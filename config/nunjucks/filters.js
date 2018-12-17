@@ -80,6 +80,11 @@ const filters = {
   pluralise,
   sentenceCase: Case.sentence,
 
+  reverseDate (dateString) {
+    if (isNil(dateString)) { return }
+    return dateString.split('/').reverse().join('/')
+  },
+
   encodeQueryString (value) {
     return encodeURIComponent(queryString.stringify(value))
   },

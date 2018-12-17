@@ -2,10 +2,16 @@
 Feature: Company details
 
   @companies-details--ghq-one-list
-  Scenario: View details for a GHQ on the One List
+  Scenario: View details for a Dun & Bradstreet GHQ company on the One List
 
     When I navigate to the `companies.details` page using `company` `One List Corp` fixture
-    Then the Company summary key value details are not displayed
+    Then the heading should be "One List Corp"
+    And after the heading should be "12 St George's Road, Paris, 75001, France"
+    And the heading description should be
+      | paragraph                                                                |
+      | This is an account managed company (One List Tier A - Strategic Account) |
+      | Global Account Manager: Travis Greene View core team                     |
+    And the Company summary key value details are not displayed
     And the Global headquarters summary key value details are displayed
       | key                       | value                        |
       | Business type             | company.businessType         |
@@ -62,3 +68,8 @@ Feature: Company details
     And the Global headquarters summary key value details are not displayed
     And the Global Account Manager – One List key value details are not displayed
     And I should not see the "See all advisers on the core team" link
+
+@companies-details--dnb-company
+  Scenario: Hide Edit company details button for a company containing a DnB number
+    When I navigate to the `companies.details` page using `company` `One List Corp` fixture
+    Then I should not see the "Edit company details" button

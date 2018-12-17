@@ -1,0 +1,9 @@
+{% from "./form-group.njk" import FormGroup %}
+{% from "./input.njk" import Input %}
+
+{% macro DateField(props) %}
+  {% set fieldId = 'field-' + props.name + ('-' + props.idSuffix if props.idSuffix) if props.name %}
+  {% call FormGroup(props | assign({ fieldId: fieldId, modifier: props.modifier, class: props.groupClass })) %}
+    {{ Input(props | assignCopy({ class: props.inputClass, data: props.inputData })) }}
+  {% endcall %}
+{% endmacro %}

@@ -1,6 +1,8 @@
 const { notFound } = require('../../../middleware/errors')
-const { getCoreTeam } = require('../repos')
+const { getOneListGroupCoreTeam } = require('../repos')
+const config = require('../../../../config')
 const { transformCoreTeamToCollection } = require('../transformers')
+const { coreTeamLabels } = require('../labels')
 
 async function renderAdvisers (req, res, next) {
   if (!res.locals.features['companies-advisers']) {
@@ -8,18 +10,34 @@ async function renderAdvisers (req, res, next) {
   }
 
   try {
-    const { name: companyName, id: companyId } = res.locals.company
+    const { company } = res.locals
     const token = req.session.token
-
-    const coreTeam = await getCoreTeam(token, companyId)
+    const { global_account_manager: globalAccountManager, adviser_on_core_team: adviserOnCoreTeam, location, team } = coreTeamLabels
+    const columns = {
+      'global_account_manager': {
+        team,
+        location,
+        name: globalAccountManager,
+      },
+      'adviser_core_team': {
+        team,
+        location,
+        name: adviserOnCoreTeam,
+      },
+    }
+    const coreTeam = await getOneListGroupCoreTeam(token, company.id)
       .then(transformCoreTeamToCollection)
 
+    const view = company.duns_number ? 'companies/views/advisers' : 'companies/views/_deprecated/advisers'
+
     res
-      .breadcrumb(companyName, `/companies/${companyId}`)
+      .breadcrumb(company.name, `/companies/${company.id}`)
       .breadcrumb('Advisers')
-      .render('companies/views/advisers', {
-        companyName,
+      .render(view, {
         coreTeam,
+        columns,
+        oneListEmail: config.oneList.email,
+        companyName: company.name,
       })
   } catch (error) {
     next(error)

@@ -8,13 +8,14 @@ const { transformCompanyToExportDetailsView } = require('../transformers')
 const { exportDetailsLabels } = require('../labels')
 
 function renderExports (req, res) {
-  const { id, name } = res.locals.company
-  const exportDetails = transformCompanyToExportDetailsView(res.locals.company)
+  const { company } = res.locals
+  const exportDetails = transformCompanyToExportDetailsView(company)
+  const view = company.duns_number ? 'companies/views/exports-view' : 'companies/views/_deprecated/exports-view'
 
   res
-    .breadcrumb(name, `/companies/${id}`)
+    .breadcrumb(company.name, `/companies/${company.id}`)
     .breadcrumb('Exports')
-    .render('companies/views/exports-view', {
+    .render(view, {
       exportDetails,
     })
 }
@@ -36,13 +37,14 @@ function populateExportForm (req, res, next) {
 }
 
 function renderExportEdit (req, res) {
-  const { id, name } = res.locals.company
+  const { company } = res.locals
+  const view = company.duns_number ? 'companies/views/exports-edit' : 'companies/views/_deprecated/exports-edit'
 
   res
-    .breadcrumb(name, `/companies/${id}`)
-    .breadcrumb('Exports', `/companies/${id}/exports`)
+    .breadcrumb(company.name, `/companies/${company.id}`)
+    .breadcrumb('Exports', `/companies/${company.id}/exports`)
     .breadcrumb('Edit')
-    .render('companies/views/exports-edit', {
+    .render(view, {
       exportDetailsLabels,
       exportExperienceCategories: metadataRepo.exportExperienceCategory.map(transformObjectToOption),
       countryOptions: metadataRepo.countryOptions.map(transformObjectToOption),

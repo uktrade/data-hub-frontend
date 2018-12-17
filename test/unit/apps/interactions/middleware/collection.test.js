@@ -18,6 +18,9 @@ describe('interaction collection middleware', () => {
     this.res = {
       locals: {
         returnLink: '/return',
+        userAgent: {
+          isIE: false,
+        },
       },
     }
 
@@ -191,6 +194,7 @@ describe('interaction collection middleware', () => {
     context('when called with sort order', () => {
       beforeEach(() => {
         this.req.query.sortby = 'name'
+
         this.middleware.getInteractionsRequestBody(this.req, this.res, this.next)
       })
 

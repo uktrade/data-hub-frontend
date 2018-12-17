@@ -1,48 +1,37 @@
+const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+
+const companyMock = require('~/test/unit/data/companies/minimal-company.json')
 const { renderAddGlobalHQ } = require('~/src/apps/companies/controllers/hierarchies')
 
 describe('Companies hierarchies controller', () => {
-  const companyId = 'mock-id'
-  const companyName = 'mock-name'
-
-  beforeEach(() => {
-    this.breadcrumbStub = sinon.stub().returnsThis()
-    this.resMock = {
-      ...globalRes,
-      breadcrumb: this.breadcrumbStub,
-      render: sinon.spy(),
-      locals: {
-        company: {
-          id: companyId,
-          name: companyName,
-        },
-      },
-    }
-    this.reqMock = {
-      ...globalReq,
-    }
-    this.nextSpy = sinon.spy()
-  })
-
   describe('#renderAddGlobalHQ', () => {
     beforeEach(() => {
-      renderAddGlobalHQ(this.reqMock, this.resMock, this.nextSpy)
+      this.middlewareParameters = buildMiddlewareParameters({
+        company: companyMock,
+      })
+
+      renderAddGlobalHQ(
+        this.middlewareParameters.reqMock,
+        this.middlewareParameters.resMock,
+        this.middlewareParameters.nextSpy,
+      )
     })
 
     it('should call breadcrumb', () => {
-      expect(this.resMock.breadcrumb).to.be.calledTwice
+      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledTwice
     })
 
     it('should call breadcrumb with', () => {
-      expect(this.resMock.breadcrumb).to.be.calledWith(companyName, `/companies/${companyId}`)
+      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWith(companyMock.name, `/companies/${companyMock.id}`)
     })
 
     it('should call breadcrumb with', () => {
-      expect(this.resMock.breadcrumb).to.be.calledWith('Link Global HQ')
+      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWith('Link Global HQ')
     })
 
     it('should call render', () => {
-      expect(this.resMock.render).to.be.calledOnce
-      expect(this.resMock.render).to.be.calledWith('companies/views/add-global-hq.njk')
+      expect(this.middlewareParameters.resMock.render).to.be.calledOnce
+      expect(this.middlewareParameters.resMock.render).to.be.calledWith('companies/views/_deprecated/add-global-hq.njk')
     })
   })
 })

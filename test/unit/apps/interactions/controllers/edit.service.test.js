@@ -86,6 +86,14 @@ describe('Interaction edit controller (Service delivery)', () => {
             'event',
           ],
         },
+        {
+          id: 's5',
+          name: 'Policy feedback',
+          disabled_on: null,
+          contexts: [
+            'policy_feedback',
+          ],
+        },
       ],
       channelOptions: [
         { id: '1', name: 'c1', disabled_on: null },
@@ -100,6 +108,17 @@ describe('Interaction edit controller (Service delivery)', () => {
       serviceDeliveryStatus: [
         { id: '1', name: 'ss1', disabled_on: null },
         { id: '2', name: 'ss2', disabled_on: null },
+        { id: '3', name: 'ss3', disabled_on: null },
+      ],
+      policyAreaOptions: [
+        { id: '1', name: 'pa1', disabled_on: null },
+        { id: '2', name: 'pa2', disabled_on: yesterday },
+        { id: '3', name: 'pa3', disabled_on: null },
+      ],
+      policyIssueType: [
+        { id: '1', name: 'pt1', disabled_on: null },
+        { id: '2', name: 'pt2', disabled_on: yesterday },
+        { id: '3', name: 'pt3', disabled_on: null },
       ],
     }
 
@@ -169,8 +188,14 @@ describe('Interaction edit controller (Service delivery)', () => {
         .reply(200, { results: this.activeInactiveAdviserData })
         .post('/v3/search/event')
         .reply(200, { results: this.eventsData })
+        .get('/metadata/communication-channel/')
+        .reply(200, this.metadataMock.channelOptions)
         .get('/metadata/service-delivery-status/')
         .reply(200, this.metadataMock.serviceDeliveryStatus)
+        .get('/metadata/policy-area/')
+        .reply(200, this.metadataMock.policyAreaOptions)
+        .get('/metadata/policy-issue-type/')
+        .reply(200, this.metadataMock.policyIssueType)
 
       await controller.renderEditPage(this.req, this.res, this.nextStub)
       this.interactionForm = this.res.render.getCall(0).args[1].interactionForm
@@ -197,9 +222,10 @@ describe('Interaction edit controller (Service delivery)', () => {
     it('should generate a form with the required fields', () => {
       const fields = this.interactionForm.children.map(field => pick(field, ['name', 'label', 'macroName', 'type']))
       expect(fields).to.deep.equal([
+        { name: 'date', label: 'Date of service delivery', macroName: 'DateFieldset' },
         { name: 'contact', label: 'Contact', macroName: 'MultipleChoiceField' },
-        { name: 'dit_team', label: 'Service provider', macroName: 'MultipleChoiceField' },
         { name: 'dit_adviser', label: 'DIT adviser', macroName: 'MultipleChoiceField' },
+        { name: 'dit_team', label: 'Service provider', macroName: 'MultipleChoiceField' },
         { name: 'is_event', label: 'Is this an event?', macroName: 'MultipleChoiceField', type: 'radio' },
         { name: 'event', label: 'Event', macroName: 'MultipleChoiceField' },
         { name: 'service', label: 'Service', macroName: 'MultipleChoiceField' },
@@ -208,7 +234,15 @@ describe('Interaction edit controller (Service delivery)', () => {
         { name: 'net_company_receipt', label: 'Net receipt', macroName: 'TextField' },
         { name: 'subject', label: 'Subject', macroName: 'TextField' },
         { name: 'notes', label: 'Notes', macroName: 'TextField', type: 'textarea' },
-        { name: 'date', label: 'Date of service delivery', macroName: 'DateFieldset' },
+        {
+          name: 'was_policy_feedback_provided',
+          label: 'Did the contact give any feedback on government policy?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+        },
+        { name: 'policy_issue_types', label: 'Policy issue types', macroName: 'MultipleChoiceField', type: 'checkbox' },
+        { name: 'policy_areas', label: 'Policy area', macroName: 'AddAnother' },
+        { name: 'policy_feedback_notes', label: 'Policy feedback notes', macroName: 'TextField', type: 'textarea' },
       ])
     })
 
@@ -259,6 +293,7 @@ describe('Interaction edit controller (Service delivery)', () => {
       expect(deliveryStatusField.options).to.deep.equal([
         { value: '1', label: 'ss1' },
         { value: '2', label: 'ss2' },
+        { value: '3', label: 'ss3' },
       ])
     })
 
@@ -336,12 +371,16 @@ describe('Interaction edit controller (Service delivery)', () => {
         .reply(200, this.metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, { results: this.activeInactiveAdviserData })
-        .get('/metadata/communication-channel/')
-        .reply(200, this.metadataMock.channelOptions)
         .post('/v3/search/event')
         .reply(200, { results: this.eventsData })
+        .get('/metadata/communication-channel/')
+        .reply(200, this.metadataMock.channelOptions)
         .get('/metadata/service-delivery-status/')
         .reply(200, this.metadataMock.serviceDeliveryStatus)
+        .get('/metadata/policy-area/')
+        .reply(200, this.metadataMock.policyAreaOptions)
+        .get('/metadata/policy-issue-type/')
+        .reply(200, this.metadataMock.policyIssueType)
 
       await controller.renderEditPage(this.req, this.res, this.nextStub)
       this.interactionForm = this.res.render.getCall(0).args[1].interactionForm
@@ -383,12 +422,16 @@ describe('Interaction edit controller (Service delivery)', () => {
         .reply(200, this.metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, { results: this.activeInactiveAdviserData })
-        .get('/metadata/communication-channel/')
-        .reply(200, this.metadataMock.channelOptions)
         .post('/v3/search/event')
         .reply(200, { results: this.eventsData })
+        .get('/metadata/communication-channel/')
+        .reply(200, this.metadataMock.channelOptions)
         .get('/metadata/service-delivery-status/')
         .reply(200, this.metadataMock.serviceDeliveryStatus)
+        .get('/metadata/policy-area/')
+        .reply(200, this.metadataMock.policyAreaOptions)
+        .get('/metadata/policy-issue-type/')
+        .reply(200, this.metadataMock.policyIssueType)
 
       await controller.renderEditPage(this.req, this.res, this.nextStub)
       this.interactionForm = this.res.render.getCall(0).args[1].interactionForm
@@ -415,18 +458,8 @@ describe('Interaction edit controller (Service delivery)', () => {
     it('should generate a form with the required fields and values populated', () => {
       const fields = this.interactionForm.children.map(field => pick(field, ['name', 'label', 'macroName', 'type', 'value']))
       expect(fields).to.deep.equal([
-        { name: 'contact', label: 'Contact', macroName: 'MultipleChoiceField', value: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306' },
-        { name: 'dit_team', label: 'Service provider', macroName: 'MultipleChoiceField', value: '222' },
-        { name: 'dit_adviser', label: 'DIT adviser', macroName: 'MultipleChoiceField', value: '8036f207-ae3e-e611-8d53-e4115bed50dc' },
-        { name: 'is_event', label: 'Is this an event?', macroName: 'MultipleChoiceField', type: 'radio', value: 'true' },
-        { name: 'event', label: 'Event', macroName: 'MultipleChoiceField', value: 'bac18331-ca4d-4501-960e-a1bd68b5d46e' },
-        { name: 'service', label: 'Service', macroName: 'MultipleChoiceField', value: '1231231231312' },
-        { name: 'service_delivery_status', label: 'Service status', macroName: 'MultipleChoiceField', value: undefined },
-        { name: 'grant_amount_offered', label: 'Grant offered', macroName: 'TextField', value: undefined },
-        { name: 'net_company_receipt', label: 'Net receipt', macroName: 'TextField', value: undefined },
-        { name: 'subject', label: 'Subject', macroName: 'TextField', value: 'Test interactions' },
-        { name: 'notes', label: 'Notes', macroName: 'TextField', type: 'textarea', value: 'lorem ipsum' },
-        { name: 'date',
+        {
+          name: 'date',
           label: 'Date of service delivery',
           macroName: 'DateFieldset',
           value: {
@@ -434,6 +467,65 @@ describe('Interaction edit controller (Service delivery)', () => {
             month: '05',
             year: '2017',
           },
+        },
+        {
+          name: 'contact',
+          label: 'Contact',
+          macroName: 'MultipleChoiceField',
+          value: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
+        },
+        {
+          name: 'dit_adviser',
+          label: 'DIT adviser',
+          macroName: 'MultipleChoiceField',
+          value: '8036f207-ae3e-e611-8d53-e4115bed50dc',
+        },
+        { name: 'dit_team', label: 'Service provider', macroName: 'MultipleChoiceField', value: '222' },
+        {
+          name: 'is_event',
+          label: 'Is this an event?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          value: 'true',
+        },
+        {
+          name: 'event',
+          label: 'Event',
+          macroName: 'MultipleChoiceField',
+          value: 'bac18331-ca4d-4501-960e-a1bd68b5d46e',
+        },
+        { name: 'service', label: 'Service', macroName: 'MultipleChoiceField', value: '1231231231312' },
+        {
+          name: 'service_delivery_status',
+          label: 'Service status',
+          macroName: 'MultipleChoiceField',
+          value: undefined,
+        },
+        { name: 'grant_amount_offered', label: 'Grant offered', macroName: 'TextField', value: undefined },
+        { name: 'net_company_receipt', label: 'Net receipt', macroName: 'TextField', value: undefined },
+        { name: 'subject', label: 'Subject', macroName: 'TextField', value: 'Test interactions' },
+        { name: 'notes', label: 'Notes', macroName: 'TextField', type: 'textarea', value: 'lorem ipsum' },
+        {
+          name: 'was_policy_feedback_provided',
+          label: 'Did the contact give any feedback on government policy?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          value: 'false',
+        },
+        {
+          name: 'policy_issue_types',
+          label: 'Policy issue types',
+          macroName: 'MultipleChoiceField',
+          type: 'checkbox',
+          value: [],
+        },
+        { name: 'policy_areas', label: 'Policy area', macroName: 'AddAnother', value: [] },
+        {
+          name: 'policy_feedback_notes',
+          label: 'Policy feedback notes',
+          macroName: 'TextField',
+          type: 'textarea',
+          value: undefined,
         },
       ])
     })
@@ -538,12 +630,16 @@ describe('Interaction edit controller (Service delivery)', () => {
         .reply(200, this.metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, { results: this.activeInactiveAdviserData })
-        .get('/metadata/communication-channel/')
-        .reply(200, this.metadataMock.channelOptions)
         .post('/v3/search/event')
         .reply(200, { results: this.eventsData })
+        .get('/metadata/communication-channel/')
+        .reply(200, this.metadataMock.channelOptions)
         .get('/metadata/service-delivery-status/')
         .reply(200, this.metadataMock.serviceDeliveryStatus)
+        .get('/metadata/policy-area/')
+        .reply(200, this.metadataMock.policyAreaOptions)
+        .get('/metadata/policy-issue-type/')
+        .reply(200, this.metadataMock.policyIssueType)
 
       await controller.renderEditPage(this.req, this.res, this.nextStub)
       this.interactionForm = this.res.render.getCall(0).args[1].interactionForm
@@ -552,18 +648,8 @@ describe('Interaction edit controller (Service delivery)', () => {
     it('should merge the changes on top of the original record', () => {
       const fields = this.interactionForm.children.map(field => pick(field, ['name', 'label', 'macroName', 'type', 'value']))
       expect(fields).to.deep.equal([
-        { name: 'contact', label: 'Contact', macroName: 'MultipleChoiceField', value: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306' },
-        { name: 'dit_team', label: 'Service provider', macroName: 'MultipleChoiceField', value: '222' },
-        { name: 'dit_adviser', label: 'DIT adviser', macroName: 'MultipleChoiceField', value: '8036f207-ae3e-e611-8d53-e4115bed50dc' },
-        { name: 'is_event', label: 'Is this an event?', macroName: 'MultipleChoiceField', type: 'radio', value: 'true' },
-        { name: 'event', label: 'Event', macroName: 'MultipleChoiceField', value: 'bac18331-ca4d-4501-960e-a1bd68b5d46e' },
-        { name: 'service', label: 'Service', macroName: 'MultipleChoiceField', value: '1231231231312' },
-        { name: 'service_delivery_status', label: 'Service status', macroName: 'MultipleChoiceField', value: undefined },
-        { name: 'grant_amount_offered', label: 'Grant offered', macroName: 'TextField', value: undefined },
-        { name: 'net_company_receipt', label: 'Net receipt', macroName: 'TextField', value: undefined },
-        { name: 'subject', label: 'Subject', macroName: 'TextField', value: 'a' },
-        { name: 'notes', label: 'Notes', macroName: 'TextField', type: 'textarea', value: 'lorem ipsum' },
-        { name: 'date',
+        {
+          name: 'date',
           label: 'Date of service delivery',
           macroName: 'DateFieldset',
           value: {
@@ -571,6 +657,65 @@ describe('Interaction edit controller (Service delivery)', () => {
             month: '05',
             year: '2017',
           },
+        },
+        {
+          name: 'contact',
+          label: 'Contact',
+          macroName: 'MultipleChoiceField',
+          value: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
+        },
+        {
+          name: 'dit_adviser',
+          label: 'DIT adviser',
+          macroName: 'MultipleChoiceField',
+          value: '8036f207-ae3e-e611-8d53-e4115bed50dc',
+        },
+        { name: 'dit_team', label: 'Service provider', macroName: 'MultipleChoiceField', value: '222' },
+        {
+          name: 'is_event',
+          label: 'Is this an event?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          value: 'true',
+        },
+        {
+          name: 'event',
+          label: 'Event',
+          macroName: 'MultipleChoiceField',
+          value: 'bac18331-ca4d-4501-960e-a1bd68b5d46e',
+        },
+        { name: 'service', label: 'Service', macroName: 'MultipleChoiceField', value: '1231231231312' },
+        {
+          name: 'service_delivery_status',
+          label: 'Service status',
+          macroName: 'MultipleChoiceField',
+          value: undefined,
+        },
+        { name: 'grant_amount_offered', label: 'Grant offered', macroName: 'TextField', value: undefined },
+        { name: 'net_company_receipt', label: 'Net receipt', macroName: 'TextField', value: undefined },
+        { name: 'subject', label: 'Subject', macroName: 'TextField', value: 'a' },
+        { name: 'notes', label: 'Notes', macroName: 'TextField', type: 'textarea', value: 'lorem ipsum' },
+        {
+          name: 'was_policy_feedback_provided',
+          label: 'Did the contact give any feedback on government policy?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          value: 'false',
+        },
+        {
+          name: 'policy_issue_types',
+          label: 'Policy issue types',
+          macroName: 'MultipleChoiceField',
+          type: 'checkbox',
+          value: [],
+        },
+        { name: 'policy_areas', label: 'Policy area', macroName: 'AddAnother', value: [] },
+        {
+          name: 'policy_feedback_notes',
+          label: 'Policy feedback notes',
+          macroName: 'TextField',
+          type: 'textarea',
+          value: undefined,
         },
       ])
     })

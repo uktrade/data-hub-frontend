@@ -7,6 +7,42 @@ const { getDateFor } = require('../../../helpers/date')
 const Interaction = client.page.interactions.interaction()
 const InteractionList = client.page.interactions.list()
 
+When(/^a service delivery policy feedback is added$/, async function (dataTable) {
+  const details = fromPairs(map(dataTable.hashes(), hash => [camelCase(hash.key), hash.value]))
+  await Interaction
+    .createInteractionPolicyFeedback(details, true, (interaction) => {
+      set(this.state, 'interaction', interaction)
+      set(this.state, 'interaction.date', getDateFor({
+        year: get(this.state, 'interaction.dateOfInteractionYear'),
+        month: get(this.state, 'interaction.dateOfInteractionMonth'),
+        day: get(this.state, 'interaction.dateOfInteractionDay'),
+      }))
+      set(this.state, 'interaction.policyIssueType1', 'Domestic')
+      set(this.state, 'interaction.policyArea', interaction.policyArea)
+      set(this.state, 'interaction.policyFeedbackNotes', interaction.policyFeedbackNotes)
+      set(this.state, 'interaction.type', 'interaction')
+    })
+    .wait() // wait for backend to sync
+})
+
+When(/^an interaction policy feedback is added$/, async function (dataTable) {
+  const details = fromPairs(map(dataTable.hashes(), hash => [camelCase(hash.key), hash.value]))
+  await Interaction
+    .createInteractionPolicyFeedback(details, false, (interaction) => {
+      set(this.state, 'interaction', interaction)
+      set(this.state, 'interaction.date', getDateFor({
+        year: get(this.state, 'interaction.dateOfInteractionYear'),
+        month: get(this.state, 'interaction.dateOfInteractionMonth'),
+        day: get(this.state, 'interaction.dateOfInteractionDay'),
+      }))
+      set(this.state, 'interaction.policyIssueType1', 'Domestic')
+      set(this.state, 'interaction.policyArea', interaction.policyArea)
+      set(this.state, 'interaction.policyFeedbackNotes', interaction.policyFeedbackNotes)
+      set(this.state, 'interaction.type', 'interaction')
+    })
+    .wait() // wait for backend to sync
+})
+
 When(/^[an]{1,2} (interaction|service delivery) is added$/, async function (kind, dataTable) {
   const details = fromPairs(map(dataTable.hashes(), hash => [camelCase(hash.key), hash.value]))
   await Interaction
@@ -51,6 +87,12 @@ When(/^I select policy feedback$/, async function () {
     .click('@continueButton')
 })
 
+When(/^I select a policy feedback option$/, async function () {
+  await Interaction
+    .waitForElementVisible('@policyFeedbackYes')
+    .click('@policyFeedbackYes')
+})
+
 When(/^I select service delivery$/, async function () {
   await Interaction
     .waitForElementVisible('@continueButton')
@@ -89,8 +131,6 @@ Then(/^there are interaction fields$/, async function () {
     .assert.visible('@dateOfInteractionMonth')
     .assert.visible('@dateOfInteractionDay')
     .assert.visible('@communicationChannel')
-    .assert.elementNotPresent('@policyIssueType')
-    .assert.elementNotPresent('@policyArea')
 })
 
 Then(/^there are service delivery fields$/, async function () {
@@ -111,9 +151,6 @@ Then(/^there are service delivery fields$/, async function () {
     .assert.visible('@dateOfInteractionYear')
     .assert.visible('@dateOfInteractionMonth')
     .assert.visible('@dateOfInteractionDay')
-    .assert.elementNotPresent('@communicationChannel')
-    .assert.elementNotPresent('@policyIssueType')
-    .assert.elementNotPresent('@policyArea')
 })
 
 Then(/^there are policy feedback fields$/, async function () {
@@ -138,10 +175,23 @@ Then(/^there are policy feedback fields$/, async function () {
     .assert.elementNotPresent('@netReceipt')
 })
 
+Then(/^there are interaction policy feedback fields$/, async function () {
+  await Interaction
+    .waitForElementVisible('@policyIssueType1')
+    .assert.visible('@policyIssueType1')
+    .assert.visible('@policyIssueType2')
+    .assert.visible('@policyIssueType3')
+    .assert.visible('@policyIssueType4')
+    .assert.visible('@policyIssueType5')
+    .assert.visible('@policyArea')
+    .assert.visible('@policyFeedbackNotes')
+})
+
 Then(/^(interaction|policy feedback) fields are pre-populated$/, async function (kind) {
   const assertIsSet = (result) => client.expect(result.value.length).to.be.greaterThan(0)
   // TODO test user does not have a DIT team
   // await Interaction.getValue('@serviceProvider', assertIsSet)
+
   await Interaction.getValue('@dateOfInteractionYear', assertIsSet)
   await Interaction.getValue('@dateOfInteractionMonth', assertIsSet)
   await Interaction.getValue('@dateOfInteractionDay', assertIsSet)
@@ -195,11 +245,20 @@ Then(/^I filter the collections to view the (.+) I have just created$/, async fu
   const filterTagsSection = InteractionList.section.filterTags
   const waitForTimeout = 15000
   const interactionType = camelCase(typeOfInteraction)
+
+  const inputDateFormat = process.env.NW_CIRCLECI ? 'MM/DD/YYYY' : 'DD/MM/YYYY'
+
   const date = getDateFor({
     year: get(this.state, 'interaction.dateOfInteractionYear'),
     month: get(this.state, 'interaction.dateOfInteractionMonth'),
     day: get(this.state, 'interaction.dateOfInteractionDay'),
-  }, 'YYYY-M-D')
+  }, inputDateFormat)
+
+  const expectedDate = getDateFor({
+    year: get(this.state, 'interaction.dateOfInteractionYear'),
+    month: get(this.state, 'interaction.dateOfInteractionMonth'),
+    day: get(this.state, 'interaction.dateOfInteractionDay'),
+  }, 'YYYY-MM-DD')
 
   await filtersSection
     .waitForElementPresent(`@${interactionType}`)
@@ -208,15 +267,21 @@ Then(/^I filter the collections to view the (.+) I have just created$/, async fu
   await filterTagsSection
     .waitForElementPresent('@kind', waitForTimeout)
 
-  await filtersSection
-    .setValue('@dateFrom', date)
-    .sendKeys('@dateFrom', [ client.Keys.ENTER ])
-
-  await filterTagsSection
-    .waitForElementPresent('@dateFrom', waitForTimeout)
+  client.clearValue('#field-date_after')
 
   await filtersSection
-    .setValue('@dateTo', date)
+    .sendKeys('@dateFrom', date)
+
+  client.expect.element('#field-date_after').to.have.value.which.contains(`${expectedDate}`)
+
+  client.clearValue('#field-date_before')
+
+  await filtersSection
+    .sendKeys('@dateTo', date)
+
+  client.expect.element('#field-date_before').to.have.value.which.contains(`${expectedDate}`)
+
+  await filtersSection
     .sendKeys('@dateTo', [ client.Keys.ENTER ])
 
   await filterTagsSection

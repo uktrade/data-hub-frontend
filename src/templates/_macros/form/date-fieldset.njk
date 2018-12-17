@@ -15,7 +15,18 @@
   {% set value = props.value | default('', true) %}
 
   {% if value | isPlainObject  %}
-    {% set dateObj = props.value %}
+    {% if props.value.day %}
+      {% set dateObj = {
+        day: props.value.day,
+        month: props.value.month,
+        year: props.value.year
+      } %}
+    {% else %}
+        {% set dateObj = {
+          month: props.value.month,
+          year: props.value.year
+        } %}
+    {% endif %}
   {% elif value | isString %}
     {# Expects YYYY-MM-DD or ISO datetime#}
     {% set splitDateTime = value | split('T') %}
