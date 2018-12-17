@@ -1,5 +1,5 @@
 const transformInteractionResponseToForm = require('~/src/apps/interactions/transformers/interaction-response-to-form')
-const mockInteraction = require('~/test/unit/data/interactions/interaction.json')
+const mockInteraction = require('~/test/unit/data/interactions/interaction-with-feedback.json')
 const policyFeedbackData = require('~/test/unit/data/interactions/policy-feedback.json')
 
 describe('#transformInteractionResponseToForm', () => {
@@ -23,6 +23,9 @@ describe('#transformInteractionResponseToForm', () => {
         is_event: 'false',
         event: undefined,
         id: 'af4aac84-4d6a-47df-a733-5a54e3008c32',
+        policy_issue_types: ['4b9142df-0520-46bd-9da9-94147cdbae13'],
+        policy_feedback_notes: 'Labore culpa quas cupiditate voluptatibus magni.',
+        was_policy_feedback_provided: 'true',
         notes: 'Labore culpa quas cupiditate voluptatibus magni.',
         subject: 'ad',
         policy_areas: [],
@@ -61,6 +64,9 @@ describe('#transformInteractionResponseToForm', () => {
         is_event: 'true',
         event: '1',
         id: 'af4aac84-4d6a-47df-a733-5a54e3008c32',
+        policy_issue_types: ['4b9142df-0520-46bd-9da9-94147cdbae13'],
+        policy_feedback_notes: 'Labore culpa quas cupiditate voluptatibus magni.',
+        was_policy_feedback_provided: 'true',
         notes: 'Labore culpa quas cupiditate voluptatibus magni.',
         subject: 'ad',
         policy_areas: [],
@@ -96,6 +102,9 @@ describe('#transformInteractionResponseToForm', () => {
         is_event: 'false',
         event: undefined,
         id: 'af4aac84-4d6a-47df-a733-5a54e3008c32',
+        policy_issue_types: ['4b9142df-0520-46bd-9da9-94147cdbae13'],
+        policy_feedback_notes: 'Labore culpa quas cupiditate voluptatibus magni.',
+        was_policy_feedback_provided: 'true',
         notes: 'Labore culpa quas cupiditate voluptatibus magni.',
         subject: 'ad',
         policy_areas: [],
@@ -124,6 +133,9 @@ describe('#transformInteractionResponseToForm', () => {
         is_event: 'false',
         event: undefined,
         id: 'af4aac84-4d6a-47df-a733-5a54e3008c32',
+        policy_issue_types: ['4b9142df-0520-46bd-9da9-94147cdbae13'],
+        policy_feedback_notes: 'Labore culpa quas cupiditate voluptatibus magni.',
+        was_policy_feedback_provided: 'true',
         notes: 'Labore culpa quas cupiditate voluptatibus magni.',
         subject: 'ad',
         policy_areas: ['pa1'],

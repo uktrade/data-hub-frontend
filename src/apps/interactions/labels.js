@@ -11,6 +11,11 @@ const interaction = {
   communication_channel: 'Communication channel',
   investment_project: 'Investment project',
   documents: 'Documents',
+  was_policy_feedback_provided: 'Did the contact give any feedback on government policy?',
+  policy_issue_type: 'Policy issue type',
+  policy_issue_types: 'Policy issue types',
+  policy_areas: 'Policy area',
+  policy_feedback_notes: 'Policy feedback notes',
 }
 
 const policyFeedback = {
@@ -45,6 +50,11 @@ const serviceDelivery = {
   event: 'Event',
   investment_project: 'Investment project',
   documents: 'Documents',
+  was_policy_feedback_provided: 'Did the contact give any feedback on government policy?',
+  policy_issue_type: 'Policy issue type',
+  policy_issue_types: 'Policy issue types',
+  policy_areas: 'Policy area',
+  policy_feedback_notes: 'Policy feedback notes',
 }
 
 const filters = {

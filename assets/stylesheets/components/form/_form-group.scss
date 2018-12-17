@@ -76,7 +76,8 @@ fieldset.c-form-group.has-error {
 }
 
 // Modifiers
-.c-form-group--subfield {
+.c-form-group--subfield,
+.c-form-fieldset--subfield {
   border-left: 5px solid $grey-2;
   margin-left: $default-spacing-unit;
 
@@ -86,7 +87,8 @@ fieldset.c-form-group.has-error {
   }
 }
 
-fieldset.c-form-group.c-form-group--subfield {
+fieldset.c-form-group.c-form-group--subfield,
+fieldset.c-form-group.c-form-fieldset--subfield {
   border-left: 0;
   padding-left: $default-spacing-unit * 2;
   position: relative;
@@ -103,6 +105,16 @@ fieldset.c-form-group.c-form-group--subfield {
 
   &.has-error::before {
     border-left-color: $error-colour;
+  }
+}
+
+
+fieldset.c-form-group.c-form-fieldset--subfield {
+  border: none;
+
+  .c-form-fieldset__legend {
+    @include bold-19();
+    color: $black;
   }
 }
 

@@ -54,7 +54,9 @@ async function getCommonOptions (token, createdOn, req, res) {
 
 async function getInteractionFormOptions (token, createdOn, req, res) {
   const formOptions = {
+    areas: await getOptions(token, 'policy-area', { createdOn }),
     services: await getServiceOptions(req, res, createdOn),
+    types: await getOptions(token, 'policy-issue-type', { createdOn }),
     channels: await getOptions(token, 'communication-channel', { createdOn }),
   }
 
@@ -63,22 +65,22 @@ async function getInteractionFormOptions (token, createdOn, req, res) {
 
 async function getServiceDeliveryFormOptions (token, createdOn, req, res) {
   const services = await getServiceOptions(req, res, createdOn)
-
-  const tapServices = services
-    .filter(service => includes(service.label, '(TAP)'))
-    .map(service => service.value)
-
   const activeEvents = await getActiveEvents(token, createdOn)
-  const events = activeEvents.map(transformObjectToOption)
-  const statuses = await getOptions(token, 'service-delivery-status', { createdOn, sorted: false })
 
-  return {
-    services,
-    tapServices,
-    events,
-    statuses,
+  const formOptions = {
+    areas: await getOptions(token, 'policy-area', { createdOn }),
+    types: await getOptions(token, 'policy-issue-type', { createdOn }),
+    channels: await getOptions(token, 'communication-channel', { createdOn }),
+    events: activeEvents.map(transformObjectToOption),
+    tapServices: services
+      .filter(service => includes(service.label, '(TAP)'))
+      .map(service => service.value),
+    services: services,
+    statuses: await getOptions(token, 'service-delivery-status', { createdOn, sorted: false }),
     successfulServiceStatuses: [SERVICE_DELIVERY_STATUS_COMPLETED],
   }
+
+  return formOptions
 }
 
 async function getPolicyFeedbackFormOptions (token, createdOn) {

@@ -24,8 +24,10 @@ module.exports = {
     aServiceThatYouHaveProvided: getRadioButtonWithText('A service that you have provided'),
     aPolicyFeedback: getRadioButtonWithText('Capture policy feedback'),
     continueButton: getButtonWithText('Continue'),
-    saveButton: getButtonWithText('Add'),
+    interactionSaveButton: getButtonWithText('Add interaction'),
+    serviceDeliverySaveButton: getButtonWithText('Add service delivery'),
     addPolicyFeedbackButton: getButtonWithText('Add policy feedback'),
+    addInteractionPolicyFeedbackButton: '.js-prevent-multiple-submits',
     subject: '#field-subject',
     notes: '#field-notes',
     dateOfInteractionYear: '#field-date_year',
@@ -42,8 +44,15 @@ module.exports = {
     eventYes: 'label[for=field-is_event-1]',
     eventNo: 'label[for=field-is_event-2]',
     event: '#field-event',
+    policyFeedbackYes: 'label[for=field-was_policy_feedback_provided-1]',
     policyIssueType: '#field-policy_issue_type',
+    policyIssueType1: 'label[for=field-policy_issue_types-1]',
+    policyIssueType2: 'label[for=field-policy_issue_types-2]',
+    policyIssueType3: 'label[for=field-policy_issue_types-3]',
+    policyIssueType4: 'label[for=field-policy_issue_types-4]',
+    policyIssueType5: 'label[for=field-policy_issue_types-5]',
     policyArea: '#field-policy_areas',
+    policyFeedbackNotes: '#field-policy_feedback_notes',
     teamSearch: '#dit_team__typeahead .multiselect__input',
   },
   commands: [
@@ -52,6 +61,7 @@ module.exports = {
         return getButtonWithText(text)
       },
       createInteraction (details = {}, isServiceDelivery, callback) {
+        const saveButton = isServiceDelivery ? 'serviceDeliverySaveButton' : 'interactionSaveButton'
         const futureDate = generateFutureDate()
         const interaction = assign({}, {
           subject: appendUid(faker.lorem.word()),
@@ -62,7 +72,7 @@ module.exports = {
         }, details)
 
         this
-          .waitForElementVisible('@saveButton')
+          .waitForElementVisible(`@${saveButton}`)
           .api.perform((done) => {
             this.getListOption('@contact', (contact) => {
               interaction.contact = contact
@@ -119,10 +129,12 @@ module.exports = {
             interaction.heading = interaction.subject
           })
 
-        return this.click('@saveButton', () => {
+        return this.click(`@${saveButton}`, () => {
           callback(interaction)
         })
       },
+
+      // todo this can be removed soon after interaction policy feedback forms are in production
       createPolicyFeedback (details = {}, callback) {
         const futureDate = generateFutureDate()
         const interaction = assign({}, {
@@ -183,6 +195,84 @@ module.exports = {
           })
 
         return this.click('@addPolicyFeedbackButton', () => {
+          callback(interaction)
+        })
+      },
+      createInteractionPolicyFeedback (details, isServiceDelivery, callback) {
+        const saveButton = isServiceDelivery ? 'serviceDeliverySaveButton' : 'interactionSaveButton'
+        const futureDate = generateFutureDate()
+        const interaction = assign({}, {
+          policyFeedbackNotes: faker.lorem.sentence(),
+          subject: appendUid(faker.lorem.word()),
+          notes: faker.lorem.sentence(),
+          dateOfInteractionYear: futureDate.year,
+          dateOfInteractionMonth: futureDate.month,
+          dateOfInteractionDay: futureDate.day,
+        }, details)
+        this
+          .waitForElementVisible(`@${saveButton}`)
+          .api.perform((done) => {
+            this.getListOption('@contact', (contact) => {
+              interaction.contact = contact
+              done()
+            })
+          })
+          .perform((done) => {
+            this.getListOption('@serviceProvider', (serviceProvider) => {
+              interaction.serviceProvider = serviceProvider
+              done()
+            })
+          })
+          .perform((done) => {
+            this.click('@policyIssueType1')
+            done()
+          })
+          .perform((done) => {
+            this.getListOption('@policyArea', (policyArea) => {
+              interaction.policyArea = policyArea
+              done()
+            })
+          })
+          .perform((done) => {
+            this.getListOption('@ditAdviser', (ditAdviser) => {
+              interaction.ditAdviser = ditAdviser
+              done()
+            })
+          })
+          .perform((done) => {
+            if (!isServiceDelivery) {
+              return done()
+            }
+
+            this.click('@eventYes')
+              .getListOption('@event', (event) => {
+                interaction.event = event
+                done()
+              })
+          })
+          .perform((done) => {
+            if (isServiceDelivery) {
+              return done()
+            }
+
+            this.getListOption('@communicationChannel', (communicationChannel) => {
+              interaction.communicationChannel = communicationChannel
+              done()
+            })
+          })
+          .perform((done) => {
+            this.getListOption('@service', (service) => {
+              interaction.service = service
+              done()
+            })
+          })
+          .perform(() => {
+            forEach(keys(interaction), (key) => {
+              this.replaceValue(`@${key}`, interaction[key])
+            })
+          })
+
+        return this.click(`@${saveButton}`, () => {
           callback(interaction)
         })
       },
