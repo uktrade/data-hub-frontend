@@ -47,12 +47,56 @@ module.exports = {
       }],
     }
   },
+  feedbackPolicyIssueType (types) {
+    return {
+      macroName: 'MultipleChoiceField',
+      type: 'checkbox',
+      name: 'policy_issue_types',
+      optional: false,
+      modifier: 'subfield',
+      condition: {
+        name: 'was_policy_feedback_provided',
+        value: 'true',
+      },
+      options: types,
+    }
+  },
+  feedbackPolicyRequest: {
+    macroName: 'MultipleChoiceField',
+    type: 'radio',
+    name: 'was_policy_feedback_provided',
+    optional: false,
+    modifier: 'inline',
+    options: [
+      {
+        label: 'Yes',
+        value: 'true',
+      },
+      {
+        label: 'No',
+        value: 'false',
+      },
+    ],
+  },
+  feedbackPolicyNotes: {
+    macroName: 'TextField',
+    type: 'textarea',
+    modifier: 'subfield',
+    condition: {
+      name: 'was_policy_feedback_provided',
+      value: 'true',
+    },
+    name: 'policy_feedback_notes',
+    hint: 'These notes will be visible to other Data Hub users and may be shared within the department',
+
+  },
   subject: {
     macroName: 'TextField',
     name: 'subject',
   },
   notes: {
     macroName: 'TextField',
+    optional: true,
     type: 'textarea',
     name: 'notes',
   },

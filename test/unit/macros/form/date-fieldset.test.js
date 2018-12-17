@@ -36,8 +36,7 @@ describe('DateFieldset component', () => {
         const inputElems = this.component.querySelectorAll('input')
         const labelElems = this.component.querySelectorAll('label')
 
-        expect(this.component.querySelector('legend').firstElementChild.textContent.trim())
-          .to.equal('What is your favourite day?')
+        expect(this.component.querySelector('legend').firstElementChild.textContent.trim()).to.equal('What is your favourite day?')
         expect(inputElems.length).to.equal(2)
         expect(labelElems.length).to.equal(2)
         expect(labelElems[0].textContent.trim()).to.equal('Month')
@@ -74,9 +73,9 @@ describe('DateFieldset component', () => {
           label: 'What is your favourite day?',
           hint: 'A day you really like',
           value: {
+            day: '19',
             month: '02',
             year: '2013',
-            day: '19',
           },
         })
       })
@@ -98,20 +97,20 @@ describe('DateFieldset component', () => {
           .to.equal('What is your favourite day?')
         expect(inputElems.length).to.equal(3)
         expect(labelElems.length).to.equal(3)
-        expect(labelElems[0].textContent.trim()).to.equal('Month')
-        expect(labelElems[1].textContent.trim()).to.equal('Year')
-        expect(labelElems[2].textContent.trim()).to.equal('Day')
+        expect(labelElems[0].textContent.trim()).to.equal('Day')
+        expect(labelElems[1].textContent.trim()).to.equal('Month')
+        expect(labelElems[2].textContent.trim()).to.equal('Year')
       })
 
       it('should render a component which has inputs with names and ids based on its name', () => {
         const inputElems = this.component.querySelectorAll('input')
 
-        expect(inputElems[0].name).to.equal('estimated_date_month')
-        expect(inputElems[1].name).to.equal('estimated_date_year')
-        expect(inputElems[2].name).to.equal('estimated_date_day')
-        expect(inputElems[0].id).to.equal('field-estimated_date_month')
-        expect(inputElems[1].id).to.equal('field-estimated_date_year')
-        expect(inputElems[2].id).to.equal('field-estimated_date_day')
+        expect(inputElems[0].name).to.equal('estimated_date_day')
+        expect(inputElems[1].name).to.equal('estimated_date_month')
+        expect(inputElems[2].name).to.equal('estimated_date_year')
+        expect(inputElems[0].id).to.equal('field-estimated_date_day')
+        expect(inputElems[1].id).to.equal('field-estimated_date_month')
+        expect(inputElems[2].id).to.equal('field-estimated_date_year')
       })
 
       it('should render a component with text input by default', () => {
@@ -123,9 +122,9 @@ describe('DateFieldset component', () => {
       it('should render a field with value given', () => {
         const inputElems = this.component.querySelectorAll('input')
 
-        expect(inputElems[0].value).to.equal('02')
-        expect(inputElems[1].value).to.equal('2013')
-        expect(inputElems[2].value).to.equal('19')
+        expect(inputElems[0].value).to.equal('19')
+        expect(inputElems[1].value).to.equal('02')
+        expect(inputElems[2].value).to.equal('2013')
       })
     })
 

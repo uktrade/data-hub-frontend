@@ -10,6 +10,10 @@ const {
   notes,
   date,
   adviser,
+  policyAreas,
+  feedbackPolicyRequest,
+  feedbackPolicyIssueType,
+  feedbackPolicyNotes,
 } = require('./fields')
 
 module.exports = function ({
@@ -22,6 +26,8 @@ module.exports = function ({
   teams = [],
   channels = [],
   hiddenFields,
+  areas,
+  types,
 }) {
   return {
     returnLink,
@@ -29,14 +35,25 @@ module.exports = function ({
     buttonText,
     hiddenFields,
     children: [
+      date,
       contact(contacts),
+      adviser(advisers),
       provider(teams),
       service(services),
+      communicationChannel(channels),
       subject,
       notes,
-      date,
-      adviser(advisers),
-      communicationChannel(channels),
+      feedbackPolicyRequest,
+      feedbackPolicyIssueType(types),
+      {
+        ...policyAreas(areas),
+        modifier: 'subfield',
+        condition: {
+          name: 'was_policy_feedback_provided',
+          value: 'true',
+        },
+      },
+      feedbackPolicyNotes,
     ].map(field => {
       return assign(field, {
         label: labels.interaction[field.name],

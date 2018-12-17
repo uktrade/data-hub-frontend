@@ -9,6 +9,10 @@ const {
   notes,
   date,
   adviser,
+  policyAreas,
+  feedbackPolicyRequest,
+  feedbackPolicyIssueType,
+  feedbackPolicyNotes,
 } = require('./fields')
 
 module.exports = function ({
@@ -24,6 +28,8 @@ module.exports = function ({
   teams = [],
   events = [],
   hiddenFields,
+  areas,
+  types,
 }) {
   return {
     returnLink,
@@ -31,9 +37,10 @@ module.exports = function ({
     buttonText,
     hiddenFields,
     children: [
+      date,
       contact(contacts),
-      provider(teams),
       adviser(advisers),
+      provider(teams),
       // TODO this will be going once interactions are within events
       {
         macroName: 'MultipleChoiceField',
@@ -98,7 +105,17 @@ module.exports = function ({
       },
       subject,
       notes,
-      date,
+      feedbackPolicyRequest,
+      feedbackPolicyIssueType(types),
+      {
+        ...policyAreas(areas),
+        modifier: 'subfield',
+        condition: {
+          name: 'was_policy_feedback_provided',
+          value: 'true',
+        },
+      },
+      feedbackPolicyNotes,
     ].map(field => {
       return assign(field, {
         label: labels.serviceDelivery[field.name],

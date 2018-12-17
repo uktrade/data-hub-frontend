@@ -15,6 +15,9 @@ function transformInteractionResponseToForm ({
   subject,
   policy_areas,
   policy_issue_type,
+  policy_issue_types,
+  policy_feedback_notes,
+  was_policy_feedback_provided,
   notes,
   date,
   company,
@@ -24,6 +27,7 @@ function transformInteractionResponseToForm ({
 
   const isValidDate = isValid(new Date(date))
   const displayPolicyAreas = (policy_areas || []).map(policy_area => policy_area.id)
+  const displayPolicyTypes = (policy_issue_types || []).map(policy_type => policy_type.id)
 
   return {
     id,
@@ -40,6 +44,9 @@ function transformInteractionResponseToForm ({
     service_delivery_status: get(service_delivery_status, 'id'),
     policy_areas: displayPolicyAreas,
     policy_issue_type: get(policy_issue_type, 'id'),
+    policy_issue_types: displayPolicyTypes,
+    policy_feedback_notes,
+    was_policy_feedback_provided: isNil(was_policy_feedback_provided) ? 'false' : 'true',
     date: {
       day: isValidDate ? format(date, 'DD') : '',
       month: isValidDate ? format(date, 'MM') : '',
