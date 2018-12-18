@@ -1,5 +1,22 @@
 {% extends "_layouts/full-column.njk" %}
 
+{% macro AddressCell(meta, address) %}
+  <td>
+    {{
+      MetaList({
+        items: meta,
+        modifier: 'stacked',
+        itemModifier: 'stacked'
+      })
+    }}
+    <ul>
+      {% for element in address %}
+        <li>{{ element }}</li>
+      {% endfor %}
+    </ul>
+  </td>
+{% endmacro %}
+
 {% block main_column %}
 
   <div class="section">
@@ -36,6 +53,23 @@
           <td>{{ sector }}</td>
         </tr>
       {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2 class="heading-medium">Addresses</h2>
+
+    <table class="table--key-value">
+      <tbody>
+      <tr>
+        {% if addressesDetails.trading.address %}
+          {{ AddressCell(addressesDetails.trading.meta, addressesDetails.trading.address) }}
+        {% endif %}
+        {% if addressesDetails.registered.address %}
+          {{ AddressCell(addressesDetails.registered.meta, addressesDetails.registered.address) }}
+        {% endif %}
+      </tr>
       </tbody>
     </table>
   </div>
