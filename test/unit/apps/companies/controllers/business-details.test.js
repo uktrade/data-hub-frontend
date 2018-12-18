@@ -1,12 +1,18 @@
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
+const config = require('~/config')
 const dnbCompanyMock = require('~/test/unit/data/companies/dnb-company.json')
+const subsidiariesMock = require('~/test/unit/data/companies/subsidiaries.json')
 
 const { renderBusinessDetails } = require('~/src/apps/companies/controllers/business-details')
 
 describe('#renderBusinessDetails', () => {
   context('when rendering the view', () => {
     beforeEach(async () => {
+      nock(config.apiRoot)
+        .get(`/v3/company?limit=10&offset=0&sortby=name&global_headquarters_id=${dnbCompanyMock.id}`)
+        .reply(200, subsidiariesMock)
+
       this.middlewareParameters = buildMiddlewareParameters({
         company: dnbCompanyMock,
       })
@@ -43,6 +49,10 @@ describe('#renderBusinessDetails', () => {
 
     it('set the One List details', () => {
       expect(this.middlewareParameters.resMock.render.firstCall.args[1].oneListDetails).to.not.be.undefined
+    })
+
+    it('set the business hierarchy details', () => {
+      expect(this.middlewareParameters.resMock.render.firstCall.args[1].businessHierarchyDetails).to.not.be.undefined
     })
   })
 })
