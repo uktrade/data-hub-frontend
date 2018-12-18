@@ -12,6 +12,20 @@
  #   } %}
  #}
 
+{% macro link(url, name, newWindow, hintId, hint) %}
+  <a href="{{ url }}"
+    {% if hintId %} aria-labelledby="{{ hintId }}"{% endif %}
+    {% if newWindow %} target="_blank"{% endif %}
+    >
+    {{- name -}}
+  </a>
+  {% if hint %}
+    <span {% if hintId %}id="{{ hintId }}"{% endif %}>
+      {{- hint -}}
+    </span>
+  {% endif  %}
+{% endmacro %}
+
 {% if items|length %}
   <table class="table--key-value{{ ' table--' + variant if variant }}">
     <tbody>
@@ -20,21 +34,7 @@
         <tr>
           <th>{{ label }}</th>
           <td>
-            {% if data.url %}
-              <a
-                {% if data.hintId %}aria-labelledby="{{ data.hintId }}"{% endif %}
-                href="{{ data.url }}"
-              >
-                {{- data.name -}}
-              </a>
-              {% if data.hint %}
-                <span
-                  {% if data.hintId %}id="{{ data.hintId }}"{% endif %}
-                >
-                  {{- data.hint -}}
-                </span>
-              {% endif  %}
-            {% elif data | isArray %}
+            {% if data | isArray %}
               <ul>
                {% for item in data | removeNilAndEmpty %}
                  {% if item.type == 'document' %}
@@ -48,12 +48,18 @@
                      {% endif %}
                   </li>
                  {% else %}
-                   <li>{{ item }}</li>
+                   {% if item.url %}
+                     <li>{{ link(item.url, item.name, item.newWindow, item.hintId, item.hint) }}</li>
+                   {% else %}
+                     <li>{{ item }}</li>
+                   {% endif %}
                  {% endif %}
                {% endfor %}
               </ul>
             {% elif data | isPlainObject %}
-              {% if data.type == "date" %}
+              {% if data.url %}
+                {{ link(data.url, data.name, data.newWindow, data.hintId, data.hint) }}
+              {% elif data.type == "date" %}
                 {{ data.name | formatDate }}
               {% elif data.type == "currency" %}
                 {{ data.name | formatCurrency }}
