@@ -1,6 +1,7 @@
 const transformCompaniesHouseToListItem = require('./companies-house-to-list-item')
 const transformCompaniesHouseToView = require('./companies-house-to-view')
 const transformCompanyToBusinessHierarchyView = require('./company-to-business-hierarchy-view')
+const transformCompanyToAddressesView = require('./company-to-addresses-view')
 const transformCompanyToExportDetailsView = require('./company-to-export-details-view')
 const transformCompanyToForm = require('./company-to-form')
 const transformCompanyToKnownAsView = require('./company-to-known-as-view')
@@ -15,6 +16,7 @@ module.exports = {
   transformCompaniesHouseToListItem,
   transformCompaniesHouseToView,
   transformCompanyToBusinessHierarchyView,
+  transformCompanyToAddressesView,
   transformCompanyToExportDetailsView,
   transformCompanyToForm,
   transformCompanyToKnownAsView,

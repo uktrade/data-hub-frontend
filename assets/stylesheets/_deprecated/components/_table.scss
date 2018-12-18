@@ -27,6 +27,10 @@
     padding: 0;
     margin: 0;
   }
+
+  div + ul {
+    margin-top: $default-spacing-unit / 2;
+  }
 }
 
 .table--striped {
