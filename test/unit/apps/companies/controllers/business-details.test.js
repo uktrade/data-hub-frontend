@@ -54,5 +54,9 @@ describe('#renderBusinessDetails', () => {
     it('set the business hierarchy details', () => {
       expect(this.middlewareParameters.resMock.render.firstCall.args[1].businessHierarchyDetails).to.not.be.undefined
     })
+
+    it('set the addresses details', () => {
+      expect(this.middlewareParameters.resMock.render.firstCall.args[1].addressesDetails).to.not.be.undefined
+    })
   })
 })
