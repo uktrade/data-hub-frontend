@@ -3,6 +3,7 @@ const {
   transformCompanyToKnownAsView,
   transformCompanyToOneListView,
   transformCompanyToBusinessHierarchyView,
+  transformCompanyToSectorView,
 } = require('../transformers')
 const {
   getCompanySubsidiaries,
@@ -20,6 +21,7 @@ async function renderBusinessDetails (req, res) {
       knownAsDetails: transformCompanyToKnownAsView(company),
       oneListDetails: transformCompanyToOneListView(company),
       businessHierarchyDetails: transformCompanyToBusinessHierarchyView(company, subsidiaries.count),
+      sectorDetails: transformCompanyToSectorView(company),
     })
 }
 
