@@ -15,6 +15,7 @@ const {
 const { renderCompanyList } = require('./controllers/list')
 const { renderForm } = require('./controllers/edit')
 const { renderDetails } = require('./controllers/details')
+const { renderBusinessDetails } = require('./controllers/business-details')
 const { renderInvestments } = require('./controllers/investments')
 const { renderOrders } = require('./controllers/orders')
 const { renderAuditLog } = require('./controllers/audit')
@@ -103,6 +104,7 @@ router.use('/:companyId', handleRoutePermissions(LOCAL_NAV), setCompaniesLocalNa
 
 router.get('/:companyId', redirectToFirstNavItem)
 router.get('/:companyId/details', renderDetails)
+router.get('/:companyId/business-details', renderBusinessDetails)
 router.get('/:companyId/advisers', renderAdvisers)
 
 router.get('/:companyId/hierarchies/ghq/search', getGlobalHQCompaniesCollection, renderAddGlobalHQ)
