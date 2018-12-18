@@ -18,3 +18,6 @@ Feature: Company business details
       | key                       | value                        |
       | Headquarter type          | company.headquarterType      |
       | Subsidiaries              | company.subsidiaries         |
+    And the DIT sector values are displayed
+      | value                     |
+      | Retail                    |
