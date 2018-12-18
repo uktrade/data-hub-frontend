@@ -92,6 +92,7 @@ const QUERY_FIELDS = [
 ]
 
 const NONE_TEXT = 'None'
+const NOT_SET_TEXT = 'Not set'
 
 module.exports = {
   GLOBAL_NAV_ITEM,
@@ -100,4 +101,5 @@ module.exports = {
   APP_PERMISSIONS,
   QUERY_FIELDS,
   NONE_TEXT,
+  NOT_SET_TEXT,
 }
