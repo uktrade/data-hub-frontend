@@ -91,10 +91,13 @@ const QUERY_FIELDS = [
   'headquarter_type',
 ]
 
+const NONE_TEXT = 'None'
+
 module.exports = {
   GLOBAL_NAV_ITEM,
   LOCAL_NAV,
   DEFAULT_COLLECTION_QUERY,
   APP_PERMISSIONS,
   QUERY_FIELDS,
+  NONE_TEXT,
 }

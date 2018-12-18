@@ -3,7 +3,6 @@ const { renderDetails } = require('~/src/apps/companies/controllers/details')
 const companiesHouseCompany = require('~/test/unit/data/companies/companies-house-company.json')
 const minimalCompany = require('~/test/unit/data/companies/minimal-company.json')
 const dunAndBradstreetCompany = require('~/test/unit/data/companies/dnb-company.json')
-const oneListGroupCoreTeam = require('~/test/unit/data/companies/one-list-group-core-team.json')
 const config = require('~/config')
 
 describe('Companies details controller', () => {
@@ -22,14 +21,6 @@ describe('Companies details controller', () => {
       breadcrumb: sinon.stub().returnsThis(),
       render: sinon.stub(),
     }
-
-    nock(config.apiRoot)
-      .get(`/v3/company/${minimalCompany.id}/one-list-group-core-team`)
-      .reply(200, [])
-
-    nock(config.apiRoot)
-      .get(`/v3/company/${dunAndBradstreetCompany.id}/one-list-group-core-team`)
-      .reply(200, oneListGroupCoreTeam)
   })
 
   describe('#renderDetails', () => {
