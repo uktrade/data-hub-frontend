@@ -21,3 +21,13 @@ Feature: Company business details
     And the DIT sector values are displayed
       | value                     |
       | Retail                    |
+    And address 1 should have badges
+      | value                     |
+      | Trading                   |
+      | Registered                |
+    And address 1 should be
+      | value                     |
+      | 12 St George's Road       |
+      | Paris                     |
+      | 75001                     |
+      | France                    |
