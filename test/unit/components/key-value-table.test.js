@@ -71,7 +71,7 @@ describe('Key/value table component', () => {
     expect(component.querySelector('td').innerHTML
       .trim()
       .replace(/\s+/g, ' '))
-      .to.equal(`<a aria-labelledby="${hintId}" href="${url}">${name}</a> <span id="${hintId}">${hint}</span>`)
+      .to.equal(`<a href="${url}" aria-labelledby="${hintId}">${name}</a> <span id="${hintId}">${hint}</span>`)
   })
 
   it('should render a table with an object with a name', () => {
@@ -154,5 +154,35 @@ describe('Key/value table component', () => {
     )
 
     expect(component.className).to.contain('table--custom-variant')
+  })
+
+  context('when the item data is an array', () => {
+    it('should add the items to the table', () => {
+      const component = renderComponentToDom(
+        'key-value-table',
+        {
+          items: {
+            'First label': [
+              'first',
+              {
+                url: 'url',
+                name: 'name',
+                newWindow: true,
+              },
+            ],
+          },
+        }
+      )
+
+      expect(component.className).to.contain('table--key-value')
+      const rows = component.querySelectorAll('tr')
+      expect(rows.length).to.equal(1)
+      expect(rows[0].querySelector('th').textContent).to.equal('First label')
+      expect(rows[0].querySelector('td').querySelector('li:nth-child(1)').textContent).to.equal('first')
+      expect(rows[0].querySelector('td').querySelector('li:nth-child(2)').innerHTML
+        .trim()
+        .replace(/\s+/g, ' '))
+        .to.equal(`<a href="url" target="_blank">name</a>`)
+    })
   })
 })
