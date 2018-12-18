@@ -5,7 +5,7 @@ const dnbCompanyMock = require('~/test/unit/data/companies/dnb-company.json')
 const { renderBusinessDetails } = require('~/src/apps/companies/controllers/business-details')
 
 describe('#renderBusinessDetails', () => {
-  context('when blah', () => {
+  context('when rendering the view', () => {
     beforeEach(async () => {
       this.middlewareParameters = buildMiddlewareParameters({
         company: dnbCompanyMock,
@@ -39,6 +39,10 @@ describe('#renderBusinessDetails', () => {
 
     it('set the known as details', () => {
       expect(this.middlewareParameters.resMock.render.firstCall.args[1].knownAsDetails).to.not.be.undefined
+    })
+
+    it('set the One List details', () => {
+      expect(this.middlewareParameters.resMock.render.firstCall.args[1].oneListDetails).to.not.be.undefined
     })
   })
 })
