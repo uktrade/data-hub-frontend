@@ -8,4 +8,16 @@
     {% component 'key-value-table', items=knownAsDetails %}
   </div>
 
+  {% if company.one_list_group_tier %}
+    <div class="section">
+      <h2 class="heading-medium">Global Account Manager – One List</h2>
+
+      {% component 'key-value-table', items=oneListDetails %}
+
+      <p>
+        <a href="advisers">See all advisers on the core team</a>
+      </p>
+    </div>
+  {% endif %}
+
 {% endblock %}
