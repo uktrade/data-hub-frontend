@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 const {
   transformCompanyToKnownAsView,
+  transformCompanyToOneListView,
 } = require('../transformers')
 
 async function renderBusinessDetails (req, res) {
@@ -12,6 +13,7 @@ async function renderBusinessDetails (req, res) {
     .render('companies/views/business-details', {
       heading: 'Business details',
       knownAsDetails: transformCompanyToKnownAsView(company),
+      oneListDetails: transformCompanyToOneListView(company),
     })
 }
 

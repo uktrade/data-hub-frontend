@@ -10,3 +10,7 @@ Feature: Company business details
     And the One List Corp is known as key value details are displayed
       | key                       | value                        |
       | Trading name              | company.tradingName          |
+    And the Global Account Manager – One List key value details are displayed
+      | key                       | value                        |
+      | One List tier             | company.oneListTier          |
+      | Global Account Manager    | company.globalAccountManager |
