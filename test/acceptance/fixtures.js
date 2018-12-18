@@ -69,6 +69,7 @@ module.exports = {
       primaryAddress: '12 St George\'s Road, Paris, 75001, France',
       businessType: 'Company',
       headquarterType: 'Global HQ',
+      subsidiaries: '1 subsidiary',
       sector: 'Retail',
       description: 'This is a dummy company for testing the One List',
       employeeRange: '500+',

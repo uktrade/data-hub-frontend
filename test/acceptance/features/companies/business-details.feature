@@ -14,3 +14,7 @@ Feature: Company business details
       | key                       | value                        |
       | One List tier             | company.oneListTier          |
       | Global Account Manager    | company.globalAccountManager |
+    And the Business hierarchy key value details are displayed
+      | key                       | value                        |
+      | Headquarter type          | company.headquarterType      |
+      | Subsidiaries              | company.subsidiaries         |
