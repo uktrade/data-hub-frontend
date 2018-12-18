@@ -1,6 +1,8 @@
 $images-dir: "/images/";
 
 @import "~govuk-frontend/all";
+
+$toolkit-font-stack: Arial, sans-serif;
 @import "_deprecated/trade-elements";
 
 @import "~vue-multiselect/dist/vue-multiselect.min.css";
