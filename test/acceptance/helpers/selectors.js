@@ -41,6 +41,21 @@ function getKeyValueTableRowValueCell (text) {
   )
 }
 
+/**
+ * Gets XPath selector for a table cell contain text
+ * @param text
+ * @returns {{selector: string, locateStrategy: string}}
+ */
+function getTableValueCell (text) {
+  return getSelectorForElementWithText(
+    text,
+    {
+      el: '//td',
+      hasExactText: true,
+    }
+  )
+}
+
 function getDataTableRowCell (text, index) {
   return getSelectorForElementWithText(
     text,
@@ -115,6 +130,7 @@ module.exports = {
   getSelectorForElementWithText,
   getButtonWithText,
   getKeyValueTableRowValueCell,
+  getTableValueCell,
   getDataTableRowCell,
   getMetaListItemValueSelector,
   getLinkWithText,
