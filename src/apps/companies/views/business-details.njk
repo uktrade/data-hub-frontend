@@ -80,4 +80,23 @@
     {% component 'key-value-table', items=additionalInformationDetails %}
   </div>
 
+  {% if archivedDocumentPath %}
+    <div class="section">
+      <h2 class="heading-medium">Documents from CDMS</h2>
+
+      <table class="table--key-value">
+        <tbody>
+        <tr>
+          <td>
+            <a href="{{ ARCHIVED_DOCUMENT_BASE_URL }}{{ archivedDocumentPath }}" aria-labelledby="external-link-label">
+              View files and documents
+            </a>
+            <span id="external-link-label">(will open another website)</span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
+
 {% endblock %}

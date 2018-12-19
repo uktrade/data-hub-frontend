@@ -36,3 +36,4 @@ Feature: Company business details
       | Annual turnover           | Not available                |
       | Number of employees       | Not available                |
       | Websites                  | Not available                |
+    And the Documents from CDMS key value details are not displayed

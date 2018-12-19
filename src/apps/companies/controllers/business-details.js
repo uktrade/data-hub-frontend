@@ -1,4 +1,6 @@
 /* eslint-disable camelcase */
+const { isEmpty } = require('lodash')
+
 const {
   transformCompanyToKnownAsView,
   transformCompanyToOneListView,
@@ -26,6 +28,7 @@ async function renderBusinessDetails (req, res) {
       sectorDetails: transformCompanyToSectorView(company),
       addressesDetails: transformCompanyToAddressesView(company),
       additionalInformationDetails: transformCompanyToAdditionalInformationView(company),
+      archivedDocumentPath: isEmpty(company.archived_documents_url_path) ? undefined : company.archived_documents_url_path,
     })
 }
 
