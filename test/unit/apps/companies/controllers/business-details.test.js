@@ -8,55 +8,92 @@ const { renderBusinessDetails } = require('~/src/apps/companies/controllers/busi
 
 describe('#renderBusinessDetails', () => {
   context('when rendering the view', () => {
-    beforeEach(async () => {
-      nock(config.apiRoot)
-        .get(`/v3/company?limit=10&offset=0&sortby=name&global_headquarters_id=${dnbCompanyMock.id}`)
-        .reply(200, subsidiariesMock)
+    const commonTests = () => {
+      it('should set the company breadcrumb', () => {
+        const expectedName = dnbCompanyMock.name
+        const expectedUrl = `/companies/${dnbCompanyMock.id}`
 
-      this.middlewareParameters = buildMiddlewareParameters({
-        company: dnbCompanyMock,
+        expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWithExactly(expectedName, expectedUrl)
       })
 
-      await renderBusinessDetails(
-        this.middlewareParameters.reqMock,
-        this.middlewareParameters.resMock,
-        this.middlewareParameters.nextSpy,
-      )
+      it('should set the business details breadcrumb', () => {
+        expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWithExactly('Business details')
+      })
+
+      it('should render the business details view', () => {
+        expect(this.middlewareParameters.resMock.render.firstCall.args[0]).to.equal('companies/views/business-details')
+      })
+
+      it('should set the heading', () => {
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].heading).to.equal('Business details')
+      })
+
+      it('set the known as details', () => {
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].knownAsDetails).to.not.be.undefined
+      })
+
+      it('set the One List details', () => {
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].oneListDetails).to.not.be.undefined
+      })
+
+      it('set the business hierarchy details', () => {
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].businessHierarchyDetails).to.not.be.undefined
+      })
+
+      it('set the addresses details', () => {
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].addressesDetails).to.not.be.undefined
+      })
+    }
+
+    context('when the company does not have archived documents', () => {
+      beforeEach(async () => {
+        nock(config.apiRoot)
+          .get(`/v3/company?limit=10&offset=0&sortby=name&global_headquarters_id=${dnbCompanyMock.id}`)
+          .reply(200, subsidiariesMock)
+
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: dnbCompanyMock,
+        })
+
+        await renderBusinessDetails(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
+      })
+
+      commonTests()
+
+      it('should not set the archived documents path', () => {
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].archivedDocumentPath).to.not.exist
+      })
     })
 
-    it('should set the company breadcrumb', () => {
-      const expectedName = dnbCompanyMock.name
-      const expectedUrl = `/companies/${dnbCompanyMock.id}`
+    context('when the company has archived documents', () => {
+      beforeEach(async () => {
+        nock(config.apiRoot)
+          .get(`/v3/company?limit=10&offset=0&sortby=name&global_headquarters_id=${dnbCompanyMock.id}`)
+          .reply(200, subsidiariesMock)
 
-      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWithExactly(expectedName, expectedUrl)
-    })
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: {
+            ...dnbCompanyMock,
+            archived_documents_url_path: 'archived',
+          },
+        })
 
-    it('should set the business details breadcrumb', () => {
-      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWithExactly('Business details')
-    })
+        await renderBusinessDetails(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
+      })
 
-    it('should render the business details view', () => {
-      expect(this.middlewareParameters.resMock.render.firstCall.args[0]).to.equal('companies/views/business-details')
-    })
+      commonTests()
 
-    it('should set the heading', () => {
-      expect(this.middlewareParameters.resMock.render.firstCall.args[1].heading).to.equal('Business details')
-    })
-
-    it('set the known as details', () => {
-      expect(this.middlewareParameters.resMock.render.firstCall.args[1].knownAsDetails).to.not.be.undefined
-    })
-
-    it('set the One List details', () => {
-      expect(this.middlewareParameters.resMock.render.firstCall.args[1].oneListDetails).to.not.be.undefined
-    })
-
-    it('set the business hierarchy details', () => {
-      expect(this.middlewareParameters.resMock.render.firstCall.args[1].businessHierarchyDetails).to.not.be.undefined
-    })
-
-    it('set the addresses details', () => {
-      expect(this.middlewareParameters.resMock.render.firstCall.args[1].addressesDetails).to.not.be.undefined
+      it('should not set the archived documents path', () => {
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].archivedDocumentPath).to.equal('archived')
+      })
     })
   })
 })
