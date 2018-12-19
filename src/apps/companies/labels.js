@@ -86,6 +86,11 @@ const coreTeamLabels = {
   adviser_on_core_team: 'Adviser on core team',
 }
 
+const knownAsLabels = {
+  trading_names: 'Trading names',
+  company_number: 'Companies House number',
+}
+
 const businessHierarchyLabels = {
   headquarter_type: 'Headquarter type',
   subsidiaries: 'Subsidiaries',
@@ -106,6 +111,7 @@ module.exports = {
   exportDetailsLabels,
   address,
   coreTeamLabels,
+  knownAsLabels,
   businessHierarchyLabels,
   additionalBusinessInformationLabels,
 }
