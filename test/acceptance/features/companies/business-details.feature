@@ -6,6 +6,7 @@ Feature: Company business details
 
     When I navigate to the `companies.business-details` page using `company` `One List Corp` fixture
     Then the heading should be "Business details"
+    And the "Where does information on this page come from?" details summary should be displayed
     And the Company summary key value details are not displayed
     And the One List Corp is known as key value details are displayed
       | key                       | value                        |
