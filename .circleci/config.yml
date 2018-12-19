@@ -127,9 +127,7 @@ aliases:
       AWS_DEFAULT_REGION: eu-west-2
       AWS_ACCESS_KEY_ID: foo
       AWS_SECRET_ACCESS_KEY: bar
-      CDMS_AUTH_URL: http://example.com
       DATABASE_URL: postgresql://postgres@postgres/datahub
-      DATAHUB_SECRET: secret
       DEBUG: 'False'
       DEFAULT_BUCKET: baz
       DJANGO_SECRET_KEY: topSecret
