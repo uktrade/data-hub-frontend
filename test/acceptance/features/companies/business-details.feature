@@ -21,6 +21,9 @@ Feature: Company business details
     And the DIT sector values are displayed
       | value                     |
       | Retail                    |
+    And the DIT region values are displayed
+      | value                     |
+      | Not set                   |
     And address 1 should have badges
       | value                     |
       | Trading                   |
