@@ -8,6 +8,7 @@ const transformCompanyToForm = require('./company-to-form')
 const transformCompanyToKnownAsView = require('./company-to-known-as-view')
 const transformCompanyToListItem = require('./company-to-list-item')
 const transformCompanyToOneListView = require('./company-to-one-list-view')
+const transformCompanyToRegionView = require('./company-to-region-view')
 const transformCompanyToSectorView = require('./company-to-sector-view')
 const transformCompanyToView = require('./company-to-view')
 const transformCompanyToSubsidiaryListItem = require('./company-to-subsidiary-list-item')
@@ -24,6 +25,7 @@ module.exports = {
   transformCompanyToKnownAsView,
   transformCompanyToListItem,
   transformCompanyToOneListView,
+  transformCompanyToRegionView,
   transformCompanyToSectorView,
   transformCompanyToSubsidiaryListItem,
   transformCompanyToView,
