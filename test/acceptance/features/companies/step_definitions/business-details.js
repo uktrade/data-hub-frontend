@@ -33,7 +33,7 @@ Then(/^address ([0-9]+) should have badges/, async function (addressNumber, data
 
     await BusinessDetailsPage
       .api.useXpath()
-      .waitForElementPresent(addressSelector.selector + badgeSelector.selector)
+      .waitForElementVisible(addressSelector.selector + badgeSelector.selector)
       .useCss()
   }
 })
@@ -46,7 +46,7 @@ Then(/^address ([0-9]+) should be/, async function (addressNumber, dataTable) {
 
     await BusinessDetailsPage
       .api.useXpath()
-      .waitForElementPresent(addressSelector.selector + addressLineSelector.selector)
+      .waitForElementVisible(addressSelector.selector + addressLineSelector.selector)
       .useCss()
   }
 })
