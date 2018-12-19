@@ -19,6 +19,16 @@
 
 {% block main_column %}
 
+  {% call HiddenContent({ summary: 'Where does information on this page come from?' }) %}
+    {% call Message({ type: 'muted' }) %}
+      The information on this page that cannot be edited comes from
+      <a href="https://www.dnb.co.uk/about-us/data-cloud.html" target="_blank">Dun & Bradstreet</a>.
+      This is an external and verified source. The information is automatically updated.
+      <a href="audit">View the audit history</a>.<br />
+      If you think the information is incomplete or incorrect, <a href="/support">get in touch using the support form</a>.
+    {% endcall %}
+  {% endcall %}
+
   <div class="section">
     <h2 class="heading-medium">{{ company.name }} is known as</h2>
 
