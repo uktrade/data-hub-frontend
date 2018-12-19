@@ -2,7 +2,12 @@ const { client } = require('nightwatch-cucumber')
 const { Then } = require('cucumber')
 const { get, includes, startsWith, keys } = require('lodash')
 
-const { getKeyValueTableRowValueCell, getTableValueCell, getDataTableRowCell } = require('../../helpers/selectors')
+const {
+  getKeyValueTableRowValueCell,
+  getTableValueCell,
+  getDataTableRowCell,
+  getSelectorForElementWithText,
+} = require('../../helpers/selectors')
 const formatters = require('../../helpers/formatters')
 
 const Details = client.page.details()
@@ -148,4 +153,17 @@ Then(/^the data details ([0-9]+) are displayed$/, async function (tableNumber, d
 
   await assertTableRowCount(tableSelector, dataTable.hashes())
   await assertTableContent.bind(this)(tableSelector, dataTable.hashes(), TABLE_TYPE.DATA)
+})
+
+Then(/^the "(.+)" details summary should be displayed$/, async (summary) => {
+  const detailsSummarySelector = getSelectorForElementWithText(summary, {
+    el: '//span',
+    className: 'details__summary',
+    hasExactText: true,
+  })
+
+  await Details
+    .api.useXpath()
+    .waitForElementVisible(detailsSummarySelector.selector)
+    .useCss()
 })
