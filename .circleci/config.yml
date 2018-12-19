@@ -134,6 +134,7 @@ aliases:
       DEFAULT_BUCKET: baz
       DJANGO_SECRET_KEY: topSecret
       DJANGO_SETTINGS_MODULE: config.settings.local
+      ENABLE_CELERY_ES_SYNC_OBJECT: 'True'
       ES_INDEX_PREFIX: test_index
       ES5_URL: http://localhost:9200
       POSTGRES_URL: tcp://postgres:5432
