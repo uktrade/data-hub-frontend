@@ -4,7 +4,10 @@ describe('#transformCompanyToKnownAsView', () => {
   context('when all information is populated', () => {
     beforeEach(() => {
       this.actual = transformCompanyToKnownAsView({
-        trading_name: 'trading name',
+        trading_names: [
+          'trading name 1',
+          'trading name 2',
+        ],
         companies_house_data: {
           company_number: '123456',
         },
@@ -12,7 +15,10 @@ describe('#transformCompanyToKnownAsView', () => {
     })
 
     it('should set the trading name', () => {
-      expect(this.actual['Trading name']).to.equal('trading name')
+      expect(this.actual['Trading names']).to.deep.equal([
+        'trading name 1',
+        'trading name 2',
+      ])
     })
 
     it('should set the Companies House number', () => {
@@ -36,7 +42,7 @@ describe('#transformCompanyToKnownAsView', () => {
     })
 
     it('should set the trading name to "None"', () => {
-      expect(this.actual['Trading name']).to.equal('None')
+      expect(this.actual['Trading names']).to.equal('None')
     })
 
     it('should not set the Companies House number', () => {

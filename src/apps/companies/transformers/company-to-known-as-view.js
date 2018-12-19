@@ -1,17 +1,17 @@
 /* eslint-disable camelcase */
 const { get, pickBy } = require('lodash')
 
-const { companyDetailsLabels } = require('../labels')
+const { knownAsLabels } = require('../labels')
 const { getDataLabels } = require('../../../lib/controller-utils')
 
 module.exports = ({
-  trading_name,
+  trading_names,
   companies_house_data,
 }) => {
   const company_number = get(companies_house_data, 'company_number')
 
   const viewRecord = {
-    trading_name: trading_name || 'None',
+    trading_names: trading_names && trading_names.length ? trading_names : 'None',
     company_number: company_number ? [
       company_number,
       {
@@ -24,5 +24,5 @@ module.exports = ({
     ] : null,
   }
 
-  return pickBy(getDataLabels(viewRecord, companyDetailsLabels))
+  return pickBy(getDataLabels(viewRecord, knownAsLabels))
 }
