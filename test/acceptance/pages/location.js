@@ -55,6 +55,14 @@ module.exports = {
               }
             )
           },
+          getBadge (text) {
+            return getSelectorForElementWithText(text,
+              {
+                el: '//span',
+                className: 'c-badge',
+              }
+            )
+          },
         },
       ],
       elements: {

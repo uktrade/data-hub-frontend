@@ -1,0 +1,124 @@
+{% extends "_layouts/full-column.njk" %}
+
+{% macro AddressCell(meta, address) %}
+  <td>
+    {{
+      MetaList({
+        items: meta,
+        modifier: 'stacked',
+        itemModifier: 'stacked'
+      })
+    }}
+    <ul>
+      {% for element in address %}
+        <li>{{ element }}</li>
+      {% endfor %}
+    </ul>
+  </td>
+{% endmacro %}
+
+{% block main_column %}
+
+  {% call HiddenContent({ summary: 'Where does information on this page come from?' }) %}
+    {% call Message({ type: 'muted' }) %}
+      The information on this page that cannot be edited comes from
+      <a href="https://www.dnb.co.uk/about-us/data-cloud.html" target="_blank">Dun & Bradstreet</a>.
+      This is an external and verified source. The information is automatically updated.
+      <a href="audit">View the audit history</a>.<br />
+      If you think the information is incomplete or incorrect, <a href="/support">get in touch using the support form</a>.
+    {% endcall %}
+  {% endcall %}
+
+  <div class="section">
+    <h2 class="heading-medium">{{ company.name }} is known as</h2>
+
+    {% component 'key-value-table', items=knownAsDetails %}
+  </div>
+
+  {% if company.one_list_group_tier %}
+    <div class="section">
+      <h2 class="heading-medium">Global Account Manager – One List</h2>
+
+      {% component 'key-value-table', items=oneListDetails %}
+
+      <p>
+        <a href="advisers">See all advisers on the core team</a>
+      </p>
+    </div>
+  {% endif %}
+
+  <div class="section">
+    <h2 class="heading-medium">Business hierarchy</h2>
+
+    {% component 'key-value-table', items=businessHierarchyDetails %}
+  </div>
+
+  <div class="section">
+    <h2 class="heading-medium">DIT sector</h2>
+
+    <table class="table--key-value">
+      <tbody>
+      {% for sector in sectorDetails %}
+        <tr>
+          <td>{{ sector }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2 class="heading-medium">DIT region</h2>
+
+    <table class="table--key-value">
+      <tbody>
+      <tr>
+        <td>{{ regionDetails }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2 class="heading-medium">Addresses</h2>
+
+    <table class="table--key-value">
+      <tbody>
+      <tr>
+        {% if addressesDetails.trading.address %}
+          {{ AddressCell(addressesDetails.trading.meta, addressesDetails.trading.address) }}
+        {% endif %}
+        {% if addressesDetails.registered.address %}
+          {{ AddressCell(addressesDetails.registered.meta, addressesDetails.registered.address) }}
+        {% endif %}
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2 class="heading-medium">Additional business information</h2>
+
+    {% component 'key-value-table', items=additionalInformationDetails %}
+  </div>
+
+  {% if archivedDocumentPath %}
+    <div class="section">
+      <h2 class="heading-medium">Documents from CDMS</h2>
+
+      <table class="table--key-value">
+        <tbody>
+        <tr>
+          <td>
+            <a href="{{ ARCHIVED_DOCUMENT_BASE_URL }}{{ archivedDocumentPath }}" aria-labelledby="external-link-label">
+              View files and documents
+            </a>
+            <span id="external-link-label">(will open another website)</span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
+
+{% endblock %}

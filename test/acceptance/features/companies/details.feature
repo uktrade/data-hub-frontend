@@ -6,11 +6,13 @@ Feature: Company details
 
     When I navigate to the `companies.details` page using `company` `One List Corp` fixture
     Then the heading should be "One List Corp"
+    And the heading should contain the "Global HQ" badge
     And after the heading should be "12 St George's Road, Paris, 75001, France"
     And the heading description should be
       | paragraph                                                                |
       | This is an account managed company (One List Tier A - Strategic Account) |
       | Global Account Manager: Travis Greene View core team                     |
+    And I should see the "View full business details" link
     And the Company summary key value details are not displayed
     And the Global headquarters summary key value details are displayed
       | key                       | value                        |

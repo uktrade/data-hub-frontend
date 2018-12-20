@@ -2,15 +2,15 @@ const { client } = require('nightwatch-cucumber')
 const { Then } = require('cucumber')
 const { get, includes, startsWith, keys } = require('lodash')
 
-const { getKeyValueTableRowValueCell, getDataTableRowCell } = require('../../helpers/selectors')
+const {
+  getKeyValueTableRowValueCell,
+  getTableValueCell,
+  getDataTableRowCell,
+  getSelectorForElementWithText,
+} = require('../../helpers/selectors')
 const formatters = require('../../helpers/formatters')
 
 const Details = client.page.details()
-
-const getRowCellSelector = {
-  'key-value': getKeyValueTableRowValueCell,
-  'data': getDataTableRowCell,
-}
 
 const ignoredKeys = [
   'Business type', // todo: case issues
@@ -18,8 +18,15 @@ const ignoredKeys = [
 ]
 
 const TABLE_TYPE = {
-  KEY_VALUE: 'key-value',
-  DATA: 'data',
+  KEY_VALUE: {
+    rowCellSelector: getKeyValueTableRowValueCell,
+  },
+  VALUE: {
+    rowCellSelector: getTableValueCell,
+  },
+  DATA: {
+    rowCellSelector: getDataTableRowCell,
+  },
 }
 
 function getExpected (key, state) {
@@ -59,11 +66,12 @@ const assertTableContent = async function (tableSelector, expectedData, tableTyp
     const rowFirstCellKey = columnKeys[0]
 
     for (const [columnIndex, columnKey] of columnKeys.entries()) {
-      if (includes(ignoredKeys, row[rowFirstCellKey]) || columnIndex === 0 || columnKey === 'formatter') {
+      const canIgnoreKeyColumn = tableType !== TABLE_TYPE.VALUE && columnIndex === 0
+      if (includes(ignoredKeys, row[rowFirstCellKey]) || canIgnoreKeyColumn || columnKey === 'formatter') {
         continue
       }
 
-      const rowCellSelector = getRowCellSelector[tableType](row[rowFirstCellKey], columnIndex)
+      const rowCellSelector = tableType.rowCellSelector(row[rowFirstCellKey], columnIndex)
       const tableRowCellXPathSelector = tableSelector.selector + rowCellSelector.selector
       const expected = getExpected(row[columnKey], this.state)
       await Details
@@ -104,8 +112,16 @@ Then(/^the (.+) key value details are displayed$/, async function (tableTitle, d
   const expectedKeyValues = removeFalsey(dataTable.hashes(), this.state)
   const tableSelector = Details.getSelectorForKeyValueTable(tableTitle)
 
-  await assertTableRowCount(tableSelector, expectedKeyValues, TABLE_TYPE.KEY_VALUE)
+  await assertTableRowCount(tableSelector, expectedKeyValues)
   await assertTableContent.bind(this)(tableSelector, expectedKeyValues, TABLE_TYPE.KEY_VALUE)
+})
+
+Then(/^the (.+) values are displayed$/, async function (tableTitle, dataTable) {
+  const expectedKeyValues = removeFalsey(dataTable.hashes(), this.state)
+  const tableSelector = Details.getSelectorForKeyValueTable(tableTitle)
+
+  await assertTableRowCount(tableSelector, expectedKeyValues)
+  await assertTableContent.bind(this)(tableSelector, expectedKeyValues, TABLE_TYPE.VALUE)
 })
 
 Then(/^the (.+) key value details are not displayed$/, async function (tableTitle) {
@@ -121,22 +137,33 @@ Then(/^the key value details are displayed$/, async function (dataTable) {
   const expectedKeyValues = removeFalsey(dataTable.hashes(), this.state)
   const tableSelector = Details.getSelectorForKeyValueTable()
 
-  await assertTableRowCount(tableSelector, expectedKeyValues, TABLE_TYPE.KEY_VALUE)
+  await assertTableRowCount(tableSelector, expectedKeyValues)
   await assertTableContent.bind(this)(tableSelector, expectedKeyValues, TABLE_TYPE.KEY_VALUE)
 })
 
 Then(/^the (.+) data details are displayed$/, async function (tableTitle, dataTable) {
   const tableSelector = Details.getSelectorForDataTable(tableTitle)
 
-  await assertTableRowCount(tableSelector, dataTable.hashes(), TABLE_TYPE.DATA)
+  await assertTableRowCount(tableSelector, dataTable.hashes())
   await assertTableContent.bind(this)(tableSelector, dataTable.hashes(), TABLE_TYPE.DATA)
 })
 
 Then(/^the data details ([0-9]+) are displayed$/, async function (tableNumber, dataTable) {
   const tableSelector = Details.getSelectorForDataTableNumber(tableNumber)
 
-  console.log(tableSelector)
-
-  await assertTableRowCount(tableSelector, dataTable.hashes(), TABLE_TYPE.DATA)
+  await assertTableRowCount(tableSelector, dataTable.hashes())
   await assertTableContent.bind(this)(tableSelector, dataTable.hashes(), TABLE_TYPE.DATA)
+})
+
+Then(/^the "(.+)" details summary should be displayed$/, async (summary) => {
+  const detailsSummarySelector = getSelectorForElementWithText(summary, {
+    el: '//span',
+    className: 'details__summary',
+    hasExactText: true,
+  })
+
+  await Details
+    .api.useXpath()
+    .waitForElementVisible(detailsSummarySelector.selector)
+    .useCss()
 })

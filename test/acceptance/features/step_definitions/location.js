@@ -102,6 +102,16 @@ Then(/^the heading should be "(.+)"$/, async (value) => {
     .assert.containsText('@header', value)
 })
 
+Then(/^the heading should contain the "(.+)" badge$/, async (badgeValue) => {
+  const badgeSelector = Location.section.localNav.getBadge(badgeValue)
+
+  await Location.section.localHeader
+    .api.useXpath()
+    .waitForElementPresent(badgeSelector.selector)
+    .assert.visible(badgeSelector.selector)
+    .useCss()
+})
+
 Then(/^the heading should contain what I entered for "(.+)" field$/, async function (fieldName) {
   await Location
     .section.localHeader
