@@ -1,12 +1,10 @@
-/* eslint-disable camelcase */
-const { compact, get } = require('lodash')
+const { investmentTypes } = require('~/src/apps/investment-projects/types')
 
-function getInvestmentTypeDetails (investment_type, fdi_type) {
-  const types = [
-    investment_type.name,
-    get(fdi_type, 'name'),
-  ]
-  return compact(types).join(', ')
+const getInvestmentTypeDetails = (investmentType, fdiType) => {
+  if (investmentType.name === investmentTypes.FDI) {
+    return `${investmentType.name}, ${fdiType.name}`
+  }
+  return investmentType.name
 }
 
 module.exports = {

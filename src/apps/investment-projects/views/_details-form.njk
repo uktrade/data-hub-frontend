@@ -58,21 +58,39 @@
     label: 'Type of investment',
     value: form.state.investment_type,
     error: form.errors.messages.investment_type,
-    options: form.options.investmentTypes
-  }) }}
-
-  {{ MultipleChoiceField({
-    name: 'fdi_type',
-    label: 'Type of foreign direct investment (FDI)',
-    error: form.errors.messages.fdi_type,
-    value: form.state.fdi_type,
-    options: form.options.fdi,
-    initialOption: '-- Select an FDI type --',
-    condition: {
-      name: 'investment_type',
-      value: form.options.investmentTypesObj.fdi.value
-    },
-    modifier: 'subfield'
+    options: [
+      {
+        value: form.options.investmentTypesObj.fdi.value,
+        label: form.options.investmentTypesObj.fdi.label,
+        hint: fdiHintLink | safe,
+        children:  [
+          {
+            macroName: 'MultipleChoiceField',
+            name: 'fdi_type',
+            label: 'Type of foreign direct investment (FDI)',
+            error: form.errors.messages['fdi_type'],
+            value: form.state['fdi_type'],
+            options: form.options.fdi,
+            initialOption: '-- Select an FDI type --',
+            condition: {
+              name: 'investment_type',
+              value: form.options.investmentTypesObj.fdi.value
+            },
+            modifier: 'subfield'
+          }
+        ]
+      },
+      {
+        value: form.options.investmentTypesObj.non_fdi.value,
+        label: form.options.investmentTypesObj.non_fdi.label,
+        hint: nonFdiHintLink | safe
+      },
+      {
+        value: form.options.investmentTypesObj.commitment_to_invest.value,
+        label: form.options.investmentTypesObj.commitment_to_invest.label,
+        hint: commitmentToInvest | safe
+      }
+    ]
   }) }}
 {% endif %}
 
