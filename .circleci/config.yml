@@ -3,6 +3,7 @@ aliases:
   - &node_version               node:8.11.3
   - &redis_version              redis:3.2.10
   - &postgres_version           postgres:9.6
+  - &mi_postgres_version        postgres:9.6
   - &elasticsearch_version      docker.elastic.co/elasticsearch/elasticsearch:6.3.2
   - &oauth2_dit_staff_token     ditStaffToken
   - &oauth2_da_staff_token      daStaffToken
@@ -114,6 +115,14 @@ aliases:
       POSTGRES_DB: datahub
       TZ: "/usr/share/zoneinfo/Europe/London"
 
+  # Data hub mi dashboard postgres container
+  - &docker_mi_postgres
+    image: *mi_postgres_version
+    name: mi-postgres
+    environment:
+      POSTGRES_DB: mi
+      TZ: "/usr/share/zoneinfo/Europe/London"
+
   # Mock SSO container used by Data hub frontend
   - &docker_mock_sso
     image: ukti/mock-sso
@@ -128,6 +137,7 @@ aliases:
       AWS_ACCESS_KEY_ID: foo
       AWS_SECRET_ACCESS_KEY: bar
       DATABASE_URL: postgresql://postgres@postgres/datahub
+      MI_DATABASE_URL: postgresql://postgres@mi-postgres/mi
       DEBUG: 'False'
       DEFAULT_BUCKET: baz
       DJANGO_SECRET_KEY: topSecret
@@ -136,6 +146,7 @@ aliases:
       ES_INDEX_PREFIX: test_index
       ES5_URL: http://localhost:9200
       POSTGRES_URL: tcp://postgres:5432
+      MI_POSTGRES_URL: tcp://mi-postgres:5432
       REDIS_BASE_URL: redis://localhost:6379
       REDIS_CACHE_DB: 5
       REDIS_CELERY_DB: 6
@@ -280,6 +291,7 @@ jobs:
       - *docker_redis
       - *docker_elasticsearch
       - *docker_postgres
+      - *docker_mi_postgres
       - *docker_mock_sso
       - *docker_data_hub_backend_api
       - *docker_data_hub_backend_celery
@@ -331,6 +343,7 @@ jobs:
       - *docker_redis
       - *docker_elasticsearch
       - *docker_postgres
+      - *docker_mi_postgres
       - *docker_mock_sso
       - *docker_data_hub_backend_api
       - *docker_data_hub_backend_celery
@@ -361,6 +374,7 @@ jobs:
       - *docker_redis
       - *docker_elasticsearch
       - *docker_postgres
+      - *docker_mi_postgres
       - *docker_mock_sso
       - *docker_data_hub_backend_api
       - *docker_data_hub_backend_celery
@@ -391,6 +405,7 @@ jobs:
       - *docker_redis
       - *docker_elasticsearch
       - *docker_postgres
+      - *docker_mi_postgres
       - *docker_mock_sso
       - *docker_data_hub_backend_api
       - *docker_data_hub_backend_celery
@@ -418,6 +433,7 @@ jobs:
       - *docker_redis
       - *docker_elasticsearch
       - *docker_postgres
+      - *docker_mi_postgres
       - *docker_mock_sso
       - <<: *docker_data_hub_backend_api
         image: ukti/data-hub-leeloo:master
@@ -435,6 +451,7 @@ jobs:
       - *docker_redis
       - *docker_elasticsearch
       - *docker_postgres
+      - *docker_mi_postgres
       - *docker_mock_sso
       - <<: *docker_data_hub_backend_api
         image: ukti/data-hub-leeloo:master
@@ -452,6 +469,7 @@ jobs:
       - *docker_redis
       - *docker_elasticsearch
       - *docker_postgres
+      - *docker_mi_postgres
       - *docker_mock_sso
       - <<: *docker_data_hub_backend_api
         image: ukti/data-hub-leeloo:master
@@ -469,6 +487,7 @@ jobs:
       - *docker_redis
       - *docker_elasticsearch
       - *docker_postgres
+      - *docker_mi_postgres
       - *docker_mock_sso
       - <<: *docker_data_hub_backend_api
         image: ukti/data-hub-leeloo:master
