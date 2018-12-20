@@ -28,6 +28,10 @@
       </div>
     {% endif %}
 
+    <p>
+      <a href="/companies/{{ company.id }}/business-details">View full business details</a>
+    </p>
+
     {% if company.archived %}
       {% call Message({ type: 'info' }) %}
         This company was archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br>

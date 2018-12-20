@@ -12,6 +12,7 @@ Feature: Company details
       | paragraph                                                                |
       | This is an account managed company (One List Tier A - Strategic Account) |
       | Global Account Manager: Travis Greene View core team                     |
+    And I should see the "View full business details" link
     And the Company summary key value details are not displayed
     And the Global headquarters summary key value details are displayed
       | key                       | value                        |
