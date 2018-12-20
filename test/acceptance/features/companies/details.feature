@@ -6,6 +6,7 @@ Feature: Company details
 
     When I navigate to the `companies.details` page using `company` `One List Corp` fixture
     Then the heading should be "One List Corp"
+    And the heading should contain the "Global HQ" badge
     And after the heading should be "12 St George's Road, Paris, 75001, France"
     And the heading description should be
       | paragraph                                                                |
