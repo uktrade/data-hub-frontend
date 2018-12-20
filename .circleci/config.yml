@@ -3,6 +3,7 @@ aliases:
   - &node_version               node:8.11.3
   - &redis_version              redis:3.2.10
   - &postgres_version           postgres:9.6
+  - &mi_postgres_version        postgres:9.6
   - &elasticsearch_version      docker.elastic.co/elasticsearch/elasticsearch:6.3.2
   - &oauth2_dit_staff_token     ditStaffToken
   - &oauth2_da_staff_token      daStaffToken
@@ -114,6 +115,14 @@ aliases:
       POSTGRES_DB: datahub
       TZ: "/usr/share/zoneinfo/Europe/London"
 
+  # Data hub mi dashboard postgres container
+  - &docker_mi_postgres
+    image: *mi_postgres_version
+    name: mi-postgres
+    environment:
+      POSTGRES_DB: mi
+      TZ: "/usr/share/zoneinfo/Europe/London"
+
   # Mock SSO container used by Data hub frontend
   - &docker_mock_sso
     image: ukti/mock-sso
@@ -121,29 +130,43 @@ aliases:
       - MOCK_SSO_SCOPE: 'data-hub:internal-front-end'
 
   # Data hub backend
-  - &docker_data_hub_backend
+  - &docker_data_hub_backend_base
     image: ukti/data-hub-leeloo
-    command: ./setup-uat.sh
     environment:
       AWS_DEFAULT_REGION: eu-west-2
       AWS_ACCESS_KEY_ID: foo
       AWS_SECRET_ACCESS_KEY: bar
-      CDMS_AUTH_URL: http://example.com
       DATABASE_URL: postgresql://postgres@postgres/datahub
-      DATAHUB_SECRET: secret
-      DEBUG: 'True'
+      MI_DATABASE_URL: postgresql://postgres@mi-postgres/mi
+      DEBUG: 'False'
       DEFAULT_BUCKET: baz
       DJANGO_SECRET_KEY: topSecret
       DJANGO_SETTINGS_MODULE: config.settings.local
+      ENABLE_CELERY_ES_SYNC_OBJECT: 'True'
       ES_INDEX_PREFIX: test_index
       ES5_URL: http://localhost:9200
       POSTGRES_URL: tcp://postgres:5432
+      MI_POSTGRES_URL: tcp://mi-postgres:5432
+      REDIS_BASE_URL: redis://localhost:6379
+      REDIS_CACHE_DB: 5
+      REDIS_CELERY_DB: 6
       SSO_ENABLED: 'True'
       RESOURCE_SERVER_INTROSPECTION_URL: http://localhost:8080/o/introspect  # required but not used as user with token has been created in backend setup script
       RESOURCE_SERVER_AUTH_TOKEN: sso-token
+      WEB_CONCURRENCY: 2
       ACTIVITY_STREAM_ACCESS_KEY_ID: some-id
       ACTIVITY_STREAM_SECRET_ACCESS_KEY: some-secret
       TZ: "/usr/share/zoneinfo/Europe/London"
+
+  - &docker_data_hub_backend_api
+    <<: *docker_data_hub_backend_base
+    command: ./setup-uat.sh
+
+  - &docker_data_hub_backend_celery
+    <<: *docker_data_hub_backend_base
+    # Note: By default Celery will default to the number of CPU cores, which can be a large number on CircleCI like 36
+    # which then ends up causing out-of-memory errors
+    command: celery worker -A config -l info -Q celery,long-running --concurrency 3
 
   # Non master branch Common workflow config
   - &common_at_workflow_config
@@ -268,8 +291,10 @@ jobs:
       - *docker_redis
       - *docker_elasticsearch
       - *docker_postgres
+      - *docker_mi_postgres
       - *docker_mock_sso
-      - *docker_data_hub_backend
+      - *docker_data_hub_backend_api
+      - *docker_data_hub_backend_celery
     parallelism: 6
     steps:
       - checkout
@@ -318,8 +343,10 @@ jobs:
       - *docker_redis
       - *docker_elasticsearch
       - *docker_postgres
+      - *docker_mi_postgres
       - *docker_mock_sso
-      - *docker_data_hub_backend
+      - *docker_data_hub_backend_api
+      - *docker_data_hub_backend_celery
     steps:
       - checkout
       - *wait_for_backend
@@ -347,8 +374,10 @@ jobs:
       - *docker_redis
       - *docker_elasticsearch
       - *docker_postgres
+      - *docker_mi_postgres
       - *docker_mock_sso
-      - *docker_data_hub_backend
+      - *docker_data_hub_backend_api
+      - *docker_data_hub_backend_celery
     steps:
       - checkout
       - *wait_for_backend
@@ -376,8 +405,10 @@ jobs:
       - *docker_redis
       - *docker_elasticsearch
       - *docker_postgres
+      - *docker_mi_postgres
       - *docker_mock_sso
-      - *docker_data_hub_backend
+      - *docker_data_hub_backend_api
+      - *docker_data_hub_backend_celery
     steps:
       - checkout
       - *wait_for_backend
@@ -402,8 +433,11 @@ jobs:
       - *docker_redis
       - *docker_elasticsearch
       - *docker_postgres
+      - *docker_mi_postgres
       - *docker_mock_sso
-      - <<: *docker_data_hub_backend
+      - <<: *docker_data_hub_backend_api
+        image: ukti/data-hub-leeloo:master
+      - <<: *docker_data_hub_backend_celery
         image: ukti/data-hub-leeloo:master
 
   # Run acceptance tests for LEP staff using the master version of the backend
@@ -417,8 +451,11 @@ jobs:
       - *docker_redis
       - *docker_elasticsearch
       - *docker_postgres
+      - *docker_mi_postgres
       - *docker_mock_sso
-      - <<: *docker_data_hub_backend
+      - <<: *docker_data_hub_backend_api
+        image: ukti/data-hub-leeloo:master
+      - <<: *docker_data_hub_backend_celery
         image: ukti/data-hub-leeloo:master
 
   # Run acceptance tests for DA staff using the master version of the backend
@@ -432,8 +469,11 @@ jobs:
       - *docker_redis
       - *docker_elasticsearch
       - *docker_postgres
+      - *docker_mi_postgres
       - *docker_mock_sso
-      - <<: *docker_data_hub_backend
+      - <<: *docker_data_hub_backend_api
+        image: ukti/data-hub-leeloo:master
+      - <<: *docker_data_hub_backend_celery
         image: ukti/data-hub-leeloo:master
 
   # Run acceptance tests for Policy staff using the master version of the backend
@@ -447,8 +487,11 @@ jobs:
       - *docker_redis
       - *docker_elasticsearch
       - *docker_postgres
+      - *docker_mi_postgres
       - *docker_mock_sso
-      - <<: *docker_data_hub_backend
+      - <<: *docker_data_hub_backend_api
+        image: ukti/data-hub-leeloo:master
+      - <<: *docker_data_hub_backend_celery
         image: ukti/data-hub-leeloo:master
 
 # CircleCi workflows

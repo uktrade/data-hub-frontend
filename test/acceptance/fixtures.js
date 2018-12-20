@@ -61,6 +61,7 @@ module.exports = {
     oneListCorp: {
       id: '375094ac-f79a-43e5-9c88-059a7caa17f0',
       name: 'One List Corp',
+      tradingName: 'None',
       address1: '12 St George\'s Road',
       town: 'Paris',
       postcode: '75001',
@@ -68,6 +69,7 @@ module.exports = {
       primaryAddress: '12 St George\'s Road, Paris, 75001, France',
       businessType: 'Company',
       headquarterType: 'Global HQ',
+      subsidiaries: '1 subsidiary',
       sector: 'Retail',
       description: 'This is a dummy company for testing the One List',
       employeeRange: '500+',

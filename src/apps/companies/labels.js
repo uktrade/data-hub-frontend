@@ -86,6 +86,22 @@ const coreTeamLabels = {
   adviser_on_core_team: 'Adviser on core team',
 }
 
+const knownAsLabels = {
+  trading_names: 'Trading names',
+  company_number: 'Companies House number',
+}
+
+const businessHierarchyLabels = {
+  headquarter_type: 'Headquarter type',
+  subsidiaries: 'Subsidiaries',
+}
+
+const additionalBusinessInformationLabels = {
+  turnover: 'Annual turnover',
+  number_of_employees: 'Number of employees',
+  websites: 'Websites',
+}
+
 module.exports = {
   companyDetailsLabels,
   chDetailsLabels,
@@ -95,4 +111,7 @@ module.exports = {
   exportDetailsLabels,
   address,
   coreTeamLabels,
+  knownAsLabels,
+  businessHierarchyLabels,
+  additionalBusinessInformationLabels,
 }

@@ -8,6 +8,14 @@
   %}
     <p class="c-local-header__heading-after">{{ headingAddress }}</p>
 
+    {% if company.headquarter_type and company.headquarter_type.name == 'ghq' %}
+      <div class="c-meta-list">
+        <div class="c-meta-list__item">
+          <span class="c-badge">Global HQ</span>
+        </div>
+      </div>
+    {% endif %}
+
     {% if company.one_list_group_tier %}
       <div class="c-local-header__description">
         <p>This is an account managed company (One List {{ company.one_list_group_tier.name }})</p>
@@ -19,6 +27,10 @@
         </p>
       </div>
     {% endif %}
+
+    <p>
+      <a href="/companies/{{ company.id }}/business-details">View full business details</a>
+    </p>
 
     {% if company.archived %}
       {% call Message({ type: 'info' }) %}
