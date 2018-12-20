@@ -36,11 +36,7 @@ async function populateForm (req, res, next) {
 
     const contacts = get(equityCompany, 'contacts', []).map(transformContactToOption)
 
-    const activeInvestmentTypes = await getOptions(token, 'investment-type', { createdOn })
-    const investmentTypes = activeInvestmentTypes.filter((investmentType) => {
-      return get(equityCompany, 'uk_based') || investmentType.label.toLowerCase().includes('fdi')
-    })
-
+    const investmentTypes = await getOptions(token, 'investment-type', { createdOn })
     const referralSourceActivities = await getOptions(token, 'referral-source-activity', { createdOn })
 
     const state = assign({}, {
