@@ -1,4 +1,4 @@
-const { investmentTypes } = require('~/src/apps/investment-projects/types')
+const { investmentTypes } = require('../types')
 
 const getInvestmentTypeDetails = (investmentType, fdiType) => {
   if (investmentType.name === investmentTypes.FDI) {
