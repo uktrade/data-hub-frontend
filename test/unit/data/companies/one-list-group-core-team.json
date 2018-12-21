@@ -27,10 +27,6 @@
       "last_name": "Collins",
       "dit_team": {
         "name": "Heart of the South West LEP",
-        "uk_region": {
-          "name": "South West",
-          "id": "894cd12a-6095-e211-a939-e4115bead28a"
-        },
         "country": {
           "name": "United Kingdom",
           "id": "80756b9a-5d95-e211-a939-e4115bead28a"
