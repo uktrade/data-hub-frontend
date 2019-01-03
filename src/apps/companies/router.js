@@ -1,7 +1,7 @@
 const router = require('express').Router()
 
 const { ENTITIES } = require('../search/constants')
-const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS, QUERY_FIELDS } = require('./constants')
+const { DEPRECATED_LOCAL_NAV, DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS, QUERY_FIELDS } = require('./constants')
 
 const { getRequestBody } = require('../../middleware/collection')
 const { getCollection, exportCollection } = require('../../modules/search/middleware/collection')
@@ -100,8 +100,7 @@ router
 router.post('/:companyId/archive', archiveCompany)
 router.get('/:companyId/unarchive', unarchiveCompany)
 
-router.use('/:companyId', handleRoutePermissions(LOCAL_NAV), setCompaniesLocalNav)
-
+router.use('/:companyId', handleRoutePermissions(DEPRECATED_LOCAL_NAV), setCompaniesLocalNav)
 router.get('/:companyId', redirectToFirstNavItem)
 router.get('/:companyId/details', renderDetails)
 router.get('/:companyId/business-details', renderBusinessDetails)
