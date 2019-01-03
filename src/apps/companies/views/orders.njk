@@ -1,6 +1,7 @@
 {% extends "./_layout-view.njk" %}
 
-{% block main_grid_right_column %}
+{% block main_column %}
+
   <h2 class="heading-medium">Orders (OMIS)</h2>
 
   {% if company.archived %}
@@ -26,4 +27,5 @@
       actionButtons: actionButtons
     }))
   }}
+
 {% endblock %}
