@@ -315,7 +315,7 @@ describe('#postDetails', () => {
 
     it('should not remove the journey from state', () => {
       const actual = this.req.session['multi-step']['/base/step-1']
-      expect(actual).to.not.be.undefined
+      expect(actual).to.exist
     })
 
     it('should call next', () => {
@@ -403,7 +403,7 @@ describe('#postDetails', () => {
 
     it('should not remove the journey from state', () => {
       const actual = this.req.session['multi-step']['/base/step-1']
-      expect(actual).to.not.be.undefined
+      expect(actual).to.exist
     })
 
     it('should call next with the error', () => {
