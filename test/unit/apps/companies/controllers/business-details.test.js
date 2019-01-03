@@ -29,19 +29,19 @@ describe('#renderBusinessDetails', () => {
       })
 
       it('set the known as details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].knownAsDetails).to.not.be.undefined
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].knownAsDetails).to.exist
       })
 
       it('set the One List details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].oneListDetails).to.not.be.undefined
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].oneListDetails).to.exist
       })
 
       it('set the business hierarchy details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].businessHierarchyDetails).to.not.be.undefined
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].businessHierarchyDetails).to.exist
       })
 
       it('set the addresses details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].addressesDetails).to.not.be.undefined
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].addressesDetails).to.exist
       })
     }
 
