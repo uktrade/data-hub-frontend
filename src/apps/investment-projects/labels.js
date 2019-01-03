@@ -33,6 +33,7 @@ const labels = {
       associated_non_fdi_r_and_d_project: 'Non-FDI R&D project',
       new_tech_to_uk: 'New-to-world tech',
       export_revenue: 'Export revenue',
+      likelihood_to_land: 'Likelihood to land',
     },
     edit: {
       government_assistance: 'Is this project receiving government financial assistance?',
@@ -45,6 +46,7 @@ const labels = {
       client_cannot_provide_total_investment: 'Can client provide total investment value?',
       client_cannot_provide_foreign_investment: 'Can client provide foreign equity investment value?',
       fdi_value: 'Project value',
+      likelihood_to_land: 'Likelihood to land',
     },
   },
   requirementsLabels: {
@@ -138,6 +140,7 @@ const labels = {
       status: 'Status',
       uk_region_location: 'UK Region',
       investor_company_country: 'Country of origin',
+      likelihood_to_land: 'Likelihood to land',
     },
   },
   clientRelationshipManagementLabels: {

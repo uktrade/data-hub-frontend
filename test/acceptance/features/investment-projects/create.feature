@@ -86,7 +86,7 @@ Feature: Create a new Investment project
     When I navigate to the `companies.investments` page using `company` `Venus Ltd` fixture
     And I click the "Add investment project" link
     Then I am taken to the "Add investment project" page
-    When I select Non FDI as the Investment project type
+    When I select Non-FDI as the Investment project type
     And I search for the foreign source of equity Lambda plc
     Then I can view the Equity Source in the collection
       | text               | expected                               |
@@ -96,6 +96,37 @@ Feature: Create a new Investment project
       | Country            | investmentProject.equitySource.country |
     Then I choose the first item in the collection
     When I populate the create Investment Project form
+    Then I see the success message
+    And the investment project local header is displayed
+      | key           | value            | formatter              |
+      | Status        | Ongoing - change |                        |
+      | Project code  |                  | isProjectCodeFormatter |
+      | Valuation     | Not yet valued   |                        |
+      | Created on    |                  | isRecentDateFormatter  |
+    And the Investment project summary key value details are displayed
+      | key                           | value                                         |
+      | Client                        | investmentProject.equitySource.name           |
+      | Type of investment            | investmentProject.type                        |
+      | Primary sector                | investmentProject.primarySector               |
+      | Business activity             | investmentProject.businessActivities          |
+      | Client contacts               | investmentProject.clientContact               |
+      | Project description           | investmentProject.description                 |
+      | Anonymised description        | investmentProject.anonymousDescription        |
+      | Estimated land date           | investmentProject.estimatedLandDate           |
+      | Actual land date              | investmentProject.actualLandDate              |
+      | New or existing investor      | investmentProject.investorType                |
+      | Level of involvement          | investmentProject.levelOfInvolvement          |
+      | Specific investment programme | investmentProject.specificInvestmentProgramme |
+
+  @investment-projects-create--cti
+  Scenario: Add a Commitment to Invest Investment project
+
+    When I navigate to the `companies.investments` page using `company` `Lambda plc` fixture
+    And I click the "Add investment project" link
+    Then I am taken to the "Add investment project" page
+    When I select Commitment to invest as the Investment project type
+    And I choose Yes for "Will this company be the source of foreign equity investment?"
+    And I populate the create Investment Project form
     Then I see the success message
     And the investment project local header is displayed
       | key           | value            | formatter              |

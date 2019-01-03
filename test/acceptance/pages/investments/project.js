@@ -76,6 +76,13 @@ module.exports = {
           .click('@nonFdi')
           .submitForm('form')
       },
+      selectCtiTypeOfInvestmentProject () {
+        this
+          .section.typeOfInvestment
+          .waitForElementPresent('@cti')
+          .click('@cti')
+          .submitForm('form')
+      },
       populateForm (callback) {
         const nextYear = getYear(addYears(Date.now(), 1))
         const projectForm = this.section.projectForm
@@ -195,6 +202,7 @@ module.exports = {
         fdi: 'label[for=field-investment_type-1]',
         fdiType: '#field-fdi_type',
         nonFdi: 'label[for=field-investment_type-2]',
+        cti: 'label[for=field-investment_type-3]',
       },
     },
     equitySource: {
