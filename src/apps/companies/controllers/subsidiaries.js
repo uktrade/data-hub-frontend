@@ -27,6 +27,7 @@ async function renderSubsidiaries (req, res, next) {
       .breadcrumb(company.name, `/companies/${company.id}`)
       .breadcrumb(companyDetailsLabels.subsidiaries)
       .render(view, {
+        heading: `Subsidiaries of ${company.name}`,
         subsidiaries: {
           ...subsidiaryCollection,
           actionButtons,
