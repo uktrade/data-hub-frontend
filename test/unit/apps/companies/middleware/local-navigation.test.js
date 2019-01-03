@@ -133,7 +133,12 @@ describe('Companies local navigation', () => {
 
   context('when the company advisers feature is enabled', () => {
     beforeEach(() => {
-      this.res.locals.company = {}
+      this.res.locals.company = {
+        one_list_group_tier: {
+          id: '4321',
+          name: 'Tier A - Strategic Account',
+        },
+      }
       this.res.locals.features = { 'companies-advisers': true }
 
       setCompaniesLocalNav(this.req, this.res, this.next)
