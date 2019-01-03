@@ -105,12 +105,6 @@ function getCompanySubsidiaries (token, companyId, page = 1) {
   })
 }
 
-function getCoreTeam (token, companyId) {
-  return authorisedRequest(token, {
-    url: `${config.apiRoot}/v3/company/${companyId}/core-team`,
-  })
-}
-
 function getOneListGroupCoreTeam (token, companyId) {
   return authorisedRequest(token, {
     url: `${config.apiRoot}/v3/company/${companyId}/one-list-group-core-team`,
@@ -127,6 +121,5 @@ module.exports = {
   getCompanyAuditLog,
   getCompanyTimeline,
   getCompanySubsidiaries,
-  getCoreTeam,
   getOneListGroupCoreTeam,
 }
