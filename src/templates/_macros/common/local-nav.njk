@@ -6,12 +6,10 @@
  #
  #}
 {% macro LocalNav(props) %}
-  {% set modifier = props.modifier | concat('') | reverse | join(' c-local-nav--') if props.modifier %}
-
-  {% if props|length %}
-    <nav class="c-local-nav {{ modifier }}" aria-label="local navigation">
+  {% if props %}
+    <nav class="{{ 'c-local-nav' | applyClassModifiers(props.modifier) }}" aria-label="local navigation">
       {% for item in props.items %}
-        <a class="c-local-nav__link {{ 'is-active' if item.isActive }}" href="{{item.url}}">{{ item.label }}</a>
+        <a class="{{ 'c-local-nav__link' | applyClassModifiers(props.modifier) }} {{ 'is-active' if item.isActive }}" href="{{item.url}}">{{ item.label }}</a>
       {% endfor %}
     </nav>
   {% endif %}
