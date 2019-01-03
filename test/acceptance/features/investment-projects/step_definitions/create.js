@@ -16,11 +16,16 @@ When(/^I select (.+) as the Investment project type$/, async function (investmen
       }, (investmentProject) => {
         set(this.state, 'investmentProject', assign({}, get(this.state, 'investmentProject'), investmentProject))
       })
-  } else {
+  } else if (lowerCase(investmentType) === 'non-fdi') {
     await InvestmentProject
       .selectNonFdiTypeOfInvestmentProject()
 
     set(this.state, 'investmentProject.type', 'Non-FDI')
+  } else {
+    await InvestmentProject
+      .selectCtiTypeOfInvestmentProject()
+
+    set(this.state, 'investmentProject.type', 'Commitment to invest')
   }
 })
 

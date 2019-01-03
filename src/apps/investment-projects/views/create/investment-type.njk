@@ -40,6 +40,10 @@
     <a href="/investment-projects/create/investment-type/info#non-fdi" target="info">Is this is a Non-FDI project?</a>
   {% endset %}
 
+  {% set commitmentToInvest %}
+    <a href="/investment-projects/create/investment-type/info#cti" target="info">Is this a Commitment to Invest project?</a>
+  {% endset %}
+
   {% call Form(form | assign({
     buttonText: 'Continue',
     hiddenFields: {
@@ -79,6 +83,11 @@
           value: form.options.investmentTypesObj.non_fdi.value,
           label: form.options.investmentTypesObj.non_fdi.label,
           hint: nonFdiHintLink | safe
+        },
+        {
+          value: form.options.investmentTypesObj.commitment_to_invest.value,
+          label: form.options.investmentTypesObj.commitment_to_invest.label,
+          hint: commitmentToInvest | safe
         }
       ]
     }) }}

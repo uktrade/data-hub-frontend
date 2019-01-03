@@ -75,6 +75,7 @@ const QUERY_FIELDS = [
   'proposal_deadline_before',
   'proposal_deadline_after',
   'client_relationship_manager',
+  'likelihood_to_land',
 ]
 
 const QUERY_DATE_FIELDS = [
@@ -82,6 +83,8 @@ const QUERY_DATE_FIELDS = [
   'estimated_land_date_after',
   'actual_land_date_before',
   'actual_land_date_after',
+  'client_relationship_manager',
+  'likelihood_to_land',
 ]
 
 module.exports = {
