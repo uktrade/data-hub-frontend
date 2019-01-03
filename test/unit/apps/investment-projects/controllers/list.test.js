@@ -59,11 +59,11 @@ describe('Investment list controller', () => {
       })
 
       it('should render the view with a sort form', () => {
-        expect(this.res.render.firstCall.args[1].sortForm).to.not.be.undefined
+        expect(this.res.render.firstCall.args[1].sortForm).to.exist
       })
 
       it('should render the view with selected filters', () => {
-        expect(this.res.render.firstCall.args[1].selectedFilters).to.not.be.undefined
+        expect(this.res.render.firstCall.args[1].selectedFilters).to.exist
       })
 
       it('should render the view with an export action', () => {
@@ -71,7 +71,7 @@ describe('Investment list controller', () => {
       })
 
       it('should render the view with filter fields', () => {
-        expect(this.res.render.firstCall.args[1].filtersFields).to.not.be.undefined
+        expect(this.res.render.firstCall.args[1].filtersFields).to.exist
       })
     })
 

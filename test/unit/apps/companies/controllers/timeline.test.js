@@ -14,7 +14,7 @@ describe('Company timeline controller', () => {
         it('return a transformed list of entries', () => {
           const timeline = this.middlewareParameters.resMock.render.args[0][1].timeline
 
-          expect(timeline).to.not.be.undefined
+          expect(timeline).to.exist
         })
 
         it('should set the breadcrumbs', () => {
