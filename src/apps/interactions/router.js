@@ -17,7 +17,6 @@ const {
 } = require('./middleware/collection')
 
 const { postDetails, getInteractionDetails } = require('./middleware/details')
-const { handlePolicyPermissions } = require('./middleware/policy-permissions')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
@@ -40,9 +39,9 @@ router.get('/export',
 
 router
   .route('/:interactionId/:kind/edit')
-  .post(handlePolicyPermissions('edit'), postDetails, renderEditPage)
-  .get(handlePolicyPermissions('edit'), renderEditPage)
+  .post(postDetails, renderEditPage)
+  .get(renderEditPage)
 
-router.get('/:interactionId', handlePolicyPermissions('view'), renderDetailsPage)
+router.get('/:interactionId', renderDetailsPage)
 
 module.exports = router

@@ -9,6 +9,8 @@ describe('#transformInteractionFormBodyToApiRequest', () => {
         date_day: '02',
         grant_amount_offered: '1000',
         net_company_receipt: '500',
+        policy_areas: '4444',
+        policy_issue_types: '5555',
       })
     })
 
@@ -22,6 +24,14 @@ describe('#transformInteractionFormBodyToApiRequest', () => {
 
     it('should set the net company receipt', () => {
       expect(this.transformed.net_company_receipt).to.equal('500')
+    })
+
+    it('converts policy areas to an array', () => {
+      expect(this.transformed.policy_areas).to.deep.equal(['4444'])
+    })
+
+    it('converts policy issue types to an array', () => {
+      expect(this.transformed.policy_issue_types).to.deep.equal(['5555'])
     })
   })
 
@@ -39,92 +49,6 @@ describe('#transformInteractionFormBodyToApiRequest', () => {
 
     it('should set the net company receipt to null', () => {
       expect(this.transformed.net_company_receipt).to.be.null
-    })
-  })
-
-  context('when posting a new policy feedback', () => {
-    beforeEach(() => {
-      this.transformed = transformInteractionFormBodyToApiRequest({
-        company: '0000',
-        kind: 'policy_feedback',
-        service: 'ba6c666e-4ccd-4fdc-8209-2ab9aec6748c',
-        contact: '1111',
-        dit_team: '2222',
-        policy_issue_type: '3333',
-        policy_areas: '4444',
-        policy_issue_types: ['4b9142df-0520-46bd-9da9-94147cdbae13'],
-        subject: 'sub',
-        notes: 'some notes',
-        date_year: '2018',
-        date_month: '01',
-        date_day: '02',
-        dit_adviser: '5555',
-        communication_channel: '6666',
-      })
-    })
-
-    it('should transform the form into the correct API format', () => {
-      expect(this.transformed).to.deep.equal({
-        company: '0000',
-        kind: 'policy_feedback',
-        service: 'ba6c666e-4ccd-4fdc-8209-2ab9aec6748c',
-        contact: '1111',
-        dit_team: '2222',
-        policy_issue_type: '3333',
-        policy_areas: ['4444'],
-        policy_issue_types: ['4b9142df-0520-46bd-9da9-94147cdbae13'],
-        subject: 'sub',
-        notes: 'some notes',
-        date: '2018-01-02',
-        dit_adviser: '5555',
-        communication_channel: '6666',
-        grant_amount_offered: null,
-        net_company_receipt: null,
-      })
-    })
-  })
-
-  context('when posting a policy feedback edit', () => {
-    beforeEach(() => {
-      this.transformed = transformInteractionFormBodyToApiRequest({
-        id: '101010',
-        company: '0000',
-        kind: 'policy_feedback',
-        service: 'ba6c666e-4ccd-4fdc-8209-2ab9aec6748c',
-        contact: '1111',
-        dit_team: '2222',
-        policy_issue_type: '3333',
-        policy_areas: '4444',
-        policy_issue_types: ['4b9142df-0520-46bd-9da9-94147cdbae13'],
-        subject: 'sub',
-        notes: 'some notes',
-        date_year: '2018',
-        date_month: '01',
-        date_day: '02',
-        dit_adviser: '5555',
-        communication_channel: '6666',
-      })
-    })
-
-    it('should transform the form into the correct API format', () => {
-      expect(this.transformed).to.deep.equal({
-        id: '101010',
-        company: '0000',
-        kind: 'policy_feedback',
-        service: 'ba6c666e-4ccd-4fdc-8209-2ab9aec6748c',
-        contact: '1111',
-        dit_team: '2222',
-        policy_issue_type: '3333',
-        policy_areas: ['4444'],
-        policy_issue_types: ['4b9142df-0520-46bd-9da9-94147cdbae13'],
-        subject: 'sub',
-        notes: 'some notes',
-        date: '2018-01-02',
-        dit_adviser: '5555',
-        communication_channel: '6666',
-        grant_amount_offered: null,
-        net_company_receipt: null,
-      })
     })
   })
 })
