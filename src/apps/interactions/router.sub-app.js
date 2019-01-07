@@ -4,7 +4,6 @@ const { renderEditPage } = require('./controllers/edit')
 const { renderDetailsPage } = require('./controllers/details')
 const { postCreate, renderCreate } = require('./controllers/create')
 const { renderInteractionsForEntity } = require('./controllers/list')
-const { handlePolicyPermissions } = require('./middleware/policy-permissions')
 const { postDetails, getInteractionDetails } = require('./middleware/details')
 const { getInteractionsRequestBody, getInteractionCollectionForEntity, getInteractionSortForm } = require('./middleware/collection')
 
@@ -20,7 +19,6 @@ router.get('/interactions',
 router
   .route('/interactions/create')
   .post(
-    handlePolicyPermissions('add'),
     postCreate,
     renderCreate,
   )
@@ -29,13 +27,13 @@ router
   )
 
 router.route('/interactions/create/:kind')
-  .post(handlePolicyPermissions('create'), postDetails, renderEditPage)
-  .get(handlePolicyPermissions('create'), renderEditPage)
+  .post(postDetails, renderEditPage)
+  .get(renderEditPage)
 
 router.route('/interactions/:interactionId/:kind/edit')
-  .post(handlePolicyPermissions('edit'), postDetails, renderEditPage)
-  .get(handlePolicyPermissions('edit'), renderEditPage)
+  .post(postDetails, renderEditPage)
+  .get(renderEditPage)
 
-router.get('/interactions/:interactionId', handlePolicyPermissions('view'), renderDetailsPage)
+router.get('/interactions/:interactionId', renderDetailsPage)
 
 module.exports = router
