@@ -19,7 +19,7 @@
   ],
   "results": [
     {
-      "trading_name": null,
+      "trading_names": [],
       "archived": false,
       "archived_by": null,
       "archived_on": null,
@@ -77,7 +77,7 @@
       "website": null
     },
     {
-      "trading_name": null,
+      "trading_names": [],
       "archived": false,
       "archived_by": null,
       "archived_on": null,
@@ -131,7 +131,7 @@
       "website": null
     },
     {
-      "trading_name": null,
+      "trading_names": [],
       "archived": false,
       "archived_by": null,
       "archived_on": null,

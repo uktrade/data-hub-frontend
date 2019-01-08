@@ -36,7 +36,7 @@ module.exports = function transformCompanyToView ({
   employee_range,
   turnover_range,
   headquarter_type,
-  trading_name,
+  trading_names,
   vat_number,
   reference_code,
   registered_address_1,
@@ -56,7 +56,7 @@ module.exports = function transformCompanyToView ({
   global_headquarters,
 }) {
   const viewRecord = {
-    trading_name,
+    trading_names: trading_names && trading_names.length ? trading_names : null,
     vat_number,
     reference_code,
     description,

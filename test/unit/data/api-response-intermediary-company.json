@@ -1,7 +1,7 @@
 {
     "id": "3f2b2a0f-0eb6-4299-8489-7390ccaa17f5",
     "name": "Fred",
-    "trading_name": "",
+    "trading_names": [],
     "companies_house_data": null,
     "interactions": [
         {
@@ -103,7 +103,7 @@
                 "registered_address_county": "Berkshire",
                 "registered_address_postcode": "SL4 4QR",
                 "company_number": null,
-                "trading_name": "",
+                "trading_names": [],
                 "lead": false,
                 "description": "",
                 "website": null,

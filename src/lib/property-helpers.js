@@ -70,7 +70,7 @@ function convertYesNoToBoolean (object) {
   for (const key of keys) {
     const value = convertedObject[key]
 
-    if (typeof value !== 'boolean') {
+    if (typeof value === 'string') {
       if (value.toLocaleLowerCase() === 'yes') {
         convertedObject[key] = true
       }

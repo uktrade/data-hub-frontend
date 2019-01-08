@@ -58,7 +58,7 @@
           "name": "Yemen"
         }
       ],
-      "trading_name": "",
+      "trading_names": [],
       "created_on": "2017-10-16T11:00:00+00:00",
       "modified_on": "2018-02-28T12:18:19.456245+00:00",
       "archived": false,
@@ -118,7 +118,7 @@
       "uk_based": false,
       "export_to_countries": [],
       "future_interest_countries": [],
-      "trading_name": "",
+      "trading_names": [],
       "created_on": "2018-02-28T15:14:56.924561+00:00",
       "modified_on": "2018-02-28T15:14:56.924599+00:00",
       "archived": false,

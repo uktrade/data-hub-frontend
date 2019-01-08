@@ -12,19 +12,13 @@ class ContactController extends CreateController {
   }
 
   setHeading (req, res, next) {
-    const company = get(res.locals, 'company')
-
-    if (company) {
-      const companyName = company.trading_name || company.name
-      req.form.options.heading = req.form.options.heading.replace('the company', companyName)
-    }
+    req.form.options.heading = req.form.options.heading.replace('the company', res.locals.company.name)
 
     next()
   }
 
   setContacts (req, res, next) {
     const company = get(res.locals, 'company')
-
     if (company) {
       const contacts = sortBy(company.contacts.map(transformContactToOption), 'label')
       req.form.options.fields.contact.options = contacts

@@ -24,7 +24,7 @@ module.exports = {
     foreignOrganisationOptionBusinessType: 'select[name="business_type_for_other"]',
     name: '#field-name',
     companyNumber: '#field-company_number',
-    tradingName: '#field-trading_name',
+    tradingName: '#field-trading_names',
     ukRegion: 'select[name="uk_region"]',
     address1: '#field-registered_address_1',
     address2: '#field-registered_address_2',
