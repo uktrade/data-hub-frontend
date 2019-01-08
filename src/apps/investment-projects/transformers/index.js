@@ -7,7 +7,7 @@ const { transformInvestmentValueForView } = require('./value')
 const {
   transformToApi,
   transformFromApi,
-  transformInvestmentDataForView,
+  transformInvestmentForView,
   transformBriefInvestmentSummary,
 } = require('./project')
 
@@ -24,7 +24,7 @@ const {
 } = require('./team')
 
 module.exports = {
-  transformInvestmentDataForView,
+  transformInvestmentForView,
   transformInvestmentValueForView,
   transformInvestmentRequirementsForView,
   transformInvestmentFDIForView,

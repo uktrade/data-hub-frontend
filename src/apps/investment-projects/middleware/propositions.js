@@ -6,7 +6,7 @@ function setPropositionsReturnUrl (req, res, next) {
 }
 
 function setPropositionsEntityName (req, res, next) {
-  res.locals.entityName = res.locals.investmentData.name
+  res.locals.entityName = res.locals.investment.name
   next()
 }
 

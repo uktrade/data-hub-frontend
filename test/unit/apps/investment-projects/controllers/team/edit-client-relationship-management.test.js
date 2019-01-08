@@ -22,7 +22,7 @@ describe('Investment project, client relationship management, edit controller', 
         },
       }, {
         locals: {
-          investmentData,
+          investment: investmentData,
         },
         breadcrumb: this.breadcrumbStub,
         render: (template) => {
@@ -50,7 +50,7 @@ describe('Investment project, client relationship management, edit controller', 
             form: {
               errors: {},
             },
-            investmentData,
+            investment: investmentData,
           },
           breadcrumb: this.breadcrumbStub,
           redirect: (url) => {

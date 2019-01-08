@@ -13,7 +13,7 @@ function formatAuditLog (logEntry) {
 
 async function getInvestmentAudit (req, res, next) {
   try {
-    if (get(res, 'locals.investmentData')) {
+    if (get(res, 'locals.investment')) {
       const rawAuditLog = await getInvestmentProjectAuditLog(req.session.token, req.params.investmentId)
       const auditLog = rawAuditLog.map(formatAuditLog)
 

@@ -3,7 +3,7 @@ const { getAdviser } = require('../../adviser/repos')
 
 function getBriefInvestmentSummary (req, res, next) {
   try {
-    res.locals.briefInvestmentSummaryData = transformBriefInvestmentSummary(res.locals.investmentData)
+    res.locals.briefInvestmentSummaryData = transformBriefInvestmentSummary(res.locals.investment)
     next()
   } catch (error) {
     next(error)
@@ -17,7 +17,7 @@ async function expandTeamMembers (req, res, next) {
     // as await cannot be used arrow functions
     const teamMembers = []
 
-    for (const teamMember of res.locals.investmentData.team_members) {
+    for (const teamMember of res.locals.investment.team_members) {
       const teamMemberAdvisor = await getAdviser(req.session.token, teamMember.adviser.id)
       teamMembers.push({
         adviser: teamMemberAdvisor,
@@ -25,7 +25,7 @@ async function expandTeamMembers (req, res, next) {
       })
     }
 
-    res.locals.investmentData.team_members = teamMembers
+    res.locals.investment.team_members = teamMembers
     next()
   } catch (error) {
     next(error)

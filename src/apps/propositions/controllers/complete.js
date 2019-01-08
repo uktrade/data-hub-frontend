@@ -5,17 +5,15 @@ const { buildFormWithStateAndErrors } = require('../../builders')
 const { completeForm } = require('../macros')
 
 function renderComplete (req, res) {
-  const proposition = get(res.locals, 'proposition')
-  const propositionId = get(res.locals, 'proposition.id')
-  const investment_project = get(res.locals, 'investmentData.id')
+  const { proposition, investment } = res.locals
 
   const selectCompleteForm = buildFormWithStateAndErrors(completeForm(
     assign({}, res.locals.options, res.locals.conditions, {
       returnLink: res.locals.returnLink,
       returnText: 'Cancel',
       hiddenFields: {
-        id: propositionId,
-        investment_project,
+        id: proposition.id,
+        investment_project: investment.id,
       },
     })),
   proposition,

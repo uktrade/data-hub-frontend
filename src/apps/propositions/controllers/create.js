@@ -27,13 +27,13 @@ function renderCreatePage (req, res) {
           buttonText: 'Add proposition',
           hiddenFields: {
             id: propositionId,
-            investment_project: get(res.locals, 'investmentData.id'),
+            investment_project: get(res.locals, 'investment.id'),
           },
         })),
       mergedPropositionData,
       get(res.locals, 'form.errors.messages'),
     )
-  const forEntityName = res.locals.investmentData.name ? ` for ${res.locals.investmentData.name}` : ''
+  const forEntityName = res.locals.investment.name ? ` for ${res.locals.investment.name}` : ''
   const kindName = 'proposition'
 
   res

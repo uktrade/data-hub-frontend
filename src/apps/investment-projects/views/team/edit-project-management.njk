@@ -1,8 +1,8 @@
 {% extends "../_layout.njk" %}
 
-{% set phase = investmentData.stage.name %}
-{% set crm = investmentData.client_relationship_manager %}
-{% set rsa = investmentData.referral_source_adviser %}
+{% set phase = investment.stage.name %}
+{% set crm = investment.client_relationship_manager %}
+{% set rsa = investment.referral_source_adviser %}
 
 {% block main_grid_right_column %}
   <h2 class="heading-medium">Assign project management</h2>

@@ -18,7 +18,7 @@ describe('Proposition upload controller', () => {
       locals: {
         retrurnText: 'Pisica',
         proposition: propositionData,
-        investmentData: {
+        investment: {
           id: 1,
         },
         features: {

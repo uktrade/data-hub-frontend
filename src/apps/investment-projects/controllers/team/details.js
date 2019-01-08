@@ -12,11 +12,11 @@ const {
 
 function getDetailsHandler (req, res, next) {
   try {
-    const investmentData = res.locals.investmentData
+    const { investment } = res.locals
 
-    const clientRelationshipManagementData = transformClientRelationshipManagementForView(investmentData)
-    const projectManagementData = transformProjectManagementForView(investmentData)
-    const teamMembersData = investmentData.team_members.map(transformTeamMembersForView)
+    const clientRelationshipManagementData = transformClientRelationshipManagementForView(investment)
+    const projectManagementData = transformProjectManagementForView(investment)
+    const teamMembersData = investment.team_members.map(transformTeamMembersForView)
 
     res
       .breadcrumb('Project team')
