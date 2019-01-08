@@ -1,4 +1,4 @@
-const { assign } = require('lodash')
+const { assign, find } = require('lodash')
 
 const companyData = require('~/test/unit/data/company')
 const transformCompanyToListItem = require('~/src/apps/companies/transformers/company-to-list-item')
@@ -273,6 +273,31 @@ describe('transformCompanyToListItem', () => {
           url: '/companies/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd',
         }])
       })
+    })
+  })
+
+  context('when the company does not have trading names', () => {
+    beforeEach(() => {
+      this.listItem = transformCompanyToListItem(companyData)
+    })
+
+    it('should not set a trading name meta item', () => {
+      const tradingNameMetaItem = find(this.listItem.meta, ({ label }) => label === 'Trading names')
+      expect(tradingNameMetaItem).to.not.exist
+    })
+  })
+
+  context('when the company does have trading names', () => {
+    beforeEach(() => {
+      this.listItem = transformCompanyToListItem({
+        ...companyData,
+        trading_names: [ 'trading name' ],
+      })
+    })
+
+    it('should not set a trading name meta item', () => {
+      const tradingNameMetaItem = find(this.listItem.meta, ({ label }) => label === 'Trading names')
+      expect(tradingNameMetaItem).to.exist
     })
   })
 })

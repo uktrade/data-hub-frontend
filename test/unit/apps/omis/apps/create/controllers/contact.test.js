@@ -67,20 +67,6 @@ describe('OMIS create contact controller', () => {
         expect(this.nextSpy).to.have.been.calledWith()
       })
     })
-
-    context('when a company doesn\'t exist', () => {
-      beforeEach(() => {
-        this.controller.setHeading(this.reqMock, this.resMock, this.nextSpy)
-      })
-
-      it('should use default heading', () => {
-        expect(this.reqMock.form.options.heading).to.equal('Client contact for the company')
-      })
-
-      it('should call next', () => {
-        expect(this.nextSpy).to.have.been.calledWith()
-      })
-    })
   })
 
   describe('setContacts()', () => {

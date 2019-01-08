@@ -52,11 +52,11 @@
       <input type="hidden" name="registered_address_country" value="{{ formData.registered_address_country }}">
 
       {{ TextField({
-        name: 'trading_name',
-        label: 'Trading name',
+        name: 'trading_names',
+        label: 'Trading names',
         optional: true,
-        value: formData.trading_name,
-        error: errors.trading_name
+        value: formData.trading_names,
+        error: errors.trading_names
       }) }}
     {% else %}
       {{ TextField({
@@ -76,11 +76,11 @@
       {% endif %}
 
       {{ TextField({
-        name: 'trading_name',
+        name: 'trading_names',
         label: 'Trading name',
         optional: true,
-        value: formData.trading_name,
-        error: errors.trading_name
+        value: formData.trading_names,
+        error: errors.trading_names
       }) }}
 
       <fieldset id="registered-address-wrapper" class="c-form-fieldset {{ 'lookup-address-js' if not isForeign }}">

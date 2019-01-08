@@ -66,15 +66,15 @@ Then(/^the company is in the search results$/, async function () {
 })
 
 Then(/^the company trading name is in the search results$/, async function () {
-  const companyName = get(this.state, 'company.tradingName')
+  const tradingName = get(this.state, 'company.tradingName')
 
   await client
     .url(dashboardPage)
 
   await Search
     .navigate()
-    .search(companyName)
+    .search(tradingName)
     .section.firstCompanySearchResult
-    .waitForElementPresent('@tradingName')
-    .assert.containsText('@tradingName', companyName)
+    .waitForElementPresent('@tradingNames')
+    .assert.containsText('@tradingNames', tradingName)
 })

@@ -15,7 +15,7 @@ Feature: Create a new company
       | key                       | value                      |
       | Business type             | company.businessType       |
       | Primary address           | company.primaryAddress     |
-      | Trading name              | company.tradingName        |
+      | Trading names             | company.tradingName        |
       | UK region                 | company.ukRegion           |
       | Headquarter type          | company.headquarterType    |
       | Global HQ                 | company.globalHeadquarters |
