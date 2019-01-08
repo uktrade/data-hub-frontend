@@ -58,40 +58,19 @@ describe('interaction list', () => {
   })
 
   context('#renderInteractionList', () => {
-    context('when the user is allowed to view policy feedback data', () => {
-      beforeEach(async () => {
-        this.req.session.user.permissions = ['interaction.view_policy_feedback_interaction']
-        await renderInteractionList(this.req, this.res, this.next)
-      })
-
-      it('should show the policy feedback filter', () => {
-        const options = this.res.render.firstCall.args[1]
-        const filterFields = options.filtersFields
-
-        const kindField = filterFields.find(field => field.name === 'kind')
-        expect(kindField.options).to.deep.equal([
-          { value: 'interaction', label: 'Interaction' },
-          { value: 'service_delivery', label: 'Service delivery' },
-          { value: 'policy_feedback', label: 'Policy feedback' },
-        ])
-      })
+    beforeEach(async () => {
+      await renderInteractionList(this.req, this.res, this.next)
     })
 
-    context('when the user is not allowed to view policy feedback data', () => {
-      beforeEach(async () => {
-        await renderInteractionList(this.req, this.res, this.next)
-      })
+    it('displays the kind filters', () => {
+      const options = this.res.render.firstCall.args[1]
+      const filterFields = options.filtersFields
 
-      it('should not show the policy feedback filter', () => {
-        const options = this.res.render.firstCall.args[1]
-        const filterFields = options.filtersFields
-
-        const kindField = filterFields.find(field => field.name === 'kind')
-        expect(kindField.options).to.deep.equal([
-          { value: 'interaction', label: 'Interaction' },
-          { value: 'service_delivery', label: 'Service delivery' },
-        ])
-      })
+      const kindField = filterFields.find(field => field.name === 'kind')
+      expect(kindField.options).to.deep.equal([
+        { value: 'interaction', label: 'Interaction' },
+        { value: 'service_delivery', label: 'Service delivery' },
+      ])
     })
   })
 

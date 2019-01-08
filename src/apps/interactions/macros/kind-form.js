@@ -1,9 +1,6 @@
-const { POLICY_FEEDBACK_PERMISSIONS } = require('../constants')
-
 module.exports = function ({
   returnLink,
   errors = [],
-  permissions = [],
 }) {
   const options = [
     {
@@ -16,14 +13,6 @@ module.exports = function ({
       hint: 'For example a significant assist or an event',
     },
   ]
-
-  if (permissions.includes(POLICY_FEEDBACK_PERMISSIONS.create)) {
-    options.push({
-      value: 'policy_feedback',
-      label: 'Capture policy feedback',
-      hint: 'For example, an issue or comment on government policy from a company',
-    })
-  }
 
   return {
     buttonText: 'Continue',

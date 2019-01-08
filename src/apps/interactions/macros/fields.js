@@ -23,14 +23,6 @@ module.exports = {
       options: services,
     }
   },
-  policyIssueType (types) {
-    return {
-      macroName: 'MultipleChoiceField',
-      name: 'policy_issue_type',
-      initialOption: '-- Select policy issue --',
-      options: types,
-    }
-  },
   policyAreas (areas) {
     return {
       macroName: 'AddAnother',
