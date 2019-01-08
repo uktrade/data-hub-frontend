@@ -28,14 +28,7 @@ const QUERY_DATE_FIELDS = [
 
 const APP_PERMISSIONS = [ GLOBAL_NAV_ITEM ]
 
-const POLICY_FEEDBACK_PERMISSIONS = {
-  view: 'interaction.view_policy_feedback_interaction',
-  edit: 'interaction.change_policy_feedback_interaction',
-  create: 'interaction.add_policy_feedback_interaction',
-}
-
 const INTERACTION_NAMES = {
-  policy_feedback: 'Policy feedback',
   interaction: 'Interaction',
   service_delivery: 'Service delivery',
 }
@@ -90,6 +83,5 @@ module.exports = {
   GLOBAL_NAV_ITEM,
   INTERACTION_NAMES,
   IST_ONLY_SERVICES,
-  POLICY_FEEDBACK_PERMISSIONS,
   SERVICE_DELIVERY_STATUS_COMPLETED,
 }

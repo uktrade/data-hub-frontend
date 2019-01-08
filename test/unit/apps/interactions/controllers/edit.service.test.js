@@ -88,10 +88,10 @@ describe('Interaction edit controller (Service delivery)', () => {
         },
         {
           id: 's5',
-          name: 'Policy feedback',
+          name: 'Unrelated context',
           disabled_on: null,
           contexts: [
-            'policy_feedback',
+            'unrelated_context',
           ],
         },
       ],
@@ -327,9 +327,9 @@ describe('Interaction edit controller (Service delivery)', () => {
       expect(dateField.value).to.have.property('day', now.format('DD'))
     })
 
-    it('should not include policy feedback as a service option', () => {
+    it('should not include unrelated contexts as a service option', () => {
       const serviceField = find(this.interactionForm.children, ({ name }) => name === 'service')
-      const policyFeedbackOption = find(serviceField.options, ({ label }) => label === 'Policy feedback')
+      const policyFeedbackOption = find(serviceField.options, ({ label }) => label === 'Unrelated context')
       expect(policyFeedbackOption).to.be.undefined
     })
 
@@ -576,9 +576,9 @@ describe('Interaction edit controller (Service delivery)', () => {
       expect(idField).to.equal('af4aac84-4d6a-47df-a733-5a54e3008c32')
     })
 
-    it('should not include policy feedback as a service option', () => {
+    it('should not include unrelated contexts as a service option', () => {
       const serviceField = find(this.interactionForm.children, ({ name }) => name === 'service')
-      const policyFeedbackOption = find(serviceField.options, ({ label }) => label === 'Policy feedback')
+      const policyFeedbackOption = find(serviceField.options, ({ label }) => label === 'Unrelated context')
       expect(policyFeedbackOption).to.be.undefined
     })
 

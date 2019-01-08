@@ -59,8 +59,7 @@
           "subject": "Attended gamma event",
           "notes": "This is a dummy service delivery for testing",
           "archived_documents_url_path": "/documents/123",
-          "policy_areas": [],
-          "policy_issue_type": null
+          "policy_areas": []
       }
   ]
 }
