@@ -18,8 +18,8 @@ function transformTeamMemberArrayToFields (teamMemberArray, advisers) {
   return teamMemberArray.map((teamMember) => getTeamMemberField({ teamMember, advisers }))
 }
 
-function transformInvestmentTeamMemberstoTeamMemberArray (investmentData = {}) {
-  const teamMembers = investmentData.team_members || []
+function transformInvestmentTeamMemberstoTeamMemberArray (investment = {}) {
+  const teamMembers = investment.team_members || []
 
   const teamMemberArray = teamMembers.map((teamMember) => {
     return {
@@ -74,7 +74,7 @@ async function populateTeamEditForm (req, res, next) {
 
     const { results: advisers } = await getAdvisers(token)
 
-    const teamMembers = transformInvestmentTeamMemberstoTeamMemberArray(res.locals.investmentData)
+    const teamMembers = transformInvestmentTeamMemberstoTeamMemberArray(res.locals.investment)
 
     const fields = transformTeamMemberArrayToFields(teamMembers, advisers)
     fields.push(getTeamMemberField({ advisers }))

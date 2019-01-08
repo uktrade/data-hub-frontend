@@ -92,7 +92,7 @@ describe('Investment form middleware - investment value', () => {
 
     context('when called for an investment created in the past', () => {
       beforeEach(async () => {
-        this.resMock.locals.investmentData = {
+        this.resMock.locals.investment = {
           id: '1234',
           created_on: lastMonth,
         }
@@ -136,7 +136,7 @@ describe('Investment form middleware - investment value', () => {
     context('when called after a previous post failed', () => {
       beforeEach(async () => {
         this.resMock.locals = {
-          investmentData: {
+          investment: {
             id: '1234',
             created_on: lastMonth,
             name: 'original name',

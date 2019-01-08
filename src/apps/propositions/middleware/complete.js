@@ -39,8 +39,8 @@ async function postComplete (req, res, next) {
 async function getPropositionDetails (req, res, next, propositionId) {
   try {
     const token = req.session.token
-    const investmentId = get(res.locals, 'investmentData.id')
-    res.locals.proposition = await fetchProposition(token, propositionId, investmentId)
+    const { investment } = res.locals
+    res.locals.proposition = await fetchProposition(token, propositionId, investment.id)
 
     next()
   } catch (err) {

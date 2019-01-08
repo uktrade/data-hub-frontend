@@ -7,7 +7,7 @@ const { abandonForm } = require('../macros')
 function renderAbandon (req, res) {
   const proposition = get(res.locals, 'proposition')
   const propositionId = get(res.locals, 'proposition.id')
-  const investment_project = get(res.locals, 'investmentData.id')
+  const investment_project = get(res.locals, 'investment.id')
 
   const selectAbandonForm = buildFormWithStateAndErrors(abandonForm(
     assign({}, res.locals.options, res.locals.conditions, {

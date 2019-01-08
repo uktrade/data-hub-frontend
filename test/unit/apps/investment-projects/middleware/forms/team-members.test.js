@@ -21,7 +21,7 @@ describe('Investment form middleware - team members', () => {
 
     this.resMock = {
       locals: {
-        investmentData,
+        investment: investmentData,
       },
       redirect: sinon.stub(),
     }
@@ -45,7 +45,7 @@ describe('Investment form middleware - team members', () => {
 
     context('when the investment project contains team members', () => {
       beforeEach(async () => {
-        this.resMock.locals.investmentData = assign({}, this.resMock.locals.investmentData, {
+        this.resMock.locals.investment = assign({}, this.resMock.locals.investment, {
           team_members: [{
             adviser: { id: '4', name: 'Fred Smith' },
             role: 'Manager',
@@ -116,7 +116,7 @@ describe('Investment form middleware - team members', () => {
 
     context('when the investment project contains no team member data', () => {
       beforeEach(async () => {
-        this.resMock.locals.investmentData = assign({}, this.resMock.locals.investmentData, {
+        this.resMock.locals.investment = assign({}, this.resMock.locals.investment, {
           team_members: [],
         })
 

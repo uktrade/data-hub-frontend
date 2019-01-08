@@ -82,13 +82,13 @@ describe('Investment shared middleware', () => {
           uk_company: companyData,
         })
 
-        expect(this.resMock.locals.investmentData).to.deep.equal(expectedInvestmentData)
+        expect(this.resMock.locals.investment).to.deep.equal(expectedInvestmentData)
       })
       it('should set investment data uk company on locals', () => {
-        expect(this.resMock.locals.investmentData.uk_company).to.deep.equal(companyData)
+        expect(this.resMock.locals.investment.uk_company).to.deep.equal(companyData)
       })
       it('should set investment data client relationship manager on locals', () => {
-        expect(this.resMock.locals.investmentData.client_relationship_manager).to.deep.equal(adviserData)
+        expect(this.resMock.locals.investment.client_relationship_manager).to.deep.equal(adviserData)
       })
       it('should set equity company on locals', () => {
         const expectedEquityCompany = merge({}, investmentData.investor_company, {
@@ -178,10 +178,10 @@ describe('Investment shared middleware', () => {
           },
         })
 
-        expect(this.resMock.locals.investmentData).to.deep.equal(expectedInvestmentData)
+        expect(this.resMock.locals.investment).to.deep.equal(expectedInvestmentData)
       })
       it('should not set investment data uk company on locals', () => {
-        expect(this.resMock.locals.investmentData.uk_company.id).to.be.null
+        expect(this.resMock.locals.investment.uk_company.id).to.be.null
       })
       it('should call next once', () => {
         expect(this.nextSpy).to.have.been.calledOnce
@@ -209,10 +209,10 @@ describe('Investment shared middleware', () => {
           uk_company: companyData,
         })
 
-        expect(this.resMock.locals.investmentData).to.deep.equal(expectedInvestmentData)
+        expect(this.resMock.locals.investment).to.deep.equal(expectedInvestmentData)
       })
       it('should not set investment data client relationship manager on locals', () => {
-        expect(this.resMock.locals.investmentData.client_relationship_manager.id).to.be.null
+        expect(this.resMock.locals.investment.client_relationship_manager.id).to.be.null
       })
       it('should call next once', () => {
         expect(this.nextSpy).to.have.been.calledOnce

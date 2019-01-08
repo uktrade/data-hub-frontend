@@ -31,7 +31,7 @@ describe('Investment project, project management team, edit controller', () => {
     it('should render edit project management view', async () => {
       await this.controller.getHandler(this.reqMock, assign({}, this.resMock, {
         locals: {
-          investmentData,
+          investment: investmentData,
         },
       }), this.nextStub)
 
@@ -43,8 +43,8 @@ describe('Investment project, project management team, edit controller', () => {
 
       await this.controller.getHandler(this.reqMock, assign({}, this.resMock, {
         locals: {
-          investmentData,
           briefInvestmentSummaryData,
+          investment: investmentData,
         },
       }), this.nextStub)
 
@@ -60,7 +60,7 @@ describe('Investment project, project management team, edit controller', () => {
             form: {
               errors: {},
             },
-            investmentData,
+            investment: investmentData,
           },
         }), this.nextStub)
 

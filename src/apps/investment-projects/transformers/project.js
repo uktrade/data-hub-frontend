@@ -108,7 +108,7 @@ function transformFromApi (body) {
   return assign({}, body, formatted)
 }
 
-function transformInvestmentDataForView ({
+function transformInvestmentForView ({
   business_activities,
   other_business_activity,
   investment_type,
@@ -182,6 +182,6 @@ function transformBriefInvestmentSummary (data) {
 module.exports = {
   transformToApi,
   transformFromApi,
-  transformInvestmentDataForView,
+  transformInvestmentForView,
   transformBriefInvestmentSummary,
 }

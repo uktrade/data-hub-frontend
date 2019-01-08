@@ -17,7 +17,7 @@ describe('Investment project, team members, edit controller', () => {
         },
       }, {
         locals: {
-          investmentData,
+          investment: investmentData,
         },
         breadcrumb: this.breadcrumbStub,
         render: (template) => {

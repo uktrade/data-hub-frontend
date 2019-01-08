@@ -30,7 +30,7 @@ describe('Investment team details controller', () => {
     const data = Object.assign({}, investmentData)
     this.controller.getDetailsHandler(this.reqStub, {
       locals: {
-        investmentData: data,
+        investment: data,
       },
       breadcrumb: this.breadcrumbStub,
       render: (template, options) => {
@@ -47,7 +47,7 @@ describe('Investment team details controller', () => {
     const data = Object.assign({}, investmentData)
     this.controller.getDetailsHandler(this.reqStub, {
       locals: {
-        investmentData: data,
+        investment: data,
       },
       breadcrumb: this.breadcrumbStub,
       render: (template, options) => {
@@ -68,7 +68,7 @@ describe('Investment team details controller', () => {
 
     this.controller.getDetailsHandler(this.reqStub, {
       locals: {
-        investmentData: data,
+        investment: data,
       },
       breadcrumb: this.breadcrumbStub,
       render: (template, options) => {
@@ -83,7 +83,7 @@ describe('Investment team details controller', () => {
   it('should return labels for the project management table', (done) => {
     this.controller.getDetailsHandler(this.reqStub, {
       locals: {
-        investmentData: Object.assign({}, investmentData),
+        investment: Object.assign({}, investmentData),
       },
       breadcrumb: this.breadcrumbStub,
       render: (template, options) => {
@@ -96,7 +96,7 @@ describe('Investment team details controller', () => {
   it('should return labels for the client relationship management table', (done) => {
     this.controller.getDetailsHandler(this.reqStub, {
       locals: {
-        investmentData: Object.assign({}, investmentData),
+        investment: Object.assign({}, investmentData),
       },
       breadcrumb: this.breadcrumbStub,
       render: (template, options) => {
@@ -109,7 +109,7 @@ describe('Investment team details controller', () => {
   it('should use the correct template to render', (done) => {
     this.controller.getDetailsHandler(this.reqStub, {
       locals: {
-        investmentData: Object.assign({}, investmentData),
+        investment: Object.assign({}, investmentData),
       },
       breadcrumb: this.breadcrumbStub,
       render: (template, options) => {

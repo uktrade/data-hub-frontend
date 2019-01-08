@@ -16,7 +16,7 @@ async function getHiddenFields (req, res, interactionId) {
   const hiddenFields = {
     id: interactionId,
     company: get(res.locals, 'company.id'),
-    investment_project: get(res.locals, 'investmentData.id'),
+    investment_project: get(res.locals, 'investment.id'),
     kind: snakeCase(req.params.kind),
   }
 

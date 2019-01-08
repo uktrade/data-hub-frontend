@@ -25,8 +25,8 @@ async function populateForm (req, res, next) {
   }
 
   try {
-    const investmentData = transformFromApi(res.locals.investmentData)
-    const createdOn = get(investmentData, 'created_on')
+    const investment = transformFromApi(res.locals.investment)
+    const createdOn = get(investment, 'created_on')
     const token = req.session.token
 
     const {
@@ -42,18 +42,18 @@ async function populateForm (req, res, next) {
     const state = assign({}, {
       client_contacts: [''],
       business_activities: [''],
-    }, investmentData)
+    }, investment)
 
     const advisersResponse = await getAdvisers(token)
 
     const clientRelationshipManagers = filterActiveAdvisers({
       advisers: advisersResponse.results,
-      includeAdviser: get(investmentData, 'client_relationship_manager'),
+      includeAdviser: get(investment, 'client_relationship_manager'),
     }).map(transformObjectToOption)
 
     const referralSourceAdvisers = filterActiveAdvisers({
       advisers: advisersResponse.results,
-      includeAdviser: get(investmentData, 'referral_source_adviser'),
+      includeAdviser: get(investment, 'referral_source_adviser'),
     }).map(transformObjectToOption)
 
     res.locals.clientCompanyId = clientCompanyId || equityCompanyId
@@ -81,18 +81,18 @@ async function populateForm (req, res, next) {
       },
     })
 
-    if (investmentData) {
+    if (investment) {
       // TODO: This is to support the leading question of whether current
       // user is the CRM or adviser - this journey will be changed in the
       // future but until then this supports the settings of that data
-      if (investmentData.client_relationship_manager === req.session.user.id) {
-        res.locals.form.state.is_relationship_manager = investmentData.client_relationship_manager
+      if (investment.client_relationship_manager === req.session.user.id) {
+        res.locals.form.state.is_relationship_manager = investment.client_relationship_manager
       } else {
         res.locals.form.state.is_relationship_manager = 'false'
       }
 
-      if (investmentData.referral_source_adviser === req.session.user.id) {
-        res.locals.form.state.is_referral_source = investmentData.referral_source_adviser
+      if (investment.referral_source_adviser === req.session.user.id) {
+        res.locals.form.state.is_referral_source = investment.referral_source_adviser
       } else {
         res.locals.form.state.is_referral_source = 'false'
       }
