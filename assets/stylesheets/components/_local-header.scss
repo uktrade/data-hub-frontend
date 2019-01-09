@@ -34,10 +34,6 @@ $_first-element-spacing: $default-spacing-unit * 3;
   .c-breadcrumb {
     margin-top: $default-spacing-unit / 2;
 
-    & + * {
-      margin-top: $_first-element-spacing;
-    }
-
     & + .grid-row {
       .c-entity-search {
         margin-top: 0;
