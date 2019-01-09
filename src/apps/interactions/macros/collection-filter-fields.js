@@ -72,6 +72,15 @@ module.exports = function ({
       modifier: 'option-select',
       options: sectorOptions,
     },
+    {
+      macroName: 'MultipleChoiceField',
+      name: 'was_policy_feedback_provided',
+      type: 'checkbox',
+      modifier: 'option-select',
+      options: [
+        { value: 'true', label: 'Includes policy feedback' },
+      ],
+    },
   ].map(filter => {
     return {
       ...filter,

@@ -49,6 +49,7 @@ const filters = {
   dit_team: 'Teams',
   sector_descends: 'Sector',
   service: 'Service',
+  was_policy_feedback_provided: 'Policy feedback',
 }
 
 module.exports = {
