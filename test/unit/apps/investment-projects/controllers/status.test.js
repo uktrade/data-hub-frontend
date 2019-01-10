@@ -27,7 +27,7 @@ describe('investment status controller', () => {
       render: sinon.spy(),
       redirect: sinon.spy(),
       locals: {
-        investmentData: {
+        investment: {
           id: '111',
           status: 'open',
         },
@@ -41,7 +41,7 @@ describe('investment status controller', () => {
     context('when rendering a form for first time', () => {
       beforeEach(async () => {
         this.status = 'open'
-        this.res.locals.investmentData.status = this.status
+        this.res.locals.investment.status = this.status
         await this.controller.renderStatusPage(this.req, this.res, this.next)
       })
 

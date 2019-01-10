@@ -27,7 +27,7 @@ describe('Create proposition', () => {
       render: sinon.spy(),
       locals: {
         returnLink: '/return/',
-        investmentData: {
+        investment: {
           name: 'Bassanio wooing Portia',
         },
       },

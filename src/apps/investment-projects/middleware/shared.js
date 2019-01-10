@@ -39,60 +39,60 @@ async function getInvestmentDetails (req, res, next) {
     return next()
   }
   try {
-    const investmentData = await getInvestment(req.session.token, investmentId)
-    const investorCompany = await getDitCompany(req.session.token, get(investmentData, 'investor_company.id'))
-    const ukCompanyId = get(investmentData, 'uk_company.id')
-    const clientRelationshipManagerId = get(investmentData, 'client_relationship_manager.id')
-    const stageName = investmentData.stage.name
+    const investment = await getInvestment(req.session.token, investmentId)
+    const investorCompany = await getDitCompany(req.session.token, get(investment, 'investor_company.id'))
+    const ukCompanyId = get(investment, 'uk_company.id')
+    const clientRelationshipManagerId = get(investment, 'client_relationship_manager.id')
+    const stageName = investment.stage.name
     const investmentProjectStages = getInvestmentProjectStages(res.locals.features)
 
-    investmentData.investor_company = Object.assign({}, investmentData.investor_company, investorCompany)
+    investment.investor_company = Object.assign({}, investment.investor_company, investorCompany)
 
     if (ukCompanyId) {
       const companyDetails = await getDitCompany(req.session.token, ukCompanyId)
-      investmentData.uk_company = Object.assign({}, investmentData.uk_company, companyDetails)
+      investment.uk_company = Object.assign({}, investment.uk_company, companyDetails)
     }
 
     if (clientRelationshipManagerId) {
       const clientRelationshipManager = await getAdviser(req.session.token, clientRelationshipManagerId)
-      investmentData.client_relationship_manager = clientRelationshipManager
+      investment.client_relationship_manager = clientRelationshipManager
     }
 
-    res.locals.investmentData = investmentData
-    res.locals.equityCompany = investmentData.investor_company
+    res.locals.investment = investment
+    res.locals.equityCompany = investment.investor_company
     res.locals.investmentProjectStages = investmentProjectStages.map((stage) => stage.name)
 
-    const incompleteFields = buildIncompleteFormList(get(investmentData, 'incomplete_fields', []))
-    const isCurrentStageComplete = investmentData.team_complete &&
-      investmentData.requirements_complete &&
-      investmentData.value_complete &&
+    const incompleteFields = buildIncompleteFormList(get(investment, 'incomplete_fields', []))
+    const isCurrentStageComplete = investment.team_complete &&
+      investment.requirements_complete &&
+      investment.value_complete &&
       !incompleteFields.length
 
     res.locals.investmentStatus = {
-      id: investmentData.id,
+      id: investment.id,
       meta: [
         {
           label: 'Status',
-          value: upperFirst(investmentData.status),
-          url: `/investment-projects/${investmentData.id}/status`,
+          value: upperFirst(investment.status),
+          url: `/investment-projects/${investment.id}/status`,
           urlLabel: 'change',
         },
         {
           label: 'Project code',
-          value: investmentData.project_code,
+          value: investment.project_code,
         },
         {
           label: 'Valuation',
-          value: investmentData.value_complete ? 'Project valued' : 'Not yet valued',
+          value: investment.value_complete ? 'Project valued' : 'Not yet valued',
         },
         {
           label: 'Created on',
-          value: format(investmentData.created_on, mediumDateTimeFormat),
+          value: format(investment.created_on, mediumDateTimeFormat),
         },
       ],
       company: {
-        name: investmentData.investor_company.name,
-        url: `/companies/${get(investmentData, 'investor_company.id')}`,
+        name: investment.investor_company.name,
+        url: `/companies/${get(investment, 'investor_company.id')}`,
       },
       currentStage: {
         incompleteFields,
@@ -104,8 +104,8 @@ async function getInvestmentDetails (req, res, next) {
     }
 
     res.breadcrumb({
-      name: investmentData.name,
-      url: `/investment-projects/${investmentData.id}`,
+      name: investment.name,
+      url: `/investment-projects/${investment.id}`,
     })
 
     next()

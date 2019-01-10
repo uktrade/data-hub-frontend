@@ -7,7 +7,7 @@
 
   {% call LocalHeader({
     headingBefore: headingBefore,
-    heading: investmentData.name,
+    heading: investment.name,
     modifier: 'light-banner'
   }) %}
 
@@ -22,10 +22,10 @@
     currentStageName: investmentStatus.currentStage.name
   }) }}
 
-  {% if investmentData.archived %}
+  {% if investment.archived %}
       {% call Message({ type: 'info' }) %}
-        This investment project was archived on {{ investmentData.archived_on | formatDate }} by {{ investmentData.archived_by.first_name }} {{ investmentData.archived_by.last_name }}. <br>
-        <strong>Archive reason:</strong> {{ investmentData.archived_reason }}<br>
+        This investment project was archived on {{ investment.archived_on | formatDate }} by {{ investment.archived_by.first_name }} {{ investment.archived_by.last_name }}. <br>
+        <strong>Archive reason:</strong> {{ investment.archived_reason }}<br>
         <br>
         <a href="unarchive">Unarchive</a>
       {% endcall %}

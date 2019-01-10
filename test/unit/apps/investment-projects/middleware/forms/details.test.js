@@ -316,7 +316,7 @@ describe('investment details middleware', () => {
           .reply(200, metadataMock.investmentInvolvementOptions)
 
         this.res.locals = assign({}, this.res.locals, {
-          investmentData: {
+          investment: {
             id: uuid(),
             client_relationship_manager: {
               id: '4',

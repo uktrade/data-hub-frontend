@@ -1,4 +1,4 @@
-const { assign, get } = require('lodash')
+const { assign } = require('lodash')
 
 const castCompactArray = require('../../../../lib/cast-compact-array')
 const { updateInvestment } = require('../../repos')
@@ -27,15 +27,13 @@ function formatBody (body) {
 
 async function populateForm (req, res, next) {
   try {
-    const investmentId = req.params.investmentId
-    const investmentData = res.locals.investmentData
-    const createdOn = get(res.locals.investmentData, 'created_on')
-    const options = await getFormOptions(req.session.token, createdOn)
-    const body = res.locals.formattedBody || investmentData
+    const { investment } = res.locals
+    const options = await getFormOptions(req.session.token, investment.created_on)
+    const body = res.locals.formattedBody || investment
 
     res.locals.requirementsForm = assign({},
       buildFormWithStateAndErrors(requirementsFormConfig(options), body, res.locals.errors),
-      { returnLink: `/investment-projects/${investmentId}` },
+      { returnLink: `/investment-projects/${investment.id}` },
     )
   } catch (error) {
     return next(error)

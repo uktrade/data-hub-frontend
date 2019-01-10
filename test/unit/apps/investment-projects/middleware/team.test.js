@@ -29,7 +29,7 @@ describe('Investment team middleware', () => {
     this.reqMock = {}
     this.resMock = {
       locals: {
-        investmentData: this.investmentData,
+        investment: this.investmentData,
       },
     }
 
@@ -63,7 +63,7 @@ describe('Investment team middleware', () => {
           token: 'mock-token',
         },
       }, this.resMock, () => {
-        expect(this.resMock.locals.investmentData.team_members[0].adviser).to.deep.equal(this.adviser)
+        expect(this.resMock.locals.investment.team_members[0].adviser).to.deep.equal(this.adviser)
         done()
       })
     })

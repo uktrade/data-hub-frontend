@@ -36,9 +36,9 @@ async function postDetails (req, res, next) {
 async function getPropositionDetails (req, res, next, propositionId) {
   try {
     const token = req.session.token
-    const investmentId = get(res.locals, 'investmentData.id')
-    res.locals.proposition = await fetchProposition(token, propositionId, investmentId)
-    res.locals.proposition.files = await fetchPropositionFiles(token, propositionId, investmentId)
+    const { investment } = res.locals
+    res.locals.proposition = await fetchProposition(token, propositionId, investment.id)
+    res.locals.proposition.files = await fetchPropositionFiles(token, propositionId, investment.id)
 
     next()
   } catch (error) {
@@ -69,10 +69,9 @@ async function getPropositionOptions (req, res, next) {
 async function getDownloadLink (req, res, next) {
   try {
     const token = req.session.token
-    const propositionId = req.params.propositionId
-    const documentId = req.params.documentId
-    const investmentId = res.locals.investmentData.id
-    const s3 = await fetchDownloadLink(token, propositionId, investmentId, documentId)
+    const { propositionId, documentId } = req.params
+    const { investment } = res.locals
+    const s3 = await fetchDownloadLink(token, propositionId, investment.id, documentId)
 
     return res.redirect(s3.document_url)
   } catch (error) {
