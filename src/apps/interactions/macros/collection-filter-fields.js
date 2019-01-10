@@ -44,6 +44,7 @@ module.exports = function ({
       name: 'date_after',
       hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
       placeholder: '',
+      inputClass: userAgent.isIE ? 'ie-date-field' : null,
     },
     {
       macroName: 'DateField',
@@ -51,6 +52,7 @@ module.exports = function ({
       name: 'date_before',
       hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
       placeholder: '',
+      inputClass: userAgent.isIE ? 'ie-date-field' : null,
     },
     {
       macroName: 'Typeahead',
