@@ -1,7 +1,17 @@
-{% extends "./_layout-view.njk" %}
+{% extends "_layouts/full-column.njk" %}
 
-{% block main_grid_right_column %}
-  <h2 class="heading-medium">Documents</h2>
+{% block local_header %}
+  {%
+    call LocalHeader({
+      heading: 'Documents',
+      modifier: 'light-banner'
+    })
+  %}
+  {% endcall %}
+{% endblock %}
+
+{% block main_column %}
+
   <p>
     {% if archivedDocumentPath %}
       <a href="{{ ARCHIVED_DOCUMENT_BASE_URL }}{{ archivedDocumentPath }}" aria-labelledby="external-link-label">
