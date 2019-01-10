@@ -19,8 +19,6 @@ async function getInteractionOptions (req, res) {
 
   if (kind === 'service-delivery') {
     formOptions = await getServiceDeliveryFormOptions(token, createdOn, req, res)
-  } else if (kind === 'policy-feedback') {
-    formOptions = await getPolicyFeedbackFormOptions(token, createdOn)
   } else {
     formOptions = await getInteractionFormOptions(token, createdOn, req, res)
   }
@@ -78,16 +76,6 @@ async function getServiceDeliveryFormOptions (token, createdOn, req, res) {
     services: services,
     statuses: await getOptions(token, 'service-delivery-status', { createdOn, sorted: false }),
     successfulServiceStatuses: [SERVICE_DELIVERY_STATUS_COMPLETED],
-  }
-
-  return formOptions
-}
-
-async function getPolicyFeedbackFormOptions (token, createdOn) {
-  const formOptions = {
-    areas: await getOptions(token, 'policy-area', { createdOn }),
-    types: await getOptions(token, 'policy-issue-type', { createdOn }),
-    channels: await getOptions(token, 'communication-channel', { createdOn }),
   }
 
   return formOptions

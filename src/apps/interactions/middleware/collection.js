@@ -57,6 +57,7 @@ function getInteractionsRequestBody (req, res, next) {
     'sortby',
     'dit_team',
     'service',
+    'was_policy_feedback_provided',
   ])
 
   req.body = {

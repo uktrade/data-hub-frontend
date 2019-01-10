@@ -3,7 +3,6 @@ const { flatten } = require('lodash')
 const labels = require('../labels')
 const FILTER_CONSTANTS = require('../../../lib/filter-constants')
 const PRIMARY_SECTOR_NAME = FILTER_CONSTANTS.INTERACTIONS.SECTOR.PRIMARY.NAME
-const { POLICY_FEEDBACK_PERMISSIONS } = require('../constants')
 
 module.exports = function ({
   currentAdviserId,
@@ -18,11 +17,7 @@ module.exports = function ({
       macroName: 'MultipleChoiceField',
       name: 'kind',
       type: 'checkbox',
-      options: permissions.includes(POLICY_FEEDBACK_PERMISSIONS.view) ? [
-        { value: 'interaction', label: 'Interaction' },
-        { value: 'service_delivery', label: 'Service delivery' },
-        { value: 'policy_feedback', label: 'Policy feedback' },
-      ] : [
+      options: [
         { value: 'interaction', label: 'Interaction' },
         { value: 'service_delivery', label: 'Service delivery' },
       ],
@@ -76,6 +71,15 @@ module.exports = function ({
       name: PRIMARY_SECTOR_NAME,
       modifier: 'option-select',
       options: sectorOptions,
+    },
+    {
+      macroName: 'MultipleChoiceField',
+      name: 'was_policy_feedback_provided',
+      type: 'checkbox',
+      modifier: 'option-select',
+      options: [
+        { value: 'true', label: 'Includes policy feedback' },
+      ],
     },
   ].map(filter => {
     return {

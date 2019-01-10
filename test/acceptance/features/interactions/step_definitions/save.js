@@ -58,32 +58,10 @@ When(/^[an]{1,2} (interaction|service delivery) is added$/, async function (kind
     .wait() // wait for backend to sync
 })
 
-When(/^a policy feedback is added$/, async function (dataTable) {
-  const details = fromPairs(map(dataTable.hashes(), hash => [camelCase(hash.key), hash.value]))
-  await Interaction
-    .createPolicyFeedback(details, (interaction) => {
-      set(this.state, 'interaction', interaction)
-      set(this.state, 'interaction.date', getDateFor({
-        year: get(this.state, 'interaction.dateOfInteractionYear'),
-        month: get(this.state, 'interaction.dateOfInteractionMonth'),
-        day: get(this.state, 'interaction.dateOfInteractionDay'),
-      }))
-      set(this.state, 'interaction.type', 'Policy feedback')
-    })
-    .wait() // wait for backend to sync
-})
-
 When(/^I select interaction$/, async function () {
   await Interaction
     .waitForElementVisible('@continueButton')
     .click('@aStandardInteraction')
-    .click('@continueButton')
-})
-
-When(/^I select policy feedback$/, async function () {
-  await Interaction
-    .waitForElementVisible('@continueButton')
-    .click('@aPolicyFeedback')
     .click('@continueButton')
 })
 
@@ -153,28 +131,6 @@ Then(/^there are service delivery fields$/, async function () {
     .assert.visible('@dateOfInteractionDay')
 })
 
-Then(/^there are policy feedback fields$/, async function () {
-  await Interaction
-    .waitForElementVisible('@contact')
-    .assert.visible('@contact')
-    .assert.visible('@serviceProvider')
-    .assert.visible('@policyIssueType')
-    .assert.visible('@policyArea')
-    .assert.visible('@subject')
-    .assert.visible('@notes')
-    .assert.visible('@dateOfInteractionYear')
-    .assert.visible('@dateOfInteractionMonth')
-    .assert.visible('@dateOfInteractionDay')
-    .assert.visible('@ditAdviser')
-    .assert.visible('@communicationChannel')
-    .assert.elementNotPresent('@eventYes')
-    .assert.elementNotPresent('@eventNo')
-    .assert.elementNotPresent('@event')
-    .assert.elementNotPresent('@serviceStatus')
-    .assert.elementNotPresent('@grantOffered')
-    .assert.elementNotPresent('@netReceipt')
-})
-
 Then(/^there are interaction policy feedback fields$/, async function () {
   await Interaction
     .waitForElementVisible('@policyIssueType1')
@@ -235,9 +191,9 @@ Then(/^the net receipt field is hidden/, async function () {
 })
 
 /**
- * The filtering available for Interactions, Service Delivery or Policy feedback is particularly hard to pin down a specific
- * Interaction, Service Delivery or Policy feedback - this is by design. The filtering here combined with random dates for creation
- * of an Interaction, Service Delivery or Polcy feedback should mean we always find what we are looking for in the first
+ * The filtering available for Interactions or Service Delivery is particularly hard to pin down a specific
+ * Interaction or Service Delivery - this is by design. The filtering here combined with random dates for creation
+ * of an Interaction or Service Delivery should mean we always find what we are looking for in the first
  * result of the Collection.
  */
 Then(/^I filter the collections to view the (.+) I have just created$/, async function (typeOfInteraction) {
