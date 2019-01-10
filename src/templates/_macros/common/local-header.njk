@@ -26,8 +26,8 @@
           {{ MessageList({ items: messages }) }}
         {% endif %}
 
-        <div class="grid-row">
-          <div class="column-{{ 'two-thirds' if props.actions else 'full' }}">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-{{ 'two-thirds' if props.actions else 'full' }}">
             {% if props.headingBefore %}
               <div class="c-local-header__heading-before">
                 {{ props.headingBefore | safe }}
@@ -44,7 +44,7 @@
           </div>
 
           {% if props.actions %}
-            <div class="column-one-third c-local-header__actions">
+            <div class="govuk-grid-column-one-third c-local-header__actions">
               {{ props.actions | safe }}
             </div>
           {% endif %}

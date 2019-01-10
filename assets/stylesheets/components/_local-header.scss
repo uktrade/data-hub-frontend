@@ -14,11 +14,7 @@ $_first-element-spacing: $default-spacing-unit * 3;
   }
 
   .c-local-header__heading:first-child {
-    margin-top: $_first-element-spacing;
-  }
-
-  &[class*="c-local-header--"] {
-    padding-bottom: $default-spacing-unit;
+    margin: $_first-element-spacing 0 $default-spacing-unit;
   }
 
   .c-message-list {
@@ -26,26 +22,17 @@ $_first-element-spacing: $default-spacing-unit * 3;
 
     &+.grid-row {
       .c-local-header__heading:first-child {
-        margin-top: 0;
+        margin: 0 0 $default-spacing-unit;
       }
     }
   }
 
   .c-entity-search {
     margin-top: $baseline-grid-unit * 20.5;
-    padding-bottom: $baseline-grid-unit * 6.25;
-  }
-
-  .c-entity-search__aggregations {
-    margin-bottom: -$baseline-grid-unit * 14.25;
   }
 
   .c-breadcrumb {
     margin-top: $default-spacing-unit / 2;
-
-    & + * {
-      margin-top: $_first-element-spacing;
-    }
 
     & + .grid-row {
       .c-entity-search {
