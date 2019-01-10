@@ -1,7 +1,7 @@
 {# TODO spilt these forms into create and edit forms rather than using conditionals to show hide things #}
 
-{% if investmentData %}
-  {% set returnLink = '/investment-projects/' + investmentData.id %}
+{% if investment %}
+  {% set returnLink = '/investment-projects/' + investment.id %}
 {% else %}
   {% set returnLink = '/investment-projects/create/investment-type/' + clientCompanyId %}
 {% endif %}
@@ -14,7 +14,7 @@
   }
 })) %}
 
-{% if not investmentData %}
+{% if not investment %}
   {# If on the create journey this information has already been asked so here we just send it along with the create form #}
   {% for key, data in form.options.investmentDetails %}
     {% if data %}
@@ -51,7 +51,7 @@
     value: form.state.anonymous_description
   }) }}
 
-{% if investmentData.id %}
+{% if investment.id %}
   {{ MultipleChoiceField({
     type: 'radio',
     name: 'investment_type',
@@ -167,7 +167,7 @@
     </div>
   {% endcall %}
 
-{% if not investmentData.id %}
+{% if not investment.id %}
   {{ MultipleChoiceField({
     type: 'radio',
     name: 'is_relationship_manager',

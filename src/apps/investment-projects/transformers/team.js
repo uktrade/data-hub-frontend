@@ -1,42 +1,42 @@
 /* eslint-disable camelcase */
 const { get } = require('lodash')
 
-function getAdviserName (investmentData, key) {
-  if (!get(investmentData, key)) {
+function getAdviserName (investment, key) {
+  if (!get(investment, key)) {
     return 'To do'
   }
 
-  const adviserName = get(investmentData, `${key}.first_name`, '') + ' ' + get(investmentData, `${key}.last_name`, '')
+  const adviserName = get(investment, `${key}.first_name`, '') + ' ' + get(investment, `${key}.last_name`, '')
   return adviserName.trim()
 }
 
-function transformProjectManagementForView (investmentData) {
-  if (investmentData.project_manager || investmentData.project_assurance_adviser) {
+function transformProjectManagementForView (investment) {
+  if (investment.project_manager || investment.project_assurance_adviser) {
     return [{
       role: 'Project assurance adviser',
-      adviser: getAdviserName(investmentData, 'project_assurance_adviser'),
-      team: get(investmentData, 'project_assurance_team.name', null),
+      adviser: getAdviserName(investment, 'project_assurance_adviser'),
+      team: get(investment, 'project_assurance_team.name', null),
     }, {
       role: 'Project manager',
-      adviser: getAdviserName(investmentData, 'project_manager'),
-      team: get(investmentData, 'project_manager_team.name', null),
+      adviser: getAdviserName(investment, 'project_manager'),
+      team: get(investment, 'project_manager_team.name', null),
     }]
   }
 
   return null
 }
 
-function transformClientRelationshipManagementForView (investmentData) {
+function transformClientRelationshipManagementForView (investment) {
   const result = [{
     role: 'Client relationship manager',
-    adviser: getAdviserName(investmentData, 'client_relationship_manager'),
-    team: get(investmentData, 'client_relationship_manager.dit_team.name'),
+    adviser: getAdviserName(investment, 'client_relationship_manager'),
+    team: get(investment, 'client_relationship_manager.dit_team.name'),
   }]
-  const globalAccountManager = get(investmentData, 'investor_company.one_list_group_global_account_manager.id')
+  const globalAccountManager = get(investment, 'investor_company.one_list_group_global_account_manager.id')
   if (globalAccountManager) {
-    const firstName = get(investmentData, 'investor_company.one_list_group_global_account_manager.first_name')
-    const lastName = get(investmentData, 'investor_company.one_list_group_global_account_manager.last_name')
-    const team = get(investmentData, 'investor_company.one_list_group_global_account_manager.dit_team.name')
+    const firstName = get(investment, 'investor_company.one_list_group_global_account_manager.first_name')
+    const lastName = get(investment, 'investor_company.one_list_group_global_account_manager.last_name')
+    const team = get(investment, 'investor_company.one_list_group_global_account_manager.dit_team.name')
     result.push({
       team,
       adviser: `${firstName} ${lastName}`,

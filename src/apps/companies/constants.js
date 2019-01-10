@@ -14,7 +14,7 @@ const GLOBAL_NAV_ITEM = {
   order: 1,
 }
 
-const LOCAL_NAV = [
+const DEPRECATED_LOCAL_NAV = [
   {
     path: 'details',
     label: 'Details',
@@ -80,7 +80,47 @@ const LOCAL_NAV = [
   },
 ]
 
-const APP_PERMISSIONS = concat(LOCAL_NAV, GLOBAL_NAV_ITEM)
+const LOCAL_NAV = [
+  {
+    path: 'interactions',
+    label: 'Interactions',
+    permissions: [
+      'interaction.view_all_interaction',
+    ],
+  },
+  {
+    path: 'contacts',
+    label: 'Company contacts',
+    permissions: [
+      'company.view_contact',
+    ],
+  },
+  {
+    path: 'advisers',
+    label: 'Core team',
+  },
+  {
+    path: 'investments',
+    label: 'Investment',
+    permissions: [
+      'investment.view_all_investmentproject',
+      'investment.view_associated_investmentproject',
+    ],
+  },
+  {
+    path: 'exports',
+    label: 'Export',
+  },
+  {
+    path: 'orders',
+    label: 'Orders',
+    permissions: [
+      'order.view_order',
+    ],
+  },
+]
+
+const APP_PERMISSIONS = concat(DEPRECATED_LOCAL_NAV, GLOBAL_NAV_ITEM)
 
 const QUERY_FIELDS = [
   'archived',
@@ -96,6 +136,7 @@ const NOT_SET_TEXT = 'Not set'
 
 module.exports = {
   GLOBAL_NAV_ITEM,
+  DEPRECATED_LOCAL_NAV,
   LOCAL_NAV,
   DEFAULT_COLLECTION_QUERY,
   APP_PERMISSIONS,

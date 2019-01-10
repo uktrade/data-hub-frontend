@@ -82,7 +82,7 @@ describe('Investment requirements form middleware', () => {
 
   describe('#populateForm', () => {
     beforeEach(() => {
-      this.resMock.locals = assign({}, this.reqMock.locals, { investmentData })
+      this.resMock.locals = assign({}, this.reqMock.locals, { investment: investmentData })
 
       nock(config.apiRoot)
         .get('/metadata/uk-region/')
@@ -106,7 +106,7 @@ describe('Investment requirements form middleware', () => {
       })
 
       it('should set the return link', () => {
-        expect(this.resMock.locals.requirementsForm).to.have.property('returnLink', '/investment-projects/1234')
+        expect(this.resMock.locals.requirementsForm.returnLink).to.equal('/investment-projects/f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7')
       })
     })
 
@@ -128,7 +128,7 @@ describe('Investment requirements form middleware', () => {
       })
 
       it('should set the return link', () => {
-        expect(this.resMock.locals.requirementsForm).to.have.property('returnLink', '/investment-projects/1234')
+        expect(this.resMock.locals.requirementsForm.returnLink).to.equal('/investment-projects/f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7')
       })
     })
 

@@ -9,10 +9,10 @@ const config = require('../../../../../config')
 
 async function populateForm (req, res, next) {
   try {
-    const investmentData = res.locals.investmentData
-    const clientRelationshipManager = get(investmentData, 'client_relationship_manager.id', null)
-    const firstName = get(investmentData, 'investor_company.one_list_group_global_account_manager.first_name')
-    const lastName = get(investmentData, 'investor_company.one_list_group_global_account_manager.last_name')
+    const { investment } = res.locals
+    const clientRelationshipManager = get(investment, 'client_relationship_manager.id', null)
+    const firstName = get(investment, 'investor_company.one_list_group_global_account_manager.first_name')
+    const lastName = get(investment, 'investor_company.one_list_group_global_account_manager.last_name')
     const advisersResponse = await getAdvisers(req.session.token)
     const clientRelationshipManagerOptions = filterActiveAdvisers({
       advisers: advisersResponse.results,
@@ -30,10 +30,10 @@ async function populateForm (req, res, next) {
         clientRelationshipManagers: clientRelationshipManagerOptions,
       },
       hiddenFields: {
-        investor_company: get(investmentData, 'investor_company.id'),
+        investor_company: get(investment, 'investor_company.id'),
       },
       buttonText: 'Save',
-      returnLink: `/investment-projects/${investmentData.id}/team`,
+      returnLink: `/investment-projects/${investment.id}/team`,
       oneListEmail: config.oneList.email,
     })
 

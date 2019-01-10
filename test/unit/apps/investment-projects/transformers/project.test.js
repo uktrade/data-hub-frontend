@@ -3,7 +3,7 @@ const { assign } = require('lodash')
 const investmentData = require('~/test/unit/data/investment/investment-data.json')
 const {
   transformBriefInvestmentSummary,
-  transformInvestmentDataForView,
+  transformInvestmentForView,
   transformToApi,
   transformFromApi,
 } = require('~/src/apps/investment-projects/transformers/project')
@@ -283,10 +283,10 @@ describe('Investment project transformers', () => {
     })
   })
 
-  describe('#transformInvestmentDataForView', () => {
+  describe('#transformInvestmentForView', () => {
     context('when called with a fully populated investment', () => {
       beforeEach(() => {
-        this.result = transformInvestmentDataForView(investmentData)
+        this.result = transformInvestmentForView(investmentData)
       })
 
       it('should include all the required properties', () => {
@@ -315,7 +315,7 @@ describe('Investment project transformers', () => {
             id: '1234',
           },
         })
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should provide the investor company as a link', () => {
@@ -328,7 +328,7 @@ describe('Investment project transformers', () => {
 
     context('when called with an investment type', () => {
       beforeEach(() => {
-        this.result = transformInvestmentDataForView(investmentData)
+        this.result = transformInvestmentForView(investmentData)
       })
 
       it('should return a formatted investment type value', () => {
@@ -345,7 +345,7 @@ describe('Investment project transformers', () => {
           },
         })
 
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should include the sector name', () => {
@@ -362,7 +362,7 @@ describe('Investment project transformers', () => {
           sector: null,
         })
 
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should include a null sector', () => {
@@ -383,7 +383,7 @@ describe('Investment project transformers', () => {
           other_business_activity: '',
         })
 
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should return business activities formatted as a string list', () => {
@@ -398,7 +398,7 @@ describe('Investment project transformers', () => {
           other_business_activity: 'Surfing',
         })
 
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should return business activities formatted as a string list', () => {
@@ -413,7 +413,7 @@ describe('Investment project transformers', () => {
           other_business_activity: '',
         })
 
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should return business activities as an empty string', () => {
@@ -433,7 +433,7 @@ describe('Investment project transformers', () => {
           }],
         })
 
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should return the contact list as a string list', () => {
@@ -450,7 +450,7 @@ describe('Investment project transformers', () => {
           }],
         })
 
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should return the contact', () => {
@@ -464,7 +464,7 @@ describe('Investment project transformers', () => {
           client_contacts: [],
         })
 
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should return an empty client contact', () => {
@@ -478,7 +478,7 @@ describe('Investment project transformers', () => {
           description: 'My description',
         })
 
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should include the description', () => {
@@ -492,7 +492,7 @@ describe('Investment project transformers', () => {
           description: null,
         })
 
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should include a null description', () => {
@@ -506,7 +506,7 @@ describe('Investment project transformers', () => {
           anonymous_description: 'My description',
         })
 
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should include the description', () => {
@@ -520,7 +520,7 @@ describe('Investment project transformers', () => {
           anonymous_description: null,
         })
 
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should include a null anonymous description', () => {
@@ -537,7 +537,7 @@ describe('Investment project transformers', () => {
           },
         })
 
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should include the description', () => {
@@ -554,7 +554,7 @@ describe('Investment project transformers', () => {
           investor_type: null,
         })
 
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should include a null anonymous description', () => {
@@ -571,7 +571,7 @@ describe('Investment project transformers', () => {
           },
         })
 
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should include the level of involvement', () => {
@@ -588,7 +588,7 @@ describe('Investment project transformers', () => {
           level_of_involvement: null,
         })
 
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should include a null level of involvement', () => {
@@ -605,7 +605,7 @@ describe('Investment project transformers', () => {
           },
         })
 
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should include the specific programme', () => {
@@ -622,7 +622,7 @@ describe('Investment project transformers', () => {
           specific_programme: null,
         })
 
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should include a null for specific programme', () => {
@@ -636,7 +636,7 @@ describe('Investment project transformers', () => {
           estimated_land_date: '2017-01-07',
         })
 
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should include the estimated land date formatted as Month Year', () => {
@@ -650,7 +650,7 @@ describe('Investment project transformers', () => {
           estimated_land_date: null,
         })
 
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should set the estimated land date as null', () => {
@@ -664,7 +664,7 @@ describe('Investment project transformers', () => {
           actual_land_date: '2017-01-07',
         })
 
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should include the actual land date as a date property', () => {
@@ -681,7 +681,7 @@ describe('Investment project transformers', () => {
           actual_land_date: null,
         })
 
-        this.result = transformInvestmentDataForView(data)
+        this.result = transformInvestmentForView(data)
       })
 
       it('should include the actual land date as a date property with null value', () => {

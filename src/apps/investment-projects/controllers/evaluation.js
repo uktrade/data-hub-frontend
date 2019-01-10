@@ -13,11 +13,11 @@ const {
 } = require('../transformers')
 
 function renderEvaluationPage (req, res, next) {
-  const transformedValue = transformInvestmentValueForView(res.locals.investmentData)
-  const transformedFDI = transformInvestmentFDIForView(res.locals.investmentData)
-  const transformedLanding = transformInvestmentLandingForView(res.locals.investmentData)
+  const transformedValue = transformInvestmentValueForView(res.locals.investment)
+  const transformedFDI = transformInvestmentFDIForView(res.locals.investment)
+  const transformedLanding = transformInvestmentLandingForView(res.locals.investment)
 
-  if (get(res, 'locals.investmentData')) {
+  if (get(res, 'locals.investment')) {
     return res
       .breadcrumb('Evaluation')
       .render('investment-projects/views/evaluation', {

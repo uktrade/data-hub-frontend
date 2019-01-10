@@ -13,7 +13,7 @@ describe('Investment form middleware - project magement', () => {
       this.resMock = {
         locals: {
           form: {},
-          investmentData,
+          investment: investmentData,
         },
       }
 
@@ -71,7 +71,7 @@ describe('Investment form middleware - project magement', () => {
         this.resMock = {
           locals: {
             form: {},
-            investmentData: assign({}, investmentData, {
+            investment: assign({}, investmentData, {
               project_manager: { id: '4', name: 'Fred Smith' },
               project_assurance_adviser: { id: '5', name: 'Jim Smith' },
             }),

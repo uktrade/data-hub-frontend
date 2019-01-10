@@ -47,11 +47,11 @@ module.exports = {
       selector: '.c-local-nav',
       commands: [
         {
-          getLocalNavLinkSelector (text) {
+          getLocalNavLinkSelector (text, className = 'c-local-nav__link') {
             return getSelectorForElementWithText(text,
               {
+                className,
                 el: '//a',
-                className: 'c-local-nav__link',
               }
             )
           },

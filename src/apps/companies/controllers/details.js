@@ -7,11 +7,10 @@ const {
 
 async function renderDetails (req, res) {
   const company = res.locals.company
-  const view = company.duns_number ? 'companies/views/details' : 'companies/views/_deprecated/details'
 
   res
     .breadcrumb(company.name)
-    .render(view, {
+    .render('companies/views/_deprecated/details', {
       companyDetails: transformCompanyToView(company),
       accountManagementDetails: transformCompanyToOneListView(company),
       chDetails: company.companies_house_data ? transformCompaniesHouseToView(company.companies_house_data) : null,

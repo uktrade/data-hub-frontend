@@ -4,7 +4,7 @@ const { uploadForm } = require('../macros')
 
 function renderUpload (req, res, next) {
   const proposition = get(res.locals, 'proposition.id')
-  const investment = get(res.locals, 'investmentData.id')
+  const investment = get(res.locals, 'investment.id')
   const selectUploadForm = buildFormWithStateAndErrors(uploadForm(
     assign({}, res.locals.options, res.locals.conditions, {
       returnLink: res.locals.returnLink,

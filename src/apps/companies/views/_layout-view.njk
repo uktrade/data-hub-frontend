@@ -1,4 +1,4 @@
-{% extends "_layouts/two-column.njk" %}
+{% extends "_layouts/full-column.njk" %}
 
 {% block local_header %}
   {% call LocalHeader({
@@ -43,7 +43,8 @@
   {% endcall %}
 {% endblock %}
 
+{% block local_nav %}
 
-{% block main_grid_left_column %}
-  {{ LocalNav({ items: localNavItems }) }}
+  {{ TabbedLocalNav({ items: localNavItems }) }}
+
 {% endblock %}
