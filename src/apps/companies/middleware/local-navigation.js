@@ -1,24 +1,29 @@
-const { get, isNull } = require('lodash')
+/* eslint-disable camelcase */
+const { get } = require('lodash')
 
 const { setLocalNav } = require('../../middleware')
-const { LOCAL_NAV } = require('../constants')
+const { DEPRECATED_LOCAL_NAV, LOCAL_NAV } = require('../constants')
 
 function setCompaniesLocalNav (req, res, next) {
-  const company = get(res.locals, 'company')
+  const { company, features } = res.locals
 
-  if (!company) { next() }
+  if (company.duns_number) {
+    const navItems = LOCAL_NAV.filter(({ path }) => {
+      return (path !== 'advisers' || (features['companies-advisers'] && company.one_list_group_tier))
+    })
 
-  const headquarterType = get(company, 'headquarter_type.name')
-  const companyNumber = get(company, 'company_number')
-  const isOneListGroupTier = !isNull(company.one_list_group_tier)
+    setLocalNav(navItems)(req, res, next)
+  } else {
+    const headquarterType = get(company, 'headquarter_type.name')
 
-  const navItems = LOCAL_NAV.filter((navItem) => {
-    return (navItem.path !== 'subsidiaries' || headquarterType === 'ghq') &&
-        (navItem.path !== 'timeline' || companyNumber) &&
-        (navItem.path !== 'advisers' || (res.locals.features['companies-advisers'] && isOneListGroupTier))
-  })
+    const navItems = DEPRECATED_LOCAL_NAV.filter(({ path }) => {
+      return (path !== 'subsidiaries' || headquarterType === 'ghq') &&
+        (path !== 'timeline' || company.company_number) &&
+        (path !== 'advisers' || (features['companies-advisers'] && company.one_list_group_tier))
+    })
 
-  setLocalNav(navItems)(req, res, next)
+    setLocalNav(navItems)(req, res, next)
+  }
 }
 
 module.exports = setCompaniesLocalNav

@@ -8,7 +8,7 @@ describe('Investment details controller', () => {
     this.controller = proxyquire('~/src/apps/investment-projects/controllers/details', {
       '../transformers': {
         transformInvestmentRequirementsForView: this.transformInvestmentRequirementsForViewStub,
-        transformInvestmentDataForView: sinon.stub(),
+        transformInvestmentForView: sinon.stub(),
         transformInvestmentValueForView: sinon.stub(),
       },
     })
@@ -22,7 +22,7 @@ describe('Investment details controller', () => {
         },
       }, {
         locals: {
-          investmentData,
+          investment: investmentData,
         },
         render: (template, data) => {
           try {
@@ -51,7 +51,7 @@ describe('Investment details controller', () => {
 
         this.res = {
           locals: {
-            investmentData,
+            investment: investmentData,
           },
           render: sinon.stub(),
         }
@@ -85,7 +85,7 @@ describe('Investment details controller', () => {
 
         this.res = {
           locals: {
-            investmentData,
+            investment: investmentData,
           },
           render: sinon.stub(),
         }
@@ -121,7 +121,7 @@ describe('Investment details controller', () => {
 
         this.res = {
           locals: {
-            investmentData,
+            investment: investmentData,
           },
           render: sinon.stub(),
         }

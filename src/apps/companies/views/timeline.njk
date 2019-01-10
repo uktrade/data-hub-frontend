@@ -1,6 +1,17 @@
-{% extends "./_layout-view.njk" %}
+{% extends "_layouts/full-column.njk" %}
 
-{% block main_grid_right_column %}
-  <h2 class="heading-medium">Timeline</h2>
+{% block local_header %}
+  {%
+    call LocalHeader({
+      heading: 'Timeline',
+      modifier: 'light-banner'
+    })
+  %}
+  {% endcall %}
+{% endblock %}
+
+{% block main_column %}
+
   {{ CollectionContent(timeline) }}
+
 {% endblock %}

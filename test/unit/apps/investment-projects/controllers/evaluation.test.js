@@ -29,7 +29,7 @@ describe('Investment evaluation controller', () => {
         },
       }, {
         locals: {
-          investmentData,
+          investment: investmentData,
         },
         breadcrumb: this.breadcrumbStub,
         render: (template, data) => {
@@ -89,7 +89,7 @@ describe('Investment evaluation controller', () => {
       },
     }, {
       locals: {
-        investmentData,
+        investment: investmentData,
       },
       breadcrumb: this.breadcrumbStub,
       render: (template, data) => {
@@ -164,7 +164,7 @@ describe('Investment evaluation controller', () => {
       },
     }, {
       locals: {
-        investmentData: investmentDataUkCompany,
+        investment: investmentDataUkCompany,
       },
       breadcrumb: this.breadcrumbStub,
       render: (template, data) => {

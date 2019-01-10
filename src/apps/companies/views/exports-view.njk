@@ -1,6 +1,7 @@
 {% extends "./_layout-view.njk" %}
 
-{% block main_grid_right_column %}
+{% block main_column %}
+
   <h2 class="heading-medium">Exports</h2>
 
   {% component 'key-value-table', items=exportDetails %}
@@ -15,4 +16,5 @@
     <h2 class="heading-medium">Export wins</h2>
     <p><a href="http://www.exportwins.service.trade.gov.uk/">Record your win</a> on our export wins site.<p>
   </div>
+
 {% endblock %}

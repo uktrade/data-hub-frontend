@@ -64,7 +64,7 @@ describe('Investment archive controller', () => {
     it('should update the investment project being displayed with the reason selected', (done) => {
       const archived_reason = 'test'
       const locals = {
-        investmentData: {},
+        investment: {},
       }
 
       this.controller.archiveInvestmentProjectHandler({
@@ -78,10 +78,10 @@ describe('Investment archive controller', () => {
       }, {
         locals,
       }, () => {
-        expect(locals.investmentData.archived).to.equal(true)
-        expect(locals.investmentData.archived_reason).to.equal(archived_reason)
-        expect(locals.investmentData.archived_by).to.deep.equal(this.session.user)
-        expect(locals.investmentData).to.have.property('archived_on')
+        expect(locals.investment.archived).to.equal(true)
+        expect(locals.investment.archived_reason).to.equal(archived_reason)
+        expect(locals.investment.archived_by).to.deep.equal(this.session.user)
+        expect(locals.investment).to.have.property('archived_on')
         done()
       })
     })
@@ -89,7 +89,7 @@ describe('Investment archive controller', () => {
       const archived_reason = 'Other'
       const archived_reason_other = 'something else'
       const locals = {
-        investmentData: {},
+        investment: {},
       }
 
       this.controller.archiveInvestmentProjectHandler({
@@ -104,10 +104,10 @@ describe('Investment archive controller', () => {
       }, {
         locals,
       }, () => {
-        expect(locals.investmentData.archived).to.equal(true)
-        expect(locals.investmentData.archived_reason).to.equal(archived_reason_other)
-        expect(locals.investmentData.archived_by).to.deep.equal(this.session.user)
-        expect(locals.investmentData).to.have.property('archived_on')
+        expect(locals.investment.archived).to.equal(true)
+        expect(locals.investment.archived_reason).to.equal(archived_reason_other)
+        expect(locals.investment.archived_by).to.deep.equal(this.session.user)
+        expect(locals.investment).to.have.property('archived_on')
         done()
       })
     })
@@ -123,7 +123,7 @@ describe('Investment archive controller', () => {
       })
 
       const locals = {
-        investmentData: {},
+        investment: {},
       }
       const body = {
         archived_reason: 'Stuff',
@@ -152,7 +152,7 @@ describe('Investment archive controller', () => {
       })
 
       const locals = {
-        investmentData: {},
+        investment: {},
       }
       const body = {
         archived_reason: 'Stuff',

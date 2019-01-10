@@ -4,6 +4,8 @@ const { Then, When } = require('cucumber')
 
 const formatters = require('../../helpers/formatters')
 
+const Location = client.page.location()
+
 function getExpectedValue (row, state) {
   if (includes(row.value, '.') && !includes(row.value, ' ')) {
     const expectedText = get(state, row.value)
@@ -19,7 +21,22 @@ function getExpectedValue (row, state) {
   return row.value
 }
 
-const Location = client.page.location()
+const assertNavLinkCount = async (navLinkClassName, expectedData) => {
+  await Location.api.elements('css selector', `.${navLinkClassName}`, (result) => {
+    client.expect(result.value.length).to.equal(expectedData.length)
+  })
+}
+
+const assertNavLinks = async (navLinkClassName, expectedData) => {
+  for (const row of expectedData) {
+    const localNavItemSelector = Location.section.localNav.getLocalNavLinkSelector(row.text, navLinkClassName)
+    await Location
+      .api.useXpath()
+      .waitForElementPresent(localNavItemSelector.selector)
+      .assert.visible(localNavItemSelector.selector)
+      .useCss()
+  }
+}
 
 When(/^I click the (.+) global nav link/, async (globalNavLinkText) => {
   const globalNavLinkSelector = Location.section.globalNav.getGlobalNavLinkSelector(globalNavLinkText)
@@ -154,19 +171,18 @@ Then(/^I see the ([0-9]+) error page$/, async function (statusCode) {
 
 Then(/^there should be a local nav$/, async (dataTable) => {
   const expectedLocalNav = dataTable.hashes()
+  const navLinkClassName = 'c-local-nav__link'
 
-  await Location.api.elements('css selector', '.c-local-nav__link', (result) => {
-    client.expect(result.value.length).to.equal(expectedLocalNav.length)
-  })
+  await assertNavLinkCount(navLinkClassName, expectedLocalNav)
+  await assertNavLinks(navLinkClassName, expectedLocalNav)
+})
 
-  for (const row of expectedLocalNav) {
-    const localNavItemSelector = Location.section.localNav.getLocalNavLinkSelector(row.text)
-    await Location
-      .api.useXpath()
-      .waitForElementPresent(localNavItemSelector.selector)
-      .assert.visible(localNavItemSelector.selector)
-      .useCss()
-  }
+Then(/^there should be a tabbed local nav$/, async (dataTable) => {
+  const expectedLocalNav = dataTable.hashes()
+  const navLinkClassName = 'govuk-tabs__tab'
+
+  await assertNavLinkCount(navLinkClassName, expectedLocalNav)
+  await assertNavLinks(navLinkClassName, expectedLocalNav)
 })
 
 Then(/^there should not be a local nav$/, async () => {

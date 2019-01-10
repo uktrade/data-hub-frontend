@@ -5,11 +5,11 @@ const { statusFormConfig } = require('../macros')
 const { updateInvestment } = require('../repos')
 
 function renderStatusPage (req, res, next) {
-  const status = req.body.status || res.locals.investmentData.status
+  const status = req.body.status || res.locals.investment.status
 
   const statusForm = assign(
     buildFormWithStateAndErrors(statusFormConfig, { status }, res.locals.errors),
-    { returnLink: `/investment-projects/${res.locals.investmentData.id}/details` },
+    { returnLink: `/investment-projects/${res.locals.investment.id}/details` },
   )
 
   res
@@ -25,7 +25,7 @@ async function postStatus (req, res, next) {
 
     req.flash('success', 'Investment details updated')
 
-    return res.redirect(`/investment-projects/${res.locals.investmentData.id}/details`)
+    return res.redirect(`/investment-projects/${res.locals.investment.id}/details`)
   } catch (error) {
     if (error.statusCode === 400) {
       res.locals.errors = error.error

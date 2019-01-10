@@ -25,7 +25,7 @@ module.exports = ({
         contact,
         interaction,
         order,
-        investmentData: investment, // todo: rename
+        investment,
         features,
       },
     },

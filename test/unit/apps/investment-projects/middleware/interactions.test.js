@@ -18,7 +18,7 @@ describe('Investment projects interactions middleware', () => {
     }
     this.res = {
       locals: {
-        investmentData: {
+        investment: {
           name: 'investment',
         },
       },

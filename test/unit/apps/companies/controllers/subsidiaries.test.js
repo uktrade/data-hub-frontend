@@ -27,6 +27,11 @@ describe('company subsidiaries controller', () => {
       this.subsidiaries = this.middlewareParameters.resMock.render.firstCall.args[1].subsidiaries
     })
 
+    it('should set the heading', () => {
+      const actual = this.middlewareParameters.resMock.render.firstCall.args[1].heading
+      expect(actual).to.equal('Subsidiaries of SAMSUNG BIOEPIS UK LIMITED')
+    })
+
     it('should return the subsidiaries as a collection', () => {
       expect(this.subsidiaries).to.have.property('items')
       expect(this.subsidiaries).to.have.property('count', 1)
@@ -146,6 +151,11 @@ describe('company subsidiaries controller', () => {
       this.subsidiaries = this.middlewareParameters.resMock.render.firstCall.args[1].subsidiaries
     })
 
+    it('should set the heading', () => {
+      const actual = this.middlewareParameters.resMock.render.firstCall.args[1].heading
+      expect(actual).to.equal('Subsidiaries of SAMSUNG BIOEPIS UK LIMITED')
+    })
+
     it('should return the subsidiaries as a collection', () => {
       expect(this.subsidiaries).to.have.property('items')
       expect(this.subsidiaries).to.have.property('count', 0)
@@ -190,6 +200,11 @@ describe('company subsidiaries controller', () => {
       )
 
       this.subsidiaries = this.middlewareParameters.resMock.render.firstCall.args[1].subsidiaries
+    })
+
+    it('should set the heading', () => {
+      const actual = this.middlewareParameters.resMock.render.firstCall.args[1].heading
+      expect(actual).to.equal('Subsidiaries of SAMSUNG BIOEPIS UK LIMITED')
     })
 
     it('should return the subsidiaries as a collection', () => {

@@ -7,14 +7,14 @@ const { getOptions } = require('../../../../lib/options')
 
 async function populateForm (req, res, next) {
   const token = req.session.token
-  const investmentData = get(res, 'locals.investmentData', {})
-  const createdOn = investmentData.created_on
+  const investment = get(res, 'locals.investment', {})
+  const createdOn = investment.created_on
 
   const form = get(res, 'locals.form')
   const defaults = {
     labels: valueLabels.edit,
-    state: assign({}, investmentData, {
-      average_salary: get(investmentData, 'average_salary.id'),
+    state: assign({}, investment, {
+      average_salary: get(investment, 'average_salary.id'),
     }),
     options: {
       averageSalaryRange: await getOptions(token, 'salary-range', { createdOn }),

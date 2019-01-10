@@ -7,16 +7,16 @@ const {
 } = require('../labels')
 const { getDataLabels } = require('../../../lib/controller-utils')
 const {
-  transformInvestmentDataForView,
+  transformInvestmentForView,
   transformInvestmentValueForView,
   transformInvestmentRequirementsForView,
 } = require('../transformers')
 
 function detailsGetHandler (req, res, next) {
-  if (get(res, 'locals.investmentData')) {
-    const transformedDetails = transformInvestmentDataForView(res.locals.investmentData)
-    const transformedValue = transformInvestmentValueForView(res.locals.investmentData)
-    const transformedRequirements = transformInvestmentRequirementsForView(res.locals.investmentData)
+  if (get(res, 'locals.investment')) {
+    const transformedDetails = transformInvestmentForView(res.locals.investment)
+    const transformedValue = transformInvestmentValueForView(res.locals.investment)
+    const transformedRequirements = transformInvestmentRequirementsForView(res.locals.investment)
 
     // When getting requirements, strip out empty or null rows
     // Then if there are no requirements, or the only one is the uk company,
