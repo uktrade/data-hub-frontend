@@ -28,20 +28,32 @@ describe('#renderBusinessDetails', () => {
         expect(this.middlewareParameters.resMock.render.firstCall.args[1].heading).to.equal('Business details')
       })
 
-      it('set the known as details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].knownAsDetails).to.not.be.undefined
+      it('should set the known as details', () => {
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].knownAsDetails).to.exist
       })
 
-      it('set the One List details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].oneListDetails).to.not.be.undefined
+      it('should set the One List details', () => {
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].oneListDetails).to.exist
       })
 
-      it('set the business hierarchy details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].businessHierarchyDetails).to.not.be.undefined
+      it('should set the business hierarchy details', () => {
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].businessHierarchyDetails).to.exist
       })
 
-      it('set the addresses details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].addressesDetails).to.not.be.undefined
+      it('should set the sector details', () => {
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].sectorDetails).to.exist
+      })
+
+      it('should set the region details', () => {
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].regionDetails).to.exist
+      })
+
+      it('should set the addresses details', () => {
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].addressesDetails).to.exist
+      })
+
+      it('should set the additional information details', () => {
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].additionalInformationDetails).to.exist
       })
     }
 

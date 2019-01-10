@@ -36,7 +36,6 @@ function transformInteractionResponseToViewRecord ({
   net_company_receipt,
   dit_team,
   contact,
-  policy_issue_type,
   policy_areas,
   policy_issue_types,
   was_policy_feedback_provided,
@@ -63,7 +62,6 @@ function transformInteractionResponseToViewRecord ({
     dit_team,
     service,
     service_delivery_status,
-    policy_issue_type,
     grant_amount_offered: grant_amount_offered ? {
       type: 'currency',
       name: grant_amount_offered,

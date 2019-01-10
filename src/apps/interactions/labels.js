@@ -12,25 +12,9 @@ const interaction = {
   investment_project: 'Investment project',
   documents: 'Documents',
   was_policy_feedback_provided: 'Did the contact give any feedback on government policy?',
-  policy_issue_type: 'Policy issue type',
   policy_issue_types: 'Policy issue types',
   policy_areas: 'Policy area',
   policy_feedback_notes: 'Policy feedback notes',
-}
-
-const policyFeedback = {
-  company: 'Company',
-  subject: 'Subject',
-  notes: 'Notes',
-  contact: 'Contact',
-  date: 'Date of interaction',
-  dit_adviser: 'DIT adviser',
-  service: 'Service',
-  policy_issue_type: 'Policy issue type',
-  policy_areas: 'Policy area',
-  dit_team: 'Service provider',
-  communication_channel: 'Communication channel',
-  documents: 'Documents',
 }
 
 const serviceDelivery = {
@@ -51,7 +35,6 @@ const serviceDelivery = {
   investment_project: 'Investment project',
   documents: 'Documents',
   was_policy_feedback_provided: 'Did the contact give any feedback on government policy?',
-  policy_issue_type: 'Policy issue type',
   policy_issue_types: 'Policy issue types',
   policy_areas: 'Policy area',
   policy_feedback_notes: 'Policy feedback notes',
@@ -66,11 +49,11 @@ const filters = {
   dit_team: 'Teams',
   sector_descends: 'Sector',
   service: 'Service',
+  was_policy_feedback_provided: 'Policy feedback',
 }
 
 module.exports = {
   interaction,
   serviceDelivery,
-  policyFeedback,
   filters,
 }

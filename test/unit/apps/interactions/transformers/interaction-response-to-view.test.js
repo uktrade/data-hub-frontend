@@ -1,7 +1,7 @@
 const config = require('~/config')
 const transformInteractionResponseToViewRecord = require('~/src/apps/interactions/transformers/interaction-response-to-view')
 const mockInteraction = require('~/test/unit/data/interactions/interaction.json')
-const policyFeedbackData = require('~/test/unit/data/interactions/policy-feedback.json')
+const mockInteractionWithPolicyFeedback = require('~/test/unit/data/interactions/interaction-with-feedback.json')
 
 config.archivedDocumentsBaseUrl = 'http://base'
 
@@ -393,10 +393,10 @@ describe('#transformInteractionResponsetoViewRecord', () => {
     })
   })
 
-  context('when provided with a policy feedback', () => {
+  context('when provided with an interaction with policy feedback', () => {
     context('and one policy area', () => {
       beforeEach(() => {
-        this.transformed = transformInteractionResponseToViewRecord(policyFeedbackData)
+        this.transformed = transformInteractionResponseToViewRecord(mockInteractionWithPolicyFeedback)
       })
 
       it('should transform to display format', () => {
@@ -407,15 +407,15 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           },
           'Contact': {
             url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
-            name: 'Cleve Wisoky',
+            name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
           },
           'Service provider': {
             id: '16362a92-9698-e211-a939-e4115bead28a',
             name: 'UKTI Chief Executive\'s Office',
           },
           'Service': {
-            id: 'PF1',
-            name: 'Policy Feedback',
+            id: 'd320b92b-3499-e211-a939-e4115bead28a',
+            name: 'Investment - Company Visit',
           },
           'Subject': 'ad',
           'Notes': 'Labore culpa quas cupiditate voluptatibus magni.',
@@ -436,11 +436,8 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           'Documents': {
             name: 'There are no files or documents',
           },
-          'Policy area': 'p a 1',
-          'Policy issue type': {
-            name: 'p i t 1',
-            id: 'pit1',
-          },
+          'Policy issue types': 'Domestic',
+          'Policy feedback notes': 'Labore culpa quas cupiditate voluptatibus magni.',
         })
       })
     })
@@ -448,7 +445,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
     context('and multiple policy areas', () => {
       beforeEach(() => {
         this.transformed = transformInteractionResponseToViewRecord({
-          ...policyFeedbackData,
+          ...mockInteractionWithPolicyFeedback,
           policy_areas: [{
             name: 'p a 1',
             id: 'pa1',
