@@ -351,7 +351,7 @@
 //           id: '1',
 //           name: 'Fred ltd.',
 //         },
-//         investmentData: {
+//         investment: {
 //           id: '3',
 //           name: 'Invest in things',
 //         },
@@ -550,7 +550,7 @@
 //           id: '1',
 //           name: 'Fred ltd.',
 //         },
-//         investmentData: {
+//         investment: {
 //           id: '3',
 //         },
 //         interaction: interactionData,

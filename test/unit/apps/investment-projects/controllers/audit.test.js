@@ -25,7 +25,7 @@ describe('Investment audit controller', () => {
       },
     }, {
       locals: {
-        investmentData: {},
+        investment: {},
       },
       breadcrumb: this.breadcrumbStub,
       render: (template, data) => {
@@ -58,7 +58,7 @@ describe('Investment audit controller', () => {
       },
     }, {
       locals: {
-        investmentData: {},
+        investment: {},
       },
       breadcrumb: this.breadcrumbStub,
       render: (template, data) => {
@@ -107,7 +107,7 @@ describe('Investment audit controller', () => {
       },
     }, {
       locals: {
-        investmentData: {},
+        investment: {},
       },
       breadcrumb: this.breadcrumbStub,
       render: (template, data) => {
@@ -154,7 +154,7 @@ describe('Investment audit controller', () => {
       },
     }, {
       locals: {
-        investmentData: {},
+        investment: {},
       },
       breadcrumb: this.breadcrumbStub,
       render: (template, data) => {
@@ -201,7 +201,7 @@ describe('Investment audit controller', () => {
       },
     }, {
       locals: {
-        investmentData: {},
+        investment: {},
       },
       breadcrumb: this.breadcrumbStub,
       render: (template, data) => {

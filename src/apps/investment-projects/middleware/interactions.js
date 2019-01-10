@@ -3,7 +3,7 @@ const { getInvestment } = require('../repos')
 function setInteractionsDetails (req, res, next) {
   res.locals.interactions = {
     returnLink: `/investment-projects/${req.params.investmentId}/interactions/`,
-    entityName: res.locals.investmentData.name,
+    entityName: res.locals.investment.name,
     query: { investment_project_id: req.params.investmentId },
     view: 'investment-projects/views/interactions',
     createKind: 'interaction',

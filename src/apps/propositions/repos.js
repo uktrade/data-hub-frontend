@@ -40,7 +40,7 @@ function abandonProposition (token, proposition) {
 
 function completeProposition (req, res) {
   const options = {
-    url: `${config.apiRoot}/v3/investment/${res.locals.investmentData.id}/proposition/${req.params.propositionId}/complete`,
+    url: `${config.apiRoot}/v3/investment/${res.locals.investment.id}/proposition/${req.params.propositionId}/complete`,
     method: 'POST',
   }
 

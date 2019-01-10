@@ -30,7 +30,7 @@ describe('investment uk company', () => {
     }
     this.res = {
       locals: {
-        investmentData: {
+        investment: {
           name: 'investment',
         },
       },

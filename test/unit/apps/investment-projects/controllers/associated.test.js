@@ -50,7 +50,7 @@ describe('investment associated controller', () => {
     }
     this.res = {
       locals: {
-        investmentData: {
+        investment: {
           name: 'investment',
         },
       },
