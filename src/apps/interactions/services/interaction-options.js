@@ -5,6 +5,7 @@ const { getAdvisers } = require('../../adviser/repos')
 const { filterActiveAdvisers } = require('../../adviser/filters')
 const { getActiveEvents } = require('../../events/repos')
 const { transformObjectToOption, transformContactToOption } = require('../../transformers')
+const { transformAdviserToOption } = require('../../adviser/transformers')
 const { getOptions } = require('../../../lib/options')
 const { SERVICE_DELIVERY_STATUS_COMPLETED } = require('../constants')
 
@@ -42,7 +43,7 @@ async function getCommonOptions (token, createdOn, req, res) {
   })
 
   const commonOptions = {
-    advisers: activeAdvisers.map(transformObjectToOption),
+    advisers: activeAdvisers.map(transformAdviserToOption),
     contacts: contacts.filter(contact => !contact.archived).map(transformContactToOption),
     teams: await getOptions(token, 'team', { createdOn }),
   }

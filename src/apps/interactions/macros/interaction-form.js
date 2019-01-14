@@ -21,15 +21,16 @@ module.exports = function ({
   returnText,
   buttonText,
   contacts = [],
-  advisers = [],
   services = [],
   teams = [],
   channels = [],
+  advisers = [],
   hiddenFields,
   areas,
   types,
 }) {
   return {
+    class: 'js-vue-wrapper',
     returnLink,
     returnText,
     buttonText,

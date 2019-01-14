@@ -13,6 +13,7 @@ const eventFormConfig = ({
   ukRegions,
 }) => {
   return {
+    class: 'js-vue-wrapper',
     method: 'post',
     buttonText: eventId ? 'Save and return' : 'Add event',
     returnText: eventId ? 'Return without saving' : 'Cancel',
@@ -100,11 +101,13 @@ const eventFormConfig = ({
         options: services,
       }),
       {
-        macroName: 'MultipleChoiceField',
-        name: 'organiser',
+        macroName: 'Typeahead',
+        name: 'dit_adviser',
+        entity: 'adviser',
         label: 'Organiser',
-        optional: true,
-        initialOption: '-- Select organiser --',
+        classes: 'c-form-group c-form-group--no-filter',
+        placeholder: 'Search organiser',
+        multipleSelect: false,
         options: advisers,
       },
       {
