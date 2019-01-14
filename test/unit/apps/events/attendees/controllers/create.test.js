@@ -52,6 +52,7 @@ describe('Create attendee controller', () => {
           kind: 'service_delivery',
           service: '9484b82b-3499-e211-a939-e4115bead28a',
           subject: 'Attended A United Kingdom Get together',
+          was_policy_feedback_provided: false,
         })
         .reply(200, {})
 
