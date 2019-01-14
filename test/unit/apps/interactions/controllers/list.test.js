@@ -46,6 +46,11 @@ describe('interaction list', () => {
         { id: 's2', name: 's2', disabled_on: null },
         { id: 's3', name: 's3', disabled_on: null },
       ],
+      adviserOptions: {
+        results: [
+          { id: 'ad1', name: 'ad1', is_active: true, dit_team: { name: 'ad1' } },
+        ],
+      },
     }
 
     nock(config.apiRoot)
@@ -55,6 +60,8 @@ describe('interaction list', () => {
       .reply(200, this.metadataMock.teamOptions)
       .get('/metadata/sector/?level__lte=0')
       .reply(200, this.metadataMock.sectorOptions)
+      .get('/adviser/?limit=100000&offset=0')
+      .reply(200, this.metadataMock.adviserOptions)
   })
 
   context('#renderInteractionList', () => {
