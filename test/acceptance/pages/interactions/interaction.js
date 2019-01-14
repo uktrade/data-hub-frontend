@@ -37,7 +37,7 @@ module.exports = {
     serviceStatus: '#field-service_delivery_status',
     grantOffered: '#field-grant_amount_offered',
     netReceipt: '#field-net_company_receipt',
-    ditAdviser: '#field-dit_adviser',
+    ditAdviser: '#dit_adviser__typeahead .multiselect__single',
     communicationChannel: '#field-communication_channel',
     eventYes: 'label[for=field-is_event-1]',
     eventNo: 'label[for=field-is_event-2]',
@@ -50,7 +50,7 @@ module.exports = {
     policyIssueType5: 'label[for=field-policy_issue_types-5]',
     policyArea: '#field-policy_areas',
     policyFeedbackNotes: '#field-policy_feedback_notes',
-    teamSearch: '#dit_team__typeahead .multiselect__input',
+    teamSearch: '#dit_team__typeahead .multiselect__single',
   },
   commands: [
     {
@@ -72,7 +72,7 @@ module.exports = {
           .waitForElementVisible(`@${saveButton}`)
           .api.perform((done) => {
             this.getListOption('@contact', (contact) => {
-              interaction.contact = contact
+              interaction.contact = contact.split(',')[0].trim()
               done()
             })
           })
@@ -93,10 +93,10 @@ module.exports = {
             })
           })
           .perform((done) => {
-            this.getListOption('@ditAdviser', (ditAdviser) => {
-              interaction.ditAdviser = ditAdviser
-              done()
+            this.getText('@ditAdviser', (result) => {
+              interaction.ditAdviser = result.value
             })
+            done()
           })
           .perform((done) => {
             if (!isServiceDelivery) {
@@ -166,10 +166,10 @@ module.exports = {
             })
           })
           .perform((done) => {
-            this.getListOption('@ditAdviser', (ditAdviser) => {
-              interaction.ditAdviser = ditAdviser
-              done()
+            this.getText('@ditAdviser', (result) => {
+              interaction.ditAdviser = result.value
             })
+            done()
           })
           .perform((done) => {
             if (!isServiceDelivery) {

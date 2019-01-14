@@ -35,7 +35,10 @@ function getExpected (key, state) {
 
     if (key === 'investmentProject.clientContact') {
       // contact in investmentProjects create form has ', job_title` appended, this split removes that to run this check
-      return { value: expectedText.split(',')[0] }
+      return { value: expectedText.split(',')[0].trim() }
+    }
+    if (key === 'interaction.contact') {
+      return { value: expectedText.split(',')[0].trim() }
     }
 
     return { value: expectedText }
