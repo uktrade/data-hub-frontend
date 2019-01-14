@@ -7,7 +7,7 @@ const { collectionFilterLabels, requirementsLabels } = require('./labels')
 const FILTER_CONSTANTS = require('../../lib/filter-constants')
 const PRIMARY_SECTOR_NAME = FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.PRIMARY.NAME
 
-const investmentFiltersFields = function ({ currentAdviserId, sectorOptions, userAgent }) {
+const investmentFiltersFields = function ({ currentAdviserId, sectorOptions, adviserOptions, userAgent }) {
   return [
     {
       macroName: 'MultipleChoiceField',
@@ -31,6 +31,9 @@ const investmentFiltersFields = function ({ currentAdviserId, sectorOptions, use
       macroName: 'Typeahead',
       name: 'adviser',
       entity: 'adviser',
+      classes: 'c-form-group c-form-group--smaller c-form-group--filter',
+      placeholder: 'Search adviser',
+      options: adviserOptions,
     },
     {
       macroName: 'MultipleChoiceField',
