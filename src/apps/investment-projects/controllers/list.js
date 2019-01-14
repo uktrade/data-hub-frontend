@@ -1,10 +1,13 @@
 const qs = require('querystring')
-const { merge, omit } = require('lodash')
+const { merge, omit, get } = require('lodash')
 
 const { buildSelectedFiltersSummary, buildFieldsWithSelectedEntities } = require('../../builders')
 const { getOptions } = require('../../../lib/options')
 const { investmentFiltersFields, investmentSortForm } = require('../macros')
 const { buildExportAction } = require('../../../lib/export-helper')
+const { transformAdviserToOption } = require('../../adviser/transformers')
+const { filterActiveAdvisers } = require('../../adviser/filters')
+const { getAdvisers } = require('../../adviser/repos')
 
 const FILTER_CONSTANTS = require('../../../lib/filter-constants')
 const QUERY_STRING = FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.PRIMARY.QUERY_STRING
@@ -23,10 +26,18 @@ async function renderInvestmentList (req, res, next) {
     })
 
     const sectorOptions = await getOptions(token, SECTOR, { queryString })
+    const advisers = await getAdvisers(token)
+    const currentAdviser = get(res.locals, 'interaction.dit_adviser.id')
+
+    const activeAdvisers = filterActiveAdvisers({
+      advisers: advisers.results,
+      includeAdviser: currentAdviser,
+    })
 
     const filtersFields = investmentFiltersFields({
       currentAdviserId,
       sectorOptions,
+      adviserOptions: activeAdvisers.map(transformAdviserToOption),
       userAgent: res.locals.userAgent,
     })
 
