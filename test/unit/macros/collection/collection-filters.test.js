@@ -41,12 +41,13 @@ describe('CollectionFilters macro', () => {
           this.filter2,
         ],
       })
+
       const renderedFilter1 = component.querySelector('#group-field-who-are-you')
       const renderedFilter2 = component.querySelector('#group-field-fav-colour')
       const rendererFilter1Inputs = renderedFilter1.querySelectorAll('[type=radio]')
       const rendererFilter2Options = renderedFilter2.querySelectorAll('option')
 
-      expect(component.className).to.contain('c-collection-filters js-AutoSubmit')
+      expect(component.className).to.contain('js-vue-wrapper')
       expect(renderedFilter1).to.exist
       expect(renderedFilter2).to.exist
       expect(rendererFilter1Inputs).to.have.length(2)

@@ -1,6 +1,17 @@
 const config = require('~/config')
 
 describe('Investment list controller', () => {
+  const metadataMock = {
+    sectorOptions: [
+      { id: 's1', name: 's1', disabled_on: null },
+    ],
+    adviserOptions: {
+      results: [
+        { id: 'ad1', name: 'ad1', is_active: true, dit_team: { name: 'ad1' } },
+      ],
+    },
+  }
+
   beforeEach(() => {
     this.req = {
       session: {
@@ -29,9 +40,9 @@ describe('Investment list controller', () => {
 
     nock(config.apiRoot)
       .get('/metadata/sector/?level__lte=0')
-      .reply(200, [
-        { id: 's1', name: 's1', disabled_on: null },
-      ])
+      .reply(200, metadataMock.sectorOptions)
+      .get('/adviser/?limit=100000&offset=0')
+      .reply(200, metadataMock.adviserOptions)
   })
 
   describe('#renderInvestmentList', () => {
