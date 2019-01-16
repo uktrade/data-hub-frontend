@@ -1,8 +1,7 @@
 @import "../tools/mixins";
 
-$_first-element-spacing: $default-spacing-unit * 3;
-
 .c-local-header {
+  padding-bottom: $default-spacing-unit;
   @include clearfix;
 
   .l-container {
@@ -13,18 +12,8 @@ $_first-element-spacing: $default-spacing-unit * 3;
     margin-top: $default-spacing-unit;
   }
 
-  .c-local-header__heading:first-child {
-    margin: $_first-element-spacing 0 $default-spacing-unit;
-  }
-
   .c-message-list {
     margin-bottom: $default-spacing-unit;
-
-    &+.grid-row {
-      .c-local-header__heading:first-child {
-        margin: 0 0 $default-spacing-unit;
-      }
-    }
   }
 
   .c-entity-search {
@@ -32,9 +21,9 @@ $_first-element-spacing: $default-spacing-unit * 3;
   }
 
   .c-breadcrumb {
-    margin-top: $default-spacing-unit / 2;
+    margin: $default-spacing-unit / 2 0 $default-spacing-unit * 3;
 
-    & + .grid-row {
+    & + .govuk-grid-row {
       .c-entity-search {
         margin-top: 0;
       }
@@ -47,6 +36,7 @@ $_first-element-spacing: $default-spacing-unit * 3;
 
   .c-progress {
     margin-top: $default-spacing-unit;
+    margin-bottom: $default-spacing-unit * 1.5;
   }
 
   .c-progress__stage {
@@ -65,6 +55,11 @@ $_first-element-spacing: $default-spacing-unit * 3;
     background-color: $white;
     color: $fuschia;
     border-color: $fuschia;
+  }
+
+  .c-entity-search__aggregations{
+    position: relative;
+    top: $default-spacing-unit;
   }
 }
 
@@ -146,6 +141,7 @@ $_first-element-spacing: $default-spacing-unit * 3;
   p {
     margin-top: 0;
     margin-bottom: 0;
+
     &:not(:last-child) {
       margin-bottom: $default-spacing-unit / 2;
     }
