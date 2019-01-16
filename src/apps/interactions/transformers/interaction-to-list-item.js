@@ -12,8 +12,10 @@ function transformInteractionToListItem ({
   dit_adviser,
   dit_team,
   service,
+  was_policy_feedback_provided,
 }) {
   return {
+    was_policy_feedback_provided,
     id,
     type: 'interaction',
     name: subject || 'No subject',
@@ -48,7 +50,11 @@ function transformInteractionToListItem ({
         label: 'Service',
         value: service,
       },
-    ],
+    ].concat(was_policy_feedback_provided ? {
+      label: 'Type',
+      type: 'badge',
+      value: INTERACTION_NAMES.policy_feedback,
+    } : null),
   }
 }
 
