@@ -67,7 +67,7 @@
                 {{ data.name }}
               {% endif %}
             {% else %}
-              {{ data }}
+              {{ data | safe }}
             {% endif %}
 
             {% if data.actions %}

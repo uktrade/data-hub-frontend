@@ -49,7 +49,16 @@
   },
   "service_delivery_status": null,
   "subject": "ad",
-  "notes": "Labore culpa quas cupiditate voluptatibus magni.",
+  "notes": "Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.",
   "archived_documents_url_path": "",
-  "policy_areas": []
+  "was_policy_feedback_provided": true,
+  "policy_issue_types": [{
+    "name": "EU exit",
+    "id": "c1f1e29b-17ba-402f-ac98-aa23f9dc9bcb"
+  }],
+  "policy_areas": [{
+    "name": "Access to Public Funding (inc. EU funding)",
+    "id": "9feefd50-7f4c-4b73-a33e-779121d40419"
+  }],
+  "policy_feedback_notes": "Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni."
 }

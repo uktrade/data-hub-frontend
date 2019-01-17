@@ -33,6 +33,7 @@ async function createAttendee (req, res, next) {
       kind: 'service_delivery',
       service: get(event, 'service.id'),
       subject: `Attended ${event.name}`,
+      was_policy_feedback_provided: false,
     }
 
     await saveInteraction(token, serviceDelivery)

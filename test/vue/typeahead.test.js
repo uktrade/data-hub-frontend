@@ -151,19 +151,18 @@ describe('Typeahead', () => {
   })
 
   describe('methods', () => {
-    describe('#asyncFind', () => {
+    describe('#asyncSearch', () => {
       let instance
-      let asyncFind
+      let asyncSearch
 
       beforeEach(() => {
         instance = {
           name: 'adviser',
           entity: 'adviser',
+          multipleSelectOptions: false,
+          options: [],
         }
-      })
-
-      beforeEach(() => {
-        asyncFind = Typeahead.methods.asyncFind.bind(instance)
+        asyncSearch = Typeahead.methods.asyncSearch.bind(instance)
       })
 
       context('when the user enters more than 3 characters', () => {
@@ -176,7 +175,7 @@ describe('Typeahead', () => {
             }],
           })
 
-          asyncFind('fred')
+          asyncSearch('fred')
           setTimeout(done, 600)
         })
 
@@ -197,7 +196,7 @@ describe('Typeahead', () => {
       context('when the user enters less than 3 characters', () => {
         beforeEach((done) => {
           axios.get = sinon.stub().resolves()
-          asyncFind('fr')
+          asyncSearch('fr')
           setTimeout(done, 600)
         })
 
@@ -211,12 +210,13 @@ describe('Typeahead', () => {
       })
     })
 
-    describe('#find', () => {
+    describe('#search', () => {
       const wrapper = mount(Typeahead, {
         propsData: {
           name: 'dit_team',
           label: 'Team',
           placeholder: 'Search teams',
+          isAsync: false,
           model: `[{
             "value": "cff02898-9698-e211-a939-e4115bead28a",
             "label": "Aberdeen City Council"
@@ -312,6 +312,7 @@ describe('Typeahead', () => {
         name: 'adviser',
         entity: 'adviser',
         autoSubmit: true,
+        multiple: true,
         id: 'xyz',
       }
     })
