@@ -13,6 +13,8 @@ const eventFiltersFields = ({ advisers, userAgent }) => {
       macroName: 'Typeahead',
       name: 'organiser',
       entity: 'adviser',
+      classes: 'c-form-group c-form-group--smaller c-form-group--filter',
+      placeholder: 'Search organiser',
       options: advisers.map(transformObjectToOption),
     },
     {

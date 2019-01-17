@@ -6,6 +6,12 @@
   width: 100%;
 }
 
+.multiselect__placeholder {
+  color: $black;
+  margin-bottom: 0;
+  padding-top: 0;
+}
+
 .multiselect__content-wrapper {
   border: 1px solid $grey-1;
   border-top: 0;
@@ -16,19 +22,27 @@
 .multiselect,
 .multiselect__input,
 .multiselect__single {
-  @include core-font(16);
+  margin-bottom: 0;
+  padding: 0;
+  min-height: auto;
+  line-height: 2;
 }
 
 .multiselect__tags {
-  border: 1px solid $grey-1;
+  border: 1px solid $black;
   border-radius: 0;
+  font-size: 1em;
+  padding: 0 $default-spacing-unit / 2;
+  min-height: auto;
 }
 
 .multiselect__tag {
+  font-size: 14px;
   background: $highlight-colour;
   border-radius: 0;
   color: $text-colour;
-  margin-bottom: 0;
+  margin: 0 $default-spacing-unit / 2 0 0;
+  overflow: initial;
 }
 
 .multiselect__input:focus,
@@ -74,4 +88,38 @@
 
 .multiselect__option-label {
   margin-bottom: $default-spacing-unit / 4;
+}
+
+.c-form-group--no-filter .multiselect__tags {
+  border-width: 2px;
+}
+
+
+.multiselect__spinner {
+  background: transparent;
+  height: 2em;
+  @include media(desktop) {
+    height: 2.5em;
+  }
+
+  &::after {
+    z-index: 1;
+  }
+}
+
+.c-form-group--no-filter .multiselect__placeholder,
+.c-form-group--no-filter .multiselect__single,
+.c-form-group--no-filter .multiselect__input {
+  font-size: 16px;
+
+  &:focus {
+    font-size: 16px;
+  }
+
+  @include media (tablet) {
+    font-size: 19px;
+    &:focus {
+      font-size: 19px;
+    }
+  }
 }

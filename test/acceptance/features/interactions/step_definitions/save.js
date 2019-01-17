@@ -145,13 +145,15 @@ Then(/^there are interaction policy feedback fields$/, async function () {
 
 Then(/^(interaction|policy feedback) fields are pre-populated$/, async function (kind) {
   const assertIsSet = (result) => client.expect(result.value.length).to.be.greaterThan(0)
+
   // TODO test user does not have a DIT team
   // await Interaction.getValue('@serviceProvider', assertIsSet)
 
   await Interaction.getValue('@dateOfInteractionYear', assertIsSet)
   await Interaction.getValue('@dateOfInteractionMonth', assertIsSet)
   await Interaction.getValue('@dateOfInteractionDay', assertIsSet)
-  await Interaction.getValue('@ditAdviser', assertIsSet)
+
+  await client.expect(Interaction.getText('@ditAdviser')).not.to.be.empty
 })
 
 Then(/^the interaction events is displayed$/, async function () {

@@ -125,22 +125,37 @@ describe('Interaction edit controller (Service delivery)', () => {
     this.activeInactiveAdviserData = [{
       id: '1',
       name: 'Jeff Smith',
+      dit_team: {
+        name: 'London',
+      },
       is_active: true,
     }, {
       id: '2',
       name: 'John Smith',
+      dit_team: {
+        name: 'London',
+      },
       is_active: true,
     }, {
       id: '3',
       name: 'Zac Smith',
+      dit_team: {
+        name: 'London',
+      },
       is_active: true,
     }, {
       id: '4',
       name: 'Fred Smith',
+      dit_team: {
+        name: 'London',
+      },
       is_active: false,
     }, {
       id: '5',
       name: 'Jim Smith',
+      dit_team: {
+        name: 'London',
+      },
       is_active: false,
     }]
 
@@ -224,7 +239,7 @@ describe('Interaction edit controller (Service delivery)', () => {
       expect(fields).to.deep.equal([
         { name: 'date', label: 'Date of service delivery', macroName: 'DateFieldset' },
         { name: 'contact', label: 'Contact', macroName: 'MultipleChoiceField' },
-        { name: 'dit_adviser', label: 'DIT adviser', macroName: 'MultipleChoiceField' },
+        { name: 'dit_adviser', label: 'DIT adviser', macroName: 'Typeahead' },
         { name: 'dit_team', label: 'Service provider', macroName: 'MultipleChoiceField' },
         { name: 'is_event', label: 'Is this an event?', macroName: 'MultipleChoiceField', type: 'radio' },
         { name: 'event', label: 'Event', macroName: 'MultipleChoiceField' },
@@ -274,9 +289,9 @@ describe('Interaction edit controller (Service delivery)', () => {
     it('should provide a list of advisers', () => {
       const adviserField = find(this.interactionForm.children, ({ name }) => name === 'dit_adviser')
       expect(adviserField.options).to.deep.equal([
-        { value: '1', label: 'Jeff Smith' },
-        { value: '2', label: 'John Smith' },
-        { value: '3', label: 'Zac Smith' },
+        { value: '1', label: 'Jeff Smith', subLabel: 'London' },
+        { value: '2', label: 'John Smith', subLabel: 'London' },
+        { value: '3', label: 'Zac Smith', subLabel: 'London' },
       ])
     })
 
@@ -477,7 +492,7 @@ describe('Interaction edit controller (Service delivery)', () => {
         {
           name: 'dit_adviser',
           label: 'DIT adviser',
-          macroName: 'MultipleChoiceField',
+          macroName: 'Typeahead',
           value: '8036f207-ae3e-e611-8d53-e4115bed50dc',
         },
         { name: 'dit_team', label: 'Service provider', macroName: 'MultipleChoiceField', value: '222' },
@@ -560,9 +575,9 @@ describe('Interaction edit controller (Service delivery)', () => {
     it('should provide a list of advisers', () => {
       const adviserField = find(this.interactionForm.children, ({ name }) => name === 'dit_adviser')
       expect(adviserField.options).to.deep.equal([
-        { value: '1', label: 'Jeff Smith' },
-        { value: '2', label: 'John Smith' },
-        { value: '3', label: 'Zac Smith' },
+        { value: '1', label: 'Jeff Smith', subLabel: 'London' },
+        { value: '2', label: 'John Smith', subLabel: 'London' },
+        { value: '3', label: 'Zac Smith', subLabel: 'London' },
       ])
     })
 
@@ -667,7 +682,7 @@ describe('Interaction edit controller (Service delivery)', () => {
         {
           name: 'dit_adviser',
           label: 'DIT adviser',
-          macroName: 'MultipleChoiceField',
+          macroName: 'Typeahead',
           value: '8036f207-ae3e-e611-8d53-e4115bed50dc',
         },
         { name: 'dit_team', label: 'Service provider', macroName: 'MultipleChoiceField', value: '222' },
