@@ -41,11 +41,11 @@ describe('Investment audit controller', () => {
   it('should send a parsed copy of audit data to the view', (done) => {
     const expected = [{
       name: 'Duke Ellington',
-      timestamp: '2 June 2017',
+      timestamp: '2017-06-02T13:18:06',
       changes: 3,
     }, {
       name: 'Fred Smith',
-      timestamp: '2 June 2017',
+      timestamp: '2017-06-02T11:01:05',
       changes: 4,
     }]
 
@@ -141,7 +141,7 @@ describe('Investment audit controller', () => {
 
     const expected = [{
       name: 'Fred Smith',
-      timestamp: '14 February 2017',
+      timestamp: '2017-02-14T14:49:17',
       changes: 0,
     }]
 
@@ -188,7 +188,7 @@ describe('Investment audit controller', () => {
 
     const expected = [{
       name: 'Fred Smith',
-      timestamp: '14 February 2017',
+      timestamp: '2017-02-14T14:49:17',
       changes: 0,
     }]
 
@@ -217,8 +217,8 @@ describe('Investment audit controller', () => {
 
   describe('formatAuditLog', () => {
     beforeEach(() => {
-      this.timestamp = '2017-08-09T13:25:29.568665Z'
-      this.formattedDate = '9 August 2017'
+      this.timestamp = '2017-08-09T12:25:29.568665Z'
+      this.formattedDate = '2017-08-09T13:25:29'
       this.changes = {
         'thing': 'a thing',
         'other thing': 'another thing',

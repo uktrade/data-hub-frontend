@@ -5,7 +5,10 @@
 
   <ul class="event-list ">
     {% for logEntry in auditLog %}      <li class="event-list__item">
-      <h4 class="event-list__item__heading govuk-heading-s">{{ logEntry.timestamp }} <span class="event-list__item__heading__recede">at {{ logEntry.timestamp | formatDateTime('h:mma') }}  by {{ logEntry.name | default('Unknown adviser') }} </span></h4><!-- at {{ logEntry.timestamp | formatDateTime('h:mma')  }} (GMT) -->
+      <h4 class="event-list__item__heading govuk-heading-s">{{ logEntry.timestamp | formatDate }} <span class="event-list__item__heading__recede">at {{ logEntry.timestamp | formatDateTime('h:mma') }}  by {{ logEntry.name | default('Unknown adviser') }} </span></h4><!-- at {{ logEntry.timestamp | formatDateTime('h:mma')  }} (GMT) -->
+      <hr>
+      {{  logEntry.timestamp   }}
+      <hr>
       <p class="event-list__item_text">
         <span class=""><strong>{{ logEntry.changes }} {{ 'item' | pluralise(logEntry.changes) }}</strong> changed by {{ logEntry.name | default('Unknown adviser') }} </span>
       </p>

@@ -1,4 +1,4 @@
-const { longDateFormat, mediumDateFormat } = require('../config')
+const { longDateFormat, mediumDateFormat, iso8601DateTimeFormat } = require('../config')
 const format = require('date-fns/format')
 
 function formatLongDate (dateString = []) {
@@ -12,6 +12,14 @@ function formatLongDate (dateString = []) {
 function formatMediumDate (dateString = []) {
   if (dateString) {
     return format(parseDateString(dateString), mediumDateFormat)
+  }
+
+  return null
+}
+
+function formatISO8601DateTime (dateString = []) {
+  if (dateString) {
+    return format(parseDateString(dateString), iso8601DateTimeFormat)
   }
 
   return null
@@ -33,5 +41,6 @@ function parseDateString (dateString) {
 module.exports = {
   formatLongDate,
   formatMediumDate,
+  formatISO8601DateTime,
   parseDateString,
 }

@@ -1,12 +1,12 @@
 const { get } = require('lodash')
 
-const { formatLongDate } = require('../../../../common/date')
+const { formatISO8601DateTime } = require('../../../../common/date')
 const { getInvestmentProjectAuditLog } = require('../repos')
 
 function formatAuditLog (logEntry) {
   return {
     name: get(logEntry, 'user.name'),
-    timestamp: formatLongDate(logEntry.timestamp),
+    timestamp: formatISO8601DateTime(logEntry.timestamp),
     changes: (logEntry.changes && Object.keys(logEntry.changes).length) || 0,
   }
 }
