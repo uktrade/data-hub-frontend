@@ -1,4 +1,4 @@
-const { get } = require('lodash')
+const { get, map } = require('lodash')
 
 const GLOBAL_NAV_ITEMS = require('../apps/global-nav-items')
 const logger = require('../../config/logger')
@@ -59,6 +59,17 @@ module.exports = function locals (req, res, next) {
       }
 
       return items.reverse().slice(0, -1)
+    },
+
+    getBreadcrumbs () {
+      const breadcrumbs = res.breadcrumb()
+
+      return map(breadcrumbs, ({ text, href }, i) => {
+        return {
+          text,
+          href: i === breadcrumbs.length - 1 ? null : href,
+        }
+      })
     },
 
     getAssetPath (asset) {

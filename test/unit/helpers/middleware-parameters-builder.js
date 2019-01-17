@@ -1,6 +1,7 @@
 module.exports = ({
   requestBody,
   requestQuery = {},
+  breadcrumb = sinon.stub().returnsThis(),
   company,
   contact,
   interaction,
@@ -17,7 +18,7 @@ module.exports = ({
       query: requestQuery,
     },
     resMock: {
-      breadcrumb: sinon.stub().returnsThis(),
+      breadcrumb,
       render: sinon.spy(),
       redirect: sinon.spy(),
       locals: {
