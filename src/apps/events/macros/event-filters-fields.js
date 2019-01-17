@@ -22,12 +22,14 @@ const eventFiltersFields = ({ advisers, userAgent }) => {
       type: 'date',
       name: 'start_date_after',
       hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
+      inputClass: userAgent.isIE ? 'ie-date-field' : null,
     },
     {
       macroName: 'DateField',
       type: 'date',
       name: 'start_date_before',
       hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
+      inputClass: userAgent.isIE ? 'ie-date-field' : null,
     },
     assign({}, globalFields.countries, {
       name: 'address_country',
