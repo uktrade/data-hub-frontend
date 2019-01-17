@@ -47,8 +47,11 @@ async function renderEditPage (req, res, next) {
         get(res.locals, 'form.errors.messages'),
       )
 
+    if (eventName) {
+      res.breadcrumb(eventName, `/events/${eventId}`)
+    }
+
     res
-      .breadcrumb(eventName, `/events/${eventId}`)
       .breadcrumb(`${eventId ? 'Edit' : 'Add'} event`)
       .render('events/views/edit', {
         eventForm,
