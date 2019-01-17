@@ -7,6 +7,11 @@ const { highlight } = require('./vue/filters')
 Vue.filter('highlight', highlight)
 
 const vueWrappers = Array.from(document.querySelectorAll('.js-vue-wrapper'))
+const noScriptTags = Array.from(document.getElementsByTagName('noscript'))
+
+noScriptTags.forEach((tag) => {
+  tag.parentNode.removeChild(tag)
+})
 
 vueWrappers.forEach((wrapper) => {
   new Vue({

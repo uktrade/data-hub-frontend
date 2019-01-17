@@ -1,4 +1,15 @@
 module.exports = {
+  adviser (advisers) {
+    return {
+      macroName: 'Typeahead',
+      name: 'dit_adviser',
+      entity: 'adviser',
+      classes: 'c-form-group c-form-group--no-filter',
+      placeholder: 'Search adviser',
+      multipleSelect: false,
+      options: advisers,
+    }
+  },
   contact (contacts) {
     return {
       macroName: 'MultipleChoiceField',
@@ -95,14 +106,6 @@ module.exports = {
   date: {
     macroName: 'DateFieldset',
     name: 'date',
-  },
-  adviser (advisers) {
-    return {
-      macroName: 'MultipleChoiceField',
-      name: 'dit_adviser',
-      initialOption: '-- Select adviser --',
-      options: advisers,
-    }
   },
   communicationChannel (channels) {
     return {

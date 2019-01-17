@@ -10,6 +10,7 @@ module.exports = function ({
   sectorOptions,
   serviceOptions,
   teamOptions,
+  adviserOptions,
   userAgent,
 }) {
   return [
@@ -36,7 +37,9 @@ module.exports = function ({
       macroName: 'Typeahead',
       name: 'dit_adviser',
       entity: 'adviser',
+      classes: 'c-form-group c-form-group--smaller c-form-group--filter',
       placeholder: 'Search adviser',
+      options: adviserOptions,
     },
     {
       macroName: 'DateField',
@@ -58,7 +61,9 @@ module.exports = function ({
       macroName: 'Typeahead',
       name: 'dit_team',
       placeholder: 'Search teams',
+      classes: 'c-form-group c-form-group--smaller c-form-group--filter',
       options: teamOptions,
+      isAsync: false,
     },
     {
       macroName: 'MultipleChoiceField',
