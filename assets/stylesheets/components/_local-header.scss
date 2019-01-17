@@ -20,16 +20,12 @@
     margin-top: $baseline-grid-unit * 20.5;
   }
 
-  .c-breadcrumb {
-    margin: $default-spacing-unit / 2 0 $default-spacing-unit * 3;
+  .govuk-breadcrumbs {
+    margin-bottom: $default-spacing-unit * 2;
 
     & + .govuk-grid-row {
       .c-entity-search {
-        margin-top: 0;
-      }
-
-      .c-local-header__heading:first-child {
-        margin-top: 0;
+        margin-top: $baseline-grid-unit * 3;
       }
     }
   }

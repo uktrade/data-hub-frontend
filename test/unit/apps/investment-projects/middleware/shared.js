@@ -151,7 +151,8 @@ describe('Investment shared middleware', () => {
         expect(this.resMock.locals.investmentStatus).to.deep.equal(expectedInvestmentStatus)
       })
       it('should set the breadcrumb', () => {
-
+        expect(this.resMock.breadcrumb).to.be.calledWithExactly(investmentData.name, `/investment-projects/${investmentData.id}`)
+        expect(this.resMock.breadcrumb).to.have.been.calledOnce
       })
       it('should call next once', () => {
         expect(this.nextSpy).to.have.been.calledOnce
