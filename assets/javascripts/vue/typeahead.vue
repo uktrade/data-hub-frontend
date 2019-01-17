@@ -1,5 +1,5 @@
 <template>
-  <div class="c-form-group c-form-group--light c-form-group--smaller c-form-group--filter"
+  <div v-bind:class="classes"
        v-bind:id="name+'__typeahead'">
     <label class="c-form-group__label" :for="id">
       <span class="c-form-group__label-text">{{ label }}</span>
@@ -9,23 +9,24 @@
       open-direction="bottom"
       track-by="value"
       v-model="selectedOptions"
-      :placeholder="placeholder"
-      :model="model"
+      :placeholder="setPlaceHolder"
+      :model="multiSelectModel"
       :clear-on-select="true"
-      :close-on-select="false"
+      :close-on-select="isCloseOnSelect"
       :hide-selected="true"
       :internal-search="false"
       :loading="isLoading"
-      :multiple="allowMultiple"
+      :multiple="multipleSelect"
       :options="options"
       :options-limit="500"
       :show-no-results="false"
       :showLabels="false"
       :searchable="true"
       :id="id"
-      @search-change="searchType">
+      @search-change="queryOptions"
+      @open="clearInputField">
       <template slot="clear" slot-scope="props">
-        <div class="multiselect__clear" v-if="selectedOptions.length"
+        <div class="multiselect__clear" v-if="selectedOptions"
              @mousedown.prevent.stop="clearAll(props.search)"></div>
       </template>
       <template slot="option" slot-scope="props">
@@ -41,9 +42,17 @@
         </div>
       </template>
     </multiselect>
-    <input type="hidden" class="js-ClearInputs--removable-field" :name="name"
-           v-for="(option, index) in selectedOptions"
-           :key="index" :value="option.value">
+
+
+    <template v-if="multipleSelect">
+      <input type="hidden" class="js-ClearInputs--removable-field" :name="name"
+             v-for="(option, index) in selectedOptions"
+             :key="index" :value="option.value">
+    </template>
+    <template v-else>
+      <input type="hidden" class="js-ClearInputs--removable-field" :name="name"
+             :value="hiddenFormValue">
+    </template>
   </div>
 </template>
 <script>
@@ -70,21 +79,26 @@
         type: String,
         required: false,
       },
+      selectedValue: {
+        type: String,
+        required: false,
+      },
       name: {
         type: String,
         required: true,
       },
       placeholder: {
         type: String,
-        required: true
+        required: true,
       },
       model: {
         type: String,
-        required: false
+        required: false,
       },
       value: {
         type: String,
         required: false,
+        default: ''
       },
       formSelector: {
         type: String,
@@ -94,9 +108,39 @@
         type: Boolean,
         default: true,
       },
-      allowMultiple: {
+      multiple: {
         type: Boolean,
+        default: false,
+      },
+      multipleSelect: {
+        type: Boolean,
+        required: false,
         default: true,
+      },
+      closeOnSelect: {
+        type: Boolean,
+        default: false,
+      },
+      classes: {
+        type: String,
+        required: false,
+      },
+      isAsync: {
+        type: Boolean,
+        required: false,
+        default: true,
+      },
+    },
+    created () {
+      if(this.selectedValue) {
+        this.setPlaceHolder = this.getLabelFromValue(this.selectedValue, this.multiSelectModel)
+      }
+
+      this.isCloseOnSelect = !this.useMultipleSelect
+      this.multiSelectModel = null
+
+      if (!this.isAsync) {
+        this.multiSelectModel = this.model
       }
     },
     data () {
@@ -106,23 +150,32 @@
         optionsData: this.model && JSON.parse(this.model),
         isLoading: false,
         id: uuid(),
-
+        multiSelectModel: this.model,
+        useMultipleSelect: this.multipleSelect,
+        hiddenFormValue: this.selectedValue,
+        setPlaceHolder: this.placeholder
       }
     },
     methods: {
-      searchType: function (query) {
-        !!this.model ? this.find(query) : this.asyncFind(query)
+      clearInputField: function () {
+        this.setPlaceHolder = this.placeholder
       },
-      find: debounce(function (query) {
+      getLabelFromValue: function (value, model) {
+        const activeValue = JSON.parse(model).filter((item) => {
+          return item.value === value
+        })
+        return activeValue[0].label
+      },
+      queryOptions: function (query) {
+        this.isAsync ? this.asyncSearch(query) : this.search(query)
+      },
+      search: debounce(function (query) {
         this.options = this.optionsData.filter((obj) => {
           return matchWords(obj.label, query)
         })
       }, 500),
-      asyncFind: debounce(function (query) {
-        if (query.length < 3) {
-          this.options = []
-          return
-        }
+      asyncSearch: debounce(function (query) {
+        if (query.length < 3) {return}
         this.isLoading = true
         axios.get(`/api/options/${this.entity}?term=${query}`)
           .then((response) => {
@@ -135,7 +188,8 @@
       }, 500),
     },
     watch: {
-      selectedOptions: function (newOptions) {
+      selectedOptions: function (selectedOption) {
+        if (!selectedOption) {this.setPlaceHolder = this.placeholder}
         if (!this.autoSubmit) { return }
 
         const form = this.formSelector ? document.querySelector(this.formSelector) : this.$el.closest('form')
@@ -143,7 +197,9 @@
 
         const query = pickBy(getFormData(form))
         delete query[this.id]
-        query[this.name] = newOptions.map(option => option.value)
+
+        this.hiddenFormValue = selectedOption.value
+        query[this.name] = Array.isArray(selectedOption) ? selectedOption.map(option => option.value) : [selectedOption]
 
         XHR.request(form.action, query)
       }

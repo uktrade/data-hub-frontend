@@ -117,6 +117,8 @@ describe('Event edit controller', () => {
         .reply(200, metadataMock.programmeOptions)
         .get('/metadata/uk-region/')
         .reply(200, metadataMock.regionOptions)
+        .get('/adviser/?limit=100000&offset=0')
+        .reply(200, metadataMock.adviserOptions)
     })
 
     context('when rendering the page', () => {
@@ -167,7 +169,7 @@ describe('Event edit controller', () => {
           { label: 'Zac Smith', value: '3' },
         ]
 
-        const formOrganizerFieldOptions = getFormFieldOptions(this.res, 'organiser')
+        const formOrganizerFieldOptions = getFormFieldOptions(this.res, 'dit_adviser')
         expect(formOrganizerFieldOptions).to.deep.equal(expectedOptions)
       })
 
