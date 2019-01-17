@@ -6,7 +6,7 @@ module.exports = (middleware) => {
       type: 'form',
       heading: 'Add something',
       breadcrumbs: [
-        { name: 'Add something', url: '/url' },
+        { text: 'Add something', href: '/url' },
       ],
       macro: () => { return { children: [] } },
       nextPath: ({ selectedAtStep1 }) => {
@@ -22,7 +22,7 @@ module.exports = (middleware) => {
       type: 'form',
       heading: 'Add something',
       breadcrumbs: [
-        { name: 'Add something', url: '/url' },
+        { text: 'Add something', href: '/url' },
       ],
       macro: () => { return { children: [] } },
       nextPath: '/finish',
@@ -33,7 +33,7 @@ module.exports = (middleware) => {
       type: 'form',
       heading: 'Add something',
       breadcrumbs: [
-        { name: 'Add something', url: '/url' },
+        { text: 'Add something', href: '/url' },
       ],
       macro: () => { return { children: [] } },
       nextPath: ({ selectedAtStep3 }) => {
@@ -49,7 +49,7 @@ module.exports = (middleware) => {
       type: 'form',
       heading: 'Add something',
       breadcrumbs: [
-        { name: 'Add something', url: '/url' },
+        { text: 'Add something', href: '/url' },
       ],
       macro: () => { return { children: [] } },
       nextPath: '/finish',
@@ -59,7 +59,7 @@ module.exports = (middleware) => {
       type: 'form',
       heading: 'Add something',
       breadcrumbs: [
-        { name: 'Add something', url: '/url' },
+        { text: 'Add something', href: '/url' },
       ],
       macro: () => { return { children: [] } },
       nextPath: '/finish',

@@ -16,7 +16,6 @@ try {
 
 module.exports = function locals (req, res, next) {
   const baseUrl = `${(req.encrypted ? 'https' : req.protocol)}://${req.get('host')}`
-  const breadcrumbItems = res.breadcrumb()
   const userPermissions = get(res, 'locals.user.permissions')
 
   res.locals = Object.assign({}, res.locals, {
@@ -27,7 +26,6 @@ module.exports = function locals (req, res, next) {
     CURRENT_PATH: req.path,
     ARCHIVED_DOCUMENT_BASE_URL: config.archivedDocumentsBaseUrl,
     GOOGLE_TAG_MANAGER_KEY: config.googleTagManagerKey,
-    BREADCRUMBS: breadcrumbItems,
     IS_XHR: req.xhr,
     QUERY: req.query,
     GLOBAL_NAV_ITEMS: GLOBAL_NAV_ITEMS
@@ -46,7 +44,7 @@ module.exports = function locals (req, res, next) {
     },
 
     getPageTitle () {
-      const items = breadcrumbItems.map(item => item.name)
+      const items = res.breadcrumb().map(item => item.text)
       const title = res.locals.title
 
       if (title) {

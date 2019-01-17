@@ -16,11 +16,11 @@ describe('Company contact list controller', () => {
         })
 
         it('should add the company breadcrumb', () => {
-          expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWith(expectedBreadcrumbs[0].name, expectedBreadcrumbs[0].url)
+          expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWith(expectedBreadcrumbs[0].text, expectedBreadcrumbs[0].href)
         })
 
         it('should add the Advisers breadcrumb', () => {
-          expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWith(expectedBreadcrumbs[1].name)
+          expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWith(expectedBreadcrumbs[1].text)
         })
 
         it('should render the correct template', () => {
@@ -61,8 +61,8 @@ describe('Company contact list controller', () => {
         })
 
         commonTests([
-          { name: companyMock.name, url: `/companies/${companyMock.id}` },
-          { name: 'Advisers' },
+          { text: companyMock.name, href: `/companies/${companyMock.id}` },
+          { text: 'Advisers' },
         ], 'companies/views/_deprecated/advisers', 'Mercury Trading Ltd')
       })
 
@@ -87,8 +87,8 @@ describe('Company contact list controller', () => {
         })
 
         commonTests([
-          { name: dnbCompanyMock.name, url: `/companies/${dnbCompanyMock.id}` },
-          { name: 'Advisers' },
+          { text: dnbCompanyMock.name, href: `/companies/${dnbCompanyMock.id}` },
+          { text: 'Advisers' },
         ], 'companies/views/advisers', 'One List Corp')
       })
     })

@@ -28,7 +28,6 @@ describe('Error Middleware Test', () => {
       const nextSpy = sinon.spy()
       const mockResponse = {
         locals: {
-          BREADCRUMBS: [],
         },
       }
 
@@ -52,7 +51,6 @@ describe('Error Middleware Test', () => {
         status: this.statusStub,
         render: this.renderSpy,
         locals: {
-          BREADCRUMBS: [],
         },
       }
     })
@@ -112,10 +110,6 @@ describe('Error Middleware Test', () => {
         })
       })
 
-      it('should not render breadcrumbs', () => {
-        expect(this.responseMock.locals.BREADCRUMBS).to.equal(null)
-      })
-
       it('should log info level message to logger', () => {
         expect(this.winstonInfoStub).to.have.been.calledOnce
         expect(this.winstonInfoStub).to.have.been.calledWith(this.error)
@@ -153,10 +147,6 @@ describe('Error Middleware Test', () => {
           statusMessage: 'You don’t have permission to view this page',
           showStackTrace: true,
         })
-      })
-
-      it('should not render breadcrumbs', () => {
-        expect(this.responseMock.locals.BREADCRUMBS).to.equal(null)
       })
 
       it('should log error level message to logger', () => {
@@ -199,10 +189,6 @@ describe('Error Middleware Test', () => {
         })
       })
 
-      it('should not render breadcrumbs', () => {
-        expect(this.responseMock.locals.BREADCRUMBS).to.equal(null)
-      })
-
       it('should log error level message to logger', () => {
         expect(this.winstonErrorStub).to.have.been.calledOnce
         expect(this.winstonErrorStub).to.have.been.calledWith(this.error)
@@ -242,10 +228,6 @@ describe('Error Middleware Test', () => {
         })
       })
 
-      it('should not render breadcrumbs', () => {
-        expect(this.responseMock.locals.BREADCRUMBS).to.equal(null)
-      })
-
       it('should log error level message to logger', () => {
         expect(this.winstonErrorStub).to.have.been.calledOnce
         expect(this.winstonErrorStub).to.have.been.calledWith(this.error)
@@ -283,10 +265,6 @@ describe('Error Middleware Test', () => {
           statusMessage: 'Page unavailable',
           showStackTrace: true,
         })
-      })
-
-      it('should not render breadcrumbs', () => {
-        expect(this.responseMock.locals.BREADCRUMBS).to.equal(null)
       })
 
       it('should log error level message to logger', () => {
