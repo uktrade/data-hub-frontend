@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 const { camelCase, pickBy } = require('lodash')
 const { newlineToBr } = require('../../../lib/text-formatting')
+const brackets = /<|>|/gi
 
 const config = require('../../../../config')
 const labels = require('../labels')
@@ -72,7 +73,7 @@ function transformInteractionResponseToViewRecord ({
       name: net_company_receipt,
     } : null,
     subject,
-    notes: newlineToBr(notes),
+    notes: newlineToBr(notes.replace(brackets, '')),
     date: {
       type: 'date',
       name: date,
@@ -84,7 +85,7 @@ function transformInteractionResponseToViewRecord ({
     documents: transformDocumentsLink(archived_documents_url_path),
     policy_issue_types: displayPolicyTypes,
     policy_areas: displayPolicyAreas,
-    policy_feedback_notes: newlineToBr(policy_feedback_notes),
+    policy_feedback_notes: newlineToBr(policy_feedback_notes.replace(brackets, '')),
   }
 
   const result = {}
