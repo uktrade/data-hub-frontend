@@ -1,0 +1,28 @@
+{% extends "_layouts/two-column.njk" %}
+
+{% block local_header %}
+  {% call LocalHeader({ heading: company.name, modifier: 'light-banner' }) %}
+    <p class="c-local-header__heading-after">{{ headingAddress }}</p>
+
+    {% if metaItems.length %}
+      {{ MetaList({
+        items: metaItems,
+        itemModifier: 'stacked'
+      }) }}
+    {% endif %}
+
+    {% if company.archived %}
+      {% call Message({ type: 'info' }) %}
+        This company was archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br>
+        <strong>Reason:</strong> {{company.archived_reason}}<br>
+        <br>
+        <a href="/companies/{{company.id}}/unarchive">Unarchive</a>
+      {% endcall %}
+    {% endif %}
+  {% endcall %}
+{% endblock %}
+
+
+{% block main_grid_left_column %}
+  {{ LocalNav({ items: localNavItems }) }}
+{% endblock %}

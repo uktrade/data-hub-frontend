@@ -1,0 +1,50 @@
+{% extends "_layouts/template.njk" %}
+
+{% block local_header %}
+  {% call LocalHeader({ heading: company.name, modifier: 'light-banner' }) %}
+    <p class="c-local-header__heading-after">{{ headingAddress }}</p>
+
+    {% if company.headquarter_type and company.headquarter_type.name == 'ghq' %}
+      <div class="c-meta-list">
+        <div class="c-meta-list__item">
+          <span class="c-badge">Global HQ</span>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if company.one_list_group_tier %}
+      <div class="c-local-header__description">
+        <p>This is an account managed company (One List {{ company.one_list_group_tier.name }})</p>
+        <p>
+          Global Account Manager: {{ company.one_list_group_global_account_manager.name }}
+          {% if features['companies-advisers'] %}
+            <a href="/companies/{{ company.id }}/advisers">View core team</a>
+          {% endif %}
+        </p>
+      </div>
+    {% endif %}
+
+    <p>
+      <a href="/companies/{{ company.id }}/business-details">View full business details</a>
+    </p>
+
+    {% if company.archived %}
+      {% call Message({ type: 'info' }) %}
+        This company was archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br>
+        <strong>Reason:</strong> {{company.archived_reason}}<br>
+        <br>
+        <a href="/companies/{{company.id}}/unarchive">Unarchive</a>
+      {% endcall %}
+    {% endif %}
+  {% endcall %}
+{% endblock %}
+
+{% block local_nav %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+      {{ TabbedLocalNav({ items: localNavItems }) }}
+
+    </div>
+  </div>
+{% endblock %}

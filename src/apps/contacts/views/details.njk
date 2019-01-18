@@ -1,8 +1,7 @@
-{% extends "./_layout.njk" %}
-
+{% extends "./template.njk" %}
 
 {% block main_grid_right_column %}
-  <h2 class="heading-medium">Contact details</h2>
+  <h2 class="govuk-heading-m">Contact details</h2>
   {% component 'key-value-table', variant='striped', items=contactDetails, id='contact-details' %}
 
   {% if not contact.archived %}
