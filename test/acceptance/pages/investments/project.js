@@ -14,9 +14,9 @@ const {
   storeRadioSubFieldValues,
 } = require('../../helpers/state')
 
-const getHeaderSelector = (text) => getSelectorForElementWithText(text, {
+const getHeaderSelector = (text, className = 'heading-medium') => getSelectorForElementWithText(text, {
+  className,
   el: '//h2',
-  className: 'heading-medium',
 })
 
 const getTableCellAnchorByName = (text) => getSelectorForElementWithText(text, {
@@ -197,7 +197,7 @@ module.exports = {
   ],
   sections: {
     typeOfInvestment: {
-      selector: '#group-field-investment_type',
+      selector: '.govuk-grid-column-three-quarters',
       elements: {
         fdi: 'label[for=field-investment_type-1]',
         fdiType: '#field-fdi_type',
@@ -206,7 +206,7 @@ module.exports = {
       },
     },
     equitySource: {
-      selector: '.main-content__inner',
+      selector: '.govuk-grid-column-three-quarters',
       elements: {
         yes: 'label[for=field-is_equity_source-1]',
         no: 'label[for=field-is_equity_source-2]',
@@ -260,12 +260,12 @@ module.exports = {
       },
     },
     projectDetails: {
-      selector: '.main-content__inner',
+      selector: '#main-content',
       sections: {
         summary: {
-          selector: '.column-three-quarters',
+          selector: '.govuk-grid-column-three-quarters',
           elements: {
-            header: getHeaderSelector('Investment project summary'),
+            header: getHeaderSelector('Investment project summary', 'govuk-heading-m'),
             clientLink: getTableCellAnchorByName('Client'),
             typeOfInvestment: getKeyValueTableRowValueCell('Type of investment'),
             primarySector: getKeyValueTableRowValueCell('Primary sector'),
@@ -281,7 +281,7 @@ module.exports = {
           },
         },
         archive: {
-          selector: '.column-three-quarters',
+          selector: '.govuk-grid-column-three-quarters',
           elements: {
             archiveButton: getButtonWithText('Archive'),
           },

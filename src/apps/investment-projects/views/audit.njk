@@ -1,7 +1,7 @@
-{% extends "./_layout.njk" %}
+{% extends "./template.njk" %}
 
 {% block main_grid_right_column %}
-  <h2 class="heading-medium">Audit history</h2>
+  <h2 class="govuk-heading-m">Audit history</h2>
 
   <ul class="list-lined">
     {% for logEntry in auditLog %}

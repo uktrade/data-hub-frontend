@@ -1,0 +1,15 @@
+{% extends "_layouts/two-column.njk" %}
+
+{% block local_header %}
+  {% call LocalHeader({ heading: event.name }) %}
+    {% if event.disabled_on %}
+      {% call Message({ type: 'info' }) %}
+        This event was disabled on {{event.disabled_on | formatDate}} and can no longer be edited.
+      {% endcall %}
+    {% endif %}
+  {% endcall %}
+{% endblock %}
+
+{% block main_grid_left_column %}
+  {{ LocalNav({ items: localNavItems }) }}
+{% endblock %}

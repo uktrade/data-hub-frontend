@@ -1,8 +1,8 @@
-{% extends "./_layout-view.njk" %}
+{% extends "./template.njk" %}
 
-{% block main_column %}
+{% block body_main_content %}
 
-  <h2 class="heading-medium">Investment projects</h2>
+  <h2 class="govuk-heading-m">Investment projects</h2>
 
   {% if company.archived %}
     <details role="group">
