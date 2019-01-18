@@ -1,5 +1,6 @@
 const { longDateFormat, iso8601DateTimeFormat } = require('../config')
-const format = require('date-fns/format')
+const { format, parse } = require('date-fns')
+const toString = require('lodash/toString')
 
 function formatLongDate (dateString = []) {
   if (dateString) {
@@ -9,12 +10,10 @@ function formatLongDate (dateString = []) {
   return null
 }
 
-function formatISO8601DateTime (dateString = []) {
-  if (dateString) {
-    return format(parseDateString(dateString), iso8601DateTimeFormat)
-  }
-
-  return null
+function formatISO8601DateTime (date = '') {
+  const invalid = toString(parse('SNAFUed'))
+  let parsed = parse(date)
+  return toString(parsed) === invalid ? null : format(date, iso8601DateTimeFormat)
 }
 
 function parseDateString (dateString) {

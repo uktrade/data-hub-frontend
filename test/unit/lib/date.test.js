@@ -14,19 +14,27 @@ describe('Date tests', () => {
     })
     it('should not parse fred smith', () => {
       const actual = parseDateString('Fred Smith')
-      expect(actual).to.be.null
+      expect(actual).to.be.a('null')
     })
   })
   describe('parse dates into an ISO8601 format', () => {
-    it('should parse 2017-06-02T13:18:06.544524', () => {
+    it('should parse 2017-06-02T13:18:06.544524 into an ISO8601 format', () => {
       const actual = formatISO8601DateTime('2017-06-02T13:18:06.544524')
       const expected = '2017-06-02T13:18:06'
       expect(actual).to.equal(expected)
     })
-    it('should parse 31 January 2019', () => {
-      const actual = formatISO8601DateTime('31 January 2019')
-      const expected = '2019-01-31T00:00:00'
+    it('should parse \'7/2/2012 12:34\' into an ISO8601 format', () => {
+      const actual = formatISO8601DateTime('7/2/2012 12:34')
+      const expected = '2012-07-02T12:34:00'
       expect(actual).to.equal(expected)
+    })
+    it('should return null if mandatory argument is omitted', () => {
+      const actual = formatISO8601DateTime()
+      expect(actual).to.be.a('null')
+    })
+    it('should return null if the date to format is unparseable', () => {
+      const actual = formatISO8601DateTime('Fred Smith')
+      expect(actual).to.be.a('null')
     })
   })
 })
