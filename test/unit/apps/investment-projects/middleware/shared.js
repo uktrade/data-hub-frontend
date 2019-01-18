@@ -1,5 +1,6 @@
 const { merge, cloneDeep } = require('lodash')
-
+const format = require('date-fns/format')
+const { mediumDateTimeFormat } = require('../../../../../config')
 const investmentData = require('~/test/unit/data/investment/investment-data.json')
 const investmentProjectStages = require('~/test/unit/data/investment/investment-project-stages.json')
 
@@ -136,7 +137,7 @@ describe('Investment shared middleware', () => {
             },
             {
               label: 'Created on',
-              value: '1 Jan 1970, 12:00am',
+              value: format(null, mediumDateTimeFormat),
             },
           ],
           nextStage: {
