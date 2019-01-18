@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { assign, castArray, get, isEmpty, isPlainObject, mapValues } = require('lodash')
+const { assign, castArray, get, isEmpty, isPlainObject, mapValues, map } = require('lodash')
 const format = require('date-fns/format')
 const moment = require('moment')
 
@@ -124,6 +124,14 @@ function transformInvestmentForView ({
   estimated_land_date,
   actual_land_date,
 } = {}) {
+  function transformClientContacts (contacts) {
+    return map(contacts, ({ name, id }) => {
+      return {
+        name,
+        url: `/contacts/${id}`,
+      }
+    })[0]
+  }
   const businessActivities = castArray(business_activities).map(i => i.name)
   if (!isEmpty(other_business_activity)) {
     businessActivities.push(other_business_activity)
@@ -137,7 +145,7 @@ function transformInvestmentForView ({
     investment_type: getInvestmentTypeDetails(investment_type, fdi_type),
     sector,
     business_activities: businessActivities.join(', '),
-    client_contacts: castArray(client_contacts).map(i => i.name).join(', '),
+    client_contacts: !isEmpty(client_contacts) ? transformClientContacts(client_contacts) : null,
     description,
     anonymous_description,
     investor_type,
