@@ -7,12 +7,6 @@ html {
   background-color: $grey-3;
 }
 
-body {
-  display: flex;
-  flex-flow: column;
-  min-height: 100vh;
-}
-
 a {
   color: $link-colour;
   text-decoration-skip: ink;

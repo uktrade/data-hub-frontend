@@ -1,10 +1,9 @@
 @import "../tools/mixins";
 
 .c-local-header {
-  padding-bottom: $default-spacing-unit;
-  @include clearfix;
+  padding-bottom: $default-spacing-unit * 2;
 
-  .l-container {
+  .govuk-width-container {
     border-top: 1px solid transparent;
   }
 
@@ -18,6 +17,7 @@
 
   .c-entity-search {
     margin-top: $baseline-grid-unit * 20.5;
+    font-size: 19px;
   }
 
   .govuk-breadcrumbs {
@@ -47,7 +47,7 @@
 
   .c-entity-search__aggregations{
     position: relative;
-    top: $default-spacing-unit;
+    top: $default-spacing-unit * 2;
   }
 }
 
@@ -57,7 +57,10 @@
 
 .c-local-header--dark-banner {
   background-color: $grey-3;
-  border-top-color: $grey-2;
+
+  .govuk-width-container {
+    border-top-color: $grey-2;
+  }
 
   &.c-local-header--keyline {
     border-bottom: 1px solid $grey-2;
@@ -88,7 +91,7 @@
 
 * + .c-local-header__heading-after {
   margin-top: $default-spacing-unit / 2;
-  margin-bottom: 0;
+  margin-bottom: $default-spacing-unit * 0.75;
 }
 
 .c-local-header__actions {
