@@ -8,12 +8,12 @@ function userHasPermission (routePermissions, userPermissions) {
   return intersection(routePermissions, userPermissions).length > 0
 }
 
-function setHomeBreadcrumb (name) {
+function setHomeBreadcrumb (text) {
   return function (req, res, next) {
-    if (name) {
+    if (text) {
       res.breadcrumb({
-        name,
-        url: req.baseUrl,
+        text,
+        href: req.baseUrl,
       })
     }
     next()

@@ -4,6 +4,7 @@ describe('LocalHeader macro', () => {
   beforeEach(() => {
     this.commonMacros = getMacros('common', {
       getMessages: sinon.stub(),
+      getBreadcrumbs: sinon.stub(),
     })
   })
 
@@ -35,28 +36,6 @@ describe('LocalHeader macro', () => {
         modifier: ['beautiful', 'azure'],
       })
       expect(component.className).to.contain.all('c-local-header--beautiful', 'c-local-header--azure')
-    })
-
-    it('should render local header with breadcrumbs', () => {
-      const component = this.commonMacros.renderToDom('LocalHeader', {
-        breadcrumbs: [
-          {
-            name: 'Home',
-            url: '/',
-          }, {
-            name: 'Second level',
-            url: '/second-level',
-          },
-        ],
-      })
-
-      const breadcrumbItems = component.querySelectorAll('.c-breadcrumb__list-item')
-      expect(component.querySelector('.c-breadcrumb')).to.exist
-      expect(breadcrumbItems).to.have.length(2)
-      expect(breadcrumbItems[0].querySelector('a').getAttribute('href')).to.equal('/')
-      expect(breadcrumbItems[0].querySelector('a').textContent.trim()).to.equal('Home')
-      expect(breadcrumbItems[1].querySelector('a').getAttribute('href')).to.equal('#main-content')
-      expect(breadcrumbItems[1].querySelector('a').textContent.trim()).to.equal('Second level')
     })
   })
 

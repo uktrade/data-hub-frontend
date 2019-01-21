@@ -23,6 +23,7 @@ function render (template, options) {
   // Stub methods set in middleware locals
   options.getAssetPath = () => {}
   options.getPageTitle = () => {}
+  options.getBreadcrumbs = () => {}
   options.getMessages = () => {}
 
   return new Promise((resolve, reject) => {

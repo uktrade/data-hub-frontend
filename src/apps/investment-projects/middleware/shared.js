@@ -103,10 +103,7 @@ async function getInvestmentDetails (req, res, next) {
       nextStage: getNextStage(stageName, investmentProjectStages),
     }
 
-    res.breadcrumb({
-      name: investment.name,
-      url: `/investment-projects/${investment.id}`,
-    })
+    res.breadcrumb(investment.name, `/investment-projects/${investment.id}`)
 
     next()
   } catch (error) {
