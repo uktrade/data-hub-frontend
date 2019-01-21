@@ -59,7 +59,7 @@ const setBreadcrumbs = (req, res, next) => {
   ]
 
   forEach(breadcrumbs, (breadcrumb) => {
-    res.breadcrumb(breadcrumb.name, breadcrumb.url)
+    res.breadcrumb(breadcrumb.text, breadcrumb.href)
   })
 
   next()
