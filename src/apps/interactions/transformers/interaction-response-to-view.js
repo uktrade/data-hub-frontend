@@ -84,7 +84,7 @@ function transformInteractionResponseToViewRecord ({
     documents: transformDocumentsLink(archived_documents_url_path),
     policy_issue_types: displayPolicyTypes,
     policy_areas: displayPolicyAreas,
-    policy_feedback_notes: newlineToBr(escape(notes)),
+    policy_feedback_notes: newlineToBr(escape(policy_feedback_notes)),
   }
 
   const result = {}
