@@ -5,6 +5,7 @@ const dateFns = require('date-fns')
 const Case = require('case')
 const numeral = require('numeral')
 const queryString = require('qs')
+const { newlineToBr } = require('../../src/lib/text-formatting')
 const {
   assign,
   castArray,
@@ -79,6 +80,10 @@ const filters = {
   isString,
   pluralise,
   sentenceCase: Case.sentence,
+
+  escapeHtml (contents) {
+    return newlineToBr(escape(contents))
+  },
 
   reverseDate (dateString) {
     if (isNil(dateString)) { return }
