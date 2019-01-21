@@ -67,7 +67,7 @@
                 {{ data.name }}
               {% endif %}
             {% else %}
-              {{ data | safe }}
+              {{ data | escapeHtml | safe }}
             {% endif %}
 
             {% if data.actions %}
