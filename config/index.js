@@ -93,6 +93,7 @@ const config = {
   oneList: {
     email: process.env.ONE_LIST_EMAIL || 'one.list@example.com',
   },
+  humanizedBooleanLookup: new Map().set(true, 'Yes').set(false, 'No'),
 }
 
 module.exports = config
