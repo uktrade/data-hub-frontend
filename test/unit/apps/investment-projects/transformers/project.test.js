@@ -436,8 +436,8 @@ describe('Investment project transformers', () => {
         this.result = transformInvestmentForView(data)
       })
 
-      it('should return the contact list as a string list', () => {
-        expect(this.result).to.have.property('client_contacts', 'Allen Connelly, John Brown')
+      it('should return the contact list as an object (including contact\' URL', () => {
+        expect(this.result.client_contacts).to.have.property('name')
       })
     })
 
@@ -453,8 +453,12 @@ describe('Investment project transformers', () => {
         this.result = transformInvestmentForView(data)
       })
 
-      it('should return the contact', () => {
-        expect(this.result).to.have.property('client_contacts', 'Allen Connelly')
+      it('should return an object with the contact name', () => {
+        expect(this.result.client_contacts).to.have.property('name', 'Allen Connelly')
+      })
+
+      it('should return an object with the url pointing to the contact\'s page', () => {
+        expect(this.result.client_contacts).to.have.property('url', '/contacts/7aac69c2-7af4-4c79-9622-f25eb7690f36')
       })
     })
 
@@ -468,7 +472,7 @@ describe('Investment project transformers', () => {
       })
 
       it('should return an empty client contact', () => {
-        expect(this.result).to.have.property('client_contacts', '')
+        expect(this.result).to.have.property('client_contacts', null)
       })
     })
 

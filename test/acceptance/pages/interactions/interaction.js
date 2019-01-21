@@ -43,6 +43,7 @@ module.exports = {
     eventNo: 'label[for=field-is_event-2]',
     event: '#field-event',
     policyFeedbackYes: 'label[for=field-was_policy_feedback_provided-1]',
+    policyFeedbackNo: 'label[for=field-was_policy_feedback_provided-2]',
     policyIssueType1: 'label[for=field-policy_issue_types-1]',
     policyIssueType2: 'label[for=field-policy_issue_types-2]',
     policyIssueType3: 'label[for=field-policy_issue_types-3]',
@@ -91,6 +92,10 @@ module.exports = {
               interaction.service = service
               done()
             })
+          })
+          .perform((done) => {
+            this.click('@policyFeedbackNo')
+            done()
           })
           .perform((done) => {
             this.getText('@ditAdviser', (result) => {
