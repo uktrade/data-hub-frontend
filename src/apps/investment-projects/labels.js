@@ -137,6 +137,7 @@ const labels = {
       estimated_land_date_after: 'Estimated land date after',
       actual_land_date_before: 'Actual land date before',
       actual_land_date_after: 'Actual land date after',
+      level_of_involvement_simplified: 'Level of involvement specified',
       status: 'Status',
       uk_region_location: 'UK Region',
       investor_company_country: 'Country of origin',
