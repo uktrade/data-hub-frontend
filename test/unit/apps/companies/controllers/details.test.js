@@ -84,5 +84,32 @@ describe('Companies details controller', () => {
         expect(options.chDetails).to.be.null
       })
     })
+
+    context('when the company is a Dun & Bradstreet company', () => {
+      beforeEach(async () => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: dnbCompany,
+        })
+
+        await renderDetails(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy
+        )
+      })
+
+      it('should not render the template', () => {
+        expect(this.middlewareParameters.resMock.render).to.not.be.called
+      })
+
+      it('should not add breadcrumbs', () => {
+        expect(this.middlewareParameters.resMock.breadcrumb).to.not.be.called
+      })
+
+      it('should redirect to interactions', () => {
+        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledWith('interactions')
+        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
+      })
+    })
   })
 })
