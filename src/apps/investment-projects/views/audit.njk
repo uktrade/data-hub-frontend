@@ -4,13 +4,15 @@
   <h2 class="govuk-heading-m">Audit history</h2>
 
   <ul class="event-list ">
-    {% for logEntry in auditLog %}      <li class="event-list__item">
-      <h4 class="event-list__item__heading govuk-heading-s">{{ logEntry.timestamp | formatDate }} <span class="event-list__item__heading__recede">at {{ logEntry.timestamp | formatDateTime('h:mma') }}  by {{ logEntry.name | default('Unknown adviser') }} </span></h4><!-- at {{ logEntry.timestamp | formatDateTime('h:mma')  }} (GMT) -->
+    {% for logEntry in auditLog %}
+    <li class="event-list__item">
+      <h4 class="event-list__item__heading govuk-heading-s">{{ logEntry.timestamp | formatDate }} <span
+        class="event-list__item__heading__recede">at {{ logEntry.timestamp | formatDateTime('h:mma') }}  by {{ logEntry.name | default('Unknown adviser') }} </span></h4>
       <p class="event-list__item_text">
         <span class=""><strong>{{ logEntry.changes.length }} {{ 'item' | pluralise(logEntry.changes) }}</strong> changed by {{ logEntry.name | default('Unknown adviser') }} </span>
-        <hr>
-      <blockquote>{%  for changeItem in logEntry.changes %}<div><strong>{{ changeItem.changeName }}</strong> changed to <strong>{{ changeItem.changeDesc | humanizeBoolean }}</strong></div> {% endfor %}
-        </blockquote>
+        <div>{%  for changeItem in logEntry.changes %}<div><strong>{{ changeItem.changeName }}</strong>
+         changed to <strong>{{ changeItem.changeDesc | humanizeBoolean }}</strong></div> {% endfor %}
+        </div>
       </p>
 
     </li>
