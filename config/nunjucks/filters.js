@@ -40,7 +40,6 @@ require('numeral/locales/en-gb')
 numeral.locale('en-gb')
 
 const { longDateFormat, mediumDateTimeFormat, currencyFormat } = require('../../config')
-const { humanizedBooleanLookup } = require('../../config')
 
 function isNotEmpty (value) {
   return !isNil(value) && !/^\s*$/.test(value) && !(isPlainObject(value) && isEmpty(value))

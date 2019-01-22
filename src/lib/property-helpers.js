@@ -1,4 +1,5 @@
-const { isObject, keys, fill, fromPairs, zip} = require('lodash')
+const { isObject, keys, assign, fill, fromPairs, zip } = require('lodash')
+
 /**
  * When posting data the API has different rules for empty and null
  * fields to blank fields are made null to be consistant.
@@ -70,7 +71,6 @@ function convertYesNoToBoolean (object) {
 
   for (const key of keys) {
     const value = convertedObject[key]
-
     if (typeof value === 'string') {
       if (value.toLocaleLowerCase() === 'yes') {
         convertedObject[key] = true
@@ -84,10 +84,10 @@ function convertYesNoToBoolean (object) {
   return convertedObject
 }
 
-function convertBooleanToYesNo ( datum, neitherFallback = null) {
+function convertBooleanToYesNo (datum, neitherFallback = null) {
   const humanizedLookup = { 'true': 'Yes', 'false': 'No' }
   if (isObject(neitherFallback)) {
-    const defaultIfNeither = keys(neitherFallback)[0];
+    const defaultIfNeither = keys(neitherFallback)[0]
     const matchers = Array(neitherFallback[defaultIfNeither].length || 0).fill(defaultIfNeither)
     assign(humanizedLookup, fromPairs(zip(neitherFallback[defaultIfNeither], matchers)))
   }
