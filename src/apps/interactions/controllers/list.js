@@ -26,6 +26,7 @@ async function getInteractionOptions (token, req, res) {
   const teamOptions = await getOptions(token, 'team', { includeDisabled: true })
   const types = await getOptions(token, 'policy-issue-type')
   const advisers = await getAdvisers(token)
+  const areas = await getOptions(token, 'policy-area')
 
   const activeAdvisers = filterActiveAdvisers({
     advisers: advisers.results,
@@ -35,6 +36,7 @@ async function getInteractionOptions (token, req, res) {
   const adviserOptions = activeAdvisers.map(transformAdviserToOption)
 
   return {
+    areas,
     sectorOptions,
     serviceOptions,
     teamOptions,
