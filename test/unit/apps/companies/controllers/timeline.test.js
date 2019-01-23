@@ -19,8 +19,8 @@ describe('Company timeline controller', () => {
 
         it('should set the breadcrumbs', () => {
           expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledTwice
-          expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledWith(expectedBreadcrumbs[0].name, expectedBreadcrumbs[0].url)
-          expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledWith(expectedBreadcrumbs[1].name)
+          expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledWith(expectedBreadcrumbs[0].text, expectedBreadcrumbs[0].href)
+          expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledWith(expectedBreadcrumbs[1].text)
         })
 
         it('should render the correct template', () => {
@@ -47,8 +47,8 @@ describe('Company timeline controller', () => {
         })
 
         commonTests([
-          { name: companyMock.name, url: `/companies/${companyMock.id}` },
-          { name: 'Timeline' },
+          { text: companyMock.name, href: `/companies/${companyMock.id}` },
+          { text: 'Timeline' },
         ], 'companies/views/_deprecated/timeline')
       })
 
@@ -70,8 +70,8 @@ describe('Company timeline controller', () => {
         })
 
         commonTests([
-          { name: dnbCompanyMock.name, url: `/companies/${dnbCompanyMock.id}` },
-          { name: 'Timeline' },
+          { text: dnbCompanyMock.name, href: `/companies/${dnbCompanyMock.id}` },
+          { text: 'Timeline' },
         ], 'companies/views/timeline')
       })
     })

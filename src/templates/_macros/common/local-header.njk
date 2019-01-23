@@ -13,14 +13,16 @@
  # @param {function} [props.caller] - Optional inner contents
  #}
 {% macro LocalHeader(props) %}
-  {% set breadcrumbs = props.breadcrumbs | default(BREADCRUMBS) %}
+  {% set breadcrumbs = props.breadcrumbs | default(getBreadcrumbs()) %}
   {% set messages = props.messages | default(getMessages()) %}
   {% set modifier = props.modifier | concat('') | reverse | join(' c-local-header--') if props.modifier %}
 
   {% if props %}
     <header class="c-local-header {{ modifier }}" aria-label="local header">
       <div class="l-container">
-        {{ Breadcrumbs({ items: breadcrumbs }) }}
+        {% if breadcrumbs|length > 1 %}
+          {{ govukBreadcrumbs({ items: breadcrumbs }) }}
+        {% endif %}
 
         {% if messages|length %}
           {{ MessageList({ items: messages }) }}

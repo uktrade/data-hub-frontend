@@ -475,7 +475,7 @@ describe('#setBreadcrumbs', () => {
         locals: {
           journey: {
             breadcrumbs: [
-              { name: 'breadcrumb', url: '/url' },
+              { text: 'breadcrumb', href: '/url' },
             ],
             currentStep: steps[0],
           },
@@ -513,7 +513,7 @@ describe('#setBreadcrumbs', () => {
           journey: {
             currentStep,
             breadcrumbs: [
-              { name: 'breadcrumb', url: '/url' },
+              { text: 'breadcrumb', href: '/url' },
             ],
           },
         },

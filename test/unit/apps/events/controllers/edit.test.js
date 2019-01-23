@@ -151,8 +151,7 @@ describe('Event edit controller', () => {
       })
 
       it('should add a breadcrumb', () => {
-        expect(this.res.breadcrumb.firstCall).to.be.calledWith(undefined)
-        expect(this.res.breadcrumb.secondCall).to.be.calledWith('Add event')
+        expect(this.res.breadcrumb.firstCall).to.be.calledWith('Add event')
       })
 
       it('should get all active advisers', () => {

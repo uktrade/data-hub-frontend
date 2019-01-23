@@ -30,23 +30,23 @@ function init () {
       }
     }
 
-    function addBreadcrumbs (name, url) {
+    function addBreadcrumbs (text, href) {
       if (arguments.length === 0) {
         return breadcrumbs
       }
 
       if (arguments.length === 1) {
-        if (isArray(name)) {
-          each(name, addBreadcrumb)
-        } else if (isObject(name)) {
-          addBreadcrumb(name)
+        if (isArray(text)) {
+          each(text, addBreadcrumb)
+        } else if (isObject(text)) {
+          addBreadcrumb(text)
         } else {
-          addBreadcrumb({ name })
+          addBreadcrumb({ text })
         }
       } else if (arguments.length === 2) {
         addBreadcrumb({
-          name: name,
-          url: url,
+          text,
+          href,
         })
       }
 
@@ -74,18 +74,18 @@ function init () {
  * Examples:
  *      app.use(breadcrumbs.setHome())
  *      app.use('/admin', breadcrumbs.setHome({
- *        name: 'Dashboard',
- *        url: '/admin'
+ *        text: 'Dashboard',
+ *        href: '/admin'
  *      }))
  *
  * @param {Object} options
- *  - name    home name, default `Home`
- *  - url     home url, default `/`
+ *  - text    home text, default `Home`
+ *  - href     home href, default `/`
  * @return {Function}
  */
 function setHome (options = {}) {
-  const homeName = options.name || 'Home'
-  const homeUrl = options.url || '/'
+  const homeText = options.text || 'Home'
+  const homeHref = options.href || '/'
 
   return function (req, res, next) {
     const homeBreadcrumb = find(res.breadcrumb(), (breadcrumb) => {
@@ -94,14 +94,14 @@ function setHome (options = {}) {
 
     if (!homeBreadcrumb) {
       res.breadcrumb({
-        name: homeName,
-        url: homeUrl,
+        text: homeText,
+        href: homeHref,
         _home: true,
       })
     } else {
       extend(homeBreadcrumb, {
-        name: homeName,
-        url: homeUrl,
+        text: homeText,
+        href: homeHref,
       })
     }
 
