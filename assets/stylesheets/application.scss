@@ -1,8 +1,9 @@
 $images-dir: "/images/";
 
+$govuk-font-family: Arial, sans-serif;
 @import "~govuk-frontend/all";
 
-$toolkit-font-stack: Arial, sans-serif;
+$toolkit-font-stack: $govuk-font-family;
 @import "_deprecated/trade-elements";
 
 @import "~vue-multiselect/dist/vue-multiselect.min.css";

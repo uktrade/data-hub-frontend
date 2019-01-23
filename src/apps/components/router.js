@@ -7,7 +7,6 @@ const {
   renderIndex,
   renderMessages,
   renderLocalHeader,
-  renderBreadcrumbs,
   renderPagination,
   renderProgress,
   renderCollection,
@@ -24,7 +23,6 @@ const { getCollection } = require('../../modules/search/middleware/collection')
 
 router
   .get('/', renderIndex)
-  .get('/breadcrumbs', renderBreadcrumbs)
   .get('/messages', renderMessages)
   .get('/entity-list', renderEntityList)
   .get('/local-header', renderLocalHeader)

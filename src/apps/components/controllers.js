@@ -16,12 +16,6 @@ function renderMessages (req, res) {
     .render('components/views/messages')
 }
 
-function renderBreadcrumbs (req, res) {
-  return res
-    .breadcrumb('Breadcrumbs')
-    .render('components/views/breadcrumbs')
-}
-
 function renderLocalHeader (req, res) {
   return res
     .breadcrumb('Local header')
@@ -160,7 +154,6 @@ module.exports = {
   renderIndex,
   renderMessages,
   renderLocalHeader,
-  renderBreadcrumbs,
   renderPagination,
   renderProgress,
   renderCollection,
