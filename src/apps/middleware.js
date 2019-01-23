@@ -1,6 +1,7 @@
-const { get, isEmpty, assign, intersection, isUndefined } = require('lodash')
+const { get, isEmpty, assign, intersection, isUndefined, find, startsWith, partial } = require('lodash')
 const queryString = require('qs')
 const { parse } = require('url')
+const { LOCAL_NAV } = require('./investment-projects/constants')
 
 const { filterNonPermittedItem } = require('../modules/permissions/filters')
 
@@ -46,12 +47,20 @@ function handleRoutePermissions (routes) {
   }
 }
 
+function removeDocumentsFromLHNav (isLegacyProject, documentsLabel, filterOnPermissions, item) {
+  return item.label === documentsLabel && isLegacyProject
+    ? false
+    : filterOnPermissions(item)
+}
+
 function setLocalNav (items = []) {
   return function buildLocalNav (req, res, next) {
     const userPermissions = get(res, 'locals.user.permissions')
-
+    const isLegacyProject = startsWith(get(res, 'locals.investment.project_code'), 'DHP')
+    const documentsLabel = find(LOCAL_NAV, { 'path': 'documents' }).label
+    const filterFunctions = partial(removeDocumentsFromLHNav, isLegacyProject, documentsLabel, filterNonPermittedItem(userPermissions))
     res.locals.localNavItems = items
-      .filter(filterNonPermittedItem(userPermissions))
+      .filter(filterFunctions)
       .map((item) => {
         const url = item.isExternal ? item.url : `${req.baseUrl}/${item.path}`
         return assign({}, item, {
@@ -84,4 +93,5 @@ module.exports = {
   setDefaultQuery,
   handleRoutePermissions,
   isPermittedRoute,
+  removeDocumentsFromLHNav,
 }

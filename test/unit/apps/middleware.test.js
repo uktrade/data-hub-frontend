@@ -378,4 +378,66 @@ describe('Apps middleware', () => {
       })
     })
   })
+  // (isLegacyProject, documentsLabel, filterOnPermissions, item) {
+  describe('removeDocumentsFromLHNav', () => {
+    const NAV_ITEMS = [{
+      path: 'propositions', label: 'Propositions',
+    }, {
+      path: 'evaluation', label: 'Evaluations',
+    }, {
+      path: 'audit', label: 'Audit history',
+    }, {
+      path: 'documents', label: 'CDMS Documents', permissions: ['permission1'],
+    }]
+    beforeEach(() => {
+      this.isLegacyProject = true
+      this.docLabel = NAV_ITEMS[3].label
+      this.filterOnPermissions = sinon.stub().returns(true)
+    })
+
+    context('when the item passed into the iterator function is not \'documents\' but is a legacy project', () => {
+      beforeEach(() => {
+        this.item = NAV_ITEMS[0]
+        // this.fnReturnedByRemoveDocumentsFromLHNav = this.middleware.removeDocumentsFromLHNav(this.projectCode, this.docLabel, this.filterOnPermissions)
+      })
+
+      it('should call \'filterOnPermissions()\'', () => {
+        this.middleware.removeDocumentsFromLHNav(this.isLegacyProject, this.docLabel, this.filterOnPermissions, this.item)
+        expect(this.filterOnPermissions.calledOnce).to.be.true
+      })
+
+      it('should return whatever  \'filterOnPermissions()\' returns', () => {
+        let expected = this.middleware.removeDocumentsFromLHNav(this.isLegacyProject, this.docLabel, this.filterOnPermissions, this.item)
+        expect(expected).to.be.true
+        this.filterOnPermissions = sinon.stub().returns(false)
+        expected = this.middleware.removeDocumentsFromLHNav(this.projectCode, this.docLabel, this.filterOnPermissions, this.item)
+        expect(expected).to.be.false
+      })
+    })
+    context('when the item passed into the iterator function is \'documents\' and is also a legacy project', () => {
+      beforeEach(() => {
+        this.item = NAV_ITEMS[3]
+        // this.fnReturnedByRemoveDocumentsFromLHNav = this.middleware.removeDocumentsFromLHNav(this.projectCode, this.docLabel, this.filterOnPermissions)
+      })
+
+      it('should call not call \'filterOnPermissions()\' if this is a legacy project', () => {
+        expect(this.isLegacyProject).to.be.true
+        expect(this.docLabel).to.equal('CDMS Documents')
+        this.middleware.removeDocumentsFromLHNav(this.isLegacyProject, this.docLabel, this.filterOnPermissions, this.item)
+        expect(this.filterOnPermissions.calledOnce).to.be.false
+      })
+
+      it('should return FALSE if this is a legacy project', () => {
+        const expected = this.middleware.removeDocumentsFromLHNav(this.isLegacyProject, this.docLabel, this.filterOnPermissions, this.item)
+        expect(expected).to.be.false
+      })
+
+      it('should return TRUE if this is not a legacy project', () => {
+        this.isLegacyProject = false
+        expect(this.docLabel).to.equal('CDMS Documents')
+        const expected = this.middleware.removeDocumentsFromLHNav(this.isLegacyProject, this.docLabel, this.filterOnPermissions, this.item)
+        expect(expected).to.be.true
+      })
+    })
+  })
 })
