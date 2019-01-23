@@ -89,7 +89,7 @@ router.get('/',
 
 router.get('/export',
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
-  getRequestBody(QUERY_FIELDS),
+  getRequestBody(QUERY_FIELDS, QUERY_DATE_FIELDS),
   exportCollection('investment_project'),
 )
 
