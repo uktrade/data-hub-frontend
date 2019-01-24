@@ -7,6 +7,8 @@ const { getDateFor } = require('../../../helpers/date')
 const EventList = client.page.events.list()
 const Event = client.page.events.event()
 
+const inputDateFormat = process.env.NW_CIRCLECI ? 'MM/DD/YYYY' : 'DD/MM/YYYY'
+
 When(/^I populate the create event form$/, async function () {
   await Event
     .populateCreateEventForm({}, true, (event) => {
@@ -99,7 +101,7 @@ Then(/^I filter the events list by start date/, async function () {
     day: event.start_date_day,
     month: event.start_date_month,
     year: event.start_date_year,
-  })
+  }, inputDateFormat)
 
   await EventList.section.filters
     .waitForElementPresent('@startDateAfter')
