@@ -10,7 +10,7 @@ module.exports = function transformCompanyToListItem ({
   sector,
   uk_based,
   uk_region,
-  trading_name,
+  trading_names,
   trading_address_country,
   trading_address_county,
   trading_address_town,
@@ -34,10 +34,10 @@ module.exports = function transformCompanyToListItem ({
 
   const meta = []
 
-  if (trading_name) {
+  if (trading_names && trading_names.length) {
     meta.push({
-      label: 'Trading name',
-      value: trading_name,
+      label: hqLabels.trading_names,
+      value: trading_names,
     })
   }
 
