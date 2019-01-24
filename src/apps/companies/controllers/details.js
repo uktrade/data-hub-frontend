@@ -6,7 +6,11 @@ const {
 } = require('../transformers')
 
 async function renderDetails (req, res) {
-  const company = res.locals.company
+  const { company } = res.locals
+
+  if (company.duns_number) {
+    return res.redirect('interactions')
+  }
 
   res
     .breadcrumb(company.name)
