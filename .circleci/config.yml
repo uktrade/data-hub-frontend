@@ -2,9 +2,9 @@ version: 2
 aliases:
   - &node_version               node:8.11.3
   - &redis_version              redis:3.2.10
-  - &postgres_version           postgres:9.6
+  - &postgres_version           postgres:10
   - &mi_postgres_version        postgres:9.6
-  - &elasticsearch_version      docker.elastic.co/elasticsearch/elasticsearch:6.3.2
+  - &elasticsearch_version      docker.elastic.co/elasticsearch/elasticsearch:6.4.3
   - &oauth2_dit_staff_token     ditStaffToken
   - &oauth2_da_staff_token      daStaffToken
   - &oauth2_lep_staff_token     lepStaffToken
