@@ -327,6 +327,43 @@ describe('Companies form middleware', () => {
       })
     })
 
+    context('when saving an existing company with a new trading name', () => {
+      beforeEach(async () => {
+        nock(config.apiRoot)
+          .patch(`/v3/company/${companyRecord.id}`)
+          .reply(200, companyRecord)
+
+        this.reqMock.body = {
+          id: companyRecord.id,
+          name: 'Fred Bloggs Ltd',
+          trading_names: 'trading name',
+        }
+
+        await middleware.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should call save company service', () => {
+        const expectedBody = {
+          ...this.reqMock.body,
+          trading_names: [ 'trading name' ],
+        }
+
+        expect(this.saveCompanyFormSpy).to.have.been.calledWith(this.reqMock.session.token, expectedBody)
+      })
+
+      it('should call flash message', () => {
+        expect(this.flashSpy).to.have.been.calledOnce
+      })
+
+      it('should redirect to the entity', () => {
+        expect(this.redirectSpy).to.have.been.calledWith(`/companies/${companyRecord.id}`)
+      })
+
+      it('should not call next', () => {
+        expect(this.nextSpy).not.to.have.been.called
+      })
+    })
+
     context('when saving an existing company fails', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
@@ -377,6 +414,7 @@ describe('Companies form middleware', () => {
           name: 'Fred Boggs Ltd',
           registered_address_1: 'street',
           registered_address_country: '9999',
+          trading_names: [],
         })
       })
     })
@@ -409,6 +447,7 @@ describe('Companies form middleware', () => {
           registered_address_country: '9999',
           trading_address_1: 'another street',
           trading_address_country: '9999',
+          trading_names: [],
         })
       })
     })
@@ -431,6 +470,7 @@ describe('Companies form middleware', () => {
         expect(this.saveCompanyFormSpy).to.have.been.calledWith(this.reqMock.session.token, {
           name: 'Fred Boggs Ltd',
           headquarter_type: '',
+          trading_names: [],
         })
       })
     })

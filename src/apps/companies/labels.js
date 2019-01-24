@@ -2,7 +2,7 @@ const companyDetailsLabels = {
   business_type: 'Business type',
   name: 'Name',
   registered_address: 'Primary address',
-  trading_name: 'Trading name',
+  trading_names: 'Trading names',
   trading_address: 'Trading address',
   uk_region: 'UK region',
   headquarter_type: 'Headquarter type',
@@ -64,6 +64,7 @@ const hqLabels = {
   ehq: 'European HQ',
   ghq: 'Global HQ',
   ukhq: 'UK HQ',
+  trading_names: 'Trading names',
 }
 
 const accountManagementDisplayLabels = {
