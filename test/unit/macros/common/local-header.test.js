@@ -23,20 +23,6 @@ describe('LocalHeader macro', () => {
       expect(component.className.trim()).to.equal('c-local-header')
       expect(component.querySelector('.c-local-header__heading').textContent.trim()).to.equal('I am hot')
     })
-
-    it('should render local header with custom modifier', () => {
-      const component = this.commonMacros.renderToDom('LocalHeader', {
-        modifier: ['azure'],
-      })
-      expect(component.className).to.contain('c-local-header--azure')
-    })
-
-    it('should render local header with multiple custom modifiers', () => {
-      const component = this.commonMacros.renderToDom('LocalHeader', {
-        modifier: ['beautiful', 'azure'],
-      })
-      expect(component.className).to.contain.all('c-local-header--beautiful', 'c-local-header--azure')
-    })
   })
 
   it('should render local header with flash message', () => {

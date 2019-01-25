@@ -344,7 +344,7 @@ that extends the base layout can include these additional blocks.
 Template block names are structured by combining main element names to form path. e.g. `head` wraps everything inside
 the `head` element, the same applies to `headIcons`.  
 
-- `datahub-base.njk extends "template.njk` - the GOV.UK frontend template Data Hub extends from
+- `_layouts/template.njk extends govuk-frontend/template.njk` - the GOV.UK frontend template Data Hub extends from
 
 ```<head>```
 
@@ -361,12 +361,11 @@ the `head` element, the same applies to `headIcons`.
   - `header` - overridden by Data Hub
      - `header_site_title` - wraps the site title
      - `header_menu` - wraps the header menu
+     - `local_header` - wraps header content specific to the app
   - `main` - Data Hub overrides the GOV.UK main block
-     - `body_main_header` - contains the header of the main block
-       - `body_main_phase_banner` - contains the phase banner (e.g. alpha, beta etc)
-       - `local_header` - contains the local page title and local header
-     - `body_main_header_content` - contains the heading of the main block
-     - `body_main_content` - contains main content (inside main#content)
+     - `content` - overridden by Data Hub
+        - `local_nav` - wraps navigation specific to the app
+        - `body_main_content` - contains main content (inside main#content)
   - `footer` - contains a GOV.UK footer which DataHub overrides with an empty block
   - `bodyEnd` - initialise scripts (e.g. app.js and GOV.UK frontend)
   
@@ -380,36 +379,6 @@ Base layout checks for certain variables.
 - `serviceTitle` {string} - name of the service.
 - `phaseBanner` {boolean} - whether to show the separate phase banner or default to phase tag in the global header. Possible values: `true` and `false`.
 - `projectPhase` {string} - phase of the project. Possible values: `alpha` and `beta`.
-
-### Template inheritance diagram
-
-```
-layouts/
-
-    +-> template.njk (GOV.UK frontend)
-    |
-+-> +-+ datahub-base.njk <-----+
-|                              |
-| +++-> _base-two-column.njk +-+
-| |||
-| |||   contact/
-| |||
-| ||+---+ _layout.njk <--------+
-| ||                           |
-| ||      details.njk +--------+
-| ||
-| ||    company/
-| ||
-| |+-----+ _layout-edit.njk <--+
-| |                            |
-| +------+ _layout.view.njk <-+|
-|                             ||
-|           details-ltd.njk +-+|
-|                              |
-|           edit-ltd.njk +-----+
-|
-+-----+ login.njk
-```
 
 ## Testing
 

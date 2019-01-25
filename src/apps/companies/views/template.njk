@@ -1,11 +1,7 @@
-{% extends "_layouts/full-column.njk" %}
+{% extends "_layouts/template.njk" %}
 
 {% block local_header %}
-  {% call LocalHeader({
-      heading: company.name,
-      modifier: 'light-banner'
-    })
-  %}
+  {% call LocalHeader({ heading: company.name, modifier: 'light-banner' }) %}
     <p class="c-local-header__heading-after">{{ headingAddress }}</p>
 
     {% if company.headquarter_type and company.headquarter_type.name == 'ghq' %}
@@ -44,7 +40,11 @@
 {% endblock %}
 
 {% block local_nav %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
 
-  {{ TabbedLocalNav({ items: localNavItems }) }}
+      {{ TabbedLocalNav({ items: localNavItems }) }}
 
+    </div>
+  </div>
 {% endblock %}

@@ -10,7 +10,7 @@ const getDetailsTabSelector = (text) => getSelectorForElementWithText(text,
 module.exports = {
   url: process.env.QA_HOST,
   elements: {
-    subHeading: '.heading-medium',
+    subHeading: '.govuk-heading-m',
   },
   sections: {
     localHeader: {

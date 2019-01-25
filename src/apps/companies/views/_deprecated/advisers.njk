@@ -1,10 +1,10 @@
-{% extends "./_layout-view.njk" %}
+{% extends "./template.njk" %}
 
 {% from "_macros/entity/entity-list.njk" import EntityList %}
 
 {% block main_grid_right_column %}
 
-  <h2 class="heading-medium">Advisers on the core team</h2>
+  <h2 class="govuk-heading-m">Advisers on the core team</h2>
 
     {% if company.global_headquarters.name %}
       <p>This company is a subsidiary of the {{company.global_headquarters.name}}, an account managed company on the One List ({{company.one_list_group_tier.name}})</p>
