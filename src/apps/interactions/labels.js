@@ -50,6 +50,7 @@ const filters = {
   sector_descends: 'Sector',
   service: 'Service',
   was_policy_feedback_provided: 'Policy feedback',
+  policy_issue_types: 'Policy issue type',
 }
 
 module.exports = {
