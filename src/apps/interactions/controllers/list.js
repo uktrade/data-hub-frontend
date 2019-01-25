@@ -24,6 +24,7 @@ async function getInteractionOptions (token, req, res) {
   const sectorOptions = await getOptions(token, SECTOR, { queryString: QUERY_STRING })
   const serviceOptions = await getOptions(token, 'service', { includeDisabled: true })
   const teamOptions = await getOptions(token, 'team', { includeDisabled: true })
+  const types = await getOptions(token, 'policy-issue-type')
   const advisers = await getAdvisers(token)
 
   const activeAdvisers = filterActiveAdvisers({
@@ -38,6 +39,7 @@ async function getInteractionOptions (token, req, res) {
     serviceOptions,
     teamOptions,
     adviserOptions,
+    types,
   }
 }
 
