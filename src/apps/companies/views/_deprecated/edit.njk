@@ -1,10 +1,10 @@
-{% extends "./_layout-edit.njk" %}
+{% extends "_layouts/template.njk" %}
 
 {% set lookupButton %}
   <button class="button button--secondary postcode-lookup-button" type="button">Find UK address</button>
 {% endset %}
 
-{% block main_grid_right_column %}
+{% block body_main_content %}
   <div class="section">
     <h2 class="heading-medium">Business type</h2>
     {{ MetaList({

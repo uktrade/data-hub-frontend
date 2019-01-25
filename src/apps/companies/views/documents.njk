@@ -1,13 +1,7 @@
-{% extends "_layouts/full-column.njk" %}
+{% extends "_layouts/template.njk" %}
 
 {% block local_header %}
-  {%
-    call LocalHeader({
-      heading: 'Documents',
-      modifier: 'light-banner'
-    })
-  %}
-  {% endcall %}
+  {% call LocalHeader({ heading: 'Documents' }) %}{% endcall %}
 {% endblock %}
 
 {% block main_column %}

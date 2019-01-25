@@ -1,7 +1,7 @@
-{% extends "../_layout.njk" %}
+{% extends "../template.njk" %}
 
 {% block main_grid_right_column %}
-  <h2 class="heading-medium">Client relationship management</h2>
+  <h2 class="govuk-heading-m">Client relationship management</h2>
 
   {% component 'data-table', {
     columns: clientRelationshipManagementLabels.view,
@@ -10,7 +10,7 @@
 
   <a href="edit-client-relationship-management" class="button button--secondary">Change</a>
 
-  <h2 class="heading-medium">Project management</h2>
+  <h2 class="govuk-heading-m govuk-!-margin-top-7">Project management</h2>
 
   {% if stage == 'Prospect' %}
     {{ Message({
@@ -31,7 +31,7 @@
     <p><a href="edit-project-management" class="button">Assign</a></p>
   {% endif %}
 
-  <h2 class="heading-medium">Project specialist and team members</h2>
+  <h2 class="govuk-heading-m govuk-!-margin-top-7">Project specialist and team members</h2>
 
   {% component 'data-table', {
     columns: teamMembersLabels.view,
@@ -40,7 +40,7 @@
 
   <a href="edit-team-members" class="button button--secondary">Change</a>
 
-  <h2 class="heading-medium">Success verifier</h2>
+  <h2 class="govuk-heading-m govuk-!-margin-top-7">Success verifier</h2>
 
   {{ Message({
     type: 'muted',
