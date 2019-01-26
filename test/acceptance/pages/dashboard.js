@@ -37,6 +37,7 @@ module.exports = {
         investmentProjects: getGlobalNavAnchorWithText('Investment projects'),
         ordersOmis: getGlobalNavAnchorWithText('Orders (OMIS)'),
         miDashboards: getGlobalNavAnchorWithText('MI dashboards'),
+        findExporters: getGlobalNavAnchorWithText('Find Exporters'),
       },
     },
   },
