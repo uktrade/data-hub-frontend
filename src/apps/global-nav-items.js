@@ -20,6 +20,9 @@ const SORTED_APP_GLOBAL_NAV_ITEMS = sortBy(APP_GLOBAL_NAV_ITEMS, (globalNavItem)
 const GLOBAL_NAV_ITEMS = concat(SORTED_APP_GLOBAL_NAV_ITEMS, {
   path: config.performanceDashboardsUrl,
   label: 'MI dashboards',
+}, {
+  path: config.findExportersUrl,
+  label: 'Find exporters',
 })
 
 module.exports = GLOBAL_NAV_ITEMS

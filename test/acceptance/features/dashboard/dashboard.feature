@@ -10,10 +10,11 @@ Feature: Dashboard
       | Companies                 |
       | Contacts                  |
       | Events                    |
-      | Interactions and services |
-      | Investment projects       |
+      | Interactions              |
+      | Investments               |
       | Orders (OMIS)             |
       | MI dashboards             |
+      | Find exporters            |
 
   @dashboard--global-nav-lep @lep
   Scenario: Display global nav for LEP user
@@ -23,8 +24,10 @@ Feature: Dashboard
       | text                      |
       | Companies                 |
       | Contacts                  |
-      | Investment projects       |
+      | Investments               |
       | MI dashboards             |
+      | Find exporters            |
+
 
   @dashboard--global-nav-da @da
   Scenario: Display global nav for DA user
@@ -34,6 +37,7 @@ Feature: Dashboard
       | text                      |
       | Companies                 |
       | Contacts                  |
-      | Investment projects       |
+      | Investments               |
       | Orders (OMIS)             |
       | MI dashboards             |
+      | Find exporters            |
