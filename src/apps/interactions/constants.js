@@ -4,7 +4,7 @@ const DEFAULT_COLLECTION_QUERY = {
 
 const GLOBAL_NAV_ITEM = {
   path: '/interactions',
-  label: 'Interactions and services',
+  label: 'Interactions',
   permissions: [
     'interaction.view_all_interaction',
   ],

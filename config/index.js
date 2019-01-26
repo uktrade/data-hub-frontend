@@ -74,6 +74,7 @@ const config = {
   mediumDateTimeFormat: 'D MMM YYYY, h:mma',
   paginationMaxResults: 10000,
   performanceDashboardsUrl: process.env.PERFORMANCE_DASHBOARDS_URL || 'https://mi.exportwins.service.trade.gov.uk',
+  findExportersUrl: process.env.FIND_EXPORTERS_URL || 'https://find-exporters.datahub.trade.gov.uk',
   archivedDocumentsBaseUrl: process.env.ARCHIVED_DOCUMENTS_BASE_URL,
   oauth: {
     url: process.env.OAUTH2_AUTH_URL,
