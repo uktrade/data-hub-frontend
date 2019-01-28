@@ -84,7 +84,7 @@ module.exports = {
             return getSelectorForElementWithText(text,
               {
                 el: '//a',
-                className: 'c-global-nav__link',
+                className: 'global-nav__link',
               }
             )
           },
