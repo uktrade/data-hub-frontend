@@ -133,3 +133,11 @@
     margin-bottom: 2px;
   }
 }
+
+.c-collection__total-cost {
+  padding-top: $default-spacing-unit / 2;
+
+  .c-collection__total-cost__value{
+    font-weight: 600;
+  }
+}
