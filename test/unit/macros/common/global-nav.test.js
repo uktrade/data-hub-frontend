@@ -17,8 +17,8 @@ describe('GlobalNav macro', () => {
           { path: '/second-item', label: 'Second item' },
         ],
       })
-      expect(component.className.trim()).to.equal('c-global-nav')
-      expect(component.querySelectorAll('.c-global-nav__link')).to.have.length(2)
+      expect(component.className.trim()).to.equal('global-nav-pane')
+      expect(component.querySelectorAll('.global-nav__link')).to.have.length(2)
     })
 
     it('should render local nav with currently selected item', () => {
@@ -28,8 +28,8 @@ describe('GlobalNav macro', () => {
           { path: '/second-item', label: 'Second item' },
         ],
       })
-      expect(component.className.trim()).to.equal('c-global-nav')
-      expect(component.querySelectorAll('.c-global-nav__link.is-active')).to.have.length(1)
+      expect(component.className.trim()).to.equal('global-nav-pane')
+      expect(component.querySelectorAll('.global-nav__link.active')).to.have.length(1)
     })
 
     it('should render a string modifier', () => {
@@ -40,7 +40,7 @@ describe('GlobalNav macro', () => {
         modifier: 'modifier',
       })
 
-      expect(component.className.trim()).to.equal('c-global-nav c-global-nav--modifier')
+      expect(component.className.trim()).to.equal('global-nav-pane c-global-nav-modifier')
     })
 
     it('should render an array of modifiers', () => {
@@ -51,7 +51,7 @@ describe('GlobalNav macro', () => {
         modifier: ['modifier-1', 'modifier-2'],
       })
 
-      expect(component.className.trim()).to.equal('c-global-nav c-global-nav--modifier-2 c-global-nav--modifier-1')
+      expect(component.className.trim()).to.equal('global-nav-pane c-global-nav-modifier-2 c-global-nav-modifier-1')
     })
   })
 })

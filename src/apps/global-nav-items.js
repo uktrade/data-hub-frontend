@@ -22,7 +22,7 @@ const GLOBAL_NAV_ITEMS = concat(SORTED_APP_GLOBAL_NAV_ITEMS, {
   label: 'MI dashboards',
 }, {
   path: config.findExportersUrl,
-  label: 'Find Exporters',
+  label: 'Find exporters',
 })
 
 module.exports = GLOBAL_NAV_ITEMS

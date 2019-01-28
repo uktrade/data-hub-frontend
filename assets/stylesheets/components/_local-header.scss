@@ -58,6 +58,10 @@
 .c-local-header--dark-banner {
   background-color: $grey-3;
 
+  .govuk-width-container {
+    border-top-color: $grey-2;
+  }
+
   &.c-local-header--keyline {
     border-bottom: 1px solid $grey-2;
   }
