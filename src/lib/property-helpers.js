@@ -84,14 +84,14 @@ function convertYesNoToBoolean (object) {
   return convertedObject
 }
 
-function convertBooleanToYesNo (datum, neitherFallback = null) {
+function convertBooleanToYesNo (datum, neitherFallback = { 'n/a': [void 0, null] }) {
   const humanizedLookup = { 'true': 'Yes', 'false': 'No' }
   if (isObject(neitherFallback)) {
     const defaultIfNeither = keys(neitherFallback)[0]
     const matchers = Array(neitherFallback[defaultIfNeither].length || 0).fill(defaultIfNeither)
     assign(humanizedLookup, fromPairs(zip(neitherFallback[defaultIfNeither], matchers)))
   }
-  return humanizedLookup[datum]
+  return humanizedLookup[datum] || datum
 }
 
 /**

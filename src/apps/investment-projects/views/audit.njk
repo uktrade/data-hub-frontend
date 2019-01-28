@@ -8,12 +8,20 @@
     <li class="event-list__item">
       <h4 class="event-list__item__heading govuk-heading-s">{{ logEntry.timestamp | formatDate }} <span
         class="event-list__item__heading__recede">at {{ logEntry.timestamp | formatDateTime('h:mma') }}  by {{ logEntry.name | default('Unknown adviser') }} </span></h4>
-      <p class="event-list__item_text">
-        <span class=""><strong>{{ logEntry.changes.length }} {{ 'item' | pluralise(logEntry.changes) }}</strong> changed by {{ logEntry.name | default('Unknown adviser') }} </span>
-        <div>{%  for changeItem in logEntry.changes %}<div><strong>{{ changeItem.changeName }}</strong>
-         changed to <strong>{{ changeItem.changeDesc | humanizeBoolean }}</strong></div> {% endfor %}
-        </div>
-      </p>
+
+      <dl class="govuk-summary-list">
+
+        {%  for changeItem in logEntry.changes %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              <strong>{{ changeItem.ChangeName | replace('_', ' ') | sentenceCase | replace('di', 'DI') }}
+            </dt>
+            <dd class="govuk-summary-list__value">
+              Changed to <strong>{{ changeItem.ChangeToDesc | humanizeBoolean }}</strong> from &#39;{{ changeItem.ChangeFromDesc | humanizeBoolean }}&#39;
+            </dd>
+          </div>
+        {% endfor %}
+      </dl><!-- /.govuk-summary-list -->
 
     </li>
     {% endfor %}
