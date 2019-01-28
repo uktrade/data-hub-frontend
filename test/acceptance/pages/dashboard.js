@@ -1,6 +1,6 @@
 const { getSelectorForElementWithText, getLinkWithText } = require('../helpers/selectors')
 
-const getGlobalNavAnchorWithText = (text) => getLinkWithText(text, 'c-global-nav__link')
+const getGlobalNavAnchorWithText = (text) => getLinkWithText(text, 'global-nav__link')
 const getGlobalHeaderAnchorWithText = (text) => getLinkWithText(text, 'proposition-menu__link')
 
 const getDashboardSectionItem = (text, itemNumber) => getSelectorForElementWithText(
@@ -48,7 +48,7 @@ module.exports = {
           text,
           {
             el: '//a',
-            className: 'c-global-nav__link',
+            className: 'global-nav__link',
           },
         )
       },
