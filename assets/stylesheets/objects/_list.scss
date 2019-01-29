@@ -55,6 +55,10 @@
   position: relative;
   margin-left: 1.5789em; // 1.875em  30px
 
+  dl {
+    margin-bottom: 0;
+  }
+
   .govuk-summary-list__row:last-of-type {
     .govuk-summary-list__key,
     .govuk-summary-list__value {
