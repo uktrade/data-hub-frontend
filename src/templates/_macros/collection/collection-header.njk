@@ -69,7 +69,7 @@
 
       {% if props.summary %}
         <div class="c-collection__total-cost">
-          Total value: <span class="c-collection__total-cost__value">£{{ totalCost | formatNumber }}</span>
+          Total value: <span class="c-collection__total-cost__value">£{{ (totalCost / 100) | formatNumber }}</span>
         </div>
       {% endif %}
     </div>
