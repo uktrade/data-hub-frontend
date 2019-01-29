@@ -1,12 +1,12 @@
-{% extends "./datahub-base.njk" %}
+{% extends "./template.njk" %}
 
 {% block body_main_content %}
-  <div class="grid-row">
-    <div class="column-one-quarter">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-quarter">
       {% block main_grid_left_column %}{% endblock %}
     </div>
 
-    <article class="column-three-quarters">
+    <article class="govuk-grid-column-three-quarters">
       {% block main_grid_right_column %}{% endblock %}
     </article>
   </div>

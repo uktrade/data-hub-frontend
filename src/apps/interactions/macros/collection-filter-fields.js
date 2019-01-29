@@ -12,6 +12,8 @@ module.exports = function ({
   teamOptions,
   adviserOptions,
   userAgent,
+  areas,
+  types,
 }) {
   return [
     {
@@ -87,6 +89,20 @@ module.exports = function ({
       options: [
         { value: 'true', label: 'Includes policy feedback' },
       ],
+    },
+    {
+      macroName: 'MultipleChoiceField',
+      type: 'checkbox',
+      name: 'policy_areas',
+      modifier: 'option-select',
+      options: areas,
+    },
+    {
+      macroName: 'MultipleChoiceField',
+      type: 'checkbox',
+      name: 'policy_issue_types',
+      modifier: 'option-select',
+      options: types,
     },
   ].map(filter => {
     return {

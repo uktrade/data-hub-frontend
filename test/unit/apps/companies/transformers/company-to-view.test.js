@@ -15,7 +15,7 @@ describe('transformCompanyToView', () => {
       expect(this.viewRecord).to.have.ordered.keys([
         'Business type',
         'Primary address',
-        'Trading name',
+        'Trading names',
         'Trading address',
         'UK region',
         'Headquarter type',
@@ -37,7 +37,7 @@ describe('transformCompanyToView', () => {
     })
 
     it('should supply the trading name', () => {
-      expect(this.viewRecord['Trading name']).to.equal('Fred')
+      expect(this.viewRecord['Trading names'][0]).to.equal('Fred')
     })
 
     it('should supply the trading address', () => {
@@ -112,7 +112,7 @@ describe('transformCompanyToView', () => {
     it('should not include the business type', () => {
       expect(this.viewRecord).to.have.ordered.keys([
         'Primary address',
-        'Trading name',
+        'Trading names',
         'Trading address',
         'UK region',
         'Headquarter type',

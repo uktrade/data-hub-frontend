@@ -5,6 +5,8 @@
 {% from "_macros/common.njk" import Message, MessageList, Pagination, GlobalNav, LocalNav, Progress, FromNow, AnswersSummary, HiddenContent, TabbedLocalNav %}
 {% from "_macros/collection.njk" import CollectionContent, CollectionFilters %}
 {% from "_macros/entity.njk" import MetaList %}
+{% from "header/macro.njk" import govukHeader %}
+{% from "breadcrumbs/macro.njk" import govukBreadcrumbs %}
 
 {% if IS_XHR %}
   {% extends "./xhr.njk" %}
@@ -33,9 +35,10 @@
     <link rel="canonical" href="{{ CANONICAL_URL }}">
   {% endif %}
 
-  <!--[if IE]><link rel="shortcut icon" href="{{ getAssetPath('images/favicon.ico') }}" type="image/x-icon"><![endif]-->
+  <!--[if IE]>
+  <link rel="shortcut icon" href="{{ getAssetPath('images/favicon.ico') }}" type="image/x-icon"><![endif]-->
   <!-- Touch Icons - iOS and Android 2.1+ 180x180 pixels in size. -->
-  <link rel="apple-touch-icon" href="{{ getAssetPath('images/apple-touch-icon.png')}}">
+  <link rel="apple-touch-icon" href="{{ getAssetPath('images/apple-touch-icon.png') }}">
   <!-- Firefox, Chrome, Safari, IE 11+ and Opera. 192x192 pixels in size. -->
   <link rel="icon" href="{{ getAssetPath('images/favicon-192x192.png') }}" type="image/png">
 
@@ -43,7 +46,7 @@
   <meta property="og:url" content="{{ CANONICAL_URL }}">
   <meta property="og:site_name" content="{{ [siteTitle, serviceTitle] | removeNilAndEmpty | join(' ') }}">
   <meta property="og:title" content="{{ title | default(titleDefault) }}">
-  {% if description  -%}
+  {% if description -%}
     <meta property="og:description" content="{{ description }}">
   {% endif -%}
   <meta property="og:type" content="website">
@@ -56,7 +59,7 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:domain" content="{{ BASE_URL }}">
   <meta name="twitter:title" content="{{ title | default(titleDefault) }}">
-  {% if description  -%}
+  {% if description -%}
     <meta name="twitter:description" content="{{ description }}">
   {% endif -%}
 
@@ -67,12 +70,13 @@
   {% include "_includes/google-tag-manager-snippet.njk" %}
 
   <script>
-    (function(d){d.className=d.className.replace(/\bno-js\b/,'js-enabled')})(document.documentElement)
+    (function (d) {d.className = d.className.replace (/\bno-js\b/, 'js-enabled')}) (document.documentElement)
   </script>
 
   <!--[if lt IE 9]>
-    <script src="{{ getAssetPath('html5shiv.min.js') }}"></script>
+  <script src="{{ getAssetPath('html5shiv.min.js') }}"></script>
   <![endif]-->
+
 {% endblock %}
 
 {% block bodyStart %}
@@ -84,10 +88,10 @@
       <a href="https://www.gov.uk/help/cookies">Find out more about cookies</a>
     </p>
   </div>
-
 {% endblock %}
 
 {% block header %}
+
   <header class="global-header" aria-label="global header">
     <div class="global-header__inner">
       {% block header_site_title %}
@@ -121,7 +125,7 @@
             {% endif %}
             {% if user %}
               <li class="proposition-menu__item">
-                  <a href="/oauth/sign-out" class="proposition-menu__link">Sign out</a>
+                <a href="/oauth/sign-out" class="proposition-menu__link">Sign out</a>
               </li>
             {% endif %}
           </ul>
@@ -130,47 +134,29 @@
     </div>
   </header>
   {{ GlobalNav({ items: GLOBAL_NAV_ITEMS }) if user }}
+
+  {% block local_header %}
+    {% set pageTitle = getPageTitle() if getPageTitle %}
+    {% set heading = heading or pageTitle[0] %}
+    {{ LocalHeader({ heading: heading, modifier: 'light-banner' }) }}
+  {% endblock %}
+
 {% endblock %}
 
-{% block main %}
-  <main class="main-content" id="main-content">
-    {% block body_main_header %}
+{% block content %}
+  {% block local_nav %}{% endblock %}
 
-      {% block body_main_phase_banner %}
-        {% if phaseBanner and (projectPhase|lower in ['alpha', 'beta', 'demo'] or feedbackLink) %}
-          <div class="phase-banner">
-            <div class="l-container">
-              <span class="phase-badge">{{ projectPhase.toUpperCase() }}</span>
-              <span class="phase-banner__message">
-                This is a new service
-                {% if feedbackLink %}
-                – your <a href="{{ feedbackLink }}">feedback</a> will help us to improve it.
-                {% endif %}
-              </span>
-            </div>
-          </div>
-        {% endif %}
-      {% endblock %}
-
-      {% block local_header %}
-        {% set pageTitle = getPageTitle() if getPageTitle %}
-        {% set heading = heading or pageTitle[0] %}
-        {{ LocalHeader({ heading: heading, modifier: 'light-banner' }) }}
-      {% endblock %}
-
-    {% endblock %}
-
-    <div class="main-content__inner l-container">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
       {% block body_main_content %}{% endblock %}
     </div>
-
-  </main>
+  </div>
 {% endblock %}
 
 {% block footer %}{% endblock %}
 
 {% block bodyEnd %}
   <!--[if gt IE 8]><!-->
-      <script src="{{ getAssetPath('app.js') }}"></script>
+  <script src="{{ getAssetPath('app.js') }}"></script>
   <!--<![endif]-->
 {% endblock %}

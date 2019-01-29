@@ -33,6 +33,7 @@ module.exports = function transformCompanyToForm (body) {
   })
 
   formatted.headquarter_type = get(formatted, 'headquarter_type.id', 'not_headquarters')
+  formatted.trading_names = body.trading_names && body.trading_names.length ? body.trading_names[0] : null
 
   return assign({}, body, formatted)
 }

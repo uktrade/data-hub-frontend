@@ -4,14 +4,22 @@ const { renderDetails } = require('~/src/apps/companies/controllers/details')
 
 const companiesHouseCompany = require('~/test/unit/data/companies/companies-house-company.json')
 const minimalCompany = require('~/test/unit/data/companies/minimal-company.json')
+const dnbCompany = require('~/test/unit/data/companies/dnb-company.json')
 const config = require('~/config')
 
 describe('Companies details controller', () => {
   describe('#renderDetails', () => {
-    const commonTests = (template) => {
+    const commonTests = (expectedBreadcrumb, expectedTemplate) => {
+      it('should add a breadcrumb', () => {
+        const breadcrumbSpy = this.middlewareParameters.resMock.breadcrumb
+
+        expect(breadcrumbSpy).to.be.calledWith(expectedBreadcrumb.text)
+        expect(breadcrumbSpy).to.have.been.calledOnce
+      })
+
       it('should render the correct template', () => {
         const templateName = this.middlewareParameters.resMock.render.firstCall.args[0]
-        expect(templateName).to.equal(template)
+        expect(templateName).to.equal(expectedTemplate)
       })
 
       it('should include company details', () => {
@@ -48,7 +56,7 @@ describe('Companies details controller', () => {
         )
       })
 
-      commonTests('companies/views/_deprecated/details')
+      commonTests({ text: 'SAMSUNG BIOEPIS UK LIMITED' }, 'companies/views/_deprecated/details')
 
       it('should include companies house details', () => {
         const options = this.middlewareParameters.resMock.render.firstCall.args[1]
@@ -69,11 +77,38 @@ describe('Companies details controller', () => {
         )
       })
 
-      commonTests('companies/views/_deprecated/details')
+      commonTests({ text: 'SAMSUNG BIOEPIS UK LIMITED' }, 'companies/views/_deprecated/details')
 
       it('should not include Companies House details', () => {
         const options = this.middlewareParameters.resMock.render.firstCall.args[1]
         expect(options.chDetails).to.be.null
+      })
+    })
+
+    context('when the company is a Dun & Bradstreet company', () => {
+      beforeEach(async () => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: dnbCompany,
+        })
+
+        await renderDetails(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy
+        )
+      })
+
+      it('should not render the template', () => {
+        expect(this.middlewareParameters.resMock.render).to.not.be.called
+      })
+
+      it('should not add breadcrumbs', () => {
+        expect(this.middlewareParameters.resMock.breadcrumb).to.not.be.called
+      })
+
+      it('should redirect to interactions', () => {
+        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledWith('interactions')
+        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
       })
     })
   })

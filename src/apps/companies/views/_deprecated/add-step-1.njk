@@ -1,6 +1,10 @@
-{% extends "./_layout-edit.njk" %}
+{% extends "_layouts/template.njk" %}
 
-{% block main_grid_right_column %}
+{% block local_header %}
+  {% call LocalHeader({ heading: 'Add company' }) %}{% endcall %}
+{% endblock %}
+
+{% block body_main_content %}
   {% call Form({ buttonText: 'Continue', errors: errors }) %}
     {{ MultipleChoiceField({
       type: 'radio',

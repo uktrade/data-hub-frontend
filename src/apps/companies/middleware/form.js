@@ -66,6 +66,8 @@ async function handleFormPost (req, res, next) {
     const token = req.session.token
     const countryQueryParam = get(req.query, 'country')
 
+    req.body.trading_names = req.body.trading_names ? [ req.body.trading_names ] : []
+
     if (get(req.body, 'headquarter_type') === 'not_headquarters') {
       req.body.headquarter_type = ''
     }

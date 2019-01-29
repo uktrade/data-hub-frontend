@@ -1,3 +1,5 @@
+const moment = require('moment')
+
 const config = require('~/config')
 const { renderInteractionList, renderInteractionsForEntity } = require('~/src/apps/interactions/controllers/list')
 
@@ -30,6 +32,8 @@ describe('interaction list', () => {
 
     this.next = sinon.stub()
 
+    const yesterday = moment().subtract(1, 'days').toISOString()
+
     this.metadataMock = {
       teamOptions: [
         { id: 'te1', name: 'te1', disabled_on: null },
@@ -51,6 +55,16 @@ describe('interaction list', () => {
           { id: 'ad1', name: 'ad1', is_active: true, dit_team: { name: 'ad1' } },
         ],
       },
+      policyAreaOptions: [
+        { id: '1', name: 'pa1', disabled_on: null },
+        { id: '2', name: 'pa2', disabled_on: yesterday },
+        { id: '3', name: 'pa3', disabled_on: null },
+      ],
+      policyIssueType: [
+        { id: '1', name: 'pt1', disabled_on: null },
+        { id: '2', name: 'pt2', disabled_on: yesterday },
+        { id: '3', name: 'pt3', disabled_on: null },
+      ],
     }
 
     nock(config.apiRoot)
@@ -62,6 +76,10 @@ describe('interaction list', () => {
       .reply(200, this.metadataMock.sectorOptions)
       .get('/adviser/?limit=100000&offset=0')
       .reply(200, this.metadataMock.adviserOptions)
+      .get('/metadata/policy-area/')
+      .reply(200, this.metadataMock.policyAreaOptions)
+      .get('/metadata/policy-issue-type/')
+      .reply(200, this.metadataMock.policyIssueType)
   })
 
   context('#renderInteractionList', () => {
