@@ -1,5 +1,6 @@
 @import "../settings/colours";
 @import "../settings/layout";
+@import "../tools/mixins/typography";
 
 .list-unstyled,
 .list-inline {
@@ -50,10 +51,10 @@
 
 .event-list__item {
   border: 2px solid $border-colour; // grey 3
-  padding: .7894em; // .9375em; off 19
-  margin-bottom: .7894em; // .9375em; 15px
+  padding: govuk-spacing(3);
+  margin-bottom: govuk-spacing(3);
   position: relative;
-  margin-left: 1.5789em; // 1.875em  30px
+  margin-left: govuk-spacing(6);
 
   dl {
     margin-bottom: 0;
@@ -69,9 +70,8 @@
   &::before {
     content: "";
     position: absolute;
-    top: 1.8947em; // 1.0625em;  36px
-    left: -1.8421em; // -2.1875em;  -35px
-    display: inline-block;
+    top: 36px;
+    left: -35px;
     border: 5px solid $border-colour; // grey 3
     border-radius: 50%;
     width: 10px;
@@ -85,10 +85,9 @@
     content: "";
     border-left: 3px solid $border-colour;
     height: 120%;
-    display: inline-block;
     position: absolute;
-    top: 1.8947em; //1.0625em;  36px
-    left: -1.42105em;
+    top: 36px;
+    left: -26px;
   }
 
   &:last-of-type::after {
@@ -98,12 +97,12 @@
 
 .event-list__item__heading {
   margin-top: 0;
-  margin-bottom: .9375em;
+  margin-bottom: govuk-spacing(3);
   color: $grey-1; // #6f777b
 }
 
 .event-list__item__heading__recede {
-  font-weight: 400;
+  @include _type-setting(-1, 400);
 }
 
 @media (min-width: 40.0625em) {
