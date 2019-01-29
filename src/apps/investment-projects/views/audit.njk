@@ -17,7 +17,7 @@
               <strong>{{ changeItem.ChangeName | replace('_', ' ') | sentenceCase | replace('di', 'DI') }}
             </dt>
             <dd class="govuk-summary-list__value">
-              Changed to <strong>{{ changeItem.ChangeToDesc | humanizeBoolean }}</strong> from &#39;{{ changeItem.ChangeFromDesc | humanizeBoolean }}&#39;
+              Changed to <strong>&#39;{{ changeItem.ChangeToDesc | humanizeBoolean }}&#39;</strong> from &#39;{{ changeItem.ChangeFromDesc | humanizeBoolean }}&#39;
             </dd>
           </div>
         {% endfor %}
