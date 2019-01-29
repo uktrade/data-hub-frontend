@@ -150,6 +150,7 @@ describe('Investment start controller', () => {
         const expected = {
           aggregations: undefined,
           count: 0,
+          summary: undefined,
           highlightTerm: undefined,
           items: [],
           pagination: null,

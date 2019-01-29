@@ -1,4 +1,4 @@
-{% extends "./_layout.njk" %}
+{% extends "./template.njk" %}
 
 {% macro renderButton(endpoint, label, isSecondary) %}
   <p>
@@ -15,11 +15,11 @@
 {% block main_grid_right_column %}
   {{ super() }}
 
-  <h2 class="heading-medium">Investment project summary</h2>
+  <h2 class="govuk-heading-m">Investment project summary</h2>
   {% component 'key-value-table', items=details, variant='striped' %}
   {{ renderButton('details', 'Edit summary', true) }}
 
-  <h2 class="heading-medium">Requirements and location</h2>
+  <h2 class="govuk-heading-m govuk-!-margin-top-7">Requirements and location</h2>
   {% component 'key-value-table', items=requirements, variant='striped' %}
 
   {% if isRequirementsStarted %}
@@ -33,7 +33,7 @@
     {{ renderButton('requirements', 'Add requirements') }}
   {% endif %}
 
-  <h2 class="heading-medium">Value</h2>
+  <h2 class="govuk-heading-m govuk-!-margin-top-7">Value</h2>
   {% if values | length > 1 %}
     {% component 'key-value-table', items=values, variant='striped' %}
     {{ renderButton('value', 'Edit value', true) }}

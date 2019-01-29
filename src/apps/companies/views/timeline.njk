@@ -1,16 +1,10 @@
-{% extends "_layouts/full-column.njk" %}
+{% extends "_layouts/template.njk" %}
 
 {% block local_header %}
-  {%
-    call LocalHeader({
-      heading: 'Timeline',
-      modifier: 'light-banner'
-    })
-  %}
-  {% endcall %}
+  {% call LocalHeader({ heading: 'Timeline' }) %}{% endcall %}
 {% endblock %}
 
-{% block main_column %}
+{% block body_main_content %}
 
   {{ CollectionContent(timeline) }}
 

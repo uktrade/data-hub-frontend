@@ -1,11 +1,11 @@
-{% extends "../_layout.njk" %}
+{% extends "../template.njk" %}
 
 {% set phase = investment.stage.name %}
 {% set crm = investment.client_relationship_manager %}
 {% set rsa = investment.referral_source_adviser %}
 
 {% block main_grid_right_column %}
-  <h2 class="heading-medium">Assign project management</h2>
+  <h2 class="govuk-heading-m">Assign project management</h2>
 
   {% component 'key-value-table', items=briefInvestmentSummary, variant='striped' %}
 

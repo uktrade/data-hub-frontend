@@ -113,6 +113,17 @@ const investmentFiltersFields = function ({ currentAdviserId, sectorOptions, adv
       hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
       inputClass: userAgent.isIE ? 'ie-date-field' : null,
     },
+    {
+      macroName: 'MultipleChoiceField',
+      name: 'level_of_involvement_simplified',
+      type: 'checkbox',
+      modifier: 'option-select',
+      options: [
+        { value: 'involved', label: 'Involved' },
+        { value: 'not_involved', label: 'Not involved' },
+        { value: 'unspecified', label: 'Unspecified' },
+      ],
+    },
   ].map(filter => {
     return Object.assign(filter, {
       label: collectionFilterLabels.edit[filter.name],

@@ -1,13 +1,7 @@
-{% extends "_layouts/full-column.njk" %}
+{% extends "_layouts/template.njk" %}
 
 {% block local_header %}
-  {%
-    call LocalHeader({
-      heading: 'Edit export markets',
-      modifier: 'light-banner'
-    })
-  %}
-  {% endcall %}
+  {% call LocalHeader({ heading: 'Edit export markets' }) %}{% endcall %}
 {% endblock %}
 
 {% block main_column %}
