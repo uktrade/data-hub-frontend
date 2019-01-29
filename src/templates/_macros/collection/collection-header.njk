@@ -13,6 +13,7 @@
 #}
 {% macro CollectionHeader(props) %}
   {% set buildQuery = buildQuery or props.buildQuery %}
+  {% set totalCost = props.summary.total_subtotal_cost %}
   {% set count = props.count | default('0') %}
   {% set countLabel = props.countLabel | default('result') %}
   {% set actionButtons = props.actionButtons | default([]) | castArray %}
@@ -65,6 +66,12 @@
           {% endfor %}
         </div>
       {% endif %}
+
+      {% if props.summary %}
+        <div class="c-collection__total-cost">
+          Total value: <span class="c-collection__total-cost__value">£{{ totalCost | formatNumber }}</span>
+        </div>
+      {% endif %}
     </div>
 
     {% if props.sortForm or props.pagination %}
@@ -80,16 +87,16 @@
     {% endif %}
 
     {% if props.exportAction.enabled %}
-    <div class="c-collection__header-row">
+      <div class="c-collection__header-row">
       <span class="c-collection__export-message">
         {{ props.exportAction.buildMessage(count) }}
       </span>
-      <span class="c-collection__header-actions">
+        <span class="c-collection__header-actions">
         {% if not props.exportAction.invalidNumberOfItems(count, props.exportAction.maxItems) %}
           <a class="button" download href="{{ props.exportAction.url }}">Download</a>
         {% endif %}
       </span>
-    </div>
+      </div>
     {% endif %}
 
   </header>
