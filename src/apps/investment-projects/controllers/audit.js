@@ -24,8 +24,8 @@ function transformProjectChangesToListItems (changes) {
   transform(changes, function (result, value, key) {
     let transformedChange = {}
     transformedChange.ChangeName = grammaticizeBooleanChanges(key)
-    transformedChange.ChangeFromDesc = value.shift()
-    transformedChange.ChangeToDesc = value.shift()
+    transformedChange.ChangeFromDesc = value[0]
+    transformedChange.ChangeToDesc = value[1]
     returnArray.push(transformedChange)
   }, returnArray)
   // console.log(returnArray[0])

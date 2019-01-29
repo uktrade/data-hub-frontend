@@ -42,62 +42,15 @@ describe('Investment audit controller', () => {
     const expected = [{
       name: 'Duke Ellington',
       timestamp: '2017-06-02T13:18:06',
-      changes: 3,
+      changes: [{ 'ChangeFromDesc': 'name 1 - changed', 'ChangeName': 'name', 'ChangeToDesc': 'name 1 - changed again' },
+        { 'ChangeFromDesc': 'desc 3', 'ChangeName': 'description', 'ChangeToDesc': 'desc 3 changed' }],
     }, {
       name: 'Fred Smith',
       timestamp: '2017-06-02T11:01:05',
-      changes: 4,
+      changes: [{ 'ChangeFromDesc': 'name 2', 'ChangeName': 'name', 'ChangeToDesc': 'name 2 - changed' },
+        { 'ChangeFromDesc': null, 'ChangeName': 'anonymous_description', 'ChangeToDesc': '' },
+        { 'ChangeFromDesc': null, 'ChangeName': 'client_requirements', 'ChangeToDesc': '' }],
     }]
-
-    this.controller.getInvestmentAudit({
-      session: {
-        token,
-      },
-      params: {
-        investmentId: '9999',
-      },
-    }, {
-      locals: {
-        investment: {},
-      },
-      breadcrumb: this.breadcrumbStub,
-      render: (template, data) => {
-        try {
-          expect(data.auditLog).to.deep.equal(expected)
-          done()
-        } catch (error) {
-          done(error)
-        }
-      },
-    }, this.next)
-  })
-  it('should handle audit entry containing an empty timestamp', (done) => {
-    const badDate = [{
-      user: {
-        id: '41212312312321',
-        name: 'Fred Smith',
-      },
-      timestamp: '',
-      comment: 'Optional changeset comment - we can stick anything here',
-      changes: {
-        fieldName1: [false, true],
-      },
-    }]
-
-    this.getInvestmentProjectAuditLog = sinon.stub().resolves(badDate)
-
-    this.controller = proxyquire('~/src/apps/investment-projects/controllers/audit', {
-      '../repos': {
-        getInvestmentProjectAuditLog: this.getInvestmentProjectAuditLog,
-      },
-    })
-
-    const expected = [{
-      name: 'Fred Smith',
-      timestamp: null,
-      changes: 1,
-    }]
-
     this.controller.getInvestmentAudit({
       session: {
         token,
@@ -142,7 +95,7 @@ describe('Investment audit controller', () => {
     const expected = [{
       name: 'Fred Smith',
       timestamp: '2017-02-14T14:49:17',
-      changes: 0,
+      changes: [],
     }]
 
     this.controller.getInvestmentAudit({
@@ -189,7 +142,7 @@ describe('Investment audit controller', () => {
     const expected = [{
       name: 'Fred Smith',
       timestamp: '2017-02-14T14:49:17',
-      changes: 0,
+      changes: [],
     }]
 
     this.controller.getInvestmentAudit({
@@ -219,10 +172,8 @@ describe('Investment audit controller', () => {
     beforeEach(() => {
       this.timestamp = '2017-08-09T12:25:29.568665Z'
       this.formattedDate = '2017-08-09T13:25:29'
-      this.changes = {
-        'thing': 'a thing',
-        'other thing': 'another thing',
-      }
+      this.changes = { 'thing': ['a', 'n'],
+        'other thing': ['a', 'n'] }
     })
 
     it('should return the user name', () => {
@@ -234,7 +185,8 @@ describe('Investment audit controller', () => {
       expect(actual).to.deep.equal({
         name: 'James Example',
         timestamp: this.formattedDate,
-        changes: 2,
+        changes: [ { ChangeName: 'thing', ChangeFromDesc: 'a', ChangeToDesc: 'n' },
+          { ChangeName: 'other thing', ChangeFromDesc: 'a', ChangeToDesc: 'n' }],
       })
     })
     it('should handle absent users', () => {
@@ -242,11 +194,7 @@ describe('Investment audit controller', () => {
         timestamp: this.timestamp,
         changes: this.changes,
       })
-      expect(actual).to.deep.equal({
-        name: undefined,
-        timestamp: this.formattedDate,
-        changes: 2,
-      })
+      expect(actual.name).to.be.undefined
     })
     it('should handle empty users', () => {
       const actual = this.controller.formatAuditLog({
@@ -254,11 +202,7 @@ describe('Investment audit controller', () => {
         timestamp: this.timestamp,
         changes: this.changes,
       })
-      expect(actual).to.deep.equal({
-        name: undefined,
-        timestamp: this.formattedDate,
-        changes: 2,
-      })
+      expect(actual.name).to.be.undefined
     })
   })
 })
