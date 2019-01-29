@@ -36,6 +36,7 @@ function transformApiResponseToCollection (options = {}, ...itemTransformers) {
     return assign({}, {
       items,
       count: response.count,
+      summary: response.summary,
       pagination: buildPagination(options.query, response),
     })
   }
