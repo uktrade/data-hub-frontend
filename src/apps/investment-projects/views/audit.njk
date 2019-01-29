@@ -1,11 +1,11 @@
 {% extends "./template.njk" %}
 
 {% block main_grid_right_column %}
-  <h2 class="govuk-heading-m">Audit history</h2>
+  <h2 class="heading-medium">Timeline</h2>
 
   <ul class="event-list ">
     {% for logEntry in auditLog %}
-    <li class="event-list__item">
+    <li class="event-list__item" id="{{ logEntry.timestamp | formatDateTime('YYYY:MM:DD') }} ">
       <h4 class="event-list__item__heading govuk-heading-s">{{ logEntry.timestamp | formatDate }} <span
         class="event-list__item__heading__recede">at {{ logEntry.timestamp | formatDateTime('h:mma') }}  by {{ logEntry.name | default('Unknown adviser') }} </span></h4>
 
