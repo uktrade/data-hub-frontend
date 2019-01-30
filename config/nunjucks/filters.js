@@ -6,6 +6,7 @@ const Case = require('case')
 const numeral = require('numeral')
 const queryString = require('qs')
 const { newlineToBr } = require('../../src/lib/text-formatting')
+const { convertBooleanToYesNo } = require('../../src/lib/property-helpers')
 const {
   assign,
   castArray,
@@ -222,7 +223,7 @@ const filters = {
     return `${className} ${classModifier}`.trim()
   },
 
-  humanizeBoolean: (boolValue) => { return humanizedBooleanLookup.get(boolValue) || 'n/a' },
+  humanizeBoolean: convertBooleanToYesNo,
 }
 
 module.exports = filters

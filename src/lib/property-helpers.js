@@ -1,3 +1,4 @@
+const { isObject, keys, fill, fromPairs, zip} = require('lodash')
 /**
  * When posting data the API has different rules for empty and null
  * fields to blank fields are made null to be consistant.
@@ -83,6 +84,16 @@ function convertYesNoToBoolean (object) {
   return convertedObject
 }
 
+function convertBooleanToYesNo ( datum, neitherFallback = null) {
+  const humanizedLookup = { 'true': 'Yes', 'false': 'No' }
+  if (isObject(neitherFallback)) {
+    const defaultIfNeither = keys(neitherFallback)[0];
+    const matchers = Array(neitherFallback[defaultIfNeither].length || 0).fill(defaultIfNeither)
+    assign(humanizedLookup, fromPairs(zip(neitherFallback[defaultIfNeither], matchers)))
+  }
+  return humanizedLookup[datum]
+}
+
 /**
 * Convert fk relationships from flat to 1-level deep
 *
@@ -108,6 +119,7 @@ function convertNestedObjects (object = {}, props = []) {
 module.exports = {
   convertNestedObjects,
   convertYesNoToBoolean,
+  convertBooleanToYesNo,
   deleteNulls,
   getPropertyId,
   getPropertyName,
