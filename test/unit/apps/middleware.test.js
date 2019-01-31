@@ -378,4 +378,5 @@ describe('Apps middleware', () => {
       })
     })
   })
+  // (isLegacyProject, documentsLabel, filterOnPermissions, item) {
 })

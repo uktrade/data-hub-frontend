@@ -49,7 +49,6 @@ function handleRoutePermissions (routes) {
 function setLocalNav (items = []) {
   return function buildLocalNav (req, res, next) {
     const userPermissions = get(res, 'locals.user.permissions')
-
     res.locals.localNavItems = items
       .filter(filterNonPermittedItem(userPermissions))
       .map((item) => {
