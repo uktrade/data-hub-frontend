@@ -7,6 +7,7 @@
 {% set actionButtons = props.actionButtons | default([]) | castArray %}
 
 <header class="c-collection__header">
+
   <div class="c-collection__header-row">
     <div class="c-collection__header-intro">
       <span class="c-collection__result-count">{{ count | formatNumber }}</span>
@@ -19,71 +20,71 @@
       {% endif %}
     </div>
 
-    {% if props.selectedFilters | length or actionButtons.length %}
+    {% if actionButtons.length %}
       <div class="c-collection__header-actions">
-        {% if props.selectedFilters | length %}
-          <a
-            href="?{{ buildQuery({}, { custom: true, sortby: props.sortForm.children[0].value }) }}"
-            class="c-collection__filter-remove-all js-xhr js-ClearInputs"
-            data-target-selector=".c-collection-filters"
-            aria-label="Reset filter results"
-          >
-            Remove all filters
-          </a>
-        {% endif %}
-
         {% for actionButton in actionButtons %}
-          <a class="button button--secondary" href="{{ actionButton.url }}">{{ actionButton.label }}</a>
+          <a class="button" href="{{ actionButton.url }}">{{ actionButton.label }}</a>
         {% endfor %}
       </div>
     {% endif %}
 
-    {% if props.selectedFilters %}
-      <div class="c-collection__filter-summary">
+    {% if props.selectedFilters | length %}
+      <div class="c-collection__summary">
         {% for name, filter in props.selectedFilters %}
           <span class="c-collection__filter-tag">
-              <span class="c-collection__filter-label">{{ filter.label }}</span>
-              <span class="c-collection__filter-value">
-                {%- if 'date' in name -%}
-                  {{ filter.valueLabel | formatDate }}
-                {%- else -%}
-                  {{ filter.valueLabel }}
-                {%- endif -%}
-              </span>
+            <span class="c-collection__filter-label">{{ filter.label }}</span>
+            <span class="c-collection__filter-value">
+              {%- if 'date' in name -%}
+                {{ filter.valueLabel | formatDate }}
+              {%- else -%}
+                {{ filter.valueLabel }}
+              {%- endif -%}
             </span>
+          </span>
         {% endfor %}
+
+        <a
+          href="?{{ buildQuery({}, { custom: true, sortby: props.sortForm.children[0].value }) }}"
+          class="c-collection__filter-remove-all js-xhr js-ClearInputs"
+          data-target-selector=".c-collection-filters"
+          aria-label="Reset filter results"
+        >
+          Remove all filters
+        </a>
       </div>
     {% endif %}
 
+    {# TODO this needs to be an array of items and not explicitly referencing a field #}
     {% if props.summary %}
-      <div class="c-collection__total-cost">
-        Total value: <span class="c-collection__total-cost__value">£{{ (totalCost / 100) | formatNumber }}</span>
+      <div class="c-collection__summary">
+        <span class="c-collection__filter-tag">
+          Total value:
+          <span class="c-collection__filter-value">
+            £{{ (totalCost / 100) | formatNumber }}
+          </span>
+        </span>
       </div>
     {% endif %}
+
   </div>
 
-  {% if props.sortForm or props.pagination %}
+  {% if (count > 1 and props.sortForm) or props.exportAction.enabled %}
     <div class="c-collection__header-row">
-      {% if props.pagination %}
-        <span class="c-collection__pagination-summary">
-            Page {{ props.pagination.currentPage }} of {{ props.pagination.totalPages }}
-          </span>
-      {% endif %}
+      {{ Form(props.sortForm) if props.sortForm }}
 
-      {{ Form(props.sortForm) if props.sortForm and count > 1 }}
+      {% if props.exportAction.enabled %}
+        <span class="c-collection__header-actions">
+          {% if not props.exportAction.invalidNumberOfItems(count, props.exportAction.maxItems) %}
+            <a class="button button--secondary" download href="{{ props.exportAction.url }}">Download</a>
+          {% endif %}
+        </span>
+      {% endif %}
     </div>
   {% endif %}
 
   {% if props.exportAction.enabled %}
     <div class="c-collection__header-row">
-      <span class="c-collection__export-message">
-        {{ props.exportAction.buildMessage(count) }}
-      </span>
-      <span class="c-collection__header-actions">
-        {% if not props.exportAction.invalidNumberOfItems(count, props.exportAction.maxItems) %}
-          <a class="button" download href="{{ props.exportAction.url }}">Download</a>
-        {% endif %}
-      </span>
+      {{ props.exportAction.buildMessage(count) }}
     </div>
   {% endif %}
 
