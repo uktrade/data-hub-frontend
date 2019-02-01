@@ -200,7 +200,7 @@ Then(/^the net receipt field is hidden/, async function () {
  */
 Then(/^I filter the collections to view the (.+) I have just created$/, async function (typeOfInteraction) {
   const filtersSection = InteractionList.section.filters
-  const filterTagsSection = InteractionList.section.filterTags
+  const summarySection = InteractionList.section.summary
   const waitForTimeout = 15000
   const interactionType = camelCase(typeOfInteraction)
 
@@ -222,7 +222,7 @@ Then(/^I filter the collections to view the (.+) I have just created$/, async fu
     .waitForElementPresent(`@${interactionType}`)
     .click(`@${interactionType}`)
 
-  await filterTagsSection
+  await summarySection
     .waitForElementPresent('@kind', waitForTimeout)
 
   client.clearValue('#field-date_after')
@@ -242,6 +242,6 @@ Then(/^I filter the collections to view the (.+) I have just created$/, async fu
   await filtersSection
     .sendKeys('@dateTo', [ client.Keys.ENTER ])
 
-  await filterTagsSection
+  await summarySection
     .waitForElementPresent('@dateTo', waitForTimeout)
 })
