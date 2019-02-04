@@ -49,6 +49,9 @@
       {% if pagination.next -%}
         <a href="{{ pagination.next }}" class="c-pagination__label c-pagination__label--next">Next</a>
       {%- endif %}
+      <div class="c-pagination__summary">
+        Page {{ pagination.currentPage }} of {{ pagination.totalPages }}
+      </div>
     </nav>
   {% endif %}
 {% endmacro %}
