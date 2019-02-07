@@ -12,26 +12,18 @@ module.exports = {
   },
   contact (contacts) {
     return {
-      macroName: 'MultipleChoiceField',
-      name: 'contact',
-      initialOption: '-- Select contact --',
-      options: contacts,
-    }
-  },
-  provider (teams) {
-    return {
-      macroName: 'MultipleChoiceField',
-      name: 'dit_team',
-      initialOption: '-- Select provider --',
-      options: teams,
-    }
-  },
-  service (services) {
-    return {
-      macroName: 'MultipleChoiceField',
-      name: 'service',
-      initialOption: '-- Select service --',
-      options: services,
+      macroName: 'AddAnother',
+      buttonName: 'add_item',
+      name: 'contacts',
+      children: [{
+        macroName: 'MultipleChoiceField',
+        name: 'contacts',
+        label: 'Contacts',
+        initialOption: '-- Select contact --',
+        options: contacts,
+        optional: false,
+        isLabelHidden: true,
+      }],
     }
   },
   policyAreas (areas) {
@@ -48,6 +40,22 @@ module.exports = {
         optional: false,
         isLabelHidden: true,
       }],
+    }
+  },
+  provider (teams) {
+    return {
+      macroName: 'MultipleChoiceField',
+      name: 'dit_team',
+      initialOption: '-- Select provider --',
+      options: teams,
+    }
+  },
+  service (services) {
+    return {
+      macroName: 'MultipleChoiceField',
+      name: 'service',
+      initialOption: '-- Select service --',
+      options: services,
     }
   },
   feedbackPolicyIssueType (types) {

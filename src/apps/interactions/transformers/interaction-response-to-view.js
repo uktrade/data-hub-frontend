@@ -35,7 +35,7 @@ function transformInteractionResponseToViewRecord ({
   grant_amount_offered,
   net_company_receipt,
   dit_team,
-  contact,
+  contacts,
   policy_areas,
   policy_issue_types,
   was_policy_feedback_provided,
@@ -58,7 +58,7 @@ function transformInteractionResponseToViewRecord ({
 
   const transformed = {
     company: transformEntityLink(company, 'companies'),
-    contact: transformEntityLink(contact, 'contacts'),
+    contacts: contacts.map(contact => transformEntityLink(contact, 'contacts')),
     dit_team,
     service,
     service_delivery_status,

@@ -52,7 +52,7 @@ function getMergedData (req, res) {
   const interactionDefaults = {
     dit_adviser: user.id,
     date: transformDateStringToDateObject(new Date()),
-    contact: get(res.locals, 'contact.id'),
+    contacts: res.locals.interaction ? res.locals.interaction.contacts.map(contact => contact.id) : null,
     dit_team: get(user, 'dit_team.id'),
   }
 
