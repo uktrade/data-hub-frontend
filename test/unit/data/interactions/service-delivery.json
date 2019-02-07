@@ -22,12 +22,12 @@
     "id": "222",
     "name": "Team"
   },
-  "contact": {
+  "contacts": [{
     "id": "b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306",
     "first_name": "Jackson",
     "last_name": "Whitfield",
     "name": "Jackson Whitfield"
-  },
+  }],
   "event": {
     "id": "bac18331-ca4d-4501-960e-a1bd68b5d46e",
     "name": "Torp - Stracke"

@@ -39,7 +39,7 @@ describe('event attendees', () => {
   context('when there are no attendees', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .get(`/v3/interaction?limit=10&offset=0&sortby=contact__last_name%2Ccontact__first_name&event_id=1234`)
+        .get(`/v3/interaction?limit=10&offset=0&sortby=last_name_of_first_contact%2Cfirst_name_of_first_contact&event_id=1234`)
         .reply(200, {
           count: 0,
           results: [],
@@ -82,7 +82,7 @@ describe('event attendees', () => {
   context('when there is an attendee', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .get(`/v3/interaction?limit=10&offset=0&sortby=contact__last_name%2Ccontact__first_name&event_id=1234`)
+        .get(`/v3/interaction?limit=10&offset=0&sortby=last_name_of_first_contact%2Cfirst_name_of_first_contact&event_id=1234`)
         .reply(200, attendeesData)
 
       await renderAttendees(this.req, this.res, this.nextSpy)
@@ -130,7 +130,7 @@ describe('event attendees', () => {
   context('when there are many attendees', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .get(`/v3/interaction?limit=10&offset=0&sortby=contact__last_name%2Ccontact__first_name&event_id=1234`)
+        .get(`/v3/interaction?limit=10&offset=0&sortby=last_name_of_first_contact%2Cfirst_name_of_first_contact&event_id=1234`)
         .reply(200, {
           ...attendeesData,
           count: 200,
@@ -154,7 +154,7 @@ describe('event attendees', () => {
       this.req.query.page = 2
 
       nock(config.apiRoot)
-        .get(`/v3/interaction?limit=10&offset=10&sortby=contact__last_name%2Ccontact__first_name&event_id=1234`)
+        .get(`/v3/interaction?limit=10&offset=10&sortby=last_name_of_first_contact%2Cfirst_name_of_first_contact&event_id=1234`)
         .reply(200, {
           ...attendeesData,
           count: 200,
@@ -176,7 +176,7 @@ describe('event attendees', () => {
   context('when there is an error fetching attendees', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .get(`/v3/interaction?limit=10&offset=0&sortby=contact__last_name%2Ccontact__first_name&event_id=1234`)
+        .get(`/v3/interaction?limit=10&offset=0&sortby=last_name_of_first_contact%2Cfirst_name_of_first_contact&event_id=1234`)
         .reply(500, 'Error message')
 
       await renderAttendees(this.req, this.res, this.nextSpy)
@@ -200,7 +200,7 @@ describe('event attendees', () => {
         this.res.locals.event.service = null
 
         nock(config.apiRoot)
-          .get(`/v3/interaction?limit=10&offset=0&sortby=contact__last_name%2Ccontact__first_name&event_id=1234`)
+          .get(`/v3/interaction?limit=10&offset=0&sortby=last_name_of_first_contact%2Cfirst_name_of_first_contact&event_id=1234`)
           .reply(200, attendeesData)
 
         await renderAttendees(this.req, this.res, this.nextSpy)
@@ -221,7 +221,7 @@ describe('event attendees', () => {
         this.res.locals.event.lead_team = null
 
         nock(config.apiRoot)
-          .get(`/v3/interaction?limit=10&offset=0&sortby=contact__last_name%2Ccontact__first_name&event_id=1234`)
+          .get(`/v3/interaction?limit=10&offset=0&sortby=last_name_of_first_contact%2Cfirst_name_of_first_contact&event_id=1234`)
           .reply(200, attendeesData)
 
         await renderAttendees(this.req, this.res, this.nextSpy)
@@ -243,7 +243,7 @@ describe('event attendees', () => {
       this.res.locals.event.disabled_on = '2018-07-16T11:22:43Z'
 
       nock(config.apiRoot)
-        .get(`/v3/interaction?limit=10&offset=0&sortby=contact__last_name%2Ccontact__first_name&event_id=1234`)
+        .get(`/v3/interaction?limit=10&offset=0&sortby=last_name_of_first_contact%2Cfirst_name_of_first_contact&event_id=1234`)
         .reply(200, attendeesData)
 
       await renderAttendees(this.req, this.res, this.nextSpy)

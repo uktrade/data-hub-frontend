@@ -3,7 +3,7 @@ const { renderFindAttendee, findAttendee } = require('~/src/apps/events/attendee
 const event = require('~/test/unit/data/events/event-data.json')
 const attendeesData = require('~/test/unit/data/interactions/attendees.json')
 
-const contact = require('~/test/unit/data/contacts/contact-search-result.json')
+const contacts = require('~/test/unit/data/contacts/contact-search-result.json')
 
 describe('Find new event attendees controller', () => {
   beforeEach(() => {
@@ -104,7 +104,7 @@ describe('Find new event attendees controller', () => {
               })
               .reply(200, {
                 count: 1,
-                results: [contact],
+                results: [contacts],
               })
 
             await findAttendee(this.req, this.res, this.nextSpy)
@@ -198,7 +198,7 @@ describe('Find new event attendees controller', () => {
               })
               .reply(200, {
                 count: 50,
-                results: [contact],
+                results: [contacts],
               })
 
             await findAttendee(this.req, this.res, this.nextSpy)
@@ -250,7 +250,7 @@ describe('Find new event attendees controller', () => {
               .reply(200, {
                 count: 1,
                 results: [{
-                  ...contact,
+                  ...contacts,
                   id: '9b1138ab-ec7b-497f-b8c3-27fed21694ef',
                 }],
               })

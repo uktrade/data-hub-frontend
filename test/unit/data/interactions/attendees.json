@@ -16,6 +16,13 @@
               "job_title": null,
               "id": "9b1138ab-ec7b-497f-b8c3-27fed21694ef"
           },
+        "contacts": [{
+          "name": "Johnny Cakeman",
+          "first_name": "Johnny",
+          "last_name": "Cakeman",
+          "job_title": null,
+          "id": "9b1138ab-ec7b-497f-b8c3-27fed21694ef"
+        }],
           "created_on": "2017-06-05T00:00:00Z",
           "created_by": {
               "first_name": "Puck",

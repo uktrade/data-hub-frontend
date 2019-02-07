@@ -27,13 +27,8 @@ describe('#transformInteractionToListItem', () => {
             value: '2017-05-31T00:00:00',
           },
           {
-            label: 'Contact',
-            value: {
-              id: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
-              first_name: 'Jackson',
-              last_name: 'Whitfield',
-              name: 'Jackson Whitfield',
-            },
+            label: 'Contact(s)',
+            value: ['Jackson Whitfield'],
           },
           {
             label: 'Company',
@@ -68,6 +63,32 @@ describe('#transformInteractionToListItem', () => {
           null,
         ],
       })
+    })
+  })
+
+  context('When the source is an interaction with multiple contacts', () => {
+    beforeEach(() => {
+      this.transformed = transformInteractionToListItem({
+        ...mockInteraction,
+        contacts: [{
+          'id': 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
+          'first_name': 'Jackson',
+          'last_name': 'Whitfield',
+          'name': 'Jackson Whitfield',
+        }, {
+          'id': 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
+          'first_name': 'Jackson2',
+          'last_name': 'Whitfield2',
+          'name': 'Jackson2 Whitfield2',
+        }],
+      })
+    })
+
+    it('should transform the contacts names value', () => {
+      const contacts = this.transformed.meta.find((element) => {
+        return element.label === 'Contact(s)'
+      })
+      expect(contacts.value).to.equal('Multiple contacts')
     })
   })
 
@@ -123,13 +144,8 @@ describe('#transformInteractionToListItem', () => {
             value: '2017-05-31T00:00:00',
           },
           {
-            label: 'Contact',
-            value: {
-              id: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
-              first_name: 'Jackson',
-              last_name: 'Whitfield',
-              name: 'Jackson Whitfield',
-            },
+            label: 'Contact(s)',
+            value: ['Jackson Whitfield'],
           },
           {
             label: 'Company',
@@ -189,13 +205,8 @@ describe('#transformInteractionToListItem', () => {
             value: '2017-05-31T00:00:00',
           },
           {
-            label: 'Contact',
-            value: {
-              id: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
-              first_name: 'Jackson',
-              last_name: 'Whitfield',
-              name: 'Jackson Whitfield',
-            },
+            label: 'Contact(s)',
+            value: ['Jackson Whitfield'],
           },
           {
             label: 'Company',
@@ -262,13 +273,8 @@ describe('#transformInteractionToListItem', () => {
             value: '2017-05-31T00:00:00',
           },
           {
-            label: 'Contact',
-            value: {
-              id: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
-              first_name: 'Jackson',
-              last_name: 'Whitfield',
-              name: 'Jackson Whitfield',
-            },
+            label: 'Contact(s)',
+            value: ['Jackson Whitfield'],
           },
           {
             label: 'Company',
