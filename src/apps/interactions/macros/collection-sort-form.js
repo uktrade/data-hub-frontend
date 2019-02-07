@@ -1,7 +1,6 @@
 const options = [
   { value: '-date', label: 'Newest' },
   { value: 'company__name', label: 'Company: A-Z' },
-  { value: 'contact__first_name,contact__last_name', label: 'Contact: A-Z' },
   { value: 'dit_adviser__first_name,dit_adviser__last_name', label: 'Adviser: A-Z' },
   { value: '-dit_adviser__first_name,-dit_adviser__last_name', label: 'Adviser: Z-A' },
   { value: 'subject', label: 'Subject: A-Z' },
