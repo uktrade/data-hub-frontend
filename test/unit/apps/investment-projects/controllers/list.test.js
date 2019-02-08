@@ -74,7 +74,7 @@ describe('Investment list controller', () => {
       })
 
       it('should render the view with selected filters', () => {
-        expect(this.res.render.firstCall.args[1].selectedFilters).to.exist
+        expect(this.res.render.firstCall.args[1].selectedFiltersSummary).to.exist
       })
 
       it('should render the view with an export action', () => {
@@ -92,9 +92,9 @@ describe('Investment list controller', () => {
         const erroneousSpy = sinon.stub().throws(this.error)
 
         const controller = proxyquire('~/src/apps/investment-projects/controllers/list', {
-          '../../builders': {
+          '../../../modules/form/builders/filters': {
             buildSelectedFiltersSummary: erroneousSpy,
-            buildFieldsWithSelectedEntities: sinon.stub(),
+            hydrateFiltersFields: sinon.stub(),
           },
         })
 
