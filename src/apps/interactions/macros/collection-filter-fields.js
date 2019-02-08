@@ -34,6 +34,7 @@ module.exports = function ({
       options: [
         { value: currentAdviserId, label: 'My interactions' },
       ],
+      summarise: false,
     },
     {
       macroName: 'Typeahead',

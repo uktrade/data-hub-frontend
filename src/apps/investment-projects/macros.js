@@ -26,6 +26,7 @@ const investmentFiltersFields = function ({ currentAdviserId, sectorOptions, adv
       options: [
         { value: currentAdviserId, label: 'My Projects' },
       ],
+      summarise: false,
     },
     {
       macroName: 'Typeahead',
