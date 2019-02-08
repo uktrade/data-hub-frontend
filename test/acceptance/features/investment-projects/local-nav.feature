@@ -13,7 +13,6 @@ Feature: Investment projects local nav
       | Evaluations               |
       | Propositions              |
       | Audit history             |
-      | Documents                 |
       | Evidence                  |
 
   @investment-projects-local-nav--lep @lep
