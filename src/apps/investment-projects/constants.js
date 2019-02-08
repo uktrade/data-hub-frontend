@@ -46,7 +46,7 @@ const LOCAL_NAV = [
   },
   {
     path: 'documents',
-    label: 'Documents',
+    label: 'CDMS documents',
     permissions: [
       'investment.view_investmentproject_document',
     ],
