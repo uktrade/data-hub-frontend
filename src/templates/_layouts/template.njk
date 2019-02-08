@@ -92,54 +92,64 @@
 
 {% block header %}
 
-  <header class="global-header" aria-label="global header">
-    <div class="global-header__inner">
-      {% block header_site_title %}
-        <div class="global-header__site-title">
-          <a href="/" class="global-header__link">
-            <span class="global-header__logo">
-              <span class="global-header__site-name">{{ siteTitle|default(titleDefault) }}</span>
-              {% if serviceTitle %}
-                <span class="global-header__service-name">{{ serviceTitle }}</span>
-              {% endif %}
-            </span>
-          </a>
-          {% if not phaseBanner and projectPhase|lower in ['alpha', 'beta', 'demo'] %}
-            <span class="phase-badge">{{ projectPhase.toUpperCase() }}</span>
-          {% endif %}
-        </div>
-      {% endblock %}
-      {% block header_menu %}
-        <nav aria-label="global nav">
+
+
+  <div class="global-header">
+    <header class="govuk-header " role="banner" data-module="header">
+      <div class="govuk-header__container govuk-width-container">
+        {% block header_site_title %}
+          <div class="govuk-header__logo">
+            <a href="/" class="govuk-header__link govuk-header__link--homepage">
+              <span class="govuk-header__logotype">
+                <span class="govuk-header__logotype-text">
+                  <span class="global-header__site-name">
+                    {{ siteTitle|default(titleDefault) }}
+                  </span>
+                  {% if serviceTitle %}
+                    <span class="global-header__service-name">{{ serviceTitle }}</span>
+                  {% endif %}
+                </span>
+              </span>
+            </a>
+            {% if not phaseBanner and projectPhase|lower in ['alpha', 'beta', 'demo'] %}
+              <span class="govuk-tag govuk-phase-banner__content__tag global-phase-tag">{{ projectPhase.toUpperCase() }}</span>
+            {% endif %}
+
+          </div>
+        {% endblock %}
+        {% block header_menu %}
           <ul class="proposition-menu">
             {% if feedbackLink %}
               <li class="proposition-menu__item">
                 <a href="{{ feedbackLink }}"
-                   class="proposition-menu__link {{ 'is-active' if CURRENT_PATH and '/support' in CURRENT_PATH }}">Support</a>
+                   class="proposition-menu__link govuk-link {{ 'active' if CURRENT_PATH and '/support' in CURRENT_PATH }}">Support</a>
               </li>
             {% endif %}
             {% if user %}
               <li class="proposition-menu__item">
-                <a href="/profile" class="proposition-menu__link {{ 'is-active' if CURRENT_PATH == '/profile' }}">{{ user.name }}</a>
+                <a href="/profile" class="proposition-menu__link govuk-link {{ 'active' if CURRENT_PATH == '/profile' }}">{{ user.name }}</a>
               </li>
             {% endif %}
             {% if user %}
               <li class="proposition-menu__item">
-                <a href="/oauth/sign-out" class="proposition-menu__link">Sign out</a>
+                <a href="/oauth/sign-out" class="proposition-menu__link govuk-link">Sign out</a>
               </li>
             {% endif %}
           </ul>
-        </nav>
-      {% endblock %}
-    </div>
-  </header>
-  {{ GlobalNav({ items: GLOBAL_NAV_ITEMS }) if user }}
+        {% endblock %}
+      </div>
+      {{ GlobalNav({ items: GLOBAL_NAV_ITEMS }) if user }}
+    </header>
+  </div>
+
 
   {% block local_header %}
     {% set pageTitle = getPageTitle() if getPageTitle %}
     {% set heading = heading or pageTitle[0] %}
     {{ LocalHeader({ heading: heading, modifier: 'light-banner' }) }}
   {% endblock %}
+
+
 
 {% endblock %}
 
