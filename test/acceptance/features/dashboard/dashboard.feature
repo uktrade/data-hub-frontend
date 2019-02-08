@@ -28,7 +28,6 @@ Feature: Dashboard
       | MI dashboards             |
       | Find exporters            |
 
-
   @dashboard--global-nav-da @da
   Scenario: Display global nav for DA user
 
