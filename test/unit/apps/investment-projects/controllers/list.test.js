@@ -111,4 +111,26 @@ describe('Investment list controller', () => {
       })
     })
   })
+
+  context('when the capital-investor-profile feature flag is not active', () => {
+    beforeEach(async () => {
+      this.res.locals.features = { 'capital-investor-profile': false }
+      const controller = require('~/src/apps/investment-projects/controllers/list')
+      await controller.renderInvestmentList(this.req, this.res, this.nextSpy)
+    })
+    it('should not display the \'Create profile\' action button ', () => {
+      expect(this.res.render.firstCall.args[1].actionButtons).to.be.undefined
+    })
+  })
+
+  context('when the capital-investor-profile feature flag is active', () => {
+    beforeEach(async () => {
+      this.res.locals.features = { 'capital-investor-profile': true }
+      const controller = require('~/src/apps/investment-projects/controllers/list')
+      await controller.renderInvestmentList(this.req, this.res, this.nextSpy)
+    })
+    it('should display the \'Create profile\' action button ', () => {
+      expect(this.res.render.firstCall.args[1].actionButtons).to.be.ok
+    })
+  })
 })
