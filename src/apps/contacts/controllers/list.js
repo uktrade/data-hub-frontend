@@ -1,7 +1,7 @@
 const qs = require('querystring')
-const { get, merge, omit } = require('lodash')
+const { merge, omit } = require('lodash')
 
-const { buildSelectedFiltersSummary, hydrateFiltersFields } = require('../../../modules/form/builders/filters')
+const { buildSelectedFiltersSummary, hydrateFiltersFields, getHighlightTerm } = require('../../../modules/form/builders/filters')
 const { contactFiltersFields, contactSortForm } = require('../macros')
 const { getOptions } = require('../../../lib/options')
 const { buildExportAction } = require('../../../lib/export-helper')
@@ -46,7 +46,7 @@ async function renderContactList (req, res, next) {
       filtersFields: hydratedFiltersFields,
       title: 'Contacts',
       countLabel: 'contact',
-      highlightTerm: get(selectedFiltersSummary, 'name.valueLabel'),
+      highlightTerm: getHighlightTerm(selectedFiltersSummary, 'name'),
     })
   } catch (error) {
     next(error)

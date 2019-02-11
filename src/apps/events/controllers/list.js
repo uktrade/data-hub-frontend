@@ -1,6 +1,6 @@
-const { get, omit, merge } = require('lodash')
+const { omit, merge } = require('lodash')
 const { eventFiltersFields, eventSortForm } = require('../macros')
-const { buildSelectedFiltersSummary, hydrateFiltersFields } = require('../../../modules/form/builders/filters')
+const { buildSelectedFiltersSummary, hydrateFiltersFields, getHighlightTerm } = require('../../../modules/form/builders/filters')
 const { getAdvisers } = require('../../adviser/repos')
 
 async function renderEventList (req, res, next) {
@@ -24,7 +24,7 @@ async function renderEventList (req, res, next) {
       filtersFields: hydratedFiltersFields,
       title: 'Events',
       countLabel: 'event',
-      highlightTerm: get(selectedFiltersSummary, 'name.valueLabel'),
+      highlightTerm: getHighlightTerm(selectedFiltersSummary, 'name'),
       actionButtons: [{
         label: 'Add event',
         url: '/events/create',
