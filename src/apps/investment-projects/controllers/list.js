@@ -16,6 +16,7 @@ const SECTOR = FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.NAME
 async function renderInvestmentList (req, res, next) {
   try {
     const { token, user } = req.session
+    const { features } = res.locals
     const currentAdviserId = user.id
     const queryString = QUERY_STRING
     const sortForm = merge({}, investmentSortForm, {
@@ -53,14 +54,23 @@ async function renderInvestmentList (req, res, next) {
 
     const exportAction = await buildExportAction(qs.stringify(req.query), user.permissions, exportOptions)
 
-    res.render('_layouts/collection', {
+    const props = {
       sortForm,
       selectedFilters,
       exportAction,
       filtersFields: filtersFieldsWithSelectedOptions,
       title: 'Investment Projects',
       countLabel: 'project',
-    })
+    }
+
+    if (features && features['capital-investor-profile']) {
+      props.actionButtons = [{
+        label: 'Create profile',
+        url: '/',
+      }]
+    }
+
+    res.render('_layouts/collection', props)
   } catch (error) {
     next(error)
   }
