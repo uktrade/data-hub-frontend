@@ -2,6 +2,7 @@ const config = require('~/config')
 const {
   buildSelectedFiltersSummary,
   hydrateFiltersFields,
+  getHighlightTerm,
 } = require('~/src/modules/form/builders/filters')
 
 describe('Form filter builders', () => {
@@ -152,6 +153,49 @@ describe('Form filter builders', () => {
 
     it('should not set the selected options of the second text field', () => {
       expect(this.hydratedFields[2].selectedOptions).to.not.exist
+    })
+  })
+
+  describe('#getHighlightTerm', () => {
+    context('when filtering by the name field', () => {
+      beforeEach(() => {
+        const selectedFiltersSummary = [
+          {
+            name: 'some_other_filter',
+            label: 'Some other filter',
+            filters: [
+              {
+                label: 'Filter 1',
+              },
+            ],
+          },
+          {
+            name: 'name',
+            label: 'Company name',
+            filters: [
+              {
+                label: 'One List Corp',
+              },
+            ],
+          },
+        ]
+
+        this.highlightTerm = getHighlightTerm(selectedFiltersSummary, 'name')
+      })
+
+      it('should return the highlight term', () => {
+        expect(this.highlightTerm).to.equal('One List Corp')
+      })
+    })
+
+    context('when not filtering by the name field', () => {
+      beforeEach(() => {
+        this.highlightTerm = getHighlightTerm([], 'name')
+      })
+
+      it('should not return the highlight term', () => {
+        expect(this.highlightTerm).to.not.exist
+      })
     })
   })
 })

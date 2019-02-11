@@ -1,8 +1,8 @@
 const qs = require('querystring')
-const { get, omit, merge } = require('lodash')
+const { omit, merge } = require('lodash')
 
 const { companyFiltersFields, companySortForm } = require('../macros')
-const { buildSelectedFiltersSummary, hydrateFiltersFields } = require('../../../modules/form/builders/filters')
+const { buildSelectedFiltersSummary, hydrateFiltersFields, getHighlightTerm } = require('../../../modules/form/builders/filters')
 const { getOptions } = require('../../../lib/options')
 const { buildExportAction } = require('../../../lib/export-helper')
 
@@ -44,7 +44,7 @@ async function renderCompanyList (req, res, next) {
       filtersFields: hydratedFiltersFields,
       title: 'Companies',
       countLabel: 'company',
-      highlightTerm: get(selectedFiltersSummary, 'name.valueLabel'),
+      highlightTerm: getHighlightTerm(selectedFiltersSummary, 'name'),
       actionButtons: [
         {
           label: 'Add company',

@@ -9,6 +9,7 @@ const {
   isArray,
   filter,
   map,
+  get,
 } = require('lodash')
 
 const { getOptions } = require('../../../lib/options') // todo change this dependency
@@ -83,7 +84,14 @@ const hydrateFiltersFields = async (token, filtersFields, query) => {
   }))
 }
 
+const getHighlightTerm = (selectedFiltersSummary, name) => {
+  const nameFilterSummary = find(selectedFiltersSummary, (selectedFilter) => selectedFilter.name === name)
+
+  return get(nameFilterSummary, 'filters[0].label')
+}
+
 module.exports = {
   buildSelectedFiltersSummary,
   hydrateFiltersFields,
+  getHighlightTerm,
 }
