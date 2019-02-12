@@ -1,8 +1,8 @@
 @companies-business-details
 Feature: Company business details
 
-  @companies-business-details--ghq-one-list
-  Scenario: View details for a Dun & Bradstreet GHQ company on the One List
+  @companies-business-details--dun-and-bradstreet-ghq-one-list
+  Scenario: View business details for a Dun & Bradstreet GHQ company on the One List
 
     When I navigate to the `companies.business-details` page using `company` `One List Corp` fixture
     Then the heading should be "Business details"
