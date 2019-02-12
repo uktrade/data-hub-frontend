@@ -376,6 +376,9 @@ describe('Interaction edit controller (Service delivery)', () => {
           id: '1',
           name: 'Fred ltd.',
         },
+        contact: {
+          id: '2',
+        },
         returnLink: '/',
         entityName: 'Fred ltd.',
       }
@@ -409,9 +412,9 @@ describe('Interaction edit controller (Service delivery)', () => {
       expect(companyField).to.equal('1')
     })
 
-    it('should include a contact dropdown with no preselected value', () => {
+    it('should pre-select the dropdown with the default contact', () => {
       const contactField = find(this.interactionForm.children, ({ name }) => name === 'contacts')
-      expect(contactField.value).to.be.null
+      expect(contactField.value).to.deep.equal(['2'])
     })
   })
 
