@@ -41,3 +41,11 @@ Feature: Company business details
       | Number of employees       | Not available                |
       | Websites                  | Not available                |
     And the Documents from CDMS key value details are not displayed
+
+
+  @companies-business-details--data-hub-company
+  Scenario: View business details for a Data Hub company
+
+    When I navigate to the `companies.business-details` page using `company` `Venus Ltd` fixture
+    Then the heading should be "Business details"
+    And the "Where does information on this page come from?" details summary should not be displayed

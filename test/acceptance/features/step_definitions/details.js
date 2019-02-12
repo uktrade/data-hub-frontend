@@ -158,15 +158,17 @@ Then(/^the data details ([0-9]+) are displayed$/, async function (tableNumber, d
   await assertTableContent.bind(this)(tableSelector, dataTable.hashes(), TABLE_TYPE.DATA)
 })
 
-Then(/^the "(.+)" details summary should be displayed$/, async (summary) => {
+Then(/^the "(.+)" details summary (should be|should not be) displayed$/, async (summary, should) => {
   const detailsSummarySelector = getSelectorForElementWithText(summary, {
     el: '//span',
-    className: 'details__summary',
+    className: 'govuk-details__summary-text',
     hasExactText: true,
   })
 
+  const assertion = should === 'should be' ? 'visible' : 'elementNotPresent'
+
   await Details
     .api.useXpath()
-    .waitForElementVisible(detailsSummarySelector.selector)
+    .assert[assertion](detailsSummarySelector.selector)
     .useCss()
 })
