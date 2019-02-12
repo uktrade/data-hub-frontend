@@ -38,7 +38,6 @@ module.exports = {
     companiesHouseSearchField: '#field-term',
     collectionsCompanyNameInput: '#field-name',
     collectionResultsCompanyName: '.c-entity-list li:first-child .c-entity__title > a',
-    xhrTargetElement: '#xhr-outlet',
   },
   commands: [
     {
@@ -472,14 +471,6 @@ module.exports = {
         return this
       },
 
-      searchForCompanyInCollection (companyName) {
-        this.api.url(`${process.env.QA_HOST}/companies`)
-        return this
-          .waitForElementPresent('@collectionsCompanyNameInput')
-          .setValue('@collectionsCompanyNameInput', [companyName, this.api.Keys.ENTER]) // press enter
-          .waitForElementNotVisible('@xhrTargetElement') // wait for xhr results to come back
-          .waitForElementVisible('@xhrTargetElement')
-      },
     },
   ],
   sections: {
