@@ -1,0 +1,14 @@
+{
+  "name": "data-hub-functional-test",
+  "version": "1.0.0",
+  "description": "The aim of this test suite is perform functional tests of frontend components in isolation.",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress run"
+  },
+  "author": "DIT",
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "^3.1.5"
+  }
+}
