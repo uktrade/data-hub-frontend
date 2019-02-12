@@ -10,7 +10,7 @@ describe('#transformInteractionResponseToForm', () => {
     it('should transform data from interaction response to form', () => {
       expect(this.transformed).to.deep.equal({
         company: '0f5216e0-849f-11e6-ae22-56b6b6499611',
-        contact: '7701587b-e88f-4f39-874f-0bd06321f7df',
+        contacts: ['7701587b-e88f-4f39-874f-0bd06321f7df'],
         dit_adviser: '537df876-5062-e311-8255-e4115bead28a',
         service: 'd320b92b-3499-e211-a939-e4115bead28a',
         service_delivery_status: undefined,
@@ -50,7 +50,7 @@ describe('#transformInteractionResponseToForm', () => {
     it('should transform data from interaction response to form', () => {
       expect(this.transformed).to.deep.equal({
         company: '0f5216e0-849f-11e6-ae22-56b6b6499611',
-        contact: '7701587b-e88f-4f39-874f-0bd06321f7df',
+        contacts: ['7701587b-e88f-4f39-874f-0bd06321f7df'],
         dit_adviser: '537df876-5062-e311-8255-e4115bead28a',
         service: 'd320b92b-3499-e211-a939-e4115bead28a',
         service_delivery_status: '45329c18-6095-e211-a939-e4115bead28a',
@@ -87,7 +87,7 @@ describe('#transformInteractionResponseToForm', () => {
     it('should transform data from interaction response to form', () => {
       expect(this.transformed).to.deep.equal({
         company: '0f5216e0-849f-11e6-ae22-56b6b6499611',
-        contact: '7701587b-e88f-4f39-874f-0bd06321f7df',
+        contacts: ['7701587b-e88f-4f39-874f-0bd06321f7df'],
         dit_adviser: '537df876-5062-e311-8255-e4115bead28a',
         service: 'd320b92b-3499-e211-a939-e4115bead28a',
         service_delivery_status: undefined,

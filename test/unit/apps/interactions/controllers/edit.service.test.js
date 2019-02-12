@@ -182,9 +182,11 @@ describe('Interaction edit controller (Service delivery)', () => {
           id: '1',
           name: 'Fred ltd.',
         },
-        contact: {
-          id: '2',
-          name: 'Fred Bloggs',
+        interaction: {
+          contacts: [{
+            id: '2',
+            name: 'Fred Bloggs',
+          }],
         },
         interactions: {
           returnLink: '/',
@@ -238,7 +240,7 @@ describe('Interaction edit controller (Service delivery)', () => {
       const fields = this.interactionForm.children.map(field => pick(field, ['name', 'label', 'macroName', 'type']))
       expect(fields).to.deep.equal([
         { name: 'date', label: 'Date of service delivery', macroName: 'DateFieldset' },
-        { name: 'contact', label: 'Contact', macroName: 'MultipleChoiceField' },
+        { name: 'contacts', label: 'Contact(s)', macroName: 'AddAnother' },
         { name: 'dit_adviser', label: 'DIT adviser', macroName: 'Typeahead' },
         { name: 'dit_team', label: 'Service provider', macroName: 'MultipleChoiceField' },
         { name: 'is_event', label: 'Is this an event?', macroName: 'MultipleChoiceField', type: 'radio' },
@@ -262,8 +264,9 @@ describe('Interaction edit controller (Service delivery)', () => {
     })
 
     it('should provide a list of contacts', () => {
-      const contactField = find(this.interactionForm.children, ({ name }) => name === 'contact')
-      expect(contactField.options).to.deep.equal([
+      const contactField = find(this.interactionForm.children, ({ name }) => name === 'contacts')
+      const contacts = contactField.children[0].options
+      expect(contacts).to.deep.equal([
         { value: '999', label: 'Fred Smith, Manager' },
         { value: '998', label: 'Emily Brown, Director' },
       ])
@@ -318,8 +321,8 @@ describe('Interaction edit controller (Service delivery)', () => {
     })
 
     it('should set the default contact to the current contact', () => {
-      const contactField = find(this.interactionForm.children, ({ name }) => name === 'contact')
-      expect(contactField.value).to.equal('2')
+      const contactField = find(this.interactionForm.children, ({ name }) => name === 'contacts')
+      expect(contactField.value).to.deep.equal(['2'])
     })
 
     it('should set the default for the service provider to the users team', () => {
@@ -373,6 +376,9 @@ describe('Interaction edit controller (Service delivery)', () => {
           id: '1',
           name: 'Fred ltd.',
         },
+        contact: {
+          id: '2',
+        },
         returnLink: '/',
         entityName: 'Fred ltd.',
       }
@@ -406,9 +412,9 @@ describe('Interaction edit controller (Service delivery)', () => {
       expect(companyField).to.equal('1')
     })
 
-    it('should include a contact dropdown with no preselected value', () => {
-      const contactField = find(this.interactionForm.children, ({ name }) => name === 'contact')
-      expect(contactField.value).to.be.undefined
+    it('should pre-select the dropdown with the default contact', () => {
+      const contactField = find(this.interactionForm.children, ({ name }) => name === 'contacts')
+      expect(contactField.value).to.deep.equal(['2'])
     })
   })
 
@@ -484,10 +490,10 @@ describe('Interaction edit controller (Service delivery)', () => {
           },
         },
         {
-          name: 'contact',
-          label: 'Contact',
-          macroName: 'MultipleChoiceField',
-          value: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
+          name: 'contacts',
+          label: 'Contact(s)',
+          macroName: 'AddAnother',
+          value: ['b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306'],
         },
         {
           name: 'dit_adviser',
@@ -546,8 +552,9 @@ describe('Interaction edit controller (Service delivery)', () => {
     })
 
     it('should provide a list of contacts', () => {
-      const contactField = find(this.interactionForm.children, ({ name }) => name === 'contact')
-      expect(contactField.options).to.deep.equal([
+      const contactField = find(this.interactionForm.children, ({ name }) => name === 'contacts')
+      const contact = contactField.children[0]
+      expect(contact.options).to.deep.equal([
         { value: '999', label: 'Fred Smith, Manager' },
         { value: '998', label: 'Emily Brown, Director' },
       ])
@@ -674,10 +681,10 @@ describe('Interaction edit controller (Service delivery)', () => {
           },
         },
         {
-          name: 'contact',
-          label: 'Contact',
-          macroName: 'MultipleChoiceField',
-          value: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
+          name: 'contacts',
+          label: 'Contact(s)',
+          macroName: 'AddAnother',
+          value: ['b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306'],
         },
         {
           name: 'dit_adviser',

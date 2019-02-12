@@ -32,8 +32,8 @@ describe('Contact list controller', () => {
 
   describe('#renderContactList', () => {
     context('when there are investments to render', () => {
-      beforeEach(async () => {
-        await this.controller.renderContactList(this.req, this.res, this.next)
+      beforeEach(() => {
+        this.controller.renderContactList(this.req, this.res, this.next)
       })
 
       it('should render collection page with locals', () => {

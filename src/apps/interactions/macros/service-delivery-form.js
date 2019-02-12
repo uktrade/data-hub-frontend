@@ -32,7 +32,6 @@ module.exports = function ({
   types,
 }) {
   return {
-    class: 'js-vue-wrapper',
     returnLink,
     returnText,
     buttonText,

@@ -14,7 +14,6 @@ describe('#transformEventToAttendeeListItem', () => {
         id: '2222',
         name: 'Test company',
       }
-
       this.result = transformServiceDeliveryToAttendeeListItem(this.serviceDelivery)
     })
 
@@ -34,11 +33,11 @@ describe('#transformEventToAttendeeListItem', () => {
 
   context('when the company is missing', () => {
     beforeEach(() => {
-      this.serviceDelivery.contact = {
+      this.serviceDelivery.contacts = [{
         id: '3333',
         name: 'Test contact',
         job_title: 'Director',
-      }
+      }]
 
       this.result = transformServiceDeliveryToAttendeeListItem(this.serviceDelivery)
     })
