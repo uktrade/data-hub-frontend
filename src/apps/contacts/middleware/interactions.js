@@ -4,7 +4,7 @@ function setInteractionsDetails (req, res, next) {
   res.locals.interactions = {
     returnLink: `/contacts/${req.params.contactId}/interactions/`,
     entityName: `${res.locals.contact.first_name} ${res.locals.contact.last_name}`,
-    query: { contact_id: req.params.contactId },
+    query: { contacts_id: req.params.contactId },
     view: 'contacts/views/interactions',
     canAdd: true,
   }

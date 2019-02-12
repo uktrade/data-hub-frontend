@@ -47,12 +47,22 @@ async function buildForm (req, res, interactionId) {
 
 function getMergedData (req, res) {
   const user = get(req.session, 'user')
-  const interactionData = transformInteractionResponseToForm(res.locals.interaction)
 
+  function setDefaultContact () {
+    if (res.locals.interaction) {
+      return res.locals.interaction.contacts.map(contact => contact.id)
+    }
+    if (res.locals.contact) {
+      return [get(res.locals.contact, 'id')]
+    }
+    return null
+  }
+
+  const interactionData = transformInteractionResponseToForm(res.locals.interaction)
   const interactionDefaults = {
     dit_adviser: user.id,
     date: transformDateStringToDateObject(new Date()),
-    contact: get(res.locals, 'contact.id'),
+    contacts: setDefaultContact(),
     dit_team: get(user, 'dit_team.id'),
   }
 

@@ -1,12 +1,13 @@
 /* eslint-disable camelcase */
 
 const { INTERACTION_NAMES } = require('../constants')
+const { interaction } = require('../labels')
 
 function transformInteractionToListItem ({
   id,
   subject,
   kind,
-  contact,
+  contacts,
   company,
   date,
   dit_adviser,
@@ -14,6 +15,9 @@ function transformInteractionToListItem ({
   service,
   was_policy_feedback_provided,
 }) {
+  const hasMultipleContacts = (contacts) => {
+    return contacts.length > 1 ? interaction.multiple_contacts : contacts.map(contact => contact.name)
+  }
   return {
     was_policy_feedback_provided,
     id,
@@ -31,8 +35,8 @@ function transformInteractionToListItem ({
         type: 'date',
       },
       {
-        label: 'Contact',
-        value: contact,
+        label: 'Contact(s)',
+        value: contacts && hasMultipleContacts(contacts),
       },
       {
         label: 'Company',
