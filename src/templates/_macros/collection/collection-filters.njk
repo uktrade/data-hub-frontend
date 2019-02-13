@@ -1,4 +1,5 @@
 {% from '../form.njk' import Form, MultipleChoiceField, TextField, DateField, Typeahead %}
+{% from '../collection-selected-filters/macro.njk' import CollectionSelectedFilters %}
 
 {##
  # Render collection filters form
@@ -8,6 +9,9 @@
 #}
 {% macro CollectionFilters(props) %}
   {% if props.filtersFields | removeNilAndEmpty | length %}
+
+    {% call CollectionSelectedFilters({ selectedFiltersSummary: props.selectedFiltersSummary }) %}{% endcall %}
+
     {% call Form({
       method: 'get',
       class: 'c-collection-filters js-AutoSubmit js-vue-wrapper',

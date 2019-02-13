@@ -9,4 +9,8 @@
   * + .c-typeahead--alternative {
     margin-top: $default-spacing-unit;
   }
+
+  .c-collection-selected-filters + & {
+    margin-top: $default-spacing-unit;
+  }
 }

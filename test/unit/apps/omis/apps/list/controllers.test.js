@@ -58,7 +58,7 @@ describe('OMIS list controllers', () => {
     })
 
     it('should pass a summary of selected filters to the view', () => {
-      expect(this.renderOptions).to.have.property('selectedFilters')
+      expect(this.renderOptions).to.have.property('selectedFiltersSummary')
     })
   })
 })

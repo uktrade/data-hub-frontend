@@ -3,11 +3,12 @@ const {
   getMetaListItemValueSelector,
 } = require('../../helpers/selectors')
 
-const getFilterTagSelector = (text) => getSelectorForElementWithText(
+const getFilterSummaryFilterSelector = (text) => getSelectorForElementWithText(
   text,
   {
     el: '//span',
-    className: 'c-collection__filter-label',
+    className: 'govuk-!-font-weight-bold',
+    child: '/following-sibling::ul/li[1]',
   }
 )
 
@@ -18,14 +19,14 @@ module.exports = {
   },
   sections: {
     summary: {
-      selector: '.c-collection__summary',
+      selector: '.c-collection-selected-filters',
       elements: {
-        kind: getFilterTagSelector('Kind'),
-        communicationChannel: getFilterTagSelector('Communication channel'),
-        adviser: getFilterTagSelector('Adviser'),
-        dateFrom: getFilterTagSelector('From'),
-        dateTo: getFilterTagSelector('To'),
-        seviceProvider: getFilterTagSelector('Service provider'),
+        kind: getFilterSummaryFilterSelector('Kind'),
+        communicationChannel: getFilterSummaryFilterSelector('Communication channel'),
+        adviser: getFilterSummaryFilterSelector('Adviser'),
+        dateFrom: getFilterSummaryFilterSelector('From'),
+        dateTo: getFilterSummaryFilterSelector('To'),
+        seviceProvider: getFilterSummaryFilterSelector('Service provider'),
       },
     },
     firstInteractionInList: {

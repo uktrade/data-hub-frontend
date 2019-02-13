@@ -14,9 +14,6 @@ describe('OMIS reconciliation controllers', () => {
     this.buildSelectedFiltersSummaryStub = sinon.spy()
 
     this.controller = proxyquire('~/src/apps/omis/apps/reconciliation/controllers', {
-      '../../../builders': {
-        buildSelectedFiltersSummary: this.buildSelectedFiltersSummaryStub,
-      },
       './macros': {
         filtersFields: [
           { macroName: 'foo' },
@@ -27,8 +24,8 @@ describe('OMIS reconciliation controllers', () => {
   })
 
   describe('renderList()', () => {
-    beforeEach(() => {
-      this.controller.renderList(this.req, this.res)
+    beforeEach(async () => {
+      await this.controller.renderList(this.req, this.res)
     })
 
     it('should call render method', () => {
@@ -38,14 +35,7 @@ describe('OMIS reconciliation controllers', () => {
     it('should pass the correct data to the view', () => {
       expect(this.res.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('sortForm'))
       expect(this.res.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('filtersFields'))
-      expect(this.res.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('selectedFilters'))
-    })
-
-    it('should build filters summary', () => {
-      expect(this.buildSelectedFiltersSummaryStub).to.have.been.calledWith([
-        { macroName: 'foo' },
-        { macroName: 'bar' },
-      ], this.req.query)
+      expect(this.res.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('selectedFiltersSummary'))
     })
   })
 })
