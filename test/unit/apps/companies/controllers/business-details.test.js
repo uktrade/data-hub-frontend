@@ -28,8 +28,8 @@ describe('#renderBusinessDetails', () => {
         expect(this.middlewareParameters.resMock.render.firstCall.args[1].heading).to.equal('Business details')
       })
 
-      it('should set the known as details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].knownAsDetails).to.exist
+      it('should set the about details', () => {
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].aboutDetails).to.exist
       })
 
       it('should set the One List details', () => {

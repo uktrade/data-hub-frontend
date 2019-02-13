@@ -133,6 +133,7 @@ const QUERY_FIELDS = [
 
 const NONE_TEXT = 'None'
 const NOT_SET_TEXT = 'Not set'
+const NOT_AVAILABLE_TEXT = 'Not available'
 
 module.exports = {
   GLOBAL_NAV_ITEM,
@@ -143,4 +144,5 @@ module.exports = {
   QUERY_FIELDS,
   NONE_TEXT,
   NOT_SET_TEXT,
+  NOT_AVAILABLE_TEXT,
 }
