@@ -51,10 +51,6 @@ describe('#renderBusinessDetails', () => {
       it('should set the addresses details', () => {
         expect(this.middlewareParameters.resMock.render.firstCall.args[1].addressesDetails).to.exist
       })
-
-      it('should set the additional information details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].additionalInformationDetails).to.exist
-      })
     }
 
     context('when the company does not have archived documents', () => {
