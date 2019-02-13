@@ -16,8 +16,8 @@ Given('I store the result count in state', async function () {
 })
 
 When(/^I clear all filters$/, async function () {
-  await Collection.section.selectedFilters
-    .click('@clearAllFiltersLink')
+  await Collection.section.collectionHeader
+    .click('@removeAllFiltersLink')
     .wait() // wait for xhr
 })
 

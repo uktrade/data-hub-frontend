@@ -5,14 +5,33 @@ const dnbCompanyMock = require('~/test/unit/data/companies/dnb-company.json')
 
 describe('Company contact list controller', () => {
   beforeEach(() => {
-    this.controller = require('~/src/apps/companies/controllers/contacts')
+    this.buildSelectedFiltersSummaryStub = sinon.spy()
+
+    this.controller = proxyquire('~/src/apps/companies/controllers/contacts', {
+      '../../builders': {
+        buildSelectedFiltersSummary: this.buildSelectedFiltersSummaryStub,
+      },
+      '../../contacts/macros': {
+        contactFiltersFields: [
+          { macroName: 'foo', name: 'name' },
+          { macroName: 'bar', name: 'archived' },
+          { macroName: 'fizz', name: 'buzz' },
+        ],
+      },
+    })
   })
 
   describe('#renderContacts', () => {
     const commonTests = (expectedCompanyId, expectedTemplate) => {
       it('should render collection page with locals', () => {
         expect(this.middlewareParameters.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('sortForm'))
+        expect(this.middlewareParameters.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('filtersFields'))
+        expect(this.middlewareParameters.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('selectedFilters'))
         expect(this.middlewareParameters.resMock.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('actionButtons'))
+        expect(this.buildSelectedFiltersSummaryStub).to.have.been.calledWith([
+          { macroName: 'foo', name: 'name' },
+          { macroName: 'bar', name: 'archived' },
+        ], this.middlewareParameters.reqMock.query)
       })
 
       it('should set the correct number of breadcrumbs', () => {
@@ -25,12 +44,12 @@ describe('Company contact list controller', () => {
     }
 
     context('when the company does not have a DUNS number', () => {
-      beforeEach(async () => {
+      beforeEach(() => {
         this.middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
         })
 
-        await this.controller.renderContacts(
+        this.controller.renderContacts(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
         )
@@ -49,12 +68,12 @@ describe('Company contact list controller', () => {
     })
 
     context('when the company does have a DUNS number', () => {
-      beforeEach(async () => {
+      beforeEach(() => {
         this.middlewareParameters = buildMiddlewareParameters({
           company: dnbCompanyMock,
         })
 
-        await this.controller.renderContacts(
+        this.controller.renderContacts(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
         )
@@ -73,7 +92,7 @@ describe('Company contact list controller', () => {
     })
 
     context('when the company is archived', () => {
-      beforeEach(async () => {
+      beforeEach(() => {
         this.middlewareParameters = buildMiddlewareParameters({
           company: {
             ...companyMock,
@@ -81,7 +100,7 @@ describe('Company contact list controller', () => {
           },
         })
 
-        await this.controller.renderContacts(
+        this.controller.renderContacts(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
         )

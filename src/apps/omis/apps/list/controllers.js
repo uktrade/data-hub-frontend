@@ -1,7 +1,7 @@
 const qs = require('querystring')
 const { omit, merge } = require('lodash')
 
-const { buildSelectedFiltersSummary, hydrateFiltersFields } = require('../../../../modules/form/builders/filters')
+const { buildSelectedFiltersSummary, buildFieldsWithSelectedEntities } = require('../../../builders')
 const { getOptions } = require('../../../../lib/options')
 const { buildExportAction } = require('../../../../lib/export-helper')
 const { omisFiltersFields, collectionSortForm } = require('./macros')
@@ -41,7 +41,7 @@ async function getFormOptions (token) {
 async function getFiltersFields (token, query) {
   const { omisMarketOptions, regionOptions, sectorOptions } = await getFormOptions(token)
   const filtersFields = omisFiltersFields({ omisMarketOptions, regionOptions, sectorOptions })
-  const filtersFieldsWithSelectedOptions = await hydrateFiltersFields(token, filtersFields, query)
+  const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(token, filtersFields, query)
 
   return filtersFieldsWithSelectedOptions
 }
@@ -66,17 +66,18 @@ function getSortForm (query) {
 async function renderList (req, res, next) {
   try {
     const { token, user } = req.session
-    const sortForm = getSortForm(req.query)
-    const filtersFields = await getFiltersFields(token, req.query)
-    const hydratedFiltersFields = await hydrateFiltersFields(token, filtersFields, req.query)
-    const selectedFiltersSummary = buildSelectedFiltersSummary(hydratedFiltersFields, req.query, req.baseUrl)
+    const query = req.query
+
+    const sortForm = getSortForm(query)
+    const filtersFields = await getFiltersFields(token, query)
+    const selectedFilters = buildSelectedFiltersSummary(filtersFields, query)
     const exportAction = await buildExportAction(qs.stringify(req.query), user.permissions, exportOptions)
 
     res.render('_layouts/collection', {
       sortForm,
-      selectedFiltersSummary,
+      selectedFilters,
+      filtersFields,
       exportAction,
-      filtersFields: hydratedFiltersFields,
       countLabel: 'order',
       actionButtons: [{
         label: 'Add order',

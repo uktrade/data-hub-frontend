@@ -1,11 +1,16 @@
-const { omit, merge } = require('lodash')
+const { get, omit, merge } = require('lodash')
 const { eventFiltersFields, eventSortForm } = require('../macros')
-const { buildSelectedFiltersSummary, hydrateFiltersFields, getHighlightTerm } = require('../../../modules/form/builders/filters')
+const { buildSelectedFiltersSummary, buildFieldsWithSelectedEntities } = require('../../builders')
 const { getAdvisers } = require('../../adviser/repos')
 
 async function renderEventList (req, res, next) {
   try {
-    const { token } = req.session
+    const token = req.session.token
+    const advisers = await getAdvisers(req.session.token)
+    const filtersFields = eventFiltersFields({ advisers: advisers.results, userAgent: res.locals.userAgent })
+    const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(token, filtersFields, req.query)
+    const selectedFilters = await buildSelectedFiltersSummary(filtersFieldsWithSelectedOptions, req.query)
+
     const sortForm = merge({}, eventSortForm, {
       hiddenFields: omit(req.query, 'sortby'),
       children: [
@@ -13,18 +18,13 @@ async function renderEventList (req, res, next) {
       ],
     })
 
-    const advisers = await getAdvisers(req.session.token)
-    const filtersFields = eventFiltersFields({ advisers: advisers.results, userAgent: res.locals.userAgent })
-    const hydratedFiltersFields = await hydrateFiltersFields(token, filtersFields, req.query)
-    const selectedFiltersSummary = buildSelectedFiltersSummary(hydratedFiltersFields, req.query, req.baseUrl)
-
     res.render('_layouts/collection', {
       sortForm,
-      selectedFiltersSummary,
-      filtersFields: hydratedFiltersFields,
+      filtersFields: filtersFieldsWithSelectedOptions,
+      selectedFilters,
       title: 'Events',
       countLabel: 'event',
-      highlightTerm: getHighlightTerm(selectedFiltersSummary, 'name'),
+      highlightTerm: get(selectedFilters, 'name.valueLabel'),
       actionButtons: [{
         label: 'Add event',
         url: '/events/create',
