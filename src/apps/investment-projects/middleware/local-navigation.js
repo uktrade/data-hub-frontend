@@ -11,10 +11,10 @@ const filterDocNavItemIfProjectIsNew = (investment) => {
   return LOCAL_NAV.filter(({ path }) => !(path === DOCUMENTS && isNew))
 }
 
-const setInvestmentsLocalNav = (req, res, next) => {
+const setLocalNavigation = (req, res, next) => {
   const { investment } = res.locals
   const navItems = investment ? filterDocNavItemIfProjectIsNew(investment) : LOCAL_NAV
   setLocalNav(navItems)(req, res, next)
 }
 
-module.exports = setInvestmentsLocalNav
+module.exports = setLocalNavigation

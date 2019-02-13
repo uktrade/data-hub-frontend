@@ -57,6 +57,21 @@ const LOCAL_NAV = [
   },
 ]
 
+const INVESTMENT_TAB_ITEMS = [
+  {
+    path: 'projects',
+    label: 'Projects',
+  },
+  {
+    path: 'profiles',
+    label: 'Investor profiles',
+  },
+  {
+    path: 'opportunities',
+    label: 'UK Opportunities',
+  },
+]
+
 const DEFAULT_COLLECTION_QUERY = {
   sortby: 'estimated_land_date:asc',
 }
@@ -91,6 +106,7 @@ const QUERY_DATE_FIELDS = [
 module.exports = {
   GLOBAL_NAV_ITEM,
   LOCAL_NAV,
+  INVESTMENT_TAB_ITEMS,
   DEFAULT_COLLECTION_QUERY,
   APP_PERMISSIONS,
   QUERY_FIELDS,

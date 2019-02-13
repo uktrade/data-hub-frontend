@@ -7,7 +7,8 @@ const { getRequestBody } = require('../../middleware/collection')
 const { detectUserAgent } = require('../../middleware/detect-useragent')
 const { getCollection, exportCollection } = require('../../modules/search/middleware/collection')
 
-const setInvestmentsLocalNav = require('./middleware/local-navigation')
+const setInvestmentTabItems = require('./middleware/investments-tab-items')
+const setLocalNavigation = require('./middleware/local-navigation')
 const { setDefaultQuery, redirectToFirstNavItem, handleRoutePermissions } = require('../middleware')
 const { shared } = require('./middleware')
 const {
@@ -36,7 +37,10 @@ const {
   valueFormMiddleware,
 } = require('./middleware/forms')
 
-const { renderInvestmentList } = require('./controllers/list')
+const { renderProjectsView } = require('./controllers/projects')
+const { renderProfilesView } = require('./controllers/profiles')
+const { renderOpportunitiesView } = require('./controllers/opportunities')
+
 const { renderPropositionList } = require('./controllers/propositions')
 const { renderEvidenceView } = require('./controllers/evidence')
 const { renderAddEvidence } = require('./apps/evidence/controllers/create')
@@ -73,18 +77,38 @@ const { transformInvestmentProjectToListItem } = require('./transformers')
 const interactionsRouter = require('../interactions/router.sub-app')
 const propositionsRouter = require('../propositions/router.sub-app')
 
-router.use(handleRoutePermissions(APP_PERMISSIONS))
-
-router.use('/:investmentId', setInvestmentsLocalNav)
-router.param('investmentId', shared.getInvestmentDetails)
-router.param('companyId', shared.getCompanyDetails)
-
-router.get('/',
+const projectsMiddleware = [
   detectUserAgent,
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   getRequestBody(QUERY_FIELDS, QUERY_DATE_FIELDS),
   getCollection('investment_project', ENTITIES, transformInvestmentProjectToListItem),
-  renderInvestmentList
+]
+
+router.use(handleRoutePermissions(APP_PERMISSIONS))
+
+router.use('/:investmentId', setLocalNavigation)
+router.param('investmentId', shared.getInvestmentDetails)
+router.param('companyId', shared.getCompanyDetails)
+
+router.get('/',
+  projectsMiddleware,
+  renderProjectsView('_layouts/collection')
+)
+
+router.get('/projects',
+  projectsMiddleware,
+  setInvestmentTabItems,
+  renderProjectsView('investment-projects/views/projects'),
+)
+
+router.get('/profiles',
+  setInvestmentTabItems,
+  renderProfilesView,
+)
+
+router.get('/opportunities',
+  setInvestmentTabItems,
+  renderOpportunitiesView,
 )
 
 router.get('/export',
