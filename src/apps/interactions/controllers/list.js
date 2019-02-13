@@ -1,7 +1,7 @@
 const qs = require('querystring')
 const { get } = require('lodash')
 const { collectionFilterFields } = require('../macros')
-const { buildSelectedFiltersSummary, hydrateFiltersFields } = require('../../../modules/form/builders/filters')
+const { buildSelectedFiltersSummary, buildFieldsWithSelectedEntities } = require('../../builders')
 const { getOptions } = require('../../../lib/options')
 const { buildExportAction } = require('../../../lib/export-helper')
 const { getAdvisers } = require('../../adviser/repos')
@@ -49,6 +49,8 @@ async function renderInteractionList (req, res, next) {
   try {
     const { token, user } = req.session
     const { id: currentAdviserId, permissions } = user
+    const { query } = req
+
     const options = await getInteractionOptions(token, req, res)
 
     const filtersFields = collectionFilterFields({
@@ -58,14 +60,14 @@ async function renderInteractionList (req, res, next) {
       userAgent: res.locals.userAgent,
     })
 
-    const hydratedFiltersFields = await hydrateFiltersFields(token, filtersFields, req.query)
-    const selectedFiltersSummary = buildSelectedFiltersSummary(hydratedFiltersFields, req.query, req.baseUrl)
+    const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(token, filtersFields, query)
+    const selectedFilters = await buildSelectedFiltersSummary(filtersFieldsWithSelectedOptions, query)
     const exportAction = await buildExportAction(qs.stringify(req.query), user.permissions, exportOptions)
 
     res.render('_layouts/collection', {
-      selectedFiltersSummary,
+      selectedFilters,
       exportAction,
-      filtersFields: hydratedFiltersFields,
+      filtersFields: filtersFieldsWithSelectedOptions,
       title: 'Interactions',
       countLabel: 'interaction',
     })
