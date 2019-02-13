@@ -11,6 +11,7 @@ const GLOBAL_NAV_ITEM = {
   permissions: [
     'company.view_company',
   ],
+  key: 'datahub-crm',
   order: 1,
 }
 
