@@ -2,7 +2,7 @@
 const { isEmpty } = require('lodash')
 
 const {
-  transformCompanyToKnownAsView,
+  transformCompanyToAboutView,
   transformCompanyToOneListView,
   transformCompanyToBusinessHierarchyView,
   transformCompanyToSectorView,
@@ -23,7 +23,7 @@ async function renderBusinessDetails (req, res) {
     .breadcrumb('Business details')
     .render('companies/views/business-details', {
       heading: 'Business details',
-      knownAsDetails: transformCompanyToKnownAsView(company),
+      aboutDetails: transformCompanyToAboutView(company),
       oneListDetails: transformCompanyToOneListView(company),
       businessHierarchyDetails: transformCompanyToBusinessHierarchyView(company, subsidiaries.count),
       sectorDetails: transformCompanyToSectorView(company),
