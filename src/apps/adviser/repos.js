@@ -1,4 +1,4 @@
-const { get, isEmpty } = require('lodash')
+const { get } = require('lodash')
 const config = require('../../../config')
 const { authorisedRequest } = require('../../lib/authorised-request')
 
@@ -19,11 +19,9 @@ function getAdviser (token, id) {
 }
 
 async function fetchAdviserSearchResults (token, params) {
-  if (!isEmpty(params.term)) {
-    const url = `${config.apiRoot}/adviser/?autocomplete=${params.term}&is_active=${params.is_active}`
-    const adviserResults = await authorisedRequest(token, { url })
-    return adviserResults.results
-  }
+  const url = `${config.apiRoot}/adviser/?autocomplete=${params.term}&is_active=${params.is_active}`
+  const adviserResults = await authorisedRequest(token, { url })
+  return adviserResults.results
 }
 
 module.exports = {
