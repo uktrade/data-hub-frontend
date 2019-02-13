@@ -7,6 +7,7 @@ const GLOBAL_NAV_ITEM = {
     'investment.view_associated_investmentproject',
     'investment.view_all_investmentproject',
   ],
+  key: 'datahub-crm',
   order: 5,
 }
 

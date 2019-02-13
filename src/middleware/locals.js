@@ -1,10 +1,12 @@
-const { get, map } = require('lodash')
+/* eslint-disable no-unused-vars */
+const { get, includes, intersection, isObject, map } = require('lodash')
 
 const GLOBAL_NAV_ITEMS = require('../apps/global-nav-items')
 const logger = require('../../config/logger')
 const config = require('../../config')
 const { version } = require('../../package.json')
 const { filterNonPermittedItem } = require('../modules/permissions/filters')
+const { buildNavObject } = require('../apps/builders')
 
 let webpackManifest = {}
 
@@ -17,6 +19,8 @@ try {
 module.exports = function locals (req, res, next) {
   const baseUrl = `${(req.encrypted ? 'https' : req.protocol)}://${req.get('host')}`
   const userPermissions = get(res, 'locals.user.permissions')
+  const userProfile = config.oauth.bypassSSO ? null : get(req.session, 'userProfile')
+  const permittedApplications = get(userProfile, 'permitted_applications', [])
 
   res.locals = Object.assign({}, res.locals, {
     APP_VERSION: version,
@@ -30,14 +34,7 @@ module.exports = function locals (req, res, next) {
     QUERY: req.query,
     GLOBAL_NAV_ITEMS: GLOBAL_NAV_ITEMS
       .filter(filterNonPermittedItem(userPermissions))
-      .map(navItem => {
-        const { path: url, label } = navItem
-        return {
-          label,
-          url,
-          isActive: req.path.startsWith(url),
-        }
-      }),
+      .map(navItem => buildNavObject(req, navItem, permittedApplications, config.oauth.bypassSSO)),
 
     getMessages () {
       return req.flash()
