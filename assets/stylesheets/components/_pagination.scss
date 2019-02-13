@@ -74,15 +74,6 @@
   color: $grey-1;
 }
 
-.c-pagination__navigation {
-  @include clearfix;
-}
-
-.c-pagination__summary {
-  margin-top: $default-spacing-unit;
-  color: $grey-1;
-}
-
 @include media(mobile) {
   @include _pageless;
 }

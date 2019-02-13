@@ -17,8 +17,8 @@ module.exports = {
     interactionsTab: 'a[href*="/search/interactions"]',
   },
   sections: {
-    summary: {
-      selector: '.c-collection__summary',
+    filterTags: {
+      selector: '.c-collection__filter-summary',
       elements: {
         kind: getFilterTagSelector('Kind'),
         communicationChannel: getFilterTagSelector('Communication channel'),
