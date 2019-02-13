@@ -42,6 +42,7 @@ module.exports = {
         intro: '.c-collection__header-intro',
         paginationSummary: '.c-collection__pagination-summary',
         resultCount: '.c-collection__result-count',
+        removeAllFiltersLink: '.c-collection__filter-remove-all',
         sortBy: '#field-sortby',
       },
     },
@@ -59,12 +60,6 @@ module.exports = {
         header: '.c-entity__title',
         updatedOn: '.c-entity__subtitle',
         link: '.c-entity--block-link, .c-entity__link',
-      },
-    },
-    selectedFilters: {
-      selector: '.c-collection-selected-filters',
-      elements: {
-        clearAllFiltersLink: '.c-collection-selected-filters__clear-filters',
       },
     },
     filters: {

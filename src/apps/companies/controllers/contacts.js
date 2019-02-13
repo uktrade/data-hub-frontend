@@ -1,9 +1,13 @@
-const { merge, omit, assign } = require('lodash')
+const { merge, omit, assign, filter } = require('lodash')
 
-const { companyContactSortForm } = require('../../contacts/macros')
+const { contactFiltersFields, companyContactSortForm } = require('../../contacts/macros')
+const { buildSelectedFiltersSummary } = require('../../builders')
 
-async function renderContacts (req, res) {
+function renderContacts (req, res) {
   const { company } = res.locals
+  const filtersFields = filter(contactFiltersFields, (field) => {
+    return ['name', 'archived'].includes(field.name)
+  })
 
   const sortForm = merge({}, companyContactSortForm, {
     hiddenFields: assign({}, omit(req.query, 'sortby')),
@@ -24,7 +28,9 @@ async function renderContacts (req, res) {
     .breadcrumb('Contacts')
     .render(view, {
       sortForm,
+      filtersFields,
       actionButtons,
+      selectedFilters: buildSelectedFiltersSummary(filtersFields, req.query),
     })
 }
 

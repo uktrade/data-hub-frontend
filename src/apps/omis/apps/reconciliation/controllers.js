@@ -1,13 +1,12 @@
 const { assign, merge, omit } = require('lodash')
 
-const { buildSelectedFiltersSummary, hydrateFiltersFields } = require('../../../../modules/form/builders/filters')
+const { buildSelectedFiltersSummary } = require('../../../builders')
 const {
   filtersFields,
   reconciliationSortForm,
 } = require('./macros')
 
-async function renderList (req, res) {
-  const { token } = req.session
+function renderList (req, res) {
   const sortForm = merge({}, reconciliationSortForm, {
     hiddenFields: assign({}, omit(req.query, 'sortby')),
     children: [
@@ -15,14 +14,13 @@ async function renderList (req, res) {
     ],
   })
 
-  const hydratedFiltersFields = await hydrateFiltersFields(token, filtersFields, req.query)
-  const selectedFiltersSummary = buildSelectedFiltersSummary(hydratedFiltersFields, req.query)
+  const selectedFilters = buildSelectedFiltersSummary(filtersFields, req.query)
 
   res
     .render('omis/apps/reconciliation/views/list-reconciliation', {
       sortForm,
-      selectedFiltersSummary,
-      filtersFields: hydratedFiltersFields,
+      selectedFilters,
+      filtersFields,
     })
 }
 
