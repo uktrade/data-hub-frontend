@@ -1,8 +1,8 @@
 @companies-business-details
 Feature: Company business details
 
-  @companies-business-details--ghq-one-list
-  Scenario: View details for a Dun & Bradstreet GHQ company on the One List
+  @companies-business-details--dun-and-bradstreet-ghq-one-list
+  Scenario: View business details for a Dun & Bradstreet GHQ company on the One List
 
     When I navigate to the `companies.business-details` page using `company` `One List Corp` fixture
     Then the heading should be "Business details"
@@ -41,3 +41,11 @@ Feature: Company business details
       | Number of employees       | Not available                |
       | Websites                  | Not available                |
     And the Documents from CDMS key value details are not displayed
+
+
+  @companies-business-details--data-hub-company
+  Scenario: View business details for a Data Hub company
+
+    When I navigate to the `companies.business-details` page using `company` `Venus Ltd` fixture
+    Then the heading should be "Business details"
+    And the "Where does information on this page come from?" details summary should not be displayed
