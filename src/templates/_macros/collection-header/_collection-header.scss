@@ -1,51 +1,68 @@
-@import "~govuk-frontend/helpers/all";
-@import "~govuk-frontend/settings/all";
+@import "../../../../assets/stylesheets/settings";
+@import "../../../../assets/stylesheets/tools";
 
 .c-collection__header-row {
-  @include govuk-font($size: 16);
-
-  padding: govuk-spacing(2) 0 govuk-spacing(2) 0;
-  border-bottom: 1px solid govuk-colour("grey-2");
+  @include clearfix;
+  @include core-font(16);
+  padding-bottom: ($default-spacing-unit / 2);
 
   &:first-child {
-    border-bottom: govuk-spacing(1) solid $govuk-text-colour;
+    border-bottom: 5px solid $text-colour;
   }
 
-  @include govuk-media-query($from: tablet) {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
+  &:not(first-child) {
+    padding-top: ($default-spacing-unit / 2);
+    border-bottom: 1px solid $grey-2;
   }
 }
 
 .c-collection__header-intro {
-  @include govuk-font($size: 24);
-}
-
-.c-collection__result-count {
-  @include govuk-font($size: 36, $weight: bold, $line-height: 1);
-}
-
-.c-collection__header-actions {
-  margin-top: govuk-spacing(2);
-  margin-left: auto;
-
-  @include govuk-media-query($from: tablet) {
-    margin-top: 0;
-  }
-}
-
-.c-collection__summary {
-  width: 100%;
-}
-
-.c-collection__filter-tag {
-  margin: govuk-spacing(2) govuk-spacing(2) govuk-spacing(2) 0;
+  @include core-font(24);
   display: inline-block;
 }
 
+.c-collection__header-actions {
+  @include media(tablet) {
+    float: right;
+
+    * + * {
+      margin-left: $default-spacing-unit;
+    }
+  }
+}
+
+.c-collection__result-count {
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+// Export button
+
+.c-collection__export-message {
+  color: $black;
+  line-height: $default-spacing-unit * 2;
+}
+
+// Filter summary
+
+.c-collection__filter-summary {
+  clear: both;
+}
+
+.c-collection__filter-tag {
+  color: $text-colour;
+  display: inline-block;
+  position: relative;
+  margin-right: $default-spacing-unit / 2;
+  margin-top: $default-spacing-unit / 2;
+  padding: 0 ($default-spacing-unit / 2);
+  background: $grey-4;
+  cursor: default;
+}
+
 .c-collection__filter-label {
-  color: govuk-colour("grey-1");
+  color: $grey-1;
 
   &::after {
     content: ":";
@@ -53,33 +70,74 @@
 }
 
 .c-collection__filter-value {
-  @include govuk-font($size: 16, $weight: bold);
+  font-weight: 600;
 }
 
-.c-collection__filter-remove-all {
-  margin-left: govuk-spacing(2);
-  display: inline-block;
+.c-collection__filter-remove {
+  position: absolute;
+  top: $baseline-grid-unit;
+  right: $baseline-grid-unit;
+  text-decoration: none;
+  float: right;
+  font-size: 24px;
+  line-height: .7;
 
   &:link,
   &:visited {
-    color: $govuk-link-colour;
+    color: $text-colour;
+  }
+
+  &:hover {
+    color: $red;
   }
 }
 
-.c-collection__sort-form {
-  margin-top: govuk-spacing(2);
+.c-collection__filter-remove-all {
+  display: inline-block;
+  line-height: 1.2;
+  margin-top: $default-spacing-unit / 2;
+  margin-bottom: $default-spacing-unit / 2;
 
-  @include govuk-media-query($from: tablet) {
-    margin-top: 0;
+  &:link,
+  &:visited {
+    color: $link-colour;
   }
+}
+
+.c-collection__pagination-summary {
+  color: $grey-1;
+  line-height: $default-spacing-unit * 2;
+}
+
+.c-collection__sort-form {
+  margin-top: $default-spacing-unit / 2;
+  display: flex;
 
   .c-form-group--inline {
     display: flex;
     align-items: center;
   }
 
-  .c-form-group__label-text {
-    margin-right: govuk-spacing(1);
+  .c-form-group__label {
     margin-bottom: 0;
+    margin-right: $default-spacing-unit / 2;
+  }
+
+  @include media(tablet) {
+    margin-top: 0;
+    float: right;
+  }
+
+  .button {
+    margin-left: $default-spacing-unit / 2;
+    margin-bottom: 2px;
+  }
+}
+
+.c-collection__total-cost {
+  padding-top: $default-spacing-unit / 2;
+
+  .c-collection__total-cost__value{
+    font-weight: 600;
   }
 }
