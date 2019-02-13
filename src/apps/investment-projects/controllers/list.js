@@ -1,7 +1,7 @@
 const qs = require('querystring')
 const { merge, omit, get } = require('lodash')
 
-const { buildSelectedFiltersSummary, hydrateFiltersFields } = require('../../../modules/form/builders/filters')
+const { buildSelectedFiltersSummary, buildFieldsWithSelectedEntities } = require('../../builders')
 const { getOptions } = require('../../../lib/options')
 const { investmentFiltersFields, investmentSortForm } = require('../macros')
 const { buildExportAction } = require('../../../lib/export-helper')
@@ -42,8 +42,8 @@ async function renderInvestmentList (req, res, next) {
       userAgent: res.locals.userAgent,
     })
 
-    const hydratedFiltersFields = await hydrateFiltersFields(token, filtersFields, req.query)
-    const selectedFiltersSummary = buildSelectedFiltersSummary(hydratedFiltersFields, req.query, req.baseUrl)
+    const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(token, filtersFields, req.query)
+    const selectedFilters = await buildSelectedFiltersSummary(filtersFieldsWithSelectedOptions, req.query)
 
     const exportOptions = {
       targetPermission: 'investment.export_investmentproject',
@@ -56,9 +56,9 @@ async function renderInvestmentList (req, res, next) {
 
     const props = {
       sortForm,
-      selectedFiltersSummary,
+      selectedFilters,
       exportAction,
-      filtersFields: hydratedFiltersFields,
+      filtersFields: filtersFieldsWithSelectedOptions,
       title: 'Investment Projects',
       countLabel: 'project',
     }
