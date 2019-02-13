@@ -100,12 +100,6 @@ const businessHierarchyLabels = {
   subsidiaries: 'Subsidiaries',
 }
 
-const additionalBusinessInformationLabels = {
-  turnover: 'Annual turnover',
-  number_of_employees: 'Number of employees',
-  websites: 'Websites',
-}
-
 module.exports = {
   companyDetailsLabels,
   chDetailsLabels,
@@ -117,5 +111,4 @@ module.exports = {
   coreTeamLabels,
   aboutLabels,
   businessHierarchyLabels,
-  additionalBusinessInformationLabels,
 }

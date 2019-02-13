@@ -36,11 +36,6 @@ Feature: Company business details
       | Paris                     |
       | 75001                     |
       | France                    |
-    And the Additional business information key value details are displayed
-      | key                       | value                        |
-      | Annual turnover           | Not available                |
-      | Number of employees       | Not available                |
-      | Websites                  | Not available                |
     And the Documents from CDMS key value details are not displayed
 
 

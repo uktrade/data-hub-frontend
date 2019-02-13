@@ -8,7 +8,6 @@ const {
   transformCompanyToSectorView,
   transformCompanyToRegionView,
   transformCompanyToAddressesView,
-  transformCompanyToAdditionalInformationView,
 } = require('../transformers')
 const {
   getCompanySubsidiaries,
@@ -29,7 +28,6 @@ async function renderBusinessDetails (req, res) {
       sectorDetails: transformCompanyToSectorView(company),
       regionDetails: transformCompanyToRegionView(company),
       addressesDetails: transformCompanyToAddressesView(company),
-      additionalInformationDetails: transformCompanyToAdditionalInformationView(company),
       archivedDocumentPath: isEmpty(company.archived_documents_url_path) ? undefined : company.archived_documents_url_path,
     })
 }
