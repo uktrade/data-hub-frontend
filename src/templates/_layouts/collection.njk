@@ -1,24 +1,25 @@
 {% extends "_layouts/template.njk" %}
 
 {% block body_main_content %}
-  <div class="grid-row">
-    <div class="column-one-third">
-      {% block collection_filters %}
-        {{ CollectionFilters({
-          query: QUERY,
-          filtersFields: filtersFields,
-          action: CURRENT_PATH
-        }) }}
-      {% endblock %}
-    </div>
+  {% block xhr_content %}
 
-    {% block xhr_content %}
+    <div class="grid-row">
+      <div class="column-one-third">
+        {% block collection_filters %}
+          {{ CollectionFilters({
+            query: QUERY,
+            filtersFields: filtersFields,
+            selectedFiltersSummary: selectedFiltersSummary,
+            action: CURRENT_PATH
+          }) }}
+        {% endblock %}
+      </div>
+
       <article class="column-two-thirds" data-xhr="c781e8b1-9747-4b2e-8655-68b14ea49126">
         {% block collection_results %}
           {{ CollectionContent(results | assign({
             countLabel: countLabel,
             sortForm: assign({}, sortForm, { action: CURRENT_PATH }),
-            selectedFilters: selectedFilters,
             highlightTerm: highlightTerm,
             actionButtons: actionButtons,
             exportAction: exportAction,
@@ -26,6 +27,7 @@
           })) }}
         {% endblock %}
       </article>
-    {% endblock %}
-  </div>
+    </div>
+
+  {% endblock %}
 {% endblock %}

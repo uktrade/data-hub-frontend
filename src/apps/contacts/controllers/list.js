@@ -1,7 +1,7 @@
 const qs = require('querystring')
-const { get, merge, omit } = require('lodash')
+const { merge, omit } = require('lodash')
 
-const { buildSelectedFiltersSummary, buildFieldsWithSelectedEntities } = require('../../builders')
+const { buildSelectedFiltersSummary, hydrateFiltersFields, getHighlightTerm } = require('../../../modules/form/builders/filters')
 const { contactFiltersFields, contactSortForm } = require('../macros')
 const { getOptions } = require('../../../lib/options')
 const { buildExportAction } = require('../../../lib/export-helper')
@@ -34,19 +34,19 @@ async function renderContactList (req, res, next) {
       sectorOptions,
     })
 
-    const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(token, filtersFields, req.query)
-    const selectedFilters = await buildSelectedFiltersSummary(filtersFieldsWithSelectedOptions, req.query)
+    const hydratedFiltersFields = await hydrateFiltersFields(token, filtersFields, req.query)
+    const selectedFiltersSummary = buildSelectedFiltersSummary(hydratedFiltersFields, req.query, req.baseUrl)
 
     const exportAction = await buildExportAction(qs.stringify(req.query), user.permissions, exportOptions)
 
     res.render('_layouts/collection', {
       sortForm,
-      selectedFilters,
+      selectedFiltersSummary,
       exportAction,
-      filtersFields: filtersFieldsWithSelectedOptions,
+      filtersFields: hydratedFiltersFields,
       title: 'Contacts',
       countLabel: 'contact',
-      highlightTerm: get(selectedFilters, 'name.valueLabel'),
+      highlightTerm: getHighlightTerm(selectedFiltersSummary, 'name'),
     })
   } catch (error) {
     next(error)

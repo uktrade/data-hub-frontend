@@ -1,0 +1,41 @@
+@import "~govuk-frontend/helpers/all";
+@import "~govuk-frontend/settings/all";
+
+.c-collection-selected-filters {
+  @include govuk-font($size: 16);
+
+  background-color: govuk-colour('grey-3');
+  padding: govuk-spacing(2);
+}
+
+.c-collection-selected-filters__header {
+  display: flex;
+  align-items: center;
+}
+
+.c-collection-selected-filters__clear-filters {
+  margin-left: auto;
+}
+
+.c-collection-selected-filters__list {
+  margin: govuk-spacing(1) 0 govuk-spacing(3) 0;
+}
+
+.c-collection-selected-filters__list-item-link {
+  @include govuk-font($size: 27, $line-height: 0.5);
+
+  text-decoration: none;
+  position: relative;
+  top: 4px;
+
+  &:hover,
+  &:link,
+  &:visited,
+  &:active {
+    color: govuk-colour('black');
+  }
+
+  &:after {
+    content: "\d7";
+  }
+}

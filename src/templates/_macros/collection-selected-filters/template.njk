@@ -1,0 +1,21 @@
+<div class="c-collection-selected-filters" data-xhr="7d3f4b28-96e6-4eb4-b5bf-e36f586d6dd3">
+  <legend class="c-form-group__label c-collection-selected-filters__header">
+    <span class="c-form-group__label-text">Filters selected</span>
+    <span class="c-collection-selected-filters__clear-filters">
+      <a href="?{{ buildQuery({}, { custom: true, sortby: props.sortForm.children[0].value }) }}">Clear filters</a>
+    </span>
+  </legend>
+
+  {% for selectedFilter in props.selectedFiltersSummary %}
+    <span class="govuk-!-font-weight-bold">{{ selectedFilter.label }}</span>
+    <ul class="c-collection-selected-filters__list">
+      {% for filter in selectedFilter.filters %}
+        <li>
+          {{ filter.label }}
+          <a href="{{ filter.removeHref }}" class="c-collection-selected-filters__list-item-link"></a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+
+</div>

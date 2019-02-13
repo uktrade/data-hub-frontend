@@ -1,6 +1,5 @@
-{% from '../form.njk' import Form %}
+{% from '../form/form.njk' import Form %}
 
-{% set buildQuery = buildQuery or props.buildQuery %}
 {% set totalCost = props.summary.total_subtotal_cost %}
 {% set count = props.count | default('0') %}
 {% set countLabel = props.countLabel | default('result') %}
@@ -12,7 +11,7 @@
     <div class="c-collection__header-intro">
       <span class="c-collection__result-count">{{ count | formatNumber }}</span>
       {{ countLabel | pluralise(count) }}
-      {% if props.highlightTerm or selectedFilters | length %}
+      {% if props.highlightTerm | length %}
         matching
         {% if props.highlightTerm %}
           <span class="u-highlight">{{ props.highlightTerm }}</span>
@@ -25,32 +24,6 @@
         {% for actionButton in actionButtons %}
           <a class="button" href="{{ actionButton.url }}">{{ actionButton.label }}</a>
         {% endfor %}
-      </div>
-    {% endif %}
-
-    {% if props.selectedFilters | length %}
-      <div class="c-collection__summary">
-        {% for name, filter in props.selectedFilters %}
-          <span class="c-collection__filter-tag">
-            <span class="c-collection__filter-label">{{ filter.label }}</span>
-            <span class="c-collection__filter-value">
-              {%- if 'date' in name -%}
-                {{ filter.valueLabel | formatDate }}
-              {%- else -%}
-                {{ filter.valueLabel }}
-              {%- endif -%}
-            </span>
-          </span>
-        {% endfor %}
-
-        <a
-          href="?{{ buildQuery({}, { custom: true, sortby: props.sortForm.children[0].value }) }}"
-          class="c-collection__filter-remove-all js-xhr js-ClearInputs"
-          data-target-selector=".c-collection-filters"
-          aria-label="Reset filter results"
-        >
-          Remove all filters
-        </a>
       </div>
     {% endif %}
 
