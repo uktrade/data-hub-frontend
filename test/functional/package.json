@@ -4,7 +4,8 @@
   "description": "The aim of this test suite is perform functional tests of frontend components in isolation.",
   "main": "index.js",
   "scripts": {
-    "test": "cypress run"
+    "test": "cypress run",
+    "test:watch": "./node_modules/.bin/cypress open"
   },
   "author": "DIT",
   "license": "MIT",
