@@ -68,15 +68,17 @@
   </table>
 
 
-  <h2 class="govuk-heading-m govuk-!-margin-top-9">DIT region</h2>
+  {% if regionDetails %}
+    <h2 class="govuk-heading-m govuk-!-margin-top-9">DIT region</h2>
 
-  <table class="table--key-value">
-    <tbody>
-    <tr>
-      <td>{{ regionDetails }}</td>
-    </tr>
-    </tbody>
-  </table>
+    <table class="table--key-value">
+      <tbody>
+      <tr>
+        <td>{{ regionDetails }}</td>
+      </tr>
+      </tbody>
+    </table>
+  {% endif %}
 
 
   <h2 class="govuk-heading-m govuk-!-margin-top-9">Addresses</h2>
