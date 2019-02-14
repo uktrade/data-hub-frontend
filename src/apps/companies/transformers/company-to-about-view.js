@@ -26,9 +26,22 @@ module.exports = ({
         newWindow: true,
       },
     ] : null,
-    number_of_employees: number_of_employees || NOT_AVAILABLE_TEXT,
     turnover: turnover ? [
       `USD ${turnover}`,
+      {
+        name: 'This is an estimated number',
+        type: 'details',
+        details: {
+          summaryText: 'What does that mean?',
+          text: 'This is an estimated number',
+        },
+      },
+    ] : NOT_AVAILABLE_TEXT,
+    number_of_employees: number_of_employees ? [
+      {
+        name: number_of_employees,
+        type: 'number',
+      },
       {
         name: 'This is an estimated number',
         type: 'details',
