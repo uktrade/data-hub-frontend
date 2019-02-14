@@ -1,4 +1,4 @@
-const setInvestmentsLocalNav = require('~/src/apps/investment-projects/middleware/local-navigation')
+const setLocalNavigation = require('~/src/apps/investment-projects/middleware/local-navigation')
 
 describe('Investment projects local navigation', () => {
   beforeEach(() => {
@@ -21,7 +21,7 @@ describe('Investment projects local navigation', () => {
   context('when a project code starts with \'DHP\' it is a new project', () => {
     beforeEach(() => {
       this.res.locals.investment.project_code = 'DHP-00000001'
-      setInvestmentsLocalNav(this.req, this.res, this.next)
+      setLocalNavigation(this.req, this.res, this.next)
     })
 
     it('should filter out the documents nav item', () => {
@@ -33,7 +33,7 @@ describe('Investment projects local navigation', () => {
   context('when a project code starts with \'P\' it is an old project (CDMS)', () => {
     beforeEach(() => {
       this.res.locals.investment.project_code = 'P-30016857'
-      setInvestmentsLocalNav(this.req, this.res, this.next)
+      setLocalNavigation(this.req, this.res, this.next)
     })
 
     it('should keep the documents nav item', () => {
@@ -45,7 +45,7 @@ describe('Investment projects local navigation', () => {
   context('when a project code starts with a number it is a very old project (pre-dates CDMS)', () => {
     beforeEach(() => {
       this.res.locals.investment.project_code = '016020'
-      setInvestmentsLocalNav(this.req, this.res, this.next)
+      setLocalNavigation(this.req, this.res, this.next)
     })
 
     it('should keep the documents nav item', () => {
