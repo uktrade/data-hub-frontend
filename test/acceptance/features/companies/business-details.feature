@@ -1,8 +1,8 @@
 @companies-business-details
 Feature: Company business details
 
-  @companies-business-details--dun-and-bradstreet-ghq-one-list
-  Scenario: View business details for a Dun & Bradstreet GHQ company on the One List
+  @companies-business-details--dun-and-bradstreet-ghq-one-list-outside-uk
+  Scenario: View business details for a Dun & Bradstreet GHQ company on the One List not in the UK
 
     When I navigate to the `companies.business-details` page using `company` `One List Corp` fixture
     Then the heading should be "Business details"
@@ -22,9 +22,7 @@ Feature: Company business details
     And the DIT sector values are displayed
       | value                     |
       | Retail                    |
-    And the DIT region values are displayed
-      | value                     |
-      | Not set                   |
+    And the DIT region values are not displayed
     And address 1 should have badges
       | value                     |
       | Trading                   |
