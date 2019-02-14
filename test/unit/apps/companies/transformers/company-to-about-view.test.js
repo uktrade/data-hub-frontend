@@ -17,7 +17,7 @@ describe('#transformCompanyToKnownAsView', () => {
     })
 
     it('should set the turnover', () => {
-      expect(this.actual[aboutLabels.turnover]).to.equal(expectedTurnover)
+      expect(this.actual[aboutLabels.turnover]).to.deep.equal(expectedTurnover)
     })
   }
 
@@ -50,7 +50,17 @@ describe('#transformCompanyToKnownAsView', () => {
         newWindow: true,
       },
       200,
-      'USD 100000'
+      [
+        'USD 100000',
+        {
+          details: {
+            summaryText: 'What does that mean?',
+            text: 'This is an estimated number',
+          },
+          name: 'This is an estimated number',
+          type: 'details',
+        },
+      ],
     )
 
     it('should set the Companies House number', () => {
