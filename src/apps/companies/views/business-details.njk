@@ -38,7 +38,7 @@
 
   <h2 class="govuk-heading-m govuk-!-margin-top-9">About {{ company.name }}</h2>
 
-  {% component 'key-value-table', items=knownAsDetails %}
+  {% component 'key-value-table', items=aboutDetails %}
 
 
   <h2 class="govuk-heading-m govuk-!-margin-top-9">Global Account Manager – One List</h2>
@@ -95,11 +95,6 @@
     </tr>
     </tbody>
   </table>
-
-
-  <h2 class="govuk-heading-m govuk-!-margin-top-9">Additional business information</h2>
-
-  {% component 'key-value-table', items=additionalInformationDetails %}
 
 
   {% if archivedDocumentPath %}
