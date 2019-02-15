@@ -1,7 +1,7 @@
 {% extends "./template.njk" %}
 
 {% block main_grid_right_column %}
-<h2 class="govuk-heading-m">Company interactions</h2>
+<h2 class="govuk-heading-m" test-auto-id="companyInteractionHeader">Company interactions</h2>
 
 {% if company.contacts.length %}
 <p>
@@ -11,7 +11,7 @@
 {% if company.archived %}
 <details role="group">
   <summary role="button" aria-controls="details-content-0" aria-expanded="false">
-    <span class="details__summary">
+    <span class="details__summary" test-auto-id="archivedCompanySummary">
       Why can I not add an interaction?
     </span>
   </summary>

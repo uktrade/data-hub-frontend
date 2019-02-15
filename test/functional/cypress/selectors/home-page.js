@@ -1,5 +1,5 @@
 const homePage = {
-  contactNav: '[test-data-id="Contacts"]',
+  contactNav: '[test-auto-id="Contacts"]',
 }
 
 export default homePage
