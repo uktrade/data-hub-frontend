@@ -13,7 +13,7 @@ describe('transformCompanyToOneListView', () => {
     })
   }
 
-  context('when One List tier and Global Account Manager information exists', () => {
+  context('when the business is on the One List', () => {
     beforeEach(() => {
       this.actual = transformCompanyToOneListView(dnbCompany)
     })
@@ -25,7 +25,7 @@ describe('transformCompanyToOneListView', () => {
     ])
   })
 
-  context('when One List tier and Global Account Manager information exists', () => {
+  context('when the business is not on the One List', () => {
     beforeEach(() => {
       const company = {
         ...dnbCompany,
@@ -36,7 +36,9 @@ describe('transformCompanyToOneListView', () => {
       this.actual = transformCompanyToOneListView(company)
     })
 
-    commonTests('None', 'None')
+    it('should not set One List details', () => {
+      expect(this.actual).to.not.exist
+    })
   })
 
   context('when Global Account Manager if from outside UK', () => {
