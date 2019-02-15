@@ -11,6 +11,9 @@ Feature: Company business details
     And the About One List Corp key value details are displayed
       | key                       | value                        |
       | Trading names             | company.tradingName          |
+      | Annual turnover           | Not available                |
+      | Number of employees       | Not available                |
+      | Website                   | Not available                |
     And the Global Account Manager – One List key value details are displayed
       | key                       | value                        |
       | One List tier             | company.oneListTier          |
@@ -33,11 +36,6 @@ Feature: Company business details
       | Paris                     |
       | 75001                     |
       | France                    |
-    And the Additional business information key value details are displayed
-      | key                       | value                        |
-      | Annual turnover           | Not available                |
-      | Number of employees       | Not available                |
-      | Websites                  | Not available                |
     And the Documents from CDMS key value details are not displayed
 
 
@@ -50,6 +48,9 @@ Feature: Company business details
     And the About Venus Ltd key value details are displayed
       | key                       | value                        |
       | Trading names             | company.tradingName          |
+      | Annual turnover           | Not available                |
+      | Number of employees       | Not available                |
+      | Website                   | Not available                |
     And the Global Account Manager – One List key value details are displayed
       | key                       | value                        |
       | One List tier             | company.oneListTier          |
