@@ -1,188 +1,348 @@
 const { renderComponentToDom } = require('../component-helper')
 
 describe('Key/value table component', () => {
-  it('should not render if no items are given', () => {
-    const component = renderComponentToDom('key-value-table')
+  context('when no items are given', () => {
+    beforeEach(() => {
+      this.component = renderComponentToDom('key-value-table')
+    })
 
-    expect(component).to.be.null
+    it('should not render', () => {
+      expect(this.component).to.not.exist
+    })
   })
 
-  it('should render a table ', () => {
-    const component = renderComponentToDom(
-      'key-value-table',
-      {
+  context('when there is one item and the data is a URL with a hint', () => {
+    beforeEach(() => {
+      const component = renderComponentToDom('key-value-table', {
         items: {
-          'First label': '#1 label content',
-          'Second label': '#2 label content',
-        },
-      }
-    )
-
-    expect(component.className).to.contain('table--key-value')
-    const rows = component.querySelectorAll('tr')
-    expect(rows.length).to.equal(2)
-    expect(rows[0].querySelector('th').textContent).to.equal('First label')
-    expect(rows[0].querySelector('td').textContent).to.equal('#1 label content')
-    expect(rows[1].querySelector('th').textContent).to.equal('Second label')
-    expect(rows[1].querySelector('td').textContent).to.equal('#2 label content')
-  })
-
-  it('should render a table with link', () => {
-    const name = '#1 label content'
-    const url = '/label-1'
-    const component = renderComponentToDom(
-      'key-value-table',
-      {
-        items: {
-          'First label': {
-            name,
-            url,
+          'Label 1': {
+            url: `https://beta.companieshouse.gov.uk/company/123456`,
+            name: 'View on Companies House website',
+            hint: '(Opens in a new window)',
+            hintId: 'external-link-label',
+            newWindow: true,
           },
         },
-      }
-    )
+      })
 
-    expect(component.querySelector('td').innerHTML
-      .trim()
-      .replace(/\s+/g, ' '))
-      .to.equal(`<a href="${url}">${name}</a>`)
+      this.rows = component.querySelectorAll('tr')
+    })
+
+    it('should render one row', () => {
+      expect(this.rows.length).to.equal(1)
+    })
+
+    it('should render a label', () => {
+      expect(this.rows[0].querySelector('th').textContent).to.equal('Label 1')
+    })
+
+    it('should render a link that opens in a new window', () => {
+      const link = this.rows[0].querySelector('td a')
+      expect(link.getAttribute('href')).to.equal('https://beta.companieshouse.gov.uk/company/123456')
+      expect(link.getAttribute('aria-labelledby')).to.equal('external-link-label')
+      expect(link.getAttribute('target')).to.equal('_blank')
+      expect(link.textContent).to.equal('View on Companies House website')
+    })
+
+    it('should render a hint', () => {
+      const hint = this.rows[0].querySelector('td span')
+      expect(hint.getAttribute('id')).to.equal('external-link-label')
+      expect(hint.textContent).to.equal('(Opens in a new window)')
+    })
   })
 
-  it('should render a table with link containing hint', () => {
-    const hint = 'example hint'
-    const hintId = 'mock-id'
-    const name = '#1 label content'
-    const url = '/label-1'
-
-    const component = renderComponentToDom(
-      'key-value-table',
-      {
+  context('when there is one item and the data is currency', () => {
+    beforeEach(() => {
+      const component = renderComponentToDom('key-value-table', {
         items: {
-          'First label': {
-            name,
-            url,
-            hint,
-            hintId,
+          'Label 1': {
+            name: 1000,
+            type: 'currency',
           },
         },
-      }
-    )
+      })
 
-    expect(component.querySelector('td').innerHTML
-      .trim()
-      .replace(/\s+/g, ' '))
-      .to.equal(`<a href="${url}" aria-labelledby="${hintId}">${name}</a> <span id="${hintId}">${hint}</span>`)
+      this.rows = component.querySelectorAll('tr')
+    })
+
+    it('should render one row', () => {
+      expect(this.rows.length).to.equal(1)
+    })
+
+    it('should render a label', () => {
+      expect(this.rows[0].querySelector('th').textContent).to.equal('Label 1')
+    })
+
+    it('should render the formatted value', () => {
+      expect(this.rows[0].querySelector('td').textContent).to.equal('£1,000.00')
+    })
   })
 
-  it('should render a table with an object with a name', () => {
-    const component = renderComponentToDom(
-      'key-value-table',
-      {
+  context('when there is one item and the data is a date', () => {
+    beforeEach(() => {
+      const component = renderComponentToDom('key-value-table', {
         items: {
-          'Adviser': {
-            name: 'Fred Smith',
-          },
-          'Second label': '#2 label content',
-        },
-      }
-    )
-
-    expect(component.className).to.contain('table--key-value')
-    const rows = component.querySelectorAll('tr')
-    expect(rows.length).to.equal(2)
-    expect(rows[0].querySelector('th').textContent).to.equal('Adviser')
-    expect(rows[0].querySelector('td').textContent).to.equal('Fred Smith')
-    expect(rows[1].querySelector('th').textContent).to.equal('Second label')
-    expect(rows[1].querySelector('td').textContent).to.equal('#2 label content')
-  })
-
-  it('it sould render a table with an object with a null name', () => {
-    const component = renderComponentToDom(
-      'key-value-table',
-      {
-        items: {
-          'Start date': {
+          'Label 1': {
+            name: '10/10/2018',
             type: 'date',
-            name: null,
           },
-          'Second label': '#2 label content',
         },
-      }
-    )
+      })
 
-    expect(component.className).to.contain('table--key-value')
-    const rows = component.querySelectorAll('tr')
-    expect(rows.length).to.equal(2)
-    expect(rows[0].querySelector('th').textContent).to.equal('Start date')
-    expect(rows[0].querySelector('td').textContent).to.equal('')
-    expect(rows[1].querySelector('th').textContent).to.equal('Second label')
-    expect(rows[1].querySelector('td').textContent).to.equal('#2 label content')
+      this.rows = component.querySelectorAll('tr')
+    })
+
+    it('should render one row', () => {
+      expect(this.rows.length).to.equal(1)
+    })
+
+    it('should render a label', () => {
+      expect(this.rows[0].querySelector('th').textContent).to.equal('Label 1')
+    })
+
+    it('should render the formatted value', () => {
+      expect(this.rows[0].querySelector('td').textContent).to.equal('10 October 2018')
+    })
   })
 
-  it('should render a table with a date', () => {
-    const component = renderComponentToDom(
-      'key-value-table',
-      {
+  context('when there is one item and the data is a number', () => {
+    beforeEach(() => {
+      const component = renderComponentToDom('key-value-table', {
         items: {
-          'Start date': {
-            type: 'date',
-            name: '1971-01-07',
+          'Label 1': {
+            name: 1000,
+            type: 'number',
           },
-          'Second label': '#2 label content',
         },
-      }
-    )
+      })
 
-    expect(component.className).to.contain('table--key-value')
-    const rows = component.querySelectorAll('tr')
-    expect(rows.length).to.equal(2)
-    expect(rows[0].querySelector('th').textContent).to.equal('Start date')
-    expect(rows[0].querySelector('td').textContent).to.equal('7 January 1971')
-    expect(rows[1].querySelector('th').textContent).to.equal('Second label')
-    expect(rows[1].querySelector('td').textContent).to.equal('#2 label content')
+      this.rows = component.querySelectorAll('tr')
+    })
+
+    it('should render one row', () => {
+      expect(this.rows.length).to.equal(1)
+    })
+
+    it('should render a label', () => {
+      expect(this.rows[0].querySelector('th').textContent).to.equal('Label 1')
+    })
+
+    it('should render the formatted value', () => {
+      expect(this.rows[0].querySelector('td').textContent).to.equal('1,000')
+    })
   })
 
-  it('should render one section title', () => {
-    const component = renderComponentToDom(
-      'key-value-table',
-      {
+  context('when there is one item and the data is details', () => {
+    beforeEach(() => {
+      const component = renderComponentToDom('key-value-table', {
         items: {
-          'First label': '#1 label content',
+          'Label 1': {
+            name: 'This is an estimated number',
+            type: 'details',
+            details: {
+              summaryText: 'Summary',
+              text: 'Text',
+            },
+          },
         },
-        variant: 'custom-variant',
-      }
-    )
+      })
 
-    expect(component.className).to.contain('table--custom-variant')
+      this.rows = component.querySelectorAll('tr')
+    })
+
+    it('should render one row', () => {
+      expect(this.rows.length).to.equal(1)
+    })
+
+    it('should render a label', () => {
+      expect(this.rows[0].querySelector('th').textContent).to.equal('Label 1')
+    })
+
+    it('should render details container', () => {
+      const detailsContainer = this.rows[0].querySelector('.table__details')
+
+      expect(detailsContainer.querySelector('.table__details-name').textContent).to.equal('This is an estimated number')
+      expect(detailsContainer.querySelector('.table__details-content').textContent).to.exist
+    })
   })
 
-  context('when the item data is an array', () => {
-    it('should add the items to the table', () => {
-      const component = renderComponentToDom(
-        'key-value-table',
-        {
-          items: {
-            'First label': [
-              'first',
+  context('when there is one item and the data is an object with a name', () => {
+    beforeEach(() => {
+      const component = renderComponentToDom('key-value-table', {
+        items: {
+          'Label 1': {
+            name: 'name',
+          },
+        },
+      })
+
+      this.rows = component.querySelectorAll('tr')
+    })
+
+    it('should render one row', () => {
+      expect(this.rows.length).to.equal(1)
+    })
+
+    it('should render a label', () => {
+      expect(this.rows[0].querySelector('th').textContent).to.equal('Label 1')
+    })
+
+    it('should render the name', () => {
+      expect(this.rows[0].querySelector('td').textContent).to.equal('name')
+    })
+  })
+
+  context('when there is one item and the data is a string', () => {
+    beforeEach(() => {
+      const component = renderComponentToDom('key-value-table', {
+        items: {
+          'Label 1': 'content',
+        },
+      })
+
+      this.rows = component.querySelectorAll('tr')
+    })
+
+    it('should render one row', () => {
+      expect(this.rows.length).to.equal(1)
+    })
+
+    it('should render a label', () => {
+      expect(this.rows[0].querySelector('th').textContent).to.equal('Label 1')
+    })
+
+    it('should render the value', () => {
+      expect(this.rows[0].querySelector('td').textContent).to.equal('content')
+    })
+  })
+
+  context('when there are actions', () => {
+    beforeEach(() => {
+      const component = renderComponentToDom('key-value-table', {
+        items: {
+          'Label 1': {
+            actions: [
               {
-                url: 'url',
-                name: 'name',
-                newWindow: true,
+                label: 'Action 1',
+                url: '/action-1',
+              },
+              {
+                label: 'Action 2',
+                url: '/action-2',
               },
             ],
           },
-        }
-      )
+        },
+      })
 
-      expect(component.className).to.contain('table--key-value')
-      const rows = component.querySelectorAll('tr')
-      expect(rows.length).to.equal(1)
-      expect(rows[0].querySelector('th').textContent).to.equal('First label')
-      expect(rows[0].querySelector('td').querySelector('li:nth-child(1)').textContent).to.equal('first')
-      expect(rows[0].querySelector('td').querySelector('li:nth-child(2)').innerHTML
-        .trim()
-        .replace(/\s+/g, ' '))
-        .to.equal(`<a href="url" target="_blank">name</a>`)
+      this.rows = component.querySelectorAll('tr')
+    })
+
+    it('should render one row', () => {
+      expect(this.rows.length).to.equal(1)
+    })
+
+    it('should render a label', () => {
+      expect(this.rows[0].querySelector('th').textContent).to.equal('Label 1')
+    })
+
+    it('should render two actions', () => {
+      const actions = this.rows[0].querySelectorAll('.table__action')
+
+      expect(actions.length).to.equal(2)
+      expect(actions[0].getAttribute('href')).to.equal('/action-1')
+      expect(actions[0].textContent).to.equal('Action 1')
+      expect(actions[1].getAttribute('href')).to.equal('/action-2')
+      expect(actions[1].textContent).to.equal('Action 2')
+    })
+  })
+
+  context('when there are multiple items of each type', () => {
+    beforeEach(() => {
+      const component = renderComponentToDom('key-value-table', {
+        items: {
+          'Label 1': {
+            url: `https://beta.companieshouse.gov.uk/company/123456`,
+            name: 'View on Companies House website',
+            hint: '(Opens in a new window)',
+            hintId: 'external-link-label',
+            newWindow: true,
+          },
+          'Label 2': {
+            name: 1000,
+            type: 'currency',
+          },
+          'Label 3': {
+            name: '10/10/2018',
+            type: 'date',
+          },
+          'Label 4': {
+            name: 1000,
+            type: 'number',
+          },
+          'Label 5': {
+            name: 'This is an estimated number',
+            type: 'details',
+            details: {
+              summaryText: 'Summary',
+              text: 'Text',
+            },
+          },
+          'Label 6': 'content',
+        },
+      })
+
+      this.rows = component.querySelectorAll('tr')
+    })
+
+    it('should render two rows', () => {
+      expect(this.rows.length).to.equal(6)
+    })
+
+    it('should render labels', () => {
+      expect(this.rows[0].querySelector('th').textContent).to.equal('Label 1')
+      expect(this.rows[1].querySelector('th').textContent).to.equal('Label 2')
+      expect(this.rows[2].querySelector('th').textContent).to.equal('Label 3')
+      expect(this.rows[3].querySelector('th').textContent).to.equal('Label 4')
+      expect(this.rows[4].querySelector('th').textContent).to.equal('Label 5')
+      expect(this.rows[5].querySelector('th').textContent).to.equal('Label 6')
+    })
+
+    it('should render a link that opens in a new window', () => {
+      const link = this.rows[0].querySelector('td a')
+      expect(link.getAttribute('href')).to.equal('https://beta.companieshouse.gov.uk/company/123456')
+      expect(link.getAttribute('aria-labelledby')).to.equal('external-link-label')
+      expect(link.getAttribute('target')).to.equal('_blank')
+      expect(link.textContent).to.equal('View on Companies House website')
+    })
+
+    it('should render a hint', () => {
+      const hint = this.rows[0].querySelector('td span')
+      expect(hint.getAttribute('id')).to.equal('external-link-label')
+      expect(hint.textContent).to.equal('(Opens in a new window)')
+    })
+
+    it('should render the currency formatted value', () => {
+      expect(this.rows[1].querySelector('td').textContent).to.equal('£1,000.00')
+    })
+
+    it('should render the date formatted value', () => {
+      expect(this.rows[2].querySelector('td').textContent).to.equal('10 October 2018')
+    })
+
+    it('should render the number formatted value', () => {
+      expect(this.rows[3].querySelector('td').textContent).to.equal('1,000')
+    })
+
+    it('should render details container', () => {
+      const detailsContainer = this.rows[4].querySelector('.table__details')
+
+      expect(detailsContainer.querySelector('.table__details-name').textContent).to.equal('This is an estimated number')
+      expect(detailsContainer.querySelector('.table__details-content').textContent).to.exist
+    })
+
+    it('should render the formatted value', () => {
+      expect(this.rows[5].querySelector('td').textContent).to.equal('content')
     })
   })
 })

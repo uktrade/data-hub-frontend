@@ -1,3 +1,5 @@
+{% from "details/macro.njk" import govukDetails %}
+
 {##
  # @param {object} items An object of items with label as key
  #
@@ -12,62 +14,72 @@
  #   } %}
  #}
 
-{% macro link(url, name, newWindow, hintId, hint) %}
-  <a href="{{ url }}"
-    {% if hintId %} aria-labelledby="{{ hintId }}"{% endif %}
-    {% if newWindow %} target="_blank"{% endif %}
+{% macro link(data) %}
+  <a href="{{ data.url }}"
+    {% if data.hintId %} aria-labelledby="{{ data.hintId }}"{% endif %}
+    {% if data.newWindow %} target="_blank"{% endif %}
     >
-    {{- name -}}
+    {{- data.name -}}
   </a>
-  {% if hint %}
-    <span {% if hintId %}id="{{ hintId }}"{% endif %}>
-      {{- hint -}}
+  {% if data.hint %}
+    <span {% if data.hintId %}id="{{ data.hintId }}"{% endif %}>
+      {{- data.hint -}}
     </span>
   {% endif  %}
 {% endmacro %}
 
-{% if items|length %}
+{% macro details(data) %}
+  <div class="table__details">
+    <span class="table__details-name">{{ data.name }}</span>
+    <div class="table__details-content">
+      {{ govukDetails({
+        classes: 'govuk-details--table-cell',
+        summaryText: data.details.summaryText,
+        text: data.details.text
+      }) }}
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro renderItem(data) %}
+  {% if data.url %}
+    {{ link(data) }}
+  {% elif data.type === 'currency' %}
+    {{ data.name | formatCurrency }}
+  {% elif data.type === 'date' %}
+    {{ data.name | formatDate }}
+  {% elif data.type === 'number' %}
+    {{ data.name | formatNumber }}
+  {% elif data.type === 'details' %}
+    {{ details(data) }}
+  {% elif data.type === 'document' %} {# TODO specifically referencing "document" should not be here #}
+    {% if item.status == 'av_clean' %}
+      <a href="{{ item.href }}">{{ item.message }}</a>
+    {% elif item.status == 'scan_failed' %}
+      <span class="c-message--error">{{ item.message }}</span>
+    {% else %}
+      {{ item.message }}
+    {% endif %}
+  {% else %}
+    {{ data.name or data | escapeHtml | safe }}
+  {% endif %}
+{% endmacro %}
+
+{% if items | length %}
   <table class="table--key-value{{ ' table--' + variant if variant }}">
     <tbody>
       {% for label, data in items %}
-        {% set id = data.id %}
         <tr>
           <th>{{ label }}</th>
           <td>
             {% if data | isArray %}
               <ul>
-               {% for item in data | removeNilAndEmpty %}
-                 {% if item.type == 'document' %}
-                  <li>
-                     {% if item.status == 'av_clean' %}
-                       <a href="{{ item.href }}">{{ item.message }}</a>
-                     {% elif item.status == 'scan_failed' %}
-                       <span class="c-message--error">{{ item.message }}</span>
-                     {% else %}
-                       {{ item.message }}
-                     {% endif %}
-                  </li>
-                 {% else %}
-                   {% if item.url %}
-                     <li>{{ link(item.url, item.name, item.newWindow, item.hintId, item.hint) }}</li>
-                   {% else %}
-                     <li>{{ item }}</li>
-                   {% endif %}
-                 {% endif %}
-               {% endfor %}
+                {% for item in data %}
+                  <li>{{ renderItem(item) }}</li>
+                {% endfor %}
               </ul>
-            {% elif data | isPlainObject %}
-              {% if data.url %}
-                {{ link(data.url, data.name, data.newWindow, data.hintId, data.hint) }}
-              {% elif data.type == "date" %}
-                {{ data.name | formatDate }}
-              {% elif data.type == "currency" %}
-                {{ data.name | formatCurrency }}
-              {% else %}
-                {{ data.name }}
-              {% endif %}
             {% else %}
-              {{ data | escapeHtml | safe }}
+              {{ renderItem(data) }}
             {% endif %}
 
             {% if data.actions %}
@@ -77,6 +89,7 @@
                 {% endfor %}
               </span>
             {% endif %}
+
           </td>
         </tr>
       {% endfor %}
