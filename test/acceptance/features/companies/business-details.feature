@@ -10,10 +10,10 @@ Feature: Company business details
     And the Company summary key value details are not displayed
     And the About One List Corp key value details are displayed
       | key                       | value                        |
-      | Trading names             | company.tradingName          |
-      | Annual turnover           | Not available                |
-      | Number of employees       | Not available                |
-      | Website                   | Not available                |
+      | Trading names             | Not set                      |
+      | Annual turnover           | company.turnoverRange        |
+      | Number of employees       | company.employeeRange        |
+      | Website                   | Not set                      |
     And the Global Account Manager – One List key value details are displayed
       | key                       | value                        |
       | One List tier             | company.oneListTier          |
@@ -47,10 +47,11 @@ Feature: Company business details
     And the "Where does information on this page come from?" details summary should not be displayed
     And the About Venus Ltd key value details are displayed
       | key                       | value                        |
-      | Trading names             | company.tradingName          |
-      | Annual turnover           | Not available                |
-      | Number of employees       | Not available                |
-      | Website                   | Not available                |
+      | Business type             | company.businessType         |
+      | Trading names             | Not set                      |
+      | Annual turnover           | Not set                      |
+      | Number of employees       | Not set                      |
+      | Website                   | Not set                      |
     And the Global Account Manager – One List key value details are displayed
       | key                       | value                        |
       | One List tier             | company.oneListTier          |
@@ -89,8 +90,7 @@ Feature: Company business details
       | Trading names             | company.tradingName          |
       | Annual turnover           | company.annualTurnover       |
       | Number of employees       | company.numberOfEmployees    |
-      | Website                   | Not available                |
-    And the Global Account Manager – One List key value details are not displayed
+      | Website                   | Not set                      |
     And the Business hierarchy key value details are displayed
       | key                       | value                        |
       | Subsidiaries              | company.subsidiaries         |

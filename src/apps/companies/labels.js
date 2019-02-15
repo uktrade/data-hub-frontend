@@ -88,8 +88,10 @@ const coreTeamLabels = {
 }
 
 const aboutLabels = {
+  business_type: 'Business type',
   trading_names: 'Trading names',
   company_number: 'Companies House number',
+  vat_number: 'VAT number',
   turnover: 'Annual turnover',
   number_of_employees: 'Number of employees',
   website: 'Website',
