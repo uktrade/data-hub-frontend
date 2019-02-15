@@ -5,16 +5,6 @@ const { aboutLabels } = require('../labels')
 const { getDataLabels } = require('../../../lib/controller-utils')
 const { NOT_SET_TEXT } = require('../constants')
 
-    company_number: company_number ? [
-      company_number,
-      {
-        url: `https://beta.companieshouse.gov.uk/company/${company_number}`,
-        name: 'View on Companies House website',
-        hint: '(Opens in a new window)',
-        hintId: 'external-link-label',
-        newWindow: true,
-      },
-    ] : null,
 function transformTurnover (turnover, turnover_range) {
   if (turnover) {
     return [
@@ -30,11 +20,7 @@ function transformTurnover (turnover, turnover_range) {
     ]
   }
 
-  if (turnover_range) {
-    return turnover_range.name
-  }
-
-  return NOT_SET_TEXT
+  return get(turnover_range, 'name', NOT_SET_TEXT)
 }
 
 function transformNumberOfEmployees (number_of_employees, employee_range) {
@@ -52,21 +38,39 @@ function transformNumberOfEmployees (number_of_employees, employee_range) {
           text: 'This is an estimated number',
         },
       },
-    website: isEmpty(website) ? NOT_AVAILABLE_TEXT : {
-      name: website,
-      url: website,
-      hint: '(Opens in a new window)',
-      hintId: 'external-link-label',
-      newWindow: true,
-    },
     ]
   }
 
-  if (employee_range) {
-    return employee_range.name
+  return get(employee_range, 'name', NOT_SET_TEXT)
+}
+
+function transformCompanyNumber (company_number) {
+  if (company_number) {
+    return [
+      company_number,
+      {
+        url: `https://beta.companieshouse.gov.uk/company/${company_number}`,
+        name: 'View on Companies House website',
+        hint: '(Opens in a new window)',
+        hintId: 'external-link-label',
+        newWindow: true,
+      },
+    ]
+  }
+}
+
+function transformWebsite (website) {
+  if (isEmpty(website)) {
+    return NOT_SET_TEXT
   }
 
-  return NOT_SET_TEXT
+  return {
+    name: website,
+    url: website,
+    hint: '(Opens in a new window)',
+    hintId: 'external-link-label',
+    newWindow: true,
+  }
 }
 
 module.exports = ({
@@ -87,8 +91,10 @@ module.exports = ({
     vat_number,
     business_type: duns_number ? null : get(business_type, 'name'),
     trading_names: isEmpty(trading_names) ? NOT_SET_TEXT : trading_names,
+    company_number: transformCompanyNumber(company_number),
     turnover: transformTurnover(turnover, turnover_range),
     number_of_employees: transformNumberOfEmployees(number_of_employees, employee_range),
+    website: transformWebsite(website),
   }
 
   return pickBy(getDataLabels(viewRecord, aboutLabels))
