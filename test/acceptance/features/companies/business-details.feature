@@ -90,10 +90,7 @@ Feature: Company business details
       | Annual turnover           | company.annualTurnover       |
       | Number of employees       | company.numberOfEmployees    |
       | Website                   | Not available                |
-    And the Global Account Manager – One List key value details are displayed
-      | key                       | value                        |
-      | One List tier             | None                         |
-      | Global Account Manager    | None                         |
+    And the Global Account Manager – One List key value details are not displayed
     And the Business hierarchy key value details are displayed
       | key                       | value                        |
       | Subsidiaries              | company.subsidiaries         |
@@ -112,3 +109,4 @@ Feature: Company business details
       | 001122                    |
       | Italy                     |
     And the Documents from CDMS key value details are not displayed
+
