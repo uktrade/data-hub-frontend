@@ -47,12 +47,12 @@ module.exports = {
     ukLtd: {
       id: '0f5216e0-849f-11e6-ae22-56b6b6499611',
       name: 'Venus Ltd',
-      tradingName: 'None',
       address1: '66 Marcham Road',
       town: 'Bordley',
       postcode: 'BD23 8RZ',
       country: 'United Kingdom',
       primaryAddress: '66 Marcham Road, Bordley, BD23 8RZ, United Kingdom',
+      businessType: 'Company',
       ukRegion: 'North West',
       headquarterType: 'Global HQ - Archived Ltd',
       subsidiaries: 'None',
@@ -65,7 +65,6 @@ module.exports = {
     oneListCorp: {
       id: '375094ac-f79a-43e5-9c88-059a7caa17f0',
       name: 'One List Corp',
-      tradingName: 'None',
       address1: '12 St George\'s Road',
       town: 'Paris',
       postcode: '75001',
