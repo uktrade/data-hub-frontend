@@ -64,7 +64,12 @@ describe('#renderBusinessDetails', () => {
           .reply(200, subsidiariesMock)
 
         this.middlewareParameters = buildMiddlewareParameters({
-          company: dnbCompanyMock,
+          company: {
+            ...dnbCompanyMock,
+            registered_address_country: {
+              id: '80756b9a-5d95-e211-a939-e4115bead28a',
+            },
+          },
         })
 
         await renderBusinessDetails(
@@ -90,6 +95,9 @@ describe('#renderBusinessDetails', () => {
         this.middlewareParameters = buildMiddlewareParameters({
           company: {
             ...dnbCompanyMock,
+            registered_address_country: {
+              id: '80756b9a-5d95-e211-a939-e4115bead28a',
+            },
             archived_documents_url_path: 'archived',
           },
         })
