@@ -111,20 +111,29 @@ Then(/^details view data for "(.+)" should contain "(.+)"$/, async (detailsItemN
     .useCss()
 })
 
-Then(/^the (.+) key value details are displayed$/, async function (tableTitle, dataTable) {
-  const expectedKeyValues = removeFalsey(dataTable.hashes(), this.state)
-  const tableSelector = Details.getSelectorForKeyValueTable(tableTitle)
-
-  await assertTableRowCount(tableSelector, expectedKeyValues)
-  await assertTableContent.bind(this)(tableSelector, expectedKeyValues, TABLE_TYPE.KEY_VALUE)
-})
-
 Then(/^the (.+) values are displayed$/, async function (tableTitle, dataTable) {
   const expectedKeyValues = removeFalsey(dataTable.hashes(), this.state)
   const tableSelector = Details.getSelectorForKeyValueTable(tableTitle)
 
   await assertTableRowCount(tableSelector, expectedKeyValues)
   await assertTableContent.bind(this)(tableSelector, expectedKeyValues, TABLE_TYPE.VALUE)
+})
+
+Then(/^the (.+) values are not displayed$/, async function (tableTitle) {
+  const tableSelector = Details.getSelectorForKeyValueTable(tableTitle)
+
+  await Details
+    .api.useXpath()
+    .assert.elementNotPresent(tableSelector.selector)
+    .useCss()
+})
+
+Then(/^the (.+) key value details are displayed$/, async function (tableTitle, dataTable) {
+  const expectedKeyValues = removeFalsey(dataTable.hashes(), this.state)
+  const tableSelector = Details.getSelectorForKeyValueTable(tableTitle)
+
+  await assertTableRowCount(tableSelector, expectedKeyValues)
+  await assertTableContent.bind(this)(tableSelector, expectedKeyValues, TABLE_TYPE.KEY_VALUE)
 })
 
 Then(/^the (.+) key value details are not displayed$/, async function (tableTitle) {
