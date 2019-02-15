@@ -41,13 +41,15 @@
   {% component 'key-value-table', items=aboutDetails %}
 
 
-  <h2 class="govuk-heading-m govuk-!-margin-top-9">Global Account Manager – One List</h2>
+  {% if oneListDetails %}
+    <h2 class="govuk-heading-m govuk-!-margin-top-9">Global Account Manager – One List</h2>
 
-  {% component 'key-value-table', items=oneListDetails %}
+    {% component 'key-value-table', items=oneListDetails %}
 
-  <p>
-    <a href="advisers">See all advisers on the core team</a>
-  </p>
+    <p>
+      <a href="advisers">See all advisers on the core team</a>
+    </p>
+  {% endif %}
 
 
   <h2 class="govuk-heading-m govuk-!-margin-top-9">Business hierarchy</h2>
