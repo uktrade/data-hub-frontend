@@ -13,11 +13,11 @@ describe('#transformCompanyToKnownAsView', () => {
     })
 
     it('should set the number of employees', () => {
-      expect(this.actual[aboutLabels.number_of_employees]).to.equal(expectedEmployees)
+      expect(this.actual[aboutLabels.number_of_employees]).to.deep.equal(expectedEmployees)
     })
 
     it('should set the turnover', () => {
-      expect(this.actual[aboutLabels.turnover]).to.equal(expectedTurnover)
+      expect(this.actual[aboutLabels.turnover]).to.deep.equal(expectedTurnover)
     })
   }
 
@@ -49,8 +49,31 @@ describe('#transformCompanyToKnownAsView', () => {
         hintId: 'external-link-label',
         newWindow: true,
       },
-      200,
-      'USD 100000'
+      [
+        {
+          name: 200,
+          type: 'number',
+        },
+        {
+          details: {
+            summaryText: 'What does that mean?',
+            text: 'This is an estimated number',
+          },
+          name: 'This is an estimated number',
+          type: 'details',
+        },
+      ],
+      [
+        'USD 100000',
+        {
+          details: {
+            summaryText: 'What does that mean?',
+            text: 'This is an estimated number',
+          },
+          name: 'This is an estimated number',
+          type: 'details',
+        },
+      ],
     )
 
     it('should set the Companies House number', () => {

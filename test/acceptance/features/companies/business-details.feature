@@ -75,3 +75,40 @@ Feature: Company business details
       | Bordley                   |
       | BD23 8RZ                  |
       | United Kingdom            |
+
+
+  @companies-business-details--no-one-list
+  Scenario: View details for a Dun & Bradstreet company not on the One List
+
+    When I navigate to the `companies.business-details` page using `company` `DnB Corp` fixture
+    Then the heading should be "Business details"
+    And the "Where does information on this page come from?" details summary should be displayed
+    And the Company summary key value details are not displayed
+    And the About DnB Corp key value details are displayed
+      | key                       | value                        |
+      | Trading names             | company.tradingName          |
+      | Annual turnover           | company.annualTurnover       |
+      | Number of employees       | company.numberOfEmployees    |
+      | Website                   | Not available                |
+    And the Global Account Manager – One List key value details are displayed
+      | key                       | value                        |
+      | One List tier             | None                         |
+      | Global Account Manager    | None                         |
+    And the Business hierarchy key value details are displayed
+      | key                       | value                        |
+      | Subsidiaries              | company.subsidiaries         |
+    And the DIT sector values are displayed
+      | value                     |
+      | Retail                    |
+    And the DIT region values are not displayed
+    And address 1 should have badges
+      | value                     |
+      | Trading                   |
+      | Registered                |
+    And address 1 should be
+      | value                     |
+      | 1 Main Road               |
+      | Rome                      |
+      | 001122                    |
+      | Italy                     |
+    And the Documents from CDMS key value details are not displayed
