@@ -8,7 +8,7 @@ Feature: Company business details
     Then the heading should be "Business details"
     And the "Where does information on this page come from?" details summary should be displayed
     And the Company summary key value details are not displayed
-    And the One List Corp is known as key value details are displayed
+    And the About One List Corp key value details are displayed
       | key                       | value                        |
       | Trading names             | company.tradingName          |
     And the Global Account Manager – One List key value details are displayed
@@ -47,7 +47,7 @@ Feature: Company business details
     When I navigate to the `companies.business-details` page using `company` `Venus Ltd` fixture
     Then the heading should be "Business details"
     And the "Where does information on this page come from?" details summary should not be displayed
-    And the Venus Ltd is known as key value details are displayed
+    And the About Venus Ltd key value details are displayed
       | key                       | value                        |
       | Trading names             | company.tradingName          |
     And the Global Account Manager – One List key value details are displayed
