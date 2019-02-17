@@ -39,4 +39,12 @@ describe('Interaction service delivery', () => {
     cy.get(selectors.interactions.serviceStatus).should('not.be.visible')
     cy.get(selectors.interactions.grantOffered).should('not.be.visible')
   })
+
+  it('toggles fields whether there is an event or not', () => {
+    cy.get(selectors.interactions.eventYes).click()
+    cy.get(selectors.interactions.event).should('be.visible')
+
+    cy.get(selectors.interactions.eventNo).click()
+    cy.get(selectors.interactions.event).should('not.be.visible')
+  })
 })
