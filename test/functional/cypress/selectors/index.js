@@ -1,9 +1,13 @@
-import homePage from './home-page'
-import interactions from './interactions'
 import company from './company'
+import details from './details'
+import home from './home'
+import interactions from './interactions'
+import investment from './investment'
 
 export default {
-  homePage,
-  interactions,
   company,
+  details,
+  home,
+  interactions,
+  investment,
 }
