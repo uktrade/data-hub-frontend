@@ -61,23 +61,25 @@ async function renderForm (req, res, next) {
       req.session.token, res.locals.companiesHouseCategory, businessType
     )
     const showTradingAddress = !isEmpty(get(res.locals, 'formData.trading_address_1'))
+    const heading = `${res.locals.company ? 'Edit' : 'Add'} business details`
 
     if (res.locals.company) {
-      res.breadcrumb(get(res.locals, 'company.name'), `/companies/${get(res.locals, 'company.id')}`)
+      res.breadcrumb(res.locals.company.name, `/companies/${res.locals.company.id}`)
+      res.breadcrumb('Business details', `/companies/${res.locals.company.id}/business-details`)
     }
 
     const isForeign = isForeignCompany(req, res)
 
     res
-      .breadcrumb(res.locals.company ? 'Edit' : 'Add')
+      .breadcrumb(heading)
       .render('companies/views/_deprecated/edit', {
         isForeign,
         isOnOneList: isOnOneList(req, res),
         companyDetails: res.locals.company ? transformCompanyToView(res.locals.company) : {},
+        heading,
         businessTypeLabel,
         showTradingAddress,
         showCompanyNumber: businessType === UK_BRANCH_OF_FOREIGN_COMPANY_ID,
-        heading: getHeading(res.locals.company, isForeign),
         oneListEmail: config.oneList.email,
       })
   } catch (error) {
