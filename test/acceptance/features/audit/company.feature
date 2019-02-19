@@ -10,4 +10,3 @@ Feature: View Audit history of a Company
     And I click the "Audit history" link
     Then I see the name of the person who made the recent company record changes
     And I see the date time stamp when the recent company record changed
-    And I see the field names that were recently changed on this company record

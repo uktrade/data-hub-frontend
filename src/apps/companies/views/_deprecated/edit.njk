@@ -50,15 +50,8 @@
       <input type="hidden" name="registered_address_county" value="{{ formData.registered_address_county }}">
       <input type="hidden" name="registered_address_postcode" value="{{ formData.registered_address_postcode }}">
       <input type="hidden" name="registered_address_country" value="{{ formData.registered_address_country }}">
-
-      {{ TextField({
-        name: 'trading_names',
-        label: 'Trading names',
-        optional: true,
-        value: formData.trading_names,
-        error: errors.trading_names
-      }) }}
     {% else %}
+
       {{ TextField({
         name: 'name',
         label: 'Name',
@@ -66,6 +59,54 @@
         error: errors.name
       }) }}
 
+    {% endif %}
+
+    {{ TextField({
+      name: 'trading_names',
+      label: 'Trading name',
+      optional: true,
+      value: formData.trading_names,
+      error: errors.trading_names
+    }) }}
+
+    {% if not isForeign %}
+      {{ TextField({
+        name: 'vat_number',
+        label: 'VAT number',
+        value: formData.vat_number,
+        error: errors.vat_number
+      }) }}
+    {% endif %}
+
+    {{ MultipleChoiceField({
+      type: 'radio',
+      name: 'turnover_range',
+      label: 'Annual turnover',
+      optional: true,
+      options: options.turnovers,
+      value: formData.turnover_range,
+      error: errors.turnover_range
+    }) }}
+
+    {{ MultipleChoiceField({
+      type: 'radio',
+      name: 'employee_range',
+      label: 'Number of employees',
+      optional: true,
+      options: options.employees,
+      value: formData.employee_range,
+      error: errors.employee_range
+    }) }}
+
+    {{ TextField({
+      name: 'website',
+      label: 'Website',
+      optional: true,
+      value: formData.website,
+      error: errors.website
+    }) }}
+
+    {% if not companiesHouseRecord %}
       {% if showCompanyNumber %}
         {{ TextField({
           name: 'company_number',
@@ -74,14 +115,6 @@
           error: errors.company_number
         }) }}
       {% endif %}
-
-      {{ TextField({
-        name: 'trading_names',
-        label: 'Trading name',
-        optional: true,
-        value: formData.trading_names,
-        error: errors.trading_names
-      }) }}
 
       <fieldset id="registered-address-wrapper" class="c-form-fieldset {{ 'lookup-address-js' if not isForeign }}">
         <legend class="c-form-fieldset__legend">
@@ -253,42 +286,19 @@
       </div>
     </fieldset>
 
+    {# DIT region #}
     {% if not isForeign %}
       {{ MultipleChoiceField({
         name: 'uk_region',
-        label: 'UK region',
-        initialOption: '-- Select region --',
+        label: 'DIT region',
+        initialOption: '-- Select DIT region --',
         options: options.regions,
         value: formData.uk_region,
         error: errors.uk_region
       }) }}
     {% endif %}
 
-    {% if isOnOneList %}
-      <fieldset id="group-field-headquarter_type" class="c-form-group">
-        <legend class="c-form-group__label">
-          <span class="c-form-group__label-text">Headquarter type</span>
-        </legend>
-
-        <p>{{companyDetails['Headquarter type']}}</p>
-
-        {% call HiddenContent({ summary: 'Need to edit the headquarter type?' }) %}
-          {% call Message({ type: 'muted' }) %}
-            If you need to change the headquarter type for a company on the One List, please email <a href="mailto:{{oneListEmail}}">{{oneListEmail}}</a>.
-          {% endcall %}
-        {% endcall %}
-      </fieldset>
-    {% else %}
-      {{ MultipleChoiceField({
-        type: 'radio',
-        name: 'headquarter_type',
-        label: 'Headquarter type',
-        options: options.headquarters,
-        value: formData.headquarter_type,
-        error: errors.headquarter_type
-      }) }}
-    {% endif %}
-
+    {# DIT sector #}
     {% if isOnOneList %}
       <fieldset id="group-field-sector" class="c-form-group">
         <legend class="c-form-group__label">
@@ -306,21 +316,39 @@
     {% else %}
       {{ MultipleChoiceField({
         name: 'sector',
-        label: 'Sector',
-        initialOption: '-- Select sector --',
+        label: 'DIT sector',
+        initialOption: '-- Select DIT sector --',
         options: options.sectors,
         value: formData.sector,
         error: errors.sector
       }) }}
     {% endif %}
 
-    {{ TextField({
-      name: 'website',
-      label: 'Website',
-      optional: true,
-      value: formData.website,
-      error: errors.website
-    }) }}
+    {# Business hierarchy #}
+    {% if isOnOneList %}
+      <fieldset id="group-field-headquarter_type" class="c-form-group">
+        <legend class="c-form-group__label">
+          <span class="c-form-group__label-text">Business hierarchy</span>
+        </legend>
+
+        <p>{{companyDetails['Headquarter type']}}</p>
+
+        {% call HiddenContent({ summary: 'Need to edit the headquarter type?' }) %}
+          {% call Message({ type: 'muted' }) %}
+            If you need to change the headquarter type for a company on the One List, please email <a href="mailto:{{oneListEmail}}">{{oneListEmail}}</a>.
+          {% endcall %}
+        {% endcall %}
+      </fieldset>
+    {% else %}
+      {{ MultipleChoiceField({
+        type: 'radio',
+        name: 'headquarter_type',
+        label: 'Business hierarchy',
+        options: options.headquarters,
+        value: formData.headquarter_type,
+        error: errors.headquarter_type
+      }) }}
+    {% endif %}
 
     {{ TextField({
       name: 'description',
@@ -330,33 +358,5 @@
       error: errors.description
     }) }}
 
-    {{ MultipleChoiceField({
-      type: 'radio',
-      name: 'employee_range',
-      label: 'Number of employees',
-      optional: true,
-      options: options.employees,
-      value: formData.employee_range,
-      error: errors.employee_range
-    }) }}
-
-    {{ MultipleChoiceField({
-      type: 'radio',
-      name: 'turnover_range',
-      label: 'Annual turnover',
-      optional: true,
-      options: options.turnovers,
-      value: formData.turnover_range,
-      error: errors.turnover_range
-    }) }}
-
-    {% if not isForeign %}
-      {{ TextField({
-        name: 'vat_number',
-        label: 'VAT number',
-        value: formData.vat_number,
-        error: errors.vat_number
-      }) }}
-    {% endif %}
   {% endcall %}
 {% endblock %}
