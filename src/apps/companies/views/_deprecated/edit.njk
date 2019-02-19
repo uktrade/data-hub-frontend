@@ -145,13 +145,7 @@
           modifier: 'short'
         }) }}
 
-        {% if not isForeign %}
-          <div class="section">
-            <h2 class="heading-medium">Country</h2>
-            <p>United Kingdom</p>
-            <input type="hidden" name="registered_address_country" value="{{ formData.registered_address_country }}">
-          </div>
-        {% else %}
+        {% if isForeign %}
           {{ MultipleChoiceField({
             name: 'registered_address_country',
             label: 'Country',
@@ -160,8 +154,15 @@
             value: formData.registered_address_country,
             error: errors.registered_address_country
           }) }}
+        {% else %}
+          <div class="section">
+            <h2 class="heading-medium">Country</h2>
+            <p>United Kingdom</p>
+            <input type="hidden" name="registered_address_country" value="{{ formData.registered_address_country }}">
+          </div>
         {% endif %}
       </fieldset>
+
     {% endif %}
 
     <fieldset class="c-form-fieldset {{ 'lookup-address-js' if not isForeign }}">
