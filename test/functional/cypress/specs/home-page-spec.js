@@ -6,6 +6,6 @@ describe('Data hub homepage', () => {
   })
 
   it('Contacts Nav', () => {
-    cy.get(selectors.homePage.contactNav).should('contain', 'Contacts')
+    cy.get(selectors.home.contactNav).should('contain', 'Contacts')
   })
 })
