@@ -19,6 +19,9 @@ const QUERY_FIELDS = [
   'sortby',
   'dit_team',
   'service',
+  'was_policy_feedback_provided',
+  'policy_areas',
+  'policy_issue_types',
 ]
 
 const QUERY_DATE_FIELDS = [
