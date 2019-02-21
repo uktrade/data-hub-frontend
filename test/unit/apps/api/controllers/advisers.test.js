@@ -1,7 +1,7 @@
 const { assign } = require('lodash')
 
 const config = require('~/config')
-const { getAdviserOptionsHandler } = require('~/src//apps/api/controllers/advisers')
+const { getAdviserOptionsHandler } = require('~/src/apps/api/controllers/advisers')
 
 describe('Adviser options API controller', () => {
   beforeEach(() => {
@@ -40,14 +40,15 @@ describe('Adviser options API controller', () => {
   context('when called with a name for an adviser', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .get('/adviser/?first_name__icontains=be')
+        .get('/adviser/?autocomplete=be&is_active=true')
         .reply(200, {
           results: [this.bertSmith],
         })
 
       const reqMock = assign({}, this.reqMock, {
         query: {
-          term: 'be',
+          autocomplete: 'be',
+          is_active: true,
         },
       })
 

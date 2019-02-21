@@ -73,7 +73,7 @@ describe('options API controller', () => {
             entity: 'uk-region',
           },
           query: {
-            term: 'isle',
+            autocomplete: 'isle',
           },
         })
 

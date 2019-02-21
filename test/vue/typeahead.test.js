@@ -161,6 +161,7 @@ describe('Typeahead', () => {
           entity: 'adviser',
           multipleSelectOptions: false,
           options: [],
+          isActive: true,
         }
         asyncSearch = Typeahead.methods.asyncSearch.bind(instance)
       })
@@ -181,7 +182,7 @@ describe('Typeahead', () => {
 
         it('should have fetched suggestions', () => {
           expect(axios.get).to.have.been.calledOnce
-          expect(axios.get).to.be.calledWith('/api/options/adviser?term=fred')
+          expect(axios.get).to.be.calledWith('/api/options/adviser?autocomplete=fred&is_active=true')
         })
 
         it('should store the return options', () => {
