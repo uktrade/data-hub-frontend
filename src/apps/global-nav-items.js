@@ -20,9 +20,15 @@ const SORTED_APP_GLOBAL_NAV_ITEMS = sortBy(APP_GLOBAL_NAV_ITEMS, (globalNavItem)
 const GLOBAL_NAV_ITEMS = concat(SORTED_APP_GLOBAL_NAV_ITEMS, {
   path: config.performanceDashboardsUrl,
   label: 'MI dashboards',
+  key: 'datahub-mi',
 }, {
   path: config.findExportersUrl,
   label: 'Find exporters',
+  key: 'find-exporters',
 })
+
+/**
+ * Required for querying access to apps
+ */
 
 module.exports = GLOBAL_NAV_ITEMS

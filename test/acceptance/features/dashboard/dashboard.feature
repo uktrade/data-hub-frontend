@@ -14,7 +14,6 @@ Feature: Dashboard
       | Investments               |
       | Orders (OMIS)             |
       | MI dashboards             |
-      | Find exporters            |
 
   @dashboard--global-nav-lep @lep
   Scenario: Display global nav for LEP user
@@ -26,7 +25,6 @@ Feature: Dashboard
       | Contacts                  |
       | Investments               |
       | MI dashboards             |
-      | Find exporters            |
 
   @dashboard--global-nav-da @da
   Scenario: Display global nav for DA user
@@ -39,4 +37,3 @@ Feature: Dashboard
       | Investments               |
       | Orders (OMIS)             |
       | MI dashboards             |
-      | Find exporters            |
