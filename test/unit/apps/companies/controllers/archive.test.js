@@ -149,20 +149,43 @@ describe('Company controller, archive', () => {
 
   describe('#unarchiveCompany', () => {
     context('when save returns successfully', () => {
-      beforeEach(async () => {
-        this.middlewareParameters = buildMiddlewareParameters({
-          company: companyMock,
+      context('when there is not a redirect', () => {
+        beforeEach(async () => {
+          this.middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+          })
+
+          this.stub.unarchiveCompany.resolves(companyMock)
+
+          await this.controller.unarchiveCompany(this.middlewareParameters.reqMock, this.middlewareParameters.resMock)
         })
 
-        this.stub.unarchiveCompany.resolves(companyMock)
-
-        await this.controller.unarchiveCompany(this.middlewareParameters.reqMock, this.middlewareParameters.resMock)
+        commonTests({
+          stubName: 'unarchiveCompany',
+          expectedFlash: 'success',
+          expectedPath: `/companies/${companyMock.id}`,
+        })
       })
 
-      commonTests({
-        stubName: 'unarchiveCompany',
-        expectedFlash: 'success',
-        expectedPath: `/companies/${companyMock.id}`,
+      context('when there is a redirect', () => {
+        beforeEach(async () => {
+          this.middlewareParameters = buildMiddlewareParameters({
+            requestQuery: {
+              redirect: '/redirect/here',
+            },
+            company: companyMock,
+          })
+
+          this.stub.unarchiveCompany.resolves(companyMock)
+
+          await this.controller.unarchiveCompany(this.middlewareParameters.reqMock, this.middlewareParameters.resMock)
+        })
+
+        commonTests({
+          stubName: 'unarchiveCompany',
+          expectedFlash: 'success',
+          expectedPath: '/redirect/here',
+        })
       })
     })
 
