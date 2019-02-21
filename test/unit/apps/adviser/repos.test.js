@@ -47,70 +47,24 @@ describe('Adviser repository', () => {
       this.bertSmith = {
         id: '1',
         name: 'Bert Smith',
-        is_active: false,
-        last_login: null,
-        first_name: 'Bert',
-        last_name: 'Smith',
-        email: 'bert.smith@mockexample.com',
-        contact_email: '',
-        telephone_number: '',
-        dit_team: {
-          id: 't1',
-          name: 'Team E',
-          role: 'r1',
-          uk_region: null,
-          country: 'c1',
-        },
-      }
-
-      this.albertAsmee = {
-        id: '2',
-        name: 'Albert Asmee',
-        is_active: false,
-        last_login: null,
-        first_name: 'Albert',
-        last_name: 'Asmee',
-        email: 'albert.asmee@mockexample.com',
-        contact_email: '',
-        telephone_number: '',
-        dit_team: {
-          id: 't1',
-          name: 'Team E',
-          role: 'r1',
-          uk_region: null,
-          country: 'c1',
-        },
       }
     })
 
-    context('when searching for a single name', () => {
+    context('when searching for a term', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
-          .get('/adviser/?first_name__icontains=be')
+          .get('/adviser/?autocomplete=be&is_active=true')
           .reply(200, {
-            results: [this.bertSmith, this.albertAsmee],
+            results: [this.bertSmith],
           })
 
-        this.advisers = await repos.adviserSearch('1234', 'be')
+        this.advisers = await repos.fetchAdviserSearchResults('1234', {
+          term: 'be',
+          is_active: true,
+        })
       })
 
-      it('should return the result that starts with be', () => {
-        expect(this.advisers).to.deep.equal([this.bertSmith])
-      })
-    })
-
-    context('when searching for a full name', () => {
-      beforeEach(async () => {
-        nock(config.apiRoot)
-          .get('/adviser/?first_name__icontains=be&last_name__icontains=sm')
-          .reply(200, {
-            results: [this.bertSmith, this.albertAsmee],
-          })
-
-        this.advisers = await repos.adviserSearch('1234', 'be sm')
-      })
-
-      it('should return the result that starts with be and sm', () => {
+      it('should return the results', () => {
         expect(this.advisers).to.deep.equal([this.bertSmith])
       })
     })

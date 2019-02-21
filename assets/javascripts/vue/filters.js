@@ -1,5 +1,5 @@
 function highlight (str, words) {
-  if (!words) { return str }
+  if (!str || !words) { return str }
 
   const queryWords = words.split(' ').filter((word) => word.length >= 1)
   const openTag = '<span class=\'highlight\'>'
