@@ -4,6 +4,8 @@
   <button class="button button--secondary postcode-lookup-button" type="button">Find UK address</button>
 {% endset %}
 
+{% set isEditing = true if company.id else false %}
+
 {% block body_main_content %}
   <div class="section">
     <h2 class="heading-medium">Business type</h2>
@@ -26,9 +28,9 @@
   {% endif %}
 
   {% call Form({
-    buttonText: 'Save and return' if company.id else 'Add company',
-    returnLink: '/companies/' + company.id if company.id else '/companies/add-step-1',
-    returnText: 'Return without saving' if company.id else 'Back',
+    buttonText: 'Save and return' if isEditing else 'Add company',
+    returnLink: '/companies/' + company.id if isEditing else '/companies/add-step-1',
+    returnText: 'Return without saving' if isEditing else 'Back',
     actionExtension: {
         country : 'non-uk' if isForeign else 'uk'
     },
