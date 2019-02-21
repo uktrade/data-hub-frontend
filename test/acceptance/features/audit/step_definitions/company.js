@@ -53,8 +53,3 @@ Then(/^I see the total number of changes occurred recently on this company recor
   await AuditList.section.firstAuditInList
     .assert.containsText('@changeCount', '2 changes')
 })
-
-Then(/^I see the field names that were recently changed on this company record$/, async function () {
-  await AuditList.section.firstAuditInList
-    .assert.containsText('@fields', 'Business description')
-})

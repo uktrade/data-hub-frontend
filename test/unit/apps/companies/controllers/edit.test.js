@@ -111,11 +111,11 @@ describe('Company edit controller', () => {
       })
 
       it('should set the add breadcrumb', () => {
-        expect(this.getCalledBreadcrumb().args[0]).to.equal('Add')
+        expect(this.getCalledBreadcrumb().args[0]).to.equal('Add business details')
       })
 
       it('should set heading', () => {
-        expect(this.getCalledRenderLocals().heading).to.equal('Add UK company')
+        expect(this.getCalledRenderLocals().heading).to.equal('Add business details')
       })
 
       it('should set isForeign', () => {
@@ -182,12 +182,16 @@ describe('Company edit controller', () => {
         expect(this.getCalledBreadcrumb().args[1]).to.equal('/companies/1')
       })
 
+      it('should set the business details breadcrumb', () => {
+        expect(this.getCalledBreadcrumb(1).args[0]).to.equal('Business details')
+      })
+
       it('should set the edit breadcrumb', () => {
-        expect(this.getCalledBreadcrumb(1).args[0]).to.equal('Edit')
+        expect(this.getCalledBreadcrumb(2).args[0]).to.equal('Edit business details')
       })
 
       it('should set heading', () => {
-        expect(this.getCalledRenderLocals().heading).to.equal('Edit UK company')
+        expect(this.getCalledRenderLocals().heading).to.equal('Edit business details')
       })
 
       it('should set isForeign', () => {
@@ -242,11 +246,11 @@ describe('Company edit controller', () => {
       })
 
       it('should set the add breadcrumb', () => {
-        expect(this.getCalledBreadcrumb().args[0]).to.equal('Add')
+        expect(this.getCalledBreadcrumb().args[0]).to.equal('Add business details')
       })
 
       it('should set heading', () => {
-        expect(this.getCalledRenderLocals().heading).to.equal('Add UK company')
+        expect(this.getCalledRenderLocals().heading).to.equal('Add business details')
       })
 
       it('should set isForeign', () => {
@@ -301,11 +305,11 @@ describe('Company edit controller', () => {
       })
 
       it('should set the add breadcrumb', () => {
-        expect(this.getCalledBreadcrumb().args[0]).to.equal('Add')
+        expect(this.getCalledBreadcrumb().args[0]).to.equal('Add business details')
       })
 
       it('should set heading', () => {
-        expect(this.getCalledRenderLocals().heading).to.equal('Add foreign company')
+        expect(this.getCalledRenderLocals().heading).to.equal('Add business details')
       })
 
       it('should set isForeign', () => {
@@ -369,8 +373,16 @@ describe('Company edit controller', () => {
         expect(this.getCalledBreadcrumb().args[0]).to.equal('Existing government department')
       })
 
+      it('should set the business details breadcrumb', () => {
+        expect(this.getCalledBreadcrumb(1).args[0]).to.equal('Business details')
+      })
+
+      it('should set the edit breadcrumb', () => {
+        expect(this.getCalledBreadcrumb(2).args[0]).to.equal('Edit business details')
+      })
+
       it('should set heading', () => {
-        expect(this.getCalledRenderLocals().heading).to.equal('Edit UK company')
+        expect(this.getCalledRenderLocals().heading).to.equal('Edit business details')
       })
 
       it('should set isForeign', () => {
@@ -429,7 +441,7 @@ describe('Company edit controller', () => {
       })
 
       it('should set heading', () => {
-        expect(this.getCalledRenderLocals().heading).to.equal('Edit foreign company')
+        expect(this.getCalledRenderLocals().heading).to.equal('Edit business details')
       })
 
       it('should set isOnOneList', () => {
