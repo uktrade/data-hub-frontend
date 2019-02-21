@@ -54,12 +54,14 @@
       <input type="hidden" name="registered_address_country" value="{{ formData.registered_address_country }}">
     {% else %}
 
-      {{ TextField({
-        name: 'name',
-        label: 'Name',
-        value: formData.name,
-        error: errors.name
-      }) }}
+      {% if not isEditing %}
+        {{ TextField({
+          name: 'name',
+          label: 'Name',
+          value: formData.name,
+          error: errors.name
+        }) }}
+      {% endif %}
 
     {% endif %}
 
