@@ -107,13 +107,7 @@ async function handleFormPost (req, res, next) {
   }
 }
 
-function setIsEditMode (req, res, next) {
-  res.locals.isEditMode = true
-  next()
-}
-
 module.exports = {
   populateForm,
   handleFormPost,
-  setIsEditMode,
 }

@@ -44,7 +44,7 @@ const {
 } = require('./middleware/collection')
 
 const { setCompanyContactRequestBody, getCompanyContactCollection } = require('./middleware/contact-collection')
-const { populateForm, handleFormPost, setIsEditMode } = require('./middleware/form')
+const { populateForm, handleFormPost } = require('./middleware/form')
 const { getCompany, getCompaniesHouseRecord } = require('./middleware/params')
 const { setInteractionsDetails } = require('./middleware/interactions')
 const { setGlobalHQ, removeGlobalHQ, addSubsidiary } = require('./middleware/hierarchies')
@@ -94,8 +94,8 @@ router
 
 router
   .route('/:companyId/edit')
-  .get(setIsEditMode, populateForm, renderForm)
-  .post(handleFormPost, setIsEditMode, populateForm, renderForm)
+  .get(populateForm, renderForm)
+  .post(handleFormPost, populateForm, renderForm)
 
 router.post('/:companyId/archive', archiveCompany)
 router.get('/:companyId/unarchive', unarchiveCompany)
