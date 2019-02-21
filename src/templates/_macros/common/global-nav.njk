@@ -15,11 +15,13 @@
         <div class="govuk-width-container">
           <ul class="global-nav__list">
             {% for item in props.items %}
-              <li class="global-nav__list-item">
-                <a href="{{ item.url }}" class="global-nav__link govuk-link {{ 'active' if item.isActive }}">
-                  {{ item.label }}
-                </a>
-              </li>
+              {% if item %}
+                <li class="global-nav__list-item">
+                  <a href="{{ item.url }}" class="global-nav__link govuk-link {{ 'active' if item.isActive }}">
+                    {{ item.label }}
+                  </a>
+                </li>
+              {% endif %}
             {% endfor %}
           </ul>
         </div>
