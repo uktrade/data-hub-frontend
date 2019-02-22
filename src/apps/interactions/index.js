@@ -1,7 +1,7 @@
 const router = require('./router')
 
 module.exports = {
-  displayName: 'Interactions and services',
+  displayName: 'Interactions',
   mountpath: '/interactions',
   router,
 }

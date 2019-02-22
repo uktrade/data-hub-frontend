@@ -69,6 +69,38 @@ table.table--key-value.table--small {
   }
 }
 
+.table__details {
+  display: flex;
+  flex-flow: row wrap;
+  color: $secondary-text-colour;
+
+  .table__details-name {
+    padding-top: $default-spacing-unit / 4;
+  }
+
+  .table__details-content {
+    width: 100%;
+  }
+
+  @include media(tablet) {
+    .table__details-content {
+      width: auto;
+      flex: 1;
+      margin-left: auto;
+      padding-left: $default-spacing-unit * 1.5;
+    }
+  }
+
+  .govuk-details--table-cell {
+    @include core-font(16);
+    margin-bottom: 0;
+
+    .govuk-details__summary-text {
+      @include core-font(16);
+    }
+  }
+}
+
 .table__actions {
   float: right;
 }

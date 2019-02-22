@@ -111,20 +111,29 @@ Then(/^details view data for "(.+)" should contain "(.+)"$/, async (detailsItemN
     .useCss()
 })
 
-Then(/^the (.+) key value details are displayed$/, async function (tableTitle, dataTable) {
-  const expectedKeyValues = removeFalsey(dataTable.hashes(), this.state)
-  const tableSelector = Details.getSelectorForKeyValueTable(tableTitle)
-
-  await assertTableRowCount(tableSelector, expectedKeyValues)
-  await assertTableContent.bind(this)(tableSelector, expectedKeyValues, TABLE_TYPE.KEY_VALUE)
-})
-
 Then(/^the (.+) values are displayed$/, async function (tableTitle, dataTable) {
   const expectedKeyValues = removeFalsey(dataTable.hashes(), this.state)
   const tableSelector = Details.getSelectorForKeyValueTable(tableTitle)
 
   await assertTableRowCount(tableSelector, expectedKeyValues)
   await assertTableContent.bind(this)(tableSelector, expectedKeyValues, TABLE_TYPE.VALUE)
+})
+
+Then(/^the (.+) values are not displayed$/, async function (tableTitle) {
+  const tableSelector = Details.getSelectorForKeyValueTable(tableTitle)
+
+  await Details
+    .api.useXpath()
+    .assert.elementNotPresent(tableSelector.selector)
+    .useCss()
+})
+
+Then(/^the (.+) key value details are displayed$/, async function (tableTitle, dataTable) {
+  const expectedKeyValues = removeFalsey(dataTable.hashes(), this.state)
+  const tableSelector = Details.getSelectorForKeyValueTable(tableTitle)
+
+  await assertTableRowCount(tableSelector, expectedKeyValues)
+  await assertTableContent.bind(this)(tableSelector, expectedKeyValues, TABLE_TYPE.KEY_VALUE)
 })
 
 Then(/^the (.+) key value details are not displayed$/, async function (tableTitle) {
@@ -158,15 +167,17 @@ Then(/^the data details ([0-9]+) are displayed$/, async function (tableNumber, d
   await assertTableContent.bind(this)(tableSelector, dataTable.hashes(), TABLE_TYPE.DATA)
 })
 
-Then(/^the "(.+)" details summary should be displayed$/, async (summary) => {
+Then(/^the "(.+)" details summary (should be|should not be) displayed$/, async (summary, should) => {
   const detailsSummarySelector = getSelectorForElementWithText(summary, {
     el: '//span',
-    className: 'details__summary',
+    className: 'govuk-details__summary-text',
     hasExactText: true,
   })
 
+  const assertion = should === 'should be' ? 'visible' : 'elementNotPresent'
+
   await Details
     .api.useXpath()
-    .waitForElementVisible(detailsSummarySelector.selector)
+    .assert[assertion](detailsSummarySelector.selector)
     .useCss()
 })

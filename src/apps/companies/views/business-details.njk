@@ -22,30 +22,34 @@
 {% endblock %}
 
 {% block body_main_content %}
+  <p>This page shows information about this business and how it is related to other businesses</p>
 
-  {% call HiddenContent({ summary: 'Where does information on this page come from?' }) %}
-    {% call Message({ type: 'muted' }) %}
-      The information on this page that cannot be edited comes from
-      <a href="https://www.dnb.co.uk/about-us/data-cloud.html" target="_blank">Dun & Bradstreet</a>.
-      This is an external and verified source. The information is automatically updated.
-      <a href="audit">View the audit history</a>.<br />
-      If you think the information is incomplete or incorrect, <a href="/support">get in touch using the support form</a>.
-    {% endcall %}
-  {% endcall %}
+  {% if company.duns_number %}
+    {{ govukDetails({
+      summaryText: 'Where does information on this page come from?',
+      html: '<p>
+          The information on this page that cannot be edited comes from <a href="https://www.dnb.co.uk/about-us/data-cloud.html" target="_blank">Dun & Bradstreet</a>. This is an external and verified source. The information is automatically updated. <a href="audit">View the audit history</a>.
+        </p>
+        <p>
+          If you think the information is incomplete or incorrect, <a href="/support">get in touch using the support form</a>.
+        </p>'
+    }) }}
+  {% endif %}
+
+  <h2 class="govuk-heading-m govuk-!-margin-top-9">About {{ company.name }}</h2>
+
+  {% component 'key-value-table', items=aboutDetails %}
 
 
-  <h2 class="govuk-heading-m govuk-!-margin-top-9">{{ company.name }} is known as</h2>
+  {% if oneListDetails %}
+    <h2 class="govuk-heading-m govuk-!-margin-top-9">Global Account Manager – One List</h2>
 
-  {% component 'key-value-table', items=knownAsDetails %}
+    {% component 'key-value-table', items=oneListDetails %}
 
-
-  <h2 class="govuk-heading-m govuk-!-margin-top-9">Global Account Manager – One List</h2>
-
-  {% component 'key-value-table', items=oneListDetails %}
-
-  <p>
-    <a href="advisers">See all advisers on the core team</a>
-  </p>
+    <p>
+      <a href="advisers">See all advisers on the core team</a>
+    </p>
+  {% endif %}
 
 
   <h2 class="govuk-heading-m govuk-!-margin-top-9">Business hierarchy</h2>
@@ -66,15 +70,17 @@
   </table>
 
 
-  <h2 class="govuk-heading-m govuk-!-margin-top-9">DIT region</h2>
+  {% if regionDetails %}
+    <h2 class="govuk-heading-m govuk-!-margin-top-9">DIT region</h2>
 
-  <table class="table--key-value">
-    <tbody>
-    <tr>
-      <td>{{ regionDetails }}</td>
-    </tr>
-    </tbody>
-  </table>
+    <table class="table--key-value">
+      <tbody>
+      <tr>
+        <td>{{ regionDetails }}</td>
+      </tr>
+      </tbody>
+    </table>
+  {% endif %}
 
 
   <h2 class="govuk-heading-m govuk-!-margin-top-9">Addresses</h2>
@@ -91,11 +97,6 @@
     </tr>
     </tbody>
   </table>
-
-
-  <h2 class="govuk-heading-m govuk-!-margin-top-9">Additional business information</h2>
-
-  {% component 'key-value-table', items=additionalInformationDetails %}
 
 
   {% if archivedDocumentPath %}

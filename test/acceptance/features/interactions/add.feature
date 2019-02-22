@@ -15,7 +15,7 @@ Feature: Add a new interaction in Data hub
     And the key value details are displayed
       | key                      | value                                    |
       | Company                  | Venus Ltd                                |
-      | Contact                  | interaction.contact                      |
+      | Contact(s)               | interaction.contact                      |
       | Service provider         | interaction.serviceProvider              |
       | Service                  | interaction.service                      |
       | Subject                  | interaction.subject                      |
@@ -39,7 +39,7 @@ Feature: Add a new interaction in Data hub
     And the key value details are displayed
       | key                      | value                                    |
       | Company                  | Venus Ltd                                |
-      | Contact                  | interaction.contact                      |
+      | Contact(s)               | interaction.contact                      |
       | Service provider         | interaction.serviceProvider              |
       | Service                  | interaction.service                      |
       | Subject                  | interaction.subject                      |
@@ -67,7 +67,7 @@ Feature: Add a new interaction in Data hub
     And the key value details are displayed
       | key                      | value                                    |
       | Company                  | Venus Ltd                                |
-      | Contact                  | interaction.contact                      |
+      | Contact(s)               | interaction.contact                      |
       | Service provider         | interaction.serviceProvider              |
       | Service                  | interaction.service                      |
       | Service status           | interaction.serviceStatus                |
@@ -95,7 +95,7 @@ Feature: Add a new interaction in Data hub
     And the key value details are displayed
       | key                      | value                                    |
       | Company                  | Venus Ltd                                |
-      | Contact                  | interaction.contact                      |
+      | Contact(s)               | interaction.contact                      |
       | Service provider         | interaction.serviceProvider              |
       | Service                  | interaction.service                      |
       | Subject                  | interaction.subject                      |
@@ -119,7 +119,7 @@ Feature: Add a new interaction in Data hub
     And the key value details are displayed
       | key                      | value                                    |
       | Company                  | Venus Ltd                                |
-      | Contact                  | interaction.contact                      |
+      | Contact(s)               | interaction.contact                      |
       | Service provider         | interaction.serviceProvider              |
       | Service                  | interaction.service                      |
       | Subject                  | interaction.subject                      |
@@ -145,7 +145,7 @@ Feature: Add a new interaction in Data hub
     And the key value details are displayed
       | key                      | value                                    |
       | Company                  | Venus Ltd                                |
-      | Contact                  | interaction.contact                      |
+      | Contact(s)               | interaction.contact                      |
       | Service provider         | interaction.serviceProvider              |
       | Service                  | interaction.service                      |
       | Subject                  | interaction.subject                      |
@@ -175,7 +175,7 @@ Feature: Add a new interaction in Data hub
     And the key value details are displayed
       | key                      | value                                    |
       | Company                  | Venus Ltd                                |
-      | Contact                  | interaction.contact                      |
+      | Contact(s)               | interaction.contact                      |
       | Service provider         | interaction.serviceProvider              |
       | Service                  | interaction.service                      |
       | Subject                  | interaction.subject                      |
@@ -202,7 +202,7 @@ Feature: Add a new interaction in Data hub
     And the key value details are displayed
       | key                      | value                                    |
       | Company                  | Venus Ltd                                |
-      | Contact                  | interaction.contact                      |
+      | Contact(s)               | interaction.contact                      |
       | Service provider         | interaction.serviceProvider              |
       | Service                  | interaction.service                      |
       | Subject                  | interaction.subject                      |
@@ -225,7 +225,7 @@ Feature: Add a new interaction in Data hub
     And the key value details are displayed
       | key                      | value                                    |
       | Company                  | Venus Ltd                                |
-      | Contact                  | interaction.contact                      |
+      | Contact(s)               | interaction.contact                      |
       | Service provider         | interaction.serviceProvider              |
       | Service                  | interaction.service                      |
       | Subject                  | interaction.subject                      |

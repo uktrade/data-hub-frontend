@@ -2,11 +2,12 @@ const { concat } = require('lodash')
 
 const GLOBAL_NAV_ITEM = {
   path: '/investment-projects',
-  label: 'Investment projects',
+  label: 'Investments',
   permissions: [
     'investment.view_associated_investmentproject',
     'investment.view_all_investmentproject',
   ],
+  key: 'datahub-crm',
   order: 5,
 }
 
@@ -46,7 +47,7 @@ const LOCAL_NAV = [
   },
   {
     path: 'documents',
-    label: 'Documents',
+    label: 'CDMS documents',
     permissions: [
       'investment.view_investmentproject_document',
     ],
@@ -54,6 +55,21 @@ const LOCAL_NAV = [
   {
     path: 'evidence',
     label: 'Evidence',
+  },
+]
+
+const INVESTMENT_TAB_ITEMS = [
+  {
+    path: 'projects',
+    label: 'Projects',
+  },
+  {
+    path: 'profiles',
+    label: 'Investor profiles',
+  },
+  {
+    path: 'opportunities',
+    label: 'UK Opportunities',
   },
 ]
 
@@ -91,6 +107,7 @@ const QUERY_DATE_FIELDS = [
 module.exports = {
   GLOBAL_NAV_ITEM,
   LOCAL_NAV,
+  INVESTMENT_TAB_ITEMS,
   DEFAULT_COLLECTION_QUERY,
   APP_PERMISSIONS,
   QUERY_FIELDS,

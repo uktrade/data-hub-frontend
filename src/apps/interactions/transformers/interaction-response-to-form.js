@@ -4,7 +4,7 @@ const { format, isValid } = require('date-fns')
 
 function transformInteractionResponseToForm ({
   id,
-  contact,
+  contacts,
   dit_team,
   dit_adviser,
   event,
@@ -27,14 +27,14 @@ function transformInteractionResponseToForm ({
   const isValidDate = isValid(new Date(date))
   const displayPolicyAreas = (policy_areas || []).map(policy_area => policy_area.id)
   const displayPolicyTypes = (policy_issue_types || []).map(policy_type => policy_type.id)
-
+  const displayContactTypes = (contacts || []).map(contact => contact.id)
   return {
     id,
     subject,
     notes,
     grant_amount_offered,
     net_company_receipt,
-    contact: get(contact, 'id'),
+    contacts: displayContactTypes,
     dit_team: get(dit_team, 'id'),
     dit_adviser: get(dit_adviser, 'id'),
     is_event: isNil(event) ? 'false' : 'true',

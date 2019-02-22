@@ -31,7 +31,7 @@ module.exports = {
     dateOfInteractionYear: '#field-date_year',
     dateOfInteractionMonth: '#field-date_month',
     dateOfInteractionDay: '#field-date_day',
-    contact: '#field-contact',
+    contact: '#field-contacts',
     serviceProvider: '#field-dit_team',
     service: '#field-service',
     serviceStatus: '#field-service_delivery_status',

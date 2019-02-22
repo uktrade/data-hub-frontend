@@ -30,10 +30,9 @@
              @mousedown.prevent.stop="clearAll(props.search)"></div>
       </template>
       <template slot="option" slot-scope="props">
-        <div class="multiselect__option-label" v-html="$options.filters.highlight(props.option.label, props.search)">
-          {{ props.option.label }}
-        </div>
-        <div class="multiselect__option-sublabel">{{ props.option.subLabel }}</div>
+        <div class="multiselect__option-label" v-html="$options.filters.highlight(props.option.label, props.search)">{{ props.option.label }}</div>
+        <div class="multiselect__option-sublabel" v-if="isAsyncFunction" v-html="$options.filters.highlight(props.option.subLabel, props.search)">{{ props.option.subLabel }}</div>
+        <div class="multiselect__option-sublabel" v-else>{{ props.option.subLabel }}</div>
       </template>
 
       <template slot="caret" slot-scope="methods">
@@ -132,7 +131,7 @@
       },
     },
     created () {
-      if(this.selectedValue) {
+      if (!this.useMultipleSelect) {
         this.setPlaceHolder = this.getLabelFromValue(this.selectedValue, this.multiSelectModel)
       }
 
@@ -153,7 +152,9 @@
         multiSelectModel: this.model,
         useMultipleSelect: this.multipleSelect,
         hiddenFormValue: this.selectedValue,
-        setPlaceHolder: this.placeholder
+        setPlaceHolder: this.placeholder,
+        isAsyncFunction: false,
+        isActive: true,
       }
     },
     methods: {
@@ -177,7 +178,8 @@
       asyncSearch: debounce(function (query) {
         if (query.length < 3) {return}
         this.isLoading = true
-        axios.get(`/api/options/${this.entity}?term=${query}`)
+        this.isAsyncFunction = true
+        axios.get(`/api/options/${this.entity}?autocomplete=${query}&is_active=${this.isActive}`)
           .then((response) => {
             this.options = response.data
             this.isLoading = false
@@ -198,7 +200,9 @@
         const query = pickBy(getFormData(form))
         delete query[this.id]
 
-        this.hiddenFormValue = selectedOption.value
+        if(selectedOption){
+          this.hiddenFormValue = selectedOption.value
+        }
         query[this.name] = Array.isArray(selectedOption) ? selectedOption.map(option => option.value) : [selectedOption]
 
         XHR.request(form.action, query)

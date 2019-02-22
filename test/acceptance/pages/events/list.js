@@ -20,7 +20,6 @@ module.exports = {
     h1Element: '.c-local-header__heading',
     addEventButton: getButtonWithText('Add event'),
     sortBy: '#field-sortby',
-    xhrTargetElement: '#xhr-outlet',
   },
   sections: {
     filterTags: {

@@ -21,10 +21,12 @@ module.exports = ({
   one_list_group_global_account_manager,
   one_list_group_tier,
 }) => {
-  const viewRecord = {
-    one_list_group_global_account_manager: transformGlobalAccountManager(one_list_group_global_account_manager || {}),
-    one_list_tier: get(one_list_group_tier, 'name', NONE_TEXT),
-  }
+  if (one_list_group_tier) {
+    const viewRecord = {
+      one_list_group_global_account_manager: transformGlobalAccountManager(one_list_group_global_account_manager || {}),
+      one_list_tier: one_list_group_tier.name,
+    }
 
-  return getDataLabels(viewRecord, accountManagementDisplayLabels)
+    return getDataLabels(viewRecord, accountManagementDisplayLabels)
+  }
 }
