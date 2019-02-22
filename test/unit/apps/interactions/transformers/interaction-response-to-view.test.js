@@ -24,10 +24,10 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
           name: 'Venus Ltd',
         },
-        'Contact': {
+        'Contact(s)': [{
           url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
           name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
-        },
+        }],
         'Service provider': {
           id: '16362a92-9698-e211-a939-e4115bead28a',
           name: 'UKTI Chief Executive\'s Office',
@@ -88,6 +88,10 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
           name: 'Venus Ltd',
         },
+        'Contact(s)': [{
+          url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
+          name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
+        }],
         'Service provider': {
           id: '16362a92-9698-e211-a939-e4115bead28a',
           name: 'UKTI Chief Executive\'s Office',
@@ -139,10 +143,10 @@ describe('#transformInteractionResponsetoViewRecord', () => {
 
     it('should transform to display format', () => {
       expect(this.transformed).to.deep.equal({
-        'Contact': {
+        'Contact(s)': [{
           url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
           name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
-        },
+        }],
         'Service provider': {
           id: '16362a92-9698-e211-a939-e4115bead28a',
           name: 'UKTI Chief Executive\'s Office',
@@ -191,10 +195,10 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
           name: 'Venus Ltd',
         },
-        'Contact': {
+        'Contact(s)': [{
           url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
           name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
-        },
+        }],
         'Service provider': {
           id: '16362a92-9698-e211-a939-e4115bead28a',
           name: 'UKTI Chief Executive\'s Office',
@@ -255,10 +259,10 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
           name: 'Venus Ltd',
         },
-        'Contact': {
+        'Contact(s)': [{
           url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
           name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
-        },
+        }],
         'Service provider': {
           id: '16362a92-9698-e211-a939-e4115bead28a',
           name: 'UKTI Chief Executive\'s Office',
@@ -327,10 +331,10 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
           name: 'Venus Ltd',
         },
-        'Contact': {
+        'Contact(s)': [{
           url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
           name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
-        },
+        }],
         'Service provider': {
           id: '16362a92-9698-e211-a939-e4115bead28a',
           name: 'UKTI Chief Executive\'s Office',
@@ -376,10 +380,10 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
           name: 'Venus Ltd',
         },
-        'Contact': {
+        'Contact(s)': [{
           url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
           name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
-        },
+        }],
         'Service provider': {
           id: '16362a92-9698-e211-a939-e4115bead28a',
           name: 'UKTI Chief Executive\'s Office',
@@ -426,10 +430,10 @@ describe('#transformInteractionResponsetoViewRecord', () => {
             url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
             name: 'Venus Ltd',
           },
-          'Contact': {
+          'Contact(s)': [{
             url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
             name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
-          },
+          }],
           'Service provider': {
             id: '16362a92-9698-e211-a939-e4115bead28a',
             name: 'UKTI Chief Executive\'s Office',

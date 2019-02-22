@@ -73,7 +73,8 @@ const config = {
   mediumDateFormat: 'D MMM YYYY',
   mediumDateTimeFormat: 'D MMM YYYY, h:mma',
   paginationMaxResults: 10000,
-  performanceDashboardsUrl: process.env.PERFORMANCE_DASHBOARDS_URL || 'https://mi.exportwins.service.trade.gov.uk',
+  performanceDashboardsUrl: process.env.PERFORMANCE_DASHBOARDS_URL,
+  findExportersUrl: process.env.FIND_EXPORTERS_URL,
   archivedDocumentsBaseUrl: process.env.ARCHIVED_DOCUMENTS_BASE_URL,
   oauth: {
     url: process.env.OAUTH2_AUTH_URL,
@@ -84,6 +85,7 @@ const config = {
     logoutUrl: process.env.OAUTH2_LOGOUT_URL,
     devToken: process.env.OAUTH2_DEV_TOKEN,
     bypassSSO: process.env.OAUTH2_BYPASS_SSO || false,
+    userProfileUrl: process.env.OAUTH2_USER_PROFILE_URL,
   },
   basicAuth: {
     user: process.env.BASIC_AUTH_USER,

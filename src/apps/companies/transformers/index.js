@@ -1,11 +1,10 @@
 const transformCompaniesHouseToListItem = require('./companies-house-to-list-item')
 const transformCompaniesHouseToView = require('./companies-house-to-view')
-const transformCompanyToAdditionalInformationView = require('./company-to-additional-information-view')
 const transformCompanyToAddressesView = require('./company-to-addresses-view')
 const transformCompanyToBusinessHierarchyView = require('./company-to-business-hierarchy-view')
 const transformCompanyToExportDetailsView = require('./company-to-export-details-view')
 const transformCompanyToForm = require('./company-to-form')
-const transformCompanyToKnownAsView = require('./company-to-known-as-view')
+const transformCompanyToAboutView = require('./company-to-about-view')
 const transformCompanyToListItem = require('./company-to-list-item')
 const transformCompanyToOneListView = require('./company-to-one-list-view')
 const transformCompanyToRegionView = require('./company-to-region-view')
@@ -17,12 +16,11 @@ const transformCoreTeamToCollection = require('./one-list-core-team-to-collectio
 module.exports = {
   transformCompaniesHouseToListItem,
   transformCompaniesHouseToView,
-  transformCompanyToAdditionalInformationView,
   transformCompanyToAddressesView,
   transformCompanyToBusinessHierarchyView,
   transformCompanyToExportDetailsView,
   transformCompanyToForm,
-  transformCompanyToKnownAsView,
+  transformCompanyToAboutView,
   transformCompanyToListItem,
   transformCompanyToOneListView,
   transformCompanyToRegionView,

@@ -4,6 +4,7 @@ const GLOBAL_NAV_ITEM = {
   permissions: [
     'order.view_order',
   ],
+  key: 'datahub-crm',
   order: 6,
 }
 

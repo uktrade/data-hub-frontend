@@ -2,13 +2,12 @@
 const { isEmpty } = require('lodash')
 
 const {
-  transformCompanyToKnownAsView,
+  transformCompanyToAboutView,
   transformCompanyToOneListView,
   transformCompanyToBusinessHierarchyView,
   transformCompanyToSectorView,
   transformCompanyToRegionView,
   transformCompanyToAddressesView,
-  transformCompanyToAdditionalInformationView,
 } = require('../transformers')
 const {
   getCompanySubsidiaries,
@@ -23,13 +22,12 @@ async function renderBusinessDetails (req, res) {
     .breadcrumb('Business details')
     .render('companies/views/business-details', {
       heading: 'Business details',
-      knownAsDetails: transformCompanyToKnownAsView(company),
+      aboutDetails: transformCompanyToAboutView(company),
       oneListDetails: transformCompanyToOneListView(company),
       businessHierarchyDetails: transformCompanyToBusinessHierarchyView(company, subsidiaries.count),
       sectorDetails: transformCompanyToSectorView(company),
       regionDetails: transformCompanyToRegionView(company),
       addressesDetails: transformCompanyToAddressesView(company),
-      additionalInformationDetails: transformCompanyToAdditionalInformationView(company),
       archivedDocumentPath: isEmpty(company.archived_documents_url_path) ? undefined : company.archived_documents_url_path,
     })
 }

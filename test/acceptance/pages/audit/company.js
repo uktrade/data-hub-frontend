@@ -20,11 +20,6 @@ module.exports = {
             .setValue('@website', website)
         }
 
-        this
-          .waitForElementVisible('@description')
-          .clearValue('@description')
-          .setValue('@description', description)
-
         return this
       },
     },

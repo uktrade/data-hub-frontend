@@ -1,6 +1,7 @@
 const request = require('request-promise')
 const queryString = require('qs')
 const uuid = require('uuid')
+const axios = require('axios')
 
 const { get, set, isUndefined } = require('lodash')
 
@@ -34,6 +35,20 @@ function handleMissingState (req, res, next) {
   next()
 }
 
+async function getSSOUserProfile (token) {
+  const options = {
+    headers: { 'Authorization': 'Bearer ' + token },
+  }
+
+  const data = await axios.get(
+    config.oauth.userProfileUrl,
+    options,
+  ).then((response) => response.data)
+    .catch((error) => error)
+
+  return data
+}
+
 async function callbackOAuth (req, res, next) {
   const errorQueryParam = get(req.query, 'error')
   const stateQueryParam = get(req.query, 'state')
@@ -61,7 +76,10 @@ async function callbackOAuth (req, res, next) {
 
   try {
     const data = await getAccessToken(req.query.code)
+    const userProfile = await getSSOUserProfile(data.access_token)
+
     set(req, 'session.token', data.access_token)
+    set(req, 'session.userProfile', userProfile)
     return res.redirect(req.session.returnTo || '/')
   } catch (error) {
     return next(error)

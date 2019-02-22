@@ -1,6 +1,6 @@
 const config = require('~/config')
 
-describe('Investment list controller', () => {
+describe('Investment project controller - /views/projects', () => {
   const metadataMock = {
     sectorOptions: [
       { id: 's1', name: 's1', disabled_on: null },
@@ -45,20 +45,21 @@ describe('Investment list controller', () => {
       .reply(200, metadataMock.adviserOptions)
   })
 
-  describe('#renderInvestmentList', () => {
+  describe('#renderProjectsView', () => {
     context('when the list renders successfully', () => {
       beforeEach(async () => {
-        const controller = require('~/src/apps/investment-projects/controllers/list')
+        const controller = require('~/src/apps/investment-projects/controllers/projects')
 
-        await controller.renderInvestmentList(this.req, this.res, this.nextSpy)
+        const renderProjectsView = controller.renderProjectsView('investment-projects/views/projects')
+        await renderProjectsView(this.req, this.res, this.nextSpy)
       })
 
       it('should render', () => {
         expect(this.res.render).to.be.calledOnce
       })
 
-      it('should render the collection template', () => {
-        expect(this.res.render.firstCall.args[0]).to.equal('_layouts/collection')
+      it('should render the projects template', () => {
+        expect(this.res.render.firstCall.args[0]).to.equal('investment-projects/views/projects')
       })
 
       it('should render the view with a title', () => {
@@ -91,14 +92,15 @@ describe('Investment list controller', () => {
         this.error = new Error('error')
         const erroneousSpy = sinon.stub().throws(this.error)
 
-        const controller = proxyquire('~/src/apps/investment-projects/controllers/list', {
+        const controller = proxyquire('~/src/apps/investment-projects/controllers/projects', {
           '../../builders': {
             buildSelectedFiltersSummary: erroneousSpy,
             buildFieldsWithSelectedEntities: sinon.stub(),
           },
         })
 
-        await controller.renderInvestmentList(this.req, this.res, this.nextSpy)
+        const renderProjectsView = controller.renderProjectsView('investment-projects/views/projects')
+        await renderProjectsView(this.req, this.res, this.nextSpy)
       })
 
       it('should not render the view', () => {

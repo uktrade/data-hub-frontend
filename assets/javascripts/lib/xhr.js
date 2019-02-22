@@ -15,15 +15,18 @@ history.listen((location, action) => {
 })
 
 const XHR = {
-  getOutlet () {
-    return document.getElementById('xhr-outlet')
-  },
-
   injectResponseInHtml (data) {
-    const outlet = this.getOutlet()
-    if (!outlet) { return }
+    const dataDocument = document.createRange().createContextualFragment(data)
 
-    outlet.outerHTML = data
+    const xhrContainers = document.querySelectorAll('[data-xhr]')
+    xhrContainers.forEach((xhrContainer) => {
+      const xhrContainerId = xhrContainer.getAttribute('data-xhr')
+
+      const newContent = dataDocument.querySelector(`[data-xhr="${xhrContainerId}"]`)
+      if (newContent) {
+        xhrContainer.outerHTML = newContent.outerHTML
+      }
+    })
   },
 
   updateOutlet (res, params) {
@@ -42,14 +45,7 @@ const XHR = {
     return res
   },
 
-  request (url, params = {}, showLoader = true) {
-    const outlet = this.getOutlet()
-    if (!outlet) { return }
-
-    if (showLoader) {
-      outlet.classList.add('u-loading')
-    }
-
+  request (url, params = {}) {
     if (params) {
       const url = `?${queryString.stringify(params)}`
       history.push(url)

@@ -8,6 +8,7 @@ const GLOBAL_NAV_ITEM = {
   permissions: [
     'event.view_event',
   ],
+  key: 'datahub-crm',
   order: 3,
 }
 

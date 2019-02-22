@@ -10,8 +10,8 @@ Feature: Dashboard
       | Companies                 |
       | Contacts                  |
       | Events                    |
-      | Interactions and services |
-      | Investment projects       |
+      | Interactions              |
+      | Investments               |
       | Orders (OMIS)             |
       | MI dashboards             |
 
@@ -23,7 +23,7 @@ Feature: Dashboard
       | text                      |
       | Companies                 |
       | Contacts                  |
-      | Investment projects       |
+      | Investments               |
       | MI dashboards             |
 
   @dashboard--global-nav-da @da
@@ -34,6 +34,6 @@ Feature: Dashboard
       | text                      |
       | Companies                 |
       | Contacts                  |
-      | Investment projects       |
+      | Investments               |
       | Orders (OMIS)             |
       | MI dashboards             |

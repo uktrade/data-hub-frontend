@@ -4,10 +4,11 @@ const DEFAULT_COLLECTION_QUERY = {
 
 const GLOBAL_NAV_ITEM = {
   path: '/interactions',
-  label: 'Interactions and services',
+  label: 'Interactions',
   permissions: [
     'interaction.view_all_interaction',
   ],
+  key: 'datahub-crm',
   order: 4,
 }
 
@@ -19,6 +20,9 @@ const QUERY_FIELDS = [
   'sortby',
   'dit_team',
   'service',
+  'was_policy_feedback_provided',
+  'policy_areas',
+  'policy_issue_types',
 ]
 
 const QUERY_DATE_FIELDS = [
