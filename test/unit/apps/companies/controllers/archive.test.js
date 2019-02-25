@@ -1,194 +1,214 @@
-const tokenMock = '12345abcde'
-const companyMock = {
-  id: '9999',
-  company_number: '10620176',
-  companies_house_data: null,
-  name: 'ADALEOP LTD',
-  registered_address_1: '13 HOWICK PARK AVENUE',
-  registered_address_2: 'PENWORTHAM',
-  registered_address_town: 'PRESTON',
-  registered_address_county: '',
-  registered_address_postcode: 'PR1 0LS',
-}
+const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+
+const companyMock = require('~/test/unit/data/companies/company.json')
 
 describe('Company controller, archive', () => {
   beforeEach(() => {
-    this.archiveCompanyStub = sinon.stub()
-    this.unarchiveCompanyStub = sinon.stub()
+    this.stub = {
+      archiveCompany: sinon.stub(),
+      unarchiveCompany: sinon.stub(),
+    }
+
     this.errorLoggerSpy = sinon.spy()
-    this.redirectSpy = sinon.spy()
-    this.flashSpy = sinon.spy()
 
     this.controller = proxyquire('~/src/apps/companies/controllers/archive', {
       '../repos': {
-        archiveCompany: this.archiveCompanyStub,
-        unarchiveCompany: this.unarchiveCompanyStub,
+        archiveCompany: this.stub.archiveCompany,
+        unarchiveCompany: this.stub.unarchiveCompany,
       },
       '../../../../config/logger': {
         error: this.errorLoggerSpy,
       },
     })
-
-    this.reqMock = {
-      flash: this.flashSpy,
-      session: {
-        token: tokenMock,
-      },
-      body: {},
-    }
-    this.resMock = {
-      redirect: this.redirectSpy,
-      locals: {
-        company: companyMock,
-      },
-    }
   })
 
-  describe('archiveCompany()', () => {
+  const commonTests = ({ stubName, expectedReason, expectedFlash, expectedPath }) => {
+    if (stubName) {
+      it('should call archive company with correct args', () => {
+        const expectedToken = this.middlewareParameters.reqMock.session.token
+
+        if (expectedReason) {
+          expect(this.stub[stubName]).to.have.been.calledWith(expectedToken, companyMock.id, expectedReason)
+        } else {
+          expect(this.stub[stubName]).to.have.been.calledWith(expectedToken, companyMock.id)
+        }
+
+        expect(this.stub[stubName]).to.have.been.calledOnce
+      })
+    }
+
+    it('should set a success on flash', () => {
+      expect(this.middlewareParameters.reqMock.flash.args[0][0]).to.equal(expectedFlash)
+      expect(this.middlewareParameters.reqMock.flash).to.have.been.calledOnce
+    })
+
+    it('should redirect back to company', () => {
+      expect(this.middlewareParameters.resMock.redirect).to.have.been.calledWith(expectedPath)
+      expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
+    })
+  }
+
+  describe('#archiveCompany', () => {
     context('when no reason is supplied', () => {
       beforeEach(() => {
-        this.controller.archiveCompany(this.reqMock, this.resMock)
+        this.middlewareParameters = buildMiddlewareParameters({
+          requestBody: {},
+          company: companyMock,
+        })
+
+        this.controller.archiveCompany(this.middlewareParameters.reqMock, this.middlewareParameters.resMock)
       })
 
-      it('should set an error on flash', () => {
-        expect(this.flashSpy.args[0][0]).to.equal('error')
-        expect(this.flashSpy).to.have.been.calledOnce
-      })
-
-      it('should redirect back to company', () => {
-        expect(this.redirectSpy).to.have.been.calledWith(`/companies/${companyMock.id}`)
-        expect(this.redirectSpy).to.have.been.calledOnce
+      commonTests({
+        expectedFlash: 'error',
+        expectedPath: `/companies/${companyMock.id}`,
       })
 
       it('should not attempt to archive company', () => {
-        expect(this.archiveCompanyStub).not.to.have.been.called
+        expect(this.stub.archiveCompany).not.to.have.been.called
       })
     })
 
     context('when a reason is supplied', () => {
-      beforeEach(() => {
-        this.reasonMock = 'Archived reason'
-        this.reqMock.body.archived_reason = this.reasonMock
-      })
-
       context('when save returns successfully', () => {
-        beforeEach(() => {
-          this.archiveCompanyStub.resolves(companyMock)
-        })
-
         context('with a default reason', () => {
           beforeEach(async () => {
-            await this.controller.archiveCompany(this.reqMock, this.resMock)
+            this.middlewareParameters = buildMiddlewareParameters({
+              requestBody: {
+                archived_reason: 'Archived reason',
+              },
+              company: companyMock,
+            })
+
+            this.stub.archiveCompany.resolves(companyMock)
+
+            await this.controller.archiveCompany(this.middlewareParameters.reqMock, this.middlewareParameters.resMock)
           })
 
-          it('should call archive company with correct args', () => {
-            expect(this.archiveCompanyStub).to.have.been.calledWith(tokenMock, companyMock.id, this.reasonMock)
-            expect(this.archiveCompanyStub).to.have.been.calledOnce
-          })
-
-          it('should set a success on flash', () => {
-            expect(this.flashSpy.args[0][0]).to.equal('success')
-            expect(this.flashSpy).to.have.been.calledOnce
-          })
-
-          it('should redirect back to company', () => {
-            expect(this.redirectSpy).to.have.been.calledWith(`/companies/${companyMock.id}`)
-            expect(this.redirectSpy).to.have.been.calledOnce
+          commonTests({
+            stubName: 'archiveCompany',
+            expectedReason: 'Archived reason',
+            expectedFlash: 'success',
+            expectedPath: `/companies/${companyMock.id}`,
           })
         })
 
         context('with a custom reason', () => {
           beforeEach(async () => {
-            this.reasonMock = 'Other'
-            this.customReasonMock = 'My custom reason'
-            this.reqMock.body.archived_reason = this.reasonMock
-            this.reqMock.body.archived_reason_other = this.customReasonMock
+            this.middlewareParameters = buildMiddlewareParameters({
+              requestBody: {
+                archived_reason: 'Other',
+                archived_reason_other: 'My custom reason',
+              },
+              company: companyMock,
+            })
 
-            await this.controller.archiveCompany(this.reqMock, this.resMock)
+            this.stub.archiveCompany.resolves(companyMock)
+
+            await this.controller.archiveCompany(this.middlewareParameters.reqMock, this.middlewareParameters.resMock)
           })
 
-          it('should call archive company with custom reason', () => {
-            expect(this.archiveCompanyStub).to.have.been.calledWith(tokenMock, companyMock.id, this.customReasonMock)
-            expect(this.archiveCompanyStub).to.have.been.calledOnce
+          commonTests({
+            stubName: 'archiveCompany',
+            expectedReason: 'My custom reason',
+            expectedFlash: 'success',
+            expectedPath: `/companies/${companyMock.id}`,
           })
         })
       })
 
       context('when save rejects with an error', () => {
         beforeEach(async () => {
-          this.errorMock = {
-            errorCode: 500,
-          }
-          this.archiveCompanyStub.rejects(this.errorMock)
+          this.middlewareParameters = buildMiddlewareParameters({
+            requestBody: {
+              archived_reason: 'Other',
+              archived_reason_other: 'My custom reason',
+            },
+            company: companyMock,
+          })
 
-          await this.controller.archiveCompany(this.reqMock, this.resMock)
+          this.stub.archiveCompany.rejects({ errorCode: 500 })
+
+          await this.controller.archiveCompany(this.middlewareParameters.reqMock, this.middlewareParameters.resMock)
+        })
+
+        commonTests({
+          stubName: 'archiveCompany',
+          expectedReason: 'My custom reason',
+          expectedFlash: 'error',
+          expectedPath: `/companies/${companyMock.id}`,
         })
 
         it('should send error to logger', () => {
-          expect(this.errorLoggerSpy).to.have.been.calledWith(this.errorMock)
+          expect(this.errorLoggerSpy).to.have.been.calledWith({ errorCode: 500 })
           expect(this.errorLoggerSpy).to.have.been.calledOnce
-        })
-
-        it('should set an error on flash', () => {
-          expect(this.flashSpy.args[0][0]).to.equal('error')
-          expect(this.flashSpy).to.have.been.calledOnce
-        })
-
-        it('should redirect back to company', () => {
-          expect(this.redirectSpy).to.have.been.calledWith(`/companies/${companyMock.id}`)
-          expect(this.redirectSpy).to.have.been.calledOnce
         })
       })
     })
   })
 
-  describe('unarchiveCompany()', () => {
+  describe('#unarchiveCompany', () => {
     context('when save returns successfully', () => {
-      beforeEach(async () => {
-        this.unarchiveCompanyStub.resolves(companyMock)
+      context('when there is not a redirect', () => {
+        beforeEach(async () => {
+          this.middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+          })
 
-        await this.controller.unarchiveCompany(this.reqMock, this.resMock)
+          this.stub.unarchiveCompany.resolves(companyMock)
+
+          await this.controller.unarchiveCompany(this.middlewareParameters.reqMock, this.middlewareParameters.resMock)
+        })
+
+        commonTests({
+          stubName: 'unarchiveCompany',
+          expectedFlash: 'success',
+          expectedPath: `/companies/${companyMock.id}`,
+        })
       })
 
-      it('should call unarchive company with correct args', () => {
-        expect(this.unarchiveCompanyStub).to.have.been.calledWith(tokenMock, companyMock.id)
-        expect(this.unarchiveCompanyStub).to.have.been.calledOnce
-      })
+      context('when there is a redirect', () => {
+        beforeEach(async () => {
+          this.middlewareParameters = buildMiddlewareParameters({
+            requestQuery: {
+              redirect: '/redirect/here',
+            },
+            company: companyMock,
+          })
 
-      it('should set a success on flash', () => {
-        expect(this.flashSpy.args[0][0]).to.equal('success')
-        expect(this.flashSpy).to.have.been.calledOnce
-      })
+          this.stub.unarchiveCompany.resolves(companyMock)
 
-      it('should redirect back to company', () => {
-        expect(this.redirectSpy).to.have.been.calledWith(`/companies/${companyMock.id}`)
-        expect(this.redirectSpy).to.have.been.calledOnce
+          await this.controller.unarchiveCompany(this.middlewareParameters.reqMock, this.middlewareParameters.resMock)
+        })
+
+        commonTests({
+          stubName: 'unarchiveCompany',
+          expectedFlash: 'success',
+          expectedPath: '/redirect/here',
+        })
       })
     })
 
     context('when save rejects with an error', () => {
       beforeEach(async () => {
-        this.errorMock = {
-          errorCode: 500,
-        }
-        this.unarchiveCompanyStub.rejects(this.errorMock)
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: companyMock,
+        })
 
-        await this.controller.unarchiveCompany(this.reqMock, this.resMock)
+        this.stub.unarchiveCompany.rejects({ errorCode: 500 })
+
+        await this.controller.unarchiveCompany(this.middlewareParameters.reqMock, this.middlewareParameters.resMock)
+      })
+
+      commonTests({
+        stubName: 'unarchiveCompany',
+        expectedFlash: 'error',
+        expectedPath: `/companies/${companyMock.id}`,
       })
 
       it('should send error to logger', () => {
-        expect(this.errorLoggerSpy).to.have.been.calledWith(this.errorMock)
+        expect(this.errorLoggerSpy).to.have.been.calledWith({ errorCode: 500 })
         expect(this.errorLoggerSpy).to.have.been.calledOnce
-      })
-
-      it('should set an error on flash', () => {
-        expect(this.flashSpy.args[0][0]).to.equal('error')
-        expect(this.flashSpy).to.have.been.calledOnce
-      })
-
-      it('should redirect back to company', () => {
-        expect(this.redirectSpy).to.have.been.calledWith(`/companies/${companyMock.id}`)
-        expect(this.redirectSpy).to.have.been.calledOnce
       })
     })
   })

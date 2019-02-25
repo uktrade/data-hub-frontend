@@ -24,6 +24,15 @@
 {% block body_main_content %}
   <p>This page shows information about this business and how it is related to other businesses</p>
 
+  {% if company.archived %}
+    {% call Message({ type: 'info' }) %}
+      This company was archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br>
+      <strong>Reason:</strong> {{company.archived_reason}}<br>
+      <br>
+      <a href="/companies/{{company.id}}/unarchive?redirect=business-details">Unarchive</a>
+    {% endcall %}
+  {% endif %}
+
   {% if company.duns_number %}
     {{ govukDetails({
       summaryText: 'Where does information on this page come from?',

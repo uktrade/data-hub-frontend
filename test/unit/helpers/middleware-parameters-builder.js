@@ -16,6 +16,7 @@ module.exports = ({
       },
       body: requestBody,
       query: requestQuery,
+      flash: sinon.spy(),
     },
     resMock: {
       breadcrumb,
