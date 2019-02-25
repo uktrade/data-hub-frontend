@@ -73,6 +73,17 @@
       error: errors.trading_names
     }) }}
 
+    {% if formData.company_number and not showCompanyNumberForUkBranch %}
+      <div class="c-form-group">
+        <label class="c-form-group__label">
+          <span class="c-form-group__label-text">Companies House number</span>
+        </label>
+        <div class="c-form-group__inner">
+          {{ formData.company_number }}
+        </div>
+      </div>
+    {% endif %}
+
     {% if not isForeign %}
       {{ TextField({
         name: 'vat_number',
