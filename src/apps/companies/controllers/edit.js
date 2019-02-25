@@ -64,7 +64,7 @@ async function renderForm (req, res, next) {
         showTradingAddress,
         isOnOneList: !isEmpty(get(res.locals.company, 'one_list_group_tier')),
         companyDetails: res.locals.company ? transformCompanyToView(res.locals.company) : {},
-        showCompanyNumber: businessType === UK_BRANCH_OF_FOREIGN_COMPANY_ID,
+        showCompanyNumberForUkBranch: businessType === UK_BRANCH_OF_FOREIGN_COMPANY_ID,
         oneListEmail: config.oneList.email,
       })
   } catch (error) {
