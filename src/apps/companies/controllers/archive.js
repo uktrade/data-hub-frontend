@@ -3,10 +3,10 @@ const { archiveCompany: archive, unarchiveCompany: unarchive } = require('../rep
 const logger = require('../../../../config/logger')
 
 async function archiveCompany (req, res) {
-  const { id } = res.locals.company
+  const { company } = res.locals
   const { archived_reason, archived_reason_other } = req.body
   const reason = archived_reason_other || archived_reason
-  const returnUrl = `/companies/${id}`
+  const returnUrl = req.query.redirect || `/companies/${company.id}`
 
   if (!reason) {
     req.flash('error', 'A reason must be supplied to archive a company')
@@ -14,7 +14,7 @@ async function archiveCompany (req, res) {
   }
 
   try {
-    await archive(req.session.token, id, reason)
+    await archive(req.session.token, company.id, reason)
 
     req.flash('success', 'Company archived')
     res.redirect(returnUrl)
@@ -27,11 +27,11 @@ async function archiveCompany (req, res) {
 }
 
 async function unarchiveCompany (req, res) {
-  const { id } = res.locals.company
-  const returnUrl = req.query.redirect || `/companies/${id}`
+  const { company } = res.locals
+  const returnUrl = req.query.redirect || `/companies/${company.id}`
 
   try {
-    await unarchive(req.session.token, id)
+    await unarchive(req.session.token, company.id)
 
     req.flash('success', 'Company unarchived')
     res.redirect(returnUrl)
