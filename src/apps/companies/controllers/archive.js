@@ -28,7 +28,7 @@ async function archiveCompany (req, res) {
 
 async function unarchiveCompany (req, res) {
   const { id } = res.locals.company
-  const returnUrl = `/companies/${id}`
+  const returnUrl = req.query.redirect || `/companies/${id}`
 
   try {
     await unarchive(req.session.token, id)
