@@ -1,7 +1,9 @@
 const { getInvestment } = require('../repos')
 
 function setPropositionsReturnUrl (req, res, next) {
-  res.locals.returnLink = `/investment-projects/${req.params.investmentId}/propositions`
+  const { projects } = res.locals.paths
+  const { investmentId } = req.params
+  res.locals.returnLink = `${projects}/${investmentId}/propositions`
   next()
 }
 

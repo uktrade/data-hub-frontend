@@ -1,6 +1,7 @@
-const { assign } = require('lodash')
-const investmentData = require('~/test/unit/data/investment/investment-data.json')
 const { briefInvestmentSummaryLabels } = require('~/src/apps/investment-projects/labels')
+const investmentData = require('~/test/unit/data/investment/investment-data.json')
+const paths = require('~/src/apps/investment-projects/paths')
+const { assign } = require('lodash')
 
 describe('Investment project, project management team, edit controller', () => {
   beforeEach(() => {
@@ -31,6 +32,7 @@ describe('Investment project, project management team, edit controller', () => {
     it('should render edit project management view', async () => {
       await this.controller.getHandler(this.reqMock, assign({}, this.resMock, {
         locals: {
+          paths,
           investment: investmentData,
         },
       }), this.nextStub)
@@ -43,6 +45,7 @@ describe('Investment project, project management team, edit controller', () => {
 
       await this.controller.getHandler(this.reqMock, assign({}, this.resMock, {
         locals: {
+          paths,
           briefInvestmentSummaryData,
           investment: investmentData,
         },
@@ -57,6 +60,7 @@ describe('Investment project, project management team, edit controller', () => {
       it('should redirect to the project details page', async () => {
         await this.controller.postHandler(this.reqMock, assign({}, this.resMock, {
           locals: {
+            paths,
             form: {
               errors: {},
             },
@@ -64,7 +68,7 @@ describe('Investment project, project management team, edit controller', () => {
           },
         }), this.nextStub)
 
-        expect(this.resMock.redirect).to.be.calledWith(`/investment-projects/${investmentData.id}/team`)
+        expect(this.resMock.redirect).to.be.calledWith(`/investments/projects/${investmentData.id}/team`)
         expect(this.flashStub).to.calledWith('success', 'Investment details updated')
       })
     })
@@ -80,6 +84,7 @@ describe('Investment project, project management team, edit controller', () => {
         }),
         assign({}, this.resMock, {
           locals: {
+            paths,
             form: {
               errors: {},
             },
@@ -96,6 +101,7 @@ describe('Investment project, project management team, edit controller', () => {
       it('should pass the error onto the edit form', () => {
         this.controller.postHandler(this.reqMock, assign({}, this.resMock, {
           locals: {
+            paths,
             form: {
               errors: {
                 subject: 'example error',

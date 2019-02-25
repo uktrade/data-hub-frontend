@@ -19,7 +19,8 @@ function editDetailsPost (req, res, next) {
     return next()
   }
   req.flash('success', 'Investment details updated')
-  return res.redirect(`/investment-projects/${res.locals.resultId}/details`)
+  const { projects } = res.locals.paths
+  return res.redirect(`${projects}/${res.locals.resultId}/details`)
 }
 
 function renderValueForm (req, res) {

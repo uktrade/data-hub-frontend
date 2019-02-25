@@ -30,10 +30,11 @@ async function populateForm (req, res, next) {
     const { investment } = res.locals
     const options = await getFormOptions(req.session.token, investment.created_on)
     const body = res.locals.formattedBody || investment
+    const { projects } = res.locals.paths
 
     res.locals.requirementsForm = assign({},
       buildFormWithStateAndErrors(requirementsFormConfig(options), body, res.locals.errors),
-      { returnLink: `/investment-projects/${investment.id}` },
+      { returnLink: `${projects}/${investment.id}` },
     )
   } catch (error) {
     return next(error)
@@ -44,7 +45,8 @@ async function populateForm (req, res, next) {
 
 async function handleFormPost (req, res, next) {
   try {
-    const investmentId = req.params.investmentId
+    const { projects } = res.locals.paths
+    const { investmentId } = req.params
 
     res.locals.formattedBody = formatBody(req.body)
 
@@ -54,7 +56,7 @@ async function handleFormPost (req, res, next) {
 
     await updateInvestment(req.session.token, investmentId, res.locals.formattedBody)
     req.flash('success', 'Investment requirements updated')
-    res.redirect(`/investment-projects/${investmentId}/details`)
+    res.redirect(`${projects}/${investmentId}/details`)
   } catch (err) {
     if (err.statusCode === 400) {
       res.locals.errors = err.error

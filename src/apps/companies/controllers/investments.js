@@ -9,7 +9,7 @@ async function renderInvestments (req, res, next) {
   const view = company.duns_number ? 'companies/views/investments' : 'companies/views/_deprecated/investments'
   const actionButtons = company.archived ? undefined : [{
     label: 'Add investment project',
-    url: `/investment-projects/create/${company.id}`,
+    url: `/investments/projects/create/${company.id}`,
   }]
 
   try {

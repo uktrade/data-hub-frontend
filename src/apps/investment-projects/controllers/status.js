@@ -7,9 +7,12 @@ const { updateInvestment } = require('../repos')
 function renderStatusPage (req, res, next) {
   const status = req.body.status || res.locals.investment.status
 
+  const { projects } = res.locals.paths
+  const { id } = res.locals.investment
+
   const statusForm = assign(
     buildFormWithStateAndErrors(statusFormConfig, { status }, res.locals.errors),
-    { returnLink: `/investment-projects/${res.locals.investment.id}/details` },
+    { returnLink: `${projects}/${id}/details` },
   )
 
   res
@@ -24,8 +27,8 @@ async function postStatus (req, res, next) {
     })
 
     req.flash('success', 'Investment details updated')
-
-    return res.redirect(`/investment-projects/${res.locals.investment.id}/details`)
+    const { projects } = res.locals.paths
+    return res.redirect(`${projects}/${res.locals.investment.id}/details`)
   } catch (error) {
     if (error.statusCode === 400) {
       res.locals.errors = error.error

@@ -19,6 +19,7 @@ async function populateForm (req, res, next) {
       includeAdviser: clientRelationshipManager,
     }).map(transformObjectToOption)
     const globalAccountManager = firstName && lastName ? `${firstName} ${lastName}` : 'Not set'
+    const { projects } = res.locals.paths
 
     res.locals.form = Object.assign({}, res.locals.form, {
       labels: clientRelationshipManagementLabels.edit,
@@ -33,7 +34,7 @@ async function populateForm (req, res, next) {
         investor_company: get(investment, 'investor_company.id'),
       },
       buttonText: 'Save',
-      returnLink: `/investment-projects/${investment.id}/team`,
+      returnLink: `${projects}/${investment.id}/team`,
       oneListEmail: config.oneList.email,
     })
 

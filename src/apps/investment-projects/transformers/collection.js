@@ -31,7 +31,11 @@ function transformInvestmentProjectToListItem ({
   return {
     id,
     name,
-    type: 'investment-project',
+    // Ideally this should be defined as 'investments/projects' (i.e. plural),
+    // however, the generic macro at src/templates/_macros/entity/entity.njk
+    // pluralises it for some unknown reason, so we end up with 'investments/projectss'
+    // and consequently a broken link.
+    type: 'investments/project',
     subTitle: {
       label: 'Project code',
       value: project_code,

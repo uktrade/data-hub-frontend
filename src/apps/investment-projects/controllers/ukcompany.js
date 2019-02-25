@@ -15,7 +15,8 @@ async function selectUKCompany (req, res, next) {
     })
 
     req.flash('success', 'Investment details updated')
-    res.redirect(`/investment-projects/${req.params.investmentId}/details`)
+    const { projects } = res.locals.paths
+    res.redirect(`${projects}/${req.params.investmentId}/details`)
   } catch (error) {
     return next(error)
   }
@@ -66,7 +67,8 @@ async function removeUKCompany (req, res, next) {
     })
 
     req.flash('success', 'Investment details updated')
-    res.redirect(`/investment-projects/${req.params.investmentId}/details`)
+    const { projects } = res.locals.paths
+    res.redirect(`${projects}/${req.params.investmentId}/details`)
   } catch (error) {
     next(error)
   }

@@ -30,4 +30,3 @@ Feature: View collection of propositions for an investment project
 
     When I navigate to the `investments.propositions` page using `investment project` `New zoo (LEP)` fixture
     Then I see the 403 error page
-    

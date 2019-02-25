@@ -1,6 +1,7 @@
 const { assign } = require('lodash')
 
 const config = require('~/config')
+const paths = require('~/src/apps/investment-projects/paths')
 const investmentData = require('~/test/unit/data/investment/investment-data.json')
 const advisorData = require('~/test/unit/data/investment/interaction/advisers')
 const { projectManagementLabels } = require('~/src/apps/investment-projects/labels')
@@ -12,6 +13,7 @@ describe('Investment form middleware - project magement', () => {
       this.nextSpy = sinon.spy()
       this.resMock = {
         locals: {
+          paths,
           form: {},
           investment: investmentData,
         },
@@ -70,6 +72,7 @@ describe('Investment form middleware - project magement', () => {
 
         this.resMock = {
           locals: {
+            paths,
             form: {},
             investment: assign({}, investmentData, {
               project_manager: { id: '4', name: 'Fred Smith' },

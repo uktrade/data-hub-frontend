@@ -23,6 +23,8 @@ async function populateForm (req, res, next) {
       includeAdviser: projectAssuranceAdviser,
     }).map(transformObjectToOption)
 
+    const { projects } = res.locals.paths
+
     res.locals.form = assign({}, res.locals.form, {
       labels: projectManagementLabels.edit,
       state: {
@@ -34,7 +36,7 @@ async function populateForm (req, res, next) {
         projectAssuranceAdvisers,
       },
       buttonText: 'Save',
-      returnLink: `/investment-projects/${investment.id}/team`,
+      returnLink: `${projects}/${investment.id}/team`,
       hiddenFields: {
         returnUrl: get(req.query, 'returnUrl'),
       },

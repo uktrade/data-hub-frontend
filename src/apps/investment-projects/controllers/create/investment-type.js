@@ -28,7 +28,8 @@ function postHandler (req, res, next) {
     'fdi_type': req.body.fdi_type,
   })
 
-  return res.redirect(`/investment-projects/create/equity-source/${companyId}`)
+  const { projects } = res.locals.paths
+  return res.redirect(`${projects}/create/equity-source/${companyId}`)
 }
 
 module.exports = {
