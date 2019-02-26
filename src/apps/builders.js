@@ -1,4 +1,4 @@
-const { assign, at, castArray, get, has, keyBy, isArray, isFunction, isEmpty, isString, map, pick, pickBy, some } = require('lodash')
+const { assign, at, castArray, get, has, keyBy, includes, isArray, isFunction, isEmpty, isString, map, pick, pickBy, some } = require('lodash')
 const { getOptions } = require('../lib/options')
 
 function getDeepObjectValuesForKey (object, keyName, values = []) {
@@ -156,6 +156,14 @@ function filterNonSsoUserProfileItem (permittedApps, bypassSSO) {
 function buildNavObject (req, navItem, permittedApps = [], bypassSSO = false) {
   const { path: url, label } = navItem
   const isActive = req.path.startsWith(url)
+
+  /**
+   * Nav should always default to DH proprietary links
+   */
+
+  if (!includes(permittedApps, 'datahub-crm')) {
+    permittedApps.push({ key: 'datahub-crm' })
+  }
 
   if (filterNonSsoUserProfileItem(permittedApps, bypassSSO)(navItem)) {
     return {

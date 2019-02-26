@@ -3,6 +3,7 @@ const { assign } = require('lodash')
 const moment = require('moment')
 
 const config = require('~/config')
+const paths = require('~/src/apps/investment-projects/paths')
 const companyData = require('~/test/unit/data/companies/company.json')
 const yesterday = moment().subtract(1, 'days').toISOString()
 
@@ -82,6 +83,7 @@ describe('investment details middleware', () => {
 
     this.res = {
       locals: {
+        paths,
         form: {},
       },
       redirect: sinon.stub(),

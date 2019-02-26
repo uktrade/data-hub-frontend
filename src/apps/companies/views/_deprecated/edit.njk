@@ -4,9 +4,11 @@
   <button class="button button--secondary postcode-lookup-button" type="button">Find UK address</button>
 {% endset %}
 
+{% set isEditing = true if company.id else false %}
+
 {% block body_main_content %}
   <div class="section">
-    <h2 class="heading-medium">Business type</h2>
+    <h2 class="govuk-heading-s">Business type</h2>
     {{ MetaList({
         items: [
           {
@@ -26,9 +28,9 @@
   {% endif %}
 
   {% call Form({
-    buttonText: 'Save and return' if company.id else 'Add company',
-    returnLink: '/companies/' + company.id if company.id else '/companies/add-step-1',
-    returnText: 'Return without saving' if company.id else 'Back',
+    buttonText: 'Save and return' if isEditing else 'Add company',
+    returnLink: '/companies/' + company.id if isEditing else '/companies/add-step-1',
+    returnText: 'Return without saving' if isEditing else 'Back',
     actionExtension: {
         country : 'non-uk' if isForeign else 'uk'
     },
@@ -52,12 +54,14 @@
       <input type="hidden" name="registered_address_country" value="{{ formData.registered_address_country }}">
     {% else %}
 
-      {{ TextField({
-        name: 'name',
-        label: 'Name',
-        value: formData.name,
-        error: errors.name
-      }) }}
+      {% if not isEditing %}
+        {{ TextField({
+          name: 'name',
+          label: 'Name',
+          value: formData.name,
+          error: errors.name
+        }) }}
+      {% endif %}
 
     {% endif %}
 
@@ -68,6 +72,17 @@
       value: formData.trading_names,
       error: errors.trading_names
     }) }}
+
+    {% if formData.company_number and not showCompanyNumberForUkBranch %}
+      <div class="c-form-group">
+        <label class="c-form-group__label">
+          <span class="c-form-group__label-text">Companies House number</span>
+        </label>
+        <div class="c-form-group__inner">
+          {{ formData.company_number }}
+        </div>
+      </div>
+    {% endif %}
 
     {% if not isForeign %}
       {{ TextField({
@@ -107,7 +122,7 @@
     }) }}
 
     {% if not companiesHouseRecord %}
-      {% if showCompanyNumber %}
+      {% if showCompanyNumberForUkBranch %}
         {{ TextField({
           name: 'company_number',
           label: 'BR Companies House number',

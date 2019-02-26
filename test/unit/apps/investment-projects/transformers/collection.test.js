@@ -22,7 +22,7 @@ describe('Investment project transformers', () => {
       })
 
       it('should provide the type', () => {
-        expect(this.transformedItem.type).to.equal('investment-project')
+        expect(this.transformedItem.type).to.equal('investments/project')
       })
 
       it('should list the stage as a badge', () => {

@@ -30,13 +30,14 @@ async function populateForm (req, res, next) {
 }
 
 async function handleFormPost (req, res, next) {
-  const investmentId = req.params.investmentId
+  const { projects } = res.locals.paths
+  const { investmentId } = req.params
   const formattedBody = transformInvestmentValueFormBodyToApiRequest(req.body)
 
   try {
     await updateInvestment(req.session.token, investmentId, formattedBody)
     req.flash('success', 'Investment value updated')
-    res.redirect(`/investment-projects/${investmentId}/details`)
+    res.redirect(`${projects}/${investmentId}/details`)
   } catch (err) {
     if (err.statusCode === 400) {
       res.locals.form.state = req.body

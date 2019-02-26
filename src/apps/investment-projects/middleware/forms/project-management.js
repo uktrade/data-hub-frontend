@@ -8,6 +8,7 @@ const { transformObjectToOption } = require('../../../transformers')
 async function populateForm (req, res, next) {
   try {
     const { investment } = res.locals
+    const { projects } = res.locals.paths
     const projectManager = get(investment, 'project_manager.id')
     const projectAssuranceAdviser = get(investment, 'project_assurance_adviser.id')
 
@@ -34,7 +35,7 @@ async function populateForm (req, res, next) {
         projectAssuranceAdvisers,
       },
       buttonText: 'Save',
-      returnLink: `/investment-projects/${investment.id}/team`,
+      returnLink: `${projects}/${investment.id}/team`,
       hiddenFields: {
         returnUrl: get(req.query, 'returnUrl'),
       },

@@ -2,8 +2,9 @@ const uuid = require('uuid')
 const moment = require('moment')
 const { assign } = require('lodash')
 
-const investmentData = require('~/test/unit/data/investment/investment-data.json')
 const config = require('~/config')
+const paths = require('~/src/apps/investment-projects/paths')
+const investmentData = require('~/test/unit/data/investment/investment-data.json')
 const { handleFormPost, populateForm } = require('~/src/apps/investment-projects/middleware/forms/requirements')
 
 const yesterday = moment().subtract(1, 'days').toISOString()
@@ -73,7 +74,9 @@ describe('Investment requirements form middleware', () => {
     }
 
     this.resMock = {
-      locals: {},
+      locals: {
+        paths,
+      },
       redirect: sinon.stub(),
     }
 
@@ -82,7 +85,7 @@ describe('Investment requirements form middleware', () => {
 
   describe('#populateForm', () => {
     beforeEach(() => {
-      this.resMock.locals = assign({}, this.reqMock.locals, { investment: investmentData })
+      this.resMock.locals.investment = investmentData
 
       nock(config.apiRoot)
         .get('/metadata/uk-region/')
@@ -106,7 +109,7 @@ describe('Investment requirements form middleware', () => {
       })
 
       it('should set the return link', () => {
-        expect(this.resMock.locals.requirementsForm.returnLink).to.equal('/investment-projects/f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7')
+        expect(this.resMock.locals.requirementsForm.returnLink).to.equal('/investments/projects/f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7')
       })
     })
 
@@ -128,7 +131,7 @@ describe('Investment requirements form middleware', () => {
       })
 
       it('should set the return link', () => {
-        expect(this.resMock.locals.requirementsForm.returnLink).to.equal('/investment-projects/f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7')
+        expect(this.resMock.locals.requirementsForm.returnLink).to.equal('/investments/projects/f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7')
       })
     })
 
@@ -180,7 +183,7 @@ describe('Investment requirements form middleware', () => {
       })
 
       it('should redirect the user to the details screen', () => {
-        expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
+        expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
       })
 
       it('should send a flash message to inform the user of the change', () => {
@@ -214,7 +217,7 @@ describe('Investment requirements form middleware', () => {
       })
 
       it('should redirect the user to the details screen', () => {
-        expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
+        expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
       })
 
       it('should send a flash message to inform the user of the change', () => {
@@ -260,7 +263,7 @@ describe('Investment requirements form middleware', () => {
         })
 
         it('should redirect the user to the details screen', () => {
-          expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
+          expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
         })
 
         it('should send a flash message to inform the user of the change', () => {
@@ -296,7 +299,7 @@ describe('Investment requirements form middleware', () => {
         })
 
         it('should redirect the user to the details screen', () => {
-          expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
+          expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
         })
 
         it('should send a flash message to inform the user of the change', () => {
@@ -340,7 +343,7 @@ describe('Investment requirements form middleware', () => {
         })
 
         it('should redirect the user to the details screen', () => {
-          expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
+          expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
         })
 
         it('should send a flash message to inform the user of the change', () => {
@@ -374,7 +377,7 @@ describe('Investment requirements form middleware', () => {
         })
 
         it('should redirect the user to the details screen', () => {
-          expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
+          expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
         })
 
         it('should send a flash message to inform the user of the change', () => {
@@ -412,7 +415,7 @@ describe('Investment requirements form middleware', () => {
       })
 
       it('should redirect the user to the details screen', () => {
-        expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
+        expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
       })
 
       it('should send a flash message to inform the user of the change', () => {
@@ -446,7 +449,7 @@ describe('Investment requirements form middleware', () => {
       })
 
       it('should redirect the user to the details screen', () => {
-        expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
+        expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
       })
 
       it('should send a flash message to inform the user of the change', () => {
@@ -486,7 +489,7 @@ describe('Investment requirements form middleware', () => {
         })
 
         it('should redirect the user to the details screen', () => {
-          expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
+          expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
         })
 
         it('should send a flash message to inform the user of the change', () => {
@@ -520,7 +523,7 @@ describe('Investment requirements form middleware', () => {
         })
 
         it('should redirect the user to the details screen', () => {
-          expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
+          expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
         })
 
         it('should send a flash message to inform the user of the change', () => {
@@ -558,7 +561,7 @@ describe('Investment requirements form middleware', () => {
         })
 
         it('should redirect the user to the details screen', () => {
-          expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
+          expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
         })
 
         it('should send a flash message to inform the user of the change', () => {
@@ -592,7 +595,7 @@ describe('Investment requirements form middleware', () => {
         })
 
         it('should redirect the user to the details screen', () => {
-          expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
+          expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
         })
 
         it('should send a flash message to inform the user of the change', () => {
@@ -732,7 +735,7 @@ describe('Investment requirements form middleware', () => {
       })
 
       it('should redirect the user to the details screen', () => {
-        expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
+        expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
       })
 
       it('should send a flash message to inform the user of the change', () => {
@@ -766,7 +769,7 @@ describe('Investment requirements form middleware', () => {
       })
 
       it('should redirect the user to the details screen', () => {
-        expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
+        expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
       })
 
       it('should send a flash message to inform the user of the change', () => {

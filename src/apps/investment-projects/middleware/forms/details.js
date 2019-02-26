@@ -19,9 +19,10 @@ const {
 async function populateForm (req, res, next) {
   const clientCompanyId = req.query['client-company']
   const equityCompanyId = get(res, 'locals.equityCompany.id', req.params.equityCompanyId)
+  const { projects } = res.locals.paths
 
   if (!isValidGuid(equityCompanyId)) {
-    return res.redirect('/investment-projects/create')
+    return res.redirect(`${projects}/create`)
   }
 
   try {

@@ -18,13 +18,15 @@ async function renderPropositionList (req, res, next) {
         transformPropositionListItemToHaveUrlPrefix(`${res.locals.returnLink}/`)
       ))
 
+    const { projects } = res.locals.paths
+
     return res
       .breadcrumb('Propositions')
       .render('investment-projects/views/propositions', {
         propositions,
         actionButtons: [{
           label: 'Add proposition',
-          url: `/investment-projects/${investmentId}/propositions/create/proposition`,
+          url: `${projects}/${investmentId}/propositions/create/proposition`,
         }],
       })
   } catch (error) {

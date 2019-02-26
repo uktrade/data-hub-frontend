@@ -139,7 +139,7 @@ describe('Company edit controller', () => {
       })
 
       it('should show the company number field', () => {
-        expect(this.getCalledRenderLocals().showCompanyNumber).to.be.true
+        expect(this.getCalledRenderLocals().showCompanyNumberForUkBranch).to.be.true
       })
 
       it('should not show the trading address fields', () => {
@@ -215,7 +215,7 @@ describe('Company edit controller', () => {
       })
 
       it('should show the company number field', () => {
-        expect(this.getCalledRenderLocals().showCompanyNumber).to.be.true
+        expect(this.getCalledRenderLocals().showCompanyNumberForUkBranch).to.be.true
       })
 
       it('should not show the trading address fields', () => {
@@ -274,7 +274,7 @@ describe('Company edit controller', () => {
       })
 
       it('should not show the company number field', () => {
-        expect(this.getCalledRenderLocals().showCompanyNumber).to.be.false
+        expect(this.getCalledRenderLocals().showCompanyNumberForUkBranch).to.be.false
       })
 
       it('should not show the trading address fields', () => {
@@ -333,7 +333,7 @@ describe('Company edit controller', () => {
       })
 
       it('should not show the company number field', () => {
-        expect(this.getCalledRenderLocals().showCompanyNumber).to.be.false
+        expect(this.getCalledRenderLocals().showCompanyNumberForUkBranch).to.be.false
       })
 
       it('should not show the trading address fields', () => {
@@ -406,7 +406,7 @@ describe('Company edit controller', () => {
       })
 
       it('should not show the company number field', () => {
-        expect(this.getCalledRenderLocals().showCompanyNumber).to.be.false
+        expect(this.getCalledRenderLocals().showCompanyNumberForUkBranch).to.be.false
       })
 
       it('should not show the trading address fields', () => {
