@@ -8,14 +8,21 @@ function handleFormPost (req, res, next, projectId = req.params.investmentId) {
     },
   })
     .then(() => {
-      req.flash('success', `Investment project moved to ${res.locals.investmentStatus.nextStage.name} stage`)
-      res.redirect(`/investment-projects/${res.locals.investment.id}/details`)
+      const { id } = res.locals.investment
+      const { projects } = res.locals.paths
+      const { name } = res.locals.investmentStatus.nextStage
+
+      req.flash('success', `Investment project moved to ${name} stage`)
+      res.redirect(`${projects}/${id}/details`)
     })
     .catch((err) => {
       if (err.statusCode === 400) {
         logger.error(err)
         req.flash('error', err.error.stage ? err.error.stage.toString() : 'Something has gone wrong')
-        return res.redirect(`/investment-projects/${res.locals.investment.id}/details`)
+
+        const { projects } = res.locals.paths
+        const { id } = res.locals.investment
+        return res.redirect(`${projects}/${id}/details`)
       }
       next(err)
     })

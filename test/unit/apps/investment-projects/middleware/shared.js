@@ -1,5 +1,6 @@
 const { merge, cloneDeep } = require('lodash')
 const format = require('date-fns/format')
+const paths = require('~/src/apps/investment-projects/paths')
 const { mediumDateTimeFormat } = require('../../../../../config')
 const investmentData = require('~/test/unit/data/investment/investment-data.json')
 const investmentProjectStages = require('~/test/unit/data/investment/investment-project-stages.json')
@@ -60,8 +61,10 @@ describe('Investment shared middleware', () => {
       }
 
       this.resMock = {
+        locals: {
+          paths,
+        },
         breadcrumb: sinon.stub().returnsThis(),
-        locals: {},
       }
 
       this.nextSpy = sinon.spy()
@@ -123,7 +126,7 @@ describe('Investment shared middleware', () => {
           meta: [
             {
               label: 'Status',
-              url: '/investment-projects/f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7/status',
+              url: '/investments/projects/f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7/status',
               urlLabel: 'change',
               value: '',
             },
@@ -151,7 +154,7 @@ describe('Investment shared middleware', () => {
         expect(this.resMock.locals.investmentStatus).to.deep.equal(expectedInvestmentStatus)
       })
       it('should set the breadcrumb', () => {
-        expect(this.resMock.breadcrumb).to.be.calledWithExactly(investmentData.name, `/investment-projects/${investmentData.id}`)
+        expect(this.resMock.breadcrumb).to.be.calledWithExactly(investmentData.name, `/investments/projects/${investmentData.id}`)
         expect(this.resMock.breadcrumb).to.have.been.calledOnce
       })
       it('should call next once', () => {
