@@ -33,15 +33,15 @@
   </table>
 
   {% set fdiHintLink %}
-    <a href="/investment-projects/create/investment-type/info#fdi" target="info">Is this an FDI project?</a>
+    <a href="{{ paths.projects }}/create/investment-type/info#fdi" target="info">Is this an FDI project?</a>
   {% endset %}
 
   {% set nonFdiHintLink %}
-    <a href="/investment-projects/create/investment-type/info#non-fdi" target="info">Is this is a Non-FDI project?</a>
+    <a href="{{ paths.projects }}/create/investment-type/info#non-fdi" target="info">Is this is a Non-FDI project?</a>
   {% endset %}
 
   {% set commitmentToInvest %}
-    <a href="/investment-projects/create/investment-type/info#cti" target="info">Is this a Commitment to Invest project?</a>
+    <a href="{{ paths.projects }}/create/investment-type/info#cti" target="info">Is this a Commitment to Invest project?</a>
   {% endset %}
 
   {% call Form(form | assign({
