@@ -1,6 +1,7 @@
 const moment = require('moment')
 
 const config = require('~/config')
+const paths = require('~/src/apps/investment-projects/paths')
 const adviserData = require('~/test/unit/data/investment/interaction/advisers')
 const controller = require('~/src/apps/investment-projects/middleware/forms/value')
 
@@ -40,7 +41,9 @@ describe('Investment form middleware - investment value', () => {
     }
 
     this.resMock = {
-      locals: {},
+      locals: {
+        paths,
+      },
       redirect: sinon.stub(),
     }
 
@@ -237,7 +240,7 @@ describe('Investment form middleware - investment value', () => {
       })
 
       it('redirects to the details screen', () => {
-        expect(this.resMock.redirect).to.be.calledWith('/investment-projects/1234/details')
+        expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
       })
 
       it('sends a flash message to inform the user of the change', () => {

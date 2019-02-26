@@ -1,3 +1,5 @@
+const paths = require('~/src/apps/investment-projects/paths')
+
 module.exports = ({
   requestBody,
   requestQuery = {},
@@ -16,12 +18,14 @@ module.exports = ({
       },
       body: requestBody,
       query: requestQuery,
+      flash: sinon.spy(),
     },
     resMock: {
       breadcrumb,
       render: sinon.spy(),
       redirect: sinon.spy(),
       locals: {
+        paths,
         company,
         contact,
         interaction,

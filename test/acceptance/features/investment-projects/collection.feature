@@ -49,12 +49,12 @@ Feature: View a list of Investment Projects
   Scenario: View Investment Projects list as LEP
 
     When I navigate to the `investments.list` page
-    Then I confirm I am on the Investment projects page
+    Then I confirm I am on the Investments page
     And the results summary for a project collection is present
 
   @investment-projects-collection--view--da @da
   Scenario: View Investment Projects list as DA
 
     When I navigate to the `investments.list` page
-    Then I confirm I am on the Investment projects page
+    Then I confirm I am on the Investments page
     And the results summary for a project collection is present

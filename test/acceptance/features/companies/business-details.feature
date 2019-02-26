@@ -7,7 +7,7 @@ Feature: Company business details
     When I navigate to the `companies.business-details` page using `company` `One List Corp` fixture
     Then the heading should be "Business details"
     And the "Where does information on this page come from?" details summary should be displayed
-    And the Company summary key value details are not displayed
+    And I should not see the "Unarchive" link
     And the About One List Corp key value details are displayed
       | key                       | value                        |
       | Trading names             | Not set                      |
@@ -37,6 +37,7 @@ Feature: Company business details
       | 75001                     |
       | France                    |
     And the Documents from CDMS key value details are not displayed
+    And I should not see the "Archive" button
 
 
   @companies-business-details--data-hub-company-uk
@@ -45,6 +46,7 @@ Feature: Company business details
     When I navigate to the `companies.business-details` page using `company` `Venus Ltd` fixture
     Then the heading should be "Business details"
     And the "Where does information on this page come from?" details summary should not be displayed
+    And I should not see the "Unarchive" link
     And the About Venus Ltd key value details are displayed
       | key                       | value                        |
       | Business type             | company.businessType         |
@@ -76,6 +78,7 @@ Feature: Company business details
       | Bordley                   |
       | BD23 8RZ                  |
       | United Kingdom            |
+    And I should see the "Archive" button
 
 
   @companies-business-details--no-one-list
@@ -84,7 +87,7 @@ Feature: Company business details
     When I navigate to the `companies.business-details` page using `company` `DnB Corp` fixture
     Then the heading should be "Business details"
     And the "Where does information on this page come from?" details summary should be displayed
-    And the Company summary key value details are not displayed
+    And I should not see the "Unarchive" link
     And the About DnB Corp key value details are displayed
       | key                       | value                        |
       | Trading names             | company.tradingName          |
@@ -109,4 +112,44 @@ Feature: Company business details
       | 001122                    |
       | Italy                     |
     And the Documents from CDMS key value details are not displayed
+    And I should not see the "Archive" button
 
+
+  @companies-business-details--archived
+  Scenario: View details for an archived Data Hub company
+
+    When I navigate to the `companies.business-details` page using `company` `Archived Ltd` fixture
+    Then the heading should be "Business details"
+    And the "Where does information on this page come from?" details summary should not be displayed
+    And I should see the "Unarchive" link
+    And the About Archived Ltd key value details are displayed
+      | key                       | value                        |
+      | Business type             | company.businessType         |
+      | Trading names             | Not set                      |
+      | Annual turnover           | company.turnoverRange        |
+      | Number of employees       | company.employeeRange        |
+      | Website                   | Not set                      |
+    And the Global Account Manager – One List key value details are displayed
+      | key                       | value                        |
+      | One List tier             | company.oneListTier          |
+      | Global Account Manager    | company.globalAccountManager |
+    And the Business hierarchy key value details are displayed
+      | key                       | value                        |
+      | Headquarter type          | company.headquarterType      |
+      | Subsidiaries              | company.subsidiaries         |
+    And the DIT sector values are displayed
+      | value                     |
+      | Retail                    |
+    And the DIT region values are not displayed
+    And address 1 should have badges
+      | value                     |
+      | Trading                   |
+      | Registered                |
+    And address 1 should be
+      | value                     |
+      | 16 Getabergsvagen         |
+      | Geta                      |
+      | 22340                     |
+      | Malta                     |
+    And the Documents from CDMS key value details are not displayed
+    And I should not see the "Archive" button

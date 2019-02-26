@@ -11,7 +11,8 @@ function renderCreateProjectPage (req, res) {
 
 function getHandler (req, res, next) {
   if (!res.locals.equityCompany) {
-    return res.redirect('/investment-projects/create')
+    const { projects } = res.locals.paths
+    return res.redirect(`${projects}/create`)
   }
 
   const investmentDetails = req.store.get('investment_details')
@@ -37,8 +38,11 @@ function postHandler (req, res, next) {
     return next()
   }
 
+  const { resultId } = res.locals
+  const { projects } = res.locals.paths
+
   req.flash('success', 'Investment project created')
-  return res.redirect(`/investment-projects/${res.locals.resultId}/details`)
+  return res.redirect(`${projects}/${resultId}/details`)
 }
 
 module.exports = {

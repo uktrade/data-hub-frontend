@@ -24,6 +24,15 @@
 {% block body_main_content %}
   <p>This page shows information about this business and how it is related to other businesses</p>
 
+  {% if company.archived %}
+    {% call Message({ type: 'info' }) %}
+      This company was archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br>
+      <strong>Reason:</strong> {{company.archived_reason}}<br>
+      <br>
+      <a href="/companies/{{company.id}}/unarchive?redirect=business-details">Unarchive</a>
+    {% endcall %}
+  {% endif %}
+
   {% if company.duns_number %}
     {{ govukDetails({
       summaryText: 'Where does information on this page come from?',
@@ -114,6 +123,19 @@
     </tr>
     </tbody>
   </table>
+  {% endif %}
+
+  {% if not company.archived and not company.duns_number %}
+  <h2 class="govuk-heading-m govuk-!-margin-top-9">Archive company</h2>
+  <p>Archive this company if it is no longer required or active.</p>
+
+  {% component 'archive-form', {
+    label: 'Archive reason',
+    options: ['Company is dissolved'],
+    csrfToken: csrfToken,
+    error: form.errors.reason,
+    url: '/companies/' + company.id + '/archive?redirect=business-details'
+  } %}
   {% endif %}
 
 {% endblock %}

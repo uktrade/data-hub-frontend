@@ -124,10 +124,13 @@ module.exports = {
       primaryAddress: '16 Getabergsvagen, Geta, 22340, Aland Islands',
       businessType: 'Company',
       headquarterType: 'Global HQ',
+      subsidiaries: '1 subsidiary',
       sector: 'Retail',
       description: 'This is a dummy company for testing archived features',
       employeeRange: '500+',
       turnoverRange: '£33.5M+',
+      oneListTier: 'Tier A - Strategic Account',
+      globalAccountManager: 'Travis Greene\nIST - Sector Advisory Services\nLondon',
     },
     archivedContactless: {
       id: '346f78a5-1d23-4213-b4c2-bf48246a13c4',
