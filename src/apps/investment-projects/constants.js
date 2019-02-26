@@ -1,7 +1,8 @@
 const { concat } = require('lodash')
+const { root } = require('./paths')
 
 const GLOBAL_NAV_ITEM = {
-  path: '/investment-projects',
+  path: root,
   label: 'Investments',
   permissions: [
     'investment.view_associated_investmentproject',
