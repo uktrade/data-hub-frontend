@@ -125,4 +125,17 @@
   </table>
   {% endif %}
 
+  {% if not company.archived and not company.duns_number %}
+  <h2 class="govuk-heading-m govuk-!-margin-top-9">Archive company</h2>
+  <p>Archive this company if it is no longer required or active.</p>
+
+  {% component 'archive-form', {
+    label: 'Archive reason',
+    options: ['Company is dissolved'],
+    csrfToken: csrfToken,
+    error: form.errors.reason,
+    url: '/companies/' + company.id + '/archive?redirect=business-details'
+  } %}
+  {% endif %}
+
 {% endblock %}

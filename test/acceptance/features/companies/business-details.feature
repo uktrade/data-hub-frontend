@@ -37,6 +37,7 @@ Feature: Company business details
       | 75001                     |
       | France                    |
     And the Documents from CDMS key value details are not displayed
+    And I should not see the "Archive" button
 
 
   @companies-business-details--data-hub-company-uk
@@ -77,6 +78,7 @@ Feature: Company business details
       | Bordley                   |
       | BD23 8RZ                  |
       | United Kingdom            |
+    And I should see the "Archive" button
 
 
   @companies-business-details--no-one-list
@@ -110,6 +112,7 @@ Feature: Company business details
       | 001122                    |
       | Italy                     |
     And the Documents from CDMS key value details are not displayed
+    And I should not see the "Archive" button
 
 
   @companies-business-details--archived
@@ -149,3 +152,4 @@ Feature: Company business details
       | 22340                     |
       | Malta                     |
     And the Documents from CDMS key value details are not displayed
+    And I should not see the "Archive" button
