@@ -46,12 +46,12 @@ function getTeamMemberField ({ teamMember, advisers }) {
   }
 }
 
-function makeForm (investmentId, teamMembers) {
+function makeForm (path, teamMembers) {
   return {
     fields: { teamMembers },
     labels: teamMembersLabels.edit,
     buttonText: 'Save',
-    returnLink: `/investment-projects/${investmentId}/team`,
+    returnLink: `${path}/team`,
   }
 }
 
@@ -69,8 +69,10 @@ function transformErrorResponseToFormErrors (error) {
 
 async function populateTeamEditForm (req, res, next) {
   try {
-    const token = req.session.token
-    const investmentId = req.params.investmentId
+    const { token } = req.session
+    const { investmentId } = req.params
+    const { projects } = res.locals.paths
+    const path = `${projects}/${investmentId}`
 
     const { results: advisers } = await getAdvisers(token)
 
@@ -79,7 +81,7 @@ async function populateTeamEditForm (req, res, next) {
     const fields = transformTeamMemberArrayToFields(teamMembers, advisers)
     fields.push(getTeamMemberField({ advisers }))
 
-    res.locals.form = makeForm(investmentId, fields)
+    res.locals.form = makeForm(path, fields)
 
     next()
   } catch (error) {
@@ -88,14 +90,17 @@ async function populateTeamEditForm (req, res, next) {
 }
 
 async function postTeamEdit (req, res, next) {
-  const investmentId = req.params.investmentId
-  const token = req.session.token
+  const { token } = req.session
+  const { investmentId } = req.params
+  const { projects } = res.locals.paths
+  const path = `${projects}/${investmentId}`
+
   const teamMembersArray = transformFormToTeamMemberArray(req.body)
 
   try {
     await updateInvestmentTeamMembers(token, investmentId, teamMembersArray)
     req.flash('success', 'Investment details updated')
-    return res.redirect(`/investment-projects/${investmentId}/team`)
+    return res.redirect(`${path}/team`)
   } catch (exception) {
     if (exception.statusCode === 400) {
       const messages = transformErrorResponseToFormErrors(exception.error)
@@ -110,7 +115,7 @@ async function postTeamEdit (req, res, next) {
 
   const { results: advisers } = await getAdvisers(token)
   const fields = transformTeamMemberArrayToFields(teamMembersArray, advisers)
-  res.locals.form = assign({}, res.locals.form, makeForm(investmentId, fields))
+  res.locals.form = assign({}, res.locals.form, makeForm(path, fields))
 
   next()
 }

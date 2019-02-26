@@ -1,4 +1,5 @@
 const investmentData = { investor_company: { name: 'company' } }
+const paths = require('~/src/apps/investment-projects/paths')
 
 describe('investment uk company', () => {
   beforeEach(() => {
@@ -30,6 +31,7 @@ describe('investment uk company', () => {
     }
     this.res = {
       locals: {
+        paths,
         investment: {
           name: 'investment',
         },
@@ -61,7 +63,7 @@ describe('investment uk company', () => {
         })
 
         it('should redirect the user back to the investment details page.', () => {
-          expect(this.res.redirect).to.be.calledWith('/investment-projects/1/details')
+          expect(this.res.redirect).to.be.calledWith('/investments/projects/1/details')
         })
       })
 
@@ -203,7 +205,7 @@ describe('investment uk company', () => {
       })
 
       it('should redirect back to the details page', () => {
-        expect(this.res.redirect).to.be.calledWith('/investment-projects/1/details')
+        expect(this.res.redirect).to.be.calledWith('/investments/projects/1/details')
       })
     })
 

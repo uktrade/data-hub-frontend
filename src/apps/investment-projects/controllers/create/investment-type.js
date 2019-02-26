@@ -22,13 +22,14 @@ function postHandler (req, res, next) {
 
   const investmentTypeId = req.body.investment_type
   const companyId = req.body.company_id
+  const { projects } = res.locals.paths
 
   req.store('investment_details', {
     'investment_type': investmentTypeId,
     'fdi_type': req.body.fdi_type,
   })
 
-  return res.redirect(`/investment-projects/create/equity-source/${companyId}`)
+  return res.redirect(`${projects}/create/equity-source/${companyId}`)
 }
 
 module.exports = {

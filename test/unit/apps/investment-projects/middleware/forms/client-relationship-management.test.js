@@ -1,6 +1,7 @@
 const { assign } = require('lodash')
 
 const config = require('~/config')
+const paths = require('~/src/apps/investment-projects/paths')
 const investmentData = require('~/test/unit/data/investment/investment-data-account-manager.json')
 const companyData = require('~/test/unit/data/company.json')
 const advisorData = require('~/test/unit/data/investment/interaction/advisers')
@@ -13,6 +14,7 @@ describe('Investment form middleware - client relationship management', () => {
       this.nextSpy = sinon.spy()
       this.resMock = {
         locals: {
+          paths,
           form: {},
           investment: investmentData,
         },
@@ -104,7 +106,7 @@ describe('Investment form middleware - client relationship management', () => {
         },
       }, this.resMock, () => {
         expect(this.resMock.locals.form.buttonText).to.equal('Save')
-        expect(this.resMock.locals.form.returnLink).to.equal(`/investment-projects/${investmentData.id}/team`)
+        expect(this.resMock.locals.form.returnLink).to.equal(`/investments/projects/${investmentData.id}/team`)
         expect(this.resMock.locals.form.oneListEmail).to.equal('one.list@example.com')
       })
     })
@@ -119,6 +121,7 @@ describe('Investment form middleware - client relationship management', () => {
 
         this.resMock = {
           locals: {
+            paths,
             form: {},
             investment: assign({}, investmentData, {
               client_relationship_manager: { id: '4', name: 'Fred Smith' },

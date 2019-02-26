@@ -2,6 +2,7 @@ const { assign } = require('lodash')
 const uuid = require('uuid')
 
 const config = require('~/config')
+const paths = require('~/src/apps/investment-projects/paths')
 const investmentData = require('~/test/unit/data/investment/investment-data.json')
 const { teamMembersLabels } = require('~/src/apps/investment-projects/labels')
 const teamMembersController = require('~/src/apps/investment-projects/middleware/forms/team-members')
@@ -21,6 +22,7 @@ describe('Investment form middleware - team members', () => {
 
     this.resMock = {
       locals: {
+        paths,
         investment: investmentData,
       },
       redirect: sinon.stub(),
@@ -45,12 +47,10 @@ describe('Investment form middleware - team members', () => {
 
     context('when the investment project contains team members', () => {
       beforeEach(async () => {
-        this.resMock.locals.investment = assign({}, this.resMock.locals.investment, {
-          team_members: [{
-            adviser: { id: '4', name: 'Fred Smith' },
-            role: 'Manager',
-          }],
-        })
+        this.resMock.locals.investment.team_members = [{
+          adviser: { id: '4', name: 'Fred Smith' },
+          role: 'Manager',
+        }]
 
         await teamMembersController.populateTeamEditForm(this.reqMock, this.resMock, this.nextStub)
       })
@@ -110,7 +110,7 @@ describe('Investment form middleware - team members', () => {
 
       it('should include button text and a return link', () => {
         expect(this.resMock.locals.form.buttonText).to.equal('Save')
-        expect(this.resMock.locals.form.returnLink).to.equal(`/investment-projects/${investmentData.id}/team`)
+        expect(this.resMock.locals.form.returnLink).to.equal(`/investments/projects/${investmentData.id}/team`)
       })
     })
 
@@ -151,7 +151,7 @@ describe('Investment form middleware - team members', () => {
 
       it('should include button text and a return link', () => {
         expect(this.resMock.locals.form.buttonText).to.equal('Save')
-        expect(this.resMock.locals.form.returnLink).to.equal(`/investment-projects/${investmentData.id}/team`)
+        expect(this.resMock.locals.form.returnLink).to.equal(`/investments/projects/${investmentData.id}/team`)
       })
     })
   })
@@ -159,15 +159,11 @@ describe('Investment form middleware - team members', () => {
   describe('#postTeamEdit', () => {
     context('when posted with valid data', () => {
       beforeEach(async () => {
-        this.reqMock = assign({}, this.reqMock, {
-          params: {
-            investmentId: investmentData.id,
-          },
-          body: {
-            adviser: ['1', '2'],
-            role: ['manager', 'supervisor'],
-          },
-        })
+        this.reqMock.params.investmentId = investmentData.id
+        this.reqMock.body = {
+          adviser: ['1', '2'],
+          role: ['manager', 'supervisor'],
+        }
 
         nock(config.apiRoot)
           .put(`/v3/investment/${investmentData.id}/team-member`, [{
@@ -183,7 +179,7 @@ describe('Investment form middleware - team members', () => {
       })
 
       it('should redirect back to the details page', () => {
-        expect(this.resMock.redirect).to.be.calledWith('/investment-projects/f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7/team')
+        expect(this.resMock.redirect).to.be.calledWith('/investments/projects/f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7/team')
       })
 
       it('should not carry onto the next middleware', () => {

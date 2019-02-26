@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 const { get, isPlainObject, isNull } = require('lodash')
+const { projects } = require('../paths')
 
 function transformInvestmentAmount (clientCannotProvideInvestment, investmentAmount) {
   if (clientCannotProvideInvestment) {
@@ -108,17 +109,17 @@ function transformAssociatedProject ({
       name,
       actions: [{
         label: 'Edit project',
-        url: `/investment-projects/${id}/edit-associated?term=${project_code}`,
+        url: `${projects}/${id}/edit-associated?term=${project_code}`,
       }, {
         label: 'Remove association',
-        url: `/investment-projects/${id}/remove-associated`,
+        url: `${projects}/${id}/remove-associated`,
       }],
     }
   }
 
   return {
     name: 'Find project',
-    url: `/investment-projects/${id}/edit-associated`,
+    url: `${projects}/${id}/edit-associated`,
   }
 }
 

@@ -16,6 +16,7 @@ async function selectAssociatedInvestmentProject (req, res, next) {
   }
 
   try {
+    const { projects } = res.locals.paths
     const investmentId = req.params.investmentId
 
     await updateInvestment(req.session.token, investmentId, {
@@ -23,7 +24,7 @@ async function selectAssociatedInvestmentProject (req, res, next) {
     })
 
     req.flash('success', 'Investment details updated')
-    res.redirect(`/investment-projects/${investmentId}/details`)
+    res.redirect(`${projects}/${investmentId}/details`)
   } catch (error) {
     return next(error)
   }
@@ -82,7 +83,8 @@ async function removeAssociatedInvestmentProject (req, res, next) {
     })
 
     req.flash('success', 'Investment details updated')
-    res.redirect(`/investment-projects/${req.params.investmentId}/details`)
+    const { projects } = res.locals.paths
+    res.redirect(`${projects}/${req.params.investmentId}/details`)
   } catch (error) {
     next(error)
   }

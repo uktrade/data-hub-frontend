@@ -68,13 +68,15 @@ async function getInvestmentDetails (req, res, next) {
       investment.value_complete &&
       !incompleteFields.length
 
+    const { projects } = res.locals.paths
+
     res.locals.investmentStatus = {
       id: investment.id,
       meta: [
         {
           label: 'Status',
           value: upperFirst(investment.status),
-          url: `/investment-projects/${investment.id}/status`,
+          url: `${projects}/${investment.id}/status`,
           urlLabel: 'change',
         },
         {
@@ -103,7 +105,7 @@ async function getInvestmentDetails (req, res, next) {
       nextStage: getNextStage(stageName, investmentProjectStages),
     }
 
-    res.breadcrumb(investment.name, `/investment-projects/${investment.id}`)
+    res.breadcrumb(investment.name, `${projects}/${investment.id}`)
 
     next()
   } catch (error) {

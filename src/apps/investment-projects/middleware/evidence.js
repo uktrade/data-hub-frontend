@@ -2,7 +2,9 @@ const { fetchDownloadLink, requestDeleteEvidence } = require('../apps/evidence/r
 const { transformedEvidenceTextFields } = require('../apps/evidence/transformers')
 
 function setEvidenceReturnUrl (req, res, next) {
-  res.locals.returnLink = `/investment-projects/${req.params.investmentId}/evidence`
+  const { projects } = res.locals.paths
+  const { investmentId } = req.params
+  res.locals.returnLink = `${projects}/${investmentId}/evidence`
   next()
 }
 

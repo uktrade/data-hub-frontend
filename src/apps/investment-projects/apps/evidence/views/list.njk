@@ -33,7 +33,7 @@
         <td>
           {% if item.status == 'virus_scanned' %}
             {% if item.av_clean %}
-              <a href="/investment-projects/{{ item.investment_project.id }}/evidence/{{ item.id }}/download">Download</a>
+              <a href="{{ paths.projects }}/{{ item.investment_project.id }}/evidence/{{ item.id }}/download">Download</a>
             {% else %}
               <span class="c-message--error">The file did not pass virus scanning</span>
             {% endif %}
@@ -50,7 +50,7 @@
           {% endif %}
         </td>
         <td>
-          <a href="/investment-projects/{{ item.investment_project.id }}/evidence/{{ item.id }}/delete">Delete</a>
+          <a href="{{ paths.projects }}/{{ item.investment_project.id }}/evidence/{{ item.id }}/delete">Delete</a>
         </td>
       </tr>
     {% endfor %}
