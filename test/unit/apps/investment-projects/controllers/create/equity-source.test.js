@@ -1,3 +1,5 @@
+const paths = require('~/src/apps/investment-projects/paths')
+
 const token = 'abcd'
 const ukCompany = {
   id: '12345',
@@ -43,7 +45,9 @@ describe('Investment start controller', () => {
     describe('when no company ID is present', () => {
       it('should render company details and search', (done) => {
         this.resMock = {
-          locals: {},
+          locals: {
+            paths,
+          },
           breadcrumb: this.breadcrumbStub,
         }
 
@@ -66,6 +70,7 @@ describe('Investment start controller', () => {
         this.resMock = {
           locals: {
             company: ukCompany,
+            paths,
           },
           breadcrumb: this.breadcrumbStub,
         }
@@ -90,6 +95,7 @@ describe('Investment start controller', () => {
         this.resMock = {
           locals: {
             company: foreignCompany,
+            paths,
           },
           breadcrumb: this.breadcrumbStub,
         }
@@ -112,6 +118,7 @@ describe('Investment start controller', () => {
         this.resMock = {
           locals: {
             company: '12345',
+            paths,
           },
           breadcrumb: this.breadcrumbStub,
         }
@@ -143,6 +150,7 @@ describe('Investment start controller', () => {
         this.resMock = {
           locals: {
             company: '12345',
+            paths,
           },
           breadcrumb: this.breadcrumbStub,
         }
@@ -175,8 +183,11 @@ describe('Investment start controller', () => {
           },
         }, {
           redirect: (path) => {
-            expect(path).to.equal('/investment-projects/create/project/12345')
+            expect(path).to.equal('/investments/projects/create/project/12345')
             done()
+          },
+          locals: {
+            paths,
           },
         }, this.next)
       })
@@ -191,8 +202,11 @@ describe('Investment start controller', () => {
           },
         }, {
           redirect: (path) => {
-            expect(path).to.equal('/investment-projects/create/equity-source/12345?search=true')
+            expect(path).to.equal('/investments/projects/create/equity-source/12345?search=true')
             done()
+          },
+          locals: {
+            paths,
           },
         }, this.next)
       })
@@ -201,7 +215,9 @@ describe('Investment start controller', () => {
     describe('when no value is given for equity source', () => {
       it('should show errors', (done) => {
         this.resMock = {
-          locals: {},
+          locals: {
+            paths,
+          },
           breadcrumb: this.breadcrumbStub,
         }
 

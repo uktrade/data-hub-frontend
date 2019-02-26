@@ -1,4 +1,5 @@
 const investmentData = require('~/test/unit/data/investment/investment-data.json')
+const paths = require('~/src/apps/investment-projects/paths')
 
 describe('Investment project, client relationship management, edit controller', () => {
   beforeEach(() => {
@@ -22,6 +23,7 @@ describe('Investment project, client relationship management, edit controller', 
         },
       }, {
         locals: {
+          paths,
           investment: investmentData,
         },
         breadcrumb: this.breadcrumbStub,
@@ -47,6 +49,7 @@ describe('Investment project, client relationship management, edit controller', 
           flash: this.flashStub,
         }, {
           locals: {
+            paths,
             form: {
               errors: {},
             },
@@ -55,7 +58,7 @@ describe('Investment project, client relationship management, edit controller', 
           breadcrumb: this.breadcrumbStub,
           redirect: (url) => {
             try {
-              expect(url).to.equal(`/investment-projects/${investmentData.id}/team`)
+              expect(url).to.equal(`/investments/projects/${investmentData.id}/team`)
               expect(this.flashStub).to.calledWith('success', 'Investment details updated')
               done()
             } catch (e) {
@@ -74,6 +77,7 @@ describe('Investment project, client relationship management, edit controller', 
           },
         }, {
           locals: {
+            paths,
             form: {
               errors: {
                 subject: 'example error',

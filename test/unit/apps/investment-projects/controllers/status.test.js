@@ -1,3 +1,4 @@
+const paths = require('~/src/apps/investment-projects/paths')
 const { merge, find } = require('lodash')
 
 describe('investment status controller', () => {
@@ -27,6 +28,7 @@ describe('investment status controller', () => {
       render: sinon.spy(),
       redirect: sinon.spy(),
       locals: {
+        paths,
         investment: {
           id: '111',
           status: 'open',
@@ -52,7 +54,7 @@ describe('investment status controller', () => {
       it('should render the status page with a return link', async () => {
         const actual = this.res.render.getCall(0).args[1].statusForm.returnLink
 
-        expect(actual).to.equal('/investment-projects/111/details')
+        expect(actual).to.equal('/investments/projects/111/details')
       })
 
       it('should render the status page with a status form', () => {
@@ -98,7 +100,7 @@ describe('investment status controller', () => {
       it('should render the status page with a return link', async () => {
         const actual = this.res.render.getCall(0).args[1].statusForm.returnLink
 
-        expect(actual).to.equal('/investment-projects/111/details')
+        expect(actual).to.equal('/investments/projects/111/details')
       })
 
       it('should render the status page with a status form', () => {
@@ -143,7 +145,7 @@ describe('investment status controller', () => {
       })
 
       it('should redirect the user back to the details screen', () => {
-        expect(this.res.redirect).to.be.calledWith('/investment-projects/111/details')
+        expect(this.res.redirect).to.be.calledWith('/investments/projects/111/details')
       })
     })
 
