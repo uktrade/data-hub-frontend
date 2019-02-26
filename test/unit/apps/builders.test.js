@@ -537,16 +537,16 @@ describe('Global builders', () => {
       ]
     })
 
-    it('should return undefined when navItem doesn`t match permitted applications', () => {
+    it('should return `datahub-crm` when navItem doesn`t match permitted applications', () => {
       const navItem = {
         path: '/gaia',
         label: 'Gaia',
-        key: 'gaia',
+        key: 'datahub-crm',
       }
 
       const actual = this.builders.buildNavObject(this.req, navItem, this.permittedApps)
 
-      expect(actual).to.equal(undefined)
+      expect(actual).to.deep.equal({ label: 'Gaia', url: '/gaia', isActive: true })
     })
 
     it('should return and object with values from navItem when it matches permitted applications', () => {
