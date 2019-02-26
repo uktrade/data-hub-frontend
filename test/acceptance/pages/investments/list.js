@@ -1,4 +1,4 @@
 module.exports = {
-  url: `${process.env.QA_HOST}/investment-projects`,
+  url: `${process.env.QA_HOST}/investments/projects`,
   elements: {},
 }

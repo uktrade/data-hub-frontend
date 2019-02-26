@@ -7,7 +7,7 @@ module.exports = {
     const fixture = find(investmentProject, { name: projectName })
     const projectId = fixture ? fixture.id : investmentProject.newHotelCommitmentToInvest.id
 
-    return `${process.env.QA_HOST}/investment-projects/${projectId}/team`
+    return `${process.env.QA_HOST}/investments/projects/${projectId}/team`
   },
   elements: {},
 }
