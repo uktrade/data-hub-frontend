@@ -145,6 +145,30 @@ describe('Company controller, archive', () => {
         })
       })
     })
+
+    context('when there is a redirect', () => {
+      beforeEach(async () => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          requestQuery: {
+            redirect: '/redirect/here',
+          },
+          requestBody: {
+            archived_reason: 'Archived reason',
+          },
+          company: companyMock,
+        })
+
+        this.stub.unarchiveCompany.resolves(companyMock)
+
+        await this.controller.archiveCompany(this.middlewareParameters.reqMock, this.middlewareParameters.resMock)
+      })
+
+      commonTests({
+        stubName: 'archiveCompany',
+        expectedFlash: 'success',
+        expectedPath: '/redirect/here',
+      })
+    })
   })
 
   describe('#unarchiveCompany', () => {
