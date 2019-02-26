@@ -31,7 +31,7 @@ function transformInvestmentProjectToListItem ({
   return {
     id,
     name,
-    type: 'investment-project',
+    type: 'investments/project',
     subTitle: {
       label: 'Project code',
       value: project_code,

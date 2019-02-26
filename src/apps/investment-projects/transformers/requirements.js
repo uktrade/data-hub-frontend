@@ -1,11 +1,12 @@
 /* eslint-disable camelcase */
 const { isPlainObject, map } = require('lodash')
+const { projects } = require('../paths')
 
 function transformUKCompany (investmentId, ukCompany) {
   if (!isPlainObject(ukCompany)) {
     return {
       name: 'Find company',
-      url: `/investment-projects/${investmentId}/edit-ukcompany`,
+      url: `${projects}/${investmentId}/edit-ukcompany`,
     }
   }
 
@@ -16,11 +17,11 @@ function transformUKCompany (investmentId, ukCompany) {
     actions: [
       {
         label: 'Edit company',
-        url: `/investment-projects/${investmentId}/edit-ukcompany?term=${encodeURIComponent(name)}`,
+        url: `${projects}/${investmentId}/edit-ukcompany?term=${encodeURIComponent(name)}`,
       },
       {
         label: 'Remove company',
-        url: `/investment-projects/${investmentId}/remove-ukcompany`,
+        url: `${projects}/${investmentId}/remove-ukcompany`,
       },
     ],
   }
