@@ -1,9 +1,9 @@
 {# TODO spilt these forms into create and edit forms rather than using conditionals to show hide things #}
 
 {% if investment %}
-  {% set returnLink = '/investment-projects/' + investment.id %}
+  {% set returnLink = paths.projects + '/' +  investment.id %}
 {% else %}
-  {% set returnLink = '/investment-projects/create/investment-type/' + clientCompanyId %}
+  {% set returnLink = paths.projects + '/create/investment-type/' + clientCompanyId %}
 {% endif %}
 
 {% call Form(form | assign({
