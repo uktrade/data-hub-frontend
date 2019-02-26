@@ -1,3 +1,4 @@
+const paths = require('~/src/apps/investment-projects/paths')
 const investmentData = { investor_company: { name: 'company' } }
 
 describe('Investment projects interactions middleware', () => {
@@ -18,6 +19,7 @@ describe('Investment projects interactions middleware', () => {
     }
     this.res = {
       locals: {
+        paths,
         investment: {
           name: 'investment',
         },
@@ -32,7 +34,7 @@ describe('Investment projects interactions middleware', () => {
     })
 
     it('should set the return URL', () => {
-      expect(this.res.locals.interactions.returnLink).to.equal('/investment-projects/1/interactions/')
+      expect(this.res.locals.interactions.returnLink).to.equal('/investments/projects/1/interactions/')
     })
 
     it('should set the entity name', () => {

@@ -1,3 +1,5 @@
+const paths = require('~/src/apps/investment-projects/paths')
+
 const mockInvestmentDetails = {
   'investment_type': '1',
   'fdi_type': '2',
@@ -32,11 +34,13 @@ describe('Investment create controller', () => {
             token: 'abcd',
           },
         }, {
-          locals: {},
+          locals: {
+            paths,
+          },
           breadcrumb: this.breadcrumbStub,
           redirect: (url) => {
             try {
-              expect(url).to.equal('/investment-projects/create')
+              expect(url).to.equal('/investments/projects/create')
               done()
             } catch (e) {
               done(e)
@@ -91,11 +95,12 @@ describe('Investment create controller', () => {
           locals: {
             resultId: '12345',
             form: {},
+            paths,
           },
           breadcrumb: this.breadcrumbStub,
           redirect: (url) => {
             try {
-              expect(url).to.equal('/investment-projects/12345/details')
+              expect(url).to.equal('/investments/projects/12345/details')
               done()
             } catch (e) {
               done(e)

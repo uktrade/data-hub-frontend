@@ -1,3 +1,5 @@
+const paths = require('~/src/apps/investment-projects/paths')
+
 module.exports = ({
   requestBody,
   requestQuery = {},
@@ -23,6 +25,7 @@ module.exports = ({
       render: sinon.spy(),
       redirect: sinon.spy(),
       locals: {
+        paths,
         company,
         contact,
         interaction,

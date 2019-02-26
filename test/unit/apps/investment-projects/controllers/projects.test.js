@@ -1,6 +1,6 @@
 const config = require('~/config')
 
-describe('Investment project controller - _layouts/collection', () => {
+describe('Investment project controller', () => {
   const metadataMock = {
     sectorOptions: [
       { id: 's1', name: 's1', disabled_on: null },
@@ -50,8 +50,7 @@ describe('Investment project controller - _layouts/collection', () => {
       beforeEach(async () => {
         const controller = require('~/src/apps/investment-projects/controllers/projects')
 
-        const renderProjectsView = controller.renderProjectsView('_layouts/collection')
-        await renderProjectsView(this.req, this.res, this.nextSpy)
+        await controller.renderProjectsView(this.req, this.res, this.nextSpy)
       })
 
       it('should render', () => {
@@ -59,7 +58,7 @@ describe('Investment project controller - _layouts/collection', () => {
       })
 
       it('should render the collection template', () => {
-        expect(this.res.render.firstCall.args[0]).to.equal('_layouts/collection')
+        expect(this.res.render.firstCall.args[0]).to.equal('investment-projects/views/projects')
       })
 
       it('should render the view with a title', () => {
@@ -99,8 +98,7 @@ describe('Investment project controller - _layouts/collection', () => {
           },
         })
 
-        const renderProjectsView = controller.renderProjectsView('_layouts/collection')
-        await renderProjectsView(this.req, this.res, this.nextSpy)
+        await controller.renderProjectsView(this.req, this.res, this.nextSpy)
       })
 
       it('should not render the view', () => {
