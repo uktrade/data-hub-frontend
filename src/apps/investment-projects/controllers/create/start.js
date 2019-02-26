@@ -4,7 +4,8 @@ function redirectHandler (req, res, next) {
   const companyId = get(res, 'locals.company.id')
 
   if (companyId) {
-    return res.redirect(`/investment-projects/create/investment-type/${companyId}`)
+    const { projects } = res.locals.paths
+    return res.redirect(`${projects}/create/investment-type/${companyId}`)
   }
   next()
 }

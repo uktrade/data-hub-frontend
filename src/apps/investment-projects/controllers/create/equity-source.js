@@ -11,12 +11,12 @@ function renderEquitySourcePage (req, res, next) {
     .render('investment-projects/views/create/equity-source')
 }
 
-function transformListItemForEquitySource (company) {
+function transformListItemForEquitySource (company, projects) {
   return function augmentItem (item) {
     if (!item || !company) { return }
 
     return assign({}, item, {
-      url: `/investment-projects/create/project/${item.id}?client-company=${company.id}`,
+      url: `${projects}/create/project/${item.id}?client-company=${company.id}`,
       meta: item.meta.filter(x => x.label !== 'Sector'),
     })
   }
@@ -24,6 +24,7 @@ function transformListItemForEquitySource (company) {
 
 async function getHandler (req, res, next) {
   const company = res.locals.company
+  const { projects } = res.locals.paths
   const companyId = get(company, 'id')
   const searchTerm = req.query.term
   let searchResult
@@ -44,7 +45,7 @@ async function getHandler (req, res, next) {
             { query: req.query },
             ENTITIES,
             transformCompanyToListItem,
-            transformListItemForEquitySource(company)
+            transformListItemForEquitySource(company, projects)
           )
         )
     }
@@ -65,13 +66,14 @@ async function getHandler (req, res, next) {
 function postHandler (req, res, next) {
   const isEquitySource = req.body.is_equity_source
   const clientCompanyId = req.body.company_id
+  const { projects } = res.locals.paths
 
   if (isEquitySource === 'true') {
-    return res.redirect(`/investment-projects/create/project/${clientCompanyId}`)
+    return res.redirect(`${projects}/create/project/${clientCompanyId}`)
   }
 
   if (isEquitySource === 'false') {
-    return res.redirect(`/investment-projects/create/equity-source/${clientCompanyId}?search=true`)
+    return res.redirect(`${projects}/create/equity-source/${clientCompanyId}?search=true`)
   }
 
   res.locals.form = {
