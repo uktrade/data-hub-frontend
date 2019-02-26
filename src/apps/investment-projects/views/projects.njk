@@ -3,22 +3,30 @@
 {% block content %}
   <div class="grid-row">
     <div class="column-one-third">
-      {{ CollectionFilters({
-        query: QUERY,
-        filtersFields: filtersFields,
-        action: CURRENT_PATH
-      }) }}
+      {{
+        CollectionFilters({
+          query: QUERY,
+          filtersFields: filtersFields,
+          action: CURRENT_PATH
+        })
+      }}
     </div>
-    <article class="column-two-thirds" data-xhr="c781e8b1-9747-4b2e-8655-68b14ea49126">
-      {{ CollectionContent(results | assign({
-        countLabel: countLabel,
-        sortForm: assign({}, sortForm, { action: CURRENT_PATH }),
-        selectedFilters: selectedFilters,
-        highlightTerm: highlightTerm,
-        actionButtons: actionButtons,
-        exportAction: exportAction,
-        query: QUERY
-      })) }}
-    </article>
+
+    {% block xhr_content %}
+      <article class="column-two-thirds" data-xhr="c781e8b1-9747-4b2e-8655-68b14ea49126">
+        {{
+          CollectionContent(results | assign({
+            countLabel: countLabel,
+            sortForm: assign({}, sortForm, { action: CURRENT_PATH }),
+            selectedFilters: selectedFilters,
+            highlightTerm: highlightTerm,
+            actionButtons: actionButtons,
+            exportAction: exportAction,
+            query: QUERY
+          }))
+        }}
+      </article>
+    {% endblock %}
+
   </div>
 {% endblock %}
