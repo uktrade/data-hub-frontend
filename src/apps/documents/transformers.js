@@ -28,7 +28,7 @@ function getDownloadLinkOrState (file, proposition_id, investment_project_id) {
           ...output,
           status: 'av_clean',
           message: 'Download',
-          href: `/investment-projects/${investment_project_id}/propositions/${proposition_id}/download/${file.id}`,
+          href: `/investments/projects/${investment_project_id}/propositions/${proposition_id}/download/${file.id}`,
         }
       } else {
         return {
