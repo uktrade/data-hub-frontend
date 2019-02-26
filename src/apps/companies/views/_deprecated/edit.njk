@@ -8,7 +8,7 @@
 
 {% block body_main_content %}
   <div class="section">
-    <h2 class="heading-medium">Business type</h2>
+    <h2 class="govuk-heading-s">Business type</h2>
     {{ MetaList({
         items: [
           {
@@ -73,6 +73,17 @@
       error: errors.trading_names
     }) }}
 
+    {% if formData.company_number and not showCompanyNumberForUkBranch %}
+      <div class="c-form-group">
+        <label class="c-form-group__label">
+          <span class="c-form-group__label-text">Companies House number</span>
+        </label>
+        <div class="c-form-group__inner">
+          {{ formData.company_number }}
+        </div>
+      </div>
+    {% endif %}
+
     {% if not isForeign %}
       {{ TextField({
         name: 'vat_number',
@@ -111,7 +122,7 @@
     }) }}
 
     {% if not companiesHouseRecord %}
-      {% if showCompanyNumber %}
+      {% if showCompanyNumberForUkBranch %}
         {{ TextField({
           name: 'company_number',
           label: 'BR Companies House number',
