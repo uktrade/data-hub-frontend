@@ -48,7 +48,7 @@ describe('Company investments controller', () => {
             results: investmentsMock.results,
             actionButtons: [{
               label: 'Add investment project',
-              url: `/investment-projects/create/${expectedCompanyId}`,
+              url: `/investments/projects/create/${expectedCompanyId}`,
             }],
           })
         })

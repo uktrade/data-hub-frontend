@@ -14,8 +14,11 @@ async function selectUKCompany (req, res, next) {
       uk_company: req.query.company,
     })
 
+    const { projects } = res.locals.paths
+    const { investmentId } = req.params
+
     req.flash('success', 'Investment details updated')
-    res.redirect(`/investment-projects/${req.params.investmentId}/details`)
+    res.redirect(`${projects}/${investmentId}/details`)
   } catch (error) {
     return next(error)
   }
@@ -61,12 +64,13 @@ function renderCompanyResults (req, res, next) {
 
 async function removeUKCompany (req, res, next) {
   try {
-    await updateInvestment(req.session.token, req.params.investmentId, {
-      uk_company: null,
-    })
+    await updateInvestment(req.session.token, req.params.investmentId, { uk_company: null })
+
+    const { projects } = res.locals.paths
+    const { investmentId } = req.params
 
     req.flash('success', 'Investment details updated')
-    res.redirect(`/investment-projects/${req.params.investmentId}/details`)
+    res.redirect(`${projects}/${investmentId}/details`)
   } catch (error) {
     next(error)
   }

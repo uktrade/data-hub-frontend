@@ -3,13 +3,13 @@ const { transformInvestmentProjectToListItem } = require('../../investment-proje
 const { transformApiResponseToCollection } = require('../../../modules/api/transformers')
 
 async function renderInvestments (req, res, next) {
-  const token = req.session.token
-  const page = req.query.page || 1
+  const { token } = req.session
   const { company } = res.locals
+  const page = req.query.page || 1
   const view = company.duns_number ? 'companies/views/investments' : 'companies/views/_deprecated/investments'
   const actionButtons = company.archived ? undefined : [{
     label: 'Add investment project',
-    url: `/investment-projects/create/${company.id}`,
+    url: `/investments/projects/create/${company.id}`,
   }]
 
   try {

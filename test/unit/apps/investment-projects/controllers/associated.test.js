@@ -1,4 +1,5 @@
 const investmentCollection = require('~/test/unit/data/investment/collection.json')
+const paths = require('~/src/apps/investment-projects/paths')
 
 const investmentData = { investor_company: { name: 'company' } }
 
@@ -53,6 +54,7 @@ describe('investment associated controller', () => {
         investment: {
           name: 'investment',
         },
+        paths,
       },
       render: sinon.spy(),
       breadcrumb: sinon.stub().returnsThis(),
@@ -79,8 +81,8 @@ describe('investment associated controller', () => {
           expect(this.req.flash).to.be.calledWith('success', 'Investment details updated')
         })
 
-        it('should redirect the user back to the investment details page.', () => {
-          expect(this.res.redirect).to.be.calledWith('/investment-projects/1/details')
+        it('should redirect the user back to the investment projects details page.', () => {
+          expect(this.res.redirect).to.be.calledWith('/investments/projects/1/details')
         })
       })
 
@@ -216,7 +218,7 @@ describe('investment associated controller', () => {
       })
 
       it('should redirect back to the details page', () => {
-        expect(this.res.redirect).to.be.calledWith('/investment-projects/1/details')
+        expect(this.res.redirect).to.be.calledWith('/investments/projects/1/details')
       })
     })
 

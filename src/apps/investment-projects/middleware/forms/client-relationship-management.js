@@ -10,6 +10,7 @@ const config = require('../../../../../config')
 async function populateForm (req, res, next) {
   try {
     const { investment } = res.locals
+    const { projects } = res.locals.paths
     const clientRelationshipManager = get(investment, 'client_relationship_manager.id', null)
     const firstName = get(investment, 'investor_company.one_list_group_global_account_manager.first_name')
     const lastName = get(investment, 'investor_company.one_list_group_global_account_manager.last_name')
@@ -33,7 +34,7 @@ async function populateForm (req, res, next) {
         investor_company: get(investment, 'investor_company.id'),
       },
       buttonText: 'Save',
-      returnLink: `/investment-projects/${investment.id}/team`,
+      returnLink: `${projects}/${investment.id}/team`,
       oneListEmail: config.oneList.email,
     })
 

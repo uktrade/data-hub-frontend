@@ -9,8 +9,11 @@ function getHandler (req, res, next) {
 
 function postHandler (req, res, next) {
   if (isEmpty(res.locals.form.errors)) {
+    const { projects } = res.locals.paths
+    const { id } = res.locals.investment
+
     req.flash('success', 'Investment details updated')
-    return res.redirect(`/investment-projects/${res.locals.investment.id}/team`)
+    return res.redirect(`${projects}/${id}/team`)
   }
 
   return next()

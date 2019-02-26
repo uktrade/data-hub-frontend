@@ -1,7 +1,8 @@
 const router = require('./router')
+const { root } = require('./paths')
 
 module.exports = {
-  displayName: 'Investment projects',
-  mountpath: '/investment-projects',
+  displayName: 'Investments',
+  mountpath: root,
   router,
 }
