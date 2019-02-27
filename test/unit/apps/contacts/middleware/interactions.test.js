@@ -41,7 +41,7 @@ describe('Contacts interactions middleware', () => {
     })
 
     it('should set the interactions query', () => {
-      expect(this.res.locals.interactions.query).to.deep.equal({ contacts_id: '1' })
+      expect(this.res.locals.interactions.query).to.deep.equal({ contacts__id: '1' })
     })
 
     it('should allow interactions to be added', () => {
