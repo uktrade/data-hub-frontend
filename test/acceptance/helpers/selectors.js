@@ -122,7 +122,7 @@ function getLinkWithText (text, className) {
 const getSelectorForDetailsSectionEditButton = (sectionTitle, buttonText = 'Edit') => {
   return getSelectorForElementWithText(sectionTitle, {
     el: '//h2',
-    child: '/following-sibling::p[1]/a[contains(.,"Edit")]',
+    child: '/following-sibling::div/p[1]/a[contains(.,"Edit")]',
   })
 }
 

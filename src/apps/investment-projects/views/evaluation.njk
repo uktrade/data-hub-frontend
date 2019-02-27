@@ -9,13 +9,16 @@
     }) }}
   {% endif %}
 
-  <h2 class="govuk-heading-m">Project value (Test D)</h2>
-  {% component 'key-value-table', items=value | collectionDefault('Not Known') %}
+  {% call DetailsContainer({ heading: 'Project value (Test D)' }) %}
+    {% component 'key-value-table', items=value | collectionDefault('Not Known') %}
+  {% endcall %}
 
-  <h2 class="govuk-heading-m govuk-!-margin-top-7">FDI (Test A)</h2>
-  {% component 'key-value-table', items=fdi | collectionDefault('Not Known') %}
+  {% call DetailsContainer({ heading: 'FDI (Test A)' }) %}
+    {% component 'key-value-table', items=fdi | collectionDefault('Not Known') %}
+  {% endcall %}
 
-  <h2 class="govuk-heading-m govuk-!-margin-top-7">Project Landing (Test C)</h2>
-  {% component 'key-value-table', items=landing | collectionDefault('Not Known') %}
+  {% call DetailsContainer({ heading: 'Project Landing (Test C)' }) %}
+    {% component 'key-value-table', items=landing | collectionDefault('Not Known') %}
+  {% endcall %}
 
 {% endblock %}
