@@ -5,7 +5,7 @@ const investmentData = require('~/test/unit/data/investment/investment-data.json
 const {
   transformInvestmentValueForView,
   transformInvestmentValueFormBodyToApiRequest,
-} = require('~/src/apps/investment-projects/transformers/value')
+} = require('~/src/apps/investments/transformers/value')
 
 describe('Investment project transformers', () => {
   describe('#transformInvestmentValueForView', () => {

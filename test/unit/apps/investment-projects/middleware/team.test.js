@@ -33,7 +33,7 @@ describe('Investment team middleware', () => {
       },
     }
 
-    this.teamMiddleware = proxyquire('~/src/apps/investment-projects/middleware/team', {
+    this.teamMiddleware = proxyquire('~/src/apps/investments/middleware/team', {
       '../transformers': {
         transformBriefInvestmentSummary: this.transformBriefInvestmentSummaryStub,
       },

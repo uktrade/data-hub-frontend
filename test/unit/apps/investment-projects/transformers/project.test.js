@@ -6,7 +6,7 @@ const {
   transformInvestmentForView,
   transformToApi,
   transformFromApi,
-} = require('~/src/apps/investment-projects/transformers/project')
+} = require('~/src/apps/investments/transformers/project')
 
 describe('Investment project transformers', () => {
   describe('#transformBriefInvestmentSummary', () => {
