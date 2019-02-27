@@ -15,34 +15,38 @@
 {% block main_grid_right_column %}
   {{ super() }}
 
-  <h2 class="govuk-heading-m">Investment project summary</h2>
-  {% component 'key-value-table', items=details, variant='striped' %}
-  {{ renderButton('details', 'Edit summary', true) }}
+  {% call DetailsContainer({ heading: 'Investment project summary' }) %}
+    {% component 'key-value-table', items=details, variant='striped' %}
+    {{ renderButton('details', 'Edit summary', true) }}
+  {% endcall %}
 
-  <h2 class="govuk-heading-m govuk-!-margin-top-7">Requirements and location</h2>
-  {% component 'key-value-table', items=requirements, variant='striped' %}
+  {% call DetailsContainer({ heading: 'Requirements and location' }) %}
+    {% component 'key-value-table', items=requirements, variant='striped' %}
 
-  {% if isRequirementsStarted %}
-    {{ renderButton('requirements', 'Edit requirements', true) }}
-  {% else %}
-    {{ Message({
-      type: 'muted',
-      text: 'Please complete this section to move to Assign PM stage'
-    }) }}
+    {% if isRequirementsStarted %}
+      {{ renderButton('requirements', 'Edit requirements', true) }}
+    {% else %}
+      {{ Message({
+        type: 'muted',
+        text: 'Please complete this section to move to Assign PM stage'
+      }) }}
 
-    {{ renderButton('requirements', 'Add requirements') }}
-  {% endif %}
+      {{ renderButton('requirements', 'Add requirements') }}
+    {% endif %}
 
-  <h2 class="govuk-heading-m govuk-!-margin-top-7">Value</h2>
-  {% if values | length > 1 %}
-    {% component 'key-value-table', items=values, variant='striped' %}
-    {{ renderButton('value', 'Edit value', true) }}
-  {% else %}
-    {{ Message({
-      type: 'muted',
-      text: 'Please complete ‘Total investment’ and ‘Number of new jobs’ to move to Assign PM stage'
-    }) }}
-    {{ renderButton('value', 'Add value') }}
-  {% endif %}
+  {% endcall %}
+
+  {% call DetailsContainer({ heading: 'Value' }) %}
+    {% if values | length > 1 %}
+      {% component 'key-value-table', items=values, variant='striped' %}
+      {{ renderButton('value', 'Edit value', true) }}
+    {% else %}
+      {{ Message({
+        type: 'muted',
+        text: 'Please complete ‘Total investment’ and ‘Number of new jobs’ to move to Assign PM stage'
+      }) }}
+      {{ renderButton('value', 'Add value') }}
+    {% endif %}
+  {% endcall %}
 
 {% endblock %}

@@ -14,7 +14,7 @@ const getSelectorForTable = (title, className) => {
 
   return getSelectorForElementWithText(title, {
     el: '//h2',
-    child: '/following-sibling::table[1]',
+    child: '//following-sibling::div/table[1]',
   })
 }
 
