@@ -149,6 +149,12 @@ function renderMetaList (req, res) {
     })
 }
 
+function renderDetailsContainer (req, res) {
+  return res
+    .breadcrumb('Details container')
+    .render('components/views/details-container')
+}
+
 module.exports = {
   renderEntityList,
   renderIndex,
@@ -160,4 +166,5 @@ module.exports = {
   renderKeyValueTables,
   renderHiddenText,
   renderMetaList,
+  renderDetailsContainer,
 }
