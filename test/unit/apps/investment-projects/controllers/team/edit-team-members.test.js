@@ -6,7 +6,7 @@ describe('Investment project, team members, edit controller', () => {
     this.flashStub = sinon.stub()
     this.breadcrumbStub = sinon.stub().returnsThis()
 
-    this.controller = require('~/src/apps/investment-projects/controllers/team/edit-team-members')
+    this.controller = require('~/src/apps/investments/controllers/team/edit-team-members')
   })
 
   describe('#renderTeamEdit', () => {
@@ -22,7 +22,7 @@ describe('Investment project, team members, edit controller', () => {
         breadcrumb: this.breadcrumbStub,
         render: (template) => {
           try {
-            expect(template).to.equal('investment-projects/views/team/edit-team-members')
+            expect(template).to.equal('investments/views/team/edit-team-members')
             done()
           } catch (e) {
             done(e)

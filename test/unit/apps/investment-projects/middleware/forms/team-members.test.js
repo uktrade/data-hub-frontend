@@ -2,10 +2,10 @@ const { assign } = require('lodash')
 const uuid = require('uuid')
 
 const config = require('~/config')
-const paths = require('~/src/apps/investment-projects/paths')
+const paths = require('~/src/apps/investments/paths')
 const investmentData = require('~/test/unit/data/investment/investment-data.json')
-const { teamMembersLabels } = require('~/src/apps/investment-projects/labels')
-const teamMembersController = require('~/src/apps/investment-projects/middleware/forms/team-members')
+const { teamMembersLabels } = require('~/src/apps/investments/labels')
+const teamMembersController = require('~/src/apps/investments/middleware/forms/team-members')
 
 describe('Investment form middleware - team members', () => {
   beforeEach(() => {

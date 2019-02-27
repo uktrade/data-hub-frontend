@@ -7,7 +7,7 @@ const {
   createInvestmentProject,
   archiveInvestmentProject,
   unarchiveInvestmentProject,
-} = require('~/src/apps/investment-projects/repos')
+} = require('~/src/apps/investments/repos')
 
 const companyData = require('~/test/unit/data/company.json')
 const investmentData = require('~/test/unit/data/investment/investment-data.json')

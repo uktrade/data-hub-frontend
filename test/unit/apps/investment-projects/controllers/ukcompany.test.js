@@ -1,5 +1,5 @@
 const investmentData = { investor_company: { name: 'company' } }
-const paths = require('~/src/apps/investment-projects/paths')
+const paths = require('~/src/apps/investments/paths')
 
 describe('investment uk company', () => {
   beforeEach(() => {
@@ -7,7 +7,7 @@ describe('investment uk company', () => {
     this.searchStub = sinon.stub().resolves()
     this.transformerStub = sinon.stub()
 
-    this.controller = proxyquire('~/src/apps/investment-projects/controllers/ukcompany', {
+    this.controller = proxyquire('~/src/apps/investments/controllers/ukcompany', {
       '../../search/services': {
         searchCompanies: this.searchStub,
       },
@@ -190,7 +190,7 @@ describe('investment uk company', () => {
     })
 
     it('should render the correct template', () => {
-      expect(this.res.render).to.be.calledWith('investment-projects/views/ukcompany')
+      expect(this.res.render).to.be.calledWith('investments/views/ukcompany')
     })
   })
 

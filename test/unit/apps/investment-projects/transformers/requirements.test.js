@@ -1,6 +1,6 @@
 const { assign } = require('lodash')
 
-const { transformInvestmentRequirementsForView } = require('~/src/apps/investment-projects/transformers/requirements')
+const { transformInvestmentRequirementsForView } = require('~/src/apps/investments/transformers/requirements')
 
 describe('Investment project transformers', () => {
   describe('#transformInvestmentRequirementsForView', () => {
