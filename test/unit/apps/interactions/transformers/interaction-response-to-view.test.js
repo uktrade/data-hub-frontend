@@ -58,7 +58,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           name: 'Priyanka Karunan',
         },
         'Investment project': {
-          url: '/investment-projects/bac18331-ca4d-4501-960e-a1bd68b5d47e',
+          url: '/investments/projects/bac18331-ca4d-4501-960e-a1bd68b5d47e',
           name: 'Test project',
         },
         'Communication channel': {
@@ -122,7 +122,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           name: 'Priyanka Karunan',
         },
         'Investment project': {
-          url: '/investment-projects/bac18331-ca4d-4501-960e-a1bd68b5d47e',
+          url: '/investments/projects/bac18331-ca4d-4501-960e-a1bd68b5d47e',
           name: 'Test project',
         },
         'Communication channel': {
