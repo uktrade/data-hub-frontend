@@ -77,7 +77,7 @@ function transformInteractionResponseToViewRecord ({
       name: date,
     },
     dit_adviser,
-    investment_project: transformEntityLink(investment_project, 'investment-projects'),
+    investment_project: transformEntityLink(investment_project, 'investments/projects'),
     event: transformEntityLink(event, 'events', defaultEventText),
     communication_channel: communication_channel,
     documents: transformDocumentsLink(archived_documents_url_path),
