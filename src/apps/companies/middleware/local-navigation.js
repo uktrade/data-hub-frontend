@@ -5,11 +5,11 @@ const { setLocalNav } = require('../../middleware')
 const { DEPRECATED_LOCAL_NAV, LOCAL_NAV } = require('../constants')
 
 function setCompaniesLocalNav (req, res, next) {
-  const { company, features } = res.locals
+  const { company } = res.locals
 
   if (company.duns_number) {
     const navItems = LOCAL_NAV.filter(({ path }) => {
-      return (path !== 'advisers' || (features['companies-advisers'] && company.one_list_group_tier))
+      return (path !== 'advisers' || company.one_list_group_tier)
     })
 
     setLocalNav(navItems)(req, res, next)
@@ -19,7 +19,7 @@ function setCompaniesLocalNav (req, res, next) {
     const navItems = DEPRECATED_LOCAL_NAV.filter(({ path }) => {
       return (path !== 'subsidiaries' || headquarterType === 'ghq') &&
         (path !== 'timeline' || company.company_number) &&
-        (path !== 'advisers' || (features['companies-advisers'] && company.one_list_group_tier))
+        (path !== 'advisers' || company.one_list_group_tier)
     })
 
     setLocalNav(navItems)(req, res, next)
