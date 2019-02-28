@@ -130,23 +130,4 @@ describe('Companies local navigation', () => {
       expect(menuItem).to.be.undefined
     })
   })
-
-  context('when the company advisers feature is enabled', () => {
-    beforeEach(() => {
-      this.res.locals.company = {
-        one_list_group_tier: {
-          id: '4321',
-          name: 'Tier A - Strategic Account',
-        },
-      }
-      this.res.locals.features = { 'companies-advisers': true }
-
-      setCompaniesLocalNav(this.req, this.res, this.next)
-    })
-
-    it('should have an advisers option', () => {
-      const menuItem = this.res.locals.localNavItems.find(item => item.path === 'advisers')
-      expect(menuItem).to.be.ok
-    })
-  })
 })
