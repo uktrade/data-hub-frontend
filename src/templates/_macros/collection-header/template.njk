@@ -33,7 +33,7 @@
         {% endif %}
 
         {% for actionButton in actionButtons %}
-          <a class="button button--secondary" href="{{ actionButton.url }}">{{ actionButton.label }}</a>
+          <a class="button button--secondary" href="{{ actionButton.url }}" data-auto-id="{{ actionButton.label }}">{{ actionButton.label }}</a>
         {% endfor %}
       </div>
     {% endif %}
