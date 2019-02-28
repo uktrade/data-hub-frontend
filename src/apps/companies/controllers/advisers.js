@@ -1,14 +1,9 @@
-const { notFound } = require('../../../middleware/errors')
 const { getOneListGroupCoreTeam } = require('../repos')
 const config = require('../../../../config')
 const { transformCoreTeamToCollection } = require('../transformers')
 const { coreTeamLabels } = require('../labels')
 
 async function renderAdvisers (req, res, next) {
-  if (!res.locals.features['companies-advisers']) {
-    return notFound(req, res, next)
-  }
-
   try {
     const { company } = res.locals
     const token = req.session.token
