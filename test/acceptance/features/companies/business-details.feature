@@ -14,17 +14,21 @@ Feature: Company business details
       | Annual turnover           | company.turnoverRange        |
       | Number of employees       | company.employeeRange        |
       | Website                   | Not set                      |
+    And the "About One List Corp" Edit link should not be displayed
     And the Global Account Manager – One List key value details are displayed
       | key                       | value                        |
       | One List tier             | company.oneListTier          |
       | Global Account Manager    | company.globalAccountManager |
+    And the "Global Account Manager – One List" Edit link should not be displayed
     And the Business hierarchy key value details are displayed
       | key                       | value                        |
       | Headquarter type          | company.headquarterType      |
       | Subsidiaries              | company.subsidiaries         |
+    And the "Business hierarchy" Edit link should not be displayed
     And the DIT sector values are displayed
       | value                     |
       | Retail                    |
+    And the "DIT sector" Edit link should not be displayed
     And the DIT region values are not displayed
     And address 1 should have badges
       | value                     |
@@ -36,6 +40,7 @@ Feature: Company business details
       | Paris                     |
       | 75001                     |
       | France                    |
+    And the "Addresses" Edit link should not be displayed
     And the Documents from CDMS key value details are not displayed
     And I should not see the "Archive" button
 
@@ -54,20 +59,25 @@ Feature: Company business details
       | Annual turnover           | Not set                      |
       | Number of employees       | Not set                      |
       | Website                   | Not set                      |
+    And the "About Venus Ltd" Edit link should be displayed
     And the Global Account Manager – One List key value details are displayed
       | key                       | value                        |
       | One List tier             | company.oneListTier          |
       | Global Account Manager    | company.globalAccountManager |
+    And the "Global Account Manager – One List" Edit link should be displayed
     And the Business hierarchy key value details are displayed
       | key                       | value                        |
       | Headquarter type          | company.headquarterType      |
       | Subsidiaries              | company.subsidiaries         |
+    And the "Business hierarchy" Edit link should be displayed
     And the DIT sector values are displayed
       | value                     |
       | Retail                    |
+    And the "DIT sector" Edit link should be displayed
     And the DIT region values are displayed
       | value                     |
       | North West                |
+    And the "DIT region" Edit link should be displayed
     And address 1 should have badges
       | value                     |
       | Trading                   |
@@ -78,6 +88,7 @@ Feature: Company business details
       | Bordley                   |
       | BD23 8RZ                  |
       | United Kingdom            |
+    And the "Addresses" Edit link should be displayed
     And I should see the "Archive" button
 
 
@@ -94,12 +105,15 @@ Feature: Company business details
       | Annual turnover           | company.annualTurnover       |
       | Number of employees       | company.numberOfEmployees    |
       | Website                   | Not set                      |
+    And the "About DnB Corp" Edit link should not be displayed
     And the Business hierarchy key value details are displayed
       | key                       | value                        |
       | Subsidiaries              | company.subsidiaries         |
+    And the "Business hierarchy" Edit link should not be displayed
     And the DIT sector values are displayed
       | value                     |
       | Retail                    |
+    And the "DIT region" Edit link should not be displayed
     And the DIT region values are not displayed
     And address 1 should have badges
       | value                     |
@@ -111,6 +125,7 @@ Feature: Company business details
       | Rome                      |
       | 001122                    |
       | Italy                     |
+    And the "Addresses" Edit link should not be displayed
     And the Documents from CDMS key value details are not displayed
     And I should not see the "Archive" button
 
@@ -129,17 +144,21 @@ Feature: Company business details
       | Annual turnover           | company.turnoverRange        |
       | Number of employees       | company.employeeRange        |
       | Website                   | Not set                      |
+    And the "About Archived Ltd" Edit link should not be displayed
     And the Global Account Manager – One List key value details are displayed
       | key                       | value                        |
       | One List tier             | company.oneListTier          |
       | Global Account Manager    | company.globalAccountManager |
+    And the "Global Account Manager – One List" Edit link should not be displayed
     And the Business hierarchy key value details are displayed
       | key                       | value                        |
       | Headquarter type          | company.headquarterType      |
       | Subsidiaries              | company.subsidiaries         |
+    And the "Business hierarchy" Edit link should not be displayed
     And the DIT sector values are displayed
       | value                     |
       | Retail                    |
+    And the "DIT sector" Edit link should not be displayed
     And the DIT region values are not displayed
     And address 1 should have badges
       | value                     |
@@ -151,5 +170,6 @@ Feature: Company business details
       | Geta                      |
       | 22340                     |
       | Malta                     |
+    And the "Addresses" Edit link should not be displayed
     And the Documents from CDMS key value details are not displayed
     And I should not see the "Archive" button

@@ -5,9 +5,9 @@
 {% set rsa = investment.referral_source_adviser %}
 
 {% block main_grid_right_column %}
-  <h2 class="govuk-heading-m">Assign project management</h2>
-
-  {% component 'key-value-table', items=briefInvestmentSummary, variant='striped' %}
+  {% call DetailsContainer({ heading: 'Assign project management' }) %}
+    {% component 'key-value-table', items=briefInvestmentSummary, variant='striped' %}
+  {% endcall %}
 
   {% call Form(form) %}
     {{ MultipleChoiceField({

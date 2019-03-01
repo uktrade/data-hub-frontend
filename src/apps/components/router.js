@@ -13,6 +13,7 @@ const {
   renderKeyValueTables,
   renderHiddenText,
   renderMetaList,
+  renderDetailsContainer,
 } = require('./controllers')
 
 const { adviserLookup } = require('./middleware')
@@ -35,6 +36,7 @@ router
   .get('/keyvaluetables', renderKeyValueTables)
   .get('/hidden-text', renderHiddenText)
   .get('/meta-list', renderMetaList)
+  .get('/details-container', renderDetailsContainer)
   .all('/form', adviserLookup, renderFormElements)
 
 module.exports = router

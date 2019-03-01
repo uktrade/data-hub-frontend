@@ -1,5 +1,7 @@
 {% extends "_layouts/template.njk" %}
 
+{% set editUrl = '/companies/' + company.id + '/edit' if not company.duns_number and not company.archived %}
+
 {% macro AddressCell(meta, address) %}
   <td>
     {{
@@ -45,97 +47,92 @@
     }) }}
   {% endif %}
 
-  <h2 class="govuk-heading-m govuk-!-margin-top-9">About {{ company.name }}</h2>
-
-  {% component 'key-value-table', items=aboutDetails %}
-
+  {% call DetailsContainer({ heading: 'About ' + company.name, editUrl: editUrl }) %}
+    {% component 'key-value-table', items=aboutDetails %}
+  {% endcall %}
 
   {% if oneListDetails %}
-    <h2 class="govuk-heading-m govuk-!-margin-top-9">Global Account Manager – One List</h2>
+    {% call DetailsContainer({ heading: 'Global Account Manager – One List', editUrl: editUrl }) %}
+      {% component 'key-value-table', items=oneListDetails %}
 
-    {% component 'key-value-table', items=oneListDetails %}
-
-    <p>
-      <a href="advisers">See all advisers on the core team</a>
-    </p>
+      <p>
+        <a href="advisers">See all advisers on the core team</a>
+      </p>
+    {% endcall %}
   {% endif %}
 
+  {% call DetailsContainer({ heading: 'Business hierarchy', editUrl: editUrl }) %}
+    {% component 'key-value-table', items=businessHierarchyDetails %}
+  {% endcall %}
 
-  <h2 class="govuk-heading-m govuk-!-margin-top-9">Business hierarchy</h2>
-
-  {% component 'key-value-table', items=businessHierarchyDetails %}
-
-
-  <h2 class="govuk-heading-m govuk-!-margin-top-9">DIT sector</h2>
-
-  <table class="table--key-value">
-    <tbody>
-    {% for sector in sectorDetails %}
-      <tr>
-        <td>{{ sector }}</td>
-      </tr>
-    {% endfor %}
-    </tbody>
-  </table>
-
-
-  {% if regionDetails %}
-    <h2 class="govuk-heading-m govuk-!-margin-top-9">DIT region</h2>
-
+  {% call DetailsContainer({ heading: 'DIT sector', editUrl: editUrl }) %}
     <table class="table--key-value">
       <tbody>
-      <tr>
-        <td>{{ regionDetails }}</td>
-      </tr>
+      {% for sector in sectorDetails %}
+        <tr>
+          <td>{{ sector }}</td>
+        </tr>
+      {% endfor %}
       </tbody>
     </table>
+  {% endcall %}
+
+  {% if regionDetails %}
+    {% call DetailsContainer({ heading: 'DIT region', editUrl: editUrl }) %}
+      <table class="table--key-value">
+        <tbody>
+          <tr>
+            <td>{{ regionDetails }}</td>
+          </tr>
+        </tbody>
+      </table>
+    {% endcall %}
   {% endif %}
 
-
-  <h2 class="govuk-heading-m govuk-!-margin-top-9">Addresses</h2>
-
-  <table class="table--key-value">
-    <tbody>
-    <tr>
-      {% if addressesDetails.trading.address %}
-        {{ AddressCell(addressesDetails.trading.meta, addressesDetails.trading.address) }}
-      {% endif %}
-      {% if addressesDetails.registered.address %}
-        {{ AddressCell(addressesDetails.registered.meta, addressesDetails.registered.address) }}
-      {% endif %}
-    </tr>
-    </tbody>
-  </table>
-
+  {% call DetailsContainer({ heading: 'Addresses', editUrl: editUrl }) %}
+    <table class="table--key-value">
+      <tbody>
+        <tr>
+          {% if addressesDetails.trading.address %}
+            {{ AddressCell(addressesDetails.trading.meta, addressesDetails.trading.address) }}
+          {% endif %}
+          {% if addressesDetails.registered.address %}
+            {{ AddressCell(addressesDetails.registered.meta, addressesDetails.registered.address) }}
+          {% endif %}
+        </tr>
+      </tbody>
+    </table>
+  {% endcall %}
 
   {% if archivedDocumentPath %}
-  <h2 class="govuk-heading-m govuk-!-margin-top-9">Documents from CDMS</h2>
-
-  <table class="table--key-value">
-    <tbody>
-    <tr>
-      <td>
-        <a href="{{ ARCHIVED_DOCUMENT_BASE_URL }}{{ archivedDocumentPath }}" aria-labelledby="external-link-label">
-          View files and documents
-        </a>
-        <span id="external-link-label">(will open another website)</span>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+    {% call DetailsContainer({ heading: 'Documents from CDMS' }) %}
+      <table class="table--key-value">
+        <tbody>
+        <tr>
+          <td>
+            <a href="{{ ARCHIVED_DOCUMENT_BASE_URL }}{{ archivedDocumentPath }}" aria-labelledby="external-link-label">
+              View files and documents
+            </a>
+            <span id="external-link-label">(will open another website)</span>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    {% endcall %}
   {% endif %}
 
   {% if not company.archived and not company.duns_number %}
-  <h2 class="govuk-heading-m govuk-!-margin-top-9">Archive company</h2>
-  <p>Archive this company if it is no longer required or active.</p>
+    {% call DetailsContainer({ heading: 'Archive company' }) %}
+      <p>Archive this company if it is no longer required or active.</p>
 
-  {% component 'archive-form', {
-    label: 'Archive reason',
-    options: ['Company is dissolved'],
-    csrfToken: csrfToken,
-    error: form.errors.reason,
-    url: '/companies/' + company.id + '/archive?redirect=business-details'
-  } %}
+      {% component 'archive-form', {
+        label: 'Archive reason',
+        options: ['Company is dissolved'],
+        csrfToken: csrfToken,
+        error: form.errors.reason,
+        url: '/companies/' + company.id + '/archive?redirect=business-details'
+      } %}
+    {% endcall %}
   {% endif %}
 
 {% endblock %}
