@@ -41,6 +41,7 @@
 
     @include govuk-media-query($from: tablet) {
       width: auto;
+      width: initial;
       display: inline-block;
       list-style: none;
     }
@@ -106,6 +107,7 @@
 
     @include govuk-media-query($from: tablet) {
       width: auto;
+      width: initial;
       display: inline;
       list-style: none;
       padding: 14px 0;
@@ -135,8 +137,8 @@
     }
 
     @include govuk-media-query($from: tablet) {
-      display: inline-block;
-      width: auto;
+      display: inline;
+      display: initial;
       font-size: 16px;
       padding: 10px;
     }
