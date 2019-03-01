@@ -67,9 +67,7 @@ Feature: Company business details
     And the "Global Account Manager – One List" Edit link should be displayed
     And the Business hierarchy key value details are displayed
       | key                       | value                        |
-      | Headquarter type          | company.headquarterType      |
-      | Subsidiaries              | company.subsidiaries         |
-    And the "Business hierarchy" Edit link should be displayed
+      | Global HQ                 | company.globalHq             |
     And the DIT sector values are displayed
       | value                     |
       | Retail                    |
@@ -108,8 +106,7 @@ Feature: Company business details
     And the "About DnB Corp" Edit link should not be displayed
     And the Business hierarchy key value details are displayed
       | key                       | value                        |
-      | Subsidiaries              | company.subsidiaries         |
-    And the "Business hierarchy" Edit link should not be displayed
+      | Global HQ                 | company.globalHq             |
     And the DIT sector values are displayed
       | value                     |
       | Retail                    |
