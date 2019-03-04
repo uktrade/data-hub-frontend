@@ -11,7 +11,7 @@ const interactions = {
   serviceStatus: '#field-service_delivery_status',
   grantOffered: '#field-grant_amount_offered',
   netReceipt: '#field-net_company_receipt',
-  ditAdviser: '#dit_adviser__typeahead .multiselect__single',
+  ditAdviser: '#dit_adviser__typeahead .multiselect__tags',
   communicationChannel: '#field-communication_channel',
   eventYes: 'label[for=field-is_event-1]',
   eventNo: 'label[for=field-is_event-2]',

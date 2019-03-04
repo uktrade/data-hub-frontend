@@ -25,7 +25,7 @@ describe('Add Interaction', () => {
     })
 
     it('should add interaction by investment projects', () => {
-      cy.visit('/investment-projects/00086bb2-c5ee-4bfb-998f-0b417eafdd3e/interactions/create/interaction')
+      cy.visit('/investments/projects/00086bb2-c5ee-4bfb-998f-0b417eafdd3e/interactions/create/interaction')
       populateInteractionForm()
       cy.get(selectors.interactions.addInteraction).click()
 
@@ -59,7 +59,7 @@ describe('Add Interaction', () => {
     })
 
     it('should add service delivery by investment projects', () => {
-      cy.visit('/investment-projects/346f78a5-1d23-4213-b4c2-bf48246a13c3/interactions/create/service-delivery')
+      cy.visit('/investments/projects/346f78a5-1d23-4213-b4c2-bf48246a13c3/interactions/create/service-delivery')
       populateServiceDeliveryForm('Account Management')
       cy.get(selectors.interactions.addInteraction).click()
 
