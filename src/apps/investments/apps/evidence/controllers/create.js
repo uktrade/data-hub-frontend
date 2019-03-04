@@ -24,7 +24,7 @@ async function renderAddEvidence (req, res) {
   res
     .breadcrumb('Add evidence')
     .title('Add evidence')
-    .render('investment-projects/apps/evidence/views/create', {
+    .render('investments/apps/evidence/views/create', {
       addEvidenceForm,
     })
 }

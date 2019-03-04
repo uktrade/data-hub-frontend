@@ -73,7 +73,7 @@ async function searchForAssociatedInvestmentProject (req, res, next) {
 }
 
 function renderAssociatedInvestmentProjectResults (req, res, next) {
-  return res.render('investment-projects/views/associated')
+  return res.render('investments/views/associated')
 }
 
 async function removeAssociatedInvestmentProject (req, res, next) {

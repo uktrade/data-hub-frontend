@@ -59,7 +59,7 @@ async function searchForUKCompany (req, res, next) {
 }
 
 function renderCompanyResults (req, res, next) {
-  return res.render('investment-projects/views/ukcompany')
+  return res.render('investments/views/ukcompany')
 }
 
 async function removeUKCompany (req, res, next) {

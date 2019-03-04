@@ -29,7 +29,7 @@ function detailsGetHandler (req, res, next) {
       isRequirementsStarted = true
     }
 
-    return res.render('investment-projects/views/details', {
+    return res.render('investments/views/details', {
       requirements,
       isRequirementsStarted,
       details: getDataLabels(transformedDetails, detailsLabels.view),

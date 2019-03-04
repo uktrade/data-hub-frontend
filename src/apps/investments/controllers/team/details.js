@@ -20,7 +20,7 @@ function getDetailsHandler (req, res, next) {
 
     res
       .breadcrumb('Project team')
-      .render('investment-projects/views/team/details', {
+      .render('investments/views/team/details', {
         projectManagementData,
         projectManagementLabels,
         clientRelationshipManagementData,

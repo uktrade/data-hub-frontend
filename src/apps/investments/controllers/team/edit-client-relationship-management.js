@@ -4,7 +4,7 @@ function getHandler (req, res, next) {
   res
     .breadcrumb('Project team', 'team')
     .breadcrumb('Client relationship management')
-    .render('investment-projects/views/team/edit-client-relationship-management')
+    .render('investments/views/team/edit-client-relationship-management')
 }
 
 function postHandler (req, res, next) {

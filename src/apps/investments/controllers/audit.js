@@ -19,7 +19,7 @@ async function getInvestmentAudit (req, res, next) {
 
       return res
         .breadcrumb('Audit history')
-        .render('investment-projects/views/audit', {
+        .render('investments/views/audit', {
           auditLog,
         })
     }

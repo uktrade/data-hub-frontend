@@ -8,7 +8,7 @@ async function renderEvidenceView (req, res, next) {
 
     return res
       .breadcrumb('Evidence')
-      .render('investment-projects/apps/evidence/views/list', {
+      .render('investments/apps/evidence/views/list', {
         evidence,
       })
   } catch (error) {

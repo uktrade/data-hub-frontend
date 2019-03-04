@@ -8,7 +8,7 @@ const { ENTITIES } = require('../../../search/constants')
 function renderEquitySourcePage (req, res, next) {
   return res
     .breadcrumb('Add investment project')
-    .render('investment-projects/views/create/equity-source')
+    .render('investments/views/create/equity-source')
 }
 
 function transformListItemForEquitySource (company, projects) {

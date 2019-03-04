@@ -9,7 +9,7 @@ function getHandler (req, res, next) {
   res
     .breadcrumb('Project team', 'team')
     .breadcrumb('Project management')
-    .render('investment-projects/views/team/edit-project-management', {
+    .render('investments/views/team/edit-project-management', {
       briefInvestmentSummary,
     })
 }
