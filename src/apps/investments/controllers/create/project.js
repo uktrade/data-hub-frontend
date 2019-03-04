@@ -6,7 +6,7 @@ const { transformObjectToOption } = require('../../../transformers')
 function renderCreateProjectPage (req, res) {
   return res
     .breadcrumb('Add investment project')
-    .render('investment-projects/views/create/project')
+    .render('investments/views/create/project')
 }
 
 function getHandler (req, res, next) {

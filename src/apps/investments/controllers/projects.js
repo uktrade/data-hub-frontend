@@ -61,7 +61,7 @@ const renderProjectsView = async (req, res, next) => {
       title: 'Investment Projects',
       countLabel: 'project',
     }
-    res.render('investment-projects/views/projects', props)
+    res.render('investments/views/projects', props)
   } catch (error) {
     next(error)
   }

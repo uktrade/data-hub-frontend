@@ -13,7 +13,7 @@ function redirectHandler (req, res, next) {
 function renderCreatePage (req, res) {
   return res
     .breadcrumb('Add investment project')
-    .render('investment-projects/views/create/start')
+    .render('investments/views/create/start')
 }
 
 module.exports = {

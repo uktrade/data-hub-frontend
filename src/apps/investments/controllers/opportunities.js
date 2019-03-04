@@ -1,5 +1,5 @@
 const renderOpportunitiesView = (req, res, next) => {
-  res.render('investment-projects/views/opportunities', {})
+  res.render('investments/views/opportunities', {})
 }
 
 module.exports = { renderOpportunitiesView }

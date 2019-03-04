@@ -5,7 +5,7 @@ async function renderDocuments (req, res, next) {
 
   return res
     .breadcrumb('Documents')
-    .render('investment-projects/views/documents', {
+    .render('investments/views/documents', {
       archivedDocumentPath,
     })
 }
