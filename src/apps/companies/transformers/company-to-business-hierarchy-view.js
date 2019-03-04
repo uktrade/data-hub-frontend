@@ -1,35 +1,58 @@
 /* eslint-disable camelcase */
-const { get, pickBy } = require('lodash')
+const { pickBy } = require('lodash')
 
 const { getDataLabels } = require('../../../lib/controller-utils')
 const { businessHierarchyLabels, hqLabels } = require('../labels')
 const { pluralise } = require('../../../../config/nunjucks/filters')
 const { NONE_TEXT } = require('../constants')
 
-const transformHeadquarterType = (headquarter_type, global_headquarters) => {
-  if (get(headquarter_type, 'name') === 'ghq') {
-    return hqLabels.ghq
+const transformHeadquarterType = (headquarter_type) => {
+  if (headquarter_type) {
+    return hqLabels[headquarter_type.name]
+  }
+}
+
+const transformSubsidiaries = (id, headquarter_type, subsidiariesCount) => {
+  if (headquarter_type) {
+    return subsidiariesCount ? {
+      url: `/companies/${id}/subsidiaries`,
+      name: `${subsidiariesCount} ${pluralise('subsidiary', subsidiariesCount)}`,
+    } : NONE_TEXT
+  }
+}
+
+const transformGlobalHq = (id, headquarter_type, global_headquarters, duns_number) => {
+  if (!headquarter_type && !global_headquarters) {
+    return pickBy({
+      name: NONE_TEXT,
+      actions: duns_number ? null : [
+        {
+          url: `/companies/${id}/hierarchies/ghq/search`,
+          label: 'Link to the Global HQ',
+        },
+      ],
+    })
   }
 
   if (global_headquarters) {
-    return {
+    return pickBy({
       url: `/companies/${global_headquarters.id}`,
-      name: `Global HQ - ${global_headquarters.name}`,
-    }
+      name: global_headquarters.name,
+      actions: duns_number ? null : [
+        {
+          url: `/companies/${id}/hierarchies/ghq/remove`,
+          label: 'Remove link',
+        },
+      ],
+    })
   }
 }
 
-const transformSubsidiaries = (id, subsidiariesCount) => {
-  return subsidiariesCount ? {
-    url: `/companies/${id}/subsidiaries`,
-    name: `${subsidiariesCount} ${pluralise('subsidiary', subsidiariesCount)}`,
-  } : NONE_TEXT
-}
-
-module.exports = ({ id, headquarter_type, global_headquarters }, subsidiariesCount) => {
+module.exports = ({ id, headquarter_type, global_headquarters, duns_number }, subsidiariesCount) => {
   const viewRecord = {
-    headquarter_type: transformHeadquarterType(headquarter_type, global_headquarters),
-    subsidiaries: transformSubsidiaries(id, subsidiariesCount),
+    headquarter_type: transformHeadquarterType(headquarter_type),
+    subsidiaries: transformSubsidiaries(id, headquarter_type, subsidiariesCount),
+    global_headquarters: transformGlobalHq(id, headquarter_type, global_headquarters, duns_number),
   }
 
   return pickBy(getDataLabels(viewRecord, businessHierarchyLabels))
