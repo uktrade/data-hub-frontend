@@ -1,6 +1,6 @@
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
-const companyMock = require('~/test/unit/data/companies/company.json')
+const companyMock = require('~/test/unit/data/companies/minimal-company.json')
 
 describe('Company controller, archive', () => {
   beforeEach(() => {
@@ -146,16 +146,16 @@ describe('Company controller, archive', () => {
       })
     })
 
-    context('when there is a redirect', () => {
+    context('when the companies new layout feature is enabled', () => {
       beforeEach(async () => {
         this.middlewareParameters = buildMiddlewareParameters({
-          requestQuery: {
-            redirect: '/redirect/here',
-          },
           requestBody: {
             archived_reason: 'Archived reason',
           },
           company: companyMock,
+          features: {
+            'companies-new-layout': true,
+          },
         })
 
         this.stub.unarchiveCompany.resolves(companyMock)
@@ -166,7 +166,7 @@ describe('Company controller, archive', () => {
       commonTests({
         stubName: 'archiveCompany',
         expectedFlash: 'success',
-        expectedPath: '/redirect/here',
+        expectedPath: `/companies/${companyMock.id}/business-details`,
       })
     })
   })
@@ -191,13 +191,16 @@ describe('Company controller, archive', () => {
         })
       })
 
-      context('when there is a redirect', () => {
+      context('when the companies new layout feature is enabled', () => {
         beforeEach(async () => {
           this.middlewareParameters = buildMiddlewareParameters({
             requestQuery: {
               redirect: '/redirect/here',
             },
             company: companyMock,
+            features: {
+              'companies-new-layout': true,
+            },
           })
 
           this.stub.unarchiveCompany.resolves(companyMock)
@@ -208,7 +211,7 @@ describe('Company controller, archive', () => {
         commonTests({
           stubName: 'unarchiveCompany',
           expectedFlash: 'success',
-          expectedPath: '/redirect/here',
+          expectedPath: `/companies/${companyMock.id}/business-details`,
         })
       })
     })
