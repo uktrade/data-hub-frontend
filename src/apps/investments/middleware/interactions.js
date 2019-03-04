@@ -9,7 +9,7 @@ function setInteractionsDetails (req, res, next) {
     returnLink: `${projects}/${investmentId}/interactions/`,
     entityName: name,
     query: { investment_project_id: investmentId },
-    view: 'investment-projects/views/interactions',
+    view: 'investments/views/interactions',
     createKind: 'interaction',
     canAdd: true,
   }

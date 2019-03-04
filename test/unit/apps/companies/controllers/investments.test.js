@@ -11,10 +11,10 @@ describe('Company investments controller', () => {
     this.transformApiResponseToCollectionSpy = sinon.spy()
 
     this.controller = proxyquire('~/src/apps/companies/controllers/investments', {
-      '../../investment-projects/repos': {
+      '../../investments/repos': {
         getCompanyInvestmentProjects: this.getCompanyInvestmentProjectsStub,
       },
-      '../../investment-projects/transformers': {
+      '../../investments/transformers': {
         transformInvestmentProjectToListItem: this.transformInvestmentProjectToListItemSpy,
       },
       '../../../modules/api/transformers': {

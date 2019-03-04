@@ -4,7 +4,7 @@ const {
   transformProjectManagementForView,
   transformClientRelationshipManagementForView,
   transformTeamMembersForView,
-} = require('~/src/apps/investment-projects/transformers/team')
+} = require('~/src/apps/investments/transformers/team')
 
 describe('Investment project transformers', () => {
   describe('#transformProjectManagementForView', () => {

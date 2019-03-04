@@ -1,5 +1,5 @@
-const { getCompanyInvestmentProjects } = require('../../investment-projects/repos')
-const { transformInvestmentProjectToListItem } = require('../../investment-projects/transformers')
+const { getCompanyInvestmentProjects } = require('../../investments/repos')
+const { transformInvestmentProjectToListItem } = require('../../investments/transformers')
 const { transformApiResponseToCollection } = require('../../../modules/api/transformers')
 
 async function renderInvestments (req, res, next) {

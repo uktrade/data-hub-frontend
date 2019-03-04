@@ -17,7 +17,7 @@ function renderStatusPage (req, res, next) {
 
   res
     .breadcrumb('Change project status')
-    .render('investment-projects/views/status', { statusForm })
+    .render('investments/views/status', { statusForm })
 }
 
 async function postStatus (req, res, next) {

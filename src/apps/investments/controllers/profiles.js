@@ -1,5 +1,5 @@
 const renderProfilesView = (req, res, next) => {
-  res.render('investment-projects/views/profiles', {})
+  res.render('investments/views/profiles', {})
 }
 
 module.exports = { renderProfilesView }

@@ -5,7 +5,7 @@ describe('Investment details controller', () => {
     this.next = sinon.stub()
     this.transformInvestmentRequirementsForViewStub = sinon.stub()
 
-    this.controller = proxyquire('~/src/apps/investment-projects/controllers/details', {
+    this.controller = proxyquire('~/src/apps/investments/controllers/details', {
       '../transformers': {
         transformInvestmentRequirementsForView: this.transformInvestmentRequirementsForViewStub,
         transformInvestmentForView: sinon.stub(),
@@ -26,7 +26,7 @@ describe('Investment details controller', () => {
         },
         render: (template, data) => {
           try {
-            expect(template).to.equal('investment-projects/views/details')
+            expect(template).to.equal('investments/views/details')
             done()
           } catch (error) {
             done(error)

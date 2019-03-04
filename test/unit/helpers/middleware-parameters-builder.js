@@ -1,4 +1,4 @@
-const paths = require('~/src/apps/investment-projects/paths')
+const paths = require('~/src/apps/investments/paths')
 
 module.exports = ({
   requestBody,

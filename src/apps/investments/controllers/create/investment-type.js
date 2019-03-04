@@ -3,13 +3,13 @@ const { get, isEmpty } = require('lodash')
 function renderInvestmentTypePage (req, res) {
   return res
     .breadcrumb('Add investment project')
-    .render('investment-projects/views/create/investment-type')
+    .render('investments/views/create/investment-type')
 }
 
 function renderInvestmentInfoPage (req, res) {
   return res
     .breadcrumb('Add investment project')
-    .render('investment-projects/views/create/info')
+    .render('investments/views/create/info')
 }
 
 function postHandler (req, res, next) {

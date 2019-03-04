@@ -1,17 +1,17 @@
 function editDetailsGet (req, res) {
   res
     .breadcrumb('Edit details')
-    .render('investment-projects/views/details-edit')
+    .render('investments/views/details-edit')
 }
 
 function editValueGet (req, res) {
   res
     .breadcrumb('Edit value')
-    .render('investment-projects/views/value-edit')
+    .render('investments/views/value-edit')
 }
 
 function renderRequirementsForm (req, res) {
-  res.render('investment-projects/views/requirements-edit')
+  res.render('investments/views/requirements-edit')
 }
 
 function editDetailsPost (req, res, next) {
@@ -27,7 +27,7 @@ function editDetailsPost (req, res, next) {
 }
 
 function renderValueForm (req, res) {
-  return res.render('investment-projects/views/value-edit')
+  return res.render('investments/views/value-edit')
 }
 
 module.exports = {
