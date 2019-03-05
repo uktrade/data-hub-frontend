@@ -12,6 +12,7 @@ module.exports = ({
   investment,
   companiesHouseRecord,
   features = {},
+  user,
 }) => {
   return {
     reqMock: {
@@ -36,6 +37,7 @@ module.exports = ({
         investment,
         companiesHouseRecord,
         features,
+        user,
       },
     },
     nextSpy: sinon.spy(),

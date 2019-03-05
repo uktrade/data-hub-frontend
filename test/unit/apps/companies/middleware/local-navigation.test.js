@@ -1,133 +1,243 @@
+const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+
 const setCompaniesLocalNav = require('~/src/apps/companies/middleware/local-navigation')
 
 describe('Companies local navigation', () => {
-  beforeEach(() => {
-    this.req = {}
+  const commonTests = (expectedItems) => {
+    it('should have items', () => {
+      expectedItems.forEach((label) => {
+        const item = this.middlewareParameters.resMock.locals.localNavItems.find(item => item.label === label)
+        expect(item, label).to.exist
+      })
+    })
+  }
 
-    this.res = {
-      locals: {
-        user: {
-          permissions: ['company.view_company_timeline'],
-        },
-      },
-    }
+  context('when the company has a DUNS number', () => {
+    context('default menu items', () => {
+      beforeEach(() => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: {
+            id: '1234',
+            headquarter_type: null,
+            company_number: null,
+            duns_number: '123456',
+          },
+          user: {
+            permissions: [
+              'company.view_company_timeline',
+              'interaction.view_all_interaction',
+              'company.view_contact',
+              'investment.view_all_investmentproject',
+              'order.view_order',
+            ],
+          },
+        })
 
-    this.next = sinon.stub()
-  })
+        setCompaniesLocalNav(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
+      })
 
-  context('when company is not a headquarters', () => {
-    beforeEach(() => {
-      this.res.locals.company = {
-        id: '1234',
-        headquarter_type: null,
-        company_number: null,
-      }
-      this.res.locals.features = {}
-
-      setCompaniesLocalNav(this.req, this.res, this.next)
+      commonTests([
+        'Interactions',
+        'Company contacts',
+        'Investment',
+        'Export',
+        'Orders',
+      ])
     })
 
-    it('should not have a subsidiaries menu option', () => {
-      const menuItem = this.res.locals.localNavItems.find(item => item.path === 'subsidiaries')
-      expect(menuItem).to.be.undefined
-    })
-  })
+    context('when the company is on the One List', () => {
+      beforeEach(() => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: {
+            id: '1234',
+            headquarter_type: null,
+            company_number: null,
+            duns_number: '123456',
+            one_list_group_tier: {
+              id: '4321',
+              name: 'Tier A - Strategic Account',
+            },
+          },
+          user: {
+            permissions: [
+              'company.view_company_timeline',
+              'interaction.view_all_interaction',
+              'company.view_contact',
+              'investment.view_all_investmentproject',
+              'order.view_order',
+            ],
+          },
+        })
 
-  context('when company is a European headquarters', () => {
-    beforeEach(() => {
-      this.res.locals.company = {
-        id: '1234',
-        headquarter_type: {
-          id: '2222',
-          name: 'ehq',
-        },
-        company_number: null,
-      }
-      this.res.locals.features = {}
+        setCompaniesLocalNav(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
+      })
 
-      setCompaniesLocalNav(this.req, this.res, this.next)
-    })
-
-    it('should not have a subsidiaries menu option', () => {
-      const menuItem = this.res.locals.localNavItems.find(item => item.path === 'subsidiaries')
-      expect(menuItem).to.be.undefined
-    })
-  })
-
-  context('when company is a global headquarters', () => {
-    beforeEach(() => {
-      this.res.locals.company = {
-        id: '1234',
-        headquarter_type: {
-          id: '2222',
-          name: 'ghq',
-        },
-        company_number: null,
-      }
-      this.res.locals.features = {}
-
-      setCompaniesLocalNav(this.req, this.res, this.next)
-    })
-
-    it('should have a subsidiaries menu option', () => {
-      const menuItem = this.res.locals.localNavItems.find(item => item.path === 'subsidiaries')
-      expect(menuItem).to.be.ok
-    })
-  })
-
-  context('when company has a company number', () => {
-    beforeEach(() => {
-      this.res.locals.company = {
-        id: '1234',
-        headquarter_type: {
-          id: '2222',
-          name: 'Global HQ',
-        },
-        company_number: '1234',
-      }
-      this.res.locals.features = {}
-
-      setCompaniesLocalNav(this.req, this.res, this.next)
-    })
-
-    it('should have a timeline option', () => {
-      const menuItem = this.res.locals.localNavItems.find(item => item.path === 'timeline')
-      expect(menuItem).to.be.ok
+      commonTests([
+        'Interactions',
+        'Company contacts',
+        'Core team',
+        'Investment',
+        'Export',
+        'Orders',
+      ])
     })
   })
 
-  context('when company does not have a company number', () => {
-    beforeEach(() => {
-      this.res.locals.company = {
-        id: '1234',
-        headquarter_type: {
-          id: '2222',
-          name: 'Global HQ',
-        },
-        company_number: null,
-      }
-      this.res.locals.features = {}
+  context('when the company does not have a DUNS number', () => {
+    context('default menu items', () => {
+      beforeEach(() => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: {
+            id: '1234',
+            headquarter_type: null,
+            company_number: null,
+          },
+          user: {
+            permissions: ['company.view_company_timeline'],
+          },
+        })
 
-      setCompaniesLocalNav(this.req, this.res, this.next)
+        setCompaniesLocalNav(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
+      })
+
+      commonTests([
+        'Details',
+        'Export',
+        'Audit history',
+      ])
     })
 
-    it('should not have a timeline option', () => {
-      const menuItem = this.res.locals.localNavItems.find(item => item.path === 'timeline')
-      expect(menuItem).to.be.undefined
+    context('when company is a global headquarters', () => {
+      beforeEach(() => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: {
+            id: '1234',
+            headquarter_type: {
+              id: '2222',
+              name: 'ghq',
+            },
+            company_number: null,
+          },
+          user: {
+            permissions: ['company.view_company_timeline'],
+          },
+        })
+
+        setCompaniesLocalNav(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
+      })
+
+      commonTests([
+        'Subsidiaries',
+        'Details',
+        'Export',
+        'Audit history',
+      ])
     })
-  })
 
-  context('when the company advisers feature is not enabled', () => {
-    beforeEach(() => {
-      this.res.locals.company = {}
-      this.res.locals.features = {}
+    context('when company is a European headquarters', () => {
+      beforeEach(() => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: {
+            id: '1234',
+            headquarter_type: {
+              id: '2222',
+              name: 'ehq',
+            },
+            company_number: null,
+          },
+          user: {
+            permissions: ['company.view_company_timeline'],
+          },
+        })
 
-      setCompaniesLocalNav(this.req, this.res, this.next)
+        setCompaniesLocalNav(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
+      })
+
+      commonTests([
+        'Details',
+        'Export',
+        'Audit history',
+      ])
     })
 
-    it('should not have an advisers option', () => {
-      const menuItem = this.res.locals.localNavItems.find(item => item.path === 'advisers')
-      expect(menuItem).to.be.undefined
+    context('when company has a company number', () => {
+      beforeEach(() => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: {
+            id: '1234',
+            headquarter_type: null,
+            company_number: '1234',
+          },
+          user: {
+            permissions: ['company.view_company_timeline'],
+          },
+        })
+
+        setCompaniesLocalNav(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
+      })
+
+      commonTests([
+        'Details',
+        'Export',
+        'Timeline',
+        'Audit history',
+      ])
+    })
+
+    context('when the company is on the One List', () => {
+      beforeEach(() => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: {
+            id: '1234',
+            headquarter_type: null,
+            company_number: null,
+            one_list_group_tier: {
+              id: '4321',
+              name: 'Tier A - Strategic Account',
+            },
+          },
+          user: {
+            permissions: ['company.view_company_timeline'],
+          },
+        })
+
+        setCompaniesLocalNav(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
+      })
+
+      commonTests([
+        'Details',
+        'Export',
+        'Audit history',
+        'Advisers',
+      ])
     })
   })
 })
