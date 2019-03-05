@@ -91,6 +91,33 @@ describe('Company contact list controller', () => {
       })
     })
 
+    context('when the company does not have a DUNS number and the companies new layout feature is enabled', () => {
+      beforeEach(() => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: companyMock,
+          features: {
+            'companies-new-layout': true,
+          },
+        })
+
+        this.controller.renderContacts(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+        )
+      })
+
+      commonTests(companyMock.id, 'companies/views/contacts')
+
+      it('should set the correct add button', () => {
+        const props = this.middlewareParameters.resMock.render.args[0][1]
+
+        expect(props.actionButtons).to.deep.equal([{
+          label: 'Add contact',
+          url: `/contacts/create?company=${companyMock.id}`,
+        }])
+      })
+    })
+
     context('when the company is archived', () => {
       beforeEach(() => {
         this.middlewareParameters = buildMiddlewareParameters({
