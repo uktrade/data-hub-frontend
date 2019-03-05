@@ -1,4 +1,4 @@
-import selectors from '../../selectors'
+const selectors = require('../../selectors')
 
 describe('Company interaction', () => {
   beforeEach(() => {
@@ -6,11 +6,12 @@ describe('Company interaction', () => {
   })
 
   it('Hide add interaction for archived companies', () => {
-    cy.get(selectors.company.addInteraction).should('not.be.visible')
-    cy.get(selectors.company.companyInteractionHeader).should('be.visible')
+    console.log(selectors)
+    cy.get(selectors.companyInteraction.add).should('not.be.visible')
+    cy.get(selectors.companyInteraction.header).should('be.visible')
 
-    cy.get(selectors.company.companyInteractionHeader).should('contain', 'Company interactions')
-    cy.get(selectors.company.archivedCompanyInteractionMsg).should(
+    cy.get(selectors.companyInteraction.header).should('contain', 'Company interactions')
+    cy.get(selectors.companyInteraction.archivedMsg).should(
       'contain', 'Why can I not add an interaction?')
   })
 })

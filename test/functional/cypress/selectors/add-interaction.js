@@ -1,11 +1,11 @@
-const interactions = {
+module.exports = {
   subject: '#field-subject',
   notes: '#field-notes',
   dateOfInteractionYear: '#field-date_year',
   dateOfInteractionMonth: '#field-date_month',
   dateOfInteractionDay: '#field-date_day',
   contact: '#field-contacts',
-  addInteraction: 'form > div.c-form-actions > button',
+  add: 'form > div.c-form-actions > button',
   serviceProvider: '#field-dit_team',
   service: '#field-service',
   serviceStatus: '#field-service_delivery_status',
@@ -27,5 +27,3 @@ const interactions = {
   policyFeedbackNotes: '#field-policy_feedback_notes',
   teamSearch: '#dit_team__typeahead .multiselect__single',
 }
-
-export default interactions
