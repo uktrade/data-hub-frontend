@@ -6,7 +6,6 @@ describe('Company interaction', () => {
   })
 
   it('Hide add interaction for archived companies', () => {
-    console.log(selectors)
     cy.get(selectors.companyInteraction.add).should('not.be.visible')
     cy.get(selectors.companyInteraction.header).should('be.visible')
 

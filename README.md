@@ -409,15 +409,15 @@ By default cypress will run on electron headlessly, you can read more about it [
 
 Execute all the tests on `specs` in chrome browser:
 
-`$ npm run test --browser chrome`
+`$ npm run test:functional -- --browser chrome`
 
 #### Running the tests manually in cypress interface
 
-`$ npm run test:watch`
+`$ npm run test:functional:watch`
 
 #### Running a specific spec
 
-`$ npm run test cypress/specs/nav-spec.js`
+`$ npm run test:functional -- --spec test/functional/cypress/specs/nav-spec.js`
 
 ### Acceptance Testing
 Data hub uses [Nightwatch.js](http://nightwatchjs.org), [nightwatch-cucumber](https://github.com/mucsi96/nightwatch-cucumber) and [cucumber.js](https://github.com/cucumber/cucumber-js) to run acceptance tests.

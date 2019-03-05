@@ -1,5 +1,5 @@
 {
-    "integrationFolder": "cypress/specs",
+    "integrationFolder": "test/functional/cypress/specs",
     "baseUrl": "http://localhost:3000",
     "video": false,
     "screenshotOnRunFailure": false,
