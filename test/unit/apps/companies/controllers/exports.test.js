@@ -77,6 +77,24 @@ describe('Company export controller', () => {
 
       commonTests(dnbCompanyMock, 'companies/views/exports-view')
     })
+
+    context('when the company does not have a DUNS number and the companies new layout feature is enabled', () => {
+      beforeEach(() => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: companyMock,
+          features: {
+            'companies-new-layout': true,
+          },
+        })
+
+        this.controller.renderExports(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+        )
+      })
+
+      commonTests(companyMock, 'companies/views/exports-view')
+    })
   })
 
   describe('#populateExportForm', () => {
@@ -197,6 +215,25 @@ describe('Company export controller', () => {
       beforeEach(() => {
         this.middlewareParameters = buildMiddlewareParameters({
           company: dnbCompanyMock,
+        })
+
+        this.controller.renderExportEdit(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
+      })
+
+      commonTests('companies/views/exports-edit')
+    })
+
+    context('when the company does not have a DUNS number and the companies new layout feature is enabled', () => {
+      beforeEach(() => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: companyMock,
+          features: {
+            'companies-new-layout': true,
+          },
         })
 
         this.controller.renderExportEdit(
