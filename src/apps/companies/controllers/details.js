@@ -6,9 +6,9 @@ const {
 } = require('../transformers')
 
 async function renderDetails (req, res) {
-  const { company } = res.locals
+  const { company, features } = res.locals
 
-  if (company.duns_number) {
+  if (company.duns_number || features['companies-new-layout']) {
     return res.redirect('interactions')
   }
 
