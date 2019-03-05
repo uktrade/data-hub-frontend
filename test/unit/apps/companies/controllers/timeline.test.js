@@ -29,7 +29,7 @@ describe('Company timeline controller', () => {
         })
       }
 
-      context('when rendering for a company without a DUNS number', () => {
+      context('when the company does not have a DUNS number', () => {
         beforeEach(async () => {
           nock(config.apiRoot)
             .get(`/v3/company/${companyMock.id}/timeline?limit=10&offset=0`)
@@ -52,7 +52,7 @@ describe('Company timeline controller', () => {
         ], 'companies/views/_deprecated/timeline')
       })
 
-      context('when rendering for a company with a DUNS number', () => {
+      context('when the company does have a DUNS number', () => {
         beforeEach(async () => {
           nock(config.apiRoot)
             .get(`/v3/company/${dnbCompanyMock.id}/timeline?limit=10&offset=0`)
@@ -71,6 +71,32 @@ describe('Company timeline controller', () => {
 
         commonTests([
           { text: dnbCompanyMock.name, href: `/companies/${dnbCompanyMock.id}` },
+          { text: 'Timeline' },
+        ], 'companies/views/timeline')
+      })
+
+      context('when the company does not have a DUNS number and the companies new layout feature is enabled', () => {
+        beforeEach(async () => {
+          nock(config.apiRoot)
+            .get(`/v3/company/${companyMock.id}/timeline?limit=10&offset=0`)
+            .reply(200, timelineMock)
+
+          this.middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+            features: {
+              'companies-new-layout': true,
+            },
+          })
+
+          await renderTimeline(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
+
+        commonTests([
+          { text: companyMock.name, href: `/companies/${companyMock.id}` },
           { text: 'Timeline' },
         ], 'companies/views/timeline')
       })
