@@ -60,7 +60,32 @@ describe('Interactions middleware', () => {
         expectedAddFlag: true,
       })
     })
-    
+
+    context('when the company does not have a DUNS number and the companies new layout flag is enabled', () => {
+      beforeEach(() => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: companyMock,
+          features: {
+            'companies-new-layout': true,
+          },
+        })
+
+        setInteractionsDetails(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
+      })
+
+      commonTests({
+        expectedTemplate: 'companies/views/interactions',
+        expectedReturnLink: '/companies/72fda78f-bdc3-44dc-9c22-c8ac82f7bda4/interactions/',
+        expectedEntityName: 'SAMSUNG BIOEPIS UK LIMITED',
+        expectedQuery: { company_id: '72fda78f-bdc3-44dc-9c22-c8ac82f7bda4' },
+        expectedAddFlag: true,
+      })
+    })
+
     context('when the company does have a DUNS number', () => {
       beforeEach(() => {
         this.middlewareParameters = buildMiddlewareParameters({
