@@ -19,14 +19,16 @@ const XHR = {
     const dataDocument = document.createRange().createContextualFragment(data)
 
     const xhrContainers = document.querySelectorAll('[data-xhr]')
-    xhrContainers.forEach((xhrContainer) => {
-      const xhrContainerId = xhrContainer.getAttribute('data-xhr')
-
-      const newContent = dataDocument.querySelector(`[data-xhr="${xhrContainerId}"]`)
-      if (newContent) {
-        xhrContainer.outerHTML = newContent.outerHTML
+    for (const prop in xhrContainers) {
+      if (xhrContainers.hasOwnProperty(prop)) {
+        const xhrContainer = xhrContainers[prop]
+        const xhrContainerId = xhrContainer.getAttribute('data-xhr')
+        const newContent = dataDocument.querySelector(`[data-xhr="${xhrContainerId}"]`)
+        if (newContent) {
+          xhrContainer.outerHTML = newContent.outerHTML
+        }
       }
-    })
+    }
   },
 
   updateOutlet (res, params) {
