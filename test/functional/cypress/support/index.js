@@ -1,1 +1,1 @@
-import './commands'
+require('./commands')

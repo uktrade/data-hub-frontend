@@ -1,13 +1,4 @@
-import company from './company'
-import details from './details'
-import home from './home'
-import interactions from './interactions'
-import investment from './investment'
-
-export default {
-  company,
-  details,
-  home,
-  interactions,
-  investment,
-}
+exports.companyInteraction = require('./company-interaction')
+exports.interactionDetails = require('./interaction-details')
+exports.nav = require('./nav')
+exports.addInteraction = require('./add-interaction')
