@@ -91,6 +91,46 @@ describe('Companies local navigation', () => {
     })
   })
 
+  context('when the companies new layout flag is enabled', () => {
+    context('default menu items', () => {
+      beforeEach(() => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: {
+            id: '1234',
+            headquarter_type: null,
+            company_number: null,
+          },
+          user: {
+            permissions: [
+              'company.view_company_timeline',
+              'interaction.view_all_interaction',
+              'company.view_contact',
+              'investment.view_all_investmentproject',
+              'order.view_order',
+            ],
+          },
+          features: {
+            'companies-new-layout': true,
+          },
+        })
+
+        setCompaniesLocalNav(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
+      })
+
+      commonTests([
+        'Interactions',
+        'Company contacts',
+        'Investment',
+        'Export',
+        'Orders',
+      ])
+    })
+  })
+
   context('when the company does not have a DUNS number', () => {
     context('default menu items', () => {
       beforeEach(() => {
