@@ -84,5 +84,31 @@ describe('Company contact list controller', () => {
         { text: 'Advisers' },
       ], 'companies/views/advisers', 'One List Corp')
     })
+
+    context('when the company does not have a DUNS number and the companies new layout feature is enabled', () => {
+      beforeEach(async () => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: companyMock,
+          features: {
+            'companies-new-layout': true,
+          },
+        })
+
+        nock(config.apiRoot)
+          .get(`/v3/company/${companyMock.id}/one-list-group-core-team`)
+          .reply(200, coreTeamMock)
+
+        await renderAdvisers(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
+      })
+
+      commonTests([
+        { text: companyMock.name, href: `/companies/${companyMock.id}` },
+        { text: 'Advisers' },
+      ], 'companies/views/advisers', 'Mercury Trading Ltd')
+    })
   })
 })
