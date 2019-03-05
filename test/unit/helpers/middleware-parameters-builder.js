@@ -2,6 +2,7 @@ const paths = require('~/src/apps/investments/paths')
 
 module.exports = ({
   requestBody,
+  requestParams = {},
   requestQuery = {},
   breadcrumb = sinon.stub().returnsThis(),
   company,
@@ -18,6 +19,7 @@ module.exports = ({
         token: '1234',
       },
       body: requestBody,
+      params: requestParams,
       query: requestQuery,
       flash: sinon.spy(),
     },
