@@ -13,12 +13,13 @@ const {
   renderKeyValueTables,
   renderHiddenText,
   renderMetaList,
+  renderDetailsContainer,
 } = require('./controllers')
 
 const { adviserLookup } = require('./middleware')
 const { renderFormElements } = require('./form/controllers')
 
-const { transformInvestmentProjectToListItem } = require('../investment-projects/transformers')
+const { transformInvestmentProjectToListItem } = require('../investments/transformers')
 const { getCollection } = require('../../modules/search/middleware/collection')
 
 router
@@ -35,6 +36,7 @@ router
   .get('/keyvaluetables', renderKeyValueTables)
   .get('/hidden-text', renderHiddenText)
   .get('/meta-list', renderMetaList)
+  .get('/details-container', renderDetailsContainer)
   .all('/form', adviserLookup, renderFormElements)
 
 module.exports = router

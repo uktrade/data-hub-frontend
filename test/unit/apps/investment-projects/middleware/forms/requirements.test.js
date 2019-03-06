@@ -3,9 +3,9 @@ const moment = require('moment')
 const { assign } = require('lodash')
 
 const config = require('~/config')
-const paths = require('~/src/apps/investment-projects/paths')
+const paths = require('~/src/apps/investments/paths')
 const investmentData = require('~/test/unit/data/investment/investment-data.json')
-const { handleFormPost, populateForm } = require('~/src/apps/investment-projects/middleware/forms/requirements')
+const { handleFormPost, populateForm } = require('~/src/apps/investments/middleware/forms/requirements')
 
 const yesterday = moment().subtract(1, 'days').toISOString()
 

@@ -1,18 +1,19 @@
 {% extends "./template.njk" %}
 
 {% block main_grid_right_column %}
-  <h2 class="govuk-heading-m">Exports</h2>
 
-  {% component 'key-value-table', items=exportDetails %}
+  {% call DetailsContainer({ heading: 'Exports' }) %}
+    {% component 'key-value-table', items=exportDetails %}
 
-  {% if not company.archived %}
-    <p class="actions">
-      <a href="/companies/{{company.id}}/exports/edit" class="button button--secondary">Edit export markets</a>
-    </p>
-  {% endif %}
+    {% if not company.archived %}
+      <p class="actions">
+        <a href="/companies/{{company.id}}/exports/edit" class="button button--secondary">Edit export markets</a>
+      </p>
+    {% endif %}
+  {% endcall %}
 
-  <div class="section">
-    <h2 class="heading-medium">Export wins</h2>
+  {% call DetailsContainer({ heading: 'Export wins' }) %}
     <p><a href="http://www.exportwins.service.trade.gov.uk/">Record your win</a> on our export wins site.<p>
-  </div>
+  {% endcall %}
+
 {% endblock %}

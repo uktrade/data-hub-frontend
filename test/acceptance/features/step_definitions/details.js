@@ -181,3 +181,14 @@ Then(/^the "(.+)" details summary (should be|should not be) displayed$/, async (
     .assert[assertion](detailsSummarySelector.selector)
     .useCss()
 })
+
+Then(/^the "(.+)" Edit link (should be|should not be) displayed/, async function (heading, should) {
+  const editLinkSelector = getSelectorForElementWithText(heading, { el: '//h2', child: '//following-sibling::a' })
+
+  const assertion = should === 'should be' ? 'visible' : 'elementNotPresent'
+
+  await Details
+    .api.useXpath()
+    .assert[assertion](editLinkSelector.selector)
+    .useCss()
+})

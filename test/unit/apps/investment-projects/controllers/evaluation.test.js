@@ -14,8 +14,8 @@ describe('Investment evaluation controller', () => {
     this.next = sinon.stub()
     this.breadcrumbStub = sinon.stub().returnsThis()
 
-    this.controller = proxyquire('~/src/apps/investment-projects/controllers/evaluation', {
-      '../transformers': proxyquire('~/src/apps/investment-projects/transformers', {
+    this.controller = proxyquire('~/src/apps/investments/controllers/evaluation', {
+      '../transformers': proxyquire('~/src/apps/investments/transformers', {
         '../../../lib/metadata': mockMetadataRepository,
       }),
     })
@@ -34,7 +34,7 @@ describe('Investment evaluation controller', () => {
         breadcrumb: this.breadcrumbStub,
         render: (template, data) => {
           try {
-            expect(template).to.equal('investment-projects/views/evaluation')
+            expect(template).to.equal('investments/views/evaluation')
             done()
           } catch (error) {
             done(error)
@@ -94,7 +94,7 @@ describe('Investment evaluation controller', () => {
       breadcrumb: this.breadcrumbStub,
       render: (template, data) => {
         try {
-          expect(template).to.equal('investment-projects/views/evaluation')
+          expect(template).to.equal('investments/views/evaluation')
           expect(data.value).to.deep.equal(expectedValue)
           expect(data.fdi).to.deep.equal(expectFDI)
           expect(data.landing).to.deep.equal(expectedLanding)
@@ -169,7 +169,7 @@ describe('Investment evaluation controller', () => {
       breadcrumb: this.breadcrumbStub,
       render: (template, data) => {
         try {
-          expect(template).to.equal('investment-projects/views/evaluation')
+          expect(template).to.equal('investments/views/evaluation')
           expect(data.value).to.deep.equal(expectedValue)
           expect(data.fdi).to.deep.equal(expectFDI)
           expect(data.landing).to.deep.equal(expectedLanding)

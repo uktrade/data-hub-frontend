@@ -100,6 +100,7 @@ const aboutLabels = {
 const businessHierarchyLabels = {
   headquarter_type: 'Headquarter type',
   subsidiaries: 'Subsidiaries',
+  global_headquarters: 'Global HQ',
 }
 
 module.exports = {

@@ -25,7 +25,6 @@
     $button-width: 128px;
     border: none;
     margin-left: $button-width;
-    position: relative;
     padding-top: 10px;
     line-height: 1ex;
     text-align: left;
@@ -40,7 +39,7 @@
       content: 'Choose a file';
       display: inline-block;
       position: absolute;
-      left: -$button-width;
+      left: 0;
       top: -3px;
       -webkit-user-select: none;
       cursor: pointer;

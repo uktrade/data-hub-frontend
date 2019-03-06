@@ -3,7 +3,7 @@ const { assign } = require('lodash')
 const moment = require('moment')
 
 const config = require('~/config')
-const paths = require('~/src/apps/investment-projects/paths')
+const paths = require('~/src/apps/investments/paths')
 const companyData = require('~/test/unit/data/companies/company.json')
 const yesterday = moment().subtract(1, 'days').toISOString()
 
@@ -89,7 +89,7 @@ describe('investment details middleware', () => {
       redirect: sinon.stub(),
     }
 
-    this.detailsMiddleware = proxyquire('~/src/apps/investment-projects/middleware/forms/details', {
+    this.detailsMiddleware = proxyquire('~/src/apps/investments/middleware/forms/details', {
       '../../repos': {
         updateInvestment: this.updateInvestmentStub,
         createInvestmentProject: this.createInvestmentStub,

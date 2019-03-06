@@ -4,10 +4,10 @@ const { compact, get, pickBy } = require('lodash')
 const { attendeeLabels } = require('./labels')
 const { fetchEventAttendees } = require('./repos')
 
-function transformServiceDeliveryToAttendeeListItem ({ contact, company, date, id }) {
+function transformServiceDeliveryToAttendeeListItem ({ contacts = [], company, date, id }) {
   const metaItems = [
     { key: 'company', value: get(company, 'name'), url: `/companies/${get(company, 'id')}` },
-    { key: 'job_title', value: contact ? contact.job_title : 'Not available' },
+    { key: 'job_title', value: contacts.length ? contacts[0].job_title : 'Not available' },
     { key: 'attended_date', value: date, type: 'date' },
     { key: 'service_delivery', value: 'View or edit service delivery', url: `/interactions/${id}` },
   ]
@@ -17,11 +17,11 @@ function transformServiceDeliveryToAttendeeListItem ({ contact, company, date, i
       label: attendeeLabels[key],
     }))
 
-  const listItem = contact
+  const listItem = contacts.length
     ? {
-      id: contact.id,
+      id: contacts[0].id,
       type: 'contact',
-      name: contact.name,
+      name: contacts[0].name,
       meta: compact(metaItems),
     }
     : {
@@ -63,7 +63,10 @@ async function createContactItemToAttendeeSearchResult (token, event) {
 }
 
 function existingAttendee ({ id }, attendees) {
-  return attendees.results.find(attendee => attendee.contact.id === id)
+  return attendees.results.find((attendee) => {
+    const contact = attendee.contacts && attendee.contacts[0]
+    return contact ? contact.id === id : false
+  })
 }
 
 module.exports = {

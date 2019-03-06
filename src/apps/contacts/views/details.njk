@@ -1,24 +1,30 @@
 {% extends "./template.njk" %}
 
 {% block main_grid_right_column %}
-  <h2 class="govuk-heading-m">Contact details</h2>
-  {% component 'key-value-table', variant='striped', items=contactDetails, id='contact-details' %}
+
+  {% call DetailsContainer({ heading: 'Contact details' }) %}
+    {% component 'key-value-table', variant='striped', items=contactDetails, id='contact-details' %}
+
+    {% if not contact.archived %}
+      <p>
+        <a href="/contacts/{{id}}/edit" class="button button--secondary">Edit contact</a>
+      </p>
+    {% endif %}
+  {% endcall %}
 
   {% if not contact.archived %}
-    <p>
-      <a href="/contacts/{{id}}/edit" class="button button--secondary">Edit contact</a>
-    </p>
+    {% call DetailsContainer({ heading: 'Archive contact' }) %}
+      <p>Archive this contact if it is no longer required or active.</p>
 
-    <h2 class="heading-medium">Archive contact</h2>
-    <p>Archive this contact if it is no longer required or active.</p>
-
-    {% component 'archive-form', {
-      label: 'Archive reason',
-      options: reasonForArchiveOptions,
-      optionsPrefix: reasonForArchiveOptionsPrefix,
-      csrfToken: csrfToken,
-      error: form.errors.reason,
-      url: '/contacts/' + contact.id + '/archive'
-    } %}
+      {% component 'archive-form', {
+        label: 'Archive reason',
+        options: reasonForArchiveOptions,
+        optionsPrefix: reasonForArchiveOptionsPrefix,
+        csrfToken: csrfToken,
+        error: form.errors.reason,
+        url: '/contacts/' + contact.id + '/archive'
+      } %}
+    {% endcall %}
   {% endif %}
+
 {% endblock %}

@@ -17,7 +17,7 @@ async function fetchEventAttendees ({ token, eventId, page = 1, sortby, limit = 
       offset,
       sortby,
       event_id: eventId,
-      contact_id: contactId,
+      contacts__id: contactId,
     }, value => !isNil(value)),
   })
 

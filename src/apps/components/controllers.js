@@ -2,7 +2,7 @@ const { authorisedRequest } = require('../../lib/authorised-request')
 const config = require('../../../config')
 
 const { buildPagination } = require('../../lib/pagination')
-const { transformInvestmentProjectToListItem } = require('../investment-projects/transformers')
+const { transformInvestmentProjectToListItem } = require('../investments/transformers')
 
 function renderIndex (req, res) {
   return res.render('components/views/index', {
@@ -149,6 +149,12 @@ function renderMetaList (req, res) {
     })
 }
 
+function renderDetailsContainer (req, res) {
+  return res
+    .breadcrumb('Details container')
+    .render('components/views/details-container')
+}
+
 module.exports = {
   renderEntityList,
   renderIndex,
@@ -160,4 +166,5 @@ module.exports = {
   renderKeyValueTables,
   renderHiddenText,
   renderMetaList,
+  renderDetailsContainer,
 }

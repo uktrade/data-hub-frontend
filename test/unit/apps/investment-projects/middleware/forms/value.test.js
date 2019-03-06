@@ -1,9 +1,9 @@
 const moment = require('moment')
 
 const config = require('~/config')
-const paths = require('~/src/apps/investment-projects/paths')
+const paths = require('~/src/apps/investments/paths')
 const adviserData = require('~/test/unit/data/investment/interaction/advisers')
-const controller = require('~/src/apps/investment-projects/middleware/forms/value')
+const controller = require('~/src/apps/investments/middleware/forms/value')
 
 const yesterday = moment().subtract(1, 'days').toISOString()
 const lastMonth = moment().subtract(1, 'months').toISOString()
