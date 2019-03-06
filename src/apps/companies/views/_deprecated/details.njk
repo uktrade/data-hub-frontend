@@ -1,67 +1,50 @@
 {% extends "./template.njk" %}
 
 {% block main_grid_right_column %}
-  <h2 class="govuk-heading-m">
-    {% if company.headquarter_type.name === 'ghq' %}
-      Global headquarters summary
-    {% else %}
-      Company summary
-    {% endif %}
-  </h2>
 
-  {% if chDetails %}
-    {% call Message({ type: 'muted', element: 'div' }) %}
+  {% call DetailsContainer({ heading: 'Global headquarters summary' if company.headquarter_type.name === 'ghq' else 'Company summary' }) %}
+    {% if chDetails %}
+      {% call Message({ type: 'muted', element: 'div' }) %}
       {% component 'key-value-table', items=chDetails %}
-      <p>Powered by data from <strong>Companies House</strong></p>
+        <p>Powered by data from <strong>Companies House</strong></p>
+      {% endcall %}
+    {% endif %}
+
+    {% if companyDetails %}
+      {% component 'key-value-table', variant='striped', items=companyDetails %}
+    {% endif %}
+
+    {% if company.id %}
+      {% if not company.archived %}
+        {% if company.duns_number %}
+          {% call HiddenContent({ summary: 'Why can I not edit the company information?' }) %}
+            {% call Message({ type: 'muted' }) %}
+              Information for this company comes from an external and verified source. The information is automatically updated.
+              If you think the information is incomplete or incorrect, get in touch <a href="/support">using the support form</a>
+            {% endcall %}
+          {% endcall %}
+        {% else %}
+          <p><a href="/companies/{{company.id}}/edit" class="button button--secondary">Edit company details</a></p>
+        {% endif %}
+      {% endif %}
+    {% else %}
+      <p><a href="/companies/add/{{company.company_number}}" class="button">Add company</a></p>
+    {% endif %}
+  {% endcall %}
+
+  {% if company.one_list_group_tier %}
+    {% call DetailsContainer({ heading: 'Global Account Manager – One List' }) %}
+      {% component 'key-value-table', items=accountManagementDetails, variant='striped' %}
+
+      <p>
+        <a href="advisers">See all advisers on the core team</a>
+      </p>
+
     {% endcall %}
   {% endif %}
 
-  {% if companyDetails %}
-    {% component 'key-value-table', variant='striped', items=companyDetails %}
-  {% endif %}
-
-  {% if company.id %}
-    {% if not company.archived %}
-      {% if company.duns_number %}
-        {% call HiddenContent({ summary: 'Why can I not edit the company information?' }) %}
-          {% call Message({ type: 'muted' }) %}
-            Information for this company comes from an external and verified source. The information is automatically updated.
-            If you think the information is incomplete or incorrect, get in touch <a href="/support">using the support form</a>
-          {% endcall %}
-        {% endcall %}
-      {% else %}
-        <p><a href="/companies/{{company.id}}/edit" class="button button--secondary">Edit company details</a></p>
-      {% endif %}
-    {% endif %}
-  {% else %}
-    <p><a href="/companies/add/{{company.company_number}}" class="button">Add company</a></p>
-  {% endif %}
-
-  {% if company.one_list_group_tier %}
-    <div class="section">
-      <h2 class="heading-medium">Global Account Manager – One List</h2>
-      {% component 'key-value-table', variant='striped', items=accountManagementDetails %}
-
-      {# when the "companies-advisers" flag check is removed then the HiddenContent block should also be removed #}
-      {% if features['companies-advisers'] %}
-        <p>
-          <a href="advisers">See all advisers on the core team</a>
-        </p>
-      {% else %}
-        {% call HiddenContent({ summary: 'Need to edit the Global Account Manager information?' }) %}
-          {% call Message({ type: 'muted' }) %}
-            If you need to change the One List tier or Global Account Manager for this company,
-            go to the <a href="https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/strategic-relationship-account-management/">Digital Workspace</a>
-            or email <a href="mailto:{{oneListEmail}}">{{oneListEmail}}</a>.
-          {% endcall %}
-        {% endcall %}
-      {% endif %}
-
-    </div>
-  {% endif %}
-
   {% if not company.archived and not company.duns_number %}
-      <h2 class="heading-medium">Archive company</h2>
+    {% call DetailsContainer({ heading: 'Archive company' }) %}
       <p>Archive this company if it is no longer required or active.</p>
 
       {% component 'archive-form', {
@@ -71,5 +54,6 @@
         error: form.errors.reason,
         url: '/companies/' + company.id + '/archive'
       } %}
+    {% endcall %}
   {% endif %}
 {% endblock %}

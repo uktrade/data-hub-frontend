@@ -8,7 +8,7 @@ const BusinessDetailsPage = client.page.companies['business-details']()
 const getAddressSelector = (tableNumber) => {
   return getSelectorForElementWithText('Addresses', {
     el: '//h2',
-    child: `/following-sibling::table[${tableNumber}]`,
+    child: `/following-sibling::div/table[${tableNumber}]`,
   })
 }
 

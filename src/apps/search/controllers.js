@@ -6,7 +6,7 @@ const { transformApiResponseToSearchCollection } = require('../../modules/search
 const { transformCompanyToListItem } = require('../companies/transformers')
 const { transformContactToListItem } = require('../contacts/transformers')
 const { transformEventToListItem } = require('../events/transformers')
-const { transformInvestmentProjectToListItem } = require('../investment-projects/transformers')
+const { transformInvestmentProjectToListItem } = require('../investments/transformers')
 const { transformOrderToListItem } = require('../omis/transformers')
 const { transformInteractionToListItem } = require('../interactions/transformers')
 

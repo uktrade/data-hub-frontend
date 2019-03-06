@@ -1,0 +1,25 @@
+@import "~govuk-frontend/helpers/all";
+@import "~govuk-frontend/settings/all";
+
+.c-details-container {
+  display: flex;
+  flex-flow: row wrap;
+
+  &:not(:first-child) {
+    margin-top: govuk-spacing(8);
+  }
+}
+
+.c-details-container__edit-link {
+  @include govuk-font($size: 24);
+
+  margin-left: auto;
+}
+
+.c-details-container__content {
+  width: 100%;
+
+  & > :not(table):first-child {
+    margin-top: govuk-spacing(4);
+  }
+}

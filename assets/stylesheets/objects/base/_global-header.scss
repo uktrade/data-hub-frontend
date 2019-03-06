@@ -40,7 +40,8 @@
     width: 100%;
 
     @include govuk-media-query($from: tablet) {
-      width: auto;
+      width: auto; // IE11 fallback, as initial property is not supported
+      width: initial;
       display: inline-block;
       list-style: none;
     }
@@ -105,7 +106,8 @@
     border-bottom: 1px solid govuk-colour("grey-1");
 
     @include govuk-media-query($from: tablet) {
-      width: auto;
+      width: auto; // IE11 fallback, as initial property is not supported
+      width: initial;
       display: inline;
       list-style: none;
       padding: 14px 0;
@@ -135,8 +137,8 @@
     }
 
     @include govuk-media-query($from: tablet) {
-      display: inline-block;
-      width: auto;
+      display: inline; // IE11 fallback, as initial property is not supported
+      display: initial;
       font-size: 16px;
       padding: 10px;
     }

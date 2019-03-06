@@ -1,6 +1,6 @@
 const { merge, cloneDeep } = require('lodash')
 const format = require('date-fns/format')
-const paths = require('~/src/apps/investment-projects/paths')
+const paths = require('~/src/apps/investments/paths')
 const { mediumDateTimeFormat } = require('../../../../../config')
 const investmentData = require('~/test/unit/data/investment/investment-data.json')
 const investmentProjectStages = require('~/test/unit/data/investment/investment-project-stages.json')
@@ -32,7 +32,7 @@ const getInvestmentData = (ukCompanyId, clientRelationshipManagerId) => {
 }
 
 const createMiddleware = (investmentData, adviserData, companyData, stages = investmentProjectStages) => {
-  return proxyquire('~/src/apps/investment-projects/middleware/shared', {
+  return proxyquire('~/src/apps/investments/middleware/shared', {
     '../repos': {
       getInvestment: sinon.stub().resolves(investmentData),
     },
@@ -231,7 +231,7 @@ describe('Investment shared middleware', () => {
       beforeEach(async () => {
         this.error = new Error('error')
 
-        const middleware = proxyquire('~/src/apps/investment-projects/middleware/shared', {
+        const middleware = proxyquire('~/src/apps/investments/middleware/shared', {
           '../repos': {
             getInvestment: sinon.stub().throws(this.error),
           },

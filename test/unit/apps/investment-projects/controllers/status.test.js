@@ -1,11 +1,11 @@
-const paths = require('~/src/apps/investment-projects/paths')
+const paths = require('~/src/apps/investments/paths')
 const { merge, find } = require('lodash')
 
 describe('investment status controller', () => {
   beforeEach(() => {
     this.updateInvestmentStub = sinon.stub().resolves()
 
-    this.controller = proxyquire('~/src/apps/investment-projects/controllers/status', {
+    this.controller = proxyquire('~/src/apps/investments/controllers/status', {
       '../repos': {
         updateInvestment: this.updateInvestmentStub,
       },
@@ -48,7 +48,7 @@ describe('investment status controller', () => {
       })
 
       it('should render the status page', () => {
-        expect(this.res.render).to.be.calledWith('investment-projects/views/status')
+        expect(this.res.render).to.be.calledWith('investments/views/status')
       })
 
       it('should render the status page with a return link', async () => {
@@ -94,7 +94,7 @@ describe('investment status controller', () => {
       })
 
       it('should render the status page', () => {
-        expect(this.res.render).to.be.calledWith('investment-projects/views/status')
+        expect(this.res.render).to.be.calledWith('investments/views/status')
       })
 
       it('should render the status page with a return link', async () => {

@@ -2,25 +2,27 @@
 
 {% block body_main_content %}
 
-  <h2 class="govuk-heading-m">Advisers on the core team</h2>
+  {% call DetailsContainer({ heading: 'Advisers on the core team' }) %}
 
-  {% if company.global_headquarters.name %}
-    <p>This company is a subsidiary of the {{company.global_headquarters.name}}, an account managed company on the One List ({{company.one_list_group_tier.name}})</p>
-  {% else %}
-    <p>This is an account managed company on the One List ({{company.one_list_group_tier.name}})</p>
-  {% endif %}
+    {% if company.global_headquarters.name %}
+      <p>This company is a subsidiary of the {{company.global_headquarters.name}}, an account managed company on the One List ({{company.one_list_group_tier.name}})</p>
+    {% else %}
+      <p>This is an account managed company on the One List ({{company.one_list_group_tier.name}})</p>
+    {% endif %}
 
-  {% component 'data-table', {
-    variant: 'equal-columns',
-    columns: columns.global_account_manager,
-    data: coreTeam.accountManagers
-  } %}
+    {% component 'data-table', {
+      variant: 'equal-columns',
+      columns: columns.global_account_manager,
+      data: coreTeam.accountManagers
+    } %}
 
-  {% component 'data-table', {
-    variant: 'equal-columns',
-    columns: columns.adviser_core_team,
-    data: coreTeam.teamMembers
-  } %}
+    {% component 'data-table', {
+      variant: 'equal-columns',
+      columns: columns.adviser_core_team,
+      data: coreTeam.teamMembers
+    } %}
+
+  {% endcall %}
 
   {% call HiddenContent({ summary: 'Need to find out more, or edit the core team or One List tier information?' }) %}
     {% call Message({ type: 'muted' }) %}
