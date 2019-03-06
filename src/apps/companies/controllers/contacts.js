@@ -4,7 +4,7 @@ const { contactFiltersFields, companyContactSortForm } = require('../../contacts
 const { buildSelectedFiltersSummary } = require('../../builders')
 
 function renderContacts (req, res) {
-  const { company } = res.locals
+  const { company, features } = res.locals
   const filtersFields = filter(contactFiltersFields, (field) => {
     return ['name', 'archived'].includes(field.name)
   })
@@ -21,7 +21,9 @@ function renderContacts (req, res) {
     url: `/contacts/create?company=${company.id}`,
   }]
 
-  const view = company.duns_number ? 'companies/views/contacts' : 'companies/views/_deprecated/contacts'
+  const view = (company.duns_number || features['companies-new-layout'])
+    ? 'companies/views/contacts'
+    : 'companies/views/_deprecated/contacts'
 
   res
     .breadcrumb(company.name, `/companies/${company.id}`)

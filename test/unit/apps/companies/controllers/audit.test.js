@@ -88,6 +88,27 @@ describe('Company audit controller', () => {
 
       commonTests(dnbCompanyMock.id, 'companies/views/audit')
     })
+
+    context('when the company does not have a DUNS number and the companies new layout feature is enabled', () => {
+      beforeEach(async () => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: companyMock,
+          features: {
+            'companies-new-layout': true,
+          },
+        })
+
+        this.getCompanyAuditLogStub.resolves(auditLogMock)
+
+        await this.controller.renderAuditLog(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
+      })
+
+      commonTests(companyMock.id, 'companies/views/audit')
+    })
   })
 
   context('when audit rejects', () => {

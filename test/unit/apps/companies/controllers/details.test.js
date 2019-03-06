@@ -111,5 +111,35 @@ describe('Companies details controller', () => {
         expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
       })
     })
+
+    context('when the company is a Data Hub company and the companies new layout feature is enabled', () => {
+      beforeEach(async () => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: minimalCompany,
+          features: {
+            'companies-new-layout': true,
+          },
+        })
+
+        await renderDetails(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy
+        )
+      })
+
+      it('should not render the template', () => {
+        expect(this.middlewareParameters.resMock.render).to.not.be.called
+      })
+
+      it('should not add breadcrumbs', () => {
+        expect(this.middlewareParameters.resMock.breadcrumb).to.not.be.called
+      })
+
+      it('should redirect to interactions', () => {
+        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledWith('interactions')
+        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
+      })
+    })
   })
 })
