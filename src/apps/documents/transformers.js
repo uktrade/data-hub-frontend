@@ -17,54 +17,25 @@ function transformLabelsToShowFiles (key, labels) {
 }
 
 function getDownloadLinkOrState (file, proposition_id, investment_project_id) {
-  const output = {
-    type: 'document',
+  const items = {
+    'virus_scanned': ({ id, av_clean }) => {
+      return av_clean
+        ? {
+          url: `/investments/projects/${investment_project_id}/propositions/${proposition_id}/download/${id}`,
+          name: 'Download',
+        }
+        : {
+          type: 'error',
+          name: 'The file didn\'t pass virus scanning, contact your administrator',
+        }
+    },
+    'not_virus_scanned': () => 'File not virus scanned',
+    'virus_scanning_scheduled': () => 'Virus scanning scheduled',
+    'virus_scanning_in_progress': () => 'File is being scanned, try again in a few moments',
+    'virus_scanning_failed': () => 'Virus scanning failed, contact your administrator',
   }
 
-  switch (file.status) {
-    case 'virus_scanned':
-      if (file.av_clean) {
-        return {
-          ...output,
-          status: 'av_clean',
-          message: 'Download',
-          href: `/investments/projects/${investment_project_id}/propositions/${proposition_id}/download/${file.id}`,
-        }
-      } else {
-        return {
-          ...output,
-          status: 'scan_failed',
-          message: 'The file didn\'t pass virus scanning, contact your administrator',
-        }
-      }
-    case 'not_virus_scanned':
-      return {
-        ...output,
-        message: 'File not virus scanned',
-      }
-    case 'virus_scanning_scheduled':
-      return {
-        ...output,
-        message: 'Virus scanning scheduled',
-      }
-    case 'virus_scanning_in_progress':
-      return {
-        ...output,
-        message: 'File is being scanned, try again in a few moments',
-      }
-
-    case 'virus_scanning_failed':
-      return {
-        ...output,
-        message: 'Virus scanning failed, contact your administrator',
-      }
-
-    default:
-      return {
-        ...output,
-        message: 'Virus scanning failed, contact your administrator',
-      }
-  }
+  return items[file.status](file)
 }
 
 function transformFilesResultsToDetails (files, proposition_id, investment_project_id) {
