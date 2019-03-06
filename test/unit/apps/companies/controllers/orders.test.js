@@ -4,7 +4,7 @@ const ordersMock = require('~/test/unit/data/omis/collection.json')
 const companyMock = require('~/test/unit/data/company.json')
 const dnbCompanyMock = require('~/test/unit/data/companies/dnb-company.json')
 
-describe('Company investments controller', () => {
+describe('Company orders controller', () => {
   beforeEach(() => {
     this.searchStub = sinon.stub()
     this.transformOrderToListItemSpy = sinon.spy()
@@ -23,7 +23,7 @@ describe('Company investments controller', () => {
     })
   })
 
-  context('when investments returns successfully', () => {
+  context('when orders returns successfully', () => {
     context('with default page number', () => {
       const commonTests = (expectedCompanyId, expectedTemplate) => {
         it('should call search with correct arguments', () => {
@@ -81,14 +81,33 @@ describe('Company investments controller', () => {
         commonTests(companyMock.id, 'companies/views/_deprecated/orders')
       })
 
+      context('when the company does not have a DUNS number and the companies new layout feature is enabled', () => {
+        beforeEach(async () => {
+          this.searchStub.resolves(ordersMock.results)
+
+          this.middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+            features: {
+              'companies-new-layout': true,
+            },
+          })
+
+          await this.controller.renderOrders(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
+
+        commonTests(companyMock.id, 'companies/views/orders')
+      })
+
       context('when the company does have a DNB number', () => {
         beforeEach(async () => {
           this.searchStub.resolves(ordersMock.results)
 
           this.middlewareParameters = buildMiddlewareParameters({
-            company: {
-              ...dnbCompanyMock,
-            },
+            company: dnbCompanyMock,
           })
 
           await this.controller.renderOrders(

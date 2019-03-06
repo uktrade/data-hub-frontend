@@ -59,6 +59,9 @@ describe('Company investments controller', () => {
           this.getCompanyInvestmentProjectsStub.resolves(investmentsMock.results)
 
           this.middlewareParameters = buildMiddlewareParameters({
+            requestQuery: {
+              page: 1,
+            },
             company: companyMock,
           })
 
@@ -77,9 +80,10 @@ describe('Company investments controller', () => {
           this.getCompanyInvestmentProjectsStub.resolves(investmentsMock.results)
 
           this.middlewareParameters = buildMiddlewareParameters({
-            company: {
-              ...dnbCompanyMock,
+            requestQuery: {
+              page: 1,
             },
+            company: dnbCompanyMock,
           })
 
           await this.controller.renderInvestments(
@@ -90,6 +94,30 @@ describe('Company investments controller', () => {
         })
 
         commonTests(dnbCompanyMock.id, 'companies/views/investments')
+      })
+
+      context('when the company does not have a DUNS number and the companies new layout feature is enabled', () => {
+        beforeEach(async () => {
+          this.getCompanyInvestmentProjectsStub.resolves(investmentsMock.results)
+
+          this.middlewareParameters = buildMiddlewareParameters({
+            requestQuery: {
+              page: 1,
+            },
+            company: companyMock,
+            features: {
+              'companies-new-layout': true,
+            },
+          })
+
+          await this.controller.renderInvestments(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
+
+        commonTests(companyMock.id, 'companies/views/investments')
       })
     })
 

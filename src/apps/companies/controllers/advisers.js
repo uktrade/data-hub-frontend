@@ -5,7 +5,7 @@ const { coreTeamLabels } = require('../labels')
 
 async function renderAdvisers (req, res, next) {
   try {
-    const { company } = res.locals
+    const { company, features } = res.locals
     const token = req.session.token
     const { global_account_manager: globalAccountManager, adviser_on_core_team: adviserOnCoreTeam, location, team } = coreTeamLabels
     const columns = {
@@ -23,7 +23,9 @@ async function renderAdvisers (req, res, next) {
     const coreTeam = await getOneListGroupCoreTeam(token, company.id)
       .then(transformCoreTeamToCollection)
 
-    const view = company.duns_number ? 'companies/views/advisers' : 'companies/views/_deprecated/advisers'
+    const view = (company.duns_number || features['companies-new-layout'])
+      ? 'companies/views/advisers'
+      : 'companies/views/_deprecated/advisers'
 
     res
       .breadcrumb(company.name, `/companies/${company.id}`)
