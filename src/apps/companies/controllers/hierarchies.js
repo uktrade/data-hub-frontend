@@ -1,10 +1,13 @@
-function renderAddGlobalHQ (req, res, next) {
-  const { id: companyId, name: companyName } = res.locals.company
+function renderAddGlobalHQ (req, res) {
+  const { company, features } = res.locals
+  const view = features['companies-new-layout']
+    ? 'companies/views/add-global-hq.njk'
+    : 'companies/views/_deprecated/add-global-hq.njk'
 
   res
-    .breadcrumb(companyName, `/companies/${companyId}`)
+    .breadcrumb(company.name, `/companies/${company.id}`)
     .breadcrumb('Link Global HQ')
-    .render('companies/views/_deprecated/add-global-hq.njk')
+    .render(view)
 }
 
 module.exports = {
