@@ -41,6 +41,10 @@
   </div>
 {% endmacro %}
 
+{% macro error(data) %}
+  <span class="c-message--error">{{ data.name }}</span>
+{% endmacro %}
+
 {% macro renderItem(data) %}
   {% if data.url %}
     {{ link(data) }}
@@ -60,6 +64,8 @@
     {% else %}
       {{ item.message }}
     {% endif %}
+  {% elif data.type === 'error' %}
+    {{ error(data) }}
   {% else %}
     {{ data.name or data | escapeHtml | safe }}
   {% endif %}
