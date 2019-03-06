@@ -34,7 +34,7 @@ describe('Create attendee controller', () => {
       this.res.locals.event = event
 
       nock(config.apiRoot)
-        .get('/v3/interaction?limit=10&offset=0&event_id=31a9f8bd-7796-4af4-8f8c-25450860e2d1&contact_id=59c815d1-91d0-4d1f-b980-1d04157a298f')
+        .get('/v3/interaction?limit=10&offset=0&event_id=31a9f8bd-7796-4af4-8f8c-25450860e2d1&contacts__id=59c815d1-91d0-4d1f-b980-1d04157a298f')
         .reply(200, {
           count: 0,
           results: [],
@@ -110,7 +110,7 @@ describe('Create attendee controller', () => {
       this.res.locals.event = event
 
       nock(config.apiRoot)
-        .get('/v3/interaction?limit=10&offset=0&event_id=31a9f8bd-7796-4af4-8f8c-25450860e2d1&contact_id=9b1138ab-ec7b-497f-b8c3-27fed21694ef')
+        .get('/v3/interaction?limit=10&offset=0&event_id=31a9f8bd-7796-4af4-8f8c-25450860e2d1&contacts__id=9b1138ab-ec7b-497f-b8c3-27fed21694ef')
         .reply(200, attendeesData)
 
       await createAttendee(this.req, this.res, this.nextSpy)

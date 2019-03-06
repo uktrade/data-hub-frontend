@@ -58,10 +58,10 @@ describe('#transformEventToAttendeeListItem', () => {
 
     context('when a valid contact is provided without a job title', () => {
       beforeEach(() => {
-        this.serviceDelivery.contact = {
+        this.serviceDelivery.contacts = [{
           id: '3333',
           name: 'Test contact',
-        }
+        }]
 
         this.transformedAttendee = transformServiceDeliveryToAttendeeListItem(this.serviceDelivery)
       })
@@ -99,11 +99,11 @@ describe('#transformEventToAttendeeListItem', () => {
 
     context('when a valid contact is provided with a job title', () => {
       beforeEach(() => {
-        this.serviceDelivery.contact = {
+        this.serviceDelivery.contacts = [{
           id: '3333',
           name: 'Test contact',
           job_title: 'Director',
-        }
+        }]
 
         this.transformedAttendee = transformServiceDeliveryToAttendeeListItem(this.serviceDelivery)
       })
