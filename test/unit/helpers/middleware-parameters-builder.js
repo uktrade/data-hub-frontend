@@ -7,8 +7,9 @@ module.exports = ({
   company,
   contact,
   interaction,
-  investment,
   order,
+  investment,
+  companiesHouseRecord,
   features = {},
 }) => {
   return {
@@ -31,6 +32,7 @@ module.exports = ({
         interaction,
         order,
         investment,
+        companiesHouseRecord,
         features,
       },
     },
