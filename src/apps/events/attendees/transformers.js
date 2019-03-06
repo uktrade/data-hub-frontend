@@ -63,7 +63,10 @@ async function createContactItemToAttendeeSearchResult (token, event) {
 }
 
 function existingAttendee ({ id }, attendees) {
-  return attendees.results.find(attendee => attendee.contacts[0].id === id)
+  return attendees.results.find((attendee) => {
+    const contact = attendee.contacts && attendee.contacts[0]
+    return contact ? contact.id === id : false
+  })
 }
 
 module.exports = {
