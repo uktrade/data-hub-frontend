@@ -31,7 +31,7 @@
       This company was archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br>
       <strong>Reason:</strong> {{company.archived_reason}}<br>
       <br>
-      <a href="/companies/{{company.id}}/unarchive?redirect=business-details">Unarchive</a>
+      <a href="/companies/{{company.id}}/unarchive">Unarchive</a>
     {% endcall %}
   {% endif %}
 
@@ -130,7 +130,7 @@
         options: ['Company is dissolved'],
         csrfToken: csrfToken,
         error: form.errors.reason,
-        url: '/companies/' + company.id + '/archive?redirect=business-details'
+        url: '/companies/' + company.id + '/archive'
       } %}
     {% endcall %}
   {% endif %}
