@@ -1,15 +1,14 @@
-const { assign } = require('lodash')
 const moment = require('moment')
+
+const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
 const config = require('~/config')
 const companiesHouseRecord = require('~/test/unit/data/companies/companies-house.json')
 const companyRecord = require('~/test/unit/data/companies/datahub-only-company.json')
 
 const yesterday = moment().subtract(1, 'days').toISOString()
-const middleware = require('~/src/apps/companies/middleware/form')
+const { populateForm, handleFormPost } = require('~/src/apps/companies/middleware/form')
 const formService = require('~/src/apps/companies/services/form')
-
-const metadata = require('~/src/lib/metadata')
 
 const metadataMock = {
   headquarterOptions: [
@@ -49,92 +48,70 @@ const metadataMock = {
 }
 
 describe('Companies form middleware', () => {
-  beforeEach(() => {
-    this.flashSpy = sinon.spy()
-    this.breadcrumbStub = sinon.stub().returnsThis()
-    this.redirectSpy = sinon.spy()
-    this.nextSpy = sinon.spy()
-
-    this.reqMock = {
-      query: {},
-      session: {
-        token: '1234',
-      },
-      flash: this.flashSpy,
-    }
-
-    this.resMock = {
-      locals: {},
-      breadcrumb: this.breadcrumbStub,
-      redirect: this.redirectSpy,
-    }
-  })
-
-  describe('#populateForm()', () => {
-    beforeEach(() => {
-      metadata.businessTypeOptions = metadataMock.businessTypeOptions
-      nock(config.apiRoot)
-        .get('/metadata/uk-region/')
-        .reply(200, metadataMock.regionOptions)
-        .get('/metadata/headquarter-type/')
-        .reply(200, metadataMock.headquarterOptions)
-        .get('/metadata/sector/')
-        .reply(200, metadataMock.sectorOptions)
-        .get('/metadata/employee-range/')
-        .reply(200, metadataMock.employeeOptions)
-        .get('/metadata/turnover/')
-        .reply(200, metadataMock.turnoverOptions)
-        .get('/metadata/country/')
-        .reply(200, metadataMock.countryOptions)
-        .get('/metadata/business-type/')
-        .reply(200, metadataMock.businessTypeOptions)
-    })
-
-    afterEach(() => {
-      delete metadata.businessTypeOption
-    })
-
+  describe('#populateForm', () => {
     context('when creating any new company', () => {
       beforeEach(async () => {
-        await middleware.populateForm(this.reqMock, this.resMock, this.nextSpy)
+        this.middlewareParameters = buildMiddlewareParameters({})
+
+        nock(config.apiRoot)
+          .get('/metadata/uk-region/')
+          .reply(200, metadataMock.regionOptions)
+          .get('/metadata/headquarter-type/')
+          .reply(200, metadataMock.headquarterOptions)
+          .get('/metadata/sector/')
+          .reply(200, metadataMock.sectorOptions)
+          .get('/metadata/employee-range/')
+          .reply(200, metadataMock.employeeOptions)
+          .get('/metadata/turnover/')
+          .reply(200, metadataMock.turnoverOptions)
+          .get('/metadata/country/')
+          .reply(200, metadataMock.countryOptions)
+          .get('/metadata/business-type/')
+          .reply(200, metadataMock.businessTypeOptions)
+
+        await populateForm(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
       })
 
       it('should include the active region options for use in the form', () => {
-        expect(this.resMock.locals.options.regions).to.deep.equal([
+        expect(this.middlewareParameters.resMock.locals.options.regions).to.deep.equal([
           { value: '1', label: 'r1' },
           { value: '3', label: 'r3' },
         ])
       })
 
       it('should include the active sector options for use in the form', () => {
-        expect(this.resMock.locals.options.sectors).to.deep.equal([
+        expect(this.middlewareParameters.resMock.locals.options.sectors).to.deep.equal([
           { value: '1', label: 's1' },
           { value: '3', label: 's3' },
         ])
       })
 
       it('should include the active employee options for use in the form', () => {
-        expect(this.resMock.locals.options.employees).to.deep.equal([
+        expect(this.middlewareParameters.resMock.locals.options.employees).to.deep.equal([
           { value: '1', label: 'e1' },
           { value: '3', label: 'e3' },
         ])
       })
 
       it('should include the active turnover options for use in the form', () => {
-        expect(this.resMock.locals.options.turnovers).to.deep.equal([
+        expect(this.middlewareParameters.resMock.locals.options.turnovers).to.deep.equal([
           { value: '1', label: 't1' },
           { value: '3', label: 't3' },
         ])
       })
 
       it('should include the active foreign country options for use in the form', () => {
-        expect(this.resMock.locals.options.foreignCountries).to.deep.equal([
+        expect(this.middlewareParameters.resMock.locals.options.foreignCountries).to.deep.equal([
           { value: '7777', label: 'France' },
         ])
       })
 
       it('should include headquarter options that have had label substituted and an option for not a headquarters', () => {
-        expect(this.resMock.locals.options.headquarters).to.deep.equal([
+        expect(this.middlewareParameters.resMock.locals.options.headquarters).to.deep.equal([
           { value: 'not_headquarters', label: 'Not a headquarters' },
           { value: '1', label: 'European HQ' },
           { value: '3', label: 'UK HQ' },
@@ -144,12 +121,35 @@ describe('Companies form middleware', () => {
 
     context('when creating a new company from companies house', () => {
       beforeEach(async () => {
-        this.resMock.locals.companiesHouseRecord = companiesHouseRecord
-        await middleware.populateForm(this.reqMock, this.resMock, this.nextSpy)
+        this.middlewareParameters = buildMiddlewareParameters({
+          companiesHouseRecord: companiesHouseRecord,
+        })
+
+        nock(config.apiRoot)
+          .get('/metadata/uk-region/')
+          .reply(200, metadataMock.regionOptions)
+          .get('/metadata/headquarter-type/')
+          .reply(200, metadataMock.headquarterOptions)
+          .get('/metadata/sector/')
+          .reply(200, metadataMock.sectorOptions)
+          .get('/metadata/employee-range/')
+          .reply(200, metadataMock.employeeOptions)
+          .get('/metadata/turnover/')
+          .reply(200, metadataMock.turnoverOptions)
+          .get('/metadata/country/')
+          .reply(200, metadataMock.countryOptions)
+          .get('/metadata/business-type/')
+          .reply(200, metadataMock.businessTypeOptions)
+
+        await populateForm(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
       })
 
       it('should pre-populate the form with companies house values', () => {
-        const formData = this.resMock.locals.formData
+        const formData = this.middlewareParameters.resMock.locals.formData
         expect(formData).to.have.property('name', 'Mercury Trading Ltd')
         expect(formData).to.have.property('business_type', '6f75408b-03e7-e611-bca1-e4115bead28a')
         expect(formData).to.have.property('company_number', '99919')
@@ -161,18 +161,42 @@ describe('Companies form middleware', () => {
 
     context('when editing an existing company', () => {
       beforeEach(async () => {
-        this.resMock.locals.company = assign({}, companyRecord, {
-          uk_region: { id: 'r2' },
-          sector: { id: 's2' },
-          employee_range: { id: 'e2' },
-          turnover_range: { id: 't2' },
-          trading_address_country: { id: '8888' },
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: {
+            ...companyRecord,
+            uk_region: { id: 'r2' },
+            sector: { id: 's2' },
+            employee_range: { id: 'e2' },
+            turnover_range: { id: 't2' },
+            trading_address_country: { id: '8888' },
+          },
         })
-        await middleware.populateForm(this.reqMock, this.resMock, this.nextSpy)
+
+        nock(config.apiRoot)
+          .get('/metadata/uk-region/')
+          .reply(200, metadataMock.regionOptions)
+          .get('/metadata/headquarter-type/')
+          .reply(200, metadataMock.headquarterOptions)
+          .get('/metadata/sector/')
+          .reply(200, metadataMock.sectorOptions)
+          .get('/metadata/employee-range/')
+          .reply(200, metadataMock.employeeOptions)
+          .get('/metadata/turnover/')
+          .reply(200, metadataMock.turnoverOptions)
+          .get('/metadata/country/')
+          .reply(200, metadataMock.countryOptions)
+          .get('/metadata/business-type/')
+          .reply(200, metadataMock.businessTypeOptions)
+
+        await populateForm(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
       })
 
       it('should pre-populate the form with company values', () => {
-        const formData = this.resMock.locals.formData
+        const formData = this.middlewareParameters.resMock.locals.formData
         expect(formData).to.have.property('name', 'SAMSUNG BIOEPIS UK LIMITED')
         expect(formData).to.have.property('business_type', '6f75408b-03e7-e611-bca1-e4115bead28a')
         expect(formData).to.have.property('registered_address_1', '5TH FLOOR, PROFILE WEST')
@@ -181,7 +205,7 @@ describe('Companies form middleware', () => {
       })
 
       it('should include the active region options for use in the form and the current option', () => {
-        expect(this.resMock.locals.options.regions).to.deep.equal([
+        expect(this.middlewareParameters.resMock.locals.options.regions).to.deep.equal([
           { value: '1', label: 'r1' },
           { value: '2', label: 'r2' },
           { value: '3', label: 'r3' },
@@ -189,7 +213,7 @@ describe('Companies form middleware', () => {
       })
 
       it('should include the active sector options for use in the form and the current option', () => {
-        expect(this.resMock.locals.options.sectors).to.deep.equal([
+        expect(this.middlewareParameters.resMock.locals.options.sectors).to.deep.equal([
           { value: '1', label: 's1' },
           { value: '2', label: 's2' },
           { value: '3', label: 's3' },
@@ -197,7 +221,7 @@ describe('Companies form middleware', () => {
       })
 
       it('should include the active employee options for use in the form and the current option', () => {
-        expect(this.resMock.locals.options.employees).to.deep.equal([
+        expect(this.middlewareParameters.resMock.locals.options.employees).to.deep.equal([
           { value: '1', label: 'e1' },
           { value: '2', label: 'e2' },
           { value: '3', label: 'e3' },
@@ -205,7 +229,7 @@ describe('Companies form middleware', () => {
       })
 
       it('should include the active turnover options for use in the form and the current option', () => {
-        expect(this.resMock.locals.options.turnovers).to.deep.equal([
+        expect(this.middlewareParameters.resMock.locals.options.turnovers).to.deep.equal([
           { value: '1', label: 't1' },
           { value: '2', label: 't2' },
           { value: '3', label: 't3' },
@@ -213,236 +237,227 @@ describe('Companies form middleware', () => {
       })
 
       it('should include the active foreign country options for use in the form and the current option', () => {
-        expect(this.resMock.locals.options.foreignCountries).to.deep.equal([
+        expect(this.middlewareParameters.resMock.locals.options.foreignCountries).to.deep.equal([
           { value: '7777', label: 'France' },
           { value: '8888', label: 'Test' },
         ])
       })
     })
 
-    context('when populating a company for for a previous failed save', () => {
+    context('when populating a company for a previous failed save', () => {
       beforeEach(async () => {
-        this.resMock.locals.company = companyRecord
-        this.reqMock.body = {
-          name: 'Fred Bloggs Pies',
-        }
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: companyRecord,
+          requestBody: {
+            name: 'Fred Bloggs Pies',
+          },
+        })
 
-        await middleware.populateForm(this.reqMock, this.resMock, this.nextSpy)
+        nock(config.apiRoot)
+          .get('/metadata/uk-region/')
+          .reply(200, metadataMock.regionOptions)
+          .get('/metadata/headquarter-type/')
+          .reply(200, metadataMock.headquarterOptions)
+          .get('/metadata/sector/')
+          .reply(200, metadataMock.sectorOptions)
+          .get('/metadata/employee-range/')
+          .reply(200, metadataMock.employeeOptions)
+          .get('/metadata/turnover/')
+          .reply(200, metadataMock.turnoverOptions)
+          .get('/metadata/country/')
+          .reply(200, metadataMock.countryOptions)
+          .get('/metadata/business-type/')
+          .reply(200, metadataMock.businessTypeOptions)
+
+        await populateForm(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
       })
 
       it('should pre-populate the form with posted data', () => {
-        const formData = this.resMock.locals.formData
+        const formData = this.middlewareParameters.resMock.locals.formData
         expect(formData).to.have.property('name', 'Fred Bloggs Pies')
       })
     })
   })
 
-  describe('handleFormPost()', () => {
-    beforeEach(() => {
-      this.saveCompanyFormSpy = sinon.spy(formService, 'saveCompanyForm')
-    })
+  describe('#handleFormPost', () => {
+    context('when saving is successful', () => {
+      const commonTests = (expectedCompanyToBeSaved) => {
+        it('should call save company service', () => {
+          expect(this.saveCompanyFormSpy).to.have.been.calledWith(
+            this.middlewareParameters.reqMock.session.token,
+            expectedCompanyToBeSaved,
+          )
+        })
 
-    context('when saving a new company works', () => {
-      beforeEach(async () => {
-        nock(config.apiRoot)
-          .post('/v3/company')
-          .reply(200, companyRecord)
+        it('should call flash message', () => {
+          expect(this.middlewareParameters.reqMock.flash).to.have.been.calledOnce
+          expect(this.middlewareParameters.reqMock.flash).to.be.calledWith('success', 'Company record updated')
+        })
 
-        this.reqMock.body = {
-          name: 'Fred Bloggs Ltd',
-        }
+        it('should redirect to the entity', () => {
+          expect(this.middlewareParameters.resMock.redirect).to.have.been.calledWith(`/companies/${companyRecord.id}`)
+        })
 
-        await middleware.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
-      })
+        it('should not call next', () => {
+          expect(this.middlewareParameters.nextSpy).not.to.have.been.called
+        })
+      }
 
-      it('should call save company service', () => {
-        expect(this.saveCompanyFormSpy).to.have.been.calledWith(this.reqMock.session.token, this.reqMock.body)
-      })
+      context('when saving a new company', () => {
+        beforeEach(async () => {
+          this.saveCompanyFormSpy = sinon.spy(formService, 'saveCompanyForm')
 
-      it('should call flash message', () => {
-        expect(this.flashSpy).to.have.been.calledOnce
-      })
-
-      it('should redirect to the entity', () => {
-        expect(this.redirectSpy).to.have.been.calledWith(`/companies/${companyRecord.id}`)
-      })
-
-      it('should not call next', () => {
-        expect(this.nextSpy).not.to.have.been.called
-      })
-    })
-
-    context('when saving a new company fails validation', () => {
-      beforeEach(async () => {
-        nock(config.apiRoot)
-          .post('/v3/company')
-          .reply(500, {
-            errors: 'error',
+          this.middlewareParameters = buildMiddlewareParameters({
+            requestBody: {
+              name: 'Fred Bloggs Ltd',
+            },
           })
 
-        this.reqMock.body = {
+          nock(config.apiRoot)
+            .post('/v3/company')
+            .reply(200, companyRecord)
+
+          await handleFormPost(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
+
+        commonTests({
           name: 'Fred Bloggs Ltd',
-        }
-
-        await middleware.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
+          trading_names: [],
+        })
       })
 
-      it('should set the error on the response', () => {
-        expect(this.resMock.locals).to.have.property('errors', 'error')
-      })
+      context('when saving an existing company', () => {
+        beforeEach(async () => {
+          this.saveCompanyFormSpy = sinon.spy(formService, 'saveCompanyForm')
 
-      it('should call next to continue along the chain', () => {
-        expect(this.nextSpy).to.have.been.calledOnce
-      })
-    })
+          this.middlewareParameters = buildMiddlewareParameters({
+            requestBody: {
+              id: companyRecord.id,
+              name: 'Fred Bloggs Ltd',
+            },
+          })
 
-    context('when saving an existing company works', () => {
-      beforeEach(async () => {
-        nock(config.apiRoot)
-          .patch(`/v3/company/${companyRecord.id}`)
-          .reply(200, companyRecord)
+          nock(config.apiRoot)
+            .patch(`/v3/company/${companyRecord.id}`)
+            .reply(200, companyRecord)
 
-        this.reqMock.body = {
+          await handleFormPost(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
+
+        commonTests({
           id: companyRecord.id,
           name: 'Fred Bloggs Ltd',
-        }
-
-        await middleware.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
+          trading_names: [],
+        })
       })
 
-      it('should call save company service', () => {
-        expect(this.saveCompanyFormSpy).to.have.been.calledWith(this.reqMock.session.token, this.reqMock.body)
-      })
+      context('when saving an existing company with a new trading name', () => {
+        beforeEach(async () => {
+          this.saveCompanyFormSpy = sinon.spy(formService, 'saveCompanyForm')
 
-      it('should call flash message', () => {
-        expect(this.flashSpy).to.have.been.calledOnce
-      })
+          this.middlewareParameters = buildMiddlewareParameters({
+            requestBody: {
+              id: companyRecord.id,
+              name: 'Fred Bloggs Ltd',
+              trading_names: 'trading name',
+            },
+          })
 
-      it('should redirect to the entity', () => {
-        expect(this.redirectSpy).to.have.been.calledWith(`/companies/${companyRecord.id}`)
-      })
+          nock(config.apiRoot)
+            .patch(`/v3/company/${companyRecord.id}`)
+            .reply(200, companyRecord)
 
-      it('should not call next', () => {
-        expect(this.nextSpy).not.to.have.been.called
-      })
-    })
+          await handleFormPost(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
 
-    context('when saving an existing company with a new trading name', () => {
-      beforeEach(async () => {
-        nock(config.apiRoot)
-          .patch(`/v3/company/${companyRecord.id}`)
-          .reply(200, companyRecord)
-
-        this.reqMock.body = {
+        commonTests({
           id: companyRecord.id,
           name: 'Fred Bloggs Ltd',
-          trading_names: 'trading name',
-        }
-
-        await middleware.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
-      })
-
-      it('should call save company service', () => {
-        const expectedBody = {
-          ...this.reqMock.body,
           trading_names: [ 'trading name' ],
-        }
-
-        expect(this.saveCompanyFormSpy).to.have.been.calledWith(this.reqMock.session.token, expectedBody)
+        })
       })
 
-      it('should call flash message', () => {
-        expect(this.flashSpy).to.have.been.calledOnce
-      })
+      context('when saving a uk company with just a registered address', () => {
+        beforeEach(async () => {
+          this.saveCompanyFormSpy = sinon.spy(formService, 'saveCompanyForm')
 
-      it('should redirect to the entity', () => {
-        expect(this.redirectSpy).to.have.been.calledWith(`/companies/${companyRecord.id}`)
-      })
-
-      it('should not call next', () => {
-        expect(this.nextSpy).not.to.have.been.called
-      })
-    })
-
-    context('when saving an existing company fails', () => {
-      beforeEach(async () => {
-        nock(config.apiRoot)
-          .patch(`/v3/company/${companyRecord.id}`)
-          .reply(500, {
-            errors: 'error',
+          this.middlewareParameters = buildMiddlewareParameters({
+            requestBody: {
+              name: 'Fred Bloggs Ltd',
+              registered_address_1: 'street',
+            },
+            requestQuery: {
+              country: 'uk',
+            },
           })
 
-        this.reqMock.body = {
-          id: companyRecord.id,
+          nock(config.apiRoot)
+            .post('/v3/company')
+            .reply(200, companyRecord)
+            .get('/metadata/country/')
+            .reply(200, metadataMock.countryOptions)
+
+          await handleFormPost(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
+
+        commonTests({
           name: 'Fred Bloggs Ltd',
-        }
-
-        await middleware.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
-      })
-
-      it('should set the error on the response', () => {
-        expect(this.resMock.locals).to.have.property('errors', 'error')
-      })
-
-      it('should call next to continue along the chain', () => {
-        expect(this.nextSpy).to.have.been.calledOnce
-      })
-    })
-
-    context('when saving a uk company with just a registered address', () => {
-      beforeEach(async () => {
-        nock(config.apiRoot)
-          .post('/v3/company')
-          .reply(200, companyRecord)
-          .get('/metadata/country/')
-          .reply(200, metadataMock.countryOptions)
-
-        this.reqMock.query = {
-          country: 'uk',
-        }
-
-        this.reqMock.body = {
-          name: 'Fred Boggs Ltd',
-          registered_address_1: 'street',
-        }
-
-        await middleware.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
-      })
-
-      it('sets the registered address country to the uk', () => {
-        expect(this.saveCompanyFormSpy).to.have.been.calledWith(this.reqMock.session.token, {
-          name: 'Fred Boggs Ltd',
           registered_address_1: 'street',
           registered_address_country: '9999',
           trading_names: [],
         })
       })
-    })
 
-    context('when saving a uk company with a trading and registered address', () => {
-      beforeEach(async () => {
-        nock(config.apiRoot)
-          .post('/v3/company')
-          .reply(200, companyRecord)
-          .get('/metadata/country/')
-          .reply(200, metadataMock.countryOptions)
+      context('when saving a uk company with a trading and registered address', () => {
+        beforeEach(async () => {
+          this.saveCompanyFormSpy = sinon.spy(formService, 'saveCompanyForm')
 
-        this.reqMock.query = {
-          country: 'uk',
-        }
+          this.middlewareParameters = buildMiddlewareParameters({
+            requestBody: {
+              name: 'Fred Bloggs Ltd',
+              registered_address_1: 'street',
+              trading_address_1: 'another street',
+            },
+            requestQuery: {
+              country: 'uk',
+            },
+          })
 
-        this.reqMock.body = {
-          name: 'Fred Boggs Ltd',
-          registered_address_1: 'street',
-          trading_address_1: 'another street',
-        }
+          nock(config.apiRoot)
+            .post('/v3/company')
+            .reply(200, companyRecord)
+            .get('/metadata/country/')
+            .reply(200, metadataMock.countryOptions)
 
-        await middleware.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
-      })
+          await handleFormPost(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
 
-      it('sets the registered and trading address country to the uk', () => {
-        expect(this.saveCompanyFormSpy).to.have.been.calledWith(this.reqMock.session.token, {
-          name: 'Fred Boggs Ltd',
+        commonTests({
+          name: 'Fred Bloggs Ltd',
           registered_address_1: 'street',
           registered_address_country: '9999',
           trading_address_1: 'another street',
@@ -450,28 +465,95 @@ describe('Companies form middleware', () => {
           trading_names: [],
         })
       })
-    })
 
-    context('when the user indicates the company is not a headquarters', () => {
-      beforeEach(async () => {
-        nock(config.apiRoot)
-          .post('/v3/company')
-          .reply(200, companyRecord)
+      context('when the user indicates the company is not a headquarters', () => {
+        beforeEach(async () => {
+          this.saveCompanyFormSpy = sinon.spy(formService, 'saveCompanyForm')
 
-        this.reqMock.body = {
-          name: 'Fred Boggs Ltd',
-          headquarter_type: 'not_headquarters',
-        }
+          this.middlewareParameters = buildMiddlewareParameters({
+            requestBody: {
+              name: 'Fred Bloggs Ltd',
+              headquarter_type: 'not_headquarters',
+            },
+          })
 
-        await middleware.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
-      })
+          nock(config.apiRoot)
+            .post('/v3/company')
+            .reply(200, companyRecord)
 
-      it('Removes the headquarter type value', () => {
-        expect(this.saveCompanyFormSpy).to.have.been.calledWith(this.reqMock.session.token, {
-          name: 'Fred Boggs Ltd',
+          await handleFormPost(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
+
+        commonTests({
+          name: 'Fred Bloggs Ltd',
           headquarter_type: '',
           trading_names: [],
         })
+      })
+    })
+
+    context('when saving fails', () => {
+      const commonTests = () => {
+        it('should set the error on the response', () => {
+          expect(this.middlewareParameters.resMock.locals).to.have.property('errors', 'error')
+        })
+
+        it('should call next to continue along the chain', () => {
+          expect(this.middlewareParameters.nextSpy).to.have.been.calledOnce
+        })
+      }
+
+      context('when saving a new company', () => {
+        beforeEach(async () => {
+          this.middlewareParameters = buildMiddlewareParameters({
+            requestBody: {
+              name: 'Fred Bloggs Ltd',
+            },
+          })
+
+          nock(config.apiRoot)
+            .post('/v3/company')
+            .reply(500, {
+              errors: 'error',
+            })
+
+          await handleFormPost(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
+
+        commonTests()
+      })
+
+      context('when saving an existing company fails', () => {
+        beforeEach(async () => {
+          this.middlewareParameters = buildMiddlewareParameters({
+            requestBody: {
+              id: companyRecord.id,
+              name: 'Fred Bloggs Ltd',
+            },
+          })
+
+          nock(config.apiRoot)
+            .patch(`/v3/company/${companyRecord.id}`)
+            .reply(500, {
+              errors: 'error',
+            })
+
+          await handleFormPost(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
+
+        commonTests()
       })
     })
   })
