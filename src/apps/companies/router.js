@@ -16,7 +16,6 @@ const { renderCompanyList } = require('./controllers/list')
 const { renderForm } = require('./controllers/edit')
 const { renderDetails } = require('./controllers/details')
 const { renderBusinessDetails } = require('./controllers/business-details')
-const { renderInvestments } = require('./controllers/investments')
 const { renderOrders } = require('./controllers/orders')
 const { renderAuditLog } = require('./controllers/audit')
 const { renderTimeline } = require('./controllers/timeline')
@@ -27,6 +26,7 @@ const { renderAddGlobalHQ } = require('./controllers/hierarchies')
 const { renderSubsidiaries } = require('./controllers/subsidiaries')
 const { renderLinkSubsidiary } = require('./controllers/subsidiary-link')
 const { renderAdvisers } = require('./controllers/advisers')
+const { renderInvestmentsProjects } = require('./controllers/investments/projects')
 
 const {
   renderExports,
@@ -123,12 +123,14 @@ router.get('/:companyId/contacts',
 router.get('/:companyId/exports', renderExports)
 router.get('/:companyId/subsidiaries', renderSubsidiaries)
 router.get('/:companyId/subsidiaries/link', renderLinkSubsidiary)
-router.get('/:companyId/investments', renderInvestments)
 router.get('/:companyId/orders', renderOrders)
 router.get('/:companyId/audit', renderAuditLog)
 router.get('/:companyId/documents', renderDocuments)
 router.get('/:companyId/timeline', renderTimeline)
 
 router.use('/:companyId', setInteractionsDetails, interactionsRouter)
+
+router.use('/:companyId/investments/projects', renderInvestmentsProjects)
+router.get('/:companyId/investments/', (req, res, next) => res.redirect(`${req.originalUrl}/projects`))
 
 module.exports = router
