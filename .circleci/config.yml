@@ -45,7 +45,7 @@ aliases:
   - &wait_for_frontend
     run:
       name: Wait for data hub frontend
-      command: dockerize -wait ${QA_HOST}/healthcheck -timeout 60s
+      command: dockerize -wait ${QA_HOST}/healthcheck -timeout 120s
 
   # Create required cucumber directories
   - &create_cucumber_dirs
@@ -92,11 +92,32 @@ aliases:
     ARCHIVED_DOCUMENTS_BASE_URL: http://example-documents-url.io
     OAUTH2_DEV_TOKEN: *oauth2_dit_staff_token
 
+  - &data_hub_functional_envs
+    API_ROOT: http://data-hub-sandbox.getsandbox.com
+    QA_HOST: http://localhost:3000
+    TZ: "/usr/share/zoneinfo/Europe/London"
+    LOG_LEVEL: debug
+    REDIS_HOST: localhost
+    MOCK_SSO_ROOT: http://localhost:8080
+    OAUTH2_TOKEN_FETCH_URL: http://localhost:8080/o/token
+    OAUTH2_USER_PROFILE_URL: http://localhost:8080/api/v1/user/me
+    OAUTH2_AUTH_URL: http://localhost:8080/o/authorize
+    OAUTH2_REDIRECT_URL: http://localhost:3000/oauth/callback
+    OAUTH2_CLIENT_SECRET: youAintSeenMyRight
+    OAUTH2_CLIENT_ID: randomClientId
+    OAUTH2_DEV_TOKEN: ditStaffToken
+
   # Data hub base docker container
   - &docker_data_hub_base
     image: ukti/docker-data-hub-base
     environment:
       *data_hub_base_envs
+
+  # Cypress dependencies base docker container
+  - &docker_dit_cypress_dependencies
+    image: ukti/docker-dit-cypress
+    environment:
+      *data_hub_functional_envs
 
   # Data hub redis container
   - &docker_redis
@@ -175,6 +196,7 @@ aliases:
       - lint_code
       - unit_tests
       - vue_tests
+      - functional_tests
     filters:
       branches:
         ignore:
@@ -189,6 +211,7 @@ aliases:
       - lint_code
       - unit_tests
       - vue_tests
+      - functional_tests
     filters:
       branches:
         only:
@@ -282,6 +305,30 @@ jobs:
           path: junit
       - store_artifacts:
           path: junit
+
+# Run cypress tests
+  functional_tests:
+    <<: *at_container_config
+    docker:
+      - *docker_dit_cypress_dependencies
+      - *docker_data_hub_base
+      - *docker_redis
+      - *docker_mock_sso
+    working_directory:
+    steps:
+      - checkout
+      - run: yarn install
+      - *wait_for_mock_sso
+      - *restore_yarn_cache
+      - run: yarn build
+      - *start_frontend
+      - *wait_for_frontend
+      - run:
+          name: Cypress tests
+          command: xvfb-run yarn test:functional
+          when: always
+      - store_artifacts:
+          path: test/functional/cypress/screenshots
 
   # Run acceptance tests for DIT staff
   dit_staff_at: &dit_staff_at
@@ -458,6 +505,9 @@ workflows:
           requires:
             - dependencies
       - vue_tests:
+          requires:
+            - dependencies
+      - functional_tests:
           requires:
             - dependencies
       - dit_staff_at: *common_at_workflow_config
