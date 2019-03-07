@@ -74,31 +74,36 @@ describe('Proposition transformers', () => {
           'Modified on': { type: 'date', name: '2018-05-03T09:49:03.038168Z' },
           Deadline: { type: 'date', name: '2018-05-20' },
           'Assigned to':
-            { first_name: 'Joseph',
+            {
+              first_name: 'Joseph',
               last_name: 'Wright of Derby ',
               name: 'Joseph Wright of Derby',
-              id: '14d9f881-4df4-421b-8181-874f9dc83b76' },
+              id: '14d9f881-4df4-421b-8181-874f9dc83b76',
+            },
           Details: {
             url: undefined,
             name: undefined,
           },
           'File 1':
-            [ 'il_fullxfull.826924229_2xdo.jpg',
-              { type: 'document',
-                status: 'av_clean',
-                message: 'Download',
-                href: '/investments/projects/65e77d82-8ebb-4ee7-b6ac-8c5945c512db/propositions/7d68565a-fc0e-422c-8ce3-df92cd40a64a/download/1a85b301-56ae-4073-97db-a42604c40bea' } ],
+            ['il_fullxfull.826924229_2xdo.jpg',
+              {
+                name: 'Download',
+                url: '/investments/projects/65e77d82-8ebb-4ee7-b6ac-8c5945c512db/propositions/7d68565a-fc0e-422c-8ce3-df92cd40a64a/download/1a85b301-56ae-4073-97db-a42604c40bea',
+              },
+            ],
           'File 2':
-            [ 'totally_not_a_virus.zip',
-              { type: 'document',
-                status: 'scan_failed',
-                message: 'The file didn\'t pass virus scanning, contact your administrator' } ],
+            ['totally_not_a_virus.zip',
+              {
+                name: 'The file didn\'t pass virus scanning, contact your administrator',
+                type: 'error',
+              },
+            ],
           'File 3':
-            [ '780-rainbow-teacosy-1.jpg',
-              { type: 'document',
-                status: 'av_clean',
-                message: 'Download',
-                href: '/investments/projects/65e77d82-8ebb-4ee7-b6ac-8c5945c512db/propositions/7d68565a-fc0e-422c-8ce3-df92cd40a64a/download/1eab8de6-0a9a-4152-95d0-a3eca9ef6a8f' }],
+            ['780-rainbow-teacosy-1.jpg',
+              {
+                name: 'Download',
+                url: '/investments/projects/65e77d82-8ebb-4ee7-b6ac-8c5945c512db/propositions/7d68565a-fc0e-422c-8ce3-df92cd40a64a/download/1eab8de6-0a9a-4152-95d0-a3eca9ef6a8f',
+              }],
         })
       })
     })
