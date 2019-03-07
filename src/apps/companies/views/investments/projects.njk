@@ -1,6 +1,7 @@
-{% extends "./template.njk" %}
+{% extends "../template.njk" %}
 
-{% block main_grid_right_column %}
+{% block body_main_content %}
+
   <h2 class="govuk-heading-m">Investment projects</h2>
 
   {% if company.archived %}
@@ -18,7 +19,6 @@
     </details>
   {% endif %}
 
-
   {{
     CollectionContent(results | assignCopy({
       sort: sort,
@@ -27,4 +27,5 @@
       actionButtons: actionButtons
     }))
   }}
+
 {% endblock %}
