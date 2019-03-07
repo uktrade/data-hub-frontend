@@ -43,6 +43,7 @@ and be provided with a back end server to provide the API, data storage and sear
   - [Base template variables](#base-template-variables)
   - [Template inheritance diagram](#template-inheritance-diagram)
 - [Testing](#testing)
+  - [Functional Testing](#functional-testing)
   - [Acceptance Testing](#acceptance-testing)
     - [Running acceptance tests](#running-acceptance-tests)
     - [Running tests with specific user permissions](#running-tests-with-specific-user-permissions)
@@ -381,6 +382,42 @@ Base layout checks for certain variables.
 - `projectPhase` {string} - phase of the project. Possible values: `alpha` and `beta`.
 
 ## Testing
+
+### Functional Testing
+
+The aim of this test suite is perform functional tests of frontend components in isolation.
+
+#### Setup
+
+Pre-requisites:
+
+Ensure you have [node](https://nodejs.org/en/download/) v8 installed then install dependencies:
+
+`$ npm install`
+
+#### Coding standards
+
+StandardJS will run as part of the build, assure you run the command below before committing:
+
+`$ npm run lint`
+
+#### Running the tests
+
+Notice that before running the tests the application should be up and running.
+
+By default cypress will run on electron headlessly, you can read more about it [here](https://docs.cypress.io/guides/core-concepts/launching-browsers.html#Electron-Browser)
+
+Execute all the tests on `specs` in chrome browser:
+
+`$ npm run test:functional -- --browser chrome`
+
+#### Running the tests manually in cypress interface
+
+`$ npm run test:functional:watch`
+
+#### Running a specific spec
+
+`$ npm run test:functional -- --spec test/functional/cypress/specs/nav-spec.js`
 
 ### Acceptance Testing
 Data hub uses [Nightwatch.js](http://nightwatchjs.org), [nightwatch-cucumber](https://github.com/mucsi96/nightwatch-cucumber) and [cucumber.js](https://github.com/cucumber/cucumber-js) to run acceptance tests.
