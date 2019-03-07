@@ -61,6 +61,14 @@ async function populateForm (req, res, next) {
   }
 }
 
+function getDetailsUrl (features, currentCompany, savedCompany) {
+  const isEditingCompanyInNewLayout = features['companies-new-layout'] && currentCompany
+
+  return isEditingCompanyInNewLayout
+    ? `/companies/${savedCompany.id}/business-details`
+    : `/companies/${savedCompany.id}`
+}
+
 async function handleFormPost (req, res, next) {
   try {
     const token = req.session.token
@@ -88,9 +96,10 @@ async function handleFormPost (req, res, next) {
     }
 
     const savedCompany = await companyFormService.saveCompanyForm(token, req.body)
+    const detailsUrl = getDetailsUrl(res.locals.features, res.locals.company, savedCompany)
 
     req.flash('success', 'Company record updated')
-    res.redirect(`/companies/${savedCompany.id}`)
+    res.redirect(detailsUrl)
   } catch (response) {
     if (response.errors) {
       // Leeloo has inconsistant structure to return errors.

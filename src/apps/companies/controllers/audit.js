@@ -6,8 +6,10 @@ const { transformApiResponseToCollection } = require('../../../modules/api/trans
 async function renderAuditLog (req, res, next) {
   const token = req.session.token
   const page = req.query.page || 1
-  const { company } = res.locals
-  const view = company.duns_number ? 'companies/views/audit' : 'companies/views/_deprecated/audit'
+  const { company, features } = res.locals
+  const view = (company.duns_number || features['companies-new-layout'])
+    ? 'companies/views/audit'
+    : 'companies/views/_deprecated/audit'
 
   try {
     const auditLog = await getCompanyAuditLog(token, company.id, page)

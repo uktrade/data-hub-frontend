@@ -41,6 +41,10 @@
   </div>
 {% endmacro %}
 
+{% macro error(data) %}
+  <span class="c-message--error">{{ data.name }}</span>
+{% endmacro %}
+
 {% macro renderItem(data) %}
   {% if data.url %}
     {{ link(data) }}
@@ -52,14 +56,8 @@
     {{ data.name | formatNumber }}
   {% elif data.type === 'details' %}
     {{ details(data) }}
-  {% elif data.type === 'document' %} {# TODO specifically referencing "document" should not be here #}
-    {% if item.status == 'av_clean' %}
-      <a href="{{ item.href }}">{{ item.message }}</a>
-    {% elif item.status == 'scan_failed' %}
-      <span class="c-message--error">{{ item.message }}</span>
-    {% else %}
-      {{ item.message }}
-    {% endif %}
+  {% elif data.type === 'error' %}
+    {{ error(data) }}
   {% else %}
     {{ data.name or data | escapeHtml | safe }}
   {% endif %}

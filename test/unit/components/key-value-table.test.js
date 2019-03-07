@@ -166,6 +166,33 @@ describe('Key/value table component', () => {
     })
   })
 
+  context('when there is one item and the data is an error', () => {
+    beforeEach(() => {
+      const component = renderComponentToDom('key-value-table', {
+        items: {
+          'Label 1': {
+            name: 'Error message',
+            type: 'error',
+          },
+        },
+      })
+
+      this.rows = component.querySelectorAll('tr')
+    })
+
+    it('should render one row', () => {
+      expect(this.rows.length).to.equal(1)
+    })
+
+    it('should render a label', () => {
+      expect(this.rows[0].querySelector('th').textContent).to.equal('Label 1')
+    })
+
+    it('should render the error message', () => {
+      expect(this.rows[0].querySelector('td span.c-message--error').textContent).to.equal('Error message')
+    })
+  })
+
   context('when there is one item and the data is an object with a name', () => {
     beforeEach(() => {
       const component = renderComponentToDom('key-value-table', {
