@@ -43,7 +43,7 @@ const DEPRECATED_LOCAL_NAV = [
     ],
   },
   {
-    path: 'investments',
+    path: 'investments/projects',
     label: 'Investment',
     permissions: [
       'investment.view_all_investmentproject',
@@ -101,7 +101,7 @@ const LOCAL_NAV = [
     label: 'Core team',
   },
   {
-    path: 'investments',
+    path: 'investments/projects',
     label: 'Investment',
     permissions: [
       'investment.view_all_investmentproject',

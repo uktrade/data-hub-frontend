@@ -1,7 +1,6 @@
-{% extends "./template.njk" %}
+{% extends "../template.njk" %}
 
-{% block body_main_content %}
-
+{% block main_grid_right_column %}
   <h2 class="govuk-heading-m">Investment projects</h2>
 
   {% if company.archived %}
@@ -19,13 +18,13 @@
     </details>
   {% endif %}
 
-  {{
-    CollectionContent(results | assignCopy({
-      sort: sort,
-      countLabel: 'project',
-      query: QUERY,
-      actionButtons: actionButtons
-    }))
-  }}
 
+  {{
+  CollectionContent(results | assignCopy({
+    sort: sort,
+    countLabel: 'project',
+    query: QUERY,
+    actionButtons: actionButtons
+  }))
+  }}
 {% endblock %}
