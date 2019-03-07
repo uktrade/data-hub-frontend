@@ -27,6 +27,7 @@ const { renderSubsidiaries } = require('./controllers/subsidiaries')
 const { renderLinkSubsidiary } = require('./controllers/subsidiary-link')
 const { renderAdvisers } = require('./controllers/advisers')
 const { renderInvestmentsProjects } = require('./controllers/investments/projects')
+const { renderInvestmentsLargeCapitalProfile } = require('./controllers/investments/large-capital-profile')
 
 const {
   renderExports,
@@ -131,6 +132,7 @@ router.get('/:companyId/timeline', renderTimeline)
 router.use('/:companyId', setInteractionsDetails, interactionsRouter)
 
 router.use('/:companyId/investments/projects', renderInvestmentsProjects)
+router.use('/:companyId/investments/large-capital-profile', renderInvestmentsLargeCapitalProfile)
 router.get('/:companyId/investments/', (req, res, next) => res.redirect(`${req.originalUrl}/projects`))
 
 module.exports = router
