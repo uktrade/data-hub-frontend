@@ -5,27 +5,138 @@ const {
   transformLabelsToShowFiles,
 } = require('~/src/apps/documents/transformers')
 
+const propositionId = '1'
+const investmentId = '2'
+
 describe('Document Upload Transformers', () => {
   describe('#transformFilesResultsToDetails', () => {
-    context('when a file is uploaded', () => {
-      beforeEach(() => {
-        const investmentProjectId = '5d341b34-1fc8-4638-b4b1-a0922ebf401e'
-        const propositionId = '061730e3-692a-448f-bd8a-d52f8328e911'
-        this.transformed = transformFilesResultsToDetails(mockFilesResponse, propositionId, investmentProjectId)
+    const commonTests = ({ expectedFileName, expectedItem }) => {
+      it('should set the file name', () => {
+        expect(this.transformed.file1[0]).to.equal(expectedFileName)
       })
 
-      it('should transform display a download link if the virus scan is successful', () => {
-        expect(this.transformed).to.deep.equal({
-          file1: [
-            '001BC61C-400-400.jpg',
-            {
-              'href': '/investments/projects/5d341b34-1fc8-4638-b4b1-a0922ebf401e/propositions/061730e3-692a-448f-bd8a-d52f8328e911/download/e5de035f-86d5-4cc1-80a3-4b7f03876da8',
-              'message': 'Download',
-              'status': 'av_clean',
-              'type': 'document',
-            },
-          ],
-        })
+      it('should set the link', () => {
+        expect(this.transformed.file1[1]).to.deep.equal(expectedItem)
+      })
+    }
+
+    context('when file passed virus scan', () => {
+      beforeEach(() => {
+        const response = [
+          {
+            ...mockFilesResponse[0],
+            status: 'virus_scanned',
+            av_clean: true,
+          },
+        ]
+
+        this.transformed = transformFilesResultsToDetails(response, propositionId, investmentId)
+      })
+
+      commonTests({
+        expectedFileName: mockFilesResponse[0].original_filename,
+        expectedItem: {
+          name: 'Download',
+          url: `/investments/projects/2/propositions/1/download/${mockFilesResponse[0].id}`,
+        },
+      })
+    })
+
+    context('when file failed virus scan', () => {
+      beforeEach(() => {
+        const response = [
+          {
+            ...mockFilesResponse[0],
+            status: 'virus_scanned',
+            av_clean: false,
+          },
+        ]
+
+        this.transformed = transformFilesResultsToDetails(response, propositionId, investmentId)
+      })
+
+      commonTests({
+        expectedFileName: mockFilesResponse[0].original_filename,
+        expectedItem: {
+          name: 'The file didn\'t pass virus scanning, contact your administrator',
+          type: 'error',
+        },
+      })
+    })
+
+    context('when file has not been scanned', () => {
+      beforeEach(() => {
+        const response = [
+          {
+            ...mockFilesResponse[0],
+            status: 'not_virus_scanned',
+            av_clean: false,
+          },
+        ]
+
+        this.transformed = transformFilesResultsToDetails(response, propositionId, investmentId)
+      })
+
+      commonTests({
+        expectedFileName: mockFilesResponse[0].original_filename,
+        expectedItem: 'File not virus scanned',
+      })
+    })
+
+    context('when file virus scanning is scheduled', () => {
+      beforeEach(() => {
+        const response = [
+          {
+            ...mockFilesResponse[0],
+            status: 'virus_scanning_scheduled',
+            av_clean: false,
+          },
+        ]
+
+        this.transformed = transformFilesResultsToDetails(response, propositionId, investmentId)
+      })
+
+      commonTests({
+        expectedFileName: mockFilesResponse[0].original_filename,
+        expectedItem: 'Virus scanning scheduled',
+      })
+    })
+
+    context('when file virus scanning is in progress', () => {
+      beforeEach(() => {
+        const response = [
+          {
+            ...mockFilesResponse[0],
+            status: 'virus_scanning_in_progress',
+            av_clean: false,
+          },
+        ]
+
+        this.transformed = transformFilesResultsToDetails(response, propositionId, investmentId)
+      })
+
+      commonTests({
+        expectedFileName: mockFilesResponse[0].original_filename,
+        expectedItem: 'File is being scanned, try again in a few moments',
+      })
+    })
+
+    context('when file virus scanning failed', () => {
+      beforeEach(() => {
+        const response = [
+          {
+            ...mockFilesResponse[0],
+            status: 'virus_scanning_failed',
+            av_clean: false,
+          },
+        ]
+
+        this.transformed = transformFilesResultsToDetails(response, propositionId, investmentId)
+      })
+
+      commonTests({
+        expectedFileName: mockFilesResponse[0].original_filename,
+        expectedItem: 'Virus scanning failed, contact your administrator',
       })
     })
   })

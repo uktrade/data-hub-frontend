@@ -89,5 +89,28 @@ describe('Companies documents controller', () => {
 
       commonTests(dnbCompanyMock.name, dnbCompanyMock.id, 'companies/views/documents', archivedDocumentsPath)
     })
+
+    context('when the company does not have a DUNS number and the companies new layout feature is enabled', () => {
+      const archivedDocumentsPath = 'mock-document-url'
+
+      beforeEach(() => {
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: {
+            ...companyMock,
+            archived_documents_url_path: archivedDocumentsPath,
+          },
+          features: {
+            'companies-new-layout': true,
+          },
+        })
+
+        renderDocuments(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+        )
+      })
+
+      commonTests(companyMock.name, companyMock.id, 'companies/views/documents', archivedDocumentsPath)
+    })
   })
 })
