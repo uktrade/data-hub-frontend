@@ -7,18 +7,18 @@ const { ENTITIES } = require('../../search/constants')
 async function renderSubsidiaries (req, res, next) {
   try {
     const token = req.session.token
-    const query = req.query
-    const page = query.page || '1'
-    const { company } = res.locals
-    const view = company.duns_number ? 'companies/views/subsidiaries' : 'companies/views/_deprecated/subsidiaries'
+    const { company, features } = res.locals
+    const view = (company.duns_number || features['companies-new-layout'])
+      ? 'companies/views/subsidiaries'
+      : 'companies/views/_deprecated/subsidiaries'
     const actionButtons = company.archived || company.duns_number ? undefined : [{
       label: companyDetailsLabels.link_a_subsidiary,
       url: `/companies/${company.id}/subsidiaries/link`,
     }]
 
-    const subsidiaryCollection = await getCompanySubsidiaries(token, company.id, page)
+    const subsidiaryCollection = await getCompanySubsidiaries(token, company.id, req.query.page)
       .then(transformApiResponseToSearchCollection(
-        { query },
+        { query: req.query },
         ENTITIES,
         transformCompanyToSubsidiaryListItem(res.locals.company),
       ))

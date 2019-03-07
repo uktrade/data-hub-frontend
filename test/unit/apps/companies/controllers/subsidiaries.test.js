@@ -180,4 +180,40 @@ describe('company subsidiaries controller', () => {
       expect(props.actionButtons).to.be.undefined
     })
   })
+
+  context('when the company does not have a DUNS number and the companies new layout feature is enabled', () => {
+    beforeEach(async () => {
+      nock(config.apiRoot)
+        .get(`/v3/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`)
+        .reply(200, subsidiariesMock)
+
+      this.middlewareParameters = buildMiddlewareParameters({
+        company: companyMock,
+        features: {
+          'companies-new-layout': true,
+        },
+      })
+
+      await renderSubsidiaries(
+        this.middlewareParameters.reqMock,
+        this.middlewareParameters.resMock,
+        this.middlewareParameters.nextSpy,
+      )
+
+      this.subsidiaries = this.middlewareParameters.resMock.render.firstCall.args[1].subsidiaries
+    })
+
+    commonTests({
+      expectedBreadcrumb: 'SAMSUNG BIOEPIS UK LIMITED',
+      expectedTemplate: 'companies/views/subsidiaries',
+      expectedHeading: 'Subsidiaries of SAMSUNG BIOEPIS UK LIMITED',
+      expectedCount: 1,
+    })
+
+    it('should not set actions buttons', () => {
+      const props = this.middlewareParameters.resMock.render.args[0][1]
+
+      expect(props.actionButtons).to.be.undefined
+    })
+  })
 })
