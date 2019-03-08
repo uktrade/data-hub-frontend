@@ -1,4 +1,8 @@
-<div class="c-details-container">
+<div class="c-details-container"
+  {% if props.dataAutoId %}
+    data-auto-id="{{ props.dataAutoId }}"
+  {% endif %}
+>
   {% if props.heading %}
     <h2 class="govuk-heading-m" style="margin-bottom: 0">{{ props.heading }}</h2>
   {% endif %}

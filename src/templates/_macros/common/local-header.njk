@@ -18,7 +18,7 @@
   {% set modifier = props.modifier | concat('') | reverse | join(' c-local-header--') if props.modifier %}
 
   {% if props %}
-    <header class="c-local-header {{ modifier }}" aria-label="local header">
+    <header class="c-local-header {{ modifier }}" aria-label="local header" data-auto-id="localHeader">
       <div class="govuk-width-container">
         {% if breadcrumbs|length > 1 %}
           {{ govukBreadcrumbs({ items: breadcrumbs }) }}
