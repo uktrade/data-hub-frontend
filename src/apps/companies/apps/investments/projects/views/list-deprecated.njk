@@ -1,4 +1,4 @@
-{% extends "../template.njk" %}
+{% extends "../../../../views/_deprecated/template.njk" %}
 
 {% block main_grid_right_column %}
   <h2 class="govuk-heading-m">Investment projects</h2>
@@ -18,13 +18,12 @@
     </details>
   {% endif %}
 
-
   {{
-  CollectionContent(results | assignCopy({
-    sort: sort,
-    countLabel: 'project',
-    query: QUERY,
-    actionButtons: actionButtons
-  }))
+    CollectionContent(results | assignCopy({
+      sort: sort,
+      countLabel: 'project',
+      query: QUERY,
+      actionButtons: actionButtons
+    }))
   }}
 {% endblock %}

@@ -1,13 +1,13 @@
-const { getCompanyInvestmentProjects } = require('../../../investments/repos')
-const { transformInvestmentProjectToListItem } = require('../../../investments/transformers')
-const { transformApiResponseToCollection } = require('../../../../modules/api/transformers')
+const { getCompanyInvestmentProjects } = require('../../../../../investments/repos')
+const { transformInvestmentProjectToListItem } = require('../../../../../investments/transformers')
+const { transformApiResponseToCollection } = require('../../../../../../modules/api/transformers')
 
-async function renderInvestmentsProjects (req, res, next) {
+const list = 'companies/apps/investments/projects/views/list'
+
+async function renderProjects (req, res, next) {
   const { token } = req.session
   const { company, features } = res.locals
-  const view = (company.duns_number || features['companies-new-layout'])
-    ? 'companies/views/investments/projects'
-    : 'companies/views/_deprecated/investments/projects'
+  const view = (company.duns_number || features['companies-new-layout']) ? list : `${list}-deprecated`
   const actionButtons = company.archived ? undefined : [{
     label: 'Add investment project',
     url: `/investments/projects/create/${company.id}`,
@@ -32,6 +32,4 @@ async function renderInvestmentsProjects (req, res, next) {
   }
 }
 
-module.exports = {
-  renderInvestmentsProjects,
-}
+module.exports = renderProjects
