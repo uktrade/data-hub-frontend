@@ -64,7 +64,11 @@
 {% endmacro %}
 
 {% if items | length %}
-  <table class="table--key-value{{ ' table--' + variant if variant }}">
+  <table class="table--key-value{{ ' table--' + variant if variant }}"
+    {% if dataAutoId %}
+      data-auto-id="{{ dataAutoId }}"
+    {% endif %}
+  >
     <tbody>
       {% for label, data in items %}
         <tr>

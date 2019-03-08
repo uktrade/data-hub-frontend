@@ -23,6 +23,9 @@
   {% if url %}
     action="{{ url }}"
   {% endif %}
+  {% if dataAutoId %}
+    data-auto-id="{{ dataAutoId }}"
+  {% endif %}
 >
   <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 

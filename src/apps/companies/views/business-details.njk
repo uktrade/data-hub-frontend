@@ -31,7 +31,7 @@
       This company was archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br>
       <strong>Reason:</strong> {{company.archived_reason}}<br>
       <br>
-      <a href="/companies/{{company.id}}/unarchive">Unarchive</a>
+      <a href="/companies/{{company.id}}/unarchive" data-auto-id="businessDetailsUnarchive">Unarchive</a>
     {% endcall %}
   {% endif %}
 
@@ -43,17 +43,20 @@
         </p>
         <p>
           If you think the information is incomplete or incorrect, <a href="/support">get in touch using the support form</a>.
-        </p>'
+        </p>',
+      attributes: {
+        'data-auto-id': 'businessDetailsWhereDoesInformation'
+      }
     }) }}
   {% endif %}
 
-  {% call DetailsContainer({ heading: 'About ' + company.name, editUrl: editUrl }) %}
-    {% component 'key-value-table', items=aboutDetails %}
+  {% call DetailsContainer({ heading: 'About ' + company.name, editUrl: editUrl, dataAutoId: 'aboutDetailsContainer' }) %}
+    {% component 'key-value-table', items=aboutDetails, dataAutoId='aboutDetails' %}
   {% endcall %}
 
   {% if oneListDetails %}
-    {% call DetailsContainer({ heading: 'Global Account Manager – One List', editUrl: editUrl }) %}
-      {% component 'key-value-table', items=oneListDetails %}
+    {% call DetailsContainer({ heading: 'Global Account Manager – One List', editUrl: editUrl, dataAutoId: 'oneListDetailsContainer' }) %}
+      {% component 'key-value-table', items=oneListDetails, dataAutoId='oneListDetails' %}
 
       <p>
         <a href="advisers">See all advisers on the core team</a>
@@ -61,12 +64,12 @@
     {% endcall %}
   {% endif %}
 
-  {% call DetailsContainer({ heading: 'Business hierarchy', editUrl: editUrl }) %}
-    {% component 'key-value-table', items=businessHierarchyDetails %}
+  {% call DetailsContainer({ heading: 'Business hierarchy', editUrl: editUrl, dataAutoId: 'businessHierarchyDetailsContainer' }) %}
+    {% component 'key-value-table', items=businessHierarchyDetails, dataAutoId='businessHierarchyDetails' %}
   {% endcall %}
 
-  {% call DetailsContainer({ heading: 'DIT sector', editUrl: editUrl }) %}
-    <table class="table--key-value">
+  {% call DetailsContainer({ heading: 'DIT sector', editUrl: editUrl, dataAutoId: 'sectorDetailsContainer' }) %}
+    <table class="table--key-value" data-auto-id="sectorDetails">
       <tbody>
       {% for sector in sectorDetails %}
         <tr>
@@ -78,7 +81,7 @@
   {% endcall %}
 
   {% if regionDetails %}
-    {% call DetailsContainer({ heading: 'DIT region', editUrl: editUrl }) %}
+    {% call DetailsContainer({ heading: 'DIT region', editUrl: editUrl, dataAutoId: 'regionDetailsContainer' }) %}
       <table class="table--key-value">
         <tbody>
           <tr>
@@ -89,10 +92,10 @@
     {% endcall %}
   {% endif %}
 
-  {% call DetailsContainer({ heading: 'Addresses', editUrl: editUrl }) %}
+  {% call DetailsContainer({ heading: 'Addresses', editUrl: editUrl, dataAutoId: 'addressesDetailsContainer' }) %}
     <table class="table--key-value">
       <tbody>
-        <tr>
+        <tr data-auto-id="businessDetailsAddress">
           {% if addressesDetails.trading.address %}
             {{ AddressCell(addressesDetails.trading.meta, addressesDetails.trading.address) }}
           {% endif %}
@@ -105,7 +108,7 @@
   {% endcall %}
 
   {% if archivedDocumentPath %}
-    {% call DetailsContainer({ heading: 'Documents from CDMS' }) %}
+    {% call DetailsContainer({ heading: 'Documents from CDMS', dataAutoId: 'documentsContainer' }) %}
       <table class="table--key-value">
         <tbody>
         <tr>
@@ -122,7 +125,7 @@
   {% endif %}
 
   {% if not company.archived and not company.duns_number %}
-    {% call DetailsContainer({ heading: 'Archive company' }) %}
+    {% call DetailsContainer({ heading: 'Archive company', dataAutoId: 'archiveCompanyContainer' }) %}
       <p>Archive this company if it is no longer required or active.</p>
 
       {% component 'archive-form', {
