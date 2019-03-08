@@ -1,6 +1,6 @@
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
-const controller = require('~/src/apps/companies/controllers/investments/large-capital-profile')
+const controller = require('~/src/apps/companies/apps/investments/large-capital-profile/controllers')
 const companyMock = require('~/test/unit/data/companies/minimal-company.json')
 const dnbCompanyMock = require('~/test/unit/data/companies/dnb-company.json')
 
@@ -22,14 +22,14 @@ describe('Company Investments - large capital profile', () => {
           company: companyMock,
         })
 
-        controller.renderInvestmentsLargeCapitalProfile(
+        controller.renderLargeCapitalProfile(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
           this.middlewareParameters.nextSpy,
         )
       })
 
-      commonTests('companies/views/_deprecated/investments/large-capital-profile')
+      commonTests('companies/apps/investments/large-capital-profile/views/list-deprecated')
     })
 
     context('when the company does has a DUNS number', () => {
@@ -38,14 +38,14 @@ describe('Company Investments - large capital profile', () => {
           company: dnbCompanyMock,
         })
 
-        controller.renderInvestmentsLargeCapitalProfile(
+        controller.renderLargeCapitalProfile(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
           this.middlewareParameters.nextSpy,
         )
       })
 
-      commonTests('companies/views/investments/large-capital-profile')
+      commonTests('companies/apps/investments/large-capital-profile/views/list')
     })
 
     context('when the company does not have a DUNS number and the companies new layout feature is enabled', () => {
@@ -57,14 +57,14 @@ describe('Company Investments - large capital profile', () => {
           },
         })
 
-        controller.renderInvestmentsLargeCapitalProfile(
+        controller.renderLargeCapitalProfile(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
           this.middlewareParameters.nextSpy,
         )
       })
 
-      commonTests('companies/views/investments/large-capital-profile')
+      commonTests('companies/apps/investments/large-capital-profile/views/list')
     })
   })
 })

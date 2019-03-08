@@ -26,9 +26,6 @@ const { renderAddGlobalHQ } = require('./controllers/hierarchies')
 const { renderSubsidiaries } = require('./controllers/subsidiaries')
 const { renderLinkSubsidiary } = require('./controllers/subsidiary-link')
 const { renderAdvisers } = require('./controllers/advisers')
-const { renderInvestmentsProjects } = require('./controllers/investments/projects')
-const { renderInvestmentsLargeCapitalProfile } = require('./controllers/investments/large-capital-profile')
-const { renderInvestmentsGrowthCapitalProfile } = require('./controllers/investments/growth-capital-profile')
 
 const {
   renderExports,
@@ -54,6 +51,7 @@ const setCompaniesLocalNav = require('./middleware/local-navigation')
 
 const { transformCompanyToListItem } = require('./transformers')
 
+const investmentsRouter = require('./apps/investments/router')
 const interactionsRouter = require('../interactions/router.sub-app')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
@@ -130,11 +128,7 @@ router.get('/:companyId/audit', renderAuditLog)
 router.get('/:companyId/documents', renderDocuments)
 router.get('/:companyId/timeline', renderTimeline)
 
+router.use('/:companyId/investments', investmentsRouter)
 router.use('/:companyId', setInteractionsDetails, interactionsRouter)
-
-router.use('/:companyId/investments/projects', renderInvestmentsProjects)
-router.use('/:companyId/investments/large-capital-profile', renderInvestmentsLargeCapitalProfile)
-router.use('/:companyId/investments/growth-capital-profile', renderInvestmentsGrowthCapitalProfile)
-router.get('/:companyId/investments/', (req, res, next) => res.redirect(`${req.originalUrl}/projects`))
 
 module.exports = router

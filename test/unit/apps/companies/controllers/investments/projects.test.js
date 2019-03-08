@@ -10,14 +10,14 @@ describe('Company investments project controlle', () => {
     this.transformInvestmentProjectToListItemSpy = sinon.spy()
     this.transformApiResponseToCollectionSpy = sinon.spy()
 
-    this.controller = proxyquire('~/src/apps/companies/controllers/investments/projects', {
-      '../../../investments/repos': {
+    this.controller = proxyquire('~/src/apps/companies/apps/investments/projects/controllers/list', {
+      '../../../../../investments/repos': {
         getCompanyInvestmentProjects: this.getCompanyInvestmentProjectsStub,
       },
-      '../../../investments/transformers': {
+      '../../../../../investments/transformers': {
         transformInvestmentProjectToListItem: this.transformInvestmentProjectToListItemSpy,
       },
-      '../../../../modules/api/transformers': {
+      '../../../../../../modules/api/transformers': {
         transformApiResponseToCollection: this.transformApiResponseToCollectionSpy,
       },
     })
@@ -65,14 +65,14 @@ describe('Company investments project controlle', () => {
             company: companyMock,
           })
 
-          await this.controller.renderInvestmentsProjects(
+          await this.controller(
             this.middlewareParameters.reqMock,
             this.middlewareParameters.resMock,
             this.middlewareParameters.nextSpy,
           )
         })
 
-        commonTests(companyMock.id, 'companies/views/_deprecated/investments/projects')
+        commonTests(companyMock.id, 'companies/apps/investments/projects/views/list-deprecated')
       })
 
       context('when the company does have a DUNS number', () => {
@@ -86,14 +86,14 @@ describe('Company investments project controlle', () => {
             company: dnbCompanyMock,
           })
 
-          await this.controller.renderInvestmentsProjects(
+          await this.controller(
             this.middlewareParameters.reqMock,
             this.middlewareParameters.resMock,
             this.middlewareParameters.nextSpy,
           )
         })
 
-        commonTests(dnbCompanyMock.id, 'companies/views/investments/projects')
+        commonTests(dnbCompanyMock.id, 'companies/apps/investments/projects/views/list')
       })
 
       context('when the company does not have a DUNS number and the companies new layout feature is enabled', () => {
@@ -110,14 +110,14 @@ describe('Company investments project controlle', () => {
             },
           })
 
-          await this.controller.renderInvestmentsProjects(
+          await this.controller(
             this.middlewareParameters.reqMock,
             this.middlewareParameters.resMock,
             this.middlewareParameters.nextSpy,
           )
         })
 
-        commonTests(companyMock.id, 'companies/views/investments/projects')
+        commonTests(companyMock.id, 'companies/apps/investments/projects/views/list')
       })
     })
 
@@ -133,7 +133,7 @@ describe('Company investments project controlle', () => {
           company: companyMock,
         })
 
-        await this.controller.renderInvestmentsProjects(
+        await this.controller(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
           this.middlewareParameters.nextSpy,
