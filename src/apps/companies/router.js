@@ -132,9 +132,21 @@ router.get('/:companyId/timeline', renderTimeline)
 
 router.use('/:companyId', setInteractionsDetails, interactionsRouter)
 
-router.use('/:companyId/investments/projects', renderInvestmentsProjects)
-router.use('/:companyId/investments/large-capital-profile', renderInvestmentsLargeCapitalProfile)
-router.use('/:companyId/investments/growth-capital-profile', renderInvestmentsGrowthCapitalProfile)
-router.get('/:companyId/investments/', (req, res, next) => res.redirect(`${req.originalUrl}/projects`))
+const investmentsRouter = require('express').Router()
+
+const projectsRouter = require('express').Router()
+projectsRouter.get('/', renderInvestmentsProjects)
+
+const largeCapitalProfileRouter = require('express').Router()
+largeCapitalProfileRouter.get('/', renderInvestmentsLargeCapitalProfile)
+
+const growthCapitalProfileRouter = require('express').Router()
+growthCapitalProfileRouter.get('/', renderInvestmentsGrowthCapitalProfile)
+
+router.use('/:companyId/investments', investmentsRouter)
+investmentsRouter.use('/projects', projectsRouter)
+investmentsRouter.use('/large-capital-profile', largeCapitalProfileRouter)
+investmentsRouter.use('/growth-capital-profile', growthCapitalProfileRouter)
+investmentsRouter.get('/', (req, res, next) => res.redirect(`${req.originalUrl}/projects`))
 
 module.exports = router
