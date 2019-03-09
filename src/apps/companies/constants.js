@@ -43,7 +43,12 @@ const DEPRECATED_LOCAL_NAV = [
     ],
   },
   {
-    path: 'investments/projects',
+    path: 'investments',
+    subPaths: [
+      'projects',
+      'large-capital-profile',
+      'growth-capital-profile',
+    ],
     label: 'Investment',
     permissions: [
       'investment.view_all_investmentproject',
@@ -101,7 +106,12 @@ const LOCAL_NAV = [
     label: 'Core team',
   },
   {
-    path: 'investments/projects',
+    path: 'investments',
+    subPaths: [
+      'projects',
+      'large-capital-profile',
+      'growth-capital-profile',
+    ],
     label: 'Investment',
     permissions: [
       'investment.view_all_investmentproject',

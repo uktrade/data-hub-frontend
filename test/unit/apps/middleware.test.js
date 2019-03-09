@@ -21,6 +21,13 @@ describe('Apps middleware', () => {
           'permission1',
         ],
       },
+      {
+        path: 'fourth',
+        label: 'Fourth',
+        subPaths: [
+          'sub-path',
+        ],
+      },
     ]
 
     it('should attach nav items props to locals', () => {
@@ -53,6 +60,22 @@ describe('Apps middleware', () => {
 
       expect(resMock.locals.localNavItems[0].url).to.equal('/sub-app/first')
       expect(resMock.locals.localNavItems[0].isActive).to.be.true
+      expect(this.nextSpy.calledOnce).to.be.true
+    })
+
+    it('should set new isActive to true for the current path when a subPath is defined', () => {
+      const reqMock = {
+        baseUrl: '/sub-app',
+      }
+      const resMock = {
+        locals: {
+          CURRENT_PATH: '/sub-app/fourth/sub-path',
+        },
+      }
+      this.middleware.setLocalNav(NAV_ITEMS)(reqMock, resMock, this.nextSpy)
+
+      expect(resMock.locals.localNavItems[2].url).to.equal('/sub-app/fourth')
+      expect(resMock.locals.localNavItems[2].isActive).to.be.true
       expect(this.nextSpy.calledOnce).to.be.true
     })
 
@@ -112,7 +135,17 @@ describe('Apps middleware', () => {
             ],
             url: '/sub-app/third',
             isActive: false,
-          }]
+          },
+          {
+            path: 'fourth',
+            label: 'Fourth',
+            subPaths: [
+              'sub-path',
+            ],
+            url: '/sub-app/fourth',
+            isActive: false,
+          },
+        ]
         this.middleware.setLocalNav(NAV_ITEMS)(reqMock, resMock, this.nextSpy)
 
         expect(resMock.locals.localNavItems).to.deep.equal(expectedNavItems)
@@ -138,6 +171,15 @@ describe('Apps middleware', () => {
             path: 'second',
             label: 'Second',
             url: '/sub-app/second',
+            isActive: false,
+          },
+          {
+            path: 'fourth',
+            label: 'Fourth',
+            subPaths: [
+              'sub-path',
+            ],
+            url: '/sub-app/fourth',
             isActive: false,
           },
         ]
