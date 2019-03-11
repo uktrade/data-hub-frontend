@@ -82,7 +82,7 @@
 
   {% if regionDetails %}
     {% call DetailsContainer({ heading: 'DIT region', editUrl: editUrl, dataAutoId: 'regionDetailsContainer' }) %}
-      <table class="table--key-value">
+      <table class="table--key-value" data-auto-id="regionDetails">
         <tbody>
           <tr>
             <td>{{ regionDetails }}</td>
@@ -108,8 +108,8 @@
   {% endcall %}
 
   {% if archivedDocumentPath %}
-    {% call DetailsContainer({ heading: 'Documents from CDMS', dataAutoId: 'documentsContainer' }) %}
-      <table class="table--key-value">
+    {% call DetailsContainer({ heading: 'Documents from CDMS', dataAutoId: 'documentsDetailsContainer' }) %}
+      <table class="table--key-value" data-auto-id="documentsDetails">
         <tbody>
         <tr>
           <td>
