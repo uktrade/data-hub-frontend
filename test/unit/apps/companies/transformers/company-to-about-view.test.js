@@ -39,6 +39,7 @@ describe('#transformCompanyToKnownAsView', () => {
           website: 'www.company.com',
           turnover: 100000,
           number_of_employees: 200,
+          description: 'description',
         })
       })
 
@@ -98,6 +99,10 @@ describe('#transformCompanyToKnownAsView', () => {
           newWindow: true,
         })
       })
+
+      it('should set the description', () => {
+        expect(this.actual.Description).to.equal('description')
+      })
     })
 
     context('when minimal information is populated', () => {
@@ -124,6 +129,10 @@ describe('#transformCompanyToKnownAsView', () => {
       it('should not set the Companies House number', () => {
         expect(this.actual['Companies House number']).to.not.exist
       })
+
+      it('should not set the description', () => {
+        expect(this.actual.Description).to.not.exist
+      })
     })
   })
 
@@ -149,6 +158,7 @@ describe('#transformCompanyToKnownAsView', () => {
             name: '500+',
           },
           website: 'www.company.com',
+          description: 'description',
         })
       })
 
@@ -189,6 +199,10 @@ describe('#transformCompanyToKnownAsView', () => {
       it('should set the VAT number', () => {
         expect(this.actual['VAT number']).to.equal('0123456789')
       })
+
+      it('should set the description', () => {
+        expect(this.actual.Description).to.equal('description')
+      })
     })
 
     context('when minimal information is populated', () => {
@@ -217,6 +231,10 @@ describe('#transformCompanyToKnownAsView', () => {
 
       it('should not set the VAT number', () => {
         expect(this.actual['VAT number']).to.not.exist
+      })
+
+      it('should not set the description', () => {
+        expect(this.actual.Description).to.not.exist
       })
     })
   })

@@ -14,6 +14,7 @@ Feature: Company business details
       | Annual turnover           | company.turnoverRange        |
       | Number of employees       | company.employeeRange        |
       | Website                   | Not set                      |
+      | Description               | company.description          |
     And the "About One List Corp" Edit link should not be displayed
     And the Global Account Manager – One List key value details are displayed
       | key                       | value                        |
@@ -59,6 +60,7 @@ Feature: Company business details
       | Annual turnover           | Not set                      |
       | Number of employees       | Not set                      |
       | Website                   | Not set                      |
+      | Description               | company.description          |
     And the "About Venus Ltd" Edit link should be displayed
     And the Global Account Manager – One List key value details are displayed
       | key                       | value                        |
@@ -103,6 +105,7 @@ Feature: Company business details
       | Annual turnover           | company.annualTurnover       |
       | Number of employees       | company.numberOfEmployees    |
       | Website                   | Not set                      |
+      | Description               | company.description          |
     And the "About DnB Corp" Edit link should not be displayed
     And the Business hierarchy key value details are displayed
       | key                       | value                        |
@@ -141,6 +144,7 @@ Feature: Company business details
       | Annual turnover           | company.turnoverRange        |
       | Number of employees       | company.employeeRange        |
       | Website                   | Not set                      |
+      | Description               | company.description          |
     And the "About Archived Ltd" Edit link should not be displayed
     And the Global Account Manager – One List key value details are displayed
       | key                       | value                        |
