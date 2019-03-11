@@ -121,6 +121,14 @@
       error: errors.website
     }) }}
 
+    {{ TextField({
+      name: 'description',
+      label: 'Business description',
+      optional: true,
+      value: formData.description,
+      error: errors.description
+    }) }}
+
     {% if not companiesHouseRecord %}
       {% if showCompanyNumberForUkBranch %}
         {{ TextField({
@@ -364,14 +372,6 @@
         error: errors.headquarter_type
       }) }}
     {% endif %}
-
-    {{ TextField({
-      name: 'description',
-      label: 'Business description',
-      optional: true,
-      value: formData.description,
-      error: errors.description
-    }) }}
 
   {% endcall %}
 {% endblock %}

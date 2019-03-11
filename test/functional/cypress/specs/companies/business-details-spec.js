@@ -35,6 +35,7 @@ describe('Companies business details', () => {
         'Annual turnover': '£33.5M+',
         'Number of employees': '500+',
         'Website': 'Not set',
+        'Description': 'This is a dummy company for testing the One List',
       })
     })
 
