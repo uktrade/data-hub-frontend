@@ -95,6 +95,7 @@ const aboutLabels = {
   turnover: 'Annual turnover',
   number_of_employees: 'Number of employees',
   website: 'Website',
+  description: 'Description',
 }
 
 const businessHierarchyLabels = {

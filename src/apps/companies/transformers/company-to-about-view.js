@@ -84,11 +84,13 @@ module.exports = ({
   number_of_employees,
   employee_range,
   website,
+  description,
 }) => {
   const company_number = get(companies_house_data, 'company_number')
 
   const viewRecord = {
     vat_number,
+    description,
     business_type: duns_number ? null : get(business_type, 'name'),
     trading_names: isEmpty(trading_names) ? NOT_SET_TEXT : trading_names,
     company_number: transformCompanyNumber(company_number),
