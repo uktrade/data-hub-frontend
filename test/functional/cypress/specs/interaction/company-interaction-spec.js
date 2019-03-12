@@ -2,7 +2,7 @@ const selectors = require('../../selectors')
 
 describe('Company interaction', () => {
   beforeEach(() => {
-    cy.visit('/companies/4cd4128b-1bad-4f1e-9146-5d4678c6a018/interactions')
+    cy.visit('/companies/346f78a5-1d23-4213-b4c2-bf48246a13c3/interactions')
   })
 
   it('Hide add interaction for archived companies', () => {
