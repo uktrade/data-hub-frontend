@@ -42,7 +42,7 @@ describe('Create attendee controller', () => {
         .get('/v3/contact/59c815d1-91d0-4d1f-b980-1d04157a298f')
         .reply(200, contact)
         .post('/v3/interaction', {
-          contact: '59c815d1-91d0-4d1f-b980-1d04157a298f',
+          contacts: [ '59c815d1-91d0-4d1f-b980-1d04157a298f' ],
           company: '0fb3379c-341c-4da4-b825-bf8d47b26baa',
           date: '2017-11-10',
           dit_adviser: '999',
