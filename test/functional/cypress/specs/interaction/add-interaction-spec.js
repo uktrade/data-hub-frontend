@@ -70,7 +70,7 @@ describe('Add Interaction', () => {
     it('should add service delivery with TAP service optional fields empty', () => {
       cy.visit('/companies/346f78a5-1d23-4213-b4c2-bf48246a13c3/interactions/create/service-delivery')
 
-      cy.get(selectors.addInteraction.contact).select('Bob lawson, Magician')
+      cy.get(selectors.addInteraction.contact).select('Joseph Woof, Dog master')
       cy.get(selectors.addInteraction.eventNo).click()
       cy.get(selectors.addInteraction.service).select('Tradeshow Access Programme (TAP)')
       cy.get(selectors.addInteraction.subject).type(subject)
@@ -84,7 +84,7 @@ describe('Add Interaction', () => {
     it('should add service delivery with TAP service optional fields populated', () => {
       cy.visit('/companies/346f78a5-1d23-4213-b4c2-bf48246a13c3/interactions/create/service-delivery')
 
-      cy.get(selectors.addInteraction.contact).select('Bob lawson, Magician')
+      cy.get(selectors.addInteraction.contact).select('Joseph Woof, Dog master')
       cy.get(selectors.addInteraction.eventNo).click()
       cy.get(selectors.addInteraction.service).select('Tradeshow Access Programme (TAP)')
       cy.get(selectors.addInteraction.serviceStatus).select('Current')
@@ -109,7 +109,7 @@ describe('Add Interaction', () => {
 })
 
 const populateInteractionForm = () => {
-  cy.get(selectors.addInteraction.contact).select('Bob lawson, Magician')
+  cy.get(selectors.addInteraction.contact).select('Joseph Woof, Dog master')
   cy.get(selectors.addInteraction.service).select('Account Management')
   cy.get(selectors.addInteraction.communicationChannel).select('Email/Website')
   cy.get(selectors.addInteraction.subject).type(subject)
@@ -118,7 +118,7 @@ const populateInteractionForm = () => {
 }
 
 const populateServiceDeliveryForm = service => {
-  cy.get(selectors.addInteraction.contact).select('Bob lawson, Magician')
+  cy.get(selectors.addInteraction.contact).select('Joseph Woof, Dog master')
   cy.get(selectors.addInteraction.eventNo).click()
   cy.get(selectors.addInteraction.service).select(service)
   cy.get(selectors.addInteraction.subject).type(subject)
