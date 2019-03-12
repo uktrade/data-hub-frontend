@@ -4,6 +4,7 @@ module.exports = ({
   requestBody,
   requestParams = {},
   requestQuery = {},
+  CURRENT_PATH = '',
   breadcrumb = sinon.stub().returnsThis(),
   company,
   contact,
@@ -29,6 +30,7 @@ module.exports = ({
       render: sinon.spy(),
       redirect: sinon.spy(),
       locals: {
+        CURRENT_PATH,
         paths,
         company,
         contact,
