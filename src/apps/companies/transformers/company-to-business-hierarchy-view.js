@@ -12,12 +12,28 @@ const transformHeadquarterType = (headquarter_type) => {
   }
 }
 
-const transformSubsidiaries = (id, headquarter_type, subsidiariesCount) => {
+const transformSubsidiaries = (id, headquarter_type, subsidiariesCount, duns_number) => {
   if (headquarter_type) {
-    return subsidiariesCount ? {
-      url: `/companies/${id}/subsidiaries`,
-      name: `${subsidiariesCount} ${pluralise('subsidiary', subsidiariesCount)}`,
-    } : NONE_TEXT
+    if (subsidiariesCount) {
+      return {
+        url: `/companies/${id}/subsidiaries`,
+        name: `${subsidiariesCount} ${pluralise('subsidiary', subsidiariesCount)}`,
+      }
+    }
+
+    if (headquarter_type.name === 'ghq' && !duns_number) {
+      return {
+        name: NONE_TEXT,
+        actions: [
+          {
+            url: `/companies/${id}/subsidiaries/link`,
+            label: 'Link a subsidiary',
+          },
+        ],
+      }
+    }
+
+    return NONE_TEXT
   }
 }
 
@@ -51,7 +67,7 @@ const transformGlobalHq = (id, headquarter_type, global_headquarters, duns_numbe
 module.exports = ({ id, headquarter_type, global_headquarters, duns_number }, subsidiariesCount) => {
   const viewRecord = {
     headquarter_type: transformHeadquarterType(headquarter_type),
-    subsidiaries: transformSubsidiaries(id, headquarter_type, subsidiariesCount),
+    subsidiaries: transformSubsidiaries(id, headquarter_type, subsidiariesCount, duns_number),
     global_headquarters: transformGlobalHq(id, headquarter_type, global_headquarters, duns_number),
   }
 
