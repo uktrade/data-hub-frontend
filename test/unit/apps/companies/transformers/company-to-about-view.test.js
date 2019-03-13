@@ -1,6 +1,13 @@
-const transformCompanyToAboutView = require('~/src/apps/companies/transformers/company-to-about-view')
 const { aboutLabels } = require('~/src/apps/companies/labels')
 const { NOT_SET_TEXT } = require('~/src/apps/companies/constants')
+
+const transformCompanyToAboutView = proxyquire('~/src/apps/companies/transformers/company-to-about-view', {
+  '../../../../config': {
+    currencyRate: {
+      usdToGbp: 0.75,
+    },
+  },
+})
 
 describe('#transformCompanyToKnownAsView', () => {
   const commonTests = (expectedTradingNames, expectedWebsite, expectedEmployees, expectedTurnover) => {
@@ -70,7 +77,10 @@ describe('#transformCompanyToKnownAsView', () => {
           },
         ],
         [
-          'USD 100000',
+          {
+            type: 'currency',
+            name: 75000,
+          },
           {
             details: {
               summaryText: 'What does that mean?',
