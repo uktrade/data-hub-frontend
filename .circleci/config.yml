@@ -115,7 +115,7 @@ aliases:
 
   # Cypress dependencies base docker container
   - &docker_dit_cypress_dependencies
-    image: cypress/browsers:chrome69
+    image: ukti/docker-dit-cypress
     environment:
       *data_hub_functional_envs
 
