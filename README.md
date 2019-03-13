@@ -80,6 +80,9 @@ There are 2 docker files.
 #### docker-compose.yml
 
 This will run the front end server locally, but will point to a remote backend.
+
+##### Environment Variables
+
 This file expects the following environment variables:
 
 | Name | Description |
@@ -130,21 +133,38 @@ This file expects the following environment variables:
 
 
 These environment variables are sourced from `.env` (Docker Compose [supports declaring default environment variables](https://docs.docker.com/compose/environment-variables/#the-envfile-configuration-option) 
-in an environment file). Create a `.env` file:
+in an environment file). 
 
-```shell
-cp sample.env .env
-```
+#### Setting up with docker-compose
 
-To start the server just:
+1.  Create a `.env` file:
 
+    ```shell
+    cp sample.env .env
+    ```
+
+2.  Ensure that the `.env` file is pointing to a valid [data-hub-leeloo backend](https://github.com/uktrade/data-hub-leeloo/) 
+    using the `API_ROOT` environment variable.
+
+    - You may want to run a local copy of the leeloo backend.  By default, 
+      you can run both leeloo and the frontend under one docker-compose project.
+      [See the instructions in the leeloo readme to set it up](https://github.com/uktrade/data-hub-leeloo/#installation-with-docker).  
+      
+
+3.  To start the server just:
+
+    ```shell
     docker-compose up
+    ```
 
-The server starts in developer mode, which means that when you make local changes it will auto-compile
-sass or javavscript, and will restart nodejs when server side changes are made. A container with redis will also start, this is linked to the data hub container.
+    The server starts in developer mode, which means that when you make local changes it will auto-compile
+    sass or javavscript, and will restart nodejs when server side changes are made. A container with redis will also start, this is linked to the data hub container.
+    
+    You can access the server on port 3000, [http://localhost:3000](http://localhost:3000). You can also run
+    a remote debug session over port 5858 if using webstorm/Intellij or Visual Studio Code
 
-You can access the server on port 3000, [http://localhost:3000](http://localhost:3000). You can also run
-a remote debug session over port 5858 if using webstorm/Intellij or Visual Studio Code
+4.  You will need to set up OAuth.  It is recommended to use the [uktrade/mock-sso](https://github.com/uktrade/mock-sso) 
+    backend as this is fully compatible with docker-compose projects - [see the OAuth section for more detail](#oauth).
 
 ### Native install
 
@@ -248,8 +268,13 @@ correct access and SSO details for the SSO provider you are using.
 ##### SSO development providers
 
 ###### SSO mock
-You could use the [uktrade/mock-sso](https://github.com/uktrade/mock-sso) repo. You will need to set up the following 
-environment variables:
+You could use the [uktrade/mock-sso](https://github.com/uktrade/mock-sso) repo. 
+
+If you are using docker-compose and the supplied `sample.env` file, the default
+environment variables will suffice.  Run through the instructions to [set up 
+mock-sso under docker-compose here](https://github.com/uktrade/mock-sso#docker-compose).
+
+If you are running natively, you will need to set up the following environment variables:
 ```
 export OAUTH2_DEV_TOKEN=exampleDevToken
 export OAUTH2_TOKEN_FETCH_URL=http://localhost:8080/o/token
