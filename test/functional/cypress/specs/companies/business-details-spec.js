@@ -267,7 +267,7 @@ describe('Companies business details', () => {
     it('should display the "About" details', () => {
       assertKeyValueTable('aboutDetails', {
         'Trading names': 'DnBD&B',
-        'Annual turnover': 'USD 1000000This is an estimated numberWhat does that mean?This is an estimated number',
+        'Annual turnover': '£750,148.00This is an estimated numberWhat does that mean?This is an estimated number',
         'Number of employees': '95This is an estimated numberWhat does that mean?This is an estimated number',
         'Website': 'Not set',
       })
