@@ -94,6 +94,9 @@ const config = {
   oneList: {
     email: process.env.ONE_LIST_EMAIL || 'one.list@example.com',
   },
+  currencyRate: {
+    usdToGbp: 0.750148,
+  },
 }
 
 module.exports = config

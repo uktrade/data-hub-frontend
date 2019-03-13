@@ -4,11 +4,15 @@ const { get, pickBy, isEmpty } = require('lodash')
 const { aboutLabels } = require('../labels')
 const { getDataLabels } = require('../../../lib/controller-utils')
 const { NOT_SET_TEXT } = require('../constants')
+const { currencyRate } = require('../../../../config')
 
 function transformTurnover (turnover, turnover_range) {
   if (turnover) {
     return [
-      `USD ${turnover}`,
+      {
+        name: turnover * currencyRate.usdToGbp,
+        type: 'currency',
+      },
       {
         name: 'This is an estimated number',
         type: 'details',
