@@ -129,7 +129,13 @@ This file expects the following environment variables:
 | ZEN_TOKEN | Zendesk auth token |
 
 
-Either set these variables manually or why not look at [autoenv](https://github.com/kennethreitz/autoenv).
+These environment variables are sourced from `.env` (Docker Compose [supports declaring default environment variables](https://docs.docker.com/compose/environment-variables/#the-envfile-configuration-option) 
+in an environment file). Create a `.env` file:
+
+```shell
+cp sample.env .env
+```
+
 To start the server just:
 
     docker-compose up
@@ -139,9 +145,6 @@ sass or javavscript, and will restart nodejs when server side changes are made. 
 
 You can access the server on port 3000, [http://localhost:3000](http://localhost:3000). You can also run
 a remote debug session over port 5858 if using webstorm/Intellij or Visual Studio Code
-
-#### Environment Variables
-Docker Compose [supports declaring default environment variables](https://docs.docker.com/compose/environment-variables/#the-envfile-configuration-option) in an environment file. If you wish to send through environment variables to the docker containers please add them into the `.env` file in the projects root.
 
 ### Native install
 
