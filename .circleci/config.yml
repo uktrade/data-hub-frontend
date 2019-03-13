@@ -314,7 +314,7 @@ jobs:
       - *docker_data_hub_base
       - *docker_redis
       - *docker_mock_sso
-    working_directory:
+    working_directory: ~/data-hub-frontend
     steps:
       - checkout
       - run: yarn install
@@ -325,7 +325,7 @@ jobs:
       - *wait_for_frontend
       - run:
           name: Cypress tests
-          command: xvfb-run yarn test:functional
+          command: yarn test:functional --browser chrome
           when: always
       - store_artifacts:
           path: test/functional/cypress/screenshots
