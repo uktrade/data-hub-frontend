@@ -115,7 +115,7 @@ aliases:
 
   # Cypress dependencies base docker container
   - &docker_dit_cypress_dependencies
-    image: ukti/docker-dit-cypress
+    image: cypress/browsers:chrome69
     environment:
       *data_hub_functional_envs
 
@@ -325,7 +325,7 @@ jobs:
       - *wait_for_frontend
       - run:
           name: Cypress tests
-          command: xvfb-run yarn test:functional
+          command: yarn test:functional --browser chrome
           when: always
       - store_artifacts:
           path: test/functional/cypress/screenshots
