@@ -314,7 +314,7 @@ jobs:
       - *docker_data_hub_base
       - *docker_redis
       - *docker_mock_sso
-    working_directory:
+    working_directory: ~/data-hub-frontend
     steps:
       - checkout
       - run: yarn install
