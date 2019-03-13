@@ -23,8 +23,13 @@ async function renderSubsidiaries (req, res, next) {
         transformCompanyToSubsidiaryListItem(res.locals.company),
       ))
 
+    res.breadcrumb(company.name, `/companies/${company.id}`)
+
+    if (features['companies-new-layout']) {
+      res.breadcrumb('Business details', `/companies/${company.id}/business-details`)
+    }
+
     return res
-      .breadcrumb(company.name, `/companies/${company.id}`)
       .breadcrumb(companyDetailsLabels.subsidiaries)
       .render(view, {
         heading: `Subsidiaries of ${company.name}`,
