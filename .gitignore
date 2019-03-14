@@ -44,6 +44,8 @@ selenium-debug.log
 test/acceptance/screenshots/
 cucumber
 seleniumLogs
+test/functional/cypress/screenshots
+cypress/**
 
 # IDE configurations
 .vscode/

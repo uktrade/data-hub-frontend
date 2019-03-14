@@ -54,9 +54,10 @@ function setLocalNav (items = []) {
       .filter(filterNonPermittedItem(userPermissions))
       .map((item) => {
         const url = item.isExternal ? item.url : `${req.baseUrl}/${item.path}`
+        const isActive = res.locals.CURRENT_PATH === url || res.locals.CURRENT_PATH.startsWith(`${url}/`)
         return assign({}, item, {
           url,
-          isActive: res.locals.CURRENT_PATH === url,
+          isActive,
         })
       })
     next()

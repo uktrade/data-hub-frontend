@@ -4,6 +4,7 @@ module.exports = ({
   requestBody,
   requestParams = {},
   requestQuery = {},
+  CURRENT_PATH = '',
   breadcrumb = sinon.stub().returnsThis(),
   company,
   contact,
@@ -12,6 +13,7 @@ module.exports = ({
   investment,
   companiesHouseRecord,
   features = {},
+  user,
 }) => {
   return {
     reqMock: {
@@ -28,6 +30,7 @@ module.exports = ({
       render: sinon.spy(),
       redirect: sinon.spy(),
       locals: {
+        CURRENT_PATH,
         paths,
         company,
         contact,
@@ -36,6 +39,7 @@ module.exports = ({
         investment,
         companiesHouseRecord,
         features,
+        user,
       },
     },
     nextSpy: sinon.spy(),

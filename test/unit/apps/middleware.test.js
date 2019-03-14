@@ -21,38 +21,78 @@ describe('Apps middleware', () => {
           'permission1',
         ],
       },
+      {
+        path: 'fourth',
+        label: 'Fourth',
+      },
+      {
+        path: 'four',
+        label: 'Four',
+      },
     ]
 
     it('should attach nav items props to locals', () => {
       const reqMock = {
-        baseUrl: '/sub-app',
+        baseUrl: '/sub-app/id',
       }
       const resMock = {
         locals: {
-          CURRENT_PATH: '/sub-app/resource',
+          CURRENT_PATH: '/sub-app/id/resource',
         },
       }
 
       this.middleware.setLocalNav(NAV_ITEMS)(reqMock, resMock, this.nextSpy)
 
-      expect(resMock.locals.localNavItems[0].url).to.equal('/sub-app/first')
+      expect(resMock.locals.localNavItems[0].url).to.equal('/sub-app/id/first')
       expect(resMock.locals.localNavItems[0].isActive).to.be.false
       expect(this.nextSpy.calledOnce).to.be.true
     })
 
-    it('should set new isActive to true for the current path', () => {
+    it('should set isActive to true when the current path matches the nav item url', () => {
       const reqMock = {
-        baseUrl: '/sub-app',
+        baseUrl: '/sub-app/id',
       }
       const resMock = {
         locals: {
-          CURRENT_PATH: '/sub-app/first',
+          CURRENT_PATH: '/sub-app/id/first',
         },
       }
       this.middleware.setLocalNav(NAV_ITEMS)(reqMock, resMock, this.nextSpy)
 
-      expect(resMock.locals.localNavItems[0].url).to.equal('/sub-app/first')
+      expect(resMock.locals.localNavItems[0].url).to.equal('/sub-app/id/first')
       expect(resMock.locals.localNavItems[0].isActive).to.be.true
+      expect(this.nextSpy.calledOnce).to.be.true
+    })
+
+    it('should set isActive to true when the current path startsWith the nav item url', () => {
+      const reqMock = {
+        baseUrl: '/sub-app/id',
+      }
+      const resMock = {
+        locals: {
+          CURRENT_PATH: '/sub-app/id/fourth/projects',
+        },
+      }
+      this.middleware.setLocalNav(NAV_ITEMS)(reqMock, resMock, this.nextSpy)
+
+      expect(resMock.locals.localNavItems[2].url).to.equal('/sub-app/id/fourth')
+      expect(resMock.locals.localNavItems[2].isActive).to.be.true
+      expect(this.nextSpy.calledOnce).to.be.true
+    })
+
+    it('should set isActive to false when the current path does not startWith the nav item url', () => {
+      const reqMock = {
+        baseUrl: '/sub-app/id',
+      }
+      const resMock = {
+        locals: {
+          CURRENT_PATH: '/sub-app/id/fourth/projects',
+        },
+      }
+      this.middleware.setLocalNav(NAV_ITEMS)(reqMock, resMock, this.nextSpy)
+
+      expect(resMock.locals.localNavItems[3].url).to.equal('/sub-app/id/four')
+      expect(resMock.locals.localNavItems[3].isActive).to.be.false
       expect(this.nextSpy.calledOnce).to.be.true
     })
 
@@ -65,7 +105,9 @@ describe('Apps middleware', () => {
         }
         const reqMock = {}
         const resMock = {
-          locals: {},
+          locals: {
+            CURRENT_PATH: '',
+          },
         }
 
         this.middleware.setLocalNav([mockNavItem])(reqMock, resMock, this.nextSpy)
@@ -79,11 +121,11 @@ describe('Apps middleware', () => {
     context('user permitted nav items', () => {
       it('should include permitted items', () => {
         const reqMock = {
-          baseUrl: '/sub-app',
+          baseUrl: '/sub-app/id',
         }
         const resMock = {
           locals: {
-            CURRENT_PATH: '/sub-app/first',
+            CURRENT_PATH: '/sub-app/id/first',
             user: {
               permissions: [
                 'permission1',
@@ -95,13 +137,13 @@ describe('Apps middleware', () => {
           {
             path: 'first',
             label: 'First',
-            url: '/sub-app/first',
+            url: '/sub-app/id/first',
             isActive: true,
           },
           {
             path: 'second',
             label: 'Second',
-            url: '/sub-app/second',
+            url: '/sub-app/id/second',
             isActive: false,
           },
           {
@@ -110,9 +152,22 @@ describe('Apps middleware', () => {
             permissions: [
               'permission1',
             ],
-            url: '/sub-app/third',
+            url: '/sub-app/id/third',
             isActive: false,
-          }]
+          },
+          {
+            path: 'fourth',
+            label: 'Fourth',
+            url: '/sub-app/id/fourth',
+            isActive: false,
+          },
+          {
+            path: 'four',
+            label: 'Four',
+            url: '/sub-app/id/four',
+            isActive: false,
+          },
+        ]
         this.middleware.setLocalNav(NAV_ITEMS)(reqMock, resMock, this.nextSpy)
 
         expect(resMock.locals.localNavItems).to.deep.equal(expectedNavItems)
@@ -120,24 +175,36 @@ describe('Apps middleware', () => {
 
       it('should only include permitted items', () => {
         const reqMock = {
-          baseUrl: '/sub-app',
+          baseUrl: '/sub-app/id',
         }
         const resMock = {
           locals: {
-            CURRENT_PATH: '/sub-app/first',
+            CURRENT_PATH: '/sub-app/id/first',
           },
         }
         const expectedNavItems = [
           {
             path: 'first',
             label: 'First',
-            url: '/sub-app/first',
+            url: '/sub-app/id/first',
             isActive: true,
           },
           {
             path: 'second',
             label: 'Second',
-            url: '/sub-app/second',
+            url: '/sub-app/id/second',
+            isActive: false,
+          },
+          {
+            label: 'Fourth',
+            path: 'fourth',
+            url: '/sub-app/id/fourth',
+            isActive: false,
+          },
+          {
+            path: 'four',
+            label: 'Four',
+            url: '/sub-app/id/four',
             isActive: false,
           },
         ]
@@ -152,11 +219,11 @@ describe('Apps middleware', () => {
     const NAV_ITEMS = [{
       path: 'first',
       label: 'First',
-      url: '/base-url/first',
+      url: '/base-url/id/first',
     }, {
       path: 'second',
       label: 'Second',
-      url: '/base-url/second',
+      url: '/base-url/id/second',
     }]
 
     it('should redirect to the first item', () => {
@@ -170,7 +237,7 @@ describe('Apps middleware', () => {
 
       this.middleware.redirectToFirstNavItem({}, resMock)
 
-      expect(redirectMock).to.have.been.calledWith('/base-url/first')
+      expect(redirectMock).to.have.been.calledWith('/base-url/id/first')
     })
   })
 
