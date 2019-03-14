@@ -2,17 +2,18 @@
 
 {% block body_main_content %}
 
-  <h2 class="govuk-heading-m">Company interactions</h2>
+  <h2 class="govuk-heading-m" data-auto-id="companyInteractionHeader">Company interactions</h2>
 
   {% if company.contacts.length %}
     <p>
-      An interaction could be a meeting, call, email or another activity where you have been in touch with a company.
+      An interaction could be a meeting, call, email or another activity where someone from DIT or one of its partners
+      has been in touch with the company.
     </p>
 
     {% if company.archived %}
       <details role="group">
         <summary role="button" aria-controls="details-content-0" aria-expanded="false">
-      <span class="details__summary">
+      <span class="details__summary" data-auto-id="archivedCompanySummary">
         Why can I not add an interaction?
       </span>
         </summary>

@@ -16,7 +16,6 @@ const { renderCompanyList } = require('./controllers/list')
 const { renderForm } = require('./controllers/edit')
 const { renderDetails } = require('./controllers/details')
 const { renderBusinessDetails } = require('./controllers/business-details')
-const { renderInvestments } = require('./controllers/investments')
 const { renderOrders } = require('./controllers/orders')
 const { renderAuditLog } = require('./controllers/audit')
 const { renderTimeline } = require('./controllers/timeline')
@@ -52,6 +51,7 @@ const setCompaniesLocalNav = require('./middleware/local-navigation')
 
 const { transformCompanyToListItem } = require('./transformers')
 
+const investmentsRouter = require('./apps/investments/router')
 const interactionsRouter = require('../interactions/router.sub-app')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
@@ -123,12 +123,12 @@ router.get('/:companyId/contacts',
 router.get('/:companyId/exports', renderExports)
 router.get('/:companyId/subsidiaries', renderSubsidiaries)
 router.get('/:companyId/subsidiaries/link', renderLinkSubsidiary)
-router.get('/:companyId/investments', renderInvestments)
 router.get('/:companyId/orders', renderOrders)
 router.get('/:companyId/audit', renderAuditLog)
 router.get('/:companyId/documents', renderDocuments)
 router.get('/:companyId/timeline', renderTimeline)
 
+router.use('/:companyId/investments', investmentsRouter)
 router.use('/:companyId', setInteractionsDetails, interactionsRouter)
 
 module.exports = router

@@ -44,7 +44,7 @@ function transformInteractionResponseToForm ({
     policy_areas: displayPolicyAreas,
     policy_issue_types: displayPolicyTypes,
     policy_feedback_notes,
-    was_policy_feedback_provided: isNil(was_policy_feedback_provided) ? 'false' : 'true',
+    was_policy_feedback_provided: was_policy_feedback_provided ? 'true' : 'false',
     date: {
       day: isValidDate ? format(date, 'DD') : '',
       month: isValidDate ? format(date, 'MM') : '',

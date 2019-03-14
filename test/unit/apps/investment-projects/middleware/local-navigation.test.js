@@ -6,6 +6,7 @@ describe('Investment projects local navigation', () => {
 
     this.res = {
       locals: {
+        CURRENT_PATH: '',
         investment: {},
         user: {
           permissions: [

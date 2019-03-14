@@ -1,7 +1,6 @@
-{% extends "./template.njk" %}
+{% extends "../../../../views/_deprecated/template.njk" %}
 
-{% block body_main_content %}
-
+{% block main_grid_right_column %}
   <h2 class="govuk-heading-m">Investment projects</h2>
 
   {% if company.archived %}
@@ -27,5 +26,4 @@
       actionButtons: actionButtons
     }))
   }}
-
 {% endblock %}

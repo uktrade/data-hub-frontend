@@ -5,9 +5,9 @@ const { setLocalNav } = require('../../middleware')
 const { DEPRECATED_LOCAL_NAV, LOCAL_NAV } = require('../constants')
 
 function setCompaniesLocalNav (req, res, next) {
-  const { company } = res.locals
+  const { company, features } = res.locals
 
-  if (company.duns_number) {
+  if (company.duns_number || features['companies-new-layout']) {
     const navItems = LOCAL_NAV.filter(({ path }) => {
       return (path !== 'advisers' || company.one_list_group_tier)
     })

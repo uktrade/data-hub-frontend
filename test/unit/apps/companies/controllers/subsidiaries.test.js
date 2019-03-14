@@ -1,3 +1,5 @@
+const { forEach, isString } = require('lodash')
+
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
 const config = require('~/config')
@@ -8,19 +10,25 @@ const dnbCompanyMock = require('~/test/unit/data/companies/dnb-company.json')
 const subsidiariesMock = require('~/test/unit/data/companies/subsidiaries.json')
 
 describe('company subsidiaries controller', () => {
-  const commonTests = ({ expectedBreadcrumb, expectedTemplate, expectedHeading, expectedCount }) => {
-    it('should add two breadcrumbs', () => {
-      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledTwice
+  const commonTests = ({
+    expectedBreadcrumbs,
+    expectedTemplate,
+    expectedHeading,
+    expectedCount,
+  }) => {
+    it(`should add ${expectedBreadcrumbs.length} breadcrumbs`, () => {
+      expect(this.middlewareParameters.resMock.breadcrumb).to.be.callCount(expectedBreadcrumbs.length)
     })
 
-    it('should add a company breadcrumb', () => {
+    it('should add breadcrumbs', () => {
       const breadcrumbSpy = this.middlewareParameters.resMock.breadcrumb
-      expect(breadcrumbSpy).to.be.calledWith(expectedBreadcrumb)
-    })
-
-    it('should add a "Subsidiaries" breadcrumb', () => {
-      const breadcrumbSpy = this.middlewareParameters.resMock.breadcrumb
-      expect(breadcrumbSpy).to.be.calledWith('Subsidiaries')
+      forEach(expectedBreadcrumbs, (expectedBreadcrumb) => {
+        if (isString(expectedBreadcrumb)) {
+          expect(breadcrumbSpy).to.be.calledWith(expectedBreadcrumb)
+        } else {
+          expect(breadcrumbSpy).to.be.calledWith(expectedBreadcrumb.name, expectedBreadcrumb.url)
+        }
+      })
     })
 
     it('should render the correct template', () => {
@@ -59,7 +67,13 @@ describe('company subsidiaries controller', () => {
     })
 
     commonTests({
-      expectedBreadcrumb: 'SAMSUNG BIOEPIS UK LIMITED',
+      expectedBreadcrumbs: [
+        {
+          name: 'SAMSUNG BIOEPIS UK LIMITED',
+          url: `/companies/${companyMock.id}`,
+        },
+        'Subsidiaries',
+      ],
       expectedTemplate: 'companies/views/_deprecated/subsidiaries',
       expectedHeading: 'Subsidiaries of SAMSUNG BIOEPIS UK LIMITED',
       expectedCount: 1,
@@ -96,7 +110,13 @@ describe('company subsidiaries controller', () => {
     })
 
     commonTests({
-      expectedBreadcrumb: 'SAMSUNG BIOEPIS UK LIMITED',
+      expectedBreadcrumbs: [
+        {
+          name: 'SAMSUNG BIOEPIS UK LIMITED',
+          url: `/companies/${companyMock.id}`,
+        },
+        'Subsidiaries',
+      ],
       expectedTemplate: 'companies/views/_deprecated/subsidiaries',
       expectedHeading: 'Subsidiaries of SAMSUNG BIOEPIS UK LIMITED',
       expectedCount: 1,
@@ -134,7 +154,13 @@ describe('company subsidiaries controller', () => {
     })
 
     commonTests({
-      expectedBreadcrumb: 'SAMSUNG BIOEPIS UK LIMITED',
+      expectedBreadcrumbs: [
+        {
+          name: 'SAMSUNG BIOEPIS UK LIMITED',
+          url: `/companies/${companyMock.id}`,
+        },
+        'Subsidiaries',
+      ],
       expectedTemplate: 'companies/views/_deprecated/subsidiaries',
       expectedHeading: 'Subsidiaries of SAMSUNG BIOEPIS UK LIMITED',
       expectedCount: 0,
@@ -168,9 +194,61 @@ describe('company subsidiaries controller', () => {
     })
 
     commonTests({
-      expectedBreadcrumb: 'One List Corp',
+      expectedBreadcrumbs: [
+        {
+          name: 'One List Corp',
+          url: `/companies/${dnbCompanyMock.id}`,
+        },
+        'Subsidiaries',
+      ],
       expectedTemplate: 'companies/views/subsidiaries',
       expectedHeading: 'Subsidiaries of One List Corp',
+      expectedCount: 1,
+    })
+
+    it('should not set actions buttons', () => {
+      const props = this.middlewareParameters.resMock.render.args[0][1]
+
+      expect(props.actionButtons).to.be.undefined
+    })
+  })
+
+  context('when the company does not have a DUNS number and the companies new layout feature is enabled', () => {
+    beforeEach(async () => {
+      nock(config.apiRoot)
+        .get(`/v3/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`)
+        .reply(200, subsidiariesMock)
+
+      this.middlewareParameters = buildMiddlewareParameters({
+        company: companyMock,
+        features: {
+          'companies-new-layout': true,
+        },
+      })
+
+      await renderSubsidiaries(
+        this.middlewareParameters.reqMock,
+        this.middlewareParameters.resMock,
+        this.middlewareParameters.nextSpy,
+      )
+
+      this.subsidiaries = this.middlewareParameters.resMock.render.firstCall.args[1].subsidiaries
+    })
+
+    commonTests({
+      expectedBreadcrumbs: [
+        {
+          name: 'SAMSUNG BIOEPIS UK LIMITED',
+          url: `/companies/${companyMock.id}`,
+        },
+        {
+          name: 'Business details',
+          url: `/companies/${companyMock.id}/business-details`,
+        },
+        'Subsidiaries',
+      ],
+      expectedTemplate: 'companies/views/subsidiaries',
+      expectedHeading: 'Subsidiaries of SAMSUNG BIOEPIS UK LIMITED',
       expectedCount: 1,
     })
 

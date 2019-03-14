@@ -6,7 +6,6 @@ const {
   getKeyValueTableRowValueCell,
   getTableValueCell,
   getDataTableRowCell,
-  getSelectorForElementWithText,
 } = require('../../helpers/selectors')
 const formatters = require('../../helpers/formatters')
 
@@ -165,30 +164,4 @@ Then(/^the data details ([0-9]+) are displayed$/, async function (tableNumber, d
 
   await assertTableRowCount(tableSelector, dataTable.hashes())
   await assertTableContent.bind(this)(tableSelector, dataTable.hashes(), TABLE_TYPE.DATA)
-})
-
-Then(/^the "(.+)" details summary (should be|should not be) displayed$/, async (summary, should) => {
-  const detailsSummarySelector = getSelectorForElementWithText(summary, {
-    el: '//span',
-    className: 'govuk-details__summary-text',
-    hasExactText: true,
-  })
-
-  const assertion = should === 'should be' ? 'visible' : 'elementNotPresent'
-
-  await Details
-    .api.useXpath()
-    .assert[assertion](detailsSummarySelector.selector)
-    .useCss()
-})
-
-Then(/^the "(.+)" Edit link (should be|should not be) displayed/, async function (heading, should) {
-  const editLinkSelector = getSelectorForElementWithText(heading, { el: '//h2', child: '//following-sibling::a' })
-
-  const assertion = should === 'should be' ? 'visible' : 'elementNotPresent'
-
-  await Details
-    .api.useXpath()
-    .assert[assertion](editLinkSelector.selector)
-    .useCss()
 })
