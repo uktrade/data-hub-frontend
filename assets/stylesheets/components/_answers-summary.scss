@@ -22,7 +22,7 @@
   display: block;
 
   @include media(tablet) {
-    font-size: 20px;
+    font-size: 19px;
     float: right;
 
     & + * {
