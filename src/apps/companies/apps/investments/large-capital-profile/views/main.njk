@@ -1,0 +1,11 @@
+{% from "companies/apps/investments/macros/navigation.njk" import subnavigation %}
+
+{{ subnavigation(company, 'large-capital-profile') }}
+
+<h2 class="govuk-heading-m" data-auto-id="investment-subheading">Large capital investor profile</h2>
+
+{% if companyProfile  %}
+  <pre>{{ companyProfile | dump(2) }}</pre>
+{% else %}
+  <button class="button" data-auto-id="create-a-profile">Create a profile</button>
+{% endif %}
