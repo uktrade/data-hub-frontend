@@ -5,6 +5,7 @@
 {% endset %}
 
 {% set isEditing = true if company.id else false %}
+{% set returnLink = '/companies/' + company.id + '/business-details' if features['companies-new-layout'] else '/companies/' + company.id %}
 
 {% block body_main_content %}
   <div class="section">
@@ -19,6 +20,7 @@
       }) }}
   </div>
 
+
   {% if chDetails %}
     {# TODO Do we even still need this? It's not currently being displayed (Bug?) #}
     {% call Message({ type: 'muted', element: 'div' }) %}
@@ -29,7 +31,7 @@
 
   {% call Form({
     buttonText: 'Save and return' if isEditing else 'Add company',
-    returnLink: '/companies/' + company.id if isEditing else '/companies/add-step-1',
+    returnLink: returnLink,
     returnText: 'Return without saving' if isEditing else 'Back',
     actionExtension: {
         country : 'non-uk' if isForeign else 'uk'
