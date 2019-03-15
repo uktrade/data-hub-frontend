@@ -1,0 +1,21 @@
+{% macro subnavigation(company, active) %}
+  <nav class='sub-navigation govuk-form-group'>
+    <ol>
+      <li class="{{ 'active' if active === 'investment-projects' }}" data-auto-id="investment-projects-tab">
+        <a href="/companies/{{company.id}}/investments/projects">
+          Investment projects
+        </a>
+      </li>
+      <li class="{{ 'active' if active === 'large-capital-profile' }}" data-auto-id="large-capital-profile-tab">
+        <a href="/companies/{{company.id}}/investments/large-capital-profile">
+          Large capital profile
+        </a>
+      </li>
+      <li class="{{ 'active' if active === 'growth-capital-profile' }}" data-auto-id="growth-capital-profile-tab">
+        <a href="/companies/{{company.id}}/investments/growth-capital-profile">
+          Growth capital profile
+        </a>
+      </li>
+    </ol>
+  </nav>
+{% endmacro %}
