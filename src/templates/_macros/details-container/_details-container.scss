@@ -10,8 +10,8 @@
   }
 }
 
-.c-details-container__edit-link {
-  @include govuk-font($size: 24);
+.c-details-container__action {
+  @include govuk-font($size: 19, $weight: bold);
 
   margin-left: auto;
 }
