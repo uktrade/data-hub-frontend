@@ -1,6 +1,8 @@
 const selectors = require('../../selectors')
 const utils = require('../../support/utils')
 
+const serviceDeliveryDetails = selectors.interactionDetails.serviceDelivery
+
 let subject
 
 describe('Add Interaction', () => {
@@ -14,7 +16,7 @@ describe('Add Interaction', () => {
       populateInteractionForm()
       cy.get(selectors.addInteraction.add).click()
 
-      cy.get(selectors.interactionDetails.subject).should('contain', subject)
+      cy.get(serviceDeliveryDetails.subject).should('contain', subject)
     })
 
     it('should add interaction by contacts', () => {
@@ -22,7 +24,7 @@ describe('Add Interaction', () => {
       populateInteractionForm()
       cy.get(selectors.addInteraction.add).click()
 
-      cy.get(selectors.interactionDetails.subject).should('contain', subject)
+      cy.get(serviceDeliveryDetails.subject).should('contain', subject)
     })
 
     it('should add interaction by investment projects', () => {
@@ -30,7 +32,7 @@ describe('Add Interaction', () => {
       populateInteractionForm()
       cy.get(selectors.addInteraction.add).click()
 
-      cy.get(selectors.interactionDetails.subject).should('contain', subject)
+      cy.get(serviceDeliveryDetails.subject).should('contain', subject)
     })
 
     it('should map values to the successfully created interaction form', () => {
@@ -48,7 +50,7 @@ describe('Add Interaction', () => {
       populateServiceDeliveryForm('Bank Referral')
       cy.get(selectors.addInteraction.add).click()
 
-      cy.get(selectors.interactionDetails.subject).should('contain', subject)
+      cy.get(serviceDeliveryDetails.subject).should('contain', subject)
     })
 
     it('should add service delivery by contacts', () => {
@@ -56,7 +58,7 @@ describe('Add Interaction', () => {
       populateServiceDeliveryForm('Bank Referral')
       cy.get(selectors.addInteraction.add).click()
 
-      cy.get(selectors.interactionDetails.subject).should('contain', subject)
+      cy.get(serviceDeliveryDetails.subject).should('contain', subject)
     })
 
     it('should add service delivery by investment projects', () => {
@@ -64,7 +66,7 @@ describe('Add Interaction', () => {
       populateServiceDeliveryForm('Account Management')
       cy.get(selectors.addInteraction.add).click()
 
-      cy.get(selectors.interactionDetails.subject).should('contain', subject)
+      cy.get(serviceDeliveryDetails.subject).should('contain', subject)
     })
 
     it('should add service delivery with TAP service optional fields empty', () => {
@@ -78,7 +80,7 @@ describe('Add Interaction', () => {
       cy.get(selectors.addInteraction.policyFeedbackNo).click()
       cy.get(selectors.addInteraction.add).click()
 
-      cy.get(selectors.interactionDetails.subject).should('contain', subject)
+      cy.get(serviceDeliveryDetails.subject).should('contain', subject)
     })
 
     it('should add service delivery with TAP service optional fields populated', () => {
@@ -95,7 +97,7 @@ describe('Add Interaction', () => {
 
       cy.get(selectors.addInteraction.add).click()
 
-      cy.get(selectors.interactionDetails.subject).should('contain', subject)
+      cy.get(serviceDeliveryDetails.subject).should('contain', subject)
     })
 
     it('should map values to the successfully created service delivery form', () => {
@@ -127,15 +129,15 @@ const populateServiceDeliveryForm = service => {
 }
 
 const validateSuccesfulFormSubmission = (subject, headerTitle) => {
-  cy.get(selectors.interactionDetails.company).should('contain', 'Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978')
-  cy.get(selectors.interactionDetails.contacts).should('contain', 'Bob lawson')
-  cy.get(selectors.interactionDetails.serviceProvider).should('contain', 'UKTI Team East Midlands - International Trade Team')
-  cy.get(selectors.interactionDetails.service).should('contain', 'Account Managment: Northern Powerhouse')
-  cy.get(selectors.interactionDetails.subject).should('contain', subject)
-  cy.get(selectors.interactionDetails.notes).should('contain', 'Sandbox')
-  cy.get(selectors.interactionDetails.dateOfInteraction).should('contain', '7 February 2019')
-  cy.get(selectors.interactionDetails.ditAdviser).should('contain', 'DIT Staff')
-  cy.get(selectors.interactionDetails.communicationChannel).should('contain', 'Social Media')
-  cy.get(selectors.interactionDetails.documents).should('contain', 'There are no files or documents')
-  cy.get(selectors.interactionDetails.successMsg).should('contain', headerTitle)
+  cy.get(serviceDeliveryDetails.company).should('contain', 'Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978')
+  cy.get(serviceDeliveryDetails.contacts).should('contain', 'Bob lawson')
+  cy.get(serviceDeliveryDetails.serviceProvider).should('contain', 'UKTI Team East Midlands - International Trade Team')
+  cy.get(serviceDeliveryDetails.service).should('contain', 'Account Managment: Northern Powerhouse')
+  cy.get(serviceDeliveryDetails.subject).should('contain', subject)
+  cy.get(serviceDeliveryDetails.notes).should('contain', 'Sandbox')
+  cy.get(serviceDeliveryDetails.dateOfInteraction).should('contain', '7 February 2019')
+  cy.get(serviceDeliveryDetails.ditAdviser).should('contain', 'DIT Staff')
+  cy.get(serviceDeliveryDetails.communicationChannel).should('contain', 'Social Media')
+  cy.get(serviceDeliveryDetails.documents).should('contain', 'There are no files or documents')
+  cy.get(serviceDeliveryDetails.successMsg).should('contain', headerTitle)
 }
