@@ -1,0 +1,21 @@
+nav.sub-navigation {
+  border-bottom: 1px solid #c6c8c8;
+  ol {
+    display: flex;
+    justify-content: space-around;
+    li {
+      a {
+        color: $govuk-blue;
+        text-decoration: none;
+      }
+      &.active {
+        padding-bottom: 7px;
+        border-bottom: 7px solid $govuk-blue;
+      }
+    }
+  }
+}
+
+nav.govuk-tabs {
+  margin-bottom: 15px;
+}
