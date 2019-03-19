@@ -39,6 +39,42 @@ describe('Companies business details', () => {
       })
     })
 
+    it('should display the "Addresses" details container heading', () => {
+      assertDetailsContainerHeading('addressesDetailsContainer', 'Addresses')
+    })
+
+    it('should not display the "Addresses" details container "Edit" link', () => {
+      cy.get(selectors.detailsContainer('addressesDetailsContainer').editLink).should('not.exist')
+    })
+
+    it('should display the address', () => {
+      const addressSelector = selectors.companyBusinessDetails().address(1)
+      cy.get(addressSelector.badge(1)).should('have.text', 'Trading')
+      cy.get(addressSelector.badge(2)).should('have.text', 'Registered')
+      cy.get(addressSelector.line(1)).should('have.text', '12 St George\'s Road')
+      cy.get(addressSelector.line(2)).should('have.text', 'Paris')
+      cy.get(addressSelector.line(3)).should('have.text', '75001')
+      cy.get(addressSelector.line(4)).should('have.text', 'France')
+    })
+
+    it('should not display the "DIT region" details container', () => {
+      cy.get(selectors.detailsContainer('regionDetailsContainer').container).should('not.exist')
+    })
+
+    it('should display the "DIT sector" details container heading', () => {
+      assertDetailsContainerHeading('sectorDetailsContainer', 'DIT sector')
+    })
+
+    it('should not display the "DIT sector" details container "Edit" link', () => {
+      cy.get(selectors.detailsContainer('sectorDetailsContainer').editLink).should('not.exist')
+    })
+
+    it('should display the "DIT sector" details', () => {
+      assertValueTable('sectorDetails', [
+        'Retail',
+      ])
+    })
+
     it('should display the "Global Account Manager - One List" details container heading', () => {
       assertDetailsContainerHeading('oneListDetailsContainer', 'Global Account Manager – One List')
     })
@@ -67,42 +103,6 @@ describe('Companies business details', () => {
         'Headquarter type': 'Global HQ',
         'Subsidiaries': 'None',
       })
-    })
-
-    it('should display the "DIT sector" details container heading', () => {
-      assertDetailsContainerHeading('sectorDetailsContainer', 'DIT sector')
-    })
-
-    it('should not display the "DIT sector" details container "Edit" link', () => {
-      cy.get(selectors.detailsContainer('sectorDetailsContainer').editLink).should('not.exist')
-    })
-
-    it('should display the "DIT sector" details', () => {
-      assertValueTable('sectorDetails', [
-        'Retail',
-      ])
-    })
-
-    it('should not display the "DIT region" details container', () => {
-      cy.get(selectors.detailsContainer('regionDetailsContainer').container).should('not.exist')
-    })
-
-    it('should display the "Addresses" details container heading', () => {
-      assertDetailsContainerHeading('addressesDetailsContainer', 'Addresses')
-    })
-
-    it('should not display the "Addresses" details container "Edit" link', () => {
-      cy.get(selectors.detailsContainer('addressesDetailsContainer').editLink).should('not.exist')
-    })
-
-    it('should display the address', () => {
-      const addressSelector = selectors.companyBusinessDetails().address(1)
-      cy.get(addressSelector.badge(1)).should('have.text', 'Trading')
-      cy.get(addressSelector.badge(2)).should('have.text', 'Registered')
-      cy.get(addressSelector.line(1)).should('have.text', '12 St George\'s Road')
-      cy.get(addressSelector.line(2)).should('have.text', 'Paris')
-      cy.get(addressSelector.line(3)).should('have.text', '75001')
-      cy.get(addressSelector.line(4)).should('have.text', 'France')
     })
 
     it('should not display the "Documents from CDMS" details container', () => {
@@ -149,6 +149,52 @@ describe('Companies business details', () => {
       })
     })
 
+    it('should display the "Addresses" details container heading', () => {
+      assertDetailsContainerHeading('addressesDetailsContainer', 'Addresses')
+    })
+
+    it('should display the "Addresses" details container "Edit" link', () => {
+      cy.get(selectors.detailsContainer('addressesDetailsContainer').editLink).should('be.visible')
+    })
+
+    it('should display the address', () => {
+      const addressSelector = selectors.companyBusinessDetails().address(1)
+      cy.get(addressSelector.badge(1)).should('have.text', 'Trading')
+      cy.get(addressSelector.badge(2)).should('have.text', 'Registered')
+      cy.get(addressSelector.line(1)).should('have.text', '66 Marcham Road')
+      cy.get(addressSelector.line(2)).should('have.text', 'Bordley')
+      cy.get(addressSelector.line(3)).should('have.text', 'BD23 8RZ')
+      cy.get(addressSelector.line(4)).should('have.text', 'United Kingdom')
+    })
+
+    it('should display the "DIT region" details container heading', () => {
+      assertDetailsContainerHeading('regionDetailsContainer', 'DIT region')
+    })
+
+    it('should display the "DIT region" details container "Edit" link', () => {
+      cy.get(selectors.detailsContainer('regionDetailsContainer').editLink).should('be.visible')
+    })
+
+    it('should display the "DIT region" details', () => {
+      assertValueTable('regionDetails', [
+        'North West',
+      ])
+    })
+
+    it('should display the "DIT sector" details container heading', () => {
+      assertDetailsContainerHeading('sectorDetailsContainer', 'DIT sector')
+    })
+
+    it('should display the "DIT sector" details container "Edit" link', () => {
+      cy.get(selectors.detailsContainer('sectorDetailsContainer').editLink).should('be.visible')
+    })
+
+    it('should display the "DIT sector" details', () => {
+      assertValueTable('sectorDetails', [
+        'Retail',
+      ])
+    })
+
     it('should display the "Global Account Manager - One List" details container heading', () => {
       assertDetailsContainerHeading('oneListDetailsContainer', 'Global Account Manager – One List')
     })
@@ -176,52 +222,6 @@ describe('Companies business details', () => {
       assertKeyValueTable('businessHierarchyDetails', {
         'Global HQ': 'Archived Ltd Remove link',
       })
-    })
-
-    it('should display the "DIT sector" details container heading', () => {
-      assertDetailsContainerHeading('sectorDetailsContainer', 'DIT sector')
-    })
-
-    it('should display the "DIT sector" details container "Edit" link', () => {
-      cy.get(selectors.detailsContainer('sectorDetailsContainer').editLink).should('be.visible')
-    })
-
-    it('should display the "DIT sector" details', () => {
-      assertValueTable('sectorDetails', [
-        'Retail',
-      ])
-    })
-
-    it('should display the "DIT region" details container heading', () => {
-      assertDetailsContainerHeading('regionDetailsContainer', 'DIT region')
-    })
-
-    it('should display the "DIT region" details container "Edit" link', () => {
-      cy.get(selectors.detailsContainer('regionDetailsContainer').editLink).should('be.visible')
-    })
-
-    it('should display the "DIT region" details', () => {
-      assertValueTable('regionDetails', [
-        'North West',
-      ])
-    })
-
-    it('should display the "Addresses" details container heading', () => {
-      assertDetailsContainerHeading('addressesDetailsContainer', 'Addresses')
-    })
-
-    it('should display the "Addresses" details container "Edit" link', () => {
-      cy.get(selectors.detailsContainer('addressesDetailsContainer').editLink).should('be.visible')
-    })
-
-    it('should display the address', () => {
-      const addressSelector = selectors.companyBusinessDetails().address(1)
-      cy.get(addressSelector.badge(1)).should('have.text', 'Trading')
-      cy.get(addressSelector.badge(2)).should('have.text', 'Registered')
-      cy.get(addressSelector.line(1)).should('have.text', '66 Marcham Road')
-      cy.get(addressSelector.line(2)).should('have.text', 'Bordley')
-      cy.get(addressSelector.line(3)).should('have.text', 'BD23 8RZ')
-      cy.get(addressSelector.line(4)).should('have.text', 'United Kingdom')
     })
 
     it('should display the "Documents from CDMS" details container heading', () => {
@@ -273,42 +273,6 @@ describe('Companies business details', () => {
       })
     })
 
-    it('should not display the "Global Account Manager - One List" details container', () => {
-      cy.get(selectors.detailsContainer('oneListDetailsContainer').container).should('not.exist')
-    })
-
-    it('should display the "Business hierarchy" details container heading', () => {
-      assertDetailsContainerHeading('businessHierarchyDetailsContainer', 'Business hierarchy')
-    })
-
-    it('should not display the "Business hierarchy" details container "Edit" link', () => {
-      cy.get(selectors.detailsContainer('businessHierarchyDetailsContainer').editLink).should('not.exist')
-    })
-
-    it('should display the "Business hierarchy" details', () => {
-      assertKeyValueTable('businessHierarchyDetails', {
-        'Global HQ': 'None',
-      })
-    })
-
-    it('should display the "DIT sector" details container heading', () => {
-      assertDetailsContainerHeading('sectorDetailsContainer', 'DIT sector')
-    })
-
-    it('should not display the "DIT sector" details container "Edit" link', () => {
-      cy.get(selectors.detailsContainer('sectorDetailsContainer').editLink).should('not.exist')
-    })
-
-    it('should display the "DIT sector" details', () => {
-      assertValueTable('sectorDetails', [
-        'Retail',
-      ])
-    })
-
-    it('should not display the "DIT region" details container', () => {
-      cy.get(selectors.detailsContainer('regionDetailsContainer').container).should('not.exist')
-    })
-
     it('should display the "Addresses" details container heading', () => {
       assertDetailsContainerHeading('addressesDetailsContainer', 'Addresses')
     })
@@ -325,6 +289,42 @@ describe('Companies business details', () => {
       cy.get(addressSelector.line(2)).should('have.text', 'Rome')
       cy.get(addressSelector.line(3)).should('have.text', '001122')
       cy.get(addressSelector.line(4)).should('have.text', 'Italy')
+    })
+
+    it('should not display the "DIT region" details container', () => {
+      cy.get(selectors.detailsContainer('regionDetailsContainer').container).should('not.exist')
+    })
+
+    it('should display the "DIT sector" details container heading', () => {
+      assertDetailsContainerHeading('sectorDetailsContainer', 'DIT sector')
+    })
+
+    it('should not display the "DIT sector" details container "Edit" link', () => {
+      cy.get(selectors.detailsContainer('sectorDetailsContainer').editLink).should('not.exist')
+    })
+
+    it('should display the "DIT sector" details', () => {
+      assertValueTable('sectorDetails', [
+        'Retail',
+      ])
+    })
+
+    it('should not display the "Global Account Manager - One List" details container', () => {
+      cy.get(selectors.detailsContainer('oneListDetailsContainer').container).should('not.exist')
+    })
+
+    it('should display the "Business hierarchy" details container heading', () => {
+      assertDetailsContainerHeading('businessHierarchyDetailsContainer', 'Business hierarchy')
+    })
+
+    it('should not display the "Business hierarchy" details container "Edit" link', () => {
+      cy.get(selectors.detailsContainer('businessHierarchyDetailsContainer').editLink).should('not.exist')
+    })
+
+    it('should display the "Business hierarchy" details', () => {
+      assertKeyValueTable('businessHierarchyDetails', {
+        'Global HQ': 'None',
+      })
     })
 
     it('should not display the "Documents from CDMS" details container', () => {
@@ -371,6 +371,42 @@ describe('Companies business details', () => {
       })
     })
 
+    it('should display the "Addresses" details container heading', () => {
+      assertDetailsContainerHeading('addressesDetailsContainer', 'Addresses')
+    })
+
+    it('should not display the "Addresses" details container "Edit" link', () => {
+      cy.get(selectors.detailsContainer('addressesDetailsContainer').editLink).should('not.exist')
+    })
+
+    it('should display the address', () => {
+      const addressSelector = selectors.companyBusinessDetails().address(1)
+      cy.get(addressSelector.badge(1)).should('have.text', 'Trading')
+      cy.get(addressSelector.badge(2)).should('have.text', 'Registered')
+      cy.get(addressSelector.line(1)).should('have.text', '16 Getabergsvagen')
+      cy.get(addressSelector.line(2)).should('have.text', 'Geta')
+      cy.get(addressSelector.line(3)).should('have.text', '22340')
+      cy.get(addressSelector.line(4)).should('have.text', 'Malta')
+    })
+
+    it('should not display the "DIT region" details container', () => {
+      cy.get(selectors.detailsContainer('regionDetailsContainer').container).should('not.exist')
+    })
+
+    it('should display the "DIT sector" details container heading', () => {
+      assertDetailsContainerHeading('sectorDetailsContainer', 'DIT sector')
+    })
+
+    it('should not display the "DIT sector" details container "Edit" link', () => {
+      cy.get(selectors.detailsContainer('sectorDetailsContainer').editLink).should('not.exist')
+    })
+
+    it('should display the "DIT sector" details', () => {
+      assertValueTable('sectorDetails', [
+        'Retail',
+      ])
+    })
+
     it('should display the "Global Account Manager - One List" details container heading', () => {
       assertDetailsContainerHeading('oneListDetailsContainer', 'Global Account Manager – One List')
     })
@@ -399,42 +435,6 @@ describe('Companies business details', () => {
         'Headquarter type': 'Global HQ',
         'Subsidiaries': '1 subsidiary',
       })
-    })
-
-    it('should display the "DIT sector" details container heading', () => {
-      assertDetailsContainerHeading('sectorDetailsContainer', 'DIT sector')
-    })
-
-    it('should not display the "DIT sector" details container "Edit" link', () => {
-      cy.get(selectors.detailsContainer('sectorDetailsContainer').editLink).should('not.exist')
-    })
-
-    it('should display the "DIT sector" details', () => {
-      assertValueTable('sectorDetails', [
-        'Retail',
-      ])
-    })
-
-    it('should not display the "DIT region" details container', () => {
-      cy.get(selectors.detailsContainer('regionDetailsContainer').container).should('not.exist')
-    })
-
-    it('should display the "Addresses" details container heading', () => {
-      assertDetailsContainerHeading('addressesDetailsContainer', 'Addresses')
-    })
-
-    it('should not display the "Addresses" details container "Edit" link', () => {
-      cy.get(selectors.detailsContainer('addressesDetailsContainer').editLink).should('not.exist')
-    })
-
-    it('should display the address', () => {
-      const addressSelector = selectors.companyBusinessDetails().address(1)
-      cy.get(addressSelector.badge(1)).should('have.text', 'Trading')
-      cy.get(addressSelector.badge(2)).should('have.text', 'Registered')
-      cy.get(addressSelector.line(1)).should('have.text', '16 Getabergsvagen')
-      cy.get(addressSelector.line(2)).should('have.text', 'Geta')
-      cy.get(addressSelector.line(3)).should('have.text', '22340')
-      cy.get(addressSelector.line(4)).should('have.text', 'Malta')
     })
 
     it('should not display the "Documents from CDMS" details container', () => {
