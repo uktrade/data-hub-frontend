@@ -54,28 +54,17 @@
     {% component 'key-value-table', items=aboutDetails, dataAutoId='aboutDetails' %}
   {% endcall %}
 
-  {% if oneListDetails %}
-    {% call DetailsContainer({ heading: 'Global Account Manager – One List', editUrl: editUrl, dataAutoId: 'oneListDetailsContainer' }) %}
-      {% component 'key-value-table', items=oneListDetails, dataAutoId='oneListDetails' %}
-
-      <p>
-        <a href="advisers">See all advisers on the core team</a>
-      </p>
-    {% endcall %}
-  {% endif %}
-
-  {% call DetailsContainer({ heading: 'Business hierarchy', editUrl: editUrl, dataAutoId: 'businessHierarchyDetailsContainer' }) %}
-    {% component 'key-value-table', items=businessHierarchyDetails, dataAutoId='businessHierarchyDetails' %}
-  {% endcall %}
-
-  {% call DetailsContainer({ heading: 'DIT sector', editUrl: editUrl, dataAutoId: 'sectorDetailsContainer' }) %}
-    <table class="table--key-value" data-auto-id="sectorDetails">
+  {% call DetailsContainer({ heading: 'Addresses', editUrl: editUrl, dataAutoId: 'addressesDetailsContainer' }) %}
+    <table class="table--key-value">
       <tbody>
-      {% for sector in sectorDetails %}
-        <tr>
-          <td>{{ sector }}</td>
+        <tr data-auto-id="businessDetailsAddress">
+          {% if addressesDetails.trading.address %}
+            {{ AddressCell(addressesDetails.trading.meta, addressesDetails.trading.address) }}
+          {% endif %}
+          {% if addressesDetails.registered.address %}
+            {{ AddressCell(addressesDetails.registered.meta, addressesDetails.registered.address) }}
+          {% endif %}
         </tr>
-      {% endfor %}
       </tbody>
     </table>
   {% endcall %}
@@ -92,19 +81,30 @@
     {% endcall %}
   {% endif %}
 
-  {% call DetailsContainer({ heading: 'Addresses', editUrl: editUrl, dataAutoId: 'addressesDetailsContainer' }) %}
-    <table class="table--key-value">
+  {% call DetailsContainer({ heading: 'DIT sector', editUrl: editUrl, dataAutoId: 'sectorDetailsContainer' }) %}
+    <table class="table--key-value" data-auto-id="sectorDetails">
       <tbody>
-        <tr data-auto-id="businessDetailsAddress">
-          {% if addressesDetails.trading.address %}
-            {{ AddressCell(addressesDetails.trading.meta, addressesDetails.trading.address) }}
-          {% endif %}
-          {% if addressesDetails.registered.address %}
-            {{ AddressCell(addressesDetails.registered.meta, addressesDetails.registered.address) }}
-          {% endif %}
+      {% for sector in sectorDetails %}
+        <tr>
+          <td>{{ sector }}</td>
         </tr>
+      {% endfor %}
       </tbody>
     </table>
+  {% endcall %}
+
+  {% if oneListDetails %}
+    {% call DetailsContainer({ heading: 'Global Account Manager – One List', editUrl: editUrl, dataAutoId: 'oneListDetailsContainer' }) %}
+      {% component 'key-value-table', items=oneListDetails, dataAutoId='oneListDetails' %}
+
+      <p>
+        <a href="advisers">See all advisers on the core team</a>
+      </p>
+    {% endcall %}
+  {% endif %}
+
+  {% call DetailsContainer({ heading: 'Business hierarchy', editUrl: editUrl, dataAutoId: 'businessHierarchyDetailsContainer' }) %}
+    {% component 'key-value-table', items=businessHierarchyDetails, dataAutoId='businessHierarchyDetails' %}
   {% endcall %}
 
   {% if archivedDocumentPath %}
