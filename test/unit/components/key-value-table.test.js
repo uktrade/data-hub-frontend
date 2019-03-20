@@ -166,6 +166,42 @@ describe('Key/value table component', () => {
     })
   })
 
+  context('when there is one item and the data is an address', () => {
+    beforeEach(() => {
+      const component = renderComponentToDom('key-value-table', {
+        items: {
+          'Label 1': {
+            type: 'address',
+            address: {
+              line_1: 'line 1',
+              line_2: '',
+              town: 'town',
+              county: '',
+              postcode: 'postcode',
+              country: {
+                name: 'country',
+              },
+            },
+          },
+        },
+      })
+
+      this.rows = component.querySelectorAll('tr')
+    })
+
+    it('should render one row', () => {
+      expect(this.rows.length).to.equal(1)
+    })
+
+    it('should render a label', () => {
+      expect(this.rows[0].querySelector('th').textContent).to.equal('Label 1')
+    })
+
+    it('should render the formatted value', () => {
+      expect(this.rows[0].querySelector('td').textContent).to.equal('line 1, town, postcode, country')
+    })
+  })
+
   context('when there is one item and the data is an error', () => {
     beforeEach(() => {
       const component = renderComponentToDom('key-value-table', {
