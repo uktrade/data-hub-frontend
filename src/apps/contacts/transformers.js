@@ -1,16 +1,18 @@
 /* eslint-disable camelcase */
 const { get, pickBy, compact, assign } = require('lodash')
 
-const { getFormattedAddress } = require('../../lib/address')
 const { getDataLabels } = require('../../lib/controller-utils')
 const { contactDetailsLabels, contactMetaItemLabels } = require('./labels')
 
 function getContactAddress (address_same_as_company, contactAddressFields, company) {
-  if (!address_same_as_company) {
-    return getFormattedAddress(contactAddressFields)
+  return address_same_as_company ? company.address : {
+    line_1: contactAddressFields.address_1,
+    line_2: contactAddressFields.address_2,
+    town: contactAddressFields.address_town,
+    county: contactAddressFields.address_county,
+    postcode: contactAddressFields.address_postcode,
+    country: contactAddressFields.address_country,
   }
-
-  return getFormattedAddress(company, 'trading') || getFormattedAddress(company, 'registered')
 }
 
 function getTelephoneNumber (telephone_countrycode, telephone_number) {
@@ -96,24 +98,25 @@ function transformContactToView ({
   notes,
   address_same_as_company,
 }, company) {
-  const telephoneNumber = getTelephoneNumber(telephone_countrycode, telephone_number)
-
   const viewRecord = {
     job_title,
     email,
     telephone_alternative,
     email_alternative,
     notes,
-    telephone_number: telephoneNumber,
+    telephone_number: getTelephoneNumber(telephone_countrycode, telephone_number),
     email_marketing: rejects_dit_email_marketing ? 'Cannot be marketed to' : 'Can be marketed to',
-    address: getContactAddress(address_same_as_company, {
-      address_1,
-      address_2,
-      address_town,
-      address_county,
-      address_postcode,
-      address_country,
-    }, company),
+    address: {
+      type: 'address',
+      address: getContactAddress(address_same_as_company, {
+        address_1,
+        address_2,
+        address_town,
+        address_county,
+        address_postcode,
+        address_country,
+      }, company),
+    },
   }
 
   return pickBy(getDataLabels(viewRecord, contactDetailsLabels))

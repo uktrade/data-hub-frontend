@@ -2,7 +2,6 @@
 const { assign, get, reject, uniq } = require('lodash')
 
 const castCompactArray = require('../../lib/cast-compact-array')
-const { getFormattedAddress } = require('../../lib/address')
 const { transformDateObjectToDateString } = require('../transformers')
 const config = require('../../../config')
 
@@ -139,14 +138,17 @@ function transformEventResponseToViewRecord ({
 
   const viewRecord = assign({}, transformedEvent, {
     'Event location type': location_type,
-    'Address': getFormattedAddress({
-      address_1,
-      address_2,
-      address_town,
-      address_county,
-      address_postcode,
-      address_country,
-    }),
+    'Address': {
+      type: 'address',
+      address: {
+        line_1: address_1,
+        line_2: address_2,
+        town: address_town,
+        county: address_county,
+        postcode: address_postcode,
+        country: address_country,
+      },
+    },
     'Region': uk_region,
     'Notes': notes,
     'Lead team': lead_team,

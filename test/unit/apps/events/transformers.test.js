@@ -96,7 +96,20 @@ describe('Event transformers', () => {
 
       it('should transform to a display event', () => {
         expect(this.transformedEvent).to.deep.equal({
-          'Address': '1 UK Street, The Lane, Plymouth, Devon, PL1 3FG, United Kingdom',
+          'Address': {
+            address: {
+              country: {
+                id: '80756b9a-5d95-e211-a939-e4115bead28a',
+                name: 'United Kingdom',
+              },
+              county: 'Devon',
+              line_1: '1 UK Street',
+              line_2: 'The Lane',
+              postcode: 'PL1 3FG',
+              town: 'Plymouth',
+            },
+            type: 'address',
+          },
           'Event end date': {
             type: 'date',
             name: '2017-11-11',
@@ -154,7 +167,20 @@ describe('Event transformers', () => {
 
       it('should transform to a display event', () => {
         expect(this.transformedEvent).to.deep.equal({
-          'Address': '1 UK Street, Plymouth, Devon, PL1 3FG, United Kingdom',
+          'Address': {
+            address: {
+              country: {
+                id: '80756b9a-5d95-e211-a939-e4115bead28a',
+                name: 'United Kingdom',
+              },
+              county: 'Devon',
+              line_1: '1 UK Street',
+              line_2: '',
+              postcode: 'PL1 3FG',
+              town: 'Plymouth',
+            },
+            type: 'address',
+          },
           'Documents': {
             name: 'There are no files or documents',
           },
@@ -186,7 +212,20 @@ describe('Event transformers', () => {
 
       it('should transform to a display event', () => {
         expect(this.transformedEvent).to.deep.equal({
-          'Address': '1 UK Street, The Lane, Plymouth, Devon, PL1 3FG, United Kingdom',
+          'Address': {
+            address: {
+              country: {
+                id: '80756b9a-5d95-e211-a939-e4115bead28a',
+                name: 'United Kingdom',
+              },
+              county: 'Devon',
+              line_1: '1 UK Street',
+              line_2: 'The Lane',
+              postcode: 'PL1 3FG',
+              town: 'Plymouth',
+            },
+            type: 'address',
+          },
           'Documents': {
             name: 'There are no files or documents',
           },
