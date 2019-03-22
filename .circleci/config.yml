@@ -200,7 +200,6 @@ aliases:
       - dependencies
       - lint_code
       - unit_tests
-      - vue_tests
       - functional_tests
     filters:
       branches:
@@ -215,7 +214,6 @@ aliases:
       - dependencies
       - lint_code
       - unit_tests
-      - vue_tests
       - functional_tests
     filters:
       branches:
@@ -290,31 +288,6 @@ jobs:
       - store_artifacts:
           path: coverage
 
-  # Run vue unit tests and store results
-  vue_tests:
-    docker:
-      - image: *node_version
-        environment:
-          TZ: "/usr/share/zoneinfo/Europe/London"
-    working_directory: ~/data-hub-frontend
-    steps:
-      - checkout
-      - *store_versions
-      - *restore_yarn_cache
-      - run:
-          name: Run vue tests
-          command: |
-            mkdir junit
-            yarn build
-            yarn circle:vue
-          environment:
-            MOCHA_FILE: junit/test-results.xml
-          when: always
-      - store_test_results:
-          path: junit
-      - store_artifacts:
-          path: junit
-
 # Run cypress tests
   functional_tests:
     <<: *at_container_config
@@ -328,7 +301,6 @@ jobs:
       - checkout
       - run: yarn install
       - *wait_for_mock_sso
-      - *store_versions
       - *restore_yarn_cache
       - run: yarn build
       - *start_frontend
@@ -518,9 +490,6 @@ workflows:
           requires:
             - dependencies
       - unit_tests:
-          requires:
-            - dependencies
-      - vue_tests:
           requires:
             - dependencies
       - functional_tests:
