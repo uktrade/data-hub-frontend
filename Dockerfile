@@ -1,4 +1,4 @@
-FROM ukti/docker-data-hub-base:latest
+FROM ukti/docker-datahub-fe-base:latest
 
 ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
