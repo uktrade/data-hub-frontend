@@ -1,4 +1,0 @@
---require test/vue/common.js
---ui bdd
---recursive
---reporter dot

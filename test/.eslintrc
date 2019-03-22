@@ -3,6 +3,8 @@
     "mocha": true
   },
   "globals": {
+    "JSDOM": true,
+    "formMacros": true,
     "expect": true,
     "proxyquire": true,
     "sinon": true,

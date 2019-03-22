@@ -2,10 +2,10 @@ const Vue = require('vue')
 const { mount } = require('@vue/test-utils')
 const axios = require('axios')
 
-const Typeahead = require('../../assets/javascripts/vue/typeahead.vue').default
-const { highlight } = require('../../assets/javascripts/vue/filters')
+const Typeahead = require('../../../../../assets/javascripts/vue/typeahead.vue').default
+const { highlight } = require('../../../../../assets/javascripts/vue/filters')
 
-const XHR = require('../../assets/javascripts/lib/xhr')
+const XHR = require('../../../../../assets/javascripts/lib/xhr')
 
 describe('Typeahead', () => {
   let defaultProps
@@ -18,6 +18,7 @@ describe('Typeahead', () => {
       entity: 'adviser',
       label: 'Adviser',
       placeholder: 'Search adviser',
+      hideLabel: true,
     }
 
     Vue.filter('highlight', highlight)
@@ -83,13 +84,12 @@ describe('Typeahead', () => {
       })
     })
 
-    context('when advisers are selected', () => {
+    context('when advisers are selected that have names only', () => {
       beforeEach((done) => {
         const dataWithSelectedAdvisers = Object.assign({}, defaultProps, {
           selectedOptions: [{
             value: '1234',
             label: 'Fred Jones',
-            subLabel: 'London',
           }],
         })
 
@@ -108,6 +108,46 @@ describe('Typeahead', () => {
       it('should render the selected options as hidden fields', () => {
         const element = component.find('input[type="hidden"][name="adviser"]').element
         expect(element.value).to.equal('1234')
+      })
+    })
+
+    context('when advisers are selected that have names and team names', () => {
+      beforeEach((done) => {
+        const dataWithSelectedAdvisers = Object.assign({}, defaultProps, {
+          selectedOptions: [{
+            value: '1234',
+            label: 'Fred Jones',
+            subLabel: 'Team ABC',
+          }],
+        })
+
+        component.setData(dataWithSelectedAdvisers)
+        Vue.nextTick(done)
+      })
+
+      it('should populate the default selected options', () => {
+        expect(component.findAll('.multiselect__tag')).to.have.length(1)
+      })
+
+      it('should show the adviser name and team in the tag', () => {
+        expect(component.find('.multiselect__tag').text()).to.equal('Fred Jones - Team ABC')
+      })
+
+      it('should render the selected options as hidden fields', () => {
+        const element = component.find('input[type="hidden"][name="adviser"]').element
+        expect(element.value).to.equal('1234')
+      })
+    })
+
+    context('when choosing to not display form labels', () => {
+      beforeEach((done) => {
+        component = mount(Typeahead, {
+          propsData: Object.assign({}, defaultProps, { isLabelHidden: true }),
+        })
+        Vue.nextTick(done)
+      })
+      it('should hide the label with visually hidden class', () => {
+        expect(component.find('.u-visually-hidden').hasClass('u-visually-hidden')).to.be.true
       })
     })
   })
