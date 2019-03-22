@@ -1,4 +1,3 @@
-const { JSDOM } = require('jsdom')
 const createMemoryHistory = require('history').createMemoryHistory
 
 const HTML = `
