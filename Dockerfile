@@ -1,5 +1,7 @@
 FROM ukti/docker-datahub-fe-base:latest
 
+# **Notice that this base image is used on our deployments, so extra caution in modifying it.
+
 ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
