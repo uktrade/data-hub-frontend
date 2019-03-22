@@ -3,6 +3,8 @@ FROM ukti/docker-data-hub-base:latest
 ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
+# Install package providing fuser command - necessary to run the app with code
+# watching and debugging under nodemon
 RUN apt-get install -y psmisc
 
 # Setup app
