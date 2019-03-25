@@ -1,0 +1,44 @@
+{% from "companies/apps/investments/macros/navigation.njk" import subnavigation %}
+{% from "companies/apps/investments/macros/details/details.njk" import details %}
+
+{{ subnavigation(company, 'large-capital-profile') }}
+
+<h2 class="govuk-heading-m" data-auto-id="investment-subheading">Large capital investor profile</h2>
+
+{% if profile  %}
+  <div class="large-capital-profile">
+
+    {% call details('Investor details', profile.investorDetails.incompleteFields, edit === 'details') -%}
+      {% if edit == 'details' %}
+        {% include "./details-edit.njk" %}
+      {% else %}
+        {% include "./details.njk" %}
+      {% endif %}
+    {%- endcall %}
+
+    {% call details('Investor requirements', profile.investorRequirements.incompleteFields, edit === 'requirements') -%}
+      {% if edit == 'requirements' %}
+          {% include "./requirements-edit.njk" %}
+      {% else %}
+        {% include "./requirements.njk" %}
+      {% endif %}
+    {%- endcall %}
+
+    {% call details('Location', profile.location.incompleteFields, edit === 'location') -%}
+      {% if edit == 'location' %}
+        {% include "./location-edit.njk" %}
+      {% else %}
+        {% include "./location.njk" %}
+      {% endif %}
+    {%- endcall %}
+
+  </div>
+{% else %}
+  {% call Form({
+      buttonText: 'Create a profile',
+      hiddenFields: { id: company.id },
+      action: '/companies/' + company.id + '/investments/large-capital-profile/create'
+    })
+  %}
+  {%- endcall %}
+{% endif %}
