@@ -1,0 +1,13 @@
+{% call Form({
+  buttonText: 'Save',
+  returnText: 'Cancel',
+  returnLink: '/companies/' + company.id + '/investments/large-capital-profile',
+  action: '/companies/' + company.id + '/investments/large-capital-profile/update',
+  hiddenFields: { id: company.id }
+}) %}
+
+  <p>Location: UI components sit here...</p>
+
+{% endcall %}
+
+

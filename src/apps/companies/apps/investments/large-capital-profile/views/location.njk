@@ -1,0 +1,10 @@
+<p>Location: UI read only fields go here...</p>
+
+{% call Form({
+  buttonText: 'Edit',
+  hiddenFields: { edit: 'location' },
+  disableFormAction: edit === 'details' or edit === 'requirements',
+  action: '/companies/' + company.id + '/investments/large-capital-profile/edit'
+})
+%}
+{%- endcall %}
