@@ -1,5 +1,6 @@
 nav.sub-navigation {
   border-bottom: 1px solid #c6c8c8;
+  @include govuk-responsive-margin(4, "bottom");
   ol {
     display: flex;
     justify-content: space-around;
@@ -19,3 +20,10 @@ nav.sub-navigation {
 nav.govuk-tabs {
   margin-bottom: 15px;
 }
+
+.large-capital-profile {
+  details:last-child {
+    border-bottom: 2px solid lightgray;
+  }
+}
+
