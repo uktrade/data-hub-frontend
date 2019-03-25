@@ -11,12 +11,12 @@ aliases:
 
   # Common steps
   - &restore_yarn_cache
-    restore_cache:
-      name: Restore yarn dependencies cache
-      steps:
-        - run: node --version > node_version
-        - run: yarn --version > yarn_version
-      key: yarn-dependency-{{ checksum "package.json" }}-{{ checksum "node_version" }}-{{ checksum "yarn_version" }}
+    steps:
+      - run: node --version > node_version
+      - run: yarn --version > yarn_version
+      restore_cache:
+        name: Restore yarn dependencies cache
+        key: yarn-dependency-{{ checksum "package.json" }}-{{ checksum "node_version" }}-{{ checksum "yarn_version" }}
 
   # Configuration shared between user_acceptance* jobs
   - &at_container_config
