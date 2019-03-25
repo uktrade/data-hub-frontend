@@ -1,0 +1,10 @@
+<p>Investor requirements: UI read only fields go here...</p>
+
+{% call Form({
+  buttonText: 'Edit',
+  hiddenFields: { edit: 'requirements' },
+  disableFormAction: edit === 'details' or edit === 'location',
+  action: '/companies/' + company.id + '/investments/large-capital-profile/edit'
+})
+%}
+{%- endcall %}
