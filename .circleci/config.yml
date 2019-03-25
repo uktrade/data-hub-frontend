@@ -1,6 +1,6 @@
 version: 2
 aliases:
-  - &node_version               node:8.11.3
+  - &node_version               node:8.15.1
   - &redis_version              redis:3.2.10
   - &postgres_version           postgres:10
   - &mi_postgres_version        postgres:9.6
