@@ -1,6 +1,15 @@
 const router = require('express').Router()
 
-const { renderLargeCapitalProfile } = require('./controllers')
-router.get('/', renderLargeCapitalProfile)
+const {
+  renderProfile,
+  createProfile,
+  editProfile,
+  updateProfile,
+} = require('./controllers')
+
+router.get('/', renderProfile)
+router.post('/create', createProfile)
+router.post('/edit', editProfile)
+router.post('/update', updateProfile)
 
 module.exports = router
