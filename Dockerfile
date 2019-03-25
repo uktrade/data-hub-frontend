@@ -1,7 +1,5 @@
 FROM ukti/docker-datahub-fe-base:latest
 
-# **Notice that this base image is used on our deployments, so extra caution in modifying it.
-
 ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
@@ -15,7 +13,7 @@ WORKDIR /usr/src/app
 
 COPY package.json /usr/src/app/
 COPY yarn.lock /usr/src/app/
-RUN yarn --ignore-engines install
+RUN yarn install
 
 COPY . /usr/src/app
 RUN npm run build
