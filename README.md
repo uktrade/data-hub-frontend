@@ -72,8 +72,8 @@ and be provided with a back end server to provide the API, data storage and sear
 
 ### Docker
 
-The project comes with docker compose files, this means if you have docker you can start
-the app with a single command.
+The project comes with docker compose files, this means if you have docker 
+you can start the app with a single command.
 
 There are 2 docker files.
 
@@ -157,14 +157,19 @@ in an environment file).
     docker-compose up
     ```
 
-    The server starts in developer mode, which means that when you make local changes it will auto-compile
-    sass or javavscript, and will restart nodejs when server side changes are made. A container with redis will also start, this is linked to the data hub container.
+    The server starts in developer mode, which means that when you make local 
+    changes it will auto-compile sass or javavscript, and will restart nodejs 
+    when server side changes are made. A container with redis will also start, 
+    this is linked to the data hub container.
     
-    You can access the server on port 3000, [http://localhost:3000](http://localhost:3000). You can also run
-    a remote debug session over port 5858 if using webstorm/Intellij or Visual Studio Code
+    You can access the server on port 3000, 
+    [http://localhost:3000](http://localhost:3000). You can also run a remote 
+    debug session over port 9229 if using webstorm/Intellij or Visual Studio Code
 
-4.  You will need to set up OAuth.  It is recommended to use the [uktrade/mock-sso](https://github.com/uktrade/mock-sso) 
-    backend as this is fully compatible with docker-compose projects - [see the OAuth section for more detail](#oauth).
+4.  You will need to set up OAuth.  It is recommended to use the 
+    [uktrade/mock-sso](https://github.com/uktrade/mock-sso) backend as this is 
+    fully compatible with docker-compose projects - 
+    [see the OAuth section for more detail](#oauth).
 
 ### Native install
 
