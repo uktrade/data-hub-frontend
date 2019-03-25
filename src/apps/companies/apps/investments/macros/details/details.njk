@@ -1,0 +1,18 @@
+{% macro details(summaryText, incompleteFields, open) %}
+  <details class="govuk-details govuk-details--dit {{ summaryText }}" {{ "open" if open }}>
+    <summary class="govuk-details__summary">
+      <span class="govuk-details__summary-text">{{ summaryText }}</span>
+      <div class="incomplete-fields">
+        {% if incompleteFields === 0 %}
+          <i class="fas fa-check"></i>
+          <span class="complete">Complete</span>
+        {% else  %}
+          <span>{{ incompleteFields }} {{ 'field' | pluralise(incompleteFields) }} incomplete</span>
+        {% endif %}
+      </div>
+    </summary>
+    <div class="govuk-details__text">
+      {{ caller() }}
+    </div>
+  </details>
+{% endmacro %}
