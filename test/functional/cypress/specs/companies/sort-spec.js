@@ -1,19 +1,16 @@
 const selectors = require('../../selectors')
 
-describe('Company Collections Filter', () => {
-  before(() => {
+describe('Company Collections Sort', () => {
+  beforeEach(() => {
+    cy.server()
+    cy.route('/companies?*').as('sortResults')
     cy.visit('/companies?sortby=collectionTest')
     cy.get(selectors.entityList.entities).children().should('have.length', 9)
     cy.get(selectors.entityCollection.collection).should('contain', '100,172 companies')
   })
 
-  beforeEach(() => {
-    cy.server()
-    cy.route('/companies?*').as('sortResults')
-  })
-
   it('should sort by AZ', () => {
-    cy.get(selectors.entityCollection.sort).select('Company name: A-Z')
+    cy.get(selectors.entityCollection.sort).select('name:asc')
 
     cy.wait('@sortResults').then((xhr) => {
       expect(xhr.url).to.contain('?custom=true&sortby=name:asc')
@@ -24,7 +21,7 @@ describe('Company Collections Filter', () => {
   })
 
   it('should sort by least recent', () => {
-    cy.get(selectors.entityCollection.sort).select('Least recently updated')
+    cy.get(selectors.entityCollection.sort).select('modified_on:asc')
 
     cy.wait('@sortResults').then((xhr) => {
       expect(xhr.url).to.contain('?custom=true&sortby=modified_on:asc')
@@ -35,7 +32,7 @@ describe('Company Collections Filter', () => {
   })
 
   it('should sort by most recent', () => {
-    cy.get(selectors.entityCollection.sort).select('Recently updated')
+    cy.get(selectors.entityCollection.sort).select('modified_on:desc')
 
     cy.wait('@sortResults').then((xhr) => {
       expect(xhr.url).to.contain('?custom=true&sortby=modified_on:desc')
