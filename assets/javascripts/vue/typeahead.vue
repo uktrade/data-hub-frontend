@@ -162,6 +162,7 @@
         this.setPlaceHolder = this.placeholder
       },
       getLabelFromValue: function (value, model) {
+        if(!value){ return }
         const activeValue = JSON.parse(model).filter((item) => {
           return item.value === value
         })
