@@ -31,7 +31,7 @@ describe('Companies hierarchies controller', () => {
 
     it('should call render', () => {
       expect(this.middlewareParameters.resMock.render).to.be.calledOnce
-      expect(this.middlewareParameters.resMock.render).to.be.calledWith('companies/views/_deprecated/add-global-hq.njk')
+      expect(this.middlewareParameters.resMock.render).to.be.calledWith('companies/views/add-global-hq.njk')
     })
   })
 })

@@ -1,12 +1,11 @@
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
 const companyMock = require('~/test/unit/data/companies/minimal-company.json')
-const dnbCompanyMock = require('~/test/unit/data/companies/dnb-company.json')
 const { renderDocuments } = require('~/src/apps/companies/controllers/documents')
 
 describe('Companies documents controller', () => {
   describe('#renderDocuments', () => {
-    const commonTests = (expectedCompanyName, expectedCompanyId, expectedTemplate, expectedArchivedDocumentsPath) => {
+    const commonTests = (expectedCompanyName, expectedCompanyId, expectedArchivedDocumentsPath) => {
       it('should call breadcrumb', () => {
         expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledTwice
       })
@@ -24,60 +23,18 @@ describe('Companies documents controller', () => {
       })
 
       it('should call render with', () => {
-        expect(this.middlewareParameters.resMock.render).to.be.calledWith(expectedTemplate, {
+        expect(this.middlewareParameters.resMock.render).to.be.calledWith('companies/views/documents', {
           archivedDocumentPath: expectedArchivedDocumentsPath,
         })
       })
     }
 
-    context('when the company does not have a DUNS number', () => {
-      context('when documents path is an empty string', () => {
-        beforeEach(() => {
-          this.middlewareParameters = buildMiddlewareParameters({
-            company: {
-              ...companyMock,
-              archived_documents_url_path: '',
-            },
-          })
-
-          renderDocuments(
-            this.middlewareParameters.reqMock,
-            this.middlewareParameters.resMock,
-          )
-        })
-
-        commonTests(companyMock.name, companyMock.id, 'companies/views/_deprecated/documents', '')
-      })
-
-      context('when documents path contains a url', () => {
-        const archivedDocumentsPath = 'mock-document-url'
-
-        beforeEach(() => {
-          this.middlewareParameters = buildMiddlewareParameters({
-            company: {
-              ...companyMock,
-              archived_documents_url_path: archivedDocumentsPath,
-            },
-          })
-
-          renderDocuments(
-            this.middlewareParameters.reqMock,
-            this.middlewareParameters.resMock,
-          )
-        })
-
-        commonTests(companyMock.name, companyMock.id, 'companies/views/_deprecated/documents', archivedDocumentsPath)
-      })
-    })
-
-    context('when the company does have a DUNS number', () => {
-      const archivedDocumentsPath = 'mock-document-url'
-
+    context('when documents path is an empty string', () => {
       beforeEach(() => {
         this.middlewareParameters = buildMiddlewareParameters({
           company: {
-            ...dnbCompanyMock,
-            archived_documents_url_path: archivedDocumentsPath,
+            ...companyMock,
+            archived_documents_url_path: '',
           },
         })
 
@@ -87,10 +44,10 @@ describe('Companies documents controller', () => {
         )
       })
 
-      commonTests(dnbCompanyMock.name, dnbCompanyMock.id, 'companies/views/documents', archivedDocumentsPath)
+      commonTests(companyMock.name, companyMock.id, '')
     })
 
-    context('when the company does not have a DUNS number and the companies new layout feature is enabled', () => {
+    context('when documents path contains a url', () => {
       const archivedDocumentsPath = 'mock-document-url'
 
       beforeEach(() => {
@@ -99,9 +56,6 @@ describe('Companies documents controller', () => {
             ...companyMock,
             archived_documents_url_path: archivedDocumentsPath,
           },
-          features: {
-            'companies-new-layout': true,
-          },
         })
 
         renderDocuments(
@@ -110,7 +64,7 @@ describe('Companies documents controller', () => {
         )
       })
 
-      commonTests(companyMock.name, companyMock.id, 'companies/views/documents', archivedDocumentsPath)
+      commonTests(companyMock.name, companyMock.id, archivedDocumentsPath)
     })
   })
 })
