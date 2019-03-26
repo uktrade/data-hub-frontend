@@ -13,7 +13,6 @@ const eventFormConfig = ({
   ukRegions,
 }) => {
   return {
-    class: 'js-vue-wrapper',
     method: 'post',
     buttonText: eventId ? 'Save and return' : 'Add event',
     returnText: eventId ? 'Return without saving' : 'Cancel',
