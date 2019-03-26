@@ -2,15 +2,11 @@
 const { archiveCompany: archive, unarchiveCompany: unarchive } = require('../repos')
 const logger = require('../../../../config/logger')
 
-function getDetailsUrl (features, company) {
-  return features['companies-new-layout'] ? `/companies/${company.id}/business-details` : `/companies/${company.id}`
-}
-
 async function archiveCompany (req, res) {
-  const { company, features } = res.locals
+  const { company } = res.locals
   const { archived_reason, archived_reason_other } = req.body
   const reason = archived_reason_other || archived_reason
-  const detailsUrl = getDetailsUrl(features, company)
+  const detailsUrl = `/companies/${company.id}/business-details`
 
   if (!reason) {
     req.flash('error', 'A reason must be supplied to archive a company')
@@ -31,8 +27,8 @@ async function archiveCompany (req, res) {
 }
 
 async function unarchiveCompany (req, res) {
-  const { company, features } = res.locals
-  const detailsUrl = getDetailsUrl(features, company)
+  const { company } = res.locals
+  const detailsUrl = `/companies/${company.id}/business-details`
 
   try {
     await unarchive(req.session.token, company.id)
