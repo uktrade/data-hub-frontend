@@ -62,11 +62,7 @@ async function populateForm (req, res, next) {
 }
 
 function getDetailsUrl (features, currentCompany, savedCompany) {
-  const isEditingCompanyInNewLayout = features['companies-new-layout'] && currentCompany
-
-  return isEditingCompanyInNewLayout
-    ? `/companies/${savedCompany.id}/business-details`
-    : `/companies/${savedCompany.id}`
+  return currentCompany ? `/companies/${savedCompany.id}/business-details` : `/companies/${savedCompany.id}`
 }
 
 async function handleFormPost (req, res, next) {
