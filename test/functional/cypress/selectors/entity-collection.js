@@ -4,4 +4,5 @@ module.exports = {
   'collectionRowMessage': '.c-collection__export-message',
   'collectionRowButton': '.c-collection__header-actions > a',
   'collectionRemoveAllFilter': '.c-collection__filter-remove-all',
+  'sort': '#field-sortby',
 }
