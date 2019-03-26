@@ -23,9 +23,11 @@ const common = {
     publicPath: '/',
   },
   module: {
+    exprContextCritical: false,
     rules: [
       {
         test: /\.js$/,
+        exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
           cacheDirectory: './babel_cache',
@@ -99,6 +101,7 @@ const common = {
   ],
   node: {
     fs: 'empty',
+    child_process: 'empty',
     module: 'empty',
     net: 'empty',
     tls: 'empty',

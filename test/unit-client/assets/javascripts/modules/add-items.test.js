@@ -1,8 +1,4 @@
-const AddAnotherFragment = require('~/assets/javascripts/modules/add-items')
-const { getMacros } = require('~/test/unit/macro-helper')
-const formMacros = getMacros('form')
-const jsdom = require('jsdom')
-const { JSDOM } = jsdom
+const AddAnotherFragment = require('../../../../../assets/javascripts/modules/add-items')
 
 const selectMarkup = `<div id="group-field-adviser" class="c-form-group js-adviser">
   <label class="c-form-group__label " for="field-adviser">
@@ -115,28 +111,28 @@ function getVisibleRemoveButtons (wrapper, selector = '.js-AddItems__remove') {
     .filter((removeLink) => !Array.from(removeLink.classList).includes('u-hidden'))
 }
 
-describe('Add another', () => {
-  describe('<fieldset>', () => {
-    describe('add', () => {
-      beforeEach(() => {
+describe('Add another', function () {
+  describe('<fieldset>', function () {
+    describe('add', function () {
+      beforeEach(function () {
         const { document, wrapper } = makeSingleFieldset()
         this.document = document
         this.wrapper = wrapper
       })
 
-      it('should add a button to add more fragments', () => {
+      it('should add a button to add more fragments', function () {
         const addButtonElement = this.wrapper.querySelector('.js-AddItems__add')
         expect(addButtonElement.innerText).to.equal('Add another item')
       })
 
-      it('should create a 2nd fieldset after the first if the add button is pressed', () => {
+      it('should create a 2nd fieldset after the first if the add button is pressed', function () {
         const addButtonElement = this.wrapper.querySelector('.js-AddItems__add')
         addButtonElement.click()
         const fieldsets = this.wrapper.querySelectorAll('fieldset')
         expect(fieldsets).to.have.length(2)
       })
 
-      it('should create a new ID for elements with an existing ID', () => {
+      it('should create a new ID for elements with an existing ID', function () {
         const addButtonElement = this.wrapper.querySelector('.js-AddItems__add')
         addButtonElement.click()
         const fieldsets = Array.from(this.wrapper.querySelectorAll('fieldset'))
@@ -148,7 +144,7 @@ describe('Add another', () => {
         expect(secondTextField.id).to.not.equal(firstTextField.id)
       })
 
-      it('should not create a new NAME for elements with an existing NAME', () => {
+      it('should not create a new NAME for elements with an existing NAME', function () {
         const addButtonElement = this.wrapper.querySelector('.js-AddItems__add')
         addButtonElement.click()
         const fieldsets = Array.from(this.wrapper.querySelectorAll('fieldset'))
@@ -160,7 +156,7 @@ describe('Add another', () => {
         expect(secondTextField.name).to.equal(firstTextField.name)
       })
 
-      it('should re-assign "for" attributes to their associated new field', () => {
+      it('should re-assign "for" attributes to their associated new field', function () {
         const addButtonElement = this.wrapper.querySelector('.js-AddItems__add')
         addButtonElement.click()
 
@@ -171,9 +167,9 @@ describe('Add another', () => {
       })
     })
 
-    describe('remove', () => {
-      describe('default behaviour', () => {
-        it('should not show a remove button if there is only 1 initial fragment by default', () => {
+    describe('remove', function () {
+      describe('default behaviour', function () {
+        it('should not show a remove button if there is only 1 initial fragment by default', function () {
           const { document, wrapper } = makeSingleFieldset()
           this.document = document
           this.wrapper = wrapper
@@ -181,7 +177,7 @@ describe('Add another', () => {
           expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(0)
         })
 
-        it('should add a remove button at the end of each fragment if there is more than one', () => {
+        it('should add a remove button at the end of each fragment if there is more than one', function () {
           const { document, wrapper } = makeMultipleFieldset()
           this.document = document
           this.wrapper = wrapper
@@ -189,7 +185,7 @@ describe('Add another', () => {
           expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(2)
         })
 
-        it('should remove an element if the remove button is pressed', () => {
+        it('should remove an element if the remove button is pressed', function () {
           const { document, wrapper } = makeMultipleFieldset()
           this.document = document
           this.wrapper = wrapper
@@ -199,7 +195,7 @@ describe('Add another', () => {
           expect(this.wrapper.querySelectorAll('.c-form-fieldset')).to.have.length(1)
         })
 
-        it('should delete the remove button if you remove a fragment and there is only 1 left', () => {
+        it('should delete the remove button if you remove a fragment and there is only 1 left', function () {
           const { document, wrapper } = makeMultipleFieldset()
           this.document = document
           this.wrapper = wrapper
@@ -208,7 +204,7 @@ describe('Add another', () => {
           expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(0)
         })
 
-        it('should add a remove button to existing fragments if they go from 1 to 2 fragments', () => {
+        it('should add a remove button to existing fragments if they go from 1 to 2 fragments', function () {
           const { document, wrapper } = makeSingleFieldset()
           this.document = document
           this.wrapper = wrapper
@@ -218,66 +214,66 @@ describe('Add another', () => {
         })
       })
 
-      describe('(allow remove all)', () => {
-        beforeEach(() => {
+      describe('(allow remove all)', function () {
+        beforeEach(function () {
           const { wrapper } = makeMultipleFieldset(true)
           this.wrapper = wrapper
         })
 
-        it('should remove an element if the remove button is pressed', () => {
+        it('should remove an element if the remove button is pressed', function () {
           this.wrapper.querySelector('.js-AddItems__remove').click()
           expect(this.wrapper.querySelectorAll('.c-form-fieldset')).to.have.length(1)
         })
 
-        it('should not delete the remove button if you remove a fragment and there is only 1 left', () => {
+        it('should not delete the remove button if you remove a fragment and there is only 1 left', function () {
           this.wrapper.querySelector('.c-form-fieldset .js-AddItems__remove').click()
           expect(getVisibleRemoveButtons(this.wrapper)).have.length(1)
         })
 
-        it('should add a remove button to any new fragments', () => {
+        it('should add a remove button to any new fragments', function () {
           const addButtonElement = this.wrapper.querySelector('.js-AddItems__add')
           addButtonElement.click()
 
           expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(3)
         })
 
-        context('when multiple items', () => {
-          it('should add multiple remove button', () => {
+        context('when multiple items', function () {
+          it('should add multiple remove button', function () {
             expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(2)
           })
         })
 
-        context('when only one item', () => {
-          beforeEach(() => {
+        context('when only one item', function () {
+          beforeEach(function () {
             const { wrapper } = makeSingleFieldset(true)
             this.wrapper = wrapper
           })
 
-          it('should add one remove button', () => {
+          it('should add one remove button', function () {
             expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(1)
           })
         })
       })
 
-      describe('(disallow remove any)', () => {
-        context('when only one item', () => {
-          beforeEach(() => {
+      describe('(disallow remove any)', function () {
+        context('when only one item', function () {
+          beforeEach(function () {
             const { wrapper } = makeSingleFieldset(false, false)
             this.wrapper = wrapper
           })
 
-          it('should not add a remove button', () => {
+          it('should not add a remove button', function () {
             expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(0)
           })
         })
 
-        context('when multiple items', () => {
-          beforeEach(() => {
+        context('when multiple items', function () {
+          beforeEach(function () {
             const { wrapper } = makeMultipleFieldset(false, false)
             this.wrapper = wrapper
           })
 
-          it('should not add a remove button', () => {
+          it('should not add a remove button', function () {
             expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(0)
           })
         })
@@ -285,20 +281,20 @@ describe('Add another', () => {
     })
   })
 
-  describe('<select>', () => {
-    describe('add', () => {
-      beforeEach(() => {
+  describe('<select>', function () {
+    describe('add', function () {
+      beforeEach(function () {
         const { document, wrapper } = makeSingleSelect()
         this.document = document
         this.wrapper = wrapper
       })
 
-      it('should add a button to add more fragments', () => {
+      it('should add a button to add more fragments', function () {
         const addButtonElement = this.wrapper.querySelector('.js-AddItems__add')
         expect(addButtonElement.innerText).to.equal('Add another item')
       })
 
-      it('should create a 2nd textfield after the first if the add button is pressed', () => {
+      it('should create a 2nd textfield after the first if the add button is pressed', function () {
         const addButtonElement = this.wrapper.querySelector('.js-AddItems__add')
         addButtonElement.click()
 
@@ -307,9 +303,9 @@ describe('Add another', () => {
       })
     })
 
-    describe('remove', () => {
-      describe('default behaviour', () => {
-        it('should not add a remove button if there is only 1 initial form group by default', () => {
+    describe('remove', function () {
+      describe('default behaviour', function () {
+        it('should not add a remove button if there is only 1 initial form group by default', function () {
           const { document, wrapper } = makeSingleSelect()
           this.document = document
           this.wrapper = wrapper
@@ -317,7 +313,7 @@ describe('Add another', () => {
           expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(0)
         })
 
-        it('should add a remove button at the end of each form group if there is more than one', () => {
+        it('should add a remove button at the end of each form group if there is more than one', function () {
           const { document, wrapper } = makeMultipleSelect()
           this.document = document
           this.wrapper = wrapper
@@ -325,7 +321,7 @@ describe('Add another', () => {
           expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(2)
         })
 
-        it('should remove a form group if the remove button is pressed', () => {
+        it('should remove a form group if the remove button is pressed', function () {
           const { document, wrapper } = makeMultipleSelect()
           this.document = document
           this.wrapper = wrapper
@@ -335,7 +331,7 @@ describe('Add another', () => {
           expect(this.wrapper.querySelectorAll('.js-adviser')).to.have.length(1)
         })
 
-        it('should delete the remove button if you remove a form group and there is only 1 left', () => {
+        it('should delete the remove button if you remove a form group and there is only 1 left', function () {
           const { document, wrapper } = makeMultipleSelect()
           this.document = document
           this.wrapper = wrapper
@@ -344,7 +340,7 @@ describe('Add another', () => {
           expect(getVisibleRemoveButtons(this.wrapper)).to.be.length(0)
         })
 
-        it('should add a remove button to existing fragments if they go from 1 to 2 fragments', () => {
+        it('should add a remove button to existing fragments if they go from 1 to 2 fragments', function () {
           const { document, wrapper } = makeSingleSelect()
           this.document = document
           this.wrapper = wrapper
@@ -354,14 +350,14 @@ describe('Add another', () => {
         })
       })
 
-      describe('(allow remove all)', () => {
-        beforeEach(() => {
+      describe('(allow remove all)', function () {
+        beforeEach(function () {
           const { document, wrapper } = makeMultipleSelect(true)
           this.document = document
           this.wrapper = wrapper
         })
 
-        it('should add a remove button when there is only one fragment', () => {
+        it('should add a remove button when there is only one fragment', function () {
           const { document, wrapper } = makeSingleSelect(true)
           this.document = document
           this.wrapper = wrapper
@@ -369,21 +365,21 @@ describe('Add another', () => {
           expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(1)
         })
 
-        it('should add a remove button when there is more than one fragment', () => {
+        it('should add a remove button when there is more than one fragment', function () {
           expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(2)
         })
 
-        it('should remove an element if the remove button is pressed', () => {
+        it('should remove an element if the remove button is pressed', function () {
           this.wrapper.querySelector('.js-adviser .js-AddItems__remove').click()
           expect(this.wrapper.querySelectorAll('.js-adviser')).to.have.length(1)
         })
 
-        it('should not delete the remove button if you remove a fragment and there is only 1 left', () => {
+        it('should not delete the remove button if you remove a fragment and there is only 1 left', function () {
           this.wrapper.querySelector('.js-adviser .js-AddItems__remove').click()
           expect(getVisibleRemoveButtons(this.wrapper)).have.length(1)
         })
 
-        it('should add a remove button to any new fragments', () => {
+        it('should add a remove button to any new fragments', function () {
           this.wrapper.querySelector('.js-AddItems__add').click()
           expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(3)
         })
@@ -391,8 +387,8 @@ describe('Add another', () => {
     })
   })
 
-  describe('decorate existing add button', () => {
-    beforeEach(() => {
+  describe('decorate existing add button', function () {
+    beforeEach(function () {
       const fieldset = formMacros.renderWithCallerToDom('Fieldset')(
         formMacros.render('MultipleChoiceField', {
           label: 'Test label',
@@ -428,19 +424,19 @@ describe('Add another', () => {
       AddAnotherFragment.init(this.document)
     })
 
-    it('should not add a new add button if one is specified', () => {
+    it('should not add a new add button if one is specified', function () {
       expect(this.document.querySelector('.js-AddItems__add')).to.equal(null)
       expect(this.document.querySelectorAll('[data-method="add"]')).to.have.length(1)
     })
 
-    it('should add a fragment when the add button is pressed', () => {
+    it('should add a fragment when the add button is pressed', function () {
       this.document.getElementById('add').click()
       expect(this.document.querySelectorAll('.c-form-fieldset')).to.have.length(2)
     })
   })
 
-  describe('decorate existing remove button', () => {
-    beforeEach(() => {
+  describe('decorate existing remove button', function () {
+    beforeEach(function () {
       const selectMarkup = formMacros.render('MultipleChoiceField', {
         label: 'Test label',
         name: 'adviser',
@@ -476,17 +472,17 @@ describe('Add another', () => {
       AddAnotherFragment.init(this.document)
     })
 
-    it('should not add a new remove button if one is specified to existing markup', () => {
+    it('should not add a new remove button if one is specified to existing markup', function () {
       expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(0)
     })
 
-    it('should remove a fragment when the decorated remove button is pressed', () => {
+    it('should remove a fragment when the decorated remove button is pressed', function () {
       this.document.querySelector('.js-remove-thing').click()
       expect(this.document.querySelectorAll('.my-fragment')).to.have.length(1)
     })
   })
 
-  it('should allow add another button text to be overriden', () => {
+  it('should allow add another button text to be overriden', function () {
     const fieldset = formMacros.renderWithCallerToDom('Fieldset')(
       formMacros.render('MultipleChoiceField', {
         label: 'Test label',
@@ -519,7 +515,7 @@ describe('Add another', () => {
     expect(document.querySelector('.js-AddItems__add').innerText).to.contain('Add new adviser')
   })
 
-  it('should allow remove button text to be overridden', () => {
+  it('should allow remove button text to be overridden', function () {
     const fieldset = formMacros.renderWithCallerToDom('Fieldset')(
       formMacros.render('MultipleChoiceField', {
         label: 'Test label',

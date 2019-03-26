@@ -1,4 +1,4 @@
-const { matchWords, checkDateFormat } = require('~/assets/javascripts/lib/helpers')
+const { matchWords, checkDateFormat } = require('../../../../../assets/javascripts/lib/helpers')
 
 describe('#matchWords', () => {
   const data = 'Aberdeen city -'

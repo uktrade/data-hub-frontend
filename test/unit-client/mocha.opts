@@ -1,0 +1,4 @@
+--require test/unit-client/common.js
+--ui bdd
+--recursive
+--reporter dot
