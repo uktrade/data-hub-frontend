@@ -24,7 +24,10 @@
 {% endblock %}
 
 {% block body_main_content %}
-  <p>This page shows information about this business and how it is related to other businesses</p>
+  <p>
+    This page shows information about this business and how it is related to other businesses<br />
+    Changes made to this information can be found on the <a href="audit">Audit trail page</a>
+  </p>
 
   {% if company.archived %}
     {% call Message({ type: 'info' }) %}
