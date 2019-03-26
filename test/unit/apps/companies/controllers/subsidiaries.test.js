@@ -6,7 +6,6 @@ const config = require('~/config')
 const { renderSubsidiaries } = require('~/src/apps/companies/controllers/subsidiaries')
 
 const companyMock = require('~/test/unit/data/companies/companies-house-company.json')
-const dnbCompanyMock = require('~/test/unit/data/companies/dnb-company.json')
 const subsidiariesMock = require('~/test/unit/data/companies/subsidiaries.json')
 
 describe('company subsidiaries controller', () => {
@@ -72,9 +71,13 @@ describe('company subsidiaries controller', () => {
           name: 'SAMSUNG BIOEPIS UK LIMITED',
           url: `/companies/${companyMock.id}`,
         },
+        {
+          name: 'Business details',
+          url: `/companies/${companyMock.id}/business-details`,
+        },
         'Subsidiaries',
       ],
-      expectedTemplate: 'companies/views/_deprecated/subsidiaries',
+      expectedTemplate: 'companies/views/subsidiaries',
       expectedHeading: 'Subsidiaries of SAMSUNG BIOEPIS UK LIMITED',
       expectedCount: 1,
     })
@@ -115,9 +118,13 @@ describe('company subsidiaries controller', () => {
           name: 'SAMSUNG BIOEPIS UK LIMITED',
           url: `/companies/${companyMock.id}`,
         },
+        {
+          name: 'Business details',
+          url: `/companies/${companyMock.id}/business-details`,
+        },
         'Subsidiaries',
       ],
-      expectedTemplate: 'companies/views/_deprecated/subsidiaries',
+      expectedTemplate: 'companies/views/subsidiaries',
       expectedHeading: 'Subsidiaries of SAMSUNG BIOEPIS UK LIMITED',
       expectedCount: 1,
     })
@@ -159,9 +166,13 @@ describe('company subsidiaries controller', () => {
           name: 'SAMSUNG BIOEPIS UK LIMITED',
           url: `/companies/${companyMock.id}`,
         },
+        {
+          name: 'Business details',
+          url: `/companies/${companyMock.id}/business-details`,
+        },
         'Subsidiaries',
       ],
-      expectedTemplate: 'companies/views/_deprecated/subsidiaries',
+      expectedTemplate: 'companies/views/subsidiaries',
       expectedHeading: 'Subsidiaries of SAMSUNG BIOEPIS UK LIMITED',
       expectedCount: 0,
     })
@@ -171,91 +182,6 @@ describe('company subsidiaries controller', () => {
         label: 'Link a subsidiary',
         url: '/companies/72fda78f-bdc3-44dc-9c22-c8ac82f7bda4/subsidiaries/link',
       }])
-    })
-  })
-
-  context('when the company does have a DUNS number', () => {
-    beforeEach(async () => {
-      nock(config.apiRoot)
-        .get(`/v3/company?limit=10&offset=0&sortby=name&global_headquarters_id=${dnbCompanyMock.id}`)
-        .reply(200, subsidiariesMock)
-
-      this.middlewareParameters = buildMiddlewareParameters({
-        company: dnbCompanyMock,
-      })
-
-      await renderSubsidiaries(
-        this.middlewareParameters.reqMock,
-        this.middlewareParameters.resMock,
-        this.middlewareParameters.nextSpy,
-      )
-
-      this.subsidiaries = this.middlewareParameters.resMock.render.firstCall.args[1].subsidiaries
-    })
-
-    commonTests({
-      expectedBreadcrumbs: [
-        {
-          name: 'One List Corp',
-          url: `/companies/${dnbCompanyMock.id}`,
-        },
-        'Subsidiaries',
-      ],
-      expectedTemplate: 'companies/views/subsidiaries',
-      expectedHeading: 'Subsidiaries of One List Corp',
-      expectedCount: 1,
-    })
-
-    it('should not set actions buttons', () => {
-      const props = this.middlewareParameters.resMock.render.args[0][1]
-
-      expect(props.actionButtons).to.be.undefined
-    })
-  })
-
-  context('when the company does not have a DUNS number and the companies new layout feature is enabled', () => {
-    beforeEach(async () => {
-      nock(config.apiRoot)
-        .get(`/v3/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`)
-        .reply(200, subsidiariesMock)
-
-      this.middlewareParameters = buildMiddlewareParameters({
-        company: companyMock,
-        features: {
-          'companies-new-layout': true,
-        },
-      })
-
-      await renderSubsidiaries(
-        this.middlewareParameters.reqMock,
-        this.middlewareParameters.resMock,
-        this.middlewareParameters.nextSpy,
-      )
-
-      this.subsidiaries = this.middlewareParameters.resMock.render.firstCall.args[1].subsidiaries
-    })
-
-    commonTests({
-      expectedBreadcrumbs: [
-        {
-          name: 'SAMSUNG BIOEPIS UK LIMITED',
-          url: `/companies/${companyMock.id}`,
-        },
-        {
-          name: 'Business details',
-          url: `/companies/${companyMock.id}/business-details`,
-        },
-        'Subsidiaries',
-      ],
-      expectedTemplate: 'companies/views/subsidiaries',
-      expectedHeading: 'Subsidiaries of SAMSUNG BIOEPIS UK LIMITED',
-      expectedCount: 1,
-    })
-
-    it('should not set actions buttons', () => {
-      const props = this.middlewareParameters.resMock.render.args[0][1]
-
-      expect(props.actionButtons).to.be.undefined
     })
   })
 })

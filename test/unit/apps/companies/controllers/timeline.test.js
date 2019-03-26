@@ -2,7 +2,6 @@ const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parame
 
 const config = require('~/config')
 const companyMock = require('~/test/unit/data/companies/companies-house-company.json')
-const dnbCompanyMock = require('~/test/unit/data/companies/dnb-company.json')
 const timelineMock = require('~/test/unit/data/companies/timeline.json')
 
 const { renderTimeline } = require('~/src/apps/companies/controllers/timeline')
@@ -10,95 +9,37 @@ const { renderTimeline } = require('~/src/apps/companies/controllers/timeline')
 describe('Company timeline controller', () => {
   describe('#renderTimeline', () => {
     context('when timeline api returns valid data', () => {
-      const commonTests = (expectedBreadcrumbs, expectedTemplate) => {
-        it('return a transformed list of entries', () => {
-          const timeline = this.middlewareParameters.resMock.render.args[0][1].timeline
+      beforeEach(async () => {
+        nock(config.apiRoot)
+          .get(`/v3/company/${companyMock.id}/timeline?limit=10&offset=0`)
+          .reply(200, timelineMock)
 
-          expect(timeline).to.exist
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: companyMock,
         })
 
-        it('should set the breadcrumbs', () => {
-          expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledTwice
-          expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledWith(expectedBreadcrumbs[0].text, expectedBreadcrumbs[0].href)
-          expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledWith(expectedBreadcrumbs[1].text)
-        })
-
-        it('should render the correct template', () => {
-          expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(expectedTemplate)
-          expect(this.middlewareParameters.resMock.render).to.have.been.calledOnce
-        })
-      }
-
-      context('when the company does not have a DUNS number', () => {
-        beforeEach(async () => {
-          nock(config.apiRoot)
-            .get(`/v3/company/${companyMock.id}/timeline?limit=10&offset=0`)
-            .reply(200, timelineMock)
-
-          this.middlewareParameters = buildMiddlewareParameters({
-            company: companyMock,
-          })
-
-          await renderTimeline(
-            this.middlewareParameters.reqMock,
-            this.middlewareParameters.resMock,
-            this.middlewareParameters.nextSpy,
-          )
-        })
-
-        commonTests([
-          { text: companyMock.name, href: `/companies/${companyMock.id}` },
-          { text: 'Timeline' },
-        ], 'companies/views/_deprecated/timeline')
+        await renderTimeline(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
       })
 
-      context('when the company does have a DUNS number', () => {
-        beforeEach(async () => {
-          nock(config.apiRoot)
-            .get(`/v3/company/${dnbCompanyMock.id}/timeline?limit=10&offset=0`)
-            .reply(200, timelineMock)
+      it('return a transformed list of entries', () => {
+        const timeline = this.middlewareParameters.resMock.render.args[0][1].timeline
 
-          this.middlewareParameters = buildMiddlewareParameters({
-            company: dnbCompanyMock,
-          })
-
-          await renderTimeline(
-            this.middlewareParameters.reqMock,
-            this.middlewareParameters.resMock,
-            this.middlewareParameters.nextSpy,
-          )
-        })
-
-        commonTests([
-          { text: dnbCompanyMock.name, href: `/companies/${dnbCompanyMock.id}` },
-          { text: 'Timeline' },
-        ], 'companies/views/timeline')
+        expect(timeline).to.exist
       })
 
-      context('when the company does not have a DUNS number and the companies new layout feature is enabled', () => {
-        beforeEach(async () => {
-          nock(config.apiRoot)
-            .get(`/v3/company/${companyMock.id}/timeline?limit=10&offset=0`)
-            .reply(200, timelineMock)
+      it('should set the breadcrumbs', () => {
+        expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledTwice
+        expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledWith(companyMock.name, `/companies/${companyMock.id}`)
+        expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledWith('Timeline')
+      })
 
-          this.middlewareParameters = buildMiddlewareParameters({
-            company: companyMock,
-            features: {
-              'companies-new-layout': true,
-            },
-          })
-
-          await renderTimeline(
-            this.middlewareParameters.reqMock,
-            this.middlewareParameters.resMock,
-            this.middlewareParameters.nextSpy,
-          )
-        })
-
-        commonTests([
-          { text: companyMock.name, href: `/companies/${companyMock.id}` },
-          { text: 'Timeline' },
-        ], 'companies/views/timeline')
+      it('should render the correct template', () => {
+        expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal('companies/views/timeline')
+        expect(this.middlewareParameters.resMock.render).to.have.been.calledOnce
       })
     })
 
