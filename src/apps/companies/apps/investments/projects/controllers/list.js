@@ -2,12 +2,9 @@ const { getCompanyInvestmentProjects } = require('../../../../../investments/rep
 const { transformInvestmentProjectToListItem } = require('../../../../../investments/transformers')
 const { transformApiResponseToCollection } = require('../../../../../../modules/api/transformers')
 
-const list = 'companies/apps/investments/projects/views/list'
-
 async function renderProjects (req, res, next) {
   const { token } = req.session
-  const { company, features } = res.locals
-  const view = (company.duns_number || features['companies-new-layout']) ? list : `${list}-deprecated`
+  const { company } = res.locals
   const actionButtons = company.archived ? undefined : [{
     label: 'Add investment project',
     url: `/investments/projects/create/${company.id}`,
@@ -23,7 +20,7 @@ async function renderProjects (req, res, next) {
     res
       .breadcrumb(company.name, `/companies/${company.id}`)
       .breadcrumb('Investment')
-      .render(view, {
+      .render('companies/apps/investments/projects/views/list', {
         results,
         actionButtons,
       })
