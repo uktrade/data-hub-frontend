@@ -9,7 +9,7 @@ async function renderAddStepOne (req, res, next) {
     const ukOtherCompanyOptions = await buildUkOtherCompanyOptions(req.session.token)
     const foreignOtherCompanyOptions = await buildForeignOtherCompanyOptions(req.session.token)
 
-    res.render('companies/views/_deprecated/add-step-1.njk', {
+    res.render('companies/views/add-step-1.njk', {
       ukOtherCompanyOptions,
       foreignOtherCompanyOptions,
       company: req.body,
@@ -74,7 +74,7 @@ function postAddStepOne (req, res, next) {
 }
 
 function renderAddStepTwo (req, res, next) {
-  res.render('companies/views/_deprecated/add-step-2.njk')
+  res.render('companies/views/add-step-2.njk')
 }
 
 module.exports = {
