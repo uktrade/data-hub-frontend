@@ -57,7 +57,7 @@ async function renderForm (req, res, next) {
 
     res
       .breadcrumb(heading)
-      .render('companies/views/_deprecated/edit', {
+      .render('companies/views/edit', {
         isForeign,
         heading,
         businessTypeLabel,
