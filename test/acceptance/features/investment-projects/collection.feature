@@ -34,7 +34,7 @@ Feature: View a list of Investment Projects
       | New or existing investor      | investmentProject.investorType                |
       | Level of involvement          | investmentProject.levelOfInvolvement          |
       | Specific investment programme | investmentProject.specificInvestmentProgramme |
-    When I navigate to the Investment Projects source of equity investment
+    When I navigate to the `companies.investments` page using `company` `Lambda plc` fixture
     Then I can view the Investment project in the collection
       | text                | expected                            |
       | Investor            | investmentProject.equitySource.name |
