@@ -310,7 +310,7 @@ jobs:
           command: yarn test:functional --browser chrome
           when: always
       - store_artifacts:
-          path: test/functional/cypress/screenshots
+          path: cypress/screenshots
 
   # Run acceptance tests for DIT staff
   dit_staff_at: &dit_staff_at
