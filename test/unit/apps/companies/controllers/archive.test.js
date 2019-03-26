@@ -43,7 +43,7 @@ describe('Company controller, archive', () => {
     })
 
     it('should redirect back to company', () => {
-      expect(this.middlewareParameters.resMock.redirect).to.have.been.calledWith(expectedPath)
+      expect(this.middlewareParameters.resMock.redirect).to.have.been.calledWith(`/companies/${companyMock.id}/business-details`)
       expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
     })
   }
@@ -61,7 +61,6 @@ describe('Company controller, archive', () => {
 
       commonTests({
         expectedFlash: 'error',
-        expectedPath: `/companies/${companyMock.id}`,
       })
 
       it('should not attempt to archive company', () => {
@@ -89,7 +88,6 @@ describe('Company controller, archive', () => {
             stubName: 'archiveCompany',
             expectedReason: 'Archived reason',
             expectedFlash: 'success',
-            expectedPath: `/companies/${companyMock.id}`,
           })
         })
 
@@ -145,30 +143,6 @@ describe('Company controller, archive', () => {
         })
       })
     })
-
-    context('when the companies new layout feature is enabled', () => {
-      beforeEach(async () => {
-        this.middlewareParameters = buildMiddlewareParameters({
-          requestBody: {
-            archived_reason: 'Archived reason',
-          },
-          company: companyMock,
-          features: {
-            'companies-new-layout': true,
-          },
-        })
-
-        this.stub.unarchiveCompany.resolves(companyMock)
-
-        await this.controller.archiveCompany(this.middlewareParameters.reqMock, this.middlewareParameters.resMock)
-      })
-
-      commonTests({
-        stubName: 'archiveCompany',
-        expectedFlash: 'success',
-        expectedPath: `/companies/${companyMock.id}/business-details`,
-      })
-    })
   })
 
   describe('#unarchiveCompany', () => {
@@ -187,31 +161,6 @@ describe('Company controller, archive', () => {
         commonTests({
           stubName: 'unarchiveCompany',
           expectedFlash: 'success',
-          expectedPath: `/companies/${companyMock.id}`,
-        })
-      })
-
-      context('when the companies new layout feature is enabled', () => {
-        beforeEach(async () => {
-          this.middlewareParameters = buildMiddlewareParameters({
-            requestQuery: {
-              redirect: '/redirect/here',
-            },
-            company: companyMock,
-            features: {
-              'companies-new-layout': true,
-            },
-          })
-
-          this.stub.unarchiveCompany.resolves(companyMock)
-
-          await this.controller.unarchiveCompany(this.middlewareParameters.reqMock, this.middlewareParameters.resMock)
-        })
-
-        commonTests({
-          stubName: 'unarchiveCompany',
-          expectedFlash: 'success',
-          expectedPath: `/companies/${companyMock.id}/business-details`,
         })
       })
     })
@@ -230,7 +179,6 @@ describe('Company controller, archive', () => {
       commonTests({
         stubName: 'unarchiveCompany',
         expectedFlash: 'error',
-        expectedPath: `/companies/${companyMock.id}`,
       })
 
       it('should send error to logger', () => {
