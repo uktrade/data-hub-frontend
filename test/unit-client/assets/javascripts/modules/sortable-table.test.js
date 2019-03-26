@@ -1,7 +1,5 @@
-const jsdom = require('jsdom')
-const { JSDOM } = jsdom
-const SortableTable = require(`~/assets/javascripts/modules/sortable-table`)
-const { domTokenToArray } = require('~/test/unit/component-helper')
+const SortableTable = require(`../../../../../assets/javascripts/modules/sortable-table`)
+const { domTokenToArray } = require('../../../../../test/unit/component-helper')
 
 const FIRST_NAME_SELECTOR = '.js-SortableTable tbody tr:first-child td:first-child'
 const LAST_NAME_SELECTOR = '.js-SortableTable tbody tr:last-child td:first-child'
