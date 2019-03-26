@@ -5,23 +5,4 @@ module.exports = {
     description: '#field-description',
     website: '#field-website',
   },
-
-  commands: [
-    {
-      editCompanyRecords (description, website, number) {
-        this
-          .waitForElementVisible('@editCompanyDetailsButton')
-          .click('@editCompanyDetailsButton')
-
-        if (number > 1) {
-          this
-            .waitForElementVisible('@website')
-            .clearValue('@website')
-            .setValue('@website', website)
-        }
-
-        return this
-      },
-    },
-  ],
 }
