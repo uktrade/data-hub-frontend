@@ -8,7 +8,13 @@
 {% if profile  %}
   <div class="large-capital-profile">
 
-    {% call details('Investor details', profile.investorDetails.incompleteFields, edit === 'details') -%}
+    {% call details({
+      summaryText: 'Investor details',
+      summaryDataAttr: 'investor-details-summary',
+      incompleteFields: profile.investorDetails.incompleteFields,
+      open: edit === 'details'
+    }) -%}
+
       {% if edit == 'details' %}
         {% include "./details-edit.njk" %}
       {% else %}
@@ -16,7 +22,13 @@
       {% endif %}
     {%- endcall %}
 
-    {% call details('Investor requirements', profile.investorRequirements.incompleteFields, edit === 'requirements') -%}
+    {% call details({
+      summaryText: 'Investor requirements',
+      summaryDataAttr: 'investor-requirements-summary',
+      incompleteFields: profile.investorRequirements.incompleteFields,
+      open: edit === 'requirements'
+    }) -%}
+
       {% if edit == 'requirements' %}
           {% include "./requirements-edit.njk" %}
       {% else %}
@@ -24,7 +36,12 @@
       {% endif %}
     {%- endcall %}
 
-    {% call details('Location', profile.location.incompleteFields, edit === 'location') -%}
+    {% call details({
+      summaryText: 'Location',
+      summaryDataAttr: 'location-summary',
+      incompleteFields: profile.location.incompleteFields,
+      open: edit === 'location'}) -%}
+
       {% if edit == 'location' %}
         {% include "./location-edit.njk" %}
       {% else %}
@@ -37,6 +54,7 @@
   {% call Form({
       buttonText: 'Create a profile',
       hiddenFields: { id: company.id },
+      buttonDataAttr: 'create-a-profile',
       action: '/companies/' + company.id + '/investments/large-capital-profile/create'
     })
   %}
