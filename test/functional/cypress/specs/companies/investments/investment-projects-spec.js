@@ -1,6 +1,5 @@
-const fixtures = require('../../../fixtures/index.js')
-const selectors = require('../../../selectors/index.js')
-
+const selectors = require('../../../selectors')
+const fixtures = require('../../../fixtures')
 const { oneListCorp } = fixtures.company
 
 describe('Company Investments and Investment projects', () => {

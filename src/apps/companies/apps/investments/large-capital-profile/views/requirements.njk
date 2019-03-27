@@ -2,6 +2,7 @@
 
 {% call Form({
   buttonText: 'Edit',
+  buttonDataAttr: 'edit-investor-requirements',
   hiddenFields: { edit: 'requirements' },
   disableFormAction: edit === 'details' or edit === 'location',
   action: '/companies/' + company.id + '/investments/large-capital-profile/edit'

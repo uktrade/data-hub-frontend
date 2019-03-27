@@ -1,6 +1,7 @@
 {% call Form({
   buttonText: 'Save',
   returnText: 'Cancel',
+  buttonDataAttr: 'save-investor-requirements',
   returnLink: '/companies/' + company.id + '/investments/large-capital-profile',
   action: '/companies/' + company.id + '/investments/large-capital-profile/update',
   hiddenFields: { id: company.id }
