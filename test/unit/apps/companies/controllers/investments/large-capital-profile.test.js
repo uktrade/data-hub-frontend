@@ -8,14 +8,15 @@ const config = require('~/config')
 const controller = require('~/src/apps/companies/apps/investments/large-capital-profile/controllers')
 
 describe('Company Investments - large capital profile', () => {
-  describe('#renderInvestmentsLargeCapitalProfile', () => {
+  describe('renderProfile', () => {
     const commonTests = (companyProfile) => {
       it('should call the render function once', () => {
         expect(this.middlewareParameters.resMock.render).to.have.been.calledOnce
       })
 
       it('should call the render function and pass the view', () => {
-        expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal('companies/apps/investments/large-capital-profile/views/list')
+        const view = 'companies/apps/investments/large-capital-profile/views/profile'
+        expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(view)
       })
 
       it('should call the render function and pass the company', () => {
@@ -23,7 +24,7 @@ describe('Company Investments - large capital profile', () => {
       })
 
       it('should call the render function and pass the company profile', () => {
-        expect(this.middlewareParameters.resMock.render.args[0][1].companyProfile).to.deep.equal(companyProfile)
+        expect(this.middlewareParameters.resMock.render.args[0][1].profile).to.deep.equal(companyProfile)
       })
     }
 
@@ -37,7 +38,7 @@ describe('Company Investments - large capital profile', () => {
           company: companyMock,
         })
 
-        await controller.renderLargeCapitalProfile(
+        await controller.renderProfile(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
           this.middlewareParameters.nextSpy,
@@ -47,7 +48,7 @@ describe('Company Investments - large capital profile', () => {
       commonTests(undefined)
     })
 
-    context('when the company has a company profile', () => {
+    context('when the company has a transformed company profile', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
           .get(`/v4/large-investor-profile?investor_company_id=${companyMock.id}`)
@@ -57,14 +58,24 @@ describe('Company Investments - large capital profile', () => {
           company: companyMock,
         })
 
-        await controller.renderLargeCapitalProfile(
+        await controller.renderProfile(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
           this.middlewareParameters.nextSpy,
         )
       })
 
-      commonTests(companyProfile.results[0])
+      commonTests({
+        'investorDetails': {
+          'incompleteFields': 5,
+        },
+        'investorRequirements': {
+          'incompleteFields': 9,
+        },
+        'location': {
+          'incompleteFields': 3,
+        },
+      })
     })
   })
 })
