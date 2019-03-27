@@ -23,7 +23,7 @@ const exportOptions = {
 }
 
 async function getInteractionOptions (token, req, res) {
-  const currentAdviser = get(res.locals, 'interaction.dit_adviser.id')
+  if (get(req, 'xhr')) return
   const sectorOptions = await getOptions(token, SECTOR, {
     queryString: QUERY_STRING,
   })
@@ -32,8 +32,10 @@ async function getInteractionOptions (token, req, res) {
   })
   const teamOptions = await getOptions(token, 'team', { includeDisabled: true })
   const types = await getOptions(token, 'policy-issue-type')
+
   const areas = await getOptions(token, 'policy-area')
 
+  const currentAdviser = get(res.locals, 'interaction.dit_adviser.id')
   const advisers = await getAdvisers(token)
   const activeAdvisers = filterActiveAdvisers({
     advisers: advisers.results,
@@ -117,4 +119,5 @@ function renderInteractionsForEntity (req, res, next) {
 module.exports = {
   renderInteractionList,
   renderInteractionsForEntity,
+  getInteractionOptions,
 }
