@@ -26,6 +26,7 @@
   {% set method = props.method or 'POST' -%}
   {% set buttonText = props.buttonText or 'Submit' %}
   {% set buttonModifiers = props.buttonModifiers | concat('') | join(' ') %}
+  {% set buttonDataAttr = props.buttonDataAttr or false %}
   {% set returnText = props.returnText or 'Back' %}
   {% set hideFormActions = props.hideFormActions or false %}
   {% set children = caller() if caller else renderAsMacro(props.children) %}
@@ -63,7 +64,13 @@
     {% if not hideFormActions %}
       <div class="c-form-actions {{ props.actionsClass }}">
         {% if not props.hidePrimaryFormAction %}
-          <button class="button js-prevent-multiple-submits {{ buttonModifiers }}" {{ 'disabled="disabled"' if props.disableFormAction }}>{{ buttonText }}</button>
+          <button
+            class="button js-prevent-multiple-submits {{ buttonModifiers }}"
+            {{ 'disabled="disabled"' if props.disableFormAction }}
+            {% if buttonDataAttr %}data-auto-id="{{ buttonDataAttr }}"{% endif %}
+          >
+            {{ buttonText }}
+          </button>
         {% endif %}
         {% if props.returnLink %}
           <a href="{{ props.returnLink }}">{{ returnText }}</a>
