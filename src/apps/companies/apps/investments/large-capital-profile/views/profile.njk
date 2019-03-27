@@ -1,62 +1,65 @@
 {% from "companies/apps/investments/macros/navigation.njk" import subnavigation %}
 {% from "companies/apps/investments/macros/details/details.njk" import details %}
+{% extends "../../../../views/template.njk" %}
 
-{{ subnavigation(company, 'large-capital-profile') }}
+{% block body_main_content %}
 
-<h2 class="govuk-heading-m" data-auto-id="investment-subheading">Large capital investor profile</h2>
+  {{ subnavigation(company, 'large-capital-profile') }}
 
-{% if profile  %}
-  <div class="large-capital-profile">
+  <h2 class="govuk-heading-m" data-auto-id="investment-subheading">Large capital investor profile</h2>
 
-    {% call details({
-      summaryText: 'Investor details',
-      summaryDataAttr: 'investor-details-summary',
-      incompleteFields: profile.investorDetails.incompleteFields,
-      open: edit === 'details'
-    }) -%}
+  {% if profile  %}
+    <div class="large-capital-profile">
+      {% call details({
+        summaryText: 'Investor details',
+        summaryDataAttr: 'investor-details-summary',
+        incompleteFields: profile.investorDetails.incompleteFields,
+        open: edit === 'details'
+      }) -%}
 
-      {% if edit == 'details' %}
-        {% include "./details-edit.njk" %}
-      {% else %}
-        {% include "./details.njk" %}
-      {% endif %}
-    {%- endcall %}
+        {% if edit == 'details' %}
+          {% include "./details-edit.njk" %}
+        {% else %}
+          {% include "./details.njk" %}
+        {% endif %}
+      {%- endcall %}
 
-    {% call details({
-      summaryText: 'Investor requirements',
-      summaryDataAttr: 'investor-requirements-summary',
-      incompleteFields: profile.investorRequirements.incompleteFields,
-      open: edit === 'requirements'
-    }) -%}
+      {% call details({
+        summaryText: 'Investor requirements',
+        summaryDataAttr: 'investor-requirements-summary',
+        incompleteFields: profile.investorRequirements.incompleteFields,
+        open: edit === 'requirements'
+      }) -%}
 
-      {% if edit == 'requirements' %}
+        {% if edit == 'requirements' %}
           {% include "./requirements-edit.njk" %}
-      {% else %}
-        {% include "./requirements.njk" %}
-      {% endif %}
-    {%- endcall %}
+        {% else %}
+          {% include "./requirements.njk" %}
+        {% endif %}
+      {%- endcall %}
 
-    {% call details({
-      summaryText: 'Location',
-      summaryDataAttr: 'location-summary',
-      incompleteFields: profile.location.incompleteFields,
-      open: edit === 'location'}) -%}
+      {% call details({
+        summaryText: 'Location',
+        summaryDataAttr: 'location-summary',
+        incompleteFields: profile.location.incompleteFields,
+        open: edit === 'location'}) -%}
 
-      {% if edit == 'location' %}
-        {% include "./location-edit.njk" %}
-      {% else %}
-        {% include "./location.njk" %}
-      {% endif %}
-    {%- endcall %}
+        {% if edit == 'location' %}
+          {% include "./location-edit.njk" %}
+        {% else %}
+          {% include "./location.njk" %}
+        {% endif %}
+      {%- endcall %}
 
-  </div>
-{% else %}
-  {% call Form({
+    </div>
+  {% else %}
+    {% call Form({
       buttonText: 'Create a profile',
       hiddenFields: { id: company.id },
       buttonDataAttr: 'create-a-profile',
       action: '/companies/' + company.id + '/investments/large-capital-profile/create'
     })
-  %}
-  {%- endcall %}
-{% endif %}
+    %}
+    {%- endcall %}
+  {% endif %}
+{% endblock %}
