@@ -1,6 +1,6 @@
 {
   "name": "data-hub-frontend",
-  "version": "5.13.0",
+  "version": "5.14.0",
   "description": "Data Hub Frontend",
   "main": "src/server.js",
   "repository": {
@@ -20,13 +20,13 @@
     "lint:all:styles": "sass-lint -v -q -c .sass-lint.yml assets/stylesheets/**/*.scss",
     "test": "npm-run-all test:*",
     "test:unit": "NODE_ENV=test LOG_LEVEL=silent mocha ./test/unit --opts ./test/unit/mocha.opts",
-    "test:vue": "mocha-webpack --webpack-config webpack.config.js --opts ./test/vue/mocha.opts ./test/vue/**/*.test.js",
+    "test:unit-client": "mocha-webpack --webpack-config webpack.config.js ./test/unit-client/assets/javascripts/**/*.test.js --opts ./test/unit-client/mocha.opts",
     "test:acceptance": "nightwatch --config test/acceptance/nightwatch.conf.js --env default --skiptags ignore",
     "test:functional": "./node_modules/.bin/cypress run",
     "test:functional:watch": "./node_modules/.bin/cypress open",
     "coverage": "nyc --reporter=html --reporter=text --reporter=lcov npm run test:unit",
     "circle:unit": "nyc --reporter=lcov npm run test:unit -- --reporter mocha-circleci-reporter && codeclimate-test-reporter < coverage/lcov.info",
-    "circle:vue": "mocha-webpack --webpack-config webpack.config.js --opts ./test/vue/mocha.opts --reporter mocha-circleci-reporter ./test/vue/**/*.test.js",
+    "circle:unit-client": "mocha-webpack --webpack-config webpack.config.js --opts ./test/unit/assets/javascripts/mocha.opts --reporter mocha-circleci-reporter ./test/unit/assets/javascripts/**/*.test.js",
     "circle:acceptance": "nightwatch --config test/acceptance/nightwatch.conf.js --env circleci",
     "circle:acceptance:dit-staff": "yarn circle:acceptance --skiptags ignore,da,lep",
     "circle:acceptance:da-staff": "yarn circle:acceptance --tag da --skiptags ignore",
@@ -48,7 +48,7 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": "8.11.3"
+    "node": "8.15.1"
   },
   "dependencies": {
     "autoprefixer": "^8.5.2",
@@ -155,7 +155,7 @@
     "nightwatch-cucumber": "^9.0.0",
     "nightwatch-custom-commands-assertions": "^1.1.1",
     "nock": "^9.2.6",
-    "nodemon": "^1.17.5",
+    "nodemon": "^1.18.10",
     "npm-run-all": "^4.1.3",
     "nyc": "^11.8.0",
     "pre-commit": "^1.2.2",

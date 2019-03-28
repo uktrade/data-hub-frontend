@@ -9,6 +9,7 @@ const { newlineToBr } = require('../../src/lib/text-formatting')
 const {
   assign,
   castArray,
+  compact,
   concat,
   escape,
   isArray,
@@ -185,6 +186,19 @@ const filters = {
     if (!dateFns.isValid(parsedDate)) { return value }
 
     return dateFns.format(parsedDate, format)
+  },
+
+  formatAddress: (address) => {
+    if (address) {
+      return compact([
+        address.line_1,
+        address.line_2,
+        address.town,
+        address.county,
+        address.postcode,
+        address.country.name,
+      ]).join(', ')
+    }
   },
 
   humanizeDuration: (value, measurement = 'minutes') => {

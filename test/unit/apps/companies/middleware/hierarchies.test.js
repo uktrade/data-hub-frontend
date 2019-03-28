@@ -32,42 +32,6 @@ describe('Company hierarchies middleware', () => {
 
       it('should redirect', () => {
         expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
-        expect(this.middlewareParameters.resMock.redirect).to.be.calledWith(`/companies/${subsidiaryCompanyId}/details`)
-      })
-
-      it('should call flash', () => {
-        expect(this.middlewareParameters.reqMock.flash).to.have.been.calledOnce
-        expect(this.middlewareParameters.reqMock.flash).to.be.calledWith('success', 'You’ve linked the Global Headquarters')
-      })
-    })
-
-    context('when company update is successful and the companies new layout feature is enabled', () => {
-      beforeEach(async () => {
-        this.middlewareParameters = buildMiddlewareParameters({
-          requestParams: {
-            companyId: subsidiaryCompanyId,
-            globalHqId: globalHeadquartersId,
-          },
-          features: {
-            'companies-new-layout': true,
-          },
-        })
-
-        nock(config.apiRoot)
-          .patch(`/v3/company/${subsidiaryCompanyId}`, {
-            global_headquarters: globalHeadquartersId,
-          })
-          .reply(200, { id: subsidiaryCompanyId })
-
-        await setGlobalHQ(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
-        )
-      })
-
-      it('should redirect', () => {
-        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
         expect(this.middlewareParameters.resMock.redirect).to.be.calledWith(`/companies/${subsidiaryCompanyId}/business-details`)
       })
 
@@ -117,42 +81,6 @@ describe('Company hierarchies middleware', () => {
           requestParams: {
             companyId: subsidiaryCompanyId,
             globalHqId: globalHeadquartersId,
-          },
-        })
-
-        nock(config.apiRoot)
-          .patch(`/v3/company/${subsidiaryCompanyId}`, {
-            global_headquarters: globalHeadquartersId,
-          })
-          .reply(400, { error: 'Error message' })
-
-        await setGlobalHQ(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
-        )
-      })
-
-      it('should redirect', () => {
-        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
-        expect(this.middlewareParameters.resMock.redirect).to.be.calledWith(`/companies/${subsidiaryCompanyId}/details`)
-      })
-
-      it('should call flash', () => {
-        expect(this.middlewareParameters.reqMock.flash).to.have.been.calledOnce
-        expect(this.middlewareParameters.reqMock.flash).to.be.calledWith('error', 'There has been an error')
-      })
-    })
-
-    context('when company update fails with a validation error and the companies new layout feature is enabled', () => {
-      beforeEach(async () => {
-        this.middlewareParameters = buildMiddlewareParameters({
-          requestParams: {
-            companyId: subsidiaryCompanyId,
-            globalHqId: globalHeadquartersId,
-          },
-          features: {
-            'companies-new-layout': true,
           },
         })
 
@@ -205,41 +133,6 @@ describe('Company hierarchies middleware', () => {
 
       it('should redirect', () => {
         expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
-        expect(this.middlewareParameters.resMock.redirect).to.be.calledWith(`/companies/${subsidiaryCompanyId}/details`)
-      })
-
-      it('should call flash', () => {
-        expect(this.middlewareParameters.reqMock.flash).to.have.been.calledOnce
-        expect(this.middlewareParameters.reqMock.flash).to.be.calledWith('success', 'You’ve removed the link to Global Headquarters')
-      })
-    })
-
-    context('when company update is successful and the companies new layout feature is enabled', () => {
-      beforeEach(async () => {
-        this.middlewareParameters = buildMiddlewareParameters({
-          requestParams: {
-            companyId: subsidiaryCompanyId,
-          },
-          features: {
-            'companies-new-layout': true,
-          },
-        })
-
-        nock(config.apiRoot)
-          .patch(`/v3/company/${subsidiaryCompanyId}`, {
-            global_headquarters: null,
-          })
-          .reply(200, { id: subsidiaryCompanyId })
-
-        await removeGlobalHQ(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
-        )
-      })
-
-      it('should redirect', () => {
-        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
         expect(this.middlewareParameters.resMock.redirect).to.be.calledWith(`/companies/${subsidiaryCompanyId}/business-details`)
       })
 
@@ -287,41 +180,6 @@ describe('Company hierarchies middleware', () => {
         this.middlewareParameters = buildMiddlewareParameters({
           requestParams: {
             companyId: subsidiaryCompanyId,
-          },
-        })
-
-        nock(config.apiRoot)
-          .patch(`/v3/company/${subsidiaryCompanyId}`, {
-            global_headquarters: null,
-          })
-          .reply(400, { error: 'Error message' })
-
-        await removeGlobalHQ(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
-        )
-      })
-
-      it('should redirect', () => {
-        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
-        expect(this.middlewareParameters.resMock.redirect).to.be.calledWith(`/companies/${subsidiaryCompanyId}/details`)
-      })
-
-      it('should call flash', () => {
-        expect(this.middlewareParameters.reqMock.flash).to.have.been.calledOnce
-        expect(this.middlewareParameters.reqMock.flash).to.be.calledWith('error', 'There has been an error')
-      })
-    })
-
-    context('when company update fails with a validation error and the companies new layout feature is enabled', () => {
-      beforeEach(async () => {
-        this.middlewareParameters = buildMiddlewareParameters({
-          requestParams: {
-            companyId: subsidiaryCompanyId,
-          },
-          features: {
-            'companies-new-layout': true,
           },
         })
 

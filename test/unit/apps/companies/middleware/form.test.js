@@ -285,7 +285,7 @@ describe('Companies form middleware', () => {
 
   describe('#handleFormPost', () => {
     context('when saving is successful', () => {
-      const commonTests = (expectedCompanyToBeSaved) => {
+      const commonTests = (expectedCompanyToBeSaved, expectedRedirect) => {
         it('should call save company service', () => {
           expect(this.saveCompanyFormSpy).to.have.been.calledWith(
             this.middlewareParameters.reqMock.session.token,
@@ -299,7 +299,7 @@ describe('Companies form middleware', () => {
         })
 
         it('should redirect to the entity', () => {
-          expect(this.middlewareParameters.resMock.redirect).to.have.been.calledWith(`/companies/${companyRecord.id}`)
+          expect(this.middlewareParameters.resMock.redirect).to.have.been.calledWith(expectedRedirect)
         })
 
         it('should not call next', () => {
@@ -331,7 +331,7 @@ describe('Companies form middleware', () => {
         commonTests({
           name: 'Fred Bloggs Ltd',
           trading_names: [],
-        })
+        }, `/companies/${companyRecord.id}`)
       })
 
       context('when saving an existing company', () => {
@@ -339,6 +339,7 @@ describe('Companies form middleware', () => {
           this.saveCompanyFormSpy = sinon.spy(formService, 'saveCompanyForm')
 
           this.middlewareParameters = buildMiddlewareParameters({
+            company: companyRecord,
             requestBody: {
               id: companyRecord.id,
               name: 'Fred Bloggs Ltd',
@@ -360,7 +361,7 @@ describe('Companies form middleware', () => {
           id: companyRecord.id,
           name: 'Fred Bloggs Ltd',
           trading_names: [],
-        })
+        }, `/companies/${companyRecord.id}/business-details`)
       })
 
       context('when saving an existing company with a new trading name', () => {
@@ -368,6 +369,7 @@ describe('Companies form middleware', () => {
           this.saveCompanyFormSpy = sinon.spy(formService, 'saveCompanyForm')
 
           this.middlewareParameters = buildMiddlewareParameters({
+            company: companyRecord.id,
             requestBody: {
               id: companyRecord.id,
               name: 'Fred Bloggs Ltd',
@@ -390,7 +392,7 @@ describe('Companies form middleware', () => {
           id: companyRecord.id,
           name: 'Fred Bloggs Ltd',
           trading_names: [ 'trading name' ],
-        })
+        }, `/companies/${companyRecord.id}/business-details`)
       })
 
       context('when saving a uk company with just a registered address', () => {
@@ -425,7 +427,7 @@ describe('Companies form middleware', () => {
           registered_address_1: 'street',
           registered_address_country: '9999',
           trading_names: [],
-        })
+        }, `/companies/${companyRecord.id}`)
       })
 
       context('when saving a uk company with a trading and registered address', () => {
@@ -463,7 +465,7 @@ describe('Companies form middleware', () => {
           trading_address_1: 'another street',
           trading_address_country: '9999',
           trading_names: [],
-        })
+        }, `/companies/${companyRecord.id}`)
       })
 
       context('when the user indicates the company is not a headquarters', () => {
@@ -492,7 +494,7 @@ describe('Companies form middleware', () => {
           name: 'Fred Bloggs Ltd',
           headquarter_type: '',
           trading_names: [],
-        })
+        }, `/companies/${companyRecord.id}`)
       })
     })
 

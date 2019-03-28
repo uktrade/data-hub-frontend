@@ -308,6 +308,56 @@ describe('nunjucks filters', () => {
     })
   })
 
+  describe('#formatAddress', () => {
+    context('when all address fields are populated', () => {
+      beforeEach(() => {
+        this.actual = filters.formatAddress({
+          line_1: 'line 1',
+          line_2: 'line 2',
+          town: 'town',
+          county: 'county',
+          postcode: 'postcode',
+          country: {
+            name: 'country',
+          },
+        })
+      })
+
+      it('should format the address as a comma separated list', () => {
+        expect(this.actual).to.equal('line 1, line 2, town, county, postcode, country')
+      })
+    })
+
+    context('when minimal address fields are populated', () => {
+      beforeEach(() => {
+        this.actual = filters.formatAddress({
+          line_1: 'line 1',
+          line_2: '',
+          town: 'town',
+          county: '',
+          postcode: 'postcode',
+          country: {
+            name: 'country',
+          },
+        })
+      })
+
+      it('should format the address as a comma separated list', () => {
+        expect(this.actual).to.equal('line 1, town, postcode, country')
+      })
+    })
+
+    context('when the address does not exist', () => {
+      beforeEach(() => {
+        this.actual = filters.formatAddress(null)
+      })
+
+      it('should format the address as a comma separated list', () => {
+        expect(this.actual).to.not.exist
+      })
+    })
+  })
+
   describe('#collectionDefault', () => {
     const mockObjectWithEmpties = {
       a: true,

@@ -1,0 +1,14 @@
+{% call Form({
+  buttonText: 'Save',
+  buttonDataAttr: 'save-investor-details',
+  returnText: 'Cancel',
+  returnLink: '/companies/' + company.id + '/investments/large-capital-profile',
+  action: '/companies/' + company.id + '/investments/large-capital-profile/update',
+  hiddenFields: { id: company.id }
+}) %}
+
+  <p>Investor details: UI components go here...</p>
+
+{% endcall %}
+
+

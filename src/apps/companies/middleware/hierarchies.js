@@ -6,18 +6,12 @@ function transformErrorMessage (error) {
   return get(error, 'global_headquarters', ['There has been an error'])[0]
 }
 
-function getDetailsUrl (features, companyId) {
-  return features['companies-new-layout']
-    ? `/companies/${companyId}/business-details`
-    : `/companies/${companyId}/details`
-}
-
 async function setGlobalHQ (req, res, next) {
   const token = req.session.token
   const companyId = req.params.companyId
   const globalHqId = req.params.globalHqId
   const body = { global_headquarters: globalHqId }
-  const detailsUrl = getDetailsUrl(res.locals.features, companyId)
+  const detailsUrl = `/companies/${companyId}/business-details`
 
   try {
     await updateCompany(token, companyId, body)
@@ -37,7 +31,7 @@ async function removeGlobalHQ (req, res, next) {
   const token = req.session.token
   const companyId = req.params.companyId
   const body = { global_headquarters: null }
-  const detailsUrl = getDetailsUrl(res.locals.features, companyId)
+  const detailsUrl = `/companies/${companyId}/business-details`
 
   try {
     await updateCompany(token, companyId, body)

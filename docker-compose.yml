@@ -1,7 +1,8 @@
 version: "3"
 services:
   redis:
-    image: redis
+    image: redis:3.2
+    restart: always
   datahub-fe:
     env_file:
      - .env
@@ -21,7 +22,10 @@ services:
       - ./config:/usr/src/app/config
       - ./src:/usr/src/app/src
       - ./test:/usr/src/app/test
-    command: ./node_modules/.bin/nodemon $NODE_DEBUG_OPTION --inspect -L
+    # Must explicitly kill the process running under port 9229 due to an 
+    # incompatibility between nodemon and docker detailed here:
+    # https://github.com/remy/nodemon/issues/1476
+    command: ./node_modules/.bin/nodemon $NODE_DEBUG_OPTION --delay 80ms --exec 'fuser -k 9229/tcp; sleep 0.1; node --inspect=0.0.0.0:9229 src/server.js' -L
     links:
       - redis
   webpack:

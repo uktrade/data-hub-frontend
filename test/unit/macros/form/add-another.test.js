@@ -33,12 +33,6 @@ describe('AddAnother component', () => {
     expect(selectedElements[1].value).to.equal('2')
   })
 
-  it('should render a component with 1 unselected drop down', () => {
-    const selectElements = this.component.getElementsByTagName('select')
-
-    expect(selectElements[2].value).to.equal('')
-  })
-
   it('should render a component with an "Add another" button', () => {
     const addAnotherButton = this.component.querySelectorAll('input[type=submit]')
 

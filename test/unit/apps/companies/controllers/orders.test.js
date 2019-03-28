@@ -2,7 +2,6 @@ const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parame
 
 const ordersMock = require('~/test/unit/data/omis/collection.json')
 const companyMock = require('~/test/unit/data/company.json')
-const dnbCompanyMock = require('~/test/unit/data/companies/dnb-company.json')
 
 describe('Company orders controller', () => {
   beforeEach(() => {
@@ -25,99 +24,54 @@ describe('Company orders controller', () => {
 
   context('when orders returns successfully', () => {
     context('with default page number', () => {
-      const commonTests = (expectedCompanyId, expectedTemplate) => {
-        it('should call search with correct arguments', () => {
-          expect(this.searchStub).to.have.been.calledWith({
-            isAggregation: false,
-            page: 1,
-            requestBody: {
-              company: expectedCompanyId,
-            },
-            searchEntity: 'order',
-            token: '1234',
-          })
+      beforeEach(async () => {
+        this.searchStub.resolves(ordersMock.results)
+
+        this.middlewareParameters = buildMiddlewareParameters({
+          company: companyMock,
         })
 
-        it('should call list item transformer', () => {
-          expect(this.transformApiResponseToCollectionSpy).to.have.been.calledOnce
-        })
-
-        it('should set the correct number of breadcrumbs', () => {
-          expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledTwice
-        })
-
-        it('should render the correct template', () => {
-          expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(expectedTemplate)
-          expect(this.middlewareParameters.resMock.render).to.have.been.calledOnce
-        })
-
-        it('should send results to the template', () => {
-          expect(this.middlewareParameters.resMock.render.args[0][1].results).to.deep.equal(ordersMock.results)
-        })
-
-        it('should send an add button to the template', () => {
-          expect(this.middlewareParameters.resMock.render.args[0][1].actionButtons).to.deep.equal([{
-            label: 'Add order',
-            url: `/omis/create?company=${expectedCompanyId}&skip-company=true`,
-          }])
-        })
-      }
-
-      context('when the company does not have a DNB number', () => {
-        beforeEach(async () => {
-          this.searchStub.resolves(ordersMock.results)
-
-          this.middlewareParameters = buildMiddlewareParameters({
-            company: companyMock,
-          })
-
-          await this.controller.renderOrders(
-            this.middlewareParameters.reqMock,
-            this.middlewareParameters.resMock,
-            this.middlewareParameters.nextSpy,
-          )
-        })
-
-        commonTests(companyMock.id, 'companies/views/_deprecated/orders')
+        await this.controller.renderOrders(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
       })
 
-      context('when the company does not have a DUNS number and the companies new layout feature is enabled', () => {
-        beforeEach(async () => {
-          this.searchStub.resolves(ordersMock.results)
-
-          this.middlewareParameters = buildMiddlewareParameters({
-            company: companyMock,
-            features: {
-              'companies-new-layout': true,
-            },
-          })
-
-          await this.controller.renderOrders(
-            this.middlewareParameters.reqMock,
-            this.middlewareParameters.resMock,
-            this.middlewareParameters.nextSpy,
-          )
+      it('should call search with correct arguments', () => {
+        expect(this.searchStub).to.have.been.calledWith({
+          isAggregation: false,
+          page: 1,
+          requestBody: {
+            company: companyMock.id,
+          },
+          searchEntity: 'order',
+          token: '1234',
         })
-
-        commonTests(companyMock.id, 'companies/views/orders')
       })
 
-      context('when the company does have a DNB number', () => {
-        beforeEach(async () => {
-          this.searchStub.resolves(ordersMock.results)
+      it('should call list item transformer', () => {
+        expect(this.transformApiResponseToCollectionSpy).to.have.been.calledOnce
+      })
 
-          this.middlewareParameters = buildMiddlewareParameters({
-            company: dnbCompanyMock,
-          })
+      it('should set the correct number of breadcrumbs', () => {
+        expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledTwice
+      })
 
-          await this.controller.renderOrders(
-            this.middlewareParameters.reqMock,
-            this.middlewareParameters.resMock,
-            this.middlewareParameters.nextSpy,
-          )
-        })
+      it('should render the correct template', () => {
+        expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal('companies/views/orders')
+        expect(this.middlewareParameters.resMock.render).to.have.been.calledOnce
+      })
 
-        commonTests(dnbCompanyMock.id, 'companies/views/orders')
+      it('should send results to the template', () => {
+        expect(this.middlewareParameters.resMock.render.args[0][1].results).to.deep.equal(ordersMock.results)
+      })
+
+      it('should send an add button to the template', () => {
+        expect(this.middlewareParameters.resMock.render.args[0][1].actionButtons).to.deep.equal([{
+          label: 'Add order',
+          url: `/omis/create?company=${companyMock.id}&skip-company=true`,
+        }])
       })
     })
 
