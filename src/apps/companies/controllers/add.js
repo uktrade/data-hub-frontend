@@ -73,8 +73,10 @@ function postAddStepOne (req, res, next) {
   return res.redirect(`/companies/add-step-2?${queryString.stringify(params)}`)
 }
 
-function renderAddStepTwo (req, res, next) {
-  res.render('companies/views/add-step-2.njk')
+function renderAddStepTwo (req, res) {
+  res.render('companies/views/add-step-2', {
+    heading: 'Add company',
+  })
 }
 
 module.exports = {
