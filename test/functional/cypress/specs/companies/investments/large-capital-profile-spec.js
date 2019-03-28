@@ -16,19 +16,19 @@ describe('Company Investments and Large capital profile', () => {
     before(() => cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`))
 
     it('should display an "Investments projects" tab with the correct URL', () => {
-      cy.get(selectors.investmentProjectsTab).find('a')
+      cy.get(selectors.tabs.investmentProjects).find('a')
         .should('have.prop', 'href')
         .and('equal', `${baseUrl}/companies/${oneListCorp.id}/investments/projects`)
     })
 
     it('should display a "Large capital profile" tab with the correct URL', () => {
-      cy.get(selectors.largeCapitalProfileTab).find('a')
+      cy.get(selectors.tabs.largeCapitalProfile).find('a')
         .should('have.prop', 'href')
         .and('equal', `${baseUrl}/companies/${oneListCorp.id}/investments/large-capital-profile`)
     })
 
     it('should display a "Growth capital profile" tab with the correct URL', () => {
-      cy.get(selectors.growthCapitalProfileTab).find('a')
+      cy.get(selectors.tabs.growthCapitalProfile).find('a')
         .should('have.prop', 'href')
         .and('equal', `${baseUrl}/companies/${oneListCorp.id}/investments/growth-capital-profile`)
     })
@@ -38,15 +38,15 @@ describe('Company Investments and Large capital profile', () => {
     before(() => cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`))
 
     it('should not have an "active" class on the "Investment projects" tab', () => {
-      cy.get(selectors.investmentProjectsTab).should('not.have.class', 'active')
+      cy.get(selectors.tabs.investmentProjects).should('not.have.class', 'active')
     })
 
     it('should have an "active" class on the "Large capital profile" tab', () => {
-      cy.get(selectors.largeCapitalProfileTab).should('have.class', 'active')
+      cy.get(selectors.tabs.largeCapitalProfile).should('have.class', 'active')
     })
 
     it('should not have an "active" class on the "Growth capital profile" tab', () => {
-      cy.get(selectors.growthCapitalProfileTab).should('not.have.class', 'active')
+      cy.get(selectors.tabs.growthCapitalProfile).should('not.have.class', 'active')
     })
   })
 
@@ -62,18 +62,18 @@ describe('Company Investments and Large capital profile', () => {
     before(() => cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`))
 
     it('should expand the "Investor details" summary and have an enabled edit button', () => {
-      cy.get(selectors.investorDetailsSummary).click()
-        .get(selectors.investorDetailsEdit).should('be.visible').should('be.not.disabled')
+      cy.get(selectors.investorDetails.summary).click()
+        .get(selectors.investorDetails.edit).should('be.visible').should('be.not.disabled')
     })
 
     it('should expand the "Investor requirements" summary and have an enabled edit button', () => {
-      cy.get(selectors.investorRequirementsSummary).click()
-        .get(selectors.investorRequirementsEdit).should('be.visible').should('be.not.disabled')
+      cy.get(selectors.investorRequirements.summary).click()
+        .get(selectors.investorRequirements.edit).should('be.visible').should('be.not.disabled')
     })
 
     it('should expand the "Location" summary and have an enabled edit button', () => {
-      cy.get(selectors.investorLocationSummary).click()
-        .get(selectors.investorLocationEdit).should('be.visible').should('be.not.disabled')
+      cy.get(selectors.location.summary).click()
+        .get(selectors.location.edit).should('be.visible').should('be.not.disabled')
     })
   })
 
@@ -81,9 +81,9 @@ describe('Company Investments and Large capital profile', () => {
     before(() => visitLargeCapitalProfileAndExpandAllSections())
 
     it('should disable both the "Investor requirements" and "Location" edit button', () => {
-      cy.get(selectors.investorDetailsEdit).click()
-        .get(selectors.investorRequirementsEdit).should('be.disabled')
-        .get(selectors.investorLocationEdit).should('be.disabled')
+      cy.get(selectors.investorDetails.edit).click()
+        .get(selectors.investorRequirements.edit).should('be.disabled')
+        .get(selectors.location.edit).should('be.disabled')
     })
   })
 
@@ -91,9 +91,9 @@ describe('Company Investments and Large capital profile', () => {
     before(() => visitLargeCapitalProfileAndExpandAllSections())
 
     it('should disable both the "Investor details" and "Location" edit button', () => {
-      cy.get(selectors.investorRequirementsEdit).click()
-        .get(selectors.investorDetailsEdit).should('be.disabled')
-        .get(selectors.investorLocationEdit).should('be.disabled')
+      cy.get(selectors.investorRequirements.edit).click()
+        .get(selectors.investorDetails.edit).should('be.disabled')
+        .get(selectors.location.edit).should('be.disabled')
     })
   })
 
@@ -101,16 +101,32 @@ describe('Company Investments and Large capital profile', () => {
     before(() => visitLargeCapitalProfileAndExpandAllSections())
 
     it('should disable both the "Investor details" and "Investor requirements" edit button', () => {
-      cy.get(selectors.investorLocationEdit).click()
-        .get(selectors.investorDetailsEdit).should('be.disabled')
-        .get(selectors.investorRequirementsEdit).should('be.disabled')
+      cy.get(selectors.location.edit).click()
+        .get(selectors.investorDetails.edit).should('be.disabled')
+        .get(selectors.investorRequirements.edit).should('be.disabled')
+    })
+  })
+
+  context('when viewing the incomplete fields on each summary', () => {
+    before(() => cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`))
+
+    it('should display "5 fields incomplete"', () => {
+      cy.get(selectors.investorDetails.incompleteFields).contains('5 fields incomplete')
+    })
+
+    it('should display "9 fields incomplete"', () => {
+      cy.get(selectors.investorRequirements.incompleteFields).contains('9 fields incomplete')
+    })
+
+    it('should display "3 fields incomplete"', () => {
+      cy.get(selectors.location.incompleteFields).contains('3 fields incomplete')
     })
   })
 })
 
 const visitLargeCapitalProfileAndExpandAllSections = () => {
   cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`)
-    .get(selectors.investorDetailsSummary).click()
-    .get(selectors.investorRequirementsSummary).click()
-    .get(selectors.investorLocationSummary).click()
+    .get(selectors.investorDetails.summary).click()
+    .get(selectors.investorRequirements.summary).click()
+    .get(selectors.location.summary).click()
 }
