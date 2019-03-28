@@ -1,8 +1,7 @@
 {% macro details(props) %}
-  {% set summaryDataAttr = props.summaryDataAttr or false %}
-  <details class="govuk-details govuk-details--dit" {{ "open" if props.open }}>
-    <summary class="govuk-details__summary"
-      {% if summaryDataAttr %}data-auto-id="{{ summaryDataAttr }}"{% endif %}>
+  <details class="govuk-details govuk-details--dit" {{ "open" if props.open }}
+    data-auto-id={{props.summaryText | kebabCase }}>
+    <summary class="govuk-details__summary">
       <span class="govuk-details__summary-text">{{ props.summaryText }}</span>
       <div class="incomplete-fields">
         {% if props.incompleteFields === 0 %}

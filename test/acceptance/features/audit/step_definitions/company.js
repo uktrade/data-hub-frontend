@@ -1,38 +1,18 @@
-const faker = require('faker')
 const format = require('date-fns/format')
 const { client } = require('nightwatch-cucumber')
-const { Given, Then, When } = require('cucumber')
+const { Then, When } = require('cucumber')
 const { set } = require('lodash')
 
 const Message = client.page.message()
-const Company = client.page.companies.company()
-const Contact = client.page.contacts.contact()
 const AuditContact = client.page.audit.contact()
 const AuditCompany = client.page.audit.company()
 const AuditList = client.page.audit.list()
 
-Given(/^I Amend (.*) records of an existing company record$/, async function (number) {
-  await Company
-    .navigate()
-    .findCompany('Venus')
-  await AuditList.section.lastContactInList
-    .getText('@header', (result) => set(this.state, 'companyName', result.value))
-    .click('@header')
+When(/^I edit the company$/, async function () {
   await AuditCompany
-    .editCompanyRecords(faker.name.jobDescriptor(), faker.internet.url(), number)
     .submitForm('form')
   await Message
     .verifyMessage('success')
-})
-
-When(/^I search for this company record$/, async function () {
-  await Company
-    .navigate()
-    .findCompany(this.state.companyName)
-  await Contact
-    .click('@firstCompanyFromList')
-  await AuditContact
-    .getText('@userName', (result) => set(this.state, 'username', result.value))
 })
 
 Then(/^I see the name of the person who made the recent company record changes$/, async function () {

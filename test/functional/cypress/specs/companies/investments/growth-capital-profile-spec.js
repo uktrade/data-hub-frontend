@@ -16,19 +16,19 @@ describe('Company Investments and Growth capital profile', () => {
 
   context('when viewing the 3 tabs', () => {
     it('should display an "Investments projects" tab with the correct URL', () => {
-      cy.get(selectors.investmentProjectsTab).find('a')
+      cy.get(selectors.tabs.investmentProjects).find('a')
         .should('have.prop', 'href')
         .and('equal', `${baseUrl}/companies/${oneListCorp.id}/investments/projects`)
     })
 
     it('should display a "Large capital profile" tab with the correct URL', () => {
-      cy.get(selectors.largeCapitalProfileTab).find('a')
+      cy.get(selectors.tabs.largeCapitalProfile).find('a')
         .should('have.prop', 'href')
         .and('equal', `${baseUrl}/companies/${oneListCorp.id}/investments/large-capital-profile`)
     })
 
     it('should display a "Growth capital profile" tab with the correct URL', () => {
-      cy.get(selectors.growthCapitalProfileTab).find('a')
+      cy.get(selectors.tabs.growthCapitalProfile).find('a')
         .should('have.prop', 'href')
         .and('equal', `${baseUrl}/companies/${oneListCorp.id}/investments/growth-capital-profile`)
     })
@@ -36,15 +36,15 @@ describe('Company Investments and Growth capital profile', () => {
 
   context('when the Growth capital profile tab is selected', () => {
     it('should not have an "active" class on the "Investment projects" tab', () => {
-      cy.get(selectors.investmentProjectsTab).should('not.have.class', 'active')
+      cy.get(selectors.tabs.investmentProjects).should('not.have.class', 'active')
     })
 
     it('should not have an "active" class on the "Large capital profile" tab', () => {
-      cy.get(selectors.largeCapitalProfileTab).should('not.have.class', 'active')
+      cy.get(selectors.tabs.largeCapitalProfile).should('not.have.class', 'active')
     })
 
     it('should have an "active" class on the "Growth capital profile" tab', () => {
-      cy.get(selectors.growthCapitalProfileTab).should('have.class', 'active')
+      cy.get(selectors.tabs.growthCapitalProfile).should('have.class', 'active')
     })
   })
 

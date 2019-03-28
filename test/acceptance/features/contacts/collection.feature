@@ -94,6 +94,7 @@ Feature: View collection of contacts
     Then the contacts should be filtered to show badge company country
     When I click on the first contact collection link
     And I click the local header link
+    And I click the "View full business details" link
     Then the company details UK region is displayed
 
    @contacts-collection--sort
@@ -102,7 +103,7 @@ Feature: View collection of contacts
      When a "Foreign company" is created
      And the company is in the search results
      When the first search result is clicked
-     When I click the Contacts local nav link
+     When I click the "Company contacts" link
      And I click the "Add contact" link
      And a primary contact is added
      When I submit the form

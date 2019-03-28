@@ -6,7 +6,6 @@ const { company: companyFixtures } = require('../../../fixtures')
 const { getDateFor } = require('../../../helpers/date')
 
 const InvestmentProject = client.page.investments.project()
-const Location = client.page.location()
 
 When(/^I select (.+) as the Investment project type$/, async function (investmentType) {
   if (lowerCase(investmentType) === 'fdi') {
@@ -82,34 +81,6 @@ When(/^I populate the create Investment Project form$/, async function () {
       const { businessActivity, otherBusinessActivity } = this.state.investmentProject
       set(this.state, 'investmentProject.businessActivities', `${businessActivity}, ${otherBusinessActivity}`)
     })
-})
-
-When(/^I navigate to the Investment Projects source of equity investment$/, async function () {
-  const equitySource = get(this.state, 'investmentProject.equitySource.name')
-  const projectSummarySection = InvestmentProject.section.projectDetails.section.summary
-
-  await projectSummarySection
-    .assert.containsText('@header', 'Investment project summary')
-    .assert.containsText('@clientLink', equitySource)
-    .waitForElementPresent('@header')
-
-  await InvestmentProject
-    .storeProjectDetails((projectDetails) => {
-      set(this.state, 'investmentProject', assign({}, projectDetails, get(this.state, 'investmentProject')))
-    })
-
-  await projectSummarySection
-    .click('@clientLink')
-
-  await InvestmentProject
-    .section.localHeader
-    .waitForElementPresent('@header')
-    .assert.containsText('@header', equitySource)
-
-  await Location
-    .section.localNav
-    .waitForElementPresent('@investment')
-    .click('@investment')
 })
 
 When(/^I search for the foreign source of equity (.+)$/, async function (companyName) {
