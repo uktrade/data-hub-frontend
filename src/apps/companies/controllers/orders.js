@@ -5,10 +5,7 @@ const { transformOrderToListItem } = require('../../omis/transformers')
 async function renderOrders (req, res, next) {
   const token = req.session.token
   const page = req.query.page || 1
-  const { company, features } = res.locals
-  const view = (company.duns_number || features['companies-new-layout'])
-    ? 'companies/views/orders'
-    : 'companies/views/_deprecated/orders'
+  const { company } = res.locals
   const actionButtons = company.archived ? undefined : [{
     label: 'Add order',
     url: `/omis/create?company=${company.id}&skip-company=true`,
@@ -32,7 +29,7 @@ async function renderOrders (req, res, next) {
     res
       .breadcrumb(company.name, `/companies/${company.id}`)
       .breadcrumb('Orders (OMIS)')
-      .render(view, {
+      .render('companies/views/orders', {
         results,
         actionButtons,
       })
