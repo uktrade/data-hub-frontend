@@ -1,11 +1,8 @@
 function setInteractionsDetails (req, res, next) {
-  const { company, features } = res.locals
-  const view = (company.duns_number || features['companies-new-layout'])
-    ? 'companies/views/interactions'
-    : 'companies/views/_deprecated/interactions'
+  const { company } = res.locals
 
   res.locals.interactions = {
-    view,
+    view: 'companies/views/interactions',
     returnLink: `/companies/${company.id}/interactions/`,
     entityName: company.name,
     query: { company_id: company.id },

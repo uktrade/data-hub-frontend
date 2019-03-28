@@ -1,7 +1,6 @@
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
 const companyMock = require('~/test/unit/data/api-response-intermediary-company.json')
-const dnbCompanyMock = require('~/test/unit/data/companies/dnb-company.json')
 
 describe('Company export controller', () => {
   beforeEach(() => {
@@ -29,71 +28,32 @@ describe('Company export controller', () => {
   })
 
   describe('#renderExports', () => {
-    const commonTests = (expectedCompany, expectedTemplate) => {
-      it('should set correct breadcrumbs', () => {
-        expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWith('Exports')
+    beforeEach(() => {
+      this.middlewareParameters = buildMiddlewareParameters({
+        company: companyMock,
       })
 
-      it('should call the transformer to get the deails', () => {
-        expect(this.transformerSpy).to.be.calledWith(expectedCompany)
-      })
-
-      it('should render the correct view', () => {
-        expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(expectedTemplate)
-        expect(this.middlewareParameters.resMock.render).to.have.been.calledOnce
-      })
-
-      it('should exports to view', () => {
-        expect(this.middlewareParameters.resMock.render.args[0][1]).to.have.property('exportDetails')
-      })
-    }
-
-    context('when the company does not have a DUNS number', () => {
-      beforeEach(() => {
-        this.middlewareParameters = buildMiddlewareParameters({
-          company: companyMock,
-        })
-
-        this.controller.renderExports(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-        )
-      })
-
-      commonTests(companyMock, 'companies/views/_deprecated/exports-view')
+      this.controller.renderExports(
+        this.middlewareParameters.reqMock,
+        this.middlewareParameters.resMock,
+      )
     })
 
-    context('when the company does have a DUNS number', () => {
-      beforeEach(() => {
-        this.middlewareParameters = buildMiddlewareParameters({
-          company: dnbCompanyMock,
-        })
-
-        this.controller.renderExports(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-        )
-      })
-
-      commonTests(dnbCompanyMock, 'companies/views/exports-view')
+    it('should set correct breadcrumbs', () => {
+      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWith('Exports')
     })
 
-    context('when the company does not have a DUNS number and the companies new layout feature is enabled', () => {
-      beforeEach(() => {
-        this.middlewareParameters = buildMiddlewareParameters({
-          company: companyMock,
-          features: {
-            'companies-new-layout': true,
-          },
-        })
+    it('should call the transformer to get the deails', () => {
+      expect(this.transformerSpy).to.be.calledWith(companyMock)
+    })
 
-        this.controller.renderExports(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-        )
-      })
+    it('should render the correct view', () => {
+      expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal('companies/views/exports-view')
+      expect(this.middlewareParameters.resMock.render).to.have.been.calledOnce
+    })
 
-      commonTests(companyMock, 'companies/views/exports-view')
+    it('should exports to view', () => {
+      expect(this.middlewareParameters.resMock.render.args[0][1]).to.have.property('exportDetails')
     })
   })
 
@@ -164,86 +124,45 @@ describe('Company export controller', () => {
   })
 
   describe('#renderExportEdit', () => {
-    const commonTests = (expectedTemplate) => {
-      it('should set correct breadcrumbs', () => {
-        expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledThrice
+    beforeEach(() => {
+      this.middlewareParameters = buildMiddlewareParameters({
+        company: companyMock,
       })
 
-      it('should render the correct view', () => {
-        expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(expectedTemplate)
-        expect(this.middlewareParameters.resMock.render).to.have.been.calledOnce
-      })
-
-      it('send labels to view', () => {
-        expect(this.middlewareParameters.resMock.render.args[0][1]).to.have.property('exportDetailsLabels')
-      })
-
-      it('send export experience categories options to view', () => {
-        expect(this.middlewareParameters.resMock.render.args[0][1]).to.have.property('exportExperienceCategories')
-        expect(this.middlewareParameters.resMock.render.args[0][1].exportExperienceCategories).to.deep.equal([{
-          value: '73023b55-9568-4e3f-a134-53ec58451d3f',
-          label: 'Export growth',
-        }])
-      })
-
-      it('send country options to view', () => {
-        expect(this.middlewareParameters.resMock.render.args[0][1]).to.have.property('countryOptions')
-        expect(this.middlewareParameters.resMock.render.args[0][1].countryOptions).to.deep.equal([{
-          value: '1234',
-          label: 'France',
-        }])
-      })
-    }
-
-    context('when the company does not have a DUNS number', () => {
-      beforeEach(() => {
-        this.middlewareParameters = buildMiddlewareParameters({
-          company: companyMock,
-        })
-
-        this.controller.renderExportEdit(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
-        )
-      })
-
-      commonTests('companies/views/_deprecated/exports-edit')
+      this.controller.renderExportEdit(
+        this.middlewareParameters.reqMock,
+        this.middlewareParameters.resMock,
+        this.middlewareParameters.nextSpy,
+      )
     })
 
-    context('when the company does have a DUNS number', () => {
-      beforeEach(() => {
-        this.middlewareParameters = buildMiddlewareParameters({
-          company: dnbCompanyMock,
-        })
-
-        this.controller.renderExportEdit(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
-        )
-      })
-
-      commonTests('companies/views/exports-edit')
+    it('should set correct breadcrumbs', () => {
+      expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledThrice
     })
 
-    context('when the company does not have a DUNS number and the companies new layout feature is enabled', () => {
-      beforeEach(() => {
-        this.middlewareParameters = buildMiddlewareParameters({
-          company: companyMock,
-          features: {
-            'companies-new-layout': true,
-          },
-        })
+    it('should render the correct view', () => {
+      expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal('companies/views/exports-edit')
+      expect(this.middlewareParameters.resMock.render).to.have.been.calledOnce
+    })
 
-        this.controller.renderExportEdit(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
-        )
-      })
+    it('send labels to view', () => {
+      expect(this.middlewareParameters.resMock.render.args[0][1]).to.have.property('exportDetailsLabels')
+    })
 
-      commonTests('companies/views/exports-edit')
+    it('send export experience categories options to view', () => {
+      expect(this.middlewareParameters.resMock.render.args[0][1]).to.have.property('exportExperienceCategories')
+      expect(this.middlewareParameters.resMock.render.args[0][1].exportExperienceCategories).to.deep.equal([{
+        value: '73023b55-9568-4e3f-a134-53ec58451d3f',
+        label: 'Export growth',
+      }])
+    })
+
+    it('send country options to view', () => {
+      expect(this.middlewareParameters.resMock.render.args[0][1]).to.have.property('countryOptions')
+      expect(this.middlewareParameters.resMock.render.args[0][1].countryOptions).to.deep.equal([{
+        value: '1234',
+        label: 'France',
+      }])
     })
   })
 

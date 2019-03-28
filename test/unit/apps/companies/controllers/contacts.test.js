@@ -1,7 +1,6 @@
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
 const companyMock = require('~/test/unit/data/companies/company.json')
-const dnbCompanyMock = require('~/test/unit/data/companies/dnb-company.json')
 
 describe('Company contact list controller', () => {
   beforeEach(() => {
@@ -55,57 +54,6 @@ describe('Company contact list controller', () => {
         )
       })
 
-      commonTests(companyMock.id, 'companies/views/_deprecated/contacts')
-
-      it('should set the correct add button', () => {
-        const props = this.middlewareParameters.resMock.render.args[0][1]
-
-        expect(props.actionButtons).to.deep.equal([{
-          label: 'Add contact',
-          url: `/contacts/create?company=${companyMock.id}`,
-        }])
-      })
-    })
-
-    context('when the company does have a DUNS number', () => {
-      beforeEach(() => {
-        this.middlewareParameters = buildMiddlewareParameters({
-          company: dnbCompanyMock,
-        })
-
-        this.controller.renderContacts(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-        )
-      })
-
-      commonTests(dnbCompanyMock.id, 'companies/views/contacts')
-
-      it('should set the correct add button', () => {
-        const props = this.middlewareParameters.resMock.render.args[0][1]
-
-        expect(props.actionButtons).to.deep.equal([{
-          label: 'Add contact',
-          url: `/contacts/create?company=${dnbCompanyMock.id}`,
-        }])
-      })
-    })
-
-    context('when the company does not have a DUNS number and the companies new layout feature is enabled', () => {
-      beforeEach(() => {
-        this.middlewareParameters = buildMiddlewareParameters({
-          company: companyMock,
-          features: {
-            'companies-new-layout': true,
-          },
-        })
-
-        this.controller.renderContacts(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-        )
-      })
-
       commonTests(companyMock.id, 'companies/views/contacts')
 
       it('should set the correct add button', () => {
@@ -133,7 +81,7 @@ describe('Company contact list controller', () => {
         )
       })
 
-      commonTests(companyMock.id, 'companies/views/_deprecated/contacts')
+      commonTests(companyMock.id, 'companies/views/contacts')
 
       it('should not set actions buttons', () => {
         const props = this.middlewareParameters.resMock.render.args[0][1]
