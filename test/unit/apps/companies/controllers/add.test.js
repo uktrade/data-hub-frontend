@@ -1,5 +1,6 @@
 const { sortBy } = require('lodash')
 
+const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 const companiesHouseAndLtdCompanies = require('~/test/unit/data/search/companiesHouseAndLtdCompanies')
 const companiesHouseCompany = require('~/test/unit/data/companies/companies-house-company')
 const config = require('~/config')
@@ -212,6 +213,28 @@ describe('Company add controller', () => {
           expect(res.locals.errors.messages).to.have.property('business_type_for_other')
           done()
         })
+      })
+    })
+  })
+
+  describe('#renderAddStepTwo', () => {
+    beforeEach(() => {
+      this.middlewareParameters = buildMiddlewareParameters({})
+
+      companyAddController.renderAddStepTwo(this.middlewareParameters.reqMock, this.middlewareParameters.resMock)
+    })
+
+    it('should render once', () => {
+      expect(this.middlewareParameters.resMock.render).to.be.calledOnce
+    })
+
+    it('should render the correct template', () => {
+      expect(this.middlewareParameters.resMock.render.firstCall.args[0]).to.equal('companies/views/add-step-2')
+    })
+
+    it('should render a heading', () => {
+      expect(this.middlewareParameters.resMock.render.firstCall.args[1]).to.deep.equal({
+        heading: 'Add company',
       })
     })
   })
