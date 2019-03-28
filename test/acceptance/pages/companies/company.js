@@ -4,7 +4,6 @@ const { assign } = require('lodash')
 const {
   getMetaListItemValueSelector,
   getButtonWithText,
-  getKeyValueTableRowValueCell,
 } = require('../../helpers/selectors')
 const { appendUid, getUid } = require('../../helpers/uuid')
 const { getAddress } = require('../../helpers/address')
@@ -494,10 +493,14 @@ module.exports = {
         },
       },
     },
-    companyDetails: {
-      selector: '.table--key-value',
+    regionDetails: {
+      selector: '//div[@data-auto-id="regionDetailsContainer"]//div',
+      locateStrategy: 'xpath',
       elements: {
-        ukRegion: getKeyValueTableRowValueCell('UK region'),
+        ukRegion: {
+          selector: 'table/tbody/tr/td[1]',
+          locateStrategy: 'xpath',
+        },
       },
     },
   },
