@@ -49,3 +49,6 @@ cypress/**
 
 # IDE configurations
 .vscode/
+
+# Redis
+dump.rdb

@@ -1,6 +1,6 @@
 version: 2
 aliases:
-  - &node_version               node:8.11.3
+  - &node_version               node:8.15.1
   - &redis_version              redis:3.2.10
   - &postgres_version           postgres:10
   - &mi_postgres_version        postgres:9.6
@@ -13,7 +13,12 @@ aliases:
   - &restore_yarn_cache
     restore_cache:
       name: Restore yarn dependencies cache
-      key: yarn-dependency-{{ checksum "package.json" }}
+      key: yarn-dependency-{{ checksum "package.json" }}-{{ checksum "node_version" }}-{{ checksum "yarn_version" }}
+
+  - &store_versions
+    run:
+      name: Temporarily store node/yarn versions on filesystem
+      command: node --version > node_version; yarn --version > yarn_version
 
   # Configuration shared between user_acceptance* jobs
   - &at_container_config
@@ -195,7 +200,6 @@ aliases:
       - dependencies
       - lint_code
       - unit_tests
-      - vue_tests
       - functional_tests
     filters:
       branches:
@@ -210,7 +214,6 @@ aliases:
       - dependencies
       - lint_code
       - unit_tests
-      - vue_tests
       - functional_tests
     filters:
       branches:
@@ -225,12 +228,13 @@ jobs:
     working_directory: ~/data-hub-frontend
     steps:
       - checkout
+      - *store_versions
       - *restore_yarn_cache
       - run: yarn install
       - run: yarn add wavy  # explicitly install wavy module
       - save_cache:
           name: Save yarn dependencies cache
-          key: yarn-dependency-{{ checksum "package.json" }}
+          key: yarn-dependency-{{ checksum "package.json" }}-{{ checksum "node_version" }}-{{ checksum "yarn_version" }}
           paths:
             - ~/data-hub-frontend/node_modules
 
@@ -241,6 +245,7 @@ jobs:
     working_directory: ~/data-hub-frontend
     steps:
       - checkout
+      - *store_versions
       - *restore_yarn_cache
       - run:
           name: Lint code
@@ -263,6 +268,7 @@ jobs:
     working_directory: ~/data-hub-frontend
     steps:
       - checkout
+      - *store_versions
       - *restore_yarn_cache
       - run:
           name: Run unit tests
@@ -281,30 +287,6 @@ jobs:
           path: coverage
       - store_artifacts:
           path: coverage
-
-  # Run vue unit tests and store results
-  vue_tests:
-    docker:
-      - image: *node_version
-        environment:
-          TZ: "/usr/share/zoneinfo/Europe/London"
-    working_directory: ~/data-hub-frontend
-    steps:
-      - checkout
-      - *restore_yarn_cache
-      - run:
-          name: Run vue tests
-          command: |
-            mkdir junit
-            yarn build
-            yarn circle:vue
-          environment:
-            MOCHA_FILE: junit/test-results.xml
-          when: always
-      - store_test_results:
-          path: junit
-      - store_artifacts:
-          path: junit
 
 # Run cypress tests
   functional_tests:
@@ -328,7 +310,7 @@ jobs:
           command: yarn test:functional --browser chrome
           when: always
       - store_artifacts:
-          path: test/functional/cypress/screenshots
+          path: cypress/screenshots
 
   # Run acceptance tests for DIT staff
   dit_staff_at: &dit_staff_at
@@ -345,8 +327,10 @@ jobs:
     parallelism: 6
     steps:
       - checkout
+      - run: yarn install
       - *wait_for_backend
       - *wait_for_mock_sso
+      - *store_versions
       - *restore_yarn_cache
       - run: yarn build
       - *start_frontend
@@ -396,8 +380,10 @@ jobs:
       - *docker_data_hub_backend_celery
     steps:
       - checkout
+      - run: yarn install
       - *wait_for_backend
       - *wait_for_mock_sso
+      - *store_versions
       - *restore_yarn_cache
       - run: yarn build
       - *start_frontend
@@ -427,8 +413,10 @@ jobs:
       - *docker_data_hub_backend_celery
     steps:
       - checkout
+      - run: yarn install
       - *wait_for_backend
       - *wait_for_mock_sso
+      - *store_versions
       - *restore_yarn_cache
       - run: yarn build
       - *start_frontend
@@ -502,9 +490,6 @@ workflows:
           requires:
             - dependencies
       - unit_tests:
-          requires:
-            - dependencies
-      - vue_tests:
           requires:
             - dependencies
       - functional_tests:

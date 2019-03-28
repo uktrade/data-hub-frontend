@@ -1,0 +1,11 @@
+<p>Investor details: UI read only fields go here...</p>
+
+{% call Form({
+  buttonText: 'Edit',
+  hiddenFields: { edit: 'details' },
+  buttonDataAttr: 'edit-investor-details',
+  disableFormAction: edit === 'requirements' or edit === 'location',
+  action: '/companies/' + company.id + '/investments/large-capital-profile/edit'
+})
+%}
+{%- endcall %}

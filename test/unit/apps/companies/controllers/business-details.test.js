@@ -1,3 +1,4 @@
+
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
 const config = require('~/config')
@@ -32,24 +33,24 @@ describe('#renderBusinessDetails', () => {
         expect(this.middlewareParameters.resMock.render.firstCall.args[1].aboutDetails).to.exist
       })
 
-      it('should set the One List details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].oneListDetails).to.exist
-      })
-
-      it('should set the business hierarchy details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].businessHierarchyDetails).to.exist
-      })
-
-      it('should set the sector details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].sectorDetails).to.exist
+      it('should set the addresses details', () => {
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].addressesDetails).to.exist
       })
 
       it('should set the region details', () => {
         expect(this.middlewareParameters.resMock.render.firstCall.args[1].regionDetails).to.exist
       })
 
-      it('should set the addresses details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].addressesDetails).to.exist
+      it('should set the sector details', () => {
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].sectorDetails).to.exist
+      })
+
+      it('should set the One List details', () => {
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].oneListDetails).to.exist
+      })
+
+      it('should set the business hierarchy details', () => {
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].businessHierarchyDetails).to.exist
       })
     }
 

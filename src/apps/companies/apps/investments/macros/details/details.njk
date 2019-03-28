@@ -1,0 +1,20 @@
+{% macro details(props) %}
+  {% set summaryDataAttr = props.summaryDataAttr or false %}
+  <details class="govuk-details govuk-details--dit" {{ "open" if props.open }}>
+    <summary class="govuk-details__summary"
+      {% if summaryDataAttr %}data-auto-id="{{ summaryDataAttr }}"{% endif %}>
+      <span class="govuk-details__summary-text">{{ props.summaryText }}</span>
+      <div class="incomplete-fields">
+        {% if props.incompleteFields === 0 %}
+          <i class="fas fa-check"></i>
+          <span class="complete">Complete</span>
+        {% else  %}
+          <span>{{ props.incompleteFields }} {{ 'field' | pluralise(props.incompleteFields) }} incomplete</span>
+        {% endif %}
+      </div>
+    </summary>
+    <div class="govuk-details__text">
+      {{ caller() }}
+    </div>
+  </details>
+{% endmacro %}
