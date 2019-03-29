@@ -1,5 +1,10 @@
 /* eslint prefer-promise-reject-errors: 0 */
 const companyData = require('~/test/unit/data/company.json')
+const companyV4Data = require('~/test/unit/data/companies/company-v4.json')
+
+const config = require('~/config')
+
+const { getDitCompany } = require('~/src/apps/companies/repos.js')
 
 describe('Company repository', () => {
   describe('Save company', () => {
@@ -261,6 +266,40 @@ describe('Company repository', () => {
             },
           })
         })
+    })
+  })
+
+  describe('#getDitCompany', () => {
+    beforeEach(async () => {
+      nock(config.apiRoot)
+        .get(`/v4/company/${companyV4Data.id}`)
+        .reply(200, companyV4Data)
+
+      this.company = await getDitCompany('1234', companyV4Data.id)
+    })
+
+    it('should return', () => {
+      expect(this.company).to.deep.equal({
+        ...companyV4Data,
+        registered_address_1: '82 Ramsgate Rd',
+        registered_address_2: '',
+        registered_address_town: 'Willington',
+        registered_address_county: '',
+        registered_address_postcode: 'NE28 5JB',
+        registered_address_country: {
+          name: 'United Kingdom',
+          id: '80756b9a-5d95-e211-a939-e4115bead28a',
+        },
+        trading_address_1: '82 Ramsgate Rd',
+        trading_address_2: '',
+        trading_address_town: 'Willington',
+        trading_address_county: '',
+        trading_address_postcode: 'NE28 5JB',
+        trading_address_country: {
+          name: 'United Kingdom',
+          id: '80756b9a-5d95-e211-a939-e4115bead28a',
+        },
+      })
     })
   })
 

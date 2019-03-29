@@ -35,10 +35,6 @@ describe('Companies form middleware', () => {
         expect(this.resMock.locals).to.have.deep.property('company', datahubOnlyCompany)
       })
 
-      it('should return the company address', () => {
-        expect(this.resMock.locals).to.have.property('headingAddress', 'address')
-      })
-
       it('should have a null companies house category', () => {
         expect(this.resMock.locals).to.have.property('companiesHouseCategory', undefined)
       })
@@ -62,10 +58,6 @@ describe('Companies form middleware', () => {
 
       it('should return the company', () => {
         expect(this.resMock.locals).to.have.deep.property('company', companiesHouseCompany)
-      })
-
-      it('should return the company address', () => {
-        expect(this.resMock.locals).to.have.property('headingAddress', 'address')
       })
 
       it('should have a null companies house category', () => {
