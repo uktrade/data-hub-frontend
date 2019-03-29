@@ -54,5 +54,11 @@ describe('Companies interactions', () => {
     it('should not display the "Add interaction" button', () => {
       cy.get(selectors.companyInteraction().addButton(fixtures.company.oneListCorp.id)).should('not.exist')
     })
+
+    it('should display the timeline link', () => {
+      const selector = selectors.companyInteraction().timelineLink(fixtures.company.oneListCorp.id)
+      cy.get(selector).should('be.visible')
+      cy.get(selector).should('have.text', 'View activity for this business on a timeline')
+    })
   })
 })
