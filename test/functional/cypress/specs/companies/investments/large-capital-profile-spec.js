@@ -111,15 +111,48 @@ describe('Company Investments and Large capital profile', () => {
     before(() => cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`))
 
     it('should display "5 fields incomplete"', () => {
-      cy.get(selectors.investorDetails.incompleteFields).contains('5 fields incomplete')
+      cy.get(selectors.investorDetails.incompleteFields).should('contain', '5 fields incomplete')
     })
 
     it('should display "9 fields incomplete"', () => {
-      cy.get(selectors.investorRequirements.incompleteFields).contains('9 fields incomplete')
+      cy.get(selectors.investorRequirements.incompleteFields).should('contain', '9 fields incomplete')
     })
 
     it('should display "3 fields incomplete"', () => {
-      cy.get(selectors.location.incompleteFields).contains('3 fields incomplete')
+      cy.get(selectors.location.incompleteFields).should('contain', '3 fields incomplete')
+    })
+  })
+
+  context('when viewing all incomplete fields within "Investor details"', () => {
+    const { taskList: selector } = selectors.investorDetails
+
+    before(() => cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`))
+
+    it('should display both "Investor type" and INCOMPLETE', () => {
+      cy.get(selector.investorType.name).should('contain', 'Investor type')
+      cy.get(selector.investorType.incomplete).should('contain', 'INCOMPLETE')
+    })
+
+    it('should display both "Global assets under management" and INCOMPLETE', () => {
+      const name = 'Global assets under management'
+      cy.get(selector.globalAssetsUnderManagement.name).should('contain', name)
+      cy.get(selector.globalAssetsUnderManagement.incomplete).should('contain', 'INCOMPLETE')
+    })
+
+    it('should display both "Investable capital" and INCOMPLETE', () => {
+      cy.get(selector.investableCapital.name).should('contain', 'Investable capital')
+      cy.get(selector.investableCapital.incomplete).should('contain', 'INCOMPLETE')
+    })
+
+    it('should display both "Investor description" and INCOMPLETE', () => {
+      cy.get(selector.investorDescription.name).should('contain', 'Investor description')
+      cy.get(selector.investorDescription.incomplete).should('contain', 'INCOMPLETE')
+    })
+
+    it('should display both "Has this investor cleared the required checks within the last 12 months?" and INCOMPLETE', () => {
+      const question = 'Has this investor cleared the required checks within the last 12 months?'
+      cy.get(selector.investorChecks.name).should('contain', question)
+      cy.get(selector.investorChecks.incomplete).should('contain', 'INCOMPLETE')
     })
   })
 })
