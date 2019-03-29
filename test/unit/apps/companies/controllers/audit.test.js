@@ -49,8 +49,20 @@ describe('Company audit controller', () => {
       expect(this.transformAuditLogToListItemSpy).to.have.been.calledOnce
     })
 
-    it('should set the correct number of breadcrumbs', () => {
-      expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledTwice
+    it('should set three breadcrumbs', () => {
+      expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledThrice
+    })
+
+    it('should set the company breadcrumb', () => {
+      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWithExactly(companyMock.name, `/companies/${companyMock.id}`)
+    })
+
+    it('should set the business details breadcrumb', () => {
+      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWithExactly('Business details', `/companies/${companyMock.id}/business-details`)
+    })
+
+    it('should set the audit breadcrumb', () => {
+      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWithExactly('Audit history')
     })
 
     it('should render the correct template', () => {
