@@ -16,6 +16,7 @@ async function renderAuditLog (req, res, next) {
 
     res
       .breadcrumb(company.name, `/companies/${company.id}`)
+      .breadcrumb('Business details', `/companies/${company.id}/business-details`)
       .breadcrumb('Audit history')
       .render('companies/views/audit', {
         auditLog,
