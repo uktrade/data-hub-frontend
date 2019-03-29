@@ -13,7 +13,7 @@ describe('Company Collections Filter', () => {
   })
 
   it('should filter by name', () => {
-    cy.get(selectors.companyFilter.name)
+    cy.get(selectors.filter.name)
       .type('FilterByCompany')
       .type('{enter}')
 
@@ -24,7 +24,7 @@ describe('Company Collections Filter', () => {
   })
 
   it('should filter by active status', () => {
-    cy.get(selectors.companyFilter.statusActive).click()
+    cy.get(selectors.filter.statusActive).click()
 
     cy.wait('@filterResults').then((xhr) => {
       expect(xhr.url).to.contain('?sortby=collectionTest&custom=true&name=FilterByCompany&archived=false')
@@ -34,7 +34,7 @@ describe('Company Collections Filter', () => {
   })
 
   it('should filter by inactive status', () => {
-    cy.get(selectors.companyFilter.statusInactive).click()
+    cy.get(selectors.filter.statusInactive).click()
 
     cy.wait('@filterResults').then((xhr) => {
       expect(xhr.url).to.contain('?sortby=collectionTest&custom=true&name=FilterByCompany&archived=false&archived=true')
@@ -44,7 +44,7 @@ describe('Company Collections Filter', () => {
   })
 
   it('should filter by country', () => {
-    cy.get(selectors.companyFilter.afghanistan).click()
+    cy.get(selectors.filter.firstCountry).click()
 
     cy.wait('@filterResults').then((xhr) => {
       expect(xhr.url).to.contain('?sortby=collectionTest&custom=true&' +
@@ -58,7 +58,7 @@ describe('Company Collections Filter', () => {
   })
 
   it('should filter by region', () => {
-    cy.get(selectors.companyFilter.alderney).click()
+    cy.get(selectors.filter.firstUkRegion).click()
 
     cy.wait('@filterResults').then((xhr) => {
       expect(xhr.url).to.contain('?sortby=collectionTest&custom=true&' +
