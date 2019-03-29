@@ -1,11 +1,18 @@
 const moment = require('moment')
+const { omit } = require('lodash')
 
 const config = require('~/config')
-const { renderInteractionList, renderInteractionsForEntity } = require('~/src/apps/interactions/controllers/list')
+const {
+  renderInteractionList,
+  renderInteractionsForEntity,
+  getInteractionOptions,
+} = require('~/src/apps/interactions/controllers/list')
 
 describe('interaction list', () => {
   beforeEach(() => {
     this.error = new Error('error')
+
+    this.token = ''
 
     this.req = {
       session: {
@@ -14,6 +21,7 @@ describe('interaction list', () => {
           name: 'Fred Smith',
           permissions: [],
         },
+        xhr: false,
       },
       query: {
         sortby: 'date:desc',
@@ -32,7 +40,9 @@ describe('interaction list', () => {
 
     this.next = sinon.stub()
 
-    const yesterday = moment().subtract(1, 'days').toISOString()
+    const yesterday = moment()
+      .subtract(1, 'days')
+      .toISOString()
 
     this.metadataMock = {
       teamOptions: [
@@ -52,7 +62,12 @@ describe('interaction list', () => {
       ],
       adviserOptions: {
         results: [
-          { id: 'ad1', name: 'ad1', is_active: true, dit_team: { name: 'ad1' } },
+          {
+            id: 'ad1',
+            name: 'ad1',
+            is_active: true,
+            dit_team: { name: 'ad1' },
+          },
         ],
       },
       policyAreaOptions: [
@@ -192,6 +207,56 @@ describe('interaction list', () => {
       it('should call next with error', () => {
         expect(this.next).to.have.been.calledWith(this.error)
         expect(this.next).to.have.been.calledOnce
+      })
+    })
+  })
+
+  context('#getInteractionOptions', () => {
+    const expected = {
+      areas: [{ value: '1', label: 'pa1' }, { value: '3', label: 'pa3' }],
+      sectorOptions: [
+        { value: 's1', label: 's1' },
+        { value: 's2', label: 's2' },
+        { value: 's3', label: 's3' },
+      ],
+      serviceOptions: [
+        { value: 's1', label: 's1' },
+        { value: 's2', label: 's2' },
+        { value: 's3', label: 's3' },
+      ],
+      teamOptions: [
+        { value: 'te1', label: 'te1' },
+        { value: 'te2', label: 'te2' },
+        { value: 'te', label: 'te3' },
+      ],
+      adviserOptions: [{ value: 'ad1', label: 'ad1', subLabel: 'ad1' }],
+      types: [{ value: '1', label: 'pt1' }, { value: '3', label: 'pt3' }],
+    }
+    context('when the request is not XHR', () => {
+      it(`should return all interaction options`, async () => {
+        expect(
+          await getInteractionOptions(this.token, this.req, this.res)
+        ).to.deep.equal(expected)
+      })
+    })
+
+    context('when XHR option is not set', () => {
+      const reqMock = omit(this.req, ['xhr'])
+      it(`should return all interaction options`, async () => {
+        expect(
+          await getInteractionOptions(this.token, reqMock, this.res)
+        ).to.deep.equal(expected)
+      })
+    })
+    context('when request is XHR', () => {
+      const reqMock = {
+        ...this.req,
+        xhr: true,
+      }
+      it(`return undefined`, async () => {
+        expect(
+          await getInteractionOptions(this.token, reqMock, this.res)
+        ).to.equal(undefined)
       })
     })
   })
