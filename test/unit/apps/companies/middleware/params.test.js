@@ -15,12 +15,6 @@ describe('Companies form middleware', () => {
         getDitCompany: this.getDitCompanyStub,
         getCHCompany: this.getCHCompanyStub,
       },
-      '../transformers/shared': {
-        getCompanyAddress: sinon.stub().returns({
-          label: 'label',
-          value: 'address',
-        }),
-      },
     })
   })
 

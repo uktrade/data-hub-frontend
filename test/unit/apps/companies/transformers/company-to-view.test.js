@@ -1,4 +1,3 @@
-const { assign } = require('lodash')
 const datahubOnlyCompany = require('~/test/unit/data/companies/datahub-only-company.json')
 const minimalCompany = require('~/test/unit/data/companies/minimal-company.json')
 const companiesHouseCompany = require('~/test/unit/data/companies/companies-house-company.json')
@@ -33,7 +32,20 @@ describe('transformCompanyToView', () => {
     })
 
     it('should supply the primary address', () => {
-      expect(this.viewRecord['Primary address']).to.equal('5TH FLOOR, PROFILE WEST, 950 GREAT WEST ROAD, BRENTFORD, MIDDLESEX, TW8 9ES, United Kingdom')
+      expect(this.viewRecord['Primary address']).to.deep.equal({
+        type: 'address',
+        address: {
+          line_1: '5TH FLOOR, PROFILE WEST',
+          line_2: '950 GREAT WEST ROAD',
+          town: 'BRENTFORD',
+          county: 'MIDDLESEX',
+          postcode: 'TW8 9ES',
+          country: {
+            id: '80756b9a-5d95-e211-a939-e4115bead28a',
+            name: 'United Kingdom',
+          },
+        },
+      })
     })
 
     it('should supply the trading name', () => {
@@ -41,7 +53,20 @@ describe('transformCompanyToView', () => {
     })
 
     it('should supply the trading address', () => {
-      expect(this.viewRecord['Trading address']).to.equal('Business Innovation & Skills, 1 Victoria Street, London, Greater London, SW1H 0ET, United Kingdom')
+      expect(this.viewRecord['Primary address']).to.deep.equal({
+        type: 'address',
+        address: {
+          line_1: '5TH FLOOR, PROFILE WEST',
+          line_2: '950 GREAT WEST ROAD',
+          town: 'BRENTFORD',
+          county: 'MIDDLESEX',
+          postcode: 'TW8 9ES',
+          country: {
+            id: '80756b9a-5d95-e211-a939-e4115bead28a',
+            name: 'United Kingdom',
+          },
+        },
+      })
     })
 
     it('should supply the uk region', () => {
@@ -92,7 +117,20 @@ describe('transformCompanyToView', () => {
     })
 
     it('should supply the primary address', () => {
-      expect(this.viewRecord['Primary address']).to.equal('5TH FLOOR, PROFILE WEST, BRENTFORD, MIDDLESEX, TW8 9ES, United Kingdom')
+      expect(this.viewRecord['Primary address']).to.deep.equal({
+        type: 'address',
+        address: {
+          line_1: '5TH FLOOR, PROFILE WEST',
+          line_2: '',
+          town: 'BRENTFORD',
+          county: 'MIDDLESEX',
+          postcode: 'TW8 9ES',
+          country: {
+            id: '80756b9a-5d95-e211-a939-e4115bead28a',
+            name: 'United Kingdom',
+          },
+        },
+      })
     })
 
     it('should supply the uk region', () => {
@@ -128,14 +166,15 @@ describe('transformCompanyToView', () => {
 
   context('has a foreign datahub company', () => {
     beforeEach(() => {
-      const foreignCompany = assign({}, minimalCompany, {
+      const foreignCompany = {
+        ...minimalCompany,
         uk_based: false,
         registered_address_country: {
           id: '1234',
           name: 'France',
         },
         uk_region: null,
-      })
+      }
 
       this.viewRecord = transformCompanyToView(foreignCompany)
     })
@@ -151,7 +190,20 @@ describe('transformCompanyToView', () => {
     })
 
     it('should supply the primary address', () => {
-      expect(this.viewRecord['Primary address']).to.equal('5TH FLOOR, PROFILE WEST, BRENTFORD, MIDDLESEX, TW8 9ES, France')
+      expect(this.viewRecord['Primary address']).to.deep.equal({
+        type: 'address',
+        address: {
+          line_1: '5TH FLOOR, PROFILE WEST',
+          line_2: '',
+          town: 'BRENTFORD',
+          county: 'MIDDLESEX',
+          postcode: 'TW8 9ES',
+          country: {
+            id: '1234',
+            name: 'France',
+          },
+        },
+      })
     })
 
     it('should supply the country', () => {
