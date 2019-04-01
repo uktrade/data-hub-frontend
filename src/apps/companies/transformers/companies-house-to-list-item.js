@@ -1,7 +1,6 @@
 /* eslint-disable camelcase */
 const { capitalize } = require('lodash')
 
-const { getFormattedAddress } = require('../../../lib/address')
 const { transformSicCodes } = require('./shared')
 
 module.exports = function transformCompaniesHouseToListItem ({
@@ -53,14 +52,15 @@ module.exports = function transformCompaniesHouseToListItem ({
       },
       {
         label: 'Address',
-        value: getFormattedAddress({
-          address_1: registered_address_1,
-          address_2: registered_address_2,
-          address_town: registered_address_town,
-          address_county: registered_address_county,
-          address_postcode: registered_address_postcode,
-          address_country: registered_address_country,
-        }),
+        type: 'address',
+        value: {
+          line_1: registered_address_1,
+          line_2: registered_address_2,
+          town: registered_address_town,
+          county: registered_address_county,
+          postcode: registered_address_postcode,
+          country: registered_address_country,
+        },
       },
     ],
   }

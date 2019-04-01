@@ -177,7 +177,7 @@ describe('Contact transformers', () => {
     context('when the contact does not want to receive marketing by email', () => {
       beforeEach(() => {
         this.view = transformContactToView(assign({}, contact, {
-          accepts_dit_email_marketing: false,
+          rejects_dit_email_marketing: true,
         }), company)
       })
 
@@ -245,7 +245,7 @@ describe('Contact transformers', () => {
           address_town: 'Maidenhead',
           address_county: 'Berkshire',
           address_country: {
-            id: '4321',
+            id: '80756b9a-5d95-e211-a939-e4115bead28a',
             name: 'United Kingdom',
           },
           address_postcode: 'SL1 11LL',
@@ -254,68 +254,73 @@ describe('Contact transformers', () => {
       })
 
       it('uses the contacts address', () => {
-        expect(this.view).to.have.property('Address', 'Bridge House, Bridge Lane, Maidenhead, Berkshire, SL1 11LL, United Kingdom')
+        expect(this.view.Address).to.deep.equal({
+          type: 'address',
+          address: {
+            line_1: 'Bridge House',
+            line_2: 'Bridge Lane',
+            town: 'Maidenhead',
+            county: 'Berkshire',
+            postcode: 'SL1 11LL',
+            country: {
+              id: '80756b9a-5d95-e211-a939-e4115bead28a',
+              name: 'United Kingdom',
+            },
+          },
+        })
       })
     })
 
     context('when the contact uses a company trading address', () => {
       beforeEach(() => {
         this.view = transformContactToView(
-          assign({}, contact, { address_same_as_company: true }),
-          assign({}, company, {
-            trading_address_1: 'Business Innovation & Skills',
-            trading_address_2: '1 Victoria Street',
-            trading_address_town: 'London',
-            trading_address_county: 'Greater London',
-            trading_address_postcode: 'SW1H 0ET',
-            trading_address_country: {
-              id: '1234',
-              name: 'United Kingdom',
+          {
+            ...contact,
+            address_same_as_company: true,
+          },
+          {
+            ...company,
+            address: {
+              line_1: 'Business Innovation & Skills',
+              line_2: '1 Victoria Street',
+              town: 'London',
+              county: 'Greater London',
+              postcode: 'SW1H 0ET',
+              country: {
+                name: 'United Kingdom',
+                id: '80756b9a-5d95-e211-a939-e4115bead28a',
+              },
             },
-            registerd_address_1: '5TH FLOOR, PROFILE WEST',
-            registered_address_2: '950 GREAT WEST ROAD',
-            registered_address_town: 'BRENTFORD',
-            registered_address_county: 'MIDDLESEX',
-            registered_address_postcode: 'TW8 9ES',
-            registered_address_country: {
-              name: 'United Kingdom',
-              id: '80756b9a-5d95-e211-a939-e4115bead28a',
+            registered_address: {
+              line_1: '5TH FLOOR, PROFILE WEST',
+              line_2: '950 GREAT WEST ROAD',
+              town: 'BRENTFORD',
+              county: 'MIDDLESEX',
+              postcode: 'TW8 9ES',
+              country: {
+                name: 'United Kingdom',
+                id: '80756b9a-5d95-e211-a939-e4115bead28a',
+              },
             },
-          })
+          },
         )
       })
 
       it('should use the company trading address', () => {
-        expect(this.view).to.have.property('Address', 'Business Innovation & Skills, 1 Victoria Street, London, Greater London, SW1H 0ET, United Kingdom')
-      })
-    })
-
-    context('when the contact uses the company registered address', () => {
-      beforeEach(() => {
-        this.view = transformContactToView(
-          assign({}, contact, { address_same_as_company: true }),
-          assign({}, company, {
-            trading_address_1: null,
-            trading_address_2: null,
-            trading_address_town: null,
-            trading_address_county: null,
-            trading_address_postcode: null,
-            trading_address_country: null,
-            registerd_address_1: '5TH FLOOR, PROFILE WEST',
-            registered_address_2: '950 GREAT WEST ROAD',
-            registered_address_town: 'BRENTFORD',
-            registered_address_county: 'MIDDLESEX',
-            registered_address_postcode: 'TW8 9ES',
-            registered_address_country: {
-              name: 'United Kingdom',
+        expect(this.view.Address).to.deep.equal({
+          type: 'address',
+          address: {
+            line_1: 'Business Innovation & Skills',
+            line_2: '1 Victoria Street',
+            town: 'London',
+            county: 'Greater London',
+            postcode: 'SW1H 0ET',
+            country: {
               id: '80756b9a-5d95-e211-a939-e4115bead28a',
+              name: 'United Kingdom',
             },
-          })
-        )
-      })
-
-      it('should use the company registered address', () => {
-        expect(this.view).to.have.property('Address', '5TH FLOOR, PROFILE WEST, 950 GREAT WEST ROAD, BRENTFORD, MIDDLESEX, TW8 9ES, United Kingdom')
+          },
+        })
       })
     })
   })

@@ -1,8 +1,52 @@
 /* eslint-disable camelcase */
 const { get } = require('lodash')
 
-const { getCompanyAddress } = require('./shared')
-const { hqLabels } = require('../labels')
+const labels = require('../labels')
+
+function transformAddress ({
+  trading_address_country,
+  trading_address_county,
+  trading_address_town,
+  trading_address_postcode,
+  trading_address_1,
+  trading_address_2,
+  registered_address_country,
+  registered_address_county,
+  registered_address_town,
+  registered_address_postcode,
+  registered_address_1,
+  registered_address_2,
+}) {
+  const isTradingAddress = trading_address_town && trading_address_postcode && trading_address_1
+
+  if (isTradingAddress) {
+    return {
+      type: 'address',
+      label: labels.address.companyTradingAddress,
+      value: {
+        line_1: trading_address_1,
+        line_2: trading_address_2,
+        town: trading_address_town,
+        county: trading_address_county,
+        postcode: trading_address_postcode,
+        country: trading_address_country,
+      },
+    }
+  } else {
+    return {
+      type: 'address',
+      label: labels.address.companyRegisteredAddress,
+      value: {
+        line_1: registered_address_1,
+        line_2: registered_address_2,
+        town: registered_address_town,
+        county: registered_address_county,
+        postcode: registered_address_postcode,
+        country: registered_address_country,
+      },
+    }
+  }
+}
 
 module.exports = function transformCompanyToListItem ({
   id,
@@ -36,25 +80,10 @@ module.exports = function transformCompanyToListItem ({
 
   if (trading_names && trading_names.length) {
     meta.push({
-      label: hqLabels.trading_names,
+      label: labels.hqLabels.trading_names,
       value: trading_names,
     })
   }
-
-  const address = getCompanyAddress({
-    trading_address_country,
-    trading_address_county,
-    trading_address_town,
-    trading_address_postcode,
-    trading_address_1,
-    trading_address_2,
-    registered_address_country,
-    registered_address_county,
-    registered_address_town,
-    registered_address_postcode,
-    registered_address_1,
-    registered_address_2,
-  })
 
   if (sector) {
     meta.push({
@@ -83,7 +112,7 @@ module.exports = function transformCompanyToListItem ({
     meta.push({
       label: 'Headquarter type',
       type: 'badge',
-      value: hqLabels[get(headquarter_type, 'name')],
+      value: labels.hqLabels[get(headquarter_type, 'name')],
     })
   }
 
@@ -105,7 +134,20 @@ module.exports = function transformCompanyToListItem ({
     }
   }
 
-  meta.push(address)
+  meta.push(transformAddress({
+    trading_address_country,
+    trading_address_county,
+    trading_address_town,
+    trading_address_postcode,
+    trading_address_1,
+    trading_address_2,
+    registered_address_country,
+    registered_address_county,
+    registered_address_town,
+    registered_address_postcode,
+    registered_address_1,
+    registered_address_2,
+  }))
 
   const url = id ? `/companies/${id}` : `/companies/view/ch/${companies_house_data.company_number}`
 
