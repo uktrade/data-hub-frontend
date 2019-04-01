@@ -1,4 +1,4 @@
-<ul class="task-list" data-auto-id="investor-requirements-task-list">
+<ul class="task-list">
   {{ taskListItem({ name: 'Deal ticket size' }) }}
   {{ taskListItem({ name: 'Asset classes of interest' }) }}
   {{ taskListItem({ name: 'Types of investment' }) }}
@@ -12,7 +12,7 @@
 
 {% call Form({
   buttonText: 'Edit',
-  buttonDataAttr: 'investor-requirements-edit',
+  buttonDataAttr: 'investorRequirementsEdit',
   hiddenFields: { edit: 'requirements' },
   disableFormAction: edit === 'details' or edit === 'location',
   action: '/companies/' + company.id + '/investments/large-capital-profile/edit'

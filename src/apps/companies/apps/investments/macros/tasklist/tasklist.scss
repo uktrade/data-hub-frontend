@@ -2,16 +2,16 @@
   display: flex;
   flex-direction: column;
 
-  .task-list-item {
+  .task-list__item {
     border-bottom: 1px solid #bfc1c3;
     padding-top: 10px;
     padding-bottom: 10px;
 
-    .task-list-item-name {
+    .task-list__item-name {
       font-weight: bold;
     }
 
-    .task-list-item-incomplete {
+    .task-list__item-incomplete {
       display: block;
       background: $govuk-blue;
       width: fit-content;
@@ -27,11 +27,11 @@
       padding-top: 15px;
       padding-bottom: 15px;
 
-      .task-list-item-name {
+      .task-list__item-name {
         margin-right: 10px;
       }
 
-      .task-list-item-incomplete {
+      .task-list__item-incomplete {
         margin-top: 0;
       }
     }
