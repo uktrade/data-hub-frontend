@@ -2,7 +2,7 @@
 
 {% block local_header %}
   {% call LocalHeader({ heading: company.name, modifier: 'light-banner' }) %}
-    <p class="c-local-header__heading-after">{{ headingAddress }}</p>
+    <p class="c-local-header__heading-after">{{ company.address | formatAddress }}</p>
 
     {% if company.headquarter_type and company.headquarter_type.name == 'ghq' %}
       <div class="c-meta-list">

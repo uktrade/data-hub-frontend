@@ -63,6 +63,28 @@ describe('MetaList macro', () => {
       expect(component.querySelector('.c-meta-list__item-value').textContent).to.contain('26 July 2017')
     })
 
+    it('should render item formatted as address', () => {
+      const component = entitiesMacros.renderToDom('MetaList', {
+        items: [
+          {
+            label: 'Address',
+            type: 'address',
+            value: {
+              line_1: 'line 1',
+              line_2: '',
+              town: 'town',
+              county: '',
+              postcode: 'postcode',
+              country: {
+                name: 'country',
+              },
+            },
+          }],
+      })
+
+      expect(component.querySelector('.c-meta-list__item-value').textContent).to.contain('line 1, town, postcode, country')
+    })
+
     it('should not render item formatted as date if it has no value', () => {
       const component = entitiesMacros.renderToDom('MetaList', {
         items: [
