@@ -1,17 +1,17 @@
 {% macro subnavigation(company, active) %}
   <nav class='sub-navigation govuk-form-group'>
     <ol>
-      <li class="{{ 'active' if active === 'investment-projects' }}" data-auto-id="investment-projects-tab">
+      <li class="{{ 'active' if active === 'investment-projects' }}" data-auto-id="investmentProjectsTab">
         <a href="/companies/{{company.id}}/investments/projects">
           Investment projects
         </a>
       </li>
-      <li class="{{ 'active' if active === 'large-capital-profile' }}" data-auto-id="large-capital-profile-tab">
+      <li class="{{ 'active' if active === 'large-capital-profile' }}" data-auto-id="largeCapitalProfileTab">
         <a href="/companies/{{company.id}}/investments/large-capital-profile">
           Large capital profile
         </a>
       </li>
-      <li class="{{ 'active' if active === 'growth-capital-profile' }}" data-auto-id="growth-capital-profile-tab">
+      <li class="{{ 'active' if active === 'growth-capital-profile' }}" data-auto-id="growthCapitalProfileTab">
         <a href="/companies/{{company.id}}/investments/growth-capital-profile">
           Growth capital profile
         </a>
