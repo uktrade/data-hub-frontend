@@ -1,0 +1,26 @@
+{% extends "./_layout.njk" %}
+
+{% from "_macros/common/tabbed-local-nav.njk" import TabbedLocalNav %}
+
+{% block body_main_content %}
+
+  {% call TabbedLocalNav({
+    items: [
+      {
+        url: '/url-1',
+        label: 'Item 1'
+      },
+      {
+        url: '/url-2',
+        label: 'Item 2',
+        isActive: true
+      },
+      {
+        url: '/url-3',
+        label: 'Item 3'
+      }
+    ]
+  }) %}
+  {% endcall %}
+
+{% endblock %}
