@@ -3,7 +3,7 @@ const selectors = require('../../selectors')
 describe('Company Collections Filter', () => {
   before(() => {
     cy.visit('/companies?sortby=collectionTest')
-    cy.get(selectors.entityList.entities).children().should('have.length', 9)
+    cy.get(selectors.entityCollection.entities).children().should('have.length', 9)
     cy.get(selectors.entityCollection.collection).should('contain', '100,172 companies')
   })
 
@@ -17,7 +17,7 @@ describe('Company Collections Filter', () => {
       .type('FilterByCompany')
       .type('{enter}')
 
-    cy.get(selectors.entityList.entities).children().should('have.length', 1)
+    cy.get(selectors.entityCollection.entities).children().should('have.length', 1)
     cy.get(selectors.entityCollection.collection).should('contain', '1 company matching FilterByCompany')
     cy.get(selectors.entityCollection.collectionRowMessage).should('contain', 'You can now download this company')
     cy.get(selectors.entityCollection.collectionRowButton).should('be.visible')
@@ -30,7 +30,7 @@ describe('Company Collections Filter', () => {
       expect(xhr.url).to.contain('?sortby=collectionTest&custom=true&name=FilterByCompany&archived=false')
     })
 
-    cy.get(selectors.entityList.entities).children().should('have.length', 1)
+    cy.get(selectors.entityCollection.entities).children().should('have.length', 1)
   })
 
   it('should filter by inactive status', () => {
@@ -40,7 +40,7 @@ describe('Company Collections Filter', () => {
       expect(xhr.url).to.contain('?sortby=collectionTest&custom=true&name=FilterByCompany&archived=false&archived=true')
     })
 
-    cy.get(selectors.entityList.entities).children().should('have.length', 1)
+    cy.get(selectors.entityCollection.entities).children().should('have.length', 1)
   })
 
   it('should filter by country', () => {
@@ -54,7 +54,7 @@ describe('Company Collections Filter', () => {
         'archived=true')
     })
 
-    cy.get(selectors.entityList.entities).children().should('have.length', 1)
+    cy.get(selectors.entityCollection.entities).children().should('have.length', 1)
   })
 
   it('should filter by region', () => {
@@ -69,7 +69,7 @@ describe('Company Collections Filter', () => {
         'archived=true')
     })
 
-    cy.get(selectors.entityList.entities).children().should('have.length', 1)
+    cy.get(selectors.entityCollection.entities).children().should('have.length', 1)
   })
 
   it('should remove all filters', () => {
