@@ -2,19 +2,19 @@ const selectors = require('../../selectors')
 
 describe('Contacts Collections', () => {
   before(() => {
-    cy.visit('/contacts')
+    cy.visit('/contacts/?sortby=dummy')
   })
 
   it('should display a list of contacts', () => {
-    cy.get(selectors.entityList.entities).children().should('have.length', 100)
+    cy.get(selectors.entityCollection.entities).children().should('have.length', 100)
   })
 
   it('should contain contacts badge', () => {
-    cy.get(selectors.entityList.firstEntityBadge).should('contain', 'Primary')
+    cy.get(selectors.entityCollection.firstEntityBadge).should('contain', 'Primary')
   })
 
   it('should contain contacts details', () => {
-    cy.get(selectors.entityList.firstEntity)
+    cy.get(selectors.entityCollection.firstEntity)
       .should('contain', 'Royal Haskoning UK Ltd')
       .and('contain', 'Business Group Director, UK')
       .and('contain', 'Environment and Water')

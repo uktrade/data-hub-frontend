@@ -5,7 +5,7 @@ describe('Contact Collections Sort', () => {
     cy.server()
     cy.route('/contacts?*').as('sortResults')
     cy.visit('/contacts?sortby=collectionTest')
-    cy.get(selectors.entityList.entities).children().should('have.length', 9)
+    cy.get(selectors.entityCollection.entities).children().should('have.length', 9)
     cy.get(selectors.entityCollection.collection).should('contain', '9 contacts')
   })
 
@@ -16,8 +16,8 @@ describe('Contact Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=address_country.name:asc')
     })
 
-    cy.get(selectors.entityList.entities).children().should('have.length', 2)
-    cy.get(selectors.entityList.firstEntity).should('contain', 'Sort By')
+    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
+    cy.get(selectors.entityCollection.firstEntity).should('contain', 'Sort By')
   })
 
   it('should sort by last name AZ', () => {
@@ -27,8 +27,8 @@ describe('Contact Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=last_name:asc')
     })
 
-    cy.get(selectors.entityList.entities).children().should('have.length', 2)
-    cy.get(selectors.entityList.firstEntity).should('contain', 'Sort By')
+    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
+    cy.get(selectors.entityCollection.firstEntity).should('contain', 'Sort By')
   })
 
   it('should sort by company name AZ', () => {
@@ -38,8 +38,8 @@ describe('Contact Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=company.name:asc')
     })
 
-    cy.get(selectors.entityList.entities).children().should('have.length', 2)
-    cy.get(selectors.entityList.firstEntity).should('contain', 'Sort By')
+    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
+    cy.get(selectors.entityCollection.firstEntity).should('contain', 'Sort By')
   })
 
   it('should sort by least recent', () => {
@@ -49,8 +49,8 @@ describe('Contact Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=modified_on:asc')
     })
 
-    cy.get(selectors.entityList.entities).children().should('have.length', 2)
-    cy.get(selectors.entityList.firstEntity).should('contain', 'Sort By')
+    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
+    cy.get(selectors.entityCollection.firstEntity).should('contain', 'Sort By')
   })
 
   it('should sort by most recent', () => {
@@ -60,8 +60,8 @@ describe('Contact Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=modified_on:desc')
     })
 
-    cy.get(selectors.entityList.entities).children().should('have.length', 2)
-    cy.get(selectors.entityList.firstEntity).should('contain', 'Sort By')
+    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
+    cy.get(selectors.entityCollection.firstEntity).should('contain', 'Sort By')
   })
 
   it('should sort by Newest', () => {
@@ -71,8 +71,8 @@ describe('Contact Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=created_on:desc')
     })
 
-    cy.get(selectors.entityList.entities).children().should('have.length', 2)
-    cy.get(selectors.entityList.firstEntity).should('contain', 'Sort By')
+    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
+    cy.get(selectors.entityCollection.firstEntity).should('contain', 'Sort By')
   })
 
   it('should sort by Oldest', () => {
@@ -82,7 +82,7 @@ describe('Contact Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=created_on:asc')
     })
 
-    cy.get(selectors.entityList.entities).children().should('have.length', 2)
-    cy.get(selectors.entityList.firstEntity).should('contain', 'Sort By')
+    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
+    cy.get(selectors.entityCollection.firstEntity).should('contain', 'Sort By')
   })
 })
