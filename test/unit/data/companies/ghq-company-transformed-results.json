@@ -21,7 +21,18 @@
         },
         {
           "label": "Primary address",
-          "value": "12 First Street, New York, 765413, United States"
+          "type": "address",
+          "value": {
+            "country": {
+              "id": "81756b9a-5d95-e211-a939-e4115bead28a",
+              "name": "United States"
+            },
+            "county": "",
+            "line_1": "12 First Street",
+            "line_2": "",
+            "postcode": "765413",
+            "town": "New York"
+          }
         }
       ],
       "subTitle": {
@@ -52,7 +63,18 @@
         },
         {
           "label": "Primary address",
-          "value": "Hermann Mills, Bartonchester, 88381, Montenegro"
+          "type": "address",
+          "value": {
+            "country": {
+              "id": "7f756b9a-5d95-e211-a939-e4115bead28a",
+              "name": "Montenegro"
+            },
+            "county": "",
+            "line_1": "Hermann Mills",
+            "line_2": "",
+            "postcode": "88381",
+            "town": "Bartonchester"
+          }
         }
       ],
       "subTitle": {

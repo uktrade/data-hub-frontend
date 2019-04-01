@@ -56,6 +56,8 @@
     {{ data.name | formatNumber }}
   {% elif data.type === 'details' %}
     {{ details(data) }}
+  {% elif data.type === 'address' %}
+    {{ data.address | formatAddress }}
   {% elif data.type === 'error' %}
     {{ error(data) }}
   {% else %}

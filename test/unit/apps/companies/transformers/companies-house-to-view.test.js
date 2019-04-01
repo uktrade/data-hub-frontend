@@ -36,10 +36,20 @@ describe('transformCompaniesHouseToView', () => {
     })
 
     it('should return the registered address', () => {
-      expect(this.viewRecord).to.have.property(
-        'Registered office address',
-        '5TH FLOOR, PROFILE WEST, 950 GREAT WEST ROAD, BRENTFORD, MIDDLESEX, TW8 9ES, United Kingdom'
-      )
+      expect(this.viewRecord['Registered office address']).to.deep.equal({
+        type: 'address',
+        address: {
+          line_1: '5TH FLOOR, PROFILE WEST',
+          line_2: '950 GREAT WEST ROAD',
+          town: 'BRENTFORD',
+          county: 'MIDDLESEX',
+          postcode: 'TW8 9ES',
+          country: {
+            id: '80756b9a-5d95-e211-a939-e4115bead28a',
+            name: 'United Kingdom',
+          },
+        },
+      })
     })
 
     it('should return the incorporation date', () => {

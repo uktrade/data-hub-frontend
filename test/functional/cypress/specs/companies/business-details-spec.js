@@ -48,13 +48,19 @@ describe('Companies business details', () => {
     })
 
     it('should display the address', () => {
-      const addressSelector = selectors.companyBusinessDetails().address(1)
-      cy.get(addressSelector.badge(1)).should('have.text', 'Trading')
-      cy.get(addressSelector.badge(2)).should('have.text', 'Registered')
-      cy.get(addressSelector.line(1)).should('have.text', '12 St George\'s Road')
-      cy.get(addressSelector.line(2)).should('have.text', 'Paris')
-      cy.get(addressSelector.line(3)).should('have.text', '75001')
-      cy.get(addressSelector.line(4)).should('have.text', 'France')
+      const addressSelector1 = selectors.companyBusinessDetails().address(1)
+      cy.get(addressSelector1.badge(1)).should('have.text', 'Trading')
+      cy.get(addressSelector1.line(1)).should('have.text', '12 St George\'s Road')
+      cy.get(addressSelector1.line(2)).should('have.text', 'Paris')
+      cy.get(addressSelector1.line(3)).should('have.text', '75001')
+      cy.get(addressSelector1.line(4)).should('have.text', 'France')
+
+      const addressSelector2 = selectors.companyBusinessDetails().address(2)
+      cy.get(addressSelector2.badge(1)).should('have.text', 'Registered')
+      cy.get(addressSelector2.line(1)).should('have.text', '12 St George\'s Road')
+      cy.get(addressSelector2.line(2)).should('have.text', 'Paris')
+      cy.get(addressSelector2.line(3)).should('have.text', '75001')
+      cy.get(addressSelector2.line(4)).should('have.text', 'France')
     })
 
     it('should not display the "DIT region" details container', () => {
@@ -158,13 +164,19 @@ describe('Companies business details', () => {
     })
 
     it('should display the address', () => {
-      const addressSelector = selectors.companyBusinessDetails().address(1)
-      cy.get(addressSelector.badge(1)).should('have.text', 'Trading')
-      cy.get(addressSelector.badge(2)).should('have.text', 'Registered')
-      cy.get(addressSelector.line(1)).should('have.text', '66 Marcham Road')
-      cy.get(addressSelector.line(2)).should('have.text', 'Bordley')
-      cy.get(addressSelector.line(3)).should('have.text', 'BD23 8RZ')
-      cy.get(addressSelector.line(4)).should('have.text', 'United Kingdom')
+      const addressSelector1 = selectors.companyBusinessDetails().address(1)
+      cy.get(addressSelector1.badge(1)).should('have.text', 'Trading')
+      cy.get(addressSelector1.line(1)).should('have.text', '66 Marcham Road')
+      cy.get(addressSelector1.line(2)).should('have.text', 'Bordley')
+      cy.get(addressSelector1.line(3)).should('have.text', 'BD23 8RZ')
+      cy.get(addressSelector1.line(4)).should('have.text', 'United Kingdom')
+
+      const addressSelector2 = selectors.companyBusinessDetails().address(2)
+      cy.get(addressSelector2.badge(1)).should('have.text', 'Registered')
+      cy.get(addressSelector2.line(1)).should('have.text', '66 Marcham Road')
+      cy.get(addressSelector2.line(2)).should('have.text', 'Bordley')
+      cy.get(addressSelector2.line(3)).should('have.text', 'BD23 8RZ')
+      cy.get(addressSelector2.line(4)).should('have.text', 'United Kingdom')
     })
 
     it('should display the "DIT region" details container heading', () => {
@@ -282,13 +294,19 @@ describe('Companies business details', () => {
     })
 
     it('should display the address', () => {
-      const addressSelector = selectors.companyBusinessDetails().address(1)
-      cy.get(addressSelector.badge(1)).should('have.text', 'Trading')
-      cy.get(addressSelector.badge(2)).should('have.text', 'Registered')
-      cy.get(addressSelector.line(1)).should('have.text', '1 Main Road')
-      cy.get(addressSelector.line(2)).should('have.text', 'Rome')
-      cy.get(addressSelector.line(3)).should('have.text', '001122')
-      cy.get(addressSelector.line(4)).should('have.text', 'Italy')
+      const addressSelector1 = selectors.companyBusinessDetails().address(1)
+      cy.get(addressSelector1.badge(1)).should('have.text', 'Trading')
+      cy.get(addressSelector1.line(1)).should('have.text', '1 Main Road')
+      cy.get(addressSelector1.line(2)).should('have.text', 'Rome')
+      cy.get(addressSelector1.line(3)).should('have.text', '001122')
+      cy.get(addressSelector1.line(4)).should('have.text', 'Italy')
+
+      const addressSelector2 = selectors.companyBusinessDetails().address(2)
+      cy.get(addressSelector2.badge(1)).should('have.text', 'Registered')
+      cy.get(addressSelector2.line(1)).should('have.text', '1 Main Road')
+      cy.get(addressSelector2.line(2)).should('have.text', 'Rome')
+      cy.get(addressSelector2.line(3)).should('have.text', '001122')
+      cy.get(addressSelector2.line(4)).should('have.text', 'Italy')
     })
 
     it('should not display the "DIT region" details container', () => {
@@ -380,13 +398,19 @@ describe('Companies business details', () => {
     })
 
     it('should display the address', () => {
-      const addressSelector = selectors.companyBusinessDetails().address(1)
-      cy.get(addressSelector.badge(1)).should('have.text', 'Trading')
-      cy.get(addressSelector.badge(2)).should('have.text', 'Registered')
-      cy.get(addressSelector.line(1)).should('have.text', '16 Getabergsvagen')
-      cy.get(addressSelector.line(2)).should('have.text', 'Geta')
-      cy.get(addressSelector.line(3)).should('have.text', '22340')
-      cy.get(addressSelector.line(4)).should('have.text', 'Malta')
+      const addressSelector1 = selectors.companyBusinessDetails().address(1)
+      cy.get(addressSelector1.badge(1)).should('have.text', 'Trading')
+      cy.get(addressSelector1.line(1)).should('have.text', '16 Getabergsvagen')
+      cy.get(addressSelector1.line(2)).should('have.text', 'Geta')
+      cy.get(addressSelector1.line(3)).should('have.text', '22340')
+      cy.get(addressSelector1.line(4)).should('have.text', 'Malta')
+
+      const addressSelector2 = selectors.companyBusinessDetails().address(2)
+      cy.get(addressSelector2.badge(1)).should('have.text', 'Registered')
+      cy.get(addressSelector2.line(1)).should('have.text', '16 Getabergsvagen')
+      cy.get(addressSelector2.line(2)).should('have.text', 'Geta')
+      cy.get(addressSelector2.line(3)).should('have.text', '22340')
+      cy.get(addressSelector2.line(4)).should('have.text', 'Malta')
     })
 
     it('should not display the "DIT region" details container', () => {

@@ -54,7 +54,18 @@ describe('transformCompaniesHouseToListItem', () => {
   it('should return as meta data', () => {
     expect(this.transformed.meta[5]).to.deep.equal({
       label: 'Address',
-      value: 'FRED COTTAGE SMITH LANE, WINKFIELD, WINDSOR, BERKSHIRE, SL9 9RE, United Kingdom',
+      type: 'address',
+      value: {
+        line_1: 'FRED COTTAGE SMITH LANE',
+        line_2: 'WINKFIELD',
+        town: 'WINDSOR',
+        county: 'BERKSHIRE',
+        postcode: 'SL9 9RE',
+        country: {
+          id: '80756b9a-5d95-e211-a939-e4115bead28a',
+          name: 'United Kingdom',
+        },
+      },
     })
   })
 })

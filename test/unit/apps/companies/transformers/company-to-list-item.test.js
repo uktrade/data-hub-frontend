@@ -140,7 +140,18 @@ describe('transformCompanyToListItem', () => {
     it('should include the trading address in the result', () => {
       expect(this.listItem.meta).to.containSubset([{
         label: 'Trading address',
-        value: '100 Bolton Road, London, W1C 2BA, United Kingdom',
+        type: 'address',
+        value: {
+          line_1: '100 Bolton Road',
+          line_2: '',
+          town: 'London',
+          county: '',
+          postcode: 'W1C 2BA',
+          country: {
+            id: '123',
+            name: 'United Kingdom',
+          },
+        },
       }])
     })
 
@@ -170,7 +181,18 @@ describe('transformCompanyToListItem', () => {
     it('returns a formatted registered address', () => {
       expect(this.listItem.meta).to.containSubset([{
         label: 'Primary address',
-        value: 'Leeds City Centre, Leeds, EX1 2PL, United Kingdom',
+        type: 'address',
+        value: {
+          line_1: 'Leeds City Centre',
+          line_2: null,
+          town: 'Leeds',
+          county: null,
+          postcode: 'EX1 2PL',
+          country: {
+            id: '80756b9a-5d95-e211-a939-e4115bead28a',
+            name: 'United Kingdom',
+          },
+        },
       }])
     })
   })

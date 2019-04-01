@@ -1,5 +1,10 @@
-module.exports = {
-  add: '[data-auto-id="Add interaction"]',
-  header: '[data-auto-id="companyInteractionHeader"]',
-  archivedMsg: '[data-auto-id="archivedCompanySummary"]',
+module.exports = () => {
+  const bodyMainContentSelector = '[data-auto-id="bodyMainContent"]'
+
+  return {
+    heading: `${bodyMainContentSelector} h2`,
+    addButton: (companyId) => `${bodyMainContentSelector} [href="/companies/${companyId}/interactions/create"]`,
+    archivedSummary: `${bodyMainContentSelector} .details__summary`,
+    timelineLink: (companyId) => `${bodyMainContentSelector} [href="/companies/${companyId}/timeline"]`,
+  }
 }

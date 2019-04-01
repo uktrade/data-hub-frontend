@@ -7,10 +7,7 @@ const { ENTITIES } = require('../../search/constants')
 async function renderSubsidiaries (req, res, next) {
   try {
     const token = req.session.token
-    const { company, features } = res.locals
-    const view = (company.duns_number || features['companies-new-layout'])
-      ? 'companies/views/subsidiaries'
-      : 'companies/views/_deprecated/subsidiaries'
+    const { company } = res.locals
     const actionButtons = company.archived || company.duns_number ? undefined : [{
       label: companyDetailsLabels.link_a_subsidiary,
       url: `/companies/${company.id}/subsidiaries/link`,
@@ -23,15 +20,11 @@ async function renderSubsidiaries (req, res, next) {
         transformCompanyToSubsidiaryListItem(res.locals.company),
       ))
 
-    res.breadcrumb(company.name, `/companies/${company.id}`)
-
-    if (features['companies-new-layout']) {
-      res.breadcrumb('Business details', `/companies/${company.id}/business-details`)
-    }
-
     return res
+      .breadcrumb(company.name, `/companies/${company.id}`)
+      .breadcrumb('Business details', `/companies/${company.id}/business-details`)
       .breadcrumb(companyDetailsLabels.subsidiaries)
-      .render(view, {
+      .render('companies/views/subsidiaries', {
         heading: `Subsidiaries of ${company.name}`,
         subsidiaries: {
           ...subsidiaryCollection,
