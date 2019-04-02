@@ -129,25 +129,9 @@ describe('Typeahead', () => {
         expect(component.findAll('.multiselect__tag')).to.have.length(1)
       })
 
-      it('should show the adviser name and team in the tag', () => {
-        expect(component.find('.multiselect__tag').text()).to.equal('Fred Jones - Team ABC')
-      })
-
       it('should render the selected options as hidden fields', () => {
         const element = component.find('input[type="hidden"][name="adviser"]').element
         expect(element.value).to.equal('1234')
-      })
-    })
-
-    context('when choosing to not display form labels', () => {
-      beforeEach((done) => {
-        component = mount(Typeahead, {
-          propsData: Object.assign({}, defaultProps, { isLabelHidden: true }),
-        })
-        Vue.nextTick(done)
-      })
-      it('should hide the label with visually hidden class', () => {
-        expect(component.find('.u-visually-hidden').hasClass('u-visually-hidden')).to.be.true
       })
     })
   })
