@@ -18,7 +18,7 @@ function transformTurnover (turnover, turnover_range) {
         type: 'details',
         details: {
           summaryText: 'What does that mean?',
-          text: 'This information is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
+          text: 'Actual turnover is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
         },
       },
     ]
@@ -39,7 +39,7 @@ function transformNumberOfEmployees (number_of_employees, employee_range) {
         type: 'details',
         details: {
           summaryText: 'What does that mean?',
-          text: 'This information is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
+          text: 'Actual number of employees is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
         },
       },
     ]
