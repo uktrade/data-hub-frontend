@@ -200,6 +200,7 @@ aliases:
       - dependencies
       - lint_code
       - unit_tests
+      - unit_client_tests
       - functional_tests
     filters:
       branches:
@@ -214,6 +215,7 @@ aliases:
       - dependencies
       - lint_code
       - unit_tests
+      - unit_client_tests
       - functional_tests
     filters:
       branches:
@@ -276,6 +278,35 @@ jobs:
             mkdir junit
             yarn build
             yarn circle:unit
+          environment:
+            MOCHA_FILE: junit/test-results.xml
+          when: always
+      - store_test_results:
+          path: junit
+      - store_artifacts:
+          path: junit
+      - store_test_results:
+          path: coverage
+      - store_artifacts:
+          path: coverage
+
+  # Run unit client tests and store results
+  unit_client_tests:
+    docker:
+      - image: *node_version
+        environment:
+          TZ: "/usr/share/zoneinfo/Europe/London"
+    working_directory: ~/data-hub-frontend
+    steps:
+      - checkout
+      - *store_versions
+      - *restore_yarn_cache
+      - run:
+          name: Run unit tests
+          command: |
+            mkdir junit
+            yarn build
+            yarn circle:unit-client
           environment:
             MOCHA_FILE: junit/test-results.xml
           when: always
@@ -490,6 +521,9 @@ workflows:
           requires:
             - dependencies
       - unit_tests:
+          requires:
+            - dependencies
+      - unit_client_tests:
           requires:
             - dependencies
       - functional_tests:
