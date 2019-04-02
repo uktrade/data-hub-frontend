@@ -70,7 +70,7 @@ describe('#transformCompanyToKnownAsView', () => {
           {
             details: {
               summaryText: 'What does that mean?',
-              text: 'This is an estimated number',
+              text: 'Actual number of employees is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
             },
             name: 'This is an estimated number',
             type: 'details',
@@ -84,7 +84,7 @@ describe('#transformCompanyToKnownAsView', () => {
           {
             details: {
               summaryText: 'What does that mean?',
-              text: 'This is an estimated number',
+              text: 'Actual turnover is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
             },
             name: 'This is an estimated number',
             type: 'details',
