@@ -12,6 +12,7 @@ const {
   compact,
   concat,
   escape,
+  get,
   isArray,
   isFunction,
   isPlainObject,
@@ -196,7 +197,7 @@ const filters = {
         address.town,
         address.county,
         address.postcode,
-        address.country.name,
+        get(address, 'country.name'),
       ]).join(', ')
     }
   },

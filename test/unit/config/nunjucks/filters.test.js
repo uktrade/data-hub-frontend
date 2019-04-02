@@ -356,6 +356,23 @@ describe('nunjucks filters', () => {
         expect(this.actual).to.not.exist
       })
     })
+
+    context('when the country is null', () => {
+      beforeEach(() => {
+        this.actual = filters.formatAddress({
+          line_1: 'line 1',
+          line_2: 'line 2',
+          town: 'town',
+          county: 'county',
+          postcode: 'postcode',
+          country: null,
+        })
+      })
+
+      it('should format the address as a comma separated list', () => {
+        expect(this.actual).to.equal('line 1, line 2, town, county, postcode')
+      })
+    })
   })
 
   describe('#collectionDefault', () => {
