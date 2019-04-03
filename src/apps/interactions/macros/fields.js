@@ -1,13 +1,20 @@
 module.exports = {
   adviser (advisers) {
     return {
-      macroName: 'Typeahead',
-      name: 'dit_adviser',
-      entity: 'adviser',
-      classes: 'c-form-group c-form-group--no-filter',
-      placeholder: 'Search adviser',
-      multipleSelect: false,
-      options: advisers,
+      macroName: 'AddAnother',
+      buttonName: 'add_item',
+      name: 'dit_participants',
+      children: [{
+        macroName: 'Typeahead',
+        name: 'dit_participants',
+        label: 'Advisers',
+        isLabelHidden: true,
+        entity: 'adviser',
+        placeholder: 'Search adviser',
+        classes: 'c-form-group c-form-group--no-filter',
+        multipleSelect: false,
+        options: advisers,
+      }],
     }
   },
   contact (contacts) {
@@ -40,14 +47,6 @@ module.exports = {
         optional: false,
         isLabelHidden: true,
       }],
-    }
-  },
-  provider (teams) {
-    return {
-      macroName: 'MultipleChoiceField',
-      name: 'dit_team',
-      initialOption: '-- Select provider --',
-      options: teams,
     }
   },
   service (services) {

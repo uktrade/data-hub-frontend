@@ -1,3 +1,6 @@
+/* eslint-disable no-new */
+const Vue = require('vue')
+
 const assign = require('lodash/assign')
 const pickBy = require('lodash/pickBy')
 const {
@@ -8,7 +11,13 @@ const {
   removeElement,
 } = require('../lib/helpers')
 
+const Typeahead = require('../vue/typeahead.vue').default
+const { highlight } = require('../vue/filters')
+
+Vue.filter('highlight', highlight)
+
 const addButtonClass = 'js-AddItems__add'
+const addTypeaheadButtonClass = 'js-AddItems__add--typeahead'
 const removeButtonClass = 'js-AddItems__remove'
 
 /**
@@ -48,6 +57,7 @@ const AddItems = {
     itemSelector: '.js-AddItems__item',
     itemName: 'item',
     addButtonSelector: `.${addButtonClass}`,
+    addTypeaheadButtonSelector: `.${addTypeaheadButtonClass}`,
     addButtonText: 'Add another {{itemName}}',
     removeButtonSelector: `.${removeButtonClass}`,
     removeButtonText: 'Remove',
@@ -66,9 +76,10 @@ const AddItems = {
 
   cacheEls () {
     const lastItem = this.wrapper.querySelector(this.settings.itemSelector)
-
-    this.itemContainer = lastItem.parentNode
-    this.template = lastItem.cloneNode(true)
+    if (lastItem) {
+      this.itemContainer = lastItem.parentNode
+      this.template = lastItem.cloneNode(true)
+    }
     this.addButton = this.wrapper.querySelector(this.settings.addButtonSelector)
   },
 
@@ -89,6 +100,7 @@ const AddItems = {
   decorateButtons () {
     const removeButtons = Array.from(this.wrapper.querySelectorAll(this.settings.removeButtonSelector))
     const addButton = this.wrapper.querySelector(this.settings.addButtonSelector)
+    const addTypeaheadButton = this.wrapper.querySelector(this.settings.addTypeaheadButtonSelector)
 
     if (addButton) {
       addButton.setAttribute('data-method', 'add')
@@ -99,6 +111,15 @@ const AddItems = {
       }
     }
 
+    if (addTypeaheadButton) {
+      addTypeaheadButton.setAttribute('data-method', 'add-typeahead')
+      addTypeaheadButton.innerText = this.settings.addButtonText.replace('{{itemName}}', this.settings.itemName)
+
+      if (!removeButtons.length) {
+        addTypeaheadButton.innerText = addTypeaheadButton.innerText.replace('another', '')
+      }
+    }
+
     removeButtons.forEach((element) => {
       element.setAttribute('data-method', 'remove')
       element.innerHTML = this.settings.removeButtonText.replace('{{itemName}}', this.settings.itemName)
@@ -106,7 +127,7 @@ const AddItems = {
   },
 
   insertAddButton () {
-    if (this.wrapper.querySelector(this.settings.addButtonSelector)) {
+    if (this.wrapper.querySelector(this.settings.addButtonSelector) || this.wrapper.querySelector(this.settings.addTypeaheadButtonSelector)) {
       return
     }
 
@@ -153,6 +174,9 @@ const AddItems = {
       case 'add':
         this.addItem()
         break
+      case 'add-typeahead':
+        this.addTypeaheadItem()
+        break
       case 'remove':
         const element = closest(target, this.settings.itemSelector)
         this.removeItem(element)
@@ -192,11 +216,39 @@ const AddItems = {
 
     insertAfter(newItem, lastItem)
   },
+  addTypeaheadItem () {
+    const lastItem = this.wrapper.querySelector(`${this.settings.itemSelector}:last-of-type`)
+    const attr = this.getItemAttribute()
+    const newItem = regenIds(this.template.cloneNode(true), attr)
+    const typeaheadWrapper = newItem.querySelector('.js-vue-wrapper')
+    const typeaheadType = typeaheadWrapper.getAttribute('data-typeahead-type')
+    typeaheadWrapper.innerHTML = this.fetchTypeaheadTemplate(typeaheadType)
+    this.buildTypeahead(typeaheadWrapper)
 
+    if (!lastItem) {
+      return this.itemContainer.appendChild(newItem)
+    }
+
+    insertAfter(newItem, lastItem)
+  },
   removeItem (item) {
     if (this.settings.canRemove) {
       item.parentNode.removeChild(item)
     }
+  },
+  fetchTypeaheadTemplate (name) {
+    switch (name) {
+      case 'dit_participants':
+        return this.settings.typeaheadTemplates.ditParticipants
+    }
+  },
+  buildTypeahead (wrapper) {
+    new Vue({
+      el: wrapper,
+      components: {
+        'typeahead': Typeahead,
+      },
+    })
   },
 }
 
@@ -214,6 +266,19 @@ module.exports = {
         addButtonText: element.getAttribute('data-add-button-text'),
         removeButtonSelector: element.getAttribute('data-remove-button-selector'),
         removeButtonText: element.getAttribute('data-remove-button-text'),
+        typeaheadTemplates: {
+          ditParticipants: `<typeahead 
+                              entity="adviser"
+                              model="[]"
+                              selected-value="" 
+                              name="dit_participants" 
+                              :hide-label="true"
+                              label="Advisers" 
+                              placeholder="Search adviser" 
+                              :multiple-select="false" 
+                              value="" 
+                              classes="c-form-group c-form-group--no-filter"></typeahead>`,
+        },
       }
 
       const addItems = Object.create(AddItems, {
