@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { camelCase, pickBy } = require('lodash')
+const { camelCase, pickBy, get } = require('lodash')
 
 const config = require('../../../../config')
 const labels = require('../labels')
@@ -29,12 +29,11 @@ function transformInteractionResponseToViewRecord ({
   subject,
   notes,
   date,
-  dit_adviser,
+  dit_participants,
   service,
   service_delivery_status,
   grant_amount_offered,
   net_company_receipt,
-  dit_team,
   contacts,
   policy_areas,
   policy_issue_types,
@@ -55,11 +54,12 @@ function transformInteractionResponseToViewRecord ({
   const displayPolicyTypes = (policy_issue_types || [])
     .map(policy_type => policy_type.name)
     .join(', ')
+  const hasTeam = (name) => get(name, 'team') ? `${name.adviser.name}, ${name.team.name}` : name.adviser.name
+  const displayDitParticipants = (dit_participants || []).map(ditParticipant => hasTeam(ditParticipant))
 
   const transformed = {
     company: transformEntityLink(company, 'companies'),
     contacts: contacts.map(contact => transformEntityLink(contact, 'contacts')),
-    dit_team,
     service,
     service_delivery_status,
     grant_amount_offered: grant_amount_offered ? {
@@ -76,7 +76,7 @@ function transformInteractionResponseToViewRecord ({
       type: 'date',
       name: date,
     },
-    dit_adviser,
+    dit_participants: displayDitParticipants,
     investment_project: transformEntityLink(investment_project, 'investments/projects'),
     event: transformEntityLink(event, 'events', defaultEventText),
     communication_channel: communication_channel,

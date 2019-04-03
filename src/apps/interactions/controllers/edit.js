@@ -58,18 +58,25 @@ function getMergedData (req, res) {
     return null
   }
 
+  function setDefaultAdvisers (reqBody = {}) {
+    if (!get(reqBody, 'dit_participants')) return
+    return {
+      dit_participants: reqBody.dit_participants.map(ditParticipant => ditParticipant.adviser),
+    }
+  }
+
   const interactionData = transformInteractionResponseToForm(res.locals.interaction)
   const interactionDefaults = {
-    dit_adviser: user.id,
+    dit_participants: [user.id],
     date: transformDateStringToDateObject(new Date()),
     contacts: setDefaultContact(),
-    dit_team: get(user, 'dit_team.id'),
   }
 
   const mergedInteractionData = {
     ...interactionDefaults,
     ...interactionData,
     ...res.locals.requestBody,
+    ...setDefaultAdvisers(res.locals.requestBody),
   }
 
   return mergedInteractionData

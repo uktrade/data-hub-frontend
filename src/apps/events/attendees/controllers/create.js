@@ -23,11 +23,12 @@ async function createAttendee (req, res, next) {
     const contact = await getContact(token, contactId)
 
     const serviceDelivery = {
-      contacts: [ contact.id ],
+      contacts: [contact.id],
       company: get(contact, 'company.id'),
       date: event.start_date,
-      dit_adviser: adviser.id,
-      dit_team: get(event, 'lead_team.id'),
+      dit_participants: [{
+        adviser: adviser.id,
+      }],
       event: event.id,
       is_event: true,
       kind: 'service_delivery',
