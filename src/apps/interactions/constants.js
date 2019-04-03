@@ -16,13 +16,13 @@ const QUERY_FIELDS = [
   'kind',
   'sector_descends',
   'communication_channel',
-  'dit_adviser',
   'sortby',
   'dit_team',
   'service',
   'was_policy_feedback_provided',
   'policy_areas',
   'policy_issue_types',
+  'dit_participants',
 ]
 
 const QUERY_DATE_FIELDS = [
