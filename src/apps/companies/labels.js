@@ -92,6 +92,7 @@ const aboutLabels = {
   trading_names: 'Trading names',
   company_number: 'Companies House number',
   vat_number: 'VAT number',
+  reference_code: 'CDMS reference',
   turnover: 'Annual turnover',
   number_of_employees: 'Number of employees',
   website: 'Website',

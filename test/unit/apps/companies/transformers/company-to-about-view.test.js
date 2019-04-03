@@ -157,6 +157,7 @@ describe('#transformCompanyToKnownAsView', () => {
           ],
           company_number: '123456',
           vat_number: '0123456789',
+          reference_code: 'ORG-12345678',
           turnover_range: {
             name: '£33.5M+',
           },
@@ -206,6 +207,10 @@ describe('#transformCompanyToKnownAsView', () => {
         expect(this.actual['VAT number']).to.equal('0123456789')
       })
 
+      it('should set the CDMS reference', () => {
+        expect(this.actual['CDMS reference']).to.equal('ORG-12345678')
+      })
+
       it('should set the description', () => {
         expect(this.actual.Description).to.equal('description')
       })
@@ -233,6 +238,10 @@ describe('#transformCompanyToKnownAsView', () => {
 
       it('should set the business type', () => {
         expect(this.actual['Business type']).to.equal('Company')
+      })
+
+      it('should not set the CDMS reference', () => {
+        expect(this.actual['CDMS reference']).to.not.exist
       })
 
       it('should not set the VAT number', () => {
