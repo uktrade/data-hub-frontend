@@ -38,20 +38,8 @@ describe('#transformInteractionToListItem', () => {
             },
           },
           {
-            label: 'Adviser',
-            value: {
-              id: '8036f207-ae3e-e611-8d53-e4115bed50dc',
-              first_name: 'Test',
-              last_name: 'CMU 1',
-              name: 'Test CMU 1',
-            },
-          },
-          {
-            label: 'Service provider',
-            value: {
-              id: '222',
-              name: 'Team',
-            },
+            label: 'Adviser(s)',
+            value: ['Bob Lawson, The test team'],
           },
           {
             label: 'Service',
@@ -155,20 +143,8 @@ describe('#transformInteractionToListItem', () => {
             },
           },
           {
-            label: 'Adviser',
-            value: {
-              id: '8036f207-ae3e-e611-8d53-e4115bed50dc',
-              first_name: 'Test',
-              last_name: 'CMU 1',
-              name: 'Test CMU 1',
-            },
-          },
-          {
-            label: 'Service provider',
-            value: {
-              id: '222',
-              name: 'Team',
-            },
+            label: 'Adviser(s)',
+            value: ['Bob Lawson, The test team'],
           },
           {
             label: 'Service',
@@ -216,20 +192,8 @@ describe('#transformInteractionToListItem', () => {
             },
           },
           {
-            label: 'Adviser',
-            value: {
-              id: '8036f207-ae3e-e611-8d53-e4115bed50dc',
-              first_name: 'Test',
-              last_name: 'CMU 1',
-              name: 'Test CMU 1',
-            },
-          },
-          {
-            label: 'Service provider',
-            value: {
-              id: '222',
-              name: 'Team',
-            },
+            label: 'Adviser(s)',
+            value: ['Bob Lawson, The test team'],
           },
           {
             label: 'Service',
@@ -284,20 +248,8 @@ describe('#transformInteractionToListItem', () => {
             },
           },
           {
-            label: 'Adviser',
-            value: {
-              id: '8036f207-ae3e-e611-8d53-e4115bed50dc',
-              first_name: 'Test',
-              last_name: 'CMU 1',
-              name: 'Test CMU 1',
-            },
-          },
-          {
-            label: 'Service provider',
-            value: {
-              id: '222',
-              name: 'Team',
-            },
+            label: 'Adviser(s)',
+            value: ['Bob Lawson, The test team'],
           },
           {
             label: 'Service',

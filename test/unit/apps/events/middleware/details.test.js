@@ -77,7 +77,6 @@ describe('Event details middleware', () => {
     context('when all fields are valid', () => {
       it('should post to the API', async () => {
         await this.middleware.postDetails(this.req, this.res, this.nextSpy)
-
         expect(this.saveEventStub).to.have.been.calledWith(this.req.session.token)
         expect(this.saveEventStub).to.have.been.calledOnce
         expect(this.saveEventStub.firstCall.args[1]).to.deep.equal(expectedBody)
