@@ -2,28 +2,36 @@
 {% from "./multiple-choice-field.njk" import MultipleChoiceField %}
 
 {% macro Typeahead(props) %}
-  <div class="c-typeahead--alternative">
-    <noscript>
-      {% call MultipleChoiceField(props) %}{% endcall %}
-    </noscript>
-  </div>
-  <div class="js-vue-wrapper">
-    <typeahead
-      entity="{{ props.entity }}"
-      selected-value="{{ props.value }}"
-      name="{{ props.name }}"
-      label="{{ props.label }}"
-      placeholder="{{ props.placeholder }}"
-      {% if props.multipleSelect === false %}
-        {% raw %}:{% endraw %}multiple-select="{{ props.multipleSelect }}"
-      {% endif %}
-      model="{{ props.options | dump }}"
-      value="{{ props.selectedOptions | dump }}"
-      classes="{{ props.classes }}"
-      {% if props.isAsync === false %}
-        {% raw %}:{% endraw %}is-async="{{ props.isAsync }}"
-      {% endif %}
-    >
-    </typeahead>
+  <div class="c-form-group c-form-group--AddItems">
+    <div class="c-typeahead--alternative">
+      <noscript>
+        {% call MultipleChoiceField(props) %}{% endcall %}
+      </noscript>
+    </div>
+    <div class="js-vue-wrapper" data-typeahead-type="{{ props.name }}">
+      <typeahead
+        entity="{{ props.entity }}"
+        selected-value="{{ props.value }}"
+        name="{{ props.name }}"
+        {% if props.isLabelHidden === true %}
+          {% raw %}:{% endraw %}hide-label="{{ props.isLabelHidden }}"
+        {% endif %}
+        label="{{ props.label }}"
+        placeholder="{{ props.placeholder }}"
+        {% if props.multipleSelect === false %}
+          {% raw %}:{% endraw %}multiple-select="{{ props.multipleSelect }}"
+        {% endif %}
+        model="{{ props.options | dump }}"
+        value="{{ props.selectedOptions | dump }}"
+        classes="{{ props.classes }}"
+        {% if props.isAsync === false %}
+          {% raw %}:{% endraw %}is-async="{{ props.isAsync }}"
+        {% endif %}
+        {% if props.useSubLabel === false %}
+          {% raw %}:{% endraw %}use-sub-label="{{ props.useSubLabel }}"
+        {% endif %}
+      >
+      </typeahead>
+    </div>
   </div>
 {% endmacro %}
