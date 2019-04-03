@@ -1,3 +1,5 @@
+const typeaheadID = '#group-field-dit_participants'
+
 module.exports = {
   subject: '#field-subject',
   notes: '#field-notes',
@@ -6,12 +8,19 @@ module.exports = {
   dateOfInteractionDay: '#field-date_day',
   contact: '#field-contacts',
   add: 'form > div.c-form-actions > button',
-  serviceProvider: '#field-dit_team',
   service: '#field-service',
   serviceStatus: '#field-service_delivery_status',
   grantOffered: '#field-grant_amount_offered',
   netReceipt: '#field-net_company_receipt',
-  ditAdviser: '#dit_adviser__typeahead .multiselect__tags',
+  ditAdviserTypeahead: {
+    fieldset: typeaheadID,
+    placeHolder: `${typeaheadID} .multiselect__input`,
+    textInput: `${typeaheadID} .multiselect__tags`,
+    selectedOption: `${typeaheadID} .multiselect__single`,
+    addAnotherBtn: `${typeaheadID} .js-AddItems__add--typeahead`,
+    secondTypeahead: `${typeaheadID} .c-form-group__inner .c-form-group--AddItems:nth-child(2) .multiselect__input`,
+    secondTypeaheadRemoveLink: `${typeaheadID} .c-form-group__inner .c-form-group--AddItems:nth-child(2) .js-AddItems__remove`,
+  },
   communicationChannel: '#field-communication_channel',
   eventYes: 'label[for=field-is_event-1]',
   eventNo: 'label[for=field-is_event-2]',
