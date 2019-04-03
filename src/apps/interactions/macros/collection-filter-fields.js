@@ -67,6 +67,7 @@ module.exports = function ({
       classes: 'c-form-group c-form-group--smaller c-form-group--filter',
       options: teamOptions,
       isAsync: false,
+      useSubLabel: false,
     },
     {
       macroName: 'MultipleChoiceField',
