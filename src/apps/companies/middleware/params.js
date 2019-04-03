@@ -1,25 +1,8 @@
-const { get, isUndefined } = require('lodash')
-
-const { hqLabels } = require('../labels')
 const { getDitCompany, getCHCompany } = require('../repos')
 
 async function getCompany (req, res, next, id) {
   try {
-    const company = await getDitCompany(req.session.token, id)
-    const headquarterType = get(company, 'headquarter_type.name')
-
-    res.locals.company = company
-    res.locals.companiesHouseCategory = get(company, 'companies_house_data.company_category')
-    res.locals.metaItems = []
-
-    if (!isUndefined(headquarterType)) {
-      res.locals.metaItems.push({
-        type: 'badge',
-        label: 'Headquarter type',
-        value: hqLabels[headquarterType],
-      })
-    }
-
+    res.locals.company = await getDitCompany(req.session.token, id)
     next()
   } catch (error) {
     next(error)
