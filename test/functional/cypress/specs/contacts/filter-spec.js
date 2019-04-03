@@ -87,7 +87,9 @@ describe('Contacts Collections Filter', () => {
     })
   })
 
-  it('should remove all filters', () => {
+  // Should be enable once the issue below is fixed:
+  // https://trello.com/c/PGgFfLHw/668-when-removing-filters-from-a-collection-page-the-page-is-incorrectly-reloaded-twice
+  xit('should remove all filters', () => {
     cy.get(selectors.entityCollection.collectionRemoveAllFilter).click()
 
     cy.wait('@filterResults')
