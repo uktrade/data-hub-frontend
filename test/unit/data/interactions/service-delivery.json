@@ -8,19 +8,22 @@
   "subject": "Test interactions",
   "notes": "lorem ipsum",
   "date": "2017-05-31T00:00:00",
-  "dit_adviser": {
-    "id": "8036f207-ae3e-e611-8d53-e4115bed50dc",
-    "first_name": "Test",
-    "last_name": "CMU 1",
-    "name": "Test CMU 1"
-  },
+  "dit_participants": [
+    {
+      "adviser": {
+        "id": 1,
+        "first_name": "Bob",
+        "last_name": "Lawson",
+        "name": "Bob Lawson"
+      },
+      "team": {
+        "id": 1,
+        "name": "The test team"
+      }
+    }],
   "service": {
     "id": "1231231231312",
     "name": "Test service"
-  },
-  "dit_team": {
-    "id": "222",
-    "name": "Team"
   },
   "contacts": [{
     "id": "b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306",
