@@ -60,6 +60,8 @@
     {{ data.address | formatAddress }}
   {% elif data.type === 'error' %}
     {{ error(data) }}
+  {% elif data.type === 'html' %}
+    {{ data.string | safe }}
   {% else %}
     {{ data.name or data | escapeHtml | safe }}
   {% endif %}
