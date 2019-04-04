@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { assign, capitalize, get, mapKeys, pickBy } = require('lodash')
+const { assign, capitalize, compact, get, mapKeys, pickBy } = require('lodash')
 const { format, isValid } = require('date-fns')
 
 const { transformDateObjectToDateString } = require('../transformers')
@@ -7,7 +7,7 @@ const { transformFilesResultsToDetails, transformLabelsToShowFiles } = require('
 const labels = require('./labels')
 const { PROPOSITION_STATE } = require('./constants')
 
-const isUrlRegex = '^(http|https)://'
+const isUrlRegex = '(http|https)://'
 
 function transformPropositionResponseToForm ({
   id,
@@ -73,6 +73,37 @@ function transformPropositionToListItem ({
   }
 }
 
+function formatDetails (details = '') {
+  if (details.length) {
+    const result = splitString(details).map(s => isUrl(s) ? addAnchorsToUrl(s) : addLineBreaks(s))
+
+    return compact(result).join(' ')
+  }
+}
+
+function addLineBreaks (string) {
+  return string.replace(/\n|\r/g, '<br>')
+}
+
+function isUrl (string) {
+  return string.match(isUrlRegex)
+}
+
+function splitString (string) {
+  /**
+   * splits the string by space, and return caret
+   */
+  const separators = [' ', '\r']
+
+  return string.split(new RegExp(separators.join('|'), 'g'))
+}
+
+function addAnchorsToUrl (string) {
+  const cleanString = string.replace(/\n|\r/g, '')
+
+  return `<a href="${cleanString}">${cleanString}</a>`
+}
+
 function transformPropositionResponseToViewRecord ({
   scope,
   status,
@@ -87,6 +118,7 @@ function transformPropositionResponseToViewRecord ({
   features,
 }) {
   const detailLabels = labels.proposition
+  const formattedDetails = formatDetails(details)
   const transformed = {
     scope: capitalize(scope),
     status: capitalize(status),
@@ -103,18 +135,10 @@ function transformPropositionResponseToViewRecord ({
       name: deadline,
     },
     adviser,
-    details: (function () {
-      const regex = new RegExp(isUrlRegex, 'i')
-
-      if (regex.exec(details)) {
-        return {
-          url: details,
-          name: details,
-        }
-      } else {
-        return details
-      }
-    })(),
+    details: formattedDetails ? {
+      type: 'html',
+      string: formattedDetails,
+    } : null,
     ...transformFilesResultsToDetails(files.results, id, investment_project.id),
   }
 
