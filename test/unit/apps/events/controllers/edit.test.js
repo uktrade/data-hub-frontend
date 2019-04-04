@@ -168,7 +168,7 @@ describe('Event edit controller', () => {
           { label: 'Zac Smith', value: '3' },
         ]
 
-        const formOrganizerFieldOptions = getFormFieldOptions(this.res, 'dit_adviser')
+        const formOrganizerFieldOptions = getFormFieldOptions(this.res, 'organiser')
         expect(formOrganizerFieldOptions).to.deep.equal(expectedOptions)
       })
 
@@ -231,7 +231,6 @@ describe('Event edit controller', () => {
     context('when editing an event', () => {
       beforeEach(async () => {
         this.currentAdviser = this.activeInactiveAdviserData.results[3]
-
         this.res.locals.event = assign({}, eventData, {
           created_on: lastMonth,
           organiser: this.currentAdviser,
