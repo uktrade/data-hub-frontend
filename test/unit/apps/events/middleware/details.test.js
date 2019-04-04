@@ -24,7 +24,10 @@ const expectedBody = {
   uk_region: 'uk_region',
   notes: 'notes',
   lead_team: 'lead_team',
-  organiser: 'organiser',
+  organiser: {
+    'id': '1',
+    'name': 'abc',
+  },
   related_programmes: [ 'programme1', 'programme2' ],
   teams: [ 'team1', 'team2', 'lead_team' ],
   services: 'services',
