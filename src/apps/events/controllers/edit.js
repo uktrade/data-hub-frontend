@@ -36,8 +36,7 @@ async function renderEditPage (req, res, next) {
     const eventName = get(eventData, 'name')
     const lead_team = eventData.lead_team || get(req, 'session.user.dit_team.id')
     const mergedData = pickBy(merge({}, eventData, { lead_team }, res.locals.requestBody))
-
-    const currentAdviser = get(eventData, 'organiser.id')
+    const currentAdviser = get(eventData, 'organiser')
     const options = await getEditOptions(req.session.token, mergedData.created_on, currentAdviser)
 
     const eventForm =
