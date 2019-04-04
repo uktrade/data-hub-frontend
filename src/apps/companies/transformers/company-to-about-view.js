@@ -82,7 +82,7 @@ module.exports = ({
   duns_number,
   business_type,
   trading_names,
-  companies_house_data,
+  company_number,
   turnover,
   turnover_range,
   number_of_employees,
@@ -90,8 +90,6 @@ module.exports = ({
   website,
   description,
 }) => {
-  const company_number = get(companies_house_data, 'company_number')
-
   const viewRecord = {
     vat_number,
     description,
