@@ -80,10 +80,6 @@ describe('Proposition transformers', () => {
               name: 'Joseph Wright of Derby',
               id: '14d9f881-4df4-421b-8181-874f9dc83b76',
             },
-          Details: {
-            url: undefined,
-            name: undefined,
-          },
           'File 1':
             ['il_fullxfull.826924229_2xdo.jpg',
               {
@@ -104,6 +100,70 @@ describe('Proposition transformers', () => {
                 name: 'Download',
                 url: '/investments/projects/65e77d82-8ebb-4ee7-b6ac-8c5945c512db/propositions/7d68565a-fc0e-422c-8ce3-df92cd40a64a/download/1eab8de6-0a9a-4152-95d0-a3eca9ef6a8f',
               }],
+        })
+      })
+    })
+
+    context('when provided an abandoned proposition and simple text as detail', () => {
+      beforeEach(() => {
+        mockProposition.status = 'Abandoned'
+        mockProposition.details = 'the world is a stage'
+        this.transformed = transformPropositionResponseToViewRecord(mockProposition)
+      })
+
+      it('should not transform it to a url', () => {
+        expect(this.transformed.Details).to.deep.equal('the world is a stage')
+        expect(this.transformed.Details).to.not.deep.equal({
+          name: 'http://the-world-is-a-stage',
+          url: 'http://the-world-is-a-stage',
+        })
+      })
+    })
+
+    context('when provided an abandoned proposition and a url with http as detail', () => {
+      beforeEach(() => {
+        mockProposition.status = 'Abandoned'
+        mockProposition.details = 'http://the-world-is-a-stage'
+        this.transformed = transformPropositionResponseToViewRecord(mockProposition)
+      })
+
+      it('should transform it to a url', () => {
+        expect(this.transformed.Details).to.not.deep.equal('the world is a stage')
+        expect(this.transformed.Details).to.deep.equal({
+          name: 'http://the-world-is-a-stage',
+          url: 'http://the-world-is-a-stage',
+        })
+      })
+    })
+
+    context('when provided an abandoned proposition and a url with https as detail', () => {
+      beforeEach(() => {
+        mockProposition.status = 'Abandoned'
+        mockProposition.details = 'https://and-we-are-the-actors'
+        this.transformed = transformPropositionResponseToViewRecord(mockProposition)
+      })
+
+      it('should transform it to a url', () => {
+        expect(this.transformed.Details).to.not.deep.equal('https://and-we-are-the-actors')
+        expect(this.transformed.Details).to.deep.equal({
+          name: 'https://and-we-are-the-actors',
+          url: 'https://and-we-are-the-actors',
+        })
+      })
+    })
+
+    context('when provided an abandoned proposition and a text including a url with https as detail', () => {
+      beforeEach(() => {
+        mockProposition.status = 'Abandoned'
+        mockProposition.details = 'the world is a stage, https://and-we-are-the-actors'
+        this.transformed = transformPropositionResponseToViewRecord(mockProposition)
+      })
+
+      it('should not transform it to a url', () => {
+        expect(this.transformed.Details).to.deep.equal('the world is a stage, https://and-we-are-the-actors')
+        expect(this.transformed.Details).to.not.deep.equal({
+          name: 'https://and-we-are-the-actors',
+          url: 'https://and-we-are-the-actors',
         })
       })
     })
