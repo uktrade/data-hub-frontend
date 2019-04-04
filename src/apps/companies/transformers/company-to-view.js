@@ -50,7 +50,6 @@ module.exports = function transformCompanyToView ({
   trading_address_county,
   trading_address_postcode,
   trading_address_country,
-  companies_house_data,
   business_type,
   global_headquarters,
 }) {
@@ -91,7 +90,7 @@ module.exports = function transformCompanyToView ({
         country: trading_address_country,
       },
     } : null,
-    business_type: !companies_house_data ? get(business_type, 'name') : null,
+    business_type: get(business_type, 'name'),
   }
 
   if (get(headquarter_type, 'name') !== 'ghq') {

@@ -40,9 +40,7 @@ describe('#transformCompanyToKnownAsView', () => {
             'trading name 1',
             'trading name 2',
           ],
-          companies_house_data: {
-            company_number: '123456',
-          },
+          company_number: '123456',
           website: 'www.company.com',
           turnover: 100000,
           number_of_employees: 200,
@@ -157,9 +155,7 @@ describe('#transformCompanyToKnownAsView', () => {
             'trading name 1',
             'trading name 2',
           ],
-          companies_house_data: {
-            company_number: '123456',
-          },
+          company_number: '123456',
           vat_number: '0123456789',
           turnover_range: {
             name: '£33.5M+',

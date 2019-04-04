@@ -1,6 +1,5 @@
 const datahubOnlyCompany = require('~/test/unit/data/companies/datahub-only-company.json')
 const minimalCompany = require('~/test/unit/data/companies/minimal-company.json')
-const companiesHouseCompany = require('~/test/unit/data/companies/companies-house-company.json')
 
 const transformCompanyToView = require('~/src/apps/companies/transformers/company-to-view')
 
@@ -139,28 +138,6 @@ describe('transformCompanyToView', () => {
 
     it('should supply sector', () => {
       expect(this.viewRecord.Sector).to.equal('Aerospace')
-    })
-  })
-
-  context('called with a datahub company with companies house data', () => {
-    beforeEach(() => {
-      this.viewRecord = transformCompanyToView(companiesHouseCompany)
-    })
-
-    it('should not include the business type', () => {
-      expect(this.viewRecord).to.have.ordered.keys([
-        'Primary address',
-        'Trading names',
-        'Trading address',
-        'UK region',
-        'Headquarter type',
-        'Sector',
-        'Website',
-        'Business description',
-        'VAT number',
-        'CDMS reference',
-        'Global HQ',
-      ])
     })
   })
 
