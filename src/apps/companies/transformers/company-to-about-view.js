@@ -79,6 +79,7 @@ function transformWebsite (website) {
 
 module.exports = ({
   vat_number,
+  reference_code,
   duns_number,
   business_type,
   trading_names,
@@ -92,6 +93,7 @@ module.exports = ({
 }) => {
   const viewRecord = {
     vat_number,
+    reference_code,
     description,
     business_type: duns_number ? null : get(business_type, 'name'),
     trading_names: isEmpty(trading_names) ? NOT_SET_TEXT : trading_names,

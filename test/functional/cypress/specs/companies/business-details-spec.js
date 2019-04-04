@@ -149,6 +149,7 @@ describe('Companies business details', () => {
       assertKeyValueTable('aboutDetails', {
         'Business type': 'Company',
         'Trading names': 'Not set',
+        'CDMS reference': 'ORG-10096257',
         'Annual turnover': 'Not set',
         'Number of employees': 'Not set',
         'Website': 'Not set',
