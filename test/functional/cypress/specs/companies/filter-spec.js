@@ -74,8 +74,6 @@ describe('Company Collections Filter', () => {
 
   it('should remove all filters', () => {
     cy.get(selectors.entityCollection.collectionRemoveAllFilter).click()
-
-    cy.wait('@filterResults')
     cy.get(selectors.entityCollection.collection).should('contain', '100,172 companies')
   })
 })

@@ -24,7 +24,7 @@
         {% if props.selectedFilters | length %}
           <a
             href="?{{ buildQuery({}, { custom: true, sortby: props.sortForm.children[0].value }) }}"
-            class="c-collection__filter-remove-all js-xhr js-ClearInputs"
+            class="c-collection__filter-remove-all js-ClearInputs"
             data-target-selector=".c-collection-filters"
             aria-label="Reset filter results"
           >
