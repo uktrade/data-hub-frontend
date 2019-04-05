@@ -1,0 +1,39 @@
+.task-list {
+  display: flex;
+  flex-direction: column;
+
+  .task-list__item {
+    border-bottom: 1px solid #bfc1c3;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    .task-list__item-name {
+      font-weight: bold;
+    }
+
+    .task-list__item-incomplete {
+      display: block;
+      background: $govuk-blue;
+      width: fit-content;
+      height: fit-content;
+      padding: 2px 4px;
+      color: white;
+      margin-top: 5px;
+    }
+
+    @include govuk-media-query($from: tablet) {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 15px;
+      padding-bottom: 15px;
+
+      .task-list__item-name {
+        margin-right: 10px;
+      }
+
+      .task-list__item-incomplete {
+        margin-top: 0;
+      }
+    }
+  }
+}

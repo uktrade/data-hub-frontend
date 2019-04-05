@@ -40,9 +40,7 @@ describe('#transformCompanyToKnownAsView', () => {
             'trading name 1',
             'trading name 2',
           ],
-          companies_house_data: {
-            company_number: '123456',
-          },
+          company_number: '123456',
           website: 'www.company.com',
           turnover: 100000,
           number_of_employees: 200,
@@ -70,7 +68,7 @@ describe('#transformCompanyToKnownAsView', () => {
           {
             details: {
               summaryText: 'What does that mean?',
-              text: 'This is an estimated number',
+              text: 'Actual number of employees is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
             },
             name: 'This is an estimated number',
             type: 'details',
@@ -84,7 +82,7 @@ describe('#transformCompanyToKnownAsView', () => {
           {
             details: {
               summaryText: 'What does that mean?',
-              text: 'This is an estimated number',
+              text: 'Actual turnover is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
             },
             name: 'This is an estimated number',
             type: 'details',
@@ -157,10 +155,9 @@ describe('#transformCompanyToKnownAsView', () => {
             'trading name 1',
             'trading name 2',
           ],
-          companies_house_data: {
-            company_number: '123456',
-          },
+          company_number: '123456',
           vat_number: '0123456789',
+          reference_code: 'ORG-12345678',
           turnover_range: {
             name: '£33.5M+',
           },
@@ -210,6 +207,10 @@ describe('#transformCompanyToKnownAsView', () => {
         expect(this.actual['VAT number']).to.equal('0123456789')
       })
 
+      it('should set the CDMS reference', () => {
+        expect(this.actual['CDMS reference']).to.equal('ORG-12345678')
+      })
+
       it('should set the description', () => {
         expect(this.actual.Description).to.equal('description')
       })
@@ -237,6 +238,10 @@ describe('#transformCompanyToKnownAsView', () => {
 
       it('should set the business type', () => {
         expect(this.actual['Business type']).to.equal('Company')
+      })
+
+      it('should not set the CDMS reference', () => {
+        expect(this.actual['CDMS reference']).to.not.exist
       })
 
       it('should not set the VAT number', () => {

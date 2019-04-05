@@ -18,7 +18,7 @@ function transformTurnover (turnover, turnover_range) {
         type: 'details',
         details: {
           summaryText: 'What does that mean?',
-          text: 'This is an estimated number',
+          text: 'Actual turnover is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
         },
       },
     ]
@@ -39,7 +39,7 @@ function transformNumberOfEmployees (number_of_employees, employee_range) {
         type: 'details',
         details: {
           summaryText: 'What does that mean?',
-          text: 'This is an estimated number',
+          text: 'Actual number of employees is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
         },
       },
     ]
@@ -79,10 +79,11 @@ function transformWebsite (website) {
 
 module.exports = ({
   vat_number,
+  reference_code,
   duns_number,
   business_type,
   trading_names,
-  companies_house_data,
+  company_number,
   turnover,
   turnover_range,
   number_of_employees,
@@ -90,10 +91,9 @@ module.exports = ({
   website,
   description,
 }) => {
-  const company_number = get(companies_house_data, 'company_number')
-
   const viewRecord = {
     vat_number,
+    reference_code,
     description,
     business_type: duns_number ? null : get(business_type, 'name'),
     trading_names: isEmpty(trading_names) ? NOT_SET_TEXT : trading_names,

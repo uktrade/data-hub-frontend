@@ -1,3 +1,6 @@
+/* eslint-disable no-new */
+const Vue = require('vue')
+const Typeahead = require('../../../../../assets/javascripts/vue/typeahead.vue').default
 const AddAnotherFragment = require('../../../../../assets/javascripts/modules/add-items')
 
 const selectMarkup = `<div id="group-field-adviser" class="c-form-group js-adviser">
@@ -101,6 +104,37 @@ function makeMultipleSelect (allowDeleteAll = false) {
   const document = window.document
   const wrapper = document.querySelector('.js-AddItems')
   AddAnotherFragment.init(document)
+
+  return { document, wrapper }
+}
+
+function makeTypeahead () {
+  const HTML = formMacros.render('AddAnother', {
+    buttonName: 'add_item',
+    name: 'dit_participants',
+    children: [{
+      macroName: 'Typeahead',
+      name: 'dit_participants',
+      label: 'Advisers',
+      isLabelHidden: true,
+      entity: 'adviser',
+      placeholder: 'Search adviser',
+      classes: 'c-form-group c-form-group--no-filter',
+      multipleSelect: false,
+      options: [{
+        value: '1',
+        label: 'Bob',
+        subLabel: 'Lawson',
+      }],
+    }],
+    label: 'Adviser(s)',
+    error: null,
+    value: ['1'],
+  })
+
+  const { window } = new JSDOM(HTML)
+  const document = window.document
+  const wrapper = document.querySelector('.js-AddItems')
 
   return { document, wrapper }
 }
@@ -384,6 +418,54 @@ describe('Add another', function () {
           expect(getVisibleRemoveButtons(this.wrapper)).to.have.length(3)
         })
       })
+    })
+  })
+
+  describe('<typeahead>', function () {
+    beforeEach(function () {
+      const { document, wrapper } = makeTypeahead()
+      this.document = document
+      this.wrapper = wrapper
+      const vueWrappers = Array.from(document.querySelectorAll('.js-vue-wrapper'))
+      const noScriptTags = Array.from(document.getElementsByTagName('noscript'))
+
+      noScriptTags.forEach((tag) => {
+        tag.parentNode.removeChild(tag)
+      })
+
+      vueWrappers.forEach((wrapper) => {
+        new Vue({
+          el: wrapper,
+          components: {
+            'typeahead': Typeahead,
+          },
+        })
+      })
+      AddAnotherFragment.init(document)
+    })
+
+    it('should contain a typeahead', function () {
+      const typeahead = this.wrapper.querySelector('#dit_participants__typeahead')
+      expect(typeahead).to.exist
+    })
+    it('should contain a selected value in the placeholder', function () {
+      const hiddenInput = this.wrapper.querySelector('.multiselect__input')
+      const placeholder = hiddenInput.getAttribute('placeholder')
+      expect(placeholder).to.equal('Bob, Lawson')
+    })
+
+    it('should create a new typeahead field when add another is clicked', function () {
+      this.wrapper.querySelector('.js-AddItems__add--typeahead').click()
+      const typeaheads = this.wrapper.querySelectorAll('#dit_participants__typeahead')
+      expect(typeaheads.length).to.equal(2)
+    })
+
+    it('should not contain a placeholder in the 2nd item', function () {
+      this.wrapper.querySelector('.js-AddItems__add--typeahead').click()
+      const typeaheadTwo = Array.from(this.wrapper.querySelectorAll('#dit_participants__typeahead'))[1]
+      const hiddenInput = typeaheadTwo.querySelector('.multiselect__input')
+      const placeholder = hiddenInput.getAttribute('placeholder')
+      expect(placeholder).to.equal('Select option')
     })
   })
 

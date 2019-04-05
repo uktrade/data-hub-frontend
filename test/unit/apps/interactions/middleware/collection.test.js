@@ -220,7 +220,7 @@ describe('interaction collection middleware', () => {
       it('should put the criteria in the request body', () => {
         expect(this.req.body.kind).to.equal(this.req.query.kind)
         expect(this.req.body.communication_channel).to.equal(this.req.query.communication_channel)
-        expect(this.req.body.dit_adviser).to.equal(this.req.query.dit_adviser)
+        expect(this.req.body.dit_participants).to.equal(this.req.query.dit_participants)
         expect(this.req.body.date_after).to.equal(this.req.query.date_after)
         expect(this.req.body.date_before).to.equal(this.req.query.date_before)
       })

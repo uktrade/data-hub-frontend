@@ -28,10 +28,6 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
           name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
         }],
-        'Service provider': {
-          id: '16362a92-9698-e211-a939-e4115bead28a',
-          name: 'UKTI Chief Executive\'s Office',
-        },
         'Service': {
           id: 'd320b92b-3499-e211-a939-e4115bead28a',
           name: 'Investment - Company Visit',
@@ -51,12 +47,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           name: 'View files and documents',
           url: 'http://base/documents/123',
         },
-        'DIT adviser': {
-          id: '537df876-5062-e311-8255-e4115bead28a',
-          first_name: 'Priyanka',
-          last_name: 'Karunan',
-          name: 'Priyanka Karunan',
-        },
+        'Adviser(s)': ['Bob Lawson, The test team'],
         'Investment project': {
           url: '/investments/projects/bac18331-ca4d-4501-960e-a1bd68b5d47e',
           name: 'Test project',
@@ -92,10 +83,6 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
           name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
         }],
-        'Service provider': {
-          id: '16362a92-9698-e211-a939-e4115bead28a',
-          name: 'UKTI Chief Executive\'s Office',
-        },
         'Service': {
           id: 'd320b92b-3499-e211-a939-e4115bead28a',
           name: 'Investment - Company Visit',
@@ -115,12 +102,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           type: 'date',
           name: '2058-11-25',
         },
-        'DIT adviser': {
-          id: '537df876-5062-e311-8255-e4115bead28a',
-          first_name: 'Priyanka',
-          last_name: 'Karunan',
-          name: 'Priyanka Karunan',
-        },
+        'Adviser(s)': ['Bob Lawson, The test team'],
         'Investment project': {
           url: '/investments/projects/bac18331-ca4d-4501-960e-a1bd68b5d47e',
           name: 'Test project',
@@ -147,10 +129,6 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
           name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
         }],
-        'Service provider': {
-          id: '16362a92-9698-e211-a939-e4115bead28a',
-          name: 'UKTI Chief Executive\'s Office',
-        },
         'Service': {
           id: 'd320b92b-3499-e211-a939-e4115bead28a',
           name: 'Investment - Company Visit',
@@ -171,12 +149,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
         'Documents': {
           name: 'There are no files or documents',
         },
-        'DIT adviser': {
-          id: '537df876-5062-e311-8255-e4115bead28a',
-          first_name: 'Priyanka',
-          last_name: 'Karunan',
-          name: 'Priyanka Karunan',
-        },
+        'Adviser(s)': ['Bob Lawson, The test team'],
       })
     })
   })
@@ -199,10 +172,6 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
           name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
         }],
-        'Service provider': {
-          id: '16362a92-9698-e211-a939-e4115bead28a',
-          name: 'UKTI Chief Executive\'s Office',
-        },
         'Service': {
           id: 'd320b92b-3499-e211-a939-e4115bead28a',
           name: 'Investment - Company Visit',
@@ -219,12 +188,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           type: 'date',
           name: '2058-11-25',
         },
-        'DIT adviser': {
-          id: '537df876-5062-e311-8255-e4115bead28a',
-          first_name: 'Priyanka',
-          last_name: 'Karunan',
-          name: 'Priyanka Karunan',
-        },
+        'Adviser(s)': ['Bob Lawson, The test team'],
         'Communication channel': {
           id: '70c226d7-5d95-e211-a939-e4115bead28a',
           name: 'Email/Website',
@@ -263,10 +227,6 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
           name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
         }],
-        'Service provider': {
-          id: '16362a92-9698-e211-a939-e4115bead28a',
-          name: 'UKTI Chief Executive\'s Office',
-        },
         'Service': {
           id: 'd320b92b-3499-e211-a939-e4115bead28a',
           name: 'Investment - Company Visit',
@@ -292,12 +252,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           type: 'date',
           name: '2058-11-25',
         },
-        'DIT adviser': {
-          id: '537df876-5062-e311-8255-e4115bead28a',
-          first_name: 'Priyanka',
-          last_name: 'Karunan',
-          name: 'Priyanka Karunan',
-        },
+        'Adviser(s)': ['Bob Lawson, The test team'],
         'Documents': {
           hint: '(will open another website)',
           hintId: 'external-link-label',
@@ -335,10 +290,6 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
           name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
         }],
-        'Service provider': {
-          id: '16362a92-9698-e211-a939-e4115bead28a',
-          name: 'UKTI Chief Executive\'s Office',
-        },
         'Service': {
           id: 'd320b92b-3499-e211-a939-e4115bead28a',
           name: 'Investment - Company Visit',
@@ -352,12 +303,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           type: 'date',
           name: '2058-11-25',
         },
-        'DIT adviser': {
-          id: '537df876-5062-e311-8255-e4115bead28a',
-          first_name: 'Priyanka',
-          last_name: 'Karunan',
-          name: 'Priyanka Karunan',
-        },
+        'Adviser(s)': ['Bob Lawson, The test team'],
         'Event': 'No',
         'Documents': {
           name: 'There are no files or documents',
@@ -384,10 +330,6 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
           name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
         }],
-        'Service provider': {
-          id: '16362a92-9698-e211-a939-e4115bead28a',
-          name: 'UKTI Chief Executive\'s Office',
-        },
         'Service': {
           id: 'd320b92b-3499-e211-a939-e4115bead28a',
           name: 'Investment - Company Visit',
@@ -404,12 +346,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           type: 'date',
           name: '2058-11-25',
         },
-        'DIT adviser': {
-          id: '537df876-5062-e311-8255-e4115bead28a',
-          first_name: 'Priyanka',
-          last_name: 'Karunan',
-          name: 'Priyanka Karunan',
-        },
+        'Adviser(s)': ['Bob Lawson, The test team'],
         'Communication channel': {
           id: '70c226d7-5d95-e211-a939-e4115bead28a',
           name: 'Email/Website',
@@ -434,10 +371,6 @@ describe('#transformInteractionResponsetoViewRecord', () => {
             url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
             name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
           }],
-          'Service provider': {
-            id: '16362a92-9698-e211-a939-e4115bead28a',
-            name: 'UKTI Chief Executive\'s Office',
-          },
           'Service': {
             id: 'd320b92b-3499-e211-a939-e4115bead28a',
             name: 'Investment - Company Visit',
@@ -448,12 +381,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
             type: 'date',
             name: '2058-11-25',
           },
-          'DIT adviser': {
-            id: '537df876-5062-e311-8255-e4115bead28a',
-            first_name: 'Priyanka',
-            last_name: 'Karunan',
-            name: 'Priyanka Karunan',
-          },
+          'Adviser(s)': ['Bob Lawson, The test team'],
           'Communication channel': {
             id: '70c226d7-5d95-e211-a939-e4115bead28a',
             name: 'Email/Website',

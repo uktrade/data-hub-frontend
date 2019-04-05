@@ -19,6 +19,7 @@ describe('Typeahead', () => {
       label: 'Adviser',
       placeholder: 'Search adviser',
       hideLabel: true,
+      useSubLabel: true,
     }
 
     Vue.filter('highlight', highlight)
@@ -84,33 +85,6 @@ describe('Typeahead', () => {
       })
     })
 
-    context('when advisers are selected that have names only', () => {
-      beforeEach((done) => {
-        const dataWithSelectedAdvisers = Object.assign({}, defaultProps, {
-          selectedOptions: [{
-            value: '1234',
-            label: 'Fred Jones',
-          }],
-        })
-
-        component.setData(dataWithSelectedAdvisers)
-        Vue.nextTick(done)
-      })
-
-      it('should populate the default selected options', () => {
-        expect(component.findAll('.multiselect__tag')).to.have.length(1)
-      })
-
-      it('should show the adviser name in the tag', () => {
-        expect(component.find('.multiselect__tag').text()).to.equal('Fred Jones')
-      })
-
-      it('should render the selected options as hidden fields', () => {
-        const element = component.find('input[type="hidden"][name="adviser"]').element
-        expect(element.value).to.equal('1234')
-      })
-    })
-
     context('when advisers are selected that have names and team names', () => {
       beforeEach((done) => {
         const dataWithSelectedAdvisers = Object.assign({}, defaultProps, {
@@ -130,7 +104,7 @@ describe('Typeahead', () => {
       })
 
       it('should show the adviser name and team in the tag', () => {
-        expect(component.find('.multiselect__tag').text()).to.equal('Fred Jones - Team ABC')
+        expect(component.find('.multiselect__tag').text()).to.equal('Fred Jones, Team ABC')
       })
 
       it('should render the selected options as hidden fields', () => {
@@ -139,7 +113,7 @@ describe('Typeahead', () => {
       })
     })
 
-    context('when choosing to not display form labels', () => {
+    context('when choosing not to display form labels', () => {
       beforeEach((done) => {
         component = mount(Typeahead, {
           propsData: Object.assign({}, defaultProps, { isLabelHidden: true }),
@@ -147,7 +121,25 @@ describe('Typeahead', () => {
         Vue.nextTick(done)
       })
       it('should hide the label with visually hidden class', () => {
-        expect(component.find('.u-visually-hidden').hasClass('u-visually-hidden')).to.be.true
+        expect(component.find('.u-visually-hidden').classes('u-visually-hidden')).to.be.true
+      })
+    })
+
+    context('when choosing not to display sub labels when selected', () => {
+      beforeEach((done) => {
+        const dataWithHiddenSubLabel = Object.assign({}, defaultProps, {
+          hasSubLabel: false,
+          selectedOptions: [{
+            value: '1234',
+            label: 'Fred Jones',
+            subLabel: 'Team ABC',
+          }],
+        })
+        component.setData(dataWithHiddenSubLabel)
+        Vue.nextTick(done)
+      })
+      it('should show the adviser name without the team', () => {
+        expect(component.find('.multiselect__tag').text()).to.equal('Fred Jones')
       })
     })
   })

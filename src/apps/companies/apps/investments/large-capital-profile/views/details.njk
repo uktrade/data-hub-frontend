@@ -1,9 +1,19 @@
-<p>Investor details: UI read only fields go here...</p>
+<ul class="task-list">
+  {{ taskListItem({ name: 'Investor type' }) }}
+  {{ taskListItem({ name: 'Global assets under management' }) }}
+  {{ taskListItem({ name: 'Investable capital' }) }}
+  {{ taskListItem({ name: 'Investor description' }) }}
+  {{ taskListItem({
+       id: 'investor-checks',
+       name: 'Has this investor cleared the required checks within the last 12 months?'
+     })
+  }}
+</ul>
 
 {% call Form({
   buttonText: 'Edit',
   hiddenFields: { edit: 'details' },
-  buttonDataAttr: 'investor-details-edit',
+  buttonDataAttr: 'investorDetailsEdit',
   disableFormAction: edit === 'requirements' or edit === 'location',
   action: '/companies/' + company.id + '/investments/large-capital-profile/edit'
 })

@@ -26,16 +26,19 @@
   },
   "modified_on": "2018-04-24T13:32:35.864294Z",
   "date": "2058-11-25",
-  "dit_adviser": {
-      "first_name": "Priyanka",
-      "last_name": "Karunan",
-      "name": "Priyanka Karunan",
-      "id": "537df876-5062-e311-8255-e4115bead28a"
-  },
-  "dit_team": {
-      "name": "UKTI Chief Executive's Office",
-      "id": "16362a92-9698-e211-a939-e4115bead28a"
-  },
+  "dit_participants": [
+    {
+      "adviser": {
+        "id": 1,
+        "first_name": "Bob",
+        "last_name": "Lawson",
+        "name": "Bob Lawson"
+      },
+      "team": {
+        "id": 1,
+        "name": "The test team"
+      }
+    }],
   "communication_channel": {
       "name": "Email/Website",
       "id": "70c226d7-5d95-e211-a939-e4115bead28a"

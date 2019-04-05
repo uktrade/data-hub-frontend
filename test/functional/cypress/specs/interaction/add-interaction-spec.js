@@ -131,7 +131,6 @@ const populateServiceDeliveryForm = service => {
 const validateSuccesfulFormSubmission = (subject, headerTitle) => {
   cy.get(serviceDeliveryDetails.company).should('contain', 'Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978')
   cy.get(serviceDeliveryDetails.contacts).should('contain', 'Bob lawson')
-  cy.get(serviceDeliveryDetails.serviceProvider).should('contain', 'UKTI Team East Midlands - International Trade Team')
   cy.get(serviceDeliveryDetails.service).should('contain', 'Account Managment: Northern Powerhouse')
   cy.get(serviceDeliveryDetails.subject).should('contain', subject)
   cy.get(serviceDeliveryDetails.notes).should('contain', 'Sandbox')

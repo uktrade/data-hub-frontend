@@ -149,6 +149,7 @@ describe('Companies business details', () => {
       assertKeyValueTable('aboutDetails', {
         'Business type': 'Company',
         'Trading names': 'Not set',
+        'CDMS reference': 'ORG-10096257',
         'Annual turnover': 'Not set',
         'Number of employees': 'Not set',
         'Website': 'Not set',
@@ -279,8 +280,8 @@ describe('Companies business details', () => {
     it('should display the "About" details', () => {
       assertKeyValueTable('aboutDetails', {
         'Trading names': 'DnBD&B',
-        'Annual turnover': '£750,148.00This is an estimated numberWhat does that mean?This is an estimated number',
-        'Number of employees': '95This is an estimated numberWhat does that mean?This is an estimated number',
+        'Annual turnover': '£750,148.00This is an estimated numberWhat does that mean?Actual turnover is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
+        'Number of employees': '95This is an estimated numberWhat does that mean?Actual number of employees is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
         'Website': 'Not set',
       })
     })

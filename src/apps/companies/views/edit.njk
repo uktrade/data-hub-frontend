@@ -9,15 +9,17 @@
 
 {% block body_main_content %}
   <div class="section">
-    <h2 class="govuk-heading-s">Business type</h2>
-    {{ MetaList({
-        items: [
-          {
-            label: businessTypeLabel | default('(type of organisation not known)'),
-            value: ('&nbsp;' if company else '<a href="/companies/add-step-1">Change</a>') | safe
-          }
-        ]
-      }) }}
+    {% if businessTypeLabel %}
+      <h2 class="govuk-heading-s">Business type</h2>
+      {{ MetaList({
+          items: [
+            {
+              label: businessTypeLabel,
+              value: ('&nbsp;' if company else '<a href="/companies/add-step-1">Change</a>') | safe
+            }
+          ]
+        }) }}
+    {% endif %}
   </div>
 
 
