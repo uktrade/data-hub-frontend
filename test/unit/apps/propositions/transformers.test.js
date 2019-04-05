@@ -111,9 +111,14 @@ describe('Proposition transformers', () => {
         this.transformed = transformPropositionResponseToViewRecord(mockProposition)
       })
 
-      it('should not transform it to a url', () => {
-        expect(this.transformed.Details.string).to.equal('the world is a stage')
-        expect(this.transformed.Details.string).to.not.equal('<a href="http://the-world-is-a-stage">http://the-world-is-a-stage</a>')
+      it('should not transform it to a collection with only word objects', () => {
+        expect(this.transformed.Details.string).to.deep.equal([
+          { type: 'word', string: 'the' },
+          { type: 'word', string: 'world' },
+          { type: 'word', string: 'is' },
+          { type: 'word', string: 'a' },
+          { type: 'word', string: 'stage' },
+        ])
       })
     })
 
@@ -124,9 +129,16 @@ describe('Proposition transformers', () => {
         this.transformed = transformPropositionResponseToViewRecord(mockProposition)
       })
 
-      it('should transform it to a url', () => {
-        expect(this.transformed.Details.string).to.not.deep.equal('the world is a stage')
-        expect(this.transformed.Details.string).to.equal('<a href="http://the-world-is-a-stage">http://the-world-is-a-stage</a>')
+      it('should transform it to a collection with a single link object', () => {
+        expect(this.transformed.Details.string).to.not.equal('the world is a stage')
+        expect(this.transformed.Details.string).to.deep.equal(
+          [{ type: 'link',
+            string: {
+              url: 'http://the-world-is-a-stage',
+              name: 'http://the-world-is-a-stage',
+            },
+          }]
+        )
       })
     })
 
@@ -137,9 +149,16 @@ describe('Proposition transformers', () => {
         this.transformed = transformPropositionResponseToViewRecord(mockProposition)
       })
 
-      it('should transform it to a url', () => {
-        expect(this.transformed.Details.string).to.not.deep.equal('the world is a stage')
-        expect(this.transformed.Details.string).to.equal('<a href="http://the-world-is-a-stage">http://the-world-is-a-stage</a>')
+      it('should transform it to a collection with a single link object', () => {
+        expect(this.transformed.Details.string).to.deep.equal(
+          [{
+            type: 'link',
+            string: {
+              url: 'http://the-world-is-a-stage',
+              name: 'http://the-world-is-a-stage',
+            },
+          }]
+        )
       })
     })
 
@@ -150,9 +169,15 @@ describe('Proposition transformers', () => {
         this.transformed = transformPropositionResponseToViewRecord(mockProposition)
       })
 
-      it('should transform it to a url', () => {
-        expect(this.transformed.Details.string).to.not.deep.equal('the world is a stage')
-        expect(this.transformed.Details.string).to.equal('<a href="http://bazzinga">http://bazzinga</a>')
+      it('should transform it to a collection with a link object with http, and an empty word object', () => {
+        expect(this.transformed.Details.string).to.deep.equal(
+          [
+            { type: 'link',
+              string: { url: 'http://bazzinga', name: 'http://bazzinga' },
+            },
+            { type: 'word', string: '' },
+          ]
+        )
       })
     })
 
@@ -163,9 +188,16 @@ describe('Proposition transformers', () => {
         this.transformed = transformPropositionResponseToViewRecord(mockProposition)
       })
 
-      it('should transform it to a an anchor with the url as hyper-reference', () => {
-        expect(this.transformed.Details.string).to.not.equal('https://and-we-are-the-actors')
-        expect(this.transformed.Details.string).to.equal('<a href="https://and-we-are-the-actors">https://and-we-are-the-actors</a>')
+      it('should transform it to a collection with a link object with https', () => {
+        expect(this.transformed.Details.string).to.deep.equal(
+          [
+            { type: 'link',
+              string: {
+                url: 'https://and-we-are-the-actors',
+                name: 'https://and-we-are-the-actors',
+              },
+            }]
+        )
       })
     })
 
@@ -176,9 +208,22 @@ describe('Proposition transformers', () => {
         this.transformed = transformPropositionResponseToViewRecord(mockProposition)
       })
 
-      it('should transform the url to an anchor thus ignoring the normal text', () => {
-        expect(this.transformed.Details.string).to.equal('<a href="https://world-is-a-stage">https://world-is-a-stage</a> and we are the actors')
-        expect(this.transformed.Details.string).to.not.equal('https://world-is-a-stage and we are the actors')
+      it('should transform it to a collection with a link object for the url and a word object for the rest of the words in the string', () => {
+        expect(this.transformed.Details.string).to.deep.equal(
+          [{
+            type: 'link',
+            string:
+              {
+                url: 'https://world-is-a-stage',
+                name: 'https://world-is-a-stage',
+              },
+          },
+          { type: 'word', string: 'and' },
+          { type: 'word', string: 'we' },
+          { type: 'word', string: 'are' },
+          { type: 'word', string: 'the' },
+          { type: 'word', string: 'actors' },
+          ])
       })
     })
 
@@ -189,9 +234,19 @@ describe('Proposition transformers', () => {
         this.transformed = transformPropositionResponseToViewRecord(mockProposition)
       })
 
-      it('should transform the url to an anchor thus ignoring the normal text', () => {
-        expect(this.transformed.Details.string).to.equal('the world <a href="https://is-a-stage">https://is-a-stage</a> and we are the actors')
-        expect(this.transformed.Details.string).to.not.equal('the world https://is-a-stage and we are the actors')
+      it('should transform it to a collection with a link object for the url and a word object for the rest of the words in the string', () => {
+        expect(this.transformed.Details.string).to.deep.equal([
+          { type: 'word', string: 'the' },
+          { type: 'word', string: 'world' },
+          {
+            type: 'link',
+            string: { url: 'https://is-a-stage', name: 'https://is-a-stage' },
+          },
+          { type: 'word', string: 'and' },
+          { type: 'word', string: 'we' },
+          { type: 'word', string: 'are' },
+          { type: 'word', string: 'the' },
+          { type: 'word', string: 'actors' }])
       })
     })
 
@@ -202,9 +257,36 @@ describe('Proposition transformers', () => {
         this.transformed = transformPropositionResponseToViewRecord(mockProposition)
       })
 
-      it('should transform the url to an anchor thus ignoring the normal text', () => {
-        expect(this.transformed.Details.string).to.equal('the world <a href="https://is-a-stage">https://is-a-stage</a> and we are the actors, find more quotes at <a href="http://padding-quotes#123">http://padding-quotes#123</a> and put them here')
-        expect(this.transformed.Details.string).to.not.equal('the world https://is-a-stage and we are the actors, find more quotes at http://padding-quotes#123 and put them here')
+      it('should transform it to a collection with two link objects for the urls and a word object for the rest of the words in the string', () => {
+        expect(this.transformed.Details.string).to.deep.equal([
+          { type: 'word', string: 'the' },
+          { type: 'word', string: 'world' },
+          {
+            type: 'link',
+            string: { url: 'https://is-a-stage', name: 'https://is-a-stage' },
+          },
+          { type: 'word', string: 'and' },
+          { type: 'word', string: 'we' },
+          { type: 'word', string: 'are' },
+          { type: 'word', string: 'the' },
+          { type: 'word', string: 'actors,' },
+          { type: 'word', string: 'find' },
+          { type: 'word', string: 'more' },
+          { type: 'word', string: 'quotes' },
+          { type: 'word', string: 'at' },
+          {
+            type: 'link',
+            string:
+              {
+                url: 'http://padding-quotes#123',
+                name: 'http://padding-quotes#123',
+              },
+          },
+          { type: 'word', string: 'and' },
+          { type: 'word', string: 'put' },
+          { type: 'word', string: 'them' },
+          { type: 'word', string: 'here' }]
+        )
       })
     })
 
@@ -215,9 +297,33 @@ describe('Proposition transformers', () => {
         this.transformed = transformPropositionResponseToViewRecord(mockProposition)
       })
 
-      it('should transform the url to an anchor thus ignoring the normal text', () => {
-        expect(this.transformed.Details.string).to.equal('the world <a href="https://not.your.business.com/in-oui/Tower/BMI-slender/Heroes/Alpacas/AllTheThings.bruv?CarrotFruit=%2Bounce-ti%2Tennis%2FWD-atlethics%2BStuff%2Travel%2More%2L3ss%tim3ws6erz%20-%20Blah%2Cu8cumb34&Rap_Music=0x012000D998E6715Fr0GPF4881B0002C5764B8EF&EyeEye=%7B08EEDE07-DOOH-4B91-ASIA-BOYBAND48766CE%7D">https://not.your.business.com/in-oui/Tower/BMI-slender/Heroes/Alpacas/AllTheThings.bruv?CarrotFruit=%2Bounce-ti%2Tennis%2FWD-atlethics%2BStuff%2Travel%2More%2L3ss%tim3ws6erz%20-%20Blah%2Cu8cumb34&Rap_Music=0x012000D998E6715Fr0GPF4881B0002C5764B8EF&EyeEye=%7B08EEDE07-DOOH-4B91-ASIA-BOYBAND48766CE%7D</a> <br> The World is a stage and Susan from Accounts piloted the revolving bacon')
-        expect(this.transformed.Details.string).to.not.equal('the world https://is-a-stage and we are the actors, find more quotes at http://padding-quotes#123 and put them here')
+      it('should transform it to a collection with a link object for the complete url and a word object for the rest of the words in the string', () => {
+        expect(this.transformed.Details.string).to.deep.equal([
+          { type: 'word', string: 'the' },
+          { type: 'word', string: 'world' },
+          {
+            type: 'link',
+            string:
+              {
+                url: 'https://not.your.business.com/in-oui/Tower/BMI-slender/Heroes/Alpacas/AllTheThings.bruv?CarrotFruit=%2Bounce-ti%2Tennis%2FWD-atlethics%2BStuff%2Travel%2More%2L3ss%tim3ws6erz%20-%20Blah%2Cu8cumb34&Rap_Music=0x012000D998E6715Fr0GPF4881B0002C5764B8EF&EyeEye=%7B08EEDE07-DOOH-4B91-ASIA-BOYBAND48766CE%7D',
+                name: 'https://not.your.business.com/in-oui/Tower/BMI-slender/Heroes/Alpacas/AllTheThings.bruv?CarrotFruit=%2Bounce-ti%2Tennis%2FWD-atlethics%2BStuff%2Travel%2More%2L3ss%tim3ws6erz%20-%20Blah%2Cu8cumb34&Rap_Music=0x012000D998E6715Fr0GPF4881B0002C5764B8EF&EyeEye=%7B08EEDE07-DOOH-4B91-ASIA-BOYBAND48766CE%7D',
+              },
+          },
+          { type: 'linebreak' },
+          { type: 'word', string: 'The' },
+          { type: 'word', string: 'World' },
+          { type: 'word', string: 'is' },
+          { type: 'word', string: 'a' },
+          { type: 'word', string: 'stage' },
+          { type: 'word', string: 'and' },
+          { type: 'word', string: 'Susan' },
+          { type: 'word', string: 'from' },
+          { type: 'word', string: 'Accounts' },
+          { type: 'word', string: 'piloted' },
+          { type: 'word', string: 'the' },
+          { type: 'word', string: 'revolving' },
+          { type: 'word', string: 'bacon' },
+        ])
       })
     })
   })
