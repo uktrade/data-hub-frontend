@@ -36,15 +36,18 @@
     "export_to_countries": [],
     "future_interest_countries": [],
     "uk_based": false,
-    "registered_address_1": "The octagon",
-    "registered_address_2": "13A, A.J ACHME Drive,",
-    "registered_address_town": "Victoria island",
-    "registered_address_country": {
-      "id": "4561b8be-5d95-e211-a939-e4115bead28a",
-      "name": "Nigeria"
+    "address": {
+      "line_1": "The octagon",
+      "line_2": "13A, A.J ACHME Drive,",
+      "town": "Victoria island",
+      "country": {
+        "id": "4561b8be-5d95-e211-a939-e4115bead28a",
+        "name": "Nigeria"
+      },
+      "county": "lagos,Nigeria",
+      "postcode": null
     },
-    "registered_address_county": "lagos,Nigeria",
-    "registered_address_postcode": null,
+    "registered_address": null,
     "created_on": "2008-03-18T09:10:03",
     "modified_on": "2017-07-14T10:33:06.406791",
     "archived": false,
@@ -53,11 +56,6 @@
     "company_number": null,
     "description": "",
     "website": "www.achme.com/africa/",
-    "trading_address_1": null,
-    "trading_address_2": null,
-    "trading_address_town": null,
-    "trading_address_county": null,
-    "trading_address_postcode": null,
     "archived_by": null,
     "business_type": {
       "id": "98d14e94-5d95-e211-a939-e4115bead28a",
@@ -73,7 +71,6 @@
       "id": "0167b456-0ddd-49bd-8184-e3227a0b6396",
       "name": "Undefined"
     },
-    "trading_address_country": null,
     "headquarter_type": null,
     "one_list_group_tier": {
       "id": "b91bf800-8d53-e311-aef3-441ea13961e2",
