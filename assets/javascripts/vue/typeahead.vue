@@ -1,12 +1,12 @@
 <template>
   <div v-bind:class="classes"
        v-bind:id="name+'__typeahead'">
-    <label class="c-form-group__label" :for="id">
+    <label class="c-form-group__label" :class="{ 'u-visually-hidden': hideLabel }" :for="id">
       <span class="c-form-group__label-text">{{ label }}</span>
     </label>
     <multiselect
       label="label"
-      open-direction="bottom"
+      open-direction="auto"
       track-by="value"
       v-model="selectedOptions"
       :placeholder="setPlaceHolder"
@@ -22,6 +22,7 @@
       :show-no-results="false"
       :showLabels="false"
       :searchable="true"
+      :custom-label="nameWithSubLabel"
       :id="id"
       @search-change="queryOptions"
       @open="clearInputField">
@@ -30,8 +31,12 @@
              @mousedown.prevent.stop="clearAll(props.search)"></div>
       </template>
       <template slot="option" slot-scope="props">
-        <div class="multiselect__option-label" v-html="$options.filters.highlight(props.option.label, props.search)">{{ props.option.label }}</div>
-        <div class="multiselect__option-sublabel" v-if="isAsyncFunction" v-html="$options.filters.highlight(props.option.subLabel, props.search)">{{ props.option.subLabel }}</div>
+        <div class="multiselect__option-label" v-html="$options.filters.highlight(props.option.label, props.search)">{{
+          props.option.label }}
+        </div>
+        <div class="multiselect__option-sublabel" v-if="isAsyncFunction"
+             v-html="$options.filters.highlight(props.option.subLabel, props.search)">{{ props.option.subLabel }}
+        </div>
         <div class="multiselect__option-sublabel" v-else>{{ props.option.subLabel }}</div>
       </template>
 
@@ -129,6 +134,16 @@
         required: false,
         default: true,
       },
+      hideLabel: {
+        type: Boolean,
+        required: false,
+        default: false,
+      },
+      useSubLabel: {
+        type: Boolean,
+        required: false,
+        default: true,
+      }
     },
     created () {
       if (!this.useMultipleSelect) {
@@ -155,9 +170,14 @@
         setPlaceHolder: this.placeholder,
         isAsyncFunction: false,
         isActive: true,
+        hasLabel: this.hideLabel,
+        hasSubLabel: this.useSubLabel
       }
     },
     methods: {
+      nameWithSubLabel: function({ label, subLabel }){
+        return this.hasSubLabel ? `${label}, ${subLabel}` : label
+      },
       clearInputField: function () {
         this.setPlaceHolder = this.placeholder
       },
@@ -166,7 +186,11 @@
         const activeValue = JSON.parse(model).filter((item) => {
           return item.value === value
         })
-        return activeValue[0].label
+        if (activeValue.length < 1) {
+          return this.setPlaceHolder
+        }
+
+        return `${activeValue[0].label}, ${activeValue[0].subLabel}`
       },
       queryOptions: function (query) {
         this.isAsync ? this.asyncSearch(query) : this.search(query)
@@ -201,7 +225,7 @@
         const query = pickBy(getFormData(form))
         delete query[this.id]
 
-        if(selectedOption){
+        if (selectedOption) {
           this.hiddenFormValue = selectedOption.value
         }
         query[this.name] = Array.isArray(selectedOption) ? selectedOption.map(option => option.value) : [selectedOption]

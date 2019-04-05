@@ -55,7 +55,6 @@ module.exports = {
         adviser: '[name="dit_adviser"]',
         dateFrom: '#field-date_after',
         dateTo: '#field-date_before',
-        serviceProvider: '[name="dit_team"]',
         teamSearch: '#dit_team__typeahead .multiselect__input',
       },
     },

@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+const { get } = require('lodash')
 
 const { INTERACTION_NAMES } = require('../constants')
 const { interaction } = require('../labels')
@@ -10,14 +11,14 @@ function transformInteractionToListItem ({
   contacts,
   company,
   date,
-  dit_adviser,
+  dit_participants,
   dit_team,
   service,
   was_policy_feedback_provided,
 }) {
-  const hasMultipleContacts = (contacts) => {
-    return contacts.length > 1 ? interaction.multiple_contacts : contacts.map(contact => contact.name)
-  }
+  const hasMultipleContacts = (contacts) => contacts.length > 1 ? interaction.multiple_contacts : contacts.map(contact => contact.name)
+  const hasTeam = (name) => get(name, 'team') ? `${name.adviser.name}, ${name.team.name}` : name.adviser.name
+  const hasMultipleAdvisers = (dit_participants) => dit_participants.length > 1 ? interaction.multiple_advisers : dit_participants.map(ditParticipant => hasTeam(ditParticipant))
   return {
     was_policy_feedback_provided,
     id,
@@ -43,12 +44,8 @@ function transformInteractionToListItem ({
         value: company,
       },
       {
-        label: 'Adviser',
-        value: dit_adviser,
-      },
-      {
-        label: 'Service provider',
-        value: dit_team,
+        label: 'Adviser(s)',
+        value: dit_participants && hasMultipleAdvisers(dit_participants),
       },
       {
         label: 'Service',

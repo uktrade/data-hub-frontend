@@ -3,7 +3,6 @@ const { assign } = require('lodash')
 const labels = require('../labels')
 const {
   contact,
-  provider,
   service,
   subject,
   notes,
@@ -40,7 +39,6 @@ module.exports = function ({
       date,
       contact(contacts),
       adviser(advisers),
-      provider(teams),
       // TODO this will be going once interactions are within events
       {
         macroName: 'MultipleChoiceField',
