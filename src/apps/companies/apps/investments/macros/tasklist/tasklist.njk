@@ -1,0 +1,13 @@
+{% macro taskListItem(props) %}
+  {% set id = props.id or props.name %}
+  {% set complete = props.complete or false %}
+
+  <li class="task-list__item" data-auto-id="{{ id | camelCase }}">
+    <span class="task-list__item-name" aria-describedby="{{ id | kebabCase }}-incomplete">
+      {{ props.name }}
+    </span>
+    {% if not props.complete %}
+      <strong class="task-list__item-incomplete" id="{{ id | kebabCase }}-incomplete">INCOMPLETE</strong>
+    {% endif %}
+  </li>
+{% endmacro %}

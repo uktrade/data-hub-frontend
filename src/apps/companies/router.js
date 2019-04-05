@@ -52,6 +52,7 @@ const setCompaniesLocalNav = require('./middleware/local-navigation')
 const { transformCompanyToListItem } = require('./transformers')
 
 const investmentsRouter = require('./apps/investments/router')
+const matchingRouter = require('./apps/matching/router')
 const interactionsRouter = require('../interactions/router.sub-app')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
@@ -129,6 +130,7 @@ router.get('/:companyId/documents', renderDocuments)
 router.get('/:companyId/timeline', renderTimeline)
 
 router.use('/:companyId/investments', investmentsRouter)
+router.use('/:companyId/matching', matchingRouter)
 router.use('/:companyId', setInteractionsDetails, interactionsRouter)
 
 module.exports = router

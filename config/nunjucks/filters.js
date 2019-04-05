@@ -34,6 +34,7 @@ const {
   pick,
   lowerCase,
   kebabCase,
+  camelCase,
 } = require('lodash')
 require('numeral/locales/en-gb')
 
@@ -62,6 +63,7 @@ function pluralise (string, count, pluralisedWord) {
 const filters = {
   lowerCase,
   kebabCase,
+  camelCase,
   assign,
   castArray,
   concat,

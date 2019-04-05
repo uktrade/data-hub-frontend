@@ -18,14 +18,9 @@ async function getBusinessTypeOption (token, businessTypeId) {
   )
 }
 
-async function getBusinessTypeLabel (token, companiesHouseCategory, businessTypeId) {
-  if (companiesHouseCategory) {
-    return companiesHouseCategory
-  }
+async function getBusinessTypeLabel (token, businessTypeId) {
   const businessTypeOption = await getBusinessTypeOption(token, businessTypeId)
-  if (businessTypeOption) {
-    return businessTypeOption.label
-  }
+  return get(businessTypeOption, 'label')
 }
 
 function isForeignCompany (req, res) {
@@ -43,9 +38,7 @@ async function renderForm (req, res, next) {
     }
 
     const businessType = get(res.locals, 'formData.business_type')
-    const businessTypeLabel = await getBusinessTypeLabel(
-      req.session.token, res.locals.companiesHouseCategory, businessType
-    )
+    const businessTypeLabel = await getBusinessTypeLabel(req.session.token, businessType)
     const showTradingAddress = !isEmpty(get(res.locals, 'formData.trading_address_1'))
     const isForeign = isForeignCompany(req, res)
     const heading = `${res.locals.company ? 'Edit' : 'Add'} business details`

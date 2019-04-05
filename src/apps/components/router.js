@@ -14,6 +14,7 @@ const {
   renderHiddenText,
   renderMetaList,
   renderDetailsContainer,
+  renderTabbedLocalNav,
 } = require('./controllers')
 
 const { adviserLookup } = require('./middleware')
@@ -37,6 +38,7 @@ router
   .get('/hidden-text', renderHiddenText)
   .get('/meta-list', renderMetaList)
   .get('/details-container', renderDetailsContainer)
+  .get('/tabbed-local-nav', renderTabbedLocalNav)
   .all('/form', adviserLookup, renderFormElements)
 
 module.exports = router

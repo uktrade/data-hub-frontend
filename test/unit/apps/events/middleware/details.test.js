@@ -24,7 +24,10 @@ const expectedBody = {
   uk_region: 'uk_region',
   notes: 'notes',
   lead_team: 'lead_team',
-  organiser: 'organiser',
+  organiser: {
+    'id': '1',
+    'name': 'abc',
+  },
   related_programmes: [ 'programme1', 'programme2' ],
   teams: [ 'team1', 'team2', 'lead_team' ],
   services: 'services',
@@ -74,7 +77,6 @@ describe('Event details middleware', () => {
     context('when all fields are valid', () => {
       it('should post to the API', async () => {
         await this.middleware.postDetails(this.req, this.res, this.nextSpy)
-
         expect(this.saveEventStub).to.have.been.calledWith(this.req.session.token)
         expect(this.saveEventStub).to.have.been.calledOnce
         expect(this.saveEventStub.firstCall.args[1]).to.deep.equal(expectedBody)

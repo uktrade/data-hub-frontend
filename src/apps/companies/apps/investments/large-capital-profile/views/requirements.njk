@@ -1,8 +1,18 @@
-<p>Investor requirements: UI read only fields go here...</p>
+<ul class="task-list">
+  {{ taskListItem({ name: 'Deal ticket size' }) }}
+  {{ taskListItem({ name: 'Asset classes of interest' }) }}
+  {{ taskListItem({ name: 'Types of investment' }) }}
+  {{ taskListItem({ name: 'Minimum return rate' }) }}
+  {{ taskListItem({ name: 'Time horizon / tenor' }) }}
+  {{ taskListItem({ name: 'Restrictions / conditions' }) }}
+  {{ taskListItem({ name: 'Construction risk' }) }}
+  {{ taskListItem({ name: 'Minimum equity percentage' }) }}
+  {{ taskListItem({ name: 'Desired deal role' }) }}
+</ul>
 
 {% call Form({
   buttonText: 'Edit',
-  buttonDataAttr: 'investor-requirements-edit',
+  buttonDataAttr: 'investorRequirementsEdit',
   hiddenFields: { edit: 'requirements' },
   disableFormAction: edit === 'details' or edit === 'location',
   action: '/companies/' + company.id + '/investments/large-capital-profile/edit'

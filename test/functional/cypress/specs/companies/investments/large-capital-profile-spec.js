@@ -111,15 +111,77 @@ describe('Company Investments and Large capital profile', () => {
     before(() => cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`))
 
     it('should display "5 fields incomplete"', () => {
-      cy.get(selectors.investorDetails.incompleteFields).contains('5 fields incomplete')
+      cy.get(selectors.investorDetails.incompleteFields).should('contain', '5 fields incomplete')
     })
 
     it('should display "9 fields incomplete"', () => {
-      cy.get(selectors.investorRequirements.incompleteFields).contains('9 fields incomplete')
+      cy.get(selectors.investorRequirements.incompleteFields).should('contain', '9 fields incomplete')
     })
 
     it('should display "3 fields incomplete"', () => {
-      cy.get(selectors.location.incompleteFields).contains('3 fields incomplete')
+      cy.get(selectors.location.incompleteFields).should('contain', '3 fields incomplete')
+    })
+  })
+
+  context('when viewing all incomplete fields within "Investor details"', () => {
+    const { taskList } = selectors.investorDetails
+    const labels = [
+      'Investor type',
+      'Global assets under management',
+      'Investable capital',
+      'Investor description',
+      'Has this investor cleared the required checks within the last 12 months?',
+    ]
+
+    before(() => cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`))
+
+    Object.keys(taskList).forEach((key, index) => {
+      it(`should display both ${labels[index]} and INCOMPLETE`, () => {
+        cy.get(taskList[key].name).should('contain', labels[index])
+        cy.get(taskList[key].incomplete).should('contain', 'INCOMPLETE')
+      })
+    })
+  })
+
+  context('when viewing all incomplete fields within "Investor requirements"', () => {
+    const { taskList } = selectors.investorRequirements
+    const labels = [
+      'Deal ticket size',
+      'Asset classes of interest',
+      'Types of investment',
+      'Minimum return rate',
+      'Time horizon / tenor',
+      'Restrictions / conditions',
+      'Construction risk',
+      'Minimum equity percentage',
+      'Desired deal role',
+    ]
+
+    before(() => cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`))
+
+    Object.keys(taskList).forEach((key, index) => {
+      it(`should display both ${labels[index]} and INCOMPLETE`, () => {
+        cy.get(taskList[key].name).should('contain', labels[index])
+        cy.get(taskList[key].incomplete).should('contain', 'INCOMPLETE')
+      })
+    })
+  })
+
+  context('when viewing all incomplete fields within "Location"', () => {
+    const { taskList } = selectors.location
+    const labels = [
+      'UK locations of interest',
+      'Other countries the investor is considering',
+      'Notes on investor\'s location preferences',
+    ]
+
+    before(() => cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`))
+
+    Object.keys(taskList).forEach((key, index) => {
+      it(`should display both ${labels[index]} and INCOMPLETE`, () => {
+        cy.get(taskList[key].name).should('contain', labels[index])
+        cy.get(taskList[key].incomplete).should('contain', 'INCOMPLETE')
+      })
     })
   })
 })

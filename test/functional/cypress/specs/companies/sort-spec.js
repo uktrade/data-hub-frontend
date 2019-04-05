@@ -5,7 +5,7 @@ describe('Company Collections Sort', () => {
     cy.server()
     cy.route('/companies?*').as('sortResults')
     cy.visit('/companies?sortby=collectionTest')
-    cy.get(selectors.entityList.entities).children().should('have.length', 9)
+    cy.get(selectors.entityCollection.entities).children().should('have.length', 9)
     cy.get(selectors.entityCollection.collection).should('contain', '100,172 companies')
   })
 
@@ -16,8 +16,8 @@ describe('Company Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=name:asc')
     })
 
-    cy.get(selectors.entityList.entities).children().should('have.length', 2)
-    cy.get(selectors.entityList.firstEntity).should('contain', 'SortByAZ')
+    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
+    cy.get(selectors.entityCollection.firstEntity).should('contain', 'SortByAZ')
   })
 
   it('should sort by least recent', () => {
@@ -27,8 +27,8 @@ describe('Company Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=modified_on:asc')
     })
 
-    cy.get(selectors.entityList.entities).children().should('have.length', 2)
-    cy.get(selectors.entityList.firstEntity).should('contain', 'SortByLeastRecent')
+    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
+    cy.get(selectors.entityCollection.firstEntity).should('contain', 'SortByLeastRecent')
   })
 
   it('should sort by most recent', () => {
@@ -38,7 +38,7 @@ describe('Company Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=modified_on:desc')
     })
 
-    cy.get(selectors.entityList.entities).children().should('have.length', 2)
-    cy.get(selectors.entityList.firstEntity).should('contain', 'SortByMostRecent')
+    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
+    cy.get(selectors.entityCollection.firstEntity).should('contain', 'SortByMostRecent')
   })
 })

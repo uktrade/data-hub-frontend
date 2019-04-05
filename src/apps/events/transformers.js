@@ -181,6 +181,7 @@ function transformEventResponseToFormBody (props = {}) {
     teams: teams.map(team => get(team, 'id')),
     service: get(props.service, 'id'),
     event_shared: !!teams.length,
+    organiser: get(props.organiser, 'id'),
   })
 }
 
@@ -188,11 +189,13 @@ function transformEventFormBodyToApiRequest (props) {
   const teamsArray = castCompactArray(props.teams)
   const related_programmes = castCompactArray(props.related_programmes)
   const teams = props.lead_team ? teamsArray.concat(props.lead_team) : teamsArray
+  const organiser = props.organiser
 
   return assign({}, props, {
     start_date: transformDateObjectToDateString('start_date')(props),
     end_date: transformDateObjectToDateString('end_date')(props),
     teams: uniq(teams),
+    organiser: organiser,
     related_programmes,
   })
 }

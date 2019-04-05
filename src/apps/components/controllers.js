@@ -155,6 +155,12 @@ function renderDetailsContainer (req, res) {
     .render('components/views/details-container')
 }
 
+function renderTabbedLocalNav (req, res) {
+  return res
+    .breadcrumb('Tabbed local nav')
+    .render('components/views/tabbed-local-nav')
+}
+
 module.exports = {
   renderEntityList,
   renderIndex,
@@ -167,4 +173,5 @@ module.exports = {
   renderHiddenText,
   renderMetaList,
   renderDetailsContainer,
+  renderTabbedLocalNav,
 }

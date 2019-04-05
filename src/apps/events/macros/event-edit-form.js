@@ -101,7 +101,7 @@ const eventFormConfig = ({
       }),
       {
         macroName: 'Typeahead',
-        name: 'dit_adviser',
+        name: 'organiser',
         entity: 'adviser',
         label: 'Organiser',
         classes: 'c-form-group c-form-group--no-filter',

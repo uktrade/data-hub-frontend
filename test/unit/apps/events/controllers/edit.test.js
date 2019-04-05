@@ -9,6 +9,11 @@ const yesterday = moment().subtract(1, 'days').toISOString()
 const lastMonth = moment().subtract(1, 'months').toISOString()
 
 const metadataMock = {
+  teamOptions: [
+    { id: '1', name: 'te1', disabled_on: null },
+    { id: '2', name: 'te2', disabled_on: yesterday },
+    { id: '3', name: 'te3', disabled_on: null },
+  ],
   eventTypes: [
     { id: '1', name: 'et1', disabled_on: null },
     { id: '2', name: 'et2', disabled_on: yesterday },
@@ -22,11 +27,6 @@ const metadataMock = {
   countryOptions: [
     { id: '9999', name: 'United Kingdom', disabled_on: null },
     { id: '8888', name: 'Test', disabled_on: yesterday },
-  ],
-  teamOptions: [
-    { id: '1', name: 'te1', disabled_on: null },
-    { id: '2', name: 'te2', disabled_on: yesterday },
-    { id: '3', name: 'te3', disabled_on: null },
   ],
   serviceOptions: [
     { id: '1', name: 'sv1', disabled_on: null },
@@ -53,8 +53,6 @@ function getFormFieldOptions (res, fieldName) {
 }
 
 describe('Event edit controller', () => {
-  const currentUserTeam = 'team1'
-
   beforeEach(() => {
     this.filterActiveAdvisersSpy = sinon.spy(adviserFilters, 'filterActiveAdvisers')
 
@@ -68,9 +66,7 @@ describe('Event edit controller', () => {
       session: {
         token: 'abcd',
         user: {
-          dit_team: {
-            id: currentUserTeam,
-          },
+          id: 'user1',
         },
       },
       body: {},
@@ -80,7 +76,7 @@ describe('Event edit controller', () => {
       breadcrumb: sinon.stub().returnsThis(),
       render: sinon.spy(),
       redirect: sinon.spy(),
-      locals: { },
+      locals: {},
     }
 
     this.next = sinon.spy()
@@ -88,12 +84,42 @@ describe('Event edit controller', () => {
     this.activeInactiveAdviserData = {
       count: 5,
       results: [
-        { id: '1', name: 'Jeff Smith', is_active: true },
-        { id: '2', name: 'John Smith', is_active: true },
-        { id: '3', name: 'Zac Smith', is_active: true },
-        { id: '4', name: 'Fred Smith', is_active: false },
-        { id: '5', name: 'Jim Smith', is_active: false },
-      ],
+        {
+          id: '1',
+          name: 'Jeff Smith',
+          is_active: true,
+          dit_team: {
+            name: 'London',
+          },
+        }, {
+          id: '2',
+          name: 'John Smith',
+          is_active: true,
+          dit_team: {
+            name: 'London',
+          },
+        }, {
+          id: '3',
+          name: 'Zac Smith',
+          is_active: true,
+          dit_team: {
+            name: 'London',
+          },
+        }, {
+          id: '4',
+          name: 'Fred Smith',
+          is_active: false,
+          dit_team: {
+            name: 'London',
+          },
+        }, {
+          id: '5',
+          name: 'Jim Smith',
+          is_active: false,
+          dit_team: {
+            name: 'London',
+          },
+        }],
     }
   })
 
@@ -136,13 +162,6 @@ describe('Event edit controller', () => {
 
         expect(actual).to.be.an('object').and.have.property('hiddenFields').and.have.property('id')
       })
-
-      it('should prepopulate the team hosting the event with the current user team', () => {
-        const eventForm = this.res.render.getCall(0).args[1].eventForm
-        const actual = find(eventForm.children, { name: 'lead_team' }).value
-
-        expect(actual).to.equal(currentUserTeam)
-      })
     })
 
     context('when adding an event', () => {
@@ -168,7 +187,7 @@ describe('Event edit controller', () => {
           { label: 'Zac Smith', value: '3' },
         ]
 
-        const formOrganizerFieldOptions = getFormFieldOptions(this.res, 'dit_adviser')
+        const formOrganizerFieldOptions = getFormFieldOptions(this.res, 'organiser')
         expect(formOrganizerFieldOptions).to.deep.equal(expectedOptions)
       })
 
@@ -231,7 +250,6 @@ describe('Event edit controller', () => {
     context('when editing an event', () => {
       beforeEach(async () => {
         this.currentAdviser = this.activeInactiveAdviserData.results[3]
-
         this.res.locals.event = assign({}, eventData, {
           created_on: lastMonth,
           organiser: this.currentAdviser,

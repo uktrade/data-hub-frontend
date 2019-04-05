@@ -1,4 +1,8 @@
-<p>Location: UI read only fields go here...</p>
+<ul class="task-list">
+  {{ taskListItem({ name: 'UK locations of interest' }) }}
+  {{ taskListItem({ name: 'Other countries the investor is considering' }) }}
+  {{ taskListItem({ name: 'Notes on investor\'s location preferences' }) }}
+</ul>
 
 {% call Form({
   buttonText: 'Edit',
@@ -6,6 +10,6 @@
   hiddenFields: { edit: 'location' },
   disableFormAction: edit === 'details' or edit === 'requirements',
   action: '/companies/' + company.id + '/investments/large-capital-profile/edit'
-})
+  })
 %}
 {%- endcall %}

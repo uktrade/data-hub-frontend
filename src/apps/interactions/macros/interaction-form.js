@@ -4,7 +4,6 @@ const labels = require('../labels')
 const {
   contact,
   communicationChannel,
-  provider,
   service,
   subject,
   notes,
@@ -38,7 +37,6 @@ module.exports = function ({
       date,
       contact(contacts),
       adviser(advisers),
-      provider(teams),
       service(services),
       communicationChannel(channels),
       subject,
