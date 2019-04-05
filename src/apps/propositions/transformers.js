@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { assign, capitalize, compact, get, mapKeys, pickBy } = require('lodash')
+const { assign, capitalize, get, mapKeys, pickBy } = require('lodash')
 const { format, isValid } = require('date-fns')
 
 const { transformDateObjectToDateString } = require('../transformers')
@@ -75,14 +75,21 @@ function transformPropositionToListItem ({
 
 function formatDetails (details = '') {
   if (details.length) {
-    const result = splitString(details).map(s => isUrl(s) ? addAnchorsToUrl(s) : addLineBreaks(s))
-
-    return compact(result).join(' ')
+    return splitString(details).map(s => isUrl(s) ? addAnchorsToUrl(s) : addLineBreaks(s))
   }
 }
 
 function addLineBreaks (string) {
-  return string.replace(/\n|\r/g, '<br>')
+  if (string.match(/\n|\r/g)) {
+    return {
+      type: 'linebreak',
+    }
+  } else {
+    return {
+      type: 'word',
+      string,
+    }
+  }
 }
 
 function isUrl (string) {
@@ -98,10 +105,16 @@ function splitString (string) {
   return string.split(new RegExp(separators.join('|'), 'g'))
 }
 
-function addAnchorsToUrl (string) {
-  const cleanString = string.replace(/\n|\r/g, '')
+function addAnchorsToUrl (s) {
+  const string = s.replace(/\n|\r/g, '')
 
-  return `<a href="${cleanString}">${cleanString}</a>`
+  return {
+    type: 'link',
+    string: {
+      url: string,
+      name: string,
+    },
+  }
 }
 
 function transformPropositionResponseToViewRecord ({
@@ -136,7 +149,7 @@ function transformPropositionResponseToViewRecord ({
     },
     adviser,
     details: formattedDetails ? {
-      type: 'html',
+      type: 'paragraph',
       string: formattedDetails,
     } : null,
     ...transformFilesResultsToDetails(files.results, id, investment_project.id),

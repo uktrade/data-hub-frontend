@@ -28,6 +28,18 @@
   {% endif  %}
 {% endmacro %}
 
+{% macro paragraph(data) %}
+  {%  for item in data.string %}
+    {% if item.type == 'link' %}
+      {{ link(item.string) }}
+    {% elseif item.type == 'linebreak' %}
+      <br>
+    {% else %}
+      {{ item.string }}
+    {% endif %}
+  {% endfor %}
+{% endmacro %}
+
 {% macro details(data) %}
   <div class="table__details">
     <span class="table__details-name">{{ data.name }}</span>
@@ -60,8 +72,8 @@
     {{ data.address | formatAddress }}
   {% elif data.type === 'error' %}
     {{ error(data) }}
-  {% elif data.type === 'html' %}
-    {{ data.string | safe }}
+  {% elif data.type === 'paragraph' %}
+    {{ paragraph(data) }}
   {% else %}
     {{ data.name or data | escapeHtml | safe }}
   {% endif %}
