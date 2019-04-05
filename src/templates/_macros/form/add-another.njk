@@ -1,6 +1,7 @@
 {% from "./form-group.njk" import FormGroup %}
 {% from "./text-field.njk" import TextField %}
 {% from "./multiple-choice-field.njk" import MultipleChoiceField %}
+{% from "./typeahead.njk" import Typeahead %}
 
 {##
  # Render a collection for multiple fields for add another functionality
@@ -11,6 +12,7 @@
 {% macro AddAnother(props) %}
   {% set fieldId = 'field-' + props.name + ('-' + props.idSuffix if props.idSuffix) if props.name %}
   {% set element = props.element | default('fieldset') %}
+  {% set typeaheadClassModifier = '--typeahead' if props.children[0].macroName === 'Typeahead' %}
 
   {% call FormGroup(props | assign({ fieldId: fieldId, element: element, groupClassName: 'c-form-group c-form-fieldset' })) %}
     <div class="js-AddItems" data-item-selector=".c-form-group--AddItems">
@@ -20,9 +22,9 @@
           {{ renderAsMacro(props.children, { modifier: 'AddItems' } ) }}
         {% else %}
           {% for individualValue in props.value %}
-            {{ renderAsMacro(
-              props.children,
-              { value: individualValue, modifier: 'AddItems' }
+              {{ renderAsMacro(
+                props.children,
+                { value: individualValue, modifier: 'AddItems' }
             ) }}
           {% endfor %}
         {% endif %}
@@ -32,11 +34,11 @@
 
       <p class="c-form-fieldset__add-another">
         <input
-          class="button button--secondary js-AddItems__add"
+          class="button button--secondary js-AddItems__add{{ typeaheadClassModifier }}"
           type="submit"
           name="{{ props.buttonName }}"
           value="Add another"
-          data-persist-values="true" />
+          data-persist-values="true"/>
       </p>
     </div>
   {% endcall %}

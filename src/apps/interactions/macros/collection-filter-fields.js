@@ -28,7 +28,7 @@ module.exports = function ({
     },
     {
       macroName: 'MultipleChoiceField',
-      name: 'dit_adviser',
+      name: 'dit_participants__adviser',
       type: 'checkbox',
       modifier: ['option-select', 'hide-label'],
       options: [
@@ -37,10 +37,11 @@ module.exports = function ({
     },
     {
       macroName: 'Typeahead',
-      name: 'dit_adviser',
+      name: 'dit_participants__adviser',
       entity: 'adviser',
       classes: 'c-form-group c-form-group--smaller c-form-group--filter',
       placeholder: 'Search adviser',
+      useSubLabel: false,
       options: adviserOptions,
     },
     {
@@ -61,11 +62,12 @@ module.exports = function ({
     },
     {
       macroName: 'Typeahead',
-      name: 'dit_team',
+      name: 'dit_participants__team',
       placeholder: 'Search teams',
       classes: 'c-form-group c-form-group--smaller c-form-group--filter',
       options: teamOptions,
       isAsync: false,
+      useSubLabel: false,
     },
     {
       macroName: 'MultipleChoiceField',

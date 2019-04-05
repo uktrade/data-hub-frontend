@@ -37,7 +37,7 @@ module.exports = {
     serviceStatus: '#field-service_delivery_status',
     grantOffered: '#field-grant_amount_offered',
     netReceipt: '#field-net_company_receipt',
-    ditAdviser: '#dit_adviser__typeahead .multiselect__single',
+    ditAdviser: '#dit_participants__typeahead .multiselect__single',
     communicationChannel: '#field-communication_channel',
     eventYes: 'label[for=field-is_event-1]',
     eventNo: 'label[for=field-is_event-2]',
@@ -78,12 +78,6 @@ module.exports = {
             })
           })
           .perform((done) => {
-            this.getListOption('@serviceProvider', (serviceProvider) => {
-              interaction.serviceProvider = serviceProvider
-              done()
-            })
-          })
-          .perform((done) => {
             if (interaction.service) {
               return done()
             }
@@ -95,12 +89,6 @@ module.exports = {
           })
           .perform((done) => {
             this.click('@policyFeedbackNo')
-            done()
-          })
-          .perform((done) => {
-            this.getText('@ditAdviser', (result) => {
-              interaction.ditAdviser = result.value
-            })
             done()
           })
           .perform((done) => {
@@ -151,12 +139,6 @@ module.exports = {
           .api.perform((done) => {
             this.getListOption('@contact', (contact) => {
               interaction.contact = contact
-              done()
-            })
-          })
-          .perform((done) => {
-            this.getListOption('@serviceProvider', (serviceProvider) => {
-              interaction.serviceProvider = serviceProvider
               done()
             })
           })
