@@ -14,8 +14,10 @@ describe('#transformCompanyToRegionView', () => {
     context('when all information is populated', () => {
       beforeEach(() => {
         this.actual = transformCompanyToRegionView({
-          registered_address_country: {
-            id: unitedKingdomId,
+          address: {
+            country: {
+              id: unitedKingdomId,
+            },
           },
           uk_region: {
             name: 'North West',
@@ -29,8 +31,10 @@ describe('#transformCompanyToRegionView', () => {
     context('when no information is populated', () => {
       beforeEach(() => {
         this.actual = transformCompanyToRegionView({
-          registered_address_country: {
-            id: unitedKingdomId,
+          address: {
+            country: {
+              id: unitedKingdomId,
+            },
           },
         })
       })
@@ -42,8 +46,10 @@ describe('#transformCompanyToRegionView', () => {
   context('when a business outside the UK', () => {
     beforeEach(() => {
       this.actual = transformCompanyToRegionView({
-        registered_address_country: {
-          id: franceId,
+        address: {
+          country: {
+            id: franceId,
+          },
         },
       })
     })
