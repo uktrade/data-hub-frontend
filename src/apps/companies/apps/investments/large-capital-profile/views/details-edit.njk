@@ -1,14 +1,29 @@
+{% from "select/macro.njk" import govukSelect %}
+
 {% call Form({
   buttonText: 'Save',
   buttonDataAttr: 'investorDetailsSave',
   returnText: 'Cancel',
+  class: 'investor-details-edit',
   returnLink: '/companies/' + company.id + '/investments/large-capital-profile',
   action: '/companies/' + company.id + '/investments/large-capital-profile/update',
-  hiddenFields: { id: company.id }
+  hiddenFields: {
+    profileId: profile.id,
+    editing: profile.editing
+  }
 }) %}
 
-  <p>Investor details: UI components go here...</p>
+  {{
+    govukSelect({
+      name: 'investorType',
+      label: {
+        text: 'Investor type'
+      },
+      attributes: {
+        'data-auto-id': 'investorType'
+      },
+      items: profile.investorDetails.investorType.items
+    })
+  }}
 
 {% endcall %}
-
-
