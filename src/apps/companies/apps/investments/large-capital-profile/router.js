@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const locals = require('./locals')
 
 const {
   renderProfile,
@@ -6,6 +7,8 @@ const {
   editProfile,
   updateProfile,
 } = require('./controllers')
+
+router.use(locals)
 
 router.get('/', renderProfile)
 router.post('/create', createProfile)
