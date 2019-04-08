@@ -10,11 +10,11 @@ describe('Contacts Collections', () => {
   })
 
   it('should contain contacts badge', () => {
-    cy.get(selectors.entityCollection.firstEntityBadge).should('contain', 'Primary')
+    cy.get(selectors.entityCollection.entity(1)).should('contain', 'Primary')
   })
 
   it('should contain contacts details', () => {
-    cy.get(selectors.entityCollection.firstEntity)
+    cy.get(selectors.entityCollection.entity(1))
       .should('contain', 'Royal Haskoning UK Ltd')
       .and('contain', 'Business Group Director, UK')
       .and('contain', 'Environment and Water')
