@@ -1,10 +1,11 @@
+const fixtures = require('../../fixtures/index.js')
 const selectors = require('../../selectors')
 
 describe('Service delivery form', () => {
   beforeEach(() => {
     cy.server()
     cy.route('/api/options/adviser?autocomplete*').as('adviserAutocomplete')
-    cy.visit('/companies/some-company/interactions/create/service-delivery')
+    cy.visit(`/companies/${fixtures.default.id}/interactions/create/service-delivery`)
   })
 
   it('should display all service delivery fields', () => {
