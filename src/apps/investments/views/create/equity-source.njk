@@ -13,7 +13,7 @@
         <td>{{ company.name }}</td>
       </tr>
       <tr>
-        <td>{{ company.registered_address_country.name }}</td>
+        <td>{{ company.address.country.name }}</td>
       </tr>
       <tr>
         <td>{{ companyInvestments.count|default('No', true) }} investment {{ 'project' | pluralise(companyInvestments.count) }} in the UK</td>

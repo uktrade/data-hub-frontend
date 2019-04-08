@@ -22,8 +22,12 @@ Feature: Create a new Investment project
       | France                           |
       | No investment projects in the UK |
     When I select FDI as the Investment project type
-    And I choose Yes for "Will this company be the source of foreign equity investment?"
-    And I populate the create Investment Project form
+    Then the Client company values are displayed
+      | value                            |
+      | Lambda plc                       |
+      | France                           |
+      | No investment projects in the UK |
+    When I choose Yes for "Will this company be the source of foreign equity investment?"
     Then I see the success message
     And the investment project local header is displayed
       | key           | value            | formatter              |
@@ -58,7 +62,17 @@ Feature: Create a new Investment project
       | France                           |
       | No investment projects in the UK |
     When I select FDI as the Investment project type
+    Then the Client company values are displayed
+      | value                            |
+      | Lambda plc                       |
+      | France                           |
+      | 1 investment project in the UK   |
     And I choose No for "Will this company be the source of foreign equity investment?"
+    Then the Client company values are displayed
+      | value                            |
+      | Lambda plc                       |
+      | France                           |
+      | 1 investment project in the UK   |
     And I search for the foreign source of equity Mars Exports Ltd
     Then I can view the Equity Source in the collection
       | text               | expected                               |
@@ -104,6 +118,13 @@ Feature: Create a new Investment project
       | Tier A - Strategic Account          |
       | Relationship manager: Travis Greene |
     When I select Non-FDI as the Investment project type
+    And the Client company values are displayed
+      | value                               |
+      | Venus Ltd                           |
+      | United Kingdom                      |
+      | 9 investment projects in the UK     |
+      | Tier A - Strategic Account          |
+      | Relationship manager: Travis Greene |
     And I search for the foreign source of equity Lambda plc
     Then I can view the Equity Source in the collection
       | text               | expected                               |
@@ -147,6 +168,11 @@ Feature: Create a new Investment project
       | France                           |
       | No investment projects in the UK |
     When I select Commitment to invest as the Investment project type
+    Then the Client company values are displayed
+      | value                            |
+      | Lambda plc                       |
+      | France                           |
+      | 2 investment projects in the UK  |
     And I choose Yes for "Will this company be the source of foreign equity investment?"
     And I populate the create Investment Project form
     Then I see the success message
