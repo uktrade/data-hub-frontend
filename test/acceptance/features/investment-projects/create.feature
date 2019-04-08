@@ -16,6 +16,11 @@ Feature: Create a new Investment project
     When I navigate to the `companies.investments` page using `company` `Lambda plc` fixture
     And I click the "Add investment project" link
     Then I am taken to the "Add investment project" page
+    And the Client company values are displayed
+      | value                            |
+      | Lambda plc                       |
+      | France                           |
+      | No investment projects in the UK |
     When I select FDI as the Investment project type
     And I choose Yes for "Will this company be the source of foreign equity investment?"
     And I populate the create Investment Project form
@@ -47,6 +52,11 @@ Feature: Create a new Investment project
     When I navigate to the `companies.investments` page using `company` `Lambda plc` fixture
     And I click the "Add investment project" link
     Then I am taken to the "Add investment project" page
+    And the Client company values are displayed
+      | value                            |
+      | Lambda plc                       |
+      | France                           |
+      | No investment projects in the UK |
     When I select FDI as the Investment project type
     And I choose No for "Will this company be the source of foreign equity investment?"
     And I search for the foreign source of equity Mars Exports Ltd
@@ -86,6 +96,13 @@ Feature: Create a new Investment project
     When I navigate to the `companies.investments` page using `company` `Venus Ltd` fixture
     And I click the "Add investment project" link
     Then I am taken to the "Add investment project" page
+    And the Client company values are displayed
+      | value                               |
+      | Venus Ltd                           |
+      | United Kingdom                      |
+      | No investment projects in the UK    |
+      | Tier A - Strategic Account          |
+      | Relationship manager: Travis Greene |
     When I select Non-FDI as the Investment project type
     And I search for the foreign source of equity Lambda plc
     Then I can view the Equity Source in the collection
@@ -124,6 +141,11 @@ Feature: Create a new Investment project
     When I navigate to the `companies.investments` page using `company` `Lambda plc` fixture
     And I click the "Add investment project" link
     Then I am taken to the "Add investment project" page
+    And the Client company values are displayed
+      | value                            |
+      | Lambda plc                       |
+      | France                           |
+      | No investment projects in the UK |
     When I select Commitment to invest as the Investment project type
     And I choose Yes for "Will this company be the source of foreign equity investment?"
     And I populate the create Investment Project form
