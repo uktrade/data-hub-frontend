@@ -535,7 +535,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "DIT region" details', () => {
-      assertValueTable('regionDetails', [
+      assertValueTable('regionDetailsContainer', [
         'Not set',
       ])
     })
@@ -549,7 +549,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "DIT sector" details', () => {
-      assertValueTable('sectorDetails', [
+      assertValueTable('sectorDetailsContainer', [
         'Advanced Engineering',
       ])
     })
