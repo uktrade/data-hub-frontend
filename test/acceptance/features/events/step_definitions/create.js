@@ -11,6 +11,9 @@ Given(/^I create an event$/, async function () {
       set(this.state, 'event', event)
     })
     .wait() // wait for backend to sync
+    // This will select the organiser, workaround for typeahead.
+  client.pause(2000)
+  client.keys([client.Keys.ENTER])
 })
 
 When(/^I choose the (.+) country option$/, async (country) => {
