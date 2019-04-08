@@ -54,8 +54,19 @@ const filters = {
   policy_issue_types: 'Policy issue type',
 }
 
+const metaItems = {
+  type: 'Type',
+  date: 'Date',
+  contacts: 'Contact(s)',
+  company: 'Company',
+  dit_participants: 'Adviser(s)',
+  dit_team: 'Service provider',
+  service: 'Service',
+}
+
 module.exports = {
   interaction,
   serviceDelivery,
   filters,
+  metaItems,
 }

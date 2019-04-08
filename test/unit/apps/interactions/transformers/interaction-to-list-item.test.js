@@ -6,7 +6,7 @@ describe('#transformInteractionToListItem', () => {
   context('when the source is an interaction', () => {
     beforeEach(() => {
       mockInteraction.kind = 'interaction'
-      this.transformed = transformInteractionToListItem(mockInteraction)
+      this.transformed = transformInteractionToListItem()(mockInteraction)
     })
 
     it('should transform data from interaction response to list item', () => {
@@ -48,7 +48,6 @@ describe('#transformInteractionToListItem', () => {
               name: 'Test service',
             },
           },
-          null,
         ],
       })
     })
@@ -56,7 +55,7 @@ describe('#transformInteractionToListItem', () => {
 
   context('When the source is an interaction with multiple contacts', () => {
     beforeEach(() => {
-      this.transformed = transformInteractionToListItem({
+      this.transformed = transformInteractionToListItem()({
         ...mockInteraction,
         contacts: [{
           'id': 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
@@ -82,7 +81,7 @@ describe('#transformInteractionToListItem', () => {
 
   context('when the source is an interaction with an empty subject', () => {
     beforeEach(() => {
-      this.transformed = transformInteractionToListItem({
+      this.transformed = transformInteractionToListItem()({
         ...mockInteraction,
         subject: '',
       })
@@ -95,7 +94,7 @@ describe('#transformInteractionToListItem', () => {
 
   context('when the source is an interaction with a null subject', () => {
     beforeEach(() => {
-      this.transformed = transformInteractionToListItem({
+      this.transformed = transformInteractionToListItem()({
         ...mockInteraction,
         subject: null,
       })
@@ -108,7 +107,7 @@ describe('#transformInteractionToListItem', () => {
 
   context('when the source is a service delivery', () => {
     beforeEach(() => {
-      this.transformed = transformInteractionToListItem({
+      this.transformed = transformInteractionToListItem()({
         ...mockInteraction,
         kind: 'service_delivery',
       })
@@ -153,7 +152,6 @@ describe('#transformInteractionToListItem', () => {
               name: 'Test service',
             },
           },
-          null,
         ],
       })
     })
@@ -161,7 +159,7 @@ describe('#transformInteractionToListItem', () => {
 
   context('when the source is an interaction and has feedback', () => {
     beforeEach(() => {
-      this.transformed = transformInteractionToListItem(mockInteractionWithFeedback)
+      this.transformed = transformInteractionToListItem()(mockInteractionWithFeedback)
     })
     it('should transform data from interaction response to list item', () => {
       expect(this.transformed).to.deep.equal({
@@ -174,6 +172,11 @@ describe('#transformInteractionToListItem', () => {
             label: 'Type',
             type: 'badge',
             value: 'Interaction',
+          },
+          {
+            label: 'Type',
+            type: 'badge',
+            value: 'Policy feedback',
           },
           {
             label: 'Date',
@@ -202,11 +205,6 @@ describe('#transformInteractionToListItem', () => {
               name: 'Test service',
             },
           },
-          {
-            label: 'Type',
-            type: 'badge',
-            value: 'Policy feedback',
-          },
         ],
       })
     })
@@ -214,7 +212,7 @@ describe('#transformInteractionToListItem', () => {
 
   context('when the source is an service delivery and has feedback', () => {
     beforeEach(() => {
-      this.transformed = transformInteractionToListItem({
+      this.transformed = transformInteractionToListItem()({
         ...mockInteractionWithFeedback,
         kind: 'service_delivery',
       })
@@ -232,6 +230,11 @@ describe('#transformInteractionToListItem', () => {
             value: 'Service delivery',
           },
           {
+            label: 'Type',
+            type: 'badge',
+            value: 'Policy feedback',
+          },
+          {
             label: 'Date',
             type: 'date',
             value: '2017-05-31T00:00:00',
@@ -258,10 +261,58 @@ describe('#transformInteractionToListItem', () => {
               name: 'Test service',
             },
           },
+        ],
+      })
+    })
+  })
+
+  context('when the interactions are rendered within company context', () => {
+    beforeEach(() => {
+      this.transformed = transformInteractionToListItem(false)({
+        ...mockInteractionWithFeedback,
+        kind: 'service_delivery',
+      })
+    })
+    it('should transform data from interaction response to list item without company field included', () => {
+      expect(this.transformed).to.deep.equal({
+        was_policy_feedback_provided: true,
+        id: '7265dc3c-e89d-45ee-8106-d1e370c1c73d',
+        type: 'interaction',
+        name: 'Test interactions',
+        meta: [
           {
-            label: 'Type',
+            value: 'Service delivery',
             type: 'badge',
+            label: 'Type',
+          },
+          {
             value: 'Policy feedback',
+            type: 'badge',
+            label: 'Type',
+          },
+          {
+            value: '2017-05-31T00:00:00',
+            type: 'date',
+            label: 'Date',
+          },
+          {
+            value: [
+              'Jackson Whitfield',
+            ],
+            label: 'Contact(s)',
+          },
+          {
+            value: [
+              'Bob Lawson, The test team',
+            ],
+            label: 'Adviser(s)',
+          },
+          {
+            value: {
+              id: '1231231231312',
+              name: 'Test service',
+            },
+            label: 'Service',
           },
         ],
       })

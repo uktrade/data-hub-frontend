@@ -12,6 +12,7 @@ function setInteractionsDetails (req, res, next) {
     view: 'investments/views/interactions',
     createKind: 'interaction',
     canAdd: true,
+    showCompany: true,
   }
 
   next()
