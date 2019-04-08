@@ -61,4 +61,31 @@ describe('Companies interactions', () => {
       cy.get(selector).should('have.text', 'View activity for this business on a timeline')
     })
   })
+
+  context('when viewing Venus Ltd which has multiple interactions', () => {
+    before(() => {
+      cy.visit(`/companies/${fixtures.company.venusLtd.id}`)
+    })
+
+    it('should contain interaction details', () => {
+      cy.get(selectors.entityCollection.entity(1))
+        .should('contain', 'Date')
+        .and('contain', 'Contact(s)')
+        .and('contain', 'Service')
+    })
+
+    it('should not display the company name on the list of interactions', () => {
+      cy.get(selectors.entityCollection.entity(1))
+        .should('not.contain', 'Company')
+    })
+
+    it('should have default sorting option', () => {
+      cy.get(selectors.entityCollection.sort).should('have.value', '-date')
+    })
+
+    it('should contain interaction sorting options without the "Company: A-Z" filter', () => {
+      cy.get(selectors.entityCollection.sort)
+        .should('have.text', 'NewestSubject: A-Z')
+    })
+  })
 })

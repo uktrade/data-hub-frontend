@@ -47,15 +47,14 @@ function transformInteractionResponseToViewRecord ({
 }) {
   const defaultEventText = kind === 'service_delivery' ? 'No' : null
   const kindLabels = labels[camelCase(kind)]
-  const displayPolicyAreas = (policy_areas || [])
-    .map(policy_area => policy_area.name)
-    .join(', ')
+  const formattedPolicyAreas = (policy_areas || []).map(policy_area => policy_area.name).join(', ')
+  const formattedPolicyTypes = (policy_issue_types || []).map(policy_type => policy_type.name).join(', ')
 
-  const displayPolicyTypes = (policy_issue_types || [])
-    .map(policy_type => policy_type.name)
-    .join(', ')
-  const hasTeam = (name) => get(name, 'team') ? `${name.adviser.name}, ${name.team.name}` : name.adviser.name
-  const displayDitParticipants = (dit_participants || []).map(ditParticipant => hasTeam(ditParticipant))
+  const formatParticipantName = (participant) => get(participant, 'team')
+    ? `${participant.adviser.name}, ${participant.team.name}`
+    : participant.adviser.name
+
+  const formattedParticipants = (dit_participants || []).map(participant => formatParticipantName(participant))
 
   const transformed = {
     company: transformEntityLink(company, 'companies'),
@@ -76,13 +75,13 @@ function transformInteractionResponseToViewRecord ({
       type: 'date',
       name: date,
     },
-    dit_participants: displayDitParticipants,
+    dit_participants: formattedParticipants,
     investment_project: transformEntityLink(investment_project, 'investments/projects'),
     event: transformEntityLink(event, 'events', defaultEventText),
     communication_channel: communication_channel,
     documents: transformDocumentsLink(archived_documents_url_path),
-    policy_issue_types: displayPolicyTypes,
-    policy_areas: displayPolicyAreas,
+    policy_issue_types: formattedPolicyTypes,
+    policy_areas: formattedPolicyAreas,
     policy_feedback_notes: policy_feedback_notes,
   }
 

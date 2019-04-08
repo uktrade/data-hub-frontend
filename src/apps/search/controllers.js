@@ -52,7 +52,7 @@ async function renderSearchResults (req, res) {
   }
 
   if (searchEntity === 'interaction') {
-    itemTransformers.push(transformInteractionToListItem)
+    itemTransformers.push(transformInteractionToListItem())
   }
 
   const results = await search({
