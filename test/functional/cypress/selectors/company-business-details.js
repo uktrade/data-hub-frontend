@@ -1,9 +1,9 @@
 module.exports = () => {
   return {
-    unarchiveLink: '[data-auto-id="businessDetailsUnarchive"]',
+    unarchiveLink: '[data-auto-id="bodyMainContent"] .c-message a',
     whereDoesInformation: '[data-auto-id="businessDetailsWhereDoesInformation"]',
     address: (cellNumber) => {
-      const cellSelector = `[data-auto-id="businessDetailsAddress"] td:nth-child(${cellNumber})`
+      const cellSelector = `[data-auto-id="addressesDetailsContainer"] tr td:nth-child(${cellNumber})`
       return {
         badge: (badgeNumber) => {
           return `${cellSelector} div div:nth-child(${badgeNumber}) span.c-badge`
