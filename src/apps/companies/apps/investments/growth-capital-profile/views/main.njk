@@ -2,10 +2,10 @@
 
 {{ subnavigation(company, 'growth-capital-profile') }}
 
-<h2 class="govuk-heading-m" data-auto-id="investmentSubheading">Growth capital investor profile</h2>
+<h2 class="govuk-heading-m">Growth capital investor profile</h2>
 
 {% if companyProfile  %}
   <pre>{{ companyProfile | dump(2) }}</pre>
 {% else %}
-  <button class="button" data-auto-id="createAProfile">Create a profile</button>
+  <button class="button">Create a profile</button>
 {% endif %}
