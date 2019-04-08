@@ -28,6 +28,12 @@ Feature: Create a new Investment project
       | France                           |
       | No investment projects in the UK |
     When I choose Yes for "Will this company be the source of foreign equity investment?"
+    Then the Source of foreign equity investment values are displayed
+      | value                            |
+      | Lambda plc                       |
+      | France                           |
+      | No investment projects in the UK |
+    When I populate the create Investment Project form
     Then I see the success message
     And the investment project local header is displayed
       | key           | value            | formatter              |
@@ -81,6 +87,11 @@ Feature: Create a new Investment project
       | text               | expected                               |
       | Country            | investmentProject.equitySource.country |
     Then I choose the first item in the collection
+    Then the Source of foreign equity investment values are displayed
+      | value                            |
+      | Mars Exports Ltd                 |
+      | United States                    |
+      | No investment projects in the UK |
     When I populate the create Investment Project form
     Then I see the success message
     And the investment project local header is displayed
@@ -133,6 +144,11 @@ Feature: Create a new Investment project
       | text               | expected                               |
       | Country            | investmentProject.equitySource.country |
     Then I choose the first item in the collection
+    Then the Source of foreign equity investment values are displayed
+      | value                            |
+      | Lambda plc                       |
+      | France                           |
+      | No investment projects in the UK |
     When I populate the create Investment Project form
     Then I see the success message
     And the investment project local header is displayed
@@ -174,6 +190,11 @@ Feature: Create a new Investment project
       | France                           |
       | 2 investment projects in the UK  |
     And I choose Yes for "Will this company be the source of foreign equity investment?"
+    Then the Source of foreign equity investment values are displayed
+      | value                            |
+      | Lambda plc                       |
+      | France                           |
+      | No investment projects in the UK |
     And I populate the create Investment Project form
     Then I see the success message
     And the investment project local header is displayed
