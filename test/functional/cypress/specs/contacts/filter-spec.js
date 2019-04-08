@@ -89,6 +89,6 @@ describe('Contacts Collections Filter', () => {
 
   it('should remove all filters', () => {
     cy.get(selectors.entityCollection.collectionRemoveAllFilter).click()
-    cy.get(selectors.entityCollection.collection).should('contain', '9 contacts')
+    cy.url().should('contain', 'custom=true&name=&company_name=')
   })
 })
