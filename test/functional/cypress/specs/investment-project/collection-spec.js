@@ -10,13 +10,13 @@ describe('Investment Project Collections', () => {
   })
 
   it('should contain investment badge', () => {
-    cy.get(selectors.entityCollection.firstEntityBadge).should('contain', 'Won')
-    cy.get(selectors.entityCollection.firstEntityBadge).should('contain', 'FDI')
-    cy.get(selectors.entityCollection.firstEntityBadge).should('contain', 'ongoing')
+    cy.get(selectors.entityCollection.entityBadge(1)).should('contain', 'Won')
+    cy.get(selectors.entityCollection.entityBadge(1)).should('contain', 'FDI')
+    cy.get(selectors.entityCollection.entityBadge(1)).should('contain', 'ongoing')
   })
 
   it('should contain investor and sector', () => {
-    cy.get(selectors.entityCollection.firstEntity)
+    cy.get(selectors.entityCollection.entity(1))
       .should('contain', 'Venus Ltd')
       .and('contain', 'Renewable Energy : Wind : Onshore')
   })
