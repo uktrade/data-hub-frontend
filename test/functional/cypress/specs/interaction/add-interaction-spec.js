@@ -14,7 +14,7 @@ describe('Add Interaction', () => {
     it('should add interaction by company', () => {
       cy.visit('/companies/346f78a5-1d23-4213-b4c2-bf48246a13c3/interactions/create/interaction')
       populateInteractionForm()
-      cy.get(selectors.addInteraction.add).click()
+      cy.get(selectors.interactionForm.add).click()
 
       cy.get(serviceDeliveryDetails.subject).should('contain', subject)
     })
@@ -22,7 +22,7 @@ describe('Add Interaction', () => {
     it('should add interaction by contacts', () => {
       cy.visit('/contacts/346f78a5-1d23-4213-b4c2-bf48246a13c3/interactions/create/interaction')
       populateInteractionForm()
-      cy.get(selectors.addInteraction.add).click()
+      cy.get(selectors.interactionForm.add).click()
 
       cy.get(serviceDeliveryDetails.subject).should('contain', subject)
     })
@@ -30,15 +30,15 @@ describe('Add Interaction', () => {
     it('should add interaction by investment projects', () => {
       cy.visit('/investments/projects/5d341b34-1fc8-4638-b4b1-a0922ebf401e/interactions/create/interaction')
       populateInteractionForm()
-      cy.get(selectors.addInteraction.add).click()
+      cy.get(selectors.interactionForm.add).click()
 
       cy.get(serviceDeliveryDetails.subject).should('contain', subject)
     })
 
     it('should map values to the successfully created interaction form', () => {
       cy.visit('/companies/346f78a5-1d23-4213-b4c2-bf48246a13c3/interactions/create/interaction')
-      cy.get(selectors.addInteraction.subject).type(subject)
-      cy.get(selectors.addInteraction.add).click()
+      cy.get(selectors.interactionForm.subject).type(subject)
+      cy.get(selectors.interactionForm.add).click()
 
       validateSuccesfulFormSubmission(subject, 'Interaction created')
     })
@@ -48,7 +48,7 @@ describe('Add Interaction', () => {
     it('should add service delivery by company', () => {
       cy.visit('/companies/346f78a5-1d23-4213-b4c2-bf48246a13c3/interactions/create/service-delivery')
       populateServiceDeliveryForm('Bank Referral')
-      cy.get(selectors.addInteraction.add).click()
+      cy.get(selectors.interactionForm.add).click()
 
       cy.get(serviceDeliveryDetails.subject).should('contain', subject)
     })
@@ -56,7 +56,7 @@ describe('Add Interaction', () => {
     it('should add service delivery by contacts', () => {
       cy.visit('/contacts/346f78a5-1d23-4213-b4c2-bf48246a13c3/interactions/create/service-delivery')
       populateServiceDeliveryForm('Bank Referral')
-      cy.get(selectors.addInteraction.add).click()
+      cy.get(selectors.interactionForm.add).click()
 
       cy.get(serviceDeliveryDetails.subject).should('contain', subject)
     })
@@ -64,7 +64,7 @@ describe('Add Interaction', () => {
     it('should add service delivery by investment projects', () => {
       cy.visit('/investments/projects/5d341b34-1fc8-4638-b4b1-a0922ebf401e/interactions/create/service-delivery')
       populateServiceDeliveryForm('Account Management')
-      cy.get(selectors.addInteraction.add).click()
+      cy.get(selectors.interactionForm.add).click()
 
       cy.get(serviceDeliveryDetails.subject).should('contain', subject)
     })
@@ -72,13 +72,13 @@ describe('Add Interaction', () => {
     it('should add service delivery with TAP service optional fields empty', () => {
       cy.visit('/companies/346f78a5-1d23-4213-b4c2-bf48246a13c3/interactions/create/service-delivery')
 
-      cy.get(selectors.addInteraction.contact).select('Joseph Woof, Dog master')
-      cy.get(selectors.addInteraction.eventNo).click()
-      cy.get(selectors.addInteraction.service).select('Tradeshow Access Programme (TAP)')
-      cy.get(selectors.addInteraction.subject).type(subject)
-      cy.get(selectors.addInteraction.notes).type('Conversation with potential client')
-      cy.get(selectors.addInteraction.policyFeedbackNo).click()
-      cy.get(selectors.addInteraction.add).click()
+      cy.get(selectors.interactionForm.contact).select('Joseph Woof, Dog master')
+      cy.get(selectors.interactionForm.eventNo).click()
+      cy.get(selectors.interactionForm.service).select('Tradeshow Access Programme (TAP)')
+      cy.get(selectors.interactionForm.subject).type(subject)
+      cy.get(selectors.interactionForm.notes).type('Conversation with potential client')
+      cy.get(selectors.interactionForm.policyFeedbackNo).click()
+      cy.get(selectors.interactionForm.add).click()
 
       cy.get(serviceDeliveryDetails.subject).should('contain', subject)
     })
@@ -86,24 +86,24 @@ describe('Add Interaction', () => {
     it('should add service delivery with TAP service optional fields populated', () => {
       cy.visit('/companies/346f78a5-1d23-4213-b4c2-bf48246a13c3/interactions/create/service-delivery')
 
-      cy.get(selectors.addInteraction.contact).select('Joseph Woof, Dog master')
-      cy.get(selectors.addInteraction.eventNo).click()
-      cy.get(selectors.addInteraction.service).select('Tradeshow Access Programme (TAP)')
-      cy.get(selectors.addInteraction.serviceStatus).select('Current')
-      cy.get(selectors.addInteraction.grantOffered).type('Approved')
-      cy.get(selectors.addInteraction.subject).type(subject)
-      cy.get(selectors.addInteraction.notes).type('Conversation with potential client')
-      cy.get(selectors.addInteraction.policyFeedbackNo).click()
+      cy.get(selectors.interactionForm.contact).select('Joseph Woof, Dog master')
+      cy.get(selectors.interactionForm.eventNo).click()
+      cy.get(selectors.interactionForm.service).select('Tradeshow Access Programme (TAP)')
+      cy.get(selectors.interactionForm.serviceStatus).select('Current')
+      cy.get(selectors.interactionForm.grantOffered).type('Approved')
+      cy.get(selectors.interactionForm.subject).type(subject)
+      cy.get(selectors.interactionForm.notes).type('Conversation with potential client')
+      cy.get(selectors.interactionForm.policyFeedbackNo).click()
 
-      cy.get(selectors.addInteraction.add).click()
+      cy.get(selectors.interactionForm.add).click()
 
       cy.get(serviceDeliveryDetails.subject).should('contain', subject)
     })
 
     it('should map values to the successfully created service delivery form', () => {
       cy.visit('/companies/346f78a5-1d23-4213-b4c2-bf48246a13c3/interactions/create/service-delivery')
-      cy.get(selectors.addInteraction.subject).type(subject)
-      cy.get(selectors.addInteraction.add).click()
+      cy.get(selectors.interactionForm.subject).type(subject)
+      cy.get(selectors.interactionForm.add).click()
 
       validateSuccesfulFormSubmission(subject, 'Service delivery created')
     })
@@ -111,21 +111,21 @@ describe('Add Interaction', () => {
 })
 
 const populateInteractionForm = () => {
-  cy.get(selectors.addInteraction.contact).select('Joseph Woof, Dog master')
-  cy.get(selectors.addInteraction.service).select('Account Management')
-  cy.get(selectors.addInteraction.communicationChannel).select('Email/Website')
-  cy.get(selectors.addInteraction.subject).type(subject)
-  cy.get(selectors.addInteraction.notes).type('Conversation with potential client')
-  cy.get(selectors.addInteraction.policyFeedbackNo).click()
+  cy.get(selectors.interactionForm.contact).select('Joseph Woof, Dog master')
+  cy.get(selectors.interactionForm.service).select('Account Management')
+  cy.get(selectors.interactionForm.communicationChannel).select('Email/Website')
+  cy.get(selectors.interactionForm.subject).type(subject)
+  cy.get(selectors.interactionForm.notes).type('Conversation with potential client')
+  cy.get(selectors.interactionForm.policyFeedbackNo).click()
 }
 
 const populateServiceDeliveryForm = service => {
-  cy.get(selectors.addInteraction.contact).select('Joseph Woof, Dog master')
-  cy.get(selectors.addInteraction.eventNo).click()
-  cy.get(selectors.addInteraction.service).select(service)
-  cy.get(selectors.addInteraction.subject).type(subject)
-  cy.get(selectors.addInteraction.notes).type('Conversation with potential client')
-  cy.get(selectors.addInteraction.policyFeedbackNo).click()
+  cy.get(selectors.interactionForm.contact).select('Joseph Woof, Dog master')
+  cy.get(selectors.interactionForm.eventNo).click()
+  cy.get(selectors.interactionForm.service).select(service)
+  cy.get(selectors.interactionForm.subject).type(subject)
+  cy.get(selectors.interactionForm.notes).type('Conversation with potential client')
+  cy.get(selectors.interactionForm.policyFeedbackNo).click()
 }
 
 const validateSuccesfulFormSubmission = (subject, headerTitle) => {
