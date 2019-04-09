@@ -1,6 +1,4 @@
 /* eslint-disable camelcase */
-const { get } = require('lodash')
-
 const { getInvestmentTypeDetails } = require('./shared')
 
 function transformInvestmentFDIForView ({
@@ -15,7 +13,7 @@ function transformInvestmentFDIForView ({
       name: investor_company.name,
       url: `/companies/${investor_company.id}`,
     },
-    foreign_country: get(investor_company, 'registered_address_country.name'),
+    foreign_country: investor_company.address.country.name,
     uk_company: uk_company ? {
       name: uk_company.name,
       url: `/companies/${uk_company.id}`,
