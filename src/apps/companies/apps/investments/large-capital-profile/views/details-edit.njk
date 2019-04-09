@@ -60,4 +60,21 @@
     })
   }}
 
+  {{
+    govukTextarea({
+      name: 'investorDescription',
+      label: {
+        text: 'Investor description'
+      },
+      hint: {
+        html: '<span>Enter any additional relevant information.</span>For instance when founded, ownership, purpose and strategy.',
+        classes: 'investor-description'
+      },
+      attributes: {
+        'data-auto-id': 'investorDescription'
+      },
+      value: profile.investorDetails.investorDescription.value
+    })
+  }}
+
 {% endcall %}

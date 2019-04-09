@@ -78,6 +78,9 @@ describe('Company Investments - large capital profile', () => {
           investableCapital: {
             value: null,
           },
+          investorDescription: {
+            value: '',
+          },
         },
         investorRequirements: {
           incompleteFields: 9,
@@ -126,6 +129,9 @@ describe('Company Investments - large capital profile', () => {
           investableCapital: {
             value: null,
           },
+          investorDescription: {
+            value: '',
+          },
         },
         investorRequirements: {
           incompleteFields: 9,
@@ -145,6 +151,7 @@ describe('Company Investments - large capital profile', () => {
           'investor_type',
           'global_assets_under_management',
           'investable_capital',
+          'investor_description',
         ])
 
         profile.investor_type = {
@@ -154,6 +161,7 @@ describe('Company Investments - large capital profile', () => {
 
         profile.global_assets_under_management = 1000
         profile.investable_capital = 2000
+        profile.investor_description = 'Lorem ipsum dolor sit amet.'
 
         nock(config.apiRoot)
           .get(`/v4/large-investor-profile?investor_company_id=${companyMock.id}`)
@@ -174,7 +182,7 @@ describe('Company Investments - large capital profile', () => {
         editing: undefined,
         id: 'a9e7afa4-1079-422a-b24e-a77f3ba80375',
         investorDetails: {
-          incompleteFields: 2,
+          incompleteFields: 1,
           investorType: {
             text: 'Asset manager',
             value: '80168d31-fa91-494e-9ad5-b9255e01b5da',
@@ -184,6 +192,9 @@ describe('Company Investments - large capital profile', () => {
           },
           investableCapital: {
             value: 2000,
+          },
+          investorDescription: {
+            value: 'Lorem ipsum dolor sit amet.',
           },
         },
         investorRequirements: {

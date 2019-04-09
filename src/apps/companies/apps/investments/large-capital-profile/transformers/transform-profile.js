@@ -17,6 +17,9 @@ const transformProfile = (profile, editing) => {
       investableCapital: {
         value: get(profile, 'investable_capital'),
       },
+      investorDescription: {
+        value: get(profile, 'investor_description'),
+      },
     },
     investorRequirements: {
       incompleteFields: get(profile, 'incomplete_requirements_fields.length'),
