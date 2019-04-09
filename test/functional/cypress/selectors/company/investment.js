@@ -14,6 +14,7 @@ module.exports = {
     investorType: '[data-auto-id=investorType]',
     globalAssetsUnderManagement: '[data-auto-id=globalAssetsUnderManagement]',
     investableCapital: '[data-auto-id=investableCapital]',
+    investorDescription: '[data-auto-id=investorDescription]',
     taskList: {
       investorType: {
         name: '[data-auto-id="investorDetails"] ul > li:nth-child(1) .task-list__item-name',
