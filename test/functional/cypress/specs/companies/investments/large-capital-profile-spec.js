@@ -194,6 +194,7 @@ describe('Company Investments and Large capital profile', () => {
         .url().should('contain', `?editing=investor-details`)
         .get(selectors.investorDetails.investorType).select('Angel syndicate')
         .get(selectors.investorDetails.globalAssetsUnderManagement).type(1000)
+        .get(selectors.investorDetails.investableCapital).type(2000)
         .get(selectors.investorDetails.save).click()
         .url().should('contain', largeCapitalProfile)
     })
