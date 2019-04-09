@@ -12,11 +12,13 @@ const updateProfile = async (req, res, next) => {
       investorType,
       globalAssetsUnderManagement,
       investableCapital,
+      investorDescription,
     } = req.body
 
     body.investor_type = investorType
     body.global_assets_under_management = globalAssetsUnderManagement
     body.investable_capital = investableCapital
+    body.investor_description = investorDescription
   }
 
   try {
