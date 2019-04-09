@@ -2,10 +2,11 @@ const { localHeader, companyInvestment: selectors } = require('../../../selector
 const fixtures = require('../../../fixtures/index.js')
 const baseUrl = Cypress.config().baseUrl
 const { oneListCorp } = fixtures.company
+const largeCapitalProfile = `/companies/${oneListCorp.id}/investments/large-capital-profile`
 
 describe('Company Investments and Large capital profile', () => {
   context('when viewing the company header', () => {
-    before(() => cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`))
+    before(() => cy.visit(largeCapitalProfile))
 
     it('should display the "One List Corp" heading', () => {
       cy.get(localHeader().heading).should('have.text', 'One List Corp')
@@ -13,7 +14,7 @@ describe('Company Investments and Large capital profile', () => {
   })
 
   context('when viewing the 3 tabs', () => {
-    before(() => cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`))
+    before(() => cy.visit(largeCapitalProfile))
 
     it('should display an "Investments projects" tab with the correct URL', () => {
       cy.get(selectors.tabs.investmentProjects).find('a')
@@ -35,7 +36,7 @@ describe('Company Investments and Large capital profile', () => {
   })
 
   context('when the Large capital profile tab is selected', () => {
-    before(() => cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`))
+    before(() => cy.visit(largeCapitalProfile))
 
     it('should not have an "active" class on the "Investment projects" tab', () => {
       cy.get(selectors.tabs.investmentProjects).should('not.have.class', 'active')
@@ -51,7 +52,7 @@ describe('Company Investments and Large capital profile', () => {
   })
 
   context('when viewing the tabbed area content', () => {
-    before(() => cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`))
+    before(() => cy.visit(largeCapitalProfile))
 
     it('should display the "Large capital investor profile" subheading', () => {
       cy.get(selectors.subHeading).should('have.text', 'Large capital investor profile')
@@ -59,7 +60,7 @@ describe('Company Investments and Large capital profile', () => {
   })
 
   context('when clicking on a profile summary', () => {
-    before(() => cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`))
+    before(() => cy.visit(largeCapitalProfile))
 
     it('should expand the "Investor details" summary and have an enabled edit button', () => {
       cy.get(selectors.investorDetails.summary).click()
@@ -108,7 +109,7 @@ describe('Company Investments and Large capital profile', () => {
   })
 
   context('when viewing the incomplete fields on each summary', () => {
-    before(() => cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`))
+    before(() => cy.visit(largeCapitalProfile))
 
     it('should display "5 fields incomplete"', () => {
       cy.get(selectors.investorDetails.incompleteFields).should('contain', '5 fields incomplete')
@@ -133,7 +134,7 @@ describe('Company Investments and Large capital profile', () => {
       'Has this investor cleared the required checks within the last 12 months?',
     ]
 
-    before(() => cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`))
+    before(() => cy.visit(largeCapitalProfile))
 
     Object.keys(taskList).forEach((key, index) => {
       it(`should display both ${labels[index]} and INCOMPLETE`, () => {
@@ -157,7 +158,7 @@ describe('Company Investments and Large capital profile', () => {
       'Desired deal role',
     ]
 
-    before(() => cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`))
+    before(() => cy.visit(largeCapitalProfile))
 
     Object.keys(taskList).forEach((key, index) => {
       it(`should display both ${labels[index]} and INCOMPLETE`, () => {
@@ -175,7 +176,7 @@ describe('Company Investments and Large capital profile', () => {
       'Notes on investor\'s location preferences',
     ]
 
-    before(() => cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`))
+    before(() => cy.visit(largeCapitalProfile))
 
     Object.keys(taskList).forEach((key, index) => {
       it(`should display both ${labels[index]} and INCOMPLETE`, () => {
@@ -185,22 +186,22 @@ describe('Company Investments and Large capital profile', () => {
     })
   })
 
-  context('when saving an "Investor type" within "Investor details"', () => {
-    it('should select the "Angel syndicate" and save the change', () => {
-      const largeCapitalProfile = `${baseUrl}/companies/${oneListCorp.id}/investments/large-capital-profile`
-      cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`)
+  context('when completing the entire "Investor details" form', () => {
+    it('should fill in all fields and save', () => {
+      cy.visit(largeCapitalProfile)
         .get(selectors.investorDetails.summary).click()
         .get(selectors.investorDetails.edit).click()
-        .url().should('eq', `${largeCapitalProfile}?editing=investor-details`)
+        .url().should('contain', `?editing=investor-details`)
         .get(selectors.investorDetails.investorType).select('Angel syndicate')
+        .get(selectors.investorDetails.globalAssetsUnderManagement).type(1000)
         .get(selectors.investorDetails.save).click()
-        .url().should('eq', largeCapitalProfile)
+        .url().should('contain', largeCapitalProfile)
     })
   })
 })
 
 const visitLargeCapitalProfileAndExpandAllSections = () => {
-  cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`)
+  cy.visit(largeCapitalProfile)
     .get(selectors.investorDetails.summary).click()
     .get(selectors.investorRequirements.summary).click()
     .get(selectors.location.summary).click()

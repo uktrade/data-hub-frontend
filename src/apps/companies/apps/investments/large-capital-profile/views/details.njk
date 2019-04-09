@@ -1,6 +1,6 @@
 <ul class="task-list">
   {{ taskListItem({ name: 'Investor type', value: profile.investorDetails.investorType.text }) }}
-  {{ taskListItem({ name: 'Global assets under management' }) }}
+  {{ taskListItem({ name: 'Global assets under management', value: profile.investorDetails.globalAssetsUnderManagement.value }) }}
   {{ taskListItem({ name: 'Investable capital' }) }}
   {{ taskListItem({ name: 'Investor description' }) }}
   {{ taskListItem({
