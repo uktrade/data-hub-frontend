@@ -26,4 +26,21 @@
     })
   }}
 
+  {{
+    govukInput({
+      type: 'number',
+      name: 'globalAssetsUnderManagement',
+      label: {
+        text: 'Global assets under management'
+      },
+      hint: {
+        text: 'Enter value in US dollars'
+      },
+      attributes: {
+        'data-auto-id': 'globalAssetsUnderManagement'
+      },
+      value: profile.investorDetails.globalAssetsUnderManagement.value
+    })
+  }}
+
 {% endcall %}
