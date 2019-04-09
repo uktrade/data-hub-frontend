@@ -22,7 +22,6 @@ Feature: Save a new Event in Data hub
 
   @events-save--uk-region
   Scenario: Verify event UK region mandatory field
-
     When I click the Events global nav link
     And I click the "Add event" link
     And I populate the create event form with United Kingdom and without a region
