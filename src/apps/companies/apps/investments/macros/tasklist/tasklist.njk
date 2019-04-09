@@ -2,7 +2,7 @@
   {% set id = props.id or props.name %}
   {% set isComplete = props.value or false %}
 
-  <li class="task-list__item {{ 'complete' if isComplete }}" data-auto-id="{{ id | camelCase }}">
+  <li class="task-list__item {{ 'complete' if isComplete }}">
     <span class="task-list__item-name" aria-describedby="{{ id | kebabCase }}-incomplete">
       {{ props.name }}
     </span>
