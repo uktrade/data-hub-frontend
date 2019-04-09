@@ -1,7 +1,7 @@
 <ul class="task-list">
   {{ taskListItem({ name: 'Investor type', value: profile.investorDetails.investorType.text }) }}
   {{ taskListItem({ name: 'Global assets under management', value: profile.investorDetails.globalAssetsUnderManagement.value }) }}
-  {{ taskListItem({ name: 'Investable capital' }) }}
+  {{ taskListItem({ name: 'Investable capital', value: profile.investorDetails.investableCapital.value }) }}
   {{ taskListItem({ name: 'Investor description' }) }}
   {{ taskListItem({
        id: 'investor-checks',

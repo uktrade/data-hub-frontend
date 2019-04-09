@@ -43,4 +43,21 @@
     })
   }}
 
+  {{
+    govukInput({
+      type: 'number',
+      name: 'investableCapital',
+      label: {
+        text: 'Investable capital'
+      },
+      hint: {
+        text: 'Enter value in US dollars'
+      },
+      attributes: {
+        'data-auto-id': 'investableCapital'
+      },
+      value: profile.investorDetails.investableCapital.value
+    })
+  }}
+
 {% endcall %}
