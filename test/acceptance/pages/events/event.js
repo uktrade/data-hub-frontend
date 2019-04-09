@@ -132,7 +132,7 @@ module.exports = {
                 done()
               })
               .then(() => {
-                this.setValue('@organiserInput', 'test')
+                this.setValue('@organiserInput', 'holly')
                 done()
               })
           })

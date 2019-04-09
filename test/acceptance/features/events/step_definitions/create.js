@@ -12,7 +12,6 @@ Given(/^I create an event$/, async function () {
     })
     .wait() // wait for backend to sync
     // This will select the organiser, workaround for typeahead.
-  client.pause(2000)
   client.keys([client.Keys.ENTER])
 })
 
