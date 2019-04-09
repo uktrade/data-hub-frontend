@@ -27,3 +27,8 @@ nav.govuk-tabs {
   }
 }
 
+@include govuk-media-query($from: tablet) {
+  form.investor-details-edit {
+    width: 75%;
+  }
+}
