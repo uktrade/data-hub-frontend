@@ -14,6 +14,9 @@ const transformProfile = (profile, editing) => {
       globalAssetsUnderManagement: {
         value: get(profile, 'global_assets_under_management'),
       },
+      investableCapital: {
+        value: get(profile, 'investable_capital'),
+      },
     },
     investorRequirements: {
       incompleteFields: get(profile, 'incomplete_requirements_fields.length'),
