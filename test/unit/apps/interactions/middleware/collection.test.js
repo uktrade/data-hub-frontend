@@ -208,7 +208,8 @@ describe('interaction collection middleware', () => {
         this.req.query = assign({}, this.req.query, {
           kind: 'interaction',
           communication_channel: 'phone',
-          dit_adviser: '4321',
+          dit_participants__adviser: '4321',
+          dit_participants__team: '4321',
           date_after: '2017-02-01',
           date_before: '2018-01-01',
           fruit: 'Orange',
@@ -220,7 +221,8 @@ describe('interaction collection middleware', () => {
       it('should put the criteria in the request body', () => {
         expect(this.req.body.kind).to.equal(this.req.query.kind)
         expect(this.req.body.communication_channel).to.equal(this.req.query.communication_channel)
-        expect(this.req.body.dit_participants).to.equal(this.req.query.dit_participants)
+        expect(this.req.body.dit_participants__adviser).to.equal(this.req.query.dit_participants__adviser)
+        expect(this.req.body.dit_participants__team).to.equal(this.req.query.dit_participants__team)
         expect(this.req.body.date_after).to.equal(this.req.query.date_after)
         expect(this.req.body.date_before).to.equal(this.req.query.date_before)
       })
