@@ -15,6 +15,9 @@ When(/^I populate the create event form$/, async function () {
       set(this.state, 'event', event)
       set(this.state, 'event.heading', get(this.state, 'event.name'))
     })
+    .wait() // wait for backend to sync
+    // This will select the organiser, workaround for typeahead.
+  client.keys([client.Keys.ENTER])
 })
 
 When(/^I populate the create event form with United Kingdom and without a region$/, async function () {
@@ -23,6 +26,9 @@ When(/^I populate the create event form with United Kingdom and without a region
       set(this.state, 'event', event)
       set(this.state, 'event.heading', event.name)
     })
+    .wait() // wait for backend to sync
+    // This will select the organiser, workaround for typeahead.
+  client.keys([client.Keys.ENTER])
 })
 
 Then(/^I can view the event$/, async function () {

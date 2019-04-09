@@ -38,7 +38,8 @@ module.exports = {
     service: 'select[name="service"]',
     serviceError: 'label[for=field-service] span:nth-child(2)',
     leadTeam: 'select[name="lead_team"]',
-    organiser: '.multiselect__single',
+    organiser: '.multiselect__tags',
+    organiserInput: '.multiselect__input',
     sharedYes: 'label[for=field-event_shared-1]',
     sharedNo: 'label[for=field-event_shared-2]',
     teams: '#field-teams',
@@ -124,6 +125,14 @@ module.exports = {
                       .setValue(selector, event[key])
                   }
                 }
+                done()
+              })
+              .then(() => {
+                this.click('@organiser')
+                done()
+              })
+              .then(() => {
+                this.setValue('@organiserInput', 'holly')
                 done()
               })
           })
