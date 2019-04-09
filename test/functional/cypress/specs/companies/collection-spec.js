@@ -10,11 +10,11 @@ describe('Company Collections', () => {
   })
 
   it('should contain country badge', () => {
-    cy.get(selectors.entityCollection.firstEntityBadge).should('contain', 'Malaysia')
+    cy.get(selectors.entityCollection.entityBadge(1)).should('contain', 'Malaysia')
   })
 
   it('should contain company sector and primary address', () => {
-    cy.get(selectors.entityCollection.firstEntity)
+    cy.get(selectors.entityCollection.entity(1))
       .should('contain', 'Energy')
       .and('contain', 'Level 6, Avenue K Tower, 156 Jalan Ampang, Kuala Lumpur, London, 50450, Malaysia')
   })

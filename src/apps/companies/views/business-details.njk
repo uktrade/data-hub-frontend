@@ -45,7 +45,7 @@
       This company was archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br>
       <strong>Reason:</strong> {{company.archived_reason}}<br>
       <br>
-      <a href="/companies/{{company.id}}/unarchive" data-auto-id="businessDetailsUnarchive">Unarchive</a>
+      <a href="/companies/{{company.id}}/unarchive">Unarchive</a>
     {% endcall %}
   {% endif %}
 
@@ -71,7 +71,7 @@
   {% call DetailsContainer({ heading: 'Addresses', editUrl: editUrl, dataAutoId: 'addressesDetailsContainer' }) %}
     <table class="table--key-value">
       <tbody>
-        <tr data-auto-id="businessDetailsAddress">
+        <tr>
           {{ AddressCell(company.address) }}
 
           {% if company.registered_address %}
@@ -84,7 +84,7 @@
 
   {% if regionDetails %}
     {% call DetailsContainer({ heading: 'DIT region', editUrl: editUrl, dataAutoId: 'regionDetailsContainer' }) %}
-      <table class="table--key-value" data-auto-id="regionDetails">
+      <table class="table--key-value">
         <tbody>
           <tr>
             <td>{{ regionDetails }}</td>
@@ -95,7 +95,7 @@
   {% endif %}
 
   {% call DetailsContainer({ heading: 'DIT sector', editUrl: editUrl, dataAutoId: 'sectorDetailsContainer' }) %}
-    <table class="table--key-value" data-auto-id="sectorDetails">
+    <table class="table--key-value">
       <tbody>
       {% for sector in sectorDetails %}
         <tr>
@@ -122,7 +122,7 @@
 
   {% if archivedDocumentPath %}
     {% call DetailsContainer({ heading: 'Documents from CDMS', dataAutoId: 'documentsDetailsContainer' }) %}
-      <table class="table--key-value" data-auto-id="documentsDetails">
+      <table class="table--key-value">
         <tbody>
         <tr>
           <td>

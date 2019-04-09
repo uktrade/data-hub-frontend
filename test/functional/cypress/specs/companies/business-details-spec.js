@@ -76,7 +76,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "DIT sector" details', () => {
-      assertValueTable('sectorDetails', [
+      assertValueTable('sectorDetailsContainer', [
         'Retail',
       ])
     })
@@ -189,7 +189,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "DIT region" details', () => {
-      assertValueTable('regionDetails', [
+      assertValueTable('regionDetailsContainer', [
         'North West',
       ])
     })
@@ -203,7 +203,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "DIT sector" details', () => {
-      assertValueTable('sectorDetails', [
+      assertValueTable('sectorDetailsContainer', [
         'Retail',
       ])
     })
@@ -242,7 +242,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "Documents from CDMS" details', () => {
-      assertValueTable('documentsDetails', [
+      assertValueTable('documentsDetailsContainer', [
         'View files and documents (will open another website)',
       ])
     })
@@ -323,7 +323,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "DIT sector" details', () => {
-      assertValueTable('sectorDetails', [
+      assertValueTable('sectorDetailsContainer', [
         'Retail',
       ])
     })
@@ -427,7 +427,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "DIT sector" details', () => {
-      assertValueTable('sectorDetails', [
+      assertValueTable('sectorDetailsContainer', [
         'Retail',
       ])
     })
@@ -535,7 +535,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "DIT region" details', () => {
-      assertValueTable('regionDetails', [
+      assertValueTable('regionDetailsContainer', [
         'Not set',
       ])
     })
@@ -549,7 +549,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "DIT sector" details', () => {
-      assertValueTable('sectorDetails', [
+      assertValueTable('sectorDetailsContainer', [
         'Advanced Engineering',
       ])
     })
