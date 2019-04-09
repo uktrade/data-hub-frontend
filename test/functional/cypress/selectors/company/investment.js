@@ -12,6 +12,7 @@ module.exports = {
     edit: '[data-auto-id=investorDetailsEdit]',
     save: '[data-auto-id=investorDetailsSave]',
     investorType: '[data-auto-id=investorType]',
+    globalAssetsUnderManagement: '[data-auto-id=globalAssetsUnderManagement]',
     taskList: {
       investorType: {
         name: '[data-auto-id="investorDetails"] ul > li:nth-child(1) .task-list__item-name',

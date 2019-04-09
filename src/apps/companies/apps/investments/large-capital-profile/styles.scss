@@ -25,6 +25,12 @@ nav.govuk-tabs {
   details:last-child {
     border-bottom: 2px solid lightgray;
   }
+
+  form.investor-details-edit {
+    label {
+      font-weight: bold;
+    }
+  }
 }
 
 @include govuk-media-query($from: tablet) {
