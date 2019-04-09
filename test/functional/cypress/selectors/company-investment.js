@@ -11,6 +11,7 @@ module.exports = {
     summary: '[data-auto-id=investorDetails] summary',
     edit: '[data-auto-id=investorDetailsEdit]',
     save: '[data-auto-id=investorDetailsSave]',
+    investorType: '[data-auto-id=investorType]',
     taskList: {
       investorType: {
         name: '[data-auto-id=investorType] .task-list__item-name',
@@ -81,8 +82,8 @@ module.exports = {
   location: {
     incompleteFields: '[data-auto-id=location] .incomplete-fields',
     summary: '[data-auto-id=location] summary',
-    edit: '[data-auto-id=edit-location]',
-    save: '[data-auto-id=save-location]',
+    edit: '[data-auto-id=locationEdit]',
+    save: '[data-auto-id=locationSave]',
     taskList: {
       ukLocationsOfInterest: {
         name: '[data-auto-id=ukLocationsOfInterest] .task-list__item-name',

@@ -11,6 +11,11 @@
       font-weight: bold;
     }
 
+    .task-list__item-complete {
+      display: block;
+      margin-top: 5px;
+    }
+
     .task-list__item-incomplete {
       display: block;
       background: $govuk-blue;
@@ -26,6 +31,10 @@
       justify-content: space-between;
       padding-top: 15px;
       padding-bottom: 15px;
+
+      &.complete {
+        display: block;
+      }
 
       .task-list__item-name {
         margin-right: 10px;

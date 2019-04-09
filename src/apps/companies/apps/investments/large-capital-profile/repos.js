@@ -14,7 +14,16 @@ function createCompanyProfile (token, body) {
   })
 }
 
+function updateCompanyProfile (token, body, profileId) {
+  return authorisedRequest(token, {
+    body,
+    method: 'PATCH',
+    url: `${config.apiRoot}/v4/large-investor-profile/${profileId}`,
+  })
+}
+
 module.exports = {
   getCompanyProfiles,
   createCompanyProfile,
+  updateCompanyProfile,
 }
