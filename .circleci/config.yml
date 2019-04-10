@@ -239,6 +239,7 @@ jobs:
           key: yarn-dependency-{{ checksum "package.json" }}-{{ checksum "node_version" }}-{{ checksum "yarn_version" }}
           paths:
             - ~/data-hub-frontend/node_modules
+            - /root/.cache/Cypress
 
   # Run linting jobs
   lint_code:
@@ -330,8 +331,8 @@ jobs:
     working_directory: ~/data-hub-frontend
     steps:
       - checkout
-      - run: yarn install
       - *wait_for_mock_sso
+      - *store_versions
       - *restore_yarn_cache
       - run: yarn build
       - *start_frontend
@@ -411,11 +412,11 @@ jobs:
       - *docker_data_hub_backend_celery
     steps:
       - checkout
+      - *store_versions
+      - *restore_yarn_cache
       - run: yarn install
       - *wait_for_backend
       - *wait_for_mock_sso
-      - *store_versions
-      - *restore_yarn_cache
       - run: yarn build
       - *start_frontend
       - *wait_for_frontend
@@ -444,11 +445,11 @@ jobs:
       - *docker_data_hub_backend_celery
     steps:
       - checkout
+      - *store_versions
+      - *restore_yarn_cache
       - run: yarn install
       - *wait_for_backend
       - *wait_for_mock_sso
-      - *store_versions
-      - *restore_yarn_cache
       - run: yarn build
       - *start_frontend
       - *wait_for_frontend
