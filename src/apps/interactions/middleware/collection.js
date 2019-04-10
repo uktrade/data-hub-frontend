@@ -1,4 +1,4 @@
-const { assign, merge, pick, pickBy, omit } = require('lodash')
+const { assign, get, merge, pick, pickBy, omit } = require('lodash')
 
 const { ENTITIES } = require('../../search/constants')
 const { QUERY_DATE_FIELDS } = require('../constants')
@@ -7,31 +7,31 @@ const { transformApiResponseToCollection } = require('../../../modules/api/trans
 const { getCollection } = require('../../../modules/search/middleware/collection')
 const reverseDateIfIE = require('../../../lib/if-ie-reverse-date-value')
 
-const { interactionSortForm, defaultInteractionSort } = require('../macros/collection-sort-form')
+const { buildInteractionSortForm, getDefaultInteractionSort } = require('../macros/collection-sort-form')
 const { getInteractionsForEntity } = require('../repos')
 const { transformInteractionToListItem, transformInteractionListItemToHaveUrlPrefix } = require('../transformers')
 
 async function getInteractionCollection (req, res, next) {
   getCollection('interaction',
     ENTITIES,
-    transformInteractionToListItem
+    transformInteractionToListItem()
   )(req, res, next)
 }
 
 async function getInteractionCollectionForEntity (req, res, next) {
   try {
-    const { query: entityQuery } = res.locals.interactions
+    const { query: entityQuery, showCompany } = res.locals.interactions
     const params = {
       entityQuery,
       token: req.session.token,
       page: req.query.page,
-      sortby: req.query.sortby || defaultInteractionSort,
+      sortby: req.query.sortby || getDefaultInteractionSort(showCompany),
     }
 
     res.locals.results = await getInteractionsForEntity(params)
       .then(transformApiResponseToCollection(
         { query: req.query },
-        transformInteractionToListItem,
+        transformInteractionToListItem(showCompany),
         transformInteractionListItemToHaveUrlPrefix(res.locals.interactions.returnLink)
       ))
 
@@ -71,7 +71,9 @@ function getInteractionsRequestBody (req, res, next) {
 }
 
 function getInteractionSortForm (req, res, next) {
-  res.locals.sortForm = merge({}, interactionSortForm, {
+  const showCompany = get(res.locals, 'interactions.showCompany', true)
+
+  res.locals.sortForm = merge({}, buildInteractionSortForm(showCompany), {
     hiddenFields: assign({}, omit(req.query, 'sortby')),
     children: [
       { value: req.query.sortby },

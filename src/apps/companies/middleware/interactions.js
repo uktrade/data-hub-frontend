@@ -7,6 +7,7 @@ function setInteractionsDetails (req, res, next) {
     entityName: company.name,
     query: { company_id: company.id },
     canAdd: !company.archived,
+    showCompany: false,
   }
 
   next()
