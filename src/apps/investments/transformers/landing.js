@@ -1,26 +1,27 @@
 /* eslint-disable camelcase */
-const { get, isPlainObject } = require('lodash')
+const { get, compact } = require('lodash')
 
 const { formatLongDate } = require('../../../../common/date')
 
-function transformInvestmentLandingForView (data) {
-  if (!isPlainObject(data)) {
-    return
-  }
-
+function transformInvestmentLandingForView ({ uk_company, actual_land_date }) {
   return {
-    uk_company: data.uk_company ? { name: data.uk_company.name, url: `/companies/${data.uk_company.id}` } : null,
-    company_number: get(data, 'uk_company.company_number'),
-    registered_address: data.uk_company ? [
-      data.uk_company.registered_address_1,
-      data.uk_company.registered_address_2,
-      data.uk_company.registered_address_town,
-      data.uk_company.registered_address_country.name,
-      data.uk_company.registered_address_county,
-      data.uk_company.registered_address_postcode,
-    ].filter((address) => address) : null,
-    actual_land_date: data.actual_land_date ? formatLongDate(data.actual_land_date) : null,
+    uk_company: uk_company ? {
+      name: uk_company.name,
+      url: `/companies/${uk_company.id}`,
+    } : null,
+    company_number: get(uk_company, 'company_number'),
+    registered_address: uk_company ? compact([
+      uk_company.address.line_1,
+      uk_company.address.line_2,
+      uk_company.address.town,
+      uk_company.address.county,
+      uk_company.address.postcode,
+      uk_company.address.country.name,
+    ]) : null,
+    actual_land_date: actual_land_date ? formatLongDate(actual_land_date) : null,
   }
 }
 
-module.exports = { transformInvestmentLandingForView }
+module.exports = {
+  transformInvestmentLandingForView,
+}
