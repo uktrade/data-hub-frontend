@@ -8,20 +8,14 @@
 {% set returnLink = '/companies/' + company.id + '/business-details' if isEditing else '/companies/add-step-1' %}
 
 {% block body_main_content %}
-  <div class="section">
-    {% if businessTypeLabel %}
-      <h2 class="govuk-heading-s">Business type</h2>
-      {{ MetaList({
-          items: [
-            {
-              label: businessTypeLabel,
-              value: ('&nbsp;' if company else '<a href="/companies/add-step-1">Change</a>') | safe
-            }
-          ]
-        }) }}
-    {% endif %}
-  </div>
-
+  {% if businessTypeLabel %}
+    {{ UneditableField({
+      name: 'business_type',
+      label: 'Business type',
+      value: businessTypeLabel,
+      url: null if company else '/companies/add-step-1'
+    }) }}
+  {% endif %}
 
   {% if chDetails %}
     {# TODO Do we even still need this? It's not currently being displayed (Bug?) #}
@@ -78,14 +72,11 @@
     }) }}
 
     {% if formData.company_number and not showCompanyNumberForUkBranch %}
-      <div class="c-form-group">
-        <label class="c-form-group__label">
-          <span class="c-form-group__label-text">Companies House number</span>
-        </label>
-        <div class="c-form-group__inner">
-          {{ formData.company_number }}
-        </div>
-      </div>
+      {{ UneditableField({
+        name: 'selected_company_number',
+        label: 'Companies House number',
+        value: formData.company_number
+      }) }}
     {% endif %}
 
     {% if not isForeign %}
@@ -215,11 +206,13 @@
             error: errors.registered_address_country
           }) }}
         {% else %}
-          <div class="section">
-            <h2 class="heading-medium">Country</h2>
-            <p>United Kingdom</p>
-            <input type="hidden" name="registered_address_country" value="{{ formData.registered_address_country }}">
-          </div>
+          {{ UneditableField({
+            name: 'selected_registered_address_country',
+            label: 'Country',
+            value: 'United Kingdom'
+          }) }}
+          <input type="hidden" name="registered_address_country" value="{{ formData.registered_address_country }}">
+
         {% endif %}
       </fieldset>
 
@@ -294,11 +287,13 @@
         }) }}
 
         {% if not isForeign %}
-          <div class="section">
-            <h2 class="heading-medium">Country</h2>
-            <p>United Kingdom</p>
-            <input type="hidden" name="trading_address_country" value="{{ formData.trading_address_country }}">
-          </div>
+          {{ UneditableField({
+            name: 'selected_trading_address_country',
+            label: 'Country',
+            value: 'United Kingdom'
+          }) }}
+
+          <input type="hidden" name="trading_address_country" value="{{ formData.trading_address_country }}">
         {% else %}
           {{ MultipleChoiceField({
             name: 'trading_address_country',
@@ -327,14 +322,12 @@
 
     {# DIT sector #}
     {% if isOnOneList %}
-      <fieldset id="group-field-sector" class="c-form-group">
-        <legend class="c-form-group__label">
-          <span class="c-form-group__label-text">Sector</span>
-        </legend>
+      {{ UneditableField({
+        name: 'sector',
+        label: 'Sector',
+        value: companyDetails['Sector']
+      }) }}
 
-        <p>{{companyDetails['Sector']}}</p>
-
-      </fieldset>
       {{ govukDetails({
         summaryText: 'Need to edit the sector?',
         html: 'If you need to change the sector for a company on the One List, please email <a href="mailto:' + oneListEmail + '">' + oneListEmail + '</a>.',
@@ -355,14 +348,12 @@
 
     {# Business hierarchy #}
     {% if isOnOneList %}
-      <fieldset id="group-field-headquarter_type" class="c-form-group">
-        <legend class="c-form-group__label">
-          <span class="c-form-group__label-text">Business hierarchy</span>
-        </legend>
+      {{ UneditableField({
+        name: 'headquarter_type',
+        label: 'Business hierarchy',
+        value: companyDetails['Headquarter type']
+      }) }}
 
-        <p>{{companyDetails['Headquarter type']}}</p>
-
-      </fieldset>
       {{ govukDetails({
         summaryText: 'Need to edit the headquarter type?',
         html: 'If you need to change the headquarter type for a company on the One List, please email <a href="mailto:' + oneListEmail + '">' + oneListEmail + '</a>.',
