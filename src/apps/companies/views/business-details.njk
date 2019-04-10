@@ -2,19 +2,30 @@
 
 {% set editUrl = '/companies/' + company.id + '/edit' if not company.duns_number and not company.archived %}
 
-{% macro AddressCell(meta, address) %}
+{% macro AddressCell(address, isRegistered) %}
   <td>
-    {{
-      MetaList({
-        items: meta,
-        modifier: 'stacked',
-        itemModifier: 'stacked'
-      })
-    }}
+    {% if isRegistered %}
+      {{
+        MetaList({
+          items: [
+            {
+              value: 'Registered',
+              label: 'Type',
+              type: 'badge'
+            }
+          ],
+          modifier: 'stacked',
+          itemModifier: 'stacked'
+        })
+      }}
+    {% endif %}
     <ul>
-      {% for element in address %}
-        <li>{{ element }}</li>
-      {% endfor %}
+      {% if address.line_1 %}<li>{{ address.line_1 }}</li>{% endif %}
+      {% if address.line_2 %}<li>{{ address.line_2 }}</li>{% endif %}
+      {% if address.town %}<li>{{ address.town }}</li>{% endif %}
+      {% if address.county %}<li>{{ address.county }}</li>{% endif %}
+      {% if address.postcode %}<li>{{ address.postcode }}</li>{% endif %}
+      {% if address.country %}<li>{{ address.country.name }}</li>{% endif %}
     </ul>
   </td>
 {% endmacro %}
@@ -34,7 +45,7 @@
       This company was archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br>
       <strong>Reason:</strong> {{company.archived_reason}}<br>
       <br>
-      <a href="/companies/{{company.id}}/unarchive" data-auto-id="businessDetailsUnarchive">Unarchive</a>
+      <a href="/companies/{{company.id}}/unarchive">Unarchive</a>
     {% endcall %}
   {% endif %}
 
@@ -60,12 +71,11 @@
   {% call DetailsContainer({ heading: 'Addresses', editUrl: editUrl, dataAutoId: 'addressesDetailsContainer' }) %}
     <table class="table--key-value">
       <tbody>
-        <tr data-auto-id="businessDetailsAddress">
-          {% if addressesDetails.trading.address %}
-            {{ AddressCell(addressesDetails.trading.meta, addressesDetails.trading.address) }}
-          {% endif %}
-          {% if addressesDetails.registered.address %}
-            {{ AddressCell(addressesDetails.registered.meta, addressesDetails.registered.address) }}
+        <tr>
+          {{ AddressCell(company.address) }}
+
+          {% if company.registered_address %}
+            {{ AddressCell(company.registered_address, true) }}
           {% endif %}
         </tr>
       </tbody>
@@ -74,7 +84,7 @@
 
   {% if regionDetails %}
     {% call DetailsContainer({ heading: 'DIT region', editUrl: editUrl, dataAutoId: 'regionDetailsContainer' }) %}
-      <table class="table--key-value" data-auto-id="regionDetails">
+      <table class="table--key-value">
         <tbody>
           <tr>
             <td>{{ regionDetails }}</td>
@@ -85,7 +95,7 @@
   {% endif %}
 
   {% call DetailsContainer({ heading: 'DIT sector', editUrl: editUrl, dataAutoId: 'sectorDetailsContainer' }) %}
-    <table class="table--key-value" data-auto-id="sectorDetails">
+    <table class="table--key-value">
       <tbody>
       {% for sector in sectorDetails %}
         <tr>
@@ -112,7 +122,7 @@
 
   {% if archivedDocumentPath %}
     {% call DetailsContainer({ heading: 'Documents from CDMS', dataAutoId: 'documentsDetailsContainer' }) %}
-      <table class="table--key-value" data-auto-id="documentsDetails">
+      <table class="table--key-value">
         <tbody>
         <tr>
           <td>

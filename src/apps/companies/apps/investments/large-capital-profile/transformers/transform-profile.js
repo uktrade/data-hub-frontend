@@ -1,17 +1,22 @@
 /* eslint-disable camelcase */
-const transformProfile = ({
-  incomplete_details_fields,
-  incomplete_requirements_fields,
-  incomplete_location_fields }) => {
+const { get } = require('lodash')
+
+const transformProfile = (profile, editing) => {
   return {
+    id: profile.id,
+    editing,
     investorDetails: {
-      incompleteFields: incomplete_details_fields.length,
+      incompleteFields: get(profile, 'incomplete_details_fields.length'),
+      investorType: {
+        text: get(profile, 'investor_type.name'),
+        value: get(profile, 'investor_type.id'),
+      },
     },
     investorRequirements: {
-      incompleteFields: incomplete_requirements_fields.length,
+      incompleteFields: get(profile, 'incomplete_requirements_fields.length'),
     },
     location: {
-      incompleteFields: incomplete_location_fields.length,
+      incompleteFields: get(profile, 'incomplete_location_fields.length'),
     },
   }
 }

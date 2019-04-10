@@ -2,7 +2,7 @@
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
 const config = require('~/config')
-const dnbCompanyMock = require('~/test/unit/data/companies/dnb-company.json')
+const companyMock = require('~/test/unit/data/companies/company-v4.json')
 const subsidiariesMock = require('~/test/unit/data/companies/subsidiaries.json')
 
 const { renderBusinessDetails } = require('~/src/apps/companies/controllers/business-details')
@@ -11,8 +11,8 @@ describe('#renderBusinessDetails', () => {
   context('when rendering the view', () => {
     const commonTests = () => {
       it('should set the company breadcrumb', () => {
-        const expectedName = dnbCompanyMock.name
-        const expectedUrl = `/companies/${dnbCompanyMock.id}`
+        const expectedName = companyMock.name
+        const expectedUrl = `/companies/${companyMock.id}`
 
         expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWithExactly(expectedName, expectedUrl)
       })
@@ -31,10 +31,6 @@ describe('#renderBusinessDetails', () => {
 
       it('should set the about details', () => {
         expect(this.middlewareParameters.resMock.render.firstCall.args[1].aboutDetails).to.exist
-      })
-
-      it('should set the addresses details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].addressesDetails).to.exist
       })
 
       it('should set the region details', () => {
@@ -57,16 +53,11 @@ describe('#renderBusinessDetails', () => {
     context('when the company does not have archived documents', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
-          .get(`/v3/company?limit=10&offset=0&sortby=name&global_headquarters_id=${dnbCompanyMock.id}`)
+          .get(`/v3/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`)
           .reply(200, subsidiariesMock)
 
         this.middlewareParameters = buildMiddlewareParameters({
-          company: {
-            ...dnbCompanyMock,
-            registered_address_country: {
-              id: '80756b9a-5d95-e211-a939-e4115bead28a',
-            },
-          },
+          company: companyMock,
         })
 
         await renderBusinessDetails(
@@ -86,15 +77,12 @@ describe('#renderBusinessDetails', () => {
     context('when the company has archived documents', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
-          .get(`/v3/company?limit=10&offset=0&sortby=name&global_headquarters_id=${dnbCompanyMock.id}`)
+          .get(`/v3/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`)
           .reply(200, subsidiariesMock)
 
         this.middlewareParameters = buildMiddlewareParameters({
           company: {
-            ...dnbCompanyMock,
-            registered_address_country: {
-              id: '80756b9a-5d95-e211-a939-e4115bead28a',
-            },
+            ...companyMock,
             archived_documents_url_path: 'archived',
           },
         })

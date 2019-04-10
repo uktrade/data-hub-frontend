@@ -7,17 +7,17 @@
 
   {{ subnavigation(company, 'large-capital-profile') }}
 
-  <h2 class="govuk-heading-m" data-auto-id="investmentSubheading">Large capital investor profile</h2>
+  <h2 class="govuk-heading-m">Large capital investor profile</h2>
 
   {% if profile  %}
     <div class="large-capital-profile">
       {% call details({
         summaryText: 'Investor details',
         incompleteFields: profile.investorDetails.incompleteFields,
-        open: edit === 'details'
+        open: profile.editing === sections.INVESTOR_DETAILS
       }) -%}
 
-        {% if edit == 'details' %}
+        {% if profile.editing === sections.INVESTOR_DETAILS %}
           {% include "./details-edit.njk" %}
         {% else %}
           {% include "./details.njk" %}
@@ -27,10 +27,10 @@
       {% call details({
         summaryText: 'Investor requirements',
         incompleteFields: profile.investorRequirements.incompleteFields,
-        open: edit === 'requirements'
+        open: profile.editing === sections.INVESTOR_REQUIREMENTS
       }) -%}
 
-        {% if edit == 'requirements' %}
+        {% if profile.editing === sections.INVESTOR_REQUIREMENTS %}
           {% include "./requirements-edit.njk" %}
         {% else %}
           {% include "./requirements.njk" %}
@@ -40,9 +40,9 @@
       {% call details({
         summaryText: 'Location',
         incompleteFields: profile.location.incompleteFields,
-        open: edit === 'location'}) -%}
+        open: profile.editing === sections.LOCATION}) -%}
 
-        {% if edit == 'location' %}
+        {% if profile.editing === sections.LOCATION %}
           {% include "./location-edit.njk" %}
         {% else %}
           {% include "./location.njk" %}

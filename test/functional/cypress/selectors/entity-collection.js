@@ -5,7 +5,11 @@ module.exports = {
   collectionRowButton: '.c-collection__header-actions > a',
   collectionRemoveAllFilter: '.c-collection__filter-remove-all',
   entities: 'article > ol',
-  firstEntity: 'article > ol > li:nth-child(1)',
-  firstEntityBadge: 'article > ol .c-badge',
+  entity: (rowNum) => {
+    return `article > ol > li:nth-child(${rowNum})`
+  },
+  entityBadge: (rowNum) => {
+    return `article > ol > li:nth-child(${rowNum}) .c-badge`
+  },
   sort: '#field-sortby',
 }

@@ -1,5 +1,5 @@
 <ul class="task-list">
-  {{ taskListItem({ name: 'Investor type' }) }}
+  {{ taskListItem({ name: 'Investor type', value: profile.investorDetails.investorType.text }) }}
   {{ taskListItem({ name: 'Global assets under management' }) }}
   {{ taskListItem({ name: 'Investable capital' }) }}
   {{ taskListItem({ name: 'Investor description' }) }}
@@ -12,9 +12,9 @@
 
 {% call Form({
   buttonText: 'Edit',
-  hiddenFields: { edit: 'details' },
+  hiddenFields: { editing: sections.INVESTOR_DETAILS },
   buttonDataAttr: 'investorDetailsEdit',
-  disableFormAction: edit === 'requirements' or edit === 'location',
+  disableFormAction: profile.editing === sections.INVESTOR_REQUIREMENTS or profile.editing === sections.LOCATION,
   action: '/companies/' + company.id + '/investments/large-capital-profile/edit'
 })
 %}

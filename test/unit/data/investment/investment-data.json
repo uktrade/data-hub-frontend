@@ -36,15 +36,18 @@
     "export_to_countries": [],
     "future_interest_countries": [],
     "uk_based": false,
-    "registered_address_1": "707-19 Yoksam2 dong",
-    "registered_address_2": "Gangnam-gu",
-    "registered_address_town": "Seoul",
-    "registered_address_country": {
-      "id": "7c6a9ab2-5d95-e211-a939-e4115bead28a",
-      "name": "Korea (South)"
+    "address": {
+      "line_1": "707-19 Yoksam2 dong",
+      "line_2": "Gangnam-gu",
+      "town": "Seoul",
+      "country": {
+        "id": "7c6a9ab2-5d95-e211-a939-e4115bead28a",
+        "name": "Korea (South)"
+      },
+      "county": "",
+      "postcode": "135-918"
     },
-    "registered_address_county": "",
-    "registered_address_postcode": "135-918",
+    "registered_address": null,
     "created_on": "2008-04-02T06:00:34",
     "modified_on": "2015-11-12T15:50:58",
     "archived": false,
@@ -53,11 +56,6 @@
     "company_number": null,
     "description": "IT",
     "website": null,
-    "trading_address_1": "",
-    "trading_address_2": "",
-    "trading_address_town": "",
-    "trading_address_county": "",
-    "trading_address_postcode": "",
     "archived_by": null,
     "business_type": {
       "id": "98d14e94-5d95-e211-a939-e4115bead28a",
@@ -73,7 +71,6 @@
       "id": "0167b456-0ddd-49bd-8184-e3227a0b6396",
       "name": "Undefined"
     },
-    "trading_address_country": null,
     "headquarter_type": null,
     "one_list_group_tier": null,
     "one_list_group_global_account_manager": null

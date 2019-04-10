@@ -1,6 +1,6 @@
 const transformCompanyToOneListView = require('~/src/apps/companies/transformers/company-to-one-list-view')
 
-const dnbCompany = require('~/test/unit/data/companies/dnb-company.json')
+const companyMock = require('~/test/unit/data/companies/company-v4.json')
 
 describe('transformCompanyToOneListView', () => {
   const commonTests = (expectedOneListTier, expectedGlobalAccountManager) => {
@@ -15,7 +15,7 @@ describe('transformCompanyToOneListView', () => {
 
   context('when the business is on the One List', () => {
     beforeEach(() => {
-      this.actual = transformCompanyToOneListView(dnbCompany)
+      this.actual = transformCompanyToOneListView(companyMock)
     })
 
     commonTests('Tier A - Strategic Account', [
@@ -28,7 +28,7 @@ describe('transformCompanyToOneListView', () => {
   context('when the business is not on the One List', () => {
     beforeEach(() => {
       const company = {
-        ...dnbCompany,
+        ...companyMock,
         one_list_group_tier: null,
         one_list_group_global_account_manager: null,
       }
@@ -44,11 +44,11 @@ describe('transformCompanyToOneListView', () => {
   context('when Global Account Manager if from outside UK', () => {
     beforeEach(() => {
       const company = {
-        ...dnbCompany,
+        ...companyMock,
         one_list_group_global_account_manager: {
-          ...dnbCompany.one_list_group_global_account_manager,
+          ...companyMock.one_list_group_global_account_manager,
           dit_team: {
-            ...dnbCompany.one_list_group_global_account_manager.dit_team,
+            ...companyMock.one_list_group_global_account_manager.dit_team,
             uk_region: null,
             country: {
               name: 'France',

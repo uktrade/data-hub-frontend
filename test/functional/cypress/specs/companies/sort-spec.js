@@ -17,7 +17,7 @@ describe('Company Collections Sort', () => {
     })
 
     cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
-    cy.get(selectors.entityCollection.firstEntity).should('contain', 'SortByAZ')
+    cy.get(selectors.entityCollection.entity(1)).should('contain', 'SortByAZ')
   })
 
   it('should sort by least recent', () => {
@@ -28,7 +28,7 @@ describe('Company Collections Sort', () => {
     })
 
     cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
-    cy.get(selectors.entityCollection.firstEntity).should('contain', 'SortByLeastRecent')
+    cy.get(selectors.entityCollection.entity(1)).should('contain', 'SortByLeastRecent')
   })
 
   it('should sort by most recent', () => {
@@ -39,6 +39,6 @@ describe('Company Collections Sort', () => {
     })
 
     cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
-    cy.get(selectors.entityCollection.firstEntity).should('contain', 'SortByMostRecent')
+    cy.get(selectors.entityCollection.entity(1)).should('contain', 'SortByMostRecent')
   })
 })
