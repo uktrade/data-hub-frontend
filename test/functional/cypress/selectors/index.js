@@ -2,6 +2,8 @@ exports.companyBusinessDetails = require('./company/business-details')
 exports.companyInteraction = require('./company/interaction')
 exports.companyInvestment = require('./company/investment')
 exports.companySubsidiaries = require('./company/subsidiaries')
+
+exports.breadcrumbs = require('./breadcrumbs')
 exports.detailsContainer = require('./details-container')
 exports.document = require('./document')
 exports.entityCollection = require('./entity-collection')
