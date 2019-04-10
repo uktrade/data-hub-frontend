@@ -334,12 +334,14 @@
 
         <p>{{companyDetails['Sector']}}</p>
 
-        {% call HiddenContent({ summary: 'Need to edit the sector?' }) %}
-          {% call Message({ type: 'muted' }) %}
-            If you need to change the sector for a company on the One List, please email <a href="mailto:{{oneListEmail}}">{{oneListEmail}}</a>.
-          {% endcall %}
-        {% endcall %}
       </fieldset>
+      {{ govukDetails({
+        summaryText: 'Need to edit the sector?',
+        html: 'If you need to change the sector for a company on the One List, please email <a href="mailto:' + oneListEmail + '">' + oneListEmail + '</a>.',
+        attributes: {
+          'data-auto-id': 'needToEditTheSector'
+        }
+      }) }}
     {% else %}
       {{ MultipleChoiceField({
         name: 'sector',
@@ -360,12 +362,14 @@
 
         <p>{{companyDetails['Headquarter type']}}</p>
 
-        {% call HiddenContent({ summary: 'Need to edit the headquarter type?' }) %}
-          {% call Message({ type: 'muted' }) %}
-            If you need to change the headquarter type for a company on the One List, please email <a href="mailto:{{oneListEmail}}">{{oneListEmail}}</a>.
-          {% endcall %}
-        {% endcall %}
       </fieldset>
+      {{ govukDetails({
+        summaryText: 'Need to edit the headquarter type?',
+        html: 'If you need to change the headquarter type for a company on the One List, please email <a href="mailto:' + oneListEmail + '">' + oneListEmail + '</a>.',
+        attributes: {
+          'data-auto-id': 'needToEditTheHeadquarterType'
+        }
+      }) }}
     {% else %}
       {{ MultipleChoiceField({
         type: 'radio',
