@@ -184,6 +184,19 @@ describe('Company Investments and Large capital profile', () => {
       })
     })
   })
+
+  context('when saving an "Investor type" within "Investor details"', () => {
+    it('should select the "Angel syndicate" and save the change', () => {
+      const largeCapitalProfile = `${baseUrl}/companies/${oneListCorp.id}/investments/large-capital-profile`
+      cy.visit(`/companies/${oneListCorp.id}/investments/large-capital-profile`)
+        .get(selectors.investorDetails.summary).click()
+        .get(selectors.investorDetails.edit).click()
+        .url().should('eq', `${largeCapitalProfile}?editing=investor-details`)
+        .get(selectors.investorDetails.investorType).select('Angel syndicate')
+        .get(selectors.investorDetails.save).click()
+        .url().should('eq', largeCapitalProfile)
+    })
+  })
 })
 
 const visitLargeCapitalProfileAndExpandAllSections = () => {

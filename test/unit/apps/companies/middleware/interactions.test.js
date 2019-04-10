@@ -1,13 +1,13 @@
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
-const dnbCompanyMock = require('~/test/unit/data/companies/dnb-company.json')
+const companyMock = require('~/test/unit/data/companies/company-v4.json')
 const { setInteractionsDetails } = require('~/src/apps/companies/middleware/interactions')
 
 describe('Interactions middleware', () => {
   describe('#setInteractionsDetails', () => {
     beforeEach(() => {
       this.middlewareParameters = buildMiddlewareParameters({
-        company: dnbCompanyMock,
+        company: companyMock,
       })
 
       setInteractionsDetails(
@@ -22,15 +22,15 @@ describe('Interactions middleware', () => {
     })
 
     it('should set the return link', () => {
-      expect(this.middlewareParameters.resMock.locals.interactions.returnLink).to.equal('/companies/375094ac-f79a-43e5-9c88-059a7caa17f0/interactions/')
+      expect(this.middlewareParameters.resMock.locals.interactions.returnLink).to.equal('/companies/a73efeba-8499-11e6-ae22-56b6b6499611/interactions/')
     })
 
     it('should set the entity name', () => {
-      expect(this.middlewareParameters.resMock.locals.interactions.entityName).to.equal('One List Corp')
+      expect(this.middlewareParameters.resMock.locals.interactions.entityName).to.equal('Mercury Ltd')
     })
 
     it('should set the query', () => {
-      expect(this.middlewareParameters.resMock.locals.interactions.query).to.deep.equal({ company_id: '375094ac-f79a-43e5-9c88-059a7caa17f0' })
+      expect(this.middlewareParameters.resMock.locals.interactions.query).to.deep.equal({ company_id: 'a73efeba-8499-11e6-ae22-56b6b6499611' })
     })
 
     it('should set the add flag', () => {

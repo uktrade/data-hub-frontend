@@ -4,7 +4,10 @@
   buttonDataAttr: 'investorRequirementsSave',
   returnLink: '/companies/' + company.id + '/investments/large-capital-profile',
   action: '/companies/' + company.id + '/investments/large-capital-profile/update',
-  hiddenFields: { id: company.id }
+  hiddenFields: {
+    profileId: profile.profile.id,
+    editing: profile.editing
+  }
 }) %}
 
   <p>Investor requirements: UI components go here...</p>

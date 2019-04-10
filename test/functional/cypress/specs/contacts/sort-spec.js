@@ -17,7 +17,7 @@ describe('Contact Collections Sort', () => {
     })
 
     cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
-    cy.get(selectors.entityCollection.firstEntity).should('contain', 'Sort By')
+    cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort By')
   })
 
   it('should sort by last name AZ', () => {
@@ -28,7 +28,7 @@ describe('Contact Collections Sort', () => {
     })
 
     cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
-    cy.get(selectors.entityCollection.firstEntity).should('contain', 'Sort By')
+    cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort By')
   })
 
   it('should sort by company name AZ', () => {
@@ -39,7 +39,7 @@ describe('Contact Collections Sort', () => {
     })
 
     cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
-    cy.get(selectors.entityCollection.firstEntity).should('contain', 'Sort By')
+    cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort By')
   })
 
   it('should sort by least recent', () => {
@@ -50,7 +50,7 @@ describe('Contact Collections Sort', () => {
     })
 
     cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
-    cy.get(selectors.entityCollection.firstEntity).should('contain', 'Sort By')
+    cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort By')
   })
 
   it('should sort by most recent', () => {
@@ -61,7 +61,7 @@ describe('Contact Collections Sort', () => {
     })
 
     cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
-    cy.get(selectors.entityCollection.firstEntity).should('contain', 'Sort By')
+    cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort By')
   })
 
   it('should sort by Newest', () => {
@@ -72,7 +72,7 @@ describe('Contact Collections Sort', () => {
     })
 
     cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
-    cy.get(selectors.entityCollection.firstEntity).should('contain', 'Sort By')
+    cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort By')
   })
 
   it('should sort by Oldest', () => {
@@ -83,6 +83,6 @@ describe('Contact Collections Sort', () => {
     })
 
     cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
-    cy.get(selectors.entityCollection.firstEntity).should('contain', 'Sort By')
+    cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort By')
   })
 })

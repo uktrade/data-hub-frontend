@@ -7,7 +7,6 @@ const {
   transformCompanyToBusinessHierarchyView,
   transformCompanyToSectorView,
   transformCompanyToRegionView,
-  transformCompanyToAddressesView,
 } = require('../transformers')
 const {
   getCompanySubsidiaries,
@@ -23,7 +22,6 @@ async function renderBusinessDetails (req, res) {
     .render('companies/views/business-details', {
       heading: 'Business details',
       aboutDetails: transformCompanyToAboutView(company),
-      addressesDetails: transformCompanyToAddressesView(company),
       regionDetails: transformCompanyToRegionView(company),
       sectorDetails: transformCompanyToSectorView(company),
       oneListDetails: transformCompanyToOneListView(company),

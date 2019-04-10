@@ -17,12 +17,12 @@ const QUERY_FIELDS = [
   'sector_descends',
   'communication_channel',
   'sortby',
-  'dit_team',
+  'dit_participants__team',
   'service',
   'was_policy_feedback_provided',
   'policy_areas',
   'policy_issue_types',
-  'dit_participants',
+  'dit_participants__adviser',
 ]
 
 const QUERY_DATE_FIELDS = [
