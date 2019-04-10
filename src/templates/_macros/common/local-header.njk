@@ -21,7 +21,12 @@
     <header class="c-local-header {{ modifier }}" aria-label="local header" data-auto-id="localHeader">
       <div class="govuk-width-container">
         {% if breadcrumbs|length > 1 %}
-          {{ govukBreadcrumbs({ items: breadcrumbs }) }}
+          {{ govukBreadcrumbs({
+            items: breadcrumbs,
+            attributes: {
+              'data-auto-id': 'breadcrumbs'
+            }
+          }) }}
         {% endif %}
 
         {% if messages|length %}
