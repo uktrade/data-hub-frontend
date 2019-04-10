@@ -151,9 +151,9 @@ describe('Investment evaluation controller', () => {
         'FIRST FLOOR ACHME HOUSE',
         'KIRKDALE ROAD',
         'LEYTONSTONE',
-        'United Kingdom',
         'LONDON',
         'E134 1HP',
+        'United Kingdom',
       ],
       'Actual land date': '21 July 2018',
     }
