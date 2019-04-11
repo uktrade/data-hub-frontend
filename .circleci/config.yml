@@ -111,6 +111,7 @@ aliases:
     OAUTH2_CLIENT_SECRET: youAintSeenMyRight
     OAUTH2_CLIENT_ID: randomClientId
     OAUTH2_DEV_TOKEN: ditStaffToken
+    CACHE_ASSETS: "true"
 
   # Data hub base docker container
   - &docker_data_hub_base
