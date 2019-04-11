@@ -29,6 +29,12 @@ module.exports = {
       getSelectorForKeyValueTable (title) {
         return getSelectorForTable(title, 'table--key-value')
       },
+      getSelectorForValueTable (title) {
+        return getSelectorForElementWithText(title, {
+          el: '//h2',
+          child: '//following-sibling::table[1]',
+        })
+      },
       getSelectorForDataTable (title) {
         return getSelectorForTable(title, 'data-table')
       },
