@@ -81,7 +81,7 @@ module.exports = (app, config) => {
     autoescape: true,
     express: app,
     watch: config.isDev,
-    noCache: config.isDev,
+    noCache: config.noCache,
   })
   const tradeElementsFilters = require('./trade-elements-filters')
   const dataHubFilters = require('./filters')

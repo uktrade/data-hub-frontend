@@ -34,6 +34,7 @@ const config = {
   ci: process.env.CI,
   isDev,
   isProd,
+  noCache: process.env.CACHE_ASSETS ? false : isDev,
   port: process.env.PORT || 3000,
   apiRoot: process.env.API_ROOT || 'http://localhost:8000',
   api: {
