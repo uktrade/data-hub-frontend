@@ -94,7 +94,7 @@ Then(/^I can view the company in the search results/, async function () {
     .waitForElementPresent('@header')
     .assert.containsText('@header', name)
     .assert.containsText('@sector', sector)
-    .assert.containsText('@registeredAddress', primaryAddress)
+    .assert.containsText('@address', primaryAddress)
 })
 
 Then(/^I see (a|the) search box$/, async (messageType) => {

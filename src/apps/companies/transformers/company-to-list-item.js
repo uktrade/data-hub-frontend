@@ -17,9 +17,7 @@ function transformAddress ({
   registered_address_1,
   registered_address_2,
 }) {
-  const isTradingAddress = trading_address_town && trading_address_postcode && trading_address_1
-
-  if (isTradingAddress) {
+  if (trading_address_1 && trading_address_country) {
     return {
       type: 'address',
       label: labels.address.companyTradingAddress,
