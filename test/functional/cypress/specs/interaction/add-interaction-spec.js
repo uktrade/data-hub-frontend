@@ -4,114 +4,156 @@ const utils = require('../../support/utils')
 
 const serviceDeliveryDetails = selectors.interactionDetails.serviceDelivery
 
-let subject
-
 describe('Add Interaction', () => {
-  beforeEach(() => {
-    subject = utils.randomString()
+  context('when adding an interaction', () => {
+    context('when in the context of a company', () => {
+      beforeEach(() => {
+        cy.visit(`/companies/${fixtures.default.id}/interactions/create/interaction`)
+      })
+
+      it('should add the interaction', () => {
+        const subject = utils.randomString()
+
+        populateInteractionForm(subject)
+
+        cy.get(selectors.interactionForm.add).click()
+
+        assertDetails({ subject, flashMessage: 'Interaction created' })
+      })
+    })
+
+    context('when in the context of a contact', () => {
+      beforeEach(() => {
+        cy.visit(`/contacts/${fixtures.default.id}/interactions/create/interaction`)
+      })
+
+      it('should add the interaction', () => {
+        const subject = utils.randomString()
+
+        populateInteractionForm(subject)
+
+        cy.get(selectors.interactionForm.add).click()
+
+        assertDetails({ subject, flashMessage: 'Interaction created' })
+      })
+    })
+
+    context('when in the context of an investment project', () => {
+      beforeEach(() => {
+        cy.visit(`/investments/projects/${fixtures.default.id}/interactions/create/interaction`)
+      })
+
+      it('should add the interaction', () => {
+        const subject = utils.randomString()
+
+        populateInteractionForm(subject)
+
+        cy.get(selectors.interactionForm.add).click()
+
+        assertDetails({ subject, flashMessage: 'Interaction created' })
+      })
+    })
   })
 
-  describe('Standard Interaction', () => {
-    it('should add interaction by company', () => {
-      cy.visit(`/companies/${fixtures.default.id}/interactions/create/interaction`)
-      populateInteractionForm()
-      cy.get(selectors.interactionForm.add).click()
+  context('when adding a service delivery', () => {
+    context('when in the context of a company', () => {
+      beforeEach(() => {
+        cy.visit(`/companies/${fixtures.default.id}/interactions/create/service-delivery`)
+      })
 
-      cy.get(serviceDeliveryDetails.subject).should('contain', subject)
+      it('should add the service delivery', () => {
+        const subject = utils.randomString()
+
+        populateServiceDeliveryForm('Bank Referral', subject)
+
+        cy.get(selectors.interactionForm.add).click()
+
+        assertDetails({ subject, flashMessage: 'Service delivery created' })
+      })
     })
 
-    it('should add interaction by contacts', () => {
-      cy.visit(`/contacts/${fixtures.default.id}/interactions/create/interaction`)
-      populateInteractionForm()
-      cy.get(selectors.interactionForm.add).click()
+    context('when in the context of a contact', () => {
+      beforeEach(() => {
+        cy.visit(`/contacts/${fixtures.default.id}/interactions/create/service-delivery`)
+      })
 
-      cy.get(serviceDeliveryDetails.subject).should('contain', subject)
+      it('should add the service delivery', () => {
+        const subject = utils.randomString()
+
+        populateServiceDeliveryForm('Bank Referral', subject)
+
+        cy.get(selectors.interactionForm.add).click()
+
+        assertDetails({ subject, flashMessage: 'Service delivery created' })
+      })
     })
 
-    it('should add interaction by investment projects', () => {
-      cy.visit(`/investments/projects/${fixtures.default.id}/interactions/create/interaction`)
-      populateInteractionForm()
-      cy.get(selectors.interactionForm.add).click()
+    context('when in the context of an investment project', () => {
+      beforeEach(() => {
+        cy.visit(`/investments/projects/${fixtures.default.id}/interactions/create/service-delivery`)
+      })
 
-      cy.get(serviceDeliveryDetails.subject).should('contain', subject)
+      it('should add the service delivery', () => {
+        const subject = utils.randomString()
+
+        populateServiceDeliveryForm('Account Management', subject)
+
+        cy.get(selectors.interactionForm.add).click()
+
+        assertDetails({ subject, flashMessage: 'Service delivery created' })
+      })
     })
 
-    it('should map values to the successfully created interaction form', () => {
-      cy.visit(`/companies/${fixtures.default.id}/interactions/create/interaction`)
-      cy.get(selectors.interactionForm.subject).type(subject)
-      cy.get(selectors.interactionForm.add).click()
+    context('when TAP service fields are empty', () => {
+      beforeEach(() => {
+        cy.visit(`/companies/${fixtures.default.id}/interactions/create/service-delivery`)
+      })
 
-      validateSuccesfulFormSubmission(subject, 'Interaction created')
-    })
-  })
+      it('should add the service delivery', () => {
+        const subject = utils.randomString()
 
-  describe('Service delivery', () => {
-    it('should add service delivery by company', () => {
-      cy.visit(`/companies/${fixtures.default.id}/interactions/create/service-delivery`)
-      populateServiceDeliveryForm('Bank Referral')
-      cy.get(selectors.interactionForm.add).click()
+        cy.get(selectors.interactionForm.contact).select('Joseph Woof, Dog master')
+        cy.get(selectors.interactionForm.eventNo).click()
+        cy.get(selectors.interactionForm.service).select('Tradeshow Access Programme (TAP)')
+        cy.get(selectors.interactionForm.subject).type(subject)
+        cy.get(selectors.interactionForm.notes).type('Conversation with potential client')
+        cy.get(selectors.interactionForm.policyFeedbackNo).click()
 
-      cy.get(serviceDeliveryDetails.subject).should('contain', subject)
-    })
+        cy.get(selectors.interactionForm.add).click()
 
-    it('should add service delivery by contacts', () => {
-      cy.visit(`/contacts/${fixtures.default.id}/interactions/create/service-delivery`)
-      populateServiceDeliveryForm('Bank Referral')
-      cy.get(selectors.interactionForm.add).click()
-
-      cy.get(serviceDeliveryDetails.subject).should('contain', subject)
+        cy.get(serviceDeliveryDetails.subject).should('contain', subject)
+      })
     })
 
-    it('should add service delivery by investment projects', () => {
-      cy.visit(`/investments/projects/${fixtures.default.id}/interactions/create/service-delivery`)
-      populateServiceDeliveryForm('Account Management')
-      cy.get(selectors.interactionForm.add).click()
+    context('when TAP service fields are populated', () => {
+      beforeEach(() => {
+        cy.visit(`/companies/${fixtures.default.id}/interactions/create/service-delivery`)
+      })
 
-      cy.get(serviceDeliveryDetails.subject).should('contain', subject)
+      it('should add the service delivery', () => {
+        const subject = utils.randomString()
+
+        cy.get(selectors.interactionForm.contact).select('Joseph Woof, Dog master')
+        cy.get(selectors.interactionForm.eventNo).click()
+        cy.get(selectors.interactionForm.service).select('Tradeshow Access Programme (TAP)')
+        cy.get(selectors.interactionForm.serviceStatus).select('Current')
+        cy.get(selectors.interactionForm.grantOffered).type('Approved')
+        cy.get(selectors.interactionForm.subject).type(subject)
+        cy.get(selectors.interactionForm.notes).type('Conversation with potential client')
+        cy.get(selectors.interactionForm.policyFeedbackNo).click()
+
+        cy.get(selectors.interactionForm.add).click()
+
+        cy.get(serviceDeliveryDetails.subject).should('contain', subject)
+        // TODO assert TAP status fields are set in details
+      })
     })
 
-    it('should add service delivery with TAP service optional fields empty', () => {
-      cy.visit(`/companies/${fixtures.default.id}/interactions/create/service-delivery`)
-
-      cy.get(selectors.interactionForm.contact).select('Joseph Woof, Dog master')
-      cy.get(selectors.interactionForm.eventNo).click()
-      cy.get(selectors.interactionForm.service).select('Tradeshow Access Programme (TAP)')
-      cy.get(selectors.interactionForm.subject).type(subject)
-      cy.get(selectors.interactionForm.notes).type('Conversation with potential client')
-      cy.get(selectors.interactionForm.policyFeedbackNo).click()
-      cy.get(selectors.interactionForm.add).click()
-
-      cy.get(serviceDeliveryDetails.subject).should('contain', subject)
-    })
-
-    it('should add service delivery with TAP service optional fields populated', () => {
-      cy.visit(`/companies/${fixtures.default.id}/interactions/create/service-delivery`)
-
-      cy.get(selectors.interactionForm.contact).select('Joseph Woof, Dog master')
-      cy.get(selectors.interactionForm.eventNo).click()
-      cy.get(selectors.interactionForm.service).select('Tradeshow Access Programme (TAP)')
-      cy.get(selectors.interactionForm.serviceStatus).select('Current')
-      cy.get(selectors.interactionForm.grantOffered).type('Approved')
-      cy.get(selectors.interactionForm.subject).type(subject)
-      cy.get(selectors.interactionForm.notes).type('Conversation with potential client')
-      cy.get(selectors.interactionForm.policyFeedbackNo).click()
-
-      cy.get(selectors.interactionForm.add).click()
-
-      cy.get(serviceDeliveryDetails.subject).should('contain', subject)
-    })
-
-    it('should map values to the successfully created service delivery form', () => {
-      cy.visit(`/companies/${fixtures.default.id}/interactions/create/service-delivery`)
-      cy.get(selectors.interactionForm.subject).type(subject)
-      cy.get(selectors.interactionForm.add).click()
-
-      validateSuccesfulFormSubmission(subject, 'Service delivery created')
-    })
+    // TODO test policy feedback fields
   })
 })
 
-const populateInteractionForm = () => {
+const populateInteractionForm = (subject) => {
   cy.get(selectors.interactionForm.contact).select('Joseph Woof, Dog master')
   cy.get(selectors.interactionForm.service).select('Account Management')
   cy.get(selectors.interactionForm.communicationChannel).select('Email/Website')
@@ -120,7 +162,7 @@ const populateInteractionForm = () => {
   cy.get(selectors.interactionForm.policyFeedbackNo).click()
 }
 
-const populateServiceDeliveryForm = service => {
+const populateServiceDeliveryForm = (service, subject) => {
   cy.get(selectors.interactionForm.contact).select('Joseph Woof, Dog master')
   cy.get(selectors.interactionForm.eventNo).click()
   cy.get(selectors.interactionForm.service).select(service)
@@ -129,15 +171,26 @@ const populateServiceDeliveryForm = service => {
   cy.get(selectors.interactionForm.policyFeedbackNo).click()
 }
 
-const validateSuccesfulFormSubmission = (subject, headerTitle) => {
-  cy.get(serviceDeliveryDetails.company).should('contain', 'Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978')
-  cy.get(serviceDeliveryDetails.contacts).should('contain', 'Bob lawson')
-  cy.get(serviceDeliveryDetails.service).should('contain', 'Account Managment: Northern Powerhouse')
+const assertDetails = ({
+  flashMessage,
+  company = 'Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978',
+  contact = 'Bob lawson',
+  service = 'Account Managment: Northern Powerhouse',
+  subject,
+  notes = 'Sandbox',
+  dateOfInteraction = '7 February 2019',
+  ditAdviser = 'DIT Staff',
+  communicationChannel = 'Social Media',
+  documents = 'There are no files or documents',
+}) => {
+  cy.get(serviceDeliveryDetails.successMsg).should('contain', flashMessage)
+  cy.get(serviceDeliveryDetails.company).should('contain', company)
+  cy.get(serviceDeliveryDetails.contacts).should('contain', contact)
+  cy.get(serviceDeliveryDetails.service).should('contain', service)
   cy.get(serviceDeliveryDetails.subject).should('contain', subject)
-  cy.get(serviceDeliveryDetails.notes).should('contain', 'Sandbox')
-  cy.get(serviceDeliveryDetails.dateOfInteraction).should('contain', '7 February 2019')
-  cy.get(serviceDeliveryDetails.ditAdviser).should('contain', 'DIT Staff')
-  cy.get(serviceDeliveryDetails.communicationChannel).should('contain', 'Social Media')
-  cy.get(serviceDeliveryDetails.documents).should('contain', 'There are no files or documents')
-  cy.get(serviceDeliveryDetails.successMsg).should('contain', headerTitle)
+  cy.get(serviceDeliveryDetails.notes).should('contain', notes)
+  cy.get(serviceDeliveryDetails.dateOfInteraction).should('contain', dateOfInteraction)
+  cy.get(serviceDeliveryDetails.ditAdviser).should('contain', ditAdviser)
+  cy.get(serviceDeliveryDetails.communicationChannel).should('contain', communicationChannel)
+  cy.get(serviceDeliveryDetails.documents).should('contain', documents)
 }
