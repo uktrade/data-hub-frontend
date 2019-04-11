@@ -13,15 +13,21 @@ describe('interaction list', () => {
     this.error = new Error('error')
 
     this.token = ''
-
     this.req = {
       session: {
+        save: cb => cb(null),
         user: {
           id: '1234',
           name: 'Fred Smith',
           permissions: [],
         },
         xhr: false,
+        interactions: {
+          options: {
+            option1: 'option1',
+            option2: 'option2',
+          },
+        },
       },
       query: {
         sortby: 'date:desc',
@@ -232,6 +238,7 @@ describe('interaction list', () => {
       adviserOptions: [{ value: 'ad1', label: 'ad1', subLabel: 'ad1' }],
       types: [{ value: '1', label: 'pt1' }, { value: '3', label: 'pt3' }],
     }
+
     context('when the request is not XHR', () => {
       it(`should return all interaction options`, async () => {
         expect(
@@ -240,24 +247,34 @@ describe('interaction list', () => {
       })
     })
 
-    context('when XHR option is not set', () => {
-      const reqMock = omit(this.req, ['xhr'])
+    context('when there are no interaction options in session', () => {
+      beforeEach(async () => {
+        this.reqMock = { ...omit(this.req, 'session.interactions'), xhr: true }
+      })
+
       it(`should return all interaction options`, async () => {
         expect(
-          await getInteractionOptions(this.token, reqMock, this.res)
+          await getInteractionOptions(this.token, this.reqMock, this.res)
         ).to.deep.equal(expected)
       })
     })
-    context('when request is XHR', () => {
-      const reqMock = {
-        ...this.req,
-        xhr: true,
+
+    context(
+      'when request is XHR & interaction options exist in session',
+      () => {
+        beforeEach(async () => {
+          this.req = {
+            ...this.req,
+            xhr: true,
+          }
+        })
+
+        it(`should return interaction options from session key`, async () => {
+          expect(
+            await getInteractionOptions(this.token, this.req, this.res)
+          ).to.equal(this.req.session.interactions.options)
+        })
       }
-      it(`return undefined`, async () => {
-        expect(
-          await getInteractionOptions(this.token, reqMock, this.res)
-        ).to.equal(undefined)
-      })
-    })
+    )
   })
 })

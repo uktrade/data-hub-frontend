@@ -8,8 +8,17 @@ const updateProfile = async (req, res, next) => {
 
   const body = {}
   if (editing === INVESTOR_DETAILS) {
-    const { investorType } = req.body
+    const {
+      investorType,
+      globalAssetsUnderManagement,
+      investableCapital,
+      investorDescription,
+    } = req.body
+
     body.investor_type = investorType
+    body.global_assets_under_management = globalAssetsUnderManagement
+    body.investable_capital = investableCapital
+    body.investor_description = investorDescription
   }
 
   try {

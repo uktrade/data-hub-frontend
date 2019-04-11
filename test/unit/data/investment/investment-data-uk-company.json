@@ -224,15 +224,18 @@
     "export_to_countries": [],
     "future_interest_countries": [],
     "uk_based": true,
-    "registered_address_1": "FIRST FLOOR ACHME HOUSE",
-    "registered_address_2": "KIRKDALE ROAD",
-    "registered_address_town": "LEYTONSTONE",
-    "registered_address_country": {
-      "id": "80756b9a-5d95-e211-a939-e4115bead28a",
-      "name": "United Kingdom"
+    "address": {
+      "line_1": "FIRST FLOOR ACHME HOUSE",
+      "line_2": "KIRKDALE ROAD",
+      "town": "LEYTONSTONE",
+      "country": {
+        "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+        "name": "United Kingdom"
+      },
+      "county": "LONDON",
+      "postcode": "E134 1HP"
     },
-    "registered_address_county": "LONDON",
-    "registered_address_postcode": "E134 1HP",
+    "registered_address": null,
     "created_on": "2017-05-04T15:26:21.437150",
     "modified_on": "2017-05-04T15:26:21.437150",
     "archived": false,
@@ -241,11 +244,6 @@
     "company_number": "08311441",
     "description": "test\r\n\r\ntest\r\n\r\ntest",
     "website": "http://moo.com",
-    "trading_address_1": null,
-    "trading_address_2": null,
-    "trading_address_town": null,
-    "trading_address_county": null,
-    "trading_address_postcode": null,
     "archived_by": null,
     "business_type": {
       "id": "6f75408b-03e7-e611-bca1-e4115bead28a",
@@ -269,7 +267,6 @@
       "id": "924cd12a-6095-e211-a939-e4115bead28a",
       "name": "Jersey"
     },
-    "trading_address_country": null,
     "headquarter_type": null,
     "one_list_group_tier": {
       "id": "0167b456-0ddd-49bd-8184-e3227a0b6396",

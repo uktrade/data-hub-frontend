@@ -1,11 +1,11 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const investorTypeTransformed = require('~/test/unit/data/companies/investments/metadata/investor-type-transformed.json')
 const noCompanyProfile = require('~/test/unit/data/companies/investments/large-capital-profile-empty.json')
 const investorType = require('~/test/unit/data/companies/investments/metadata/investor-type.json')
-const investorTypeTransformed = require('~/test/unit/data/companies/investments/metadata/investor-type-transformed.json')
 const companyProfile = require('~/test/unit/data/companies/investments/large-capital-profile.json')
 const companyMock = require('~/test/unit/data/companies/minimal-company.json')
+const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const { cloneDeep, pullAll } = require('lodash')
 const config = require('~/config')
-const { cloneDeep } = require('lodash')
 
 const controller = require('~/src/apps/companies/apps/investments/large-capital-profile/controllers')
 
@@ -72,6 +72,15 @@ describe('Company Investments - large capital profile', () => {
             text: undefined,
             value: undefined,
           },
+          globalAssetsUnderManagement: {
+            value: null,
+          },
+          investableCapital: {
+            value: null,
+          },
+          investorDescription: {
+            value: '',
+          },
         },
         investorRequirements: {
           incompleteFields: 9,
@@ -114,6 +123,15 @@ describe('Company Investments - large capital profile', () => {
             value: undefined,
             items: investorTypeTransformed,
           },
+          globalAssetsUnderManagement: {
+            value: null,
+          },
+          investableCapital: {
+            value: null,
+          },
+          investorDescription: {
+            value: '',
+          },
         },
         investorRequirements: {
           incompleteFields: 9,
@@ -124,19 +142,26 @@ describe('Company Investments - large capital profile', () => {
       })
     })
 
-    context('when the user has previously saved the "Investor type" within "Investor details"', () => {
+    context('when the user has previously saved all fields within "Investor details"', () => {
       beforeEach(async () => {
         const clonedCompanyProfile = cloneDeep(companyProfile)
         const profile = clonedCompanyProfile.results[0]
 
-        // Remove investor-type from the incomplete details fields array.
-        profile.incomplete_details_fields.shift()
+        pullAll(profile.incomplete_details_fields, [
+          'investor_type',
+          'global_assets_under_management',
+          'investable_capital',
+          'investor_description',
+        ])
 
-        // User has previously saved 'Asset manager'.
         profile.investor_type = {
           id: '80168d31-fa91-494e-9ad5-b9255e01b5da',
           name: 'Asset manager',
         }
+
+        profile.global_assets_under_management = 1000
+        profile.investable_capital = 2000
+        profile.investor_description = 'Lorem ipsum dolor sit amet.'
 
         nock(config.apiRoot)
           .get(`/v4/large-investor-profile?investor_company_id=${companyMock.id}`)
@@ -157,10 +182,19 @@ describe('Company Investments - large capital profile', () => {
         editing: undefined,
         id: 'a9e7afa4-1079-422a-b24e-a77f3ba80375',
         investorDetails: {
-          incompleteFields: 4,
+          incompleteFields: 1,
           investorType: {
             text: 'Asset manager',
             value: '80168d31-fa91-494e-9ad5-b9255e01b5da',
+          },
+          globalAssetsUnderManagement: {
+            value: 1000,
+          },
+          investableCapital: {
+            value: 2000,
+          },
+          investorDescription: {
+            value: 'Lorem ipsum dolor sit amet.',
           },
         },
         investorRequirements: {

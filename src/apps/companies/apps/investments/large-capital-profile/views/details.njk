@@ -1,8 +1,8 @@
 <ul class="task-list">
   {{ taskListItem({ name: 'Investor type', value: profile.investorDetails.investorType.text }) }}
-  {{ taskListItem({ name: 'Global assets under management' }) }}
-  {{ taskListItem({ name: 'Investable capital' }) }}
-  {{ taskListItem({ name: 'Investor description' }) }}
+  {{ taskListItem({ name: 'Global assets under management', value: profile.investorDetails.globalAssetsUnderManagement.value }) }}
+  {{ taskListItem({ name: 'Investable capital', value: profile.investorDetails.investableCapital.value }) }}
+  {{ taskListItem({ name: 'Investor description', value: profile.investorDetails.investorDescription.value }) }}
   {{ taskListItem({
        id: 'investor-checks',
        name: 'Has this investor cleared the required checks within the last 12 months?'

@@ -1,5 +1,5 @@
 const qs = require('querystring')
-const { get } = require('lodash')
+const { get, set } = require('lodash')
 const { collectionFilterFields } = require('../macros')
 const {
   buildSelectedFiltersSummary,
@@ -10,6 +10,7 @@ const { buildExportAction } = require('../../../lib/export-helper')
 const { getAdvisers } = require('../../adviser/repos')
 const { filterActiveAdvisers } = require('../../adviser/filters')
 const { transformAdviserToOption } = require('../../adviser/transformers')
+const { saveSession } = require('../../../lib/session-helper')
 
 const FILTER_CONSTANTS = require('../../../lib/filter-constants')
 const QUERY_STRING = FILTER_CONSTANTS.INTERACTIONS.SECTOR.PRIMARY.QUERY_STRING
@@ -23,7 +24,9 @@ const exportOptions = {
 }
 
 async function getInteractionOptions (token, req, res) {
-  if (get(req, 'xhr')) return
+  if (req.xhr && get(req.session, 'interactions.options')) {
+    return req.session.interactions.options
+  }
   const sectorOptions = await getOptions(token, SECTOR, {
     queryString: QUERY_STRING,
   })
@@ -44,7 +47,7 @@ async function getInteractionOptions (token, req, res) {
 
   const adviserOptions = activeAdvisers.map(transformAdviserToOption)
 
-  return {
+  const interactionOptions = {
     areas,
     sectorOptions,
     serviceOptions,
@@ -52,6 +55,11 @@ async function getInteractionOptions (token, req, res) {
     adviserOptions,
     types,
   }
+
+  set(req.session, 'interactions.options', interactionOptions)
+  await saveSession(req.session)
+
+  return interactionOptions
 }
 
 async function renderInteractionList (req, res, next) {
