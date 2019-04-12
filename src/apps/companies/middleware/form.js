@@ -1,9 +1,9 @@
-const { assign, find, get, filter } = require('lodash')
+const { assign, get, filter, omit, pickBy } = require('lodash')
 
 const { getOptions } = require('../../../lib/options')
 const { hqLabels } = require('../labels')
 const companyFormService = require('../services/form')
-const { transformCompanyToForm } = require('../transformers')
+const { transformCompanyToForm, transformCompanyFormToApi } = require('../transformers')
 
 function getHeadquarterOptions (token) {
   return getOptions(token, 'headquarter-type')
@@ -65,49 +65,43 @@ function getDetailsUrl (features, currentCompany, savedCompany) {
   return currentCompany ? `/companies/${savedCompany.id}/business-details` : `/companies/${savedCompany.id}`
 }
 
+function transformErrors ({ error }) {
+  return {
+    ...omit(error, [ 'address', 'registered_address' ]),
+    ...pickBy({
+      address_1: get(error.address, 'line_1'),
+      address_2: get(error.address, 'line_2'),
+      address_town: get(error.address, 'town'),
+      address_county: get(error.address, 'country'),
+      address_postcode: get(error.address, 'postcode'),
+      address_country: get(error.address, 'country'),
+      registered_address_1: get(error.registered_address, 'line_1'),
+      registered_address_2: get(error.registered_address, 'line_2'),
+      registered_address_town: get(error.registered_address, 'town'),
+      registered_address_county: get(error.registered_address, 'country'),
+      registered_address_postcode: get(error.registered_address, 'postcode'),
+      registered_address_country: get(error.registered_address, 'country'),
+    }),
+  }
+}
+
 async function handleFormPost (req, res, next) {
   try {
-    const token = req.session.token
-    const countryQueryParam = get(req.query, 'country')
+    const { token } = req.session
+    const isUkCompany = req.query.country === 'uk'
+    const body = transformCompanyFormToApi(req.body, isUkCompany)
 
-    req.body.trading_names = req.body.trading_names ? [ req.body.trading_names ] : []
-
-    if (get(req.body, 'headquarter_type') === 'not_headquarters') {
-      req.body.headquarter_type = ''
-    }
-
-    if (countryQueryParam && countryQueryParam === 'uk') {
-      const countryOptions = await getOptions(token, 'country')
-      const ukCountryOption = find(countryOptions, (option) => {
-        return option.label === 'United Kingdom'
-      })
-
-      if (get(req.body, 'registered_address_1')) {
-        req.body.registered_address_country = ukCountryOption.value
-      }
-
-      if (get(req.body, 'trading_address_1')) {
-        req.body.trading_address_country = ukCountryOption.value
-      }
-    }
-
-    const savedCompany = await companyFormService.saveCompanyForm(token, req.body)
+    const savedCompany = await companyFormService.saveCompanyForm(token, body)
     const detailsUrl = getDetailsUrl(res.locals.features, res.locals.company, savedCompany)
 
     req.flash('success', 'Company record updated')
     res.redirect(detailsUrl)
-  } catch (response) {
-    if (response.errors) {
-      // Leeloo has inconsistant structure to return errors.
-      // Get the errors and then re-render the edit page.
-      if (response.errors.errors) {
-        res.locals.errors = response.errors.errors
-      } else {
-        res.locals.errors = response.errors
-      }
+  } catch (err) {
+    if (err.statusCode === 400) {
+      res.locals.errors = transformErrors(err)
       next()
     } else {
-      next(response)
+      next(err)
     }
   }
 }
