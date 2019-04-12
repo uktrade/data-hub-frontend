@@ -149,7 +149,7 @@ module.exports = function transformCompanyToListItem ({
     registered_address_2,
   }))
 
-  const url = id ? `/companies/${id}` : `/companies/view/ch/${companies_house_data.company_number}`
+  const url = `/companies/${id}`
 
   return {
     id,
