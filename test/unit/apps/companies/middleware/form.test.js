@@ -314,11 +314,17 @@ describe('Companies form middleware', () => {
           this.middlewareParameters = buildMiddlewareParameters({
             requestBody: {
               name: 'Fred Bloggs Ltd',
+              address_1: 'line 1',
+              address_2: 'line 2',
+              address_town: 'town',
+              address_county: 'county',
+              address_postcode: 'postcode',
+              address_country: 'country',
             },
           })
 
           nock(config.apiRoot)
-            .post('/v3/company')
+            .post('/v4/company')
             .reply(200, companyRecord)
 
           await handleFormPost(
@@ -331,6 +337,15 @@ describe('Companies form middleware', () => {
         commonTests({
           name: 'Fred Bloggs Ltd',
           trading_names: [],
+          address: {
+            country: 'country',
+            county: 'county',
+            line_1: 'line 1',
+            line_2: 'line 2',
+            postcode: 'postcode',
+            town: 'town',
+          },
+          registered_address: undefined,
         }, `/companies/${companyRecord.id}`)
       })
 
@@ -343,11 +358,17 @@ describe('Companies form middleware', () => {
             requestBody: {
               id: companyRecord.id,
               name: 'Fred Bloggs Ltd',
+              address_1: 'line 1',
+              address_2: 'line 2',
+              address_town: 'town',
+              address_county: 'county',
+              address_postcode: 'postcode',
+              address_country: 'country',
             },
           })
 
           nock(config.apiRoot)
-            .patch(`/v3/company/${companyRecord.id}`)
+            .patch(`/v4/company/${companyRecord.id}`)
             .reply(200, companyRecord)
 
           await handleFormPost(
@@ -361,150 +382,26 @@ describe('Companies form middleware', () => {
           id: companyRecord.id,
           name: 'Fred Bloggs Ltd',
           trading_names: [],
+          address: {
+            country: 'country',
+            county: 'county',
+            line_1: 'line 1',
+            line_2: 'line 2',
+            postcode: 'postcode',
+            town: 'town',
+          },
+          registered_address: undefined,
         }, `/companies/${companyRecord.id}/business-details`)
-      })
-
-      context('when saving an existing company with a new trading name', () => {
-        beforeEach(async () => {
-          this.saveCompanyFormSpy = sinon.spy(formService, 'saveCompanyForm')
-
-          this.middlewareParameters = buildMiddlewareParameters({
-            company: companyRecord.id,
-            requestBody: {
-              id: companyRecord.id,
-              name: 'Fred Bloggs Ltd',
-              trading_names: 'trading name',
-            },
-          })
-
-          nock(config.apiRoot)
-            .patch(`/v3/company/${companyRecord.id}`)
-            .reply(200, companyRecord)
-
-          await handleFormPost(
-            this.middlewareParameters.reqMock,
-            this.middlewareParameters.resMock,
-            this.middlewareParameters.nextSpy,
-          )
-        })
-
-        commonTests({
-          id: companyRecord.id,
-          name: 'Fred Bloggs Ltd',
-          trading_names: [ 'trading name' ],
-        }, `/companies/${companyRecord.id}/business-details`)
-      })
-
-      context('when saving a uk company with just a registered address', () => {
-        beforeEach(async () => {
-          this.saveCompanyFormSpy = sinon.spy(formService, 'saveCompanyForm')
-
-          this.middlewareParameters = buildMiddlewareParameters({
-            requestBody: {
-              name: 'Fred Bloggs Ltd',
-              registered_address_1: 'street',
-            },
-            requestQuery: {
-              country: 'uk',
-            },
-          })
-
-          nock(config.apiRoot)
-            .post('/v3/company')
-            .reply(200, companyRecord)
-            .get('/metadata/country/')
-            .reply(200, metadataMock.countryOptions)
-
-          await handleFormPost(
-            this.middlewareParameters.reqMock,
-            this.middlewareParameters.resMock,
-            this.middlewareParameters.nextSpy,
-          )
-        })
-
-        commonTests({
-          name: 'Fred Bloggs Ltd',
-          registered_address_1: 'street',
-          registered_address_country: '9999',
-          trading_names: [],
-        }, `/companies/${companyRecord.id}`)
-      })
-
-      context('when saving a uk company with a trading and registered address', () => {
-        beforeEach(async () => {
-          this.saveCompanyFormSpy = sinon.spy(formService, 'saveCompanyForm')
-
-          this.middlewareParameters = buildMiddlewareParameters({
-            requestBody: {
-              name: 'Fred Bloggs Ltd',
-              registered_address_1: 'street',
-              trading_address_1: 'another street',
-            },
-            requestQuery: {
-              country: 'uk',
-            },
-          })
-
-          nock(config.apiRoot)
-            .post('/v3/company')
-            .reply(200, companyRecord)
-            .get('/metadata/country/')
-            .reply(200, metadataMock.countryOptions)
-
-          await handleFormPost(
-            this.middlewareParameters.reqMock,
-            this.middlewareParameters.resMock,
-            this.middlewareParameters.nextSpy,
-          )
-        })
-
-        commonTests({
-          name: 'Fred Bloggs Ltd',
-          registered_address_1: 'street',
-          registered_address_country: '9999',
-          trading_address_1: 'another street',
-          trading_address_country: '9999',
-          trading_names: [],
-        }, `/companies/${companyRecord.id}`)
-      })
-
-      context('when the user indicates the company is not a headquarters', () => {
-        beforeEach(async () => {
-          this.saveCompanyFormSpy = sinon.spy(formService, 'saveCompanyForm')
-
-          this.middlewareParameters = buildMiddlewareParameters({
-            requestBody: {
-              name: 'Fred Bloggs Ltd',
-              headquarter_type: 'not_headquarters',
-            },
-          })
-
-          nock(config.apiRoot)
-            .post('/v3/company')
-            .reply(200, companyRecord)
-
-          await handleFormPost(
-            this.middlewareParameters.reqMock,
-            this.middlewareParameters.resMock,
-            this.middlewareParameters.nextSpy,
-          )
-        })
-
-        commonTests({
-          name: 'Fred Bloggs Ltd',
-          headquarter_type: '',
-          trading_names: [],
-        }, `/companies/${companyRecord.id}`)
       })
     })
 
     context('when saving fails', () => {
       const commonTests = () => {
         it('should set the error on the response', () => {
-          expect(this.middlewareParameters.resMock.locals).to.have.property('errors', 'error')
+          expect(this.middlewareParameters.resMock.locals.errors).to.exist
         })
 
-        it('should call next to continue along the chain', () => {
+        it('should call next', () => {
           expect(this.middlewareParameters.nextSpy).to.have.been.calledOnce
         })
       }
@@ -518,10 +415,8 @@ describe('Companies form middleware', () => {
           })
 
           nock(config.apiRoot)
-            .post('/v3/company')
-            .reply(500, {
-              errors: 'error',
-            })
+            .post('/v4/company')
+            .reply(400, { error: 'Error message' })
 
           await handleFormPost(
             this.middlewareParameters.reqMock,
@@ -543,10 +438,8 @@ describe('Companies form middleware', () => {
           })
 
           nock(config.apiRoot)
-            .patch(`/v3/company/${companyRecord.id}`)
-            .reply(500, {
-              errors: 'error',
-            })
+            .patch(`/v4/company/${companyRecord.id}`)
+            .reply(400, { error: 'Error message' })
 
           await handleFormPost(
             this.middlewareParameters.reqMock,

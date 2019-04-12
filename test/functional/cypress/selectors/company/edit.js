@@ -19,7 +19,7 @@ module.exports = {
   website: '#field-website',
   businessDescription: '#field-description',
   address: {
-    postcodeLookup: '#field-trading_address_pcode_lookup',
+    postcodeLookup: '#field-address_pcode_lookup',
     line1: '#field-address_1',
     line2: '#field-address_2',
     town: '#field-address_town',

@@ -18,7 +18,7 @@ describe('Company hierarchies middleware', () => {
         })
 
         nock(config.apiRoot)
-          .patch(`/v3/company/${subsidiaryCompanyId}`, {
+          .patch(`/v4/company/${subsidiaryCompanyId}`, {
             global_headquarters: globalHeadquartersId,
           })
           .reply(200, { id: subsidiaryCompanyId })
@@ -51,7 +51,7 @@ describe('Company hierarchies middleware', () => {
         })
 
         nock(config.apiRoot)
-          .patch(`/v3/company/${subsidiaryCompanyId}`, {
+          .patch(`/v4/company/${subsidiaryCompanyId}`, {
             global_headquarters: globalHeadquartersId,
           })
           .reply(500, 'Error message')
@@ -85,7 +85,7 @@ describe('Company hierarchies middleware', () => {
         })
 
         nock(config.apiRoot)
-          .patch(`/v3/company/${subsidiaryCompanyId}`, {
+          .patch(`/v4/company/${subsidiaryCompanyId}`, {
             global_headquarters: globalHeadquartersId,
           })
           .reply(400, { error: 'Error message' })
@@ -119,7 +119,7 @@ describe('Company hierarchies middleware', () => {
         })
 
         nock(config.apiRoot)
-          .patch(`/v3/company/${subsidiaryCompanyId}`, {
+          .patch(`/v4/company/${subsidiaryCompanyId}`, {
             global_headquarters: null,
           })
           .reply(200, { id: subsidiaryCompanyId })
@@ -151,7 +151,7 @@ describe('Company hierarchies middleware', () => {
         })
 
         nock(config.apiRoot)
-          .patch(`/v3/company/${subsidiaryCompanyId}`, {
+          .patch(`/v4/company/${subsidiaryCompanyId}`, {
             global_headquarters: null,
           })
           .reply(500, 'Error message')
@@ -184,7 +184,7 @@ describe('Company hierarchies middleware', () => {
         })
 
         nock(config.apiRoot)
-          .patch(`/v3/company/${subsidiaryCompanyId}`, {
+          .patch(`/v4/company/${subsidiaryCompanyId}`, {
             global_headquarters: null,
           })
           .reply(400, { error: 'Error message' })
@@ -219,7 +219,7 @@ describe('Company hierarchies middleware', () => {
         })
 
         nock(config.apiRoot)
-          .patch(`/v3/company/${subsidiaryCompanyId}`, {
+          .patch(`/v4/company/${subsidiaryCompanyId}`, {
             global_headquarters: globalHeadquartersId,
           })
           .reply(200, { id: subsidiaryCompanyId })
@@ -252,7 +252,7 @@ describe('Company hierarchies middleware', () => {
         })
 
         nock(config.apiRoot)
-          .patch(`/v3/company/${subsidiaryCompanyId}`, {
+          .patch(`/v4/company/${subsidiaryCompanyId}`, {
             global_headquarters: globalHeadquartersId,
           })
           .reply(500, 'Error message')
@@ -286,7 +286,7 @@ describe('Company hierarchies middleware', () => {
         })
 
         nock(config.apiRoot)
-          .patch(`/v3/company/${subsidiaryCompanyId}`, {
+          .patch(`/v4/company/${subsidiaryCompanyId}`, {
             global_headquarters: globalHeadquartersId,
           })
           .reply(400, { error: 'Error message' })

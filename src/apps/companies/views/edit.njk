@@ -44,8 +44,8 @@
     {% if companiesHouseRecord %}
       <input type="hidden" name="name" value="{{ formData.name }}">
       <input type="hidden" name="company_number" value="{{ formData.company_number }}">
-      <input type="hidden" name="registered_address_1" value="{{ formData.registered_address_1 }}">
-      <input type="hidden" name="registered_address_2" value="{{ formData.registered_address_2 }}">
+      <input type="hidden" name="registered_address_line_1" value="{{ formData.registered_address_1 }}">
+      <input type="hidden" name="registered_address_line_2" value="{{ formData.registered_address_2 }}">
       <input type="hidden" name="registered_address_town" value="{{ formData.registered_address_town }}">
       <input type="hidden" name="registered_address_county" value="{{ formData.registered_address_county }}">
       <input type="hidden" name="registered_address_postcode" value="{{ formData.registered_address_postcode }}">
@@ -133,7 +133,7 @@
         {% if not isForeign %}
           <span class="u-no-js-hidden">
             {{ TextField({
-              name: 'trading_address_pcode_lookup',
+              name: 'address_pcode_lookup',
               label: 'Postcode',
               modifier: ['short', 'PostcodeLookup'],
               innerHTML: lookupButton,
@@ -141,7 +141,7 @@
             }) }}
 
             {{ MultipleChoiceField({
-              name: 'trading_address_pcode_result',
+              name: 'address_pcode_result',
               label: 'Select an address',
               initialOption: 'Enter a postcode to lookup your address',
               modifier: 'PostcodeLookupResult'
@@ -150,14 +150,14 @@
         {% endif %}
 
         {{ TextField({
-          name: 'trading_address_1',
+          name: 'address_1',
           label: 'Address line one',
           value: formData.address_1 if isEditing or formData.address_1 else formData.registered_address_1,
           error: errors.address_1
         }) }}
 
         {{ TextField({
-          name: 'trading_address_2',
+          name: 'address_2',
           label: 'Address line two',
           optional: true,
           value: formData.address_2 if isEditing or formData.address_2 else formData.registered_address_2,
@@ -165,14 +165,14 @@
         }) }}
 
         {{ TextField({
-          name: 'trading_address_town',
+          name: 'address_town',
           label: 'Town or city',
           value: formData.address_town if isEditing or formData.address_town else formData.registered_address_town,
           error: errors.address_town
         }) }}
 
         {{ TextField({
-          name: 'trading_address_county',
+          name: 'address_county',
           label: 'County',
           optional: true,
           value: formData.address_county if isEditing or formData.address_county else formData.registered_address_county,
@@ -180,7 +180,7 @@
         }) }}
 
         {{ TextField({
-          name: 'trading_address_postcode',
+          name: 'address_postcode',
           label: 'Postcode',
           optional: true,
           value: formData.address_postcode if isEditing or formData.address_postcode else formData.registered_address_postcode,
@@ -190,7 +190,7 @@
 
         {% if not isForeign %}
           {{ UneditableField({
-            name: 'selected_trading_address_country',
+            name: 'selected_address_country',
             label: 'Country',
             value: 'United Kingdom'
           }) }}
@@ -198,12 +198,12 @@
           <input type="hidden" name="address_country" value="{{ formData.address_country if isEditing or formData.address_country else formData.registered_address_country }}">
         {% else %}
           {{ MultipleChoiceField({
-            name: 'trading_address_country',
+            name: 'address_country',
             label: 'Country',
             disabled: true if not isForeign else false,
             initialOption: '-- Select country --',
             options: options.foreignCountries,
-            value: formData.address.country,
+            value: formData.address_country,
             error: errors.address_country
           }) }}
         {% endif %}
