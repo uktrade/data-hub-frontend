@@ -11,6 +11,14 @@ describe('Add Interaction', () => {
         cy.visit(`/companies/${fixtures.default.id}/interactions/create/interaction`)
       })
 
+      it('should render breadcrumbs', () => {
+        cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
+        cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
+        cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Companies')
+        cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/companies')
+        cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Add interaction')
+      })
+
       it('should add the interaction', () => {
         const subject = utils.randomString()
 
@@ -27,6 +35,14 @@ describe('Add Interaction', () => {
         cy.visit(`/contacts/${fixtures.default.id}/interactions/create/interaction`)
       })
 
+      it('should render breadcrumbs', () => {
+        cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
+        cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
+        cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Contacts')
+        cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/contacts')
+        cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Add interaction')
+      })
+
       it('should add the interaction', () => {
         const subject = utils.randomString()
 
@@ -41,6 +57,16 @@ describe('Add Interaction', () => {
     context('when in the context of an investment project', () => {
       beforeEach(() => {
         cy.visit(`/investments/projects/${fixtures.default.id}/interactions/create/interaction`)
+      })
+
+      it('should render breadcrumbs', () => {
+        cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
+        cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
+        cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Investments')
+        cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/investments')
+        cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.text', 'New hotel (commitment to invest)')
+        cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.attr', 'href', '/investments/projects/fb5b5006-56af-40e0-8615-7aba53e0e4bf')
+        cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Add interaction')
       })
 
       it('should add the interaction', () => {
@@ -61,6 +87,14 @@ describe('Add Interaction', () => {
         cy.visit(`/companies/${fixtures.default.id}/interactions/create/service-delivery`)
       })
 
+      it('should render breadcrumbs', () => {
+        cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
+        cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
+        cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Companies')
+        cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/companies')
+        cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Add service delivery')
+      })
+
       it('should add the service delivery', () => {
         const subject = utils.randomString()
 
@@ -75,6 +109,14 @@ describe('Add Interaction', () => {
     context('when in the context of a contact', () => {
       beforeEach(() => {
         cy.visit(`/contacts/${fixtures.default.id}/interactions/create/service-delivery`)
+      })
+
+      it('should render breadcrumbs', () => {
+        cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
+        cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
+        cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Contacts')
+        cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/contacts')
+        cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Add service delivery')
       })
 
       it('should add the service delivery', () => {
@@ -93,6 +135,16 @@ describe('Add Interaction', () => {
         cy.visit(`/investments/projects/${fixtures.default.id}/interactions/create/service-delivery`)
       })
 
+      it('should render breadcrumbs', () => {
+        cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
+        cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
+        cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Investments')
+        cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/investments')
+        cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.text', 'New hotel (commitment to invest)')
+        cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.attr', 'href', '/investments/projects/fb5b5006-56af-40e0-8615-7aba53e0e4bf')
+        cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Add service delivery')
+      })
+
       it('should add the service delivery', () => {
         const subject = utils.randomString()
 
@@ -107,6 +159,14 @@ describe('Add Interaction', () => {
     context('when TAP service fields are empty', () => {
       beforeEach(() => {
         cy.visit(`/companies/${fixtures.default.id}/interactions/create/service-delivery`)
+      })
+
+      it('should render breadcrumbs', () => {
+        cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
+        cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
+        cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Companies')
+        cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/companies')
+        cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Add service delivery')
       })
 
       it('should add the service delivery', () => {
@@ -128,6 +188,14 @@ describe('Add Interaction', () => {
     context('when TAP service fields are populated', () => {
       beforeEach(() => {
         cy.visit(`/companies/${fixtures.default.id}/interactions/create/service-delivery`)
+      })
+
+      it('should render breadcrumbs', () => {
+        cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
+        cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
+        cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Companies')
+        cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/companies')
+        cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Add service delivery')
       })
 
       it('should add the service delivery', () => {
