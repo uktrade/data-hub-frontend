@@ -140,7 +140,7 @@ const labels = {
       level_of_involvement_simplified: 'Level of involvement specified',
       status: 'Status',
       uk_region_location: 'UK Region',
-      investor_company_country: 'Country of origin',
+      country_investment_originates_from: 'Country of origin',
       likelihood_to_land: 'Likelihood to land',
     },
   },
