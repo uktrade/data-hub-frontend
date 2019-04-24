@@ -14,7 +14,8 @@ $search-button-width: 50px;
   right: 0;
   border: 0;
   padding: 0;
-  background: $govuk-blue url("../../../images/_deprecated/search-button.png") no-repeat 8px 50%; // TODO convert to SVG
+  background: $govuk-blue url("../../../images/_deprecated/search-button.png")
+    no-repeat 8px 50%; // TODO convert to SVG
   border-radius: 0;
 
   &:focus {
@@ -25,7 +26,6 @@ $search-button-width: 50px;
 .c-entity-search--global {
   .c-form-group {
     max-width: none;
-    margin-bottom: $default-spacing-unit * 2;
   }
 }
 
