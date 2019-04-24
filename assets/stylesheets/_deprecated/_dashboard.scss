@@ -2,17 +2,44 @@
 @import "../settings";
 
 .dashboard-section {
-  @include core-font(16);
-  border-top: 5px solid $black;
+  @include core-font(14);
+  border-top: 4px solid $grey-2;
   padding-top: $default-spacing-unit;
+  position: relative;
+
 
   .dashboard-section-title {
-    @include bold-font(24);
+    @include bold-font(20);
+    line-height: normal;
   }
 
   .dashboard-list {
     li + li {
       padding-top: $default-spacing-unit / 2;
     }
+  }
+
+  a:visited{
+    color: $link-colour;
+  }
+
+  &__link {
+    top: 15px;
+    position: absolute;
+    right: 0;
+  }
+
+  &__subheading {
+    @include core-font(14);
+   color: $grey-5;
+  }
+
+  &__info-feed-link{
+    text-decoration: none;
+  }
+
+  &__info-feed-date:last-of-type{
+    border-bottom: 1px solid $grey-2;
+    padding-bottom: $default-spacing-unit;
   }
 }
