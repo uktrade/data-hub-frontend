@@ -1,9 +1,9 @@
-const { assign, get, merge } = require('lodash')
-
-const { updateInvestment } = require('../../repos')
-const { valueLabels } = require('../../labels')
 const { transformInvestmentValueFormBodyToApiRequest } = require('../../transformers/value')
+const { grossValueAddedMessage } = require('./gross-value-added-message')
 const { getOptions } = require('../../../../lib/options')
+const { updateInvestment } = require('../../repos')
+const { assign, get, merge } = require('lodash')
+const { valueLabels } = require('../../labels')
 
 async function populateForm (req, res, next) {
   const token = req.session.token
@@ -15,6 +15,7 @@ async function populateForm (req, res, next) {
     labels: valueLabels.edit,
     state: assign({}, investment, {
       average_salary: get(investment, 'average_salary.id'),
+      gross_value_added_message: grossValueAddedMessage(investment),
     }),
     options: {
       averageSalaryRange: await getOptions(token, 'salary-range', { createdOn }),
