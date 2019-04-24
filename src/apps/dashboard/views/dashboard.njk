@@ -13,49 +13,61 @@
 
 {% block body_main_content %}
   <div class="grid-row dashboard">
+    <div class="govuk-grid-column-two-thirds">
     {% if interactionsPermitted %}
-      <div class="column-half">
         <div class="dashboard-section">
-          <h2 class="dashboard-section-title">My latest interactions</h2>
+          <h2 class="dashboard-section-title">My latest 5 interactions</h2>
+          <a href="/interactions" class="dashboard-section__link">See all interactions</a>
           {% if interactions.length %}
-            <ol class="dashboard-list">
-              {% for interaction in interactions %}
-                <li>
-                  {% if interaction.company.name %}
-                    <a href="/companies/{{ interaction.company.id }}">{{ interaction.company.name }}</a>
-                    &ndash;
-                  {% endif %}
-                  <a href="/interactions/{{ interaction.id }}">{{ interaction.subject }}</a>
-                </li>
-              {% endfor %}
-            </ol>
+            {% set interactionData = [] %}
+            {% for interaction in interactions.slice(0, 5) %}
+              {% set interactionData = (interactionData.push({interaction:  interaction.subject, company: interaction.company.name, outboundURL: '/interactions/' + interaction.id +''}), interactionData) %}
+            {% endfor %}
+
+            {% component 'data-table', {
+              variant: 'slim',
+              cellClasses: 'govuk-grid-column-one-half',
+              data: interactionData
+            } %}
+
           {% else %}
             <p>No interactions have been added.</p>
           {% endif %}
-          <p><a href="/interactions">See all interactions</a></p>
         </div>
-      </div>
     {% endif %}
 
-
-    <div class="column-half">
       <div class="dashboard-section">
         <h2 class="dashboard-section-title">My latest contacts</h2>
-
+        <a href="/contacts" class="dashboard-section__link">See all contacts</a>
         {% if contacts.length %}
-          <ol class="dashboard-list">
-            {% for contact in contacts %}
-              <li>
-                <a href="/contacts/{{ contact.id }}">{{ contact.first_name }} {{ contact.last_name }}</a> from <a href="/companies/{{ contact.company.id }}">{{ contact.company.name }}</a>
-              </li>
-            {% endfor %}
-          </ol>
+
+          {% set contactData = [] %}
+          {% for contact in contacts.slice(0, 5) %}
+            {% set contactData = (contactData.push({name: contact.first_name + ' ' + contact.last_name, company: contact.company.name, outboundURL: '/contacts/' + contact.id +''}), contactData) %}
+          {% endfor %}
+
+          {% component 'data-table', {
+            variant: 'slim',
+            cellClasses: 'govuk-grid-column-one-half',
+            data: contactData
+          } %}
         {% else %}
           <p>No contacts have been added.</p>
         {% endif %}
-
-        <p><a href="/contacts">See all contacts</a></p>
       </div>
     </div>
+
+    <div class="govuk-grid-column-one-third">
+      {% component 'info-feed', {
+        heading: 'Data Hub Updates',
+        subHeading: 'Announcements & updates from the Data Hub team',
+        feedLimit: 3,
+        dataFeed: articleFeed,
+        outboundLinkURL: '#',
+        outboundLinkText: 'View all updates'
+      } %}
+    </div>
+
   </div>
+
 {% endblock %}
