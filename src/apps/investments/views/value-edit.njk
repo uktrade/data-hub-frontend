@@ -49,7 +49,7 @@
       })
     }}
 
-    {{ TextField({
+    {% call TextField({
       name: 'foreign_equity_investment',
       label: form.labels.foreign_equity_investment,
       value: form.state.foreign_equity_investment,
@@ -59,7 +59,18 @@
         name: 'client_cannot_provide_foreign_investment',
         value: 'false'
       }
-    }) }}
+      }) -%}
+      {% if form.state.investment_type.name === 'FDI' %}
+        <dl class="c-form-group">
+          <dt class="c-form-group__label-text">Gross value added (GVA)</dt>
+          {% if form.state.gross_value_added %}
+            <dd>{{ form.state.gross_value_added | formatCurrency }}</dd>
+          {% else %}
+            <dd>{{ form.state.gross_value_added_message | safe }}</dd>
+          {% endif %}
+        </dl>
+      {% endif %}
+    {%- endcall %}
 
     {{ TextField({
       name: 'number_new_jobs',

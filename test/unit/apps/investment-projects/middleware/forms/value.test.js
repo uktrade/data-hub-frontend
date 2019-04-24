@@ -1,10 +1,12 @@
-const moment = require('moment')
-
-const config = require('~/config')
-const paths = require('~/src/apps/investments/paths')
+const { gvaMessages } = require('~/src/apps/investments/middleware/forms/gross-value-added-message')
 const adviserData = require('~/test/unit/data/investment/interaction/advisers')
 const controller = require('~/src/apps/investments/middleware/forms/value')
+const { investmentTypes } = require('~/src/apps/investments/types')
+const paths = require('~/src/apps/investments/paths')
+const config = require('~/config')
+const moment = require('moment')
 
+const gvaMessage = gvaMessages.foreignEquityAndPrimarySector
 const yesterday = moment().subtract(1, 'days').toISOString()
 const lastMonth = moment().subtract(1, 'months').toISOString()
 
@@ -61,6 +63,11 @@ describe('Investment form middleware - investment value', () => {
   describe('#populateForm', () => {
     context('when called for a new form', () => {
       beforeEach(async () => {
+        this.resMock.locals.investment = {
+          investment_type: {
+            name: investmentTypes.FDI,
+          },
+        }
         await controller.populateForm(this.reqMock, this.resMock, this.nextSpy)
       })
 
@@ -71,6 +78,8 @@ describe('Investment form middleware - investment value', () => {
       it('create an empty state object', () => {
         expect(this.resMock.locals.form.state).to.deep.equal({
           average_salary: undefined,
+          investment_type: { name: 'FDI' },
+          gross_value_added_message: gvaMessage,
         })
       })
 
@@ -98,6 +107,8 @@ describe('Investment form middleware - investment value', () => {
         this.resMock.locals.investment = {
           id: '1234',
           created_on: lastMonth,
+          investment_type: { name: 'FDI' },
+          gross_value_added_message: gvaMessage,
         }
 
         await controller.populateForm(this.reqMock, this.resMock, this.nextSpy)
@@ -112,6 +123,8 @@ describe('Investment form middleware - investment value', () => {
           id: '1234',
           created_on: lastMonth,
           average_salary: undefined,
+          investment_type: { name: 'FDI' },
+          gross_value_added_message: gvaMessage,
         })
       })
 
@@ -143,6 +156,8 @@ describe('Investment form middleware - investment value', () => {
             id: '1234',
             created_on: lastMonth,
             name: 'original name',
+            investment_type: { name: 'FDI' },
+            gross_value_added_message: gvaMessage,
           },
           form: {
             errors: ['an error'],
@@ -165,6 +180,8 @@ describe('Investment form middleware - investment value', () => {
           created_on: lastMonth,
           average_salary: undefined,
           name: 'modified name',
+          investment_type: { name: 'FDI' },
+          gross_value_added_message: gvaMessage,
         })
       })
 

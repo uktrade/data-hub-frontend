@@ -28,5 +28,6 @@
     {% else %}
       {{ Input(props | assignCopy({ class: props.inputClass, data: props.inputData })) }}
     {% endif %}
+    {{ caller() if caller }}
   {% endcall %}
 {% endmacro %}
