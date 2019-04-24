@@ -16,6 +16,7 @@ describe('Investment project transformers', () => {
           total_investment: null,
           client_cannot_provide_foreign_investment: true,
           foreign_equity_investment: null,
+          gross_value_added: null,
           number_new_jobs: null,
           number_safeguarded_jobs: null,
           government_assistance: false,
@@ -37,6 +38,7 @@ describe('Investment project transformers', () => {
         const expectedInvestmentValue = {
           total_investment: 'Client cannot provide this information',
           foreign_equity_investment: 'Client cannot provide this information',
+          gross_value_added: null,
           number_new_jobs: null,
           number_safeguarded_jobs: null,
           government_assistance: 'No government assistance',
@@ -62,6 +64,7 @@ describe('Investment project transformers', () => {
           total_investment: 100000,
           client_cannot_provide_foreign_investment: false,
           foreign_equity_investment: 200000,
+          gross_value_added: 16500,
           number_new_jobs: 100,
           number_safeguarded_jobs: 200,
           government_assistance: true,
@@ -108,6 +111,10 @@ describe('Investment project transformers', () => {
           foreign_equity_investment: {
             type: 'currency',
             name: 200000,
+          },
+          gross_value_added: {
+            name: 16500,
+            type: 'currency',
           },
           number_new_jobs: '100 new jobs',
           number_safeguarded_jobs: '200 safeguarded jobs',
@@ -190,6 +197,7 @@ describe('Investment project transformers', () => {
         const expectedInvestmentValue = {
           total_investment: null,
           foreign_equity_investment: null,
+          gross_value_added: null,
           number_new_jobs: '100 new jobs',
           number_safeguarded_jobs: '200 safeguarded jobs',
           government_assistance: 'Has government assistance',
