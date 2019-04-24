@@ -3,6 +3,7 @@
  # @param {object}   [columns]         Key/value pair of columns to show and their label
  # @param {string}   [variant=striped] Variant of table to display
  # @param {boolean}  [sortable=false]  Adds ability to sort each column
+ # @param {string}  [cellClasses]  Adds classes to table cells
  #
  # @return {string} HTML for table
  #
@@ -21,6 +22,7 @@
  #       id: '4444',
  #       name: 'Jane Smith',
  #       addr: '32 Palace Place, London, SE1 1TR'
+ #       outboundURL: 'www.google.com'
  #     }]
  #  } %}
  #}
@@ -44,9 +46,11 @@
     </thead>
     <tbody>
       {% for record in data %}
-        <tr>
+        <tr {% if record.outboundURL %} onclick="location.href='{{ record.outboundURL }}'" style="cursor:pointer"{% endif %}>
           {% for key in keys %}
-            <td>{{ record[key] }}</td>
+            {% if key != 'outboundURL' %}
+              <td {% if cellClasses %} class="{{ cellClasses }}{% endif %}" >{{ record[key] }}</td>
+            {% endif %}
           {% endfor %}
         </tr>
       {% endfor %}
