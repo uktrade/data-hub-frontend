@@ -3,21 +3,13 @@ const { getSelectorForElementWithText, getLinkWithText } = require('../helpers/s
 const getGlobalNavAnchorWithText = (text) => getLinkWithText(text, 'global-nav__link')
 const getGlobalHeaderAnchorWithText = (text) => getLinkWithText(text, 'proposition-menu__link')
 
-const getDashboardSectionItem = (text, itemNumber) => getSelectorForElementWithText(
-  text,
-  {
-    el: '//h2',
-    child: `/following-sibling::ol/li[${itemNumber}]`,
-  }
-)
-
 module.exports = {
   url: process.env.QA_HOST,
   props: {},
   elements: {
-    pageHeading: 'h1.c-local-header__heading',
+    pageHeading: 'h2.dashboard-section-title',
     term: '#field-term',
-    firstMyLatestContact: getDashboardSectionItem('My latest contacts', 1),
+    firstMyLatestContact: '#main-content > div > div > div > div.govuk-grid-column-two-thirds > div:nth-child(2) > table > tbody > tr:nth-child(1) > td:nth-child(1) > a',
   },
   sections: {
     globalHeader: {
