@@ -24,14 +24,16 @@
   }
 
   &__link {
-    top: 15px;
+    top: 21px;
     position: absolute;
     right: 0;
   }
 
   &__subheading {
     @include core-font(14);
-   color: $grey-5;
+    color: $grey-5;
+    margin-top: -$default-spacing-unit;
+    margin-bottom: $default-spacing-unit;
   }
 
   &__info-feed-link{

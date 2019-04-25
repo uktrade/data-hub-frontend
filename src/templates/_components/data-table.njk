@@ -22,7 +22,6 @@
  #       id: '4444',
  #       name: 'Jane Smith',
  #       addr: '32 Palace Place, London, SE1 1TR'
- #       outboundURL: 'www.google.com'
  #     }]
  #  } %}
  #}
@@ -36,21 +35,19 @@
     {% set headings = columns | values %}
   {% endif %}
 
-  <table class="data-table{% if sortable %} is-sortable js-SortableTable{% endif %}{{ ' data-table--' + variant if variant }}">
+  <table class="data-table {% if sortable %} is-sortable js-SortableTable {% endif %} {{ ' data-table--' + variant if variant }}">
     <thead>
       <tr>
         {% for heading in headings %}
-          <th>{{ heading }}</th>
+          <th scope="col">{{ heading }}</th>
         {% endfor %}
       </tr>
     </thead>
     <tbody>
       {% for record in data %}
-        <tr {% if record.outboundURL %} onclick="location.href='{{ record.outboundURL }}'" style="cursor:pointer"{% endif %}>
+        <tr>
           {% for key in keys %}
-            {% if key != 'outboundURL' %}
-              <td {% if cellClasses %} class="{{ cellClasses }}{% endif %}" >{{ record[key] }}</td>
-            {% endif %}
+              <td {% if cellClasses %} class="{{ cellClasses }}"{% endif %}>{{ record[key] | safe }}</td>
           {% endfor %}
         </tr>
       {% endfor %}
