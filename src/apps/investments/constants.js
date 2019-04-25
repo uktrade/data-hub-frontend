@@ -84,7 +84,7 @@ const QUERY_FIELDS = [
   'status',
   'adviser',
   'sector_descends',
-  'investor_company_country',
+  'country_investment_originates_from',
   'uk_region_location',
   'stage',
   'investment_type',
