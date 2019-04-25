@@ -1,7 +1,8 @@
 # Data Hub frontend
 
 [![CircleCI](https://circleci.com/gh/uktrade/data-hub-frontend.svg?style=svg)](https://circleci.com/gh/uktrade/data-hub-frontend)
-[![Known Vulnerabilities](https://snyk.io/test/github/uktrade/data-hub-frontend/badge.svg)](https://snyk.io/test/github/uktrade/data-hub-frontend) 
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/uktrade/data-hub-frontend.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/uktrade/data-hub-frontend/alerts/) 
+[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/uktrade/data-hub-frontend.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/uktrade/data-hub-frontend/context:javascript)
 
 An express application that fetches data from a back end JSON based api and renders it to the screen.
 This front end layer is primarily turning requests from the browser into back end API calls and then
