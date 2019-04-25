@@ -52,3 +52,6 @@ cypress/**
 
 # Redis
 dump.rdb
+
+# Generated trello number file
+scripts/trello-numbers.txt
