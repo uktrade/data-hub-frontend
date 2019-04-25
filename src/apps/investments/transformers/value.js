@@ -17,11 +17,23 @@ function transformInvestmentAmount (clientCannotProvideInvestment, investmentAmo
   }
 }
 
+function transformGrossValueAdded (grossValueAdded) {
+  if (!grossValueAdded) {
+    return null
+  }
+
+  return {
+    type: 'currency',
+    name: grossValueAdded,
+  }
+}
+
 function transformInvestmentValueForView ({
   client_cannot_provide_total_investment,
   total_investment,
   client_cannot_provide_foreign_investment,
   foreign_equity_investment,
+  gross_value_added,
   number_new_jobs,
   number_safeguarded_jobs,
   government_assistance,
@@ -49,6 +61,7 @@ function transformInvestmentValueForView ({
   return {
     total_investment: transformInvestmentAmount(client_cannot_provide_total_investment, total_investment),
     foreign_equity_investment: transformInvestmentAmount(client_cannot_provide_foreign_investment, foreign_equity_investment),
+    gross_value_added: transformGrossValueAdded(gross_value_added),
     number_new_jobs: number_new_jobs && `${number_new_jobs} new jobs`,
     number_safeguarded_jobs: number_safeguarded_jobs && `${number_safeguarded_jobs} safeguarded jobs`,
     government_assistance: formatBoolean(government_assistance, {

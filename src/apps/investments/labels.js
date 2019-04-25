@@ -25,6 +25,7 @@ const labels = {
     view: {
       total_investment: 'Total investment',
       foreign_equity_investment: 'Foreign equity investment',
+      gross_value_added: 'Gross Value Added (GVA)',
       government_assistance: 'Government assistance',
       number_new_jobs: 'New jobs',
       average_salary: 'Average salary of new jobs',
