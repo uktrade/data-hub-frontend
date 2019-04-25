@@ -1,0 +1,14 @@
+{% from "./form-group.njk" import FormGroup %}
+
+{% macro UneditableField(props) %}
+  {% set fieldId = 'field-' + props.name if props.name %}
+
+  {% call FormGroup(props | assign({ fieldId: fieldId })) %}
+    <p>
+      {{ props.value }}
+      {% if props.url %}
+        <a href="{{ props.url }}">Change</a>
+      {% endif %}
+    </p>
+  {% endcall %}
+{% endmacro %}

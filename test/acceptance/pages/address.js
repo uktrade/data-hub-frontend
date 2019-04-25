@@ -12,12 +12,12 @@ module.exports = {
     postCodeLookupTown: '#field-address_town',
     postCodeLookupCounty: '#field-address_county',
     postCodeLookupCountry: '#field-address_country',
-    companyPostCode: '#field-registered_address_pcode_lookup',
-    companyPostCodeLookupSuggestions: '#field-registered_address_pcode_result',
-    companyPostCodeLookupAddress1: '#field-registered_address_1',
-    companyPostCodeLookupAddress2: '#field-registered_address_2',
-    companyPostCodeLookupTown: '#field-registered_address_town',
-    companyPostCodeLookupCounty: '#field-registered_address_county',
+    companyPostCode: '#field-address_pcode_lookup',
+    companyPostCodeLookupSuggestions: '#field-address_pcode_result',
+    companyPostCodeLookupAddress1: '#field-address_1',
+    companyPostCodeLookupAddress2: '#field-address_2',
+    companyPostCodeLookupTown: '#field-address_town',
+    companyPostCodeLookupCounty: '#field-address_county',
   },
   commands: [
     {
