@@ -77,8 +77,7 @@ Then(/^the contact is displayed on the company contact tab$/, async function () 
 
 Then(/^the contact is displayed on the dashboard$/, async function () {
   const contactName = `${this.state.contact.firstName} ${this.state.contact.lastName}`
-  const dashboardContactEntry = `${contactName} from ${this.state.company.name}`
 
   await Dashboard
-    .assert.containsText('@firstMyLatestContact', dashboardContactEntry)
+    .assert.containsText('@firstMyLatestContact', contactName)
 })

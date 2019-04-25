@@ -47,7 +47,7 @@ describe('dashboard controller', () => {
       expect(renderOptions.contacts).to.deep.equal(this.dashData.contacts)
     })
 
-    it('sould render the page with interactions', () => {
+    it('should render the page with interactions', () => {
       const renderOptions = this.resMock.render.firstCall.args[1]
       expect(renderOptions.interactions).to.deep.equal(this.dashData.interactions)
     })
