@@ -8,6 +8,14 @@ describe('Service delivery form', () => {
     cy.visit(`/companies/${fixtures.default.id}/interactions/create/service-delivery`)
   })
 
+  it('should render breadcrumbs', () => {
+    cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
+    cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
+    cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Companies')
+    cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/companies')
+    cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Add service delivery')
+  })
+
   it('should display all service delivery fields', () => {
     cy.get(selectors.interactionForm.contact).should('be.visible')
     cy.get(selectors.interactionForm.ditAdviserTypeahead.fieldset).should('to.exist')

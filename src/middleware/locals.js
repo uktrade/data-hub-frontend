@@ -1,5 +1,4 @@
-/* eslint-disable no-unused-vars */
-const { get, includes, intersection, isObject, map } = require('lodash')
+const { get, map } = require('lodash')
 
 const GLOBAL_NAV_ITEMS = require('../apps/global-nav-items')
 const logger = require('../../config/logger')

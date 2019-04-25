@@ -5,6 +5,12 @@ describe('Investment Project Collections', () => {
     cy.visit('/investments/projects')
   })
 
+  it('should render breadcrumbs', () => {
+    cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
+    cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
+    cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Investments')
+  })
+
   it('should display a list of investments', () => {
     cy.get(selectors.entityCollection.entities).children().should('have.length', 10)
   })

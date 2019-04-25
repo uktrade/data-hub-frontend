@@ -67,7 +67,6 @@ module.exports = function transformCompanyToListItem ({
   registered_address_postcode,
   registered_address_1,
   registered_address_2,
-  companies_house_data,
   modified_on,
   headquarter_type,
   global_headquarters,
@@ -149,7 +148,7 @@ module.exports = function transformCompanyToListItem ({
     registered_address_2,
   }))
 
-  const url = id ? `/companies/${id}` : `/companies/view/ch/${companies_house_data.company_number}`
+  const url = `/companies/${id}`
 
   return {
     id,

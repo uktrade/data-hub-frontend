@@ -5,6 +5,12 @@ describe('Contacts Collections', () => {
     cy.visit('/contacts/?sortby=dummy')
   })
 
+  it('should render breadcrumbs', () => {
+    cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
+    cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
+    cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Contacts')
+  })
+
   it('should display a list of contacts', () => {
     cy.get(selectors.entityCollection.entities).children().should('have.length', 100)
   })

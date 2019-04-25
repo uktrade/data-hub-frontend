@@ -14,7 +14,7 @@
           <td>{{ equityCompany.name }}</td>
         </tr>
         <tr>
-          <td>{{ equityCompany.registered_address_country.name }}</td>
+          <td>{{ equityCompany.address.country.name }}</td>
         </tr>
         <tr>
           <td>{{ equityCompanyInvestments.count|default('No', true) }} investment {{ 'project' | pluralise(equityCompanyInvestments.count) }} in the UK</td>
