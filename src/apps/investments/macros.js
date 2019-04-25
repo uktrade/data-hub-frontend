@@ -44,7 +44,7 @@ const investmentFiltersFields = function ({ currentAdviserId, sectorOptions, adv
     },
     {
       macroName: 'MultipleChoiceField',
-      name: 'investor_company_country',
+      name: 'country_investment_originates_from',
       type: 'checkbox',
       modifier: 'option-select',
       options () {
