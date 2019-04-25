@@ -1,6 +1,6 @@
 {
   "name": "data-hub-frontend",
-  "version": "5.18.0",
+  "version": "5.19.0",
   "description": "Data Hub Frontend",
   "main": "src/server.js",
   "repository": {
