@@ -49,15 +49,12 @@
 
   tr{
     border-bottom: 1px solid $grey-2;
-    &:hover{
-      background-color: $grey-4;
-    }
   }
   td{
     border: 0;
     color: $grey-5;
     font-size: inherit;
-    padding: 0 $default-spacing-unit 0 0;
+    padding: $default-spacing-unit/4 0;
     @include media (mobile) {
       display:block;
     }

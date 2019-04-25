@@ -1,12 +1,12 @@
 const { get } = require('lodash')
 const rp = require('request-promise')
-const moment = require('moment')
 
 const GLOBAL_NAV_ITEMS = require('../global-nav-items')
 
 const { isPermittedRoute } = require('../middleware')
 const { fetchHomepageData } = require('./repos')
 const config = require('../../../config')
+const { formatZenArticles } = require('./transformers')
 
 async function renderDashboard (req, res, next) {
   try {
@@ -20,16 +20,10 @@ async function renderDashboard (req, res, next) {
       json: true,
       timeout: 1000,
     })
-      .then(feed =>
-        feed.articles.map(item => ({
-          heading: item.title,
-          link: item.html_url,
-          date: moment(item.created_at)
-            .fromNow(),
-        }))
-      )
+      .then(feed => formatZenArticles(feed))
       .catch(err => {
         console.log(err)
+        return []
       })
 
     res.title('Dashboard').render('dashboard/views/dashboard', {
