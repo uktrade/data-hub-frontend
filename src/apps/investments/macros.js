@@ -328,9 +328,40 @@ const statusFormConfig = {
   }],
 }
 
+const investmentProfilesFiltersFields = function ({ currentAdviserId, sectorOptions, userAgent }) {
+  return [
+    {
+      macroName: 'MultipleChoiceField',
+      name: 'investor_company_country',
+      type: 'checkbox',
+      modifier: 'option-select',
+      options () {
+        return metadata.countryOptions.map(transformObjectToOption)
+      },
+    },
+    {
+      macroName: 'MultipleChoiceField',
+      name: 'level_of_involvement_simplified',
+      type: 'checkbox',
+      modifier: 'option-select',
+      options: [
+        { value: 'involved', label: 'Involved' },
+        { value: 'not_involved', label: 'Not involved' },
+        { value: 'unspecified', label: 'Unspecified' },
+      ],
+    },
+  ].map(filter => {
+    return Object.assign(filter, {
+      label: collectionFilterLabels.edit[filter.name],
+      modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
+    })
+  })
+}
+
 module.exports = {
   investmentFiltersFields,
   investmentSortForm,
   requirementsFormConfig,
   statusFormConfig,
+  investmentProfilesFiltersFields,
 }
