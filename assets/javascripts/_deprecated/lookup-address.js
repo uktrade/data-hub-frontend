@@ -6,10 +6,12 @@ class LookupAddress {
   constructor (elementSelector) {
     this.cacheElements(elementSelector)
     this.suggestions = []
-    this.addEvents()
-    hide(closest(this.addressPostcodeField, '.c-form-group'))
 
-    this.postcodeLookupField.value = this.addressPostcodeField.value
+    if (this.postcodeLookupField) {
+      this.addEvents()
+      hide(closest(this.addressPostcodeField, '.c-form-group'))
+      this.postcodeLookupField.value = this.addressPostcodeField.value
+    }
   }
 
   cacheElements (elementSelector) {

@@ -17,9 +17,6 @@ const ClearInputs = require('./modules/clear-inputs.js')
 const PreventMultipleSubmits = require('./modules/prevent-multiple-submits.js')
 const PreventLinkDoubleClick = require('./modules/prevent-link-double-click.js')
 
-const CompanyAdd = require('./_deprecated/company-add')
-const CompanyEdit = require('./_deprecated/company-edit')
-
 LabelSelect.init()
 ConditionalSubfields.init()
 SortableTable.init()
@@ -35,5 +32,5 @@ PreventMultipleSubmits.init()
 PreventLinkDoubleClick.init()
 
 // Deprecated
-CompanyAdd.init()
-CompanyEdit.init()
+require('./_deprecated/company-add').init()
+require('./_deprecated/lookup-address')

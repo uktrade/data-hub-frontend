@@ -25,6 +25,7 @@
       data-control-value="{{ props.condition.value }}"
     {% endif %}
     {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
+    {% for attribute, value in props.attributes %} {{attribute}}="{{value}}"{% endfor %}
   >
     {% if props.legend %}
       <legend class="c-form-fieldset__legend">

@@ -141,10 +141,6 @@ describe('Company edit controller', () => {
       it('should show the company number field', () => {
         expect(this.getCalledRenderLocals().showCompanyNumberForUkBranch).to.be.true
       })
-
-      it('should not show the trading address fields', () => {
-        expect(this.getCalledRenderLocals().showTradingAddress).to.be.false
-      })
     })
 
     context('when editing a UK branch of a foreign company', () => {
@@ -217,10 +213,6 @@ describe('Company edit controller', () => {
       it('should show the company number field', () => {
         expect(this.getCalledRenderLocals().showCompanyNumberForUkBranch).to.be.true
       })
-
-      it('should not show the trading address fields', () => {
-        expect(this.getCalledRenderLocals().showTradingAddress).to.be.false
-      })
     })
 
     context('when adding a UK sole trader', () => {
@@ -276,10 +268,6 @@ describe('Company edit controller', () => {
       it('should not show the company number field', () => {
         expect(this.getCalledRenderLocals().showCompanyNumberForUkBranch).to.be.false
       })
-
-      it('should not show the trading address fields', () => {
-        expect(this.getCalledRenderLocals().showTradingAddress).to.be.false
-      })
     })
 
     context('when adding a foreign sole trader', () => {
@@ -334,10 +322,6 @@ describe('Company edit controller', () => {
 
       it('should not show the company number field', () => {
         expect(this.getCalledRenderLocals().showCompanyNumberForUkBranch).to.be.false
-      })
-
-      it('should not show the trading address fields', () => {
-        expect(this.getCalledRenderLocals().showTradingAddress).to.be.false
       })
     })
 
@@ -407,10 +391,6 @@ describe('Company edit controller', () => {
 
       it('should not show the company number field', () => {
         expect(this.getCalledRenderLocals().showCompanyNumberForUkBranch).to.be.false
-      })
-
-      it('should not show the trading address fields', () => {
-        expect(this.getCalledRenderLocals().showTradingAddress).to.be.true
       })
     })
 
