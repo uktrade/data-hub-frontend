@@ -5,8 +5,10 @@ const isProd = process.env.NODE_ENV === 'production'
 const root = path.normalize(`${__dirname}/..`)
 
 const buildRedisConfig = () => {
-  const metadataTtl = (process.env.METADATA_TTL || (15 * 60))
-  const vcap = process.env.VCAP_SERVICES ? JSON.parse(process.env.VCAP_SERVICES) : JSON.parse('{}')
+  const metadataTtl = process.env.METADATA_TTL || 15 * 60
+  const vcap = process.env.VCAP_SERVICES
+    ? JSON.parse(process.env.VCAP_SERVICES)
+    : JSON.parse('{}')
 
   if (vcap.hasOwnProperty('redis')) {
     return {
@@ -52,13 +54,16 @@ const config = {
   session: {
     secret: process.env.SESSION_SECRET || 'howdoesyourgardengrow',
     // 2 hour timeout
-    ttl: process.env.SESSION_TTL || (2 * 60 * 60 * 1000),
+    ttl: process.env.SESSION_TTL || 2 * 60 * 60 * 1000,
   },
   assetsHost: process.env.ASSETS_HOST,
   logLevel: process.env.LOG_LEVEL || (isDev ? 'debug' : 'error'),
   zen: {
     // TODO tidy up the configuration of zendesk URLs
     url: `https://${process.env.ZEN_DOMAIN}.zendesk.com/api/v2/tickets.json`,
+    announcementsURL: `https://${
+      process.env.ZEN_DOMAIN
+    }.zendesk.com/api/v2/help_center/sections/360000018069/articles.json`,
     token: process.env.ZEN_TOKEN,
     email: process.env.ZEN_EMAIL,
     browser: process.env.ZEN_BROWSER,
