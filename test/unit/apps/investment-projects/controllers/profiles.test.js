@@ -1,4 +1,5 @@
 const config = require('~/config')
+const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
 describe('Investment profile controller', () => {
   const metadataMock = {
@@ -12,31 +13,8 @@ describe('Investment profile controller', () => {
     },
   }
 
-  beforeEach(() => {
-    this.req = {
-      session: {
-        user: {
-          id: '1234',
-          name: 'Fred Smith',
-          permissions: [],
-        },
-        token: 'abcd',
-      },
-      query: {
-        sortby: 'estimated_land_date:asc',
-      },
-    }
-
-    this.res = {
-      render: sinon.spy(),
-      query: {},
-      locals: {
-        userAgent: {
-          isIE: false,
-        },
-      },
-    }
-    this.nextSpy = sinon.spy()
+  beforeEach(async () => {
+    this.middlewareParameters = await buildMiddlewareParameters({ 'test': 'test' })
 
     nock(config.apiRoot)
       .get('/metadata/sector/?level__lte=0')
@@ -50,39 +28,46 @@ describe('Investment profile controller', () => {
       beforeEach(async () => {
         const controller = require('~/src/apps/investments/controllers/profiles')
 
-        await controller.renderProfilesView(this.req, this.res, this.nextSpy)
+        await controller.renderProfilesView(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy)
       })
 
       it('should render', () => {
-        expect(this.res.render).to.be.calledOnce
+        expect(this.middlewareParameters.resMock.render).to.be.calledOnce
       })
 
       it('should render the collection template', () => {
-        expect(this.res.render.firstCall.args[0]).to.equal('investments/views/profiles')
+        expect(this.middlewareParameters.resMock.render.firstCall.args[0]).to
+          .equal('investments/views/profiles')
       })
 
       it('should render the view with a title', () => {
-        expect(this.res.render.firstCall.args[1].title).to.equal('Investments')
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].title).to
+          .equal('Investments')
       })
 
       it.skip('should render the view with a count label', () => {
-        expect(this.res.render.firstCall.args[1].countLabel).to.equal('project')
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].countLabel).to
+          .equal('project')
       })
 
       it.skip('should render the view with a sort form', () => {
-        expect(this.res.render.firstCall.args[1].sortForm).to.exist
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].sortForm).to.exist
       })
 
       it.skip('should render the view with selected filters', () => {
-        expect(this.res.render.firstCall.args[1].selectedFilters).to.exist
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].selectedFilters).to.exist
       })
 
       it.skip('should render the view with an export action', () => {
-        expect(this.res.render.firstCall.args[1].exportAction).to.deep.equal({ enabled: false })
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].exportAction).to
+          .deep.equal({ enabled: false })
       })
 
       it.skip('should render the view with filter fields', () => {
-        expect(this.res.render.firstCall.args[1].filtersFields).to.exist
+        expect(this.middlewareParameters.resMock.render.firstCall.args[1].filtersFields).to.exist
       })
     })
 
@@ -98,16 +83,19 @@ describe('Investment profile controller', () => {
           },
         })
 
-        await controller.renderProfilesView(this.req, this.res, this.nextSpy)
+        await controller.renderProfilesView(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy)
       })
 
       it.skip('should not render the view', () => {
-        expect(this.res.render).to.not.be.called
+        expect(this.middlewareParameters.resMock.render).to.not.be.called
       })
 
       it.skip('should call next with an error', () => {
-        expect(this.nextSpy).to.have.been.calledWith(this.error)
-        expect(this.nextSpy).to.have.been.calledOnce
+        expect(this.middlewareParameters.nextSpy).to.have.been.calledWith(this.error)
+        expect(this.middlewareParameters.nextSpy).to.have.been.calledOnce
       })
     })
   })
