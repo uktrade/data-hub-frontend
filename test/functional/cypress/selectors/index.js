@@ -1,4 +1,5 @@
 exports.companyBusinessDetails = require('./company/business-details')
+exports.companyAddStep2 = require('./company/add-step-2')
 exports.companyEdit = require('./company/edit')
 exports.companyInteraction = require('./company/interaction')
 exports.companyInvestment = require('./company/investment')
