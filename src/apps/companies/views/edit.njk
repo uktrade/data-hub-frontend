@@ -42,14 +42,14 @@
     }
   }) %}
     {% if companiesHouseRecord %}
-      <input type="hidden" name="name" value="{{ formData.name }}">
-      <input type="hidden" name="company_number" value="{{ formData.company_number }}">
-      <input type="hidden" name="registered_address_line_1" value="{{ formData.registered_address_1 }}">
-      <input type="hidden" name="registered_address_line_2" value="{{ formData.registered_address_2 }}">
-      <input type="hidden" name="registered_address_town" value="{{ formData.registered_address_town }}">
-      <input type="hidden" name="registered_address_county" value="{{ formData.registered_address_county }}">
-      <input type="hidden" name="registered_address_postcode" value="{{ formData.registered_address_postcode }}">
-      <input type="hidden" name="registered_address_country" value="{{ formData.registered_address_country }}">
+      <input type="hidden" name="name" value="{{ formData.name }}" data-auto-id="companiesHouseName">
+      <input type="hidden" name="company_number" value="{{ formData.company_number }}" data-auto-id="companiesHouseNumber">
+      <input type="hidden" name="registered_address_1" value="{{ formData.registered_address_1 }}" data-auto-id="companiesHouseAddress1">
+      <input type="hidden" name="registered_address_2" value="{{ formData.registered_address_2 }}" data-auto-id="companiesHouseAddress2">
+      <input type="hidden" name="registered_address_town" value="{{ formData.registered_address_town }}" data-auto-id="companiesHouseAddressTown">
+      <input type="hidden" name="registered_address_county" value="{{ formData.registered_address_county }}" data-auto-id="companiesHouseAddressCounty">
+      <input type="hidden" name="registered_address_postcode" value="{{ formData.registered_address_postcode }}" data-auto-id="companiesHouseAddressPostcode">
+      <input type="hidden" name="registered_address_country" value="{{ formData.registered_address_country }}" data-auto-id="companiesHouseAddressCountry">
     {% else %}
 
       {% if not isEditing %}
