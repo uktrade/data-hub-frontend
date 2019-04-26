@@ -1,0 +1,39 @@
+{##
+ # @param {array[]} dataFeed          Data feed values to show
+ # @param {int} [feedLimit=5]         How many data feed items to show
+ # @param {string}  heading           Heading to show
+ # @param {string}  subheading        Sub heading to show
+ # @param {string}  outboundLinkText  Shows an anchor link
+ # @param {string}  outboundLinkUrl   URL for anchor link
+ #
+ # @return {string} HTML for feed
+ #
+ # @example
+ #  {% component 'data-feed, {
+ #     heading: 'Data Hub Updates',
+ #     subHeading: 'Announcements, updates, release notes and roadmap from the Data Hub team',
+ #     feedLimit: 3,
+ #     outboundLinkText: 'Link Text'
+ #     outboundLinkURL: 'www.google.com'
+ #     dataFeed: [{
+ #       heading: 'Interactions - Recording Multiple Advisors - Changes Coming in April',
+ #       link: 'https://uktrade.zendesk.com/hc/en-gb/articles/360001412918-April-2019-improvements-to-company-page-data'
+ #       date: '21 hours ago'
+ #     }]
+ #  } %}
+ #}
+
+{% set feedLimit =  feedLimit | default(5) %}
+<div class="dashboard-section">
+{% if heading %} <h2 class="dashboard-section-title">{{heading}}</h2> {% endif %}
+{% if subHeading %} <p class="dashboard-section__subheading">{{subHeading}}</p> {% endif %}
+{% if outboundLinkText %} <a href="{{ outboundLinkURL }}" class="dashboard-section__link">{{ outboundLinkText }}</a> {% endif %}
+{% if dataFeed.length %}
+  {% for item in dataFeed.slice(0, feedLimit) %}
+      <a href="{{ item.link }}" class="dashboard-section__info-feed-link">{{ item.heading }}</a>
+      <p class="dashboard-section__info-feed-date">{{ item.date }}</p>
+  {% endfor %}
+{% else %}
+  <p class="dashboard-section__fallback-text">No updates available</p>
+{% endif %}
+</div>

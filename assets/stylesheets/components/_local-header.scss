@@ -1,7 +1,6 @@
 @import "../tools/mixins";
 
 .c-local-header {
-  padding-bottom: $default-spacing-unit * 2;
 
   .govuk-width-container {
     border-top: 1px solid transparent;
@@ -16,7 +15,7 @@
   }
 
   .c-entity-search {
-    margin-top: $baseline-grid-unit * 20.5;
+    padding: $default-spacing-unit * 1.5 0;
     font-size: 19px;
   }
 
