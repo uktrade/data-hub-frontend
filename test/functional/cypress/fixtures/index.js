@@ -1,4 +1,7 @@
 module.exports = {
+  chCompany: {
+    mercuryTradingLtd: require('./ch-company/mercury-trading-ltd'),
+  },
   company: {
     archivedLtd: require('./company/archived-ltd.json'),
     dnbCorp: require('./company/dnb-corp.json'),
