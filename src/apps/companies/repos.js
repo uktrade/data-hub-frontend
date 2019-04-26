@@ -32,41 +32,7 @@ function getCHCompany (token, id) {
 }
 
 function saveCompany (token, company) {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const parsedCompany = Object.assign({}, company)
-      delete parsedCompany.companies_house_data
-      delete parsedCompany.contacts
-      delete parsedCompany.interactions
-
-      let method
-      let url
-
-      if (parsedCompany.id && parsedCompany.id.length > 0) {
-        method = 'PATCH'
-        url = `${config.apiRoot}/v3/company/${parsedCompany.id}`
-      } else {
-        delete parsedCompany.id
-        method = 'POST'
-        url = `${config.apiRoot}/v3/company`
-      }
-
-      const data = await authorisedRequest(token, { url, method, body: parsedCompany })
-      resolve(data)
-    } catch (error) {
-      if (typeof error.error === 'string') {
-        reject({
-          statusCode: error.response.statusCode,
-          errors: { detail: error.response.statusMessage },
-        })
-      } else {
-        reject({
-          statusCode: error.response.statusCode,
-          errors: error.error,
-        })
-      }
-    }
-  })
+  return company.id ? updateCompany(token, company.id, company) : addCompany(token, company)
 }
 
 function archiveCompany (token, companyId, reason) {
@@ -85,11 +51,19 @@ function unarchiveCompany (token, companyId) {
   })
 }
 
+function addCompany (token, body) {
+  return authorisedRequest(token, {
+    body,
+    url: `${config.apiRoot}/v4/company`,
+    method: 'POST',
+  })
+}
+
 function updateCompany (token, companyId, body) {
   return authorisedRequest(token, {
-    url: `${config.apiRoot}/v3/company/${companyId}`,
-    method: 'PATCH',
     body,
+    url: `${config.apiRoot}/v4/company/${companyId}`,
+    method: 'PATCH',
   })
 }
 

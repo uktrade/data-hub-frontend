@@ -39,7 +39,6 @@ async function renderForm (req, res, next) {
 
     const businessType = get(res.locals, 'formData.business_type')
     const businessTypeLabel = await getBusinessTypeLabel(req.session.token, businessType)
-    const showTradingAddress = !isEmpty(get(res.locals, 'formData.trading_address_1'))
     const isForeign = isForeignCompany(req, res)
     const heading = `${res.locals.company ? 'Edit' : 'Add'} business details`
 
@@ -54,7 +53,6 @@ async function renderForm (req, res, next) {
         isForeign,
         heading,
         businessTypeLabel,
-        showTradingAddress,
         isOnOneList: !isEmpty(get(res.locals.company, 'one_list_group_tier')),
         companyDetails: res.locals.company ? transformCompanyToView(res.locals.company) : {},
         showCompanyNumberForUkBranch: businessType === UK_BRANCH_OF_FOREIGN_COMPANY_ID,
