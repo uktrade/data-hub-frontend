@@ -25,12 +25,12 @@ module.exports = {
     companyNumber: '#field-company_number',
     tradingName: '#field-trading_names',
     ukRegion: 'select[name="uk_region"]',
-    address1: '#field-registered_address_1',
-    address2: '#field-registered_address_2',
-    town: '#field-registered_address_town',
-    county: '#field-registered_address_county',
-    registeredAddressCountry: 'select[name="registered_address_country"]',
-    postcode: '#field-registered_address_postcode',
+    address1: '#field-address_1',
+    address2: '#field-address_2',
+    town: '#field-address_town',
+    county: '#field-address_county',
+    addressCountry: 'select[name="address_country"]',
+    postcode: '#field-address_postcode',
     sector: '#field-sector',
     website: '#field-website',
     description: '#field-description',
@@ -86,8 +86,8 @@ module.exports = {
 
             this
               .api.perform((done) => {
-                this.getListOption('@registeredAddressCountry', (country) => {
-                  company.registeredAddressCountry = country
+                this.getListOption('@addressCountry', (country) => {
+                  company.addressCountry = country
                   done()
                 })
               })
@@ -131,12 +131,12 @@ module.exports = {
                   .waitForElementPresent('@saveAndCreateButton')
                   .click('@saveAndCreateButton')
 
-                const { address1, town, postcode, registeredAddressCountry } = company
+                const { address1, town, postcode, addressCountry } = company
                 callback(assign({}, company, {
                   heading: company.name,
-                  primaryAddress: `${address1}, ${town}, ${postcode}, ${registeredAddressCountry}`,
+                  primaryAddress: `${address1}, ${town}, ${postcode}, ${addressCountry}`,
                   uniqueSearchTerm: getUid(company.name),
-                  country: company.registeredAddressCountry,
+                  country: company.addressCountry,
                   globalHeadquarters: companyRadioButtons.headquarterType.text !== 'Global HQ' ? 'Link the Global HQ' : '',
                   businessType: companyStep1.businessType,
                 }))

@@ -11,8 +11,8 @@ const {
 //
 // Will be replaced with newer form builder transformers once the form view is
 // replaced with newer form macros
-module.exports = function transformCompanyToForm (body) {
-  if (!isPlainObject(body)) { return }
+module.exports = function transformCompanyToForm (company) {
+  if (!isPlainObject(company)) { return }
 
   const schema = {
     registered_address_country: String,
@@ -27,13 +27,20 @@ module.exports = function transformCompanyToForm (body) {
 
   const formatted = mapValues(schema, (type, key) => {
     if (type === Object) {
-      return get(body, key)
+      return get(company, key)
     }
-    return get(body, `${key}.id`)
+    return get(company, `${key}.id`)
   })
 
   formatted.headquarter_type = get(formatted, 'headquarter_type.id', 'not_headquarters')
-  formatted.trading_names = body.trading_names && body.trading_names.length ? body.trading_names[0] : null
+  formatted.trading_names = company.trading_names && company.trading_names.length ? company.trading_names[0] : null
 
-  return assign({}, body, formatted)
+  formatted.address_1 = get(company.address, 'line_1')
+  formatted.address_2 = get(company.address, 'line_2')
+  formatted.address_town = get(company.address, 'town')
+  formatted.address_county = get(company.address, 'county')
+  formatted.address_postcode = get(company.address, 'postcode')
+  formatted.address_country = get(company.address, 'country.id')
+
+  return assign({}, company, formatted)
 }

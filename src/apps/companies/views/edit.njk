@@ -8,20 +8,14 @@
 {% set returnLink = '/companies/' + company.id + '/business-details' if isEditing else '/companies/add-step-1' %}
 
 {% block body_main_content %}
-  <div class="section">
-    {% if businessTypeLabel %}
-      <h2 class="govuk-heading-s">Business type</h2>
-      {{ MetaList({
-          items: [
-            {
-              label: businessTypeLabel,
-              value: ('&nbsp;' if company else '<a href="/companies/add-step-1">Change</a>') | safe
-            }
-          ]
-        }) }}
-    {% endif %}
-  </div>
-
+  {% if businessTypeLabel %}
+    {{ UneditableField({
+      name: 'business_type',
+      label: 'Business type',
+      value: businessTypeLabel,
+      url: null if company else '/companies/add-step-1'
+    }) }}
+  {% endif %}
 
   {% if chDetails %}
     {# TODO Do we even still need this? It's not currently being displayed (Bug?) #}
@@ -50,8 +44,8 @@
     {% if companiesHouseRecord %}
       <input type="hidden" name="name" value="{{ formData.name }}">
       <input type="hidden" name="company_number" value="{{ formData.company_number }}">
-      <input type="hidden" name="registered_address_1" value="{{ formData.registered_address_1 }}">
-      <input type="hidden" name="registered_address_2" value="{{ formData.registered_address_2 }}">
+      <input type="hidden" name="registered_address_line_1" value="{{ formData.registered_address_1 }}">
+      <input type="hidden" name="registered_address_line_2" value="{{ formData.registered_address_2 }}">
       <input type="hidden" name="registered_address_town" value="{{ formData.registered_address_town }}">
       <input type="hidden" name="registered_address_county" value="{{ formData.registered_address_county }}">
       <input type="hidden" name="registered_address_postcode" value="{{ formData.registered_address_postcode }}">
@@ -78,20 +72,18 @@
     }) }}
 
     {% if formData.company_number and not showCompanyNumberForUkBranch %}
-      <div class="c-form-group">
-        <label class="c-form-group__label">
-          <span class="c-form-group__label-text">Companies House number</span>
-        </label>
-        <div class="c-form-group__inner">
-          {{ formData.company_number }}
-        </div>
-      </div>
+      {{ UneditableField({
+        name: 'selected_company_number',
+        label: 'Companies House number',
+        value: formData.company_number
+      }) }}
     {% endif %}
 
     {% if not isForeign %}
       {{ TextField({
         name: 'vat_number',
         label: 'VAT number',
+        optional: true,
         value: formData.vat_number,
         error: errors.vat_number
       }) }}
@@ -133,6 +125,92 @@
       error: errors.description
     }) }}
 
+    {# Address #}
+    {% call Fieldset({ legend: 'Address', attributes: { 'data-auto-id': 'address' } }) %}
+      <p>This should be the address for this particular office of the business. If you need to record activity or a contact for a different address, please add a new company record to Data Hub.</p>
+
+      <div id="trading-address-wrapper" class="lookup-address-js">
+        {% if not isForeign %}
+          <span class="u-no-js-hidden">
+            {{ TextField({
+              name: 'address_pcode_lookup',
+              label: 'Postcode',
+              modifier: ['short', 'PostcodeLookup'],
+              innerHTML: lookupButton,
+              value: formData.registered_address_postcode if not isEditing
+            }) }}
+
+            {{ MultipleChoiceField({
+              name: 'address_pcode_result',
+              label: 'Select an address',
+              initialOption: 'Enter a postcode to lookup your address',
+              modifier: 'PostcodeLookupResult'
+            }) }}
+          </span>
+        {% endif %}
+
+        {{ TextField({
+          name: 'address_1',
+          label: 'Address line one',
+          value: formData.address_1 if isEditing or formData.address_1 else formData.registered_address_1,
+          error: errors.address_1
+        }) }}
+
+        {{ TextField({
+          name: 'address_2',
+          label: 'Address line two',
+          optional: true,
+          value: formData.address_2 if isEditing or formData.address_2 else formData.registered_address_2,
+          error: errors.address_2
+        }) }}
+
+        {{ TextField({
+          name: 'address_town',
+          label: 'Town or city',
+          value: formData.address_town if isEditing or formData.address_town else formData.registered_address_town,
+          error: errors.address_town
+        }) }}
+
+        {{ TextField({
+          name: 'address_county',
+          label: 'County',
+          optional: true,
+          value: formData.address_county if isEditing or formData.address_county else formData.registered_address_county,
+          error: errors.address_county
+        }) }}
+
+        {{ TextField({
+          name: 'address_postcode',
+          label: 'Postcode',
+          optional: true,
+          value: formData.address_postcode if isEditing or formData.address_postcode else formData.registered_address_postcode,
+          error: errors.address_postcode,
+          modifier: 'short'
+        }) }}
+
+        {% if not isForeign %}
+          {{ UneditableField({
+            name: 'selected_address_country',
+            label: 'Country',
+            value: 'United Kingdom'
+          }) }}
+
+          <input type="hidden" name="address_country" value="{{ formData.address_country if isEditing or formData.address_country else formData.registered_address_country }}">
+        {% else %}
+          {{ MultipleChoiceField({
+            name: 'address_country',
+            label: 'Country',
+            disabled: true if not isForeign else false,
+            initialOption: '-- Select country --',
+            options: options.foreignCountries,
+            value: formData.address_country,
+            error: errors.address_country
+          }) }}
+        {% endif %}
+      </div>
+    {% endcall %}
+
+
     {% if not companiesHouseRecord %}
       {% if showCompanyNumberForUkBranch %}
         {{ TextField({
@@ -143,175 +221,30 @@
         }) }}
       {% endif %}
 
-      <fieldset id="registered-address-wrapper" class="c-form-fieldset {{ 'lookup-address-js' if not isForeign }}">
-        <legend class="c-form-fieldset__legend">
-          <span class="c-form-fieldset__legend-text">Primary address</span>
-        </legend>
+      {# Registered address #}
+      {% if company.registered_address %}
+        {% call Fieldset({
+          legend: 'Registered address',
+          attributes: { 'data-auto-id': 'registeredAddress' }
+        }) %}
+          <p>A registered office address is a legal requirement of all limited companies and Limited Liability
+            Partnerships (LLPs) incorporated in the UK. Its purpose is to provide Companies House, HMRC and other
+            relevant government bodies with an official address for delivering statutory mail and legal notices.</p>
 
-        {% if not isForeign %}
-          <span class="u-no-js-hidden">
-            {{ TextField({
-              name: 'registered_address_pcode_lookup',
-              label: 'Postcode',
-              modifier: ['short', 'PostcodeLookup'],
-              innerHTML: lookupButton
-            }) }}
+          <ul>
+            {% if company.registered_address.line_1 %}<li>{{ company.registered_address.line_1 }}</li>{% endif %}
+            {% if company.registered_address.line_2 %}<li>{{ company.registered_address.line_2 }}</li>{% endif %}
+            {% if company.registered_address.town %}<li>{{ company.registered_address.town }}</li>{% endif %}
+            {% if company.registered_address.county %}<li>{{ company.registered_address.county }}</li>{% endif %}
+            {% if company.registered_address.postcode %}<li>{{ company.registered_address.postcode }}</li>{% endif %}
+            {% if company.registered_address.country %}<li>{{ company.registered_address.country.name }}</li>{% endif %}
+          </ul>
 
-            {{ MultipleChoiceField({
-              name: 'registered_address_pcode_result',
-              label: 'Select an address',
-              initialOption: 'Enter a postcode to lookup your address',
-              modifier: 'PostcodeLookupResult'
-            }) }}
-          </span>
-        {% endif %}
+        {% endcall %}
 
-        {{ TextField({
-          name: 'registered_address_1',
-          label: 'Address line one',
-          value: formData.registered_address_1,
-          error: errors.registered_address_1
-        }) }}
-
-        {{ TextField({
-          name: 'registered_address_2',
-          label: 'Address line two',
-          optional: true,
-          value: formData.registered_address_2,
-          error: errors.registered_address_2
-        }) }}
-
-        {{ TextField({
-          name: 'registered_address_town',
-          label: 'Town or city',
-          value: formData.registered_address_town,
-          error: errors.registered_address_town
-        }) }}
-
-        {{ TextField({
-          name: 'registered_address_county',
-          label: 'County',
-          optional: true,
-          value: formData.registered_address_county,
-          error: errors.registered_address_county
-        }) }}
-
-        {{ TextField({
-          name: 'registered_address_postcode',
-          label: 'Postcode',
-          optional: true,
-          value: formData.registered_address_postcode,
-          error: errors.registered_address_postcode,
-          modifier: 'short'
-        }) }}
-
-        {% if isForeign %}
-          {{ MultipleChoiceField({
-            name: 'registered_address_country',
-            label: 'Country',
-            initialOption: '-- Select country --',
-            options: options.foreignCountries,
-            value: formData.registered_address_country,
-            error: errors.registered_address_country
-          }) }}
-        {% else %}
-          <div class="section">
-            <h2 class="heading-medium">Country</h2>
-            <p>United Kingdom</p>
-            <input type="hidden" name="registered_address_country" value="{{ formData.registered_address_country }}">
-          </div>
-        {% endif %}
-      </fieldset>
+      {% endif %}
 
     {% endif %}
-
-    <fieldset class="c-form-fieldset {{ 'lookup-address-js' if not isForeign }}">
-      <legend class="c-form-fieldset__legend">
-        <span class="c-form-fieldset__legend-text">Trading address (optional)</span>
-      </legend>
-      {# TODO make trading address work without JavaScript #}
-      <div class="form-group">
-        <button id="add-trading-address" class="button--secondary {{ 'u-hidden' if showTradingAddress }}" type="button">Add trading address</button>
-        <button id="remove-trading-address" class="button--secondary {{ 'u-hidden' if not showTradingAddress }}" type="button">Remove trading address</button>
-      </div>
-
-      <div id="trading-address-wrapper" class="{{ 'u-hidden' if not showTradingAddress }}">
-        {% if not isForeign %}
-          <span class="u-no-js-hidden">
-            {{ TextField({
-              name: 'trading_address_pcode_lookup',
-              label: 'Postcode',
-              modifier: ['short', 'PostcodeLookup'],
-              innerHTML: lookupButton
-            }) }}
-
-            {{ MultipleChoiceField({
-              name: 'trading_address_pcode_result',
-              label: 'Select an address',
-              initialOption: 'Enter a postcode to lookup your address',
-              modifier: 'PostcodeLookupResult'
-            }) }}
-          </span>
-        {% endif %}
-
-        {{ TextField({
-          name: 'trading_address_1',
-          label: 'Address line one',
-          value: formData.trading_address_1,
-          error: errors.trading_address_1
-        }) }}
-
-        {{ TextField({
-          name: 'trading_address_2',
-          label: 'Address line two',
-          optional: true,
-          value: formData.trading_address_2,
-          error: errors.trading_address_2
-        }) }}
-
-        {{ TextField({
-          name: 'trading_address_town',
-          label: 'Town or city',
-          value: formData.trading_address_town,
-          error: errors.trading_address_town
-        }) }}
-
-        {{ TextField({
-          name: 'trading_address_county',
-          label: 'County',
-          optional: true,
-          value: formData.trading_address_county,
-          error: errors.trading_address_county
-        }) }}
-
-        {{ TextField({
-          name: 'trading_address_postcode',
-          label: 'Postcode',
-          optional: true,
-          value: formData.trading_address_postcode,
-          error: errors.trading_address_postcode,
-          modifier: 'short'
-        }) }}
-
-        {% if not isForeign %}
-          <div class="section">
-            <h2 class="heading-medium">Country</h2>
-            <p>United Kingdom</p>
-            <input type="hidden" name="trading_address_country" value="{{ formData.trading_address_country }}">
-          </div>
-        {% else %}
-          {{ MultipleChoiceField({
-            name: 'trading_address_country',
-            label: 'Country',
-            disabled: true if not isForeign else false,
-            initialOption: '-- Select country --',
-            options: options.foreignCountries,
-            value: formData.trading_address_country,
-            error: errors.trading_address_country
-          }) }}
-        {% endif %}
-      </div>
-    </fieldset>
 
     {# DIT region #}
     {% if not isForeign %}
@@ -327,19 +260,19 @@
 
     {# DIT sector #}
     {% if isOnOneList %}
-      <fieldset id="group-field-sector" class="c-form-group">
-        <legend class="c-form-group__label">
-          <span class="c-form-group__label-text">Sector</span>
-        </legend>
+      {{ UneditableField({
+        name: 'sector',
+        label: 'Sector',
+        value: companyDetails['Sector']
+      }) }}
 
-        <p>{{companyDetails['Sector']}}</p>
-
-        {% call HiddenContent({ summary: 'Need to edit the sector?' }) %}
-          {% call Message({ type: 'muted' }) %}
-            If you need to change the sector for a company on the One List, please email <a href="mailto:{{oneListEmail}}">{{oneListEmail}}</a>.
-          {% endcall %}
-        {% endcall %}
-      </fieldset>
+      {{ govukDetails({
+        summaryText: 'Need to edit the sector?',
+        html: 'If you need to change the sector for a company on the One List, please email <a href="mailto:' + oneListEmail + '">' + oneListEmail + '</a>.',
+        attributes: {
+          'data-auto-id': 'needToEditTheSector'
+        }
+      }) }}
     {% else %}
       {{ MultipleChoiceField({
         name: 'sector',
@@ -353,19 +286,19 @@
 
     {# Business hierarchy #}
     {% if isOnOneList %}
-      <fieldset id="group-field-headquarter_type" class="c-form-group">
-        <legend class="c-form-group__label">
-          <span class="c-form-group__label-text">Business hierarchy</span>
-        </legend>
+      {{ UneditableField({
+        name: 'headquarter_type',
+        label: 'Business hierarchy',
+        value: companyDetails['Headquarter type']
+      }) }}
 
-        <p>{{companyDetails['Headquarter type']}}</p>
-
-        {% call HiddenContent({ summary: 'Need to edit the headquarter type?' }) %}
-          {% call Message({ type: 'muted' }) %}
-            If you need to change the headquarter type for a company on the One List, please email <a href="mailto:{{oneListEmail}}">{{oneListEmail}}</a>.
-          {% endcall %}
-        {% endcall %}
-      </fieldset>
+      {{ govukDetails({
+        summaryText: 'Need to edit the headquarter type?',
+        html: 'If you need to change the headquarter type for a company on the One List, please email <a href="mailto:' + oneListEmail + '">' + oneListEmail + '</a>.',
+        attributes: {
+          'data-auto-id': 'needToEditTheHeadquarterType'
+        }
+      }) }}
     {% else %}
       {{ MultipleChoiceField({
         type: 'radio',
