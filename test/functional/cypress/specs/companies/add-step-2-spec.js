@@ -56,6 +56,40 @@ describe('Company edit', () => {
 
     commonTests()
 
+    it('should render the Companies House hidden fields', () => {
+      cy.get(selectors.companyAddStep2.hiddenFields.companiesHouse.name)
+        .should('exist')
+        .and('have.value', 'Mercury Trading Ltd')
+
+      cy.get(selectors.companyAddStep2.hiddenFields.companiesHouse.number)
+        .should('exist')
+        .and('have.value', '99919')
+
+      cy.get(selectors.companyAddStep2.hiddenFields.companiesHouse.address1)
+        .should('exist')
+        .and('have.value', '64 Ermin Street')
+
+      cy.get(selectors.companyAddStep2.hiddenFields.companiesHouse.address2)
+        .should('exist')
+        .and('have.value', '')
+
+      cy.get(selectors.companyAddStep2.hiddenFields.companiesHouse.town)
+        .should('exist')
+        .and('have.value', 'Y Ffor')
+
+      cy.get(selectors.companyAddStep2.hiddenFields.companiesHouse.county)
+        .should('exist')
+        .and('have.value', '')
+
+      cy.get(selectors.companyAddStep2.hiddenFields.companiesHouse.postcode)
+        .should('exist')
+        .and('have.value', 'LL53 5RN')
+
+      cy.get(selectors.companyAddStep2.hiddenFields.companiesHouse.country)
+        .should('exist')
+        .and('have.value', '80756b9a-5d95-e211-a939-e4115bead28a')
+    })
+
     it('should render the Companies House number uneditable field', () => {
       cy.get(selectors.uneditableField('group-field-selected_company_number')).should('have.text', '99919')
     })
