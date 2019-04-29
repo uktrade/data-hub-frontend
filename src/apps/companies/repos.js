@@ -1,30 +1,9 @@
 /* eslint camelcase: 0, prefer-promise-reject-errors: 0 */
-const { get } = require('lodash')
-
 const config = require('../../../config')
 const { authorisedRequest } = require('../../lib/authorised-request')
 
-// TODO remove this when no dependencies on company.registered_address_* and company.trading_address_*
-const mapDeprecatedAddressFields = (companyAddress, deprecatedAddressPrefix) => {
-  return {
-    [`${deprecatedAddressPrefix}_address_1`]: get(companyAddress, 'line_1'),
-    [`${deprecatedAddressPrefix}_address_2`]: get(companyAddress, 'line_2'),
-    [`${deprecatedAddressPrefix}_address_town`]: get(companyAddress, 'town'),
-    [`${deprecatedAddressPrefix}_address_county`]: get(companyAddress, 'county'),
-    [`${deprecatedAddressPrefix}_address_postcode`]: get(companyAddress, 'postcode'),
-    [`${deprecatedAddressPrefix}_address_country`]: get(companyAddress, 'country'),
-  }
-}
-
 function getDitCompany (token, id) {
   return authorisedRequest(token, `${config.apiRoot}/v4/company/${id}`)
-    .then((company) => {
-      return {
-        ...company,
-        ...mapDeprecatedAddressFields(company.address, 'trading'),
-        ...mapDeprecatedAddressFields(company.registered_address, 'registered'),
-      }
-    })
 }
 
 function getCHCompany (token, id) {

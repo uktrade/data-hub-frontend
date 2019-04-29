@@ -65,27 +65,7 @@ describe('Company repository', () => {
 
     it('should return company', async () => {
       const company = await getDitCompany('TEST_TOKEN', companyV4Data.id)
-      expect(company).to.deep.equal({
-        ...companyV4Data,
-        'registered_address_1': '82 Ramsgate Rd',
-        'registered_address_2': '',
-        'registered_address_country': {
-          'id': '80756b9a-5d95-e211-a939-e4115bead28a',
-          'name': 'United Kingdom',
-        },
-        'registered_address_county': '',
-        'registered_address_postcode': 'NE28 5JB',
-        'registered_address_town': 'Willington',
-        'trading_address_1': '82 Ramsgate Rd',
-        'trading_address_2': '',
-        'trading_address_country': {
-          'id': '80756b9a-5d95-e211-a939-e4115bead28a',
-          'name': 'United Kingdom',
-        },
-        'trading_address_county': '',
-        'trading_address_postcode': 'NE28 5JB',
-        'trading_address_town': 'Willington',
-      })
+      expect(company).to.deep.equal(companyV4Data)
     })
   })
 
