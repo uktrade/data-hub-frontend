@@ -10,16 +10,12 @@
     {{ values.contact.email | escape }}
   {% endset %}
 
+  {% set address = company.registered_address if company.registered_address else company.address %}
+
   {% set companyValue %}
     {{ values.company.name | escape }}
     <br>
-    {{ [
-      values.company.registered_address_1,
-      values.company.registered_address_2,
-      values.company.registered_address_county,
-      values.company.registered_address_town,
-      values.company.registered_address_postcode
-    ] | removeNilAndEmpty | join(", ") | escape }}
+    {{ address | formatAddress }}
   {% endset %}
 
   {% call MultiStepForm({

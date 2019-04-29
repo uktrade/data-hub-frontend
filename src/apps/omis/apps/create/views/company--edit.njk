@@ -4,13 +4,9 @@
   {% call Message({ type: 'muted' }) %}
     {{ company.name }}
     <br>
-    {{ [
-      company.registered_address_1,
-      company.registered_address_2,
-      company.registered_address_county,
-      company.registered_address_town,
-      company.registered_address_postcode
-    ] | removeNilAndEmpty | join(', ') }}
+    {% set address = company.registered_address if company.registered_address else company.address %}
+
+    {{ address | formatAddress }}
     <br>
     <a href="?search=true">Change company</a>
   {% endcall %}
