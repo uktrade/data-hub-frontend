@@ -190,7 +190,7 @@ const filters = {
     return dateFns.format(parsedDate, format)
   },
 
-  formatAddress: (address) => {
+  formatAddress: (address, join = ', ') => {
     if (address) {
       return compact([
         address.line_1,
@@ -199,7 +199,7 @@ const filters = {
         address.county,
         address.postcode,
         address.country.name,
-      ]).join(', ')
+      ]).join(join)
     }
   },
 
