@@ -213,23 +213,16 @@
     values.billing_address_country.name
   ] | removeNilAndEmpty %}
 
-  {% set registeredAddress = [
-    company.registered_address_1,
-    company.registered_address_2,
-    company.registered_address_town,
-    company.registered_address_county,
-    company.registered_address_postcode,
-    company.registered_address_country.name
-  ] | removeNilAndEmpty %}
+  {% set address = company.registered_address if company.registered_address else company.address %}
 
   {% set addressValue %}
     {% if billingAddress | length %}
       {{ billingAddress | join(', ') }}
     {% else %}
-      <p>{{ registeredAddress | join(', ') }}</p>
+      <p>{{ address | formatAddress }}</p>
 
       {% call Message({ type: 'muted' }) %}
-        The company’s registered address is currently being used for the invoice.
+        The company’s address is currently being used for the invoice.
       {% endcall %}
     {% endif %}
   {% endset %}
