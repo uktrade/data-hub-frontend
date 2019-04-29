@@ -85,7 +85,7 @@ module.exports = {
           selector: '.c-entity__header a',
         },
         sector: getSearchResultSelector('Sector'),
-        address: getSearchResultSelector('Trading address'),
+        address: getSearchResultSelector('Address'),
         tradingNames: getSearchResultSelector('Trading name'),
       },
     },
