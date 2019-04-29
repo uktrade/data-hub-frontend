@@ -28,7 +28,7 @@ function getDitCompany (token, id) {
 }
 
 function getCHCompany (token, id) {
-  return authorisedRequest(token, `${config.apiRoot}/v3/ch-company/${id}`)
+  return authorisedRequest(token, `${config.apiRoot}/v4/ch-company/${id}`)
 }
 
 function saveCompany (token, company) {
