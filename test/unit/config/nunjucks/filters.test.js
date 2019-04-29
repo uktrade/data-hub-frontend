@@ -356,6 +356,25 @@ describe('nunjucks filters', () => {
         expect(this.actual).to.not.exist
       })
     })
+
+    context('when specifying a custom join', () => {
+      beforeEach(() => {
+        this.actual = filters.formatAddress({
+          line_1: 'line 1',
+          line_2: '',
+          town: 'town',
+          county: '',
+          postcode: 'postcode',
+          country: {
+            name: 'country',
+          },
+        }, '<br />')
+      })
+
+      it('should format the address as a comma separated list', () => {
+        expect(this.actual).to.equal('line 1<br />town<br />postcode<br />country')
+      })
+    })
   })
 
   describe('#collectionDefault', () => {
