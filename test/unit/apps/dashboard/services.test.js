@@ -9,7 +9,7 @@ describe('Dashboard service', () => {
     })
   }
 
-  it('returns correct homepage data with interaction companies', () => {
+  it('should return correct homepage data with interaction companies', () => {
     const mockHomepageData = {
       interactions: [{
         id: 'int-id',

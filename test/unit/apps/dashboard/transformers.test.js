@@ -1,3 +1,4 @@
+const moment = require('moment')
 const {
   formatZenArticles,
 } = require('../../../../src/apps/dashboard/transformers')
@@ -69,19 +70,19 @@ const expected = [
     heading: 'Recording policy feedback on Data Hub',
     link:
       'https://uktrade.zendesk.com/hc/en-gb/articles/360001431697-Recording-policy-feedback-on-Data-Hub',
-    date: '8 days ago',
+    date: `${moment(mockResponse.articles[0].created_at).fromNow()}`,
   },
   {
     heading: 'Improvements to company data in Data Hub - April 2019',
     link:
       'https://uktrade.zendesk.com/hc/en-gb/articles/360001412918-Improvements-to-company-data-in-Data-Hub-April-2019',
-    date: '11 days ago',
+    date: `${moment(mockResponse.articles[1].created_at).fromNow()}`,
   },
   {
     heading: 'Recording multiple DIT advisers against interactions',
     link:
       'https://uktrade.zendesk.com/hc/en-gb/articles/360001345138-Recording-multiple-DIT-advisers-against-interactions',
-    date: '23 days ago',
+    date: `${moment(mockResponse.articles[2].created_at).fromNow()}`,
   },
 ]
 
