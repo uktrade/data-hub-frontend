@@ -6,14 +6,27 @@
   "uk_based": true,
   "company_number": null,
   "vat_number": "123412341234",
-  "registered_address_1": "5TH FLOOR, PROFILE WEST",
-  "registered_address_2": "950 GREAT WEST ROAD",
-  "registered_address_town": "BRENTFORD",
-  "registered_address_county": "MIDDLESEX",
-  "registered_address_postcode": "TW8 9ES",
-  "registered_address_country": {
+  "address": {
+    "line_1": "Business Innovation & Skills",
+    "line_2": "1 Victoria Street",
+    "town": "London",
+    "county": "Greater London",
+    "postcode": "SW1H 0ET",
+    "country": {
       "name": "United Kingdom",
       "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+    }
+  },
+  "registered_address": {
+    "line_1": "5TH FLOOR, PROFILE WEST",
+    "line_2": "950 GREAT WEST ROAD",
+    "town": "BRENTFORD",
+    "county": "MIDDLESEX",
+    "postcode": "TW8 9ES",
+    "country": {
+      "name": "United Kingdom",
+      "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+    }
   },
   "created_on": "2017-11-13T13:09:29.008940Z",
   "modified_on": "2017-11-15T14:14:03.006642Z",
@@ -24,15 +37,6 @@
   "archived_by": null,
   "description": "description",
   "website": "http://www.test.com",
-  "trading_address_1": "Business Innovation & Skills",
-  "trading_address_2": "1 Victoria Street",
-  "trading_address_town": "London",
-  "trading_address_county": "Greater London",
-  "trading_address_postcode": "SW1H 0ET",
-  "trading_address_country": {
-    "id": "1234",
-    "name": "United Kingdom"
-  },
   "business_type": {
       "name": "Private limited company",
       "id": "6f75408b-03e7-e611-bca1-e4115bead28a"

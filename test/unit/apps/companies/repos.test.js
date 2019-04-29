@@ -89,6 +89,19 @@ describe('Company repository', () => {
     })
   })
 
+  describe('#getCHCompany', () => {
+    beforeEach(async () => {
+      nock(config.apiRoot)
+        .get(`/v4/ch-company/${companyCHData.id}`)
+        .reply(200, companyCHData)
+    })
+
+    it('should return company', async () => {
+      const company = await getCHCompany('TEST_TOKEN', companyCHData.id)
+      expect(company).to.deep.equal(companyCHData)
+    })
+  })
+
   function makeRepositoryWithAuthRequest (authorisedRequestStub) {
     return proxyquire('~/src/apps/companies/repos', {
       '../../lib/authorised-request': { authorisedRequest: authorisedRequestStub },
