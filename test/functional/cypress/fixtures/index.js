@@ -10,6 +10,7 @@ module.exports = {
     minimallyMinimalLtd: require('./company/minimally-minimal-ltd'),
     oneListCorp: require('./company/one-list-corp.json'),
     venusLtd: require('./company/venus-ltd.json'),
+    withContacts: require('./company/with-contacts.json'),
   },
   default: require('./default.json'),
   interaction: {
