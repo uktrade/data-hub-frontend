@@ -17,19 +17,15 @@
     {% endcall %}
   {% endif %}
 
+  {% set address = company.registered_address if company.registered_address else company.address %}
+
   {% if order.status === 'quote_accepted' %}
     <h2 class="heading-medium">Company details</h2>
 
     <div>
       {{ company.name }}
       <br>
-      {{ [
-        company.registered_address_1,
-        company.registered_address_2,
-        company.registered_address_county,
-        company.registered_address_town,
-        company.registered_address_postcode
-        ] | removeNilAndEmpty | join(", ") }}
+      {{ address | formatAddress }}
     </div>
 
     <h2 class="heading-medium">Invoice details</h2>
