@@ -292,7 +292,7 @@ describe('investment details middleware', () => {
         nock(config.apiRoot)
           .get(`/adviser/?limit=100000&offset=0`)
           .reply(200, this.advisersData)
-          .get(`/v3/company/${this.req.params.equityCompanyId}`)
+          .get(`/v4/company/${this.req.params.equityCompanyId}`)
           .reply(200, companyData)
           .get(`/v3/investment?investor_company_id=${this.req.params.equityCompanyId}&limit=10&offset=0`)
           .reply(200, { count: 0, results: [] })
