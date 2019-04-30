@@ -4,11 +4,11 @@ const utils = require('../../support/utils')
 
 const serviceDeliveryDetails = selectors.interactionDetails.serviceDelivery
 
-describe('Add Interaction', () => {
-  context('when adding an interaction', () => {
+describe('Add Export', () => {
+  context('when adding an export interaction', () => {
     context('when in the context of a company', () => {
       beforeEach(() => {
-        cy.visit(`/companies/${fixtures.default.id}/interactions/create/interaction`)
+        cy.visit(`/companies/${fixtures.default.id}/interactions/create/export/interaction`)
       })
 
       it('should render breadcrumbs', () => {
@@ -32,7 +32,7 @@ describe('Add Interaction', () => {
 
     context('when in the context of a contact', () => {
       beforeEach(() => {
-        cy.visit(`/contacts/${fixtures.default.id}/interactions/create/interaction`)
+        cy.visit(`/contacts/${fixtures.default.id}/interactions/create/export/interaction`)
       })
 
       it('should render breadcrumbs', () => {
@@ -56,7 +56,7 @@ describe('Add Interaction', () => {
 
     context('when in the context of an investment project', () => {
       beforeEach(() => {
-        cy.visit(`/investments/projects/${fixtures.default.id}/interactions/create/interaction`)
+        cy.visit(`/investments/projects/${fixtures.default.id}/interactions/create/investment/interaction`)
       })
 
       it('should render breadcrumbs', () => {
@@ -81,10 +81,10 @@ describe('Add Interaction', () => {
     })
   })
 
-  context('when adding a service delivery', () => {
+  context('when adding an export service delivery', () => {
     context('when in the context of a company', () => {
       beforeEach(() => {
-        cy.visit(`/companies/${fixtures.default.id}/interactions/create/service-delivery`)
+        cy.visit(`/companies/${fixtures.default.id}/interactions/create/export/service-delivery`)
       })
 
       it('should render breadcrumbs', () => {
@@ -108,7 +108,7 @@ describe('Add Interaction', () => {
 
     context('when in the context of a contact', () => {
       beforeEach(() => {
-        cy.visit(`/contacts/${fixtures.default.id}/interactions/create/service-delivery`)
+        cy.visit(`/contacts/${fixtures.default.id}/interactions/create/export/service-delivery`)
       })
 
       it('should render breadcrumbs', () => {
@@ -130,35 +130,9 @@ describe('Add Interaction', () => {
       })
     })
 
-    context('when in the context of an investment project', () => {
-      beforeEach(() => {
-        cy.visit(`/investments/projects/${fixtures.default.id}/interactions/create/service-delivery`)
-      })
-
-      it('should render breadcrumbs', () => {
-        cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-        cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-        cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Investments')
-        cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/investments')
-        cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.text', 'New hotel (commitment to invest)')
-        cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.attr', 'href', '/investments/projects/fb5b5006-56af-40e0-8615-7aba53e0e4bf')
-        cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Add service delivery')
-      })
-
-      it('should add the service delivery', () => {
-        const subject = utils.randomString()
-
-        populateServiceDeliveryForm('Account Management', subject)
-
-        cy.get(selectors.interactionForm.add).click()
-
-        assertDetails({ subject, flashMessage: 'Service delivery created' })
-      })
-    })
-
     context('when TAP service fields are empty', () => {
       beforeEach(() => {
-        cy.visit(`/companies/${fixtures.default.id}/interactions/create/service-delivery`)
+        cy.visit(`/companies/${fixtures.default.id}/interactions/create/export/service-delivery`)
       })
 
       it('should render breadcrumbs', () => {
@@ -187,7 +161,7 @@ describe('Add Interaction', () => {
 
     context('when TAP service fields are populated', () => {
       beforeEach(() => {
-        cy.visit(`/companies/${fixtures.default.id}/interactions/create/service-delivery`)
+        cy.visit(`/companies/${fixtures.default.id}/interactions/create/export/service-delivery`)
       })
 
       it('should render breadcrumbs', () => {
@@ -218,6 +192,77 @@ describe('Add Interaction', () => {
     })
 
     // TODO test policy feedback fields
+  })
+
+  context('when in the context of an investment project', () => {
+    beforeEach(() => {
+      cy.visit(`/investments/projects/${fixtures.default.id}/interactions/create/investment/interaction`)
+    })
+
+    it('should render breadcrumbs', () => {
+      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
+      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
+      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Investments')
+      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/investments')
+      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.text', 'New hotel (commitment to invest)')
+      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.attr', 'href', '/investments/projects/fb5b5006-56af-40e0-8615-7aba53e0e4bf')
+      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Add interaction')
+    })
+
+    it('should add an interaction', () => {
+      const subject = utils.randomString()
+
+      populateInteractionForm(subject)
+
+      cy.get(selectors.interactionForm.add).click()
+
+      assertDetails({ subject, flashMessage: 'Interaction created' })
+    })
+  })
+})
+
+describe('Adding interaction or service', () => {
+  beforeEach(() => {
+    cy.visit(`/contacts/5e75d636-1d24-416a-aaf0-3fb220d594ce/interactions/create`)
+  })
+  context('when choosing export interaction', () => {
+    it('should direct you to "add interaction" form', () => {
+      cy.get(selectors.createInteractionContext.export.theme).click()
+      cy.get(selectors.createInteractionContext.export.interaction).click()
+      cy.get(selectors.createInteractionContext.button).click()
+      cy.get(selectors.createInteractionContext.header).should('have.text', 'Add interaction')
+    })
+  })
+  context('when choosing export interaction service delivery', () => {
+    it('should direct you to "add service delivery" form', () => {
+      cy.get(selectors.createInteractionContext.export.theme).click()
+      cy.get(selectors.createInteractionContext.export.serviceDelivery).click()
+      cy.get(selectors.createInteractionContext.button).click()
+      cy.get(selectors.createInteractionContext.header).should('have.text', 'Add service delivery')
+    })
+  })
+  context('when choosing investment interaction', () => {
+    it('should direct you to "add interaction" form', () => {
+      cy.get(selectors.createInteractionContext.investment.theme).click()
+      cy.get(selectors.createInteractionContext.button).click()
+      cy.get(selectors.createInteractionContext.header).should('have.text', 'Add interaction')
+    })
+  })
+  context('when choosing other interaction', () => {
+    it('should direct you to "add interaction" form', () => {
+      cy.get(selectors.createInteractionContext.other.theme).click()
+      cy.get(selectors.createInteractionContext.other.interaction).click()
+      cy.get(selectors.createInteractionContext.button).click()
+      cy.get(selectors.createInteractionContext.header).should('have.text', 'Add interaction')
+    })
+  })
+  context('when choosing other service delivery', () => {
+    it('should direct you to "add service delivery" form', () => {
+      cy.get(selectors.createInteractionContext.other.theme).click()
+      cy.get(selectors.createInteractionContext.other.serviceDelivery).click()
+      cy.get(selectors.createInteractionContext.button).click()
+      cy.get(selectors.createInteractionContext.header).should('have.text', 'Add service delivery')
+    })
   })
 })
 
