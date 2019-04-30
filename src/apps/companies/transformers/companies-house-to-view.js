@@ -9,12 +9,7 @@ const { chDetailsLabels } = require('../labels')
 
 module.exports = function transformCompaniesHouseToView ({
   name,
-  registered_address_1,
-  registered_address_2,
-  registered_address_town,
-  registered_address_county,
-  registered_address_postcode,
-  registered_address_country,
+  registered_address,
   company_number,
   company_category,
   company_status,
@@ -31,14 +26,7 @@ module.exports = function transformCompaniesHouseToView ({
     business_type: company_category,
     registered_address: {
       type: 'address',
-      address: {
-        line_1: registered_address_1,
-        line_2: registered_address_2,
-        town: registered_address_town,
-        county: registered_address_county,
-        postcode: registered_address_postcode,
-        country: registered_address_country,
-      },
+      address: registered_address,
     },
     incorporation_date: formatLongDate(incorporation_date),
     sic_code: transformSicCodes({ sic_code_1, sic_code_2, sic_code_3, sic_code_4 }),

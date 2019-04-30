@@ -1,9 +1,9 @@
 const companyDetailsLabels = {
   business_type: 'Business type',
   name: 'Name',
-  registered_address: 'Primary address',
+  registered_address: 'Registered address',
   trading_names: 'Trading names',
-  trading_address: 'Trading address',
+  address: 'Address',
   uk_region: 'UK region',
   headquarter_type: 'Headquarter type',
   global_headquarters: 'Global HQ',
@@ -49,8 +49,8 @@ const chDetailsLabels = {
 }
 
 const address = {
-  companyRegisteredAddress: 'Primary address',
-  companyTradingAddress: 'Trading address',
+  companyAddress: 'Address',
+  companyRegisteredAddress: 'Registered address',
   companiesHouseRegisteredAddress: 'Registered address',
 }
 

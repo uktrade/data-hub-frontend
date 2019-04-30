@@ -15,7 +15,7 @@
           "value": "United States"
         },
         {
-          "label": "Primary address",
+          "label": "Registered address",
           "type": "address",
           "value": {
             "country": {
@@ -56,7 +56,7 @@
           "value": "North West"
         },
         {
-          "label": "Primary address",
+          "label": "Registered address",
           "type": "address",
           "value": {
             "country": {
