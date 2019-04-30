@@ -29,6 +29,10 @@ describe('Interaction edit controller (Service delivery)', () => {
     this.nextStub = sinon.stub()
 
     const yesterday = moment().subtract(1, 'days').toISOString()
+    const contexts = [
+      'export_service_delivery',
+      'other_service_delivery',
+    ]
 
     this.metadataMock = {
       teamOptions: [
@@ -41,45 +45,25 @@ describe('Interaction edit controller (Service delivery)', () => {
           id: 's1',
           name: 'sv1',
           disabled_on: null,
-          contexts: [
-            'service_delivery',
-            'investment_project_interaction',
-            'interaction',
-            'event',
-          ],
+          contexts: contexts,
         },
         {
           id: 's2',
           name: 'sv2',
           disabled_on: yesterday,
-          contexts: [
-            'service_delivery',
-            'investment_project_interaction',
-            'interaction',
-            'event',
-          ],
+          contexts: contexts,
         },
         {
           id: 's3',
           name: 'sv3',
           disabled_on: null,
-          contexts: [
-            'service_delivery',
-            'investment_project_interaction',
-            'interaction',
-            'event',
-          ],
+          contexts: contexts,
         },
         {
           id: 's4',
           name: 'sv4 (TAP)',
           disabled_on: null,
-          contexts: [
-            'service_delivery',
-            'investment_project_interaction',
-            'interaction',
-            'event',
-          ],
+          contexts: contexts,
         },
         {
           id: 's5',
@@ -165,10 +149,11 @@ describe('Interaction edit controller (Service delivery)', () => {
     ]
   })
 
-  context('When adding a service delivery from company contact', () => {
+  context('When editing a service delivery from a company contact', () => {
     beforeEach(async () => {
       this.req.params = {
         ...this.req.parms,
+        theme: 'export',
         kind: 'service-delivery',
       }
 
@@ -194,7 +179,7 @@ describe('Interaction edit controller (Service delivery)', () => {
         .reply(200, { results: this.contactsData })
         .get('/metadata/team/')
         .reply(200, this.metadataMock.teamOptions)
-        .get('/metadata/service/?contexts__has_any=service_delivery')
+        .get('/metadata/service/?contexts__has_any=export_service_delivery')
         .reply(200, this.metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, { results: this.activeInactiveAdviserData })
@@ -215,7 +200,6 @@ describe('Interaction edit controller (Service delivery)', () => {
 
     it('should render the interaction page', async () => {
       expect(this.res.render).to.be.calledWith('interactions/views/edit')
-      expect(this.res.render).to.have.been.calledOnce
     })
 
     it('should add a breadcrumb', () => {
@@ -251,7 +235,12 @@ describe('Interaction edit controller (Service delivery)', () => {
           macroName: 'MultipleChoiceField',
           type: 'radio',
         },
-        { name: 'policy_issue_types', label: 'Policy issue types', macroName: 'MultipleChoiceField', type: 'checkbox' },
+        {
+          name: 'policy_issue_types',
+          label: 'Policy issue types',
+          macroName: 'MultipleChoiceField',
+          type: 'checkbox',
+        },
         { name: 'policy_areas', label: 'Policy area', macroName: 'AddAnother' },
         { name: 'policy_feedback_notes', label: 'Policy feedback notes', macroName: 'TextField', type: 'textarea' },
       ])
@@ -345,11 +334,13 @@ describe('Interaction edit controller (Service delivery)', () => {
     })
   })
 
-  context('When adding a service delivery from a company', () => {
+  context('when editing a other service delivery', () => {
     beforeEach(async () => {
       this.req.params = {
         ...this.req.parms,
+        theme: 'other',
         kind: 'service-delivery',
+        interactionId: 'af4aac84-4d6a-47df-a733-5a54e3008c32',
       }
 
       this.res.locals = {
@@ -357,11 +348,7 @@ describe('Interaction edit controller (Service delivery)', () => {
           id: '1',
           name: 'Fred ltd.',
         },
-        contact: {
-          id: '2',
-        },
-        returnLink: '/',
-        entityName: 'Fred ltd.',
+        interaction: serviceDeliveryData,
       }
 
       nock(config.apiRoot)
@@ -369,7 +356,7 @@ describe('Interaction edit controller (Service delivery)', () => {
         .reply(200, { results: this.contactsData })
         .get('/metadata/team/')
         .reply(200, this.metadataMock.teamOptions)
-        .get('/metadata/service/?contexts__has_any=service_delivery')
+        .get('/metadata/service/?contexts__has_any=other_service_delivery')
         .reply(200, this.metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, { results: this.activeInactiveAdviserData })
@@ -388,14 +375,9 @@ describe('Interaction edit controller (Service delivery)', () => {
       this.interactionForm = this.res.render.getCall(0).args[1].interactionForm
     })
 
-    it('should set the company id as a hidden field', () => {
-      const companyField = this.interactionForm.hiddenFields.company
-      expect(companyField).to.equal('1')
-    })
-
-    it('should pre-select the dropdown with the default contact', () => {
-      const contactField = find(this.interactionForm.children, ({ name }) => name === 'contacts')
-      expect(contactField.value).to.deep.equal(['2'])
+    it('should render the interaction page', async () => {
+      expect(this.res.render).to.be.calledWith('interactions/views/edit')
+      expect(this.res.render).to.have.been.calledOnce
     })
   })
 
@@ -403,6 +385,7 @@ describe('Interaction edit controller (Service delivery)', () => {
     beforeEach(async () => {
       this.req.params = {
         ...this.req.parms,
+        theme: 'export',
         kind: 'service-delivery',
         interactionId: 'af4aac84-4d6a-47df-a733-5a54e3008c32',
       }
@@ -420,7 +403,7 @@ describe('Interaction edit controller (Service delivery)', () => {
         .reply(200, { results: this.contactsData })
         .get('/metadata/team/')
         .reply(200, this.metadataMock.teamOptions)
-        .get('/metadata/service/?contexts__has_any=service_delivery')
+        .get('/metadata/service/?contexts__has_any=export_service_delivery')
         .reply(200, this.metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, { results: this.activeInactiveAdviserData })
@@ -592,6 +575,7 @@ describe('Interaction edit controller (Service delivery)', () => {
     beforeEach(async () => {
       this.req.params = {
         ...this.req.parms,
+        theme: 'export',
         kind: 'service-delivery',
         interactionId: 'af4aac84-4d6a-47df-a733-5a54e3008c32',
       }
@@ -619,7 +603,7 @@ describe('Interaction edit controller (Service delivery)', () => {
         .reply(200, { results: this.contactsData })
         .get('/metadata/team/')
         .reply(200, this.metadataMock.teamOptions)
-        .get('/metadata/service/?contexts__has_any=service_delivery')
+        .get('/metadata/service/?contexts__has_any=export_service_delivery')
         .reply(200, this.metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, { results: this.activeInactiveAdviserData })
