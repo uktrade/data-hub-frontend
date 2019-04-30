@@ -124,6 +124,49 @@ describe('transformCompanyToListItem', () => {
     })
   })
 
+  context('when the company has an address', () => {
+    beforeEach(() => {
+      this.listItem = transformCompanyToListItem(assign({}, companyData, {
+        address: {
+          line_1: 'line 1',
+          line_2: null,
+          town: 'town',
+          county: null,
+          postcode: 'postcode',
+          country: {
+            id: '80756b9a-5d95-e211-a939-e4115bead28a',
+            name: 'United Kingdom',
+          },
+        },
+      }))
+    })
+
+    it('should include the trading address in the result', () => {
+      expect(this.listItem.meta).to.containSubset([{
+        label: 'Address',
+        type: 'address',
+        value: {
+          line_1: 'line 1',
+          line_2: null,
+          town: 'town',
+          county: null,
+          postcode: 'postcode',
+          country: {
+            id: '80756b9a-5d95-e211-a939-e4115bead28a',
+            name: 'United Kingdom',
+          },
+        },
+      }])
+    })
+
+    it('does not include the registered address', () => {
+      expect(this.listItem.meta).to.not.containSubset([{
+        label: 'Registered address',
+        value: 'Leeds City Centre, Leeds, EX1 2PM, United Kingdom',
+      }])
+    })
+  })
+
   context('when the company has a trading address', () => {
     beforeEach(() => {
       this.listItem = transformCompanyToListItem(assign({}, companyData, {

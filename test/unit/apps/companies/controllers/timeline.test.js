@@ -11,7 +11,7 @@ describe('Company timeline controller', () => {
     context('when timeline api returns valid data', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
-          .get(`/v3/company/${companyMock.id}/timeline?limit=10&offset=0`)
+          .get(`/v4/company/${companyMock.id}/timeline?limit=10&offset=0`)
           .reply(200, timelineMock)
 
         this.middlewareParameters = buildMiddlewareParameters({
@@ -46,7 +46,7 @@ describe('Company timeline controller', () => {
     context('when timeline api returns error', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
-          .get(`/v3/company/${companyMock.id}/timeline?limit=10&offset=0`)
+          .get(`/v4/company/${companyMock.id}/timeline?limit=10&offset=0`)
           .reply(500)
 
         this.middlewareParameters = buildMiddlewareParameters({
