@@ -1,4 +1,5 @@
 const selectors = require('../../selectors')
+const fixtures = require('../../fixtures/index.js')
 
 describe('Contact Collections Sort', () => {
   beforeEach(() => {
@@ -84,5 +85,23 @@ describe('Contact Collections Sort', () => {
 
     cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
     cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort By')
+  })
+})
+
+describe('Company Contact Collections Sort', () => {
+  beforeEach(() => {
+    cy.visit(`/companies/${fixtures.default.id}/contacts?sortby=collectionTest`)
+  })
+
+  it('should load sort by dropdown', () => {
+    cy.get(`${selectors.entityCollection.sort} option`).then(options => {
+      const actual = [...options].map(o => o.value)
+      expect(actual).to.deep.eq(['created_on:desc',
+        'created_on:asc',
+        'modified_on:desc',
+        'modified_on:asc',
+        'last_name:asc',
+        'address_country.name:asc'])
+    })
   })
 })
