@@ -5,6 +5,9 @@ exports.companyInteraction = require('./company/interaction')
 exports.companyInvestment = require('./company/investment')
 exports.companySubsidiaries = require('./company/subsidiaries')
 
+exports.omisCreate = require('./omis/create')
+exports.omisSummary = require('./omis/summary')
+
 exports.breadcrumbs = require('./breadcrumbs')
 exports.detailsContainer = require('./details-container')
 exports.document = require('./document')
