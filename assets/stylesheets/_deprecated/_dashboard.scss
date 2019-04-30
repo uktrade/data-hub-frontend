@@ -29,6 +29,12 @@
     right: 0;
   }
 
+  &__bottom-link {
+    border-bottom: 1px solid $grey-2;
+    display:block;
+    padding-bottom: $default-spacing-unit;
+  }
+
   &__subheading {
     @include core-font(14);
     color: $grey-5;
@@ -40,8 +46,4 @@
     text-decoration: none;
   }
 
-  &__info-feed-date:last-of-type{
-    border-bottom: 1px solid $grey-2;
-    padding-bottom: $default-spacing-unit;
-  }
 }
