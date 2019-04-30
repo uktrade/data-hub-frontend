@@ -1,4 +1,6 @@
 const config = require('~/config')
+const moment = require('moment')
+const now = moment()
 const transformInteractionResponseToViewRecord = require('~/src/apps/interactions/transformers/interaction-response-to-view')
 const mockInteraction = require('~/test/unit/data/interactions/interaction.json')
 const mockInteractionWithPolicyFeedback = require('~/test/unit/data/interactions/interaction-with-feedback.json')
@@ -39,7 +41,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
         'Policy issue types': 'EU exit',
         'Date of interaction': {
           type: 'date',
-          name: '2058-11-25',
+          name: now.format('YYYY-MM-DD'),
         },
         'Documents': {
           hint: '(will open another website)',
@@ -100,7 +102,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
         },
         'Date of interaction': {
           type: 'date',
-          name: '2058-11-25',
+          name: now.format('YYYY-MM-DD'),
         },
         'Adviser(s)': ['Bob Lawson, The test team'],
         'Investment project': {
@@ -140,7 +142,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
         'Policy issue types': 'EU exit',
         'Date of interaction': {
           type: 'date',
-          name: '2058-11-25',
+          name: now.format('YYYY-MM-DD'),
         },
         'Communication channel': {
           id: '70c226d7-5d95-e211-a939-e4115bead28a',
@@ -186,7 +188,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
         },
         'Date of interaction': {
           type: 'date',
-          name: '2058-11-25',
+          name: now.format('YYYY-MM-DD'),
         },
         'Adviser(s)': ['Bob Lawson, The test team'],
         'Communication channel': {
@@ -250,7 +252,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
         'Policy issue types': 'EU exit',
         'Date of service delivery': {
           type: 'date',
-          name: '2058-11-25',
+          name: now.format('YYYY-MM-DD'),
         },
         'Adviser(s)': ['Bob Lawson, The test team'],
         'Documents': {
@@ -301,7 +303,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
         'Policy issue types': 'EU exit',
         'Date of service delivery': {
           type: 'date',
-          name: '2058-11-25',
+          name: now.format('YYYY-MM-DD'),
         },
         'Adviser(s)': ['Bob Lawson, The test team'],
         'Event': 'No',
@@ -344,7 +346,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
         },
         'Date of interaction': {
           type: 'date',
-          name: '2058-11-25',
+          name: now.format('YYYY-MM-DD'),
         },
         'Adviser(s)': ['Bob Lawson, The test team'],
         'Communication channel': {
