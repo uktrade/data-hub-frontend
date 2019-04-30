@@ -1,4 +1,7 @@
 module.exports = {
+  chCompany: {
+    mercuryTradingLtd: require('./ch-company/mercury-trading-ltd'),
+  },
   company: {
     archivedLtd: require('./company/archived-ltd.json'),
     dnbCorp: require('./company/dnb-corp.json'),
@@ -7,6 +10,7 @@ module.exports = {
     minimallyMinimalLtd: require('./company/minimally-minimal-ltd'),
     oneListCorp: require('./company/one-list-corp.json'),
     venusLtd: require('./company/venus-ltd.json'),
+    withContacts: require('./company/with-contacts.json'),
   },
   default: require('./default.json'),
   interaction: {

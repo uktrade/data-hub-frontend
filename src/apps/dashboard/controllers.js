@@ -21,8 +21,7 @@ async function renderDashboard (req, res, next) {
       timeout: 1000,
     })
       .then(feed => formatZenArticles(feed))
-      .catch(err => {
-        console.log(err)
+      .catch(() => {
         return []
       })
 

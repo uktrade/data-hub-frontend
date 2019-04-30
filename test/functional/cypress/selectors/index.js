@@ -1,8 +1,12 @@
 exports.companyBusinessDetails = require('./company/business-details')
+exports.companyAddStep2 = require('./company/add-step-2')
 exports.companyEdit = require('./company/edit')
 exports.companyInteraction = require('./company/interaction')
 exports.companyInvestment = require('./company/investment')
 exports.companySubsidiaries = require('./company/subsidiaries')
+
+exports.omisCreate = require('./omis/create')
+exports.omisSummary = require('./omis/summary')
 
 exports.breadcrumbs = require('./breadcrumbs')
 exports.detailsContainer = require('./details-container')

@@ -1,4 +1,4 @@
 module.exports = {
-  'documentContent': 'article > p',
-  'documentHeader': 'article > h2',
+  documentContent: 'article > p',
+  documentHeader: 'article > h2',
 }

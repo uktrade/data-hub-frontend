@@ -1,20 +1,20 @@
 const router = require('express').Router()
 
-const { ENTITIES } = require('../search/constants')
-const { DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS, QUERY_FIELDS, QUERY_DATE_FIELDS } = require('./constants')
+const { ENTITIES } = require('../../search/constants')
+const { DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS, QUERY_FIELDS, QUERY_DATE_FIELDS } = require('../constants')
 
-const { getRequestBody } = require('../../middleware/collection')
-const { detectUserAgent } = require('../../middleware/detect-useragent')
-const { getCollection, exportCollection } = require('../../modules/search/middleware/collection')
+const { getRequestBody } = require('../../../middleware/collection')
+const { detectUserAgent } = require('../../../middleware/detect-useragent')
+const { getCollection, exportCollection } = require('../../../modules/search/middleware/collection')
 
-const setInvestmentTabItems = require('./middleware/investments-tab-items')
-const setLocalNavigation = require('./middleware/local-navigation')
-const { setDefaultQuery, redirectToFirstNavItem, handleRoutePermissions } = require('../middleware')
-const { shared } = require('./middleware')
+const setInvestmentTabItems = require('../middleware/investments-tab-items')
+const setLocalNavigation = require('../middleware/local-navigation')
+const { setDefaultQuery, redirectToFirstNavItem, handleRoutePermissions } = require('../../middleware')
+const { shared } = require('../middleware')
 const {
   getBriefInvestmentSummary,
   expandTeamMembers,
-} = require('./middleware/team')
+} = require('../middleware/team')
 
 const {
   create,
@@ -25,7 +25,7 @@ const {
   edit,
   evaluation,
   team,
-} = require('./controllers')
+} = require('../controllers')
 
 const {
   clientRelationshipManagementFormMiddleware,
@@ -35,44 +35,44 @@ const {
   projectStageFormMiddleware,
   requirementsFormMiddleware,
   valueFormMiddleware,
-} = require('./middleware/forms')
+} = require('../middleware/forms')
 
-const { renderProjectsView } = require('./controllers/projects')
-const { renderPropositionList } = require('./controllers/propositions')
-const { renderEvidenceView } = require('./controllers/evidence')
-const { renderAddEvidence } = require('./apps/evidence/controllers/create')
-const { postUpload } = require('../documents/middleware/upload')
+const { renderProjectsView } = require('../controllers/projects')
+const { renderPropositionList } = require('../controllers/propositions')
+const { renderEvidenceView } = require('../controllers/evidence')
+const { renderAddEvidence } = require('../apps/evidence/controllers/create')
+const { postUpload } = require('../../documents/middleware/upload')
 
-const { setInteractionsDetails, setCompanyDetails } = require('./middleware/interactions')
-const { setPropositionsReturnUrl } = require('./middleware/propositions')
-const { setEvidenceReturnUrl, setEvidenceDocumentsOptions, getDownloadLink, deleteEvidence } = require('./middleware/evidence')
+const { setInteractionsDetails, setCompanyDetails } = require('../middleware/interactions')
+const { setPropositionsReturnUrl } = require('../middleware/propositions')
+const { setEvidenceReturnUrl, setEvidenceDocumentsOptions, getDownloadLink, deleteEvidence } = require('../middleware/evidence')
 
-const { renderTeamEdit } = require('./controllers/team/edit-team-members')
-const { populateTeamEditForm, postTeamEdit } = require('./middleware/forms/team-members')
+const { renderTeamEdit } = require('../controllers/team/edit-team-members')
+const { populateTeamEditForm, postTeamEdit } = require('../middleware/forms/team-members')
 
 const {
   renderStatusPage,
   postStatus,
-} = require('./controllers/status')
+} = require('../controllers/status')
 
 const {
   selectUKCompany,
   searchForUKCompany,
   renderCompanyResults,
   removeUKCompany,
-} = require('./controllers/ukcompany')
+} = require('../controllers/ukcompany')
 
 const {
   selectAssociatedInvestmentProject,
   searchForAssociatedInvestmentProject,
   renderAssociatedInvestmentProjectResults,
   removeAssociatedInvestmentProject,
-} = require('./controllers/associated')
+} = require('../controllers/associated')
 
-const { transformInvestmentProjectToListItem } = require('./transformers')
+const { transformInvestmentProjectToListItem } = require('../transformers')
 
-const interactionsRouter = require('../interactions/router.sub-app')
-const propositionsRouter = require('../propositions/router.sub-app')
+const interactionsRouter = require('../../interactions/router.sub-app')
+const propositionsRouter = require('../../propositions/router.sub-app')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
