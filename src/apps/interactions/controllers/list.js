@@ -106,12 +106,12 @@ async function renderInteractionList (req, res, next) {
 
 function renderInteractionsForEntity (req, res, next) {
   try {
-    const { view, returnLink, createKind, canAdd } = res.locals.interactions
+    const { view, returnLink, createKind, canAdd, theme = '' } = res.locals.interactions
     const actionButtons = canAdd
       ? [
         {
           label: 'Add interaction',
-          url: `${returnLink}create${createKind ? `/${createKind}` : ''}`,
+          url: `${returnLink}create${createKind ? `/${theme}/${createKind}` : ''}`,
         },
       ]
       : undefined
