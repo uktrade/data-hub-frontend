@@ -20,7 +20,7 @@ function transformAddress ({
   if (trading_address_1 && trading_address_country) {
     return {
       type: 'address',
-      label: labels.address.companyTradingAddress,
+      label: labels.address.companyAddress,
       value: {
         line_1: trading_address_1,
         line_2: trading_address_2,

@@ -139,7 +139,7 @@ describe('transformCompanyToListItem', () => {
 
     it('should include the trading address in the result', () => {
       expect(this.listItem.meta).to.containSubset([{
-        label: 'Trading address',
+        label: 'Address',
         type: 'address',
         value: {
           line_1: '100 Bolton Road',
@@ -157,7 +157,7 @@ describe('transformCompanyToListItem', () => {
 
     it('does not include the registered address', () => {
       expect(this.listItem.meta).to.not.containSubset([{
-        label: 'Primary address',
+        label: 'Registered address',
         value: 'Leeds City Centre, Leeds, EX1 2PM, United Kingdom',
       }])
     })
@@ -174,13 +174,13 @@ describe('transformCompanyToListItem', () => {
 
     it('should not include the trading address in the result', () => {
       expect(this.listItem.meta).to.not.containSubset([{
-        label: 'Trading address',
+        label: 'Address',
       }])
     })
 
     it('returns a formatted registered address', () => {
       expect(this.listItem.meta).to.containSubset([{
-        label: 'Primary address',
+        label: 'Registered address',
         type: 'address',
         value: {
           line_1: 'Leeds City Centre',
