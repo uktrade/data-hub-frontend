@@ -1,7 +1,7 @@
 [
   {
     "text": "-- Please select an investor type --",
-    "value": "default"
+    "value": null
   },
   {
     "text": "Angel syndicate",

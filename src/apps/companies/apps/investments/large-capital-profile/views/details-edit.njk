@@ -77,4 +77,87 @@
     })
   }}
 
+  {% macro conditional(props) %}
+    {% set date = props.date or {} %}
+    {{
+      govukDateInput({
+        namePrefix: props.value,
+        id: props.text | camelCase,
+        fieldset: {
+          legend: {
+            text: 'Date of most recent checks'
+          }
+        },
+        hint: {
+          text: 'For example, 12 11 2015'
+        },
+        attributes: {
+          'data-auto-id': ('requiredChecks' + props.text) | camelCase
+        },
+        items: [
+          {
+            classes: 'govuk-input--width-2',
+            name: 'day',
+            value: date.day
+          },
+          {
+            classes: 'govuk-input--width-2',
+            name: 'month',
+            value: date.month
+          },
+          {
+            classes: 'govuk-input--width-4',
+            name: 'year',
+            value: date.year
+          }
+        ]
+      })
+    }}
+  {% endmacro %}
+
+  {% set requiredChecks =  profile.investorDetails.requiredChecks %}
+
+  {{
+    govukRadios({
+      name: 'conducted',
+      fieldset: {
+        legend: {
+          text: 'Has this investor cleared the required checks within the last 12 months?',
+          classes: 'govuk-fieldset__legend--s'
+        }
+      },
+      attributes: {
+        'data-auto-id': 'requiredChecks'
+      },
+      items: [
+        {
+          value: requiredChecks.cleared.value,
+          text:  requiredChecks.cleared.text,
+          checked: requiredChecks.cleared.checked,
+          conditional: {
+            html: conditional(requiredChecks.cleared)
+          }
+        },
+        {
+          value: requiredChecks.issuesIdentified.value,
+          text:  requiredChecks.issuesIdentified.text,
+          checked: requiredChecks.issuesIdentified.checked,
+          conditional: {
+            html: conditional(requiredChecks.issuesIdentified)
+          }
+        },
+        {
+          value: requiredChecks.notYetChecked.value,
+          text:  requiredChecks.notYetChecked.text,
+          checked: requiredChecks.notYetChecked.checked
+        },
+        {
+          value: requiredChecks.notRequired.value,
+          text:  requiredChecks.notRequired.text,
+          checked: requiredChecks.notRequired.checked
+        }
+      ]
+    })
+  }}
+
 {% endcall %}

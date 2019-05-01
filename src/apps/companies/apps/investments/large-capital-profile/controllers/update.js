@@ -1,3 +1,4 @@
+const { transformInvestorDetails } = require('../transformers')
 const { updateCompanyProfile } = require('../repos')
 const { INVESTOR_DETAILS } = require('../sections')
 
@@ -6,19 +7,9 @@ const updateProfile = async (req, res, next) => {
   const { company } = res.locals
   const { token } = req.session
 
-  const body = {}
+  let body
   if (editing === INVESTOR_DETAILS) {
-    const {
-      investorType,
-      globalAssetsUnderManagement,
-      investableCapital,
-      investorDescription,
-    } = req.body
-
-    body.investor_type = investorType
-    body.global_assets_under_management = globalAssetsUnderManagement
-    body.investable_capital = investableCapital
-    body.investor_description = investorDescription
+    body = transformInvestorDetails(req.body)
   }
 
   try {

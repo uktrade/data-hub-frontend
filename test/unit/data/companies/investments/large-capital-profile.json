@@ -39,6 +39,8 @@
       "global_assets_under_management": null,
       "investor_description": "",
       "required_checks_conducted": null,
+      "required_checks_conducted_on": null,
+      "required_checks_conducted_by": null,
       "deal_ticket_sizes": [],
       "investment_types": [],
       "minimum_return_rate": null,
