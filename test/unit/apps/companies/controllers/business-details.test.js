@@ -53,7 +53,7 @@ describe('#renderBusinessDetails', () => {
     context('when the company does not have archived documents', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
-          .get(`/v3/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`)
+          .get(`/v4/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`)
           .reply(200, subsidiariesMock)
 
         this.middlewareParameters = buildMiddlewareParameters({
@@ -77,7 +77,7 @@ describe('#renderBusinessDetails', () => {
     context('when the company has archived documents', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
-          .get(`/v3/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`)
+          .get(`/v4/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`)
           .reply(200, subsidiariesMock)
 
         this.middlewareParameters = buildMiddlewareParameters({
