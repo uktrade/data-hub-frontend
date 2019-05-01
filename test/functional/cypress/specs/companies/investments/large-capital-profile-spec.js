@@ -111,8 +111,8 @@ describe('Company Investments and Large capital profile', () => {
   context('when viewing the incomplete fields on each summary', () => {
     before(() => cy.visit(largeCapitalProfile))
 
-    it('should display "5 fields incomplete"', () => {
-      cy.get(selectors.investorDetails.incompleteFields).should('contain', '5 fields incomplete')
+    it('should display "1 field incomplete"', () => {
+      cy.get(selectors.investorDetails.incompleteFields).should('contain', '1 field incomplete')
     })
 
     it('should display "9 fields incomplete"', () => {
@@ -124,23 +124,12 @@ describe('Company Investments and Large capital profile', () => {
     })
   })
 
-  context('when viewing all incomplete fields within "Investor details"', () => {
-    const { taskList } = selectors.investorDetails
-    const labels = [
-      'Investor type',
-      'Global assets under management',
-      'Investable capital',
-      'Investor description',
-      'Has this investor cleared the required checks within the last 12 months?',
-    ]
-
+  context('when viewing a single incomplete field within "Investor details"', () => {
     before(() => cy.visit(largeCapitalProfile))
 
-    Object.keys(taskList).forEach((key, index) => {
-      it(`should display both ${labels[index]} and INCOMPLETE`, () => {
-        cy.get(taskList[key].name).should('contain', labels[index])
-        cy.get(taskList[key].incomplete).should('contain', 'INCOMPLETE')
-      })
+    it(`should display both Investor description and INCOMPLETE`, () => {
+      cy.get(selectors.investorDetails.taskList.investorDescription.name).should('contain', 'Investor description')
+      cy.get(selectors.investorDetails.taskList.investorDescription.incomplete).should('contain', 'INCOMPLETE')
     })
   })
 
@@ -186,18 +175,35 @@ describe('Company Investments and Large capital profile', () => {
     })
   })
 
-  context('when completing the entire "Investor details" form', () => {
-    it('should fill in all fields and save', () => {
+  context('when viewing the "Investor details" section', () => {
+    const { investorDetails } = selectors
+
+    it('should display all the field values apart from "Investor Description"', () => {
+      cy.visit(largeCapitalProfile).get(selectors.investorDetails.summary).click()
+        .get(investorDetails.taskList.investorType.complete).should('contain', 'Asset manager')
+        .get(investorDetails.taskList.globalAssetsUnderManagement.complete).should('contain', 1000000)
+        .get(investorDetails.taskList.investableCapital.complete).should('contain', 30000)
+        .get(investorDetails.taskList.investorDescription.incomplete).should('contain', 'INCOMPLETE')
+        .get(investorDetails.taskList.requiredChecks.complete).should('contain', 'Cleared')
+        .get(investorDetails.taskList.requiredChecks.completeDate).should('contain', 'Date of most recent background checks: 29 04 2019')
+    })
+  })
+
+  context('when viewing the "Investor details" edit section', () => {
+    const { investorDetails } = selectors
+
+    it('should display all the field values apart from "Investor Description"', () => {
       cy.visit(largeCapitalProfile)
-        .get(selectors.investorDetails.summary).click()
-        .get(selectors.investorDetails.edit).click()
-        .url().should('contain', `?editing=investor-details`)
-        .get(selectors.investorDetails.investorType).select('Angel syndicate')
-        .get(selectors.investorDetails.globalAssetsUnderManagement).type(1000)
-        .get(selectors.investorDetails.investableCapital).type(2000)
-        .get(selectors.investorDetails.investorDescription).type('Lorem ipsum dolor sit amet.')
-        .get(selectors.investorDetails.save).click()
-        .url().should('contain', largeCapitalProfile)
+        .get(investorDetails.summary).click()
+        .get(investorDetails.edit).click()
+        .get(investorDetails.investorType).should('contain', 'Asset manager')
+        .get(investorDetails.globalAssetsUnderManagement).should('have.value', '1000000')
+        .get(investorDetails.investableCapital).should('have.value', '30000')
+        .get(investorDetails.investorDescription).should('have.value', '')
+        .get(investorDetails.requiredChecks.cleared).should('be.checked')
+        .get(investorDetails.requiredChecks.clearedDay).should('have.value', '29')
+        .get(investorDetails.requiredChecks.clearedMonth).should('have.value', '4')
+        .get(investorDetails.requiredChecks.clearedYear).should('have.value', '2019')
     })
   })
 })

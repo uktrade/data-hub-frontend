@@ -15,25 +15,40 @@ module.exports = {
     globalAssetsUnderManagement: '[data-auto-id=globalAssetsUnderManagement]',
     investableCapital: '[data-auto-id=investableCapital]',
     investorDescription: '[data-auto-id=investorDescription]',
+    requiredChecks: {
+      cleared: '[data-auto-id=requiredChecks] #conducted-1',
+      clearedDay: '[data-auto-id=requiredChecksCleared] #cleared-day',
+      clearedMonth: '[data-auto-id=requiredChecksCleared] #cleared-month',
+      clearedYear: '[data-auto-id=requiredChecksCleared] #cleared-year',
+      issuesIdentified: '[data-auto-id=requiredChecks] #conducted-2',
+      notYetChecked: '[data-auto-id=requiredChecks] #conducted-3',
+      notRequired: '[data-auto-id=requiredChecks] #conducted-4',
+    },
     taskList: {
       investorType: {
         name: '[data-auto-id="investorDetails"] ul > li:nth-child(1) .task-list__item-name',
+        complete: '[data-auto-id="investorDetails"] ul > li:nth-child(1) .task-list__item-complete',
         incomplete: '[data-auto-id="investorDetails"] ul > li:nth-child(1) .task-list__item-incomplete',
       },
       globalAssetsUnderManagement: {
         name: '[data-auto-id="investorDetails"] ul > li:nth-child(2) .task-list__item-name',
+        complete: '[data-auto-id="investorDetails"] ul > li:nth-child(2) .task-list__item-complete',
         incomplete: '[data-auto-id="investorDetails"] ul > li:nth-child(2) .task-list__item-incomplete',
       },
       investableCapital: {
         name: '[data-auto-id="investorDetails"] ul > li:nth-child(3) .task-list__item-name',
+        complete: '[data-auto-id="investorDetails"] ul > li:nth-child(3) .task-list__item-complete',
         incomplete: '[data-auto-id="investorDetails"] ul > li:nth-child(3) .task-list__item-incomplete',
       },
       investorDescription: {
         name: '[data-auto-id="investorDetails"] ul > li:nth-child(4) .task-list__item-name',
+        complete: '[data-auto-id="investorDetails"] ul > li:nth-child(4) .task-list__item-complete',
         incomplete: '[data-auto-id="investorDetails"] ul > li:nth-child(4) .task-list__item-incomplete',
       },
-      investorChecks: {
+      requiredChecks: {
         name: '[data-auto-id="investorDetails"] ul > li:nth-child(5) .task-list__item-name',
+        complete: '[data-auto-id="investorDetails"] ul > li:nth-child(5) .task-list__item-complete',
+        completeDate: '[data-auto-id="investorDetails"] ul > li:nth-child(5) span:nth-child(3)',
         incomplete: '[data-auto-id="investorDetails"] ul > li:nth-child(5) .task-list__item-incomplete',
       },
     },

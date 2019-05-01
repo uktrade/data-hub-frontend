@@ -1,12 +1,25 @@
-const { transformProfile, transformInvestorTypes } = require('../transformers')
+const {
+  transformProfile,
+  transformInvestorTypes,
+  transformRequiredChecks,
+} = require('../transformers')
+
 const { getOptions } = require('../../../../../../lib/options')
 const { getCompanyProfiles } = require('../repos')
 const { INVESTOR_DETAILS } = require('../sections')
+const { get } = require('lodash')
 
 const getInvestorTypes = (token, profile) => {
   return getOptions(token, 'capital-investment/investor-type')
     .then((investorTypes) => {
-      return transformInvestorTypes(investorTypes, profile)
+      return transformInvestorTypes(investorTypes, profile.investorDetails)
+    })
+}
+
+const getRequiredChecks = (token, profile) => {
+  return getOptions(token, 'capital-investment/required-checks-conducted')
+    .then((requiredChecks) => {
+      return transformRequiredChecks(requiredChecks, profile.investorDetails)
     })
 }
 
@@ -26,10 +39,9 @@ const renderProfile = async (req, res, next) => {
   try {
     const profile = await getCompanyProfile(token, company, editing)
 
-    if (profile && profile.editing) {
-      if (profile.editing === INVESTOR_DETAILS) {
-        profile.investorDetails.investorType.items = await getInvestorTypes(token, profile)
-      }
+    if (get(profile, 'editing') === INVESTOR_DETAILS) {
+      profile.investorDetails.investorType.items = await getInvestorTypes(token, profile)
+      profile.investorDetails.requiredChecks = await getRequiredChecks(token, profile)
     }
 
     res.render('companies/apps/investments/large-capital-profile/views/profile', { profile })
