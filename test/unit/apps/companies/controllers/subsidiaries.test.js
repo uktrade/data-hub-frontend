@@ -49,7 +49,7 @@ describe('company subsidiaries controller', () => {
   context('when there are subsidiaries to list', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .get(`/v3/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`)
+        .get(`/v4/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`)
         .reply(200, subsidiariesMock)
 
       this.middlewareParameters = buildMiddlewareParameters({
@@ -93,7 +93,7 @@ describe('company subsidiaries controller', () => {
   context('when the company is archived', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .get(`/v3/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`)
+        .get(`/v4/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`)
         .reply(200, subsidiariesMock)
 
       this.middlewareParameters = buildMiddlewareParameters({
@@ -139,7 +139,7 @@ describe('company subsidiaries controller', () => {
   context('when there are no subsidiaries', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .get(`/v3/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`)
+        .get(`/v4/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`)
         .reply(200, {
           count: 0,
           next: null,

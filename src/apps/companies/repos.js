@@ -17,7 +17,7 @@ function saveCompany (token, company) {
 function archiveCompany (token, companyId, reason) {
   const options = {
     body: { reason },
-    url: `${config.apiRoot}/v3/company/${companyId}/archive`,
+    url: `${config.apiRoot}/v4/company/${companyId}/archive`,
     method: 'POST',
   }
   return authorisedRequest(token, options)
@@ -26,7 +26,7 @@ function archiveCompany (token, companyId, reason) {
 function unarchiveCompany (token, companyId) {
   return authorisedRequest(token, {
     method: 'POST',
-    url: `${config.apiRoot}/v3/company/${companyId}/unarchive`,
+    url: `${config.apiRoot}/v4/company/${companyId}/unarchive`,
   })
 }
 
@@ -50,7 +50,7 @@ function getCompanyAuditLog (token, companyId, page = 1) {
   const limit = 10
   const offset = limit * (page - 1)
   return authorisedRequest(token, {
-    url: `${config.apiRoot}/v3/company/${companyId}/audit`,
+    url: `${config.apiRoot}/v4/company/${companyId}/audit`,
     qs: { limit, offset },
   })
 }
@@ -59,7 +59,7 @@ function getCompanyTimeline (token, companyId, page = 1) {
   const limit = 10
   const offset = limit * (page - 1)
   return authorisedRequest(token, {
-    url: `${config.apiRoot}/v3/company/${companyId}/timeline`,
+    url: `${config.apiRoot}/v4/company/${companyId}/timeline`,
     qs: { limit, offset },
   })
 }
@@ -68,7 +68,7 @@ function getCompanySubsidiaries (token, companyId, page = 1) {
   const limit = 10
   const offset = limit * (page - 1)
   return authorisedRequest(token, {
-    url: `${config.apiRoot}/v3/company`,
+    url: `${config.apiRoot}/v4/company`,
     qs: {
       limit,
       offset,
@@ -80,7 +80,7 @@ function getCompanySubsidiaries (token, companyId, page = 1) {
 
 function getOneListGroupCoreTeam (token, companyId) {
   return authorisedRequest(token, {
-    url: `${config.apiRoot}/v3/company/${companyId}/one-list-group-core-team`,
+    url: `${config.apiRoot}/v4/company/${companyId}/one-list-group-core-team`,
   })
 }
 
