@@ -1,5 +1,4 @@
 const queryString = require('qs')
-const { assign } = require('lodash')
 
 const { authorisedRequest } = require('../../lib/authorised-request')
 const config = require('../../../config')
@@ -60,55 +59,56 @@ function search ({
     })
 }
 
-function searchInvestments ({ token, searchTerm, page = 1, limit = 10, filters = {} }) {
+function searchEntity (token, body, route, { page = 1, limit = 10 }) {
   const queryParams = {
     offset: (page * limit) - limit,
     limit,
   }
-  const body = assign({}, filters, {
-    original_query: searchTerm,
-    searchEntity: 'investment_project',
-  })
 
   const options = {
-    url: `${config.apiRoot}/v3/search/investment_project?${queryString.stringify(queryParams)}`,
-    method: 'POST',
     body,
+    url: `${config.apiRoot}/v3/search/${route}?${queryString.stringify(queryParams)}`,
+    method: 'POST',
   }
 
   return authorisedRequest(token, options)
-    .then((result) => {
+    .then(result => {
       result.page = page
       return result
     })
 }
 
-function searchForeignCompanies (options) {
-  const optionsUkBasedFalse = assign({}, options, { isUkBased: false })
+function searchCompanies ({ token, searchTerm, isUkBased, page = 1, limit = 10, requestBody = {} }) {
+  return searchEntity(token, {
+    ...requestBody,
+    original_query: searchTerm,
+    uk_based: isUkBased,
+    isAggregation: false,
+  }, 'company', { page, limit })
+}
 
-  return searchCompanies(optionsUkBasedFalse)
+function searchInvestments ({ token, searchTerm, page = 1, limit = 10, filters = {} }) {
+  return searchEntity(token, {
+    ...filters,
+    original_query: searchTerm,
+    searchEntity: 'investment_project',
+  }, 'investment_project', { page, limit })
+}
+
+function searchForeignCompanies ({ token, searchTerm, page = 1, limit = 10 }) {
+  return searchCompanies({
+    token,
+    searchTerm,
+    page,
+    limit,
+    isUkBased: false,
+  })
 }
 
 function searchLimitedCompanies ({ token, searchTerm, page = 1, limit = 10 }) {
-  const queryParams = {
-    offset: (page * limit) - limit,
-    limit,
-  }
-  const body = {
+  return searchEntity(token, {
     original_query: searchTerm,
-  }
-
-  const options = {
-    url: `${config.apiRoot}/v3/search/companieshousecompany?${queryString.stringify(queryParams)}`,
-    method: 'POST',
-    body,
-  }
-
-  return authorisedRequest(token, options)
-    .then((result) => {
-      result.page = page
-      return result
-    })
+  }, 'companieshousecompany', { page, limit })
 }
 
 module.exports = {
