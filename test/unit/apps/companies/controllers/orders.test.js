@@ -10,7 +10,7 @@ describe('Company orders controller', () => {
     this.transformApiResponseToCollectionSpy = sinon.spy()
 
     this.controller = proxyquire('~/src/apps/companies/controllers/orders', {
-      '../../search/services': {
+      '../../../modules/search/services': {
         search: this.searchStub,
       },
       '../../omis/transformers': {

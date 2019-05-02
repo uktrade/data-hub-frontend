@@ -1,4 +1,4 @@
-const { searchCompanies } = require('../../search/services')
+const { searchCompanies } = require('../../../modules/search/services')
 const { transformCompanyToListItem } = require('../../companies/transformers')
 const { transformApiResponseToSearchCollection } = require('../../../modules/search/transformers')
 const { updateInvestment } = require('../repos')

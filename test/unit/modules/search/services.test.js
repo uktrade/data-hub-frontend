@@ -5,7 +5,7 @@ const {
   searchInvestments,
   searchForeignCompanies,
   searchLimitedCompanies,
-} = require('~/src/apps/search/services')
+} = require('~/src/modules/search/services')
 
 describe('Search service', () => {
   describe('#search', () => {

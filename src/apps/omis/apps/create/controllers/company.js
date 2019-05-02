@@ -2,7 +2,7 @@ const path = require('path')
 const { assign, get } = require('lodash')
 
 const { CreateController } = require('../../../controllers')
-const { searchCompanies } = require('../../../../search/services')
+const { searchCompanies } = require('../../../../../modules/search/services')
 const { transformApiResponseToSearchCollection } = require('../../../../../modules/search/transformers')
 const { transformCompanyToListItem } = require('../../../../companies/transformers')
 const { ENTITIES } = require('../../../../search/constants')

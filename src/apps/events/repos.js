@@ -1,6 +1,6 @@
 const config = require('../../../config')
 const { authorisedRequest } = require('../../lib/authorised-request')
-const { search } = require('../search/services')
+const { search } = require('../../modules/search/services')
 
 function saveEvent (token, event) {
   const options = {
