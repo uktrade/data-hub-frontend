@@ -4,55 +4,58 @@ const { assign } = require('lodash')
 const { authorisedRequest } = require('../../lib/authorised-request')
 const config = require('../../../config')
 
-function search ({ token, searchTerm = '', searchEntity, requestBody, isAggregation = true, limit = 10, page = 1 }) {
-  const searchUrl = `${config.apiRoot}/v3/search`
-  let options = {
-    url: isAggregation ? searchUrl : `${searchUrl}/${searchEntity}`,
-    method: isAggregation ? 'GET' : 'POST',
-  }
-  requestBody = assign({}, requestBody, {
-    term: searchTerm,
-    limit,
-    offset: (page * limit) - limit,
-  })
-
+const buildOptions = (
+  isAggregation,
+  searchUrl,
+  body,
+  entity,
+) => {
   if (isAggregation) {
-    options.qs = assign(requestBody, {
-      entity: searchEntity,
-    })
-  } else {
-    options.body = requestBody
+    return {
+      url: searchUrl,
+      method: 'GET',
+      qs: {
+        ...body,
+        entity,
+      },
+    }
   }
 
-  return authorisedRequest(token, options)
-    .then(result => {
-      result.page = page
-      return result
-    })
+  return {
+    body,
+    url: `${searchUrl}/${entity}`,
+    method: 'POST',
+  }
 }
 
-// TODO the search endpoints need aligning see Jira DH-293 for details
-function searchCompanies ({ token, searchTerm, isUkBased, page = 1, limit = 10, requestBody = {} }) {
-  const queryParams = {
-    offset: (page * limit) - limit,
-    limit,
-  }
-  const body = assign({}, requestBody, {
-    original_query: searchTerm,
-    uk_based: isUkBased,
-    isAggregation: false,
-  })
+function search ({
+  token,
+  searchTerm: term = '',
+  searchEntity,
+  requestBody,
+  isAggregation = true,
+  limit = 10,
+  page = 1,
+}) {
+  const searchUrl = `${config.apiRoot}/v3/search`
 
-  const options = {
-    url: `${config.apiRoot}/v3/search/company?${queryString.stringify(queryParams)}`,
-    method: 'POST',
-    body,
+  const body = {
+    ...requestBody,
+    limit,
+    term,
+    offset: (page * limit) - limit,
   }
+
+  const options = buildOptions(
+    isAggregation,
+    searchUrl,
+    body,
+    searchEntity,
+  )
 
   return authorisedRequest(token, options)
     .then(result => {
       result.page = page
-
       return result
     })
 }
