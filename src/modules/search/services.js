@@ -112,7 +112,8 @@ function searchLimitedCompanies ({ token, searchTerm, page = 1, limit = 10 }) {
 }
 
 function exportSearch ({ token, searchTerm = '', searchEntity, requestBody }) {
-  const searchUrl = `${config.apiRoot}/v3/search`
+  const apiVersion = searchEntity === 'company' ? 'v4' : 'v3'
+  const searchUrl = `${config.apiRoot}/${apiVersion}/search`
   const options = {
     url: `${searchUrl}/${searchEntity}/export`,
     method: 'POST',

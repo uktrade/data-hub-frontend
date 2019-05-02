@@ -271,5 +271,44 @@ describe('Search service', () => {
         expect(this.middlewareParameters.resMock.on).to.be.called
       })
     })
+
+    context('when exporting records that are not company', () => {
+      beforeEach(async () => {
+        nock(config.apiRoot)
+          .post(`/v3/search/entity/export`, {
+            field: true,
+            term: 'search',
+          })
+          .reply(200, {
+            count: 0,
+            results: [],
+            aggregations: [],
+          })
+
+        this.middlewareParameters = buildMiddlewareParameters({
+          resMock: {
+            on: sinon.spy(),
+            emit: sinon.spy(),
+            end: sinon.spy(),
+            removeListener: sinon.spy(),
+          },
+        })
+
+        await exportSearch({
+          token: '1234',
+          searchTerm: 'search',
+          searchEntity: 'entity',
+          requestBody: {
+            field: true,
+          },
+        }).then((response) => {
+          response.pipe(this.middlewareParameters.resMock)
+        })
+      })
+
+      it('should return the response', () => {
+        expect(this.middlewareParameters.resMock.on).to.be.called
+      })
+    })
   })
 })
