@@ -14,7 +14,7 @@ describe('Company contact list controller', () => {
       })
 
       nock(config.apiRoot)
-        .get(`/v3/company/${companyMock.id}/one-list-group-core-team`)
+        .get(`/v4/company/${companyMock.id}/one-list-group-core-team`)
         .reply(200, coreTeamMock)
 
       await renderAdvisers(

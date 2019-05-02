@@ -26,7 +26,6 @@ for id in args.board_id:
     url = 'https://api.trello.com/1/boards/{id}/cards'.format(id=id)
     cards += requests.request('GET', url, params=payload).json()
 
-print(cards)
 
 # Fetch all trello short link ids from file
 with open(args.input_file, 'r') as trello_links:
