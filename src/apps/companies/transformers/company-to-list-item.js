@@ -4,6 +4,7 @@ const { get } = require('lodash')
 const labels = require('../labels')
 
 function transformAddress ({
+  address,
   trading_address_country,
   trading_address_county,
   trading_address_town,
@@ -17,6 +18,14 @@ function transformAddress ({
   registered_address_1,
   registered_address_2,
 }) {
+  if (address) {
+    return {
+      type: 'address',
+      label: labels.address.companyAddress,
+      value: address,
+    }
+  }
+
   if (trading_address_1 && trading_address_country) {
     return {
       type: 'address',
@@ -30,19 +39,19 @@ function transformAddress ({
         country: trading_address_country,
       },
     }
-  } else {
-    return {
-      type: 'address',
-      label: labels.address.companyRegisteredAddress,
-      value: {
-        line_1: registered_address_1,
-        line_2: registered_address_2,
-        town: registered_address_town,
-        county: registered_address_county,
-        postcode: registered_address_postcode,
-        country: registered_address_country,
-      },
-    }
+  }
+
+  return {
+    type: 'address',
+    label: labels.address.companyRegisteredAddress,
+    value: {
+      line_1: registered_address_1,
+      line_2: registered_address_2,
+      town: registered_address_town,
+      county: registered_address_county,
+      postcode: registered_address_postcode,
+      country: registered_address_country,
+    },
   }
 }
 
@@ -53,6 +62,8 @@ module.exports = function transformCompanyToListItem ({
   uk_based,
   uk_region,
   trading_names,
+  address,
+  registered_address,
   trading_address_country,
   trading_address_county,
   trading_address_town,
@@ -132,6 +143,8 @@ module.exports = function transformCompanyToListItem ({
   }
 
   meta.push(transformAddress({
+    address,
+    registered_address,
     trading_address_country,
     trading_address_county,
     trading_address_town,

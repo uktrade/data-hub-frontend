@@ -53,7 +53,7 @@ describe('Adviser repository', () => {
     context('when searching for a term', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
-          .get('/adviser/?autocomplete=be&is_active=true')
+          .get('/adviser/?autocomplete=be')
           .reply(200, {
             results: [this.bertSmith],
           })
