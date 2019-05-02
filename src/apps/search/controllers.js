@@ -1,7 +1,7 @@
 const { get, find } = require('lodash')
 
 const { ENTITIES } = require('./constants')
-const { search } = require('./services')
+const { search } = require('../../modules/search/services')
 const { transformApiResponseToSearchCollection } = require('../../modules/search/transformers')
 const { transformCompanyToListItem } = require('../companies/transformers')
 const { transformContactToListItem } = require('../contacts/transformers')

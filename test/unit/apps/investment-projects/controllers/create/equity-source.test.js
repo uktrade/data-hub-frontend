@@ -32,7 +32,7 @@ describe('Investment start controller', () => {
       '../../repos': {
         getCompanyInvestmentProjects: this.getCompanyInvestmentProjects,
       },
-      '../../../search/services': {
+      '../../../../modules/search/services': {
         searchForeignCompanies: this.searchForeignCompanies,
       },
       '../../../../lib/pagination': {
