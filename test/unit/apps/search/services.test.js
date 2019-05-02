@@ -1,38 +1,232 @@
-const { assign } = require('lodash')
-
 const config = require('~/config')
-const { search } = require('~/src/apps/search/services')
+const {
+  search,
+  searchCompanies,
+  searchInvestments,
+  searchForeignCompanies,
+  searchLimitedCompanies,
+} = require('~/src/apps/search/services')
 
 describe('Search service', () => {
   describe('#search', () => {
-    const searchTerm = 'testTerm'
-    const searchEntity = 'company'
-    const mockResponse = { message: 'mock response' }
+    context('when minimal parameters are populated', () => {
+      beforeEach(async () => {
+        nock(config.apiRoot)
+          .get(`/v3/search?term=search&limit=10&offset=0`)
+          .reply(200, {
+            count: 0,
+            results: [],
+            aggregations: [],
+          })
 
-    beforeEach(() => {
-      nock(config.apiRoot)
-        .get(`/v3/search`)
-        .query({
-          term: searchTerm,
-          entity: searchEntity,
-          limit: 10,
-          offset: 0,
+        this.actual = await search({
+          token: '1234',
+          searchTerm: 'search',
         })
-        .reply(200, mockResponse)
+      })
+
+      it('should return the response', () => {
+        expect(this.actual).to.deep.equal({
+          aggregations: [],
+          count: 0,
+          page: 1,
+          results: [],
+        })
+      })
     })
 
-    it('the result should contain correct details', async () => {
-      const expectedResponse = assign({}, mockResponse, {
+    context('when all parameters are populated', () => {
+      beforeEach(async () => {
+        nock(config.apiRoot)
+          .get(`/v3/search?field=true&term=search&limit=10&offset=0&entity=company`)
+          .reply(200, {
+            count: 0,
+            results: [],
+            aggregations: [],
+          })
+
+        this.actual = await search({
+          token: '1234',
+          searchTerm: 'search',
+          searchEntity: 'company',
+          requestBody: {
+            field: true,
+          },
+        })
+      })
+
+      it('should return the response', () => {
+        expect(this.actual).to.deep.equal({
+          aggregations: [],
+          count: 0,
+          page: 1,
+          results: [],
+        })
+      })
+    })
+
+    context('when default parameters are customised', () => {
+      beforeEach(async () => {
+        nock(config.apiRoot)
+          .post(`/v3/search/company`, {
+            field: true,
+            term: 'search',
+            limit: 100,
+            offset: 100,
+          })
+          .reply(200, {
+            count: 0,
+            results: [],
+            aggregations: [],
+          })
+
+        this.actual = await search({
+          token: '1234',
+          searchTerm: 'search',
+          searchEntity: 'company',
+          requestBody: {
+            field: true,
+          },
+          isAggregation: false,
+          limit: 100,
+          page: 2,
+        })
+      })
+
+      it('should return the response', () => {
+        expect(this.actual).to.deep.equal({
+          aggregations: [],
+          count: 0,
+          page: 2,
+          results: [],
+        })
+      })
+    })
+  })
+
+  describe('#searchCompanies', () => {
+    beforeEach(async () => {
+      nock(config.apiRoot)
+        .post(`/v3/search/company?offset=0&limit=10`, {
+          field: true,
+          original_query: 'search',
+          uk_based: true,
+          isAggregation: false,
+        })
+        .reply(200, {
+          count: 0,
+          results: [],
+          aggregations: [],
+        })
+
+      this.actual = await searchCompanies({
+        token: '1234',
+        searchTerm: 'search',
+        isUkBased: true,
+        requestBody: {
+          field: true,
+        },
+      })
+    })
+
+    it('should return the response', () => {
+      expect(this.actual).to.deep.equal({
+        aggregations: [],
+        count: 0,
         page: 1,
+        results: [],
       })
+    })
+  })
 
-      const actual = await search({
-        token: 'token',
-        searchTerm,
-        searchEntity,
+  describe('#searchInvestments', () => {
+    beforeEach(async () => {
+      nock(config.apiRoot)
+        .post(`/v3/search/investment_project?offset=0&limit=10`, {
+          field: true,
+          original_query: 'search',
+          searchEntity: 'investment_project',
+        })
+        .reply(200, {
+          count: 0,
+          results: [],
+          aggregations: [],
+        })
+
+      this.actual = await searchInvestments({
+        token: '1234',
+        searchTerm: 'search',
+        filters: {
+          field: true,
+        },
       })
+    })
 
-      expect(actual).to.deep.equal(expectedResponse)
+    it('should return the response', () => {
+      expect(this.actual).to.deep.equal({
+        aggregations: [],
+        count: 0,
+        page: 1,
+        results: [],
+      })
+    })
+  })
+
+  describe('#searchForeignCompanies', () => {
+    beforeEach(async () => {
+      nock(config.apiRoot)
+        .post(`/v3/search/company?offset=0&limit=10`, {
+          original_query: 'search',
+          uk_based: false,
+          isAggregation: false,
+        })
+        .reply(200, {
+          count: 0,
+          results: [],
+          aggregations: [],
+        })
+
+      this.actual = await searchForeignCompanies({
+        token: '1234',
+        searchTerm: 'search',
+      })
+    })
+
+    it('should return the response', () => {
+      expect(this.actual).to.deep.equal({
+        aggregations: [],
+        count: 0,
+        page: 1,
+        results: [],
+      })
+    })
+  })
+
+  describe('#searchLimitedCompanies', () => {
+    beforeEach(async () => {
+      nock(config.apiRoot)
+        .post(`/v3/search/companieshousecompany?offset=0&limit=10`, {
+          original_query: 'search',
+        })
+        .reply(200, {
+          count: 0,
+          results: [],
+          aggregations: [],
+        })
+
+      this.actual = await searchLimitedCompanies({
+        token: '1234',
+        searchTerm: 'search',
+      })
+    })
+
+    it('should return the response', () => {
+      expect(this.actual).to.deep.equal({
+        aggregations: [],
+        count: 0,
+        page: 1,
+        results: [],
+      })
     })
   })
 })
