@@ -14,10 +14,6 @@
         "id": "43281c5e-92a4-4794-867b-b4d5f801e6f3",
         "name": "ghq"
       },
-      "registered_address_country": {
-        "id": "81756b9a-5d95-e211-a939-e4115bead28a",
-        "name": "United States"
-      },
       "sector": {
         "id": "355f977b-8ac3-e211-a646-e4115bead28a",
         "name": "Retail"
@@ -66,23 +62,23 @@
       "archived_reason": null,
       "archived_by": null,
       "name": "Mars Exports Ltd",
-      "registered_address_1": "12 First Street",
-      "registered_address_2": "",
-      "registered_address_town": "New York",
-      "registered_address_county": "",
-      "registered_address_postcode": "765413",
+      "address": {
+        "line_1": "12 First Street",
+        "line_2": "",
+        "town": "New York",
+        "county": "",
+        "postcode": "765413",
+        "country": {
+          "id": "81756b9a-5d95-e211-a939-e4115bead28a",
+          "name": "United States"
+        }
+      },
       "reference_code": "",
       "company_number": null,
       "vat_number": "",
       "description": "This is a dummy company for testing",
       "website": "",
       "uk_region": null,
-      "trading_address_1": "",
-      "trading_address_2": "",
-      "trading_address_town": "",
-      "trading_address_county": "",
-      "trading_address_country": null,
-      "trading_address_postcode": "",
       "one_list_group_tier": null,
       "global_headquarters": null,
       "one_list_group_global_account_manager": null,
@@ -100,10 +96,6 @@
       "headquarter_type": {
         "id": "43281c5e-92a4-4794-867b-b4d5f801e6f3",
         "name": "ghq"
-      },
-      "registered_address_country": {
-        "id": "7f756b9a-5d95-e211-a939-e4115bead28a",
-        "name": "Montenegro"
       },
       "sector": {
         "id": "64535406-6095-e211-a939-e4115bead28a",
@@ -126,23 +118,23 @@
       "archived_reason": null,
       "archived_by": null,
       "name": "Cole, Stoltenberg and Russel",
-      "registered_address_1": "Hermann Mills",
-      "registered_address_2": "",
-      "registered_address_town": "Bartonchester",
-      "registered_address_county": "",
-      "registered_address_postcode": "88381",
+      "address": {
+        "line_1": "Hermann Mills",
+        "line_2": "",
+        "town": "Bartonchester",
+        "county": "",
+        "postcode": "88381",
+        "country": {
+          "id": "7f756b9a-5d95-e211-a939-e4115bead28a",
+          "name": "Montenegro"
+        }
+      },
       "reference_code": "",
       "company_number": null,
       "vat_number": "",
       "description": "Sequi aut animi voluptatem unde explicabo nostrum quod magnam.",
       "website": "http://sallie.com",
       "uk_region": null,
-      "trading_address_1": "",
-      "trading_address_2": "",
-      "trading_address_town": "",
-      "trading_address_county": "",
-      "trading_address_country": null,
-      "trading_address_postcode": "",
       "one_list_group_tier": null,
       "global_headquarters": null,
       "one_list_group_global_account_manager": null,
