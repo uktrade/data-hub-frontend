@@ -163,15 +163,17 @@
   "export_to_countries": [],
   "future_interest_countries": [],
   "uk_based": true,
-  "registered_address_1": "Leeds City Centre",
-  "registered_address_2": null,
-  "registered_address_town": "Leeds",
-  "registered_address_country": {
-    "id": "80756b9a-5d95-e211-a939-e4115bead28a",
-    "name": "United Kingdom"
+  "address": {
+    "line_1": "Leeds City Centre",
+    "line_2": null,
+    "town": "Leeds",
+    "county": null,
+    "postcode": "EX1 2PL",
+    "country": {
+      "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+      "name": "United Kingdom"
+    }
   },
-  "registered_address_county": null,
-  "registered_address_postcode": "EX1 2PL",
   "created_on": "2014-12-11T09:26:30",
   "modified_on": "2017-05-13T15:58:46.421721",
   "archived": false,
@@ -181,11 +183,6 @@
   "lead": false,
   "description": null,
   "website": "http://www.wonka-industries.com",
-  "trading_address_1": "",
-  "trading_address_2": "",
-  "trading_address_town": "",
-  "trading_address_county": "",
-  "trading_address_postcode": "",
   "archived_by": null,
   "business_type": {
     "id": "98d14e94-5d95-e211-a939-e4115bead28a",
@@ -201,7 +198,6 @@
     "id": "834cd12a-6095-e211-a939-e4115bead28a",
     "name": "Yorkshire and The Humber"
   },
-  "trading_address_country": null,
   "headquarter_type": {
     "id": "eb59eaeb-eeb8-4f54-9506-a5e08773046b",
     "name": "ehq"
