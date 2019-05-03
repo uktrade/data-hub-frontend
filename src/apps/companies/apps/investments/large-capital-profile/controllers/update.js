@@ -20,4 +20,6 @@ const updateProfile = async (req, res, next) => {
   }
 }
 
-module.exports = updateProfile
+module.exports = {
+  updateProfile,
+}
