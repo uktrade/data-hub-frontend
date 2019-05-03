@@ -4,30 +4,20 @@ Feature: Create New Contact
   I would like to add a contact to data hub
   So that I can collect contact data
 
-  @contacts-save--primary
-  Scenario: Add a new primary contact
-
+  @contacts-save--primary-dashboard
+  Scenario: New primary contact is visible on the dashboard
     When I navigate to the `companies.contacts` page using `company` `Lambda plc` fixture
     And I click the "Add contact" link
     Then there are contact fields
     When a primary contact is added
     And I submit the form
     Then I see the success message
-    Then the Contact details key value details are displayed
-      | key                   | value                                |
-      | Job title             | contact.jobTitle                     |
-      | Phone number          | contact.primaryPhoneNumber           |
-      | Alternative telephone | contact.alternativePhoneNumber       |
-      | Address               | contact.address                      |
-      | Email                 | contact.emailAddress                 |
-      | Alternative email     | contact.alternativeEmail             |
-      | Notes                 | contact.notes                        |
-      | Email marketing       | contact.acceptsEmailMarketingFromDit |
-
+    And I wait and then refresh the page
+    When I navigate to the `dashboard` page
+    Then the contact is displayed on the dashboard
 
   @contacts-save--primary-new-company-address
   Scenario: Add a new primary contact with new company address
-
     When I navigate to the `companies.contacts` page using `company` `Lambda plc` fixture
     And I click the "Add contact" link
     Then there are contact fields
@@ -44,55 +34,3 @@ Feature: Create New Contact
       | Alternative email     | contact.alternativeEmail             |
       | Notes                 | contact.notes                        |
       | Email marketing       | contact.acceptsEmailMarketingFromDit |
-
-
-  @contacts-save--non-primary
-  Scenario: Add a new non-primary contact
-
-    When I navigate to the `companies.contacts` page using `company` `Lambda plc` fixture
-    And I click the "Add contact" link
-    Then there are contact fields
-    When a non-primary contact is added
-    And I submit the form
-    Then I see the success message
-    Then the Contact details key value details are displayed
-      | key                   | value                                |
-      | Job title             | contact.jobTitle                     |
-      | Phone number          | contact.primaryPhoneNumber           |
-      | Alternative telephone | contact.alternativePhoneNumber       |
-      | Address               | contact.address                      |
-      | Email                 | contact.emailAddress                 |
-      | Alternative email     | contact.alternativeEmail             |
-      | Notes                 | contact.notes                        |
-      | Email marketing       | contact.acceptsEmailMarketingFromDit |
-
-
-  @contacts-save--primary-dashboard
-  Scenario: New primary contact is visible on the dashboard
-
-    When I navigate to the `companies.contacts` page using `company` `Lambda plc` fixture
-    And I click the "Add contact" link
-    Then there are contact fields
-    When a primary contact is added
-    And I submit the form
-    Then I see the success message
-    And I wait and then refresh the page
-    When I navigate to the `dashboard` page
-    Then the contact is displayed on the dashboard
-
-
-  @contacts-save--mandatory-fields
-  Scenario: Contact fields are mandatory
-
-    When I navigate to the `companies.contacts` page using `company` `Lambda plc` fixture
-    And I click the "Add contact" link
-    Then there are contact fields
-    When I submit the form
-    Then the contact fields have error messages
-    And I see form error summary
-
-  @contacts-save--archived-company
-  Scenario: Archived company without Add contact button
-
-    When I navigate to the `companies.contacts` page using `company` `Archived Ltd` fixture
-    And I should not see the "Add contact" button
