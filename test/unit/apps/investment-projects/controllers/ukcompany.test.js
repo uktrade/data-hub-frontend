@@ -8,7 +8,7 @@ describe('investment uk company', () => {
     this.transformerStub = sinon.stub()
 
     this.controller = proxyquire('~/src/apps/investments/controllers/ukcompany', {
-      '../../search/services': {
+      '../../../modules/search/services': {
         searchCompanies: this.searchStub,
       },
       '../repos': {

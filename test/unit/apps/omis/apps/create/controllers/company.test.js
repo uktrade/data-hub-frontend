@@ -8,7 +8,7 @@ describe('OMIS create company controller', () => {
     this.searchCompaniesStub = sinon.stub()
 
     this.ControllerClass = proxyquire('~/src/apps/omis/apps/create/controllers/company', {
-      '../../../../search/services': {
+      '../../../../../modules/search/services': {
         searchCompanies: this.searchCompaniesStub,
       },
     })

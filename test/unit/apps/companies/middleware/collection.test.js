@@ -49,7 +49,7 @@ describe('Company collection middleware', () => {
         })
 
         const collectionMiddleware = proxyquire('~/src/apps/companies/middleware/collection', {
-          '../../search/services': {
+          '../../../modules/search/services': {
             searchLimitedCompanies: this.searchStub,
           },
           '../transformers': {

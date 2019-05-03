@@ -1,6 +1,6 @@
 const { find, assign } = require('lodash')
 
-const { searchInvestments } = require('../../search/services')
+const { searchInvestments } = require('../../../modules/search/services')
 const { transformApiResponseToSearchCollection } = require('../../../modules/search/transformers')
 const { updateInvestment } = require('../repos')
 const metadata = require('../../../lib/metadata')

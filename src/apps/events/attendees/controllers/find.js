@@ -1,6 +1,6 @@
 const { get, isEmpty } = require('lodash')
 
-const { search } = require('../../../search/services')
+const { search } = require('../../../../modules/search/services')
 const { transformApiResponseToSearchCollection } = require('../../../../modules/search/transformers')
 const { transformContactToListItem } = require('../../../contacts/transformers')
 const { createContactItemToAttendeeSearchResult } = require('../transformers')

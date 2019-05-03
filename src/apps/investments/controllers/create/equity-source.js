@@ -1,6 +1,6 @@
 const { assign, get } = require('lodash')
 const { getCompanyInvestmentProjects } = require('../../repos')
-const { searchForeignCompanies } = require('../../../search/services')
+const { searchForeignCompanies } = require('../../../../modules/search/services')
 const { transformApiResponseToSearchCollection } = require('../../../../modules/search/transformers')
 const { transformCompanyToListItem } = require('../../../companies/transformers')
 const { ENTITIES } = require('../../../search/constants')
