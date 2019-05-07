@@ -117,7 +117,7 @@ describe('Company collection middleware', () => {
           nock(config.apiRoot)
             .get('/metadata/headquarter-type/')
             .reply(200, headquarterTypes)
-            .post('/v3/search/company?offset=0&limit=10')
+            .post('/v4/search/company?offset=0&limit=10')
             .reply(200, ghqCompanySearchResponse)
 
           await getGlobalHQCompaniesCollection(this.reqMock, this.resMock, this.nextSpy)
@@ -140,7 +140,7 @@ describe('Company collection middleware', () => {
           nock(config.apiRoot)
             .get('/metadata/headquarter-type/')
             .reply(200, headquarterTypes)
-            .post('/v3/search/company?offset=0&limit=10')
+            .post('/v4/search/company?offset=0&limit=10')
             .replyWithError(this.errorMsg)
 
           await getGlobalHQCompaniesCollection(this.reqMock, this.resMock, this.nextSpy)
@@ -192,7 +192,7 @@ describe('Company collection middleware', () => {
           nock(config.apiRoot)
             .get('/metadata/headquarter-type/')
             .reply(200, headquarterTypes)
-            .post('/v3/search/company?offset=0&limit=10', {
+            .post('/v4/search/company?offset=0&limit=10', {
               headquarter_type: [
                 'eb59eaeb-eeb8-4f54-9506-a5e08773046b',
                 '3e6debb4-1596-40c5-aa25-f00da0e05af9',
@@ -237,7 +237,7 @@ describe('Company collection middleware', () => {
           nock(config.apiRoot)
             .get('/metadata/headquarter-type/')
             .reply(200, headquarterTypes)
-            .post('/v3/search/company?offset=0&limit=10', {
+            .post('/v4/search/company?offset=0&limit=10', {
               headquarter_type: [
                 'eb59eaeb-eeb8-4f54-9506-a5e08773046b',
                 '3e6debb4-1596-40c5-aa25-f00da0e05af9',
@@ -271,7 +271,7 @@ describe('Company collection middleware', () => {
           nock(config.apiRoot)
             .get('/metadata/headquarter-type/')
             .reply(200, headquarterTypes)
-            .post('/v3/search/company?offset=0&limit=10', {
+            .post('/v4/search/company?offset=0&limit=10', {
               headquarter_type: [
                 'eb59eaeb-eeb8-4f54-9506-a5e08773046b',
                 '3e6debb4-1596-40c5-aa25-f00da0e05af9',

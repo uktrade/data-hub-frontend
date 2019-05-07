@@ -70,7 +70,7 @@ describe('Search service', () => {
     context('when default parameters are customised', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
-          .post(`/v3/search/company`, {
+          .post(`/v4/search/company`, {
             field: true,
             term: 'search',
             limit: 100,
@@ -109,7 +109,7 @@ describe('Search service', () => {
   describe('#searchCompanies', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .post(`/v3/search/company?offset=0&limit=10`, {
+        .post(`/v4/search/company?offset=0&limit=10`, {
           field: true,
           original_query: 'search',
           uk_based: true,
@@ -177,7 +177,7 @@ describe('Search service', () => {
   describe('#searchForeignCompanies', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .post(`/v3/search/company?offset=0&limit=10`, {
+        .post(`/v4/search/company?offset=0&limit=10`, {
           original_query: 'search',
           uk_based: false,
           isAggregation: false,
