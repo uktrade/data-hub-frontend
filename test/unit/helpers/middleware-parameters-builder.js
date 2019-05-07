@@ -1,6 +1,8 @@
 const paths = require('~/src/apps/investments/paths')
 
 module.exports = ({
+  reqMock = {},
+  resMock = {},
   requestBody,
   requestParams = {},
   requestQuery = {},
@@ -17,6 +19,7 @@ module.exports = ({
 }) => {
   return {
     reqMock: {
+      ...reqMock,
       session: {
         token: '1234',
       },
@@ -26,6 +29,7 @@ module.exports = ({
       flash: sinon.spy(),
     },
     resMock: {
+      ...resMock,
       breadcrumb,
       render: sinon.spy(),
       redirect: sinon.spy(),
