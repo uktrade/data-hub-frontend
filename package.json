@@ -169,5 +169,8 @@
     "supertest": "^3.3.0",
     "wavy": "^1.0.4"
   },
-  "sasslintConfig": ".sass-lint.yml"
+  "sasslintConfig": ".sass-lint.yml",
+  "resolutions": {
+    "tar": "^4.4.8"
+  }
 }
