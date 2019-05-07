@@ -47,28 +47,21 @@
       "modified_on": "2017-05-25T11:15:27.272221",
       "name": "abc defg ltd",
       "one_list_group_global_account_manager": null,
-      "registered_address_1": "2 Foo st.",
-      "registered_address_2": null,
-      "registered_address_country": {
-        "id": "80756b9a-5d95-e211-a939-e4115bead28a",
-        "name": "United Kingdom"
+      "address": {
+        "line_1": "2 Foo st.",
+        "line_2": null,
+        "country": {
+          "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+          "name": "United Kingdom"
+        },
+        "county": null,
+        "postcode": null,
+        "town": "London"
       },
-      "registered_address_county": null,
-      "registered_address_postcode": null,
-      "registered_address_town": "London",
       "sector": {
         "id": "b422c9d2-5f95-e211-a939-e4115bead28a",
         "name": "Aerospace : Manufacturing and Assembly : Aircraft"
       },
-      "trading_address_1": "1 Fake Lane",
-      "trading_address_2": null,
-      "trading_address_country": {
-        "id": "80756b9a-5d95-e211-a939-e4115bead28a",
-        "name": "United Kingdom"
-      },
-      "trading_address_county": null,
-      "trading_address_postcode": null,
-      "trading_address_town": "Downtown",
       "turnover_range": null,
       "uk_region": {
         "id": "8a4cd12a-6095-e211-a939-e4115bead28a",
@@ -101,28 +94,21 @@
       "modified_on": "2017-05-25T11:15:27.283250",
       "name": "abc defg us ltd",
       "one_list_group_global_account_manager": null,
-      "registered_address_1": "3 Foo st.",
-      "registered_address_2": null,
-      "registered_address_country": {
-        "id": "80756b9a-5d95-e211-a939-e4115bead28a",
-        "name": "United Kingdom"
+      "address": {
+        "line_1": "3 Foo st.",
+        "line_2": null,
+        "country": {
+          "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+          "name": "United Kingdom"
+        },
+        "county": null,
+        "postcode": null,
+        "town": "London"
       },
-      "registered_address_county": null,
-      "registered_address_postcode": null,
-      "registered_address_town": "London",
       "sector": {
         "id": "b422c9d2-5f95-e211-a939-e4115bead28a",
         "name": "Aerospace : Manufacturing and Assembly : Aircraft"
       },
-      "trading_address_1": "1 Fake Lane",
-      "trading_address_2": null,
-      "trading_address_country": {
-        "id": "81756b9a-5d95-e211-a939-e4115bead28a",
-        "name": "United States"
-      },
-      "trading_address_county": null,
-      "trading_address_postcode": null,
-      "trading_address_town": "Downtown",
       "turnover_range": null,
       "uk_region": {
         "id": "8a4cd12a-6095-e211-a939-e4115bead28a",
@@ -161,28 +147,21 @@
       "modified_on": "2017-05-25T11:15:27.237129",
       "name": "name0",
       "one_list_group_global_account_manager": null,
-      "registered_address_1": "0 Foo st.",
-      "registered_address_2": null,
-      "registered_address_country": {
-        "id": "80756b9a-5d95-e211-a939-e4115bead28a",
-        "name": "United Kingdom"
+      "address": {
+        "line_1": "0 Foo st.",
+        "line_2": null,
+        "country": {
+          "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+          "name": "United Kingdom"
+        },
+        "county": null,
+        "postcode": null,
+        "town": "London"
       },
-      "registered_address_county": null,
-      "registered_address_postcode": null,
-      "registered_address_town": "London",
       "sector": {
         "id": "b422c9d2-5f95-e211-a939-e4115bead28a",
         "name": "Aerospace : Manufacturing and Assembly : Aircraft"
       },
-      "trading_address_1": "0 Fake Lane",
-      "trading_address_2": null,
-      "trading_address_country": {
-        "id": "80756b9a-5d95-e211-a939-e4115bead28a",
-        "name": "United Kingdom"
-      },
-      "trading_address_county": null,
-      "trading_address_postcode": null,
-      "trading_address_town": "Woodside",
       "turnover_range": null,
       "uk_region": {
         "id": "8a4cd12a-6095-e211-a939-e4115bead28a",

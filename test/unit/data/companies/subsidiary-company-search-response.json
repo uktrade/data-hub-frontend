@@ -48,10 +48,6 @@
       "global_headquarters": null,
       "headquarter_type": null,
       "one_list_group_global_account_manager": null,
-      "registered_address_country": {
-        "id": "81756b9a-5d95-e211-a939-e4115bead28a",
-        "name": "United States"
-      },
       "sector": {
         "id": "355f977b-8ac3-e211-a646-e4115bead28a",
         "name": "Retail",
@@ -59,7 +55,6 @@
 
         ]
       },
-      "trading_address_country": null,
       "turnover_range": {
         "id": "7a4cd12a-6095-e211-a939-e4115bead28a",
         "name": "\u00a333.5M+"
@@ -67,25 +62,26 @@
       "uk_based": false,
       "uk_region": null,
       "trading_names": [],
-      "registered_address_town": "New York",
+      "address": {
+        "line_1": "12 First Street",
+        "line_2": null,
+        "town": "New York",
+        "county": null,
+        "postcode": "765413",
+        "country": {
+          "id": "81756b9a-5d95-e211-a939-e4115bead28a",
+          "name": "United States"
+        }
+      },
       "archived": false,
-      "trading_address_2": null,
-      "trading_address_postcode": null,
       "description": "This is a dummy company for testing",
-      "registered_address_county": null,
-      "registered_address_postcode": "765413",
       "archived_on": null,
-      "trading_address_town": null,
-      "trading_address_county": null,
       "website": null,
-      "registered_address_1": "12 First Street",
-      "registered_address_2": null,
       "name": "Mars Exports Ltd",
       "modified_on": "2017-11-16T11:00:00+00:00",
       "archived_reason": null,
       "reference_code": "",
       "vat_number": "",
-      "trading_address_1": null,
       "company_number": null,
       "created_on": "2017-10-16T11:00:00+00:00"
     },
@@ -125,10 +121,6 @@
       "global_headquarters": null,
       "headquarter_type": null,
       "one_list_group_global_account_manager": null,
-      "registered_address_country": {
-        "id": "80756b9a-5d95-e211-a939-e4115bead28a",
-        "name": "United Kingdom"
-      },
       "sector": {
         "id": "355f977b-8ac3-e211-a646-e4115bead28a",
         "name": "Retail",
@@ -136,7 +128,6 @@
 
         ]
       },
-      "trading_address_country": null,
       "turnover_range": {
         "id": "7a4cd12a-6095-e211-a939-e4115bead28a",
         "name": "\u00a333.5M+"
@@ -147,25 +138,26 @@
         "name": "North West"
       },
       "trading_names": [],
-      "registered_address_town": "Volcanus",
       "archived": false,
-      "trading_address_2": null,
-      "trading_address_postcode": null,
       "description": "This is a dummy company for testing",
-      "registered_address_county": null,
-      "registered_address_postcode": "NE28 5AQ",
+      "address": {
+        "line_1": "12 Alpha Street",
+        "line_2": null,
+        "town": "Volcanus",
+        "county": null,
+        "postcode": "NE28 5AQ",
+        "country": {
+          "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+          "name": "United Kingdom"
+        }
+      },
       "archived_on": null,
-      "trading_address_town": null,
-      "trading_address_county": null,
       "website": null,
-      "registered_address_1": "12 Alpha Street",
-      "registered_address_2": null,
       "name": "Mars Components Ltd",
       "modified_on": "2017-10-16T11:00:00+00:00",
       "archived_reason": null,
       "reference_code": "",
       "vat_number": "",
-      "trading_address_1": null,
       "company_number": null,
       "created_on": "2016-09-16T11:00:00+00:00"
     }

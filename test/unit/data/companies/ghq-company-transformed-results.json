@@ -20,7 +20,7 @@
           "value": "Global HQ"
         },
         {
-          "label": "Registered address",
+          "label": "Address",
           "type": "address",
           "value": {
             "country": {
@@ -62,7 +62,7 @@
           "value": "Global HQ"
         },
         {
-          "label": "Registered address",
+          "label": "Address",
           "type": "address",
           "value": {
             "country": {

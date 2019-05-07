@@ -36,7 +36,8 @@ function search ({
   limit = 10,
   page = 1,
 }) {
-  const searchUrl = `${config.apiRoot}/v3/search`
+  const apiVersion = !isAggregation && searchEntity === 'company' ? 'v4' : 'v3'
+  const searchUrl = `${config.apiRoot}/${apiVersion}/search`
 
   const body = {
     ...requestBody,
@@ -59,7 +60,7 @@ function search ({
     })
 }
 
-function searchEntity (token, body, route, { page = 1, limit = 10 }) {
+function searchEntity (token, body, route, { apiVersion = 'v3', page = 1, limit = 10 }) {
   const queryParams = {
     offset: (page * limit) - limit,
     limit,
@@ -67,7 +68,7 @@ function searchEntity (token, body, route, { page = 1, limit = 10 }) {
 
   const options = {
     body,
-    url: `${config.apiRoot}/v3/search/${route}?${queryString.stringify(queryParams)}`,
+    url: `${config.apiRoot}/${apiVersion}/search/${route}?${queryString.stringify(queryParams)}`,
     method: 'POST',
   }
 
@@ -84,7 +85,7 @@ function searchCompanies ({ token, searchTerm, isUkBased, page = 1, limit = 10, 
     original_query: searchTerm,
     uk_based: isUkBased,
     isAggregation: false,
-  }, 'company', { page, limit })
+  }, 'company', { apiVersion: 'v4', page, limit })
 }
 
 function searchInvestments ({ token, searchTerm, page = 1, limit = 10, filters = {} }) {
