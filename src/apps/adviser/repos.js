@@ -19,7 +19,8 @@ function getAdviser (token, id) {
 }
 
 async function fetchAdviserSearchResults (token, params) {
-  const url = `${config.apiRoot}/adviser/?autocomplete=${params.term}`
+  const isActive = params.is_active ? '&is_active=true' : ''
+  const url = `${config.apiRoot}/adviser/?autocomplete=${params.term}${isActive}`
   const adviserResults = await authorisedRequest(token, { url })
   return adviserResults.results
 }
