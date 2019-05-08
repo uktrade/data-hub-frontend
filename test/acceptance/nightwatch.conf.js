@@ -1,7 +1,8 @@
 require('dotenv').config()
-const seleniumServer = require('selenium-server')
+
 const chromeDriver = require('chromedriver')
 const path = require('path')
+const seleniumServer = require('selenium-server')
 
 require('nightwatch-cucumber')({
   cucumberArgs: [
@@ -12,7 +13,33 @@ require('nightwatch-cucumber')({
   ],
 })
 
-module.exports = {
+const client = process.env.CLIENT || 'chrome'
+const browserStackUser = process.env.BROWSERSTACK_USERNAME || ''
+const browserStackKey = process.env.BROWSERSTACK_ACCESS_KEY || ''
+const isRemote = !!process.env.BROWSERSTACK_ACCESS_KEY
+
+const remoteConfig = {
+  selenium: {
+    start_process: false,
+    host: 'hub-cloud.browserstack.com',
+    port: 80,
+  },
+  test_settings: {
+    default: {
+      desiredCapabilities: {
+        build: 'DataHub - Liveservices',
+        browserName: client,
+        'browserstack.user': browserStackUser,
+        'browserstack.key': browserStackKey,
+        'browserstack.local': true,
+      },
+      selenium_host: 'hub-cloud.browserstack.com',
+      selenium_port: 80,
+    },
+  },
+}
+
+const defaultConfig = {
   custom_commands_path: [
     'node_modules/nightwatch-custom-commands-assertions/js/commands',
     path.resolve(__dirname, 'commands'),
@@ -63,3 +90,7 @@ module.exports = {
     },
   },
 }
+
+module.exports = isRemote
+  ? Object.assign({}, defaultConfig, remoteConfig)
+  : defaultConfig
