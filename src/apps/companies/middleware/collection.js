@@ -1,7 +1,7 @@
 const { assign } = require('lodash')
 
 const { getOptions } = require('../../../lib/options')
-const { searchLimitedCompanies, searchCompanies } = require('../../search/services')
+const { searchLimitedCompanies, searchCompanies } = require('../../../modules/search/services')
 const { transformApiResponseToSearchCollection } = require('../../../modules/search/transformers')
 const {
   transformCompanyToListItem,

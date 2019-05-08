@@ -191,9 +191,8 @@ describe('Typeahead', () => {
         instance = {
           name: 'adviser',
           entity: 'adviser',
-          multipleSelectOptions: false,
           options: [],
-          isActive: true,
+          filterInactive: '',
         }
         asyncSearch = Typeahead.methods.asyncSearch.bind(instance)
       })
@@ -214,7 +213,7 @@ describe('Typeahead', () => {
 
         it('should have fetched suggestions', () => {
           expect(axios.get).to.have.been.calledOnce
-          expect(axios.get).to.be.calledWith('/api/options/adviser?autocomplete=fred&is_active=true')
+          expect(axios.get).to.be.calledWith('/api/options/adviser?autocomplete=fred')
         })
 
         it('should store the return options', () => {
@@ -239,6 +238,33 @@ describe('Typeahead', () => {
 
         it('should clear the available options', () => {
           expect(instance.options).to.deep.equal([])
+        })
+      })
+
+      context('when choosing to not display inactive advisers', () => {
+        beforeEach((done) => {
+          instance = {
+            name: 'adviser',
+            entity: 'adviser',
+            options: [],
+            filterInactive: '&is_active=true',
+          }
+          asyncSearch = Typeahead.methods.asyncSearch.bind(instance)
+
+          axios.get = sinon.stub().resolves({
+            data: [{
+              value: '1',
+              label: 'Fred Smith',
+              subLabel: 'Dept of commerce',
+            }],
+          })
+
+          asyncSearch('fred')
+          setTimeout(done, 600)
+        })
+        it('should not fetch active users', () => {
+          expect(axios.get).to.have.been.calledOnce
+          expect(axios.get).to.be.calledWith('/api/options/adviser?autocomplete=fred&is_active=true')
         })
       })
     })

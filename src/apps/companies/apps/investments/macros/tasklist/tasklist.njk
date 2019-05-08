@@ -8,6 +8,7 @@
     </span>
     {% if isComplete %}
       <span class="task-list__item-complete">{{ props.value }}</span>
+      {{ caller() if caller }}
     {% else %}
       <strong class="task-list__item-incomplete" id="{{ id | kebabCase }}-incomplete">INCOMPLETE</strong>
     {% endif %}

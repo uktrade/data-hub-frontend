@@ -20,7 +20,13 @@ const getRadioButtonWithText = (text) =>
 module.exports = {
   props: {},
   elements: {
-    aStandardInteraction: getRadioButtonWithText('A standard interaction'),
+    export: getRadioButtonWithText('Export'),
+    investment: getRadioButtonWithText('Investment'),
+    other: getRadioButtonWithText('Other'),
+    anExportInteraction: 'label[for=field-kind_export-1]',
+    anExportServiceDelivery: 'label[for=field-kind_export-2]',
+    anOtherInteraction: 'label[for=field-kind_other-1]',
+    anOtherServiceDelivery: 'label[for=field-kind_other-2]',
     aServiceThatYouHaveProvided: getRadioButtonWithText('A service that you have provided'),
     continueButton: getButtonWithText('Continue'),
     interactionSaveButton: getButtonWithText('Add interaction'),

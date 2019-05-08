@@ -1,4 +1,4 @@
-const { search } = require('../../search/services')
+const { search } = require('../../../modules/search/services')
 const { transformApiResponseToCollection } = require('../../../modules/api/transformers')
 const { transformOrderToListItem } = require('../../omis/transformers')
 

@@ -1,6 +1,6 @@
 {
   "name": "data-hub-frontend",
-  "version": "5.21.0",
+  "version": "5.22.0",
   "description": "Data Hub Frontend",
   "main": "src/server.js",
   "repository": {
@@ -169,5 +169,8 @@
     "supertest": "^3.3.0",
     "wavy": "^1.0.4"
   },
-  "sasslintConfig": ".sass-lint.yml"
+  "sasslintConfig": ".sass-lint.yml",
+  "resolutions": {
+    "tar": "^4.4.8"
+  }
 }

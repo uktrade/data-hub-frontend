@@ -143,6 +143,7 @@ describe('interaction list', () => {
                 view: 'entity/interactions',
                 returnLink: 'entity/interactions/',
                 createKind: 'interaction',
+                theme: 'export',
                 canAdd: true,
                 isIE: false,
               },
@@ -158,7 +159,7 @@ describe('interaction list', () => {
           const actual = this.res.render.firstCall.args[1].actionButtons[0]
           expect(actual).to.deep.equal({
             label: 'Add interaction',
-            url: 'entity/interactions/create/interaction',
+            url: 'entity/interactions/create/export/interaction',
           })
         })
       })

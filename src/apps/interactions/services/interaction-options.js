@@ -1,4 +1,4 @@
-const { get, includes, snakeCase } = require('lodash')
+const { get, includes } = require('lodash')
 
 const { getContactsForCompany } = require('../../contacts/repos')
 const { getAdvisers } = require('../../adviser/repos')
@@ -89,11 +89,17 @@ async function getServiceOptions (req, res, createdOn) {
 }
 
 function getContextForInteraction (req, res) {
+  const { theme = {}, kind } = req.params
+
   if (get(res, 'locals.investment.id') || get(res.locals, 'interaction.investment_project.id')) {
     return 'investment_project_interaction'
   }
 
-  return snakeCase(get(req.params, 'kind', 'interaction'))
+  const getContext = {
+    'export': (kind) => kind === 'interaction' ? 'export_interaction' : 'export_service_delivery',
+    'other': (kind) => kind === 'interaction' ? 'other_interaction' : 'other_service_delivery',
+  }
+  return getContext[theme] ? getContext[theme](kind) : 'investment_interaction'
 }
 
 module.exports = { getInteractionOptions }

@@ -1,7 +1,7 @@
 const { standardFormConfig, entitySearchConfig } = require('./macros')
 const { globalFields } = require('../../macros')
 const { buildFormWithStateAndErrors } = require('../../builders')
-const { search, buildSearchEntityResultsData } = require('../../search/services')
+const { search, buildSearchEntityResultsData } = require('../../../modules/search/services')
 
 async function getAggregationData (token, searchTerm) {
   if (!searchTerm) { return null }

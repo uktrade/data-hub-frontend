@@ -141,7 +141,7 @@ describe('transformCompanyToListItem', () => {
       }))
     })
 
-    it('should include the trading address in the result', () => {
+    it('should include the address in the result', () => {
       expect(this.listItem.meta).to.containSubset([{
         label: 'Address',
         type: 'address',
@@ -151,86 +151,6 @@ describe('transformCompanyToListItem', () => {
           town: 'town',
           county: null,
           postcode: 'postcode',
-          country: {
-            id: '80756b9a-5d95-e211-a939-e4115bead28a',
-            name: 'United Kingdom',
-          },
-        },
-      }])
-    })
-
-    it('does not include the registered address', () => {
-      expect(this.listItem.meta).to.not.containSubset([{
-        label: 'Registered address',
-        value: 'Leeds City Centre, Leeds, EX1 2PM, United Kingdom',
-      }])
-    })
-  })
-
-  context('when the company has a trading address', () => {
-    beforeEach(() => {
-      this.listItem = transformCompanyToListItem(assign({}, companyData, {
-        trading_address_postcode: 'W1C 2BA',
-        trading_address_town: 'London',
-        trading_address_1: '100 Bolton Road',
-        trading_address_country: {
-          id: '123',
-          name: 'United Kingdom',
-        },
-      }))
-    })
-
-    it('should include the trading address in the result', () => {
-      expect(this.listItem.meta).to.containSubset([{
-        label: 'Address',
-        type: 'address',
-        value: {
-          line_1: '100 Bolton Road',
-          line_2: '',
-          town: 'London',
-          county: '',
-          postcode: 'W1C 2BA',
-          country: {
-            id: '123',
-            name: 'United Kingdom',
-          },
-        },
-      }])
-    })
-
-    it('does not include the registered address', () => {
-      expect(this.listItem.meta).to.not.containSubset([{
-        label: 'Registered address',
-        value: 'Leeds City Centre, Leeds, EX1 2PM, United Kingdom',
-      }])
-    })
-  })
-
-  context('when the company does not have a trading address', () => {
-    beforeEach(() => {
-      this.listItem = transformCompanyToListItem(assign({}, companyData, {
-        trading_address_postcode: null,
-        trading_address_town: null,
-        trading_address_1: null,
-      }))
-    })
-
-    it('should not include the trading address in the result', () => {
-      expect(this.listItem.meta).to.not.containSubset([{
-        label: 'Address',
-      }])
-    })
-
-    it('returns a formatted registered address', () => {
-      expect(this.listItem.meta).to.containSubset([{
-        label: 'Registered address',
-        type: 'address',
-        value: {
-          line_1: 'Leeds City Centre',
-          line_2: null,
-          town: 'Leeds',
-          county: null,
-          postcode: 'EX1 2PL',
           country: {
             id: '80756b9a-5d95-e211-a939-e4115bead28a',
             name: 'United Kingdom',
