@@ -56,3 +56,6 @@ dump.rdb
 # Generated trello number file
 scripts/trello-numbers.txt
 scripts/trello-story-description.txt
+
+# BrowserStack local log
+local.log
