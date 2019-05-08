@@ -43,6 +43,7 @@ module.exports = function ({
       placeholder: 'Search adviser',
       useSubLabel: false,
       options: adviserOptions,
+      hideInactive: false,
     },
     {
       macroName: 'DateField',

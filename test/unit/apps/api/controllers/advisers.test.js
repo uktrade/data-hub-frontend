@@ -40,7 +40,7 @@ describe('Adviser options API controller', () => {
   context('when called with a name for an adviser', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .get('/adviser/?autocomplete=be')
+        .get('/adviser/?autocomplete=be&is_active=true')
         .reply(200, {
           results: [this.bertSmith],
         })
