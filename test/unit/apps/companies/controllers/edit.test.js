@@ -1,6 +1,6 @@
 const { assign } = require('lodash')
 
-const companyMock = require('~/test/unit/data/api-response-intermediary-company.json')
+const companyMock = require('~/test/unit/data/companies/company-v4.json')
 const config = require('~/config')
 
 const metaDataMock = {
