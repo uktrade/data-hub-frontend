@@ -58,10 +58,42 @@ When(/^[an]{1,2} (interaction|service delivery) is added$/, async function (kind
     .wait() // wait for backend to sync
 })
 
-When(/^I select interaction$/, async function () {
+When(/^I select export interaction$/, async function () {
   await Interaction
     .waitForElementVisible('@continueButton')
-    .click('@aStandardInteraction')
+    .click('@export')
+    .click('@anExportInteraction')
+    .click('@continueButton')
+})
+
+When(/^I select export service delivery$/, async function () {
+  await Interaction
+    .waitForElementVisible('@continueButton')
+    .click('@export')
+    .click('@anExportServiceDelivery')
+    .click('@continueButton')
+})
+
+When(/^I select investment$/, async function () {
+  await Interaction
+    .waitForElementVisible('@continueButton')
+    .click('@investment')
+    .click('@continueButton')
+})
+
+When(/^I select other interaction$/, async function () {
+  await Interaction
+    .waitForElementVisible('@continueButton')
+    .click('@other')
+    .click('@anOtherInteraction')
+    .click('@continueButton')
+})
+
+When(/^I select other service delivery$/, async function () {
+  await Interaction
+    .waitForElementVisible('@continueButton')
+    .click('@other')
+    .click('@anOtherServiceDelivery')
     .click('@continueButton')
 })
 
@@ -69,13 +101,6 @@ When(/^I select a policy feedback option$/, async function () {
   await Interaction
     .waitForElementVisible('@policyFeedbackYes')
     .click('@policyFeedbackYes')
-})
-
-When(/^I select service delivery$/, async function () {
-  await Interaction
-    .waitForElementVisible('@continueButton')
-    .click('@aServiceThatYouHaveProvided')
-    .click('@continueButton')
 })
 
 When(/^the interaction events Yes option is chosen$/, async function () {

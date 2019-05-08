@@ -5,7 +5,7 @@ describe('Service delivery form', () => {
   beforeEach(() => {
     cy.server()
     cy.route('/api/options/adviser?autocomplete*').as('adviserAutocomplete')
-    cy.visit(`/companies/${fixtures.default.id}/interactions/create/service-delivery`)
+    cy.visit(`/companies/${fixtures.default.id}/interactions/create/export/service-delivery`)
   })
 
   it('should render breadcrumbs', () => {

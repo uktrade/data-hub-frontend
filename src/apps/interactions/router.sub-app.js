@@ -26,11 +26,11 @@ router
     renderCreate,
   )
 
-router.route('/interactions/create/:kind')
+router.route('/interactions/create/:theme/:kind')
   .post(postDetails, renderEditPage)
   .get(renderEditPage)
 
-router.route('/interactions/:interactionId/:kind/edit')
+router.route('/interactions/:interactionId/:theme/:kind/edit')
   .post(postDetails, renderEditPage)
   .get(renderEditPage)
 
