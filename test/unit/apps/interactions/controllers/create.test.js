@@ -36,11 +36,12 @@ describe('Create interaction, step 1', () => {
   })
 
   describe('#postcreate', () => {
-    context('when a request is made to add an interaction', () => {
+    context('when a request is made to add an interaction and the theme is "export" and the kind is "interaction"', () => {
       beforeEach(() => {
         this.req = assign({}, this.req, {
           body: {
-            kind: 'interaction',
+            theme: 'interaction',
+            kind_export: 'export_interaction',
           },
           query: {
             company: '1234',
@@ -53,15 +54,59 @@ describe('Create interaction, step 1', () => {
 
       it('should forward the user to the create interaction page', () => {
         const redirectUrl = this.res.redirect.firstCall.args[0]
-        expect(redirectUrl).to.contain('/return/create/interaction')
+        expect(redirectUrl).to.equal('/return/create/export/interaction')
       })
     })
 
-    context('when a request is made to add a service delivery', () => {
+    context('when a request is made to add an interaction and the theme is "service_delivery" and the kind is "export_service_delivery"', () => {
       beforeEach(() => {
         this.req = assign({}, this.req, {
           body: {
-            kind: 'service_delivery',
+            theme: 'service_delivery',
+            kind_export: 'export_service_delivery',
+          },
+          query: {
+            company: '1234',
+            contact: '4321',
+          },
+        })
+
+        this.create.postCreate(this.req, this.res, this.next)
+      })
+
+      it('should forward the user to the create interaction page', () => {
+        const redirectUrl = this.res.redirect.firstCall.args[0]
+        expect(redirectUrl).to.equal('/return/create/export/service-delivery')
+      })
+    })
+
+    context('when a request is made to add an interaction and the theme is "investment_interaction" and the kind is "interaction"', () => {
+      beforeEach(() => {
+        this.req = assign({}, this.req, {
+          body: {
+            theme: 'investment_interaction',
+          },
+          query: {
+            company: '1234',
+            contact: '4321',
+          },
+        })
+
+        this.create.postCreate(this.req, this.res, this.next)
+      })
+
+      it('should forward the user to the create interaction page', () => {
+        const redirectUrl = this.res.redirect.firstCall.args[0]
+        expect(redirectUrl).to.equal('/return/create/investment/interaction')
+      })
+    })
+
+    context('when a request is made to add an interaction and the theme is "service_delivery" and the kind is "interaction"', () => {
+      beforeEach(() => {
+        this.req = assign({}, this.req, {
+          body: {
+            theme: 'service_delivery',
+            kind_other: 'other_interaction',
           },
           query: {
             company: '1234',
@@ -74,11 +119,33 @@ describe('Create interaction, step 1', () => {
 
       it('should forward the user to the create service delivery page', () => {
         const redirectUrl = this.res.redirect.firstCall.args[0]
-        expect(redirectUrl).to.contain('/return/create/service-delivery')
+        expect(redirectUrl).to.equal('/return/create/other/interaction')
       })
     })
 
-    context('when a request is made with no select', () => {
+    context('when a request is made to add an interaction and the theme is "service_delivery" and the kind is "other_service_delivery"', () => {
+      beforeEach(() => {
+        this.req = assign({}, this.req, {
+          body: {
+            theme: 'service_delivery',
+            kind_other: 'other_service_delivery',
+          },
+          query: {
+            company: '1234',
+            contact: '4321',
+          },
+        })
+
+        this.create.postCreate(this.req, this.res, this.next)
+      })
+
+      it('should forward the user to the create service delivery page', () => {
+        const redirectUrl = this.res.redirect.firstCall.args[0]
+        expect(redirectUrl).to.equal('/return/create/other/service-delivery')
+      })
+    })
+
+    context('when a request is made with no theme selected', () => {
       beforeEach(() => {
         this.req = assign({}, this.req, {
           query: {
@@ -91,6 +158,54 @@ describe('Create interaction, step 1', () => {
 
       it('should add an error to the response', () => {
         expect(this.res.locals.errors.messages.kind).to.deep.equal(['You must select an interaction type'])
+      })
+
+      it('should continue onto the render form controller', () => {
+        expect(this.next).to.be.calledOnce
+      })
+    })
+
+    context('when a request is made with a theme selected but no kind export selected', () => {
+      beforeEach(() => {
+        this.req = assign({}, this.req, {
+          body: {
+            theme: 'a theme',
+            kind_export: '',
+          },
+          query: {
+            company: '1234',
+          },
+        })
+
+        this.create.postCreate(this.req, this.res, this.next)
+      })
+
+      it('should add an error to the response', () => {
+        expect(this.res.locals.errors.messages.kind).to.deep.equal(['You must select what you would like to record'])
+      })
+
+      it('should continue onto the render form controller', () => {
+        expect(this.next).to.be.calledOnce
+      })
+    })
+
+    context('when a request is made with a theme selected but no kind other selected', () => {
+      beforeEach(() => {
+        this.req = assign({}, this.req, {
+          body: {
+            theme: 'a theme',
+            kind_other: '',
+          },
+          query: {
+            company: '1234',
+          },
+        })
+
+        this.create.postCreate(this.req, this.res, this.next)
+      })
+
+      it('should add an error to the response', () => {
+        expect(this.res.locals.errors.messages.kind).to.deep.equal(['You must select what you would like to record'])
       })
 
       it('should continue onto the render form controller', () => {
