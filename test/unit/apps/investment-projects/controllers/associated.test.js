@@ -15,7 +15,7 @@ describe('investment associated controller', () => {
       '../repos': {
         updateInvestment: this.updateInvestmentStub,
       },
-      '../../search/services': {
+      '../../../modules/search/services': {
         searchInvestments: this.searchStub,
       },
       '../../../lib/metadata': {

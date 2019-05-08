@@ -11,6 +11,7 @@ function setInteractionsDetails (req, res, next) {
     query: { investment_project_id: investmentId },
     view: 'investments/views/interactions',
     createKind: 'interaction',
+    theme: 'investment',
     canAdd: true,
     showCompany: true,
   }

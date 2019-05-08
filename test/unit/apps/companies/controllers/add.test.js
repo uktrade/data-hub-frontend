@@ -36,7 +36,7 @@ describe('Company add controller', () => {
     this.nextStub = sinon.stub()
 
     companyAddController = proxyquire('~/src/apps/companies/controllers/add', {
-      '../../search/services': {
+      '../../../modules/search/services': {
         searchLimitedCompanies: searchLimitedCompaniesStub,
       },
       '../repos': {

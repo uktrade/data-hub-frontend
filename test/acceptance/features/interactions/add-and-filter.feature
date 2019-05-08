@@ -5,11 +5,11 @@ Feature: Add interaction and view collection of interactions
   And have the ability to filter a collection of interactions 
   So that I can easily find and read my newly created interaction details
 
-  @add-and-view-interaction
+  @add-and-view-export-interaction
   Scenario: Add and view interaction in interactions and services collection
     When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
     And I click the "Add interaction" link
-    And I select interaction
+    And I select export interaction
     When an interaction is added
       | key      | value                 |
     Then I see the success message
@@ -27,11 +27,11 @@ Feature: Add interaction and view collection of interactions
       | text    | expected               |
       | Type    | interaction.type       |
 
-  @add-and-view-service-delivery
-  Scenario: Add and view service delivery in interactions and services collection
+  @add-and-view-export-service-delivery
+  Scenario: Add and view interaction in interactions and services collection
     When I navigate to the `companies.interactions` page using `company` `Venus Ltd` fixture
     And I click the "Add interaction" link
-    And I select service delivery
+    And I select export service delivery
     And a service delivery is added
       | key             | value          |
     Then I see the success message
@@ -48,3 +48,4 @@ Feature: Add interaction and view collection of interactions
     And the Interaction has badges
       | text    | expected               |
       | Type    | interaction.type       |
+

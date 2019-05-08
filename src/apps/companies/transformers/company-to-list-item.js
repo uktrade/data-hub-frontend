@@ -3,58 +3,6 @@ const { get } = require('lodash')
 
 const labels = require('../labels')
 
-function transformAddress ({
-  address,
-  trading_address_country,
-  trading_address_county,
-  trading_address_town,
-  trading_address_postcode,
-  trading_address_1,
-  trading_address_2,
-  registered_address_country,
-  registered_address_county,
-  registered_address_town,
-  registered_address_postcode,
-  registered_address_1,
-  registered_address_2,
-}) {
-  if (address) {
-    return {
-      type: 'address',
-      label: labels.address.companyAddress,
-      value: address,
-    }
-  }
-
-  if (trading_address_1 && trading_address_country) {
-    return {
-      type: 'address',
-      label: labels.address.companyAddress,
-      value: {
-        line_1: trading_address_1,
-        line_2: trading_address_2,
-        town: trading_address_town,
-        county: trading_address_county,
-        postcode: trading_address_postcode,
-        country: trading_address_country,
-      },
-    }
-  }
-
-  return {
-    type: 'address',
-    label: labels.address.companyRegisteredAddress,
-    value: {
-      line_1: registered_address_1,
-      line_2: registered_address_2,
-      town: registered_address_town,
-      county: registered_address_county,
-      postcode: registered_address_postcode,
-      country: registered_address_country,
-    },
-  }
-}
-
 module.exports = function transformCompanyToListItem ({
   id,
   name,
@@ -63,19 +11,6 @@ module.exports = function transformCompanyToListItem ({
   uk_region,
   trading_names,
   address,
-  registered_address,
-  trading_address_country,
-  trading_address_county,
-  trading_address_town,
-  trading_address_postcode,
-  trading_address_1,
-  trading_address_2,
-  registered_address_country,
-  registered_address_county,
-  registered_address_town,
-  registered_address_postcode,
-  registered_address_1,
-  registered_address_2,
   modified_on,
   headquarter_type,
   global_headquarters,
@@ -100,13 +35,11 @@ module.exports = function transformCompanyToListItem ({
     })
   }
 
-  if (trading_address_country || registered_address_country) {
-    meta.push({
-      label: 'Country',
-      type: 'badge',
-      value: get(trading_address_country, 'name') || get(registered_address_country, 'name'),
-    })
-  }
+  meta.push({
+    label: 'Country',
+    type: 'badge',
+    value: address.country.name,
+  })
 
   if (uk_based) {
     meta.push({
@@ -142,22 +75,11 @@ module.exports = function transformCompanyToListItem ({
     }
   }
 
-  meta.push(transformAddress({
-    address,
-    registered_address,
-    trading_address_country,
-    trading_address_county,
-    trading_address_town,
-    trading_address_postcode,
-    trading_address_1,
-    trading_address_2,
-    registered_address_country,
-    registered_address_county,
-    registered_address_town,
-    registered_address_postcode,
-    registered_address_1,
-    registered_address_2,
-  }))
+  meta.push({
+    type: 'address',
+    label: labels.address.companyAddress,
+    value: address,
+  })
 
   const url = `/companies/${id}`
 

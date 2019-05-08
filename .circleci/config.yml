@@ -360,7 +360,6 @@ jobs:
     parallelism: 6
     steps:
       - checkout
-      - run: yarn install
       - *wait_for_backend
       - *wait_for_mock_sso
       - *store_versions
@@ -413,11 +412,10 @@ jobs:
       - *docker_data_hub_backend_celery
     steps:
       - checkout
-      - *store_versions
-      - *restore_yarn_cache
-      - run: yarn install
       - *wait_for_backend
       - *wait_for_mock_sso
+      - *store_versions
+      - *restore_yarn_cache
       - run: yarn build
       - *start_frontend
       - *wait_for_frontend
@@ -446,11 +444,10 @@ jobs:
       - *docker_data_hub_backend_celery
     steps:
       - checkout
-      - *store_versions
-      - *restore_yarn_cache
-      - run: yarn install
       - *wait_for_backend
       - *wait_for_mock_sso
+      - *store_versions
+      - *restore_yarn_cache
       - run: yarn build
       - *start_frontend
       - *wait_for_frontend

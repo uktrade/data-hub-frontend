@@ -18,6 +18,7 @@ async function getHiddenFields (req, res, interactionId) {
     company: get(res.locals, 'company.id'),
     investment_project: get(res.locals, 'investment.id'),
     kind: snakeCase(req.params.kind),
+    theme: snakeCase(req.params.theme) || 'other',
   }
 
   return hiddenFields
@@ -39,6 +40,10 @@ async function buildForm (req, res, interactionId) {
     returnLink,
     returnText: interactionId ? 'Return without saving' : 'Cancel',
     buttonText: interactionId ? 'Save and return' : `Add ${lowerCase(req.params.kind)}`,
+  }
+
+  if (req.params.kind !== 'service-delivery' && req.params.kind !== 'interaction') {
+    res.redirect('/404')
   }
 
   const form = formConfigs[req.params.kind](formProperties)
