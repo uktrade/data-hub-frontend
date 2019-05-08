@@ -30,6 +30,9 @@
         {% if props.useSubLabel === false %}
           {% raw %}:{% endraw %}use-sub-label="{{ props.useSubLabel }}"
         {% endif %}
+        {% if props.hideInactive === false %}
+          {% raw %}:{% endraw %}hide-inactive="{{ props.hideInactive }}"
+        {% endif %}
       >
       </typeahead>
     </div>

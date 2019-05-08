@@ -143,6 +143,11 @@
         type: Boolean,
         required: false,
         default: true,
+      },
+      hideInactive: {
+        type: Boolean,
+        required: false,
+        default: true,
       }
     },
     created () {
@@ -169,9 +174,9 @@
         hiddenFormValue: this.selectedValue,
         setPlaceHolder: this.placeholder,
         isAsyncFunction: false,
-        isActive: true,
         hasLabel: this.hideLabel,
-        hasSubLabel: this.useSubLabel
+        hasSubLabel: this.useSubLabel,
+        filterInactive: this.hideInactive ? '&is_active=true' : ''
       }
     },
     methods: {
@@ -204,7 +209,7 @@
         if (query.length < 3) {return}
         this.isLoading = true
         this.isAsyncFunction = true
-        axios.get(`/api/options/${this.entity}?autocomplete=${query}&is_active=${this.isActive}`)
+        axios.get(`/api/options/${this.entity}?autocomplete=${query}${this.filterInactive}`)
           .then((response) => {
             this.options = response.data
             this.isLoading = false
