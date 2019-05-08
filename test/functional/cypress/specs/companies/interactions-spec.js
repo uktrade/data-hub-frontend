@@ -39,11 +39,11 @@ describe('Companies interactions', () => {
     })
 
     it('should display the "Company interactions" heading', () => {
-      cy.get(selectors.companyInteraction().heading).should('have.text', 'Company interactions')
+      cy.get(selectors.companyCollection().heading).should('have.text', 'Company interactions')
     })
 
     it('should display the timeline link', () => {
-      const selector = selectors.companyInteraction().timelineLink(expectedCompanyId)
+      const selector = selectors.companyCollection().timelineLink(expectedCompanyId)
       cy.get(selector).should('be.visible')
       cy.get(selector).should('have.text', 'View activity for this business on a timeline')
     })
@@ -75,11 +75,11 @@ describe('Companies interactions', () => {
     })
 
     it('should not display the "Add interaction" button', () => {
-      cy.get(selectors.companyInteraction().addButton(fixtures.company.oneListCorp.id)).should('not.exist')
+      cy.get(selectors.companyCollection().interaction.addButton(fixtures.company.oneListCorp.id)).should('not.exist')
     })
 
     it('should not display the archived summary', () => {
-      cy.get(selectors.companyInteraction().archivedSummary).should('not.exist')
+      cy.get(selectors.companyCollection().archivedSummary).should('not.exist')
     })
   })
 
@@ -109,11 +109,11 @@ describe('Companies interactions', () => {
     })
 
     it('should not display the "Add interaction" button', () => {
-      cy.get(selectors.companyInteraction().addButton(fixtures.company.oneListCorp.id)).should('not.exist')
+      cy.get(selectors.companyCollection().interaction.addButton(fixtures.company.oneListCorp.id)).should('not.exist')
     })
 
     it('should display the archived summary', () => {
-      cy.get(selectors.companyInteraction().archivedSummary).should('contain', 'Why can I not add an interaction?')
+      cy.get(selectors.companyCollection().archivedSummary).should('contain', 'Why can I not add an interaction?')
     })
   })
 
