@@ -65,27 +65,11 @@ describe('#transformCompanyToKnownAsView', () => {
             name: 200,
             type: 'number',
           },
-          {
-            details: {
-              summaryText: 'What does that mean?',
-              text: 'Actual number of employees is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
-            },
-            name: 'This is an estimated number',
-            type: 'details',
-          },
         ],
         [
           {
             type: 'currency',
             name: 75000,
-          },
-          {
-            details: {
-              summaryText: 'What does that mean?',
-              text: 'Actual turnover is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
-            },
-            name: 'This is an estimated number',
-            type: 'details',
           },
         ],
       )
@@ -250,6 +234,68 @@ describe('#transformCompanyToKnownAsView', () => {
 
       it('should not set the description', () => {
         expect(this.actual.Description).to.not.exist
+      })
+    })
+
+    context('when the turnover is estimated', () => {
+      beforeEach(() => {
+        this.actual = transformCompanyToAboutView({
+          business_type: {
+            name: 'Company',
+          },
+          turnover: 100000,
+          is_turnover_estimated: true,
+        })
+      })
+
+      it('should set the turnover with description', () => {
+        const expectedTurnover = [
+          {
+            type: 'currency',
+            name: 75000,
+          },
+          {
+            details: {
+              summaryText: 'What does that mean?',
+              text: 'Actual turnover is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
+            },
+            name: 'This is an estimated number',
+            type: 'details',
+          },
+        ]
+
+        expect(this.actual[aboutLabels.turnover]).to.deep.equal(expectedTurnover)
+      })
+    })
+
+    context('when the number of employees is estimated', () => {
+      beforeEach(() => {
+        this.actual = transformCompanyToAboutView({
+          business_type: {
+            name: 'Company',
+          },
+          number_of_employees: 200,
+          is_number_of_employees_estimated: true,
+        })
+      })
+
+      it('should set the number of employees with description', () => {
+        const expectedNumberOfEmployees = [
+          {
+            'name': 200,
+            'type': 'number',
+          },
+          {
+            'details': {
+              'summaryText': 'What does that mean?',
+              'text': 'Actual number of employees is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
+            },
+            'name': 'This is an estimated number',
+            'type': 'details',
+          },
+        ]
+
+        expect(this.actual[aboutLabels.number_of_employees]).to.deep.equal(expectedNumberOfEmployees)
       })
     })
   })
