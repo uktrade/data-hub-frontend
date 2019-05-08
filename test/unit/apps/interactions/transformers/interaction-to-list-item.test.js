@@ -1,3 +1,4 @@
+const { find } = require('lodash')
 const transformInteractionToListItem = require('~/src/apps/interactions/transformers/interaction-to-list-item')
 const mockInteraction = require('~/test/unit/data/interactions/search-interaction.json')
 const mockInteractionWithFeedback = require('~/test/unit/data/interactions/search-interaction-with-feedback.json')
@@ -102,6 +103,87 @@ describe('#transformInteractionToListItem', () => {
 
     it('should transform data from interaction response to list item', () => {
       expect(this.transformed).have.property('name', 'No subject')
+    })
+  })
+
+  context('when the source is an interaction with adviser and team name', () => {
+    it('should return adviser name and team', () => {
+      this.transformed = transformInteractionToListItem()({
+        ...mockInteraction,
+        dit_participants: [
+          {
+            adviser: {
+              id: 1,
+              first_name: 'Bob',
+              last_name: 'Lawson',
+              name: 'Bob Lawson',
+            },
+            team: {
+              id: 1,
+              name: 'The test team',
+            },
+          }],
+      })
+      const metadata = this.transformed.meta
+      const adviserName = find(metadata, (item) => item.label === 'Adviser(s)')
+      expect(adviserName.value).to.deep.equal(['Bob Lawson, The test team'])
+    })
+  })
+
+  context('when the source is an interaction with a null team name', () => {
+    it('should return just an adviser name', () => {
+      this.transformed = transformInteractionToListItem()({
+        ...mockInteraction,
+        dit_participants: [
+          {
+            adviser: {
+              id: 1,
+              first_name: 'Bob',
+              last_name: 'Lawson',
+              name: 'Bob Lawson',
+            },
+            team: null,
+          }],
+      })
+      const metadata = this.transformed.meta
+      const adviserName = find(metadata, (item) => item.label === 'Adviser(s)')
+      expect(adviserName.value).to.deep.equal(['Bob Lawson'])
+    })
+  })
+
+  context('when the source is an interaction with a null adviser', () => {
+    it('should return unknown name', () => {
+      this.transformed = transformInteractionToListItem()({
+        ...mockInteraction,
+        dit_participants: [
+          {
+            adviser: null,
+            team: {
+              id: 1,
+              name: 'The test team',
+            },
+          }],
+      })
+      const metadata = this.transformed.meta
+      const adviserName = find(metadata, (item) => item.label === 'Adviser(s)')
+      expect(adviserName.value).to.deep.equal(['Unknown adviser'])
+    })
+  })
+
+  context('when the source is an interaction with a null contact name', () => {
+    it('should return unknown name', () => {
+      this.transformed = transformInteractionToListItem()({
+        ...mockInteraction,
+        contacts: [{
+          id: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
+          first_name: 'Jackson',
+          last_name: 'Whitfield',
+          name: null,
+        }],
+      })
+      const metadata = this.transformed.meta
+      const contactName = find(metadata, (item) => item.label === 'Contact(s)')
+      expect(contactName.value).to.deep.equal(['Unknown contact'])
     })
   })
 
