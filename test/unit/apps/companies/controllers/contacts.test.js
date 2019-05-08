@@ -1,6 +1,6 @@
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
-const companyMock = require('~/test/unit/data/companies/company.json')
+const companyMock = require('~/test/unit/data/companies/company-v4.json')
 
 describe('Company contact list controller', () => {
   beforeEach(() => {
