@@ -109,7 +109,7 @@ function searchForeignCompanies ({ token, searchTerm, page = 1, limit = 10 }) {
 function searchLimitedCompanies ({ token, searchTerm, page = 1, limit = 10 }) {
   return searchEntity(token, {
     original_query: searchTerm,
-  }, 'companieshousecompany', { page, limit })
+  }, 'companieshousecompany', { apiVersion: 'v4', page, limit })
 }
 
 function exportSearch ({ token, searchTerm = '', searchEntity, requestBody }) {
