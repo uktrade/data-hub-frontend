@@ -88,4 +88,45 @@ describe('options API controller', () => {
       })
     })
   })
+
+  context('given the list of options depends on another selection', () => {
+    beforeEach(async () => {
+      const reqMock = {
+        query: {
+          chained_param: 'chainedParam',
+          chained_value: 'chainedValue',
+          api_version: 'v4',
+          is_active: true,
+          autocomplete: 'France',
+        },
+        session: {
+          token: '1234',
+        },
+        params: {
+          entity: 'company',
+        },
+      }
+
+      this.getOptions = sinon.stub().resolves({})
+
+      const controller = proxyquire('~/src/apps/api/controllers/options', {
+        '../../../lib/options': {
+          getOptions: this.getOptions,
+        },
+      })
+
+      await controller.getOptionsHandler(reqMock, this.resMock, this.nextSpy)
+    })
+
+    it('should define and pass chained params to getOptions', () => {
+      expect(this.getOptions).to.be.calledWith('1234', 'company', {
+        apiVersion: 'v4',
+        chainedUrlParam: 'chainedParam',
+        chainedValue: 'chainedValue',
+        includeDisabled: true,
+        is_active: true,
+        term: 'France',
+      })
+    })
+  })
 })

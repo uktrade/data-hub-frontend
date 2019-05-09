@@ -35,6 +35,7 @@ const investmentFiltersFields = function ({ currentAdviserId, sectorOptions, adv
       placeholder: 'Search adviser',
       options: adviserOptions,
       hideInactive: false,
+      apiVersion: 'metadata',
     },
     {
       macroName: 'MultipleChoiceField',

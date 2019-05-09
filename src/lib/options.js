@@ -5,7 +5,7 @@ const { authorisedRequest } = require('../lib/authorised-request')
 const { filterDisabledOption } = require('../modules/permissions/filters')
 const { transformObjectToOption } = require('../apps/transformers')
 
-async function getOptions (token, key, { createdOn, currentValue, includeDisabled = false, sorted = true, term, id, queryString = '', context } = {}) {
+async function getOptions (token, key, { createdOn, currentValue, includeDisabled = false, sorted = true, term, id, queryString = '', context, apiVersion = 'metadata', chainedUrlParam, chainedValue } = {}) {
   if (id) {
     return getOptionsForId(token, key, id)
   }
@@ -18,24 +18,37 @@ async function getOptions (token, key, { createdOn, currentValue, includeDisable
     }
   }
 
-  const url = `${config.apiRoot}/metadata/${key}/${queryString}`
-  let options = await authorisedRequest(token, url)
+  let url
+  let options
 
-  if (!includeDisabled) {
-    options = options.filter(filterDisabledOption({ currentValue, createdOn }))
-  }
+  if (apiVersion === `metadata`) {
+    url = `${config.apiRoot}/metadata/${key}/${queryString}`
+    options = await authorisedRequest(token, url)
 
-  if (term) {
-    const lowercaseTerm = term.toLowerCase()
-    options = options.filter((option) => {
-      return option.name.toLowerCase().startsWith(lowercaseTerm)
-    })
-  }
+    if (!includeDisabled) {
+      options = options.filter(filterDisabledOption({ currentValue, createdOn }))
+    }
 
-  if (context) {
-    options = options.filter((option) => {
-      return !option.contexts || option.contexts.includes(context)
-    })
+    if (term) {
+      const lowercaseTerm = term.toLowerCase()
+      options = options.filter((option) => {
+        return option.name.toLowerCase().startsWith(lowercaseTerm)
+      })
+    }
+
+    if (context) {
+      options = options.filter((option) => {
+        return !option.contexts || option.contexts.includes(context)
+      })
+    }
+  } else if (apiVersion === `v4/search`) {
+    if (chainedUrlParam && chainedValue) {
+      term += `&${chainedUrlParam}=${chainedValue}`
+    }
+
+    url = `${config.apiRoot}/v4/search/${key}/autocomplete?term=${term}&format=json`
+    options = await authorisedRequest(token, url)
+    options = options.results
   }
 
   const mappedOptions = options.map(transformObjectToOption)

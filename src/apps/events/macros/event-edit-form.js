@@ -108,6 +108,7 @@ const eventFormConfig = ({
         placeholder: 'Search organiser',
         multipleSelect: false,
         options: advisers,
+        apiVersion: 'metadata',
       },
       {
         macroName: 'MultipleChoiceField',
