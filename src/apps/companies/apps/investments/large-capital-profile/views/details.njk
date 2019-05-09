@@ -12,6 +12,9 @@
       <span class="task-list__item-complete">
         Date of most recent background checks: {{ profile.investorDetails.requiredChecks.conductedOn | formatDate('DD MM YYYY') }}
       </span>
+      <span class="task-list__item-complete">
+        Person responsible for most recent background checks: {{ profile.investorDetails.requiredChecks.conductedBy.name }}
+      </span>
     {% endif %}
   {%- endcall %}
 </ul>

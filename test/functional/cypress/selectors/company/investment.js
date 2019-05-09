@@ -23,6 +23,11 @@ module.exports = {
       issuesIdentified: '[data-auto-id=requiredChecks] #conducted-2',
       notYetChecked: '[data-auto-id=requiredChecks] #conducted-3',
       notRequired: '[data-auto-id=requiredChecks] #conducted-4',
+      adviser: {
+        placeHolder: '#conditional-conducted-1 .multiselect__tags',
+        textInput: '#conditional-conducted-1 .multiselect__input',
+        selectedOption: '#conditional-conducted-1 .multiselect__single',
+      },
     },
     taskList: {
       investorType: {
@@ -49,6 +54,7 @@ module.exports = {
         name: '[data-auto-id="investorDetails"] ul > li:nth-child(5) .task-list__item-name',
         complete: '[data-auto-id="investorDetails"] ul > li:nth-child(5) .task-list__item-complete',
         completeDate: '[data-auto-id="investorDetails"] ul > li:nth-child(5) span:nth-child(3)',
+        adviser: '[data-auto-id="investorDetails"] ul > li:nth-child(5) span:nth-child(4)',
         incomplete: '[data-auto-id="investorDetails"] ul > li:nth-child(5) .task-list__item-incomplete',
       },
     },

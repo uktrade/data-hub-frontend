@@ -27,6 +27,9 @@
         {% if props.isAsync === false %}
           {% raw %}:{% endraw %}is-async="{{ props.isAsync }}"
         {% endif %}
+        {% if props.autoSubmit === false %}
+          {% raw %}:{% endraw %}auto-submit="{{ props.autoSubmit }}"
+        {% endif %}
         {% if props.useSubLabel === false %}
           {% raw %}:{% endraw %}use-sub-label="{{ props.useSubLabel }}"
         {% endif %}
