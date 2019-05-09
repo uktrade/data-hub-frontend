@@ -4,6 +4,7 @@ const moment = require('moment')
 const types = require('../constants')
 
 const transformObjectToOption = ({ value, label }) => ({ value, text: label })
+const transformAdvisersToTypeahead = ({ name, dit_team, id }) => ({ label: name, subLabel: dit_team.name, value: id })
 
 const parseDate = (dateStr) => {
   const date = moment(dateStr, 'YYYY-MM-DD', true)
@@ -47,15 +48,22 @@ const transformRequiredChecks = (requiredChecksMetaData, { requiredChecks }) => 
 
   const selectedType = get(requiredChecks, 'conducted.name')
   if (selectedType === types.CLEARED) {
+    retVal.cleared.adviser = requiredChecks.conductedBy
     retVal.cleared.date = parseDate(requiredChecks.conductedOn)
   } else if (selectedType === types.ISSUES_IDENTIFIED) {
+    retVal.issuesIdentified.adviser = requiredChecks.conductedBy
     retVal.issuesIdentified.date = parseDate(requiredChecks.conductedOn)
   }
 
   return retVal
 }
 
+const transformAdvisers = (advisers) => {
+  return advisers.map(transformAdvisersToTypeahead)
+}
+
 module.exports = {
+  transformAdvisers,
   transformInvestorTypes,
   transformRequiredChecks,
 }

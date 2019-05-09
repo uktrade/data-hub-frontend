@@ -23,6 +23,7 @@ const transformProfile = (profile, editing) => {
       requiredChecks: {
         conductedOn: get(profile, 'required_checks_conducted_on'),
         conducted: get(profile, 'required_checks_conducted'),
+        conductedBy: get(profile, 'required_checks_conducted_by'),
       },
     },
     investorRequirements: {
