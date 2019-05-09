@@ -2,7 +2,12 @@ const { flatten } = require('lodash')
 
 const { ORDER_STATES } = require('../../constants')
 
-const omisFiltersFields = function ({ omisMarketOptions, regionOptions, sectorOptions }) {
+const omisFiltersFields = function ({
+  omisMarketOptions,
+  regionOptions,
+  sectorOptions,
+  userAgent,
+}) {
   return [
     {
       macroName: 'MultipleChoiceField',
@@ -16,6 +21,42 @@ const omisFiltersFields = function ({ omisMarketOptions, regionOptions, sectorOp
       macroName: 'TextField',
       label: 'Order reference',
       name: 'reference',
+    },
+    {
+      macroName: 'DateField',
+      type: 'date',
+      label: 'Completed date from',
+      name: 'completed_on_after',
+      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
+      placeholder: '',
+      inputClass: userAgent.isIE ? 'ie-date-field' : null,
+    },
+    {
+      macroName: 'DateField',
+      type: 'date',
+      label: 'Completed date to',
+      name: 'completed_on_before',
+      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
+      placeholder: '',
+      inputClass: userAgent.isIE ? 'ie-date-field' : null,
+    },
+    {
+      macroName: 'DateField',
+      type: 'date',
+      label: 'Expected delivery date from',
+      name: 'delivery_date_after',
+      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
+      placeholder: '',
+      inputClass: userAgent.isIE ? 'ie-date-field' : null,
+    },
+    {
+      macroName: 'DateField',
+      type: 'date',
+      label: 'Expected delivery date to',
+      name: 'delivery_date_before',
+      hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
+      placeholder: '',
+      inputClass: userAgent.isIE ? 'ie-date-field' : null,
     },
     {
       macroName: 'TextField',
