@@ -126,6 +126,7 @@ function makeTypeahead () {
         label: 'Bob',
         subLabel: 'Lawson',
       }],
+      apiVersion: 'metadata',
     }],
     label: 'Adviser(s)',
     error: null,
@@ -135,7 +136,6 @@ function makeTypeahead () {
   const { window } = new JSDOM(HTML)
   const document = window.document
   const wrapper = document.querySelector('.js-AddItems')
-
   return { document, wrapper }
 }
 
@@ -445,9 +445,10 @@ describe('Add another', function () {
     })
 
     it('should contain a typeahead', function () {
-      const typeahead = this.wrapper.querySelector('#dit_participants__typeahead')
+      const typeahead = this.wrapper.querySelector('#group-field-dit_participants')
       expect(typeahead).to.exist
     })
+
     it('should contain a selected value in the placeholder', function () {
       const hiddenInput = this.wrapper.querySelector('.multiselect__input')
       const placeholder = hiddenInput.getAttribute('placeholder')
@@ -456,13 +457,13 @@ describe('Add another', function () {
 
     it('should create a new typeahead field when add another is clicked', function () {
       this.wrapper.querySelector('.js-AddItems__add--typeahead').click()
-      const typeaheads = this.wrapper.querySelectorAll('#dit_participants__typeahead')
+      const typeaheads = this.wrapper.querySelectorAll('#group-field-dit_participants')
       expect(typeaheads.length).to.equal(2)
     })
 
     it('should not contain a placeholder in the 2nd item', function () {
       this.wrapper.querySelector('.js-AddItems__add--typeahead').click()
-      const typeaheadTwo = Array.from(this.wrapper.querySelectorAll('#dit_participants__typeahead'))[1]
+      const typeaheadTwo = Array.from(this.wrapper.querySelectorAll('#group-field-dit_participants'))[1]
       const hiddenInput = typeaheadTwo.querySelector('.multiselect__input')
       const placeholder = hiddenInput.getAttribute('placeholder')
       expect(placeholder).to.equal('Search adviser')

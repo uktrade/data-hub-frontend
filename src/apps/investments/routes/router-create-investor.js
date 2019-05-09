@@ -1,8 +1,9 @@
 const { renderCreateInvestorProfilePage } = require('../controllers/create/investor-profile')
-const setInvestmentTabItems = require('../middleware/investments-tab-items')
-
+const { createProfile } = require('../controllers/create/create-profile')
 const router = require('express').Router()
 
-router.get('/', setInvestmentTabItems, renderCreateInvestorProfilePage)
+router
+  .get('/', renderCreateInvestorProfilePage)
+  .post('/', createProfile, renderCreateInvestorProfilePage)
 
 module.exports = router
