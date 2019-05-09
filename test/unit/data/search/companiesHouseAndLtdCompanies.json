@@ -14,10 +14,6 @@
         "id": "0167b456-0ddd-49bd-8184-e3227a0b6396",
         "name": "Undefined"
       },
-      "registered_address_country": {
-        "id": "80756b9a-5d95-e211-a939-e4115bead28a",
-        "name": "United Kingdom"
-      },
       "sector": {
         "id": "bb22c9d2-5f95-e211-a939-e4115bead28a",
         "name": "Automotive : Component Manufacturing : Electronic Components"
@@ -38,11 +34,6 @@
       "archived_reason": null,
       "archived_by": null,
       "name": "ACHME LIMITED",
-      "registered_address_1": "FIRST FLOOR ACHME HOUSE",
-      "registered_address_2": "ACHME ROAD",
-      "registered_address_town": "ACHME",
-      "registered_address_county": "ACHME",
-      "registered_address_postcode": "E15 1HP",
       "company_number": "08311441",
       "trading_names": [],
       "employee_range": null,
@@ -50,15 +41,31 @@
       "lead": false,
       "description": "test\r\n\r\ntest\r\n\r\ntst",
       "website": null,
-      "trading_address_1": null,
-      "trading_address_2": null,
-      "trading_address_town": null,
-      "trading_address_county": null,
-      "trading_address_country": null,
-      "trading_address_postcode": null,
       "headquarter_type": null,
       "one_list_group_global_account_manager": null,
-      "level": 0
+      "level": 0,
+      "address": {
+        "line_1": "FIRST FLOOR ACHME HOUSE",
+        "line_2": "ACHME ROAD",
+        "town": "ACHME",
+        "county": "ACHME",
+        "postcode": "E15 1HP",
+        "country": {
+          "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+          "name": "United Kingdom"
+        }
+      },
+      "registered_address": {
+        "line_1": "FIRST FLOOR ACHME HOUSE",
+        "line_2": "ACHME ROAD",
+        "town": "ACHME",
+        "county": "ACHME",
+        "postcode": "E15 1HP",
+        "country": {
+          "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+          "name": "United Kingdom"
+        }
+      }
     },
     {
       "business_type": {
@@ -72,10 +79,6 @@
       "employee_range": {
         "id": "3fafd8d0-5d95-e211-a939-e4115bead28a",
         "name": "50 to 249"
-      },
-      "registered_address_country": {
-        "id": "80756b9a-5d95-e211-a939-e4115bead28a",
-        "name": "United Kingdom"
       },
       "sector": {
         "id": "bb22c9d2-5f95-e211-a939-e4115bead28a",
@@ -101,25 +104,36 @@
       "archived_reason": null,
       "archived_by": null,
       "name": "Bouncing ball LTD",
-      "registered_address_1": "FIRST FLOOR Bouncing ball HOUSE",
-      "registered_address_2": "Bouncing ball ROAD",
-      "registered_address_town": "Bouncing ball",
-      "registered_address_county": "LONDON",
-      "registered_address_postcode": "GH7 1HP",
       "company_number": null,
       "trading_names": [],
       "lead": false,
       "description": "test\r\n\r\ntest\r\n\r\ntest",
       "website": "http://moo.com",
-      "trading_address_1": null,
-      "trading_address_2": null,
-      "trading_address_town": null,
-      "trading_address_county": null,
-      "trading_address_country": null,
-      "trading_address_postcode": null,
       "headquarter_type": null,
       "one_list_group_global_account_manager": null,
-      "level": 0
+      "level": 0,
+      "address": {
+        "line_1": "FIRST FLOOR Bouncing ball HOUSE",
+        "line_2": "Bouncing ball ROAD",
+        "town": "Bouncing ball",
+        "county": "LONDON",
+        "postcode": "GH7 1HP",
+        "country": {
+          "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+          "name": "United Kingdom"
+        }
+      },
+      "registered_address": {
+        "line_1": "FIRST FLOOR Bouncing ball HOUSE",
+        "line_2": "Bouncing ball ROAD",
+        "town": "Bouncing ball",
+        "county": "LONDON",
+        "postcode": "GH7 1HP",
+        "country": {
+          "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+          "name": "United Kingdom"
+        }
+      }
     },
     {
       "business_type": {
@@ -133,10 +147,6 @@
       "employee_range": {
         "id": "3fafd8d0-5d95-e211-a939-e4115bead28a",
         "name": "50 to 249"
-      },
-      "registered_address_country": {
-        "id": "80756b9a-5d95-e211-a939-e4115bead28a",
-        "name": "United Kingdom"
       },
       "sector": {
         "id": "bb22c9d2-5f95-e211-a939-e4115bead28a",
@@ -162,25 +172,36 @@
       "archived_reason": null,
       "archived_by": null,
       "name": "Hats R Us",
-      "registered_address_1": "FIRST FLOOR Hats R Us HOUSE",
-      "registered_address_2": "Hats R Us ROAD",
-      "registered_address_town": "Hats R Us",
-      "registered_address_county": "Hats R Us Ville",
-      "registered_address_postcode": "io8 1HP",
       "company_number": null,
       "trading_names": [],
       "lead": false,
       "description": "test\r\n\r\ntest\r\n\r\ntest",
       "website": null,
-      "trading_address_1": null,
-      "trading_address_2": null,
-      "trading_address_town": null,
-      "trading_address_county": null,
-      "trading_address_country": null,
-      "trading_address_postcode": null,
       "headquarter_type": null,
       "one_list_group_global_account_manager": null,
-      "level": 0
+      "level": 0,
+      "address": {
+        "line_1": "FIRST FLOOR Hats R Us HOUSE",
+        "line_2": "Hats R Us ROAD",
+        "town": "Hats R Us",
+        "county": "Hats R Us Ville",
+        "postcode": "io8 1HP",
+        "country": {
+          "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+          "name": "United Kingdom"
+        }
+      },
+      "registered_address": {
+        "line_1": "FIRST FLOOR Hats R Us HOUSE",
+        "line_2": "Hats R Us ROAD",
+        "town": "Hats R Us",
+        "county": "Hats R Us Ville",
+        "postcode": "io8 1HP",
+        "country": {
+          "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+          "name": "United Kingdom"
+        }
+      }
     }
   ],
   "page": 1
