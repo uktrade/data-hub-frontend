@@ -1,6 +1,6 @@
 const { assign } = require('lodash')
 
-const companyMock = require('~/test/unit/data/api-response-intermediary-company.json')
+const companyMock = require('~/test/unit/data/companies/company-v4.json')
 const config = require('~/config')
 
 const metaDataMock = {
@@ -325,7 +325,7 @@ describe('Company edit controller', () => {
       })
     })
 
-    context('when editing a government department with a trading address', () => {
+    context('when editing a government department', () => {
       beforeEach(async () => {
         const reqMock = assign(this.reqMock, {
           query: {
@@ -336,7 +336,6 @@ describe('Company edit controller', () => {
           locals: {
             formData: {
               business_type: '9cd14e94-5d95-e211-a939-e4115bead28a',
-              trading_address_1: 'address',
             },
             company: {
               id: 1,

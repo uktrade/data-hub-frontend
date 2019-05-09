@@ -1,6 +1,6 @@
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
-const companyMock = require('~/test/unit/data/api-response-intermediary-company.json')
+const companyMock = require('~/test/unit/data/companies/company-v4.json')
 
 describe('Company export controller', () => {
   beforeEach(() => {
@@ -77,8 +77,13 @@ describe('Company export controller', () => {
             id: '8b05e8c7-1812-46bf-bab7-a0096ab5689f',
             name: 'Increasing export markets',
           },
-          export_to_countries: ['1234', '2234'],
-          future_interest_countries: ['4321', '5678'],
+          export_to_countries: [
+            '35afd8d0-5d95-e211-a939-e4115bead28a',
+            '36afd8d0-5d95-e211-a939-e4115bead28a',
+          ],
+          future_interest_countries: [
+            '37afd8d0-5d95-e211-a939-e4115bead28a',
+          ],
         })
       })
 
