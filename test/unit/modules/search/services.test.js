@@ -207,7 +207,7 @@ describe('Search service', () => {
   describe('#searchLimitedCompanies', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .post(`/v3/search/companieshousecompany?offset=0&limit=10`, {
+        .post(`/v4/search/companieshousecompany?offset=0&limit=10`, {
           original_query: 'search',
         })
         .reply(200, {

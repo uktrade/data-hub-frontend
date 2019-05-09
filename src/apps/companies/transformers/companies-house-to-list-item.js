@@ -5,12 +5,7 @@ const { transformSicCodes } = require('./shared')
 
 module.exports = function transformCompaniesHouseToListItem ({
   name,
-  registered_address_1,
-  registered_address_2,
-  registered_address_town,
-  registered_address_county,
-  registered_address_postcode,
-  registered_address_country,
+  registered_address,
   company_number,
   company_category,
   company_status,
@@ -53,14 +48,7 @@ module.exports = function transformCompaniesHouseToListItem ({
       {
         label: 'Address',
         type: 'address',
-        value: {
-          line_1: registered_address_1,
-          line_2: registered_address_2,
-          town: registered_address_town,
-          county: registered_address_county,
-          postcode: registered_address_postcode,
-          country: registered_address_country,
-        },
+        value: registered_address,
       },
     ],
   }

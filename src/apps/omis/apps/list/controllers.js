@@ -19,15 +19,15 @@ const exportOptions = {
  * including a flat version of the sector list
  *
  */
-async function getFormOptions (token) {
+async function getFormOptions (token, res) {
   const omisMarketOptions = await getOptions(token, 'omis-market')
   const regionOptions = await getOptions(token, 'uk-region')
   const sectorOptions = await getOptions(token, 'sector', { queryString: '?level__lte=0' })
-
   return {
     omisMarketOptions,
     regionOptions,
     sectorOptions,
+    userAgent: res.locals.userAgent,
   }
 }
 
@@ -38,9 +38,8 @@ async function getFormOptions (token) {
  * request query
  *
  */
-async function getFiltersFields (token, query) {
-  const { omisMarketOptions, regionOptions, sectorOptions } = await getFormOptions(token)
-  const filtersFields = omisFiltersFields({ omisMarketOptions, regionOptions, sectorOptions })
+async function getFiltersFields (token, query, res) {
+  const filtersFields = omisFiltersFields(await getFormOptions(token, res))
   const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(token, filtersFields, query)
 
   return filtersFieldsWithSelectedOptions
@@ -69,7 +68,7 @@ async function renderList (req, res, next) {
     const query = req.query
 
     const sortForm = getSortForm(query)
-    const filtersFields = await getFiltersFields(token, query)
+    const filtersFields = await getFiltersFields(token, query, res)
     const selectedFilters = buildSelectedFiltersSummary(filtersFields, query)
     const exportAction = await buildExportAction(qs.stringify(req.query), user.permissions, exportOptions)
 

@@ -1,7 +1,7 @@
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
 const auditLogMock = require('~/test/unit/data/audit/company-audit.json')
-const companyMock = require('~/test/unit/data/companies/company.json')
+const companyMock = require('~/test/unit/data/companies/company-v4.json')
 
 describe('Company audit controller', () => {
   beforeEach(() => {
