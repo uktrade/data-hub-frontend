@@ -9,7 +9,9 @@
   action: '/companies/' + company.id + '/investments/large-capital-profile/update',
   hiddenFields: {
     profileId: profile.id,
-    editing: profile.editing
+    editing: profile.editing,
+    clearedId: profile.investorDetails.requiredChecks.cleared.value,
+    issuesIdentifiedId: profile.investorDetails.requiredChecks.issuesIdentified.value
   }
 }) %}
 
@@ -79,6 +81,7 @@
 
   {% macro conditional(props) %}
     {% set date = props.date or {} %}
+
     {{
       govukDateInput({
         namePrefix: props.value,
@@ -111,6 +114,21 @@
             value: date.year
           }
         ]
+      })
+    }}
+
+    {{
+      Typeahead({
+        entity: 'adviser',
+        name: 'adviser',
+        label: 'Person responsible for most recent checks',
+        classes: 'c-form-group--no-filter',
+        autoSubmit: false,
+        isAsync: false,
+        useSubLabel: true,
+        multipleSelect: false,
+        value: props.adviser.id,
+        options: props.advisers
       })
     }}
   {% endmacro %}

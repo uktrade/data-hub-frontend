@@ -64,6 +64,7 @@ describe('Large capital profile, Investor details API to form', () => {
             id: '1',
           },
           conductedOn: '2019-05-01',
+          conductedBy: '123', // Adviser id.
         },
       }
 
@@ -75,7 +76,9 @@ describe('Large capital profile, Investor details API to form', () => {
           id: '1',
         },
         conductedOn: '2019-05-01',
+        conductedBy: '123', // Adviser id.
         cleared: {
+          adviser: '123',
           checked: true,
           text: 'Cleared',
           value: '1',
@@ -108,6 +111,7 @@ describe('Large capital profile, Investor details API to form', () => {
             id: '2',
           },
           conductedOn: '2019-05-02',
+          conductedBy: '123', // Adviser id.
         },
       }
 
@@ -119,11 +123,13 @@ describe('Large capital profile, Investor details API to form', () => {
           id: '2',
         },
         conductedOn: '2019-05-02',
+        conductedBy: '123', // Adviser id.
         cleared: {
           text: 'Cleared',
           value: '1',
         },
         issuesIdentified: {
+          adviser: '123',
           checked: true,
           date: {
             day: 2,

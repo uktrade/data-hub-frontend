@@ -221,7 +221,12 @@
     },
     watch: {
       selectedOptions: function (selectedOption) {
-        if (!selectedOption) {this.setPlaceHolder = this.placeholder}
+        if (selectedOption) {
+          this.hiddenFormValue = selectedOption.value
+        } else {
+          this.setPlaceHolder = this.placeholder
+        }
+
         if (!this.autoSubmit) { return }
 
         const form = this.formSelector ? document.querySelector(this.formSelector) : this.$el.closest('form')
@@ -230,9 +235,6 @@
         const query = pickBy(getFormData(form))
         delete query[this.id]
 
-        if (selectedOption) {
-          this.hiddenFormValue = selectedOption.value
-        }
         query[this.name] = Array.isArray(selectedOption) ? selectedOption.map(option => option.value) : [selectedOption]
 
         XHR.request(form.action, query)
