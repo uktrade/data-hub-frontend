@@ -6,43 +6,49 @@ const { getDataLabels } = require('../../../lib/controller-utils')
 const { NOT_SET_TEXT } = require('../constants')
 const { currencyRate } = require('../../../../config')
 
-function transformTurnover (turnover, turnover_range) {
+function transformTurnover (turnover, is_turnover_estimated, turnover_range) {
   if (turnover) {
-    return [
-      {
-        name: turnover * currencyRate.usdToGbp,
-        type: 'currency',
-      },
-      {
+    const items = [{
+      name: turnover * currencyRate.usdToGbp,
+      type: 'currency',
+    }]
+
+    if (is_turnover_estimated) {
+      items.push({
         name: 'This is an estimated number',
         type: 'details',
         details: {
           summaryText: 'What does that mean?',
           text: 'Actual turnover is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
         },
-      },
-    ]
+      })
+    }
+
+    return items
   }
 
   return get(turnover_range, 'name', NOT_SET_TEXT)
 }
 
-function transformNumberOfEmployees (number_of_employees, employee_range) {
+function transformNumberOfEmployees (number_of_employees, is_number_of_employees_estimated, employee_range) {
   if (number_of_employees) {
-    return [
-      {
-        name: number_of_employees,
-        type: 'number',
-      },
-      {
+    const items = [{
+      name: number_of_employees,
+      type: 'number',
+    }]
+
+    if (is_number_of_employees_estimated) {
+      items.push({
         name: 'This is an estimated number',
         type: 'details',
         details: {
           summaryText: 'What does that mean?',
           text: 'Actual number of employees is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
         },
-      },
-    ]
+      })
+    }
+
+    return items
   }
 
   return get(employee_range, 'name', NOT_SET_TEXT)
@@ -85,8 +91,10 @@ module.exports = ({
   trading_names,
   company_number,
   turnover,
+  is_turnover_estimated,
   turnover_range,
   number_of_employees,
+  is_number_of_employees_estimated,
   employee_range,
   website,
   description,
@@ -98,8 +106,8 @@ module.exports = ({
     business_type: duns_number ? null : get(business_type, 'name'),
     trading_names: isEmpty(trading_names) ? NOT_SET_TEXT : trading_names,
     company_number: transformCompanyNumber(company_number),
-    turnover: transformTurnover(turnover, turnover_range),
-    number_of_employees: transformNumberOfEmployees(number_of_employees, employee_range),
+    turnover: transformTurnover(turnover, is_turnover_estimated, turnover_range),
+    number_of_employees: transformNumberOfEmployees(number_of_employees, is_number_of_employees_estimated, employee_range),
     website: transformWebsite(website),
   }
 
