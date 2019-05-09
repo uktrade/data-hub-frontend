@@ -4,6 +4,7 @@ const investorType = require('~/test/unit/data/companies/investments/metadata/in
 const requiredChecksConducted = require('~/test/unit/data/companies/investments/metadata/required-checks-conducted.json')
 const companyProfile = require('~/test/unit/data/companies/investments/large-capital-profile.json')
 const companyMock = require('~/test/unit/data/companies/minimal-company.json')
+const advisersMock = require('~/test/unit/data/advisers/advisers.json')
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 const { cloneDeep, pullAll } = require('lodash')
 const config = require('~/config')
@@ -85,6 +86,7 @@ describe('Company Investments - large capital profile', () => {
           requiredChecks: {
             conducted: null,
             conductedOn: null,
+            conductedBy: null,
           },
         },
         investorRequirements: {
@@ -110,6 +112,9 @@ describe('Company Investments - large capital profile', () => {
         // Define a date the advisor conducted the checks on.
         profile.required_checks_conducted_on = '2019-05-02'
 
+        //  Define the advisor.
+        profile.required_checks_conducted_by = 'a0dae366-1134-e411-985c-e4115bead28a'
+
         nock(config.apiRoot)
           .get(`/v4/large-investor-profile?investor_company_id=${companyMock.id}`)
           .reply(200, clonedCompanyProfile)
@@ -117,6 +122,8 @@ describe('Company Investments - large capital profile', () => {
           .reply(200, investorType)
           .get('/metadata/capital-investment/required-checks-conducted/')
           .reply(200, requiredChecksConducted)
+          .get('/adviser/?limit=100000&offset=0')
+          .reply(200, advisersMock)
 
         this.middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
@@ -157,9 +164,38 @@ describe('Company Investments - large capital profile', () => {
               name: 'Cleared',
             },
             conductedOn: '2019-05-02',
+            conductedBy: 'a0dae366-1134-e411-985c-e4115bead28a',
             cleared: {
               checked: true,
               text: 'Cleared',
+              adviser: 'a0dae366-1134-e411-985c-e4115bead28a',
+              advisers: [
+                {
+                  label: 'Jeff Smith',
+                  subLabel: 'Team A',
+                  value: 'a0dae366-1134-e411-985c-e4115bead28a',
+                },
+                {
+                  label: 'Aaron Mr',
+                  subLabel: 'Team B',
+                  value: 'e13209b8-8d61-e311-8255-e4115bead28a',
+                },
+                {
+                  label: 'Mr Benjamin',
+                  subLabel: 'Team C',
+                  value: 'b9d6b3dc-7af4-e411-bcbe-e4115bead28a',
+                },
+                {
+                  label: 'George Chan',
+                  subLabel: 'Team D',
+                  value: '0119a99e-9798-e211-a939-e4115bead28a',
+                },
+                {
+                  label: 'Fred Rafters',
+                  subLabel: 'Team E',
+                  value: '0919a99e-9798-e211-a939-e4115bead28a',
+                },
+              ],
               date: {
                 day: 2,
                 month: 5,
@@ -170,6 +206,33 @@ describe('Company Investments - large capital profile', () => {
             issuesIdentified: {
               text: 'Issues identified',
               value: '9beab8fc-1094-49b4-97d0-37bc7a9de631',
+              advisers: [
+                {
+                  label: 'Jeff Smith',
+                  subLabel: 'Team A',
+                  value: 'a0dae366-1134-e411-985c-e4115bead28a',
+                },
+                {
+                  label: 'Aaron Mr',
+                  subLabel: 'Team B',
+                  value: 'e13209b8-8d61-e311-8255-e4115bead28a',
+                },
+                {
+                  label: 'Mr Benjamin',
+                  subLabel: 'Team C',
+                  value: 'b9d6b3dc-7af4-e411-bcbe-e4115bead28a',
+                },
+                {
+                  label: 'George Chan',
+                  subLabel: 'Team D',
+                  value: '0119a99e-9798-e211-a939-e4115bead28a',
+                },
+                {
+                  label: 'Fred Rafters',
+                  subLabel: 'Team E',
+                  value: '0919a99e-9798-e211-a939-e4115bead28a',
+                },
+              ],
             },
             notYetChecked: {
               text: 'Not yet checked',
@@ -212,6 +275,7 @@ describe('Company Investments - large capital profile', () => {
         profile.investor_description = 'Lorem ipsum dolor sit amet.'
         profile.required_checks_conducted = '02d6fc9b-fbb9-4621-b247-d86f2487898e'
         profile.required_checks_conducted_on = '2019-04-29'
+        profile.required_checks_conducted_by = 'a0dae366-1134-e411-985c-e4115bead28a'
 
         nock(config.apiRoot)
           .get(`/v4/large-investor-profile?investor_company_id=${companyMock.id}`)
@@ -249,6 +313,7 @@ describe('Company Investments - large capital profile', () => {
           requiredChecks: {
             conducted: '02d6fc9b-fbb9-4621-b247-d86f2487898e',
             conductedOn: '2019-04-29',
+            conductedBy: 'a0dae366-1134-e411-985c-e4115bead28a',
           },
         },
         investorRequirements: {

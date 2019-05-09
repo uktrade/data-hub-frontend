@@ -177,6 +177,8 @@ describe('Company Investments and Large capital profile', () => {
 
   context('when viewing the "Investor details" section', () => {
     const { investorDetails } = selectors
+    const completeDate = 'Date of most recent background checks: 29 04 2019'
+    const adviser = 'Person responsible for most recent background checks: Aaron Chan'
 
     it('should display all the field values apart from "Investor Description"', () => {
       cy.visit(largeCapitalProfile).get(selectors.investorDetails.summary).click()
@@ -185,17 +187,17 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorDetails.taskList.investableCapital.complete).should('contain', 30000)
         .get(investorDetails.taskList.investorDescription.incomplete).should('contain', 'INCOMPLETE')
         .get(investorDetails.taskList.requiredChecks.complete).should('contain', 'Cleared')
-        .get(investorDetails.taskList.requiredChecks.completeDate).should('contain', 'Date of most recent background checks: 29 04 2019')
+        .get(investorDetails.taskList.requiredChecks.completeDate).should('contain', completeDate)
+        .get(investorDetails.taskList.requiredChecks.adviser).should('contain', adviser)
     })
   })
 
   context('when viewing the "Investor details" edit section', () => {
     const { investorDetails } = selectors
+    const adviser = 'Aaron Chan, British Embassy Manila Philippines'
 
     it('should display all the field values apart from "Investor Description"', () => {
-      cy.visit(largeCapitalProfile)
-        .get(investorDetails.summary).click()
-        .get(investorDetails.edit).click()
+      cy.visit(`${largeCapitalProfile}?editing=investor-details`)
         .get(investorDetails.investorType).should('contain', 'Asset manager')
         .get(investorDetails.globalAssetsUnderManagement).should('have.value', '1000000')
         .get(investorDetails.investableCapital).should('have.value', '30000')
@@ -204,6 +206,21 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorDetails.requiredChecks.clearedDay).should('have.value', '29')
         .get(investorDetails.requiredChecks.clearedMonth).should('have.value', '4')
         .get(investorDetails.requiredChecks.clearedYear).should('have.value', '2019')
+        .get(investorDetails.requiredChecks.adviser.placeHolder).should('contain', adviser)
+    })
+  })
+
+  context('When interacting with the Adviser typeahead', () => {
+    const { investorDetails } = selectors
+
+    it('should be able to select an Adviser', () => {
+      cy.visit(`${largeCapitalProfile}?editing=investor-details`)
+        .get(investorDetails.requiredChecks.adviser.placeHolder).click()
+        .get(investorDetails.requiredChecks.adviser.textInput).type('abby').wait(500)
+        .get(investorDetails.requiredChecks.adviser.textInput).type('{downarrow}')
+        .get(investorDetails.requiredChecks.adviser.textInput).type('{enter}')
+        .get(investorDetails.requiredChecks.adviser.selectedOption)
+        .should('contain', 'Abby Chan, British High Commission Singapore')
     })
   })
 })
