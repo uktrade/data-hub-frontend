@@ -35,6 +35,12 @@ const ORDER_STATES = [
   },
 ]
 
+const QUERY_DATE_FIELDS = [
+  'completed_on_after',
+  'completed_on_before',
+  'delivery_date_before',
+  'delivery_date_after',
+]
 const QUERY_FIELDS = [
   'status',
   'company_name',
@@ -45,6 +51,7 @@ const QUERY_FIELDS = [
   'total_cost',
   'net_cost',
   'sector_descends',
+  ...QUERY_DATE_FIELDS,
 ]
 
 const APP_PERMISSIONS = [ GLOBAL_NAV_ITEM ]
@@ -54,4 +61,5 @@ module.exports = {
   GLOBAL_NAV_ITEM,
   ORDER_STATES,
   QUERY_FIELDS,
+  QUERY_DATE_FIELDS,
 }

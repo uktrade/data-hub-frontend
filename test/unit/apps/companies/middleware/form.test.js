@@ -168,7 +168,6 @@ describe('Companies form middleware', () => {
             sector: { id: 's2' },
             employee_range: { id: 'e2' },
             turnover_range: { id: 't2' },
-            trading_address_country: { id: '8888' },
           },
         })
 

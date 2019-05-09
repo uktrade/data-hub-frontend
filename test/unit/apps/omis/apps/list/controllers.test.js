@@ -16,6 +16,11 @@ describe('OMIS list controllers', () => {
       breadcrumb: sinon.stub().returnsThis(),
       render: sinon.spy(),
       query: {},
+      locals: {
+        userAgent: {
+          isIE: false,
+        },
+      },
     }
 
     this.nextSpy = sinon.spy()

@@ -65,7 +65,10 @@
     "name": "North West",
     "id": "824cd12a-6095-e211-a939-e4115bead28a"
   },
-  "export_experience_category": null,
+  "export_experience_category": {
+    "id": "8b05e8c7-1812-46bf-bab7-a0096ab5689f",
+    "name": "Increasing export markets"
+  },
   "address": {
     "line_1": "82 Ramsgate Rd",
     "line_2": "",
