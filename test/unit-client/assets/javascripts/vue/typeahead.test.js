@@ -20,6 +20,7 @@ describe('Typeahead', () => {
       placeholder: 'Search adviser',
       hideLabel: true,
       useSubLabel: true,
+      apiVersion: 'metadata',
     }
 
     Vue.filter('highlight', highlight)
@@ -193,6 +194,7 @@ describe('Typeahead', () => {
           entity: 'adviser',
           options: [],
           filterInactive: '',
+          apiVersion: 'metadata',
         }
         asyncSearch = Typeahead.methods.asyncSearch.bind(instance)
       })
@@ -213,7 +215,7 @@ describe('Typeahead', () => {
 
         it('should have fetched suggestions', () => {
           expect(axios.get).to.have.been.calledOnce
-          expect(axios.get).to.be.calledWith('/api/options/adviser?autocomplete=fred')
+          expect(axios.get).to.be.calledWith('/api/options/adviser?autocomplete=fred&api_version=metadata')
         })
 
         it('should store the return options', () => {
@@ -222,6 +224,42 @@ describe('Typeahead', () => {
             label: 'Fred Smith',
             subLabel: 'Dept of commerce',
           }])
+        })
+      })
+
+      context('when typehead depends (is chained with) on another typehead', () => {
+        beforeEach((done) => {
+          instance = {
+            name: 'adviser',
+            entity: 'adviser',
+            multipleSelectOptions: false,
+            options: [],
+            filterInactive: '',
+            chainedParams: { 'urlParam': 'testparam', 'valueFrom': 'testInput' },
+            apiVersion: 'metadata',
+          }
+
+          asyncSearch = Typeahead.methods.asyncSearch.bind(instance)
+
+          sinon.stub(document, 'getElementsByName').returns([{
+            value: 'testvalue',
+          }])
+
+          axios.get = sinon.stub().resolves({
+            data: [{
+              value: '1',
+              label: 'Fred Smith',
+              subLabel: 'Dept of commerce',
+            }],
+          })
+
+          asyncSearch('fred')
+          setTimeout(done, 600)
+        })
+
+        it('should have fetched suggestions', () => {
+          expect(axios.get).to.have.been.calledOnce
+          expect(axios.get).to.be.calledWith('/api/options/adviser?autocomplete=fred&api_version=metadata&chained_param=testparam&chained_value=testvalue')
         })
       })
 
@@ -248,6 +286,7 @@ describe('Typeahead', () => {
             entity: 'adviser',
             options: [],
             filterInactive: '&is_active=true',
+            apiVersion: 'metadata',
           }
           asyncSearch = Typeahead.methods.asyncSearch.bind(instance)
 
@@ -264,7 +303,7 @@ describe('Typeahead', () => {
         })
         it('should not fetch active users', () => {
           expect(axios.get).to.have.been.calledOnce
-          expect(axios.get).to.be.calledWith('/api/options/adviser?autocomplete=fred&is_active=true')
+          expect(axios.get).to.be.calledWith('/api/options/adviser?autocomplete=fred&is_active=true&api_version=metadata')
         })
       })
     })
@@ -286,6 +325,7 @@ describe('Typeahead', () => {
             "value": "d33ade1c-9798-e211-a939-e4115bead28a",
             "label": "Advantage West Midlands (AWM)"
           }]`,
+          apiVersion: 'metadata',
         },
       })
 
