@@ -1,7 +1,7 @@
 # Data Hub frontend
 
 [![CircleCI](https://circleci.com/gh/uktrade/data-hub-frontend.svg?style=svg)](https://circleci.com/gh/uktrade/data-hub-frontend)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/uktrade/data-hub-frontend.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/uktrade/data-hub-frontend/alerts/)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/uktrade/data-hub-frontend.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/uktrade/data-hub-frontend/alerts/) 
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/uktrade/data-hub-frontend.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/uktrade/data-hub-frontend/context:javascript)
 
 An express application that fetches data from a back end JSON based api and renders it to the screen.
@@ -73,7 +73,7 @@ and be provided with a back end server to provide the API, data storage and sear
 
 ### Docker
 
-The project comes with docker compose files, this means if you have docker
+The project comes with docker compose files, this means if you have docker 
 you can start the app with a single command.
 
 There are 2 docker files.
@@ -133,8 +133,8 @@ This file expects the following environment variables:
 | ZEN_TOKEN | Zendesk auth token |
 
 
-These environment variables are sourced from `.env` (Docker Compose [supports declaring default environment variables](https://docs.docker.com/compose/environment-variables/#the-envfile-configuration-option)
-in an environment file).
+These environment variables are sourced from `.env` (Docker Compose [supports declaring default environment variables](https://docs.docker.com/compose/environment-variables/#the-envfile-configuration-option) 
+in an environment file). 
 
 #### Setting up with docker-compose
 
@@ -144,13 +144,13 @@ in an environment file).
     cp sample.env .env
     ```
 
-2.  Ensure that the `.env` file is pointing to a valid [data-hub-leeloo backend](https://github.com/uktrade/data-hub-leeloo/)
+2.  Ensure that the `.env` file is pointing to a valid [data-hub-leeloo backend](https://github.com/uktrade/data-hub-leeloo/) 
     using the `API_ROOT` environment variable.
 
-    - You may want to run a local copy of the leeloo backend.  By default,
+    - You may want to run a local copy of the leeloo backend.  By default, 
       you can run both leeloo and the frontend under one docker-compose project.
-      [See the instructions in the leeloo readme to set it up](https://github.com/uktrade/data-hub-leeloo/#installation-with-docker).
-
+      [See the instructions in the leeloo readme to set it up](https://github.com/uktrade/data-hub-leeloo/#installation-with-docker).  
+      
 
 3.  To start the server just:
 
@@ -158,18 +158,18 @@ in an environment file).
     docker-compose up
     ```
 
-    The server starts in developer mode, which means that when you make local
-    changes it will auto-compile sass or javavscript, and will restart nodejs
-    when server side changes are made. A container with redis will also start,
+    The server starts in developer mode, which means that when you make local 
+    changes it will auto-compile sass or javavscript, and will restart nodejs 
+    when server side changes are made. A container with redis will also start, 
     this is linked to the data hub container.
-
-    You can access the server on port 3000,
-    [http://localhost:3000](http://localhost:3000). You can also run a remote
+    
+    You can access the server on port 3000, 
+    [http://localhost:3000](http://localhost:3000). You can also run a remote 
     debug session over port 9229 if using webstorm/Intellij or Visual Studio Code
 
-4.  You will need to set up OAuth.  It is recommended to use the
-    [uktrade/mock-sso](https://github.com/uktrade/mock-sso) backend as this is
-    fully compatible with docker-compose projects -
+4.  You will need to set up OAuth.  It is recommended to use the 
+    [uktrade/mock-sso](https://github.com/uktrade/mock-sso) backend as this is 
+    fully compatible with docker-compose projects - 
     [see the OAuth section for more detail](#oauth).
 
 ### Native install
@@ -274,16 +274,16 @@ the application is pointed at.
 
 #### Using SSO when developing
 Developers can also test SSO functionality locally by removing the `OAUTH2_DEV_TOKEN` environment variable and making
-sure that `OAUTH2_BYPASS_SSO` is set to false (it is by default). To use Oauth locally you will then need to set up the
+sure that `OAUTH2_BYPASS_SSO` is set to false (it is by default). To use Oauth locally you will then need to set up the 
 correct access and SSO details for the SSO provider you are using.
 
 ##### SSO development providers
 
 ###### SSO mock
-You could use the [uktrade/mock-sso](https://github.com/uktrade/mock-sso) repo.
+You could use the [uktrade/mock-sso](https://github.com/uktrade/mock-sso) repo. 
 
 If you are using docker-compose and the supplied `sample.env` file, the default
-environment variables will suffice.  Run through the instructions to [set up
+environment variables will suffice.  Run through the instructions to [set up 
 mock-sso under docker-compose here](https://github.com/uktrade/mock-sso#docker-compose).
 
 If you are running natively, you will need to set up the following environment variables:
@@ -295,8 +295,8 @@ export OAUTH2_AUTH_URL=http://localhost:8080/o/authorize
 data-hub-frontend will then use mock-sso to simply pass your `OAUTH2_DEV_TOKEN` between SSO and the application.
 
 ###### UAT SSO
-You could point data-hub-frontend to the UAT SSO environment. If you wish to please speak to the
-[#technology-sso](https://ditdigitalteam.slack.com/messages/C5FLP2DSM/details/) team to set up the correct access and
+You could point data-hub-frontend to the UAT SSO environment. If you wish to please speak to the 
+[#technology-sso](https://ditdigitalteam.slack.com/messages/C5FLP2DSM/details/) team to set up the correct access and 
 SSO details required.
 
 ### HTTP Basic Auth
@@ -356,7 +356,7 @@ Component can take multiple arguments. It will combine them in single object:
 res.render('some-page', {
   personData: {
     name: 'Barry',
-    age: 55
+    age: 55    
   }
 })
 ```
@@ -383,7 +383,7 @@ that extends the base layout can include these additional blocks.
 ### Nunjucks base template blocks
 
 Template block names are structured by combining main element names to form path. e.g. `head` wraps everything inside
-the `head` element, the same applies to `headIcons`.
+the `head` element, the same applies to `headIcons`.  
 
 - `_layouts/template.njk extends govuk-frontend/template.njk` - the GOV.UK frontend template Data Hub extends from
 
@@ -409,7 +409,7 @@ the `head` element, the same applies to `headIcons`.
         - `body_main_content` - contains main content (inside main#content)
   - `footer` - contains a GOV.UK footer which DataHub overrides with an empty block
   - `bodyEnd` - initialise scripts (e.g. app.js and GOV.UK frontend)
-
+  
 ```</body>```
 
 ### Base template variables
@@ -466,8 +466,8 @@ Data hub uses [Nightwatch.js](http://nightwatchjs.org), [nightwatch-cucumber](ht
 For information on [cucumber-js](https://github.com/cucumber/cucumber-js) tags please see the `nightwatch-cucumber` docs [executing-individual-feature-files-or-scenarios](http://mucsi96.github.io/nightwatch-cucumber/#executing-individual-feature-files-or-scenarios)
 
 #### Running tests with specific user permissions
-To run tests against a specific user permissions type:
-- Change your `OAUTH2_DEV_TOKEN` environment variable to use one of:
+To run tests against a specific user permissions type: 
+- Change your `OAUTH2_DEV_TOKEN` environment variable to use one of: 
   - `lepStaffToken`
   - `daStaffToken`
   - `ditStaffToken`
@@ -478,7 +478,7 @@ To run tests against a specific user permissions type:
 The above permissions tokens are available on the dev api
 
 ##### Backend locally with user permission tokens
-If you are running the api locally please run the [https://github.com/uktrade/data-hub-leeloo/blob/develop/setup-uat.sh](https://github.com/uktrade/data-hub-leeloo/blob/develop/setup-uat.sh) to setup the relevant users and permission tokens
+If you are running the api locally please run the [https://github.com/uktrade/data-hub-leeloo/blob/develop/setup-uat.sh](https://github.com/uktrade/data-hub-leeloo/blob/develop/setup-uat.sh) to setup the relevant users and permission tokens 
 
 ##### Adding tokens
 If you need to add a token have a look in confluence on how to do this `Data Hub team > Technical Documentation > Frontend > SSO for developers > Adding an Access token`.
@@ -539,7 +539,7 @@ Data hub uses [CircleCI](https://circleci.com/) for continuous integration.
 ### Running CI jobs
 - All branches run the `lint_code`, `unit_tests` and `user_acceptance_tests` CI jobs
 - You can skip the `user_acceptance_tests` CI job by using a branch starting with `/^skip-tests.*/`
-- The `user_acceptance_tests_master` job will run on branches that match the regex `release.*` or the `master` branch. This job runs a branch against the `master` branch of [data-hub-leeloo](https://github.com/uktrade/data-hub-leeloo/tree/master)
+- The `user_acceptance_tests_master` job will run on branches that match the regex `release.*` or the `master` branch. This job runs a branch against the `master` branch of [data-hub-leeloo](https://github.com/uktrade/data-hub-leeloo/tree/master) 
 
 ### Setting up users with different permissions
 On CircleCi we run Acceptance tests against users with different permissions. We do this via the environment variable `OAUTH2_DEV_TOKEN`. Essentially we have users with different permissions setup in a job via `OAUTH2_DEV_TOKEN` and then we run tests with the specified permissions tag.
