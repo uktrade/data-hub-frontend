@@ -240,6 +240,12 @@ Engines in `package.json` needs updating:
   },
 ```
 
+#### Version inside .nvmrc
+Default node version for `nvm` is defined inside .nvmrc. Update by running:
+```
+  echo "v8.15.1"  > .nvmrc
+```
+
 #### CircleCi config
 The value used in `.circleci/config.yaml` needs updating:
 ```
