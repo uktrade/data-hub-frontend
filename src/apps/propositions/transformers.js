@@ -87,7 +87,7 @@ function addLineBreaks (string) {
   } else {
     return {
       type: 'word',
-      string,
+      value: string,
     }
   }
 }
@@ -110,7 +110,7 @@ function addAnchorsToUrl (s) {
 
   return {
     type: 'link',
-    string: {
+    value: {
       url: string,
       name: string,
     },
@@ -150,7 +150,7 @@ function transformPropositionResponseToViewRecord ({
     adviser,
     details: formattedDetails ? {
       type: 'paragraph',
-      string: formattedDetails,
+      value: formattedDetails,
     } : null,
     ...transformFilesResultsToDetails(files.results, id, investment_project.id),
   }
