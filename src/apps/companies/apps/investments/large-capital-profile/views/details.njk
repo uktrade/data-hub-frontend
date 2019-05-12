@@ -3,20 +3,7 @@
   {{ taskListItem({ name: 'Global assets under management', value: profile.investorDetails.globalAssetsUnderManagement.value }) }}
   {{ taskListItem({ name: 'Investable capital', value: profile.investorDetails.investableCapital.value }) }}
   {{ taskListItem({ name: 'Investor description', value: profile.investorDetails.investorDescription.value }) }}
-  {% call taskListItem({
-      name: 'Has this investor cleared the required checks within the last 12 months?',
-      value: profile.investorDetails.requiredChecks.conducted.name
-    })
-  %}
-    {% if profile.investorDetails.requiredChecks.conductedOn %}
-      <span class="task-list__item-complete">
-        Date of most recent background checks: {{ profile.investorDetails.requiredChecks.conductedOn | formatDate('DD MM YYYY') }}
-      </span>
-      <span class="task-list__item-complete">
-        Person responsible for most recent background checks: {{ profile.investorDetails.requiredChecks.conductedBy.name }}
-      </span>
-    {% endif %}
-  {%- endcall %}
+  {{ taskListItem({ name: 'Has this investor cleared the required checks within the last 12 months?', value: profile.investorDetails.requiredChecks.value }) }}
 </ul>
 
 {% call Form({
