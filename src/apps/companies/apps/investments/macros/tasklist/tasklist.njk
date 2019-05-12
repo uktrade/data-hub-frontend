@@ -7,8 +7,17 @@
       {{ props.name }}
     </span>
     {% if isComplete %}
-      <span class="task-list__item-complete">{{ props.value }}</span>
-      {{ caller() if caller }}
+      {% if props.value | isArray %}
+        {% for item in props.value %}
+          <span class="task-list__item-complete">{{ item }}</span>
+        {% endfor %}
+      {% elif props.value | isPlainObject %}
+        {% for key, value in props.value %}
+          <span class="task-list__item-complete">{{ value }}</span>
+        {% endfor %}
+      {% else %}
+          <span class="task-list__item-complete">{{ props.value }}</span>
+      {% endif %}
     {% else %}
       <strong class="task-list__item-incomplete" id="{{ id | kebabCase }}-incomplete">INCOMPLETE</strong>
     {% endif %}

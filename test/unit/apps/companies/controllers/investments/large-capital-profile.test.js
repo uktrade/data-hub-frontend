@@ -84,9 +84,10 @@ describe('Company Investments - large capital profile', () => {
             value: '',
           },
           requiredChecks: {
-            conducted: null,
-            conductedOn: null,
-            conductedBy: null,
+            adviser: null,
+            date: null,
+            type: null,
+            value: null,
           },
         },
         investorRequirements: {
@@ -113,7 +114,10 @@ describe('Company Investments - large capital profile', () => {
         profile.required_checks_conducted_on = '2019-05-02'
 
         //  Define the advisor.
-        profile.required_checks_conducted_by = 'a0dae366-1134-e411-985c-e4115bead28a'
+        profile.required_checks_conducted_by = {
+          name: 'Holly Collins',
+          id: '379f390a-e083-4a2c-9cea-e3b9a08606a7',
+        }
 
         nock(config.apiRoot)
           .get(`/v4/large-investor-profile?investor_company_id=${companyMock.id}`)
@@ -159,16 +163,13 @@ describe('Company Investments - large capital profile', () => {
             value: '',
           },
           requiredChecks: {
-            conducted: {
-              id: '02d6fc9b-fbb9-4621-b247-d86f2487898e',
-              name: 'Cleared',
-            },
-            conductedOn: '2019-05-02',
-            conductedBy: 'a0dae366-1134-e411-985c-e4115bead28a',
             cleared: {
               checked: true,
               text: 'Cleared',
-              adviser: 'a0dae366-1134-e411-985c-e4115bead28a',
+              adviser: {
+                name: 'Holly Collins',
+                id: '379f390a-e083-4a2c-9cea-e3b9a08606a7',
+              },
               advisers: [
                 {
                   label: 'Jeff Smith',
@@ -273,9 +274,15 @@ describe('Company Investments - large capital profile', () => {
         profile.global_assets_under_management = 1000
         profile.investable_capital = 2000
         profile.investor_description = 'Lorem ipsum dolor sit amet.'
-        profile.required_checks_conducted = '02d6fc9b-fbb9-4621-b247-d86f2487898e'
+        profile.required_checks_conducted = {
+          name: 'Cleared',
+          id: '02d6fc9b-fbb9-4621-b247-d86f2487898e',
+        }
+        profile.required_checks_conducted_by = {
+          name: 'Holly Collins',
+          id: '379f390a-e083-4a2c-9cea-e3b9a08606a7',
+        }
         profile.required_checks_conducted_on = '2019-04-29'
-        profile.required_checks_conducted_by = 'a0dae366-1134-e411-985c-e4115bead28a'
 
         nock(config.apiRoot)
           .get(`/v4/large-investor-profile?investor_company_id=${companyMock.id}`)
@@ -311,9 +318,20 @@ describe('Company Investments - large capital profile', () => {
             value: 'Lorem ipsum dolor sit amet.',
           },
           requiredChecks: {
-            conducted: '02d6fc9b-fbb9-4621-b247-d86f2487898e',
-            conductedOn: '2019-04-29',
-            conductedBy: 'a0dae366-1134-e411-985c-e4115bead28a',
+            type: {
+              id: '02d6fc9b-fbb9-4621-b247-d86f2487898e',
+              name: 'Cleared',
+            },
+            date: '2019-04-29',
+            adviser: {
+              id: '379f390a-e083-4a2c-9cea-e3b9a08606a7',
+              name: 'Holly Collins',
+            },
+            value: [
+              'Cleared',
+              'Date of most recent background checks: 29 04 2019',
+              'Person responsible for most recent background checks: Holly Collins',
+            ],
           },
         },
         investorRequirements: {
