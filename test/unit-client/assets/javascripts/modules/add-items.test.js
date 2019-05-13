@@ -465,7 +465,65 @@ describe('Add another', function () {
       const typeaheadTwo = Array.from(this.wrapper.querySelectorAll('#dit_participants__typeahead'))[1]
       const hiddenInput = typeaheadTwo.querySelector('.multiselect__input')
       const placeholder = hiddenInput.getAttribute('placeholder')
-      expect(placeholder).to.equal('Select option')
+      expect(placeholder).to.equal('Search adviser')
+    })
+  })
+
+  describe('decorate with typeahead add button', function () {
+    beforeEach(function () {
+      const fieldset = formMacros.renderWithCallerToDom('Fieldset')(
+        formMacros.render('Typeahead', {
+          name: 'dit_participants',
+          label: 'Advisers',
+          isLabelHidden: true,
+          entity: 'adviser',
+          placeholder: 'Search adviser',
+          classes: 'c-form-group c-form-group--no-filter',
+          multipleSelect: false,
+          options: [{
+            value: '1',
+            label: 'Bob',
+            subLabel: 'Lawson',
+          }],
+        }),
+      ).outerHTML
+
+      const HTML = `
+        <div class="js-AddItems"
+          data-item-selector=".c-form-fieldset"
+          data-add-button-type="typeahead"
+          >
+
+          ${fieldset}
+        </div>`
+
+      const { window } = new JSDOM(HTML)
+      this.document = window.document
+      const vueWrappers = Array.from(this.document.querySelectorAll('.js-vue-wrapper'))
+      const noScriptTags = Array.from(this.document.getElementsByTagName('noscript'))
+
+      noScriptTags.forEach((tag) => {
+        tag.parentNode.removeChild(tag)
+      })
+
+      vueWrappers.forEach((wrapper) => {
+        new Vue({
+          el: wrapper,
+          components: {
+            'typeahead': Typeahead,
+          },
+        })
+      })
+      AddAnotherFragment.init(this.document)
+    })
+
+    it('should create a button that adds a new fieldset with typeahead ', function () {
+      expect(this.document.querySelectorAll('[data-method="add-typeahead"]')).to.have.length(1)
+    })
+
+    it('should add a fragment when the add button is pressed', function () {
+      this.document.querySelector('[data-method="add-typeahead"]').click()
+      expect(this.document.querySelectorAll('.c-form-fieldset')).to.have.length(2)
     })
   })
 
