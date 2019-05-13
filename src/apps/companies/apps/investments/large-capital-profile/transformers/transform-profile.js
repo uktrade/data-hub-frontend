@@ -55,6 +55,9 @@ const transformProfile = (profile, editing) => {
     },
     investorRequirements: {
       incompleteFields: get(profile, 'incomplete_requirements_fields.length'),
+      dealTicketSizes: {
+        value: get(profile, 'deal_ticket_sizes'),
+      },
     },
     location: {
       incompleteFields: get(profile, 'incomplete_location_fields.length'),
