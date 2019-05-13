@@ -37,7 +37,9 @@ describe('OMIS edit subscribers controller', () => {
         form: {
           options: {
             fields: {
-              subscribers: {},
+              subscribers: {
+                children: [],
+              },
             },
           },
         },
