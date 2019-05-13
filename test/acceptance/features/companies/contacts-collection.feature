@@ -5,7 +5,7 @@ Feature: View collection of contacts for a company
   I would like to view all the Contacts for my company in one place
   And be able to read the contact details as expected
 
-  @companies-contact-collection--view
+  @companies-contact-collection--view @smoke
   Scenario: View companies contact collection
     When I navigate to the `companies.contacts` page using `company` `Lambda plc` fixture
     And the results summary for a contact collection is present
