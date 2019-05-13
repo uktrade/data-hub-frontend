@@ -29,15 +29,11 @@
 {% endmacro %}
 
 {% macro paragraph(data) %}
-  {%  for item in data.string %}
-    {% if item.type == 'link' %}
-      {{ link(item.string) }}
-    {% elseif item.type == 'linebreak' %}
-      <br>
-    {% else %}
-      {{ item.string }}
-    {% endif %}
-  {% endfor %}
+  <p>
+    {% for item in data.value %}
+      {{ renderItem(item.value) }}
+    {% endfor %}
+  </p>
 {% endmacro %}
 
 {% macro details(data) %}
