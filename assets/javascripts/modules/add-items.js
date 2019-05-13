@@ -16,7 +16,7 @@ const { highlight } = require('../vue/filters')
 
 Vue.filter('highlight', highlight)
 
-const addButtonClass = 'js-AddItems__add'
+let addButtonClass = 'js-AddItems__add'
 const addTypeaheadButtonClass = 'js-AddItems__add--typeahead'
 const removeButtonClass = 'js-AddItems__remove'
 
@@ -131,6 +131,10 @@ const AddItems = {
       return
     }
 
+    if (this.wrapper.getAttribute('data-add-button-type') === 'typeahead') {
+      addButtonClass = addTypeaheadButtonClass
+    }
+
     const addButtonElement = this.document.createElement('button')
     addButtonElement.className = `button button--secondary ${addButtonClass}`
 
@@ -222,7 +226,7 @@ const AddItems = {
     const newItem = regenIds(this.template.cloneNode(true), attr)
     const typeaheadWrapper = newItem.querySelector('.js-vue-wrapper')
     const typeaheadType = typeaheadWrapper.getAttribute('data-typeahead-type')
-    typeaheadWrapper.innerHTML = this.fetchTypeaheadTemplate(typeaheadType)
+    typeaheadWrapper.innerHTML = this.buildTypeaheadTemplate(typeaheadType)
     this.buildTypeahead(typeaheadWrapper)
 
     if (!lastItem) {
@@ -236,11 +240,18 @@ const AddItems = {
       item.parentNode.removeChild(item)
     }
   },
-  fetchTypeaheadTemplate (name) {
-    switch (name) {
-      case 'dit_participants':
-        return this.settings.typeaheadTemplates.ditParticipants
-    }
+  buildTypeaheadTemplate (name) {
+    return `<typeahead 
+            entity="adviser"
+            model="[]"
+            selected-value="" 
+            name="${name}" 
+            :hide-label="true"
+            label="Advisers" 
+            placeholder="Search adviser" 
+            :multiple-select="false" 
+            value="" 
+            classes="c-form-group c-form-group--no-filter"></typeahead>`
   },
   buildTypeahead (wrapper) {
     new Vue({
@@ -266,19 +277,6 @@ module.exports = {
         addButtonText: element.getAttribute('data-add-button-text'),
         removeButtonSelector: element.getAttribute('data-remove-button-selector'),
         removeButtonText: element.getAttribute('data-remove-button-text'),
-        typeaheadTemplates: {
-          ditParticipants: `<typeahead 
-                              entity="adviser"
-                              model="[]"
-                              selected-value="" 
-                              name="dit_participants" 
-                              :hide-label="true"
-                              label="Advisers" 
-                              placeholder="Search adviser" 
-                              :multiple-select="false" 
-                              value="" 
-                              classes="c-form-group c-form-group--no-filter"></typeahead>`,
-        },
       }
 
       const addItems = Object.create(AddItems, {
