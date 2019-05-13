@@ -236,19 +236,15 @@ describe('Key/value table component', () => {
           'Label 1': {
             name: 'Paragraph',
             type: 'paragraph',
-            string: [{
+            value: [{
               type: 'link',
-              string:
+              value:
                 {
                   url: 'https://world-is-a-stage',
                   name: 'https://world-is-a-stage',
                 },
             },
-            { type: 'word', string: 'and' },
-            { type: 'word', string: 'we' },
-            { type: 'word', string: 'are' },
-            { type: 'word', string: 'the' },
-            { type: 'word', string: 'actors' },
+            { type: 'paragraph', value: 'and we are the actors' },
             ],
           },
         },
@@ -266,7 +262,7 @@ describe('Key/value table component', () => {
     })
 
     it('should render the paragraph', () => {
-      expect(this.rows[0].querySelector('td').textContent).to.equal(' https://world-is-a-stage and we\n        are the actors')
+      expect(this.rows[0].querySelector('td').textContent).to.equal('\n         https://world-is-a-stage and we\n          are the actors\n      ')
     })
   })
 
