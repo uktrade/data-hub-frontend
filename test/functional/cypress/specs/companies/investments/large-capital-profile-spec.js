@@ -1,8 +1,9 @@
 const { localHeader, companyInvestment: selectors } = require('../../../selectors')
 const fixtures = require('../../../fixtures/index.js')
 const baseUrl = Cypress.config().baseUrl
-const { oneListCorp } = fixtures.company
+const { oneListCorp, lambdaPlc } = fixtures.company
 const largeCapitalProfile = `/companies/${oneListCorp.id}/investments/large-capital-profile`
+const largeCapitalProfileNew = `/companies/${lambdaPlc.id}/investments/large-capital-profile`
 
 describe('Company Investments and Large capital profile', () => {
   context('when viewing the company header', () => {
@@ -147,7 +148,7 @@ describe('Company Investments and Large capital profile', () => {
       'Desired deal role',
     ]
 
-    before(() => cy.visit(largeCapitalProfile))
+    before(() => cy.visit(largeCapitalProfileNew))
 
     Object.keys(taskList).forEach((key, index) => {
       it(`should display both ${labels[index]} and INCOMPLETE`, () => {
@@ -165,7 +166,7 @@ describe('Company Investments and Large capital profile', () => {
       'Notes on investor\'s location preferences',
     ]
 
-    before(() => cy.visit(largeCapitalProfile))
+    before(() => cy.visit(largeCapitalProfileNew))
 
     Object.keys(taskList).forEach((key, index) => {
       it(`should display both ${labels[index]} and INCOMPLETE`, () => {
@@ -177,7 +178,9 @@ describe('Company Investments and Large capital profile', () => {
 
   context('when viewing the "Investor details" section', () => {
     const { investorDetails } = selectors
-    const completeDate = 'Date of most recent background checks: 29 04 2019'
+
+    const type = 'Cleared'
+    const date = 'Date of most recent background checks: 29 04 2019'
     const adviser = 'Person responsible for most recent background checks: Aaron Chan'
 
     it('should display all the field values apart from "Investor Description"', () => {
@@ -186,8 +189,8 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorDetails.taskList.globalAssetsUnderManagement.complete).should('contain', 1000000)
         .get(investorDetails.taskList.investableCapital.complete).should('contain', 30000)
         .get(investorDetails.taskList.investorDescription.incomplete).should('contain', 'INCOMPLETE')
-        .get(investorDetails.taskList.requiredChecks.complete).should('contain', 'Cleared')
-        .get(investorDetails.taskList.requiredChecks.completeDate).should('contain', completeDate)
+        .get(investorDetails.taskList.requiredChecks.complete).should('contain', type)
+        .get(investorDetails.taskList.requiredChecks.completeDate).should('contain', date)
         .get(investorDetails.taskList.requiredChecks.adviser).should('contain', adviser)
     })
   })
@@ -221,6 +224,36 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorDetails.requiredChecks.adviser.textInput).type('{enter}')
         .get(investorDetails.requiredChecks.adviser.selectedOption)
         .should('contain', 'Abby Chan, British High Commission Singapore')
+    })
+  })
+
+  context('when viewing the "Investor requirements" edit section', () => {
+    const { investorRequirements } = selectors
+
+    it('should select all "Deal ticket sizes"', () => {
+      cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
+        .get(investorRequirements.dealTicketSize.upTo49Million).should('be.checked')
+        .get(investorRequirements.dealTicketSize.fiftyTo99Million).should('be.checked')
+        .get(investorRequirements.dealTicketSize.oneHundredTo249Million).should('be.checked')
+        .get(investorRequirements.dealTicketSize.twoHundredFiftyTo499Million).should('be.checked')
+        .get(investorRequirements.dealTicketSize.fiveHundredTo999Million).should('be.checked')
+        .get(investorRequirements.dealTicketSize.oneBillionPlus).should('be.checked')
+    })
+  })
+
+  context('when viewing the "Investor requirements" details section', () => {
+    const { investorRequirements } = selectors
+
+    it('should display "Deal ticket size" and all 6 sizes', () => {
+      cy.visit(largeCapitalProfile)
+        .get(selectors.investorRequirements.summary).click()
+        .get(investorRequirements.taskList.dealTicketSize.name).should('contain', 'Deal ticket size')
+        .get(investorRequirements.taskList.dealTicketSize.upTo49Million).should('contain', 'Up to £49 million')
+        .get(investorRequirements.taskList.dealTicketSize.fiftyTo99Million).should('contain', '£50-99 million')
+        .get(investorRequirements.taskList.dealTicketSize.oneHundredTo249Million).should('contain', '£100-249 million')
+        .get(investorRequirements.taskList.dealTicketSize.twoHundredFiftyTo499Million).should('contain', '£250-499 million')
+        .get(investorRequirements.taskList.dealTicketSize.fiveHundredTo999Million).should('contain', '£500-999 million')
+        .get(investorRequirements.taskList.dealTicketSize.oneBillionPlus).should('contain', '£1 billion +')
     })
   })
 })
