@@ -109,8 +109,8 @@ const labels = {
   },
   projectManagementLabels: {
     edit: {
-      project_manager: 'Project manager',
-      project_assurance_adviser: 'Project assurance adviser',
+      project_manager: 'Project Manager',
+      project_assurance_adviser: 'Project Assurance Adviser',
     },
     view: roleAdviserTeam,
   },
@@ -148,7 +148,7 @@ const labels = {
   clientRelationshipManagementLabels: {
     view: roleAdviserTeam,
     edit: {
-      client_relationship_manager: 'Client relationship manager',
+      client_relationship_manager: 'Client Relationship Manager',
       global_account_manager: 'Global Account Manager',
     },
   },
