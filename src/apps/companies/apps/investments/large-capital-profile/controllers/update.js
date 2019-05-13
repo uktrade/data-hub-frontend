@@ -1,6 +1,6 @@
-const { transformInvestorDetails } = require('../transformers')
+const { transformInvestorDetails, transformInvestorRequirements } = require('../transformers')
 const { updateCompanyProfile } = require('../repos')
-const { INVESTOR_DETAILS } = require('../sections')
+const { INVESTOR_DETAILS, INVESTOR_REQUIREMENTS } = require('../sections')
 
 const updateProfile = async (req, res, next) => {
   const { profileId, editing } = req.body
@@ -10,6 +10,8 @@ const updateProfile = async (req, res, next) => {
   let body
   if (editing === INVESTOR_DETAILS) {
     body = transformInvestorDetails(req.body)
+  } else if (editing === INVESTOR_REQUIREMENTS) {
+    body = transformInvestorRequirements(req.body)
   }
 
   try {

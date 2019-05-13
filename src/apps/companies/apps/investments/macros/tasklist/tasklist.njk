@@ -1,6 +1,11 @@
 {% macro taskListItem(props) %}
   {% set id = props.id or props.name %}
-  {% set isComplete = props.value or false %}
+
+  {% if props.value | isArray %}
+    {% set isComplete = props.value | length %}
+  {% else %}
+    {% set isComplete = props.value or false %}
+  {% endif %}
 
   <li class="task-list__item {{ 'complete' if isComplete }}">
     <span class="task-list__item-name" aria-describedby="{{ id | kebabCase }}-incomplete">
@@ -9,7 +14,7 @@
     {% if isComplete %}
       {% if props.value | isArray %}
         {% for item in props.value %}
-          <span class="task-list__item-complete">{{ item }}</span>
+          <span class="task-list__item-complete">{{ item[props.key] if props.key else item }}</span>
         {% endfor %}
       {% elif props.value | isPlainObject %}
         {% for key, value in props.value %}

@@ -64,10 +64,24 @@ module.exports = {
     summary: '[data-auto-id=investorRequirements] summary',
     edit: '[data-auto-id=investorRequirementsEdit]',
     save: '[data-auto-id=investorRequirementsSave]',
+    dealTicketSize: {
+      upTo49Million: '[data-auto-id=dealTicketSizes] #dealTicketSizes-1',
+      fiftyTo99Million: '[data-auto-id=dealTicketSizes] #dealTicketSizes-2',
+      oneHundredTo249Million: '[data-auto-id=dealTicketSizes] #dealTicketSizes-3',
+      twoHundredFiftyTo499Million: '[data-auto-id=dealTicketSizes] #dealTicketSizes-4',
+      fiveHundredTo999Million: '[data-auto-id=dealTicketSizes] #dealTicketSizes-5',
+      oneBillionPlus: '[data-auto-id=dealTicketSizes] #dealTicketSizes-6',
+    },
     taskList: {
       dealTicketSize: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(1) .task-list__item-name',
         incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(1) .task-list__item-incomplete',
+        upTo49Million: '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(2)',
+        fiftyTo99Million: '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(3)',
+        oneHundredTo249Million: '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(4)',
+        twoHundredFiftyTo499Million: '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(5)',
+        fiveHundredTo999Million: '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(6)',
+        oneBillionPlus: '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(7)',
       },
       assetClassesOfInterest: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(2) .task-list__item-name',
