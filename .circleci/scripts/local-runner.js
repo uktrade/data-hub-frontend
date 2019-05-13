@@ -16,11 +16,11 @@ try {
       Nightwatch.CliRunner(argv)
         .setup(null, function(){
           // Code to stop browserstack local after end of parallel test
-          bs_local.stop(function(){});
+          bsLocal.stop(function(){});
         })
         .runTests(function(){
           // Code to stop browserstack local after end of single test
-          bs_local.stop(function(){});
+          bsLocal.stop(function(){});
         });
     });
   });

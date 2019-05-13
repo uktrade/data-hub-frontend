@@ -13,10 +13,9 @@ require('nightwatch-cucumber')({
   ],
 })
 
-const client = process.env.CLIENT || 'chrome'
 const browserStackUser = process.env.BROWSERSTACK_USERNAME || ''
 const browserStackKey = process.env.BROWSERSTACK_ACCESS_KEY || ''
-const isRemote = !!process.env.BROWSERSTACK_ACCESS_KEY
+const isRemote = !!process.env.REMOTE_RUN
 
 const remoteConfig = {
   selenium: {
@@ -25,10 +24,28 @@ const remoteConfig = {
     port: 80,
   },
   test_settings: {
-    default: {
+    ie11: {
       desiredCapabilities: {
         build: 'DataHub - Liveservices',
-        browserName: client,
+        browserName: 'IE',
+        browser_version: '11',
+        os: 'Windows',
+        os_version: '10',
+        'browserstack.user': browserStackUser,
+        'browserstack.key': browserStackKey,
+        'browserstack.local': true,
+      },
+      selenium_host: 'hub-cloud.browserstack.com',
+      selenium_port: 80,
+    },
+    firefox: {
+      desiredCapabilities: {
+        build: 'DataHub - Liveservices',
+        browserName: 'Firefox',
+        browser_version: '67.0 beta',
+        'browserstack.selenium_version': '3.5.2',
+        os: 'Windows',
+        os_version: '10',
         'browserstack.user': browserStackUser,
         'browserstack.key': browserStackKey,
         'browserstack.local': true,

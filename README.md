@@ -513,12 +513,11 @@ e.g:
 ```
 BROWSERSTACK_USERNAME=username
 BROWSERSTACK_ACCESS_KEY=accesskey
-CLIENT=chrome
 ```
 
 Then run:
 ```
-yarn test:acceptance:remote --tag audit-company--name
+REMOTE_RUN=true yarn test:acceptance:remote --env ie11,firefox --tag audit-company--name
 ```
 
 #### Naming conventions
