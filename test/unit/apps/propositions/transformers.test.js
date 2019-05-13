@@ -113,11 +113,7 @@ describe('Proposition transformers', () => {
 
       it('should not transform it to a collection with only word objects', () => {
         expect(this.transformed.Details.value).to.deep.equal([
-          { type: 'word', value: 'the' },
-          { type: 'word', value: 'world' },
-          { type: 'word', value: 'is' },
-          { type: 'word', value: 'a' },
-          { type: 'word', value: 'stage' },
+          { type: 'paragraph', value: 'the world is a stage' },
         ])
       })
     })
@@ -175,7 +171,6 @@ describe('Proposition transformers', () => {
             { type: 'link',
               value: { url: 'http://bazzinga', name: 'http://bazzinga' },
             },
-            { type: 'word', value: '' },
           ]
         )
       })
@@ -218,11 +213,49 @@ describe('Proposition transformers', () => {
                 name: 'https://world-is-a-stage',
               },
           },
-          { type: 'word', value: 'and' },
-          { type: 'word', value: 'we' },
-          { type: 'word', value: 'are' },
-          { type: 'word', value: 'the' },
-          { type: 'word', value: 'actors' },
+          { type: 'paragraph', value: 'and we are the actors' },
+          ])
+      })
+    })
+
+    context('when provided an abandoned proposition and a text that starts has also some a urls as detail', () => {
+      beforeEach(() => {
+        mockProposition.status = 'Abandoned'
+        mockProposition.details = 'in this universe https://world-is-a-stage and we are the actors www.yahoo.com of the play http://third.link lorem ipsum'
+        this.transformed = transformPropositionResponseToViewRecord(mockProposition)
+      })
+
+      it('should transform it to a collection with a link object for the url and a word object for the rest of the words in the string', () => {
+        expect(this.transformed.Details.value).to.deep.equal(
+          [
+            { type: 'paragraph', value: 'in this universe' },
+            {
+              type: 'link',
+              value:
+                {
+                  url: 'https://world-is-a-stage',
+                  name: 'https://world-is-a-stage',
+                },
+            },
+            { type: 'paragraph', value: 'and we are the actors' },
+            {
+              type: 'link',
+              value:
+                {
+                  url: 'www.yahoo.com',
+                  name: 'www.yahoo.com',
+                },
+            },
+            { type: 'paragraph', value: 'of the play' },
+            {
+              type: 'link',
+              value:
+                {
+                  url: 'http://third.link',
+                  name: 'http://third.link',
+                },
+            },
+            { type: 'paragraph', value: 'lorem ipsum' },
           ])
       })
     })
@@ -236,17 +269,13 @@ describe('Proposition transformers', () => {
 
       it('should transform it to a collection with a link object for the url and a word object for the rest of the words in the string', () => {
         expect(this.transformed.Details.value).to.deep.equal([
-          { type: 'word', value: 'the' },
-          { type: 'word', value: 'world' },
+          { type: 'paragraph', value: 'the world' },
           {
             type: 'link',
             value: { url: 'https://is-a-stage', name: 'https://is-a-stage' },
           },
-          { type: 'word', value: 'and' },
-          { type: 'word', value: 'we' },
-          { type: 'word', value: 'are' },
-          { type: 'word', value: 'the' },
-          { type: 'word', value: 'actors' }])
+          { type: 'paragraph', value: 'and we are the actors' },
+        ])
       })
     })
 
@@ -259,21 +288,12 @@ describe('Proposition transformers', () => {
 
       it('should transform it to a collection with two link objects for the urls and a word object for the rest of the words in the string', () => {
         expect(this.transformed.Details.value).to.deep.equal([
-          { type: 'word', value: 'the' },
-          { type: 'word', value: 'world' },
+          { type: 'paragraph', value: 'the world' },
           {
             type: 'link',
             value: { url: 'https://is-a-stage', name: 'https://is-a-stage' },
           },
-          { type: 'word', value: 'and' },
-          { type: 'word', value: 'we' },
-          { type: 'word', value: 'are' },
-          { type: 'word', value: 'the' },
-          { type: 'word', value: 'actors,' },
-          { type: 'word', value: 'find' },
-          { type: 'word', value: 'more' },
-          { type: 'word', value: 'quotes' },
-          { type: 'word', value: 'at' },
+          { type: 'paragraph', value: 'and we are the actors, find more quotes at' },
           {
             type: 'link',
             value:
@@ -282,10 +302,7 @@ describe('Proposition transformers', () => {
                 name: 'http://padding-quotes#123',
               },
           },
-          { type: 'word', value: 'and' },
-          { type: 'word', value: 'put' },
-          { type: 'word', value: 'them' },
-          { type: 'word', value: 'here' }]
+          { type: 'paragraph', value: 'and put them here' }]
         )
       })
     })
