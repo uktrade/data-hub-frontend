@@ -36,7 +36,7 @@ describe('Investment create invenstor profile post call controller', () => {
 
       context('when profile exists', () => {
         beforeEach(async () => {
-          this.createCompanyProfileSpy = sinon.stub().rejects({ 'error': { 'investor_company': 'company exist' } })
+          this.createCompanyProfileSpy = sinon.stub().rejects({ 'statusCode': 400, 'error': { 'investor_company': 'company exist' } })
 
           const controller = proxyquire('~/src/apps/investments/controllers/create/create-profile', {
             './../../../companies/apps/investments/large-capital-profile/repos.js': {
@@ -58,7 +58,7 @@ describe('Investment create invenstor profile post call controller', () => {
 
         it('should return error message', () => {
           expect(this.middlewareParameters.resMock.redirect).not.to.be.called
-          expect(this.middlewareParameters.resMock.locals.form.errors.summary).to.equal('company exist')
+          expect(this.middlewareParameters.resMock.locals.errors.summary).to.equal('company exist')
         })
       })
     })
@@ -86,7 +86,7 @@ describe('Investment create invenstor profile post call controller', () => {
       it('should return validation error message', () => {
         expect(this.createCompanyProfileSpy).not.to.be.called
         expect(this.middlewareParameters.resMock.redirect).not.to.be.called
-        expect(this.middlewareParameters.resMock.locals.form.errors.messages.investor_company)
+        expect(this.middlewareParameters.resMock.locals.errors.messages.investor_company)
           .an('array').that.includes('Enter a company name')
       })
     })
