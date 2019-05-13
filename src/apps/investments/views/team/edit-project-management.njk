@@ -10,22 +10,28 @@
   {% endcall %}
 
   {% call Form(form) %}
-    {{ MultipleChoiceField({
+    {{ Typeahead({
       name: 'project_assurance_adviser',
+      entity: 'adviser',
+      placeholder: 'Select an adviser',
+      multipleSelect: false,
+      classes: 'c-form-group c-form-group--no-filter',
       label: form.labels.project_assurance_adviser,
       error: form.errors.project_assurance_adviser,
-      options: form.options.projectAssuranceAdvisers,
-      value: form.state.project_assurance_adviser,
-      initialOption: 'Select an adviser'
+      options: form.options.projectManagers,
+      value: form.state.project_assurance_adviser
     }) }}
 
-    {{ MultipleChoiceField({
+    {{ Typeahead({
       name: 'project_manager',
+      entity: 'adviser',
+      placeholder: 'Select a manager',
+      multipleSelect: false,
+      classes: 'c-form-group c-form-group--no-filter',
       label: form.labels.project_manager,
-      error: form.errors.project_manager,
+      error: form.labels.project_manager,
       options: form.options.projectManagers,
-      value: form.state.project_manager,
-      initialOption: 'Select an adviser'
+      value: form.state.project_manager
     }) }}
 
   {% endcall %}
