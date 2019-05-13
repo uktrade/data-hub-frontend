@@ -1,10 +1,10 @@
 const router = require('express').Router()
 const paths = require('./paths')
 
-const projectsRouter = require('./routes/router-projects')
-const profilesRouter = require('./routes/router-profiles')
-const opportunitiesRouter = require('./routes/router-opportunities')
-const createInvestorProfileRouter = require('./routes/router-create-investor')
+const projectsRouter = require('./router-projects')
+const profilesRouter = require('./router-profiles')
+const opportunitiesRouter = require('./router-opportunities')
+const createInvestorProfileRouter = require('./router-create-investor')
 
 router.use((req, res, next) => {
   res.locals.paths = paths
