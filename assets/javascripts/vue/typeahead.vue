@@ -174,7 +174,7 @@
         required: false,
         default: true,
       },
-      apiVersion: {
+      target: {
         type: String,
         required: true,
       },
@@ -247,7 +247,7 @@
         this.isLoading = true
         this.isAsyncFunction = true
 
-        let url = `/api/options/${this.entity}?autocomplete=${query}${this.filterInactive}&api_version=${this.apiVersion}`
+        let url = `/api/options/${this.entity}?autocomplete=${query}${this.filterInactive}&target=${this.target}`
 
         if (this.chainedParams)  {
           url += `&chained_param=${this.chainedParams.urlParam}&chained_value=${document.getElementsByName(this.chainedParams.valueFrom)[0].value}`

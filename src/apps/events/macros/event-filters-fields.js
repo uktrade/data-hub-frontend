@@ -17,7 +17,7 @@ const eventFiltersFields = ({ advisers, userAgent }) => {
       placeholder: 'Search organiser',
       options: advisers.map(transformObjectToOption),
       hideInactive: false,
-      apiVersion: 'metadata',
+      target: 'metadata',
     },
     {
       macroName: 'DateField',
