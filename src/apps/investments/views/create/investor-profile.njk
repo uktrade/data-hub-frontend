@@ -30,7 +30,7 @@
         useSubLabel: false,
         multipleSelect: false,
         isAsync: true,
-        apiVersion: 'metadata'
+        target: 'metadata'
       }) }}
 
       {{ Typeahead({
@@ -45,7 +45,7 @@
           'urlParam': 'country',
           'valueFrom': 'country_investment_originates_from'
         },
-        apiVersion: 'v4/search',
+        target: 'search_autocomplete',
         error: errors.messages.investor_company
       }) }}
 

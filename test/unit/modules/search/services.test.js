@@ -6,6 +6,7 @@ const {
   searchForeignCompanies,
   searchLimitedCompanies,
   exportSearch,
+  searchAutocomplete,
 } = require('~/src/modules/search/services')
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
@@ -308,6 +309,30 @@ describe('Search service', () => {
 
       it('should return the response', () => {
         expect(this.middlewareParameters.resMock.on).to.be.called
+      })
+    })
+  })
+
+  describe('#searchAutocomplete', () => {
+    beforeEach(async () => {
+      nock(config.apiRoot)
+        .get(`/v4/search/company/autocomplete?term=search`)
+        .reply(200, {
+          count: 0,
+          results: [],
+        })
+
+      this.actual = await searchAutocomplete({
+        token: '1234',
+        searchEntity: 'company',
+        searchTerm: 'search',
+      })
+    })
+
+    it('should return the response', () => {
+      expect(this.actual).to.deep.equal({
+        count: 0,
+        results: [],
       })
     })
   })

@@ -38,22 +38,6 @@ const serviceOptions = [
   },
 ]
 
-const v4Response = { 'results': [{
-  'id': '375094ac-f79a-43e5-9c88-059a7caa17f0',
-  'name': 'One List Corp',
-}, {
-  'id': '960e1fa9-cc25-478c-a548-a2e2047319bb',
-  'name': 'One List Subsidiary Ltd',
-}] }
-
-const v4Options = [{
-  'value': '375094ac-f79a-43e5-9c88-059a7caa17f0',
-  'label': 'One List Corp',
-}, {
-  'value': '960e1fa9-cc25-478c-a548-a2e2047319bb',
-  'label': 'One List Subsidiary Ltd',
-}]
-
 describe('#options', () => {
   beforeEach(() => {
     nock(config.apiRoot)
@@ -156,31 +140,6 @@ describe('#options', () => {
 
       it('should return options in that context', () => {
         expect(this.options).to.deep.equal([{ label: 'Advice', value: '1' }])
-      })
-    })
-  })
-
-  context('when api version is v4/search', () => {
-    beforeEach(() => {
-      nock(config.apiRoot) // /v4/search/${key}/autocomplete?term=${term}&format=json
-        .get('/v4/search/service/autocomplete?term=France&chainedParam=chainedValue&format=json')
-        .reply(200, v4Response)
-    })
-
-    context('when there is a context in the options response', () => {
-      beforeEach(async () => {
-        this.options = await getOptions('1234', 'service', {
-          apiVersion: 'v4/search',
-          chainedUrlParam: 'chainedParam',
-          chainedValue: 'chainedValue',
-          includeDisabled: true,
-          is_active: true,
-          term: 'France',
-        })
-      })
-
-      it('should return options in that context', () => {
-        expect(this.options).to.deep.equal(v4Options)
       })
     })
   })

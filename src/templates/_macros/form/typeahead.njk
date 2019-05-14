@@ -42,8 +42,8 @@
         {% if props.hideInactive === false %}
           {% raw %}:{% endraw %}hide-inactive="{{ props.hideInactive }}"
         {% endif %}
-        {% if props.apiVersion %}
-          api-version="{{ props.apiVersion }}"
+        {% if props.target %}
+          target="{{ props.target }}"
         {% endif %}
         {% if props.chainedParams %}
           {% raw %}:{% endraw %}chained-params="{{ props.chainedParams | dump }}"
