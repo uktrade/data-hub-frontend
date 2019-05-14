@@ -24,7 +24,7 @@ Feature: Add value to investment project
     And the Value key value details are displayed
       | key                               | value                                            |
       | Total investment                  | £100,000.00                                      |
-      | Foreign equity investment         | £200,000.00                                      |
+      | Capital expenditure value         | £200,000.00                                      |
       | Government assistance             | Has government assistance                        |
       | New jobs                          | 100 new jobs                                     |
       | Average salary of new jobs        | investmentProject.value.averageSalary            |
@@ -56,7 +56,7 @@ Feature: Add value to investment project
     And the Value key value details are displayed
       | key                        | value                                           |
       | Total investment           | Client cannot provide this information          |
-      | Foreign equity investment  | Client cannot provide this information          |
+      | Capital expenditure value  | Client cannot provide this information          |
       | Government assistance      | No government assistance                        |
       | New jobs                   | 0                                               |
       | Average salary of new jobs | investmentProject.value.averageSalary           |
