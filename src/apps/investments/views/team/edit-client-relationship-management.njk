@@ -4,13 +4,16 @@
   <h2 class="govuk-heading-m">Edit client relationship management</h2>
 
   {% call Form(form) %}
-    {{ MultipleChoiceField({
+    {{ Typeahead({
       name: 'client_relationship_manager',
+      entity: 'adviser',
+      placeholder: 'Search client relationship manager',
+      classes: 'c-form-group c-form-group--no-filter',
+      multipleSelect: false,
       label: form.labels.client_relationship_manager,
       error: form.errors.client_relationship_manager,
       options: form.options.clientRelationshipManagers,
-      value: form.state.client_relationship_manager,
-      initialOption: '-- Select an adviser --'
+      value: form.state.client_relationship_manager
     }) }}
 
     {{ FormGroup({} | assign(props, {

@@ -8,12 +8,17 @@
       data-item-selector=".c-form-fieldset"
       data-item-name="team member"
       data-can-remove-all
+         data-add-button-type="typeahead"
     >
       <div>
         {% for teamMember in form.fields.teamMembers %}
           {% call Fieldset({ legend: 'Team member' }) %}
-            {{ MultipleChoiceField({
+            {{ Typeahead({
               name: 'adviser',
+              entity: 'adviser',
+              placeholder: 'Select an adviser',
+              multipleSelect: false,
+              classes: 'c-form-group c-form-group--no-filter',
               label: form.labels.adviser,
               options: teamMember.options,
               value: teamMember.adviser,
