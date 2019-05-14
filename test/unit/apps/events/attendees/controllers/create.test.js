@@ -49,6 +49,7 @@ describe('Create attendee controller', () => {
           event: '31a9f8bd-7796-4af4-8f8c-25450860e2d1',
           is_event: true,
           kind: 'service_delivery',
+          theme: 'other',
           service: '9484b82b-3499-e211-a939-e4115bead28a',
           subject: 'Attended A United Kingdom Get together',
           was_policy_feedback_provided: false,
