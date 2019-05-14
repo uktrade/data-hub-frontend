@@ -22,6 +22,7 @@
     "test:unit": "NODE_ENV=test LOG_LEVEL=silent mocha ./test/unit --opts ./test/unit/mocha.opts",
     "test:unit-client": "mocha-webpack --webpack-config webpack.config.js ./test/unit-client/assets/javascripts/**/*.test.js --opts ./test/unit-client/mocha.opts",
     "test:acceptance": "nightwatch --config test/acceptance/nightwatch.conf.js --env default --skiptags ignore",
+    "test:acceptance:remote": "./.circleci/scripts/local-runner.js --config test/acceptance/nightwatch.conf.js",
     "test:functional": "cypress run",
     "test:functional:watch": "cypress open",
     "coverage": "nyc --reporter=html --reporter=text --reporter=lcov npm run test:unit",

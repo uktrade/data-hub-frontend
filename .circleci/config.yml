@@ -459,6 +459,38 @@ jobs:
       - *store_test_results
       - *store_test_artifacts
 
+  # Run acceptance tests on different browsers
+  compatibility_at:
+    <<: *at_container_config
+    docker:
+      - <<: *docker_data_hub_base
+        environment:
+          <<: *data_hub_base_envs
+          OAUTH2_DEV_TOKEN: *oauth2_da_staff_token
+      - *docker_redis
+      - *docker_elasticsearch
+      - *docker_postgres
+      - *docker_mi_postgres
+      - *docker_mock_sso
+      - *docker_data_hub_backend_api
+      - *docker_data_hub_backend_celery
+    steps:
+      - checkout
+      - *wait_for_backend
+      - *wait_for_mock_sso
+      - *store_versions
+      - *restore_yarn_cache
+      - run: yarn build
+      - *start_frontend
+      - *wait_for_frontend
+      - *create_cucumber_dirs
+      - run:
+          name: Run compatibility acceptance tests
+          command: REMOTE_RUN=true yarn test:acceptance:remote --env ie11,firefox --tag smoke
+      - *create_at_reports
+      - *store_test_results
+      - *store_test_artifacts
+
   # Run acceptance tests for DIT staff using the master version of the backend
   master-dit_staff_at:
     <<: *dit_staff_at
@@ -531,6 +563,15 @@ workflows:
       - dit_staff_at: *common_at_workflow_config
       - da_staff_at: *common_at_workflow_config
       - lep_staff_at: *common_at_workflow_config
+      - compatibility_at:
+          requires:
+            - dit_staff_at
+            - da_staff_at
+            - lep_staff_at
+          filters:
+            branches:
+              only:
+                - develop
       - master-dit_staff_at: *master_common_at_workflow_config
       - master-da_staff_at: *master_common_at_workflow_config
       - master-lep_staff_at: *master_common_at_workflow_config
