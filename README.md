@@ -506,6 +506,20 @@ e.g:
 yarn test:acceptance -- --tag audit-company--name
 ```
 
+You can also run the tests pointing to browserstack.
+Ensure you have the user and access key in your environment variables.
+You can find the browserstack credentials which lead to the info below on Rattic.
+e.g:
+```
+BROWSERSTACK_USERNAME=username
+BROWSERSTACK_ACCESS_KEY=accesskey
+```
+
+Then run:
+```
+REMOTE_RUN=true yarn test:acceptance:remote --env ie11,firefox --tag audit-company--name
+```
+
 #### Naming conventions
 ##### Folders
 We use singular or plural folder names. E.g `contacts`, `companies`, `audit`.
