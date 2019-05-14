@@ -24,7 +24,9 @@ const labels = {
   valueLabels: {
     view: {
       total_investment: 'Total investment',
+      total_investment_hint: 'Enter the total number of GB pounds',
       foreign_equity_investment: 'Foreign equity investment',
+      foreign_equity_investment_hint: 'Enter the total number of GB pounds',
       gross_value_added: 'Gross Value Added (GVA)',
       government_assistance: 'Government assistance',
       number_new_jobs: 'New jobs',
@@ -45,7 +47,9 @@ const labels = {
       new_tech_to_uk: 'Does the project bring ‘New To World’ Technology, IP or Business Model to the UK site?',
       export_revenue: 'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project?',
       client_cannot_provide_total_investment: 'Can client provide total investment value?',
+      client_cannot_provide_total_investment_hint: 'Includes capital, operational and R&D expenditure',
       client_cannot_provide_foreign_investment: 'Can client provide foreign equity investment value?',
+      client_cannot_provide_foreign_investment_hint: 'Foreign equity only, excluding operational and R&D expenditure',
       fdi_value: 'Project value',
       likelihood_to_land: 'Likelihood to land',
     },
