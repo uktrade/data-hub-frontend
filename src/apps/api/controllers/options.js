@@ -1,31 +1,40 @@
 const { getOptions } = require('../../../lib/options')
+const { searchAutocomplete } = require('./../../../modules/search/services')
+const { transformObjectToOption } = require('../../../apps/transformers')
 
 async function getOptionsHandler (req, res, next) {
   const token = req.session.token
   const key = req.params.entity
-  let chainedParams = {}
 
   if (key === 'adviser') {
     return next()
   }
 
-  if (req.query.chained_param) {
-    chainedParams = {
-      'chainedUrlParam': req.query.chained_param,
-      'chainedValue': req.query.chained_value,
-    }
-  }
-
   try {
-    const options = await getOptions(token, key, {
-      includeDisabled: true,
-      term: req.query.autocomplete,
-      is_active: req.query.is_active,
-      apiVersion: req.query.api_version,
-      ...chainedParams,
-    })
+    if (req.query.target === `search_autocomplete`) {
+      let searchTerm = req.query.autocomplete
 
-    res.json(options)
+      // restrict search area using another typeahead's value
+      if (req.query.chained_param && req.query.chained_value) {
+        searchTerm += `&${req.query.chained_param}=${req.query.chained_value}`
+      }
+
+      const options = await searchAutocomplete({
+        token: token,
+        searchEntity: key,
+        searchTerm: searchTerm,
+      })
+
+      res.json(options.results.map(transformObjectToOption))
+    } else {
+      const options = await getOptions(token, key, {
+        includeDisabled: true,
+        term: req.query.autocomplete,
+        is_active: req.query.is_active,
+      })
+
+      res.json(options)
+    }
   } catch (error) {
     next(error)
   }

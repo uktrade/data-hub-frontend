@@ -14,7 +14,7 @@ module.exports = {
         classes: 'c-form-group c-form-group--no-filter',
         multipleSelect: false,
         options: advisers,
-        apiVersion: 'metadata',
+        target: 'metadata',
       }],
     }
   },
