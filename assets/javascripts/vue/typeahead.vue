@@ -152,7 +152,7 @@
     },
     created () {
       if (!this.useMultipleSelect) {
-        this.setPlaceHolder = this.getLabelFromValue(this.selectedValue, this.multiSelectModel)
+        this.setPlaceHolder = this.getLabelFromValue(this.selectedValue, this.multiSelectModel) || this.placeholder
       }
 
       this.isCloseOnSelect = !this.useMultipleSelect
@@ -195,7 +195,7 @@
           return this.setPlaceHolder
         }
 
-        return `${activeValue[0].label}, ${activeValue[0].subLabel}`
+        return `${activeValue[0].label}${activeValue[0].subLabel ? ', ' + activeValue[0].subLabel : ''}`
       },
       queryOptions: function (query) {
         this.isAsync ? this.asyncSearch(query) : this.search(query)
