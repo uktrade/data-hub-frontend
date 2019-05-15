@@ -108,7 +108,10 @@ describe('HTTP PATCH - Large capital profile', () => {
       beforeEach(async () => {
         this.middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
-          requestBody: {},
+          requestBody: {
+            profileId: '123',
+            editing: 'investor-requirements',
+          },
         })
 
         this.errorMock = {
