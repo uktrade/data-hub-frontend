@@ -3,12 +3,13 @@ const {
   transformAdvisers,
   transformInvestorTypes,
   transformRequiredChecks,
+  transformDealTicketSizes,
 } = require('../transformers')
 
 const { getOptions } = require('../../../../../../lib/options')
 const { getAdvisers } = require('../../../../../adviser/repos')
 const { getCompanyProfiles } = require('../repos')
-const { INVESTOR_DETAILS } = require('../sections')
+const { INVESTOR_DETAILS, INVESTOR_REQUIREMENTS } = require('../sections')
 const { get } = require('lodash')
 
 const getInvestorTypes = async (token, profile) => {
@@ -26,6 +27,11 @@ const getRequiredChecksAdvisers = async (token) => {
   return transformAdvisers(advisers.results)
 }
 
+const getDealTicketSizes = async (token, profile) => {
+  const dealTicketSizes = await getOptions(token, 'capital-investment/deal-ticket-size', { sorted: false })
+  return transformDealTicketSizes(dealTicketSizes, profile.investorRequirements)
+}
+
 const getCompanyProfile = async (token, company, editing) => {
   const profiles = await getCompanyProfiles(token, company.id)
   const profile = profiles.results && profiles.results[0]
@@ -39,14 +45,16 @@ const renderProfile = async (req, res, next) => {
 
   try {
     const profile = await getCompanyProfile(token, company, editing)
+    const editType = get(profile, 'editing')
 
-    if (get(profile, 'editing') === INVESTOR_DETAILS) {
+    if (editType === INVESTOR_DETAILS) {
       profile.investorDetails.investorType.items = await getInvestorTypes(token, profile)
       profile.investorDetails.requiredChecks = await getRequiredChecks(token, profile)
-
       const advisers = await getRequiredChecksAdvisers(token)
       profile.investorDetails.requiredChecks.cleared.advisers = advisers
       profile.investorDetails.requiredChecks.issuesIdentified.advisers = advisers
+    } else if (editType === INVESTOR_REQUIREMENTS) {
+      profile.investorRequirements.dealTicketSizes.items = await getDealTicketSizes(token, profile)
     }
 
     res.render('companies/apps/investments/large-capital-profile/views/profile', { profile })
