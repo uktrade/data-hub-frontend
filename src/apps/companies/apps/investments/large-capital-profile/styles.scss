@@ -38,12 +38,6 @@ nav.govuk-tabs {
   }
 }
 
-.govuk-checkboxes__input +
-  .govuk-checkboxes__label::after {
-    width: 23px;
-    height: 12px;
-}
-
 @include govuk-media-query($from: tablet) {
   form.investor-details-edit {
     width: 75%;
