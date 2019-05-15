@@ -7,12 +7,12 @@ const updateProfile = async (req, res, next) => {
   const { company } = res.locals
   const { token } = req.session
 
-  let body
-  if (editing === INVESTOR_DETAILS) {
-    body = transformInvestorDetails(req.body)
-  } else if (editing === INVESTOR_REQUIREMENTS) {
-    body = transformInvestorRequirements(req.body)
+  const transformer = {
+    [INVESTOR_DETAILS]: transformInvestorDetails,
+    [INVESTOR_REQUIREMENTS]: transformInvestorRequirements,
   }
+
+  const body = transformer[editing](req.body)
 
   try {
     await updateCompanyProfile(token, body, profileId)
