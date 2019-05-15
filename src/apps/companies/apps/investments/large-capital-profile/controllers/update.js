@@ -12,9 +12,8 @@ const updateProfile = async (req, res, next) => {
     [INVESTOR_REQUIREMENTS]: transformInvestorRequirements,
   }
 
-  const body = transformer[editing](req.body)
-
   try {
+    const body = transformer[editing](req.body)
     await updateCompanyProfile(token, body, profileId)
     res.redirect(`/companies/${company.id}/investments/large-capital-profile`)
   } catch (error) {
