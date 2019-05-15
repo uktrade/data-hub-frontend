@@ -1,17 +1,33 @@
 {% call Form({
   buttonText: 'Save',
   returnText: 'Cancel',
+  class: 'investor-requirements-edit',
   buttonDataAttr: 'investorRequirementsSave',
   returnLink: '/companies/' + company.id + '/investments/large-capital-profile',
   action: '/companies/' + company.id + '/investments/large-capital-profile/update',
   hiddenFields: {
-    profileId: profile.profile.id,
+    profileId: profile.id,
     editing: profile.editing
   }
 }) %}
 
-  <p>Investor requirements: UI components go here...</p>
+  {{
+    govukCheckboxes({
+      name: "dealTicketSizes",
+      classes: 'deal-ticket-sizes',
+      fieldset: {
+        attributes: {
+          'data-auto-id': 'dealTicketSizes'
+        },
+        legend: {
+          text: "Deal ticket size",
+          classes: "govuk-fieldset__legend--s"
+        }
+      },
+      items: profile.investorRequirements.dealTicketSizes.items
+    })
+  }}
 
 {% endcall %}
 
-
+{#<pre>{{ profile.investorRequirements.dealTicketSizes.value | dump(2) }}</pre>#}
