@@ -129,7 +129,6 @@ function exportSearch ({ token, searchTerm = '', searchEntity, requestBody }) {
 
 function searchAutocomplete ({ token, searchEntity, searchTerm = '', requestBody = {} }) {
   const searchUrl = `${config.apiRoot}/v4/search/${searchEntity}/autocomplete?term=${searchTerm}`
-  console.log(searchUrl)
   const body = {
     ...requestBody,
   }

@@ -42,4 +42,13 @@ nav.govuk-tabs {
   form.investor-details-edit {
     width: 75%;
   }
+  form.investor-requirements-edit  {
+   .deal-ticket-sizes {
+     width: 660px;
+     height: 152px;
+     display: flex;
+     flex-direction: column;
+     flex-wrap: wrap;
+   }
+  }
 }

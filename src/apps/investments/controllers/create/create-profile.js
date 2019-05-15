@@ -13,6 +13,7 @@ const createProfile = async (req, res, next) => {
     res.redirect(`/companies/${profile.investor_company.id}/investments/large-capital-profile`)
   } catch (err) {
     if (err.statusCode === 400) {
+      // profile already exists for investor_company
       set(res.locals, 'errors.summary', err.error.investor_company)
       next()
     } else {
