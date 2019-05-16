@@ -114,7 +114,7 @@ describe('Investment create invenstor profile post call controller', () => {
         expect(this.createCompanyProfileSpy).not.to.be.called
         expect(this.middlewareParameters.resMock.redirect).not.to.be.called
         expect(this.middlewareParameters.resMock.locals.errors.messages.investor_company)
-          .an('array').that.includes('Enter a company name')
+          .to.be.a('string').that.equal('Enter a company name')
       })
     })
   })
