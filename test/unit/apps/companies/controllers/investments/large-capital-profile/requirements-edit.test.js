@@ -1,4 +1,5 @@
 const dealTicketSize = require('~/test/unit/data/companies/investments/metadata/deal-ticket-size.json')
+const investmentType = require('~/test/unit/data/companies/investments/metadata/investment-type.json')
 const companyProfile = require('~/test/unit/data/companies/investments/large-capital-profile.json')
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 const companyMock = require('~/test/unit/data/companies/minimal-company.json')
@@ -42,6 +43,8 @@ describe('Company Investments - Large capital profile - Investor requirements', 
           .reply(200, clonedCompanyProfile)
           .get('/metadata/capital-investment/deal-ticket-size/')
           .reply(200, dealTicketSize)
+          .get('/metadata/capital-investment/large-capital-investment-type/')
+          .reply(200, investmentType)
 
         this.middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
@@ -113,6 +116,34 @@ describe('Company Investments - Large capital profile - Investor requirements', 
               text: '£1 billion +',
               value: '5e7601b5-becd-42ea-b885-1bbd88b85e4b',
             }],
+          },
+          investmentTypes: {
+            items: [ {
+              text: 'Direct Investment in Corporate Debt',
+              value: 'f972c0d9-f480-4727-af39-dff10cf935a9',
+            }, {
+              text: 'Direct Investment in Corporate Equity',
+              value: '942726e3-1b3f-4218-b06e-7cf983754de0',
+            }, {
+              text: 'Direct Investment in Project Debt',
+              value: '06834da2-c9ac-4faf-b555-39762ce373ae',
+            }, {
+              text: 'Direct Investment in Project Equity',
+              value: '4170d99a-02fc-46ee-8fd4-3fe786717708',
+            }, {
+              text: 'Energy / Infrastructure / Real Estate Funds (UKEIREFs)',
+              value: '24826b7c-e3df-4a76-80d4-4fe2661b838e',
+            }, {
+              text: 'Mezzanine Debt (incl. preferred shares, convertibles)',
+              value: '703140ec-6990-4f36-8b22-52ebde63932c',
+            }, {
+              text: 'Private Equity / Venture Capital',
+              value: 'ef615dde-49d8-41dd-9ddd-a00c78004135',
+            }, {
+              text: 'Venture capital funds',
+              value: '8feb6087-d61c-43bd-9bf1-3d9e1129432b',
+            } ],
+            value: [],
           },
         },
         location: {

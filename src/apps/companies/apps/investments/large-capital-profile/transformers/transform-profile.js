@@ -58,6 +58,9 @@ const transformProfile = (profile, editing) => {
       dealTicketSizes: {
         value: get(profile, 'deal_ticket_sizes'),
       },
+      investmentTypes: {
+        value: get(profile, 'investment_types'),
+      },
     },
     location: {
       incompleteFields: get(profile, 'incomplete_location_fields.length'),

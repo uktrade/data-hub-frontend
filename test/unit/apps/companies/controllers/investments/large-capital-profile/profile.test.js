@@ -91,6 +91,9 @@ describe('Company Investments - Large capital profile', () => {
           dealTicketSizes: {
             value: [],
           },
+          investmentTypes: {
+            value: [],
+          },
         },
         location: {
           incompleteFields: 3,
@@ -131,6 +134,11 @@ describe('Company Investments - Large capital profile', () => {
         profile.deal_ticket_sizes = [ {
           name: '£1 billion +',
           id: '5e7601b5-becd-42ea-b885-1bbd88b85e4b',
+        }]
+
+        profile.investment_types = [{
+          name: 'Direct Investment in Project Equity',
+          id: '4170d99a-02fc-46ee-8fd4-3fe786717708',
         }]
 
         nock(config.apiRoot)
@@ -189,6 +197,12 @@ describe('Company Investments - Large capital profile', () => {
             value: [ {
               name: '£1 billion +',
               id: '5e7601b5-becd-42ea-b885-1bbd88b85e4b',
+            }],
+          },
+          investmentTypes: {
+            value: [ {
+              name: 'Direct Investment in Project Equity',
+              id: '4170d99a-02fc-46ee-8fd4-3fe786717708',
             }],
           },
         },

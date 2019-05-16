@@ -179,6 +179,9 @@ describe('Company Investments - Large capital profile - Investor details', () =>
           dealTicketSizes: {
             value: [],
           },
+          investmentTypes: {
+            value: [],
+          },
         },
         location: {
           incompleteFields: 3,

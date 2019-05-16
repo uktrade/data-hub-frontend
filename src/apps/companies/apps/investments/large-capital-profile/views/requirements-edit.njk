@@ -28,6 +28,23 @@
     })
   }}
 
-{% endcall %}
+  <p>Placeholder - Asset classes of interest</p>
 
-{#<pre>{{ profile.investorRequirements.dealTicketSizes.value | dump(2) }}</pre>#}
+  {{
+    govukCheckboxes({
+      name: "investmentTypes",
+      classes: 'types-of-investment',
+      fieldset: {
+        attributes: {
+          'data-auto-id': 'investmentTypes'
+        },
+        legend: {
+          text: "Types of investment",
+          classes: "govuk-fieldset__legend--s"
+        }
+      },
+      items: profile.investorRequirements.investmentTypes.items
+    })
+  }}
+
+{% endcall %}
