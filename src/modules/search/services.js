@@ -127,6 +127,24 @@ function exportSearch ({ token, searchTerm = '', searchEntity, requestBody }) {
   return authorisedRawRequest(token, options)
 }
 
+function searchAutocomplete ({ token, searchEntity, searchTerm = '', requestBody = {} }) {
+  const searchUrl = `${config.apiRoot}/v4/search/${searchEntity}/autocomplete?term=${searchTerm}`
+  const body = {
+    ...requestBody,
+  }
+
+  const options = buildOptions(
+    true,
+    searchUrl,
+    body,
+  )
+
+  return authorisedRequest(token, options)
+    .then(result => {
+      return result
+    })
+}
+
 module.exports = {
   search,
   searchCompanies,
@@ -134,4 +152,5 @@ module.exports = {
   searchForeignCompanies,
   searchInvestments,
   exportSearch,
+  searchAutocomplete,
 }
