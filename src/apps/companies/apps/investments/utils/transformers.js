@@ -1,4 +1,4 @@
-const { find, isString } = require('lodash')
+const { find, isString, castArray, compact } = require('lodash')
 
 const transformObjectToOption = ({ value, label }) => ({ value, text: label })
 
@@ -12,12 +12,8 @@ const checkMatchingItemById = (items) => {
   }
 }
 
-const ifStringAddToEmtpyArray = (obj) => {
-  return isString(obj) ? [obj] : obj
-}
-
 const sanitizeCheckboxes = (selection) => {
-  return selection === undefined ? [] : ifStringAddToEmtpyArray(selection)
+  return isString(selection) ? castArray(selection) : compact(selection)
 }
 
 module.exports = {

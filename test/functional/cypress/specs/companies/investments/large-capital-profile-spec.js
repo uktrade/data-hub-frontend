@@ -253,6 +253,15 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorRequirements.investmentTypes.energyInfrastructure).should('be.checked')
         .get(investorRequirements.investmentTypes.privateEquity).should('be.checked')
     })
+
+    it('should display "Time Horizon / tenor" and all checkboxes should be checked"', () => {
+      cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
+        .get(investorRequirements.timeHorizons.name).should('contain', 'Time horizon / tenor')
+        .get(investorRequirements.timeHorizons.upToFiveYears).should('be.checked')
+        .get(investorRequirements.timeHorizons.fiveTo9Years).should('be.checked')
+        .get(investorRequirements.timeHorizons.tenTo14Years).should('be.checked')
+        .get(investorRequirements.timeHorizons.fifteenYearsPlus).should('be.checked')
+    })
   })
 
   context('when viewing the "Investor requirements" details section', () => {
@@ -282,6 +291,16 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorRequirements.taskList.investmentTypes.ventureCapitalFunds).should('contain', 'Venture capital funds')
         .get(investorRequirements.taskList.investmentTypes.energyInfrastructure).should('contain', 'Energy / Infrastructure / Real Estate Funds (UKEIREFs)')
         .get(investorRequirements.taskList.investmentTypes.privateEquity).should('contain', 'Private Equity / Venture Capital')
+    })
+
+    it('should display "Time horizon / tenor" and all 4 times', () => {
+      cy.visit(largeCapitalProfile)
+        .get(selectors.investorRequirements.summary).click()
+        .get(investorRequirements.taskList.timeHorizon.name).should('contain', 'Time horizon / tenor')
+        .get(investorRequirements.taskList.timeHorizon.upToFiveYears).should('contain', 'Up to 5 years')
+        .get(investorRequirements.taskList.timeHorizon.fiveTo9Years).should('contain', '5-9 years')
+        .get(investorRequirements.taskList.timeHorizon.tenTo14Years).should('contain', '10-14 years')
+        .get(investorRequirements.taskList.timeHorizon.fifteenYearsPlus).should('contain', '15 years +')
     })
   })
 })

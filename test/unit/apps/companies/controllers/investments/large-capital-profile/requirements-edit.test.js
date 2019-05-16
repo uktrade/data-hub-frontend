@@ -1,5 +1,6 @@
 const dealTicketSize = require('~/test/unit/data/companies/investments/metadata/deal-ticket-size.json')
 const investmentType = require('~/test/unit/data/companies/investments/metadata/investment-type.json')
+const timeHorizons = require('~/test/unit/data/companies/investments/metadata/time-horizon.json')
 const companyProfile = require('~/test/unit/data/companies/investments/large-capital-profile.json')
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 const companyMock = require('~/test/unit/data/companies/minimal-company.json')
@@ -38,6 +39,16 @@ describe('Company Investments - Large capital profile - Investor requirements', 
           id: '5e7601b5-becd-42ea-b885-1bbd88b85e4b',
         }]
 
+        profile.investment_types = [{
+          id: '06834da2-c9ac-4faf-b555-39762ce373ae',
+          name: 'Direct Investment in Project Debt',
+        }]
+
+        profile.time_horizons = [{
+          id: 'd2d1bdbb-c42a-459c-adaa-fce45ce08cc9',
+          name: 'Up to 5 years',
+        }]
+
         nock(config.apiRoot)
           .get(`/v4/large-investor-profile?investor_company_id=${companyMock.id}`)
           .reply(200, clonedCompanyProfile)
@@ -45,6 +56,8 @@ describe('Company Investments - Large capital profile - Investor requirements', 
           .reply(200, dealTicketSize)
           .get('/metadata/capital-investment/large-capital-investment-type/')
           .reply(200, investmentType)
+          .get('/metadata/capital-investment/time-horizon/')
+          .reply(200, timeHorizons)
 
         this.middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
@@ -125,6 +138,7 @@ describe('Company Investments - Large capital profile - Investor requirements', 
               text: 'Direct Investment in Corporate Equity',
               value: '942726e3-1b3f-4218-b06e-7cf983754de0',
             }, {
+              checked: true,
               text: 'Direct Investment in Project Debt',
               value: '06834da2-c9ac-4faf-b555-39762ce373ae',
             }, {
@@ -143,7 +157,35 @@ describe('Company Investments - Large capital profile - Investor requirements', 
               text: 'Venture capital funds',
               value: '8feb6087-d61c-43bd-9bf1-3d9e1129432b',
             } ],
-            value: [],
+            value: [{
+              id: '06834da2-c9ac-4faf-b555-39762ce373ae',
+              name: 'Direct Investment in Project Debt',
+            }],
+          },
+          timeHorizons: {
+            items: [
+              {
+                checked: true,
+                text: 'Up to 5 years',
+                value: 'd2d1bdbb-c42a-459c-adaa-fce45ce08cc9',
+              },
+              {
+                text: '5-9 years',
+                value: 'd186343f-ed66-47e4-9ab0-258f583ff3cb',
+              },
+              {
+                text: '10-14 years',
+                value: '29a0a8e9-1c21-432a-bb4f-b9363b46a6aa',
+              },
+              {
+                text: '15 years +',
+                value: 'c4579a5e-4588-4952-a974-e03475a3f559',
+              },
+            ],
+            value: [{
+              name: 'Up to 5 years',
+              id: 'd2d1bdbb-c42a-459c-adaa-fce45ce08cc9',
+            }],
           },
         },
         location: {
