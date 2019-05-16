@@ -61,6 +61,9 @@ const transformProfile = (profile, editing) => {
       investmentTypes: {
         value: get(profile, 'investment_types'),
       },
+      timeHorizons: {
+        value: get(profile, 'time_horizons'),
+      },
     },
     location: {
       incompleteFields: get(profile, 'incomplete_location_fields.length'),

@@ -2,15 +2,15 @@ const { transformInvestorDetails, transformInvestorRequirements } = require('../
 const { updateCompanyProfile } = require('../repos')
 const { INVESTOR_DETAILS, INVESTOR_REQUIREMENTS } = require('../sections')
 
+const transformer = {
+  [INVESTOR_DETAILS]: transformInvestorDetails,
+  [INVESTOR_REQUIREMENTS]: transformInvestorRequirements,
+}
+
 const updateProfile = async (req, res, next) => {
   const { profileId, editing } = req.body
   const { company } = res.locals
   const { token } = req.session
-
-  const transformer = {
-    [INVESTOR_DETAILS]: transformInvestorDetails,
-    [INVESTOR_REQUIREMENTS]: transformInvestorRequirements,
-  }
 
   try {
     const body = transformer[editing](req.body)
