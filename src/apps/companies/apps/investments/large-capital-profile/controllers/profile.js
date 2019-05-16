@@ -1,9 +1,9 @@
 const {
   transformProfile,
   transformAdvisers,
+  transformCheckboxes,
   transformInvestorTypes,
   transformRequiredChecks,
-  transformDealTicketSizes,
 } = require('../transformers')
 
 const { getOptions } = require('../../../../../../lib/options')
@@ -29,7 +29,12 @@ const getRequiredChecksAdvisers = async (token) => {
 
 const getDealTicketSizes = async (token, profile) => {
   const dealTicketSizes = await getOptions(token, 'capital-investment/deal-ticket-size', { sorted: false })
-  return transformDealTicketSizes(dealTicketSizes, profile.investorRequirements)
+  return transformCheckboxes(dealTicketSizes, profile.investorRequirements.dealTicketSizes)
+}
+
+const getInvestmentTypes = async (token, profile) => {
+  const investmentType = await getOptions(token, 'capital-investment/large-capital-investment-type')
+  return transformCheckboxes(investmentType, profile.investorRequirements.investmentTypes)
 }
 
 const getCompanyProfile = async (token, company, editing) => {
@@ -55,6 +60,7 @@ const renderProfile = async (req, res, next) => {
       profile.investorDetails.requiredChecks.issuesIdentified.advisers = advisers
     } else if (editType === INVESTOR_REQUIREMENTS) {
       profile.investorRequirements.dealTicketSizes.items = await getDealTicketSizes(token, profile)
+      profile.investorRequirements.investmentTypes.items = await getInvestmentTypes(token, profile)
     }
 
     res.render('companies/apps/investments/large-capital-profile/views/profile', { profile })

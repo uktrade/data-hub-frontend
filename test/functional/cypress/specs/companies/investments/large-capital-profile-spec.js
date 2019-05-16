@@ -230,14 +230,28 @@ describe('Company Investments and Large capital profile', () => {
   context('when viewing the "Investor requirements" edit section', () => {
     const { investorRequirements } = selectors
 
-    it('should select all "Deal ticket sizes"', () => {
+    it('should display "Deal ticket size" and all checkboxes should be checked', () => {
       cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
+        .get(investorRequirements.dealTicketSize.name).should('contain', 'Deal ticket size')
         .get(investorRequirements.dealTicketSize.upTo49Million).should('be.checked')
         .get(investorRequirements.dealTicketSize.fiftyTo99Million).should('be.checked')
         .get(investorRequirements.dealTicketSize.oneHundredTo249Million).should('be.checked')
         .get(investorRequirements.dealTicketSize.twoHundredFiftyTo499Million).should('be.checked')
         .get(investorRequirements.dealTicketSize.fiveHundredTo999Million).should('be.checked')
         .get(investorRequirements.dealTicketSize.oneBillionPlus).should('be.checked')
+    })
+
+    it('should display "Types of investment" and all checkboxes should be checked"', () => {
+      cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
+        .get(investorRequirements.investmentTypes.name).should('contain', 'Types of investment')
+        .get(investorRequirements.investmentTypes.projectEquity).should('be.checked')
+        .get(investorRequirements.investmentTypes.projectDebt).should('be.checked')
+        .get(investorRequirements.investmentTypes.corporateEquity).should('be.checked')
+        .get(investorRequirements.investmentTypes.corporateDebt).should('be.checked')
+        .get(investorRequirements.investmentTypes.mezzanineDebt).should('be.checked')
+        .get(investorRequirements.investmentTypes.ventureCapitalFunds).should('be.checked')
+        .get(investorRequirements.investmentTypes.energyInfrastructure).should('be.checked')
+        .get(investorRequirements.investmentTypes.privateEquity).should('be.checked')
     })
   })
 
@@ -254,6 +268,20 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorRequirements.taskList.dealTicketSize.twoHundredFiftyTo499Million).should('contain', '£250-499 million')
         .get(investorRequirements.taskList.dealTicketSize.fiveHundredTo999Million).should('contain', '£500-999 million')
         .get(investorRequirements.taskList.dealTicketSize.oneBillionPlus).should('contain', '£1 billion +')
+    })
+
+    it('should display "Types of investment" and all 8 investments', () => {
+      cy.visit(largeCapitalProfile)
+        .get(selectors.investorRequirements.summary).click()
+        .get(investorRequirements.taskList.investmentTypes.name).should('contain', 'Types of investment')
+        .get(investorRequirements.taskList.investmentTypes.projectEquity).should('contain', 'Direct Investment in Project Equity')
+        .get(investorRequirements.taskList.investmentTypes.projectDebt).should('contain', 'Direct Investment in Project Debt')
+        .get(investorRequirements.taskList.investmentTypes.corporateEquity).should('contain', 'Direct Investment in Corporate Equity')
+        .get(investorRequirements.taskList.investmentTypes.corporateDebt).should('contain', 'Direct Investment in Corporate Debt')
+        .get(investorRequirements.taskList.investmentTypes.mezzanineDebt).should('contain', 'Mezzanine Debt (incl. preferred shares, convertibles')
+        .get(investorRequirements.taskList.investmentTypes.ventureCapitalFunds).should('contain', 'Venture capital funds')
+        .get(investorRequirements.taskList.investmentTypes.energyInfrastructure).should('contain', 'Energy / Infrastructure / Real Estate Funds (UKEIREFs)')
+        .get(investorRequirements.taskList.investmentTypes.privateEquity).should('contain', 'Private Equity / Venture Capital')
     })
   })
 })

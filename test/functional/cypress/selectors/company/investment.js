@@ -65,12 +65,24 @@ module.exports = {
     edit: '[data-auto-id=investorRequirementsEdit]',
     save: '[data-auto-id=investorRequirementsSave]',
     dealTicketSize: {
+      name: '[data-auto-id=dealTicketSizes] legend',
       upTo49Million: '[data-auto-id=dealTicketSizes] #dealTicketSizes-1',
       fiftyTo99Million: '[data-auto-id=dealTicketSizes] #dealTicketSizes-2',
       oneHundredTo249Million: '[data-auto-id=dealTicketSizes] #dealTicketSizes-3',
       twoHundredFiftyTo499Million: '[data-auto-id=dealTicketSizes] #dealTicketSizes-4',
       fiveHundredTo999Million: '[data-auto-id=dealTicketSizes] #dealTicketSizes-5',
       oneBillionPlus: '[data-auto-id=dealTicketSizes] #dealTicketSizes-6',
+    },
+    investmentTypes: {
+      name: '[data-auto-id=investmentTypes] legend',
+      projectEquity: '[data-auto-id=investmentTypes] #investmentTypes-1',
+      projectDebt: '[data-auto-id=investmentTypes] #investmentTypes-2',
+      corporateEquity: '[data-auto-id=investmentTypes] #investmentTypes-3',
+      corporateDebt: '[data-auto-id=investmentTypes] #investmentTypes-4',
+      mezzanineDebt: '[data-auto-id=investmentTypes] #investmentTypes-5',
+      ventureCapitalFunds: '[data-auto-id=investmentTypes] #investmentTypes-6',
+      energyInfrastructure: '[data-auto-id=investmentTypes] #investmentTypes-7',
+      privateEquity: '[data-auto-id=investmentTypes] #investmentTypes-8',
     },
     taskList: {
       dealTicketSize: {
@@ -87,9 +99,17 @@ module.exports = {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(2) .task-list__item-name',
         incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(2) .task-list__item-incomplete',
       },
-      typesOfInvestment: {
+      investmentTypes: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(3) .task-list__item-name',
         incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(3) .task-list__item-incomplete',
+        projectEquity: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(2)',
+        projectDebt: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(3)',
+        corporateEquity: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(4)',
+        corporateDebt: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(5)',
+        mezzanineDebt: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(6)',
+        ventureCapitalFunds: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(7)',
+        energyInfrastructure: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(8)',
+        privateEquity: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(9)',
       },
       minimumReturnRate: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(4) .task-list__item-name',

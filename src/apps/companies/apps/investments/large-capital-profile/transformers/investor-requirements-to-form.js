@@ -1,15 +1,12 @@
 /* eslint-disable camelcase */
-const {
-  transformObjectToOption,
-  checkMatchingItemById,
-} = require('../../utils/transformers')
+const { transformObjectToOption, checkMatchingItemById } = require('../../utils/transformers')
 
-const transformDealTicketSizes = (dealTicketSizesMetaData, { dealTicketSizes }) => {
-  return dealTicketSizesMetaData
+const transformCheckboxes = (metaData, obj) => {
+  return metaData
     .map(transformObjectToOption)
-    .map(checkMatchingItemById(dealTicketSizes.value))
+    .map(checkMatchingItemById(obj.value))
 }
 
 module.exports = {
-  transformDealTicketSizes,
+  transformCheckboxes,
 }
