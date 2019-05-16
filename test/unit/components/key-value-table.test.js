@@ -229,6 +229,43 @@ describe('Key/value table component', () => {
     })
   })
 
+  context('when there is one item and the data is a paragraph', () => {
+    beforeEach(() => {
+      const component = renderComponentToDom('key-value-table', {
+        items: {
+          'Label 1': {
+            name: 'Paragraph',
+            type: 'paragraph',
+            value: [{
+              type: 'link',
+              value:
+                {
+                  url: 'https://world-is-a-stage',
+                  name: 'https://world-is-a-stage',
+                },
+            },
+            { type: 'paragraph', value: 'and we are the actors' },
+            ],
+          },
+        },
+      })
+
+      this.rows = component.querySelectorAll('tr')
+    })
+
+    it('should render one row', () => {
+      expect(this.rows.length).to.equal(1)
+    })
+
+    it('should render a label', () => {
+      expect(this.rows[0].querySelector('th').textContent).to.equal('Label 1')
+    })
+
+    it('should render the paragraph', () => {
+      expect(this.rows[0].querySelector('td').textContent).to.equal('\n         https://world-is-a-stage and we\n          are the actors\n      ')
+    })
+  })
+
   context('when there is one item and the data is an object with a name', () => {
     beforeEach(() => {
       const component = renderComponentToDom('key-value-table', {
