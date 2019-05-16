@@ -1,5 +1,5 @@
 <template>
-  <div v-bind:class="{classes, 'govuk-form-group--error': error}"
+  <div v-bind:class="[classes, {'govuk-form-group--error': error}]"
        v-bind:id="'group-field-' + name">
     <label class="c-form-group__label" :class="{ 'u-visually-hidden': hideLabel }" :for="id">
       <span class="c-form-group__label-text">{{ label }}</span>
@@ -15,9 +15,7 @@
     <span v-if="error" v-bind:id="name + '-error'" class="govuk-error-message">
       <span class="govuk-visually-hidden">Error:</span>
       <ul v-bind:id="name + '-error-messages'">
-        <li v-for="message in error" v-bind:key="message">
-          {{ message }}
-        </li>
+        <li>{{ error }}</li>
       </ul>
     </span>
 

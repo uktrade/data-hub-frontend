@@ -4,7 +4,7 @@ const { createCompanyProfile } = require('./../../../companies/apps/investments/
 
 const createProfile = async (req, res, next) => {
   if (!req.body.investor_company) {
-    set(res.locals, 'errors.messages.investor_company', ['Enter a company name'])
+    set(res.locals, 'errors.messages.investor_company', 'Enter a company name')
     return next()
   }
 
