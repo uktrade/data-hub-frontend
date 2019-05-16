@@ -1,7 +1,7 @@
 <ul class="task-list">
   {{ taskListItem({ name: 'Deal ticket size', value: profile.investorRequirements.dealTicketSizes.value, key: 'name'}) }}
   {{ taskListItem({ name: 'Asset classes of interest' }) }}
-  {{ taskListItem({ name: 'Types of investment' }) }}
+  {{ taskListItem({ name: 'Types of investment',  value: profile.investorRequirements.investmentTypes.value, key: 'name' }) }}
   {{ taskListItem({ name: 'Minimum return rate' }) }}
   {{ taskListItem({ name: 'Time horizon / tenor' }) }}
   {{ taskListItem({ name: 'Restrictions / conditions' }) }}

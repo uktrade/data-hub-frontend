@@ -1,3 +1,9 @@
+@mixin flexWrap() {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
 nav.sub-navigation {
   border-bottom: 1px solid #c6c8c8;
   @include govuk-responsive-margin(4, "bottom");
@@ -43,12 +49,14 @@ nav.govuk-tabs {
     width: 75%;
   }
   form.investor-requirements-edit  {
-   .deal-ticket-sizes {
-     width: 660px;
-     height: 152px;
-     display: flex;
-     flex-direction: column;
-     flex-wrap: wrap;
-   }
+    .deal-ticket-sizes {
+      @include flexWrap;
+      width: 660px;
+      height: 152px;
+    }
+    .types-of-investment {
+      @include flexWrap;
+      height: 205px;
+    }
   }
 }
