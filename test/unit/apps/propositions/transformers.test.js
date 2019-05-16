@@ -111,12 +111,10 @@ describe('Proposition transformers', () => {
         this.transformed = transformPropositionResponseToViewRecord(mockProposition)
       })
 
-      it('should not transform it to a url', () => {
-        expect(this.transformed.Details).to.deep.equal('the world is a stage')
-        expect(this.transformed.Details).to.not.deep.equal({
-          name: 'http://the-world-is-a-stage',
-          url: 'http://the-world-is-a-stage',
-        })
+      it('should not transform it to a collection with only word objects', () => {
+        expect(this.transformed.Details.value).to.deep.equal([
+          { type: 'paragraph', value: 'the world is a stage' },
+        ])
       })
     })
 
@@ -127,12 +125,54 @@ describe('Proposition transformers', () => {
         this.transformed = transformPropositionResponseToViewRecord(mockProposition)
       })
 
-      it('should transform it to a url', () => {
-        expect(this.transformed.Details).to.not.deep.equal('the world is a stage')
-        expect(this.transformed.Details).to.deep.equal({
-          name: 'http://the-world-is-a-stage',
-          url: 'http://the-world-is-a-stage',
-        })
+      it('should transform it to a collection with a single link object', () => {
+        expect(this.transformed.Details.value).to.not.equal('the world is a stage')
+        expect(this.transformed.Details.value).to.deep.equal(
+          [{ type: 'link',
+            value: {
+              url: 'http://the-world-is-a-stage',
+              name: 'http://the-world-is-a-stage',
+            },
+          }]
+        )
+      })
+    })
+
+    context('when provided an abandoned proposition and a url with http as detail ending with a new line', () => {
+      beforeEach(() => {
+        mockProposition.status = 'Abandoned'
+        mockProposition.details = 'http://the-world-is-a-stage\n'
+        this.transformed = transformPropositionResponseToViewRecord(mockProposition)
+      })
+
+      it('should transform it to a collection with a single link object', () => {
+        expect(this.transformed.Details.value).to.deep.equal(
+          [{
+            type: 'link',
+            value: {
+              url: 'http://the-world-is-a-stage',
+              name: 'http://the-world-is-a-stage',
+            },
+          }]
+        )
+      })
+    })
+
+    context('when provided an abandoned proposition and a url with http as detail ending with a carriage return', () => {
+      beforeEach(() => {
+        mockProposition.status = 'Abandoned'
+        mockProposition.details = 'http://bazzinga\r'
+        this.transformed = transformPropositionResponseToViewRecord(mockProposition)
+      })
+
+      it('should transform it to a collection with a link object with http, and an empty word object', () => {
+        expect(this.transformed.Details.value).to.deep.equal(
+          [
+            { type: 'link',
+              value: { url: 'http://bazzinga', name: 'http://bazzinga' },
+            },
+          ]
+        )
       })
     })
 
@@ -143,28 +183,127 @@ describe('Proposition transformers', () => {
         this.transformed = transformPropositionResponseToViewRecord(mockProposition)
       })
 
-      it('should transform it to a url', () => {
-        expect(this.transformed.Details).to.not.deep.equal('https://and-we-are-the-actors')
-        expect(this.transformed.Details).to.deep.equal({
-          name: 'https://and-we-are-the-actors',
-          url: 'https://and-we-are-the-actors',
-        })
+      it('should transform it to a collection with a link object with https', () => {
+        expect(this.transformed.Details.value).to.deep.equal(
+          [
+            { type: 'link',
+              value: {
+                url: 'https://and-we-are-the-actors',
+                name: 'https://and-we-are-the-actors',
+              },
+            }]
+        )
       })
     })
 
-    context('when provided an abandoned proposition and a text including a url with https as detail', () => {
+    context('when provided an abandoned proposition and a text that starts with a https url as detail', () => {
       beforeEach(() => {
         mockProposition.status = 'Abandoned'
-        mockProposition.details = 'the world is a stage, https://and-we-are-the-actors'
+        mockProposition.details = 'https://world-is-a-stage and we are the actors'
         this.transformed = transformPropositionResponseToViewRecord(mockProposition)
       })
 
-      it('should not transform it to a url', () => {
-        expect(this.transformed.Details).to.deep.equal('the world is a stage, https://and-we-are-the-actors')
-        expect(this.transformed.Details).to.not.deep.equal({
-          name: 'https://and-we-are-the-actors',
-          url: 'https://and-we-are-the-actors',
-        })
+      it('should transform it to a collection with a link object for the url and a word object for the rest of the words in the string', () => {
+        expect(this.transformed.Details.value).to.deep.equal(
+          [{
+            type: 'link',
+            value:
+              {
+                url: 'https://world-is-a-stage',
+                name: 'https://world-is-a-stage',
+              },
+          },
+          { type: 'paragraph', value: 'and we are the actors' },
+          ])
+      })
+    })
+
+    context('when provided an abandoned proposition and a text that starts has also some a urls as detail', () => {
+      beforeEach(() => {
+        mockProposition.status = 'Abandoned'
+        mockProposition.details = 'in this universe https://world-is-a-stage and we are the actors www.yahoo.com of the play http://third.link lorem ipsum'
+        this.transformed = transformPropositionResponseToViewRecord(mockProposition)
+      })
+
+      it('should transform it to a collection with a link object for the url and a word object for the rest of the words in the string', () => {
+        expect(this.transformed.Details.value).to.deep.equal(
+          [
+            { type: 'paragraph', value: 'in this universe' },
+            {
+              type: 'link',
+              value:
+                {
+                  url: 'https://world-is-a-stage',
+                  name: 'https://world-is-a-stage',
+                },
+            },
+            { type: 'paragraph', value: 'and we are the actors' },
+            {
+              type: 'link',
+              value:
+                {
+                  url: 'www.yahoo.com',
+                  name: 'www.yahoo.com',
+                },
+            },
+            { type: 'paragraph', value: 'of the play' },
+            {
+              type: 'link',
+              value:
+                {
+                  url: 'http://third.link',
+                  name: 'http://third.link',
+                },
+            },
+            { type: 'paragraph', value: 'lorem ipsum' },
+          ])
+      })
+    })
+
+    context('when provided an abandoned proposition and a text including an url with https as detail', () => {
+      beforeEach(() => {
+        mockProposition.status = 'Abandoned'
+        mockProposition.details = 'the world https://is-a-stage and we are the actors'
+        this.transformed = transformPropositionResponseToViewRecord(mockProposition)
+      })
+
+      it('should transform it to a collection with a link object for the url and a word object for the rest of the words in the string', () => {
+        expect(this.transformed.Details.value).to.deep.equal([
+          { type: 'paragraph', value: 'the world' },
+          {
+            type: 'link',
+            value: { url: 'https://is-a-stage', name: 'https://is-a-stage' },
+          },
+          { type: 'paragraph', value: 'and we are the actors' },
+        ])
+      })
+    })
+
+    context('when provided an abandoned proposition and a text including multiple urls as detail', () => {
+      beforeEach(() => {
+        mockProposition.status = 'Abandoned'
+        mockProposition.details = 'the world https://is-a-stage and we are the actors, find more quotes at http://padding-quotes#123 and put them here'
+        this.transformed = transformPropositionResponseToViewRecord(mockProposition)
+      })
+
+      it('should transform it to a collection with two link objects for the urls and a word object for the rest of the words in the string', () => {
+        expect(this.transformed.Details.value).to.deep.equal([
+          { type: 'paragraph', value: 'the world' },
+          {
+            type: 'link',
+            value: { url: 'https://is-a-stage', name: 'https://is-a-stage' },
+          },
+          { type: 'paragraph', value: 'and we are the actors, find more quotes at' },
+          {
+            type: 'link',
+            value:
+              {
+                url: 'http://padding-quotes#123',
+                name: 'http://padding-quotes#123',
+              },
+          },
+          { type: 'paragraph', value: 'and put them here' }]
+        )
       })
     })
   })
