@@ -182,6 +182,9 @@ describe('Company Investments - Large capital profile - Investor details', () =>
           investmentTypes: {
             value: [],
           },
+          timeHorizons: {
+            value: [],
+          },
         },
         location: {
           incompleteFields: 3,

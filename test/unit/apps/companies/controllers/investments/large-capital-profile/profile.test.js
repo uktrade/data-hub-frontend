@@ -94,6 +94,9 @@ describe('Company Investments - Large capital profile', () => {
           investmentTypes: {
             value: [],
           },
+          timeHorizons: {
+            value: [],
+          },
         },
         location: {
           incompleteFields: 3,
@@ -139,6 +142,11 @@ describe('Company Investments - Large capital profile', () => {
         profile.investment_types = [{
           name: 'Direct Investment in Project Equity',
           id: '4170d99a-02fc-46ee-8fd4-3fe786717708',
+        }]
+
+        profile.time_horizons = [{
+          id: '29a0a8e9-1c21-432a-bb4f-b9363b46a6aa',
+          name: '10-14 years',
         }]
 
         nock(config.apiRoot)
@@ -203,6 +211,12 @@ describe('Company Investments - Large capital profile', () => {
             value: [ {
               name: 'Direct Investment in Project Equity',
               id: '4170d99a-02fc-46ee-8fd4-3fe786717708',
+            }],
+          },
+          timeHorizons: {
+            value: [ {
+              id: '29a0a8e9-1c21-432a-bb4f-b9363b46a6aa',
+              name: '10-14 years',
             }],
           },
         },

@@ -84,6 +84,13 @@ module.exports = {
       energyInfrastructure: '[data-auto-id=investmentTypes] #investmentTypes-7',
       privateEquity: '[data-auto-id=investmentTypes] #investmentTypes-8',
     },
+    timeHorizons: {
+      name: '[data-auto-id=timeHorizons] legend',
+      upToFiveYears: '[data-auto-id=timeHorizons] #timeHorizons-1',
+      fiveTo9Years: '[data-auto-id=timeHorizons] #timeHorizons-2',
+      tenTo14Years: '[data-auto-id=timeHorizons] #timeHorizons-3',
+      fifteenYearsPlus: '[data-auto-id=timeHorizons] #timeHorizons-4',
+    },
     taskList: {
       dealTicketSize: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(1) .task-list__item-name',
@@ -115,9 +122,13 @@ module.exports = {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(4) .task-list__item-name',
         incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(4) .task-list__item-incomplete',
       },
-      timeHorizonTenor: {
+      timeHorizon: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(5) .task-list__item-name',
         incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(5) .task-list__item-incomplete',
+        upToFiveYears: '[data-auto-id=investorRequirements] ul > li:nth-child(5) span:nth-child(2)',
+        fiveTo9Years: '[data-auto-id=investorRequirements]  ul > li:nth-child(5) span:nth-child(3)',
+        tenTo14Years: '[data-auto-id=investorRequirements]  ul > li:nth-child(5) span:nth-child(4)',
+        fifteenYearsPlus: '[data-auto-id=investorRequirements]  ul > li:nth-child(5) span:nth-child(5)',
       },
       restrictionsConditions: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(6) .task-list__item-name',

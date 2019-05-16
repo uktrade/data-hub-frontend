@@ -47,4 +47,23 @@
     })
   }}
 
+  <p>Placeholder - Minimum return rate</p>
+
+  {{
+    govukCheckboxes({
+      name: "timeHorizons",
+      classes: 'time-horizon',
+      fieldset: {
+        attributes: {
+          'data-auto-id': 'timeHorizons'
+        },
+        legend: {
+          text: "Time horizon / tenor",
+          classes: "govuk-fieldset__legend--s"
+        }
+      },
+      items: profile.investorRequirements.timeHorizons.items
+    })
+  }}
+
 {% endcall %}
