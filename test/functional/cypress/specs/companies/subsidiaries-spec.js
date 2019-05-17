@@ -1,7 +1,7 @@
 const fixtures = require('../../fixtures/index.js')
 const selectors = require('../../selectors/index.js')
 
-describe('Companies business details', () => {
+describe('Companies subsidiaries', () => {
   context('when viewing subsidiaries for a Dun & Bradstreet company', () => {
     before(() => {
       cy.visit(`/companies/${fixtures.company.oneListCorp.id}/subsidiaries`)
