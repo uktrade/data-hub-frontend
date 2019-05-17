@@ -48,40 +48,21 @@ describe('Investment profile controller', () => {
           .equal('Investments')
       })
 
-      it.skip('should render the view with a count label', () => {
+      it('should render the view with a count label', () => {
         expect(this.middlewareParameters.resMock.render.firstCall.args[1].countLabel).to
-          .equal('project')
+          .equal('large capital profile')
       })
 
-      it.skip('should render the view with a sort form', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].sortForm).to.exist
-      })
-
-      it.skip('should render the view with selected filters', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].selectedFilters).to.exist
-      })
-
-      it.skip('should render the view with an export action', () => {
+      it('should render the view with an export action', () => {
         expect(this.middlewareParameters.resMock.render.firstCall.args[1].exportAction).to
           .deep.equal({ enabled: false })
-      })
-
-      it.skip('should render the view with filter fields', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].filtersFields).to.exist
       })
     })
 
     context('when there is an error', () => {
       beforeEach(async () => {
-        this.error = new Error('error')
-        const erroneousSpy = sinon.stub().throws(this.error)
-
-        const controller = proxyquire('~/src/apps/investments/controllers/profiles', {
-          '../../builders': {
-            buildSelectedFiltersSummary: erroneousSpy,
-            buildFieldsWithSelectedEntities: sinon.stub(),
-          },
-        })
+        const controller = require('~/src/apps/investments/controllers/profiles')
+        this.middlewareParameters.reqMock.session = {}
 
         await controller.renderProfilesView(
           this.middlewareParameters.reqMock,
@@ -89,12 +70,11 @@ describe('Investment profile controller', () => {
           this.middlewareParameters.nextSpy)
       })
 
-      it.skip('should not render the view', () => {
+      it('should not render the view', () => {
         expect(this.middlewareParameters.resMock.render).to.not.be.called
       })
 
-      it.skip('should call next with an error', () => {
-        expect(this.middlewareParameters.nextSpy).to.have.been.calledWith(this.error)
+      it('should call next with an error', () => {
         expect(this.middlewareParameters.nextSpy).to.have.been.calledOnce
       })
     })

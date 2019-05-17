@@ -29,6 +29,16 @@ const FILTER_CONSTANTS = {
       MAX_EXPORT_ITEMS: 5000,
     },
   },
+  INVESTMENT_PROJECTS_PROFILES: {
+    SECTOR: {
+      NAME: 'sector',
+      PRIMARY: {
+        NAME: 'sector_descends',
+        QUERY_STRING: '?level__lte=0',
+      },
+      MAX_EXPORT_ITEMS: 5000,
+    },
+  },
   INTERACTIONS: {
     SECTOR: {
       NAME: 'sector',

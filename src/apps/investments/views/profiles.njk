@@ -1,4 +1,3 @@
-{# {% extends "_layouts/template.njk" %} #}
 {% extends "_layouts/collection.njk" %}
 
 {% block content %}
@@ -20,7 +19,6 @@
           {{
             CollectionContent(results | assign({
               countLabel: countLabel,
-              sortForm: assign({}, sortForm, { action: CURRENT_PATH }),
               selectedFilters: selectedFilters,
               highlightTerm: highlightTerm,
               actionButtons: actionButtons,

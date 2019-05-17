@@ -1,7 +1,10 @@
 const investmentProjectsData = require('~/test/unit/data/investment/collection')
+const investmentLargeProfilesCollection = require('~/test/unit/data/investment/investement-large-profiles-collection')
+
 const {
   transformInvestmentProjectToListItem,
   transformInvestmentListItemToDisableMetaLinks,
+  transformInvestmentProjectLargeProfilesToListItem,
 } = require('~/src/apps/investments/transformers/collection')
 
 describe('Investment project transformers', () => {
@@ -85,6 +88,60 @@ describe('Investment project transformers', () => {
 
       const transformedItem = transformInvestmentListItemToDisableMetaLinks(item)
       expect(transformedItem.meta[0].isInert).to.equal(true)
+    })
+  })
+
+  describe('#transformInvestmentProjectLargeProfilesToListItem', () => {
+    context('when transforming a fully populated project', () => {
+      beforeEach(() => {
+        this.rawItem = investmentLargeProfilesCollection.results[0]
+        this.transformed = investmentLargeProfilesCollection.results.map(transformInvestmentProjectLargeProfilesToListItem)
+        this.transformedItem = this.transformed[0]
+      })
+
+      it('should provide the id', () => {
+        expect(this.transformedItem.id).to.equal(this.rawItem.id)
+      })
+
+      it('should provide the investor company name', () => {
+        expect(this.transformed[0].name).to.equal(this.rawItem.investor_company.name)
+      })
+
+      it('should provide the url to company profile', () => {
+        expect(this.transformed[0].url).to.equal(
+          `/companies/${this.rawItem.investor_company.id}/investments/large-capital-profile`)
+      })
+
+      it('should list the updated date', () => {
+        expect(this.transformedItem.meta[0]).to.deep.equal({
+          label: 'Updated on',
+          type: 'date',
+          value: this.rawItem.modified_on,
+        })
+      })
+
+      it('should list the country as badge', () => {
+        expect(this.transformedItem.meta[1]).to.deep.equal({
+          label: 'Country of origin',
+          type: 'badge',
+          badgeModifier: 'secondary',
+          value: this.rawItem.country_of_origin,
+        })
+      })
+
+      it('should list the investor type', () => {
+        expect(this.transformedItem.meta[2]).to.deep.equal({
+          label: 'Investor type',
+          value: this.rawItem.investor_type,
+        })
+      })
+
+      it('should list the global assets under management', () => {
+        expect(this.transformedItem.meta[3]).to.deep.equal({
+          label: 'Global assets under management',
+          value: this.rawItem.global_assets_under_management,
+        })
+      })
     })
   })
 })

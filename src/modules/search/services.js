@@ -36,7 +36,7 @@ function search ({
   limit = 10,
   page = 1,
 }) {
-  const apiVersion = !isAggregation && searchEntity === 'company' ? 'v4' : 'v3'
+  const apiVersion = !isAggregation && (searchEntity === 'company' || searchEntity === 'large-investor-profile') ? 'v4' : 'v3'
   const searchUrl = `${config.apiRoot}/${apiVersion}/search`
 
   const body = {
@@ -113,7 +113,7 @@ function searchLimitedCompanies ({ token, searchTerm, page = 1, limit = 10 }) {
 }
 
 function exportSearch ({ token, searchTerm = '', searchEntity, requestBody }) {
-  const apiVersion = searchEntity === 'company' ? 'v4' : 'v3'
+  const apiVersion = (searchEntity === 'company' || searchEntity === 'large-investor-profile') ? 'v4' : 'v3'
   const searchUrl = `${config.apiRoot}/${apiVersion}/search`
   const options = {
     url: `${searchUrl}/${searchEntity}/export`,

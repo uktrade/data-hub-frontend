@@ -50,7 +50,37 @@ function transformInvestmentListItemToDisableMetaLinks (item) {
   return assign({}, item, { meta })
 }
 
+function transformInvestmentProjectLargeProfilesToListItem ({
+  id,
+  country_of_origin,
+  investor_company,
+  investor_type,
+  modified_on,
+  global_assets_under_management,
+}) {
+  const metaItems = [
+    { key: 'updated', value: modified_on, type: 'date' },
+    { key: 'country_of_origin', value: country_of_origin, type: 'badge', badgeModifier: 'secondary' },
+    { key: 'investor_type', value: investor_type },
+    { key: 'global_assets_under_management', value: global_assets_under_management },
+  ].map(({ key, value, type, badgeModifier, isInert }) => {
+    if (!value) return
+    return assign({}, pickBy({ value, type, badgeModifier, isInert }), {
+      label: labels.metaItems[key],
+    })
+  })
+
+  return {
+    id,
+    name: investor_company.name,
+    type: `large-capital-profile`,
+    url: `/companies/${investor_company.id}/investments/large-capital-profile`,
+    meta: compact(metaItems),
+  }
+}
+
 module.exports = {
   transformInvestmentProjectToListItem,
   transformInvestmentListItemToDisableMetaLinks,
+  transformInvestmentProjectLargeProfilesToListItem,
 }

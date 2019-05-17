@@ -1,32 +1,40 @@
-{% extends "_layouts/template.njk" %}
+{% extends "_layouts/collection.njk" %}
 
 {% block content %}
-  <div class="grid-row">
-    <div class="column-one-third">
-      {{
-        CollectionFilters({
-          query: QUERY,
-          filtersFields: filtersFields,
-          action: CURRENT_PATH
-        })
-      }}
+  <div id="investors-projects-tab">
+    <div class="govuk-grid-row">
+    {# TODO: FIXME: PP: Remove comments to enable tab navigation on projects  #}
+      {# <div class="govuk-grid-column-full">
+        {{ TabbedLocalNav({ items: investmentTabItems }) }}
+      </div> #}
     </div>
 
-    {% block xhr_content %}
-      <article class="column-two-thirds" data-xhr="c781e8b1-9747-4b2e-8655-68b14ea49126">
+    <div class="grid-row">
+      <div class="column-one-third">
         {{
-          CollectionContent(results | assign({
-            countLabel: countLabel,
-            sortForm: assign({}, sortForm, { action: CURRENT_PATH }),
-            selectedFilters: selectedFilters,
-            highlightTerm: highlightTerm,
-            actionButtons: actionButtons,
-            exportAction: exportAction,
-            query: QUERY
-          }))
+          CollectionFilters({
+            query: QUERY,
+            filtersFields: filtersFields,
+            action: CURRENT_PATH
+          })
         }}
-      </article>
-    {% endblock %}
+      </div>
 
+      {% block xhr_content %}
+        <article class="column-two-thirds" data-xhr="c781e8b1-9747-4b2e-8655-68b14ea49126">
+          {{
+            CollectionContent(results | assign({
+              countLabel: countLabel,
+              sortForm: assign({}, sortForm, { action: CURRENT_PATH }),
+              selectedFilters: selectedFilters,
+              highlightTerm: highlightTerm,
+              actionButtons: actionButtons,
+              exportAction: exportAction,
+              query: QUERY
+            }))
+          }}
+        </article>
+      {% endblock %}
+    </div>
   </div>
 {% endblock %}

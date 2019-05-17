@@ -16,7 +16,6 @@ async function userMiddleware (req, res, next) {
 
   try {
     const userResponse = await authorisedRequest(token, `${config.apiRoot}/whoami/`)
-
     req.session.user = res.locals.user = userResponse
     next()
   } catch (error) {

@@ -21,6 +21,11 @@ module.exports = ({
     reqMock: {
       ...reqMock,
       session: {
+        user: {
+          id: '1234',
+          name: 'Fred Smith',
+          permissions: [],
+        },
         token: '1234',
       },
       body: requestBody,

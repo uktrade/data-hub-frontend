@@ -167,6 +167,12 @@ const labels = {
     estimated_land_date: 'Estimated land date',
     sector: 'Sector',
   },
+  metaItems: {
+    updated: 'Updated on',
+    country_of_origin: 'Country of origin',
+    investor_type: 'Investor type',
+    global_assets_under_management: 'Global assets under management',
+  },
 }
 
 labels.valueLabels.edit = Object.assign({}, labels.valueLabels.view, labels.valueLabels.edit)
