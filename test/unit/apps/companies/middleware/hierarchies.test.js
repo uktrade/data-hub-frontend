@@ -238,7 +238,7 @@ describe('Company hierarchies middleware', () => {
 
       it('should call flash', () => {
         expect(this.middlewareParameters.reqMock.flash).to.have.been.calledOnce
-        expect(this.middlewareParameters.reqMock.flash).to.be.calledWith('success', 'You’ve linked the Subsidiary')
+        expect(this.middlewareParameters.reqMock.flash).to.be.calledWith('success', 'You’ve linked the subsidiary')
       })
     })
 
