@@ -20,11 +20,11 @@ describe('Investment project transformers', () => {
     it('should return formatted data for the project manager and assurance adviser if there are both', () => {
       const data = Object.assign({}, investmentData)
       const expectedProjectManagementData = [{
-        role: 'Project assurance adviser',
+        role: 'Project Assurance Adviser',
         adviser: 'John Brown',
         team: 'Team B',
       }, {
-        role: 'Project manager',
+        role: 'Project Manager',
         adviser: 'Fred Smith',
         team: 'Team A',
       }]
@@ -39,11 +39,11 @@ describe('Investment project transformers', () => {
       data.project_assurance_team = null
 
       const expectedProjectManagementData = [{
-        role: 'Project assurance adviser',
+        role: 'Project Assurance Adviser',
         adviser: 'To do',
         team: null,
       }, {
-        role: 'Project manager',
+        role: 'Project Manager',
         adviser: 'Fred Smith',
         team: 'Team A',
       }]
@@ -58,11 +58,11 @@ describe('Investment project transformers', () => {
       data.project_manager_team = null
 
       const expectedProjectManagementData = [{
-        role: 'Project assurance adviser',
+        role: 'Project Assurance Adviser',
         adviser: 'John Brown',
         team: 'Team B',
       }, {
-        role: 'Project manager',
+        role: 'Project Manager',
         adviser: 'To do',
         team: null,
       }]
@@ -90,7 +90,7 @@ describe('Investment project transformers', () => {
 
       const expectedResult = [{
         adviser: 'Fred Smith',
-        role: 'Client relationship manager',
+        role: 'Client Relationship Manager',
         team: 'Team Fred',
       }]
 
@@ -123,7 +123,7 @@ describe('Investment project transformers', () => {
 
       const expectedResult = [{
         adviser: 'Fred Smith',
-        role: 'Client relationship manager',
+        role: 'Client Relationship Manager',
         team: 'Team Fred',
       }, {
         adviser: 'John Brown',
