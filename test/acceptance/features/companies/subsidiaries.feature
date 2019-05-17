@@ -52,4 +52,4 @@ Feature: Company subsidiaries
     When I navigate to the `companies.subsidiaries` page using `company` `One List Corp` fixture
     And I should see the "Link a subsidiary" button
     And I can view the collection
-    And I should not see the "Remove subsidiary" link
+    And I should see the "Remove subsidiary" link
