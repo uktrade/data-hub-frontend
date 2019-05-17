@@ -13,11 +13,11 @@ function getAdviserName (investment, key) {
 function transformProjectManagementForView (investment) {
   if (investment.project_manager || investment.project_assurance_adviser) {
     return [{
-      role: 'Project assurance adviser',
+      role: 'Project Assurance Adviser',
       adviser: getAdviserName(investment, 'project_assurance_adviser'),
       team: get(investment, 'project_assurance_team.name', null),
     }, {
-      role: 'Project manager',
+      role: 'Project Manager',
       adviser: getAdviserName(investment, 'project_manager'),
       team: get(investment, 'project_manager_team.name', null),
     }]
@@ -28,7 +28,7 @@ function transformProjectManagementForView (investment) {
 
 function transformClientRelationshipManagementForView (investment) {
   const result = [{
-    role: 'Client relationship manager',
+    role: 'Client Relationship Manager',
     adviser: getAdviserName(investment, 'client_relationship_manager'),
     team: get(investment, 'client_relationship_manager.dit_team.name'),
   }]
