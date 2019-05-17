@@ -117,7 +117,7 @@ describe('Companies business details', () => {
     it('should display the "Business hierarchy" details', () => {
       assertKeyValueTable('businessHierarchyDetails', {
         'Headquarter type': 'Global HQ',
-        'Subsidiaries': 'None',
+        'Subsidiaries': 'None Link a subsidiary',
       })
     })
 
@@ -372,7 +372,7 @@ describe('Companies business details', () => {
 
     it('should display the "Business hierarchy" details', () => {
       assertKeyValueTable('businessHierarchyDetails', {
-        'Global HQ': 'None',
+        'Global HQ': 'None Link to the Global HQ',
       })
     })
 
