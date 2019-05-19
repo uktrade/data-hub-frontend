@@ -50,6 +50,8 @@ const config = {
     baseUrl: 'https://ukregionlookup.cloudapps.digital/pcode={postcode}',
   },
   redis: buildRedisConfig(),
+  cacheDurationShort: process.env.CACHE_DURATION_SHORT || 100,
+  cacheDurationLong: process.env.CACHE_DURATION_LONG || 1000,
   googleTagManagerKey: process.env.GOOGLE_TAG_MANAGER_KEY,
   session: {
     secret: process.env.SESSION_SECRET || 'howdoesyourgardengrow',
