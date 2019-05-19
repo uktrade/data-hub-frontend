@@ -10,14 +10,17 @@ const redisOpts = {
   cacheDuration: config.cacheDurationShort,
 }
 
-const client = Redis.createClient(redisOpts)
-const redisAsync = promisify(client.get).bind(client)
+let client, redisAsync
+if (process.env.NODE_ENV !== 'test') {
+  client = Redis.createClient(redisOpts)
+  redisAsync = promisify(client.get).bind(client)
+}
 
 async function getAdvisers (token) {
+  let results
   const advisers =
     process.env.NODE_ENV === 'test' ? null : await redisAsync('advisers')
   const url = `${config.apiRoot}/adviser/?limit=100000&offset=0`
-  let results
 
   if (advisers) {
     results = JSON.parse(advisers)
@@ -27,13 +30,14 @@ async function getAdvisers (token) {
     results = response.results.filter(
       adviser => get(adviser, 'name', '').trim().length
     )
-
-    client.set(
-      'advisers',
-      JSON.stringify(results),
-      'EX',
-      redisOpts.cacheDuration
-    )
+    if (process.env.NODE_ENV !== 'test') {
+      client.set(
+        'advisers',
+        JSON.stringify(results),
+        'EX',
+        redisOpts.cacheDuration
+      )
+    }
   }
 
   return {

@@ -1,11 +1,51 @@
 const { castArray, sortBy } = require('lodash')
+const { promisify } = require('util')
+const Redis = require('redis')
 
 const config = require('../../config')
 const { authorisedRequest } = require('../lib/authorised-request')
 const { filterDisabledOption } = require('../modules/permissions/filters')
 const { transformObjectToOption } = require('../apps/transformers')
 
-async function getOptions (token, key, { createdOn, currentValue, includeDisabled = false, sorted = true, term, id, queryString = '', context, apiVersion = 'metadata', chainedUrlParam, chainedValue } = {}) {
+const redisOpts = {
+  url: config.redis.url,
+  cacheDuration: config.cacheDurationLong,
+}
+
+let client, redisAsync
+if (process.env.NODE_ENV !== 'test') {
+  client = Redis.createClient(redisOpts)
+  redisAsync = promisify(client.get).bind(client)
+}
+
+async function fetchOptions (token, url) {
+  let metaData = process.env.NODE_ENV === 'test' ? null : await redisAsync(url)
+
+  if (metaData) {
+    return JSON.parse(metaData)
+  }
+  metaData = await authorisedRequest(token, url)
+  if (process.env.NODE_ENV !== 'test') {
+    client.set(url, JSON.stringify(metaData), 'ex', redisOpts.cacheDuration)
+  }
+
+  return metaData
+}
+
+async function getOptions (
+  token,
+  key,
+  {
+    createdOn,
+    currentValue,
+    includeDisabled = false,
+    sorted = true,
+    term,
+    id,
+    queryString = '',
+    context,
+  } = {}
+) {
   if (id) {
     return getOptionsForId(token, key, id)
   }
@@ -18,37 +58,24 @@ async function getOptions (token, key, { createdOn, currentValue, includeDisable
     }
   }
 
-  let url
-  let options
+  const url = `${config.apiRoot}/metadata/${key}/${queryString}`
+  let options = await fetchOptions(token, url)
 
-  if (apiVersion === `metadata`) {
-    url = `${config.apiRoot}/metadata/${key}/${queryString}`
-    options = await authorisedRequest(token, url)
+  if (!includeDisabled) {
+    options = options.filter(filterDisabledOption({ currentValue, createdOn }))
+  }
 
-    if (!includeDisabled) {
-      options = options.filter(filterDisabledOption({ currentValue, createdOn }))
-    }
+  if (term) {
+    const lowercaseTerm = term.toLowerCase()
+    options = options.filter(option => {
+      return option.name.toLowerCase().startsWith(lowercaseTerm)
+    })
+  }
 
-    if (term) {
-      const lowercaseTerm = term.toLowerCase()
-      options = options.filter((option) => {
-        return option.name.toLowerCase().startsWith(lowercaseTerm)
-      })
-    }
-
-    if (context) {
-      options = options.filter((option) => {
-        return !option.contexts || option.contexts.includes(context)
-      })
-    }
-  } else if (apiVersion === `v4/search`) {
-    if (chainedUrlParam && chainedValue) {
-      term += `&${chainedUrlParam}=${chainedValue}`
-    }
-
-    url = `${config.apiRoot}/v4/search/${key}/autocomplete?term=${term}&format=json`
-    options = await authorisedRequest(token, url)
-    options = options.results
+  if (context) {
+    options = options.filter(option => {
+      return !option.contexts || option.contexts.includes(context)
+    })
   }
 
   const mappedOptions = options.map(transformObjectToOption)
@@ -61,7 +88,10 @@ async function getOptionsForId (token, key, id) {
   const options = []
 
   for (let index = 0; index < ids.length; index += 1) {
-    const url = key === 'adviser' ? `${config.apiRoot}/adviser/${ids[index]}/` : `${config.apiRoot}/v3/${key}/${ids[index]}`
+    const url =
+      key === 'adviser'
+        ? `${config.apiRoot}/adviser/${ids[index]}/`
+        : `${config.apiRoot}/v3/${key}/${ids[index]}`
     const data = await authorisedRequest(token, url)
     options.push({
       value: data.id,
@@ -74,4 +104,5 @@ async function getOptionsForId (token, key, id) {
 
 module.exports = {
   getOptions,
+  fetchOptions,
 }
