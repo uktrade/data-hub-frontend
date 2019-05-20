@@ -9,9 +9,7 @@
   action: '/companies/' + company.id + '/investments/large-capital-profile/update',
   hiddenFields: {
     profileId: profile.id,
-    editing: profile.editing,
-    clearedId: profile.investorDetails.requiredChecks.cleared.value,
-    issuesIdentifiedId: profile.investorDetails.requiredChecks.issuesIdentified.value
+    editing: profile.editing
   }
 }) %}
 
@@ -120,7 +118,7 @@
     {{
       Typeahead({
         entity: 'adviser',
-        name: 'adviser',
+        name: props.value + '-adviser',
         label: 'Person responsible for most recent checks',
         classes: 'c-form-group--no-filter',
         autoSubmit: false,
@@ -137,7 +135,7 @@
 
   {{
     govukRadios({
-      name: 'conducted',
+      name: 'requiredChecks',
       fieldset: {
         legend: {
           text: 'Has this investor cleared the required checks within the last 12 months?',
