@@ -1,9 +1,24 @@
 <template>
-  <div v-bind:class="classes"
-       v-bind:id="name+'__typeahead'">
+  <div v-bind:class="[classes, {'govuk-form-group--error': error}]"
+       v-bind:id="'group-field-' + name">
     <label class="c-form-group__label" :class="{ 'u-visually-hidden': hideLabel }" :for="id">
       <span class="c-form-group__label-text">{{ label }}</span>
+      <span v-if="isOptional" v-bind:id="name + '-optional-hint'" class="govuk-hint govuk-!-margin-left-1">
+        (optional)
+      </span>
     </label>
+
+    <span v-if="hint" v-bind:id="name + '-hint'" class="govuk-hint">
+      {{hint}}
+    </span>
+
+    <span v-if="error" v-bind:id="name + '-error'" class="govuk-error-message">
+      <span class="govuk-visually-hidden">Error:</span>
+      <ul v-bind:id="name + '-error-messages'">
+        <li>{{ error }}</li>
+      </ul>
+    </span>
+
     <multiselect
       label="label"
       open-direction="auto"
@@ -24,6 +39,7 @@
       :searchable="true"
       :custom-label="nameWithSubLabel"
       :id="id"
+      :class="{ 'govuk-input--error': error }"
       @search-change="queryOptions"
       @open="clearInputField">
       <template slot="clear" slot-scope="props">
@@ -46,7 +62,6 @@
         </div>
       </template>
     </multiselect>
-
 
     <template v-if="multipleSelect">
       <input type="hidden" class="js-ClearInputs--removable-field" :name="name"
@@ -78,6 +93,14 @@
       label: {
         type: String,
         required: true,
+      },
+      isOptional: {
+        type: Boolean,
+        required: false,
+      },
+      hint: {
+        type: String,
+        required: false,
       },
       entity: {
         type: String,
@@ -148,11 +171,23 @@
         type: Boolean,
         required: false,
         default: true,
-      }
+      },
+      target: {
+        type: String,
+        required: true,
+      },
+      chainedParams: {
+        type: Object,
+        required: false,
+      },
+      error: {
+        type: Array,
+        required: false,
+      },
     },
     created () {
       if (!this.useMultipleSelect) {
-        this.setPlaceHolder = this.getLabelFromValue(this.selectedValue, this.multiSelectModel)
+        this.setPlaceHolder = this.getLabelFromValue(this.selectedValue, this.multiSelectModel) || this.placeholder
       }
 
       this.isCloseOnSelect = !this.useMultipleSelect
@@ -195,7 +230,7 @@
           return this.setPlaceHolder
         }
 
-        return `${activeValue[0].label}, ${activeValue[0].subLabel}`
+        return `${activeValue[0].label}${activeValue[0].subLabel ? ', ' + activeValue[0].subLabel : ''}`
       },
       queryOptions: function (query) {
         this.isAsync ? this.asyncSearch(query) : this.search(query)
@@ -209,7 +244,14 @@
         if (query.length < 3) {return}
         this.isLoading = true
         this.isAsyncFunction = true
-        axios.get(`/api/options/${this.entity}?autocomplete=${query}${this.filterInactive}`)
+
+        let url = `/api/options/${this.entity}?autocomplete=${query}${this.filterInactive}&target=${this.target}`
+
+        if (this.chainedParams)  {
+          url += `&chained_param=${this.chainedParams.urlParam}&chained_value=${document.getElementsByName(this.chainedParams.valueFrom)[0].value}`
+        }
+
+        axios.get(url)
           .then((response) => {
             this.options = response.data
             this.isLoading = false
@@ -221,7 +263,12 @@
     },
     watch: {
       selectedOptions: function (selectedOption) {
-        if (!selectedOption) {this.setPlaceHolder = this.placeholder}
+        if (selectedOption) {
+          this.hiddenFormValue = selectedOption.value
+        } else {
+          this.setPlaceHolder = this.placeholder
+        }
+
         if (!this.autoSubmit) { return }
 
         const form = this.formSelector ? document.querySelector(this.formSelector) : this.$el.closest('form')
@@ -230,9 +277,6 @@
         const query = pickBy(getFormData(form))
         delete query[this.id]
 
-        if (selectedOption) {
-          this.hiddenFormValue = selectedOption.value
-        }
         query[this.name] = Array.isArray(selectedOption) ? selectedOption.map(option => option.value) : [selectedOption]
 
         XHR.request(form.action, query)

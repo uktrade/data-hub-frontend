@@ -59,26 +59,29 @@ describe('Large capital profile, Investor details API to form', () => {
     it('should transform the required checks when the user selects "Cleared"', () => {
       this.investorDetails = {
         requiredChecks: {
-          conducted: {
+          type: {
             name: 'Cleared',
             id: '1',
           },
-          conductedOn: '2019-05-01',
+          date: '2019-05-01',
+          adviser: {
+            name: 'Holly',
+            id: '123',
+          },
         },
       }
 
       this.transformed = transformRequiredChecks(this.requiredChecks, this.investorDetails)
 
       expect(this.transformed).to.deep.equal({
-        conducted: {
-          name: 'Cleared',
-          id: '1',
-        },
-        conductedOn: '2019-05-01',
         cleared: {
           checked: true,
           text: 'Cleared',
           value: '1',
+          adviser: {
+            name: 'Holly',
+            id: '123',
+          },
           date: {
             day: 1,
             month: 5,
@@ -103,35 +106,38 @@ describe('Large capital profile, Investor details API to form', () => {
     it('should transform the required checks when the user selects "Issues identified"', () => {
       this.investorDetails = {
         requiredChecks: {
-          conducted: {
+          type: {
             name: 'Issues identified',
             id: '2',
           },
-          conductedOn: '2019-05-02',
+          date: '2019-05-02',
+          adviser: {
+            name: 'Holly',
+            id: '123',
+          },
         },
       }
 
       this.transformed = transformRequiredChecks(this.requiredChecks, this.investorDetails)
 
       expect(this.transformed).to.deep.equal({
-        conducted: {
-          name: 'Issues identified',
-          id: '2',
-        },
-        conductedOn: '2019-05-02',
         cleared: {
           text: 'Cleared',
           value: '1',
         },
         issuesIdentified: {
           checked: true,
+          text: 'Issues identified',
+          value: '2',
+          adviser: {
+            id: '123',
+            name: 'Holly',
+          },
           date: {
             day: 2,
             month: 5,
             year: 2019,
           },
-          text: 'Issues identified',
-          value: '2',
         },
         notRequired: {
           text: 'Checks not required - See Investor Screening Report (ISR) guidance',
@@ -147,7 +153,7 @@ describe('Large capital profile, Investor details API to form', () => {
     it('should transform the required checks when the user selects "Checks not required..."', () => {
       this.investorDetails = {
         requiredChecks: {
-          conducted: {
+          type: {
             name: 'Checks not required - See Investor Screening Report (ISR) guidance',
             id: '3',
           },
@@ -157,10 +163,6 @@ describe('Large capital profile, Investor details API to form', () => {
       this.transformed = transformRequiredChecks(this.requiredChecks, this.investorDetails)
 
       expect(this.transformed).to.deep.equal({
-        conducted: {
-          name: 'Checks not required - See Investor Screening Report (ISR) guidance',
-          id: '3',
-        },
         cleared: {
           text: 'Cleared',
           value: '1',
@@ -184,7 +186,7 @@ describe('Large capital profile, Investor details API to form', () => {
     it('should transform the required checks when the user selects "Not yet checked"', () => {
       this.investorDetails = {
         requiredChecks: {
-          conducted: {
+          type: {
             name: 'Not yet checked',
             id: '4',
           },
@@ -194,10 +196,6 @@ describe('Large capital profile, Investor details API to form', () => {
       this.transformed = transformRequiredChecks(this.requiredChecks, this.investorDetails)
 
       expect(this.transformed).to.deep.equal({
-        conducted: {
-          name: 'Not yet checked',
-          id: '4',
-        },
         cleared: {
           text: 'Cleared',
           value: '1',

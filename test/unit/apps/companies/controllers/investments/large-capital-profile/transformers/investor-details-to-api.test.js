@@ -11,6 +11,10 @@ describe('Large capital profile, Investor details form to API', () => {
         investableCapital: '',
         investorDescription: '',
         conducted: '',
+        adviser: [ '', '' ],
+        // Hidden fields
+        clearedId: '1',
+        issuesIdentifiedId: '2',
       })
       expect(this.transformed).to.deep.equal({
         investor_type: '',
@@ -18,7 +22,6 @@ describe('Large capital profile, Investor details form to API', () => {
         investable_capital: null,
         investor_description: '',
         required_checks_conducted: '',
-        required_checks_conducted_by: 'a80ff5fd-8904-4940-bf96-fe8047e34be5', // Hard-coded Adviser id.
       })
     })
 
@@ -29,9 +32,13 @@ describe('Large capital profile, Investor details form to API', () => {
         investableCapital: '100000',
         investorDescription: 'Lorem ipsum dolor sit amet',
         conducted: '1', // Cleared id
+        adviser: [ 'a80ff5fd-8904-4940-bf96-fe8047e34be5', '' ],
         '1-day': '02',
         '1-month': '05',
         '1-year': '2019',
+        // Hidden fields
+        clearedId: '1',
+        issuesIdentifiedId: '2',
       })
       expect(this.transformed).to.deep.equal({
         investor_type: 'assetManagerId',
@@ -39,8 +46,8 @@ describe('Large capital profile, Investor details form to API', () => {
         investable_capital: '100000',
         investor_description: 'Lorem ipsum dolor sit amet',
         required_checks_conducted: '1', // Cleared id
-        required_checks_conducted_by: 'a80ff5fd-8904-4940-bf96-fe8047e34be5', // Hard-coded Adviser id.
         required_checks_conducted_on: '2019-05-02', // Date the checks were conducted on
+        required_checks_conducted_by: 'a80ff5fd-8904-4940-bf96-fe8047e34be5', // Adviser id
       })
     })
 
@@ -51,9 +58,13 @@ describe('Large capital profile, Investor details form to API', () => {
         investableCapital: '100000',
         investorDescription: 'Lorem ipsum dolor sit amet',
         conducted: '2', // Issues identified id
+        adviser: [ '', 'a80ff5fd-8904-4940-bf96-fe8047e34be5' ],
         '2-day': '03',
         '2-month': '05',
         '2-year': '2019',
+        // Hidden fields
+        clearedId: '1',
+        issuesIdentifiedId: '2',
       })
       expect(this.transformed).to.deep.equal({
         investor_type: 'assetManagerId',
@@ -61,8 +72,8 @@ describe('Large capital profile, Investor details form to API', () => {
         investable_capital: '100000',
         investor_description: 'Lorem ipsum dolor sit amet',
         required_checks_conducted: '2', // Issues identified id
-        required_checks_conducted_by: 'a80ff5fd-8904-4940-bf96-fe8047e34be5', // Hard-coded Adviser id.
         required_checks_conducted_on: '2019-05-03', // Date the checks were conducted on
+        required_checks_conducted_by: 'a80ff5fd-8904-4940-bf96-fe8047e34be5', // Adviser id.
       })
     })
 
@@ -80,7 +91,6 @@ describe('Large capital profile, Investor details form to API', () => {
         investable_capital: '100000',
         investor_description: 'Lorem ipsum dolor sit amet',
         required_checks_conducted: '3', // Not yet checked id
-        required_checks_conducted_by: 'a80ff5fd-8904-4940-bf96-fe8047e34be5', // Hard-coded Adviser id.
       })
     })
 
@@ -98,7 +108,6 @@ describe('Large capital profile, Investor details form to API', () => {
         investable_capital: '100000',
         investor_description: 'Lorem ipsum dolor sit amet',
         required_checks_conducted: '4', // Checks not required id
-        required_checks_conducted_by: 'a80ff5fd-8904-4940-bf96-fe8047e34be5', // Hard-coded Adviser id.
       })
     })
   })

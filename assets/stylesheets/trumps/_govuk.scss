@@ -1,0 +1,11 @@
+// Data Hub uses a wildcard to apply 'box-sizing: border-box'
+// to every HTML element. This approach conflicts with GOV.UK
+// checkboxes and as a consequence the tick within the checkbox
+// appears clipped.
+
+// By overriding the generic approach /assets/stylesheets/generic/_box-sizing.scss
+// and setting 'box-sizing: content-box' (the default) rectifies the issue.
+
+.govuk-checkboxes__input + .govuk-checkboxes__label::after {
+  box-sizing: content-box;
+}
