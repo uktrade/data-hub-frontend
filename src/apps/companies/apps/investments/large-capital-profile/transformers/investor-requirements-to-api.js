@@ -5,6 +5,7 @@ const transformInvestorRequirements = (body) => {
     deal_ticket_sizes: sanitizeCheckboxes(body.dealTicketSizes),
     investment_types: sanitizeCheckboxes(body.investmentTypes),
     time_horizons: sanitizeCheckboxes(body.timeHorizons),
+    restrictions: sanitizeCheckboxes(body.restrictions),
   }
 }
 

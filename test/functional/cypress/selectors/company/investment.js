@@ -91,6 +91,15 @@ module.exports = {
       tenTo14Years: '[data-auto-id=timeHorizons] #timeHorizons-3',
       fifteenYearsPlus: '[data-auto-id=timeHorizons] #timeHorizons-4',
     },
+    restrictions: {
+      name: '[data-auto-id=restrictions] legend',
+      liquidity: '[data-auto-id=restrictions] #restrictions-1',
+      inflationAdjustment: '[data-auto-id=restrictions] #restrictions-2',
+      requireFXHedge: '[data-auto-id=restrictions] #restrictions-3',
+      requireBoardSeat: '[data-auto-id=restrictions] #restrictions-4',
+      requireLinkedTech: '[data-auto-id=restrictions] #restrictions-5',
+      willParticipateInCompBids: '[data-auto-id=restrictions] #restrictions-6',
+    },
     taskList: {
       dealTicketSize: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(1) .task-list__item-name',
@@ -130,9 +139,16 @@ module.exports = {
         tenTo14Years: '[data-auto-id=investorRequirements]  ul > li:nth-child(5) span:nth-child(4)',
         fifteenYearsPlus: '[data-auto-id=investorRequirements]  ul > li:nth-child(5) span:nth-child(5)',
       },
-      restrictionsConditions: {
+      restrictions: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(6) .task-list__item-name',
         incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(6) .task-list__item-incomplete',
+        liquidity: '[data-auto-id=investorRequirements] ul > li:nth-child(6) span:nth-child(2)',
+        inflationAdjustment: '[data-auto-id=investorRequirements] ul > li:nth-child(6) span:nth-child(3)',
+        requireFXHedge: '[data-auto-id=investorRequirements] ul > li:nth-child(6) span:nth-child(4)',
+        requireBoardSeat: '[data-auto-id=investorRequirements] ul > li:nth-child(6) span:nth-child(5)',
+        requireLinkedTech: '[data-auto-id=investorRequirements] ul > li:nth-child(6) span:nth-child(6)',
+        willParticipateInCompBids: '[data-auto-id=investorRequirements] ul > li:nth-child(6) span:nth-child(7)',
+
       },
       constructionRisk: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(7) .task-list__item-name',

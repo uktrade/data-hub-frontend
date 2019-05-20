@@ -1,6 +1,7 @@
 const dealTicketSize = require('~/test/unit/data/companies/investments/metadata/deal-ticket-size.json')
 const investmentType = require('~/test/unit/data/companies/investments/metadata/investment-type.json')
 const timeHorizons = require('~/test/unit/data/companies/investments/metadata/time-horizon.json')
+const restrictions = require('~/test/unit/data/companies/investments/metadata/restrictions.json')
 const companyProfile = require('~/test/unit/data/companies/investments/large-capital-profile.json')
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 const companyMock = require('~/test/unit/data/companies/minimal-company.json')
@@ -58,6 +59,8 @@ describe('Company Investments - Large capital profile - Investor requirements', 
           .reply(200, investmentType)
           .get('/metadata/capital-investment/time-horizon/')
           .reply(200, timeHorizons)
+          .get('/metadata/capital-investment/restriction/')
+          .reply(200, restrictions)
 
         this.middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
@@ -186,6 +189,28 @@ describe('Company Investments - Large capital profile - Investor requirements', 
               name: 'Up to 5 years',
               id: 'd2d1bdbb-c42a-459c-adaa-fce45ce08cc9',
             }],
+          },
+          restrictions: {
+            items: [{
+              text: 'Liquidity / exchange listing',
+              value: '5b4f5dc5-c836-4572-afd2-013776ed00c5',
+            }, {
+              text: 'Inflation adjustment',
+              value: 'daa293d4-e18e-44af-b139-bd1b4c4a9067',
+            }, {
+              text: 'Require FX hedge',
+              value: '24d90807-91de-4814-92f6-0a5ee43406d1',
+            }, {
+              text: 'Require board seat',
+              value: '7dad0891-9174-437d-bb30-b610ac1ecd0a',
+            }, {
+              text: 'Require linked technology / knowledge transfer',
+              value: 'bfa167ab-f98a-4c73-b34d-c34ba7bdf93b',
+            }, {
+              text: 'Will participate in competitive bids / auctions',
+              value: 'dbc0cdf0-5365-4cbf-8d55-7516b6ebc383',
+            }],
+            value: [],
           },
         },
         location: {

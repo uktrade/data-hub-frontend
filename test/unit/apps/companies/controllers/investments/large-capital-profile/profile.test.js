@@ -97,6 +97,9 @@ describe('Company Investments - Large capital profile', () => {
           timeHorizons: {
             value: [],
           },
+          restrictions: {
+            value: [],
+          },
         },
         location: {
           incompleteFields: 3,
@@ -147,6 +150,11 @@ describe('Company Investments - Large capital profile', () => {
         profile.time_horizons = [{
           id: '29a0a8e9-1c21-432a-bb4f-b9363b46a6aa',
           name: '10-14 years',
+        }]
+
+        profile.restrictions = [{
+          id: '24d90807-91de-4814-92f6-0a5ee43406d1',
+          name: 'Require FX hedge',
         }]
 
         nock(config.apiRoot)
@@ -217,6 +225,12 @@ describe('Company Investments - Large capital profile', () => {
             value: [ {
               id: '29a0a8e9-1c21-432a-bb4f-b9363b46a6aa',
               name: '10-14 years',
+            }],
+          },
+          restrictions: {
+            value: [ {
+              id: '24d90807-91de-4814-92f6-0a5ee43406d1',
+              name: 'Require FX hedge',
             }],
           },
         },
