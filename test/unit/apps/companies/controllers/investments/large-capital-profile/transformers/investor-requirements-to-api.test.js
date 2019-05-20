@@ -14,6 +14,7 @@ describe('Large capital profile, Investor requirements form to API', () => {
         deal_ticket_sizes: [],
         investment_types: [],
         time_horizons: [],
+        restrictions: [],
       })
     })
 
@@ -22,11 +23,13 @@ describe('Large capital profile, Investor requirements form to API', () => {
         dealTicketSizes: 'id',
         investmentTypes: 'id',
         timeHorizons: 'id',
+        restrictions: 'id',
       })
       expect(this.transformed).to.deep.equal({
         deal_ticket_sizes: ['id'],
         investment_types: ['id'],
         time_horizons: ['id'],
+        restrictions: ['id'],
       })
     })
 
@@ -35,11 +38,13 @@ describe('Large capital profile, Investor requirements form to API', () => {
         dealTicketSizes: ['id'],
         investmentTypes: ['id'],
         timeHorizons: ['id'],
+        restrictions: ['id'],
       })
       expect(this.transformed).to.deep.equal({
         deal_ticket_sizes: ['id'],
         investment_types: ['id'],
         time_horizons: ['id'],
+        restrictions: ['id'],
       })
     })
   })
