@@ -28,6 +28,14 @@
   {% endif  %}
 {% endmacro %}
 
+{% macro paragraph(data) %}
+  <p>
+    {% for item in data.value %}
+      {{ renderItem(item.value) }}
+    {% endfor %}
+  </p>
+{% endmacro %}
+
 {% macro details(data) %}
   <div class="table__details">
     <span class="table__details-name">{{ data.name }}</span>
@@ -60,6 +68,8 @@
     {{ data.address | formatAddress }}
   {% elif data.type === 'error' %}
     {{ error(data) }}
+  {% elif data.type === 'paragraph' %}
+    {{ paragraph(data) }}
   {% else %}
     {{ data.name or data | escapeHtml | safe }}
   {% endif %}

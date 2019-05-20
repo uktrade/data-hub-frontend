@@ -13,6 +13,18 @@ const nullifyIfEmptyString = (value) => {
   return value === '' ? null : value
 }
 
+const getAdviser = ({ conducted, clearedId, issuesIdentifiedId, adviser }) => {
+  if (conducted === clearedId) {
+    return adviser[0]
+  }
+
+  if (conducted === issuesIdentifiedId) {
+    return adviser[1]
+  }
+
+  return null
+}
+
 const transformInvestorDetails = (body) => {
   const {
     investorType,
@@ -28,11 +40,11 @@ const transformInvestorDetails = (body) => {
     investable_capital: nullifyIfEmptyString(investableCapital),
     investor_description: investorDescription,
     required_checks_conducted: conducted,
+  }
 
-    // Note: at present this work is completely hidden from all users.
-    // Temporarily hard-code the company adviser otherwise we are unable to POST into the API.
-    // The next piece of work will address this circumvention by allowing the user to select an adviser.
-    required_checks_conducted_by: 'a80ff5fd-8904-4940-bf96-fe8047e34be5', // adviser
+  const adviser = getAdviser(body)
+  if (adviser) {
+    investorDetails.required_checks_conducted_by = getAdviser(body)
   }
 
   const requiredChecksDate = getRequiredChecksDate(body, conducted)

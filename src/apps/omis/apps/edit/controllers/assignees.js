@@ -1,4 +1,4 @@
-const { get, sortBy } = require('lodash')
+const { get, sortBy, isString } = require('lodash')
 
 const { EditController } = require('../../../controllers')
 const { getAdvisers } = require('../../../../adviser/repos')
@@ -22,6 +22,10 @@ class EditAssigneesController extends EditController {
 
       res.locals.order.assignees = assignees
 
+      req.form.options.fields.assignees.children.forEach((item) => {
+        item.options.push(...options)
+      })
+
       super.configure(req, res, next)
     } catch (error) {
       next(error)
@@ -30,7 +34,8 @@ class EditAssigneesController extends EditController {
 
   async saveValues (req, res, next) {
     const data = req.form.values
-    const assignees = data.assignees.map((id) => {
+    const assigneesArray = isString(data.assignees) ? [data.assignees] : data.assignees
+    const assignees = assigneesArray.map((id) => {
       return {
         adviser: { id },
       }

@@ -88,4 +88,78 @@ describe('options API controller', () => {
       })
     })
   })
+
+  context('given that defined target is search_autocomplete', () => {
+    beforeEach(async () => {
+      const reqMock = {
+        query: {
+          target: 'search_autocomplete',
+          is_active: true,
+          autocomplete: 'France',
+        },
+        session: {
+          token: '1234',
+        },
+        params: {
+          entity: 'company',
+        },
+      }
+
+      this.searchAutocomplete = sinon.stub().resolves({})
+
+      const controller = proxyquire('~/src/apps/api/controllers/options', {
+        '../../../modules/search/services': {
+          searchAutocomplete: this.searchAutocomplete,
+        },
+      })
+
+      await controller.getOptionsHandler(reqMock, this.resMock, this.nextSpy)
+    })
+
+    it('should define and pass chained params to getOptions', () => {
+      expect(this.searchAutocomplete).to.be.calledWith({
+        searchEntity: 'company',
+        searchTerm: 'France',
+        token: '1234',
+      })
+    })
+  })
+
+  context('given target is search_autocomplete and list of options depends on another selection', () => {
+    beforeEach(async () => {
+      const reqMock = {
+        query: {
+          chained_param: 'chainedParam',
+          chained_value: 'chainedValue',
+          target: 'search_autocomplete',
+          is_active: true,
+          autocomplete: 'France',
+        },
+        session: {
+          token: '1234',
+        },
+        params: {
+          entity: 'company',
+        },
+      }
+
+      this.searchAutocomplete = sinon.stub().resolves({})
+
+      const controller = proxyquire('~/src/apps/api/controllers/options', {
+        '../../../modules/search/services': {
+          searchAutocomplete: this.searchAutocomplete,
+        },
+      })
+
+      await controller.getOptionsHandler(reqMock, this.resMock, this.nextSpy)
+    })
+
+    it('should define and pass chained params to getOptions', () => {
+      expect(this.searchAutocomplete).to.be.calledWith({
+        searchEntity: 'company',
+        searchTerm: 'France&chainedParam=chainedValue',
+        token: '1234',
+      })
+    })
+  })
 })

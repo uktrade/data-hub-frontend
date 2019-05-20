@@ -24,7 +24,9 @@ const labels = {
   valueLabels: {
     view: {
       total_investment: 'Total investment',
-      foreign_equity_investment: 'Foreign equity investment',
+      total_investment_hint: 'Enter the total number of GB pounds',
+      foreign_equity_investment: 'Capital expenditure value',
+      foreign_equity_investment_hint: 'Enter the total number of GB pounds',
       gross_value_added: 'Gross Value Added (GVA)',
       government_assistance: 'Government assistance',
       number_new_jobs: 'New jobs',
@@ -45,7 +47,9 @@ const labels = {
       new_tech_to_uk: 'Does the project bring ‘New To World’ Technology, IP or Business Model to the UK site?',
       export_revenue: 'Will the UK company export a significant proportion of their products and services produced in the UK as a result of the FDI project?',
       client_cannot_provide_total_investment: 'Can client provide total investment value?',
-      client_cannot_provide_foreign_investment: 'Can client provide foreign equity investment value?',
+      client_cannot_provide_total_investment_hint: 'Includes capital, operational and R&D expenditure',
+      client_cannot_provide_foreign_investment: 'Can client provide capital expenditure value?',
+      client_cannot_provide_foreign_investment_hint: 'Foreign equity only, excluding operational and R&D expenditure',
       fdi_value: 'Project value',
       likelihood_to_land: 'Likelihood to land',
     },
@@ -109,8 +113,8 @@ const labels = {
   },
   projectManagementLabels: {
     edit: {
-      project_manager: 'Project manager',
-      project_assurance_adviser: 'Project assurance adviser',
+      project_manager: 'Project Manager',
+      project_assurance_adviser: 'Project Assurance Adviser',
     },
     view: roleAdviserTeam,
   },
@@ -141,14 +145,14 @@ const labels = {
       level_of_involvement_simplified: 'Level of involvement specified',
       status: 'Status',
       uk_region_location: 'UK Region',
-      country_investment_originates_from: 'Country of origin',
+      investor_company_country: 'Country of origin',
       likelihood_to_land: 'Likelihood to land',
     },
   },
   clientRelationshipManagementLabels: {
     view: roleAdviserTeam,
     edit: {
-      client_relationship_manager: 'Client relationship manager',
+      client_relationship_manager: 'Client Relationship Manager',
       global_account_manager: 'Global Account Manager',
     },
   },

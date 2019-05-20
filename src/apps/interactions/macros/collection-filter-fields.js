@@ -44,6 +44,7 @@ module.exports = function ({
       useSubLabel: false,
       options: adviserOptions,
       hideInactive: false,
+      target: 'metadata',
     },
     {
       macroName: 'DateField',
@@ -69,6 +70,7 @@ module.exports = function ({
       options: teamOptions,
       isAsync: false,
       useSubLabel: false,
+      target: 'metadata',
     },
     {
       macroName: 'MultipleChoiceField',

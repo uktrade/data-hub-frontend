@@ -1,17 +1,69 @@
 {% call Form({
   buttonText: 'Save',
   returnText: 'Cancel',
+  class: 'investor-requirements-edit',
   buttonDataAttr: 'investorRequirementsSave',
   returnLink: '/companies/' + company.id + '/investments/large-capital-profile',
   action: '/companies/' + company.id + '/investments/large-capital-profile/update',
   hiddenFields: {
-    profileId: profile.profile.id,
+    profileId: profile.id,
     editing: profile.editing
   }
 }) %}
 
-  <p>Investor requirements: UI components go here...</p>
+  {{
+    govukCheckboxes({
+      name: "dealTicketSizes",
+      classes: 'deal-ticket-sizes',
+      fieldset: {
+        attributes: {
+          'data-auto-id': 'dealTicketSizes'
+        },
+        legend: {
+          text: "Deal ticket size",
+          classes: "govuk-fieldset__legend--s"
+        }
+      },
+      items: profile.investorRequirements.dealTicketSizes.items
+    })
+  }}
+
+  <p>Placeholder - Asset classes of interest</p>
+
+  {{
+    govukCheckboxes({
+      name: "investmentTypes",
+      classes: 'types-of-investment',
+      fieldset: {
+        attributes: {
+          'data-auto-id': 'investmentTypes'
+        },
+        legend: {
+          text: "Types of investment",
+          classes: "govuk-fieldset__legend--s"
+        }
+      },
+      items: profile.investorRequirements.investmentTypes.items
+    })
+  }}
+
+  <p>Placeholder - Minimum return rate</p>
+
+  {{
+    govukCheckboxes({
+      name: "timeHorizons",
+      classes: 'time-horizon',
+      fieldset: {
+        attributes: {
+          'data-auto-id': 'timeHorizons'
+        },
+        legend: {
+          text: "Time horizon / tenor",
+          classes: "govuk-fieldset__legend--s"
+        }
+      },
+      items: profile.investorRequirements.timeHorizons.items
+    })
+  }}
 
 {% endcall %}
-
-

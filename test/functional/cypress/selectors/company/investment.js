@@ -23,6 +23,11 @@ module.exports = {
       issuesIdentified: '[data-auto-id=requiredChecks] #conducted-2',
       notYetChecked: '[data-auto-id=requiredChecks] #conducted-3',
       notRequired: '[data-auto-id=requiredChecks] #conducted-4',
+      adviser: {
+        placeHolder: '#conditional-conducted-1 .multiselect__tags',
+        textInput: '#conditional-conducted-1 .multiselect__input',
+        selectedOption: '#conditional-conducted-1 .multiselect__single',
+      },
     },
     taskList: {
       investorType: {
@@ -49,6 +54,7 @@ module.exports = {
         name: '[data-auto-id="investorDetails"] ul > li:nth-child(5) .task-list__item-name',
         complete: '[data-auto-id="investorDetails"] ul > li:nth-child(5) .task-list__item-complete',
         completeDate: '[data-auto-id="investorDetails"] ul > li:nth-child(5) span:nth-child(3)',
+        adviser: '[data-auto-id="investorDetails"] ul > li:nth-child(5) span:nth-child(4)',
         incomplete: '[data-auto-id="investorDetails"] ul > li:nth-child(5) .task-list__item-incomplete',
       },
     },
@@ -58,26 +64,71 @@ module.exports = {
     summary: '[data-auto-id=investorRequirements] summary',
     edit: '[data-auto-id=investorRequirementsEdit]',
     save: '[data-auto-id=investorRequirementsSave]',
+    dealTicketSize: {
+      name: '[data-auto-id=dealTicketSizes] legend',
+      upTo49Million: '[data-auto-id=dealTicketSizes] #dealTicketSizes-1',
+      fiftyTo99Million: '[data-auto-id=dealTicketSizes] #dealTicketSizes-2',
+      oneHundredTo249Million: '[data-auto-id=dealTicketSizes] #dealTicketSizes-3',
+      twoHundredFiftyTo499Million: '[data-auto-id=dealTicketSizes] #dealTicketSizes-4',
+      fiveHundredTo999Million: '[data-auto-id=dealTicketSizes] #dealTicketSizes-5',
+      oneBillionPlus: '[data-auto-id=dealTicketSizes] #dealTicketSizes-6',
+    },
+    investmentTypes: {
+      name: '[data-auto-id=investmentTypes] legend',
+      projectEquity: '[data-auto-id=investmentTypes] #investmentTypes-1',
+      projectDebt: '[data-auto-id=investmentTypes] #investmentTypes-2',
+      corporateEquity: '[data-auto-id=investmentTypes] #investmentTypes-3',
+      corporateDebt: '[data-auto-id=investmentTypes] #investmentTypes-4',
+      mezzanineDebt: '[data-auto-id=investmentTypes] #investmentTypes-5',
+      ventureCapitalFunds: '[data-auto-id=investmentTypes] #investmentTypes-6',
+      energyInfrastructure: '[data-auto-id=investmentTypes] #investmentTypes-7',
+      privateEquity: '[data-auto-id=investmentTypes] #investmentTypes-8',
+    },
+    timeHorizons: {
+      name: '[data-auto-id=timeHorizons] legend',
+      upToFiveYears: '[data-auto-id=timeHorizons] #timeHorizons-1',
+      fiveTo9Years: '[data-auto-id=timeHorizons] #timeHorizons-2',
+      tenTo14Years: '[data-auto-id=timeHorizons] #timeHorizons-3',
+      fifteenYearsPlus: '[data-auto-id=timeHorizons] #timeHorizons-4',
+    },
     taskList: {
       dealTicketSize: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(1) .task-list__item-name',
         incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(1) .task-list__item-incomplete',
+        upTo49Million: '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(2)',
+        fiftyTo99Million: '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(3)',
+        oneHundredTo249Million: '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(4)',
+        twoHundredFiftyTo499Million: '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(5)',
+        fiveHundredTo999Million: '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(6)',
+        oneBillionPlus: '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(7)',
       },
       assetClassesOfInterest: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(2) .task-list__item-name',
         incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(2) .task-list__item-incomplete',
       },
-      typesOfInvestment: {
+      investmentTypes: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(3) .task-list__item-name',
         incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(3) .task-list__item-incomplete',
+        projectEquity: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(2)',
+        projectDebt: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(3)',
+        corporateEquity: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(4)',
+        corporateDebt: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(5)',
+        mezzanineDebt: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(6)',
+        ventureCapitalFunds: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(7)',
+        energyInfrastructure: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(8)',
+        privateEquity: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(9)',
       },
       minimumReturnRate: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(4) .task-list__item-name',
         incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(4) .task-list__item-incomplete',
       },
-      timeHorizonTenor: {
+      timeHorizon: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(5) .task-list__item-name',
         incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(5) .task-list__item-incomplete',
+        upToFiveYears: '[data-auto-id=investorRequirements] ul > li:nth-child(5) span:nth-child(2)',
+        fiveTo9Years: '[data-auto-id=investorRequirements]  ul > li:nth-child(5) span:nth-child(3)',
+        tenTo14Years: '[data-auto-id=investorRequirements]  ul > li:nth-child(5) span:nth-child(4)',
+        fifteenYearsPlus: '[data-auto-id=investorRequirements]  ul > li:nth-child(5) span:nth-child(5)',
       },
       restrictionsConditions: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(6) .task-list__item-name',

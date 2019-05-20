@@ -1,14 +1,28 @@
 {% macro taskListItem(props) %}
   {% set id = props.id or props.name %}
-  {% set isComplete = props.value or false %}
+
+  {% if props.value | isArray %}
+    {% set isComplete = props.value | length %}
+  {% else %}
+    {% set isComplete = props.value or false %}
+  {% endif %}
 
   <li class="task-list__item {{ 'complete' if isComplete }}">
     <span class="task-list__item-name" aria-describedby="{{ id | kebabCase }}-incomplete">
       {{ props.name }}
     </span>
     {% if isComplete %}
-      <span class="task-list__item-complete">{{ props.value }}</span>
-      {{ caller() if caller }}
+      {% if props.value | isArray %}
+        {% for item in props.value %}
+          <span class="task-list__item-complete">{{ item[props.key] if props.key else item }}</span>
+        {% endfor %}
+      {% elif props.value | isPlainObject %}
+        {% for key, value in props.value %}
+          <span class="task-list__item-complete">{{ value }}</span>
+        {% endfor %}
+      {% else %}
+          <span class="task-list__item-complete">{{ props.value }}</span>
+      {% endif %}
     {% else %}
       <strong class="task-list__item-incomplete" id="{{ id | kebabCase }}-incomplete">INCOMPLETE</strong>
     {% endif %}
