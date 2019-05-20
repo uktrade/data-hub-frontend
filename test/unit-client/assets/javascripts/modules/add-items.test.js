@@ -466,7 +466,7 @@ describe('Add another', function () {
       const typeaheadTwo = Array.from(this.wrapper.querySelectorAll('#group-field-dit_participants'))[1]
       const hiddenInput = typeaheadTwo.querySelector('.multiselect__input')
       const placeholder = hiddenInput.getAttribute('placeholder')
-      expect(placeholder).to.equal('Search adviser')
+      expect(placeholder).to.equal('Search team member')
     })
   })
 

@@ -17,7 +17,7 @@ describe('Typeahead', () => {
       name: 'adviser',
       entity: 'adviser',
       label: 'Adviser',
-      placeholder: 'Search adviser',
+      placeholder: 'Search team member',
       hideLabel: true,
       useSubLabel: true,
       target: 'metadata',
@@ -53,7 +53,7 @@ describe('Typeahead', () => {
       })
 
       it('should render a placeholder value in search text field', () => {
-        expect(component.find('.multiselect__input').attributes().placeholder).to.equal('Search adviser')
+        expect(component.find('.multiselect__input').attributes().placeholder).to.equal('Search team member')
       })
     })
 
