@@ -15,7 +15,7 @@ const eventFiltersFields = ({ advisers, userAgent }) => {
       entity: 'adviser',
       classes: 'c-form-group c-form-group--smaller c-form-group--filter',
       placeholder: 'Search organiser',
-      options: advisers.results.map(transformObjectToOption),
+      options: advisers.map(transformObjectToOption),
       hideInactive: false,
       target: 'metadata',
     },
