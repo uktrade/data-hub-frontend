@@ -11,13 +11,9 @@ describe('Investment / Invenstor profiles', () => {
       .should('have.attr', 'href', '/investments/profiles/create-investor-profile')
   })
 
-  context('When no profiles are available', () => {
-    it('should not display any profiles', () => {
-      cy.get(selectors.entityCollection.entities).should('have.length', 0)
-    })
-
-    it('should display a proper message', () => {
-      cy.get('#no-profiles').should('be.visible')
+  context('When profiles are available', () => {
+    it('should display profiles', () => {
+      cy.get(selectors.entityCollection.entities).should('have.length', 1)
     })
   })
 })

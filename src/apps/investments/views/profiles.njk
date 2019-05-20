@@ -27,7 +27,7 @@
             }))
           }}
 
-          {% if not results %}
+          {% if not results.items | length %}
             <section id="no-profiles">
               <p class="govuk-body-s govuk-!-font-weight-regular govuk-!-margin-top-4">There are no profiles to view</p>
               <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
