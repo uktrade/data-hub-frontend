@@ -134,6 +134,26 @@ describe('Company Investments and Large capital profile', () => {
     })
   })
 
+  context('when viewing all incomplete fields within "Investor details"', () => {
+    const { taskList } = selectors.investorDetails
+    const labels = [
+      'Investor type',
+      'Global assets under management',
+      'Investable capital',
+      'Investor description',
+      'Has this investor cleared the required checks within the last 12 months?',
+    ]
+
+    before(() => cy.visit(largeCapitalProfileNew))
+
+    Object.keys(taskList).forEach((key, index) => {
+      it(`should display both ${labels[index]} and INCOMPLETE`, () => {
+        cy.get(taskList[key].name).should('contain', labels[index])
+        cy.get(taskList[key].incomplete).should('contain', 'INCOMPLETE')
+      })
+    })
+  })
+
   context('when viewing all incomplete fields within "Investor requirements"', () => {
     const { taskList } = selectors.investorRequirements
     const labels = [
