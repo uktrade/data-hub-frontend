@@ -66,4 +66,21 @@
     })
   }}
 
+  {{
+    govukCheckboxes({
+      name: 'restrictions',
+      classes: 'restrictions',
+      fieldset: {
+        attributes: {
+          'data-auto-id': 'restrictions'
+        },
+        legend: {
+          text: 'Restrictions / conditions',
+          classes: 'govuk-fieldset__legend--s'
+        }
+      },
+      items: profile.investorRequirements.restrictions.items
+    })
+  }}
+
 {% endcall %}

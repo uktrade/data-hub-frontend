@@ -99,33 +99,27 @@ describe('Company Investments - Large capital profile - Investor details', () =>
                 name: 'Holly Collins',
                 id: '379f390a-e083-4a2c-9cea-e3b9a08606a7',
               },
-              advisers: [
-                {
-                  label: 'Jeff Smith',
-                  subLabel: 'Team A',
-                  value: 'a0dae366-1134-e411-985c-e4115bead28a',
-                },
-                {
-                  label: 'Aaron Mr',
-                  subLabel: 'Team B',
-                  value: 'e13209b8-8d61-e311-8255-e4115bead28a',
-                },
-                {
-                  label: 'Mr Benjamin',
-                  subLabel: 'Team C',
-                  value: 'b9d6b3dc-7af4-e411-bcbe-e4115bead28a',
-                },
-                {
-                  label: 'George Chan',
-                  subLabel: 'Team D',
-                  value: '0119a99e-9798-e211-a939-e4115bead28a',
-                },
-                {
-                  label: 'Fred Rafters',
-                  subLabel: 'Team E',
-                  value: '0919a99e-9798-e211-a939-e4115bead28a',
-                },
-              ],
+              advisers: [{
+                label: 'Jeff Smith',
+                subLabel: 'Team A',
+                value: 'a0dae366-1134-e411-985c-e4115bead28a',
+              }, {
+                label: 'Aaron Mr',
+                subLabel: 'Team B',
+                value: 'e13209b8-8d61-e311-8255-e4115bead28a',
+              }, {
+                label: 'Mr Benjamin',
+                subLabel: 'Team C',
+                value: 'b9d6b3dc-7af4-e411-bcbe-e4115bead28a',
+              }, {
+                label: 'George Chan',
+                subLabel: 'Team D',
+                value: '0119a99e-9798-e211-a939-e4115bead28a',
+              }, {
+                label: 'Fred Rafters',
+                subLabel: 'Team E',
+                value: '0919a99e-9798-e211-a939-e4115bead28a',
+              }],
               date: {
                 day: 2,
                 month: 5,
@@ -183,6 +177,9 @@ describe('Company Investments - Large capital profile - Investor details', () =>
             value: [],
           },
           timeHorizons: {
+            value: [],
+          },
+          restrictions: {
             value: [],
           },
         },

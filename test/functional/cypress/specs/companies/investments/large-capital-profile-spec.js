@@ -282,6 +282,17 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorRequirements.timeHorizons.tenTo14Years).should('be.checked')
         .get(investorRequirements.timeHorizons.fifteenYearsPlus).should('be.checked')
     })
+
+    it('should display "Restrictions / conditions" and all checkboxes should be checked"', () => {
+      cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
+        .get(investorRequirements.restrictions.name).should('contain', 'Restrictions / conditions')
+        .get(investorRequirements.restrictions.liquidity).should('be.checked')
+        .get(investorRequirements.restrictions.inflationAdjustment).should('be.checked')
+        .get(investorRequirements.restrictions.requireFXHedge).should('be.checked')
+        .get(investorRequirements.restrictions.requireBoardSeat).should('be.checked')
+        .get(investorRequirements.restrictions.requireLinkedTech).should('be.checked')
+        .get(investorRequirements.restrictions.willParticipateInCompBids).should('be.checked')
+    })
   })
 
   context('when viewing the "Investor requirements" details section', () => {
@@ -321,6 +332,18 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorRequirements.taskList.timeHorizon.fiveTo9Years).should('contain', '5-9 years')
         .get(investorRequirements.taskList.timeHorizon.tenTo14Years).should('contain', '10-14 years')
         .get(investorRequirements.taskList.timeHorizon.fifteenYearsPlus).should('contain', '15 years +')
+    })
+
+    it('should display "Restrictions / conditions" and all 6 restrictions', () => {
+      cy.visit(largeCapitalProfile)
+        .get(selectors.investorRequirements.summary).click()
+        .get(investorRequirements.taskList.restrictions.name).should('contain', 'Restrictions / conditions')
+        .get(investorRequirements.taskList.restrictions.liquidity).should('contain', 'Liquidity / exchange listing')
+        .get(investorRequirements.taskList.restrictions.inflationAdjustment).should('contain', 'Inflation adjustment')
+        .get(investorRequirements.taskList.restrictions.requireFXHedge).should('contain', 'Require FX hedge')
+        .get(investorRequirements.taskList.restrictions.requireBoardSeat).should('contain', 'Require board seat')
+        .get(investorRequirements.taskList.restrictions.requireLinkedTech).should('contain', 'Require linked technology / knowledge transfer')
+        .get(investorRequirements.taskList.restrictions.willParticipateInCompBids).should('contain', 'Will participate in competitive bids / auctions')
     })
   })
 })

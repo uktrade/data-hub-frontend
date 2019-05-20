@@ -42,6 +42,11 @@ const getTimeHorizons = async (token, profile) => {
   return transformCheckboxes(timeHorizons, profile.investorRequirements.timeHorizons)
 }
 
+const getRestrictions = async (token, profile) => {
+  const restriction = await getOptions(token, 'capital-investment/restriction', { sorted: false })
+  return transformCheckboxes(restriction, profile.investorRequirements.restrictions)
+}
+
 const getCompanyProfile = async (token, company, editing) => {
   const profiles = await getCompanyProfiles(token, company.id)
   const profile = profiles.results && profiles.results[0]
@@ -67,6 +72,7 @@ const renderProfile = async (req, res, next) => {
       profile.investorRequirements.dealTicketSizes.items = await getDealTicketSizes(token, profile)
       profile.investorRequirements.investmentTypes.items = await getInvestmentTypes(token, profile)
       profile.investorRequirements.timeHorizons.items = await getTimeHorizons(token, profile)
+      profile.investorRequirements.restrictions.items = await getRestrictions(token, profile)
     }
 
     res.render('companies/apps/investments/large-capital-profile/views/profile', { profile })
