@@ -2,31 +2,17 @@ const dealTicketSize = require('~/test/unit/data/companies/investments/metadata/
 const investmentType = require('~/test/unit/data/companies/investments/metadata/investment-type.json')
 const timeHorizons = require('~/test/unit/data/companies/investments/metadata/time-horizon.json')
 const restrictions = require('~/test/unit/data/companies/investments/metadata/restrictions.json')
-const companyProfile = require('~/test/unit/data/companies/investments/large-capital-profile.json')
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const constructionRisk = require('~/test/unit/data/companies/investments/metadata/construction-risk.json')
+const companyProfile = require('~/test/unit/data/companies/investments/large-capital-profile-new.json')
 const companyMock = require('~/test/unit/data/companies/minimal-company.json')
 const { cloneDeep } = require('lodash')
 const config = require('~/config')
 
 const controller = require('~/src/apps/companies/apps/investments/large-capital-profile/controllers')
+const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
 describe('Company Investments - Large capital profile - Investor requirements', () => {
   describe('renderProfile', () => {
-    const commonTests = (profile) => {
-      it('should call the render function once', () => {
-        expect(this.middlewareParameters.resMock.render).to.have.been.calledOnce
-      })
-
-      it('should call the render function and pass the view', () => {
-        const view = 'companies/apps/investments/large-capital-profile/views/profile'
-        expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(view)
-      })
-
-      it('should call the render function and pass the profile', () => {
-        expect(this.middlewareParameters.resMock.render.args[0][1].profile).to.deep.equal(profile)
-      })
-    }
-
     context('when the user is editing the "Investor requirements" section', () => {
       beforeEach(async () => {
         const clonedCompanyProfile = cloneDeep(companyProfile)
@@ -61,6 +47,8 @@ describe('Company Investments - Large capital profile - Investor requirements', 
           .reply(200, timeHorizons)
           .get('/metadata/capital-investment/restriction/')
           .reply(200, restrictions)
+          .get('/metadata/capital-investment/construction-risk/')
+          .reply(200, constructionRisk)
 
         this.middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
@@ -76,7 +64,7 @@ describe('Company Investments - Large capital profile - Investor requirements', 
         )
       })
 
-      commonTests({
+      const profile = {
         editing: 'investor-requirements',
         id: companyProfile.results[0].id,
         investorDetails: {
@@ -212,10 +200,36 @@ describe('Company Investments - Large capital profile - Investor requirements', 
             }],
             value: [],
           },
+          constructionRisks: {
+            items: [{
+              text: 'Greenfield (construction risk)',
+              value: '79cc3963-9376-4771-9cba-c1b3cc0ade33',
+            }, {
+              text: 'Brownfield (some construction risk)',
+              value: '884deaf6-cb0c-4036-b78c-efd92cb10098',
+            }, {
+              text: 'Operational (no construction risk)',
+              value: '9f554b26-70f2-4cac-89ae-758c2ef71c70',
+            }],
+            value: [],
+          },
         },
         location: {
           incompleteFields: 3,
         },
+      }
+
+      it('should call the render function once', () => {
+        expect(this.middlewareParameters.resMock.render).to.have.been.calledOnce
+      })
+
+      it('should call the render function and pass the view', () => {
+        const view = 'companies/apps/investments/large-capital-profile/views/profile'
+        expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(view)
+      })
+
+      it('should call the render function and pass the profile', () => {
+        expect(this.middlewareParameters.resMock.render.args[0][1].profile).to.deep.equal(profile)
       })
     })
   })

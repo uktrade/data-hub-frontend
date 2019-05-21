@@ -250,7 +250,7 @@ describe('Company Investments and Large capital profile', () => {
   context('when viewing the "Investor requirements" edit section', () => {
     const { investorRequirements } = selectors
 
-    it('should display "Deal ticket size" and all checkboxes should be checked', () => {
+    it('should display "Deal ticket size" and all 6 checkboxes should be checked', () => {
       cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
         .get(investorRequirements.dealTicketSize.name).should('contain', 'Deal ticket size')
         .get(investorRequirements.dealTicketSize.upTo49Million).should('be.checked')
@@ -261,7 +261,7 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorRequirements.dealTicketSize.oneBillionPlus).should('be.checked')
     })
 
-    it('should display "Types of investment" and all checkboxes should be checked"', () => {
+    it('should display "Types of investment" and all 8 checkboxes should be checked"', () => {
       cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
         .get(investorRequirements.investmentTypes.name).should('contain', 'Types of investment')
         .get(investorRequirements.investmentTypes.projectEquity).should('be.checked')
@@ -274,7 +274,7 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorRequirements.investmentTypes.privateEquity).should('be.checked')
     })
 
-    it('should display "Time Horizon / tenor" and all checkboxes should be checked"', () => {
+    it('should display "Time Horizon / tenor" and all 4 checkboxes should be checked"', () => {
       cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
         .get(investorRequirements.timeHorizons.name).should('contain', 'Time horizon / tenor')
         .get(investorRequirements.timeHorizons.upToFiveYears).should('be.checked')
@@ -283,7 +283,7 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorRequirements.timeHorizons.fifteenYearsPlus).should('be.checked')
     })
 
-    it('should display "Restrictions / conditions" and all checkboxes should be checked"', () => {
+    it('should display "Restrictions / conditions" and all 6 checkboxes should be checked"', () => {
       cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
         .get(investorRequirements.restrictions.name).should('contain', 'Restrictions / conditions')
         .get(investorRequirements.restrictions.liquidity).should('be.checked')
@@ -292,6 +292,14 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorRequirements.restrictions.requireBoardSeat).should('be.checked')
         .get(investorRequirements.restrictions.requireLinkedTech).should('be.checked')
         .get(investorRequirements.restrictions.willParticipateInCompBids).should('be.checked')
+    })
+
+    it('should display "Construction risk" and all 3 checkboxes should be checked"', () => {
+      cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
+        .get(investorRequirements.constructionRisks.name).should('contain', 'Construction risk')
+        .get(investorRequirements.constructionRisks.greenfield).should('be.checked')
+        .get(investorRequirements.constructionRisks.brownfield).should('be.checked')
+        .get(investorRequirements.constructionRisks.operational).should('be.checked')
     })
   })
 
@@ -344,6 +352,15 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorRequirements.taskList.restrictions.requireBoardSeat).should('contain', 'Require board seat')
         .get(investorRequirements.taskList.restrictions.requireLinkedTech).should('contain', 'Require linked technology / knowledge transfer')
         .get(investorRequirements.taskList.restrictions.willParticipateInCompBids).should('contain', 'Will participate in competitive bids / auctions')
+    })
+
+    it('should display "Construction risk" and all 3 risks', () => {
+      cy.visit(largeCapitalProfile)
+        .get(selectors.investorRequirements.summary).click()
+        .get(investorRequirements.taskList.constructionRisks.name).should('contain', 'Construction risk')
+        .get(investorRequirements.taskList.constructionRisks.greenfield).should('contain', 'Greenfield (construction risk)')
+        .get(investorRequirements.taskList.constructionRisks.brownfield).should('contain', 'Brownfield (some construction risk)')
+        .get(investorRequirements.taskList.constructionRisks.operational).should('contain', 'Operational (no construction risk)')
     })
   })
 })

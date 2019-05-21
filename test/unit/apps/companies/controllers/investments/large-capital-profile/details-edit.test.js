@@ -1,7 +1,7 @@
 const investorTypeTransformed = require('~/test/unit/data/companies/investments/metadata/investor-type-transformed.json')
 const requiredChecksConducted = require('~/test/unit/data/companies/investments/metadata/required-checks-conducted.json')
 const investorType = require('~/test/unit/data/companies/investments/metadata/investor-type.json')
-const companyProfile = require('~/test/unit/data/companies/investments/large-capital-profile.json')
+const companyProfile = require('~/test/unit/data/companies/investments/large-capital-profile-new.json')
 const advisersMock = require('~/test/unit/data/advisers/advisers.json')
 
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
@@ -180,6 +180,9 @@ describe('Company Investments - Large capital profile - Investor details', () =>
             value: [],
           },
           restrictions: {
+            value: [],
+          },
+          constructionRisks: {
             value: [],
           },
         },
