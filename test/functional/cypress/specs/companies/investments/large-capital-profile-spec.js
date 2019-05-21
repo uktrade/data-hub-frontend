@@ -1,5 +1,5 @@
 const { localHeader, companyInvestment: selectors } = require('../../../selectors')
-const fixtures = require('../../../fixtures/index.js')
+const fixtures = require('../../../fixtures')
 const baseUrl = Cypress.config().baseUrl
 const { oneListCorp, lambdaPlc } = fixtures.company
 const largeCapitalProfile = `/companies/${oneListCorp.id}/investments/large-capital-profile`

@@ -6,16 +6,6 @@
 
 {% block body_main_content %}
 
-  {% if company.duns_number %}
-    {{ govukDetails({
-      summaryText: 'Why can I not link a subsidiary?',
-      html: 'Subsidiaries cannot be linked to a Dun & Bradstreet company.',
-      attributes: {
-        'data-auto-id': 'subsidiariesWhyDunAndBradstreet'
-      }
-    }) }}
-  {% endif %}
-
   {% if company.archived %}
     {{ govukDetails({
       summaryText: 'Why can I not link a subsidiary?',
