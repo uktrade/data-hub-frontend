@@ -6,6 +6,7 @@ const transformInvestorRequirements = (body) => {
     investment_types: sanitizeCheckboxes(body.investmentTypes),
     time_horizons: sanitizeCheckboxes(body.timeHorizons),
     restrictions: sanitizeCheckboxes(body.restrictions),
+    construction_risks: sanitizeCheckboxes(body.constructionRisks),
   }
 }
 
