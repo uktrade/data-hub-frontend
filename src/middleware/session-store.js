@@ -1,6 +1,6 @@
 const session = require('express-session')
 
-const redisStore = require('../../config/redis-store')
+const { redisStore } = require('../../config/redis-store')
 const config = require('../../config')
 
 const sessionStore = session({

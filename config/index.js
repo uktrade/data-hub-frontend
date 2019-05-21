@@ -2,6 +2,8 @@ const path = require('path')
 
 const isDev = process.env.NODE_ENV !== 'production'
 const isProd = process.env.NODE_ENV === 'production'
+const isTest = process.env.NODE_ENV === 'test'
+
 const root = path.normalize(`${__dirname}/..`)
 
 const buildRedisConfig = () => {
@@ -36,6 +38,7 @@ const config = {
   ci: process.env.CI,
   isDev,
   isProd,
+  isTest,
   noCache: process.env.CACHE_ASSETS ? false : isDev,
   port: process.env.PORT || 3000,
   apiRoot: process.env.API_ROOT || 'http://localhost:8000',
