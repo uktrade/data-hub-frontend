@@ -1,4 +1,4 @@
-const fixtures = require('../../fixtures/index.js')
+const fixtures = require('../../fixtures')
 const selectors = require('../../selectors')
 
 describe('Interaction details', () => {

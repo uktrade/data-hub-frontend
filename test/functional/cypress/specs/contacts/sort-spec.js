@@ -1,5 +1,5 @@
 const selectors = require('../../selectors')
-const fixtures = require('../../fixtures/index.js')
+const fixtures = require('../../fixtures')
 
 describe('Contact Collections Sort', () => {
   beforeEach(() => {
