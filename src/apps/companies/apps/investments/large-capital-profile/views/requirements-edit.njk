@@ -83,4 +83,20 @@
     })
   }}
 
+  {{
+    govukCheckboxes({
+      name: 'constructionRisks',
+      classes: 'construction-risk',
+      fieldset: {
+        attributes: {
+          'data-auto-id': 'constructionRisks'
+        },
+        legend: {
+          text: 'Construction risk',
+          classes: 'govuk-fieldset__legend--s'
+        }
+      },
+      items: profile.investorRequirements.constructionRisks.items
+    })
+  }}
 {% endcall %}
