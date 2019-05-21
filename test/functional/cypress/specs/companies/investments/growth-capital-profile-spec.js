@@ -1,5 +1,5 @@
-const { localHeader, companyInvestment: selectors } = require('../../../selectors/index.js')
-const fixtures = require('../../../fixtures/index.js')
+const { localHeader, companyInvestment: selectors } = require('../../../selectors')
+const fixtures = require('../../../fixtures')
 const baseUrl = Cypress.config().baseUrl
 const { oneListCorp } = fixtures.company
 

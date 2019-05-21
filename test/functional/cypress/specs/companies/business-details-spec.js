@@ -1,7 +1,7 @@
 const { keys, forEach } = require('lodash')
 
-const fixtures = require('../../fixtures/index.js')
-const selectors = require('../../selectors/index.js')
+const fixtures = require('../../fixtures')
+const selectors = require('../../selectors')
 
 describe('Companies business details', () => {
   context('when viewing business details for a Dun & Bradstreet GHQ company on the One List not in the UK', () => {
