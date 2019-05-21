@@ -1,5 +1,5 @@
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
-const companyProfile = require('~/test/unit/data/companies/investments/large-capital-profile.json')
+const companyProfile = require('~/test/unit/data/companies/investments/large-capital-profile-new.json')
 const companyMock = require('~/test/unit/data/companies/minimal-company.json')
 const route = `/companies/${companyMock.id}/investments/large-capital-profile`
 const config = require('../../../../../../../config')
