@@ -74,11 +74,27 @@ const renderProfile = async (req, res, next) => {
       profile.investorDetails.requiredChecks.cleared.advisers = advisers
       profile.investorDetails.requiredChecks.issuesIdentified.advisers = advisers
     } else if (editType === INVESTOR_REQUIREMENTS) {
-      profile.investorRequirements.dealTicketSizes.items = await getDealTicketSizes(token, profile)
-      profile.investorRequirements.investmentTypes.items = await getInvestmentTypes(token, profile)
-      profile.investorRequirements.timeHorizons.items = await getTimeHorizons(token, profile)
-      profile.investorRequirements.restrictions.items = await getRestrictions(token, profile)
-      profile.investorRequirements.constructionRisks.items = await getConstructionRisks(token, profile)
+      const promises = [
+        getDealTicketSizes(token, profile),
+        getInvestmentTypes(token, profile),
+        getTimeHorizons(token, profile),
+        getRestrictions(token, profile),
+        getConstructionRisks(token, profile),
+      ]
+
+      await Promise.all(promises).then(([
+        dealTicketSizes,
+        investmentTypes,
+        timeHorizons,
+        restrictions,
+        constructionRisks,
+      ]) => {
+        profile.investorRequirements.dealTicketSizes.items = dealTicketSizes
+        profile.investorRequirements.investmentTypes.items = investmentTypes
+        profile.investorRequirements.timeHorizons.items = timeHorizons
+        profile.investorRequirements.restrictions.items = restrictions
+        profile.investorRequirements.constructionRisks.items = constructionRisks
+      })
     }
 
     res.render('companies/apps/investments/large-capital-profile/views/profile', { profile })
