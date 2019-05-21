@@ -1,26 +1,21 @@
-const { promisify } = require('util')
 const { get } = require('lodash')
 const Redis = require('redis')
-
 const config = require('../../../config')
 const { authorisedRequest } = require('../../lib/authorised-request')
 
-const redisOpts = {
-  url: config.redis.url,
-  cacheDuration: config.cacheDurationShort,
-}
-
 let client, redisAsync
-if (process.env.NODE_ENV !== 'test') {
-  client = Redis.createClient(redisOpts)
+if (!config.isTest) {
+  const { promisify } = require('util')
+  const { getRedisConfig } = require('../../../config/redis-store')
+
+  client = Redis.createClient({ ...getRedisConfig(), url: config.redis.url })
   redisAsync = promisify(client.get).bind(client)
 }
 
 async function getAdvisers (token) {
   let results
-  const advisers =
-    process.env.NODE_ENV === 'test' ? null : await redisAsync('advisers')
   const url = `${config.apiRoot}/adviser/?limit=100000&offset=0`
+  const advisers = config.isTest ? null : await redisAsync('advisers')
 
   if (advisers) {
     results = JSON.parse(advisers)
@@ -30,12 +25,12 @@ async function getAdvisers (token) {
     results = response.results.filter(
       adviser => get(adviser, 'name', '').trim().length
     )
-    if (process.env.NODE_ENV !== 'test') {
+    if (!config.isTest) {
       client.set(
         'advisers',
         JSON.stringify(results),
         'EX',
-        redisOpts.cacheDuration
+        config.cacheDurationShort
       )
     }
   }
