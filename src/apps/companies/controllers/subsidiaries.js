@@ -8,7 +8,7 @@ async function renderSubsidiaries (req, res, next) {
   try {
     const token = req.session.token
     const { company } = res.locals
-    const actionButtons = company.archived || company.duns_number ? undefined : [{
+    const actionButtons = company.archived ? undefined : [{
       label: companyDetailsLabels.link_a_subsidiary,
       url: `/companies/${company.id}/subsidiaries/link`,
     }]

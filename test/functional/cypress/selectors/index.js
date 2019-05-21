@@ -3,6 +3,7 @@ exports.companyAddStep2 = require('./company/add-step-2')
 exports.companyEdit = require('./company/edit')
 exports.companyCollection = require('./company/company-collection')
 exports.companyInvestment = require('./company/investment')
+exports.companySubsidiariesLink = require('./company/subsidiaries-link')
 exports.companySubsidiaries = require('./company/subsidiaries')
 
 exports.contactCreate = require('./contact/create')

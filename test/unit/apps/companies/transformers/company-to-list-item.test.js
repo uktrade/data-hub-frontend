@@ -195,51 +195,16 @@ describe('transformCompanyToListItem', () => {
 
   context('global headquarters information', () => {
     context('contains the global headquarters information', () => {
-      context('and its global headquarters is not archived', () => {
-        beforeEach(() => {
-          this.listItem = transformCompanyToListItem(companyData)
-        })
-
-        it('should include the headquarter info in the result', () => {
-          expect(this.listItem.meta).to.containSubset([{
-            label: 'Global HQ',
-            value: 'Mars Exports Ltd',
-            url: '/companies/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd',
-          }])
-        })
-
-        it('should include the "Remove subsidiary" link in the result', () => {
-          expect(this.listItem.meta).to.containSubset([{
-            label: '',
-            value: 'Remove subsidiary',
-            url: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a/hierarchies/ghq/remove',
-          }])
-        })
+      beforeEach(() => {
+        this.listItem = transformCompanyToListItem(companyData)
       })
 
-      context('and its global headquarters is archived', () => {
-        beforeEach(() => {
-          this.listItem = transformCompanyToListItem({
-            ...companyData,
-            global_headquarters_archived: true,
-          })
-        })
-
-        it('should include the headquarter info in the result', () => {
-          expect(this.listItem.meta).to.containSubset([{
-            label: 'Global HQ',
-            value: 'Mars Exports Ltd',
-            url: '/companies/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd',
-          }])
-        })
-
-        it('should not include the "Remove subsidiary" link in the result', () => {
-          expect(this.listItem.meta).to.not.containSubset([{
-            label: '',
-            value: 'Remove subsidiary',
-            url: '/companies/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd/hierarchies/ghq/remove',
-          }])
-        })
+      it('should include the headquarter info in the result', () => {
+        expect(this.listItem.meta).to.containSubset([{
+          label: 'Global HQ',
+          value: 'Mars Exports Ltd',
+          url: '/companies/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd',
+        }])
       })
     })
 
