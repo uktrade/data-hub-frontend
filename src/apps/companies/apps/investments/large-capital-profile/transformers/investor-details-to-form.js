@@ -3,8 +3,8 @@ const { find, get } = require('lodash')
 const moment = require('moment')
 const types = require('../constants')
 
+const { transformAdviserToOption } = require('../../../../../adviser/transformers')
 const transformObjectToOption = ({ value, label }) => ({ value, text: label })
-const transformAdvisersToTypeahead = ({ name, dit_team, id }) => ({ label: name, subLabel: dit_team.name, value: id })
 
 const parseDate = (dateStr) => {
   const date = moment(dateStr, 'YYYY-MM-DD', true)
@@ -62,7 +62,7 @@ const transformRequiredChecks = (requiredChecksMetaData, { requiredChecks }) => 
 }
 
 const transformAdvisers = (advisers) => {
-  return advisers.map(transformAdvisersToTypeahead)
+  return advisers.map(transformAdviserToOption)
 }
 
 module.exports = {

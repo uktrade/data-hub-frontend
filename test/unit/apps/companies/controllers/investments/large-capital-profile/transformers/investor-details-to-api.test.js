@@ -2,6 +2,34 @@ const {
   transformInvestorDetails,
 } = require('~/src/apps/companies/apps/investments/large-capital-profile/transformers')
 
+const getClearedPOSTData = ({
+  day = '01',
+  month = '01',
+  year = '2019',
+  adviserId = 'adviserId',
+}) => {
+  return {
+    'clearedId-day': day,
+    'clearedId-month': month,
+    'clearedId-year': year,
+    'clearedId-adviser': adviserId,
+  }
+}
+
+const getIssuesIdentifiedPOSTData = ({
+  day = '02',
+  month = '02',
+  year = '2019',
+  adviserId = 'adviserId2',
+}) => {
+  return {
+    'issuesIdentifiedId-day': day,
+    'issuesIdentifiedId-month': month,
+    'issuesIdentifiedId-year': year,
+    'issuesIdentifiedId-adviser': adviserId,
+  }
+}
+
 describe('Large capital profile, Investor details form to API', () => {
   context('when translating Investor details', () => {
     it('should transform an empty POST', () => {
@@ -10,18 +38,18 @@ describe('Large capital profile, Investor details form to API', () => {
         globalAssetsUnderManagement: '',
         investableCapital: '',
         investorDescription: '',
-        conducted: '',
-        adviser: [ '', '' ],
-        // Hidden fields
-        clearedId: '1',
-        issuesIdentifiedId: '2',
+        requiredChecks: undefined,
+        ...getClearedPOSTData({ date: '', month: '', year: '' }),
+        ...getIssuesIdentifiedPOSTData({ date: '', month: '', year: '' }),
       })
       expect(this.transformed).to.deep.equal({
-        investor_type: '',
+        investor_type: null,
         global_assets_under_management: null,
         investable_capital: null,
         investor_description: '',
-        required_checks_conducted: '',
+        required_checks_conducted: undefined,
+        required_checks_conducted_by: null,
+        required_checks_conducted_on: null,
       })
     })
 
@@ -31,23 +59,18 @@ describe('Large capital profile, Investor details form to API', () => {
         globalAssetsUnderManagement: '1000000',
         investableCapital: '100000',
         investorDescription: 'Lorem ipsum dolor sit amet',
-        conducted: '1', // Cleared id
-        adviser: [ 'a80ff5fd-8904-4940-bf96-fe8047e34be5', '' ],
-        '1-day': '02',
-        '1-month': '05',
-        '1-year': '2019',
-        // Hidden fields
-        clearedId: '1',
-        issuesIdentifiedId: '2',
+        requiredChecks: 'clearedId',
+        ...getClearedPOSTData({}),
+        ...getIssuesIdentifiedPOSTData({}),
       })
       expect(this.transformed).to.deep.equal({
         investor_type: 'assetManagerId',
         global_assets_under_management: '1000000',
         investable_capital: '100000',
         investor_description: 'Lorem ipsum dolor sit amet',
-        required_checks_conducted: '1', // Cleared id
-        required_checks_conducted_on: '2019-05-02', // Date the checks were conducted on
-        required_checks_conducted_by: 'a80ff5fd-8904-4940-bf96-fe8047e34be5', // Adviser id
+        required_checks_conducted: 'clearedId',
+        required_checks_conducted_on: '2019-01-01',
+        required_checks_conducted_by: 'adviserId',
       })
     })
 
@@ -57,23 +80,18 @@ describe('Large capital profile, Investor details form to API', () => {
         globalAssetsUnderManagement: '1000000',
         investableCapital: '100000',
         investorDescription: 'Lorem ipsum dolor sit amet',
-        conducted: '2', // Issues identified id
-        adviser: [ '', 'a80ff5fd-8904-4940-bf96-fe8047e34be5' ],
-        '2-day': '03',
-        '2-month': '05',
-        '2-year': '2019',
-        // Hidden fields
-        clearedId: '1',
-        issuesIdentifiedId: '2',
+        requiredChecks: 'issuesIdentifiedId',
+        ...getClearedPOSTData({}),
+        ...getIssuesIdentifiedPOSTData({}),
       })
       expect(this.transformed).to.deep.equal({
         investor_type: 'assetManagerId',
         global_assets_under_management: '1000000',
         investable_capital: '100000',
         investor_description: 'Lorem ipsum dolor sit amet',
-        required_checks_conducted: '2', // Issues identified id
-        required_checks_conducted_on: '2019-05-03', // Date the checks were conducted on
-        required_checks_conducted_by: 'a80ff5fd-8904-4940-bf96-fe8047e34be5', // Adviser id.
+        required_checks_conducted: 'issuesIdentifiedId',
+        required_checks_conducted_on: '2019-02-02',
+        required_checks_conducted_by: 'adviserId2',
       })
     })
 
@@ -83,14 +101,18 @@ describe('Large capital profile, Investor details form to API', () => {
         globalAssetsUnderManagement: '1000000',
         investableCapital: '100000',
         investorDescription: 'Lorem ipsum dolor sit amet',
-        conducted: '3', // Not yet checked id
+        requiredChecks: 'notYetCheckedId',
+        ...getClearedPOSTData({}),
+        ...getIssuesIdentifiedPOSTData({}),
       })
       expect(this.transformed).to.deep.equal({
         investor_type: 'assetManagerId',
         global_assets_under_management: '1000000',
         investable_capital: '100000',
         investor_description: 'Lorem ipsum dolor sit amet',
-        required_checks_conducted: '3', // Not yet checked id
+        required_checks_conducted: 'notYetCheckedId',
+        required_checks_conducted_on: null,
+        required_checks_conducted_by: null,
       })
     })
 
@@ -100,14 +122,18 @@ describe('Large capital profile, Investor details form to API', () => {
         globalAssetsUnderManagement: '1000000',
         investableCapital: '100000',
         investorDescription: 'Lorem ipsum dolor sit amet',
-        conducted: '4', // Checks not required id
+        requiredChecks: 'checksNotRequiredId',
+        ...getClearedPOSTData({}),
+        ...getIssuesIdentifiedPOSTData({}),
       })
       expect(this.transformed).to.deep.equal({
         investor_type: 'assetManagerId',
         global_assets_under_management: '1000000',
         investable_capital: '100000',
         investor_description: 'Lorem ipsum dolor sit amet',
-        required_checks_conducted: '4', // Checks not required id
+        required_checks_conducted: 'checksNotRequiredId',
+        required_checks_conducted_on: null,
+        required_checks_conducted_by: null,
       })
     })
   })
