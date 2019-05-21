@@ -47,6 +47,11 @@ const getRestrictions = async (token, profile) => {
   return transformCheckboxes(restriction, profile.investorRequirements.restrictions)
 }
 
+const getConstructionRisks = async (token, profile) => {
+  const constructionRisks = await getOptions(token, 'capital-investment/construction-risk', { sorted: false })
+  return transformCheckboxes(constructionRisks, profile.investorRequirements.constructionRisks)
+}
+
 const getCompanyProfile = async (token, company, editing) => {
   const profiles = await getCompanyProfiles(token, company.id)
   const profile = profiles.results && profiles.results[0]
@@ -73,6 +78,7 @@ const renderProfile = async (req, res, next) => {
       profile.investorRequirements.investmentTypes.items = await getInvestmentTypes(token, profile)
       profile.investorRequirements.timeHorizons.items = await getTimeHorizons(token, profile)
       profile.investorRequirements.restrictions.items = await getRestrictions(token, profile)
+      profile.investorRequirements.constructionRisks.items = await getConstructionRisks(token, profile)
     }
 
     res.render('companies/apps/investments/large-capital-profile/views/profile', { profile })

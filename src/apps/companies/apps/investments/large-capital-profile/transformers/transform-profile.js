@@ -67,6 +67,9 @@ const transformProfile = (profile, editing) => {
       restrictions: {
         value: get(profile, 'restrictions'),
       },
+      constructionRisks: {
+        value: get(profile, 'construction_risks'),
+      },
     },
     location: {
       incompleteFields: get(profile, 'incomplete_location_fields.length'),

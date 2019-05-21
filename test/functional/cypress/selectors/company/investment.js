@@ -100,6 +100,12 @@ module.exports = {
       requireLinkedTech: '[data-auto-id=restrictions] #restrictions-5',
       willParticipateInCompBids: '[data-auto-id=restrictions] #restrictions-6',
     },
+    constructionRisks: {
+      name: '[data-auto-id=constructionRisks] legend',
+      greenfield: '[data-auto-id=constructionRisks] #constructionRisks-1',
+      brownfield: '[data-auto-id=constructionRisks] #constructionRisks-2',
+      operational: '[data-auto-id=constructionRisks] #constructionRisks-3',
+    },
     taskList: {
       dealTicketSize: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(1) .task-list__item-name',
@@ -148,11 +154,13 @@ module.exports = {
         requireBoardSeat: '[data-auto-id=investorRequirements] ul > li:nth-child(6) span:nth-child(5)',
         requireLinkedTech: '[data-auto-id=investorRequirements] ul > li:nth-child(6) span:nth-child(6)',
         willParticipateInCompBids: '[data-auto-id=investorRequirements] ul > li:nth-child(6) span:nth-child(7)',
-
       },
-      constructionRisk: {
+      constructionRisks: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(7) .task-list__item-name',
         incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(7) .task-list__item-incomplete',
+        greenfield: '[data-auto-id=investorRequirements] ul > li:nth-child(7) span:nth-child(2)',
+        brownfield: '[data-auto-id=investorRequirements] ul > li:nth-child(7) span:nth-child(3)',
+        operational: '[data-auto-id=investorRequirements] ul > li:nth-child(7) span:nth-child(4)',
       },
       minimumEquityPercentage: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(8) .task-list__item-name',
