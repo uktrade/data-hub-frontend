@@ -3,6 +3,7 @@ const investmentType = require('~/test/unit/data/companies/investments/metadata/
 const timeHorizons = require('~/test/unit/data/companies/investments/metadata/time-horizon.json')
 const restrictions = require('~/test/unit/data/companies/investments/metadata/restrictions.json')
 const constructionRisk = require('~/test/unit/data/companies/investments/metadata/construction-risk.json')
+const desiredDealRole = require('~/test/unit/data/companies/investments/metadata/desired-deal-role.json')
 const companyProfile = require('~/test/unit/data/companies/investments/large-capital-profile-new.json')
 const companyMock = require('~/test/unit/data/companies/minimal-company.json')
 const { cloneDeep } = require('lodash')
@@ -49,6 +50,8 @@ describe('Company Investments - Large capital profile - Investor requirements', 
           .reply(200, restrictions)
           .get('/metadata/capital-investment/construction-risk/')
           .reply(200, constructionRisk)
+          .get('/metadata/capital-investment/desired-deal-role/')
+          .reply(200, desiredDealRole)
 
         this.middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
@@ -210,6 +213,19 @@ describe('Company Investments - Large capital profile - Investor requirements', 
             }, {
               text: 'Operational (no construction risk)',
               value: '9f554b26-70f2-4cac-89ae-758c2ef71c70',
+            }],
+            value: [],
+          },
+          desiredDealRoles: {
+            items: [{
+              text: 'Lead manager / deal structure',
+              value: 'efadc6bb-2a73-4627-8ce3-9dc2c34c3f31',
+            }, {
+              text: 'Co-lead manager',
+              value: '29d930e6-de2f-403d-87dc-764bc418d33a',
+            }, {
+              text: 'Co-investor / syndicate member',
+              value: '48cace6e-ec14-467b-b1b5-19b318ab5c51',
             }],
             value: [],
           },
