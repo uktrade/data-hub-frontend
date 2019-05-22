@@ -1,5 +1,4 @@
 const { castArray, sortBy } = require('lodash')
-const { promisify } = require('util')
 const Redis = require('redis')
 
 const config = require('../../config')
@@ -7,26 +6,24 @@ const { authorisedRequest } = require('../lib/authorised-request')
 const { filterDisabledOption } = require('../modules/permissions/filters')
 const { transformObjectToOption } = require('../apps/transformers')
 
-const redisOpts = {
-  url: config.redis.url,
-  cacheDuration: config.cacheDurationLong,
-}
-
 let client, redisAsync
-if (process.env.NODE_ENV !== 'test') {
-  client = Redis.createClient(redisOpts)
+if (!config.isTest) {
+  const { getRedisConfig } = require('../../config/redis-store')
+  const { promisify } = require('util')
+
+  client = Redis.createClient({ ...getRedisConfig(), url: config.redis.url })
   redisAsync = promisify(client.get).bind(client)
 }
 
 async function fetchOptions (token, url) {
-  let metaData = process.env.NODE_ENV === 'test' ? null : await redisAsync(url)
+  let metaData = config.isTest ? null : await redisAsync(url)
 
   if (metaData) {
     return JSON.parse(metaData)
   }
   metaData = await authorisedRequest(token, url)
-  if (process.env.NODE_ENV !== 'test') {
-    client.set(url, JSON.stringify(metaData), 'ex', redisOpts.cacheDuration)
+  if (!config.isTest) {
+    client.set(url, JSON.stringify(metaData), 'ex', config.cacheDurationLong)
   }
 
   return metaData
