@@ -66,6 +66,9 @@ describe('Company Investments - Large capital profile', () => {
           constructionRisks: {
             value: [],
           },
+          desiredDealRoles: {
+            value: [],
+          },
         },
         location: {
           incompleteFields: 3,

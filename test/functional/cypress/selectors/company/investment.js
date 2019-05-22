@@ -106,6 +106,12 @@ module.exports = {
       brownfield: '[data-auto-id=constructionRisks] #constructionRisks-2',
       operational: '[data-auto-id=constructionRisks] #constructionRisks-3',
     },
+    desiredDealRoles: {
+      name: '[data-auto-id=desiredDealRoles] legend',
+      leadManager: '[data-auto-id=desiredDealRoles] #desiredDealRoles-1',
+      coLeadManager: '[data-auto-id=desiredDealRoles] #desiredDealRoles-2',
+      coInvestor: '[data-auto-id=desiredDealRoles] #desiredDealRoles-3',
+    },
     taskList: {
       dealTicketSize: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(1) .task-list__item-name',
@@ -166,9 +172,12 @@ module.exports = {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(8) .task-list__item-name',
         incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(8) .task-list__item-incomplete',
       },
-      desiredDealRole: {
+      desiredDealRoles: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(9) .task-list__item-name',
         incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(9) .task-list__item-incomplete',
+        leadManager: '[data-auto-id=investorRequirements] ul > li:nth-child(9) span:nth-child(2)',
+        coLeadManager: '[data-auto-id=investorRequirements] ul > li:nth-child(9) span:nth-child(3)',
+        coInvestor: '[data-auto-id=investorRequirements] ul > li:nth-child(9) span:nth-child(4)',
       },
     },
   },
