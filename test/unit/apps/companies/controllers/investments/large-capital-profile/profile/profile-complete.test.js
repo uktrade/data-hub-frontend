@@ -91,6 +91,12 @@ describe('Company Investments - Large capital profile', () => {
               name: 'Brownfield (some construction risk)',
             }],
           },
+          desiredDealRoles: {
+            value: [ {
+              id: '48cace6e-ec14-467b-b1b5-19b318ab5c51',
+              name: 'Co-investor / syndicate member',
+            }],
+          },
         },
         location: {
           incompleteFields: 3,

@@ -301,6 +301,14 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorRequirements.constructionRisks.brownfield).should('be.checked')
         .get(investorRequirements.constructionRisks.operational).should('be.checked')
     })
+
+    it('should display "Desired deal role" and all 3 checkboxes should be checked"', () => {
+      cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
+        .get(investorRequirements.desiredDealRoles.name).should('contain', 'Desired deal role')
+        .get(investorRequirements.desiredDealRoles.leadManager).should('be.checked')
+        .get(investorRequirements.desiredDealRoles.coLeadManager).should('be.checked')
+        .get(investorRequirements.desiredDealRoles.coInvestor).should('be.checked')
+    })
   })
 
   context('when viewing the "Investor requirements" details section', () => {
@@ -361,6 +369,15 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorRequirements.taskList.constructionRisks.greenfield).should('contain', 'Greenfield (construction risk)')
         .get(investorRequirements.taskList.constructionRisks.brownfield).should('contain', 'Brownfield (some construction risk)')
         .get(investorRequirements.taskList.constructionRisks.operational).should('contain', 'Operational (no construction risk)')
+    })
+
+    it('should display "Desired deal role" and all 3 roles', () => {
+      cy.visit(largeCapitalProfile)
+        .get(selectors.investorRequirements.summary).click()
+        .get(investorRequirements.taskList.desiredDealRoles.name).should('contain', 'Desired deal role')
+        .get(investorRequirements.taskList.desiredDealRoles.leadManager).should('contain', 'Lead manager / deal structure')
+        .get(investorRequirements.taskList.desiredDealRoles.coLeadManager).should('contain', 'Co-lead manager')
+        .get(investorRequirements.taskList.desiredDealRoles.coInvestor).should('contain', 'Co-investor / syndicate member')
     })
   })
 })

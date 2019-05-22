@@ -52,6 +52,11 @@ const getConstructionRisks = async (token, profile) => {
   return transformCheckboxes(constructionRisks, profile.investorRequirements.constructionRisks)
 }
 
+const getDesiredDealRoles = async (token, profile) => {
+  const desiredDealRoles = await getOptions(token, 'capital-investment/desired-deal-role', { sorted: false })
+  return transformCheckboxes(desiredDealRoles, profile.investorRequirements.desiredDealRoles)
+}
+
 const getCompanyProfile = async (token, company, editing) => {
   const profiles = await getCompanyProfiles(token, company.id)
   const profile = profiles.results && profiles.results[0]
@@ -80,6 +85,7 @@ const renderProfile = async (req, res, next) => {
         getTimeHorizons(token, profile),
         getRestrictions(token, profile),
         getConstructionRisks(token, profile),
+        getDesiredDealRoles(token, profile),
       ]
 
       await Promise.all(promises).then(([
@@ -88,12 +94,14 @@ const renderProfile = async (req, res, next) => {
         timeHorizons,
         restrictions,
         constructionRisks,
+        desiredDealRoles,
       ]) => {
         profile.investorRequirements.dealTicketSizes.items = dealTicketSizes
         profile.investorRequirements.investmentTypes.items = investmentTypes
         profile.investorRequirements.timeHorizons.items = timeHorizons
         profile.investorRequirements.restrictions.items = restrictions
         profile.investorRequirements.constructionRisks.items = constructionRisks
+        profile.investorRequirements.desiredDealRoles.items = desiredDealRoles
       })
     }
 

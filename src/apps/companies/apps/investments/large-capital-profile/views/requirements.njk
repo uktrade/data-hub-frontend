@@ -7,7 +7,7 @@
   {{ taskListItem({ name: 'Restrictions / conditions', value: profile.investorRequirements.restrictions.value, key: 'name' }) }}
   {{ taskListItem({ name: 'Construction risk', value: profile.investorRequirements.constructionRisks.value, key: 'name' }) }}
   {{ taskListItem({ name: 'Minimum equity percentage' }) }}
-  {{ taskListItem({ name: 'Desired deal role' }) }}
+  {{ taskListItem({ name: 'Desired deal role', value: profile.investorRequirements.desiredDealRoles.value, key: 'name' }) }}
 </ul>
 
 {% call Form({
