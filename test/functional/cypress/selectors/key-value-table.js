@@ -7,5 +7,8 @@ module.exports = (dataAutoId) => {
     valueCell: (rowNumber) => {
       return `${tableSelector} tr:nth-child(${rowNumber}) td`
     },
+    valueCellLink: (rowNumber) => {
+      return `${tableSelector} tr:nth-child(${rowNumber}) td a`
+    },
   }
 }
