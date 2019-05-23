@@ -3,8 +3,12 @@
 .table--key-value {
 
   margin: 20px 0;
+  table-layout: fixed;
 
   tbody {
+    th, td {
+      word-wrap: break-word;
+    }
     th {
       vertical-align: top;
       width: 40%;
