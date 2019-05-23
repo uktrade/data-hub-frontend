@@ -1,5 +1,4 @@
-const { keys, forEach } = require('lodash')
-
+const { assertKeyValueTable, assertValueTable } = require('../../helpers/key-value-table')
 const fixtures = require('../../fixtures')
 const selectors = require('../../selectors')
 
@@ -633,20 +632,5 @@ describe('Companies business details', () => {
 
   const assertDetailsContainerHeading = (dataAutoId, expected) => {
     cy.get(selectors.detailsContainer(dataAutoId).heading).should('have.text', expected)
-  }
-
-  const assertKeyValueTable = (dataAutoId, expected) => {
-    forEach(keys(expected), (key, i) => {
-      const rowNumber = i + 1
-      cy.get(selectors.keyValueTable(dataAutoId).keyCell(rowNumber)).should('have.text', key)
-      cy.get(selectors.keyValueTable(dataAutoId).valueCell(rowNumber)).should('have.text', expected[key])
-    })
-  }
-
-  const assertValueTable = (dataAutoId, expected) => {
-    forEach(expected, (expectedValue, i) => {
-      const rowNumber = i + 1
-      cy.get(selectors.keyValueTable(dataAutoId).valueCell(rowNumber)).should('have.text', expectedValue)
-    })
   }
 })
