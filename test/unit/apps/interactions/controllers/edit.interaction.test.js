@@ -152,7 +152,9 @@ describe('Interaction edit controller (Interactions)', () => {
           id: '1',
           name: 'Fred ltd.',
         },
-        interaction: interactionData,
+        interaction: {
+          ...interactionData,
+        },
         interactions: {
           returnLink: '/',
         },
@@ -200,7 +202,9 @@ describe('Interaction edit controller (Interactions)', () => {
           id: '1',
           name: 'Fred ltd.',
         },
-        interaction: interactionData,
+        interaction: {
+          ...interactionData,
+        },
         interactions: {
           returnLink: '/',
         },
@@ -248,7 +252,9 @@ describe('Interaction edit controller (Interactions)', () => {
           id: '1',
           name: 'Fred ltd.',
         },
-        interaction: interactionData,
+        interaction: {
+          ...interactionData,
+        },
         interactions: {
           returnLink: '/',
         },
@@ -487,7 +493,9 @@ describe('Interaction edit controller (Interactions)', () => {
           id: '1',
           name: 'Fred ltd.',
         },
-        interaction: interactionData,
+        interaction: {
+          ...interactionData,
+        },
       }
 
       this.res.locals.interaction.date = now.format('YYYY-MM-DD')
@@ -733,7 +741,9 @@ describe('Interaction edit controller (Interactions)', () => {
         investment: {
           id: '3',
         },
-        interaction: interactionData,
+        interaction: {
+          ...interactionData,
+        },
       }
 
       nock(config.apiRoot)
@@ -778,7 +788,9 @@ describe('Interaction edit controller (Interactions)', () => {
           id: '1',
           name: 'Fred ltd.',
         },
-        interaction: interactionData,
+        interaction: {
+          ...interactionData,
+        },
         form: {
           errors: {
             messages: {
@@ -897,7 +909,9 @@ describe('Interaction edit controller (Interactions)', () => {
           id: '1',
           name: 'Fred ltd.',
         },
-        interaction: interactionData,
+        interaction: {
+          ...interactionData,
+        },
         form: {
           errors: {
             messages: {
