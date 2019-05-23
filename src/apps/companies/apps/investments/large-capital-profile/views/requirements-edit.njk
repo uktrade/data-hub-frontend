@@ -66,4 +66,57 @@
     })
   }}
 
+  {{
+    govukCheckboxes({
+      name: 'restrictions',
+      classes: 'restrictions',
+      fieldset: {
+        attributes: {
+          'data-auto-id': 'restrictions'
+        },
+        legend: {
+          text: 'Restrictions / conditions',
+          classes: 'govuk-fieldset__legend--s'
+        }
+      },
+      items: profile.investorRequirements.restrictions.items
+    })
+  }}
+
+  {{
+    govukCheckboxes({
+      name: 'constructionRisks',
+      classes: 'construction-risk',
+      fieldset: {
+        attributes: {
+          'data-auto-id': 'constructionRisks'
+        },
+        legend: {
+          text: 'Construction risk',
+          classes: 'govuk-fieldset__legend--s'
+        }
+      },
+      items: profile.investorRequirements.constructionRisks.items
+    })
+  }}
+
+  <p>Minimum equity percentage</p>
+
+  {{
+    govukCheckboxes({
+      name: 'desiredDealRoles',
+      classes: 'construction-risk',
+      fieldset: {
+        attributes: {
+          'data-auto-id': 'desiredDealRoles'
+        },
+        legend: {
+          text: 'Desired deal role',
+          classes: 'govuk-fieldset__legend--s'
+        }
+      },
+      items: profile.investorRequirements.desiredDealRoles.items
+    })
+  }}
+
 {% endcall %}

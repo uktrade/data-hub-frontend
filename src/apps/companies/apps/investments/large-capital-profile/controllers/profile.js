@@ -42,6 +42,21 @@ const getTimeHorizons = async (token, profile) => {
   return transformCheckboxes(timeHorizons, profile.investorRequirements.timeHorizons)
 }
 
+const getRestrictions = async (token, profile) => {
+  const restriction = await getOptions(token, 'capital-investment/restriction', { sorted: false })
+  return transformCheckboxes(restriction, profile.investorRequirements.restrictions)
+}
+
+const getConstructionRisks = async (token, profile) => {
+  const constructionRisks = await getOptions(token, 'capital-investment/construction-risk', { sorted: false })
+  return transformCheckboxes(constructionRisks, profile.investorRequirements.constructionRisks)
+}
+
+const getDesiredDealRoles = async (token, profile) => {
+  const desiredDealRoles = await getOptions(token, 'capital-investment/desired-deal-role', { sorted: false })
+  return transformCheckboxes(desiredDealRoles, profile.investorRequirements.desiredDealRoles)
+}
+
 const getCompanyProfile = async (token, company, editing) => {
   const profiles = await getCompanyProfiles(token, company.id)
   const profile = profiles.results && profiles.results[0]
@@ -64,9 +79,30 @@ const renderProfile = async (req, res, next) => {
       profile.investorDetails.requiredChecks.cleared.advisers = advisers
       profile.investorDetails.requiredChecks.issuesIdentified.advisers = advisers
     } else if (editType === INVESTOR_REQUIREMENTS) {
-      profile.investorRequirements.dealTicketSizes.items = await getDealTicketSizes(token, profile)
-      profile.investorRequirements.investmentTypes.items = await getInvestmentTypes(token, profile)
-      profile.investorRequirements.timeHorizons.items = await getTimeHorizons(token, profile)
+      const promises = [
+        getDealTicketSizes(token, profile),
+        getInvestmentTypes(token, profile),
+        getTimeHorizons(token, profile),
+        getRestrictions(token, profile),
+        getConstructionRisks(token, profile),
+        getDesiredDealRoles(token, profile),
+      ]
+
+      await Promise.all(promises).then(([
+        dealTicketSizes,
+        investmentTypes,
+        timeHorizons,
+        restrictions,
+        constructionRisks,
+        desiredDealRoles,
+      ]) => {
+        profile.investorRequirements.dealTicketSizes.items = dealTicketSizes
+        profile.investorRequirements.investmentTypes.items = investmentTypes
+        profile.investorRequirements.timeHorizons.items = timeHorizons
+        profile.investorRequirements.restrictions.items = restrictions
+        profile.investorRequirements.constructionRisks.items = constructionRisks
+        profile.investorRequirements.desiredDealRoles.items = desiredDealRoles
+      })
     }
 
     res.render('companies/apps/investments/large-capital-profile/views/profile', { profile })

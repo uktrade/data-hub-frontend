@@ -64,6 +64,15 @@ const transformProfile = (profile, editing) => {
       timeHorizons: {
         value: get(profile, 'time_horizons'),
       },
+      restrictions: {
+        value: get(profile, 'restrictions'),
+      },
+      constructionRisks: {
+        value: get(profile, 'construction_risks'),
+      },
+      desiredDealRoles: {
+        value: get(profile, 'desired_deal_roles'),
+      },
     },
     location: {
       incompleteFields: get(profile, 'incomplete_location_fields.length'),

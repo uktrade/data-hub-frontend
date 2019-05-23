@@ -9,11 +9,17 @@ describe('Large capital profile, Investor requirements form to API', () => {
         dealTicketSizes: undefined,
         investmentTypes: undefined,
         timeHorizons: undefined,
+        restrictions: undefined,
+        constructionRisks: undefined,
+        desiredDealsRoles: undefined,
       })
       expect(this.transformed).to.deep.equal({
         deal_ticket_sizes: [],
         investment_types: [],
         time_horizons: [],
+        restrictions: [],
+        construction_risks: [],
+        desired_deal_roles: [],
       })
     })
 
@@ -22,11 +28,17 @@ describe('Large capital profile, Investor requirements form to API', () => {
         dealTicketSizes: 'id',
         investmentTypes: 'id',
         timeHorizons: 'id',
+        restrictions: 'id',
+        constructionRisks: 'id',
+        desiredDealRoles: 'id',
       })
       expect(this.transformed).to.deep.equal({
         deal_ticket_sizes: ['id'],
         investment_types: ['id'],
         time_horizons: ['id'],
+        restrictions: ['id'],
+        construction_risks: ['id'],
+        desired_deal_roles: ['id'],
       })
     })
 
@@ -35,11 +47,17 @@ describe('Large capital profile, Investor requirements form to API', () => {
         dealTicketSizes: ['id'],
         investmentTypes: ['id'],
         timeHorizons: ['id'],
+        restrictions: ['id'],
+        constructionRisks: ['id'],
+        desiredDealRoles: 'id',
       })
       expect(this.transformed).to.deep.equal({
         deal_ticket_sizes: ['id'],
         investment_types: ['id'],
         time_horizons: ['id'],
+        restrictions: ['id'],
+        construction_risks: ['id'],
+        desired_deal_roles: ['id'],
       })
     })
   })

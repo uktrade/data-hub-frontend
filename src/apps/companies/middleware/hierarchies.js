@@ -54,7 +54,7 @@ async function addSubsidiary (req, res, next) {
 
   try {
     await updateCompany(token, subsidiaryCompanyId, body)
-    req.flash('success', 'You’ve linked the Subsidiary')
+    req.flash('success', 'You’ve linked the subsidiary')
   } catch (error) {
     if (error.statusCode !== 400) {
       return next(error)

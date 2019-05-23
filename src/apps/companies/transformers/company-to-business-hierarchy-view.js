@@ -12,7 +12,7 @@ const transformHeadquarterType = (headquarter_type) => {
   }
 }
 
-const transformSubsidiaries = (id, headquarter_type, subsidiariesCount, duns_number) => {
+const transformSubsidiaries = (id, headquarter_type, subsidiariesCount) => {
   if (headquarter_type) {
     if (subsidiariesCount) {
       return {
@@ -21,7 +21,7 @@ const transformSubsidiaries = (id, headquarter_type, subsidiariesCount, duns_num
       }
     }
 
-    if (headquarter_type.name === 'ghq' && !duns_number) {
+    if (headquarter_type.name === 'ghq') {
       return {
         name: NONE_TEXT,
         actions: [
@@ -37,11 +37,11 @@ const transformSubsidiaries = (id, headquarter_type, subsidiariesCount, duns_num
   }
 }
 
-const transformGlobalHq = (id, headquarter_type, global_headquarters, duns_number) => {
+const transformGlobalHq = (id, headquarter_type, global_headquarters) => {
   if (!headquarter_type && !global_headquarters) {
     return pickBy({
       name: NONE_TEXT,
-      actions: duns_number ? null : [
+      actions: [
         {
           url: `/companies/${id}/hierarchies/ghq/search`,
           label: 'Link to the Global HQ',
@@ -54,7 +54,7 @@ const transformGlobalHq = (id, headquarter_type, global_headquarters, duns_numbe
     return pickBy({
       url: `/companies/${global_headquarters.id}`,
       name: global_headquarters.name,
-      actions: duns_number ? null : [
+      actions: [
         {
           url: `/companies/${id}/hierarchies/ghq/remove`,
           label: 'Remove link',
@@ -64,11 +64,11 @@ const transformGlobalHq = (id, headquarter_type, global_headquarters, duns_numbe
   }
 }
 
-module.exports = ({ id, headquarter_type, global_headquarters, duns_number }, subsidiariesCount) => {
+module.exports = ({ id, headquarter_type, global_headquarters }, subsidiariesCount) => {
   const viewRecord = {
     headquarter_type: transformHeadquarterType(headquarter_type),
-    subsidiaries: transformSubsidiaries(id, headquarter_type, subsidiariesCount, duns_number),
-    global_headquarters: transformGlobalHq(id, headquarter_type, global_headquarters, duns_number),
+    subsidiaries: transformSubsidiaries(id, headquarter_type, subsidiariesCount),
+    global_headquarters: transformGlobalHq(id, headquarter_type, global_headquarters),
   }
 
   return pickBy(getDataLabels(viewRecord, businessHierarchyLabels))

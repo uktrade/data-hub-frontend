@@ -1,5 +1,5 @@
-const fixtures = require('../../fixtures/index.js')
-const selectors = require('../../selectors/index.js')
+const fixtures = require('../../fixtures')
+const selectors = require('../../selectors')
 
 describe('Omis Create Required Fields', () => {
   before(() => {

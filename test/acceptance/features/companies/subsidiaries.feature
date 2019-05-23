@@ -48,9 +48,8 @@ Feature: Company subsidiaries
     And the page should contain text "Why can I not link a subsidiary"
 
   @companies-subsidiaries--dnb-company
-  Scenario: DnB company cannot link to a subsidiary
+  Scenario: DnB company can link to a subsidiary
     When I navigate to the `companies.subsidiaries` page using `company` `One List Corp` fixture
-    And I should not see the "Link a subsidiary" button
+    And I should see the "Link a subsidiary" button
     And I can view the collection
-    And the page should contain text "Why can I not link a subsidiary"
-    And I should not see the "Remove subsidiary" link
+    And I should see the "Remove subsidiary" link

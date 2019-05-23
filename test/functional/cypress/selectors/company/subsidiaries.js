@@ -1,6 +1,9 @@
 module.exports = () => {
   return {
-    whyDunAndBradstreet: '[data-auto-id="subsidiariesWhyDunAndBradstreet"]',
     whyArchived: '[data-auto-id="subsidiariesWhyArchived"]',
+    linkASubsidiary: '[data-auto-id="Link a subsidiary"]',
+    flash: {
+      success: '.c-message--success',
+    },
   }
 }

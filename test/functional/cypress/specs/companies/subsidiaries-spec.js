@@ -1,7 +1,7 @@
-const fixtures = require('../../fixtures/index.js')
-const selectors = require('../../selectors/index.js')
+const fixtures = require('../../fixtures')
+const selectors = require('../../selectors')
 
-describe('Companies business details', () => {
+describe('Companies subsidiaries', () => {
   context('when viewing subsidiaries for a Dun & Bradstreet company', () => {
     before(() => {
       cy.visit(`/companies/${fixtures.company.oneListCorp.id}/subsidiaries`)
@@ -17,10 +17,6 @@ describe('Companies business details', () => {
       cy.get(selectors.breadcrumbs.item.byNumber(4)).should('have.text', 'Business details')
       cy.get(selectors.breadcrumbs.item.byNumber(4)).should('have.attr', 'href', `/companies/${fixtures.company.oneListCorp.id}/business-details`)
       cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Subsidiaries')
-    })
-
-    it('should display the "Why can I not link a subsidiary?" D&B details summary', () => {
-      cy.get(selectors.companySubsidiaries().whyDunAndBradstreet).should('be.visible')
     })
 
     it('should not display the "Why can I not link a subsidiary?" archived details summary', () => {
@@ -45,10 +41,6 @@ describe('Companies business details', () => {
       cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Subsidiaries')
     })
 
-    it('should not display the "Why can I not link a subsidiary?" D&B details summary', () => {
-      cy.get(selectors.companySubsidiaries().whyDunAndBradstreet).should('not.exist')
-    })
-
     it('should not display the "Why can I not link a subsidiary?" archived details summary', () => {
       cy.get(selectors.companySubsidiaries().whyArchived).should('not.exist')
     })
@@ -69,10 +61,6 @@ describe('Companies business details', () => {
       cy.get(selectors.breadcrumbs.item.byNumber(4)).should('have.text', 'Business details')
       cy.get(selectors.breadcrumbs.item.byNumber(4)).should('have.attr', 'href', `/companies/${fixtures.company.archivedLtd.id}/business-details`)
       cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Subsidiaries')
-    })
-
-    it('should not display the "Why can I not link a subsidiary?" D&B details summary', () => {
-      cy.get(selectors.companySubsidiaries().whyDunAndBradstreet).should('not.exist')
     })
 
     it('should display the "Why can I not link a subsidiary?" archived details summary', () => {
