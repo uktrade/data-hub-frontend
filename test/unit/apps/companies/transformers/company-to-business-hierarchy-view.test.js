@@ -46,8 +46,16 @@ describe('#transformCompanyToBusinessHierarchyView', () => {
         expect(this.actual['Headquarter type']).to.deep.equal('Global HQ')
       })
 
-      it('should set the subsidiaries to "None"', () => {
-        expect(this.actual.Subsidiaries).to.equal('None')
+      it('should set the subsidiaries to "None", with a "Link a subsidiary action"', () => {
+        expect(this.actual.Subsidiaries).to.deep.equal({
+          actions: [
+            {
+              label: 'Link a subsidiary',
+              url: '/companies/1/subsidiaries/link',
+            },
+          ],
+          name: 'None',
+        })
       })
 
       it('should not set the Global HQ', () => {
@@ -76,8 +84,14 @@ describe('#transformCompanyToBusinessHierarchyView', () => {
         expect(this.actual.Subsidiaries).to.not.exist
       })
 
-      it('should set the Global HQ without a "Remove link" action', () => {
+      it('should set the Global HQ with a "Remove link" action', () => {
         expect(this.actual['Global HQ']).to.deep.equal({
+          actions: [
+            {
+              label: 'Remove link',
+              url: '/companies/1/hierarchies/ghq/remove',
+            },
+          ],
           name: 'Parent Ltd',
           url: '/companies/2',
         })
@@ -102,8 +116,14 @@ describe('#transformCompanyToBusinessHierarchyView', () => {
         expect(this.actual.Subsidiaries).to.not.exist
       })
 
-      it('should set the Global HQ without a "Link to the Global HQ" action', () => {
+      it('should set the Global HQ with a "Link to the Global HQ" action', () => {
         expect(this.actual['Global HQ']).to.deep.equal({
+          actions: [
+            {
+              label: 'Link to the Global HQ',
+              url: `/companies/1/hierarchies/ghq/search`,
+            },
+          ],
           name: 'None',
         })
       })

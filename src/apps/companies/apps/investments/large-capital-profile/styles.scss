@@ -49,6 +49,7 @@ nav.govuk-tabs {
     width: 75%;
   }
   form.investor-requirements-edit  {
+    .restrictions,
     .deal-ticket-sizes {
       @include flexWrap;
       width: 660px;
