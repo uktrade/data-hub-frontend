@@ -1,15 +1,10 @@
 exports.interaction = {
   successMsg: '.c-message--success',
-  company: 'tr:nth-child(1)',
-  contacts: 'tr:nth-child(2)',
-  service: 'tr:nth-child(3)',
-  subject: 'tr:nth-child(4)',
-  notes: 'tr:nth-child(5)',
-  dateOfInteraction: 'tr:nth-child(6)',
-  ditAdviser: 'tr:nth-child(7)',
-  investmentProject: 'tr:nth-child(8)',
-  communicationChannel: 'tr:nth-child(9)',
-  documents: 'tr:nth-child(10)',
+  actions: {
+    completeInteraction: ({ companyId, interactionId }) => `[href="/companies/${companyId}/interactions/${interactionId}/confirm"]`,
+    editInteraction: ({ companyId, interactionId }, theme, kind) => `[href="/companies/${companyId}/interactions/${interactionId}/${theme}/${kind}/edit"]`,
+    back: ({ companyId }) => `[href="/companies/${companyId}/interactions/"]`,
+  },
 }
 
 exports.serviceDelivery = {
