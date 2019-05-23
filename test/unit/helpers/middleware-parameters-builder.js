@@ -8,6 +8,7 @@ module.exports = ({
   requestQuery = {},
   CURRENT_PATH = '',
   breadcrumb = sinon.stub().returnsThis(),
+  title = sinon.stub().returnsThis(),
   company,
   contact,
   interaction,
@@ -31,6 +32,7 @@ module.exports = ({
     resMock: {
       ...resMock,
       breadcrumb,
+      title,
       render: sinon.spy(),
       redirect: sinon.spy(),
       locals: {
