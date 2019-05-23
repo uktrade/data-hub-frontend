@@ -250,8 +250,8 @@ describe('Interaction edit controller (Service delivery)', () => {
       const contactField = find(this.interactionForm.children, ({ name }) => name === 'contacts')
       const contacts = contactField.children[0].options
       expect(contacts).to.deep.equal([
-        { value: '999', label: 'Fred Smith, Manager' },
         { value: '998', label: 'Emily Brown, Director' },
+        { value: '999', label: 'Fred Smith, Manager' },
       ])
     })
 
@@ -518,8 +518,8 @@ describe('Interaction edit controller (Service delivery)', () => {
       const contactField = find(this.interactionForm.children, ({ name }) => name === 'contacts')
       const contact = contactField.children[0]
       expect(contact.options).to.deep.equal([
-        { value: '999', label: 'Fred Smith, Manager' },
         { value: '998', label: 'Emily Brown, Director' },
+        { value: '999', label: 'Fred Smith, Manager' },
       ])
     })
 
