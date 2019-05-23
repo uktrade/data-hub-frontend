@@ -155,7 +155,7 @@ describe('Add Export', () => {
 
         cy.get(selectors.interactionForm.add).click()
 
-        cy.get(serviceDeliveryDetails.subject).should('contain', subject)
+        cy.get(selectors.localHeader().heading).should('contain', subject)
       })
     })
 
@@ -186,7 +186,7 @@ describe('Add Export', () => {
 
         cy.get(selectors.interactionForm.add).click()
 
-        cy.get(serviceDeliveryDetails.subject).should('contain', subject)
+        cy.get(selectors.localHeader().heading).should('contain', subject)
         // TODO assert TAP status fields are set in details
       })
     })
@@ -289,7 +289,6 @@ const assertDetails = ({
   company = 'Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978',
   contact = 'Bob lawson',
   service = 'Account Managment: Northern Powerhouse',
-  subject,
   notes = 'Sandbox',
   dateOfInteraction = '7 February 2019',
   ditAdviser = 'DIT Staff',
@@ -300,7 +299,6 @@ const assertDetails = ({
   cy.get(serviceDeliveryDetails.company).should('contain', company)
   cy.get(serviceDeliveryDetails.contacts).should('contain', contact)
   cy.get(serviceDeliveryDetails.service).should('contain', service)
-  cy.get(serviceDeliveryDetails.subject).should('contain', subject)
   cy.get(serviceDeliveryDetails.notes).should('contain', notes)
   cy.get(serviceDeliveryDetails.dateOfInteraction).should('contain', dateOfInteraction)
   cy.get(serviceDeliveryDetails.ditAdviser).should('contain', ditAdviser)
