@@ -2,7 +2,7 @@ const fixtures = require('../../fixtures')
 const selectors = require('../../selectors')
 const utils = require('../../support/utils')
 
-const serviceDeliveryDetails = selectors.interactionDetails.serviceDelivery
+const serviceDeliveryDetails = selectors.interaction.details.serviceDelivery
 
 describe('Add Export', () => {
   context('when adding an export interaction', () => {
