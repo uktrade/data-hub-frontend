@@ -61,6 +61,10 @@ const transformProfile = (profile, editing) => {
       investmentTypes: {
         value: get(profile, 'investment_types'),
       },
+      minimumReturnRate: {
+        text: get(profile, 'minimum_return_rate.name', null),
+        value: get(profile, 'minimum_return_rate.id', null),
+      },
       timeHorizons: {
         value: get(profile, 'time_horizons'),
       },

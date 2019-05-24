@@ -57,6 +57,10 @@ describe('Company Investments - Large capital profile', () => {
           investmentTypes: {
             value: [],
           },
+          minimumReturnRate: {
+            text: null,
+            value: null,
+          },
           timeHorizons: {
             value: [],
           },
