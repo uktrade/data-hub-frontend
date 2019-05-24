@@ -47,7 +47,10 @@
         "name": "Direct Investment in Project Equity",
         "id": "4170d99a-02fc-46ee-8fd4-3fe786717708"
       }],
-      "minimum_return_rate": null,
+      "minimum_return_rate": {
+        "id": "65c9bc7a-af68-4549-a9c9-70cd73109617",
+        "name": "5-10%"
+      },
       "time_horizons": [{
         "id": "29a0a8e9-1c21-432a-bb4f-b9363b46a6aa",
         "name": "10-14 years"
