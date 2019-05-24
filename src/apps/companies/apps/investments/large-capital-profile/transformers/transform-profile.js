@@ -70,6 +70,10 @@ const transformProfile = (profile, editing) => {
       constructionRisks: {
         value: get(profile, 'construction_risks'),
       },
+      minimumEquityPercentage: {
+        text: get(profile, 'minimum_equity_percentage.name', null),
+        value: get(profile, 'minimum_equity_percentage.id', null),
+      },
       desiredDealRoles: {
         value: get(profile, 'desired_deal_roles'),
       },
