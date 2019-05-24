@@ -84,6 +84,13 @@ module.exports = {
       energyInfrastructure: '[data-auto-id=investmentTypes] #investmentTypes-7',
       privateEquity: '[data-auto-id=investmentTypes] #investmentTypes-8',
     },
+    minimumReturnRate: {
+      name: '[data-auto-id=minimumReturnRate] legend',
+      zeroTo5Percent: '[data-auto-id=minimumReturnRate] #minimumReturnRate-1',
+      fiveTo10Percent: '[data-auto-id=minimumReturnRate] #minimumReturnRate-2',
+      tenTo15Percent: '[data-auto-id=minimumReturnRate] #minimumReturnRate-3',
+      fifteenPercent: '[data-auto-id=minimumReturnRate] #minimumReturnRate-4',
+    },
     timeHorizons: {
       name: '[data-auto-id=timeHorizons] legend',
       upToFiveYears: '[data-auto-id=timeHorizons] #timeHorizons-1',
@@ -148,6 +155,7 @@ module.exports = {
       },
       minimumReturnRate: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(4) .task-list__item-name',
+        complete: '[data-auto-id=investorRequirements] ul > li:nth-child(4) .task-list__item-complete',
         incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(4) .task-list__item-incomplete',
       },
       timeHorizon: {

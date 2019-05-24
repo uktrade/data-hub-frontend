@@ -8,6 +8,7 @@ describe('Large capital profile, Investor requirements form to API', () => {
       this.transformed = transformInvestorRequirements({
         dealTicketSizes: undefined,
         investmentTypes: undefined,
+        minimumReturnRate: undefined,
         timeHorizons: undefined,
         restrictions: undefined,
         constructionRisks: undefined,
@@ -17,6 +18,7 @@ describe('Large capital profile, Investor requirements form to API', () => {
       expect(this.transformed).to.deep.equal({
         deal_ticket_sizes: [],
         investment_types: [],
+        minimum_return_rate: undefined,
         time_horizons: [],
         restrictions: [],
         construction_risks: [],
@@ -29,6 +31,7 @@ describe('Large capital profile, Investor requirements form to API', () => {
       this.transformed = transformInvestorRequirements({
         dealTicketSizes: 'id',
         investmentTypes: 'id',
+        minimumReturnRate: 'id',
         timeHorizons: 'id',
         restrictions: 'id',
         constructionRisks: 'id',
@@ -38,6 +41,7 @@ describe('Large capital profile, Investor requirements form to API', () => {
       expect(this.transformed).to.deep.equal({
         deal_ticket_sizes: ['id'],
         investment_types: ['id'],
+        minimum_return_rate: 'id',
         time_horizons: ['id'],
         restrictions: ['id'],
         construction_risks: ['id'],
@@ -50,6 +54,7 @@ describe('Large capital profile, Investor requirements form to API', () => {
       this.transformed = transformInvestorRequirements({
         dealTicketSizes: ['id'],
         investmentTypes: ['id'],
+        minimumReturnRate: 'id',
         timeHorizons: ['id'],
         restrictions: ['id'],
         constructionRisks: ['id'],
@@ -59,6 +64,7 @@ describe('Large capital profile, Investor requirements form to API', () => {
       expect(this.transformed).to.deep.equal({
         deal_ticket_sizes: ['id'],
         investment_types: ['id'],
+        minimum_return_rate: 'id',
         time_horizons: ['id'],
         restrictions: ['id'],
         construction_risks: ['id'],

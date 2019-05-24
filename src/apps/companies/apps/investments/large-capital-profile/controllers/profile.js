@@ -43,6 +43,7 @@ const renderProfile = async (req, res, next) => {
         .then(([
           dealTicketSizeMD,
           investmentTypeMD,
+          minimumReturnRateMD,
           timeHorizonMD,
           restrictionMD,
           constructionRiskMD,
@@ -52,6 +53,7 @@ const renderProfile = async (req, res, next) => {
           const {
             dealTicketSizes,
             investmentTypes,
+            minimumReturnRate,
             timeHorizons,
             restrictions,
             constructionRisks,
@@ -61,6 +63,7 @@ const renderProfile = async (req, res, next) => {
 
           profile.investorRequirements.dealTicketSizes.items = transformCheckboxes(dealTicketSizeMD, dealTicketSizes)
           profile.investorRequirements.investmentTypes.items = transformCheckboxes(investmentTypeMD, investmentTypes)
+          profile.investorRequirements.minimumReturnRate.items = transformRadioButtons(minimumReturnRateMD, minimumReturnRate)
           profile.investorRequirements.timeHorizons.items = transformCheckboxes(timeHorizonMD, timeHorizons)
           profile.investorRequirements.restrictions.items = transformCheckboxes(restrictionMD, restrictions)
           profile.investorRequirements.constructionRisks.items = transformCheckboxes(constructionRiskMD, constructionRisks)
