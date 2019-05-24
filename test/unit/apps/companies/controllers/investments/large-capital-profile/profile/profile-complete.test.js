@@ -91,6 +91,10 @@ describe('Company Investments - Large capital profile', () => {
               name: 'Brownfield (some construction risk)',
             }],
           },
+          minimumEquityPercentage: {
+            text: '20-49%',
+            value: 'ec061f70-b287-41cf-aaf4-620aec79616b',
+          },
           desiredDealRoles: {
             value: [ {
               id: '48cace6e-ec14-467b-b1b5-19b318ab5c51',

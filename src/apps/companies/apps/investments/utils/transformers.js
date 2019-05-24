@@ -2,13 +2,23 @@ const { find, isString, castArray, compact } = require('lodash')
 
 const transformObjectToOption = ({ value, label }) => ({ value, text: label })
 
-const checkMatchingItemById = (items) => {
-  return obj => {
-    if (find(items, (item) => item.id === obj.value)) {
-      obj.checked = true
+const checkOptionByFindingMatchingId = (items) => {
+  return option => {
+    if (find(items, (item) => item.id === option.value)) {
+      option.checked = true
     }
 
-    return obj
+    return option
+  }
+}
+
+const checkOptionByMatchingId = (id) => {
+  return option => {
+    if (option.value === id) {
+      option.checked = true
+    }
+
+    return option
   }
 }
 
@@ -17,7 +27,8 @@ const sanitizeCheckboxes = (selection) => {
 }
 
 module.exports = {
-  checkMatchingItemById,
-  transformObjectToOption,
   sanitizeCheckboxes,
+  transformObjectToOption,
+  checkOptionByMatchingId,
+  checkOptionByFindingMatchingId,
 }

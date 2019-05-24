@@ -302,6 +302,12 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorRequirements.constructionRisks.operational).should('be.checked')
     })
 
+    it('should display "Minimum equity percentage" and the radio button "20-49%"" should be checked"', () => {
+      cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
+        .get(investorRequirements.minimumEquityPercentage.name).should('contain', 'Minimum equity percentage')
+        .get(investorRequirements.minimumEquityPercentage.twentyTo49Percent).should('be.checked')
+    })
+
     it('should display "Desired deal role" and all 3 checkboxes should be checked"', () => {
       cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
         .get(investorRequirements.desiredDealRoles.name).should('contain', 'Desired deal role')
@@ -369,6 +375,13 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorRequirements.taskList.constructionRisks.greenfield).should('contain', 'Greenfield (construction risk)')
         .get(investorRequirements.taskList.constructionRisks.brownfield).should('contain', 'Brownfield (some construction risk)')
         .get(investorRequirements.taskList.constructionRisks.operational).should('contain', 'Operational (no construction risk)')
+    })
+
+    it('should display "Minimum equity percentage" and "20-49%"', () => {
+      cy.visit(largeCapitalProfile)
+        .get(selectors.investorRequirements.summary).click()
+        .get(investorRequirements.taskList.minimumEquityPercentage.name).should('contain', 'Minimum equity percentage')
+        .get(investorRequirements.taskList.minimumEquityPercentage.complete).should('contain', '20-49%')
     })
 
     it('should display "Desired deal role" and all 3 roles', () => {
