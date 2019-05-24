@@ -329,6 +329,7 @@ jobs:
       - *docker_data_hub_base
       - *docker_redis
       - *docker_mock_sso
+    parallelism: 6
     working_directory: ~/data-hub-frontend
     steps:
       - checkout
@@ -340,7 +341,7 @@ jobs:
       - *wait_for_frontend
       - run:
           name: Cypress tests
-          command: yarn test:functional --browser chrome
+          command: yarn test:functional --browser chrome --parallel --record --key $CYPRESS_DASHBOARD_KEY
           when: always
       - store_artifacts:
           path: cypress/screenshots
