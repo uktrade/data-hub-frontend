@@ -1,5 +1,6 @@
 const dealTicketSize = require('~/test/unit/data/companies/investments/metadata/deal-ticket-size.json')
 const investmentType = require('~/test/unit/data/companies/investments/metadata/investment-type.json')
+const minimumReturnRate = require('~/test/unit/data/companies/investments/metadata/minimum-return-rate.json')
 const timeHorizons = require('~/test/unit/data/companies/investments/metadata/time-horizon.json')
 const restrictions = require('~/test/unit/data/companies/investments/metadata/restrictions.json')
 const constructionRisk = require('~/test/unit/data/companies/investments/metadata/construction-risk.json')
@@ -50,6 +51,8 @@ describe('Company Investments - Large capital profile - Investor requirements', 
           .reply(200, dealTicketSize)
           .get('/metadata/capital-investment/large-capital-investment-type/')
           .reply(200, investmentType)
+          .get('/metadata/capital-investment/return-rate/')
+          .reply(200, minimumReturnRate)
           .get('/metadata/capital-investment/time-horizon/')
           .reply(200, timeHorizons)
           .get('/metadata/capital-investment/restriction/')
@@ -163,6 +166,23 @@ describe('Company Investments - Large capital profile - Investor requirements', 
               id: '06834da2-c9ac-4faf-b555-39762ce373ae',
               name: 'Direct Investment in Project Debt',
             }],
+          },
+          minimumReturnRate: {
+            items: [{
+              text: 'Up to 5% IRR',
+              value: '6fec56ba-0be9-4931-bd76-16e11924ec55',
+            }, {
+              text: '5-10%',
+              value: '65c9bc7a-af68-4549-a9c9-70cd73109617',
+            }, {
+              text: '10-15%',
+              value: '6ecbd7d2-e16a-4bfd-a4b9-8c9bca947302',
+            }, {
+              text: '15%',
+              value: '0c55bd5c-82ea-4400-b7fc-7344958ee3a5',
+            }],
+            text: null,
+            value: null,
           },
           timeHorizons: {
             items: [

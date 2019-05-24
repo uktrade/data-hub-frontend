@@ -160,6 +160,10 @@ describe('Company Investments - Large capital profile - Investor details', () =>
           investmentTypes: {
             value: [],
           },
+          minimumReturnRate: {
+            text: null,
+            value: null,
+          },
           timeHorizons: {
             value: [],
           },
