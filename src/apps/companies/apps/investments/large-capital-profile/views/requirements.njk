@@ -6,7 +6,7 @@
   {{ taskListItem({ name: 'Time horizon / tenor', value: profile.investorRequirements.timeHorizons.value, key: 'name' }) }}
   {{ taskListItem({ name: 'Restrictions / conditions', value: profile.investorRequirements.restrictions.value, key: 'name' }) }}
   {{ taskListItem({ name: 'Construction risk', value: profile.investorRequirements.constructionRisks.value, key: 'name' }) }}
-  {{ taskListItem({ name: 'Minimum equity percentage' }) }}
+  {{ taskListItem({ name: 'Minimum equity percentage', value: profile.investorRequirements.minimumEquityPercentage.text }) }}
   {{ taskListItem({ name: 'Desired deal role', value: profile.investorRequirements.desiredDealRoles.value, key: 'name' }) }}
 </ul>
 

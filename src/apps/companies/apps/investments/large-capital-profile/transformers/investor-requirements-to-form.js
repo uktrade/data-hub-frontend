@@ -1,12 +1,23 @@
 /* eslint-disable camelcase */
-const { transformObjectToOption, checkMatchingItemById } = require('../../utils/transformers')
+const {
+  transformObjectToOption,
+  checkOptionByMatchingId,
+  checkOptionByFindingMatchingId,
+} = require('../../utils/transformers')
 
-const transformCheckboxes = (metaData, obj) => {
-  return metaData
+const transformCheckboxes = (metadata, obj) => {
+  return metadata
     .map(transformObjectToOption)
-    .map(checkMatchingItemById(obj.value))
+    .map(checkOptionByFindingMatchingId(obj.value)) // Array
+}
+
+const transformRadioButtons = (metadata, obj) => {
+  return metadata
+    .map(transformObjectToOption)
+    .map(checkOptionByMatchingId(obj.value)) // String
 }
 
 module.exports = {
   transformCheckboxes,
+  transformRadioButtons,
 }
