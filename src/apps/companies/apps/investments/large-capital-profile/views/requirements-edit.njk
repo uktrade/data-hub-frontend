@@ -100,7 +100,21 @@
     })
   }}
 
-  <p>Minimum equity percentage</p>
+  {{
+    govukRadios({
+      name: 'minimumEquityPercentage',
+      fieldset: {
+        attributes: {
+          'data-auto-id': 'minimumEquityPercentage'
+        },
+        legend: {
+          text: 'Minimum equity percentage',
+          classes: 'govuk-fieldset__legend--s'
+        }
+      },
+      items: profile.investorRequirements.minimumEquityPercentage.items
+    })
+  }}
 
   {{
     govukCheckboxes({

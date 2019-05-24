@@ -7,6 +7,7 @@ const transformInvestorRequirements = (body) => {
     time_horizons: sanitizeCheckboxes(body.timeHorizons),
     restrictions: sanitizeCheckboxes(body.restrictions),
     construction_risks: sanitizeCheckboxes(body.constructionRisks),
+    minimum_equity_percentage: body.minimumEquityPercentage,
     desired_deal_roles: sanitizeCheckboxes(body.desiredDealRoles),
   }
 }

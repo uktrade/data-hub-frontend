@@ -3,6 +3,7 @@ const investmentType = require('~/test/unit/data/companies/investments/metadata/
 const timeHorizons = require('~/test/unit/data/companies/investments/metadata/time-horizon.json')
 const restrictions = require('~/test/unit/data/companies/investments/metadata/restrictions.json')
 const constructionRisk = require('~/test/unit/data/companies/investments/metadata/construction-risk.json')
+const minimumEquityPercentage = require('~/test/unit/data/companies/investments/metadata/minimum-equity-percentage.json')
 const desiredDealRole = require('~/test/unit/data/companies/investments/metadata/desired-deal-role.json')
 const companyProfile = require('~/test/unit/data/companies/investments/large-capital-profile-new.json')
 const companyMock = require('~/test/unit/data/companies/minimal-company.json')
@@ -37,6 +38,11 @@ describe('Company Investments - Large capital profile - Investor requirements', 
           name: 'Up to 5 years',
         }]
 
+        profile.minimum_equity_percentage = {
+          id: 'f7b72f8b-399e-43b2-b7ef-f42a154ef916',
+          name: '1-19%',
+        }
+
         nock(config.apiRoot)
           .get(`/v4/large-investor-profile?investor_company_id=${companyMock.id}`)
           .reply(200, clonedCompanyProfile)
@@ -50,6 +56,8 @@ describe('Company Investments - Large capital profile - Investor requirements', 
           .reply(200, restrictions)
           .get('/metadata/capital-investment/construction-risk/')
           .reply(200, constructionRisk)
+          .get('/metadata/capital-investment/equity-percentage/')
+          .reply(200, minimumEquityPercentage)
           .get('/metadata/capital-investment/desired-deal-role/')
           .reply(200, desiredDealRole)
 
@@ -215,6 +223,24 @@ describe('Company Investments - Large capital profile - Investor requirements', 
               value: '9f554b26-70f2-4cac-89ae-758c2ef71c70',
             }],
             value: [],
+          },
+          minimumEquityPercentage: {
+            items: [{
+              text: '0% - Not required',
+              value: '414a13f7-1b6f-4071-a6d3-d22ed64f4612',
+            }, {
+              checked: true,
+              text: '1-19%',
+              value: 'f7b72f8b-399e-43b2-b7ef-f42a154ef916',
+            }, {
+              text: '20-49%',
+              value: 'ec061f70-b287-41cf-aaf4-620aec79616b',
+            }, {
+              text: '50% +',
+              value: '488bf5ad-4c8e-4e6b-b339-182f291dcd76',
+            }],
+            text: '1-19%',
+            value: 'f7b72f8b-399e-43b2-b7ef-f42a154ef916',
           },
           desiredDealRoles: {
             items: [{

@@ -2,6 +2,7 @@ const {
   transformProfile,
   transformAdvisers,
   transformCheckboxes,
+  transformRadioButtons,
   transformInvestorTypes,
   transformRequiredChecks,
 } = require('../transformers')
@@ -45,6 +46,7 @@ const renderProfile = async (req, res, next) => {
           timeHorizonMD,
           restrictionMD,
           constructionRiskMD,
+          minimumEquityPercentageMD,
           desiredDealRoleMD,
         ]) => {
           const {
@@ -53,6 +55,7 @@ const renderProfile = async (req, res, next) => {
             timeHorizons,
             restrictions,
             constructionRisks,
+            minimumEquityPercentage,
             desiredDealRoles,
           } = profile.investorRequirements
 
@@ -61,6 +64,7 @@ const renderProfile = async (req, res, next) => {
           profile.investorRequirements.timeHorizons.items = transformCheckboxes(timeHorizonMD, timeHorizons)
           profile.investorRequirements.restrictions.items = transformCheckboxes(restrictionMD, restrictions)
           profile.investorRequirements.constructionRisks.items = transformCheckboxes(constructionRiskMD, constructionRisks)
+          profile.investorRequirements.minimumEquityPercentage.items = transformRadioButtons(minimumEquityPercentageMD, minimumEquityPercentage)
           profile.investorRequirements.desiredDealRoles.items = transformCheckboxes(desiredDealRoleMD, desiredDealRoles)
         })
     }

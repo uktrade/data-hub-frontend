@@ -1,6 +1,8 @@
 const { getOptions } = require('../../../../../lib/options')
 const { getAdvisers } = require('../../../../adviser/repos')
 
+const DO_NOT_SORT = { sorted: false }
+
 const getInvestorDetailsOptions = (token) => {
   return [
     getOptions(token, 'capital-investment/investor-type'),
@@ -10,14 +12,14 @@ const getInvestorDetailsOptions = (token) => {
 }
 
 const getInvestorRequirementsOptions = (token) => {
-  const doNotSort = { sorted: false }
   return [
-    getOptions(token, 'capital-investment/deal-ticket-size', doNotSort),
+    getOptions(token, 'capital-investment/deal-ticket-size', DO_NOT_SORT),
     getOptions(token, 'capital-investment/large-capital-investment-type'),
-    getOptions(token, 'capital-investment/time-horizon', doNotSort),
-    getOptions(token, 'capital-investment/restriction', doNotSort),
-    getOptions(token, 'capital-investment/construction-risk', doNotSort),
-    getOptions(token, 'capital-investment/desired-deal-role', doNotSort),
+    getOptions(token, 'capital-investment/time-horizon', DO_NOT_SORT),
+    getOptions(token, 'capital-investment/restriction', DO_NOT_SORT),
+    getOptions(token, 'capital-investment/construction-risk', DO_NOT_SORT),
+    getOptions(token, 'capital-investment/equity-percentage', DO_NOT_SORT),
+    getOptions(token, 'capital-investment/desired-deal-role', DO_NOT_SORT),
   ]
 }
 

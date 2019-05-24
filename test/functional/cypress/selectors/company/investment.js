@@ -106,6 +106,13 @@ module.exports = {
       brownfield: '[data-auto-id=constructionRisks] #constructionRisks-2',
       operational: '[data-auto-id=constructionRisks] #constructionRisks-3',
     },
+    minimumEquityPercentage: {
+      name: '[data-auto-id=minimumEquityPercentage] legend',
+      zeroPercent: '[data-auto-id=minimumEquityPercentage] #minimumEquityPercentage-1',
+      oneTo19Percent: '[data-auto-id=minimumEquityPercentage] #minimumEquityPercentage-2',
+      twentyTo49Percent: '[data-auto-id=minimumEquityPercentage] #minimumEquityPercentage-3',
+      fiftyPercentPlus: '[data-auto-id=minimumEquityPercentage] #minimumEquityPercentage-4',
+    },
     desiredDealRoles: {
       name: '[data-auto-id=desiredDealRoles] legend',
       leadManager: '[data-auto-id=desiredDealRoles] #desiredDealRoles-1',
@@ -170,6 +177,7 @@ module.exports = {
       },
       minimumEquityPercentage: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(8) .task-list__item-name',
+        complete: '[data-auto-id=investorRequirements] ul > li:nth-child(8) .task-list__item-complete',
         incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(8) .task-list__item-incomplete',
       },
       desiredDealRoles: {

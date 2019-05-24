@@ -4,7 +4,7 @@ const {
 
 describe('Large capital profile, Investor requirements form to API', () => {
   context('when translating Investor requirements', () => {
-    it('should transform undefined into an empty array', () => {
+    it('should transform all undefined fields', () => {
       this.transformed = transformInvestorRequirements({
         dealTicketSizes: undefined,
         investmentTypes: undefined,
@@ -12,6 +12,7 @@ describe('Large capital profile, Investor requirements form to API', () => {
         restrictions: undefined,
         constructionRisks: undefined,
         desiredDealsRoles: undefined,
+        minimumEquityPercentage: undefined,
       })
       expect(this.transformed).to.deep.equal({
         deal_ticket_sizes: [],
@@ -20,16 +21,18 @@ describe('Large capital profile, Investor requirements form to API', () => {
         restrictions: [],
         construction_risks: [],
         desired_deal_roles: [],
+        minimum_equity_percentage: undefined,
       })
     })
 
-    it('should transform a String by adding it to an empty array', () => {
+    it('should transform all String fields', () => {
       this.transformed = transformInvestorRequirements({
         dealTicketSizes: 'id',
         investmentTypes: 'id',
         timeHorizons: 'id',
         restrictions: 'id',
         constructionRisks: 'id',
+        minimumEquityPercentage: 'id',
         desiredDealRoles: 'id',
       })
       expect(this.transformed).to.deep.equal({
@@ -38,6 +41,7 @@ describe('Large capital profile, Investor requirements form to API', () => {
         time_horizons: ['id'],
         restrictions: ['id'],
         construction_risks: ['id'],
+        minimum_equity_percentage: 'id',
         desired_deal_roles: ['id'],
       })
     })
@@ -49,7 +53,8 @@ describe('Large capital profile, Investor requirements form to API', () => {
         timeHorizons: ['id'],
         restrictions: ['id'],
         constructionRisks: ['id'],
-        desiredDealRoles: 'id',
+        minimumEquityPercentage: 'id',
+        desiredDealRoles: ['id'],
       })
       expect(this.transformed).to.deep.equal({
         deal_ticket_sizes: ['id'],
@@ -57,6 +62,7 @@ describe('Large capital profile, Investor requirements form to API', () => {
         time_horizons: ['id'],
         restrictions: ['id'],
         construction_risks: ['id'],
+        minimum_equity_percentage: 'id',
         desired_deal_roles: ['id'],
       })
     })
