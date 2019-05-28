@@ -1,8 +1,10 @@
 const dealTicketSize = require('~/test/unit/data/companies/investments/metadata/deal-ticket-size.json')
 const investmentType = require('~/test/unit/data/companies/investments/metadata/investment-type.json')
+const minimumReturnRate = require('~/test/unit/data/companies/investments/metadata/minimum-return-rate.json')
 const timeHorizons = require('~/test/unit/data/companies/investments/metadata/time-horizon.json')
 const restrictions = require('~/test/unit/data/companies/investments/metadata/restrictions.json')
 const constructionRisk = require('~/test/unit/data/companies/investments/metadata/construction-risk.json')
+const minimumEquityPercentage = require('~/test/unit/data/companies/investments/metadata/minimum-equity-percentage.json')
 const desiredDealRole = require('~/test/unit/data/companies/investments/metadata/desired-deal-role.json')
 const companyProfile = require('~/test/unit/data/companies/investments/large-capital-profile-new.json')
 const companyMock = require('~/test/unit/data/companies/minimal-company.json')
@@ -37,6 +39,11 @@ describe('Company Investments - Large capital profile - Investor requirements', 
           name: 'Up to 5 years',
         }]
 
+        profile.minimum_equity_percentage = {
+          id: 'f7b72f8b-399e-43b2-b7ef-f42a154ef916',
+          name: '1-19%',
+        }
+
         nock(config.apiRoot)
           .get(`/v4/large-investor-profile?investor_company_id=${companyMock.id}`)
           .reply(200, clonedCompanyProfile)
@@ -44,12 +51,16 @@ describe('Company Investments - Large capital profile - Investor requirements', 
           .reply(200, dealTicketSize)
           .get('/metadata/capital-investment/large-capital-investment-type/')
           .reply(200, investmentType)
+          .get('/metadata/capital-investment/return-rate/')
+          .reply(200, minimumReturnRate)
           .get('/metadata/capital-investment/time-horizon/')
           .reply(200, timeHorizons)
           .get('/metadata/capital-investment/restriction/')
           .reply(200, restrictions)
           .get('/metadata/capital-investment/construction-risk/')
           .reply(200, constructionRisk)
+          .get('/metadata/capital-investment/equity-percentage/')
+          .reply(200, minimumEquityPercentage)
           .get('/metadata/capital-investment/desired-deal-role/')
           .reply(200, desiredDealRole)
 
@@ -156,6 +167,23 @@ describe('Company Investments - Large capital profile - Investor requirements', 
               name: 'Direct Investment in Project Debt',
             }],
           },
+          minimumReturnRate: {
+            items: [{
+              text: 'Up to 5% IRR',
+              value: '6fec56ba-0be9-4931-bd76-16e11924ec55',
+            }, {
+              text: '5-10%',
+              value: '65c9bc7a-af68-4549-a9c9-70cd73109617',
+            }, {
+              text: '10-15%',
+              value: '6ecbd7d2-e16a-4bfd-a4b9-8c9bca947302',
+            }, {
+              text: '15%',
+              value: '0c55bd5c-82ea-4400-b7fc-7344958ee3a5',
+            }],
+            text: null,
+            value: null,
+          },
           timeHorizons: {
             items: [
               {
@@ -215,6 +243,24 @@ describe('Company Investments - Large capital profile - Investor requirements', 
               value: '9f554b26-70f2-4cac-89ae-758c2ef71c70',
             }],
             value: [],
+          },
+          minimumEquityPercentage: {
+            items: [{
+              text: '0% - Not required',
+              value: '414a13f7-1b6f-4071-a6d3-d22ed64f4612',
+            }, {
+              checked: true,
+              text: '1-19%',
+              value: 'f7b72f8b-399e-43b2-b7ef-f42a154ef916',
+            }, {
+              text: '20-49%',
+              value: 'ec061f70-b287-41cf-aaf4-620aec79616b',
+            }, {
+              text: '50% +',
+              value: '488bf5ad-4c8e-4e6b-b339-182f291dcd76',
+            }],
+            text: '1-19%',
+            value: 'f7b72f8b-399e-43b2-b7ef-f42a154ef916',
           },
           desiredDealRoles: {
             items: [{

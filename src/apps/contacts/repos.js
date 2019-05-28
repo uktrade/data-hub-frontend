@@ -1,3 +1,4 @@
+const { sortBy } = require('lodash')
 const { authorisedRequest } = require('../../lib/authorised-request')
 const config = require('../../../config')
 
@@ -46,7 +47,7 @@ async function getContactsForCompany (token, companyId) {
       limit: 500,
     },
   })
-  return response.results
+  return sortBy(response.results, [(name) => name.first_name])
 }
 
 function getContactAuditLog (token, contactId, page = 1) {

@@ -3,6 +3,7 @@ const { camelCase, pickBy, get } = require('lodash')
 
 const config = require('../../../../config')
 const labels = require('../labels')
+const { getDataLabels } = require('../../../lib/controller-utils')
 
 const transformEntityLink = (entity, entityPath, noLinkText = null) => {
   return entity ? {
@@ -56,7 +57,7 @@ function transformInteractionResponseToViewRecord ({
 
   const formattedParticipants = (dit_participants || []).map(participant => formatParticipantName(participant))
 
-  const transformed = {
+  const viewRecord = {
     company: transformEntityLink(company, 'companies'),
     contacts: contacts.map(contact => transformEntityLink(contact, 'contacts')),
     service,
@@ -85,15 +86,7 @@ function transformInteractionResponseToViewRecord ({
     policy_feedback_notes: policy_feedback_notes,
   }
 
-  const result = {}
-  Object.keys(transformed).forEach((key) => {
-    const label = kindLabels[key]
-    if (label) {
-      result[label] = transformed[key]
-    }
-  })
-
-  return pickBy(result)
+  return pickBy(getDataLabels(viewRecord, kindLabels))
 }
 
 module.exports = transformInteractionResponseToViewRecord
