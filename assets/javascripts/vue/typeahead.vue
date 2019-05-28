@@ -26,7 +26,7 @@
       v-model="selectedOptions"
       :placeholder="setPlaceHolder"
       :model="multiSelectModel"
-      :clear-on-select="true"
+      :clear-on-select="!multipleSelect"
       :close-on-select="isCloseOnSelect"
       :hide-selected="true"
       :internal-search="false"
@@ -200,7 +200,7 @@
     data () {
       return {
         selectedOptions: this.value ? JSON.parse(this.value) : [],
-        options: [],
+        options: !this.isAsync ? JSON.parse(this.model) : [],
         optionsData: this.model && JSON.parse(this.model),
         isLoading: false,
         id: uuid(),
@@ -220,6 +220,7 @@
       },
       clearInputField: function () {
         this.setPlaceHolder = this.placeholder
+        this.options = this.isAsync ? [] : this.options
       },
       getLabelFromValue: function (value, model) {
         if(!value){ return }
