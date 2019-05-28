@@ -274,6 +274,12 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorRequirements.investmentTypes.privateEquity).should('be.checked')
     })
 
+    it('should display "Minimum return rate" and the radio button "10-15%" should be checked"', () => {
+      cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
+        .get(investorRequirements.minimumReturnRate.name).should('contain', 'Minimum return rate')
+        .get(investorRequirements.minimumReturnRate.tenTo15Percent).should('be.checked')
+    })
+
     it('should display "Time Horizon / tenor" and all 4 checkboxes should be checked"', () => {
       cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
         .get(investorRequirements.timeHorizons.name).should('contain', 'Time horizon / tenor')
@@ -300,6 +306,12 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorRequirements.constructionRisks.greenfield).should('be.checked')
         .get(investorRequirements.constructionRisks.brownfield).should('be.checked')
         .get(investorRequirements.constructionRisks.operational).should('be.checked')
+    })
+
+    it('should display "Minimum equity percentage" and the radio button "20-49%"" should be checked"', () => {
+      cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
+        .get(investorRequirements.minimumEquityPercentage.name).should('contain', 'Minimum equity percentage')
+        .get(investorRequirements.minimumEquityPercentage.twentyTo49Percent).should('be.checked')
     })
 
     it('should display "Desired deal role" and all 3 checkboxes should be checked"', () => {
@@ -340,6 +352,13 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorRequirements.taskList.investmentTypes.privateEquity).should('contain', 'Private Equity / Venture Capital')
     })
 
+    it('should display "Minimum return rate" and "10-15%"', () => {
+      cy.visit(largeCapitalProfile)
+        .get(selectors.investorRequirements.summary).click()
+        .get(investorRequirements.taskList.minimumReturnRate.name).should('contain', 'Minimum return rate')
+        .get(investorRequirements.taskList.minimumReturnRate.complete).should('contain', '10-15%')
+    })
+
     it('should display "Time horizon / tenor" and all 4 times', () => {
       cy.visit(largeCapitalProfile)
         .get(selectors.investorRequirements.summary).click()
@@ -369,6 +388,13 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorRequirements.taskList.constructionRisks.greenfield).should('contain', 'Greenfield (construction risk)')
         .get(investorRequirements.taskList.constructionRisks.brownfield).should('contain', 'Brownfield (some construction risk)')
         .get(investorRequirements.taskList.constructionRisks.operational).should('contain', 'Operational (no construction risk)')
+    })
+
+    it('should display "Minimum equity percentage" and "20-49%"', () => {
+      cy.visit(largeCapitalProfile)
+        .get(selectors.investorRequirements.summary).click()
+        .get(investorRequirements.taskList.minimumEquityPercentage.name).should('contain', 'Minimum equity percentage')
+        .get(investorRequirements.taskList.minimumEquityPercentage.complete).should('contain', '20-49%')
     })
 
     it('should display "Desired deal role" and all 3 roles', () => {

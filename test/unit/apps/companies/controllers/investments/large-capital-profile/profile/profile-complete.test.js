@@ -73,6 +73,10 @@ describe('Company Investments - Large capital profile', () => {
               id: '4170d99a-02fc-46ee-8fd4-3fe786717708',
             }],
           },
+          minimumReturnRate: {
+            text: '5-10%',
+            value: '65c9bc7a-af68-4549-a9c9-70cd73109617',
+          },
           timeHorizons: {
             value: [ {
               id: '29a0a8e9-1c21-432a-bb4f-b9363b46a6aa',
@@ -90,6 +94,10 @@ describe('Company Investments - Large capital profile', () => {
               id: '884deaf6-cb0c-4036-b78c-efd92cb10098',
               name: 'Brownfield (some construction risk)',
             }],
+          },
+          minimumEquityPercentage: {
+            text: '20-49%',
+            value: 'ec061f70-b287-41cf-aaf4-620aec79616b',
           },
           desiredDealRoles: {
             value: [ {

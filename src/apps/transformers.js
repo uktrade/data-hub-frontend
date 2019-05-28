@@ -3,6 +3,7 @@ const {
   filter,
   keyBy,
   snakeCase,
+  upperFirst,
 } = require('lodash')
 const { isValid, format, parse } = require('date-fns')
 
@@ -45,7 +46,7 @@ function transformStringToOption (string) {
 function transformContactToOption ({ id, first_name, last_name, job_title, email }) {
   return {
     value: id,
-    label: filter([`${first_name} ${last_name}`, job_title]).join(', '),
+    label: upperFirst(filter([`${first_name} ${last_name}`, job_title]).join(', ')),
   }
 }
 

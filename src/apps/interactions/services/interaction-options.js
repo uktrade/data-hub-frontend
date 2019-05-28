@@ -34,7 +34,9 @@ async function getCommonOptions (token, createdOn, req, res) {
   const companyId = get(res.locals, 'company.id')
   const currentAdviser = get(res.locals, 'interaction.dit_adviser.id')
 
-  const contacts = await getContactsForCompany(token, companyId)
+  const companyContacts = await getContactsForCompany(token, companyId)
+  const contacts = companyContacts.filter(contact => !contact.archived).map(transformContactToOption)
+
   const advisers = await getAdvisers(token)
 
   const activeAdvisers = filterActiveAdvisers({
@@ -44,7 +46,7 @@ async function getCommonOptions (token, createdOn, req, res) {
 
   const commonOptions = {
     advisers: activeAdvisers.map(transformAdviserToOption),
-    contacts: contacts.filter(contact => !contact.archived).map(transformContactToOption),
+    contacts: contacts,
     teams: await getOptions(token, 'team', { createdOn }),
   }
 

@@ -47,7 +47,21 @@
     })
   }}
 
-  <p>Placeholder - Minimum return rate</p>
+  {{
+    govukRadios({
+      name: 'minimumReturnRate',
+      fieldset: {
+        attributes: {
+          'data-auto-id': 'minimumReturnRate'
+        },
+        legend: {
+          text: 'Minimum return rate',
+          classes: 'govuk-fieldset__legend--s'
+        }
+      },
+      items: profile.investorRequirements.minimumReturnRate.items
+    })
+  }}
 
   {{
     govukCheckboxes({
@@ -100,7 +114,21 @@
     })
   }}
 
-  <p>Minimum equity percentage</p>
+  {{
+    govukRadios({
+      name: 'minimumEquityPercentage',
+      fieldset: {
+        attributes: {
+          'data-auto-id': 'minimumEquityPercentage'
+        },
+        legend: {
+          text: 'Minimum equity percentage',
+          classes: 'govuk-fieldset__legend--s'
+        }
+      },
+      items: profile.investorRequirements.minimumEquityPercentage.items
+    })
+  }}
 
   {{
     govukCheckboxes({

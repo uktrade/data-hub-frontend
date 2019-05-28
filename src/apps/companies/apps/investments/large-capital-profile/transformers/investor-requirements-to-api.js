@@ -4,9 +4,11 @@ const transformInvestorRequirements = (body) => {
   return {
     deal_ticket_sizes: sanitizeCheckboxes(body.dealTicketSizes),
     investment_types: sanitizeCheckboxes(body.investmentTypes),
+    minimum_return_rate: body.minimumReturnRate,
     time_horizons: sanitizeCheckboxes(body.timeHorizons),
     restrictions: sanitizeCheckboxes(body.restrictions),
     construction_risks: sanitizeCheckboxes(body.constructionRisks),
+    minimum_equity_percentage: body.minimumEquityPercentage,
     desired_deal_roles: sanitizeCheckboxes(body.desiredDealRoles),
   }
 }

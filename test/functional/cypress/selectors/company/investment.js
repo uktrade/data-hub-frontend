@@ -84,6 +84,13 @@ module.exports = {
       energyInfrastructure: '[data-auto-id=investmentTypes] #investmentTypes-7',
       privateEquity: '[data-auto-id=investmentTypes] #investmentTypes-8',
     },
+    minimumReturnRate: {
+      name: '[data-auto-id=minimumReturnRate] legend',
+      zeroTo5Percent: '[data-auto-id=minimumReturnRate] #minimumReturnRate-1',
+      fiveTo10Percent: '[data-auto-id=minimumReturnRate] #minimumReturnRate-2',
+      tenTo15Percent: '[data-auto-id=minimumReturnRate] #minimumReturnRate-3',
+      fifteenPercent: '[data-auto-id=minimumReturnRate] #minimumReturnRate-4',
+    },
     timeHorizons: {
       name: '[data-auto-id=timeHorizons] legend',
       upToFiveYears: '[data-auto-id=timeHorizons] #timeHorizons-1',
@@ -105,6 +112,13 @@ module.exports = {
       greenfield: '[data-auto-id=constructionRisks] #constructionRisks-1',
       brownfield: '[data-auto-id=constructionRisks] #constructionRisks-2',
       operational: '[data-auto-id=constructionRisks] #constructionRisks-3',
+    },
+    minimumEquityPercentage: {
+      name: '[data-auto-id=minimumEquityPercentage] legend',
+      zeroPercent: '[data-auto-id=minimumEquityPercentage] #minimumEquityPercentage-1',
+      oneTo19Percent: '[data-auto-id=minimumEquityPercentage] #minimumEquityPercentage-2',
+      twentyTo49Percent: '[data-auto-id=minimumEquityPercentage] #minimumEquityPercentage-3',
+      fiftyPercentPlus: '[data-auto-id=minimumEquityPercentage] #minimumEquityPercentage-4',
     },
     desiredDealRoles: {
       name: '[data-auto-id=desiredDealRoles] legend',
@@ -141,6 +155,7 @@ module.exports = {
       },
       minimumReturnRate: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(4) .task-list__item-name',
+        complete: '[data-auto-id=investorRequirements] ul > li:nth-child(4) .task-list__item-complete',
         incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(4) .task-list__item-incomplete',
       },
       timeHorizon: {
@@ -170,6 +185,7 @@ module.exports = {
       },
       minimumEquityPercentage: {
         name: '[data-auto-id=investorRequirements] ul > li:nth-child(8) .task-list__item-name',
+        complete: '[data-auto-id=investorRequirements] ul > li:nth-child(8) .task-list__item-complete',
         incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(8) .task-list__item-incomplete',
       },
       desiredDealRoles: {
