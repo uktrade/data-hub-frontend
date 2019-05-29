@@ -4,6 +4,7 @@ const { DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS, QUERY_FIELDS, QUERY_DATE_FIEL
 
 const { renderEditPage } = require('./controllers/edit')
 const { renderDetailsPage } = require('./controllers/details')
+const { renderCompletePage } = require('./controllers/complete')
 const { renderInteractionList } = require('./controllers/list')
 const { exportCollection } = require('../../modules/search/middleware/collection')
 const { getRequestBody } = require('../../middleware/collection')
@@ -43,5 +44,9 @@ router
   .get(renderEditPage)
 
 router.get('/:interactionId', renderDetailsPage)
+
+router
+  .route('/:interactionId/complete')
+  .get(detectUserAgent, renderCompletePage)
 
 module.exports = router
