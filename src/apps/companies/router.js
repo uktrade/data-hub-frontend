@@ -1,5 +1,5 @@
-const router = require('express').Router()
 
+const router = require('express').Router()
 const { ENTITIES } = require('../search/constants')
 const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS, QUERY_FIELDS } = require('./constants')
 
@@ -54,6 +54,7 @@ const { transformCompanyToListItem } = require('./transformers')
 const investmentsRouter = require('./apps/investments/router')
 const matchingRouter = require('./apps/matching/router')
 const interactionsRouter = require('../interactions/router.sub-app')
+const activityFeedRouter = require('./apps/activity-feed/router')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
@@ -132,5 +133,6 @@ router.get('/:companyId/timeline', renderTimeline)
 router.use('/:companyId/investments', investmentsRouter)
 router.use('/:companyId/matching', matchingRouter)
 router.use('/:companyId', setInteractionsDetails, interactionsRouter)
+router.use('/:companyId/activity-feed', activityFeedRouter)
 
 module.exports = router
