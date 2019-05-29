@@ -3,6 +3,7 @@ const collectionFilterFields = require('./collection-filter-fields')
 const fields = require('./fields')
 const interactionForm = require('./interaction-form')
 const kindForm = require('./kind-form')
+const meetingHappenForm = require('./meeting-happen-form')
 const serviceDeliveryForm = require('./service-delivery-form')
 
 module.exports = {
@@ -11,5 +12,6 @@ module.exports = {
   fields,
   interactionForm,
   kindForm,
+  meetingHappenForm,
   serviceDeliveryForm,
 }

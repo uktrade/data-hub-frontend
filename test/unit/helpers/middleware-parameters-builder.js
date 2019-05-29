@@ -16,6 +16,7 @@ module.exports = ({
   investment,
   companiesHouseRecord,
   features = {},
+  userAgent = { isIE: false },
   user,
 }) => {
   return {
@@ -45,6 +46,7 @@ module.exports = ({
         investment,
         companiesHouseRecord,
         features,
+        userAgent,
         user,
       },
     },
