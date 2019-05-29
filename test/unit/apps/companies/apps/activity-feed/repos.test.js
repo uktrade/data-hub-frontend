@@ -1,12 +1,12 @@
-const config = require('../../../../config')
-const activityFeedRawFixture = require('../../data/activity-feed/activity-feed-from-es')
+const config = require('~/config')
+const activityFeedRawFixture = require('~/test/unit/data/activity-feed/activity-feed-from-es')
 const token = 'abcd'
 
 describe('Activity feed repos', () => {
   beforeEach(() => {
     this.authorisedRequestStub = sinon.stub().resolves(activityFeedRawFixture)
-    this.repos = proxyquire('../../src/apps/activity-feed/repos', {
-      '../../lib/authorised-request': { authorisedRequest: this.authorisedRequestStub },
+    this.repos = proxyquire('../../src/apps/companies/apps/activity-feed/repos', {
+      '../../../../lib/authorised-request': { authorisedRequest: this.authorisedRequestStub },
     })
   })
 
@@ -20,10 +20,14 @@ describe('Activity feed repos', () => {
         const expectedBody = {
           from: 1,
           query: {
-            bool: { filter: { term: { 'object.attributedTo.id': 'dit:DataHubCompany:123' } } },
+            bool: {
+              filter: [
+                { term: { 'object.attributedTo.id': 'dit:DataHubCompany:123' } },
+              ],
+            },
           },
           size: 21,
-          sort: { published: 'desc' },
+          sort: { 'object.startTime': 'desc' },
         }
         expect(this.authorisedRequestStub).to.be.calledOnceWith(token, {
           body: expectedBody,
@@ -32,7 +36,7 @@ describe('Activity feed repos', () => {
       })
 
       it('should return results', async () => {
-        expect(this.results).to.be.equal(activityFeedRawFixture.hits)
+        expect(this.results).to.be.equal(activityFeedRawFixture)
       })
     })
 
@@ -45,7 +49,14 @@ describe('Activity feed repos', () => {
         const expectedBody = {
           from: 0,
           size: 20,
-          sort: { published: 'desc' },
+          sort: { 'object.startTime': 'desc' },
+          query: {
+            bool: {
+              filter: [
+                { term: { 'object.attributedTo.id': 'dit:DataHubCompany:undefined' } },
+              ],
+            },
+          },
         }
         expect(this.authorisedRequestStub).to.be.calledOnceWith(token, {
           body: expectedBody,
@@ -54,7 +65,7 @@ describe('Activity feed repos', () => {
       })
 
       it('should return results', async () => {
-        expect(this.results).to.be.equal(activityFeedRawFixture.hits)
+        expect(this.results).to.be.equal(activityFeedRawFixture)
       })
     })
 
@@ -67,7 +78,14 @@ describe('Activity feed repos', () => {
         const expectedBody = {
           from: 0,
           size: 20,
-          sort: { published: 'desc' },
+          sort: { 'object.startTime': 'desc' },
+          query: {
+            bool: {
+              filter: [
+                { term: { 'object.attributedTo.id': 'dit:DataHubCompany:undefined' } },
+              ],
+            },
+          },
         }
         expect(this.authorisedRequestStub).to.be.calledOnceWith(undefined, {
           body: expectedBody,
@@ -76,7 +94,7 @@ describe('Activity feed repos', () => {
       })
 
       it('should return results', async () => {
-        expect(this.results).to.be.equal(activityFeedRawFixture.hits)
+        expect(this.results).to.be.equal(activityFeedRawFixture)
       })
     })
   })
