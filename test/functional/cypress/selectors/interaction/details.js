@@ -1,7 +1,7 @@
 exports.interaction = {
   successMsg: '.c-message--success',
   actions: {
-    completeInteraction: ({ companyId, interactionId }) => `[href="/companies/${companyId}/interactions/${interactionId}/confirm"]`,
+    completeInteraction: ({ companyId, interactionId }) => `[href="/companies/${companyId}/interactions/${interactionId}/complete"]`,
     editInteraction: ({ companyId, interactionId }, theme, kind) => `[href="/companies/${companyId}/interactions/${interactionId}/${theme}/${kind}/edit"]`,
     back: ({ companyId }) => `[href="/companies/${companyId}/interactions/"]`,
   },

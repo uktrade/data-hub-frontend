@@ -17,6 +17,7 @@ exports.document = require('./document')
 exports.entityCollection = require('./entity-collection')
 exports.filter = require('./filter')
 exports.interaction = {
+  complete: require('./interaction/complete'),
   details: require('./interaction/details'),
 }
 exports.interactionForm = require('./interaction-form')
