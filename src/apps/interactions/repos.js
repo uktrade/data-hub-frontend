@@ -34,8 +34,18 @@ function getInteractionsForEntity ({ token, entityQuery, page = 1, sortby }) {
   })
 }
 
+function archiveInteraction (token, interactionId, reason) {
+  const options = {
+    body: { reason },
+    url: `${config.apiRoot}/v3/interaction/${interactionId}/archive`,
+    method: 'POST',
+  }
+  return authorisedRequest(token, options)
+}
+
 module.exports = {
   saveInteraction,
   fetchInteraction,
   getInteractionsForEntity,
+  archiveInteraction,
 }
