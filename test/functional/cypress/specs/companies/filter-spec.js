@@ -76,8 +76,9 @@ describe('Company Collections Filter', () => {
       .type('Advanced Engineering')
       .get(typeahead(sector).options)
       .should('have.length', 1)
-      .get(typeahead(sector).firstOption)
-      .click()
+      .get(typeahead(sector).textInput)
+      .type('{enter}')
+      .type('{esc}')
 
     cy.wait('@filterResults').then(xhr => {
       expect(xhr.url).to.contain(
@@ -97,8 +98,9 @@ describe('Company Collections Filter', () => {
       .type('United Kingdom')
       .get(typeahead(country).options)
       .should('have.length', 1)
-      .get(typeahead(country).firstOption)
-      .click()
+      .get(typeahead(country).textInput)
+      .type('{enter}')
+      .type('{esc}')
 
     cy.wait('@filterResults').then(xhr => {
       expect(xhr.url).to.contain('country=80756b9a-5d95-e211-a939-e4115bead28a')
