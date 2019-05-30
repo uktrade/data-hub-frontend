@@ -1,7 +1,6 @@
-const { keys, forEach } = require('lodash')
-
-const fixtures = require('../../fixtures/index.js')
-const selectors = require('../../selectors/index.js')
+const { assertKeyValueTable, assertValueTable } = require('../../helpers/key-value-table')
+const fixtures = require('../../fixtures')
+const selectors = require('../../selectors')
 
 describe('Companies business details', () => {
   context('when viewing business details for a Dun & Bradstreet GHQ company on the One List not in the UK', () => {
@@ -117,7 +116,7 @@ describe('Companies business details', () => {
     it('should display the "Business hierarchy" details', () => {
       assertKeyValueTable('businessHierarchyDetails', {
         'Headquarter type': 'Global HQ',
-        'Subsidiaries': 'None',
+        'Subsidiaries': 'None Link a subsidiary',
       })
     })
 
@@ -372,7 +371,7 @@ describe('Companies business details', () => {
 
     it('should display the "Business hierarchy" details', () => {
       assertKeyValueTable('businessHierarchyDetails', {
-        'Global HQ': 'None',
+        'Global HQ': 'None Link to the Global HQ',
       })
     })
 
@@ -633,20 +632,5 @@ describe('Companies business details', () => {
 
   const assertDetailsContainerHeading = (dataAutoId, expected) => {
     cy.get(selectors.detailsContainer(dataAutoId).heading).should('have.text', expected)
-  }
-
-  const assertKeyValueTable = (dataAutoId, expected) => {
-    forEach(keys(expected), (key, i) => {
-      const rowNumber = i + 1
-      cy.get(selectors.keyValueTable(dataAutoId).keyCell(rowNumber)).should('have.text', key)
-      cy.get(selectors.keyValueTable(dataAutoId).valueCell(rowNumber)).should('have.text', expected[key])
-    })
-  }
-
-  const assertValueTable = (dataAutoId, expected) => {
-    forEach(expected, (expectedValue, i) => {
-      const rowNumber = i + 1
-      cy.get(selectors.keyValueTable(dataAutoId).valueCell(rowNumber)).should('have.text', expectedValue)
-    })
   }
 })

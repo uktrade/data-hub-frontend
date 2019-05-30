@@ -1,6 +1,6 @@
 const axios = require('axios')
 const config = require('../../../config')
-const redisStore = require('../../../config/redis-store')
+const { redisStore } = require('../../../config/redis-store')
 
 module.exports = [
   {
@@ -23,6 +23,11 @@ module.exports = [
   },
   {
     name: 'getaddress postcode lookup',
-    healthCheck: () => axios.get(`https://api.getaddress.io/usage?api-key=${config.postcodeLookup.apiKey}`),
+    healthCheck: () =>
+      axios.get(
+        `https://api.getaddress.io/usage?api-key=${
+          config.postcodeLookup.apiKey
+        }`
+      ),
   },
 ]

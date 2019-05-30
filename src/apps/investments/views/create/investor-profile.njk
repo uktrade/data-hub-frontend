@@ -4,6 +4,53 @@
 
 {% block main_grid_right_column %}
 
-  {# Form will be added here #}
+  {% call Form({
+  buttonText: 'Save',
+  buttonDataAttr: 'investorProfileSave',
+  returnText: 'Cancel',
+  returnLink: '/investments/profiles',
+  method: 'POST',
+  action: '/investments/profiles/create-investor-profile',
+  errors: errors
+}) %}
+
+    {% call Fieldset({
+        legend: 'Find a company',
+        modifier: '',
+        class: ''
+    }) %}
+
+      {{ Typeahead({
+        autoSubmit: false,
+        entity: 'country',
+        name: 'country_investment_originates_from',
+        label: 'Country of origin',
+        hint: 'This is a filter to help you find the correct company. It is not stored against the profile.',
+        isOptional: true,
+        useSubLabel: false,
+        multipleSelect: false,
+        isAsync: true,
+        target: 'metadata'
+      }) }}
+
+      {{ Typeahead({
+        autoSubmit: false,
+        entity: 'company',
+        name: 'investor_company',
+        label: 'Company name',
+        useSubLabel: false,
+        multipleSelect: false,
+        isAsync: true,
+        chainedParams: {
+          'urlParam': 'country',
+          'valueFrom': 'country_investment_originates_from'
+        },
+        target: 'search_autocomplete',
+        error: errors.messages.investor_company
+      }) }}
+
+    {% endcall %}
+
+  {% endcall %}
 
 {% endblock %}

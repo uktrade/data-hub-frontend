@@ -16,10 +16,11 @@
             {{ Typeahead({
               name: 'adviser',
               entity: 'adviser',
-              placeholder: 'Select an adviser',
+              placeholder: 'Search team member',
               multipleSelect: false,
               classes: 'c-form-group c-form-group--no-filter',
               label: form.labels.adviser,
+              isLabelHidden: true,
               options: teamMember.options,
               value: teamMember.adviser,
               idSuffix: loop.index,

@@ -1,0 +1,17 @@
+[
+  {
+    "id": "efadc6bb-2a73-4627-8ce3-9dc2c34c3f31",
+    "name": "Lead manager / deal structure",
+    "disabled_on": null
+  },
+  {
+    "id": "29d930e6-de2f-403d-87dc-764bc418d33a",
+    "name": "Co-lead manager",
+    "disabled_on": null
+  },
+  {
+    "id": "48cace6e-ec14-467b-b1b5-19b318ab5c51",
+    "name": "Co-investor / syndicate member",
+    "disabled_on": null
+  }
+]

@@ -55,6 +55,32 @@ const transformProfile = (profile, editing) => {
     },
     investorRequirements: {
       incompleteFields: get(profile, 'incomplete_requirements_fields.length'),
+      dealTicketSizes: {
+        value: get(profile, 'deal_ticket_sizes'),
+      },
+      investmentTypes: {
+        value: get(profile, 'investment_types'),
+      },
+      minimumReturnRate: {
+        text: get(profile, 'minimum_return_rate.name', null),
+        value: get(profile, 'minimum_return_rate.id', null),
+      },
+      timeHorizons: {
+        value: get(profile, 'time_horizons'),
+      },
+      restrictions: {
+        value: get(profile, 'restrictions'),
+      },
+      constructionRisks: {
+        value: get(profile, 'construction_risks'),
+      },
+      minimumEquityPercentage: {
+        text: get(profile, 'minimum_equity_percentage.name', null),
+        value: get(profile, 'minimum_equity_percentage.id', null),
+      },
+      desiredDealRoles: {
+        value: get(profile, 'desired_deal_roles'),
+      },
     },
     location: {
       incompleteFields: get(profile, 'incomplete_location_fields.length'),

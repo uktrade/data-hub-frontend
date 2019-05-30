@@ -402,6 +402,7 @@ describe('Global builders', () => {
             { value: '1', label: 'Adviser 1' },
             { value: '2', label: 'Adviser 2' },
           ],
+          apiVersion: 'metadata',
         }]
 
         const query = {

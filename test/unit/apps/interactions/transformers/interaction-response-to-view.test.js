@@ -1,7 +1,6 @@
 const config = require('~/config')
-const moment = require('moment')
-const now = moment()
 const transformInteractionResponseToViewRecord = require('~/src/apps/interactions/transformers/interaction-response-to-view')
+const mcokDraftPastMeeting = require('~/test/unit/data/interactions/draft-past-meeting.json')
 const mockInteraction = require('~/test/unit/data/interactions/interaction.json')
 const mockInteractionWithPolicyFeedback = require('~/test/unit/data/interactions/interaction-with-feedback.json')
 
@@ -17,7 +16,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           id: 'bac18331-ca4d-4501-960e-a1bd68b5d47e',
           name: 'Test project',
         },
-      })
+      }, true)
     })
 
     it('should transform to display format', () => {
@@ -34,14 +33,13 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           id: 'd320b92b-3499-e211-a939-e4115bead28a',
           name: 'Investment - Company Visit',
         },
-        'Subject': 'ad',
         'Notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy area': 'Access to Public Funding (inc. EU funding)',
         'Policy feedback notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy issue types': 'EU exit',
         'Date of interaction': {
           type: 'date',
-          name: now.format('YYYY-MM-DD'),
+          name: '2058-11-25',
         },
         'Documents': {
           hint: '(will open another website)',
@@ -72,7 +70,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           id: 'bac18331-ca4d-4501-960e-a1bd68b5d47e',
           name: 'Test project',
         },
-      })
+      }, true)
     })
 
     it('should transform to display format', () => {
@@ -89,7 +87,6 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           id: 'd320b92b-3499-e211-a939-e4115bead28a',
           name: 'Investment - Company Visit',
         },
-        'Subject': 'ad',
         'Notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy area': 'Access to Public Funding (inc. EU funding)',
         'Policy feedback notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
@@ -102,7 +99,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
         },
         'Date of interaction': {
           type: 'date',
-          name: now.format('YYYY-MM-DD'),
+          name: '2058-11-25',
         },
         'Adviser(s)': ['Bob Lawson, The test team'],
         'Investment project': {
@@ -122,7 +119,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
       this.transformed = transformInteractionResponseToViewRecord({
         ...mockInteraction,
         company: null,
-      })
+      }, true)
     })
 
     it('should transform to display format', () => {
@@ -135,14 +132,13 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           id: 'd320b92b-3499-e211-a939-e4115bead28a',
           name: 'Investment - Company Visit',
         },
-        'Subject': 'ad',
         'Notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy area': 'Access to Public Funding (inc. EU funding)',
         'Policy feedback notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy issue types': 'EU exit',
         'Date of interaction': {
           type: 'date',
-          name: now.format('YYYY-MM-DD'),
+          name: '2058-11-25',
         },
         'Communication channel': {
           id: '70c226d7-5d95-e211-a939-e4115bead28a',
@@ -161,7 +157,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
       this.transformed = transformInteractionResponseToViewRecord({
         ...mockInteraction,
         investment_project: null,
-      })
+      }, true)
     })
 
     it('should transform to display format', () => {
@@ -178,7 +174,6 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           id: 'd320b92b-3499-e211-a939-e4115bead28a',
           name: 'Investment - Company Visit',
         },
-        'Subject': 'ad',
         'Notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy area': 'Access to Public Funding (inc. EU funding)',
         'Policy feedback notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
@@ -188,7 +183,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
         },
         'Date of interaction': {
           type: 'date',
-          name: now.format('YYYY-MM-DD'),
+          name: '2058-11-25',
         },
         'Adviser(s)': ['Bob Lawson, The test team'],
         'Communication channel': {
@@ -216,7 +211,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
         net_company_receipt: '500.00',
         archived_documents_url_path: '/documents/123',
         communication_channel: null,
-      })
+      }, true)
     })
 
     it('should transform to display format', () => {
@@ -245,14 +240,13 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           name: '500.00',
           type: 'currency',
         },
-        'Subject': 'ad',
         'Notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy area': 'Access to Public Funding (inc. EU funding)',
         'Policy feedback notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy issue types': 'EU exit',
         'Date of service delivery': {
           type: 'date',
-          name: now.format('YYYY-MM-DD'),
+          name: '2058-11-25',
         },
         'Adviser(s)': ['Bob Lawson, The test team'],
         'Documents': {
@@ -279,7 +273,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
         grant_amount_offered: null,
         net_company_receipt: null,
         communication_channel: null,
-      })
+      }, true)
     })
 
     it('should transform to display format', () => {
@@ -296,14 +290,13 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           id: 'd320b92b-3499-e211-a939-e4115bead28a',
           name: 'Investment - Company Visit',
         },
-        'Subject': 'ad',
         'Notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy area': 'Access to Public Funding (inc. EU funding)',
         'Policy feedback notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy issue types': 'EU exit',
         'Date of service delivery': {
           type: 'date',
-          name: now.format('YYYY-MM-DD'),
+          name: '2058-11-25',
         },
         'Adviser(s)': ['Bob Lawson, The test team'],
         'Event': 'No',
@@ -319,7 +312,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
       this.transformed = transformInteractionResponseToViewRecord({
         ...mockInteraction,
         archived_documents_url_path: '',
-      })
+      }, true)
     })
 
     it('should transform to display format', () => {
@@ -336,7 +329,6 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           id: 'd320b92b-3499-e211-a939-e4115bead28a',
           name: 'Investment - Company Visit',
         },
-        'Subject': 'ad',
         'Notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy area': 'Access to Public Funding (inc. EU funding)',
         'Policy feedback notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
@@ -346,7 +338,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
         },
         'Date of interaction': {
           type: 'date',
-          name: now.format('YYYY-MM-DD'),
+          name: '2058-11-25',
         },
         'Adviser(s)': ['Bob Lawson, The test team'],
         'Communication channel': {
@@ -360,7 +352,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
   context('when provided with an interaction with policy feedback', () => {
     context('and one policy area', () => {
       beforeEach(() => {
-        this.transformed = transformInteractionResponseToViewRecord(mockInteractionWithPolicyFeedback)
+        this.transformed = transformInteractionResponseToViewRecord(mockInteractionWithPolicyFeedback, true)
       })
 
       it('should transform to display format', () => {
@@ -377,7 +369,6 @@ describe('#transformInteractionResponsetoViewRecord', () => {
             id: 'd320b92b-3499-e211-a939-e4115bead28a',
             name: 'Investment - Company Visit',
           },
-          'Subject': 'ad',
           'Notes': 'Labore culpa quas cupiditate voluptatibus magni.',
           'Date of interaction': {
             type: 'date',
@@ -413,6 +404,34 @@ describe('#transformInteractionResponsetoViewRecord', () => {
 
       it('should transform to display format', () => {
         expect(this.transformed['Policy area']).to.equal('p a 1, p a 2')
+      })
+    })
+  })
+
+  context('when transforming a draft and not showing document information', () => {
+    beforeEach(() => {
+      this.transformed = transformInteractionResponseToViewRecord(mcokDraftPastMeeting)
+    })
+
+    it('should transform to display format', () => {
+      expect(this.transformed).to.deep.equal({
+        'Adviser(s)': [
+          'Brendan Smith, Aberdeen City Council',
+        ],
+        'Company': {
+          name: 'Venus Ltd',
+          url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
+        },
+        'Contact(s)': [
+          {
+            name: 'Theodore Schaden|6e4b048d-5bb5-4868-9455-aa712f4ceffd',
+            url: '/contacts/71906039-858e-47ba-8016-f3c80da69ace',
+          },
+        ],
+        'Date of interaction': {
+          name: '2019-05-20',
+          type: 'date',
+        },
       })
     })
   })

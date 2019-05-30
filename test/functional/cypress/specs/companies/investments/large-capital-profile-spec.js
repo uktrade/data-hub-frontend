@@ -1,8 +1,9 @@
 const { localHeader, companyInvestment: selectors } = require('../../../selectors')
-const fixtures = require('../../../fixtures/index.js')
+const fixtures = require('../../../fixtures')
 const baseUrl = Cypress.config().baseUrl
-const { oneListCorp } = fixtures.company
+const { oneListCorp, lambdaPlc } = fixtures.company
 const largeCapitalProfile = `/companies/${oneListCorp.id}/investments/large-capital-profile`
+const largeCapitalProfileNew = `/companies/${lambdaPlc.id}/investments/large-capital-profile`
 
 describe('Company Investments and Large capital profile', () => {
   context('when viewing the company header', () => {
@@ -133,6 +134,26 @@ describe('Company Investments and Large capital profile', () => {
     })
   })
 
+  context('when viewing all incomplete fields within "Investor details"', () => {
+    const { taskList } = selectors.investorDetails
+    const labels = [
+      'Investor type',
+      'Global assets under management',
+      'Investable capital',
+      'Investor description',
+      'Has this investor cleared the required checks within the last 12 months?',
+    ]
+
+    before(() => cy.visit(largeCapitalProfileNew))
+
+    Object.keys(taskList).forEach((key, index) => {
+      it(`should display both ${labels[index]} and INCOMPLETE`, () => {
+        cy.get(taskList[key].name).should('contain', labels[index])
+        cy.get(taskList[key].incomplete).should('contain', 'INCOMPLETE')
+      })
+    })
+  })
+
   context('when viewing all incomplete fields within "Investor requirements"', () => {
     const { taskList } = selectors.investorRequirements
     const labels = [
@@ -147,7 +168,7 @@ describe('Company Investments and Large capital profile', () => {
       'Desired deal role',
     ]
 
-    before(() => cy.visit(largeCapitalProfile))
+    before(() => cy.visit(largeCapitalProfileNew))
 
     Object.keys(taskList).forEach((key, index) => {
       it(`should display both ${labels[index]} and INCOMPLETE`, () => {
@@ -165,7 +186,7 @@ describe('Company Investments and Large capital profile', () => {
       'Notes on investor\'s location preferences',
     ]
 
-    before(() => cy.visit(largeCapitalProfile))
+    before(() => cy.visit(largeCapitalProfileNew))
 
     Object.keys(taskList).forEach((key, index) => {
       it(`should display both ${labels[index]} and INCOMPLETE`, () => {
@@ -177,7 +198,9 @@ describe('Company Investments and Large capital profile', () => {
 
   context('when viewing the "Investor details" section', () => {
     const { investorDetails } = selectors
-    const completeDate = 'Date of most recent background checks: 29 04 2019'
+
+    const type = 'Cleared'
+    const date = 'Date of most recent background checks: 29 04 2019'
     const adviser = 'Person responsible for most recent background checks: Aaron Chan'
 
     it('should display all the field values apart from "Investor Description"', () => {
@@ -186,8 +209,8 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorDetails.taskList.globalAssetsUnderManagement.complete).should('contain', 1000000)
         .get(investorDetails.taskList.investableCapital.complete).should('contain', 30000)
         .get(investorDetails.taskList.investorDescription.incomplete).should('contain', 'INCOMPLETE')
-        .get(investorDetails.taskList.requiredChecks.complete).should('contain', 'Cleared')
-        .get(investorDetails.taskList.requiredChecks.completeDate).should('contain', completeDate)
+        .get(investorDetails.taskList.requiredChecks.complete).should('contain', type)
+        .get(investorDetails.taskList.requiredChecks.completeDate).should('contain', date)
         .get(investorDetails.taskList.requiredChecks.adviser).should('contain', adviser)
     })
   })
@@ -221,6 +244,166 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorDetails.requiredChecks.adviser.textInput).type('{enter}')
         .get(investorDetails.requiredChecks.adviser.selectedOption)
         .should('contain', 'Abby Chan, British High Commission Singapore')
+    })
+  })
+
+  context('when viewing the "Investor requirements" edit section', () => {
+    const { investorRequirements } = selectors
+
+    it('should display "Deal ticket size" and all 6 checkboxes should be checked', () => {
+      cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
+        .get(investorRequirements.dealTicketSize.name).should('contain', 'Deal ticket size')
+        .get(investorRequirements.dealTicketSize.upTo49Million).should('be.checked')
+        .get(investorRequirements.dealTicketSize.fiftyTo99Million).should('be.checked')
+        .get(investorRequirements.dealTicketSize.oneHundredTo249Million).should('be.checked')
+        .get(investorRequirements.dealTicketSize.twoHundredFiftyTo499Million).should('be.checked')
+        .get(investorRequirements.dealTicketSize.fiveHundredTo999Million).should('be.checked')
+        .get(investorRequirements.dealTicketSize.oneBillionPlus).should('be.checked')
+    })
+
+    it('should display "Types of investment" and all 8 checkboxes should be checked"', () => {
+      cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
+        .get(investorRequirements.investmentTypes.name).should('contain', 'Types of investment')
+        .get(investorRequirements.investmentTypes.projectEquity).should('be.checked')
+        .get(investorRequirements.investmentTypes.projectDebt).should('be.checked')
+        .get(investorRequirements.investmentTypes.corporateEquity).should('be.checked')
+        .get(investorRequirements.investmentTypes.corporateDebt).should('be.checked')
+        .get(investorRequirements.investmentTypes.mezzanineDebt).should('be.checked')
+        .get(investorRequirements.investmentTypes.ventureCapitalFunds).should('be.checked')
+        .get(investorRequirements.investmentTypes.energyInfrastructure).should('be.checked')
+        .get(investorRequirements.investmentTypes.privateEquity).should('be.checked')
+    })
+
+    it('should display "Minimum return rate" and the radio button "10-15%" should be checked"', () => {
+      cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
+        .get(investorRequirements.minimumReturnRate.name).should('contain', 'Minimum return rate')
+        .get(investorRequirements.minimumReturnRate.tenTo15Percent).should('be.checked')
+    })
+
+    it('should display "Time Horizon / tenor" and all 4 checkboxes should be checked"', () => {
+      cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
+        .get(investorRequirements.timeHorizons.name).should('contain', 'Time horizon / tenor')
+        .get(investorRequirements.timeHorizons.upToFiveYears).should('be.checked')
+        .get(investorRequirements.timeHorizons.fiveTo9Years).should('be.checked')
+        .get(investorRequirements.timeHorizons.tenTo14Years).should('be.checked')
+        .get(investorRequirements.timeHorizons.fifteenYearsPlus).should('be.checked')
+    })
+
+    it('should display "Restrictions / conditions" and all 6 checkboxes should be checked"', () => {
+      cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
+        .get(investorRequirements.restrictions.name).should('contain', 'Restrictions / conditions')
+        .get(investorRequirements.restrictions.liquidity).should('be.checked')
+        .get(investorRequirements.restrictions.inflationAdjustment).should('be.checked')
+        .get(investorRequirements.restrictions.requireFXHedge).should('be.checked')
+        .get(investorRequirements.restrictions.requireBoardSeat).should('be.checked')
+        .get(investorRequirements.restrictions.requireLinkedTech).should('be.checked')
+        .get(investorRequirements.restrictions.willParticipateInCompBids).should('be.checked')
+    })
+
+    it('should display "Construction risk" and all 3 checkboxes should be checked"', () => {
+      cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
+        .get(investorRequirements.constructionRisks.name).should('contain', 'Construction risk')
+        .get(investorRequirements.constructionRisks.greenfield).should('be.checked')
+        .get(investorRequirements.constructionRisks.brownfield).should('be.checked')
+        .get(investorRequirements.constructionRisks.operational).should('be.checked')
+    })
+
+    it('should display "Minimum equity percentage" and the radio button "20-49%"" should be checked"', () => {
+      cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
+        .get(investorRequirements.minimumEquityPercentage.name).should('contain', 'Minimum equity percentage')
+        .get(investorRequirements.minimumEquityPercentage.twentyTo49Percent).should('be.checked')
+    })
+
+    it('should display "Desired deal role" and all 3 checkboxes should be checked"', () => {
+      cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
+        .get(investorRequirements.desiredDealRoles.name).should('contain', 'Desired deal role')
+        .get(investorRequirements.desiredDealRoles.leadManager).should('be.checked')
+        .get(investorRequirements.desiredDealRoles.coLeadManager).should('be.checked')
+        .get(investorRequirements.desiredDealRoles.coInvestor).should('be.checked')
+    })
+  })
+
+  context('when viewing the "Investor requirements" details section', () => {
+    const { investorRequirements } = selectors
+
+    it('should display "Deal ticket size" and all 6 sizes', () => {
+      cy.visit(largeCapitalProfile)
+        .get(selectors.investorRequirements.summary).click()
+        .get(investorRequirements.taskList.dealTicketSize.name).should('contain', 'Deal ticket size')
+        .get(investorRequirements.taskList.dealTicketSize.upTo49Million).should('contain', 'Up to £49 million')
+        .get(investorRequirements.taskList.dealTicketSize.fiftyTo99Million).should('contain', '£50-99 million')
+        .get(investorRequirements.taskList.dealTicketSize.oneHundredTo249Million).should('contain', '£100-249 million')
+        .get(investorRequirements.taskList.dealTicketSize.twoHundredFiftyTo499Million).should('contain', '£250-499 million')
+        .get(investorRequirements.taskList.dealTicketSize.fiveHundredTo999Million).should('contain', '£500-999 million')
+        .get(investorRequirements.taskList.dealTicketSize.oneBillionPlus).should('contain', '£1 billion +')
+    })
+
+    it('should display "Types of investment" and all 8 investments', () => {
+      cy.visit(largeCapitalProfile)
+        .get(selectors.investorRequirements.summary).click()
+        .get(investorRequirements.taskList.investmentTypes.name).should('contain', 'Types of investment')
+        .get(investorRequirements.taskList.investmentTypes.projectEquity).should('contain', 'Direct Investment in Project Equity')
+        .get(investorRequirements.taskList.investmentTypes.projectDebt).should('contain', 'Direct Investment in Project Debt')
+        .get(investorRequirements.taskList.investmentTypes.corporateEquity).should('contain', 'Direct Investment in Corporate Equity')
+        .get(investorRequirements.taskList.investmentTypes.corporateDebt).should('contain', 'Direct Investment in Corporate Debt')
+        .get(investorRequirements.taskList.investmentTypes.mezzanineDebt).should('contain', 'Mezzanine Debt (incl. preferred shares, convertibles')
+        .get(investorRequirements.taskList.investmentTypes.ventureCapitalFunds).should('contain', 'Venture capital funds')
+        .get(investorRequirements.taskList.investmentTypes.energyInfrastructure).should('contain', 'Energy / Infrastructure / Real Estate Funds (UKEIREFs)')
+        .get(investorRequirements.taskList.investmentTypes.privateEquity).should('contain', 'Private Equity / Venture Capital')
+    })
+
+    it('should display "Minimum return rate" and "10-15%"', () => {
+      cy.visit(largeCapitalProfile)
+        .get(selectors.investorRequirements.summary).click()
+        .get(investorRequirements.taskList.minimumReturnRate.name).should('contain', 'Minimum return rate')
+        .get(investorRequirements.taskList.minimumReturnRate.complete).should('contain', '10-15%')
+    })
+
+    it('should display "Time horizon / tenor" and all 4 times', () => {
+      cy.visit(largeCapitalProfile)
+        .get(selectors.investorRequirements.summary).click()
+        .get(investorRequirements.taskList.timeHorizon.name).should('contain', 'Time horizon / tenor')
+        .get(investorRequirements.taskList.timeHorizon.upToFiveYears).should('contain', 'Up to 5 years')
+        .get(investorRequirements.taskList.timeHorizon.fiveTo9Years).should('contain', '5-9 years')
+        .get(investorRequirements.taskList.timeHorizon.tenTo14Years).should('contain', '10-14 years')
+        .get(investorRequirements.taskList.timeHorizon.fifteenYearsPlus).should('contain', '15 years +')
+    })
+
+    it('should display "Restrictions / conditions" and all 6 restrictions', () => {
+      cy.visit(largeCapitalProfile)
+        .get(selectors.investorRequirements.summary).click()
+        .get(investorRequirements.taskList.restrictions.name).should('contain', 'Restrictions / conditions')
+        .get(investorRequirements.taskList.restrictions.liquidity).should('contain', 'Liquidity / exchange listing')
+        .get(investorRequirements.taskList.restrictions.inflationAdjustment).should('contain', 'Inflation adjustment')
+        .get(investorRequirements.taskList.restrictions.requireFXHedge).should('contain', 'Require FX hedge')
+        .get(investorRequirements.taskList.restrictions.requireBoardSeat).should('contain', 'Require board seat')
+        .get(investorRequirements.taskList.restrictions.requireLinkedTech).should('contain', 'Require linked technology / knowledge transfer')
+        .get(investorRequirements.taskList.restrictions.willParticipateInCompBids).should('contain', 'Will participate in competitive bids / auctions')
+    })
+
+    it('should display "Construction risk" and all 3 risks', () => {
+      cy.visit(largeCapitalProfile)
+        .get(selectors.investorRequirements.summary).click()
+        .get(investorRequirements.taskList.constructionRisks.name).should('contain', 'Construction risk')
+        .get(investorRequirements.taskList.constructionRisks.greenfield).should('contain', 'Greenfield (construction risk)')
+        .get(investorRequirements.taskList.constructionRisks.brownfield).should('contain', 'Brownfield (some construction risk)')
+        .get(investorRequirements.taskList.constructionRisks.operational).should('contain', 'Operational (no construction risk)')
+    })
+
+    it('should display "Minimum equity percentage" and "20-49%"', () => {
+      cy.visit(largeCapitalProfile)
+        .get(selectors.investorRequirements.summary).click()
+        .get(investorRequirements.taskList.minimumEquityPercentage.name).should('contain', 'Minimum equity percentage')
+        .get(investorRequirements.taskList.minimumEquityPercentage.complete).should('contain', '20-49%')
+    })
+
+    it('should display "Desired deal role" and all 3 roles', () => {
+      cy.visit(largeCapitalProfile)
+        .get(selectors.investorRequirements.summary).click()
+        .get(investorRequirements.taskList.desiredDealRoles.name).should('contain', 'Desired deal role')
+        .get(investorRequirements.taskList.desiredDealRoles.leadManager).should('contain', 'Lead manager / deal structure')
+        .get(investorRequirements.taskList.desiredDealRoles.coLeadManager).should('contain', 'Co-lead manager')
+        .get(investorRequirements.taskList.desiredDealRoles.coInvestor).should('contain', 'Co-investor / syndicate member')
     })
   })
 })

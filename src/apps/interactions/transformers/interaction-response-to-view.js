@@ -3,6 +3,7 @@ const { camelCase, pickBy, get } = require('lodash')
 
 const config = require('../../../../config')
 const labels = require('../labels')
+const { getDataLabels } = require('../../../lib/controller-utils')
 
 const transformEntityLink = (entity, entityPath, noLinkText = null) => {
   return entity ? {
@@ -26,7 +27,6 @@ const transformDocumentsLink = (archived_documents_url_path) => {
 
 function transformInteractionResponseToViewRecord ({
   company,
-  subject,
   notes,
   date,
   dit_participants,
@@ -37,14 +37,13 @@ function transformInteractionResponseToViewRecord ({
   contacts,
   policy_areas,
   policy_issue_types,
-  was_policy_feedback_provided,
   policy_feedback_notes,
   investment_project,
   communication_channel,
   event,
   kind,
   archived_documents_url_path,
-}) {
+}, canShowDocuments = false) {
   const defaultEventText = kind === 'service_delivery' ? 'No' : null
   const kindLabels = labels[camelCase(kind)]
   const formattedPolicyAreas = (policy_areas || []).map(policy_area => policy_area.name).join(', ')
@@ -56,7 +55,7 @@ function transformInteractionResponseToViewRecord ({
 
   const formattedParticipants = (dit_participants || []).map(participant => formatParticipantName(participant))
 
-  const transformed = {
+  const viewRecord = {
     company: transformEntityLink(company, 'companies'),
     contacts: contacts.map(contact => transformEntityLink(contact, 'contacts')),
     service,
@@ -69,7 +68,6 @@ function transformInteractionResponseToViewRecord ({
       type: 'currency',
       name: net_company_receipt,
     } : null,
-    subject,
     notes: notes,
     date: {
       type: 'date',
@@ -79,21 +77,13 @@ function transformInteractionResponseToViewRecord ({
     investment_project: transformEntityLink(investment_project, 'investments/projects'),
     event: transformEntityLink(event, 'events', defaultEventText),
     communication_channel: communication_channel,
-    documents: transformDocumentsLink(archived_documents_url_path),
+    documents: canShowDocuments ? transformDocumentsLink(archived_documents_url_path) : null,
     policy_issue_types: formattedPolicyTypes,
     policy_areas: formattedPolicyAreas,
     policy_feedback_notes: policy_feedback_notes,
   }
 
-  const result = {}
-  Object.keys(transformed).forEach((key) => {
-    const label = kindLabels[key]
-    if (label) {
-      result[label] = transformed[key]
-    }
-  })
-
-  return pickBy(result)
+  return pickBy(getDataLabels(viewRecord, kindLabels))
 }
 
 module.exports = transformInteractionResponseToViewRecord

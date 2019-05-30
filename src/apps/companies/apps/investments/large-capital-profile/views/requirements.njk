@@ -1,13 +1,13 @@
 <ul class="task-list">
-  {{ taskListItem({ name: 'Deal ticket size' }) }}
+  {{ taskListItem({ name: 'Deal ticket size', value: profile.investorRequirements.dealTicketSizes.value, key: 'name' }) }}
   {{ taskListItem({ name: 'Asset classes of interest' }) }}
-  {{ taskListItem({ name: 'Types of investment' }) }}
-  {{ taskListItem({ name: 'Minimum return rate' }) }}
-  {{ taskListItem({ name: 'Time horizon / tenor' }) }}
-  {{ taskListItem({ name: 'Restrictions / conditions' }) }}
-  {{ taskListItem({ name: 'Construction risk' }) }}
-  {{ taskListItem({ name: 'Minimum equity percentage' }) }}
-  {{ taskListItem({ name: 'Desired deal role' }) }}
+  {{ taskListItem({ name: 'Types of investment',  value: profile.investorRequirements.investmentTypes.value, key: 'name' }) }}
+  {{ taskListItem({ name: 'Minimum return rate', value: profile.investorRequirements.minimumReturnRate.text }) }}
+  {{ taskListItem({ name: 'Time horizon / tenor', value: profile.investorRequirements.timeHorizons.value, key: 'name' }) }}
+  {{ taskListItem({ name: 'Restrictions / conditions', value: profile.investorRequirements.restrictions.value, key: 'name' }) }}
+  {{ taskListItem({ name: 'Construction risk', value: profile.investorRequirements.constructionRisks.value, key: 'name' }) }}
+  {{ taskListItem({ name: 'Minimum equity percentage', value: profile.investorRequirements.minimumEquityPercentage.text }) }}
+  {{ taskListItem({ name: 'Desired deal role', value: profile.investorRequirements.desiredDealRoles.value, key: 'name' }) }}
 </ul>
 
 {% call Form({

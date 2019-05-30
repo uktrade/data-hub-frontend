@@ -1,17 +1,150 @@
 {% call Form({
   buttonText: 'Save',
   returnText: 'Cancel',
+  class: 'investor-requirements-edit',
   buttonDataAttr: 'investorRequirementsSave',
   returnLink: '/companies/' + company.id + '/investments/large-capital-profile',
   action: '/companies/' + company.id + '/investments/large-capital-profile/update',
   hiddenFields: {
-    profileId: profile.profile.id,
+    profileId: profile.id,
     editing: profile.editing
   }
 }) %}
 
-  <p>Investor requirements: UI components go here...</p>
+  {{
+    govukCheckboxes({
+      name: "dealTicketSizes",
+      classes: 'deal-ticket-sizes',
+      fieldset: {
+        attributes: {
+          'data-auto-id': 'dealTicketSizes'
+        },
+        legend: {
+          text: "Deal ticket size",
+          classes: "govuk-fieldset__legend--s"
+        }
+      },
+      items: profile.investorRequirements.dealTicketSizes.items
+    })
+  }}
+
+  <p>Placeholder - Asset classes of interest</p>
+
+  {{
+    govukCheckboxes({
+      name: "investmentTypes",
+      classes: 'types-of-investment',
+      fieldset: {
+        attributes: {
+          'data-auto-id': 'investmentTypes'
+        },
+        legend: {
+          text: "Types of investment",
+          classes: "govuk-fieldset__legend--s"
+        }
+      },
+      items: profile.investorRequirements.investmentTypes.items
+    })
+  }}
+
+  {{
+    govukRadios({
+      name: 'minimumReturnRate',
+      fieldset: {
+        attributes: {
+          'data-auto-id': 'minimumReturnRate'
+        },
+        legend: {
+          text: 'Minimum return rate',
+          classes: 'govuk-fieldset__legend--s'
+        }
+      },
+      items: profile.investorRequirements.minimumReturnRate.items
+    })
+  }}
+
+  {{
+    govukCheckboxes({
+      name: "timeHorizons",
+      classes: 'time-horizon',
+      fieldset: {
+        attributes: {
+          'data-auto-id': 'timeHorizons'
+        },
+        legend: {
+          text: "Time horizon / tenor",
+          classes: "govuk-fieldset__legend--s"
+        }
+      },
+      items: profile.investorRequirements.timeHorizons.items
+    })
+  }}
+
+  {{
+    govukCheckboxes({
+      name: 'restrictions',
+      classes: 'restrictions',
+      fieldset: {
+        attributes: {
+          'data-auto-id': 'restrictions'
+        },
+        legend: {
+          text: 'Restrictions / conditions',
+          classes: 'govuk-fieldset__legend--s'
+        }
+      },
+      items: profile.investorRequirements.restrictions.items
+    })
+  }}
+
+  {{
+    govukCheckboxes({
+      name: 'constructionRisks',
+      classes: 'construction-risk',
+      fieldset: {
+        attributes: {
+          'data-auto-id': 'constructionRisks'
+        },
+        legend: {
+          text: 'Construction risk',
+          classes: 'govuk-fieldset__legend--s'
+        }
+      },
+      items: profile.investorRequirements.constructionRisks.items
+    })
+  }}
+
+  {{
+    govukRadios({
+      name: 'minimumEquityPercentage',
+      fieldset: {
+        attributes: {
+          'data-auto-id': 'minimumEquityPercentage'
+        },
+        legend: {
+          text: 'Minimum equity percentage',
+          classes: 'govuk-fieldset__legend--s'
+        }
+      },
+      items: profile.investorRequirements.minimumEquityPercentage.items
+    })
+  }}
+
+  {{
+    govukCheckboxes({
+      name: 'desiredDealRoles',
+      classes: 'construction-risk',
+      fieldset: {
+        attributes: {
+          'data-auto-id': 'desiredDealRoles'
+        },
+        legend: {
+          text: 'Desired deal role',
+          classes: 'govuk-fieldset__legend--s'
+        }
+      },
+      items: profile.investorRequirements.desiredDealRoles.items
+    })
+  }}
 
 {% endcall %}
-
-

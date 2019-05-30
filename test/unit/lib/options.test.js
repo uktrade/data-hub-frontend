@@ -1,11 +1,15 @@
 const moment = require('moment')
 
 const config = require('~/config')
-const yesterday = moment().subtract(1, 'days').toISOString()
-const lastWeek = moment().subtract(1, 'weeks').toISOString()
+const yesterday = moment()
+  .subtract(1, 'days')
+  .toISOString()
+const lastWeek = moment()
+  .subtract(1, 'weeks')
+  .toISOString()
 const today = moment().toISOString()
 
-const { getOptions } = require('~/src/lib/options')
+const { getOptions, fetchOptions } = require('~/src/lib/options')
 
 const regionOptions = [
   { id: '1', name: 'r1', disabled_on: null },
@@ -43,11 +47,19 @@ describe('#options', () => {
     nock(config.apiRoot)
       .get('/metadata/uk-region/')
       .reply(200, regionOptions)
+
+    nock(config.apiRoot)
+      .get('/metadata/123/&contexts__has_any=')
+      .reply(200, regionOptions)
   })
 
   context('when asking for options for a new record', () => {
     beforeEach(async () => {
       this.options = await getOptions('1234', 'uk-region')
+      this.fetchedOptions = await fetchOptions(
+        '1234',
+        `${config.apiRoot}/metadata/123/&contexts__has_any=`
+      )
     })
 
     it('should return just active options', () => {
@@ -56,39 +68,57 @@ describe('#options', () => {
         { label: 'r3', value: '3' },
       ])
     })
-  })
 
-  context('when asking for options for an existing record using disabled value', () => {
-    beforeEach(async () => {
-      this.options = await getOptions('1234', 'uk-region', { currentValue: '2', createdOn: today })
-    })
-
-    it('should return just active options', () => {
-      expect(this.options).to.deep.equal([
-        { label: 'r1', value: '1' },
-        { label: 'r2', value: '2' },
-        { label: 'r3', value: '3' },
-      ])
+    it('fetches options', async () => {
+      expect(this.fetchedOptions).to.deep.equal(regionOptions)
     })
   })
 
-  context('when asking for options for an existing record created before option disabled', () => {
-    beforeEach(async () => {
-      this.options = await getOptions('1234', 'uk-region', { currentValue: '1', createdOn: lastWeek })
-    })
+  context(
+    'when asking for options for an existing record using disabled value',
+    () => {
+      beforeEach(async () => {
+        this.options = await getOptions('1234', 'uk-region', {
+          currentValue: '2',
+          createdOn: today,
+        })
+      })
 
-    it('should return just active options', () => {
-      expect(this.options).to.deep.equal([
-        { label: 'r1', value: '1' },
-        { label: 'r2', value: '2' },
-        { label: 'r3', value: '3' },
-      ])
-    })
-  })
+      it('should return just active options', () => {
+        expect(this.options).to.deep.equal([
+          { label: 'r1', value: '1' },
+          { label: 'r2', value: '2' },
+          { label: 'r3', value: '3' },
+        ])
+      })
+    }
+  )
+
+  context(
+    'when asking for options for an existing record created before option disabled',
+    () => {
+      beforeEach(async () => {
+        this.options = await getOptions('1234', 'uk-region', {
+          currentValue: '1',
+          createdOn: lastWeek,
+        })
+      })
+
+      it('should return just active options', () => {
+        expect(this.options).to.deep.equal([
+          { label: 'r1', value: '1' },
+          { label: 'r2', value: '2' },
+          { label: 'r3', value: '3' },
+        ])
+      })
+    }
+  )
 
   context('when asking for all options for a filter form', () => {
     beforeEach(async () => {
-      this.options = await getOptions('1234', 'uk-region', { includeDisabled: true })
+      this.options = await getOptions('1234', 'uk-region', {
+        includeDisabled: true,
+      })
     })
 
     it('should return just active options', () => {
@@ -102,7 +132,10 @@ describe('#options', () => {
 
   context('when the options are to not be sorted', () => {
     beforeEach(async () => {
-      this.options = await getOptions('1234', 'uk-region', { includeDisabled: true, sorted: false })
+      this.options = await getOptions('1234', 'uk-region', {
+        includeDisabled: true,
+        sorted: false,
+      })
     })
 
     it('should not sort the options', () => {
@@ -116,13 +149,14 @@ describe('#options', () => {
 
   context('when a search term is provided', () => {
     beforeEach(async () => {
-      this.options = await getOptions('1234', 'uk-region', { term: 'r1', includeDisabled: true })
+      this.options = await getOptions('1234', 'uk-region', {
+        term: 'r1',
+        includeDisabled: true,
+      })
     })
 
     it('should only return the option that starts with the term', () => {
-      expect(this.options).to.deep.equal([
-        { label: 'r1', value: '1' },
-      ])
+      expect(this.options).to.deep.equal([{ label: 'r1', value: '1' }])
     })
   })
 
@@ -135,7 +169,9 @@ describe('#options', () => {
 
     context('when there is a context in the options response', () => {
       beforeEach(async () => {
-        this.options = await getOptions('1234', 'service', { context: 'interaction' })
+        this.options = await getOptions('1234', 'service', {
+          context: 'interaction',
+        })
       })
 
       it('should return options in that context', () => {

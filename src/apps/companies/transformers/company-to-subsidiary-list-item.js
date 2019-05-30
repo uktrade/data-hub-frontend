@@ -1,13 +1,16 @@
 const transformCompanyToListItem = require('./company-to-list-item')
 
-module.exports = function transformCompanyToSubsidiaryListItem ({ archived: globalHeadquartersArchived, duns_number: globalHeadquartersDunsNumber }) {
+module.exports = function transformCompanyToSubsidiaryListItem ({ archived: globalHeadquartersArchived }) {
   return (company) => {
-    const listItem = transformCompanyToListItem({
-      ...company,
-      global_headquarters_archived: globalHeadquartersArchived,
-      global_headquarters_duns_number: globalHeadquartersDunsNumber,
-    })
-    listItem.meta = listItem.meta.filter(metaItem => metaItem.label !== 'Global HQ')
+    const listItem = transformCompanyToListItem(company)
+
+    if (!globalHeadquartersArchived) {
+      listItem.meta.push({
+        value: 'Remove subsidiary',
+        url: `/companies/${company.id}/hierarchies/ghq/remove`,
+      })
+    }
+
     return listItem
   }
 }

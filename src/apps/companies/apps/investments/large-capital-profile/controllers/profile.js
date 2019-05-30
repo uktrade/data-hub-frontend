@@ -1,30 +1,16 @@
 const {
   transformProfile,
   transformAdvisers,
+  transformCheckboxes,
+  transformRadioButtons,
   transformInvestorTypes,
   transformRequiredChecks,
 } = require('../transformers')
 
-const { getOptions } = require('../../../../../../lib/options')
-const { getAdvisers } = require('../../../../../adviser/repos')
+const { getInvestorDetailsOptions, getInvestorRequirementsOptions } = require('../options')
+const { INVESTOR_DETAILS, INVESTOR_REQUIREMENTS } = require('../sections')
 const { getCompanyProfiles } = require('../repos')
-const { INVESTOR_DETAILS } = require('../sections')
 const { get } = require('lodash')
-
-const getInvestorTypes = async (token, profile) => {
-  const investorTypes = await getOptions(token, 'capital-investment/investor-type')
-  return transformInvestorTypes(investorTypes, profile.investorDetails)
-}
-
-const getRequiredChecks = async (token, profile) => {
-  const requiredChecks = await getOptions(token, 'capital-investment/required-checks-conducted')
-  return transformRequiredChecks(requiredChecks, profile.investorDetails)
-}
-
-const getRequiredChecksAdvisers = async (token) => {
-  const advisers = await getAdvisers(token)
-  return transformAdvisers(advisers.results)
-}
 
 const getCompanyProfile = async (token, company, editing) => {
   const profiles = await getCompanyProfiles(token, company.id)
@@ -39,14 +25,51 @@ const renderProfile = async (req, res, next) => {
 
   try {
     const profile = await getCompanyProfile(token, company, editing)
+    const editType = get(profile, 'editing')
 
-    if (get(profile, 'editing') === INVESTOR_DETAILS) {
-      profile.investorDetails.investorType.items = await getInvestorTypes(token, profile)
-      profile.investorDetails.requiredChecks = await getRequiredChecks(token, profile)
+    if (editType === INVESTOR_DETAILS) {
+      await Promise.all(getInvestorDetailsOptions(token))
+        .then(([
+          investorTypeMD,
+          requiredCheckMD,
+          adviserMD ]) => {
+          profile.investorDetails.investorType.items = transformInvestorTypes(investorTypeMD, profile.investorDetails)
+          profile.investorDetails.requiredChecks = transformRequiredChecks(requiredCheckMD, profile.investorDetails)
+          profile.investorDetails.requiredChecks.cleared.advisers = transformAdvisers(adviserMD.results)
+          profile.investorDetails.requiredChecks.issuesIdentified.advisers = transformAdvisers(adviserMD.results)
+        })
+    } else if (editType === INVESTOR_REQUIREMENTS) {
+      await Promise.all(getInvestorRequirementsOptions(token))
+        .then(([
+          dealTicketSizeMD,
+          investmentTypeMD,
+          minimumReturnRateMD,
+          timeHorizonMD,
+          restrictionMD,
+          constructionRiskMD,
+          minimumEquityPercentageMD,
+          desiredDealRoleMD,
+        ]) => {
+          const {
+            dealTicketSizes,
+            investmentTypes,
+            minimumReturnRate,
+            timeHorizons,
+            restrictions,
+            constructionRisks,
+            minimumEquityPercentage,
+            desiredDealRoles,
+          } = profile.investorRequirements
 
-      const advisers = await getRequiredChecksAdvisers(token)
-      profile.investorDetails.requiredChecks.cleared.advisers = advisers
-      profile.investorDetails.requiredChecks.issuesIdentified.advisers = advisers
+          profile.investorRequirements.dealTicketSizes.items = transformCheckboxes(dealTicketSizeMD, dealTicketSizes)
+          profile.investorRequirements.investmentTypes.items = transformCheckboxes(investmentTypeMD, investmentTypes)
+          profile.investorRequirements.minimumReturnRate.items = transformRadioButtons(minimumReturnRateMD, minimumReturnRate)
+          profile.investorRequirements.timeHorizons.items = transformCheckboxes(timeHorizonMD, timeHorizons)
+          profile.investorRequirements.restrictions.items = transformCheckboxes(restrictionMD, restrictions)
+          profile.investorRequirements.constructionRisks.items = transformCheckboxes(constructionRiskMD, constructionRisks)
+          profile.investorRequirements.minimumEquityPercentage.items = transformRadioButtons(minimumEquityPercentageMD, minimumEquityPercentage)
+          profile.investorRequirements.desiredDealRoles.items = transformCheckboxes(desiredDealRoleMD, desiredDealRoles)
+        })
     }
 
     res.render('companies/apps/investments/large-capital-profile/views/profile', { profile })

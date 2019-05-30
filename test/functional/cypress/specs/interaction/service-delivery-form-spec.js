@@ -1,4 +1,4 @@
-const fixtures = require('../../fixtures/index.js')
+const fixtures = require('../../fixtures')
 const selectors = require('../../selectors')
 
 describe('Service delivery form', () => {
@@ -82,7 +82,7 @@ describe('Service delivery form', () => {
       cy.get(selectors.interactionForm.ditAdviserTypeahead.addAnotherBtn).click()
       cy.get(selectors.interactionForm.ditAdviserTypeahead.secondTypeahead)
         .should('have.attr', 'placeholder')
-        .and('include', 'Search adviser')
+        .and('include', 'Search team member')
       cy.get(selectors.interactionForm.ditAdviserTypeahead.secondTypeaheadRemoveLink).should('be.visible')
       cy.get(selectors.interactionForm.ditAdviserTypeahead.secondTypeaheadRemoveLink).click()
       cy.get(selectors.interactionForm.ditAdviserTypeahead.secondTypeahead).should('not.be.visible')

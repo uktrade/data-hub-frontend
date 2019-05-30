@@ -241,16 +241,16 @@ const AddItems = {
     }
   },
   buildTypeaheadTemplate (name) {
-    return `<typeahead 
+    return `<typeahead
             entity="adviser"
             model="[]"
-            selected-value="" 
-            name="${name}" 
+            selected-value=""
+            name="${name}"
             :hide-label="true"
-            label="Advisers" 
-            placeholder="Search adviser" 
-            :multiple-select="false" 
-            value="" 
+            label="Advisers"
+            placeholder="Search team member"
+            :multiple-select="false"
+            value=""
             classes="c-form-group c-form-group--no-filter"></typeahead>`
   },
   buildTypeahead (wrapper) {
