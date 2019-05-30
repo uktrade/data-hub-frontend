@@ -8,6 +8,14 @@ describe('Interaction details controller', () => {
     beforeEach(() => {
       this.middlewareParameters = buildMiddlewareParameters({
         interaction: draftPastMeeting,
+        interactions: {
+          breadcrumbs: [
+            {
+              text: 'breadcrumb',
+              href: 'href',
+            },
+          ],
+        },
       })
 
       completeController.renderCompletePage(
@@ -17,9 +25,10 @@ describe('Interaction details controller', () => {
       )
     })
 
-    it('should set the breadcrumb', () => {
+    it('should set the breadcrumbs', () => {
+      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWithExactly('breadcrumb', 'href')
       expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWithExactly('Interaction')
-      expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledOnce
+      expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledTwice
     })
 
     it('should set the title', () => {
