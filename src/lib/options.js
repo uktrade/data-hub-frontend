@@ -37,10 +37,12 @@ async function getOptions (
     currentValue,
     includeDisabled = false,
     sorted = true,
+    sortPropertyName = 'label',
     term,
     id,
     queryString = '',
     context,
+    transformer = transformObjectToOption,
   } = {}
 ) {
   if (id) {
@@ -75,9 +77,9 @@ async function getOptions (
     })
   }
 
-  const mappedOptions = options.map(transformObjectToOption)
+  const mappedOptions = options.map(transformer)
 
-  return sorted ? sortBy(mappedOptions, 'label') : mappedOptions
+  return sorted ? sortBy(mappedOptions, sortPropertyName) : mappedOptions
 }
 
 async function getOptionsForId (token, key, id) {
