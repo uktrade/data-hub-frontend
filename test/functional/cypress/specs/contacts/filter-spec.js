@@ -90,7 +90,7 @@ describe('Contacts Collections Filter', () => {
   })
 
   it('should filter by sector', () => {
-    const sector = '#group-field-company_sector_descends'
+    const sector = selectors.filter.companies.sector
     const { typeahead } = selectors.filter
     cy
       .get(typeahead(sector).selectedOption)
@@ -111,7 +111,7 @@ describe('Contacts Collections Filter', () => {
   })
 
   it('should filter by country', () => {
-    const country = '#group-field-address_country'
+    const country = selectors.filter.companies.country
     const { typeahead } = selectors.filter
 
     cy
