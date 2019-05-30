@@ -22,7 +22,7 @@ describe('Interaction details', () => {
     })
 
     it('should render the heading', () => {
-      cy.get(selectors.localHeader().heading).should('not.be.empty')
+      cy.get(selectors.localHeader().heading).should('have.text', fixtures.interaction.interactionDraftPastMeeting.subject)
     })
 
     it('should render the details', () => {
@@ -74,7 +74,7 @@ describe('Interaction details', () => {
     })
 
     it('should render the heading', () => {
-      cy.get(selectors.localHeader().heading).should('not.be.empty')
+      cy.get(selectors.localHeader().heading).should('have.text', fixtures.interaction.interactionDraftFutureMeeting.subject)
     })
 
     it('should render the details', () => {
@@ -125,7 +125,7 @@ describe('Interaction details', () => {
     })
 
     it('should render the heading', () => {
-      cy.get(selectors.localHeader().heading).should('not.be.empty')
+      cy.get(selectors.localHeader().heading).should('have.text', fixtures.interaction.interactionWithLink.subject)
     })
 
     it('should render the details', () => {
@@ -187,7 +187,7 @@ describe('Interaction details', () => {
     })
 
     it('should render the heading', () => {
-      cy.get(selectors.localHeader().heading).should('not.be.empty')
+      cy.get(selectors.localHeader().heading).should('have.text', fixtures.interaction.interactionWithNoLink.subject)
     })
 
     it('should render the details', () => {
