@@ -85,6 +85,10 @@ const INTERACTION_STATUS = {
   COMPLETE: 'complete',
 }
 
+const ARCHIVED_REASON = {
+  RESCHEDULED: 'Rescheduled',
+}
+
 module.exports = {
   QUERY_FIELDS,
   QUERY_DATE_FIELDS,
@@ -95,4 +99,5 @@ module.exports = {
   IST_ONLY_SERVICES,
   SERVICE_DELIVERY_STATUS_COMPLETED,
   INTERACTION_STATUS,
+  ARCHIVED_REASON,
 }
