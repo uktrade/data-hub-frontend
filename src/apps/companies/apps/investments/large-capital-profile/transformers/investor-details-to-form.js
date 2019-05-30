@@ -4,7 +4,6 @@ const moment = require('moment')
 const types = require('../constants')
 
 const { transformAdviserToOption } = require('../../../../../adviser/transformers')
-const transformObjectToOption = ({ value, label }) => ({ value, text: label })
 
 const parseDate = (dateStr) => {
   const date = moment(dateStr, 'YYYY-MM-DD', true)
@@ -15,30 +14,27 @@ const parseDate = (dateStr) => {
   }
 }
 
-const transformInvestorTypes = (investorTypes, { investorType }) => {
-  const options = investorTypes.map(transformObjectToOption)
+const transformInvestorTypes = (investorTypesMetadata, { investorType }) => {
   const { value } = investorType
 
   if (value) {
-    find(options, (item) => item.value === value).selected = true
+    find(investorTypesMetadata, (item) => item.value === value).selected = true
   }
 
-  options.unshift({
+  investorTypesMetadata.unshift({
     value: null,
     text: '-- Please select an investor type --',
   })
 
-  return options
+  return investorTypesMetadata
 }
 
-const transformRequiredChecks = (requiredChecksMetaData, { requiredChecks }) => {
-  const radioButtons = requiredChecksMetaData.map(transformObjectToOption)
-
+const transformRequiredChecks = (requiredChecksMetadata, { requiredChecks }) => {
   const transformed = {
-    cleared: find(radioButtons, item => item.text === types.CLEARED),
-    issuesIdentified: find(radioButtons, item => item.text === types.ISSUES_IDENTIFIED),
-    notYetChecked: find(radioButtons, item => item.text === types.NOT_YET_CHECKED),
-    notRequired: find(radioButtons, item => item.text === types.CHECKS_NOT_REQUIRED),
+    cleared: find(requiredChecksMetadata, item => item.text === types.CLEARED),
+    issuesIdentified: find(requiredChecksMetadata, item => item.text === types.ISSUES_IDENTIFIED),
+    notYetChecked: find(requiredChecksMetadata, item => item.text === types.NOT_YET_CHECKED),
+    notRequired: find(requiredChecksMetadata, item => item.text === types.CHECKS_NOT_REQUIRED),
   }
 
   const type = get(requiredChecks, 'type.name')
@@ -55,7 +51,7 @@ const transformRequiredChecks = (requiredChecksMetaData, { requiredChecks }) => 
 
   const id = get(requiredChecks, 'type.id')
   if (id) {
-    find(radioButtons, (item) => item.value === id).checked = true
+    find(requiredChecksMetadata, (item) => item.value === id).checked = true
   }
 
   return transformed
