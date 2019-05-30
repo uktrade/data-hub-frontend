@@ -61,3 +61,7 @@ scripts/trello-story-description.txt
 
 # BrowserStack local log
 local.log
+
+# Yarn version policy
+.yarnrc
+.yarn/
