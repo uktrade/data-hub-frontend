@@ -21,8 +21,9 @@ describe('Events Collections Filter', () => {
       .type('United Kingdom')
       .get(typeahead(country).options)
       .should('have.length', 1)
-      .get(typeahead(country).firstOption)
-      .click()
+      .get(typeahead(country).textInput)
+      .type('{enter}')
+      .type('{esc}')
 
     cy.wait('@filterResults').then(xhr => {
       expect(xhr.url).to.contain(
