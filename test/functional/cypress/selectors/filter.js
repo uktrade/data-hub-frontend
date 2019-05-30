@@ -25,6 +25,10 @@ module.exports = {
   events: {
     country: '#group-field-address_country',
   },
+  companies: {
+    country: '#group-field-address_country',
+    sector: '#group-field-company_sector_descends',
+  },
   typeahead (id) {
     return {
       fieldset: id,
