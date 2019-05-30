@@ -16,7 +16,10 @@ function renderCompletePage (req, res) {
     userAgent,
     errors,
   } = res.locals
-  
+
+  const breadcrumbs = get(interactions, 'breadcrumbs', [])
+  breadcrumbs.forEach(({ text, href }) => res.breadcrumb(text, href))
+
   const form = meetingHappenForm({
     userAgent,
     returnLink: getReturnLink(interactions, interaction.id),

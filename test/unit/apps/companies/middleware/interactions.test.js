@@ -37,6 +37,19 @@ describe('Interactions middleware', () => {
       expect(this.middlewareParameters.resMock.locals.interactions.canAdd).to.equal(true)
     })
 
+    it('should set the breadcrumbs', () => {
+      expect(this.middlewareParameters.resMock.locals.interactions.breadcrumbs).to.deep.equal([
+        {
+          href: `/companies/${companyMock.id}`,
+          text: companyMock.name,
+        },
+        {
+          href: `/companies/${companyMock.id}/interactions`,
+          text: 'Interactions',
+        },
+      ])
+    })
+
     it('should call next once', () => {
       expect(this.middlewareParameters.nextSpy).to.be.calledWithExactly()
       expect(this.middlewareParameters.nextSpy).to.be.calledOnce
