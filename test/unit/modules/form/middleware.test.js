@@ -246,7 +246,7 @@ describe('#postDetails', () => {
     })
 
     it('should redirect', () => {
-      expect(this.redirectSpy).to.be.calledWithExactly('/base/1')
+      expect(this.redirectSpy).to.be.calledWithExactly('base/1')
       expect(this.redirectSpy).to.have.been.calledOnce
     })
   })

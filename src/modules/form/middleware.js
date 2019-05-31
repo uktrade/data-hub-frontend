@@ -1,6 +1,7 @@
 const { isEmpty, set, forEach, get } = require('lodash')
 
-const { getNextPath, joinPaths } = require('./helpers')
+const { getNextPath } = require('./helpers')
+const { joinPaths } = require('../../lib/path')
 const state = require('./state/current')
 const { getErrors } = require('./errors')
 
