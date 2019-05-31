@@ -6,6 +6,8 @@ const { transformDateStringToDateObject } = require('../../transformers')
 const { interactionForm, serviceDeliveryForm } = require('../macros')
 const { buildFormWithStateAndErrors } = require('../../builders')
 const { getInteractionOptions } = require('../services/interaction-options')
+const { getReturnLink } = require('../helpers')
+const { joinPaths } = require('../../../lib/path')
 
 const formConfigs = {
   'interaction': interactionForm,
@@ -24,15 +26,10 @@ async function getHiddenFields (req, res, interactionId) {
   return hiddenFields
 }
 
-const getReturnLink = (res, interactionId) => {
-  const urlPrefix = (res.locals.interactions && res.locals.interactions.returnLink) || '/interactions/'
-  return interactionId ? `${urlPrefix}${interactionId}` : urlPrefix
-}
-
 async function buildForm (req, res, interactionId) {
   const options = await getInteractionOptions(req, res)
   const hiddenFields = await getHiddenFields(req, res, interactionId)
-  const returnLink = getReturnLink(res, interactionId)
+  const returnLink = joinPaths([ getReturnLink(res.locals.interactions), interactionId ])
 
   const formProperties = {
     ...options,
