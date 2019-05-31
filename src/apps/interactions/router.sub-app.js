@@ -19,7 +19,7 @@ router.get('/interactions',
 )
 
 router
-  .route('/interactions/create')
+  .route([ '/interactions/create', '/interactions/:interactionId/create' ])
   .post(
     postCreate,
     renderCreate,

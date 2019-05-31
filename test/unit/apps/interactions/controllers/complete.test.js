@@ -202,7 +202,7 @@ describe('Interaction details controller', () => {
       })
     })
 
-    context('when the user selects "Rescheduled" and does not enter a date', () => {
+    context('when the user selects "No" and "Rescheduled" and does not enter a date', () => {
       beforeEach(() => {
         this.saveInteractionStub = sinon.stub()
         this.archiveInteractionStub = sinon.stub()
@@ -256,7 +256,7 @@ describe('Interaction details controller', () => {
       })
     })
 
-    context('when the user selects "Rescheduled" and does enter a date', () => {
+    context('when the user selects "No" and "Rescheduled" and does enter a date', () => {
       beforeEach(() => {
         this.saveInteractionStub = sinon.stub()
         this.archiveInteractionStub = sinon.stub()
@@ -363,6 +363,58 @@ describe('Interaction details controller', () => {
 
       it('should call next once', () => {
         expect(this.middlewareParameters.nextSpy).have.been.calledOnceWithExactly({ statusCode: 500, error: 'error' })
+      })
+    })
+
+    context('when the user selects "Yes"', () => {
+      beforeEach(() => {
+        this.saveInteractionStub = sinon.stub()
+        this.archiveInteractionStub = sinon.stub()
+
+        const controller = proxyquire('~/src/apps/interactions/controllers/complete', {
+          '../repos': {
+            saveInteraction: this.saveInteractionStub,
+            archiveInteraction: this.archiveInteractionStub,
+          },
+        })
+
+        this.middlewareParameters = buildMiddlewareParameters({
+          requestBody: {
+            meeting_happen: 'true',
+          },
+          interaction: draftPastMeeting,
+        })
+
+        return controller.postComplete(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
+      })
+
+      it('should not save the interaction', () => {
+        expect(this.saveInteractionStub).to.not.have.been.called
+      })
+
+      it('should not archive the interaction', () => {
+        expect(this.archiveInteractionStub).to.not.have.been.called
+      })
+
+      it('should not call flash message', () => {
+        expect(this.middlewareParameters.reqMock.flash).to.not.have.been.called
+      })
+
+      it('should redirect to the interaction create journey', () => {
+        const expectedPath = `/companies/${draftPastMeeting.company.id}/interactions/${draftPastMeeting.id}/create`
+        expect(this.middlewareParameters.resMock.redirect).calledOnceWithExactly(expectedPath)
+      })
+
+      it('should not set the errors', () => {
+        expect(this.middlewareParameters.resMock.locals.errors).to.not.exist
+      })
+
+      it('should not call next', () => {
+        expect(this.middlewareParameters.nextSpy).to.not.have.been.called
       })
     })
   })
