@@ -50,7 +50,8 @@ function postCreate (req, res, next) {
   const path = joinPaths(
     [
       res.locals.interactions.returnLink,
-      'create',
+      req.params.interactionId,
+      req.params.interactionId ? 'edit' : 'create',
       kebabCase(theme),
       kebabCase(kind),
     ]
