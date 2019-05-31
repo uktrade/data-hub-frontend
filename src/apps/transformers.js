@@ -16,6 +16,13 @@ function transformObjectToOption ({ id, name }) {
   }
 }
 
+function transformObjectToGovUKOption ({ id, name }) {
+  return {
+    value: id,
+    text: name,
+  }
+}
+
 function transformHQCodeToLabelledOption ({ id, name }) {
   switch (name) {
     case 'ehq':
@@ -99,4 +106,5 @@ module.exports = {
   transformIdToObject,
   transformDateObjectToDateString,
   transformDateStringToDateObject,
+  transformObjectToGovUKOption,
 }
