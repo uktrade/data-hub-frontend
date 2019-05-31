@@ -1,6 +1,7 @@
+const { transformObjectToGovUKOption } = require('../../../../../apps/transformers')
+const { transformAssetClasses } = require('./transformers')
 const { getOptions } = require('../../../../../lib/options')
 const { getAdvisers } = require('../../../../adviser/repos')
-const { transformObjectToGovUKOption } = require('../../../../../apps/transformers')
 
 const OPTIONS = {
   sorted: false,
@@ -18,8 +19,10 @@ const getInvestorDetailsOptions = (token) => {
 const getInvestorRequirementsOptions = (token) => {
   return [
     getOptions(token, 'capital-investment/deal-ticket-size', OPTIONS),
+    getOptions(token, 'capital-investment/asset-class-interest', {
+      transformer: transformAssetClasses,
+    }),
     getOptions(token, 'capital-investment/large-capital-investment-type', {
-      sorted: true,
       sortPropertyName: 'text',
       transformer: transformObjectToGovUKOption,
     }),

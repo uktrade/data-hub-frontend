@@ -1,4 +1,5 @@
 const dealTicketSize = require('~/test/unit/data/companies/investments/metadata/deal-ticket-size.json')
+const assetClassInterest = require('~/test/unit/data/companies/investments/metadata/asset-class-interest.json')
 const investmentType = require('~/test/unit/data/companies/investments/metadata/investment-type.json')
 const minimumReturnRate = require('~/test/unit/data/companies/investments/metadata/minimum-return-rate.json')
 const timeHorizons = require('~/test/unit/data/companies/investments/metadata/time-horizon.json')
@@ -49,6 +50,8 @@ describe('Company Investments - Large capital profile - Investor requirements', 
           .reply(200, clonedCompanyProfile)
           .get('/metadata/capital-investment/deal-ticket-size/')
           .reply(200, dealTicketSize)
+          .get('/metadata/capital-investment/asset-class-interest/')
+          .reply(200, assetClassInterest)
           .get('/metadata/capital-investment/large-capital-investment-type/')
           .reply(200, investmentType)
           .get('/metadata/capital-investment/return-rate/')
@@ -134,6 +137,72 @@ describe('Company Investments - Large capital profile - Investor requirements', 
               text: '£1 billion +',
               value: '5e7601b5-becd-42ea-b885-1bbd88b85e4b',
             }],
+          },
+          assetClasses: {
+            energyAndInfrastructure: {
+              items: [{
+                text: 'Biofuel',
+                value: '66507830-595d-432e-8521-9daf11785265',
+                sector: 'Energy and infrastructure',
+              }, {
+                text: 'Biomass',
+                value: 'f2b6c1a7-4d4f-4fd9-884b-5e1f5b3525be',
+                sector: 'Energy and infrastructure',
+              }, {
+                text: 'Direct heating',
+                value: 'bfab8ff2-e9bb-4fc8-b36c-5adddf8286b0',
+                sector: 'Energy and infrastructure',
+              }, {
+                text: 'Energy from waste',
+                value: '7fe8bde8-72ef-45ac-8c2d-4627023514b4',
+                sector: 'Energy and infrastructure',
+              }, {
+                text: 'Energy storage',
+                value: 'f5a134fa-968f-4723-9255-9450d8f98869',
+                sector: 'Energy and infrastructure',
+              }, {
+                text: 'Gas fired power',
+                value: '0ec0c3b8-6b79-40ae-945a-1a0e1b9a9c46',
+                sector: 'Energy and infrastructure',
+              }, {
+                text: 'Nuclear',
+                value: '9e619e8d-af51-4abf-a83a-5c139851de82',
+                sector: 'Energy and infrastructure',
+              }, {
+                text: 'Regulated assets',
+                value: 'c50686e4-9700-4a9b-8ea9-3dac53c934ac',
+                sector: 'Energy and infrastructure',
+              }, {
+                text: 'Smart energy',
+                value: '51d4f291-15ab-441f-b9e5-82b46a1ba145',
+                sector: 'Energy and infrastructure',
+              }, {
+                text: 'Solar power',
+                value: '87d5c012-9f06-49ce-b2a7-a15d4943a976',
+                sector: 'Energy and infrastructure',
+              }, {
+                text: 'Transport',
+                value: '096772cb-bd14-4bdf-bd5a-5b430e651048',
+                sector: 'Energy and infrastructure',
+              }, {
+                text: 'Wave and tidal',
+                value: 'ea41c626-5464-484e-81a3-05906917aad6',
+                sector: 'Energy and infrastructure',
+              }, {
+                text: 'Windpower (offshore)',
+                value: '07046d37-60bc-4db4-942c-56c5cd31c3e1',
+                sector: 'Energy and infrastructure',
+              }, {
+                text: 'Windpower (onshore)',
+                value: 'f081c413-0c01-4fc2-9061-3203041c71e2',
+                sector: 'Energy and infrastructure',
+              }, {
+                text: 'Upstream oil and gas',
+                value: 'ce528446-a24d-4f05-b3b8-a033cf5d4720',
+                sector: 'Energy and infrastructure',
+              }],
+              value: [],
+            },
           },
           investmentTypes: {
             items: [ {

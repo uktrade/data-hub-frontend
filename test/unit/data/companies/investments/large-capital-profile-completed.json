@@ -71,7 +71,14 @@
         "id": "24d90807-91de-4814-92f6-0a5ee43406d1",
         "name": "Require FX hedge"
       }],
-      "asset_classes_of_interest": [],
+      "asset_classes_of_interest": [{
+         "name": "Biomass",
+         "id": "f2b6c1a7-4d4f-4fd9-884b-5e1f5b3525be"
+        }, {
+         "name": "Direct heating",
+         "id": "bfab8ff2-e9bb-4fc8-b36c-5adddf8286b0"
+        }
+      ],
       "uk_region_locations": [],
       "notes_on_locations": "",
       "other_countries_being_considered": []
