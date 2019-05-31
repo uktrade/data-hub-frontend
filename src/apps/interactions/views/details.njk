@@ -1,7 +1,7 @@
 {% extends "_layouts/two-column.njk" %}
 
 {% set kindWord = interaction.kind | lowerCase %}
-{% set returnLink = interactions.returnLink if interactions else '' %}
+{% set returnLink = interactions.returnLink if interactions else '/interactions' %}
 {% set themePath = interaction.theme | kebabCase if interaction.theme else 'other' %}
 {% set kindPath = interaction.kind | kebabCase %}
 
@@ -12,14 +12,14 @@
     {% if canComplete %}
       {{ govukButton({
         text: 'Complete ' + kindWord,
-        href: returnLink + interaction.id + '/complete'
+        href: [ returnLink, interaction.id, 'complete' ] | joinPaths
       }) }}
     {% endif %}
 
     {% if canEdit %}
       {{ govukButton({
         text: 'Edit ' + kindWord,
-        href: returnLink + interaction.id + '/' + themePath + '/' + kindPath + '/edit',
+        href: [ returnLink, interaction.id, 'edit', themePath, kindPath ] | joinPaths,
         classes: 'govuk-button--secondary'
       }) }}
     {% endif %}

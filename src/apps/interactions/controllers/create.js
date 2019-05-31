@@ -1,5 +1,6 @@
 const { get, kebabCase } = require('lodash')
 const { kindForm } = require('../macros')
+const { joinPaths } = require('../../../lib/path')
 
 const kindLookup = {
   export_interaction: {
@@ -46,8 +47,16 @@ function postCreate (req, res, next) {
   }
 
   const { kind, theme } = kindLookup[kindType] || kindLookup.other
+  const path = joinPaths(
+    [
+      res.locals.interactions.returnLink,
+      'create',
+      kebabCase(theme),
+      kebabCase(kind),
+    ]
+  )
 
-  return res.redirect(`${res.locals.interactions.returnLink}create/${kebabCase(theme)}/${kebabCase(kind)}`)
+  return res.redirect(path)
 }
 
 function renderCreate (req, res) {

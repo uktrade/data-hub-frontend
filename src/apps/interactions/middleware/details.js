@@ -5,6 +5,8 @@ const { transformInteractionFormBodyToApiRequest } = require('../transformers')
 const { fetchInteraction, saveInteraction } = require('../repos')
 const { getContact } = require('../../contacts/repos')
 const { getDitCompany } = require('../../companies/repos')
+const { joinPaths } = require('../../../lib/path')
+const { getReturnLink } = require('../helpers')
 
 async function postDetails (req, res, next) {
   res.locals.requestBody = transformInteractionFormBodyToApiRequest(req.body)
@@ -13,12 +15,7 @@ async function postDetails (req, res, next) {
     const result = await saveInteraction(req.session.token, res.locals.requestBody)
 
     req.flash('success', `${sentence(req.params.kind)} ${res.locals.interaction ? 'updated' : 'created'}`)
-
-    if (res.locals.interactions && res.locals.interactions.returnLink) {
-      return res.redirect(res.locals.interactions.returnLink + result.id)
-    }
-
-    return res.redirect(`/interactions/${result.id}`)
+    res.redirect(joinPaths([ getReturnLink(res.locals.interactions), result.id ]))
   } catch (err) {
     if (err.statusCode === 400) {
       res.locals.form = assign({}, res.locals.form, {

@@ -17,7 +17,6 @@ describe('interaction collection middleware', () => {
 
     this.res = {
       locals: {
-        returnLink: '/return',
         userAgent: {
           isIE: false,
         },
