@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 const { find, get } = require('lodash')
 const moment = require('moment')
-const types = require('../constants')
+const { requiredChecks: types } = require('../constants')
 
 const { transformAdviserToOption } = require('../../../../../adviser/transformers')
 
