@@ -261,6 +261,44 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorRequirements.dealTicketSize.oneBillionPlus).should('be.checked')
     })
 
+    context('should display "Energy and Infrastructure" and all 15 checkboxes should be checked', () => {
+      const { assetClasses } = selectors.investorRequirements
+
+      const labels = [
+        'Energy and Infrastructure',
+        'Biofuel',
+        'Biomass',
+        'Direct heating',
+        'Energy from waste',
+        'Energy storage',
+        'Gas fired power',
+        'Nuclear',
+        'Regulated assets',
+        'Smart energy',
+        'Solar power',
+        'Transport',
+        'Wave and tidal',
+        'Windpower (offshore)',
+        'Windpower (onshore)',
+        'Upstream oil and gas',
+      ]
+
+      before(() => cy.visit(`${largeCapitalProfile}?editing=investor-requirements`))
+
+      Object.keys(assetClasses.energyAndInfrastructure).forEach((key, index) => {
+        if (index === 0) {
+          it(`should display the heading "Energy and Infrastructure"`, () => {
+            cy.get(assetClasses.energyAndInfrastructure[key]).should('contain', labels[index])
+          })
+        } else {
+          it(`should display the ${labels[index]} checkbox and it should be checked`, () => {
+            cy.get(assetClasses.energyAndInfrastructure[key]).should('be.checked')
+            cy.get(`${assetClasses.energyAndInfrastructure[key]} + label`).should('contain', labels[index])
+          })
+        }
+      })
+    })
+
     it('should display "Types of investment" and all 8 checkboxes should be checked"', () => {
       cy.visit(`${largeCapitalProfile}?editing=investor-requirements`)
         .get(investorRequirements.investmentTypes.name).should('contain', 'Types of investment')
