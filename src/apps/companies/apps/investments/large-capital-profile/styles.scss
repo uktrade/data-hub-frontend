@@ -72,15 +72,14 @@ form {
       width: 75%;
     }
     &.investor-requirements-edit  {
-      .restrictions,
       .deal-ticket-sizes {
         @include flexWrap;
-        width: 660px;
-        height: 152px;
+        width: 34.7em;
+        height: 8em;
       }
       .types-of-investment {
         @include flexWrap;
-        height: 205px;
+        height: 11em;
       }
       .energy-and-infrastructure {
         @include flexWrap;
@@ -88,11 +87,16 @@ form {
         padding-left: 10px;
         padding-top: 12px;
         margin-bottom: 15px;
-        width: 654px;
-        height: 414px;
+        width: 34em;
+        height: 22em;
         .label {
           top: -14px;
         }
+      }
+      .restrictions {
+        @include flexWrap;
+        width: 44em;
+        height: 8em;
       }
     }
   }
