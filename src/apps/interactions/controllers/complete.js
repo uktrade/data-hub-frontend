@@ -70,7 +70,10 @@ async function postComplete (req, res, next) {
     }
   }
 
-  // todo meeting_happen true
+  if (req.body.meeting_happen === 'true') {
+    const path = joinPaths([ `/companies/${interaction.company.id}/interactions`, interaction.id, 'create' ])
+    return res.redirect(path)
+  }
 }
 
 module.exports = {
