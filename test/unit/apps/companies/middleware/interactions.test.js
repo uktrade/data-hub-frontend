@@ -22,19 +22,36 @@ describe('Interactions middleware', () => {
     })
 
     it('should set the return link', () => {
-      expect(this.middlewareParameters.resMock.locals.interactions.returnLink).to.equal('/companies/a73efeba-8499-11e6-ae22-56b6b6499611/interactions/')
+      expect(this.middlewareParameters.resMock.locals.interactions.returnLink).to.equal(`/companies/${companyMock.id}/interactions/`)
     })
 
     it('should set the entity name', () => {
-      expect(this.middlewareParameters.resMock.locals.interactions.entityName).to.equal('Mercury Ltd')
+      expect(this.middlewareParameters.resMock.locals.interactions.entityName).to.equal(companyMock.name)
     })
 
     it('should set the query', () => {
-      expect(this.middlewareParameters.resMock.locals.interactions.query).to.deep.equal({ company_id: 'a73efeba-8499-11e6-ae22-56b6b6499611' })
+      expect(this.middlewareParameters.resMock.locals.interactions.query).to.deep.equal({ company_id: companyMock.id })
     })
 
     it('should set the add flag', () => {
       expect(this.middlewareParameters.resMock.locals.interactions.canAdd).to.equal(true)
+    })
+
+    it('should set the show company flag', () => {
+      expect(this.middlewareParameters.resMock.locals.interactions.showCompany).to.equal(false)
+    })
+
+    it('should set the breadcrumbs', () => {
+      expect(this.middlewareParameters.resMock.locals.interactions.breadcrumbs).to.deep.equal([
+        {
+          href: `/companies/${companyMock.id}`,
+          text: companyMock.name,
+        },
+        {
+          href: `/companies/${companyMock.id}/interactions`,
+          text: 'Interactions',
+        },
+      ])
     })
 
     it('should call next once', () => {

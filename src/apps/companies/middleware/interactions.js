@@ -8,6 +8,16 @@ function setInteractionsDetails (req, res, next) {
     query: { company_id: company.id },
     canAdd: !company.archived,
     showCompany: false,
+    breadcrumbs: [
+      {
+        text: company.name,
+        href: `/companies/${company.id}`,
+      },
+      {
+        text: 'Interactions',
+        href: `/companies/${company.id}/interactions`,
+      },
+    ],
   }
 
   next()
