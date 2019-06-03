@@ -7,6 +7,7 @@ const requiredChecks = {
 
 const assetClassSectors = {
   ENERGY_AND_INFRASTRUCTURE: 'Energy and infrastructure',
+  REAL_ESTATE: 'Real estate',
 }
 
 module.exports = {

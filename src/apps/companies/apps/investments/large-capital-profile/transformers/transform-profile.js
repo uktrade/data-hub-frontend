@@ -62,6 +62,9 @@ const transformProfile = (profile, editing) => {
         energyAndInfrastructure: {
           value: get(profile, 'asset_classes_of_interest'),
         },
+        realEstate: {
+          value: get(profile, 'asset_classes_of_interest'),
+        },
       },
       investmentTypes: {
         value: get(profile, 'investment_types'),
