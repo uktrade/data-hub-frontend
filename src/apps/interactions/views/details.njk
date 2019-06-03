@@ -12,7 +12,7 @@
     {% if canComplete %}
       {{ govukButton({
         text: 'Complete ' + kindWord,
-        href: returnLink + interaction.id + '/confirm'
+        href: returnLink + interaction.id + '/complete'
       }) }}
     {% endif %}
 
