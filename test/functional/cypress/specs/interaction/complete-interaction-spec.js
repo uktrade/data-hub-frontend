@@ -226,5 +226,25 @@ describe('Complete interaction', () => {
         })
       })
     })
+
+    context('when the meeting did happen', () => {
+      let params = {}
+
+      before(() => {
+        params.companyId = fixtures.company.venusLtd.id
+        params.interactionId = fixtures.interaction.interactionDraftPastMeeting.id
+
+        cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
+
+        cy.get(selectors.interaction.details.interaction.actions.completeInteraction(params)).click()
+
+        cy.get(selectors.interaction.complete.meetingHappen.yes).click()
+        cy.get(selectors.interaction.complete.actions.continue).click()
+      })
+
+      it('should redirect to the interaction create form', () => {
+        cy.location('pathname').should('eq', `/companies/${params.companyId}/interactions/${[params.interactionId]}/create`)
+      })
+    })
   })
 })
