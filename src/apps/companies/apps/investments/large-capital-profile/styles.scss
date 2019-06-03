@@ -48,7 +48,7 @@ form {
     .asset-classes-of-interest {
       border: 1px solid $govuk-border-colour;
       position: relative;
-      padding: 20px 15px 0 10px;
+      padding: 25px 0 0 10px;
       .label {
         position: absolute;
         top: -10px;
@@ -58,9 +58,20 @@ form {
         padding-left: 10px;
         padding-right: 10px;
       }
-      .email {
-        text-decoration: underline;
-        color: $govuk-blue;
+      .notice {
+        margin-top: 10px;
+        span {
+          text-decoration: underline;
+          color: $govuk-blue;
+        }
+      }
+      .govuk-form-group {
+        margin-bottom: 10px;
+      }
+      .real-estate,
+      .energy-and-infrastructure {
+        border-left: 7px solid $govuk-border-colour;
+        padding-left: 10px;
       }
     }
   }
@@ -77,26 +88,24 @@ form {
         width: 34.7em;
         height: 8em;
       }
-      .types-of-investment {
-        @include flexWrap;
-        height: 11em;
-      }
-      .energy-and-infrastructure {
-        @include flexWrap;
-        border-left: 7px solid $govuk-border-colour;
-        padding-left: 10px;
-        padding-top: 12px;
-        margin-bottom: 15px;
-        width: 34em;
-        height: 22em;
-        .label {
-          top: -14px;
+      .asset-classes-of-interest {
+        .real-estate,
+        .energy-and-infrastructure {
+          @include flexWrap;
+          padding-top: 12px;
+          margin-bottom: 10px;
+          width: 34em;
+          height: 22em;
+          .label {
+            top: -14px;
+          }
         }
-      }
-      .restrictions {
-        @include flexWrap;
-        width: 44em;
-        height: 8em;
+        .real-estate {
+          height: 24.5em;
+        }
+        .govuk-form-group {
+          margin-bottom: 0;
+        }
       }
     }
   }
