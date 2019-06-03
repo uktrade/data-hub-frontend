@@ -108,6 +108,9 @@ const config = {
   currencyRate: {
     usdToGbp: 0.750148,
   },
+  activityFeed: {
+    paginationSize: 20,
+  },
 }
 
 module.exports = config
