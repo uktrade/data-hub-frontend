@@ -46,18 +46,29 @@ const contactFiltersFields = function ({ sectorOptions }) {
       name: 'company_name',
     },
     {
-      macroName: 'MultipleChoiceField',
-      type: 'checkbox',
+      macroName: 'Typeahead',
       name: PRIMARY_SECTOR_NAME,
-      modifier: 'option-select',
+      isAsync: false,
+      classes: 'c-form-group c-form-group--smaller c-form-group--filter',
+      placeholder: 'Search sector',
+      useSubLabel: false,
       options: sectorOptions,
-      label: 'Sectors',
+      hideInactive: false,
+      target: 'metadata',
+      label: 'Sector',
     },
-    assign({}, globalFields.countries, {
+    {
+      macroName: 'Typeahead',
       name: 'address_country',
-      type: 'checkbox',
-      modifier: 'option-select',
-    }),
+      isAsync: false,
+      classes: 'c-form-group c-form-group--smaller c-form-group--filter',
+      placeholder: 'Search country',
+      useSubLabel: false,
+      options: globalFields.countries.options(),
+      hideInactive: false,
+      target: 'metadata',
+      label: 'Country',
+    },
     assign({}, globalFields.ukRegions, {
       name: 'company_uk_region',
       type: 'checkbox',
@@ -74,7 +85,6 @@ const contactFiltersFields = function ({ sectorOptions }) {
       ],
       modifier: 'option-select',
     },
-
   ].map(filter => {
     return assign(filter, {
       modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
@@ -83,15 +93,13 @@ const contactFiltersFields = function ({ sectorOptions }) {
 }
 
 const contactSortForm = merge({}, sortFormBase, {
-  children: [
-    { options: contactSortOptions },
-  ],
+  children: [{ options: contactSortOptions }],
 })
 
 const companyContactSortForm = merge({}, sortFormBase, {
   children: [
     {
-      options: reject(contactSortOptions, (option) => {
+      options: reject(contactSortOptions, option => {
         return option.value.includes('company.name:')
       }),
     },
