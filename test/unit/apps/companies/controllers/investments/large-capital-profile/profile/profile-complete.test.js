@@ -67,6 +67,17 @@ describe('Company Investments - Large capital profile', () => {
               id: '5e7601b5-becd-42ea-b885-1bbd88b85e4b',
             }],
           },
+          assetClasses: {
+            energyAndInfrastructure: {
+              value: [{
+                name: 'Biomass',
+                id: 'f2b6c1a7-4d4f-4fd9-884b-5e1f5b3525be',
+              }, {
+                name: 'Direct heating',
+                id: 'bfab8ff2-e9bb-4fc8-b36c-5adddf8286b0',
+              }],
+            },
+          },
           investmentTypes: {
             value: [ {
               name: 'Direct Investment in Project Equity',

@@ -16,7 +16,10 @@ exports.detailsContainer = require('./details-container')
 exports.document = require('./document')
 exports.entityCollection = require('./entity-collection')
 exports.filter = require('./filter')
-exports.interactionDetails = require('./interaction-details')
+exports.interaction = {
+  complete: require('./interaction/complete'),
+  details: require('./interaction/details'),
+}
 exports.interactionForm = require('./interaction-form')
 exports.keyValueTable = require('./key-value-table')
 exports.localHeader = require('./local-header')

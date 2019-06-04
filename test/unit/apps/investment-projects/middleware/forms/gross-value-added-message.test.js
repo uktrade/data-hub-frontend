@@ -39,7 +39,7 @@ describe('Gross value added message', () => {
         investment_type: { name: investmentTypes.FDI },
         gross_value_added: null,
       }
-      expect(grossValueAddedMessage(investment)).to.eq(gvaMessages.foreignEquityInvestment)
+      expect(grossValueAddedMessage(investment)).to.eq(gvaMessages.capitalExpenditureRequired)
     })
   })
 
@@ -64,7 +64,7 @@ describe('Gross value added message', () => {
         investment_type: { name: investmentTypes.FDI },
         gross_value_added: null,
       }
-      expect(grossValueAddedMessage(investment)).to.eq(gvaMessages.foreignEquityAndPrimarySector)
+      expect(grossValueAddedMessage(investment)).to.eq(gvaMessages.capitalExpenditureAndPrimarySectorRequired)
     })
   })
 })

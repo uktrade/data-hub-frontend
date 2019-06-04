@@ -1,8 +1,29 @@
 {% extends "_layouts/two-column.njk" %}
 
+{% set kindWord = interaction.kind | lowerCase %}
+{% set returnLink = interactions.returnLink if interactions else '' %}
+{% set themePath = interaction.theme | kebabCase if interaction.theme else 'other' %}
+{% set kindPath = interaction.kind | kebabCase %}
+
 {% block main_grid_right_column %}
-  {% component 'key-value-table', variant='striped', items=interactionViewRecord %}
-  <a class="button button--secondary" href="{{interaction.id}}/{{ interaction.theme if (interaction.theme | kebabCase) else 'other' }}/{{ interaction.kind | kebabCase }}/edit">
-    Edit {{ interaction.kind | lowerCase }}
-  </a>
+  {% component 'key-value-table', variant='striped', items=interactionViewRecord, dataAutoId='interactionDetails' %}
+
+  <div class="c-form-actions">
+    {% if canComplete %}
+      {{ govukButton({
+        text: 'Complete ' + kindWord,
+        href: returnLink + interaction.id + '/complete'
+      }) }}
+    {% endif %}
+
+    {% if canEdit %}
+      {{ govukButton({
+        text: 'Edit ' + kindWord,
+        href: returnLink + interaction.id + '/' + themePath + '/' + kindPath + '/edit',
+        classes: 'govuk-button--secondary'
+      }) }}
+    {% endif %}
+
+    <a href="{{ returnLink }}">Back</a>
+  </div>
 {% endblock %}

@@ -31,8 +31,10 @@ nav.govuk-tabs {
   details:last-child {
     border-bottom: 2px solid lightgray;
   }
+}
 
-  form.investor-details-edit {
+form {
+  &.investor-details-edit {
     label {
       font-weight: bold;
     }
@@ -42,22 +44,60 @@ nav.govuk-tabs {
       }
     }
   }
+  &.investor-requirements-edit {
+    .asset-classes-of-interest {
+      border: 1px solid $govuk-border-colour;
+      position: relative;
+      padding: 20px 15px 0 10px;
+      .label {
+        position: absolute;
+        top: -10px;
+        left: 7px;
+        color: $govuk-secondary-text-colour;
+        background: $govuk-body-background-colour;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+      .email {
+        text-decoration: underline;
+        color: $govuk-blue;
+      }
+    }
+  }
 }
 
 @include govuk-media-query($from: tablet) {
-  form.investor-details-edit {
-    width: 75%;
-  }
-  form.investor-requirements-edit  {
-    .restrictions,
-    .deal-ticket-sizes {
-      @include flexWrap;
-      width: 660px;
-      height: 152px;
+  form {
+    &.investor-details-edit {
+      width: 75%;
     }
-    .types-of-investment {
-      @include flexWrap;
-      height: 205px;
+    &.investor-requirements-edit  {
+      .deal-ticket-sizes {
+        @include flexWrap;
+        width: 34.7em;
+        height: 8em;
+      }
+      .types-of-investment {
+        @include flexWrap;
+        height: 11em;
+      }
+      .energy-and-infrastructure {
+        @include flexWrap;
+        border-left: 7px solid $govuk-border-colour;
+        padding-left: 10px;
+        padding-top: 12px;
+        margin-bottom: 15px;
+        width: 34em;
+        height: 22em;
+        .label {
+          top: -14px;
+        }
+      }
+      .restrictions {
+        @include flexWrap;
+        width: 44em;
+        height: 8em;
+      }
     }
   }
 }

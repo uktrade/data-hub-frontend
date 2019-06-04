@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
 const { formatDate } = require('../../../../../../../config/nunjucks/filters')
-const { CLEARED, ISSUES_IDENTIFIED } = require('../constants')
+const { requiredChecks } = require('../constants')
 const { get } = require('lodash')
 
 const getRequiredChecksDetails = (type, date, adviser) => {
   const details = [ type.name ]
 
-  if (type.name === CLEARED || type.name === ISSUES_IDENTIFIED) {
+  if (type.name === requiredChecks.CLEARED || type.name === requiredChecks.ISSUES_IDENTIFIED) {
     details.push(`Date of most recent background checks: ${formatDate(date, 'DD MM YYYY')}`)
     details.push(`Person responsible for most recent background checks: ${adviser.name}`)
   }
@@ -57,6 +57,11 @@ const transformProfile = (profile, editing) => {
       incompleteFields: get(profile, 'incomplete_requirements_fields.length'),
       dealTicketSizes: {
         value: get(profile, 'deal_ticket_sizes'),
+      },
+      assetClasses: {
+        energyAndInfrastructure: {
+          value: get(profile, 'asset_classes_of_interest'),
+        },
       },
       investmentTypes: {
         value: get(profile, 'investment_types'),
