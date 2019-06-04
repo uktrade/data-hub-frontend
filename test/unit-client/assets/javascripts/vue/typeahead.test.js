@@ -2,7 +2,8 @@ const Vue = require('vue')
 const { mount } = require('@vue/test-utils')
 const axios = require('axios')
 
-const Typeahead = require('../../../../../assets/javascripts/vue/typeahead.vue').default
+const Typeahead = require('../../../../../assets/javascripts/vue/typeahead.vue')
+  .default
 const { highlight } = require('../../../../../assets/javascripts/vue/filters')
 
 const XHR = require('../../../../../assets/javascripts/lib/xhr')
@@ -41,11 +42,19 @@ describe('Typeahead', () => {
 
     context('when rendering default state', () => {
       it('should render a control wrapper with the request classes for styling', () => {
-        expect(component.find('.c-form-group.c-form-group--light.c-form-group--smaller.c-form-group--filter')).to.not.be.null
+        expect(
+          component.find(
+            '.c-form-group.c-form-group--light.c-form-group--smaller.c-form-group--filter'
+          )
+        ).to.not.be.null
       })
 
       it('should render the label', () => {
-        expect(component.find('label.c-form-group__label span.c-form-group__label-text').text()).to.equal('Adviser')
+        expect(
+          component
+            .find('label.c-form-group__label span.c-form-group__label-text')
+            .text()
+        ).to.equal('Adviser')
       })
 
       it('should render a multi select control', () => {
@@ -53,22 +62,27 @@ describe('Typeahead', () => {
       })
 
       it('should render a placeholder value in search text field', () => {
-        expect(component.find('.multiselect__input').attributes().placeholder).to.equal('Search team member')
+        expect(
+          component.find('.multiselect__input').attributes().placeholder
+        ).to.equal('Search team member')
       })
     })
 
     context('when there are suggestions to display', () => {
-      beforeEach((done) => {
+      beforeEach(done => {
         const dataWithOptions = Object.assign({}, defaultProps, {
-          options: [{
-            value: '1234',
-            label: 'Fred Smith',
-            subLabel: 'London',
-          }, {
-            value: '4321',
-            label: 'Jane Jones',
-            subLabel: 'Scotland',
-          }],
+          options: [
+            {
+              value: '1234',
+              label: 'Fred Smith',
+              subLabel: 'London',
+            },
+            {
+              value: '4321',
+              label: 'Jane Jones',
+              subLabel: 'Scotland',
+            },
+          ],
         })
 
         component.setData(dataWithOptions)
@@ -76,24 +90,32 @@ describe('Typeahead', () => {
       })
 
       it('should render an item for each option', () => {
-        const options = component.findAll('.multiselect__element .multiselect__option')
+        const options = component.findAll(
+          '.multiselect__element .multiselect__option'
+        )
         expect(options).to.have.length(2)
       })
 
       it('should render the correct markup for an option', () => {
-        const markup = component.find('.multiselect__element .multiselect__option').element.innerHTML
-        expect(markup).to.equal('<div class="multiselect__option-label">Fred Smith</div> <div class="multiselect__option-sublabel">London</div>')
+        const markup = component.find(
+          '.multiselect__element .multiselect__option'
+        ).element.innerHTML
+        expect(markup).to.equal(
+          '<div class="multiselect__option-label">Fred Smith</div> <div class="multiselect__option-sublabel">London</div>'
+        )
       })
     })
 
     context('when advisers are selected that have names and team names', () => {
-      beforeEach((done) => {
+      beforeEach(done => {
         const dataWithSelectedAdvisers = Object.assign({}, defaultProps, {
-          selectedOptions: [{
-            value: '1234',
-            label: 'Fred Jones',
-            subLabel: 'Team ABC',
-          }],
+          selectedOptions: [
+            {
+              value: '1234',
+              label: 'Fred Jones',
+              subLabel: 'Team ABC',
+            },
+          ],
         })
 
         component.setData(dataWithSelectedAdvisers)
@@ -105,48 +127,81 @@ describe('Typeahead', () => {
       })
 
       it('should show the adviser name and team in the tag', () => {
-        expect(component.find('.multiselect__tag').text()).to.equal('Fred Jones, Team ABC')
+        expect(component.find('.multiselect__tag').text()).to.equal(
+          'Fred Jones, Team ABC'
+        )
       })
 
       it('should render the selected options as hidden fields', () => {
-        const element = component.find('input[type="hidden"][name="adviser"]').element
+        const element = component.find('input[type="hidden"][name="adviser"]')
+          .element
         expect(element.value).to.equal('1234')
       })
     })
 
     context('when choosing not to display form labels', () => {
-      beforeEach((done) => {
+      beforeEach(done => {
         component = mount(Typeahead, {
           propsData: Object.assign({}, defaultProps, { isLabelHidden: true }),
         })
         Vue.nextTick(done)
       })
       it('should hide the label with visually hidden class', () => {
-        expect(component.find('.u-visually-hidden').classes('u-visually-hidden')).to.be.true
+        expect(
+          component.find('.u-visually-hidden').classes('u-visually-hidden')
+        ).to.be.true
       })
     })
 
     context('when choosing not to display sub labels when selected', () => {
-      beforeEach((done) => {
+      beforeEach(done => {
         const dataWithHiddenSubLabel = Object.assign({}, defaultProps, {
           hasSubLabel: false,
-          selectedOptions: [{
-            value: '1234',
-            label: 'Fred Jones',
-            subLabel: 'Team ABC',
-          }],
+          selectedOptions: [
+            {
+              value: '1234',
+              label: 'Fred Jones',
+              subLabel: 'Team ABC',
+            },
+          ],
         })
         component.setData(dataWithHiddenSubLabel)
         Vue.nextTick(done)
       })
       it('should show the adviser name without the team', () => {
-        expect(component.find('.multiselect__tag').text()).to.equal('Fred Jones')
+        expect(component.find('.multiselect__tag').text()).to.equal(
+          'Fred Jones'
+        )
       })
     })
   })
 
   describe('data', () => {
     let component
+    const model = `[{
+            "value": "cff02898-9698-e211-a939-e4115bead28a",
+            "label": "Aberdeen City Council"
+          }, {
+            "value": "08c14624-2f50-e311-a56a-e4115bead28a",
+            "label": "Advanced Manufacturing Sector"
+          }, {
+            "value": "d33ade1c-9798-e211-a939-e4115bead28a",
+            "label": "Advantage West Midlands (AWM)"
+          }]`
+
+    context('when created with isAsync false', () => {
+      beforeEach(() => {
+        component = mount(Typeahead, {
+          propsData: Object.assign({}, defaultProps, {
+            isAsync: false,
+            model,
+          }),
+        })
+      })
+      it('should set options data to parsed model data', () => {
+        expect(component.vm.options).to.deep.equal(JSON.parse(model))
+      })
+    })
 
     context('when created with no value', () => {
       beforeEach(() => {
@@ -200,13 +255,15 @@ describe('Typeahead', () => {
       })
 
       context('when the user enters more than 3 characters', () => {
-        beforeEach((done) => {
+        beforeEach(done => {
           axios.get = sinon.stub().resolves({
-            data: [{
-              value: '1',
-              label: 'Fred Smith',
-              subLabel: 'Dept of commerce',
-            }],
+            data: [
+              {
+                value: '1',
+                label: 'Fred Smith',
+                subLabel: 'Dept of commerce',
+              },
+            ],
           })
 
           asyncSearch('fred')
@@ -215,56 +272,69 @@ describe('Typeahead', () => {
 
         it('should have fetched suggestions', () => {
           expect(axios.get).to.have.been.calledOnce
-          expect(axios.get).to.be.calledWith('/api/options/adviser?autocomplete=fred&target=metadata')
+          expect(axios.get).to.be.calledWith(
+            '/api/options/adviser?autocomplete=fred&target=metadata'
+          )
         })
 
         it('should store the return options', () => {
-          expect(instance.options).to.deep.equal([{
-            value: '1',
-            label: 'Fred Smith',
-            subLabel: 'Dept of commerce',
-          }])
-        })
-      })
-
-      context('when typehead depends (is chained with) on another typehead', () => {
-        beforeEach((done) => {
-          instance = {
-            name: 'adviser',
-            entity: 'adviser',
-            multipleSelectOptions: false,
-            options: [],
-            filterInactive: '',
-            chainedParams: { 'urlParam': 'testparam', 'valueFrom': 'testInput' },
-            target: 'metadata',
-          }
-
-          asyncSearch = Typeahead.methods.asyncSearch.bind(instance)
-
-          sinon.stub(document, 'getElementsByName').returns([{
-            value: 'testvalue',
-          }])
-
-          axios.get = sinon.stub().resolves({
-            data: [{
+          expect(instance.options).to.deep.equal([
+            {
               value: '1',
               label: 'Fred Smith',
               subLabel: 'Dept of commerce',
-            }],
-          })
-
-          asyncSearch('fred')
-          setTimeout(done, 600)
-        })
-
-        it('should have fetched suggestions', () => {
-          expect(axios.get).to.have.been.calledOnce
-          expect(axios.get).to.be.calledWith('/api/options/adviser?autocomplete=fred&target=metadata&chained_param=testparam&chained_value=testvalue')
+            },
+          ])
         })
       })
 
+      context(
+        'when typehead depends (is chained with) on another typehead',
+        () => {
+          beforeEach(done => {
+            instance = {
+              name: 'adviser',
+              entity: 'adviser',
+              multipleSelectOptions: false,
+              options: [],
+              filterInactive: '',
+              chainedParams: { urlParam: 'testparam', valueFrom: 'testInput' },
+              target: 'metadata',
+            }
+
+            asyncSearch = Typeahead.methods.asyncSearch.bind(instance)
+
+            sinon.stub(document, 'getElementsByName').returns([
+              {
+                value: 'testvalue',
+              },
+            ])
+
+            axios.get = sinon.stub().resolves({
+              data: [
+                {
+                  value: '1',
+                  label: 'Fred Smith',
+                  subLabel: 'Dept of commerce',
+                },
+              ],
+            })
+
+            asyncSearch('fred')
+            setTimeout(done, 600)
+          })
+
+          it('should have fetched suggestions', () => {
+            expect(axios.get).to.have.been.calledOnce
+            expect(axios.get).to.be.calledWith(
+              '/api/options/adviser?autocomplete=fred&target=metadata&chained_param=testparam&chained_value=testvalue'
+            )
+          })
+        }
+      )
+
       context('when the user enters less than 3 characters', () => {
-        beforeEach((done) => {
+        beforeEach(done => {
           axios.get = sinon.stub().resolves()
           asyncSearch('fr')
           setTimeout(done, 600)
@@ -280,7 +350,7 @@ describe('Typeahead', () => {
       })
 
       context('when choosing to not display inactive advisers', () => {
-        beforeEach((done) => {
+        beforeEach(done => {
           instance = {
             name: 'adviser',
             entity: 'adviser',
@@ -291,11 +361,13 @@ describe('Typeahead', () => {
           asyncSearch = Typeahead.methods.asyncSearch.bind(instance)
 
           axios.get = sinon.stub().resolves({
-            data: [{
-              value: '1',
-              label: 'Fred Smith',
-              subLabel: 'Dept of commerce',
-            }],
+            data: [
+              {
+                value: '1',
+                label: 'Fred Smith',
+                subLabel: 'Dept of commerce',
+              },
+            ],
           })
 
           asyncSearch('fred')
@@ -303,7 +375,9 @@ describe('Typeahead', () => {
         })
         it('should not fetch active users', () => {
           expect(axios.get).to.have.been.calledOnce
-          expect(axios.get).to.be.calledWith('/api/options/adviser?autocomplete=fred&is_active=true&target=metadata')
+          expect(axios.get).to.be.calledWith(
+            '/api/options/adviser?autocomplete=fred&is_active=true&target=metadata'
+          )
         })
       })
     })
@@ -336,18 +410,20 @@ describe('Typeahead', () => {
       })
 
       context('when the user enters less than 3 characters', () => {
-        beforeEach((done) => {
+        beforeEach(done => {
           textInput.setValue('z')
           setTimeout(done, 600)
         })
         it('should not have fetched results', () => {
           const listItem = wrapper.find('.multiselect__content li')
-          expect(listItem.text()).to.equal('No elements found. Consider changing the search query.')
+          expect(listItem.text()).to.equal(
+            'No elements found. Consider changing the search query.'
+          )
         })
       })
 
       context('when the user enters a character that matches', () => {
-        beforeEach((done) => {
+        beforeEach(done => {
           textInput.setValue('a')
           setTimeout(done, 600)
         })
@@ -358,7 +434,7 @@ describe('Typeahead', () => {
       })
 
       context('when the user enters characters that match', () => {
-        beforeEach((done) => {
+        beforeEach(done => {
           textInput.setValue('aber')
           setTimeout(done, 600)
         })
@@ -369,7 +445,7 @@ describe('Typeahead', () => {
       })
 
       context('when the user enters words that match in reverse order', () => {
-        beforeEach((done) => {
+        beforeEach(done => {
           textInput.setValue('City Aberdeen')
           setTimeout(done, 600)
         })
@@ -380,7 +456,7 @@ describe('Typeahead', () => {
       })
 
       context('when the user enters words that match in all lowercase', () => {
-        beforeEach((done) => {
+        beforeEach(done => {
           textInput.setValue('aberdeen city')
           setTimeout(done, 600)
         })
@@ -391,7 +467,7 @@ describe('Typeahead', () => {
       })
 
       context('when the user enters words that match in all uppercase', () => {
-        beforeEach((done) => {
+        beforeEach(done => {
           textInput.setValue('ABERDEEN CITY')
           setTimeout(done, 600)
         })
@@ -438,8 +514,10 @@ describe('Typeahead', () => {
         })
 
         context('and when not already waiting for search results', () => {
-          beforeEach((done) => {
-            selectedOptions([{ value: '1234', label: 'Fred Smith', subLabel: 'Charters' }])
+          beforeEach(done => {
+            selectedOptions([
+              { value: '1234', label: 'Fred Smith', subLabel: 'Charters' },
+            ])
             setTimeout(done, 100)
           })
 
