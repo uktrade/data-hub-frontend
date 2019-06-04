@@ -60,8 +60,6 @@ Feature: View a list of events
     Then I can view the event
     And I filter the events list by event type
     Then I can view the event
-    And I filter the events list by country
-    Then I can view the event
     And I filter the events list by start date
     Then I can view the event
 
