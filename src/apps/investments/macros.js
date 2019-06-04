@@ -1,13 +1,19 @@
-const { assign, flatten } = require('lodash')
+const { assign, flatten, get } = require('lodash')
 
 const metadata = require('../../lib/metadata')
 const { globalFields } = require('../macros')
 const { transformObjectToOption } = require('../transformers')
 const { collectionFilterLabels, requirementsLabels } = require('./labels')
 const FILTER_CONSTANTS = require('../../lib/filter-constants')
-const PRIMARY_SECTOR_NAME = FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.PRIMARY.NAME
+const PRIMARY_SECTOR_NAME =
+  FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.PRIMARY.NAME
 
-const investmentFiltersFields = function ({ currentAdviserId, sectorOptions, adviserOptions, userAgent }) {
+const investmentFiltersFields = function ({
+  currentAdviserId,
+  sectorOptions,
+  adviserOptions,
+  userAgent,
+}) {
   return [
     {
       macroName: 'MultipleChoiceField',
@@ -23,9 +29,7 @@ const investmentFiltersFields = function ({ currentAdviserId, sectorOptions, adv
       name: 'adviser',
       type: 'checkbox',
       modifier: ['option-select', 'hide-label'],
-      options: [
-        { value: currentAdviserId, label: 'My Projects' },
-      ],
+      options: [{ value: currentAdviserId, label: 'My Projects' }],
     },
     {
       macroName: 'Typeahead',
@@ -38,20 +42,28 @@ const investmentFiltersFields = function ({ currentAdviserId, sectorOptions, adv
       target: 'metadata',
     },
     {
-      macroName: 'MultipleChoiceField',
-      type: 'checkbox',
+      macroName: 'Typeahead',
       name: PRIMARY_SECTOR_NAME,
-      modifier: 'option-select',
+      isAsync: false,
+      classes: 'c-form-group c-form-group--smaller c-form-group--filter',
+      placeholder: 'Search sector',
+      useSubLabel: false,
       options: sectorOptions,
+      hideInactive: false,
+      target: 'metadata',
+      label: 'Sector',
     },
     {
-      macroName: 'MultipleChoiceField',
+      macroName: 'Typeahead',
       name: 'investor_company_country',
-      type: 'checkbox',
-      modifier: 'option-select',
-      options () {
-        return metadata.countryOptions.map(transformObjectToOption)
-      },
+      isAsync: false,
+      classes: 'c-form-group c-form-group--smaller c-form-group--filter',
+      placeholder: 'Search country',
+      useSubLabel: false,
+      options: get(metadata, 'countryOptions', []).map(transformObjectToOption),
+      hideInactive: false,
+      target: 'metadata',
+      label: 'Country of origin',
     },
     {
       macroName: 'MultipleChoiceField',
@@ -301,14 +313,16 @@ const requirementsFormConfig = ({
         macroName: 'AddAnother',
         buttonName: 'add_item',
         name: 'delivery_partners',
-        children: [{
-          macroName: 'MultipleChoiceField',
-          name: 'delivery_partners',
-          label: labels.delivery_partners,
-          isLabelHidden: true,
-          options: partners,
-          initialOption: '-- Select a partner --',
-        }],
+        children: [
+          {
+            macroName: 'MultipleChoiceField',
+            name: 'delivery_partners',
+            label: labels.delivery_partners,
+            isLabelHidden: true,
+            options: partners,
+            initialOption: '-- Select a partner --',
+          },
+        ],
       },
     ].map(field => {
       return assign(field, {
@@ -320,27 +334,24 @@ const requirementsFormConfig = ({
 
 const statusFormConfig = {
   buttonText: 'Save',
-  children: [{
-    macroName: 'MultipleChoiceField',
-    type: 'radio',
-    name: 'status',
-    label: 'Status',
-    isLabelHidden: true,
-    options: metadata.investmentStatusOptions,
-  }],
-}
-
-const investmentProfilesFiltersFields = function ({ currentAdviserId, sectorOptions, userAgent }) {
-  return [
+  children: [
     {
       macroName: 'MultipleChoiceField',
-      name: 'investor_company_country',
-      type: 'checkbox',
-      modifier: 'option-select',
-      options () {
-        return metadata.countryOptions.map(transformObjectToOption)
-      },
+      type: 'radio',
+      name: 'status',
+      label: 'Status',
+      isLabelHidden: true,
+      options: metadata.investmentStatusOptions,
     },
+  ],
+}
+
+const investmentProfilesFiltersFields = function ({
+  currentAdviserId,
+  sectorOptions,
+  userAgent,
+}) {
+  return [
     {
       macroName: 'MultipleChoiceField',
       name: 'level_of_involvement_simplified',

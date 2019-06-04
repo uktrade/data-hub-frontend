@@ -33,11 +33,18 @@ const eventFiltersFields = ({ advisers, userAgent }) => {
       hint: userAgent.isIE ? 'DD/MM/YYYY' : null,
       inputClass: userAgent.isIE ? 'ie-date-field' : null,
     },
-    assign({}, globalFields.countries, {
+    {
+      macroName: 'Typeahead',
       name: 'address_country',
-      type: 'checkbox',
-      modifier: 'option-select',
-    }),
+      isAsync: false,
+      classes: 'c-form-group c-form-group--smaller c-form-group--filter',
+      placeholder: 'Search country',
+      useSubLabel: false,
+      options: globalFields.countries.options(),
+      hideInactive: false,
+      target: 'metadata',
+      label: 'Country',
+    },
     assign({}, globalFields.ukRegions, {
       name: 'uk_region',
       type: 'checkbox',

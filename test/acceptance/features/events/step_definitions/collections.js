@@ -87,13 +87,6 @@ Then(/^I filter the events list by organiser$/, async function () {
     .wait() // wait for xhr
 })
 
-Then(/^I filter the events list by country/, async function () {
-  await EventList.section.filters
-    .waitForElementPresent('@country')
-    .clickMultipleChoiceOption('address_country', this.state.event.address_country)
-    .wait() // wait for xhr
-})
-
 Then(/^I filter the events list by event type/, async function () {
   await EventList.section.filters
     .waitForElementPresent('@eventType')
