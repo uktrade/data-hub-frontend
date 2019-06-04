@@ -8,5 +8,6 @@ module.exports = () => {
       paragraph: (number) => `${localHeaderSelector} .c-local-header__description p:nth-child(${number})`,
     },
     viewFullBusinessDetailsLink: (companyId) => `${localHeaderSelector} [href="/companies/${companyId}/business-details"]`,
+    flash: '.c-message',
   }
 }
