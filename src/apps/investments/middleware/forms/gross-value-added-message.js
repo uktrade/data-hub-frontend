@@ -1,12 +1,12 @@
 /* eslint-disable camelcase */
 const { investmentTypes } = require('../../types')
 
-const foreignEquityInvestment = `<span class='govuk-body govuk-!-font-weight-bold'>Foreign equity investment value</span>`
 const primarySector = `<span class='govuk-body govuk-!-font-weight-bold'>Primary sector</span>`
+const capitalExpenditureValue = `<span class='govuk-body govuk-!-font-weight-bold'>capital expenditure value</span>`
 
 const gvaMessages = {
-  foreignEquityAndPrimarySector: `Add ${foreignEquityInvestment} and ${primarySector} (investment project summary) to calculate GVA`,
-  foreignEquityInvestment: `Add ${foreignEquityInvestment} and click "Save" to calculate GVA`,
+  capitalExpenditureAndPrimarySectorRequired: `Add ${capitalExpenditureValue} and ${primarySector} (investment project summary) to calculate GVA`,
+  capitalExpenditureRequired: `Add ${capitalExpenditureValue} and click "Save" to calculate GVA`,
   primarySector: `Add ${primarySector} (investment project summary) to calculate GVA`,
 }
 
@@ -24,11 +24,11 @@ const grossValueAddedMessage = ({
   }
 
   if (!foreign_equity_investment && !sector) {
-    return gvaMessages.foreignEquityAndPrimarySector
+    return gvaMessages.capitalExpenditureAndPrimarySectorRequired
   }
 
   if (!foreign_equity_investment) {
-    return gvaMessages.foreignEquityInvestment
+    return gvaMessages.capitalExpenditureRequired
   }
 
   if (!sector) {

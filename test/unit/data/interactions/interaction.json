@@ -17,6 +17,7 @@
   },
   "event": null,
   "is_event": null,
+  "status": "complete",
   "kind": "interaction",
   "modified_by": {
       "first_name": "DIT",

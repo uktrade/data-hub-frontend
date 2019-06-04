@@ -6,7 +6,7 @@ const paths = require('~/src/apps/investments/paths')
 const config = require('~/config')
 const moment = require('moment')
 
-const gvaMessage = gvaMessages.foreignEquityAndPrimarySector
+const gvaMessage = gvaMessages.capitalExpenditureAndPrimarySectorRequired
 const yesterday = moment().subtract(1, 'days').toISOString()
 const lastMonth = moment().subtract(1, 'months').toISOString()
 

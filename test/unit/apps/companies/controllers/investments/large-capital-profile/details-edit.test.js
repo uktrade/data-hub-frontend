@@ -157,6 +157,11 @@ describe('Company Investments - Large capital profile - Investor details', () =>
           dealTicketSizes: {
             value: [],
           },
+          assetClasses: {
+            energyAndInfrastructure: {
+              value: [],
+            },
+          },
           investmentTypes: {
             value: [],
           },

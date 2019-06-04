@@ -1,6 +1,6 @@
 <ul class="task-list">
   {{ taskListItem({ name: 'Deal ticket size', value: profile.investorRequirements.dealTicketSizes.value, key: 'name' }) }}
-  {{ taskListItem({ name: 'Asset classes of interest' }) }}
+  {{ taskListItem({ name: 'Asset classes of interest', value: profile.investorRequirements.assetClasses.energyAndInfrastructure.value, key: 'name' }) }}
   {{ taskListItem({ name: 'Types of investment',  value: profile.investorRequirements.investmentTypes.value, key: 'name' }) }}
   {{ taskListItem({ name: 'Minimum return rate', value: profile.investorRequirements.minimumReturnRate.text }) }}
   {{ taskListItem({ name: 'Time horizon / tenor', value: profile.investorRequirements.timeHorizons.value, key: 'name' }) }}

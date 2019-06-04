@@ -7,10 +7,10 @@ describe('Large capital profile, Investor details API to form', () => {
   context('when translating Investor types', () => {
     beforeEach(() => {
       const investorTypes = [ {
-        label: 'Angel syndicate',
+        text: 'Angel syndicate',
         value: '1',
       }, {
-        label: 'Asset manager',
+        text: 'Asset manager',
         value: '2',
       }]
 
@@ -42,16 +42,16 @@ describe('Large capital profile, Investor details API to form', () => {
   context('when translating required checks', () => {
     beforeEach(() => {
       this.requiredChecks = [ {
-        label: 'Cleared',
+        text: 'Cleared',
         value: '1',
       }, {
-        label: 'Issues identified',
+        text: 'Issues identified',
         value: '2',
       }, {
-        label: 'Not yet checked',
+        text: 'Not yet checked',
         value: '4',
       }, {
-        label: 'Checks not required - See Investor Screening Report (ISR) guidance',
+        text: 'Checks not required - See Investor Screening Report (ISR) guidance',
         value: '3',
       }]
     })

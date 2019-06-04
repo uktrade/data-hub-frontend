@@ -9,6 +9,7 @@ const {
 
 const { getInvestorDetailsOptions, getInvestorRequirementsOptions } = require('../options')
 const { INVESTOR_DETAILS, INVESTOR_REQUIREMENTS } = require('../sections')
+const { assetClassSectors } = require('../constants')
 const { getCompanyProfiles } = require('../repos')
 const { get } = require('lodash')
 
@@ -42,6 +43,7 @@ const renderProfile = async (req, res, next) => {
       await Promise.all(getInvestorRequirementsOptions(token))
         .then(([
           dealTicketSizeMD,
+          assetClassesMD,
           investmentTypeMD,
           minimumReturnRateMD,
           timeHorizonMD,
@@ -52,6 +54,7 @@ const renderProfile = async (req, res, next) => {
         ]) => {
           const {
             dealTicketSizes,
+            assetClasses,
             investmentTypes,
             minimumReturnRate,
             timeHorizons,
@@ -62,6 +65,13 @@ const renderProfile = async (req, res, next) => {
           } = profile.investorRequirements
 
           profile.investorRequirements.dealTicketSizes.items = transformCheckboxes(dealTicketSizeMD, dealTicketSizes)
+
+          const energyAndInfrastructureMD = assetClassesMD.filter((item) =>
+            item.sector === assetClassSectors.ENERGY_AND_INFRASTRUCTURE)
+
+          profile.investorRequirements.assetClasses.energyAndInfrastructure.items =
+            transformCheckboxes(energyAndInfrastructureMD, assetClasses.energyAndInfrastructure)
+
           profile.investorRequirements.investmentTypes.items = transformCheckboxes(investmentTypeMD, investmentTypes)
           profile.investorRequirements.minimumReturnRate.items = transformRadioButtons(minimumReturnRateMD, minimumReturnRate)
           profile.investorRequirements.timeHorizons.items = transformCheckboxes(timeHorizonMD, timeHorizons)

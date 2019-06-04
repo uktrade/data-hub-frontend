@@ -28,7 +28,31 @@
     })
   }}
 
-  <p>Placeholder - Asset classes of interest</p>
+  <div class="govuk-form-group asset-classes-of-interest" data-auto-id="assetClasses">
+
+    <span class="label">Asset classes of interest</span>
+
+    {{
+      govukCheckboxes({
+        name: "energyAndInfrastructure",
+        classes: 'energy-and-infrastructure',
+        fieldset: {
+          legend: {
+            text: "Energy and Infrastructure",
+            classes: "govuk-fieldset__legend--s"
+          }
+        },
+        items: profile.investorRequirements.assetClasses.energyAndInfrastructure.items
+      })
+    }}
+
+    <p>Placeholder - Real estate</p>
+
+    <p>If the asset class you wish to select is not shown above, then please request it from
+      <span class="email">capitalinvestment@trade.gov.uk</span>
+    </p>
+
+  </div>
 
   {{
     govukCheckboxes({

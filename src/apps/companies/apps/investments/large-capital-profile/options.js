@@ -1,26 +1,37 @@
+const { transformObjectToGovUKOption } = require('../../../../../apps/transformers')
+const { transformAssetClasses } = require('./transformers')
 const { getOptions } = require('../../../../../lib/options')
 const { getAdvisers } = require('../../../../adviser/repos')
 
-const DO_NOT_SORT = { sorted: false }
+const OPTIONS = {
+  sorted: false,
+  transformer: transformObjectToGovUKOption,
+}
 
 const getInvestorDetailsOptions = (token) => {
   return [
-    getOptions(token, 'capital-investment/investor-type'),
-    getOptions(token, 'capital-investment/required-checks-conducted'),
+    getOptions(token, 'capital-investment/investor-type', OPTIONS),
+    getOptions(token, 'capital-investment/required-checks-conducted', OPTIONS),
     getAdvisers(token),
   ]
 }
 
 const getInvestorRequirementsOptions = (token) => {
   return [
-    getOptions(token, 'capital-investment/deal-ticket-size', DO_NOT_SORT),
-    getOptions(token, 'capital-investment/large-capital-investment-type'),
-    getOptions(token, 'capital-investment/return-rate', DO_NOT_SORT),
-    getOptions(token, 'capital-investment/time-horizon', DO_NOT_SORT),
-    getOptions(token, 'capital-investment/restriction', DO_NOT_SORT),
-    getOptions(token, 'capital-investment/construction-risk', DO_NOT_SORT),
-    getOptions(token, 'capital-investment/equity-percentage', DO_NOT_SORT),
-    getOptions(token, 'capital-investment/desired-deal-role', DO_NOT_SORT),
+    getOptions(token, 'capital-investment/deal-ticket-size', OPTIONS),
+    getOptions(token, 'capital-investment/asset-class-interest', {
+      transformer: transformAssetClasses,
+    }),
+    getOptions(token, 'capital-investment/large-capital-investment-type', {
+      sortPropertyName: 'text',
+      transformer: transformObjectToGovUKOption,
+    }),
+    getOptions(token, 'capital-investment/return-rate', OPTIONS),
+    getOptions(token, 'capital-investment/time-horizon', OPTIONS),
+    getOptions(token, 'capital-investment/restriction', OPTIONS),
+    getOptions(token, 'capital-investment/construction-risk', OPTIONS),
+    getOptions(token, 'capital-investment/equity-percentage', OPTIONS),
+    getOptions(token, 'capital-investment/desired-deal-role', OPTIONS),
   ]
 }
 

@@ -80,6 +80,11 @@ const IST_ONLY_SERVICES = [
   },
 ]
 
+const INTERACTION_STATUS = {
+  DRAFT: 'draft',
+  COMPLETE: 'complete',
+}
+
 module.exports = {
   QUERY_FIELDS,
   QUERY_DATE_FIELDS,
@@ -89,4 +94,5 @@ module.exports = {
   INTERACTION_NAMES,
   IST_ONLY_SERVICES,
   SERVICE_DELIVERY_STATUS_COMPLETED,
+  INTERACTION_STATUS,
 }
