@@ -19,6 +19,7 @@ describe('Create interaction, step 1', () => {
         },
       },
       body: {},
+      params: {},
     }
 
     this.res = {
@@ -210,6 +211,31 @@ describe('Create interaction, step 1', () => {
 
       it('should continue onto the render form controller', () => {
         expect(this.next).to.be.calledOnce
+      })
+    })
+
+    context('when a request is made for an existing interaction', () => {
+      beforeEach(() => {
+        this.req = assign({}, this.req, {
+          body: {
+            theme: 'interaction',
+            kind_export: 'export_interaction',
+          },
+          query: {
+            company: '1234',
+            contact: '4321',
+          },
+          params: {
+            interactionId: '1',
+          },
+        })
+
+        this.create.postCreate(this.req, this.res, this.next)
+      })
+
+      it('should forward the user to the edit interaction page', () => {
+        const redirectUrl = this.res.redirect.firstCall.args[0]
+        expect(redirectUrl).to.equal('/return/1/edit/export/interaction')
       })
     })
   })

@@ -39,7 +39,7 @@ router.get('/export',
 )
 
 router
-  .route('/:interactionId/:theme/:kind/edit')
+  .route('/:interactionId/edit/:theme/:kind')
   .post(postDetails, renderEditPage)
   .get(renderEditPage)
 

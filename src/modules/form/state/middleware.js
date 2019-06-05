@@ -13,7 +13,8 @@ const {
 } = require('lodash')
 
 const state = require('../state/current')
-const { joinPaths, getNextPath } = require('../helpers')
+const { getNextPath } = require('../helpers')
+const { joinPaths } = require('../../../lib/path')
 
 const mapStepsWithState = (steps, currentState) => {
   return compact(map(steps, (step, stepId) => {

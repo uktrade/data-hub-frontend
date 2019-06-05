@@ -19,7 +19,7 @@ router.get('/interactions',
 )
 
 router
-  .route('/interactions/create')
+  .route([ '/interactions/create', '/interactions/:interactionId/create' ])
   .post(
     postCreate,
     renderCreate,
@@ -32,7 +32,7 @@ router.route('/interactions/create/:theme/:kind')
   .post(postDetails, renderEditPage)
   .get(renderEditPage)
 
-router.route('/interactions/:interactionId/:theme/:kind/edit')
+router.route('/interactions/:interactionId/edit/:theme/:kind')
   .post(postDetails, renderEditPage)
   .get(renderEditPage)
 

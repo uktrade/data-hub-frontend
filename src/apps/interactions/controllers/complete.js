@@ -6,12 +6,8 @@ const { saveInteraction, archiveInteraction } = require('../repos')
 const { buildFormWithStateAndErrors } = require('../../builders')
 const { ERROR } = require('../../constants')
 const { ARCHIVED_REASON } = require('../constants')
-
-function getReturnLink (interactions, interactionId) {
-  const prefix = get(interactions, 'returnLink', 'interactions/')
-
-  return `${prefix}${interactionId}`
-}
+const { joinPaths } = require('../../../lib/path')
+const { getReturnLink } = require('../helpers')
 
 function renderCompletePage (req, res) {
   const {
@@ -26,7 +22,7 @@ function renderCompletePage (req, res) {
 
   const form = meetingHappenForm({
     userAgent,
-    returnLink: getReturnLink(interactions, interaction.id),
+    returnLink: joinPaths([ getReturnLink(interactions), interaction.id ]),
   })
 
   return res
@@ -56,7 +52,6 @@ async function postComplete (req, res, next) {
 
   const { token } = req.session
   const { interaction, interactions } = res.locals
-
   if (req.body.meeting_happen === 'false') {
     try {
       if (req.body.archived_reason === ARCHIVED_REASON.RESCHEDULED) {
@@ -69,13 +64,16 @@ async function postComplete (req, res, next) {
       }
 
       req.flash('success', 'The interaction has been updated')
-      return res.redirect(get(interactions, 'returnLink', '/interactions'))
+      return res.redirect(getReturnLink(interactions))
     } catch (e) {
       return next(e)
     }
   }
 
-  // todo meeting_happen true
+  if (req.body.meeting_happen === 'true') {
+    const path = joinPaths([ `/companies/${interaction.company.id}/interactions`, interaction.id, 'create' ])
+    return res.redirect(path)
+  }
 }
 
 module.exports = {
