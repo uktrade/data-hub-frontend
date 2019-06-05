@@ -2,7 +2,7 @@ const selectors = require('../../selectors')
 
 describe('Interactions Collections Filter', () => {
   before(() => {
-    cy.visit('/interactions')
+    cy.visit('/interactions?sortby=date%3Adesc')
   })
 
   beforeEach(() => {
