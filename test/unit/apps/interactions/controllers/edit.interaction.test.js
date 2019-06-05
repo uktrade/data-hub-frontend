@@ -156,7 +156,7 @@ describe('Interaction edit controller (Interactions)', () => {
           ...interactionData,
         },
         interactions: {
-          returnLink: '/',
+          returnLink: '/return',
         },
         entityName: 'Fred Bloggs',
       }
@@ -206,7 +206,7 @@ describe('Interaction edit controller (Interactions)', () => {
           ...interactionData,
         },
         interactions: {
-          returnLink: '/',
+          returnLink: '/return',
         },
         entityName: 'Fred Bloggs',
       }
@@ -256,7 +256,7 @@ describe('Interaction edit controller (Interactions)', () => {
           ...interactionData,
         },
         interactions: {
-          returnLink: '/',
+          returnLink: '/return',
         },
         entityName: 'Fred Bloggs',
       }
@@ -417,7 +417,7 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should set the return link source of the add action', () => {
-      expect(this.interactionForm.returnLink).to.equal('/')
+      expect(this.interactionForm.returnLink).to.equal('/return')
     })
 
     it('should set the appropriate return text', () => {
@@ -442,7 +442,6 @@ describe('Interaction edit controller (Interactions)', () => {
           id: '1',
           name: 'Fred ltd.',
         },
-        returnLink: '/',
         entityName: 'Fred ltd.',
       }
 
@@ -682,7 +681,6 @@ describe('Interaction edit controller (Interactions)', () => {
           id: '3',
           name: 'Invest in things',
         },
-        returnLink: '/',
         entityName: 'Invest in things',
       }
 
