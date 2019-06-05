@@ -15,5 +15,13 @@
   },
   "rules": {
     "no-unused-expressions": 0
-  }
+  },
+  "overrides": [
+    {
+      "files": ["visual/**/*.js"],
+      "rules": {
+        "no-undef": "off"   
+      }
+    }
+  ]
 }
