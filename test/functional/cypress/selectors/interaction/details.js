@@ -5,6 +5,7 @@ exports.interaction = {
     editInteraction: ({ companyId, interactionId }, theme, kind) => `[href="/companies/${companyId}/interactions/${interactionId}/edit/${theme}/${kind}"]`,
     back: ({ companyId }) => `[href="/companies/${companyId}/interactions/"]`,
   },
+  whyCanINotComplete: '[data-auto-id="interactionDetailsWhyCanINotComplete"]',
 }
 
 exports.serviceDelivery = {

@@ -26,4 +26,20 @@
 
     <a href="{{ returnLink }}">Back</a>
   </div>
+
+  {% if not canComplete and not canEdit %}
+    {{ govukDetails({
+      summaryText: 'Why can I not complete this interaction?',
+      html: '<p>
+          This is an upcoming interaction, once the meeting has taken place, you will see a button that will allow you to complete the interaction.</a>.
+        </p>
+        <p>
+          If you think the information is incomplete or incorrect, <a href="/support">get in touch using the support form</a>.
+        </p>',
+      attributes: {
+        'data-auto-id': 'interactionDetailsWhyCanINotComplete'
+      }
+    }) }}
+  {% endif %}
+
 {% endblock %}

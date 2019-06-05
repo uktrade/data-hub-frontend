@@ -53,6 +53,10 @@ describe('Interaction details', () => {
       cy.get(selectors.interaction.details.interaction.actions.back(params)).should('be.visible')
       cy.get(selectors.interaction.details.interaction.actions.back(params)).should('have.text', 'Back')
     })
+
+    it('should not render the "Why can I not complete this interaction?" details summary', () => {
+      cy.get(selectors.interaction.details.interaction.whyCanINotComplete).should('not.be.visible')
+    })
   })
 
   context('Future draft interaction', () => {
@@ -103,6 +107,10 @@ describe('Interaction details', () => {
     it('should render the "Back" link', () => {
       cy.get(selectors.interaction.details.interaction.actions.back(params)).should('be.visible')
       cy.get(selectors.interaction.details.interaction.actions.back(params)).should('have.text', 'Back')
+    })
+
+    it('should render the "Why can I not complete this interaction?" details summary', () => {
+      cy.get(selectors.interaction.details.interaction.whyCanINotComplete).should('be.visible')
     })
   })
 
@@ -166,6 +174,10 @@ describe('Interaction details', () => {
       cy.get(back).should('be.visible')
       cy.get(back).should('have.text', 'Back')
     })
+
+    it('should not render the "Why can I not complete this interaction?" details summary', () => {
+      cy.get(selectors.interaction.details.interaction.whyCanINotComplete).should('not.be.visible')
+    })
   })
 
   context('Complete investment project interaction without documents', () => {
@@ -228,6 +240,10 @@ describe('Interaction details', () => {
       const back = selectors.interaction.details.interaction.actions.back(params)
       cy.get(back).should('be.visible')
       cy.get(back).should('have.text', 'Back')
+    })
+
+    it('should not render the "Why can I not complete this interaction?" details summary', () => {
+      cy.get(selectors.interaction.details.interaction.whyCanINotComplete).should('not.be.visible')
     })
   })
 })
