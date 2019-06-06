@@ -137,7 +137,7 @@ describe('Interaction details controller', () => {
       })
 
       it('should redirect to the interactions', () => {
-        expect(this.middlewareParameters.resMock.redirect).calledOnceWithExactly('/interactions')
+        expect(this.middlewareParameters.resMock.redirect).calledOnceWithExactly(`/companies/${draftPastMeeting.company.id}/interactions`)
       })
 
       it('should not set the errors', () => {
@@ -300,7 +300,7 @@ describe('Interaction details controller', () => {
       })
 
       it('should redirect to the interactions', () => {
-        expect(this.middlewareParameters.resMock.redirect).calledOnceWithExactly('/interactions')
+        expect(this.middlewareParameters.resMock.redirect).calledOnceWithExactly(`/companies/${draftPastMeeting.company.id}/interactions`)
       })
 
       it('should not set the errors', () => {

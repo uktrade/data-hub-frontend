@@ -51,7 +51,9 @@ async function postComplete (req, res, next) {
   }
 
   const { token } = req.session
-  const { interaction, interactions } = res.locals
+  const { interaction } = res.locals
+  const companyInteractionsPath = `/companies/${interaction.company.id}/interactions`
+
   if (req.body.meeting_happen === 'false') {
     try {
       if (req.body.archived_reason === ARCHIVED_REASON.RESCHEDULED) {
@@ -64,14 +66,14 @@ async function postComplete (req, res, next) {
       }
 
       req.flash('success', 'The interaction has been updated')
-      return res.redirect(getReturnLink(interactions))
+      return res.redirect(companyInteractionsPath)
     } catch (e) {
       return next(e)
     }
   }
 
   if (req.body.meeting_happen === 'true') {
-    const path = joinPaths([ `/companies/${interaction.company.id}/interactions`, interaction.id, 'create' ])
+    const path = joinPaths([ companyInteractionsPath, interaction.id, 'create' ])
     return res.redirect(path)
   }
 }
