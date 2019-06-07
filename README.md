@@ -59,6 +59,7 @@ and be provided with a back end server to provide the API, data storage and sear
       - [Scenario tags](#scenario-tags)
       - [Permissions tags](#permissions-tags)
     - [Ignoring features](#ignoring-features)
+  -[Visual Testing](#visual-testing)
 - [Continuous Integration](#continuous-integration)
   - [Running CI jobs](#running-ci-jobs)
   - [Setting up users with different permissions](#setting-up-users-with-different-permissions)
@@ -590,6 +591,36 @@ CircleCI has been configured to show you a summary report of what has failed on 
 
 When acceptance tests fail you can also have a look at the `Nightwatch.js` html report found in the jobs artifacts folder.
 This can be accessed by logging in to [CircleCI](https://circleci.com/)
+
+## Visual Testing
+
+The aim of this suite is taking screenshots from pages and comparing to baselines
+to ensure consistency between builds.
+
+### Folder structure
+
+Screenshots will be stored in the root of the project. We commit the baselines and ignore the comparison diff images. If we need to update the baseline screenshot we need to delete the old baseline and rerun the test (it will then copy the new screenshot saved in comparison folder into the baseline folder)
+
+```
+- visual-screenshots
+  - baseline
+  - comparison
+  - diff
+```
+
+### Environment variables
+
+to run in browserstack, ensure you have the following environment variables set:
+
+```
+export BROWSERSTACK_USERNAME=xxx
+export BROWSERSTACK_ACCESS_KEY=xxx
+export TUNNEL=true
+```
+### Running the tests
+After setting up the environment variables, run the following command to execute the tests:
+
+`$ yarn test:visual`
 
 ## Deployment
 
