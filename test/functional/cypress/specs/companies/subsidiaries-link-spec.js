@@ -13,6 +13,6 @@ describe('Companies link a subsidiary', () => {
     cy.get(selectors.companySubsidiariesLink().search.button).click()
     cy.get(selectors.companySubsidiariesLink().search.result(1).title).click()
 
-    cy.get(selectors.companySubsidiaries().flash.success).should('contain', 'You’ve linked the subsidiary')
+    cy.get(selectors.localHeader().flash).should('contain', 'You’ve linked the subsidiary')
   })
 })

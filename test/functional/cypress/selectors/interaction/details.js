@@ -1,5 +1,4 @@
 exports.interaction = {
-  successMsg: '.c-message--success',
   actions: {
     completeInteraction: ({ companyId, interactionId }) => `[href="/companies/${companyId}/interactions/${interactionId}/complete"]`,
     editInteraction: ({ companyId, interactionId }, theme, kind) => `[href="/companies/${companyId}/interactions/${interactionId}/edit/${theme}/${kind}"]`,
@@ -9,7 +8,6 @@ exports.interaction = {
 }
 
 exports.serviceDelivery = {
-  successMsg: '.c-message--success',
   company: 'tr:nth-child(1)',
   contacts: 'tr:nth-child(2)',
   service: 'tr:nth-child(3)',
