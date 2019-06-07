@@ -46,6 +46,8 @@ cucumber
 seleniumLogs
 test/functional/cypress/screenshots
 cypress/**
+visual-screenshots/comparison
+visual-screenshots/diff
 
 # IDE configurations
 .vscode/
