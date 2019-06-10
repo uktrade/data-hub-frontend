@@ -1,4 +1,7 @@
-const { getPropertyId, nullEmptyFields } = require('../../../lib/property-helpers')
+const {
+  getPropertyId,
+  nullEmptyFields,
+} = require('../../../lib/property-helpers')
 
 /**
  * Accepts an API interaction object and converts it into a format compatible with a HTML form
@@ -17,9 +20,6 @@ function getInteractionAsFormData (interaction) {
     subject: interaction.subject || null,
     notes: interaction.notes || null,
     date: interaction.date || null,
-    dit_adviser: getPropertyId(interaction, 'dit_adviser'),
-    service: getPropertyId(interaction, 'service'),
-    dit_team: getPropertyId(interaction, 'dit_team'),
   }
 
   result = nullEmptyFields(result)
