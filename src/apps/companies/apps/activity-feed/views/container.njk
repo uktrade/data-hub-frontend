@@ -1,0 +1,13 @@
+{% extends "../../../views/template.njk" %}
+
+{% block body_main_content %}
+
+  {% set params = params or {} %}
+
+  <div id="activity-feed-app" data-params="{{ params | dump }}">
+    <noscript>Please enable JavaScript in your browser to see the activity feed.</noscript>
+  </div>
+
+  <script src="{{ getAssetPath('activity-feed-app.js') }}"></script>
+
+{% endblock %}
