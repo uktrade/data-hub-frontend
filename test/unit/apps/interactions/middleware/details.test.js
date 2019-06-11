@@ -1,209 +1,293 @@
+const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
-const { assign, merge } = require('lodash')
-
-const interactionData = require('../../../data/interactions/new-interaction.json')
-const servicesData = [
-  { id: '9484b82b-3499-e211-a939-e4115bead28a', name: 'Account Management' },
-  { id: '632b8708-28b6-e611-984a-e4115bead28a', name: 'Bank Referral' },
-]
-const contactsData = require('~/test/unit/data/contacts/contacts.json')
-
-const adviserFilters = require('~/src/apps/adviser/filters')
-const eventsRepos = require('~/src/apps/events/repos')
-
-const transformed = {
-  id: '1',
-  data: 'transformed',
-}
+const interactionData = require('~/test/unit/data/interactions/new-interaction.json')
 
 describe('Interaction details middleware', () => {
-  beforeEach(() => {
-    this.saveInteractionStub = sinon.stub()
-    this.fetchInteractionStub = sinon.stub()
-    this.transformInteractionFormBodyToApiRequestStub = sinon.stub()
-    this.transformInteractionResponseToViewRecordStub = sinon.stub()
-    this.getContactsForCompanyStub = sinon.stub()
-    this.getContactStub = sinon.stub()
-    this.getDitCompanyStub = sinon.stub()
-    this.filterActiveAdvisersSpy = sinon.spy(adviserFilters, 'filterActiveAdvisers')
-    this.getActiveEventsSpy = sinon.spy(eventsRepos, 'getActiveEvents')
-
-    this.middleware = proxyquire('~/src/apps/interactions/middleware/details', {
-      '../repos': {
-        saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
-        fetchInteraction: this.fetchInteractionStub.resolves(interactionData),
-      },
-      '../transformers': {
-        transformInteractionFormBodyToApiRequest: this.transformInteractionFormBodyToApiRequestStub.returns(transformed),
-        transformInteractionResponseToViewRecord: this.transformInteractionResponseToViewRecordStub.returns(transformed),
-      },
-      '../../adviser/filters': {
-        filterActiveAdvisers: this.filterActiveAdvisersSpy,
-      },
-      '../../../lib/metadata': {
-        getServices: () => { return servicesData },
-      },
-      '../../contacts/repos': {
-        getContactsForCompany: this.getContactsForCompanyStub.returns(contactsData),
-        getContact: this.getContactStub,
-      },
-      '../../companies/repos': {
-        getDitCompany: this.getDitCompanyStub,
-      },
-    })
-
-    this.req = {
-      session: {
-        token: 'abcd',
-      },
-      flash: sinon.spy(),
-      body: assign({}, interactionData),
-      query: {
-        company: '299e7412-d9ee-4ab0-a4cb-a8cc00922c91',
-      },
-      params: {
-        kind: 'interaction',
-      },
-    }
-
-    this.res = {
-      breadcrumb: sinon.stub().returnsThis(),
-      render: sinon.spy(),
-      redirect: sinon.spy(),
-      locals: {
-        company: {
-          id: '1',
-        },
-        interactions: {
-          returnLink: '/return/',
-        },
-      },
-    }
-
-    this.nextSpy = sinon.spy()
-
-    this.activeInactiveAdviserData = {
-      count: 5,
-      results: [
-        { id: '1', name: 'Jeff Smith', is_active: true },
-        { id: '2', name: 'John Smith', is_active: true },
-        { id: '3', name: 'Zac Smith', is_active: true },
-        { id: '4', name: 'Fred Smith', is_active: false },
-        { id: '5', name: 'Jim Smith', is_active: false },
-      ],
-    }
-  })
-
   describe('#postDetails', () => {
-    context('when all fields are valid for creating', () => {
-      beforeEach(async () => {
-        await this.middleware.postDetails(this.req, this.res, this.nextSpy)
-      })
+    context('when all fields are valid', () => {
+      context('when creating a new interaction', () => {
+        beforeEach(async () => {
+          this.saveInteractionStub = sinon.stub()
 
-      it('should post to the API', () => {
-        expect(this.saveInteractionStub).to.have.been.calledWith(this.req.session.token)
-        expect(this.saveInteractionStub).to.have.been.calledOnce
-        expect(this.saveInteractionStub.firstCall.args[1]).to.deep.equal(transformed)
-      })
+          this.middlewareParameters = buildMiddlewareParameters({
+            requestBody: { ...interactionData },
+            requestParams: {
+              kind: 'interaction',
+            },
+            interactions: {
+              returnLink: '/return/',
+            },
+          })
 
-      it('should flash a created message', () => {
-        expect(this.req.flash).to.be.calledWith('success', 'Interaction created')
-      })
+          const middleware = proxyquire('~/src/apps/interactions/middleware/details', {
+            '../repos': {
+              saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
+            },
+          })
 
-      it('should redirect on success', () => {
-        expect(this.res.redirect).to.be.calledWith('/return/1')
-      })
-    })
-
-    context('when all fields are valid for updating', () => {
-      beforeEach(async () => {
-        const res = merge({}, this.res, {
-          locals: {
-            interaction: interactionData,
-          },
-        })
-        await this.middleware.postDetails(this.req, res, this.nextSpy)
-      })
-
-      it('should flash an updated message', () => {
-        expect(this.req.flash).to.be.calledWith('success', 'Interaction updated')
-      })
-    })
-
-    context('when all fields are valid for updating an interaction found from the top level navigation', () => {
-      it('should redirect on success', async () => {
-        const res = assign({}, this.res, {
-          breadcrumb: sinon.stub().returnsThis(),
-          render: sinon.spy(),
-          redirect: sinon.spy(),
-          locals: {},
+          await middleware.postDetails(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
         })
 
-        await this.middleware.postDetails(this.req, res, this.nextSpy)
+        it('should POST to the API', () => {
+          expect(this.saveInteractionStub).to.have.been.calledOnceWithExactly(
+            this.middlewareParameters.reqMock.session.token,
+            {
+              contact: '4c748e6e-05f4-478c-b07f-3d2e2290eb03',
+              contacts: [],
+              date: '2017-10-03',
+              dit_adviser: '4ae885a0-6db4-4929-848d-ef9c84d5a085',
+              dit_participants: [],
+              dit_team: 'cff02898-9698-e211-a939-e4115bead28a',
+              grant_amount_offered: null,
+              net_company_receipt: null,
+              notes: 'notes',
+              policy_areas: [],
+              policy_issue_types: [],
+              service: '1783ae93-b78f-e611-8c55-e4115bed50dc',
+              subject: 'subject',
+            }
+          )
+        })
 
-        expect(res.redirect).to.be.calledWith('/interactions/1')
+        it('should flash a created message', () => {
+          expect(this.middlewareParameters.reqMock.flash).to.be.calledOnceWithExactly('success', 'Interaction created')
+        })
+
+        it('should redirect', () => {
+          expect(this.middlewareParameters.resMock.redirect).to.be.calledOnceWithExactly('/return/1')
+        })
+      })
+
+      context('when updating an existing interaction', () => {
+        beforeEach(async () => {
+          this.saveInteractionStub = sinon.stub()
+
+          this.middlewareParameters = buildMiddlewareParameters({
+            requestBody: { ...interactionData },
+            requestParams: {
+              kind: 'interaction',
+            },
+            interactions: {
+              returnLink: '/return/',
+            },
+            interaction: {
+              ...interactionData,
+            },
+          })
+
+          const middleware = proxyquire('~/src/apps/interactions/middleware/details', {
+            '../repos': {
+              saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
+            },
+          })
+
+          await middleware.postDetails(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
+
+        it('should PATCH to the API', () => {
+          expect(this.saveInteractionStub).to.have.been.calledOnceWithExactly(
+            this.middlewareParameters.reqMock.session.token,
+            {
+              contact: '4c748e6e-05f4-478c-b07f-3d2e2290eb03',
+              contacts: [],
+              date: '2017-10-03',
+              dit_adviser: '4ae885a0-6db4-4929-848d-ef9c84d5a085',
+              dit_participants: [],
+              dit_team: 'cff02898-9698-e211-a939-e4115bead28a',
+              grant_amount_offered: null,
+              net_company_receipt: null,
+              notes: 'notes',
+              policy_areas: [],
+              policy_issue_types: [],
+              service: '1783ae93-b78f-e611-8c55-e4115bed50dc',
+              subject: 'subject',
+            }
+          )
+        })
+
+        it('should flash an updated message', () => {
+          expect(this.middlewareParameters.reqMock.flash).to.be.calledOnceWithExactly('success', 'Interaction updated')
+        })
+
+        it('should redirect', () => {
+          expect(this.middlewareParameters.resMock.redirect).to.be.calledOnceWithExactly('/return/1')
+        })
       })
     })
 
-    context('when there is a 400', () => {
-      beforeEach(async () => {
-        this.saveInteractionStub.rejects({ statusCode: 400, error: 'error' })
-        await this.middleware.postDetails(this.req, this.res, this.nextSpy)
+    context('when there are server errors', () => {
+      context('when the error is 400', () => {
+        beforeEach(async () => {
+          this.saveInteractionStub = sinon.stub()
+
+          this.middlewareParameters = buildMiddlewareParameters({
+            requestBody: { ...interactionData },
+            requestParams: {
+              kind: 'interaction',
+            },
+            interactions: {
+              returnLink: '/return/',
+            },
+          })
+
+          const middleware = proxyquire('~/src/apps/interactions/middleware/details', {
+            '../repos': {
+              saveInteraction: this.saveInteractionStub.rejects({ statusCode: 400, error: 'error' }),
+            },
+          })
+
+          await middleware.postDetails(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
+
+        it('should not flash a message', () => {
+          expect(this.middlewareParameters.reqMock.flash).to.not.be.called
+        })
+
+        it('should not redirect', () => {
+          expect(this.middlewareParameters.resMock.redirect).to.not.be.called
+        })
+
+        it('should set errors on locals', () => {
+          expect(this.middlewareParameters.resMock.locals.form).to.deep.equal({
+            errors: {
+              messages: 'error',
+            },
+          })
+        })
+
+        it('should call next without errors', () => {
+          expect(this.middlewareParameters.nextSpy).have.been.calledOnceWithExactly()
+        })
       })
 
-      it('should set the errors', () => {
-        expect(this.res.locals.form.errors.messages).to.equal('error')
-      })
+      context('when the error is 500', () => {
+        beforeEach(async () => {
+          this.saveInteractionStub = sinon.stub()
 
-      it('should not call next with errors', () => {
-        expect(this.nextSpy).have.been.calledWith()
-        expect(this.nextSpy).have.been.calledOnce
-      })
-    })
+          this.middlewareParameters = buildMiddlewareParameters({
+            requestBody: { ...interactionData },
+            requestParams: {
+              kind: 'interaction',
+            },
+            interactions: {
+              returnLink: '/return/',
+            },
+          })
 
-    context('when there is an error other than 400', () => {
-      beforeEach(async () => {
-        this.saveInteractionStub.rejects({ statusCode: 500, error: 'error' })
-        await this.middleware.postDetails(this.req, this.res, this.nextSpy)
-      })
+          const middleware = proxyquire('~/src/apps/interactions/middleware/details', {
+            '../repos': {
+              saveInteraction: this.saveInteractionStub.rejects({ statusCode: 500, error: 'error' }),
+            },
+          })
 
-      it('should not set form', () => {
-        expect(this.res.locals.form).to.be.undefined
-      })
+          await middleware.postDetails(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
 
-      it('should call next with errors', () => {
-        expect(this.nextSpy).have.been.calledWith({ statusCode: 500, error: 'error' })
-        expect(this.nextSpy).have.been.calledOnce
+        it('should not flash a message', () => {
+          expect(this.middlewareParameters.reqMock.flash).to.not.be.called
+        })
+
+        it('should not redirect', () => {
+          expect(this.middlewareParameters.resMock.redirect).to.not.be.called
+        })
+
+        it('should not set errors on locals', () => {
+          expect(this.middlewareParameters.resMock.locals.form).to.not.exist
+        })
+
+        it('should call next with errors', () => {
+          expect(this.middlewareParameters.nextSpy).have.been.calledOnceWithExactly({
+            error: 'error',
+            statusCode: 500,
+          })
+        })
       })
     })
   })
 
   describe('#getInteractionDetails', () => {
+    beforeEach(() => {
+      this.fetchInteractionStub = sinon.stub()
+      this.getContactStub = sinon.stub()
+      this.getDitCompanyStub = sinon.stub()
+
+      this.middleware = proxyquire('~/src/apps/interactions/middleware/details', {
+        '../repos': {
+          fetchInteraction: this.fetchInteractionStub.resolves(interactionData),
+        },
+        '../../adviser/filters': {
+          filterActiveAdvisers: this.filterActiveAdvisersSpy,
+        },
+        '../../contacts/repos': {
+          getContact: this.getContactStub,
+        },
+        '../../companies/repos': {
+          getDitCompany: this.getDitCompanyStub,
+        },
+      })
+
+      this.middlewareParameters = buildMiddlewareParameters({
+        requestBody: { ...interactionData },
+        requestParams: {
+          kind: 'interaction',
+        },
+        interactions: {
+          returnLink: '/return/',
+        },
+      })
+    })
+
     context('when provided an interaction with a company associated', () => {
       beforeEach(async () => {
         this.company = sinon.mock()
-        this.interaction = assign({}, interactionData, { company: this.company })
+        this.interaction = {
+          ...interactionData,
+          company: this.company,
+        }
         this.fetchInteractionStub.resolves(this.interaction)
-        await this.middleware.getInteractionDetails(this.req, this.res, this.nextSpy, '1')
+
+        await this.middleware.getInteractionDetails(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+          '1'
+        )
       })
 
       it('should set interaction data on locals', () => {
-        expect(this.res.locals.interaction).to.deep.equal(this.interaction)
+        expect(this.middlewareParameters.resMock.locals.interaction).to.deep.equal(this.interaction)
       })
 
       it('should set company to the one associated with the interaction', () => {
-        expect(this.res.locals.company).to.deep.equal(this.company)
+        expect(this.middlewareParameters.resMock.locals.company).to.deep.equal(this.company)
       })
     })
 
     context('when provided an investment interaction with no company', () => {
       beforeEach(async () => {
-        this.interaction = assign({}, interactionData, {
+        this.interaction = {
+          ...interactionData,
           company: null,
           contact: {
             id: '4444',
           },
-        })
+        }
 
         this.fetchInteractionStub.resolves(this.interaction)
 
@@ -216,15 +300,20 @@ describe('Interaction details middleware', () => {
         this.company = sinon.mock()
         this.getDitCompanyStub.resolves(this.company)
 
-        await this.middleware.getInteractionDetails(this.req, this.res, this.nextSpy, '1')
+        await this.middleware.getInteractionDetails(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+          '1'
+        )
       })
 
       it('should set interaction data on locals', () => {
-        expect(this.res.locals.interaction).to.deep.equal(this.interaction)
+        expect(this.middlewareParameters.resMock.locals.interaction).to.deep.equal(this.interaction)
       })
 
       it('should set company to the one associated with the interaction contact', () => {
-        expect(this.res.locals.company).to.deep.equal(this.company)
+        expect(this.middlewareParameters.resMock.locals.company).to.deep.equal(this.company)
       })
     })
   })
