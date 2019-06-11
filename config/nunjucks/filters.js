@@ -6,6 +6,7 @@ const Case = require('case')
 const numeral = require('numeral')
 const queryString = require('qs')
 const { newlineToBr } = require('../../src/lib/text-formatting')
+const { joinPaths } = require('../../src/lib/path')
 const {
   assign,
   castArray,
@@ -82,6 +83,7 @@ const filters = {
   isPlainObject,
   isString,
   pluralise,
+  joinPaths,
   sentenceCase: Case.sentence,
 
   escapeHtml (contents) {

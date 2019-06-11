@@ -1,7 +1,10 @@
 const qs = require('querystring')
 const { merge, omit, get } = require('lodash')
 
-const { buildSelectedFiltersSummary, buildFieldsWithSelectedEntities } = require('../../builders')
+const {
+  buildSelectedFiltersSummary,
+  buildFieldsWithSelectedEntities,
+} = require('../../builders')
 const { getOptions } = require('../../../lib/options')
 const { investmentFiltersFields, investmentSortForm } = require('../macros')
 const { buildExportAction } = require('../../../lib/export-helper')
@@ -10,7 +13,8 @@ const { filterActiveAdvisers } = require('../../adviser/filters')
 const { getAdvisers } = require('../../adviser/repos')
 
 const FILTER_CONSTANTS = require('../../../lib/filter-constants')
-const QUERY_STRING = FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.PRIMARY.QUERY_STRING
+const QUERY_STRING =
+  FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.PRIMARY.QUERY_STRING
 const SECTOR = FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.NAME
 
 const renderProjectsView = async (req, res, next) => {
@@ -20,18 +24,20 @@ const renderProjectsView = async (req, res, next) => {
     const queryString = QUERY_STRING
     const sortForm = merge({}, investmentSortForm, {
       hiddenFields: { ...omit(req.query, 'sortby') },
-      children: [
-        { value: req.query.sortby },
-      ],
+      children: [{ value: req.query.sortby }],
     })
 
     const sectorOptions = await getOptions(token, SECTOR, { queryString })
     const advisers = await getAdvisers(token)
-    const currentAdviser = get(res.locals, 'interaction.dit_adviser.id')
+    const currentAdvisers =
+      get(res.locals, 'interaction.dit_participants') &&
+      res.locals.interaction.dit_participants.map(
+        participant => participant.adviser && participant.adviser.id
+      )
 
     const activeAdvisers = filterActiveAdvisers({
       advisers: advisers.results,
-      includeAdviser: currentAdviser,
+      includeAdviser: currentAdvisers,
     })
 
     const filtersFields = investmentFiltersFields({
@@ -41,8 +47,15 @@ const renderProjectsView = async (req, res, next) => {
       userAgent: res.locals.userAgent,
     })
 
-    const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(token, filtersFields, req.query)
-    const selectedFilters = await buildSelectedFiltersSummary(filtersFieldsWithSelectedOptions, req.query)
+    const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(
+      token,
+      filtersFields,
+      req.query
+    )
+    const selectedFilters = await buildSelectedFiltersSummary(
+      filtersFieldsWithSelectedOptions,
+      req.query
+    )
 
     const exportOptions = {
       targetPermission: 'investment.export_investmentproject',
@@ -51,7 +64,11 @@ const renderProjectsView = async (req, res, next) => {
       entityName: 'project',
     }
 
-    const exportAction = await buildExportAction(qs.stringify(req.query), user.permissions, exportOptions)
+    const exportAction = await buildExportAction(
+      qs.stringify(req.query),
+      user.permissions,
+      exportOptions
+    )
 
     const props = {
       sortForm,

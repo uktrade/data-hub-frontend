@@ -72,6 +72,9 @@ const renderProfile = async (req, res, next) => {
           profile.investorRequirements.assetClasses.energyAndInfrastructure.items =
             transformCheckboxes(energyAndInfrastructureMD, assetClasses.energyAndInfrastructure)
 
+          const realEstateMD = assetClassesMD.filter((item) => item.sector === assetClassSectors.REAL_ESTATE)
+          profile.investorRequirements.assetClasses.realEstate.items = transformCheckboxes(realEstateMD, assetClasses.realEstate)
+
           profile.investorRequirements.investmentTypes.items = transformCheckboxes(investmentTypeMD, investmentTypes)
           profile.investorRequirements.minimumReturnRate.items = transformRadioButtons(minimumReturnRateMD, minimumReturnRate)
           profile.investorRequirements.timeHorizons.items = transformCheckboxes(timeHorizonMD, timeHorizons)

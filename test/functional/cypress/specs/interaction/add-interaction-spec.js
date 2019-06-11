@@ -295,7 +295,7 @@ const assertDetails = ({
   communicationChannel = 'Social Media',
   documents = 'There are no files or documents',
 }) => {
-  cy.get(serviceDeliveryDetails.successMsg).should('contain', flashMessage)
+  cy.get(selectors.localHeader().flash).should('contain', flashMessage)
   cy.get(serviceDeliveryDetails.company).should('contain', company)
   cy.get(serviceDeliveryDetails.contacts).should('contain', contact)
   cy.get(serviceDeliveryDetails.service).should('contain', service)

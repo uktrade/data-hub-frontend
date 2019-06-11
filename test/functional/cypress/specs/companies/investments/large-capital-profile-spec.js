@@ -261,7 +261,7 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorRequirements.dealTicketSize.oneBillionPlus).should('be.checked')
     })
 
-    context('should display "Energy and Infrastructure" and all 15 checkboxes should be checked', () => {
+    context('should display "Energy and Infrastructure" and contain 15 checkboxes', () => {
       const { assetClasses } = selectors.investorRequirements
 
       const labels = [
@@ -291,9 +291,49 @@ describe('Company Investments and Large capital profile', () => {
             cy.get(assetClasses.energyAndInfrastructure[key]).should('contain', labels[index])
           })
         } else {
-          it(`should display the ${labels[index]} checkbox and it should be checked`, () => {
+          it(`should display the ${labels[index]} checkbox label and it should be checked`, () => {
             cy.get(assetClasses.energyAndInfrastructure[key]).should('be.checked')
             cy.get(`${assetClasses.energyAndInfrastructure[key]} + label`).should('contain', labels[index])
+          })
+        }
+      })
+    })
+
+    context('should display "Real estate" and contain 17 checkboxes', () => {
+      const { assetClasses } = selectors.investorRequirements
+
+      const labels = [
+        'Real estate',
+        'Advanced manufacturing',
+        'Commerical led',
+        'Data centre',
+        'Garden cities',
+        'Hotel',
+        'Lesuire',
+        'Life sciences',
+        'Logistics',
+        'Mixed use',
+        'Private rented sector',
+        'Regeneration',
+        'Research and development',
+        'Residential led',
+        'Retail',
+        'Smart cities',
+        'Student housing',
+        'Transport hub / rail',
+      ]
+
+      before(() => cy.visit(`${largeCapitalProfile}?editing=investor-requirements`))
+
+      Object.keys(assetClasses.realEstate).forEach((key, index) => {
+        if (index === 0) {
+          it(`should display the heading "Real estate"`, () => {
+            cy.get(assetClasses.realEstate[key]).should('contain', labels[index])
+          })
+        } else {
+          it(`should display the ${labels[index]} checkbox label and it should be checked`, () => {
+            cy.get(assetClasses.realEstate[key]).should('be.checked')
+            cy.get(`${assetClasses.realEstate[key]} + label`).should('contain', labels[index])
           })
         }
       })

@@ -169,7 +169,7 @@ describe('Interaction edit controller (Service delivery)', () => {
           }],
         },
         interactions: {
-          returnLink: '/',
+          returnLink: '/return',
         },
         entityName: 'Fred Bloggs',
       }
@@ -322,7 +322,7 @@ describe('Interaction edit controller (Service delivery)', () => {
     })
 
     it('should set the return link source of the add action', () => {
-      expect(this.interactionForm.returnLink).to.equal('/')
+      expect(this.interactionForm.returnLink).to.equal('/return')
     })
 
     it('should set the appropriate return text', () => {

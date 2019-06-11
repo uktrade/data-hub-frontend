@@ -75,6 +75,27 @@ describe('Company Investments - Large capital profile', () => {
               }, {
                 name: 'Direct heating',
                 id: 'bfab8ff2-e9bb-4fc8-b36c-5adddf8286b0',
+              }, {
+                id: '0fbceb4c-860a-4d1c-9c51-1da6997ba5fd',
+                name: 'Advanced manufacturing',
+              }, {
+                id: 'a8818051-1618-466d-b2b8-7a4992dcd923',
+                name: 'Commerical led',
+              }],
+            },
+            realEstate: {
+              value: [{
+                id: 'f2b6c1a7-4d4f-4fd9-884b-5e1f5b3525be',
+                name: 'Biomass',
+              }, {
+                id: 'bfab8ff2-e9bb-4fc8-b36c-5adddf8286b0',
+                name: 'Direct heating',
+              }, {
+                id: '0fbceb4c-860a-4d1c-9c51-1da6997ba5fd',
+                name: 'Advanced manufacturing',
+              }, {
+                id: 'a8818051-1618-466d-b2b8-7a4992dcd923',
+                name: 'Commerical led',
               }],
             },
           },
