@@ -13,7 +13,7 @@ aliases:
   - &restore_yarn_cache
     restore_cache:
       name: Restore yarn dependencies cache
-      key: yarn-dependency-{{ checksum "package.json" }}-{{ checksum "node_version" }}-{{ checksum "yarn_version" }}
+      key: yarn-dependency-{{ checksum "yarn.lock" }}-{{ checksum "node_version" }}-{{ checksum "yarn_version" }}
 
   - &store_versions
     run:
@@ -233,11 +233,11 @@ jobs:
       - checkout
       - *store_versions
       - *restore_yarn_cache
-      - run: yarn install --ignore-engines
-      - run: yarn add wavy --ignore-engines # explicitly install wavy module
+      - run: yarn install
+      - run: yarn add wavy # explicitly install wavy module
       - save_cache:
           name: Save yarn dependencies cache
-          key: yarn-dependency-{{ checksum "package.json" }}-{{ checksum "node_version" }}-{{ checksum "yarn_version" }}
+          key: yarn-dependency-{{ checksum "yarn.lock" }}-{{ checksum "node_version" }}-{{ checksum "yarn_version" }}
           paths:
             - ~/data-hub-frontend/node_modules
             - /root/.cache/Cypress
