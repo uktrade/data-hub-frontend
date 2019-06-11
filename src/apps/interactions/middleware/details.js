@@ -1,4 +1,4 @@
-const { assign, get } = require('lodash')
+const { get, set } = require('lodash')
 const { sentence } = require('case')
 
 const { transformInteractionFormBodyToApiRequest } = require('../transformers')
@@ -17,16 +17,12 @@ async function postDetails (req, res, next) {
     req.flash('success', `${sentence(req.params.kind)} ${res.locals.interaction ? 'updated' : 'created'}`)
     res.redirect(joinPaths([ getReturnLink(res.locals.interactions), result.id ]))
   } catch (err) {
-    if (err.statusCode === 400) {
-      res.locals.form = assign({}, res.locals.form, {
-        errors: {
-          messages: err.error,
-        },
-      })
-      next()
-    } else {
-      next(err)
+    if (err.statusCode !== 400) {
+      return next(err)
     }
+
+    set(res.locals, 'form.errors.messages', err.error)
+    next()
   }
 }
 
