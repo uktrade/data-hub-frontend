@@ -1,6 +1,6 @@
 const GLOBAL_NAV_ITEM = {
   path: '/omis',
-  label: 'Orders (OMIS)',
+  headerKey: 'datahub-orders',
   permissions: [
     'order.view_order',
   ],
