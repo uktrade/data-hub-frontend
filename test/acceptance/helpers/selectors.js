@@ -22,7 +22,7 @@ function getSelectorForElementWithText (text, { el = '//*', className, child, ha
  * @returns {{selector: string, locateStrategy: string}}
  */
 function getButtonWithText (text) {
-  return getSelectorForElementWithText(text, { el: '//*', className: 'button' })
+  return getSelectorForElementWithText(text, { el: '//*', className: 'govuk-button' })
 }
 
 /**

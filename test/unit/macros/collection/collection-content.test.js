@@ -58,7 +58,7 @@ describe('Collection macro', () => {
 
     it('should render an action button header', () => {
       const actionHeader = this.component.querySelectorAll('.c-collection__header-actions')
-      const actionButton = this.component.querySelectorAll('.button--secondary')
+      const actionButton = this.component.querySelectorAll('.govuk-button--secondary')
 
       expect(actionHeader).to.exist
       expect(actionButton).to.exist

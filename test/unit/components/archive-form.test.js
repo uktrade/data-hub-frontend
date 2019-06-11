@@ -23,7 +23,7 @@ const HTML = `
       </div>
     </fieldset>
     <div class="save-bar">
-      <button class="button button--save" type="submit">Archive</button>
+      <button class="govuk-button" type="submit">Archive</button>
     </div>
   </form>
 `
@@ -53,7 +53,7 @@ describe('archive form control', () => {
 
   it('it should add a button to reveal the form', () => {
     const prev = this.form.previousSibling
-    expect(domTokenToArray(prev.classList)).to.include('button')
+    expect(domTokenToArray(prev.classList)).to.include('govuk-button')
     expect(prev.textContent).to.include('Archive')
   })
 

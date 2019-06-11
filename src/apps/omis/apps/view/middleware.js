@@ -38,9 +38,7 @@ async function setContact (req, res, next) {
   }
 
   try {
-    const contact = await getContact(req.session.token, contactId)
-
-    res.locals.order.contact = contact
+    res.locals.order.contact = await getContact(req.session.token, contactId)
     next()
   } catch (error) {
     next(error)
@@ -52,9 +50,7 @@ async function setAssignees (req, res, next) {
 
   if (orderId) {
     try {
-      const assignees = await Order.getAssignees(req.session.token, orderId)
-
-      res.locals.assignees = assignees
+      res.locals.assignees = await Order.getAssignees(req.session.token, orderId)
     } catch (error) {
       return next(error)
     }
@@ -67,9 +63,7 @@ async function setSubscribers (req, res, next) {
 
   if (orderId) {
     try {
-      const subscribers = await Order.getSubscribers(req.session.token, orderId)
-
-      res.locals.subscribers = subscribers
+      res.locals.subscribers = await Order.getSubscribers(req.session.token, orderId)
     } catch (error) {
       return next(error)
     }
@@ -252,7 +246,7 @@ function setQuoteForm (req, res, next) {
   if (get(quote, 'created_on') && !get(quote, 'cancelled_on')) {
     form.action = `/omis/${orderId}/quote/cancel`
     form.buttonText = 'Withdraw quote'
-    form.buttonModifiers = 'button--destructive'
+    form.buttonModifiers = 'govuk-button--warning'
     res.locals.destructive = true
 
     if (quote.accepted_on) {

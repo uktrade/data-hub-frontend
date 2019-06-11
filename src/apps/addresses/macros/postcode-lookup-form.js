@@ -10,7 +10,7 @@ module.exports = ({
         name: 'postcode',
         label: 'Postcode',
         modifier: 'short',
-        innerHTML: '<button class="button">Find address</button>',
+        innerHTML: '<button class="govuk-button">Find address</button>',
         validations: [
           {
             type: 'required',
