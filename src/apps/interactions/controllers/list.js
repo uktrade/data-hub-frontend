@@ -38,11 +38,17 @@ async function getInteractionOptions (token, req, res) {
 
   const areas = await getOptions(token, 'policy-area')
 
-  const currentAdviser = get(res.locals, 'interaction.dit_adviser.id')
+  const currentAdvisers =
+    get(res.locals, 'interaction.dit_participants') &&
+    res.locals.interaction.dit_participants.map(
+      participant => participant.adviser && participant.adviser.id
+    )
+
   const advisers = await getAdvisers(token)
+
   const activeAdvisers = filterActiveAdvisers({
     advisers: advisers.results,
-    includeAdviser: currentAdviser,
+    includeAdviser: currentAdvisers,
   })
 
   const adviserOptions = activeAdvisers.map(transformAdviserToOption)
@@ -106,12 +112,20 @@ async function renderInteractionList (req, res, next) {
 
 function renderInteractionsForEntity (req, res, next) {
   try {
-    const { view, returnLink, createKind, canAdd, theme = '' } = res.locals.interactions
+    const {
+      view,
+      returnLink,
+      createKind,
+      canAdd,
+      theme = '',
+    } = res.locals.interactions
     const actionButtons = canAdd
       ? [
         {
           label: 'Add interaction',
-          url: `${returnLink}create${createKind ? `/${theme}/${createKind}` : ''}`,
+          url: `${returnLink}create${
+            createKind ? `/${theme}/${createKind}` : ''
+          }`,
         },
       ]
       : undefined
