@@ -203,6 +203,78 @@ describe('Company Investments - Large capital profile - Investor requirements', 
               }],
               value: [],
             },
+            realEstate: {
+              items: [{
+                sector: 'Real estate',
+                text: 'Advanced manufacturing',
+                value: '0fbceb4c-860a-4d1c-9c51-1da6997ba5fd',
+              }, {
+                sector: 'Real estate',
+                text: 'Commerical led',
+                value: 'a8818051-1618-466d-b2b8-7a4992dcd923',
+              }, {
+                sector: 'Real estate',
+                text: 'Data centre',
+                value: 'f84e9340-d975-453e-895b-c63d388b1bf5',
+              }, {
+                sector: 'Real estate',
+                text: 'Garden cities',
+                value: '7df7000e-afd1-4301-8d65-7ab7d8d64fea',
+              }, {
+                sector: 'Real estate',
+                text: 'Hotel',
+                value: 'b4516edf-c151-47d6-9c12-1c2185cacff0',
+              }, {
+                sector: 'Real estate',
+                text: 'Lesuire',
+                value: '1536f225-f755-44d1-8bdd-e89a1964966b',
+              }, {
+                sector: 'Real estate',
+                text: 'Life sciences',
+                value: '38c8d05c-2899-4433-a15c-6598d76dd69b',
+              }, {
+                sector: 'Real estate',
+                text: 'Logistics',
+                value: '55bec24e-e107-4bae-9869-9a470dbe1cd7',
+              }, {
+                sector: 'Real estate',
+                text: 'Mixed use',
+                value: '2fcf4687-724b-44af-b6df-65a9cc6e037c',
+              }, {
+                sector: 'Real estate',
+                text: 'Private rented sector',
+                value: '814f4c5b-854b-48f8-80f3-5bd070f9f97e',
+              }, {
+                sector: 'Real estate',
+                text: 'Regeneration',
+                value: '2c2c0d6d-6a10-44fc-bdab-e6a0484394a5',
+              }, {
+                sector: 'Real estate',
+                text: 'Research and development',
+                value: 'a865f307-2f73-43a2-8039-2b906237406c',
+              }, {
+                sector: 'Real estate',
+                text: 'Residential led',
+                value: '1eae0983-7c94-4d3a-8888-40c84a9ae092',
+              }, {
+                sector: 'Real estate',
+                text: 'Retail',
+                value: '17755b4f-0aee-4675-baf5-5e592bd89c7d',
+              }, {
+                sector: 'Real estate',
+                text: 'Smart cities',
+                value: 'e0d2d653-dba4-4be9-9fb8-b91a8fcdbe9e',
+              }, {
+                sector: 'Real estate',
+                text: 'Student housing',
+                value: '3b95756d-a905-4abc-81f6-398fe6dc029d',
+              }, {
+                sector: 'Real estate',
+                text: 'Transport hub / rail',
+                value: 'f86ca55d-4512-4b71-a6fd-60ddc6c3bafe',
+              }],
+              value: [],
+            },
           },
           investmentTypes: {
             items: [ {

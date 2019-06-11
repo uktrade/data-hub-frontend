@@ -415,11 +415,11 @@ describe('#build', () => {
 
       it('should redirect to the finish', () => {
         expect(this.response.statusCode).to.equal(302)
-        expect(this.response.headers.location).to.equal('/base/entities/1')
+        expect(this.response.headers.location).to.equal('base/entities/1')
       })
 
       it('should not render a template', () => {
-        expect(this.response.res.text).to.equal('Found. Redirecting to /base/entities/1')
+        expect(this.response.res.text).to.equal('Found. Redirecting to base/entities/1')
       })
     })
 

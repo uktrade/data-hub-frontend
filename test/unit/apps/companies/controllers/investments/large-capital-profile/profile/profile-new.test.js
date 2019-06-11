@@ -58,6 +58,9 @@ describe('Company Investments - Large capital profile', () => {
             energyAndInfrastructure: {
               value: [],
             },
+            realEstate: {
+              value: [],
+            },
           },
           investmentTypes: {
             value: [],

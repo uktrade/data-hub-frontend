@@ -37,6 +37,8 @@ module.exports = ({
       title,
       render: sinon.spy(),
       redirect: sinon.spy(),
+      json: sinon.spy(),
+      header: sinon.spy(),
       locals: {
         CURRENT_PATH,
         paths,

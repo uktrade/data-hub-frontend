@@ -46,10 +46,22 @@
       })
     }}
 
-    <p>Placeholder - Real estate</p>
+    {{
+      govukCheckboxes({
+        name: "realEstate",
+        classes: 'real-estate',
+        fieldset: {
+          legend: {
+            text: "Real estate",
+            classes: "govuk-fieldset__legend--s"
+          }
+        },
+        items: profile.investorRequirements.assetClasses.realEstate.items
+      })
+    }}
 
-    <p>If the asset class you wish to select is not shown above, then please request it from
-      <span class="email">capitalinvestment@trade.gov.uk</span>
+    <p class="notice">If the asset class you wish to select is not shown above, then please request it from
+      <span>capitalinvestment@trade.gov.uk</span>
     </p>
 
   </div>

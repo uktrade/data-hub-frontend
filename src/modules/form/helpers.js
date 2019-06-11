@@ -1,20 +1,4 @@
-const { isString, trimEnd, trimStart, map, join } = require('lodash')
-
-const joinPaths = (paths) => {
-  const cleanPaths = map(paths, (path, index) => {
-    if (index === 0) {
-      return trimEnd(path, '/')
-    }
-
-    if (index === paths.length - 1) {
-      return trimStart(path, '/')
-    }
-
-    return trimStart(trimEnd(path, '/'), '/')
-  })
-
-  return join(cleanPaths, '/')
-}
+const { isString } = require('lodash')
 
 const getNextPath = (step, requestBody) => {
   if (step.nextPath) {
@@ -24,5 +8,4 @@ const getNextPath = (step, requestBody) => {
 
 module.exports = {
   getNextPath,
-  joinPaths,
 }
