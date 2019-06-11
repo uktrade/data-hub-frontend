@@ -48,6 +48,7 @@ describe('Interaction details middleware', () => {
               policy_areas: [],
               policy_issue_types: [],
               service: '1783ae93-b78f-e611-8c55-e4115bed50dc',
+              status: 'complete',
               subject: 'subject',
             }
           )
@@ -108,6 +109,7 @@ describe('Interaction details middleware', () => {
               policy_areas: [],
               policy_issue_types: [],
               service: '1783ae93-b78f-e611-8c55-e4115bed50dc',
+              status: 'complete',
               subject: 'subject',
             }
           )
