@@ -65,7 +65,7 @@
       <div class="c-form-actions {{ props.actionsClass }}">
         {% if not props.hidePrimaryFormAction %}
           <button
-            class="button js-prevent-multiple-submits {{ buttonModifiers }}"
+            class="govuk-button js-prevent-multiple-submits {{ buttonModifiers }}"
             {{ 'disabled="disabled"' if props.disableFormAction }}
             {% if buttonDataAttr %}data-auto-id="{{ buttonDataAttr }}"{% endif %}
           >

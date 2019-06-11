@@ -24,6 +24,6 @@ module.exports = function ({
         label: labels.abandonProposition[field.name],
       })
     }),
-    buttonModifiers: 'button--destructive',
+    buttonModifiers: 'govuk-button--warning',
   }
 }
