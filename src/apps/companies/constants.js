@@ -7,7 +7,7 @@ const DEFAULT_COLLECTION_QUERY = {
 
 const GLOBAL_NAV_ITEM = {
   path: '/companies',
-  label: 'Companies',
+  headerKey: 'datahub-companies',
   permissions: [
     'company.view_company',
   ],

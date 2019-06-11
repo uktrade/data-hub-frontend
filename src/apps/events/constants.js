@@ -4,7 +4,7 @@ const DEFAULT_COLLECTION_QUERY = {
 
 const GLOBAL_NAV_ITEM = {
   path: '/events',
-  label: 'Events',
+  headerKey: 'datahub-events',
   permissions: [
     'event.view_event',
   ],
