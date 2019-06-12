@@ -37,6 +37,7 @@ async function buildForm (req, res, interactionId) {
     returnLink,
     returnText: interactionId ? 'Return without saving' : 'Cancel',
     buttonText: interactionId ? 'Save and return' : `Add ${lowerCase(req.params.kind)}`,
+    company: get(res.locals, 'company.id'),
   }
 
   if (req.params.kind !== 'service-delivery' && req.params.kind !== 'interaction') {

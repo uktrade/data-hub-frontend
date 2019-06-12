@@ -1,0 +1,14 @@
+{% from "./form-group.njk" import FormGroup %}
+
+{##
+ # Render a sub heading within a form
+ # @param {object} props - An object containing field properties
+ # @param {array} [props.heading] - Heading
+ # @param {array} [props.secondaryHeading] - Secondary heading 
+ #}
+{% macro FormSubHeading(props) %}
+  <div class="form-sub-heading">
+      <h1>{{ props.heading }}</h1>
+      {% if props.secondaryHeading %}<h2>{{ props.secondaryHeading }}</h2>{% endif %}
+  </div>
+{% endmacro %}
