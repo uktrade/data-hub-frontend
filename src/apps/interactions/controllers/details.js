@@ -14,7 +14,8 @@ function renderDetailsPage (req, res, next) {
     const interactionViewRecord = transformInteractionResponseToViewRecord(interaction, isComplete)
     const canComplete = features['interactions-complete-drafts'] === true &&
       interaction.status === INTERACTION_STATUS.DRAFT &&
-      new Date(interaction.date) < new Date()
+      new Date(interaction.date) < new Date() &&
+      !interaction.archived
 
     return res
       .breadcrumb(breadcrumb)
