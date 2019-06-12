@@ -2,6 +2,7 @@ const { omit } = require('lodash')
 
 const castCompactArray = require('../../../lib/cast-compact-array')
 const { transformDateObjectToDateString } = require('../../transformers')
+const { INTERACTION_STATUS } = require('../constants')
 
 function transformInteractionFormBodyToApiRequest (props) {
   const policyAreasArray = castCompactArray(props.policy_areas)
@@ -18,6 +19,7 @@ function transformInteractionFormBodyToApiRequest (props) {
     dit_participants: advisersArray,
     policy_areas: policyAreasArray,
     policy_issue_types: policyIssueTypesArray,
+    status: INTERACTION_STATUS.COMPLETE,
   }, ['date_day', 'date_month', 'date_year'])
 }
 
