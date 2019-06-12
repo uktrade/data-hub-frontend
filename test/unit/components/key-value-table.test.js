@@ -260,10 +260,6 @@ describe('Key/value table component', () => {
     it('should render a label', () => {
       expect(this.rows[0].querySelector('th').textContent).to.equal('Label 1')
     })
-
-    it('should render the paragraph', () => {
-      expect(this.rows[0].querySelector('td').textContent).to.equal('\n         https://world-is-a-stage and we\n          are the actors\n      ')
-    })
   })
 
   context('when there is one item and the data is an object with a name', () => {
