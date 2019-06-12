@@ -34,7 +34,9 @@ describe('Interaction edit controller (Interactions)', () => {
 
     this.nextStub = sinon.stub()
 
-    const yesterday = moment().subtract(1, 'days').toISOString()
+    const yesterday = moment()
+      .subtract(1, 'days')
+      .toISOString()
     const contexts = [
       'export_interaction',
       'export_service_delivery',
@@ -79,9 +81,7 @@ describe('Interaction edit controller (Interactions)', () => {
           id: 's5',
           name: 'Policy feedback',
           disabled_on: null,
-          contexts: [
-            'policy-feedback',
-          ],
+          contexts: ['policy-feedback'],
         },
       ],
       channelOptions: [
@@ -111,31 +111,47 @@ describe('Interaction edit controller (Interactions)', () => {
       ],
     }
 
-    this.activeInactiveAdviserData = [{
-      id: '1',
-      name: 'Jeff Smith',
-      is_active: true,
-    }, {
-      id: '2',
-      name: 'John Smith',
-      is_active: true,
-    }, {
-      id: '3',
-      name: 'Zac Smith',
-      is_active: true,
-    }, {
-      id: '4',
-      name: 'Fred Smith',
-      is_active: false,
-    }, {
-      id: '5',
-      name: 'Jim Smith',
-      is_active: false,
-    }]
+    this.activeInactiveAdviserData = [
+      {
+        id: '1',
+        name: 'Jeff Smith',
+        is_active: true,
+      },
+      {
+        id: '2',
+        name: 'John Smith',
+        is_active: true,
+      },
+      {
+        id: '3',
+        name: 'Zac Smith',
+        is_active: true,
+      },
+      {
+        id: '4',
+        name: 'Fred Smith',
+        is_active: false,
+      },
+      {
+        id: '5',
+        name: 'Jim Smith',
+        is_active: false,
+      },
+    ]
 
     this.contactsData = [
-      { id: '999', first_name: 'Fred', last_name: 'Smith', job_title: 'Manager' },
-      { id: '998', first_name: 'Emily', last_name: 'Brown', job_title: 'Director' },
+      {
+        id: '999',
+        first_name: 'Fred',
+        last_name: 'Smith',
+        job_title: 'Manager',
+      },
+      {
+        id: '998',
+        first_name: 'Emily',
+        last_name: 'Brown',
+        job_title: 'Director',
+      },
     ]
   })
 
@@ -294,7 +310,9 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should add a title', () => {
-      expect(this.res.title.firstCall).to.be.calledWith('Add interaction for Fred Bloggs')
+      expect(this.res.title.firstCall).to.be.calledWith(
+        'Add interaction for Fred Bloggs'
+      )
     })
 
     it('should include an interaction form', async () => {
@@ -303,61 +321,101 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should generate a form with the required fields', () => {
-      const fieldNames = this.interactionForm.children.map(field => pick(field, ['name', 'label', 'macroName', 'type']))
-      expect(fieldNames).to.deep.equal([{
-        name: 'date',
-        label: 'Date of interaction',
-        macroName: 'DateFieldset',
-      }, {
-        name: 'contacts',
-        label: 'Contact(s)',
-        macroName: 'AddAnother',
-      }, {
-        name: 'dit_participants',
-        label: 'Adviser(s)',
-        macroName: 'AddAnother',
-      }, {
-        name: 'service',
-        label: 'Service',
-        macroName: 'MultipleChoiceField',
-      }, {
-        name: 'communication_channel',
-        label: 'Communication channel',
-        macroName: 'MultipleChoiceField',
-      }, {
-        name: 'subject',
-        label: 'Subject',
-        macroName: 'TextField',
-      }, {
-        name: 'notes',
-        label: 'Notes',
-        macroName: 'TextField',
-        type: 'textarea',
-      }, {
-        name: 'was_policy_feedback_provided',
-        label: 'Did the contact give any feedback on government policy?',
-        macroName: 'MultipleChoiceField',
-        type: 'radio',
-      }, {
-        name: 'policy_issue_types',
-        label: 'Policy issue types',
-        macroName: 'MultipleChoiceField',
-        type: 'checkbox',
-      }, {
-        name: 'policy_areas',
-        label: 'Policy area',
-        macroName: 'AddAnother',
-      }, {
-        name: 'policy_feedback_notes',
-        label: 'Policy feedback notes',
-        macroName: 'TextField',
-        type: 'textarea',
-      },
+      const fieldNames = this.interactionForm.children.map(field =>
+        pick(field, [
+          'name',
+          'label',
+          'macroName',
+          'type',
+          'heading',
+          'secondaryHeading',
+        ])
+      )
+      expect(fieldNames).to.deep.equal([
+        {
+          label: undefined,
+          macroName: 'FormSubHeading',
+          heading: 'Service',
+        },
+        {
+          name: 'service',
+          label: 'Service',
+          macroName: 'MultipleChoiceField',
+        },
+        {
+          label: undefined,
+          macroName: 'FormSubHeading',
+          heading: 'Interaction Participants',
+          secondaryHeading: '1',
+        },
+        {
+          name: 'contacts',
+          label: 'Contact(s)',
+          macroName: 'AddAnother',
+        },
+        {
+          name: 'dit_participants',
+          label: 'Adviser(s)',
+          macroName: 'AddAnother',
+        },
+        {
+          label: undefined,
+          macroName: 'FormSubHeading',
+          heading: 'Details',
+        },
+        {
+          name: 'date',
+          label: 'Date of interaction',
+          macroName: 'DateFieldset',
+        },
+        {
+          name: 'communication_channel',
+          label: 'Communication channel',
+          macroName: 'MultipleChoiceField',
+        },
+        {
+          label: undefined,
+          macroName: 'FormSubHeading',
+          heading: 'Notes',
+        },
+        { name: 'subject', label: 'Subject', macroName: 'TextField' },
+        {
+          name: 'notes',
+          label: 'Notes',
+          macroName: 'TextField',
+          type: 'textarea',
+        },
+        {
+          name: 'was_policy_feedback_provided',
+          label: 'Did the contact give any feedback on government policy?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+        },
+        {
+          name: 'policy_issue_types',
+          label: 'Policy issue types',
+          macroName: 'MultipleChoiceField',
+          type: 'checkbox',
+        },
+        {
+          name: 'policy_areas',
+          label: 'Policy area',
+          macroName: 'AddAnother',
+        },
+        {
+          name: 'policy_feedback_notes',
+          label: 'Policy feedback notes',
+          macroName: 'TextField',
+          type: 'textarea',
+        },
       ])
     })
 
     it('should provide a list of contacts', () => {
-      const contactField = find(this.interactionForm.children, ({ name }) => name === 'contacts')
+      const contactField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'contacts'
+      )
       const contact = contactField.children[0].options
       expect(contact).to.deep.equal([
         { value: '998', label: 'Emily Brown, Director' },
@@ -366,7 +424,10 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should provide a list of services', () => {
-      const serviceField = find(this.interactionForm.children, ({ name }) => name === 'service')
+      const serviceField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'service'
+      )
       expect(serviceField.options).to.deep.equal([
         { value: 's1', label: 'sv1' },
         { value: 's2', label: 'sv2' },
@@ -376,7 +437,10 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should provide a list of communication channels', () => {
-      const communicationChannelField = find(this.interactionForm.children, ({ name }) => name === 'communication_channel')
+      const communicationChannelField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'communication_channel'
+      )
       expect(communicationChannelField.options).to.deep.equal([
         { value: '1', label: 'c1' },
         { value: '2', label: 'c2' },
@@ -390,7 +454,10 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should set the default contact to the current contact', () => {
-      const contactField = find(this.interactionForm.children, ({ name }) => name === 'contacts')
+      const contactField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'contacts'
+      )
       const contact = contactField.children[0].options
       expect(contact).to.deep.equal([
         { value: '998', label: 'Emily Brown, Director' },
@@ -399,20 +466,32 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should set the default for the adviser to the current user', () => {
-      const adviserField = find(this.interactionForm.children, ({ name }) => name === 'dit_participants')
+      const adviserField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'dit_participants'
+      )
       expect(adviserField.value).to.deep.equal([1])
     })
 
     it('should set the interaction date to the current date', () => {
-      const dateField = find(this.interactionForm.children, ({ name }) => name === 'date')
+      const dateField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'date'
+      )
       expect(dateField.value).to.have.property('year', now.format('YYYY'))
       expect(dateField.value).to.have.property('month', now.format('MM'))
       expect(dateField.value).to.have.property('day', now.format('DD'))
     })
 
     it('should not include policy feedback as a service option', () => {
-      const serviceField = find(this.interactionForm.children, ({ name }) => name === 'service')
-      const policyFeedbackOption = find(serviceField.options, ({ label }) => label === 'Policy feedback')
+      const serviceField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'service'
+      )
+      const policyFeedbackOption = find(
+        serviceField.options,
+        ({ label }) => label === 'Policy feedback'
+      )
       expect(policyFeedbackOption).to.be.undefined
     })
 
@@ -473,7 +552,10 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should include a contact dropdown with no preselected value', () => {
-      const contactField = find(this.interactionForm.children, ({ name }) => name === 'contacts')
+      const contactField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'contacts'
+      )
       expect(contactField.value).to.be.null
     })
   })
@@ -539,76 +621,121 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should generate a form with the required fields and values populated', () => {
-      const fields = this.interactionForm.children.map(field => pick(field, ['name', 'label', 'macroName', 'type', 'value']))
-      expect(fields).to.deep.equal([{
-        name: 'date',
-        label: 'Date of interaction',
-        macroName: 'DateFieldset',
-        value: {
-          day: now.format('DD'),
-          month: now.format('MM'),
-          year: now.format('YYYY'),
+      const fields = this.interactionForm.children.map(field =>
+        pick(field, [
+          'name',
+          'label',
+          'macroName',
+          'type',
+          'value',
+          'heading',
+          'secondaryHeading',
+        ])
+      )
+      expect(fields).to.deep.equal([
+        {
+          label: undefined,
+          macroName: 'FormSubHeading',
+          value: undefined,
+          heading: 'Service',
         },
-      }, {
-        name: 'contacts',
-        label: 'Contact(s)',
-        macroName: 'AddAnother',
-        value: ['7701587b-e88f-4f39-874f-0bd06321f7df'],
-      }, {
-        name: 'dit_participants',
-        label: 'Adviser(s)',
-        macroName: 'AddAnother',
-        value: [1],
-      }, {
-        name: 'service',
-        label: 'Service',
-        macroName: 'MultipleChoiceField',
-        value: 'd320b92b-3499-e211-a939-e4115bead28a',
-      }, {
-        name: 'communication_channel',
-        label: 'Communication channel',
-        macroName: 'MultipleChoiceField',
-        value: '70c226d7-5d95-e211-a939-e4115bead28a',
-      }, {
-        name: 'subject',
-        label: 'Subject',
-        macroName: 'TextField',
-        value: 'ad',
-      }, {
-        name: 'notes',
-        label: 'Notes',
-        macroName: 'TextField',
-        type: 'textarea',
-        value: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-      }, {
-        name: 'was_policy_feedback_provided',
-        label: 'Did the contact give any feedback on government policy?',
-        macroName: 'MultipleChoiceField',
-        type: 'radio',
-        value: 'true',
-      }, {
-        name: 'policy_issue_types',
-        label: 'Policy issue types',
-        macroName: 'MultipleChoiceField',
-        type: 'checkbox',
-        value: ['c1f1e29b-17ba-402f-ac98-aa23f9dc9bcb'],
-      }, {
-        name: 'policy_areas',
-        label: 'Policy area',
-        macroName: 'AddAnother',
-        value: ['9feefd50-7f4c-4b73-a33e-779121d40419'],
-      }, {
-        name: 'policy_feedback_notes',
-        label: 'Policy feedback notes',
-        macroName: 'TextField',
-        type: 'textarea',
-        value: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-      },
+        {
+          name: 'service',
+          label: 'Service',
+          macroName: 'MultipleChoiceField',
+          value: 'd320b92b-3499-e211-a939-e4115bead28a',
+        },
+        {
+          label: undefined,
+          macroName: 'FormSubHeading',
+          value: undefined,
+          heading: 'Interaction Participants',
+          secondaryHeading: '1',
+        },
+        {
+          name: 'contacts',
+          label: 'Contact(s)',
+          macroName: 'AddAnother',
+          value: ['7701587b-e88f-4f39-874f-0bd06321f7df'],
+        },
+        {
+          name: 'dit_participants',
+          label: 'Adviser(s)',
+          macroName: 'AddAnother',
+          value: [1],
+        },
+        {
+          label: undefined,
+          macroName: 'FormSubHeading',
+          value: undefined,
+          heading: 'Details',
+        },
+        {
+          name: 'date',
+          label: 'Date of interaction',
+          macroName: 'DateFieldset',
+          value: { day: '12', month: '06', year: '2019' },
+        },
+        {
+          name: 'communication_channel',
+          label: 'Communication channel',
+          macroName: 'MultipleChoiceField',
+          value: '70c226d7-5d95-e211-a939-e4115bead28a',
+        },
+        {
+          label: undefined,
+          macroName: 'FormSubHeading',
+          value: undefined,
+          heading: 'Notes',
+        },
+        {
+          name: 'subject',
+          label: 'Subject',
+          macroName: 'TextField',
+          value: 'ad',
+        },
+        {
+          name: 'notes',
+          label: 'Notes',
+          macroName: 'TextField',
+          type: 'textarea',
+          value: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+        },
+        {
+          name: 'was_policy_feedback_provided',
+          label: 'Did the contact give any feedback on government policy?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          value: 'true',
+        },
+        {
+          name: 'policy_issue_types',
+          label: 'Policy issue types',
+          macroName: 'MultipleChoiceField',
+          type: 'checkbox',
+          value: ['c1f1e29b-17ba-402f-ac98-aa23f9dc9bcb'],
+        },
+        {
+          name: 'policy_areas',
+          label: 'Policy area',
+          macroName: 'AddAnother',
+          value: ['9feefd50-7f4c-4b73-a33e-779121d40419'],
+        },
+        {
+          name: 'policy_feedback_notes',
+          label: 'Policy feedback notes',
+          macroName: 'TextField',
+          type: 'textarea',
+          value: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+        },
       ])
     })
 
     it('should provide a list of contacts', () => {
-      const contactField = find(this.interactionForm.children, ({ name }) => name === 'contacts')
+      const contactField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'contacts'
+      )
       const contacts = contactField.children[0]
       expect(contacts.options).to.deep.equal([
         { value: '998', label: 'Emily Brown, Director' },
@@ -617,7 +744,10 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should provide a list of services at creation time', () => {
-      const serviceField = find(this.interactionForm.children, ({ name }) => name === 'service')
+      const serviceField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'service'
+      )
       expect(serviceField.options).to.deep.equal([
         { value: 's1', label: 'sv1' },
         { value: 's2', label: 'sv2' },
@@ -627,7 +757,10 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should provide a list of communication channels at creation time', () => {
-      const communicationChannelField = find(this.interactionForm.children, ({ name }) => name === 'communication_channel')
+      const communicationChannelField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'communication_channel'
+      )
       expect(communicationChannelField.options).to.deep.equal([
         { value: '1', label: 'c1' },
         { value: '2', label: 'c2' },
@@ -646,13 +779,21 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should not include policy feedback as a service option', () => {
-      const serviceField = find(this.interactionForm.children, ({ name }) => name === 'service')
-      const policyFeedbackOption = find(serviceField.options, ({ label }) => label === 'Policy feedback')
+      const serviceField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'service'
+      )
+      const policyFeedbackOption = find(
+        serviceField.options,
+        ({ label }) => label === 'Policy feedback'
+      )
       expect(policyFeedbackOption).to.be.undefined
     })
 
     it('should set the return link to the detail view', () => {
-      expect(this.interactionForm.returnLink).to.equal('/interactions/af4aac84-4d6a-47df-a733-5a54e3008c32')
+      expect(this.interactionForm.returnLink).to.equal(
+        '/interactions/af4aac84-4d6a-47df-a733-5a54e3008c32'
+      )
     })
 
     it('should set the appropriate return text', () => {
@@ -689,7 +830,9 @@ describe('Interaction edit controller (Interactions)', () => {
         .reply(200, { results: this.contactsData })
         .get('/metadata/team/')
         .reply(200, this.metadataMock.teamOptions)
-        .get('/metadata/service/?contexts__has_any=investment_project_interaction')
+        .get(
+          '/metadata/service/?contexts__has_any=investment_project_interaction'
+        )
         .reply(200, this.metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, { results: this.activeInactiveAdviserData })
@@ -707,7 +850,8 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should set the investment project id as a hidden field', () => {
-      const investmentField = this.interactionForm.hiddenFields.investment_project
+      const investmentField = this.interactionForm.hiddenFields
+        .investment_project
       expect(investmentField).to.equal('3')
     })
 
@@ -717,7 +861,10 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should include a contact dropdown with no preselected value', () => {
-      const contactField = find(this.interactionForm.children, ({ name }) => name === 'contacts')
+      const contactField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'contacts'
+      )
       expect(contactField.value).to.be.null
     })
   })
@@ -749,7 +896,9 @@ describe('Interaction edit controller (Interactions)', () => {
         .reply(200, { results: this.contactsData })
         .get('/metadata/team/')
         .reply(200, this.metadataMock.teamOptions)
-        .get('/metadata/service/?contexts__has_any=investment_project_interaction')
+        .get(
+          '/metadata/service/?contexts__has_any=investment_project_interaction'
+        )
         .reply(200, this.metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, { results: this.activeInactiveAdviserData })
@@ -824,71 +973,121 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should merge the changes on top of the original record', () => {
-      const fields = this.interactionForm.children.map(field => pick(field, ['name', 'label', 'macroName', 'type', 'value']))
-      expect(fields).to.deep.equal([{
-        name: 'date',
-        label: 'Date of interaction',
-        macroName: 'DateFieldset',
-        value: { day: now.format('DD'), month: now.format('MM'), year: now.format('YYYY') },
-      }, {
-        name: 'contacts',
-        label: 'Contact(s)',
-        macroName: 'AddAnother',
-        value: ['7701587b-e88f-4f39-874f-0bd06321f7df'],
-      }, {
-        name: 'dit_participants',
-        label: 'Adviser(s)',
-        macroName: 'AddAnother',
-        value: [1],
-      }, {
-        name: 'service',
-        label: 'Service',
-        macroName: 'MultipleChoiceField',
-        value: 'd320b92b-3499-e211-a939-e4115bead28a',
-      }, {
-        name: 'communication_channel',
-        label: 'Communication channel',
-        macroName: 'MultipleChoiceField',
-        value: '70c226d7-5d95-e211-a939-e4115bead28a',
-      }, {
-        name: 'subject',
-        label: 'Subject',
-        macroName: 'TextField',
-        value: 'a',
-      }, {
-        name: 'notes',
-        label: 'Notes',
-        macroName: 'TextField',
-        type: 'textarea',
-        value: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-      }, {
-        name: 'was_policy_feedback_provided',
-        label: 'Did the contact give any feedback on government policy?',
-        macroName: 'MultipleChoiceField',
-        type: 'radio',
-        value: 'true',
-      }, {
-        name: 'policy_issue_types',
-        label: 'Policy issue types',
-        macroName: 'MultipleChoiceField',
-        type: 'checkbox',
-        value: ['c1f1e29b-17ba-402f-ac98-aa23f9dc9bcb'],
-      }, {
-        name: 'policy_areas',
-        label: 'Policy area',
-        macroName: 'AddAnother',
-        value: ['9feefd50-7f4c-4b73-a33e-779121d40419'],
-      }, {
-        name: 'policy_feedback_notes',
-        label: 'Policy feedback notes',
-        macroName: 'TextField',
-        type: 'textarea',
-        value: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-      }])
+      const fields = this.interactionForm.children.map(field =>
+        pick(field, [
+          'name',
+          'label',
+          'macroName',
+          'type',
+          'value',
+          'heading',
+          'secondaryHeading',
+        ])
+      )
+      expect(fields).to.deep.equal([
+        {
+          label: undefined,
+          macroName: 'FormSubHeading',
+          value: undefined,
+          heading: 'Service',
+        },
+        {
+          name: 'service',
+          label: 'Service',
+          macroName: 'MultipleChoiceField',
+          value: 'd320b92b-3499-e211-a939-e4115bead28a',
+        },
+        {
+          label: undefined,
+          macroName: 'FormSubHeading',
+          value: undefined,
+          heading: 'Interaction Participants',
+          secondaryHeading: '1',
+        },
+        {
+          name: 'contacts',
+          label: 'Contact(s)',
+          macroName: 'AddAnother',
+          value: ['7701587b-e88f-4f39-874f-0bd06321f7df'],
+        },
+        {
+          name: 'dit_participants',
+          label: 'Adviser(s)',
+          macroName: 'AddAnother',
+          value: [1],
+        },
+        {
+          label: undefined,
+          macroName: 'FormSubHeading',
+          value: undefined,
+          heading: 'Details',
+        },
+        {
+          name: 'date',
+          label: 'Date of interaction',
+          macroName: 'DateFieldset',
+          value: { day: '12', month: '06', year: '2019' },
+        },
+        {
+          name: 'communication_channel',
+          label: 'Communication channel',
+          macroName: 'MultipleChoiceField',
+          value: '70c226d7-5d95-e211-a939-e4115bead28a',
+        },
+        {
+          label: undefined,
+          macroName: 'FormSubHeading',
+          value: undefined,
+          heading: 'Notes',
+        },
+        {
+          name: 'subject',
+          label: 'Subject',
+          macroName: 'TextField',
+          value: 'a',
+        },
+        {
+          name: 'notes',
+          label: 'Notes',
+          macroName: 'TextField',
+          type: 'textarea',
+          value: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+        },
+        {
+          name: 'was_policy_feedback_provided',
+          label: 'Did the contact give any feedback on government policy?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          value: 'true',
+        },
+        {
+          name: 'policy_issue_types',
+          label: 'Policy issue types',
+          macroName: 'MultipleChoiceField',
+          type: 'checkbox',
+          value: ['c1f1e29b-17ba-402f-ac98-aa23f9dc9bcb'],
+        },
+        {
+          name: 'policy_areas',
+          label: 'Policy area',
+          macroName: 'AddAnother',
+          value: ['9feefd50-7f4c-4b73-a33e-779121d40419'],
+        },
+        {
+          name: 'policy_feedback_notes',
+          label: 'Policy feedback notes',
+          macroName: 'TextField',
+          type: 'textarea',
+          value: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+        },
+      ])
     })
 
     it('should include the error in the form', () => {
-      const subjectField = find(this.interactionForm.children, ({ name }) => name === 'subject')
+      const subjectField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'subject'
+      )
       expect(subjectField.error).to.deep.equal(['Error message'])
     })
   })
