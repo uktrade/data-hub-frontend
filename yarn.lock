@@ -785,8 +785,8 @@
     pngjs "^3.4.0"
 
 "@uktrade/datahub-header@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@uktrade/datahub-header/-/datahub-header-1.1.0.tgz#ca9cbab5e3436ca2dd66cd3ea0b4cd133403efe2"
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@uktrade/datahub-header/-/datahub-header-1.1.1.tgz#6d38ae5b90e046820483603c5500ffd5fc9a4212"
 
 "@vue/component-compiler-utils@^1.2.1":
   version "1.2.1"
