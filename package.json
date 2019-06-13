@@ -75,7 +75,7 @@
     "csurf": "^1.9.0",
     "data-hub-components": "^0.2.2",
     "date-fns": "^1.29.0",
-    "del-cli": "^1.1.0",
+    "del-cli": "^2.0.0",
     "dotenv": "^5.0.0",
     "element-closest": "^2.0.2",
     "express": "^4.16.2",
@@ -190,6 +190,7 @@
   },
   "sasslintConfig": ".sass-lint.yml",
   "resolutions": {
-    "tar": "^4.4.8"
+    "tar": "^4.4.8",
+    "http-proxy-agent": "^2.1.0"
   }
 }
