@@ -234,7 +234,6 @@ jobs:
       - *store_versions
       - *restore_yarn_cache
       - run: yarn install
-      - run: yarn add wavy # explicitly install wavy module
       - save_cache:
           name: Save yarn dependencies cache
           key: yarn-dependency-{{ checksum "package.json" }}-{{ checksum "node_version" }}
