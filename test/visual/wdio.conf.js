@@ -76,7 +76,7 @@ const defaultConfig = {
   },
   before: function () {
     browser.setTimeout({ 'implicit': IMPLICIT_TIMEOUT })
-    const wdioImageDiff = new WdioImage(browser)
+    const wdioImageDiff = new WdioImage(browser, { threshold: 0.1 })
     browser.imageDiff = wdioImageDiff
   },
 }
