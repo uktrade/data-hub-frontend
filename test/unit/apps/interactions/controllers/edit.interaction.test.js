@@ -579,7 +579,6 @@ describe('Interaction edit controller (Interactions)', () => {
         },
       }
 
-      this.res.locals.interaction.date = now.format('YYYY-MM-DD')
       nock(config.apiRoot)
         .get('/v3/contact?company_id=1&limit=500')
         .reply(200, { results: this.contactsData })
@@ -674,7 +673,7 @@ describe('Interaction edit controller (Interactions)', () => {
           name: 'date',
           label: 'Date of interaction',
           macroName: 'DateFieldset',
-          value: { day: '12', month: '06', year: '2019' },
+          value: { day: '25', month: '11', year: '2058' },
         },
         {
           name: 'communication_channel',
@@ -949,7 +948,7 @@ describe('Interaction edit controller (Interactions)', () => {
           subject: 'a',
         },
       }
-      this.res.locals.interaction.date = now.format('YYYY-MM-DD')
+
       nock(config.apiRoot)
         .get('/v3/contact?company_id=1&limit=500')
         .reply(200, { results: this.contactsData })
@@ -1026,7 +1025,7 @@ describe('Interaction edit controller (Interactions)', () => {
           name: 'date',
           label: 'Date of interaction',
           macroName: 'DateFieldset',
-          value: { day: '12', month: '06', year: '2019' },
+          value: { day: '25', month: '11', year: '2058' },
         },
         {
           name: 'communication_channel',
