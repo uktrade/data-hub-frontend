@@ -50,8 +50,8 @@
   ],
   "license": "MIT",
   "engines": {
-    "node": "8.15.1",
-    "yarn": "1.15.2"
+    "yarn": "1.16.0",
+    "node": "10.16.0"
   },
   "dependencies": {
     "@uktrade/datahub-header": "1.1.2",
