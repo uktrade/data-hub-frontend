@@ -1,5 +1,4 @@
 const moment = require('moment')
-const now = moment()
 const { find, pick } = require('lodash')
 
 const config = require('~/config')
@@ -177,7 +176,6 @@ describe('Interaction edit controller (Interactions)', () => {
         entityName: 'Fred Bloggs',
       }
 
-      this.res.locals.interaction.date = now.format('YYYY-MM-DD')
       nock(config.apiRoot)
         .get('/v3/contact?company_id=1&limit=500')
         .reply(200, { results: this.contactsData })
@@ -227,7 +225,6 @@ describe('Interaction edit controller (Interactions)', () => {
         entityName: 'Fred Bloggs',
       }
 
-      this.res.locals.interaction.date = now.format('YYYY-MM-DD')
       nock(config.apiRoot)
         .get('/v3/contact?company_id=1&limit=500')
         .reply(200, { results: this.contactsData })
@@ -277,7 +274,6 @@ describe('Interaction edit controller (Interactions)', () => {
         entityName: 'Fred Bloggs',
       }
 
-      this.res.locals.interaction.date = now.format('YYYY-MM-DD')
       nock(config.apiRoot)
         .get('/v3/contact?company_id=1&limit=500')
         .reply(200, { results: this.contactsData })
@@ -478,9 +474,9 @@ describe('Interaction edit controller (Interactions)', () => {
         this.interactionForm.children,
         ({ name }) => name === 'date'
       )
-      expect(dateField.value).to.have.property('year', now.format('YYYY'))
-      expect(dateField.value).to.have.property('month', now.format('MM'))
-      expect(dateField.value).to.have.property('day', now.format('DD'))
+      expect(dateField.value).to.have.property('year', '2058')
+      expect(dateField.value).to.have.property('month', '11')
+      expect(dateField.value).to.have.property('day', '25')
     })
 
     it('should not include policy feedback as a service option', () => {
@@ -1119,7 +1115,7 @@ describe('Interaction edit controller (Interactions)', () => {
           subject: 'a',
         },
       }
-      this.res.locals.interaction.date = now.format('YYYY-MM-DD')
+
       nock(config.apiRoot)
         .get('/v3/contact?company_id=1&limit=500')
         .reply(200, { results: this.contactsData })
