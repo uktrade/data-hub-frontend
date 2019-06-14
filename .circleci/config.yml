@@ -1,5 +1,6 @@
 version: 2 # Do not upgrade to 2.1 until CircleCI CLI supports it
 aliases:
+  - &node_version               node:10.16.0
   - &redis_version              redis:3.2.10
   - &postgres_version           postgres:10
   - &mi_postgres_version        postgres:9.6
