@@ -8,7 +8,7 @@ describe('Collection macro', () => {
     expect(component.tagName).to.equal('ARTICLE')
     expect(component.className).to.equal('c-collection')
     expect(component.querySelector('.c-collection__header')).to.exist
-    expect(component.querySelector('.c-collection__result-count').parentNode.textContent.trim()).equal('0 results')
+    expect(component.querySelector('.c-collection__result-count').parentNode.textContent.trim()).to.match(/0[\n ]results/)
   })
 
   it('should render results summary component with correct count', () => {
@@ -17,7 +17,7 @@ describe('Collection macro', () => {
       countLabel: 'cat',
     })
 
-    expect(component.querySelector('.c-collection__result-count').parentNode.textContent.trim()).equal('10 cats')
+    expect(component.querySelector('.c-collection__result-count').parentNode.textContent.trim()).to.match(/10[\n ]cats/)
   })
 
   context('when filters are selected', () => {
