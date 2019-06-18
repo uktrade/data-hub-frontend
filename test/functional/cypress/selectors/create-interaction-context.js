@@ -13,5 +13,5 @@ module.exports = {
     interaction: `[for=field-kind_other-1]`,
     serviceDelivery: `[for=field-kind_other-2]`,
   },
-  button: `button`,
+  button: `form button`,
 }
