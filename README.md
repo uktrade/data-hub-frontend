@@ -191,20 +191,26 @@ The project is using ES6 async/await therefore Node 8 is required.
    git clone https://github.com/UKTradeInvestment/data-hub-frontend && cd data-hub-frontend
    ```
 
-2. Install node dependencies:
+2. Ensure correct version of yarn is used:
+
+   ```
+   yarn policies set-version 1.15.2
+   ```
+   
+3. Install node dependencies:
 
    ```
    yarn install
    ```
 
-3. Create a copy of the sample .env file and add values for the keys
+4. Create a copy of the sample .env file and add values for the keys
    (a current member of the project team can give you these):
 
    ```
    cp sample.env .env
    ```
 
-4. Run an instance of Redis and change `REDIS_HOST` and `REDIS_PORT` in your
+5. Run an instance of Redis and change `REDIS_HOST` and `REDIS_PORT` in your
    .env file if necessary
 
 #### Run in production mode
