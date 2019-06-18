@@ -6,6 +6,7 @@ module.exports = ({
   requestBody,
   requestParams = {},
   requestQuery = {},
+  requestPath,
   CURRENT_PATH = '',
   breadcrumb = sinon.stub().returnsThis(),
   title = sinon.stub().returnsThis(),
@@ -29,6 +30,7 @@ module.exports = ({
       body: requestBody,
       params: requestParams,
       query: requestQuery,
+      path: requestPath,
       flash: sinon.spy(),
     },
     resMock: {

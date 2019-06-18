@@ -29,7 +29,7 @@ describe('Company activity feed', () => {
     })
 
     it('should display the local nav', () => {
-      cy.get(selectors.tabbedLocalNav().item(1)).should('have.text', 'Interactions')
+      cy.get(selectors.tabbedLocalNav().item(1)).should('have.text', 'Activity')
       cy.get(selectors.tabbedLocalNav().item(2)).should('have.text', 'Company contacts')
       cy.get(selectors.tabbedLocalNav().item(3)).should('have.text', 'Core team')
       cy.get(selectors.tabbedLocalNav().item(4)).should('have.text', 'Investment')
@@ -44,7 +44,7 @@ describe('Company activity feed', () => {
 
   context('when viewing Venus Ltd which has no activities', () => {
     before(() => {
-      cy.visit(`/companies/${fixtures.company.venusLtd.id}/activity-feed`)
+      cy.visit(`/companies/${fixtures.company.venusLtd.id}/activity`)
     })
 
     commonTests({
@@ -60,7 +60,7 @@ describe('Company activity feed', () => {
 
   context('when viewing activity feed for an archived company', () => {
     before(() => {
-      cy.visit(`/companies/${fixtures.company.archivedLtd.id}/activity-feed`)
+      cy.visit(`/companies/${fixtures.company.archivedLtd.id}/activity`)
     })
 
     commonTests({

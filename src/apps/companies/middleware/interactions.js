@@ -1,6 +1,10 @@
 function setInteractionsDetails (req, res, next) {
   const { company } = res.locals
 
+  if (req.path === '/interactions') {
+    return res.redirect(301, 'activity')
+  }
+
   res.locals.interactions = {
     view: 'companies/views/interactions',
     returnLink: `/companies/${company.id}/interactions/`,

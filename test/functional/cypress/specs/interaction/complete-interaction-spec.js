@@ -129,8 +129,8 @@ describe('Complete interaction', () => {
           cy.get(selectors.interaction.complete.actions.continue).click()
         })
 
-        it('should redirect to the interaction list', () => {
-          cy.location('pathname').should('eq', `/companies/${params.companyId}/interactions`)
+        it('should redirect to the company activity', () => {
+          cy.location('pathname').should('eq', `/companies/${params.companyId}/activity`)
         })
 
         it('should show the success message', () => {
@@ -157,8 +157,8 @@ describe('Complete interaction', () => {
           cy.get(selectors.interaction.complete.actions.continue).click()
         })
 
-        it('should redirect to the interaction list', () => {
-          cy.location('pathname').should('eq', `/companies/${params.companyId}/interactions`)
+        it('should redirect to the company activity', () => {
+          cy.location('pathname').should('eq', `/companies/${params.companyId}/activity`)
         })
 
         it('should show the success message', () => {
@@ -213,8 +213,8 @@ describe('Complete interaction', () => {
             cy.get(selectors.interaction.complete.actions.continue).click()
           })
 
-          it('should redirect to the interaction list', () => {
-            cy.location('pathname').should('eq', `/companies/${params.companyId}/interactions`)
+          it('should redirect to the company activity', () => {
+            cy.location('pathname').should('eq', `/companies/${params.companyId}/activity`)
           })
 
           it('should show the success message', () => {
