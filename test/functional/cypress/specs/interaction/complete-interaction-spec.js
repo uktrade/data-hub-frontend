@@ -7,7 +7,7 @@ describe('Complete interaction', () => {
 
     before(() => {
       params.companyId = fixtures.company.venusLtd.id
-      params.interactionId = fixtures.interaction.interactionDraftPastMeeting.id
+      params.interactionId = fixtures.interaction.draftPastMeeting.id
 
       cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
 
@@ -68,7 +68,7 @@ describe('Complete interaction', () => {
 
       before(() => {
         params.companyId = fixtures.company.venusLtd.id
-        params.interactionId = fixtures.interaction.interactionDraftPastMeeting.id
+        params.interactionId = fixtures.interaction.draftPastMeeting.id
 
         cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
 
@@ -93,7 +93,7 @@ describe('Complete interaction', () => {
 
         before(() => {
           params.companyId = fixtures.company.venusLtd.id
-          params.interactionId = fixtures.interaction.interactionDraftPastMeeting.id
+          params.interactionId = fixtures.interaction.draftPastMeeting.id
 
           cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
 
@@ -118,7 +118,7 @@ describe('Complete interaction', () => {
 
         before(() => {
           params.companyId = fixtures.company.venusLtd.id
-          params.interactionId = fixtures.interaction.interactionDraftPastMeeting.id
+          params.interactionId = fixtures.interaction.draftPastMeeting.id
 
           cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
 
@@ -146,7 +146,7 @@ describe('Complete interaction', () => {
 
         before(() => {
           params.companyId = fixtures.company.venusLtd.id
-          params.interactionId = fixtures.interaction.interactionDraftPastMeeting.id
+          params.interactionId = fixtures.interaction.draftPastMeeting.id
 
           cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
 
@@ -175,7 +175,7 @@ describe('Complete interaction', () => {
 
           before(() => {
             params.companyId = fixtures.company.venusLtd.id
-            params.interactionId = fixtures.interaction.interactionDraftPastMeeting.id
+            params.interactionId = fixtures.interaction.draftPastMeeting.id
 
             cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
 
@@ -201,7 +201,7 @@ describe('Complete interaction', () => {
 
           before(() => {
             params.companyId = fixtures.company.venusLtd.id
-            params.interactionId = fixtures.interaction.interactionDraftPastMeeting.id
+            params.interactionId = fixtures.interaction.draftPastMeeting.id
 
             cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
 
@@ -232,7 +232,7 @@ describe('Complete interaction', () => {
 
       before(() => {
         params.companyId = fixtures.company.venusLtd.id
-        params.interactionId = fixtures.interaction.interactionDraftPastMeeting.id
+        params.interactionId = fixtures.interaction.draftPastMeeting.id
 
         cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
 

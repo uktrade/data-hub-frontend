@@ -8,7 +8,7 @@ describe('Interaction details', () => {
 
     before(() => {
       params.companyId = fixtures.company.venusLtd.id
-      params.interactionId = fixtures.interaction.interactionDraftPastMeeting.id
+      params.interactionId = fixtures.interaction.draftPastMeeting.id
 
       cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
     })
@@ -22,7 +22,7 @@ describe('Interaction details', () => {
     })
 
     it('should render the heading', () => {
-      cy.get(selectors.localHeader().heading).should('have.text', fixtures.interaction.interactionDraftPastMeeting.subject)
+      cy.get(selectors.localHeader().heading).should('have.text', fixtures.interaction.draftPastMeeting.subject)
     })
 
     it('should render the details', () => {
@@ -64,7 +64,7 @@ describe('Interaction details', () => {
 
     before(() => {
       params.companyId = fixtures.company.venusLtd.id
-      params.interactionId = fixtures.interaction.interactionDraftFutureMeeting.id
+      params.interactionId = fixtures.interaction.draftFutureMeeting.id
 
       cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
     })
@@ -78,7 +78,7 @@ describe('Interaction details', () => {
     })
 
     it('should render the heading', () => {
-      cy.get(selectors.localHeader().heading).should('have.text', fixtures.interaction.interactionDraftFutureMeeting.subject)
+      cy.get(selectors.localHeader().heading).should('have.text', fixtures.interaction.draftFutureMeeting.subject)
     })
 
     it('should render the details', () => {
@@ -119,7 +119,7 @@ describe('Interaction details', () => {
 
     before(() => {
       params.companyId = fixtures.company.venusLtd.id
-      params.interactionId = fixtures.interaction.interactionCancelledMeeting.id
+      params.interactionId = fixtures.interaction.cancelledMeeting.id
 
       cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
     })
@@ -133,7 +133,7 @@ describe('Interaction details', () => {
     })
 
     it('should render the heading', () => {
-      cy.get(selectors.localHeader().heading).should('have.text', fixtures.interaction.interactionCancelledMeeting.subject)
+      cy.get(selectors.localHeader().heading).should('have.text', fixtures.interaction.cancelledMeeting.subject)
     })
 
     it('should render the details', () => {
@@ -174,7 +174,7 @@ describe('Interaction details', () => {
 
     before(() => {
       params.companyId = fixtures.company.venusLtd.id
-      params.interactionId = fixtures.interaction.interactionWithLink.id
+      params.interactionId = fixtures.interaction.withLink.id
 
       cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
     })
@@ -188,7 +188,7 @@ describe('Interaction details', () => {
     })
 
     it('should render the heading', () => {
-      cy.get(selectors.localHeader().heading).should('have.text', fixtures.interaction.interactionWithLink.subject)
+      cy.get(selectors.localHeader().heading).should('have.text', fixtures.interaction.withLink.subject)
     })
 
     it('should render the details', () => {
@@ -240,7 +240,7 @@ describe('Interaction details', () => {
 
     before(() => {
       params.companyId = fixtures.company.venusLtd.id
-      params.interactionId = fixtures.interaction.interactionWithNoLink.id
+      params.interactionId = fixtures.interaction.withNoLink.id
 
       cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
     })
@@ -254,7 +254,7 @@ describe('Interaction details', () => {
     })
 
     it('should render the heading', () => {
-      cy.get(selectors.localHeader().heading).should('have.text', fixtures.interaction.interactionWithNoLink.subject)
+      cy.get(selectors.localHeader().heading).should('have.text', fixtures.interaction.withNoLink.subject)
     })
 
     it('should render the details', () => {
