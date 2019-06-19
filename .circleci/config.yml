@@ -110,7 +110,7 @@ aliases:
 
   # Data hub base docker container
   - &docker_data_hub_base
-    image: ukti/data-hub-frontend-test:1.0.0
+    image: ukti/data-hub-frontend-test:1.1.0
     environment:
       *data_hub_base_envs
 
@@ -324,7 +324,7 @@ jobs:
       - *wait_for_frontend
       - run:
           name: Run Cypress tests
-          command: yarn test:functional --parallel --record --key $CYPRESS_DASHBOARD_KEY
+          command: yarn test:functional --browser chrome --parallel --record --key $CYPRESS_DASHBOARD_KEY
           when: always
       - store_artifacts:
           path: cypress/screenshots

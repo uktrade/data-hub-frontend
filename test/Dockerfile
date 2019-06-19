@@ -3,9 +3,6 @@
 
 FROM node:8.15.1
 
-# Increment this version each time when you edit Dockerfile.
-ENV VERSION                1.0.0
-
 ENV DOCKERIZE_VERSION      v0.3.0
 ENV YARN_VERSION           1.15.2
 ENV NPM_CONFIG_LOGLEVEL    warn
@@ -51,11 +48,13 @@ RUN apt-get install -y \
   libasound2 \
   xvfb
 
-# Install Chrome
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-  && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list \
-  && apt-get update \
-  && apt-get install -y dbus-x11 google-chrome-stable
+# Install Chrome (73)
+# We decided to lock on Chrome 73 for now until we solve random error when running functional tests: "Error: There has been an OAuth stateId mismatch"
+# See related CircleCI build: https://circleci.com/gh/uktrade/data-hub-frontend/48022#tests/containers/3
+RUN apt-get install -y xdg-utils libgtk-3-0 lsb-release libappindicator3-1 fonts-liberation \
+  && curl https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_74.0.3729.169-1_amd64.deb -O \
+  && dpkg -i google-chrome-stable_74.0.3729.169-1_amd64.deb \
+  && rm google-chrome-stable_74.0.3729.169-1_amd64.deb
 
 # Install dependencies for acceptance tests
 RUN apt-get install -y openjdk-8-jre
@@ -66,3 +65,4 @@ RUN npm -v
 RUN yarn -v
 RUN google-chrome --version
 RUN git --version
+RUN java -version
