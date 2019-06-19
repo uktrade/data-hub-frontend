@@ -317,14 +317,14 @@ jobs:
       - checkout
       - *wait_for_mock_sso
       - *restore_yarn_cache
+      - *wait_for_api_sandbox
       - run: yarn install
       - run: yarn build
       - *start_frontend
       - *wait_for_frontend
-      - *wait_for_api_sandbox
       - run:
           name: Run Cypress tests
-          command: yarn test:functional --browser chrome --parallel --record --key $CYPRESS_DASHBOARD_KEY
+          command: yarn test:functional --parallel --record --key $CYPRESS_DASHBOARD_KEY
           when: always
       - store_artifacts:
           path: cypress/screenshots
