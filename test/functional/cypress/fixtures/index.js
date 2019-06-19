@@ -17,6 +17,7 @@ module.exports = {
   },
   default: require('./default.json'),
   interaction: {
+    interactionCancelledMeeting: require('./interaction/interaction-cancelled-meeting'),
     interactionDraftFutureMeeting: require('./interaction/interaction-draft-future-meeting'),
     interactionDraftPastMeeting: require('./interaction/interaction-draft-past-meeting'),
     interactionWithNoLink: require('./interaction/interaction-with-no-link.json'),

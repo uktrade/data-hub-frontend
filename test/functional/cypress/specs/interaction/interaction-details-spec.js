@@ -114,6 +114,61 @@ describe('Interaction details', () => {
     })
   })
 
+  context('Cancelled interaction', () => {
+    let params = {}
+
+    before(() => {
+      params.companyId = fixtures.company.venusLtd.id
+      params.interactionId = fixtures.interaction.interactionCancelledMeeting.id
+
+      cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
+    })
+
+    it('should render breadcrumbs', () => {
+      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
+      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
+      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Companies')
+      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/companies')
+      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Interaction')
+    })
+
+    it('should render the heading', () => {
+      cy.get(selectors.localHeader().heading).should('have.text', fixtures.interaction.interactionCancelledMeeting.subject)
+    })
+
+    it('should render the details', () => {
+      assertKeyValueTable('interactionDetails', {
+        'Company': {
+          href: `/companies/${fixtures.company.venusLtd.id}`,
+          name: fixtures.company.venusLtd.name,
+        },
+        'Contact(s)': {
+          href: '/contacts/e2eee6cd-acf6-454a-a4a8-f6c8fa604fde',
+          name: 'Tyson Morar',
+        },
+        'Date of interaction': '11 June 2019',
+        'Adviser(s)': 'Brendan Smith, Digital Data Hub - Live Service',
+      })
+    })
+
+    it('should not render the "Complete interaction" button', () => {
+      cy.get(selectors.interaction.details.interaction.actions.completeInteraction(params)).should('not.be.visible')
+    })
+
+    it('should not render the "Edit interaction" button', () => {
+      cy.get(selectors.interaction.details.interaction.actions.editInteraction(params, 'other', 'service-delivery')).should('not.be.visible')
+    })
+
+    it('should render the "Back" link', () => {
+      cy.get(selectors.interaction.details.interaction.actions.back(params)).should('be.visible')
+      cy.get(selectors.interaction.details.interaction.actions.back(params)).should('have.text', 'Back')
+    })
+
+    it('should not render the "Why can I not complete this interaction?" details summary', () => {
+      cy.get(selectors.interaction.details.interaction.whyCanINotComplete).should('not.be.visible')
+    })
+  })
+
   context('Complete service delivery with documents', () => {
     let params = {}
 
