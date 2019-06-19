@@ -25,7 +25,7 @@ describe('FromNow macro', () => {
     })
 
     it('should format datetime attribute to local datetime', () => {
-      expect(this.component.getAttribute('datetime')).to.match(/\d{4}(-\d{2}){2}T(\d{2}:){2}\d{2}\+\d{2}:\d{2}/)
+      expect(this.component.getAttribute('datetime')).to.equal('2010-08-01T00:00:00+01:00')
     })
 
     it('should contain title attribute', () => {
