@@ -40,7 +40,7 @@ describe('Companies local navigation', () => {
     })
 
     commonTests([
-      'Interactions',
+      'Activity',
       'Company contacts',
       'Investment',
       'Export',
@@ -80,7 +80,7 @@ describe('Companies local navigation', () => {
     })
 
     commonTests([
-      'Interactions',
+      'Activity',
       'Company contacts',
       'Core team',
       'Investment',
