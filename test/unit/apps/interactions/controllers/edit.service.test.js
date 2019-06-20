@@ -216,19 +216,82 @@ describe('Interaction edit controller (Service delivery)', () => {
     })
 
     it('should generate a form with the required fields', () => {
-      const fields = this.interactionForm.children.map(field => pick(field, ['name', 'label', 'macroName', 'type']))
+      const fields = this.interactionForm.children.map(field => pick(field, ['name', 'label', 'macroName', 'type', 'heading', 'secondaryHeading']))
       expect(fields).to.deep.equal([
-        { name: 'date', label: 'Date of service delivery', macroName: 'DateFieldset' },
-        { name: 'contacts', label: 'Contact(s)', macroName: 'AddAnother' },
-        { name: 'dit_participants', label: 'Adviser(s)', macroName: 'AddAnother' },
-        { name: 'is_event', label: 'Is this an event?', macroName: 'MultipleChoiceField', type: 'radio' },
-        { name: 'event', label: 'Event', macroName: 'MultipleChoiceField' },
-        { name: 'service', label: 'Service', macroName: 'MultipleChoiceField' },
-        { name: 'service_delivery_status', label: 'Service status', macroName: 'MultipleChoiceField' },
-        { name: 'grant_amount_offered', label: 'Grant offered', macroName: 'TextField' },
-        { name: 'net_company_receipt', label: 'Net receipt', macroName: 'TextField' },
+        {
+          label: undefined,
+          macroName: 'FormSubHeading',
+          heading: 'Service',
+        },
+        {
+          name: 'service',
+          label: 'Service',
+          macroName: 'MultipleChoiceField',
+        },
+        {
+          name: 'service_delivery_status',
+          label: 'Service status',
+          macroName: 'MultipleChoiceField',
+        },
+        {
+          name: 'grant_amount_offered',
+          label: 'Grant offered',
+          macroName: 'TextField',
+        },
+        {
+          name: 'net_company_receipt',
+          label: 'Net receipt',
+          macroName: 'TextField',
+        },
+        {
+          label: undefined,
+          macroName: 'FormSubHeading',
+          heading: 'Interaction Participants',
+          secondaryHeading: 'Fred ltd.',
+        },
+        {
+          name: 'contacts',
+          label: 'Contact(s)',
+          macroName: 'AddAnother',
+        },
+        {
+          name: 'dit_participants',
+          label: 'Adviser(s)',
+          macroName: 'AddAnother',
+        },
+        {
+          label: undefined,
+          macroName: 'FormSubHeading',
+          heading: 'Details',
+        },
+        {
+          name: 'date',
+          label: 'Date of service delivery',
+          macroName: 'DateFieldset',
+        },
+        {
+          name: 'is_event',
+          label: 'Is this an event?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+        },
+        {
+          name: 'event',
+          label: 'Event',
+          macroName: 'MultipleChoiceField',
+        },
+        {
+          label: undefined,
+          macroName: 'FormSubHeading',
+          heading: 'Notes',
+        },
         { name: 'subject', label: 'Subject', macroName: 'TextField' },
-        { name: 'notes', label: 'Notes', macroName: 'TextField', type: 'textarea' },
+        {
+          name: 'notes',
+          label: 'Notes',
+          macroName: 'TextField',
+          type: 'textarea',
+        },
         {
           name: 'was_policy_feedback_provided',
           label: 'Did the contact give any feedback on government policy?',
@@ -241,9 +304,18 @@ describe('Interaction edit controller (Service delivery)', () => {
           macroName: 'MultipleChoiceField',
           type: 'checkbox',
         },
-        { name: 'policy_areas', label: 'Policy area', macroName: 'AddAnother' },
-        { name: 'policy_feedback_notes', label: 'Policy feedback notes', macroName: 'TextField', type: 'textarea' },
-      ])
+        {
+          name: 'policy_areas',
+          label: 'Policy area',
+          macroName: 'AddAnother',
+        },
+        {
+          name: 'policy_feedback_notes',
+          label: 'Policy feedback notes',
+          macroName: 'TextField',
+          type: 'textarea',
+        }]
+      )
     })
 
     it('should provide a list of contacts', () => {
@@ -444,14 +516,38 @@ describe('Interaction edit controller (Service delivery)', () => {
       const fields = this.interactionForm.children.map(field => pick(field, ['name', 'label', 'macroName', 'type', 'value']))
       expect(fields).to.deep.equal([
         {
-          name: 'date',
-          label: 'Date of service delivery',
-          macroName: 'DateFieldset',
-          value: {
-            day: '31',
-            month: '05',
-            year: '2017',
-          },
+          label: undefined,
+          macroName: 'FormSubHeading',
+          value: undefined,
+        },
+        {
+          name: 'service',
+          label: 'Service',
+          macroName: 'MultipleChoiceField',
+          value: '1231231231312',
+        },
+        {
+          name: 'service_delivery_status',
+          label: 'Service status',
+          macroName: 'MultipleChoiceField',
+          value: undefined,
+        },
+        {
+          name: 'grant_amount_offered',
+          label: 'Grant offered',
+          macroName: 'TextField',
+          value: undefined,
+        },
+        {
+          name: 'net_company_receipt',
+          label: 'Net receipt',
+          macroName: 'TextField',
+          value: undefined,
+        },
+        {
+          label: undefined,
+          macroName: 'FormSubHeading',
+          value: undefined,
         },
         {
           name: 'contacts',
@@ -466,6 +562,17 @@ describe('Interaction edit controller (Service delivery)', () => {
           value: [1],
         },
         {
+          label: undefined,
+          macroName: 'FormSubHeading',
+          value: undefined,
+        },
+        {
+          name: 'date',
+          label: 'Date of service delivery',
+          macroName: 'DateFieldset',
+          value: { day: '31', month: '05', year: '2017' },
+        },
+        {
           name: 'is_event',
           label: 'Is this an event?',
           macroName: 'MultipleChoiceField',
@@ -478,17 +585,24 @@ describe('Interaction edit controller (Service delivery)', () => {
           macroName: 'MultipleChoiceField',
           value: 'bac18331-ca4d-4501-960e-a1bd68b5d46e',
         },
-        { name: 'service', label: 'Service', macroName: 'MultipleChoiceField', value: '1231231231312' },
         {
-          name: 'service_delivery_status',
-          label: 'Service status',
-          macroName: 'MultipleChoiceField',
+          label: undefined,
+          macroName: 'FormSubHeading',
           value: undefined,
         },
-        { name: 'grant_amount_offered', label: 'Grant offered', macroName: 'TextField', value: undefined },
-        { name: 'net_company_receipt', label: 'Net receipt', macroName: 'TextField', value: undefined },
-        { name: 'subject', label: 'Subject', macroName: 'TextField', value: 'Test interactions' },
-        { name: 'notes', label: 'Notes', macroName: 'TextField', type: 'textarea', value: 'lorem ipsum' },
+        {
+          name: 'subject',
+          label: 'Subject',
+          macroName: 'TextField',
+          value: 'Test interactions',
+        },
+        {
+          name: 'notes',
+          label: 'Notes',
+          macroName: 'TextField',
+          type: 'textarea',
+          value: 'lorem ipsum',
+        },
         {
           name: 'was_policy_feedback_provided',
           label: 'Did the contact give any feedback on government policy?',
@@ -503,15 +617,19 @@ describe('Interaction edit controller (Service delivery)', () => {
           type: 'checkbox',
           value: [],
         },
-        { name: 'policy_areas', label: 'Policy area', macroName: 'AddAnother', value: [] },
+        {
+          name: 'policy_areas',
+          label: 'Policy area',
+          macroName: 'AddAnother',
+          value: [],
+        },
         {
           name: 'policy_feedback_notes',
           label: 'Policy feedback notes',
           macroName: 'TextField',
           type: 'textarea',
           value: undefined,
-        },
-      ])
+        }])
     })
 
     it('should provide a list of contacts', () => {
@@ -623,17 +741,44 @@ describe('Interaction edit controller (Service delivery)', () => {
     })
 
     it('should merge the changes on top of the original record', () => {
-      const fields = this.interactionForm.children.map(field => pick(field, ['name', 'label', 'macroName', 'type', 'value']))
+      const fields = this.interactionForm.children.map(field => pick(field, ['name', 'label', 'macroName', 'type', 'value', 'heading', 'secondaryHeading']))
       expect(fields).to.deep.equal([
         {
-          name: 'date',
-          label: 'Date of service delivery',
-          macroName: 'DateFieldset',
-          value: {
-            day: '31',
-            month: '05',
-            year: '2017',
-          },
+          label: undefined,
+          macroName: 'FormSubHeading',
+          value: undefined,
+          heading: 'Service',
+        },
+        {
+          name: 'service',
+          label: 'Service',
+          macroName: 'MultipleChoiceField',
+          value: '1231231231312',
+        },
+        {
+          name: 'service_delivery_status',
+          label: 'Service status',
+          macroName: 'MultipleChoiceField',
+          value: undefined,
+        },
+        {
+          name: 'grant_amount_offered',
+          label: 'Grant offered',
+          macroName: 'TextField',
+          value: undefined,
+        },
+        {
+          name: 'net_company_receipt',
+          label: 'Net receipt',
+          macroName: 'TextField',
+          value: undefined,
+        },
+        {
+          label: undefined,
+          macroName: 'FormSubHeading',
+          value: undefined,
+          heading: 'Interaction Participants',
+          secondaryHeading: 'Fred ltd.',
         },
         {
           name: 'contacts',
@@ -648,6 +793,18 @@ describe('Interaction edit controller (Service delivery)', () => {
           value: [1],
         },
         {
+          label: undefined,
+          macroName: 'FormSubHeading',
+          value: undefined,
+          heading: 'Details',
+        },
+        {
+          name: 'date',
+          label: 'Date of service delivery',
+          macroName: 'DateFieldset',
+          value: { day: '31', month: '05', year: '2017' },
+        },
+        {
           name: 'is_event',
           label: 'Is this an event?',
           macroName: 'MultipleChoiceField',
@@ -660,17 +817,25 @@ describe('Interaction edit controller (Service delivery)', () => {
           macroName: 'MultipleChoiceField',
           value: 'bac18331-ca4d-4501-960e-a1bd68b5d46e',
         },
-        { name: 'service', label: 'Service', macroName: 'MultipleChoiceField', value: '1231231231312' },
         {
-          name: 'service_delivery_status',
-          label: 'Service status',
-          macroName: 'MultipleChoiceField',
+          label: undefined,
+          macroName: 'FormSubHeading',
           value: undefined,
+          heading: 'Notes',
         },
-        { name: 'grant_amount_offered', label: 'Grant offered', macroName: 'TextField', value: undefined },
-        { name: 'net_company_receipt', label: 'Net receipt', macroName: 'TextField', value: undefined },
-        { name: 'subject', label: 'Subject', macroName: 'TextField', value: 'a' },
-        { name: 'notes', label: 'Notes', macroName: 'TextField', type: 'textarea', value: 'lorem ipsum' },
+        {
+          name: 'subject',
+          label: 'Subject',
+          macroName: 'TextField',
+          value: 'a',
+        },
+        {
+          name: 'notes',
+          label: 'Notes',
+          macroName: 'TextField',
+          type: 'textarea',
+          value: 'lorem ipsum',
+        },
         {
           name: 'was_policy_feedback_provided',
           label: 'Did the contact give any feedback on government policy?',
@@ -685,15 +850,20 @@ describe('Interaction edit controller (Service delivery)', () => {
           type: 'checkbox',
           value: [],
         },
-        { name: 'policy_areas', label: 'Policy area', macroName: 'AddAnother', value: [] },
+        {
+          name: 'policy_areas',
+          label: 'Policy area',
+          macroName: 'AddAnother',
+          value: [],
+        },
         {
           name: 'policy_feedback_notes',
           label: 'Policy feedback notes',
           macroName: 'TextField',
           type: 'textarea',
           value: undefined,
-        },
-      ])
+        }]
+      )
     })
 
     it('should include the error in the form', () => {
