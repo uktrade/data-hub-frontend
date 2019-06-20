@@ -16,6 +16,7 @@ require('nightwatch-cucumber')({
 const browserStackUser = process.env.BROWSERSTACK_USERNAME || ''
 const browserStackKey = process.env.BROWSERSTACK_ACCESS_KEY || ''
 const isRemote = !!process.env.REMOTE_RUN
+const isDocker = !!process.env.NIGHTWATCH_IN_DOCKER
 
 const remoteConfig = {
   selenium: {
@@ -108,6 +109,12 @@ const defaultConfig = {
   },
 }
 
+const dockerConfig = {
+  selenium: {
+    start_process: false,
+  },
+}
+
 module.exports = isRemote
   ? Object.assign({}, defaultConfig, remoteConfig)
-  : defaultConfig
+  : isDocker ? Object.assign({}, defaultConfig, dockerConfig) : defaultConfig
