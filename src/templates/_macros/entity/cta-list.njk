@@ -10,8 +10,8 @@
   {% if props.items | length %}
     {% if props.items[0].value === 'Ongoing' or props.items[0].value === 'Late' %}
       <div class="{{ 'c-entity__cta-list' | applyClassModifiers(props.modifier) }}">
-        <a href="{{ props.url }}/abandon" class="button button--secondary">Abandon</a>
-        <a href="{{ props.url }}/document" class="button">Complete</a>
+        <a href="{{ props.url }}/abandon" class="govuk-button govuk-button--secondary">Abandon</a>
+        <a href="{{ props.url }}/document" class="govuk-button">Complete</a>
       </div>
     {% endif %}
   {% endif %}

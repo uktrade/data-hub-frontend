@@ -1,4 +1,6 @@
+@import "~govuk_frontend_toolkit/stylesheets/design-patterns/buttons";
 @import "../../settings";
+@import "../../settings/colours";
 
 .c-form-control {
   appearance: none;
@@ -34,7 +36,7 @@
     }
 
     &::before {
-      @include button ($grey-2);
+      @include button ($grey-3);
       padding-bottom: .526315em;
       content: 'Choose a file';
       display: inline-block;
