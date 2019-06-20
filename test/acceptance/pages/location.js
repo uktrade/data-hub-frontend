@@ -77,14 +77,14 @@ module.exports = {
       },
     },
     globalNav: {
-      selector: '.c-global-nav',
+      selector: '.datahub-header__navigation',
       commands: [
         {
           getGlobalNavLinkSelector (text) {
             return getSelectorForElementWithText(text,
               {
                 el: '//a',
-                className: 'global-nav__link',
+                className: 'datahub-header__navigation__item__link',
               }
             )
           },

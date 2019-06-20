@@ -196,7 +196,7 @@ The project is using ES6 async/await therefore Node 8 is required.
    ```
    yarn policies set-version 1.15.2
    ```
-   
+
 3. Install node dependencies:
 
    ```
@@ -525,6 +525,17 @@ BROWSERSTACK_ACCESS_KEY=accesskey
 Then run:
 ```
 REMOTE_RUN=true yarn test:acceptance:remote --env ie11,firefox --tag audit-company--name
+```
+
+If you don't want to install Java and selenium locally you can run them in a docker container:
+
+```
+docker run -d -p 4444:4444 selenium/standalone-chrome:3
+```
+
+Then run:
+```
+NIGHTWATCH_IN_DOCKER=true yarn test:acceptance
 ```
 
 #### Naming conventions

@@ -5,7 +5,6 @@ const logger = require('../../config/logger')
 const config = require('../../config')
 const { version } = require('../../package.json')
 const { filterNonPermittedItem } = require('../modules/permissions/filters')
-const { buildNavObject } = require('../apps/builders')
 
 let webpackManifest = {}
 
@@ -15,11 +14,26 @@ try {
   logger.error('Manifest file is not found. Ensure assets are built.')
 }
 
+function getActiveHeaderKey (requestPath, permittedNavItems) {
+  if (requestPath.startsWith('/support')) {
+    return 'datahub-support'
+  } else if (requestPath === '/profile') {
+    return 'datahub-profile'
+  } else {
+    for (const { path, headerKey } of permittedNavItems) {
+      if (requestPath.startsWith(path)) {
+        return headerKey
+      }
+    }
+  }
+}
+
 module.exports = function locals (req, res, next) {
   const baseUrl = `${(req.encrypted ? 'https' : req.protocol)}://${req.get('host')}`
   const userPermissions = get(res, 'locals.user.permissions')
   const userProfile = config.oauth.bypassSSO ? null : get(req.session, 'userProfile')
   const permittedApplications = get(userProfile, 'permitted_applications', [])
+  const permittedNavItems = GLOBAL_NAV_ITEMS.filter(filterNonPermittedItem(userPermissions))
 
   res.locals = Object.assign({}, res.locals, {
     APP_VERSION: version,
@@ -31,9 +45,12 @@ module.exports = function locals (req, res, next) {
     GOOGLE_TAG_MANAGER_KEY: config.googleTagManagerKey,
     IS_XHR: req.xhr,
     QUERY: req.query,
-    GLOBAL_NAV_ITEMS: GLOBAL_NAV_ITEMS
-      .filter(filterNonPermittedItem(userPermissions))
-      .map(navItem => buildNavObject(req, navItem, permittedApplications, config.oauth.bypassSSO)),
+    PERMITTED_APPLICATIONS: (config.oauth.bypassSSO ? [{ key: 'datahub-crm' }] : permittedApplications),
+    ALLOWED_APPS: permittedNavItems.reduce((apps, { headerKey }) => {
+      headerKey && apps.push(headerKey)
+      return apps
+    }, []),
+    ACTIVE_KEY: getActiveHeaderKey(req.path, permittedNavItems),
 
     getMessages () {
       return req.flash()
