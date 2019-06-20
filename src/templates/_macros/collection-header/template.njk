@@ -33,7 +33,7 @@
         {% endif %}
 
         {% for actionButton in actionButtons %}
-          <a class="button button--secondary" href="{{ actionButton.url }}" data-auto-id="{{ actionButton.label }}">{{ actionButton.label }}</a>
+          <a class="govuk-button govuk-button--secondary" href="{{ actionButton.url }}" data-auto-id="{{ actionButton.label }}">{{ actionButton.label }}</a>
         {% endfor %}
       </div>
     {% endif %}
@@ -81,7 +81,7 @@
       </span>
       <span class="c-collection__header-actions">
         {% if not props.exportAction.invalidNumberOfItems(count, props.exportAction.maxItems) %}
-          <a class="button" download href="{{ props.exportAction.url }}">Download</a>
+          <a class="govuk-button" download href="{{ props.exportAction.url }}">Download</a>
         {% endif %}
       </span>
     </div>

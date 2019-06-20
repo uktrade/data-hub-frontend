@@ -3,6 +3,6 @@
 {% block main_grid_right_column %}
   {% component 'key-value-table', variant='striped', items=eventViewRecord %}
   {% if event.disabled_on == null %}
-    <a class="button button--secondary" href="/events/{{ event.id }}/edit">Edit event</a>
+    <a class="govuk-button govuk-button--secondary" href="/events/{{ event.id }}/edit">Edit event</a>
   {% endif %}
 {% endblock %}

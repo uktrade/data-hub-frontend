@@ -59,7 +59,7 @@ const ArchiveForm = {
 
   createShowButton () {
     const showArchiveFormButton = this.document.createElement('a')
-    showArchiveFormButton.classList.add('button', 'button--secondary')
+    showArchiveFormButton.classList.add('govuk-button', 'govuk-button--secondary')
     showArchiveFormButton.href = '#'
     showArchiveFormButton.textContent = 'Archive'
     return showArchiveFormButton
