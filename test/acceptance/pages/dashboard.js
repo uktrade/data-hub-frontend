@@ -1,7 +1,7 @@
 const { getSelectorForElementWithText, getLinkWithText } = require('../helpers/selectors')
 
-const getGlobalNavAnchorWithText = (text) => getLinkWithText(text, 'global-nav__link')
-const getGlobalHeaderAnchorWithText = (text) => getLinkWithText(text, 'proposition-menu__link')
+const getGlobalNavAnchorWithText = (text) => getLinkWithText(text, 'datahub-header__navigation__item__link')
+const getGlobalHeaderAnchorWithText = (text) => getLinkWithText(text, 'datahub-header__links__item')
 
 module.exports = {
   url: process.env.QA_HOST,
@@ -13,21 +13,21 @@ module.exports = {
   },
   sections: {
     globalHeader: {
-      selector: '.global-header',
+      selector: '.datahub-header',
       elements: {
-        serviceName: '.global-header__service-name',
+        serviceName: '.datahub-header__logo__text',
         support: getGlobalHeaderAnchorWithText('Support'),
       },
     },
     globalNav: {
-      selector: '.c-global-nav__container',
+      selector: '.datahub-header__navigation',
       elements: {
         companies: getGlobalNavAnchorWithText('Companies'),
         contacts: getGlobalNavAnchorWithText('Contacts'),
         events: getGlobalNavAnchorWithText('Events'),
         interactionsAndServices: getGlobalNavAnchorWithText('Interactions'),
         investmentProjects: getGlobalNavAnchorWithText('Investments'),
-        ordersOmis: getGlobalNavAnchorWithText('Orders (OMIS)'),
+        ordersOmis: getGlobalNavAnchorWithText('Orders'),
         miDashboards: getGlobalNavAnchorWithText('MI dashboards'),
         findExporters: getGlobalNavAnchorWithText('Find exporters'),
       },
@@ -40,7 +40,7 @@ module.exports = {
           text,
           {
             el: '//a',
-            className: 'global-nav__link',
+            className: 'datahub-header__navigation__item__link',
           },
         )
       },
