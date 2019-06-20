@@ -133,6 +133,6 @@ router.get('/:companyId/timeline', renderTimeline)
 router.use('/:companyId/investments', investmentsRouter)
 router.use('/:companyId/matching', matchingRouter)
 router.use('/:companyId', setInteractionsDetails, interactionsRouter)
-router.use('/:companyId/activity-feed', activityFeedRouter)
+router.use('/:companyId/activity', activityFeedRouter)
 
 module.exports = router

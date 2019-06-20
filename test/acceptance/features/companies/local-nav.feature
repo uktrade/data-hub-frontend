@@ -7,7 +7,7 @@ Feature: Companies local nav
     When I navigate to the `companies.fixture` page using `company` `One List Corp` fixture
     Then there should be a tabbed local nav
       | text                      |
-      | Interactions              |
+      | Activity                  |
       | Company contacts          |
       | Core team                 |
       | Investment                |
