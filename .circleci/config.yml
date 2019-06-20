@@ -110,7 +110,7 @@ aliases:
 
   # Data hub base docker container
   - &docker_data_hub_base
-    image: ukti/data-hub-frontend-test:1.0.0
+    image: ukti/data-hub-frontend-test:1.1.0
     environment:
       *data_hub_base_envs
 
@@ -221,7 +221,7 @@ jobs:
     steps:
       - checkout
       - *restore_yarn_cache
-      - run: yarn install
+      - run: yarn install --pure-lockfile
       - save_cache:
           name: Save yarn dependencies cache
           key: yarn-dependency-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
@@ -237,7 +237,7 @@ jobs:
     steps:
       - checkout
       - *restore_yarn_cache
-      - run: yarn install
+      - run: yarn install --pure-lockfile
       - run:
           name: Lint code
           command: |
@@ -258,7 +258,7 @@ jobs:
     steps:
       - checkout
       - *restore_yarn_cache
-      - run: yarn install
+      - run: yarn install --pure-lockfile
       - run:
           name: Run unit tests
           command: |
@@ -284,7 +284,7 @@ jobs:
     steps:
       - checkout
       - *restore_yarn_cache
-      - run: yarn install
+      - run: yarn install --pure-lockfile
       - run: yarn build
       - run:
           name: Run client-side unit tests
@@ -317,11 +317,11 @@ jobs:
       - checkout
       - *wait_for_mock_sso
       - *restore_yarn_cache
-      - run: yarn install
+      - *wait_for_api_sandbox
+      - run: yarn install --pure-lockfile
       - run: yarn build
       - *start_frontend
       - *wait_for_frontend
-      - *wait_for_api_sandbox
       - run:
           name: Run Cypress tests
           command: yarn test:functional --browser chrome --parallel --record --key $CYPRESS_DASHBOARD_KEY
@@ -347,7 +347,7 @@ jobs:
       - *wait_for_backend
       - *wait_for_mock_sso
       - *restore_yarn_cache
-      - run: yarn install
+      - run: yarn install --pure-lockfile
       - run: yarn build
       - *start_frontend
       - *wait_for_frontend
@@ -399,7 +399,7 @@ jobs:
       - *wait_for_backend
       - *wait_for_mock_sso
       - *restore_yarn_cache
-      - run: yarn install
+      - run: yarn install --pure-lockfile
       - run: yarn build
       - *start_frontend
       - *wait_for_frontend
@@ -431,7 +431,7 @@ jobs:
       - *wait_for_backend
       - *wait_for_mock_sso
       - *restore_yarn_cache
-      - run: yarn install
+      - run: yarn install --pure-lockfile
       - run: yarn build
       - *start_frontend
       - *wait_for_frontend
@@ -463,7 +463,7 @@ jobs:
       - *wait_for_backend
       - *wait_for_mock_sso
       - *restore_yarn_cache
-      - run: yarn install
+      - run: yarn install --pure-lockfile
       - run: yarn build
       - *start_frontend
       - *wait_for_frontend
