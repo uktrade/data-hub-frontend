@@ -14,7 +14,7 @@ async function renderActivityFeed (req, res, next) {
       .render('companies/apps/activity-feed/views/container', {
         params: {
           ...addContentParams,
-          apiEndpoint: `/companies/${company.id}/activity-feed/data`,
+          apiEndpoint: `/companies/${company.id}/activity/data`,
         },
       })
   } catch (error) {
