@@ -3,7 +3,7 @@ const { root } = require('./paths')
 
 const GLOBAL_NAV_ITEM = {
   path: root,
-  label: 'Investments',
+  headerKey: 'datahub-investments',
   permissions: [
     'investment.view_associated_investmentproject',
     'investment.view_all_investmentproject',

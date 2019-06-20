@@ -2,6 +2,7 @@ $images-dir: "/images/";
 
 $govuk-canvas-background-colour: #fff;
 $govuk-font-family: Arial, sans-serif;
+@import "~@uktrade/datahub-header/component/header.css";
 @import "~govuk-frontend/all";
 
 $toolkit-font-stack: $govuk-font-family;
