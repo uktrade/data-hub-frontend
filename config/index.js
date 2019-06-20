@@ -110,6 +110,12 @@ const config = {
   },
   activityFeed: {
     paginationSize: 20,
+    supportedActivityTypes: [
+      'dit:Interaction',
+      'dit:ServiceDelivery',
+      'dit:InvestmentProject',
+      'dit:OMISOrder',
+    ],
   },
 }
 
