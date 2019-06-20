@@ -9,7 +9,7 @@ Then(/^there should be a global nav$/, async (dataTable) => {
 
   const expectedGlobalNav = dataTable.hashes()
 
-  await Dashboard.api.elements('css selector', '.global-nav__link', (result) => {
+  await Dashboard.api.elements('css selector', '.datahub-header__navigation__item__link', (result) => {
     client.expect(result.value.length).to.equal(expectedGlobalNav.length)
   })
 
