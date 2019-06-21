@@ -23,7 +23,7 @@ describe('Company OMIS Collections', () => {
   it('should contain company info', () => {
     cy.get(selectors.entityCollection.entity(1))
       .should('contain', 'Samsung')
-      .and('contain', '29 Apr 2019, 3:25pm')
+      .and('contain', '29 Apr 2019')
       .and('contain', 'Alysia Tolley')
       .and('contain', 'Yorkshire and The Humber')
       .and('contain', 'ICT')
