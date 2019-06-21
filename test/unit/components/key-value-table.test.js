@@ -1,4 +1,4 @@
-const { renderComponentToDom } = require('../component-helper')
+const { renderComponentToDom, normaliseHtml } = require('../component-helper')
 
 describe('Key/value table component', () => {
   context('when no items are given', () => {
@@ -262,7 +262,7 @@ describe('Key/value table component', () => {
     })
 
     it('should render the paragraph', () => {
-      expect(this.rows[0].querySelector('td').textContent).to.equal('\n         https://world-is-a-stage and we\n          are the actors\n      ')
+      expect(normaliseHtml(this.rows[0].querySelector('td').textContent)).to.equal(normaliseHtml('\n         https://world-is-a-stage and we\n          are the actors\n      '))
     })
   })
 
