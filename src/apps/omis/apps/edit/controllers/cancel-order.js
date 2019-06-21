@@ -21,7 +21,7 @@ class CancelOrderController extends EditController {
       disableFormAction: false,
       returnText: 'Return without cancelling',
       buttonText: 'Cancel order',
-      buttonModifiers: 'button--destructive',
+      buttonModifiers: 'govuk-button--warning',
       fields: {
         cancellation_reason: {
           options: filteredReasons.map(transformObjectToOption),

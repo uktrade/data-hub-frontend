@@ -17,10 +17,11 @@ module.exports = {
   },
   default: require('./default.json'),
   interaction: {
-    interactionDraftFutureMeeting: require('./interaction/interaction-draft-future-meeting'),
-    interactionDraftPastMeeting: require('./interaction/interaction-draft-past-meeting'),
-    interactionWithNoLink: require('./interaction/interaction-with-no-link.json'),
-    interactionWithLink: require('./interaction/interaction-with-link.json'),
+    cancelledMeeting: require('./interaction/cancelled-meeting'),
+    draftFutureMeeting: require('./interaction/draft-future-meeting'),
+    draftPastMeeting: require('./interaction/draft-past-meeting'),
+    withNoLink: require('./interaction/with-no-link.json'),
+    withLink: require('./interaction/with-link.json'),
   },
   investment: {
     investmentWithNoLink: require('./investment/investment-with-no-link.json'),

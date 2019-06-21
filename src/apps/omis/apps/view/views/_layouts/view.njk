@@ -3,7 +3,7 @@
 {% set actions %}
   {% if order.status in ['paid'] %}
     <p class="c-local-header__action">
-      <a href="edit/complete-order" class="button">Complete order</a>
+      <a href="edit/complete-order" class="govuk-button">Complete order</a>
     </p>
   {% endif %}
 
@@ -22,7 +22,7 @@
   {% else %}
     <p class="c-local-header__action">
       {% if order.status == 'draft' %}
-        <a href="quote" class="button">Preview quote</a>
+        <a href="quote" class="govuk-button">Preview quote</a>
       {% elif order.status not in ['cancelled']  %}
         <a href="quote">View quote</a>
       {% endif %}

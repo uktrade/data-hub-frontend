@@ -12,7 +12,7 @@ Feature: Dashboard
       | Events                    |
       | Interactions              |
       | Investments               |
-      | Orders (OMIS)             |
+      | Orders                    |
       | MI dashboards             |
 
   @dashboard--global-nav-lep @lep
@@ -35,5 +35,5 @@ Feature: Dashboard
       | Companies                 |
       | Contacts                  |
       | Investments               |
-      | Orders (OMIS)             |
+      | Orders                    |
       | MI dashboards             |

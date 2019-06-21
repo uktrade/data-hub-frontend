@@ -7,7 +7,7 @@ describe('Complete interaction', () => {
 
     before(() => {
       params.companyId = fixtures.company.venusLtd.id
-      params.interactionId = fixtures.interaction.interactionDraftPastMeeting.id
+      params.interactionId = fixtures.interaction.draftPastMeeting.id
 
       cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
 
@@ -68,7 +68,7 @@ describe('Complete interaction', () => {
 
       before(() => {
         params.companyId = fixtures.company.venusLtd.id
-        params.interactionId = fixtures.interaction.interactionDraftPastMeeting.id
+        params.interactionId = fixtures.interaction.draftPastMeeting.id
 
         cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
 
@@ -93,7 +93,7 @@ describe('Complete interaction', () => {
 
         before(() => {
           params.companyId = fixtures.company.venusLtd.id
-          params.interactionId = fixtures.interaction.interactionDraftPastMeeting.id
+          params.interactionId = fixtures.interaction.draftPastMeeting.id
 
           cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
 
@@ -118,7 +118,7 @@ describe('Complete interaction', () => {
 
         before(() => {
           params.companyId = fixtures.company.venusLtd.id
-          params.interactionId = fixtures.interaction.interactionDraftPastMeeting.id
+          params.interactionId = fixtures.interaction.draftPastMeeting.id
 
           cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
 
@@ -129,8 +129,8 @@ describe('Complete interaction', () => {
           cy.get(selectors.interaction.complete.actions.continue).click()
         })
 
-        it('should redirect to the interaction list', () => {
-          cy.location('pathname').should('eq', `/companies/${params.companyId}/interactions`)
+        it('should redirect to the company activity', () => {
+          cy.location('pathname').should('eq', `/companies/${params.companyId}/activity`)
         })
 
         it('should show the success message', () => {
@@ -146,7 +146,7 @@ describe('Complete interaction', () => {
 
         before(() => {
           params.companyId = fixtures.company.venusLtd.id
-          params.interactionId = fixtures.interaction.interactionDraftPastMeeting.id
+          params.interactionId = fixtures.interaction.draftPastMeeting.id
 
           cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
 
@@ -157,8 +157,8 @@ describe('Complete interaction', () => {
           cy.get(selectors.interaction.complete.actions.continue).click()
         })
 
-        it('should redirect to the interaction list', () => {
-          cy.location('pathname').should('eq', `/companies/${params.companyId}/interactions`)
+        it('should redirect to the company activity', () => {
+          cy.location('pathname').should('eq', `/companies/${params.companyId}/activity`)
         })
 
         it('should show the success message', () => {
@@ -175,7 +175,7 @@ describe('Complete interaction', () => {
 
           before(() => {
             params.companyId = fixtures.company.venusLtd.id
-            params.interactionId = fixtures.interaction.interactionDraftPastMeeting.id
+            params.interactionId = fixtures.interaction.draftPastMeeting.id
 
             cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
 
@@ -201,7 +201,7 @@ describe('Complete interaction', () => {
 
           before(() => {
             params.companyId = fixtures.company.venusLtd.id
-            params.interactionId = fixtures.interaction.interactionDraftPastMeeting.id
+            params.interactionId = fixtures.interaction.draftPastMeeting.id
 
             cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
 
@@ -213,8 +213,8 @@ describe('Complete interaction', () => {
             cy.get(selectors.interaction.complete.actions.continue).click()
           })
 
-          it('should redirect to the interaction list', () => {
-            cy.location('pathname').should('eq', `/companies/${params.companyId}/interactions`)
+          it('should redirect to the company activity', () => {
+            cy.location('pathname').should('eq', `/companies/${params.companyId}/activity`)
           })
 
           it('should show the success message', () => {
@@ -232,7 +232,7 @@ describe('Complete interaction', () => {
 
       before(() => {
         params.companyId = fixtures.company.venusLtd.id
-        params.interactionId = fixtures.interaction.interactionDraftPastMeeting.id
+        params.interactionId = fixtures.interaction.draftPastMeeting.id
 
         cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
 

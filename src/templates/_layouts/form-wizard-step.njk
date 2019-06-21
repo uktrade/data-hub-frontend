@@ -48,7 +48,7 @@
                 })) %}
                   {% for value in fieldValues %}
                     {% set removeButton %}
-                      <button class="button button--link c-form-group__action js-AddItems__remove" name="remove-item" value="{{ key }}::{{ loop.index0 }}">
+                      <button class="govuk-button button--link c-form-group__action js-AddItems__remove" name="remove-item" value="{{ key }}::{{ loop.index0 }}">
                         {{ translate(removeButtonText) }}
                       </button>
                     {% endset %}
@@ -67,7 +67,7 @@
                 {% endcall %}
 
                 <p class="c-form-group c-form-group--compact">
-                  <button class="button button--secondary js-AddItems__add" name="add-item" value="{{ key }}">
+                  <button class="govuk-button govuk-button--secondary js-AddItems__add" name="add-item" value="{{ key }}">
                     {{ translate(addButtonText) }}
                   </button>
                 </p>

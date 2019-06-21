@@ -20,14 +20,14 @@
       {{ govukButton({
         text: 'Edit ' + kindWord,
         href: [ returnLink, interaction.id, 'edit', themePath, kindPath ] | joinPaths,
-        classes: 'govuk-button--secondary'
+        classes: 'govuk-button govuk-button--secondary'
       }) }}
     {% endif %}
 
     <a href="{{ returnLink }}">Back</a>
   </div>
 
-  {% if not canComplete and not canEdit %}
+  {% if not canComplete and not canEdit and not interaction.archived %}
     {{ govukDetails({
       summaryText: 'Why can I not complete this interaction?',
       html: '<p>
