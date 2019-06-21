@@ -1,4 +1,4 @@
-const { assign, at, castArray, get, has, keyBy, includes, isArray, isFunction, isEmpty, isString, map, pick, pickBy, some } = require('lodash')
+const { assign, at, castArray, get, has, keyBy, isArray, isFunction, isEmpty, isString, map, pick, pickBy } = require('lodash')
 const { getOptions } = require('../lib/options')
 
 function getDeepObjectValuesForKey (object, keyName, values = []) {
@@ -147,33 +147,6 @@ async function buildFieldsWithSelectedEntities (token, fields = [], query = {}) 
   return processedFields
 }
 
-function filterNonSsoUserProfileItem (permittedApps, bypassSSO) {
-  return (item) => {
-    return bypassSSO || some(permittedApps, (app) => app.key === item.key)
-  }
-}
-
-function buildNavObject (req, navItem, permittedApps = [], bypassSSO = false) {
-  const { path: url, label } = navItem
-  const isActive = req.path.startsWith(url)
-
-  /**
-   * Nav should always default to DH proprietary links
-   */
-
-  if (!includes(permittedApps, 'datahub-crm')) {
-    permittedApps.push({ key: 'datahub-crm' })
-  }
-
-  if (filterNonSsoUserProfileItem(permittedApps, bypassSSO)(navItem)) {
-    return {
-      label,
-      url,
-      isActive,
-    }
-  }
-}
-
 module.exports = {
   getDeepObjectValuesForKey,
   assignPropsIfFoundInObject,
@@ -182,5 +155,4 @@ module.exports = {
   buildFormWithStateAndErrors,
   buildSelectedFiltersSummary,
   buildFieldsWithSelectedEntities,
-  buildNavObject,
 }

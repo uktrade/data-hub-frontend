@@ -6,6 +6,7 @@ describe('Company activity feed', () => {
     expectedHeading,
     expectedAddress,
     expectedCompanyId,
+    expectedActivitiesHeading,
   }) => {
     it('should render breadcrumbs', () => {
       cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
@@ -29,7 +30,7 @@ describe('Company activity feed', () => {
     })
 
     it('should display the local nav', () => {
-      cy.get(selectors.tabbedLocalNav().item(1)).should('have.text', 'Interactions')
+      cy.get(selectors.tabbedLocalNav().item(1)).should('have.text', 'Activity')
       cy.get(selectors.tabbedLocalNav().item(2)).should('have.text', 'Company contacts')
       cy.get(selectors.tabbedLocalNav().item(3)).should('have.text', 'Core team')
       cy.get(selectors.tabbedLocalNav().item(4)).should('have.text', 'Investment')
@@ -38,35 +39,45 @@ describe('Company activity feed', () => {
     })
 
     it('should display the "Activities" heading', () => {
-      cy.get(selectors.companyCollection().heading).should('have.text', 'Activities')
+      cy.get(selectors.companyCollection().heading).should('have.text', expectedActivitiesHeading)
     })
   }
 
   context('when viewing Venus Ltd which has no activities', () => {
     before(() => {
-      cy.visit(`/companies/${fixtures.company.venusLtd.id}/activity-feed`)
+      cy.visit(`/companies/${fixtures.company.venusLtd.id}/activity`)
     })
 
     commonTests({
       expectedHeading: fixtures.company.venusLtd.name,
       expectedAddress: '66 Marcham Road, Bordley, BD23 8RZ, United Kingdom',
       expectedCompanyId: fixtures.company.venusLtd.id,
+      expectedActivitiesHeading: 'Activities',
     })
 
     it('should display "Add interaction" button', () => {
       cy.get(selectors.companyCollection().interaction.addButton(fixtures.company.venusLtd.id)).should('have.text', 'Add interaction')
     })
+
+    it('should not display the activity feed', () => {
+      cy.get(selectors.companyActivity.activityFeed.item(1)).should('not.be.visible')
+    })
+
+    it('should display the "There are no activities to show." message', () => {
+      cy.get(selectors.companyActivity.activityFeed.noActivites).should('be.visible')
+    })
   })
 
   context('when viewing activity feed for an archived company', () => {
     before(() => {
-      cy.visit(`/companies/${fixtures.company.archivedLtd.id}/activity-feed`)
+      cy.visit(`/companies/${fixtures.company.archivedLtd.id}/activity`)
     })
 
     commonTests({
       expectedHeading: fixtures.company.archivedLtd.name,
       expectedAddress: '16 Getabergsvagen, Geta, 22340, Malta',
       expectedCompanyId: fixtures.company.archivedLtd.id,
+      expectedActivitiesHeading: '1 activities',
     })
 
     it('should display the badge', () => {
@@ -85,6 +96,14 @@ describe('Company activity feed', () => {
 
     it('should not display the "Add interaction" button', () => {
       cy.get(selectors.companyCollection().interaction.addButton(fixtures.company.archivedLtd.id)).should('not.exist')
+    })
+
+    it('should display the activity feed', () => {
+      cy.get(selectors.companyActivity.activityFeed.item(1)).should('be.visible')
+    })
+
+    it('should not display the "There are no activities to show." message', () => {
+      cy.get(selectors.companyActivity.activityFeed.noActivites).should('not.be.visible')
     })
   })
 })

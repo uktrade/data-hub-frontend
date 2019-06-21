@@ -7,7 +7,7 @@ const DEFAULT_COLLECTION_QUERY = {
 
 const GLOBAL_NAV_ITEM = {
   path: '/contacts',
-  label: 'Contacts',
+  headerKey: 'datahub-contacts',
   permissions: [
     'company.view_contact',
   ],

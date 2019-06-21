@@ -7,7 +7,7 @@ const DEFAULT_COLLECTION_QUERY = {
 
 const GLOBAL_NAV_ITEM = {
   path: '/companies',
-  label: 'Companies',
+  headerKey: 'datahub-companies',
   permissions: [
     'company.view_company',
   ],
@@ -17,8 +17,8 @@ const GLOBAL_NAV_ITEM = {
 
 const LOCAL_NAV = [
   {
-    path: 'interactions',
-    label: 'Interactions',
+    path: 'activity',
+    label: 'Activity',
     permissions: [
       'interaction.view_all_interaction',
     ],

@@ -102,7 +102,7 @@
   a {
     text-decoration: none;
 
-    &:not(.button):hover {
+    &:not(.govuk-button):hover {
       text-decoration: underline;
     }
   }

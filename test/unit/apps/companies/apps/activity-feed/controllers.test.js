@@ -85,7 +85,7 @@ describe('Activity feed controllers', () => {
           params: {
             addContentLink: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a/interactions/create',
             addContentText: 'Add interaction',
-            apiEndpoint: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a/activity-feed/data',
+            apiEndpoint: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a/activity/data',
           },
         })
       })
@@ -122,7 +122,7 @@ describe('Activity feed controllers', () => {
       it('should render the template without the "Add interaction" button', () => {
         expect(this.middlewareParameters.resMock.render).to.be.calledOnceWithExactly('companies/apps/activity-feed/views/container', {
           params: {
-            apiEndpoint: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a/activity-feed/data',
+            apiEndpoint: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a/activity/data',
           },
         })
       })

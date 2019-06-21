@@ -1,6 +1,5 @@
-version: 2
+version: 2 # Do not upgrade to 2.1 until CircleCI CLI supports it
 aliases:
-  - &node_version               node:8.15.1
   - &redis_version              redis:3.2.10
   - &postgres_version           postgres:10
   - &mi_postgres_version        postgres:9.6
@@ -13,19 +12,11 @@ aliases:
   - &restore_yarn_cache
     restore_cache:
       name: Restore yarn dependencies cache
-      key: yarn-dependency-{{ checksum "package.json" }}-{{ checksum "node_version" }}
-
-  - &store_versions
-    run:
-      name: Temporarily store node/yarn versions on filesystem
-      command: node --version > node_version; yarn --version > yarn_version
+      key: yarn-dependency-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
 
   # Configuration shared between user_acceptance* jobs
   - &at_container_config
     working_directory: ~/data-hub-frontend
-    environment:
-      BASH_ENV: "/usr/local/nvm/nvm.sh"  # make node, npm and yarn available
-      TZ: "/usr/share/zoneinfo/Europe/London"
 
   # Common steps for user_acceptance* jobs
   - &wait_for_backend
@@ -51,6 +42,12 @@ aliases:
     run:
       name: Wait for data hub frontend
       command: dockerize -wait ${QA_HOST}/healthcheck -timeout 120s
+
+  # Wait for api sandbox to report OK
+  - &wait_for_api_sandbox
+    run:
+      name: Wait for api sandbox
+      command: dockerize -wait ${API_ROOT}/ping.xml -timeout 120s
 
   # Create required cucumber directories
   - &create_cucumber_dirs
@@ -86,7 +83,6 @@ aliases:
     QA_SELENIUM_HOST: 127.0.0.1
     QA_SELENIUM_PORT: 4444
     REDIS_HOST: localhost
-    TZ: "/usr/share/zoneinfo/Europe/London"
     LOG_LEVEL: debug
     OAUTH2_TOKEN_FETCH_URL: http://localhost:8080/o/token
     OAUTH2_USER_PROFILE_URL: http://localhost:8080/api/v1/user/me
@@ -98,9 +94,8 @@ aliases:
     OAUTH2_DEV_TOKEN: *oauth2_dit_staff_token
 
   - &data_hub_functional_envs
-    API_ROOT: http://data-hub-sandbox.getsandbox.com
+    API_ROOT: http://localhost:8001
     QA_HOST: http://localhost:3000
-    TZ: "/usr/share/zoneinfo/Europe/London"
     LOG_LEVEL: debug
     REDIS_HOST: localhost
     MOCK_SSO_ROOT: http://localhost:8080
@@ -115,15 +110,9 @@ aliases:
 
   # Data hub base docker container
   - &docker_data_hub_base
-    image: ukti/docker-data-hub-base
+    image: ukti/data-hub-frontend-test:1.1.0
     environment:
       *data_hub_base_envs
-
-  # Cypress dependencies base docker container
-  - &docker_dit_cypress_dependencies
-    image: ukti/docker-dit-cypress
-    environment:
-      *data_hub_functional_envs
 
   # Data hub redis container
   - &docker_redis
@@ -139,7 +128,6 @@ aliases:
     name: postgres
     environment:
       POSTGRES_DB: datahub
-      TZ: "/usr/share/zoneinfo/Europe/London"
 
   # Data hub mi dashboard postgres container
   - &docker_mi_postgres
@@ -147,18 +135,20 @@ aliases:
     name: mi-postgres
     environment:
       POSTGRES_DB: mi
-      TZ: "/usr/share/zoneinfo/Europe/London"
 
   # Mock SSO container used by Data hub frontend
   - &docker_mock_sso
-    image: ukti/mock-sso
+    image: ukti/mock-sso:latest
     environment:
       - MOCK_SSO_SCOPE: 'data-hub:internal-front-end'
       - MOCK_SSO_TOKEN: 123
 
+  - &docker_data_api_sandbox
+    image: ukti/data-hub-sandbox:latest
+
   # Data hub backend
   - &docker_data_hub_backend_base
-    image: ukti/data-hub-leeloo
+    image: ukti/data-hub-leeloo:latest
     environment:
       AWS_DEFAULT_REGION: eu-west-2
       AWS_ACCESS_KEY_ID: foo
@@ -183,7 +173,6 @@ aliases:
       WEB_CONCURRENCY: 2
       ACTIVITY_STREAM_ACCESS_KEY_ID: some-id
       ACTIVITY_STREAM_SECRET_ACCESS_KEY: some-secret
-      TZ: "/usr/share/zoneinfo/Europe/London"
 
   - &docker_data_hub_backend_api
     <<: *docker_data_hub_backend_base
@@ -226,30 +215,29 @@ aliases:
 jobs:
   # Save yarn dependencies to cache
   dependencies:
+    <<: *at_container_config
     docker:
-      - image: *node_version
-    working_directory: ~/data-hub-frontend
+      - <<: *docker_data_hub_base
     steps:
       - checkout
-      - *store_versions
       - *restore_yarn_cache
-      - run: yarn install
+      - run: yarn install --pure-lockfile
       - save_cache:
           name: Save yarn dependencies cache
-          key: yarn-dependency-{{ checksum "package.json" }}-{{ checksum "node_version" }}
+          key: yarn-dependency-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
           paths:
             - ~/data-hub-frontend/node_modules
             - /root/.cache/Cypress
 
   # Run linting jobs
   lint_code:
+    <<: *at_container_config
     docker:
-      - image: *node_version
-    working_directory: ~/data-hub-frontend
+      - <<: *docker_data_hub_base
     steps:
       - checkout
-      - *store_versions
       - *restore_yarn_cache
+      - run: yarn install --pure-lockfile
       - run:
           name: Lint code
           command: |
@@ -264,20 +252,17 @@ jobs:
 
   # Run unit tests and store results
   unit_tests:
+    <<: *at_container_config
     docker:
-      - image: *node_version
-        environment:
-          TZ: "/usr/share/zoneinfo/Europe/London"
-    working_directory: ~/data-hub-frontend
+      - *docker_data_hub_base
     steps:
       - checkout
-      - *store_versions
       - *restore_yarn_cache
+      - run: yarn install --pure-lockfile
       - run:
           name: Run unit tests
           command: |
             mkdir junit
-            yarn build
             yarn circle:unit
           environment:
             MOCHA_FILE: junit/test-results.xml
@@ -293,20 +278,18 @@ jobs:
 
   # Run unit client tests and store results
   unit_client_tests:
+    <<: *at_container_config
     docker:
-      - image: *node_version
-        environment:
-          TZ: "/usr/share/zoneinfo/Europe/London"
-    working_directory: ~/data-hub-frontend
+      - <<: *docker_data_hub_base
     steps:
       - checkout
-      - *store_versions
       - *restore_yarn_cache
+      - run: yarn install --pure-lockfile
+      - run: yarn build
       - run:
-          name: Run unit tests
+          name: Run client-side unit tests
           command: |
             mkdir junit
-            yarn build
             yarn circle:unit-client
           environment:
             MOCHA_FILE: junit/test-results.xml
@@ -324,22 +307,23 @@ jobs:
   functional_tests:
     <<: *at_container_config
     docker:
-      - *docker_dit_cypress_dependencies
-      - *docker_data_hub_base
+      - <<: *docker_data_hub_base
+        environment: *data_hub_functional_envs
       - *docker_redis
       - *docker_mock_sso
-    parallelism: 6
-    working_directory: ~/data-hub-frontend
+      - *docker_data_api_sandbox
+    parallelism: 9
     steps:
       - checkout
       - *wait_for_mock_sso
-      - *store_versions
       - *restore_yarn_cache
+      - *wait_for_api_sandbox
+      - run: yarn install --pure-lockfile
       - run: yarn build
       - *start_frontend
       - *wait_for_frontend
       - run:
-          name: Cypress tests
+          name: Run Cypress tests
           command: yarn test:functional --browser chrome --parallel --record --key $CYPRESS_DASHBOARD_KEY
           when: always
       - store_artifacts:
@@ -362,8 +346,8 @@ jobs:
       - checkout
       - *wait_for_backend
       - *wait_for_mock_sso
-      - *store_versions
       - *restore_yarn_cache
+      - run: yarn install --pure-lockfile
       - run: yarn build
       - *start_frontend
       - *wait_for_frontend
@@ -414,8 +398,8 @@ jobs:
       - checkout
       - *wait_for_backend
       - *wait_for_mock_sso
-      - *store_versions
       - *restore_yarn_cache
+      - run: yarn install --pure-lockfile
       - run: yarn build
       - *start_frontend
       - *wait_for_frontend
@@ -446,8 +430,8 @@ jobs:
       - checkout
       - *wait_for_backend
       - *wait_for_mock_sso
-      - *store_versions
       - *restore_yarn_cache
+      - run: yarn install --pure-lockfile
       - run: yarn build
       - *start_frontend
       - *wait_for_frontend
@@ -478,8 +462,8 @@ jobs:
       - checkout
       - *wait_for_backend
       - *wait_for_mock_sso
-      - *store_versions
       - *restore_yarn_cache
+      - run: yarn install --pure-lockfile
       - run: yarn build
       - *start_frontend
       - *wait_for_frontend
@@ -542,7 +526,7 @@ jobs:
       - <<: *docker_data_hub_backend_celery
         image: ukti/data-hub-leeloo:master
 
-# CircleCi workflows
+# CircleCI workflows
 workflows:
   version: 2
   datahub:
@@ -575,8 +559,3 @@ workflows:
       - master-dit_staff_at: *master_common_at_workflow_config
       - master-da_staff_at: *master_common_at_workflow_config
       - master-lep_staff_at: *master_common_at_workflow_config
-
-# Webhook for geckoboard heroku app
-notify:
-  webhooks:
-    - url: https://data-hub-circleci-geckoboard.herokuapp.com/parse-payload

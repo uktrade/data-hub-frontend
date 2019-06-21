@@ -4,18 +4,29 @@
   <h2 class="heading-large">Buttons</h2>
 
   {% call Example('Primary button') %}
-    <button class="button">Primary button</button>
-    <button class="button" disabled="disabled">Disabled primary button</button>
+    <button class="govuk-button">Primary button</button>
+    <button class="govuk-button" disabled="disabled">Disabled primary button</button>
   {% endcall %}
 
   {% call Example('Secondary button') %}
-    <button class="button button--secondary">Secondary button</button>
-    <button class="button button--secondary" disabled="disabled">Disabled secondary button</button>
+    <button class="govuk-button govuk-button--secondary">Secondary button</button>
   {% endcall %}
 
-  {% call Example('Destructive button') %}
-    <button class="button button--destructive">Destructive button</button>
-    <button class="button button--destructive" disabled="disabled">Disabled destructive button</button>
+  {% call Example('Warning button') %}
+    <button class="govuk-button govuk-button--warning">Warning button</button>
+  {% endcall %}
+
+  {% call Example('Link button') %}
+    <button class="govuk-button button--link">Link button</button>
+  {% endcall %}
+
+  {% call Example('File upload') %}
+  {{ TextField({
+    type: 'file',
+    label: 'File',
+    name: 'original_filename',
+    isLabelHidden: true
+  }) }}
   {% endcall %}
 
   <h2 class="heading-large">Entity search</h2>
@@ -217,7 +228,7 @@
 
   {% call Example('Fields with actions') %}
     {% set removeButton %}
-      <button class="button button--link c-form-group__action">Remove</button>
+      <button class="govuk-button button--link c-form-group__action">Remove</button>
     {% endset %}
 
     {% call Form(form) %}
@@ -263,7 +274,7 @@
 
   {% call Example('Add another (custom actions)') %}
     {% set removeButton %}
-      <button class="button button--link c-form-group__action js-AddItems__remove">Remove</button>
+      <button class="govuk-button button--link c-form-group__action js-AddItems__remove">Remove</button>
     {% endset %}
 
     {% call Form(form) %}
@@ -280,7 +291,7 @@
         </div>
 
         <p class="c-form-group c-form-group--compact">
-          <button class="button button--secondary js-AddItems__add" name="add-item">
+          <button class="govuk-button govuk-button--secondary js-AddItems__add" name="add-item">
             Add item
           </button>
         </p>

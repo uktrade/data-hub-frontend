@@ -15,7 +15,7 @@ module.exports = {
     error: '#group-field-date .c-form-group__error-message',
   },
   actions: {
-    continue: '.button',
+    continue: '.govuk-button',
     back: ({ companyId, interactionId }) => `[href="/companies/${companyId}/interactions/${interactionId}"]`,
   },
 }

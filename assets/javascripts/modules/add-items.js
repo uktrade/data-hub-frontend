@@ -136,7 +136,7 @@ const AddItems = {
     }
 
     const addButtonElement = this.document.createElement('button')
-    addButtonElement.className = `button button--secondary ${addButtonClass}`
+    addButtonElement.className = `govuk-button govuk-button--secondary ${addButtonClass}`
 
     const addButtonWrapper = this.document.createElement('p')
     addButtonWrapper.className = 'c-form-group c-form-group--compact'
@@ -153,7 +153,7 @@ const AddItems = {
         }
 
         const removeButtonElement = this.document.createElement('button')
-        removeButtonElement.className = `button button--link ${removeButtonClass}`
+        removeButtonElement.className = `govuk-button button--link ${removeButtonClass}`
 
         item.appendChild(removeButtonElement)
       })

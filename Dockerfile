@@ -1,7 +1,31 @@
-FROM ukti/docker-datahub-fe-base:latest
+# This docker image is used ONLY for local development.
+# For CircleCI image which is used for tests see test/Dockerfile.
+# Deployments are made using Jenkins and Cloud Foundry, see manifest.yml for the buildpack manifest file.
 
-ENV NODE_PATH $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
-ENV PATH      $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+FROM ubuntu:16.04
+
+ENV NODE_VERSION  8.15.1
+ENV YARN_VERSION  1.15.2
+ENV NVM_DIR       /usr/local/nvm
+ENV NODE_PATH     $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
+ENV PATH          $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+
+# Install packages needed by datahub frontend npm dependencies
+RUN apt-get update && apt-get install -y build-essential libpq-dev curl libpng-dev
+
+# Install nvm, node, npm and yarn
+RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.30.1/install.sh | bash \
+    && . $NVM_DIR/nvm.sh \
+    && nvm install $NODE_VERSION \
+    && nvm alias default $NODE_VERSION \
+    && nvm use default \
+    && npm install -g yarn@$YARN_VERSION
+
+# Confirm what has been installed
+RUN . $NVM_DIR/nvm.sh \
+  && echo "nodejs $(node -v)" \
+  && echo "npm $(npm -v)" \
+  && echo "yarn $(yarn -v)"
 
 # Install package providing fuser command - necessary to run the app with code
 # watching and debugging under nodemon
@@ -11,14 +35,14 @@ RUN apt-get install -y psmisc
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-COPY package.json /usr/src/app/
-COPY yarn.lock /usr/src/app/
+COPY package.json .
+COPY yarn.lock .
 RUN yarn install
 
-COPY . /usr/src/app
-RUN npm run build
+COPY . .
+RUN yarn build
 
 EXPOSE 3000
 EXPOSE 9229
 
-CMD [ "npm", "start" ]
+CMD [ "yarn", "start" ]

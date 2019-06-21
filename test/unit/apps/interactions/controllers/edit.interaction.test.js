@@ -342,7 +342,7 @@ describe('Interaction edit controller (Interactions)', () => {
           label: undefined,
           macroName: 'FormSubHeading',
           heading: 'Interaction Participants',
-          secondaryHeading: '1',
+          secondaryHeading: 'Fred ltd.',
         },
         {
           name: 'contacts',
@@ -645,7 +645,7 @@ describe('Interaction edit controller (Interactions)', () => {
           macroName: 'FormSubHeading',
           value: undefined,
           heading: 'Interaction Participants',
-          secondaryHeading: '1',
+          secondaryHeading: 'Fred ltd.',
         },
         {
           name: 'contacts',
@@ -997,7 +997,7 @@ describe('Interaction edit controller (Interactions)', () => {
           macroName: 'FormSubHeading',
           value: undefined,
           heading: 'Interaction Participants',
-          secondaryHeading: '1',
+          secondaryHeading: 'Fred ltd.',
         },
         {
           name: 'contacts',

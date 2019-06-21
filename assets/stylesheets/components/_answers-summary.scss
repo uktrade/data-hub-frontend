@@ -80,7 +80,7 @@
     text-align: right;
   }
 
-  .button--secondary {
+  .govuk-button--secondary {
     @include core-font(16);
     margin-bottom: $default-spacing-unit / 2;
 
