@@ -17,6 +17,7 @@ function fetchActivityFeed ({
       bool: {
         filter: [
           { term: { 'object.attributedTo.id': `dit:DataHubCompany:${companyId}` } },
+          { terms: { 'object.type': config.activityFeed.supportedActivityTypes } },
         ],
       },
     },
