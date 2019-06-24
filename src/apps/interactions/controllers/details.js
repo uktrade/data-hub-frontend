@@ -8,12 +8,11 @@ const { INTERACTION_STATUS } = require('../constants')
 
 function renderDetailsPage (req, res, next) {
   try {
-    const { interaction, features } = res.locals
+    const { interaction } = res.locals
     const breadcrumb = capitalize(lowerCase(interaction.kind))
     const isComplete = interaction.status === INTERACTION_STATUS.COMPLETE
     const interactionViewRecord = transformInteractionResponseToViewRecord(interaction, isComplete)
-    const canComplete = features['interactions-complete-drafts'] === true &&
-      interaction.status === INTERACTION_STATUS.DRAFT &&
+    const canComplete = interaction.status === INTERACTION_STATUS.DRAFT &&
       new Date(interaction.date) < new Date() &&
       !interaction.archived
 
