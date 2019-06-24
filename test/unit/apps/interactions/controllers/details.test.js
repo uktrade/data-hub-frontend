@@ -15,9 +15,6 @@ describe('Interaction details controller', () => {
           requestParams: {
             id: '1234',
           },
-          features: {
-            'interactions-complete-drafts': true,
-          },
         })
 
         detailsController.renderDetailsPage(
@@ -63,9 +60,6 @@ describe('Interaction details controller', () => {
           interaction: serviceDelivery,
           requestParams: {
             id: '1234',
-          },
-          features: {
-            'interactions-complete-drafts': true,
           },
         })
 
@@ -113,9 +107,6 @@ describe('Interaction details controller', () => {
           requestParams: {
             id: '1234',
           },
-          features: {
-            'interactions-complete-drafts': true,
-          },
         })
 
         detailsController.renderDetailsPage(
@@ -162,9 +153,6 @@ describe('Interaction details controller', () => {
           requestParams: {
             id: '1234',
           },
-          features: {
-            'interactions-complete-drafts': true,
-          },
         })
 
         detailsController.renderDetailsPage(
@@ -204,52 +192,6 @@ describe('Interaction details controller', () => {
       })
     })
 
-    context('when rendering a draft past meeting and the flag is not enabled', () => {
-      beforeEach(() => {
-        this.middlewareParameters = buildMiddlewareParameters({
-          interaction: draftPastMeeting,
-          requestParams: {
-            id: '1234',
-          },
-        })
-
-        detailsController.renderDetailsPage(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
-        )
-      })
-
-      it('should set the breadcrumb', () => {
-        expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWithExactly('Interaction')
-        expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledOnce
-      })
-
-      it('should set the title', () => {
-        expect(this.middlewareParameters.resMock.title).to.be.calledWith('Past meeting between Brendan and Theodore')
-      })
-
-      it('should render the interaction details template', () => {
-        expect(this.middlewareParameters.resMock.render).to.be.calledWith('interactions/views/details')
-      })
-
-      it('should render the template without Document details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].interactionViewRecord.Documents).to.not.exist
-      })
-
-      it('should render the template with interaction data', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].interactionViewRecord).to.exist
-      })
-
-      it('should render the template with canComplete as true', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].canComplete).to.be.false
-      })
-
-      it('should render the template with canEdit as false', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].canEdit).to.be.false
-      })
-    })
-
     context('when rendering a draft archived meeting', () => {
       beforeEach(() => {
         this.middlewareParameters = buildMiddlewareParameters({
@@ -259,9 +201,6 @@ describe('Interaction details controller', () => {
           },
           requestParams: {
             id: '1234',
-          },
-          features: {
-            'interactions-complete-drafts': true,
           },
         })
 
