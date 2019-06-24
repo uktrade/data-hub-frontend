@@ -1,4 +1,5 @@
 --require test/unit-client/common.js
+--require test/unit-client/prettier-fixer.js
 --ui bdd
 --recursive
 --reporter dot

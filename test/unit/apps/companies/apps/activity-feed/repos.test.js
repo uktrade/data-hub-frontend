@@ -23,6 +23,12 @@ describe('Activity feed repos', () => {
             bool: {
               filter: [
                 { term: { 'object.attributedTo.id': 'dit:DataHubCompany:123' } },
+                { terms: { 'object.type': [
+                  'dit:Interaction',
+                  'dit:ServiceDelivery',
+                  'dit:InvestmentProject',
+                  'dit:OMISOrder',
+                ] } },
               ],
             },
           },
@@ -54,6 +60,12 @@ describe('Activity feed repos', () => {
             bool: {
               filter: [
                 { term: { 'object.attributedTo.id': 'dit:DataHubCompany:undefined' } },
+                { terms: { 'object.type': [
+                  'dit:Interaction',
+                  'dit:ServiceDelivery',
+                  'dit:InvestmentProject',
+                  'dit:OMISOrder',
+                ] } },
               ],
             },
           },
@@ -83,6 +95,12 @@ describe('Activity feed repos', () => {
             bool: {
               filter: [
                 { term: { 'object.attributedTo.id': 'dit:DataHubCompany:undefined' } },
+                { terms: { 'object.type': [
+                  'dit:Interaction',
+                  'dit:ServiceDelivery',
+                  'dit:InvestmentProject',
+                  'dit:OMISOrder',
+                ] } },
               ],
             },
           },
