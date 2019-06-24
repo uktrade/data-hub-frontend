@@ -1,8 +1,24 @@
-**Implementation notes**
+## Description of change
 
-_Add any additional information about the change that isn't captured in the Trello ticket._
+_Document what the PR does and why the change is needed_
 
-**Checklist**
+## Test instructions
+
+_What should I see?_
+ 
+## Screenshots
+### Before
+
+_Add a screenshot_
+
+### After 
+
+_Add a screenshot_
+
+## Checklist
+
+[//]: # "When submitting a PR make sure the code review guidelines have been satisfied. 
+https://github.com/uktrade/data-hub-frontend/blob/develop/docs/Code%20review%20guidelines.md"
 
 - [ ] Has the branch been rebased to develop?
 - [ ] Automated tests (Any of the following when applicable: Unit, Functional or Acceptance)
