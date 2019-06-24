@@ -2,19 +2,23 @@ const selectors = require('../../selectors')
 
 describe('Contacts Collections Filter', () => {
   before(() => {
-    cy.visit('/contacts?sortby=collectionTest')
+    cy.visit('/contacts')
     cy
       .get(selectors.entityCollection.entities)
       .children()
-      .should('have.length', 9)
+      .should('have.length', 1)
     cy
       .get(selectors.entityCollection.collection)
-      .should('contain', '9 contacts')
+      .should('contain', '1 contact')
   })
 
   beforeEach(() => {
     cy.server()
     cy.route('/contacts?*').as('filterResults')
+  })
+
+  it('should default active contacts filter', () => {
+    cy.url().should('include', 'archived=false')
   })
 
   it('should filter by contact name', () => {
@@ -44,24 +48,7 @@ describe('Contacts Collections Filter', () => {
 
     cy.wait('@filterResults').then(xhr => {
       expect(xhr.url).to.contain(
-        '?sortby=collectionTest&custom=true&name=FilterByContacts&company_name=FilterByCompany'
-      )
-    })
-
-    cy
-      .get(selectors.entityCollection.entities)
-      .children()
-      .should('have.length', 1)
-  })
-
-  it('should filter by active status', () => {
-    cy.get(selectors.filter.statusActive).click()
-
-    cy.wait('@filterResults').then(xhr => {
-      expect(xhr.url).to.contain(
-        'name=FilterByContacts&' +
-          'company_name=FilterByCompany&' +
-          'archived=false'
+        'company_name=FilterByCompany'
       )
     })
 
@@ -75,12 +62,7 @@ describe('Contacts Collections Filter', () => {
     cy.get(selectors.filter.statusInactive).click()
 
     cy.wait('@filterResults').then(xhr => {
-      expect(xhr.url).to.contain(
-        'name=FilterByContacts&' +
-          'company_name=FilterByCompany&' +
-          'archived=false&' +
-          'archived=true'
-      )
+      expect(xhr.url).to.contain('archived=true')
     })
 
     cy
@@ -137,6 +119,19 @@ describe('Contacts Collections Filter', () => {
       expect(xhr.url).to.contain(
         'uk_region=934cd12a-6095-e211-a939-e4115bead28a'
       )
+    })
+
+    cy
+      .get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 1)
+  })
+
+  it('should remove default active status filter', () => {
+    cy.get(selectors.filter.statusActive).click()
+
+    cy.wait('@filterResults').then(xhr => {
+      expect(xhr.url).not.to.contain('archived=false')
     })
 
     cy

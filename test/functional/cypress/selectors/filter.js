@@ -34,7 +34,7 @@ module.exports = {
       fieldset: id,
       placeHolder: `${id} .multiselect__tags`,
       textInput: `${id} .multiselect__input`,
-      selectedOption: `${id} .multiselect__single`,
+      selectedOption: `${id} .multiselect`,
       addAnotherBtn: `${id} .js-AddItems__add--typeahead`,
       firstOption: `${id} .multiselect__element:nth-child(1)`,
       options: `${id} .multiselect__element`,
