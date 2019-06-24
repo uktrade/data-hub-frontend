@@ -3969,10 +3969,10 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-data-hub-components@^0.3.2:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/data-hub-components/-/data-hub-components-0.3.2.tgz#b4df633fb057520bd289723ec231807ddf0e6321"
-  integrity sha512-FnkS8e7t+ALgCmN6WDPb2u1LV5JROBPhFv0vFqrDKU7Kixy3Qlx9s2KaZ83SE2rkwRyDIAeMRVFTPopehlUXDg==
+data-hub-components@0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/data-hub-components/-/data-hub-components-0.3.3.tgz#6e737b54a474350a1fdf79a7c1138646aa8dd344"
+  integrity sha512-gA/617BQK0/FyU3uATF1SCnhaERfeugr9oYOCUrHBfw64+k6dUAVpRJ/GRfxRdj90IWDkxnXo9G+RlTYwN4A+g==
   dependencies:
     "@babel/runtime" "^7.4.5"
     "@govuk-react/constants" "^0.7.1"
@@ -3980,6 +3980,7 @@ data-hub-components@^0.3.2:
     govuk-react "^0.7.0"
     lodash "^4.17.11"
     moment "^2.24.0"
+    pluralise "^1.0.1"
     prop-types "^15.7.2"
     react-markdown "^4.0.8"
     styled-components "^4.2.0"
@@ -9037,7 +9038,7 @@ minimalistic-crypto-utils@^1.0.0, minimalistic-crypto-utils@^1.0.1:
   resolved "https://registry.yarnpkg.com/minimalistic-crypto-utils/-/minimalistic-crypto-utils-1.0.1.tgz#f6c00c1c0b082246e5c4d99dfb8c7c083b2b582a"
   integrity sha1-9sAMHAsIIkblxNmd+4x8CDsrWCo=
 
-"minimatch@2 || 3", minimatch@3.0.4, minimatch@^3.0.2, minimatch@^3.0.4, minimatch@~3.0.2:
+"minimatch@2 || 3", minimatch@3.0.4, minimatch@^3.0.0, minimatch@^3.0.2, minimatch@^3.0.4, minimatch@~3.0.2:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
   integrity sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==
@@ -9321,7 +9322,7 @@ mz@^2.4.0:
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
 
-nan@^2.12.1, nan@^2.13.2, nan@^2.3.0, nan@^2.9.2:
+nan@^2.13.2, nan@^2.3.0, nan@^2.9.2:
   version "2.14.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.0.tgz#7818f722027b2459a86f0295d434d1fc2336c52c"
   integrity sha512-INOFj37C7k3AfaNTtX8RhsTw7qRy7eLET14cROi9+5HAVbbHuIWUHEauBv5qT4Av2tWasiTY1Jw6puUNqRJXQg==
@@ -9522,22 +9523,6 @@ node-pre-gyp@^0.10.0:
   version "0.10.3"
   resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.10.3.tgz#3070040716afdc778747b61b6887bf78880b80fc"
   integrity sha512-d1xFs+C/IPS8Id0qPTZ4bUT8wWryfR/OzzAFxweG+uLN85oPzyo2Iw6bVlLQ/JOdgNonXLCoRyqDzDWq4iw72A==
-  dependencies:
-    detect-libc "^1.0.2"
-    mkdirp "^0.5.1"
-    needle "^2.2.1"
-    nopt "^4.0.1"
-    npm-packlist "^1.1.6"
-    npmlog "^4.0.2"
-    rc "^1.2.7"
-    rimraf "^2.6.1"
-    semver "^5.3.0"
-    tar "^4"
-
-node-pre-gyp@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.12.0.tgz#39ba4bb1439da030295f899e3b520b7785766149"
-  integrity sha512-4KghwV8vH5k+g2ylT+sLTjy5wmUOb9vPhnM8NHvRf9dHmnW/CndrFXy2aRPaPST6dugXSdHXfeaHQm77PIz/1A==
   dependencies:
     detect-libc "^1.0.2"
     mkdirp "^0.5.1"
@@ -10495,6 +10480,11 @@ please-upgrade-node@^3.0.2:
   integrity sha512-KY1uHnQ2NlQHqIJQpnh/i54rKkuxCEBx+voJIS/Mvb+L2iYd2NMotwduhKTMjfC1uKoX3VXOxLjIYG66dfJTVQ==
   dependencies:
     semver-compare "^1.0.0"
+
+pluralise@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/pluralise/-/pluralise-1.0.1.tgz#c17a240ca8c6febb1439f7d2e78077defd128500"
+  integrity sha512-C2ddX33ihY6e3S7JYG8FspCf0o08D8tsXef2zcEx9geuX3vlOhkmUy6pXjRvmlVC60p7J5l3OxviKMFWLMs/0g==
 
 pluralize@^1.2.1:
   version "1.2.1"
@@ -13840,7 +13830,7 @@ wdio-chromedriver-service@^5.0.1:
   dependencies:
     fs-extra "^0.30.0"
 
-webdriver@^5.10.4:
+webdriver@^5.10.0, webdriver@^5.10.4:
   version "5.10.4"
   resolved "https://registry.yarnpkg.com/webdriver/-/webdriver-5.10.4.tgz#ecfa464a95445fefeb645259ebad1ed00d214649"
   integrity sha512-JIlHdKCWhS7cPwP3y3+OEWy1coUjGr7U8o8WeQfQbCxlO8163djeW5R2/dr78FqQxBAGQhFWiGU4qDagL9cboA==
