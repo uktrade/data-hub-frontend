@@ -13,7 +13,8 @@ Feature: Dashboard
       | Interactions              |
       | Investments               |
       | Orders                    |
-      | MI dashboards             |
+      | Dashboards                |
+      | Market Access             |
 
   @dashboard--global-nav-lep @lep
   Scenario: Display global nav for LEP user
@@ -24,7 +25,8 @@ Feature: Dashboard
       | Companies                 |
       | Contacts                  |
       | Investments               |
-      | MI dashboards             |
+      | Dashboards                |
+      | Market Access             |
 
   @dashboard--global-nav-da @da
   Scenario: Display global nav for DA user
@@ -36,4 +38,5 @@ Feature: Dashboard
       | Contacts                  |
       | Investments               |
       | Orders                    |
-      | MI dashboards             |
+      | Dashboards                |
+      | Market Access             |
