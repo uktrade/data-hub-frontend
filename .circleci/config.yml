@@ -192,6 +192,7 @@ aliases:
       - unit_tests
       - unit_client_tests
       - functional_tests
+      - visual_tests
     filters:
       branches:
         ignore:
@@ -303,7 +304,7 @@ jobs:
       - store_artifacts:
           path: coverage
 
-# Run cypress tests
+# Run functional tests
   functional_tests:
     <<: *at_container_config
     docker:
@@ -323,11 +324,36 @@ jobs:
       - *start_frontend
       - *wait_for_frontend
       - run:
-          name: Run Cypress tests
+          name: Run functional tests
           command: yarn test:functional --browser chrome --parallel --record --key $CYPRESS_DASHBOARD_KEY
           when: always
       - store_artifacts:
           path: cypress/screenshots
+
+# Run visual tests
+  visual_tests:
+    <<: *at_container_config
+    docker:
+      - <<: *docker_data_hub_base
+        environment: *data_hub_functional_envs
+      - *docker_redis
+      - *docker_mock_sso
+      - *docker_data_api_sandbox
+    steps:
+      - checkout
+      - *wait_for_mock_sso
+      - *restore_yarn_cache
+      - *wait_for_api_sandbox
+      - run: yarn install --pure-lockfile
+      - run: yarn build
+      - *start_frontend
+      - *wait_for_frontend
+      - run:
+          name: Run visual tests
+          command: yarn test:visual
+          when: always
+      - store_artifacts:
+          path: visual-screenshots
 
   # Run acceptance tests for DIT staff
   dit_staff_at: &dit_staff_at
@@ -542,6 +568,9 @@ workflows:
           requires:
             - dependencies
       - functional_tests:
+          requires:
+            - dependencies
+      - visual_tests:
           requires:
             - dependencies
       - dit_staff_at: *common_at_workflow_config
