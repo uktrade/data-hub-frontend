@@ -7,15 +7,14 @@ const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
 
 const browserStackUser = process.env.BROWSERSTACK_USERNAME || ''
 const browserStackKey = process.env.BROWSERSTACK_ACCESS_KEY || ''
-const browserStackTunnel = !!process.env.TUNNEL
-const isRemote = !!process.env.BROWSERSTACK_ACCESS_KEY
+const isRemote = !!process.env.IS_REMOTE
 
 
 const remoteConfig = {
   services: ['browserstack'],
   user: browserStackUser,
   key: browserStackKey,
-  browserstackLocal: browserStackTunnel,
+  browserstackLocal: true,
   // Code to start browserstack local before start of test
   onPrepare: function () {
     console.log("Connecting local");
@@ -53,7 +52,7 @@ const remoteConfig = {
     'browser': 'Firefox',
     'browser_version': '67.0',
     'resolution': '1920x1080'
-  }],
+  }]
 }
 
 const defaultConfig = {
