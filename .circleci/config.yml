@@ -138,7 +138,7 @@ aliases:
 
   # Mock SSO container used by Data hub frontend
   - &docker_mock_sso
-    image: ukti/mock-sso:latest
+    image: quay.io/uktrade/mock-sso:latest
     environment:
       - MOCK_SSO_SCOPE: 'data-hub:internal-front-end'
       - MOCK_SSO_TOKEN: 123
