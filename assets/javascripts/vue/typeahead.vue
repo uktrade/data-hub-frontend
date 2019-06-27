@@ -33,7 +33,7 @@
       :loading="isLoading"
       :multiple="multipleSelect"
       :options="options"
-      :options-limit="500"
+      :options-limit="1500"
       :show-no-results="false"
       :showLabels="false"
       :searchable="true"
