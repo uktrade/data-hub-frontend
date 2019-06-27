@@ -1,6 +1,6 @@
 {
   "name": "data-hub-frontend",
-  "version": "5.33.0",
+  "version": "5.34.0",
   "description": "Data Hub Frontend",
   "main": "src/server.js",
   "repository": {
@@ -54,7 +54,7 @@
     "node": "10.16.0"
   },
   "dependencies": {
-    "@uktrade/datahub-header": "1.1.2",
+    "@uktrade/datahub-header": "1.2.0",
     "autoprefixer": "^8.5.2",
     "axios": "^0.18.0",
     "babel-core": "^6.26.3",

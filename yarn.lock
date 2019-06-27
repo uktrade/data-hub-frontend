@@ -812,10 +812,10 @@
   resolved "https://registry.yarnpkg.com/@uktrade/client-matrix-js/-/client-matrix-js-1.0.50.tgz#43ff315a15ee46864bda827dc4a7acc1a1a3e7a5"
   integrity sha512-f/K9UZkmaQBfAJqmIswutSVnzLaTjBcUbOETNlwEgBvzMMY/sJEaU5N5XKUJciyLwrXeNAxX4AbbS4hhoUe2CQ==
 
-"@uktrade/datahub-header@1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@uktrade/datahub-header/-/datahub-header-1.1.2.tgz#df1f9e3b756a9af5a219e5b6cf08cdcf991e73bb"
-  integrity sha512-+3A1Wq5p7vfRRL+j2Ef+B9e1jSGfhOr4EUtksQ00KWa1UMFzkXFpQtL7U7FyqSIW4qZv4GsjvebSeriEAYt5Hg==
+"@uktrade/datahub-header@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@uktrade/datahub-header/-/datahub-header-1.2.0.tgz#45c380eb18c40994d5a0fc36a25cce1a942dbb0c"
+  integrity sha512-OhzrnEuppfRbi3z+QZhbVKLQgwE3CCsG5dNQCz1WnQcqUDRJHvuqJJdGzDlEmnlJvUSwQn3ruyhs4BvKYDgKJw==
 
 "@uktrade/wdio-image-diff-js@^1.0.49":
   version "1.0.49"
@@ -9037,7 +9037,7 @@ minimalistic-crypto-utils@^1.0.0, minimalistic-crypto-utils@^1.0.1:
   resolved "https://registry.yarnpkg.com/minimalistic-crypto-utils/-/minimalistic-crypto-utils-1.0.1.tgz#f6c00c1c0b082246e5c4d99dfb8c7c083b2b582a"
   integrity sha1-9sAMHAsIIkblxNmd+4x8CDsrWCo=
 
-"minimatch@2 || 3", minimatch@3.0.4, minimatch@^3.0.2, minimatch@^3.0.4, minimatch@~3.0.2:
+"minimatch@2 || 3", minimatch@3.0.4, minimatch@^3.0.0, minimatch@^3.0.2, minimatch@^3.0.4, minimatch@~3.0.2:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
   integrity sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==
@@ -9321,7 +9321,7 @@ mz@^2.4.0:
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
 
-nan@^2.12.1, nan@^2.13.2, nan@^2.3.0, nan@^2.9.2:
+nan@^2.13.2, nan@^2.3.0, nan@^2.9.2:
   version "2.14.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.14.0.tgz#7818f722027b2459a86f0295d434d1fc2336c52c"
   integrity sha512-INOFj37C7k3AfaNTtX8RhsTw7qRy7eLET14cROi9+5HAVbbHuIWUHEauBv5qT4Av2tWasiTY1Jw6puUNqRJXQg==
@@ -9522,22 +9522,6 @@ node-pre-gyp@^0.10.0:
   version "0.10.3"
   resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.10.3.tgz#3070040716afdc778747b61b6887bf78880b80fc"
   integrity sha512-d1xFs+C/IPS8Id0qPTZ4bUT8wWryfR/OzzAFxweG+uLN85oPzyo2Iw6bVlLQ/JOdgNonXLCoRyqDzDWq4iw72A==
-  dependencies:
-    detect-libc "^1.0.2"
-    mkdirp "^0.5.1"
-    needle "^2.2.1"
-    nopt "^4.0.1"
-    npm-packlist "^1.1.6"
-    npmlog "^4.0.2"
-    rc "^1.2.7"
-    rimraf "^2.6.1"
-    semver "^5.3.0"
-    tar "^4"
-
-node-pre-gyp@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.12.0.tgz#39ba4bb1439da030295f899e3b520b7785766149"
-  integrity sha512-4KghwV8vH5k+g2ylT+sLTjy5wmUOb9vPhnM8NHvRf9dHmnW/CndrFXy2aRPaPST6dugXSdHXfeaHQm77PIz/1A==
   dependencies:
     detect-libc "^1.0.2"
     mkdirp "^0.5.1"
@@ -13840,7 +13824,7 @@ wdio-chromedriver-service@^5.0.1:
   dependencies:
     fs-extra "^0.30.0"
 
-webdriver@^5.10.4:
+webdriver@^5.10.0, webdriver@^5.10.4:
   version "5.10.4"
   resolved "https://registry.yarnpkg.com/webdriver/-/webdriver-5.10.4.tgz#ecfa464a95445fefeb645259ebad1ed00d214649"
   integrity sha512-JIlHdKCWhS7cPwP3y3+OEWy1coUjGr7U8o8WeQfQbCxlO8163djeW5R2/dr78FqQxBAGQhFWiGU4qDagL9cboA==
