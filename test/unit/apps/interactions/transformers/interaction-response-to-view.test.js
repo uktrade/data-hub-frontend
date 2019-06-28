@@ -30,8 +30,8 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
         }],
         'Service': {
-          id: 'd320b92b-3499-e211-a939-e4115bead28a',
-          name: 'Investment - Company Visit',
+          id: 'sv1',
+          name: 'Account Management',
         },
         'Notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy area': 'Access to Public Funding (inc. EU funding)',
@@ -84,8 +84,8 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
         }],
         'Service': {
-          id: 'd320b92b-3499-e211-a939-e4115bead28a',
-          name: 'Investment - Company Visit',
+          id: 'sv1',
+          name: 'Account Management',
         },
         'Notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy area': 'Access to Public Funding (inc. EU funding)',
@@ -129,8 +129,8 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
         }],
         'Service': {
-          id: 'd320b92b-3499-e211-a939-e4115bead28a',
-          name: 'Investment - Company Visit',
+          id: 'sv1',
+          name: 'Account Management',
         },
         'Notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy area': 'Access to Public Funding (inc. EU funding)',
@@ -171,8 +171,8 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
         }],
         'Service': {
-          id: 'd320b92b-3499-e211-a939-e4115bead28a',
-          name: 'Investment - Company Visit',
+          id: 'sv1',
+          name: 'Account Management',
         },
         'Notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy area': 'Access to Public Funding (inc. EU funding)',
@@ -225,8 +225,8 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
         }],
         'Service': {
-          id: 'd320b92b-3499-e211-a939-e4115bead28a',
-          name: 'Investment - Company Visit',
+          id: 'sv1',
+          name: 'Account Management',
         },
         'Service status': {
           id: '45329c18-6095-e211-a939-e4115bead28a',
@@ -287,8 +287,8 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
         }],
         'Service': {
-          id: 'd320b92b-3499-e211-a939-e4115bead28a',
-          name: 'Investment - Company Visit',
+          id: 'sv1',
+          name: 'Account Management',
         },
         'Notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy area': 'Access to Public Funding (inc. EU funding)',
@@ -326,8 +326,8 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
         }],
         'Service': {
-          id: 'd320b92b-3499-e211-a939-e4115bead28a',
-          name: 'Investment - Company Visit',
+          id: 'sv1',
+          name: 'Account Management',
         },
         'Notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy area': 'Access to Public Funding (inc. EU funding)',
@@ -366,8 +366,8 @@ describe('#transformInteractionResponsetoViewRecord', () => {
             name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
           }],
           'Service': {
-            id: 'd320b92b-3499-e211-a939-e4115bead28a',
-            name: 'Investment - Company Visit',
+            id: 'sv1',
+            name: 'Account Management',
           },
           'Notes': 'Labore culpa quas cupiditate voluptatibus magni.',
           'Date of interaction': {

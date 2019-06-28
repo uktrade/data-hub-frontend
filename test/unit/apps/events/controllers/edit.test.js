@@ -4,6 +4,7 @@ const moment = require('moment')
 const config = require('~/config')
 const eventData = require('~/test/unit/data/events/event.json')
 const adviserFilters = require('~/src/apps/adviser/filters')
+const serviceOptionData = require('~/test/unit/data/interactions/service-options-data.json')
 
 const yesterday = moment().subtract(1, 'days').toISOString()
 const lastMonth = moment().subtract(1, 'months').toISOString()
@@ -28,11 +29,7 @@ const metadataMock = {
     { id: '9999', name: 'United Kingdom', disabled_on: null },
     { id: '8888', name: 'Test', disabled_on: yesterday },
   ],
-  serviceOptions: [
-    { id: '1', name: 'sv1', disabled_on: null },
-    { id: '2', name: 'sv2', disabled_on: yesterday },
-    { id: '3', name: 'sv3', disabled_on: null },
-  ],
+  serviceOptions: serviceOptionData,
   programmeOptions: [
     { id: '1', name: 'p1', disabled_on: null },
     { id: '2', name: 'p2', disabled_on: yesterday },
@@ -224,10 +221,11 @@ describe('Event edit controller', () => {
 
       it('should get all active service options', () => {
         const options = getFormFieldOptions(this.res, 'service')
-        expect(options).to.deep.equal([
-          { label: 'sv1', value: '1' },
-          { label: 'sv3', value: '3' },
-        ])
+        expect(options.length).to.equal(3)
+        expect(options[0].value).to.equal('sv1')
+        expect(options[1].secondaryOptions.length).to.equal(1)
+        expect(options[1].secondaryOptions[0].value).to.equal('sv2')
+        expect(options[2].value).to.equal('sv3')
       })
 
       it('should get all active programme options', () => {
@@ -300,11 +298,11 @@ describe('Event edit controller', () => {
 
       it('should get all active service options when the event was created', () => {
         const options = getFormFieldOptions(this.res, 'service')
-        expect(options).to.deep.equal([
-          { label: 'sv1', value: '1' },
-          { label: 'sv2', value: '2' },
-          { label: 'sv3', value: '3' },
-        ])
+        expect(options.length).to.equal(3)
+        expect(options[0].value).to.equal('sv1')
+        expect(options[1].secondaryOptions.length).to.equal(1)
+        expect(options[1].secondaryOptions[0].value).to.equal('sv2')
+        expect(options[2].value).to.equal('sv3')
       })
 
       it('should get all active programme options when the event was created', () => {

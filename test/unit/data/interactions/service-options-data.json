@@ -1,0 +1,95 @@
+[
+  {
+    "id": "sv1",
+    "name": "Account Management",
+    "disabled_on": null,
+    "interaction_questions": [],
+    "contexts": [
+      "export_interaction",
+      "other_interaction",
+      "export_service_delivery",
+      "other_service_delivery",
+      "event",
+      "interaction"
+    ]
+  },
+  {
+    "id": "sv2",
+    "name": "Providing Export Advice & Information : Advice & information",
+    "disabled_on": null,
+    "interaction_questions": [
+      {
+        "disabled_on": null,
+        "id": "sv2-q1",
+        "name": "What did you give advice about?",
+        "answer_options": [
+          {
+            "disabled_on": null,
+            "id": "sv2-q1-a1",
+            "name": "Banking & Funding"
+          },
+          {
+            "disabled_on": null,
+            "id": "sv2-q1-a2",
+            "name": "More Banking & Funding"
+          }
+        ]
+      },
+      {
+        "disabled_on": null,
+        "id": "sv2-q2",
+        "name": "Another question?",
+        "answer_options": [
+          {
+            "disabled_on": null,
+            "id": "sv2-q2-a1",
+            "name": "Banking & Funding"
+          },
+          {
+            "disabled_on": null,
+            "id": "sv2-q2-a2",
+            "name": "More Banking & Funding"
+          }
+        ]
+      }
+    ],
+    "contexts": [
+      "export_interaction",
+      "other_interaction",
+      "export_service_delivery",
+      "other_service_delivery",
+      "event"
+    ]
+  },
+  {
+    "id": "sv3",
+    "name": "Making Introductions (Export)",
+    "disabled_on": null,
+    "interaction_questions": [
+      {
+        "disabled_on": null,
+        "id": "sv3-q1",
+        "name": "Who was the company introduced to?",
+        "answer_options": [
+          {
+            "disabled_on": null,
+            "id": "sv3-q1-a1",
+            "name": "Customers"
+          },
+          {
+            "disabled_on": null,
+            "id": "sv3-q1-a2",
+            "name": "More customers"
+          }
+        ]
+      }
+    ],
+    "contexts": [
+      "export_interaction",
+      "other_interaction",
+      "export_service_delivery",
+      "other_service_delivery",
+      "event"
+    ]
+  }
+]
