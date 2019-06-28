@@ -42,7 +42,7 @@ module.exports = function ({
     hiddenFields,
     children: [
       serviceHeading,
-      service(services),
+      ...service(services),
       {
         macroName: 'MultipleChoiceField',
         name: 'service_delivery_status',
@@ -125,7 +125,7 @@ module.exports = function ({
       feedbackPolicyNotes,
     ].map(field => {
       return assign(field, {
-        label: labels.serviceDelivery[field.name],
+        label: field.label || labels.serviceDelivery[field.name],
       })
     }),
   }

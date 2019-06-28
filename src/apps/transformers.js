@@ -4,6 +4,8 @@ const {
   keyBy,
   snakeCase,
   upperFirst,
+  flatten,
+  uniqBy,
 } = require('lodash')
 const { isValid, format, parse } = require('date-fns')
 
@@ -50,10 +52,18 @@ function transformStringToOption (string) {
   }
 }
 
-function transformContactToOption ({ id, first_name, last_name, job_title, email }) {
+function transformContactToOption ({
+  id,
+  first_name,
+  last_name,
+  job_title,
+  email,
+}) {
   return {
     value: id,
-    label: upperFirst(filter([`${first_name} ${last_name}`, job_title]).join(', ')),
+    label: upperFirst(
+      filter([`${first_name} ${last_name}`, job_title]).join(', ')
+    ),
   }
 }
 
@@ -86,13 +96,130 @@ function transformDateStringToDateObject (dateString) {
   }
 }
 
+function transformServicesOptions (services) {
+  const delim = ' : '
+
+  const level1 = uniqBy(
+    services.map(s => {
+      const splitName = s.name.split(delim)
+      return {
+        label: splitName[0],
+        value: !splitName[1] ? s.id : splitName[0],
+        interactionQuestions: s.interaction_questions.length
+          ? s.interaction_questions.map(q => {
+            return {
+              value: q.id,
+              label: q.name,
+              options:
+                  q.answer_options &&
+                  q.answer_options.map(o => ({
+                    label: o.name,
+                    value: o.id,
+                  })),
+            }
+          })
+          : [],
+      }
+    }),
+    'label'
+  )
+
+  const level2 = services
+    .map(s => {
+      const splitName = s.name.split(delim)
+      if (!splitName[1]) return
+      return {
+        label: splitName[1],
+        value: s.id,
+        parent: splitName[0],
+        interactionQuestions: s.interaction_questions
+          ? s.interaction_questions.map(q => {
+            return {
+              label: q.name,
+              value: q.id,
+              options:
+                  q.answer_options &&
+                  q.answer_options.map(o => ({
+                    label: o.name,
+                    value: o.id,
+                  })),
+            }
+          })
+          : [],
+      }
+    })
+    .filter(s => s !== undefined)
+
+  const nested = level1.map(s => {
+    const isControlledBySecondary = s.label === s.value
+    return {
+      ...s,
+      interactionQuestions: isControlledBySecondary
+        ? []
+        : s.interactionQuestions.map(i => ({
+          ...i,
+          serviceId: s.value,
+        })),
+      secondaryOptions: isControlledBySecondary
+        ? level2
+          .map(o => {
+            if (o.parent === s.label) {
+              return {
+                ...o,
+                interactionQuestions: o.interactionQuestions.map(i => {
+                  return {
+                    ...i,
+                    serviceId: o.value,
+                    isControlledBySecondary,
+                  }
+                }),
+              }
+            }
+          })
+          .filter(s => s !== undefined)
+        : [],
+    }
+  })
+
+  return nested
+}
+
+function transformServiceQuestionsToOptions (questions) {
+  const mapOptions = ({ id, name, answer_options = [] }) => {
+    return {
+      value: id,
+      label: name,
+      options: flatten(answer_options.map(mapAnswerOptions)),
+    }
+  }
+
+  const mapAdditionalQuestions = ({ id, type, is_required, name }) => {
+    return {
+      value: id,
+      label: name,
+      type: type && type,
+      isRequired: is_required && is_required,
+    }
+  }
+
+  const mapAnswerOptions = ({ id, name, additional_questions = [] }) => {
+    return {
+      value: id,
+      label: name,
+      additionalQuestions: additional_questions.map(mapAdditionalQuestions),
+    }
+  }
+
+  return mapOptions(questions)
+}
+
 /**
  * Utility to build an object from a transformed metadata array of objects so you can reference properties
  * by key rather than array index. Helpful when the array length changes.
  * @returns {{}}
  */
 function buildMetaDataObj (collection) {
-  return keyBy(collection, (elem) => {
+  return keyBy(collection, elem => {
     return snakeCase(elem.label)
   })
 }
@@ -106,5 +233,7 @@ module.exports = {
   transformIdToObject,
   transformDateObjectToDateString,
   transformDateStringToDateObject,
+  transformServicesOptions,
+  transformServiceQuestionsToOptions,
   transformObjectToGovUKOption,
 }

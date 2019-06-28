@@ -68,9 +68,11 @@ async function getCommonOptions (token, createdOn, req, res) {
 }
 
 async function getInteractionFormOptions (token, createdOn, req, res) {
+  const services = await getServiceOptions(req, res, createdOn)
+
   const formOptions = {
     areas: await getOptions(token, 'policy-area', { createdOn }),
-    services: await getServiceOptions(req, res, createdOn),
+    services,
     types: await getOptions(token, 'policy-issue-type', { createdOn }),
     channels: await getOptions(token, 'communication-channel', { createdOn }),
   }
@@ -80,6 +82,7 @@ async function getInteractionFormOptions (token, createdOn, req, res) {
 
 async function getServiceDeliveryFormOptions (token, createdOn, req, res) {
   const services = await getServiceOptions(req, res, createdOn)
+
   const activeEvents = await getActiveEvents(token, createdOn)
 
   const formOptions = {
@@ -90,7 +93,7 @@ async function getServiceDeliveryFormOptions (token, createdOn, req, res) {
     tapServices: services
       .filter(service => includes(service.label, '(TAP)'))
       .map(service => service.value),
-    services: services,
+    services,
     statuses: await getOptions(token, 'service-delivery-status', {
       createdOn,
       sorted: false,

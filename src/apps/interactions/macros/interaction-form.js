@@ -40,7 +40,7 @@ module.exports = function ({
     hiddenFields,
     children: [
       serviceHeading,
-      service(services),
+      ...service(services),
       participantsHeading(company),
       contact(contacts),
       adviser(advisers),
@@ -63,7 +63,7 @@ module.exports = function ({
       feedbackPolicyNotes,
     ].map(field => {
       return assign(field, {
-        label: labels.interaction[field.name],
+        label: field.label || labels.interaction[field.name],
       })
     }),
   }
