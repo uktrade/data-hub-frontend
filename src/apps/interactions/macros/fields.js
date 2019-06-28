@@ -1,23 +1,22 @@
+const { flattenDeep } = require('lodash')
 module.exports = {
   adviser (advisers) {
     return {
       macroName: 'AddAnother',
       buttonName: 'add_item',
       name: 'dit_participants',
-      children: [
-        {
-          macroName: 'Typeahead',
-          name: 'dit_participants',
-          label: 'Advisers',
-          isLabelHidden: true,
-          entity: 'adviser',
-          placeholder: 'Search adviser',
-          classes: 'c-form-group c-form-group--no-filter',
-          multipleSelect: false,
-          options: advisers,
-          target: 'metadata',
-        },
-      ],
+      children: [{
+        macroName: 'Typeahead',
+        name: 'dit_participants',
+        label: 'Advisers',
+        isLabelHidden: true,
+        entity: 'adviser',
+        placeholder: 'Search adviser',
+        classes: 'c-form-group c-form-group--no-filter',
+        multipleSelect: false,
+        options: advisers,
+        target: 'metadata',
+      }],
     }
   },
   contact (contacts) {
@@ -25,17 +24,15 @@ module.exports = {
       macroName: 'AddAnother',
       buttonName: 'add_item',
       name: 'contacts',
-      children: [
-        {
-          macroName: 'MultipleChoiceField',
-          name: 'contacts',
-          label: 'Contacts',
-          initialOption: '-- Select contact --',
-          options: contacts,
-          optional: false,
-          isLabelHidden: true,
-        },
-      ],
+      children: [{
+        macroName: 'MultipleChoiceField',
+        name: 'contacts',
+        label: 'Contacts',
+        initialOption: '-- Select contact --',
+        options: contacts,
+        optional: false,
+        isLabelHidden: true,
+      }],
     }
   },
   policyAreas (areas) {
@@ -43,27 +40,99 @@ module.exports = {
       macroName: 'AddAnother',
       buttonName: 'add_item',
       name: 'policy_areas',
-      children: [
-        {
-          macroName: 'MultipleChoiceField',
-          name: 'policy_areas',
-          label: 'Policy area',
-          initialOption: '-- Select policy area --',
-          options: areas,
-          optional: false,
-          isLabelHidden: true,
-        },
-      ],
+      children: [{
+        macroName: 'MultipleChoiceField',
+        name: 'policy_areas',
+        label: 'Policy area',
+        initialOption: '-- Select policy area --',
+        options: areas,
+        optional: false,
+        isLabelHidden: true,
+      }],
     }
   },
   service (services) {
-    return {
-      macroName: 'MultipleChoiceField',
-      name: 'service',
-      initialOption: '-- Select service --',
-      options: services,
-      modifier: ['hide-label'],
-    }
+    const primaryOptionsValues = services.map(
+      ({ value, label, isControlledBySecondary }) => {
+        return {
+          value,
+          label,
+          isControlledBySecondary: !!isControlledBySecondary,
+        }
+      }
+    )
+    const secondaryOptionValues = services.map(({ secondaryOptions }) => {
+      return secondaryOptions.map(secondaryOption => {
+        return {
+          value: secondaryOption.value,
+          label: secondaryOption.label,
+        }
+      })
+    })
+
+    const r = services.map(s => {
+      if (!s.secondaryOptions.length) {
+        return s.interactionQuestions
+      }
+      return s.secondaryOptions.map(option => {
+        return option.interactionQuestions
+      })
+    })
+
+    const serviceQuestions = flattenDeep(r)
+
+    const serviceIds = primaryOptionsValues.map(service => service.value)
+    const primaryOptions = [
+      {
+        macroName: 'MultipleChoiceField',
+        name: 'service',
+        initialOption: '-- Select service --',
+        options: primaryOptionsValues,
+        modifier: ['hide-label'],
+      },
+    ]
+
+    const secondaryOptions = secondaryOptionValues
+      .map((option, index) => {
+        if (!option.length) return
+        return {
+          macroName: 'MultipleChoiceField',
+          name: 'subService',
+          label: 'Sub service',
+          modifier: 'subfield',
+          isLabelHidden: true,
+          initialOption: '-- Select --',
+          options: [].concat(...secondaryOptionValues[index]),
+          condition: {
+            name: 'service',
+            value: option.length && serviceIds[index],
+          },
+        }
+      })
+      .filter(x => x)
+
+    const tertiaryOptions = serviceQuestions.map((option, index) => {
+      return {
+        macroName: 'MultipleChoiceField',
+        label: option.label,
+        name: option.value,
+        type: 'radio',
+        value: option.label,
+        modifier: 'subfield',
+        options: option.options.map(option => {
+          return {
+            label: option.label,
+            name: option.value,
+            value: option.value,
+          }
+        }),
+        condition: {
+          name: option.isControlledBySecondary ? 'subService' : 'service',
+          value: option.serviceId,
+        },
+      }
+    })
+    return [...primaryOptions, ...secondaryOptions, ...tertiaryOptions]
   },
   feedbackPolicyIssueType (types) {
     return {
@@ -105,8 +174,8 @@ module.exports = {
       value: 'true',
     },
     name: 'policy_feedback_notes',
-    hint:
-      'These notes will be visible to other Data Hub users and may be shared within the department',
+    hint: 'These notes will be visible to other Data Hub users and may be shared within the department',
+
   },
   subject: {
     macroName: 'TextField',
