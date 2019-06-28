@@ -48,7 +48,7 @@ function transformInteractionResponseToForm ({
     dit_participants: displayDitParticipants,
     is_event: isNil(event) ? 'false' : 'true',
     event: get(event, 'id'),
-    service: service,
+    service: get(service, 'id'),
     ...serviceAnswers,
     service_delivery_status: get(service_delivery_status, 'id'),
     policy_areas: displayPolicyAreas,
