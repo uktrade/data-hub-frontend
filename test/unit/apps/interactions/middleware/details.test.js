@@ -1,6 +1,9 @@
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
 const interactionData = require('~/test/unit/data/interactions/new-interaction.json')
+const serviceOptions = require('~/test/unit/data/interactions/service-options-data.json')
+const { transformServicesOptions } = require('~/src/apps/transformers.js')
+const serviceOptionsTransformed = transformServicesOptions(serviceOptions)
 
 describe('Interaction details middleware', () => {
   describe('#postDetails', () => {
@@ -8,6 +11,7 @@ describe('Interaction details middleware', () => {
       context('when creating a new interaction', () => {
         beforeEach(async () => {
           this.saveInteractionStub = sinon.stub()
+          this.getServiceOptionsStub = sinon.stub()
 
           this.middlewareParameters = buildMiddlewareParameters({
             requestBody: { ...interactionData },
@@ -22,6 +26,7 @@ describe('Interaction details middleware', () => {
           const middleware = proxyquire('~/src/apps/interactions/middleware/details', {
             '../repos': {
               saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
+              getServiceOptions: this.getServiceOptionsStub.resolves(serviceOptionsTransformed),
             },
           })
 
@@ -37,19 +42,22 @@ describe('Interaction details middleware', () => {
             this.middlewareParameters.reqMock.session.token,
             {
               contact: '4c748e6e-05f4-478c-b07f-3d2e2290eb03',
-              contacts: [],
-              date: '2017-10-03',
-              dit_adviser: '4ae885a0-6db4-4929-848d-ef9c84d5a085',
-              dit_participants: [],
               dit_team: 'cff02898-9698-e211-a939-e4115bead28a',
+              service: 'Providing Export Advice & Information',
+              subService: 'Providing Export Advice & Information',
+              'sv2-q1': 'sv2-a1',
+              subject: 'subject',
+              notes: 'notes',
+              dit_adviser: '4ae885a0-6db4-4929-848d-ef9c84d5a085',
+              service_answers: { 'sv2-q1': { 'sv2-a1': {} } },
+              date: '2017-10-03',
               grant_amount_offered: null,
               net_company_receipt: null,
-              notes: 'notes',
+              contacts: [],
+              dit_participants: [],
               policy_areas: [],
               policy_issue_types: [],
-              service: '1783ae93-b78f-e611-8c55-e4115bed50dc',
               status: 'complete',
-              subject: 'subject',
             }
           )
         })
@@ -66,6 +74,7 @@ describe('Interaction details middleware', () => {
       context('when updating an existing interaction', () => {
         beforeEach(async () => {
           this.saveInteractionStub = sinon.stub()
+          this.getServiceOptionsStub = sinon.stub()
 
           this.middlewareParameters = buildMiddlewareParameters({
             requestBody: { ...interactionData },
@@ -83,6 +92,7 @@ describe('Interaction details middleware', () => {
           const middleware = proxyquire('~/src/apps/interactions/middleware/details', {
             '../repos': {
               saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
+              getServiceOptions: this.getServiceOptionsStub.resolves(serviceOptionsTransformed),
             },
           })
 
@@ -96,22 +106,23 @@ describe('Interaction details middleware', () => {
         it('should PATCH to the API', () => {
           expect(this.saveInteractionStub).to.have.been.calledOnceWithExactly(
             this.middlewareParameters.reqMock.session.token,
-            {
-              contact: '4c748e6e-05f4-478c-b07f-3d2e2290eb03',
-              contacts: [],
-              date: '2017-10-03',
-              dit_adviser: '4ae885a0-6db4-4929-848d-ef9c84d5a085',
-              dit_participants: [],
+            { contact: '4c748e6e-05f4-478c-b07f-3d2e2290eb03',
               dit_team: 'cff02898-9698-e211-a939-e4115bead28a',
+              service: 'Providing Export Advice & Information',
+              subService: 'Providing Export Advice & Information',
+              'sv2-q1': 'sv2-a1',
+              subject: 'subject',
+              notes: 'notes',
+              dit_adviser: '4ae885a0-6db4-4929-848d-ef9c84d5a085',
+              service_answers: { 'sv2-q1': { 'sv2-a1': {} } },
+              date: '2017-10-03',
               grant_amount_offered: null,
               net_company_receipt: null,
-              notes: 'notes',
+              contacts: [],
+              dit_participants: [],
               policy_areas: [],
               policy_issue_types: [],
-              service: '1783ae93-b78f-e611-8c55-e4115bed50dc',
-              status: 'complete',
-              subject: 'subject',
-            }
+              status: 'complete' }
           )
         })
 
@@ -129,6 +140,7 @@ describe('Interaction details middleware', () => {
       context('when the error is 400', () => {
         beforeEach(async () => {
           this.saveInteractionStub = sinon.stub()
+          this.getServiceOptionsStub = sinon.stub()
 
           this.middlewareParameters = buildMiddlewareParameters({
             requestBody: { ...interactionData },
@@ -143,6 +155,7 @@ describe('Interaction details middleware', () => {
           const middleware = proxyquire('~/src/apps/interactions/middleware/details', {
             '../repos': {
               saveInteraction: this.saveInteractionStub.rejects({ statusCode: 400, error: 'error' }),
+              getServiceOptions: this.getServiceOptionsStub.resolves(serviceOptionsTransformed),
             },
           })
 
@@ -177,6 +190,7 @@ describe('Interaction details middleware', () => {
       context('when the error is 500', () => {
         beforeEach(async () => {
           this.saveInteractionStub = sinon.stub()
+          this.getServiceOptionsStub = sinon.stub()
 
           this.middlewareParameters = buildMiddlewareParameters({
             requestBody: { ...interactionData },
@@ -191,6 +205,7 @@ describe('Interaction details middleware', () => {
           const middleware = proxyquire('~/src/apps/interactions/middleware/details', {
             '../repos': {
               saveInteraction: this.saveInteractionStub.rejects({ statusCode: 500, error: 'error' }),
+              getServiceOptions: this.getServiceOptionsStub.resolves(serviceOptionsTransformed),
             },
           })
 

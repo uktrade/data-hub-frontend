@@ -7,6 +7,9 @@ const {
   renderInteractionsForEntity,
   getInteractionOptions,
 } = require('~/src/apps/interactions/controllers/list')
+const { transformServicesOptions } = require('~/src/apps/transformers.js')
+const serviceOptionData = require('~/test/unit/data/interactions/service-options-data.json')
+const transformedServiceOptionData = transformServicesOptions(serviceOptionData)
 
 describe('interaction list', () => {
   beforeEach(() => {
@@ -56,11 +59,7 @@ describe('interaction list', () => {
         { id: 'te2', name: 'te2', disabled_on: null },
         { id: 'te', name: 'te3', disabled_on: null },
       ],
-      service: [
-        { id: 's1', name: 's1', disabled_on: null },
-        { id: 's2', name: 's2', disabled_on: null },
-        { id: 's3', name: 's3', disabled_on: null },
-      ],
+      serviceOptions: serviceOptionData,
       sectorOptions: [
         { id: 's1', name: 's1', disabled_on: null },
         { id: 's2', name: 's2', disabled_on: null },
@@ -90,7 +89,7 @@ describe('interaction list', () => {
 
     nock(config.apiRoot)
       .get('/metadata/service/')
-      .reply(200, this.metadataMock.sectorOptions)
+      .reply(200, this.metadataMock.serviceOptions)
       .get('/metadata/team/')
       .reply(200, this.metadataMock.teamOptions)
       .get('/metadata/sector/?level__lte=0')
@@ -226,11 +225,7 @@ describe('interaction list', () => {
         { value: 's2', label: 's2' },
         { value: 's3', label: 's3' },
       ],
-      serviceOptions: [
-        { value: 's1', label: 's1' },
-        { value: 's2', label: 's2' },
-        { value: 's3', label: 's3' },
-      ],
+      serviceOptions: transformedServiceOptionData,
       teamOptions: [
         { value: 'te1', label: 'te1' },
         { value: 'te2', label: 'te2' },
