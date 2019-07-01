@@ -78,7 +78,7 @@
 
 .c-local-header__heading {
   @include bold-font(36);
-  margin-bottom: 0;
+  margin: 0;
 
   .c-badge--secondary {
     @include core-font(24);

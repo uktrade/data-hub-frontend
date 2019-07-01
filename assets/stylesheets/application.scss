@@ -6,7 +6,7 @@ $govuk-font-family: Arial, sans-serif;
 @import "~govuk-frontend/all";
 
 $toolkit-font-stack: $govuk-font-family;
-@import "_deprecated/trade-elements";
+@import "_deprecated/components/table";
 
 @import "~vue-multiselect/dist/vue-multiselect.min.css";
 
