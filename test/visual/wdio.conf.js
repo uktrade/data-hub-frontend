@@ -38,21 +38,11 @@ const remoteConfig = {
     'browser': 'Chrome',
     'browser_version': '75.0 beta',
     'resolution': '1920x1080'
-  },
-  {
-    'os': 'Windows',
-    'os_version': '10',
-    'browser': 'IE',
-    'browser_version': '11.0',
-    'resolution': '1920x1080'
-  },
-  {
-    'os': 'Windows',
-    'os_version': '10',
-    'browser': 'Firefox',
-    'browser_version': '67.0',
-    'resolution': '1920x1080'
   }]
+}
+
+const localConfig = {
+  path: '/'
 }
 
 const defaultConfig = {
@@ -75,11 +65,11 @@ const defaultConfig = {
   },
   before: function () {
     browser.setTimeout({ 'implicit': IMPLICIT_TIMEOUT })
-    const wdioImageDiff = new WdioImage(browser, { threshold: 0.1 })
+    const wdioImageDiff = new WdioImage(browser, { threshold: 0.1, width: 1792, height: 1008, })
     browser.imageDiff = wdioImageDiff
   },
 }
 
 exports.config = isRemote
   ? Object.assign({}, defaultConfig, remoteConfig)
-  : defaultConfig
+  : Object.assign({}, defaultConfig, localConfig)
