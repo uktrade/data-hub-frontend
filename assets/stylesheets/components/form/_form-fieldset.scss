@@ -7,6 +7,12 @@
   border: 1px solid $grey-2;
   padding: $default-spacing-unit;
   width: auto;
+
+  & > ul {
+    margin-top: 0;
+    padding-left: 0;
+    list-style-type: none;
+  }
 }
 
 .c-form-fieldset__legend {
