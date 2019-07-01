@@ -106,7 +106,9 @@ aliases:
     OAUTH2_CLIENT_SECRET: youAintSeenMyRight
     OAUTH2_CLIENT_ID: randomClientId
     OAUTH2_DEV_TOKEN: ditStaffToken
+    OAUTH2_BYPASS_SSO: true
     CACHE_ASSETS: "true"
+    ZEN_ANNOUNCEMENT_URL: http://localhost:8001/zendesk/announcement
 
   # Data hub base docker container
   - &docker_data_hub_base
@@ -192,7 +194,6 @@ aliases:
       - unit_tests
       - unit_client_tests
       - functional_tests
-      - visual_tests
     filters:
       branches:
         ignore:
@@ -570,9 +571,7 @@ workflows:
       - functional_tests:
           requires:
             - dependencies
-      - visual_tests:
-          requires:
-            - dependencies
+      - visual_tests: *common_at_workflow_config
       - dit_staff_at: *common_at_workflow_config
       - da_staff_at: *common_at_workflow_config
       - lep_staff_at: *common_at_workflow_config
@@ -581,6 +580,7 @@ workflows:
             - dit_staff_at
             - da_staff_at
             - lep_staff_at
+            - visual_tests
           filters:
             branches:
               only:
