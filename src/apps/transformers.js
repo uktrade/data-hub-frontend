@@ -99,32 +99,36 @@ function transformDateStringToDateObject (dateString) {
 function transformServicesOptions (services) {
   const delim = ' : '
 
-  const level1 = uniqBy(
+  const mapInteractionQuestions = service => {
+    return service.interaction_questions && service.interaction_questions.length
+      ? service.interaction_questions.map(q => {
+        return {
+          value: q.id,
+          label: q.name,
+          options:
+              q.answer_options &&
+              q.answer_options.map(o => ({
+                label: o.name,
+                value: o.id,
+              })),
+        }
+      })
+      : []
+  }
+
+  const serviceList = uniqBy(
     services.map(s => {
       const splitName = s.name.split(delim)
       return {
         label: splitName[0],
         value: !splitName[1] ? s.id : splitName[0],
-        interactionQuestions: s.interaction_questions.length
-          ? s.interaction_questions.map(q => {
-            return {
-              value: q.id,
-              label: q.name,
-              options:
-                  q.answer_options &&
-                  q.answer_options.map(o => ({
-                    label: o.name,
-                    value: o.id,
-                  })),
-            }
-          })
-          : [],
+        interactionQuestions: mapInteractionQuestions(s),
       }
     }),
     'label'
   )
 
-  const level2 = services
+  const subServiceList = services
     .map(s => {
       const splitName = s.name.split(delim)
       if (!splitName[1]) return
@@ -132,25 +136,12 @@ function transformServicesOptions (services) {
         label: splitName[1],
         value: s.id,
         parent: splitName[0],
-        interactionQuestions: s.interaction_questions
-          ? s.interaction_questions.map(q => {
-            return {
-              label: q.name,
-              value: q.id,
-              options:
-                  q.answer_options &&
-                  q.answer_options.map(o => ({
-                    label: o.name,
-                    value: o.id,
-                  })),
-            }
-          })
-          : [],
+        interactionQuestions: mapInteractionQuestions(s),
       }
     })
     .filter(s => s !== undefined)
 
-  const nested = level1.map(s => {
+  const nestedServiceList = serviceList.map(s => {
     const isControlledBySecondary = s.label === s.value
     return {
       ...s,
@@ -161,7 +152,7 @@ function transformServicesOptions (services) {
           serviceId: s.value,
         })),
       secondaryOptions: isControlledBySecondary
-        ? level2
+        ? subServiceList
           .map(o => {
             if (o.parent === s.label) {
               return {
@@ -181,7 +172,7 @@ function transformServicesOptions (services) {
     }
   })
 
-  return nested
+  return nestedServiceList
 }
 
 function transformServiceQuestionsToOptions (questions) {
