@@ -91,6 +91,10 @@ async function getServiceDeliveryFormOptions (token, createdOn, req, res) {
     channels: await getOptions(token, 'communication-channel', { createdOn }),
     events: activeEvents.map(transformObjectToOption),
     tapServices: services
+      .reduce(
+        (prev, current) => [...prev, { ...current }, ...current.secondaryOptions],
+        []
+      )
       .filter(service => includes(service.label, '(TAP)'))
       .map(service => service.value),
     services,

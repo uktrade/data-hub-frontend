@@ -124,7 +124,6 @@ async function renderEditPage (req, res, next) {
         interactionForm,
       })
   } catch (error) {
-    console.log(error)
     next(error)
   }
 }
