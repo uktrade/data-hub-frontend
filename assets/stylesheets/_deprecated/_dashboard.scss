@@ -11,6 +11,7 @@
   .dashboard-section-title {
     @include bold-font(20);
     line-height: normal;
+    margin-top: 0;
   }
 
   .dashboard-list {
