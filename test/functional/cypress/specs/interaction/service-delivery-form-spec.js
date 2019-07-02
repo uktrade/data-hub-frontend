@@ -47,7 +47,7 @@ describe('Service delivery form', () => {
       cy.get(selectors.interactionForm.serviceDeliveryStatus).select('Current')
       cy.get(selectors.interactionForm.netReceipt).should('not.be.visible')
 
-      cy.get(selectors.interactionForm.service).select('A Specific Service')
+      cy.get(selectors.interactionForm.service).select('A Specific DIT Export Service or Funding')
       cy.get(selectors.interactionForm.serviceDeliveryStatus).should('not.be.visible')
       cy.get(selectors.interactionForm.grantOffered).should('not.be.visible')
     })

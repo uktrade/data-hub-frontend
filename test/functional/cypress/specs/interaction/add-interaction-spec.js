@@ -72,7 +72,7 @@ describe('Add Export', () => {
       it('should add the interaction', () => {
         const subject = utils.randomString()
 
-        populateInteractionForm(subject, 'Account Management', 'High Growth')
+        populateInteractionForm(subject, 'Enquiry received', 'General Investment Enquiry')
 
         cy.get(selectors.interactionForm.add).click()
 
@@ -211,7 +211,7 @@ describe('Add Export', () => {
     it('should add an interaction', () => {
       const subject = utils.randomString()
 
-      populateInteractionForm(subject, 'Account Management', 'High Growth')
+      populateInteractionForm(subject, 'Enquiry received', 'General Investment Enquiry')
 
       cy.get(selectors.interactionForm.add).click()
 
