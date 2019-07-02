@@ -642,7 +642,7 @@ describe('Interaction edit controller (Interactions)', () => {
           name: 'service',
           label: 'Service',
           macroName: 'MultipleChoiceField',
-          value: { name: 'Account Management', id: 'sv1' },
+          value: 'sv1',
         },
         {
           name: 'subService',
@@ -1042,7 +1042,7 @@ describe('Interaction edit controller (Interactions)', () => {
           name: 'service',
           label: 'Service',
           macroName: 'MultipleChoiceField',
-          value: { name: 'Account Management', id: 'sv1' },
+          value: 'sv1',
         },
         {
           name: 'subService',

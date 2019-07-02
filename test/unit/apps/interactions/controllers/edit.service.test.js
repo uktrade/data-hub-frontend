@@ -511,18 +511,19 @@ describe('Interaction edit controller (Service delivery)', () => {
     })
 
     it('should generate a form with the required fields and values populated', () => {
-      const fields = this.interactionForm.children.map(field => pick(field, ['name', 'label', 'macroName', 'type', 'value']))
+      const fields = this.interactionForm.children.map(field => pick(field, ['name', 'label', 'macroName', 'type', 'value', 'heading', 'secondaryHeading']))
       expect(fields).to.deep.equal([
         {
           label: undefined,
           macroName: 'FormSubHeading',
           value: undefined,
+          heading: 'Service',
         },
         {
           name: 'service',
           label: 'Service',
           macroName: 'MultipleChoiceField',
-          value: { name: 'Account Management', id: 'sv1' },
+          value: 'sv1',
         },
         {
           name: 'subService',
@@ -573,6 +574,8 @@ describe('Interaction edit controller (Service delivery)', () => {
           label: undefined,
           macroName: 'FormSubHeading',
           value: undefined,
+          heading: 'Interaction Participants',
+          secondaryHeading: 'Fred ltd.',
         },
         {
           name: 'contacts',
@@ -590,6 +593,7 @@ describe('Interaction edit controller (Service delivery)', () => {
           label: undefined,
           macroName: 'FormSubHeading',
           value: undefined,
+          heading: 'Details',
         },
         {
           name: 'date',
@@ -614,6 +618,7 @@ describe('Interaction edit controller (Service delivery)', () => {
           label: undefined,
           macroName: 'FormSubHeading',
           value: undefined,
+          heading: 'Notes',
         },
         {
           name: 'subject',
@@ -789,7 +794,7 @@ describe('Interaction edit controller (Service delivery)', () => {
           name: 'service',
           label: 'Service',
           macroName: 'MultipleChoiceField',
-          value: { name: 'Account Management', id: 'sv1' },
+          value: 'sv1',
         },
         {
           name: 'subService',
