@@ -51,8 +51,8 @@ module.exports = function ({
         optional: true,
         modifier: ['subfield', 'medium'],
         condition: {
-          name: 'service',
-          value: tapServices.join('||'),
+          name: 'subService',
+          value: tapServices.length && tapServices.join('||'),
         },
       },
       {
@@ -61,8 +61,8 @@ module.exports = function ({
         optional: true,
         modifier: ['subfield', 'medium'],
         condition: {
-          name: 'service',
-          value: tapServices.join('||'),
+          name: 'subService',
+          value: tapServices.length && tapServices.join('||'),
         },
       },
       {
@@ -72,7 +72,7 @@ module.exports = function ({
         modifier: ['subfield', 'medium'],
         condition: {
           name: 'service_delivery_status',
-          value: successfulServiceStatuses.join('||'),
+          value: successfulServiceStatuses && successfulServiceStatuses.join('||'),
         },
       },
       participantsHeading(company),

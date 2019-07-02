@@ -5,18 +5,20 @@ module.exports = {
       macroName: 'AddAnother',
       buttonName: 'add_item',
       name: 'dit_participants',
-      children: [{
-        macroName: 'Typeahead',
-        name: 'dit_participants',
-        label: 'Advisers',
-        isLabelHidden: true,
-        entity: 'adviser',
-        placeholder: 'Search adviser',
-        classes: 'c-form-group c-form-group--no-filter',
-        multipleSelect: false,
-        options: advisers,
-        target: 'metadata',
-      }],
+      children: [
+        {
+          macroName: 'Typeahead',
+          name: 'dit_participants',
+          label: 'Advisers',
+          isLabelHidden: true,
+          entity: 'adviser',
+          placeholder: 'Search adviser',
+          classes: 'c-form-group c-form-group--no-filter',
+          multipleSelect: false,
+          options: advisers,
+          target: 'metadata',
+        },
+      ],
     }
   },
   contact (contacts) {
@@ -24,15 +26,17 @@ module.exports = {
       macroName: 'AddAnother',
       buttonName: 'add_item',
       name: 'contacts',
-      children: [{
-        macroName: 'MultipleChoiceField',
-        name: 'contacts',
-        label: 'Contacts',
-        initialOption: '-- Select contact --',
-        options: contacts,
-        optional: false,
-        isLabelHidden: true,
-      }],
+      children: [
+        {
+          macroName: 'MultipleChoiceField',
+          name: 'contacts',
+          label: 'Contacts',
+          initialOption: '-- Select contact --',
+          options: contacts,
+          optional: false,
+          isLabelHidden: true,
+        },
+      ],
     }
   },
   policyAreas (areas) {
@@ -40,15 +44,17 @@ module.exports = {
       macroName: 'AddAnother',
       buttonName: 'add_item',
       name: 'policy_areas',
-      children: [{
-        macroName: 'MultipleChoiceField',
-        name: 'policy_areas',
-        label: 'Policy area',
-        initialOption: '-- Select policy area --',
-        options: areas,
-        optional: false,
-        isLabelHidden: true,
-      }],
+      children: [
+        {
+          macroName: 'MultipleChoiceField',
+          name: 'policy_areas',
+          label: 'Policy area',
+          initialOption: '-- Select policy area --',
+          options: areas,
+          optional: false,
+          isLabelHidden: true,
+        },
+      ],
     }
   },
   service (services) {
@@ -70,16 +76,16 @@ module.exports = {
       })
     })
 
-    const r = services.map(s => {
-      if (!s.secondaryOptions.length) {
-        return s.interactionQuestions
-      }
-      return s.secondaryOptions.map(option => {
-        return option.interactionQuestions
+    const serviceQuestions = flattenDeep(
+      services.map(s => {
+        if (!s.secondaryOptions.length) {
+          return s.interactionQuestions
+        }
+        return s.secondaryOptions.map(option => {
+          return option.interactionQuestions
+        })
       })
-    })
-
-    const serviceQuestions = flattenDeep(r)
+    )
 
     const serviceIds = primaryOptionsValues.map(service => service.value)
     const primaryOptions = [
@@ -174,8 +180,8 @@ module.exports = {
       value: 'true',
     },
     name: 'policy_feedback_notes',
-    hint: 'These notes will be visible to other Data Hub users and may be shared within the department',
-
+    hint:
+      'These notes will be visible to other Data Hub users and may be shared within the department',
   },
   subject: {
     macroName: 'TextField',
