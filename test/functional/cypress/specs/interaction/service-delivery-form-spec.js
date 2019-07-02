@@ -36,18 +36,19 @@ describe('Service delivery form', () => {
 
   context('When interacting with service field', () => {
     it('should toggle fields based on service dropdown values', () => {
-      cy.get(selectors.interactionForm.service).select('Tradeshow Access Programme (TAP)')
-      cy.get(selectors.interactionForm.serviceStatus).should('be.visible')
+      cy.get(selectors.interactionForm.service).select('A Specific DIT Export Service or Funding')
+      cy.get(selectors.interactionForm.subService).select('Tradeshow Access Programme (TAP)')
+      cy.get(selectors.interactionForm.serviceDeliveryStatus).should('be.visible')
       cy.get(selectors.interactionForm.grantOffered).should('be.visible')
 
-      cy.get(selectors.interactionForm.serviceStatus).select('Completed')
+      cy.get(selectors.interactionForm.serviceDeliveryStatus).select('Completed')
       cy.get(selectors.interactionForm.netReceipt).should('be.visible')
 
-      cy.get(selectors.interactionForm.serviceStatus).select('Current')
+      cy.get(selectors.interactionForm.serviceDeliveryStatus).select('Current')
       cy.get(selectors.interactionForm.netReceipt).should('not.be.visible')
 
-      cy.get(selectors.interactionForm.service).select('Bank Referral')
-      cy.get(selectors.interactionForm.serviceStatus).should('not.be.visible')
+      cy.get(selectors.interactionForm.service).select('A Specific Service')
+      cy.get(selectors.interactionForm.serviceDeliveryStatus).should('not.be.visible')
       cy.get(selectors.interactionForm.grantOffered).should('not.be.visible')
     })
 
