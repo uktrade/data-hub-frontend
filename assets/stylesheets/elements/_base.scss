@@ -38,9 +38,6 @@ textarea {
     text-decoration: none;
     outline-offset: 0;
   }
-  &[type="date"]{
-    font: inherit;
-  }
 }
 
 input:focus + label::before {

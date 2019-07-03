@@ -6275,6 +6275,13 @@ govuk-colours@^1.0.3:
   resolved "https://registry.yarnpkg.com/govuk-colours/-/govuk-colours-1.0.3.tgz#41d983693626dbaadb05594c5931a51696f79488"
   integrity sha512-xdVD7YzHG+KEwCs8Rl+MgVfgEagjANVau4dJNTe30Xi6KySJ1LaI1vzBRRgThBjmJC8YFTwk4CshRtRfSbXKcA==
 
+govuk-elements-sass@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/govuk-elements-sass/-/govuk-elements-sass-2.2.1.tgz#da4df6e803c3b07daa251ff59b922066b6229277"
+  integrity sha1-2k326APDsH2qJR/1m5IgZrYiknc=
+  dependencies:
+    govuk_frontend_toolkit "^5.0.2"
+
 govuk-frontend@^2.11.0:
   version "2.13.0"
   resolved "https://registry.yarnpkg.com/govuk-frontend/-/govuk-frontend-2.13.0.tgz#0273f7c92070abd6450c73a006ebb3ddc793463a"
@@ -6343,6 +6350,11 @@ govuk-react@^0.7.0:
     "@govuk-react/visually-hidden" "^0.7.1"
     "@govuk-react/warning-text" "^0.7.1"
     govuk-colours "^1.0.3"
+
+govuk_frontend_toolkit@^5.0.2:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/govuk_frontend_toolkit/-/govuk_frontend_toolkit-5.2.0.tgz#f5f6c5ae48e431ecb97d8b808b1e8db7782abc7f"
+  integrity sha1-9fbFrkjkMey5fYuAix6Nt3gqvH8=
 
 govuk_frontend_toolkit@^7.5.0:
   version "7.6.0"
