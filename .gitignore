@@ -65,3 +65,6 @@ local.log
 # Yarn version policy
 .yarnrc
 .yarn/
+
+# NVM version
+.nvmrc

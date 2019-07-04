@@ -1,6 +1,17 @@
 const config = require('~/config')
 const activityFeedRawFixture = require('~/test/unit/data/activity-feed/activity-feed-from-es')
+
 const token = 'abcd'
+const sortQuery = {
+  _script: {
+    type: 'string',
+    script: {
+      lang: 'painless',
+      source: "return !doc['object.startTime'].empty ? doc['object.startTime'].value : doc['published'].value",
+    },
+    order: 'desc',
+  },
+}
 
 describe('Activity feed repos', () => {
   beforeEach(() => {
@@ -33,7 +44,7 @@ describe('Activity feed repos', () => {
             },
           },
           size: 21,
-          sort: { 'object.startTime': 'desc' },
+          sort: sortQuery,
         }
         expect(this.authorisedRequestStub).to.be.calledOnceWith(token, {
           body: expectedBody,
@@ -55,7 +66,7 @@ describe('Activity feed repos', () => {
         const expectedBody = {
           from: 0,
           size: 20,
-          sort: { 'object.startTime': 'desc' },
+          sort: sortQuery,
           query: {
             bool: {
               filter: [
@@ -90,7 +101,7 @@ describe('Activity feed repos', () => {
         const expectedBody = {
           from: 0,
           size: 20,
-          sort: { 'object.startTime': 'desc' },
+          sort: sortQuery,
           query: {
             bool: {
               filter: [

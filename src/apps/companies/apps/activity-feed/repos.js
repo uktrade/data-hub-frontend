@@ -11,7 +11,14 @@ function fetchActivityFeed ({
     size,
     from,
     sort: {
-      'object.startTime': 'desc',
+      _script: {
+        type: 'string',
+        script: {
+          lang: 'painless',
+          source: "return !doc['object.startTime'].empty ? doc['object.startTime'].value : doc['published'].value",
+        },
+        order: 'desc',
+      },
     },
     query: {
       bool: {
