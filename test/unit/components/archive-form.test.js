@@ -10,7 +10,7 @@ const HTML = `
     <fieldset>
       <legend class="visually-hidden" aria-visible="false">Archive reason</legend>
       <div class='form-group' id="archived_reason-wrapper">
-        <label For='archived_reason'>Reason for archiving company</label>
+        <label class='form-label-bold' For='archived_reason'>Reason for archiving company</label>
         <select id="archived_reason" class="form-control" name="archived_reason">
           <option value=''>Select a value</option>
           <option value='Company is dissolved'>Company is dissolved</option>
@@ -82,7 +82,7 @@ describe('archive form control', () => {
 
     const fieldsetElement = this.form.querySelector('fieldset')
     expect(domTokenToArray(fieldsetElement.classList)).to.include('error')
-    const errorMessage = this.document.querySelector('#archived_reason-wrapper .error-message')
+    const errorMessage = this.document.querySelector('#archived_reason-wrapper .form-label-bold .error-message')
     expect(errorMessage).to.not.be.null
     expect(errorMessage.textContent).to.include('You must provide a reason to archive.')
   })
@@ -90,7 +90,7 @@ describe('archive form control', () => {
   it('should not add 2 errors if you try to submit bad data twice', () => {
     this.archiveFormControl.validateForm(event)
     this.archiveFormControl.validateForm(event)
-    const errorMessages = this.document.querySelectorAll('#archived_reason-wrapper .error-message')
+    const errorMessages = this.document.querySelectorAll('#archived_reason-wrapper .form-label-bold .error-message')
     expect(errorMessages.length).to.equal(1)
   })
 

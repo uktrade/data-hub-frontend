@@ -2,12 +2,6 @@
 @import "../settings/layout";
 @import "../tools/functions/typography";
 
-.c-entity-list {
-  margin-top: 0;
-  padding-left: 0;
-  list-style-type: none;
-}
-
 .c-entity-list__item {
   padding: $default-spacing-unit 0;
 

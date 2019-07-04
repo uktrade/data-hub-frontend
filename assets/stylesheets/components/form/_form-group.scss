@@ -2,18 +2,12 @@
 @import "../../settings";
 
 .c-form-group {
-  margin: 0;
-  padding: 0;
-  border: 0;
+  max-width: 40em;
 
   [type="hidden"] + &,
   .c-form-fieldset__legend + &,
   .c-form-fieldset__hint + & {
     margin-top: 0;
-  }
-
-  *:not(label) + & {
-    margin-top: $default-spacing-unit * 2;
   }
 }
 
@@ -119,6 +113,7 @@ fieldset.c-form-group.c-form-fieldset--subfield {
   border: none;
 
   .c-form-fieldset__legend {
+    @include bold-19();
     color: $black;
   }
 }
