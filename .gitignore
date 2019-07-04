@@ -48,6 +48,7 @@ test/functional/cypress/screenshots
 cypress/**
 visual-screenshots/comparison
 visual-screenshots/diff
+allure*
 
 # IDE configurations
 .vscode/
