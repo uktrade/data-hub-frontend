@@ -2,12 +2,13 @@
 
 {% block body_main_content %}
   <div class="key-value key-value--vertical">
-    {{ UneditableField({
-      name: 'business_type',
-      label: 'Business type',
-      value: 'UK private or public limited company',
-      url: '/companies/add-step-1'
-    }) }}
+    <div id="business-type" class="key-value__key form-label-bold">
+      Business type
+    </div>
+    <div class="key-value__value" aria-labelledby="business-type">
+      UK private or public limited company
+      <a href="/companies/add-step-1">Change</a>
+    </div>
   </div>
 
   {{ EntitySearchForm({
