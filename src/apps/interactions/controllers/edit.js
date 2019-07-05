@@ -26,9 +26,9 @@ async function getHiddenFields (req, res, interactionId) {
   return hiddenFields
 }
 
-async function buildForm (req, res, interactionId) {
+async function buildForm (req, res, interactionId, validatedKind) {
   const options = await getInteractionOptions(req, res)
-  const hiddenFields = await getHiddenFields(req, res, interactionId)
+  const hiddenFields = await getHiddenFields(req, res, interactionId, validatedKind)
   const returnLink = joinPaths([ getReturnLink(res.locals.interactions), interactionId ])
 
   const formProperties = {
@@ -36,15 +36,11 @@ async function buildForm (req, res, interactionId) {
     hiddenFields,
     returnLink,
     returnText: interactionId ? 'Return without saving' : 'Cancel',
-    buttonText: interactionId ? 'Save and return' : `Add ${lowerCase(req.params.kind)}`,
+    buttonText: interactionId ? 'Save and return' : `Add ${lowerCase(validatedKind)}`,
     company: get(res.locals, 'company.name'),
   }
 
-  if (req.params.kind !== 'service-delivery' && req.params.kind !== 'interaction') {
-    res.redirect('/404')
-  }
-
-  const form = formConfigs[req.params.kind](formProperties)
+  const form = formConfigs[validatedKind](formProperties)
   return form
 }
 
@@ -85,17 +81,40 @@ function getMergedData (req, res) {
   return mergedInteractionData
 }
 
+// to avoid an unvalidated dynamic method call
+// and for exisiting interactions to use the kind stored in the database to avoid using the wrong form and sending bad data to the backend
+function validateKind (paramsKind, activityKindInDatabase) {
+  let activityKind = ''
+  if (activityKindInDatabase) {
+    if (activityKindInDatabase === 'service_delivery') {
+      activityKindInDatabase = 'service-delivery'
+    }
+    activityKind = activityKindInDatabase
+  } else if (formConfigs.hasOwnProperty(paramsKind)) {
+    activityKind = paramsKind
+  } else {
+    activityKind = undefined
+  }
+
+  return activityKind
+}
+
 async function renderEditPage (req, res, next) {
   try {
     const interactionId = get(req.params, 'interactionId')
     const mergedInteractionData = getMergedData(req, res)
-    const form = await buildForm(req, res, interactionId)
+    const validatedKind = validateKind(req.params.kind, mergedInteractionData.kind)
+    if (validatedKind === undefined) {
+      res.redirect('/404')
+    }
+
+    const form = await buildForm(req, res, interactionId, validatedKind)
     const errors = get(res.locals, 'form.errors.messages')
 
     const interactionForm = buildFormWithStateAndErrors(form, mergedInteractionData, errors)
 
     const forEntityName = res.locals.entityName ? ` for ${res.locals.entityName}` : ''
-    const kindName = lowerCase(req.params.kind)
+    const kindName = lowerCase(validatedKind)
     const title = interactionId ? `Edit ${kindName}` : `Add ${kindName + forEntityName}`
 
     res

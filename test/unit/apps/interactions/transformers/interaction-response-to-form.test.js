@@ -28,6 +28,7 @@ describe('#transformInteractionResponseToForm', () => {
         notes: 'Labore culpa quas cupiditate voluptatibus magni.',
         subject: 'ad',
         policy_areas: [],
+        kind: 'interaction',
       })
     })
   })
@@ -67,6 +68,7 @@ describe('#transformInteractionResponseToForm', () => {
         notes: 'Labore culpa quas cupiditate voluptatibus magni.',
         subject: 'ad',
         policy_areas: [],
+        kind: 'interaction',
       })
     })
   })
@@ -103,6 +105,7 @@ describe('#transformInteractionResponseToForm', () => {
         notes: 'Labore culpa quas cupiditate voluptatibus magni.',
         subject: 'ad',
         policy_areas: [],
+        kind: 'interaction',
       })
     })
   })
@@ -134,6 +137,7 @@ describe('#transformInteractionResponseToForm', () => {
         notes: 'Labore culpa quas cupiditate voluptatibus magni.',
         subject: 'ad',
         policy_areas: [],
+        kind: 'interaction',
       })
     })
   })
