@@ -28,7 +28,7 @@ async function getHiddenFields (req, res, interactionId) {
 
 async function buildForm (req, res, interactionId, validatedKind) {
   const options = await getInteractionOptions(req, res)
-  const hiddenFields = await getHiddenFields(req, res, interactionId, validatedKind)
+  const hiddenFields = await getHiddenFields(req, res, interactionId)
   const returnLink = joinPaths([ getReturnLink(res.locals.interactions), interactionId ])
 
   const formProperties = {
