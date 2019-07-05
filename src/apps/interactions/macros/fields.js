@@ -130,7 +130,7 @@ module.exports = {
     return {
       macroName: 'FormSubHeading',
       heading: 'Interaction Participants',
-      secondaryHeading: companyName && companyName,
+      secondaryHeading: companyName,
     }
   },
   detailsHeading: {
