@@ -1,7 +1,6 @@
 /* eslint-disable */
 const WdioImage = require ('@uktrade/wdio-image-diff-js').default
 const browserstack = require('browserstack-local')
-const { addAttachment } = require('@wdio/allure-reporter').default
 
 const IMPLICIT_TIMEOUT = process.env.WDIO_IMPLICIT_TIMEOUT || 90000
 const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
@@ -9,7 +8,7 @@ const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
 const browserStackUser = process.env.BROWSERSTACK_USERNAME || ''
 const browserStackKey = process.env.BROWSERSTACK_ACCESS_KEY || ''
 const isRemote = !!process.env.IS_REMOTE
-let testName = 'undefined'
+let testName
 
 const remoteConfig = {
   services: ['browserstack'],
@@ -60,32 +59,18 @@ const defaultConfig = {
   connectionRetryCount: 3,
   services: ['chromedriver'],
   framework: 'mocha',
-  reporters: ['spec', ['allure', {
-    outputDir: 'allure-results',
-    disableWebdriverStepsReporting: true,
-    disableWebdriverScreenshotsReporting: true,
-  }]],
+  reporters: ['spec'],
   mochaOpts: {
     timeout: 60000,
   },
   before: () => {
     browser.setTimeout({ 'implicit': IMPLICIT_TIMEOUT })
-    const wdioImageDiff = new WdioImage(browser, { threshold: 0.1, width: 1792, height: 1008, })
+    const wdioImageDiff = new WdioImage(browser, { threshold: 0.1, width: 1792, height: 1008 })
     browser.imageDiff = wdioImageDiff
   },
   beforeTest: (test) => {
     testName = `${test.fullTitle} - ${browser.capabilities.browserName}`
     browser.imageDiff.testName = testName
-  },
-  afterEach: () => {
-    const fs = require('fs')
-    const path = require('path')
-    const filepath = path.join(`/Users/filipporaimondi/code/data-hub-frontend/visual-screenshots/baseline/${testName}.png`)
-
-    fs.readFile(filepath, function(err, data) {
-      if (err) throw err
-      addAttachment('Baseline', Buffer.from(data, 'base64'))
-    })
   }
 }
 
