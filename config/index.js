@@ -57,7 +57,7 @@ const config = {
   cacheDurationLong: process.env.CACHE_DURATION_LONG || 1000,
   googleTagManagerKey: process.env.GOOGLE_TAG_MANAGER_KEY,
   session: {
-    secret: process.env.SESSION_SECRET || 'howdoesyourgardengrow',
+    secret: process.env.SESSION_SECRET,
     // 2 hour timeout
     ttl: process.env.SESSION_TTL || 2 * 60 * 60 * 1000,
   },
