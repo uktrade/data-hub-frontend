@@ -71,10 +71,25 @@ async function getInteractionFormOptions (token, createdOn, req, res) {
   const services = await getServiceOptions(req, res, createdOn)
 
   const formOptions = {
-    areas: await getOptions(token, 'policy-area', { createdOn }),
     services,
+    areas: await getOptions(token, 'policy-area', { createdOn }),
     types: await getOptions(token, 'policy-issue-type', { createdOn }),
     channels: await getOptions(token, 'communication-channel', { createdOn }),
+    tapServices: services
+      .reduce(
+        (prev, current) => [
+          ...prev,
+          { ...current },
+          ...current.secondaryOptions,
+        ],
+        []
+      )
+      .filter(service => includes(service.label, '(TAP)'))
+      .map(service => service.value),
+    statuses: await getOptions(token, 'service-delivery-status', {
+      createdOn,
+      sorted: false,
+    }),
   }
 
   return formOptions
@@ -86,18 +101,22 @@ async function getServiceDeliveryFormOptions (token, createdOn, req, res) {
   const activeEvents = await getActiveEvents(token, createdOn)
 
   const formOptions = {
+    services,
     areas: await getOptions(token, 'policy-area', { createdOn }),
     types: await getOptions(token, 'policy-issue-type', { createdOn }),
     channels: await getOptions(token, 'communication-channel', { createdOn }),
     events: activeEvents.map(transformObjectToOption),
     tapServices: services
       .reduce(
-        (prev, current) => [...prev, { ...current }, ...current.secondaryOptions],
+        (prev, current) => [
+          ...prev,
+          { ...current },
+          ...current.secondaryOptions,
+        ],
         []
       )
       .filter(service => includes(service.label, '(TAP)'))
       .map(service => service.value),
-    services,
     statuses: await getOptions(token, 'service-delivery-status', {
       createdOn,
       sorted: false,
