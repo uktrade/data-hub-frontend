@@ -1,4 +1,5 @@
 const { flattenDeep } = require('lodash')
+
 module.exports = {
   adviser (advisers) {
     return {
@@ -68,21 +69,21 @@ module.exports = {
       }
     )
     const secondaryOptionValues = services.map(({ secondaryOptions }) => {
-      return secondaryOptions.map(secondaryOption => {
+      return secondaryOptions.map(({ value, label }) => {
         return {
-          value: secondaryOption.value,
-          label: secondaryOption.label,
+          value,
+          label,
         }
       })
     })
 
     const serviceQuestions = flattenDeep(
-      services.map(s => {
-        if (!s.secondaryOptions.length) {
-          return s.interactionQuestions
+      services.map(service => {
+        if (!service.secondaryOptions.length) {
+          return service.interactionQuestions
         }
-        return s.secondaryOptions.map(option => {
-          return option.interactionQuestions
+        return service.secondaryOptions.map(secondaryOption => {
+          return secondaryOption.interactionQuestions
         })
       })
     )
@@ -138,6 +139,7 @@ module.exports = {
         },
       }
     })
+
     return [...primaryOptions, ...secondaryOptions, ...tertiaryOptions]
   },
   feedbackPolicyIssueType (types) {
