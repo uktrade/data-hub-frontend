@@ -188,8 +188,8 @@ function transformServiceQuestionsToOptions (questions) {
     return {
       value: id,
       label: name,
-      type: type && type,
-      isRequired: is_required && is_required,
+      type: type || '',
+      isRequired: is_required || '',
     }
   }
 

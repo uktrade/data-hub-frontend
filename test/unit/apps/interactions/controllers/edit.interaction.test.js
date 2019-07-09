@@ -5,6 +5,7 @@ const config = require('~/config')
 const controller = require('~/src/apps/interactions/controllers/edit')
 const interactionData = require('~/test/unit/data/interactions/interaction.json')
 const serviceOptionData = require('~/test/unit/data/interactions/service-options-data.json')
+
 const currentUserTeam = '99887766553'
 
 describe('Interaction edit controller (Interactions)', () => {
@@ -323,6 +324,16 @@ describe('Interaction edit controller (Interactions)', () => {
           type: 'radio',
         },
         {
+          label: 'Service status',
+          macroName: 'MultipleChoiceField',
+          name: 'service_delivery_status',
+        },
+        {
+          label: 'Grant offered',
+          macroName: 'TextField',
+          name: 'grant_amount_offered',
+        },
+        {
           label: undefined,
           macroName: 'FormSubHeading',
           heading: 'Interaction Participants',
@@ -387,7 +398,8 @@ describe('Interaction edit controller (Interactions)', () => {
           label: 'Policy feedback notes',
           macroName: 'TextField',
           type: 'textarea',
-        }])
+        },
+      ])
     })
 
     it('should provide a list of contacts', () => {
@@ -422,8 +434,8 @@ describe('Interaction edit controller (Interactions)', () => {
           value: 'sv3',
           label: 'Making Introductions (Export)',
           isControlledBySecondary: false,
-        }]
-      )
+        },
+      ])
     })
 
     it('should provide a list of sub services', () => {
@@ -672,6 +684,18 @@ describe('Interaction edit controller (Interactions)', () => {
           value: undefined,
         },
         {
+          label: 'Service status',
+          macroName: 'MultipleChoiceField',
+          name: 'service_delivery_status',
+          value: undefined,
+        },
+        {
+          label: 'Grant offered',
+          macroName: 'TextField',
+          name: 'grant_amount_offered',
+          value: null,
+        },
+        {
           label: undefined,
           macroName: 'FormSubHeading',
           value: undefined,
@@ -753,8 +777,8 @@ describe('Interaction edit controller (Interactions)', () => {
           macroName: 'TextField',
           type: 'textarea',
           value: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-        }]
-      )
+        },
+      ])
     })
 
     it('should provide a list of contacts', () => {
@@ -789,8 +813,8 @@ describe('Interaction edit controller (Interactions)', () => {
           value: 'sv3',
           label: 'Making Introductions (Export)',
           isControlledBySecondary: false,
-        }]
-      )
+        },
+      ])
     })
 
     it('should provide a list of sub services at creation time', () => {
@@ -1031,6 +1055,7 @@ describe('Interaction edit controller (Interactions)', () => {
           'secondaryHeading',
         ])
       )
+
       expect(fields).to.deep.equal([
         {
           label: undefined,
@@ -1070,6 +1095,18 @@ describe('Interaction edit controller (Interactions)', () => {
           macroName: 'MultipleChoiceField',
           type: 'radio',
           value: undefined,
+        },
+        {
+          name: 'service_delivery_status',
+          label: 'Service status',
+          macroName: 'MultipleChoiceField',
+          value: undefined,
+        },
+        {
+          name: 'grant_amount_offered',
+          label: 'Grant offered',
+          macroName: 'TextField',
+          value: null,
         },
         {
           label: undefined,
@@ -1153,8 +1190,8 @@ describe('Interaction edit controller (Interactions)', () => {
           macroName: 'TextField',
           type: 'textarea',
           value: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-        }]
-      )
+        },
+      ])
     })
 
     it('should include the error in the form', () => {
