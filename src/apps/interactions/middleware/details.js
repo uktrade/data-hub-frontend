@@ -1,8 +1,9 @@
 const { get, set } = require('lodash')
 const { sentence } = require('case')
 
+const { getOptions } = require('../../../lib/options')
 const { transformInteractionFormBodyToApiRequest } = require('../transformers')
-const { fetchInteraction, saveInteraction, getServiceOptions } = require('../repos')
+const { fetchInteraction, saveInteraction } = require('../repos')
 const { getContact } = require('../../contacts/repos')
 const { getDitCompany } = require('../../companies/repos')
 const { joinPaths } = require('../../../lib/path')
@@ -10,12 +11,23 @@ const { getReturnLink } = require('../helpers')
 
 async function postDetails (req, res, next) {
   try {
-    const serviceOptions = await getServiceOptions(req, res)
-    res.locals.requestBody = transformInteractionFormBodyToApiRequest(req.body, serviceOptions)
-    const result = await saveInteraction(req.session.token, res.locals.requestBody)
+    const serviceOptions = await getOptions(req.session.token, 'service')
+    res.locals.requestBody = transformInteractionFormBodyToApiRequest(
+      req.body,
+      serviceOptions
+    )
+    const result = await saveInteraction(
+      req.session.token,
+      res.locals.requestBody
+    )
 
-    req.flash('success', `${sentence(req.params.kind)} ${res.locals.interaction ? 'updated' : 'created'}`)
-    res.redirect(joinPaths([ getReturnLink(res.locals.interactions), result.id ]))
+    req.flash(
+      'success',
+      `${sentence(req.params.kind)} ${
+        res.locals.interaction ? 'updated' : 'created'
+      }`
+    )
+    res.redirect(joinPaths([getReturnLink(res.locals.interactions), result.id]))
   } catch (err) {
     if (err.statusCode !== 400) {
       return next(err)
@@ -29,7 +41,10 @@ async function postDetails (req, res, next) {
 async function getInteractionDetails (req, res, next, interactionId) {
   try {
     const token = req.session.token
-    const interaction = res.locals.interaction = await fetchInteraction(token, interactionId)
+    const interaction = (res.locals.interaction = await fetchInteraction(
+      token,
+      interactionId
+    ))
 
     // Get the company associated with the interaction. This can be in the interaction
     // record, or in the case of editing investment interactions it is the company
@@ -41,7 +56,11 @@ async function getInteractionDetails (req, res, next, interactionId) {
 
     const contactId = get(interaction, 'contact.id')
     if (!contactId) {
-      return next(new Error('An interaction must have a company or contact associated with it'))
+      return next(
+        new Error(
+          'An interaction must have a company or contact associated with it'
+        )
+      )
     }
 
     const contact = await getContact(token, contactId)

@@ -1,9 +1,11 @@
 const config = require('../../../config')
-const { getOptions } = require('../../lib/options')
 const { authorisedRequest } = require('../../lib/authorised-request')
 
 function fetchInteraction (token, interactionId) {
-  return authorisedRequest(token, `${config.apiRoot}/v3/interaction/${interactionId}`)
+  return authorisedRequest(
+    token,
+    `${config.apiRoot}/v3/interaction/${interactionId}`
+  )
 }
 
 function saveInteraction (token, interaction) {
@@ -19,13 +21,6 @@ function saveInteraction (token, interaction) {
   }
 
   return authorisedRequest(token, options)
-}
-
-async function getServiceOptions (req, res, createdOn) {
-  const services = await getOptions(req.session.token, 'service', {
-    createdOn,
-  })
-  return services
 }
 
 function getInteractionsForEntity ({ token, entityQuery, page = 1, sortby }) {
@@ -56,5 +51,4 @@ module.exports = {
   fetchInteraction,
   getInteractionsForEntity,
   archiveInteraction,
-  getServiceOptions,
 }
