@@ -4,7 +4,11 @@ const Redis = require('redis')
 const config = require('../../config')
 const { authorisedRequest } = require('../lib/authorised-request')
 const { filterDisabledOption } = require('../modules/permissions/filters')
-const { transformObjectToOption, transformServicesOptions } = require('../apps/transformers')
+const {
+  transformObjectToOption,
+  transformServicesOptions,
+} = require('../apps/transformers')
+const { isInteractionServiceForm } = require('../apps/interactions/helpers')
 
 let client, redisAsync
 if (!config.isTest) {
@@ -75,10 +79,10 @@ async function getOptions (
     options = options.filter(option => {
       return !option.contexts || option.contexts.includes(context)
     })
-  }
 
-  if (key === 'service') {
-    return transformServicesOptions(options)
+    if (isInteractionServiceForm(key, context)) {
+      return transformServicesOptions(options)
+    }
   }
 
   const mappedOptions = options.map(transformer)
