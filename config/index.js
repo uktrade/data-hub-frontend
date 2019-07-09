@@ -66,9 +66,7 @@ const config = {
   zen: {
     // TODO tidy up the configuration of zendesk URLs
     url: `https://${process.env.ZEN_DOMAIN}.zendesk.com/api/v2/tickets.json`,
-    announcementsURL: `https://${
-      process.env.ZEN_DOMAIN
-    }.zendesk.com/api/v2/help_center/sections/360000018069/articles.json`,
+    announcementsURL: process.env.ZEN_ANNOUNCEMENT_URL,
     token: process.env.ZEN_TOKEN,
     email: process.env.ZEN_EMAIL,
     browser: process.env.ZEN_BROWSER,
