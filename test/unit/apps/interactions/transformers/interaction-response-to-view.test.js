@@ -9,39 +9,45 @@ config.archivedDocumentsBaseUrl = 'http://base'
 describe('#transformInteractionResponsetoViewRecord', () => {
   context('when provided a fully populated interaction', () => {
     beforeEach(() => {
-      this.transformed = transformInteractionResponseToViewRecord({
-        ...mockInteraction,
-        archived_documents_url_path: '/documents/123',
-        investment_project: {
-          id: 'bac18331-ca4d-4501-960e-a1bd68b5d47e',
-          name: 'Test project',
+      this.transformed = transformInteractionResponseToViewRecord(
+        {
+          ...mockInteraction,
+          archived_documents_url_path: '/documents/123',
+          investment_project: {
+            id: 'bac18331-ca4d-4501-960e-a1bd68b5d47e',
+            name: 'Test project',
+          },
         },
-      }, true)
+        true
+      )
     })
 
     it('should transform to display format', () => {
       expect(this.transformed).to.deep.equal({
-        'Company': {
+        Company: {
           url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
           name: 'Venus Ltd',
         },
-        'Contact(s)': [{
-          url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
-          name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
-        }],
-        'Service': {
+        'Contact(s)': [
+          {
+            url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
+            name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
+          },
+        ],
+        Service: {
           id: 'sv1',
           name: 'Account Management',
         },
-        'Notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+        Notes: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy area': 'Access to Public Funding (inc. EU funding)',
-        'Policy feedback notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+        'Policy feedback notes':
+          'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy issue types': 'EU exit',
         'Date of interaction': {
           type: 'date',
           name: '2058-11-25',
         },
-        'Documents': {
+        Documents: {
           hint: '(will open another website)',
           hintId: 'external-link-label',
           name: 'View files and documents',
@@ -60,38 +66,176 @@ describe('#transformInteractionResponsetoViewRecord', () => {
     })
   })
 
+  context(
+    'when provided a fully populated interaction & service name has a deliminator',
+    () => {
+      beforeEach(() => {
+        this.transformed = transformInteractionResponseToViewRecord(
+          {
+            ...mockInteraction,
+            service: {
+              name: 'Account Management : Specific type of management',
+              id: 'sv1',
+            },
+            archived_documents_url_path: '/documents/123',
+            investment_project: {
+              id: 'bac18331-ca4d-4501-960e-a1bd68b5d47e',
+              name: 'Test project',
+            },
+          },
+          true
+        )
+      })
+
+      it('should transform to display format', () => {
+        expect(this.transformed).to.deep.equal({
+          Company: {
+            url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
+            name: 'Venus Ltd',
+          },
+          'Contact(s)': [
+            {
+              url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
+              name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
+            },
+          ],
+          Service: {
+            id: 'sv1',
+            name: 'Specific type of management',
+          },
+          Notes: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+          'Policy area': 'Access to Public Funding (inc. EU funding)',
+          'Policy feedback notes':
+            'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+          'Policy issue types': 'EU exit',
+          'Date of interaction': {
+            type: 'date',
+            name: '2058-11-25',
+          },
+          Documents: {
+            hint: '(will open another website)',
+            hintId: 'external-link-label',
+            name: 'View files and documents',
+            url: 'http://base/documents/123',
+          },
+          'Adviser(s)': ['Bob Lawson, The test team'],
+          'Investment project': {
+            url: '/investments/projects/bac18331-ca4d-4501-960e-a1bd68b5d47e',
+            name: 'Test project',
+          },
+          'Communication channel': {
+            id: '70c226d7-5d95-e211-a939-e4115bead28a',
+            name: 'Email/Website',
+          },
+        })
+      })
+    }
+  )
+
+  context(
+    'when provided a fully populated interaction & service name has a deliminator & has deliminator exlusion string ',
+    () => {
+      beforeEach(() => {
+        this.transformed = transformInteractionResponseToViewRecord(
+          {
+            ...mockInteraction,
+            service: {
+              name: 'A Specific DIT : Specific type of service',
+              id: 'sv1',
+            },
+            archived_documents_url_path: '/documents/123',
+            investment_project: {
+              id: 'bac18331-ca4d-4501-960e-a1bd68b5d47e',
+              name: 'Test project',
+            },
+          },
+          true
+        )
+      })
+
+      it('should transform to display format', () => {
+        expect(this.transformed).to.deep.equal({
+          Company: {
+            url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
+            name: 'Venus Ltd',
+          },
+          'Contact(s)': [
+            {
+              url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
+              name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
+            },
+          ],
+          Service: {
+            id: 'sv1',
+            name: 'A Specific DIT : Specific type of service',
+          },
+          Notes: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+          'Policy area': 'Access to Public Funding (inc. EU funding)',
+          'Policy feedback notes':
+            'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+          'Policy issue types': 'EU exit',
+          'Date of interaction': {
+            type: 'date',
+            name: '2058-11-25',
+          },
+          Documents: {
+            hint: '(will open another website)',
+            hintId: 'external-link-label',
+            name: 'View files and documents',
+            url: 'http://base/documents/123',
+          },
+          'Adviser(s)': ['Bob Lawson, The test team'],
+          'Investment project': {
+            url: '/investments/projects/bac18331-ca4d-4501-960e-a1bd68b5d47e',
+            name: 'Test project',
+          },
+          'Communication channel': {
+            id: '70c226d7-5d95-e211-a939-e4115bead28a',
+            name: 'Email/Website',
+          },
+        })
+      })
+    }
+  )
+
   context('when there is no contact associated with the interaction', () => {
     beforeEach(() => {
-      this.transformed = transformInteractionResponseToViewRecord({
-        ...mockInteraction,
-        archived_documents_url_path: '/documents/123',
-        contact: null,
-        investment_project: {
-          id: 'bac18331-ca4d-4501-960e-a1bd68b5d47e',
-          name: 'Test project',
+      this.transformed = transformInteractionResponseToViewRecord(
+        {
+          ...mockInteraction,
+          archived_documents_url_path: '/documents/123',
+          contact: null,
+          investment_project: {
+            id: 'bac18331-ca4d-4501-960e-a1bd68b5d47e',
+            name: 'Test project',
+          },
         },
-      }, true)
+        true
+      )
     })
 
     it('should transform to display format', () => {
       expect(this.transformed).to.deep.equal({
-        'Company': {
+        Company: {
           url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
           name: 'Venus Ltd',
         },
-        'Contact(s)': [{
-          url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
-          name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
-        }],
-        'Service': {
+        'Contact(s)': [
+          {
+            url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
+            name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
+          },
+        ],
+        Service: {
           id: 'sv1',
           name: 'Account Management',
         },
-        'Notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+        Notes: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy area': 'Access to Public Funding (inc. EU funding)',
-        'Policy feedback notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+        'Policy feedback notes':
+          'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy issue types': 'EU exit',
-        'Documents': {
+        Documents: {
           hint: '(will open another website)',
           hintId: 'external-link-label',
           name: 'View files and documents',
@@ -116,25 +260,31 @@ describe('#transformInteractionResponsetoViewRecord', () => {
 
   context('when there is no company associated with the interaction', () => {
     beforeEach(() => {
-      this.transformed = transformInteractionResponseToViewRecord({
-        ...mockInteraction,
-        company: null,
-      }, true)
+      this.transformed = transformInteractionResponseToViewRecord(
+        {
+          ...mockInteraction,
+          company: null,
+        },
+        true
+      )
     })
 
     it('should transform to display format', () => {
       expect(this.transformed).to.deep.equal({
-        'Contact(s)': [{
-          url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
-          name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
-        }],
-        'Service': {
+        'Contact(s)': [
+          {
+            url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
+            name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
+          },
+        ],
+        Service: {
           id: 'sv1',
           name: 'Account Management',
         },
-        'Notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+        Notes: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy area': 'Access to Public Funding (inc. EU funding)',
-        'Policy feedback notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+        'Policy feedback notes':
+          'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy issue types': 'EU exit',
         'Date of interaction': {
           type: 'date',
@@ -144,7 +294,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           id: '70c226d7-5d95-e211-a939-e4115bead28a',
           name: 'Email/Website',
         },
-        'Documents': {
+        Documents: {
           name: 'There are no files or documents',
         },
         'Adviser(s)': ['Bob Lawson, The test team'],
@@ -152,79 +302,93 @@ describe('#transformInteractionResponsetoViewRecord', () => {
     })
   })
 
-  context('when there is no investment project associated with the interaction', () => {
-    beforeEach(() => {
-      this.transformed = transformInteractionResponseToViewRecord({
-        ...mockInteraction,
-        investment_project: null,
-      }, true)
-    })
-
-    it('should transform to display format', () => {
-      expect(this.transformed).to.deep.equal({
-        'Company': {
-          url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
-          name: 'Venus Ltd',
-        },
-        'Contact(s)': [{
-          url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
-          name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
-        }],
-        'Service': {
-          id: 'sv1',
-          name: 'Account Management',
-        },
-        'Notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-        'Policy area': 'Access to Public Funding (inc. EU funding)',
-        'Policy feedback notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-        'Policy issue types': 'EU exit',
-        'Documents': {
-          name: 'There are no files or documents',
-        },
-        'Date of interaction': {
-          type: 'date',
-          name: '2058-11-25',
-        },
-        'Adviser(s)': ['Bob Lawson, The test team'],
-        'Communication channel': {
-          id: '70c226d7-5d95-e211-a939-e4115bead28a',
-          name: 'Email/Website',
-        },
+  context(
+    'when there is no investment project associated with the interaction',
+    () => {
+      beforeEach(() => {
+        this.transformed = transformInteractionResponseToViewRecord(
+          {
+            ...mockInteraction,
+            investment_project: null,
+          },
+          true
+        )
       })
-    })
-  })
+
+      it('should transform to display format', () => {
+        expect(this.transformed).to.deep.equal({
+          Company: {
+            url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
+            name: 'Venus Ltd',
+          },
+          'Contact(s)': [
+            {
+              url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
+              name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
+            },
+          ],
+          Service: {
+            id: 'sv1',
+            name: 'Account Management',
+          },
+          Notes: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+          'Policy area': 'Access to Public Funding (inc. EU funding)',
+          'Policy feedback notes':
+            'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+          'Policy issue types': 'EU exit',
+          Documents: {
+            name: 'There are no files or documents',
+          },
+          'Date of interaction': {
+            type: 'date',
+            name: '2058-11-25',
+          },
+          'Adviser(s)': ['Bob Lawson, The test team'],
+          'Communication channel': {
+            id: '70c226d7-5d95-e211-a939-e4115bead28a',
+            name: 'Email/Website',
+          },
+        })
+      })
+    }
+  )
 
   context('when provided with a fully populated service delivery', () => {
     beforeEach(() => {
-      this.transformed = transformInteractionResponseToViewRecord({
-        ...mockInteraction,
-        event: {
-          id: '4444',
-          name: 'Event title',
+      this.transformed = transformInteractionResponseToViewRecord(
+        {
+          ...mockInteraction,
+          event: {
+            id: '4444',
+            name: 'Event title',
+          },
+          kind: 'service_delivery',
+          service_delivery_status: {
+            name: 'Offered',
+            id: '45329c18-6095-e211-a939-e4115bead28a',
+          },
+          grant_amount_offered: '1000.00',
+          net_company_receipt: '500.00',
+          archived_documents_url_path: '/documents/123',
+          communication_channel: null,
         },
-        kind: 'service_delivery',
-        service_delivery_status: {
-          name: 'Offered',
-          id: '45329c18-6095-e211-a939-e4115bead28a',
-        },
-        grant_amount_offered: '1000.00',
-        net_company_receipt: '500.00',
-        archived_documents_url_path: '/documents/123',
-        communication_channel: null,
-      }, true)
+        true
+      )
     })
 
     it('should transform to display format', () => {
       expect(this.transformed).to.deep.equal({
-        'Company': {
+        Company: {
           url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
           name: 'Venus Ltd',
         },
-        'Contact(s)': [{
-          url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
-          name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
-        }],
-        'Service': {
+        'Contact(s)': [
+          {
+            url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
+            name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
+          },
+        ],
+        Service: {
           id: 'sv1',
           name: 'Account Management',
         },
@@ -240,22 +404,23 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           name: '500.00',
           type: 'currency',
         },
-        'Notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+        Notes: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy area': 'Access to Public Funding (inc. EU funding)',
-        'Policy feedback notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+        'Policy feedback notes':
+          'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy issue types': 'EU exit',
         'Date of service delivery': {
           type: 'date',
           name: '2058-11-25',
         },
         'Adviser(s)': ['Bob Lawson, The test team'],
-        'Documents': {
+        Documents: {
           hint: '(will open another website)',
           hintId: 'external-link-label',
           name: 'View files and documents',
           url: 'http://base/documents/123',
         },
-        'Event': {
+        Event: {
           url: '/events/4444',
           name: 'Event title',
         },
@@ -263,77 +428,92 @@ describe('#transformInteractionResponsetoViewRecord', () => {
     })
   })
 
-  context('when provided with a service delivery with optional fields not set', () => {
-    beforeEach(() => {
-      this.transformed = transformInteractionResponseToViewRecord({
-        ...mockInteraction,
-        event: null,
-        kind: 'service_delivery',
-        service_delivery_status: null,
-        grant_amount_offered: null,
-        net_company_receipt: null,
-        communication_channel: null,
-      }, true)
-    })
-
-    it('should transform to display format', () => {
-      expect(this.transformed).to.deep.equal({
-        'Company': {
-          url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
-          name: 'Venus Ltd',
-        },
-        'Contact(s)': [{
-          url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
-          name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
-        }],
-        'Service': {
-          id: 'sv1',
-          name: 'Account Management',
-        },
-        'Notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-        'Policy area': 'Access to Public Funding (inc. EU funding)',
-        'Policy feedback notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-        'Policy issue types': 'EU exit',
-        'Date of service delivery': {
-          type: 'date',
-          name: '2058-11-25',
-        },
-        'Adviser(s)': ['Bob Lawson, The test team'],
-        'Event': 'No',
-        'Documents': {
-          name: 'There are no files or documents',
-        },
+  context(
+    'when provided with a service delivery with optional fields not set',
+    () => {
+      beforeEach(() => {
+        this.transformed = transformInteractionResponseToViewRecord(
+          {
+            ...mockInteraction,
+            event: null,
+            kind: 'service_delivery',
+            service_delivery_status: null,
+            grant_amount_offered: null,
+            net_company_receipt: null,
+            communication_channel: null,
+          },
+          true
+        )
       })
-    })
-  })
+
+      it('should transform to display format', () => {
+        expect(this.transformed).to.deep.equal({
+          Company: {
+            url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
+            name: 'Venus Ltd',
+          },
+          'Contact(s)': [
+            {
+              url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
+              name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
+            },
+          ],
+          Service: {
+            id: 'sv1',
+            name: 'Account Management',
+          },
+          Notes: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+          'Policy area': 'Access to Public Funding (inc. EU funding)',
+          'Policy feedback notes':
+            'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+          'Policy issue types': 'EU exit',
+          'Date of service delivery': {
+            type: 'date',
+            name: '2058-11-25',
+          },
+          'Adviser(s)': ['Bob Lawson, The test team'],
+          Event: 'No',
+          Documents: {
+            name: 'There are no files or documents',
+          },
+        })
+      })
+    }
+  )
 
   context('when there is not an archived documents URL path', () => {
     beforeEach(() => {
-      this.transformed = transformInteractionResponseToViewRecord({
-        ...mockInteraction,
-        archived_documents_url_path: '',
-      }, true)
+      this.transformed = transformInteractionResponseToViewRecord(
+        {
+          ...mockInteraction,
+          archived_documents_url_path: '',
+        },
+        true
+      )
     })
 
     it('should transform to display format', () => {
       expect(this.transformed).to.deep.equal({
-        'Company': {
+        Company: {
           url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
           name: 'Venus Ltd',
         },
-        'Contact(s)': [{
-          url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
-          name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
-        }],
-        'Service': {
+        'Contact(s)': [
+          {
+            url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
+            name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
+          },
+        ],
+        Service: {
           id: 'sv1',
           name: 'Account Management',
         },
-        'Notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+        Notes: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy area': 'Access to Public Funding (inc. EU funding)',
-        'Policy feedback notes': 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+        'Policy feedback notes':
+          'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy issue types': 'EU exit',
-        'Documents': {
+        Documents: {
           name: 'There are no files or documents',
         },
         'Date of interaction': {
@@ -352,24 +532,29 @@ describe('#transformInteractionResponsetoViewRecord', () => {
   context('when provided with an interaction with policy feedback', () => {
     context('and one policy area', () => {
       beforeEach(() => {
-        this.transformed = transformInteractionResponseToViewRecord(mockInteractionWithPolicyFeedback, true)
+        this.transformed = transformInteractionResponseToViewRecord(
+          mockInteractionWithPolicyFeedback,
+          true
+        )
       })
 
       it('should transform to display format', () => {
         expect(this.transformed).to.deep.equal({
-          'Company': {
+          Company: {
             url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
             name: 'Venus Ltd',
           },
-          'Contact(s)': [{
-            url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
-            name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
-          }],
-          'Service': {
+          'Contact(s)': [
+            {
+              url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
+              name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
+            },
+          ],
+          Service: {
             id: 'sv1',
             name: 'Account Management',
           },
-          'Notes': 'Labore culpa quas cupiditate voluptatibus magni.',
+          Notes: 'Labore culpa quas cupiditate voluptatibus magni.',
           'Date of interaction': {
             type: 'date',
             name: '2058-11-25',
@@ -379,11 +564,12 @@ describe('#transformInteractionResponsetoViewRecord', () => {
             id: '70c226d7-5d95-e211-a939-e4115bead28a',
             name: 'Email/Website',
           },
-          'Documents': {
+          Documents: {
             name: 'There are no files or documents',
           },
           'Policy issue types': 'Domestic',
-          'Policy feedback notes': 'Labore culpa quas cupiditate voluptatibus magni.',
+          'Policy feedback notes':
+            'Labore culpa quas cupiditate voluptatibus magni.',
         })
       })
     })
@@ -392,13 +578,16 @@ describe('#transformInteractionResponsetoViewRecord', () => {
       beforeEach(() => {
         this.transformed = transformInteractionResponseToViewRecord({
           ...mockInteractionWithPolicyFeedback,
-          policy_areas: [{
-            name: 'p a 1',
-            id: 'pa1',
-          }, {
-            name: 'p a 2',
-            id: 'pa2',
-          }],
+          policy_areas: [
+            {
+              name: 'p a 1',
+              id: 'pa1',
+            },
+            {
+              name: 'p a 2',
+              id: 'pa2',
+            },
+          ],
         })
       })
 
@@ -408,31 +597,34 @@ describe('#transformInteractionResponsetoViewRecord', () => {
     })
   })
 
-  context('when transforming a draft and not showing document information', () => {
-    beforeEach(() => {
-      this.transformed = transformInteractionResponseToViewRecord(mcokDraftPastMeeting)
-    })
-
-    it('should transform to display format', () => {
-      expect(this.transformed).to.deep.equal({
-        'Adviser(s)': [
-          'Brendan Smith, Aberdeen City Council',
-        ],
-        'Company': {
-          name: 'Venus Ltd',
-          url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
-        },
-        'Contact(s)': [
-          {
-            name: 'Theodore Schaden|6e4b048d-5bb5-4868-9455-aa712f4ceffd',
-            url: '/contacts/71906039-858e-47ba-8016-f3c80da69ace',
-          },
-        ],
-        'Date of interaction': {
-          name: '2019-05-20',
-          type: 'date',
-        },
+  context(
+    'when transforming a draft and not showing document information',
+    () => {
+      beforeEach(() => {
+        this.transformed = transformInteractionResponseToViewRecord(
+          mcokDraftPastMeeting
+        )
       })
-    })
-  })
+
+      it('should transform to display format', () => {
+        expect(this.transformed).to.deep.equal({
+          'Adviser(s)': ['Brendan Smith, Aberdeen City Council'],
+          Company: {
+            name: 'Venus Ltd',
+            url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
+          },
+          'Contact(s)': [
+            {
+              name: 'Theodore Schaden|6e4b048d-5bb5-4868-9455-aa712f4ceffd',
+              url: '/contacts/71906039-858e-47ba-8016-f3c80da69ace',
+            },
+          ],
+          'Date of interaction': {
+            name: '2019-05-20',
+            type: 'date',
+          },
+        })
+      })
+    }
+  )
 })
