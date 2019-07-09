@@ -58,7 +58,9 @@ describe('Global transformers', () => {
 
     context('when valid key', () => {
       it('should return a function', () => {
-        const actual = this.transformers.transformDateObjectToDateString('start_date')
+        const actual = this.transformers.transformDateObjectToDateString(
+          'start_date'
+        )
 
         expect(actual).to.be.a('function')
       })
@@ -66,11 +68,27 @@ describe('Global transformers', () => {
 
     context('when valid key with inner call', () => {
       it('should return empty string for incorrect object', () => {
-        expect(this.transformers.transformDateObjectToDateString('start_date')()).to.be.null
-        expect(this.transformers.transformDateObjectToDateString('start_date')({})).to.be.null
-        expect(this.transformers.transformDateObjectToDateString('start_date')({ a: 'v' })).to.be.null
-        expect(this.transformers.transformDateObjectToDateString('start_date')({ year: '123124' })).to.be.null
-        expect(this.transformers.transformDateObjectToDateString('start_date')({ year: '2017' })).to.be.null
+        expect(
+          this.transformers.transformDateObjectToDateString('start_date')()
+        ).to.be.null
+        expect(
+          this.transformers.transformDateObjectToDateString('start_date')({})
+        ).to.be.null
+        expect(
+          this.transformers.transformDateObjectToDateString('start_date')({
+            a: 'v',
+          })
+        ).to.be.null
+        expect(
+          this.transformers.transformDateObjectToDateString('start_date')({
+            year: '123124',
+          })
+        ).to.be.null
+        expect(
+          this.transformers.transformDateObjectToDateString('start_date')({
+            year: '2017',
+          })
+        ).to.be.null
       })
 
       it('should return date string for correct object', () => {
@@ -79,17 +97,23 @@ describe('Global transformers', () => {
           start_date_month: '09',
           start_date_day: '25',
         }
-        const actual = this.transformers.transformDateObjectToDateString('start_date')(dateObj)
+        const actual = this.transformers.transformDateObjectToDateString(
+          'start_date'
+        )(dateObj)
 
         expect(actual).to.equal('2017-09-25')
       })
 
       it('should return partial date string for object', () => {
-        const actualYearMonth = this.transformers.transformDateObjectToDateString('start_date')({
+        const actualYearMonth = this.transformers.transformDateObjectToDateString(
+          'start_date'
+        )({
           start_date_year: '2017',
           start_date_month: '09',
         })
-        const actualYear = this.transformers.transformDateObjectToDateString('start_date')({
+        const actualYear = this.transformers.transformDateObjectToDateString(
+          'start_date'
+        )({
           start_date_year: '2017',
         })
 
@@ -112,7 +136,9 @@ describe('Global transformers', () => {
       })
 
       it('should return empty date object for invalid date', () => {
-        const actual = this.transformers.transformDateStringToDateObject('12345-098-11')
+        const actual = this.transformers.transformDateStringToDateObject(
+          '12345-098-11'
+        )
 
         expect(actual).to.deep.equal({
           year: '',
@@ -124,7 +150,9 @@ describe('Global transformers', () => {
 
     context('when valid date string', () => {
       it('should return correct date object from date string', () => {
-        const actual = this.transformers.transformDateStringToDateObject('2017-09-25')
+        const actual = this.transformers.transformDateStringToDateObject(
+          '2017-09-25'
+        )
 
         expect(actual).to.deep.equal({
           year: '2017',
@@ -146,53 +174,118 @@ describe('Global transformers', () => {
   })
 
   describe('#transformServicesOptions', () => {
-    context('when the service options have no interaction questions or secondary options', () => {
+    context(
+      'when the service options have no interaction questions or secondary options',
+      () => {
+        it('should return the correct options', () => {
+          const actual = this.transformers.transformServicesOptions([
+            serviceOptionData[0],
+          ])
+          expect(actual).to.deep.equal([
+            {
+              label: 'Account Management',
+              value: 'sv1',
+              interactionQuestions: [],
+              secondaryOptions: [],
+            },
+          ])
+        })
+      }
+    )
+    context('when the service options have interaction questions', () => {
       it('should return the correct options', () => {
-        const actual = this.transformers.transformServicesOptions([serviceOptionData[0]])
+        const actual = this.transformers.transformServicesOptions([
+          serviceOptionData[1],
+        ])
+        expect(actual).to.deep.equal([
+          {
+            label: 'Providing Export Advice & Information',
+            value: 'Providing Export Advice & Information',
+            interactionQuestions: [],
+            secondaryOptions: [
+              {
+                label: 'Advice & information',
+                value: 'sv2',
+                parent: 'Providing Export Advice & Information',
+                interactionQuestions: [
+                  {
+                    label: 'What did you give advice about?',
+                    value: 'sv2-q1',
+                    options: [
+                      { label: 'Banking & Funding', value: 'sv2-q1-a1' },
+                      {
+                        label: 'More Banking & Funding',
+                        value: 'sv2-q1-a2',
+                      },
+                    ],
+                    serviceId: 'sv2',
+                    isControlledBySecondary: true,
+                  },
+                  {
+                    label: 'Another question?',
+                    value: 'sv2-q2',
+                    options: [
+                      { label: 'Banking & Funding', value: 'sv2-q2-a1' },
+                      {
+                        label: 'More Banking & Funding',
+                        value: 'sv2-q2-a2',
+                      },
+                    ],
+                    serviceId: 'sv2',
+                    isControlledBySecondary: true,
+                  },
+                ],
+              },
+            ],
+          },
+        ])
+      })
+    })
+    context('when the service options have no interaction questions', () => {
+      it('should return the correct options', () => {
+        const actual = this.transformers.transformServicesOptions([
+          serviceOptionData[0],
+        ])
         expect(actual).to.deep.equal([
           {
             label: 'Account Management',
             value: 'sv1',
             interactionQuestions: [],
             secondaryOptions: [],
-          }]
-        )
+          },
+        ])
       })
     })
-    context('when the service options have interaction questions', () => {
+
+    context('when the service has questions but no sub service', () => {
       it('should return the correct options', () => {
-        const actual = this.transformers.transformServicesOptions([serviceOptionData[1]])
+        const actual = this.transformers.transformServicesOptions([
+          serviceOptionData[2],
+        ])
         expect(actual).to.deep.equal([
           {
-            label: 'Providing Export Advice & Information',
-            value: 'Providing Export Advice & Information',
-            interactionQuestions: [],
-            secondaryOptions: [{
-              label: 'Advice & information',
-              value: 'sv2',
-              parent: 'Providing Export Advice & Information',
-              interactionQuestions: [{
-                label: 'What did you give advice about?',
-                value: 'sv2-q1',
-                options: [{ label: 'Banking & Funding', value: 'sv2-q1-a1' }, {
-                  label: 'More Banking & Funding',
-                  value: 'sv2-q1-a2',
-                }],
-                serviceId: 'sv2',
-                isControlledBySecondary: true,
-              }, {
-                label: 'Another question?',
-                value: 'sv2-q2',
-                options: [{ label: 'Banking & Funding', value: 'sv2-q2-a1' }, {
-                  label: 'More Banking & Funding',
-                  value: 'sv2-q2-a2',
-                }],
-                serviceId: 'sv2',
-                isControlledBySecondary: true,
-              }],
-            }],
-          }]
-        )
+            interactionQuestions: [
+              {
+                label: 'Who was the company introduced to?',
+                options: [
+                  {
+                    label: 'Customers',
+                    value: 'sv3-q1-a1',
+                  },
+                  {
+                    label: 'More customers',
+                    value: 'sv3-q1-a2',
+                  },
+                ],
+                serviceId: 'sv3',
+                value: 'sv3-q1',
+              },
+            ],
+            label: 'Making Introductions (Export)',
+            secondaryOptions: [],
+            value: 'sv3',
+          },
+        ])
       })
     })
   })

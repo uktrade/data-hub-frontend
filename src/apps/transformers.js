@@ -52,13 +52,7 @@ function transformStringToOption (string) {
   }
 }
 
-function transformContactToOption ({
-  id,
-  first_name,
-  last_name,
-  job_title,
-  email,
-}) {
+function transformContactToOption ({ id, first_name, last_name, job_title }) {
   return {
     value: id,
     label: upperFirst(
@@ -97,7 +91,7 @@ function transformDateStringToDateObject (dateString) {
 }
 
 function transformServicesOptions (services) {
-  const delim = ' : '
+  const deliminator = ' : '
 
   const mapInteractionQuestions = service => {
     return service.interaction_questions && service.interaction_questions.length
@@ -118,7 +112,7 @@ function transformServicesOptions (services) {
 
   const serviceList = uniqBy(
     services.map(s => {
-      const splitName = s.name.split(delim)
+      const splitName = s.name.split(deliminator)
       return {
         label: splitName[0],
         value: !splitName[1] ? s.id : splitName[0],
@@ -130,7 +124,7 @@ function transformServicesOptions (services) {
 
   const subServiceList = services
     .map(s => {
-      const splitName = s.name.split(delim)
+      const splitName = s.name.split(deliminator)
       if (!splitName[1]) return
       return {
         label: splitName[1],
@@ -141,34 +135,40 @@ function transformServicesOptions (services) {
     })
     .filter(s => s !== undefined)
 
-  const nestedServiceList = serviceList.map(s => {
-    const isControlledBySecondary = s.label === s.value
-    return {
-      ...s,
-      interactionQuestions: isControlledBySecondary
-        ? []
-        : s.interactionQuestions.map(i => ({
-          ...i,
-          serviceId: s.value,
-        })),
-      secondaryOptions: isControlledBySecondary
-        ? subServiceList
-          .map(o => {
-            if (o.parent === s.label) {
-              return {
-                ...o,
-                interactionQuestions: o.interactionQuestions.map(i => {
-                  return {
-                    ...i,
-                    serviceId: o.value,
-                    isControlledBySecondary,
-                  }
-                }),
-              }
+  const nestedServiceList = serviceList.map(service => {
+    const isControlledBySecondary = service.label === service.value
+
+    const interactionQuestions = isControlledBySecondary
+      ? []
+      : service.interactionQuestions.map(question => ({
+        ...question,
+        serviceId: service.value,
+      }))
+
+    const secondaryOptions = isControlledBySecondary
+      ? subServiceList
+        .map(option => {
+          // loops through sub service list to and matches it to its parent service
+          if (option.parent === service.label) {
+            return {
+              ...option,
+              interactionQuestions: option.interactionQuestions.map(
+                question => ({
+                  ...question,
+                  serviceId: option.value,
+                  isControlledBySecondary,
+                })
+              ),
             }
-          })
-          .filter(s => s !== undefined)
-        : [],
+          }
+        })
+        .filter(s => s !== undefined)
+      : []
+
+    return {
+      ...service,
+      interactionQuestions,
+      secondaryOptions,
     }
   })
 
