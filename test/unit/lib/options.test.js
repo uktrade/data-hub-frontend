@@ -151,8 +151,6 @@ describe('#options', () => {
           {
             label: 'Account Management',
             value: 'sv1',
-            interactionQuestions: [],
-            secondaryOptions: [],
           }]
         )
       })

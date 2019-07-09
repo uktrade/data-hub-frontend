@@ -1,5 +1,5 @@
+const config = require('~/config')
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
-
 const interactionData = require('~/test/unit/data/interactions/new-interaction.json')
 const serviceOptions = require('~/test/unit/data/interactions/service-options-data.json')
 const { transformServicesOptions } = require('~/src/apps/transformers.js')
@@ -189,8 +189,11 @@ describe('Interaction details middleware', () => {
 
       context('when the error is 500', () => {
         beforeEach(async () => {
+          nock(config.apiRoot)
+            .get('/metadata/service/')
+            .reply(200, serviceOptions)
+
           this.saveInteractionStub = sinon.stub()
-          this.getServiceOptionsStub = sinon.stub()
 
           this.middlewareParameters = buildMiddlewareParameters({
             requestBody: { ...interactionData },
@@ -205,7 +208,6 @@ describe('Interaction details middleware', () => {
           const middleware = proxyquire('~/src/apps/interactions/middleware/details', {
             '../repos': {
               saveInteraction: this.saveInteractionStub.rejects({ statusCode: 500, error: 'error' }),
-              getServiceOptions: this.getServiceOptionsStub.resolves(serviceOptionsTransformed),
             },
           })
 
