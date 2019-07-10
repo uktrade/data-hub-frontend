@@ -192,32 +192,6 @@ describe('Add Export', () => {
 
     // TODO test policy feedback fields
   })
-
-  context('when in the context of an investment project', () => {
-    beforeEach(() => {
-      cy.visit(`/investments/projects/${fixtures.default.id}/interactions/create/export/service-delivery`)
-    })
-
-    it('should render breadcrumbs', () => {
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Investments')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/investments')
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.text', 'New hotel (commitment to invest)')
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.attr', 'href', '/investments/projects/fb5b5006-56af-40e0-8615-7aba53e0e4bf')
-      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Add interaction')
-    })
-
-    it('should add an interaction', () => {
-      const subject = utils.randomString()
-
-      populateInteractionForm(subject, 'Enquiry received', 'General Investment Enquiry')
-
-      cy.get(selectors.interactionForm.add).click()
-
-      assertDetails({ subject, flashMessage: 'Interaction created' })
-    })
-  })
 })
 
 describe('Adding interaction or service', () => {

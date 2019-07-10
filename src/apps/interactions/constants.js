@@ -94,6 +94,7 @@ const INTERACTION_CONTEXTS = [
   'investment_interaction',
   'other_service_delivery',
   'other_interaction',
+  'investment_project_interaction',
 ]
 
 const INTERACTION_STATUS = {
