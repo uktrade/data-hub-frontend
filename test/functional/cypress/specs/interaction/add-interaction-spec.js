@@ -195,7 +195,7 @@ describe('Add Export', () => {
 
   context('when in the context of an investment project', () => {
     beforeEach(() => {
-      cy.visit(`/investments/projects/${fixtures.default.id}/interactions/create/investment/interaction`)
+      cy.visit(`/investments/projects/${fixtures.default.id}/interactions/create/export/service-delivery`)
     })
 
     it('should render breadcrumbs', () => {
