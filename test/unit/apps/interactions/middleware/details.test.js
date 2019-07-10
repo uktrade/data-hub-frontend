@@ -1,8 +1,8 @@
-const config = require('~/config')
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 const interactionData = require('~/test/unit/data/interactions/new-interaction.json')
 const serviceOptions = require('~/test/unit/data/interactions/service-options-data.json')
 const { transformServicesOptions } = require('~/src/apps/transformers.js')
+
 const serviceOptionsTransformed = transformServicesOptions(serviceOptions)
 
 describe('Interaction details middleware', () => {
@@ -22,11 +22,12 @@ describe('Interaction details middleware', () => {
               returnLink: '/return/',
             },
           })
-
           const middleware = proxyquire('~/src/apps/interactions/middleware/details', {
             '../repos': {
               saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
-              getServiceOptions: this.getServiceOptionsStub.resolves(serviceOptionsTransformed),
+            },
+            '../../../lib/options': {
+              getOptions: this.getServiceOptionsStub.resolves(serviceOptionsTransformed),
             },
           })
 
@@ -44,7 +45,7 @@ describe('Interaction details middleware', () => {
               contact: '4c748e6e-05f4-478c-b07f-3d2e2290eb03',
               dit_team: 'cff02898-9698-e211-a939-e4115bead28a',
               service: 'Providing Export Advice & Information',
-              subService: 'Providing Export Advice & Information',
+              subService: ['Providing Export Advice & Information'],
               'sv2-q1': 'sv2-a1',
               subject: 'subject',
               notes: 'notes',
@@ -92,7 +93,9 @@ describe('Interaction details middleware', () => {
           const middleware = proxyquire('~/src/apps/interactions/middleware/details', {
             '../repos': {
               saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
-              getServiceOptions: this.getServiceOptionsStub.resolves(serviceOptionsTransformed),
+            },
+            '../../../lib/options': {
+              getOptions: this.getServiceOptionsStub.resolves(serviceOptionsTransformed),
             },
           })
 
@@ -109,7 +112,7 @@ describe('Interaction details middleware', () => {
             { contact: '4c748e6e-05f4-478c-b07f-3d2e2290eb03',
               dit_team: 'cff02898-9698-e211-a939-e4115bead28a',
               service: 'Providing Export Advice & Information',
-              subService: 'Providing Export Advice & Information',
+              subService: ['Providing Export Advice & Information'],
               'sv2-q1': 'sv2-a1',
               subject: 'subject',
               notes: 'notes',
@@ -155,7 +158,9 @@ describe('Interaction details middleware', () => {
           const middleware = proxyquire('~/src/apps/interactions/middleware/details', {
             '../repos': {
               saveInteraction: this.saveInteractionStub.rejects({ statusCode: 400, error: 'error' }),
-              getServiceOptions: this.getServiceOptionsStub.resolves(serviceOptionsTransformed),
+            },
+            '../../../lib/options': {
+              getOptions: this.getServiceOptionsStub.resolves(serviceOptionsTransformed),
             },
           })
 
@@ -189,11 +194,8 @@ describe('Interaction details middleware', () => {
 
       context('when the error is 500', () => {
         beforeEach(async () => {
-          nock(config.apiRoot)
-            .get('/metadata/service/')
-            .reply(200, serviceOptions)
-
           this.saveInteractionStub = sinon.stub()
+          this.getServiceOptionsStub = sinon.stub()
 
           this.middlewareParameters = buildMiddlewareParameters({
             requestBody: { ...interactionData },
@@ -208,6 +210,9 @@ describe('Interaction details middleware', () => {
           const middleware = proxyquire('~/src/apps/interactions/middleware/details', {
             '../repos': {
               saveInteraction: this.saveInteractionStub.rejects({ statusCode: 500, error: 'error' }),
+            },
+            '../../../lib/options': {
+              getOptions: this.getServiceOptionsStub.resolves(serviceOptionsTransformed),
             },
           })
 
