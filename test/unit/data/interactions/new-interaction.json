@@ -2,7 +2,7 @@
   "contact": "4c748e6e-05f4-478c-b07f-3d2e2290eb03",
   "dit_team": "cff02898-9698-e211-a939-e4115bead28a",
   "service": "Providing Export Advice & Information",
-  "subService": "Providing Export Advice & Information",
+  "subService": ["Providing Export Advice & Information"],
   "sv2-q1": "sv2-a1",
   "subject": "subject",
   "notes": "notes",

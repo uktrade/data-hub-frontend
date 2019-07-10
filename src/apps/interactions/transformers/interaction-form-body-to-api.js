@@ -1,4 +1,4 @@
-const { omit, flatten } = require('lodash')
+const { omit } = require('lodash')
 
 const castCompactArray = require('../../../lib/cast-compact-array')
 const { transformDateObjectToDateString } = require('../../transformers')
@@ -24,10 +24,10 @@ function transformInteractionFormBodyToApiRequest (props, services) {
     : selectedServiceOption.value
 
   const serviceOptionStore = serviceHasSecondaryOptions
-    ? flatten(selectedServiceOption.secondaryOptions.map(option => option.interactionQuestions))
-    : selectedServiceOption.interactionQuestions
+    ? selectedServiceOption.secondaryOptions[0]
+    : selectedServiceOption
 
-  serviceOptionStore.map(interactionQuestion => {
+  serviceOptionStore.interactionQuestions.map(interactionQuestion => {
     for (const [key, value] of Object.entries(props)) {
       if (key === interactionQuestion.value) {
         serviceAnswers[key] = {

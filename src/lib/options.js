@@ -79,10 +79,13 @@ async function getOptions (
     options = options.filter(option => {
       return !option.contexts || option.contexts.includes(context)
     })
+  }
 
-    if (isInteractionServiceForm(key, context)) {
-      return transformServicesOptions(options)
-    }
+  if (
+    isInteractionServiceForm(key, context) ||
+    transformer === 'transformServicesOptions'
+  ) {
+    return transformServicesOptions(options)
   }
 
   const mappedOptions = options.map(transformer)

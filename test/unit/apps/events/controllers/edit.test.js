@@ -1,4 +1,4 @@
-const { assign, find } = require('lodash')
+const { assign, find, sortBy } = require('lodash')
 const moment = require('moment')
 
 const config = require('~/config')
@@ -220,11 +220,10 @@ describe('Event edit controller', () => {
       })
 
       it('should get all active service options', () => {
-        const options = getFormFieldOptions(this.res, 'service')
+        const options = sortBy(getFormFieldOptions(this.res, 'service'), ['value'])
         expect(options.length).to.equal(3)
         expect(options[0].value).to.equal('sv1')
-        expect(options[1].secondaryOptions.length).to.equal(1)
-        expect(options[1].secondaryOptions[0].value).to.equal('sv2')
+        expect(options[1].value).to.equal('sv2')
         expect(options[2].value).to.equal('sv3')
       })
 
@@ -297,11 +296,10 @@ describe('Event edit controller', () => {
       })
 
       it('should get all active service options when the event was created', () => {
-        const options = getFormFieldOptions(this.res, 'service')
+        const options = sortBy(getFormFieldOptions(this.res, 'service'), ['value'])
         expect(options.length).to.equal(3)
         expect(options[0].value).to.equal('sv1')
-        expect(options[1].secondaryOptions.length).to.equal(1)
-        expect(options[1].secondaryOptions[0].value).to.equal('sv2')
+        expect(options[1].value).to.equal('sv2')
         expect(options[2].value).to.equal('sv3')
       })
 

@@ -11,7 +11,9 @@ const { getReturnLink } = require('../helpers')
 
 async function postDetails (req, res, next) {
   try {
-    const serviceOptions = await getOptions(req.session.token, 'service')
+    const serviceOptions = await getOptions(req.session.token, 'service', {
+      transformer: 'transformServicesOptions',
+    })
     res.locals.requestBody = transformInteractionFormBodyToApiRequest(
       req.body,
       serviceOptions
