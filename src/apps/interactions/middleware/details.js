@@ -2,7 +2,10 @@ const { get, set } = require('lodash')
 const { sentence } = require('case')
 
 const { getOptions } = require('../../../lib/options')
-const { transformInteractionFormBodyToApiRequest } = require('../transformers')
+const {
+  transformInteractionFormBodyToApiRequest,
+  transformServicesOptions,
+} = require('../transformers')
 const { fetchInteraction, saveInteraction } = require('../repos')
 const { getContact } = require('../../contacts/repos')
 const { getDitCompany } = require('../../companies/repos')
@@ -12,7 +15,8 @@ const { getReturnLink } = require('../helpers')
 async function postDetails (req, res, next) {
   try {
     const serviceOptions = await getOptions(req.session.token, 'service', {
-      transformer: 'transformServicesOptions',
+      transformer: transformServicesOptions,
+      transformWithoutMapping: true,
     })
     res.locals.requestBody = transformInteractionFormBodyToApiRequest(
       req.body,

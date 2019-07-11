@@ -4,13 +4,13 @@ const { getContactsForCompany } = require('../../contacts/repos')
 const { getAdvisers } = require('../../adviser/repos')
 const { filterActiveAdvisers } = require('../../adviser/filters')
 const { getActiveEvents } = require('../../events/repos')
+const { isInteractionServiceForm } = require('../helpers')
 const {
   transformObjectToOption,
   transformContactToOption,
 } = require('../../transformers')
 const { transformAdviserToOption } = require('../../adviser/transformers')
 const { getOptions } = require('../../../lib/options')
-const { isInteractionServiceForm } = require('../helpers')
 const { transformServicesOptions } = require('../transformers')
 
 const { SERVICE_DELIVERY_STATUS_COMPLETED } = require('../constants')
@@ -138,12 +138,12 @@ async function getServiceOptions (req, res, createdOn) {
       transformWithoutMapping: true,
     }
     : {}
-
   const services = await getOptions(req.session.token, 'service', {
     createdOn,
     context,
     ...transformationProps,
   })
+
   return services
 }
 

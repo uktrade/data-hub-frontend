@@ -6,9 +6,7 @@ const { authorisedRequest } = require('../lib/authorised-request')
 const { filterDisabledOption } = require('../modules/permissions/filters')
 const {
   transformObjectToOption,
-  transformServicesOptions,
 } = require('../apps/transformers')
-const { isInteractionServiceForm } = require('../apps/interactions/helpers')
 
 let client, redisAsync
 if (!config.isTest) {
@@ -47,6 +45,7 @@ async function getOptions (
     queryString = '',
     context,
     transformer = transformObjectToOption,
+    transformWithoutMapping = false,
   } = {}
 ) {
   if (id) {
@@ -81,11 +80,8 @@ async function getOptions (
     })
   }
 
-  if (
-    isInteractionServiceForm(key, context) ||
-    transformer === 'transformServicesOptions'
-  ) {
-    return transformServicesOptions(options)
+  if (transformWithoutMapping) {
+    return transformer(options)
   }
 
   const mappedOptions = options.map(transformer)
