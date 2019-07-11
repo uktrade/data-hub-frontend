@@ -10,6 +10,9 @@ const {
 } = require('../../transformers')
 const { transformAdviserToOption } = require('../../adviser/transformers')
 const { getOptions } = require('../../../lib/options')
+const { isInteractionServiceForm } = require('../helpers')
+const { transformServicesOptions } = require('../transformers')
+
 const { SERVICE_DELIVERY_STATUS_COMPLETED } = require('../constants')
 
 async function getInteractionOptions (req, res) {
@@ -129,9 +132,17 @@ async function getServiceDeliveryFormOptions (token, createdOn, req, res) {
 
 async function getServiceOptions (req, res, createdOn) {
   const context = getContextForInteraction(req, res)
+  const transformationProps = isInteractionServiceForm(context)
+    ? {
+      transformer: transformServicesOptions,
+      transformWithoutMapping: true,
+    }
+    : {}
+
   const services = await getOptions(req.session.token, 'service', {
     createdOn,
     context,
+    ...transformationProps,
   })
   return services
 }

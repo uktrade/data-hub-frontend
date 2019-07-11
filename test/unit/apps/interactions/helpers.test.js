@@ -30,39 +30,32 @@ describe('Interaction helpers', () => {
   })
 
   describe('#isInteractionServiceForm', () => {
-    context('interaction form values', () => {
+    context('matching interaction form context values', () => {
       it('should return true', () => {
         expect(
-          isInteractionServiceForm('service', INTERACTION_CONTEXTS[0])
+          isInteractionServiceForm(INTERACTION_CONTEXTS[0])
         ).to.equal(true)
         expect(
-          isInteractionServiceForm('service', INTERACTION_CONTEXTS[1])
+          isInteractionServiceForm(INTERACTION_CONTEXTS[1])
         ).to.equal(true)
         expect(
-          isInteractionServiceForm('service', INTERACTION_CONTEXTS[2])
+          isInteractionServiceForm(INTERACTION_CONTEXTS[2])
         ).to.equal(true)
         expect(
-          isInteractionServiceForm('service', INTERACTION_CONTEXTS[3])
+          isInteractionServiceForm(INTERACTION_CONTEXTS[3])
         ).to.equal(true)
         expect(
-          isInteractionServiceForm('service', INTERACTION_CONTEXTS[0])
+          isInteractionServiceForm(INTERACTION_CONTEXTS[0])
         ).to.equal(true)
       })
     })
 
-    context('non interaction form values', () => {
+    context('non matching interaction form values', () => {
       it('should return false', () => {
-        expect(
-          isInteractionServiceForm('blah', INTERACTION_CONTEXTS[0])
-        ).to.equal(false)
-        expect(isInteractionServiceForm('service', 'some_context')).to.equal(
-          false
-        )
-        expect(isInteractionServiceForm('', '')).to.equal(false)
-        expect(isInteractionServiceForm('service', '')).to.equal(false)
-        expect(
-          isInteractionServiceForm('', INTERACTION_CONTEXTS[0])
-        ).to.equal(false)
+        expect(isInteractionServiceForm('some_context')).to.equal(false)
+        expect(isInteractionServiceForm(undefined)).to.equal(false)
+        expect(isInteractionServiceForm('')).to.equal(false)
+        expect(isInteractionServiceForm(null)).to.equal(false)
       })
     })
   })
