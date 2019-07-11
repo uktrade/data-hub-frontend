@@ -179,6 +179,24 @@ describe('#options', () => {
     })
   })
 
+  context('when a transformer is provided with transformWithoutMapping prop and non-mapping function', () => {
+    beforeEach(async () => {
+      this.options = await getOptions('1234', 'uk-region', {
+        includeDisabled: true,
+        transformWithoutMapping: true,
+        transformer: (options) => options.map(({ id, name }) => ({ value: id, text: name })),
+      })
+    })
+
+    it('should transform the options without mapping', () => {
+      expect(this.options).to.deep.equal([
+        { text: 'r1', value: '1' },
+        { text: 'r3', value: '3' },
+        { text: 'r2', value: '2' },
+      ])
+    })
+  })
+
   context('when the options are sorted', () => {
     beforeEach(async () => {
       this.options = await getOptions('1234', 'uk-region', {
