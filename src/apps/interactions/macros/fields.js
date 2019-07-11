@@ -1,3 +1,5 @@
+const { flattenDeep } = require('lodash')
+
 module.exports = {
   adviser (advisers) {
     return {
@@ -57,13 +59,88 @@ module.exports = {
     }
   },
   service (services) {
-    return {
-      macroName: 'MultipleChoiceField',
-      name: 'service',
-      initialOption: '-- Select service --',
-      options: services,
-      modifier: ['hide-label'],
-    }
+    const primaryOptionsValues = services.map(
+      ({ value, label, isControlledBySecondary }) => {
+        return {
+          value,
+          label,
+          isControlledBySecondary: !!isControlledBySecondary,
+        }
+      }
+    )
+    const secondaryOptionValues = services.map(({ secondaryOptions }) => {
+      return secondaryOptions.map(({ value, label }) => {
+        return {
+          value,
+          label,
+        }
+      })
+    })
+
+    const serviceQuestions = flattenDeep(
+      services.map(service => {
+        if (!service.secondaryOptions.length) {
+          return service.interactionQuestions
+        }
+        return service.secondaryOptions.map(secondaryOption => {
+          return secondaryOption.interactionQuestions
+        })
+      })
+    )
+
+    const serviceIds = primaryOptionsValues.map(service => service.value)
+    const primaryOptions = [
+      {
+        macroName: 'MultipleChoiceField',
+        name: 'service',
+        initialOption: '-- Select service --',
+        options: primaryOptionsValues,
+        modifier: ['hide-label'],
+      },
+    ]
+
+    const secondaryOptions = secondaryOptionValues
+      .map((option, index) => {
+        if (!option.length) return
+        return {
+          macroName: 'MultipleChoiceField',
+          name: 'subService',
+          label: 'Sub service',
+          modifier: 'subfield',
+          isLabelHidden: true,
+          initialOption: '-- Select --',
+          options: [].concat(...secondaryOptionValues[index]),
+          condition: {
+            name: 'service',
+            value: option.length && serviceIds[index],
+          },
+        }
+      })
+      .filter(x => x)
+
+    const tertiaryOptions = serviceQuestions.map((option, index) => {
+      return {
+        macroName: 'MultipleChoiceField',
+        label: option.label,
+        name: option.value,
+        type: 'radio',
+        value: option.label,
+        modifier: 'subfield',
+        options: option.options.map(option => {
+          return {
+            label: option.label,
+            name: option.value,
+            value: option.value,
+          }
+        }),
+        condition: {
+          name: option.isControlledBySecondary ? 'subService' : 'service',
+          value: option.serviceId,
+        },
+      }
+    })
+
+    return [...primaryOptions, ...secondaryOptions, ...tertiaryOptions]
   },
   feedbackPolicyIssueType (types) {
     return {

@@ -62,6 +62,9 @@ scripts/trello-story-description.txt
 # BrowserStack local log
 local.log
 
+# VScode history plugin
+/.history
+
 # Yarn version policy
 .yarnrc
 .yarn/

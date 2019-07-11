@@ -32,6 +32,8 @@ module.exports = function ({
   areas,
   types,
   company,
+  tapServices = [],
+  statuses = [],
 }) {
   return {
     returnLink,
@@ -40,7 +42,29 @@ module.exports = function ({
     hiddenFields,
     children: [
       serviceHeading,
-      service(services),
+      ...service(services),
+      {
+        macroName: 'MultipleChoiceField',
+        name: 'service_delivery_status',
+        initialOption: '-- Select service status --',
+        options: statuses,
+        optional: true,
+        modifier: ['subfield', 'medium'],
+        condition: {
+          name: 'subService',
+          value: tapServices.length && tapServices.join('||'),
+        },
+      },
+      {
+        macroName: 'TextField',
+        name: 'grant_amount_offered',
+        optional: true,
+        modifier: ['subfield', 'medium'],
+        condition: {
+          name: 'subService',
+          value: tapServices.length && tapServices.join('||'),
+        },
+      },
       participantsHeading(company),
       contact(contacts),
       adviser(advisers),
@@ -63,7 +87,7 @@ module.exports = function ({
       feedbackPolicyNotes,
     ].map(field => {
       return assign(field, {
-        label: labels.interaction[field.name],
+        label: field.label || labels.interaction[field.name],
       })
     }),
   }

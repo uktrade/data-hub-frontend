@@ -22,8 +22,16 @@
       }
     }],
   "service": {
-    "id": "1231231231312",
-    "name": "Test service"
+    "name": "Account Management",
+    "id": "sv1"
+  },
+  "service_answers": {
+    "question-1": {
+      "answer-1": {}
+    },
+    "question-2": {
+      "answer-2": {}
+    }
   },
   "contacts": [{
     "id": "b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306",

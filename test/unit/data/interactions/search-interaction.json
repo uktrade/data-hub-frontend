@@ -38,8 +38,18 @@
   "modified_on": "2017-06-28T16:05:19.036841",
   "date": "2017-05-31T00:00:00",
   "service": {
-    "id": "1231231231312",
-    "name": "Test service"
+    "name": "Account Management",
+    "id": "sv1"
+  },
+  "service_answers": {
+    "question-1": {
+      "answer-1": {
+        "additional-question": 4000
+      }
+    },
+    "question-2": {
+      "answer-2": {}
+    }
   },
   "subject": "Test interactions",
   "notes": "lorem ipsum",
