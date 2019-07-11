@@ -2,7 +2,8 @@ const transformInteractionResponseToForm = require('./interaction-response-to-fo
 const transformInteractionToListItem = require('./interaction-to-list-item')
 const transformInteractionFormBodyToApiRequest = require('./interaction-form-body-to-api')
 const transformInteractionResponseToViewRecord = require('./interaction-response-to-view')
-const transformInteractionListItemToHaveUrlPrefix = require('./interaction-list-item-to-have-url')
+const transformInteractionListItemToHaveUrlPrefix = require('./interaction-to-options')
+const transformServicesOptions = require('./interaction-to-options')
 
 module.exports = {
   transformInteractionResponseToForm,
@@ -10,4 +11,5 @@ module.exports = {
   transformInteractionFormBodyToApiRequest,
   transformInteractionResponseToViewRecord,
   transformInteractionListItemToHaveUrlPrefix,
+  transformServicesOptions,
 }
