@@ -1,7 +1,9 @@
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 const interactionData = require('~/test/unit/data/interactions/new-interaction.json')
 const serviceOptions = require('~/test/unit/data/interactions/service-options-data.json')
-const { transformServicesOptions } = require('~/src/apps/transformers.js')
+const {
+  transformServicesOptions,
+} = require('~/src/apps/interactions/transformers')
 
 const serviceOptionsTransformed = transformServicesOptions(serviceOptions)
 
@@ -22,19 +24,24 @@ describe('Interaction details middleware', () => {
               returnLink: '/return/',
             },
           })
-          const middleware = proxyquire('~/src/apps/interactions/middleware/details', {
-            '../repos': {
-              saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
-            },
-            '../../../lib/options': {
-              getOptions: this.getServiceOptionsStub.resolves(serviceOptionsTransformed),
-            },
-          })
+          const middleware = proxyquire(
+            '~/src/apps/interactions/middleware/details',
+            {
+              '../repos': {
+                saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
+              },
+              '../../../lib/options': {
+                getOptions: this.getServiceOptionsStub.resolves(
+                  serviceOptionsTransformed
+                ),
+              },
+            }
+          )
 
           await middleware.postDetails(
             this.middlewareParameters.reqMock,
             this.middlewareParameters.resMock,
-            this.middlewareParameters.nextSpy,
+            this.middlewareParameters.nextSpy
           )
         })
 
@@ -64,11 +71,15 @@ describe('Interaction details middleware', () => {
         })
 
         it('should flash a created message', () => {
-          expect(this.middlewareParameters.reqMock.flash).to.be.calledOnceWithExactly('success', 'Interaction created')
+          expect(
+            this.middlewareParameters.reqMock.flash
+          ).to.be.calledOnceWithExactly('success', 'Interaction created')
         })
 
         it('should redirect', () => {
-          expect(this.middlewareParameters.resMock.redirect).to.be.calledOnceWithExactly('/return/1')
+          expect(
+            this.middlewareParameters.resMock.redirect
+          ).to.be.calledOnceWithExactly('/return/1')
         })
       })
 
@@ -90,26 +101,32 @@ describe('Interaction details middleware', () => {
             },
           })
 
-          const middleware = proxyquire('~/src/apps/interactions/middleware/details', {
-            '../repos': {
-              saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
-            },
-            '../../../lib/options': {
-              getOptions: this.getServiceOptionsStub.resolves(serviceOptionsTransformed),
-            },
-          })
+          const middleware = proxyquire(
+            '~/src/apps/interactions/middleware/details',
+            {
+              '../repos': {
+                saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
+              },
+              '../../../lib/options': {
+                getOptions: this.getServiceOptionsStub.resolves(
+                  serviceOptionsTransformed
+                ),
+              },
+            }
+          )
 
           await middleware.postDetails(
             this.middlewareParameters.reqMock,
             this.middlewareParameters.resMock,
-            this.middlewareParameters.nextSpy,
+            this.middlewareParameters.nextSpy
           )
         })
 
         it('should PATCH to the API', () => {
           expect(this.saveInteractionStub).to.have.been.calledOnceWithExactly(
             this.middlewareParameters.reqMock.session.token,
-            { contact: '4c748e6e-05f4-478c-b07f-3d2e2290eb03',
+            {
+              contact: '4c748e6e-05f4-478c-b07f-3d2e2290eb03',
               dit_team: 'cff02898-9698-e211-a939-e4115bead28a',
               service: 'Providing Export Advice & Information',
               subService: ['Providing Export Advice & Information'],
@@ -125,16 +142,21 @@ describe('Interaction details middleware', () => {
               dit_participants: [],
               policy_areas: [],
               policy_issue_types: [],
-              status: 'complete' }
+              status: 'complete',
+            }
           )
         })
 
         it('should flash an updated message', () => {
-          expect(this.middlewareParameters.reqMock.flash).to.be.calledOnceWithExactly('success', 'Interaction updated')
+          expect(
+            this.middlewareParameters.reqMock.flash
+          ).to.be.calledOnceWithExactly('success', 'Interaction updated')
         })
 
         it('should redirect', () => {
-          expect(this.middlewareParameters.resMock.redirect).to.be.calledOnceWithExactly('/return/1')
+          expect(
+            this.middlewareParameters.resMock.redirect
+          ).to.be.calledOnceWithExactly('/return/1')
         })
       })
     })
@@ -155,19 +177,27 @@ describe('Interaction details middleware', () => {
             },
           })
 
-          const middleware = proxyquire('~/src/apps/interactions/middleware/details', {
-            '../repos': {
-              saveInteraction: this.saveInteractionStub.rejects({ statusCode: 400, error: 'error' }),
-            },
-            '../../../lib/options': {
-              getOptions: this.getServiceOptionsStub.resolves(serviceOptionsTransformed),
-            },
-          })
+          const middleware = proxyquire(
+            '~/src/apps/interactions/middleware/details',
+            {
+              '../repos': {
+                saveInteraction: this.saveInteractionStub.rejects({
+                  statusCode: 400,
+                  error: 'error',
+                }),
+              },
+              '../../../lib/options': {
+                getOptions: this.getServiceOptionsStub.resolves(
+                  serviceOptionsTransformed
+                ),
+              },
+            }
+          )
 
           await middleware.postDetails(
             this.middlewareParameters.reqMock,
             this.middlewareParameters.resMock,
-            this.middlewareParameters.nextSpy,
+            this.middlewareParameters.nextSpy
           )
         })
 
@@ -188,7 +218,9 @@ describe('Interaction details middleware', () => {
         })
 
         it('should call next without errors', () => {
-          expect(this.middlewareParameters.nextSpy).have.been.calledOnceWithExactly()
+          expect(
+            this.middlewareParameters.nextSpy
+          ).have.been.calledOnceWithExactly()
         })
       })
 
@@ -207,19 +239,27 @@ describe('Interaction details middleware', () => {
             },
           })
 
-          const middleware = proxyquire('~/src/apps/interactions/middleware/details', {
-            '../repos': {
-              saveInteraction: this.saveInteractionStub.rejects({ statusCode: 500, error: 'error' }),
-            },
-            '../../../lib/options': {
-              getOptions: this.getServiceOptionsStub.resolves(serviceOptionsTransformed),
-            },
-          })
+          const middleware = proxyquire(
+            '~/src/apps/interactions/middleware/details',
+            {
+              '../repos': {
+                saveInteraction: this.saveInteractionStub.rejects({
+                  statusCode: 500,
+                  error: 'error',
+                }),
+              },
+              '../../../lib/options': {
+                getOptions: this.getServiceOptionsStub.resolves(
+                  serviceOptionsTransformed
+                ),
+              },
+            }
+          )
 
           await middleware.postDetails(
             this.middlewareParameters.reqMock,
             this.middlewareParameters.resMock,
-            this.middlewareParameters.nextSpy,
+            this.middlewareParameters.nextSpy
           )
         })
 
@@ -236,7 +276,9 @@ describe('Interaction details middleware', () => {
         })
 
         it('should call next with errors', () => {
-          expect(this.middlewareParameters.nextSpy).have.been.calledOnceWithExactly({
+          expect(
+            this.middlewareParameters.nextSpy
+          ).have.been.calledOnceWithExactly({
             error: 'error',
             statusCode: 500,
           })
@@ -251,20 +293,25 @@ describe('Interaction details middleware', () => {
       this.getContactStub = sinon.stub()
       this.getDitCompanyStub = sinon.stub()
 
-      this.middleware = proxyquire('~/src/apps/interactions/middleware/details', {
-        '../repos': {
-          fetchInteraction: this.fetchInteractionStub.resolves(interactionData),
-        },
-        '../../adviser/filters': {
-          filterActiveAdvisers: this.filterActiveAdvisersSpy,
-        },
-        '../../contacts/repos': {
-          getContact: this.getContactStub,
-        },
-        '../../companies/repos': {
-          getDitCompany: this.getDitCompanyStub,
-        },
-      })
+      this.middleware = proxyquire(
+        '~/src/apps/interactions/middleware/details',
+        {
+          '../repos': {
+            fetchInteraction: this.fetchInteractionStub.resolves(
+              interactionData
+            ),
+          },
+          '../../adviser/filters': {
+            filterActiveAdvisers: this.filterActiveAdvisersSpy,
+          },
+          '../../contacts/repos': {
+            getContact: this.getContactStub,
+          },
+          '../../companies/repos': {
+            getDitCompany: this.getDitCompanyStub,
+          },
+        }
+      )
 
       this.middlewareParameters = buildMiddlewareParameters({
         requestBody: { ...interactionData },
@@ -295,11 +342,15 @@ describe('Interaction details middleware', () => {
       })
 
       it('should set interaction data on locals', () => {
-        expect(this.middlewareParameters.resMock.locals.interaction).to.deep.equal(this.interaction)
+        expect(
+          this.middlewareParameters.resMock.locals.interaction
+        ).to.deep.equal(this.interaction)
       })
 
       it('should set company to the one associated with the interaction', () => {
-        expect(this.middlewareParameters.resMock.locals.company).to.deep.equal(this.company)
+        expect(this.middlewareParameters.resMock.locals.company).to.deep.equal(
+          this.company
+        )
       })
     })
 
@@ -333,11 +384,15 @@ describe('Interaction details middleware', () => {
       })
 
       it('should set interaction data on locals', () => {
-        expect(this.middlewareParameters.resMock.locals.interaction).to.deep.equal(this.interaction)
+        expect(
+          this.middlewareParameters.resMock.locals.interaction
+        ).to.deep.equal(this.interaction)
       })
 
       it('should set company to the one associated with the interaction contact', () => {
-        expect(this.middlewareParameters.resMock.locals.company).to.deep.equal(this.company)
+        expect(this.middlewareParameters.resMock.locals.company).to.deep.equal(
+          this.company
+        )
       })
     })
   })
