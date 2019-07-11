@@ -45,8 +45,8 @@ describe('#transformInteractionToListItem', () => {
           {
             label: 'Service',
             value: {
-              id: '1231231231312',
-              name: 'Test service',
+              id: 'sv1',
+              name: 'Account Management',
             },
           },
         ],
@@ -230,8 +230,8 @@ describe('#transformInteractionToListItem', () => {
           {
             label: 'Service',
             value: {
-              id: '1231231231312',
-              name: 'Test service',
+              id: 'sv1',
+              name: 'Account Management',
             },
           },
         ],

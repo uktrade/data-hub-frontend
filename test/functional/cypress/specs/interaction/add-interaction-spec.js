@@ -22,7 +22,7 @@ describe('Add Export', () => {
       it('should add the interaction', () => {
         const subject = utils.randomString()
 
-        populateInteractionForm(subject)
+        populateInteractionForm(subject, 'A Specific DIT Export Service or Funding', 'Export Win')
 
         cy.get(selectors.interactionForm.add).click()
 
@@ -46,7 +46,7 @@ describe('Add Export', () => {
       it('should add the interaction', () => {
         const subject = utils.randomString()
 
-        populateInteractionForm(subject)
+        populateInteractionForm(subject, 'A Specific DIT Export Service or Funding', 'Export Win')
 
         cy.get(selectors.interactionForm.add).click()
 
@@ -72,7 +72,7 @@ describe('Add Export', () => {
       it('should add the interaction', () => {
         const subject = utils.randomString()
 
-        populateInteractionForm(subject)
+        populateInteractionForm(subject, 'Enquiry received', 'General Investment Enquiry')
 
         cy.get(selectors.interactionForm.add).click()
 
@@ -98,7 +98,7 @@ describe('Add Export', () => {
       it('should add the service delivery', () => {
         const subject = utils.randomString()
 
-        populateServiceDeliveryForm('Bank Referral', subject)
+        populateServiceDeliveryForm(subject, 'A Specific DIT Export Service or Funding', 'Export Win')
 
         cy.get(selectors.interactionForm.add).click()
 
@@ -122,7 +122,7 @@ describe('Add Export', () => {
       it('should add the service delivery', () => {
         const subject = utils.randomString()
 
-        populateServiceDeliveryForm('Bank Referral', subject)
+        populateServiceDeliveryForm(subject, 'A Specific DIT Export Service or Funding', 'Export Win')
 
         cy.get(selectors.interactionForm.add).click()
 
@@ -148,7 +148,7 @@ describe('Add Export', () => {
 
         cy.get(selectors.interactionForm.contact).select('Joseph Woof, Dog master')
         cy.get(selectors.interactionForm.eventNo).click()
-        cy.get(selectors.interactionForm.service).select('Tradeshow Access Programme (TAP)')
+        cy.get(selectors.interactionForm.service).select('A Specific DIT Export Service or Funding')
         cy.get(selectors.interactionForm.subject).type(subject)
         cy.get(selectors.interactionForm.notes).type('Conversation with potential client')
         cy.get(selectors.interactionForm.policyFeedbackNo).click()
@@ -177,9 +177,8 @@ describe('Add Export', () => {
 
         cy.get(selectors.interactionForm.contact).select('Joseph Woof, Dog master')
         cy.get(selectors.interactionForm.eventNo).click()
-        cy.get(selectors.interactionForm.service).select('Tradeshow Access Programme (TAP)')
-        cy.get(selectors.interactionForm.serviceStatus).select('Current')
-        cy.get(selectors.interactionForm.grantOffered).type('Approved')
+        cy.get(selectors.interactionForm.service).select('A Specific DIT Export Service or Funding')
+        cy.get(selectors.interactionForm.subService).select('Tradeshow Access Programme (TAP)')
         cy.get(selectors.interactionForm.subject).type(subject)
         cy.get(selectors.interactionForm.notes).type('Conversation with potential client')
         cy.get(selectors.interactionForm.policyFeedbackNo).click()
@@ -192,32 +191,6 @@ describe('Add Export', () => {
     })
 
     // TODO test policy feedback fields
-  })
-
-  context('when in the context of an investment project', () => {
-    beforeEach(() => {
-      cy.visit(`/investments/projects/${fixtures.default.id}/interactions/create/investment/interaction`)
-    })
-
-    it('should render breadcrumbs', () => {
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Investments')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/investments')
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.text', 'New hotel (commitment to invest)')
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.attr', 'href', '/investments/projects/fb5b5006-56af-40e0-8615-7aba53e0e4bf')
-      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Add interaction')
-    })
-
-    it('should add an interaction', () => {
-      const subject = utils.randomString()
-
-      populateInteractionForm(subject)
-
-      cy.get(selectors.interactionForm.add).click()
-
-      assertDetails({ subject, flashMessage: 'Interaction created' })
-    })
   })
 })
 
@@ -266,19 +239,26 @@ describe('Adding interaction or service', () => {
   })
 })
 
-const populateInteractionForm = (subject) => {
+const populateInteractionForm = (subject, service, subService) => {
   cy.get(selectors.interactionForm.contact).select('Joseph Woof, Dog master')
-  cy.get(selectors.interactionForm.service).select('Account Management')
+  cy.get(selectors.interactionForm.service).select(service)
+
+  if (subService) {
+    cy.get(selectors.interactionForm.subService).select(subService)
+  }
   cy.get(selectors.interactionForm.communicationChannel).select('Email/Website')
   cy.get(selectors.interactionForm.subject).type(subject)
   cy.get(selectors.interactionForm.notes).type('Conversation with potential client')
   cy.get(selectors.interactionForm.policyFeedbackNo).click()
 }
 
-const populateServiceDeliveryForm = (service, subject) => {
+const populateServiceDeliveryForm = (subject, service, subService) => {
   cy.get(selectors.interactionForm.contact).select('Joseph Woof, Dog master')
   cy.get(selectors.interactionForm.eventNo).click()
   cy.get(selectors.interactionForm.service).select(service)
+  if (subService) {
+    cy.get(selectors.interactionForm.subService).select(subService)
+  }
   cy.get(selectors.interactionForm.subject).type(subject)
   cy.get(selectors.interactionForm.notes).type('Conversation with potential client')
   cy.get(selectors.interactionForm.policyFeedbackNo).click()

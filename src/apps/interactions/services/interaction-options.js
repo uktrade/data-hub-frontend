@@ -4,12 +4,15 @@ const { getContactsForCompany } = require('../../contacts/repos')
 const { getAdvisers } = require('../../adviser/repos')
 const { filterActiveAdvisers } = require('../../adviser/filters')
 const { getActiveEvents } = require('../../events/repos')
+const { isInteractionServiceForm } = require('../helpers')
 const {
   transformObjectToOption,
   transformContactToOption,
 } = require('../../transformers')
 const { transformAdviserToOption } = require('../../adviser/transformers')
 const { getOptions } = require('../../../lib/options')
+const { transformServicesOptions } = require('../transformers')
+
 const { SERVICE_DELIVERY_STATUS_COMPLETED } = require('../constants')
 
 async function getInteractionOptions (req, res) {
@@ -68,11 +71,28 @@ async function getCommonOptions (token, createdOn, req, res) {
 }
 
 async function getInteractionFormOptions (token, createdOn, req, res) {
+  const services = await getServiceOptions(req, res, createdOn)
+
   const formOptions = {
+    services,
     areas: await getOptions(token, 'policy-area', { createdOn }),
-    services: await getServiceOptions(req, res, createdOn),
     types: await getOptions(token, 'policy-issue-type', { createdOn }),
     channels: await getOptions(token, 'communication-channel', { createdOn }),
+    tapServices: services
+      .reduce(
+        (prev, current) => [
+          ...prev,
+          { ...current },
+          ...current.secondaryOptions,
+        ],
+        []
+      )
+      .filter(service => includes(service.label, '(TAP)'))
+      .map(service => service.value),
+    statuses: await getOptions(token, 'service-delivery-status', {
+      createdOn,
+      sorted: false,
+    }),
   }
 
   return formOptions
@@ -80,17 +100,26 @@ async function getInteractionFormOptions (token, createdOn, req, res) {
 
 async function getServiceDeliveryFormOptions (token, createdOn, req, res) {
   const services = await getServiceOptions(req, res, createdOn)
+
   const activeEvents = await getActiveEvents(token, createdOn)
 
   const formOptions = {
+    services,
     areas: await getOptions(token, 'policy-area', { createdOn }),
     types: await getOptions(token, 'policy-issue-type', { createdOn }),
     channels: await getOptions(token, 'communication-channel', { createdOn }),
     events: activeEvents.map(transformObjectToOption),
     tapServices: services
+      .reduce(
+        (prev, current) => [
+          ...prev,
+          { ...current },
+          ...current.secondaryOptions,
+        ],
+        []
+      )
       .filter(service => includes(service.label, '(TAP)'))
       .map(service => service.value),
-    services: services,
     statuses: await getOptions(token, 'service-delivery-status', {
       createdOn,
       sorted: false,
@@ -103,10 +132,18 @@ async function getServiceDeliveryFormOptions (token, createdOn, req, res) {
 
 async function getServiceOptions (req, res, createdOn) {
   const context = getContextForInteraction(req, res)
+  const transformationProps = isInteractionServiceForm(context)
+    ? {
+      transformer: transformServicesOptions,
+      transformWithoutMapping: true,
+    }
+    : {}
   const services = await getOptions(req.session.token, 'service', {
     createdOn,
     context,
+    ...transformationProps,
   })
+
   return services
 }
 

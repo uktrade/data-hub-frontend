@@ -2,8 +2,9 @@ const moment = require('moment')
 const { find, pick } = require('lodash')
 
 const config = require('~/config')
-const interactionData = require('~/test/unit/data/interactions/interaction.json')
 const controller = require('~/src/apps/interactions/controllers/edit')
+const interactionData = require('~/test/unit/data/interactions/interaction.json')
+const serviceOptionData = require('~/test/unit/data/interactions/service-options-data.json')
 
 const currentUserTeam = '99887766553'
 
@@ -36,14 +37,6 @@ describe('Interaction edit controller (Interactions)', () => {
     const yesterday = moment()
       .subtract(1, 'days')
       .toISOString()
-    const contexts = [
-      'export_interaction',
-      'export_service_delivery',
-      'other_interaction',
-      'other_service_delivery',
-      'investment_interaction',
-      'investment_project_interaction',
-    ]
 
     this.metadataMock = {
       teamOptions: [
@@ -51,43 +44,12 @@ describe('Interaction edit controller (Interactions)', () => {
         { id: '2', name: 'te2', disabled_on: yesterday },
         { id: '3', name: 'te3', disabled_on: null },
       ],
-      serviceOptions: [
-        {
-          id: 's1',
-          name: 'sv1',
-          disabled_on: null,
-          contexts: contexts,
-        },
-        {
-          id: 's2',
-          name: 'sv2',
-          disabled_on: yesterday,
-          contexts: contexts,
-        },
-        {
-          id: 's3',
-          name: 'sv3',
-          disabled_on: null,
-          contexts: contexts,
-        },
-        {
-          id: 's4',
-          name: 'sv4 (TAP)',
-          disabled_on: null,
-          contexts: contexts,
-        },
-        {
-          id: 's5',
-          name: 'Policy feedback',
-          disabled_on: null,
-          contexts: ['policy-feedback'],
-        },
-      ],
       channelOptions: [
         { id: '1', name: 'c1', disabled_on: null },
         { id: '2', name: 'c2', disabled_on: yesterday },
         { id: '3', name: 'c3', disabled_on: null },
       ],
+      serviceOptions: serviceOptionData,
       serviceDeliveryOptions: [
         { id: '1', name: 'sds1', disabled_on: null },
         { id: '2', name: 'sds2', disabled_on: yesterday },
@@ -339,6 +301,39 @@ describe('Interaction edit controller (Interactions)', () => {
           macroName: 'MultipleChoiceField',
         },
         {
+          name: 'subService',
+          label: 'Sub service',
+          macroName: 'MultipleChoiceField',
+        },
+        {
+          name: 'sv2-q1',
+          label: 'What did you give advice about?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+        },
+        {
+          name: 'sv2-q2',
+          label: 'Another question?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+        },
+        {
+          name: 'sv3-q1',
+          label: 'Who was the company introduced to?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+        },
+        {
+          label: 'Service status',
+          macroName: 'MultipleChoiceField',
+          name: 'service_delivery_status',
+        },
+        {
+          label: 'Grant offered',
+          macroName: 'TextField',
+          name: 'grant_amount_offered',
+        },
+        {
           label: undefined,
           macroName: 'FormSubHeading',
           heading: 'Interaction Participants',
@@ -425,10 +420,31 @@ describe('Interaction edit controller (Interactions)', () => {
         ({ name }) => name === 'service'
       )
       expect(serviceField.options).to.deep.equal([
-        { value: 's1', label: 'sv1' },
-        { value: 's2', label: 'sv2' },
-        { value: 's3', label: 'sv3' },
-        { value: 's4', label: 'sv4 (TAP)' },
+        {
+          value: 'sv1',
+          label: 'Account Management',
+          isControlledBySecondary: false,
+        },
+        {
+          value: 'Providing Export Advice & Information',
+          label: 'Providing Export Advice & Information',
+          isControlledBySecondary: false,
+        },
+        {
+          value: 'sv3',
+          label: 'Making Introductions (Export)',
+          isControlledBySecondary: false,
+        },
+      ])
+    })
+
+    it('should provide a list of sub services', () => {
+      const subServiceField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'subService'
+      )
+      expect(subServiceField.options).to.deep.equal([
+        { value: 'sv2', label: 'Advice & information' },
       ])
     })
 
@@ -638,7 +654,46 @@ describe('Interaction edit controller (Interactions)', () => {
           name: 'service',
           label: 'Service',
           macroName: 'MultipleChoiceField',
-          value: 'd320b92b-3499-e211-a939-e4115bead28a',
+          value: 'sv1',
+        },
+        {
+          name: 'subService',
+          label: 'Sub service',
+          macroName: 'MultipleChoiceField',
+          value: undefined,
+        },
+        {
+          name: 'sv2-q1',
+          label: 'What did you give advice about?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          value: undefined,
+        },
+        {
+          name: 'sv2-q2',
+          label: 'Another question?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          value: undefined,
+        },
+        {
+          name: 'sv3-q1',
+          label: 'Who was the company introduced to?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          value: undefined,
+        },
+        {
+          label: 'Service status',
+          macroName: 'MultipleChoiceField',
+          name: 'service_delivery_status',
+          value: undefined,
+        },
+        {
+          label: 'Grant offered',
+          macroName: 'TextField',
+          name: 'grant_amount_offered',
+          value: null,
         },
         {
           label: undefined,
@@ -744,10 +799,31 @@ describe('Interaction edit controller (Interactions)', () => {
         ({ name }) => name === 'service'
       )
       expect(serviceField.options).to.deep.equal([
-        { value: 's1', label: 'sv1' },
-        { value: 's2', label: 'sv2' },
-        { value: 's3', label: 'sv3' },
-        { value: 's4', label: 'sv4 (TAP)' },
+        {
+          value: 'sv1',
+          label: 'Account Management',
+          isControlledBySecondary: false,
+        },
+        {
+          value: 'Providing Export Advice & Information',
+          label: 'Providing Export Advice & Information',
+          isControlledBySecondary: false,
+        },
+        {
+          value: 'sv3',
+          label: 'Making Introductions (Export)',
+          isControlledBySecondary: false,
+        },
+      ])
+    })
+
+    it('should provide a list of sub services at creation time', () => {
+      const subSrviceField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'subService'
+      )
+      expect(subSrviceField.options).to.deep.equal([
+        { value: 'sv2', label: 'Advice & information' },
       ])
     })
 
@@ -979,6 +1055,7 @@ describe('Interaction edit controller (Interactions)', () => {
           'secondaryHeading',
         ])
       )
+
       expect(fields).to.deep.equal([
         {
           label: undefined,
@@ -990,7 +1067,46 @@ describe('Interaction edit controller (Interactions)', () => {
           name: 'service',
           label: 'Service',
           macroName: 'MultipleChoiceField',
-          value: 'd320b92b-3499-e211-a939-e4115bead28a',
+          value: 'sv1',
+        },
+        {
+          name: 'subService',
+          label: 'Sub service',
+          macroName: 'MultipleChoiceField',
+          value: undefined,
+        },
+        {
+          name: 'sv2-q1',
+          label: 'What did you give advice about?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          value: undefined,
+        },
+        {
+          name: 'sv2-q2',
+          label: 'Another question?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          value: undefined,
+        },
+        {
+          name: 'sv3-q1',
+          label: 'Who was the company introduced to?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          value: undefined,
+        },
+        {
+          name: 'service_delivery_status',
+          label: 'Service status',
+          macroName: 'MultipleChoiceField',
+          value: undefined,
+        },
+        {
+          name: 'grant_amount_offered',
+          label: 'Grant offered',
+          macroName: 'TextField',
+          value: null,
         },
         {
           label: undefined,

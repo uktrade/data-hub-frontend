@@ -42,7 +42,7 @@ module.exports = function ({
     hiddenFields,
     children: [
       serviceHeading,
-      service(services),
+      ...service(services),
       {
         macroName: 'MultipleChoiceField',
         name: 'service_delivery_status',
@@ -51,8 +51,8 @@ module.exports = function ({
         optional: true,
         modifier: ['subfield', 'medium'],
         condition: {
-          name: 'service',
-          value: tapServices.join('||'),
+          name: 'subService',
+          value: tapServices.length && tapServices.join('||'),
         },
       },
       {
@@ -61,8 +61,8 @@ module.exports = function ({
         optional: true,
         modifier: ['subfield', 'medium'],
         condition: {
-          name: 'service',
-          value: tapServices.join('||'),
+          name: 'subService',
+          value: tapServices.length && tapServices.join('||'),
         },
       },
       {
@@ -72,7 +72,7 @@ module.exports = function ({
         modifier: ['subfield', 'medium'],
         condition: {
           name: 'service_delivery_status',
-          value: successfulServiceStatuses.join('||'),
+          value: successfulServiceStatuses && successfulServiceStatuses.join('||'),
         },
       },
       participantsHeading(company),
@@ -125,7 +125,7 @@ module.exports = function ({
       feedbackPolicyNotes,
     ].map(field => {
       return assign(field, {
-        label: labels.serviceDelivery[field.name],
+        label: field.label || labels.serviceDelivery[field.name],
       })
     }),
   }
