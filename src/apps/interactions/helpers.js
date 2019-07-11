@@ -5,8 +5,7 @@ const getReturnLink = interactions => {
   return get(interactions, 'returnLink', '/interactions')
 }
 
-const isInteractionServiceForm = (key, context) =>
-  key === 'service' && includes(INTERACTION_CONTEXTS, context) === true
+const isInteractionServiceForm = (context) => includes(INTERACTION_CONTEXTS, context)
 
 module.exports = {
   getReturnLink,
