@@ -74,7 +74,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           {
             ...mockInteraction,
             service: {
-              name: 'Account Management : Specific type of management',
+              name: 'Specific type of management',
               id: 'sv1',
             },
             archived_documents_url_path: '/documents/123',

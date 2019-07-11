@@ -69,9 +69,17 @@ function transformInteractionResponseToViewRecord (
 
   const getServiceValues = () => {
     if (!service) return
+    const excludedServiceStrings = [
+      'A Specific DIT Export Service or Funding',
+      'A Specific Service',
+      'Enquiry or Referral Received',
+      'Enquiry Received',
+    ]
+
     const splitServiceName = service.name.split(' : ')
     const serviceName =
-      splitServiceName[1] && !service.name.includes('A Specific DIT')
+      splitServiceName[1] &&
+      excludedServiceStrings.includes(splitServiceName[0])
         ? splitServiceName[1]
         : service.name
 
