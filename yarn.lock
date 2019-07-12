@@ -817,10 +817,10 @@
   resolved "https://registry.yarnpkg.com/@uktrade/datahub-header/-/datahub-header-1.2.0.tgz#45c380eb18c40994d5a0fc36a25cce1a942dbb0c"
   integrity sha512-OhzrnEuppfRbi3z+QZhbVKLQgwE3CCsG5dNQCz1WnQcqUDRJHvuqJJdGzDlEmnlJvUSwQn3ruyhs4BvKYDgKJw==
 
-"@uktrade/wdio-image-diff-js@^1.0.49":
-  version "1.0.49"
-  resolved "https://registry.yarnpkg.com/@uktrade/wdio-image-diff-js/-/wdio-image-diff-js-1.0.49.tgz#28fcdea0a0ba4dad8c655b8c31ec86eb2c8e5640"
-  integrity sha512-6Fxm3QIeN/4OV4hz4hRA2u7e6saBrE5ogMOZ6JKeiyCzYk60Tq94e98JJdXpy6N9UUjs4cvIYoG7U+PtJZHdEQ==
+"@uktrade/wdio-image-diff-js@1.0.57":
+  version "1.0.57"
+  resolved "https://registry.yarnpkg.com/@uktrade/wdio-image-diff-js/-/wdio-image-diff-js-1.0.57.tgz#035f786f1b5bb3a5834efd302a31cb39df35b86c"
+  integrity sha512-v4FTQ0szSLDxxA1TQPpNxdF17+Z4kJaXM7HocEoMJN2WzQCEFd4o9v0mvLn4nG6wVhKRk0q3gx88wiX+oBoycA==
   dependencies:
     fs "0.0.1-security"
     pixelmatch "^4.0.2"
