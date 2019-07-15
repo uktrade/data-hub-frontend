@@ -5,6 +5,7 @@ const config = require('~/config')
 const eventData = require('~/test/unit/data/events/event.json')
 const adviserFilters = require('~/src/apps/adviser/filters')
 const serviceOptionData = require('~/test/unit/data/interactions/service-options-data.json')
+const { filterServiceNames } = require('../../../../../src/apps/events/controllers/edit')
 
 const yesterday = moment().subtract(1, 'days').toISOString()
 const lastMonth = moment().subtract(1, 'months').toISOString()
@@ -362,6 +363,23 @@ describe('Event edit controller', () => {
 
         expect(actualErrors).to.deep.equal(expectedErrors)
       })
+    })
+  })
+
+  describe('#filterServiceNames', () => {
+    this.testData = [
+      { label: 'A Specific DIT Export Service or Funding : label with excluded strings' },
+      { label: 'A Specific Service : label with excluded strings2' },
+      { label: 'label without excluded strings' },
+    ]
+
+    this.expected = [
+      { label: 'label with excluded strings' },
+      { label: 'label with excluded strings2' },
+      { label: 'label without excluded strings' },
+    ]
+    it('should transform labels excluding strings in exlusion list', async () => {
+      expect(filterServiceNames(this.testData)).to.deep.equal(this.expected)
     })
   })
 })
