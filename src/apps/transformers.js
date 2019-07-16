@@ -50,10 +50,12 @@ function transformStringToOption (string) {
   }
 }
 
-function transformContactToOption ({ id, first_name, last_name, job_title, email }) {
+function transformContactToOption ({ id, first_name, last_name, job_title }) {
   return {
     value: id,
-    label: upperFirst(filter([`${first_name} ${last_name}`, job_title]).join(', ')),
+    label: upperFirst(
+      filter([`${first_name} ${last_name}`, job_title]).join(', ')
+    ),
   }
 }
 
@@ -92,7 +94,7 @@ function transformDateStringToDateObject (dateString) {
  * @returns {{}}
  */
 function buildMetaDataObj (collection) {
-  return keyBy(collection, (elem) => {
+  return keyBy(collection, elem => {
     return snakeCase(elem.label)
   })
 }

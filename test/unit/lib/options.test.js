@@ -10,6 +10,7 @@ const lastWeek = moment()
 const today = moment().toISOString()
 
 const { getOptions, fetchOptions } = require('~/src/lib/options')
+const serviceOptionData = require('~/test/unit/data/interactions/service-options-data.json')
 
 const regionOptions = [
   { id: '1', name: 'r1', disabled_on: null },
@@ -17,30 +18,7 @@ const regionOptions = [
   { id: '2', name: 'r2', disabled_on: yesterday },
 ]
 
-const serviceOptions = [
-  {
-    id: '1',
-    name: 'Advice',
-    disabled_on: null,
-    contexts: [
-      'service_delivery',
-      'investment_project_interaction',
-      'interaction',
-      'event',
-    ],
-  },
-  {
-    id: '2',
-    name: 'Sales',
-    disabled_on: '2017-06-27T13:43:29.000001Z',
-    contexts: [
-      'service_delivery',
-      'investment_project_interaction',
-      'interaction',
-      'event',
-    ],
-  },
-]
+const serviceOptions = serviceOptionData
 
 describe('#options', () => {
   beforeEach(() => {
@@ -169,7 +147,12 @@ describe('#options', () => {
       })
 
       it('should return options in that context', () => {
-        expect(this.options).to.deep.equal([{ label: 'Advice', value: '1' }])
+        expect(this.options).to.deep.equal([
+          {
+            label: 'Account Management',
+            value: 'sv1',
+          }]
+        )
       })
     })
   })
@@ -188,6 +171,24 @@ describe('#options', () => {
     })
 
     it('should transform the options', () => {
+      expect(this.options).to.deep.equal([
+        { text: 'r1', value: '1' },
+        { text: 'r3', value: '3' },
+        { text: 'r2', value: '2' },
+      ])
+    })
+  })
+
+  context('when a transformer is provided with transformWithoutMapping prop and non-mapping function', () => {
+    beforeEach(async () => {
+      this.options = await getOptions('1234', 'uk-region', {
+        includeDisabled: true,
+        transformWithoutMapping: true,
+        transformer: (options) => options.map(({ id, name }) => ({ value: id, text: name })),
+      })
+    })
+
+    it('should transform the options without mapping', () => {
       expect(this.options).to.deep.equal([
         { text: 'r1', value: '1' },
         { text: 'r3', value: '3' },

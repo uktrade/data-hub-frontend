@@ -9,7 +9,8 @@ module.exports = {
   contact: '#field-contacts',
   add: 'form > div.c-form-actions > button',
   service: '#field-service',
-  serviceStatus: '#field-service_delivery_status',
+  serviceDeliveryStatus: '#field-service_delivery_status',
+  subService: '.is-active > .c-form-group__inner > #field-subService',
   grantOffered: '#field-grant_amount_offered',
   netReceipt: '#field-net_company_receipt',
   ditAdviserTypeahead: {

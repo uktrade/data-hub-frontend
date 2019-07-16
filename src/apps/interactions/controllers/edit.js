@@ -10,7 +10,7 @@ const { getReturnLink } = require('../helpers')
 const { joinPaths } = require('../../../lib/path')
 
 const formConfigs = {
-  'interaction': interactionForm,
+  interaction: interactionForm,
   'service-delivery': serviceDeliveryForm,
 }
 
@@ -36,14 +36,18 @@ async function buildForm (req, res, interactionId) {
     hiddenFields,
     returnLink,
     returnText: interactionId ? 'Return without saving' : 'Cancel',
-    buttonText: interactionId ? 'Save and return' : `Add ${lowerCase(req.params.kind)}`,
+    buttonText: interactionId
+      ? 'Save and return'
+      : `Add ${lowerCase(req.params.kind)}`,
     company: get(res.locals, 'company.name'),
   }
 
-  if (req.params.kind !== 'service-delivery' && req.params.kind !== 'interaction') {
-    res.redirect('/404')
+  if (
+    req.params.kind !== 'service-delivery' &&
+    req.params.kind !== 'interaction'
+  ) {
+    return res.redirect('/404')
   }
-
   const form = formConfigs[req.params.kind](formProperties)
   return form
 }
@@ -64,11 +68,15 @@ function getMergedData (req, res) {
   function setDefaultAdvisers (reqBody = {}) {
     if (!get(reqBody, 'dit_participants')) return
     return {
-      dit_participants: reqBody.dit_participants.map(ditParticipant => ditParticipant.adviser),
+      dit_participants: reqBody.dit_participants.map(
+        ditParticipant => ditParticipant.adviser
+      ),
     }
   }
 
-  const interactionData = transformInteractionResponseToForm(res.locals.interaction)
+  const interactionData = transformInteractionResponseToForm(
+    res.locals.interaction
+  )
   const interactionDefaults = {
     dit_participants: [user.id],
     date: transformDateStringToDateObject(new Date()),
@@ -88,15 +96,26 @@ function getMergedData (req, res) {
 async function renderEditPage (req, res, next) {
   try {
     const interactionId = get(req.params, 'interactionId')
+
     const mergedInteractionData = getMergedData(req, res)
+
     const form = await buildForm(req, res, interactionId)
+
     const errors = get(res.locals, 'form.errors.messages')
 
-    const interactionForm = buildFormWithStateAndErrors(form, mergedInteractionData, errors)
+    const interactionForm = buildFormWithStateAndErrors(
+      form,
+      mergedInteractionData,
+      errors
+    )
 
-    const forEntityName = res.locals.entityName ? ` for ${res.locals.entityName}` : ''
+    const forEntityName = res.locals.entityName
+      ? ` for ${res.locals.entityName}`
+      : ''
     const kindName = lowerCase(req.params.kind)
-    const title = interactionId ? `Edit ${kindName}` : `Add ${kindName + forEntityName}`
+    const title = interactionId
+      ? `Edit ${kindName}`
+      : `Add ${kindName + forEntityName}`
 
     res
       .breadcrumb(`${interactionId ? 'Edit' : 'Add'} ${kindName}`)

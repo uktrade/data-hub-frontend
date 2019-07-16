@@ -9,11 +9,38 @@ const { filterActiveAdvisers } = require('../../adviser/filters')
 const { getOptions } = require('../../../lib/options')
 const { transformObjectToOption } = require('../../transformers')
 
+const filterServiceNames = services => {
+  if (!services) return
+
+  const excludedServiceStrings = [
+    'A Specific DIT Export Service or Funding',
+    'A Specific Service',
+  ]
+
+  const filteredServiceNames = services
+    .map(service => {
+      const splitServiceName = service.label.split(' : ')
+      const name =
+        splitServiceName[1] &&
+        excludedServiceStrings.includes(splitServiceName[0])
+          ? splitServiceName[1]
+          : service.label
+      return { ...service, label: name }
+    })
+
+  return filteredServiceNames
+}
+
 async function getEditOptions (token, createdOn, currentAdviser) {
   const advisers = await getAdvisers(token)
   const activeAdvisers = filterActiveAdvisers({
     advisers: advisers.results,
     includeAdviser: currentAdviser,
+  })
+
+  const unfilteredServiceOptions = await getOptions(token, 'service', {
+    createdOn,
+    context: 'event',
   })
 
   return {
@@ -22,7 +49,7 @@ async function getEditOptions (token, createdOn, currentAdviser) {
     locationTypes: await getOptions(token, 'location-type', { createdOn }),
     countries: await getOptions(token, 'country', { createdOn }),
     teams: await getOptions(token, 'team', { createdOn }),
-    services: await getOptions(token, 'service', { createdOn, context: 'event' }),
+    services: filterServiceNames(unfilteredServiceOptions),
     programmes: await getOptions(token, 'programme', { createdOn }),
     ukRegions: await getOptions(token, 'uk-region', { createdOn }),
   }
@@ -62,4 +89,5 @@ async function renderEditPage (req, res, next) {
 
 module.exports = {
   renderEditPage,
+  filterServiceNames,
 }
