@@ -13,6 +13,7 @@ const { transformAdviserToOption } = require('../../adviser/transformers')
 const { saveSession } = require('../../../lib/session-helper')
 
 const FILTER_CONSTANTS = require('../../../lib/filter-constants')
+
 const QUERY_STRING = FILTER_CONSTANTS.INTERACTIONS.SECTOR.PRIMARY.QUERY_STRING
 const SECTOR = FILTER_CONSTANTS.INTERACTIONS.SECTOR.NAME
 
@@ -23,6 +24,36 @@ const exportOptions = {
   entityName: 'interaction',
 }
 
+const filterServiceNames = services => {
+  if (!services) return
+
+  const excludedServiceStrings = [
+    'A Specific DIT Export Service or Funding',
+    'A Specific Service',
+    'Enquiry or Referral Received',
+    'Enquiry Received',
+  ]
+
+  const filteredServiceNames = services
+    .map(service => {
+      const splitServiceName = service.label.split(' : ')
+      const name =
+        splitServiceName[1] &&
+        excludedServiceStrings.includes(splitServiceName[0])
+          ? splitServiceName[1]
+          : service.label
+      return { ...service, label: name }
+    })
+    .sort(function (a, b) {
+      const textA = a.label
+      const textB = b.label
+
+      return textA.localeCompare(textB)
+    })
+
+  return filteredServiceNames
+}
+
 async function getInteractionOptions (token, req, res) {
   if (req.xhr && get(req.session, 'interactions.options')) {
     return req.session.interactions.options
@@ -30,9 +61,13 @@ async function getInteractionOptions (token, req, res) {
   const sectorOptions = await getOptions(token, SECTOR, {
     queryString: QUERY_STRING,
   })
-  const serviceOptions = await getOptions(token, 'service', {
+
+  const unfilteredServiceOptions = await getOptions(token, 'service', {
     includeDisabled: true,
   })
+
+  const serviceOptions = filterServiceNames(unfilteredServiceOptions)
+
   const teamOptions = await getOptions(token, 'team', { includeDisabled: true })
   const types = await getOptions(token, 'policy-issue-type')
 
@@ -73,7 +108,6 @@ async function renderInteractionList (req, res, next) {
     const { token, user } = req.session
     const { id: currentAdviserId, permissions } = user
     const { query } = req
-
     const options = await getInteractionOptions(token, req, res)
 
     const filtersFields = collectionFilterFields({

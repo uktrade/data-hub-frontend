@@ -48,8 +48,12 @@
   "investment_project": null,
   "net_company_receipt": null,
   "service": {
-      "name": "Investment - Company Visit",
-      "id": "d320b92b-3499-e211-a939-e4115bead28a"
+      "name": "Account Management",
+      "id": "sv1"
+  },
+  "service_answers": {
+    "q1": {"a1": {}},
+    "q2": {"a2": {}}
   },
   "service_delivery_status": null,
   "subject": "ad",

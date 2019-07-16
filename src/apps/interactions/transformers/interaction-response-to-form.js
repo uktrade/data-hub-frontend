@@ -8,6 +8,7 @@ function transformInteractionResponseToForm ({
   dit_participants,
   event,
   service,
+  service_answers,
   service_delivery_status,
   grant_amount_offered,
   net_company_receipt,
@@ -27,6 +28,16 @@ function transformInteractionResponseToForm ({
   const displayPolicyTypes = (policy_issue_types || []).map(policy_type => policy_type.id)
   const displayContactTypes = (contacts || []).map(contact => contact.id)
   const displayDitParticipants = (dit_participants || []).map(ditParticipant => ditParticipant.adviser.id)
+  const serviceAnswers = {}
+
+  if (serviceAnswers.length) {
+    for (let [questionKey, questionValue] of Object.entries(service_answers)) {
+      for (let [answerKey] of Object.entries(questionValue)) {
+        serviceAnswers[questionKey] = answerKey
+      }
+    }
+  }
+
   return {
     id,
     subject,
@@ -38,6 +49,7 @@ function transformInteractionResponseToForm ({
     is_event: isNil(event) ? 'false' : 'true',
     event: get(event, 'id'),
     service: get(service, 'id'),
+    ...serviceAnswers,
     service_delivery_status: get(service_delivery_status, 'id'),
     policy_areas: displayPolicyAreas,
     policy_issue_types: displayPolicyTypes,

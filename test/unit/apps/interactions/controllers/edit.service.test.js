@@ -3,6 +3,7 @@ const { find, pick } = require('lodash')
 
 const config = require('~/config')
 const serviceDeliveryData = require('~/test/unit/data/interactions/service-delivery.json')
+const serviceOptionData = require('~/test/unit/data/interactions/service-options-data.json')
 const controller = require('~/src/apps/interactions/controllers/edit')
 
 describe('Interaction edit controller (Service delivery)', () => {
@@ -29,10 +30,6 @@ describe('Interaction edit controller (Service delivery)', () => {
     this.nextStub = sinon.stub()
 
     const yesterday = moment().subtract(1, 'days').toISOString()
-    const contexts = [
-      'export_service_delivery',
-      'other_service_delivery',
-    ]
 
     this.metadataMock = {
       teamOptions: [
@@ -40,40 +37,7 @@ describe('Interaction edit controller (Service delivery)', () => {
         { id: '2', name: 'te2', disabled_on: yesterday },
         { id: '3', name: 'te3', disabled_on: null },
       ],
-      serviceOptions: [
-        {
-          id: 's1',
-          name: 'sv1',
-          disabled_on: null,
-          contexts: contexts,
-        },
-        {
-          id: 's2',
-          name: 'sv2',
-          disabled_on: yesterday,
-          contexts: contexts,
-        },
-        {
-          id: 's3',
-          name: 'sv3',
-          disabled_on: null,
-          contexts: contexts,
-        },
-        {
-          id: 's4',
-          name: 'sv4 (TAP)',
-          disabled_on: null,
-          contexts: contexts,
-        },
-        {
-          id: 's5',
-          name: 'Unrelated context',
-          disabled_on: null,
-          contexts: [
-            'unrelated_context',
-          ],
-        },
-      ],
+      serviceOptions: serviceOptionData,
       channelOptions: [
         { id: '1', name: 'c1', disabled_on: null },
         { id: '2', name: 'c2', disabled_on: yesterday },
@@ -229,6 +193,29 @@ describe('Interaction edit controller (Service delivery)', () => {
           macroName: 'MultipleChoiceField',
         },
         {
+          name: 'subService',
+          label: 'Sub service',
+          macroName: 'MultipleChoiceField',
+        },
+        {
+          name: 'sv2-q1',
+          label: 'What did you give advice about?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+        },
+        {
+          name: 'sv2-q2',
+          label: 'Another question?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+        },
+        {
+          name: 'sv3-q1',
+          label: 'Who was the company introduced to?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+        },
+        {
           name: 'service_delivery_status',
           label: 'Service status',
           macroName: 'MultipleChoiceField',
@@ -266,7 +253,7 @@ describe('Interaction edit controller (Service delivery)', () => {
         },
         {
           name: 'date',
-          label: 'Date of service delivery',
+          label: 'Date of interaction',
           macroName: 'DateFieldset',
         },
         {
@@ -314,8 +301,7 @@ describe('Interaction edit controller (Service delivery)', () => {
           label: 'Policy feedback notes',
           macroName: 'TextField',
           type: 'textarea',
-        }]
-      )
+        }])
     })
 
     it('should provide a list of contacts', () => {
@@ -330,10 +316,22 @@ describe('Interaction edit controller (Service delivery)', () => {
     it('should provide a list of services', () => {
       const serviceField = find(this.interactionForm.children, ({ name }) => name === 'service')
       expect(serviceField.options).to.deep.equal([
-        { value: 's1', label: 'sv1' },
-        { value: 's3', label: 'sv3' },
-        { value: 's4', label: 'sv4 (TAP)' },
-      ])
+        {
+          value: 'sv1',
+          label: 'Account Management',
+          isControlledBySecondary: false,
+        },
+        {
+          value: 'Providing Export Advice & Information',
+          label: 'Providing Export Advice & Information',
+          isControlledBySecondary: false,
+        },
+        {
+          value: 'sv3',
+          label: 'Making Introductions (Export)',
+          isControlledBySecondary: false,
+        }]
+      )
     })
 
     it('should provide a list of advisers', () => {
@@ -513,18 +511,46 @@ describe('Interaction edit controller (Service delivery)', () => {
     })
 
     it('should generate a form with the required fields and values populated', () => {
-      const fields = this.interactionForm.children.map(field => pick(field, ['name', 'label', 'macroName', 'type', 'value']))
+      const fields = this.interactionForm.children.map(field => pick(field, ['name', 'label', 'macroName', 'type', 'value', 'heading', 'secondaryHeading']))
       expect(fields).to.deep.equal([
         {
           label: undefined,
           macroName: 'FormSubHeading',
           value: undefined,
+          heading: 'Service',
         },
         {
           name: 'service',
           label: 'Service',
           macroName: 'MultipleChoiceField',
-          value: '1231231231312',
+          value: 'sv1',
+        },
+        {
+          name: 'subService',
+          label: 'Sub service',
+          macroName: 'MultipleChoiceField',
+          value: undefined,
+        },
+        {
+          name: 'sv2-q1',
+          label: 'What did you give advice about?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          value: undefined,
+        },
+        {
+          name: 'sv2-q2',
+          label: 'Another question?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          value: undefined,
+        },
+        {
+          name: 'sv3-q1',
+          label: 'Who was the company introduced to?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          value: undefined,
         },
         {
           name: 'service_delivery_status',
@@ -548,6 +574,8 @@ describe('Interaction edit controller (Service delivery)', () => {
           label: undefined,
           macroName: 'FormSubHeading',
           value: undefined,
+          heading: 'Interaction Participants',
+          secondaryHeading: 'Fred ltd.',
         },
         {
           name: 'contacts',
@@ -565,10 +593,11 @@ describe('Interaction edit controller (Service delivery)', () => {
           label: undefined,
           macroName: 'FormSubHeading',
           value: undefined,
+          heading: 'Details',
         },
         {
           name: 'date',
-          label: 'Date of service delivery',
+          label: 'Date of interaction',
           macroName: 'DateFieldset',
           value: { day: '31', month: '05', year: '2017' },
         },
@@ -589,6 +618,7 @@ describe('Interaction edit controller (Service delivery)', () => {
           label: undefined,
           macroName: 'FormSubHeading',
           value: undefined,
+          heading: 'Notes',
         },
         {
           name: 'subject',
@@ -629,7 +659,8 @@ describe('Interaction edit controller (Service delivery)', () => {
           macroName: 'TextField',
           type: 'textarea',
           value: undefined,
-        }])
+        }]
+      )
     })
 
     it('should provide a list of contacts', () => {
@@ -644,11 +675,21 @@ describe('Interaction edit controller (Service delivery)', () => {
     it('should provide a list of services at creation time', () => {
       const serviceField = find(this.interactionForm.children, ({ name }) => name === 'service')
       expect(serviceField.options).to.deep.equal([
-        { value: 's1', label: 'sv1' },
-        { value: 's2', label: 'sv2' },
-        { value: 's3', label: 'sv3' },
-        { value: 's4', label: 'sv4 (TAP)' },
-      ])
+        {
+          value: 'sv1',
+          label: 'Account Management',
+          isControlledBySecondary: false,
+        },
+        {
+          value: 'Providing Export Advice & Information',
+          label: 'Providing Export Advice & Information',
+          isControlledBySecondary: false,
+        },
+        {
+          value: 'sv3',
+          label: 'Making Introductions (Export)',
+          isControlledBySecondary: false,
+        }])
     })
 
     it('should provide a list of advisers', () => {
@@ -753,7 +794,34 @@ describe('Interaction edit controller (Service delivery)', () => {
           name: 'service',
           label: 'Service',
           macroName: 'MultipleChoiceField',
-          value: '1231231231312',
+          value: 'sv1',
+        },
+        {
+          name: 'subService',
+          label: 'Sub service',
+          macroName: 'MultipleChoiceField',
+          value: undefined,
+        },
+        {
+          name: 'sv2-q1',
+          label: 'What did you give advice about?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          value: undefined,
+        },
+        {
+          name: 'sv2-q2',
+          label: 'Another question?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          value: undefined,
+        },
+        {
+          name: 'sv3-q1',
+          label: 'Who was the company introduced to?',
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          value: undefined,
         },
         {
           name: 'service_delivery_status',
@@ -800,7 +868,7 @@ describe('Interaction edit controller (Service delivery)', () => {
         },
         {
           name: 'date',
-          label: 'Date of service delivery',
+          label: 'Date of interaction',
           macroName: 'DateFieldset',
           value: { day: '31', month: '05', year: '2017' },
         },
@@ -862,8 +930,7 @@ describe('Interaction edit controller (Service delivery)', () => {
           macroName: 'TextField',
           type: 'textarea',
           value: undefined,
-        }]
-      )
+        }])
     })
 
     it('should include the error in the form', () => {

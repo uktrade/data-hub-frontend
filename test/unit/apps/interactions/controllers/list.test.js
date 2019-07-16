@@ -7,6 +7,7 @@ const {
   renderInteractionsForEntity,
   getInteractionOptions,
 } = require('~/src/apps/interactions/controllers/list')
+const serviceOptionData = require('~/test/unit/data/interactions/service-options-data.json')
 
 describe('interaction list', () => {
   beforeEach(() => {
@@ -56,11 +57,7 @@ describe('interaction list', () => {
         { id: 'te2', name: 'te2', disabled_on: null },
         { id: 'te', name: 'te3', disabled_on: null },
       ],
-      service: [
-        { id: 's1', name: 's1', disabled_on: null },
-        { id: 's2', name: 's2', disabled_on: null },
-        { id: 's3', name: 's3', disabled_on: null },
-      ],
+      serviceOptions: serviceOptionData,
       sectorOptions: [
         { id: 's1', name: 's1', disabled_on: null },
         { id: 's2', name: 's2', disabled_on: null },
@@ -90,7 +87,7 @@ describe('interaction list', () => {
 
     nock(config.apiRoot)
       .get('/metadata/service/')
-      .reply(200, this.metadataMock.sectorOptions)
+      .reply(200, this.metadataMock.serviceOptions)
       .get('/metadata/team/')
       .reply(200, this.metadataMock.teamOptions)
       .get('/metadata/sector/?level__lte=0')
@@ -219,26 +216,22 @@ describe('interaction list', () => {
   })
 
   context('#getInteractionOptions', () => {
-    const expected = {
-      areas: [{ value: '1', label: 'pa1' }, { value: '3', label: 'pa3' }],
-      sectorOptions: [
-        { value: 's1', label: 's1' },
-        { value: 's2', label: 's2' },
-        { value: 's3', label: 's3' },
-      ],
-      serviceOptions: [
-        { value: 's1', label: 's1' },
-        { value: 's2', label: 's2' },
-        { value: 's3', label: 's3' },
-      ],
-      teamOptions: [
-        { value: 'te1', label: 'te1' },
-        { value: 'te2', label: 'te2' },
-        { value: 'te', label: 'te3' },
-      ],
-      adviserOptions: [{ value: 'ad1', label: 'ad1', subLabel: 'ad1' }],
-      types: [{ value: '1', label: 'pt1' }, { value: '3', label: 'pt3' }],
-    }
+    const expected = { areas: [ { value: '1', label: 'pa1' }, { value: '3', label: 'pa3' } ],
+      sectorOptions:
+   [ { value: 's1', label: 's1' },
+     { value: 's2', label: 's2' },
+     { value: 's3', label: 's3' } ],
+      serviceOptions:
+   [ { value: 'sv1', label: 'Account Management' },
+     { value: 'sv3', label: 'Making Introductions (Export)' },
+     { value: 'sv2',
+       label: 'Providing Export Advice & Information : Advice & information' } ],
+      teamOptions:
+   [ { value: 'te1', label: 'te1' },
+     { value: 'te2', label: 'te2' },
+     { value: 'te', label: 'te3' } ],
+      adviserOptions: [ { value: 'ad1', label: 'ad1', subLabel: 'ad1' } ],
+      types: [ { value: '1', label: 'pt1' }, { value: '3', label: 'pt3' } ] }
 
     context('when the request is not XHR', () => {
       it(`should return all interaction options`, async () => {
