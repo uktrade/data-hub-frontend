@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { uniqBy } = require('lodash')
+const { uniqBy, sortBy } = require('lodash')
 
 function transformServicesOptions (services) {
   const deliminator = ' : '
@@ -11,11 +11,11 @@ function transformServicesOptions (services) {
           value: q.id,
           label: q.name,
           options:
-              q.answer_options &&
-              q.answer_options.map(o => ({
-                label: o.name,
-                value: o.id,
-              })),
+            q.answer_options &&
+            q.answer_options.map(o => ({
+              label: o.name,
+              value: o.id,
+            })),
         }
       })
       : []
@@ -79,7 +79,7 @@ function transformServicesOptions (services) {
     return {
       ...service,
       interactionQuestions,
-      secondaryOptions,
+      secondaryOptions: sortBy(secondaryOptions, (option) => option.label),
     }
   })
 
