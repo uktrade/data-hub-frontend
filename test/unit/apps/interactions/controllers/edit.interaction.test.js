@@ -324,16 +324,6 @@ describe('Interaction edit controller (Interactions)', () => {
           type: 'radio',
         },
         {
-          label: 'Service status',
-          macroName: 'MultipleChoiceField',
-          name: 'service_delivery_status',
-        },
-        {
-          label: 'Grant offered',
-          macroName: 'TextField',
-          name: 'grant_amount_offered',
-        },
-        {
           label: undefined,
           macroName: 'FormSubHeading',
           heading: 'Interaction Participants',
@@ -682,18 +672,6 @@ describe('Interaction edit controller (Interactions)', () => {
           macroName: 'MultipleChoiceField',
           type: 'radio',
           value: undefined,
-        },
-        {
-          label: 'Service status',
-          macroName: 'MultipleChoiceField',
-          name: 'service_delivery_status',
-          value: undefined,
-        },
-        {
-          label: 'Grant offered',
-          macroName: 'TextField',
-          name: 'grant_amount_offered',
-          value: null,
         },
         {
           label: undefined,
@@ -1095,18 +1073,6 @@ describe('Interaction edit controller (Interactions)', () => {
           macroName: 'MultipleChoiceField',
           type: 'radio',
           value: undefined,
-        },
-        {
-          name: 'service_delivery_status',
-          label: 'Service status',
-          macroName: 'MultipleChoiceField',
-          value: undefined,
-        },
-        {
-          name: 'grant_amount_offered',
-          label: 'Grant offered',
-          macroName: 'TextField',
-          value: null,
         },
         {
           label: undefined,
