@@ -1,4 +1,4 @@
-const { assign } = require('lodash')
+const { assign, sortBy } = require('lodash')
 const { globalFields } = require('../../macros')
 
 const eventFormConfig = ({
@@ -97,7 +97,7 @@ const eventFormConfig = ({
         options: teams,
       }),
       assign({}, globalFields.serviceDeliveryServices, {
-        options: services,
+        options: sortBy(services, (option) => option.label),
       }),
       {
         macroName: 'Typeahead',
