@@ -88,7 +88,7 @@ async function getInteractionFormOptions (token, createdOn, req, res) {
         []
       )
       .filter(service => includes(service.label, '(TAP)'))
-      .map(service => service.value),
+      .map(service => service.value) || [],
     statuses: await getOptions(token, 'service-delivery-status', {
       createdOn,
       sorted: false,
