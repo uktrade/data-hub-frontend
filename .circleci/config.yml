@@ -357,7 +357,9 @@ jobs:
           command: yarn test:visual
           when: always
       - store_artifacts:
-          path: visual-screenshots
+          path:
+            - visual-screenshots
+            - visual-test-report.html
 
   # Run acceptance tests for DIT staff
   dit_staff_at: &dit_staff_at
