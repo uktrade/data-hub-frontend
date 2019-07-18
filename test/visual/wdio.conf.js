@@ -71,6 +71,9 @@ const defaultConfig = {
   beforeTest: (test) => {
     testName = `${test.fullTitle} - ${browser.capabilities.browserName}`
     browser.imageDiff.testName = testName
+  },
+  after: () => {
+    browser.imageDiff.generateReport()
   }
 }
 
