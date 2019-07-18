@@ -142,9 +142,7 @@ const ConditionalSubfields = {
           if (['select', 'radio', 'checkbox'].indexOf(field.type) > -1) {
             field.checked = false
           } else {
-            // Auto selects first available option on dropdown if only 1 option with a non empty value is available
-            const isSingleOptionSelect = field.type === 'select-one' && field.options.length === 2 && field.options[0].value === ''
-            field.value = isSingleOptionSelect ? field.options[1].value : ''
+            field.value = ''
           }
         }
 
