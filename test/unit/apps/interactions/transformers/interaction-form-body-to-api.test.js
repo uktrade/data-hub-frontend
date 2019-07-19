@@ -141,4 +141,26 @@ describe('#transformInteractionFormBodyToApiRequest', () => {
       })
     }
   )
+
+  context(
+    'when no selected service can be found',
+    () => {
+      beforeEach(() => {
+        this.transformed = transformInteractionFormBodyToApiRequest(
+          {
+            service: undefined,
+          },
+          transformedServices
+        )
+      })
+
+      it('should post a null as service value', () => {
+        expect(this.transformed.service).to.equal(null)
+      })
+
+      it('should return service answers as an empty object', () => {
+        expect(this.transformed.service_answers).to.deep.equal({})
+      })
+    }
+  )
 })
