@@ -14,28 +14,30 @@ function transformInteractionFormBodyToApiRequest (props, services) {
   const selectedServiceOption = services.find(
     service => service.value === props.service
   )
+
   const serviceAnswers = {}
+  let service = null
+  if (selectedServiceOption) {
+    const serviceHasSecondaryOptions = !!selectedServiceOption.secondaryOptions.length
 
-  const serviceHasSecondaryOptions = !!selectedServiceOption.secondaryOptions
-    .length
+    service = serviceHasSecondaryOptions
+      ? props.subService.find(id => id.length)
+      : selectedServiceOption.value
 
-  const service = serviceHasSecondaryOptions
-    ? props.subService.find(id => id.length)
-    : selectedServiceOption.value
+    const serviceOptionStore = serviceHasSecondaryOptions
+      ? selectedServiceOption.secondaryOptions[0]
+      : selectedServiceOption
 
-  const serviceOptionStore = serviceHasSecondaryOptions
-    ? selectedServiceOption.secondaryOptions[0]
-    : selectedServiceOption
-
-  serviceOptionStore.interactionQuestions.map(interactionQuestion => {
-    for (const [key, value] of Object.entries(props)) {
-      if (key === interactionQuestion.value) {
-        serviceAnswers[key] = {
-          [value]: {},
+    serviceOptionStore.interactionQuestions.map(interactionQuestion => {
+      for (const [key, value] of Object.entries(props)) {
+        if (key === interactionQuestion.value) {
+          serviceAnswers[key] = {
+            [value]: {},
+          }
         }
       }
-    }
-  })
+    })
+  }
 
   return omit(
     {
