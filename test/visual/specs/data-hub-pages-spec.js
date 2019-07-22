@@ -48,4 +48,12 @@ describe('Data Hub core pages', () => {
       assert.equal(result, 0)
     })
   })
+
+  it('should validate events page is visually correct', async () => {
+    await browser.url('/events')
+    await browser.imageDiff.take()
+    await browser.imageDiff.validate().then(result => {
+      assert.equal(result, 0)
+    })
+  })
 })
