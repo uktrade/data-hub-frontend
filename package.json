@@ -1,6 +1,6 @@
 {
   "name": "data-hub-frontend",
-  "version": "5.36.2",
+  "version": "5.37.0",
   "description": "Data Hub Frontend",
   "main": "src/server.js",
   "repository": {
@@ -75,7 +75,7 @@
     "core-js": "^2.5.7",
     "css-loader": "^1.0.0",
     "csurf": "^1.9.0",
-    "data-hub-components": "^0.4.0",
+    "data-hub-components": "^0.4.1",
     "date-fns": "^1.29.0",
     "del-cli": "^2.0.0",
     "dotenv": "^5.0.0",
@@ -134,7 +134,7 @@
   },
   "devDependencies": {
     "@uktrade/client-matrix-js": "^1.0.38",
-    "@uktrade/wdio-image-diff-js": "1.0.57",
+    "@uktrade/wdio-image-diff-js": "1.0.89",
     "@vue/test-utils": "^1.0.0-beta.25",
     "@wdio/browserstack-service": "^5.9.3",
     "@wdio/cli": "5.10.0",

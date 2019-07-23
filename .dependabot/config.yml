@@ -1,0 +1,24 @@
+# Documentation: https://dependabot.com/docs/config-file
+
+version: 1
+update_configs:
+  - package_manager: javascript
+    directory: "/"
+    update_schedule: live
+    target_branch: develop
+    default_reviewers:
+      - datahub-fed
+    allowed_updates:
+      - match:
+          update_type: "security"
+
+  - package_manager: javascript
+    directory: "/"
+    update_schedule: weekly
+    target_branch: develop
+    version_requirement_updates: increase_versions
+    default_reviewers:
+      - datahub-fed
+    allowed_updates:
+      - match:
+          dependency_name: "data-hub-components"
