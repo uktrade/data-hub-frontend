@@ -3910,10 +3910,10 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-data-hub-components@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/data-hub-components/-/data-hub-components-0.4.0.tgz#b7a61b934f2fa2cb29f5378002a20e83979cab15"
-  integrity sha512-ln1Vo4PRdN4s2uEbYUH5XTqr/GMez/0GpXWB4sLAg4/4TFZvUkJlfNJJnL7IejCZOW+YSu3WDM3CE+UjYmrUCw==
+data-hub-components@0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/data-hub-components/-/data-hub-components-0.4.1.tgz#92db2b999640747279a8f59ba35e4dd81df7c6ab"
+  integrity sha512-JbamjUYrXSq8f+/2Ldl2ggR9ICtgi7CvR27tZmhJAwV34eagNOpbmtmambmDjU8Pizy1/4xCD704PyW8HtWwVQ==
   dependencies:
     "@babel/runtime" "^7.4.5"
     "@govuk-react/constants" "^0.7.1"
