@@ -358,6 +358,8 @@ jobs:
           when: always
       - store_artifacts:
           path: visual-screenshots
+      - store_artifacts:
+          path: visual-test-report.html
 
   # Run acceptance tests for DIT staff
   dit_staff_at: &dit_staff_at
