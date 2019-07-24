@@ -3,8 +3,7 @@ const router = require('~/src/apps/companies/router.js')
 describe('Company router', () => {
   it('should define all routes', () => {
     const paths = router.stack.filter(r => r.route).map(r => r.route.path)
-    expect(paths).to.deep.equal([
-      '/',
+    expect(paths).to.deep.equal([ '/',
       '/export',
       '/add-step-1',
       '/add-step-2',
@@ -30,6 +29,7 @@ describe('Company router', () => {
       '/:companyId/audit',
       '/:companyId/documents',
       '/:companyId/timeline',
-    ])
+      '/:companyId/manage-company-list' ],
+    )
   })
 })
