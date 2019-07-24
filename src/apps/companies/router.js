@@ -1,4 +1,3 @@
-
 const router = require('express').Router()
 const { ENTITIES } = require('../search/constants')
 const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS, QUERY_FIELDS } = require('./constants')
@@ -44,7 +43,7 @@ const {
 
 const { setCompanyContactRequestBody, getCompanyContactCollection } = require('./middleware/contact-collection')
 const { populateForm, handleFormPost } = require('./middleware/form')
-const { getCompany, getCompaniesHouseRecord } = require('./middleware/params')
+const { getCompany, setIsCompanyAlreadyAdded, addCompanyOrRemoveFromList, getCompaniesHouseRecord } = require('./middleware/params')
 const { setInteractionsDetails } = require('./middleware/interactions')
 const { setGlobalHQ, removeGlobalHQ, addSubsidiary } = require('./middleware/hierarchies')
 const setCompaniesLocalNav = require('./middleware/local-navigation')
@@ -59,6 +58,7 @@ const activityFeedRouter = require('./apps/activity-feed/router')
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.param('companyId', getCompany)
+router.param('companyId', setIsCompanyAlreadyAdded)
 router.param('companyNumber', getCompaniesHouseRecord)
 
 router.get('/',
@@ -134,5 +134,7 @@ router.use('/:companyId/investments', investmentsRouter)
 router.use('/:companyId/matching', matchingRouter)
 router.use('/:companyId', setInteractionsDetails, interactionsRouter)
 router.use('/:companyId/activity', activityFeedRouter)
+
+router.post('/:companyId/manage-company-list', addCompanyOrRemoveFromList)
 
 module.exports = router
