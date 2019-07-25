@@ -6,7 +6,9 @@ async function editLeadAssignee (req, res, next) {
   const adviserId = req.body.adviserId
   const orderId = req.body.orderId
 
-  if (!adviserId || !orderId) { return res.redirect(res.locals.ORIGINAL_URL) }
+  if (!adviserId || !orderId) {
+    return res.redirect(res.locals.ORIGINAL_URL)
+  }
 
   try {
     const allAssignees = await Order.getAssignees(req.session.token, orderId)
