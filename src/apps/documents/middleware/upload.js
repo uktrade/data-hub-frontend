@@ -25,7 +25,7 @@ function parseForm (req, res) {
         })
       } catch (e) {
         req.flash('error', e.message)
-        res.redirect(req.originalUrl)
+        res.redirect(res.locals.ORIGINAL_URL)
       }
 
       if (collection.length === index + 1) {
