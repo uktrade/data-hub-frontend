@@ -11,7 +11,12 @@ ENV NODE_PATH     $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ENV PATH          $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
 # Install packages needed by datahub frontend npm dependencies
-RUN apt-get update && apt-get install -y build-essential libpq-dev curl libpng-dev
+RUN apt-get update && apt-get install -y wget build-essential libpq-dev curl libpng-dev
+
+# Install dockerize https://github.com/jwilder/dockerize
+ENV DOCKERIZE_VERSION v0.2.0
+RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 # Install nvm, node, npm and yarn
 RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.30.1/install.sh | bash \
