@@ -12,26 +12,6 @@ function newlineToBr (str) {
   return str.replace(/(?:\r\n|\r|\n)/g, '<br/>')
 }
 
-function getContactName (contact) {
-  let name = ''
-  if (contact.first_name) {
-    name += `${contact.first_name} `
-  }
-  if (contact.last_name) {
-    name += contact.last_name
-  }
-  return name.trim()
-}
-
-function getContactLink (object) {
-  if (object.contact) {
-    return `<a href="/contacts/${object.contact.id}">${getContactName(object.contact)}</a>`
-  }
-  return null
-}
-
 module.exports = {
   newlineToBr,
-  getContactName,
-  getContactLink,
 }
