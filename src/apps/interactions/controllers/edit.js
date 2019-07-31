@@ -1,5 +1,5 @@
 /* eslint camelcase: 0 */
-const { get, lowerCase, snakeCase } = require('lodash')
+const { get, lowerCase, snakeCase, kebabCase } = require('lodash')
 
 const { transformInteractionResponseToForm } = require('../transformers')
 const { transformDateStringToDateObject } = require('../../transformers')
@@ -26,7 +26,7 @@ async function getHiddenFields (req, res, interactionId) {
   return hiddenFields
 }
 
-async function buildForm (req, res, interactionId) {
+async function buildForm (req, res, interactionId, validatedKind) {
   const options = await getInteractionOptions(req, res)
   const hiddenFields = await getHiddenFields(req, res, interactionId)
   const returnLink = joinPaths([ getReturnLink(res.locals.interactions), interactionId ])
@@ -38,17 +38,11 @@ async function buildForm (req, res, interactionId) {
     returnText: interactionId ? 'Return without saving' : 'Cancel',
     buttonText: interactionId
       ? 'Save and return'
-      : `Add ${lowerCase(req.params.kind)}`,
+      : `Add ${lowerCase(validatedKind)}`,
     company: get(res.locals, 'company.name'),
   }
 
-  if (
-    req.params.kind !== 'service-delivery' &&
-    req.params.kind !== 'interaction'
-  ) {
-    return res.redirect('/404')
-  }
-  const form = formConfigs[req.params.kind](formProperties)
+  const form = formConfigs[validatedKind](formProperties)
   return form
 }
 
@@ -93,14 +87,27 @@ function getMergedData (req, res) {
   return mergedInteractionData
 }
 
+function validateKind (requestParamsKind, existingKind) {
+  if (existingKind) {
+    return kebabCase(existingKind)
+  }
+
+  if (formConfigs.hasOwnProperty(requestParamsKind)) {
+    return requestParamsKind
+  }
+}
+
 async function renderEditPage (req, res, next) {
   try {
     const interactionId = get(req.params, 'interactionId')
 
     const mergedInteractionData = getMergedData(req, res)
+    const validatedKind = validateKind(req.params.kind, mergedInteractionData.kind)
+    if (!validatedKind) {
+      throw new Error('Invalid kind')
+    }
 
-    const form = await buildForm(req, res, interactionId)
-
+    const form = await buildForm(req, res, interactionId, validatedKind)
     const errors = get(res.locals, 'form.errors.messages')
 
     const interactionForm = buildFormWithStateAndErrors(
@@ -112,7 +119,7 @@ async function renderEditPage (req, res, next) {
     const forEntityName = res.locals.entityName
       ? ` for ${res.locals.entityName}`
       : ''
-    const kindName = lowerCase(req.params.kind)
+    const kindName = lowerCase(validatedKind)
     const title = interactionId
       ? `Edit ${kindName}`
       : `Add ${kindName + forEntityName}`

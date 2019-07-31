@@ -1,5 +1,6 @@
 const transformInteractionResponseToForm = require('~/src/apps/interactions/transformers/interaction-response-to-form')
 const mockInteraction = require('~/test/unit/data/interactions/interaction-with-feedback.json')
+
 const mockInteractionNoFeedback = { ...mockInteraction }
 
 describe('#transformInteractionResponseToForm', () => {
@@ -29,6 +30,7 @@ describe('#transformInteractionResponseToForm', () => {
           date: { day: '25', month: '11', year: '2058' },
           company: '0f5216e0-849f-11e6-ae22-56b6b6499611',
           communication_channel: '70c226d7-5d95-e211-a939-e4115bead28a',
+          kind: 'interaction',
         }
       )
     })
@@ -70,6 +72,7 @@ describe('#transformInteractionResponseToForm', () => {
           date: { day: '25', month: '11', year: '2058' },
           company: '0f5216e0-849f-11e6-ae22-56b6b6499611',
           communication_channel: '70c226d7-5d95-e211-a939-e4115bead28a',
+          kind: 'interaction',
         })
     })
   })
@@ -107,6 +110,7 @@ describe('#transformInteractionResponseToForm', () => {
           date: { day: '25', month: '11', year: '2058' },
           company: '0f5216e0-849f-11e6-ae22-56b6b6499611',
           communication_channel: '70c226d7-5d95-e211-a939-e4115bead28a',
+          kind: 'interaction',
         }
       )
     })
@@ -140,6 +144,7 @@ describe('#transformInteractionResponseToForm', () => {
           date: { day: '25', month: '11', year: '2058' },
           company: '0f5216e0-849f-11e6-ae22-56b6b6499611',
           communication_channel: '70c226d7-5d95-e211-a939-e4115bead28a',
+          kind: 'interaction',
         }
       )
     })
