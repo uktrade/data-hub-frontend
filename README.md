@@ -215,10 +215,10 @@ The project is using ES6 async/await therefore Node 8 is required.
 
 #### Run in production mode
 
-Builds static assets and runs a server using node
+Builds static assets and runs a server using node:
 
 ```
-yarn run build && yarn start
+NODE_ENV=production yarn run build && node .
 ```
 
 #### Run in development mode

@@ -18,8 +18,6 @@ const common = {
       './assets/javascripts/app-vue.js',
     ],
     'activity-feed-app': [
-      'react-app-polyfill/ie9',
-      'react-app-polyfill/stable',
       './src/apps/companies/apps/activity-feed/client.jsx',
     ],
   },
@@ -32,13 +30,22 @@ const common = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-
-        // Package "hex-rgb" is not transpiled to ES5 by default so we need to transpile it again.
-        // See: https://stackoverflow.com/questions/51289261/babel-does-not-transpile-imported-modules-from-node-modules
-        exclude: /node_modules\/(?!(hex-rgb)\/).*/,
-
         loader: 'babel-loader',
         options: {
+          presets: [
+            ['@babel/preset-react'],
+            ['@babel/preset-env', {
+              useBuiltIns: 'entry',
+              corejs: 3,
+              targets: {
+                browsers: ['last 2 versions', 'ie >= 8'],
+              },
+            }],
+          ],
+          plugins: [
+            '@babel/plugin-proposal-object-rest-spread',
+            '@babel/plugin-proposal-class-properties',
+          ],
           cacheDirectory: './babel_cache',
         },
       },
