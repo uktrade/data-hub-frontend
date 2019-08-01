@@ -15,4 +15,4 @@ To create a feature flag you just need to add one in Django and it will be added
 
 Data Hub Sandbox repo - https://github.com/uktrade/data-hub-sandbox
 
-To add a feature flag in Sandbox for functional testing you just need to add you flag name to this file https://github.com/uktrade/data-hub-sandbox/blob/master/fixtures/v3/feature-flag/feature-flag.json 
+To add a feature flag in Sandbox for functional testing you just need to add your feature flag name to this JSON file https://github.com/uktrade/data-hub-sandbox/blob/master/fixtures/v3/feature-flag/feature-flag.json 
