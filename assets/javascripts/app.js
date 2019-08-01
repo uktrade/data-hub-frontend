@@ -1,6 +1,6 @@
 require('@uktrade/datahub-header/component/header')
-require('core-js/fn/array/from')
-require('core-js/fn/promise')
+require('core-js/features/array/from')
+require('core-js/features/promise')
 require('element-closest')
 require('classlist.js')
 
