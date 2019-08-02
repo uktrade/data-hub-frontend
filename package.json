@@ -11,6 +11,7 @@
     "clean": "del .build",
     "start": "node --use-strict src/server.js",
     "build": "npm run clean && webpack",
+    "build:prod": "NODE_ENV=production npm run build",
     "develop": "run-p watch:js:*",
     "watch:test": "npm run test:unit -- -w",
     "watch:js:client": "webpack --watch --progress",
@@ -33,7 +34,6 @@
     "circle:acceptance:dit-staff": "yarn circle:acceptance --skiptags ignore,da,lep",
     "circle:acceptance:da-staff": "yarn circle:acceptance --tag da --skiptags ignore",
     "circle:acceptance:lep-staff": "yarn circle:acceptance --tag lep --skiptags ignore",
-    "heroku-postbuild": "yarn cache clean && npm rebuild && npm run build",
     "lint-staged": "lint-staged"
   },
   "pre-commit": "lint-staged",
