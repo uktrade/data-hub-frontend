@@ -48,8 +48,6 @@ function transformToApi (body) {
       }
 
       return [{ id: value }]
-    } else if (type === Boolean) {
-      return value === 'true' | false
     }
 
     return { id: value }
