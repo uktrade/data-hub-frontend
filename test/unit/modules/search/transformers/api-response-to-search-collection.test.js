@@ -9,7 +9,7 @@ describe('Search transformers', () => {
       entityDetails: [],
     }
 
-    this.transformApiResponseToSearchCollection = proxyquire('~/src/modules/search/transformers/api-response-to-search-collection.js', {
+    this.transformApiResponseToSearchCollection = proxyquire('src/modules/search/transformers/api-response-to-search-collection.js', {
       '../../api/transformers': {
         transformApiResponseToCollection: this.transformApiResponseToCollectionStub,
       },

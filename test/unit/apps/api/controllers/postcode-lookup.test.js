@@ -9,7 +9,7 @@ describe('postcodeLookupHandler', () => {
     this.lookupAddressStub = sinon.stub().resolves([
       { country: 'united kingdom' },
     ])
-    this.controller = proxyquire('~/src/apps/api/controllers/postcode-lookup', {
+    this.controller = proxyquire('src/apps/api/controllers/postcode-lookup', {
       '../services': {
         lookupAddress: postcode => this.lookupAddressStub(postcode),
       },

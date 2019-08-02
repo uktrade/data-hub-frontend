@@ -1,10 +1,10 @@
 /* eslint handle-callback-err: 0 */
 const moment = require('moment')
 
-const config = require('~/config')
-const { render } = require('~/test/unit/nunjucks')
-const { expectField, expectRadioField, expectHiddenField } = require('~/test/unit/form-helpers')
-const contactLabels = require('~/src/apps/contacts/labels')
+const config = require('config')
+const { render } = require('test/unit/nunjucks')
+const { expectField, expectRadioField, expectHiddenField } = require('test/unit/form-helpers')
+const contactLabels = require('src/apps/contacts/labels')
 
 const yesterday = moment().subtract(1, 'days').toISOString()
 
@@ -33,7 +33,7 @@ describe('Contact controller, edit', () => {
       return this
     }
 
-    contactEditController = proxyquire('~/src/apps/contacts/controllers/edit', {
+    contactEditController = proxyquire('src/apps/contacts/controllers/edit', {
       '../services/form': {
         getContactAsFormData: getContactAsFormDataStub,
         saveContactForm: saveContactFormStub,
@@ -391,7 +391,7 @@ describe('Contact controller, edit', () => {
         error: { name: ['test'] },
       })
 
-      contactEditController = proxyquire('~/src/apps/contacts/controllers/edit', {
+      contactEditController = proxyquire('src/apps/contacts/controllers/edit', {
         '../services/form': {
           getContactAsFormData: getContactAsFormDataStub,
           saveContactForm: saveContactFormStub,
@@ -415,7 +415,7 @@ describe('Contact controller, edit', () => {
     it('should show errors when the save fails for a non-validation related reason', function (done) {
       saveContactFormStub = sinon.stub().rejects(Error('some error'))
 
-      contactEditController = proxyquire('~/src/apps/contacts/controllers/edit', {
+      contactEditController = proxyquire('src/apps/contacts/controllers/edit', {
         '../services/form': {
           getContactAsFormData: getContactAsFormDataStub,
           saveContactForm: saveContactFormStub,

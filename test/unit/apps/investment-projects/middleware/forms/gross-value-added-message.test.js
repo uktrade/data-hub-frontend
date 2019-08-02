@@ -1,5 +1,5 @@
-const { grossValueAddedMessage, gvaMessages } = require('~/src/apps/investments/middleware/forms/gross-value-added-message')
-const { investmentTypes } = require('~/src/apps/investments/types')
+const { grossValueAddedMessage, gvaMessages } = require('src/apps/investments/middleware/forms/gross-value-added-message')
+const { investmentTypes } = require('src/apps/investments/types')
 
 describe('Gross value added message', () => {
   context('when the investment type is not Foreign direct investment (FDI)', () => {

@@ -1,5 +1,5 @@
-const companyData = require('~/test/unit/data/company.json')
-const orderData = require('~/test/unit/data/omis/simple-order.json')
+const companyData = require('test/unit/data/company.json')
+const orderData = require('test/unit/data/omis/simple-order.json')
 
 describe('OMIS middleware', () => {
   beforeEach(() => {
@@ -19,7 +19,7 @@ describe('OMIS middleware', () => {
       },
     }
 
-    this.middleware = proxyquire('~/src/apps/omis/middleware', {
+    this.middleware = proxyquire('src/apps/omis/middleware', {
       '../companies/repos': {
         getDitCompany: this.getDitCompanyStub,
       },

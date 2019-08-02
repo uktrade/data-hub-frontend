@@ -1,9 +1,9 @@
-const config = require('~/config')
+const config = require('config')
 
 describe('Collection middleware', () => {
   context('#collectionExport', () => {
     beforeEach(() => {
-      const { exportCollection } = require('~/src/modules/search/middleware/collection')
+      const { exportCollection } = require('src/modules/search/middleware/collection')
       this.exportCollection = exportCollection
 
       this.reqMock = {

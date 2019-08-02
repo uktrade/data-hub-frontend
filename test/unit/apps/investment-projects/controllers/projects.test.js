@@ -1,4 +1,4 @@
-const config = require('~/config')
+const config = require('config')
 
 describe('Investment project controller', () => {
   const metadataMock = {
@@ -52,7 +52,7 @@ describe('Investment project controller', () => {
   describe('#renderProjectsView', () => {
     context('when the list renders successfully', () => {
       beforeEach(async () => {
-        const controller = require('~/src/apps/investments/controllers/projects')
+        const controller = require('src/apps/investments/controllers/projects')
 
         await controller.renderProjectsView(this.req, this.res, this.nextSpy)
       })
@@ -102,7 +102,7 @@ describe('Investment project controller', () => {
         const erroneousSpy = sinon.stub().throws(this.error)
 
         const controller = proxyquire(
-          '~/src/apps/investments/controllers/projects',
+          'src/apps/investments/controllers/projects',
           {
             '../../builders': {
               buildSelectedFiltersSummary: erroneousSpy,

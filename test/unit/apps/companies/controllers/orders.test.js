@@ -1,7 +1,7 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder.js')
 
-const ordersMock = require('~/test/unit/data/omis/collection.json')
-const companyMock = require('~/test/unit/data/company.json')
+const ordersMock = require('test/unit/data/omis/collection.json')
+const companyMock = require('test/unit/data/company.json')
 
 describe('Company orders controller', () => {
   beforeEach(() => {
@@ -9,7 +9,7 @@ describe('Company orders controller', () => {
     this.transformOrderToListItemSpy = sinon.spy()
     this.transformApiResponseToCollectionSpy = sinon.spy()
 
-    this.controller = proxyquire('~/src/apps/companies/controllers/orders', {
+    this.controller = proxyquire('src/apps/companies/controllers/orders', {
       '../../../modules/search/services': {
         search: this.searchStub,
       },

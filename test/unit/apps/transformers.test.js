@@ -1,6 +1,6 @@
 describe('Global transformers', () => {
   beforeEach(() => {
-    this.transformers = require('~/src/apps/transformers')
+    this.transformers = require('src/apps/transformers')
   })
 
   describe('#transformObjectToOption', () => {

@@ -1,10 +1,10 @@
-const investmentData = require('~/test/unit/data/investment/investment-data.json')
+const investmentData = require('test/unit/data/investment/investment-data.json')
 
 const {
   transformProjectManagementForView,
   transformClientRelationshipManagementForView,
   transformTeamMembersForView,
-} = require('~/src/apps/investments/transformers/team')
+} = require('src/apps/investments/transformers/team')
 
 describe('Investment project transformers', () => {
   describe('#transformProjectManagementForView', () => {

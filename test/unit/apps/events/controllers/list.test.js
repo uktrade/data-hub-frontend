@@ -1,4 +1,4 @@
-const config = require('~/config')
+const config = require('config')
 const advisersData = require('../../../data/advisers/advisers')
 
 const standardMacros = [
@@ -23,7 +23,7 @@ describe('Event list controller', () => {
       },
     }
     this.eventFiltersFieldsStub = sinon.stub()
-    this.controller = proxyquire('~/src/apps/events/controllers/list', {
+    this.controller = proxyquire('src/apps/events/controllers/list', {
       '../macros': {
         eventFiltersFields: this.eventFiltersFieldsStub,
       },

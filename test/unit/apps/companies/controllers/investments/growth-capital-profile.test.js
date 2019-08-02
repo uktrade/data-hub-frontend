@@ -1,7 +1,7 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder.js')
 
-const controller = require('~/src/apps/companies/apps/investments/growth-capital-profile/controllers')
-const companyMock = require('~/test/unit/data/companies/minimal-company.json')
+const controller = require('src/apps/companies/apps/investments/growth-capital-profile/controllers')
+const companyMock = require('test/unit/data/companies/minimal-company.json')
 
 describe('Company investments - growth capital profile', () => {
   describe('#renderInvestmentsGrowthCapitalProfile', () => {

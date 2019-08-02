@@ -1,8 +1,8 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
-const draftPastMeeting = require('~/test/unit/data/interactions/draft-past-meeting.json')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder.js')
+const draftPastMeeting = require('test/unit/data/interactions/draft-past-meeting.json')
 
-const { completeController } = require('~/src/apps/interactions/controllers')
-const { ERROR } = require('~/src/apps/constants')
+const { completeController } = require('src/apps/interactions/controllers')
+const { ERROR } = require('src/apps/constants')
 
 describe('Interaction details controller', () => {
   describe('#renderCompletePage', () => {
@@ -51,7 +51,7 @@ describe('Interaction details controller', () => {
         this.saveInteractionStub = sinon.stub()
         this.archiveInteractionStub = sinon.stub()
 
-        const controller = proxyquire('~/src/apps/interactions/controllers/complete', {
+        const controller = proxyquire('src/apps/interactions/controllers/complete', {
           '../repos': {
             saveInteraction: this.saveInteractionStub,
             archiveInteraction: this.archiveInteractionStub,
@@ -102,7 +102,7 @@ describe('Interaction details controller', () => {
         this.saveInteractionStub = sinon.stub()
         this.archiveInteractionStub = sinon.stub()
 
-        const controller = proxyquire('~/src/apps/interactions/controllers/complete', {
+        const controller = proxyquire('src/apps/interactions/controllers/complete', {
           '../repos': {
             saveInteraction: this.saveInteractionStub,
             archiveInteraction: this.archiveInteractionStub,
@@ -154,7 +154,7 @@ describe('Interaction details controller', () => {
         this.saveInteractionStub = sinon.stub()
         this.archiveInteractionStub = sinon.stub()
 
-        const controller = proxyquire('~/src/apps/interactions/controllers/complete', {
+        const controller = proxyquire('src/apps/interactions/controllers/complete', {
           '../repos': {
             saveInteraction: this.saveInteractionStub,
             archiveInteraction: this.archiveInteractionStub,
@@ -207,7 +207,7 @@ describe('Interaction details controller', () => {
         this.saveInteractionStub = sinon.stub()
         this.archiveInteractionStub = sinon.stub()
 
-        const controller = proxyquire('~/src/apps/interactions/controllers/complete', {
+        const controller = proxyquire('src/apps/interactions/controllers/complete', {
           '../repos': {
             saveInteraction: this.saveInteractionStub,
             archiveInteraction: this.archiveInteractionStub,
@@ -261,7 +261,7 @@ describe('Interaction details controller', () => {
         this.saveInteractionStub = sinon.stub()
         this.archiveInteractionStub = sinon.stub()
 
-        const controller = proxyquire('~/src/apps/interactions/controllers/complete', {
+        const controller = proxyquire('src/apps/interactions/controllers/complete', {
           '../repos': {
             saveInteraction: this.saveInteractionStub,
             archiveInteraction: this.archiveInteractionStub,
@@ -318,7 +318,7 @@ describe('Interaction details controller', () => {
         this.saveInteractionStub.rejects({ statusCode: 500, error: 'error' })
         this.archiveInteractionStub = sinon.stub()
 
-        const controller = proxyquire('~/src/apps/interactions/controllers/complete', {
+        const controller = proxyquire('src/apps/interactions/controllers/complete', {
           '../repos': {
             saveInteraction: this.saveInteractionStub,
             archiveInteraction: this.archiveInteractionStub,
@@ -371,7 +371,7 @@ describe('Interaction details controller', () => {
         this.saveInteractionStub = sinon.stub()
         this.archiveInteractionStub = sinon.stub()
 
-        const controller = proxyquire('~/src/apps/interactions/controllers/complete', {
+        const controller = proxyquire('src/apps/interactions/controllers/complete', {
           '../repos': {
             saveInteraction: this.saveInteractionStub,
             archiveInteraction: this.archiveInteractionStub,

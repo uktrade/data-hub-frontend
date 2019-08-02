@@ -1,13 +1,13 @@
 const moment = require('moment')
 const { omit } = require('lodash')
 
-const config = require('~/config')
+const config = require('config')
 const {
   renderInteractionList,
   renderInteractionsForEntity,
   getInteractionOptions,
-} = require('~/src/apps/interactions/controllers/list')
-const serviceOptionData = require('~/test/unit/data/interactions/service-options-data.json')
+} = require('src/apps/interactions/controllers/list')
+const serviceOptionData = require('test/unit/data/interactions/service-options-data.json')
 
 describe('interaction list', () => {
   beforeEach(() => {

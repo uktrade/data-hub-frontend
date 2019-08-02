@@ -1,6 +1,6 @@
 const FormController = require('hmpo-form-wizard').Controller
 
-const Controller = require('~/src/apps/omis/controllers/form')
+const Controller = require('src/apps/omis/controllers/form')
 
 describe('OMIS FormController', () => {
   beforeEach(() => {

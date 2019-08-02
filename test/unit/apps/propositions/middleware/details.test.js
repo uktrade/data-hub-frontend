@@ -14,7 +14,7 @@ describe('Proposition details middleware', () => {
     this.transformPropositionFormBodyToApiRequestStub = sinon.stub()
     this.transformPropositionResponseToViewRecordStub = sinon.stub()
 
-    this.middleware = proxyquire('~/src/apps/propositions/middleware/details', {
+    this.middleware = proxyquire('src/apps/propositions/middleware/details', {
       '../repos': {
         saveProposition: this.savePropositionStub.resolves({ id: '1' }),
         fetchProposition: this.fetchPropositionStub.resolves(propositionData),

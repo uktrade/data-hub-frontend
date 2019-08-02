@@ -1,13 +1,13 @@
-const CreateController = require('~/src/apps/omis/controllers/create')
-const companyMock = require('~/test/unit/data/company.json')
-const searchMock = require('~/test/unit/data/search/company.json')
+const CreateController = require('src/apps/omis/controllers/create')
+const companyMock = require('test/unit/data/company.json')
+const searchMock = require('test/unit/data/search/company.json')
 
 describe('OMIS create company controller', () => {
   beforeEach(() => {
     this.nextSpy = sinon.spy()
     this.searchCompaniesStub = sinon.stub()
 
-    this.ControllerClass = proxyquire('~/src/apps/omis/apps/create/controllers/company', {
+    this.ControllerClass = proxyquire('src/apps/omis/apps/create/controllers/company', {
       '../../../../../modules/search/services': {
         searchCompanies: this.searchCompaniesStub,
       },

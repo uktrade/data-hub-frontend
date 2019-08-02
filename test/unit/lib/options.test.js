@@ -1,6 +1,6 @@
 const moment = require('moment')
 
-const config = require('~/config')
+const config = require('config')
 const yesterday = moment()
   .subtract(1, 'days')
   .toISOString()
@@ -9,8 +9,8 @@ const lastWeek = moment()
   .toISOString()
 const today = moment().toISOString()
 
-const { getOptions, fetchOptions } = require('~/src/lib/options')
-const serviceOptionData = require('~/test/unit/data/interactions/service-options-data.json')
+const { getOptions, fetchOptions } = require('src/lib/options')
+const serviceOptionData = require('test/unit/data/interactions/service-options-data.json')
 
 const regionOptions = [
   { id: '1', name: 'r1', disabled_on: null },

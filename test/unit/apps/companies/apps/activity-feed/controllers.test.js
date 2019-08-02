@@ -1,8 +1,8 @@
-const { renderActivityFeed } = require('~/src/apps/companies/apps/activity-feed/controllers')
+const { renderActivityFeed } = require('src/apps/companies/apps/activity-feed/controllers')
 
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder')
-const activityFeedEsFixtures = require('~/test/unit/data/activity-feed/activity-feed-from-es')
-const companyMock = require('~/test/unit/data/company.json')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder')
+const activityFeedEsFixtures = require('test/unit/data/activity-feed/activity-feed-from-es')
+const companyMock = require('test/unit/data/company.json')
 
 describe('Activity feed controllers', () => {
   describe('#fetchActivityFeedHandler', () => {

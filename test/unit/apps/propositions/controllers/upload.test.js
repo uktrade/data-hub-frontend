@@ -1,4 +1,4 @@
-const propositionData = require('~/test/unit/data/propositions/proposition.json')
+const propositionData = require('test/unit/data/propositions/proposition.json')
 
 describe('Proposition upload controller', () => {
   beforeEach(() => {
@@ -28,7 +28,7 @@ describe('Proposition upload controller', () => {
     }
 
     this.next = sinon.spy()
-    this.controller = require('~/src/apps/propositions/controllers/upload')
+    this.controller = require('src/apps/propositions/controllers/upload')
   })
 
   describe('#renderUpload', () => {

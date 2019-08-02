@@ -1,4 +1,4 @@
-const paths = require('~/src/apps/investments/paths')
+const paths = require('src/apps/investments/paths')
 
 const token = 'abcd'
 const ukCompany = {
@@ -28,7 +28,7 @@ describe('Investment start controller', () => {
     this.buildPagination = sinon.stub().returns(null)
     this.breadcrumbStub = sinon.stub().returnsThis()
 
-    this.controller = proxyquire('~/src/apps/investments/controllers/create/equity-source', {
+    this.controller = proxyquire('src/apps/investments/controllers/create/equity-source', {
       '../../repos': {
         getCompanyInvestmentProjects: this.getCompanyInvestmentProjects,
       },

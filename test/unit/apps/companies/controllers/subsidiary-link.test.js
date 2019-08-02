@@ -1,7 +1,7 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder.js')
 
-const companyMock = require('~/test/unit/data/companies/minimal-company.json')
-const { renderLinkSubsidiary } = require('~/src/apps/companies/controllers/subsidiary-link')
+const companyMock = require('test/unit/data/companies/minimal-company.json')
+const { renderLinkSubsidiary } = require('src/apps/companies/controllers/subsidiary-link')
 
 describe('Subsidiary link controller', () => {
   describe('#renderLinkSubsidiary', () => {

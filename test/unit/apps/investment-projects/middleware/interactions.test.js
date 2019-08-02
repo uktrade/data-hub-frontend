@@ -1,10 +1,10 @@
-const paths = require('~/src/apps/investments/paths')
+const paths = require('src/apps/investments/paths')
 const investmentData = { investor_company: { name: 'company' } }
 
 describe('Investment projects interactions middleware', () => {
   beforeEach(() => {
     this.getInvestmentStub = sinon.stub().returns(investmentData)
-    this.middleware = proxyquire('~/src/apps/investments/middleware/interactions', {
+    this.middleware = proxyquire('src/apps/investments/middleware/interactions', {
       '../repos': {
         getInvestment: this.getInvestmentStub,
       },

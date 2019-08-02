@@ -1,5 +1,5 @@
-const config = require('~/config')
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const config = require('config')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder.js')
 
 describe('Investment profile controller', () => {
   const metadataMock = {
@@ -26,7 +26,7 @@ describe('Investment profile controller', () => {
   describe('#renderProfilesView', () => {
     context('when the list renders successfully', () => {
       beforeEach(async () => {
-        const controller = require('~/src/apps/investments/controllers/profiles')
+        const controller = require('src/apps/investments/controllers/profiles')
 
         await controller.renderProfilesView(
           this.middlewareParameters.reqMock,
@@ -76,7 +76,7 @@ describe('Investment profile controller', () => {
         this.error = new Error('error')
         const erroneousSpy = sinon.stub().throws(this.error)
 
-        const controller = proxyquire('~/src/apps/investments/controllers/profiles', {
+        const controller = proxyquire('src/apps/investments/controllers/profiles', {
           '../../builders': {
             buildSelectedFiltersSummary: erroneousSpy,
             buildFieldsWithSelectedEntities: sinon.stub(),

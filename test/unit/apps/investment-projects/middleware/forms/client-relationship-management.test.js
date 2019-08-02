@@ -1,11 +1,11 @@
 const { assign } = require('lodash')
 
-const config = require('~/config')
-const paths = require('~/src/apps/investments/paths')
-const investmentData = require('~/test/unit/data/investment/investment-data-account-manager.json')
-const companyData = require('~/test/unit/data/company.json')
-const advisorData = require('~/test/unit/data/investment/interaction/advisers')
-const { clientRelationshipManagementLabels } = require('~/src/apps/investments/labels')
+const config = require('config')
+const paths = require('src/apps/investments/paths')
+const investmentData = require('test/unit/data/investment/investment-data-account-manager.json')
+const companyData = require('test/unit/data/company.json')
+const advisorData = require('test/unit/data/investment/interaction/advisers')
+const { clientRelationshipManagementLabels } = require('src/apps/investments/labels')
 
 describe('Investment form middleware - client relationship management', () => {
   describe('#populateForm', () => {
@@ -20,7 +20,7 @@ describe('Investment form middleware - client relationship management', () => {
         },
       }
 
-      this.controller = proxyquire('~/src/apps/investments/middleware/forms/client-relationship-management', {
+      this.controller = proxyquire('src/apps/investments/middleware/forms/client-relationship-management', {
         '../../../companies/repos': {
           updateCompany: this.updateCompanyStub,
         },
@@ -164,7 +164,7 @@ describe('Investment form middleware - client relationship management', () => {
           locals: {},
         }
 
-        this.controller = proxyquire('~/src/apps/investments/middleware/forms/client-relationship-management', {
+        this.controller = proxyquire('src/apps/investments/middleware/forms/client-relationship-management', {
           '../../repos': {
             updateInvestment: this.updateInvestmentStub,
           },
@@ -214,7 +214,7 @@ describe('Investment form middleware - client relationship management', () => {
           locals: {},
         }
 
-        this.controller = proxyquire('~/src/apps/investments/middleware/forms/client-relationship-management', {
+        this.controller = proxyquire('src/apps/investments/middleware/forms/client-relationship-management', {
           '../../../adviser/repos': {
             getAdvisers: this.getAdvisersStub,
           },

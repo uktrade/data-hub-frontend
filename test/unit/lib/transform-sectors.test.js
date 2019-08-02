@@ -1,5 +1,5 @@
-const transformSectors = require('~/common/transform-sectors')
-const sectorList = require('~/test/unit/data/sector-list_input.json')
+const transformSectors = require('common/transform-sectors')
+const sectorList = require('test/unit/data/sector-list_input.json')
 
 describe('Sectors transformer', () => {
   describe('Has subsector', () => {

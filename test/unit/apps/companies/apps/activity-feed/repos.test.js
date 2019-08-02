@@ -1,5 +1,5 @@
-const config = require('~/config')
-const activityFeedRawFixture = require('~/test/unit/data/activity-feed/activity-feed-from-es')
+const config = require('config')
+const activityFeedRawFixture = require('test/unit/data/activity-feed/activity-feed-from-es')
 const token = 'abcd'
 
 describe('Activity feed repos', () => {

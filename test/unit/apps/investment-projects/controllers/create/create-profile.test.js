@@ -1,4 +1,4 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder.js')
 
 describe('Investment create invenstor profile post call controller', () => {
   describe('#createInvestorProfile', () => {
@@ -7,7 +7,7 @@ describe('Investment create invenstor profile post call controller', () => {
         beforeEach(async () => {
           this.createCompanyProfileSpy = sinon.stub().resolves({ 'investor_company': 'test' })
 
-          const controller = proxyquire('~/src/apps/investments/controllers/create/create-profile', {
+          const controller = proxyquire('src/apps/investments/controllers/create/create-profile', {
             './../../../companies/apps/investments/large-capital-profile/repos.js': {
               createCompanyProfile: this.createCompanyProfileSpy,
             },
@@ -38,7 +38,7 @@ describe('Investment create invenstor profile post call controller', () => {
         beforeEach(async () => {
           this.createCompanyProfileSpy = sinon.stub().rejects({ 'statusCode': 400, 'error': { 'investor_company': 'company exist' } })
 
-          const controller = proxyquire('~/src/apps/investments/controllers/create/create-profile', {
+          const controller = proxyquire('src/apps/investments/controllers/create/create-profile', {
             './../../../companies/apps/investments/large-capital-profile/repos.js': {
               createCompanyProfile: this.createCompanyProfileSpy,
             },
@@ -66,7 +66,7 @@ describe('Investment create invenstor profile post call controller', () => {
         beforeEach(async () => {
           this.createCompanyProfileSpy = sinon.stub().throws({ 'statusCode': 500, 'error': { 'server': 'error' } })
 
-          const controller = proxyquire('~/src/apps/investments/controllers/create/create-profile', {
+          const controller = proxyquire('src/apps/investments/controllers/create/create-profile', {
             './../../../companies/apps/investments/large-capital-profile/repos.js': {
               createCompanyProfile: this.createCompanyProfileSpy,
             },
@@ -94,7 +94,7 @@ describe('Investment create invenstor profile post call controller', () => {
       beforeEach(async () => {
         this.createCompanyProfileSpy = sinon.stub().resolves({})
 
-        const controller = proxyquire('~/src/apps/investments/controllers/create/create-profile', {
+        const controller = proxyquire('src/apps/investments/controllers/create/create-profile', {
           './../../../companies/apps/investments/large-capital-profile/repos.js': {
             createCompanyProfile: this.createCompanyProfileSpy,
           },

@@ -1,8 +1,8 @@
-const transformInteractionFormBodyToApiRequest = require('~/src/apps/interactions/transformers/interaction-form-body-to-api')
-const serviceOptions = require('~/test/unit/data/interactions/service-options-data.json')
+const transformInteractionFormBodyToApiRequest = require('src/apps/interactions/transformers/interaction-form-body-to-api')
+const serviceOptions = require('test/unit/data/interactions/service-options-data.json')
 const {
   transformServicesOptions,
-} = require('~/src/apps/interactions/transformers')
+} = require('src/apps/interactions/transformers')
 
 const transformedServices = transformServicesOptions(serviceOptions)
 

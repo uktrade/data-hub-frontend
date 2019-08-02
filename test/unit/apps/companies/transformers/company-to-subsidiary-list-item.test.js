@@ -1,6 +1,6 @@
-const transformCompanyToSubsidiaryListItem = require('~/src/apps/companies/transformers/company-to-subsidiary-list-item')
+const transformCompanyToSubsidiaryListItem = require('src/apps/companies/transformers/company-to-subsidiary-list-item')
 
-const companyMock = require('~/test/unit/data/companies/company-v4.json')
+const companyMock = require('test/unit/data/companies/company-v4.json')
 
 describe('#transformCompanyToSubsidiaryListItem', () => {
   context('when the global headquarters is not archived', () => {

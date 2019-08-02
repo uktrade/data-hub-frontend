@@ -1,4 +1,4 @@
-const { joinPaths } = require('~/src/lib/path.js')
+const { joinPaths } = require('src/lib/path.js')
 
 describe('#joinPaths', () => {
   context('when the first path has an extra forward slash at the end', () => {

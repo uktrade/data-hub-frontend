@@ -9,7 +9,7 @@ describe('OMIS reconciliation middleware', () => {
     })
     this.res = assign({}, globalRes)
 
-    this.controller = require('~/src/apps/omis/apps/reconciliation/middleware')
+    this.controller = require('src/apps/omis/apps/reconciliation/middleware')
   })
 
   describe('#setRequestBody', () => {

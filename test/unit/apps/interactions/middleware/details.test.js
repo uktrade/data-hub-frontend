@@ -1,9 +1,9 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
-const interactionData = require('~/test/unit/data/interactions/new-interaction.json')
-const serviceOptions = require('~/test/unit/data/interactions/service-options-data.json')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder.js')
+const interactionData = require('test/unit/data/interactions/new-interaction.json')
+const serviceOptions = require('test/unit/data/interactions/service-options-data.json')
 const {
   transformServicesOptions,
-} = require('~/src/apps/interactions/transformers')
+} = require('src/apps/interactions/transformers')
 
 const serviceOptionsTransformed = transformServicesOptions(serviceOptions)
 
@@ -25,7 +25,7 @@ describe('Interaction details middleware', () => {
             },
           })
           const middleware = proxyquire(
-            '~/src/apps/interactions/middleware/details',
+            'src/apps/interactions/middleware/details',
             {
               '../repos': {
                 saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
@@ -102,7 +102,7 @@ describe('Interaction details middleware', () => {
           })
 
           const middleware = proxyquire(
-            '~/src/apps/interactions/middleware/details',
+            'src/apps/interactions/middleware/details',
             {
               '../repos': {
                 saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
@@ -178,7 +178,7 @@ describe('Interaction details middleware', () => {
           })
 
           const middleware = proxyquire(
-            '~/src/apps/interactions/middleware/details',
+            'src/apps/interactions/middleware/details',
             {
               '../repos': {
                 saveInteraction: this.saveInteractionStub.rejects({
@@ -240,7 +240,7 @@ describe('Interaction details middleware', () => {
           })
 
           const middleware = proxyquire(
-            '~/src/apps/interactions/middleware/details',
+            'src/apps/interactions/middleware/details',
             {
               '../repos': {
                 saveInteraction: this.saveInteractionStub.rejects({
@@ -294,7 +294,7 @@ describe('Interaction details middleware', () => {
       this.getDitCompanyStub = sinon.stub()
 
       this.middleware = proxyquire(
-        '~/src/apps/interactions/middleware/details',
+        'src/apps/interactions/middleware/details',
         {
           '../repos': {
             fetchInteraction: this.fetchInteractionStub.resolves(

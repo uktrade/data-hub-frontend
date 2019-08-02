@@ -36,7 +36,7 @@ describe('interaction form service', () => {
     })
 
     interactionFormService = proxyquire(
-      '~/src/apps/interactions/services/form',
+      'src/apps/interactions/services/form',
       {
         '../repos': {
           saveInteraction: saveInteractionStub,

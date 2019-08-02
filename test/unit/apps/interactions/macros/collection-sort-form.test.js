@@ -1,4 +1,4 @@
-const { buildInteractionSortForm, getDefaultInteractionSort } = require('~/src/apps/interactions/macros/collection-sort-form.js')
+const { buildInteractionSortForm, getDefaultInteractionSort } = require('src/apps/interactions/macros/collection-sort-form.js')
 
 describe('interactions collection sort form', () => {
   describe('#buildInteractionSortForm', () => {

@@ -1,6 +1,6 @@
-const transformOneListCoreTeamToCollection = require('~/src/apps/companies/transformers/one-list-core-team-to-collection')
+const transformOneListCoreTeamToCollection = require('src/apps/companies/transformers/one-list-core-team-to-collection')
 
-const coreTeamMock = require('~/test/unit/data/companies/one-list-group-core-team.json')
+const coreTeamMock = require('test/unit/data/companies/one-list-group-core-team.json')
 
 describe('#transformOneListCoreTeamToCollection', () => {
   context('when the core team member is a Global Account Manager and from a UK region', () => {

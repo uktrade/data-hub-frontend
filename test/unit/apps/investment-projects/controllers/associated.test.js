@@ -1,5 +1,5 @@
-const investmentCollection = require('~/test/unit/data/investment/collection.json')
-const paths = require('~/src/apps/investments/paths')
+const investmentCollection = require('test/unit/data/investment/collection.json')
+const paths = require('src/apps/investments/paths')
 
 const investmentData = { investor_company: { name: 'company' } }
 
@@ -11,7 +11,7 @@ describe('investment associated controller', () => {
     this.transformInvestmentProjectToListItemStub = sinon.stub().returns({ id: 1 })
     this.transformInvestmentListItemToDisableMetaLinksStub = sinon.stub().returns({ id: 1 })
 
-    this.controller = proxyquire('~/src/apps/investments/controllers/associated', {
+    this.controller = proxyquire('src/apps/investments/controllers/associated', {
       '../repos': {
         updateInvestment: this.updateInvestmentStub,
       },

@@ -1,4 +1,4 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder.js')
 
 describe('Investment create invenstor profile controller', () => {
   beforeEach(async () => {
@@ -7,7 +7,7 @@ describe('Investment create invenstor profile controller', () => {
 
   describe('#renderCreateInvestorProfileView', () => {
     beforeEach(async () => {
-      const controller = require('~/src/apps/investments/controllers/create/investor-profile')
+      const controller = require('src/apps/investments/controllers/create/investor-profile')
 
       await controller.renderCreateInvestorProfilePage(
         this.middlewareParameters.reqMock,

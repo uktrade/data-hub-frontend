@@ -1,7 +1,7 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder.js')
 
-const investmentsMock = require('~/test/unit/data/investment/collection.json')
-const companyMock = require('~/test/unit/data/companies/minimal-company.json')
+const investmentsMock = require('test/unit/data/investment/collection.json')
+const companyMock = require('test/unit/data/companies/minimal-company.json')
 
 describe('Company investments project controlle', () => {
   beforeEach(() => {
@@ -9,7 +9,7 @@ describe('Company investments project controlle', () => {
     this.transformInvestmentProjectToListItemSpy = sinon.spy()
     this.transformApiResponseToCollectionSpy = sinon.spy()
 
-    this.controller = proxyquire('~/src/apps/companies/apps/investments/projects/controllers/list', {
+    this.controller = proxyquire('src/apps/companies/apps/investments/projects/controllers/list', {
       '../../../../../investments/repos': {
         getCompanyInvestmentProjects: this.getCompanyInvestmentProjectsStub,
       },

@@ -1,4 +1,4 @@
-const router = require('~/src/apps/companies/apps/activity-feed/router')
+const router = require('src/apps/companies/apps/activity-feed/router')
 
 describe('Activity feed routes', () => {
   it('should define route to activity feed app', () => {

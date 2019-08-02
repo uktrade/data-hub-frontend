@@ -6,7 +6,7 @@ describe('OAuth controller', () => {
     this.mockUuid = sinon.stub().returns(this.mockUUIDvalue)
     this.mockConfig = {}
     this.saveSessionStub = sinon.stub()
-    this.controller = proxyquire.noCallThru().load('~/src/apps/oauth/controllers', {
+    this.controller = proxyquire.noCallThru().load('src/apps/oauth/controllers', {
       './../../../config': this.mockConfig,
       'uuid': this.mockUuid,
       './../../lib/session-helper': {

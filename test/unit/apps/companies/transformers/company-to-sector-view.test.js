@@ -1,4 +1,4 @@
-const transformCompanyToSectorView = require('~/src/apps/companies/transformers/company-to-sector-view')
+const transformCompanyToSectorView = require('src/apps/companies/transformers/company-to-sector-view')
 
 describe('#transformCompanyToSectorView', () => {
   const commonTests = (expectedSectors) => {

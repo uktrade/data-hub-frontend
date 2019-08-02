@@ -2,8 +2,8 @@ const nunjucks = require('nunjucks')
 const jsdom = require('jsdom')
 const { JSDOM } = jsdom
 
-const tradeElementsFilters = require('~/config/nunjucks/trade-elements-filters')
-const dataHubFilters = require('~/config/nunjucks/filters')
+const tradeElementsFilters = require('config/nunjucks/trade-elements-filters')
+const dataHubFilters = require('config/nunjucks/filters')
 
 const filters = Object.assign({}, tradeElementsFilters, dataHubFilters)
 

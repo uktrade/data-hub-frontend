@@ -2,7 +2,7 @@ const { assign, merge } = require('lodash')
 
 describe('OMIS list transformers', () => {
   beforeEach(() => {
-    this.transformers = proxyquire('~/src/apps/omis/transformers', {
+    this.transformers = proxyquire('src/apps/omis/transformers', {
       './constants': {
         ORDER_STATES: [
           {
@@ -16,7 +16,7 @@ describe('OMIS list transformers', () => {
   })
 
   describe('#transformOrderToListItem', () => {
-    const simpleOrder = require('~/test/unit/data/omis/simple-order.json')
+    const simpleOrder = require('test/unit/data/omis/simple-order.json')
 
     context('when given an unqualified result', () => {
       it('should return undefined', () => {
@@ -122,7 +122,7 @@ describe('OMIS list transformers', () => {
   })
 
   describe('#transformOrderToTableItem', () => {
-    const simpleOrder = require('~/test/unit/data/omis/simple-order.json')
+    const simpleOrder = require('test/unit/data/omis/simple-order.json')
 
     context('when given an unqualified result', () => {
       it('should return undefined', () => {
@@ -147,7 +147,7 @@ describe('OMIS list transformers', () => {
   })
 
   describe('#transformPaymentToView', () => {
-    const payment = require('~/test/unit/data/omis/payments.json')[0]
+    const payment = require('test/unit/data/omis/payments.json')[0]
 
     context('when given an unqualified result', () => {
       it('should return undefined', () => {
@@ -180,7 +180,7 @@ describe('OMIS list transformers', () => {
   })
 
   describe('#transformSubscriberToView', () => {
-    const subscriber = require('~/test/unit/data/omis/subscribers.json')[0]
+    const subscriber = require('test/unit/data/omis/subscribers.json')[0]
     const subscriberWithTeam = merge({}, subscriber, {
       dit_team: {
         uk_region: {

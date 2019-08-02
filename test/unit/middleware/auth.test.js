@@ -2,7 +2,7 @@ const { assign } = require('lodash')
 
 describe('Auth middleware', () => {
   beforeEach(() => {
-    this.authMiddleware = require('~/src/middleware/auth')
+    this.authMiddleware = require('src/middleware/auth')
     this.nextSpy = sinon.spy()
     this.reqMock = assign({}, globalReq, {
       session: {},

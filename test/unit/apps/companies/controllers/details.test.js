@@ -1,6 +1,6 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder.js')
 
-const { renderDetails } = require('~/src/apps/companies/controllers/details')
+const { renderDetails } = require('src/apps/companies/controllers/details')
 
 describe('Companies details controller', () => {
   describe('#renderDetails', () => {

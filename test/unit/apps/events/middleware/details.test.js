@@ -41,7 +41,7 @@ describe('Event details middleware', () => {
     this.getAdvisersStub = sinon.stub()
     this.transformEventFormBodyToApiRequestStub = sinon.stub()
     this.transformEventResponseToViewRecordStub = sinon.stub()
-    this.middleware = proxyquire('~/src/apps/events/middleware/details', {
+    this.middleware = proxyquire('src/apps/events/middleware/details', {
       '../repos': {
         saveEvent: this.saveEventStub.resolves({ id: '1' }),
         fetchEvent: this.fetchEventStub.resolves(eventData),

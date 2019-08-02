@@ -1,8 +1,8 @@
-const investmentData = require('~/test/unit/data/investment/investment-data.json')
+const investmentData = require('test/unit/data/investment/investment-data.json')
 const {
   projectManagementLabels,
   clientRelationshipManagementLabels,
-} = require('~/src/apps/investments/labels')
+} = require('src/apps/investments/labels')
 
 describe('Investment team details controller', () => {
   beforeEach(() => {
@@ -17,7 +17,7 @@ describe('Investment team details controller', () => {
     this.transformClientRelationshipManagementForViewStub = sinon.stub().returns(this.clientRelationshipManagementData)
     this.transformTeamMembersForViewStub = sinon.stub().returns(this.teamMembersData)
 
-    this.controller = proxyquire('~/src/apps/investments/controllers/team/details', {
+    this.controller = proxyquire('src/apps/investments/controllers/team/details', {
       '../../transformers': {
         transformProjectManagementForView: this.transformProjectManagementForViewStub,
         transformClientRelationshipManagementForView: this.transformClientRelationshipManagementForViewStub,

@@ -2,7 +2,7 @@ const {
   isBlank,
   isValidGuid,
   getDataLabels,
-} = require('~/src/lib/controller-utils')
+} = require('src/lib/controller-utils')
 
 describe('isBlank', () => {
   it('should detects undefined variables', () => {

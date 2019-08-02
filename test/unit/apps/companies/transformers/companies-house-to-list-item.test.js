@@ -1,5 +1,5 @@
-const companiesHouseSearchResults = require('~/test/unit/data/companies/companies-house-search.json')
-const transformCompaniesHouseToListItem = require('~/src/apps/companies/transformers/companies-house-to-list-item')
+const companiesHouseSearchResults = require('test/unit/data/companies/companies-house-search.json')
+const transformCompaniesHouseToListItem = require('src/apps/companies/transformers/companies-house-to-list-item')
 
 describe('transformCompaniesHouseToListItem', () => {
   beforeEach(() => {

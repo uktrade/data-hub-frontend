@@ -1,10 +1,10 @@
 const { assign, find, sortBy } = require('lodash')
 const moment = require('moment')
 
-const config = require('~/config')
-const eventData = require('~/test/unit/data/events/event.json')
-const adviserFilters = require('~/src/apps/adviser/filters')
-const serviceOptionData = require('~/test/unit/data/interactions/service-options-data.json')
+const config = require('config')
+const eventData = require('test/unit/data/events/event.json')
+const adviserFilters = require('src/apps/adviser/filters')
+const serviceOptionData = require('test/unit/data/interactions/service-options-data.json')
 const { filterServiceNames } = require('../../../../../src/apps/events/controllers/edit')
 
 const yesterday = moment().subtract(1, 'days').toISOString()
@@ -54,7 +54,7 @@ describe('Event edit controller', () => {
   beforeEach(() => {
     this.filterActiveAdvisersSpy = sinon.spy(adviserFilters, 'filterActiveAdvisers')
 
-    this.controller = proxyquire('~/src/apps/events/controllers/edit', {
+    this.controller = proxyquire('src/apps/events/controllers/edit', {
       '../../adviser/filters': {
         filterActiveAdvisers: this.filterActiveAdvisersSpy,
       },

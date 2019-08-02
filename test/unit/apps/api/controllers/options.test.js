@@ -1,7 +1,7 @@
 const { assign } = require('lodash')
 
-const config = require('~/config')
-const { getOptionsHandler } = require('~/src/apps/api/controllers/options')
+const config = require('config')
+const { getOptionsHandler } = require('src/apps/api/controllers/options')
 
 describe('options API controller', () => {
   beforeEach(() => {
@@ -107,7 +107,7 @@ describe('options API controller', () => {
 
       this.searchAutocomplete = sinon.stub().resolves({})
 
-      const controller = proxyquire('~/src/apps/api/controllers/options', {
+      const controller = proxyquire('src/apps/api/controllers/options', {
         '../../../modules/search/services': {
           searchAutocomplete: this.searchAutocomplete,
         },
@@ -145,7 +145,7 @@ describe('options API controller', () => {
 
       this.searchAutocomplete = sinon.stub().resolves({})
 
-      const controller = proxyquire('~/src/apps/api/controllers/options', {
+      const controller = proxyquire('src/apps/api/controllers/options', {
         '../../../modules/search/services': {
           searchAutocomplete: this.searchAutocomplete,
         },

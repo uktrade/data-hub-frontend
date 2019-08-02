@@ -1,5 +1,5 @@
-const auditLog = require('~/test/unit/data/audit/contact-audit.json')
-const { contactAuditLabels } = require('~/src/apps/contacts/labels')
+const auditLog = require('test/unit/data/audit/contact-audit.json')
+const { contactAuditLabels } = require('src/apps/contacts/labels')
 
 describe('Contact audit controller', () => {
   beforeEach(() => {
@@ -12,7 +12,7 @@ describe('Contact audit controller', () => {
 
     this.breadcrumbStub = sinon.stub().returnsThis()
 
-    this.controller = proxyquire('~/src/apps/contacts/controllers/audit', {
+    this.controller = proxyquire('src/apps/contacts/controllers/audit', {
       '../repos': {
         getContactAuditLog: this.getContactAuditLogStub,
       },

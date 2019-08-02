@@ -1,6 +1,6 @@
-const datahubOnlyCompany = require('~/test/unit/data/companies/datahub-only-company.json')
+const datahubOnlyCompany = require('test/unit/data/companies/datahub-only-company.json')
 
-const transformCompanyToView = require('~/src/apps/companies/transformers/company-to-view')
+const transformCompanyToView = require('src/apps/companies/transformers/company-to-view')
 
 describe('transformCompanyToView', () => {
   context('when called with a fully populated datahub only company', () => {

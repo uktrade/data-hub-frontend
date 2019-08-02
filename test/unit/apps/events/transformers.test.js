@@ -1,14 +1,14 @@
 /* eslint camelcase: 0 */
 const { assign } = require('lodash')
 
-const mockEvent = require('~/test/unit/data/events/event-data')
+const mockEvent = require('test/unit/data/events/event-data')
 const archivedDocumentsBaseUrl = 'http://base'
 
 const {
   transformEventToListItem,
   transformEventResponseToViewRecord,
   transformEventFormBodyToApiRequest,
-} = proxyquire('~/src/apps/events/transformers', {
+} = proxyquire('src/apps/events/transformers', {
   '../../../config': {
     archivedDocumentsBaseUrl,
   },
@@ -161,7 +161,7 @@ describe('Event transformers', () => {
 
     context('when the event contains minimal data', () => {
       beforeEach(() => {
-        const minimalEvent = require('~/test/unit/data/events/minimal-event.json')
+        const minimalEvent = require('test/unit/data/events/minimal-event.json')
         this.transformedEvent = transformEventResponseToViewRecord(minimalEvent)
       })
 

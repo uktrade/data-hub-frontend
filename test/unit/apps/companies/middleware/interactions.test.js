@@ -1,7 +1,7 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder.js')
 
-const companyMock = require('~/test/unit/data/companies/company-v4.json')
-const { setInteractionsDetails } = require('~/src/apps/companies/middleware/interactions')
+const companyMock = require('test/unit/data/companies/company-v4.json')
+const { setInteractionsDetails } = require('src/apps/companies/middleware/interactions')
 
 describe('Interactions middleware', () => {
   describe('#setInteractionsDetails', () => {

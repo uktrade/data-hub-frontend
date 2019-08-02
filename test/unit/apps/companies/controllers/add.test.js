@@ -1,9 +1,9 @@
 const { sortBy } = require('lodash')
 
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
-const companiesHouseAndLtdCompanies = require('~/test/unit/data/search/companiesHouseAndLtdCompanies')
-const companiesHouseCompany = require('~/test/unit/data/companies/companies-house-company')
-const config = require('~/config')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder.js')
+const companiesHouseAndLtdCompanies = require('test/unit/data/search/companiesHouseAndLtdCompanies')
+const companiesHouseCompany = require('test/unit/data/companies/companies-house-company')
+const config = require('config')
 
 const next = function (error) {
   throw Error(error)
@@ -35,7 +35,7 @@ describe('Company add controller', () => {
 
     this.nextStub = sinon.stub()
 
-    companyAddController = proxyquire('~/src/apps/companies/controllers/add', {
+    companyAddController = proxyquire('src/apps/companies/controllers/add', {
       '../../../modules/search/services': {
         searchLimitedCompanies: searchLimitedCompaniesStub,
       },

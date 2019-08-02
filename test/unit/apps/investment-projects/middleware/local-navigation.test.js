@@ -1,4 +1,4 @@
-const setLocalNavigation = require('~/src/apps/investments/middleware/local-navigation')
+const setLocalNavigation = require('src/apps/investments/middleware/local-navigation')
 
 describe('Investment projects local navigation', () => {
   beforeEach(() => {

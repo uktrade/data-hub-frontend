@@ -1,4 +1,4 @@
-const transformCompanyFormToApi = require('~/src/apps/companies/transformers/company-form-to-api')
+const transformCompanyFormToApi = require('src/apps/companies/transformers/company-form-to-api')
 
 describe('Company form to API transformer', () => {
   context('when all fields are populated', () => {

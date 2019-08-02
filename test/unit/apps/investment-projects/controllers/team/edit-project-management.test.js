@@ -1,6 +1,6 @@
-const { briefInvestmentSummaryLabels } = require('~/src/apps/investments/labels')
-const investmentData = require('~/test/unit/data/investment/investment-data.json')
-const paths = require('~/src/apps/investments/paths')
+const { briefInvestmentSummaryLabels } = require('src/apps/investments/labels')
+const investmentData = require('test/unit/data/investment/investment-data.json')
+const paths = require('src/apps/investments/paths')
 const { assign } = require('lodash')
 
 describe('Investment project, project management team, edit controller', () => {
@@ -21,7 +21,7 @@ describe('Investment project, project management team, edit controller', () => {
       breadcrumb: this.breadcrumbStub,
     })
 
-    this.controller = proxyquire('~/src/apps/investments/controllers/team/edit-project-management', {
+    this.controller = proxyquire('src/apps/investments/controllers/team/edit-project-management', {
       '../../../../lib/controller-utils': {
         getDataLabels: this.getDataLabelsStub,
       },

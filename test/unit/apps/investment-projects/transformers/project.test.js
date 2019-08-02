@@ -1,12 +1,12 @@
 const { assign } = require('lodash')
 
-const investmentData = require('~/test/unit/data/investment/investment-data.json')
+const investmentData = require('test/unit/data/investment/investment-data.json')
 const {
   transformBriefInvestmentSummary,
   transformInvestmentForView,
   transformToApi,
   transformFromApi,
-} = require('~/src/apps/investments/transformers/project')
+} = require('src/apps/investments/transformers/project')
 
 describe('Investment project transformers', () => {
   describe('#transformBriefInvestmentSummary', () => {

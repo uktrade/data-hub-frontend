@@ -13,7 +13,7 @@ describe('OMIS reconciliation controllers', () => {
     }
     this.buildSelectedFiltersSummaryStub = sinon.spy()
 
-    this.controller = proxyquire('~/src/apps/omis/apps/reconciliation/controllers', {
+    this.controller = proxyquire('src/apps/omis/apps/reconciliation/controllers', {
       '../../../builders': {
         buildSelectedFiltersSummary: this.buildSelectedFiltersSummaryStub,
       },

@@ -1,4 +1,4 @@
-const paths = require('~/src/apps/investments/paths')
+const paths = require('src/apps/investments/paths')
 
 module.exports = ({
   reqMock = {},

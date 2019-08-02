@@ -14,7 +14,7 @@ describe('Contact controller, archive', () => {
   beforeEach(() => {
     contactRepositoryArchiveContactStub = sinon.stub().resolves(null)
     contactRepositoryUnArchiveContactStub = sinon.stub().resolves(null)
-    contactArchiveController = proxyquire('~/src/apps/contacts/controllers/archive', {
+    contactArchiveController = proxyquire('src/apps/contacts/controllers/archive', {
       '../repos': {
         archiveContact: contactRepositoryArchiveContactStub,
         unarchiveContact: contactRepositoryUnArchiveContactStub,
@@ -110,7 +110,7 @@ describe('Contact controller, archive', () => {
   it('should handle errors when you archive a contact', function (done) {
     const error = Error('error')
     contactRepositoryArchiveContactStub = sinon.stub().rejects(error)
-    contactArchiveController = proxyquire('~/src/apps/contacts/controllers/archive', {
+    contactArchiveController = proxyquire('src/apps/contacts/controllers/archive', {
       '../repos': {
         archiveContact: contactRepositoryArchiveContactStub,
         unarchiveContact: contactRepositoryUnArchiveContactStub,
@@ -138,7 +138,7 @@ describe('Contact controller, archive', () => {
   it('should handle errors when you unarchive a contact', function (done) {
     const error = Error('error')
     contactRepositoryUnArchiveContactStub = sinon.stub().rejects(error)
-    contactArchiveController = proxyquire('~/src/apps/contacts/controllers/archive', {
+    contactArchiveController = proxyquire('src/apps/contacts/controllers/archive', {
       '../repos': {
         archiveContact: contactRepositoryArchiveContactStub,
         unarchiveContact: contactRepositoryUnArchiveContactStub,

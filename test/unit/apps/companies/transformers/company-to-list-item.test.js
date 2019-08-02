@@ -1,7 +1,7 @@
 const { assign, find } = require('lodash')
 
-const companyData = require('~/test/unit/data/company')
-const transformCompanyToListItem = require('~/src/apps/companies/transformers/company-to-list-item')
+const companyData = require('test/unit/data/company')
+const transformCompanyToListItem = require('src/apps/companies/transformers/company-to-list-item')
 
 describe('transformCompanyToListItem', () => {
   context('when there is no companies house data or datahub data', () => {

@@ -1,5 +1,5 @@
-const transformInteractionListItemToHaveUrlPrefix = require('~/src/apps/interactions/transformers/interaction-list-item-to-have-url')
-const mockInteraction = require('~/test/unit/data/interactions/search-interaction.json')
+const transformInteractionListItemToHaveUrlPrefix = require('src/apps/interactions/transformers/interaction-list-item-to-have-url')
+const mockInteraction = require('test/unit/data/interactions/search-interaction.json')
 
 describe('#transformInteractionListItemToHaveUrlPrefix', () => {
   context('when there is a leading forward slash', () => {

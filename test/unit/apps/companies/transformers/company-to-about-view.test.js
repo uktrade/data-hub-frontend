@@ -1,7 +1,7 @@
-const { aboutLabels } = require('~/src/apps/companies/labels')
-const { NOT_SET_TEXT } = require('~/src/apps/companies/constants')
+const { aboutLabels } = require('src/apps/companies/labels')
+const { NOT_SET_TEXT } = require('src/apps/companies/constants')
 
-const transformCompanyToAboutView = proxyquire('~/src/apps/companies/transformers/company-to-about-view', {
+const transformCompanyToAboutView = proxyquire('src/apps/companies/transformers/company-to-about-view', {
   '../../../../config': {
     currencyRate: {
       usdToGbp: 0.75,

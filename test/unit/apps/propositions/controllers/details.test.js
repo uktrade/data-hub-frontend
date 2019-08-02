@@ -1,5 +1,5 @@
 const { assign } = require('lodash')
-const propositionData = require('~/test/unit/data/propositions/proposition.json')
+const propositionData = require('test/unit/data/propositions/proposition.json')
 
 describe('Proposition details controller', () => {
   beforeEach(() => {
@@ -27,7 +27,7 @@ describe('Proposition details controller', () => {
 
     this.transformPropositionResponseToViewRecordStub = sinon.stub().returns(this.transformedPropositionDataMock)
 
-    this.controller = proxyquire('~/src/apps/propositions/controllers/details', {
+    this.controller = proxyquire('src/apps/propositions/controllers/details', {
       '../transformers': {
         transformPropositionResponseToViewRecord: this.transformPropositionResponseToViewRecordStub,
       },

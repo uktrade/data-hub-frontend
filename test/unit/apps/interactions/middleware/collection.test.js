@@ -26,7 +26,7 @@ describe('interaction collection middleware', () => {
     this.next = sinon.spy()
     this.getInteractionsForEntityStub = sinon.stub()
 
-    this.middleware = proxyquire('~/src/apps/interactions/middleware/collection', {
+    this.middleware = proxyquire('src/apps/interactions/middleware/collection', {
       '../repos': {
         getInteractionsForEntity: this.getInteractionsForEntityStub.resolves({
           count: 20,
@@ -174,7 +174,7 @@ describe('interaction collection middleware', () => {
 
         this.error = new Error('error')
 
-        this.middleware = proxyquire('~/src/apps/interactions/middleware/collection', {
+        this.middleware = proxyquire('src/apps/interactions/middleware/collection', {
           '../repos': {
             getInteractionsForEntity: this.getInteractionsForEntityStub.rejects(this.error),
           },

@@ -3,7 +3,7 @@ const contactData = { company: { name: 'company' } }
 describe('Contacts interactions middleware', () => {
   beforeEach(() => {
     this.getContactStub = sinon.stub().returns(contactData)
-    this.middleware = proxyquire('~/src/apps/contacts/middleware/interactions', {
+    this.middleware = proxyquire('src/apps/contacts/middleware/interactions', {
       '../../contacts/repos': {
         getContact: this.getContactStub,
       },

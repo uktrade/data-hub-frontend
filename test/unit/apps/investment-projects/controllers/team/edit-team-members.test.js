@@ -1,4 +1,4 @@
-const investmentData = require('~/test/unit/data/investment/investment-data.json')
+const investmentData = require('test/unit/data/investment/investment-data.json')
 
 describe('Investment project, team members, edit controller', () => {
   beforeEach(() => {
@@ -6,7 +6,7 @@ describe('Investment project, team members, edit controller', () => {
     this.flashStub = sinon.stub()
     this.breadcrumbStub = sinon.stub().returnsThis()
 
-    this.controller = require('~/src/apps/investments/controllers/team/edit-team-members')
+    this.controller = require('src/apps/investments/controllers/team/edit-team-members')
   })
 
   describe('#renderTeamEdit', () => {

@@ -1,6 +1,6 @@
-const subscriberData = require('~/test/unit/data/omis/subscribers.json')
-const assigneeData = require('~/test/unit/data/omis/assignees.json')
-const contactData = require('~/test/unit/data/contacts/contact.json')
+const subscriberData = require('test/unit/data/omis/subscribers.json')
+const assigneeData = require('test/unit/data/omis/assignees.json')
+const contactData = require('test/unit/data/contacts/contact.json')
 
 const orderMock = {
   id: '1230asd-123dasda',
@@ -17,7 +17,7 @@ describe('OMIS View controllers', () => {
   beforeEach(() => {
     this.transformSubscriberToViewStub = sinon.stub().returns(transformerStub)
 
-    this.controllers = proxyquire('~/src/apps/omis/apps/view/controllers', {
+    this.controllers = proxyquire('src/apps/omis/apps/view/controllers', {
       '../../transformers': {
         transformSubscriberToView: this.transformSubscriberToViewStub,
       },

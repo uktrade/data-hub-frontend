@@ -5,7 +5,7 @@ describe('company form service', () => {
   beforeEach(() => {
     saveCompanyStub = sinon.stub().resolves({ id: '1234' })
 
-    companyFormService = proxyquire('~/src/apps/companies/services/form', {
+    companyFormService = proxyquire('src/apps/companies/services/form', {
       '../repos': {
         saveCompany: saveCompanyStub,
       },
@@ -35,7 +35,7 @@ describe('company form service', () => {
     })
     it('handles errors', () => {
       saveCompanyStub = sinon.stub().rejects({ error: 'test' })
-      companyFormService = proxyquire('~/src/apps/companies/services/form', {
+      companyFormService = proxyquire('src/apps/companies/services/form', {
         '../repos': {
           saveCompany: saveCompanyStub,
         },

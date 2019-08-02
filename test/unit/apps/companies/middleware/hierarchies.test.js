@@ -1,7 +1,7 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder.js')
 
-const config = require('~/config')
-const { setGlobalHQ, removeGlobalHQ, addSubsidiary } = require('~/src/apps/companies/middleware/hierarchies')
+const config = require('config')
+const { setGlobalHQ, removeGlobalHQ, addSubsidiary } = require('src/apps/companies/middleware/hierarchies')
 
 const globalHeadquartersId = '1'
 const subsidiaryCompanyId = '2'

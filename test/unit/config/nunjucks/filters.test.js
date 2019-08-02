@@ -1,4 +1,4 @@
-const filters = require('~/config/nunjucks/filters')
+const filters = require('config/nunjucks/filters')
 
 describe('nunjucks filters', () => {
   beforeEach(() => {

@@ -1,7 +1,7 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder.js')
 
-const companyMock = require('~/test/unit/data/companies/minimal-company.json')
-const { renderAddGlobalHQ } = require('~/src/apps/companies/controllers/hierarchies')
+const companyMock = require('test/unit/data/companies/minimal-company.json')
+const { renderAddGlobalHQ } = require('src/apps/companies/controllers/hierarchies')
 
 describe('Companies hierarchies controller', () => {
   describe('#renderAddGlobalHQ', () => {

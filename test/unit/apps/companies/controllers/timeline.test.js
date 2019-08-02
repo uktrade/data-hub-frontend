@@ -1,10 +1,10 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder.js')
 
-const config = require('~/config')
-const companyMock = require('~/test/unit/data/companies/companies-house-company.json')
-const timelineMock = require('~/test/unit/data/companies/timeline.json')
+const config = require('config')
+const companyMock = require('test/unit/data/companies/companies-house-company.json')
+const timelineMock = require('test/unit/data/companies/timeline.json')
 
-const { renderTimeline } = require('~/src/apps/companies/controllers/timeline')
+const { renderTimeline } = require('src/apps/companies/controllers/timeline')
 
 describe('Company timeline controller', () => {
   describe('#renderTimeline', () => {

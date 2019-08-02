@@ -1,8 +1,8 @@
-const datahubOnlyCompany = require('~/test/unit/data/companies/datahub-only-company.json')
-const minimalCompany = require('~/test/unit/data/companies/minimal-company.json')
-const companiesHouseCompany = require('~/test/unit/data/companies/companies-house.json')
+const datahubOnlyCompany = require('test/unit/data/companies/datahub-only-company.json')
+const minimalCompany = require('test/unit/data/companies/minimal-company.json')
+const companiesHouseCompany = require('test/unit/data/companies/companies-house.json')
 
-const transformCompanyToForm = require('~/src/apps/companies/transformers/company-to-form')
+const transformCompanyToForm = require('src/apps/companies/transformers/company-to-form')
 
 describe('transformCompanyToForm', () => {
   context('when called with a fully populated datahub only company', () => {

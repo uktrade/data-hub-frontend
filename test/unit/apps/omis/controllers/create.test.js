@@ -1,7 +1,7 @@
 const { assign } = require('lodash')
 
-const FormController = require('~/src/apps/omis/controllers/form')
-const companyMock = require('~/test/unit/data/company.json')
+const FormController = require('src/apps/omis/controllers/form')
+const companyMock = require('test/unit/data/company.json')
 
 describe('OMIS CreateController', () => {
   beforeEach(() => {
@@ -9,7 +9,7 @@ describe('OMIS CreateController', () => {
     this.errorSpy = sinon.spy()
     this.getDitCompanyStub = sinon.stub().resolves(companyMock)
 
-    this.ControllerClass = proxyquire('~/src/apps/omis/controllers/create', {
+    this.ControllerClass = proxyquire('src/apps/omis/controllers/create', {
       '../../companies/repos': {
         getDitCompany: this.getDitCompanyStub,
       },

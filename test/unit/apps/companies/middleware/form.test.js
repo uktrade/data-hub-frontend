@@ -1,14 +1,14 @@
 const moment = require('moment')
 
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder.js')
 
-const config = require('~/config')
-const companiesHouseRecord = require('~/test/unit/data/companies/companies-house.json')
-const companyRecord = require('~/test/unit/data/companies/datahub-only-company.json')
+const config = require('config')
+const companiesHouseRecord = require('test/unit/data/companies/companies-house.json')
+const companyRecord = require('test/unit/data/companies/datahub-only-company.json')
 
 const yesterday = moment().subtract(1, 'days').toISOString()
-const { populateForm, handleFormPost } = require('~/src/apps/companies/middleware/form')
-const formService = require('~/src/apps/companies/services/form')
+const { populateForm, handleFormPost } = require('src/apps/companies/middleware/form')
+const formService = require('src/apps/companies/services/form')
 
 const metadataMock = {
   headquarterOptions: [

@@ -2,7 +2,7 @@ describe('Create proposition', () => {
   beforeEach(() => {
     this.propositionFormStub = sinon.spy()
 
-    this.create = proxyquire('~/src/apps/propositions/controllers/create', {
+    this.create = proxyquire('src/apps/propositions/controllers/create', {
       '../macros': {
         propositionForm: this.propositionFormStub,
       },

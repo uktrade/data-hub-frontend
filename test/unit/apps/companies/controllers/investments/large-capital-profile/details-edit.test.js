@@ -1,14 +1,14 @@
-const investorTypeTransformed = require('~/test/unit/data/companies/investments/metadata/investor-type-transformed.json')
-const requiredChecksConducted = require('~/test/unit/data/companies/investments/metadata/required-checks-conducted.json')
-const companyProfile = require('~/test/unit/data/companies/investments/large-capital-profile-new.json')
-const investorType = require('~/test/unit/data/companies/investments/metadata/investor-type.json')
-const company = require('~/test/unit/data/companies/minimal-company.json')
-const advisers = require('~/test/unit/data/advisers/advisers.json')
+const investorTypeTransformed = require('test/unit/data/companies/investments/metadata/investor-type-transformed.json')
+const requiredChecksConducted = require('test/unit/data/companies/investments/metadata/required-checks-conducted.json')
+const companyProfile = require('test/unit/data/companies/investments/large-capital-profile-new.json')
+const investorType = require('test/unit/data/companies/investments/metadata/investor-type.json')
+const company = require('test/unit/data/companies/minimal-company.json')
+const advisers = require('test/unit/data/advisers/advisers.json')
 const { cloneDeep } = require('lodash')
-const config = require('~/config')
+const config = require('config')
 
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
-const controller = require('~/src/apps/companies/apps/investments/large-capital-profile/controllers')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder.js')
+const controller = require('src/apps/companies/apps/investments/large-capital-profile/controllers')
 
 describe('Company Investments - Large capital profile - Investor details', () => {
   describe('renderProfile', () => {

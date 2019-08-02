@@ -1,10 +1,10 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder.js')
 
-const config = require('~/config')
-const companyMock = require('~/test/unit/data/companies/companies-house.json')
-const coreTeamMock = require('~/test/unit/data/companies/one-list-group-core-team.json')
+const config = require('config')
+const companyMock = require('test/unit/data/companies/companies-house.json')
+const coreTeamMock = require('test/unit/data/companies/one-list-group-core-team.json')
 
-const { renderAdvisers } = require('~/src/apps/companies/controllers/advisers')
+const { renderAdvisers } = require('src/apps/companies/controllers/advisers')
 
 describe('Company contact list controller', () => {
   describe('#renderAdvisers', () => {

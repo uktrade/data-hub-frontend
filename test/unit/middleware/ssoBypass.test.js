@@ -3,7 +3,7 @@ const { assign, set } = require('lodash')
 describe('SSO bypass middleware', () => {
   beforeEach(() => {
     this.mockConfig = {}
-    this.ssoBypassMiddleware = proxyquire.noCallThru().load('~/src/middleware/sso-bypass', {
+    this.ssoBypassMiddleware = proxyquire.noCallThru().load('src/middleware/sso-bypass', {
       '../../config': this.mockConfig,
     })
     this.reqMock = assign({}, globalReq, {

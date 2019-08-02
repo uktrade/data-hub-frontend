@@ -1,4 +1,4 @@
-const builders = require('~/src/modules/search/builders')
+const builders = require('src/modules/search/builders')
 
 describe('Search builders', () => {
   describe('#buildSearchAggregation', () => {

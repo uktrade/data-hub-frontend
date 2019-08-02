@@ -1,4 +1,4 @@
-const transformCompanyToBusinessHierarchyView = require('~/src/apps/companies/transformers/company-to-business-hierarchy-view')
+const transformCompanyToBusinessHierarchyView = require('src/apps/companies/transformers/company-to-business-hierarchy-view')
 
 describe('#transformCompanyToBusinessHierarchyView', () => {
   context('when the company is populated from D&B data', () => {

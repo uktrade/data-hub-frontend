@@ -1,4 +1,4 @@
-const { getMacros } = require('~/test/unit/macro-helper')
+const { getMacros } = require('test/unit/macro-helper')
 
 describe('LocalHeader macro', () => {
   beforeEach(() => {

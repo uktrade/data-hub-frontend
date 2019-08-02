@@ -1,7 +1,7 @@
 
-const config = require('~/config')
-const serviceOptions = require('~/test/unit/data/interactions/service-options-data.json')
-const { transformServicesOptions } = require('~/src/apps/interactions/transformers')
+const config = require('config')
+const serviceOptions = require('test/unit/data/interactions/service-options-data.json')
+const { transformServicesOptions } = require('src/apps/interactions/transformers')
 
 const serviceOptionsTransformed = transformServicesOptions(serviceOptions)
 
@@ -65,7 +65,7 @@ describe('Interaction options', () => {
 
   context('when there is no tap services', () => {
     beforeEach(() => {
-      this.interactionOption = proxyquire('~/src/apps/interactions/services/interaction-options', {
+      this.interactionOption = proxyquire('src/apps/interactions/services/interaction-options', {
         '../../../lib/options': {
           getOptions: this.getServiceOptionsStub.resolves(serviceOptionsTransformed),
         },
@@ -82,7 +82,7 @@ describe('Interaction options', () => {
   context('when there is a tap services', () => {
     beforeEach(() => {
       serviceOptionsTransformed[0].label = '(TAP)'
-      this.interactionOption = proxyquire('~/src/apps/interactions/services/interaction-options', {
+      this.interactionOption = proxyquire('src/apps/interactions/services/interaction-options', {
         '../../../lib/options': {
           getOptions: this.getServiceOptionsStub.resolves(serviceOptionsTransformed),
         },

@@ -1,6 +1,6 @@
 describe('Dashboard service', () => {
   function getDashboardService (mockData) {
-    return proxyquire('~/src/apps/dashboard/services', {
+    return proxyquire('src/apps/dashboard/services', {
       '../../lib/authorised-request': {
         authorisedRequest: () => new Promise((resolve) => {
           resolve(mockData)

@@ -1,12 +1,12 @@
 const { assign } = require('lodash')
-const contactSearchResult = require('~/test/unit/data/contacts/contact-search-result.json')
-const contact = require('~/test/unit/data/contacts/contact.json')
-const company = require('~/test/unit/data/companies/companies-house-company.json')
+const contactSearchResult = require('test/unit/data/contacts/contact-search-result.json')
+const contact = require('test/unit/data/contacts/contact.json')
+const company = require('test/unit/data/companies/companies-house-company.json')
 
 const {
   transformContactToListItem,
   transformContactToView,
-} = require('~/src/apps/contacts/transformers')
+} = require('src/apps/contacts/transformers')
 
 describe('Contact transformers', () => {
   describe('#transformContactToListItem', () => {

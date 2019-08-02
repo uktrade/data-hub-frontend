@@ -1,6 +1,6 @@
 const { assign } = require('lodash')
 
-const sessionHelper = require('~/src/lib/session-helper')
+const sessionHelper = require('src/lib/session-helper')
 
 describe('#saveSession', () => {
   beforeEach(() => {

@@ -1,4 +1,4 @@
-const adviserFilters = require('~/src/apps/adviser/filters')
+const adviserFilters = require('src/apps/adviser/filters')
 
 describe('adviser filters', () => {
   describe('#filterActiveAdvisers', () => {

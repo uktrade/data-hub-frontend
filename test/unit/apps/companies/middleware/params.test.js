@@ -1,5 +1,5 @@
-const company = require('~/test/unit/data/companies/company-v4.json')
-const companiesHouseRecord = require('~/test/unit/data/companies/companies-house.json')
+const company = require('test/unit/data/companies/company-v4.json')
+const companiesHouseRecord = require('test/unit/data/companies/companies-house.json')
 
 describe('Companies form middleware', () => {
   beforeEach(() => {
@@ -9,7 +9,7 @@ describe('Companies form middleware', () => {
     this.reqMock = { query: {}, session: { token: 2 } }
     this.resMock = { locals: {} }
 
-    this.middleware = proxyquire('~/src/apps/companies/middleware/params.js', {
+    this.middleware = proxyquire('src/apps/companies/middleware/params.js', {
       '../repos': {
         getDitCompany: this.getDitCompanyStub,
         getCHCompany: this.getCHCompanyStub,

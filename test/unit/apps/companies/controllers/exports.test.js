@@ -1,13 +1,13 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder.js')
 
-const companyMock = require('~/test/unit/data/companies/company-v4.json')
+const companyMock = require('test/unit/data/companies/company-v4.json')
 
 describe('Company export controller', () => {
   beforeEach(() => {
     this.saveCompany = sinon.stub()
     this.transformerSpy = sinon.spy()
 
-    this.controller = proxyquire('~/src/apps/companies/controllers/exports', {
+    this.controller = proxyquire('src/apps/companies/controllers/exports', {
       '../repos': {
         saveCompany: this.saveCompany,
       },

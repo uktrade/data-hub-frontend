@@ -1,5 +1,5 @@
-const investmentData = require('~/test/unit/data/investment/investment-data.json')
-const paths = require('~/src/apps/investments/paths')
+const investmentData = require('test/unit/data/investment/investment-data.json')
+const paths = require('src/apps/investments/paths')
 
 describe('Investment project, client relationship management, edit controller', () => {
   beforeEach(() => {
@@ -8,7 +8,7 @@ describe('Investment project, client relationship management, edit controller', 
     this.getDataLabelsStub = sinon.stub()
     this.breadcrumbStub = sinon.stub().returnsThis()
 
-    this.controller = proxyquire('~/src/apps/investments/controllers/team/edit-client-relationship-management', {
+    this.controller = proxyquire('src/apps/investments/controllers/team/edit-client-relationship-management', {
       '../../../../lib/controller-utils': {
         getDataLabels: this.getDataLabelsStub,
       },

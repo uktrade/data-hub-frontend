@@ -1,7 +1,7 @@
 describe('#transformApiResponseToCollection', () => {
   beforeEach(() => {
     this.buildPaginationSpy = sinon.spy()
-    this.transformApiResponseToCollection = proxyquire('~/src/modules/api/transformers/api-response-to-collection.js', {
+    this.transformApiResponseToCollection = proxyquire('src/modules/api/transformers/api-response-to-collection.js', {
       '../../../lib/pagination': {
         buildPagination: this.buildPaginationSpy,
       },

@@ -1,4 +1,4 @@
-const config = require('~/config')
+const config = require('config')
 
 const {
   getInvestment,
@@ -7,11 +7,11 @@ const {
   createInvestmentProject,
   archiveInvestmentProject,
   unarchiveInvestmentProject,
-} = require('~/src/apps/investments/repos')
+} = require('src/apps/investments/repos')
 
-const companyData = require('~/test/unit/data/company.json')
-const investmentData = require('~/test/unit/data/investment/investment-data.json')
-const investmentProjectAuditData = require('~/test/unit/data/investment/audit-log.json')
+const companyData = require('test/unit/data/company.json')
+const investmentData = require('test/unit/data/investment/investment-data.json')
+const investmentProjectAuditData = require('test/unit/data/investment/audit-log.json')
 
 describe('Investment repository', () => {
   describe('#getCompanyInvestmentProjects', () => {

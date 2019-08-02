@@ -1,4 +1,4 @@
-const { transformTimelineToListItem } = require('~/src/apps/timeline/transformers')
+const { transformTimelineToListItem } = require('src/apps/timeline/transformers')
 
 describe('Timeline transformers', () => {
   context('when called with a valid source', () => {

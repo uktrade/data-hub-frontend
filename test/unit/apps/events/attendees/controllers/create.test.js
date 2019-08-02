@@ -1,8 +1,8 @@
-const config = require('~/config')
-const { createAttendee } = require('~/src/apps/events/attendees/controllers/create')
-const attendeesData = require('~/test/unit/data/interactions/attendees.json')
-const event = require('~/test/unit/data/events/event-data.json')
-const contact = require('~/test/unit/data/contacts/contact.json')
+const config = require('config')
+const { createAttendee } = require('src/apps/events/attendees/controllers/create')
+const attendeesData = require('test/unit/data/interactions/attendees.json')
+const event = require('test/unit/data/events/event-data.json')
+const contact = require('test/unit/data/contacts/contact.json')
 
 describe('Create attendee controller', () => {
   beforeEach(() => {

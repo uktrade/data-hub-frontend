@@ -1,10 +1,10 @@
 const { assign } = require('lodash')
 
-const config = require('~/config')
-const paths = require('~/src/apps/investments/paths')
-const investmentData = require('~/test/unit/data/investment/investment-data.json')
-const advisorData = require('~/test/unit/data/investment/interaction/advisers')
-const { projectManagementLabels } = require('~/src/apps/investments/labels')
+const config = require('config')
+const paths = require('src/apps/investments/paths')
+const investmentData = require('test/unit/data/investment/investment-data.json')
+const advisorData = require('test/unit/data/investment/interaction/advisers')
+const { projectManagementLabels } = require('src/apps/investments/labels')
 
 describe('Investment form middleware - project magement', () => {
   describe('#populateForm', () => {
@@ -19,7 +19,7 @@ describe('Investment form middleware - project magement', () => {
         },
       }
 
-      this.controller = require('~/src/apps/investments/middleware/forms/project-management')
+      this.controller = require('src/apps/investments/middleware/forms/project-management')
 
       nock(config.apiRoot)
         .get(`/adviser/?limit=100000&offset=0`)
@@ -124,7 +124,7 @@ describe('Investment form middleware - project magement', () => {
           locals: {},
         }
 
-        this.controller = proxyquire('~/src/apps/investments/middleware/forms/project-management', {
+        this.controller = proxyquire('src/apps/investments/middleware/forms/project-management', {
           '../../repos': {
             updateInvestment: this.updateInvestmentStub,
           },
@@ -170,7 +170,7 @@ describe('Investment form middleware - project magement', () => {
           locals: {},
         }
 
-        this.controller = proxyquire('~/src/apps/investments/middleware/forms/project-management', {
+        this.controller = proxyquire('src/apps/investments/middleware/forms/project-management', {
           '../../repos': {
             updateInvestment: this.updateInvestmentStub,
           },

@@ -1,11 +1,11 @@
 
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder.js')
 
-const config = require('~/config')
-const companyMock = require('~/test/unit/data/companies/company-v4.json')
-const subsidiariesMock = require('~/test/unit/data/companies/subsidiaries.json')
+const config = require('config')
+const companyMock = require('test/unit/data/companies/company-v4.json')
+const subsidiariesMock = require('test/unit/data/companies/subsidiaries.json')
 
-const { renderBusinessDetails } = require('~/src/apps/companies/controllers/business-details')
+const { renderBusinessDetails } = require('src/apps/companies/controllers/business-details')
 
 describe('#renderBusinessDetails', () => {
   context('when rendering the view', () => {

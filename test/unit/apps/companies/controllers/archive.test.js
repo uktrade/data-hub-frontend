@@ -1,6 +1,6 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder.js')
 
-const companyMock = require('~/test/unit/data/companies/minimal-company.json')
+const companyMock = require('test/unit/data/companies/minimal-company.json')
 
 describe('Company controller, archive', () => {
   beforeEach(() => {
@@ -11,7 +11,7 @@ describe('Company controller, archive', () => {
 
     this.errorLoggerSpy = sinon.spy()
 
-    this.controller = proxyquire('~/src/apps/companies/controllers/archive', {
+    this.controller = proxyquire('src/apps/companies/controllers/archive', {
       '../repos': {
         archiveCompany: this.stub.archiveCompany,
         unarchiveCompany: this.stub.unarchiveCompany,

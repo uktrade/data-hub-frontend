@@ -1,7 +1,7 @@
 const {
   transformInvestorTypes,
   transformRequiredChecks,
-} = require('~/src/apps/companies/apps/investments/large-capital-profile/transformers')
+} = require('src/apps/companies/apps/investments/large-capital-profile/transformers')
 
 describe('Large capital profile, Investor details API to form', () => {
   context('when translating Investor types', () => {

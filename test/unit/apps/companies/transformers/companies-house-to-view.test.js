@@ -1,5 +1,5 @@
-const companiesHouseCompany = require('~/test/unit/data/companies/companies-house.json')
-const transformCompaniesHouseToView = require('~/src/apps/companies/transformers/companies-house-to-view')
+const companiesHouseCompany = require('test/unit/data/companies/companies-house.json')
+const transformCompaniesHouseToView = require('src/apps/companies/transformers/companies-house-to-view')
 
 describe('transformCompaniesHouseToView', () => {
   context('when companies data is provided', () => {

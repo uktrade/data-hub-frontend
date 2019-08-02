@@ -1,8 +1,8 @@
-const contactMock = require('~/test/unit/data/contacts/contacts')[0]
-const invoiceMock = require('~/test/unit/data/omis/invoice')
-const paymentsMock = require('~/test/unit/data/omis/payments')
-const assigneesMock = require('~/test/unit/data/omis/assignees')
-const subscribersMock = require('~/test/unit/data/omis/subscribers')
+const contactMock = require('test/unit/data/contacts/contacts')[0]
+const invoiceMock = require('test/unit/data/omis/invoice')
+const paymentsMock = require('test/unit/data/omis/payments')
+const assigneesMock = require('test/unit/data/omis/assignees')
+const subscribersMock = require('test/unit/data/omis/subscribers')
 
 describe('OMIS View middleware', () => {
   beforeEach(() => {
@@ -35,7 +35,7 @@ describe('OMIS View middleware', () => {
       flash: this.flashSpy,
     }
 
-    this.middleware = proxyquire('~/src/apps/omis/apps/view/middleware', {
+    this.middleware = proxyquire('src/apps/omis/apps/view/middleware', {
       '../../middleware': {
         setCompany: this.setCompanySpy,
       },

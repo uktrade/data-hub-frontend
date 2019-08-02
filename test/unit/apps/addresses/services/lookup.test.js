@@ -3,7 +3,7 @@ describe('Address lookup service', () => {
     beforeEach(() => {
       this.loggerErrorSpy = sinon.spy()
 
-      this.lookup = proxyquire('~/src/apps/addresses/services/lookup.js', {
+      this.lookup = proxyquire('src/apps/addresses/services/lookup.js', {
         '../../../../config': {
           postcodeLookup: {
             baseUrl: 'https://addresses.com/{postcode}?api-key={api-key}',

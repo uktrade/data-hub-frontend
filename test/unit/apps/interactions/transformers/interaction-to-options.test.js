@@ -2,7 +2,7 @@ const serviceOptionData = require('../../../data/interactions/service-options-da
 
 describe('Global transformers', () => {
   beforeEach(() => {
-    this.transformers = require('~/src/apps/interactions/transformers')
+    this.transformers = require('src/apps/interactions/transformers')
   })
   describe('#transformServicesOptions', () => {
     context(

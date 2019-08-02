@@ -1,8 +1,8 @@
 const { assign } = require('lodash')
 
-const { apiRoot } = require('~/config')
-const FormController = require('~/src/apps/omis/controllers/form')
-const Controller = require('~/src/apps/omis/apps/create/controllers/market')
+const { apiRoot } = require('config')
+const FormController = require('src/apps/omis/controllers/form')
+const Controller = require('src/apps/omis/apps/create/controllers/market')
 
 const marketOptionsMock = [
   { id: '9999', name: 'United Kingdom' },

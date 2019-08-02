@@ -1,5 +1,5 @@
-const contactsListData = require('~/test/unit/data/contacts/contact.json')
-const { transformContactToListItem } = require('~/src/apps/contacts/transformers')
+const contactsListData = require('test/unit/data/contacts/contact.json')
+const { transformContactToListItem } = require('src/apps/contacts/transformers')
 
 describe('Contact list controller', () => {
   beforeEach(() => {
@@ -21,7 +21,7 @@ describe('Contact list controller', () => {
 
     this.buildSelectedFiltersSummaryStub = sinon.spy()
 
-    this.controller = proxyquire('~/src/apps/contacts/controllers/list', {
+    this.controller = proxyquire('src/apps/contacts/controllers/list', {
       '../../builders': {
         buildSelectedFiltersSummary: this.buildSelectedFiltersSummaryStub,
       },

@@ -3,7 +3,7 @@ describe('Region service', () => {
     beforeEach(() => {
       this.loggerErrorSpy = sinon.spy()
 
-      this.region = proxyquire('~/src/apps/addresses/services/region.js', {
+      this.region = proxyquire('src/apps/addresses/services/region.js', {
         '../../../../config': {
           regionLookup: {
             baseUrl: 'https://regions.com/pcode={postcode}',

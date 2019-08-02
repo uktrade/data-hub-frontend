@@ -24,7 +24,7 @@ describe('XHR', () => {
         },
       }
     }
-    XHR = proxyquire('~/assets/javascripts/lib/xhr', {
+    XHR = proxyquire('assets/javascripts/lib/xhr', {
       'history': { createBrowserHistory: () => history },
     })
   })

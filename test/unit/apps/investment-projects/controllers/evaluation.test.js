@@ -1,5 +1,5 @@
-const investmentData = require('~/test/unit/data/investment/investment-data.json')
-const investmentDataUkCompany = require('~/test/unit/data/investment/investment-data-uk-company.json')
+const investmentData = require('test/unit/data/investment/investment-data.json')
+const investmentDataUkCompany = require('test/unit/data/investment/investment-data-uk-company.json')
 
 const mockMetadataRepository = {
   investmentTypeOptions: [
@@ -14,8 +14,8 @@ describe('Investment evaluation controller', () => {
     this.next = sinon.stub()
     this.breadcrumbStub = sinon.stub().returnsThis()
 
-    this.controller = proxyquire('~/src/apps/investments/controllers/evaluation', {
-      '../transformers': proxyquire('~/src/apps/investments/transformers', {
+    this.controller = proxyquire('src/apps/investments/controllers/evaluation', {
+      '../transformers': proxyquire('src/apps/investments/transformers', {
         '../../../lib/metadata': mockMetadataRepository,
       }),
     })

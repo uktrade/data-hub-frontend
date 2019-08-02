@@ -1,4 +1,4 @@
-const { transformServiceDeliveryToAttendeeListItem } = require('~/src/apps/events/attendees/transformers')
+const { transformServiceDeliveryToAttendeeListItem } = require('src/apps/events/attendees/transformers')
 
 describe('#transformEventToAttendeeListItem', () => {
   beforeEach(() => {

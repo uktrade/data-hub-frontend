@@ -1,8 +1,8 @@
-const FormController = require('~/src/apps/omis/controllers/form')
+const FormController = require('src/apps/omis/controllers/form')
 
-const orderMock = require('~/test/unit/data/omis/simple-order.json')
-const assigneesMock = require('~/test/unit/data/omis/assignees.json')
-const advisersMock = require('~/test/unit/data/advisers/advisers.json')
+const orderMock = require('test/unit/data/omis/simple-order.json')
+const assigneesMock = require('test/unit/data/omis/assignees.json')
+const advisersMock = require('test/unit/data/advisers/advisers.json')
 
 const tokenMock = '12345abcde'
 
@@ -14,7 +14,7 @@ describe('OMIS edit subscribers controller', () => {
     this.saveAssigneesStub = sinon.stub().resolves(assigneesMock)
     this.forceSaveAssigneesStub = sinon.stub().resolves(assigneesMock)
 
-    const Controller = proxyquire('~/src/apps/omis/apps/edit/controllers/assignees', {
+    const Controller = proxyquire('src/apps/omis/apps/edit/controllers/assignees', {
       '../../../../adviser/repos': {
         getAdvisers: this.getAdvisersStub,
       },

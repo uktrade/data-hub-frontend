@@ -1,7 +1,7 @@
 const { assign } = require('lodash')
 
-const minimalCompany = require('~/test/unit/data/companies/minimal-company.json')
-const { transformCompanyToExportDetailsView } = require('~/src/apps/companies/transformers')
+const minimalCompany = require('test/unit/data/companies/minimal-company.json')
+const { transformCompanyToExportDetailsView } = require('src/apps/companies/transformers')
 
 describe('transformCompanyToExportDetailsView', () => {
   context('when no export market information has been entered', () => {

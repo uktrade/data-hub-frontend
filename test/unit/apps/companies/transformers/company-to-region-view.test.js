@@ -1,4 +1,4 @@
-const transformCompanyToRegionView = require('~/src/apps/companies/transformers/company-to-region-view')
+const transformCompanyToRegionView = require('src/apps/companies/transformers/company-to-region-view')
 
 const unitedKingdomId = '80756b9a-5d95-e211-a939-e4115bead28a'
 const franceId = '82756b9a-5d95-e211-a939-e4115bead28a'

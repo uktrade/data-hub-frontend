@@ -1,6 +1,6 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const buildMiddlewareParameters = require('test/unit/helpers/middleware-parameters-builder.js')
 
-const setCompaniesLocalNav = require('~/src/apps/companies/middleware/local-navigation')
+const setCompaniesLocalNav = require('src/apps/companies/middleware/local-navigation')
 
 describe('Companies local navigation', () => {
   const commonTests = (expectedItems) => {

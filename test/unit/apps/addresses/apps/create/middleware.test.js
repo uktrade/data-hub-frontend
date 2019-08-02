@@ -1,10 +1,10 @@
-const currentJourney = require('~/src/modules/form/current-journey.js')
-const config = require('~/config')
+const currentJourney = require('src/modules/form/current-journey.js')
+const config = require('config')
 
 describe('Addresses create middleware', () => {
   describe('#setAddresses', () => {
     beforeEach(async () => {
-      this.middleware = proxyquire('~/src/apps/addresses/apps/create/middleware.js', {
+      this.middleware = proxyquire('src/apps/addresses/apps/create/middleware.js', {
         '../../services/lookup': {
           getAddresses () {
             return [
@@ -72,7 +72,7 @@ describe('Addresses create middleware', () => {
 
   describe('#setCountries', () => {
     beforeEach(async () => {
-      this.middleware = require('~/src/apps/addresses/apps/create/middleware.js')
+      this.middleware = require('src/apps/addresses/apps/create/middleware.js')
 
       this.req = {
         session: {

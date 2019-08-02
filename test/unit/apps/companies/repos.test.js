@@ -1,11 +1,11 @@
 /* eslint prefer-promise-reject-errors: 0 */
-const companyData = require('~/test/unit/data/company.json')
-const companyV4Data = require('~/test/unit/data/companies/company-v4.json')
-const companyCHData = require('~/test/unit/data/companies/companies-house-company.json')
+const companyData = require('test/unit/data/company.json')
+const companyV4Data = require('test/unit/data/companies/company-v4.json')
+const companyCHData = require('test/unit/data/companies/companies-house-company.json')
 
-const config = require('~/config')
+const config = require('config')
 
-const { getDitCompany, getCHCompany } = require('~/src/apps/companies/repos.js')
+const { getDitCompany, getCHCompany } = require('src/apps/companies/repos.js')
 
 describe('Company repository', () => {
   describe('Save company', () => {
@@ -83,7 +83,7 @@ describe('Company repository', () => {
   })
 
   function makeRepositoryWithAuthRequest (authorisedRequestStub) {
-    return proxyquire('~/src/apps/companies/repos', {
+    return proxyquire('src/apps/companies/repos', {
       '../../lib/authorised-request': { authorisedRequest: authorisedRequestStub },
     })
   }

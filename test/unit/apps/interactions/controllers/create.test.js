@@ -4,7 +4,7 @@ describe('Create interaction, step 1', () => {
   beforeEach(() => {
     this.kindFormStub = sinon.spy()
 
-    this.create = proxyquire('~/src/apps/interactions/controllers/create', {
+    this.create = proxyquire('src/apps/interactions/controllers/create', {
       '../macros': {
         kindForm: this.kindFormStub,
       },

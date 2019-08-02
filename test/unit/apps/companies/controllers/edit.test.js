@@ -1,7 +1,7 @@
 const { assign } = require('lodash')
 
-const companyMock = require('~/test/unit/data/companies/company-v4.json')
-const config = require('~/config')
+const companyMock = require('test/unit/data/companies/company-v4.json')
+const config = require('config')
 
 const metaDataMock = {
   businessTypeOptions: [
@@ -55,7 +55,7 @@ describe('Company edit controller', () => {
     this.nextSpy = sinon.spy()
     this.redirectSpy = sinon.spy()
 
-    this.controller = require('~/src/apps/companies/controllers/edit')
+    this.controller = require('src/apps/companies/controllers/edit')
 
     this.reqMock = {
       session: {

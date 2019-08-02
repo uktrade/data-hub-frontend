@@ -1,6 +1,6 @@
-const transformCompanyToOneListView = require('~/src/apps/companies/transformers/company-to-one-list-view')
+const transformCompanyToOneListView = require('src/apps/companies/transformers/company-to-one-list-view')
 
-const companyMock = require('~/test/unit/data/companies/company-v4.json')
+const companyMock = require('test/unit/data/companies/company-v4.json')
 
 describe('transformCompanyToOneListView', () => {
   const commonTests = (expectedOneListTier, expectedGlobalAccountManager) => {

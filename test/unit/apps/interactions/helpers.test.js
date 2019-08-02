@@ -1,7 +1,7 @@
 const {
   getReturnLink,
   isInteractionServiceForm,
-} = require('~/src/apps/interactions/helpers')
+} = require('src/apps/interactions/helpers')
 const {
   INTERACTION_CONTEXTS,
 } = require('../../../../src/apps/interactions/constants')

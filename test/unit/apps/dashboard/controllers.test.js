@@ -16,7 +16,7 @@ describe('dashboard controller', () => {
 
     this.fetchHomepageDataStub = sinon.stub()
 
-    this.controllers = proxyquire('~/src/apps/dashboard/controllers', {
+    this.controllers = proxyquire('src/apps/dashboard/controllers', {
       './repos': {
         fetchHomepageData: this.fetchHomepageDataStub,
       },

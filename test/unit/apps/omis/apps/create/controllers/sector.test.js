@@ -1,8 +1,8 @@
 const { assign } = require('lodash')
 
-const { apiRoot } = require('~/config')
-const FormController = require('~/src/apps/omis/controllers/form')
-const Controller = require('~/src/apps/omis/apps/create/controllers/sector')
+const { apiRoot } = require('config')
+const FormController = require('src/apps/omis/controllers/form')
+const Controller = require('src/apps/omis/apps/create/controllers/sector')
 
 const sectorOptionsMock = [
   { id: '9999', name: 'ICT' },

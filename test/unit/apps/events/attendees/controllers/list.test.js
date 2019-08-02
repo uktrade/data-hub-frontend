@@ -1,7 +1,7 @@
-const config = require('~/config')
-const attendeesData = require('~/test/unit/data/interactions/attendees.json')
+const config = require('config')
+const attendeesData = require('test/unit/data/interactions/attendees.json')
 
-const { renderAttendees } = require('~/src/apps/events/attendees/controllers/list')
+const { renderAttendees } = require('src/apps/events/attendees/controllers/list')
 
 describe('event attendees', () => {
   beforeEach(() => {
