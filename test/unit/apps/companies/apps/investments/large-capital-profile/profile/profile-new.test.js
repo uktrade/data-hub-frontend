@@ -89,6 +89,9 @@ describe('Company Investments - Large capital profile', () => {
         location: {
           incompleteFields: 3,
           notes_on_locations: '',
+          uk_region_locations: {
+            value: [],
+          },
         },
       }
 
