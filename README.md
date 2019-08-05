@@ -16,11 +16,9 @@ and be provided with a back end server to provide the API, data storage and sear
 
 ## Table of Contents
 - [Getting started](#getting-started)
-  - [Docker](#docker)
-    - [docker-compose.yml](#docker-composeyml)
-    - [Environment Variables](#environment-variables)
-  - [Native install](#native-install)
-    - [Dependencies](#dependencies)
+  - [Environment variables](#environment-variables)
+  - [Running project within Docker](#running-project-within-docker)
+  - [Running project natively](#running-project-natively)
   - [Installation](#installation)
     - [Run in production mode](#run-in-production-mode)
     - [Run in development mode](#run-in-development-mode)
@@ -72,20 +70,7 @@ and be provided with a back end server to provide the API, data storage and sear
 
 ## Getting started
 
-### Docker
-
-The project comes with docker compose files, this means if you have docker
-you can start the app with a single command.
-
-There are 2 docker files.
-
-#### docker-compose.yml
-
-This will run the front end server locally, but will point to a remote backend.
-
-##### Environment Variables
-
-This file expects the following environment variables:
+### Environment variables
 
 | Name | Description |
 |:-----|:------------|
@@ -133,104 +118,97 @@ This file expects the following environment variables:
 | ZEN_SERVICE_CHANNEL | The Zen channel name for the service - defaults to `datahub` |
 | ZEN_TOKEN | Zendesk auth token |
 
+### Running project within Docker
 
-These environment variables are sourced from `.env` (Docker Compose [supports declaring default environment variables](https://docs.docker.com/compose/environment-variables/#the-envfile-configuration-option)
-in an environment file).
+1.  Go to the project root.
+  
+2.  Start the server:
 
-#### Setting up with docker-compose
-
-1.  Create a `.env` file:
-
-    ```shell
-    cp sample.env .env
-    ```
-
-2.  Ensure that the `.env` file is pointing to a valid [data-hub-leeloo backend](https://github.com/uktrade/data-hub-leeloo/)
-    using the `API_ROOT` environment variable.
-
-    - You may want to run a local copy of the leeloo backend.  By default,
-      you can run both leeloo and the frontend under one docker-compose project.
-      [See the instructions in the leeloo readme to set it up](https://github.com/uktrade/data-hub-leeloo/#installation-with-docker).
-
-
-3.  To start the server just:
-
-    ```shell
+    ```bash
     docker-compose up
     ```
 
-    The server starts in developer mode, which means that when you make local
-    changes it will auto-compile sass or javavscript, and will restart nodejs
-    when server side changes are made. A container with redis will also start,
-    this is linked to the data hub container.
+    The server will start in developer mode, which means that when you make local changes it will auto-compile assets, and will restart nodejs.
 
     You can access the server on port 3000,
     [http://localhost:3000](http://localhost:3000). You can also run a remote
-    debug session over port 9229 if using webstorm/Intellij or Visual Studio Code
+    debug session over port 9229 if using webstorm/Intellij or Visual Studio Code.
+  
+3.  Optionally, you can point the frontend to a different backend:
+    
+    ```bash
+    API_ROOT=example.com docker-compose up frontend
+    ```
+    
+### Running project natively
 
-4.  You will need to set up OAuth.  It is recommended to use the
-    [uktrade/mock-sso](https://github.com/uktrade/mock-sso) backend as this is
-    fully compatible with docker-compose projects -
-    [see the OAuth section for more detail](#oauth).
+1.  Navigate to the project root.
 
-### Native install
+2.  Install the required version of node:
 
-#### Dependencies
+    ```bash
+    brew install nvm
+    nvm use 10.16.0
+    ```
 
-* [Node.js](https://nodejs.org/en/) (>= 8.0.0)
-* [Yarn](https://yarnpkg.com/en/docs/install) (>= 0.23.4)
-* [Redis](https://redis.io/)
+3.  Ensure correct version of yarn is used:
 
-The project is using ES6 async/await therefore Node 8 is required.
+    ```bash
+    yarn policies set-version 1.16.0
+    ```
 
-### Installation
+4.  Install node packages:
+ 
+    ```bash
+    yarn install
+    ```
 
-1. Clone repository and change directory:
+5.  Create a copy of a sample `.env` file which points to a mocked API:
+ 
+    ```bash
+    cp sample.env .env
+    ```
+    
+    See [supported environment variables](#environment-variables).
+   
+6.  Start redis server:
 
-   ```
-   git clone https://github.com/UKTradeInvestment/data-hub-frontend && cd data-hub-frontend
-   ```
+    ```bash
+    docker run -it -p 6379:6379 redis:3.2
+    ```
+    
+7.  Start the mocked SSO:
 
-2. Ensure correct version of yarn is used:
+    ```bash
+    docker run -it -p 8080:8080 quay.io/uktrade/mock-sso:latest
+    ```
+    
+8.  Start the mocked backend:
 
-   ```
-   yarn policies set-version 1.15.2
-   ```
+    ```bash
+    docker run -it -p 8001:8001 ukti/data-hub-sandbox:1.0.0
+    ```
+    
+9.  Start the node server
 
-3. Install node dependencies:
-
-   ```
-   yarn install
-   ```
-
-4. Create a copy of the sample .env file and add values for the keys
-   (a current member of the project team can give you these):
-
-   ```
-   cp sample.env .env
-   ```
-
-5. Run an instance of Redis and change `REDIS_HOST` and `REDIS_PORT` in your
-   .env file if necessary
-
-#### Run in production mode
-
-Builds static assets and runs a server using node
-
-```
-yarn run build && yarn start
-```
-
-#### Run in development mode
-
-Server watches for changes and rebuilds sass or compiles js using webpack as
-needed. Changes to server side code will result in the server autorestarting.
-The server will run with the node debug flag so you can debug with Webstorm
-or Visual Studio Code.
-
-```
-yarn run develop
-```
+    **In production mode:**
+    
+    ```bash
+    yarn run build && yarn start
+    ```
+    
+    This will build static assets beforehand and then run the app.
+    
+    **In development mode:**
+    
+    ```bash
+    yarn run develop
+    ```
+    
+    Server will watch for changes and rebuild sass or compile js using webpack as
+    needed. Changes to server side code will result in the server autorestarting.
+    The server will run with the node debug flag so you can debug with Webstorm
+    or Visual Studio Code.
 
 ### Updating NodeJs
 When NodeJs is updated it is worth noting it needs to be updated in a few places:
@@ -266,7 +244,7 @@ The version of the NodeJs docker that is used in our CircleCi Acceptance tests j
 
 ### OAuth
 Data hub uses [uktrade/staff-sso](https://github.com/uktrade/staff-sso) for OAuth. Details of the required environment
-variables needed to setup OAuth can be seen in the [Environment Variables](#environment-variables) section.
+variables needed to setup OAuth can be seen in the [Environment variables](#environment-variables) section.
 For further information about how to setup OAuth:
 - Look in confluence for details on setting up SSO for developers. Instructions can be found in
   `Data Hub team > Technical Documentation > Frontend > SSO for developers`.
@@ -625,7 +603,7 @@ Screenshots will be stored in the root of the project. We commit the baselines a
   - diff
 ```
 
-### Environment variables
+### Browserstack environment variables
 
 to run in browserstack, ensure you have the following environment variables set:
 
