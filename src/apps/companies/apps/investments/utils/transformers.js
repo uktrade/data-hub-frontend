@@ -22,12 +22,12 @@ const checkOptionByMatchingId = (id) => {
   }
 }
 
-const sanitizeCheckboxes = (selection) => {
+const sanitiseUserSelection = (selection) => {
   return isString(selection) ? castArray(selection) : compact(selection)
 }
 
 module.exports = {
-  sanitizeCheckboxes,
+  sanitiseUserSelection,
   transformObjectToOption,
   checkOptionByMatchingId,
   checkOptionByFindingMatchingId,
