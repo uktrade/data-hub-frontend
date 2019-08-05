@@ -11,7 +11,28 @@
   }
 }) %}
 
-    {{
+  {{
+    AddAnother({
+      buttonName: 'uk_region_locations',
+      name: 'uk_region_locations',
+      label: 'UK locations of interest',
+      attributes: {
+        'data-auto-id': 'ukRegionLocations'
+      },
+      value: profile.location.uk_region_locations.value,
+      children: [{
+        macroName: 'MultipleChoiceField',
+        name: 'uk_region_locations',
+        label: 'UK locations of interest',
+        isLabelHidden: true,
+        optional: true,
+        initialOption: '-- Select region --',
+        options: profile.location.uk_region_locations.items
+      }]
+    })
+  }}
+
+  {{
     govukTextarea({
       name: 'notes_on_locations',
       label: {
@@ -23,5 +44,6 @@
       value: profile.location.notes_on_locations
     })
   }}
+
 
 {% endcall %}

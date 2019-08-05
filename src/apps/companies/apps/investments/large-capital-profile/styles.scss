@@ -79,6 +79,12 @@ form {
     label {
       font-weight: bold;
     }
+    .c-form-fieldset__add-another {
+      margin-top: $default-spacing-unit;
+    }
+    .govuk-form-group {
+      margin-top: $default-spacing-unit;
+    }
   }
 }
 
