@@ -1,15 +1,27 @@
 {% call Form({
   buttonText: 'Save',
-  returnText: 'Cancel',
   buttonDataAttr: 'locationSave',
+  returnText: 'Cancel',
+  class: 'location-edit',
   returnLink: '/companies/' + company.id + '/investments/large-capital-profile',
   action: '/companies/' + company.id + '/investments/large-capital-profile/update',
   hiddenFields: {
-    profileId: profile.profile.id,
+    profileId: profile.id,
     editing: profile.editing
   }
 }) %}
 
-  <p>Location: UI components sit here...</p>
+    {{
+    govukTextarea({
+      name: 'notes_on_locations',
+      label: {
+        text: "Notes on investor's location preferences"
+      },
+      attributes: {
+        'data-auto-id': 'notesOnLocations'
+      },
+      value: profile.location.notes_on_locations
+    })
+  }}
 
 {% endcall %}

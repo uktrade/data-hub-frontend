@@ -139,7 +139,8 @@ describe('Company Investments - Large capital profile', () => {
           },
         },
         location: {
-          incompleteFields: 3,
+          incompleteFields: 2,
+          notes_on_locations: 'They are super keen on the Midlands Engine',
         },
       }
 

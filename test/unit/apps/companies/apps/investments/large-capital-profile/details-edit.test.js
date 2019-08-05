@@ -191,6 +191,7 @@ describe('Company Investments - Large capital profile - Investor details', () =>
         },
         location: {
           incompleteFields: 3,
+          notes_on_locations: '',
         },
       }
 
