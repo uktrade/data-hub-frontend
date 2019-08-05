@@ -195,6 +195,9 @@ describe('Company Investments - Large capital profile - Investor details', () =>
           uk_region_locations: {
             value: [],
           },
+          other_countries_being_considered: {
+            value: [],
+          },
         },
       }
 

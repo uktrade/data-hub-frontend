@@ -1,19 +1,19 @@
-const { sanitizeCheckboxes } = require('../../utils/transformers')
+const { sanitiseUserSelection } = require('../../utils/transformers')
 
 const transformInvestorRequirements = (body) => {
   return {
-    deal_ticket_sizes: sanitizeCheckboxes(body.dealTicketSizes),
+    deal_ticket_sizes: sanitiseUserSelection(body.dealTicketSizes),
     asset_classes_of_interest: [
-      ...sanitizeCheckboxes(body.energyAndInfrastructure),
-      ...sanitizeCheckboxes(body.realEstate),
+      ...sanitiseUserSelection(body.energyAndInfrastructure),
+      ...sanitiseUserSelection(body.realEstate),
     ],
-    investment_types: sanitizeCheckboxes(body.investmentTypes),
+    investment_types: sanitiseUserSelection(body.investmentTypes),
     minimum_return_rate: body.minimumReturnRate,
-    time_horizons: sanitizeCheckboxes(body.timeHorizons),
-    restrictions: sanitizeCheckboxes(body.restrictions),
-    construction_risks: sanitizeCheckboxes(body.constructionRisks),
+    time_horizons: sanitiseUserSelection(body.timeHorizons),
+    restrictions: sanitiseUserSelection(body.restrictions),
+    construction_risks: sanitiseUserSelection(body.constructionRisks),
     minimum_equity_percentage: body.minimumEquityPercentage,
-    desired_deal_roles: sanitizeCheckboxes(body.desiredDealRoles),
+    desired_deal_roles: sanitiseUserSelection(body.desiredDealRoles),
   }
 }
 
