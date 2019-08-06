@@ -5,10 +5,9 @@ const { Order } = require('../../../models')
 async function editLeadAssignee (req, res, next) {
   const adviserId = req.body.adviserId
   const orderId = req.body.orderId
-  const returnUrl = req.body.returnUrl || req.header('Referer')
 
   if (!adviserId || !orderId) {
-    return res.redirect(returnUrl)
+    return res.redirect(res.locals.ORIGINAL_URL)
   }
 
   try {
@@ -23,7 +22,7 @@ async function editLeadAssignee (req, res, next) {
     await Order.saveAssignees(req.session.token, orderId, assignees)
 
     req.flash('success', `Lead adviser in the market set to ${get(leadAdviser, 'adviser.name')}`)
-    res.redirect(returnUrl)
+    res.redirect(res.locals.ORIGINAL_URL)
   } catch (error) {
     next(error)
   }
