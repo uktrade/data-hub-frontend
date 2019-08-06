@@ -21,6 +21,7 @@ function transformInteractionResponseToForm ({
   date,
   company,
   communication_channel,
+  kind,
 } = {}) {
   if (!id) return null
   const isValidDate = isValid(new Date(date))
@@ -62,6 +63,7 @@ function transformInteractionResponseToForm ({
     },
     company: get(company, 'id'),
     communication_channel: get(communication_channel, 'id'),
+    kind,
   }
 }
 

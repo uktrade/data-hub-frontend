@@ -1,39 +1,49 @@
 version: "3"
 services:
-  redis:
-    image: redis:3.2
-    restart: always
-  datahub-fe:
-    env_file:
-     - .env
+
+  frontend:
     build:
       context: .
     ports:
       - 3000:3000
       - 9229:9229
+    depends_on:
+      - redis
+      - mock-backend
+      - mock-sso
     environment:
-     - API_ROOT
-     - API_CLIENT_ID
-     - API_CLIENT_SECRET
-     - POSTCODE_KEY
+      API_ROOT: ${API_ROOT:-http://mock-backend:8001}
+      QA_HOST: http://localhost:3000
+      REDIS_HOST: redis
+      MOCK_SSO_ROOT: http://mock-sso:8080
+      OAUTH2_TOKEN_FETCH_URL: http://mock-sso:8080/o/token
+      OAUTH2_USER_PROFILE_URL: http://mock-sso:8080/api/v1/user/me
+      OAUTH2_AUTH_URL: http://localhost:8080/o/authorize # Redirects user in the browser hence 'localhost'
+      OAUTH2_REDIRECT_URL: http://localhost:3000/oauth/callback # Redirects user in the browser hence 'localhost'
+      OAUTH2_CLIENT_SECRET: youAintSeenMyRight
+      OAUTH2_CLIENT_ID: randomClientId
+      OAUTH2_DEV_TOKEN: ditStaffToken
+      CACHE_ASSETS: "true"
     volumes:
       - ./assets:/usr/src/app/assets
       - ./common:/usr/src/app/common
       - ./config:/usr/src/app/config
       - ./src:/usr/src/app/src
       - ./test:/usr/src/app/test
-    # Must explicitly kill the process running under port 9229 due to an 
+    # Must explicitly kill the process running under port 9229 due to an
     # incompatibility between nodemon and docker detailed here:
     # https://github.com/remy/nodemon/issues/1476
+    entrypoint: dockerize -wait tcp://redis:6379 -wait tcp://mock-backend:8001 -wait tcp://mock-sso:8080 -timeout 180s
     command: ./node_modules/.bin/nodemon $NODE_DEBUG_OPTION --delay 80ms --exec 'fuser -k 9229/tcp; sleep 0.1; node --inspect=0.0.0.0:9229 src/server.js' -L
-    links:
-      - redis
+
   webpack:
     build:
       context: .
     ports:
       - 3001:3001
       - 3002:3002
+    depends_on:
+      - frontend
     environment:
       - WEBPACK_ENV=docker
     volumes:
@@ -41,5 +51,21 @@ services:
       - ./common:/usr/src/app/common
       - ./config:/usr/src/app/config
     command: ./node_modules/.bin/webpack --watch --watch-poll --progress
-    links:
-      - datahub-fe
+
+  mock-sso:
+    image: quay.io/uktrade/mock-sso:latest
+    ports:
+      - 8080:8080
+    environment:
+      MOCK_SSO_SCOPE: data-hub:internal-front-end
+      MOCK_SSO_TOKEN: 123
+
+  mock-backend:
+    image: ukti/data-hub-sandbox:1.0.0
+    ports:
+      - 8001:8001
+
+  redis:
+    image: redis:3.2
+    ports:
+      - 6379:6379

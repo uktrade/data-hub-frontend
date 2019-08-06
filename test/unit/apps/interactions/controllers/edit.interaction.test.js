@@ -513,7 +513,7 @@ describe('Interaction edit controller (Interactions)', () => {
   context('When adding an interaction from a company', () => {
     beforeEach(async () => {
       this.req.params = {
-        ...this.req.parms,
+        ...this.req.params,
         theme: 'export',
         kind: 'interaction',
       }
@@ -1169,22 +1169,18 @@ describe('Interaction edit controller (Interactions)', () => {
     })
   })
 
-  context('when an interaction has no kind', () => {
+  context('when a new interaction has no kind', () => {
     beforeEach(async () => {
       this.req.params = {
         ...this.req.parms,
         theme: 'export',
         kind: '',
-        interactionId: 'af4aac84-4d6a-47df-a733-5a54e3008c32',
       }
 
       this.res.locals = {
         company: {
           id: '1',
           name: 'Fred ltd.',
-        },
-        interaction: {
-          ...interactionData,
         },
         form: {
           errors: {
@@ -1218,9 +1214,62 @@ describe('Interaction edit controller (Interactions)', () => {
 
       await controller.renderEditPage(this.req, this.res, this.nextStub)
     })
-    it('should redirect to a 404', () => {
-      expect(this.res.redirect).to.have.been.called
-      expect(this.res.redirect).to.have.been.calledWith('/404')
+    it('should throw an error', () => {
+      expect(this.nextStub).to.have.been.called
+      expect(this.nextStub.firstCall.args[0]).to.be.instanceof(Error)
+      expect(this.nextStub.firstCall.args[0].message).to.equal('Invalid kind')
+    })
+  })
+
+  context('when a new interaction has a kind that does not match service-delivery or interaction', () => {
+    beforeEach(async () => {
+      this.req.params = {
+        ...this.req.parms,
+        theme: 'export',
+        kind: 'not-really-an-interaction',
+      }
+
+      this.res.locals = {
+        company: {
+          id: '1',
+          name: 'Fred ltd.',
+        },
+        form: {
+          errors: {
+            messages: {
+              subject: ['Error message'],
+            },
+          },
+        },
+        requestBody: {
+          subject: 'a',
+        },
+      }
+
+      nock(config.apiRoot)
+        .get('/v3/contact?company_id=1&limit=500')
+        .reply(200, { results: this.contactsData })
+        .get('/metadata/team/')
+        .reply(200, this.metadataMock.teamOptions)
+        .get('/metadata/service/?contexts__has_any=export_service_delivery')
+        .reply(200, this.metadataMock.serviceOptions)
+        .get('/adviser/?limit=100000&offset=0')
+        .reply(200, { results: this.activeInactiveAdviserData })
+        .get('/metadata/communication-channel/')
+        .reply(200, this.metadataMock.channelOptions)
+        .get('/metadata/service-delivery-status/')
+        .reply(200, this.metadataMock.serviceDeliveryStatus)
+        .get('/metadata/policy-area/')
+        .reply(200, this.metadataMock.policyAreaOptions)
+        .get('/metadata/policy-issue-type/')
+        .reply(200, this.metadataMock.policyIssueType)
+
+      await controller.renderEditPage(this.req, this.res, this.nextStub)
+    })
+    it('should throw an error', () => {
+      expect(this.nextStub).to.have.been.called
+      expect(this.nextStub.firstCall.args[0]).to.be.instanceof(Error)
+      expect(this.nextStub.firstCall.args[0].message).to.equal('Invalid kind')
     })
   })
 })
