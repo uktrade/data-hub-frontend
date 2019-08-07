@@ -194,6 +194,7 @@ and be provided with a back end server to provide the API, data storage and sear
     **In production mode:**
     
     ```bash
+    export NODE_ENV=production
     yarn run build && yarn start
     ```
     

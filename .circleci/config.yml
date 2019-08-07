@@ -290,7 +290,7 @@ jobs:
       - checkout
       - *restore_yarn_cache
       - run: yarn install --pure-lockfile
-      - run: yarn build
+      - run: yarn build:prod
       - run:
           name: Run client-side unit tests
           command: |
@@ -324,7 +324,7 @@ jobs:
       - *restore_yarn_cache
       - *wait_for_api_sandbox
       - run: yarn install --pure-lockfile
-      - run: yarn build
+      - run: yarn build:prod
       - *start_frontend
       - *wait_for_frontend
       - run:
@@ -349,7 +349,7 @@ jobs:
       - *restore_yarn_cache
       - *wait_for_api_sandbox
       - run: yarn install --pure-lockfile
-      - run: yarn build
+      - run: yarn build:prod
       - *start_frontend
       - *wait_for_frontend
       - run:
@@ -380,7 +380,7 @@ jobs:
       - *wait_for_mock_sso
       - *restore_yarn_cache
       - run: yarn install --pure-lockfile
-      - run: yarn build
+      - run: yarn build:prod
       - *start_frontend
       - *wait_for_frontend
       - run:
@@ -432,7 +432,7 @@ jobs:
       - *wait_for_mock_sso
       - *restore_yarn_cache
       - run: yarn install --pure-lockfile
-      - run: yarn build
+      - run: yarn build:prod
       - *start_frontend
       - *wait_for_frontend
       - *create_cucumber_dirs
@@ -464,7 +464,7 @@ jobs:
       - *wait_for_mock_sso
       - *restore_yarn_cache
       - run: yarn install --pure-lockfile
-      - run: yarn build
+      - run: yarn build:prod
       - *start_frontend
       - *wait_for_frontend
       - *create_cucumber_dirs
@@ -496,7 +496,7 @@ jobs:
       - *wait_for_mock_sso
       - *restore_yarn_cache
       - run: yarn install --pure-lockfile
-      - run: yarn build
+      - run: yarn build:prod
       - *start_frontend
       - *wait_for_frontend
       - *create_cucumber_dirs
