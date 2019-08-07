@@ -92,6 +92,7 @@ aliases:
     OAUTH2_CLIENT_ID: randomClientId
     ARCHIVED_DOCUMENTS_BASE_URL: http://example-documents-url.io
     OAUTH2_DEV_TOKEN: *oauth2_dit_staff_token
+    SESSION_SECRET: theStrongestAvenger
 
   - &data_hub_functional_envs
     API_ROOT: http://localhost:8001
@@ -109,6 +110,7 @@ aliases:
     OAUTH2_BYPASS_SSO: true
     CACHE_ASSETS: "true"
     ZEN_ANNOUNCEMENT_URL: http://localhost:8001/zendesk/announcement
+    SESSION_SECRET: theStrongestAvenger
 
   # Data hub base docker container
   - &docker_data_hub_base
