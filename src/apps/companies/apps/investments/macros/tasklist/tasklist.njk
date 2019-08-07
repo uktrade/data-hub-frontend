@@ -21,7 +21,7 @@
           <span class="task-list__item-complete">{{ value }}</span>
         {% endfor %}
       {% else %}
-          <span class="task-list__item-complete">{{ props.value }}</span>
+          <span class="task-list__item-complete">{{ props.value | escapeHtml | safe }}</span>
       {% endif %}
     {% else %}
       <strong class="task-list__item-incomplete" id="{{ id | kebabCase }}-incomplete">INCOMPLETE</strong>
