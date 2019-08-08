@@ -1,4 +1,4 @@
-{
+module.exports = {
   "sourceType": "unambiguous",
   "plugins": [
     "@babel/plugin-proposal-object-rest-spread",
@@ -8,8 +8,9 @@
     ["@babel/preset-react"],
     ["@babel/preset-env", {
       "useBuiltIns": "usage",
+      "corejs": 2,
       "targets": {
-        "browsers": ["last 2 versions", "ie >= 8"]
+        "browsers": ["last 2 versions", "ie >= 11"]
       }
     }]
   ]
