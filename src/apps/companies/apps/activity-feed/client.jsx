@@ -7,7 +7,7 @@ const { ActivityFeedApp } = require('data-hub-components')
 const element = document.querySelector('#activity-feed-app')
 
 if (element) {
-  const params = JSON.parse(element.dataset.params)
+  const params = JSON.parse(element.getAttribute('data-params'))
 
   render(
     <ActivityFeedApp {...params} />,
