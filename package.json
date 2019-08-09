@@ -34,6 +34,7 @@
     "circle:acceptance:dit-staff": "yarn circle:acceptance --skiptags ignore,da,lep",
     "circle:acceptance:da-staff": "yarn circle:acceptance --tag da --skiptags ignore",
     "circle:acceptance:lep-staff": "yarn circle:acceptance --tag lep --skiptags ignore",
+    "heroku-postbuild": "yarn cache clean && npm rebuild && npm run build",
     "lint-staged": "lint-staged"
   },
   "pre-commit": "lint-staged",
