@@ -6,6 +6,7 @@ exports.companyCollection = require('./company/company-collection')
 exports.companyInvestment = require('./company/investment')
 exports.companySubsidiariesLink = require('./company/subsidiaries-link')
 exports.companySubsidiaries = require('./company/subsidiaries')
+exports.companyAddToListButton = require('./company/add-to-list')
 
 exports.contactCreate = require('./contact/create')
 
@@ -17,6 +18,7 @@ exports.detailsContainer = require('./details-container')
 exports.document = require('./document')
 exports.entityCollection = require('./entity-collection')
 exports.filter = require('./filter')
+
 exports.interaction = {
   complete: require('./interaction/complete'),
   details: require('./interaction/details'),
