@@ -1,7 +1,7 @@
 <ul class="task-list">
   {{ taskListItem({ name: 'UK locations of interest' }) }}
   {{ taskListItem({ name: 'Other countries the investor is considering' }) }}
-  {{ taskListItem({ name: 'Notes on investor\'s location preferences' }) }}
+  {{ taskListItem({ name: "Notes on investor's location preferences", value: profile.location.notes_on_locations }) }}
 </ul>
 
 {% call Form({

@@ -254,6 +254,7 @@ module.exports = {
       },
       notesOnInvestorsLocationPreferences: {
         name: '[data-auto-id=location] ul > li:nth-child(3) .task-list__item-name',
+        complete: '[data-auto-id="location"] ul > li:nth-child(3) .task-list__item-complete',
         incomplete: '[data-auto-id=location] ul > li:nth-child(3) .task-list__item-incomplete',
       },
     },
