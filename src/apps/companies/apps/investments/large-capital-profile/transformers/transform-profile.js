@@ -92,6 +92,7 @@ const transformProfile = (profile, editing) => {
     },
     location: {
       incompleteFields: get(profile, 'incomplete_location_fields.length'),
+      notes_on_locations: get(profile, 'notes_on_locations'),
     },
   }
 }

@@ -75,6 +75,11 @@ form {
       }
     }
   }
+  &.location-edit {
+    label {
+      font-weight: bold;
+    }
+  }
 }
 
 @include govuk-media-query($from: tablet) {
