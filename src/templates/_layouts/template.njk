@@ -126,7 +126,12 @@
 {% block footer %}{% endblock %}
 
 {% block bodyEnd %}
+  <div id="react-app">
+    <noscript>Please enable JavaScript in your browser to see the content.</noscript>
+  </div>
+
   <!--[if gt IE 8]><!-->
   <script src="{{ getAssetPath('app.js') }}"></script>
+  <script src="{{ getAssetPath('react-app.js') }}"></script>
   <!--<![endif]-->
 {% endblock %}

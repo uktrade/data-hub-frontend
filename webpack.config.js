@@ -16,10 +16,10 @@ const common = {
       './assets/javascripts/app.js',
       './assets/javascripts/app-vue.js',
     ],
-    'activity-feed-app': [
+    'react-app': [
       'react-app-polyfill/ie9',
       'react-app-polyfill/stable',
-      './src/apps/companies/apps/activity-feed/client.jsx',
+      './src/client.jsx',
     ],
   },
   output: {

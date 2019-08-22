@@ -69,3 +69,7 @@ local.log
 # Yarn version policy
 .yarnrc
 .yarn/
+
+# Yalc packages
+.yalc
+yalc.lock
