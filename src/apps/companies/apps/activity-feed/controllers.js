@@ -3,7 +3,7 @@ const { fetchActivityFeed } = require('./repos')
 async function renderActivityFeed (req, res, next) {
   const { company } = res.locals
   try {
-    const addContentParams = company.archived ? {} : {
+    const addContentProps = company.archived ? {} : {
       addContentText: 'Add interaction',
       addContentLink: `/companies/${company.id}/interactions/create`,
     }
@@ -11,9 +11,9 @@ async function renderActivityFeed (req, res, next) {
     res
       .breadcrumb(company.name, `/companies/${company.id}`)
       .breadcrumb('Activity Feed')
-      .render('companies/apps/activity-feed/views/container', {
-        params: {
-          ...addContentParams,
+      .render('companies/apps/activity-feed/views/client-container', {
+        props: {
+          ...addContentProps,
           apiEndpoint: `/companies/${company.id}/activity/data`,
         },
       })

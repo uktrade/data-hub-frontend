@@ -54,6 +54,7 @@ const investmentsRouter = require('./apps/investments/router')
 const matchingRouter = require('./apps/matching/router')
 const interactionsRouter = require('../interactions/router.sub-app')
 const activityFeedRouter = require('./apps/activity-feed/router')
+const addCompanyFormRouter = require('./apps/add-company/router')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
@@ -73,6 +74,8 @@ router.get('/export',
   getRequestBody(QUERY_FIELDS),
   exportCollection('company'),
 )
+
+router.use('/create', addCompanyFormRouter)
 
 router
   .route('/add-step-1')

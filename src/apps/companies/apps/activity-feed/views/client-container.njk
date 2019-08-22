@@ -2,12 +2,10 @@
 
 {% block body_main_content %}
 
-  {% set params = params or {} %}
+  {% set props = props or {} %}
 
-  <div id="activity-feed-app" data-params="{{ params | dump }}">
+  <div id="activity-feed-app" data-props="{{ props | dump }}">
     <noscript>Please enable JavaScript in your browser to see the activity feed.</noscript>
   </div>
-
-  <script src="{{ getAssetPath('activity-feed-app.js') }}"></script>
 
 {% endblock %}
