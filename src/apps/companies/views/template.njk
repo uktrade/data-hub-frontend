@@ -1,7 +1,6 @@
 {% extends "_layouts/template.njk" %}
 
 {% block local_header %}
-  {% if features.add_company_to_list %}
   {% set action %}
     <form action="/companies/{{ company.id }}/manage-company-list?_csrf={{ csrfToken }}" method="post">
       <input type="hidden" value="{{ company.id }}"/>
@@ -18,7 +17,6 @@
       {% endif %}
     </form>
   {% endset %}
-  {% endif %}
 
   {% call LocalHeader({
     heading: company.name,
