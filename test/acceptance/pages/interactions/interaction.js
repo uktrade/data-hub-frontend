@@ -40,6 +40,7 @@ module.exports = {
     contact: '#field-contacts',
     serviceProvider: '#field-dit_team',
     service: '#field-service',
+    subService: '#field-subService',
     serviceStatus: '#field-service_delivery_status',
     grantOffered: '#field-grant_amount_offered',
     netReceipt: '#field-net_company_receipt',
@@ -66,6 +67,15 @@ module.exports = {
       },
       createInteraction (details = {}, isServiceDelivery, callback) {
         const saveButton = isServiceDelivery ? 'serviceDeliverySaveButton' : 'interactionSaveButton'
+        const interactionDeliveryOpt = {
+          service: 'Enquiry or Referral Received',
+          subService: 'EiG National Referral',
+        }
+        const serviceDeliveryOpt = {
+          service: 'Account Management',
+          subService: 'General',
+        }
+        const selectService = isServiceDelivery ? serviceDeliveryOpt : interactionDeliveryOpt
         const futureDate = generateFutureDate()
         const interaction = assign({}, {
           subject: appendUid(faker.lorem.word()),
@@ -87,11 +97,9 @@ module.exports = {
             if (interaction.service) {
               return done()
             }
-
-            this.getListOption('@service', (service) => {
-              interaction.service = service
-              done()
-            })
+            interaction.service = selectService.service
+            interaction.subService = selectService.subService
+            done()
           })
           .perform((done) => {
             this.click('@policyFeedbackNo')

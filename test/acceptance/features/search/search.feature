@@ -4,7 +4,7 @@ Feature: Search
   I would like to search the data hub
   So search for entities
 
-  @search--events
+  @search--eventsselenium
   Scenario: Search events
 
     When I click the Events global nav link
@@ -43,7 +43,7 @@ Feature: Search
     And the Companies search tab has 1 results
     And I can view the company in the search results
 
-  @search--companies--lep @lep
+  @search--companies--lep @lep @ignore
   Scenario: Search companies as a LEP
 
     Given a "Foreign company" is created
@@ -57,7 +57,7 @@ Feature: Search
     And the Companies search tab has 1 results
     And I can view the company in the search results
 
-  @search--companies--da @da
+  @search--companies--da @da @ignore
   Scenario: Search companies as a DA
 
     Given a "Foreign company" is created

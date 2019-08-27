@@ -4,18 +4,6 @@ Feature: Create New Contact
   I would like to add a contact to data hub
   So that I can collect contact data
 
-  @contacts-save--primary-dashboard
-  Scenario: New primary contact is visible on the dashboard
-    When I navigate to the `companies.contacts` page using `company` `Lambda plc` fixture
-    And I click the "Add contact" link
-    Then there are contact fields
-    When a primary contact is added
-    And I submit the form
-    Then I see the success message
-    And I wait and then refresh the page
-    When I navigate to the `dashboard` page
-    Then the contact is displayed on the dashboard
-
   @contacts-save--primary-new-company-address
   Scenario: Add a new primary contact with new company address
     When I navigate to the `companies.contacts` page using `company` `Lambda plc` fixture

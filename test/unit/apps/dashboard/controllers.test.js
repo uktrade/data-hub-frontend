@@ -15,10 +15,12 @@ describe('dashboard controller', () => {
     this.nextSpy = sinon.spy()
 
     this.fetchHomepageDataStub = sinon.stub()
+    this.fetchCompanyListStub = sinon.stub()
 
     this.controllers = proxyquire('~/src/apps/dashboard/controllers', {
       './repos': {
         fetchHomepageData: this.fetchHomepageDataStub,
+        fetchCompanyList: this.fetchCompanyListStub,
       },
     })
   })
@@ -34,7 +36,26 @@ describe('dashboard controller', () => {
         }],
       }
 
+      this.companyData = {
+        results: [
+          {
+            company: {
+              name: 'Company name',
+              id: '39cad2d5-0fd2-427d-860a-47b120b0109e',
+              isArchived: false,
+            },
+            latestInteraction: {
+              id: '4db036cd-7444-46bb-9b51-67425e8ec189',
+              date: '2019-08-06',
+              displayDate: '06 Aug 19',
+              subject: 'a subject',
+            },
+          },
+        ],
+      }
+
       this.fetchHomepageDataStub.resolves(this.dashData)
+      this.fetchCompanyListStub.resolves(this.companyData)
       await this.controllers.renderDashboard(this.reqMock, this.resMock, this.nextSpy)
     })
 
