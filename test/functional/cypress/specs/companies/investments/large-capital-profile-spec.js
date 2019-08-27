@@ -1,5 +1,6 @@
 const { localHeader, companyInvestment: selectors } = require('../../../selectors')
 const fixtures = require('../../../fixtures')
+
 const baseUrl = Cypress.config().baseUrl
 const { oneListCorp, lambdaPlc } = fixtures.company
 const largeCapitalProfile = `/companies/${oneListCorp.id}/investments/large-capital-profile`
@@ -120,8 +121,8 @@ describe('Company Investments and Large capital profile', () => {
       cy.get(selectors.investorRequirements.incompleteFields).should('contain', '9 fields incomplete')
     })
 
-    it('should display "3 fields incomplete"', () => {
-      cy.get(selectors.location.incompleteFields).should('contain', '3 fields incomplete')
+    it('should display "2 fields incomplete"', () => {
+      cy.get(selectors.location.incompleteFields).should('contain', '2 fields incomplete')
     })
   })
 
@@ -482,6 +483,17 @@ describe('Company Investments and Large capital profile', () => {
         .get(investorRequirements.taskList.desiredDealRoles.leadManager).should('contain', 'Lead manager / deal structure')
         .get(investorRequirements.taskList.desiredDealRoles.coLeadManager).should('contain', 'Co-lead manager')
         .get(investorRequirements.taskList.desiredDealRoles.coInvestor).should('contain', 'Co-investor / syndicate member')
+    })
+  })
+
+  context('when viewing the "Location" details section', () => {
+    const { location } = selectors
+
+    it("should display 'Notes on investor's location preferences' and the text within the notes", () => {
+      cy.visit(largeCapitalProfile)
+        .get(location.summary).click()
+        .get(location.taskList.notesOnInvestorsLocationPreferences.name).should('contain', "Notes on investor's location preferences")
+        .get(location.taskList.notesOnInvestorsLocationPreferences.complete).should('contain', 'Notes go here please')
     })
   })
 })

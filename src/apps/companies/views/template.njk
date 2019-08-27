@@ -1,9 +1,30 @@
 {% extends "_layouts/template.njk" %}
 
 {% block local_header %}
-  {% call LocalHeader({ heading: company.name, modifier: 'light-banner' }) %}
-    <p class="c-local-header__heading-after">{{ company.address | formatAddress }}</p>
+  {% set action %}
+    <form action="/companies/{{ company.id }}/manage-company-list?_csrf={{ csrfToken }}" method="post">
+      <input type="hidden" value="{{ company.id }}"/>
+      {% if isCompanyAlreadyAdded %}
+        <button type="submit" name="action" value="remove" class="govuk-button govuk-button--secondary">
+          Remove from my list
+        </button>
+      {% else %}
+        {% if not company.archived %}
+          <button type="submit" name="action" value="add" class="govuk-button govuk-button--secondary">
+            Add to my list
+          </button>
+        {% endif %}
+      {% endif %}
+    </form>
+  {% endset %}
 
+  {% call LocalHeader({
+    heading: company.name,
+    actions: action,
+    modifier: 'light-banner',
+    fullWidthContent: true
+  }) %}
+    <p class="c-local-header__heading-after">{{ company.address | formatAddress }}</p>
     {% if company.headquarter_type and company.headquarter_type.name == 'ghq' %}
       <div class="c-meta-list">
         <div class="c-meta-list__item">
@@ -25,24 +46,24 @@
     <p>
       <a href="/companies/{{ company.id }}/business-details">View full business details</a>
     </p>
-
-    {% if company.archived %}
-      {% call Message({ type: 'info' }) %}
-        This company was archived on {{company.archived_on | formatDate}} by {{company.archived_by.first_name}} {{company.archived_by.last_name}}. <br>
-        <strong>Reason:</strong> {{company.archived_reason}}<br>
-        <br>
-        <a href="/companies/{{company.id}}/unarchive">Unarchive</a>
-      {% endcall %}
-    {% endif %}
   {% endcall %}
+  {% if company.archived %}
+    <div class="govuk-width-container">
+        {% call Message({ type: 'info ' }) %}
+          This company was archived on {{ company.archived_on | formatDate }} by {{ company.archived_by.first_name }} {{ company.archived_by.last_name }}.
+          <br>
+          <strong>Reason:</strong> {{ company.archived_reason }}<br>
+          <br>
+          <a href="/companies/{{ company.id }}/unarchive">Unarchive</a>
+        {% endcall %}
+    </div>
+  {% endif %}
 {% endblock %}
 
 {% block local_nav %}
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-
       {{ TabbedLocalNav({ items: localNavItems }) }}
-
     </div>
   </div>
 {% endblock %}

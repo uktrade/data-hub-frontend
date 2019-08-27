@@ -1,0 +1,11 @@
+{% extends "_layouts/template.njk" %}
+
+{% block body_main_content %}
+
+  {% set props = props or {} %}
+
+  <div id="add-company-form" data-props="{{ props | dump }}">
+    <noscript>Please enable JavaScript in your browser to see the content.</noscript>
+  </div>
+
+{% endblock %}

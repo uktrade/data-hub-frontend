@@ -6,6 +6,27 @@ function getDitCompany (token, id) {
   return authorisedRequest(token, `${config.apiRoot}/v4/company/${id}`)
 }
 
+function getDitCompanyFromList (token, id) {
+  return authorisedRequest(token, {
+    method: 'GET',
+    url: `${config.apiRoot}/v4/user/company-list/${id}`,
+  })
+}
+
+function addDitCompanyToList (token, id) {
+  return authorisedRequest(token, {
+    method: 'PUT',
+    url: `${config.apiRoot}/v4/user/company-list/${id}`,
+  })
+}
+
+function removeDitCompanyFromList (token, id) {
+  return authorisedRequest(token, {
+    method: 'DELETE',
+    url: `${config.apiRoot}/v4/user/company-list/${id}`,
+  })
+}
+
 function getCHCompany (token, id) {
   return authorisedRequest(token, `${config.apiRoot}/v4/ch-company/${id}`)
 }
@@ -87,6 +108,9 @@ function getOneListGroupCoreTeam (token, companyId) {
 module.exports = {
   saveCompany,
   getDitCompany,
+  addDitCompanyToList,
+  removeDitCompanyFromList,
+  getDitCompanyFromList,
   getCHCompany,
   archiveCompany,
   unarchiveCompany,

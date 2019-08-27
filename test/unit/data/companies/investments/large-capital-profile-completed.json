@@ -20,7 +20,6 @@
       ],
       "incomplete_location_fields": [
         "uk_region_locations",
-        "notes_on_locations",
         "other_countries_being_considered"
       ],
       "investor_type": {
@@ -39,53 +38,70 @@
         "name": "Holly Collins",
         "id": "379f390a-e083-4a2c-9cea-e3b9a08606a7"
       },
-      "deal_ticket_sizes": [{
-        "name": "£1 billion +",
-        "id": "5e7601b5-becd-42ea-b885-1bbd88b85e4b"
-      }],
-      "investment_types": [{
-        "name": "Direct Investment in Project Equity",
-        "id": "4170d99a-02fc-46ee-8fd4-3fe786717708"
-      }],
+      "deal_ticket_sizes": [
+        {
+          "name": "£1 billion +",
+          "id": "5e7601b5-becd-42ea-b885-1bbd88b85e4b"
+        }
+      ],
+      "investment_types": [
+        {
+          "name": "Direct Investment in Project Equity",
+          "id": "4170d99a-02fc-46ee-8fd4-3fe786717708"
+        }
+      ],
       "minimum_return_rate": {
         "id": "65c9bc7a-af68-4549-a9c9-70cd73109617",
         "name": "5-10%"
       },
-      "time_horizons": [{
-        "id": "29a0a8e9-1c21-432a-bb4f-b9363b46a6aa",
-        "name": "10-14 years"
-      }],
-      "construction_risks": [{
-        "id": "884deaf6-cb0c-4036-b78c-efd92cb10098",
-        "name": "Brownfield (some construction risk)"
-      }],
+      "time_horizons": [
+        {
+          "id": "29a0a8e9-1c21-432a-bb4f-b9363b46a6aa",
+          "name": "10-14 years"
+        }
+      ],
+      "construction_risks": [
+        {
+          "id": "884deaf6-cb0c-4036-b78c-efd92cb10098",
+          "name": "Brownfield (some construction risk)"
+        }
+      ],
       "minimum_equity_percentage": {
         "id": "ec061f70-b287-41cf-aaf4-620aec79616b",
         "name": "20-49%"
       },
-      "desired_deal_roles": [{
-        "id": "48cace6e-ec14-467b-b1b5-19b318ab5c51",
-        "name": "Co-investor / syndicate member"
-      }],
-      "restrictions": [{
-        "id": "24d90807-91de-4814-92f6-0a5ee43406d1",
-        "name": "Require FX hedge"
-      }],
-      "asset_classes_of_interest": [{
-        "name": "Biomass",
-        "id": "f2b6c1a7-4d4f-4fd9-884b-5e1f5b3525be"
-      }, {
-        "name": "Direct heating",
-        "id": "bfab8ff2-e9bb-4fc8-b36c-5adddf8286b0"
-      }, {
-        "id": "0fbceb4c-860a-4d1c-9c51-1da6997ba5fd",
-        "name": "Advanced manufacturing"
-      }, {
-        "id": "a8818051-1618-466d-b2b8-7a4992dcd923",
-        "name": "Commerical led"
-      }],
+      "desired_deal_roles": [
+        {
+          "id": "48cace6e-ec14-467b-b1b5-19b318ab5c51",
+          "name": "Co-investor / syndicate member"
+        }
+      ],
+      "restrictions": [
+        {
+          "id": "24d90807-91de-4814-92f6-0a5ee43406d1",
+          "name": "Require FX hedge"
+        }
+      ],
+      "asset_classes_of_interest": [
+        {
+          "name": "Biomass",
+          "id": "f2b6c1a7-4d4f-4fd9-884b-5e1f5b3525be"
+        },
+        {
+          "name": "Direct heating",
+          "id": "bfab8ff2-e9bb-4fc8-b36c-5adddf8286b0"
+        },
+        {
+          "id": "0fbceb4c-860a-4d1c-9c51-1da6997ba5fd",
+          "name": "Advanced manufacturing"
+        },
+        {
+          "id": "a8818051-1618-466d-b2b8-7a4992dcd923",
+          "name": "Commerical led"
+        }
+      ],
       "uk_region_locations": [],
-      "notes_on_locations": "",
+      "notes_on_locations": "They are super keen on the Midlands Engine",
       "other_countries_being_considered": []
     }
   ]

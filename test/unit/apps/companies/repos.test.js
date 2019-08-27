@@ -2,10 +2,17 @@
 const companyData = require('~/test/unit/data/company.json')
 const companyV4Data = require('~/test/unit/data/companies/company-v4.json')
 const companyCHData = require('~/test/unit/data/companies/companies-house-company.json')
+const myCompanyListData = require('~/test/unit/data/companies/my-company-list.json')
 
 const config = require('~/config')
 
 const { getDitCompany, getCHCompany } = require('~/src/apps/companies/repos.js')
+
+function makeRepositoryWithAuthRequest (authorisedRequestStub) {
+  return proxyquire('~/src/apps/companies/repos', {
+    '../../lib/authorised-request': { authorisedRequest: authorisedRequestStub },
+  })
+}
 
 describe('Company repository', () => {
   describe('Save company', () => {
@@ -82,9 +89,39 @@ describe('Company repository', () => {
     })
   })
 
-  function makeRepositoryWithAuthRequest (authorisedRequestStub) {
-    return proxyquire('~/src/apps/companies/repos', {
-      '../../lib/authorised-request': { authorisedRequest: authorisedRequestStub },
+  describe('#getDitCompanyFromList', () => {
+    it('should call the API with a GET to see if the company exists in the list', async () => {
+      this.authorisedRequestStub = sinon.stub()
+      this.repo = makeRepositoryWithAuthRequest(this.authorisedRequestStub)
+      await this.repo.getDitCompanyFromList('TEST_TOKEN', myCompanyListData.id)
+      expect(this.authorisedRequestStub).calledOnceWithExactly('TEST_TOKEN', {
+        method: 'GET',
+        url: `http://localhost:8000/v4/user/company-list/${myCompanyListData.id}`,
+      })
     })
-  }
+  })
+
+  describe('#addDitCompanyToList', () => {
+    it('should call the API with a PUT to add company to the list', async () => {
+      this.authorisedRequestStub = sinon.stub()
+      this.repo = makeRepositoryWithAuthRequest(this.authorisedRequestStub)
+      await this.repo.addDitCompanyToList('TEST_TOKEN', myCompanyListData.id)
+      expect(this.authorisedRequestStub).calledOnceWithExactly('TEST_TOKEN', {
+        method: 'PUT',
+        url: `http://localhost:8000/v4/user/company-list/${myCompanyListData.id}`,
+      })
+    })
+  })
+
+  describe('#removeDitCompanyToList', () => {
+    it('should call the API with a DELETE to remove company from the list', async () => {
+      this.authorisedRequestStub = sinon.stub()
+      this.repo = makeRepositoryWithAuthRequest(this.authorisedRequestStub)
+      await this.repo.removeDitCompanyFromList('TEST_TOKEN', myCompanyListData.id)
+      expect(this.authorisedRequestStub).calledOnceWithExactly('TEST_TOKEN', {
+        method: 'DELETE',
+        url: `http://localhost:8000/v4/user/company-list/${myCompanyListData.id}`,
+      })
+    })
+  })
 })
