@@ -7,6 +7,8 @@ aliases:
   - &oauth2_dit_staff_token     ditStaffToken
   - &oauth2_da_staff_token      daStaffToken
   - &oauth2_lep_staff_token     lepStaffToken
+  - &leeloo_develop_image       quay.io/uktrade/data-hub-leeloo:develop
+  - &leeloo_master_image        quay.io/uktrade/data-hub-leeloo:master
 
   # Common steps
   - &restore_yarn_cache
@@ -152,7 +154,7 @@ aliases:
 
   # Data hub backend
   - &docker_data_hub_backend_base
-    image: ukti/data-hub-leeloo:latest
+    image: *leeloo_develop_image
     environment:
       AWS_DEFAULT_REGION: eu-west-2
       AWS_ACCESS_KEY_ID: foo
@@ -520,9 +522,9 @@ jobs:
       - *docker_mi_postgres
       - *docker_mock_sso
       - <<: *docker_data_hub_backend_api
-        image: ukti/data-hub-leeloo:master
+        image: *leeloo_master_image
       - <<: *docker_data_hub_backend_celery
-        image: ukti/data-hub-leeloo:master
+        image: *leeloo_master_image
 
   # Run acceptance tests for LEP staff using the master version of the backend
   master-lep_staff_at:
@@ -538,9 +540,9 @@ jobs:
       - *docker_mi_postgres
       - *docker_mock_sso
       - <<: *docker_data_hub_backend_api
-        image: ukti/data-hub-leeloo:master
+        image: *leeloo_master_image
       - <<: *docker_data_hub_backend_celery
-        image: ukti/data-hub-leeloo:master
+        image: *leeloo_master_image
 
   # Run acceptance tests for DA staff using the master version of the backend
   master-da_staff_at:
@@ -556,9 +558,9 @@ jobs:
       - *docker_mi_postgres
       - *docker_mock_sso
       - <<: *docker_data_hub_backend_api
-        image: ukti/data-hub-leeloo:master
+        image: *leeloo_master_image
       - <<: *docker_data_hub_backend_celery
-        image: ukti/data-hub-leeloo:master
+        image: *leeloo_master_image
 
 # CircleCI workflows
 workflows:
