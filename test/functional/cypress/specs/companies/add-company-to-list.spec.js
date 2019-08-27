@@ -23,7 +23,8 @@ describe('Add company to list', () => {
       cy.visit(`/companies/${fixtures.company.archivedLtd.id}/activity`)
     })
     it('should not render a button for adding a company to a user list', () => {
-      cy.get(selectors.companyAddToListButton.button).should('not.be.visible')
+      cy.get(selectors.companyAddToListButton.button).should('have.text', 'Remove from my list')
+      cy.get(selectors.companyAddToListButton.button).should('not.have.text', 'Add to my list')
     })
   })
 })

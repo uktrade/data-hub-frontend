@@ -4,9 +4,9 @@ const rp = require('request-promise')
 const GLOBAL_NAV_ITEMS = require('../global-nav-items')
 
 const { isPermittedRoute } = require('../middleware')
-const { fetchHomepageData } = require('./repos')
+const { fetchHomepageData, fetchCompanyList } = require('./repos')
 const config = require('../../../config')
-const { formatZenArticles } = require('./transformers')
+const { formatZenArticles, transformCompanyList } = require('./transformers')
 
 async function renderDashboard (req, res, next) {
   try {
@@ -25,7 +25,10 @@ async function renderDashboard (req, res, next) {
         return []
       })
 
+    const companyList = JSON.stringify(transformCompanyList(await fetchCompanyList(req.session.token)))
+
     res.title('Dashboard').render('dashboard/views/dashboard', {
+      companyList,
       contacts,
       interactions,
       articleFeed,
