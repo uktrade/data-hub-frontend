@@ -3,7 +3,7 @@
 .c-local-header {
   padding-bottom: $default-spacing-unit * 2;
 
-  .govuk-width-container {
+  .c-local-header__container {
     border-top: 1px solid transparent;
   }
 
@@ -50,6 +50,29 @@
     top: $default-spacing-unit * 2;
   }
 }
+
+.c-local-header--relative {
+  .c-local-header__heading {
+    @include media(tablet) {
+      margin-right: 25%;
+    }
+  }
+
+  .c-local-header__content {
+    @include media(tablet) {
+      position: relative;
+    }
+  }
+
+  .c-local-header__actions {
+    @include media(tablet) {
+      position: absolute;
+      top: 0;
+      right: $default-spacing-unit;
+    }
+  }
+}
+
 
 .c-local-header--light-banner {
   background-color: $grey-4;

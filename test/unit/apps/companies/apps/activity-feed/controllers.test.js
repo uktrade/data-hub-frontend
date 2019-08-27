@@ -81,16 +81,17 @@ describe('Activity feed controllers', () => {
       })
 
       it('should render the activity feed template', () => {
-        expect(this.middlewareParameters.resMock.render).to.be.calledOnceWithExactly('companies/apps/activity-feed/views/container', {
-          params: {
-            addContentLink: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a/interactions/create',
-            addContentText: 'Add interaction',
-            apiEndpoint: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a/activity/data',
-          },
-        })
+        expect(this.middlewareParameters.resMock.render).to.be.calledOnceWithExactly(
+          'companies/apps/activity-feed/views/client-container', {
+            props: {
+              addContentLink: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a/interactions/create',
+              addContentText: 'Add interaction',
+              apiEndpoint: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a/activity/data',
+            },
+          })
       })
 
-      it('should add a breadcrumbs', () => {
+      it('should add a breadcrumb', () => {
         expect(this.middlewareParameters.resMock.breadcrumb.firstCall).to.be.calledWith(
           'Wonka Industries',
           '/companies/dcdabbc9-1781-e411-8955-e4115bead28a'
@@ -98,7 +99,7 @@ describe('Activity feed controllers', () => {
         expect(this.middlewareParameters.resMock.breadcrumb.lastCall).to.be.calledWith('Activity Feed')
       })
 
-      it('should not call next with an error', async () => {
+      it('should not call "next" with an error', async () => {
         expect(this.middlewareParameters.nextSpy).to.not.have.been.called
       })
     })
@@ -120,8 +121,8 @@ describe('Activity feed controllers', () => {
       })
 
       it('should render the template without the "Add interaction" button', () => {
-        expect(this.middlewareParameters.resMock.render).to.be.calledOnceWithExactly('companies/apps/activity-feed/views/container', {
-          params: {
+        expect(this.middlewareParameters.resMock.render).to.be.calledOnceWithExactly('companies/apps/activity-feed/views/client-container', {
+          props: {
             apiEndpoint: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a/activity/data',
           },
         })

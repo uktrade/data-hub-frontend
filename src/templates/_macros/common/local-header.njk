@@ -18,8 +18,8 @@
   {% set modifier = props.modifier | concat('') | reverse | join(' c-local-header--') if props.modifier %}
 
   {% if props %}
-    <header class="c-local-header {{ modifier }}" aria-label="local header" data-auto-id="localHeader">
-      <div class="govuk-width-container">
+    <header class="c-local-header {{ modifier }}{{ ' c-local-header--relative' if props.fullWidthContent }}" aria-label="local header" data-auto-id="localHeader">
+      <div class="govuk-width-container c-local-header__container">
         {% if breadcrumbs|length > 1 %}
           {{ govukBreadcrumbs({
             items: breadcrumbs,
@@ -33,8 +33,8 @@
           {{ MessageList({ items: messages }) }}
         {% endif %}
 
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-{{ 'two-thirds' if props.actions else 'full' }}">
+        <div class="govuk-grid-row c-local-header__content">
+          <div class="govuk-grid-column-{{ 'two-thirds' if props.actions and not props.fullWidthContent else 'full' }}">
             {% if props.headingBefore %}
               <div class="c-local-header__heading-before">
                 {{ props.headingBefore | safe }}
@@ -46,12 +46,10 @@
                 {{ props.heading }} {{ props.headingSuffix | safe }}
               </h1>
             {% endif %}
-
             {{ caller() if caller }}
           </div>
-
           {% if props.actions %}
-            <div class="govuk-grid-column-one-third c-local-header__actions">
+            <div class="c-local-header__actions govuk-grid-column-one-third">
               {{ props.actions | safe }}
             </div>
           {% endif %}

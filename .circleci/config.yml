@@ -41,7 +41,7 @@ aliases:
   - &wait_for_frontend
     run:
       name: Wait for data hub frontend
-      command: dockerize -wait ${QA_HOST}/healthcheck -timeout 120s
+      command: dockerize -wait ${QA_HOST}/healthcheck -timeout 180s
 
   # Wait for api sandbox to report OK
   - &wait_for_api_sandbox
@@ -148,7 +148,7 @@ aliases:
       - MOCK_SSO_TOKEN: 123
 
   - &docker_data_api_sandbox
-    image: ukti/data-hub-sandbox:1.0.0
+    image: ukti/data-hub-sandbox
 
   # Data hub backend
   - &docker_data_hub_backend_base
