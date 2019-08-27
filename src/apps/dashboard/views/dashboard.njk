@@ -12,49 +12,12 @@
 {% endblock %}
 
 {% block body_main_content %}
-  <div class="grid-row dashboard">
+<div class="grid-row dashboard">
     <div class="govuk-grid-column-two-thirds">
-    {% if interactionsPermitted %}
-        <div class="dashboard-section">
-          <h2 class="dashboard-section-title">My latest interactions</h2>
-          <a href="/interactions" class="dashboard-section__link">See all interactions</a>
-          {% if interactions.length %}
-            {% set interactionData = [] %}
-            {% for interaction in interactions.slice(0, 5) %}
-              {% set interactionData = (interactionData.push({interaction:  '<a href="/interactions/' + interaction.id +'"/>' + interaction.subject +  '</a>', company: interaction.company.name}), interactionData) %}
-            {% endfor %}
-
-            {% component 'data-table', {
-              variant: 'slim',
-              cellClasses: 'govuk-grid-column-one-half',
-              data: interactionData
-            } %}
-
-          {% else %}
-            <p>No interactions have been added.</p>
-          {% endif %}
-        </div>
-    {% endif %}
-
-      <div class="dashboard-section">
-        <h2 class="dashboard-section-title">My latest contacts</h2>
-        <a href="/contacts" class="dashboard-section__link">See all contacts</a>
-        {% if contacts.length %}
-
-          {% set contactData = [] %}
-          {% for contact in contacts.slice(0, 5) %}
-            {% set contactData = (contactData.push({name: '<a href="/contacts/' + contact.id +'"/>' + contact.first_name + ' ' + contact.last_name + '</a>', company: contact.company.name}), contactData) %}
-          {% endfor %}
-
-          {% component 'data-table', {
-            variant: 'slim',
-            cellClasses: 'govuk-grid-column-one-half',
-            data: contactData
-          } %}
-        {% else %}
-          <p>No contacts have been added.</p>
-        {% endif %}
-      </div>
+      {% component 'react-slot', {
+        id: 'react-mount-my-companies',
+        model: companyList
+      } %}
     </div>
 
     <div class="govuk-grid-column-one-third">
