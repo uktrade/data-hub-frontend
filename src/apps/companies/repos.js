@@ -76,15 +76,6 @@ function getCompanyAuditLog (token, companyId, page = 1) {
   })
 }
 
-function getCompanyTimeline (token, companyId, page = 1) {
-  const limit = 10
-  const offset = limit * (page - 1)
-  return authorisedRequest(token, {
-    url: `${config.apiRoot}/v4/company/${companyId}/timeline`,
-    qs: { limit, offset },
-  })
-}
-
 function getCompanySubsidiaries (token, companyId, page = 1) {
   const limit = 10
   const offset = limit * (page - 1)
@@ -116,7 +107,6 @@ module.exports = {
   unarchiveCompany,
   updateCompany,
   getCompanyAuditLog,
-  getCompanyTimeline,
   getCompanySubsidiaries,
   getOneListGroupCoreTeam,
 }

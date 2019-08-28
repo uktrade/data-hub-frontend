@@ -10,6 +10,5 @@ module.exports = () => {
     },
     heading: `${bodyMainContentSelector} h2`,
     archivedSummary: `${bodyMainContentSelector} .details__summary`,
-    timelineLink: (companyId) => `${bodyMainContentSelector} [href="/companies/${companyId}/timeline"]`,
   }
 }
