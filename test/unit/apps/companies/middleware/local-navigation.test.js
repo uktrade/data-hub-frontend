@@ -23,7 +23,6 @@ describe('Companies local navigation', () => {
         },
         user: {
           permissions: [
-            'company.view_company_timeline',
             'interaction.view_all_interaction',
             'company.view_contact',
             'investment.view_all_investmentproject',
@@ -63,7 +62,6 @@ describe('Companies local navigation', () => {
         },
         user: {
           permissions: [
-            'company.view_company_timeline',
             'interaction.view_all_interaction',
             'company.view_contact',
             'investment.view_all_investmentproject',
