@@ -13,13 +13,14 @@
 
 {% block body_main_content %}
 <div class="grid-row dashboard">
+{% if canViewCompanyList %}   
     <div class="govuk-grid-column-two-thirds">
       {% component 'react-slot', {
         id: 'react-mount-my-companies',
         model: companyList
       } %}
     </div>
-
+{% endif %}   
     <div class="govuk-grid-column-one-third">
       {% component 'info-feed', {
         heading: 'Data Hub updates',
@@ -30,7 +31,6 @@
         outboundLinkText: 'View all updates'
       } %}
     </div>
-
-  </div>
+</div>
 
 {% endblock %}

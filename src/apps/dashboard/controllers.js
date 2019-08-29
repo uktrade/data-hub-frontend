@@ -25,7 +25,15 @@ async function renderDashboard (req, res, next) {
         return []
       })
 
-    const companyList = JSON.stringify(transformCompanyList(await fetchCompanyList(req.session.token)))
+    const canViewCompanyList = userPermissions.includes(
+      'company_list.view_companylistitem'
+    )
+
+    const companyList = canViewCompanyList
+      ? JSON.stringify(
+        transformCompanyList(await fetchCompanyList(req.session.token))
+      )
+      : null
 
     res.title('Dashboard').render('dashboard/views/dashboard', {
       companyList,
@@ -37,6 +45,7 @@ async function renderDashboard (req, res, next) {
         GLOBAL_NAV_ITEMS,
         userPermissions
       ),
+      canViewCompanyList,
     })
   } catch (error) {
     next(error)
