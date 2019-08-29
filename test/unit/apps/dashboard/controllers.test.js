@@ -7,7 +7,11 @@ describe('dashboard controller', () => {
     })
 
     this.resMock = {
-      locals: {},
+      locals: {
+        user: {
+          permissions: ['company_list.view_companylistitem'],
+        },
+      },
       render: sinon.spy(),
       title: sinon.stub().returnsThis(),
     }
@@ -28,12 +32,16 @@ describe('dashboard controller', () => {
   context('when there are no errors calling the API', () => {
     beforeEach(async () => {
       this.dashData = {
-        contacts: [{
-          id: '1234',
-        }],
-        interactions: [{
-          id: '4321',
-        }],
+        contacts: [
+          {
+            id: '1234',
+          },
+        ],
+        interactions: [
+          {
+            id: '4321',
+          },
+        ],
       }
 
       this.companyData = {
@@ -56,7 +64,11 @@ describe('dashboard controller', () => {
 
       this.fetchHomepageDataStub.resolves(this.dashData)
       this.fetchCompanyListStub.resolves(this.companyData)
-      await this.controllers.renderDashboard(this.reqMock, this.resMock, this.nextSpy)
+      await this.controllers.renderDashboard(
+        this.reqMock,
+        this.resMock,
+        this.nextSpy
+      )
     })
 
     it('should render the dashboard template', () => {
@@ -70,7 +82,9 @@ describe('dashboard controller', () => {
 
     it('should render the page with interactions', () => {
       const renderOptions = this.resMock.render.firstCall.args[1]
-      expect(renderOptions.interactions).to.deep.equal(this.dashData.interactions)
+      expect(renderOptions.interactions).to.deep.equal(
+        this.dashData.interactions
+      )
     })
 
     it('should not call next', () => {
@@ -86,7 +100,11 @@ describe('dashboard controller', () => {
     beforeEach(async () => {
       this.error = { status: 500 }
       this.fetchHomepageDataStub.rejects(this.error)
-      await this.controllers.renderDashboard(this.reqMock, this.resMock, this.nextSpy)
+      await this.controllers.renderDashboard(
+        this.reqMock,
+        this.resMock,
+        this.nextSpy
+      )
     })
 
     it('should show an error', () => {
