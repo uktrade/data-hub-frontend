@@ -28,7 +28,6 @@ describe('Company router', () => {
       '/:companyId/orders',
       '/:companyId/audit',
       '/:companyId/documents',
-      '/:companyId/timeline',
       '/:companyId/manage-company-list' ],
     )
   })
