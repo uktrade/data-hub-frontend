@@ -44,7 +44,7 @@ describe('Info feed component', () => {
       '.dashboard-section__subheading'
     )
     this.outboundLink = this.component.querySelector(
-      '.dashboard-section__bottom-link'
+      '.dashboard-section__top-link'
     )
     this.infoFeedLink = this.component.querySelectorAll(
       '.dashboard-section__info-feed-link'

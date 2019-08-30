@@ -13,15 +13,7 @@
 
 {% block body_main_content %}
 <div class="grid-row dashboard">
-{% if canViewCompanyList %}   
-    <div class="govuk-grid-column-two-thirds">
-      {% component 'react-slot', {
-        id: 'react-mount-my-companies',
-        model: companyList
-      } %}
-    </div>
-{% endif %}   
-    <div class="govuk-grid-column-one-third">
+    <div class="govuk-grid-column-full">
       {% component 'info-feed', {
         heading: 'Data Hub updates',
         subHeading: 'Announcements from the Data Hub team. Links open in a new window.',
@@ -31,6 +23,14 @@
         outboundLinkText: 'View all updates'
       } %}
     </div>
-</div>
+{% if canViewCompanyList %}   
+    <div class="govuk-grid-column-full">
+      {% component 'react-slot', {
+        id: 'react-mount-my-companies',
+        model: companyList
+      } %}
+    </div> 
+{% endif %}  
+</div> 
 
 {% endblock %}
