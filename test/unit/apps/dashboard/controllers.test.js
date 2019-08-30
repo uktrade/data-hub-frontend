@@ -96,6 +96,39 @@ describe('dashboard controller', () => {
     })
   })
 
+  context('when the user has no permissions to view my-companies', () => {
+    beforeEach(async () => {
+      this.resMock = {
+        locals: {
+          user: {
+            permissions: [],
+          },
+        },
+        render: sinon.spy(),
+        title: sinon.stub().returnsThis(),
+      }
+
+      this.fetchHomepageDataStub.resolves(this.dashData)
+      this.fetchCompanyListStub.resolves(this.companyData)
+      await this.controllers.renderDashboard(
+        this.reqMock,
+        this.resMock,
+        this.nextSpy
+      )
+    })
+    it('canViewCompanyList should be false', () => {
+      const expected = {
+        companyList: null,
+        contacts: [{ id: '1234' }],
+        interactions: [{ id: '4321' }],
+        articleFeed: [],
+        interactionsPermitted: false,
+        canViewCompanyList: false,
+      }
+      expect(this.resMock.render.firstCall.args[1]).to.deep.equal(expected)
+    })
+  })
+
   context('when there is a problem calling the API', () => {
     beforeEach(async () => {
       this.error = { status: 500 }
