@@ -14,10 +14,6 @@ describe('Add company form controllers', () => {
         )
       })
 
-      it('should render', () => {
-        expect(this.middlewareParameters.resMock.render).to.be.calledOnce
-      })
-
       it('should render the add company form template', () => {
         expect(this.middlewareParameters.resMock.render).to.be.calledOnceWithExactly(
           'companies/apps/add-company/views/client-container'
@@ -28,7 +24,7 @@ describe('Add company form controllers', () => {
         expect(this.middlewareParameters.resMock.breadcrumb.firstCall).to.be.calledWith('Add company')
       })
 
-      it('should not call "next" with an error', async () => {
+      it('should not call next() with an error', () => {
         expect(this.middlewareParameters.nextSpy).to.not.have.been.called
       })
     })
@@ -51,8 +47,8 @@ describe('Add company form controllers', () => {
         )
       })
 
-      it('should call "next" with an error', async () => {
-        expect(this.middlewareParameters.nextSpy).to.have.been.calledWith(this.error)
+      it('should call next() with an error', () => {
+        expect(this.middlewareParameters.nextSpy).to.have.been.calledOnceWithExactly(this.error)
       })
     })
   })
