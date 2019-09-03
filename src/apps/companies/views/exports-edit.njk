@@ -48,7 +48,7 @@
     </div>
 
     {# TODO: Make these work without JavaScript #}
-    {% set futureCountries = formData.future_interest_countries if formData.future_interest_countries.length else ['']%}
+    {% set futureCountries = formData.combined_future_interest_countries if formData.combined_future_interest_countries.length else ['']%}
     <div class="c-form-group js-AddItems" data-item-selector=".c-form-group--AddItems">
       <label class="c-form-group__label">
         <span class="c-form-group__label-text">
@@ -58,7 +58,7 @@
 
       {% for country in futureCountries %}
         {{ MultipleChoiceField({
-          name: 'future_interest_countries',
+          name: 'combined_future_interest_countries',
           label: 'Future markets of interest',
           value: country,
           options: countryOptions,

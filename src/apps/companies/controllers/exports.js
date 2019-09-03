@@ -22,14 +22,14 @@ function renderExports (req, res) {
 function populateExportForm (req, res, next) {
   const {
     export_to_countries,
-    future_interest_countries,
+    combined_future_interest_countries,
     export_experience_category,
   } = res.locals.company
 
   res.locals.formData = assign({}, {
     export_experience_category,
     export_to_countries: export_to_countries.map(country => country.id),
-    future_interest_countries: future_interest_countries.map(country => country.id),
+    combined_future_interest_countries: combined_future_interest_countries.map(country => country.id),
   }, req.body)
 
   next()
@@ -51,13 +51,18 @@ function renderExportEdit (req, res) {
 
 async function handleEditFormPost (req, res, next) {
   const exportToCountries = flatten([req.body.export_to_countries])
-  const futureInterestCountries = flatten([req.body.future_interest_countries])
+  const combinedFutureInterestCountries = flatten([req.body.combined_future_interest_countries])
 
   const data = assign({}, res.locals.company, {
     export_experience_category: req.body.export_experience_category,
     export_to_countries: filter(exportToCountries),
-    future_interest_countries: filter(futureInterestCountries),
+    combined_future_interest_countries: filter(combinedFutureInterestCountries),
   })
+  // We are setting combined_future_interest_countries now,
+  // but the API still also returns future_interest_countries.
+  // If we supply future_interest_countries with the stale value,
+  // it will override what we supply for combined_future_interest_countries.
+  delete data.future_interest_countries
 
   try {
     const save = await saveCompany(req.session.token, data)
