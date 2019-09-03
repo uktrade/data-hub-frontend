@@ -12,7 +12,7 @@ describe('Add company form controllers', () => {
   describe('#renderAddCompanyForm', () => {
     context('when the "Add company form" renders successfully', () => {
       beforeEach(async () => {
-        this.middlewareParameters = buildMiddlewareParameters({})
+        this.middlewareParameters = buildMiddlewareParameters()
         await renderAddCompanyForm(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
@@ -20,10 +20,14 @@ describe('Add company form controllers', () => {
         )
       })
 
-      it('should render the add company form template', () => {
-        expect(this.middlewareParameters.resMock.render).to.be.calledOnceWithExactly(
-          'companies/apps/add-company/views/client-container'
-        )
+      it('should render the add company form template with fields', () => {
+        const expectedTemplate = 'companies/apps/add-company/views/client-container'
+        expect(this.middlewareParameters.resMock.render).to.be.calledOnceWithExactly(expectedTemplate, {
+          props: {
+            host: 'localhost:3000',
+            csrfToken: 'csrf',
+          },
+        })
       })
 
       it('should add a breadcrumb', () => {
@@ -37,7 +41,7 @@ describe('Add company form controllers', () => {
 
     context('when the rendering fails', () => {
       beforeEach(async () => {
-        this.middlewareParameters = buildMiddlewareParameters({})
+        this.middlewareParameters = buildMiddlewareParameters()
 
         this.error = new Error('Could not render')
 
