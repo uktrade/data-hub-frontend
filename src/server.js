@@ -67,6 +67,7 @@ app.use(cookieParser())
 app.use(sessionStore)
 
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }))
+app.use(bodyParser.json())
 
 app.use(compression())
 app.use(i18n)
