@@ -95,6 +95,9 @@ aliases:
     ARCHIVED_DOCUMENTS_BASE_URL: http://example-documents-url.io
     OAUTH2_DEV_TOKEN: *oauth2_dit_staff_token
     SESSION_SECRET: theStrongestAvenger
+    HELP_CENTRE_URL: https://datahub-helpcentre.london.cloudapps.digital
+    HELP_CENTRE_ANNOUNCMENTS_URL: https://datahub-helpcentre.london.cloudapps.digital/updates/announcements
+    HELP_CENTRE_API_FEED: https://datahub-helpcentre.london.cloudapps.digital/api/feeds/announcements
 
   - &data_hub_functional_envs
     API_ROOT: http://localhost:8001
@@ -111,7 +114,8 @@ aliases:
     OAUTH2_DEV_TOKEN: ditStaffToken
     OAUTH2_BYPASS_SSO: true
     CACHE_ASSETS: "true"
-    ZEN_ANNOUNCEMENT_URL: http://localhost:8001/zendesk/announcement
+    HELP_CENTRE_API_FEED: http://localhost:8001/help-centre/announcement
+    HELP_CENTRE_FEED_API_TOKEN: apiToken
     SESSION_SECRET: theStrongestAvenger
 
   # Data hub base docker container

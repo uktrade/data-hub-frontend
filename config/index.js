@@ -118,6 +118,12 @@ const config = {
       'dit:OMISOrder',
     ],
   },
+  helpCentre: {
+    url: process.env.HELP_CENTRE_URL,
+    announcementsURL: process.env.HELP_CENTRE_ANNOUNCMENTS_URL,
+    apiFeed: process.env.HELP_CENTRE_API_FEED,
+    token: process.env.HELP_CENTRE_FEED_API_TOKEN,
+  },
 }
 
 module.exports = config

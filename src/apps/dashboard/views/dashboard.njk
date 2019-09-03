@@ -19,18 +19,18 @@
         subHeading: 'Announcements from the Data Hub team. Links open in a new window.',
         feedLimit: 3,
         dataFeed: articleFeed,
-        outboundLinkURL: 'https://uktrade.zendesk.com/hc/en-gb/sections/360000018069-Announcements',
+        outboundLinkURL: helpCentre.announcementsURL,
         outboundLinkText: 'View all updates'
       } %}
     </div>
-{% if canViewCompanyList %}   
+{% if canViewCompanyList %}
     <div class="govuk-grid-column-full">
       {% component 'react-slot', {
         id: 'react-mount-my-companies',
         model: companyList
       } %}
-    </div> 
-{% endif %}  
-</div> 
+    </div>
+{% endif %}
+</div>
 
 {% endblock %}
