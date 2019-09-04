@@ -2,12 +2,12 @@
 
 1. Move to the `develop` branch - `git checkout develop`
 2. Make sure you’ve got the latest updates - `git pull`
-3. Create a branch for your release  - `git checkout -b release/5.40.0` (change the version number to what you need it to be, this goes for all version numbers used as examples from here on out)
+3. Create a branch for your release  - `git checkout -b release/v5.40.0` (change the version number to what you need it to be, this goes for all version numbers used as examples from here on out)
 4. Use `npm version` to bump the version number in the package.json. You can do this manually, but this is easier - `npm version minor`
 (For a major version bump, i.e. 5.39 => 6.0, use `npm version major`. There is also patch, prepatch, preminor, premajor, and prerelease)
 5. `npm version` also creates a Git tag. A Git tag records a point in history and means the codebase, as it is at this point in time, doesn’t get deleted by Git’s garbage collection. In other words, we can easily roll back to this commit if you screw up later - so relax.
-6. Push the branch up to GitHub - `git push origin release/5.40.0`
-7. Push the tag up to GitHub - `git push origin 5.40.0`
+6. Push the branch up to GitHub - `git push origin release/v5.40.0`
+7. Push the tag up to GitHub - `git push origin v5.40.0`
 8. Go to the repo on [GitHub](www.github.com/uktrade/data-hub-frontend) and you should see a ‘New pull request’ button. Click it.
 9. At the top of the screen you’ll see a compare box. Compare your branch to `master` to see what changes you’ll be merging. This not only shows you what has changed in comparison to `master`, but will actually merge it to `master` too, rather than `develop` as per normal PRs.
 10. Write release notes based on what has changed. This should be understandable for humans who aren’t developers. The format is generally 3 sections - features, bugs, technical. Check a previous release for inspiration.
@@ -31,4 +31,4 @@
 28. Select `production` for the environment.
 29. Type `master` in the Git_Commit box.
 30. And that should be it. Hang around to make sure it succeeds and there aren’t any unexpected hiccups.
-31. One last thing. Delete the branch locally from your machine - `git branch -d release/5.40.0`
+31. One last thing. Delete the branch locally from your machine - `git branch -d release/v5.40.0`
