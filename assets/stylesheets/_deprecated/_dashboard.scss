@@ -6,6 +6,7 @@
   border-top: 4px solid $grey-2;
   padding-top: $default-spacing-unit;
   position: relative;
+  margin-bottom: $default-spacing-unit * 2;
 
 
   .dashboard-section-title {
@@ -29,10 +30,9 @@
     right: 0;
   }
 
-  &__bottom-link {
-    border-bottom: 1px solid $grey-2;
-    display:block;
-    padding-bottom: $default-spacing-unit;
+  &__top-link {
+    position: absolute;
+    right:0
   }
 
   &__subheading {

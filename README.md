@@ -110,13 +110,10 @@ and be provided with a back end server to provide the API, data storage and sear
 | SESSION_TTL | How long the user session lasts, in millis. Defaults to 2 hours |
 | TEAM_SITE_SHARE_POINT_URL | Team site share point url |
 | WEBPACK_ENV | Optionally select the webpack configuration variation to use, the default will correctly pick a production or development config based on NODE_ENV. Valid values include `prod`, `develop` and `docker` |
-| ZEN_BROWSER | Zendesk browser ID |
-| ZEN_DOMAIN | Domain used on Zendesk |
-| ZEN_EMAIL | Zendesk email address |
-| ZEN_IMPACT | Zendesk impact ID |
-| ZEN_SERVICE | Zendesk service ID |
-| ZEN_SERVICE_CHANNEL | The Zen channel name for the service - defaults to `datahub` |
-| ZEN_TOKEN | Zendesk auth token |
+| HELP_CENTRE_URL | Help centre url |
+| HELP_CENTRE_ANNOUNCMENTS_URL | Help centre announcements url |
+| HELP_CENTRE_API_FEED | Help centre feed API url |
+| HELP_CENTRE_FEED_API_TOKEN | Help centre API token |
 
 ### Running project within Docker
 

@@ -1,6 +1,5 @@
 {% extends "_layouts/template.njk" %}
-
 {% block body_main_content %}
-  Take a look at our <a href="https://uktrade.zendesk.com/hc">help centre</a> for help, guidance and updates.
+  Take a look at our <a href="{{ helpCentre.url }}">help centre</a> for help, guidance and updates.
   {{ Form(feedbackForm) }}
 {% endblock %}
