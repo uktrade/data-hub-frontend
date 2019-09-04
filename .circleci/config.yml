@@ -3,10 +3,12 @@ aliases:
   - &redis_version              redis:3.2.10
   - &postgres_version           postgres:10
   - &mi_postgres_version        postgres:9.6
-  - &elasticsearch_version      docker.elastic.co/elasticsearch/elasticsearch:6.4.3
+  - &elasticsearch_version      docker.elastic.co/elasticsearch/elasticsearch:6.7.1
   - &oauth2_dit_staff_token     ditStaffToken
   - &oauth2_da_staff_token      daStaffToken
   - &oauth2_lep_staff_token     lepStaffToken
+  - &leeloo_develop_image       quay.io/uktrade/data-hub-leeloo:develop
+  - &leeloo_master_image        quay.io/uktrade/data-hub-leeloo:master
 
   # Common steps
   - &restore_yarn_cache
@@ -93,6 +95,9 @@ aliases:
     ARCHIVED_DOCUMENTS_BASE_URL: http://example-documents-url.io
     OAUTH2_DEV_TOKEN: *oauth2_dit_staff_token
     SESSION_SECRET: theStrongestAvenger
+    HELP_CENTRE_URL: https://datahub-helpcentre.london.cloudapps.digital
+    HELP_CENTRE_ANNOUNCMENTS_URL: https://datahub-helpcentre.london.cloudapps.digital/updates/announcements
+    HELP_CENTRE_API_FEED: https://datahub-helpcentre.london.cloudapps.digital/api/feeds/announcements
 
   - &data_hub_functional_envs
     API_ROOT: http://localhost:8001
@@ -109,7 +114,8 @@ aliases:
     OAUTH2_DEV_TOKEN: ditStaffToken
     OAUTH2_BYPASS_SSO: true
     CACHE_ASSETS: "true"
-    ZEN_ANNOUNCEMENT_URL: http://localhost:8001/zendesk/announcement
+    HELP_CENTRE_API_FEED: http://localhost:8001/help-centre/announcement
+    HELP_CENTRE_FEED_API_TOKEN: apiToken
     SESSION_SECRET: theStrongestAvenger
 
   # Data hub base docker container
@@ -152,7 +158,7 @@ aliases:
 
   # Data hub backend
   - &docker_data_hub_backend_base
-    image: ukti/data-hub-leeloo:latest
+    image: *leeloo_develop_image
     environment:
       AWS_DEFAULT_REGION: eu-west-2
       AWS_ACCESS_KEY_ID: foo
@@ -520,9 +526,9 @@ jobs:
       - *docker_mi_postgres
       - *docker_mock_sso
       - <<: *docker_data_hub_backend_api
-        image: ukti/data-hub-leeloo:master
+        image: *leeloo_master_image
       - <<: *docker_data_hub_backend_celery
-        image: ukti/data-hub-leeloo:master
+        image: *leeloo_master_image
 
   # Run acceptance tests for LEP staff using the master version of the backend
   master-lep_staff_at:
@@ -538,9 +544,9 @@ jobs:
       - *docker_mi_postgres
       - *docker_mock_sso
       - <<: *docker_data_hub_backend_api
-        image: ukti/data-hub-leeloo:master
+        image: *leeloo_master_image
       - <<: *docker_data_hub_backend_celery
-        image: ukti/data-hub-leeloo:master
+        image: *leeloo_master_image
 
   # Run acceptance tests for DA staff using the master version of the backend
   master-da_staff_at:
@@ -556,9 +562,9 @@ jobs:
       - *docker_mi_postgres
       - *docker_mock_sso
       - <<: *docker_data_hub_backend_api
-        image: ukti/data-hub-leeloo:master
+        image: *leeloo_master_image
       - <<: *docker_data_hub_backend_celery
-        image: ukti/data-hub-leeloo:master
+        image: *leeloo_master_image
 
 # CircleCI workflows
 workflows:

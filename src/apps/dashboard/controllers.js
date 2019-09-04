@@ -6,7 +6,7 @@ const GLOBAL_NAV_ITEMS = require('../global-nav-items')
 const { isPermittedRoute } = require('../middleware')
 const { fetchHomepageData, fetchCompanyList } = require('./repos')
 const config = require('../../../config')
-const { formatZenArticles, transformCompanyList } = require('./transformers')
+const { formatHelpCentreAnnouncements, transformCompanyList } = require('./transformers')
 
 async function renderDashboard (req, res, next) {
   try {
@@ -15,17 +15,31 @@ async function renderDashboard (req, res, next) {
       req.session.token
     )
 
-    const articleFeed = await rp({
-      uri: config.zen.announcementsURL,
-      json: true,
-      timeout: 1000,
-    })
-      .then(feed => formatZenArticles(feed))
-      .catch(() => {
-        return []
-      })
+    const helpCentre = config.helpCentre
+    let articleFeed
 
-    const companyList = JSON.stringify(transformCompanyList(await fetchCompanyList(req.session.token)))
+    try {
+      const helpCentreArticleFeed = await rp({
+        uri: config.helpCentre.apiFeed,
+        auth: {
+          'bearer': config.helpCentre.token,
+        },
+        json: true,
+        timeout: 1000,
+      })
+      articleFeed = formatHelpCentreAnnouncements(helpCentreArticleFeed) || []
+    } catch (e) {
+      next(e)
+    }
+    const canViewCompanyList = userPermissions.includes(
+      'company_list.view_companylistitem'
+    )
+
+    const companyList = canViewCompanyList
+      ? JSON.stringify(
+        transformCompanyList(await fetchCompanyList(req.session.token))
+      )
+      : null
 
     res.title('Dashboard').render('dashboard/views/dashboard', {
       companyList,
@@ -37,6 +51,8 @@ async function renderDashboard (req, res, next) {
         GLOBAL_NAV_ITEMS,
         userPermissions
       ),
+      canViewCompanyList,
+      helpCentre,
     })
   } catch (error) {
     next(error)
