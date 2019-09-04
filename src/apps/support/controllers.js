@@ -3,6 +3,7 @@ const { title } = require('case')
 const Sniffr = require('sniffr')
 const { feedbackFormConfig } = require('./macros')
 const { buildFormWithStateAndErrors } = require('../builders')
+const config = require('../../../config/index')
 
 function renderFeedbackPage (req, res) {
   const sniffr = new Sniffr()
@@ -16,6 +17,8 @@ function renderFeedbackPage (req, res) {
     get(res.locals, 'formErrors.messages'),
   )
 
+  const helpCentre = config.helpCentre
+
   res
     .title('Report a problem or leave feedback')
     .render('support/views/feedback', {
@@ -23,6 +26,7 @@ function renderFeedbackPage (req, res) {
       feedbackForm: merge(feedbackForm, {
         errors: res.locals.formErrors,
       }),
+      helpCentre,
     })
 }
 

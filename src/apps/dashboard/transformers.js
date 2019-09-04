@@ -1,7 +1,7 @@
 /* eslint camelcase: 0 */
 const moment = require('moment')
 
-const formatZenArticles = (feed = {}) => {
+const formatHelpCentreAnnouncements = (feed = {}) => {
   const { articles = [] } = feed
   return articles.map(item => {
     if (item.title && item.html_url && item.created_at) {
@@ -43,5 +43,5 @@ const transformCompanyList = ({ results }) => {
 
 module.exports = {
   transformCompanyList,
-  formatZenArticles,
+  formatHelpCentreAnnouncements,
 }

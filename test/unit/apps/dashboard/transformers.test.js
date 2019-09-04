@@ -1,20 +1,20 @@
 const moment = require('moment')
 const {
-  formatZenArticles,
+  formatHelpCentreAnnouncements,
   transformCompanyList,
 } = require('../../../../src/apps/dashboard/transformers')
 const { omit } = require('lodash')
 
-describe('#formatZenArticles', () => {
+describe('#formatHelpCentreAnnouncements', () => {
   const mockResponse = {
     count: 3,
     articles: [
       {
         id: 360001431697,
         url:
-          'https://uktrade.zendesk.com/api/v2/help_center/en-gb/articles/360001431697-Recording-policy-feedback-on-Data-Hub.json',
+          'https://helpcentre.com/api/v2/help_center/en-gb/articles/360001431697-Recording-policy-feedback-on-Data-Hub.json',
         html_url:
-          'https://uktrade.zendesk.com/hc/en-gb/articles/360001431697-Recording-policy-feedback-on-Data-Hub',
+          'https://helpcentre.com/hc/en-gb/articles/360001431697-Recording-policy-feedback-on-Data-Hub',
         author_id: 7837434105,
         comments_disabled: true,
         draft: false,
@@ -31,9 +31,9 @@ describe('#formatZenArticles', () => {
       {
         id: 360001412918,
         url:
-          'https://uktrade.zendesk.com/api/v2/help_center/en-gb/articles/360001412918-Improvements-to-company-data-in-Data-Hub-April-2019.json',
+          'https://helpcentre.com/api/v2/help_center/en-gb/articles/360001412918-Improvements-to-company-data-in-Data-Hub-April-2019.json',
         html_url:
-          'https://uktrade.zendesk.com/hc/en-gb/articles/360001412918-Improvements-to-company-data-in-Data-Hub-April-2019',
+          'https://helpcentre.com/hc/en-gb/articles/360001412918-Improvements-to-company-data-in-Data-Hub-April-2019',
         author_id: 17979367345,
         created_at: '2019-04-15T09:42:05Z',
         updated_at: '2019-04-18T14:30:29Z',
@@ -48,9 +48,9 @@ describe('#formatZenArticles', () => {
       {
         id: 360001345138,
         url:
-          'https://uktrade.zendesk.com/api/v2/help_center/en-gb/articles/360001345138-Recording-multiple-DIT-advisers-against-interactions.json',
+          'https://helpcentre.com/api/v2/help_center/en-gb/articles/360001345138-Recording-multiple-DIT-advisers-against-interactions.json',
         html_url:
-          'https://uktrade.zendesk.com/hc/en-gb/articles/360001345138-Recording-multiple-DIT-advisers-against-interactions',
+          'https://helpcentre.com/hc/en-gb/articles/360001345138-Recording-multiple-DIT-advisers-against-interactions',
         author_id: 9903012689,
         comments_disabled: true,
         vote_count: 0,
@@ -71,37 +71,37 @@ describe('#formatZenArticles', () => {
     {
       heading: 'Recording policy feedback on Data Hub',
       link:
-        'https://uktrade.zendesk.com/hc/en-gb/articles/360001431697-Recording-policy-feedback-on-Data-Hub',
+        'https://helpcentre.com/hc/en-gb/articles/360001431697-Recording-policy-feedback-on-Data-Hub',
       date: `${moment(mockResponse.articles[0].created_at).fromNow()}`,
     },
     {
       heading: 'Improvements to company data in Data Hub - April 2019',
       link:
-        'https://uktrade.zendesk.com/hc/en-gb/articles/360001412918-Improvements-to-company-data-in-Data-Hub-April-2019',
+        'https://helpcentre.com/hc/en-gb/articles/360001412918-Improvements-to-company-data-in-Data-Hub-April-2019',
       date: `${moment(mockResponse.articles[1].created_at).fromNow()}`,
     },
     {
       heading: 'Recording multiple DIT advisers against interactions',
       link:
-        'https://uktrade.zendesk.com/hc/en-gb/articles/360001345138-Recording-multiple-DIT-advisers-against-interactions',
+        'https://helpcentre.com/hc/en-gb/articles/360001345138-Recording-multiple-DIT-advisers-against-interactions',
       date: `${moment(mockResponse.articles[2].created_at).fromNow()}`,
     },
   ]
   context('Successful API response', () => {
     beforeEach(() => {
-      this.transformed = formatZenArticles(mockResponse)
+      this.transformed = formatHelpCentreAnnouncements(mockResponse)
     })
-    it('should format Zen desk articles', () => {
+    it('should format Help centre articles', () => {
       expect(this.transformed).to.deep.equal(expected)
     })
   })
 
   context('malformed api responses', () => {
     it('should return empty array', () => {
-      expect(formatZenArticles({})).to.deep.equal([])
-      expect(formatZenArticles(undefined)).to.deep.equal([])
-      expect(formatZenArticles([])).to.deep.equal([])
-      expect(formatZenArticles(omit(expected, ['articles']))).to.deep.equal([])
+      expect(formatHelpCentreAnnouncements({})).to.deep.equal([])
+      expect(formatHelpCentreAnnouncements(undefined)).to.deep.equal([])
+      expect(formatHelpCentreAnnouncements([])).to.deep.equal([])
+      expect(formatHelpCentreAnnouncements(omit(expected, ['articles']))).to.deep.equal([])
     })
   })
 })
