@@ -46,4 +46,12 @@
     text-decoration: none;
   }
 
+  &__info-feed-date {
+    margin: 0;
+  }
+
+  &__info-feed-link-note {
+    color: $grey-1;
+  }
+
 }

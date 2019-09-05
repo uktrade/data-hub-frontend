@@ -30,7 +30,7 @@
 {% if subHeading %} <p class="dashboard-section__subheading">{{subHeading}}</p> {% endif %}
 {% if dataFeed.length %}
   {% for item in dataFeed.slice(0, feedLimit) %}
-      <a href="{{ item.link }}" class="dashboard-section__info-feed-link" target="_blank">{{ item.heading }}</a>
+    <a href="{{ item.link }}" class="dashboard-section__info-feed-link" target="_blank">{{ item.heading }}</a> <span class="dashboard-section__info-feed-link-note">(Link opens in a new window)</span>
       <p class="dashboard-section__info-feed-date">{{ item.date }}</p>
   {% endfor %}
 {% else %}
