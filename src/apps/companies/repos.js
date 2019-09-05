@@ -96,6 +96,16 @@ function getOneListGroupCoreTeam (token, companyId) {
   })
 }
 
+function saveDnbCompany (token, dunsNumber) {
+  return authorisedRequest(token, {
+    body: {
+      duns_number: dunsNumber,
+    },
+    url: `${config.apiRoot}/v4/dnb/company-create`,
+    method: 'POST',
+  })
+}
+
 module.exports = {
   saveCompany,
   getDitCompany,
@@ -109,4 +119,5 @@ module.exports = {
   getCompanyAuditLog,
   getCompanySubsidiaries,
   getOneListGroupCoreTeam,
+  saveDnbCompany,
 }
