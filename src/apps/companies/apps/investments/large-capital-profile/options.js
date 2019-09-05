@@ -35,7 +35,12 @@ const getInvestorRequirementsOptions = (token) => {
   ]
 }
 
+const getLocationOptions = (token) => {
+  return getOptions(token, 'uk-region')
+}
+
 module.exports = {
   getInvestorDetailsOptions,
   getInvestorRequirementsOptions,
+  getLocationOptions,
 }
