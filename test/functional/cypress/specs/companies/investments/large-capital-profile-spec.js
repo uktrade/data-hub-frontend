@@ -29,12 +29,6 @@ describe('Company Investments and Large capital profile', () => {
         .should('have.prop', 'href')
         .and('equal', `${baseUrl}/companies/${oneListCorp.id}/investments/large-capital-profile`)
     })
-
-    it('should display a "Growth capital profile" tab with the correct URL', () => {
-      cy.get(selectors.tabs.growthCapitalProfile).find('a')
-        .should('have.prop', 'href')
-        .and('equal', `${baseUrl}/companies/${oneListCorp.id}/investments/growth-capital-profile`)
-    })
   })
 
   context('when the Large capital profile tab is selected', () => {
@@ -46,10 +40,6 @@ describe('Company Investments and Large capital profile', () => {
 
     it('should have an "active" class on the "Large capital profile" tab', () => {
       cy.get(selectors.tabs.largeCapitalProfile).should('have.class', 'active')
-    })
-
-    it('should not have an "active" class on the "Growth capital profile" tab', () => {
-      cy.get(selectors.tabs.growthCapitalProfile).should('not.have.class', 'active')
     })
   })
 
