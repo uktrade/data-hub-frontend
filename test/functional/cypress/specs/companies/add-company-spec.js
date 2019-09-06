@@ -94,8 +94,8 @@ describe('Add company form', () => {
             cy.get(selectors.companyAdd.entitySearch.results.someOtherCompany).click()
           })
 
-          it('should display "Add this company to Data Hub" subheader', () => {
-            cy.get(selectors.companyAdd.stepHeader).should('have.text', 'Add this company to Data Hub')
+          it('should display "Confirm you want to add this company to Data Hub" subheader', () => {
+            cy.get(selectors.companyAdd.stepHeader).should('have.text', 'Confirm you want to add this company to Data Hub')
           })
 
           it('should display "Back" button', () => {
