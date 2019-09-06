@@ -1,6 +1,6 @@
 module.exports = {
   nextButton: 'form button:contains("Next")',
-  submitButton: 'form button:contains("Add company")',
+  submitButton: 'form button:contains("Save and continue")',
   backButton: 'form button:contains("Back")',
   subheader: 'form p',
   h3: 'form h3',
@@ -10,5 +10,8 @@ module.exports = {
       someCompanyName: 'form ol li:nth-child(1)',
       someOtherCompany: 'form ol li:nth-child(2)',
     },
+  },
+  companyDetails: {
+    subheader: 'form h2',
   },
 }
