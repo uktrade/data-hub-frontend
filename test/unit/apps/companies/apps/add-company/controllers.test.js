@@ -5,14 +5,26 @@ const {
   postAddDnbCompany,
 } = require('~/src/apps/companies/apps/add-company/controllers')
 const companyCreateResponse = require('~/test/unit/data/companies/dnb/company-create.json')
-
+const countriesFixture = require('../../../../data/metadata/country')
+const { transformObjectToOption } = require('~/src/apps/transformers')
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder')
 
 describe('Add company form controllers', () => {
+  beforeEach(() => {
+    nock(config.apiRoot)
+      .get('/metadata/country/')
+      .reply(200, countriesFixture)
+  })
+
   describe('#renderAddCompanyForm', () => {
     context('when the "Add company form" renders successfully', () => {
       beforeEach(async () => {
+        this.foreignCountriesFixture = countriesFixture
+          .filter(c => c.name !== 'United Kingdom')
+          .map(transformObjectToOption)
+
         this.middlewareParameters = buildMiddlewareParameters()
+
         await renderAddCompanyForm(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
@@ -26,6 +38,7 @@ describe('Add company form controllers', () => {
           props: {
             host: 'localhost:3000',
             csrfToken: 'csrf',
+            foreignCountries: this.foreignCountriesFixture,
           },
         })
       })

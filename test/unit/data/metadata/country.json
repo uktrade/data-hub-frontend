@@ -1,0 +1,1207 @@
+[
+  {
+    "id": "87756b9a-5d95-e211-a939-e4115bead28a",
+    "name": "Afghanistan",
+    "disabled_on": null
+  },
+  {
+    "id": "945f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Albania",
+    "disabled_on": null
+  },
+  {
+    "id": "955f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Algeria",
+    "disabled_on": null
+  },
+  {
+    "id": "965f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "American Samoa",
+    "disabled_on": null
+  },
+  {
+    "id": "975f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Andorra",
+    "disabled_on": null
+  },
+  {
+    "id": "985f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Angola",
+    "disabled_on": null
+  },
+  {
+    "id": "995f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Anguilla",
+    "disabled_on": null
+  },
+  {
+    "id": "9a5f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Antarctica",
+    "disabled_on": null
+  },
+  {
+    "id": "9b5f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Antigua and Barbuda",
+    "disabled_on": null
+  },
+  {
+    "id": "9c5f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Argentina",
+    "disabled_on": null
+  },
+  {
+    "id": "9d5f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Armenia",
+    "disabled_on": null
+  },
+  {
+    "id": "9e5f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Aruba",
+    "disabled_on": null
+  },
+  {
+    "id": "9f5f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Australia",
+    "disabled_on": null
+  },
+  {
+    "id": "a05f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Austria",
+    "disabled_on": null
+  },
+  {
+    "id": "a15f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Azerbaijan",
+    "disabled_on": null
+  },
+  {
+    "id": "a25f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Bahamas",
+    "disabled_on": null
+  },
+  {
+    "id": "a35f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Bahrain",
+    "disabled_on": null
+  },
+  {
+    "id": "a45f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Bangladesh",
+    "disabled_on": null
+  },
+  {
+    "id": "a55f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Barbados",
+    "disabled_on": null
+  },
+  {
+    "id": "a65f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Belarus",
+    "disabled_on": null
+  },
+  {
+    "id": "a75f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Belgium",
+    "disabled_on": null
+  },
+  {
+    "id": "a85f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Belize",
+    "disabled_on": null
+  },
+  {
+    "id": "a95f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Benin",
+    "disabled_on": null
+  },
+  {
+    "id": "aa5f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Bermuda",
+    "disabled_on": null
+  },
+  {
+    "id": "ab5f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Bhutan",
+    "disabled_on": null
+  },
+  {
+    "id": "ac5f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Bolivia",
+    "disabled_on": null
+  },
+  {
+    "id": "ad5f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Bosnia and Herzegovina",
+    "disabled_on": null
+  },
+  {
+    "id": "ae5f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Botswana",
+    "disabled_on": null
+  },
+  {
+    "id": "af5f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Bouvet Island",
+    "disabled_on": null
+  },
+  {
+    "id": "b05f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "Brazil",
+    "disabled_on": null
+  },
+  {
+    "id": "b15f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "British Indian Ocean Territory",
+    "disabled_on": null
+  },
+  {
+    "id": "b25f66a0-5d95-e211-a939-e4115bead28a",
+    "name": "British Virgin Islands",
+    "disabled_on": null
+  },
+  {
+    "id": "56af72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Brunei",
+    "disabled_on": null
+  },
+  {
+    "id": "57af72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Bulgaria",
+    "disabled_on": null
+  },
+  {
+    "id": "58af72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Burkina",
+    "disabled_on": null
+  },
+  {
+    "id": "59af72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Burma",
+    "disabled_on": null
+  },
+  {
+    "id": "5aaf72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Burundi",
+    "disabled_on": null
+  },
+  {
+    "id": "5baf72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Cambodia",
+    "disabled_on": null
+  },
+  {
+    "id": "5caf72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Cameroon",
+    "disabled_on": null
+  },
+  {
+    "id": "5daf72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Canada",
+    "disabled_on": null
+  },
+  {
+    "id": "5eaf72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Cape Verde",
+    "disabled_on": null
+  },
+  {
+    "id": "5faf72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Cayman Islands",
+    "disabled_on": null
+  },
+  {
+    "id": "60af72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Central African Republic",
+    "disabled_on": null
+  },
+  {
+    "id": "61af72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Chad",
+    "disabled_on": null
+  },
+  {
+    "id": "62af72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Chile",
+    "disabled_on": null
+  },
+  {
+    "id": "63af72a6-5d95-e211-a939-e4115bead28a",
+    "name": "China",
+    "disabled_on": null
+  },
+  {
+    "id": "64af72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Christmas Island",
+    "disabled_on": null
+  },
+  {
+    "id": "65af72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Cocos (Keeling) Islands",
+    "disabled_on": null
+  },
+  {
+    "id": "66af72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Colombia",
+    "disabled_on": null
+  },
+  {
+    "id": "67af72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Comoros",
+    "disabled_on": null
+  },
+  {
+    "id": "69af72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Congo",
+    "disabled_on": null
+  },
+  {
+    "id": "68af72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Congo (Democratic Republic)",
+    "disabled_on": null
+  },
+  {
+    "id": "6aaf72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Cook Islands",
+    "disabled_on": null
+  },
+  {
+    "id": "6baf72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Costa Rica",
+    "disabled_on": null
+  },
+  {
+    "id": "6caf72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Croatia",
+    "disabled_on": null
+  },
+  {
+    "id": "6daf72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Cuba",
+    "disabled_on": null
+  },
+  {
+    "id": "6eaf72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Cyprus",
+    "disabled_on": null
+  },
+  {
+    "id": "6faf72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Czech Republic",
+    "disabled_on": null
+  },
+  {
+    "id": "70af72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Denmark",
+    "disabled_on": null
+  },
+  {
+    "id": "71af72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Djibouti",
+    "disabled_on": null
+  },
+  {
+    "id": "72af72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Dominica",
+    "disabled_on": null
+  },
+  {
+    "id": "73af72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Dominican Republic",
+    "disabled_on": null
+  },
+  {
+    "id": "74af72a6-5d95-e211-a939-e4115bead28a",
+    "name": "East Timor",
+    "disabled_on": null
+  },
+  {
+    "id": "75af72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Ecuador",
+    "disabled_on": null
+  },
+  {
+    "id": "76af72a6-5d95-e211-a939-e4115bead28a",
+    "name": "Egypt",
+    "disabled_on": null
+  },
+  {
+    "id": "d2f682ac-5d95-e211-a939-e4115bead28a",
+    "name": "El Salvador",
+    "disabled_on": null
+  },
+  {
+    "id": "d3f682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Equatorial Guinea",
+    "disabled_on": null
+  },
+  {
+    "id": "d4f682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Eritrea",
+    "disabled_on": null
+  },
+  {
+    "id": "d5f682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Estonia",
+    "disabled_on": null
+  },
+  {
+    "id": "d6f682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Ethiopia",
+    "disabled_on": null
+  },
+  {
+    "id": "d7f682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Falkland Islands",
+    "disabled_on": null
+  },
+  {
+    "id": "d8f682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Faroe Islands",
+    "disabled_on": null
+  },
+  {
+    "id": "d9f682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Fiji",
+    "disabled_on": null
+  },
+  {
+    "id": "daf682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Finland",
+    "disabled_on": null
+  },
+  {
+    "id": "82756b9a-5d95-e211-a939-e4115bead28a",
+    "name": "France",
+    "disabled_on": null
+  },
+  {
+    "id": "dbf682ac-5d95-e211-a939-e4115bead28a",
+    "name": "French Guiana",
+    "disabled_on": null
+  },
+  {
+    "id": "dcf682ac-5d95-e211-a939-e4115bead28a",
+    "name": "French Polynesia",
+    "disabled_on": null
+  },
+  {
+    "id": "ddf682ac-5d95-e211-a939-e4115bead28a",
+    "name": "French Southern Territories",
+    "disabled_on": null
+  },
+  {
+    "id": "def682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Gabon",
+    "disabled_on": null
+  },
+  {
+    "id": "dff682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Gambia",
+    "disabled_on": null
+  },
+  {
+    "id": "e0f682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Georgia",
+    "disabled_on": null
+  },
+  {
+    "id": "83756b9a-5d95-e211-a939-e4115bead28a",
+    "name": "Germany",
+    "disabled_on": null
+  },
+  {
+    "id": "e1f682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Ghana",
+    "disabled_on": null
+  },
+  {
+    "id": "e2f682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Gibraltar",
+    "disabled_on": null
+  },
+  {
+    "id": "e3f682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Greece",
+    "disabled_on": null
+  },
+  {
+    "id": "e4f682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Greenland",
+    "disabled_on": null
+  },
+  {
+    "id": "e5f682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Grenada",
+    "disabled_on": null
+  },
+  {
+    "id": "e6f682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Guadeloupe",
+    "disabled_on": null
+  },
+  {
+    "id": "e7f682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Guam",
+    "disabled_on": null
+  },
+  {
+    "id": "e8f682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Guatemala",
+    "disabled_on": null
+  },
+  {
+    "id": "77756b9a-5d95-e211-a939-e4115bead28a",
+    "name": "Guernsey",
+    "disabled_on": null
+  },
+  {
+    "id": "e9f682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Guinea",
+    "disabled_on": null
+  },
+  {
+    "id": "eaf682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Guinea-Bissau",
+    "disabled_on": null
+  },
+  {
+    "id": "ebf682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Guyana",
+    "disabled_on": null
+  },
+  {
+    "id": "ecf682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Haiti",
+    "disabled_on": null
+  },
+  {
+    "id": "edf682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Heard Island and McDonald Island",
+    "disabled_on": null
+  },
+  {
+    "id": "eff682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Honduras",
+    "disabled_on": null
+  },
+  {
+    "id": "f0f682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Hong Kong (SAR)",
+    "disabled_on": null
+  },
+  {
+    "id": "6d6a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Hungary",
+    "disabled_on": null
+  },
+  {
+    "id": "6e6a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Iceland",
+    "disabled_on": null
+  },
+  {
+    "id": "6f6a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "India",
+    "disabled_on": null
+  },
+  {
+    "id": "706a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Indonesia",
+    "disabled_on": null
+  },
+  {
+    "id": "716a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Iran",
+    "disabled_on": null
+  },
+  {
+    "id": "726a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Iraq",
+    "disabled_on": null
+  },
+  {
+    "id": "736a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Ireland",
+    "disabled_on": null
+  },
+  {
+    "id": "79756b9a-5d95-e211-a939-e4115bead28a",
+    "name": "Isle of Man",
+    "disabled_on": null
+  },
+  {
+    "id": "746a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Israel",
+    "disabled_on": null
+  },
+  {
+    "id": "84756b9a-5d95-e211-a939-e4115bead28a",
+    "name": "Italy",
+    "disabled_on": null
+  },
+  {
+    "id": "756a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Ivory Coast",
+    "disabled_on": null
+  },
+  {
+    "id": "766a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Jamaica",
+    "disabled_on": null
+  },
+  {
+    "id": "85756b9a-5d95-e211-a939-e4115bead28a",
+    "name": "Japan",
+    "disabled_on": null
+  },
+  {
+    "id": "78756b9a-5d95-e211-a939-e4115bead28a",
+    "name": "Jersey",
+    "disabled_on": null
+  },
+  {
+    "id": "776a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Jordan",
+    "disabled_on": null
+  },
+  {
+    "id": "786a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Kazakhstan",
+    "disabled_on": null
+  },
+  {
+    "id": "796a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Kenya",
+    "disabled_on": null
+  },
+  {
+    "id": "7b6a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Korea (North)",
+    "disabled_on": null
+  },
+  {
+    "id": "7c6a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Korea (South)",
+    "disabled_on": null
+  },
+  {
+    "id": "7a756b9a-5d95-e211-a939-e4115bead28a",
+    "name": "Kosovo",
+    "disabled_on": null
+  },
+  {
+    "id": "7d6a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Kuwait",
+    "disabled_on": null
+  },
+  {
+    "id": "7e6a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Kyrgyzstan",
+    "disabled_on": null
+  },
+  {
+    "id": "7f6a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Laos",
+    "disabled_on": null
+  },
+  {
+    "id": "806a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Latvia",
+    "disabled_on": null
+  },
+  {
+    "id": "816a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Lebanon",
+    "disabled_on": null
+  },
+  {
+    "id": "826a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Lesotho",
+    "disabled_on": null
+  },
+  {
+    "id": "836a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Liberia",
+    "disabled_on": null
+  },
+  {
+    "id": "846a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Libya",
+    "disabled_on": null
+  },
+  {
+    "id": "856a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Liechtenstein",
+    "disabled_on": null
+  },
+  {
+    "id": "866a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Lithuania",
+    "disabled_on": null
+  },
+  {
+    "id": "876a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Luxembourg",
+    "disabled_on": null
+  },
+  {
+    "id": "886a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Macao (SAR)",
+    "disabled_on": null
+  },
+  {
+    "id": "896a9ab2-5d95-e211-a939-e4115bead28a",
+    "name": "Macedonia",
+    "disabled_on": null
+  },
+  {
+    "id": "0350bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "Madagascar",
+    "disabled_on": null
+  },
+  {
+    "id": "0450bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "Malawi",
+    "disabled_on": null
+  },
+  {
+    "id": "0550bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "Malaysia",
+    "disabled_on": null
+  },
+  {
+    "id": "0650bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "Maldives",
+    "disabled_on": null
+  },
+  {
+    "id": "0750bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "Mali",
+    "disabled_on": null
+  },
+  {
+    "id": "0850bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "Malta",
+    "disabled_on": null
+  },
+  {
+    "id": "0a50bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "Martinique",
+    "disabled_on": null
+  },
+  {
+    "id": "0b50bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "Mauritania",
+    "disabled_on": null
+  },
+  {
+    "id": "0c50bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "Mauritius",
+    "disabled_on": null
+  },
+  {
+    "id": "0d50bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "Mayotte",
+    "disabled_on": null
+  },
+  {
+    "id": "0e50bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "Mexico",
+    "disabled_on": null
+  },
+  {
+    "id": "1050bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "Moldova",
+    "disabled_on": null
+  },
+  {
+    "id": "1150bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "Monaco",
+    "disabled_on": null
+  },
+  {
+    "id": "1250bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "Mongolia",
+    "disabled_on": null
+  },
+  {
+    "id": "7f756b9a-5d95-e211-a939-e4115bead28a",
+    "name": "Montenegro",
+    "disabled_on": null
+  },
+  {
+    "id": "1350bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "Montserrat",
+    "disabled_on": null
+  },
+  {
+    "id": "1450bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "Morocco",
+    "disabled_on": null
+  },
+  {
+    "id": "1550bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "Mozambique",
+    "disabled_on": null
+  },
+  {
+    "id": "1650bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "Namibia",
+    "disabled_on": null
+  },
+  {
+    "id": "1750bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "Nauru",
+    "disabled_on": null
+  },
+  {
+    "id": "1850bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "Nepal",
+    "disabled_on": null
+  },
+  {
+    "id": "1950bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "Netherlands",
+    "disabled_on": null
+  },
+  {
+    "id": "1b50bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "New Caledonia",
+    "disabled_on": null
+  },
+  {
+    "id": "1c50bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "New Zealand",
+    "disabled_on": null
+  },
+  {
+    "id": "1d50bdb8-5d95-e211-a939-e4115bead28a",
+    "name": "Nicaragua",
+    "disabled_on": null
+  },
+  {
+    "id": "4461b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Niger",
+    "disabled_on": null
+  },
+  {
+    "id": "4561b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Nigeria",
+    "disabled_on": null
+  },
+  {
+    "id": "4661b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Niue",
+    "disabled_on": null
+  },
+  {
+    "id": "4761b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Norfolk Island",
+    "disabled_on": null
+  },
+  {
+    "id": "4861b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Northern Mariana Islands",
+    "disabled_on": null
+  },
+  {
+    "id": "4961b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Norway",
+    "disabled_on": null
+  },
+  {
+    "id": "35afd8d0-5d95-e211-a939-e4115bead28a",
+    "name": "Occupied Palestinian Territories",
+    "disabled_on": null
+  },
+  {
+    "id": "4a61b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Oman",
+    "disabled_on": null
+  },
+  {
+    "id": "4b61b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Pakistan",
+    "disabled_on": null
+  },
+  {
+    "id": "4c61b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Palau",
+    "disabled_on": null
+  },
+  {
+    "id": "4d61b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Panama",
+    "disabled_on": null
+  },
+  {
+    "id": "4e61b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Papua New Guinea",
+    "disabled_on": null
+  },
+  {
+    "id": "4f61b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Paraguay",
+    "disabled_on": null
+  },
+  {
+    "id": "5061b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Peru",
+    "disabled_on": null
+  },
+  {
+    "id": "5161b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Philippines",
+    "disabled_on": null
+  },
+  {
+    "id": "5261b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Pitcairn, Henderson, Ducie and Oeno Islands",
+    "disabled_on": null
+  },
+  {
+    "id": "5361b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Poland",
+    "disabled_on": null
+  },
+  {
+    "id": "5461b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Portugal",
+    "disabled_on": null
+  },
+  {
+    "id": "5561b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Puerto Rico",
+    "disabled_on": null
+  },
+  {
+    "id": "5661b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Qatar",
+    "disabled_on": null
+  },
+  {
+    "id": "5861b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Romania",
+    "disabled_on": null
+  },
+  {
+    "id": "5961b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Russia",
+    "disabled_on": null
+  },
+  {
+    "id": "5a61b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Rwanda",
+    "disabled_on": null
+  },
+  {
+    "id": "5b61b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Samoa",
+    "disabled_on": null
+  },
+  {
+    "id": "5c61b8be-5d95-e211-a939-e4115bead28a",
+    "name": "San Marino",
+    "disabled_on": null
+  },
+  {
+    "id": "5d61b8be-5d95-e211-a939-e4115bead28a",
+    "name": "Sao Tome and Principe",
+    "disabled_on": null
+  },
+  {
+    "id": "1a0be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "Saudi Arabia",
+    "disabled_on": null
+  },
+  {
+    "id": "1b0be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "Senegal",
+    "disabled_on": null
+  },
+  {
+    "id": "1c0be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "Serbia",
+    "disabled_on": null
+  },
+  {
+    "id": "1d0be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "Seychelles",
+    "disabled_on": null
+  },
+  {
+    "id": "1e0be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "Sierra Leone",
+    "disabled_on": null
+  },
+  {
+    "id": "1f0be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "Singapore",
+    "disabled_on": null
+  },
+  {
+    "id": "200be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "Slovakia",
+    "disabled_on": null
+  },
+  {
+    "id": "210be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "Slovenia",
+    "disabled_on": null
+  },
+  {
+    "id": "220be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "Solomon Islands",
+    "disabled_on": null
+  },
+  {
+    "id": "230be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "Somalia",
+    "disabled_on": null
+  },
+  {
+    "id": "240be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "South Africa",
+    "disabled_on": null
+  },
+  {
+    "id": "250be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "South Georgia and South Sandwich Islands",
+    "disabled_on": null
+  },
+  {
+    "id": "86756b9a-5d95-e211-a939-e4115bead28a",
+    "name": "Spain",
+    "disabled_on": null
+  },
+  {
+    "id": "260be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "Sri Lanka",
+    "disabled_on": null
+  },
+  {
+    "id": "7b756b9a-5d95-e211-a939-e4115bead28a",
+    "name": "St Barthelemy",
+    "disabled_on": null
+  },
+  {
+    "id": "270be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "St Helena",
+    "disabled_on": null
+  },
+  {
+    "id": "280be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "St Kitts and Nevis",
+    "disabled_on": null
+  },
+  {
+    "id": "290be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "St Lucia",
+    "disabled_on": null
+  },
+  {
+    "id": "7c756b9a-5d95-e211-a939-e4115bead28a",
+    "name": "St Martin",
+    "disabled_on": null
+  },
+  {
+    "id": "2a0be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "St Pierre and Miquelon",
+    "disabled_on": null
+  },
+  {
+    "id": "2b0be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "St Vincent",
+    "disabled_on": null
+  },
+  {
+    "id": "2c0be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "Sudan",
+    "disabled_on": null
+  },
+  {
+    "id": "7e756b9a-5d95-e211-a939-e4115bead28a",
+    "name": "Sudan, South",
+    "disabled_on": null
+  },
+  {
+    "id": "2d0be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "Surinam",
+    "disabled_on": null
+  },
+  {
+    "id": "2e0be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "Svalbard and Jan Mayen Islands",
+    "disabled_on": null
+  },
+  {
+    "id": "2f0be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "Swaziland",
+    "disabled_on": null
+  },
+  {
+    "id": "300be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "Sweden",
+    "disabled_on": null
+  },
+  {
+    "id": "310be5c4-5d95-e211-a939-e4115bead28a",
+    "name": "Switzerland",
+    "disabled_on": null
+  },
+  {
+    "id": "a46ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "Syria",
+    "disabled_on": null
+  },
+  {
+    "id": "a56ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "Taiwan",
+    "disabled_on": null
+  },
+  {
+    "id": "a66ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "Tajikistan",
+    "disabled_on": null
+  },
+  {
+    "id": "a76ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "Tanzania",
+    "disabled_on": null
+  },
+  {
+    "id": "a86ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "Thailand",
+    "disabled_on": null
+  },
+  {
+    "id": "a96ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "Togo",
+    "disabled_on": null
+  },
+  {
+    "id": "aa6ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "Tokelau",
+    "disabled_on": null
+  },
+  {
+    "id": "ab6ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "Tonga",
+    "disabled_on": null
+  },
+  {
+    "id": "ac6ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "Trinidad and Tobago",
+    "disabled_on": null
+  },
+  {
+    "id": "ad6ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "Tunisia",
+    "disabled_on": null
+  },
+  {
+    "id": "ae6ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "Turkey",
+    "disabled_on": null
+  },
+  {
+    "id": "af6ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "Turkmenistan",
+    "disabled_on": null
+  },
+  {
+    "id": "b06ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "Turks and Caicos Islands",
+    "disabled_on": null
+  },
+  {
+    "id": "b16ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "Tuvalu",
+    "disabled_on": null
+  },
+  {
+    "id": "b26ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "Uganda",
+    "disabled_on": null
+  },
+  {
+    "id": "b36ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "Ukraine",
+    "disabled_on": null
+  },
+  {
+    "id": "b46ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "United Arab Emirates",
+    "disabled_on": null
+  },
+  {
+    "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+    "name": "United Kingdom",
+    "disabled_on": null
+  },
+  {
+    "id": "81756b9a-5d95-e211-a939-e4115bead28a",
+    "name": "United States",
+    "disabled_on": null
+  },
+  {
+    "id": "b56ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "United States Minor Outlying Islands",
+    "disabled_on": null
+  },
+  {
+    "id": "b66ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "Uruguay",
+    "disabled_on": null
+  },
+  {
+    "id": "b76ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "Uzbekistan",
+    "disabled_on": null
+  },
+  {
+    "id": "b86ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "Vanuatu",
+    "disabled_on": null
+  },
+  {
+    "id": "eef682ac-5d95-e211-a939-e4115bead28a",
+    "name": "Vatican City",
+    "disabled_on": null
+  },
+  {
+    "id": "b96ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "Venezuela",
+    "disabled_on": null
+  },
+  {
+    "id": "ba6ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "Vietnam",
+    "disabled_on": null
+  },
+  {
+    "id": "bb6ee1ca-5d95-e211-a939-e4115bead28a",
+    "name": "Virgin Islands (US)",
+    "disabled_on": null
+  },
+  {
+    "id": "34afd8d0-5d95-e211-a939-e4115bead28a",
+    "name": "Wallis and Futuna",
+    "disabled_on": null
+  },
+  {
+    "id": "37afd8d0-5d95-e211-a939-e4115bead28a",
+    "name": "Yemen",
+    "disabled_on": null
+  },
+  {
+    "id": "38afd8d0-5d95-e211-a939-e4115bead28a",
+    "name": "Zambia",
+    "disabled_on": null
+  },
+  {
+    "id": "39afd8d0-5d95-e211-a939-e4115bead28a",
+    "name": "Zimbabwe",
+    "disabled_on": null
+  }
+]
