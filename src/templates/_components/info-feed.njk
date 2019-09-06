@@ -32,7 +32,7 @@
   {% for item in dataFeed.slice(0, feedLimit) %}
     <a href="{{ item.link }}" class="dashboard-section__info-feed-link" target="_blank">{{ item.heading }}</a>
     <span class="dashboard-section__info-feed-link-note">(Link opens in a new window)</span>
-      <p class="dashboard-section__info-feed-date">{{ item.date }}</p>
+      <time class="dashboard-section__info-feed-date">{{ item.date }}</time>
   {% endfor %}
 {% else %}
   <p class="dashboard-section__fallback-text">No updates available</p>
