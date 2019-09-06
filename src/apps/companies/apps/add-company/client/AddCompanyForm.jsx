@@ -3,18 +3,21 @@
 import React, { useState } from 'react'
 import { LoadingBox, H2, H3 } from 'govuk-react'
 import { Form, Step, FieldDnbCompany } from 'data-hub-components'
-import { MEDIA_QUERIES } from '@govuk-react/constants'
-import { BLUE } from 'govuk-colours'
+import { MEDIA_QUERIES, FONT_SIZE, SPACING } from '@govuk-react/constants'
+import { BLUE, GREY_3 } from 'govuk-colours'
 import { uniqueId } from 'lodash'
 import styled from 'styled-components'
 
-const StyledDivider = styled('div')`
-  border: 1px solid #d8d8dc;
-  margin: 18px 0;
+const StyledDLContainer = styled('div')`
+  border-top: 2px solid ${GREY_3};
+  border-bottom: 2px solid ${GREY_3};
+  padding-top: ${SPACING.SCALE_4};
+  padding-bottom: ${SPACING.SCALE_4};
+  margin-bottom: ${SPACING.SCALE_5};
 `
 
-const StyledDiv = styled('div')`
-  padding 5px 0;
+const StyledInnerRow = styled('div')`
+  padding: ${SPACING.SCALE_1} 0;
 
   ${MEDIA_QUERIES.TABLET} {
     display: inline-flex;
@@ -23,7 +26,7 @@ const StyledDiv = styled('div')`
 
 const StyledH3 = styled('h3')`
   color: ${BLUE};
-  font-size: 20px;
+  font-size: ${FONT_SIZE.SIZE_20};
   font-weight: bold;
 `
 
@@ -35,8 +38,8 @@ const StyledDL = styled('dl')`
 `
 
 const StyledDT = styled('dt')`
-  padding-right: 20px
-  width: 105px
+  padding-right: ${SPACING.SCALE_4};
+  min-width: 105px;
 `
 
 const StyledDD = styled('dd')`
@@ -66,10 +69,10 @@ function AddCompanyForm(props) {
 
   function DLRow({ label, description }) {
     return (
-      <StyledDiv>
+      <StyledInnerRow>
         <StyledDT>{ label }</StyledDT>
         <StyledDD>{ description }</StyledDD>
-      </StyledDiv>      
+      </StyledInnerRow>      
     )
   }
 
@@ -102,14 +105,14 @@ function AddCompanyForm(props) {
 
         <Step name="companyDetails" forwardButtonText={"Save and continue"}>
           <H2 size="MEDIUM">Add this company to Data Hub</H2>
-          <StyledDivider />
-          <StyledH3>Samsung Venture Investment</StyledH3>
-          <DL rows={[
-            { label: 'Sector', description: 'Business (and Consumer) services' },
-            { label: 'UK region', description: 'LONDON' },
-            { label: 'Address', description: 'Samsung HQ, 44 Riverbank House, Great West Road, Brentford, Middlesex' }
-          ]}/>
-          <StyledDivider />
+          <StyledDLContainer>
+            <StyledH3>Samsung Venture Investment</StyledH3>
+            <DL rows={[
+              { label: 'Sector', description: 'Business (and Consumer) services' },
+              { label: 'UK region', description: 'LONDON' },
+              { label: 'Address', description: 'Samsung HQ, 44 Riverbank House, Great West Road, Brentford, Middlesex' }
+            ]}/>
+          </StyledDLContainer>
         </Step>
       </LoadingBox>
     </Form>
