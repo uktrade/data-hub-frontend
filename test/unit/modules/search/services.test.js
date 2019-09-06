@@ -7,6 +7,7 @@ const {
   searchLimitedCompanies,
   exportSearch,
   searchAutocomplete,
+  searchDnbCompanies,
 } = require('~/src/modules/search/services')
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
@@ -326,6 +327,36 @@ describe('Search service', () => {
         token: '1234',
         searchEntity: 'company',
         searchTerm: 'search',
+      })
+    })
+
+    it('should return the response', () => {
+      expect(this.actual).to.deep.equal({
+        count: 0,
+        results: [],
+      })
+    })
+  })
+
+  describe('#searchDnbCompanies', () => {
+    beforeEach(async () => {
+      nock(config.apiRoot)
+        .post(`/v4/dnb/company-search`, {
+          search_term: 'company',
+          address_country: 'GB',
+          page_size: 100,
+        })
+        .reply(200, {
+          count: 0,
+          results: [],
+        })
+
+      this.actual = await searchDnbCompanies({
+        token: '1234',
+        requestBody: {
+          search_term: 'company',
+          address_country: 'GB',
+        },
       })
     })
 

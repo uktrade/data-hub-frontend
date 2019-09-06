@@ -247,6 +247,8 @@ module.exports = {
       ukLocationsOfInterest: {
         name: '[data-auto-id=location] ul > li:nth-child(1) .task-list__item-name',
         incomplete: '[data-auto-id=location] ul > li:nth-child(1) .task-list__item-incomplete',
+        locationOne: '[data-auto-id="location"] > .govuk-details__text > .task-list > :nth-child(1) > :nth-child(2)',
+        locationTwo: '[data-auto-id="location"] > .govuk-details__text > .task-list > :nth-child(1) > :nth-child(3)',
       },
       otherCountriesTheInvestorIsConsidering: {
         name: '[data-auto-id=location] ul > li:nth-child(2) .task-list__item-name',

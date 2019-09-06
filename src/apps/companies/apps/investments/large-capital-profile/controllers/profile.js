@@ -7,8 +7,8 @@ const {
   transformRequiredChecks,
 } = require('../transformers')
 
-const { getInvestorDetailsOptions, getInvestorRequirementsOptions } = require('../options')
-const { INVESTOR_DETAILS, INVESTOR_REQUIREMENTS } = require('../sections')
+const { getInvestorDetailsOptions, getInvestorRequirementsOptions, getLocationOptions } = require('../options')
+const { INVESTOR_DETAILS, INVESTOR_REQUIREMENTS, LOCATION } = require('../sections')
 const { assetClassSectors } = require('../constants')
 const { getCompanyProfiles } = require('../repos')
 const { get } = require('lodash')
@@ -82,6 +82,11 @@ const renderProfile = async (req, res, next) => {
           profile.investorRequirements.constructionRisks.items = transformCheckboxes(constructionRiskMD, constructionRisks)
           profile.investorRequirements.minimumEquityPercentage.items = transformRadioButtons(minimumEquityPercentageMD, minimumEquityPercentage)
           profile.investorRequirements.desiredDealRoles.items = transformCheckboxes(desiredDealRoleMD, desiredDealRoles)
+        })
+    } else if (editType === LOCATION) {
+      await getLocationOptions(token)
+        .then((result) => {
+          profile.location.uk_region_locations.items = result
         })
     }
 

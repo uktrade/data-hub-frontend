@@ -136,6 +136,10 @@ and be provided with a back end server to provide the API, data storage and sear
     ```bash
     API_ROOT=example.com docker-compose up frontend
     ```
+
+    If using the mock-sso instance specified in `docker-compose.yml`, you will 
+    also need to specify the `MOCK_SSO_USERNAME` environment variable in `.env`.
+    This value should correspond with an `Advisor.email` value in the Data Hub backend
     
 ### Running project natively
 
