@@ -1,8 +1,9 @@
 /* eslint-disable */
 
 import React, { useState } from 'react'
-import { Details, LoadingBox } from 'govuk-react'
-import { Form, Step } from 'data-hub-components'
+import { Details, LoadingBox, H3 } from 'govuk-react'
+
+import { Form, Step, FieldDnbCompany } from 'data-hub-components'
 
 function AddCompanyForm(props) {
   const [submitted, setSubmitted] = useState(false)
@@ -32,8 +33,14 @@ function AddCompanyForm(props) {
           <p>Companies</p>
         </Step>
 
-        <Step name="companySearch">
-          <p>Add a Company</p>
+        <Step name="companySearch" hideForwardButton={true}>
+          <H3>Find the company</H3>
+
+          <FieldDnbCompany
+            apiEndpoint={`//${props.host}/companies/create/dnb/company-search?_csrf=${props.csrfToken}`}
+            country="UK"
+            name="dnb_company"
+          />
         </Step>
 
         <Step name="companyDetails" forwardButtonText={"Add company"}>

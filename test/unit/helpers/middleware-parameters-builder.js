@@ -7,6 +7,7 @@ module.exports = ({
   requestParams = {},
   requestQuery = {},
   requestPath,
+  requestHeaders = { host: 'localhost:3000' },
   CURRENT_PATH = '',
   breadcrumb = sinon.stub().returnsThis(),
   title = sinon.stub().returnsThis(),
@@ -20,7 +21,7 @@ module.exports = ({
   features = {},
   userAgent = { isIE: false },
   user,
-}) => {
+} = {}) => {
   return {
     reqMock: {
       ...reqMock,
@@ -31,6 +32,7 @@ module.exports = ({
       params: requestParams,
       query: requestQuery,
       path: requestPath,
+      headers: requestHeaders,
       flash: sinon.spy(),
     },
     resMock: {
@@ -54,6 +56,7 @@ module.exports = ({
         features,
         userAgent,
         user,
+        csrfToken: 'csrf',
       },
     },
     nextSpy: sinon.spy(),
