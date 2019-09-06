@@ -1,9 +1,47 @@
 /* eslint-disable */
 
 import React, { useState } from 'react'
-import { Details, LoadingBox, H3 } from 'govuk-react'
-
+import { LoadingBox, H2, H3 } from 'govuk-react'
 import { Form, Step, FieldDnbCompany } from 'data-hub-components'
+import { MEDIA_QUERIES } from '@govuk-react/constants'
+import { BLUE } from 'govuk-colours'
+import { uniqueId } from 'lodash'
+import styled from 'styled-components'
+
+const StyledDivider = styled('div')`
+  border: 1px solid #d8d8dc;
+  margin: 18px 0;
+`
+
+const StyledDiv = styled('div')`
+  padding 5px 0;
+
+  ${MEDIA_QUERIES.TABLET} {
+    display: inline-flex;
+  }
+`
+
+const StyledH3 = styled('h3')`
+  color: ${BLUE};
+  font-size: 20px;
+  font-weight: bold;
+`
+
+const StyledDL = styled('dl')`
+  ${MEDIA_QUERIES.TABLET} {
+    display: flex;
+    flex-direction: column;
+  }
+`
+
+const StyledDT = styled('dt')`
+  padding-right: 20px
+  width: 105px
+`
+
+const StyledDD = styled('dd')`
+  font-weight: bold;
+`
 
 function AddCompanyForm(props) {
   const [submitted, setSubmitted] = useState(false)
@@ -26,6 +64,25 @@ function AddCompanyForm(props) {
     )
   }
 
+  function DLRow({ label, description }) {
+    return (
+      <StyledDiv>
+        <StyledDT>{ label }</StyledDT>
+        <StyledDD>{ description }</StyledDD>
+      </StyledDiv>      
+    )
+  }
+
+  function DL({ rows }) {
+    return (
+      <StyledDL>
+        {rows.map(({ label, description }) => (
+          <DLRow label={label} description={description} key={uniqueId()} />
+        ))}
+      </StyledDL>
+    )
+  }
+
   return (
     <Form {...props} onSubmit={submitCallback}>
       <LoadingBox loading={isSubmitting}>
@@ -43,17 +100,16 @@ function AddCompanyForm(props) {
           />
         </Step>
 
-        <Step name="companyDetails" forwardButtonText={"Add company"}>
-          <p>Add company details</p>
-
-          <Details summary="Why am I seeing this?">
-            The company you want to add to Data Hub cannot be found
-            in the external databases Data Hub checks.
-            You will need to provide information about the company,
-            so the company can be added to Data Hub
-            while the Data Hub support team checks with the company
-            the information you have provided.
-          </Details>
+        <Step name="companyDetails" forwardButtonText={"Save and continue"}>
+          <H2 size="MEDIUM">Add this company to Data Hub</H2>
+          <StyledDivider />
+          <StyledH3>Samsung Venture Investment</StyledH3>
+          <DL rows={[
+            { label: 'Sector', description: 'Business (and Consumer) services' },
+            { label: 'UK region', description: 'LONDON' },
+            { label: 'Address', description: 'Samsung HQ, 44 Riverbank House, Great West Road, Brentford, Middlesex' }
+          ]}/>
+          <StyledDivider />
         </Step>
       </LoadingBox>
     </Form>
