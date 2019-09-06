@@ -2,8 +2,15 @@ const router = require('express').Router()
 
 const {
   renderAddCompanyForm,
+  postSearchDnbCompanies,
+  postAddDnbCompany,
 } = require('./controllers')
 
-router.get('/', renderAddCompanyForm)
+router
+  .route('/')
+  .get(renderAddCompanyForm)
+  .post(postAddDnbCompany)
+
+router.post('/dnb/company-search', postSearchDnbCompanies)
 
 module.exports = router

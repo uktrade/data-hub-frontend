@@ -24,6 +24,7 @@ services:
       OAUTH2_CLIENT_ID: randomClientId
       OAUTH2_DEV_TOKEN: ditStaffToken
       CACHE_ASSETS: "true"
+      SESSION_SECRET: foobarbaz
     volumes:
       - ./assets:/usr/src/app/assets
       - ./common:/usr/src/app/common
@@ -58,7 +59,8 @@ services:
       - 8080:8080
     environment:
       MOCK_SSO_SCOPE: data-hub:internal-front-end
-      MOCK_SSO_TOKEN: 123
+      MOCK_SSO_TOKEN: ditStaffToken
+      MOCK_SSO_USERNAME: ${MOCK_SSO_USERNAME}
 
   mock-backend:
     image: ukti/data-hub-sandbox:1.0.0

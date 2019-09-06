@@ -495,6 +495,14 @@ describe('Company Investments and Large capital profile', () => {
         .get(location.taskList.notesOnInvestorsLocationPreferences.name).should('contain', "Notes on investor's location preferences")
         .get(location.taskList.notesOnInvestorsLocationPreferences.complete).should('contain', 'Notes go here please')
     })
+
+    it("should display 'UK locations of interest' and London and the West Midlands", () => {
+      cy.visit(largeCapitalProfile)
+        .get(location.summary).click()
+        .get(location.taskList.ukLocationsOfInterest.name).should('contain', 'UK locations of interest')
+        .get(location.taskList.ukLocationsOfInterest.locationOne).should('contain', 'London')
+        .get(location.taskList.ukLocationsOfInterest.locationTwo).should('contain', 'West Midlands')
+    })
   })
 })
 

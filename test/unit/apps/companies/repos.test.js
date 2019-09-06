@@ -6,7 +6,11 @@ const myCompanyListData = require('~/test/unit/data/companies/my-company-list.js
 
 const config = require('~/config')
 
-const { getDitCompany, getCHCompany } = require('~/src/apps/companies/repos.js')
+const {
+  getDitCompany,
+  getCHCompany,
+  saveDnbCompany,
+} = require('~/src/apps/companies/repos.js')
 
 function makeRepositoryWithAuthRequest (authorisedRequestStub) {
   return proxyquire('~/src/apps/companies/repos', {
@@ -122,6 +126,24 @@ describe('Company repository', () => {
         method: 'DELETE',
         url: `http://localhost:8000/v4/user/company-list/${myCompanyListData.id}`,
       })
+    })
+  })
+
+  describe('#saveDnbCompany', () => {
+    beforeEach(async () => {
+      nock(config.apiRoot)
+        .post('/v4/dnb/company-create', {
+          duns_number: '123',
+        })
+        .reply(200, {
+          hello: true,
+        })
+
+      this.actual = await saveDnbCompany('1234', '123')
+    })
+
+    it('should respond successfully', () => {
+      expect(this.actual).to.deep.equal({ hello: true })
     })
   })
 })

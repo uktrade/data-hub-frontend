@@ -139,10 +139,21 @@ describe('Company Investments - Large capital profile', () => {
           },
         },
         location: {
-          incompleteFields: 2,
+          incompleteFields: 1,
           notes_on_locations: 'They are super keen on the Midlands Engine',
-        },
-      }
+          uk_region_locations: {
+            value: [
+              {
+                name: 'East of England',
+                id: '864cd12a-6095-e211-a939-e4115bead28a',
+              },
+              {
+                name: 'London',
+                id: '874cd12a-6095-e211-a939-e4115bead28a',
+              },
+            ],
+          },
+        } }
 
       it('should call the render function once', () => {
         expect(this.middlewareParameters.resMock.render).to.have.been.calledOnce
