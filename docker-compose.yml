@@ -24,6 +24,10 @@ services:
       OAUTH2_CLIENT_ID: randomClientId
       OAUTH2_DEV_TOKEN: ditStaffToken
       CACHE_ASSETS: "true"
+      HELP_CENTRE_URL: https://datahub-helpcentre.london.cloudapps.digital
+      HELP_CENTRE_ANNOUNCMENTS_URL: https://datahub-helpcentre.london.cloudapps.digital/updates/announcements
+      HELP_CENTRE_API_FEED: https://data-hub-sandbox.getsandbox.com:443/help-centre/announcement
+      HELP_CENTRE_FEED_API_TOKEN: apiToken
       SESSION_SECRET: foobarbaz
     volumes:
       - ./assets:/usr/src/app/assets
