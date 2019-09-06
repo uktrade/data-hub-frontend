@@ -12,25 +12,25 @@ const data = {
       heading:
         'Interactions - Recording Multiple Advisors - Changes Coming in April',
       link:
-        'https://uktrade.zendesk.com/hc/en-gb/articles/360001412918-April-2019-improvements-to-company-page-data',
+        'https://www.help-centre.com/hc/en-gb/articles/360001412918-April-2019-improvements-to-company-page-data',
       date: '21 hours ago',
     },
     {
       heading: 'Interactions',
       link:
-        'https://uktrade.zendesk.com/hc/en-gb/articles/360001412918-April-2019-improvements-to-company-page-data',
+        'https://www.help-centre.com/hc/en-gb/articles/360001412918-April-2019-improvements-to-company-page-data',
       date: '22 hours ago',
     },
     {
       heading: 'Interactions 2',
       link:
-        'https://uktrade.zendesk.com/hc/en-gb/articles/360001412918-April-2019-improvements-to-company-page-data',
+        'https://www.help-centre.com/hc/en-gb/articles/360001412918-April-2019-improvements-to-company-page-data',
       date: '1 day ago',
     },
     {
       heading: 'Interactions 3',
       link:
-        'https://uktrade.zendesk.com/hc/en-gb/articles/360001412918-April-2019-improvements-to-company-page-data',
+        'https://www.help-centre.com/hc/en-gb/articles/360001412918-April-2019-improvements-to-company-page-data',
       date: '2 days ago',
     },
   ],
@@ -84,6 +84,17 @@ describe('Info feed component', () => {
       expect(this.infoFeedLink[1].href).to.equal(data.dataFeed[1].link)
       expect(this.infoFeedLink[2].text).to.equal(data.dataFeed[2].heading)
       expect(this.infoFeedLink[2].href).to.equal(data.dataFeed[2].link)
+    })
+  })
+  context('when there is no sub heading', () => {
+    beforeEach(() => {
+      this.component = renderComponentToDom('info-feed', { ...data, subHeading: null })
+      this.subHeading = this.component.querySelector(
+        '.dashboard-section__subheading'
+      )
+    })
+    it('should not render a sub heading', () => {
+      expect(this.subHeading).to.not.exist
     })
   })
 })
