@@ -109,9 +109,6 @@ const config = {
   activityFeed: {
     paginationSize: 20,
     supportedActivityTypes: [
-      'dit:Accounts',
-      'dit:Company',
-      'dit:Export',
       'dit:Interaction',
       'dit:ServiceDelivery',
       'dit:InvestmentProject',

@@ -24,9 +24,6 @@ describe('Activity feed repos', () => {
               filter: [
                 { term: { 'object.attributedTo.id': 'dit:DataHubCompany:123' } },
                 { terms: { 'object.type': [
-                  'dit:Accounts',
-                  'dit:Company',
-                  'dit:Export',
                   'dit:Interaction',
                   'dit:ServiceDelivery',
                   'dit:InvestmentProject',
@@ -64,9 +61,6 @@ describe('Activity feed repos', () => {
               filter: [
                 { term: { 'object.attributedTo.id': 'dit:DataHubCompany:undefined' } },
                 { terms: { 'object.type': [
-                  'dit:Accounts',
-                  'dit:Company',
-                  'dit:Export',
                   'dit:Interaction',
                   'dit:ServiceDelivery',
                   'dit:InvestmentProject',
@@ -102,9 +96,6 @@ describe('Activity feed repos', () => {
               filter: [
                 { term: { 'object.attributedTo.id': 'dit:DataHubCompany:undefined' } },
                 { terms: { 'object.type': [
-                  'dit:Accounts',
-                  'dit:Company',
-                  'dit:Export',
                   'dit:Interaction',
                   'dit:ServiceDelivery',
                   'dit:InvestmentProject',
