@@ -35,25 +35,31 @@ const StyledDL = styled('dl')`
 
 const StyledDT = styled('dt')`
   padding-right: ${SPACING.SCALE_4};
-  min-width: 105px;
-`
-
-const StyledDD = styled('dd')`
+  width: 30%;
   font-weight: bold;
 `
 
 function Row ({ label, description }) {
+  if (!label || !description) {
+    return null
+  }
+
   return (
     <StyledInnerRow>
       <StyledDT>{ label }</StyledDT>
-      <StyledDD>{ description }</StyledDD>
+      <dd>{ description }</dd>
     </StyledInnerRow>
   )
 }
 
 Row.propTypes = {
-  label: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  description: PropTypes.string,
+}
+
+DefinitionList.defaultProps = {
+  label: null,
+  description: null,
 }
 
 function DefinitionList ({ header, children }) {
