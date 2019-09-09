@@ -1,60 +1,46 @@
-/* eslint-disable */
-
 import React, { useState } from 'react'
-import { LoadingBox, H2, H3 } from 'govuk-react'
-import { Form, Step, FieldDnbCompany } from 'data-hub-components'
-import { MEDIA_QUERIES, FONT_SIZE, SPACING } from '@govuk-react/constants'
-import { BLUE, GREY_3 } from 'govuk-colours'
-import { uniqueId } from 'lodash'
-import styled from 'styled-components'
+import { H3, LoadingBox } from 'govuk-react'
+import PropTypes from 'prop-types'
+import {
+  FieldDnbCompany,
+  FieldRadios,
+  FieldSelect,
+  Form,
+  Step
+} from 'data-hub-components'
 
-const StyledDLContainer = styled('div')`
-  border-top: 2px solid ${GREY_3};
-  border-bottom: 2px solid ${GREY_3};
-  padding-top: ${SPACING.SCALE_4};
-  padding-bottom: ${SPACING.SCALE_4};
-  margin-bottom: ${SPACING.SCALE_5};
-`
+import DefinitionList from './DefinitionList'
 
-const StyledInnerRow = styled('div')`
-  padding: ${SPACING.SCALE_1} 0;
+const COMPANY_LOCATION_OPTIONS = {
+  uk: {
+    label: 'UK',
+    value: 'uk',
+  },
+  overseas: {
+    label: 'Overseas',
+    value: 'overseas',
+  },
+}
 
-  ${MEDIA_QUERIES.TABLET} {
-    display: inline-flex;
-  }
-`
-
-const StyledH3 = styled('h3')`
-  color: ${BLUE};
-  font-size: ${FONT_SIZE.SIZE_20};
-  font-weight: bold;
-`
-
-const StyledDL = styled('dl')`
-  ${MEDIA_QUERIES.TABLET} {
-    display: flex;
-    flex-direction: column;
-  }
-`
-
-const StyledDT = styled('dt')`
-  padding-right: ${SPACING.SCALE_4};
-  min-width: 105px;
-`
-
-const StyledDD = styled('dd')`
-  font-weight: bold;
-`
-
-function AddCompanyForm(props) {
+function AddCompanyForm ({ host, csrfToken, foreignCountries }) {
   const [submitted, setSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  function timeout(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+  function timeout (ms) {
+    return new Promise(resolve => setTimeout(resolve, ms))
   }
 
-  async function submitCallback() {
+  function getCountry (values) {
+    if (values.companyLocation && values.companyLocation === COMPANY_LOCATION_OPTIONS.uk.value) {
+      return COMPANY_LOCATION_OPTIONS.uk.label
+    }
+
+    if (values.companyOverseasCountry) {
+      return foreignCountries.find(c => c.value === values.companyOverseasCountry).label
+    }
+  }
+
+  async function submitCallback () {
     setIsSubmitting(true)
     await timeout(1000)
     setIsSubmitting(false)
@@ -67,59 +53,73 @@ function AddCompanyForm(props) {
     )
   }
 
-  function DLRow({ label, description }) {
-    return (
-      <StyledInnerRow>
-        <StyledDT>{ label }</StyledDT>
-        <StyledDD>{ description }</StyledDD>
-      </StyledInnerRow>      
-    )
-  }
-
-  function DL({ rows }) {
-    return (
-      <StyledDL>
-        {rows.map(({ label, description }) => (
-          <DLRow label={label} description={description} key={uniqueId()} />
-        ))}
-      </StyledDL>
-    )
-  }
-
   return (
-    <Form {...props} onSubmit={submitCallback}>
-      <LoadingBox loading={isSubmitting}>
-        <Step name="companyType">
-          <p>Companies</p>
-        </Step>
+    <Form onSubmit={submitCallback}>
+      {form => (
+        <LoadingBox loading={isSubmitting}>
+          <Step name="companyLocation">
+            <FieldRadios
+              name="companyLocation"
+              label={<H3>Where is this company based?</H3>}
+              required="Specify location of the company"
+              options={[
+                COMPANY_LOCATION_OPTIONS.uk,
+                {
+                  ...COMPANY_LOCATION_OPTIONS.overseas,
+                  children: (
+                    <FieldSelect
+                      required="Select in which country the company is based"
+                      label="Country"
+                      name="companyOverseasCountry"
+                      options={foreignCountries}
+                    />
+                  ),
+                },
+              ]}
+            />
+          </Step>
 
-        <Step name="companySearch" hideForwardButton={true}>
-          <H3>Find the company</H3>
+          <Step name="companySearch" hideForwardButton={true}>
+            <H3>Find the company</H3>
 
-          <FieldDnbCompany
-            apiEndpoint={`//${props.host}/companies/create/dnb/company-search?_csrf=${props.csrfToken}`}
-            country="UK"
-            name="dnb_company"
-          />
-        </Step>
+            <FieldDnbCompany
+              apiEndpoint={`//${host}/companies/create/dnb/company-search?_csrf=${csrfToken}`}
+              country={getCountry(form.values)}
+              name="dnb_company"
+            />
+          </Step>
 
-        <Step name="companyDetails" forwardButtonText={"Save and continue"}>
-          <H2 size="MEDIUM">Add this company to Data Hub</H2>
-          <StyledDLContainer>
-            <StyledH3>Samsung Venture Investment</StyledH3>
-            <DL rows={[
-              { label: 'Sector', description: 'Business (and Consumer) services' },
-              { label: 'UK region', description: 'LONDON' },
-              { label: 'Address', description: 'Samsung HQ, 44 Riverbank House, Great West Road, Brentford, Middlesex' }
-            ]}/>
-          </StyledDLContainer>
-        </Step>
-      </LoadingBox>
+          <Step name="companyDetails" forwardButtonText="Add company">
+            <H3>Add this company to Data Hub</H3>
+
+            <DefinitionList header="Samsung Venture Investment">
+              <DefinitionList.Row
+                label="Sector"
+                description="Business (and Consumer) services"
+              />
+              <DefinitionList.Row
+                label="UK region"
+                description="LONDON"
+              />
+              <DefinitionList.Row
+                label="Address"
+                description="Samsung HQ, 44 Riverbank House, Great West Road, Brentford, Middlesex"
+              />
+            </DefinitionList>
+          </Step>
+        </LoadingBox>
+      )}
     </Form>
   )
 }
 
-AddCompanyForm.propTypes = Form.propTypes
-AddCompanyForm.defaultProps = Form.defaultProps
+AddCompanyForm.propTypes = {
+  host: PropTypes.string.isRequired,
+  csrfToken: PropTypes.string.isRequired,
+  foreignCountries: PropTypes.arrayOf(PropTypes.shape({
+    label: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  })).isRequired,
+}
 
 export default AddCompanyForm
