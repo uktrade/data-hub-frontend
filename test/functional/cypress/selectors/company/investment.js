@@ -250,9 +250,10 @@ module.exports = {
         locationOne: '[data-auto-id="location"] > .govuk-details__text > .task-list > :nth-child(1) > :nth-child(2)',
         locationTwo: '[data-auto-id="location"] > .govuk-details__text > .task-list > :nth-child(1) > :nth-child(3)',
       },
-      otherCountriesTheInvestorIsConsidering: {
+      otherCountriesBeingConsidered: {
         name: '[data-auto-id=location] ul > li:nth-child(2) .task-list__item-name',
         incomplete: '[data-auto-id=location] ul > li:nth-child(2) .task-list__item-incomplete',
+        locationOne: '[data-auto-id="location"] > .govuk-details__text > .task-list > :nth-child(2) > :nth-child(2)',
       },
       notesOnInvestorsLocationPreferences: {
         name: '[data-auto-id=location] ul > li:nth-child(3) .task-list__item-name',
