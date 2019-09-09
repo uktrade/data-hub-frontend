@@ -1,10 +1,11 @@
 /* eslint-disable camelcase */
-const { sanitizeCheckboxes } = require('../../utils/transformers')
+const { sanitiseUserSelection } = require('../../utils/transformers')
 
-const transformLocation = ({ notes_on_locations, uk_region_locations }) => {
+const transformLocation = ({ notes_on_locations, uk_region_locations, other_countries_being_considered }) => {
   return {
     notes_on_locations,
-    uk_region_locations: sanitizeCheckboxes(uk_region_locations),
+    uk_region_locations: uk_region_locations ? sanitiseUserSelection(uk_region_locations) : [],
+    other_countries_being_considered: other_countries_being_considered ? sanitiseUserSelection(other_countries_being_considered) : [],
   }
 }
 

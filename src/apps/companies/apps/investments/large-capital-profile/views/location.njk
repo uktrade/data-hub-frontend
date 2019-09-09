@@ -1,6 +1,6 @@
 <ul class="task-list">
   {{ taskListItem({ name: 'UK locations of interest', value: profile.location.uk_region_locations.value, key: 'name'}) }}
-  {{ taskListItem({ name: 'Other countries the investor is considering' }) }}
+  {{ taskListItem({ name: 'Other countries the investor is considering', value: profile.location.other_countries_being_considered.value, key: 'name'}) }}
   {{ taskListItem({ name: "Notes on investor's location preferences", value: profile.location.notes_on_locations }) }}
 </ul>
 

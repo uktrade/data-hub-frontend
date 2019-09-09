@@ -33,6 +33,27 @@
   }}
 
   {{
+    AddAnother({
+      buttonName: 'other_countries_being_considered',
+      name: 'other_countries_being_considered',
+      label: 'Other countries the investor is considering',
+      attributes: {
+        'data-auto-id': 'otherCountriesBeingConsidered'
+      },
+      value: profile.location.other_countries_being_considered.value,
+      children: [{
+        macroName: 'MultipleChoiceField',
+        name: 'other_countries_being_considered',
+        label: 'Other countries the investor is considering',
+        isLabelHidden: true,
+        optional: true,
+        initialOption: '-- Select country --',
+        options: profile.location.other_countries_being_considered.items
+      }]
+    })
+  }}
+
+  {{
     govukTextarea({
       name: 'notes_on_locations',
       label: {
