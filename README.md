@@ -612,7 +612,7 @@ to run in browserstack, ensure you have the following environment variables set:
 ```
 export BROWSERSTACK_USERNAME=xxx
 export BROWSERSTACK_ACCESS_KEY=xxx
-export TUNNEL=true
+export IS_REMOTE=true
 ```
 ### Running the tests
 After setting up the environment variables, run the following command to execute the tests:
