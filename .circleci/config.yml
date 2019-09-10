@@ -367,7 +367,7 @@ jobs:
       - store_artifacts:
           path: visual-screenshots
       - store_artifacts:
-          path: visual-test-report.html
+          path: visual-report
 
   # Run acceptance tests for DIT staff
   dit_staff_at: &dit_staff_at
