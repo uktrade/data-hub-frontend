@@ -224,16 +224,16 @@ describe('OMIS FormController', () => {
     context('when parent returns an errors object', () => {
       beforeEach(() => {
         this.getErrorsStub = this.getErrorsStub.returns({
-          fieldOne: {
-            key: 'fieldOne',
+          assignee_time: {
+            key: 'assignee_time',
             type: 'required',
-            message: 'cannot not be blank',
+            message: 'cannot be blank',
             url: '/step-url',
           },
-          fieldTwo: {
-            key: 'fieldTwo',
+          assignee_actual_time: {
+            key: 'assignee_actual_time',
             type: 'required',
-            message: 'cannot not be blank',
+            message: 'cannot be blank',
             url: '/step-url',
           },
         })
@@ -248,21 +248,21 @@ describe('OMIS FormController', () => {
         const errors = this.controller.getErrors(this.reqMock, globalRes)
 
         expect(errors).to.deep.equal({
-          fieldOne: {
-            key: 'fieldOne',
+          assignee_time: {
+            key: 'assignee_time',
             type: 'required',
-            message: 'cannot not be blank',
+            message: 'cannot be blank',
             url: '/step-url',
           },
-          fieldTwo: {
-            key: 'fieldTwo',
+          assignee_actual_time: {
+            key: 'assignee_actual_time',
             type: 'required',
-            message: 'cannot not be blank',
+            message: 'cannot be blank',
             url: '/step-url',
           },
           messages: {
-            fieldOne: 'fields.fieldOne.label cannot not be blank',
-            fieldTwo: 'fields.fieldTwo.label cannot not be blank',
+            assignee_time: 'Estimated hours cannot be blank',
+            assignee_actual_time: 'Actual hours worked cannot be blank',
           },
         })
       })
