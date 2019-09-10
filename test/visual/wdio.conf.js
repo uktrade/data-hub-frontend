@@ -33,12 +33,20 @@ const remoteConfig = {
   },
   capabilities: [
     {
-    'os': 'Windows',
-    'os_version': '10',
-    'browser': 'Chrome',
-    'browser_version': '76.0 beta',
-    'resolution': '1920x1080'
-  }]
+      'os': 'Windows',
+      'os_version': '10',
+      'browser': 'Chrome',
+      'browser_version': '76.0 beta',
+      'resolution': '1920x1080'
+    },
+    {
+      'os': 'Windows',
+      'os_version': '10',
+      'browser': 'IE',
+      'browser_version': '11.0',
+      'resolution': '1920x1080'
+    },
+  ]
 }
 
 const localConfig = {
@@ -65,7 +73,7 @@ const defaultConfig = {
   },
   before: () => {
     browser.setTimeout({ 'implicit': IMPLICIT_TIMEOUT })
-    const wdioImageDiff = new WdioImage(browser, { threshold: 0.1, width: 1792, height: 1008 })
+    const wdioImageDiff = new WdioImage(browser, { threshold: 0.2, width: 1792, height: 1008 })
     browser.imageDiff = wdioImageDiff
   },
   beforeTest: (test) => {
