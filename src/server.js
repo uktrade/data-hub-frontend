@@ -13,7 +13,6 @@ const enforce = require('express-sslify')
 const favicon = require('serve-favicon')
 const cookieParser = require('cookie-parser')
 const minifyHTML = require('express-minify-html')
-const i18n = require('i18n-future').middleware()
 
 const title = require('./middleware/title')
 const breadcrumbs = require('./middleware/breadcrumbs')
@@ -70,7 +69,6 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }))
 app.use(bodyParser.json())
 
 app.use(compression())
-app.use(i18n)
 
 app.set('view engine', 'njk')
 nunjucks(app, config)

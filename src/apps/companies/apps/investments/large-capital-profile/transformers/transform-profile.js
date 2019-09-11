@@ -96,6 +96,9 @@ const transformProfile = (profile, editing) => {
       uk_region_locations: {
         value: get(profile, 'uk_region_locations', null),
       },
+      other_countries_being_considered: {
+        value: get(profile, 'other_countries_being_considered', null),
+      },
     },
   }
 }

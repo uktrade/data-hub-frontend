@@ -8,7 +8,6 @@ const {
   renderPaymentReceipt,
 } = require('./controllers')
 const {
-  setTranslation,
   setCompany,
   setContact,
   setAssignees,
@@ -31,7 +30,6 @@ const LOCAL_NAV = [
 ]
 
 router.use(setLocalNav(LOCAL_NAV))
-router.use(setTranslation)
 router.use(setCompany)
 router.use(setOrderBreadcrumb)
 router.use(setQuoteSummary)

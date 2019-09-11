@@ -84,9 +84,10 @@ const renderProfile = async (req, res, next) => {
           profile.investorRequirements.desiredDealRoles.items = transformCheckboxes(desiredDealRoleMD, desiredDealRoles)
         })
     } else if (editType === LOCATION) {
-      await getLocationOptions(token)
-        .then((result) => {
-          profile.location.uk_region_locations.items = result
+      await Promise.all(getLocationOptions(token))
+        .then(([ regions, countries ]) => {
+          profile.location.uk_region_locations.items = regions
+          profile.location.other_countries_being_considered.items = countries
         })
     }
 
