@@ -1,3 +1,4 @@
+const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 const companyData = require('~/test/unit/data/company.json')
 const orderData = require('~/test/unit/data/omis/simple-order.json')
 
@@ -265,6 +266,27 @@ describe('OMIS middleware', () => {
 
       expect(this.setHomeBreadcrumbReturnSpy).to.have.been.calledOnce
       expect(this.setHomeBreadcrumbReturnSpy).to.have.been.calledWith({}, this.resMock, this.nextSpy)
+    })
+  })
+
+  describe('translate()', () => {
+    beforeEach(() => {
+      this.middlewareParameters = buildMiddlewareParameters({})
+
+      this.middleware.translate(
+        this.middlewareParameters.reqMock,
+        this.middlewareParameters.resMock,
+        this.middlewareParameters.nextSpy,
+      )
+    })
+
+    it('should set the translate function', () => {
+      const actual = this.middlewareParameters.resMock.locals.translate('fields.contact.label')
+      expect(actual).to.equal('Contact responsible for the order')
+    })
+
+    it('should call next()', () => {
+      expect(this.middlewareParameters.nextSpy).to.have.been.calledOnceWithExactly()
     })
   })
 })

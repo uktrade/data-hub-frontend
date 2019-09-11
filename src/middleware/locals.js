@@ -97,10 +97,6 @@ module.exports = function locals (req, res, next) {
     getLocal (key) {
       return res.locals[key]
     },
-
-    translate (key) {
-      return req.translate(key)
-    },
   })
   next()
 }
