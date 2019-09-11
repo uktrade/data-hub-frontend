@@ -1,6 +1,9 @@
+/* eslint-disable camelcase */
+
 import React, { useState } from 'react'
 import { H3, LoadingBox } from 'govuk-react'
 import PropTypes from 'prop-types'
+import { compact, get } from 'lodash'
 import {
   FieldDnbCompany,
   FieldRadios,
@@ -30,13 +33,39 @@ function AddCompanyForm ({ host, csrfToken, foreignCountries }) {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
 
-  function getCountry (values) {
-    if (values.companyLocation && values.companyLocation === COMPANY_LOCATION_OPTIONS.uk.value) {
+  function getCountry ({ companyLocation, companyOverseasCountry }) {
+    if (companyLocation && companyLocation === COMPANY_LOCATION_OPTIONS.uk.value) {
       return COMPANY_LOCATION_OPTIONS.uk.label
     }
 
-    if (values.companyOverseasCountry) {
-      return foreignCountries.find(c => c.value === values.companyOverseasCountry).label
+    if (companyOverseasCountry) {
+      return foreignCountries.find(c => c.value === companyOverseasCountry).label
+    }
+  }
+
+  function getCompanyName ({ dnbCompany }) {
+    return get(dnbCompany, 'primary_name')
+  }
+
+  function getCompanyAddress ({ dnbCompany }) {
+    if (dnbCompany) {
+      return compact([
+        dnbCompany.address_line_1,
+        dnbCompany.address_line_2,
+        dnbCompany.address_town,
+        dnbCompany.address_postcode,
+      ]).join(', ')
+    }
+  }
+
+  function getCompaniesHouseNumber ({ dnbCompany }) {
+    if (dnbCompany) {
+      const companiesHouseAccount = dnbCompany.registration_numbers
+        .find(({ registration_type }) => registration_type === 'uk_companies_house_number')
+
+      if (companiesHouseAccount) {
+        return companiesHouseAccount.registration_number
+      }
     }
   }
 
@@ -85,25 +114,21 @@ function AddCompanyForm ({ host, csrfToken, foreignCountries }) {
             <FieldDnbCompany
               apiEndpoint={`//${host}/companies/create/dnb/company-search?_csrf=${csrfToken}`}
               country={getCountry(form.values)}
-              name="dnb_company"
+              name="dnbCompany"
             />
           </Step>
 
           <Step name="companyDetails" forwardButtonText="Add company">
-            <H3>Add this company to Data Hub</H3>
+            <H3>Confirm you want to add this company to Data Hub</H3>
 
-            <DefinitionList header="Samsung Venture Investment">
+            <DefinitionList header={getCompanyName(form.values)}>
               <DefinitionList.Row
-                label="Sector"
-                description="Business (and Consumer) services"
-              />
-              <DefinitionList.Row
-                label="UK region"
-                description="LONDON"
+                label="Companies House number"
+                description={getCompaniesHouseNumber(form.values)}
               />
               <DefinitionList.Row
                 label="Address"
-                description="Samsung HQ, 44 Riverbank House, Great West Road, Brentford, Middlesex"
+                description={getCompanyAddress(form.values)}
               />
             </DefinitionList>
           </Step>
