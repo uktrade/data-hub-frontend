@@ -18,9 +18,7 @@
         "minimum_equity_percentage",
         "desired_deal_roles"
       ],
-      "incomplete_location_fields": [
-        "other_countries_being_considered"
-      ],
+      "incomplete_location_fields": [],
       "investor_type": {
         "id": "80168d31-fa91-494e-9ad5-b9255e01b5da",
         "name": "Asset manager"
@@ -109,8 +107,13 @@
           "id": "874cd12a-6095-e211-a939-e4115bead28a"
         }
       ],
-      "notes_on_locations": "They are super keen on the Midlands Engine",
-      "other_countries_being_considered": []
+      "other_countries_being_considered": [
+        {
+          "name": "Japan",
+          "id": "85756b9a-5d95-e211-a939-e4115bead28a"
+        }
+      ],
+      "notes_on_locations": "They are super keen on the Midlands Engine"
     }
   ]
 }

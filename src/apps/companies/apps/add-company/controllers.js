@@ -1,14 +1,18 @@
+const { fetchForeignCountries } = require('./repos')
 const { searchDnbCompanies } = require('../../../../modules/search/services')
 const { saveDnbCompany } = require('../../repos')
 
 async function renderAddCompanyForm (req, res, next) {
   try {
+    const foreignCountries = await fetchForeignCountries({ token: req.session.token })
+
     res
       .breadcrumb('Add company')
       .render('companies/apps/add-company/views/client-container', {
         props: {
           host: req.headers.host,
           csrfToken: res.locals.csrfToken,
+          foreignCountries,
         },
       })
   } catch (error) {

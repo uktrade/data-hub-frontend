@@ -139,7 +139,7 @@ describe('Company Investments - Large capital profile', () => {
           },
         },
         location: {
-          incompleteFields: 1,
+          incompleteFields: 0,
           notes_on_locations: 'They are super keen on the Midlands Engine',
           uk_region_locations: {
             value: [
@@ -150,6 +150,14 @@ describe('Company Investments - Large capital profile', () => {
               {
                 name: 'London',
                 id: '874cd12a-6095-e211-a939-e4115bead28a',
+              },
+            ],
+          },
+          other_countries_being_considered: {
+            value: [
+              {
+                name: 'Japan',
+                id: '85756b9a-5d95-e211-a939-e4115bead28a',
               },
             ],
           },

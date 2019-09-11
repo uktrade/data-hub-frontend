@@ -421,7 +421,10 @@ describe('Company Investments - Large capital profile - Investor requirements', 
           incompleteFields: 3,
           notes_on_locations: '',
           uk_region_locations: {
-            'value': [],
+            value: [],
+          },
+          other_countries_being_considered: {
+            value: [],
           },
         },
       }

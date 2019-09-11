@@ -1,5 +1,6 @@
 const { get, filter, flatten, forEach, mapValues } = require('lodash')
 const { Controller } = require('hmpo-form-wizard')
+const labels = require('../locales/en/default')
 
 class FormController extends Controller {
   render (req, res, next) {
@@ -16,7 +17,15 @@ class FormController extends Controller {
     const errors = super.getErrors(req, res)
 
     errors.messages = mapValues(errors, (item) => {
-      return `${req.translate(`fields.${item.key}.label`)} ${item.message}`
+      /*
+      In order to remove the i18n-future dependency this
+      function has been introduced to replace code which was
+      calling the translation library. Translations are not
+      required at this stage.
+      */
+      const label = get(labels, `fields.${item.key}.label`)
+      const error = get(labels, `validation.${item.type}`)
+      return `${label} ${error}`
     })
 
     return errors

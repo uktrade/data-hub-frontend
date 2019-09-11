@@ -1,6 +1,4 @@
 const { assign, get, filter, mapValues, pickBy } = require('lodash')
-const path = require('path')
-const i18nFuture = require('i18n-future')
 
 const logger = require('../../../../../config/logger')
 const { Order } = require('../../models')
@@ -8,17 +6,6 @@ const { setCompany: setCompanyMW } = require('../../middleware')
 const { getContact } = require('../../../contacts/repos')
 const { transformPaymentToView } = require('../../transformers')
 const editSteps = require('../edit/steps')
-
-const i18n = i18nFuture({
-  path: path.resolve(__dirname, '../../locales/__lng__/__ns__.json'),
-})
-
-function setTranslation (req, res, next) {
-  res.locals.translate = (key) => {
-    return i18n.translate(key)
-  }
-  next()
-}
 
 function setCompany (req, res, next) {
   const orderId = get(res.locals, 'order.company.id')
@@ -259,7 +246,6 @@ function setQuoteForm (req, res, next) {
 }
 
 module.exports = {
-  setTranslation,
   setCompany,
   setContact,
   setAssignees,

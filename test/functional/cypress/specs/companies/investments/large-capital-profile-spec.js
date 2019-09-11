@@ -503,6 +503,13 @@ describe('Company Investments and Large capital profile', () => {
         .get(location.taskList.ukLocationsOfInterest.locationOne).should('contain', 'London')
         .get(location.taskList.ukLocationsOfInterest.locationTwo).should('contain', 'West Midlands')
     })
+
+    it("should display 'Other countries the investor is considering' and Japan", () => {
+      cy.visit(largeCapitalProfile)
+        .get(location.summary).click()
+        .get(location.taskList.otherCountriesBeingConsidered.name).should('contain', 'Other countries the investor is considering')
+        .get(location.taskList.otherCountriesBeingConsidered.locationOne).should('contain', 'Japan')
+    })
   })
 })
 

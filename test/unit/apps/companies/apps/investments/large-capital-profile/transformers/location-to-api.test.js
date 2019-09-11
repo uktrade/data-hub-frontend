@@ -17,6 +17,12 @@ describe('Large capital profile, location form to API', () => {
             'id': '874cd12a-6095-e211-a939-e4115bead28a',
           },
         ],
+        other_countries_being_considered: [
+          {
+            name: 'Japan',
+            id: '85756b9a-5d95-e211-a939-e4115bead28a',
+          },
+        ],
       })
     })
 
@@ -31,6 +37,12 @@ describe('Large capital profile, location form to API', () => {
           {
             'name': 'London',
             'id': '874cd12a-6095-e211-a939-e4115bead28a',
+          },
+        ],
+        other_countries_being_considered: [
+          {
+            name: 'Japan',
+            id: '85756b9a-5d95-e211-a939-e4115bead28a',
           },
         ],
       })
