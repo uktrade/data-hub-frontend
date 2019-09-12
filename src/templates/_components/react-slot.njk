@@ -1,15 +1,19 @@
 {##
- # @param {string}    id         The react slot element ID to mount the component to
- # @param {string[]}  classes    Classes for the wrapping div
+ # @param {string} id - The react slot element ID to mount the component to
+ # @param {string[]} classes - Classes for the wrapping div
+ # @param {object} props - Props which will be passed to the React component
  #
  # @example
  # {% component 'react-slot', {
  #    id: 'react-mount-my-companies',
  #    classes: 'gov-uk-column-one-third',
-      model: data
+ #    props: data
  #  } %}
  #
-##}
-<div id="{{id}}" class="{{classes}}" data-model="{{ model }}">
-  <noscript> Please enable Javascript in your browser to view this section. <noscript>
+ #}
+
+{% set props = props or {} %}
+
+<div id="{{id}}" class="{{classes}}" data-props="{{ props | dump }}">
+  <noscript>Please enable JavaScript in your browser to see the content.</noscript>
 </div>
