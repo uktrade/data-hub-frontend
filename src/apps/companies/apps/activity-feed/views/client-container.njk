@@ -2,10 +2,9 @@
 
 {% block body_main_content %}
 
-  {% set props = props or {} %}
-
-  <div id="activity-feed-app" data-props="{{ props | dump }}">
-    <noscript>Please enable JavaScript in your browser to see the activity feed.</noscript>
-  </div>
+  {% component 'react-slot', {
+    id: 'activity-feed-app',
+    props: props
+  } %}
 
 {% endblock %}
