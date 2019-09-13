@@ -20,6 +20,13 @@ const metadataMock = {
     { id: '2', name: 's2', disabled_on: null },
     { id: '3', name: 's3', disabled_on: null },
   ],
+  businessTypeOptions: [
+    {
+      id: '9cd14e94-5d95-e211-a939-e4115bead28a',
+      name: 'Government department or other public body',
+      disabled_on: null,
+    },
+  ],
 }
 
 describe('Add company form controllers', () => {
@@ -27,6 +34,10 @@ describe('Add company form controllers', () => {
     nock(config.apiRoot)
       .get('/metadata/country/')
       .reply(200, countriesFixture)
+
+    nock(config.apiRoot)
+      .get('/metadata/business-type/')
+      .reply(200, metadataMock.businessTypeOptions)
 
     nock(config.apiRoot)
       .get('/metadata/sector/')
@@ -54,6 +65,7 @@ describe('Add company form controllers', () => {
         const expectedForeignCountries = countriesFixture
           .filter(c => c.name !== 'United Kingdom')
           .map(transformObjectToOption)
+        const expectedOrganisationTypes = metadataMock.businessTypeOptions.map(transformObjectToOption)
         const expectedSectors = metadataMock.sectorOptions.map(transformObjectToOption)
         const expectedRegions = metadataMock.regionOptions.map(transformObjectToOption)
 
@@ -62,6 +74,7 @@ describe('Add company form controllers', () => {
             host: 'localhost:3000',
             csrfToken: 'csrf',
             foreignCountries: expectedForeignCountries,
+            organisationTypes: expectedOrganisationTypes,
             sectors: expectedSectors,
             regions: expectedRegions,
           },
