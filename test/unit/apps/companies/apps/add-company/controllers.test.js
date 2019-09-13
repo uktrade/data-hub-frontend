@@ -3,8 +3,10 @@ const {
   renderAddCompanyForm,
   postSearchDnbCompanies,
   postAddDnbCompany,
+  postAddDnbCompanyInvestigation,
 } = require('~/src/apps/companies/apps/add-company/controllers')
 const companyCreateResponse = require('~/test/unit/data/companies/dnb/company-create.json')
+const companyCreateInvestigationResponse = require('~/test/unit/data/companies/dnb/company-create-investigation.json')
 const countriesFixture = require('../../../../data/metadata/country')
 const { transformObjectToOption } = require('~/src/apps/transformers')
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder')
@@ -242,6 +244,118 @@ describe('Add company form controllers', () => {
         })
 
         await postAddDnbCompany(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
+      })
+
+      it('should not flash a created message', () => {
+        expect(this.middlewareParameters.reqMock.flash).to.not.have.been.called
+      })
+
+      it('should not respond', () => {
+        expect(this.middlewareParameters.resMock.json).to.not.have.been.called
+      })
+
+      it('should call next() with an error', async () => {
+        expect(this.middlewareParameters.nextSpy).to.have.been.calledOnceWithExactly(sinon.match({
+          message: '500 - "Error message"',
+        }))
+      })
+    })
+  })
+
+  describe('#postAddDnbCompanyInvestigation', () => {
+    context('when the company investigation is successfully created', () => {
+      beforeEach(async () => {
+        nock(config.apiRoot)
+          .post('/v4/dnb/company-create-investigation', {
+            address: {
+              country: {
+                id: '80756b9a-5d95-e211-a939-e4115bead28a',
+              },
+              county: null,
+              line_1: 'Unit 10, Ockham Drive',
+              line_2: null,
+              postcode: 'UB6 0F2',
+              town: 'GREENFORD',
+            },
+            business_type: '1',
+            name: 'name',
+            sector: '3',
+            telephone_number: '123',
+            uk_region: '2',
+            website: 'website',
+          })
+          .reply(200, companyCreateInvestigationResponse)
+
+        this.middlewareParameters = buildMiddlewareParameters({
+          requestBody: {
+            business_type: '1',
+            name: 'name',
+            sector: '3',
+            telephone_number: '123',
+            uk_region: '2',
+            website: 'website',
+          },
+        })
+
+        await postAddDnbCompanyInvestigation(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
+      })
+
+      it('should flash a created message', () => {
+        expect(this.middlewareParameters.reqMock.flash).to.be.calledOnceWithExactly('success', 'Company added to Data Hub')
+      })
+
+      it('should respond with the created company', () => {
+        expect(this.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(companyCreateInvestigationResponse)
+      })
+
+      it('should not call next() with an error', async () => {
+        expect(this.middlewareParameters.nextSpy).to.not.have.been.called
+      })
+    })
+
+    context('when there is an error', () => {
+      beforeEach(async () => {
+        nock(config.apiRoot)
+          .post('/v4/dnb/company-create-investigation', {
+            address: {
+              country: {
+                id: '80756b9a-5d95-e211-a939-e4115bead28a',
+              },
+              county: null,
+              line_1: 'Unit 10, Ockham Drive',
+              line_2: null,
+              postcode: 'UB6 0F2',
+              town: 'GREENFORD',
+            },
+            business_type: '1',
+            name: 'name',
+            sector: '3',
+            telephone_number: '123',
+            uk_region: '2',
+            website: 'website',
+          })
+          .reply(500, 'Error message')
+
+        this.middlewareParameters = buildMiddlewareParameters({
+          requestBody: {
+            business_type: '1',
+            name: 'name',
+            sector: '3',
+            telephone_number: '123',
+            uk_region: '2',
+            website: 'website',
+          },
+        })
+
+        await postAddDnbCompanyInvestigation(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
           this.middlewareParameters.nextSpy,
