@@ -1,13 +1,14 @@
 const selectors = require('../../selectors')
+const fixtures = require('../../fixtures')
 
 describe('Add company form', () => {
+  beforeEach(function () {
+    Cypress.Cookies.preserveOnce('datahub.sid')
+  })
+
   context('when viewing "Add a company form"', () => {
     before(() => {
       cy.visit('/companies/create')
-    })
-
-    beforeEach(function () {
-      Cypress.Cookies.preserveOnce('datahub.sid')
     })
 
     it('should render breadcrumbs', () => {
@@ -139,9 +140,9 @@ describe('Add company form', () => {
 
     context('when I complete the form', () => {
       before(() => {
-        cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.limitedCompany).click()
-        cy.get(selectors.companyAdd.newCompanyRecordForm.name).type('name')
-        cy.get(selectors.companyAdd.newCompanyRecordForm.website).type('website')
+        cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.charity).click()
+        cy.get(selectors.companyAdd.newCompanyRecordForm.name).type('INVESTIGATION LIMITED')
+        cy.get(selectors.companyAdd.newCompanyRecordForm.website).type('www.investigationlimited.com')
         cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).type('0123456789')
         cy.get(selectors.companyAdd.newCompanyRecordForm.region).select('London')
         cy.get(selectors.companyAdd.newCompanyRecordForm.sector).select('Advanced Engineering')
@@ -149,11 +150,11 @@ describe('Add company form', () => {
         cy.get(selectors.companyAdd.submitButton).click()
       })
 
-      xit('should redirect to the new company activity', () => {
-        cy.location('pathname').should('eq', `/companies/5678/activity`)
+      it('should redirect to the new company activity', () => {
+        cy.location('pathname').should('eq', `/companies/${fixtures.dnb.investigationLimited.id}/activity`)
       })
 
-      xit('should display the flash message', () => {
+      it('should display the flash message', () => {
         cy.get(selectors.localHeader().flash).should('contain', 'Company added to Data Hub')
       })
     })
