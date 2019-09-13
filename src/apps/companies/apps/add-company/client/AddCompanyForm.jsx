@@ -32,7 +32,7 @@ const COMPANY_LOCATION_OPTIONS = {
   },
 }
 
-function AddCompanyForm ({ host, csrfToken, foreignCountries, regions, sectors }) {
+function AddCompanyForm ({ host, csrfToken, foreignCountries, organisationTypes, regions, sectors }) {
   const [submitted, setSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -155,11 +155,7 @@ function AddCompanyForm ({ host, csrfToken, foreignCountries, regions, sectors }
                 name="organisation_type"
                 label="Organisation type"
                 required="Select organisation"
-                options={[
-                  { label: 'Business', value: 'business' },
-                  { label: 'Charity', value: 'charity' },
-                  { label: 'Public body', value: 'publicbody' },
-                ]}
+                options={organisationTypes}
               />
 
               <FieldInput
@@ -228,6 +224,10 @@ AddCompanyForm.propTypes = {
   host: PropTypes.string.isRequired,
   csrfToken: PropTypes.string.isRequired,
   foreignCountries: PropTypes.arrayOf(PropTypes.shape({
+    label: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  })).isRequired,
+  organisationTypes: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
   })).isRequired,
