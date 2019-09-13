@@ -2,7 +2,6 @@ const { filter, map, includes, sortBy } = require('lodash')
 
 const { getOptions } = require('../../../../lib/options')
 
-const METADATA_COUNTRY_UK_LABEL = 'United Kingdom'
 const COMPANY_LABEL = 'Company'
 const LIMITED_COMPANY_LABEL = 'Limited company'
 const BUSINESS_TYPE_WHITELIST = {
@@ -12,11 +11,6 @@ const BUSINESS_TYPE_WHITELIST = {
   limitedPartnership: '8b6eaf7e-03e7-e611-bca1-e4115bead28a',
   partnership: '9ad14e94-5d95-e211-a939-e4115bead28a',
   soleTrader: '99d14e94-5d95-e211-a939-e4115bead28a',
-}
-
-async function fetchForeignCountries ({ token, domesticCountry = METADATA_COUNTRY_UK_LABEL }) {
-  const countries = await getOptions(token, 'country')
-  return filter(countries, ({ label }) => { return label !== domesticCountry })
 }
 
 async function fetchOrganisationTypes (token) {
@@ -38,6 +32,5 @@ async function fetchOrganisationTypes (token) {
 }
 
 module.exports = {
-  fetchForeignCountries,
   fetchOrganisationTypes,
 }
