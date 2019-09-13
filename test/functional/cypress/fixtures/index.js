@@ -16,6 +16,9 @@ module.exports = {
     deanCox: require('./contact/dean-cox'),
   },
   default: require('./default.json'),
+  dnb: {
+    investigationLimited: require('./dnb/investigation-limited'),
+  },
   interaction: {
     cancelledMeeting: require('./interaction/cancelled-meeting'),
     draftFutureMeeting: require('./interaction/draft-future-meeting'),

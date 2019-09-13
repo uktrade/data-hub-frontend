@@ -1,15 +1,17 @@
 /* eslint-disable camelcase */
 
 import React, { useState } from 'react'
+import axios from 'axios'
 import {
   H3,
   LoadingBox,
   UnorderedList,
   ListItem,
-  Details,
+  Details
 } from 'govuk-react'
 import PropTypes from 'prop-types'
 import { compact, get } from 'lodash'
+
 import {
   FieldDnbCompany,
   FieldInput,
@@ -33,12 +35,7 @@ const COMPANY_LOCATION_OPTIONS = {
 }
 
 function AddCompanyForm ({ host, csrfToken, foreignCountries, organisationTypes, regions, sectors }) {
-  const [submitted, setSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
-
-  function timeout (ms) {
-    return new Promise(resolve => setTimeout(resolve, ms))
-  }
 
   function getCountry ({ companyLocation, companyOverseasCountry }) {
     if (companyLocation && companyLocation === COMPANY_LOCATION_OPTIONS.uk.value) {
@@ -76,21 +73,25 @@ function AddCompanyForm ({ host, csrfToken, foreignCountries, organisationTypes,
     }
   }
 
-  async function submitCallback () {
+  async function onSubmit (values) {
     setIsSubmitting(true)
-    await timeout(1000)
-    setIsSubmitting(false)
-    setSubmitted(true)
-  }
 
-  if (submitted) {
-    return (
-      <p>Form submitted, thank you.</p>
-    )
+    if (values.cannotFind) {
+      try {
+        const { data } = await axios.post(`//${host}/companies/create/dnb/company-investigation?_csrf=${csrfToken}`, values)
+        window.location.href = `//${host}/companies/${data.id}`
+      } catch (error) {
+        // handle error
+      }
+    } else {
+      // handle can find
+    }
+
+    setIsSubmitting(false)
   }
 
   return (
-    <Form onSubmit={submitCallback}>
+    <Form onSubmit={onSubmit}>
       {form => (
         <LoadingBox loading={isSubmitting}>
           <Step name="companyLocation">
@@ -152,7 +153,7 @@ function AddCompanyForm ({ host, csrfToken, foreignCountries, organisationTypes,
               </Details>
 
               <FieldRadios
-                name="organisation_type"
+                name="business_type"
                 label="Organisation type"
                 required="Select organisation"
                 options={organisationTypes}
@@ -174,12 +175,12 @@ function AddCompanyForm ({ host, csrfToken, foreignCountries, organisationTypes,
 
               <FieldInput
                 label="Company's telephone number"
-                name="telephone"
+                name="telephone_number"
                 type="text"
               />
 
               <FieldSelect
-                name="region"
+                name="uk_region"
                 label="DIT region"
                 emptyOption="-- Select DIT region --"
                 options={regions}

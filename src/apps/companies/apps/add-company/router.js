@@ -4,6 +4,7 @@ const {
   renderAddCompanyForm,
   postSearchDnbCompanies,
   postAddDnbCompany,
+  postAddDnbCompanyInvestigation,
 } = require('./controllers')
 
 router
@@ -12,5 +13,7 @@ router
   .post(postAddDnbCompany)
 
 router.post('/dnb/company-search', postSearchDnbCompanies)
+
+router.post('/dnb/company-investigation', postAddDnbCompanyInvestigation)
 
 module.exports = router
