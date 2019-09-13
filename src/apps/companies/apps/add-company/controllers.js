@@ -1,4 +1,7 @@
-const { fetchForeignCountries, fetchOrganisationTypes } = require('./repos')
+/* eslint-disable camelcase */
+
+const { transformCountryToOptionWithIsoCode } = require('../../../transformers')
+const { fetchOrganisationTypes } = require('./repos')
 const { searchDnbCompanies } = require('../../../../modules/search/services')
 const { saveDnbCompany, saveDnbCompanyInvestigation } = require('../../repos')
 const { getOptions } = require('../../../../lib/options')
@@ -6,8 +9,10 @@ const { transformToDnbCompanyInvestigationApi } = require('./transformers')
 
 async function renderAddCompanyForm (req, res, next) {
   try {
-    const [foreignCountries, organisationTypes, regions, sectors] = await Promise.all([
-      fetchForeignCountries({ token: req.session.token }),
+    const [countries, organisationTypes, regions, sectors] = await Promise.all([
+      getOptions(req.session.token, 'country', {
+        transformer: transformCountryToOptionWithIsoCode,
+      }),
       fetchOrganisationTypes(req.session.token),
       getOptions(req.session.token, 'uk-region'),
       getOptions(req.session.token, 'sector'),
@@ -17,7 +22,7 @@ async function renderAddCompanyForm (req, res, next) {
       .breadcrumb('Add company')
       .render('companies/apps/add-company/views/client-container', {
         props: {
-          foreignCountries,
+          countries,
           organisationTypes,
           regions,
           sectors,

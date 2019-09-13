@@ -1,3 +1,7 @@
+/**
+ * Tests for: ./src/apps/companies/apps/add-company/client/AddCompanyForm.jsx
+ */
+
 const selectors = require('../../selectors')
 const fixtures = require('../../fixtures')
 
@@ -68,20 +72,40 @@ describe('Add company form', () => {
         cy.get(selectors.companyAdd.stepHeader).should('have.text', 'Find the company')
       })
 
-      it('should display the "Based in the Poland" text', () => {
-        cy.get(selectors.companyAdd.form).find('p').contains('Based in the Poland')
+      it('should display the selected country', () => {
+        cy.get(selectors.companyAdd.form).find('fieldset').should('have.text', 'CountryPoland Change Country')
       })
 
-      it('should display "Back" button', () => {
-        cy.get(selectors.companyAdd.backButton).should('be.visible')
+      it('should display the "Find company" button', () => {
+        cy.get(selectors.companyAdd.entitySearch.searchButton).should('be.visible')
+      })
+
+      it('should not display the"Back" button', () => {
+        cy.get(selectors.companyAdd.backButton).should('not.be.visible')
       })
 
       it('should not display the "Next" button', () => {
         cy.get(selectors.companyAdd.nextButton).should('not.be.visible')
       })
 
-      context('when I click the "Search" button', () => {
+      context('when I click the "Find company" button without filling the required "Company name" field', () => {
         before(() => {
+          cy.get(selectors.companyAdd.entitySearch.searchButton).click()
+        })
+
+        it('should display an error message for the "Company name" field', () => {
+          cy.get(selectors.companyAdd.form).should('contain', 'Enter company name')
+        })
+
+        it('should not display the entity search results', () => {
+          cy.get(selectors.companyAdd.entitySearch.results.someCompanyName).should('not.be.visible')
+          cy.get(selectors.companyAdd.entitySearch.results.someOtherCompany).should('not.be.visible')
+        })
+      })
+
+      context('when I click the "Find company" button after filling the required "Company name" field', () => {
+        before(() => {
+          cy.get(selectors.companyAdd.entitySearch.companyNameField).type('some company')
           cy.get(selectors.companyAdd.entitySearch.searchButton).click()
         })
 
@@ -115,9 +139,10 @@ describe('Add company form', () => {
     before(() => {
       cy.visit('/companies/create')
 
-      cy.get(selectors.companyAdd.form).find('[type="radio"]').check('uk')
+      cy.get(selectors.companyAdd.form).find('[type="radio"]').check('GB')
       cy.get(selectors.companyAdd.nextButton).click()
 
+      cy.get(selectors.companyAdd.entitySearch.companyNameField).type('some company')
       cy.get(selectors.companyAdd.entitySearch.searchButton).click()
 
       cy.get(selectors.companyAdd.entitySearch.cannotFind.summary).click()
@@ -131,7 +156,7 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.limitedPartnership).should('be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.partnership).should('be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.soleTrader).should('be.visible')
-      cy.get(selectors.companyAdd.newCompanyRecordForm.name).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.companyName).should('be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.website).should('be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).should('be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.region).should('be.visible')
@@ -140,8 +165,8 @@ describe('Add company form', () => {
 
     context('when I complete the form', () => {
       before(() => {
-        cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.charity).click()
-        cy.get(selectors.companyAdd.newCompanyRecordForm.name).type('INVESTIGATION LIMITED')
+        cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.limitedCompany).click()
+        cy.get(selectors.companyAdd.newCompanyRecordForm.companyName).type('INVESTIGATION LIMITED')
         cy.get(selectors.companyAdd.newCompanyRecordForm.website).type('www.investigationlimited.com')
         cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).type('0123456789')
         cy.get(selectors.companyAdd.newCompanyRecordForm.region).select('London')

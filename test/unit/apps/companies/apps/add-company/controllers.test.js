@@ -7,11 +7,30 @@ const {
 } = require('~/src/apps/companies/apps/add-company/controllers')
 const companyCreateResponse = require('~/test/unit/data/companies/dnb/company-create.json')
 const companyCreateInvestigationResponse = require('~/test/unit/data/companies/dnb/company-create-investigation.json')
-const countriesFixture = require('../../../../data/metadata/country')
-const { transformObjectToOption } = require('~/src/apps/transformers')
+const {
+  transformObjectToOption,
+  transformCountryToOptionWithIsoCode,
+} = require('~/src/apps/transformers')
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder')
 
 const metadataMock = {
+  countriesOptions: [
+    {
+      id: '1',
+      name: 'France',
+      iso_alpha2_code: 'FR',
+    },
+    {
+      id: '2',
+      name: 'United Kingdom',
+      iso_alpha2_code: 'GB',
+    },
+    {
+      id: '3',
+      name: 'United States',
+      iso_alpha2_code: 'US',
+    },
+  ],
   regionOptions: [
     { id: '1', name: 'r1', disabled_on: null },
     { id: '2', name: 'r2', disabled_on: null },
@@ -35,7 +54,7 @@ describe('Add company form controllers', () => {
   beforeEach(() => {
     nock(config.apiRoot)
       .get('/metadata/country/')
-      .reply(200, countriesFixture)
+      .reply(200, metadataMock.countriesOptions)
 
     nock(config.apiRoot)
       .get('/metadata/business-type/')
@@ -64,9 +83,7 @@ describe('Add company form controllers', () => {
 
       it('should render the add company form template with fields', () => {
         const expectedTemplate = 'companies/apps/add-company/views/client-container'
-        const expectedForeignCountries = countriesFixture
-          .filter(c => c.name !== 'United Kingdom')
-          .map(transformObjectToOption)
+        const expectedCountries = metadataMock.countriesOptions.map(transformCountryToOptionWithIsoCode)
         const expectedOrganisationTypes = metadataMock.businessTypeOptions.map(transformObjectToOption)
         const expectedSectors = metadataMock.sectorOptions.map(transformObjectToOption)
         const expectedRegions = metadataMock.regionOptions.map(transformObjectToOption)
@@ -75,7 +92,7 @@ describe('Add company form controllers', () => {
           props: {
             host: 'localhost:3000',
             csrfToken: 'csrf',
-            foreignCountries: expectedForeignCountries,
+            countries: expectedCountries,
             organisationTypes: expectedOrganisationTypes,
             sectors: expectedSectors,
             regions: expectedRegions,
