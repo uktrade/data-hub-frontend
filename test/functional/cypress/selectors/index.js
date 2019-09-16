@@ -9,6 +9,10 @@ exports.companySubsidiariesLink = require('./company/subsidiaries-link')
 exports.companySubsidiaries = require('./company/subsidiaries')
 exports.companyAddToListButton = require('./company/add-to-list')
 
+exports.companyList = {
+  delete: require('./company-lists/delete'),
+}
+
 exports.contactCreate = require('./contact/create')
 
 exports.omisCreate = require('./omis/create')
