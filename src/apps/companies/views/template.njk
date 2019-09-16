@@ -60,6 +60,16 @@
       {% endcall %}
     </div>
   {% endif %}
+
+  {% if company.pending_dnb_investigation %}
+    <div class="govuk-width-container govuk-!-margin-top-2">
+      {% call Message({ type: 'info ', element: 'div' }) %}
+        This company record is based on information that has not yet been validated. This information is currently
+        being checked by the Data Hub support team.
+      {% endcall %}
+    </div>
+  {% endif %}
+
 {% endblock %}
 
 {% block local_nav %}
