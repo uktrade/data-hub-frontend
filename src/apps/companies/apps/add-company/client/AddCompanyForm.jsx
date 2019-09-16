@@ -196,17 +196,16 @@ function AddCompanyForm ({ host, csrfToken, foreignCountries, organisationTypes,
 
               <H3>What happens next</H3>
               <p>
-                You are requesting a new company record to be added to Data Hub. This is what will happen next:
+                You are requesting that a new company be added to Data Hub. Once you select the ‘Add company’ button below:
                 <UnorderedList>
                   <ListItem>
-                    The information you have provided will be sent to the Data Hub support team and they will check this
-                    information with the company
+                    you can continue to record interactions with the company
                   </ListItem>
                   <ListItem>
-                    In the meantime, you can continue to record interactions with this company
+                    Data Hub’s external data provider will confirm with the company that the information on this page is correct
                   </ListItem>
                   <ListItem>
-                    You will be sent an email with the outcome of the investigation
+                    within 3 weeks the Data Hub support team will send you an email to tell you whether the information on this page has been confirmed
                   </ListItem>
                 </UnorderedList>
               </p>
