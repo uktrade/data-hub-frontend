@@ -10,6 +10,7 @@ module.exports = {
     marsExportsLtd: require('./company/mars-exports-ltd'),
     minimallyMinimalLtd: require('./company/minimally-minimal-ltd'),
     oneListCorp: require('./company/one-list-corp.json'),
+    someOtherCompany: require('./company/some-other-company.json'),
     venusLtd: require('./company/venus-ltd.json'),
     withContacts: require('./company/with-contacts.json'),
   },

@@ -130,6 +130,20 @@ describe('Add company form', () => {
           it('should display "Add company" button', () => {
             cy.get(selectors.companyAdd.submitButton).should('be.visible')
           })
+
+          context('when the "Add company" button is clicked', () => {
+            before(() => {
+              cy.get(selectors.companyAdd.submitButton).click()
+            })
+
+            it('should redirect to the new company activity', () => {
+              cy.location('pathname').should('eq', `/companies/${fixtures.company.someOtherCompany.id}/activity`)
+            })
+
+            it('should display the flash message', () => {
+              cy.get(selectors.localHeader().flash).should('contain', 'Company added to Data Hub')
+            })
+          })
         })
       })
     })
