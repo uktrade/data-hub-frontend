@@ -38,6 +38,10 @@ describe('Company activity feed', () => {
       cy.get(selectors.tabbedLocalNav().item(6)).should('have.text', 'Orders')
     })
 
+    it('should not display the pending D&B investigation message', () => {
+      cy.get(selectors.companyActivity.pendingDnbInvestigationMessage).should('not.be.visible')
+    })
+
     it('should display the "Activities" heading', () => {
       cy.get(selectors.companyCollection().heading).should('have.text', expectedActivitiesHeading)
     })
