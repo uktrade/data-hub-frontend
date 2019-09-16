@@ -52,6 +52,7 @@ function getInteractionsRequestBody (req, res, next) {
     'kind',
     'sector_descends',
     'communication_channel',
+    'company_one_list_group_tier',
     'dit_participants__adviser',
     ...QUERY_DATE_FIELDS,
     'sortby',
