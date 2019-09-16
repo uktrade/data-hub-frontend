@@ -124,9 +124,12 @@ describe('Add company form', () => {
     })
 
     it('should display the form', () => {
-      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.business).should('be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.charity).should('be.visible')
-      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.publicBody).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.governmentDepartmentOrOtherPublicBody).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.limitedCompany).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.limitedPartnership).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.partnership).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.soleTrader).should('be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.name).should('be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.website).should('be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).should('be.visible')
@@ -136,7 +139,7 @@ describe('Add company form', () => {
 
     context('when I complete the form', () => {
       before(() => {
-        cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.business).click()
+        cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.limitedCompany).click()
         cy.get(selectors.companyAdd.newCompanyRecordForm.name).type('name')
         cy.get(selectors.companyAdd.newCompanyRecordForm.website).type('website')
         cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).type('0123456789')
