@@ -39,9 +39,10 @@ module.exports = ({
       ...resMock,
       breadcrumb,
       title,
-      render: sinon.spy(),
+      render: sinon.stub(),
       redirect: sinon.spy(),
       json: sinon.spy(),
+      send: sinon.spy(),
       header: sinon.spy(),
       locals: {
         CURRENT_PATH,
