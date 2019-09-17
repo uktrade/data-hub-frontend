@@ -151,11 +151,15 @@ describe('Add company form', () => {
       })
 
       it('should redirect to the new company activity', () => {
-        cy.location('pathname').should('eq', `/companies/${fixtures.dnb.investigationLimited.id}/activity`)
+        cy.location('pathname').should('eq', `/companies/${fixtures.company.investigationLimited.id}/activity`)
       })
 
       it('should display the flash message', () => {
         cy.get(selectors.localHeader().flash).should('contain', 'Company added to Data Hub')
+      })
+
+      it('should display the pending D&B investigation message', () => {
+        cy.get(selectors.companyActivity.pendingDnbInvestigationMessage).should('be.visible')
       })
     })
   })
