@@ -109,4 +109,53 @@ describe('Add company form', () => {
       })
     })
   })
+
+  context('when the user clicks "I still cannot find the company"', () => {
+    before(() => {
+      cy.visit('/companies/create')
+
+      cy.get(selectors.companyAdd.form).find('[type="radio"]').check('uk')
+      cy.get(selectors.companyAdd.nextButton).click()
+
+      cy.get(selectors.companyAdd.entitySearch.searchButton).click()
+
+      cy.get(selectors.companyAdd.entitySearch.cannotFind.summary).click()
+      cy.get(selectors.companyAdd.entitySearch.cannotFind.stillCannotFind).click()
+    })
+
+    it('should display the form', () => {
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.charity).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.governmentDepartmentOrOtherPublicBody).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.limitedCompany).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.limitedPartnership).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.partnership).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.soleTrader).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.name).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.website).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.region).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.sector).should('be.visible')
+    })
+
+    context('when I complete the form', () => {
+      before(() => {
+        cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.limitedCompany).click()
+        cy.get(selectors.companyAdd.newCompanyRecordForm.name).type('name')
+        cy.get(selectors.companyAdd.newCompanyRecordForm.website).type('website')
+        cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).type('0123456789')
+        cy.get(selectors.companyAdd.newCompanyRecordForm.region).select('London')
+        cy.get(selectors.companyAdd.newCompanyRecordForm.sector).select('Advanced Engineering')
+
+        cy.get(selectors.companyAdd.submitButton).click()
+      })
+
+      xit('should redirect to the new company activity', () => {
+        cy.location('pathname').should('eq', `/companies/5678/activity`)
+      })
+
+      xit('should display the flash message', () => {
+        cy.get(selectors.localHeader().flash).should('contain', 'Company added to Data Hub')
+      })
+    })
+  })
 })

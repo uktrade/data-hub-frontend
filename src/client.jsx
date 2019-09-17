@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React from 'react'
 import ReactDOM from 'react-dom'
 
@@ -7,7 +5,7 @@ import { ActivityFeedApp } from 'data-hub-components'
 import AddCompanyForm from './apps/companies/apps/add-company/client/AddCompanyForm'
 import MyCompanies from './apps/dashboard/client/MyCompanies.jsx'
 
-function Mount({ selector, children }) {
+function Mount ({ selector, children }) {
   return [...document.querySelectorAll(selector)].map(domNode => {
     const props =
       'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -18,7 +16,7 @@ function Mount({ selector, children }) {
   })
 }
 
-function App() {
+function App () {
   return (
     <>
       <Mount selector="#add-company-form">
