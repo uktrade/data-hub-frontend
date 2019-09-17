@@ -1,18 +1,27 @@
-const { fetchForeignCountries } = require('./repos')
+const { fetchForeignCountries, fetchOrganisationTypes } = require('./repos')
 const { searchDnbCompanies } = require('../../../../modules/search/services')
 const { saveDnbCompany } = require('../../repos')
+const { getOptions } = require('../../../../lib/options')
 
 async function renderAddCompanyForm (req, res, next) {
   try {
-    const foreignCountries = await fetchForeignCountries({ token: req.session.token })
+    const [foreignCountries, organisationTypes, regions, sectors] = await Promise.all([
+      fetchForeignCountries({ token: req.session.token }),
+      fetchOrganisationTypes(req.session.token),
+      getOptions(req.session.token, 'uk-region'),
+      getOptions(req.session.token, 'sector'),
+    ])
 
     res
       .breadcrumb('Add company')
       .render('companies/apps/add-company/views/client-container', {
         props: {
+          foreignCountries,
+          organisationTypes,
+          regions,
+          sectors,
           host: req.headers.host,
           csrfToken: res.locals.csrfToken,
-          foreignCountries,
         },
       })
   } catch (error) {

@@ -9,20 +9,48 @@ const countriesFixture = require('../../../../data/metadata/country')
 const { transformObjectToOption } = require('~/src/apps/transformers')
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder')
 
+const metadataMock = {
+  regionOptions: [
+    { id: '1', name: 'r1', disabled_on: null },
+    { id: '2', name: 'r2', disabled_on: null },
+    { id: '3', name: 'r3', disabled_on: null },
+  ],
+  sectorOptions: [
+    { id: '1', name: 's1', disabled_on: null },
+    { id: '2', name: 's2', disabled_on: null },
+    { id: '3', name: 's3', disabled_on: null },
+  ],
+  businessTypeOptions: [
+    {
+      id: '9cd14e94-5d95-e211-a939-e4115bead28a',
+      name: 'Government department or other public body',
+      disabled_on: null,
+    },
+  ],
+}
+
 describe('Add company form controllers', () => {
   beforeEach(() => {
     nock(config.apiRoot)
       .get('/metadata/country/')
       .reply(200, countriesFixture)
+
+    nock(config.apiRoot)
+      .get('/metadata/business-type/')
+      .reply(200, metadataMock.businessTypeOptions)
+
+    nock(config.apiRoot)
+      .get('/metadata/sector/')
+      .reply(200, metadataMock.sectorOptions)
+
+    nock(config.apiRoot)
+      .get('/metadata/uk-region/')
+      .reply(200, metadataMock.regionOptions)
   })
 
   describe('#renderAddCompanyForm', () => {
     context('when the "Add company form" renders successfully', () => {
       beforeEach(async () => {
-        this.foreignCountriesFixture = countriesFixture
-          .filter(c => c.name !== 'United Kingdom')
-          .map(transformObjectToOption)
-
         this.middlewareParameters = buildMiddlewareParameters()
 
         await renderAddCompanyForm(
@@ -34,11 +62,21 @@ describe('Add company form controllers', () => {
 
       it('should render the add company form template with fields', () => {
         const expectedTemplate = 'companies/apps/add-company/views/client-container'
+        const expectedForeignCountries = countriesFixture
+          .filter(c => c.name !== 'United Kingdom')
+          .map(transformObjectToOption)
+        const expectedOrganisationTypes = metadataMock.businessTypeOptions.map(transformObjectToOption)
+        const expectedSectors = metadataMock.sectorOptions.map(transformObjectToOption)
+        const expectedRegions = metadataMock.regionOptions.map(transformObjectToOption)
+
         expect(this.middlewareParameters.resMock.render).to.be.calledOnceWithExactly(expectedTemplate, {
           props: {
             host: 'localhost:3000',
             csrfToken: 'csrf',
-            foreignCountries: this.foreignCountriesFixture,
+            foreignCountries: expectedForeignCountries,
+            organisationTypes: expectedOrganisationTypes,
+            sectors: expectedSectors,
+            regions: expectedRegions,
           },
         })
       })
