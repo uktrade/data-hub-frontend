@@ -1,9 +1,9 @@
 import React from 'react'
-import { H3 } from '@govuk-react/heading'
+import { Details } from 'govuk-react'
+import PropTypes from 'prop-types'
 import { FieldInput, FieldRadios, FieldSelect, Step } from 'data-hub-components'
 
-import { Details, ListItem, UnorderedList } from 'govuk-react'
-import PropTypes from 'prop-types'
+import InformationList from './InformationList'
 
 function CompanyNotFoundStep ({ organisationTypes, regions, sectors }) {
   return (
@@ -58,21 +58,20 @@ function CompanyNotFoundStep ({ organisationTypes, regions, sectors }) {
         required="Select DIT sector"
       />
 
-      <H3>What happens next</H3>
-      <p>
-        You are requesting that a new company be added to Data Hub. Once you select the ‘Add company’ button below:
-        <UnorderedList>
-          <ListItem>
-            you can continue to record interactions with the company
-          </ListItem>
-          <ListItem>
-            Data Hub’s external data provider will confirm with the company that the information on this page is correct
-          </ListItem>
-          <ListItem>
-            within 3 weeks the Data Hub support team will send you an email to tell you whether the information on this page has been confirmed
-          </ListItem>
-        </UnorderedList>
-      </p>
+      <InformationList
+        heading="What happens next"
+        description="You are requesting that a new company be added to Data Hub. Once you select the ‘Add company’ button below:"
+      >
+        <InformationList.Item>
+          you can continue to record interactions with the company
+        </InformationList.Item>
+        <InformationList.Item>
+          Data Hub’s external data provider will confirm with the company that the information on this page is correct
+        </InformationList.Item>
+        <InformationList.Item>
+          within 3 weeks the Data Hub support team will send you an email to tell you whether the information on this page has been confirmed
+        </InformationList.Item>
+      </InformationList>
 
     </Step>
   )
