@@ -62,6 +62,7 @@ DefinitionList.defaultProps = {
   description: null,
 }
 
+// TODO: Replace this in the near future with SummaryList component and place it in the component library.
 function DefinitionList ({ header, children }) {
   return (
     <StyledDLContainer>
