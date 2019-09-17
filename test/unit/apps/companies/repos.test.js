@@ -10,6 +10,7 @@ const {
   getDitCompany,
   getCHCompany,
   saveDnbCompany,
+  saveDnbCompanyInvestigation,
 } = require('~/src/apps/companies/repos.js')
 
 function makeRepositoryWithAuthRequest (authorisedRequestStub) {
@@ -140,6 +141,24 @@ describe('Company repository', () => {
         })
 
       this.actual = await saveDnbCompany('1234', '123')
+    })
+
+    it('should respond successfully', () => {
+      expect(this.actual).to.deep.equal({ hello: true })
+    })
+  })
+
+  describe('#saveDnbCompanyInvestigation', () => {
+    beforeEach(async () => {
+      nock(config.apiRoot)
+        .post('/v4/dnb/company-create-investigation', {
+          name: 'name',
+        })
+        .reply(200, {
+          hello: true,
+        })
+
+      this.actual = await saveDnbCompanyInvestigation('1234', { name: 'name' })
     })
 
     it('should respond successfully', () => {

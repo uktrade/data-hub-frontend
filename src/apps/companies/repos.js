@@ -106,6 +106,14 @@ function saveDnbCompany (token, dunsNumber) {
   })
 }
 
+function saveDnbCompanyInvestigation (token, company) {
+  return authorisedRequest(token, {
+    body: company,
+    url: `${config.apiRoot}/v4/dnb/company-create-investigation`,
+    method: 'POST',
+  })
+}
+
 module.exports = {
   saveCompany,
   getDitCompany,
@@ -120,4 +128,5 @@ module.exports = {
   getCompanySubsidiaries,
   getOneListGroupCoreTeam,
   saveDnbCompany,
+  saveDnbCompanyInvestigation,
 }

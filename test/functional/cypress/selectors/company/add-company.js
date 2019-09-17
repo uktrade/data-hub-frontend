@@ -30,8 +30,8 @@ module.exports = {
     },
     name: '#name input',
     website: '#website input',
-    telephone: '#telephone input',
-    region: 'label[name="region"] select',
+    telephone: '#telephone_number input',
+    region: 'label[name="uk_region"] select',
     sector: 'label[name="sector"] select',
   },
   companyDetails: {

@@ -1,7 +1,8 @@
 const { fetchForeignCountries, fetchOrganisationTypes } = require('./repos')
 const { searchDnbCompanies } = require('../../../../modules/search/services')
-const { saveDnbCompany } = require('../../repos')
+const { saveDnbCompany, saveDnbCompanyInvestigation } = require('../../repos')
 const { getOptions } = require('../../../../lib/options')
+const { transformToDnbCompanyInvestigationApi } = require('./transformers')
 
 async function renderAddCompanyForm (req, res, next) {
   try {
@@ -34,6 +35,7 @@ async function postSearchDnbCompanies (req, res, next) {
     const results = await searchDnbCompanies({
       token: req.session.token,
       requestBody: req.body,
+      csrfToken: res.locals.csrfToken,
     })
 
     res.json(results)
@@ -53,8 +55,22 @@ async function postAddDnbCompany (req, res, next) {
   }
 }
 
+async function postAddDnbCompanyInvestigation (req, res, next) {
+  try {
+    const transformed = transformToDnbCompanyInvestigationApi(req.body)
+    await saveDnbCompanyInvestigation(req.session.token, transformed)
+      .then((result) => {
+        req.flash('success', 'Company added to Data Hub')
+        res.json(result)
+      })
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   renderAddCompanyForm,
   postSearchDnbCompanies,
   postAddDnbCompany,
+  postAddDnbCompanyInvestigation,
 }
