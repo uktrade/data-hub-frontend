@@ -5,6 +5,7 @@ module.exports = {
   company: {
     archivedLtd: require('./company/archived-ltd.json'),
     dnbCorp: require('./company/dnb-corp.json'),
+    investigationLimited: require('./company/investigation-limited'),
     lambdaPlc: require('./company/lambda-plc'),
     marsExportsLtd: require('./company/mars-exports-ltd'),
     minimallyMinimalLtd: require('./company/minimally-minimal-ltd'),
@@ -16,9 +17,6 @@ module.exports = {
     deanCox: require('./contact/dean-cox'),
   },
   default: require('./default.json'),
-  dnb: {
-    investigationLimited: require('./dnb/investigation-limited'),
-  },
   interaction: {
     cancelledMeeting: require('./interaction/cancelled-meeting'),
     draftFutureMeeting: require('./interaction/draft-future-meeting'),
