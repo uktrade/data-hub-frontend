@@ -58,15 +58,13 @@ function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, region
   async function onSubmit (values) {
     setIsSubmitting(true)
 
-    if (values.cannotFind) {
-      try {
-        const { data } = await axios.post(`//${host}/companies/create/dnb/company-investigation?_csrf=${csrfToken}`, values)
-        window.location.href = `//${host}/companies/${data.id}`
-      } catch (error) {
-        // TODO: handle error
-      }
-    } else {
-      // TODO: handle can find
+    const path = values.cannotFind ? 'company-investigation' : 'company-create'
+
+    try {
+      const { data } = await axios.post(`//${host}/companies/create/dnb/${path}?_csrf=${csrfToken}`, values)
+      window.location.href = `//${host}/companies/${data.id}`
+    } catch (error) {
+      // todo handle error
     }
 
     setIsSubmitting(false)

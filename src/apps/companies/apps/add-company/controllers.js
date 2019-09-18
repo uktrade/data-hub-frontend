@@ -51,10 +51,11 @@ async function postSearchDnbCompanies (req, res, next) {
 
 async function postAddDnbCompany (req, res, next) {
   try {
-    const company = await saveDnbCompany(req.session.token, req.body.duns_number)
-    req.flash('success', 'Company created')
-
-    res.json(company)
+    await saveDnbCompany(req.session.token, req.body.duns_number)
+      .then((result) => {
+        req.flash('success', 'Company added to Data Hub')
+        res.json(result)
+      })
   } catch (error) {
     next(error)
   }
