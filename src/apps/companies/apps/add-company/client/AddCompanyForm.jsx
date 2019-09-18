@@ -65,9 +65,8 @@ function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, region
       window.location.href = `//${host}/companies/${data.id}`
     } catch (error) {
       // todo handle error
+      setIsSubmitting(false)
     }
-
-    setIsSubmitting(false)
   }
 
   return (
