@@ -1,220 +1,117 @@
-/* eslint-disable camelcase */
+/**
+ * Functional tests: ./test/functional/cypress/specs/companies/add-company-spec.js
+ */
 
 import React, { useState } from 'react'
-import {
-  H3,
-  LoadingBox,
-  UnorderedList,
-  ListItem,
-  Details,
-} from 'govuk-react'
 import PropTypes from 'prop-types'
-import { compact, get } from 'lodash'
+import axios from 'axios'
+import { get } from 'lodash'
+import { H3 } from '@govuk-react/heading'
+import LoadingBox from '@govuk-react/loading-box'
+
 import {
   FieldDnbCompany,
-  FieldInput,
   FieldRadios,
   FieldSelect,
   Form,
-  Step
+  Step,
 } from 'data-hub-components'
 
-import DefinitionList from './DefinitionList'
+import CompanyFoundStep from './CompanyFoundStep'
+import CompanyNotFoundStep from './CompanyNotFoundStep'
 
-const COMPANY_LOCATION_OPTIONS = {
-  uk: {
-    label: 'UK',
-    value: 'uk',
-  },
-  overseas: {
-    label: 'Overseas',
-    value: 'overseas',
-  },
-}
-
-function AddCompanyForm ({ host, csrfToken, foreignCountries, organisationTypes, regions, sectors }) {
-  const [submitted, setSubmitted] = useState(false)
+function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, regions, sectors }) {
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  function timeout (ms) {
-    return new Promise(resolve => setTimeout(resolve, ms))
+  const UK_ISO_CODE = 'GB'
+
+  const optionCountryUK = countries.find(({ value }) => value === UK_ISO_CODE)
+  const overseasCountries = countries.filter(({ value }) => value && value !== UK_ISO_CODE)
+
+  const COMPANY_LOCATION_OPTIONS = {
+    uk: optionCountryUK,
+    overseas: {
+      label: 'Overseas',
+      value: 'overseas',
+      children: (
+        <FieldSelect
+          required="Select in which country the company is based"
+          emptyOption="-- Select country --"
+          label="Country"
+          name="companyOverseasCountry"
+          options={overseasCountries}
+        />
+      ),
+    },
   }
 
   function getCountry ({ companyLocation, companyOverseasCountry }) {
     if (companyLocation && companyLocation === COMPANY_LOCATION_OPTIONS.uk.value) {
-      return COMPANY_LOCATION_OPTIONS.uk.label
+      return COMPANY_LOCATION_OPTIONS.uk
     }
 
     if (companyOverseasCountry) {
-      return foreignCountries.find(c => c.value === companyOverseasCountry).label
+      return overseasCountries.find(c => c.value === companyOverseasCountry)
     }
   }
 
-  function getCompanyName ({ dnbCompany }) {
-    return get(dnbCompany, 'primary_name')
-  }
-
-  function getCompanyAddress ({ dnbCompany }) {
-    if (dnbCompany) {
-      return compact([
-        dnbCompany.address_line_1,
-        dnbCompany.address_line_2,
-        dnbCompany.address_town,
-        dnbCompany.address_postcode,
-      ]).join(', ')
-    }
-  }
-
-  function getCompaniesHouseNumber ({ dnbCompany }) {
-    if (dnbCompany) {
-      const companiesHouseAccount = dnbCompany.registration_numbers
-        .find(({ registration_type }) => registration_type === 'uk_companies_house_number')
-
-      if (companiesHouseAccount) {
-        return companiesHouseAccount.registration_number
-      }
-    }
-  }
-
-  async function submitCallback () {
+  async function onSubmit (values) {
     setIsSubmitting(true)
-    await timeout(1000)
-    setIsSubmitting(false)
-    setSubmitted(true)
-  }
 
-  if (submitted) {
-    return (
-      <p>Form submitted, thank you.</p>
-    )
+    const path = values.cannotFind ? 'company-investigation' : 'company-create'
+
+    try {
+      const { data } = await axios.post(`//${host}/companies/create/dnb/${path}?_csrf=${csrfToken}`, values)
+      window.location.href = `//${host}/companies/${data.id}`
+    } catch (error) {
+      // todo handle error
+    }
+
+    setIsSubmitting(false)
   }
 
   return (
-    <Form onSubmit={submitCallback}>
-      {form => (
-        <LoadingBox loading={isSubmitting}>
-          <Step name="companyLocation">
-            <FieldRadios
-              name="companyLocation"
-              label={<H3>Where is this company based?</H3>}
-              required="Specify location of the company"
-              options={[
-                COMPANY_LOCATION_OPTIONS.uk,
-                {
-                  ...COMPANY_LOCATION_OPTIONS.overseas,
-                  children: (
-                    <FieldSelect
-                      required="Select in which country the company is based"
-                      label="Country"
-                      name="companyOverseasCountry"
-                      options={foreignCountries}
-                    />
-                  ),
-                },
-              ]}
-            />
-          </Step>
+    <Form onSubmit={onSubmit}>
+      {({ values }) => {
+        const country = getCountry(values)
+        const countryName = get(country, 'label')
+        const countryIsoCode = get(country, 'value')
 
-          <Step name="companySearch" hideForwardButton={true}>
-            <H3>Find the company</H3>
-
-            <FieldDnbCompany
-              apiEndpoint={`//${host}/companies/create/dnb/company-search?_csrf=${csrfToken}`}
-              country={getCountry(form.values)}
-              name="dnbCompany"
-            />
-          </Step>
-
-          {!form.values.cannotFind && (
-            <Step name="companyDetails" forwardButtonText="Add company">
-              <H3>Confirm you want to add this company to Data Hub</H3>
-
-              <DefinitionList header={getCompanyName(form.values)}>
-                <DefinitionList.Row
-                  label="Companies House number"
-                  description={getCompaniesHouseNumber(form.values)}
-                />
-                <DefinitionList.Row
-                  label="Address"
-                  description={getCompanyAddress(form.values)}
-                />
-              </DefinitionList>
-            </Step>
-          )}
-
-          {form.values.cannotFind && (
-            <Step name="unhappy" forwardButtonText="Add company">
-
-              <Details summary="Why am I seeing this?">
-                The company you want to add to Data Hub cannot be found in the external databases Data Hub checks.
-                You will need to provide information about the company, so the company can be added to Data Hub
-                while the Data Hub support team checks with the company the information you have provided.
-              </Details>
+        return (
+          <LoadingBox loading={isSubmitting}>
+            <Step name="companyLocation">
+              <H3>Where is this company based?</H3>
 
               <FieldRadios
-                name="organisation_type"
-                label="Organisation type"
-                required="Select organisation"
-                options={organisationTypes}
+                name="companyLocation"
+                required="Specify location of the company"
+                options={Object.values(COMPANY_LOCATION_OPTIONS)}
               />
-
-              <FieldInput
-                label="Name of company"
-                name="name"
-                required="Enter name"
-                type="text"
-              />
-
-              <FieldInput
-                label="Company's website"
-                name="website"
-                required="Enter website"
-                type="text"
-              />
-
-              <FieldInput
-                label="Company's telephone number"
-                name="telephone"
-                type="text"
-              />
-
-              <FieldSelect
-                name="region"
-                label="DIT region"
-                emptyOption="-- Select DIT region --"
-                options={regions}
-                required="Select DIT region"
-              />
-
-              <FieldSelect
-                name="sector"
-                label="DIT sector"
-                emptyOption="-- Select DIT sector --"
-                options={sectors}
-                required="Select DIT sector"
-              />
-
-              <H3>What happens next</H3>
-              <p>
-                You are requesting that a new company be added to Data Hub. Once you select the ‘Add company’ button below:
-                <UnorderedList>
-                  <ListItem>
-                    you can continue to record interactions with the company
-                  </ListItem>
-                  <ListItem>
-                    Data Hub’s external data provider will confirm with the company that the information on this page is correct
-                  </ListItem>
-                  <ListItem>
-                    within 3 weeks the Data Hub support team will send you an email to tell you whether the information on this page has been confirmed
-                  </ListItem>
-                </UnorderedList>
-              </p>
-
             </Step>
-          )}
 
-        </LoadingBox>
-      )}
+            <Step name="companySearch" hideForwardButton={true} hideBackButton={true}>
+              <H3>Find the company</H3>
+
+              <FieldDnbCompany
+                apiEndpoint={`//${host}/companies/create/dnb/company-search?_csrf=${csrfToken}`}
+                queryParams={{ address_country: countryIsoCode }}
+                name="dnbCompany"
+                country={countryName}
+              />
+            </Step>
+
+            {!values.cannotFind && <CompanyFoundStep />}
+
+            {values.cannotFind && (
+              <CompanyNotFoundStep
+                organisationTypes={organisationTypes}
+                regions={regions}
+                sectors={sectors}
+              />
+            )}
+          </LoadingBox>
+        )
+      }}
     </Form>
   )
 }
@@ -222,7 +119,8 @@ function AddCompanyForm ({ host, csrfToken, foreignCountries, organisationTypes,
 AddCompanyForm.propTypes = {
   host: PropTypes.string.isRequired,
   csrfToken: PropTypes.string.isRequired,
-  foreignCountries: PropTypes.arrayOf(PropTypes.shape({
+  countries: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
   })).isRequired,

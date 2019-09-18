@@ -3,13 +3,34 @@ const {
   renderAddCompanyForm,
   postSearchDnbCompanies,
   postAddDnbCompany,
+  postAddDnbCompanyInvestigation,
 } = require('~/src/apps/companies/apps/add-company/controllers')
 const companyCreateResponse = require('~/test/unit/data/companies/dnb/company-create.json')
-const countriesFixture = require('../../../../data/metadata/country')
-const { transformObjectToOption } = require('~/src/apps/transformers')
+const companyCreateInvestigationResponse = require('~/test/unit/data/companies/dnb/company-create-investigation.json')
+const {
+  transformObjectToOption,
+  transformCountryToOptionWithIsoCode,
+} = require('~/src/apps/transformers')
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder')
 
 const metadataMock = {
+  countriesOptions: [
+    {
+      id: '1',
+      name: 'France',
+      iso_alpha2_code: 'FR',
+    },
+    {
+      id: '2',
+      name: 'United Kingdom',
+      iso_alpha2_code: 'GB',
+    },
+    {
+      id: '3',
+      name: 'United States',
+      iso_alpha2_code: 'US',
+    },
+  ],
   regionOptions: [
     { id: '1', name: 'r1', disabled_on: null },
     { id: '2', name: 'r2', disabled_on: null },
@@ -33,7 +54,7 @@ describe('Add company form controllers', () => {
   beforeEach(() => {
     nock(config.apiRoot)
       .get('/metadata/country/')
-      .reply(200, countriesFixture)
+      .reply(200, metadataMock.countriesOptions)
 
     nock(config.apiRoot)
       .get('/metadata/business-type/')
@@ -62,9 +83,7 @@ describe('Add company form controllers', () => {
 
       it('should render the add company form template with fields', () => {
         const expectedTemplate = 'companies/apps/add-company/views/client-container'
-        const expectedForeignCountries = countriesFixture
-          .filter(c => c.name !== 'United Kingdom')
-          .map(transformObjectToOption)
+        const expectedCountries = metadataMock.countriesOptions.map(transformCountryToOptionWithIsoCode)
         const expectedOrganisationTypes = metadataMock.businessTypeOptions.map(transformObjectToOption)
         const expectedSectors = metadataMock.sectorOptions.map(transformObjectToOption)
         const expectedRegions = metadataMock.regionOptions.map(transformObjectToOption)
@@ -73,7 +92,7 @@ describe('Add company form controllers', () => {
           props: {
             host: 'localhost:3000',
             csrfToken: 'csrf',
-            foreignCountries: expectedForeignCountries,
+            countries: expectedCountries,
             organisationTypes: expectedOrganisationTypes,
             sectors: expectedSectors,
             regions: expectedRegions,
@@ -215,7 +234,7 @@ describe('Add company form controllers', () => {
       })
 
       it('should flash a created message', () => {
-        expect(this.middlewareParameters.reqMock.flash).to.be.calledOnceWithExactly('success', 'Company created')
+        expect(this.middlewareParameters.reqMock.flash).to.be.calledOnceWithExactly('success', 'Company added to Data Hub')
       })
 
       it('should respond with the created company', () => {
@@ -242,6 +261,118 @@ describe('Add company form controllers', () => {
         })
 
         await postAddDnbCompany(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
+      })
+
+      it('should not flash a created message', () => {
+        expect(this.middlewareParameters.reqMock.flash).to.not.have.been.called
+      })
+
+      it('should not respond', () => {
+        expect(this.middlewareParameters.resMock.json).to.not.have.been.called
+      })
+
+      it('should call next() with an error', async () => {
+        expect(this.middlewareParameters.nextSpy).to.have.been.calledOnceWithExactly(sinon.match({
+          message: '500 - "Error message"',
+        }))
+      })
+    })
+  })
+
+  describe('#postAddDnbCompanyInvestigation', () => {
+    context('when the company investigation is successfully created', () => {
+      beforeEach(async () => {
+        nock(config.apiRoot)
+          .post('/v4/dnb/company-create-investigation', {
+            address: {
+              country: {
+                id: '80756b9a-5d95-e211-a939-e4115bead28a',
+              },
+              county: null,
+              line_1: 'Unit 10, Ockham Drive',
+              line_2: null,
+              postcode: 'UB6 0F2',
+              town: 'GREENFORD',
+            },
+            business_type: '1',
+            name: 'name',
+            sector: '3',
+            telephone_number: '123',
+            uk_region: '2',
+            website: 'website',
+          })
+          .reply(200, companyCreateInvestigationResponse)
+
+        this.middlewareParameters = buildMiddlewareParameters({
+          requestBody: {
+            business_type: '1',
+            name: 'name',
+            sector: '3',
+            telephone_number: '123',
+            uk_region: '2',
+            website: 'website',
+          },
+        })
+
+        await postAddDnbCompanyInvestigation(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock,
+          this.middlewareParameters.nextSpy,
+        )
+      })
+
+      it('should flash a created message', () => {
+        expect(this.middlewareParameters.reqMock.flash).to.be.calledOnceWithExactly('success', 'Company added to Data Hub')
+      })
+
+      it('should respond with the created company', () => {
+        expect(this.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(companyCreateInvestigationResponse)
+      })
+
+      it('should not call next() with an error', async () => {
+        expect(this.middlewareParameters.nextSpy).to.not.have.been.called
+      })
+    })
+
+    context('when there is an error', () => {
+      beforeEach(async () => {
+        nock(config.apiRoot)
+          .post('/v4/dnb/company-create-investigation', {
+            address: {
+              country: {
+                id: '80756b9a-5d95-e211-a939-e4115bead28a',
+              },
+              county: null,
+              line_1: 'Unit 10, Ockham Drive',
+              line_2: null,
+              postcode: 'UB6 0F2',
+              town: 'GREENFORD',
+            },
+            business_type: '1',
+            name: 'name',
+            sector: '3',
+            telephone_number: '123',
+            uk_region: '2',
+            website: 'website',
+          })
+          .reply(500, 'Error message')
+
+        this.middlewareParameters = buildMiddlewareParameters({
+          requestBody: {
+            business_type: '1',
+            name: 'name',
+            sector: '3',
+            telephone_number: '123',
+            uk_region: '2',
+            website: 'website',
+          },
+        })
+
+        await postAddDnbCompanyInvestigation(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
           this.middlewareParameters.nextSpy,

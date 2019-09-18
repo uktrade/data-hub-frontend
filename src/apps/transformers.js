@@ -59,6 +59,14 @@ function transformContactToOption ({ id, first_name, last_name, job_title }) {
   }
 }
 
+function transformCountryToOptionWithIsoCode ({ id, name, iso_alpha2_code }) {
+  return {
+    key: id,
+    label: name,
+    value: iso_alpha2_code,
+  }
+}
+
 function transformIdToObject (id) {
   return {
     id,
@@ -105,6 +113,7 @@ module.exports = {
   transformObjectToOption,
   transformStringToOption,
   transformContactToOption,
+  transformCountryToOptionWithIsoCode,
   transformIdToObject,
   transformDateObjectToDateString,
   transformDateStringToDateObject,
