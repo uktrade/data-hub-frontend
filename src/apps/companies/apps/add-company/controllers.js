@@ -51,11 +51,9 @@ async function postSearchDnbCompanies (req, res, next) {
 
 async function postAddDnbCompany (req, res, next) {
   try {
-    await saveDnbCompany(req.session.token, req.body.dnbCompany.duns_number)
-      .then((result) => {
-        req.flash('success', 'Company added to Data Hub')
-        res.json(result)
-      })
+    const result = await saveDnbCompany(req.session.token, req.body.dnbCompany.duns_number)
+    req.flash('success', 'Company added to Data Hub')
+    res.json(result)
   } catch (error) {
     next(error)
   }
@@ -64,11 +62,9 @@ async function postAddDnbCompany (req, res, next) {
 async function postAddDnbCompanyInvestigation (req, res, next) {
   try {
     const transformed = transformToDnbCompanyInvestigationApi(req.body)
-    await saveDnbCompanyInvestigation(req.session.token, transformed)
-      .then((result) => {
-        req.flash('success', 'Company added to Data Hub')
-        res.json(result)
-      })
+    const result = await saveDnbCompanyInvestigation(req.session.token, transformed)
+    req.flash('success', 'Company added to Data Hub')
+    res.json(result)
   } catch (error) {
     next(error)
   }
