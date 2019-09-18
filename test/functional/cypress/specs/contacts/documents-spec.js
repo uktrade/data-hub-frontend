@@ -1,4 +1,4 @@
-const selectors = require('../../selectors')
+const selectors = require('../../../../selectors')
 
 describe('Contact Documents', () => {
   context('when there is a document link', () => {

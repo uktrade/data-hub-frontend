@@ -1,4 +1,4 @@
-const { localHeader, companyInvestment: selectors } = require('../../../selectors')
+const { localHeader, companyInvestment: selectors } = require('../../../../../selectors')
 const fixtures = require('../../../fixtures')
 
 const baseUrl = Cypress.config().baseUrl

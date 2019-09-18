@@ -1,6 +1,6 @@
 const { assertKeyValueTable } = require('../../helpers/key-value-table')
 const fixtures = require('../../fixtures')
-const selectors = require('../../selectors')
+const selectors = require('../../../../selectors')
 
 describe('Interaction details', () => {
   context('Past draft interaction', () => {

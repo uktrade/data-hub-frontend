@@ -1,5 +1,5 @@
 const fixtures = require('../../fixtures/index.js')
-const selectors = require('../../selectors/index.js')
+const selectors = require('../../../../selectors/index.js')
 
 describe('Companies link a subsidiary', () => {
   before(() => {

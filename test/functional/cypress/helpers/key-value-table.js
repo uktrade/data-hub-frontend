@@ -1,6 +1,6 @@
 const { keys, forEach } = require('lodash')
 
-const selectors = require('../selectors')
+const selectors = require('../../../selectors')
 
 const assertKeyValueTable = (dataAutoId, expected) => {
   forEach(keys(expected), (key, i) => {
