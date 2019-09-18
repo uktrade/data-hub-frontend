@@ -23,8 +23,8 @@ describe('Add company form', () => {
       cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Add company')
     })
 
-    it('should display "Where is this company based?" heading', () => {
-      cy.get(selectors.companyAdd.stepHeader).should('have.text', 'Where is this company based?')
+    it('should display "Where is this company located?" heading', () => {
+      cy.get(selectors.companyAdd.stepHeader).should('have.text', 'Where is this company located?')
     })
 
     it('should display "Next" button', () => {
@@ -58,7 +58,7 @@ describe('Add company form', () => {
       })
 
       it('should display error message', () => {
-        cy.get(selectors.companyAdd.form).contains('Select in which country the company is based')
+        cy.get(selectors.companyAdd.form).contains('Select in which country the company is located')
       })
     })
 
