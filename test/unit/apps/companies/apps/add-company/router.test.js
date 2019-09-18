@@ -10,7 +10,8 @@ describe('Add company form routes', () => {
     })
 
     expect(paths).to.deep.equal([
-      { path: '/', methods: [ 'get', 'post' ] },
+      { path: '/', methods: [ 'get' ] },
+      { path: '/dnb/company-create', methods: [ 'post' ] },
       { path: '/dnb/company-search', methods: [ 'post' ] },
       { path: '/dnb/company-investigation', methods: [ 'post' ] },
     ])

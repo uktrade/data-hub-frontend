@@ -234,7 +234,7 @@ describe('Add company form controllers', () => {
       })
 
       it('should flash a created message', () => {
-        expect(this.middlewareParameters.reqMock.flash).to.be.calledOnceWithExactly('success', 'Company created')
+        expect(this.middlewareParameters.reqMock.flash).to.be.calledOnceWithExactly('success', 'Company added to Data Hub')
       })
 
       it('should respond with the created company', () => {
