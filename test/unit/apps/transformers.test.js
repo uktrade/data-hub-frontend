@@ -170,4 +170,20 @@ describe('Global transformers', () => {
       })
     })
   })
+
+  describe('#transformCountryToOptionWithIsoCode', () => {
+    it('should return object with id, name as label and code as value', () => {
+      const actual = this.transformers.transformCountryToOptionWithIsoCode({
+        id: '1',
+        name: 'France',
+        iso_alpha2_code: 'FR',
+      })
+
+      expect(actual).to.deep.equal({
+        'key': '1',
+        'label': 'France',
+        'value': 'FR',
+      })
+    })
+  })
 })

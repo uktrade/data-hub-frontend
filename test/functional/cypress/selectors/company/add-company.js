@@ -6,14 +6,16 @@ module.exports = {
   subheader: 'form p',
   stepHeader: 'form h3',
   entitySearch: {
-    searchButton: 'form button:contains("Search")',
+    companyNameField: 'input[name="dnbCompanyName"]',
+    postalCodeField: 'input[name="dnbPostalCode"]',
+    searchButton: 'form button:contains("Find company")',
     results: {
       someCompanyName: 'form ol li:nth-child(1)',
       someOtherCompany: 'form ol li:nth-child(2)',
     },
     cannotFind: {
       summary: 'details summary span',
-      stillCannotFind: 'a:contains("I still cannot find the company")',
+      stillCannotFind: 'button:contains("I still cannot find the company")',
     },
   },
   newCompanyRecordForm: {
@@ -28,11 +30,11 @@ module.exports = {
       partnership: 'input[type="radio"][value="9ad14e94-5d95-e211-a939-e4115bead28a"]',
       soleTrader: 'input[type="radio"][value="99d14e94-5d95-e211-a939-e4115bead28a"]',
     },
-    name: '#name input',
-    website: '#website input',
-    telephone: '#telephone input',
-    region: 'label[name="region"] select',
-    sector: 'label[name="sector"] select',
+    companyName: 'input[name="name"]',
+    website: 'input[name="website"]',
+    telephone: 'input[name="telephone_number"]',
+    region: 'select#uk_region',
+    sector: 'select#sector',
   },
   companyDetails: {
     subheader: 'form h2',
