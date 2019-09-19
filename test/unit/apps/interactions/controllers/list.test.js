@@ -83,6 +83,11 @@ describe('interaction list', () => {
         { id: '2', name: 'pt2', disabled_on: yesterday },
         { id: '3', name: 'pt3', disabled_on: null },
       ],
+      oneListTierOptions: [
+        { id: '1', name: 'tier1', disabled_on: null },
+        { id: '2', name: 'tier2', disabled_on: yesterday },
+        { id: '3', name: 'tier3', disabled_on: null },
+      ],
     }
 
     nock(config.apiRoot)
@@ -98,6 +103,8 @@ describe('interaction list', () => {
       .reply(200, this.metadataMock.policyAreaOptions)
       .get('/metadata/policy-issue-type/')
       .reply(200, this.metadataMock.policyIssueType)
+      .get('/metadata/one-list-tier/')
+      .reply(200, this.metadataMock.oneListTierOptions)
   })
 
   context('#renderInteractionList', () => {
@@ -113,6 +120,17 @@ describe('interaction list', () => {
       expect(kindField.options).to.deep.equal([
         { value: 'interaction', label: 'Interaction' },
         { value: 'service_delivery', label: 'Service delivery' },
+      ])
+    })
+
+    it('displays the one list group tier filters', () => {
+      const options = this.res.render.firstCall.args[1]
+      const filterFields = options.filtersFields
+
+      const oneListGroupTierField = filterFields.find(field => field.name === 'company_one_list_group_tier')
+      expect(oneListGroupTierField.options).to.deep.equal([
+        { value: '1', label: 'tier1' },
+        { value: '3', label: 'tier3' },
       ])
     })
   })
@@ -230,6 +248,9 @@ describe('interaction list', () => {
    [ { value: 'te1', label: 'te1' },
      { value: 'te2', label: 'te2' },
      { value: 'te', label: 'te3' } ],
+      oneListTierOptions:
+   [ { value: '1', label: 'tier1' },
+     { value: '3', label: 'tier3' } ],
       adviserOptions: [ { value: 'ad1', label: 'ad1', subLabel: 'ad1' } ],
       types: [ { value: '1', label: 'pt1' }, { value: '3', label: 'pt3' } ] }
 
