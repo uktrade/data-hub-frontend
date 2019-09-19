@@ -18,7 +18,7 @@ function CompanyNotFoundStep ({ organisationTypes, regions, sectors }) {
       <FieldRadios
         name="business_type"
         label="Organisation type"
-        required="Select organisation"
+        required="Select organisation type"
         options={organisationTypes}
       />
 
