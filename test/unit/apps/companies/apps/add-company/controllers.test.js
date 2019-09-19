@@ -222,7 +222,9 @@ describe('Add company form controllers', () => {
 
         this.middlewareParameters = buildMiddlewareParameters({
           requestBody: {
-            duns_number: '123',
+            dnbCompany: {
+              duns_number: '123',
+            },
           },
         })
 
@@ -256,7 +258,9 @@ describe('Add company form controllers', () => {
 
         this.middlewareParameters = buildMiddlewareParameters({
           requestBody: {
-            duns_number: '123',
+            dnbCompany: {
+              duns_number: '123',
+            },
           },
         })
 
