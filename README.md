@@ -619,6 +619,17 @@ After setting up the environment variables, run the following command to execute
 
 `$ yarn test:visual`
 
+### Updating the baseline image
+
+Currently updating the baseline imagine is a manual process. Once you confirm the comparison image
+is how the application should look like, delete the baseline for the particular test case, and rerun
+the visual test suite. Once it reruns, it will notice there is a baseline image missing and use the 
+freshly screenshot taken as the current baseline.
+
+Baseline image filename and path should look something like this:
+
+`~/visual-screenshots/baseline/Data Hub core pages should visually check data hub home page is correct - chrome`
+
 ## Deployment
 
 Commits to `develop` are automatically deployed to a heroku instance. Pull
