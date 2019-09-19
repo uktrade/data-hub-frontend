@@ -35,7 +35,7 @@ function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, region
       value: 'overseas',
       children: (
         <FieldSelect
-          required="Select in which country the company is based"
+          required="Select in which country the company is located"
           emptyOption="-- Select country --"
           label="Country"
           name="companyOverseasCountry"
@@ -79,7 +79,7 @@ function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, region
         return (
           <LoadingBox loading={isSubmitting}>
             <Step name="companyLocation">
-              <H3>Where is this company based?</H3>
+              <H3>Where is this company located?</H3>
 
               <FieldRadios
                 name="companyLocation"
