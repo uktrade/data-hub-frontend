@@ -115,7 +115,7 @@ describe('Company collection middleware', () => {
           this.reqMock.query.term = 'mock-search-term'
 
           nock(config.apiRoot)
-            .get('/metadata/headquarter-type/')
+            .get('/v4/metadata/headquarter-type')
             .reply(200, headquarterTypes)
             .post('/v4/search/company?offset=0&limit=10')
             .reply(200, ghqCompanySearchResponse)
@@ -138,7 +138,7 @@ describe('Company collection middleware', () => {
           this.errorMsg = 'oh no!'
 
           nock(config.apiRoot)
-            .get('/metadata/headquarter-type/')
+            .get('/v4/metadata/headquarter-type')
             .reply(200, headquarterTypes)
             .post('/v4/search/company?offset=0&limit=10')
             .replyWithError(this.errorMsg)
@@ -190,7 +190,7 @@ describe('Company collection middleware', () => {
       context('a couple of results', () => {
         beforeEach(async () => {
           nock(config.apiRoot)
-            .get('/metadata/headquarter-type/')
+            .get('/v4/metadata/headquarter-type')
             .reply(200, headquarterTypes)
             .post('/v4/search/company?offset=0&limit=10', {
               headquarter_type: [
@@ -235,7 +235,7 @@ describe('Company collection middleware', () => {
       context('more than 10 results', () => {
         beforeEach(async () => {
           nock(config.apiRoot)
-            .get('/metadata/headquarter-type/')
+            .get('/v4/metadata/headquarter-type')
             .reply(200, headquarterTypes)
             .post('/v4/search/company?offset=0&limit=10', {
               headquarter_type: [
@@ -269,7 +269,7 @@ describe('Company collection middleware', () => {
           this.errorMsg = 'oh no!'
 
           nock(config.apiRoot)
-            .get('/metadata/headquarter-type/')
+            .get('/v4/metadata/headquarter-type')
             .reply(200, headquarterTypes)
             .post('/v4/search/company?offset=0&limit=10', {
               headquarter_type: [
