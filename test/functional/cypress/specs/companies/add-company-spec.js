@@ -192,7 +192,29 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.newCompanyRecordForm.sector).should('be.visible')
     })
 
-    context('when I complete the form', () => {
+    context('when I complete the form without filling the required fields', () => {
+      before(() => {
+        cy.get(selectors.companyAdd.submitButton).click()
+      })
+
+      it('should display error "Select organisation type"', () => {
+        cy.get(selectors.companyAdd.form).contains('Select organisation type')
+      })
+
+      it('should display error "Enter name"', () => {
+        cy.get(selectors.companyAdd.form).contains('Enter name')
+      })
+
+      it('should display error "Select DIT region"', () => {
+        cy.get(selectors.companyAdd.form).contains('Select DIT region')
+      })
+
+      it('should display error "Select DIT sector"', () => {
+        cy.get(selectors.companyAdd.form).contains('Select DIT sector')
+      })
+    })
+
+    context('when I complete the form after filling the required fields', () => {
       before(() => {
         cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.limitedCompany).click()
         cy.get(selectors.companyAdd.newCompanyRecordForm.companyName).type('INVESTIGATION LIMITED')
