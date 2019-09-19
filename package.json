@@ -27,6 +27,7 @@
     "test:functional": "cypress run",
     "test:functional:watch": "cypress open",
     "test:visual": "./node_modules/.bin/wdio test/visual/wdio.conf.js",
+    "test:e2e": "./node_modules/.bin/wdio test/end-to-end/wdio.conf.js",
     "coverage": "nyc --reporter=html --reporter=text --reporter=lcov npm run test:unit",
     "circle:unit": "nyc --reporter=lcov npm run test:unit -- --reporter mocha-circleci-reporter && codeclimate-test-reporter < coverage/lcov.info",
     "circle:unit-client": "mocha-webpack --webpack-config webpack.config.js ./test/unit-client/assets/javascripts/**/*.test.js --opts ./test/unit-client/mocha.opts --reporter mocha-circleci-reporter ./test/unit-client/assets/javascripts/**/*.test.js",
@@ -139,6 +140,7 @@
     "winston": "^2.4.2"
   },
   "devDependencies": {
+    "@babel/register": "^7.6.0",
     "@uktrade/client-matrix-js": "^1.0.38",
     "@uktrade/wdio-image-diff-js": "1.0.117",
     "@vue/test-utils": "^1.0.0-beta.25",
