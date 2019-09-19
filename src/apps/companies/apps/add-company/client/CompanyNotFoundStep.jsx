@@ -3,9 +3,10 @@ import { Details } from 'govuk-react'
 import PropTypes from 'prop-types'
 import { FieldInput, FieldRadios, FieldSelect, Step } from 'data-hub-components'
 
+import { ISO_CODE } from './constants'
 import InformationList from './InformationList'
 
-function CompanyNotFoundStep ({ organisationTypes, regions, sectors }) {
+function CompanyNotFoundStep ({ organisationTypes, regions, sectors, countryIsoCode }) {
   return (
     <Step name="unhappy" forwardButtonText="Add company">
 
@@ -42,13 +43,15 @@ function CompanyNotFoundStep ({ organisationTypes, regions, sectors }) {
         type="tel"
       />
 
-      <FieldSelect
-        name="uk_region"
-        label="DIT region"
-        emptyOption="-- Select DIT region --"
-        options={regions}
-        required="Select DIT region"
-      />
+      {countryIsoCode === ISO_CODE.UK && (
+        <FieldSelect
+          name="uk_region"
+          label="DIT region"
+          emptyOption="-- Select DIT region --"
+          options={regions}
+          required="Select DIT region"
+        />
+      )}
 
       <FieldSelect
         name="sector"
