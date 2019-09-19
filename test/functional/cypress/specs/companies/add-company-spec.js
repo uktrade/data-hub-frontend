@@ -123,6 +123,21 @@ describe('Add company form', () => {
             cy.get(selectors.companyAdd.stepHeader).should('have.text', 'Confirm you want to add this company to Data Hub')
           })
 
+          it('should display Companies House number', () => {
+            cy.get(selectors.companyAdd.summary).should('contain', 'Companies House number')
+            cy.get(selectors.companyAdd.summary).should('contain', '00016033')
+          })
+
+          it('should display address', () => {
+            cy.get(selectors.companyAdd.summary).should('contain', 'Address')
+            cy.get(selectors.companyAdd.summary).should('contain', '123 ABC Road, Brighton, BN2 9QB')
+          })
+
+          it('should display country', () => {
+            cy.get(selectors.companyAdd.summary).should('contain', 'Country')
+            cy.get(selectors.companyAdd.summary).should('contain', 'Poland')
+          })
+
           it('should display "Back" button', () => {
             cy.get(selectors.companyAdd.backButton).should('be.visible')
           })

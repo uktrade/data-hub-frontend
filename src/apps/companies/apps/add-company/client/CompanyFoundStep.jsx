@@ -6,6 +6,7 @@ import { H3 } from '@govuk-react/heading'
 import { Step, useFormContext } from 'data-hub-components'
 
 import DefinitionList from './DefinitionList'
+import PropTypes from 'prop-types'
 
 function getCompanyAddress (dnbCompany) {
   if (dnbCompany) {
@@ -29,7 +30,7 @@ function getCompaniesHouseNumber (dnbCompany) {
   }
 }
 
-function CompanyFoundStep () {
+function CompanyFoundStep ({ countryName }) {
   const { values } = useFormContext()
 
   const dnbCompany = get(values, 'dnbCompany')
@@ -47,12 +48,20 @@ function CompanyFoundStep () {
           description={companiesHouseNumber}
         />
         <DefinitionList.Row
+          label="Country"
+          description={countryName}
+        />
+        <DefinitionList.Row
           label="Address"
           description={companyAddress}
         />
       </DefinitionList>
     </Step>
   )
+}
+
+CompanyFoundStep.propTypes = {
+  countryName: PropTypes.string.isRequired,
 }
 
 export default CompanyFoundStep

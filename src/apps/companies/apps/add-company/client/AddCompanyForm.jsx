@@ -100,7 +100,7 @@ function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, region
               />
             </Step>
 
-            {!values.cannotFind && <CompanyFoundStep />}
+            {!values.cannotFind && <CompanyFoundStep countryName={countryName} />}
 
             {values.cannotFind && (
               <CompanyNotFoundStep
