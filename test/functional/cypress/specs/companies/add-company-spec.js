@@ -239,4 +239,34 @@ describe('Add company form', () => {
       })
     })
   })
+
+  context('when the user clicks "I still cannot find the company" for an overseas country', () => {
+    before(() => {
+      cy.visit('/companies/create')
+
+      cy.get(selectors.companyAdd.form).find('[type="radio"]').check('overseas')
+      cy.get(selectors.companyAdd.form).find('select').select('India')
+      cy.get(selectors.companyAdd.nextButton).click()
+
+      cy.get(selectors.companyAdd.entitySearch.companyNameField).type('some company')
+      cy.get(selectors.companyAdd.entitySearch.searchButton).click()
+
+      cy.get(selectors.companyAdd.entitySearch.cannotFind.summary).click()
+      cy.get(selectors.companyAdd.entitySearch.cannotFind.stillCannotFind).click()
+    })
+
+    it('should display the form', () => {
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.charity).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.governmentDepartmentOrOtherPublicBody).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.limitedCompany).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.limitedPartnership).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.partnership).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.soleTrader).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.companyName).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.website).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.region).should('not.be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.sector).should('be.visible')
+    })
+  })
 })
