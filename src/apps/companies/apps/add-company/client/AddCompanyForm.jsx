@@ -19,14 +19,12 @@ import {
 
 import CompanyFoundStep from './CompanyFoundStep'
 import CompanyNotFoundStep from './CompanyNotFoundStep'
+import { ISO_CODE } from './constants'
 
 function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, regions, sectors }) {
   const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const UK_ISO_CODE = 'GB'
-
-  const optionCountryUK = countries.find(({ value }) => value === UK_ISO_CODE)
-  const overseasCountries = countries.filter(({ value }) => value && value !== UK_ISO_CODE)
+  const optionCountryUK = countries.find(({ value }) => value === ISO_CODE.UK)
+  const overseasCountries = countries.filter(({ value }) => value && value !== ISO_CODE.UK)
 
   const COMPANY_LOCATION_OPTIONS = {
     uk: optionCountryUK,
@@ -106,6 +104,7 @@ function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, region
                 organisationTypes={organisationTypes}
                 regions={regions}
                 sectors={sectors}
+                countryIsoCode={countryIsoCode}
               />
             )}
           </LoadingBox>
