@@ -122,6 +122,7 @@ describe('interaction list', () => {
         { value: 'service_delivery', label: 'Service delivery' },
       ])
     })
+
     it('displays the one list group tier filters', () => {
       const options = this.res.render.firstCall.args[1]
       const filterFields = options.filtersFields
