@@ -1,6 +1,7 @@
 const moment = require('moment')
 
 const config = require('~/config')
+
 const yesterday = moment()
   .subtract(1, 'days')
   .toISOString()
@@ -23,11 +24,11 @@ const serviceOptions = serviceOptionData
 describe('#options', () => {
   beforeEach(() => {
     nock(config.apiRoot)
-      .get('/metadata/uk-region/')
+      .get('/v4/metadata/uk-region')
       .reply(200, regionOptions)
 
     nock(config.apiRoot)
-      .get('/metadata/123/&contexts__has_any=')
+      .get('/v4/metadata/123&contexts__has_any=')
       .reply(200, regionOptions)
   })
 
@@ -36,7 +37,7 @@ describe('#options', () => {
       this.options = await getOptions('1234', 'uk-region')
       this.fetchedOptions = await fetchOptions(
         '1234',
-        `${config.apiRoot}/metadata/123/&contexts__has_any=`
+        `${config.apiRoot}/v4/metadata/123&contexts__has_any=`
       )
     })
 
@@ -135,7 +136,7 @@ describe('#options', () => {
   context('when a context is provided', () => {
     beforeEach(() => {
       nock(config.apiRoot)
-        .get('/metadata/service/?contexts__has_any=interaction')
+        .get('/v4/metadata/service?contexts__has_any=interaction')
         .reply(200, serviceOptions)
     })
 

@@ -36,7 +36,7 @@ describe('options API controller', () => {
     }]
 
     nock(config.apiRoot)
-      .get('/metadata/uk-region/')
+      .get('/v4/metadata/uk-region')
       .reply(200, regions)
   })
 
