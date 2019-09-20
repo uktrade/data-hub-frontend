@@ -205,6 +205,10 @@ describe('Add company form', () => {
         cy.get(selectors.companyAdd.form).contains('Enter name')
       })
 
+      it('should display error "Enter at least a website or a phone number"', () => {
+        cy.get(selectors.companyAdd.form).contains('Enter at least a website or a phone number')
+      })
+
       it('should display error "Select DIT region"', () => {
         cy.get(selectors.companyAdd.form).contains('Select DIT region')
       })
