@@ -42,7 +42,7 @@ describe('Create a company list', () => {
 
   context('when submitting with no input', () => {
     before(() => {
-      cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/lists/create-list`)
+      cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/lists/create`)
     })
     it('should display an error', () => {
       cy.get(selectors.companyList.create.submit).click()
@@ -52,7 +52,7 @@ describe('Create a company list', () => {
 
   context('when submitting over 30 characters', () => {
     before(() => {
-      cy.visit('/companies/4cd4128b-1bad-4f1e-9146-5d4678c6a018/lists/create-list')
+      cy.visit('/companies/4cd4128b-1bad-4f1e-9146-5d4678c6a018/lists/create')
     })
     it('should display an error', () => {
       cy.get(selectors.companyList.create.input).type('loooooooooooooonnnnnnnnnnnnnggggggggg text!')
@@ -63,7 +63,7 @@ describe('Create a company list', () => {
 
   context('when submitting a valid list name', () => {
     before(() => {
-      cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/lists/create-list`)
+      cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/lists/create`)
     })
     it('should display a success message', () => {
       cy.get(selectors.companyList.create.input).type('New list name')
@@ -74,7 +74,7 @@ describe('Create a company list', () => {
 
   context('when cancelling the form', () => {
     before(() => {
-      cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/lists/create-list`)
+      cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/lists/create`)
     })
     it('should return to the company page', () => {
       cy.get(selectors.companyList.create.cancel).click()
