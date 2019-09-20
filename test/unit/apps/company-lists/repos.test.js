@@ -3,6 +3,7 @@ const config = require('~/config')
 const {
   getCompanyList,
   deleteCompanyList,
+  createUserCompanyList,
 } = require('~/src/apps/company-lists/repos')
 
 const companyListFixture = require('~/test/unit/data/company-lists/list-with-multiple-items.json')
@@ -10,6 +11,22 @@ const companyListFixture = require('~/test/unit/data/company-lists/list-with-mul
 const companyListId = companyListFixture.id
 
 describe('Company list repository', () => {
+  describe('#createUserCompanyList', () => {
+    beforeEach(() => {
+      nock(config.apiRoot)
+        .post('/v4/company-list', {
+          id: '1',
+          name: 'listName',
+        })
+        .reply(200, { id: '1', name: 'listName', created_on: '2019' })
+    })
+
+    it('should return company', async () => {
+      const companyList = await createUserCompanyList('TEST_TOKEN', '1', 'listName')
+      expect(companyList).to.deep.equal({ id: '1', name: 'listName', created_on: '2019' })
+    })
+  })
+
   describe('#getCompanyList', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
