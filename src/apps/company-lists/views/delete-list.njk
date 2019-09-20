@@ -1,0 +1,13 @@
+{% extends "_layouts/template.njk" %}
+
+{% block local_header %}
+  {% call LocalHeader({ heading: 'Delete list' }) %}{% endcall %}
+{% endblock %}
+
+{% block body_main_content %}
+  {% component 'react-slot', {
+    id: 'delete-company-list',
+    props: props
+  } %}
+
+{% endblock %}
