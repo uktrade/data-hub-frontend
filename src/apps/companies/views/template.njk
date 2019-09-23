@@ -17,6 +17,11 @@
       {% endif %}
     </form>
   {% endset %}
+  {% if features.companies_create_list %}
+    {% set action %}
+      <a href="/companies/{{ company.id }}/lists/create" class="govuk-button govuk-button--secondary">Add to my lists</a>
+    {% endset %}
+  {% endif %}
 
   {% call LocalHeader({
     heading: company.name,
