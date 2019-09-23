@@ -6,6 +6,14 @@ const { handleRoutePermissions } = require('../middleware')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
+const {
+  renderCreateListForm,
+  createCompanyList,
+} = require('./controllers/create')
+
+router.post('/', createCompanyList)
+router.get('/', renderCreateListForm)
+
 router.get('/:listId/delete', fetchCompanyList, renderDeleteCompanyListPage)
 router.post('/:listId/delete', handleDeleteCompanyList)
 

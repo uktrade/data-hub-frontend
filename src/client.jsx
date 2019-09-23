@@ -5,6 +5,7 @@ import { ActivityFeedApp } from 'data-hub-components'
 import AddCompanyForm from './apps/companies/apps/add-company/client/AddCompanyForm'
 import DeleteCompanyList from './apps/company-lists/client/DeleteCompanyList'
 import MyCompanies from './apps/dashboard/client/MyCompanies.jsx'
+import CreateListFormSection from './apps/company-lists/client/CreateListFormSection'
 
 function Mount ({ selector, children }) {
   return [...document.querySelectorAll(selector)].map(domNode => {
@@ -31,6 +32,9 @@ function App () {
       </Mount>
       <Mount selector="#delete-company-list">
         {props => <DeleteCompanyList {...props} />}
+      </Mount>
+      <Mount selector="#create-company-list-form">
+        {props => <CreateListFormSection {...props} />}
       </Mount>
     </>
   )
