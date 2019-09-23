@@ -11,6 +11,7 @@ module.exports = function ({
   serviceOptions,
   teamOptions,
   adviserOptions,
+  oneListTierOptions,
   userAgent,
   areas,
   types,
@@ -113,6 +114,13 @@ module.exports = function ({
       name: 'policy_issue_types',
       modifier: 'option-select',
       options: types,
+    },
+    {
+      macroName: 'MultipleChoiceField',
+      type: 'checkbox',
+      name: 'company_one_list_group_tier',
+      modifier: 'option-select',
+      options: oneListTierOptions,
     },
   ].map(filter => {
     return {

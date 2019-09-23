@@ -19,14 +19,12 @@ import {
 
 import CompanyFoundStep from './CompanyFoundStep'
 import CompanyNotFoundStep from './CompanyNotFoundStep'
+import { ISO_CODE } from './constants'
 
 function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, regions, sectors }) {
   const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const UK_ISO_CODE = 'GB'
-
-  const optionCountryUK = countries.find(({ value }) => value === UK_ISO_CODE)
-  const overseasCountries = countries.filter(({ value }) => value && value !== UK_ISO_CODE)
+  const optionCountryUK = countries.find(({ value }) => value === ISO_CODE.UK)
+  const overseasCountries = countries.filter(({ value }) => value && value !== ISO_CODE.UK)
 
   const COMPANY_LOCATION_OPTIONS = {
     uk: optionCountryUK,
@@ -35,7 +33,7 @@ function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, region
       value: 'overseas',
       children: (
         <FieldSelect
-          required="Select in which country the company is based"
+          required="Select in which country the company is located"
           emptyOption="-- Select country --"
           label="Country"
           name="companyOverseasCountry"
@@ -65,9 +63,8 @@ function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, region
       window.location.href = `//${host}/companies/${data.id}`
     } catch (error) {
       // todo handle error
+      setIsSubmitting(false)
     }
-
-    setIsSubmitting(false)
   }
 
   return (
@@ -80,7 +77,7 @@ function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, region
         return (
           <LoadingBox loading={isSubmitting}>
             <Step name="companyLocation">
-              <H3>Where is this company based?</H3>
+              <H3>Where is this company located?</H3>
 
               <FieldRadios
                 name="companyLocation"
@@ -100,13 +97,14 @@ function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, region
               />
             </Step>
 
-            {!values.cannotFind && <CompanyFoundStep />}
+            {!values.cannotFind && <CompanyFoundStep countryName={countryName} />}
 
             {values.cannotFind && (
               <CompanyNotFoundStep
                 organisationTypes={organisationTypes}
                 regions={regions}
                 sectors={sectors}
+                countryIsoCode={countryIsoCode}
               />
             )}
           </LoadingBox>

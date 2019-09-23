@@ -1,6 +1,6 @@
 {
   "name": "data-hub-frontend",
-  "version": "5.44.0",
+  "version": "5.45.0",
   "description": "Data Hub Frontend",
   "main": "src/server.js",
   "repository": {
@@ -78,7 +78,7 @@
     "core-js": "^2.5.7",
     "css-loader": "^1.0.0",
     "csurf": "^1.9.0",
-    "data-hub-components": "^1.16.0",
+    "data-hub-components": "^1.20.0",
     "date-fns": "^1.29.0",
     "del-cli": "^2.0.0",
     "dotenv": "^5.0.0",

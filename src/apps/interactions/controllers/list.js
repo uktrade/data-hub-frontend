@@ -72,6 +72,7 @@ async function getInteractionOptions (token, req, res) {
   const types = await getOptions(token, 'policy-issue-type')
 
   const areas = await getOptions(token, 'policy-area')
+  const oneListTierOptions = await getOptions(token, 'one-list-tier')
 
   const currentAdvisers =
     get(res.locals, 'interaction.dit_participants') &&
@@ -94,6 +95,7 @@ async function getInteractionOptions (token, req, res) {
     serviceOptions,
     teamOptions,
     adviserOptions,
+    oneListTierOptions,
     types,
   }
 

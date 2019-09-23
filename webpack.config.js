@@ -32,9 +32,9 @@ const common = {
       {
         test: /\.(js|jsx)$/,
 
-        // Package "hex-rgb" is not transpiled to ES5 by default so we need to transpile it again.
+        // Packages "hex-rgb" and "set-harmonic-interval" are not transpiled to ES5 by default so we need to transpile them again.
         // See: https://stackoverflow.com/questions/51289261/babel-does-not-transpile-imported-modules-from-node-modules
-        exclude: /node_modules\/(?!(hex-rgb)\/).*/,
+        exclude: /node_modules\/(?!(hex-rgb|set-harmonic-interval)\/).*/,
 
         loader: 'babel-loader',
         options: {

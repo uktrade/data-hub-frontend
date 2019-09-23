@@ -1,22 +1,18 @@
 {
-  "name":"data-hub-fe-beta2",
-  "scripts":{},
   "env":{
-    "BUILDPACK_URL": "https://github.com/heroku/heroku-buildpack-nodejs.git",
-    "NODE_MODULES_CACHE": "false",
-    "NPM_CONFIG_PRODUCTION": "false",
     "API_ROOT": { "required": true },
     "BASIC_AUTH_USER": { "required": true },
     "BASIC_AUTH_PASSWORD": { "required": true },
-    "POSTCODE_KEY": { "required": true },
+    "HELP_CENTRE_ANNOUNCMENTS_URL": { "required": true },
+    "HELP_CENTRE_API_FEED": { "required": true },
+    "HELP_CENTRE_FEED_API_TOKEN": { "required": true },
+    "HELP_CENTRE_URL": { "required": true },
+    "NODE_ENV": { "required": true },
+    "NODE_MODULES_CACHE": "false",
     "OAUTH2_DEV_TOKEN": { "required": true },
     "OAUTH2_BYPASS_SSO": { "required": true },
-    "ZEN_TOKEN": { "required": true },
-    "ZEN_DOMAIN": { "required": true },
-    "ZEN_EMAIL": { "required": true },
-    "ZEN_BROWSER": { "required": true },
-    "ZEN_IMPACT": { "required": true },
-    "ZEN_SERVICE": { "required": true }
+    "POSTCODE_KEY": { "required": true },
+    "SESSION_SECRET": { "required": true }
   },
   "addons":["heroku-redis"]
 }
