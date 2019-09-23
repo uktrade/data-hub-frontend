@@ -56,6 +56,7 @@ const filters = {
   was_policy_feedback_provided: 'Policy feedback',
   policy_areas: 'Policy areas',
   policy_issue_types: 'Policy issue type',
+  company_one_list_group_tier: 'Company One List Group Tier',
 }
 
 const metaItems = {

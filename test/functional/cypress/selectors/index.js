@@ -8,6 +8,12 @@ exports.companyInvestment = require('./company/investment')
 exports.companySubsidiariesLink = require('./company/subsidiaries-link')
 exports.companySubsidiaries = require('./company/subsidiaries')
 exports.companyAddToListButton = require('./company/add-to-list')
+exports.companyCreateListButton = require('./company')
+
+exports.companyList = {
+  delete: require('./company-lists/delete'),
+  create: require('./company-lists/create'),
+}
 
 exports.contactCreate = require('./contact/create')
 

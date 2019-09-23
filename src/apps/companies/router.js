@@ -54,6 +54,7 @@ const matchingRouter = require('./apps/matching/router')
 const interactionsRouter = require('../interactions/router.sub-app')
 const activityFeedRouter = require('./apps/activity-feed/router')
 const addCompanyFormRouter = require('./apps/add-company/router')
+const addCreateListFormRouter = require('../company-lists/router')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
@@ -75,6 +76,7 @@ router.get('/export',
 )
 
 router.use('/create', addCompanyFormRouter)
+router.use('/:companyId/lists/create', addCreateListFormRouter)
 
 router
   .route('/add-step-1')
@@ -130,7 +132,6 @@ router.get('/:companyId/subsidiaries/link', renderLinkSubsidiary)
 router.get('/:companyId/orders', renderOrders)
 router.get('/:companyId/audit', renderAuditLog)
 router.get('/:companyId/documents', renderDocuments)
-
 router.use('/:companyId/investments', investmentsRouter)
 router.use('/:companyId/matching', matchingRouter)
 router.use('/:companyId', setInteractionsDetails, interactionsRouter)

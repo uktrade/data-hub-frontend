@@ -5,6 +5,7 @@ module.exports = {
   backButton: 'form button:contains("Back")',
   subheader: 'form p',
   stepHeader: 'form h3',
+  summary: 'form dl',
   entitySearch: {
     companyNameField: 'input[name="dnbCompanyName"]',
     postalCodeField: 'input[name="dnbPostalCode"]',

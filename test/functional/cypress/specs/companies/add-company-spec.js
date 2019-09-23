@@ -23,8 +23,8 @@ describe('Add company form', () => {
       cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Add company')
     })
 
-    it('should display "Where is this company based?" heading', () => {
-      cy.get(selectors.companyAdd.stepHeader).should('have.text', 'Where is this company based?')
+    it('should display "Where is this company located?" heading', () => {
+      cy.get(selectors.companyAdd.stepHeader).should('have.text', 'Where is this company located?')
     })
 
     it('should display "Next" button', () => {
@@ -58,7 +58,7 @@ describe('Add company form', () => {
       })
 
       it('should display error message', () => {
-        cy.get(selectors.companyAdd.form).contains('Select in which country the company is based')
+        cy.get(selectors.companyAdd.form).contains('Select in which country the company is located')
       })
     })
 
@@ -123,6 +123,21 @@ describe('Add company form', () => {
             cy.get(selectors.companyAdd.stepHeader).should('have.text', 'Confirm you want to add this company to Data Hub')
           })
 
+          it('should display Companies House number', () => {
+            cy.get(selectors.companyAdd.summary).should('contain', 'Companies House number')
+            cy.get(selectors.companyAdd.summary).should('contain', '00016033')
+          })
+
+          it('should display address', () => {
+            cy.get(selectors.companyAdd.summary).should('contain', 'Address')
+            cy.get(selectors.companyAdd.summary).should('contain', '123 ABC Road, Brighton, BN2 9QB')
+          })
+
+          it('should display country', () => {
+            cy.get(selectors.companyAdd.summary).should('contain', 'Country')
+            cy.get(selectors.companyAdd.summary).should('contain', 'Poland')
+          })
+
           it('should display "Back" button', () => {
             cy.get(selectors.companyAdd.backButton).should('be.visible')
           })
@@ -177,7 +192,33 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.newCompanyRecordForm.sector).should('be.visible')
     })
 
-    context('when I complete the form', () => {
+    context('when I complete the form without filling the required fields', () => {
+      before(() => {
+        cy.get(selectors.companyAdd.submitButton).click()
+      })
+
+      it('should display error "Select organisation type"', () => {
+        cy.get(selectors.companyAdd.form).contains('Select organisation type')
+      })
+
+      it('should display error "Enter name"', () => {
+        cy.get(selectors.companyAdd.form).contains('Enter name')
+      })
+
+      it('should display error "Enter at least a website or a phone number"', () => {
+        cy.get(selectors.companyAdd.form).contains('Enter at least a website or a phone number')
+      })
+
+      it('should display error "Select DIT region"', () => {
+        cy.get(selectors.companyAdd.form).contains('Select DIT region')
+      })
+
+      it('should display error "Select DIT sector"', () => {
+        cy.get(selectors.companyAdd.form).contains('Select DIT sector')
+      })
+    })
+
+    context('when I complete the form after filling the required fields', () => {
       before(() => {
         cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.limitedCompany).click()
         cy.get(selectors.companyAdd.newCompanyRecordForm.companyName).type('INVESTIGATION LIMITED')
@@ -200,6 +241,36 @@ describe('Add company form', () => {
       it('should display the pending D&B investigation message', () => {
         cy.get(selectors.companyActivity.pendingDnbInvestigationMessage).should('be.visible')
       })
+    })
+  })
+
+  context('when the user clicks "I still cannot find the company" for an overseas country', () => {
+    before(() => {
+      cy.visit('/companies/create')
+
+      cy.get(selectors.companyAdd.form).find('[type="radio"]').check('overseas')
+      cy.get(selectors.companyAdd.form).find('select').select('India')
+      cy.get(selectors.companyAdd.nextButton).click()
+
+      cy.get(selectors.companyAdd.entitySearch.companyNameField).type('some company')
+      cy.get(selectors.companyAdd.entitySearch.searchButton).click()
+
+      cy.get(selectors.companyAdd.entitySearch.cannotFind.summary).click()
+      cy.get(selectors.companyAdd.entitySearch.cannotFind.stillCannotFind).click()
+    })
+
+    it('should display the form', () => {
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.charity).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.governmentDepartmentOrOtherPublicBody).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.limitedCompany).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.limitedPartnership).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.partnership).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.soleTrader).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.companyName).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.website).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.region).should('not.be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.sector).should('be.visible')
     })
   })
 })
