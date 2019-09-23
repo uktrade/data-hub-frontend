@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+
 import React from 'react'
 import { Details } from 'govuk-react'
 import PropTypes from 'prop-types'
@@ -7,9 +9,12 @@ import { ISO_CODE } from './constants'
 import InformationList from './InformationList'
 
 function CompanyNotFoundStep ({ organisationTypes, regions, sectors, countryIsoCode }) {
+  function requireWebsiteOrPhone (value, name, { values: { website, telephone_number } }) {
+    return !website && !telephone_number ? 'Enter at least a website or a phone number' : null
+  }
+
   return (
     <Step name="unhappy" forwardButtonText="Add company">
-
       <Details summary="Why am I seeing this?">
         The company you want to add to Data Hub cannot be found in the external databases Data Hub checks.
         You will need to provide information about the company, so the company can be added to Data Hub
@@ -33,14 +38,15 @@ function CompanyNotFoundStep ({ organisationTypes, regions, sectors, countryIsoC
       <FieldInput
         label="Company's website"
         name="website"
-        required="Enter website"
         type="url"
+        validate={requireWebsiteOrPhone}
       />
 
       <FieldInput
-        label="Company's telephone number (optional)"
+        label="Company's telephone number"
         name="telephone_number"
         type="tel"
+        validate={requireWebsiteOrPhone}
       />
 
       {countryIsoCode === ISO_CODE.UK && (
@@ -93,6 +99,7 @@ CompanyNotFoundStep.propTypes = {
     label: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
   })).isRequired,
+  countryIsoCode: PropTypes.string.isRequired,
 }
 
 export default CompanyNotFoundStep
