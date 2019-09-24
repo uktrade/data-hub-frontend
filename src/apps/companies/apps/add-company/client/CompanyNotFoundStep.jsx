@@ -4,11 +4,12 @@ import React from 'react'
 import { Details } from 'govuk-react'
 import PropTypes from 'prop-types'
 import { FieldInput, FieldRadios, FieldSelect, Step } from 'data-hub-components'
+import FieldAddress from 'data-hub-components/dist/forms/elements/FieldAddress'
 
 import { ISO_CODE } from './constants'
 import InformationList from './InformationList'
 
-function CompanyNotFoundStep ({ organisationTypes, regions, sectors, countryIsoCode }) {
+function CompanyNotFoundStep ({ host, organisationTypes, regions, sectors, country }) {
   function requireWebsiteOrPhone (value, name, { values: { website, telephone_number } }) {
     return !website && !telephone_number ? 'Enter at least a website or a phone number' : null
   }
@@ -49,7 +50,15 @@ function CompanyNotFoundStep ({ organisationTypes, regions, sectors, countryIsoC
         validate={requireWebsiteOrPhone}
       />
 
-      {countryIsoCode === ISO_CODE.UK && (
+      <FieldAddress
+        country={{
+          id: country.key,
+          name: country.label,
+        }}
+        apiEndpoint={`//${host}/api/postcodelookup`}
+      />
+
+      {country.value === ISO_CODE.UK && (
         <FieldSelect
           name="uk_region"
           label="DIT region"
@@ -87,6 +96,7 @@ function CompanyNotFoundStep ({ organisationTypes, regions, sectors, countryIsoC
 }
 
 CompanyNotFoundStep.propTypes = {
+  host: PropTypes.string.isRequired,
   organisationTypes: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
@@ -99,7 +109,11 @@ CompanyNotFoundStep.propTypes = {
     label: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
   })).isRequired,
-  countryIsoCode: PropTypes.string.isRequired,
+  country: PropTypes.shape({
+    key: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired,
+  }),
 }
 
 export default CompanyNotFoundStep

@@ -1,6 +1,6 @@
 module.exports = {
   form: 'form',
-  nextButton: 'form button:contains("Next")',
+  continueButton: 'form button:contains("Continue")',
   submitButton: 'form button:contains("Add company")',
   backButton: 'form button:contains("Back")',
   subheader: 'form p',
@@ -34,6 +34,11 @@ module.exports = {
     companyName: 'input[name="name"]',
     website: 'input[name="website"]',
     telephone: 'input[name="telephone_number"]',
+    address: {
+      postcode: 'label[for="postcode"] ~ input',
+      findUkAddress: 'form button:contains("Find UK address")',
+      options: 'label[for="address"] ~ label select',
+    },
     region: 'select#uk_region',
     sector: 'select#sector',
   },
