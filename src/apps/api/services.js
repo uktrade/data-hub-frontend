@@ -1,5 +1,6 @@
 const rp = require('request-promise')
 const config = require('../../../config')
+const { trim } = require('lodash')
 
 function lookupAddress (postcode) {
   return new Promise((resolve, reject) => {
@@ -30,7 +31,7 @@ function parsePostcodeResult (data, postcode) {
   }
 
   return data.Addresses.map((address) => {
-    let split = address.split(',')
+    let split = address.split(',').map(result => trim(result))
     let parsedAddress = {}
     if (split[5].trim().length > 0) {
       parsedAddress.county = split[6]
@@ -49,6 +50,7 @@ function parsePostcodeResult (data, postcode) {
     return parsedAddress
   })
 }
+
 module.exports = {
   lookupAddress,
 }
