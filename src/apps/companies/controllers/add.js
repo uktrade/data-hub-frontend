@@ -6,15 +6,19 @@ const { companyDetailsLabels, companyTypeOptions } = require('../labels')
 
 async function renderAddStepOne (req, res, next) {
   try {
+    if (res.locals.features['companies-create']) {
+      return res.redirect(301, 'create')
+    }
+
     const ukOtherCompanyOptions = await buildUkOtherCompanyOptions(req.session.token)
     const foreignOtherCompanyOptions = await buildForeignOtherCompanyOptions(req.session.token)
 
     res.render('companies/views/add-step-1.njk', {
       ukOtherCompanyOptions,
       foreignOtherCompanyOptions,
-      company: req.body,
       companyTypeOptions,
       companyDetailsLabels,
+      company: req.body,
     })
   } catch (error) {
     next(error)
