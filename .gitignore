@@ -35,6 +35,8 @@ stats.json
 package-lock.json
 .vscode/launch.json
 .vscode/settings.json
+.envrc
+.nvmrc
 
 # Tests
 .nyc_output
