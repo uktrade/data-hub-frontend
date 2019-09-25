@@ -101,10 +101,11 @@ function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, region
 
             {values.cannotFind && (
               <CompanyNotFoundStep
+                host={host}
                 organisationTypes={organisationTypes}
                 regions={regions}
                 sectors={sectors}
-                countryIsoCode={countryIsoCode}
+                country={country}
               />
             )}
           </LoadingBox>
