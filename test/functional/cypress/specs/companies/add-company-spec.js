@@ -27,13 +27,13 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.stepHeader).should('have.text', 'Where is this company located?')
     })
 
-    it('should display "Next" button', () => {
-      cy.get(selectors.companyAdd.nextButton).should('be.visible')
+    it('should display "Continue" button', () => {
+      cy.get(selectors.companyAdd.continueButton).should('be.visible')
     })
 
-    context('when I click the "Next" button without specifying company location', () => {
+    context('when I click the "Continue" button without specifying company location', () => {
       before(() => {
-        cy.get(selectors.companyAdd.nextButton).click()
+        cy.get(selectors.companyAdd.continueButton).click()
       })
 
       it('should display error message', () => {
@@ -52,9 +52,9 @@ describe('Add company form', () => {
       })
     })
 
-    context('when I click the "Next" button without specifying company country', () => {
+    context('when I click the "Continue" button without specifying company country', () => {
       before(() => {
-        cy.get(selectors.companyAdd.nextButton).click()
+        cy.get(selectors.companyAdd.continueButton).click()
       })
 
       it('should display error message', () => {
@@ -62,10 +62,10 @@ describe('Add company form', () => {
       })
     })
 
-    context('when I click the "Next" button after filling the required fields', () => {
+    context('when I click the "Continue" button after filling the required fields', () => {
       before(() => {
         cy.get(selectors.companyAdd.form).find('select').select('Poland')
-        cy.get(selectors.companyAdd.nextButton).click()
+        cy.get(selectors.companyAdd.continueButton).click()
       })
 
       it('should display the "Find the company" heading', () => {
@@ -84,8 +84,8 @@ describe('Add company form', () => {
         cy.get(selectors.companyAdd.backButton).should('not.be.visible')
       })
 
-      it('should not display the "Next" button', () => {
-        cy.get(selectors.companyAdd.nextButton).should('not.be.visible')
+      it('should not display the "Continue" button', () => {
+        cy.get(selectors.companyAdd.continueButton).should('not.be.visible')
       })
 
       context('when I click the "Find company" button without filling the required "Company name" field', () => {
@@ -169,7 +169,7 @@ describe('Add company form', () => {
       cy.visit('/companies/create')
 
       cy.get(selectors.companyAdd.form).find('[type="radio"]').check('GB')
-      cy.get(selectors.companyAdd.nextButton).click()
+      cy.get(selectors.companyAdd.continueButton).click()
 
       cy.get(selectors.companyAdd.entitySearch.companyNameField).type('some company')
       cy.get(selectors.companyAdd.entitySearch.searchButton).click()
@@ -187,7 +187,10 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.soleTrader).should('be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.companyName).should('be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.website).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.website).should('be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).should('be.visible')
+      cy.get(selectors.companyAdd.form).contains('United Kingdom')
       cy.get(selectors.companyAdd.newCompanyRecordForm.region).should('be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.sector).should('be.visible')
     })
@@ -197,23 +200,13 @@ describe('Add company form', () => {
         cy.get(selectors.companyAdd.submitButton).click()
       })
 
-      it('should display error "Select organisation type"', () => {
+      it('should display errors', () => {
         cy.get(selectors.companyAdd.form).contains('Select organisation type')
-      })
-
-      it('should display error "Enter name"', () => {
         cy.get(selectors.companyAdd.form).contains('Enter name')
-      })
-
-      it('should display error "Enter at least a website or a phone number"', () => {
         cy.get(selectors.companyAdd.form).contains('Enter at least a website or a phone number')
-      })
-
-      it('should display error "Select DIT region"', () => {
+        cy.get(selectors.companyAdd.form).contains('Enter address line 1')
+        cy.get(selectors.companyAdd.form).contains('Enter town or city')
         cy.get(selectors.companyAdd.form).contains('Select DIT region')
-      })
-
-      it('should display error "Select DIT sector"', () => {
         cy.get(selectors.companyAdd.form).contains('Select DIT sector')
       })
     })
@@ -224,6 +217,11 @@ describe('Add company form', () => {
         cy.get(selectors.companyAdd.newCompanyRecordForm.companyName).type('INVESTIGATION LIMITED')
         cy.get(selectors.companyAdd.newCompanyRecordForm.website).type('www.investigationlimited.com')
         cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).type('0123456789')
+
+        cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).type('SW1H 9AJ')
+        cy.get(selectors.companyAdd.newCompanyRecordForm.address.findUkAddress).click()
+        cy.get(selectors.companyAdd.newCompanyRecordForm.address.options).select('Ministry of Justice')
+
         cy.get(selectors.companyAdd.newCompanyRecordForm.region).select('London')
         cy.get(selectors.companyAdd.newCompanyRecordForm.sector).select('Advanced Engineering')
 
@@ -250,7 +248,7 @@ describe('Add company form', () => {
 
       cy.get(selectors.companyAdd.form).find('[type="radio"]').check('overseas')
       cy.get(selectors.companyAdd.form).find('select').select('India')
-      cy.get(selectors.companyAdd.nextButton).click()
+      cy.get(selectors.companyAdd.continueButton).click()
 
       cy.get(selectors.companyAdd.entitySearch.companyNameField).type('some company')
       cy.get(selectors.companyAdd.entitySearch.searchButton).click()
@@ -269,6 +267,8 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.newCompanyRecordForm.companyName).should('be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.website).should('be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).should('not.be.visible')
+      cy.get(selectors.companyAdd.form).contains('India')
       cy.get(selectors.companyAdd.newCompanyRecordForm.region).should('not.be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.sector).should('be.visible')
     })
