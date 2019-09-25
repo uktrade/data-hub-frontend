@@ -46,75 +46,109 @@ describe('Company add controller', () => {
   })
 
   describe('Get step 1', () => {
-    beforeEach(() => {
-      nock(config.apiRoot)
-        .get('/metadata/business-type/')
-        .twice().reply(200, metaDataMock.businessTypeOptions)
+    context('when the companies-create feature flag does not exist', () => {
+      beforeEach(() => {
+        nock(config.apiRoot)
+          .get('/metadata/business-type/')
+          .twice().reply(200, metaDataMock.businessTypeOptions)
+      })
+
+      it('should return options for company types', async function () {
+        const req = { session: {} }
+        const expected = [
+          { label: 'Charity', value: '9dd14e94-5d95-e211-a939-e4115bead28a' },
+          { label: 'Government Dept', value: '9cd14e94-5d95-e211-a939-e4115bead28a' },
+          { label: 'Intermediary', value: '9bd14e94-5d95-e211-a939-e4115bead28a' },
+          { label: 'Limited partnership', value: '8b6eaf7e-03e7-e611-bca1-e4115bead28a' },
+          { label: 'Partnership', value: '9ad14e94-5d95-e211-a939-e4115bead28a' },
+          { label: 'Sole Trader', value: '99d14e94-5d95-e211-a939-e4115bead28a' },
+        ]
+        const expectedUk = [
+          ...expected,
+          { label: 'UK branch of foreign company (BR)', value: 'b0730fc6-fcce-4071-bdab-ba8de4f4fc98' },
+        ]
+        const expectedForeign = [
+          ...expected,
+          { label: 'Company', value: '98d14e94-5d95-e211-a939-e4115bead28a' },
+        ]
+        const res = {
+          locals: {
+            features: [],
+          },
+          render: function (template, options) {
+            const allOptions = mergeLocals(res, options)
+            expect(allOptions.ukOtherCompanyOptions).to.deep.equal(expectedUk)
+            expect(allOptions.foreignOtherCompanyOptions).to.deep.equal(sortBy(expectedForeign, 'label'))
+          },
+        }
+
+        await companyAddController.renderAddStepOne(req, res, this.nextStub)
+      })
+      it('should return labels for the types and error messages', async function () {
+        const req = { session: {} }
+        const res = {
+          locals: {
+            features: [],
+          },
+          render: function (template, options) {
+            const allOptions = mergeLocals(res, options)
+            expect(allOptions.companyTypeOptions).to.deep.equal({
+              ltd: 'UK private or public limited company',
+              ukother: 'Other type of UK organisation',
+              foreign: 'Foreign organisation',
+            })
+            expect(allOptions.companyDetailsLabels.business_type).to.equal('Business type')
+          },
+        }
+
+        await companyAddController.renderAddStepOne(req, res, this.nextStub)
+      })
+      it('should pass through the request body to show previosuly selected options', async function () {
+        const body = { business_type: '1231231231232' }
+        const req = { body, session: {} }
+        const res = {
+          locals: {
+            features: [],
+          },
+          render: function (template, options) {
+            const allOptions = mergeLocals(res, options)
+            expect(allOptions.companyTypeOptions).to.deep.equal({
+              ltd: 'UK private or public limited company',
+              ukother: 'Other type of UK organisation',
+              foreign: 'Foreign organisation',
+            })
+            expect(allOptions.company).to.deep.equal(body)
+          },
+        }
+
+        await companyAddController.renderAddStepOne(req, res, this.nextStub)
+      })
     })
 
-    it('should return options for company types', async function () {
-      const req = { session: {} }
-      const expected = [
-        { label: 'Charity', value: '9dd14e94-5d95-e211-a939-e4115bead28a' },
-        { label: 'Government Dept', value: '9cd14e94-5d95-e211-a939-e4115bead28a' },
-        { label: 'Intermediary', value: '9bd14e94-5d95-e211-a939-e4115bead28a' },
-        { label: 'Limited partnership', value: '8b6eaf7e-03e7-e611-bca1-e4115bead28a' },
-        { label: 'Partnership', value: '9ad14e94-5d95-e211-a939-e4115bead28a' },
-        { label: 'Sole Trader', value: '99d14e94-5d95-e211-a939-e4115bead28a' },
-      ]
-      const expectedUk = [
-        ...expected,
-        { label: 'UK branch of foreign company (BR)', value: 'b0730fc6-fcce-4071-bdab-ba8de4f4fc98' },
-      ]
-      const expectedForeign = [
-        ...expected,
-        { label: 'Company', value: '98d14e94-5d95-e211-a939-e4115bead28a' },
-      ]
-      const res = {
-        locals: {},
-        render: function (template, options) {
-          const allOptions = mergeLocals(res, options)
-          expect(allOptions.ukOtherCompanyOptions).to.deep.equal(expectedUk)
-          expect(allOptions.foreignOtherCompanyOptions).to.deep.equal(sortBy(expectedForeign, 'label'))
-        },
-      }
+    context('when the companies-create feature flag does exist', () => {
+      let middlewareParameters
 
-      await companyAddController.renderAddStepOne(req, res, this.nextStub)
-    })
-    it('should return labels for the types and error messages', async function () {
-      const req = { session: {} }
-      const res = {
-        locals: {},
-        render: function (template, options) {
-          const allOptions = mergeLocals(res, options)
-          expect(allOptions.companyTypeOptions).to.deep.equal({
-            ltd: 'UK private or public limited company',
-            ukother: 'Other type of UK organisation',
-            foreign: 'Foreign organisation',
-          })
-          expect(allOptions.companyDetailsLabels.business_type).to.equal('Business type')
-        },
-      }
+      beforeEach(async function () {
+        middlewareParameters = buildMiddlewareParameters({
+          features: {
+            'companies-create': true,
+          },
+        })
 
-      await companyAddController.renderAddStepOne(req, res, this.nextStub)
-    })
-    it('should pass through the request body to show previosuly selected options', async function () {
-      const body = { business_type: '1231231231232' }
-      const req = { body, session: {} }
-      const res = {
-        locals: {},
-        render: function (template, options) {
-          const allOptions = mergeLocals(res, options)
-          expect(allOptions.companyTypeOptions).to.deep.equal({
-            ltd: 'UK private or public limited company',
-            ukother: 'Other type of UK organisation',
-            foreign: 'Foreign organisation',
-          })
-          expect(allOptions.company).to.deep.equal(body)
-        },
-      }
+        await companyAddController.renderAddStepOne(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy,
+        )
+      })
 
-      await companyAddController.renderAddStepOne(req, res, this.nextStub)
+      it('should redirect to the new companies create route', () => {
+        expect(middlewareParameters.resMock.redirect).to.be.calledOnceWithExactly(301, 'create')
+      })
+
+      it('should not render the legacy add company step', () => {
+        expect(middlewareParameters.resMock.render).to.not.be.called
+      })
     })
   })
   describe('Post step 1', () => {
@@ -144,7 +178,9 @@ describe('Company add controller', () => {
           session: {},
         }
         const res = {
-          locals: {},
+          locals: {
+            features: [],
+          },
           redirect: function (url) {
             expect(url).to.equal('/companies/add?business_type=Charity&country=uk')
             done()
@@ -161,7 +197,9 @@ describe('Company add controller', () => {
           session: {},
         }
         const res = {
-          locals: {},
+          locals: {
+            features: [],
+          },
           redirect: function (url) {
             expect(url).to.equal('/companies/add?business_type=Charity&country=non-uk')
             done()
@@ -177,7 +215,9 @@ describe('Company add controller', () => {
           session: {},
         }
         const res = {
-          locals: {},
+          locals: {
+            features: [],
+          },
         }
         companyAddController.postAddStepOne(req, res, () => {
           expect(res.locals.errors.messages).to.have.property('business_type')
@@ -192,7 +232,9 @@ describe('Company add controller', () => {
           session: {},
         }
         const res = {
-          locals: {},
+          locals: {
+            features: [],
+          },
         }
         companyAddController.postAddStepOne(req, res, () => {
           expect(res.locals.errors.messages).to.have.property('business_type_uk_other')
@@ -207,7 +249,9 @@ describe('Company add controller', () => {
           session: {},
         }
         const res = {
-          locals: {},
+          locals: {
+            features: [],
+          },
         }
         companyAddController.postAddStepOne(req, res, () => {
           expect(res.locals.errors.messages).to.have.property('business_type_for_other')
