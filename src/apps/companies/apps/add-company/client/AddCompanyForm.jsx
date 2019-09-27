@@ -2,7 +2,7 @@
  * Functional tests: ./test/functional/cypress/specs/companies/add-company-spec.js
  */
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import { get } from 'lodash'
@@ -69,10 +69,15 @@ function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, region
 
   return (
     <Form onSubmit={onSubmit}>
-      {({ values }) => {
+      {({ values, setFieldValue }) => {
         const country = getCountry(values)
+        const countryID = get(country, 'key')
         const countryName = get(country, 'label')
         const countryIsoCode = get(country, 'value')
+
+        useEffect(() => {
+          setFieldValue('country', countryID)
+        }, [countryID])
 
         return (
           <LoadingBox loading={isSubmitting}>
@@ -119,7 +124,7 @@ AddCompanyForm.propTypes = {
   host: PropTypes.string.isRequired,
   csrfToken: PropTypes.string.isRequired,
   countries: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    key: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,
   })).isRequired,
