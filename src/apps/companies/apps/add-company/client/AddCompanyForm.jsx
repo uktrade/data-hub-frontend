@@ -51,6 +51,8 @@ function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, region
     if (companyOverseasCountry) {
       return overseasCountries.find(c => c.value === companyOverseasCountry)
     }
+
+    return {}
   }
 
   async function onSubmit (values) {
