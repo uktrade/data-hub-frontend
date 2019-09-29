@@ -4145,10 +4145,10 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-data-hub-components@^1.21.4:
-  version "1.21.4"
-  resolved "https://registry.yarnpkg.com/data-hub-components/-/data-hub-components-1.21.4.tgz#ca92e08871be4f0c0febb7c8f9d6f2a6d88916b7"
-  integrity sha512-jVOcBp6CT0mPxuGIYjwLQDrcQ2rFSHSVJTkgCyYJoerWIlCX5vgfzDGkfdVrPDwLM7rtigLT0zZsuI68VHNV1w==
+data-hub-components@^1.22.0:
+  version "1.22.0"
+  resolved "https://registry.yarnpkg.com/data-hub-components/-/data-hub-components-1.22.0.tgz#b29b2d153ea65722e4f49dfb5725a979ca4cb29a"
+  integrity sha512-jfIthHRbbUwp5H8kGvZ4CjVF3s5BtpgmUPEUQmjQ3YmvzxTR7TwzZVB+sB6Q0VNLXsKbkci6MOpeXlBcQYOcww==
   dependencies:
     "@babel/runtime" "^7.4.5"
     "@govuk-react/button" "^0.7.1"
@@ -6479,12 +6479,7 @@ got@^8.3.1:
     url-parse-lax "^3.0.0"
     url-to-options "^1.0.1"
 
-govuk-colours@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/govuk-colours/-/govuk-colours-1.0.3.tgz#41d983693626dbaadb05594c5931a51696f79488"
-  integrity sha512-xdVD7YzHG+KEwCs8Rl+MgVfgEagjANVau4dJNTe30Xi6KySJ1LaI1vzBRRgThBjmJC8YFTwk4CshRtRfSbXKcA==
-
-govuk-colours@latest:
+govuk-colours@^1.0.3, govuk-colours@latest:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/govuk-colours/-/govuk-colours-1.1.0.tgz#71afae4ed7e9d61c5e230cb61f0f00fa410a76a7"
   integrity sha512-EcwnP9PsWubmTcsJtLF8w0D5b69j43LwYtSqGyPtO3903J0bbwB2t5ujWZ9UhsbLamuUmigBkNpLItU3/KuFqw==
