@@ -122,6 +122,46 @@ describe('Company Collections Filter', () => {
       .should('have.length', 1)
   })
 
+  it('should filter by currently exporting to', () => {
+    const exportingTo = selectors.filter.exportingTo
+    const { typeahead } = selectors.filter
+
+    cy
+      .get(typeahead(exportingTo).selectedOption)
+      .click()
+      .get(typeahead(exportingTo).textInput)
+      .type('Australia')
+      .get(typeahead(exportingTo).options)
+      .should('have.length', 1)
+      .get(typeahead(exportingTo).textInput)
+      .type('{enter}')
+      .type('{esc}')
+
+    cy.wait('@filterResults').then(xhr => {
+      expect(xhr.url).to.contain('export_to_countries=9f5f66a0-5d95-e211-a939-e4115bead28a')
+    })
+  })
+
+  it('should filter by future markets of interest', () => {
+    const interestedIn = selectors.filter.interestedIn
+    const { typeahead } = selectors.filter
+
+    cy
+      .get(typeahead(interestedIn).selectedOption)
+      .click()
+      .get(typeahead(interestedIn).textInput)
+      .type('Bahamas')
+      .get(typeahead(interestedIn).options)
+      .should('have.length', 1)
+      .get(typeahead(interestedIn).textInput)
+      .type('{enter}')
+      .type('{esc}')
+
+    cy.wait('@filterResults').then(xhr => {
+      expect(xhr.url).to.contain('future_interest_countries=a25f66a0-5d95-e211-a939-e4115bead28a')
+    })
+  })
+
   it('should remove all filters', () => {
     cy.get(selectors.entityCollection.collectionRemoveAllFilter).click()
     cy
