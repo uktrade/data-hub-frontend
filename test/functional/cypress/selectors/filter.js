@@ -5,6 +5,8 @@ module.exports = {
   firstUkRegion: '[for="field-uk_region-1"]',
   country: '#group-field-country',
   sector: '#group-field-sector_descends',
+  exportingTo: '#group-field-export_to_countries',
+  interestedIn: '#group-field-future_interest_countries',
   contacts: {
     sector: '#group-field-company_sector_descends',
     companyName: '#field-company_name',
