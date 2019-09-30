@@ -1,5 +1,5 @@
-const fixtures = require('~/test/functional/cypress/fixtures')
-const selectors = require('~/test/functional/cypress/selectors')
+const fixtures = require('../../../fixtures')
+const selectors = require('../../../selectors')
 
 describe('Companies matching select', () => {
   context('when viewing the matching select form', () => {
