@@ -50,7 +50,7 @@ describe('transformCompanyToExportDetailsView', () => {
           id: '4321',
           name: 'Germany',
         }],
-        export_potential_score: 'Some score',
+        export_potential_score: 'low',
       })
 
       this.viewRecord = transformCompanyToExportDetailsView(company)
@@ -69,7 +69,7 @@ describe('transformCompanyToExportDetailsView', () => {
     })
 
     it('should show the export potential', () => {
-      expect(this.viewRecord).to.have.property(EXPORT_POTENTIAL_LABEL, 'Some score')
+      expect(this.viewRecord).to.have.property(EXPORT_POTENTIAL_LABEL, 'Low')
     })
   })
 
