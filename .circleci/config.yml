@@ -154,7 +154,7 @@ aliases:
       - MOCK_SSO_TOKEN: 123
 
   - &docker_data_api_sandbox
-    image: ukti/data-hub-sandbox:3.0.2
+    image: ukti/data-hub-sandbox
 
   # Data hub backend
   - &docker_data_hub_backend_base
