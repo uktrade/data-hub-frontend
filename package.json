@@ -35,7 +35,8 @@
     "circle:acceptance:da-staff": "yarn circle:acceptance --tag da --skiptags ignore",
     "circle:acceptance:lep-staff": "yarn circle:acceptance --tag lep --skiptags ignore",
     "heroku-postbuild": "yarn cache clean && npm rebuild && npm run build",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "wavy-check": "grep -rl \"require('~\" test | wc -l | { read count; if [ $count -gt 0 ]; then echo \"wavy dependency still in use by $count files\"; else echo '🎉 wavy dependency can be removed 🎉'; fi; }"
   },
   "pre-commit": "lint-staged",
   "lint-staged": {
