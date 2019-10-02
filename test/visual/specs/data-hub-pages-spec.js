@@ -1,9 +1,11 @@
 const assert = require('assert')
 
+const bodyCssPath = '.govuk-template__body'
+
 describe('Data Hub core pages', () => {
   it('should visually check data hub home page is correct', async () => {
     await browser.url('')
-    await browser.imageDiff.take()
+    await browser.imageDiff.takeElement(bodyCssPath)
     await browser.imageDiff.validate().then(result => {
       assert.equal(result, 0)
     })
