@@ -140,7 +140,7 @@
   },
   "devDependencies": {
     "@uktrade/client-matrix-js": "^1.0.38",
-    "@uktrade/wdio-image-diff-js": "1.0.117",
+    "@uktrade/wdio-image-diff-js": "1.0.143",
     "@vue/test-utils": "^1.0.0-beta.25",
     "@wdio/browserstack-service": "^5.9.3",
     "@wdio/cli": "5.10.0",
@@ -157,7 +157,7 @@
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chai-subset": "^1.6.0",
-    "chromedriver": "^74.0.0",
+    "chromedriver": "^77.0.0",
     "codeclimate-test-reporter": "^0.5.0",
     "cucumber": "^4.2.1",
     "cucumber-html-reporter": "^4.0.0",
