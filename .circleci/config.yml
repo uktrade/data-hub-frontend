@@ -120,7 +120,7 @@ aliases:
 
   # Data hub base docker container
   - &docker_data_hub_base
-    image: ukti/data-hub-frontend-test:2.0.0
+    image: ukti/data-hub-frontend-test:3.0.0
     environment:
       *data_hub_base_envs
 
