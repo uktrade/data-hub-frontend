@@ -157,7 +157,7 @@
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "chai-subset": "^1.6.0",
-    "chromedriver": "^77.0.0",
+    "chromedriver": "^74.0.0",
     "codeclimate-test-reporter": "^0.5.0",
     "cucumber": "^4.2.1",
     "cucumber-html-reporter": "^4.0.0",
