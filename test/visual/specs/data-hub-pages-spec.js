@@ -1,17 +1,23 @@
 const assert = require('assert')
 
-const bodyCssPath = '.govuk-template__body'
-
-describe('Data Hub core pages', () => {
-  it('should visually check data hub home page is correct', async () => {
+describe('Visual Test', () => {
+  it('home page - content', async () => {
     await browser.url('')
-    await browser.imageDiff.takeElement(bodyCssPath)
+    await browser.imageDiff.takeElement('.grid-row')
     await browser.imageDiff.validate().then(result => {
       assert.equal(result, 0)
     })
   })
 
-  it('should validate contacts page is visually correct', async () => {
+  it('home page - header', async () => {
+    await browser.url('')
+    await browser.imageDiff.takeElement('.datahub-header')
+    await browser.imageDiff.validate().then(result => {
+      assert.equal(result, 0)
+    })
+  })
+
+  it('contage page', async () => {
     await browser.url('/contacts')
     await browser.imageDiff.take()
     await browser.imageDiff.validate().then(result => {
@@ -19,7 +25,7 @@ describe('Data Hub core pages', () => {
     })
   })
 
-  it('should validate companies page is visually correct', async () => {
+  it('companies page', async () => {
     await browser.url('/companies')
     await browser.imageDiff.take()
     await browser.imageDiff.validate().then(result => {
@@ -27,7 +33,7 @@ describe('Data Hub core pages', () => {
     })
   })
 
-  it('should validate interactions page is visually correct', async () => {
+  it('interaction page', async () => {
     await browser.url('/interactions')
     await browser.imageDiff.take()
     await browser.imageDiff.validate().then(result => {
@@ -35,7 +41,7 @@ describe('Data Hub core pages', () => {
     })
   })
 
-  it('should validate investments page is visually correct', async () => {
+  it('investment page', async () => {
     await browser.url('/investments/projects')
     await browser.imageDiff.take()
     await browser.imageDiff.validate().then(result => {
@@ -43,7 +49,7 @@ describe('Data Hub core pages', () => {
     })
   })
 
-  it('should validate orders page is visually correct', async () => {
+  it('omis page', async () => {
     await browser.url('/omis')
     await browser.imageDiff.take()
     await browser.imageDiff.validate().then(result => {
@@ -51,7 +57,7 @@ describe('Data Hub core pages', () => {
     })
   })
 
-  it('should validate events page is visually correct', async () => {
+  it('event page', async () => {
     await browser.url('/events')
     await browser.imageDiff.take()
     await browser.imageDiff.validate().then(result => {
