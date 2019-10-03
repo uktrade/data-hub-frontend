@@ -35,7 +35,7 @@ describe('Company repository', () => {
         expect(this.authorisedRequestStub).calledOnceWithExactly('TEST_TOKEN', {
           body: { id: 'TEST_TOKEN', name: 'fred' },
           method: 'PATCH',
-          url: 'http://localhost:8000/v4/company/TEST_TOKEN',
+          url: `${config.apiRoot}/v4/company/TEST_TOKEN`,
         })
       })
 
@@ -44,7 +44,7 @@ describe('Company repository', () => {
         expect(this.authorisedRequestStub).calledOnceWithExactly('TEST_TOKEN', {
           body: { name: 'fred' },
           method: 'POST',
-          url: 'http://localhost:8000/v4/company',
+          url: `${config.apiRoot}/v4/company`,
         })
       })
     })
@@ -59,7 +59,7 @@ describe('Company repository', () => {
     it('should make the correct call to the API', async () => {
       await this.repo.updateCompany('TEST_TOKEN', '999', { global_headquarters: '1' })
       expect(this.authorisedRequestStub).to.be.calledOnceWithExactly('TEST_TOKEN', {
-        url: 'http://localhost:8000/v4/company/999',
+        url: `${config.apiRoot}/v4/company/999`,
         method: 'PATCH',
         body: {
           global_headquarters: '1',
@@ -101,7 +101,7 @@ describe('Company repository', () => {
       await this.repo.getDitCompanyFromList('TEST_TOKEN', myCompanyListData.id)
       expect(this.authorisedRequestStub).calledOnceWithExactly('TEST_TOKEN', {
         method: 'GET',
-        url: `http://localhost:8000/v4/user/company-list/${myCompanyListData.id}`,
+        url: `${config.apiRoot}/v4/user/company-list/${myCompanyListData.id}`,
       })
     })
   })
@@ -113,7 +113,7 @@ describe('Company repository', () => {
       await this.repo.addDitCompanyToList('TEST_TOKEN', myCompanyListData.id)
       expect(this.authorisedRequestStub).calledOnceWithExactly('TEST_TOKEN', {
         method: 'PUT',
-        url: `http://localhost:8000/v4/user/company-list/${myCompanyListData.id}`,
+        url: `${config.apiRoot}/v4/user/company-list/${myCompanyListData.id}`,
       })
     })
   })
@@ -125,7 +125,7 @@ describe('Company repository', () => {
       await this.repo.removeDitCompanyFromList('TEST_TOKEN', myCompanyListData.id)
       expect(this.authorisedRequestStub).calledOnceWithExactly('TEST_TOKEN', {
         method: 'DELETE',
-        url: `http://localhost:8000/v4/user/company-list/${myCompanyListData.id}`,
+        url: `${config.apiRoot}/v4/user/company-list/${myCompanyListData.id}`,
       })
     })
   })

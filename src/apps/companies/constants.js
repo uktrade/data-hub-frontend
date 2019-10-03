@@ -1,8 +1,19 @@
 const { concat } = require('lodash')
 
+const QUERY_FIELDS_MAP = {
+  archived: 'archived',
+  name: 'name',
+  sectorDescends: 'sector_descends',
+  country: 'country',
+  ukRegion: 'uk_region',
+  headquarterType: 'headquarter_type',
+  exportingTo: 'export_to_countries',
+  interestedIn: 'future_interest_countries',
+}
+
 const DEFAULT_COLLECTION_QUERY = {
   sortby: 'modified_on:desc',
-  archived: false,
+  [QUERY_FIELDS_MAP.archived]: false,
 }
 
 const GLOBAL_NAV_ITEM = {
@@ -56,16 +67,7 @@ const LOCAL_NAV = [
 ]
 
 const APP_PERMISSIONS = concat(LOCAL_NAV, GLOBAL_NAV_ITEM)
-
-const QUERY_FIELDS = [
-  'archived',
-  'name',
-  'sector_descends',
-  'country',
-  'uk_region',
-  'headquarter_type',
-]
-
+const QUERY_FIELDS = Object.values(QUERY_FIELDS_MAP)
 const NONE_TEXT = 'None'
 const NOT_SET_TEXT = 'Not set'
 const NOT_AVAILABLE_TEXT = 'Not available'
@@ -76,6 +78,7 @@ module.exports = {
   DEFAULT_COLLECTION_QUERY,
   APP_PERMISSIONS,
   QUERY_FIELDS,
+  QUERY_FIELDS_MAP,
   NONE_TEXT,
   NOT_SET_TEXT,
   NOT_AVAILABLE_TEXT,
