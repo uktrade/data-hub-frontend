@@ -1,23 +1,34 @@
 const assert = require('assert')
 
-describe('Visual Test', () => {
-  it('home page - content', async () => {
-    await browser.url('')
-    await browser.imageDiff.takeElement('.grid-row')
-    await browser.imageDiff.validate().then(result => {
-      assert.equal(result, 0)
+describe('Data Hub', () => {
+  describe('home page', () => {
+    before(async () => {
+      await browser.url('')
+    })
+
+    it('content', async () => {
+      await browser.imageDiff.takeElement('.grid-row')
+      await browser.imageDiff.validate().then(result => {
+        assert.equal(result, 0)
+      })
+    })
+
+    it('header', async () => {
+      await browser.imageDiff.takeElement('.datahub-header')
+      await browser.imageDiff.validate().then(result => {
+        assert.equal(result, 0)
+      })
+    })
+
+    it('search bar', async () => {
+      await browser.imageDiff.takeElement('.govuk-grid-column-full')
+      await browser.imageDiff.validate().then(result => {
+        assert.equal(result, 0)
+      })
     })
   })
 
-  it('home page - header', async () => {
-    await browser.url('')
-    await browser.imageDiff.takeElement('.datahub-header')
-    await browser.imageDiff.validate().then(result => {
-      assert.equal(result, 0)
-    })
-  })
-
-  it('contage page', async () => {
+  it('contacts page', async () => {
     await browser.url('/contacts')
     await browser.imageDiff.take()
     await browser.imageDiff.validate().then(result => {
@@ -33,7 +44,7 @@ describe('Visual Test', () => {
     })
   })
 
-  it('interaction page', async () => {
+  it('interactions page', async () => {
     await browser.url('/interactions')
     await browser.imageDiff.take()
     await browser.imageDiff.validate().then(result => {
@@ -41,7 +52,7 @@ describe('Visual Test', () => {
     })
   })
 
-  it('investment page', async () => {
+  it('investments page', async () => {
     await browser.url('/investments/projects')
     await browser.imageDiff.take()
     await browser.imageDiff.validate().then(result => {
@@ -57,7 +68,7 @@ describe('Visual Test', () => {
     })
   })
 
-  it('event page', async () => {
+  it('events page', async () => {
     await browser.url('/events')
     await browser.imageDiff.take()
     await browser.imageDiff.validate().then(result => {
