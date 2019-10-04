@@ -216,6 +216,17 @@ describe('Add company form', () => {
       })
     })
 
+    context('when an invalid website URL is filled', () => {
+      before(() => {
+        cy.get(selectors.companyAdd.newCompanyRecordForm.website).type('hello')
+        cy.get(selectors.companyAdd.submitButton).click()
+      })
+
+      it('should display invalid website URL error', () => {
+        cy.get(selectors.companyAdd.form).contains('Enter a valid website URL')
+      })
+    })
+
     context('when the form is submitted after filling the required fields', () => {
       before(() => {
         cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.limitedCompany).click()
