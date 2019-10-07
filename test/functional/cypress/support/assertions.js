@@ -23,7 +23,22 @@ const assertValueTable = (dataAutoId, expected) => {
   })
 }
 
+const assertBreadcrumbs = (expected) => {
+  Object.keys(expected).map((text, index) => {
+    const href = expected[text]
+    const breadcrumbNumber = index + 1
+
+    if (href) {
+      cy.get(selectors.breadcrumbs.item.byNumber(breadcrumbNumber)).should('have.text', text)
+      cy.get(selectors.breadcrumbs.item.byNumber(breadcrumbNumber)).should('have.attr', 'href', href)
+    } else {
+      cy.get(selectors.breadcrumbs.item.last()).should('have.text', text)
+    }
+  })
+}
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
+  assertBreadcrumbs,
 }
