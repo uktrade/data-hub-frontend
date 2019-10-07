@@ -140,7 +140,7 @@
   },
   "devDependencies": {
     "@uktrade/client-matrix-js": "^1.0.38",
-    "@uktrade/wdio-image-diff-js": "1.0.117",
+    "@uktrade/wdio-image-diff-js": "1.0.143",
     "@vue/test-utils": "^1.0.0-beta.25",
     "@wdio/browserstack-service": "^5.9.3",
     "@wdio/cli": "5.10.0",
