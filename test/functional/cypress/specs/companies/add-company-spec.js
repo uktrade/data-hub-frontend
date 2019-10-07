@@ -4,23 +4,24 @@
 
 const selectors = require('../../selectors')
 const fixtures = require('../../fixtures')
+const { assertBreadcrumbs } = require('../../support/assertions')
 
 describe('Add company form', () => {
   beforeEach(function () {
     Cypress.Cookies.preserveOnce('datahub.sid')
   })
 
-  context('when viewing "Add a company form"', () => {
+  context('when viewing the "Add company form"', () => {
     before(() => {
       cy.visit('/companies/create')
     })
 
     it('should render breadcrumbs', () => {
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Companies')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/companies')
-      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Add company')
+      assertBreadcrumbs({
+        Home: '/',
+        Companies: '/companies',
+        'Add company': null,
+      })
     })
 
     it('should display "Where is this company located?" heading', () => {
@@ -31,7 +32,7 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.continueButton).should('be.visible')
     })
 
-    context('when I click the "Continue" button without specifying company location', () => {
+    context('when "Continue" button is pressed without specifying the company location', () => {
       before(() => {
         cy.get(selectors.companyAdd.continueButton).click()
       })
@@ -41,7 +42,7 @@ describe('Add company form', () => {
       })
     })
 
-    context('when I select "Overseas" on the company location radio button', () => {
+    context('when "Overseas" is selected for the company location', () => {
       before(() => {
         cy.get(selectors.companyAdd.form).find('[type="radio"]').check('overseas')
       })
@@ -164,7 +165,7 @@ describe('Add company form', () => {
     })
   })
 
-  context('when the user clicks "I still cannot find the company"', () => {
+  context('when I click "I still cannot find the company" for a UK-based company', () => {
     before(() => {
       cy.visit('/companies/create')
 
@@ -191,8 +192,12 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).should('be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).should('be.visible')
       cy.get(selectors.companyAdd.form).contains('United Kingdom')
-      cy.get(selectors.companyAdd.newCompanyRecordForm.region).should('be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.sector).should('be.visible')
+    })
+
+    it('should display the UK-related fields', () => {
+      cy.get(selectors.companyAdd.newCompanyRecordForm.address.findUkAddress).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.region).should('be.visible')
     })
 
     context('when I complete the form without filling the required fields', () => {
@@ -242,7 +247,7 @@ describe('Add company form', () => {
     })
   })
 
-  context('when the user clicks "I still cannot find the company" for an overseas country', () => {
+  context('when I click "I still cannot find the company" for an overseas country', () => {
     before(() => {
       cy.visit('/companies/create')
 
@@ -267,10 +272,14 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.newCompanyRecordForm.companyName).should('be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.website).should('be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).should('be.visible')
-      cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).should('not.be.visible')
-      cy.get(selectors.companyAdd.form).contains('India')
-      cy.get(selectors.companyAdd.newCompanyRecordForm.region).should('not.be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.address.postcode).should('be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.sector).should('be.visible')
+      cy.get(selectors.companyAdd.form).contains('India')
+    })
+
+    it('should hide the UK-related fields', () => {
+      cy.get(selectors.companyAdd.newCompanyRecordForm.address.findUkAddress).should('not.be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.region).should('not.be.visible')
     })
   })
 })
