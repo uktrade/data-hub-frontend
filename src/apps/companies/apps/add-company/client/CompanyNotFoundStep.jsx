@@ -15,7 +15,7 @@ function CompanyNotFoundStep ({ host, organisationTypes, regions, sectors, count
   }
 
   return (
-    <Step name="unhappy" forwardButtonText="Add company">
+    <Step name="unhappy" forwardButton="Add company">
       <Details summary="Why am I seeing this?">
         The company you want to add to Data Hub cannot be found in the external databases Data Hub checks.
         You will need to provide information about the company, so the company can be added to Data Hub
