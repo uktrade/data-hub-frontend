@@ -49,7 +49,7 @@ describe('Company add controller', () => {
     context('when the companies-create feature flag does not exist', () => {
       beforeEach(() => {
         nock(config.apiRoot)
-          .get('/metadata/business-type/')
+          .get('/v4/metadata/business-type')
           .twice().reply(200, metaDataMock.businessTypeOptions)
       })
 

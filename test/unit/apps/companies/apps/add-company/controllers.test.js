@@ -53,19 +53,19 @@ const metadataMock = {
 describe('Add company form controllers', () => {
   beforeEach(() => {
     nock(config.apiRoot)
-      .get('/metadata/country/')
+      .get('/v4/metadata/country')
       .reply(200, metadataMock.countriesOptions)
 
     nock(config.apiRoot)
-      .get('/metadata/business-type/')
+      .get('/v4/metadata/business-type')
       .reply(200, metadataMock.businessTypeOptions)
 
     nock(config.apiRoot)
-      .get('/metadata/sector/')
+      .get('/v4/metadata/sector')
       .reply(200, metadataMock.sectorOptions)
 
     nock(config.apiRoot)
-      .get('/metadata/uk-region/')
+      .get('/v4/metadata/uk-region')
       .reply(200, metadataMock.regionOptions)
   })
 

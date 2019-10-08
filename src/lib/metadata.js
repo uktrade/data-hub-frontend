@@ -1,22 +1,23 @@
 const config = require('../../config')
 const logger = require('../../config/logger')
-const { authorisedRequest } = require('../lib/authorised-request')
+const hawkRequest = require('../lib/hawk-request')
 
 let redisClient
 
 function getMetadata (path, key) {
-  const ttl = config.redis.metadataTtl
-  const url = `${config.apiRoot}/metadata/${path}/`
+  const url = `${config.apiRoot}/v4/metadata/${path}`
 
   if (redisClient) {
     return new Promise((resolve, reject) => {
+      const ttl = config.redis.metadataTtl
+
       redisClient.get(url, (err, data) => {
         if (!err && data) {
           data = JSON.parse(data)
           module.exports[key] = data
           resolve(data)
         } else {
-          authorisedRequest(null, url)
+          hawkRequest(url)
             .then((responseData) => {
               module.exports[key] = responseData
               redisClient.setex(url, ttl, JSON.stringify(responseData))
@@ -32,7 +33,7 @@ function getMetadata (path, key) {
     })
   }
 
-  return authorisedRequest(null, url)
+  return hawkRequest(url)
     .then((responseData) => {
       module.exports[key] = responseData
       return responseData
@@ -44,10 +45,10 @@ function getMetadata (path, key) {
 }
 
 module.exports.getMetadataItem = function (table, id) {
-  const url = `${config.apiRoot}/metadata/${table}/`
+  const url = `${config.apiRoot}/v4/metadata/${table}`
 
   return new Promise((resolve, reject) => {
-    authorisedRequest(null, url)
+    hawkRequest(url)
       .then((data) => {
         data.forEach((item) => {
           if (item.id === id) {
@@ -172,12 +173,12 @@ module.exports.investmentStatusOptions = [
   { label: 'Dormant', value: 'dormant' },
 ]
 
-module.exports.getServices = function (token) {
-  return authorisedRequest(token, `${config.apiRoot}/metadata/service/`)
+module.exports.getServices = function () {
+  return hawkRequest(`${config.apiRoot}/v4/metadata/service`)
 }
 
 module.exports.initialiseRestrictedServiceOptions = function () {
-  authorisedRequest(null, `${config.apiRoot}/metadata/service/`)
+  hawkRequest(`${config.apiRoot}/v4/metadata/service`)
     .then((data) => {
       module.exports.serviceDeliveryServiceOptions = data.filter(service => restrictedServiceKeys.includes(service.name))
     })
