@@ -1,3 +1,5 @@
+import { assertBreadcrumbs } from '../../support/assertions'
+
 const selectors = require('../../selectors')
 const fixtures = require('../../fixtures')
 
@@ -7,9 +9,10 @@ describe('Contacts Collections', () => {
   })
 
   it('should render breadcrumbs', () => {
-    cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-    cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-    cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Contacts')
+    assertBreadcrumbs({
+      'Home': '/',
+      'Contacts': null,
+    })
   })
 
   it('should display a list of contacts', () => {
