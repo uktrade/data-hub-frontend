@@ -18,8 +18,8 @@ describe('Add company form', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: '/',
-        Companies: '/companies',
+        'Home': '/',
+        'Companies': '/companies',
         'Add company': null,
       })
     })
@@ -89,7 +89,7 @@ describe('Add company form', () => {
         cy.get(selectors.companyAdd.continueButton).should('not.be.visible')
       })
 
-      context('when I click the "Find company" button without filling the required "Company name" field', () => {
+      context('when the "Find company" button is clicked without filling the required "Company name" field', () => {
         before(() => {
           cy.get(selectors.companyAdd.entitySearch.searchButton).click()
         })
@@ -104,7 +104,7 @@ describe('Add company form', () => {
         })
       })
 
-      context('when I click the "Find company" button after filling the required "Company name" field', () => {
+      context('when the "Find company" button  is clicked after filling the required "Company name" field', () => {
         before(() => {
           cy.get(selectors.companyAdd.entitySearch.companyNameField).type('some company')
           cy.get(selectors.companyAdd.entitySearch.searchButton).click()
@@ -115,7 +115,7 @@ describe('Add company form', () => {
           cy.get(selectors.companyAdd.entitySearch.results.someOtherCompany).should('be.visible')
         })
 
-        context('when I click the first company that does not exist on Data Hub', () => {
+        context('when the first company is clicked that does not exist on Data Hub', () => {
           before(() => {
             cy.get(selectors.companyAdd.entitySearch.results.someOtherCompany).click()
           })
@@ -165,7 +165,7 @@ describe('Add company form', () => {
     })
   })
 
-  context('when I click "I still cannot find the company" for a UK-based company', () => {
+  context('when "I still cannot find the company" is clicked for a UK-based company', () => {
     before(() => {
       cy.visit('/companies/create')
 
@@ -200,7 +200,7 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.newCompanyRecordForm.region).should('be.visible')
     })
 
-    context('when I complete the form without filling the required fields', () => {
+    context('when the form is submitted without filling the required fields', () => {
       before(() => {
         cy.get(selectors.companyAdd.submitButton).click()
       })
@@ -216,7 +216,7 @@ describe('Add company form', () => {
       })
     })
 
-    context('when I complete the form after filling the required fields', () => {
+    context('when the form is submitted after filling the required fields', () => {
       before(() => {
         cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.limitedCompany).click()
         cy.get(selectors.companyAdd.newCompanyRecordForm.companyName).type('INVESTIGATION LIMITED')
@@ -247,7 +247,7 @@ describe('Add company form', () => {
     })
   })
 
-  context('when I click "I still cannot find the company" for an overseas country', () => {
+  context('when "I still cannot find the company" is clicked for an overseas country', () => {
     before(() => {
       cy.visit('/companies/create')
 

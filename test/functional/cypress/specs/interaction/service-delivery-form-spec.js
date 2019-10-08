@@ -1,5 +1,6 @@
 const fixtures = require('../../fixtures')
 const selectors = require('../../selectors')
+const { assertBreadcrumbs } = require('../../support/assertions')
 
 describe('Service delivery form', () => {
   beforeEach(() => {
@@ -9,11 +10,11 @@ describe('Service delivery form', () => {
   })
 
   it('should render breadcrumbs', () => {
-    cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-    cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-    cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Companies')
-    cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/companies')
-    cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Add service delivery')
+    assertBreadcrumbs({
+      'Home': '/',
+      'Companies': '/companies',
+      'Add service delivery': null,
+    })
   })
 
   it('should display all service delivery fields', () => {
