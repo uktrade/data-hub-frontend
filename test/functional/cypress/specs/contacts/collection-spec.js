@@ -1,6 +1,6 @@
 import { assertBreadcrumbs } from '../../support/assertions'
 
-const selectors = require('../../selectors')
+const selectors = require('../../../../selectors')
 const fixtures = require('../../fixtures')
 
 describe('Contacts Collections', () => {

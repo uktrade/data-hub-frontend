@@ -1,7 +1,7 @@
 import { assertBreadcrumbs } from '../../support/assertions'
 
 const fixtures = require('../../fixtures')
-const selectors = require('../../selectors')
+const selectors = require('../../../../selectors')
 
 describe('Company edit', () => {
   const commonTests = () => {
