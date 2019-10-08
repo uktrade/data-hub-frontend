@@ -18,9 +18,9 @@ describe('Company Investments - Large capital profile - Investor details', () =>
         nock(config.apiRoot)
           .get(`/v4/large-investor-profile?investor_company_id=${company.id}`)
           .reply(200, clonedCompanyProfile)
-          .get('/metadata/uk-region/')
+          .get('/v4/metadata/uk-region')
           .reply(200, ukRegion)
-          .get('/metadata/country/')
+          .get('/v4/metadata/country')
           .reply(200, country)
 
         this.middlewareParameters = buildMiddlewareParameters({

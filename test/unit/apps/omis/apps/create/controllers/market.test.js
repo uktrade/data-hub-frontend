@@ -19,7 +19,7 @@ describe('OMIS create market controller', () => {
     context('when getOptions returns 200', () => {
       beforeEach(async () => {
         nock(apiRoot)
-          .get('/metadata/omis-market/')
+          .get('/v4/metadata/omis-market')
           .reply(200, marketOptionsMock)
 
         this.reqMock = assign({}, globalReq, {
@@ -54,7 +54,7 @@ describe('OMIS create market controller', () => {
         this.errorMessageMock = 'ERROR_REASON'
 
         nock(apiRoot)
-          .get('/metadata/omis-market/')
+          .get('/v4/metadata/omis-market')
           .replyWithError(this.errorMessageMock)
 
         await this.controller.configure(globalReq, globalRes, this.nextSpy)

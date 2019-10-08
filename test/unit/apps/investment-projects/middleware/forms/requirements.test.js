@@ -88,13 +88,13 @@ describe('Investment requirements form middleware', () => {
       this.resMock.locals.investment = investmentData
 
       nock(config.apiRoot)
-        .get('/metadata/uk-region/')
+        .get('/v4/metadata/uk-region')
         .reply(200, metadataMock.regionOptions)
-        .get('/metadata/country/')
+        .get('/v4/metadata/country')
         .reply(200, metadataMock.countryOptions)
-        .get('/metadata/investment-strategic-driver/')
+        .get('/v4/metadata/investment-strategic-driver')
         .reply(200, metadataMock.strategicDriversOptions)
-        .get('/metadata/investment-delivery-partner/')
+        .get('/v4/metadata/investment-delivery-partner')
         .reply(200, metadataMock.deliveryPartnerOptions)
     })
 

@@ -50,7 +50,7 @@ describe('Contact controller, edit', () => {
   describe('get', () => {
     beforeEach(() => {
       nock(config.apiRoot)
-        .get('/metadata/country/')
+        .get('/v4/metadata/country')
         .reply(200, [
           { id: '9999', name: 'United Kingdom', disabled_on: null },
           { id: '8888', name: 'Test', disabled_on: yesterday },
@@ -355,7 +355,7 @@ describe('Contact controller, edit', () => {
       req.body = body
 
       nock(config.apiRoot)
-        .get('/metadata/country/')
+        .get('/v4/metadata/country')
         .reply(200, [
           { id: '9999', name: 'United Kingdom', disabled_on: null },
           { id: '8888', name: 'Test', disabled_on: yesterday },

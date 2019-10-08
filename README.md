@@ -80,6 +80,8 @@ and be provided with a back end server to provide the API, data storage and sear
 | BASIC_AUTH_USER | Optional. If running a server with OAUTH2_BYPASS_SSO=true then this can be used in conjunction with a password to setup basic HTTP auth to protect the server |
 | BASIC_AUTH_PASSWORD |  Used in conjunction with BASIC_AUTH_USER to setup security for the server |
 | CI | Set to true for UAT testing, otherwise ignore |
+| DATA_HUB_BACKEND_ACCESS_KEY_ID | Indentifier of a Hawk key required to access the backend metadata endpoints |
+| DATA_HUB_BACKEND_SECRET_ACCESS_KEY | Secret Hawk key required to access the backend metadata endpoints |
 | FEATURES_FOLDER | Lo  cation of the Cucumber feature files |
 | GOOGLE_TAG_MANAGER_KEY | The key needed to integrate with Google Tag Manager to track usage |
 | LOG_LEVEL | How much logging to output: defaults to `debug` in dev and `error` everywhere else |
