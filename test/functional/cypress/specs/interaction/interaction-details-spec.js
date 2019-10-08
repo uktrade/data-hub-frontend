@@ -1,6 +1,6 @@
-const { assertKeyValueTable } = require('../../helpers/key-value-table')
 const fixtures = require('../../fixtures')
 const selectors = require('../../selectors')
+const { assertKeyValueTable, assertBreadcrumbs } = require('../../support/assertions')
 
 describe('Interaction details', () => {
   context('Past draft interaction', () => {
@@ -14,11 +14,11 @@ describe('Interaction details', () => {
     })
 
     it('should render breadcrumbs', () => {
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Companies')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/companies')
-      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Interaction')
+      assertBreadcrumbs({
+        'Home': '/',
+        'Companies': '/companies',
+        'Interaction': null,
+      })
     })
 
     it('should render the heading', () => {
@@ -70,11 +70,11 @@ describe('Interaction details', () => {
     })
 
     it('should render breadcrumbs', () => {
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Companies')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/companies')
-      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Interaction')
+      assertBreadcrumbs({
+        'Home': '/',
+        'Companies': '/companies',
+        'Interaction': null,
+      })
     })
 
     it('should render the heading', () => {
@@ -125,11 +125,11 @@ describe('Interaction details', () => {
     })
 
     it('should render breadcrumbs', () => {
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Companies')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/companies')
-      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Interaction')
+      assertBreadcrumbs({
+        'Home': '/',
+        'Companies': '/companies',
+        'Interaction': null,
+      })
     })
 
     it('should render the heading', () => {
@@ -180,11 +180,11 @@ describe('Interaction details', () => {
     })
 
     it('should render breadcrumbs', () => {
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Companies')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/companies')
-      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Service delivery')
+      assertBreadcrumbs({
+        'Home': '/',
+        'Companies': '/companies',
+        'Service delivery': null,
+      })
     })
 
     it('should render the heading', () => {
@@ -246,11 +246,11 @@ describe('Interaction details', () => {
     })
 
     it('should render breadcrumbs', () => {
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Companies')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/companies')
-      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Interaction')
+      assertBreadcrumbs({
+        'Home': '/',
+        'Companies': '/companies',
+        'Interaction': null,
+      })
     })
 
     it('should render the heading', () => {

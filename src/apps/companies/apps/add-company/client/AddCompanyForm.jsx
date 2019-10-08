@@ -2,27 +2,19 @@
  * Functional tests: ./test/functional/cypress/specs/companies/add-company-spec.js
  */
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import { get } from 'lodash'
 import { H3 } from '@govuk-react/heading'
-import LoadingBox from '@govuk-react/loading-box'
 
-import {
-  FieldDnbCompany,
-  FieldRadios,
-  FieldSelect,
-  Form,
-  Step,
-} from 'data-hub-components'
+import { FieldDnbCompany, FieldRadios, FieldSelect, Form, Step } from 'data-hub-components'
 
 import CompanyFoundStep from './CompanyFoundStep'
 import CompanyNotFoundStep from './CompanyNotFoundStep'
 import { ISO_CODE } from './constants'
 
 function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, regions, sectors }) {
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const optionCountryUK = countries.find(({ value }) => value === ISO_CODE.UK)
   const overseasCountries = countries.filter(({ value }) => value && value !== ISO_CODE.UK)
 
@@ -56,17 +48,10 @@ function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, region
   }
 
   async function onSubmit (values) {
-    setIsSubmitting(true)
-
     const path = values.cannotFind ? 'company-investigation' : 'company-create'
-
-    try {
-      const { data } = await axios.post(`//${host}/companies/create/dnb/${path}?_csrf=${csrfToken}`, values)
-      window.location.href = `//${host}/companies/${data.id}`
-    } catch (error) {
-      // todo handle error
-      setIsSubmitting(false)
-    }
+    const postUrl = `//${host}/companies/create/dnb/${path}?_csrf=${csrfToken}`
+    const { data } = await axios.post(postUrl, values)
+    return `//${host}/companies/${data.id}`
   }
 
   return (
@@ -82,7 +67,7 @@ function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, region
         }, [countryID])
 
         return (
-          <LoadingBox loading={isSubmitting}>
+          <div>
             <Step name="companyLocation">
               <H3>Where is this company located?</H3>
 
@@ -93,7 +78,7 @@ function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, region
               />
             </Step>
 
-            <Step name="companySearch" hideForwardButton={true} hideBackButton={true}>
+            <Step name="companySearch" forwardButton={null} backButton={null}>
               <H3>Find the company</H3>
 
               <FieldDnbCompany
@@ -115,7 +100,7 @@ function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, region
                 country={country}
               />
             )}
-          </LoadingBox>
+          </div>
         )
       }}
     </Form>

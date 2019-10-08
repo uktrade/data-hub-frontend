@@ -1,3 +1,5 @@
+import { assertBreadcrumbs } from '../../support/assertions'
+
 const selectors = require('../../selectors')
 
 describe('Contact Documents', () => {
@@ -7,13 +9,12 @@ describe('Contact Documents', () => {
     })
 
     it('should render breadcrumbs', () => {
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Contacts')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/contacts')
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.text', 'Joseph Woof')
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.attr', 'href', `/contacts/5e75d636-1d24-416a-aaf0-3fb220d594ce`)
-      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Documents')
+      assertBreadcrumbs({
+        'Home': '/',
+        'Contacts': '/contacts',
+        'Joseph Woof': '/contacts/5e75d636-1d24-416a-aaf0-3fb220d594ce',
+        'Documents': null,
+      })
     })
 
     it('should display appropriate message when there is a link to a document', () => {
@@ -29,13 +30,12 @@ describe('Contact Documents', () => {
     })
 
     it('should render breadcrumbs', () => {
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Contacts')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/contacts')
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.text', 'Joseph Woof')
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.attr', 'href', `/contacts/5555d636-1d24-416a-aaf0-3fb220d59aaa`)
-      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Documents')
+      assertBreadcrumbs({
+        'Home': '/',
+        'Contacts': '/contacts',
+        'Joseph Woof': '/contacts/5555d636-1d24-416a-aaf0-3fb220d59aaa',
+        'Documents': null,
+      })
     })
 
     it('should display appropriate message when there is not a link to a document', () => {
