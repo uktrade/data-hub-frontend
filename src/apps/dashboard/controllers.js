@@ -33,12 +33,13 @@ async function renderDashboard (req, res, next) {
       // just show an empty feed
       articleFeed = []
     }
-    const canViewCompanyList = userPermissions.includes(
-      'company_list.view_companylistitem'
-    )
+
+    const companyLists = res.locals.features.companies_add_remove_from_lists &&
+      userPermissions.includes('company_list.view_companylistitem') &&
+      await fetchCompanyLists(req.session.token)
 
     res.title('Dashboard').render('dashboard/views/dashboard', {
-      companyLists: await fetchCompanyLists(req.session.token),
+      companyLists,
       contacts,
       interactions,
       articleFeed,
@@ -47,7 +48,6 @@ async function renderDashboard (req, res, next) {
         GLOBAL_NAV_ITEMS,
         userPermissions
       ),
-      canViewCompanyList,
       helpCentre,
     })
   } catch (error) {
