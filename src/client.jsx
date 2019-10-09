@@ -39,9 +39,7 @@ function App () {
       <Mount selector="#activity-feed-app">
         {props => <ActivityFeedApp {...props} />}
       </Mount>
-      <Mount selector="#react-mount-my-companies">
-        {props => <MyCompanies {...props} />}
-      </Mount>
+      <Mount selector="#my-companies" children={MyCompanies} />
       <Mount selector="#delete-company-list">
         {props => <DeleteCompanyList csrfToken={globalProps.csrfToken} {...props} />}
       </Mount>
