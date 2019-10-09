@@ -1,3 +1,5 @@
+var rpErrors = require('request-promise/errors')
+
 describe('dashboard controller', () => {
   beforeEach(() => {
     this.reqMock = Object.assign({}, globalReq, {
@@ -196,7 +198,46 @@ describe('dashboard controller', () => {
         companyList: null,
         contacts: [{ id: '1234' }],
         interactions: [{ id: '4321' }],
-        articleFeed: undefined,
+        articleFeed: [],
+        interactionsPermitted: false,
+        canViewCompanyList: false,
+        helpCentre: {
+          announcementsURL: 'www',
+          token: '1',
+          url: 'www',
+        },
+      }
+      expect(this.resMock.render.firstCall.args[1]).to.deep.equal(expected)
+    })
+  })
+
+  context('when the Help centre API request throws an error', () => {
+    beforeEach(async () => {
+      this.resMock = {
+        locals: {
+          user: {
+            permissions: [],
+          },
+        },
+        render: sinon.spy(),
+        title: sinon.stub().returnsThis(),
+      }
+      this.fetchHomepageDataStub.resolves(this.dashData)
+      this.fetchCompanyListStub.resolves(this.companyData)
+      this.rpStub.throws(rpErrors.StatusCodeError(500))
+      await this.controllers.renderDashboard(
+        this.reqMock,
+        this.resMock,
+        this.nextSpy
+      )
+    })
+
+    it('should return an empty array', () => {
+      const expected = {
+        companyList: null,
+        contacts: [{ id: '1234' }],
+        interactions: [{ id: '4321' }],
+        articleFeed: [],
         interactionsPermitted: false,
         canViewCompanyList: false,
         helpCentre: {
