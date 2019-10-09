@@ -5,6 +5,7 @@ module.exports = {
   company: {
     archivedLtd: require('./company/archived-ltd.json'),
     dnbCorp: require('./company/dnb-corp.json'),
+    dnbLtd: require('./company/dnb-ltd.json'),
     investigationLimited: require('./company/investigation-limited'),
     lambdaPlc: require('./company/lambda-plc'),
     marsExportsLtd: require('./company/mars-exports-ltd'),
