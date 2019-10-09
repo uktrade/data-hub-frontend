@@ -81,7 +81,7 @@ const companyFiltersFields = function ({ sectorOptions }) {
       options: countryOptions,
       hideInactive: false,
       target: 'metadata',
-      label: 'Future markets of interest',
+      label: 'Future countries of interest',
     },
   ].map(filter => {
     return Object.assign(filter, {
