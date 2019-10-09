@@ -5,7 +5,7 @@ const metadataRepo = require('../../../lib/metadata')
 const { saveCompany } = require('../repos')
 const { transformObjectToOption } = require('../../transformers')
 const { transformCompanyToExportDetailsView } = require('../transformers')
-const { exportDetailsLabels } = require('../labels')
+const { exportDetailsLabels, exportPotentialLabels } = require('../labels')
 
 function renderExports (req, res) {
   const { company } = res.locals
@@ -16,6 +16,7 @@ function renderExports (req, res) {
     .breadcrumb('Exports')
     .render('companies/views/exports-view', {
       exportDetails,
+      exportPotentials: Object.values(exportPotentialLabels),
     })
 }
 

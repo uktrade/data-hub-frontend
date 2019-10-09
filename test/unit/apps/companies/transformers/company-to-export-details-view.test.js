@@ -3,6 +3,8 @@ const { assign } = require('lodash')
 const minimalCompany = require('~/test/unit/data/companies/minimal-company.json')
 const { transformCompanyToExportDetailsView } = require('~/src/apps/companies/transformers')
 
+const EXPORT_POTENTIAL_LABEL = 'Export potential'
+
 describe('transformCompanyToExportDetailsView', () => {
   context('when no export market information has been entered', () => {
     beforeEach(() => {
@@ -26,6 +28,10 @@ describe('transformCompanyToExportDetailsView', () => {
     it('should show the export win category', () => {
       expect(this.viewRecord).to.have.property('Export win category', 'None')
     })
+
+    it('should show the export potential', () => {
+      expect(this.viewRecord).to.have.property(EXPORT_POTENTIAL_LABEL, 'No score given')
+    })
   })
 
   context('when single values have been selected for drop down fields', () => {
@@ -44,6 +50,7 @@ describe('transformCompanyToExportDetailsView', () => {
           id: '4321',
           name: 'Germany',
         }],
+        export_potential_score: 'low',
       })
 
       this.viewRecord = transformCompanyToExportDetailsView(company)
@@ -59,6 +66,10 @@ describe('transformCompanyToExportDetailsView', () => {
 
     it('should show the export win category', () => {
       expect(this.viewRecord).to.have.property('Export win category', this.exportExperienceCategory)
+    })
+
+    it('should show the export potential', () => {
+      expect(this.viewRecord).to.have.property(EXPORT_POTENTIAL_LABEL, 'Low')
     })
   })
 

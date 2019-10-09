@@ -9,6 +9,7 @@ Feature: Company export save
       | Export win category          | None                              |
       | Currently exporting to       | company.currentlyExportingTo      |
       | Future countries of interest | company.futureCountriesOfInterest |
+      | Export potential             | No score given                    |
     When I click the "Edit export markets" link
     And I update the company Exports details
     And I submit the form
@@ -17,6 +18,7 @@ Feature: Company export save
       | Export win category          | company.exportWinCategory         |
       | Currently exporting to       | company.currentlyExportingTo      |
       | Future countries of interest | company.futureCountriesOfInterest |
+      | Export potential             | No score given                    |
 
   @companies-export--archived-company
   Scenario: Archived company without Edit export markets button
