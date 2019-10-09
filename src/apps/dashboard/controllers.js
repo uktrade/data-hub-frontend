@@ -4,9 +4,9 @@ const rp = require('request-promise')
 const GLOBAL_NAV_ITEMS = require('../global-nav-items')
 
 const { isPermittedRoute } = require('../middleware')
-const { fetchHomepageData, fetchCompanyList } = require('./repos')
+const { fetchHomepageData, fetchCompanyLists } = require('./repos')
 const config = require('../../../config')
-const { formatHelpCentreAnnouncements, transformCompanyList } = require('./transformers')
+const { formatHelpCentreAnnouncements } = require('./transformers')
 
 async function renderDashboard (req, res, next) {
   try {
@@ -37,14 +37,8 @@ async function renderDashboard (req, res, next) {
       'company_list.view_companylistitem'
     )
 
-    const companyList = canViewCompanyList
-      ? JSON.stringify(
-        transformCompanyList(await fetchCompanyList(req.session.token))
-      )
-      : null
-
     res.title('Dashboard').render('dashboard/views/dashboard', {
-      companyList,
+      companyLists: await fetchCompanyLists(req.session.token),
       contacts,
       interactions,
       articleFeed,
