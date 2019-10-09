@@ -1,7 +1,7 @@
 const { localHeader, companyBusinessDetailsRegion: selectors } = require('../../../../selectors')
-const { venusLtd } = require('../../fixtures').company
+const { dnbLtd } = require('../../fixtures').company
 
-const businessDetailsUrl = `/companies/${venusLtd.id}/business-details`
+const businessDetailsUrl = `/companies/${dnbLtd.id}/business-details`
 const editRegionUrl = `${businessDetailsUrl}/region`
 
 describe('Companies business details - region', () => {
