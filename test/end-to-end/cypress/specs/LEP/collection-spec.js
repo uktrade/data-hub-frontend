@@ -1,6 +1,6 @@
 const selectors = require('../../../../selectors')
 
-describe('ompany Collections', () => {
+describe('company Collections', () => {
   before(() => {
     cy.visit(`/companies`)
   })
