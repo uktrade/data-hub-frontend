@@ -90,8 +90,6 @@ describe('Add company form controllers', () => {
 
         expect(this.middlewareParameters.resMock.render).to.be.calledOnceWithExactly(expectedTemplate, {
           props: {
-            host: 'localhost:3000',
-            csrfToken: 'csrf',
             countries: expectedCountries,
             organisationTypes: expectedOrganisationTypes,
             sectors: expectedSectors,

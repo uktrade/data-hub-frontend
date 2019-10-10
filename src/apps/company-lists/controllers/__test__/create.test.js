@@ -92,7 +92,6 @@ describe('Creating company lists', () => {
         {
           props: {
             id: '1',
-            token: 'token',
             name: 'listName',
             label: 'List name',
             hint: 'This is a name only you see, and can be up to 30 characters',

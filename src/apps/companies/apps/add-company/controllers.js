@@ -26,8 +26,6 @@ async function renderAddCompanyForm (req, res, next) {
           organisationTypes,
           regions,
           sectors,
-          host: req.headers.host,
-          csrfToken: res.locals.csrfToken,
         },
       })
   } catch (error) {
@@ -40,7 +38,6 @@ async function postSearchDnbCompanies (req, res, next) {
     const results = await searchDnbCompanies({
       token: req.session.token,
       requestBody: req.body,
-      csrfToken: res.locals.csrfToken,
     })
 
     res.json(results)
