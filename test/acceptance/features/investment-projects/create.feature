@@ -126,7 +126,7 @@ Feature: Create a new Investment project
       | Venus Ltd                           |
       | United Kingdom                      |
       | No investment projects in the UK    |
-      | Tier A - Strategic Account          |
+      | Tier A - SRM Programme Accounts     |
       | Relationship manager: Travis Greene |
     When I select Non-FDI as the Investment project type
     And the Client company values are displayed
@@ -134,7 +134,7 @@ Feature: Create a new Investment project
       | Venus Ltd                           |
       | United Kingdom                      |
       | 9 investment projects in the UK     |
-      | Tier A - Strategic Account          |
+      | Tier A - SRM Programme Accounts     |
       | Relationship manager: Travis Greene |
     And I search for the foreign source of equity Lambda plc
     Then I can view the Equity Source in the collection
