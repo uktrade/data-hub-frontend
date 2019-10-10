@@ -1,54 +1,70 @@
 const contactsListData = require('~/test/unit/data/contacts/contact.json')
 const { transformContactToListItem } = require('~/src/apps/contacts/transformers')
+const config = require('~/config')
 
 describe('Contact list controller', () => {
+  let next
+  let req
+  let res
+  let getContactsStub
+  let transformApiResponseToCollectionStub
+  let buildSelectedFiltersSummaryStub
+  let controller
+
   beforeEach(() => {
-    this.transformedContacts = {}
-    this.next = sinon.spy()
-    this.req = {
+    next = sinon.spy()
+    req = {
       session: {
         token: 'abcd',
       },
       query: {},
     }
-    this.res = {
+    res = {
       render: sinon.spy(),
       query: {},
     }
 
-    this.getContactsStub = sinon.stub().resolves(contactsListData)
-    this.transformApiResponseToCollectionStub = sinon.stub().returns(this.transformContactToListItem)
+    getContactsStub = sinon.stub().resolves(contactsListData)
+    transformApiResponseToCollectionStub = sinon.stub().returns(transformContactToListItem)
 
-    this.buildSelectedFiltersSummaryStub = sinon.spy()
+    buildSelectedFiltersSummaryStub = sinon.spy()
 
-    this.controller = proxyquire('~/src/apps/contacts/controllers/list', {
+    controller = proxyquire('~/src/apps/contacts/controllers/list', {
       '../../builders': {
-        buildSelectedFiltersSummary: this.buildSelectedFiltersSummaryStub,
+        buildSelectedFiltersSummary: buildSelectedFiltersSummaryStub,
       },
     })
 
-    this.next = sinon.spy()
+    next = sinon.spy()
   })
 
   describe('#renderContactList', () => {
     context('when there are investments to render', () => {
       beforeEach(() => {
-        this.controller.renderContactList(this.req, this.res, this.next)
+        const metaMock = [
+          { id: '1', name: 'm1', disabled_on: null },
+          { id: '2', name: 'm2', disabled_on: null },
+          { id: '3', name: 'm3', disabled_on: null },
+        ]
+
+        nock(config.apiRoot)
+          .get('/v4/metadata/sector?level__lte=0')
+          .reply(200, metaMock)
       })
 
-      it('should render collection page with locals', () => {
-        this.controller.renderContactList(this.req, this.res, this.next)
+      it('should render collection page with locals', async () => {
+        await controller.renderContactList(req, res, next)
 
         it('should get interactions from the repository', () => {
-          expect(this.getContactsStub).to.be.calledWith('abcd')
+          expect(getContactsStub).to.be.calledWith('abcd')
         })
 
         it('should call the transformer to convert investment project for display', () => {
-          expect(this.transformApiResponseToCollectionStub).to.be.calledWith({ entityType: 'interaction' }, transformContactToListItem)
+          expect(transformApiResponseToCollectionStub).to.be.calledWith({ entityType: 'interaction' }, transformContactToListItem)
         })
 
         it('should return investment projects', () => {
-          const renderOptions = this.res.render.firstCall.args[1]
+          const renderOptions = res.render.firstCall.args[1]
           expect(renderOptions).to.have.property('contacts')
         })
       })

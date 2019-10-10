@@ -9,10 +9,12 @@ import FieldAddress from 'data-hub-components/dist/forms/elements/FieldAddress'
 import { ISO_CODE, WEBSITE_REGEX } from './constants'
 import InformationList from './InformationList'
 
+// TODO: Move this validation to the component library
 const requiredWebsiteOrPhoneValidator = (value, name, { values: { website, telephone_number } }) => {
   return !website && !telephone_number ? 'Enter at least a website or a phone number' : null
 }
 
+// TODO: Move this validation to the component library
 const websiteValidator = (value) => !WEBSITE_REGEX.test(value) ? 'Enter a valid website URL' : null
 
 function CompanyNotFoundStep ({ organisationTypes, regions, sectors, country }) {

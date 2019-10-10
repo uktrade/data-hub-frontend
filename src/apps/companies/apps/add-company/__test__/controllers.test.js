@@ -1,17 +1,17 @@
-const config = require('~/config')
+const config = require('../../../../../../config')
 const {
   renderAddCompanyForm,
   postSearchDnbCompanies,
   postAddDnbCompany,
   postAddDnbCompanyInvestigation,
-} = require('~/src/apps/companies/apps/add-company/controllers')
-const companyCreateResponse = require('~/test/unit/data/companies/dnb/company-create.json')
-const companyCreateInvestigationResponse = require('~/test/unit/data/companies/dnb/company-create-investigation.json')
+} = require('../controllers')
+const companyCreateResponse = require('../../../../../../test/unit/data/companies/dnb/company-create.json')
+const companyCreateInvestigationResponse = require('../../../../../../test/unit/data/companies/dnb/company-create-investigation.json')
 const {
   transformObjectToOption,
   transformCountryToOptionWithIsoCode,
-} = require('~/src/apps/transformers')
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder')
+} = require('../../../../../apps/transformers')
+const buildMiddlewareParameters = require('../../../../../../test/unit/helpers/middleware-parameters-builder')
 
 const metadataMock = {
   countriesOptions: [
@@ -51,6 +51,8 @@ const metadataMock = {
 }
 
 describe('Add company form controllers', () => {
+  let middlewareParameters
+
   beforeEach(() => {
     nock(config.apiRoot)
       .get('/v4/metadata/country')
@@ -72,12 +74,12 @@ describe('Add company form controllers', () => {
   describe('#renderAddCompanyForm', () => {
     context('when the "Add company form" renders successfully', () => {
       beforeEach(async () => {
-        this.middlewareParameters = buildMiddlewareParameters()
+        middlewareParameters = buildMiddlewareParameters()
 
         await renderAddCompanyForm(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy,
         )
       })
 
@@ -88,7 +90,7 @@ describe('Add company form controllers', () => {
         const expectedSectors = metadataMock.sectorOptions.map(transformObjectToOption)
         const expectedRegions = metadataMock.regionOptions.map(transformObjectToOption)
 
-        expect(this.middlewareParameters.resMock.render).to.be.calledOnceWithExactly(expectedTemplate, {
+        expect(middlewareParameters.resMock.render).to.be.calledOnceWithExactly(expectedTemplate, {
           props: {
             countries: expectedCountries,
             organisationTypes: expectedOrganisationTypes,
@@ -99,34 +101,34 @@ describe('Add company form controllers', () => {
       })
 
       it('should add a breadcrumb', () => {
-        expect(this.middlewareParameters.resMock.breadcrumb.firstCall).to.be.calledWith('Add company')
+        expect(middlewareParameters.resMock.breadcrumb.firstCall).to.be.calledWith('Add company')
       })
 
       it('should not call next() with an error', () => {
-        expect(this.middlewareParameters.nextSpy).to.not.have.been.called
+        expect(middlewareParameters.nextSpy).to.not.have.been.called
       })
     })
 
     context('when the rendering fails', () => {
-      beforeEach(async () => {
-        this.middlewareParameters = buildMiddlewareParameters()
+      const error = new Error('Could not render')
 
-        this.error = new Error('Could not render')
+      beforeEach(async () => {
+        middlewareParameters = buildMiddlewareParameters()
 
         const errorRes = {
-          ...this.middlewareParameters.resMock,
-          render: () => { throw this.error },
+          ...middlewareParameters.resMock,
+          render: () => { throw error },
         }
 
         await renderAddCompanyForm(
-          this.middlewareParameters.reqMock,
+          middlewareParameters.reqMock,
           errorRes,
-          this.middlewareParameters.nextSpy,
+          middlewareParameters.nextSpy,
         )
       })
 
       it('should call next() with an error', () => {
-        expect(this.middlewareParameters.nextSpy).to.have.been.calledOnceWithExactly(this.error)
+        expect(middlewareParameters.nextSpy).to.have.been.calledOnceWithExactly(error)
       })
     })
   })
@@ -145,7 +147,7 @@ describe('Add company form controllers', () => {
             results: [],
           })
 
-        this.middlewareParameters = buildMiddlewareParameters({
+        middlewareParameters = buildMiddlewareParameters({
           requestBody: {
             search_term: 'company',
             address_country: 'GB',
@@ -154,21 +156,21 @@ describe('Add company form controllers', () => {
         })
 
         await postSearchDnbCompanies(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy,
         )
       })
 
       it('should respond with JSON', () => {
-        expect(this.middlewareParameters.resMock.json).to.be.calledOnceWithExactly({
+        expect(middlewareParameters.resMock.json).to.be.calledOnceWithExactly({
           count: 0,
           results: [],
         })
       })
 
       it('should not call next() with an error', () => {
-        expect(this.middlewareParameters.nextSpy).to.not.have.been.called
+        expect(middlewareParameters.nextSpy).to.not.have.been.called
       })
     })
 
@@ -182,7 +184,7 @@ describe('Add company form controllers', () => {
           })
           .reply(500, 'Error message')
 
-        this.middlewareParameters = buildMiddlewareParameters({
+        middlewareParameters = buildMiddlewareParameters({
           requestBody: {
             search_term: 'company',
             address_country: 'GB',
@@ -191,18 +193,18 @@ describe('Add company form controllers', () => {
         })
 
         await postSearchDnbCompanies(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy,
         )
       })
 
       it('should not respond with JSON', () => {
-        expect(this.middlewareParameters.resMock.json).to.not.have.been.called
+        expect(middlewareParameters.resMock.json).to.not.have.been.called
       })
 
       it('should call next() with an error', () => {
-        expect(this.middlewareParameters.nextSpy).to.have.been.calledOnceWithExactly(sinon.match({
+        expect(middlewareParameters.nextSpy).to.have.been.calledOnceWithExactly(sinon.match({
           message: '500 - "Error message"',
         }))
       })
@@ -218,7 +220,7 @@ describe('Add company form controllers', () => {
           })
           .reply(200, companyCreateResponse)
 
-        this.middlewareParameters = buildMiddlewareParameters({
+        middlewareParameters = buildMiddlewareParameters({
           requestBody: {
             dnbCompany: {
               duns_number: '123',
@@ -227,22 +229,22 @@ describe('Add company form controllers', () => {
         })
 
         await postAddDnbCompany(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy,
         )
       })
 
       it('should flash a created message', () => {
-        expect(this.middlewareParameters.reqMock.flash).to.be.calledOnceWithExactly('success', 'Company added to Data Hub')
+        expect(middlewareParameters.reqMock.flash).to.be.calledOnceWithExactly('success', 'Company added to Data Hub')
       })
 
       it('should respond with the created company', () => {
-        expect(this.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(companyCreateResponse)
+        expect(middlewareParameters.resMock.json).to.be.calledOnceWithExactly(companyCreateResponse)
       })
 
       it('should not call next() with an error', async () => {
-        expect(this.middlewareParameters.nextSpy).to.not.have.been.called
+        expect(middlewareParameters.nextSpy).to.not.have.been.called
       })
     })
 
@@ -254,7 +256,7 @@ describe('Add company form controllers', () => {
           })
           .reply(500, 'Error message')
 
-        this.middlewareParameters = buildMiddlewareParameters({
+        middlewareParameters = buildMiddlewareParameters({
           requestBody: {
             dnbCompany: {
               duns_number: '123',
@@ -263,22 +265,22 @@ describe('Add company form controllers', () => {
         })
 
         await postAddDnbCompany(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy,
         )
       })
 
       it('should not flash a created message', () => {
-        expect(this.middlewareParameters.reqMock.flash).to.not.have.been.called
+        expect(middlewareParameters.reqMock.flash).to.not.have.been.called
       })
 
       it('should not respond', () => {
-        expect(this.middlewareParameters.resMock.json).to.not.have.been.called
+        expect(middlewareParameters.resMock.json).to.not.have.been.called
       })
 
       it('should call next() with an error', async () => {
-        expect(this.middlewareParameters.nextSpy).to.have.been.calledOnceWithExactly(sinon.match({
+        expect(middlewareParameters.nextSpy).to.have.been.calledOnceWithExactly(sinon.match({
           message: '500 - "Error message"',
         }))
       })
@@ -309,7 +311,7 @@ describe('Add company form controllers', () => {
           })
           .reply(200, companyCreateInvestigationResponse)
 
-        this.middlewareParameters = buildMiddlewareParameters({
+        middlewareParameters = buildMiddlewareParameters({
           requestBody: {
             business_type: '1',
             name: 'name',
@@ -327,22 +329,22 @@ describe('Add company form controllers', () => {
         })
 
         await postAddDnbCompanyInvestigation(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy,
         )
       })
 
       it('should flash a created message', () => {
-        expect(this.middlewareParameters.reqMock.flash).to.be.calledOnceWithExactly('success', 'Company added to Data Hub')
+        expect(middlewareParameters.reqMock.flash).to.be.calledOnceWithExactly('success', 'Company added to Data Hub')
       })
 
       it('should respond with the created company', () => {
-        expect(this.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(companyCreateInvestigationResponse)
+        expect(middlewareParameters.resMock.json).to.be.calledOnceWithExactly(companyCreateInvestigationResponse)
       })
 
       it('should not call next() with an error', async () => {
-        expect(this.middlewareParameters.nextSpy).to.not.have.been.called
+        expect(middlewareParameters.nextSpy).to.not.have.been.called
       })
     })
 
@@ -369,7 +371,7 @@ describe('Add company form controllers', () => {
           })
           .reply(500, 'Error message')
 
-        this.middlewareParameters = buildMiddlewareParameters({
+        middlewareParameters = buildMiddlewareParameters({
           requestBody: {
             business_type: '1',
             name: 'name',
@@ -387,22 +389,22 @@ describe('Add company form controllers', () => {
         })
 
         await postAddDnbCompanyInvestigation(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy,
         )
       })
 
       it('should not flash a created message', () => {
-        expect(this.middlewareParameters.reqMock.flash).to.not.have.been.called
+        expect(middlewareParameters.reqMock.flash).to.not.have.been.called
       })
 
       it('should not respond', () => {
-        expect(this.middlewareParameters.resMock.json).to.not.have.been.called
+        expect(middlewareParameters.resMock.json).to.not.have.been.called
       })
 
       it('should call next() with an error', async () => {
-        expect(this.middlewareParameters.nextSpy).to.have.been.calledOnceWithExactly(sinon.match({
+        expect(middlewareParameters.nextSpy).to.have.been.calledOnceWithExactly(sinon.match({
           message: '500 - "Error message"',
         }))
       })

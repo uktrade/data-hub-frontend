@@ -91,10 +91,6 @@ describe('#transformCompanyToKnownAsView', () => {
           newWindow: true,
         })
       })
-
-      it('should set the description', () => {
-        expect(this.actual.Description).to.equal('description')
-      })
     })
 
     context('when minimal information is populated', () => {
@@ -193,10 +189,6 @@ describe('#transformCompanyToKnownAsView', () => {
 
       it('should set the CDMS reference', () => {
         expect(this.actual['CDMS reference']).to.equal('ORG-12345678')
-      })
-
-      it('should set the description', () => {
-        expect(this.actual.Description).to.equal('description')
       })
     })
 

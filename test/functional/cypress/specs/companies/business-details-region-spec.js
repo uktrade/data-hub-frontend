@@ -5,24 +5,6 @@ const businessDetailsUrl = `/companies/${dnbLtd.id}/business-details`
 const editRegionUrl = `${businessDetailsUrl}/region`
 
 describe('Companies business details - region', () => {
-  context('when viewing the region of a Dun & Bradstreet company in the UK', () => {
-    before(() => {
-      cy.visit(businessDetailsUrl)
-    })
-
-    it('should show an "Edit" link with the correct URL', () => {
-      cy.get(selectors.editRegionLink)
-        .should('have.text', 'Edit')
-        .should('have.prop', 'href')
-        .and('contain', editRegionUrl)
-    })
-
-    it('should take you to the "Edit the DIT region" page when clicked', () => {
-      cy.get(selectors.editRegionLink).click()
-        .url().should('contain', editRegionUrl)
-    })
-  })
-
   context('when viewing the edit regions page', () => {
     before(() => {
       cy.visit(editRegionUrl)
