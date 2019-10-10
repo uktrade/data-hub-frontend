@@ -1,4 +1,4 @@
-const { localHeader, companyBusinessDetailsRegion: selectors } = require('../../selectors')
+const { localHeader, companyBusinessDetailsRegion: selectors } = require('../../../../selectors')
 const { venusLtd } = require('../../fixtures').company
 
 const businessDetailsUrl = `/companies/${venusLtd.id}/business-details`
