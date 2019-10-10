@@ -1,7 +1,7 @@
 import { assertBreadcrumbs } from '../../support/assertions'
 
 const fixtures = require('../../fixtures')
-const selectors = require('../../selectors')
+const selectors = require('../../../../selectors')
 
 describe('Companies subsidiaries', () => {
   context('when viewing subsidiaries for a Dun & Bradstreet company', () => {

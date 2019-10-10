@@ -1,4 +1,4 @@
-const selectors = require('../../selectors')
+const selectors = require('../../../../selectors')
 
 describe('Contact Create Form Validation', () => {
   before(() => {

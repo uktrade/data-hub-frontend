@@ -1,6 +1,6 @@
 const { assertKeyValueTable, assertValueTable, assertBreadcrumbs } = require('../../support/assertions')
 const fixtures = require('../../fixtures')
-const selectors = require('../../selectors')
+const selectors = require('../../../../selectors')
 
 describe('Companies business details', () => {
   context('when viewing business details for a Dun & Bradstreet GHQ company on the One List not in the UK', () => {
