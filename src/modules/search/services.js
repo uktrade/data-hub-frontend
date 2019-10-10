@@ -106,12 +106,6 @@ function searchForeignCompanies ({ token, searchTerm, page = 1, limit = 10 }) {
   })
 }
 
-function searchLimitedCompanies ({ token, searchTerm, page = 1, limit = 10 }) {
-  return searchEntity(token, {
-    original_query: searchTerm,
-  }, 'companieshousecompany', { apiVersion: 'v4', page, limit })
-}
-
 function exportSearch ({ token, searchTerm = '', searchEntity, requestBody }) {
   const apiVersion = searchEntity === 'company' ? 'v4' : 'v3'
   const searchUrl = `${config.apiRoot}/${apiVersion}/search`
@@ -158,7 +152,6 @@ function searchDnbCompanies ({ token, requestBody = {} }) {
 module.exports = {
   search,
   searchCompanies,
-  searchLimitedCompanies,
   searchForeignCompanies,
   searchInvestments,
   exportSearch,
