@@ -1,7 +1,6 @@
 {% extends "_layouts/template.njk" %}
 
 {% set editUrl = '/companies/' + company.id + '/edit' if not company.duns_number and not company.archived %}
-{% set regionUrl = '/companies/' + company.id + '/business-details/region' if not company.archived %}
 
 {% macro AddressCell(address, isRegistered) %}
   <td>
@@ -83,7 +82,14 @@
     </table>
   {% endcall %}
 
-  {% if regionDetails %}
+  {% if regionDetails %}   
+    {% if not company.archived %}
+        {% if company.duns_number %}
+            {% set regionUrl = '/companies/' + company.id + '/business-details/region' %}  
+        {% else %}
+            {% set regionUrl = '/companies/' + company.id + '/edit' %}
+        {% endif %}
+    {% endif %}        
     {% call DetailsContainer({ heading: 'DIT region', editUrl: regionUrl, dataAutoId: 'regionDetailsContainer' }) %}
       <table class="table--key-value">
         <tbody>
