@@ -1,6 +1,6 @@
 {% extends "_layouts/template.njk" %}
 
-{% set editUrl = '/companies/' + company.id + '/edit' if not company.duns_number and not company.archived %}
+{% set editUrl = '/companies/' + company.id + '/edit' if not company.duns_number and not company.archived %} 
 
 {% macro AddressCell(address, isRegistered) %}
   <td>
@@ -82,29 +82,22 @@
     </table>
   {% endcall %}
 
-  {% if regionDetails %}   
-    {% if not company.archived %}
-        {% if company.duns_number %}
-            {% set regionUrl = '/companies/' + company.id + '/business-details/region' %}  
-        {% else %}
-            {% set regionUrl = '/companies/' + company.id + '/edit' %}
-        {% endif %}
-    {% endif %}        
-    {% call DetailsContainer({ heading: 'DIT region', editUrl: regionUrl, dataAutoId: 'regionDetailsContainer' }) %}
+  {% if regionDetails %}          
+    {% call DetailsContainer({ heading: 'DIT region', editUrl: regionDetails.url, dataAutoId: 'regionDetailsContainer' }) %}
       <table class="table--key-value">
         <tbody>
           <tr>
-            <td>{{ regionDetails }}</td>
+            <td>{{ regionDetails.name }}</td>
           </tr>
         </tbody>
       </table>
     {% endcall %}
   {% endif %}
 
-  {% call DetailsContainer({ heading: 'DIT sector', editUrl: editUrl, dataAutoId: 'sectorDetailsContainer' }) %}
+  {% call DetailsContainer({ heading: 'DIT sector', editUrl: sectorDetails.url, dataAutoId: 'sectorDetailsContainer' }) %}
     <table class="table--key-value">
       <tbody>
-      {% for sector in sectorDetails %}
+      {% for sector in sectorDetails.name %}
         <tr>
           <td>{{ sector }}</td>
         </tr>
