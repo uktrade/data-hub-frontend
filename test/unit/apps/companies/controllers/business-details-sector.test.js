@@ -1,48 +1,52 @@
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 const companyMock = require('~/test/unit/data/companies/company-v4.json')
-const { renderRegion, updateRegion } = require('~/src/apps/companies/controllers/business-details-region')
+const { renderSector, updateSector } = require('~/src/apps/companies/controllers/business-details-sector')
 const config = require('~/config')
 
-const regionOptions = [{
-  id: '1',
-  name: 'East of England',
-}, {
-  id: '2',
-  name: 'London',
-}, {
-  id: '3',
-  name: 'North East' },
+const sectorOptions = [
+  {
+    id: '1',
+    name: 'Advanced Engineering',
+  },
+  {
+    id: '2',
+    name: 'Aerospace',
+  },
+  {
+    id: '3',
+    name: 'Aerospace : Aircraft Design',
+  },
 ]
 
-describe('#renderRegion', () => {
+describe('#renderSector', () => {
   context('when the view renders successfully', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .get('/v4/metadata/uk-region')
-        .reply(200, regionOptions)
+        .get('/v4/metadata/sector')
+        .reply(200, sectorOptions)
 
       this.middlewareParameters = buildMiddlewareParameters({
         company: companyMock,
       })
 
-      await renderRegion(
+      await renderSector(
         this.middlewareParameters.reqMock,
         this.middlewareParameters.resMock,
         this.middlewareParameters.nextSpy,
       )
     })
 
-    it('should render the "Edit DIT region" view', () => {
-      const view = 'companies/views/business-details-region-edit'
+    it('should render the "Edit DIT sector" view', () => {
+      const view = 'companies/views/business-details-sector-edit'
 
       expect(this.middlewareParameters.resMock.render).to.be.calledOnceWithExactly(view, {
         props: {
           companyId: 'a73efeba-8499-11e6-ae22-56b6b6499611',
           csrfToken: 'csrf',
-          ukRegions: [
-            { value: '1', label: 'East of England' },
-            { value: '2', label: 'London' },
-            { value: '3', label: 'North East' },
+          sectors: [
+            { value: '1', label: 'Advanced Engineering' },
+            { value: '2', label: 'Aerospace' },
+            { value: '3', label: 'Aerospace : Aircraft Design' },
           ],
         },
       })
@@ -64,8 +68,8 @@ describe('#renderRegion', () => {
       expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWith('Business details')
     })
 
-    it('should add the "Edit the DIT region" breadcrumb', () => {
-      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWith('Edit the DIT region')
+    it('should add the "Edit the DIT sector" breadcrumb', () => {
+      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWith('Edit the DIT sector')
     })
 
     it('should not call next() with an error', () => {
@@ -76,14 +80,14 @@ describe('#renderRegion', () => {
   context('when there is an error', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .get('/v4/metadata/uk-region')
+        .get('/v4/metadata/sector')
         .reply(400, { message: 'Error message' })
 
       this.middlewareParameters = buildMiddlewareParameters({
         company: companyMock,
       })
 
-      await renderRegion(
+      await renderSector(
         this.middlewareParameters.reqMock,
         this.middlewareParameters.resMock,
         this.middlewareParameters.nextSpy,
@@ -96,7 +100,7 @@ describe('#renderRegion', () => {
   })
 })
 
-describe('#updateRegion', () => {
+describe('#updateSector', () => {
   context('when the company update is successful', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
@@ -106,7 +110,7 @@ describe('#updateRegion', () => {
       this.middlewareParameters = buildMiddlewareParameters({
         company: companyMock,
         requestBody: {
-          uk_region: '1',
+          sector: '1',
         },
         requestParams: {
           companyId: companyMock.id,
@@ -119,7 +123,7 @@ describe('#updateRegion', () => {
         }),
       }
 
-      await updateRegion(
+      await updateSector(
         this.middlewareParameters.reqMock,
         this.resMock,
         this.middlewareParameters.nextSpy,
@@ -133,7 +137,7 @@ describe('#updateRegion', () => {
 
     it('should flash a message', async () => {
       expect(this.middlewareParameters.reqMock.flash).to.have.been.calledOnce
-      expect(this.middlewareParameters.reqMock.flash).to.have.been.calledWith('success', 'Company region updated')
+      expect(this.middlewareParameters.reqMock.flash).to.have.been.calledWith('success', 'Company sector updated')
     })
 
     it('should not call next() with an error', () => {
@@ -150,7 +154,7 @@ describe('#updateRegion', () => {
       this.middlewareParameters = buildMiddlewareParameters({
         company: companyMock,
         requestBody: {
-          uk_region: 'London',
+          sector: '1',
         },
         requestParams: {
           companyId: companyMock.id,
@@ -163,7 +167,7 @@ describe('#updateRegion', () => {
         }),
       }
 
-      await updateRegion(
+      await updateSector(
         this.middlewareParameters.reqMock,
         this.resMock,
         this.middlewareParameters.nextSpy,
@@ -172,7 +176,7 @@ describe('#updateRegion', () => {
 
     it('should flash a message', async () => {
       expect(this.middlewareParameters.reqMock.flash).to.have.been.calledOnce
-      expect(this.middlewareParameters.reqMock.flash).to.have.been.calledWith('error', 'Company region could not be updated')
+      expect(this.middlewareParameters.reqMock.flash).to.have.been.calledWith('error', 'Company sector could not be updated')
     })
 
     it('should call status', async () => {

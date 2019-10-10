@@ -79,10 +79,6 @@ describe('Companies business details', () => {
       assertDetailsContainerHeading('sectorDetailsContainer', 'DIT sector')
     })
 
-    it('should not display the "DIT sector" details container "Edit" link', () => {
-      cy.get(selectors.detailsContainer('sectorDetailsContainer').editLink).should('not.exist')
-    })
-
     it('should display the "DIT sector" details', () => {
       assertValueTable('sectorDetailsContainer', [
         'Retail',
@@ -342,10 +338,6 @@ describe('Companies business details', () => {
 
     it('should display the "DIT sector" details container heading', () => {
       assertDetailsContainerHeading('sectorDetailsContainer', 'DIT sector')
-    })
-
-    it('should not display the "DIT sector" details container "Edit" link', () => {
-      cy.get(selectors.detailsContainer('sectorDetailsContainer').editLink).should('not.exist')
     })
 
     it('should display the "DIT sector" details', () => {
