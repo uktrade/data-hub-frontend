@@ -188,7 +188,7 @@ Feature: Create a new Investment project
       | value                            |
       | Lambda plc                       |
       | France                           |
-      | 1 investment projects in the UK  |
+      | 2 investment projects in the UK  |
     And I choose Yes for "Will this company be the source of foreign equity investment?"
     Then the Source of foreign equity investment values are displayed
       | value                            |
