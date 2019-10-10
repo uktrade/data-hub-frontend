@@ -48,7 +48,7 @@ async function renderCompanyList (req, res, next) {
       highlightTerm: get(selectedFilters, 'name.valueLabel'),
       actionButtons: [{
         label: 'Add company',
-        url: '/companies/add-step-1',
+        url: '/companies/create',
       }],
     })
   } catch (error) {

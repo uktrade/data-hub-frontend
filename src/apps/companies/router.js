@@ -5,12 +5,6 @@ const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS, QUERY_FIELDS } = r
 const { getRequestBody } = require('../../middleware/collection')
 const { getCollection, exportCollection } = require('../../modules/search/middleware/collection')
 
-const {
-  renderAddStepOne,
-  postAddStepOne,
-  renderAddStepTwo,
-} = require('./controllers/add')
-
 const { renderCompanyList } = require('./controllers/list')
 const { renderForm } = require('./controllers/edit')
 const { renderDetails } = require('./controllers/details')
@@ -42,7 +36,6 @@ const {
 const { setDefaultQuery, redirectToFirstNavItem, handleRoutePermissions } = require('../middleware')
 
 const {
-  getLimitedCompaniesCollection,
   getGlobalHQCompaniesCollection,
   getSubsidiaryCompaniesCollection,
 } = require('./middleware/collection')
@@ -86,24 +79,9 @@ router.use('/create', addCompanyFormRouter)
 router.use('/:companyId/lists/create', addCreateListFormRouter)
 
 router
-  .route('/add-step-1')
-  .get(renderAddStepOne)
-  .post(postAddStepOne, renderAddStepOne)
-
-router.get('/add-step-2', getLimitedCompaniesCollection, renderAddStepTwo)
-
-router
   .route('/:companyId/exports/edit')
   .get(populateExportForm, renderExportEdit)
   .post(populateExportForm, handleEditFormPost, renderExportEdit)
-
-router
-  .route([
-    '/add',
-    '/add/:companyNumber',
-  ])
-  .get(populateForm, renderForm)
-  .post(handleFormPost, populateForm, renderForm)
 
 router
   .route('/:companyId/edit')
