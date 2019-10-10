@@ -14,7 +14,7 @@ import CompanyFoundStep from './CompanyFoundStep'
 import CompanyNotFoundStep from './CompanyNotFoundStep'
 import { ISO_CODE } from './constants'
 
-function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, regions, sectors }) {
+function AddCompanyForm ({ csrfToken, countries, organisationTypes, regions, sectors }) {
   const optionCountryUK = countries.find(({ value }) => value === ISO_CODE.UK)
   const overseasCountries = countries.filter(({ value }) => value && value !== ISO_CODE.UK)
 
@@ -49,9 +49,9 @@ function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, region
 
   async function onSubmit (values) {
     const path = values.cannotFind ? 'company-investigation' : 'company-create'
-    const postUrl = `//${host}/companies/create/dnb/${path}?_csrf=${csrfToken}`
+    const postUrl = `/companies/create/dnb/${path}?_csrf=${csrfToken}`
     const { data } = await axios.post(postUrl, values)
-    return `//${host}/companies/${data.id}`
+    return `/companies/${data.id}`
   }
 
   return (
@@ -82,7 +82,7 @@ function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, region
               <H3>Find the company</H3>
 
               <FieldDnbCompany
-                apiEndpoint={`//${host}/companies/create/dnb/company-search?_csrf=${csrfToken}`}
+                apiEndpoint={`/companies/create/dnb/company-search?_csrf=${csrfToken}`}
                 queryParams={{ address_country: countryIsoCode }}
                 name="dnbCompany"
                 country={countryName}
@@ -93,7 +93,6 @@ function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, region
 
             {values.cannotFind && (
               <CompanyNotFoundStep
-                host={host}
                 organisationTypes={organisationTypes}
                 regions={regions}
                 sectors={sectors}
@@ -108,7 +107,6 @@ function AddCompanyForm ({ host, csrfToken, countries, organisationTypes, region
 }
 
 AddCompanyForm.propTypes = {
-  host: PropTypes.string.isRequired,
   csrfToken: PropTypes.string.isRequired,
   countries: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string.isRequired,

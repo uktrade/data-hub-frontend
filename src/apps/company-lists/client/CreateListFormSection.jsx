@@ -15,18 +15,13 @@ const CreateListFormSection = (
     maxLength
   }) => {
 
-  async function onCreateList (id, name, token, cancelUrl, listName) {
+  async function onCreateList (id, name, csrfToken, cancelUrl, listName) {
     try {
       await axios({
         method: 'POST',
-        url: `/companies/${id}/lists/create?_csrf=${token}`,
-        headers: {
-          'accept': 'application/json',
-          'content-type': 'application/json',
-        },
-        data: {
-          name: listName,
-        },
+        url: `/companies/${id}/lists/create`,
+        params: { _csrf: csrfToken },
+        data: { name: listName },
       })
       window.location.href = cancelUrl
     } catch (error) {
