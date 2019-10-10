@@ -1,4 +1,4 @@
-const selectors = require('../../selectors')
+const selectors = require('../../../../selectors')
 const { assertBreadcrumbs } = require('../../support/assertions')
 
 describe('Investment Project Collections', () => {

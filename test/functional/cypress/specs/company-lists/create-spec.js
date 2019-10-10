@@ -1,4 +1,4 @@
-const selectors = require('../../selectors')
+const selectors = require('../../../../selectors')
 const fixtures = require('../../fixtures')
 const { assertBreadcrumbs } = require('../../support/assertions')
 

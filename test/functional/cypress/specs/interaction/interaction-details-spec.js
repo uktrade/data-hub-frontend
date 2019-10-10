@@ -1,5 +1,5 @@
 const fixtures = require('../../fixtures')
-const selectors = require('../../selectors')
+const selectors = require('../../../../selectors')
 const { assertKeyValueTable, assertBreadcrumbs } = require('../../support/assertions')
 
 describe('Interaction details', () => {
