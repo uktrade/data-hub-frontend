@@ -1,4 +1,4 @@
-const router = require('~/src/apps/companies/apps/add-company/router')
+const router = require('../router')
 
 describe('Add company form routes', () => {
   it('should define route to "Add company form" form', () => {

@@ -1,6 +1,6 @@
 const {
   transformToDnbCompanyInvestigationApi,
-} = require('~/src/apps/companies/apps/add-company/transformers')
+} = require('../transformers')
 
 describe('Companies add company transformers', () => {
   describe('#transformToDnbCompanyInvestigationApi', () => {
