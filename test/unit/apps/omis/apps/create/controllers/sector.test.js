@@ -19,7 +19,7 @@ describe('OMIS create sector controller', () => {
     context('when getOptions returns 200', () => {
       beforeEach(async () => {
         nock(apiRoot)
-          .get('/metadata/sector/')
+          .get('/v4/metadata/sector')
           .reply(200, sectorOptionsMock)
 
         this.reqMock = assign({}, globalReq, {
@@ -54,7 +54,7 @@ describe('OMIS create sector controller', () => {
         this.errorMessageMock = 'ERROR_REASON'
 
         nock(apiRoot)
-          .get('/metadata/sector/')
+          .get('/v4/metadata/sector')
           .replyWithError(this.errorMessageMock)
 
         await this.controller.configure(globalReq, globalRes, this.nextSpy)

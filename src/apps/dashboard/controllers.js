@@ -29,7 +29,9 @@ async function renderDashboard (req, res, next) {
       })
       articleFeed = formatHelpCentreAnnouncements(helpCentreArticleFeed) || []
     } catch (e) {
-      next(e)
+      // If we encounter an error when fetching the latest help centre articles,
+      // just show an empty feed
+      articleFeed = []
     }
     const canViewCompanyList = userPermissions.includes(
       'company_list.view_companylistitem'

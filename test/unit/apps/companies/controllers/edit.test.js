@@ -84,7 +84,7 @@ describe('Company edit controller', () => {
   describe('renderForm', () => {
     beforeEach(() => {
       nock(config.apiRoot)
-        .get('/metadata/business-type/')
+        .get('/v4/metadata/business-type')
         .twice().reply(200, metaDataMock.businessTypeOptions)
     })
 

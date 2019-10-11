@@ -1,6 +1,6 @@
-const { assertKeyValueTable, assertValueTable } = require('../../helpers/key-value-table')
+const { assertKeyValueTable, assertValueTable, assertBreadcrumbs } = require('../../support/assertions')
 const fixtures = require('../../fixtures')
-const selectors = require('../../selectors')
+const selectors = require('../../../../selectors')
 
 describe('Companies business details', () => {
   context('when viewing business details for a Dun & Bradstreet GHQ company on the One List not in the UK', () => {
@@ -9,13 +9,12 @@ describe('Companies business details', () => {
     })
 
     it('should render breadcrumbs', () => {
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Companies')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/companies')
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.text', fixtures.company.oneListCorp.name)
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.attr', 'href', `/companies/${fixtures.company.oneListCorp.id}`)
-      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Business details')
+      assertBreadcrumbs({
+        'Home': '/',
+        'Companies': '/companies',
+        [fixtures.company.oneListCorp.name]: `/companies/${fixtures.company.oneListCorp.id}`,
+        'Business details': null,
+      })
     })
 
     it('should display the "Business details" heading', () => {
@@ -80,10 +79,6 @@ describe('Companies business details', () => {
       assertDetailsContainerHeading('sectorDetailsContainer', 'DIT sector')
     })
 
-    it('should not display the "DIT sector" details container "Edit" link', () => {
-      cy.get(selectors.detailsContainer('sectorDetailsContainer').editLink).should('not.exist')
-    })
-
     it('should display the "DIT sector" details', () => {
       assertValueTable('sectorDetailsContainer', [
         'Retail',
@@ -135,13 +130,12 @@ describe('Companies business details', () => {
     })
 
     it('should render breadcrumbs', () => {
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Companies')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/companies')
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.text', fixtures.company.venusLtd.name)
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.attr', 'href', `/companies/${fixtures.company.venusLtd.id}`)
-      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Business details')
+      assertBreadcrumbs({
+        'Home': '/',
+        'Companies': '/companies',
+        [fixtures.company.venusLtd.name]: `/companies/${fixtures.company.venusLtd.id}`,
+        'Business details': null,
+      })
     })
 
     it('should display the "Business details" heading', () => {
@@ -277,13 +271,12 @@ describe('Companies business details', () => {
     })
 
     it('should render breadcrumbs', () => {
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Companies')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/companies')
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.text', fixtures.company.dnbCorp.name)
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.attr', 'href', `/companies/${fixtures.company.dnbCorp.id}`)
-      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Business details')
+      assertBreadcrumbs({
+        'Home': '/',
+        'Companies': '/companies',
+        [fixtures.company.dnbCorp.name]: `/companies/${fixtures.company.dnbCorp.id}`,
+        'Business details': null,
+      })
     })
 
     it('should display the "Business details" heading', () => {
@@ -347,10 +340,6 @@ describe('Companies business details', () => {
       assertDetailsContainerHeading('sectorDetailsContainer', 'DIT sector')
     })
 
-    it('should not display the "DIT sector" details container "Edit" link', () => {
-      cy.get(selectors.detailsContainer('sectorDetailsContainer').editLink).should('not.exist')
-    })
-
     it('should display the "DIT sector" details', () => {
       assertValueTable('sectorDetailsContainer', [
         'Retail',
@@ -390,13 +379,12 @@ describe('Companies business details', () => {
     })
 
     it('should render breadcrumbs', () => {
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Companies')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/companies')
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.text', fixtures.company.archivedLtd.name)
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.attr', 'href', `/companies/${fixtures.company.archivedLtd.id}`)
-      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Business details')
+      assertBreadcrumbs({
+        'Home': '/',
+        'Companies': '/companies',
+        [fixtures.company.archivedLtd.name]: `/companies/${fixtures.company.archivedLtd.id}`,
+        'Business details': null,
+      })
     })
 
     it('should display the "Business details" heading', () => {
@@ -516,13 +504,12 @@ describe('Companies business details', () => {
     })
 
     it('should render breadcrumbs', () => {
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Companies')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/companies')
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.text', fixtures.company.minimallyMinimalLtd.name)
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.attr', 'href', `/companies/${fixtures.company.minimallyMinimalLtd.id}`)
-      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Business details')
+      assertBreadcrumbs({
+        'Home': '/',
+        'Companies': '/companies',
+        [fixtures.company.minimallyMinimalLtd.name]: `/companies/${fixtures.company.minimallyMinimalLtd.id}`,
+        'Business details': null,
+      })
     })
 
     it('should display the "Business details" heading', () => {

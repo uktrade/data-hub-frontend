@@ -1,4 +1,6 @@
 /* eslint-disable camelcase */
+const config = require('../../../../config/')
+
 describe('Documents Upload repos', () => {
   beforeEach(async () => {
     this.authorisedRequestStub = sinon.stub().resolves()
@@ -71,7 +73,7 @@ describe('Documents Upload repos', () => {
 
       it('should only post to the API the name of the document', () => {
         const options = {
-          url: 'http://localhost:8000/v3/investment/123/proposition/345/document',
+          url: `${config.apiRoot}/v3/investment/123/proposition/345/document`,
           body: {
             original_filename: 'document.txt',
           },
@@ -90,7 +92,7 @@ describe('Documents Upload repos', () => {
       })
 
       it('should only post to the API the name of the document and the text fields', () => {
-        const url = `http://localhost:8000/v3/investment/123/proposition/345/document`
+        const url = `${config.apiRoot}/v3/investment/123/proposition/345/document`
         const body = {
           original_filename: 'document.txt',
         }

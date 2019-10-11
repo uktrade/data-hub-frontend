@@ -1,18 +1,18 @@
+import { assertBreadcrumbs } from '../../support/assertions'
+
 const fixtures = require('../../fixtures')
-const selectors = require('../../selectors')
+const selectors = require('../../../../selectors')
 
 describe('Company edit', () => {
   const commonTests = (expected) => {
     it('should render breadcrumbs', () => {
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Companies')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/companies')
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.text', expected.company.name)
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.attr', 'href', `/companies/${expected.company.id}`)
-      cy.get(selectors.breadcrumbs.item.byNumber(4)).should('have.text', 'Business details')
-      cy.get(selectors.breadcrumbs.item.byNumber(4)).should('have.attr', 'href', `/companies/${expected.company.id}/business-details`)
-      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Edit business details')
+      assertBreadcrumbs({
+        'Home': '/',
+        'Companies': '/companies',
+        [expected.company.name]: `/companies/${expected.company.id}`,
+        'Business details': `/companies/${expected.company.id}/business-details`,
+        'Edit business details': null,
+      })
     })
 
     it('should render the trading name text field', () => {

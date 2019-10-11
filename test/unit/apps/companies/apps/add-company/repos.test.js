@@ -8,7 +8,7 @@ describe('Add company form repos', () => {
   describe('#fetchOrganisationTypes', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .get('/metadata/business-type/')
+        .get('/v4/metadata/business-type')
         .reply(200, businessTypeFixture)
 
       this.actual = await fetchOrganisationTypes(token)

@@ -48,6 +48,9 @@ RUN apt-get install -y \
   libasound2 \
   xvfb
 
+# Install visual test dependencies
+RUN apt-get install -y imagemagick
+
 # Install Chrome (74)
 # We decided to lock on Chrome 74 for now until we solve random error when running functional tests: "Error: There has been an OAuth stateId mismatch"
 # See related CircleCI build: https://circleci.com/gh/uktrade/data-hub-frontend/48022#tests/containers/3

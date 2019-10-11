@@ -1,5 +1,6 @@
 const fixtures = require('../../fixtures')
-const selectors = require('../../selectors')
+const selectors = require('../../../../selectors')
+const { assertBreadcrumbs } = require('../../support/assertions')
 
 describe('Company activity feed', () => {
   const commonTests = ({
@@ -9,11 +10,11 @@ describe('Company activity feed', () => {
     expectedActivitiesHeading,
   }) => {
     it('should render breadcrumbs', () => {
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Companies')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/companies')
-      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Activity Feed')
+      assertBreadcrumbs({
+        'Home': '/',
+        'Companies': '/companies',
+        'Activity Feed': null,
+      })
     })
 
     it('should display the heading', () => {

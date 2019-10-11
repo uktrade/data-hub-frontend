@@ -1,20 +1,23 @@
 const { flatten } = require('lodash')
 
 const { globalFields } = require('../../macros')
+
 const FILTER_CONSTANTS = require('../../../lib/filter-constants')
+const { QUERY_FIELDS_MAP } = require('../constants')
 const PRIMARY_SECTOR_NAME = FILTER_CONSTANTS.COMPANIES.SECTOR.PRIMARY.NAME
 
 const companyFiltersFields = function ({ sectorOptions }) {
+  const countryOptions = globalFields.countries.options()
   return [
     Object.assign({}, globalFields.headquarter_type, {
-      name: 'headquarter_type',
+      name: QUERY_FIELDS_MAP.headquarterType,
       type: 'checkbox',
       modifier: 'option-select',
     }),
     {
       macroName: 'TextField',
       label: 'Company name',
-      name: 'name',
+      name: QUERY_FIELDS_MAP.name,
     },
     {
       macroName: 'Typeahead',
@@ -30,24 +33,24 @@ const companyFiltersFields = function ({ sectorOptions }) {
     },
     {
       macroName: 'Typeahead',
-      name: 'country',
+      name: QUERY_FIELDS_MAP.country,
       isAsync: false,
       classes: 'c-form-group c-form-group--smaller c-form-group--filter',
       placeholder: 'Search country',
       useSubLabel: false,
-      options: globalFields.countries.options(),
+      options: countryOptions,
       hideInactive: false,
       target: 'metadata',
       label: 'Country',
     },
     Object.assign({}, globalFields.ukRegions, {
-      name: 'uk_region',
+      name: QUERY_FIELDS_MAP.ukRegion,
       type: 'checkbox',
       modifier: 'option-select',
     }),
     {
       macroName: 'MultipleChoiceField',
-      name: 'archived',
+      name: QUERY_FIELDS_MAP.archived,
       type: 'checkbox',
       label: 'Status',
       options: [
@@ -55,6 +58,30 @@ const companyFiltersFields = function ({ sectorOptions }) {
         { value: 'true', label: 'Inactive' },
       ],
       modifier: 'option-select',
+    },
+    {
+      macroName: 'Typeahead',
+      name: QUERY_FIELDS_MAP.exportingTo,
+      isAsync: false,
+      classes: 'c-form-group c-form-group--smaller c-form-group--filter',
+      placeholder: 'Search country',
+      useSubLabel: false,
+      options: countryOptions,
+      hideInactive: false,
+      target: 'metadata',
+      label: 'Currently exporting to',
+    },
+    {
+      macroName: 'Typeahead',
+      name: QUERY_FIELDS_MAP.interestedIn,
+      isAsync: false,
+      classes: 'c-form-group c-form-group--smaller c-form-group--filter',
+      placeholder: 'Search country',
+      useSubLabel: false,
+      options: countryOptions,
+      hideInactive: false,
+      target: 'metadata',
+      label: 'Future countries of interest',
     },
   ].map(filter => {
     return Object.assign(filter, {

@@ -1,5 +1,5 @@
 const fixtures = require('../../fixtures')
-const selectors = require('../../selectors')
+const selectors = require('../../../../selectors')
 
 describe('Companies Contact', () => {
   context('when viewing contacts for an archived company', () => {

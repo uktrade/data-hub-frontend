@@ -33,11 +33,13 @@ module.exports = function transformCompanyToListItem ({
     })
   }
 
-  meta.push({
-    label: 'Country',
-    type: 'badge',
-    value: address.country.name,
-  })
+  if (address && address.country) {
+    meta.push({
+      label: 'Country',
+      type: 'badge',
+      value: get(address, 'country.name'),
+    })
+  }
 
   if (uk_based) {
     meta.push({
