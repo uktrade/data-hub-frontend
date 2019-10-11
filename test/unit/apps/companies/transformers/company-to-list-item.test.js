@@ -250,4 +250,18 @@ describe('transformCompanyToListItem', () => {
       expect(tradingNameMetaItem).to.exist
     })
   })
+
+  context('when the company address is null', () => {
+    beforeEach(() => {
+      this.listItem = transformCompanyToListItem({
+        ...companyData,
+        address: null,
+      })
+    })
+
+    it('should still transform the company and not return country', () => {
+      const country = find(this.listItem.meta, ({ label }) => label === 'Country')
+      expect(country).to.not.exist
+    })
+  })
 })

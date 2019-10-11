@@ -41,9 +41,9 @@ describe('Investment project controller', () => {
     this.nextSpy = sinon.spy()
 
     nock(config.apiRoot)
-      .get('/metadata/sector/?level__lte=0')
+      .get('/v4/metadata/sector?level__lte=0')
       .reply(200, metadataMock.sectorOptions)
-      .get('/metadata/country/')
+      .get('/v4/metadata/country')
       .reply(200, metadataMock.countryOptions)
       .get('/adviser/?limit=100000&offset=0')
       .reply(200, metadataMock.adviserOptions)

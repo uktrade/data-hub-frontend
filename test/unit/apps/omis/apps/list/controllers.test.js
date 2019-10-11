@@ -1,5 +1,6 @@
 const config = require('~/config')
 const controller = require('~/src/apps/omis/apps/list/controllers')
+
 describe('OMIS list controllers', () => {
   beforeEach(() => {
     this.req = {
@@ -32,11 +33,11 @@ describe('OMIS list controllers', () => {
     ]
 
     nock(config.apiRoot)
-      .get('/metadata/sector/?level__lte=0')
+      .get('/v4/metadata/sector?level__lte=0')
       .reply(200, metaMock)
-      .get('/metadata/omis-market/')
+      .get('/v4/metadata/omis-market')
       .reply(200, metaMock)
-      .get('/metadata/uk-region/')
+      .get('/v4/metadata/uk-region')
       .reply(200, metaMock)
   })
 

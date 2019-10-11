@@ -1,5 +1,6 @@
-const selectors = require('../../selectors')
+const selectors = require('../../../../selectors')
 const fixtures = require('../../fixtures')
+const { assertBreadcrumbs } = require('../../support/assertions')
 
 describe('Create a company list', () => {
   context('when viewing a Create list form', () => {
@@ -8,11 +9,11 @@ describe('Create a company list', () => {
     })
 
     it('displays breadcrumbs', () => {
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Companies')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/companies')
-      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Create a list')
+      assertBreadcrumbs({
+        'Home': '/',
+        'Companies': '/companies',
+        'Create a list': null,
+      })
     })
 
     it('displays the "Create list" heading', () => {
@@ -46,7 +47,7 @@ describe('Create a company list', () => {
     })
     it('should display an error', () => {
       cy.get(selectors.companyList.create.submit).click()
-      cy.get(selectors.companyList.create.error).should('have.text', 'Enter a name for your list')
+      cy.get(selectors.companyList.create.error).should('contain.text', 'Enter a name for your list')
     })
   })
 
@@ -57,7 +58,7 @@ describe('Create a company list', () => {
     it('should display an error', () => {
       cy.get(selectors.companyList.create.input).type('loooooooooooooonnnnnnnnnnnnnggggggggg text!')
       cy.get(selectors.companyList.create.submit).click()
-      cy.get(selectors.companyList.create.error).should('have.text', 'Enter list name which is no longer than 30 characters')
+      cy.get(selectors.companyList.create.error).should('contain.text', 'Enter list name which is no longer than 30 characters')
     })
   })
 

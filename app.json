@@ -1,6 +1,8 @@
 {
   "env":{
     "API_ROOT": { "required": true },
+    "DATA_HUB_BACKEND_ACCESS_KEY_ID": { "required": true },
+    "DATA_HUB_BACKEND_SECRET_ACCESS_KEY": { "required": true },
     "BASIC_AUTH_USER": { "required": true },
     "BASIC_AUTH_PASSWORD": { "required": true },
     "HELP_CENTRE_ANNOUNCMENTS_URL": { "required": true },

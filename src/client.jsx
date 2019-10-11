@@ -6,6 +6,8 @@ import AddCompanyForm from './apps/companies/apps/add-company/client/AddCompanyF
 import DeleteCompanyList from './apps/company-lists/client/DeleteCompanyList'
 import MyCompanies from './apps/dashboard/client/MyCompanies.jsx'
 import CreateListFormSection from './apps/company-lists/client/CreateListFormSection'
+import BusinessDetailsRegionEdit from './apps/companies/client/BusinessDetailsRegionEdit'
+import BusinessDetailsSectorEdit from './apps/companies/client/BusinessDetailsSectorEdit'
 
 function Mount ({ selector, children }) {
   return [...document.querySelectorAll(selector)].map(domNode => {
@@ -35,6 +37,12 @@ function App () {
       </Mount>
       <Mount selector="#create-company-list-form">
         {props => <CreateListFormSection {...props} />}
+      </Mount>
+      <Mount selector="#business-details-region-edit">
+        {props => <BusinessDetailsRegionEdit {...props} />}
+      </Mount>
+      <Mount selector="#business-details-sector-edit">
+        {props => <BusinessDetailsSectorEdit {...props} />}
       </Mount>
     </>
   )

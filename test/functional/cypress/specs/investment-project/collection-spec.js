@@ -1,4 +1,5 @@
-const selectors = require('../../selectors')
+const selectors = require('../../../../selectors')
+const { assertBreadcrumbs } = require('../../support/assertions')
 
 describe('Investment Project Collections', () => {
   before(() => {
@@ -6,9 +7,10 @@ describe('Investment Project Collections', () => {
   })
 
   it('should render breadcrumbs', () => {
-    cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-    cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-    cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Investments')
+    assertBreadcrumbs({
+      'Home': '/',
+      'Investments': null,
+    })
   })
 
   it('should display a list of investments', () => {

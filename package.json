@@ -1,6 +1,6 @@
 {
   "name": "data-hub-frontend",
-  "version": "5.46.0",
+  "version": "5.47.0",
   "description": "Data Hub Frontend",
   "main": "src/server.js",
   "repository": {
@@ -61,6 +61,7 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "@govuk-react/constants": "^0.7.1",
+    "@hapi/hawk": "^7.1.2",
     "@uktrade/datahub-header": "1.2.0",
     "autoprefixer": "^8.5.2",
     "axios": "^0.18.0",
@@ -78,7 +79,7 @@
     "core-js": "^2.5.7",
     "css-loader": "^1.0.0",
     "csurf": "^1.9.0",
-    "data-hub-components": "^1.21.4",
+    "data-hub-components": "^2.5.0",
     "date-fns": "^1.29.0",
     "del-cli": "^2.0.0",
     "dotenv": "^5.0.0",
@@ -140,7 +141,7 @@
   },
   "devDependencies": {
     "@uktrade/client-matrix-js": "^1.0.38",
-    "@uktrade/wdio-image-diff-js": "1.0.117",
+    "@uktrade/wdio-image-diff-js": "1.0.143",
     "@vue/test-utils": "^1.0.0-beta.25",
     "@wdio/browserstack-service": "^5.9.3",
     "@wdio/cli": "5.10.0",

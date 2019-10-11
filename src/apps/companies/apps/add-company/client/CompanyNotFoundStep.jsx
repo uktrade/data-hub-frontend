@@ -6,16 +6,18 @@ import PropTypes from 'prop-types'
 import { FieldInput, FieldRadios, FieldSelect, Step } from 'data-hub-components'
 import FieldAddress from 'data-hub-components/dist/forms/elements/FieldAddress'
 
-import { ISO_CODE } from './constants'
+import { ISO_CODE, WEBSITE_REGEX } from './constants'
 import InformationList from './InformationList'
 
-function CompanyNotFoundStep ({ host, organisationTypes, regions, sectors, country }) {
-  function requireWebsiteOrPhone (value, name, { values: { website, telephone_number } }) {
-    return !website && !telephone_number ? 'Enter at least a website or a phone number' : null
-  }
+const requiredWebsiteOrPhoneValidator = (value, name, { values: { website, telephone_number } }) => {
+  return !website && !telephone_number ? 'Enter at least a website or a phone number' : null
+}
 
+const websiteValidator = (value) => !WEBSITE_REGEX.test(value) ? 'Enter a valid website URL' : null
+
+function CompanyNotFoundStep ({ host, organisationTypes, regions, sectors, country }) {
   return (
-    <Step name="unhappy" forwardButtonText="Add company">
+    <Step name="unhappy" forwardButton="Add company">
       <Details summary="Why am I seeing this?">
         The company you want to add to Data Hub cannot be found in the external databases Data Hub checks.
         You will need to provide information about the company, so the company can be added to Data Hub
@@ -40,14 +42,17 @@ function CompanyNotFoundStep ({ host, organisationTypes, regions, sectors, count
         label="Company's website"
         name="website"
         type="url"
-        validate={requireWebsiteOrPhone}
+        validate={[
+          requiredWebsiteOrPhoneValidator,
+          websiteValidator,
+        ]}
       />
 
       <FieldInput
         label="Company's telephone number"
         name="telephone_number"
         type="tel"
-        validate={requireWebsiteOrPhone}
+        validate={requiredWebsiteOrPhoneValidator}
       />
 
       <FieldAddress

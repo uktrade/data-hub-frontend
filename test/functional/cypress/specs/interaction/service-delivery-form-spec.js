@@ -1,5 +1,6 @@
 const fixtures = require('../../fixtures')
-const selectors = require('../../selectors')
+const selectors = require('../../../../selectors')
+const { assertBreadcrumbs } = require('../../support/assertions')
 
 describe('Service delivery form', () => {
   beforeEach(() => {
@@ -9,11 +10,11 @@ describe('Service delivery form', () => {
   })
 
   it('should render breadcrumbs', () => {
-    cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-    cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-    cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Companies')
-    cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/companies')
-    cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Add service delivery')
+    assertBreadcrumbs({
+      'Home': '/',
+      'Companies': '/companies',
+      'Add service delivery': null,
+    })
   })
 
   it('should display all service delivery fields', () => {
@@ -65,7 +66,7 @@ describe('Service delivery form', () => {
     it('should contain an pre-populated input with an adviser', () => {
       cy.get(selectors.interactionForm.ditAdviserTypeahead.placeHolder)
         .should('have.attr', 'placeholder')
-        .and('include', 'Ade Walton, RTC North : North East R & D Collaboration Project')
+        .and('include', 'Jimmy West, Bertie Drake')
     })
 
     it('should be able to select an adviser', () => {
@@ -76,7 +77,7 @@ describe('Service delivery form', () => {
       cy.get(selectors.interactionForm.ditAdviserTypeahead.placeHolder).first().type('{enter}')
 
       cy.get(selectors.interactionForm.ditAdviserTypeahead.selectedOption).first()
-        .should('contain', 'Barbara Benedicto, British Consulate General Sao Paulo Brazil')
+        .should('contain', 'Leroy Powers, Walter Wolfe')
     })
 
     it('should be able to create and remove a new adviser typeahead input field', () => {

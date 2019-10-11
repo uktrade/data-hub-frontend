@@ -3,6 +3,7 @@ const Redis = require('redis')
 
 const config = require('../../config')
 const { authorisedRequest } = require('../lib/authorised-request')
+const hawkRequest = require('../lib/hawk-request')
 const { filterDisabledOption } = require('../modules/permissions/filters')
 const {
   transformObjectToOption,
@@ -23,7 +24,7 @@ async function fetchOptions (token, url) {
   if (metaData) {
     return JSON.parse(metaData)
   }
-  metaData = await authorisedRequest(token, url)
+  metaData = await hawkRequest(url)
   if (!config.isTest) {
     client.set(url, JSON.stringify(metaData), 'ex', config.cacheDurationLong)
   }
@@ -60,7 +61,7 @@ async function getOptions (
     }
   }
 
-  const url = `${config.apiRoot}/metadata/${key}/${queryString}`
+  const url = `${config.apiRoot}/v4/metadata/${key}${queryString}`
   let options = await fetchOptions(token, url)
 
   if (!includeDisabled) {

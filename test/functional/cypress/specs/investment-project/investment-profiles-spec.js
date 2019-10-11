@@ -1,4 +1,4 @@
-const selectors = require('../../selectors')
+const selectors = require('../../../../selectors')
 
 describe('Investment / Invenstor profiles', () => {
   before(() => {

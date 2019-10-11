@@ -15,6 +15,8 @@ describe('Company router', () => {
       '/:companyId',
       '/:companyId/details',
       '/:companyId/business-details',
+      '/:companyId/business-details/region',
+      '/:companyId/business-details/sector',
       '/:companyId/advisers',
       '/:companyId/hierarchies/ghq/search',
       '/:companyId/hierarchies/ghq/:globalHqId/add',

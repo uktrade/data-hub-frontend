@@ -1,22 +1,30 @@
 /* eslint-disable camelcase */
-const { flatten } = require('lodash')
+const { flatMap } = require('lodash')
 
 const { getDataLabels } = require('../../../lib/controller-utils')
-const { exportDetailsLabels } = require('../labels')
+const { exportDetailsLabels, exportPotentialLabels } = require('../labels')
+
+function getCountries (data) {
+  return flatMap(data, ({ name }) => (name || null)).join(', ') || 'None'
+}
+
+function getExportPotentialLabel (key) {
+  const item = exportPotentialLabels[ key ]
+
+  return (item && item.text) || 'No score given'
+}
 
 module.exports = function transformCompanyToExportDetailsView ({
   export_experience_category,
   export_to_countries,
   future_interest_countries,
+  export_potential_score,
 }) {
   const viewRecord = {
     exportExperienceCategory: export_experience_category || 'None',
-    exportToCountries: flatten([export_to_countries])
-      .map(country => (country.name || null))
-      .join(', ') || 'None',
-    futureInterestCountries: flatten([future_interest_countries])
-      .map(country => (country.name || null))
-      .join(', ') || 'None',
+    exportToCountries: getCountries(export_to_countries),
+    futureInterestCountries: getCountries(future_interest_countries),
+    exportPotential: getExportPotentialLabel(export_potential_score),
   }
 
   return getDataLabels(viewRecord, exportDetailsLabels)

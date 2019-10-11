@@ -1,4 +1,5 @@
-const selectors = require('../../selectors')
+const selectors = require('../../../../selectors')
+const { assertBreadcrumbs } = require('../../support/assertions')
 
 describe('Delete company list page', () => {
   beforeEach(function () {
@@ -11,11 +12,11 @@ describe('Delete company list page', () => {
     })
 
     it('displays breadcrumbs', () => {
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Edit my company lists')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/company-lists')
-      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Delete list')
+      assertBreadcrumbs({
+        'Home': '/',
+        'Edit my company lists': '/company-lists',
+        'Delete list': null,
+      })
     })
 
     it('displays the "Delete list" heading', () => {

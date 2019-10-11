@@ -100,6 +100,13 @@ const config = {
     user: process.env.BASIC_AUTH_USER,
     password: process.env.BASIC_AUTH_PASSWORD,
   },
+  hawkCredentials: {
+    dataHubBackend: {
+      id: process.env.DATA_HUB_BACKEND_ACCESS_KEY_ID,
+      key: process.env.DATA_HUB_BACKEND_SECRET_ACCESS_KEY,
+      algorithm: 'sha256',
+    },
+  },
   oneList: {
     email: process.env.ONE_LIST_EMAIL || 'one.list@example.com',
   },

@@ -98,6 +98,8 @@ aliases:
     HELP_CENTRE_URL: https://datahub-helpcentre.london.cloudapps.digital
     HELP_CENTRE_ANNOUNCMENTS_URL: https://datahub-helpcentre.london.cloudapps.digital/updates/announcements
     HELP_CENTRE_API_FEED: https://datahub-helpcentre.london.cloudapps.digital/api/feeds/announcements
+    DATA_HUB_BACKEND_ACCESS_KEY_ID: frontend-key-id
+    DATA_HUB_BACKEND_SECRET_ACCESS_KEY: frontend-key
 
   - &data_hub_functional_envs
     API_ROOT: http://localhost:8001
@@ -117,10 +119,12 @@ aliases:
     HELP_CENTRE_API_FEED: http://localhost:8001/help-centre/announcement
     HELP_CENTRE_FEED_API_TOKEN: apiToken
     SESSION_SECRET: theStrongestAvenger
+    DATA_HUB_BACKEND_ACCESS_KEY_ID: frontend-key-id
+    DATA_HUB_BACKEND_SECRET_ACCESS_KEY: frontend-key
 
   # Data hub base docker container
   - &docker_data_hub_base
-    image: ukti/data-hub-frontend-test:2.0.0
+    image: ukti/data-hub-frontend-test:3.0.0
     environment:
       *data_hub_base_envs
 
@@ -183,6 +187,9 @@ aliases:
       WEB_CONCURRENCY: 2
       ACTIVITY_STREAM_ACCESS_KEY_ID: some-id
       ACTIVITY_STREAM_SECRET_ACCESS_KEY: some-secret
+      DISABLE_PAAS_IP_CHECK: 'True'
+      DATA_HUB_FRONTEND_ACCESS_KEY_ID: frontend-key-id
+      DATA_HUB_FRONTEND_SECRET_ACCESS_KEY: frontend-key
 
   - &docker_data_hub_backend_api
     <<: *docker_data_hub_backend_base

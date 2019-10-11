@@ -1,5 +1,6 @@
 const fixtures = require('../../fixtures')
-const selectors = require('../../selectors')
+const selectors = require('../../../../selectors')
+const { assertBreadcrumbs } = require('../../support/assertions')
 
 describe('Investment Project Documents', () => {
   context('when there is a document link', () => {
@@ -8,13 +9,12 @@ describe('Investment Project Documents', () => {
     })
 
     it('should render breadcrumbs', () => {
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Investments')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/investments')
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.text', 'New hotel (commitment to invest)')
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.attr', 'href', `/investments/projects/fb5b5006-56af-40e0-8615-7aba53e0e4bf`)
-      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Documents')
+      assertBreadcrumbs({
+        'Home': '/',
+        'Investments': '/investments',
+        'New hotel (commitment to invest)': '/investments/projects/fb5b5006-56af-40e0-8615-7aba53e0e4bf',
+        'Documents': null,
+      })
     })
 
     it('should display appropriate message when there is a link to a document', () => {
@@ -30,13 +30,12 @@ describe('Investment Project Documents', () => {
     })
 
     it('should render breadcrumbs', () => {
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.text', 'Home')
-      cy.get(selectors.breadcrumbs.item.byNumber(1)).should('have.attr', 'href', '/')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.text', 'Investments')
-      cy.get(selectors.breadcrumbs.item.byNumber(2)).should('have.attr', 'href', '/investments')
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.text', 'Green tea plantation')
-      cy.get(selectors.breadcrumbs.item.byNumber(3)).should('have.attr', 'href', `/investments/projects/addca042-5a00-412c-9d7c-acc04552756c`)
-      cy.get(selectors.breadcrumbs.item.last()).should('have.text', 'Documents')
+      assertBreadcrumbs({
+        'Home': '/',
+        'Investments': '/investments',
+        'Green tea plantation': '/investments/projects/addca042-5a00-412c-9d7c-acc04552756c',
+        'Documents': null,
+      })
     })
 
     it('should display appropriate message when there is not a link to a document', () => {

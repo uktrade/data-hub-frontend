@@ -1,4 +1,4 @@
-const { localHeader, companyInvestment: selectors } = require('../../../selectors')
+const { localHeader, companyInvestment: selectors } = require('../../../../../selectors')
 const fixtures = require('../../../fixtures')
 
 const baseUrl = Cypress.config().baseUrl
@@ -208,7 +208,7 @@ describe('Company Investments and Large capital profile', () => {
 
   context('when viewing the "Investor details" edit section', () => {
     const { investorDetails } = selectors
-    const adviser = 'Aaron Chan, British Embassy Manila Philippines'
+    const adviser = 'Seth Hernandez, Callie Taylor'
 
     it('should display all the field values apart from "Investor Description"', () => {
       cy.visit(`${largeCapitalProfile}?editing=investor-details`)
@@ -230,11 +230,11 @@ describe('Company Investments and Large capital profile', () => {
     it('should be able to select an Adviser', () => {
       cy.visit(`${largeCapitalProfile}?editing=investor-details`)
         .get(investorDetails.requiredChecks.adviser.placeHolder).click()
-        .get(investorDetails.requiredChecks.adviser.textInput).type('abby').wait(500)
+        .get(investorDetails.requiredChecks.adviser.textInput).type('Seth').wait(500)
         .get(investorDetails.requiredChecks.adviser.textInput).type('{downarrow}')
         .get(investorDetails.requiredChecks.adviser.textInput).type('{enter}')
         .get(investorDetails.requiredChecks.adviser.selectedOption)
-        .should('contain', 'Abby Chan, British High Commission Singapore')
+        .should('contain', 'Seth Hernandez, Callie Taylor')
     })
   })
 
