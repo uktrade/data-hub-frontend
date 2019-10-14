@@ -1,6 +1,6 @@
-const nock = require('nock')
 const config = require('../../../../config')
 const repos = require('../../../../src/apps/dashboard/repos')
+const { mockCompanyListsServer } = require('./utils')
 
 function makeRepositoryWithAuthRequest (authorisedRequestStub) {
   return proxyquire('~/src/apps/dashboard/repos.js', {
@@ -20,71 +20,6 @@ describe('Dashboard', () => {
     })
   })
 })
-
-const mockCompanyListsServer = ({ companyIdString = '', listIds = {} } = {}) => {
-  const companyListItemRegexp = /\/v4\/company-list\/([^/]+)\/item/
-
-  const companies = [...companyIdString].reduce(
-    (acc, id) => ({
-      ...acc,
-      [id]: {
-        company: {
-          id,
-          name: `Company ${id.toUpperCase()}`,
-          archived: false,
-          trading_names: [],
-        },
-        latest_interaction: {},
-      },
-    }),
-    {}
-  )
-
-  const lists = Object.entries(listIds).reduce(
-    (acc, [listIdStr, companyIds]) => ({
-      ...acc,
-      [listIdStr]: {
-        count: companyIds.length,
-        next: null,
-        previous: null,
-        results: [...companyIds].map(id => companies[id]),
-      },
-    }),
-    {},
-  )
-
-  const userLists = {
-    count: Object.keys(lists).length,
-    next: null,
-    previous: null,
-    results: Object.entries(lists).reduce(
-      (acc, [id, list]) => [
-        ...acc,
-        {
-          id,
-          item_count: list.count,
-          name: `Company List ${id.toUpperCase()}`,
-          created_on: new Date().toISOString(),
-        },
-      ],
-      [],
-    ),
-  }
-
-  const scope = nock(config.apiRoot)
-    .get('/v4/company-list')
-    .reply(200, userLists)
-
-  const numberOfLists = Object.keys(listIds).length
-  if (numberOfLists) {
-    return scope
-      .get(companyListItemRegexp)
-      .times(numberOfLists)
-      .reply(200, uri => lists[uri.match(companyListItemRegexp)[1]])
-  }
-
-  return scope
-}
 
 describe('fetchCompanyLists', () => {
   describe('No lists', async () => {
