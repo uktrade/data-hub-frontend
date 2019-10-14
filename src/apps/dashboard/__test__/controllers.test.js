@@ -1,4 +1,82 @@
 var rpErrors = require('request-promise/errors')
+const { mockCompanyListsServer } = require('./repos.test')
+
+const withPopulatedCompanyLists = () =>
+  mockCompanyListsServer({
+    companyIdString: 'abcdef',
+    listIds: {
+      x: 'abc',
+      y: 'def',
+    },
+  })
+
+const canSeeCompanyListsRequest = {
+  locals: {
+    user: {
+      permissions: ['company_list.view_companylistitem'],
+    },
+    features: {
+      companies_add_remove_from_lists: true,
+    },
+  },
+}
+
+const expectedCompanyLists = [
+  {
+    id: 'x',
+    name: 'Company List X',
+    companies: [
+      {
+        company: {
+          id: 'a',
+          name: 'Company A',
+        },
+        latestInteraction: {},
+      },
+      {
+        company: {
+          id: 'b',
+          name: 'Company B',
+        },
+        latestInteraction: {},
+      },
+      {
+        company: {
+          id: 'c',
+          name: 'Company C',
+        },
+        latestInteraction: {},
+      },
+    ],
+  },
+  {
+    id: 'y',
+    name: 'Company List Y',
+    companies: [
+      {
+        company: {
+          id: 'd',
+          name: 'Company D',
+        },
+        latestInteraction: {},
+      },
+      {
+        company: {
+          id: 'e',
+          name: 'Company E',
+        },
+        latestInteraction: {},
+      },
+      {
+        company: {
+          id: 'f',
+          name: 'Company F',
+        },
+        latestInteraction: {},
+      },
+    ],
+  },
+]
 
 describe('dashboard controller', () => {
   beforeEach(() => {
@@ -9,10 +87,7 @@ describe('dashboard controller', () => {
     })
 
     this.resMock = {
-      locals: {
-        user: {},
-        features: {},
-      },
+      ...canSeeCompanyListsRequest,
       render: sinon.spy(),
       title: sinon.stub().returnsThis(),
     }
@@ -58,6 +133,8 @@ describe('dashboard controller', () => {
     beforeEach(async () => {
       this.fetchHomepageDataStub.resolves(this.dashData)
       this.rpStub.resolves([])
+
+      withPopulatedCompanyLists()
       await this.controllers.renderDashboard(
         this.reqMock,
         this.resMock,
@@ -89,27 +166,10 @@ describe('dashboard controller', () => {
     it('should set a page title', () => {
       expect(this.resMock.title).to.be.calledWith('Dashboard')
     })
-  })
 
-  context('when the user has no permissions to view my-companies', () => {
-    beforeEach(async () => {
-      this.resMock = {
-        locals: {
-          user: {
-            permissions: [],
-          },
-        },
-        render: sinon.spy(),
-        title: sinon.stub().returnsThis(),
-      }
-
-      this.fetchHomepageDataStub.resolves(this.dashData)
-      this.rpStub.resolves()
-      await this.controllers.renderDashboard(
-        this.reqMock,
-        this.resMock,
-        this.nextSpy
-      )
+    it('should render the company lists', () => {
+      expect(this.resMock.render.firstCall.args[1].companyLists)
+        .to.deep.equal(expectedCompanyLists)
     })
   })
 
@@ -117,6 +177,8 @@ describe('dashboard controller', () => {
     beforeEach(async () => {
       this.error = { status: 500 }
       this.fetchHomepageDataStub.rejects(this.error)
+
+      withPopulatedCompanyLists()
       await this.controllers.renderDashboard(
         this.reqMock,
         this.resMock,
@@ -137,17 +199,14 @@ describe('dashboard controller', () => {
     // TODO: Before each is useless here as we only have one test case.
     beforeEach(async () => {
       this.resMock = {
-        locals: {
-          user: {
-            permissions: [],
-          },
-          features: {},
-        },
+        ...canSeeCompanyListsRequest,
         render: sinon.spy(),
         title: sinon.stub().returnsThis(),
       }
       this.fetchHomepageDataStub.resolves(this.dashData)
       this.rpStub.rejects()
+
+      withPopulatedCompanyLists()
       await this.controllers.renderDashboard(
         this.reqMock,
         this.resMock,
@@ -157,7 +216,7 @@ describe('dashboard controller', () => {
 
     it('should return an empty array', () => {
       const expected = {
-        companyLists: undefined,
+        companyLists: expectedCompanyLists,
         contacts: [{ id: '1234' }],
         interactions: [{ id: '4321' }],
         articleFeed: [],
@@ -176,17 +235,14 @@ describe('dashboard controller', () => {
     // TODO: Before each is useless here as we only have one test case.
     beforeEach(async () => {
       this.resMock = {
-        locals: {
-          user: {
-            permissions: [],
-          },
-          features: {},
-        },
+        ...canSeeCompanyListsRequest,
         render: sinon.spy(),
         title: sinon.stub().returnsThis(),
       }
       this.fetchHomepageDataStub.resolves(this.dashData)
       this.rpStub.throws(rpErrors.StatusCodeError(500))
+
+      withPopulatedCompanyLists()
       await this.controllers.renderDashboard(
         this.reqMock,
         this.resMock,
@@ -196,7 +252,7 @@ describe('dashboard controller', () => {
 
     it('should return an empty array', () => {
       const expected = {
-        companyLists: undefined,
+        companyLists: expectedCompanyLists,
         contacts: [{ id: '1234' }],
         interactions: [{ id: '4321' }],
         articleFeed: [],
