@@ -1,5 +1,5 @@
 var rpErrors = require('request-promise/errors')
-const { mockCompanyListsServer } = require('./repos.test')
+const { mockCompanyListsServer } = require('./utils')
 
 const withPopulatedCompanyLists = () =>
   mockCompanyListsServer({
@@ -9,17 +9,6 @@ const withPopulatedCompanyLists = () =>
       y: 'def',
     },
   })
-
-const canSeeCompanyListsRequest = {
-  locals: {
-    user: {
-      permissions: ['company_list.view_companylistitem'],
-    },
-    features: {
-      companies_add_remove_from_lists: true,
-    },
-  },
-}
 
 const expectedCompanyLists = [
   {
@@ -77,6 +66,37 @@ const expectedCompanyLists = [
     ],
   },
 ]
+
+const canSeeCompanyListsRequest = {
+  locals: {
+    user: {
+      permissions: ['company_list.view_companylistitem'],
+    },
+    features: {
+      companies_add_remove_from_lists: true,
+    },
+  },
+}
+
+const cannotSeeCompanyListsRequest = {
+  locals: {
+    user: {
+      permissions: [],
+    },
+    features: {
+      companies_add_remove_from_lists: true,
+    },
+  },
+}
+
+const companyListsFeatureOffRequest = {
+  locals: {
+    user: {
+      permissions: ['company_list.view_companylistitem'],
+    },
+    features: {},
+  },
+}
 
 describe('dashboard controller', () => {
   beforeEach(() => {
@@ -264,6 +284,52 @@ describe('dashboard controller', () => {
         },
       }
       expect(this.resMock.render.firstCall.args[1]).to.deep.equal(expected)
+    })
+  })
+
+  context('when the company list feature is off', () => {
+    beforeEach(async () => {
+      this.resMock = {
+        ...companyListsFeatureOffRequest,
+        render: sinon.spy(),
+        title: sinon.stub().returnsThis(),
+      }
+      this.fetchHomepageDataStub.resolves(this.dashData)
+
+      withPopulatedCompanyLists()
+      await this.controllers.renderDashboard(
+        this.reqMock,
+        this.resMock,
+        this.nextSpy
+      )
+    })
+
+    it('it should not be rendered', () => {
+      expect(this.resMock.render.firstCall.args[1].companyLists)
+        .to.not.be.ok
+    })
+  })
+
+  context("when the user doesn't have the right permission", () => {
+    beforeEach(async () => {
+      this.resMock = {
+        ...cannotSeeCompanyListsRequest,
+        render: sinon.spy(),
+        title: sinon.stub().returnsThis(),
+      }
+      this.fetchHomepageDataStub.resolves(this.dashData)
+
+      withPopulatedCompanyLists()
+      await this.controllers.renderDashboard(
+        this.reqMock,
+        this.resMock,
+        this.nextSpy
+      )
+    })
+
+    it('company lists should not be rendered', () => {
+      expect(this.resMock.render.firstCall.args[1].companyLists)
+        .to.not.be.ok
     })
   })
 })
