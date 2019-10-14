@@ -1,13 +1,15 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const proxyquire = require('proxyquire')
+const urls = require('../../../../../src/lib/urls')
+const buildMiddlewareParameters = require('../../../helpers/middleware-parameters-builder')
 
-const companyMock = require('~/test/unit/data/companies/company-v4.json')
+const companyMock = require('../../../data/companies/company-v4.json')
 
 describe('Company export controller', () => {
   beforeEach(() => {
     this.saveCompany = sinon.stub()
     this.transformerSpy = sinon.spy()
 
-    this.controller = proxyquire('~/src/apps/companies/controllers/exports', {
+    this.controller = proxyquire('../../../../../src/apps/companies/controllers/exports', {
       '../repos': {
         saveCompany: this.saveCompany,
       },
@@ -204,7 +206,7 @@ describe('Company export controller', () => {
       })
 
       it('should redirect to exports routes', () => {
-        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledWith(`/companies/${companyMock.id}/exports`)
+        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledWith(urls.companies.exports(companyMock.id))
         expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
       })
 
