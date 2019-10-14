@@ -21,9 +21,9 @@ describe('Dashboard', () => {
   })
 })
 
-const companyListItemRegexp = /\/v4\/company-list\/([^/]+)\/item/
+const mockCompanyListsServer = ({ companyIdString = '', listIds = {} } = {}) => {
+  const companyListItemRegexp = /\/v4\/company-list\/([^/]+)\/item/
 
-const createMockServer = ({ companyIdString, listIds }) => {
   const companies = [...companyIdString].reduce(
     (acc, id) => ({
       ...acc,
@@ -53,45 +53,47 @@ const createMockServer = ({ companyIdString, listIds }) => {
     {},
   )
 
-  return {
-    'company-list': {
-      count: Object.keys(lists).length,
-      next: null,
-      previous: null,
-      results: Object.entries(lists).reduce(
-        (acc, [id, list]) => [
-          ...acc,
-          {
-            id,
-            item_count: list.count,
-            name: `Company List ${id.toUpperCase()}`,
-            created_on: new Date().toISOString(),
-          },
-        ],
-        [],
-      ),
-    },
-    'company-list/:id/item': uri =>
-      lists[uri.match(companyListItemRegexp)[1]],
+  const userLists = {
+    count: Object.keys(lists).length,
+    next: null,
+    previous: null,
+    results: Object.entries(lists).reduce(
+      (acc, [id, list]) => [
+        ...acc,
+        {
+          id,
+          item_count: list.count,
+          name: `Company List ${id.toUpperCase()}`,
+          created_on: new Date().toISOString(),
+        },
+      ],
+      [],
+    ),
   }
+
+  const scope = nock(config.apiRoot)
+    .get('/v4/company-list')
+    .reply(200, userLists)
+
+  const numberOfLists = Object.keys(listIds).length
+  if (numberOfLists) {
+    return scope
+      .get(companyListItemRegexp)
+      .times(numberOfLists)
+      .reply(200, uri => lists[uri.match(companyListItemRegexp)[1]])
+  }
+
+  return scope
 }
 
 describe('fetchCompanyLists', () => {
   describe('No lists', async () => {
-    const mockServer = createMockServer({
-      companyIdString: '',
-      listIds: {},
-    })
-
-    nock(config.apiRoot)
-      .get('/v4/company-list')
-      .reply(200, mockServer['company-list'])
-
+    mockCompanyListsServer()
     expect(await repos.fetchCompanyLists('DUMMY TOKEN')).to.deep.equal([])
   })
 
   describe('Many lists', async () => {
-    const mockServer = createMockServer({
+    mockCompanyListsServer({
       companyIdString: 'abcdefgh',
       listIds: {
         u: '',
@@ -101,13 +103,6 @@ describe('fetchCompanyLists', () => {
         z: 'efg',
       },
     })
-
-    nock(config.apiRoot)
-      .get(companyListItemRegexp)
-      .times(5)
-      .reply(200, mockServer['company-list/:id/item'])
-      .get('/v4/company-list')
-      .reply(200, mockServer['company-list'])
 
     expect(await repos.fetchCompanyLists('DUMMY TOKEN')).to.deep.equal([
       {
@@ -240,3 +235,7 @@ describe('fetchCompanyLists', () => {
     ])
   })
 })
+
+module.exports = {
+  mockCompanyListsServer,
+}
