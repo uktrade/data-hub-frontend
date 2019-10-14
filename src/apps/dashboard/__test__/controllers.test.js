@@ -10,9 +10,8 @@ describe('dashboard controller', () => {
 
     this.resMock = {
       locals: {
-        user: {
-          permissions: ['company_list.view_companylistitem'],
-        },
+        user: {},
+        features: {},
       },
       render: sinon.spy(),
       title: sinon.stub().returnsThis(),
@@ -21,7 +20,6 @@ describe('dashboard controller', () => {
     this.nextSpy = sinon.spy()
 
     this.fetchHomepageDataStub = sinon.stub()
-    this.fetchCompanyListStub = sinon.stub()
     this.formatHelpCentreAnnouncementsStub = sinon.stub()
     this.rpStub = sinon.stub()
     this.helpCentre = {
@@ -43,28 +41,9 @@ describe('dashboard controller', () => {
       ],
     }
 
-    this.companyData = {
-      results: [
-        {
-          company: {
-            name: 'Company name',
-            id: '39cad2d5-0fd2-427d-860a-47b120b0109e',
-            isArchived: false,
-          },
-          latestInteraction: {
-            id: '4db036cd-7444-46bb-9b51-67425e8ec189',
-            date: '2019-08-06',
-            displayDate: '06 Aug 19',
-            subject: 'a subject',
-          },
-        },
-      ],
-    }
-
     this.controllers = proxyquire('~/src/apps/dashboard/controllers', {
       './repos': {
         fetchHomepageData: this.fetchHomepageDataStub,
-        fetchCompanyList: this.fetchCompanyListStub,
       },
       '../../../config': {
         helpCentre: this.helpCentre,
@@ -78,7 +57,6 @@ describe('dashboard controller', () => {
   context('when there are no errors calling the API', () => {
     beforeEach(async () => {
       this.fetchHomepageDataStub.resolves(this.dashData)
-      this.fetchCompanyListStub.resolves(this.companyData)
       this.rpStub.resolves([])
       await this.controllers.renderDashboard(
         this.reqMock,
@@ -126,29 +104,12 @@ describe('dashboard controller', () => {
       }
 
       this.fetchHomepageDataStub.resolves(this.dashData)
-      this.fetchCompanyListStub.resolves(this.companyData)
       this.rpStub.resolves()
       await this.controllers.renderDashboard(
         this.reqMock,
         this.resMock,
         this.nextSpy
       )
-    })
-    it('canViewCompanyList should be false', () => {
-      const expected = {
-        companyList: null,
-        contacts: [{ id: '1234' }],
-        interactions: [{ id: '4321' }],
-        articleFeed: [],
-        interactionsPermitted: false,
-        canViewCompanyList: false,
-        helpCentre: {
-          announcementsURL: 'www',
-          token: '1',
-          url: 'www',
-        },
-      }
-      expect(this.resMock.render.firstCall.args[1]).to.deep.equal(expected)
     })
   })
 
@@ -173,18 +134,19 @@ describe('dashboard controller', () => {
   })
 
   context('when the Help centre API fails to return data', () => {
+    // TODO: Before each is useless here as we only have one test case.
     beforeEach(async () => {
       this.resMock = {
         locals: {
           user: {
             permissions: [],
           },
+          features: {},
         },
         render: sinon.spy(),
         title: sinon.stub().returnsThis(),
       }
       this.fetchHomepageDataStub.resolves(this.dashData)
-      this.fetchCompanyListStub.resolves(this.companyData)
       this.rpStub.rejects()
       await this.controllers.renderDashboard(
         this.reqMock,
@@ -195,12 +157,11 @@ describe('dashboard controller', () => {
 
     it('should return an empty array', () => {
       const expected = {
-        companyList: null,
+        companyLists: undefined,
         contacts: [{ id: '1234' }],
         interactions: [{ id: '4321' }],
         articleFeed: [],
         interactionsPermitted: false,
-        canViewCompanyList: false,
         helpCentre: {
           announcementsURL: 'www',
           token: '1',
@@ -212,18 +173,19 @@ describe('dashboard controller', () => {
   })
 
   context('when the Help centre API request throws an error', () => {
+    // TODO: Before each is useless here as we only have one test case.
     beforeEach(async () => {
       this.resMock = {
         locals: {
           user: {
             permissions: [],
           },
+          features: {},
         },
         render: sinon.spy(),
         title: sinon.stub().returnsThis(),
       }
       this.fetchHomepageDataStub.resolves(this.dashData)
-      this.fetchCompanyListStub.resolves(this.companyData)
       this.rpStub.throws(rpErrors.StatusCodeError(500))
       await this.controllers.renderDashboard(
         this.reqMock,
@@ -234,12 +196,11 @@ describe('dashboard controller', () => {
 
     it('should return an empty array', () => {
       const expected = {
-        companyList: null,
+        companyLists: undefined,
         contacts: [{ id: '1234' }],
         interactions: [{ id: '4321' }],
         articleFeed: [],
         interactionsPermitted: false,
-        canViewCompanyList: false,
         helpCentre: {
           announcementsURL: 'www',
           token: '1',
