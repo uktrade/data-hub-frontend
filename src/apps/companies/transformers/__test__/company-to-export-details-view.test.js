@@ -8,13 +8,13 @@ const EXPORT_POTENTIAL_LABEL = 'Export potential'
 describe('transformCompanyToExportDetailsView', () => {
   let transformCompanyToExportDetailsView
   let urls
-  let greatProfileResponse
+  let greatUrlProfileResponse
 
   beforeEach(() => {
-    greatProfileResponse = faker.internet.url()
+    greatUrlProfileResponse = faker.internet.url()
     urls = {
       external: {
-        greatProfile: sinon.stub().returns(greatProfileResponse),
+        greatProfile: sinon.stub().returns(greatUrlProfileResponse),
       },
     }
     transformCompanyToExportDetailsView = proxyquire(transformerPath, {
@@ -155,7 +155,7 @@ describe('transformCompanyToExportDetailsView', () => {
         const viewRecord = createRecord({ great_profile_status: 'published' })
         const data = viewRecord[GREAT_LABEL]
 
-        expect(data).to.have.property('url', greatProfileResponse)
+        expect(data).to.have.property('url', greatUrlProfileResponse)
         expect(data).to.have.property('newWindow', true)
         expect(data).to.have.property('name', '"Find a supplier" profile')
         expect(data).to.have.property('hint', '(opens in a new window)')

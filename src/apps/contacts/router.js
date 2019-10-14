@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const urls = require('../../lib/urls')
 
 const { ENTITIES } = require('../search/constants')
 const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY, QUERY_FIELDS } = require('./constants')
@@ -20,7 +21,7 @@ const { transformContactToListItem } = require('./transformers')
 
 const interactionsRouter = require('../interactions/router.sub-app')
 
-router.get('/',
+router.get(urls.contacts.index.route,
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   getRequestBody(QUERY_FIELDS),
   getCollection('contact', ENTITIES, transformContactToListItem),
