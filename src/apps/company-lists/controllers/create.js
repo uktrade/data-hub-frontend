@@ -25,7 +25,7 @@ async function renderCreateListForm (req, res, next) {
           name: 'listName',
           label: 'List name',
           hint: 'This is a name only you see, and can be up to 30 characters',
-          cancelUrl: `/companies/${company.id}`,
+          cancelUrl: `/companies/${company.id}/lists/add-remove`,
           maxLength: 30,
         },
       })

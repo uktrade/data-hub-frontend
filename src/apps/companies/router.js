@@ -42,7 +42,7 @@ const {
 
 const { setCompanyContactRequestBody, getCompanyContactCollection } = require('./middleware/contact-collection')
 const { populateForm, handleFormPost } = require('./middleware/form')
-const { getCompany, setIsCompanyAlreadyAdded, addCompanyOrRemoveFromList, getCompaniesHouseRecord } = require('./middleware/params')
+const { getCompany, setIsCompanyAlreadyAdded, setDoAnyListsExist, addCompanyOrRemoveFromList, getCompaniesHouseRecord } = require('./middleware/params')
 const { setInteractionsDetails } = require('./middleware/interactions')
 const { setGlobalHQ, removeGlobalHQ, addSubsidiary } = require('./middleware/hierarchies')
 const setCompaniesLocalNav = require('./middleware/local-navigation')
@@ -56,12 +56,13 @@ const investmentsRouter = require('./apps/investments/router')
 const matchingRouter = require('./apps/matching/router')
 const interactionsRouter = require('../interactions/router.sub-app')
 const activityFeedRouter = require('./apps/activity-feed/router')
-const addCreateListFormRouter = require('../company-lists/router')
+const companyListsRouter = require('../company-lists/router')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.param('companyId', getCompany)
 router.param('companyId', setIsCompanyAlreadyAdded)
+router.param('companyId', setDoAnyListsExist)
 router.param('companyNumber', getCompaniesHouseRecord)
 
 router.get('/',
@@ -78,6 +79,7 @@ router.get('/export',
 )
 
 router.use('/create', addCompanyFormRouter)
+router.use('/:companyId/lists', companyListsRouter)
 router.use('/:companyId/edit', editCompanyFormRouter)
 
 router.use('/:companyId/lists/create', addCreateListFormRouter)
