@@ -4,7 +4,10 @@ const buildMiddlewareParameters = require('../../../../unit/helpers/middleware-p
 const { handleAddRemoveCompanyToList, renderAddRemoveForm } = require('../../../../../src/apps/company-lists/controllers/add-remove')
 
 describe('Adding and removing a company to a list', () => {
-  let middlewareParameters = buildMiddlewareParameters()
+  let middlewareParameters
+  beforeEach(() => {
+    middlewareParameters = buildMiddlewareParameters()
+  })
   describe('#handleAddRemoveCompanyToList', () => {
     context('when adding a company to a list', () => {
       beforeEach(async () => {
@@ -38,7 +41,6 @@ describe('Adding and removing a company to a list', () => {
     })
     context('when removing a company from a list', () => {
       beforeEach(async () => {
-        middlewareParameters = buildMiddlewareParameters()
         middlewareParameters.reqMock.body = { list: { '1': 'no' } }
         middlewareParameters.resMock.locals = {
           csrfToken: 'token',
@@ -69,7 +71,6 @@ describe('Adding and removing a company to a list', () => {
     })
     context('when there is an error adding or removing a company from a list', () => {
       beforeEach(async () => {
-        middlewareParameters = buildMiddlewareParameters()
         middlewareParameters.reqMock.body = { list: { '1': 'no' } }
         middlewareParameters.resMock.locals = {
           csrfToken: 'token',
@@ -102,7 +103,6 @@ describe('Adding and removing a company to a list', () => {
   describe('#fetchListsCompanyIsOn', () => {
     context('when you fetch all lists company is on', () => {
       beforeEach(async () => {
-        middlewareParameters = buildMiddlewareParameters()
         middlewareParameters.resMock.locals = {
           csrfToken: 'token',
           company: {
@@ -110,16 +110,16 @@ describe('Adding and removing a company to a list', () => {
             id: '1',
           },
         }
-        let getAllCompanyListsStub = sinon.stub().resolves()
-        let getListsCompanyIsInStub = sinon.stub().resolves()
-        let transformCompaniesInListsStub = sinon.stub().resolves({
+        const getAllCompanyListsStub = sinon.stub().resolves()
+        const getListsCompanyIsInStub = sinon.stub().resolves()
+        const transformCompaniesInListsStub = sinon.stub().resolves({
           companyLists: [{
             listName: 'name',
             listId: '1',
             isAdded: 'yes',
           }],
         })
-        global.middleware = proxyquire('../../../../../src/apps/company-lists/controllers/add-remove', {
+        const middleware = proxyquire('../../../../../src/apps/company-lists/controllers/add-remove', {
           '../repos': {
             getAllCompanyLists: getAllCompanyListsStub,
             getListsCompanyIsIn: getListsCompanyIsInStub,
@@ -129,7 +129,7 @@ describe('Adding and removing a company to a list', () => {
           },
         })
 
-        await global.middleware.fetchListsCompanyIsOn(
+        await middleware.fetchListsCompanyIsOn(
           middlewareParameters.reqMock,
           middlewareParameters.resMock,
           middlewareParameters.nextSpy,
@@ -145,44 +145,42 @@ describe('Adding and removing a company to a list', () => {
         })
         expect(middlewareParameters.nextSpy).to.be.called
       })
-      context('when you get an error fetching all lists company is on', () => {
-        beforeEach(async () => {
-          middlewareParameters = buildMiddlewareParameters()
-          middlewareParameters.resMock.locals = {
-            csrfToken: 'token',
-            company: {
-              name: 'Company',
-              id: '1',
-            },
-          }
-          global.getAllCompanyListsStub = sinon.stub().rejects()
-          global.getListsCompanyIsInStub = sinon.stub().resolves()
-          global.transformCompaniesInListsStub = sinon.stub().resolves()
-          global.middleware = proxyquire('../../../../../src/apps/company-lists/controllers/add-remove', {
-            '../repos': {
-              getAllCompanyLists: global.getAllCompanyListsStub,
-              getListsCompanyIsIn: global.getListsCompanyIsInStub,
-            },
-            '../transformers': {
-              transformCompaniesInLists: global.transformCompaniesInListsStub,
-            },
-          })
-          await global.middleware.fetchListsCompanyIsOn(
-            middlewareParameters.reqMock,
-            middlewareParameters.resMock,
-            middlewareParameters.nextSpy,
-          )
+    })
+    context('when you get an error fetching all lists company is on', () => {
+      beforeEach(async () => {
+        middlewareParameters.resMock.locals = {
+          csrfToken: 'token',
+          company: {
+            name: 'Company',
+            id: '1',
+          },
+        }
+        const getAllCompanyListsStub = sinon.stub().rejects()
+        const getListsCompanyIsInStub = sinon.stub().resolves()
+        const transformCompaniesInListsStub = sinon.stub().resolves()
+        const middleware = proxyquire('../../../../../src/apps/company-lists/controllers/add-remove', {
+          '../repos': {
+            getAllCompanyLists: getAllCompanyListsStub,
+            getListsCompanyIsIn: getListsCompanyIsInStub,
+          },
+          '../transformers': {
+            transformCompaniesInLists: transformCompaniesInListsStub,
+          },
         })
-        it('should pass an error to the next callback', () => {
-          expect(middlewareParameters.nextSpy).to.be.called
-          expect(middlewareParameters.nextSpy.firstCall.args[0]).to.be.instanceof(Error)
-        })
+        await middleware.fetchListsCompanyIsOn(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy,
+        )
+      })
+      it('should pass an error to the next callback', () => {
+        expect(middlewareParameters.nextSpy).to.be.called
+        expect(middlewareParameters.nextSpy.firstCall.args[0]).to.be.instanceof(Error)
       })
     })
   })
   describe('#renderAddRemoveForm', () => {
     beforeEach(async () => {
-      middlewareParameters = buildMiddlewareParameters()
       middlewareParameters.resMock.locals = {
         csrfToken: 'token',
         company: {
