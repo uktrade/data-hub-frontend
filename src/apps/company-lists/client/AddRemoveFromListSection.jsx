@@ -38,10 +38,10 @@ const AddRemoveFromListSection = (
   }
 
   return (
-    <div>
+    <>
       {errorMessage && (
         <ErrorSummary
-          heading="There was an error adding/removing from lists"
+          heading="There was an error adding or removing from lists. Please try again."
           description={errorMessage}
           errors={[]}
         />
@@ -53,7 +53,7 @@ const AddRemoveFromListSection = (
         createNewListUrl={createNewListUrl}
         cancelLinkUrl={cancelLinkUrl}
       />
-    </div>
+    </>
   )
 }
 
