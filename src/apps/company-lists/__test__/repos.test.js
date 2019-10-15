@@ -1,4 +1,4 @@
-const config = require('~/config')
+const config = require('../../../../config')
 
 const {
   getCompanyList,
@@ -8,9 +8,9 @@ const {
   getAllCompanyLists,
   addCompanyToList,
   removeCompanyFromList,
-} = require('~/src/apps/company-lists/repos')
+} = require('../../../../src/apps/company-lists/repos')
 
-const companyListFixture = require('~/test/unit/data/company-lists/list-with-multiple-items.json')
+const companyListFixture = require('../../../../test/unit/data/company-lists/list-with-multiple-items.json')
 
 const companyListId = companyListFixture.id
 
