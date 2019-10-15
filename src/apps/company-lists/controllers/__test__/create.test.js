@@ -95,7 +95,7 @@ describe('Creating company lists', () => {
             name: 'listName',
             label: 'List name',
             hint: 'This is a name only you see, and can be up to 30 characters',
-            cancelUrl: `/companies/1`,
+            cancelUrl: `/companies/1/lists/add-remove`,
             maxLength: 30,
           },
         })
