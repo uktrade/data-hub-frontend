@@ -4,6 +4,10 @@ const {
   getCompanyList,
   deleteCompanyList,
   createUserCompanyList,
+  getListsCompanyIsIn,
+  getAllCompanyLists,
+  addCompanyToList,
+  removeCompanyFromList,
 } = require('~/src/apps/company-lists/repos')
 
 const companyListFixture = require('~/test/unit/data/company-lists/list-with-multiple-items.json')
@@ -27,6 +31,32 @@ describe('Company list repository', () => {
     })
   })
 
+  describe('#getListsCompanyIsIn', () => {
+    beforeEach(() => {
+      nock(config.apiRoot)
+        .get('/v4/company-list?items__company_id=1')
+        .reply(200, companyListFixture)
+    })
+
+    it('should return all lists a company is in', async () => {
+      const companyList = await getListsCompanyIsIn('TEST_TOKEN', '1')
+      expect(companyList).to.deep.equal(companyListFixture)
+    })
+  })
+
+  describe('#getAllCompanyLists', () => {
+    beforeEach(() => {
+      nock(config.apiRoot)
+        .get('/v4/company-list')
+        .reply(200, companyListFixture)
+    })
+
+    it('should return all company lists', async () => {
+      const companyList = await getAllCompanyLists('TEST_TOKEN')
+      expect(companyList).to.deep.equal(companyListFixture)
+    })
+  })
+
   describe('#getCompanyList', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
@@ -41,15 +71,43 @@ describe('Company list repository', () => {
   })
 
   describe('#deleteCompanyList', () => {
-    beforeEach(async () => {
+    beforeEach(() => {
       nock(config.apiRoot)
         .delete(`/v4/company-list/${companyListId}`)
         .reply(204)
     })
 
-    it('deletes a company list', async () => {
+    it('deletes a company list', () => {
       expect(
-        async () => deleteCompanyList('token', companyListId)
+        () => deleteCompanyList('token', companyListId)
+      ).to.not.throw()
+    })
+  })
+
+  describe('#addCompanyToList', () => {
+    beforeEach(() => {
+      nock(config.apiRoot)
+        .put('/v4/company-list/1/item/2')
+        .reply(204)
+    })
+
+    it('should add a company to a list', () => {
+      expect(
+        () => addCompanyToList('TEST_TOKEN', '1', '2')
+      ).to.not.throw()
+    })
+  })
+
+  describe('#removeCompanyFromList', () => {
+    beforeEach(() => {
+      nock(config.apiRoot)
+        .delete('/v4/company-list/1/item/2')
+        .reply(204)
+    })
+
+    it('should delete a company from a list', () => {
+      expect(
+        () => removeCompanyFromList('TEST_TOKEN', '1', '2')
       ).to.not.throw()
     })
   })
