@@ -4,7 +4,6 @@ const {
   searchCompanies,
   searchInvestments,
   searchForeignCompanies,
-  searchLimitedCompanies,
   exportSearch,
   searchAutocomplete,
   searchDnbCompanies,
@@ -191,34 +190,6 @@ describe('Search service', () => {
         })
 
       this.actual = await searchForeignCompanies({
-        token: '1234',
-        searchTerm: 'search',
-      })
-    })
-
-    it('should return the response', () => {
-      expect(this.actual).to.deep.equal({
-        aggregations: [],
-        count: 0,
-        page: 1,
-        results: [],
-      })
-    })
-  })
-
-  describe('#searchLimitedCompanies', () => {
-    beforeEach(async () => {
-      nock(config.apiRoot)
-        .post(`/v4/search/companieshousecompany?offset=0&limit=10`, {
-          original_query: 'search',
-        })
-        .reply(200, {
-          count: 0,
-          results: [],
-          aggregations: [],
-        })
-
-      this.actual = await searchLimitedCompanies({
         token: '1234',
         searchTerm: 'search',
       })
