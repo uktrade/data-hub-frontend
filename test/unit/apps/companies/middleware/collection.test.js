@@ -1,7 +1,6 @@
 const { pickBy } = require('lodash')
 
 const config = require('~/config')
-const companiesHouseSearchResults = require('~/test/unit/data/companies/companies-house-search.json')
 const ghqCompanySearchResponse = require('~/test/unit/data/companies/ghq-company-search-response.json')
 const ghqCompanyTransformedResults = require('~/test/unit/data/companies/ghq-company-transformed-results.json')
 const subsidiaryCompanySearchResponse = require('~/test/unit/data/companies/subsidiary-company-search-response.json')
@@ -36,57 +35,6 @@ describe('Company collection middleware', () => {
     this.resMock = {
       locals: {},
     }
-  })
-
-  describe('#getLimitedCompaniesCollection', () => {
-    context('when search returns results', () => {
-      beforeEach(async () => {
-        this.searchStub = sinon.stub().resolves(companiesHouseSearchResults)
-        this.transformerStub = sinon.stub().returns({
-          id: '1234',
-          name: 'Freds',
-          meta: [],
-        })
-
-        const collectionMiddleware = proxyquire('~/src/apps/companies/middleware/collection', {
-          '../../../modules/search/services': {
-            searchLimitedCompanies: this.searchStub,
-          },
-          '../transformers': {
-            transformCompaniesHouseToListItem: this.transformerStub,
-          },
-        })
-
-        this.reqMock = Object.assign({}, this.reqMock, {
-          query: {
-            term: 'fred',
-            page: '2',
-          },
-        })
-
-        await collectionMiddleware.getLimitedCompaniesCollection(this.reqMock, this.resMock, this.nextSpy)
-      })
-
-      it('should search for companies house results', () => {
-        expect(this.searchStub).to.be.calledWith({
-          token: 'abcd',
-          searchTerm: 'fred',
-          page: '2',
-        })
-      })
-
-      it('should use the companies house transformer', () => {
-        expect(this.transformerStub).to.be.called
-      })
-
-      it('should include results', () => {
-        expect(this.resMock.locals).to.have.property('results')
-      })
-
-      it('should adjust the url in the search results to point to the add company screen', () => {
-        expect(this.resMock.locals.results.items[0].url).to.equal('/companies/add/1234')
-      })
-    })
   })
 
   describe('#getGlobalHQCompaniesCollection', () => {
