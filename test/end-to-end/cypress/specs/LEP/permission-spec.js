@@ -1,35 +1,6 @@
 const selectors = require('../../../../selectors')
 
 describe('LEP Permission', () => {
-  describe('activity', () => {
-    before(() => {
-      cy.visit('/companies/375094ac-f79a-43e5-9c88-059a7caa17f0')
-    })
-
-    it('should display LEP only tabs', () => {
-      cy.get(selectors.tabbedLocalNav().tabs)
-        .should('have.length', 4)
-        .and('contain', 'Company contacts')
-        .and('contain', 'Core team')
-        .and('contain', 'Investment')
-        .and('contain', 'Export')
-    })
-  })
-
-  describe('dashboard', () => {
-    before(() => {
-      cy.visit('')
-    })
-
-    it('should display LEP only tabs', () => {
-      cy.get(selectors.nav.headerNav)
-        .should('have.length', 3)
-        .and('contain', 'Companies')
-        .and('contain', 'Contacts')
-        .and('contain', 'Investments')
-    })
-  })
-
   describe('orders', () => {
     before(() => {
       cy.visit('/companies/0fb3379c-341c-4da4-b825-bf8d47b26baa/orders', { failOnStatusCode: false })
@@ -60,9 +31,9 @@ describe('LEP Permission', () => {
     })
   })
 
-  describe('investment document', () => {
+  describe('omis', () => {
     before(() => {
-      cy.visit('/investments/projects/ba1f0b14-5fe4-4c36-bf6a-ddf115272977/documents', { failOnStatusCode: false })
+      cy.visit('/omis', { failOnStatusCode: false })
     })
 
     it('should prevent LEP users from accessing the page', () => {
@@ -70,20 +41,39 @@ describe('LEP Permission', () => {
     })
   })
 
-  context('contacts', () => {
-    describe('details', () => {
+  context('investment', () => {
+    describe('investment document', () => {
       before(() => {
-        cy.visit('/contacts/9b1138ab-ec7b-497f-b8c3-27fed21694ef/details', { failOnStatusCode: false })
+        cy.visit('/investments/projects/ba1f0b14-5fe4-4c36-bf6a-ddf115272977/documents', { failOnStatusCode: false })
       })
 
-      it('should display LEP only tabs', () => {
-        cy.get(selectors.nav.sideNav)
-          .should('have.length', 2)
-          .and('contain', 'Details')
-          .and('contain', 'Audit history')
+      it('should prevent LEP users from accessing the page', () => {
+        cy.get(selectors.collection.error).should('contain', '403')
       })
     })
 
+    describe('interaction', () => {
+      before(() => {
+        cy.visit('/investments/projects/e32b3c33-80ac-4589-a8c4-dda305d726ba/interactions', { failOnStatusCode: false })
+      })
+
+      it('should prevent LEP users from accessing an interaction they don\'t have access to', () => {
+        cy.get(selectors.collection.error).should('contain', '403')
+      })
+    })
+
+    describe('team', () => {
+      before(() => {
+        cy.visit('/investments/projects/b30dee70-b2d6-48cf-9ce4-b9264854470c/team', { failOnStatusCode: false })
+      })
+
+      it('should prevent LEP users from accessing a team they don\'t have access to', () => {
+        cy.get(selectors.collection.error).should('contain', '403')
+      })
+    })
+  })
+
+  context('contacts', () => {
     describe('documents', () => {
       before(() => {
         cy.visit('/contacts/9b1138ab-ec7b-497f-b8c3-27fed21694ef/documents', { failOnStatusCode: false })
