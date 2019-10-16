@@ -32,13 +32,36 @@ describe('Collection', () => {
       })
     })
 
-    describe('project', () => {
+    describe('interaction', () => {
       before(() => {
-        cy.visit('/investments/projects/ba1f0b14-5fe4-4c36-bf6a-ddf115272977/details')
+        cy.visit('/investments/projects/ba1f0b14-5fe4-4c36-bf6a-ddf115272977/interactions')
       })
 
       it('should return the results summary for a contact collection', () => {
         verifyCollection()
+      })
+    })
+
+    describe('proposition', () => {
+      before(() => {
+        cy.visit('/investments/projects/ba1f0b14-5fe4-4c36-bf6a-ddf115272977/propositions')
+      })
+
+      it('should return the results summary for a contact collection', () => {
+        verifyCollection()
+      })
+    })
+
+    describe('proposition', () => {
+      before(() => {
+        cy.visit('/investments/projects/ba1f0b14-5fe4-4c36-bf6a-ddf115272977/team')
+      })
+
+      it('should return the results summary for a contact collection', () => {
+        cy.get(selectors.companyInvestmentProjects.investmentTeamGrid)
+          .should('contain', 'Client Relationship Manager')
+          .and('contain', 'Marketing - Marketing Team')
+          .and('contain', 'Paula Churing')
       })
     })
   })
