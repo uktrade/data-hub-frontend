@@ -4,11 +4,12 @@ const allListsCompaniesIn = require('../../data/company-lists/all-lists-company-
 const { transformCompaniesInLists } = require('../../../../src/apps/company-lists/transformers')
 
 describe('#transformCompaniesInLists', () => {
+  let transformed
   beforeEach(async () => {
-    global.transformed = await transformCompaniesInLists(allLists, allListsCompaniesIn)
+    transformed = await transformCompaniesInLists(allLists, allListsCompaniesIn)
   })
   it('should return a list of what lists the company is in', () => {
-    expect(global.transformed).to.deep.equal({
+    expect(transformed).to.deep.equal({
       companyLists: [
         {
           listName: 'List A',
