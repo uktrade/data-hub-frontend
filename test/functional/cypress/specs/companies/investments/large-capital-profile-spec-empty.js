@@ -1,5 +1,6 @@
 const fixtures = require('../../../fixtures')
 const selectors = require('../../../../../selectors')
+
 const { dnbCorp } = fixtures.company
 
 describe('Company Investments and Large capital profile', () => {
