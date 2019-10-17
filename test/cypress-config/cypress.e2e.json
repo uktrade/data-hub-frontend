@@ -1,0 +1,9 @@
+{
+  "integrationFolder": "test/end-to-end/cypress/specs",
+  "baseUrl": "http://localhost:3000",
+  "video": false,
+  "screenshotOnRunFailure": false,
+  "pluginsFile": false,
+  "defaultCommandTimeout": 10000,
+  "projectId": "w97se2"
+}
