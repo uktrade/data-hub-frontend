@@ -51,7 +51,6 @@ cypress/**
 visual-screenshots/comparison
 visual-screenshots/diff
 visual-report
-cypress.json
 
 # IDE configurations
 .vscode/
