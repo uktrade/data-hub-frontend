@@ -452,8 +452,8 @@ jobs:
       - *wait_for_frontend
       - *create_cucumber_dirs
       - run:
-          name: Run LEP acceptance tests
-          command: yarn circle:acceptance:lep-staff
+          name: Run LEP e2e tests
+          command: yarn test:e2e --browser chrome
       - *create_at_reports
       - *store_test_results
       - *store_test_artifacts
