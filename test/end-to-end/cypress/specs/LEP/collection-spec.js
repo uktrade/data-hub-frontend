@@ -1,5 +1,13 @@
 const selectors = require('../../../../selectors')
 
+const verifyCollection = () => {
+  cy.get(selectors.collection.headerCount).invoke('text').then((headerCount) => {
+    cy.get(selectors.collection.items).should((collectionItems) => {
+      expect(headerCount).to.eq(collectionItems.length.toString())
+    })
+  })
+}
+
 describe('Collection', () => {
   describe('company', () => {
     before(() => {
@@ -66,11 +74,3 @@ describe('Collection', () => {
     })
   })
 })
-
-const verifyCollection = () => {
-  cy.get(selectors.collection.headerCount).invoke('text').then((headerCount) => {
-    cy.get(selectors.collection.items).should((collectionItems) => {
-      expect(headerCount).to.eq(collectionItems.length.toString())
-    })
-  })
-}
