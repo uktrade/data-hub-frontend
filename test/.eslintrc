@@ -20,7 +20,7 @@
     {
       "files": ["visual/**/*.js"],
       "rules": {
-        "no-undef": "off"   
+        "no-undef": "off"
       }
     }
   ]

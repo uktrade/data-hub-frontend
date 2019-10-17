@@ -7,6 +7,7 @@ const { getOptions } = require('../../../lib/options')
 const { buildExportAction } = require('../../../lib/export-helper')
 
 const FILTER_CONSTANTS = require('../../../lib/filter-constants')
+
 const QUERY_STRING = FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.PRIMARY.QUERY_STRING
 const SECTOR = FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.NAME
 
