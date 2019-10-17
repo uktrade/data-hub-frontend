@@ -5,6 +5,7 @@ const { globalFields } = require('../macros')
 const { transformObjectToOption } = require('../transformers')
 const { collectionFilterLabels, requirementsLabels } = require('./labels')
 const FILTER_CONSTANTS = require('../../lib/filter-constants')
+
 const PRIMARY_SECTOR_NAME =
   FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.PRIMARY.NAME
 

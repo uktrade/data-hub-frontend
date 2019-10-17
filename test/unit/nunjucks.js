@@ -1,5 +1,6 @@
 const nunjucks = require('nunjucks')
 const jsdom = require('jsdom')
+
 const { JSDOM } = jsdom
 
 const tradeElementsFilters = require('~/config/nunjucks/trade-elements-filters')

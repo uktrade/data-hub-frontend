@@ -5,6 +5,7 @@ const { buildSelectedFiltersSummary, buildFieldsWithSelectedEntities } = require
 const { getOptions } = require('../../../lib/options')
 
 const FILTER_CONSTANTS = require('../../../lib/filter-constants')
+
 const QUERY_STRING = FILTER_CONSTANTS.PROPOSITIONS.SECTOR.PRIMARY.QUERY_STRING
 const SECTOR = FILTER_CONSTANTS.PROPOSITIONS.SECTOR.NAME
 
