@@ -13,12 +13,6 @@ Feature: View collection of interactions for a contact
 
   @contacts-interactions-collection--sort # TODO
 
-  @contacts-interactions-collection--lep @lep
-  Scenario: Navigate to interactions as LEP
-
-    When I navigate to the `contacts.interactions` page using `contact` `Johnny Cakeman` fixture
-    Then I see the 403 error page
-
   @contacts-interactions-collection--da @da
   Scenario: Navigate to interaction as DA
 

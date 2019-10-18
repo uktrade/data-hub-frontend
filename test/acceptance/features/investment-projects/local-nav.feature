@@ -15,22 +15,6 @@ Feature: Investment projects local nav
       | Audit history             |
       | Evidence                  |
 
-  @investment-projects-local-nav--lep @lep
-  Scenario: Investment projects local nav as LEP
-
-    When I navigate to the `investments.fixture` page using `investment project` `New zoo (LEP)` fixture
-    Then there should be a local nav
-      | text                      |
-      | Project details           |
-      | Project team              |
-      | Interactions              |
-      | Evaluations               |
-      | Propositions              |
-      | Audit history             |
-      | Evidence                  |
-
-
-
   @investment-projects-local-nav--da @da
   Scenario: Investment projects local nav as DA
 

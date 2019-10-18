@@ -452,11 +452,10 @@ jobs:
       - *wait_for_frontend
       - *create_cucumber_dirs
       - run:
-          name: Run LEP acceptance tests
-          command: yarn circle:acceptance:lep-staff
-      - *create_at_reports
-      - *store_test_results
-      - *store_test_artifacts
+          name: Run LEP e2e tests
+          command: yarn test:e2e --browser chrome
+      - store_artifacts:
+          path: cypress/screenshots
 
   # Run acceptance tests for DA staff
   da_staff_at: &da_staff_at
