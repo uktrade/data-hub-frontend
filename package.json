@@ -26,6 +26,8 @@
     "test:acceptance:remote": "./.circleci/scripts/local-runner.js --config test/acceptance/nightwatch.conf.js",
     "test:functional": "cypress run",
     "test:functional:watch": "cypress open",
+    "test:e2e": "CYPRESS_integrationFolder=test/end-to-end/cypress/specs cypress run",
+    "test:e2e:watch": "CYPRESS_integrationFolder=test/end-to-end/cypress/specs cypress open",
     "test:visual": "./node_modules/.bin/wdio test/visual/wdio.conf.js",
     "coverage": "nyc --reporter=html --reporter=text --reporter=lcov npm run test:unit",
     "circle:unit": "nyc --reporter=lcov npm run test:unit -- --reporter mocha-circleci-reporter && codeclimate-test-reporter < coverage/lcov.info",
@@ -33,7 +35,6 @@
     "circle:acceptance": "nightwatch --config test/acceptance/nightwatch.conf.js --env circleci",
     "circle:acceptance:dit-staff": "yarn circle:acceptance --skiptags ignore,da,lep",
     "circle:acceptance:da-staff": "yarn circle:acceptance --tag da --skiptags ignore",
-    "circle:acceptance:lep-staff": "yarn circle:acceptance --tag lep --skiptags ignore",
     "heroku-postbuild": "yarn cache clean && npm rebuild && npm run build",
     "lint-staged": "lint-staged",
     "wavy-check": "grep -rlE \"(proxy|re)quire\\('~\" test | wc -l | { read count; if [ $count -gt 0 ]; then echo \"wavy dependency still in use by $count files\"; else echo '🎉 wavy dependency can be removed 🎉'; fi; }"
