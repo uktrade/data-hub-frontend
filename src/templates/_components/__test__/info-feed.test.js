@@ -37,64 +37,71 @@ const data = {
 }
 
 describe('Info feed component', () => {
+  let component
+  let heading
+  let subHeading
+  let outboundLink
+  let infoFeedLink
+  let infoFeedDate
+
   beforeEach(() => {
-    this.component = renderComponentToDom('info-feed', data)
-    this.heading = this.component.querySelector('.dashboard-section-title')
-    this.subHeading = this.component.querySelector(
+    component = renderComponentToDom('info-feed', data)
+    heading = component.querySelector('.govuk-heading-m')
+    subHeading = component.querySelector(
       '.dashboard-section__subheading'
     )
-    this.outboundLink = this.component.querySelector(
+    outboundLink = component.querySelector(
       '.dashboard-section__top-link'
     )
-    this.infoFeedLink = this.component.querySelectorAll(
+    infoFeedLink = component.querySelectorAll(
       '.dashboard-section__info-feed-link'
     )
-    this.infoFeedDate = this.component.querySelectorAll(
+    infoFeedDate = component.querySelectorAll(
       '.dashboard-section__info-feed-date'
     )
   })
   describe('Render correct heading', () => {
     it('should render heading', () => {
-      expect(this.heading.textContent).to.equal(data.heading)
+      expect(heading.textContent).to.equal(data.heading)
     })
   })
 
   describe('Render correct sub-heading', () => {
     it('should render sub-heading', () => {
-      expect(this.subHeading.textContent).to.equal(data.subHeading)
+      expect(subHeading.textContent).to.equal(data.subHeading)
     })
   })
 
   describe('Render correct outbound link', () => {
     it('should render outbound link', () => {
-      expect(this.outboundLink.textContent).to.equal(data.outboundLinkText)
-      expect(this.outboundLink.href).to.equal(data.outboundLinkURL)
+      expect(outboundLink.textContent).to.equal(data.outboundLinkText)
+      expect(outboundLink.href).to.equal(data.outboundLinkURL)
     })
   })
 
   describe('render feed values', () => {
     it('should only render as many feed items as feed limit value', () => {
-      expect(this.infoFeedLink.length).to.equal(data.feedLimit)
-      expect(this.infoFeedDate.length).to.equal(data.feedLimit)
+      expect(infoFeedLink.length).to.equal(data.feedLimit)
+      expect(infoFeedDate.length).to.equal(data.feedLimit)
     })
     it('should render correct feed items', () => {
-      expect(this.infoFeedLink[0].text).to.equal(data.dataFeed[0].heading)
-      expect(this.infoFeedLink[0].href).to.equal(data.dataFeed[0].link)
-      expect(this.infoFeedLink[1].text).to.equal(data.dataFeed[1].heading)
-      expect(this.infoFeedLink[1].href).to.equal(data.dataFeed[1].link)
-      expect(this.infoFeedLink[2].text).to.equal(data.dataFeed[2].heading)
-      expect(this.infoFeedLink[2].href).to.equal(data.dataFeed[2].link)
+      expect(infoFeedLink[0].text).to.equal(data.dataFeed[0].heading)
+      expect(infoFeedLink[0].href).to.equal(data.dataFeed[0].link)
+      expect(infoFeedLink[1].text).to.equal(data.dataFeed[1].heading)
+      expect(infoFeedLink[1].href).to.equal(data.dataFeed[1].link)
+      expect(infoFeedLink[2].text).to.equal(data.dataFeed[2].heading)
+      expect(infoFeedLink[2].href).to.equal(data.dataFeed[2].link)
     })
   })
   context('when there is no sub heading', () => {
     beforeEach(() => {
-      this.component = renderComponentToDom('info-feed', { ...data, subHeading: null })
-      this.subHeading = this.component.querySelector(
+      component = renderComponentToDom('info-feed', { ...data, subHeading: null })
+      subHeading = component.querySelector(
         '.dashboard-section__subheading'
       )
     })
     it('should not render a sub heading', () => {
-      expect(this.subHeading).to.not.exist
+      expect(subHeading).to.not.exist
     })
   })
 })
