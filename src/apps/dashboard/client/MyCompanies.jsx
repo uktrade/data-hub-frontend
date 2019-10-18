@@ -3,7 +3,9 @@ import { useMyCompaniesContext, MyCompaniesTile } from 'data-hub-components'
 
 const MyCompanies = (props) =>
   <useMyCompaniesContext.Provider {...props}
-    deleteListPropsAccessor={list => ({ href: '/delete-list/' + list.id })}
+    deleteListPropsAccessor={list =>
+      ({ href: `/company-lists/${list.id}/delete` })
+    }
   >
     <MyCompaniesTile />
   </useMyCompaniesContext.Provider>
