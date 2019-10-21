@@ -1,8 +1,8 @@
 const proxyquire = require('proxyquire')
 const faker = require('faker')
-const minimalCompany = require('../../../data/companies/minimal-company.json')
+const minimalCompany = require('../../../../../test/unit/data/companies/minimal-company.json')
 
-const transformerPath = '../../../../../src/apps/companies/transformers/company-to-export-details-view'
+const transformerPath = '../company-to-export-details-view'
 const EXPORT_POTENTIAL_LABEL = 'Export potential'
 
 describe('transformCompanyToExportDetailsView', () => {
