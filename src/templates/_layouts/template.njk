@@ -126,7 +126,8 @@
 {% block footer %}{% endblock %}
 
 {% block bodyEnd %}
-  <div id="react-app">
+  {% set props = { csrfToken: csrfToken } %}
+  <div id="react-app" data-props="{{ props | dump }}">
     <noscript>Please enable JavaScript in your browser to see the content.</noscript>
   </div>
 

@@ -49,11 +49,13 @@ const setCompaniesLocalNav = require('./middleware/local-navigation')
 
 const { transformCompanyToListItem } = require('./transformers')
 
+const addCompanyFormRouter = require('./apps/add-company/router')
+const editCompanyFormRouter = require('./apps/edit-company/router')
+
 const investmentsRouter = require('./apps/investments/router')
 const matchingRouter = require('./apps/matching/router')
 const interactionsRouter = require('../interactions/router.sub-app')
 const activityFeedRouter = require('./apps/activity-feed/router')
-const addCompanyFormRouter = require('./apps/add-company/router')
 const addCreateListFormRouter = require('../company-lists/router')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
@@ -76,6 +78,8 @@ router.get('/export',
 )
 
 router.use('/create', addCompanyFormRouter)
+router.use('/:companyId/edit', editCompanyFormRouter)
+
 router.use('/:companyId/lists/create', addCreateListFormRouter)
 
 router
@@ -83,8 +87,9 @@ router
   .get(populateExportForm, renderExportEdit)
   .post(populateExportForm, handleEditFormPost, renderExportEdit)
 
+// TODO: Remove in a separate PR
 router
-  .route('/:companyId/edit')
+  .route('/:companyId/edit-old')
   .get(populateForm, renderForm)
   .post(handleFormPost, populateForm, renderForm)
 

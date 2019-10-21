@@ -43,6 +43,7 @@ module.exports = ({
       redirect: sinon.spy(),
       json: sinon.spy(),
       send: sinon.spy(),
+      status: sinon.stub().returnsThis(),
       header: sinon.spy(),
       locals: {
         CURRENT_PATH,

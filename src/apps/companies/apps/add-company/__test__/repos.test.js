@@ -1,21 +1,23 @@
-const config = require('~/config')
-const { fetchOrganisationTypes } = require('~/src/apps/companies/apps/add-company/repos')
-const businessTypeFixture = require('~/test/unit/data/metadata/business-type')
+const config = require('../../../../../../config')
+const { fetchOrganisationTypes } = require('../repos')
+const businessTypeFixture = require('../../../../../../test/unit/data/metadata/business-type')
 
 const token = 'abcd'
 
 describe('Add company form repos', () => {
   describe('#fetchOrganisationTypes', () => {
+    let actual
+
     beforeEach(async () => {
       nock(config.apiRoot)
         .get('/v4/metadata/business-type')
         .reply(200, businessTypeFixture)
 
-      this.actual = await fetchOrganisationTypes(token)
+      actual = await fetchOrganisationTypes(token)
     })
 
     it('should return the organisation types', () => {
-      expect(this.actual).to.deep.equal([
+      expect(actual).to.deep.equal([
         {
           value: '9dd14e94-5d95-e211-a939-e4115bead28a',
           label: 'Charity',
