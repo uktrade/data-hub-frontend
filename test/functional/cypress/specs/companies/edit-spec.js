@@ -1,4 +1,4 @@
-import { assertBreadcrumbs } from '../../support/assertions'
+import { assertBreadcrumbs, assertFieldUneditable } from '../../support/assertions'
 
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
@@ -20,18 +20,11 @@ describe('Company edit', () => {
     })
 
     it('should render the annual turnover radio buttons', () => {
-      cy.get(selectors.companyEdit.annualTurnover[0]).should('be.visible')
-      cy.get(selectors.companyEdit.annualTurnover[1]).should('be.visible')
-      cy.get(selectors.companyEdit.annualTurnover[2]).should('be.visible')
-      cy.get(selectors.companyEdit.annualTurnover[3]).should('be.visible')
+      cy.get(selectors.companyEdit.annualTurnover.length).should('be', 4)
     })
 
     it('should render the number of employees radio buttons', () => {
-      cy.get(selectors.companyEdit.numberOfEmployees[0]).should('be.visible')
-      cy.get(selectors.companyEdit.numberOfEmployees[1]).should('be.visible')
-      cy.get(selectors.companyEdit.numberOfEmployees[2]).should('be.visible')
-      cy.get(selectors.companyEdit.numberOfEmployees[3]).should('be.visible')
-      cy.get(selectors.companyEdit.numberOfEmployees[4]).should('be.visible')
+      cy.get(selectors.companyEdit.numberOfEmployees).should('be', 4)
     })
 
     it('should render the website text field', () => {
@@ -45,11 +38,11 @@ describe('Company edit', () => {
     })
 
     it('should render a save button', () => {
-      cy.get(selectors.companyEdit.saveButton).should('have.text', 'Save and return')
+      cy.get(selectors.companyEdit.saveButton).should('be.visible')
     })
 
     it('should render a back link', () => {
-      cy.get(selectors.companyEdit.backLink).should('have.text', 'Return without saving')
+      cy.get(selectors.companyEdit.backLink).should('be.visible')
       cy.get(selectors.companyEdit.backLink).should('have.attr', 'href', `/companies/${expected.company.id}/business-details`)
     })
   }
@@ -64,7 +57,7 @@ describe('Company edit', () => {
     })
 
     it('should render the business type uneditable field', () => {
-      cy.get(selectors.uneditableField('group-field-business_type')).should('have.text', 'Company')
+      assertFieldUneditable({ name: 'business_type', value: 'Company' })
     })
 
     it('should render the VAT number text field', () => {
@@ -72,7 +65,10 @@ describe('Company edit', () => {
     })
 
     it('should render the address fields', () => {
-      cy.get(selectors.companyEdit.address.postcodeLookup)
+      cy.get(selectors.companyEdit.address.postcodeLookupButton)
+        .should('be.visible')
+
+      cy.get(selectors.companyEdit.address.postcode)
         .should('be.visible')
         .and('have.value', 'BD23 8RZ')
 
@@ -92,22 +88,15 @@ describe('Company edit', () => {
         .should('be.visible')
         .and('have.value', '')
 
-      cy.get(selectors.companyEdit.address.postcode)
-        .should('not.be.visible')
-
-      cy.get(selectors.companyEdit.address.country)
-        .should('not.exist')
-
-      cy.get(selectors.uneditableField('group-field-selected_address_country'))
-        .should('have.text', 'United Kingdom')
+      assertFieldUneditable({ name: 'country', value: 'United Kingdom' })
     })
 
     it('should render the registered address fields', () => {
-      cy.get(selectors.companyEdit.registeredAddress.fieldset.selector).should('be.visible')
-      cy.get(selectors.companyEdit.registeredAddress.fieldset.listItem(1)).should('have.text', '66 Marcham Road')
-      cy.get(selectors.companyEdit.registeredAddress.fieldset.listItem(2)).should('have.text', 'Bordley')
-      cy.get(selectors.companyEdit.registeredAddress.fieldset.listItem(3)).should('have.text', 'BD23 8RZ')
-      cy.get(selectors.companyEdit.registeredAddress.fieldset.listItem(4)).should('have.text', 'United Kingdom')
+      cy.get(selectors.companyEdit.registeredAddressLegend).parent()
+        .should('contain', '66 Marcham Road')
+        .and('contain', 'Bordley')
+        .and('contain', 'BD23 8RZ')
+        .and('contain', 'United Kingdom')
     })
 
     it('should render the region list', () => {
@@ -122,7 +111,7 @@ describe('Company edit', () => {
     })
 
     it('should render the sector uneditable field', () => {
-      cy.get(selectors.uneditableField('group-field-sector')).should('have.text', 'Retail')
+      assertFieldUneditable({ name: 'sector', value: 'Retail' })
     })
 
     it('should render the sector details summary', () => {
@@ -130,14 +119,11 @@ describe('Company edit', () => {
     })
 
     it('should not render the business hierarchy radio buttons', () => {
-      cy.get(selectors.companyEdit.businessHierarchy[0]).should('not.exist')
-      cy.get(selectors.companyEdit.businessHierarchy[1]).should('not.exist')
-      cy.get(selectors.companyEdit.businessHierarchy[2]).should('not.exist')
-      cy.get(selectors.companyEdit.businessHierarchy[3]).should('not.exist')
+      cy.get(selectors.companyEdit.businessHierarchy).should('not.exist')
     })
 
     it('should render the business hierarchy uneditable field', () => {
-      cy.get(selectors.uneditableField('group-field-headquarter_type')).should('have.text', 'Not a headquarters')
+      assertFieldUneditable({ name: 'headquarter_type', value: 'Not a headquarters' })
     })
 
     it('should render the business hierarchy details summary', () => {
@@ -155,7 +141,7 @@ describe('Company edit', () => {
     })
 
     it('should not render the business type uneditable field', () => {
-      cy.get(selectors.uneditableField('group-field-business_type')).should('not.exist')
+      cy.get('#field-business_type').should('not.exist')
     })
 
     it('should render the VAT number text field', () => {
@@ -163,7 +149,10 @@ describe('Company edit', () => {
     })
 
     it('should render the address fields', () => {
-      cy.get(selectors.companyEdit.address.postcodeLookup)
+      cy.get(selectors.companyEdit.address.postcodeLookupButton)
+        .should('be.visible')
+
+      cy.get(selectors.companyEdit.address.postcode)
         .should('be.visible')
         .and('have.value', '')
 
@@ -183,18 +172,11 @@ describe('Company edit', () => {
         .should('be.visible')
         .and('have.value', '')
 
-      cy.get(selectors.companyEdit.address.postcode)
-        .should('not.be.visible')
-
-      cy.get(selectors.companyEdit.address.country)
-        .should('not.exist')
-
-      cy.get(selectors.uneditableField('group-field-selected_address_country'))
-        .should('have.text', 'United Kingdom')
+      assertFieldUneditable({ name: 'country', value: 'United Kingdom' })
     })
 
     it('should not render the registered address fieldset', () => {
-      cy.get(selectors.companyEdit.registeredAddress.fieldset.selector).should('not.exist')
+      cy.get(selectors.companyEdit.registeredAddressLegend).should('not.exist')
     })
 
     it('should render the region list', () => {
@@ -205,23 +187,12 @@ describe('Company edit', () => {
       cy.get(selectors.companyEdit.sector).should('be.visible')
     })
 
-    it('should not render the sector uneditable field', () => {
-      cy.get(selectors.uneditableField('group-field-sector')).should('not.exist')
-    })
-
     it('should not render the sector details summary', () => {
       cy.get(selectors.companyEdit.needToEditTheSector).should('not.exist')
     })
 
     it('should render the business hierarchy radio buttons', () => {
-      cy.get(selectors.companyEdit.businessHierarchy[0]).should('be.visible')
-      cy.get(selectors.companyEdit.businessHierarchy[1]).should('be.visible')
-      cy.get(selectors.companyEdit.businessHierarchy[2]).should('be.visible')
-      cy.get(selectors.companyEdit.businessHierarchy[3]).should('be.visible')
-    })
-
-    it('should not render the business hierarchy uneditable field', () => {
-      cy.get(selectors.uneditableField('group-field-headquarter_type')).should('not.exist')
+      cy.get(selectors.companyEdit.businessHierarchy.length).should('be', 4)
     })
 
     it('should not render the business hierarchy details summary', () => {
@@ -239,7 +210,7 @@ describe('Company edit', () => {
     })
 
     it('should render the business type uneditable field', () => {
-      cy.get(selectors.uneditableField('group-field-business_type')).should('have.text', 'Company')
+      assertFieldUneditable({ name: 'business_type', value: 'Company' })
     })
 
     it('should not render the VAT number text field', () => {
@@ -270,21 +241,15 @@ describe('Company edit', () => {
         .should('be.visible')
         .and('have.value', '765413')
 
-      cy.get(selectors.companyEdit.address.country)
-        .should('be.visible')
-        .find(':selected')
-        .contains('United States')
-
-      cy.get(selectors.uneditableField('group-field-selected_address_country'))
-        .should('not.exist')
+      assertFieldUneditable({ name: 'country', value: 'United States' })
     })
 
     it('should render the registered address fieldset', () => {
-      cy.get(selectors.companyEdit.registeredAddress.fieldset.selector).should('be.visible')
-      cy.get(selectors.companyEdit.registeredAddress.fieldset.listItem(1)).should('have.text', '12 First Street')
-      cy.get(selectors.companyEdit.registeredAddress.fieldset.listItem(2)).should('have.text', 'New York')
-      cy.get(selectors.companyEdit.registeredAddress.fieldset.listItem(3)).should('have.text', '765413')
-      cy.get(selectors.companyEdit.registeredAddress.fieldset.listItem(4)).should('have.text', 'United States')
+      cy.get(selectors.companyEdit.registeredAddressLegend).parent()
+        .should('contain', '12 First Street')
+        .and('contain', 'New York')
+        .and('contain', '765413')
+        .and('contain', 'United States')
     })
 
     it('should not render the region list', () => {
@@ -295,23 +260,12 @@ describe('Company edit', () => {
       cy.get(selectors.companyEdit.sector).should('be.visible')
     })
 
-    it('should not render the sector uneditable field', () => {
-      cy.get(selectors.uneditableField('group-field-sector')).should('not.exist')
-    })
-
     it('should not render the sector details summary', () => {
       cy.get(selectors.companyEdit.needToEditTheSector).should('not.exist')
     })
 
     it('should render the business hierarchy radio buttons', () => {
-      cy.get(selectors.companyEdit.businessHierarchy[0]).should('be.visible')
-      cy.get(selectors.companyEdit.businessHierarchy[1]).should('be.visible')
-      cy.get(selectors.companyEdit.businessHierarchy[2]).should('be.visible')
-      cy.get(selectors.companyEdit.businessHierarchy[3]).should('be.visible')
-    })
-
-    it('should not render the business hierarchy uneditable field', () => {
-      cy.get(selectors.uneditableField('group-field-headquarter_type')).should('not.exist')
+      cy.get(selectors.companyEdit.businessHierarchy.length).should('be', 4)
     })
 
     it('should not render the business hierarchy details summary', () => {

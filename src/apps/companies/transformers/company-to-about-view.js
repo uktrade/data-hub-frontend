@@ -97,12 +97,10 @@ module.exports = ({
   is_number_of_employees_estimated,
   employee_range,
   website,
-  description,
 }) => {
   const viewRecord = {
     vat_number,
     reference_code,
-    description,
     business_type: duns_number ? null : get(business_type, 'name'),
     trading_names: isEmpty(trading_names) ? NOT_SET_TEXT : trading_names,
     company_number: transformCompanyNumber(company_number),

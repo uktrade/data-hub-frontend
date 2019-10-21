@@ -33,14 +33,6 @@ describe('#renderBusinessDetails', () => {
         expect(this.middlewareParameters.resMock.render.firstCall.args[1].aboutDetails).to.exist
       })
 
-      it('should set the region details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].regionDetails).to.exist
-      })
-
-      it('should set the sector details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].sectorDetails).to.exist
-      })
-
       it('should set the One List details', () => {
         expect(this.middlewareParameters.resMock.render.firstCall.args[1].oneListDetails).to.exist
       })

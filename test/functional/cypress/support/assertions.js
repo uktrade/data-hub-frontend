@@ -37,8 +37,40 @@ const assertBreadcrumbs = (expected) => {
   })
 }
 
+const assertFieldInput = ({ name, label = null, value = null }) => {
+  const inputElement = cy.get(`input[name="${name}"]`)
+  inputElement.should('be.visible')
+
+  if (label) {
+    const labelElement = cy.get(`label[for="${name}"]`)
+    labelElement.should('have.text', label)
+  }
+
+  if (value) {
+    inputElement.should('have.value', value)
+  }
+}
+
+const assertFieldUneditable = ({ name, label = null, value = null }) => {
+  let fieldWrapperElement
+
+  fieldWrapperElement = cy.get(`label[for="${name}"]`).parent()
+  fieldWrapperElement.should('be.visible')
+
+  if (label) {
+    const labelElement = fieldWrapperElement.find('label')
+    labelElement.should('have.text', label)
+  }
+
+  if (value) {
+    fieldWrapperElement.should('contain', value)
+  }
+}
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
   assertBreadcrumbs,
+  assertFieldInput,
+  assertFieldUneditable,
 }
