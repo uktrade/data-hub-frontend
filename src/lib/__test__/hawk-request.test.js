@@ -1,5 +1,7 @@
-const config = require('~/config')
+const config = require('../../../config')
 const rewire = require('rewire')
+
+const modulePath = '../hawk-request'
 
 const testDataHubCredentials = {
   id: 'test-key-id',
@@ -7,14 +9,14 @@ const testDataHubCredentials = {
   algorithm: 'sha256',
 }
 const testClientHeaderArtifacts = { fake: 'artifacts' }
-const testRequestOptions = { uri: 'http://localhost:8000/v4/metadata/countries',
+const testRequestOptions = { uri: `${config.apiRoot}/v4/metadata/countries`,
   method: 'GET',
   headers: { accept: 'application/json', Authorization: 'Fake header' },
 }
 
 describe('#hawkRequest: check getHawkHeader', () => {
   beforeEach(() => {
-    this.hawkRequest = rewire('~/src/lib/hawk-request')
+    this.hawkRequest = rewire(modulePath)
     this.configStub = sinon.stub()
     this.expectedHawkHeader = {
       header: 'Hawk id="test-key-id", ts="1501545600", nonce="Sj_D4e", hash="B0weSUXsMcb5UhL41FZbrUJCAotzSI3HawE1NPLRUz8=", mac="eUfXrU30nDxsrP0+c6s54EaP8Dyuhp7JfBEFO4Ufllw="',
@@ -63,7 +65,7 @@ describe('#hawkRequest: check sendHawkRequest', () => {
     this.configStub = sinon.stub()
     this.configStub.hawkCredentials = sinon.stub()
     this.configStub.hawkCredentials.dataHubBackend = testDataHubCredentials
-    this.hawkRequest = rewire('~/src/lib/hawk-request')
+    this.hawkRequest = rewire(modulePath)
     this.hawkRequest.__set__('config', this.configStub)
     this.createPromiseRequestSpy = sinon.spy()
     this.hawkRequest.__set__('createPromiseRequest', this.createPromiseRequestSpy)
@@ -93,7 +95,7 @@ describe('#hawkRequest: check sendHawkRequest', () => {
 describe('#hawkRequest: check createPromiseRequest', () => {
   beforeEach(() => {
     this.configStub = sinon.stub()
-    this.hawkRequest = rewire('~/src/lib/hawk-request')
+    this.hawkRequest = rewire(modulePath)
     this.hawkRequest.__set__('config', this.configStub)
     this.hawkRequest.__set__('hawk.client.authenticate', sinon.stub().returns(true))
   })
