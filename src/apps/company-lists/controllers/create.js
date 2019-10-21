@@ -22,7 +22,6 @@ async function renderCreateListForm (req, res, next) {
       .render('company-lists/views/create-list-container', {
         props: {
           id: company.id,
-          token: res.locals.csrfToken,
           name: 'listName',
           label: 'List name',
           hint: 'This is a name only you see, and can be up to 30 characters',

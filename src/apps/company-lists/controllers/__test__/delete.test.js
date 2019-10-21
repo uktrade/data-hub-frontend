@@ -86,7 +86,6 @@ describe('Delete company list controller', () => {
         const actualProps = middlewareParameters.resMock.render.getCall(0).args[1].props
         expect(actualProps).to.be.deep.equal({
           companyList: companyList,
-          csrfToken: 'csrf',
           returnUrl: '/company-lists',
         })
       })

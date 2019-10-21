@@ -5,8 +5,6 @@ const {
   transformCompanyToAboutView,
   transformCompanyToOneListView,
   transformCompanyToBusinessHierarchyView,
-  transformCompanyToSectorView,
-  transformCompanyToRegionView,
 } = require('../transformers')
 const {
   getCompanySubsidiaries,
@@ -22,8 +20,6 @@ async function renderBusinessDetails (req, res) {
     .render('companies/views/business-details', {
       heading: 'Business details',
       aboutDetails: transformCompanyToAboutView(company),
-      regionDetails: transformCompanyToRegionView(company),
-      sectorDetails: transformCompanyToSectorView(company),
       oneListDetails: transformCompanyToOneListView(company),
       businessHierarchyDetails: transformCompanyToBusinessHierarchyView(company, subsidiaries.count),
       archivedDocumentPath: isEmpty(company.archived_documents_url_path) ? undefined : company.archived_documents_url_path,

@@ -5,5 +5,5 @@
  * @returns this
  */
 exports.command = function clickRadioOption (name, textContent) {
-  return this.click('xpath', `//input[@name="${name}"]/following-sibling::label/span[normalize-space(.)="${textContent}"]`)
+  return this.click('xpath', `//form//label[normalize-space(.)="${textContent}"]`)
 }
