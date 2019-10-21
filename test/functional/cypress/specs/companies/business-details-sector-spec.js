@@ -5,24 +5,6 @@ const businessDetailsUrl = `/companies/${dnbLtd.id}/business-details`
 const editSectorUrl = `${businessDetailsUrl}/sector`
 
 describe('Companies business details - sector', () => {
-  context('when viewing the sector of a Dun & Bradstreet company in the UK', () => {
-    before(() => {
-      cy.visit(businessDetailsUrl)
-    })
-
-    it('should show an "Edit" link with the correct URL', () => {
-      cy.get(selectors.editSectorLink)
-        .should('have.text', 'Edit')
-        .should('have.prop', 'href')
-        .and('contain', editSectorUrl)
-    })
-
-    it('should take you to the "Edit the DIT sector" page when clicked', () => {
-      cy.get(selectors.editSectorLink).click()
-        .url().should('contain', editSectorUrl)
-    })
-  })
-
   context('when viewing the edit sector page', () => {
     before(() => {
       cy.visit(editSectorUrl)

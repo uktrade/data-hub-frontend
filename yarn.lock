@@ -4206,7 +4206,7 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-data-hub-components@^2.5.0:
+data-hub-components@2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/data-hub-components/-/data-hub-components-2.5.0.tgz#6cf0789f96b6918cb887c49426239ac69acd86ae"
   integrity sha512-6RRT+G5gJZu3qEyG71JYBfwO+JNgqO6SCVw2CuRdgZxCsoxedWa7x0lSfIjrpE3mLO9zLGFhbgmCgNFV7rpTsg==
