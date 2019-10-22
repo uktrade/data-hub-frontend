@@ -51,7 +51,7 @@ describe('Delete company list page', () => {
     it('redirects to the edit company lists page', () => {
       cy.location().should((loc) => {
         expect(loc.origin).to.eq(Cypress.config().baseUrl)
-        expect(loc.pathname).to.eq('/company-lists')
+        expect(loc.pathname).to.eq('/')
       })
     })
 
