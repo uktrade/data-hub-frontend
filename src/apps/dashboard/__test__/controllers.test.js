@@ -100,30 +100,30 @@ const companyListsFeatureOffRequest = {
 
 describe('dashboard controller', () => {
   beforeEach(() => {
-    this.reqMock = Object.assign({}, globalReq, {
+    global.reqMock = Object.assign({}, globalReq, {
       session: {
         token: 'abcd',
       },
     })
 
-    this.resMock = {
+    global.resMock = {
       ...canSeeCompanyListsRequest,
       render: sinon.spy(),
       title: sinon.stub().returnsThis(),
     }
 
-    this.nextSpy = sinon.spy()
+    global.nextSpy = sinon.spy()
 
-    this.fetchHomepageDataStub = sinon.stub()
-    this.formatHelpCentreAnnouncementsStub = sinon.stub()
-    this.rpStub = sinon.stub()
-    this.helpCentre = {
+    global.fetchHomepageDataStub = sinon.stub()
+    global.formatHelpCentreAnnouncementsStub = sinon.stub()
+    global.rpStub = sinon.stub()
+    global.helpCentre = {
       url: 'www',
       announcementsURL: 'www',
       token: '1',
     }
 
-    this.dashData = {
+    global.dashData = {
       contacts: [
         {
           id: '1234',
@@ -136,101 +136,101 @@ describe('dashboard controller', () => {
       ],
     }
 
-    this.controllers = proxyquire('~/src/apps/dashboard/controllers', {
+    global.controllers = proxyquire('~/src/apps/dashboard/controllers', {
       './repos': {
-        fetchHomepageData: this.fetchHomepageDataStub,
+        fetchHomepageData: global.fetchHomepageDataStub,
       },
       '../../../config': {
-        helpCentre: this.helpCentre,
+        helpCentre: global.helpCentre,
       },
       './transformers': {
-        formatHelpCentreAnnouncements: this.formatHelpCentreAnnouncementsStub,
+        formatHelpCentreAnnouncements: global.formatHelpCentreAnnouncementsStub,
       },
-      'request-promise': this.rpStub,
+      'request-promise': global.rpStub,
     })
   })
   context('when there are no errors calling the API', () => {
     beforeEach(async () => {
-      this.fetchHomepageDataStub.resolves(this.dashData)
-      this.rpStub.resolves([])
+      global.fetchHomepageDataStub.resolves(global.dashData)
+      global.rpStub.resolves([])
 
       withPopulatedCompanyLists()
-      await this.controllers.renderDashboard(
-        this.reqMock,
-        this.resMock,
-        this.nextSpy
+      await global.controllers.renderDashboard(
+        global.reqMock,
+        global.resMock,
+        global.nextSpy
       )
     })
 
     it('should render the dashboard template', () => {
-      expect(this.resMock.render).to.be.calledWith('dashboard/views/dashboard')
-      expect(this.formatHelpCentreAnnouncementsStub).to.be.called
+      expect(global.resMock.render).to.be.calledWith('dashboard/views/dashboard')
+      expect(global.formatHelpCentreAnnouncementsStub).to.be.called
     })
 
     it('should render the page with contacts', () => {
-      const renderOptions = this.resMock.render.firstCall.args[1]
-      expect(renderOptions.contacts).to.deep.equal(this.dashData.contacts)
+      const renderOptions = global.resMock.render.firstCall.args[1]
+      expect(renderOptions.contacts).to.deep.equal(global.dashData.contacts)
     })
 
     it('should render the page with interactions', () => {
-      const renderOptions = this.resMock.render.firstCall.args[1]
+      const renderOptions = global.resMock.render.firstCall.args[1]
       expect(renderOptions.interactions).to.deep.equal(
-        this.dashData.interactions
+        global.dashData.interactions
       )
     })
 
     it('should not call next', () => {
-      expect(this.nextSpy).to.not.have.been.called
+      expect(global.nextSpy).to.not.have.been.called
     })
 
     it('should set a page title', () => {
-      expect(this.resMock.title).to.be.calledWith('Dashboard')
+      expect(global.resMock.title).to.be.calledWith('Dashboard')
     })
 
     it('should render the company lists', () => {
-      expect(this.resMock.render.firstCall.args[1].companyLists)
+      expect(global.resMock.render.firstCall.args[1].companyLists)
         .to.deep.equal(expectedCompanyLists)
     })
   })
 
   context('when there is a problem calling the API', () => {
     beforeEach(async () => {
-      this.error = { status: 500 }
-      this.fetchHomepageDataStub.rejects(this.error)
+      global.error = { status: 500 }
+      global.fetchHomepageDataStub.rejects(global.error)
 
       withPopulatedCompanyLists()
-      await this.controllers.renderDashboard(
-        this.reqMock,
-        this.resMock,
-        this.nextSpy
+      await global.controllers.renderDashboard(
+        global.reqMock,
+        global.resMock,
+        global.nextSpy
       )
     })
 
     it('should show an error', () => {
-      expect(this.nextSpy).to.have.been.calledWith(this.error)
+      expect(global.nextSpy).to.have.been.calledWith(global.error)
     })
 
     it('should not render the page', () => {
-      expect(this.resMock.render).to.not.have.been.called
+      expect(global.resMock.render).to.not.have.been.called
     })
   })
 
   context('when the Help centre API fails to return data', () => {
     // TODO: Before each is useless here as we only have one test case.
     beforeEach(async () => {
-      this.resMock = {
+      global.resMock = {
         ...canSeeCompanyListsRequest,
         render: sinon.spy(),
         title: sinon.stub().returnsThis(),
       }
-      this.fetchHomepageDataStub.resolves(this.dashData)
-      this.rpStub.rejects()
+      global.fetchHomepageDataStub.resolves(global.dashData)
+      global.rpStub.rejects()
 
       withPopulatedCompanyLists()
-      await this.controllers.renderDashboard(
-        this.reqMock,
-        this.resMock,
-        this.nextSpy
+      await global.controllers.renderDashboard(
+        global.reqMock,
+        global.resMock,
+        global.nextSpy
       )
     })
 
@@ -247,26 +247,26 @@ describe('dashboard controller', () => {
           url: 'www',
         },
       }
-      expect(this.resMock.render.firstCall.args[1]).to.deep.equal(expected)
+      expect(global.resMock.render.firstCall.args[1]).to.deep.equal(expected)
     })
   })
 
   context('when the Help centre API request throws an error', () => {
     // TODO: Before each is useless here as we only have one test case.
     beforeEach(async () => {
-      this.resMock = {
+      global.resMock = {
         ...canSeeCompanyListsRequest,
         render: sinon.spy(),
         title: sinon.stub().returnsThis(),
       }
-      this.fetchHomepageDataStub.resolves(this.dashData)
-      this.rpStub.throws(rpErrors.StatusCodeError(500))
+      global.fetchHomepageDataStub.resolves(global.dashData)
+      global.rpStub.throws(rpErrors.StatusCodeError(500))
 
       withPopulatedCompanyLists()
-      await this.controllers.renderDashboard(
-        this.reqMock,
-        this.resMock,
-        this.nextSpy
+      await global.controllers.renderDashboard(
+        global.reqMock,
+        global.resMock,
+        global.nextSpy
       )
     })
 
@@ -283,52 +283,52 @@ describe('dashboard controller', () => {
           url: 'www',
         },
       }
-      expect(this.resMock.render.firstCall.args[1]).to.deep.equal(expected)
+      expect(global.resMock.render.firstCall.args[1]).to.deep.equal(expected)
     })
   })
 
   context('when the company list feature is off', () => {
     beforeEach(async () => {
-      this.resMock = {
+      global.resMock = {
         ...companyListsFeatureOffRequest,
         render: sinon.spy(),
         title: sinon.stub().returnsThis(),
       }
-      this.fetchHomepageDataStub.resolves(this.dashData)
+      global.fetchHomepageDataStub.resolves(global.dashData)
 
       withPopulatedCompanyLists()
-      await this.controllers.renderDashboard(
-        this.reqMock,
-        this.resMock,
-        this.nextSpy
+      await global.controllers.renderDashboard(
+        global.reqMock,
+        global.resMock,
+        global.nextSpy
       )
     })
 
     it('it should not be rendered', () => {
-      expect(this.resMock.render.firstCall.args[1].companyLists)
+      expect(global.resMock.render.firstCall.args[1].companyLists)
         .to.not.be.ok
     })
   })
 
   context("when the user doesn't have the right permission", () => {
     beforeEach(async () => {
-      this.resMock = {
+      global.resMock = {
         ...cannotSeeCompanyListsRequest,
         render: sinon.spy(),
         title: sinon.stub().returnsThis(),
       }
-      this.fetchHomepageDataStub.resolves(this.dashData)
+      global.fetchHomepageDataStub.resolves(global.dashData)
 
       withPopulatedCompanyLists()
-      await this.controllers.renderDashboard(
-        this.reqMock,
-        this.resMock,
-        this.nextSpy
+      await global.controllers.renderDashboard(
+        global.reqMock,
+        global.resMock,
+        global.nextSpy
       )
     })
 
     it('company lists should not be rendered', () => {
-      expect(this.resMock.render.firstCall.args[1].companyLists)
+      expect(global.resMock.render.firstCall.args[1].companyLists)
         .to.not.be.ok
     })
   })
