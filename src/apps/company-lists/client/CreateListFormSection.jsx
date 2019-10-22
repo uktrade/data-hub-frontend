@@ -15,7 +15,7 @@ const CreateListFormSection = (
     maxLength,
   }) => {
 
-  async function onCreateList (listName) {
+  async function onCreateList ({listName}) {
     await axios({
       method: 'POST',
       url: `/companies/${id}/lists/create?_csrf=${csrfToken}`,
