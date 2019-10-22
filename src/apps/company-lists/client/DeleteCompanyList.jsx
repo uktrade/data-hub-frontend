@@ -15,7 +15,7 @@ function DeleteCompanyList ({ companyList, csrfToken, returnUrl }) {
         null,
         { params: { _csrf: csrfToken } },
       )
-      window.location.assign('/company-lists')
+      window.location.assign('/')
     } catch (error) {
       if (get(error, 'response.status') === 404) {
         setErrorMessage(notFoundMessage)
