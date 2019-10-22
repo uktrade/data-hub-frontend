@@ -1,6 +1,8 @@
 const nock = require('nock')
 const config = require('../../../../config')
 
+const companyListItemRegexp = /\/v4\/company-list\/([^/]+)\/item/
+
 /**
  * @function mockCompanyListsServer
  * @description Mocks the API (leeloo) end points needed to display the user's
@@ -27,8 +29,6 @@ const config = require('../../../../config')
  * // now be handled by _nock_ and will resolve with dummy data.
  */
 const mockCompanyListsServer = ({ companyIdString = '', listIds = {} } = {}) => {
-  const companyListItemRegexp = /\/v4\/company-list\/([^/]+)\/item/
-
   const companies = [...companyIdString].reduce(
     (acc, id) => ({
       ...acc,
