@@ -1,3 +1,5 @@
+const { get } = require('lodash')
+
 const {
   getDitCompany,
   addDitCompanyToList,
@@ -5,6 +7,8 @@ const {
   removeDitCompanyFromList,
   getCHCompany,
 } = require('../repos')
+
+const { getAllCompanyLists } = require('../../company-lists/repos')
 
 async function getCompany (req, res, next, id) {
   try {
@@ -24,6 +28,24 @@ async function setIsCompanyAlreadyAdded (req, res, next, id) {
     //  Do nothing
   }
   res.locals.isCompanyAlreadyAdded = isCompanyAlreadyAdded
+  next()
+}
+
+async function setDoAnyListsExist (req, res, next, id) {
+  const userPermissions = get(res, 'locals.user.permissions')
+  res.locals.canViewCompanyList = userPermissions.includes(
+    'company_list.view_companylist'
+  )
+  if (res.locals.canViewCompanyList) {
+    let listsExist = false
+    try {
+      const { count } = await getAllCompanyLists(req.session.token)
+      listsExist = count > 0
+      res.locals.listsExist = listsExist
+    } catch (error) {
+      next(error)
+    }
+  }
   next()
 }
 
@@ -62,6 +84,7 @@ async function getCompaniesHouseRecord (req, res, next, companyNumber) {
 module.exports = {
   getCompany,
   setIsCompanyAlreadyAdded,
+  setDoAnyListsExist,
   addCompanyOrRemoveFromList,
   getCompaniesHouseRecord,
 }
