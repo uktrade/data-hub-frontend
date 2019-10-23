@@ -2,6 +2,7 @@ const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const utils = require('../../support/utils')
 const { assertBreadcrumbs } = require('../../support/assertions')
+const { companies, contacts, dashboard, investments } = require('../../../../../src/lib/urls')
 
 const serviceDeliveryDetails = selectors.interaction.details.serviceDelivery
 
@@ -9,13 +10,13 @@ describe('Add Export', () => {
   context('when adding an export interaction', () => {
     context('when in the context of a company', () => {
       beforeEach(() => {
-        cy.visit(`/companies/${fixtures.default.id}/interactions/create/export/interaction`)
+        cy.visit(companies.interactions.createType(fixtures.default.id, 'export', 'interaction'))
       })
 
       it('should render breadcrumbs', () => {
         assertBreadcrumbs({
-          'Home': '/',
-          'Companies': '/companies',
+          'Home': dashboard(),
+          'Companies': companies.index(),
           'Add interaction': null,
         })
       })
@@ -33,14 +34,14 @@ describe('Add Export', () => {
 
     context('when in the context of a contact', () => {
       beforeEach(() => {
-        cy.visit(`/contacts/${fixtures.default.id}/interactions/create/export/interaction`)
+        cy.visit(contacts.interactions.createType(fixtures.default.id, 'export', 'interaction'))
       })
 
       it('should render breadcrumbs', () => {
         assertBreadcrumbs({
-          'Home': '/',
-          'Contacts': '/contacts',
-          'Joseph Woof': '/contacts/5e75d636-1d24-416a-aaf0-3fb220d594ce',
+          'Home': dashboard(),
+          'Contacts': contacts.index(),
+          'Joseph Woof': contacts.contact('5e75d636-1d24-416a-aaf0-3fb220d594ce'),
           'Add interaction': null,
         })
       })
@@ -58,14 +59,15 @@ describe('Add Export', () => {
 
     context('when in the context of an investment project', () => {
       beforeEach(() => {
-        cy.visit(`/investments/projects/${fixtures.default.id}/interactions/create/investment/interaction`)
+        cy.visit(investments.projects.interactions.createType(fixtures.default.id, 'investment', 'interaction'))
       })
 
       it('should render breadcrumbs', () => {
         assertBreadcrumbs({
-          'Home': '/',
-          'Investments': '/investments',
-          'New hotel (commitment to invest)': '/investments/projects/fb5b5006-56af-40e0-8615-7aba53e0e4bf',
+          'Home': dashboard(),
+          'Investments': investments.index(),
+          'Projects': investments.projects.index(),
+          'New hotel (commitment to invest)': investments.projects.project('fb5b5006-56af-40e0-8615-7aba53e0e4bf'),
           'Add interaction': null,
         })
       })
@@ -85,13 +87,13 @@ describe('Add Export', () => {
   context('when adding an export service delivery', () => {
     context('when in the context of a company', () => {
       beforeEach(() => {
-        cy.visit(`/companies/${fixtures.default.id}/interactions/create/export/service-delivery`)
+        cy.visit(companies.interactions.createType(fixtures.default.id, 'export', 'service-delivery'))
       })
 
       it('should render breadcrumbs', () => {
         assertBreadcrumbs({
-          'Home': '/',
-          'Companies': '/companies',
+          'Home': dashboard(),
+          'Companies': companies.index(),
           'Add service delivery': null,
         })
       })
@@ -109,14 +111,14 @@ describe('Add Export', () => {
 
     context('when in the context of a contact', () => {
       beforeEach(() => {
-        cy.visit(`/contacts/${fixtures.default.id}/interactions/create/export/service-delivery`)
+        cy.visit(contacts.interactions.createType(fixtures.default.id, 'export', 'service-delivery'))
       })
 
       it('should render breadcrumbs', () => {
         assertBreadcrumbs({
-          'Home': '/',
-          'Contacts': '/contacts',
-          'Joseph Woof': '/contacts/5e75d636-1d24-416a-aaf0-3fb220d594ce',
+          'Home': dashboard(),
+          'Contacts': contacts.index(),
+          'Joseph Woof': contacts.contact('5e75d636-1d24-416a-aaf0-3fb220d594ce'),
           'Add service delivery': null,
         })
       })
@@ -134,13 +136,13 @@ describe('Add Export', () => {
 
     context('when TAP service fields are empty', () => {
       beforeEach(() => {
-        cy.visit(`/companies/${fixtures.default.id}/interactions/create/export/service-delivery`)
+        cy.visit(companies.interactions.createType(fixtures.default.id, 'export', 'service-delivery'))
       })
 
       it('should render breadcrumbs', () => {
         assertBreadcrumbs({
-          'Home': '/',
-          'Companies': '/companies',
+          'Home': dashboard(),
+          'Companies': companies.index(),
           'Add service delivery': null,
         })
       })
@@ -163,13 +165,13 @@ describe('Add Export', () => {
 
     context('when TAP service fields are populated', () => {
       beforeEach(() => {
-        cy.visit(`/companies/${fixtures.default.id}/interactions/create/export/service-delivery`)
+        cy.visit(companies.interactions.createType(fixtures.default.id, 'export', 'service-delivery'))
       })
 
       it('should render breadcrumbs', () => {
         assertBreadcrumbs({
-          'Home': '/',
-          'Companies': '/companies',
+          'Home': dashboard(),
+          'Companies': companies.index(),
           'Add service delivery': null,
         })
       })
@@ -198,7 +200,7 @@ describe('Add Export', () => {
 
 describe('Adding interaction or service', () => {
   beforeEach(() => {
-    cy.visit(`/contacts/5e75d636-1d24-416a-aaf0-3fb220d594ce/interactions/create`)
+    cy.visit(contacts.interactions.create(fixtures.default.id))
   })
   context('when choosing export interaction', () => {
     it('should direct you to "add interaction" form', () => {
