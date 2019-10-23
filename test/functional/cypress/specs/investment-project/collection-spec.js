@@ -1,16 +1,23 @@
 const selectors = require('../../../../selectors')
-const { assertBreadcrumbs } = require('../../support/assertions')
+const { assertTabbedLocalNav, assertBreadcrumbs } = require('../../support/assertions')
+const { dashboard, investments } = require('../../../../../src/lib/urls')
 
 describe('Investment Project Collections', () => {
   before(() => {
-    cy.visit('/investments/projects')
+    cy.visit(investments.projects.index())
   })
 
   it('should render breadcrumbs', () => {
     assertBreadcrumbs({
-      'Home': '/',
-      'Investments': null,
+      'Home': dashboard(),
+      'Investments': investments.index(),
+      'Projects': null,
     })
+  })
+
+  it('should render the local navigation', () => {
+    assertTabbedLocalNav('Projects')
+    assertTabbedLocalNav('Investor profiles')
   })
 
   it('should display a list of investments', () => {

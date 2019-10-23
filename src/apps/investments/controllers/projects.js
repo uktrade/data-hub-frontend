@@ -78,8 +78,12 @@ const renderProjectsView = async (req, res, next) => {
       filtersFields: filtersFieldsWithSelectedOptions,
       title: 'Investment Projects',
       countLabel: 'project',
+      heading: 'Investments',
     }
-    res.render('investments/views/projects', props)
+
+    return res
+      .breadcrumb('Projects')
+      .render('investments/views/projects', props)
   } catch (error) {
     next(error)
   }

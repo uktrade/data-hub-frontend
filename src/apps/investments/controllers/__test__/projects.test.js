@@ -1,6 +1,7 @@
-const config = require('~/src/config')
+const config = require('../../../../config')
+const { renderProjectsView } = require('../../controllers/projects')
 
-describe('Investment project controller', () => {
+const fixture = (statusCode) => {
   const metadataMock = {
     sectorOptions: [{ id: 's1', name: 's1', disabled_on: null }],
     adviserOptions: {
@@ -14,8 +15,16 @@ describe('Investment project controller', () => {
     ],
   }
 
-  beforeEach(() => {
-    this.req = {
+  nock(config.apiRoot)
+    .get('/v4/metadata/sector?level__lte=0')
+    .reply(statusCode, metadataMock.sectorOptions)
+    .get('/v4/metadata/country')
+    .reply(statusCode, metadataMock.countryOptions)
+    .get('/adviser/?limit=100000&offset=0')
+    .reply(statusCode, metadataMock.adviserOptions)
+
+  return {
+    req: {
       session: {
         user: {
           id: '1234',
@@ -27,101 +36,59 @@ describe('Investment project controller', () => {
       query: {
         sortby: 'estimated_land_date:asc',
       },
-    }
-
-    this.res = {
+    },
+    res: {
       render: sinon.spy(),
+      breadcrumb: sinon.stub().returnsThis(),
       query: {},
       locals: {
         userAgent: {
           isIE: false,
         },
       },
-    }
-    this.nextSpy = sinon.spy()
+    },
+    next: sinon.spy(),
+  }
+}
 
-    nock(config.apiRoot)
-      .get('/v4/metadata/sector?level__lte=0')
-      .reply(200, metadataMock.sectorOptions)
-      .get('/v4/metadata/country')
-      .reply(200, metadataMock.countryOptions)
-      .get('/adviser/?limit=100000&offset=0')
-      .reply(200, metadataMock.adviserOptions)
-  })
+describe('#renderProjectsView', () => {
+  it('should render the page if there are no errors', async () => {
+    const { req, res, next } = fixture(200)
 
-  describe('#renderProjectsView', () => {
-    context('when the list renders successfully', () => {
-      beforeEach(async () => {
-        const controller = require('~/src/apps/investments/controllers/projects')
+    await renderProjectsView(req, res, next)
 
-        await controller.renderProjectsView(this.req, this.res, this.nextSpy)
-      })
+    expect(res.render, 'should render').to.be.calledOnce
 
-      it('should render', () => {
-        expect(this.res.render).to.be.calledOnce
-      })
+    expect(res.breadcrumb, 'should render the breadcrumsb').to.be.calledWith('Projects')
 
-      it('should render the collection template', () => {
-        expect(this.res.render.firstCall.args[0]).to.equal(
-          'investments/views/projects'
-        )
-      })
+    expect(res.render.firstCall.args[0], 'should render the collection template').to.equal(
+      'investments/views/projects'
+    )
 
-      it('should render the view with a title', () => {
-        expect(this.res.render.firstCall.args[1].title).to.equal(
-          'Investment Projects'
-        )
-      })
+    expect(res.render.firstCall.args[1].title, 'should render the view with a title').to.equal(
+      'Investment Projects'
+    )
 
-      it('should render the view with a count label', () => {
-        expect(this.res.render.firstCall.args[1].countLabel).to.equal('project')
-      })
+    expect(res.render.firstCall.args[1].countLabel, 'should render the view with a count label').to.equal('project')
 
-      it('should render the view with a sort form', () => {
-        expect(this.res.render.firstCall.args[1].sortForm).to.exist
-      })
+    expect(res.render.firstCall.args[1].sortForm, 'should render the view with a sort form').to.exist
 
-      it('should render the view with selected filters', () => {
-        expect(this.res.render.firstCall.args[1].selectedFilters).to.exist
-      })
+    expect(res.render.firstCall.args[1].selectedFilters, 'should render the view with selected filters').to.exist
 
-      it('should render the view with an export action', () => {
-        expect(this.res.render.firstCall.args[1].exportAction).to.deep.equal({
-          enabled: false,
-        })
-      })
-
-      it('should render the view with filter fields', () => {
-        expect(this.res.render.firstCall.args[1].filtersFields).to.exist
-      })
+    expect(res.render.firstCall.args[1].exportAction, 'should render the view with an export action').to.deep.equal({
+      enabled: false,
     })
 
-    context('when there is an error', () => {
-      beforeEach(async () => {
-        this.error = new Error('error')
-        const erroneousSpy = sinon.stub().throws(this.error)
+    expect(res.render.firstCall.args[1].filtersFields, 'should render the view with filter fields').to.exist
 
-        const controller = proxyquire(
-          '~/src/apps/investments/controllers/projects',
-          {
-            '../../builders': {
-              buildSelectedFiltersSummary: erroneousSpy,
-              buildFieldsWithSelectedEntities: sinon.stub(),
-            },
-          }
-        )
+    it('should call an error if there is an error', async () => {
+      const { req, res, next } = fixture(500)
 
-        await controller.renderProjectsView(this.req, this.res, this.nextSpy)
-      })
+      await renderProjectsView(req, res, next)
 
-      it('should not render the view', () => {
-        expect(this.res.render).to.not.be.called
-      })
+      expect(res.render, 'should not render the view').to.be.thrown
 
-      it('should call next with an error', () => {
-        expect(this.nextSpy).to.have.been.calledWith(this.error)
-        expect(this.nextSpy).to.have.been.calledOnce
-      })
+      expect(next, 'should call next').to.have.been.calledOnce
     })
   })
 })
