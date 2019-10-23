@@ -1,6 +1,6 @@
 const proxyquire = require('proxyquire')
-const company = require('../../../../unit/data/companies/company-v4.json')
-const companiesHouseRecord = require('../../../../unit/data/companies/companies-house.json')
+const company = require('../../../../../test/unit/data/companies/company-v4.json')
+const companiesHouseRecord = require('../../../../../test/unit/data/companies/companies-house.json')
 
 describe('Companies form middleware', () => {
   let nextSpy
