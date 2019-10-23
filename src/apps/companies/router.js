@@ -82,8 +82,6 @@ router.use('/create', addCompanyFormRouter)
 router.use('/:companyId/lists', companyListsRouter)
 router.use('/:companyId/edit', editCompanyFormRouter)
 
-router.use('/:companyId/lists/create', addCreateListFormRouter)
-
 router
   .route('/:companyId/exports/edit')
   .get(populateExportForm, renderExportEdit)
