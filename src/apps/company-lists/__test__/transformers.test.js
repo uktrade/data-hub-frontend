@@ -1,5 +1,5 @@
-const allLists = require('../../data/company-lists/all-lists')
-const allListsCompaniesIn = require('../../data/company-lists/all-lists-company-is-in')
+const allLists = require('../../../../test/unit/data/company-lists/all-lists')
+const allListsCompaniesIn = require('../../../../test/unit/data/company-lists/all-lists-company-is-in')
 
 const { transformCompaniesInLists } = require('../../../../src/apps/company-lists/transformers')
 

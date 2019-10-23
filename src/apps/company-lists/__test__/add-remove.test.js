@@ -1,7 +1,7 @@
 const proxyquire = require('proxyquire')
-const config = require('../../../../../config')
-const buildMiddlewareParameters = require('../../../../unit/helpers/middleware-parameters-builder')
-const { handleAddRemoveCompanyToList, renderAddRemoveForm } = require('../../../../../src/apps/company-lists/controllers/add-remove')
+const config = require('../../../../config')
+const buildMiddlewareParameters = require('../../../../test/unit/helpers/middleware-parameters-builder')
+const { handleAddRemoveCompanyToList, renderAddRemoveForm } = require('../../../../src/apps/company-lists/controllers/add-remove')
 
 describe('Adding and removing a company to a list', () => {
   let middlewareParameters
@@ -119,7 +119,7 @@ describe('Adding and removing a company to a list', () => {
             isAdded: 'yes',
           }],
         })
-        const middleware = proxyquire('../../../../../src/apps/company-lists/controllers/add-remove', {
+        const middleware = proxyquire('../controllers/add-remove', {
           '../repos': {
             getAllCompanyLists: getAllCompanyListsStub,
             getListsCompanyIsIn: getListsCompanyIsInStub,
@@ -158,7 +158,7 @@ describe('Adding and removing a company to a list', () => {
         const getAllCompanyListsStub = sinon.stub().rejects()
         const getListsCompanyIsInStub = sinon.stub().resolves()
         const transformCompaniesInListsStub = sinon.stub().resolves()
-        const middleware = proxyquire('../../../../../src/apps/company-lists/controllers/add-remove', {
+        const middleware = proxyquire('../controllers/add-remove', {
           '../repos': {
             getAllCompanyLists: getAllCompanyListsStub,
             getListsCompanyIsIn: getListsCompanyIsInStub,
