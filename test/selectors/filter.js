@@ -7,6 +7,7 @@ module.exports = {
   sector: '#group-field-sector_descends',
   exportingTo: '#group-field-export_to_countries',
   interestedIn: '#group-field-future_interest_countries',
+  firstInteractionDate: '[for="field-interaction_between-1"]',
   contacts: {
     sector: '#group-field-company_sector_descends',
     companyName: '#field-company_name',

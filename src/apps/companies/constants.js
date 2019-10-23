@@ -9,6 +9,7 @@ const QUERY_FIELDS_MAP = {
   headquarterType: 'headquarter_type',
   exportingTo: 'export_to_countries',
   interestedIn: 'future_interest_countries',
+  lastInteractionDate: 'interaction_between',
 }
 
 const DEFAULT_COLLECTION_QUERY = {

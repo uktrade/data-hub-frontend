@@ -18,6 +18,7 @@ const ClearInputs = require('./modules/clear-inputs.js')
 const PreventMultipleSubmits = require('./modules/prevent-multiple-submits.js')
 const PreventLinkDoubleClick = require('./modules/prevent-link-double-click.js')
 
+LastInteractionFilter.init()// register before AutoSubmit so it should add the params before getting submitted
 LabelSelect.init()
 ConditionalSubfields.init()
 SortableTable.init()
