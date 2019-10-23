@@ -43,11 +43,6 @@ describe('Investment profile controller', () => {
           .equal('investments/views/profiles')
       })
 
-      it('should render the view with a title', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].title).to
-          .equal('Investments')
-      })
-
       it.skip('should render the view with a count label', () => {
         expect(this.middlewareParameters.resMock.render.firstCall.args[1].countLabel).to
           .equal('project')
