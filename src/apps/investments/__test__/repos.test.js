@@ -1,4 +1,4 @@
-const config = require('~/src/config')
+const config = require('../../../config')
 
 const {
   getInvestment,
@@ -7,11 +7,12 @@ const {
   createInvestmentProject,
   archiveInvestmentProject,
   unarchiveInvestmentProject,
-} = require('~/src/apps/investments/repos')
+  fetchLargeCapitalProfiles,
+} = require('../../../apps/investments/repos')
 
-const companyData = require('~/test/unit/data/company.json')
-const investmentData = require('~/test/unit/data/investment/investment-data.json')
-const investmentProjectAuditData = require('~/test/unit/data/investment/audit-log.json')
+const companyData = require('../../../../test/unit/data/company.json')
+const investmentData = require('../../../../test/unit/data/investment/investment-data.json')
+const investmentProjectAuditData = require('../../../../test/unit/data/investment/audit-log.json')
 
 describe('Investment repository', () => {
   describe('#getCompanyInvestmentProjects', () => {
@@ -92,5 +93,13 @@ describe('Investment repository', () => {
     it('should call unarchive url', async () => {
       expect(this.investmentProjectAuditData).to.deep.equal(investmentProjectAuditData)
     })
+  })
+
+  it('#fetchLargeCapitalProfiles', async () => {
+    nock(config.apiRoot)
+      .get(`/v4/large-investor-profile?limit=10&offset=0&sortby=modified_on`)
+      .reply(200, 'data')
+
+    expect(await fetchLargeCapitalProfiles('token', 10)).to.equal('data')
   })
 })
