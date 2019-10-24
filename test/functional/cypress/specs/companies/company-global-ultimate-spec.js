@@ -7,8 +7,8 @@ describe('Company Global Ultimate HQ', () => {
       cy.visit(`/companies/${fixtures.company.dnbGlobalUltimate.id}/activity`)
     })
 
-    it('should display the badge', () => {
-      cy.get(selectors.localHeader().badge(1)).should('have.text', 'Ultimate HQ')
+    it('should not display a "Ultimate HQ" badge when the feature flag "companies-ultimate-hq" is false', () => {
+      cy.get(selectors.localHeader().badge(1)).should('not.be.visible')
     })
   })
 })

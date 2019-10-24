@@ -33,11 +33,13 @@
     fullWidthContent: true
   }) %}
     <p class="c-local-header__heading-after">{{ company.address | formatAddress }}</p>
-    {% set isGlobalHQ = true if company.headquarter_type and company.headquarter_type.name == 'ghq' %}
-    {% if company.is_global_ultimate or isGlobalHQ %}
+    {% set isUltimate = company.is_global_ultimate and features["companies-ultimate-hq"] %}
+    {% set isGlobalHQ = company.headquarter_type and company.headquarter_type.name == 'ghq' %}
+    
+    {% if isUltimate or isGlobalHQ %}
       <div class="c-meta-list">
         <div class="c-meta-list__item">
-          <span class="c-badge">{{ "Ultimate" if company.is_global_ultimate else "Global" }} HQ</span>
+          <span class="c-badge">{{ "Ultimate" if isUltimate else "Global" }} HQ</span>
         </div>
       </div>
     {% endif %}
