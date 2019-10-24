@@ -1,3 +1,4 @@
+import { ACTIVITY_TYPE_FILTERS } from '../../constants'
 const { fetchActivityFeed } = require('./repos')
 
 async function renderActivityFeed (req, res, next) {
@@ -6,6 +7,15 @@ async function renderActivityFeed (req, res, next) {
     const addContentProps = company.archived ? {} : {
       addContentText: 'Add interaction',
       addContentLink: `/companies/${company.id}/interactions/create`,
+      addActivityTypeFilter: {
+        values: [
+          ACTIVITY_TYPE_FILTERS.all,
+          ACTIVITY_TYPE_FILTERS.myActivity, // TODO(jf): this should have the whoami value (email, user id etc) at this point
+          ACTIVITY_TYPE_FILTERS.dataHubActivity,
+          ACTIVITY_TYPE_FILTERS.externalActivity,
+        ],
+        defaultValue: ACTIVITY_TYPE_FILTERS.dataHubActivity.value,
+      },
     }
 
     res
