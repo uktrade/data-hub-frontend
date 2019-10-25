@@ -82,7 +82,7 @@ describe('Company activity feed', () => {
       expectedHeading: fixtures.company.archivedLtd.name,
       expectedAddress: '16 Getabergsvagen, Geta, 22340, Malta',
       expectedCompanyId: fixtures.company.archivedLtd.id,
-      expectedActivitiesHeading: '1 activity',
+      expectedActivitiesHeading: 'Activities',
     })
 
     it('should display the badge', () => {
