@@ -2,7 +2,7 @@ import { ACTIVITY_TYPE_FILTERS } from '../../constants'
 const { fetchActivityFeed } = require('./repos')
 
 async function renderActivityFeed (req, res, next) {
-  const { company } = res.locals
+  const { company, features } = res.locals
   try {
     const addContentProps = company.archived ? {} : {
       addContentText: 'Add interaction',
@@ -10,12 +10,16 @@ async function renderActivityFeed (req, res, next) {
       addActivityTypeFilter: {
         values: [
           ACTIVITY_TYPE_FILTERS.all,
-          ACTIVITY_TYPE_FILTERS.myActivity, // TODO(jf): this should have the whoami value (email, user id etc) at this point
+          {
+            label: 'My activity',
+            value: '123', // TODO(jf): get res.locals.whoamI.userId
+          },
           ACTIVITY_TYPE_FILTERS.dataHubActivity,
           ACTIVITY_TYPE_FILTERS.externalActivity,
         ],
         defaultValue: ACTIVITY_TYPE_FILTERS.dataHubActivity.value,
       },
+      isFilterEnabled: !!features['activity-type-filter'], // TODO(jf): set this feature flag
     }
 
     res
