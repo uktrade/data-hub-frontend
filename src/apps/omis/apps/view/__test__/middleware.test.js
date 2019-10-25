@@ -42,7 +42,7 @@ describe('OMIS View middleware', () => {
       '../../transformers': {
         transformPaymentToView: this.transformPaymentToViewStub,
       },
-      '../../../../../config/logger': {
+      '../../../../config/logger': {
         error: this.loggerErrorSpy,
       },
       '../../../contacts/repos': {

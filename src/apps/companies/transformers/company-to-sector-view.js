@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 const { get } = require('lodash')
 
-const { getPrimarySectorName } = require('../../../../common/transform-sectors')
+const { getPrimarySectorName } = require('../../../common/transform-sectors')
 const { NOT_SET_TEXT } = require('../constants')
 
 const getCompanySectorUrl = (archived = true, duns_number, companyId) => {

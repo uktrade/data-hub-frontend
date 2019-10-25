@@ -1,4 +1,4 @@
-const transformSectors = require('~/common/transform-sectors')
+const transformSectors = require('~/src/common/transform-sectors')
 const sectorList = require('~/test/unit/data/sector-list_input.json')
 
 describe('Sectors transformer', () => {

@@ -13,7 +13,7 @@ describe('OMIS CreateController', () => {
       '../../companies/repos': {
         getDitCompany: this.getDitCompanyStub,
       },
-      '../../../../config/logger': {
+      '../../../config/logger': {
         error: this.errorSpy,
       },
     })
