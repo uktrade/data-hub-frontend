@@ -1,6 +1,6 @@
 const uniqueId = require('lodash/uniqueId')
 
-const { parseDateString } = require('../../../common/date')
+const { parseDateString } = require('../../../src/common/date')
 const { addClass, removeClass } = require('../lib/helpers')
 
 function isDate (text) {

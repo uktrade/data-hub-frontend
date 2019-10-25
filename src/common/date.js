@@ -1,4 +1,4 @@
-const { longDateFormat, mediumDateFormat } = require('../src/config')
+const { longDateFormat, mediumDateFormat } = require('../config')
 const format = require('date-fns/format')
 
 function formatLongDate (dateString = []) {

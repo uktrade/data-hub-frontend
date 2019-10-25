@@ -12,10 +12,10 @@ describe('Error Middleware Test', () => {
 
     this.errorsStub = (isDev) => {
       return proxyquire('~/src/middleware/errors', {
-        '../../config': {
+        '../config': {
           isDev,
         },
-        '../../config/logger': {
+        '../config/logger': {
           error: this.winstonErrorStub,
           info: this.winstonInfoStub,
         },

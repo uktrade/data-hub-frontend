@@ -4,7 +4,7 @@ describe('SSO bypass middleware', () => {
   beforeEach(() => {
     this.mockConfig = {}
     this.ssoBypassMiddleware = proxyquire.noCallThru().load('~/src/middleware/sso-bypass', {
-      '../../config': this.mockConfig,
+      '../config': this.mockConfig,
     })
     this.reqMock = assign({}, globalReq, {
       session: {},

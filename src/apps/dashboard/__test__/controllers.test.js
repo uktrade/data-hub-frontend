@@ -140,7 +140,7 @@ describe('dashboard controller', () => {
       './repos': {
         fetchHomepageData: global.fetchHomepageDataStub,
       },
-      '../../../config': {
+      '../../config': {
         helpCentre: global.helpCentre,
       },
       './transformers': {

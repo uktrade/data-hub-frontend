@@ -1,6 +1,6 @@
 const { get } = require('lodash')
 
-const { formatLongDate } = require('../../../../common/date')
+const { formatLongDate } = require('../../../common/date')
 const { getInvestmentProjectAuditLog } = require('../repos')
 
 function formatAuditLog (logEntry) {
