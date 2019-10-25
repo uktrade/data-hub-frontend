@@ -13,6 +13,7 @@ const { filterActiveAdvisers } = require('../../adviser/filters')
 const { getAdvisers } = require('../../adviser/repos')
 
 const FILTER_CONSTANTS = require('../../../lib/filter-constants')
+
 const QUERY_STRING =
   FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.PRIMARY.QUERY_STRING
 const SECTOR = FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.NAME

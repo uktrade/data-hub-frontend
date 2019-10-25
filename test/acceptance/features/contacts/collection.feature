@@ -4,12 +4,6 @@ Feature: View collection of contacts
   I would like to view all the Contacts in one place
   And be able to read the contact details as expected
 
-  @contacts-collection--view--lep @lep
-  Scenario: View contact collection as LEP
-    When I navigate to the `contacts.list` page
-    Then I confirm I am on the Contacts page
-    And the results summary for a contact collection is present
-
   @contacts-collection--view--da @da
   Scenario: View contact collection as DA
     When I navigate to the `contacts.list` page

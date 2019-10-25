@@ -10,10 +10,12 @@ function DeleteCompanyList ({ companyList, csrfToken, returnUrl }) {
   const [errorMessage, setErrorMessage] = useState(null)
   const onDelete = async () => {
     try {
-      await axios.post(`/company-lists/${companyList.id}/delete`,
+      await axios.post(
+        `/company-lists/${companyList.id}/delete`,
         null,
-        { params: { _csrf: csrfToken } })
-      window.location.assign('/company-lists')
+        { params: { _csrf: csrfToken } },
+      )
+      window.location.assign('/')
     } catch (error) {
       if (get(error, 'response.status') === 404) {
         setErrorMessage(notFoundMessage)

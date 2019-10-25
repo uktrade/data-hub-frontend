@@ -5,6 +5,7 @@ const { transformPropositionResponseToForm } = require('../transformers')
 const { transformDateStringToDateObject } = require('../../transformers')
 const { propositionForm } = require('../macros')
 const { buildFormWithStateAndErrors } = require('../../builders')
+
 const formConfigs = {
   'proposition': propositionForm,
 }

@@ -6,6 +6,7 @@ const { getOptions } = require('../../../lib/options')
 const { buildExportAction } = require('../../../lib/export-helper')
 
 const FILTER_CONSTANTS = require('../../../lib/filter-constants')
+
 const QUERY_STRING = FILTER_CONSTANTS.COMPANIES.SECTOR.PRIMARY.QUERY_STRING
 const SECTOR = FILTER_CONSTANTS.COMPANIES.SECTOR.NAME
 
@@ -48,7 +49,7 @@ async function renderCompanyList (req, res, next) {
       highlightTerm: get(selectedFilters, 'name.valueLabel'),
       actionButtons: [{
         label: 'Add company',
-        url: '/companies/add-step-1',
+        url: '/companies/create',
       }],
     })
   } catch (error) {

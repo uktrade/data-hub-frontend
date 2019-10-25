@@ -5,12 +5,6 @@ const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS, QUERY_FIELDS } = r
 const { getRequestBody } = require('../../middleware/collection')
 const { getCollection, exportCollection } = require('../../modules/search/middleware/collection')
 
-const {
-  renderAddStepOne,
-  postAddStepOne,
-  renderAddStepTwo,
-} = require('./controllers/add')
-
 const { renderCompanyList } = require('./controllers/list')
 const { renderForm } = require('./controllers/edit')
 const { renderDetails } = require('./controllers/details')
@@ -42,31 +36,33 @@ const {
 const { setDefaultQuery, redirectToFirstNavItem, handleRoutePermissions } = require('../middleware')
 
 const {
-  getLimitedCompaniesCollection,
   getGlobalHQCompaniesCollection,
   getSubsidiaryCompaniesCollection,
 } = require('./middleware/collection')
 
 const { setCompanyContactRequestBody, getCompanyContactCollection } = require('./middleware/contact-collection')
 const { populateForm, handleFormPost } = require('./middleware/form')
-const { getCompany, setIsCompanyAlreadyAdded, addCompanyOrRemoveFromList, getCompaniesHouseRecord } = require('./middleware/params')
+const { getCompany, setIsCompanyAlreadyAdded, setDoAnyListsExist, addCompanyOrRemoveFromList, getCompaniesHouseRecord } = require('./middleware/params')
 const { setInteractionsDetails } = require('./middleware/interactions')
 const { setGlobalHQ, removeGlobalHQ, addSubsidiary } = require('./middleware/hierarchies')
 const setCompaniesLocalNav = require('./middleware/local-navigation')
 
 const { transformCompanyToListItem } = require('./transformers')
 
+const addCompanyFormRouter = require('./apps/add-company/router')
+const editCompanyFormRouter = require('./apps/edit-company/router')
+
 const investmentsRouter = require('./apps/investments/router')
 const matchingRouter = require('./apps/matching/router')
 const interactionsRouter = require('../interactions/router.sub-app')
 const activityFeedRouter = require('./apps/activity-feed/router')
-const addCompanyFormRouter = require('./apps/add-company/router')
-const addCreateListFormRouter = require('../company-lists/router')
+const companyListsRouter = require('../company-lists/router')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.param('companyId', getCompany)
 router.param('companyId', setIsCompanyAlreadyAdded)
+router.param('companyId', setDoAnyListsExist)
 router.param('companyNumber', getCompaniesHouseRecord)
 
 router.get('/',
@@ -83,30 +79,17 @@ router.get('/export',
 )
 
 router.use('/create', addCompanyFormRouter)
-router.use('/:companyId/lists/create', addCreateListFormRouter)
-
-router
-  .route('/add-step-1')
-  .get(renderAddStepOne)
-  .post(postAddStepOne, renderAddStepOne)
-
-router.get('/add-step-2', getLimitedCompaniesCollection, renderAddStepTwo)
+router.use('/:companyId/lists', companyListsRouter)
+router.use('/:companyId/edit', editCompanyFormRouter)
 
 router
   .route('/:companyId/exports/edit')
   .get(populateExportForm, renderExportEdit)
   .post(populateExportForm, handleEditFormPost, renderExportEdit)
 
+// TODO: Remove in a separate PR
 router
-  .route([
-    '/add',
-    '/add/:companyNumber',
-  ])
-  .get(populateForm, renderForm)
-  .post(handleFormPost, populateForm, renderForm)
-
-router
-  .route('/:companyId/edit')
+  .route('/:companyId/edit-old')
   .get(populateForm, renderForm)
   .post(handleFormPost, populateForm, renderForm)
 

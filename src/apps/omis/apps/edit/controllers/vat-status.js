@@ -1,6 +1,7 @@
 const { get } = require('lodash')
 
 const { EditController } = require('../../../controllers')
+
 class EditVatStatusController extends EditController {
   configure (req, res, next) {
     if (req.form.options.disableFormAction) {

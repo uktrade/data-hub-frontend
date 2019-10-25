@@ -92,12 +92,6 @@ Feature: View a list of events
     And I filter the events list by name "Teddy bear expo"
     Then I cannot see a sort option
 
-  @events-collection--lep @lep
-  Scenario: Navigate to events shows 403 for LEPs
-
-    When I navigate to the `events.list` page
-    Then I see the 403 error page
-
   @events-collection--da @da
   Scenario: Navigate to events shows 403 for DAs
 

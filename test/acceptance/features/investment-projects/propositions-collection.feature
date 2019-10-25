@@ -7,22 +7,10 @@ Feature: View collection of propositions for an investment project
     When I navigate to the `investments.propositions` page using `investment project` `New hotel (FDI)` fixture
     And I can view the collection
 
-  @investment-projects-propositions-collection--view--lep @lep
-  Scenario: View investment projects proposition collection
-
-    When I navigate to the `investments.propositions` page using `investment project` `New zoo (LEP)` fixture
-    And I can view the collection
-
   @investment-projects-propositions-collection--view--da @da
   Scenario: View investment projects proposition collection
 
     When I navigate to the `investments.propositions` page using `investment project` `New golf course (DA)` fixture
-    And I can view the collection
-
-  @investment-projects-propositions-collection--lep @lep
-  Scenario: Navigate to propositions of a different investment project as LEP
-
-    When I navigate to the `investments.propositions` page using `investment project` `New zoo (LEP)` fixture
     And I can view the collection
 
   @investment-projects-propositions-collection--da @da

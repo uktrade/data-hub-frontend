@@ -52,18 +52,10 @@ function parseOptions (opts, token) {
   }
 }
 
-const acceptUntrustedCertificatesForDevEnvironments = () => {
-  if (process.env.PROXY && config.isDev) {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
-  }
-}
-
 // Accepts options as keys on an object or encoded as a url
 // Responses are parsed to remove any embedded XSS attempts with
 // script tags
 function authorisedRequest (token, opts) {
-  acceptUntrustedCertificatesForDevEnvironments()
-
   const requestOptions = parseOptions(opts, token)
 
   logger.debug('Send authorised request: ', requestOptions)
@@ -77,13 +69,16 @@ function authorisedRequest (token, opts) {
 // See request-promise #90 does not work with streams
 // https://github.com/request/request-promise/issues/90
 function authorisedRawRequest (token, opts) {
-  acceptUntrustedCertificatesForDevEnvironments()
-
   const requestOptions = parseOptions(opts, token)
 
   logger.debug('Send authorised raw request: ', requestOptions)
 
   return Promise.resolve(request(requestOptions))
+}
+
+// accept untrusted certificates for dev environments
+if (config.isDev && process.env.PROXY) {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 }
 
 module.exports = {

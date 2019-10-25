@@ -3,7 +3,7 @@
 {% block local_header %}
   {% set action %}
     <form action="/companies/{{ company.id }}/manage-company-list?_csrf={{ csrfToken }}" method="post">
-      <input type="hidden" value="{{ company.id }}"/>
+      <input type="hidden" value="{{ company.id }}" />
       {% if isCompanyAlreadyAdded %}
         <button type="submit" name="action" value="remove" class="govuk-button govuk-button--secondary">
           Remove from my list
@@ -17,12 +17,15 @@
       {% endif %}
     </form>
   {% endset %}
-  {% if features.companies_create_list %}
+  {% if features.companies_add_remove_from_lists %}
     {% set action %}
-      <a href="/companies/{{ company.id }}/lists/create" class="govuk-button govuk-button--secondary">Add to my lists</a>
+      {% if canViewCompanyList %}
+        {% set addListText = 'Add to or remove from lists' if listsExist else 'Add to my list' %}
+        <a href="/companies/{{ company.id }}/lists/add-remove"
+           class="govuk-button govuk-button--secondary">{{ addListText }}</a>
+      {% endif %}
     {% endset %}
   {% endif %}
-
   {% call LocalHeader({
     heading: company.name,
     actions: action,
@@ -30,10 +33,13 @@
     fullWidthContent: true
   }) %}
     <p class="c-local-header__heading-after">{{ company.address | formatAddress }}</p>
-    {% if company.headquarter_type and company.headquarter_type.name == 'ghq' %}
+    {% set isUltimate = company.is_global_ultimate and features["companies-ultimate-hq"] %}
+    {% set isGlobalHQ = company.headquarter_type and company.headquarter_type.name == 'ghq' %}
+    
+    {% if isUltimate or isGlobalHQ %}
       <div class="c-meta-list">
         <div class="c-meta-list__item">
-          <span class="c-badge">Global HQ</span>
+          <span class="c-badge">{{ "Ultimate" if isUltimate else "Global" }} HQ</span>
         </div>
       </div>
     {% endif %}

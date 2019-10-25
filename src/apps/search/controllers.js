@@ -47,7 +47,7 @@ async function renderSearchResults (req, res) {
     itemTransformers.push(transformCompanyToListItem)
     actionButtons.push({
       label: 'Add company',
-      url: '/companies/add-step-1',
+      url: '/companies/create',
     })
   }
 

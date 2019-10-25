@@ -7,31 +7,21 @@ import { CreateListForm } from 'data-hub-components'
 const CreateListFormSection = (
   {
     id,
-    token,
+    csrfToken,
     name,
     hint,
     label,
     cancelUrl,
-    maxLength
+    maxLength,
   }) => {
 
-  async function onCreateList (id, name, token, cancelUrl, listName) {
-    try {
-      await axios({
-        method: 'POST',
-        url: `/companies/${id}/lists/create?_csrf=${token}`,
-        headers: {
-          'accept': 'application/json',
-          'content-type': 'application/json',
-        },
-        data: {
-          name: listName,
-        },
-      })
-      window.location.href = cancelUrl
-    } catch (error) {
-      console.log(error)
-    }
+  async function onCreateList ({listName}) {
+    await axios({
+      method: 'POST',
+      url: `/companies/${id}/lists/create?_csrf=${csrfToken}`,
+      data: { name: listName },
+    })
+    return cancelUrl
   }
 
   return (
@@ -41,7 +31,7 @@ const CreateListFormSection = (
       label={label}
       cancelUrl={cancelUrl}
       maxLength={maxLength}
-      onSubmitHandler={({ listName }) => onCreateList(id, name, token, cancelUrl, listName)}
+      onSubmitHandler={onCreateList}
     />
   )
 }

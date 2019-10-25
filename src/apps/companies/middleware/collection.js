@@ -1,12 +1,7 @@
-const { assign } = require('lodash')
-
 const { getOptions } = require('../../../lib/options')
-const { searchLimitedCompanies, searchCompanies } = require('../../../modules/search/services')
+const { searchCompanies } = require('../../../modules/search/services')
 const { transformApiResponseToSearchCollection } = require('../../../modules/search/transformers')
-const {
-  transformCompanyToListItem,
-  transformCompaniesHouseToListItem,
-} = require('../transformers')
+const { transformCompanyToListItem } = require('../transformers')
 const { ENTITIES } = require('../../search/constants')
 
 async function getNonGlobalHQs (token) {
@@ -24,38 +19,6 @@ async function getNonGlobalHQs (token) {
 async function getGlobalHQ (token) {
   const headerquarterTypes = await getOptions(token, 'headquarter-type')
   return headerquarterTypes.find(hqType => hqType.label === 'ghq')
-}
-
-async function getLimitedCompaniesCollection (req, res, next) {
-  const searchTerm = res.locals.searchTerm = req.query.term
-
-  if (!searchTerm) {
-    return next()
-  }
-
-  try {
-    res.locals.results = await searchLimitedCompanies({
-      searchTerm,
-      token: req.session.token,
-      page: req.query.page,
-    })
-      .then(
-        transformApiResponseToSearchCollection(
-          { query: req.query },
-          ENTITIES,
-          transformCompaniesHouseToListItem,
-          (item) => {
-            return assign({}, item, {
-              url: `/companies/add/${item.id}`,
-            })
-          }
-        )
-      )
-
-    next()
-  } catch (error) {
-    next(error)
-  }
 }
 
 async function getGlobalHQCompaniesCollection (req, res, next) {
@@ -137,7 +100,6 @@ async function getSubsidiaryCompaniesCollection (req, res, next) {
 }
 
 module.exports = {
-  getLimitedCompaniesCollection,
   getGlobalHQCompaniesCollection,
   getSubsidiaryCompaniesCollection,
 }
