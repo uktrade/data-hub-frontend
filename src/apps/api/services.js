@@ -1,5 +1,5 @@
 const rp = require('request-promise')
-const config = require('../../../config')
+const config = require('../../config')
 const { trim } = require('lodash')
 
 function lookupAddress (postcode) {

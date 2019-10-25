@@ -1,6 +1,6 @@
 const { authorisedRequest } = require('../lib/authorised-request')
-const config = require('../../config')
-const logger = require('../../config/logger')
+const config = require('../config')
+const logger = require('../config/logger')
 
 const flagUrl = `${config.apiRoot}/v3/feature-flag`
 

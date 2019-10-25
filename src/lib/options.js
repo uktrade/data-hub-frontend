@@ -1,7 +1,7 @@
 const { castArray, sortBy } = require('lodash')
 const Redis = require('redis')
 
-const config = require('../../config')
+const config = require('../config')
 const { authorisedRequest } = require('../lib/authorised-request')
 const hawkRequest = require('../lib/hawk-request')
 const { filterDisabledOption } = require('../modules/permissions/filters')
@@ -11,7 +11,7 @@ const {
 
 let client, redisAsync
 if (!config.isTest) {
-  const { getRedisConfig } = require('../../config/redis-store')
+  const { getRedisConfig } = require('../config/redis-store')
   const { promisify } = require('util')
 
   client = Redis.createClient({ ...getRedisConfig(), url: config.redis.url })

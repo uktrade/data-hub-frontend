@@ -1,7 +1,7 @@
 const rewire = require('rewire')
 
 const builders = require('~/src/apps/builders')
-const config = require('~/config')
+const config = require('~/src/config')
 
 describe('Global builders', () => {
   describe('#getDeepObjectValuesForKey', () => {

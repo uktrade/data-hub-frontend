@@ -1,7 +1,7 @@
 const uuid = require('uuid')
 const { assign } = require('lodash')
 const moment = require('moment')
-const config = require('~/config')
+const config = require('~/src/config')
 const paths = require('~/src/apps/investments/paths')
 const companyData = require('~/test/unit/data/companies/company-v4.json')
 

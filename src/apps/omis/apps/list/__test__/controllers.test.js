@@ -1,4 +1,4 @@
-const config = require('~/config')
+const config = require('~/src/config')
 const controller = require('~/src/apps/omis/apps/list/controllers')
 
 describe('OMIS list controllers', () => {

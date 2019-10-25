@@ -3,7 +3,7 @@ const companyData = require('~/test/unit/data/company.json')
 const companyV4Data = require('~/test/unit/data/companies/company-v4.json')
 const myCompanyListData = require('~/test/unit/data/companies/my-company-list.json')
 
-const config = require('~/config')
+const config = require('~/src/config')
 
 const {
   getDitCompany,

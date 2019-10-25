@@ -3,7 +3,7 @@ const adviserData = require('~/test/unit/data/investment/interaction/advisers')
 const controller = require('~/src/apps/investments/middleware/forms/value')
 const { investmentTypes } = require('~/src/apps/investments/types')
 const paths = require('~/src/apps/investments/paths')
-const config = require('~/config')
+const config = require('~/src/config')
 const moment = require('moment')
 
 const gvaMessage = gvaMessages.capitalExpenditureAndPrimarySectorRequired

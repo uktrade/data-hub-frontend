@@ -5,7 +5,7 @@ const uuid = require('uuid')
 const { get, set, isUndefined } = require('lodash')
 
 const { saveSession } = require('./../../lib/session-helper')
-const config = require('./../../../config')
+const config = require('../../config')
 
 function getAccessToken (code) {
   const options = {

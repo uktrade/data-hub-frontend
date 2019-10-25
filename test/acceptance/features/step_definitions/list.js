@@ -3,8 +3,8 @@ const { client } = require('nightwatch-cucumber')
 const { Given, When, Then } = require('cucumber')
 const moment = require('moment')
 
-const { pluralise } = require('../../../../config/nunjucks/filters')
-const { mediumDateTimeFormat } = require('../../../../config')
+const { pluralise } = require('../../../../src/config/nunjucks/filters')
+const { mediumDateTimeFormat } = require('../../../../src/config')
 
 const Collection = client.page.collection()
 

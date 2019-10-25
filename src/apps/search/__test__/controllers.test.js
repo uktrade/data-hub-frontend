@@ -1,5 +1,5 @@
 
-const config = require('~/config')
+const config = require('~/src/config')
 const { renderSearchResults } = require('~/src/apps/search/controllers')
 
 describe('Search Controller #renderSearchResults', () => {

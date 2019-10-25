@@ -1,5 +1,5 @@
-const config = require('../../config')
-const logger = require('../../config/logger')
+const config = require('../config')
+const logger = require('../config/logger')
 
 function getStatusMessage (error) {
   if (error.code === 'EBADCSRFTOKEN') {

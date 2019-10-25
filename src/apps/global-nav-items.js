@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const { compact, sortBy, concat, includes } = require('lodash')
 
-const config = require('../../config')
+const config = require('../config')
 
 const subApps = fs.readdirSync(__dirname)
 

@@ -1,5 +1,5 @@
 const { getOneListGroupCoreTeam } = require('../repos')
-const config = require('../../../../config')
+const config = require('../../../config')
 const { transformCoreTeamToCollection } = require('../transformers')
 const { coreTeamLabels } = require('../labels')
 

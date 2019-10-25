@@ -1,6 +1,6 @@
 const { assign } = require('lodash')
 
-const config = require('~/config')
+const config = require('~/src/config')
 const { getOptionsHandler } = require('~/src/apps/api/controllers/options')
 
 describe('options API controller', () => {

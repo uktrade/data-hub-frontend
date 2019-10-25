@@ -1,4 +1,4 @@
-const config = require('~/config')
+const config = require('~/src/config')
 const advisersData = require('~/test/unit/data/advisers/advisers')
 
 const standardMacros = [

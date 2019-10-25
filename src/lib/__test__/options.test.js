@@ -1,6 +1,6 @@
 const moment = require('moment')
 
-const config = require('~/config')
+const config = require('~/src/config')
 
 const yesterday = moment()
   .subtract(1, 'days')

@@ -1,4 +1,4 @@
-const config = require('~/config')
+const config = require('~/src/config')
 const { createAttendee } = require('~/src/apps/events/attendees/controllers/create')
 const attendeesData = require('~/test/unit/data/interactions/attendees.json')
 const event = require('~/test/unit/data/events/event-data.json')
