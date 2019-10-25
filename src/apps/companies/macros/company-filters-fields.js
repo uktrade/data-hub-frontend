@@ -4,6 +4,7 @@ const { globalFields } = require('../../macros')
 
 const FILTER_CONSTANTS = require('../../../lib/filter-constants')
 const { QUERY_FIELDS_MAP } = require('../constants')
+
 const PRIMARY_SECTOR_NAME = FILTER_CONSTANTS.COMPANIES.SECTOR.PRIMARY.NAME
 
 const companyFiltersFields = function ({ sectorOptions }) {

@@ -11,14 +11,6 @@ Feature: Contact local nav
       | Audit history               |
       | Documents                   |
 
-  @contact-local-nav--lep @lep
-  Scenario: Contact local nav as LEP
-    When I navigate to the `contacts.fixture` page using `contact` `Johnny Cakeman` fixture
-    Then there should be a local nav
-      | text                        |
-      | Details                     |
-      | Audit history               |
-
   @contact-local-nav--da @da
   Scenario: Contact local nav as DA
     When I navigate to the `contacts.fixture` page using `contact` `Johnny Cakeman` fixture

@@ -12,8 +12,7 @@ async function fetchCompanyList (req, res, next) {
 async function renderDeleteCompanyListPage (req, res, next) {
   const props = {
     companyList: res.locals.companyList,
-    csrfToken: res.locals.csrfToken,
-    returnUrl: '/company-lists',
+    returnUrl: '/',
   }
 
   try {

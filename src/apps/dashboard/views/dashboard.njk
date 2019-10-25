@@ -22,11 +22,12 @@
         outboundLinkText: 'View all updates'
       } %}
     </div>
-{% if canViewCompanyList %}
+{% if companyLists %}
     <div class="govuk-grid-column-full">
-      <div id="react-mount-my-companies" data-model="{{ companyList }}">
-        <noscript>Please enable JavaScript in your browser to see the content.</noscript>
-      </div>
+      {% component 'react-slot', {
+        id: 'my-companies',
+        props: {lists: companyLists}
+      } %}
     </div>
 {% endif %}
 </div>

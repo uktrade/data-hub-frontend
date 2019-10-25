@@ -2,6 +2,7 @@ const { assign, flatten, reject, merge } = require('lodash')
 
 const { globalFields } = require('../macros')
 const FILTER_CONSTANTS = require('../../lib/filter-constants')
+
 const PRIMARY_SECTOR_NAME = FILTER_CONSTANTS.CONTACTS.SECTOR.PRIMARY.NAME
 
 const sortFormBase = {

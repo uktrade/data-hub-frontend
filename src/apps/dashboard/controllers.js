@@ -4,9 +4,9 @@ const rp = require('request-promise')
 const GLOBAL_NAV_ITEMS = require('../global-nav-items')
 
 const { isPermittedRoute } = require('../middleware')
-const { fetchHomepageData, fetchCompanyList } = require('./repos')
+const { fetchHomepageData, fetchCompanyLists } = require('./repos')
 const config = require('../../../config')
-const { formatHelpCentreAnnouncements, transformCompanyList } = require('./transformers')
+const { formatHelpCentreAnnouncements } = require('./transformers')
 
 async function renderDashboard (req, res, next) {
   try {
@@ -33,18 +33,13 @@ async function renderDashboard (req, res, next) {
       // just show an empty feed
       articleFeed = []
     }
-    const canViewCompanyList = userPermissions.includes(
-      'company_list.view_companylistitem'
-    )
 
-    const companyList = canViewCompanyList
-      ? JSON.stringify(
-        transformCompanyList(await fetchCompanyList(req.session.token))
-      )
-      : null
+    const companyLists = res.locals.features.companies_add_remove_from_lists &&
+      userPermissions.includes('company_list.view_companylistitem') &&
+      await fetchCompanyLists(req.session.token)
 
     res.title('Dashboard').render('dashboard/views/dashboard', {
-      companyList,
+      companyLists,
       contacts,
       interactions,
       articleFeed,
@@ -53,7 +48,6 @@ async function renderDashboard (req, res, next) {
         GLOBAL_NAV_ITEMS,
         userPermissions
       ),
-      canViewCompanyList,
       helpCentre,
     })
   } catch (error) {

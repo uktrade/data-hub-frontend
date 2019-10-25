@@ -6,8 +6,10 @@ require('jsdom-global')()
 global.rootPath = `${process.cwd()}`
 
 const { getMacros } = require('../unit/macro-helper')
+
 const formMacros = getMacros('form')
 const jsdom = require('jsdom')
+
 const { JSDOM } = jsdom
 
 global.JSDOM = JSDOM

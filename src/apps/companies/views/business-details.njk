@@ -1,6 +1,9 @@
-{% extends "_layouts/template.njk" %}
+{% extends '_layouts/template.njk' %}
 
-{% set editUrl = '/companies/' + company.id + '/edit' if not company.duns_number and not company.archived %} 
+{% set editUrl = '/companies/' + company.id + '/edit' %}
+{% set showEditLinkForNotArchived = true if not company.archived %}
+{% set showEditLinkForNonDnb = true if showEditLinkForNotArchived and not company.duns_number %}
+{% set showEditLinkForNonOneList = true if showEditLinkForNotArchived and not company.one_list_group_tier %}
 
 {% macro AddressCell(address, isRegistered) %}
   <td>
@@ -31,7 +34,11 @@
 {% endmacro %}
 
 {% block local_header %}
-  {% call LocalHeader({ heading: 'Business details' }) %}{% endcall %}
+  {{ LocalHeader({
+    heading: 'Business details',
+    modifier: 'light-banner',
+    fullWidthContent: true
+  }) }}
 {% endblock %}
 
 {% block body_main_content %}
@@ -64,65 +71,79 @@
     }) }}
   {% endif %}
 
-  {% call DetailsContainer({ heading: 'About ' + company.name, editUrl: editUrl, dataAutoId: 'aboutDetailsContainer' }) %}
+  {% set aboutEditUrl = editUrl if showEditLinkForNonDnb %}
+  {% call DetailsContainer({ heading: 'About ' + company.name, editUrl: aboutEditUrl, dataAutoId: 'aboutDetailsContainer' }) %}
     {% component 'key-value-table', items=aboutDetails, dataAutoId='aboutDetails' %}
   {% endcall %}
 
-  {% call DetailsContainer({ heading: 'Addresses', editUrl: editUrl, dataAutoId: 'addressesDetailsContainer' }) %}
-    <table class="table--key-value">
+  {% set addressEditUrl = editUrl + '#field-address' if showEditLinkForNonDnb %}
+  {% call DetailsContainer({ heading: 'Addresses', editUrl: addressEditUrl, dataAutoId: 'addressesDetailsContainer' }) %}
+    <table class="table--key-value" data-auto-id="addressesDetails">
       <tbody>
-        <tr>
-          {{ AddressCell(company.address) }}
+      <tr>
+        {{ AddressCell(company.address) }}
 
-          {% if company.registered_address %}
-            {{ AddressCell(company.registered_address, true) }}
-          {% endif %}
-        </tr>
+        {% if company.registered_address %}
+          {{ AddressCell(company.registered_address, true) }}
+        {% endif %}
+      </tr>
       </tbody>
     </table>
   {% endcall %}
 
-  {% if regionDetails %}          
-    {% call DetailsContainer({ heading: 'DIT region', editUrl: regionDetails.url, dataAutoId: 'regionDetailsContainer' }) %}
-      <table class="table--key-value">
+  {% set descriptionEditUrl = editUrl + '#description' if showEditLinkForNotArchived %}
+  {% call DetailsContainer({ heading: 'Description', editUrl: descriptionEditUrl, dataAutoId: 'descriptionDetailsContainer' }) %}
+    <table class="table--key-value" data-auto-id="descriptionDetails">
+      <tbody>
+      <tr>
+        <td>{{ company.description or 'No description has been added' }}</td>
+      </tr>
+      </tbody>
+    </table>
+  {% endcall %}
+
+  {% if company.uk_based %}
+    {% set regionEditUrl = editUrl + '#uk_region' if showEditLinkForNotArchived %}
+    {% call DetailsContainer({ heading: 'DIT region', editUrl: regionEditUrl, dataAutoId: 'regionDetailsContainer' }) %}
+      <table class="table--key-value" data-auto-id="regionDetails">
         <tbody>
-          <tr>
-            <td>{{ regionDetails.name }}</td>
-          </tr>
+        <tr>
+          <td>{{ company.uk_region.name or 'Not set' }}</td>
+        </tr>
         </tbody>
       </table>
     {% endcall %}
   {% endif %}
 
-  {% call DetailsContainer({ heading: 'DIT sector', editUrl: sectorDetails.url, dataAutoId: 'sectorDetailsContainer' }) %}
-    <table class="table--key-value">
+  {% set sectorEditUrl = editUrl + '#sector' if showEditLinkForNotArchived %}
+  {% call DetailsContainer({ heading: 'DIT sector', editUrl: sectorEditUrl, dataAutoId: 'sectorDetailsContainer' }) %}
+    <table class="table--key-value" data-auto-id="sectorDetails">
       <tbody>
-      {% for sector in sectorDetails.name %}
-        <tr>
-          <td>{{ sector }}</td>
-        </tr>
-      {% endfor %}
+      <tr>
+        <td>{{ company.sector.name or 'Not set' }}</td>
+      </tr>
       </tbody>
     </table>
   {% endcall %}
 
   {% if oneListDetails %}
-    {% call DetailsContainer({ heading: 'Global Account Manager – One List', editUrl: editUrl, dataAutoId: 'oneListDetailsContainer' }) %}
+    {% set oneListEditUrl = editUrl if showEditLinkForNonDnb %}
+    {% call DetailsContainer({ heading: 'Global Account Manager – One List', editUrl: oneListEditUrl, dataAutoId: 'oneListDetailsContainer' }) %}
       {% component 'key-value-table', items=oneListDetails, dataAutoId='oneListDetails' %}
-
       <p>
         <a href="advisers">See all advisers on the core team</a>
       </p>
     {% endcall %}
   {% endif %}
 
-  {% call DetailsContainer({ heading: 'Business hierarchy', editUrl: editUrl, dataAutoId: 'businessHierarchyDetailsContainer' }) %}
+  {% set businessHierarchyEditUrl = editUrl + '#field-headquarter_type' if showEditLinkForNonDnb %}
+  {% call DetailsContainer({ heading: 'Business hierarchy', editUrl: businessHierarchyEditUrl, dataAutoId: 'businessHierarchyDetailsContainer' }) %}
     {% component 'key-value-table', items=businessHierarchyDetails, dataAutoId='businessHierarchyDetails' %}
   {% endcall %}
 
   {% if archivedDocumentPath %}
     {% call DetailsContainer({ heading: 'Documents from CDMS', dataAutoId: 'documentsDetailsContainer' }) %}
-      <table class="table--key-value">
+      <table class="table--key-value" data-auto-id="documentsDetails">
         <tbody>
         <tr>
           <td>
@@ -135,7 +156,7 @@
     {% endcall %}
   {% endif %}
 
-  {% if not company.archived and not company.duns_number %}
+  {% if showEditLinkForNonDnb %}
     {% call DetailsContainer({ heading: 'Archive company', dataAutoId: 'archiveCompanyContainer' }) %}
       <p>Archive this company if it is no longer required or active.</p>
 

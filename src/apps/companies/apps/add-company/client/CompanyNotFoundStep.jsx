@@ -9,13 +9,15 @@ import FieldAddress from 'data-hub-components/dist/forms/elements/FieldAddress'
 import { ISO_CODE, WEBSITE_REGEX } from './constants'
 import InformationList from './InformationList'
 
+// TODO: Move this validation to the component library
 const requiredWebsiteOrPhoneValidator = (value, name, { values: { website, telephone_number } }) => {
   return !website && !telephone_number ? 'Enter at least a website or a phone number' : null
 }
 
+// TODO: Move this validation to the component library
 const websiteValidator = (value) => !WEBSITE_REGEX.test(value) ? 'Enter a valid website URL' : null
 
-function CompanyNotFoundStep ({ host, organisationTypes, regions, sectors, country }) {
+function CompanyNotFoundStep ({ organisationTypes, regions, sectors, country }) {
   return (
     <Step name="unhappy" forwardButton="Add company">
       <Details summary="Why am I seeing this?">
@@ -60,7 +62,7 @@ function CompanyNotFoundStep ({ host, organisationTypes, regions, sectors, count
           id: country.key,
           name: country.label,
         }}
-        apiEndpoint={`//${host}/api/postcodelookup`}
+        apiEndpoint="/api/postcodelookup"
       />
 
       {country.value === ISO_CODE.UK && (
@@ -95,13 +97,11 @@ function CompanyNotFoundStep ({ host, organisationTypes, regions, sectors, count
           within 3 weeks the Data Hub support team will send you an email to tell you whether the information on this page has been confirmed
         </InformationList.Item>
       </InformationList>
-
     </Step>
   )
 }
 
 CompanyNotFoundStep.propTypes = {
-  host: PropTypes.string.isRequired,
   organisationTypes: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string.isRequired,
     value: PropTypes.string.isRequired,

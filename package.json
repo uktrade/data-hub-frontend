@@ -1,6 +1,6 @@
 {
   "name": "data-hub-frontend",
-  "version": "5.47.0",
+  "version": "5.48.0",
   "description": "Data Hub Frontend",
   "main": "src/server.js",
   "repository": {
@@ -20,12 +20,14 @@
     "lint:all:js": "eslint ./test ./src ./assets ./config ./circleci",
     "lint:all:styles": "sass-lint -v -q -c .sass-lint.yml assets/stylesheets/**/*.scss",
     "test": "npm-run-all test:*",
-    "test:unit": "NODE_ENV=test LOG_LEVEL=silent mocha ./test/unit --opts ./test/unit/mocha.opts",
+    "test:unit": "NODE_ENV=test LOG_LEVEL=silent mocha ./{src,config,common}/**/*.test.js --opts ./test/unit/mocha.opts",
     "test:unit-client": "mocha-webpack --webpack-config webpack.config.js ./test/unit-client/assets/javascripts/**/*.test.js --opts ./test/unit-client/mocha.opts",
     "test:acceptance": "nightwatch --config test/acceptance/nightwatch.conf.js --env default --skiptags ignore",
     "test:acceptance:remote": "./.circleci/scripts/local-runner.js --config test/acceptance/nightwatch.conf.js",
     "test:functional": "cypress run",
     "test:functional:watch": "cypress open",
+    "test:e2e": "CYPRESS_integrationFolder=test/end-to-end/cypress/specs cypress run",
+    "test:e2e:watch": "CYPRESS_integrationFolder=test/end-to-end/cypress/specs cypress open",
     "test:visual": "./node_modules/.bin/wdio test/visual/wdio.conf.js",
     "coverage": "nyc --reporter=html --reporter=text --reporter=lcov npm run test:unit",
     "circle:unit": "nyc --reporter=lcov npm run test:unit -- --reporter mocha-circleci-reporter && codeclimate-test-reporter < coverage/lcov.info",
@@ -33,11 +35,11 @@
     "circle:acceptance": "nightwatch --config test/acceptance/nightwatch.conf.js --env circleci",
     "circle:acceptance:dit-staff": "yarn circle:acceptance --skiptags ignore,da,lep",
     "circle:acceptance:da-staff": "yarn circle:acceptance --tag da --skiptags ignore",
-    "circle:acceptance:lep-staff": "yarn circle:acceptance --tag lep --skiptags ignore",
     "heroku-postbuild": "yarn cache clean && npm rebuild && npm run build",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "wavy-check": "grep -rlE \"(proxyquire|rewire|require).*?\\(.*?~\" test src | wc -l | { read count; if [ $count -gt 0 ]; then echo \"wavy dependency still in use by $count files\"; else echo '🎉 wavy dependency can be removed 🎉'; fi; }"
   },
-  "pre-commit": "lint-staged",
+  "pre-commit": "lint-staged, wavy-check",
   "lint-staged": {
     "*.js": "eslint",
     "*.scss": "sass-lint -v -q -c .sass-lint.yml"
@@ -79,7 +81,7 @@
     "core-js": "^2.5.7",
     "css-loader": "^1.0.0",
     "csurf": "^1.9.0",
-    "data-hub-components": "^2.5.0",
+    "data-hub-components": "^2.10.6",
     "date-fns": "^1.29.0",
     "del-cli": "^2.0.0",
     "dotenv": "^5.0.0",

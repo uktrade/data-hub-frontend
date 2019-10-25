@@ -4,14 +4,15 @@ exports.companyActivity = require('./company/activity')
 exports.companyBusinessDetailsRegion = require('./company/business-details-region')
 exports.companyBusinessDetailsSector = require('./company/business-details-sector')
 exports.companyBusinessDetails = require('./company/business-details')
-exports.companyAddStep2 = require('./company/add-step-2')
 exports.companyEdit = require('./company/edit')
 exports.companyCollection = require('./company/company-collection')
 exports.companyInvestment = require('./company/investment')
+exports.companyInvestmentProjects = require('./company/investment-projects')
 exports.companySubsidiariesLink = require('./company/subsidiaries-link')
 exports.companySubsidiaries = require('./company/subsidiaries')
 exports.companyAddToListButton = require('./company/add-to-list')
 exports.companyCreateListButton = require('./company')
+exports.companyAddRemoveFromLists = require('./company-lists/add-remove')
 
 exports.companyList = {
   delete: require('./company-lists/delete'),
