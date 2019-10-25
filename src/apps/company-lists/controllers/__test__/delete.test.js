@@ -1,6 +1,6 @@
 const requestErrors = require('request-promise/errors')
 
-const config = require('~/config')
+const config = require('~/src/config')
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 const {
   fetchCompanyList,

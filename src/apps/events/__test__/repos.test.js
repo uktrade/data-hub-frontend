@@ -1,4 +1,4 @@
-const config = require('~/config')
+const config = require('~/src/config')
 const { search } = require('~/src/modules/search/services')
 
 const token = 'abcd'

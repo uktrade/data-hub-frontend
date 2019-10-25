@@ -1,7 +1,7 @@
 const { get } = require('lodash')
 const basicAuth = require('basic-auth')
 
-const config = require('../../config')
+const config = require('../config')
 
 function basicAuthMiddleware (req, res, next) {
   const bypassSSO = get(config, 'oauth.bypassSSO')

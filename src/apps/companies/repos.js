@@ -1,5 +1,5 @@
 /* eslint camelcase: 0, prefer-promise-reject-errors: 0 */
-const config = require('../../../config')
+const config = require('../../config')
 const { authorisedRequest } = require('../../lib/authorised-request')
 
 function getDitCompany (token, id) {

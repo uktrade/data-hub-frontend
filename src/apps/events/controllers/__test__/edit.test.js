@@ -1,7 +1,7 @@
 const { assign, find, sortBy } = require('lodash')
 const moment = require('moment')
 
-const config = require('~/config')
+const config = require('~/src/config')
 const eventData = require('~/test/unit/data/events/event.json')
 const adviserFilters = require('~/src/apps/adviser/filters')
 const serviceOptionData = require('~/test/unit/data/interactions/service-options-data.json')

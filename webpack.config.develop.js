@@ -1,7 +1,7 @@
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-const config = require('./config')
+const config = require('./src/config')
 
 module.exports = {
   output: {

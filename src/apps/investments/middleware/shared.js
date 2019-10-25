@@ -7,7 +7,7 @@ const { isValidGuid } = require('../../../lib/controller-utils')
 const { getDitCompany } = require('../../companies/repos')
 const { getAdviser } = require('../../adviser/repos')
 const { getInvestment } = require('../repos')
-const { mediumDateTimeFormat } = require('../../../../config')
+const { mediumDateTimeFormat } = require('../../../config')
 
 function getNextStage (currentStage, projectStages) {
   const projectStageIndex = projectStages.findIndex((projectStage) => {

@@ -1,6 +1,6 @@
 const { find, get, isEmpty } = require('lodash')
 
-const config = require('../../../../config')
+const config = require('../../../config')
 const {
   transformCompanyToView,
 } = require('../transformers')

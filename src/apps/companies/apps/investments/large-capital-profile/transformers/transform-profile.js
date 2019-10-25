@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { formatDate } = require('../../../../../../../config/nunjucks/filters')
+const { formatDate } = require('../../../../../../config/nunjucks/filters')
 const { requiredChecks } = require('../constants')
 const { get } = require('lodash')
 

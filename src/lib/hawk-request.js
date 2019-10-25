@@ -1,6 +1,6 @@
 const request = require('request')
 const hawk = require('@hapi/hawk')
-const config = require('../../config')
+const config = require('../config')
 
 function getHawkHeader (credentials, requestOptions) {
   if (config.isTest) {

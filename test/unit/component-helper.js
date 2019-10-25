@@ -4,7 +4,7 @@ const html = require('html')
 const htmlBeautifier = require('js-beautify').html
 const { JSDOM } = require('jsdom')
 
-const nunjucksConfig = require('../../config/nunjucks')
+const nunjucksConfig = require('../../src/config/nunjucks')
 
 const nunjucks = nunjucksConfig(null, {
   root: path.normalize(rootPath),

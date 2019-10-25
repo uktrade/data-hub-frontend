@@ -1,7 +1,7 @@
 const nunjucks = require('nunjucks')
 const { assign, omit, isFunction, isArray, map } = require('lodash')
 const queryString = require('qs')
-const config = require('../../config')
+const config = require('../')
 
 module.exports = {
   serviceTitle: 'Data Hub',

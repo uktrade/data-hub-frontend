@@ -1,4 +1,4 @@
-const config = require('../../../../../../config')
+const config = require('../../../../../config')
 const { getHeadquarterOptions } = require('../repos')
 const headquarterTypeFixture = require('../../../../../../test/unit/data/metadata/headquarter-type')
 

@@ -5,8 +5,8 @@ const dateFns = require('date-fns')
 const Case = require('case')
 const numeral = require('numeral')
 const queryString = require('qs')
-const { newlineToBr } = require('../../src/lib/text-formatting')
-const { joinPaths } = require('../../src/lib/path')
+const { newlineToBr } = require('../../lib/text-formatting')
+const { joinPaths } = require('../../lib/path')
 const {
   assign,
   castArray,
@@ -41,7 +41,7 @@ require('numeral/locales/en-gb')
 
 numeral.locale('en-gb')
 
-const { longDateFormat, mediumDateTimeFormat, currencyFormat } = require('../../config')
+const { longDateFormat, mediumDateTimeFormat, currencyFormat } = require('../')
 
 function isNotEmpty (value) {
   return !isNil(value) && !/^\s*$/.test(value) && !(isPlainObject(value) && isEmpty(value))

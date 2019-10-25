@@ -2,7 +2,7 @@
 const axios = require('axios')
 const { get } = require('lodash')
 
-const config = require('../../../config')
+const config = require('../../config')
 
 function createZenDeskMessage ({
   email,

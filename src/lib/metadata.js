@@ -1,5 +1,5 @@
-const config = require('../../config')
-const logger = require('../../config/logger')
+const config = require('../config')
+const logger = require('../config/logger')
 const hawkRequest = require('../lib/hawk-request')
 
 let redisClient
