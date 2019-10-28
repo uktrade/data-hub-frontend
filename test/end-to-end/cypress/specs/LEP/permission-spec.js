@@ -41,6 +41,38 @@ describe('LEP Permission', () => {
     })
   })
 
+  context('search', () => {
+    describe('interaction', () => {
+      before(() => {
+        cy.visit('/search/interactions', { failOnStatusCode: false })
+      })
+
+      it('should prevent LEP users from accessing the page', () => {
+        cy.get(selectors.collection.error).should('contain', '403')
+      })
+    })
+
+    describe('event', () => {
+      before(() => {
+        cy.visit('/search/events', { failOnStatusCode: false })
+      })
+
+      it('should prevent LEP users from accessing the page', () => {
+        cy.get(selectors.collection.error).should('contain', '403')
+      })
+    })
+
+    describe('omis', () => {
+      before(() => {
+        cy.visit('/search/omis', { failOnStatusCode: false })
+      })
+
+      it('should prevent LEP users from accessing the page', () => {
+        cy.get(selectors.collection.error).should('contain', '403')
+      })
+    })
+  })
+
   context('investment', () => {
     describe('investment document', () => {
       before(() => {

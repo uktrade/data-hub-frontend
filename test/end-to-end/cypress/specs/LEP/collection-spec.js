@@ -60,12 +60,12 @@ describe('Collection', () => {
       })
     })
 
-    describe('proposition', () => {
+    describe('team', () => {
       before(() => {
         cy.visit('/investments/projects/ba1f0b14-5fe4-4c36-bf6a-ddf115272977/team')
       })
 
-      it('should return the results summary for a contact collection', () => {
+      it('should return the investment project team summary', () => {
         cy.get(selectors.companyInvestmentProjects.investmentTeamGrid)
           .should('contain', 'Client Relationship Manager')
           .and('contain', 'Marketing - Marketing Team')
