@@ -1,16 +1,6 @@
 const selectors = require('../../../../selectors')
 
 describe('DA Permission', () => {
-  // describe('orders', () => {
-  //   before(() => {
-  //     cy.visit('/companies/0fb3379c-341c-4da4-b825-bf8d47b26baa/orders', { failOnStatusCode: false })
-  //   })
-
-  //   it('should prevent DA users from accessing the page', () => {
-  //     cy.get(selectors.collection.error).should('contain', '403')
-  //   })
-  // })
-
   describe('event', () => {
     before(() => {
       cy.visit('/events', { failOnStatusCode: false })
