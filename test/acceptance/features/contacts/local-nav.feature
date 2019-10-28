@@ -10,11 +10,3 @@ Feature: Contact local nav
       | Interactions                |
       | Audit history               |
       | Documents                   |
-
-  @contact-local-nav--da @da
-  Scenario: Contact local nav as DA
-    When I navigate to the `contacts.fixture` page using `contact` `Johnny Cakeman` fixture
-    Then there should be a local nav
-      | text                        |
-      | Details                     |
-      | Audit history               |
