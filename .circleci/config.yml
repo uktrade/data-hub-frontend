@@ -453,7 +453,7 @@ jobs:
       - *create_cucumber_dirs
       - run:
           name: Run LEP e2e tests
-          command: yarn test:e2e --browser chrome
+          command: yarn test:e2e:lep --browser chrome
       - store_artifacts:
           path: cypress/screenshots
 
