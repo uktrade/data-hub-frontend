@@ -1,4 +1,5 @@
 const { renderActivityFeed } = require('../controllers')
+const { ACTIVITY_TYPE_FILTERS } = require('../../../constants')
 
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder')
 const activityFeedEsFixtures = require('~/test/unit/data/activity-feed/activity-feed-from-es')
@@ -28,7 +29,7 @@ describe('Activity feed controllers', () => {
       })
 
       it('should call fetchActivityFeed with default params', async () => {
-        const expectedParams = { companyId: 'dcdabbc9-1781-e411-8955-e4115bead28a', from: 0, token: '1234' }
+        const expectedParams = { companyId: 'dcdabbc9-1781-e411-8955-e4115bead28a', filter: { }, from: 0, token: '1234' }
 
         expect(this.fetchActivityFeedStub).to.be.calledWith(expectedParams)
         expect(this.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(activityFeedEsFixtures)
@@ -54,7 +55,7 @@ describe('Activity feed controllers', () => {
       })
 
       it('should call next with an error', async () => {
-        const expectedParams = { companyId: 'dcdabbc9-1781-e411-8955-e4115bead28a', from: 0, token: '1234' }
+        const expectedParams = { companyId: 'dcdabbc9-1781-e411-8955-e4115bead28a', filter: { }, from: 0, token: '1234' }
 
         expect(this.fetchActivityFeedStub).to.be.calledWith(expectedParams)
         expect(this.middlewareParameters.resMock.json).to.not.have.been.called
@@ -65,10 +66,27 @@ describe('Activity feed controllers', () => {
 
   describe('#renderActivityFeed', () => {
     context('when the feed renders successfully', () => {
+      const addActivityTypeFilter = {
+        values: [
+          ACTIVITY_TYPE_FILTERS.all,
+          {
+            label: 'My activity',
+            value: `dit:DataHubAdviser:123`,
+          },
+          ACTIVITY_TYPE_FILTERS.dataHubActivity,
+          ACTIVITY_TYPE_FILTERS.externalActivity,
+        ],
+        default: ACTIVITY_TYPE_FILTERS.dataHubActivity,
+      }
+
       beforeEach(async () => {
         this.middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
+          user: {
+            id: 123,
+          },
         })
+
         await renderActivityFeed(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
@@ -84,9 +102,11 @@ describe('Activity feed controllers', () => {
         expect(this.middlewareParameters.resMock.render).to.be.calledOnceWithExactly(
           'companies/apps/activity-feed/views/client-container', {
             props: {
+              addActivityTypeFilter,
               addContentLink: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a/interactions/create',
               addContentText: 'Add interaction',
               apiEndpoint: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a/activity/data',
+              isFilterEnabled: undefined,
             },
           })
       })
@@ -111,6 +131,9 @@ describe('Activity feed controllers', () => {
             ...companyMock,
             archived: true,
           },
+          user: {
+            id: 123,
+          },
         })
 
         await renderActivityFeed(
@@ -133,6 +156,9 @@ describe('Activity feed controllers', () => {
       beforeEach(async () => {
         this.middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
+          user: {
+            id: 123,
+          },
         })
 
         this.error = new Error('Could not render')
