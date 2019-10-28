@@ -78,7 +78,16 @@ const ACTIVITY_TYPE = {
 const ACTIVITY_TYPE_FILTERS = {
   all: {
     label: 'All Data Hub & external activity',
-    value: 'all',
+    value: [].concat(
+      ...[
+        ACTIVITY_TYPE.CompaniesHouseAccount,
+        ACTIVITY_TYPE.CompaniesHouseCompany,
+        ACTIVITY_TYPE.HmrcExporter,
+        ACTIVITY_TYPE.Interaction,
+        ACTIVITY_TYPE.InvestmentProject,
+        ACTIVITY_TYPE.Omis,
+      ]
+    ),
   },
 
   myActivity: {
