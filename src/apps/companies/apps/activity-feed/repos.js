@@ -1,11 +1,13 @@
 const config = require('../../../../config')
 const { authorisedRequest } = require('../../../../lib/authorised-request')
+const { buildActivityFeedFilters } = require('./builders')
 
 function fetchActivityFeed ({
   token,
   size = config.activityFeed.paginationSize,
   from = 0,
   companyId,
+  filter = {},
 }) {
   const requestBody = {
     size,
@@ -15,10 +17,7 @@ function fetchActivityFeed ({
     },
     query: {
       bool: {
-        filter: [
-          { term: { 'object.attributedTo.id': `dit:DataHubCompany:${companyId}` } },
-          { terms: { 'object.type': config.activityFeed.supportedActivityTypes } },
-        ],
+        filter: buildActivityFeedFilters(companyId, filter),
       },
     },
   }
