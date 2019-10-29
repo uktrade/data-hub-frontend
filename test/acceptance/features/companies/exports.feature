@@ -10,7 +10,7 @@ Feature: Company export save
       | Currently exporting to       | company.currentlyExportingTo      |
       | Future countries of interest | company.futureCountriesOfInterest |
       | Export potential             | No score given                    |
-    When I click the "Edit export markets" link
+    When I click the "Edit export countries" link
     And I update the company Exports details
     And I submit the form
     Then the Exports key value details are displayed
@@ -21,6 +21,6 @@ Feature: Company export save
       | Export potential             | No score given                    |
 
   @companies-export--archived-company
-  Scenario: Archived company without Edit export markets button
+  Scenario: Archived company without Edit export countries button
     When I navigate to the `companies.exports` page using `company` `Archived Ltd` fixture
-    And I should not see the "Edit export markets" button
+    And I should not see the "Edit export countries" button
