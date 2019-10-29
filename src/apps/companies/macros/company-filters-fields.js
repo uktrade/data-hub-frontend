@@ -89,6 +89,7 @@ const companyFiltersFields = function ({ sectorOptions }) {
       name: QUERY_FIELDS_MAP.lastInteractionDate,
       type: 'checkbox',
       label: 'Last interaction between',
+      groupClass: 'js-last-interaction-filter',
       options: [
         { value: '1', label: '1 - 3 months' },
         { value: '2', label: '3 - 6 months' },
