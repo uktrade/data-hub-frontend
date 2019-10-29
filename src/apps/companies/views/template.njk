@@ -20,9 +20,10 @@
   {% if features.companies_add_remove_from_lists %}
     {% set action %}
       {% if canViewCompanyList %}
-        {% set addListText = 'Add to or remove from lists' if listsExist else 'Add to my list' %}
         <a href="/companies/{{ company.id }}/lists/add-remove"
-           class="govuk-button govuk-button--secondary">{{ addListText }}</a>
+           class="govuk-button govuk-button--secondary">
+          Add to or remove from lists
+        </a>
       {% endif %}
     {% endset %}
   {% endif %}

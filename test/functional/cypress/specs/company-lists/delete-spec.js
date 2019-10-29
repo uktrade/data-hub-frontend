@@ -1,5 +1,5 @@
 const selectors = require('../../../../selectors')
-const { assertBreadcrumbs } = require('../../support/assertions')
+const { describeBreadcrumbs } = require('../../support/utils')
 
 describe('Delete company list page', () => {
   beforeEach(function () {
@@ -12,10 +12,9 @@ describe('Delete company list page', () => {
     })
 
     it('displays breadcrumbs', () => {
-      assertBreadcrumbs({
+      describeBreadcrumbs({
         'Home': '/',
-        'Edit my company lists': '/company-lists',
-        'Delete list': null,
+        'Delete list': undefined,
       })
     })
 

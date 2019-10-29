@@ -208,7 +208,6 @@ describe('Adding and removing a company to a list', () => {
     })
     it('should render a breadcrumb', () => {
       expect(middlewareParameters.resMock.breadcrumb).to.have.been.calledWith('Company')
-      expect(middlewareParameters.resMock.breadcrumb).to.have.been.calledWith('lists')
       expect(middlewareParameters.resMock.breadcrumb).to.have.been.calledWith('Add and remove from lists')
     })
     it('should call the render with props', () => {

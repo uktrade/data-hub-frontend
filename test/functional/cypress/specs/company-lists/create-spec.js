@@ -1,6 +1,6 @@
 const selectors = require('../../../../selectors')
 const fixtures = require('../../fixtures')
-const { assertBreadcrumbs } = require('../../support/assertions')
+const { describeBreadcrumbs } = require('../../support/utils')
 
 describe('Create a company list', () => {
   context('when viewing a Create list form', () => {
@@ -8,12 +8,11 @@ describe('Create a company list', () => {
       cy.visit('/companies/4cd4128b-1bad-4f1e-9146-5d4678c6a018/lists/create')
     })
 
-    it('displays breadcrumbs', () => {
-      assertBreadcrumbs({
-        'Home': '/',
-        'Companies': '/companies',
-        'Create a list': null,
-      })
+    describeBreadcrumbs({
+      'Home': '/',
+      'Companies': '/companies',
+      'Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978': '/companies/4cd4128b-1bad-4f1e-9146-5d4678c6a018',
+      'Create a list': undefined,
     })
 
     it('displays the "Create list" heading', () => {
