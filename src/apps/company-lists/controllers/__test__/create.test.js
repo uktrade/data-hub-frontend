@@ -83,7 +83,6 @@ describe('Creating company lists', () => {
 
     it('should render a breadcrumb', () => {
       expect(global.middlewareParameters.resMock.breadcrumb).to.have.been.calledWith('Company')
-      expect(global.middlewareParameters.resMock.breadcrumb).to.have.been.calledWith('lists')
       expect(global.middlewareParameters.resMock.breadcrumb).to.have.been.calledWith('Create a list')
     })
 

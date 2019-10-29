@@ -16,8 +16,7 @@ async function renderCreateListForm (req, res, next) {
   const { company } = res.locals
   try {
     res
-      .breadcrumb(company.name)
-      .breadcrumb('lists')
+      .breadcrumb(company.name, `/companies/${company.id}`)
       .breadcrumb('Create a list')
       .render('company-lists/views/create-list-container', {
         props: {

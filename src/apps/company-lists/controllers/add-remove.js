@@ -37,7 +37,6 @@ async function renderAddRemoveForm (req, res, next) {
   try {
     res
       .breadcrumb(company.name, `/companies/${company.id}`)
-      .breadcrumb('lists')
       .breadcrumb('Add and remove from lists')
       .render('company-lists/views/add-remove-list-container', {
         heading: `Add and remove ${company.name} from lists`,
