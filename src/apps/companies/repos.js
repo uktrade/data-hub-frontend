@@ -86,6 +86,16 @@ function getCompanySubsidiaries (token, companyId, page = 1) {
   })
 }
 
+function getUltimateHQSubsidiaries (token, globalUltimateDunnsNumber) {
+  return authorisedRequest(token, {
+    url: `${config.apiRoot}/v4/company`,
+    qs: {
+      limit: 200,
+      global_ultimate_duns_number: globalUltimateDunnsNumber,
+    },
+  })
+}
+
 function getOneListGroupCoreTeam (token, companyId) {
   return authorisedRequest(token, {
     url: `${config.apiRoot}/v4/company/${companyId}/one-list-group-core-team`,
@@ -121,6 +131,7 @@ module.exports = {
   updateCompany,
   getCompanyAuditLog,
   getCompanySubsidiaries,
+  getUltimateHQSubsidiaries,
   getOneListGroupCoreTeam,
   saveDnbCompany,
   saveDnbCompanyInvestigation,

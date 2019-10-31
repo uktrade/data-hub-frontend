@@ -17,6 +17,7 @@
     <p class="c-local-header__heading-after">{{ company.address | formatAddress }}</p>
     {% set isUltimate = company.is_global_ultimate and features["companies-ultimate-hq"] %}
     {% set isGlobalHQ = company.headquarter_type and company.headquarter_type.name == 'ghq' %}
+    {% set isOneListTier = company.one_list_group_tier %}
     
     {% if isUltimate or isGlobalHQ %}
       <div class="c-meta-list">
@@ -26,13 +27,19 @@
       </div>
     {% endif %}
 
-    {% if company.one_list_group_tier %}
+    {% if isUltimate or isOneListTier %}
       <div class="c-local-header__description">
-        <p>This is an account managed company (One List {{ company.one_list_group_tier.name }})</p>
-        <p>
-          Global Account Manager: {{ company.one_list_group_global_account_manager.name }}
-          <a href="/companies/{{ company.id }}/advisers">View core team</a>
-        </p>
+        {% if isUltimate %}
+          {% set link =  props.subsidiaryCount + ' other company ' + 'record' | pluralise(props.subsidiaryCount) %}
+          <p>Data Hub contains <a class="subsidiaries" href={{ urls.companies.subsidiaries(company.id) }}>{{ link }}</a> related to this company</p>        
+        {% endif %}
+        {% if isOneListTier %}
+          <p>This is an account managed company (One List {{ company.one_list_group_tier.name }})</p>
+          <p>
+            Global Account Manager: {{ company.one_list_group_global_account_manager.name }}
+            <a href={{ urls.companies.advisers(company.id) }}>View core team</a>
+          </p>
+        {% endif %}
       </div>
     {% endif %}
 

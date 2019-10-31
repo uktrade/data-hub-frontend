@@ -42,19 +42,28 @@ module.exports = {
   },
   dashboard: url('/'),
   companies: {
-    index: url('/companies'),
-    detail: url('/companies', '/:companyId'),
+    activity: {
+      index: url('/companies', '/:companyId/activity'),
+      data: url('/companies', '/:companyId/activity/data'),
+    },
+    advisers: url('/companies', '/:companyId/advisers'),
     businessDetails: url('/companies', '/:companyId/business-details'),
+    detail: url('/companies', '/:companyId'),
+    dnbSubsidiaries: {
+      index: url('/companies', '/:companyId/dnb-subsidiaries'),
+      data: url('/companies', '/:companyId/dnb-subsidiaries/data'),
+    },
     exports: url('/companies', '/:companyId/exports'),
     hierarchies: {
       ghq: {
         add: url('/companies', '/:companyId/hierarchies/ghq/:globalHqId/add'),
       },
     },
-    dnbSubsidiaries: {
-      index: url('/companies', '/:companyId/dnb-subsidiaries'),
-      data: url('/companies', '/:companyId/dnb-subsidiaries/data'),
+    index: url('/companies'),
+    interactions: {
+      create: url('/companies', '/:companyId/interactions/create'),
     },
+    subsidiaries: url('/companies', '/:companyId/subsidiaries'),
   },
   contacts: {
     index: url('/contacts'),

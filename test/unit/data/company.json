@@ -179,6 +179,8 @@
   "archived_on": null,
   "archived_reason": "",
   "company_number": null,
+  "is_global_ultimate": false,
+  "global_ultimate_duns_number": "123456789",
   "lead": false,
   "description": null,
   "website": "http://www.wonka-industries.com",
