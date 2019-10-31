@@ -1,4 +1,7 @@
 const selectors = require('../../../../selectors')
+const { validateErrorCode } = require('../../support/assertions')
+
+const errorMsg = selectors.collection.error
 
 describe('DA Permission', () => {
   describe('event', () => {
@@ -7,7 +10,7 @@ describe('DA Permission', () => {
     })
 
     it('should prevent DA users from accessing the page', () => {
-      cy.get(selectors.collection.error).should('contain', '403')
+      validateErrorCode(errorMsg, '403')
     })
   })
 
@@ -17,7 +20,7 @@ describe('DA Permission', () => {
     })
 
     it('should prevent DA users from accessing the page', () => {
-      cy.get(selectors.collection.error).should('contain', '403')
+      validateErrorCode(errorMsg, '403')
     })
   })
 
@@ -28,7 +31,7 @@ describe('DA Permission', () => {
       })
 
       it('should prevent DA users from accessing the page', () => {
-        cy.get(selectors.collection.error).should('contain', '403')
+        validateErrorCode(errorMsg, '403')
       })
     })
 
@@ -38,7 +41,7 @@ describe('DA Permission', () => {
       })
 
       it('should prevent DA users from accessing the page', () => {
-        cy.get(selectors.collection.error).should('contain', '403')
+        validateErrorCode(errorMsg, '403')
       })
     })
   })
@@ -50,7 +53,7 @@ describe('DA Permission', () => {
       })
 
       it('should prevent DA users from accessing the page', () => {
-        cy.get(selectors.collection.error).should('contain', '403')
+        validateErrorCode(errorMsg, '403')
       })
     })
 
@@ -60,7 +63,7 @@ describe('DA Permission', () => {
       })
 
       it('should prevent DA users from accessing an interaction they don\'t have access to', () => {
-        cy.get(selectors.collection.error).should('contain', '403')
+        validateErrorCode(errorMsg, '403')
       })
     })
 
@@ -70,7 +73,7 @@ describe('DA Permission', () => {
       })
 
       it('should prevent DA users from accessing an interaction they don\'t have access to', () => {
-        cy.get(selectors.collection.error).should('contain', '403')
+        validateErrorCode(errorMsg, '403')
       })
     })
 
@@ -80,7 +83,7 @@ describe('DA Permission', () => {
       })
 
       it('should prevent DA users from accessing a team they don\'t have access to', () => {
-        cy.get(selectors.collection.error).should('contain', '403')
+        validateErrorCode(errorMsg, '403')
       })
     })
   })
@@ -92,7 +95,7 @@ describe('DA Permission', () => {
       })
 
       it('should prevent DA users from accessing the page', () => {
-        cy.get(selectors.collection.error).should('contain', '403')
+        validateErrorCode(errorMsg, '403')
       })
     })
 
@@ -102,7 +105,7 @@ describe('DA Permission', () => {
       })
 
       it('should prevent DA users from accessing the page', () => {
-        cy.get(selectors.collection.error).should('contain', '403')
+        validateErrorCode(errorMsg, '403')
       })
     })
   })

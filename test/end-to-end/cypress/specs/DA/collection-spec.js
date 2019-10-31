@@ -1,12 +1,8 @@
 const selectors = require('../../../../selectors')
+const { verifyCollection } = require('../../support/assertions')
 
-const verifyCollection = () => {
-  cy.get(selectors.collection.headerCount).invoke('text').then((headerCount) => {
-    cy.get(selectors.collection.items).should((collectionItems) => {
-      expect(headerCount).to.eq(collectionItems.length.toString())
-    })
-  })
-}
+const headerCount = selectors.collection.headerCount
+const collectionItems = selectors.collection.items
 
 describe('Collection', () => {
   describe('company', () => {
@@ -15,7 +11,7 @@ describe('Collection', () => {
     })
 
     it('should return the results summary for a company collection', () => {
-      verifyCollection()
+      verifyCollection(headerCount, collectionItems)
     })
   })
 
@@ -25,7 +21,7 @@ describe('Collection', () => {
     })
 
     it('should return the results summary for a contact collection', () => {
-      verifyCollection()
+      verifyCollection(headerCount, collectionItems)
     })
   })
 
@@ -36,7 +32,7 @@ describe('Collection', () => {
       })
 
       it('should return the results summary for a contact collection', () => {
-        verifyCollection()
+        verifyCollection(headerCount, collectionItems)
       })
     })
 
@@ -46,7 +42,7 @@ describe('Collection', () => {
       })
 
       it('should return the results summary for a contact collection', () => {
-        verifyCollection()
+        verifyCollection(headerCount, collectionItems)
       })
     })
 
@@ -56,7 +52,7 @@ describe('Collection', () => {
       })
 
       it('should return the results summary for a contact collection', () => {
-        verifyCollection()
+        verifyCollection(headerCount, collectionItems)
       })
     })
 
