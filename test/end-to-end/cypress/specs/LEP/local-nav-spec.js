@@ -1,4 +1,5 @@
 const selectors = require('../../../../selectors')
+const { assertLocalNav } = require('../../support/assertions')
 
 describe('LEP Permission', () => {
   describe('activity', () => {
@@ -7,7 +8,7 @@ describe('LEP Permission', () => {
     })
 
     it('should display LEP only tabs', () => {
-      assertNav(selectors.tabbedLocalNav().tabs, [
+      assertLocalNav(selectors.tabbedLocalNav().tabs, [
         'Company contacts',
         'Core team',
         'Investment',
@@ -22,7 +23,7 @@ describe('LEP Permission', () => {
     })
 
     it('should display LEP only tabs', () => {
-      assertNav(selectors.nav.headerNav, [
+      assertLocalNav(selectors.nav.headerNav, [
         'Companies',
         'Contacts',
         'Investments',
@@ -36,7 +37,7 @@ describe('LEP Permission', () => {
     })
 
     it('should display LEP only tabs', () => {
-      assertNav(selectors.nav.sideNav, [
+      assertLocalNav(selectors.nav.sideNav, [
         'Details',
         'Audit history',
       ])
@@ -49,7 +50,7 @@ describe('LEP Permission', () => {
     })
 
     it('should display LEP only tabs', () => {
-      assertNav(selectors.nav.sideNav, [
+      assertLocalNav(selectors.nav.sideNav, [
         'Project details',
         'Project team',
         'Interactions',

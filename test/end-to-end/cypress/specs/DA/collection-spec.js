@@ -32,7 +32,7 @@ describe('Collection', () => {
         cy.visit('/investments/projects')
       })
 
-      it('should return the results summary for a contact collection', () => {
+      it('should return the results summary for a investment collection', () => {
         checkCollection()
       })
     })
@@ -42,7 +42,7 @@ describe('Collection', () => {
         cy.visit('/investments/projects/e32b3c33-80ac-4589-a8c4-dda305d726ba/interactions')
       })
 
-      it('should return the results summary for a contact collection', () => {
+      it('should return the results summary for a interaction collection', () => {
         checkCollection()
       })
     })
@@ -52,7 +52,7 @@ describe('Collection', () => {
         cy.visit('/investments/projects/e32b3c33-80ac-4589-a8c4-dda305d726ba/propositions')
       })
 
-      it('should return the results summary for a contact collection', () => {
+      it('should return the results summary for a proposition collection', () => {
         checkCollection()
       })
     })

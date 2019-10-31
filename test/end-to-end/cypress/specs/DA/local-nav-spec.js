@@ -1,5 +1,5 @@
 const selectors = require('../../../../selectors')
-const { assertNav } = require('../../support/assertions')
+const { assertLocalNav } = require('../../support/assertions')
 
 describe('DA Permission', () => {
   describe('activity', () => {
@@ -8,7 +8,7 @@ describe('DA Permission', () => {
     })
 
     it('should display DA only tabs', () => {
-      assertNav(selectors.tabbedLocalNav().tabs, [
+      assertLocalNav(selectors.tabbedLocalNav().tabs, [
         'Company contacts',
         'Core team',
         'Investment',
@@ -24,7 +24,7 @@ describe('DA Permission', () => {
     })
 
     it('should display DA only tabs', () => {
-      assertNav(selectors.nav.headerNav, [
+      assertLocalNav(selectors.nav.headerNav, [
         'Companies',
         'Contacts',
         'Investments',
@@ -41,7 +41,7 @@ describe('DA Permission', () => {
     })
 
     it('should display DA only tabs', () => {
-      assertNav(selectors.nav.sideNav, [
+      assertLocalNav(selectors.nav.sideNav, [
         'Details',
         'Audit history',
       ])
@@ -54,7 +54,7 @@ describe('DA Permission', () => {
     })
 
     it('should display DA only tabs', () => {
-      assertNav(selectors.nav.sideNav, [
+      assertLocalNav(selectors.nav.sideNav, [
         'Project details',
         'Project team',
         'Interactions',

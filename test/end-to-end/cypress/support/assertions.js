@@ -1,5 +1,5 @@
 const assertError = (message) => {
-  cy.get('h3').should('contain', message)
+  cy.get('body').should('contain', message)
 }
 
 const assertCollection = (headerCountSelector, collectionItemsSelector) => {
@@ -10,7 +10,7 @@ const assertCollection = (headerCountSelector, collectionItemsSelector) => {
   })
 }
 
-const assertNav = (selector, navList) => {
+const assertLocalNav = (selector, navList) => {
   const navElement = cy.get(selector)
   navElement.should('have.length', navList.length)
 
@@ -22,5 +22,5 @@ const assertNav = (selector, navList) => {
 module.exports = {
   assertError,
   assertCollection,
-  assertNav,
+  assertLocalNav,
 }
