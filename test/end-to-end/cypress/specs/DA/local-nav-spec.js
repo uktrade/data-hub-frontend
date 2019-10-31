@@ -1,4 +1,5 @@
 const selectors = require('../../../../selectors')
+const { assertNav } = require('../../support/assertions')
 
 describe('DA Permission', () => {
   describe('activity', () => {
@@ -7,13 +8,13 @@ describe('DA Permission', () => {
     })
 
     it('should display DA only tabs', () => {
-      cy.get(selectors.tabbedLocalNav().tabs)
-        .should('have.length', 5)
-        .and('contain', 'Company contacts')
-        .and('contain', 'Core team')
-        .and('contain', 'Investment')
-        .and('contain', 'Export')
-        .and('contain', 'Orders')
+      assertNav(selectors.tabbedLocalNav().tabs, [
+        'Company contacts',
+        'Core team',
+        'Investment',
+        'Export',
+        'Orders',
+      ])
     })
   })
 
@@ -23,14 +24,14 @@ describe('DA Permission', () => {
     })
 
     it('should display DA only tabs', () => {
-      cy.get(selectors.nav.headerNav)
-        .should('have.length', 6)
-        .and('contain', 'Companies')
-        .and('contain', 'Contacts')
-        .and('contain', 'Investments')
-        .and('contain', 'Orders')
-        .and('contain', 'Dashboards')
-        .and('contain', 'Market Access')
+      assertNav(selectors.nav.headerNav, [
+        'Companies',
+        'Contacts',
+        'Investments',
+        'Orders',
+        'Dashboards',
+        'Market Access',
+      ])
     })
   })
 
@@ -40,10 +41,10 @@ describe('DA Permission', () => {
     })
 
     it('should display DA only tabs', () => {
-      cy.get(selectors.nav.sideNav)
-        .should('have.length', 2)
-        .and('contain', 'Details')
-        .and('contain', 'Audit history')
+      assertNav(selectors.nav.sideNav, [
+        'Details',
+        'Audit history',
+      ])
     })
   })
 
@@ -53,15 +54,15 @@ describe('DA Permission', () => {
     })
 
     it('should display DA only tabs', () => {
-      cy.get(selectors.nav.sideNav)
-        .should('have.length', 7)
-        .and('contain', 'Project details')
-        .and('contain', 'Project team')
-        .and('contain', 'Interactions')
-        .and('contain', 'Evaluations')
-        .and('contain', 'Propositions')
-        .and('contain', 'Audit history')
-        .and('contain', 'Evidence')
+      assertNav(selectors.nav.sideNav, [
+        'Project details',
+        'Project team',
+        'Interactions',
+        'Evaluations',
+        'Propositions',
+        'Audit history',
+        'Evidence',
+      ])
     })
   })
 })
