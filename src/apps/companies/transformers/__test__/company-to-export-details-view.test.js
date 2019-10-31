@@ -50,7 +50,7 @@ describe('transformCompanyToExportDetailsView', () => {
           id: '4321',
           name: 'Germany',
         }],
-        export_potential_score: 'low',
+        export_potential: 'low',
       })
 
       this.viewRecord = transformCompanyToExportDetailsView(company)
