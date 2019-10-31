@@ -43,6 +43,7 @@ and be provided with a back end server to provide the API, data storage and sear
   - [Template inheritance diagram](#template-inheritance-diagram)
 - [Testing](#testing)
   - [Functional Testing](#functional-testing)
+  - [E2E Testing](docs/How%20to%20execute%20tests.md#e2e-testing)
   - [Acceptance Testing](#acceptance-testing)
     - [Running acceptance tests](#running-acceptance-tests)
     - [Running tests with specific user permissions](#running-tests-with-specific-user-permissions)
@@ -420,7 +421,7 @@ The aim of this test suite is perform functional tests of frontend components in
 
 Pre-requisites:
 
-Ensure you have [node](https://nodejs.org/en/download/) v8 installed then install dependencies:
+Ensure you have [node](https://nodejs.org/en/download/) v10 installed then install dependencies:
 
 `$ npm install`
 
@@ -449,6 +450,8 @@ Execute all the tests on `specs` in chrome browser:
 `$ npm run test:functional -- --spec test/functional/cypress/specs/nav-spec.js`
 
 ### Acceptance Testing
+DEPRECATED - CURRENTLY BEING MIGRATED TO THE END-TO-END SUITE
+
 Data hub uses [Nightwatch.js](http://nightwatchjs.org), [nightwatch-cucumber](https://github.com/mucsi96/nightwatch-cucumber) and [cucumber.js](https://github.com/cucumber/cucumber-js) to run acceptance tests.
 
 #### Running acceptance tests

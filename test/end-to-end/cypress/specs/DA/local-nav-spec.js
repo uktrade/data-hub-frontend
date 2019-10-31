@@ -1,18 +1,19 @@
 const selectors = require('../../../../selectors')
 const { assertLocalNav } = require('../../support/assertions')
 
-describe('LEP Permission', () => {
+describe('DA Permission', () => {
   describe('activity', () => {
     before(() => {
       cy.visit('/companies/375094ac-f79a-43e5-9c88-059a7caa17f0')
     })
 
-    it('should display LEP only tabs', () => {
+    it('should display DA only tabs', () => {
       assertLocalNav(selectors.tabbedLocalNav().tabs, [
         'Company contacts',
         'Core team',
         'Investment',
         'Export',
+        'Orders',
       ])
     })
   })
@@ -22,11 +23,14 @@ describe('LEP Permission', () => {
       cy.visit('')
     })
 
-    it('should display LEP only tabs', () => {
+    it('should display DA only tabs', () => {
       assertLocalNav(selectors.nav.headerNav, [
         'Companies',
         'Contacts',
         'Investments',
+        'Orders',
+        'Dashboards',
+        'Market Access',
       ])
     })
   })
@@ -36,7 +40,7 @@ describe('LEP Permission', () => {
       cy.visit('/contacts/9b1138ab-ec7b-497f-b8c3-27fed21694ef/details')
     })
 
-    it('should display LEP only tabs', () => {
+    it('should display DA only tabs', () => {
       assertLocalNav(selectors.nav.sideNav, [
         'Details',
         'Audit history',
@@ -46,10 +50,10 @@ describe('LEP Permission', () => {
 
   describe('investment projects', () => {
     before(() => {
-      cy.visit('/investments/projects/ba1f0b14-5fe4-4c36-bf6a-ddf115272977/details')
+      cy.visit('/investments/projects/e32b3c33-80ac-4589-a8c4-dda305d726ba/details')
     })
 
-    it('should display LEP only tabs', () => {
+    it('should display DA only tabs', () => {
       assertLocalNav(selectors.nav.sideNav, [
         'Project details',
         'Project team',

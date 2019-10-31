@@ -39,7 +39,7 @@ describe('Collection', () => {
 
     describe('interaction', () => {
       before(() => {
-        cy.visit('/investments/projects/ba1f0b14-5fe4-4c36-bf6a-ddf115272977/interactions')
+        cy.visit('/investments/projects/e32b3c33-80ac-4589-a8c4-dda305d726ba/interactions')
       })
 
       it('should return the results summary for a interaction collection', () => {
@@ -49,7 +49,7 @@ describe('Collection', () => {
 
     describe('proposition', () => {
       before(() => {
-        cy.visit('/investments/projects/ba1f0b14-5fe4-4c36-bf6a-ddf115272977/propositions')
+        cy.visit('/investments/projects/e32b3c33-80ac-4589-a8c4-dda305d726ba/propositions')
       })
 
       it('should return the results summary for a proposition collection', () => {
@@ -59,7 +59,7 @@ describe('Collection', () => {
 
     describe('team', () => {
       before(() => {
-        cy.visit('/investments/projects/ba1f0b14-5fe4-4c36-bf6a-ddf115272977/team')
+        cy.visit('/investments/projects/e32b3c33-80ac-4589-a8c4-dda305d726ba/team')
       })
 
       it('should return the investment project team summary', () => {
