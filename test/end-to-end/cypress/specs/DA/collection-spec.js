@@ -1,8 +1,9 @@
 const selectors = require('../../../../selectors')
-const { verifyCollection } = require('../../support/assertions')
+const { assertCollection } = require('../../support/assertions')
 
-const headerCount = selectors.collection.headerCount
-const collectionItems = selectors.collection.items
+const checkCollection = () => {
+  assertCollection(selectors.collection.headerCount, selectors.collection.items)
+}
 
 describe('Collection', () => {
   describe('company', () => {
@@ -11,7 +12,7 @@ describe('Collection', () => {
     })
 
     it('should return the results summary for a company collection', () => {
-      verifyCollection(headerCount, collectionItems)
+      checkCollection()
     })
   })
 
@@ -21,7 +22,7 @@ describe('Collection', () => {
     })
 
     it('should return the results summary for a contact collection', () => {
-      verifyCollection(headerCount, collectionItems)
+      checkCollection()
     })
   })
 
@@ -32,7 +33,7 @@ describe('Collection', () => {
       })
 
       it('should return the results summary for a contact collection', () => {
-        verifyCollection(headerCount, collectionItems)
+        checkCollection()
       })
     })
 
@@ -42,7 +43,7 @@ describe('Collection', () => {
       })
 
       it('should return the results summary for a contact collection', () => {
-        verifyCollection(headerCount, collectionItems)
+        checkCollection()
       })
     })
 
@@ -52,7 +53,7 @@ describe('Collection', () => {
       })
 
       it('should return the results summary for a contact collection', () => {
-        verifyCollection(headerCount, collectionItems)
+        checkCollection()
       })
     })
 
