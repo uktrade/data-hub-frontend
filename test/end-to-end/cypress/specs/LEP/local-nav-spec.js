@@ -7,12 +7,12 @@ describe('LEP Permission', () => {
     })
 
     it('should display LEP only tabs', () => {
-      cy.get(selectors.tabbedLocalNav().tabs)
-        .should('have.length', 4)
-        .and('contain', 'Company contacts')
-        .and('contain', 'Core team')
-        .and('contain', 'Investment')
-        .and('contain', 'Export')
+      assertNav(selectors.tabbedLocalNav().tabs, [
+        'Company contacts',
+        'Core team',
+        'Investment',
+        'Export',
+      ])
     })
   })
 
@@ -22,11 +22,11 @@ describe('LEP Permission', () => {
     })
 
     it('should display LEP only tabs', () => {
-      cy.get(selectors.nav.headerNav)
-        .should('have.length', 3)
-        .and('contain', 'Companies')
-        .and('contain', 'Contacts')
-        .and('contain', 'Investments')
+      assertNav(selectors.nav.headerNav, [
+        'Companies',
+        'Contacts',
+        'Investments',
+      ])
     })
   })
 
@@ -36,10 +36,10 @@ describe('LEP Permission', () => {
     })
 
     it('should display LEP only tabs', () => {
-      cy.get(selectors.nav.sideNav)
-        .should('have.length', 2)
-        .and('contain', 'Details')
-        .and('contain', 'Audit history')
+      assertNav(selectors.nav.sideNav, [
+        'Details',
+        'Audit history',
+      ])
     })
   })
 
@@ -49,15 +49,15 @@ describe('LEP Permission', () => {
     })
 
     it('should display LEP only tabs', () => {
-      cy.get(selectors.nav.sideNav)
-        .should('have.length', 7)
-        .and('contain', 'Project details')
-        .and('contain', 'Project team')
-        .and('contain', 'Interactions')
-        .and('contain', 'Evaluations')
-        .and('contain', 'Propositions')
-        .and('contain', 'Audit history')
-        .and('contain', 'Evidence')
+      assertNav(selectors.nav.sideNav, [
+        'Project details',
+        'Project team',
+        'Interactions',
+        'Evaluations',
+        'Propositions',
+        'Audit history',
+        'Evidence',
+      ])
     })
   })
 })

@@ -1,8 +1,8 @@
-const validateErrorCode = (selector, statusCode) => {
-  cy.get(selector).should('contain', statusCode)
+const assertError = (message) => {
+  cy.get('h3').should('contain', message)
 }
 
-const verifyCollection = (headerCountSelector, collectionItemsSelector) => {
+const assertCollection = (headerCountSelector, collectionItemsSelector) => {
   cy.get(headerCountSelector).invoke('text').then((headerCount) => {
     cy.get(collectionItemsSelector).should((collectionItems) => {
       expect(headerCount).to.eq(collectionItems.length.toString())
@@ -10,7 +10,17 @@ const verifyCollection = (headerCountSelector, collectionItemsSelector) => {
   })
 }
 
+const assertNav = (selector, navList) => {
+  const navElement = cy.get(selector)
+  navElement.should('have.length', navList.length)
+
+  navList.forEach(nav => {
+    navElement.should('contain', nav)
+  })
+}
+
 module.exports = {
-  validateErrorCode,
-  verifyCollection,
+  assertError,
+  assertCollection,
+  assertNav,
 }
