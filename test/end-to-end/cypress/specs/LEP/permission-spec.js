@@ -1,4 +1,7 @@
 const selectors = require('../../../../selectors')
+const { validateErrorCode } = require('../../support/assertions')
+
+const errorMsg = selectors.collection.error
 
 describe('LEP Permission', () => {
   describe('orders', () => {
@@ -7,7 +10,7 @@ describe('LEP Permission', () => {
     })
 
     it('should prevent LEP users from accessing the page', () => {
-      cy.get(selectors.collection.error).should('contain', '403')
+      validateErrorCode(errorMsg, '403')
     })
   })
 
@@ -17,7 +20,7 @@ describe('LEP Permission', () => {
     })
 
     it('should prevent LEP users from accessing the page', () => {
-      cy.get(selectors.collection.error).should('contain', '403')
+      validateErrorCode(errorMsg, '403')
     })
   })
 
@@ -27,7 +30,7 @@ describe('LEP Permission', () => {
     })
 
     it('should prevent LEP users from accessing the page', () => {
-      cy.get(selectors.collection.error).should('contain', '403')
+      validateErrorCode(errorMsg, '403')
     })
   })
 
@@ -37,7 +40,7 @@ describe('LEP Permission', () => {
     })
 
     it('should prevent LEP users from accessing the page', () => {
-      cy.get(selectors.collection.error).should('contain', '403')
+      validateErrorCode(errorMsg, '403')
     })
   })
 
@@ -48,7 +51,7 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        cy.get(selectors.collection.error).should('contain', '403')
+        validateErrorCode(errorMsg, '403')
       })
     })
 
@@ -58,7 +61,7 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        cy.get(selectors.collection.error).should('contain', '403')
+        validateErrorCode(errorMsg, '403')
       })
     })
 
@@ -68,7 +71,7 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        cy.get(selectors.collection.error).should('contain', '403')
+        validateErrorCode(errorMsg, '403')
       })
     })
   })
@@ -80,7 +83,7 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        cy.get(selectors.collection.error).should('contain', '403')
+        validateErrorCode(errorMsg, '403')
       })
     })
 
@@ -90,7 +93,7 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing an interaction they don\'t have access to', () => {
-        cy.get(selectors.collection.error).should('contain', '403')
+        validateErrorCode(errorMsg, '403')
       })
     })
 
@@ -100,7 +103,7 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing a team they don\'t have access to', () => {
-        cy.get(selectors.collection.error).should('contain', '403')
+        validateErrorCode(errorMsg, '403')
       })
     })
   })
@@ -112,7 +115,7 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        cy.get(selectors.collection.error).should('contain', '403')
+        validateErrorCode(errorMsg, '403')
       })
     })
 
@@ -122,7 +125,7 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        cy.get(selectors.collection.error).should('contain', '403')
+        validateErrorCode(errorMsg, '403')
       })
     })
   })
