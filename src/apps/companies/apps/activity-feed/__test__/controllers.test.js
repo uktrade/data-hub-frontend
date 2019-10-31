@@ -1,32 +1,32 @@
-const { renderActivityFeed } = require('../controllers')
-const { ACTIVITY_TYPE_FILTERS } = require('../../../constants')
+const activityFeedEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-from-es.json')
+const buildMiddlewareParameters = require('../../../../../../test/unit/helpers/middleware-parameters-builder')
+const companyMock = require('../../../../../../test/unit/data/company.json')
 const { ACTIVITY_TYPE_FILTER_KEYS } = require('../../../constants')
+const { ACTIVITY_TYPE_FILTERS } = require('../../../constants')
+const { companies } = require('../../../../../lib/urls')
 const config = require('../../../../../config')
-
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder')
-const activityFeedEsFixtures = require('~/test/unit/data/activity-feed/activity-feed-from-es')
-const companyMock = require('~/test/unit/data/company.json')
 
 describe('Activity feed controllers', () => {
   describe('#fetchActivityFeedHandler', () => {
     beforeEach(() => {
-      this.fetchActivityFeedStub = sinon.stub().resolves(activityFeedEsFixtures)
-
-      this.controllers = proxyquire('../../src/apps/companies/apps/activity-feed/controllers', {
-        './repos': { fetchActivityFeed: this.fetchActivityFeedStub },
+      global.fetchActivityFeedStub = sinon.stub().resolves(activityFeedEsFixtures)
+      global.controllers = proxyquire('../../src/apps/companies/apps/activity-feed/controllers', {
+        './repos': {
+          fetchActivityFeed: global.fetchActivityFeedStub,
+        },
       })
     })
 
     context('when fetching feed for a company', () => {
       beforeEach(async () => {
-        this.middlewareParameters = buildMiddlewareParameters({
+        global.middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
         })
 
-        await this.controllers.fetchActivityFeedHandler(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+        await global.controllers.fetchActivityFeedHandler(
+          global.middlewareParameters.reqMock,
+          global.middlewareParameters.resMock,
+          global.middlewareParameters.nextSpy,
         )
       })
 
@@ -42,39 +42,39 @@ describe('Activity feed controllers', () => {
           token: '1234',
         }
 
-        expect(this.fetchActivityFeedStub).to.be.calledWith(expectedParams)
-        expect(this.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(activityFeedEsFixtures)
+        expect(global.fetchActivityFeedStub).to.be.calledWith(expectedParams)
+        expect(global.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(activityFeedEsFixtures)
       })
     })
 
     context('when filtering for "all" activity feed for a company', () => {
       const { allActivity } = ACTIVITY_TYPE_FILTER_KEYS
       beforeEach(async () => {
-        this.middlewareParameters = buildMiddlewareParameters({
+        global.middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
           requestQuery: {
             queryParams: 'all',
           },
         })
 
-        await this.controllers.fetchActivityFeedHandler(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+        await global.controllers.fetchActivityFeedHandler(
+          global.middlewareParameters.reqMock,
+          global.middlewareParameters.resMock,
+          global.middlewareParameters.nextSpy,
         )
       })
 
       it('should call fetchActivityFeed with the right params', async () => {
         const expectedParams = { companyId: 'dcdabbc9-1781-e411-8955-e4115bead28a', filter: { 'terms': { 'object.type': allActivity } }, from: 0, token: '1234' }
 
-        expect(this.fetchActivityFeedStub).to.be.calledWith(expectedParams)
-        expect(this.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(activityFeedEsFixtures)
+        expect(global.fetchActivityFeedStub).to.be.calledWith(expectedParams)
+        expect(global.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(activityFeedEsFixtures)
       })
     })
 
     context('when filtering for "my" activity feed for a company', () => {
       beforeEach(async () => {
-        this.middlewareParameters = buildMiddlewareParameters({
+        global.middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
           requestQuery: {
             queryParams: 'my-activity',
@@ -84,10 +84,10 @@ describe('Activity feed controllers', () => {
           },
         })
 
-        await this.controllers.fetchActivityFeedHandler(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+        await global.controllers.fetchActivityFeedHandler(
+          global.middlewareParameters.reqMock,
+          global.middlewareParameters.resMock,
+          global.middlewareParameters.nextSpy,
         )
       })
 
@@ -99,25 +99,25 @@ describe('Activity feed controllers', () => {
           token: '1234',
         }
 
-        expect(this.fetchActivityFeedStub).to.be.calledWith(expectedParams)
-        expect(this.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(activityFeedEsFixtures)
+        expect(global.fetchActivityFeedStub).to.be.calledWith(expectedParams)
+        expect(global.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(activityFeedEsFixtures)
       })
     })
 
     context('when filtering for "data-hub activity" activity feed for a company', () => {
       const { dataHubActivity } = ACTIVITY_TYPE_FILTER_KEYS
       beforeEach(async () => {
-        this.middlewareParameters = buildMiddlewareParameters({
+        global.middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
           requestQuery: {
             queryParams: 'datahub-activity',
           },
         })
 
-        await this.controllers.fetchActivityFeedHandler(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+        await global.controllers.fetchActivityFeedHandler(
+          global.middlewareParameters.reqMock,
+          global.middlewareParameters.resMock,
+          global.middlewareParameters.nextSpy,
         )
       })
 
@@ -129,25 +129,25 @@ describe('Activity feed controllers', () => {
           token: '1234',
         }
 
-        expect(this.fetchActivityFeedStub).to.be.calledWith(expectedParams)
-        expect(this.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(activityFeedEsFixtures)
+        expect(global.fetchActivityFeedStub).to.be.calledWith(expectedParams)
+        expect(global.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(activityFeedEsFixtures)
       })
     })
 
     context('when filtering for "external activity" activity feed for a company', () => {
       const { externalActivity } = ACTIVITY_TYPE_FILTER_KEYS
       beforeEach(async () => {
-        this.middlewareParameters = buildMiddlewareParameters({
+        global.middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
           requestQuery: {
             queryParams: 'external-activity',
           },
         })
 
-        await this.controllers.fetchActivityFeedHandler(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+        await global.controllers.fetchActivityFeedHandler(
+          global.middlewareParameters.reqMock,
+          global.middlewareParameters.resMock,
+          global.middlewareParameters.nextSpy,
         )
       })
 
@@ -159,24 +159,24 @@ describe('Activity feed controllers', () => {
           token: '1234',
         }
 
-        expect(this.fetchActivityFeedStub).to.be.calledWith(expectedParams)
-        expect(this.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(activityFeedEsFixtures)
+        expect(global.fetchActivityFeedStub).to.be.calledWith(expectedParams)
+        expect(global.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(activityFeedEsFixtures)
       })
     })
 
     context('when filtering param is invalid', () => {
       beforeEach(async () => {
-        this.middlewareParameters = buildMiddlewareParameters({
+        global.middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
           requestQuery: {
             queryParams: 'foobar',
           },
         })
 
-        await this.controllers.fetchActivityFeedHandler(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+        await global.controllers.fetchActivityFeedHandler(
+          global.middlewareParameters.reqMock,
+          global.middlewareParameters.resMock,
+          global.middlewareParameters.nextSpy,
         )
       })
 
@@ -188,26 +188,26 @@ describe('Activity feed controllers', () => {
           token: '1234',
         }
 
-        expect(this.fetchActivityFeedStub).to.be.calledWith(expectedParams)
-        expect(this.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(activityFeedEsFixtures)
+        expect(global.fetchActivityFeedStub).to.be.calledWith(expectedParams)
+        expect(global.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(activityFeedEsFixtures)
       })
     })
 
     context('when the endpoint returns error', () => {
       beforeEach(async () => {
-        this.error = {
+        global.error = {
           statusCode: 404,
         }
-        this.fetchActivityFeedStub.rejects(this.error)
+        global.fetchActivityFeedStub.rejects(global.error)
 
-        this.middlewareParameters = buildMiddlewareParameters({
+        global.middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
         })
 
-        await this.controllers.fetchActivityFeedHandler(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+        await global.controllers.fetchActivityFeedHandler(
+          global.middlewareParameters.reqMock,
+          global.middlewareParameters.resMock,
+          global.middlewareParameters.nextSpy,
         )
       })
 
@@ -223,74 +223,106 @@ describe('Activity feed controllers', () => {
           token: '1234',
         }
 
-        expect(this.fetchActivityFeedStub).to.be.calledWith(expectedParams)
-        expect(this.middlewareParameters.resMock.json).to.not.have.been.called
-        expect(this.middlewareParameters.nextSpy).to.have.been.calledWith(this.error)
+        expect(global.fetchActivityFeedStub).to.be.calledWith(expectedParams)
+        expect(global.middlewareParameters.resMock.json).to.not.have.been.called
+        expect(global.middlewareParameters.nextSpy).to.have.been.calledWith(global.error)
       })
     })
   })
 
   describe('#renderActivityFeed', () => {
     context('when the feed renders successfully', () => {
-      const { allActivity, dataHubActivity, externalActivity, myActivity } = ACTIVITY_TYPE_FILTERS
-      const addActivityTypeFilter = {
-        allActivity,
-        myActivity: {
-          label: myActivity.label,
-          value: 'my-activity',
-        },
-        externalActivity,
-        dataHubActivity,
-      }
-
       beforeEach(async () => {
-        this.middlewareParameters = buildMiddlewareParameters({
-          company: companyMock,
+        global.middlewareParameters = buildMiddlewareParameters({
+          company: {
+            ...companyMock,
+          },
           user: {
             id: 123,
           },
         })
 
-        await renderActivityFeed(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+        await global.controllers.renderActivityFeed(
+          global.middlewareParameters.reqMock,
+          global.middlewareParameters.resMock,
+          global.middlewareParameters.nextSpy,
         )
       })
 
       it('should render', () => {
-        expect(this.middlewareParameters.resMock.render).to.be.calledOnce
+        expect(global.middlewareParameters.resMock.render).to.be.calledOnce
       })
 
       it('should render the activity feed template', () => {
-        expect(this.middlewareParameters.resMock.render).to.be.calledOnceWithExactly(
+        const companyId = global.middlewareParameters.resMock.locals.company.id
+        expect(global.middlewareParameters.resMock.render).to.be.calledOnceWithExactly(
           'companies/apps/activity-feed/views/client-container', {
             props: {
-              addActivityTypeFilter,
-              addContentLink: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a/interactions/create',
+              addActivityTypeFilter: {
+                ...ACTIVITY_TYPE_FILTERS,
+              },
+              addContentLink: companies.interactions.create(companyId),
               addContentText: 'Add interaction',
-              apiEndpoint: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a/activity/data',
+              apiEndpoint: companies.activity.data(companyId),
               isTypeFilterEnabled: undefined,
             },
           })
       })
 
       it('should add a breadcrumb', () => {
-        expect(this.middlewareParameters.resMock.breadcrumb.firstCall).to.be.calledWith(
+        expect(global.middlewareParameters.resMock.breadcrumb.firstCall).to.be.calledWith(
           'Wonka Industries',
           '/companies/dcdabbc9-1781-e411-8955-e4115bead28a'
         )
-        expect(this.middlewareParameters.resMock.breadcrumb.lastCall).to.be.calledWith('Activity Feed')
+        expect(global.middlewareParameters.resMock.breadcrumb.lastCall).to.be.calledWith('Activity Feed')
       })
 
       it('should not call "next" with an error', async () => {
-        expect(this.middlewareParameters.nextSpy).to.not.have.been.called
+        expect(global.middlewareParameters.nextSpy).to.not.have.been.called
+      })
+    })
+
+    context('when viewing the Ulitmate HQ block', () => {
+      beforeEach(async () => {
+        nock(config.apiRoot)
+          .get(`/v4/company?limit=200&global_ultimate_duns_number=123456789`)
+          .reply(200, { results: [{}, {}, {}] })
+
+        global.middlewareParameters = buildMiddlewareParameters({
+          company: {
+            ...companyMock,
+            is_global_ultimate: true,
+          },
+        })
+
+        await global.controllers.renderActivityFeed(
+          global.middlewareParameters.reqMock,
+          global.middlewareParameters.resMock,
+          global.middlewareParameters.nextSpy,
+        )
+      })
+
+      it('should make an API call to get the Ultimate HQ subsidiary count', () => {
+        const companyId = global.middlewareParameters.resMock.locals.company.id
+        expect(global.middlewareParameters.resMock.render).to.be.calledOnceWithExactly(
+          'companies/apps/activity-feed/views/client-container', {
+            props: {
+              addActivityTypeFilter: {
+                ...ACTIVITY_TYPE_FILTERS,
+              },
+              addContentLink: companies.interactions.create(companyId),
+              addContentText: 'Add interaction',
+              apiEndpoint: companies.activity.data(companyId),
+              isTypeFilterEnabled: undefined,
+              subsidiaryCount: 2,
+            },
+          })
       })
     })
 
     context('when viewing the feed for archived company', () => {
       beforeEach(async () => {
-        this.middlewareParameters = buildMiddlewareParameters({
+        global.middlewareParameters = buildMiddlewareParameters({
           company: {
             ...companyMock,
             archived: true,
@@ -300,15 +332,15 @@ describe('Activity feed controllers', () => {
           },
         })
 
-        await renderActivityFeed(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+        await global.controllers.renderActivityFeed(
+          global.middlewareParameters.reqMock,
+          global.middlewareParameters.resMock,
+          global.middlewareParameters.nextSpy,
         )
       })
 
       it('should render the template without the "Add interaction" button', () => {
-        expect(this.middlewareParameters.resMock.render).to.be.calledOnceWithExactly('companies/apps/activity-feed/views/client-container', {
+        expect(global.middlewareParameters.resMock.render).to.be.calledOnceWithExactly('companies/apps/activity-feed/views/client-container', {
           props: {
             apiEndpoint: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a/activity/data',
           },
@@ -318,29 +350,29 @@ describe('Activity feed controllers', () => {
 
     context('when the rendering fails', () => {
       beforeEach(async () => {
-        this.middlewareParameters = buildMiddlewareParameters({
+        global.middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
           user: {
             id: 123,
           },
         })
 
-        this.error = new Error('Could not render')
+        global.error = new Error('Could not render')
 
         const errorRes = {
-          ...this.middlewareParameters.resMock,
-          render: () => { throw this.error },
+          ...global.middlewareParameters.resMock,
+          render: () => { throw global.error },
         }
 
-        await renderActivityFeed(
-          this.middlewareParameters.reqMock,
+        await global.controllers.renderActivityFeed(
+          global.middlewareParameters.reqMock,
           errorRes,
-          this.middlewareParameters.nextSpy,
+          global.middlewareParameters.nextSpy,
         )
       })
 
       it('should call next with an error', async () => {
-        expect(this.middlewareParameters.nextSpy).to.have.been.calledWith(this.error)
+        expect(global.middlewareParameters.nextSpy).to.have.been.calledWith(global.error)
       })
     })
   })

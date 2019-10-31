@@ -34,12 +34,19 @@ describe('urls', () => {
       companyId = faker.random.uuid()
     })
     it('should return the correct values', () => {
-      expect(urls.companies.index.mountPoint).to.equal('/companies')
-      expect(urls.companies.index.route).to.equal('/')
-      expect(urls.companies.index()).to.equal('/companies')
+      expect(urls.companies.activity.data(companyId)).to.equal(`/companies/${companyId}/activity/data`)
+      expect(urls.companies.activity.index(companyId)).to.equal(`/companies/${companyId}/activity`)
+
+      expect(urls.companies.advisers(companyId)).to.equal(`/companies/${companyId}/advisers`)
 
       expect(urls.companies.detail.route).to.equal('/:companyId')
       expect(urls.companies.detail(companyId)).to.equal(`/companies/${companyId}`)
+
+      expect(urls.companies.dnbSubsidiaries.index.route).to.equal('/:companyId/dnb-subsidiaries')
+      expect(urls.companies.dnbSubsidiaries.index(companyId)).to.equal(`/companies/${companyId}/dnb-subsidiaries`)
+
+      expect(urls.companies.dnbSubsidiaries.data.route).to.equal('/:companyId/dnb-subsidiaries/data')
+      expect(urls.companies.dnbSubsidiaries.data(companyId)).to.equal(`/companies/${companyId}/dnb-subsidiaries/data`)
 
       expect(urls.companies.exports.route).to.equal('/:companyId/exports')
       expect(urls.companies.exports(companyId)).to.equal(`/companies/${companyId}/exports`)
@@ -48,11 +55,13 @@ describe('urls', () => {
       expect(urls.companies.hierarchies.ghq.add.route).to.equal('/:companyId/hierarchies/ghq/:globalHqId/add')
       expect(urls.companies.hierarchies.ghq.add(companyId, globalHqId)).to.equal(`/companies/${companyId}/hierarchies/ghq/${globalHqId}/add`)
 
-      expect(urls.companies.dnbSubsidiaries.index.route).to.equal('/:companyId/dnb-subsidiaries')
-      expect(urls.companies.dnbSubsidiaries.index(companyId)).to.equal(`/companies/${companyId}/dnb-subsidiaries`)
+      expect(urls.companies.index.mountPoint).to.equal('/companies')
+      expect(urls.companies.index.route).to.equal('/')
+      expect(urls.companies.index()).to.equal('/companies')
 
-      expect(urls.companies.dnbSubsidiaries.data.route).to.equal('/:companyId/dnb-subsidiaries/data')
-      expect(urls.companies.dnbSubsidiaries.data(companyId)).to.equal(`/companies/${companyId}/dnb-subsidiaries/data`)
+      expect(urls.companies.interactions.create(companyId)).to.equal(`/companies/${companyId}/interactions/create`)
+
+      expect(urls.companies.subsidiaries(companyId)).to.equal(`/companies/${companyId}/subsidiaries`)
     })
   })
 
