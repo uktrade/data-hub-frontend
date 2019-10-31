@@ -1,7 +1,4 @@
-const selectors = require('../../../../selectors')
-const { validateErrorCode } = require('../../support/assertions')
-
-const errorMsg = selectors.collection.error
+const { assertError } = require('../../support/assertions')
 
 describe('LEP Permission', () => {
   describe('orders', () => {
@@ -10,7 +7,8 @@ describe('LEP Permission', () => {
     })
 
     it('should prevent LEP users from accessing the page', () => {
-      validateErrorCode(errorMsg, '403')
+      assertError("You don't have permissions to this page")
+      assertError('403')
     })
   })
 
@@ -20,7 +18,8 @@ describe('LEP Permission', () => {
     })
 
     it('should prevent LEP users from accessing the page', () => {
-      validateErrorCode(errorMsg, '403')
+      assertError("You don't have permissions to this page")
+      assertError('403')
     })
   })
 
@@ -30,7 +29,8 @@ describe('LEP Permission', () => {
     })
 
     it('should prevent LEP users from accessing the page', () => {
-      validateErrorCode(errorMsg, '403')
+      assertError("You don't have permissions to this page")
+      assertError('403')
     })
   })
 
@@ -40,7 +40,8 @@ describe('LEP Permission', () => {
     })
 
     it('should prevent LEP users from accessing the page', () => {
-      validateErrorCode(errorMsg, '403')
+      assertError("You don't have permissions to this page")
+      assertError('403')
     })
   })
 
@@ -51,7 +52,8 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        validateErrorCode(errorMsg, '403')
+        assertError("You don't have permissions to this page")
+        assertError('403')
       })
     })
 
@@ -61,7 +63,8 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        validateErrorCode(errorMsg, '403')
+        assertError("You don't have permissions to this page")
+        assertError('403')
       })
     })
 
@@ -71,7 +74,8 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        validateErrorCode(errorMsg, '403')
+        assertError("You don't have permissions to this page")
+        assertError('403')
       })
     })
   })
@@ -83,7 +87,8 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        validateErrorCode(errorMsg, '403')
+        assertError("You don't have permissions to this page")
+        assertError('403')
       })
     })
 
@@ -93,7 +98,8 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing an interaction they don\'t have access to', () => {
-        validateErrorCode(errorMsg, '403')
+        assertError("You don't have permissions to this page")
+        assertError('403')
       })
     })
 
@@ -103,7 +109,8 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing a team they don\'t have access to', () => {
-        validateErrorCode(errorMsg, '403')
+        assertError("You don't have permissions to this page")
+        assertError('403')
       })
     })
   })
@@ -115,7 +122,8 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        validateErrorCode(errorMsg, '403')
+        assertError("You don't have permissions to this page")
+        assertError('403')
       })
     })
 
@@ -125,7 +133,8 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        validateErrorCode(errorMsg, '403')
+        assertError("You don't have permissions to this page")
+        assertError('403')
       })
     })
   })

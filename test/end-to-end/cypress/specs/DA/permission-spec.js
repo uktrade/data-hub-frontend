@@ -1,7 +1,4 @@
-const selectors = require('../../../../selectors')
-const { validateErrorCode } = require('../../support/assertions')
-
-const errorMsg = selectors.collection.error
+const { assertError } = require('../../support/assertions')
 
 describe('DA Permission', () => {
   describe('event', () => {
@@ -10,7 +7,8 @@ describe('DA Permission', () => {
     })
 
     it('should prevent DA users from accessing the page', () => {
-      validateErrorCode(errorMsg, '403')
+      assertError("You don't have permissions to this page")
+      assertError('403')
     })
   })
 
@@ -20,7 +18,8 @@ describe('DA Permission', () => {
     })
 
     it('should prevent DA users from accessing the page', () => {
-      validateErrorCode(errorMsg, '403')
+      assertError("You don't have permissions to this page")
+      assertError('403')
     })
   })
 
@@ -31,7 +30,8 @@ describe('DA Permission', () => {
       })
 
       it('should prevent DA users from accessing the page', () => {
-        validateErrorCode(errorMsg, '403')
+        assertError("You don't have permissions to this page")
+        assertError('403')
       })
     })
 
@@ -41,7 +41,8 @@ describe('DA Permission', () => {
       })
 
       it('should prevent DA users from accessing the page', () => {
-        validateErrorCode(errorMsg, '403')
+        assertError("You don't have permissions to this page")
+        assertError('403')
       })
     })
   })
@@ -53,7 +54,8 @@ describe('DA Permission', () => {
       })
 
       it('should prevent DA users from accessing the page', () => {
-        validateErrorCode(errorMsg, '403')
+        assertError("You don't have permissions to this page")
+        assertError('403')
       })
     })
 
@@ -63,7 +65,8 @@ describe('DA Permission', () => {
       })
 
       it('should prevent DA users from accessing an interaction they don\'t have access to', () => {
-        validateErrorCode(errorMsg, '403')
+        assertError("You don't have permissions to this page")
+        assertError('403')
       })
     })
 
@@ -73,7 +76,8 @@ describe('DA Permission', () => {
       })
 
       it('should prevent DA users from accessing an interaction they don\'t have access to', () => {
-        validateErrorCode(errorMsg, '403')
+        assertError("You don't have permissions to this page")
+        assertError('403')
       })
     })
 
@@ -83,7 +87,8 @@ describe('DA Permission', () => {
       })
 
       it('should prevent DA users from accessing a team they don\'t have access to', () => {
-        validateErrorCode(errorMsg, '403')
+        assertError("You don't have permissions to this page")
+        assertError('403')
       })
     })
   })
@@ -95,7 +100,8 @@ describe('DA Permission', () => {
       })
 
       it('should prevent DA users from accessing the page', () => {
-        validateErrorCode(errorMsg, '403')
+        assertError("You don't have permissions to this page")
+        assertError('403')
       })
     })
 
@@ -105,7 +111,8 @@ describe('DA Permission', () => {
       })
 
       it('should prevent DA users from accessing the page', () => {
-        validateErrorCode(errorMsg, '403')
+        assertError("You don't have permissions to this page")
+        assertError('403')
       })
     })
   })
