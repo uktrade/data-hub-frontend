@@ -43,6 +43,7 @@ and be provided with a back end server to provide the API, data storage and sear
   - [Template inheritance diagram](#template-inheritance-diagram)
 - [Testing](#testing)
   - [Functional Testing](#functional-testing)
+  - [E2E Testing](docs/How%20to%20execute%20tests.md#e2e-testing)
   - [Acceptance Testing](#acceptance-testing)
     - [Running acceptance tests](#running-acceptance-tests)
     - [Running tests with specific user permissions](#running-tests-with-specific-user-permissions)
@@ -447,46 +448,6 @@ Execute all the tests on `specs` in chrome browser:
 #### Running a specific spec
 
 `$ npm run test:functional -- --spec test/functional/cypress/specs/nav-spec.js`
-
-### End to end Testing
-
-The aim of this test suite is perform end to end tests, simulating a user flow.
-
-#### Setup
-
-Pre-requisites:
-
-Ensure you have [node](https://nodejs.org/en/download/) v10 installed then install dependencies:
-
-`$ npm install`
-
-#### Running the tests
-
-Notice that before running the tests the application should be up and running.
-
-By default cypress will run on electron headlessly, you can read more about it [here](https://docs.cypress.io/guides/core-concepts/launching-browsers.html#Electron-Browser)
-
-Execute all the tests on `specs` in chrome browser:
-
-`$ npm run test:e2e -- --browser chrome`
-
-#### Permission tags
-
-If you'd like to run specific permission user tests, run one of the following commands below:
-
-`$ npm run test:e2e:lep -- --browser chrome`
-
-or
-
-`$ npm run test:e2e:da -- --browser chrome`
-
-#### Running the tests manually in cypress interface
-
-`$ npm run test:e2e:watch`
-
-#### Running a specific spec
-
-`$ npm run test:e2e -- --spec test/end-to-end/cypress/specs/LEP/permission-spec.js`
 
 ### Acceptance Testing
 DEPRECATED - CURRENTLY BEING MIGRATED TO THE END-TO-END SUITE
