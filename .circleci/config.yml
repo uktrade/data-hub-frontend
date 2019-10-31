@@ -7,8 +7,8 @@ aliases:
   - &oauth2_dit_staff_token     ditStaffToken
   - &oauth2_da_staff_token      daStaffToken
   - &oauth2_lep_staff_token     lepStaffToken
-  - &api_develop_image          quay.io/uktrade/data-hub-leeloo:develop
-  - &api_master_image           quay.io/uktrade/data-hub-leeloo:master
+  - &api_develop_image          quay.io/uktrade/data-hub-api:develop
+  - &api_master_image           quay.io/uktrade/data-hub-api:master
 
   # Common steps
   - &restore_yarn_cache

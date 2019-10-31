@@ -572,10 +572,10 @@ Details can be found in the [GitHub](https://github.com/uktrade/docker-data-hub-
 
 ### Data hub backend docker image
 The acceptance tests `user_acceptance_tests` job on circleCi uses its own version of [uktrade/data-hub-api](https://github.com/uktrade/data-hub-api).
-The `quay.io/uktrade/data-hub-leeloo` docker image and tags that is used is automatically built via a Docker hub automated job. Details can be found [https://quay.io/repository/uktrade/data-hub-leeloo](https://quay.io/repository/uktrade/data-hub-leeloo).
+The `quay.io/uktrade/data-hub-api` docker image and tags that is used is automatically built via a Docker hub automated job. Details can be found [https://quay.io/repository/uktrade/data-hub-api](https://quay.io/repository/uktrade/data-hub-api).
 
-- `user_acceptance_tests` job uses `quay.io/uktrade/data-hub-leeloo:develop`
-- `user_acceptance_tests_master` job uses `quay.io/uktrade/data-hub-leeloo:master`
+- `user_acceptance_tests` job uses `quay.io/uktrade/data-hub-api:develop`
+- `user_acceptance_tests_master` job uses `quay.io/uktrade/data-hub-api:master`
 
 ### Mock SSO docker build
 The acceptance tests `user_acceptance_tests` job on circleCi uses [uktrade/mock-sso](https://github.com/uktrade/mock-sso)
