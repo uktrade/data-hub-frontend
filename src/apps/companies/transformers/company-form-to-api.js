@@ -30,7 +30,6 @@ const transformAddress = (requestBody, addressType, isUkCompany) => {
 module.exports = (requestBody, isUkCompany) => {
   const transformed = {
     ...omit(requestBody, [
-      'companies_house_data',
       'contacts',
       'interactions',
       'address_1',

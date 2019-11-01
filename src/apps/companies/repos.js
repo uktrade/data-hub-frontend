@@ -27,10 +27,6 @@ function removeDitCompanyFromList (token, id) {
   })
 }
 
-function getCHCompany (token, id) {
-  return authorisedRequest(token, `${config.apiRoot}/v4/ch-company/${id}`)
-}
-
 function saveCompany (token, company) {
   return company.id ? updateCompany(token, company.id, company) : addCompany(token, company)
 }
@@ -120,7 +116,6 @@ module.exports = {
   addDitCompanyToList,
   removeDitCompanyFromList,
   getDitCompanyFromList,
-  getCHCompany,
   archiveCompany,
   unarchiveCompany,
   updateCompany,
