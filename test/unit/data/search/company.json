@@ -32,10 +32,6 @@
       "company_number": null,
       "contacts": [],
       "created_on": "2017-05-25T11:15:27.270215",
-      "companies_house_data": {
-        "id": "company-house-id",
-        "company_number": "company-house-number"
-      },
       "description": null,
       "employee_range": null,
       "export_to_countries": [],

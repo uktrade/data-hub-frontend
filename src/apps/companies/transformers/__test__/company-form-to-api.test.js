@@ -4,9 +4,6 @@ describe('Company form to API transformer', () => {
   context('when all fields are populated', () => {
     beforeEach(() => {
       this.transformed = transformCompanyFormToApi({
-        companies_house_data: {
-          company_number: '123456',
-        },
         contacts: [],
         interactions: [],
         address_1: 'line 1',
@@ -57,9 +54,6 @@ describe('Company form to API transformer', () => {
   context('when "trading_names" is not set', () => {
     beforeEach(() => {
       this.transformed = transformCompanyFormToApi({
-        companies_house_data: {
-          company_number: '123456',
-        },
         contacts: [],
         interactions: [],
         address_1: 'line 1',
@@ -107,9 +101,6 @@ describe('Company form to API transformer', () => {
   context('when unsetting optional address fields', () => {
     beforeEach(() => {
       this.transformed = transformCompanyFormToApi({
-        companies_house_data: {
-          company_number: '123456',
-        },
         contacts: [],
         interactions: [],
         address_1: 'line 1',
@@ -157,9 +148,6 @@ describe('Company form to API transformer', () => {
   context('when registered address fields are not specified', () => {
     beforeEach(() => {
       this.transformed = transformCompanyFormToApi({
-        companies_house_data: {
-          company_number: '123456',
-        },
         contacts: [],
         interactions: [],
         address_1: 'line 1',
@@ -197,9 +185,6 @@ describe('Company form to API transformer', () => {
   context('when "headquarter_type" is set as "not_headquarters', () => {
     beforeEach(() => {
       this.transformed = transformCompanyFormToApi({
-        companies_house_data: {
-          company_number: '123456',
-        },
         contacts: [],
         interactions: [],
         address_1: 'line 1',
