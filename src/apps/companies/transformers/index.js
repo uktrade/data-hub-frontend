@@ -1,4 +1,3 @@
-const transformCompaniesHouseToView = require('./companies-house-to-view')
 const transformCompanyFormToApi = require('./company-form-to-api')
 const transformCompanyToBusinessHierarchyView = require('./company-to-business-hierarchy-view')
 const transformCompanyToExportDetailsView = require('./company-to-export-details-view')
@@ -13,7 +12,6 @@ const transformCompanyToSubsidiaryListItem = require('./company-to-subsidiary-li
 const transformCoreTeamToCollection = require('./one-list-core-team-to-collection')
 
 module.exports = {
-  transformCompaniesHouseToView,
   transformCompanyFormToApi,
   transformCompanyToBusinessHierarchyView,
   transformCompanyToExportDetailsView,

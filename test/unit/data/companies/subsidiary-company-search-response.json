@@ -9,7 +9,6 @@
         "name": "Company"
       },
       "one_list_group_tier": null,
-      "companies_house_data": null,
       "contacts": [
         {
           "id": "7d43f9a2-868f-4d85-8e5f-631e5a8c9a3b",
@@ -93,7 +92,6 @@
         "name": "Partnership"
       },
       "one_list_group_tier": null,
-      "companies_house_data": null,
       "contacts": [
 
       ],

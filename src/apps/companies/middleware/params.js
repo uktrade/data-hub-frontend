@@ -5,7 +5,6 @@ const {
   addDitCompanyToList,
   getDitCompanyFromList,
   removeDitCompanyFromList,
-  getCHCompany,
 } = require('../repos')
 
 const { getAllCompanyLists } = require('../../company-lists/repos')
@@ -70,21 +69,9 @@ async function addCompanyOrRemoveFromList (req, res, next) {
   }
 }
 
-async function getCompaniesHouseRecord (req, res, next, companyNumber) {
-  try {
-    const companiesHouseRecord = await getCHCompany(req.session.token, companyNumber)
-    res.locals.companiesHouseCategory = companiesHouseRecord.company_category
-    res.locals.companiesHouseRecord = companiesHouseRecord
-    next()
-  } catch (error) {
-    next(error)
-  }
-}
-
 module.exports = {
   getCompany,
   setIsCompanyAlreadyAdded,
   setDoAnyListsExist,
   addCompanyOrRemoveFromList,
-  getCompaniesHouseRecord,
 }

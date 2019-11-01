@@ -50,7 +50,7 @@ async function populateForm (req, res, next) {
     const createdOn = get(res.locals, 'company.created_on')
     const options = await getCompanyFormOptions(token, createdOn)
 
-    const companyRecord = res.locals.companiesHouseRecord || res.locals.company
+    const companyRecord = res.locals.company
     const defaultCompanyData = isPlainObject(companyRecord) ? transformCompanyToForm(companyRecord) : null
     const formData = assign({}, defaultCompanyData, req.body)
 
