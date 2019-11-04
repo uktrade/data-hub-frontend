@@ -1,5 +1,5 @@
 
-const config = require('~/config')
+const config = require('~/src/config')
 const serviceOptions = require('~/test/unit/data/interactions/service-options-data.json')
 const { transformServicesOptions } = require('~/src/apps/interactions/transformers')
 

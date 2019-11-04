@@ -1,4 +1,4 @@
-const config = require('~/config')
+const config = require('~/src/config')
 const activityFeedRawFixture = require('~/test/unit/data/activity-feed/activity-feed-from-es')
 
 const token = 'abcd'

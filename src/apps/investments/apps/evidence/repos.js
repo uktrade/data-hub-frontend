@@ -1,4 +1,4 @@
-const config = require('../../../../../config/index')
+const config = require('../../../../config')
 const { authorisedRequest } = require('../../../../lib/authorised-request')
 
 function getEvidenceForInvestment (token, investmentId) {

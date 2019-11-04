@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 const { archiveCompany: archive, unarchiveCompany: unarchive } = require('../repos')
-const logger = require('../../../../config/logger')
+const logger = require('../../../config/logger')
 
 async function archiveCompany (req, res) {
   const { company } = res.locals

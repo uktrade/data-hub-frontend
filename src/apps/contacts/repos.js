@@ -1,6 +1,6 @@
 const { sortBy } = require('lodash')
 const { authorisedRequest } = require('../../lib/authorised-request')
-const config = require('../../../config')
+const config = require('../../config')
 
 function getContact (token, contactId) {
   return authorisedRequest(token, `${config.apiRoot}/v3/contact/${contactId}`)

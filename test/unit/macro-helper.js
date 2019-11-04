@@ -2,7 +2,7 @@ const { isEmpty } = require('lodash')
 const path = require('path')
 const { JSDOM } = require('jsdom')
 
-const nunjucksConfig = require('../../config/nunjucks')
+const nunjucksConfig = require('../../src/config/nunjucks')
 const { normaliseHtml } = require('./component-helper')
 
 const nunjucks = nunjucksConfig(null, {

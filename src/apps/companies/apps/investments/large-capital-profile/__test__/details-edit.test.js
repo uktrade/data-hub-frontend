@@ -5,7 +5,7 @@ const investorType = require('~/test/unit/data/companies/investments/metadata/in
 const company = require('~/test/unit/data/companies/minimal-company.json')
 const advisers = require('~/test/unit/data/advisers/advisers.json')
 const { cloneDeep } = require('lodash')
-const config = require('~/config')
+const config = require('~/src/config')
 
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 const controller = require('~/src/apps/companies/apps/investments/large-capital-profile/controllers')

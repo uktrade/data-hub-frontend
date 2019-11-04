@@ -16,7 +16,7 @@ describe('Company controller, archive', () => {
         archiveCompany: this.stub.archiveCompany,
         unarchiveCompany: this.stub.unarchiveCompany,
       },
-      '../../../../config/logger': {
+      '../../../config/logger': {
         error: this.errorLoggerSpy,
       },
     })

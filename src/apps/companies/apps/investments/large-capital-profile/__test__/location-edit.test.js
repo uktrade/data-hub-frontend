@@ -4,7 +4,7 @@ const ukRegion = require('~/test/unit/data/companies/investments/metadata/uk-reg
 const country = require('~/test/unit/data/companies/investments/metadata/country.json')
 
 const { cloneDeep } = require('lodash')
-const config = require('~/config')
+const config = require('~/src/config')
 
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 const controller = require('~/src/apps/companies/apps/investments/large-capital-profile/controllers')

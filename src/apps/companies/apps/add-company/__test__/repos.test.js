@@ -1,4 +1,4 @@
-const config = require('../../../../../../config')
+const config = require('../../../../../config')
 const { fetchOrganisationTypes } = require('../repos')
 const businessTypeFixture = require('../../../../../../test/unit/data/metadata/business-type')
 

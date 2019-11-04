@@ -5,7 +5,7 @@ const WebpackAssetsManifest = require('webpack-assets-manifest')
 
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
-const config = require('./config')
+const config = require('./src/config')
 
 const common = {
   devtool: 'source-map',

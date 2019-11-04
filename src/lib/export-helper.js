@@ -1,4 +1,4 @@
-const { pluralise } = require('../../config/nunjucks/filters')
+const { pluralise } = require('../config/nunjucks/filters')
 
 function hasExportPermission (userPermissions, targetPermission) {
   return userPermissions.includes(targetPermission)

@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 const { get, pickBy } = require('lodash')
 
-const { getPrimarySectorName } = require('../../../../common/transform-sectors')
+const { getPrimarySectorName } = require('../../../common/transform-sectors')
 const { getDataLabels } = require('../../../lib/controller-utils')
 const { companyDetailsLabels, hqLabels } = require('../labels')
 

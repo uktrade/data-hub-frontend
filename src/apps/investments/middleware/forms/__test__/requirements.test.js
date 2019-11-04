@@ -2,7 +2,7 @@ const uuid = require('uuid')
 const moment = require('moment')
 const { assign } = require('lodash')
 
-const config = require('~/config')
+const config = require('~/src/config')
 const paths = require('~/src/apps/investments/paths')
 const investmentData = require('~/test/unit/data/investment/investment-data.json')
 const { handleFormPost, populateForm } = require('~/src/apps/investments/middleware/forms/requirements')

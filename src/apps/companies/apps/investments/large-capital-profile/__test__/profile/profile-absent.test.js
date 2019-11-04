@@ -1,6 +1,6 @@
 const absentCompanyProfile = require('~/test/unit/data/companies/investments/large-capital-profile-absent.json')
 const companyMock = require('~/test/unit/data/companies/minimal-company.json')
-const config = require('~/config')
+const config = require('~/src/config')
 
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 const controller = require('~/src/apps/companies/apps/investments/large-capital-profile/controllers')

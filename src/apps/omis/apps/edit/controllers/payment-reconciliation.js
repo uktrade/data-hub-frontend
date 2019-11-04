@@ -3,7 +3,7 @@ const numeral = require('numeral')
 const chrono = require('chrono-node')
 const dateFns = require('date-fns')
 
-const logger = require('../../../../../../config/logger')
+const logger = require('../../../../../config/logger')
 const { EditController } = require('../../../controllers')
 const { Order } = require('../../../models')
 

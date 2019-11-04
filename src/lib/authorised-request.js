@@ -2,8 +2,8 @@ const { isNil, isString, pickBy } = require('lodash')
 const request = require('request')
 const requestPromise = require('request-promise')
 
-const config = require('../../config')
-const logger = require('../../config/logger')
+const config = require('../config')
+const logger = require('../config/logger')
 
 function hasValue (value) {
   return !isNil(value)

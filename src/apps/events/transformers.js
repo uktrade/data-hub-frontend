@@ -3,7 +3,7 @@ const { assign, get, reject, uniq } = require('lodash')
 
 const castCompactArray = require('../../lib/cast-compact-array')
 const { transformDateObjectToDateString } = require('../transformers')
-const config = require('../../../config')
+const config = require('../../config')
 
 function transformEventToListItem ({
   id,

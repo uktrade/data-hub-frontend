@@ -5,7 +5,7 @@ const { filterActiveAdvisers } = require('../../../adviser/filters')
 const { updateInvestment } = require('../../repos')
 const { clientRelationshipManagementLabels } = require('../../labels')
 const { transformObjectToOption } = require('../../../transformers')
-const config = require('../../../../../config')
+const config = require('../../../../config')
 
 async function populateForm (req, res, next) {
   try {

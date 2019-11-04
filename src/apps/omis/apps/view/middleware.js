@@ -1,6 +1,6 @@
 const { assign, get, filter, mapValues, pickBy } = require('lodash')
 
-const logger = require('../../../../../config/logger')
+const logger = require('../../../../config/logger')
 const { Order } = require('../../models')
 const { setCompany: setCompanyMW } = require('../../middleware')
 const { getContact } = require('../../../contacts/repos')

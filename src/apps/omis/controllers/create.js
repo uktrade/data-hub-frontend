@@ -1,5 +1,5 @@
 const FormController = require('./form')
-const logger = require('../../../../config/logger')
+const logger = require('../../../config/logger')
 const { getDitCompany } = require('../../companies/repos')
 
 class CreateController extends FormController {
