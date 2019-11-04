@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const config = require('../../../../config/')
+const config = require('../../../config/')
 
 describe('Documents Upload repos', () => {
   beforeEach(async () => {

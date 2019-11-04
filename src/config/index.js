@@ -4,7 +4,7 @@ const isDev = process.env.NODE_ENV !== 'production'
 const isProd = process.env.NODE_ENV === 'production'
 const isTest = process.env.NODE_ENV === 'test'
 
-const root = path.normalize(`${__dirname}/..`)
+const root = path.normalize(`${__dirname}/../..`)
 
 const buildRedisConfig = () => {
   const metadataTtl = process.env.METADATA_TTL || 15 * 60

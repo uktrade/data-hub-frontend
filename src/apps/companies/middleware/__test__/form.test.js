@@ -2,7 +2,7 @@ const moment = require('moment')
 
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
-const config = require('~/config')
+const config = require('~/src/config')
 const companyRecord = require('~/test/unit/data/companies/datahub-only-company.json')
 
 const yesterday = moment().subtract(1, 'days').toISOString()

@@ -1,5 +1,5 @@
 const nock = require('nock')
-const config = require('../../../../config')
+const config = require('../../../config')
 
 const companyListItemRegexp = /\/v4\/company-list\/([^/]+)\/item/
 

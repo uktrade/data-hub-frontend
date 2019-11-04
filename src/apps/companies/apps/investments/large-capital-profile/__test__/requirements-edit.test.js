@@ -10,7 +10,7 @@ const desiredDealRole = require('~/test/unit/data/companies/investments/metadata
 const companyProfile = require('~/test/unit/data/companies/investments/large-capital-profile-new.json')
 const companyMock = require('~/test/unit/data/companies/minimal-company.json')
 const { cloneDeep } = require('lodash')
-const config = require('~/config')
+const config = require('~/src/config')
 
 const controller = require('~/src/apps/companies/apps/investments/large-capital-profile/controllers')
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')

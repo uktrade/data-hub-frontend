@@ -1,4 +1,4 @@
-const config = require('~/config')
+const config = require('~/src/config')
 const { renderFindAttendee, findAttendee } = require('~/src/apps/events/attendees/controllers/find')
 const event = require('~/test/unit/data/events/event-data.json')
 const attendeesData = require('~/test/unit/data/interactions/attendees.json')

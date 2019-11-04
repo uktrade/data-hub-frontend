@@ -1,7 +1,7 @@
 const { merge, cloneDeep } = require('lodash')
 const format = require('date-fns/format')
 const paths = require('~/src/apps/investments/paths')
-const { mediumDateTimeFormat } = require('../../../../../config')
+const { mediumDateTimeFormat } = require('../../../../config')
 const investmentData = require('~/test/unit/data/investment/investment-data.json')
 const investmentProjectStages = require('~/test/unit/data/investment/investment-project-stages.json')
 

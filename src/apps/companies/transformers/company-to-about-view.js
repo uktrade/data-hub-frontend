@@ -4,7 +4,7 @@ const { get, pickBy, isEmpty } = require('lodash')
 const { aboutLabels } = require('../labels')
 const { getDataLabels } = require('../../../lib/controller-utils')
 const { NOT_SET_TEXT } = require('../constants')
-const { currencyRate } = require('../../../../config')
+const { currencyRate } = require('../../../config')
 
 function transformTurnover (turnover, is_turnover_estimated, turnover_range) {
   if (turnover) {

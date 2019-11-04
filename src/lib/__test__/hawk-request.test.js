@@ -1,4 +1,4 @@
-const config = require('../../../config')
+const config = require('../../config')
 const rewire = require('rewire')
 
 const modulePath = '../hawk-request'

@@ -1,4 +1,4 @@
-const config = require('../../../../config')
+const config = require('../../../config')
 const repos = require('../../../../src/apps/dashboard/repos')
 const { mockCompanyListsServer } = require('./utils')
 

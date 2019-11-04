@@ -1,6 +1,6 @@
 const { assign } = require('lodash')
 
-const { apiRoot } = require('~/config')
+const { apiRoot } = require('~/src/config')
 const FormController = require('~/src/apps/omis/controllers/form')
 const Controller = require('~/src/apps/omis/apps/create/controllers/sector')
 

@@ -1,5 +1,5 @@
 const { get } = require('lodash')
-const config = require('../../config')
+const config = require('../config')
 
 /**
  * If a developer wishes to bypass SSO via config and has also provided a development bearer token, then assign

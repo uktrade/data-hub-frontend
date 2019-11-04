@@ -1,4 +1,4 @@
-const logger = require('../../../config/logger')
+const logger = require('../../config/logger')
 const serviceDependencies = require('./serviceDependencies')
 
 function pingdomTemplate (statusMessage) {

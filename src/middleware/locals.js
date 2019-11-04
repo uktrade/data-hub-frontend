@@ -1,8 +1,8 @@
 const { get, map } = require('lodash')
 
 const GLOBAL_NAV_ITEMS = require('../apps/global-nav-items')
-const logger = require('../../config/logger')
-const config = require('../../config')
+const logger = require('../config/logger')
+const config = require('../config')
 const { version } = require('../../package.json')
 const { filterNonPermittedItem } = require('../modules/permissions/filters')
 

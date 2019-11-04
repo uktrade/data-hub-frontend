@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 const { isEmpty, pickBy } = require('lodash')
 
-const logger = require('../../../config/logger')
+const logger = require('../../config/logger')
 const { createZenDeskMessage, postToZenDesk } = require('./services')
 
 async function postFeedback (req, res, next) {

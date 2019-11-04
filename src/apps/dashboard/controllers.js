@@ -5,7 +5,7 @@ const GLOBAL_NAV_ITEMS = require('../global-nav-items')
 
 const { isPermittedRoute } = require('../middleware')
 const { fetchHomepageData, fetchCompanyLists } = require('./repos')
-const config = require('../../../config')
+const config = require('../../config')
 const { formatHelpCentreAnnouncements } = require('./transformers')
 
 async function renderDashboard (req, res, next) {

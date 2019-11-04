@@ -1,4 +1,4 @@
-const logger = require('../../config/logger')
+const logger = require('../config/logger')
 
 module.exports = function auth (req, res, next) {
   if (req.url.indexOf('/css') === -1 && req.url.indexOf('/javascripts') === -1 && req.url.indexOf('/images') === -1) {
