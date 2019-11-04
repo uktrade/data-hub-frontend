@@ -437,7 +437,7 @@ Notice that before running the tests the application should be up and running.
 
 By default cypress will run on electron headlessly, you can read more about it [here](https://docs.cypress.io/guides/core-concepts/launching-browsers.html#Electron-Browser)
 
-Execute all the tests on `specs` in chrome browser:
+With the local server running on port 3000, execute all the tests on `specs` in chrome browser:
 
 `$ npm run test:functional -- --browser chrome`
 
