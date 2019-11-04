@@ -18,13 +18,13 @@ module.exports = function transformCompanyToExportDetailsView ({
   export_experience_category,
   export_to_countries,
   future_interest_countries,
-  export_potential_score,
+  export_potential,
 }) {
   const viewRecord = {
     exportExperienceCategory: export_experience_category || 'None',
     exportToCountries: getCountries(export_to_countries),
     futureInterestCountries: getCountries(future_interest_countries),
-    exportPotential: getExportPotentialLabel(export_potential_score),
+    exportPotential: getExportPotentialLabel(export_potential),
   }
 
   return getDataLabels(viewRecord, exportDetailsLabels)
