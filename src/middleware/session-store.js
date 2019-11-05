@@ -1,7 +1,16 @@
 const session = require('express-session')
+const redisConnect = require('connect-redis')
 
-const { redisStore } = require('../config/redis-store')
 const config = require('../config')
+const redisClient = require('../lib/redis-client')
+
+const RedisStore = redisConnect(session)
+const redisStore = new RedisStore({
+  client: redisClient.get(),
+  // config ttl defined in milliseconds
+  ttl: config.session.ttl / 1000,
+  secret: config.session.secret,
+})
 
 const sessionStore = session({
   store: redisStore,
