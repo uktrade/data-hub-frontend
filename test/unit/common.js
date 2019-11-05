@@ -18,6 +18,8 @@ global.rootPath = `${process.cwd()}`
 global.globalReq = reqres.req()
 global.globalRes = reqres.res()
 
+process.env.TZ = 'Europe/London'
+
 chai.config.truncateThreshold = 0
 
 process.setMaxListeners(0)

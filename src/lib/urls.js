@@ -44,11 +44,16 @@ module.exports = {
   companies: {
     index: url('/companies'),
     detail: url('/companies', '/:companyId'),
+    businessDetails: url('/companies', '/:companyId/business-details'),
     exports: url('/companies', '/:companyId/exports'),
     hierarchies: {
       ghq: {
         add: url('/companies', '/:companyId/hierarchies/ghq/:globalHqId/add'),
       },
+    },
+    dnbSubsidiaries: {
+      index: url('/companies', '/:companyId/dnb-subsidiaries'),
+      data: url('/companies', '/:companyId/dnb-subsidiaries/data'),
     },
   },
   contacts: {

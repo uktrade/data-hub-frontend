@@ -20,6 +20,8 @@ describe('Company router', () => {
       '/:companyId/hierarchies/ghq/remove',
       '/:companyId/hierarchies/subsidiaries/search',
       '/:companyId/hierarchies/subsidiaries/:subsidiaryCompanyId/add',
+      '/:companyId/dnb-subsidiaries',
+      '/:companyId/dnb-subsidiaries/data',
       '/:companyId/contacts',
       '/:companyId/exports',
       '/:companyId/subsidiaries',
