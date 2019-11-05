@@ -7,7 +7,7 @@ function fetchActivityFeed ({
   size = config.activityFeed.paginationSize,
   from = 0,
   companyId,
-  filter = {},
+  filter = '',
 }) {
   const requestBody = {
     size,
