@@ -1,20 +1,16 @@
 const { ACTIVITY_TYPE_FILTERS } = require('../../constants')
 const { fetchActivityFeed } = require('./repos')
+const { buildEsFilterQuery } = require('./builders')
 
 async function renderActivityFeed (req, res, next) {
-  const { company, features, user } = res.locals
+  const { allActivity, dataHubActivity, externalActivity, myActivity } = ACTIVITY_TYPE_FILTERS
+  const { company, features } = res.locals
 
   const addActivityTypeFilter = {
-    values: [
-      ACTIVITY_TYPE_FILTERS.all,
-      {
-        label: 'My activity',
-        value: `dit:DataHubAdviser:${user.id}`,
-      },
-      ACTIVITY_TYPE_FILTERS.dataHubActivity,
-      ACTIVITY_TYPE_FILTERS.externalActivity,
-    ],
-    default: ACTIVITY_TYPE_FILTERS.dataHubActivity,
+    allActivity,
+    myActivity,
+    externalActivity,
+    dataHubActivity,
   }
 
   try {
@@ -22,7 +18,7 @@ async function renderActivityFeed (req, res, next) {
       addContentText: 'Add interaction',
       addContentLink: `/companies/${company.id}/interactions/create`,
       addActivityTypeFilter,
-      isFilterEnabled: features['activity-feed-filters'],
+      isTypeFilterEnabled: features['activity-feed-type-filter-enabled'],
     }
 
     res
@@ -41,14 +37,14 @@ async function renderActivityFeed (req, res, next) {
 
 async function fetchActivityFeedHandler (req, res, next) {
   try {
-    const { company } = res.locals
+    const { company, user } = res.locals
     const { from = 0, queryParams = {} } = req.query
 
     const results = await fetchActivityFeed({
       token: req.session.token,
       from,
       companyId: company.id,
-      filter: queryParams,
+      filter: buildEsFilterQuery(queryParams, user),
     })
 
     res.json(results)
