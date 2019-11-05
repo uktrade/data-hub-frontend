@@ -76,18 +76,9 @@ const ACTIVITY_TYPE = {
 }
 
 const ACTIVITY_TYPE_FILTERS = {
-  all: {
+  allActivity: {
     label: 'All Data Hub & external activity',
-    value: [].concat(
-      ...[
-        ACTIVITY_TYPE.CompaniesHouseAccount,
-        ACTIVITY_TYPE.CompaniesHouseCompany,
-        ACTIVITY_TYPE.HmrcExporter,
-        ACTIVITY_TYPE.Interaction,
-        ACTIVITY_TYPE.InvestmentProject,
-        ACTIVITY_TYPE.Omis,
-      ]
-    ),
+    value: 'all',
   },
 
   myActivity: {
@@ -97,25 +88,47 @@ const ACTIVITY_TYPE_FILTERS = {
 
   externalActivity: {
     label: 'All external activity',
-    value: [].concat(
-      ...[
-        ACTIVITY_TYPE.CompaniesHouseAccount,
-        ACTIVITY_TYPE.CompaniesHouseCompany,
-        ACTIVITY_TYPE.HmrcExporter,
-      ]
-    ),
+    value: 'external-activity',
   },
 
   dataHubActivity: {
     label: 'All Data Hub activity',
-    value: [].concat(
-      ...[
-        ACTIVITY_TYPE.Interaction,
-        ACTIVITY_TYPE.InvestmentProject,
-        ACTIVITY_TYPE.Omis,
-      ]
-    ),
+    value: 'datahub-activity',
   },
+}
+
+const ACTIVITY_TYPE_FILTER_OBJECT = {
+  TYPE: 'object.type',
+  ATTRIBUTED_TO_ID: 'object.attributedTo.id',
+}
+
+const ACTIVITY_TYPE_FILTER_KEYS = {
+  allActivity: [].concat(
+    ...[
+      ACTIVITY_TYPE.CompaniesHouseAccount,
+      ACTIVITY_TYPE.CompaniesHouseCompany,
+      ACTIVITY_TYPE.HmrcExporter,
+      ACTIVITY_TYPE.Interaction,
+      ACTIVITY_TYPE.InvestmentProject,
+      ACTIVITY_TYPE.Omis,
+    ]
+  ),
+
+  externalActivity: [].concat(
+    ...[
+      ACTIVITY_TYPE.CompaniesHouseAccount,
+      ACTIVITY_TYPE.CompaniesHouseCompany,
+      ACTIVITY_TYPE.HmrcExporter,
+    ]
+  ),
+
+  dataHubActivity: [].concat(
+    ...[
+      ACTIVITY_TYPE.Interaction,
+      ACTIVITY_TYPE.InvestmentProject,
+      ACTIVITY_TYPE.Omis,
+    ]
+  ),
 }
 
 const APP_PERMISSIONS = concat(LOCAL_NAV, GLOBAL_NAV_ITEM)
@@ -127,6 +140,8 @@ const NOT_AVAILABLE_TEXT = 'Not available'
 module.exports = {
   ACTIVITY_TYPE,
   ACTIVITY_TYPE_FILTERS,
+  ACTIVITY_TYPE_FILTER_KEYS,
+  ACTIVITY_TYPE_FILTER_OBJECT,
   GLOBAL_NAV_ITEM,
   LOCAL_NAV,
   DEFAULT_COLLECTION_QUERY,

@@ -1,4 +1,4 @@
-const { ACTIVITY_TYPE } = require('../src/apps/companies/constants')
+const { ACTIVITY_TYPE } = require('../apps/companies/constants')
 const path = require('path')
 
 const isDev = process.env.NODE_ENV !== 'production'
