@@ -1,5 +1,4 @@
 const { castArray, sortBy } = require('lodash')
-const Redis = require('redis')
 
 const config = require('../config')
 const { authorisedRequest } = require('../lib/authorised-request')
@@ -9,17 +8,17 @@ const {
   transformObjectToOption,
 } = require('../apps/transformers')
 
-let client, redisAsync
-if (!config.isTest) {
-  const { getRedisConfig } = require('../config/redis-store')
-  const { promisify } = require('util')
+let client, redisAsyncGet
 
-  client = Redis.createClient({ ...getRedisConfig(), url: config.redis.url })
-  redisAsync = promisify(client.get).bind(client)
+if (!config.isTest) {
+  const redisClient = require('./redis-client')
+
+  client = redisClient.get()
+  redisAsyncGet = redisClient.asyncGet()
 }
 
 async function fetchOptions (token, url) {
-  let metaData = config.isTest ? null : await redisAsync(url)
+  let metaData = config.isTest ? null : await redisAsyncGet(url)
 
   if (metaData) {
     return JSON.parse(metaData)
