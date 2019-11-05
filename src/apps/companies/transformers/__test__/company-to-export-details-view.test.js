@@ -1,18 +1,34 @@
-const { assign } = require('lodash')
+const proxyquire = require('proxyquire')
+const faker = require('faker')
+const minimalCompany = require('../../../../../test/unit/data/companies/minimal-company.json')
 
-const minimalCompany = require('~/test/unit/data/companies/minimal-company.json')
-const { transformCompanyToExportDetailsView } = require('~/src/apps/companies/transformers')
-
+const transformerPath = '../company-to-export-details-view'
 const EXPORT_POTENTIAL_LABEL = 'Export potential'
 
 describe('transformCompanyToExportDetailsView', () => {
+  let transformCompanyToExportDetailsView
+  let urls
+  let greatUrlProfileResponse
+
+  beforeEach(() => {
+    greatUrlProfileResponse = faker.internet.url()
+    urls = {
+      external: {
+        greatProfile: sinon.stub().returns(greatUrlProfileResponse),
+      },
+    }
+    transformCompanyToExportDetailsView = proxyquire(transformerPath, {
+      '../../../lib/urls': urls,
+    })
+  })
   context('when no export market information has been entered', () => {
     beforeEach(() => {
-      const company = assign({}, minimalCompany, {
+      const company = {
+        ...minimalCompany,
         export_experience_category: null,
         export_to_countries: [],
         future_interest_countries: [],
-      })
+      }
 
       this.viewRecord = transformCompanyToExportDetailsView(company)
     })
@@ -40,7 +56,8 @@ describe('transformCompanyToExportDetailsView', () => {
         id: '8b05e8c7-1812-46bf-bab7-a0096ab5689f',
         name: 'Increasing export markets',
       }
-      const company = assign({}, minimalCompany, {
+      const company = {
+        ...minimalCompany,
         export_experience_category: this.exportExperienceCategory,
         export_to_countries: [{
           id: '1234',
@@ -50,8 +67,8 @@ describe('transformCompanyToExportDetailsView', () => {
           id: '4321',
           name: 'Germany',
         }],
-        export_potential: 'low',
-      })
+        export_potential_score: 'low',
+      }
 
       this.viewRecord = transformCompanyToExportDetailsView(company)
     })
@@ -79,7 +96,8 @@ describe('transformCompanyToExportDetailsView', () => {
         id: '8b05e8c7-1812-46bf-bab7-a0096ab5689f',
         name: 'Increasing export markets',
       }
-      const company = assign({}, minimalCompany, {
+      const company = {
+        ...minimalCompany,
         export_experience_category: this.exportExperienceCategory,
         export_to_countries: [{
           id: '1234',
@@ -95,7 +113,7 @@ describe('transformCompanyToExportDetailsView', () => {
           id: '4123',
           name: 'Sweden',
         }],
-      })
+      }
 
       this.viewRecord = transformCompanyToExportDetailsView(company)
     })
@@ -110,6 +128,54 @@ describe('transformCompanyToExportDetailsView', () => {
 
     it('should show the export win category', () => {
       expect(this.viewRecord).to.have.property('Export win category', this.exportExperienceCategory)
+    })
+  })
+
+  describe('great profile', () => {
+    const GREAT_LABEL = 'great.gov.uk business profile'
+    let companiesHouseNumber
+
+    function createRecord (props) {
+      return transformCompanyToExportDetailsView({
+        ...minimalCompany,
+        export_experience_category: null,
+        export_to_countries: [],
+        future_interest_countries: [],
+        company_number: companiesHouseNumber,
+        ...props,
+      })
+    }
+
+    beforeEach(() => {
+      companiesHouseNumber = faker.random.alphaNumeric(8)
+    })
+
+    context('when a profile is published', () => {
+      it('should return the data to link to the profile', () => {
+        const viewRecord = createRecord({ great_profile_status: 'published' })
+        const data = viewRecord[GREAT_LABEL]
+
+        expect(data).to.have.property('url', greatUrlProfileResponse)
+        expect(data).to.have.property('newWindow', true)
+        expect(data).to.have.property('name', '"Find a supplier" profile')
+        expect(data).to.have.property('hint', '(opens in a new window)')
+
+        expect(urls.external.greatProfile).to.have.been.calledWith(companiesHouseNumber)
+      })
+    })
+
+    context('when a profile is unpublished', () => {
+      it('should return the label and data', () => {
+        const viewRecord = createRecord({ great_profile_status: 'unpublished' })
+        expect(viewRecord).to.have.property(GREAT_LABEL, 'Profile not published')
+      })
+    })
+
+    context('without a profile', () => {
+      it('should return the label and data', () => {
+        const viewRecord = createRecord({ great_profile_status: null })
+        expect(viewRecord).to.have.property(GREAT_LABEL, 'No profile')
+      })
     })
   })
 })
