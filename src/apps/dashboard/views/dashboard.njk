@@ -22,7 +22,6 @@
         outboundLinkText: 'View all updates'
       } %}
     </div>
-<pre>{{ user | dump(2) }}</pre>
 {% if user.permissions.includes('company_list.view_companylist') %}
     <div class="govuk-grid-column-full">
       {% component 'react-slot', {
