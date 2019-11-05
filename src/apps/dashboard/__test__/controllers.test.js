@@ -72,9 +72,6 @@ const canSeeCompanyListsRequest = {
     user: {
       permissions: ['company_list.view_companylistitem'],
     },
-    features: {
-      companies_add_remove_from_lists: true,
-    },
   },
 }
 
@@ -83,18 +80,6 @@ const cannotSeeCompanyListsRequest = {
     user: {
       permissions: [],
     },
-    features: {
-      companies_add_remove_from_lists: true,
-    },
-  },
-}
-
-const companyListsFeatureOffRequest = {
-  locals: {
-    user: {
-      permissions: ['company_list.view_companylistitem'],
-    },
-    features: {},
   },
 }
 
@@ -284,29 +269,6 @@ describe('dashboard controller', () => {
         },
       }
       expect(global.resMock.render.firstCall.args[1]).to.deep.equal(expected)
-    })
-  })
-
-  context('when the company list feature is off', () => {
-    beforeEach(async () => {
-      global.resMock = {
-        ...companyListsFeatureOffRequest,
-        render: sinon.spy(),
-        title: sinon.stub().returnsThis(),
-      }
-      global.fetchHomepageDataStub.resolves(global.dashData)
-
-      withPopulatedCompanyLists()
-      await global.controllers.renderDashboard(
-        global.reqMock,
-        global.resMock,
-        global.nextSpy
-      )
-    })
-
-    it('it should not be rendered', () => {
-      expect(global.resMock.render.firstCall.args[1].companyLists)
-        .to.not.be.ok
     })
   })
 
