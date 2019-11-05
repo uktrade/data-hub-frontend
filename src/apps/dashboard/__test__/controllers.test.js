@@ -70,14 +70,6 @@ const expectedCompanyLists = [
   },
 ]
 
-const canSeeCompanyListsRequest = {
-  locals: {
-    user: {
-      permissions: ['company_list.view_companylis'],
-    },
-  },
-}
-
 describe('dashboard controller', () => {
   beforeEach(() => {
     global.reqMock = Object.assign({}, globalReq, {
@@ -87,7 +79,6 @@ describe('dashboard controller', () => {
     })
 
     global.resMock = {
-      ...canSeeCompanyListsRequest,
       render: sinon.spy(),
       title: sinon.stub().returnsThis(),
     }
@@ -170,7 +161,6 @@ describe('dashboard controller', () => {
     // TODO: Before each is useless here as we only have one test case.
     beforeEach(async () => {
       global.resMock = {
-        ...canSeeCompanyListsRequest,
         render: sinon.spy(),
         title: sinon.stub().returnsThis(),
       }
@@ -203,7 +193,6 @@ describe('dashboard controller', () => {
     // TODO: Before each is useless here as we only have one test case.
     beforeEach(async () => {
       global.resMock = {
-        ...canSeeCompanyListsRequest,
         render: sinon.spy(),
         title: sinon.stub().returnsThis(),
       }
