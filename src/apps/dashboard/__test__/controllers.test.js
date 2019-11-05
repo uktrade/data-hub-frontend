@@ -73,15 +73,7 @@ const expectedCompanyLists = [
 const canSeeCompanyListsRequest = {
   locals: {
     user: {
-      permissions: ['company_list.view_companylistitem'],
-    },
-  },
-}
-
-const cannotSeeCompanyListsRequest = {
-  locals: {
-    user: {
-      permissions: [],
+      permissions: ['company_list.view_companylis'],
     },
   },
 }
@@ -237,28 +229,6 @@ describe('dashboard controller', () => {
         },
       }
       expect(global.resMock.render.firstCall.args[1]).to.deep.equal(expected)
-    })
-  })
-
-  context("when the user doesn't have the right permission", () => {
-    beforeEach(async () => {
-      global.resMock = {
-        ...cannotSeeCompanyListsRequest,
-        render: sinon.spy(),
-        title: sinon.stub().returnsThis(),
-      }
-
-      withPopulatedCompanyLists()
-      await global.controllers.renderDashboard(
-        global.reqMock,
-        global.resMock,
-        global.nextSpy
-      )
-    })
-
-    it('company lists should not be rendered', () => {
-      expect(global.resMock.render.firstCall.args[1].companyLists)
-        .to.not.be.ok
     })
   })
 })

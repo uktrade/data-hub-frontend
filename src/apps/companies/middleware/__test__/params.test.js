@@ -25,11 +25,7 @@ describe('Companies form middleware', () => {
     redirectSpy = sinon.spy()
     reqMock = { query: {}, session: { token: 2 } }
     resMock = {
-      locals: {
-        user: {
-          permissions: ['company_list.view_companylist'],
-        },
-      },
+      locals: {},
     }
 
     middleware = proxyquire('../../../../../src/apps/companies/middleware/params', {
@@ -136,61 +132,6 @@ describe('Companies form middleware', () => {
       })
       it('should redirect to the company page', () => {
         expect(redirectSpy).to.be.calledWithExactly(`${reqMock.baseUrl}/${resMock.locals.company.id}`)
-      })
-    })
-  })
-
-  describe('setDoAnyListsExist', () => {
-    context('when a users has company lists added', async () => {
-      beforeEach(async () => {
-        nextSpy = sinon.spy()
-        getAllCompanyListsStub.resolves({ count: 1 })
-        await middleware.setDoAnyListsExist(reqMock, resMock, nextSpy, 2)
-      })
-
-      it('should set a local variable for displaying the right action on the companies page', () => {
-        expect(resMock.locals).to.have.deep.property('listsExist', true)
-        expect(nextSpy).to.have.been.called
-      })
-    })
-    context('when a users has no company lists added', async () => {
-      beforeEach(async () => {
-        nextSpy = sinon.spy()
-        getAllCompanyListsStub.resolves({ count: 0 })
-        await middleware.setDoAnyListsExist(reqMock, resMock, nextSpy, 2)
-      })
-
-      it('should set a local variable for displaying the right action on the companies page', () => {
-        expect(resMock.locals).to.have.deep.property('listsExist', false)
-        expect(nextSpy).to.have.been.called
-      })
-    })
-    context('when there is an error getting company lists', async () => {
-      beforeEach(async () => {
-        nextSpy = sinon.spy()
-        getAllCompanyListsStub.rejects()
-        await middleware.setDoAnyListsExist(reqMock, resMock, nextSpy, 2)
-      })
-      it('should throw an error', () => {
-        expect(nextSpy.firstCall.args[0]).to.be.instanceof(Error)
-      })
-    })
-    context('when the user is a LEP/DA or has no permission to view/edit company lists', () => {
-      beforeEach(async () => {
-        resMock = {
-          ...resMock,
-          locals: {
-            user: {
-              permissions: [],
-            },
-          },
-        }
-        nextSpy = sinon.spy()
-        await middleware.setDoAnyListsExist(reqMock, resMock, nextSpy, 2)
-      })
-      it('should not call the API', () => {
-        expect(resMock.locals.canViewCompanyList).to.equal(false)
-        expect(nextSpy).to.have.been.called
       })
     })
   })
