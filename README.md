@@ -58,7 +58,7 @@ and be provided with a back end server to provide the API, data storage and sear
       - [Scenario tags](#scenario-tags)
       - [Permissions tags](#permissions-tags)
     - [Ignoring features](#ignoring-features)
-  -[Visual Testing](#visual-testing)
+  -[Visual Testing](docs/How%20to%20execute%20tests.md#visual-testing)
 - [Continuous Integration](#continuous-integration)
   - [Running CI jobs](#running-ci-jobs)
   - [Setting up users with different permissions](#setting-up-users-with-different-permissions)
@@ -593,47 +593,6 @@ CircleCI has been configured to show you a summary report of what has failed on 
 
 When acceptance tests fail you can also have a look at the `Nightwatch.js` html report found in the jobs artifacts folder.
 This can be accessed by logging in to [CircleCI](https://circleci.com/)
-
-## Visual Testing
-
-The aim of this suite is taking screenshots from pages and comparing to baselines
-to ensure consistency between builds.
-
-### Folder structure
-
-Screenshots will be stored in the root of the project. We commit the baselines and ignore the comparison diff images. If we need to update the baseline screenshot we need to delete the old baseline and rerun the test (it will then copy the new screenshot saved in comparison folder into the baseline folder)
-
-```
-- visual-screenshots
-  - baseline
-  - comparison
-  - diff
-```
-
-### Browserstack environment variables
-
-to run in browserstack, ensure you have the following environment variables set:
-
-```
-export BROWSERSTACK_USERNAME=xxx
-export BROWSERSTACK_ACCESS_KEY=xxx
-export IS_REMOTE=true
-```
-### Running the tests
-After setting up the environment variables, run the following command to execute the tests:
-
-`$ yarn test:visual`
-
-### Updating the baseline image
-
-Currently updating the baseline imagine is a manual process. Once you confirm the comparison image
-is how the application should look like, delete the baseline for the particular test case, and rerun
-the visual test suite. Once it reruns, it will notice there is a baseline image missing and use the 
-freshly screenshot taken as the current baseline.
-
-Baseline image filename and path should look something like this:
-
-`~/visual-screenshots/baseline/Data Hub core pages should visually check data hub home page is correct - chrome`
 
 ## Deployment
 
