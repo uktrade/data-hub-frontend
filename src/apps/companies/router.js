@@ -43,7 +43,7 @@ const {
 
 const { setCompanyContactRequestBody, getCompanyContactCollection } = require('./middleware/contact-collection')
 const { populateForm, handleFormPost } = require('./middleware/form')
-const { getCompany, setIsCompanyAlreadyAdded, setDoAnyListsExist, addCompanyOrRemoveFromList } = require('./middleware/params')
+const { getCompany, setIsCompanyAlreadyAdded, addCompanyOrRemoveFromList } = require('./middleware/params')
 const { setInteractionsDetails } = require('./middleware/interactions')
 const { setGlobalHQ, removeGlobalHQ, addSubsidiary } = require('./middleware/hierarchies')
 const setCompaniesLocalNav = require('./middleware/local-navigation')
@@ -63,7 +63,6 @@ router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.param('companyId', getCompany)
 router.param('companyId', setIsCompanyAlreadyAdded)
-router.param('companyId', setDoAnyListsExist)
 
 router.get(urls.companies.index.route,
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
