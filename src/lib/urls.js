@@ -54,4 +54,8 @@ module.exports = {
   contacts: {
     index: url('/contacts'),
   },
+  search: {
+    index: url('/search'),
+    type: url('/search', '/:searchPath?'),
+  },
 }
