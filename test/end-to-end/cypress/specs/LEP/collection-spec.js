@@ -1,11 +1,8 @@
 const selectors = require('../../../../selectors')
+const { assertCollection } = require('../../support/assertions')
 
-const verifyCollection = () => {
-  cy.get(selectors.collection.headerCount).invoke('text').then((headerCount) => {
-    cy.get(selectors.collection.items).should((collectionItems) => {
-      expect(headerCount).to.eq(collectionItems.length.toString())
-    })
-  })
+const checkCollection = () => {
+  assertCollection(selectors.collection.headerCount, selectors.collection.items)
 }
 
 describe('Collection', () => {
@@ -15,7 +12,7 @@ describe('Collection', () => {
     })
 
     it('should return the results summary for a company collection', () => {
-      verifyCollection()
+      checkCollection()
     })
   })
 
@@ -25,7 +22,7 @@ describe('Collection', () => {
     })
 
     it('should return the results summary for a contact collection', () => {
-      verifyCollection()
+      checkCollection()
     })
   })
 
@@ -35,8 +32,8 @@ describe('Collection', () => {
         cy.visit('/investments/projects')
       })
 
-      it('should return the results summary for a contact collection', () => {
-        verifyCollection()
+      it('should return the results summary for a investment collection', () => {
+        checkCollection()
       })
     })
 
@@ -45,8 +42,8 @@ describe('Collection', () => {
         cy.visit('/investments/projects/ba1f0b14-5fe4-4c36-bf6a-ddf115272977/interactions')
       })
 
-      it('should return the results summary for a contact collection', () => {
-        verifyCollection()
+      it('should return the results summary for a interaction collection', () => {
+        checkCollection()
       })
     })
 
@@ -55,17 +52,17 @@ describe('Collection', () => {
         cy.visit('/investments/projects/ba1f0b14-5fe4-4c36-bf6a-ddf115272977/propositions')
       })
 
-      it('should return the results summary for a contact collection', () => {
-        verifyCollection()
+      it('should return the results summary for a proposition collection', () => {
+        checkCollection()
       })
     })
 
-    describe('proposition', () => {
+    describe('team', () => {
       before(() => {
         cy.visit('/investments/projects/ba1f0b14-5fe4-4c36-bf6a-ddf115272977/team')
       })
 
-      it('should return the results summary for a contact collection', () => {
+      it('should return the investment project team summary', () => {
         cy.get(selectors.companyInvestmentProjects.investmentTeamGrid)
           .should('contain', 'Client Relationship Manager')
           .and('contain', 'Marketing - Marketing Team')

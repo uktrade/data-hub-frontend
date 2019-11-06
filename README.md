@@ -43,6 +43,7 @@ and be provided with a back end server to provide the API, data storage and sear
   - [Template inheritance diagram](#template-inheritance-diagram)
 - [Testing](#testing)
   - [Functional Testing](#functional-testing)
+  - [E2E Testing](docs/How%20to%20execute%20tests.md#e2e-testing)
   - [Acceptance Testing](#acceptance-testing)
     - [Running acceptance tests](#running-acceptance-tests)
     - [Running tests with specific user permissions](#running-tests-with-specific-user-permissions)
@@ -420,7 +421,7 @@ The aim of this test suite is perform functional tests of frontend components in
 
 Pre-requisites:
 
-Ensure you have [node](https://nodejs.org/en/download/) v8 installed then install dependencies:
+Ensure you have [node](https://nodejs.org/en/download/) v10 installed then install dependencies:
 
 `$ npm install`
 
@@ -449,6 +450,8 @@ Execute all the tests on `specs` in chrome browser:
 `$ npm run test:functional -- --spec test/functional/cypress/specs/nav-spec.js`
 
 ### Acceptance Testing
+DEPRECATED - CURRENTLY BEING MIGRATED TO THE END-TO-END SUITE
+
 Data hub uses [Nightwatch.js](http://nightwatchjs.org), [nightwatch-cucumber](https://github.com/mucsi96/nightwatch-cucumber) and [cucumber.js](https://github.com/cucumber/cucumber-js) to run acceptance tests.
 
 #### Running acceptance tests
@@ -467,7 +470,7 @@ To run tests against a specific user permissions type:
 The above permissions tokens are available on the dev api
 
 ##### Backend locally with user permission tokens
-If you are running the api locally please run the [https://github.com/uktrade/data-hub-leeloo/blob/develop/setup-uat.sh](https://github.com/uktrade/data-hub-leeloo/blob/develop/setup-uat.sh) to setup the relevant users and permission tokens
+If you are running the api locally please run the [https://github.com/uktrade/data-hub-api/blob/develop/setup-uat.sh](https://github.com/uktrade/data-hub-api/blob/develop/setup-uat.sh) to setup the relevant users and permission tokens
 
 ##### Adding tokens
 If you need to add a token have a look in confluence on how to do this `Data Hub team > Technical Documentation > Frontend > SSO for developers > Adding an Access token`.
@@ -553,7 +556,7 @@ Data hub uses [CircleCI](https://circleci.com/) for continuous integration.
 ### Running CI jobs
 - All branches run the `lint_code`, `unit_tests` and `user_acceptance_tests` CI jobs
 - You can skip the `user_acceptance_tests` CI job by using a branch starting with `/^skip-tests.*/`
-- The `user_acceptance_tests_master` job will run on branches that match the regex `release.*` or the `master` branch. This job runs a branch against the `master` branch of [data-hub-leeloo](https://github.com/uktrade/data-hub-leeloo/tree/master)
+- The `user_acceptance_tests_master` job will run on branches that match the regex `release.*` or the `master` branch. This job runs a branch against the `master` branch of [data-hub-api](https://github.com/uktrade/data-hub-api/tree/master)
 
 ### Setting up users with different permissions
 On CircleCi we run Acceptance tests against users with different permissions. We do this via the environment variable `OAUTH2_DEV_TOKEN`. Essentially we have users with different permissions setup in a job via `OAUTH2_DEV_TOKEN` and then we run tests with the specified permissions tag.
@@ -568,11 +571,11 @@ The acceptance tests `user_acceptance_tests` job uses the docker image `ukti/doc
 Details can be found in the [GitHub](https://github.com/uktrade/docker-data-hub-base) and [docker](https://hub.docker.com/r/ukti/docker-data-hub-base/) repositories.
 
 ### Data hub backend docker image
-The acceptance tests `user_acceptance_tests` job on circleCi uses its own version of [uktrade/data-hub-leeloo](https://github.com/uktrade/data-hub-leeloo).
-The `uktrade/data-hub-leeloo` docker image and tags that is used is automatically built via a Docker hub automated job. Details can be found [https://hub.docker.com/r/ukti/data-hub-leeloo](https://hub.docker.com/r/ukti/data-hub-leeloo).
+The acceptance tests `user_acceptance_tests` job on circleCi uses its own version of [uktrade/data-hub-api](https://github.com/uktrade/data-hub-api).
+The `quay.io/uktrade/data-hub-api` docker image and tags that is used is automatically built via a Docker hub automated job. Details can be found [https://quay.io/repository/uktrade/data-hub-api](https://quay.io/repository/uktrade/data-hub-api).
 
-- `user_acceptance_tests` job uses `ukti/data-hub-leeloo:latest`
-- `user_acceptance_tests_master` job uses `ukti/data-hub-leeloo:master`
+- `user_acceptance_tests` job uses `quay.io/uktrade/data-hub-api:develop`
+- `user_acceptance_tests_master` job uses `quay.io/uktrade/data-hub-api:master`
 
 ### Mock SSO docker build
 The acceptance tests `user_acceptance_tests` job on circleCi uses [uktrade/mock-sso](https://github.com/uktrade/mock-sso)

@@ -1,7 +1,7 @@
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 const companyMock = require('~/test/unit/data/companies/company-v4.json')
 const { renderSector, updateSector } = require('~/src/apps/companies/controllers/business-details-sector')
-const config = require('~/config')
+const config = require('~/src/config')
 
 const sectorOptions = [
   {

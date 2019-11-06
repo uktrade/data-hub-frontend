@@ -1,7 +1,7 @@
 const moment = require('moment')
 const { find, pick } = require('lodash')
 
-const config = require('~/config')
+const config = require('~/src/config')
 const controller = require('~/src/apps/interactions/controllers/edit')
 const interactionData = require('~/test/unit/data/interactions/interaction.json')
 const serviceOptionData = require('~/test/unit/data/interactions/service-options-data.json')

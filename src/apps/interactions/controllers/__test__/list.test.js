@@ -1,7 +1,7 @@
 const moment = require('moment')
 const { omit } = require('lodash')
 
-const config = require('~/config')
+const config = require('~/src/config')
 const {
   renderInteractionList,
   renderInteractionsForEntity,

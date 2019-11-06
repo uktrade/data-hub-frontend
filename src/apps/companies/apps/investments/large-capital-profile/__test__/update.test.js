@@ -3,7 +3,7 @@ const companyProfile = require('~/test/unit/data/companies/investments/large-cap
 const companyMock = require('~/test/unit/data/companies/minimal-company.json')
 
 const route = `/companies/${companyMock.id}/investments/large-capital-profile`
-const config = require('../../../../../../../config')
+const config = require('../../../../../../config')
 
 describe('HTTP PATCH - Large capital profile', () => {
   describe('#updateCompanyProfile', () => {

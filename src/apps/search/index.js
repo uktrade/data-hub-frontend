@@ -1,7 +1,8 @@
+const urls = require('../../lib/urls')
 const router = require('./router')
 
 module.exports = {
   displayName: 'Search',
-  mountpath: '/search',
+  mountpath: urls.search.index.mountPoint,
   router,
 }

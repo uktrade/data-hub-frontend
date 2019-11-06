@@ -1,11 +1,9 @@
 const proxyquire = require('proxyquire')
 const company = require('../../../../../test/unit/data/companies/company-v4.json')
-const companiesHouseRecord = require('../../../../../test/unit/data/companies/companies-house.json')
 
 describe('Companies form middleware', () => {
   let nextSpy
   let getDitCompanyStub
-  let getCHCompanyStub
   let getDitCompanyFromListStub
   let addDitCompanyToListStub
   let getAllCompanyListsStub
@@ -19,7 +17,6 @@ describe('Companies form middleware', () => {
   beforeEach(() => {
     nextSpy = sinon.spy()
     getDitCompanyStub = sinon.stub()
-    getCHCompanyStub = sinon.stub()
     getDitCompanyFromListStub = sinon.stub()
     addDitCompanyToListStub = sinon.stub()
     getAllCompanyListsStub = sinon.stub()
@@ -38,7 +35,6 @@ describe('Companies form middleware', () => {
     middleware = proxyquire('../../../../../src/apps/companies/middleware/params', {
       '../repos': {
         getDitCompany: getDitCompanyStub,
-        getCHCompany: getCHCompanyStub,
         getDitCompanyFromList: getDitCompanyFromListStub,
         addDitCompanyToList: addDitCompanyToListStub,
         removeDitCompanyFromList: removeDitCompanyFromListStub,
@@ -57,23 +53,6 @@ describe('Companies form middleware', () => {
 
     it('should return the company', () => {
       expect(resMock.locals).to.have.deep.property('company', company)
-    })
-  })
-
-  describe('getCompaniesHouseRecord', () => {
-    context('when the API returns a companies house record', async () => {
-      beforeEach(async () => {
-        getCHCompanyStub.resolves(companiesHouseRecord)
-        await middleware.getCompaniesHouseRecord(reqMock, resMock, nextSpy, 2)
-      })
-
-      it('should return the companies house record', () => {
-        expect(resMock.locals).to.have.deep.property('companiesHouseRecord', companiesHouseRecord)
-      })
-
-      it('should return the companies house category', () => {
-        expect(resMock.locals).to.have.property('companiesHouseCategory', 'Private Limited Company')
-      })
     })
   })
 

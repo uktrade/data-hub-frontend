@@ -10,7 +10,7 @@ const {
   transformEventResponseToViewRecord,
   transformEventFormBodyToApiRequest,
 } = proxyquire('~/src/apps/events/transformers', {
-  '../../../config': {
+  '../../config': {
     archivedDocumentsBaseUrl,
   },
 })

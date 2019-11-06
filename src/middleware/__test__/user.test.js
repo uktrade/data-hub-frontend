@@ -12,7 +12,7 @@ describe('user middleware', () => {
     this.nextSpy = sinon.spy()
 
     this.userMiddleware = proxyquire('~/src/middleware/user', {
-      '../../config': {
+      '../config': {
         apiRoot: apiRoot,
       },
       '../lib/authorised-request': { authorisedRequest: this.authorisedRequestStub },

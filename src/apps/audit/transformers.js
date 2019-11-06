@@ -1,7 +1,7 @@
 /* eslint camelcase: 0 */
 const { get } = require('lodash')
 const dateFns = require('date-fns')
-const { mediumDateTimeFormat } = require('../../../config')
+const { mediumDateTimeFormat } = require('../../config')
 
 function transformChanges (changes, labels) {
   return Object.keys(changes)

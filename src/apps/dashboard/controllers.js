@@ -5,7 +5,7 @@ const GLOBAL_NAV_ITEMS = require('../global-nav-items')
 
 const { isPermittedRoute } = require('../middleware')
 const { fetchHomepageData, fetchCompanyLists } = require('./repos')
-const config = require('../../../config')
+const config = require('../../config')
 const { formatHelpCentreAnnouncements } = require('./transformers')
 
 async function renderDashboard (req, res, next) {
@@ -34,8 +34,7 @@ async function renderDashboard (req, res, next) {
       articleFeed = []
     }
 
-    const companyLists = res.locals.features.companies_add_remove_from_lists &&
-      userPermissions.includes('company_list.view_companylistitem') &&
+    const companyLists = userPermissions.includes('company_list.view_companylistitem') &&
       await fetchCompanyLists(req.session.token)
 
     res.title('Dashboard').render('dashboard/views/dashboard', {

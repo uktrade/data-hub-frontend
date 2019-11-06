@@ -2,8 +2,7 @@ const moment = require('moment')
 
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
-const config = require('~/config')
-const companiesHouseRecord = require('~/test/unit/data/companies/companies-house.json')
+const config = require('~/src/config')
 const companyRecord = require('~/test/unit/data/companies/datahub-only-company.json')
 
 const yesterday = moment().subtract(1, 'days').toISOString()
@@ -116,46 +115,6 @@ describe('Companies form middleware', () => {
           { value: '1', label: 'European HQ' },
           { value: '3', label: 'UK HQ' },
         ])
-      })
-    })
-
-    context('when creating a new company from companies house', () => {
-      beforeEach(async () => {
-        this.middlewareParameters = buildMiddlewareParameters({
-          companiesHouseRecord: companiesHouseRecord,
-        })
-
-        nock(config.apiRoot)
-          .get('/v4/metadata/uk-region')
-          .reply(200, metadataMock.regionOptions)
-          .get('/v4/metadata/headquarter-type')
-          .reply(200, metadataMock.headquarterOptions)
-          .get('/v4/metadata/sector')
-          .reply(200, metadataMock.sectorOptions)
-          .get('/v4/metadata/employee-range')
-          .reply(200, metadataMock.employeeOptions)
-          .get('/v4/metadata/turnover')
-          .reply(200, metadataMock.turnoverOptions)
-          .get('/v4/metadata/country')
-          .reply(200, metadataMock.countryOptions)
-          .get('/v4/metadata/business-type')
-          .reply(200, metadataMock.businessTypeOptions)
-
-        await populateForm(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
-        )
-      })
-
-      it('should pre-populate the form with companies house values', () => {
-        const formData = this.middlewareParameters.resMock.locals.formData
-        expect(formData).to.have.property('name', 'Mercury Trading Ltd')
-        expect(formData).to.have.property('business_type', '6f75408b-03e7-e611-bca1-e4115bead28a')
-        expect(formData).to.have.property('company_number', '99919')
-        expect(formData).to.have.property('registered_address_1', '64 Ermin Street')
-        expect(formData).to.have.property('registered_address_town', 'Y Ffor')
-        expect(formData).to.have.property('registered_address_postcode', 'LL53 5RN')
       })
     })
 

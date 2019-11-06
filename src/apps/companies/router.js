@@ -1,3 +1,4 @@
+const urls = require('../../lib/urls')
 const router = require('express').Router()
 const { ENTITIES } = require('../search/constants')
 const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS, QUERY_FIELDS } = require('./constants')
@@ -42,7 +43,7 @@ const {
 
 const { setCompanyContactRequestBody, getCompanyContactCollection } = require('./middleware/contact-collection')
 const { populateForm, handleFormPost } = require('./middleware/form')
-const { getCompany, setIsCompanyAlreadyAdded, setDoAnyListsExist, addCompanyOrRemoveFromList, getCompaniesHouseRecord } = require('./middleware/params')
+const { getCompany, setIsCompanyAlreadyAdded, setDoAnyListsExist, addCompanyOrRemoveFromList } = require('./middleware/params')
 const { setInteractionsDetails } = require('./middleware/interactions')
 const { setGlobalHQ, removeGlobalHQ, addSubsidiary } = require('./middleware/hierarchies')
 const setCompaniesLocalNav = require('./middleware/local-navigation')
@@ -63,9 +64,8 @@ router.use(handleRoutePermissions(APP_PERMISSIONS))
 router.param('companyId', getCompany)
 router.param('companyId', setIsCompanyAlreadyAdded)
 router.param('companyId', setDoAnyListsExist)
-router.param('companyNumber', getCompaniesHouseRecord)
 
-router.get('/',
+router.get(urls.companies.index.route,
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   getRequestBody(QUERY_FIELDS),
   getCollection('company', ENTITIES, transformCompanyToListItem),
@@ -115,7 +115,7 @@ router
 router.get('/:companyId/advisers', renderAdvisers)
 
 router.get('/:companyId/hierarchies/ghq/search', getGlobalHQCompaniesCollection, renderAddGlobalHQ)
-router.get('/:companyId/hierarchies/ghq/:globalHqId/add', setGlobalHQ)
+router.get(urls.companies.hierarchies.ghq.add.route, setGlobalHQ)
 router.get('/:companyId/hierarchies/ghq/remove', removeGlobalHQ)
 
 router.get('/:companyId/hierarchies/subsidiaries/search', getSubsidiaryCompaniesCollection, renderLinkSubsidiary)
@@ -128,7 +128,7 @@ router.get('/:companyId/contacts',
   renderContacts
 )
 
-router.get('/:companyId/exports', renderExports)
+router.get(urls.companies.exports.route, renderExports)
 router.get('/:companyId/subsidiaries', renderSubsidiaries)
 router.get('/:companyId/subsidiaries/link', renderLinkSubsidiary)
 router.get('/:companyId/orders', renderOrders)

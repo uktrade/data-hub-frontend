@@ -1,5 +1,5 @@
 /* eslint camelcase: 0, prefer-promise-reject-errors: 0 */
-const config = require('../../../config')
+const config = require('../../config')
 const { authorisedRequest } = require('../../lib/authorised-request')
 
 function getDitCompany (token, id) {
@@ -25,10 +25,6 @@ function removeDitCompanyFromList (token, id) {
     method: 'DELETE',
     url: `${config.apiRoot}/v4/user/company-list/${id}`,
   })
-}
-
-function getCHCompany (token, id) {
-  return authorisedRequest(token, `${config.apiRoot}/v4/ch-company/${id}`)
 }
 
 function saveCompany (token, company) {
@@ -120,7 +116,6 @@ module.exports = {
   addDitCompanyToList,
   removeDitCompanyFromList,
   getDitCompanyFromList,
-  getCHCompany,
   archiveCompany,
   unarchiveCompany,
   updateCompany,

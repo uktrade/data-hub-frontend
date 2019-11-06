@@ -1,4 +1,4 @@
-const selectors = require('../../../../selectors')
+const { assertError } = require('../../support/assertions')
 
 describe('LEP Permission', () => {
   describe('orders', () => {
@@ -7,7 +7,8 @@ describe('LEP Permission', () => {
     })
 
     it('should prevent LEP users from accessing the page', () => {
-      cy.get(selectors.collection.error).should('contain', '403')
+      assertError('You don’t have permission to view this page')
+      assertError('403')
     })
   })
 
@@ -17,7 +18,8 @@ describe('LEP Permission', () => {
     })
 
     it('should prevent LEP users from accessing the page', () => {
-      cy.get(selectors.collection.error).should('contain', '403')
+      assertError('You don’t have permission to view this page')
+      assertError('403')
     })
   })
 
@@ -27,7 +29,8 @@ describe('LEP Permission', () => {
     })
 
     it('should prevent LEP users from accessing the page', () => {
-      cy.get(selectors.collection.error).should('contain', '403')
+      assertError('You don’t have permission to view this page')
+      assertError('403')
     })
   })
 
@@ -37,7 +40,43 @@ describe('LEP Permission', () => {
     })
 
     it('should prevent LEP users from accessing the page', () => {
-      cy.get(selectors.collection.error).should('contain', '403')
+      assertError('You don’t have permission to view this page')
+      assertError('403')
+    })
+  })
+
+  context('search', () => {
+    describe('interaction', () => {
+      before(() => {
+        cy.visit('/search/interactions', { failOnStatusCode: false })
+      })
+
+      it('should prevent LEP users from accessing the page', () => {
+        assertError('You don’t have permission to view this page')
+        assertError('403')
+      })
+    })
+
+    describe('event', () => {
+      before(() => {
+        cy.visit('/search/events', { failOnStatusCode: false })
+      })
+
+      it('should prevent LEP users from accessing the page', () => {
+        assertError('You don’t have permission to view this page')
+        assertError('403')
+      })
+    })
+
+    describe('omis', () => {
+      before(() => {
+        cy.visit('/search/omis', { failOnStatusCode: false })
+      })
+
+      it('should prevent LEP users from accessing the page', () => {
+        assertError('You don’t have permission to view this page')
+        assertError('403')
+      })
     })
   })
 
@@ -48,7 +87,8 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        cy.get(selectors.collection.error).should('contain', '403')
+        assertError('You don’t have permission to view this page')
+        assertError('403')
       })
     })
 
@@ -58,7 +98,8 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing an interaction they don\'t have access to', () => {
-        cy.get(selectors.collection.error).should('contain', '403')
+        assertError('You don’t have permission to view this page')
+        assertError('403')
       })
     })
 
@@ -68,7 +109,8 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing a team they don\'t have access to', () => {
-        cy.get(selectors.collection.error).should('contain', '403')
+        assertError('You don’t have permission to view this page')
+        assertError('403')
       })
     })
   })
@@ -80,7 +122,8 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        cy.get(selectors.collection.error).should('contain', '403')
+        assertError('You don’t have permission to view this page')
+        assertError('403')
       })
     })
 
@@ -90,7 +133,8 @@ describe('LEP Permission', () => {
       })
 
       it('should prevent LEP users from accessing the page', () => {
-        cy.get(selectors.collection.error).should('contain', '403')
+        assertError('You don’t have permission to view this page')
+        assertError('403')
       })
     })
   })

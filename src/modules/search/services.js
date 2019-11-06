@@ -1,7 +1,7 @@
 const queryString = require('qs')
 
 const { authorisedRequest, authorisedRawRequest } = require('../../lib/authorised-request')
-const config = require('../../../config')
+const config = require('../../config')
 
 const buildOptions = (
   isAggregation,

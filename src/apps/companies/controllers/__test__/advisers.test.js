@@ -1,6 +1,6 @@
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
 
-const config = require('~/config')
+const config = require('~/src/config')
 const companyMock = require('~/test/unit/data/companies/companies-house.json')
 const coreTeamMock = require('~/test/unit/data/companies/one-list-group-core-team.json')
 

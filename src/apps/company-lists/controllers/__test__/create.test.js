@@ -1,4 +1,4 @@
-const config = require('~/config')
+const config = require('~/src/config')
 const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder')
 const { createCompanyList, renderCreateListForm } = require('~/src/apps/company-lists/controllers/create')
 

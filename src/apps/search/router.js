@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const queryString = require('qs')
 
+const urls = require('../../lib/urls')
 const { ENTITIES } = require('./constants')
 const { handleRoutePermissions } = require('../middleware')
 const { renderSearchResults } = require('./controllers')
@@ -11,7 +12,7 @@ function redirectToCompaniesSearch (req, res) {
 
 router.use(handleRoutePermissions(ENTITIES))
 
-router.get('/', redirectToCompaniesSearch)
-router.get('/:searchPath?', renderSearchResults)
+router.get(urls.search.index.route, redirectToCompaniesSearch)
+router.get(urls.search.type.route, renderSearchResults)
 
 module.exports = router
