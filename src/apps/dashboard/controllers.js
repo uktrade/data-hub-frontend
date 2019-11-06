@@ -34,11 +34,8 @@ async function renderDashboard (req, res, next) {
       articleFeed = []
     }
 
-    const companyLists = userPermissions.includes('company_list.view_companylistitem') &&
-      await fetchCompanyLists(req.session.token)
-
     res.title('Dashboard').render('dashboard/views/dashboard', {
-      companyLists,
+      companyLists: await fetchCompanyLists(req.session.token),
       contacts,
       interactions,
       articleFeed,
