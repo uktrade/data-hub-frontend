@@ -5,7 +5,7 @@
     {{ EntitySearchForm({
       inputName: 'term',
       modifier: 'global',
-      action: '/search/companies',
+      action: urls.search.type('companies'),
       inputLabel: 'Search for company, contact, event, investment project or OMIS order'
     }) }}
   {% endcall %}
