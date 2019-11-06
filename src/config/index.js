@@ -128,6 +128,13 @@ const config = {
     apiFeed: process.env.HELP_CENTRE_API_FEED,
     token: process.env.HELP_CENTRE_FEED_API_TOKEN,
   },
+  companies: {
+    tierTypes: {
+      typeD: {
+        itaAccount: '1929c808-99b4-4abf-a891-45f2e187b410',
+      },
+    },
+  },
   greatProfileUrl: process.env.GREAT_PROFILE_URL,
 }
 
