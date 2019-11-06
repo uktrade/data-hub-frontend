@@ -58,7 +58,7 @@
               {% if isCurrentPage %}
                 {{ item.text }}
               {% else %}
-                <a class="c-entity-search__aggregations-link" href="/search/{{ item.path }}?term={{ props.searchTerm }}">{{ item.text }}</a>
+                <a class="c-entity-search__aggregations-link" href="{{ urls.search.type(item.path) }}?term={{ props.searchTerm }}">{{ item.text }}</a>
               {% endif %}
               <span class="c-entity-search__aggregations-count">({{ item.count | formatNumber }})</span>
             </li>

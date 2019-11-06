@@ -2,6 +2,7 @@ const nunjucks = require('nunjucks')
 const { assign, omit, isFunction, isArray, map } = require('lodash')
 const queryString = require('qs')
 const config = require('../')
+const urls = require('../../lib/urls')
 
 module.exports = {
   serviceTitle: 'Data Hub',
@@ -11,6 +12,7 @@ module.exports = {
   findExportersUrl: config.findExportersUrl,
 
   assign,
+  urls,
 
   callAsMacro (name) {
     const macro = this.ctx[name]
