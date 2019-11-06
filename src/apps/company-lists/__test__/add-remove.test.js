@@ -1,5 +1,5 @@
 const proxyquire = require('proxyquire')
-const config = require('../../../../config')
+const config = require('../../../config')
 const buildMiddlewareParameters = require('../../../../test/unit/helpers/middleware-parameters-builder')
 const { handleAddRemoveCompanyToList, renderAddRemoveForm } = require('../../../../src/apps/company-lists/controllers/add-remove')
 

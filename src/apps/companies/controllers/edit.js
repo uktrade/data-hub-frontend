@@ -1,9 +1,8 @@
 const { find, get, isEmpty } = require('lodash')
 
-const config = require('../../../../config')
+const config = require('../../../config')
 const {
   transformCompanyToView,
-  transformCompaniesHouseToView,
 } = require('../transformers')
 
 const { buildUkOtherCompanyOptions, buildForeignOtherCompanyOptions } = require('../options')
@@ -34,10 +33,6 @@ function isForeignCompany (req, res) {
 
 async function renderForm (req, res, next) {
   try {
-    if (res.locals.companiesHouseRecord) {
-      res.locals.chDetails = transformCompaniesHouseToView(res.locals.companiesHouseRecord)
-    }
-
     const businessType = get(res.locals, 'formData.business_type')
     const businessTypeLabel = await getBusinessTypeLabel(req.session.token, businessType)
     const isForeign = isForeignCompany(req, res)

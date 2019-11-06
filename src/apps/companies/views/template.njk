@@ -1,35 +1,16 @@
 {% extends "_layouts/template.njk" %}
 
+{% set action %}
+  <a href="/companies/{{ company.id }}/lists/add-remove"
+      class="govuk-button govuk-button--secondary">
+    Add to or remove from lists
+  </a>
+{% endset %}
+
 {% block local_header %}
-  {% set action %}
-    <form action="/companies/{{ company.id }}/manage-company-list?_csrf={{ csrfToken }}" method="post">
-      <input type="hidden" value="{{ company.id }}" />
-      {% if isCompanyAlreadyAdded %}
-        <button type="submit" name="action" value="remove" class="govuk-button govuk-button--secondary">
-          Remove from my list
-        </button>
-      {% else %}
-        {% if not company.archived %}
-          <button type="submit" name="action" value="add" class="govuk-button govuk-button--secondary">
-            Add to my list
-          </button>
-        {% endif %}
-      {% endif %}
-    </form>
-  {% endset %}
-  {% if features.companies_add_remove_from_lists %}
-    {% set action %}
-      {% if canViewCompanyList %}
-        <a href="/companies/{{ company.id }}/lists/add-remove"
-           class="govuk-button govuk-button--secondary">
-          Add to or remove from lists
-        </a>
-      {% endif %}
-    {% endset %}
-  {% endif %}
   {% call LocalHeader({
     heading: company.name,
-    actions: action,
+    actions: action if canViewCompanyList,
     modifier: 'light-banner',
     fullWidthContent: true
   }) %}

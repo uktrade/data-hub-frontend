@@ -3,7 +3,7 @@ const { pickBy } = require('lodash')
 
 const { getDataLabels } = require('../../../lib/controller-utils')
 const { businessHierarchyLabels, hqLabels } = require('../labels')
-const { pluralise } = require('../../../../config/nunjucks/filters')
+const { pluralise } = require('../../../config/nunjucks/filters')
 const { NONE_TEXT } = require('../constants')
 
 const transformHeadquarterType = (headquarter_type) => {

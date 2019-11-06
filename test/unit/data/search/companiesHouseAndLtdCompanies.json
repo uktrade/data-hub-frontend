@@ -2,10 +2,6 @@
   "count": 3,
   "results": [
     {
-      "companies_house_data": {
-        "id": "170494",
-        "company_number": "08311441"
-      },
       "business_type": {
         "id": "6f75408b-03e7-e611-bca1-e4115bead28a",
         "name": "Private limited company"

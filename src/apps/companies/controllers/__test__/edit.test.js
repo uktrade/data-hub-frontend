@@ -1,7 +1,7 @@
 const { assign } = require('lodash')
 
 const companyMock = require('~/test/unit/data/companies/company-v4.json')
-const config = require('~/config')
+const config = require('~/src/config')
 
 const metaDataMock = {
   businessTypeOptions: [

@@ -1,7 +1,7 @@
 const { addMinutes, isAfter } = require('date-fns')
 const moment = require('moment')
 
-const { mediumDateTimeFormat } = require('../../../config')
+const { mediumDateTimeFormat } = require('../../../src/config')
 
 module.exports = {
   isEuropeanOrGlobalHeadquartersFormatter (expected, actual) {

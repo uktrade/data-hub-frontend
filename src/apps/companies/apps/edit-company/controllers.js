@@ -2,7 +2,7 @@
 
 const { get } = require('lodash')
 
-const config = require('../../../../../config')
+const config = require('../../../../config')
 const { transformCompanyToForm, transformFormToCompany } = require('./transformers')
 const { updateCompany } = require('../../repos')
 const { getHeadquarterOptions } = require('./repos')

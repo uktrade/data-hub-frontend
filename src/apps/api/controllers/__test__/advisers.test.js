@@ -1,6 +1,6 @@
 const { assign } = require('lodash')
 
-const config = require('~/config')
+const config = require('~/src/config')
 const { getAdviserOptionsHandler } = require('~/src/apps/api/controllers/advisers')
 
 describe('Adviser options API controller', () => {

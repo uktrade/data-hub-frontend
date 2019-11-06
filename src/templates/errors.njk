@@ -27,7 +27,7 @@
     <h3 class="heading-medium">{{ statusCode }}</h3>
     <dl class="stack-trace">
       <dt class="stack-trace__heading">{{ error.message }}</dt>
-      <dd class="stack-trace__details">{{ error.stack }}</dd>
+      <dd class="stack-trace__details"><pre>{{ error.stack }}</pre></dd>
     </dl>
   {% endif %}
 {% endblock %}

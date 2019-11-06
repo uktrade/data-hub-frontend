@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 const { camelCase, pickBy, get } = require('lodash')
 
-const config = require('../../../../config')
+const config = require('../../../config')
 const labels = require('../labels')
 const { getDataLabels } = require('../../../lib/controller-utils')
 

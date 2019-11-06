@@ -1,7 +1,7 @@
 const { assign, map, sortBy, compact, get } = require('lodash')
 
 const labels = require('./labels')
-const logger = require('../../../config/logger')
+const logger = require('../../config/logger')
 
 const allLabels = assign(
   {},

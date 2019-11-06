@@ -1,5 +1,5 @@
 const { authorisedRequest } = require('../../lib/authorised-request')
-const config = require('../../../config')
+const config = require('../../config')
 
 function mapContacts (contacts) {
   if (contacts && (typeof contacts.map) === 'function') {

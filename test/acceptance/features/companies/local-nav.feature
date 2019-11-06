@@ -14,14 +14,3 @@ Feature: Companies local nav
       | Export                    |
       | Orders                    |
 
-  @companies-local-nav--da @da
-  Scenario: Companies local nav as DA
-
-    When I navigate to the `companies.fixture` page using `company` `One List Corp` fixture
-    Then there should be a tabbed local nav
-      | text                      |
-      | Company contacts          |
-      | Core team                 |
-      | Investment                |
-      | Export                    |
-      | Orders                    |

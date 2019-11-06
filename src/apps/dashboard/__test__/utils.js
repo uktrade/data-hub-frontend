@@ -1,11 +1,11 @@
 const nock = require('nock')
-const config = require('../../../../config')
+const config = require('../../../config')
 
 const companyListItemRegexp = /\/v4\/company-list\/([^/]+)\/item/
 
 /**
  * @function mockCompanyListsServer
- * @description Mocks the API (leeloo) end points needed to display the user's
+ * @description Mocks the API end points needed to display the user's
  * list of company lists. The mocked endpoints are: `/v4/company-list` and
  * `/v4/company-list/<list-id>/item`.
  * @param {Object} options

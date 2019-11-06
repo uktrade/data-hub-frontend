@@ -2,7 +2,7 @@ describe('buildIncompleteFormList', () => {
   beforeEach(() => {
     this.loggerSpy = sinon.spy()
     this.helpers = proxyquire('~/src/apps/investments/helpers', {
-      '../../../config/logger': {
+      '../../config/logger': {
         error: this.loggerSpy,
       },
     })

@@ -1,14 +1,12 @@
 /* eslint prefer-promise-reject-errors: 0 */
 const companyData = require('~/test/unit/data/company.json')
 const companyV4Data = require('~/test/unit/data/companies/company-v4.json')
-const companyCHData = require('~/test/unit/data/companies/companies-house-company.json')
 const myCompanyListData = require('~/test/unit/data/companies/my-company-list.json')
 
-const config = require('~/config')
+const config = require('~/src/config')
 
 const {
   getDitCompany,
-  getCHCompany,
   saveDnbCompany,
   saveDnbCompanyInvestigation,
 } = require('~/src/apps/companies/repos.js')
@@ -78,19 +76,6 @@ describe('Company repository', () => {
     it('should return company', async () => {
       const company = await getDitCompany('TEST_TOKEN', companyV4Data.id)
       expect(company).to.deep.equal(companyV4Data)
-    })
-  })
-
-  describe('#getCHCompany', () => {
-    beforeEach(async () => {
-      nock(config.apiRoot)
-        .get(`/v4/ch-company/${companyCHData.id}`)
-        .reply(200, companyCHData)
-    })
-
-    it('should return company', async () => {
-      const company = await getCHCompany('TEST_TOKEN', companyCHData.id)
-      expect(company).to.deep.equal(companyCHData)
     })
   })
 

@@ -1,12 +1,12 @@
 const { get } = require('lodash')
 const Redis = require('redis')
-const config = require('../../../config')
+const config = require('../../config')
 const { authorisedRequest } = require('../../lib/authorised-request')
 
 let client, redisAsync
 if (!config.isTest) {
   const { promisify } = require('util')
-  const { getRedisConfig } = require('../../../config/redis-store')
+  const { getRedisConfig } = require('../../config/redis-store')
 
   client = Redis.createClient({ ...getRedisConfig(), url: config.redis.url })
   redisAsync = promisify(client.get).bind(client)

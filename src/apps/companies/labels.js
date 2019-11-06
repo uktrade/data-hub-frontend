@@ -26,15 +26,6 @@ const companyDetailsLabels = {
   vat_number: 'VAT number',
   reference_code: 'CDMS reference',
 }
-const chDetailsLabels = {
-  name: 'Registered name',
-  company_number: 'Companies House No',
-  registered_address: 'Registered office address',
-  business_type: 'Company type',
-  company_status: 'Company status',
-  incorporation_date: 'Incorporated on',
-  sic_code: 'Nature of business (SIC)',
-}
 
 const address = {
   companyAddress: 'Address',
@@ -64,6 +55,7 @@ const exportDetailsLabels = {
   exportExperienceCategory: 'Export win category',
   exportToCountries: 'Currently exporting to',
   futureInterestCountries: 'Future countries of interest',
+  greatProfile: 'great.gov.uk business profile',
   exportPotential: 'Export potential',
 }
 
@@ -119,7 +111,6 @@ const exportPotentialLabels = {
 
 module.exports = {
   companyDetailsLabels,
-  chDetailsLabels,
   companyTypeOptions,
   hqLabels,
   accountManagementDisplayLabels,

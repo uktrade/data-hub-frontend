@@ -1,5 +1,5 @@
 const { authorisedRequest } = require('../../lib/authorised-request')
-const config = require('../../../config')
+const config = require('../../config')
 
 const { buildPagination } = require('../../lib/pagination')
 const { transformInvestmentProjectToListItem } = require('../investments/transformers')

@@ -13,7 +13,7 @@ const {
 } = require('lodash')
 const dateFns = require('date-fns')
 
-const { longDateFormat } = require('../../../../config')
+const { longDateFormat } = require('../../../config')
 const FormController = require('./form')
 const { Order } = require('../models')
 

@@ -1,6 +1,6 @@
 const contactsListData = require('~/test/unit/data/contacts/contact.json')
 const { transformContactToListItem } = require('~/src/apps/contacts/transformers')
-const config = require('~/config')
+const config = require('~/src/config')
 
 describe('Contact list controller', () => {
   let next

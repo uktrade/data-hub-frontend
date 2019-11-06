@@ -1,7 +1,7 @@
 /* eslint handle-callback-err: 0 */
 const moment = require('moment')
 
-const config = require('~/config')
+const config = require('~/src/config')
 const { render } = require('~/test/unit/nunjucks')
 const { expectField, expectRadioField, expectHiddenField } = require('~/test/unit/form-helpers')
 const contactLabels = require('~/src/apps/contacts/labels')

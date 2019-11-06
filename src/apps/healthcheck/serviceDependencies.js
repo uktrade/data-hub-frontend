@@ -1,10 +1,10 @@
 const axios = require('axios')
-const config = require('../../../config')
-const { redisStore } = require('../../../config/redis-store')
+const config = require('../../config')
+const { redisStore } = require('../../config/redis-store')
 
 module.exports = [
   {
-    name: 'leeloo',
+    name: 'api',
     healthCheck: () => axios.get(`${config.apiRoot}/ping.xml`),
   },
   {
