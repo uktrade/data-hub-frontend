@@ -32,7 +32,8 @@ async function renderDashboard (req, res, next) {
     }
 
     res.title('Dashboard').render('dashboard/views/dashboard', {
-      companyLists: await fetchCompanyLists(req.session.token),
+      companyLists: userPermissions.includes('company_list.view_companylist') &&
+        await fetchCompanyLists(req.session.token),
       articleFeed,
       interactionsPermitted: isPermittedRoute(
         '/interactions',

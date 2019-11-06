@@ -70,6 +70,22 @@ const expectedCompanyLists = [
   },
 ]
 
+const canSeeCompanyListsRequest = {
+  locals: {
+    user: {
+      permissions: ['company_list.view_companylist'],
+    },
+  },
+}
+
+const cannotSeeCompanyListsRequest = {
+  locals: {
+    user: {
+      permissions: [],
+    },
+  },
+}
+
 describe('dashboard controller', () => {
   beforeEach(() => {
     global.reqMock = Object.assign({}, globalReq, {
@@ -79,6 +95,7 @@ describe('dashboard controller', () => {
     })
 
     global.resMock = {
+      ...canSeeCompanyListsRequest,
       render: sinon.spy(),
       title: sinon.stub().returnsThis(),
     }
@@ -161,6 +178,7 @@ describe('dashboard controller', () => {
     // TODO: Before each is useless here as we only have one test case.
     beforeEach(async () => {
       global.resMock = {
+        ...canSeeCompanyListsRequest,
         render: sinon.spy(),
         title: sinon.stub().returnsThis(),
       }
@@ -193,6 +211,7 @@ describe('dashboard controller', () => {
     // TODO: Before each is useless here as we only have one test case.
     beforeEach(async () => {
       global.resMock = {
+        ...canSeeCompanyListsRequest,
         render: sinon.spy(),
         title: sinon.stub().returnsThis(),
       }
@@ -218,6 +237,29 @@ describe('dashboard controller', () => {
         },
       }
       expect(global.resMock.render.firstCall.args[1]).to.deep.equal(expected)
+    })
+  })
+
+  context("when the user doesn't have the right permission", () => {
+    beforeEach(async () => {
+      global.resMock = {
+        ...cannotSeeCompanyListsRequest,
+        render: sinon.spy(),
+        title: sinon.stub().returnsThis(),
+      }
+      global.fetchHomepageDataStub.resolves(global.dashData)
+
+      withPopulatedCompanyLists()
+      await global.controllers.renderDashboard(
+        global.reqMock,
+        global.resMock,
+        global.nextSpy
+      )
+    })
+
+    it('company lists should not be rendered', () => {
+      expect(global.resMock.render.firstCall.args[1].companyLists)
+        .to.not.be.ok
     })
   })
 })
