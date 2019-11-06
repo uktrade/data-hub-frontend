@@ -86,6 +86,7 @@ describe('Edit company form transformers', () => {
         const actual = transformCompanyToForm(companiesHouseCompany)
         const expected = {
           'id': 15387806,
+          'one_list_group_tier': null,
           'company_number': '99919',
           'registered_address': {
             'line_1': '64 Ermin Street',
