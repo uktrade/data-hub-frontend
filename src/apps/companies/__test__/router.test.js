@@ -6,7 +6,6 @@ describe('Company router', () => {
     expect(paths).to.deep.equal([ '/',
       '/export',
       '/:companyId/exports/edit',
-      '/:companyId/edit-old',
       '/:companyId/archive',
       '/:companyId/unarchive',
       '/:companyId',
