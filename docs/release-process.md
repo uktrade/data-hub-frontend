@@ -10,7 +10,7 @@
 7. Push the tag up to GitHub - `git push origin v5.40.0`
 8. Go to the repo on [GitHub](https://github.com/uktrade/data-hub-frontend) and you should see a ‘New pull request’ button. Click it.
 9. At the top of the screen you’ll see a compare box. Compare your branch to `master` to see what changes you’ll be merging. This not only shows you what has changed in comparison to `master`, but will actually merge it to `master` too, rather than `develop` as per normal PRs.
-10. Write release notes based on what has changed. This should be understandable for humans who aren’t developers. The format is generally 3 sections - features, bugs, technical. Check a previous release for inspiration.
+10. Write release notes based on what has changed. This should be understandable for humans who aren’t developers. The format is generally 3 sections - features, bugs, technical. Check a previous release for inspiration. You can also look at what's previosuly been [merged](https://github.com/uktrade/data-hub-frontend/pulls?utf8=%E2%9C%93&q=is%3Apr+merged%3A%3E%3D2019-11-06) since the last release by adjusting the dates within the URL accordingly.
 11. Click 'Create pull request'.
 12. Once created you’ll need someone else to review the release pull request. So, add a reviewer on the right hand side of the page and/or ask for someone to look at it in the #data-hub-fed-dev slack channel
 13. Once it’s approved and providing all the tests have passed, go ahead and merge your release (this will automatically delete the branch too).
