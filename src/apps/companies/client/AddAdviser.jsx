@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Button, H3, Details, UnorderedList, Link, ListItem } from 'govuk-react'
 
-const StyledButtonContainer = styled('div')({
+const StyledForm = styled('form')({
   display: 'flex',
   alignItems: 'baseline',
   '> *': {
@@ -10,7 +10,7 @@ const StyledButtonContainer = styled('div')({
   },
 })
 
-const AddAdviser = () =>
+const AddAdviser = ({ csrfToken }) =>
   <div>
     <H3>Do you want to add yourself as the first point of contact?</H3>
     <Details summary="How do I add someone else as the lead ITA?">
@@ -31,10 +31,11 @@ const AddAdviser = () =>
         Other ITAs will be able to replace you as the Lead ITA for the company
       </ListItem>
     </UnorderedList>
-    <StyledButtonContainer>
+    <StyledForm method="POST">
+      <input type="hidden" name="_csrf" value={csrfToken}/>
       <Button>Add myself as Lead ITA</Button>
-      <Link href="#">Cancel</Link>
-    </StyledButtonContainer>
+      <Link href="..">Cancel</Link>
+    </StyledForm>
   </div>
 
 export default AddAdviser

@@ -68,15 +68,31 @@ async function renderAdvisers (req, res, next) {
     : await renderCoreTeamAdvisers(req, res, next)
 }
 
-function addAdviser (req, res, next) {
-  const { company } = res.locals
+function addAdviserForm (req, res) {
+  const { company, csrfToken } = res.locals
   res
     .breadcrumb(company.name, `/companies/${company.id}`)
     .breadcrumb('Confirm you are the Lead ITA')
-    .render('companies/views/add-adviser.njk')
+    .render('companies/views/add-adviser.njk', {
+      props: { csrfToken },
+    })
+}
+
+async function addAdviser (req, res, next) {
+  const { company, user } = res.locals
+  const nextUrl = '/companies/' + company.id
+  try {
+    // TODO: Call the endpoint here
+    console.log('ADDING ADVISER', user.id, company.id)
+    req.flash('success', 'Adviser added')
+    res.redirect(nextUrl)
+  } catch (error) {
+    next(error)
+  }
 }
 
 module.exports = {
   renderAdvisers,
   addAdviser,
+  addAdviserForm,
 }
