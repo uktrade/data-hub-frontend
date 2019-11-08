@@ -1,5 +1,4 @@
-const fieldsetSelector = '.js-last-interaction-filter'
-const checkboxesSelector = (fieldsetSelector + ' input')
+const checkboxesSelector = '.js-last-interaction-filter input'
 
 /*
   This feature is experimental to allow us to get feedback, so this is not the final version of this filter.
@@ -24,28 +23,27 @@ const LastInteractionFilter = {
   checkSelections () {
     let firstCheckedIndex
     let lastCheckedIndex
-    let i
     let l = this.checkboxes.length
 
     if (this.getCheckedCount() <= 1) {
       return // nothing to do if we have one or less checkboxes checked
     }
 
-    for (i = 0; i < l; i++) {
+    for (let i = 0; i < l; i++) {
       if (this.checkboxes[i].checked) {
         firstCheckedIndex = i
         break
       }
     }
 
-    for (i = (l - 1); i >= 0; i--) {
+    for (let i = (l - 1); i >= 0; i--) {
       if (this.checkboxes[i].checked) {
         lastCheckedIndex = i
         break
       }
     }
 
-    for (i = 0; i < l; i++) {
+    for (let i = 0; i < l; i++) {
       const checkbox = this.checkboxes[i]
       const autoCheck = (i > firstCheckedIndex && i < lastCheckedIndex)
 
