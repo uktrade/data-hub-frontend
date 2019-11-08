@@ -1,3 +1,6 @@
+const nock = require('nock')
+const config = require('../../../config')
+
 var rpErrors = require('request-promise/errors')
 const { mockCompanyListsServer } = require('./utils')
 
@@ -99,7 +102,6 @@ describe('dashboard controller', () => {
 
     global.nextSpy = sinon.spy()
 
-    global.fetchHomepageDataStub = sinon.stub()
     global.formatHelpCentreAnnouncementsStub = sinon.stub()
     global.rpStub = sinon.stub()
     global.helpCentre = {
@@ -108,23 +110,7 @@ describe('dashboard controller', () => {
       token: '1',
     }
 
-    global.dashData = {
-      contacts: [
-        {
-          id: '1234',
-        },
-      ],
-      interactions: [
-        {
-          id: '4321',
-        },
-      ],
-    }
-
     global.controllers = proxyquire('~/src/apps/dashboard/controllers', {
-      './repos': {
-        fetchHomepageData: global.fetchHomepageDataStub,
-      },
       '../../config': {
         helpCentre: global.helpCentre,
       },
@@ -136,7 +122,6 @@ describe('dashboard controller', () => {
   })
   context('when there are no errors calling the API', () => {
     beforeEach(async () => {
-      global.fetchHomepageDataStub.resolves(global.dashData)
       global.rpStub.resolves([])
 
       withPopulatedCompanyLists()
@@ -150,18 +135,6 @@ describe('dashboard controller', () => {
     it('should render the dashboard template', () => {
       expect(global.resMock.render).to.be.calledWith('dashboard/views/dashboard')
       expect(global.formatHelpCentreAnnouncementsStub).to.be.called
-    })
-
-    it('should render the page with contacts', () => {
-      const renderOptions = global.resMock.render.firstCall.args[1]
-      expect(renderOptions.contacts).to.deep.equal(global.dashData.contacts)
-    })
-
-    it('should render the page with interactions', () => {
-      const renderOptions = global.resMock.render.firstCall.args[1]
-      expect(renderOptions.interactions).to.deep.equal(
-        global.dashData.interactions
-      )
     })
 
     it('should not call next', () => {
@@ -178,12 +151,12 @@ describe('dashboard controller', () => {
     })
   })
 
-  context('when there is a problem calling the API', () => {
+  context('when there is a problem fetching company lists from the API', () => {
     beforeEach(async () => {
-      global.error = { status: 500 }
-      global.fetchHomepageDataStub.rejects(global.error)
+      nock(config.apiRoot)
+        .get('/v4/company-list')
+        .reply(500)
 
-      withPopulatedCompanyLists()
       await global.controllers.renderDashboard(
         global.reqMock,
         global.resMock,
@@ -192,7 +165,8 @@ describe('dashboard controller', () => {
     })
 
     it('should show an error', () => {
-      expect(global.nextSpy).to.have.been.calledWith(global.error)
+      expect(global.nextSpy).to.have.been.called
+      expect(global.nextSpy.firstCall.args[0]).to.be.instanceof(rpErrors.StatusCodeError)
     })
 
     it('should not render the page', () => {
@@ -208,7 +182,6 @@ describe('dashboard controller', () => {
         render: sinon.spy(),
         title: sinon.stub().returnsThis(),
       }
-      global.fetchHomepageDataStub.resolves(global.dashData)
       global.rpStub.rejects()
 
       withPopulatedCompanyLists()
@@ -222,8 +195,6 @@ describe('dashboard controller', () => {
     it('should return an empty array', () => {
       const expected = {
         companyLists: expectedCompanyLists,
-        contacts: [{ id: '1234' }],
-        interactions: [{ id: '4321' }],
         articleFeed: [],
         interactionsPermitted: false,
         helpCentre: {
@@ -244,7 +215,6 @@ describe('dashboard controller', () => {
         render: sinon.spy(),
         title: sinon.stub().returnsThis(),
       }
-      global.fetchHomepageDataStub.resolves(global.dashData)
       global.rpStub.throws(rpErrors.StatusCodeError(500))
 
       withPopulatedCompanyLists()
@@ -258,8 +228,6 @@ describe('dashboard controller', () => {
     it('should return an empty array', () => {
       const expected = {
         companyLists: expectedCompanyLists,
-        contacts: [{ id: '1234' }],
-        interactions: [{ id: '4321' }],
         articleFeed: [],
         interactionsPermitted: false,
         helpCentre: {
@@ -279,7 +247,6 @@ describe('dashboard controller', () => {
         render: sinon.spy(),
         title: sinon.stub().returnsThis(),
       }
-      global.fetchHomepageDataStub.resolves(global.dashData)
 
       withPopulatedCompanyLists()
       await global.controllers.renderDashboard(
