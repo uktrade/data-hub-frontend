@@ -68,6 +68,15 @@ async function renderAdvisers (req, res, next) {
     : await renderCoreTeamAdvisers(req, res, next)
 }
 
+function addAdviser (req, res, next) {
+  const { company } = res.locals
+  res
+    .breadcrumb(company.name, `/companies/${company.id}`)
+    .breadcrumb('Confirm you are the Lead ITA')
+    .render('companies/views/add-adviser.njk')
+}
+
 module.exports = {
   renderAdvisers,
+  addAdviser,
 }

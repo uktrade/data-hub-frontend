@@ -21,6 +21,7 @@ const { renderDocuments } = require('./controllers/documents')
 const { renderAddGlobalHQ } = require('./controllers/hierarchies')
 const { renderSubsidiaries } = require('./controllers/subsidiaries')
 const { renderLinkSubsidiary } = require('./controllers/subsidiary-link')
+const { addAdviser } = require('./controllers/advisers')
 
 const {
   renderExports,
@@ -85,6 +86,7 @@ router.get('/export',
 router.use('/create', addCompanyFormRouter)
 router.use('/:companyId/lists', companyListsRouter)
 router.use('/:companyId/edit', editCompanyFormRouter)
+router.use('/:companyId/advisers/add', addAdviser)
 
 router
   .route('/:companyId/exports/edit')
