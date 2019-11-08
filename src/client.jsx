@@ -11,6 +11,7 @@ import AddRemoveFromListSection from './apps/company-lists/client/AddRemoveFromL
 import DnbSubsidiaries from './apps/companies/apps/dnb-subsidiaries/client/DnbSubsidiaries'
 import LeadAdvisers from './apps/companies/apps/advisers/client/LeadAdvisers'
 import LargeCapitalProfileCollection from './apps/investments/client/LargeCapitalProfileCollection'
+import AddAdviser from './apps/companies/client/AddAdviser'
 
 const appWrapper = document.getElementById('react-app')
 
@@ -60,6 +61,7 @@ function App () {
       <Mount selector="#large-capital-profile-collection">
         {props => <LargeCapitalProfileCollection {...props} />}
       </Mount>
+      <Mount selector="#lead-ita-add-myself" children={AddAdviser} />
     </>
   )
 }
