@@ -106,6 +106,7 @@
     "history": "^4.7.2",
     "hmpo-form-wizard": "^9.9.0",
     "html5shiv": "^3.7.3",
+    "http-proxy-middleware": "^0.20.0",
     "image-webpack-loader": "^4.0.0",
     "lodash": "^4.17.13",
     "markdown-it": "^8.4.0",
