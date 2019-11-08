@@ -37,3 +37,42 @@ or
 #### Running a specific spec
 
 `$ npm run test:e2e -- --spec test/end-to-end/cypress/specs/LEP/permission-spec.js`
+
+
+## Visual Testing
+
+The aim of this suite is taking screenshots from pages and comparing to baselines
+to ensure consistency between builds.
+
+### Folder structure
+
+Screenshots will be stored in the root of the project. We commit the baselines and ignore the comparison diff images. If we need to update the baseline screenshot we need to delete the old baseline and rerun the test (it will then copy the new screenshot saved in comparison folder into the baseline folder)
+
+```
+- visual-screenshots
+  - baseline
+  - comparison
+  - diff
+```
+
+### Browserstack environment variables
+
+to run in browserstack, ensure you have the following environment variables set:
+
+```
+export BROWSERSTACK_USERNAME=xxx
+export BROWSERSTACK_ACCESS_KEY=xxx
+export IS_REMOTE=true
+```
+### Running the tests
+After setting up the environment variables, run the following command to execute the tests:
+
+`$ yarn test:visual`
+
+### Updating the baseline image
+
+Updating the baseline consists in 2 steps:
+
+- 1:. Run the visual tests on your machine, if the baseline is no longer the correct representation of the page in test then execute step #2:
+
+- 2:. Run `wdio-image-diff -u` this will copy the comparison images over to the baseline folder, updating any baseline image that is no longer valid.

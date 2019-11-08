@@ -10,6 +10,7 @@ import CreateListFormSection from './apps/company-lists/client/CreateListFormSec
 import AddRemoveFromListSection from './apps/company-lists/client/AddRemoveFromListSection'
 import BusinessDetailsRegionEdit from './apps/companies/client/BusinessDetailsRegionEdit'
 import BusinessDetailsSectorEdit from './apps/companies/client/BusinessDetailsSectorEdit'
+import LeadAdvisers from './apps/companies/client/LeadAdvisers'
 
 const appWrapper = document.getElementById('react-app')
 
@@ -55,6 +56,9 @@ function App () {
       </Mount>
       <Mount selector="#business-details-sector-edit">
         {props => <BusinessDetailsSectorEdit {...props} />}
+      </Mount>
+      <Mount selector="#lead-advisers">
+        {props => <LeadAdvisers {...props} />}
       </Mount>
     </>
   )
