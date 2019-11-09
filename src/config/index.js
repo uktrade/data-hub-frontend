@@ -1,3 +1,4 @@
+const { ACTIVITY_TYPE } = require('../apps/companies/constants')
 const path = require('path')
 
 const isDev = process.env.NODE_ENV !== 'production'
@@ -115,12 +116,14 @@ const config = {
   },
   activityFeed: {
     paginationSize: 20,
-    supportedActivityTypes: [
-      'dit:Interaction',
-      'dit:ServiceDelivery',
-      'dit:InvestmentProject',
-      'dit:OMISOrder',
-    ],
+    supportedActivityTypes: [].concat(
+      ...[
+        ACTIVITY_TYPE.Interaction,
+        ACTIVITY_TYPE.InvestmentProject,
+        ACTIVITY_TYPE.Omis,
+      ]
+    ),
+
   },
   helpCentre: {
     url: process.env.HELP_CENTRE_URL,

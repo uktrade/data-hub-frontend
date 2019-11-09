@@ -1,6 +1,8 @@
 const config = require('~/src/config')
 const activityFeedRawFixture = require('~/test/unit/data/activity-feed/activity-feed-from-es')
 
+const { ACTIVITY_TYPE_FILTER_KEYS, ACTIVITY_TYPE_FILTER_OBJECT } = require('../../../constants')
+
 const token = 'abcd'
 
 describe('Activity feed repos', () => {
@@ -14,22 +16,27 @@ describe('Activity feed repos', () => {
   describe('#fetchActivityFeed', () => {
     context('when called with companyId', () => {
       beforeEach(async () => {
-        this.results = await this.repos.fetchActivityFeed({ token, from: 1, size: 21, companyId: '123' })
+        this.results = await this.repos.fetchActivityFeed(
+          { token,
+            from: 1,
+            size: 21,
+            filter: {
+              terms: {
+                [ACTIVITY_TYPE_FILTER_OBJECT.TYPE]: ACTIVITY_TYPE_FILTER_KEYS.dataHubActivity.value,
+              },
+            },
+            companyId: '123',
+          })
       })
 
-      it('should make a request without company ID in the request body', () => {
+      it('should make a request with company ID in the request body', () => {
         const expectedBody = {
           from: 1,
           query: {
             bool: {
               filter: [
-                { term: { 'object.attributedTo.id': 'dit:DataHubCompany:123' } },
-                { terms: { 'object.type': [
-                  'dit:Interaction',
-                  'dit:ServiceDelivery',
-                  'dit:InvestmentProject',
-                  'dit:OMISOrder',
-                ] } },
+                { term: { [ACTIVITY_TYPE_FILTER_OBJECT.ATTRIBUTED_TO_ID]: 'dit:DataHubCompany:123' } },
+                { terms: { [ACTIVITY_TYPE_FILTER_OBJECT.TYPE]: ACTIVITY_TYPE_FILTER_KEYS.dataHubActivity.value } },
               ],
             },
           },
@@ -49,7 +56,16 @@ describe('Activity feed repos', () => {
 
     context('when called without companyId', () => {
       beforeEach(async () => {
-        this.results = await this.repos.fetchActivityFeed({ token, from: 0, size: 20 })
+        this.results = await this.repos.fetchActivityFeed(
+          { token,
+            from: 0,
+            size: 20,
+            filter: {
+              terms: {
+                [ACTIVITY_TYPE_FILTER_OBJECT.TYPE]: ACTIVITY_TYPE_FILTER_KEYS.dataHubActivity.value,
+              },
+            },
+          })
       })
 
       it('should make a request without company ID in the request body', () => {
@@ -60,13 +76,8 @@ describe('Activity feed repos', () => {
           query: {
             bool: {
               filter: [
-                { term: { 'object.attributedTo.id': 'dit:DataHubCompany:undefined' } },
-                { terms: { 'object.type': [
-                  'dit:Interaction',
-                  'dit:ServiceDelivery',
-                  'dit:InvestmentProject',
-                  'dit:OMISOrder',
-                ] } },
+                { term: { [ACTIVITY_TYPE_FILTER_OBJECT.ATTRIBUTED_TO_ID]: 'dit:DataHubCompany:undefined' } },
+                { terms: { [ACTIVITY_TYPE_FILTER_OBJECT.TYPE]: ACTIVITY_TYPE_FILTER_KEYS.dataHubActivity.value } },
               ],
             },
           },
@@ -82,12 +93,22 @@ describe('Activity feed repos', () => {
       })
     })
 
-    context('when called without any params', () => {
+    context('when multiple filter items are applied', () => {
       beforeEach(async () => {
-        this.results = await this.repos.fetchActivityFeed({})
+        this.results = await this.repos.fetchActivityFeed(
+          { token,
+            from: 0,
+            size: 20,
+            filter: [
+              { terms: {
+                [ACTIVITY_TYPE_FILTER_OBJECT.TYPE]: ACTIVITY_TYPE_FILTER_KEYS.dataHubActivity.value,
+              } },
+              { term: { [ACTIVITY_TYPE_FILTER_OBJECT.ATTRIBUTED_TO_ID]: 'dit:randomPrefix:stuff' } },
+            ],
+          })
       })
 
-      it('should make a request with default params', async () => {
+      it('should make a request with multiple filters in the request body', () => {
         const expectedBody = {
           from: 0,
           size: 20,
@@ -95,18 +116,14 @@ describe('Activity feed repos', () => {
           query: {
             bool: {
               filter: [
-                { term: { 'object.attributedTo.id': 'dit:DataHubCompany:undefined' } },
-                { terms: { 'object.type': [
-                  'dit:Interaction',
-                  'dit:ServiceDelivery',
-                  'dit:InvestmentProject',
-                  'dit:OMISOrder',
-                ] } },
+                { term: { [ACTIVITY_TYPE_FILTER_OBJECT.ATTRIBUTED_TO_ID]: 'dit:DataHubCompany:undefined' } },
+                { terms: { [ACTIVITY_TYPE_FILTER_OBJECT.TYPE]: ACTIVITY_TYPE_FILTER_KEYS.dataHubActivity.value } },
+                { term: { 'object.attributedTo.id': 'dit:randomPrefix:stuff' } },
               ],
             },
           },
         }
-        expect(this.authorisedRequestStub).to.be.calledOnceWith(undefined, {
+        expect(this.authorisedRequestStub).to.be.calledOnceWith(token, {
           body: expectedBody,
           url: `${config.apiRoot}/v4/activity-feed`,
         })
