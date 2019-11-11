@@ -1,6 +1,8 @@
 const axios = require('axios')
 const config = require('../../config')
-const { redisStore } = require('../../config/redis-store')
+const redisClient = require('../../lib/redis-client')
+
+const client = redisClient.get()
 
 module.exports = [
   {
@@ -11,7 +13,7 @@ module.exports = [
     name: 'redis',
     healthCheck: () => {
       return new Promise((resolve, reject) => {
-        redisStore.client.ping('OK', (err, result) => {
+        client.ping('OK', (err, result) => {
           if (err) {
             return reject(err)
           }
