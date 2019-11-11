@@ -1,6 +1,7 @@
 exports.collection = require('./collection')
 exports.companyAdd = require('./company/add-company')
 exports.companyActivity = require('./company/activity')
+exports.companyAudit = require('./company/audit')
 exports.companyBusinessDetailsRegion = require('./company/business-details-region')
 exports.companyBusinessDetailsSector = require('./company/business-details-sector')
 exports.companyBusinessDetails = require('./company/business-details')
