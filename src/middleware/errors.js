@@ -1,6 +1,13 @@
 const config = require('../config')
 const logger = require('../config/logger')
 
+class NotFoundError extends Error {
+  constructor () {
+    super('Not Found')
+    this.statusCode = 404
+  }
+}
+
 function getStatusMessage (error) {
   if (error.code === 'EBADCSRFTOKEN') {
     return 'This form has been tampered with'
@@ -18,10 +25,7 @@ function getStatusMessage (error) {
 }
 
 function notFound (req, res, next) {
-  const error = new Error('Not Found')
-  error.statusCode = 404
-
-  next(error)
+  next(new NotFoundError())
 }
 
 function catchAll (error, req, res, next) {
@@ -46,5 +50,6 @@ function catchAll (error, req, res, next) {
 
 module.exports = {
   notFound,
+  NotFoundError,
   catchAll,
 }
