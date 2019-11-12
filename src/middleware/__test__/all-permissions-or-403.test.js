@@ -1,40 +1,41 @@
 const sinon = require('sinon')
-const allFeaturesOr404 = require('../all-features-or-404')
+const allPermissionsOr403 = require('../all-permissions-or-403')
 
-const NOT_FOUND_ERROR = 'not found error'
+const NOT_AUTHORIZED = 'not authorized error'
 const NO_ARGUMENTS = 'no arguments'
 
 const testCase = ({
-  uut = allFeaturesOr404,
-  activeFeatures,
+  uut = allPermissionsOr403,
+  permissions,
   params,
   shouldCallNextWith,
 }) => {
-  if (![NO_ARGUMENTS, NOT_FOUND_ERROR].includes(shouldCallNextWith)) {
+  if (![NO_ARGUMENTS, NOT_AUTHORIZED].includes(shouldCallNextWith)) {
     throw Error(
       'Invalid value for `shouldCallNext` option. Valid options are: ' +
-      `"${NOT_FOUND_ERROR}" and "${NO_ARGUMENTS}".`,
+      `"${NOT_AUTHORIZED}" and "${NO_ARGUMENTS}".`,
     )
   }
 
-  const expectError = shouldCallNextWith === NOT_FOUND_ERROR
+  const expectError = shouldCallNextWith === NOT_AUTHORIZED
 
   const quote = a =>
     a.map(x => `"${x}"`).join(', ')
 
   const xpectedNextArgMsg = expectError
-    ? 'Not Found error'
+    ? 'Not Authorized error'
     : 'no arguments'
   const paramsMsg = params.length
     ? `params ${quote(params)}`
     : `no params`
   const msg = `Should call next() with ${xpectedNextArgMsg}, when ` +
-    `called with ${paramsMsg} and active features are ${quote(activeFeatures)}.`
+    `called with ${paramsMsg} and user permissions are ${quote(permissions)}.`
 
   const res = {
     locals: {
-      // Convert a list of strings to props of an object with true values.
-      features: activeFeatures.reduce((a, x) => ({ ...a, [x]: true }), {}),
+      user: {
+        permissions,
+      },
     },
   }
 
@@ -48,53 +49,53 @@ const testCase = ({
 
     if (expectError) {
       expect(arg).to.be.instanceof(Error)
-      expect(arg.message).to.equal('Not Found')
-      expect(arg.statusCode).to.equal(404)
+      expect(arg.message).to.equal('Not Authorized')
+      expect(arg.statusCode).to.equal(403)
     } else {
       expect(arg).not.to.be.ok // A.K.A. falsy
     }
   })
 }
 
-describe('allFeaturesOr404', () => {
+describe('allPermissionsOr403', () => {
   testCase({
-    activeFeatures: ['foo', 'bar', 'baz'],
+    permissions: ['foo', 'bar', 'baz'],
     params: [],
     shouldCallNextWith: NO_ARGUMENTS,
   })
 
   testCase({
-    activeFeatures: ['foo', 'bar', 'baz'],
+    permissions: ['foo', 'bar', 'baz'],
     params: ['bing'],
-    shouldCallNextWith: NOT_FOUND_ERROR,
+    shouldCallNextWith: NOT_AUTHORIZED,
   })
 
   testCase({
-    activeFeatures: ['foo', 'bar', 'baz'],
+    permissions: ['foo', 'bar', 'baz'],
     params: ['foo', 'bing'],
-    shouldCallNextWith: NOT_FOUND_ERROR,
+    shouldCallNextWith: NOT_AUTHORIZED,
   })
 
   testCase({
-    activeFeatures: ['foo', 'bar', 'baz'],
+    permissions: ['foo', 'bar', 'baz'],
     params: ['foo', 'bar', 'bing', 'baz'],
-    shouldCallNextWith: NOT_FOUND_ERROR,
+    shouldCallNextWith: NOT_AUTHORIZED,
   })
 
   testCase({
-    activeFeatures: ['foo', 'bar', 'baz'],
+    permissions: ['foo', 'bar', 'baz'],
     params: ['foo'],
     shouldCallNextWith: NO_ARGUMENTS,
   })
 
   testCase({
-    activeFeatures: ['foo', 'bar', 'baz'],
+    permissions: ['foo', 'bar', 'baz'],
     params: ['foo', 'bar'],
     shouldCallNextWith: NO_ARGUMENTS,
   })
 
   testCase({
-    activeFeatures: ['foo', 'bar', 'baz'],
+    permissions: ['foo', 'bar', 'baz'],
     params: ['foo', 'bar', 'baz'],
     shouldCallNextWith: NO_ARGUMENTS,
   })
