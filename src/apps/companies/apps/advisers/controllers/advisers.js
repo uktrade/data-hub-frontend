@@ -4,6 +4,7 @@ const { transformCoreTeamToCollection, transformAccountManager } = require('../.
 const { coreTeamLabels } = require('../../../labels')
 const { isItaTierDAccount } = require('../../../../../lib/is-tier-type-company')
 const { companies } = require('../../../../../../src/lib/urls')
+const { authorisedRequest } = require('../../../lib/authorised-request')
 
 function renderLeadAdvisers (req, res) {
   const { company, user: { permissions } } = res.locals
@@ -70,6 +71,7 @@ async function renderAdvisers (req, res, next) {
 
 function addAdviserForm (req, res) {
   const { company, csrfToken } = res.locals
+
   res
     .breadcrumb(company.name, `/companies/${company.id}`)
     .breadcrumb('Confirm you are the Lead ITA')
@@ -79,13 +81,16 @@ function addAdviserForm (req, res) {
 }
 
 async function addAdviser (req, res, next) {
-  const { company, user } = res.locals
-  const nextUrl = '/companies/' + company.id
+  const { company: { id } } = res.locals
+
   try {
-    // TODO: Call the endpoint here
-    console.log('ADDING ADVISER', user.id, company.id)
+    await authorisedRequest(req.session.token, {
+      method: 'POST',
+      url: `${config.apiRoot}/v4/company/${id}/self-assign-account-manager`,
+    })
+
     req.flash('success', 'Adviser added')
-    res.redirect(nextUrl)
+    res.redirect(`/companies/${id}/advisers`)
   } catch (error) {
     next(error)
   }
