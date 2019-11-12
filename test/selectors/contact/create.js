@@ -2,6 +2,7 @@ const msgCls = '.c-form-group__error-message'
 
 module.exports = {
   addContact: '.c-form-actions .govuk-button',
+  save: 'div.c-form-actions > button.govuk-button',
   validationHeader: '.c-error-summary__heading',
   validationFieldMsg: {
     name: `[for="field-first_name"] ${msgCls}`,
