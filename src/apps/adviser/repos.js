@@ -1,21 +1,20 @@
 const { get } = require('lodash')
-const Redis = require('redis')
 const config = require('../../config')
 const { authorisedRequest } = require('../../lib/authorised-request')
 
-let client, redisAsync
-if (!config.isTest) {
-  const { promisify } = require('util')
-  const { getRedisConfig } = require('../../config/redis-store')
+let client, redisAsyncGet
 
-  client = Redis.createClient({ ...getRedisConfig(), url: config.redis.url })
-  redisAsync = promisify(client.get).bind(client)
+if (!config.isTest) {
+  const redisClient = require('../../lib/redis-client')
+
+  client = redisClient.get()
+  redisAsyncGet = redisClient.asyncGet()
 }
 
 async function getAdvisers (token) {
   let results
   const url = `${config.apiRoot}/adviser/?limit=100000&offset=0`
-  const advisers = config.isTest ? null : await redisAsync('advisers')
+  const advisers = config.isTest ? null : await redisAsyncGet('advisers')
 
   if (advisers) {
     results = JSON.parse(advisers)
