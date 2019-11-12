@@ -1,0 +1,13 @@
+{% extends "_layouts/template.njk" %}
+
+{% block local_header %}
+  {{ LocalHeader({ heading: 'System down', modifier: 'light-banner' }) }}
+{% endblock %}
+
+{% block body_main_content %}
+
+  <p>
+    Part of the system is down, please try again shortly. The team has been notified.
+  </p>
+
+{% endblock %}

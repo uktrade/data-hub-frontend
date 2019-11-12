@@ -4,16 +4,13 @@ const rp = require('request-promise')
 const GLOBAL_NAV_ITEMS = require('../global-nav-items')
 
 const { isPermittedRoute } = require('../middleware')
-const { fetchHomepageData, fetchCompanyLists } = require('./repos')
+const { fetchCompanyLists } = require('./repos')
 const config = require('../../config')
 const { formatHelpCentreAnnouncements } = require('./transformers')
 
 async function renderDashboard (req, res, next) {
   try {
     const userPermissions = get(res, 'locals.user.permissions')
-    const { contacts, interactions } = await fetchHomepageData(
-      req.session.token
-    )
 
     const helpCentre = config.helpCentre
     let articleFeed
@@ -39,8 +36,6 @@ async function renderDashboard (req, res, next) {
 
     res.title('Dashboard').render('dashboard/views/dashboard', {
       companyLists,
-      contacts,
-      interactions,
       articleFeed,
       interactionsPermitted: isPermittedRoute(
         '/interactions',

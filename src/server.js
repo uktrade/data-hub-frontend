@@ -4,7 +4,6 @@ const bodyParser = require('body-parser')
 const compression = require('compression')
 const config = require('./config')
 const express = require('express')
-const raven = require('raven')
 const flash = require('connect-flash')
 const csrf = require('csurf')
 const slashify = require('slashify')
@@ -20,6 +19,7 @@ const currentJourney = require('./modules/form/current-journey')
 const nunjucks = require('./config/nunjucks')
 const headers = require('./middleware/headers')
 const locals = require('./middleware/locals')
+const userLocals = require('./middleware/user-locals')
 const metadata = require('./lib/metadata')
 const user = require('./middleware/user')
 const auth = require('./middleware/auth')
@@ -31,6 +31,8 @@ const ssoBypass = require('./middleware/sso-bypass')
 const logger = require('./config/logger')
 const basicAuth = require('./middleware/basic-auth')
 const features = require('./middleware/features')
+const redisCheck = require('./middleware/redis-check')
+const reporter = require('./lib/reporter')
 
 const routers = require('./apps/routers')
 
@@ -38,18 +40,8 @@ const app = express()
 
 app.disable('x-powered-by')
 
-if (config.sentryDsn) {
-  logger.info('Sentry DSN detected. Raven will be enabled.')
-  // See https://docs.sentry.io/clients/node/config/
-  // and https://docs.sentry.io/clients/node/usage/
-  // for info on Raven config options
-  raven.config(config.sentryDsn, {
-    autoBreadcrumbs: true,
-    captureUnhandledRejections: true,
-  }).install()
-  // Raven request handler must be the first middleware
-  app.use(raven.requestHandler())
-}
+// Raven request handler must be the first middleware
+reporter.setup(app)
 
 if (!config.ci) {
   app.use(churchill(logger))
@@ -63,11 +55,6 @@ if (!config.isDev) {
 }
 
 app.use(cookieParser())
-app.use(sessionStore)
-
-app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }))
-app.use(bodyParser.json())
-
 app.use(compression())
 
 app.set('view engine', 'njk')
@@ -99,6 +86,13 @@ app.use('/assets', express.static(path.join(config.root, 'node_modules/govuk-fro
 app.use(title())
 app.use(breadcrumbs.init())
 app.use(breadcrumbs.setHome())
+app.use(locals)
+app.use(redisCheck)
+
+app.use(sessionStore)
+
+app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }))
+app.use(bodyParser.json())
 
 app.use(currentJourney())
 
@@ -109,7 +103,7 @@ app.use(basicAuth)
 app.use(auth)
 app.use(user)
 app.use(features)
-app.use(locals)
+app.use(userLocals)
 app.use(headers)
 app.use(store())
 app.use(csrf())
@@ -120,9 +114,7 @@ app.use(slashify())
 app.use(routers)
 
 // Raven error handler must come before other error middleware
-if (config.sentryDsn) {
-  app.use(raven.errorHandler())
-}
+reporter.handleErrors(app)
 
 app.use(errors.notFound)
 app.use(errors.catchAll)

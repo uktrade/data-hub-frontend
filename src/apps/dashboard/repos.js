@@ -2,10 +2,6 @@ const { pick } = require('lodash')
 const { authorisedRequest } = require('../../lib/authorised-request')
 const config = require('../../config')
 
-function fetchHomepageData (token) {
-  return authorisedRequest(token, `${config.apiRoot}/dashboard/homepage/`)
-}
-
 function fetchRawCompanyListItems (token, id) {
   return authorisedRequest(token, {
     method: 'GET',
@@ -41,6 +37,5 @@ const fetchCompanyLists = token =>
     )
 
 module.exports = {
-  fetchHomepageData,
   fetchCompanyLists,
 }
