@@ -4,6 +4,7 @@ const { ENTITIES } = require('../search/constants')
 const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS, QUERY_FIELDS } = require('./constants')
 
 const allFeaturesOr404 = require('../../middleware/all-features-or-404')
+const allPermissionsOr403 = require('../../middleware/all-permissions-or-403')
 const { getRequestBody } = require('../../middleware/collection')
 const { getCollection, exportCollection } = require('../../modules/search/middleware/collection')
 
@@ -88,8 +89,10 @@ router.use('/create', addCompanyFormRouter)
 router.use('/:companyId/lists', companyListsRouter)
 router.use('/:companyId/edit', editCompanyFormRouter)
 
-router.use('/:companyId/advisers/add', allFeaturesOr404('lead_advisers'))
 router.route('/:companyId/advisers/add')
+  // TODO: Change these to decorators
+  .all(allFeaturesOr404('lead_advisers'))
+  .all(allPermissionsOr403('company.change_regional_account_manager'))
   .get(addAdviserForm)
   .post(addAdviser)
 
