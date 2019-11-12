@@ -2,6 +2,7 @@
 const { get } = require('lodash')
 
 const labels = require('../labels')
+const urls = require('../../../lib/urls')
 
 module.exports = function transformCompanyToListItem ({
   id,
@@ -63,7 +64,7 @@ module.exports = function transformCompanyToListItem ({
     meta.push({
       label: 'Global HQ',
       value: ghqName,
-      url: `/companies/${ghqId}`,
+      url: urls.companies.detail(ghqId),
     })
   }
 
@@ -73,12 +74,10 @@ module.exports = function transformCompanyToListItem ({
     value: address,
   })
 
-  const url = `/companies/${id}`
-
   return {
     id,
     name,
-    url,
+    url: urls.companies.detail(id),
     meta,
     subTitle: {
       type: 'datetime',
