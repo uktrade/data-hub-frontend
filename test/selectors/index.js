@@ -39,6 +39,7 @@ exports.interaction = {
 exports.interactionForm = require('./interaction-form')
 exports.keyValueTable = require('./key-value-table')
 exports.localHeader = require('./local-header')
+exports.message = require('./message')
 exports.nav = require('./nav')
 exports.tabbedLocalNav = require('./tabbed-local-nav')
 exports.uneditableField = require('./uneditable-field')
