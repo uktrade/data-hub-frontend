@@ -3,6 +3,7 @@ const router = require('express').Router()
 const { ENTITIES } = require('../search/constants')
 const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS, QUERY_FIELDS } = require('./constants')
 
+const allFeaturesOr404 = require('../../middleware/all-features-or-404')
 const { getRequestBody } = require('../../middleware/collection')
 const { getCollection, exportCollection } = require('../../modules/search/middleware/collection')
 
@@ -86,6 +87,8 @@ router.get('/export',
 router.use('/create', addCompanyFormRouter)
 router.use('/:companyId/lists', companyListsRouter)
 router.use('/:companyId/edit', editCompanyFormRouter)
+
+router.use('/:companyId/advisers/add', allFeaturesOr404('lead_advisers'))
 router.route('/:companyId/advisers/add')
   .get(addAdviserForm)
   .post(addAdviser)
