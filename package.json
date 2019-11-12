@@ -28,6 +28,7 @@
     "test:functional:watch": "cypress open",
     "test:e2e:lep": "CYPRESS_integrationFolder=test/end-to-end/cypress/specs/LEP cypress run",
     "test:e2e:da": "CYPRESS_integrationFolder=test/end-to-end/cypress/specs/DA cypress run",
+    "test:e2e:dit": "CYPRESS_integrationFolder=test/end-to-end/cypress/specs/DIT cypress run",
     "test:e2e:watch": "CYPRESS_integrationFolder=test/end-to-end/cypress/specs cypress open",
     "test:visual": "./node_modules/.bin/wdio test/visual/wdio.conf.js",
     "coverage": "nyc --reporter=html --reporter=text --reporter=lcov npm run test:unit",
