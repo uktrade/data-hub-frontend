@@ -69,7 +69,7 @@ async function renderAdvisers (req, res, next) {
     : await renderCoreTeamAdvisers(req, res, next)
 }
 
-function addAdviserForm (req, res) {
+function renderAddAdviserForm (req, res) {
   const { company, csrfToken } = res.locals
 
   res
@@ -99,5 +99,5 @@ async function addAdviser (req, res, next) {
 module.exports = {
   renderAdvisers,
   addAdviser,
-  addAdviserForm,
+  renderAddAdviserForm,
 }
