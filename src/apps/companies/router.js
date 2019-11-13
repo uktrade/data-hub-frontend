@@ -7,7 +7,6 @@ const { getRequestBody } = require('../../middleware/collection')
 const { getCollection, exportCollection } = require('../../modules/search/middleware/collection')
 
 const { renderCompanyList } = require('./controllers/list')
-const { renderForm } = require('./controllers/edit')
 const { renderDetails } = require('./controllers/details')
 
 const {
@@ -42,7 +41,6 @@ const {
 } = require('./middleware/collection')
 
 const { setCompanyContactRequestBody, getCompanyContactCollection } = require('./middleware/contact-collection')
-const { populateForm, handleFormPost } = require('./middleware/form')
 const { getCompany, setIsCompanyAlreadyAdded, setDoAnyListsExist, addCompanyOrRemoveFromList } = require('./middleware/params')
 const { setInteractionsDetails } = require('./middleware/interactions')
 const { setGlobalHQ, removeGlobalHQ, addSubsidiary } = require('./middleware/hierarchies')
@@ -88,12 +86,6 @@ router
   .route('/:companyId/exports/edit')
   .get(populateExportForm, renderExportEdit)
   .post(populateExportForm, handleEditFormPost, renderExportEdit)
-
-// TODO: Remove in a separate PR
-router
-  .route('/:companyId/edit-old')
-  .get(populateForm, renderForm)
-  .post(handleFormPost, populateForm, renderForm)
 
 router.post('/:companyId/archive', archiveCompany)
 router.get('/:companyId/unarchive', unarchiveCompany)
