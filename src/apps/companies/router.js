@@ -33,7 +33,11 @@ const {
   handleEditFormPost,
 } = require('./controllers/exports')
 
-const { setDefaultQuery, redirectToFirstNavItem, handleRoutePermissions } = require('../middleware')
+const {
+  setDefaultQuery,
+  redirectToFirstNavItem,
+  handleRoutePermissions,
+} = require('../middleware')
 
 const {
   getGlobalHQCompaniesCollection,
@@ -45,6 +49,7 @@ const { getCompany, setIsCompanyAlreadyAdded, setDoAnyListsExist, addCompanyOrRe
 const { setInteractionsDetails } = require('./middleware/interactions')
 const { setGlobalHQ, removeGlobalHQ, addSubsidiary } = require('./middleware/hierarchies')
 const setCompaniesLocalNav = require('./middleware/local-navigation')
+const lastInteractionDate = require('./middleware/last-interaction-date')
 
 const { transformCompanyToListItem } = require('./transformers')
 
@@ -68,6 +73,7 @@ router.param('companyId', setDoAnyListsExist)
 router.get(urls.companies.index.route,
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   getRequestBody(QUERY_FIELDS),
+  lastInteractionDate,
   getCollection('company', ENTITIES, transformCompanyToListItem),
   renderCompanyList,
 )
@@ -75,6 +81,7 @@ router.get(urls.companies.index.route,
 router.get('/export',
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   getRequestBody(QUERY_FIELDS),
+  lastInteractionDate,
   exportCollection('company'),
 )
 

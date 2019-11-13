@@ -10,7 +10,7 @@
   {% if props.filtersFields | removeNilAndEmpty | length %}
     {% call Form({
       method: 'get',
-      class: 'c-collection-filters js-AutoSubmit js-vue-wrapper',
+      class: 'c-collection-filters js-AutoSubmit',
       action: props.action,
       buttonText: 'Refresh results',
       actionsClass: 'u-js-hidden',
