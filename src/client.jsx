@@ -8,8 +8,6 @@ import DeleteCompanyList from './apps/company-lists/client/DeleteCompanyList'
 import MyCompanies from './apps/dashboard/client/MyCompanies.jsx'
 import CreateListFormSection from './apps/company-lists/client/CreateListFormSection'
 import AddRemoveFromListSection from './apps/company-lists/client/AddRemoveFromListSection'
-import BusinessDetailsRegionEdit from './apps/companies/client/BusinessDetailsRegionEdit'
-import BusinessDetailsSectorEdit from './apps/companies/client/BusinessDetailsSectorEdit'
 import LeadAdvisers from './apps/companies/client/LeadAdvisers'
 import DnbSubsidiaries from './apps/companies/apps/dnb-subsidiaries/client/DnbSubsidiaries'
 
@@ -51,12 +49,6 @@ function App () {
       </Mount>
       <Mount selector="#add-remove-list-form">
         {props => <AddRemoveFromListSection {...props} />}
-      </Mount>
-      <Mount selector="#business-details-region-edit">
-        {props => <BusinessDetailsRegionEdit csrfToken={globalProps.csrfToken} {...props} />}
-      </Mount>
-      <Mount selector="#business-details-sector-edit">
-        {props => <BusinessDetailsSectorEdit {...props} />}
       </Mount>
       <Mount selector="#lead-advisers">
         {props => <LeadAdvisers {...props} />}
