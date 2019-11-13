@@ -15,6 +15,7 @@ module.exports = function transformCompanyToListItem ({
   modified_on,
   headquarter_type,
   global_headquarters,
+  latest_interaction_date,
 } = {}) {
   if (!id) { return }
 
@@ -73,6 +74,14 @@ module.exports = function transformCompanyToListItem ({
     label: labels.address.companyAddress,
     value: address,
   })
+
+  if (latest_interaction_date) {
+    meta.push({
+      type: 'date',
+      label: 'Last interaction date',
+      value: latest_interaction_date,
+    })
+  }
 
   return {
     id,
