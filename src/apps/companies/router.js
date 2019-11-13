@@ -59,6 +59,8 @@ const interactionsRouter = require('../interactions/router.sub-app')
 const activityFeedRouter = require('./apps/activity-feed/router')
 const companyListsRouter = require('../company-lists/router')
 
+const dnbSubsidiariesControllers = require('./apps/dnb-subsidiaries/controllers')
+
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.param('companyId', getCompany)
@@ -120,6 +122,9 @@ router.get('/:companyId/hierarchies/ghq/remove', removeGlobalHQ)
 
 router.get('/:companyId/hierarchies/subsidiaries/search', getSubsidiaryCompaniesCollection, renderLinkSubsidiary)
 router.get('/:companyId/hierarchies/subsidiaries/:subsidiaryCompanyId/add', addSubsidiary)
+
+router.get(urls.companies.dnbSubsidiaries.index.route, dnbSubsidiariesControllers.renderDnbSubsidiaries)
+router.get(urls.companies.dnbSubsidiaries.data.route, dnbSubsidiariesControllers.fetchSubsidiariesHandler)
 
 router.get('/:companyId/contacts',
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),

@@ -67,10 +67,15 @@ const assertFieldUneditable = ({ name, label = null, value = null }) => {
   }
 }
 
+const assertLocalHeader = (header) => {
+  cy.get(selectors.localHeader).contains(header)
+}
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
   assertBreadcrumbs,
   assertFieldInput,
   assertFieldUneditable,
+  assertLocalHeader,
 }

@@ -122,6 +122,7 @@
     "react": "^16.8.6",
     "react-app-polyfill": "^1.0.1",
     "react-dom": "^16.8.6",
+    "react-use": "^13.2.1",
     "redis": "^2.8.0",
     "request": "^2.87.0",
     "request-promise": "^4.2.2",
