@@ -23,7 +23,7 @@ const { renderDocuments } = require('./controllers/documents')
 const { renderAddGlobalHQ } = require('./controllers/hierarchies')
 const { renderSubsidiaries } = require('./controllers/subsidiaries')
 const { renderLinkSubsidiary } = require('./controllers/subsidiary-link')
-const { addAdviser, addAdviserForm } = require('./controllers/advisers')
+const { addAdviser, renderAddAdviserForm } = require('./controllers/advisers')
 
 const {
   renderExports,
@@ -93,7 +93,7 @@ router.route('/:companyId/advisers/add')
   // TODO: Change these to decorators
   .all(allFeaturesOr404('lead_advisers'))
   .all(allPermissionsOr403('company.change_regional_account_manager'))
-  .get(addAdviserForm)
+  .get(renderAddAdviserForm)
   .post(addAdviser)
 
 router
