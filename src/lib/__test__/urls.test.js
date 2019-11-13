@@ -47,6 +47,12 @@ describe('urls', () => {
       const globalHqId = faker.random.uuid()
       expect(urls.companies.hierarchies.ghq.add.route).to.equal('/:companyId/hierarchies/ghq/:globalHqId/add')
       expect(urls.companies.hierarchies.ghq.add(companyId, globalHqId)).to.equal(`/companies/${companyId}/hierarchies/ghq/${globalHqId}/add`)
+
+      expect(urls.companies.dnbSubsidiaries.index.route).to.equal('/:companyId/dnb-subsidiaries')
+      expect(urls.companies.dnbSubsidiaries.index(companyId)).to.equal(`/companies/${companyId}/dnb-subsidiaries`)
+
+      expect(urls.companies.dnbSubsidiaries.data.route).to.equal('/:companyId/dnb-subsidiaries/data')
+      expect(urls.companies.dnbSubsidiaries.data(companyId)).to.equal(`/companies/${companyId}/dnb-subsidiaries/data`)
     })
   })
 
