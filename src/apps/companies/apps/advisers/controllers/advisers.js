@@ -89,7 +89,7 @@ async function addAdviser (req, res, next) {
       url: `${config.apiRoot}/v4/company/${id}/self-assign-account-manager`,
     })
 
-    req.flash('success', 'Adviser added')
+    req.flash('success', 'Lead adviser information updated')
     res.redirect(`/companies/${id}/advisers`)
   } catch (error) {
     next(error)
