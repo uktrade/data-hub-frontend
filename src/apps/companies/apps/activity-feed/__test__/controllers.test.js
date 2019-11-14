@@ -3,9 +3,9 @@ const { ACTIVITY_TYPE_FILTERS } = require('../../../constants')
 const { ACTIVITY_TYPE_FILTER_KEYS } = require('../../../constants')
 const config = require('../../../../../config')
 
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder')
-const activityFeedEsFixtures = require('~/test/unit/data/activity-feed/activity-feed-from-es')
-const companyMock = require('~/test/unit/data/company.json')
+const { buildMiddlewareParameters, getMockData } = helpers
+const activityFeedEsFixtures = getMockData('/activity-feed/activity-feed-from-es')
+const companyMock = getMockData('/company.json')
 
 describe('Activity feed controllers', () => {
   describe('#fetchActivityFeedHandler', () => {

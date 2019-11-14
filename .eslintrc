@@ -31,7 +31,8 @@
         "nock": true,
         "rootPath": true,
         "globalReq": true,
-        "globalRes": true
+        "globalRes": true,
+        "helpers": true
       },
       "rules": {
         "no-unused-expressions": 0

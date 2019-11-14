@@ -22,6 +22,16 @@ process.env.TZ = 'Europe/London'
 
 chai.config.truncateThreshold = 0
 
+global.helpers = {
+  buildMiddlewareParameters: require('./helpers/middleware-parameters-builder'),
+  getMockData: (path) => {
+    const data = require('./data' + path)
+
+    // convert to string and back to JSON to ensure it's clean data
+    return JSON.parse(JSON.stringify(data))
+  },
+}
+
 process.setMaxListeners(0)
 process.stdout.setMaxListeners(0)
 
