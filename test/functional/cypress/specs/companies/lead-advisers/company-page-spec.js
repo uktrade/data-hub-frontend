@@ -1,8 +1,5 @@
-import { assertBreadcrumbs } from '../../support/assertions'
-
-const fixtures = require('../../fixtures')
-const selectors = require('../../../../selectors')
-const { companies, dashboard } = require('../../../../../src/lib/urls')
+const fixtures = require('../../../fixtures')
+const selectors = require('../../../../../selectors')
 
 describe('Lead advisers', () => {
   context('when viewing a non One List tier company', () => {
