@@ -17,23 +17,50 @@ function getPath (path, tokens, params) {
   if (path === '/') {
     return ''
   }
+
   tokens.forEach((token, index) => {
-    path = path.replace(token, params[index])
+    const value = params[index]
+
+    if (typeof value !== 'undefined') {
+      path = path.replace(token, value)
+    } else {
+      path = path.replace('/' + token, '')
+    }
   })
+
   return path
 }
 
-function url (mountPoint, path = '/') {
-  const tokens = getTokens(path)
+function url (mountPoint, subMountPoint, path) {
+  let tokenPath
+
+  if (path) {
+    tokenPath = (subMountPoint + path)
+  } else {
+    tokenPath = (subMountPoint || '/')
+    path = tokenPath
+  }
+
+  const tokens = getTokens(tokenPath)
 
   function getUrl (...params) {
-    return (mountPoint + getPath(path, tokens, params))
+    return (mountPoint + getPath(tokenPath, tokens, params))
   }
 
   getUrl.mountPoint = mountPoint
   getUrl.route = path
 
   return getUrl
+}
+
+function createInteractionsSubApp (...mountPoints) {
+  if (mountPoints.length === 0) {
+    mountPoints.push(null)
+  }
+
+  return {
+    create: url(...mountPoints, '/interactions/:interactionId?/create'),
+  }
 }
 
 module.exports = {
@@ -60,16 +87,18 @@ module.exports = {
       },
     },
     index: url('/companies'),
-    interactions: {
-      create: url('/companies', '/:companyId/interactions/create'),
-    },
     subsidiaries: url('/companies', '/:companyId/subsidiaries'),
+    interactions: createInteractionsSubApp('/companies', '/:companyId'),
   },
   contacts: {
     index: url('/contacts'),
+    interactions: createInteractionsSubApp('/contacts', '/:contactId'),
   },
   search: {
     index: url('/search'),
     type: url('/search', '/:searchPath?'),
+  },
+  interactions: {
+    subapp: createInteractionsSubApp(),
   },
 }
