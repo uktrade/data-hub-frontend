@@ -3,8 +3,8 @@ const middleware = require('../last-interaction-date')
 const buildMiddlewareParameters = require('../../../../../test/unit/helpers/middleware-parameters-builder')
 
 const QUERY_PARAM = 'interaction_between'
-const START_DATE_PARAM = 'last_interaction_date_before'
-const END_DATE_PARAM = 'last_interaction_date_after'
+const START_DATE_PARAM = 'latest_interaction_date_before'
+const END_DATE_PARAM = 'latest_interaction_date_after'
 
 function getTimestamp (offset) {
   return moment().subtract(offset, 'month').utc().format('YYYY-MM-DD')
