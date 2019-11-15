@@ -1,10 +1,5 @@
-const {
-  getReturnLink,
-  isInteractionServiceForm,
-} = require('~/src/apps/interactions/helpers')
-const {
-  INTERACTION_CONTEXTS,
-} = require('../../../../src/apps/interactions/constants')
+const { getReturnLink, isInteractionServiceForm } = require('../helpers')
+const { INTERACTION_CONTEXTS } = require('../constants')
 
 describe('Interaction helpers', () => {
   describe('#getReturnLink', () => {

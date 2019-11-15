@@ -1,10 +1,13 @@
 /* eslint handle-callback-err: 0 */
+const proxyquire = require('proxyquire')
 const moment = require('moment')
 
-const config = require('~/src/config')
-const { render } = require('~/test/unit/nunjucks')
-const { expectField, expectRadioField, expectHiddenField } = require('~/test/unit/form-helpers')
-const contactLabels = require('~/src/apps/contacts/labels')
+const contactLabels = require('../../labels')
+
+const { config, nunjucks, formHelpers } = helpers
+const { expectField, expectRadioField, expectHiddenField } = formHelpers
+const { renderFromRoot } = nunjucks
+const MODULE_PATH = '../edit'
 
 const yesterday = moment().subtract(1, 'days').toISOString()
 
@@ -33,7 +36,7 @@ describe('Contact controller, edit', () => {
       return this
     }
 
-    contactEditController = proxyquire('~/src/apps/contacts/controllers/edit', {
+    contactEditController = proxyquire(MODULE_PATH, {
       '../services/form': {
         getContactAsFormData: getContactAsFormDataStub,
         saveContactForm: saveContactFormStub,
@@ -303,7 +306,7 @@ describe('Contact controller, edit', () => {
       }
     })
     it('should render all the required fields on the page', () => {
-      return render('../../src/apps/contacts/views/edit.njk', locals)
+      return renderFromRoot('/src/apps/contacts/views/edit.njk', locals)
         .then((document) => {
           expect(document.querySelector('[type=hidden][name=id]')).to.not.be.null
           expect(document.querySelector('[type=hidden][name=company][type=hidden]')).to.not.be.null
@@ -391,7 +394,7 @@ describe('Contact controller, edit', () => {
         error: { name: ['test'] },
       })
 
-      contactEditController = proxyquire('~/src/apps/contacts/controllers/edit', {
+      contactEditController = proxyquire(MODULE_PATH, {
         '../services/form': {
           getContactAsFormData: getContactAsFormDataStub,
           saveContactForm: saveContactFormStub,
@@ -415,7 +418,7 @@ describe('Contact controller, edit', () => {
     it('should show errors when the save fails for a non-validation related reason', function (done) {
       saveContactFormStub = sinon.stub().rejects(Error('some error'))
 
-      contactEditController = proxyquire('~/src/apps/contacts/controllers/edit', {
+      contactEditController = proxyquire(MODULE_PATH, {
         '../services/form': {
           getContactAsFormData: getContactAsFormDataStub,
           saveContactForm: saveContactFormStub,

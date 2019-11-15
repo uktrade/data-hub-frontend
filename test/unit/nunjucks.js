@@ -39,4 +39,8 @@ function render (template, options) {
   })
 }
 
-module.exports = { render }
+function renderFromRoot (template, options) {
+  return render('../..' + template, options)
+}
+
+module.exports = { render, renderFromRoot }

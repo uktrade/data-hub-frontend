@@ -1,4 +1,4 @@
-const repos = require('../../../../src/apps/dashboard/repos')
+const repos = require('../repos')
 const { mockCompanyListsServer } = require('./utils')
 
 describe('fetchCompanyLists', () => {

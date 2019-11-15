@@ -1,14 +1,17 @@
-const config = require('~/src/config')
-const activityFeedRawFixture = require('~/test/unit/data/activity-feed/activity-feed-from-es')
+const proxyquire = require('proxyquire')
 
 const { ACTIVITY_TYPE_FILTER_KEYS, ACTIVITY_TYPE_FILTER_OBJECT } = require('../../../constants')
+
+const { config, getMockData } = helpers
+
+const activityFeedRawFixture = getMockData('/activity-feed/activity-feed-from-es')
 
 const token = 'abcd'
 
 describe('Activity feed repos', () => {
   beforeEach(() => {
     this.authorisedRequestStub = sinon.stub().resolves(activityFeedRawFixture)
-    this.repos = proxyquire('../../src/apps/companies/apps/activity-feed/repos', {
+    this.repos = proxyquire('../repos', {
       '../../../../lib/authorised-request': { authorisedRequest: this.authorisedRequestStub },
     })
   })

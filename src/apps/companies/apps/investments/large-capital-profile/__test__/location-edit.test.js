@@ -1,13 +1,13 @@
-const companyProfile = require('~/test/unit/data/companies/investments/large-capital-profile-new.json')
-const company = require('~/test/unit/data/companies/minimal-company.json')
-const ukRegion = require('~/test/unit/data/companies/investments/metadata/uk-region.json')
-const country = require('~/test/unit/data/companies/investments/metadata/country.json')
-
 const { cloneDeep } = require('lodash')
-const config = require('~/src/config')
 
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
-const controller = require('~/src/apps/companies/apps/investments/large-capital-profile/controllers')
+const { config, getMockData, buildMiddlewareParameters } = helpers
+
+const companyProfile = getMockData('/companies/investments/large-capital-profile-new')
+const company = getMockData('/companies/minimal-company')
+const ukRegion = getMockData('/companies/investments/metadata/uk-region')
+const country = getMockData('/companies/investments/metadata/country')
+
+const controller = require('../controllers')
 
 describe('Company Investments - Large capital profile - Investor details', () => {
   describe('renderProfile', () => {

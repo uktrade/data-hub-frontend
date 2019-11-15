@@ -1,9 +1,7 @@
 const moment = require('moment')
-const {
-  formatHelpCentreAnnouncements,
-  transformCompanyList,
-} = require('../../../../src/apps/dashboard/transformers')
 const { omit } = require('lodash')
+
+const { formatHelpCentreAnnouncements, transformCompanyList } = require('../transformers')
 
 describe('#formatHelpCentreAnnouncements', () => {
   const mockResponse = {

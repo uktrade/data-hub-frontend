@@ -24,6 +24,10 @@ chai.config.truncateThreshold = 0
 
 global.helpers = {
   buildMiddlewareParameters: require('./helpers/middleware-parameters-builder'),
+  config: require('../../src/config/index'),
+  urls: require('../../src/lib/urls'),
+  nunjucks: require('./nunjucks'),
+  formHelpers: require('./form-helpers'),
   getMockData: (path) => {
     const data = require('./data' + path)
 

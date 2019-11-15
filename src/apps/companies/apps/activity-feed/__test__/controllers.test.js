@@ -1,18 +1,20 @@
+const proxyquire = require('proxyquire')
+
 const { renderActivityFeed } = require('../controllers')
 const { ACTIVITY_TYPE_FILTERS } = require('../../../constants')
 const { ACTIVITY_TYPE_FILTER_KEYS } = require('../../../constants')
-const config = require('../../../../../config')
 
-const { buildMiddlewareParameters, getMockData } = helpers
+const { buildMiddlewareParameters, getMockData, config } = helpers
+
 const activityFeedEsFixtures = getMockData('/activity-feed/activity-feed-from-es')
-const companyMock = getMockData('/company.json')
+const companyMock = getMockData('/company')
 
 describe('Activity feed controllers', () => {
   describe('#fetchActivityFeedHandler', () => {
     beforeEach(() => {
       this.fetchActivityFeedStub = sinon.stub().resolves(activityFeedEsFixtures)
 
-      this.controllers = proxyquire('../../src/apps/companies/apps/activity-feed/controllers', {
+      this.controllers = proxyquire('../controllers', {
         './repos': { fetchActivityFeed: this.fetchActivityFeedStub },
       })
     })
