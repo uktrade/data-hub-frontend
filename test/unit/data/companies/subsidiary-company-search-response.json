@@ -8,6 +8,7 @@
         "id": "98d14e94-5d95-e211-a939-e4115bead28a",
         "name": "Company"
       },
+      "duns_number": "999999",
       "one_list_group_tier": null,
       "contacts": [
         {
@@ -87,6 +88,7 @@
     {
       "id": "731bdcc1-f685-4c8e-bd66-b356b2c16995",
       "archived_by": null,
+      "duns_number": "123",
       "business_type": {
         "id": "9ad14e94-5d95-e211-a939-e4115bead28a",
         "name": "Partnership"

@@ -84,6 +84,20 @@ const companyFiltersFields = function ({ sectorOptions }) {
       target: 'metadata',
       label: 'Future countries of interest',
     },
+    {
+      macroName: 'MultipleChoiceField',
+      name: QUERY_FIELDS_MAP.lastInteractionDate,
+      type: 'checkbox',
+      label: 'Last interaction between',
+      groupClass: 'js-last-interaction-filter',
+      options: [
+        { value: '1', label: '1 - 3 months' },
+        { value: '2', label: '3 - 6 months' },
+        { value: '3', label: '6 - 12 months' },
+        { value: '4', label: '12 - 24 months' },
+      ],
+      modifier: 'option-select',
+    },
   ].map(filter => {
     return Object.assign(filter, {
       modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
