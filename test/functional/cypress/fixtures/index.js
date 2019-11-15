@@ -7,6 +7,7 @@ module.exports = {
     dnbCorp: require('./company/dnb-corp.json'),
     dnbLtd: require('./company/dnb-ltd.json'),
     dnbGlobalUltimate: require('./company/dnb-global-ultimate.json'),
+    dnBGlobalUltimateAndGlobalHq: require('./company/dnb-global-ultimate-and-global-hq.json'),
     investigationLimited: require('./company/investigation-limited'),
     lambdaPlc: require('./company/lambda-plc'),
     marsExportsLtd: require('./company/mars-exports-ltd'),

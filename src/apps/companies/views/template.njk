@@ -31,7 +31,7 @@
       <div class="c-local-header__description">
         {% if isUltimate %}
           {% set link =  props.subsidiaryCount + ' other company ' + 'record' | pluralise(props.subsidiaryCount) %}
-          <p>Data Hub contains <a class="subsidiaries" href={{ urls.companies.subsidiaries(company.id) }}>{{ link }}</a> related to this company</p>
+          <p>Data Hub contains <a class="subsidiaries" href={{ urls.companies.dnbSubsidiaries.index(company.id) }}>{{ link }}</a> related to this company</p>
         {% endif %}
         {% if isOneListTier %}
           <p>This is an account managed company (One List {{ company.one_list_group_tier.name }})</p>
