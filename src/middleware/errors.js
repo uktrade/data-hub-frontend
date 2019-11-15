@@ -1,5 +1,13 @@
+
 const config = require('../config')
 const logger = require('../config/logger')
+
+class NotAuthorizedError extends Error {
+  constructor () {
+    super('Not Authorized')
+    this.statusCode = 403
+  }
+}
 
 class NotFoundError extends Error {
   constructor () {
@@ -50,6 +58,7 @@ function catchAll (error, req, res, next) {
 
 module.exports = {
   notFound,
+  NotAuthorizedError,
   NotFoundError,
   catchAll,
 }
