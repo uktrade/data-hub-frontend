@@ -89,7 +89,6 @@ router.use('/:companyId/lists', companyListsRouter)
 router.use('/:companyId/edit', editCompanyFormRouter)
 
 router.route('/:companyId/advisers/add')
-  // TODO: Change these to decorators
   .all(allFeaturesOr404('lead_advisers'))
   .all(allPermissionsOr403('company.change_regional_account_manager'))
   .get(renderAddAdviserForm)
