@@ -45,6 +45,7 @@ const { getCompany, setIsCompanyAlreadyAdded, setDoAnyListsExist, addCompanyOrRe
 const { setInteractionsDetails } = require('./middleware/interactions')
 const { setGlobalHQ, removeGlobalHQ, addSubsidiary } = require('./middleware/hierarchies')
 const setCompaniesLocalNav = require('./middleware/local-navigation')
+const { setSubsidiariesLocalNav } = require('./apps/dnb-subsidiaries/middleware')
 const lastInteractionDate = require('./middleware/last-interaction-date')
 
 const { transformCompanyToListItem } = require('./transformers')
@@ -107,6 +108,7 @@ router.get('/:companyId/hierarchies/ghq/remove', removeGlobalHQ)
 router.get('/:companyId/hierarchies/subsidiaries/search', getSubsidiaryCompaniesCollection, renderLinkSubsidiary)
 router.get('/:companyId/hierarchies/subsidiaries/:subsidiaryCompanyId/add', addSubsidiary)
 
+router.use(urls.companies.dnbSubsidiaries.index.route, setSubsidiariesLocalNav)
 router.get(urls.companies.dnbSubsidiaries.index.route, dnbSubsidiariesControllers.renderDnbSubsidiaries)
 router.get(urls.companies.dnbSubsidiaries.data.route, dnbSubsidiariesControllers.fetchSubsidiariesHandler)
 
@@ -118,8 +120,11 @@ router.get('/:companyId/contacts',
 )
 
 router.get(urls.companies.exports.route, renderExports)
+
+router.use('/:companyId/subsidiaries', setSubsidiariesLocalNav)
 router.get('/:companyId/subsidiaries', renderSubsidiaries)
 router.get('/:companyId/subsidiaries/link', renderLinkSubsidiary)
+
 router.get('/:companyId/orders', renderOrders)
 router.get('/:companyId/audit', renderAuditLog)
 router.get('/:companyId/documents', renderDocuments)

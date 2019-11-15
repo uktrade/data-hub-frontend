@@ -15,6 +15,7 @@ function transformCompanyToSubsidiariesList ({
   address,
   modified_on,
   headquarter_type,
+  is_global_ultimate,
 } = {}) {
   if (!id) { return }
 
@@ -45,6 +46,10 @@ function transformCompanyToSubsidiariesList ({
 
   if (headquarter_type) {
     badges.push(labels.hqLabels[get(headquarter_type, 'name')])
+  }
+
+  if (is_global_ultimate) {
+    badges.push(labels.companyDetailsLabels.ultimate_hq)
   }
 
   if (address) {
