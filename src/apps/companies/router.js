@@ -3,8 +3,7 @@ const router = require('express').Router()
 const { ENTITIES } = require('../search/constants')
 const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS, QUERY_FIELDS } = require('./constants')
 
-const allFeaturesOr404 = require('../../middleware/all-features-or-404')
-const allPermissionsOr403 = require('../../middleware/all-permissions-or-403')
+const { allFeaturesOr404, allPermissionsOr403 } = require('../../middleware/conditionals')
 const { getRequestBody } = require('../../middleware/collection')
 const { getCollection, exportCollection } = require('../../modules/search/middleware/collection')
 
