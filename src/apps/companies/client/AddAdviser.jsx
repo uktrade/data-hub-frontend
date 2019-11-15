@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Button, H3, Details, UnorderedList, Link, ListItem } from 'govuk-react'
 
@@ -37,5 +38,9 @@ const AddAdviser = ({ csrfToken }) =>
       <Link href="../advisers">Cancel</Link>
     </StyledForm>
   </div>
+
+AddAdviser.propTypes = {
+  csrfToken: PropTypes.string.isRequired,
+}
 
 export default AddAdviser
