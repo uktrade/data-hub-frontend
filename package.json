@@ -7,6 +7,9 @@
     "type": "git",
     "url": "https://github.com/uktrade/data-hub-frontend"
   },
+  "_moduleAliases": {
+    "~": "."
+  },
   "scripts": {
     "clean": "del .build",
     "start": "node --use-strict src/server.js",
@@ -109,6 +112,7 @@
     "image-webpack-loader": "^4.0.0",
     "lodash": "^4.17.13",
     "markdown-it": "^8.4.0",
+    "module-alias": "^2.2.2",
     "moment": "^2.22.1",
     "moment-duration-format": "^2.1.0",
     "node-sass": "^4.9.0",
@@ -203,7 +207,6 @@
     "sinon": "^5.0.10",
     "sinon-chai": "^3.1.0",
     "supertest": "^3.3.0",
-    "wavy": "^1.0.4",
     "wdio-chromedriver-service": "^5.0.1"
   },
   "sasslintConfig": ".sass-lint.yml",
