@@ -11,6 +11,7 @@ import AddRemoveFromListSection from './apps/company-lists/client/AddRemoveFromL
 import BusinessDetailsRegionEdit from './apps/companies/client/BusinessDetailsRegionEdit'
 import BusinessDetailsSectorEdit from './apps/companies/client/BusinessDetailsSectorEdit'
 import LeadAdvisers from './apps/companies/client/LeadAdvisers'
+import DnbSubsidiaries from './apps/companies/apps/dnb-subsidiaries/client/DnbSubsidiaries'
 
 const appWrapper = document.getElementById('react-app')
 
@@ -59,6 +60,9 @@ function App () {
       </Mount>
       <Mount selector="#lead-advisers">
         {props => <LeadAdvisers {...props} />}
+      </Mount>
+      <Mount selector="#dnb-subsidiaries">
+        {props => <DnbSubsidiaries {...props} />}
       </Mount>
     </>
   )

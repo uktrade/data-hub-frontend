@@ -85,6 +85,11 @@
     visibility: visible;
   }
 
+  &:disabled + .c-multiple-choice__label::after,
+  &:disabled + .c-multiple-choice__label::before {
+    opacity: 0.4;
+  }
+
   &:focus + .c-multiple-choice__label::before {
     box-shadow: 0 0 0 3px $focus-colour;
   }

@@ -162,6 +162,19 @@ describe('Company Collections Filter', () => {
     })
   })
 
+  it('should filter by last interaction date', () => {
+    cy.get(selectors.filter.firstInteractionDate).click()
+
+    cy.wait('@filterResults').then(xhr => {
+      expect(xhr.url).to.contain('interaction_between=1')
+    })
+
+    cy
+      .get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 1)
+  })
+
   it('should remove all filters', () => {
     cy.get(selectors.entityCollection.collectionRemoveAllFilter).click()
     cy

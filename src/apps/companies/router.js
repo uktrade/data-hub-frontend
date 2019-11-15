@@ -7,7 +7,6 @@ const { getRequestBody } = require('../../middleware/collection')
 const { getCollection, exportCollection } = require('../../modules/search/middleware/collection')
 
 const { renderCompanyList } = require('./controllers/list')
-const { renderForm } = require('./controllers/edit')
 const { renderDetails } = require('./controllers/details')
 
 const {
@@ -34,7 +33,11 @@ const {
   handleEditFormPost,
 } = require('./controllers/exports')
 
-const { setDefaultQuery, redirectToFirstNavItem, handleRoutePermissions } = require('../middleware')
+const {
+  setDefaultQuery,
+  redirectToFirstNavItem,
+  handleRoutePermissions,
+} = require('../middleware')
 
 const {
   getGlobalHQCompaniesCollection,
@@ -42,11 +45,11 @@ const {
 } = require('./middleware/collection')
 
 const { setCompanyContactRequestBody, getCompanyContactCollection } = require('./middleware/contact-collection')
-const { populateForm, handleFormPost } = require('./middleware/form')
 const { getCompany, setIsCompanyAlreadyAdded, setDoAnyListsExist, addCompanyOrRemoveFromList } = require('./middleware/params')
 const { setInteractionsDetails } = require('./middleware/interactions')
 const { setGlobalHQ, removeGlobalHQ, addSubsidiary } = require('./middleware/hierarchies')
 const setCompaniesLocalNav = require('./middleware/local-navigation')
+const lastInteractionDate = require('./middleware/last-interaction-date')
 
 const { transformCompanyToListItem } = require('./transformers')
 
@@ -59,6 +62,8 @@ const interactionsRouter = require('../interactions/router.sub-app')
 const activityFeedRouter = require('./apps/activity-feed/router')
 const companyListsRouter = require('../company-lists/router')
 
+const dnbSubsidiariesControllers = require('./apps/dnb-subsidiaries/controllers')
+
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.param('companyId', getCompany)
@@ -68,6 +73,7 @@ router.param('companyId', setDoAnyListsExist)
 router.get(urls.companies.index.route,
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   getRequestBody(QUERY_FIELDS),
+  lastInteractionDate,
   getCollection('company', ENTITIES, transformCompanyToListItem),
   renderCompanyList,
 )
@@ -75,6 +81,7 @@ router.get(urls.companies.index.route,
 router.get('/export',
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   getRequestBody(QUERY_FIELDS),
+  lastInteractionDate,
   exportCollection('company'),
 )
 
@@ -86,12 +93,6 @@ router
   .route('/:companyId/exports/edit')
   .get(populateExportForm, renderExportEdit)
   .post(populateExportForm, handleEditFormPost, renderExportEdit)
-
-// TODO: Remove in a separate PR
-router
-  .route('/:companyId/edit-old')
-  .get(populateForm, renderForm)
-  .post(handleFormPost, populateForm, renderForm)
 
 router.post('/:companyId/archive', archiveCompany)
 router.get('/:companyId/unarchive', unarchiveCompany)
@@ -120,6 +121,9 @@ router.get('/:companyId/hierarchies/ghq/remove', removeGlobalHQ)
 
 router.get('/:companyId/hierarchies/subsidiaries/search', getSubsidiaryCompaniesCollection, renderLinkSubsidiary)
 router.get('/:companyId/hierarchies/subsidiaries/:subsidiaryCompanyId/add', addSubsidiary)
+
+router.get(urls.companies.dnbSubsidiaries.index.route, dnbSubsidiariesControllers.renderDnbSubsidiaries)
+router.get(urls.companies.dnbSubsidiaries.data.route, dnbSubsidiariesControllers.fetchSubsidiariesHandler)
 
 router.get('/:companyId/contacts',
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
