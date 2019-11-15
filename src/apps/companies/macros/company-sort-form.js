@@ -17,7 +17,7 @@ const companySortForm = {
         { value: 'modified_on:desc', label: 'Recently updated' },
         { value: 'modified_on:asc', label: 'Least recently updated' },
         { value: 'name:asc', label: 'Company name: A-Z' },
-        { value: 'latest_interaction_date:desc', label: 'Lastest interaction date' },
+        { value: 'latest_interaction_date:desc', label: 'Latest interaction date' },
       ],
     },
   ],
