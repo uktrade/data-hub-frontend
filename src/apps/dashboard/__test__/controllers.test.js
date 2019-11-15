@@ -247,7 +247,6 @@ describe('dashboard controller', () => {
         render: sinon.spy(),
         title: sinon.stub().returnsThis(),
       }
-      global.fetchHomepageDataStub.resolves(global.dashData)
 
       withPopulatedCompanyLists()
       await global.controllers.renderDashboard(
