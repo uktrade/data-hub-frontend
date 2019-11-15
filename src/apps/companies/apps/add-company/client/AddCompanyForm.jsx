@@ -10,7 +10,7 @@ import { H3 } from '@govuk-react/heading'
 
 import { FieldDnbCompany, FieldRadios, FieldSelect, Form, Step } from 'data-hub-components'
 
-import CompanyFoundStep from './CompanyFoundStep'
+import CompanyFoundStep from '~/src/apps/companies/apps/add-company/client/CompanyFoundStep'
 import CompanyNotFoundStep from './CompanyNotFoundStep'
 import { ISO_CODE } from './constants'
 
