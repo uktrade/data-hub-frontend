@@ -2,8 +2,8 @@ const moment = require('moment')
 const { QUERY_FIELDS_MAP } = require('../constants')
 
 const QUERY_PARAM = QUERY_FIELDS_MAP.lastInteractionDate
-const START_DATE_PARAM = 'last_interaction_date_before'
-const END_DATE_PARAM = 'last_interaction_date_after'
+const START_DATE_PARAM = 'latest_interaction_date_before'
+const END_DATE_PARAM = 'latest_interaction_date_after'
 const DATE_FORMAT = 'YYYY-MM-DD'
 
 function getTimestamp (offset) {
