@@ -32,11 +32,19 @@ describe('Add Adviser', () => {
       .as('list')
       .should($element => expect($element.prop('tagName')).to.equal('UL'))
       .find('li')
-      .contains('Your name and team will be displayed on top of the company page, as well as in the Lead Adviser tab')
+      .contains(
+        'Your name and team will be displayed on top of the company page, ' +
+        'as well as in the Lead Adviser tab'
+      )
       .next()
-      .contains('This will also replace Lead ITAs set on any subsidiaries of this company')
+      .contains(
+        'This will also replace Lead ITAs set on ' +
+        'any subsidiaries of this company'
+      )
       .next()
-      .contains('Other ITAs will be able to replace you as the Lead ITA for the company')
+      .contains(
+        'Other ITAs will be able to replace you as the Lead ITA for the company'
+      )
 
     cy.get('@list')
       .next()
