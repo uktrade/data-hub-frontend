@@ -44,7 +44,7 @@ const LOCAL_NAV = [
   },
   {
     path: 'advisers',
-    label: 'Lead Advisers',
+    label: 'Lead adviser',
   },
   {
     path: 'investments',
