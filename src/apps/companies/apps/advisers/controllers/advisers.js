@@ -1,21 +1,29 @@
-const { getOneListGroupCoreTeam } = require('../repos')
-const config = require('../../../config')
-const { transformCoreTeamToCollection } = require('../transformers')
-const { coreTeamLabels } = require('../labels')
-const { isItaTierDAccount } = require('../../../lib/is-tier-type-company')
+const { getOneListGroupCoreTeam } = require('../../../repos')
+const config = require('../../../../../config')
+const { transformCoreTeamToCollection, transformAccountManager } = require('../../../transformers')
+const { coreTeamLabels } = require('../../../labels')
+const { isItaTierDAccount } = require('../../../../../lib/is-tier-type-company')
+const { companies } = require('../../../../../../src/lib/urls')
 
 function renderLeadAdvisers (req, res) {
   const { company, user: { permissions } } = res.locals
-  const { name } = company
+  const hasAccountManager = !!company.one_list_group_global_account_manager
+  const { name = null, team = null, email = null } = hasAccountManager ? transformAccountManager(company) : {}
+
   res
-    .breadcrumb(company.name, `/companies/${company.id}`)
-    .breadcrumb('Lead Advisers')
+    .breadcrumb(company.name, `${companies.detail(company.id)}`)
+    .breadcrumb('Lead adviser')
     .render('companies/views/lead-advisers', {
       props: {
-        company: name,
-        pageUrl: `/companies/${company.id}/advisers/confirm`,
-        hasPermission: permissions.includes('company.change_regional_account_manager'),
-        isItaTierDAccount: isItaTierDAccount(company),
+        hasAccountManager,
+        name,
+        team,
+        email,
+        companyName: company.name,
+        companyId: company.id,
+        confirmUrl: `${companies.advisers.confirm(company.id)}`,
+        replaceUrl: `${companies.advisers.replace(company.id)}`,
+        hasPermissionToAddIta: permissions.includes('company.change_regional_account_manager'),
       },
     })
 }

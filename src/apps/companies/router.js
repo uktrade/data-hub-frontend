@@ -21,7 +21,6 @@ const { renderDocuments } = require('./controllers/documents')
 const { renderAddGlobalHQ } = require('./controllers/hierarchies')
 const { renderSubsidiaries } = require('./controllers/subsidiaries')
 const { renderLinkSubsidiary } = require('./controllers/subsidiary-link')
-const { renderAdvisers } = require('./controllers/advisers')
 
 const {
   renderExports,
@@ -58,6 +57,7 @@ const matchingRouter = require('./apps/matching/router')
 const interactionsRouter = require('../interactions/router.sub-app')
 const activityFeedRouter = require('./apps/activity-feed/router')
 const companyListsRouter = require('../company-lists/router')
+const advisersRouter = require('./apps/advisers/router')
 
 const dnbSubsidiariesControllers = require('./apps/dnb-subsidiaries/controllers')
 
@@ -100,8 +100,6 @@ router.get('/:companyId/details', renderDetails)
 
 router.get('/:companyId/business-details', renderBusinessDetails)
 
-router.get('/:companyId/advisers', renderAdvisers)
-
 router.get('/:companyId/hierarchies/ghq/search', getGlobalHQCompaniesCollection, renderAddGlobalHQ)
 router.get(urls.companies.hierarchies.ghq.add.route, setGlobalHQ)
 router.get('/:companyId/hierarchies/ghq/remove', removeGlobalHQ)
@@ -129,6 +127,7 @@ router.use('/:companyId/investments', investmentsRouter)
 router.use('/:companyId/matching', matchingRouter)
 router.use('/:companyId', setInteractionsDetails, interactionsRouter)
 router.use('/:companyId/activity', activityFeedRouter)
+router.use('/:companyId/advisers', advisersRouter)
 
 router.post('/:companyId/manage-company-list', addCompanyOrRemoveFromList)
 

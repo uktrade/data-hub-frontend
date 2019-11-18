@@ -8,8 +8,8 @@ import DeleteCompanyList from './apps/company-lists/client/DeleteCompanyList'
 import MyCompanies from './apps/dashboard/client/MyCompanies.jsx'
 import CreateListFormSection from './apps/company-lists/client/CreateListFormSection'
 import AddRemoveFromListSection from './apps/company-lists/client/AddRemoveFromListSection'
-import LeadAdvisers from './apps/companies/client/LeadAdvisers'
 import DnbSubsidiaries from './apps/companies/apps/dnb-subsidiaries/client/DnbSubsidiaries'
+import LeadAdvisers from './apps/companies/apps/advisers/client/LeadAdvisers'
 
 const appWrapper = document.getElementById('react-app')
 
