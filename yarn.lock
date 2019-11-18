@@ -1523,10 +1523,10 @@
   resolved "https://registry.yarnpkg.com/@uktrade/datahub-header/-/datahub-header-1.2.0.tgz#45c380eb18c40994d5a0fc36a25cce1a942dbb0c"
   integrity sha512-OhzrnEuppfRbi3z+QZhbVKLQgwE3CCsG5dNQCz1WnQcqUDRJHvuqJJdGzDlEmnlJvUSwQn3ruyhs4BvKYDgKJw==
 
-"@uktrade/wdio-image-diff-js@1.0.173":
-  version "1.0.173"
-  resolved "https://registry.yarnpkg.com/@uktrade/wdio-image-diff-js/-/wdio-image-diff-js-1.0.173.tgz#c7f410c4645eebf2586b6e3900fda53c7c9ac6bd"
-  integrity sha512-D8db4d4e4imUl9gKkj5AB4HAcIs0ifbPcNHvAIur+XyuZGo02XjmwM9gnbftlKRkxbBgIUJVMXqie9SBK6RA9A==
+"@uktrade/wdio-image-diff-js@1.0.180":
+  version "1.0.180"
+  resolved "https://registry.yarnpkg.com/@uktrade/wdio-image-diff-js/-/wdio-image-diff-js-1.0.180.tgz#cc23cbe5a0bb9b52de49c40b687ee38f864f8cfa"
+  integrity sha512-C30EWSrNhED7qQSfpYOJmEhOYMoJy+b7vDbehVnckoLW/ia5VNGdPlQzuIaFvZa7i5denIS1W+2TecEvjO6UIg==
   dependencies:
     "@babel/runtime" "^7.5.5"
     arg "^4.1.1"

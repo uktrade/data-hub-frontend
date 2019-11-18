@@ -31,6 +31,7 @@
     "test:e2e:dit": "CYPRESS_integrationFolder=test/end-to-end/cypress/specs/DIT cypress run",
     "test:e2e:watch": "CYPRESS_integrationFolder=test/end-to-end/cypress/specs cypress open",
     "test:visual": "./node_modules/.bin/wdio test/visual/wdio.conf.js",
+    "test:visual:update": "wdio-image-diff -u",
     "coverage": "nyc --reporter=html --reporter=text --reporter=lcov npm run test:unit",
     "circle:unit": "nyc --reporter=lcov npm run test:unit -- --reporter mocha-circleci-reporter && codeclimate-test-reporter < coverage/lcov.info",
     "circle:unit-client": "mocha-webpack --webpack-config webpack.config.js ./test/unit-client/assets/javascripts/**/*.test.js --opts ./test/unit-client/mocha.opts --reporter mocha-circleci-reporter ./test/unit-client/assets/javascripts/**/*.test.js",
@@ -146,7 +147,7 @@
   },
   "devDependencies": {
     "@uktrade/client-matrix-js": "^1.0.38",
-    "@uktrade/wdio-image-diff-js": "1.0.173",
+    "@uktrade/wdio-image-diff-js": "1.0.180",
     "@vue/test-utils": "^1.0.0-beta.25",
     "@wdio/browserstack-service": "^5.9.3",
     "@wdio/cli": "5.10.0",
