@@ -22,7 +22,7 @@ describe('Lead advisers', () => {
       cy.get(selectors.companyLeadAdviser.header).should('have.text', 'Lead ITA for Mars Exports Ltd')
     })
     it('should display a button to add myself as lead adviser', () => {
-      cy.contains('Add myself as Lead ITA').invoke('attr', 'href').should('eq', companies.advisers.confirm(fixtures.company.marsExportsLtd.id))
+      cy.contains('Add myself as Lead ITA').invoke('attr', 'href').should('eq', `/companies/${fixtures.company.marsExportsLtd.id}/advisers/add`)
     })
   })
   context('when viewing a One List Tier company', () => {
