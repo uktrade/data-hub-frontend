@@ -73,7 +73,6 @@ module.exports = {
       index: url('/companies', '/:companyId/activity'),
       data: url('/companies', '/:companyId/activity/data'),
     },
-    advisers: url('/companies', '/:companyId/advisers'),
     businessDetails: url('/companies', '/:companyId/business-details'),
     detail: url('/companies', '/:companyId'),
     dnbSubsidiaries: {
@@ -81,10 +80,16 @@ module.exports = {
       data: url('/companies', '/:companyId/dnb-subsidiaries/data'),
     },
     exports: url('/companies', '/:companyId/exports'),
+    audit: url('/companies', '/:companyId/audit'),
     hierarchies: {
       ghq: {
         add: url('/companies', '/:companyId/hierarchies/ghq/:globalHqId/add'),
       },
+    },
+    advisers: {
+      index: url('/companies', '/:companyId/advisers'),
+      confirm: url('/companies', '/:companyId/advisers/confirm'),
+      replace: url('/companies', '/:companyId/advisers/replace'),
     },
     index: url('/companies'),
     subsidiaries: url('/companies', '/:companyId/subsidiaries'),
