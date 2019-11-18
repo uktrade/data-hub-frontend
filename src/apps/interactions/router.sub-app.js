@@ -8,6 +8,7 @@ const { renderInteractionsForEntity } = require('./controllers/list')
 const { postDetails, getInteractionDetails } = require('./middleware/details')
 const { getInteractionsRequestBody, getInteractionCollectionForEntity, getInteractionSortForm } = require('./middleware/collection')
 const { detectUserAgent } = require('../../middleware/detect-useragent')
+const urls = require('../../lib/urls')
 
 router.param('interactionId', getInteractionDetails)
 
@@ -19,7 +20,7 @@ router.get('/interactions',
 )
 
 router
-  .route([ '/interactions/create', '/interactions/:interactionId/create' ])
+  .route(urls.interactions.subapp.create.route)
   .post(
     postCreate,
     renderCreate,
