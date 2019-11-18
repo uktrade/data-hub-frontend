@@ -1,10 +1,10 @@
 const buildMiddlewareParameters = require('../../../../../../../test/unit/helpers/middleware-parameters-builder.js')
-const config = require('../../../../../../../src/config')
+const config = require('../../../../../../config')
 const companyMock = require('../../../../../../../test/unit/data/companies/companies-house.json')
 const coreTeamMock = require('../../../../../../../test/unit/data/companies/one-list-group-core-team.json')
 
-const { renderAdvisers } = require('../../../../../../../src/apps/companies/apps/advisers/controllers/advisers')
-const { companies } = require('../../../../../../../src/lib/urls')
+const { renderAdvisers } = require('../advisers')
+const { companies } = require('../../../../../../lib/urls')
 
 let middlewareParameters
 
