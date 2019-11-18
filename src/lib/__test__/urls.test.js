@@ -34,13 +34,17 @@ describe('urls', () => {
       companyId = faker.random.uuid()
     })
     it('should return the correct values', () => {
+      expect(urls.companies.index.mountPoint).to.equal('/companies')
+      expect(urls.companies.index.route).to.equal('/')
+      expect(urls.companies.index()).to.equal('/companies')
+
+      expect(urls.companies.detail.route).to.equal('/:companyId')
+      expect(urls.companies.detail(companyId)).to.equal(`/companies/${companyId}`)
+
       expect(urls.companies.activity.data(companyId)).to.equal(`/companies/${companyId}/activity/data`)
       expect(urls.companies.activity.index(companyId)).to.equal(`/companies/${companyId}/activity`)
 
       expect(urls.companies.advisers(companyId)).to.equal(`/companies/${companyId}/advisers`)
-
-      expect(urls.companies.detail.route).to.equal('/:companyId')
-      expect(urls.companies.detail(companyId)).to.equal(`/companies/${companyId}`)
 
       expect(urls.companies.dnbSubsidiaries.index.route).to.equal('/:companyId/dnb-subsidiaries')
       expect(urls.companies.dnbSubsidiaries.index(companyId)).to.equal(`/companies/${companyId}/dnb-subsidiaries`)
@@ -51,17 +55,16 @@ describe('urls', () => {
       expect(urls.companies.exports.route).to.equal('/:companyId/exports')
       expect(urls.companies.exports(companyId)).to.equal(`/companies/${companyId}/exports`)
 
+      expect(urls.companies.subsidiaries(companyId)).to.equal(`/companies/${companyId}/subsidiaries`)
+
       const globalHqId = faker.random.uuid()
       expect(urls.companies.hierarchies.ghq.add.route).to.equal('/:companyId/hierarchies/ghq/:globalHqId/add')
       expect(urls.companies.hierarchies.ghq.add(companyId, globalHqId)).to.equal(`/companies/${companyId}/hierarchies/ghq/${globalHqId}/add`)
 
-      expect(urls.companies.index.mountPoint).to.equal('/companies')
-      expect(urls.companies.index.route).to.equal('/')
-      expect(urls.companies.index()).to.equal('/companies')
-
+      const interactionId = faker.random.uuid()
+      expect(urls.companies.interactions.create.route).to.equal(`/interactions/:interactionId?/create`)
       expect(urls.companies.interactions.create(companyId)).to.equal(`/companies/${companyId}/interactions/create`)
-
-      expect(urls.companies.subsidiaries(companyId)).to.equal(`/companies/${companyId}/subsidiaries`)
+      expect(urls.companies.interactions.create(companyId, interactionId)).to.equal(`/companies/${companyId}/interactions/${interactionId}/create`)
     })
   })
 
@@ -70,11 +73,14 @@ describe('urls', () => {
       expect(urls.contacts.index.mountPoint).to.equal('/contacts')
       expect(urls.contacts.index.route).to.equal('/')
       expect(urls.contacts.index()).to.equal('/contacts')
+
+      const contactId = faker.random.uuid()
+      expect(urls.contacts.interactions.create(contactId)).to.equal(`/contacts/${contactId}/interactions/create`)
     })
   })
 
   describe('search', () => {
-    it('should return the correct values ', () => {
+    it('should return the correct values', () => {
       expect(urls.search.index.mountPoint).to.equal('/search')
       expect(urls.search.index.route).to.equal('/')
       expect(urls.search.index()).to.equal('/search')
@@ -82,6 +88,15 @@ describe('urls', () => {
       const type = faker.lorem.word()
       expect(urls.search.type.route).to.equal('/:searchPath?')
       expect(urls.search.type(type)).to.equal(`/search/${type}`)
+    })
+  })
+
+  describe('interactions', () => {
+    describe('subapp', () => {
+      it('should return the correct values', () => {
+        expect(urls.interactions.subapp.create.mountPoint).to.equal(null)
+        expect(urls.interactions.subapp.create.route).to.equal('/interactions/:interactionId?/create')
+      })
     })
   })
 })
