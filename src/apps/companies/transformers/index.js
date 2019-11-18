@@ -3,7 +3,6 @@ const transformCompanyToExportDetailsView = require('./company-to-export-details
 const transformCompanyToAboutView = require('./company-to-about-view')
 const transformCompanyToListItem = require('./company-to-list-item')
 const transformCompanyToOneListView = require('./company-to-one-list-view')
-const transformCompanyToRegionView = require('./company-to-region-view')
 const transformCompanyToSubsidiaryListItem = require('./company-to-subsidiary-list-item')
 const transformCoreTeamToCollection = require('./one-list-core-team-to-collection')
 
@@ -13,7 +12,6 @@ module.exports = {
   transformCompanyToAboutView,
   transformCompanyToListItem,
   transformCompanyToOneListView,
-  transformCompanyToRegionView,
   transformCompanyToSubsidiaryListItem,
   transformCoreTeamToCollection,
 }

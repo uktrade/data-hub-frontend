@@ -13,9 +13,6 @@ const {
   renderBusinessDetails,
 } = require('./controllers/business-details')
 
-const { renderRegion, updateRegion } = require('./controllers/business-details-region')
-const { renderSector, updateSector } = require('./controllers/business-details-sector')
-
 const { renderOrders } = require('./controllers/orders')
 const { renderAuditLog } = require('./controllers/audit')
 const { archiveCompany, unarchiveCompany } = require('./controllers/archive')
@@ -102,16 +99,6 @@ router.get('/:companyId', redirectToFirstNavItem)
 router.get('/:companyId/details', renderDetails)
 
 router.get('/:companyId/business-details', renderBusinessDetails)
-
-router
-  .route('/:companyId/business-details/region')
-  .get(renderRegion)
-  .post(updateRegion)
-
-router
-  .route('/:companyId/business-details/sector')
-  .get(renderSector)
-  .post(updateSector)
 
 router.get('/:companyId/advisers', renderAdvisers)
 
