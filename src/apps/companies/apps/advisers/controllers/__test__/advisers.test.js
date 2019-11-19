@@ -1,10 +1,9 @@
-const requestErrors = require('request-promise/errors')
 const buildMiddlewareParameters = require('../../../../../../../test/unit/helpers/middleware-parameters-builder.js')
 const config = require('../../../../../../config')
 const companyMock = require('../../../../../../../test/unit/data/companies/companies-house.json')
 const coreTeamMock = require('../../../../../../../test/unit/data/companies/one-list-group-core-team.json')
 
-const { renderAdvisers, renderAddAdviserForm, addAdviser } = require('../advisers')
+const { renderAdvisers } = require('../advisers')
 const { companies } = require('../../../../../../lib/urls')
 
 let middlewareParameters
@@ -193,82 +192,6 @@ describe('Company adviser list controller', () => {
           expect(middlewareParameters.nextSpy).to.not.be.called
         })
       })
-    })
-  })
-
-  describe('#renderAddAdviserForm', () => {
-    it('Should do exactly what it does', () => {
-      const res = {
-        locals: {
-          company: {
-            id: 'foo',
-            name: 'bar',
-          },
-          csrfToken: 'baz',
-        },
-        breadcrumb: sinon.stub().returnsThis(),
-        render: sinon.stub(),
-      }
-      renderAddAdviserForm(undefined, res)
-      expect(res.breadcrumb.args).to.deep.equal([
-        ['bar', '/companies/foo'],
-        ['Confirm you are the Lead ITA'],
-      ])
-      expect(res.render).to.be.calledWith(
-        'companies/views/add-adviser.njk',
-        {
-          props: {
-            csrfToken: 'baz',
-          },
-        },
-      )
-    })
-  })
-
-  describe('#addAdviser', () => {
-    const fixture = status => {
-      nock(config.apiRoot)
-        .post('/v4/company/bar/self-assign-account-manager')
-        .reply(status, {})
-
-      return {
-        req: {
-          session: {
-            token: 'foo',
-          },
-          flash: sinon.spy(),
-        },
-        res: {
-          locals: {
-            company: {
-              id: 'bar',
-            },
-          },
-          redirect: sinon.spy(),
-        },
-        next: sinon.spy(),
-      }
-    }
-
-    it('Should show a flash message and redirect when the request is OK', async () => {
-      const { req, res, next } = fixture(204)
-      await addAdviser(req, res, next)
-      expect(res.redirect)
-        .to.have.been.calledOnceWith('/companies/bar/advisers')
-      expect(req.flash).to.have.been.calledOnceWith(
-        'success',
-        'Lead adviser information updated',
-      )
-      expect(next).not.to.have.been.called
-    })
-
-    it('Should show propagate the error if the request is not OK', async () => {
-      const { req, res, next } = fixture(500)
-      await addAdviser(req, res, next)
-      expect(res.redirect).not.to.have.been.called
-      expect(req.flash).not.to.have.been.called
-      expect(next).to.have.been.calledOnce
-      expect(next.args[0][0]).to.be.instanceOf(requestErrors.StatusCodeError)
     })
   })
 })

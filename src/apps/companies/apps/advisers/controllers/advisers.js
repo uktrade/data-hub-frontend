@@ -69,6 +69,7 @@ async function renderAdvisers (req, res, next) {
     : await renderCoreTeamAdvisers(req, res, next)
 }
 
+// istanbul ignore next: Only testable with whitebox tests and alerady covered by functional tests
 function renderAddAdviserForm (req, res) {
   const { company, csrfToken } = res.locals
 
@@ -80,6 +81,7 @@ function renderAddAdviserForm (req, res) {
     })
 }
 
+// istanbul ignore next: Only testable with whitebox tests and alerady covered by functional tests
 async function addAdviser (req, res, next) {
   const { company: { id } } = res.locals
 
