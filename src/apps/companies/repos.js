@@ -86,7 +86,7 @@ function getCompanySubsidiaries (token, companyId, page = 1) {
   })
 }
 
-function getUltimateHQSubsidiaries (token, globalUltimateDunnsNumber) {
+function getGlobalUltimateHierarchy (token, globalUltimateDunnsNumber) {
   return authorisedRequest(token, {
     url: `${config.apiRoot}/v4/company`,
     qs: {
@@ -131,7 +131,7 @@ module.exports = {
   updateCompany,
   getCompanyAuditLog,
   getCompanySubsidiaries,
-  getUltimateHQSubsidiaries,
+  getGlobalUltimateHierarchy,
   getOneListGroupCoreTeam,
   saveDnbCompany,
   saveDnbCompanyInvestigation,

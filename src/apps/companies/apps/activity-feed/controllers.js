@@ -1,38 +1,34 @@
-const { ACTIVITY_TYPE_FILTERS } = require('../../constants')
-const { fetchActivityFeed } = require('./repos')
-const { buildEsFilterQuery } = require('./builders')
-const { getUltimateHQSubsidiaries } = require('../../repos')
+const { FILTER_ITEMS, FILTER_KEYS } = require('./constants')
+const { getGlobalUltimateHierarchy } = require('../../repos')
 const { companies } = require('../../../../lib/urls')
+const { createESFilters } = require('./builders')
+const { fetchActivityFeed } = require('./repos')
+const config = require('../../../../config')
 
 async function renderActivityFeed (req, res, next) {
-  const { allActivity, dataHubActivity, externalActivity, myActivity } = ACTIVITY_TYPE_FILTERS
   const { company, features } = res.locals
   const { token } = req.session
 
-  const addActivityTypeFilter = {
-    allActivity,
-    myActivity,
-    externalActivity,
-    dataHubActivity,
-  }
-
   try {
-    const addContentProps = company.archived ? {} : {
-      addContentText: 'Add interaction',
-      addContentLink: companies.interactions.create(company.id),
-      addActivityTypeFilter,
-      isTypeFilterEnabled: features['activity-feed-type-filter-enabled'],
+    const contentProps = company.archived ? {} : {
+      contentText: 'Add interaction',
+      contentLink: companies.interactions.create(company.id),
+      activityTypeFilter: FILTER_KEYS.dataHubActivity,
+      activityTypeFilters: FILTER_ITEMS,
+      isGlobalUltimate: company.is_global_ultimate,
+      isTypeFilterFlagEnabled: features['activity-feed-type-filter-enabled'],
+      isGlobalUltimateFlagEnabled: features['companies-ultimate-hq'],
     }
 
     const props = {
-      ...addContentProps,
+      ...contentProps,
       apiEndpoint: companies.activity.data(company.id),
     }
 
     if (company.is_global_ultimate) {
-      const subsidiaries = await getUltimateHQSubsidiaries(token, company.global_ultimate_duns_number)
-      // Substract the Utlimate HQ from the count
-      props.subsidiaryCount = subsidiaries.results.length - 1
+      const { results } = await getGlobalUltimateHierarchy(token, company.global_ultimate_duns_number)
+      props.dnbHierarchyCount = results.length
+      props.dnbSubsidiaryCount = results.length - 1 // Substract the Global Utlimate
     }
 
     res
@@ -46,14 +42,26 @@ async function renderActivityFeed (req, res, next) {
 
 async function fetchActivityFeedHandler (req, res, next) {
   try {
+    const { token } = req.session
     const { company, user } = res.locals
-    const { from = 0, queryParams = {} } = req.query
+    const {
+      from = 0,
+      size = config.activityFeed.paginationSize,
+      activityTypeFilter = FILTER_KEYS.dataHubActivity,
+      showDnbHierarchy = false,
+    } = req.query
+
+    let ultimateHQSubsidiaryIds = []
+    if (company.is_global_ultimate && showDnbHierarchy) {
+      const { results } = await getGlobalUltimateHierarchy(token, company.global_ultimate_duns_number)
+      ultimateHQSubsidiaryIds = results.filter((company) => !company.is_global_ultimate).map((company) => company.id)
+    }
 
     const results = await fetchActivityFeed({
       token: req.session.token,
       from,
-      companyId: company.id,
-      filter: buildEsFilterQuery(queryParams, user),
+      size,
+      filter: createESFilters(activityTypeFilter, ultimateHQSubsidiaryIds, company, user),
     })
 
     res.json(results)

@@ -1,24 +1,22 @@
 const config = require('../../../../config')
 const { authorisedRequest } = require('../../../../lib/authorised-request')
-const { buildActivityFeedFilters } = require('./builders')
 
 function fetchActivityFeed ({
   token,
-  size = config.activityFeed.paginationSize,
-  from = 0,
-  companyId,
-  filter = '',
+  from,
+  size,
+  filter,
 }) {
   const requestBody = {
     size,
     from,
-    sort: {
-      'object.startTime': 'desc',
-    },
     query: {
       bool: {
-        filter: buildActivityFeedFilters(companyId, filter),
+        filter,
       },
+    },
+    sort: {
+      'object.startTime': 'desc',
     },
   }
 

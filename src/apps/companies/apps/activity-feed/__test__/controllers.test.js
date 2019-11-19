@@ -1,328 +1,355 @@
 const activityFeedEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-from-es.json')
 const buildMiddlewareParameters = require('../../../../../../test/unit/helpers/middleware-parameters-builder')
 const companyMock = require('../../../../../../test/unit/data/company.json')
-const { ACTIVITY_TYPE_FILTER_KEYS } = require('../../../constants')
-const { ACTIVITY_TYPE_FILTERS } = require('../../../constants')
+const { FILTER_ITEMS, FILTER_KEYS, ES_KEYS_GROUPED } = require('../constants')
 const { companies } = require('../../../../../lib/urls')
-const config = require('../../../../../config')
 
 describe('Activity feed controllers', () => {
+  let fetchActivityFeedStub, getGlobalUltimateHierarchyStub, controllers, middlewareParameters
   describe('#fetchActivityFeedHandler', () => {
-    beforeEach(() => {
-      global.fetchActivityFeedStub = sinon.stub().resolves(activityFeedEsFixtures)
-      global.controllers = proxyquire('../../src/apps/companies/apps/activity-feed/controllers', {
+    before(() => {
+      fetchActivityFeedStub = sinon.stub().resolves(activityFeedEsFixtures)
+      getGlobalUltimateHierarchyStub = sinon.stub().resolves({ results: [{ id: '123' }, { id: '456' }] })
+
+      controllers = proxyquire('../../src/apps/companies/apps/activity-feed/controllers', {
         './repos': {
-          fetchActivityFeed: global.fetchActivityFeedStub,
+          fetchActivityFeed: fetchActivityFeedStub,
+        },
+        '../../repos': {
+          getGlobalUltimateHierarchy: getGlobalUltimateHierarchyStub,
         },
       })
     })
 
-    context('when fetching feed for a company', () => {
-      beforeEach(async () => {
-        global.middlewareParameters = buildMiddlewareParameters({
+    const commonTests = (types, attributedTo) => {
+      expect(fetchActivityFeedStub).to.be.calledWith({
+        token: '1234',
+        from: 0,
+        size: 20,
+        filter: [
+          {
+            terms: {
+              'object.type': types,
+            },
+          },
+          {
+            terms: {
+              'object.attributedTo.id': attributedTo,
+            },
+          },
+        ],
+      })
+      expect(middlewareParameters.resMock.json).to.be.calledOnceWithExactly(activityFeedEsFixtures)
+    }
+
+    context('when fetching activity (no filter) for a company', () => {
+      before(async () => {
+        middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
         })
 
-        await global.controllers.fetchActivityFeedHandler(
-          global.middlewareParameters.reqMock,
-          global.middlewareParameters.resMock,
-          global.middlewareParameters.nextSpy,
+        await controllers.fetchActivityFeedHandler(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy,
         )
       })
 
       it('should call fetchActivityFeed with default params', async () => {
-        const expectedParams = {
-          companyId: 'dcdabbc9-1781-e411-8955-e4115bead28a',
-          filter: {
-            terms: {
-              'object.type': config.activityFeed.supportedActivityTypes,
-            },
-          },
-          from: 0,
-          token: '1234',
-        }
-
-        expect(global.fetchActivityFeedStub).to.be.calledWith(expectedParams)
-        expect(global.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(activityFeedEsFixtures)
+        const { dataHubActivity } = ES_KEYS_GROUPED
+        commonTests(dataHubActivity, ['dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a'])
       })
     })
 
-    context('when filtering for "all" activity feed for a company', () => {
-      const { allActivity } = ACTIVITY_TYPE_FILTER_KEYS
-      beforeEach(async () => {
-        global.middlewareParameters = buildMiddlewareParameters({
+    context('when filtering on "All activity" for a company', () => {
+      before(async () => {
+        middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
           requestQuery: {
-            queryParams: 'all',
+            activityTypeFilter: 'allActivity',
+            showDnbHierarchy: false,
           },
         })
 
-        await global.controllers.fetchActivityFeedHandler(
-          global.middlewareParameters.reqMock,
-          global.middlewareParameters.resMock,
-          global.middlewareParameters.nextSpy,
+        await controllers.fetchActivityFeedHandler(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy,
         )
       })
 
       it('should call fetchActivityFeed with the right params', async () => {
-        const expectedParams = { companyId: 'dcdabbc9-1781-e411-8955-e4115bead28a', filter: { 'terms': { 'object.type': allActivity } }, from: 0, token: '1234' }
-
-        expect(global.fetchActivityFeedStub).to.be.calledWith(expectedParams)
-        expect(global.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(activityFeedEsFixtures)
+        const { allActivity } = ES_KEYS_GROUPED
+        commonTests(allActivity, ['dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a'])
       })
     })
 
-    context('when filtering for "my" activity feed for a company', () => {
-      beforeEach(async () => {
-        global.middlewareParameters = buildMiddlewareParameters({
+    context('when filtering on "My activity" for a company', () => {
+      before(async () => {
+        middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
           requestQuery: {
-            queryParams: 'my-activity',
+            activityTypeFilter: 'myActivity',
+            showDnbHierarchy: false,
           },
           user: {
             id: 123,
           },
         })
 
-        await global.controllers.fetchActivityFeedHandler(
-          global.middlewareParameters.reqMock,
-          global.middlewareParameters.resMock,
-          global.middlewareParameters.nextSpy,
+        await controllers.fetchActivityFeedHandler(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy,
         )
       })
 
-      it('should call fetchActivityFeed with "my" user id', async () => {
-        const expectedParams = {
-          companyId: 'dcdabbc9-1781-e411-8955-e4115bead28a',
-          filter: { 'terms': { 'object.attributedTo.id': ['dit:DataHubAdviser:123'] } },
-          from: 0,
-          token: '1234',
-        }
-
-        expect(global.fetchActivityFeedStub).to.be.calledWith(expectedParams)
-        expect(global.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(activityFeedEsFixtures)
+      it('should call fetchActivityFeed with a user id', async () => {
+        const { dataHubActivity } = ES_KEYS_GROUPED
+        commonTests(dataHubActivity, [
+          'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+          'dit:DataHubAdviser:123',
+        ])
       })
     })
 
-    context('when filtering for "data-hub activity" activity feed for a company', () => {
-      const { dataHubActivity } = ACTIVITY_TYPE_FILTER_KEYS
-      beforeEach(async () => {
-        global.middlewareParameters = buildMiddlewareParameters({
+    context('when filtering on "Data Hub activity" for a company', () => {
+      before(async () => {
+        middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
           requestQuery: {
-            queryParams: 'datahub-activity',
+            activityTypeFilter: 'dataHubActivity',
+            showDnbHierarchy: false,
           },
         })
 
-        await global.controllers.fetchActivityFeedHandler(
-          global.middlewareParameters.reqMock,
-          global.middlewareParameters.resMock,
-          global.middlewareParameters.nextSpy,
+        await controllers.fetchActivityFeedHandler(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy,
         )
       })
 
       it('should call fetchActivityFeed with the right params', async () => {
-        const expectedParams = {
-          companyId: 'dcdabbc9-1781-e411-8955-e4115bead28a',
-          filter: { 'terms': { 'object.type': dataHubActivity } },
-          from: 0,
-          token: '1234',
-        }
-
-        expect(global.fetchActivityFeedStub).to.be.calledWith(expectedParams)
-        expect(global.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(activityFeedEsFixtures)
+        const { dataHubActivity } = ES_KEYS_GROUPED
+        commonTests(dataHubActivity, ['dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a'])
       })
     })
 
-    context('when filtering for "external activity" activity feed for a company', () => {
-      const { externalActivity } = ACTIVITY_TYPE_FILTER_KEYS
-      beforeEach(async () => {
-        global.middlewareParameters = buildMiddlewareParameters({
+    context('when filtering on "External activity"', () => {
+      before(async () => {
+        middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
           requestQuery: {
-            queryParams: 'external-activity',
+            activityTypeFilter: 'externalActivity',
+            showDnbHierarchy: false,
           },
         })
 
-        await global.controllers.fetchActivityFeedHandler(
-          global.middlewareParameters.reqMock,
-          global.middlewareParameters.resMock,
-          global.middlewareParameters.nextSpy,
+        await controllers.fetchActivityFeedHandler(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy,
         )
       })
 
       it('should call fetchActivityFeed with the right params', async () => {
-        const expectedParams = {
-          companyId: 'dcdabbc9-1781-e411-8955-e4115bead28a',
-          filter: { 'terms': { 'object.type': externalActivity } },
-          from: 0,
-          token: '1234',
-        }
+        const { externalActivity } = ES_KEYS_GROUPED
+        commonTests(externalActivity, ['dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a'])
+      })
+    })
 
-        expect(global.fetchActivityFeedStub).to.be.calledWith(expectedParams)
-        expect(global.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(activityFeedEsFixtures)
+    context('when applying both Data Hub activity and Ultimate HQ subsidaries filters', () => {
+      before(async () => {
+        middlewareParameters = buildMiddlewareParameters({
+          company: {
+            ...companyMock,
+            is_global_ultimate: true,
+          },
+          requestQuery: {
+            activityTypeFilter: 'dataHubActivity',
+            showDnbHierarchy: true,
+          },
+        })
+
+        await controllers.fetchActivityFeedHandler(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy,
+        )
+      })
+
+      it('should call fetchActivityFeed with the right params', async () => {
+        const { dataHubActivity } = ES_KEYS_GROUPED
+        commonTests(dataHubActivity, [
+          'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+          'dit:DataHubCompany:123',
+          'dit:DataHubCompany:456',
+        ])
       })
     })
 
     context('when filtering param is invalid', () => {
-      beforeEach(async () => {
-        global.middlewareParameters = buildMiddlewareParameters({
+      before(async () => {
+        middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
           requestQuery: {
-            queryParams: 'foobar',
+            activityTypeFilter: 'foobar',
+            showDnbHierarchy: false,
           },
         })
 
-        await global.controllers.fetchActivityFeedHandler(
-          global.middlewareParameters.reqMock,
-          global.middlewareParameters.resMock,
-          global.middlewareParameters.nextSpy,
+        await controllers.fetchActivityFeedHandler(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy,
         )
       })
 
       it('should call fetchActivityFeed with the right params', async () => {
-        const expectedParams = {
-          companyId: 'dcdabbc9-1781-e411-8955-e4115bead28a',
-          filter: { 'terms': { 'object.type': config.activityFeed.supportedActivityTypes } },
-          from: 0,
-          token: '1234',
-        }
-
-        expect(global.fetchActivityFeedStub).to.be.calledWith(expectedParams)
-        expect(global.middlewareParameters.resMock.json).to.be.calledOnceWithExactly(activityFeedEsFixtures)
+        const { dataHubActivity } = ES_KEYS_GROUPED
+        commonTests(dataHubActivity, ['dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a'])
       })
     })
 
     context('when the endpoint returns error', () => {
-      beforeEach(async () => {
-        global.error = {
-          statusCode: 404,
-        }
-        global.fetchActivityFeedStub.rejects(global.error)
+      let error = {
+        status: 404,
+      }
 
-        global.middlewareParameters = buildMiddlewareParameters({
+      before(async () => {
+        fetchActivityFeedStub.rejects(error)
+        middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
         })
 
-        await global.controllers.fetchActivityFeedHandler(
-          global.middlewareParameters.reqMock,
-          global.middlewareParameters.resMock,
-          global.middlewareParameters.nextSpy,
+        await controllers.fetchActivityFeedHandler(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy,
         )
       })
 
       it('should call next with an error', async () => {
+        const { dataHubActivity } = ES_KEYS_GROUPED
         const expectedParams = {
-          companyId: 'dcdabbc9-1781-e411-8955-e4115bead28a',
-          filter: {
-            terms: {
-              'object.type': config.activityFeed.supportedActivityTypes,
-            },
-          },
-          from: 0,
           token: '1234',
+          from: 0,
+          size: 20,
+          filter: [
+            {
+              terms: {
+                'object.type': dataHubActivity,
+              },
+            },
+            {
+              terms: {
+                'object.attributedTo.id': [
+                  'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                ],
+              },
+            },
+          ],
         }
 
-        expect(global.fetchActivityFeedStub).to.be.calledWith(expectedParams)
-        expect(global.middlewareParameters.resMock.json).to.not.have.been.called
-        expect(global.middlewareParameters.nextSpy).to.have.been.calledWith(global.error)
+        expect(fetchActivityFeedStub).to.be.calledWith(expectedParams)
+        expect(middlewareParameters.resMock.json).to.not.have.been.called
+        expect(middlewareParameters.nextSpy).to.have.been.calledWith(error)
       })
     })
   })
 
   describe('#renderActivityFeed', () => {
     context('when the feed renders successfully', () => {
-      beforeEach(async () => {
-        global.middlewareParameters = buildMiddlewareParameters({
-          company: {
-            ...companyMock,
-          },
+      before(async () => {
+        middlewareParameters = buildMiddlewareParameters({
+          company: companyMock,
           user: {
             id: 123,
           },
         })
 
-        await global.controllers.renderActivityFeed(
-          global.middlewareParameters.reqMock,
-          global.middlewareParameters.resMock,
-          global.middlewareParameters.nextSpy,
+        await controllers.renderActivityFeed(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy,
         )
       })
 
       it('should render', () => {
-        expect(global.middlewareParameters.resMock.render).to.be.calledOnce
+        expect(middlewareParameters.resMock.render).to.be.calledOnce
       })
 
       it('should render the activity feed template', () => {
-        const companyId = global.middlewareParameters.resMock.locals.company.id
-        expect(global.middlewareParameters.resMock.render).to.be.calledOnceWithExactly(
+        const companyId = middlewareParameters.resMock.locals.company.id
+        expect(middlewareParameters.resMock.render).to.be.calledOnceWithExactly(
           'companies/apps/activity-feed/views/client-container', {
             props: {
-              addActivityTypeFilter: {
-                ...ACTIVITY_TYPE_FILTERS,
-              },
-              addContentLink: companies.interactions.create(companyId),
-              addContentText: 'Add interaction',
+              contentLink: companies.interactions.create(companyId),
+              contentText: 'Add interaction',
+              activityTypeFilter: FILTER_KEYS.dataHubActivity,
+              activityTypeFilters: FILTER_ITEMS,
               apiEndpoint: companies.activity.data(companyId),
-              isTypeFilterEnabled: undefined,
+              isGlobalUltimate: false,
+              isTypeFilterFlagEnabled: undefined,
+              isGlobalUltimateFlagEnabled: undefined,
             },
           })
       })
 
       it('should add a breadcrumb', () => {
-        expect(global.middlewareParameters.resMock.breadcrumb.firstCall).to.be.calledWith(
+        expect(middlewareParameters.resMock.breadcrumb.firstCall).to.be.calledWith(
           'Wonka Industries',
-          '/companies/dcdabbc9-1781-e411-8955-e4115bead28a'
+          companies.detail('dcdabbc9-1781-e411-8955-e4115bead28a')
         )
-        expect(global.middlewareParameters.resMock.breadcrumb.lastCall).to.be.calledWith('Activity Feed')
+        expect(middlewareParameters.resMock.breadcrumb.lastCall).to.be.calledWith('Activity Feed')
       })
 
       it('should not call "next" with an error', async () => {
-        expect(global.middlewareParameters.nextSpy).to.not.have.been.called
+        expect(middlewareParameters.nextSpy).to.not.have.been.called
       })
     })
 
     context('when viewing the Ulitmate HQ block', () => {
-      beforeEach(async () => {
-        nock(config.apiRoot)
-          .get(`/v4/company?limit=200&global_ultimate_duns_number=123456789`)
-          .reply(200, { results: [{}, {}, {}] })
-
-        global.middlewareParameters = buildMiddlewareParameters({
+      before(async () => {
+        middlewareParameters = buildMiddlewareParameters({
           company: {
             ...companyMock,
             is_global_ultimate: true,
           },
         })
 
-        await global.controllers.renderActivityFeed(
-          global.middlewareParameters.reqMock,
-          global.middlewareParameters.resMock,
-          global.middlewareParameters.nextSpy,
+        await controllers.renderActivityFeed(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy,
         )
       })
 
-      it('should make an API call to get the Ultimate HQ subsidiary count', () => {
-        const companyId = global.middlewareParameters.resMock.locals.company.id
-        expect(global.middlewareParameters.resMock.render).to.be.calledOnceWithExactly(
+      it('should set both the "DnB Hierarchy" and "DnB Subsidiary" counts', () => {
+        const companyId = 'dcdabbc9-1781-e411-8955-e4115bead28a'
+        expect(middlewareParameters.resMock.render).to.be.calledOnceWithExactly(
           'companies/apps/activity-feed/views/client-container', {
             props: {
-              addActivityTypeFilter: {
-                ...ACTIVITY_TYPE_FILTERS,
-              },
-              addContentLink: companies.interactions.create(companyId),
-              addContentText: 'Add interaction',
+              contentLink: companies.interactions.create(companyId),
+              contentText: 'Add interaction',
+              activityTypeFilter: FILTER_KEYS.dataHubActivity,
+              activityTypeFilters: FILTER_ITEMS,
               apiEndpoint: companies.activity.data(companyId),
-              isTypeFilterEnabled: undefined,
-              subsidiaryCount: 2,
+              isGlobalUltimate: true,
+              dnbHierarchyCount: 2,
+              dnbSubsidiaryCount: 1,
+              isTypeFilterFlagEnabled: undefined,
+              isGlobalUltimateFlagEnabled: undefined,
             },
           })
       })
     })
 
     context('when viewing the feed for archived company', () => {
-      beforeEach(async () => {
-        global.middlewareParameters = buildMiddlewareParameters({
+      let middlewareParameters = null
+      before(async () => {
+        middlewareParameters = buildMiddlewareParameters({
           company: {
             ...companyMock,
             archived: true,
@@ -332,47 +359,42 @@ describe('Activity feed controllers', () => {
           },
         })
 
-        await global.controllers.renderActivityFeed(
-          global.middlewareParameters.reqMock,
-          global.middlewareParameters.resMock,
-          global.middlewareParameters.nextSpy,
+        await controllers.renderActivityFeed(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy,
         )
       })
 
       it('should render the template without the "Add interaction" button', () => {
-        expect(global.middlewareParameters.resMock.render).to.be.calledOnceWithExactly('companies/apps/activity-feed/views/client-container', {
+        const expectedParams = {
           props: {
             apiEndpoint: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a/activity/data',
           },
-        })
+        }
+
+        expect(middlewareParameters.resMock.render).to.be.calledOnceWithExactly(
+          'companies/apps/activity-feed/views/client-container', expectedParams)
       })
     })
 
     context('when the rendering fails', () => {
-      beforeEach(async () => {
-        global.middlewareParameters = buildMiddlewareParameters({
-          company: companyMock,
-          user: {
-            id: 123,
-          },
-        })
+      before(async () => {
+        middlewareParameters.resMock.render.throws()
 
-        global.error = new Error('Could not render')
-
-        const errorRes = {
-          ...global.middlewareParameters.resMock,
-          render: () => { throw global.error },
-        }
-
-        await global.controllers.renderActivityFeed(
-          global.middlewareParameters.reqMock,
-          errorRes,
-          global.middlewareParameters.nextSpy,
+        await controllers.renderActivityFeed(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy
         )
       })
 
-      it('should call next with an error', async () => {
-        expect(global.middlewareParameters.nextSpy).to.have.been.calledWith(global.error)
+      it('should not call render', () => {
+        expect(middlewareParameters.resMock.render).to.be.thrown
+      })
+
+      it('should call next in the catch', () => {
+        expect(middlewareParameters.nextSpy).to.be.calledOnce
       })
     })
   })
