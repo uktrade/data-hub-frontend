@@ -1,14 +1,20 @@
 const selectors = require('../../../../selectors')
 const fixtures = require('../../fixtures')
+const { companies } = require('../../../../../src/lib/urls')
 
 describe('Company Global Ultimate HQ', () => {
   context('when a company has a DnB Ultimate HQ badge', () => {
     before(() => {
-      cy.visit(`/companies/${fixtures.company.dnbGlobalUltimate.id}/activity`)
+      cy.visit(`${companies.activity.index(fixtures.company.dnbGlobalUltimate.id)}`)
     })
 
-    it('should display a "Ultimate HQ" badge', () => {
+    it('should display an "Ultimate HQ" badge', () => {
       cy.get(selectors.localHeader().badge(1)).should('be.visible')
+    })
+
+    it('should display a single subsidiary', () => {
+      const expected = 'Data Hub contains 1 other company record related to this company'
+      cy.get(selectors.localHeader().description.paragraph(1)).should('have.text', expected)
     })
   })
 })

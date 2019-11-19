@@ -123,7 +123,7 @@ describe('Companies local navigation', () => {
     commonTests([
       'Activity',
       'Company contacts',
-      'Lead Advisers',
+      'Lead adviser',
       'Investment',
       'Export',
       'Orders',
@@ -161,7 +161,7 @@ describe('Companies local navigation', () => {
     commonTests([
       'Activity',
       'Company contacts',
-      'Lead Advisers',
+      'Lead adviser',
       'Investment',
       'Export',
       'Orders',

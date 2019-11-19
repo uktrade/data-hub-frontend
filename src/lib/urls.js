@@ -17,17 +17,34 @@ function getPath (path, tokens, params) {
   if (path === '/') {
     return ''
   }
+
   tokens.forEach((token, index) => {
-    path = path.replace(token, params[index])
+    const value = params[index]
+
+    if (typeof value !== 'undefined') {
+      path = path.replace(token, value)
+    } else {
+      path = path.replace('/' + token, '')
+    }
   })
+
   return path
 }
 
-function url (mountPoint, path = '/') {
-  const tokens = getTokens(path)
+function url (mountPoint, subMountPoint, path) {
+  let tokenPath
+
+  if (path) {
+    tokenPath = (subMountPoint + path)
+  } else {
+    tokenPath = (subMountPoint || '/')
+    path = tokenPath
+  }
+
+  const tokens = getTokens(tokenPath)
 
   function getUrl (...params) {
-    return (mountPoint + getPath(path, tokens, params))
+    return (mountPoint + getPath(tokenPath, tokens, params))
   }
 
   getUrl.mountPoint = mountPoint
@@ -36,31 +53,57 @@ function url (mountPoint, path = '/') {
   return getUrl
 }
 
+function createInteractionsSubApp (...mountPoints) {
+  if (mountPoints.length === 0) {
+    mountPoints.push(null)
+  }
+
+  return {
+    create: url(...mountPoints, '/interactions/:interactionId?/create'),
+  }
+}
+
 module.exports = {
   external: {
     greatProfile: (id) => config.greatProfileUrl.replace('{id}', id),
   },
   dashboard: url('/'),
   companies: {
-    index: url('/companies'),
-    detail: url('/companies', '/:companyId'),
+    activity: {
+      index: url('/companies', '/:companyId/activity'),
+      data: url('/companies', '/:companyId/activity/data'),
+    },
     businessDetails: url('/companies', '/:companyId/business-details'),
+    detail: url('/companies', '/:companyId'),
+    dnbSubsidiaries: {
+      index: url('/companies', '/:companyId/dnb-subsidiaries'),
+      data: url('/companies', '/:companyId/dnb-subsidiaries/data'),
+    },
     exports: url('/companies', '/:companyId/exports'),
+    audit: url('/companies', '/:companyId/audit'),
     hierarchies: {
       ghq: {
         add: url('/companies', '/:companyId/hierarchies/ghq/:globalHqId/add'),
       },
     },
-    dnbSubsidiaries: {
-      index: url('/companies', '/:companyId/dnb-subsidiaries'),
-      data: url('/companies', '/:companyId/dnb-subsidiaries/data'),
+    advisers: {
+      index: url('/companies', '/:companyId/advisers'),
+      confirm: url('/companies', '/:companyId/advisers/confirm'),
+      replace: url('/companies', '/:companyId/advisers/replace'),
     },
+    index: url('/companies'),
+    subsidiaries: url('/companies', '/:companyId/subsidiaries'),
+    interactions: createInteractionsSubApp('/companies', '/:companyId'),
   },
   contacts: {
     index: url('/contacts'),
+    interactions: createInteractionsSubApp('/contacts', '/:contactId'),
   },
   search: {
     index: url('/search'),
     type: url('/search', '/:searchPath?'),
+  },
+  interactions: {
+    subapp: createInteractionsSubApp(),
   },
 }
