@@ -4,7 +4,7 @@ const { createContact } = require('../../support/user-actions')
 
 describe('Advisors', () => {
   const globalManagerTable = 2
-  const AdviserTable = 3
+  const adviserTable = 3
 
   it('should display advisers for a GHQ for a given company', () => {
     cy.visit('/companies/375094ac-f79a-43e5-9c88-059a7caa17f0/advisers')
@@ -17,7 +17,7 @@ describe('Advisors', () => {
       .and('contain', 'London')
       .and('contain', 'Travis Greene')
 
-    cy.get(selectors.collection.contentTable(AdviserTable))
+    cy.get(selectors.collection.contentTable(adviserTable))
       .should('contain', 'Heart of the South West LEP')
       .and('contain', 'South West')
       .and('contain', 'Holly Collins')
