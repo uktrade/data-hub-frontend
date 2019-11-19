@@ -23,19 +23,19 @@
         </div>
       </div>
     {% endif %}
-    {% if company.hasManagedAccountDetails %}
+    {% if company.isUltimate or company.hasManagedAccountDetails %}
       <div class="c-local-header__description">
         {% if company.isUltimate %}
-          {% set link =  props.subsidiaryCount + ' other company ' + 'record' | pluralise(props.subsidiaryCount) %}
+          {% set link =  props.dnbSubsidiaryCount + ' other company ' + 'record' | pluralise(props.dnbSubsidiaryCount) %}
           <p>Data Hub contains <a class="subsidiaries" href={{ urls.companies.dnbSubsidiaries.index(company.id) }}>{{ link }}</a> related to this company</p>
         {% endif %}
-
-
+        {% if company.hasManagedAccountDetails %}
           <p>This is an account managed company (One List {{ company.one_list_group_tier.name }})</p>
           <p>
             {{ "Lead ITA" if company.isItaTierDAccount else "Global Account Manager" }}: {{ company.one_list_group_global_account_manager.name }}
             <a href={{ urls.companies.advisers.index(company.id) }}>{{ "View Lead adviser" if company.isItaTierDAccount else "View core team" }}</a>
           </p>
+        {% endif %}
       </div>
     {% endif %}
 
