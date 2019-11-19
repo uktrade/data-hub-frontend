@@ -75,4 +75,4 @@ Updating the baseline consists in 2 steps:
 
 - 1:. Run the visual tests on your machine, if the baseline is no longer the correct representation of the page in test then execute step #2:
 
-- 2:. Run `wdio-image-diff -u` this will copy the comparison images over to the baseline folder, updating any baseline image that is no longer valid.
+- 2:. Run `$ yarn test:visual:update` to update the failed tests with updated images of how the page in test should look like.
