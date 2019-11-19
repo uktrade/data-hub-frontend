@@ -9,7 +9,7 @@ const createContact = data => {
   cy.get(selectors.companyContact.phone).type(data.phone)
   cy.get(selectors.companyContact.email).type(data.email)
   cy.get(selectors.companyContact.sameCompanyAddressYes).click()
-  cy.get(selectors.companyContact.save).click()
+  cy.get(selectors.companyForm.save).click()
 }
 
 export { createContact }

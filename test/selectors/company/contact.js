@@ -8,5 +8,4 @@ module.exports = {
   phone: '#field-telephone_number',
   email: '#field-email',
   sameCompanyAddressYes: '[for="field-address_same_as_company-1"]',
-  save: 'button.govuk-button.js-prevent-multiple-submits',
 }

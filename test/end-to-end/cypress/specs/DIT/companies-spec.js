@@ -49,3 +49,33 @@ describe('Contacts', () => {
       .and('contain', 'company.contact@dit.com')
   })
 })
+
+describe('Export', () => {
+  it('should update export values when edit is made', () => {
+    cy.visit('/companies/0fb3379c-341c-4da4-b825-bf8d47b26baa/exports/edit')
+
+    cy.get(selectors.companyExport.winCategory).select('Export growth')
+    cy.get(selectors.companyForm.save).click()
+
+    cy.get(selectors.collection.table)
+      .should('contain', 'Export growth')
+      .and('contain', 'France, Germany')
+      .and('contain', 'Yemen')
+      .and('contain', 'No profile')
+      .and('contain', 'No score given')
+  })
+
+  it('should update export values when edit is made', () => {
+    cy.visit('/companies/0fb3379c-341c-4da4-b825-bf8d47b26baa/exports/edit')
+
+    cy.get(selectors.companyExport.winCategory).select('Export growth')
+    cy.get(selectors.companyForm.save).click()
+
+    cy.get(selectors.collection.table)
+      .should('contain', 'Export growth')
+      .and('contain', 'France, Germany')
+      .and('contain', 'Yemen')
+      .and('contain', 'No profile')
+      .and('contain', 'No score given')
+  })
+})
