@@ -34,5 +34,13 @@
   {
     "code": "activity-feed-filters",
     "is_active": true
+  },
+  {
+    "code": "companies-ultimate-hq",
+    "is_active": true
+  },
+  {
+    "code": "activity-feed-type-filter-enabled",
+    "is_active": true
   }
 ]

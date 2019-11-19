@@ -66,6 +66,34 @@ describe('Company Collections Filter', () => {
       .should('have.length', 1)
   })
 
+  it('should filter by region', () => {
+    cy.get(selectors.filter.firstUkRegion).click()
+
+    cy.wait('@filterResults').then(xhr => {
+      expect(xhr.url).to.contain(
+        'uk_region=934cd12a-6095-e211-a939-e4115bead28a'
+      )
+    })
+
+    cy
+      .get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 1)
+  })
+
+  it('should filter by last interaction date', () => {
+    cy.get(selectors.filter.firstInteractionDate).click()
+
+    cy.wait('@filterResults').then(xhr => {
+      expect(xhr.url).to.contain('interaction_between=1')
+    })
+
+    cy
+      .get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 1)
+  })
+
   it('should filter by sector', () => {
     const sector = selectors.filter.sector
     const { typeahead } = selectors.filter
@@ -107,21 +135,6 @@ describe('Company Collections Filter', () => {
     })
   })
 
-  it('should filter by region', () => {
-    cy.get(selectors.filter.firstUkRegion).click()
-
-    cy.wait('@filterResults').then(xhr => {
-      expect(xhr.url).to.contain(
-        'uk_region=934cd12a-6095-e211-a939-e4115bead28a'
-      )
-    })
-
-    cy
-      .get(selectors.entityCollection.entities)
-      .children()
-      .should('have.length', 1)
-  })
-
   it('should filter by currently exporting to', () => {
     const exportingTo = selectors.filter.exportingTo
     const { typeahead } = selectors.filter
@@ -160,19 +173,6 @@ describe('Company Collections Filter', () => {
     cy.wait('@filterResults').then(xhr => {
       expect(xhr.url).to.contain('future_interest_countries=a25f66a0-5d95-e211-a939-e4115bead28a')
     })
-  })
-
-  it('should filter by last interaction date', () => {
-    cy.get(selectors.filter.firstInteractionDate).click()
-
-    cy.wait('@filterResults').then(xhr => {
-      expect(xhr.url).to.contain('interaction_between=1')
-    })
-
-    cy
-      .get(selectors.entityCollection.entities)
-      .children()
-      .should('have.length', 1)
   })
 
   it('should remove all filters', () => {
