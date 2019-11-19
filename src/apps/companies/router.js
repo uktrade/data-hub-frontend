@@ -3,7 +3,6 @@ const router = require('express').Router()
 const { ENTITIES } = require('../search/constants')
 const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS, QUERY_FIELDS } = require('./constants')
 
-const { allFeaturesOr404, allPermissionsOr403 } = require('../../middleware/conditionals')
 const { getRequestBody } = require('../../middleware/collection')
 const { getCollection, exportCollection } = require('../../modules/search/middleware/collection')
 
@@ -22,7 +21,6 @@ const { renderDocuments } = require('./controllers/documents')
 const { renderAddGlobalHQ } = require('./controllers/hierarchies')
 const { renderSubsidiaries } = require('./controllers/subsidiaries')
 const { renderLinkSubsidiary } = require('./controllers/subsidiary-link')
-const { addAdviser, renderAddAdviserForm } = require('./controllers/advisers')
 
 const {
   renderExports,
@@ -87,12 +85,6 @@ router.get('/export',
 router.use('/create', addCompanyFormRouter)
 router.use('/:companyId/lists', companyListsRouter)
 router.use('/:companyId/edit', editCompanyFormRouter)
-
-router.route('/:companyId/advisers/add')
-  .all(allFeaturesOr404('lead_advisers'))
-  .all(allPermissionsOr403('company.change_regional_account_manager'))
-  .get(renderAddAdviserForm)
-  .post(addAdviser)
 
 router
   .route('/:companyId/exports/edit')

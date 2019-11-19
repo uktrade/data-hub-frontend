@@ -4,7 +4,7 @@ const { transformCoreTeamToCollection, transformAccountManager } = require('../.
 const { coreTeamLabels } = require('../../../labels')
 const { isItaTierDAccount } = require('../../../../../lib/is-tier-type-company')
 const { companies } = require('../../../../../../src/lib/urls')
-const { authorisedRequest } = require('../../../lib/authorised-request')
+const { authorisedRequest } = require('../../../../../lib/authorised-request')
 
 function renderLeadAdvisers (req, res) {
   const { company, user: { permissions } } = res.locals
