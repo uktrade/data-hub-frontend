@@ -1,15 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
 import { Button, H3, Details, UnorderedList, Link, ListItem } from 'govuk-react'
-
-const StyledForm = styled('form')({
-  display: 'flex',
-  alignItems: 'baseline',
-  '> *': {
-    margin: '10px',
-  },
-})
+import { FormActions } from 'data-hub-components'
 
 const AddAdviser = ({ csrfToken }) =>
   <div>
@@ -32,11 +24,13 @@ const AddAdviser = ({ csrfToken }) =>
         Other ITAs will be able to replace you as the Lead ITA for the company
       </ListItem>
     </UnorderedList>
-    <StyledForm method="POST">
+    <form method="POST">
       <input type="hidden" name="_csrf" value={csrfToken}/>
-      <Button>Add myself as Lead ITA</Button>
-      <Link href="../advisers">Cancel</Link>
-    </StyledForm>
+      <FormActions>
+        <Button>Add myself as Lead ITA</Button>
+        <Link href="../advisers">Cancel</Link>
+      </FormActions>
+    </form>
   </div>
 
 AddAdviser.propTypes = {
