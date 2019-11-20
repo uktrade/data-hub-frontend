@@ -10,7 +10,7 @@ describe('Add Adviser', () => {
     assertBreadcrumbs({
       'Home': '/',
       'Companies': '/companies',
-      'Lambda plc': '/companies/0fb3379c-341c-4da4-b825-bf8d47b26baa',
+      'Lambda plc': `/companies/${fixtures.company.lambdaPlc.id}`,
       'Confirm you are the Lead ITA': undefined,
     })
 
