@@ -106,4 +106,11 @@ module.exports = {
   interactions: {
     subapp: createInteractionsSubApp(),
   },
+  investments: {
+    index: url('/investments'),
+    profiles: {
+      index: url('/investments', '/profiles'),
+      data: url('/investments', '/profiles/data'),
+    },
+  },
 }
