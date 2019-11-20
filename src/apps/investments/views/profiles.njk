@@ -1,4 +1,3 @@
-{# {% extends "_layouts/template.njk" %} #}
 {% extends "_layouts/collection.njk" %}
 
 {% block content %}
@@ -9,35 +8,14 @@
       </div>
     </div>
 
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-one-third">
-        <h4 class="govuk-heading-s govuk-!-padding-left-2 govuk-!-margin-bottom-2">Large capital</h4>
-        {# New filters section will be added here  #}
+      <div class="govuk-grid-column-full">
+          {% component 'react-slot', {
+            id: 'large-capital-profile-collection',
+            props: props
+          }
+          %}
       </div>
 
-      {% block xhr_content %}
-        <article class="govuk-grid-column-two-thirds" data-xhr="c781e8b1-9747-4b2e-8655-68b14ea49126">
-          {{
-            CollectionContent(results | assign({
-              countLabel: countLabel,
-              sortForm: assign({}, sortForm, { action: CURRENT_PATH }),
-              selectedFilters: selectedFilters,
-              highlightTerm: highlightTerm,
-              actionButtons: actionButtons,
-              exportAction: exportAction,
-              query: QUERY
-            }))
-          }}
-
-          {% if not results %}
-            <section id="no-profiles">
-              <p class="govuk-body-s govuk-!-font-weight-regular govuk-!-margin-top-4">There are no profiles to view</p>
-              <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
-            </section>
-          {% endif %}
-
-        </article>
-      {% endblock %}
     </div>
   </div>
 {% endblock %}

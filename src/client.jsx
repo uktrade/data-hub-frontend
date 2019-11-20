@@ -10,6 +10,7 @@ import CreateListFormSection from './apps/company-lists/client/CreateListFormSec
 import AddRemoveFromListSection from './apps/company-lists/client/AddRemoveFromListSection'
 import DnbSubsidiaries from './apps/companies/apps/dnb-subsidiaries/client/DnbSubsidiaries'
 import LeadAdvisers from './apps/companies/apps/advisers/client/LeadAdvisers'
+import LargeCapitalProfileCollection from './apps/investments/client/LargeCapitalProfileCollection'
 
 const appWrapper = document.getElementById('react-app')
 
@@ -55,6 +56,9 @@ function App () {
       </Mount>
       <Mount selector="#dnb-subsidiaries">
         {props => <DnbSubsidiaries {...props} />}
+      </Mount>
+      <Mount selector="#large-capital-profile-collection">
+        {props => <LargeCapitalProfileCollection {...props} />}
       </Mount>
     </>
   )
