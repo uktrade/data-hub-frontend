@@ -70,16 +70,11 @@ async function renderAdvisers (req, res, next) {
 }
 
 // istanbul ignore next: Only testable with whitebox tests and alerady covered by functional tests
-function renderAddAdviserForm (req, res) {
-  const { company, csrfToken } = res.locals
-
+const renderAddAdviserForm = (req, res) =>
   res
-    .breadcrumb(company.name, `/companies/${company.id}`)
+    .breadcrumb(res.locals.company.name, `/companies/${res.locals.company.id}`)
     .breadcrumb('Confirm you are the Lead ITA')
-    .render('companies/apps/advisers/views/add-adviser.njk', {
-      props: { csrfToken },
-    })
-}
+    .render('companies/apps/advisers/views/add-adviser.njk')
 
 // istanbul ignore next: Only testable with whitebox tests and alerady covered by functional tests
 async function addAdviser (req, res, next) {
