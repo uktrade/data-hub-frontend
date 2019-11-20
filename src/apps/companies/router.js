@@ -1,5 +1,7 @@
-const urls = require('../../lib/urls')
 const router = require('express').Router()
+
+const urls = require('../../lib/urls')
+
 const { ENTITIES } = require('../search/constants')
 const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS, QUERY_FIELDS } = require('./constants')
 
@@ -44,27 +46,32 @@ const { getCompany, setIsCompanyAlreadyAdded, addCompanyOrRemoveFromList } = req
 const { setInteractionsDetails } = require('./middleware/interactions')
 const { setGlobalHQ, removeGlobalHQ, addSubsidiary } = require('./middleware/hierarchies')
 const setCompaniesLocalNav = require('./middleware/local-navigation')
-const { setSubsidiariesLocalNav } = require('./apps/dnb-subsidiaries/middleware')
 const lastInteractionDate = require('./middleware/last-interaction-date')
 
 const { transformCompanyToListItem } = require('./transformers')
 
 const addCompanyFormRouter = require('./apps/add-company/router')
 const editCompanyFormRouter = require('./apps/edit-company/router')
+const activityFeedRouter = require('./apps/activity-feed/router')
+const dnbHierarchyRouter = require('./apps/dnb-hierarchy/router')
+const businessDetailsRouter = require('./apps/business-details/router')
 
 const investmentsRouter = require('./apps/investments/router')
 const matchingRouter = require('./apps/matching/router')
 const interactionsRouter = require('../interactions/router.sub-app')
-const activityFeedRouter = require('./apps/activity-feed/router')
 const companyListsRouter = require('../company-lists/router')
 const advisersRouter = require('./apps/advisers/router')
 
-const dnbSubsidiariesControllers = require('./apps/dnb-subsidiaries/controllers')
+const {
+  setCompanyHierarchyLocalNav,
+  setDnbHierarchyDetails,
+} = require('./apps/dnb-hierarchy/middleware')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.param('companyId', getCompany)
 router.param('companyId', setIsCompanyAlreadyAdded)
+router.param('companyId', setDnbHierarchyDetails)
 
 router.get(urls.companies.index.route,
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
@@ -107,10 +114,6 @@ router.get('/:companyId/hierarchies/ghq/remove', removeGlobalHQ)
 router.get('/:companyId/hierarchies/subsidiaries/search', getSubsidiaryCompaniesCollection, renderLinkSubsidiary)
 router.get('/:companyId/hierarchies/subsidiaries/:subsidiaryCompanyId/add', addSubsidiary)
 
-router.use(urls.companies.dnbSubsidiaries.index.route, setSubsidiariesLocalNav)
-router.get(urls.companies.dnbSubsidiaries.index.route, dnbSubsidiariesControllers.renderDnbSubsidiaries)
-router.get(urls.companies.dnbSubsidiaries.data.route, dnbSubsidiariesControllers.fetchSubsidiariesHandler)
-
 router.get('/:companyId/contacts',
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   setCompanyContactRequestBody,
@@ -120,19 +123,24 @@ router.get('/:companyId/contacts',
 
 router.get(urls.companies.exports.route, renderExports)
 
-router.use('/:companyId/subsidiaries', setSubsidiariesLocalNav)
-router.get('/:companyId/subsidiaries', renderSubsidiaries)
-router.get('/:companyId/subsidiaries/link', renderLinkSubsidiary)
-
 router.get('/:companyId/orders', renderOrders)
 router.get('/:companyId/audit', renderAuditLog)
 router.get('/:companyId/documents', renderDocuments)
 router.use('/:companyId/investments', investmentsRouter)
 router.use('/:companyId/matching', matchingRouter)
 router.use('/:companyId', setInteractionsDetails, interactionsRouter)
-router.use('/:companyId/activity', activityFeedRouter)
 router.use('/:companyId/advisers', advisersRouter)
 
 router.post('/:companyId/manage-company-list', addCompanyOrRemoveFromList)
+
+router.use('/:companyId/subsidiaries', setCompanyHierarchyLocalNav)
+router.get('/:companyId/subsidiaries', renderSubsidiaries)
+router.get('/:companyId/subsidiaries/link', renderLinkSubsidiary)
+
+router.use(activityFeedRouter)
+
+router.use(dnbHierarchyRouter)
+
+router.use(businessDetailsRouter)
 
 module.exports = router

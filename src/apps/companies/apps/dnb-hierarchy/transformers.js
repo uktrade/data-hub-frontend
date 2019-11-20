@@ -5,7 +5,7 @@ const { formatAddress, formatDateTime } = require('../../../../config/nunjucks/f
 const urls = require('../../../../lib/urls')
 const labels = require('../../labels')
 
-function transformCompanyToSubsidiariesList ({
+function transformCompanyToDnbHierarchyList ({
   id,
   name,
   sector,
@@ -44,12 +44,12 @@ function transformCompanyToSubsidiariesList ({
     badges.push(get(uk_region, 'name'))
   }
 
-  if (headquarter_type) {
-    badges.push(labels.hqLabels[get(headquarter_type, 'name')])
-  }
-
   if (is_global_ultimate) {
     badges.push(labels.companyDetailsLabels.ultimate_hq)
+  }
+
+  if (headquarter_type) {
+    badges.push(labels.hqLabels[get(headquarter_type, 'name')])
   }
 
   if (address) {
@@ -69,5 +69,5 @@ function transformCompanyToSubsidiariesList ({
 }
 
 module.exports = {
-  transformCompanyToSubsidiariesList,
+  transformCompanyToDnbHierarchyList,
 }
