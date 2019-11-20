@@ -1,11 +1,9 @@
 const fixtures = require('../../../fixtures')
 const { assertBreadcrumbs } = require('../../../support/utils')
 
-const url = `/companies/${fixtures.company.lambdaPlc.id}/advisers/add`
-
 describe('Add Adviser', () => {
   it('Should display the add Lead ITA confirmation page', () => {
-    cy.visit(url)
+    cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/advisers/add`)
 
     assertBreadcrumbs({
       'Home': '/',
