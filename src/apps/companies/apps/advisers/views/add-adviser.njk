@@ -3,6 +3,6 @@
 {% block content %}
     {% component 'react-slot', {
         id: 'add-adviser',
-        props: props
+        props: { csrfToken: csrfToken }
     } %}
 {% endblock %}
