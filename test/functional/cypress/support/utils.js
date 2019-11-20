@@ -1,5 +1,4 @@
 /**
- * @function assertBreadcrumbs
  * @description Asserts the presence of breadcrumbs with minimal knowledge about
  * implementation details e.g. class names and ids.
  * @param {Object} specs - A map of expected breadcrumb item labels to hrefs.
@@ -32,7 +31,6 @@ const assertBreadcrumbs = specs => {
 }
 
 /**
- * @function describeBreadcrumbs
  * @description Same as asserBreadcrumbs but already wrapped in an `it` block.
  * @param {Object} specs - A map of expected breadcrumb item labels to hrefs.
  */
