@@ -29,12 +29,16 @@ const StyledRoot = styled('div')`
 const CompanyBusinessDetails = ({
   businessDetails,
   subsidiariesCount,
+  dnbRelatedCompaniesCount,
+  globalUltimate,
+  isGlobalUltimateFlagEnabled,
   urls,
 }) => {
+  const isGlobalHQ = get(businessDetails, 'headquarter_type.name') === 'ghq'
+  const isGlobalUltimate = !!businessDetails.is_global_ultimate
   const isDnbCompany = !!businessDetails.duns_number
   const isArchived = !!businessDetails.archived
   const isBasedInUK = !!businessDetails.uk_based
-  const isGlobalHQ = get(businessDetails, 'headquarter_type.name') === 'ghq'
 
   return (
     <StyledRoot>
@@ -113,9 +117,13 @@ const CompanyBusinessDetails = ({
       <SectionHierarchy
         businessDetails={businessDetails}
         subsidiariesCount={subsidiariesCount}
+        dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
         isArchived={isArchived}
         isDnbCompany={isDnbCompany}
+        isGlobalUltimate={isGlobalUltimate}
         isGlobalHQ={isGlobalHQ}
+        isGlobalUltimateFlagEnabled={isGlobalUltimateFlagEnabled}
+        globalUltimate={globalUltimate}
         urls={urls}
       />
 
@@ -134,10 +142,14 @@ CompanyBusinessDetails.propTypes = {
   businessDetails: PropTypes.object.isRequired,
   urls: PropTypes.object.isRequired,
   subsidiariesCount: PropTypes.number,
+  dnbRelatedCompaniesCount: PropTypes.number,
+  globalUltimate: PropTypes.object.isRequired,
+  isGlobalUltimateFlagEnabled: PropTypes.bool.isRequired,
 }
 
 CompanyBusinessDetails.defaultProps = {
   subsidiariesCount: 0,
+  dnbRelatedCompaniesCount: 0,
 }
 
 export default CompanyBusinessDetails

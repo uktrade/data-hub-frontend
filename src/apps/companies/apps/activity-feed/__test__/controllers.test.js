@@ -293,6 +293,7 @@ describe('Activity feed controllers', () => {
               isGlobalUltimate: false,
               isTypeFilterFlagEnabled: undefined,
               isGlobalUltimateFlagEnabled: undefined,
+              dnbHierachyCount: undefined,
             },
           })
       })
@@ -317,6 +318,9 @@ describe('Activity feed controllers', () => {
             ...companyMock,
             is_global_ultimate: true,
           },
+          locals: {
+            dnbHierarchyCount: 123,
+          },
         })
 
         await controllers.renderActivityFeed(
@@ -337,8 +341,7 @@ describe('Activity feed controllers', () => {
               activityTypeFilters: FILTER_ITEMS,
               apiEndpoint: companies.activity.data(companyId),
               isGlobalUltimate: true,
-              dnbHierarchyCount: 2,
-              dnbSubsidiaryCount: 1,
+              dnbHierachyCount: 123,
               isTypeFilterFlagEnabled: undefined,
               isGlobalUltimateFlagEnabled: undefined,
             },
@@ -370,6 +373,7 @@ describe('Activity feed controllers', () => {
         const expectedParams = {
           props: {
             apiEndpoint: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a/activity/data',
+            dnbHierachyCount: undefined,
           },
         }
 
