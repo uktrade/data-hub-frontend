@@ -4,7 +4,7 @@ import { Button, H3, Details, UnorderedList, Link, ListItem } from 'govuk-react'
 import { FormActions } from 'data-hub-components'
 
 const AddAdviser = ({ csrfToken }) =>
-  <div>
+  <>
     <H3>Do you want to add yourself as the first point of contact?</H3>
     <Details summary="How do I add someone else as the Lead ITA?">
       You can only add yourself as the Lead ITA.
@@ -31,7 +31,7 @@ const AddAdviser = ({ csrfToken }) =>
         <Link href="../advisers">Cancel</Link>
       </FormActions>
     </form>
-  </div>
+  </>
 
 AddAdviser.propTypes = {
   csrfToken: PropTypes.string.isRequired,
