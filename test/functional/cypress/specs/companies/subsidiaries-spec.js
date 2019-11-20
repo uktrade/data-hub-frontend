@@ -7,7 +7,7 @@ const { assertLocalNav } = require('../../../../end-to-end/cypress/support/asser
 describe('Companies subsidiaries', () => {
   context('when viewing subsidiaries for a Dun & Bradstreet company', () => {
     before(() => {
-      cy.visit(urls.companies.subsidiaries(fixtures.company.oneListCorp.id))
+      cy.visit(urls.companies.subsidiaries.index(fixtures.company.oneListCorp.id))
     })
 
     it('should render breadcrumbs', () => {
@@ -27,7 +27,7 @@ describe('Companies subsidiaries', () => {
 
   context('when viewing subsidiaries for a Data Hub company', () => {
     before(() => {
-      cy.visit(urls.companies.subsidiaries(fixtures.company.venusLtd.id))
+      cy.visit(urls.companies.subsidiaries.index(fixtures.company.venusLtd.id))
     })
 
     it('should render breadcrumbs', () => {
@@ -47,7 +47,7 @@ describe('Companies subsidiaries', () => {
 
   context('when viewing subsidiaries for an archived company', () => {
     before(() => {
-      cy.visit(urls.companies.subsidiaries(fixtures.company.archivedLtd.id))
+      cy.visit(urls.companies.subsidiaries.index(fixtures.company.archivedLtd.id))
     })
 
     it('should render breadcrumbs', () => {
@@ -67,7 +67,7 @@ describe('Companies subsidiaries', () => {
 
   context('when viewing a company which is a D&B Global Ultimate and Global HQ at the same time', () => {
     before(() => {
-      cy.visit(urls.companies.subsidiaries(fixtures.company.dnBGlobalUltimateAndGlobalHq.id))
+      cy.visit(urls.companies.subsidiaries.index(fixtures.company.dnBGlobalUltimateAndGlobalHq.id))
     })
 
     it('should render breadcrumbs', () => {
