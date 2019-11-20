@@ -76,7 +76,7 @@ function renderAddAdviserForm (req, res) {
   res
     .breadcrumb(company.name, `/companies/${company.id}`)
     .breadcrumb('Confirm you are the Lead ITA')
-    .render('companies/views/add-adviser.njk', {
+    .render('companies/apps/advisers/views/add-adviser.njk', {
       props: { csrfToken },
     })
 }
