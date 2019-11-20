@@ -11,7 +11,7 @@ import AddRemoveFromListSection from './apps/company-lists/client/AddRemoveFromL
 import DnbSubsidiaries from './apps/companies/apps/dnb-subsidiaries/client/DnbSubsidiaries'
 import LeadAdvisers from './apps/companies/apps/advisers/client/LeadAdvisers'
 import LargeCapitalProfileCollection from './apps/investments/client/LargeCapitalProfileCollection'
-import AddAdviser from './apps/companies/client/AddAdviser'
+import AddAdviser from './apps/companies/apps/advisers/client/AddAdviser'
 
 const appWrapper = document.getElementById('react-app')
 
