@@ -5,6 +5,7 @@ const { coreTeamLabels } = require('../../../labels')
 const { isItaTierDAccount } = require('../../../../../lib/is-tier-type-company')
 const { companies } = require('../../../../../../src/lib/urls')
 const { authorisedRequest } = require('../../../../../lib/authorised-request')
+const urls = require('../../../../../lib/urls')
 
 function renderLeadAdvisers (req, res) {
   const { company, user: { permissions } } = res.locals
@@ -22,8 +23,7 @@ function renderLeadAdvisers (req, res) {
         email,
         companyName: company.name,
         companyId: company.id,
-        confirmUrl: `${companies.advisers.confirm(company.id)}`,
-        replaceUrl: `${companies.advisers.replace(company.id)}`,
+        addUrl: `${companies.advisers.add(company.id)}`,
         removeUrl: `${companies.advisers.remove(company.id)}`,
         hasPermissionToAddIta: permissions.includes('company.change_regional_account_manager'),
       },
@@ -50,7 +50,7 @@ async function renderCoreTeamAdvisers (req, res, next) {
     const coreTeam = await getOneListGroupCoreTeam(token, company.id)
       .then(transformCoreTeamToCollection)
     res
-      .breadcrumb(company.name, `/companies/${company.id}`)
+      .breadcrumb(company.name, urls.companies.detail(company.id))
       .breadcrumb('Advisers')
       .render('companies/views/advisers', {
         coreTeam,
@@ -71,11 +71,27 @@ async function renderAdvisers (req, res, next) {
 }
 
 // istanbul ignore next: Only testable with whitebox tests and alerady covered by functional tests
-const renderAddAdviserForm = (req, res) =>
+const renderAddAdviserForm = (req, res) => {
+  const rawLeadITA = res.locals.company.one_list_group_global_account_manager
+  const { name, id } = res.locals.company
+  const currentLeadITA = rawLeadITA && {
+    name: rawLeadITA.name,
+    team: rawLeadITA.dit_team.name,
+  }
   res
-    .breadcrumb(res.locals.company.name, `/companies/${res.locals.company.id}`)
-    .breadcrumb('Confirm you are the Lead ITA')
-    .render('companies/apps/advisers/views/add-adviser.njk')
+    .breadcrumb(name, urls.companies.detail(id))
+    .breadcrumb(
+      currentLeadITA
+        ? 'Replace the Lead ITA'
+        : 'Confirm you are the Lead ITA'
+    )
+    .render('companies/apps/advisers/views/add-adviser.njk', {
+      props: {
+        currentLeadITA,
+        cancelUrl: urls.companies.advisers.index(id),
+      },
+    })
+}
 
 // istanbul ignore next: Only testable with whitebox tests and alerady covered by functional tests
 async function addAdviser (req, res, next) {
@@ -88,7 +104,7 @@ async function addAdviser (req, res, next) {
     })
 
     req.flash('success', 'Lead adviser information updated')
-    res.redirect(`/companies/${id}/advisers`)
+    res.redirect(urls.companies.advisers.index(id))
   } catch (error) {
     next(error)
   }

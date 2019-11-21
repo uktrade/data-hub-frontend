@@ -91,7 +91,7 @@ describe('Lead advisers', () => {
       cy
         .contains('Replace Lead ITA')
         .invoke('attr', 'href')
-        .should('eq', companies.advisers.replace(fixtures.company.oneListTierDita.id))
+        .should('eq', companies.advisers.add(fixtures.company.oneListTierDita.id))
     })
     it('should display a button to remove the Lead ITA', () => {
       cy
