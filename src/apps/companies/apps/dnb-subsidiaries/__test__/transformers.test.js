@@ -1,29 +1,56 @@
 const { transformCompanyToSubsidiariesList } = require('../transformers')
 const urls = require('../../../../../lib/urls')
 
-const companyMock = require('../../../../../../test/unit/data/companies/company-v4')
-
 describe('Edit company form transformers', () => {
   describe('#transformCompanyToSubsidiariesList', () => {
     context('when called with a fully populated company', () => {
-      const actual = transformCompanyToSubsidiariesList(companyMock)
+      const actual = transformCompanyToSubsidiariesList({
+        id: '123',
+        name: 'Test company',
+        sector: {
+          name: 'Test sector',
+        },
+        uk_based: true,
+        uk_region: {
+          name: 'Test UK region',
+        },
+        trading_names: ['Test trading name'],
+        address: {
+          country: {
+            name: 'Test country',
+          },
+        },
+        modified_on: '2016-07-05T12:00:00Z',
+        headquarter_type: {
+          name: 'ghq',
+        },
+        is_global_ultimate: true,
+      })
 
       it('should return transformed values', () => {
         const expected = {
           'badges': [
-            'United Kingdom',
-            'North West',
+            'Test country',
+            'Test UK region',
+            'Global HQ',
+            'Ultimate HQ',
           ],
-          'headingText': 'Mercury Ltd',
-          'headingUrl': urls.companies.detail('a73efeba-8499-11e6-ae22-56b6b6499611'),
+          'headingText': 'Test company',
+          'headingUrl': '/companies/123',
           'metadata': [
             {
+              'label': 'Trading names',
+              'value': [
+                'Test trading name',
+              ],
+            },
+            {
               'label': 'Sector',
-              'value': 'Retail',
+              'value': 'Test sector',
             },
             {
               'label': 'Address',
-              'value': '82 Ramsgate Rd, Willington, NE28 5JB, United Kingdom',
+              'value': 'Test country',
             },
           ],
           'subheading': 'Updated on 5 Jul 2016, 1:00pm',
