@@ -90,6 +90,7 @@ module.exports = {
       index: url('/companies', '/:companyId/advisers'),
       confirm: url('/companies', '/:companyId/advisers/add'),
       replace: url('/companies', '/:companyId/advisers/replace'),
+      remove: url('/companies', '/:companyId/advisers/remove'),
     },
     index: url('/companies'),
     subsidiaries: url('/companies', '/:companyId/subsidiaries'),
