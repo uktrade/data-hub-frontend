@@ -68,6 +68,8 @@ describe('urls', () => {
       expect(urls.companies.interactions.create.route).to.equal(`/interactions/:interactionId?/create`)
       expect(urls.companies.interactions.create(companyId)).to.equal(`/companies/${companyId}/interactions/create`)
       expect(urls.companies.interactions.create(companyId, interactionId)).to.equal(`/companies/${companyId}/interactions/${interactionId}/create`)
+
+      expect(urls.companies.orders(companyId)).to.equal(`/companies/${companyId}/orders`)
     })
   })
 
