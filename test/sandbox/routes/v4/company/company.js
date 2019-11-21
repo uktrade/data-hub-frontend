@@ -92,6 +92,20 @@ exports.company = function (req, res) {
     'a73efeba-8499-11e6-ae22-56b6b6499611': companyWithInvestment2,
     '0f5216e0-849f-11e6-ae22-56b6b6499622': companyWithContacts,
     'w2c34b41-1d5a-4b4b-7685-7c53ff2868dg': companyOneListTierDIta,
+    'not-managed': _.assign({}, company, {
+      name: 'Not Managed Company',
+      id: 'not-managed',
+    }),
+    'managed': _.assign({}, company, {
+      name: 'Managed Company',
+      id: 'managed',
+      one_list_group_global_account_manager: {
+        name: 'Andy Pipkin',
+        dit_team: {
+          name: 'Little Britain',
+        },
+      },
+    }),
   }
 
   res.json(companies[req.params.companyId] || company)

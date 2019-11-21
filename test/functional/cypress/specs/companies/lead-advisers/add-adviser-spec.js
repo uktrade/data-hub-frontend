@@ -1,25 +1,39 @@
-const fixtures = require('../../../fixtures')
 const { assertBreadcrumbs } = require('../../../support/assertions')
 
-describe('Add Adviser', () => {
-  it('Should display the add Lead ITA confirmation page', () => {
-    cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/advisers/add`)
+const testCase = ({ companyId, companyName, replace }) =>
+  it(`Should render the ${replace ? 'replace' : 'add'} variant`, () => {
+    cy.visit(`/companies/${companyId}/advisers/add`)
+
+    const headline = replace
+      ? 'Replace the Lead ITA'
+      : 'Confirm you are the Lead ITA'
 
     assertBreadcrumbs({
       'Home': '/',
       'Companies': '/companies',
-      'Lambda plc': `/companies/${fixtures.company.lambdaPlc.id}`,
-      'Confirm you are the Lead ITA': undefined,
+      [companyName]: `/companies/${companyId}`,
+      [headline]: undefined,
     })
 
     cy.get('h1')
-      .contains('Confirm you are the Lead ITA')
+      .contains(headline)
 
     cy.get('main')
       .children()
       .first()
-      .get('h3').as('h3').eq(0)
+      .get('h3').as('h3').eq(0).as('question')
       .contains('Do you want to add yourself as the first point of contact?')
+      .then($el =>
+        replace && cy
+          .get($el)
+          .next()
+          .contains('You would replace Lead ITA:')
+          .next()
+          .contains(
+            'Name: Andy Pipkin' +
+            'Team: Little Britain'
+          )
+      )
       .next()
       .contains('How do I add someone else as the Lead ITA?')
       .as('detail-summary')
@@ -60,6 +74,7 @@ describe('Add Adviser', () => {
       .as('detail-content')
       .should('not.be.visible')
 
+    // Test interaction
     cy.get('@detail-summary')
       .click()
 
@@ -71,5 +86,16 @@ describe('Add Adviser', () => {
 
     cy.get('[role="alert"]')
       .contains('Lead adviser information updated')
+  })
+
+describe('Lead ITA page', () => {
+  testCase({
+    companyId: 'not-managed',
+    companyName: 'Not Managed Company',
+  })
+  testCase({
+    companyId: 'managed',
+    companyName: 'Managed Company',
+    replace: true,
   })
 })
