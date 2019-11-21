@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 const moment = require('moment')
+const { companies } = require('../../../lib/urls')
 
 function transformLargeCapitalProfiles ({
   investor_company,
@@ -7,7 +8,7 @@ function transformLargeCapitalProfiles ({
 }) {
   return {
     headingText: investor_company.name,
-    headingUrl: `/companies/${investor_company.id}`,
+    headingUrl: companies.investments.largeCapitalProfile(investor_company.id),
     itemId: investor_company.id,
     metadata: [
       {
