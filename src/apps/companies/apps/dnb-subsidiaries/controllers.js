@@ -16,9 +16,9 @@ async function renderDnbSubsidiaries (req, res, next) {
     res
       .breadcrumb(company.name, urls.companies.detail(company.id))
       .breadcrumb('Business details', urls.companies.businessDetails(company.id))
-      .breadcrumb('Subsidiaries')
+      .breadcrumb('Related companies')
       .render('companies/apps/dnb-subsidiaries/views/client-container', {
-        heading: `Subsidiaries of ${company.name}`,
+        heading: `Companies related to ${company.name}`,
         props: {
           dataEndpoint: urls.companies.dnbSubsidiaries.data(company.id),
         },

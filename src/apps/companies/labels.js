@@ -7,6 +7,7 @@ const companyDetailsLabels = {
   uk_region: 'UK region',
   headquarter_type: 'Headquarter type',
   global_headquarters: 'Global HQ',
+  ultimate_hq: 'Ultimate HQ',
   sector: 'Sector',
   website: 'Website',
   description: 'Business description',

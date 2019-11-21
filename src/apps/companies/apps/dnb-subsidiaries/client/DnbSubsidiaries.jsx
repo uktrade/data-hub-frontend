@@ -39,16 +39,20 @@ const DnbSubsidiaries = ({ dataEndpoint }) => {
   }, [activePage])
 
   return (
-    <LoadingBox loading={isLoading}>
-      <CollectionList
-        itemName="subsidiary"
-        items={subsidiaries}
-        totalItems={totalItems}
-        onPageClick={onPageClick}
-        getPageUrl={getPageUrl}
-        activePage={activePage}
-      />
-    </LoadingBox>
+    <>
+      <p>This hierarchy information from Dun & Bradstreet cannot be edited.</p>
+
+      <LoadingBox loading={isLoading}>
+        <CollectionList
+          itemName="related company"
+          items={subsidiaries}
+          totalItems={totalItems}
+          onPageClick={onPageClick}
+          getPageUrl={getPageUrl}
+          activePage={activePage}
+        />
+      </LoadingBox>
+    </>
   )
 }
 

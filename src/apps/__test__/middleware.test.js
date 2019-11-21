@@ -118,6 +118,27 @@ describe('Apps middleware', () => {
       })
     })
 
+    context('when the "appendBaseUrl" argument is set to false', () => {
+      it('should not append the baseUrl to the link', () => {
+        const url = '/some-url'
+        const mockNavItem = {
+          url,
+        }
+        const reqMock = {}
+        const resMock = {
+          locals: {
+            CURRENT_PATH: url,
+          },
+        }
+
+        this.middleware.setLocalNav([mockNavItem], false)(reqMock, resMock, this.nextSpy)
+
+        expect(resMock.locals.localNavItems[0].url).to.equal(url)
+        expect(resMock.locals.localNavItems[0].isActive).to.be.true
+        expect(this.nextSpy.calledOnce).to.be.true
+      })
+    })
+
     context('user permitted nav items', () => {
       it('should include permitted items', () => {
         const reqMock = {

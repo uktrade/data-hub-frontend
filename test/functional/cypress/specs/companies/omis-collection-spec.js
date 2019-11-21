@@ -1,9 +1,10 @@
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
+const urls = require('../../../../../src/lib/urls')
 
 describe('Company OMIS Collections', () => {
   before(() => {
-    cy.visit(`/companies/${fixtures.default.id}/orders`)
+    cy.visit(urls.companies.orders(fixtures.company.oneListCorp.id))
   })
 
   it('should display a list of orders with the total result', () => {

@@ -71,6 +71,10 @@ const assertLocalHeader = (header) => {
   cy.get(selectors.localHeader).contains(header)
 }
 
+const assertTabbedLocalNav = (nav) => {
+  cy.get(selectors.tabbedLocalNav).contains(nav)
+}
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
@@ -78,4 +82,5 @@ module.exports = {
   assertFieldInput,
   assertFieldUneditable,
   assertLocalHeader,
+  assertTabbedLocalNav,
 }
