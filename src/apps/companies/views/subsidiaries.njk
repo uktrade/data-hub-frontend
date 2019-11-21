@@ -1,10 +1,28 @@
 {% extends "_layouts/template.njk" %}
 
 {% block local_header %}
-  {% call LocalHeader({ heading: heading }) %}{% endcall %}
+  {{ LocalHeader({
+    heading: heading,
+    modifier: 'light-banner',
+    fullWidthContent: true
+  }) }}
+{% endblock %}
+
+{% block local_nav %}
+  {% if localNavItems.length > 0 %}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        {{ TabbedLocalNav({ items: localNavItems }) }}
+      </div>
+    </div>
+  {% endif %}
 {% endblock %}
 
 {% block body_main_content %}
+
+  <p>
+    This hierarchy information is manually recorded (linked) by Data Hub users. This means it can be different from the Dun & Bradstreet hierarchy, which in the future will replace this manually recorded information.
+  </p>
 
   {% if company.archived %}
     {{ govukDetails({

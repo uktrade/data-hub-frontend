@@ -1,6 +1,7 @@
 const { get, isEmpty, assign, intersection, isUndefined } = require('lodash')
 const queryString = require('qs')
 const { parse } = require('url')
+const path = require('path')
 
 const { filterNonPermittedItem } = require('../modules/permissions/filters')
 
@@ -46,15 +47,16 @@ function handleRoutePermissions (routes) {
   }
 }
 
-function setLocalNav (items = []) {
+function setLocalNav (items = [], appendBaseUrl = true) {
   return function buildLocalNav (req, res, next) {
     const userPermissions = get(res, 'locals.user.permissions')
+    const { CURRENT_PATH } = res.locals
 
     res.locals.localNavItems = items
       .filter(filterNonPermittedItem(userPermissions))
       .map((item) => {
-        const url = item.isExternal ? item.url : `${req.baseUrl}/${item.path}`
-        const isActive = res.locals.CURRENT_PATH === url || res.locals.CURRENT_PATH.startsWith(`${url}/`)
+        const url = item.isExternal || !appendBaseUrl ? item.url : path.join(req.baseUrl || '', item.path)
+        const isActive = CURRENT_PATH === url || CURRENT_PATH.startsWith(`${url}/`)
         return assign({}, item, {
           url,
           isActive,
