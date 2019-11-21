@@ -5,7 +5,7 @@ import Link from '@govuk-react/link'
 import { H2 } from '@govuk-react/heading'
 import Table from '@govuk-react/table'
 import { LEVEL_SIZE } from '@govuk-react/constants'
-
+import { FormActions } from 'data-hub-components'
 import { companies } from '../../../../../lib/urls'
 
 const RenderHasAccountManager = (
