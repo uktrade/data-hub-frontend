@@ -73,7 +73,7 @@ const expectedCompanyLists = [
 const canSeeCompanyListsRequest = {
   locals: {
     user: {
-      permissions: ['company_list.view_companylistitem'],
+      permissions: ['company_list.view_companylist'],
     },
   },
 }
