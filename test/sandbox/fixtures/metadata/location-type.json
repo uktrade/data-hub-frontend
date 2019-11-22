@@ -1,0 +1,22 @@
+[
+    {
+        "id": "b71fa81c-0c22-44c6-ab6f-13b9e045dc10",
+        "name": "HQ",
+        "disabled_on": null
+    },
+    {
+        "id": "cf45bf02-8ea7-4e53-af0e-b5676a30cb96",
+        "name": "Other",
+        "disabled_on": null
+    },
+    {
+        "id": "6043fe88-9fc4-428e-8243-a20076e5c811",
+        "name": "Post",
+        "disabled_on": null
+    },
+    {
+        "id": "d3a3dcee-3c31-445e-9602-a7843e40ad02",
+        "name": "Regional network",
+        "disabled_on": null
+    }
+]

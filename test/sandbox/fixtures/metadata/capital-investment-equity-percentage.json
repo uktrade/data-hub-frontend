@@ -1,0 +1,22 @@
+[
+  {
+    "id": "414a13f7-1b6f-4071-a6d3-d22ed64f4612",
+    "name": "0% - Not required",
+    "disabled_on": null
+  },
+  {
+    "id": "f7b72f8b-399e-43b2-b7ef-f42a154ef916",
+    "name": "1-19%",
+    "disabled_on": null
+  },
+  {
+    "id": "ec061f70-b287-41cf-aaf4-620aec79616b",
+    "name": "20-49%",
+    "disabled_on": null
+  },
+  {
+    "id": "488bf5ad-4c8e-4e6b-b339-182f291dcd76",
+    "name": "50% +",
+    "disabled_on": null
+  }
+]

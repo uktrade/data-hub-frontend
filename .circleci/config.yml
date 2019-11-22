@@ -45,6 +45,13 @@ aliases:
       name: Wait for data hub frontend
       command: dockerize -wait ${QA_HOST}/healthcheck -timeout 180s
 
+  # Start sandbox
+  - &start_api_sandbox
+    run:
+      name: Start API sandbox
+      command: java -jar /usr/local/sandbox.jar --port=8001 --watch=false --base=./test/sandbox run
+      background: true
+
   # Wait for api sandbox to report OK
   - &wait_for_api_sandbox
     run:
@@ -124,7 +131,7 @@ aliases:
 
   # Data hub base docker container
   - &docker_data_hub_base
-    image: ukti/data-hub-frontend-test:3.0.0
+    image: ukti/data-hub-frontend-test:3.1.0
     environment:
       *data_hub_base_envs
 
@@ -156,9 +163,6 @@ aliases:
     environment:
       - MOCK_SSO_SCOPE: 'data-hub:internal-front-end'
       - MOCK_SSO_TOKEN: 123
-
-  - &docker_data_api_sandbox
-    image: ukti/data-hub-sandbox
 
   # Data hub backend
   - &docker_data_hub_backend_base
@@ -331,12 +335,12 @@ jobs:
         environment: *data_hub_functional_envs
       - *docker_redis
       - *docker_mock_sso
-      - *docker_data_api_sandbox
     parallelism: 9
     steps:
       - checkout
       - *wait_for_mock_sso
       - *restore_yarn_cache
+      - *start_api_sandbox
       - *wait_for_api_sandbox
       - run: yarn install --pure-lockfile
       - run: yarn build:prod
@@ -357,11 +361,11 @@ jobs:
         environment: *data_hub_functional_envs
       - *docker_redis
       - *docker_mock_sso
-      - *docker_data_api_sandbox
     steps:
       - checkout
       - *wait_for_mock_sso
       - *restore_yarn_cache
+      - *start_api_sandbox
       - *wait_for_api_sandbox
       - run: yarn install --pure-lockfile
       - run: yarn build:prod

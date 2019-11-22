@@ -1,0 +1,73 @@
+{
+  "70513f19-0df6-4c8d-bef1-f11b65641ae4": {
+    "count": 3,
+    "next": null,
+    "previous": null,
+    "results": [
+      {
+        "company": {
+          "name": "A1 BMW LTD!!!!!",
+          "id": "a1138c1c-d449-4846-aa58-18fae7e1cb92",
+          "isArchived": false
+        },
+        "latest_interaction": {
+          "id": "79d92719-7402-45b6-b3d7-eff559d6b282",
+          "date": "2019-08-14",
+          "displayDate": "14 Aug 19",
+          "subject": "Here is a long interaction title some more text some more text some more text almost finished some more text nearly there more text finished"
+        }
+      },
+      {
+        "company": {
+          "name": "Portable Potatoes",
+          "id": "a30b1db3-7140-44ca-ad7a-9824c3c2ed56",
+          "isArchived": false
+        },
+        "latest_interaction": {
+          "displayDate": "-",
+          "date": null,
+          "subject": "No interactions have been recorded"
+        }
+      },
+      {
+        "company": {
+          "name": "Zebra clothing",
+          "id": "b89b1db3-7140-44ca-ad7a-9824c3c2gh74",
+          "isArchived": false
+        },
+        "latest_interaction": {
+          "id": "86f92719-7402-45b6-b3d7-eff559d6b678",
+          "displayDate": "21 Feb 2019",
+          "date": "2019-02-21",
+          "subject": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        }
+      }
+    ]
+  },
+  "75e14e32-292e-4d1b-a361-992d548251f7": {
+    "count": 1,
+    "next": null,
+    "previous": null,
+    "results": [
+      {
+        "company": {
+          "name": "A1 BMW LTD!!!!!",
+          "id": "a1138c1c-d449-4846-aa58-18fae7e1cb92",
+          "isArchived": false
+        },
+        "latest_interaction": {
+          "id": "79d92719-7402-45b6-b3d7-eff559d6b282",
+          "date": "2019-08-14",
+          "displayDate": "14 Aug 19",
+          "subject": "Here is a long interaction title some more text some more text some more text almost finished some more text nearly there more text finished"
+        }
+      }
+    ]
+  },
+  "a87af6bc-e117-47c7-ad3d-35f9900bbd0e": {
+    "count": 0,
+    "next": null,
+    "previous": null,
+    "results": []
+  }
+}

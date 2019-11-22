@@ -1,0 +1,17 @@
+[
+    {
+        "id": "031269ab-b7ec-40e9-8a4e-7371404f0622",
+        "name": "Commitment to invest",
+        "disabled_on": null
+    },
+    {
+        "id": "3e143372-496c-4d1e-8278-6fdd3da9b48b",
+        "name": "FDI",
+        "disabled_on": null
+    },
+    {
+        "id": "9c364e64-2b28-401b-b2df-50e08b0bca44",
+        "name": "Non-FDI",
+        "disabled_on": null
+    }
+]

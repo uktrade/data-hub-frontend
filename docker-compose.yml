@@ -69,7 +69,8 @@ services:
       MOCK_SSO_USERNAME: ${MOCK_SSO_USERNAME}
 
   mock-backend:
-    image: ukti/data-hub-sandbox:1.0.0
+    build:
+      context: ./test/sandbox
     ports:
       - 8001:8001
 

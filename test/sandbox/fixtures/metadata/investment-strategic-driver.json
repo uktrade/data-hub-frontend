@@ -1,0 +1,52 @@
+[
+    {
+        "id": "a2cef09f-cdbb-4eae-b191-0391260af9ad",
+        "name": "Access to clients",
+        "disabled_on": null
+    },
+    {
+        "id": "382aa6d1-a362-4166-a09d-f579d9f3be75",
+        "name": "Access to market",
+        "disabled_on": null
+    },
+    {
+        "id": "03593ab6-b583-4620-b7dc-c5d194d16943",
+        "name": "Access to resources",
+        "disabled_on": null
+    },
+    {
+        "id": "1be97a9e-2e65-49ee-a420-ab8928d296e5",
+        "name": "Cost reduction",
+        "disabled_on": null
+    },
+    {
+        "id": "15a69447-3802-4089-8dd1-b1175ab210fe",
+        "name": "Incentive driven",
+        "disabled_on": null
+    },
+    {
+        "id": "611a661c-08fe-4924-8847-f3b1fb021313",
+        "name": "Other",
+        "disabled_on": null
+    },
+    {
+        "id": "8d0fbd93-e39c-4e55-8d80-955257906de9",
+        "name": "Proximity to supplier",
+        "disabled_on": null
+    },
+    {
+        "id": "7b80f131-90f7-49e3-80d2-6b31baabf227",
+        "name": "Regulatory driven",
+        "disabled_on": null
+    },
+    {
+        "id": "7cc42486-30bb-46d5-813d-6ad1c918ef08",
+        "name": "Skills seeking",
+        "disabled_on": null
+    },
+    {
+        "id": "e6ebf75c-56a6-4cf3-ba67-9b479217d733",
+        "name": "Technology seeking",
+        "disabled_on": null
+    }
+]
