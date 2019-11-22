@@ -1,7 +1,7 @@
-const { camelCase, get } = require('lodash')
+const { camelCase, has } = require('lodash')
 
 module.exports = (req, res, next) => {
-  if (get(res, 'locals.user.permissions')) {
+  if (has(res, 'locals.user.permissions')) {
     res.locals.user.hasPermission = res.locals.user.permissions.reduce(
       (a, x) => ({
         ...a,
