@@ -21,7 +21,7 @@
     "lint:all:styles": "sass-lint -v -q -c .sass-lint.yml assets/stylesheets/**/*.scss",
     "sandbox": "sandbox --watch=true --base=./test/sandbox run",
     "test": "npm-run-all test:*",
-    "test:unit": "NODE_ENV=test LOG_LEVEL=silent mocha ./src/**/*.test.js --opts ./test/unit/mocha.opts",
+    "test:unit": "NODE_ENV=test LOG_LEVEL=silent mocha './src/**/*.test.{js,jsx}' --opts ./test/unit/mocha.opts",
     "test:unit-client": "mocha-webpack --webpack-config webpack.config.js ./test/unit-client/assets/javascripts/**/*.test.js --opts ./test/unit-client/mocha.opts",
     "test:acceptance": "nightwatch --config test/acceptance/nightwatch.conf.js --env default --skiptags ignore",
     "test:acceptance:remote": "./.circleci/scripts/local-runner.js --config test/acceptance/nightwatch.conf.js",
@@ -148,6 +148,7 @@
     "winston": "^2.4.2"
   },
   "devDependencies": {
+    "@babel/register": "^7.7.0",
     "@uktrade/client-matrix-js": "^1.0.38",
     "@uktrade/wdio-image-diff-js": "1.0.180",
     "@vue/test-utils": "^1.0.0-beta.25",
@@ -170,6 +171,8 @@
     "cucumber": "^4.2.1",
     "cucumber-html-reporter": "^4.0.0",
     "cypress": "^3.1.5",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0-beta.0",
     "eslint-plugin-import": "^2.12.0",

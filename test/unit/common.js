@@ -1,8 +1,14 @@
+require('@babel/register')
+
 const chai = require('chai')
 const sinon = require('sinon')
 const proxyquire = require('proxyquire')
 const reqres = require('reqres')
 const nock = require('nock')
+const { configure } = require('enzyme')
+const Adapter = require('enzyme-adapter-react-16')
+
+configure({ adapter: new Adapter() })
 
 chai.use(require('sinon-chai'))
 chai.use(require('chai-as-promised'))
