@@ -1,6 +1,6 @@
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
-const { assertBreadcrumbs } = require('../../support/assertions')
+const { testBreadcrumbs } = require('../../support/assertions')
 
 describe('Company activity feed', () => {
   const commonTests = ({
@@ -9,14 +9,6 @@ describe('Company activity feed', () => {
     expectedCompanyId,
     expectedActivitiesHeading,
   }) => {
-    it('should render breadcrumbs', () => {
-      assertBreadcrumbs({
-        'Home': '/',
-        'Companies': '/companies',
-        'Activity Feed': null,
-      })
-    })
-
     it('should display the heading', () => {
       cy.get(selectors.localHeader().heading).should('have.text', expectedHeading)
     })
@@ -53,6 +45,13 @@ describe('Company activity feed', () => {
       cy.visit(`/companies/${fixtures.company.venusLtd.id}/activity`)
     })
 
+    testBreadcrumbs({
+      'Home': '/',
+      'Companies': '/companies',
+      'Venus Ltd': '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
+      'Activity Feed': null,
+    })
+
     commonTests({
       expectedHeading: fixtures.company.venusLtd.name,
       expectedAddress: '66 Marcham Road, Bordley, BD23 8RZ, United Kingdom',
@@ -76,6 +75,13 @@ describe('Company activity feed', () => {
   context('when viewing activity feed for an archived company', () => {
     before(() => {
       cy.visit(`/companies/${fixtures.company.archivedLtd.id}/activity`)
+    })
+
+    testBreadcrumbs({
+      'Home': '/',
+      'Companies': '/companies',
+      'Archived Ltd': '/companies/346f78a5-1d23-4213-b4c2-bf48246a13c3',
+      'Activity Feed': null,
     })
 
     commonTests({
