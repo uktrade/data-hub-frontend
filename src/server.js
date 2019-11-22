@@ -110,10 +110,10 @@ app.use(store())
 app.use(csrf())
 app.use(csrfToken())
 
-app.use(proxy('/api', {
+app.use(proxy('/api-proxy', {
   target: config.apiRoot,
   pathRewrite: {
-    '^/api': '/',
+    '^/api-proxy': '/',
   },
   onProxyReq: (req, res) =>
     req.setHeader('authorization', `Bearer ${res.session.token}`),
