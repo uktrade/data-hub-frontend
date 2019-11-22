@@ -1,5 +1,5 @@
 const fixtures = require('../../../fixtures')
-const { assertBreadcrumbs } = require('../../../support/utils')
+const { assertBreadcrumbs } = require('../../../support/assertions')
 
 describe('Add Adviser', () => {
   it('Should display the add Lead ITA confirmation page', () => {

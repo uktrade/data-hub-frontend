@@ -1,5 +1,5 @@
 const selectors = require('../../../../selectors')
-const { describeBreadcrumbs } = require('../../support/utils')
+const { testBreadcrumbs } = require('../../support/assertions')
 
 describe('Delete company list page', () => {
   beforeEach(function () {
@@ -11,11 +11,9 @@ describe('Delete company list page', () => {
       cy.visit('/company-lists/2a8fb06f-2099-44d6-b404-e0fae0b9ea59/delete')
     })
 
-    it('displays breadcrumbs', () => {
-      describeBreadcrumbs({
-        'Home': '/',
-        'Delete list': undefined,
-      })
+    testBreadcrumbs({
+      'Home': '/',
+      'Delete list': undefined,
     })
 
     it('displays the "Delete list" heading', () => {
