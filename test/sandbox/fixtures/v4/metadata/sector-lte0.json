@@ -1,0 +1,362 @@
+[
+  {
+      "id": "af959812-6095-e211-a939-e4115bead28a",
+      "name": "Advanced Engineering",
+      "segment": "Advanced Engineering",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "9538cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Aerospace",
+      "segment": "Aerospace",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "9638cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Agriculture, Horticulture and Fisheries",
+      "segment": "Agriculture, Horticulture and Fisheries",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "9738cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Airports",
+      "segment": "Airports",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "9838cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Automotive",
+      "segment": "Automotive",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "9938cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Biotechnology and Pharmaceuticals",
+      "segment": "Biotechnology and Pharmaceuticals",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "9a38cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Business (and Consumer) Services",
+      "segment": "Business (and Consumer) Services",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "9b38cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Chemicals",
+      "segment": "Chemicals",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "9c38cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Clothing, Footwear and Fashion",
+      "segment": "Clothing, Footwear and Fashion",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "9d38cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Communications",
+      "segment": "Communications",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "9e38cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Construction",
+      "segment": "Construction",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "9f38cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Creative and Media",
+      "segment": "Creative and Media",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "7dbb9fc6-5f95-e211-a939-e4115bead28a",
+      "name": "Defence",
+      "segment": "Defence",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "b0959812-6095-e211-a939-e4115bead28a",
+      "name": "Defence and Security",
+      "segment": "Defence and Security",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "a038cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Education and Training",
+      "segment": "Education and Training",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "a138cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Electronics and IT Hardware",
+      "segment": "Electronics and IT Hardware",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "b1959812-6095-e211-a939-e4115bead28a",
+      "name": "Energy",
+      "segment": "Energy",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "a238cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Environment",
+      "segment": "Environment",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "b2959812-6095-e211-a939-e4115bead28a",
+      "name": "Environment and Water",
+      "segment": "Environment and Water",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "a338cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Financial Services (including Professional Services)",
+      "segment": "Financial Services (including Professional Services)",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "a538cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Food and Drink",
+      "segment": "Food and Drink",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "a638cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Giftware, Jewellery and Tableware",
+      "segment": "Giftware, Jewellery and Tableware",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "ac22c9d2-5f95-e211-a939-e4115bead28a",
+      "name": "Global Sports Projects",
+      "segment": "Global Sports Projects",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "a738cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Healthcare and Medical",
+      "segment": "Healthcare and Medical",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "a838cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Household Goods, Furniture and Furnishings",
+      "segment": "Household Goods, Furniture and Furnishings",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "b3959812-6095-e211-a939-e4115bead28a",
+      "name": "ICT",
+      "segment": "ICT",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "a938cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Leisure and Tourism",
+      "segment": "Leisure and Tourism",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "b4959812-6095-e211-a939-e4115bead28a",
+      "name": "Life Sciences",
+      "segment": "Life Sciences",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "aa38cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Marine",
+      "segment": "Marine",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "b5959812-6095-e211-a939-e4115bead28a",
+      "name": "Mass Transport",
+      "segment": "Mass Transport",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "ab38cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Mechanical Electrical and Process Engineering",
+      "segment": "Mechanical Electrical and Process Engineering",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "a422c9d2-5f95-e211-a939-e4115bead28a",
+      "name": "Metallurgical Process Plant",
+      "segment": "Metallurgical Process Plant",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "a522c9d2-5f95-e211-a939-e4115bead28a",
+      "name": "Metals, Minerals and Materials",
+      "segment": "Metals, Minerals and Materials",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "a622c9d2-5f95-e211-a939-e4115bead28a",
+      "name": "Mining",
+      "segment": "Mining",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "44329c18-6095-e211-a939-e4115bead28a",
+      "name": "More Sectors",
+      "segment": "More Sectors",
+      "parent": null,
+      "level": 0,
+      "disabled_on": "2013-08-06T15:51:32Z"
+  },
+  {
+      "id": "a722c9d2-5f95-e211-a939-e4115bead28a",
+      "name": "Oil and Gas",
+      "segment": "Oil and Gas",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "a822c9d2-5f95-e211-a939-e4115bead28a",
+      "name": "Ports and Logistics",
+      "segment": "Ports and Logistics",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "a922c9d2-5f95-e211-a939-e4115bead28a",
+      "name": "Power",
+      "segment": "Power",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "aa22c9d2-5f95-e211-a939-e4115bead28a",
+      "name": "Railways",
+      "segment": "Railways",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "7ebb9fc6-5f95-e211-a939-e4115bead28a",
+      "name": "Renewable Energy",
+      "segment": "Renewable Energy",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "355f977b-8ac3-e211-a646-e4115bead28a",
+      "name": "Retail",
+      "segment": "Retail",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "a438cecc-5f95-e211-a939-e4115bead28a",
+      "name": "Security",
+      "segment": "Security",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "ab22c9d2-5f95-e211-a939-e4115bead28a",
+      "name": "Software and Computer Services Business to Business (B2B)",
+      "segment": "Software and Computer Services Business to Business (B2B)",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "ad22c9d2-5f95-e211-a939-e4115bead28a",
+      "name": "Textiles, Interior Textiles and Carpets",
+      "segment": "Textiles, Interior Textiles and Carpets",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  },
+  {
+      "id": "ae22c9d2-5f95-e211-a939-e4115bead28a",
+      "name": "Water",
+      "segment": "Water",
+      "parent": null,
+      "level": 0,
+      "disabled_on": null
+  }
+]

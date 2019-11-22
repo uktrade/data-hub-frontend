@@ -1,0 +1,28 @@
+{
+  "id": 1,
+  "business_type": {
+    "name": "Private limited company",
+    "id": "6f75408b-03e7-e611-bca1-e4115bead28a"
+  },
+  "company_category": "Private Limited Company",
+  "company_number": "99919",
+  "company_status": "",
+  "incorporation_date": "2000-12-14",
+  "name": "Mercury Trading Ltd",
+  "registered_address": {
+    "line_1": "64 Ermin Street",
+    "line_2": "",
+    "town": "Y Ffor",
+    "county": "",
+    "postcode": "LL53 5RN",
+    "country": {
+      "name": "United Kingdom",
+      "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+    }
+  },
+  "sic_code_1": "",
+  "sic_code_2": "",
+  "sic_code_3": "",
+  "sic_code_4": "",
+  "uri": ""
+}

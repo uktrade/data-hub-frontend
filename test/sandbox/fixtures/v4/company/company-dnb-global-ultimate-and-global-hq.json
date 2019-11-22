@@ -1,0 +1,82 @@
+{
+  "id": "0418f79f-154b-4f55-85a6-8ddad559663e",
+  "reference_code": "",
+  "name": "DnB Global Ultimate & Global HQ",
+  "trading_names": [
+      "DnB Global Ultimate & Global HQ"
+  ],
+  "uk_based": false,
+  "company_number": null,
+  "vat_number": "",
+  "duns_number": "079942718",
+  "created_on": "2019-10-28T12:49:16.152859Z",
+  "modified_on": "2019-10-28T12:49:16.152880Z",
+  "archived": false,
+  "archived_documents_url_path": "",
+  "archived_on": null,
+  "archived_reason": null,
+  "archived_by": null,
+  "description": "This is a dummy company for testing companies with DnB Global Ultimate data",
+  "transferred_by": null,
+  "transferred_on": null,
+  "transferred_to": null,
+  "transfer_reason": "",
+  "website": "http://abc.xyz",
+  "business_type": null,
+  "one_list_group_tier": {
+    "name": "Tier A - Strategic Account",
+    "id": "b91bf800-8d53-e311-aef3-441ea13961e2"
+  },
+  "contacts": [],
+  "employee_range": null,
+  "number_of_employees": 98771,
+  "is_number_of_employees_estimated": false,
+  "export_to_countries": [],
+  "future_interest_countries": [],
+  "headquarter_type": {
+    "name": "ghq",
+    "id": "43281c5e-92a4-4794-867b-b4d5f801e6f3"
+  },
+  "one_list_group_global_account_manager": {
+    "name": "Travis Greene",
+    "first_name": "Travis",
+    "last_name": "Greene",
+    "dit_team": {
+      "name": "IST - Sector Advisory Services",
+      "uk_region": {
+        "name": "London",
+        "id": "874cd12a-6095-e211-a939-e4115bead28a"
+      },
+      "country": {
+        "name": "United Kingdom",
+        "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+      },
+      "id": "fc3a6667-cfe9-e511-8ffa-e4115bead28a"
+    },
+    "id": "8eefe6b4-2816-4e47-94b5-a13409dcef70"
+  },
+  "global_headquarters": null,
+  "sector": null,
+  "turnover_range": null,
+  "turnover": 136819000000,
+  "is_turnover_estimated": null,
+  "uk_region": null,
+  "export_experience_category": null,
+  "address": {
+      "line_1": "1700 Amphitheatre Way",
+      "line_2": "",
+      "town": "Mountain Range",
+      "county": "",
+      "postcode": "95543-1771",
+      "country": {
+          "name": "United States",
+          "id": "81756b9a-5d95-e211-a939-e4115bead28a"
+      }
+  },
+  "registered_address": null,
+  "pending_dnb_investigation": false,
+  "export_potential": null,
+  "great_profile_status": null,
+  "is_global_ultimate": true,
+  "global_ultimate_duns_number": "079942718"
+}

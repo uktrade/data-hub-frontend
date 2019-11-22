@@ -1,0 +1,77 @@
+{
+  "id": "cc7e2f19-7251-4a41-a27a-f98437720531",
+  "reference_code": "",
+  "name": "DnB Corp",
+  "trading_names": [
+    "DnB",
+    "D&B"
+  ],
+  "uk_based": false,
+  "company_number": null,
+  "vat_number": "",
+  "duns_number": "000000001",
+  "created_on": "2015-10-26T11:00:00Z",
+  "modified_on": "2017-11-26T11:00:00Z",
+  "archived": false,
+  "archived_documents_url_path": "",
+  "archived_on": null,
+  "archived_reason": null,
+  "archived_by": null,
+  "description": "This is a dummy company for testing companies with DnB data",
+  "transferred_by": null,
+  "transferred_on": null,
+  "transferred_to": null,
+  "transfer_reason": "",
+  "website": null,
+  "business_type": {
+    "name": "Company",
+    "id": "98d14e94-5d95-e211-a939-e4115bead28a"
+  },
+  "one_list_group_tier": null,
+  "contacts": [],
+  "employee_range": {
+    "name": "500+",
+    "id": "41afd8d0-5d95-e211-a939-e4115bead28a"
+  },
+  "number_of_employees": 95,
+  "is_number_of_employees_estimated": true,
+  "export_to_countries": [],
+  "future_interest_countries": [],
+  "headquarter_type": null,
+  "one_list_group_global_account_manager": null,
+  "global_headquarters": null,
+  "sector": {
+    "name": "Retail",
+    "id": "355f977b-8ac3-e211-a646-e4115bead28a"
+  },
+  "turnover_range": {
+    "name": "£33.5M+",
+    "id": "7a4cd12a-6095-e211-a939-e4115bead28a"
+  },
+  "turnover": 1000000,
+  "is_turnover_estimated": true,
+  "uk_region": null,
+  "export_experience_category": null,
+  "address": {
+    "line_1": "1 Main Road",
+    "line_2": "",
+    "town": "Rome",
+    "county": "",
+    "postcode": "001122",
+    "country": {
+      "name": "Italy",
+      "id": "84756b9a-5d95-e211-a939-e4115bead28a"
+    }
+  },
+  "registered_address": {
+    "line_1": "1 Main Road",
+    "line_2": "",
+    "town": "Rome",
+    "county": "",
+    "postcode": "001122",
+    "country": {
+      "name": "Italy",
+      "id": "84756b9a-5d95-e211-a939-e4115bead28a"
+    }
+  }
+}

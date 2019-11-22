@@ -1,0 +1,32 @@
+[
+    {
+        "id": "73023b55-9568-4e3f-a134-53ec58451d3f",
+        "name": "Export growth",
+        "disabled_on": null
+    },
+    {
+        "id": "8b05e8c7-1812-46bf-bab7-a0096ab5689f",
+        "name": "Increasing export markets",
+        "disabled_on": null
+    },
+    {
+        "id": "85ec7ed9-0113-429d-9ee9-626248eb5cf0",
+        "name": "Increasing export turnover",
+        "disabled_on": null
+    },
+    {
+        "id": "b9b88464-6ffb-47e7-bb60-b1fc376bf949",
+        "name": "New exporter",
+        "disabled_on": null
+    },
+    {
+        "id": "52b160c9-40dc-4ed9-abb7-d787dd2d1871",
+        "name": "No exports in the last 12 months",
+        "disabled_on": null
+    },
+    {
+        "id": "01a283b1-0e43-434f-b447-5c475eeca52a",
+        "name": "Reactive",
+        "disabled_on": null
+    }
+]

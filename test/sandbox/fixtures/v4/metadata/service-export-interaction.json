@@ -1,0 +1,141 @@
+[
+  {
+    "id": "9484b82b-3499-e211-a939-e4115bead28a",
+    "name": "Account Management",
+    "disabled_on": null,
+    "contexts": [
+      "investment_project_interaction",
+      "export_service_delivery",
+      "interaction",
+      "event",
+      "other_service_delivery",
+      "investment_interaction",
+      "export_interaction",
+      "other_interaction"
+    ]
+  },
+  {
+    "id": "a4a733b6-eb95-e611-be23-e4115bead28a",
+    "name": "Account Management: Northern Powerhouse",
+    "disabled_on": null,
+    "contexts": [
+      "investment_project_interaction",
+      "interaction",
+      "event",
+      "other_service_delivery",
+      "export_interaction",
+      "other_interaction"
+    ]
+  },
+  {
+    "id": "56c42f6d-1ff3-e411-bcbe-e4115bead28a",
+    "name": "Digital Trade Advisers One-to-One",
+    "disabled_on": null,
+    "contexts": [
+      "investment_project_interaction",
+      "export_service_delivery",
+      "interaction",
+      "event",
+      "other_service_delivery",
+      "export_interaction",
+      "other_interaction"
+    ]
+  },
+  {
+    "id": "0796b92b-3499-e211-a939-e4115bead28a",
+    "name": "DSO Interaction",
+    "disabled_on": null,
+    "contexts": [
+      "investment_project_interaction",
+      "interaction",
+      "event",
+      "investment_interaction",
+      "export_interaction",
+      "other_interaction"
+    ]
+  },
+  {
+    "id": "350bba2b-3499-e211-a939-e4115bead28a",
+    "name": "Export Win",
+    "disabled_on": null,
+    "contexts": [
+      "investment_project_interaction",
+      "export_service_delivery",
+      "interaction",
+      "event",
+      "other_service_delivery",
+      "export_interaction",
+      "other_interaction"
+    ]
+  },
+  {
+    "id": "9984b82b-3499-e211-a939-e4115bead28a",
+    "name": "Inbound Referral",
+    "disabled_on": null,
+    "contexts": [
+      "other_interaction",
+      "export_interaction",
+      "service_delivery"
+    ]
+  },
+  {
+    "id": "e96a775a-1ff3-e411-bcbe-e4115bead28a",
+    "name": "Language and Culture Advisers One-to-One",
+    "disabled_on": null,
+    "contexts": [
+      "investment_project_interaction",
+      "export_service_delivery",
+      "interaction",
+      "event",
+      "other_service_delivery",
+      "export_interaction",
+      "other_interaction"
+    ]
+  },
+  {
+    "id": "c4f9b82b-3499-e211-a939-e4115bead28a",
+    "name": "Onward Referral",
+    "disabled_on": null,
+    "contexts": [
+      "other_interaction",
+      "export_interaction",
+      "service_delivery"
+    ]
+  },
+  {
+    "id": "330bba2b-3499-e211-a939-e4115bead28a",
+    "name": "Trade - Enquiry",
+    "disabled_on": null,
+    "contexts": [
+      "investment_project_interaction",
+      "interaction",
+      "event",
+      "export_interaction",
+      "other_interaction"
+    ]
+  },
+  {
+    "id": "f36eb92b-3499-e211-a939-e4115bead28a",
+    "name": "Trade - Services (Other)",
+    "disabled_on": null,
+    "contexts": [
+      "investment_project_interaction",
+      "interaction",
+      "event",
+      "export_interaction",
+      "other_interaction"
+    ]
+  },
+  {
+    "id": "380bba2b-3499-e211-a939-e4115bead28a",
+    "name": "Tradeshow Access Programme (TAP)",
+    "disabled_on": null,
+    "contexts": [
+      "export_service_delivery",
+      "other_service_delivery",
+      "export_interaction",
+      "service_delivery",
+      "other_interaction"
+    ]
+  }
+]

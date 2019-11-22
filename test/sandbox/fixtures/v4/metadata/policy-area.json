@@ -1,0 +1,252 @@
+[
+  {
+      "id": "4b9142df-0520-46bd-9da9-94147cdbae13",
+      "name": "Access to Finance",
+      "disabled_on": null
+  },
+  {
+      "id": "9feefd50-7f4c-4b73-a33e-779121d40419",
+      "name": "Access to Public Funding (inc. EU funding)",
+      "disabled_on": null
+  },
+  {
+      "id": "e28d0a0a-287c-40f4-a7d6-fd03c70ec641",
+      "name": "Agriculture (Regulation/Support)",
+      "disabled_on": null
+  },
+  {
+      "id": "42e8b64d-304e-4de3-9928-b3d278db5a68",
+      "name": "Announcement Feedback",
+      "disabled_on": null
+  },
+  {
+      "id": "d6ef8497-a12c-41a8-a6fe-3652028e7fad",
+      "name": "Art, Culture, Sport and Leisure",
+      "disabled_on": null
+  },
+  {
+      "id": "a87aa322-0153-4b1e-a2fd-23a03060204e",
+      "name": "Borders, Migration, Immigration and Foreign Travel",
+      "disabled_on": null
+  },
+  {
+      "id": "53ca7c82-5851-4bed-908e-92016f77c5b9",
+      "name": "Business Regulation",
+      "disabled_on": null
+  },
+  {
+      "id": "2242e7bd-e54e-4195-a639-3a9e52992c2f",
+      "name": "Company Law and Company Reporting",
+      "disabled_on": null
+  },
+  {
+      "id": "7d5aecf6-d747-4cdc-b06a-5c51c8a0b21c",
+      "name": "Competition Law and Policy",
+      "disabled_on": null
+  },
+  {
+      "id": "d4e57549-1eae-43f0-b7cb-04fc57b9a276",
+      "name": "Consumer Rights, Trading Standards, Product Regulation",
+      "disabled_on": null
+  },
+  {
+      "id": "d1614021-6728-4194-84b7-15186295bf45",
+      "name": "Customs Union",
+      "disabled_on": null
+  },
+  {
+      "id": "c5916321-1c8e-452a-bd5d-05569afd7a5f",
+      "name": "Data Policy",
+      "disabled_on": null
+  },
+  {
+      "id": "7e22430d-1a6e-42ca-8f4e-60238dc26129",
+      "name": "Devolved Administration - Northern Ireland",
+      "disabled_on": null
+  },
+  {
+      "id": "4e6d6400-61f1-4c9e-ab97-4215e4d7fd49",
+      "name": "Devolved Administration - Scotland",
+      "disabled_on": null
+  },
+  {
+      "id": "a5441150-ce05-4bd9-a49d-5ce6504f9625",
+      "name": "Devolved Administration - Wales",
+      "disabled_on": null
+  },
+  {
+      "id": "3f995c74-f601-4281-9ee4-4b3a73a33dfe",
+      "name": "Education and Skills (including students)",
+      "disabled_on": null
+  },
+  {
+      "id": "67649465-c70a-443b-af49-00560d8ab6b5",
+      "name": "Employment Law and Labour Market Policy",
+      "disabled_on": null
+  },
+  {
+      "id": "6fa2ec0e-073b-4b0d-8e74-3eb9aef34dca",
+      "name": "Energy (exploration, production, distribution and use)",
+      "disabled_on": null
+  },
+  {
+      "id": "6c0b0d7f-1007-437d-bc0b-6f7b8c148bc5",
+      "name": "Energy Market Regulation",
+      "disabled_on": null
+  },
+  {
+      "id": "9a9ae32a-0a12-4e0f-82f9-17050dd95449",
+      "name": "Environmental Law and Policy",
+      "disabled_on": null
+  },
+  {
+      "id": "1428a832-b726-4008-a1d3-f48ea2a7b580",
+      "name": "European Lobbying Feedback",
+      "disabled_on": null
+  },
+  {
+      "id": "6e414839-8427-402b-a904-2fb95b37f005",
+      "name": "Exporting and Export Support",
+      "disabled_on": null
+  },
+  {
+      "id": "808e2fbb-dd23-4d87-82a3-6eacbf95cfeb",
+      "name": "Facility Locations (Legal HQ/Factory/etc)",
+      "disabled_on": null
+  },
+  {
+      "id": "1f1c9c0e-f93c-46b1-94f8-28dc48bd6d61",
+      "name": "Gender Pay",
+      "disabled_on": null
+  },
+  {
+      "id": "4fb8c6c6-d3aa-4b36-a954-7578e0337f4d",
+      "name": "Government Communications",
+      "disabled_on": null
+  },
+  {
+      "id": "7a1d48ed-84a6-4d17-b065-df6cfb81eb4e",
+      "name": "Health and Social Care (NHS)",
+      "disabled_on": null
+  },
+  {
+      "id": "0da4abf1-6344-48bc-85cf-1834b5fb26e1",
+      "name": "Imports",
+      "disabled_on": null
+  },
+  {
+      "id": "708a84d8-d25f-4b1e-ab56-15105f7537b6",
+      "name": "Inclusive Economy",
+      "disabled_on": null
+  },
+  {
+      "id": "273bc920-9961-459a-9eb0-b9686d37421d",
+      "name": "Industrial Strategy",
+      "disabled_on": null
+  },
+  {
+      "id": "77e60c71-944b-48e9-b998-c4a21d0f0045",
+      "name": "Law and Justice",
+      "disabled_on": null
+  },
+  {
+      "id": "d54d96c4-20f8-4acd-9d70-fb27f3596d54",
+      "name": "Local Government",
+      "disabled_on": null
+  },
+  {
+      "id": "01861666-4150-4aaf-b659-31f84e459612",
+      "name": "Local Growth",
+      "disabled_on": null
+  },
+  {
+      "id": "e23a60ba-aaa5-42da-866a-7f1a563dbc3e",
+      "name": "Loss of Investment/Jobs",
+      "disabled_on": null
+  },
+  {
+      "id": "96b0e3b3-686e-4e5f-bfa5-061b3df6223d",
+      "name": "Market Access",
+      "disabled_on": null
+  },
+  {
+      "id": "a89151e6-2bf9-43ec-8ac3-c5cbc3e3554f",
+      "name": "Movement of Goods",
+      "disabled_on": null
+  },
+  {
+      "id": "2ca6322b-27e4-4ed9-95d4-342989d98022",
+      "name": "Movement of Services",
+      "disabled_on": null
+  },
+  {
+      "id": "5bb2abdd-b56f-4d64-8f11-f31c217932fb",
+      "name": "National Security",
+      "disabled_on": null
+  },
+  {
+      "id": "7a8ce103-a08f-4068-a236-749f1f0d9e7c",
+      "name": "New Investment/Jobs",
+      "disabled_on": null
+  },
+  {
+      "id": "121b75fa-02a1-481e-8bb6-968d81f104b9",
+      "name": "Northern Powerhouse",
+      "disabled_on": null
+  },
+  {
+      "id": "6596d1bd-7e23-4f4c-9821-e19cc72aa44d",
+      "name": "Other",
+      "disabled_on": null
+  },
+  {
+      "id": "46468f7a-575d-4e95-8350-0879cab5993a",
+      "name": "Regional Devolution",
+      "disabled_on": null
+  },
+  {
+      "id": "fb4b00c8-93fb-46f5-bd3d-bf1bd7466a86",
+      "name": "Repeal Bill",
+      "disabled_on": null
+  },
+  {
+      "id": "276b98bc-d12e-42e2-b506-27c3f36083a4",
+      "name": "Returnships",
+      "disabled_on": null
+  },
+  {
+      "id": "9c5c4f45-09de-4383-83b5-7190c3f58b7b",
+      "name": "Science, R&D and Innovation",
+      "disabled_on": null
+  },
+  {
+      "id": "8feee1c8-97d5-4169-acb4-e10d2926c856",
+      "name": "Standards",
+      "disabled_on": null
+  },
+  {
+      "id": "583c0bb6-d3c5-4e4b-8f25-e861c1e8d9c9",
+      "name": "State Aid",
+      "disabled_on": null
+  },
+  {
+      "id": "8b31e513-c5c8-4c93-a494-9273381b6d14",
+      "name": "Supply Chains and Raw Materials",
+      "disabled_on": null
+  },
+  {
+      "id": "6f5db2e8-a128-4d66-ae0a-5e314758933b",
+      "name": "Tariffs and Trade Policy",
+      "disabled_on": null
+  },
+  {
+      "id": "ef9ec638-eddf-4936-b039-77a37e45cfb5",
+      "name": "Tax and Revenue",
+      "disabled_on": null
+  },
+  {
+      "id": "75834c92-573f-4cae-b670-3f61dd2448d3",
+      "name": "Transportation (Freight and People)",
+      "disabled_on": null
+  }
+]

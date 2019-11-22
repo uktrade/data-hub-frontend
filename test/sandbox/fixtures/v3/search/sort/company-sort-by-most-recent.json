@@ -1,0 +1,181 @@
+{  
+  "count":2,
+  "results":[  
+     {  
+        "archived_by":null,
+        "business_type":{  
+           "id":"98d14e94-5d95-e211-a939-e4115bead28a",
+           "name":"Company"
+        },
+        "companies_house_data":null,
+        "contacts":[  
+
+        ],
+        "employee_range":null,
+        "export_experience_category":null,
+        "export_to_countries":[  
+
+        ],
+        "future_interest_countries":[  
+
+        ],
+        "global_headquarters":null,
+        "headquarter_type":null,
+        "sector":{  
+           "id":"b1959812-6095-e211-a939-e4115bead28a",
+           "name":"Energy",
+           "ancestors":[  
+
+           ]
+        },
+        "registered_address_country":{  
+           "id":"0550bdb8-5d95-e211-a939-e4115bead28a",
+           "name":"Malaysia"
+        },
+        "trading_address_country":null,
+        "turnover_range":null,
+        "uk_based":false,
+        "uk_region":null,
+        "trading_name":"",
+        "suggest":[  
+           "SortByMostRecent"
+        ],
+        "address":{  
+           "line_1":"Level 6, Avenue K Tower",
+           "line_2":"156 Jalan Ampang",
+           "town":"Kuala Lumpur",
+           "county":"",
+           "postcode":"50450",
+           "country":{  
+              "id":"0550bdb8-5d95-e211-a939-e4115bead28a",
+              "name":"Malaysia"
+           }
+        },
+        "registered_address":{  
+           "line_1":"Level 6, Avenue K Tower",
+           "line_2":"156 Jalan Ampang",
+           "town":"Kuala Lumpur",
+           "county":"",
+           "postcode":"50450",
+           "country":{  
+              "id":"0550bdb8-5d95-e211-a939-e4115bead28a",
+              "name":"Malaysia"
+           }
+        },
+        "website":"",
+        "trading_address_1":"",
+        "modified_on":"2014-07-23T03:34:52+00:00",
+        "registered_address_2":"156 Jalan Ampang",
+        "trading_address_2":"",
+        "vat_number":"",
+        "archived":false,
+        "id":"00009ae3-1912-e411-8a2b-e4115bead28a",
+        "archived_reason":"",
+        "name":"SortByMostRecent",
+        "registered_address_town":"Kuala Lumpur",
+        "description":"Some Description",
+        "trading_address_town":"Batman",
+        "created_on":"2014-07-23T03:31:57+00:00",
+        "company_number":null,
+        "duns_number":null,
+        "trading_names":[  
+
+        ],
+        "registered_address_1":"Level 6, Avenue K Tower",
+        "registered_address_postcode":"50450",
+        "reference_code":"123",
+        "archived_on":null,
+        "trading_address_postcode":"E14",
+        "trading_address_county":"London",
+        "registered_address_county":"London"
+     },
+     {  
+      "archived_by":null,
+      "business_type":{  
+         "id":"98d14e94-5d95-e211-a939-e4115bead28a",
+         "name":"Company"
+      },
+      "companies_house_data":null,
+      "contacts":[  
+
+      ],
+      "employee_range":null,
+      "export_experience_category":null,
+      "export_to_countries":[  
+
+      ],
+      "future_interest_countries":[  
+
+      ],
+      "global_headquarters":null,
+      "headquarter_type":null,
+      "sector":{  
+         "id":"b1959812-6095-e211-a939-e4115bead28a",
+         "name":"Energy",
+         "ancestors":[  
+
+         ]
+      },
+      "registered_address_country":{  
+         "id":"0550bdb8-5d95-e211-a939-e4115bead28a",
+         "name":"Malaysia"
+      },
+      "trading_address_country":null,
+      "turnover_range":null,
+      "uk_based":false,
+      "uk_region":null,
+      "trading_name":"",
+      "suggest":[  
+         "SortByMostRecent2"
+      ],
+      "address":{  
+         "line_1":"Level 6, Avenue K Tower",
+         "line_2":"156 Jalan Ampang",
+         "town":"Kuala Lumpur",
+         "county":"",
+         "postcode":"50450",
+         "country":{  
+            "id":"0550bdb8-5d95-e211-a939-e4115bead28a",
+            "name":"Malaysia"
+         }
+      },
+      "registered_address":{  
+         "line_1":"Level 6, Avenue K Tower",
+         "line_2":"156 Jalan Ampang",
+         "town":"Kuala Lumpur",
+         "county":"",
+         "postcode":"50450",
+         "country":{  
+            "id":"0550bdb8-5d95-e211-a939-e4115bead28a",
+            "name":"Malaysia"
+         }
+      },
+      "website":"",
+      "trading_address_1":"",
+      "modified_on":"2014-07-23T03:34:52+00:00",
+      "registered_address_2":"156 Jalan Ampang",
+      "trading_address_2":"",
+      "vat_number":"",
+      "archived":false,
+      "id":"00009ae3-1912-e411-8a2b-e4115bead28a",
+      "archived_reason":"",
+      "name":"SortByMostRecent2",
+      "registered_address_town":"Kuala Lumpur",
+      "description":"Some Description",
+      "trading_address_town":"Batman",
+      "created_on":"2014-07-23T03:31:57+00:00",
+      "company_number":null,
+      "duns_number":null,
+      "trading_names":[  
+
+      ],
+      "registered_address_1":"Level 6, Avenue K Tower",
+      "registered_address_postcode":"50450",
+      "reference_code":"123",
+      "archived_on":null,
+      "trading_address_postcode":"E14",
+      "trading_address_county":"London",
+      "registered_address_county":"London"
+   }
+  ]
+}

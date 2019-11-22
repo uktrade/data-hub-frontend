@@ -1,0 +1,38 @@
+[
+  {
+    "code": "cfe1",
+    "is_active": true
+  },
+  {
+    "code": "companies-advisers",
+    "is_active": true
+  },
+  {
+    "code": "investment-evidence",
+    "is_active": true
+  },
+  {
+    "code": "proposition-documents",
+    "is_active": true
+  },
+  {
+    "code": "interactions-complete-drafts",
+    "is_active": true
+  },
+  {
+    "code": "companies_add_remove_from_lists",
+    "is_active": true
+  },
+  {
+    "code": "companies-ultimate-hq",
+    "is_active": true
+  },
+  {
+    "code": "lead_advisers",
+    "is_active": true
+  },
+  {
+    "code": "activity-feed-filters",
+    "is_active": true
+  }
+]

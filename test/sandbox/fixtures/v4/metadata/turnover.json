@@ -1,0 +1,22 @@
+[
+    {
+        "id": "774cd12a-6095-e211-a939-e4115bead28a",
+        "name": "£0 to £1.34M",
+        "disabled_on": null
+    },
+    {
+        "id": "784cd12a-6095-e211-a939-e4115bead28a",
+        "name": "£1.34 to £6.7M",
+        "disabled_on": null
+    },
+    {
+        "id": "794cd12a-6095-e211-a939-e4115bead28a",
+        "name": "£6.7 to £33.5M",
+        "disabled_on": null
+    },
+    {
+        "id": "7a4cd12a-6095-e211-a939-e4115bead28a",
+        "name": "£33.5M+",
+        "disabled_on": null
+    }
+]
