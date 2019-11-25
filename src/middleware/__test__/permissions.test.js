@@ -2,7 +2,7 @@ const sinon = require('sinon')
 const permissions = require('../permissions')
 
 describe('Permissions middleware', () => {
-  it('Should add a map from camel-cased permissions to `true` to `res.session.user.hasPermission`', () => {
+  it('Should add a hasPermission method to res.locals.user', () => {
     const res = {
       locals: {
         user: {
@@ -16,12 +16,9 @@ describe('Permissions middleware', () => {
     }
     const next = sinon.stub()
     permissions(null, res, next)
-    expect(res.locals.user.hasPermission).to.deep.equal({
-      fooFooFooFoo: true,
-      barBarBarBar: true,
-      bazBazBazBaz: true,
-    })
-    expect(next).to.have.been.calledOnce
-    expect(next).to.have.been.calledWith()
+    expect(res.locals.user.hasPermission('foo-foo_foo.foo')).to.be.true
+    expect(res.locals.user.hasPermission('bar_bar.bar-bar')).to.be.true
+    expect(res.locals.user.hasPermission('baz.baz-baz_baz')).to.be.true
+    expect(res.locals.user.hasPermission('abc')).to.be.false
   })
 })
