@@ -34,17 +34,15 @@ const RenderHasAccountManager = (
       </Table.Row>
     </Table>
     <p>You can <a href={companies.audit(companyId)}>see changes in the Audit trail</a></p>
-    {hasPermissionToAddIta && <FormActions><Button
-      as={Link}
-      href={replaceUrl}
-    >
-      Replace Lead ITA
-    </Button><Button
-      as={Link}
-      href={removeUrl}
-    >
-      Remove Lead ITA
-    </Button></FormActions>}
+    {hasPermissionToAddIta &&
+    <FormActions>
+      <Button as={Link} href={replaceUrl}>
+        Replace Lead ITA
+      </Button>
+      <Button as={Link} href={removeUrl}>
+        Remove Lead ITA
+      </Button>
+    </FormActions>}
   </div>
 
 const RenderHasNoAccountManager = (

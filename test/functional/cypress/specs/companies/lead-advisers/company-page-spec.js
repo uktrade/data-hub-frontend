@@ -88,10 +88,16 @@ describe('Lead advisers', () => {
       cy.get(selectors.companyLeadAdviser.table.email).should('have.text', 'travis@travis.com')
     })
     it('should display a button to replace the Lead ITA', () => {
-      cy.contains('Replace Lead ITA').invoke('attr', 'href').should('eq', companies.advisers.replace(fixtures.company.oneListTierDita.id))
+      cy
+        .contains('Replace Lead ITA')
+        .invoke('attr', 'href')
+        .should('eq', companies.advisers.replace(fixtures.company.oneListTierDita.id))
     })
     it('should display a button to remove the Lead ITA', () => {
-      cy.contains('Remove Lead ITA').invoke('attr', 'href').should('eq', companies.advisers.remove(fixtures.company.oneListTierDita.id))
+      cy
+        .contains('Remove Lead ITA')
+        .invoke('attr', 'href')
+        .should('eq', companies.advisers.remove(fixtures.company.oneListTierDita.id))
     })
   })
 })
