@@ -4,6 +4,7 @@ const { transformCoreTeamToCollection, transformAccountManager } = require('../.
 const { coreTeamLabels } = require('../../../labels')
 const { isItaTierDAccount } = require('../../../../../lib/is-tier-type-company')
 const { companies } = require('../../../../../../src/lib/urls')
+const { authorisedRequest } = require('../../../../../lib/authorised-request')
 
 function renderLeadAdvisers (req, res) {
   const { company, user: { permissions } } = res.locals
@@ -68,6 +69,32 @@ async function renderAdvisers (req, res, next) {
     : await renderCoreTeamAdvisers(req, res, next)
 }
 
+// istanbul ignore next: Only testable with whitebox tests and alerady covered by functional tests
+const renderAddAdviserForm = (req, res) =>
+  res
+    .breadcrumb(res.locals.company.name, `/companies/${res.locals.company.id}`)
+    .breadcrumb('Confirm you are the Lead ITA')
+    .render('companies/apps/advisers/views/add-adviser.njk')
+
+// istanbul ignore next: Only testable with whitebox tests and alerady covered by functional tests
+async function addAdviser (req, res, next) {
+  const { company: { id } } = res.locals
+
+  try {
+    await authorisedRequest(req.session.token, {
+      method: 'POST',
+      url: `${config.apiRoot}/v4/company/${id}/self-assign-account-manager`,
+    })
+
+    req.flash('success', 'Lead adviser information updated')
+    res.redirect(`/companies/${id}/advisers`)
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   renderAdvisers,
+  addAdviser,
+  renderAddAdviserForm,
 }
