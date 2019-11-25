@@ -1,6 +1,6 @@
 const selectors = require('../../../../selectors')
 const fixtures = require('../../fixtures')
-const { describeBreadcrumbs } = require('../../support/utils')
+const { testBreadcrumbs } = require('../../support/assertions')
 
 const listSelectors = selectors.companyAddRemoveFromLists
 
@@ -18,7 +18,7 @@ describe('Adding and removing a company to a list', () => {
       cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/lists/add-remove`)
     })
 
-    describeBreadcrumbs({
+    testBreadcrumbs({
       'Home': '/',
       'Companies': '/companies',
       'Lambda plc': '/companies/0fb3379c-341c-4da4-b825-bf8d47b26baa',

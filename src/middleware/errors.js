@@ -1,5 +1,20 @@
+
 const config = require('../config')
 const logger = require('../config/logger')
+
+class NotAuthorizedError extends Error {
+  constructor () {
+    super('Not Authorized')
+    this.statusCode = 403
+  }
+}
+
+class NotFoundError extends Error {
+  constructor () {
+    super('Not Found')
+    this.statusCode = 404
+  }
+}
 
 function getStatusMessage (error) {
   if (error.code === 'EBADCSRFTOKEN') {
@@ -18,10 +33,7 @@ function getStatusMessage (error) {
 }
 
 function notFound (req, res, next) {
-  const error = new Error('Not Found')
-  error.statusCode = 404
-
-  next(error)
+  next(new NotFoundError())
 }
 
 function catchAll (error, req, res, next) {
@@ -46,5 +58,7 @@ function catchAll (error, req, res, next) {
 
 module.exports = {
   notFound,
+  NotAuthorizedError,
+  NotFoundError,
   catchAll,
 }

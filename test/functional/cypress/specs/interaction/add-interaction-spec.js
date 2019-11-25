@@ -40,6 +40,7 @@ describe('Add Export', () => {
         assertBreadcrumbs({
           'Home': '/',
           'Contacts': '/contacts',
+          'Joseph Woof': '/contacts/5e75d636-1d24-416a-aaf0-3fb220d594ce',
           'Add interaction': null,
         })
       })
@@ -115,6 +116,7 @@ describe('Add Export', () => {
         assertBreadcrumbs({
           'Home': '/',
           'Contacts': '/contacts',
+          'Joseph Woof': '/contacts/5e75d636-1d24-416a-aaf0-3fb220d594ce',
           'Add service delivery': null,
         })
       })
