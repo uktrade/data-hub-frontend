@@ -100,7 +100,6 @@ const common = {
     ],
     alias: {
       'vue$': 'vue/dist/vue.common.js',
-      '~': __dirname,
     },
     extensions: ['*', '.js', '.jsx', '.vue', '.json'],
   },

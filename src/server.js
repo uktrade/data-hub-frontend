@@ -1,4 +1,3 @@
-require('module-alias/register')
 require('dotenv').config()
 const path = require('path')
 const bodyParser = require('body-parser')
