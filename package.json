@@ -144,7 +144,6 @@
     "vue-loader": "^15.2.2",
     "vue-multiselect": "^2.1.0",
     "vue-template-compiler": "^2.5.13",
-    "wavy": "^1.0.4",
     "webpack": "^3.12.0",
     "webpack-assets-manifest": "^1.0.0",
     "webpack-merge": "^4.1.1",
