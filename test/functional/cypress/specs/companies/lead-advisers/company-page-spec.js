@@ -57,6 +57,12 @@ describe('Lead advisers', () => {
         'Lead adviser': null,
       })
     })
+    it('should show the allocated Lead adviser in the company header', () => {
+      cy.get(selectors.localHeader().description.paragraph(2)).should('contain', 'Lead ITA: Travis Greene')
+    })
+    it('should have a link to the Lead adviser tab', () => {
+      cy.contains('View Lead adviser').invoke('attr', 'href').should('eq', companies.advisers.index(fixtures.company.oneListTierDita.id))
+    })
     it('should display the "Lead Adviser" tab in the navigation', () => {
       cy.get(selectors.tabbedLocalNav().item(3)).should('contain', 'Lead adviser')
     })
