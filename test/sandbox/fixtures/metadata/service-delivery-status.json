@@ -1,0 +1,27 @@
+[
+  {
+      "id": "45329c18-6095-e211-a939-e4115bead28a",
+      "name": "Offered",
+      "disabled_on": null
+  },
+  {
+      "id": "46329c18-6095-e211-a939-e4115bead28a",
+      "name": "Current",
+      "disabled_on": null
+  },
+  {
+      "id": "47329c18-6095-e211-a939-e4115bead28a",
+      "name": "Completed",
+      "disabled_on": null
+  },
+  {
+      "id": "48329c18-6095-e211-a939-e4115bead28a",
+      "name": "Withdrawn",
+      "disabled_on": null
+  },
+  {
+      "id": "49329c18-6095-e211-a939-e4115bead28a",
+      "name": "On hold",
+      "disabled_on": null
+  }
+]

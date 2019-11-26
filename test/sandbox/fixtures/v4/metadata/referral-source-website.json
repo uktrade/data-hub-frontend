@@ -1,0 +1,27 @@
+[
+    {
+        "id": "cbde665e-9121-46d5-ba54-24e1e6c4aa77",
+        "name": "DIT Global Website",
+        "disabled_on": null
+    },
+    {
+        "id": "7524c091-2d60-4a52-90e3-cc647c92b140",
+        "name": "DIT Regional Website",
+        "disabled_on": null
+    },
+    {
+        "id": "b5b26c78-8e97-47b4-9014-6d4a3e40b257",
+        "name": "Exporting is Great - Campaign",
+        "disabled_on": null
+    },
+    {
+        "id": "afefa334-d96f-4a80-acb8-abf537bd3ae7",
+        "name": "Invest in GREAT Britain",
+        "disabled_on": null
+    },
+    {
+        "id": "072241d4-22d0-4657-8d8e-1848a0519b0a",
+        "name": "Other website",
+        "disabled_on": null
+    }
+]
