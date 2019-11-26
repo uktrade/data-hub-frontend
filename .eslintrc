@@ -43,6 +43,16 @@
         "mocha": true,
         "browser": true
       }
+    },
+    {
+      "globals": {
+        "Sandbox": true,
+        "state": true,
+        "_": true
+      },
+      "files": [
+        "test/sandbox/**"
+      ]
     }
   ]
 }

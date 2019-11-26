@@ -1,4 +1,5 @@
 const { transformLargeCapitalProfiles } = require('../profiles')
+const { companies } = require('../../../../lib/urls')
 
 describe('#transformLargeCapitalProfiles', () => {
   let actual
@@ -16,7 +17,7 @@ describe('#transformLargeCapitalProfiles', () => {
   it('should return the transformed values', () => {
     const expected = {
       'headingText': 'ABC Inc',
-      'headingUrl': '/companies/1',
+      'headingUrl': companies.investments.largeCapitalProfile(1),
       'itemId': '1',
       'metadata': [
         {

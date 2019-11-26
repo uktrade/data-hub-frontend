@@ -1,0 +1,17 @@
+[
+    {
+        "id": "38e36c77-61ad-4186-a7a8-ac6a1a1104c6",
+        "name": "Higher",
+        "disabled_on": null
+    },
+    {
+        "id": "002c18d9-f5c7-4f3c-b061-aee09fce8416",
+        "name": "Good",
+        "disabled_on": null
+    },
+    {
+        "id": "2bacde8d-128f-4d0a-849b-645ceafe4cf9",
+        "name": "Standard",
+        "disabled_on": null
+    }
+]

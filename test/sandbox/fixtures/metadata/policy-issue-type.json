@@ -1,0 +1,27 @@
+[
+  {
+      "id": "688ac22e-89d4-4d1f-bf0b-013588bf63a7",
+      "name": "Domestic",
+      "disabled_on": null
+  },
+  {
+      "id": "c1f1e29b-17ba-402f-ac98-aa23f9dc9bcb",
+      "name": "EU exit",
+      "disabled_on": null
+  },
+  {
+      "id": "a4d65900-3c83-4d2f-884b-be8977a554c4",
+      "name": "Non-EU trade priority",
+      "disabled_on": null
+  },
+  {
+      "id": "fa35595d-780d-4faa-b575-35f1c319bfee",
+      "name": "Economic opportunity",
+      "disabled_on": null
+  },
+  {
+      "id": "c1543164-7612-42df-b556-f59ae5173042",
+      "name": "Economic risk",
+      "disabled_on": null
+  }
+]

@@ -10,7 +10,7 @@
 {% block local_header %}
   {% call LocalHeader({
     heading: company.name,
-    actions: action if canViewCompanyList,
+    actions: action if user.permissions.includes('company_list.add_companylist'),
     modifier: 'light-banner',
     fullWidthContent: true
   }) %}

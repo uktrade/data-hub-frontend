@@ -1,0 +1,181 @@
+[
+  {
+    "id": "9484b82b-3499-e211-a939-e4115bead28a",
+    "name": "Account Management",
+    "disabled_on": null,
+    "contexts": [
+      "investment_project_interaction",
+      "export_service_delivery",
+      "interaction",
+      "event",
+      "other_service_delivery",
+      "investment_interaction",
+      "export_interaction",
+      "other_interaction"
+    ]
+  },
+  {
+    "id": "632b8708-28b6-e611-984a-e4115bead28a",
+    "name": "Bank Referral",
+    "disabled_on": null,
+    "contexts": [
+      "other_service_delivery",
+      "service_delivery",
+      "export_service_delivery"
+    ]
+  },
+  {
+    "id": "56c42f6d-1ff3-e411-bcbe-e4115bead28a",
+    "name": "Digital Trade Advisers One-to-One",
+    "disabled_on": null,
+    "contexts": [
+      "investment_project_interaction",
+      "export_service_delivery",
+      "interaction",
+      "event",
+      "other_service_delivery",
+      "export_interaction",
+      "other_interaction"
+    ]
+  },
+  {
+    "id": "e7238b26-653c-e711-8a1f-e4115bead28a",
+    "name": "EiG Referral",
+    "disabled_on": null,
+    "contexts": [
+      "other_service_delivery",
+      "service_delivery",
+      "export_service_delivery"
+    ]
+  },
+  {
+    "id": "370bba2b-3499-e211-a939-e4115bead28a",
+    "name": "Events - Inward Missions",
+    "disabled_on": null,
+    "contexts": [
+      "other_service_delivery",
+      "service_delivery",
+      "export_service_delivery"
+    ]
+  },
+  {
+    "id": "340bba2b-3499-e211-a939-e4115bead28a",
+    "name": "Events - Market Visit Support (MVS)",
+    "disabled_on": null,
+    "contexts": [
+      "other_service_delivery",
+      "service_delivery",
+      "export_service_delivery"
+    ]
+  },
+  {
+    "id": "0696b92b-3499-e211-a939-e4115bead28a",
+    "name": "Events - Outward Missions",
+    "disabled_on": null,
+    "contexts": [
+      "other_service_delivery",
+      "service_delivery",
+      "export_service_delivery"
+    ]
+  },
+  {
+    "id": "ccf9b82b-3499-e211-a939-e4115bead28a",
+    "name": "Events - Overseas",
+    "disabled_on": null,
+    "contexts": [
+      "other_service_delivery",
+      "service_delivery",
+      "export_service_delivery"
+    ]
+  },
+  {
+    "id": "9584b82b-3499-e211-a939-e4115bead28a",
+    "name": "Events - UK Based",
+    "disabled_on": null,
+    "contexts": [
+      "other_service_delivery",
+      "service_delivery",
+      "export_service_delivery"
+    ]
+  },
+  {
+    "id": "510a4016-4bb9-e211-a646-e4115bead28a",
+    "name": "Events - Webinars",
+    "disabled_on": null,
+    "contexts": [
+      "other_service_delivery",
+      "service_delivery",
+      "export_service_delivery"
+    ]
+  },
+  {
+    "id": "350bba2b-3499-e211-a939-e4115bead28a",
+    "name": "Export Win",
+    "disabled_on": null,
+    "contexts": [
+      "investment_project_interaction",
+      "export_service_delivery",
+      "interaction",
+      "event",
+      "other_service_delivery",
+      "export_interaction",
+      "other_interaction"
+    ]
+  },
+  {
+    "id": "e96a775a-1ff3-e411-bcbe-e4115bead28a",
+    "name": "Language and Culture Advisers One-to-One",
+    "disabled_on": null,
+    "contexts": [
+      "investment_project_interaction",
+      "export_service_delivery",
+      "interaction",
+      "event",
+      "other_service_delivery",
+      "export_interaction",
+      "other_interaction"
+    ]
+  },
+  {
+    "id": "0b94cd30-e5eb-e311-8a2b-e4115bead28a",
+    "name": "OBN Chargeable Services",
+    "disabled_on": null,
+    "contexts": [
+      "other_service_delivery",
+      "service_delivery",
+      "export_service_delivery"
+    ]
+  },
+  {
+    "id": "f56eb92b-3499-e211-a939-e4115bead28a",
+    "name": "Significant Assistance (PIMS)",
+    "disabled_on": null,
+    "contexts": [
+      "other_service_delivery",
+      "service_delivery",
+      "export_service_delivery"
+    ]
+  },
+  {
+    "id": "380bba2b-3499-e211-a939-e4115bead28a",
+    "name": "Tradeshow Access Programme (TAP)",
+    "disabled_on": null,
+    "contexts": [
+      "export_service_delivery",
+      "other_service_delivery",
+      "export_interaction",
+      "service_delivery",
+      "other_interaction"
+    ]
+  },
+  {
+    "id": "9a84b82b-3499-e211-a939-e4115bead28a",
+    "name": "UK Region Local",
+    "disabled_on": null,
+    "contexts": [
+      "other_service_delivery",
+      "service_delivery",
+      "export_service_delivery"
+    ]
+  }
+]

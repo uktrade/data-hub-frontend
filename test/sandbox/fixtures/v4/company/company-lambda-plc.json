@@ -1,0 +1,162 @@
+{
+  "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+  "reference_code": "",
+  "name": "Lambda plc",
+  "trading_names": [],
+  "uk_based": false,
+  "company_number": null,
+  "vat_number": "",
+  "duns_number": null,
+  "created_on": "2015-10-26T11:00:00Z",
+  "modified_on": "2017-11-26T11:00:00Z",
+  "archived": false,
+  "archived_documents_url_path": "",
+  "archived_on": null,
+  "archived_reason": null,
+  "archived_by": null,
+  "description": "This is a dummy company for testing",
+  "transferred_by": null,
+  "transferred_on": null,
+  "transferred_to": null,
+  "transfer_reason": "",
+  "website": null,
+  "business_type": {
+    "name": "Company",
+    "id": "98d14e94-5d95-e211-a939-e4115bead28a"
+  },
+  "one_list_group_tier": null,
+  "contacts": [
+    {
+      "id": "048f2edc-e7ed-4881-b1cc-29142a80238a",
+      "title": null,
+      "first_name": "Georgina",
+      "last_name": "Clark",
+      "name": "Georgina Clark",
+      "job_title": null,
+      "company": {
+        "name": "Lambda plc",
+        "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa"
+      },
+      "adviser": null,
+      "primary": false,
+      "telephone_countrycode": "33",
+      "telephone_number": "6 72 83 69 66",
+      "email": "georgina@clark.com",
+      "address_same_as_company": false,
+      "address_1": "7 chemin",
+      "address_2": null,
+      "address_town": "Lefevre",
+      "address_county": null,
+      "address_country": {
+        "name": "France",
+        "id": "82756b9a-5d95-e211-a939-e4115bead28a"
+      },
+      "address_postcode": "15404",
+      "telephone_alternative": null,
+      "email_alternative": null,
+      "notes": "This is a dummy contact for testing",
+      "accepts_dit_email_marketing": false,
+      "archived": false,
+      "archived_documents_url_path": "",
+      "archived_on": null,
+      "archived_reason": null,
+      "archived_by": null,
+      "created_on": "2017-02-28T15:00:00Z",
+      "modified_on": "2017-04-05T00:00:00Z"
+    },
+    {
+      "id": "952232d2-1d25-4c3a-bcac-2f3a30a94da9",
+      "title": null,
+      "first_name": "Dean",
+      "last_name": "Cox",
+      "name": "Dean Cox",
+      "job_title": null,
+      "company": {
+        "name": "Lambda plc",
+        "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa"
+      },
+      "adviser": null,
+      "primary": true,
+      "telephone_countrycode": "33",
+      "telephone_number": "6 39 15 95 29",
+      "email": "dean@cox.com",
+      "address_same_as_company": true,
+      "address_1": null,
+      "address_2": null,
+      "address_town": null,
+      "address_county": null,
+      "address_country": null,
+      "address_postcode": null,
+      "telephone_alternative": null,
+      "email_alternative": null,
+      "notes": "This is a dummy contact for testing",
+      "accepts_dit_email_marketing": true,
+      "archived": false,
+      "archived_documents_url_path": "",
+      "archived_on": null,
+      "archived_reason": null,
+      "archived_by": null,
+      "created_on": "2017-02-28T15:00:00Z",
+      "modified_on": "2017-06-08T00:00:00Z"
+    }
+  ],
+  "employee_range": {
+    "name": "500+",
+    "id": "41afd8d0-5d95-e211-a939-e4115bead28a"
+  },
+  "number_of_employees": null,
+  "is_number_of_employees_estimated": null,
+  "export_to_countries": [
+    {
+      "name": "France",
+      "id": "82756b9a-5d95-e211-a939-e4115bead28a"
+    },
+    {
+      "name": "Germany",
+      "id": "83756b9a-5d95-e211-a939-e4115bead28a"
+    }
+  ],
+  "future_interest_countries": [
+    {
+      "name": "Yemen",
+      "id": "37afd8d0-5d95-e211-a939-e4115bead28a"
+    }
+  ],
+  "headquarter_type": null,
+  "one_list_group_global_account_manager": null,
+  "global_headquarters": null,
+  "sector": {
+    "name": "Retail",
+    "id": "355f977b-8ac3-e211-a646-e4115bead28a"
+  },
+  "turnover_range": {
+    "name": "£33.5M+",
+    "id": "7a4cd12a-6095-e211-a939-e4115bead28a"
+  },
+  "turnover": null,
+  "is_turnover_estimated": null,
+  "uk_region": null,
+  "export_experience_category": null,
+  "address": {
+    "line_1": "12 St George's Road",
+    "line_2": "",
+    "town": "Paris",
+    "county": "",
+    "postcode": "75001",
+    "country": {
+      "name": "France",
+      "id": "82756b9a-5d95-e211-a939-e4115bead28a"
+    }
+  },
+  "registered_address": {
+    "line_1": "12 St George's Road",
+    "line_2": "",
+    "town": "Paris",
+    "county": "",
+    "postcode": "75001",
+    "country": {
+      "name": "France",
+      "id": "82756b9a-5d95-e211-a939-e4115bead28a"
+    }
+  }
+}

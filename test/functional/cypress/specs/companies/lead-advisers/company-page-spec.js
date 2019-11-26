@@ -1,8 +1,8 @@
-import { assertBreadcrumbs } from '../../support/assertions'
+import { assertBreadcrumbs } from '../../../support/assertions'
 
-const fixtures = require('../../fixtures')
-const selectors = require('../../../../selectors')
-const { companies, dashboard } = require('../../../../../src/lib/urls')
+const fixtures = require('../../../fixtures')
+const selectors = require('../../../../../selectors')
+const { companies, dashboard } = require('../../../../../../src/lib/urls')
 
 describe('Lead advisers', () => {
   context('when viewing a non One List tier company', () => {
@@ -25,7 +25,7 @@ describe('Lead advisers', () => {
       cy.get(selectors.companyLeadAdviser.header).should('have.text', 'Lead ITA for Mars Exports Ltd')
     })
     it('should display a button to add myself as lead adviser', () => {
-      cy.contains('Add myself as Lead ITA').invoke('attr', 'href').should('eq', companies.advisers.confirm(fixtures.company.marsExportsLtd.id))
+      cy.contains('Add myself as Lead ITA').invoke('attr', 'href').should('eq', `/companies/${fixtures.company.marsExportsLtd.id}/advisers/add`)
     })
   })
   context('when viewing a One List Tier company', () => {

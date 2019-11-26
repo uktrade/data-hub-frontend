@@ -1,0 +1,32 @@
+[
+  {
+    "id": "5b4f5dc5-c836-4572-afd2-013776ed00c5",
+    "name": "Liquidity / exchange listing",
+    "disabled_on": null
+  },
+  {
+    "id": "daa293d4-e18e-44af-b139-bd1b4c4a9067",
+    "name": "Inflation adjustment",
+    "disabled_on": null
+  },
+  {
+    "id": "24d90807-91de-4814-92f6-0a5ee43406d1",
+    "name": "Require FX hedge",
+    "disabled_on": null
+  },
+  {
+    "id": "7dad0891-9174-437d-bb30-b610ac1ecd0a",
+    "name": "Require board seat",
+    "disabled_on": null
+  },
+  {
+    "id": "bfa167ab-f98a-4c73-b34d-c34ba7bdf93b",
+    "name": "Require linked technology / knowledge transfer",
+    "disabled_on": null
+  },
+  {
+    "id": "dbc0cdf0-5365-4cbf-8d55-7516b6ebc383",
+    "name": "Will participate in competitive bids / auctions",
+    "disabled_on": null
+  }
+]

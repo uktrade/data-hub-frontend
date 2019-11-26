@@ -1,0 +1,22 @@
+[
+  {
+    "id": "6fec56ba-0be9-4931-bd76-16e11924ec55",
+    "name": "Up to 5% IRR",
+    "disabled_on": null
+  },
+  {
+    "id": "65c9bc7a-af68-4549-a9c9-70cd73109617",
+    "name": "5-10%",
+    "disabled_on": null
+  },
+  {
+    "id": "6ecbd7d2-e16a-4bfd-a4b9-8c9bca947302",
+    "name": "10-15%",
+    "disabled_on": null
+  },
+  {
+    "id": "0c55bd5c-82ea-4400-b7fc-7344958ee3a5",
+    "name": "15%",
+    "disabled_on": null
+  }
+]
