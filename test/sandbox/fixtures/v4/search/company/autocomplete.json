@@ -1,0 +1,59 @@
+{
+  "count": 2,
+  "results": [
+      {
+          "registered_address": {
+              "line_1": "12 St George's Road",
+              "line_2": "",
+              "country": {
+                  "name": "France",
+                  "id": "82756b9a-5d95-e211-a939-e4115bead28a"
+              },
+              "town": "Paris",
+              "county": "",
+              "postcode": "75001"
+          },
+          "address": {
+              "line_1": "12 St George's Road",
+              "line_2": "",
+              "country": {
+                  "name": "France",
+                  "id": "82756b9a-5d95-e211-a939-e4115bead28a"
+              },
+              "town": "Paris",
+              "county": "",
+              "postcode": "75001"
+          },
+          "trading_names": [],
+          "name": "One List Corp",
+          "id": "375094ac-f79a-43e5-9c88-059a7caa17f0"
+      },
+      {
+        "registered_address": {
+            "line_1": "14 St John's Road",
+            "line_2": "",
+            "country": {
+                "name": "France",
+                "id": "82756b9a-5d95-e211-a939-e4115bead28a"
+            },
+            "town": "Paris",
+            "county": "",
+            "postcode": "75034"
+        },
+        "address": {
+            "line_1": "14 St John's Road",
+            "line_2": "",
+            "country": {
+                "name": "France",
+                "id": "82756b9a-5d95-e211-a939-e4115bead28a"
+            },
+            "town": "Paris",
+            "county": "",
+            "postcode": "75034"
+        },
+        "trading_names": [],
+        "name": "One Team Corp",
+        "id": "400094ac-f79a-43e5-9c88-059a7baa17f3"
+    }
+  ]
+}

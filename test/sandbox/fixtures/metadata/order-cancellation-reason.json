@@ -1,0 +1,62 @@
+[
+    {
+        "id": "fce5a84b-c7ef-e311-8a2b-e4115bead28a",
+        "name": "Company not eligible for support from DIT",
+        "disabled_on": null
+    },
+    {
+        "id": "05e6a84b-c7ef-e311-8a2b-e4115bead28a",
+        "name": "Company no longer wants work ordered",
+        "disabled_on": null
+    },
+    {
+        "id": "01e6a84b-c7ef-e311-8a2b-e4115bead28a",
+        "name": "Company believes cost of work too high",
+        "disabled_on": null
+    },
+    {
+        "id": "03e6a84b-c7ef-e311-8a2b-e4115bead28a",
+        "name": "Work will not be done by Company's deadline",
+        "disabled_on": null
+    },
+    {
+        "id": "fae5a84b-c7ef-e311-8a2b-e4115bead28a",
+        "name": "Company has not paid",
+        "disabled_on": null
+    },
+    {
+        "id": "dacfeb25-656b-e511-9d3c-e4115bead28a",
+        "name": "Work transferred to Overseas Partner",
+        "disabled_on": null
+    },
+    {
+        "id": "f8e5a84b-c7ef-e311-8a2b-e4115bead28a",
+        "name": "User error in order creation",
+        "disabled_on": null
+    },
+    {
+        "id": "07e6a84b-c7ef-e311-8a2b-e4115bead28a",
+        "name": "Work cannot be done in this country",
+        "disabled_on": null
+    },
+    {
+        "id": "18f10ce2-c0b3-e511-88b6-e4115bead28a",
+        "name": "Refund",
+        "disabled_on": "2017-10-24T11:00:00Z"
+    },
+    {
+        "id": "09e6a84b-c7ef-e311-8a2b-e4115bead28a",
+        "name": "Written-off",
+        "disabled_on": "2017-10-24T11:00:00Z"
+    },
+    {
+        "id": "f6e5a84b-c7ef-e311-8a2b-e4115bead28a",
+        "name": "First Response meets customer's requirements, no further action necessary",
+        "disabled_on": "2017-10-24T11:00:00Z"
+    },
+    {
+        "id": "fee5a84b-c7ef-e311-8a2b-e4115bead28a",
+        "name": "Other",
+        "disabled_on": "2017-10-24T11:00:00Z"
+    }
+]

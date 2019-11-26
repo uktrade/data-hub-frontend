@@ -1,0 +1,42 @@
+[
+  {
+    "id": "4170d99a-02fc-46ee-8fd4-3fe786717708",
+    "name": "Direct Investment in Project Equity",
+    "disabled_on": null
+  },
+  {
+    "id": "06834da2-c9ac-4faf-b555-39762ce373ae",
+    "name": "Direct Investment in Project Debt",
+    "disabled_on": null
+  },
+  {
+    "id": "942726e3-1b3f-4218-b06e-7cf983754de0",
+    "name": "Direct Investment in Corporate Equity",
+    "disabled_on": null
+  },
+  {
+    "id": "f972c0d9-f480-4727-af39-dff10cf935a9",
+    "name": "Direct Investment in Corporate Debt",
+    "disabled_on": null
+  },
+  {
+    "id": "703140ec-6990-4f36-8b22-52ebde63932c",
+    "name": "Mezzanine Debt (incl. preferred shares, convertibles)",
+    "disabled_on": null
+  },
+  {
+    "id": "8feb6087-d61c-43bd-9bf1-3d9e1129432b",
+    "name": "Venture capital funds",
+    "disabled_on": null
+  },
+  {
+    "id": "24826b7c-e3df-4a76-80d4-4fe2661b838e",
+    "name": "Energy / Infrastructure / Real Estate Funds (UKEIREFs)",
+    "disabled_on": null
+  },
+  {
+    "id": "ef615dde-49d8-41dd-9ddd-a00c78004135",
+    "name": "Private Equity / Venture Capital",
+    "disabled_on": null
+  }
+]

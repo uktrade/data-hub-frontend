@@ -46,7 +46,7 @@ describe('urls', () => {
 
       expect(urls.companies.advisers.index(companyId)).to.equal(`/companies/${companyId}/advisers`)
 
-      expect(urls.companies.advisers.confirm(companyId)).to.equal(`/companies/${companyId}/advisers/confirm`)
+      expect(urls.companies.advisers.confirm(companyId)).to.equal(`/companies/${companyId}/advisers/add`)
       expect(urls.companies.advisers.replace(companyId)).to.equal(`/companies/${companyId}/advisers/replace`)
 
       expect(urls.companies.dnbSubsidiaries.index.route).to.equal('/:companyId/dnb-subsidiaries')
@@ -59,6 +59,8 @@ describe('urls', () => {
       expect(urls.companies.exports(companyId)).to.equal(`/companies/${companyId}/exports`)
 
       expect(urls.companies.subsidiaries(companyId)).to.equal(`/companies/${companyId}/subsidiaries`)
+
+      expect(urls.companies.investments.largeCapitalProfile(companyId)).to.equal(`/companies/${companyId}/investments/large-capital-profile`)
 
       const globalHqId = faker.random.uuid()
       expect(urls.companies.hierarchies.ghq.add.route).to.equal('/:companyId/hierarchies/ghq/:globalHqId/add')

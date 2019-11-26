@@ -1,0 +1,17 @@
+[
+    {
+        "id": "b3515282-dc36-487a-a5af-320cde165575",
+        "name": "Low",
+        "disabled_on": null
+    },
+    {
+        "id": "683ca57b-bd69-462c-852f-d2177e35b2eb",
+        "name": "Medium",
+        "disabled_on": null
+    },
+    {
+        "id": "90531272-fc9c-4403-9320-b69e51fbec06",
+        "name": "High",
+        "disabled_on": null
+    }
+]

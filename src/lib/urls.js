@@ -88,13 +88,16 @@ module.exports = {
     },
     advisers: {
       index: url('/companies', '/:companyId/advisers'),
-      confirm: url('/companies', '/:companyId/advisers/confirm'),
+      confirm: url('/companies', '/:companyId/advisers/add'),
       replace: url('/companies', '/:companyId/advisers/replace'),
     },
     index: url('/companies'),
     subsidiaries: url('/companies', '/:companyId/subsidiaries'),
     interactions: createInteractionsSubApp('/companies', '/:companyId'),
     orders: url('/companies', '/:companyId/orders'),
+    investments: {
+      largeCapitalProfile: url('/companies', '/:companyId/investments/large-capital-profile'),
+    },
   },
   contacts: {
     index: url('/contacts'),

@@ -1,0 +1,2683 @@
+[
+    {
+        "id": "af959812-6095-e211-a939-e4115bead28a",
+        "name": "Advanced Engineering",
+        "segment": "Advanced Engineering",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "9538cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Aerospace",
+        "segment": "Aerospace",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "af22c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Aerospace : Aircraft Design",
+        "segment": "Aircraft Design",
+        "parent": {
+            "name": "Aerospace",
+            "id": "9538cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "e9e181d2-f6a0-e211-b972-e4115bead28a",
+        "name": "Aerospace : Component Manufacturing",
+        "segment": "Component Manufacturing",
+        "parent": {
+            "name": "Aerospace",
+            "id": "9538cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "b122c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Aerospace : Component Manufacturing : Engines",
+        "segment": "Engines",
+        "parent": {
+            "name": "Aerospace : Component Manufacturing",
+            "id": "e9e181d2-f6a0-e211-b972-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "b722c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Aerospace : Maintenance",
+        "segment": "Maintenance",
+        "parent": {
+            "name": "Aerospace",
+            "id": "9538cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "b906a205-f5a0-e211-b972-e4115bead28a",
+        "name": "Aerospace : Manufacturing and Assembly",
+        "segment": "Manufacturing and Assembly",
+        "parent": {
+            "name": "Aerospace",
+            "id": "9538cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "b422c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Aerospace : Manufacturing and Assembly : Aircraft",
+        "segment": "Aircraft",
+        "parent": {
+            "name": "Aerospace : Manufacturing and Assembly",
+            "id": "b906a205-f5a0-e211-b972-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "b522c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Aerospace : Manufacturing and Assembly : Helicopters",
+        "segment": "Helicopters",
+        "parent": {
+            "name": "Aerospace : Manufacturing and Assembly",
+            "id": "b906a205-f5a0-e211-b972-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "b622c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Aerospace : Manufacturing and Assembly : Space Technology",
+        "segment": "Space Technology",
+        "parent": {
+            "name": "Aerospace : Manufacturing and Assembly",
+            "id": "b906a205-f5a0-e211-b972-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "b322c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Aerospace : Manufacturing and Assembly : UAVs",
+        "segment": "UAVs",
+        "parent": {
+            "name": "Aerospace : Manufacturing and Assembly",
+            "id": "b906a205-f5a0-e211-b972-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "9638cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Agriculture, Horticulture and Fisheries",
+        "segment": "Agriculture, Horticulture and Fisheries",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "9738cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Airports",
+        "segment": "Airports",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "9838cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive",
+        "segment": "Automotive",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "b1ee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive : Automotive Maintenance",
+        "segment": "Automotive Maintenance",
+        "parent": {
+            "name": "Automotive",
+            "id": "9838cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "b0ee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive : Automotive Retail",
+        "segment": "Automotive Retail",
+        "parent": {
+            "name": "Automotive",
+            "id": "9838cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "b022c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive : Component Manufacturing",
+        "segment": "Component Manufacturing",
+        "parent": {
+            "name": "Automotive",
+            "id": "9838cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "a4ee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive : Component Manufacturing : Bodies and Coachwork",
+        "segment": "Bodies and Coachwork",
+        "parent": {
+            "name": "Automotive : Component Manufacturing",
+            "id": "b022c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "bb22c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive : Component Manufacturing : Electronic Components",
+        "segment": "Electronic Components",
+        "parent": {
+            "name": "Automotive : Component Manufacturing",
+            "id": "b022c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "ba22c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive : Component Manufacturing : Engines and Transmission",
+        "segment": "Engines and Transmission",
+        "parent": {
+            "name": "Automotive : Component Manufacturing",
+            "id": "b022c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "a5ee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive : Component Manufacturing : Tyres",
+        "segment": "Tyres",
+        "parent": {
+            "name": "Automotive : Component Manufacturing",
+            "id": "b022c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "b822c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive : Design Engineering",
+        "segment": "Design Engineering",
+        "parent": {
+            "name": "Automotive",
+            "id": "9838cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "b222c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive : Manufacturing and Assembly",
+        "segment": "Manufacturing and Assembly",
+        "parent": {
+            "name": "Automotive",
+            "id": "9838cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "afee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive : Manufacturing and Assembly : Agricultural Machinery",
+        "segment": "Agricultural Machinery",
+        "parent": {
+            "name": "Automotive : Manufacturing and Assembly",
+            "id": "b222c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "adee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive : Manufacturing and Assembly : Bicycles",
+        "segment": "Bicycles",
+        "parent": {
+            "name": "Automotive : Manufacturing and Assembly",
+            "id": "b222c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "a9ee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive : Manufacturing and Assembly : Caravans",
+        "segment": "Caravans",
+        "parent": {
+            "name": "Automotive : Manufacturing and Assembly",
+            "id": "b222c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "a6ee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive : Manufacturing and Assembly : Cars",
+        "segment": "Cars",
+        "parent": {
+            "name": "Automotive : Manufacturing and Assembly",
+            "id": "b222c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "abee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive : Manufacturing and Assembly : Containers",
+        "segment": "Containers",
+        "parent": {
+            "name": "Automotive : Manufacturing and Assembly",
+            "id": "b222c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "aeee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive : Manufacturing and Assembly : Invalid Carriages",
+        "segment": "Invalid Carriages",
+        "parent": {
+            "name": "Automotive : Manufacturing and Assembly",
+            "id": "b222c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "a8ee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive : Manufacturing and Assembly : Lorries",
+        "segment": "Lorries",
+        "parent": {
+            "name": "Automotive : Manufacturing and Assembly",
+            "id": "b222c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "acee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive : Manufacturing and Assembly : Motorcycles",
+        "segment": "Motorcycles",
+        "parent": {
+            "name": "Automotive : Manufacturing and Assembly",
+            "id": "b222c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "aaee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive : Manufacturing and Assembly : Trailers",
+        "segment": "Trailers",
+        "parent": {
+            "name": "Automotive : Manufacturing and Assembly",
+            "id": "b222c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "a7ee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive : Manufacturing and Assembly : Vans",
+        "segment": "Vans",
+        "parent": {
+            "name": "Automotive : Manufacturing and Assembly",
+            "id": "b222c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "b922c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Automotive : Motorsport",
+        "segment": "Motorsport",
+        "parent": {
+            "name": "Automotive",
+            "id": "9838cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "9938cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Biotechnology and Pharmaceuticals",
+        "segment": "Biotechnology and Pharmaceuticals",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "6ef7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Biotechnology and Pharmaceuticals : Bio and Pharma Marketing and Sales",
+        "segment": "Bio and Pharma Marketing and Sales",
+        "parent": {
+            "name": "Biotechnology and Pharmaceuticals",
+            "id": "9938cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "70f7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Biotechnology and Pharmaceuticals : Bio and Pharma Marketing and Sales : Bio and Pharma Retail",
+        "segment": "Bio and Pharma Retail",
+        "parent": {
+            "name": "Biotechnology and Pharmaceuticals : Bio and Pharma Marketing and Sales",
+            "id": "6ef7ffde-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "6ff7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Biotechnology and Pharmaceuticals : Bio and Pharma Marketing and Sales : Bio and Pharma Wholesale",
+        "segment": "Bio and Pharma Wholesale",
+        "parent": {
+            "name": "Biotechnology and Pharmaceuticals : Bio and Pharma Marketing and Sales",
+            "id": "6ef7ffde-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "b7ee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Biotechnology and Pharmaceuticals : Biotechnology",
+        "segment": "Biotechnology",
+        "parent": {
+            "name": "Biotechnology and Pharmaceuticals",
+            "id": "9938cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "67f7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Biotechnology and Pharmaceuticals : Biotechnology : Agribio",
+        "segment": "Agribio",
+        "parent": {
+            "name": "Biotechnology and Pharmaceuticals : Biotechnology",
+            "id": "b7ee00d9-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "b8ee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Biotechnology and Pharmaceuticals : Biotechnology : Biodiagnostics",
+        "segment": "Biodiagnostics",
+        "parent": {
+            "name": "Biotechnology and Pharmaceuticals : Biotechnology",
+            "id": "b7ee00d9-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "64f7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Biotechnology and Pharmaceuticals : Biotechnology : Biomanufacturing",
+        "segment": "Biomanufacturing",
+        "parent": {
+            "name": "Biotechnology and Pharmaceuticals : Biotechnology",
+            "id": "b7ee00d9-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "66f7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Biotechnology and Pharmaceuticals : Biotechnology : Bioremediation",
+        "segment": "Bioremediation",
+        "parent": {
+            "name": "Biotechnology and Pharmaceuticals : Biotechnology",
+            "id": "b7ee00d9-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "b9ee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Biotechnology and Pharmaceuticals : Biotechnology : Biotherapeutics",
+        "segment": "Biotherapeutics",
+        "parent": {
+            "name": "Biotechnology and Pharmaceuticals : Biotechnology",
+            "id": "b7ee00d9-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "65f7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Biotechnology and Pharmaceuticals : Biotechnology : Industrialbio",
+        "segment": "Industrialbio",
+        "parent": {
+            "name": "Biotechnology and Pharmaceuticals : Biotechnology",
+            "id": "b7ee00d9-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "68f7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Biotechnology and Pharmaceuticals : Biotechnology : Platform Technologies",
+        "segment": "Platform Technologies",
+        "parent": {
+            "name": "Biotechnology and Pharmaceuticals : Biotechnology",
+            "id": "b7ee00d9-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "6df7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Biotechnology and Pharmaceuticals : Clinical Trials",
+        "segment": "Clinical Trials",
+        "parent": {
+            "name": "Biotechnology and Pharmaceuticals",
+            "id": "9938cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "6af7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Biotechnology and Pharmaceuticals : Lab Services",
+        "segment": "Lab Services",
+        "parent": {
+            "name": "Biotechnology and Pharmaceuticals",
+            "id": "9938cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "6cf7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Biotechnology and Pharmaceuticals : Lab Services : Contract Research",
+        "segment": "Contract Research",
+        "parent": {
+            "name": "Biotechnology and Pharmaceuticals : Lab Services",
+            "id": "6af7ffde-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "6bf7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Biotechnology and Pharmaceuticals : Lab Services : Reagents, Consumables and Instruments",
+        "segment": "Reagents, Consumables and Instruments",
+        "parent": {
+            "name": "Biotechnology and Pharmaceuticals : Lab Services",
+            "id": "6af7ffde-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "b2ee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Biotechnology and Pharmaceuticals : Pharmaceuticals",
+        "segment": "Pharmaceuticals",
+        "parent": {
+            "name": "Biotechnology and Pharmaceuticals",
+            "id": "9938cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "b5ee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Biotechnology and Pharmaceuticals : Pharmaceuticals : Basic Pharmaceutical Products",
+        "segment": "Basic Pharmaceutical Products",
+        "parent": {
+            "name": "Biotechnology and Pharmaceuticals : Pharmaceuticals",
+            "id": "b2ee00d9-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "b3ee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Biotechnology and Pharmaceuticals : Pharmaceuticals : Drug Discovery",
+        "segment": "Drug Discovery",
+        "parent": {
+            "name": "Biotechnology and Pharmaceuticals : Pharmaceuticals",
+            "id": "b2ee00d9-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "b4ee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Biotechnology and Pharmaceuticals : Pharmaceuticals : Drug Manufacture",
+        "segment": "Drug Manufacture",
+        "parent": {
+            "name": "Biotechnology and Pharmaceuticals : Pharmaceuticals",
+            "id": "b2ee00d9-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "b6ee00d9-5f95-e211-a939-e4115bead28a",
+        "name": "Biotechnology and Pharmaceuticals : Pharmaceuticals : Neutraceuticals",
+        "segment": "Neutraceuticals",
+        "parent": {
+            "name": "Biotechnology and Pharmaceuticals : Pharmaceuticals",
+            "id": "b2ee00d9-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "69f7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Biotechnology and Pharmaceuticals : Vaccines",
+        "segment": "Vaccines",
+        "parent": {
+            "name": "Biotechnology and Pharmaceuticals",
+            "id": "9938cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "9a38cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Business (and Consumer) Services",
+        "segment": "Business (and Consumer) Services",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "71f7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Business (and Consumer) Services : Commercial Real Estate Services",
+        "segment": "Commercial Real Estate Services",
+        "parent": {
+            "name": "Business (and Consumer) Services",
+            "id": "9a38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "72f7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Business (and Consumer) Services : Contact Centres",
+        "segment": "Contact Centres",
+        "parent": {
+            "name": "Business (and Consumer) Services",
+            "id": "9a38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "73f7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Business (and Consumer) Services : HR Services",
+        "segment": "HR Services",
+        "parent": {
+            "name": "Business (and Consumer) Services",
+            "id": "9a38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "74f7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Business (and Consumer) Services : Marketing Services",
+        "segment": "Marketing Services",
+        "parent": {
+            "name": "Business (and Consumer) Services",
+            "id": "9a38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "75f7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Business (and Consumer) Services : Marketing Services : Market Research",
+        "segment": "Market Research",
+        "parent": {
+            "name": "Business (and Consumer) Services : Marketing Services",
+            "id": "74f7ffde-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "76f7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Business (and Consumer) Services : Shared Service Centres",
+        "segment": "Shared Service Centres",
+        "parent": {
+            "name": "Business (and Consumer) Services",
+            "id": "9a38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "9b38cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Chemicals",
+        "segment": "Chemicals",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "79f7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Chemicals : Agricultural Chemicals",
+        "segment": "Agricultural Chemicals",
+        "parent": {
+            "name": "Chemicals",
+            "id": "9b38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "77f7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Chemicals : Basic Chemicals",
+        "segment": "Basic Chemicals",
+        "parent": {
+            "name": "Chemicals",
+            "id": "9b38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "549c37e5-5f95-e211-a939-e4115bead28a",
+        "name": "Chemicals : Cleaning Preparations",
+        "segment": "Cleaning Preparations",
+        "parent": {
+            "name": "Chemicals",
+            "id": "9b38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "559c37e5-5f95-e211-a939-e4115bead28a",
+        "name": "Chemicals : Miscellaneous Chemicals",
+        "segment": "Miscellaneous Chemicals",
+        "parent": {
+            "name": "Chemicals",
+            "id": "9b38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "7af7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Chemicals : Paint, Coating and Adhesive Products",
+        "segment": "Paint, Coating and Adhesive Products",
+        "parent": {
+            "name": "Chemicals",
+            "id": "9b38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "78f7ffde-5f95-e211-a939-e4115bead28a",
+        "name": "Chemicals : Synthetic Materials",
+        "segment": "Synthetic Materials",
+        "parent": {
+            "name": "Chemicals",
+            "id": "9b38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "9c38cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Clothing, Footwear and Fashion",
+        "segment": "Clothing, Footwear and Fashion",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "569c37e5-5f95-e211-a939-e4115bead28a",
+        "name": "Clothing, Footwear and Fashion : Clothing",
+        "segment": "Clothing",
+        "parent": {
+            "name": "Clothing, Footwear and Fashion",
+            "id": "9c38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "579c37e5-5f95-e211-a939-e4115bead28a",
+        "name": "Clothing, Footwear and Fashion : Clothing : Workwear",
+        "segment": "Workwear",
+        "parent": {
+            "name": "Clothing, Footwear and Fashion : Clothing",
+            "id": "569c37e5-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "589c37e5-5f95-e211-a939-e4115bead28a",
+        "name": "Clothing, Footwear and Fashion : Footwear",
+        "segment": "Footwear",
+        "parent": {
+            "name": "Clothing, Footwear and Fashion",
+            "id": "9c38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "9d38cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Communications",
+        "segment": "Communications",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "599c37e5-5f95-e211-a939-e4115bead28a",
+        "name": "Communications : Broadband",
+        "segment": "Broadband",
+        "parent": {
+            "name": "Communications",
+            "id": "9d38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "639c37e5-5f95-e211-a939-e4115bead28a",
+        "name": "Communications : Communications Wholesale",
+        "segment": "Communications Wholesale",
+        "parent": {
+            "name": "Communications",
+            "id": "9d38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "5a9c37e5-5f95-e211-a939-e4115bead28a",
+        "name": "Communications : Convergent",
+        "segment": "Convergent",
+        "parent": {
+            "name": "Communications",
+            "id": "9d38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "5b9c37e5-5f95-e211-a939-e4115bead28a",
+        "name": "Communications : Fixed Line",
+        "segment": "Fixed Line",
+        "parent": {
+            "name": "Communications",
+            "id": "9d38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "5c9c37e5-5f95-e211-a939-e4115bead28a",
+        "name": "Communications : Mobile",
+        "segment": "Mobile",
+        "parent": {
+            "name": "Communications",
+            "id": "9d38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "5d9c37e5-5f95-e211-a939-e4115bead28a",
+        "name": "Communications : Mobile : 3G Services",
+        "segment": "3G Services",
+        "parent": {
+            "name": "Communications : Mobile",
+            "id": "5c9c37e5-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "5e9c37e5-5f95-e211-a939-e4115bead28a",
+        "name": "Communications : Mobile : GSM",
+        "segment": "GSM",
+        "parent": {
+            "name": "Communications : Mobile",
+            "id": "5c9c37e5-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "5f9c37e5-5f95-e211-a939-e4115bead28a",
+        "name": "Communications : Retail",
+        "segment": "Retail",
+        "parent": {
+            "name": "Communications",
+            "id": "9d38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "609c37e5-5f95-e211-a939-e4115bead28a",
+        "name": "Communications : Wireless",
+        "segment": "Wireless",
+        "parent": {
+            "name": "Communications",
+            "id": "9d38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "619c37e5-5f95-e211-a939-e4115bead28a",
+        "name": "Communications : Wireless : Wi-Fi",
+        "segment": "Wi-Fi",
+        "parent": {
+            "name": "Communications : Wireless",
+            "id": "609c37e5-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "629c37e5-5f95-e211-a939-e4115bead28a",
+        "name": "Communications : Wireless : Wi-Max",
+        "segment": "Wi-Max",
+        "parent": {
+            "name": "Communications : Wireless",
+            "id": "609c37e5-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "9e38cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Construction",
+        "segment": "Construction",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "9f38cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media",
+        "segment": "Creative and Media",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "649c37e5-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Architecture",
+        "segment": "Architecture",
+        "parent": {
+            "name": "Creative and Media",
+            "id": "9f38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "659c37e5-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Art, Design and Creativity",
+        "segment": "Art, Design and Creativity",
+        "parent": {
+            "name": "Creative and Media",
+            "id": "9f38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "e5a038eb-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Art, Design and Creativity : Artistic and Literary Creation",
+        "segment": "Artistic and Literary Creation",
+        "parent": {
+            "name": "Creative and Media : Art, Design and Creativity",
+            "id": "659c37e5-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "689c37e5-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Art, Design and Creativity : Arts Facilities Operation",
+        "segment": "Arts Facilities Operation",
+        "parent": {
+            "name": "Creative and Media : Art, Design and Creativity",
+            "id": "659c37e5-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "669c37e5-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Art, Design and Creativity : Design",
+        "segment": "Design",
+        "parent": {
+            "name": "Creative and Media : Art, Design and Creativity",
+            "id": "659c37e5-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "679c37e5-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Art, Design and Creativity : Fashion",
+        "segment": "Fashion",
+        "parent": {
+            "name": "Creative and Media : Art, Design and Creativity",
+            "id": "659c37e5-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "e4a038eb-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Art, Design and Creativity : Live Theatrical Presentations",
+        "segment": "Live Theatrical Presentations",
+        "parent": {
+            "name": "Creative and Media : Art, Design and Creativity",
+            "id": "659c37e5-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "f4a038eb-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Creative and Media Distribution",
+        "segment": "Creative and Media Distribution",
+        "parent": {
+            "name": "Creative and Media",
+            "id": "9f38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "f5a038eb-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Creative and Media Distribution : Film and Video",
+        "segment": "Film and Video",
+        "parent": {
+            "name": "Creative and Media : Creative and Media Distribution",
+            "id": "f4a038eb-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "f1a038eb-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Creative and Media Equipment",
+        "segment": "Creative and Media Equipment",
+        "parent": {
+            "name": "Creative and Media",
+            "id": "9f38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "f3a038eb-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Creative and Media Equipment : Musical Instrument Manufacture",
+        "segment": "Musical Instrument Manufacture",
+        "parent": {
+            "name": "Creative and Media : Creative and Media Equipment",
+            "id": "f1a038eb-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "f2a038eb-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Creative and Media Equipment : Photo and Cinema Equipment",
+        "segment": "Photo and Cinema Equipment",
+        "parent": {
+            "name": "Creative and Media : Creative and Media Equipment",
+            "id": "f1a038eb-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "941a72f1-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Creative and Media Retail",
+        "segment": "Creative and Media Retail",
+        "parent": {
+            "name": "Creative and Media",
+            "id": "9f38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "971a72f1-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Creative and Media Retail : Antiques and Antiquities",
+        "segment": "Antiques and Antiquities",
+        "parent": {
+            "name": "Creative and Media : Creative and Media Retail",
+            "id": "941a72f1-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "961a72f1-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Creative and Media Retail : Art",
+        "segment": "Art",
+        "parent": {
+            "name": "Creative and Media : Creative and Media Retail",
+            "id": "941a72f1-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "951a72f1-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Creative and Media Retail : Books, Newspapers and Stationery",
+        "segment": "Books, Newspapers and Stationery",
+        "parent": {
+            "name": "Creative and Media : Creative and Media Retail",
+            "id": "941a72f1-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "f6a038eb-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Creative and Media Wholesaling",
+        "segment": "Creative and Media Wholesaling",
+        "parent": {
+            "name": "Creative and Media",
+            "id": "9f38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "f7a038eb-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Creative and Media Wholesaling : Multimedia Sales",
+        "segment": "Multimedia Sales",
+        "parent": {
+            "name": "Creative and Media : Creative and Media Wholesaling",
+            "id": "f6a038eb-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "f8a038eb-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Creative and Media Wholesaling : Musical Instruments",
+        "segment": "Musical Instruments",
+        "parent": {
+            "name": "Creative and Media : Creative and Media Wholesaling",
+            "id": "f6a038eb-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "f9a038eb-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Creative and Media Wholesaling : Photographic Goods",
+        "segment": "Photographic Goods",
+        "parent": {
+            "name": "Creative and Media : Creative and Media Wholesaling",
+            "id": "f6a038eb-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "e6a038eb-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Events and Attractions",
+        "segment": "Events and Attractions",
+        "parent": {
+            "name": "Creative and Media",
+            "id": "9f38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "e7a038eb-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Media",
+        "segment": "Media",
+        "parent": {
+            "name": "Creative and Media",
+            "id": "9f38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "eda038eb-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Media : Advertising",
+        "segment": "Advertising",
+        "parent": {
+            "name": "Creative and Media : Media",
+            "id": "e7a038eb-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "e8a038eb-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Media : Film, Photography and Animation",
+        "segment": "Film, Photography and Animation",
+        "parent": {
+            "name": "Creative and Media : Media",
+            "id": "e7a038eb-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "e9a038eb-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Media : Music",
+        "segment": "Music",
+        "parent": {
+            "name": "Creative and Media : Media",
+            "id": "e7a038eb-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "eca038eb-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Media : Publishing",
+        "segment": "Publishing",
+        "parent": {
+            "name": "Creative and Media : Media",
+            "id": "e7a038eb-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "eba038eb-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Media : TV and Radio",
+        "segment": "TV and Radio",
+        "parent": {
+            "name": "Creative and Media : Media",
+            "id": "e7a038eb-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "eaa038eb-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Media : Video Games",
+        "segment": "Video Games",
+        "parent": {
+            "name": "Creative and Media : Media",
+            "id": "e7a038eb-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "eea038eb-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Media Reproduction",
+        "segment": "Media Reproduction",
+        "parent": {
+            "name": "Creative and Media",
+            "id": "9f38cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "efa038eb-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Media Reproduction : Printing",
+        "segment": "Printing",
+        "parent": {
+            "name": "Creative and Media : Media Reproduction",
+            "id": "eea038eb-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "f0a038eb-5f95-e211-a939-e4115bead28a",
+        "name": "Creative and Media : Media Reproduction : Reproduction",
+        "segment": "Reproduction",
+        "parent": {
+            "name": "Creative and Media : Media Reproduction",
+            "id": "eea038eb-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "7dbb9fc6-5f95-e211-a939-e4115bead28a",
+        "name": "Defence",
+        "segment": "Defence",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "b0959812-6095-e211-a939-e4115bead28a",
+        "name": "Defence and Security",
+        "segment": "Defence and Security",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "a038cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Education and Training",
+        "segment": "Education and Training",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "a138cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Electronics and IT Hardware",
+        "segment": "Electronics and IT Hardware",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "9f1a72f1-5f95-e211-a939-e4115bead28a",
+        "name": "Electronics and IT Hardware : Electronic Instruments",
+        "segment": "Electronic Instruments",
+        "parent": {
+            "name": "Electronics and IT Hardware",
+            "id": "a138cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "981a72f1-5f95-e211-a939-e4115bead28a",
+        "name": "Electronics and IT Hardware : Electronics and IT Technologies",
+        "segment": "Electronics and IT Technologies",
+        "parent": {
+            "name": "Electronics and IT Hardware",
+            "id": "a138cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "9d1a72f1-5f95-e211-a939-e4115bead28a",
+        "name": "Electronics and IT Hardware : Electronics and IT Technologies : Broadcasting",
+        "segment": "Broadcasting",
+        "parent": {
+            "name": "Electronics and IT Hardware : Electronics and IT Technologies",
+            "id": "981a72f1-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "9b1a72f1-5f95-e211-a939-e4115bead28a",
+        "name": "Electronics and IT Hardware : Electronics and IT Technologies : Component Technologies",
+        "segment": "Component Technologies",
+        "parent": {
+            "name": "Electronics and IT Hardware : Electronics and IT Technologies",
+            "id": "981a72f1-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "9e1a72f1-5f95-e211-a939-e4115bead28a",
+        "name": "Electronics and IT Hardware : Electronics and IT Technologies : Computing",
+        "segment": "Computing",
+        "parent": {
+            "name": "Electronics and IT Hardware : Electronics and IT Technologies",
+            "id": "981a72f1-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "9a1a72f1-5f95-e211-a939-e4115bead28a",
+        "name": "Electronics and IT Hardware : Electronics and IT Technologies : Display Technologies",
+        "segment": "Display Technologies",
+        "parent": {
+            "name": "Electronics and IT Hardware : Electronics and IT Technologies",
+            "id": "981a72f1-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "991a72f1-5f95-e211-a939-e4115bead28a",
+        "name": "Electronics and IT Hardware : Electronics and IT Technologies : Network Technologies",
+        "segment": "Network Technologies",
+        "parent": {
+            "name": "Electronics and IT Hardware : Electronics and IT Technologies",
+            "id": "981a72f1-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "9c1a72f1-5f95-e211-a939-e4115bead28a",
+        "name": "Electronics and IT Hardware : Electronics and IT Technologies : Security Technologies",
+        "segment": "Security Technologies",
+        "parent": {
+            "name": "Electronics and IT Hardware : Electronics and IT Technologies",
+            "id": "981a72f1-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "b1959812-6095-e211-a939-e4115bead28a",
+        "name": "Energy",
+        "segment": "Energy",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "a238cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Environment",
+        "segment": "Environment",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "a01a72f1-5f95-e211-a939-e4115bead28a",
+        "name": "Environment : Air Pollution and Noise Control",
+        "segment": "Air Pollution and Noise Control",
+        "parent": {
+            "name": "Environment",
+            "id": "a238cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "a31a72f1-5f95-e211-a939-e4115bead28a",
+        "name": "Environment : Environmental Monitoring",
+        "segment": "Environmental Monitoring",
+        "parent": {
+            "name": "Environment",
+            "id": "a238cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "98e61afa-5f95-e211-a939-e4115bead28a",
+        "name": "Environment : Fuel Cells",
+        "segment": "Fuel Cells",
+        "parent": {
+            "name": "Environment",
+            "id": "a238cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "a11a72f1-5f95-e211-a939-e4115bead28a",
+        "name": "Environment : Marine Pollution Control",
+        "segment": "Marine Pollution Control",
+        "parent": {
+            "name": "Environment",
+            "id": "a238cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "a21a72f1-5f95-e211-a939-e4115bead28a",
+        "name": "Environment : Sanitation and Remediation",
+        "segment": "Sanitation and Remediation",
+        "parent": {
+            "name": "Environment",
+            "id": "a238cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "a51a72f1-5f95-e211-a939-e4115bead28a",
+        "name": "Environment : Waste Management",
+        "segment": "Waste Management",
+        "parent": {
+            "name": "Environment",
+            "id": "a238cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "94e61afa-5f95-e211-a939-e4115bead28a",
+        "name": "Environment : Waste Management : Hazardous Waste Management",
+        "segment": "Hazardous Waste Management",
+        "parent": {
+            "name": "Environment : Waste Management",
+            "id": "a51a72f1-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "96e61afa-5f95-e211-a939-e4115bead28a",
+        "name": "Environment : Waste Management : Non-Metal Waste and Scrap Recycling",
+        "segment": "Non-Metal Waste and Scrap Recycling",
+        "parent": {
+            "name": "Environment : Waste Management",
+            "id": "a51a72f1-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "95e61afa-5f95-e211-a939-e4115bead28a",
+        "name": "Environment : Waste Management : Sewage Collection and Treatment",
+        "segment": "Sewage Collection and Treatment",
+        "parent": {
+            "name": "Environment : Waste Management",
+            "id": "a51a72f1-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "97e61afa-5f95-e211-a939-e4115bead28a",
+        "name": "Environment : Waste to Energy",
+        "segment": "Waste to Energy",
+        "parent": {
+            "name": "Environment",
+            "id": "a238cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "a41a72f1-5f95-e211-a939-e4115bead28a",
+        "name": "Environment : Water Management",
+        "segment": "Water Management",
+        "parent": {
+            "name": "Environment",
+            "id": "a238cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "b2959812-6095-e211-a939-e4115bead28a",
+        "name": "Environment and Water",
+        "segment": "Environment and Water",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "a338cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services)",
+        "segment": "Financial Services (including Professional Services)",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "99e61afa-5f95-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services) : Asset Management",
+        "segment": "Asset Management",
+        "parent": {
+            "name": "Financial Services (including Professional Services)",
+            "id": "a338cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "9ae61afa-5f95-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services) : Banking",
+        "segment": "Banking",
+        "parent": {
+            "name": "Financial Services (including Professional Services)",
+            "id": "a338cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "9de61afa-5f95-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services) : Banking : Commercial Banking",
+        "segment": "Commercial Banking",
+        "parent": {
+            "name": "Financial Services (including Professional Services) : Banking",
+            "id": "9ae61afa-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "9ee61afa-5f95-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services) : Banking : Investment Banking",
+        "segment": "Investment Banking",
+        "parent": {
+            "name": "Financial Services (including Professional Services) : Banking",
+            "id": "9ae61afa-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "9ce61afa-5f95-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services) : Banking : Private Banking",
+        "segment": "Private Banking",
+        "parent": {
+            "name": "Financial Services (including Professional Services) : Banking",
+            "id": "9ae61afa-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "9be61afa-5f95-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services) : Banking : Retail Banking",
+        "segment": "Retail Banking",
+        "parent": {
+            "name": "Financial Services (including Professional Services) : Banking",
+            "id": "9ae61afa-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "9fe61afa-5f95-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services) : Capital Markets",
+        "segment": "Capital Markets",
+        "parent": {
+            "name": "Financial Services (including Professional Services)",
+            "id": "a338cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "a2e61afa-5f95-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services) : Capital Markets : Hedge Funds",
+        "segment": "Hedge Funds",
+        "parent": {
+            "name": "Financial Services (including Professional Services) : Capital Markets",
+            "id": "9fe61afa-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "a0e61afa-5f95-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services) : Capital Markets : Private Equity",
+        "segment": "Private Equity",
+        "parent": {
+            "name": "Financial Services (including Professional Services) : Capital Markets",
+            "id": "9fe61afa-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "a1e61afa-5f95-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services) : Capital Markets : Venture Capital",
+        "segment": "Venture Capital",
+        "parent": {
+            "name": "Financial Services (including Professional Services) : Capital Markets",
+            "id": "9fe61afa-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "a3e61afa-5f95-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services) : Foreign Exchange",
+        "segment": "Foreign Exchange",
+        "parent": {
+            "name": "Financial Services (including Professional Services)",
+            "id": "a338cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "a4e61afa-5f95-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services) : Insurance",
+        "segment": "Insurance",
+        "parent": {
+            "name": "Financial Services (including Professional Services)",
+            "id": "a338cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "75363000-6095-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services) : Insurance : Commercial Insurance",
+        "segment": "Commercial Insurance",
+        "parent": {
+            "name": "Financial Services (including Professional Services) : Insurance",
+            "id": "a4e61afa-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "a6e61afa-5f95-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services) : Insurance : Home Insurance",
+        "segment": "Home Insurance",
+        "parent": {
+            "name": "Financial Services (including Professional Services) : Insurance",
+            "id": "a4e61afa-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "76363000-6095-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services) : Insurance : Life Insurance",
+        "segment": "Life Insurance",
+        "parent": {
+            "name": "Financial Services (including Professional Services) : Insurance",
+            "id": "a4e61afa-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "a5e61afa-5f95-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services) : Insurance : Motor Insurance",
+        "segment": "Motor Insurance",
+        "parent": {
+            "name": "Financial Services (including Professional Services) : Insurance",
+            "id": "a4e61afa-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "74363000-6095-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services) : Insurance : Travel Insurance",
+        "segment": "Travel Insurance",
+        "parent": {
+            "name": "Financial Services (including Professional Services) : Insurance",
+            "id": "a4e61afa-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "77363000-6095-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services) : Listings",
+        "segment": "Listings",
+        "parent": {
+            "name": "Financial Services (including Professional Services)",
+            "id": "a338cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "78363000-6095-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services) : Professional Services",
+        "segment": "Professional Services",
+        "parent": {
+            "name": "Financial Services (including Professional Services)",
+            "id": "a338cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "79363000-6095-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services) : Professional Services : Accountancy Services",
+        "segment": "Accountancy Services",
+        "parent": {
+            "name": "Financial Services (including Professional Services) : Professional Services",
+            "id": "78363000-6095-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "7b363000-6095-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services) : Professional Services : Legal Services",
+        "segment": "Legal Services",
+        "parent": {
+            "name": "Financial Services (including Professional Services) : Professional Services",
+            "id": "78363000-6095-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "7a363000-6095-e211-a939-e4115bead28a",
+        "name": "Financial Services (including Professional Services) : Professional Services : Management Consultancy",
+        "segment": "Management Consultancy",
+        "parent": {
+            "name": "Financial Services (including Professional Services) : Professional Services",
+            "id": "78363000-6095-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "a538cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Food and Drink",
+        "segment": "Food and Drink",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "7d363000-6095-e211-a939-e4115bead28a",
+        "name": "Food and Drink : Bakery Products",
+        "segment": "Bakery Products",
+        "parent": {
+            "name": "Food and Drink",
+            "id": "a538cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "82363000-6095-e211-a939-e4115bead28a",
+        "name": "Food and Drink : Beverages and Alcoholic Drinks",
+        "segment": "Beverages and Alcoholic Drinks",
+        "parent": {
+            "name": "Food and Drink",
+            "id": "a538cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "7c363000-6095-e211-a939-e4115bead28a",
+        "name": "Food and Drink : Brewing",
+        "segment": "Brewing",
+        "parent": {
+            "name": "Food and Drink",
+            "id": "a538cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "80363000-6095-e211-a939-e4115bead28a",
+        "name": "Food and Drink : Dairy Products",
+        "segment": "Dairy Products",
+        "parent": {
+            "name": "Food and Drink",
+            "id": "a538cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "84363000-6095-e211-a939-e4115bead28a",
+        "name": "Food and Drink : Food and Drink Manufacturing",
+        "segment": "Food and Drink Manufacturing",
+        "parent": {
+            "name": "Food and Drink",
+            "id": "a538cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "81363000-6095-e211-a939-e4115bead28a",
+        "name": "Food and Drink : Frozen and Chilled Foods",
+        "segment": "Frozen and Chilled Foods",
+        "parent": {
+            "name": "Food and Drink",
+            "id": "a538cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "83363000-6095-e211-a939-e4115bead28a",
+        "name": "Food and Drink : Fruit and Vegetables",
+        "segment": "Fruit and Vegetables",
+        "parent": {
+            "name": "Food and Drink",
+            "id": "a538cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "7f363000-6095-e211-a939-e4115bead28a",
+        "name": "Food and Drink : Meat Products",
+        "segment": "Meat Products",
+        "parent": {
+            "name": "Food and Drink",
+            "id": "a538cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "85363000-6095-e211-a939-e4115bead28a",
+        "name": "Food and Drink : Pet Food",
+        "segment": "Pet Food",
+        "parent": {
+            "name": "Food and Drink",
+            "id": "a538cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "7e363000-6095-e211-a939-e4115bead28a",
+        "name": "Food and Drink : Ready Meals",
+        "segment": "Ready Meals",
+        "parent": {
+            "name": "Food and Drink",
+            "id": "a538cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "86363000-6095-e211-a939-e4115bead28a",
+        "name": "Food and Drink : Secondary Food Processing",
+        "segment": "Secondary Food Processing",
+        "parent": {
+            "name": "Food and Drink",
+            "id": "a538cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "64535406-6095-e211-a939-e4115bead28a",
+        "name": "Food and Drink : Tobacco Products",
+        "segment": "Tobacco Products",
+        "parent": {
+            "name": "Food and Drink",
+            "id": "a538cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "a638cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Giftware, Jewellery and Tableware",
+        "segment": "Giftware, Jewellery and Tableware",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "ac22c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Global Sports Projects",
+        "segment": "Global Sports Projects",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "65535406-6095-e211-a939-e4115bead28a",
+        "name": "Global Sports Projects : Major Events",
+        "segment": "Major Events",
+        "parent": {
+            "name": "Global Sports Projects",
+            "id": "ac22c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "a738cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Healthcare and Medical",
+        "segment": "Healthcare and Medical",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "75535406-6095-e211-a939-e4115bead28a",
+        "name": "Healthcare and Medical : Healthcare Marketing and Sales",
+        "segment": "Healthcare Marketing and Sales",
+        "parent": {
+            "name": "Healthcare and Medical",
+            "id": "a738cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "64f1690c-6095-e211-a939-e4115bead28a",
+        "name": "Healthcare and Medical : Healthcare Marketing and Sales : Healthcare Retail",
+        "segment": "Healthcare Retail",
+        "parent": {
+            "name": "Healthcare and Medical : Healthcare Marketing and Sales",
+            "id": "75535406-6095-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "76535406-6095-e211-a939-e4115bead28a",
+        "name": "Healthcare and Medical : Healthcare Marketing and Sales : Healthcare Wholesale",
+        "segment": "Healthcare Wholesale",
+        "parent": {
+            "name": "Healthcare and Medical : Healthcare Marketing and Sales",
+            "id": "75535406-6095-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "66535406-6095-e211-a939-e4115bead28a",
+        "name": "Healthcare and Medical : Healthcare Services",
+        "segment": "Healthcare Services",
+        "parent": {
+            "name": "Healthcare and Medical",
+            "id": "a738cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "6b535406-6095-e211-a939-e4115bead28a",
+        "name": "Healthcare and Medical : Healthcare Services : Dentists",
+        "segment": "Dentists",
+        "parent": {
+            "name": "Healthcare and Medical : Healthcare Services",
+            "id": "66535406-6095-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "6a535406-6095-e211-a939-e4115bead28a",
+        "name": "Healthcare and Medical : Healthcare Services : Medical Practice",
+        "segment": "Medical Practice",
+        "parent": {
+            "name": "Healthcare and Medical : Healthcare Services",
+            "id": "66535406-6095-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "69535406-6095-e211-a939-e4115bead28a",
+        "name": "Healthcare and Medical : Healthcare Services : Nursing Homes",
+        "segment": "Nursing Homes",
+        "parent": {
+            "name": "Healthcare and Medical : Healthcare Services",
+            "id": "66535406-6095-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "68535406-6095-e211-a939-e4115bead28a",
+        "name": "Healthcare and Medical : Healthcare Services : Private Sector",
+        "segment": "Private Sector",
+        "parent": {
+            "name": "Healthcare and Medical : Healthcare Services",
+            "id": "66535406-6095-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "67535406-6095-e211-a939-e4115bead28a",
+        "name": "Healthcare and Medical : Healthcare Services : Public Sector",
+        "segment": "Public Sector",
+        "parent": {
+            "name": "Healthcare and Medical : Healthcare Services",
+            "id": "66535406-6095-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "6c535406-6095-e211-a939-e4115bead28a",
+        "name": "Healthcare and Medical : Healthcare Services : Vets",
+        "segment": "Vets",
+        "parent": {
+            "name": "Healthcare and Medical : Healthcare Services",
+            "id": "66535406-6095-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "73535406-6095-e211-a939-e4115bead28a",
+        "name": "Healthcare and Medical : Medical Consumables",
+        "segment": "Medical Consumables",
+        "parent": {
+            "name": "Healthcare and Medical",
+            "id": "a738cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "6d535406-6095-e211-a939-e4115bead28a",
+        "name": "Healthcare and Medical : Medical Devices and Systems",
+        "segment": "Medical Devices and Systems",
+        "parent": {
+            "name": "Healthcare and Medical",
+            "id": "a738cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "6e535406-6095-e211-a939-e4115bead28a",
+        "name": "Healthcare and Medical : Medical Devices and Systems : Optical Precision Instruments",
+        "segment": "Optical Precision Instruments",
+        "parent": {
+            "name": "Healthcare and Medical : Medical Devices and Systems",
+            "id": "6d535406-6095-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "6f535406-6095-e211-a939-e4115bead28a",
+        "name": "Healthcare and Medical : Medical Equipment",
+        "segment": "Medical Equipment",
+        "parent": {
+            "name": "Healthcare and Medical",
+            "id": "a738cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "70535406-6095-e211-a939-e4115bead28a",
+        "name": "Healthcare and Medical : Medical Equipment : Dental Aesthetics",
+        "segment": "Dental Aesthetics",
+        "parent": {
+            "name": "Healthcare and Medical : Medical Equipment",
+            "id": "6f535406-6095-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "71535406-6095-e211-a939-e4115bead28a",
+        "name": "Healthcare and Medical : Medical Equipment : Glass",
+        "segment": "Glass",
+        "parent": {
+            "name": "Healthcare and Medical : Medical Equipment",
+            "id": "6f535406-6095-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "72535406-6095-e211-a939-e4115bead28a",
+        "name": "Healthcare and Medical : Medical Equipment : Spectacles and Unmounted Lenses",
+        "segment": "Spectacles and Unmounted Lenses",
+        "parent": {
+            "name": "Healthcare and Medical : Medical Equipment",
+            "id": "6f535406-6095-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "74535406-6095-e211-a939-e4115bead28a",
+        "name": "Healthcare and Medical : Medical Lab Services",
+        "segment": "Medical Lab Services",
+        "parent": {
+            "name": "Healthcare and Medical",
+            "id": "a738cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "a838cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Household Goods, Furniture and Furnishings",
+        "segment": "Household Goods, Furniture and Furnishings",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "b3959812-6095-e211-a939-e4115bead28a",
+        "name": "ICT",
+        "segment": "ICT",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "a938cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Leisure and Tourism",
+        "segment": "Leisure and Tourism",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "66f1690c-6095-e211-a939-e4115bead28a",
+        "name": "Leisure and Tourism : Gaming",
+        "segment": "Gaming",
+        "parent": {
+            "name": "Leisure and Tourism",
+            "id": "a938cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "67f1690c-6095-e211-a939-e4115bead28a",
+        "name": "Leisure and Tourism : Gaming : Casino Gambling",
+        "segment": "Casino Gambling",
+        "parent": {
+            "name": "Leisure and Tourism : Gaming",
+            "id": "66f1690c-6095-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "68f1690c-6095-e211-a939-e4115bead28a",
+        "name": "Leisure and Tourism : Gaming : Mass-Market Gambling",
+        "segment": "Mass-Market Gambling",
+        "parent": {
+            "name": "Leisure and Tourism : Gaming",
+            "id": "66f1690c-6095-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "65f1690c-6095-e211-a939-e4115bead28a",
+        "name": "Leisure and Tourism : Sports and Leisure Infrastructure",
+        "segment": "Sports and Leisure Infrastructure",
+        "parent": {
+            "name": "Leisure and Tourism",
+            "id": "a938cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "b4959812-6095-e211-a939-e4115bead28a",
+        "name": "Life Sciences",
+        "segment": "Life Sciences",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "aa38cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Marine",
+        "segment": "Marine",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "b5959812-6095-e211-a939-e4115bead28a",
+        "name": "Mass Transport",
+        "segment": "Mass Transport",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "ab38cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Mechanical Electrical and Process Engineering",
+        "segment": "Mechanical Electrical and Process Engineering",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "a422c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Metallurgical Process Plant",
+        "segment": "Metallurgical Process Plant",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "a522c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Metals, Minerals and Materials",
+        "segment": "Metals, Minerals and Materials",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "6df1690c-6095-e211-a939-e4115bead28a",
+        "name": "Metals, Minerals and Materials : Ceramics",
+        "segment": "Ceramics",
+        "parent": {
+            "name": "Metals, Minerals and Materials",
+            "id": "a522c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "6ef1690c-6095-e211-a939-e4115bead28a",
+        "name": "Metals, Minerals and Materials : Composite Materials",
+        "segment": "Composite Materials",
+        "parent": {
+            "name": "Metals, Minerals and Materials",
+            "id": "a522c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "6ff1690c-6095-e211-a939-e4115bead28a",
+        "name": "Metals, Minerals and Materials : Elastomers and Rubbers",
+        "segment": "Elastomers and Rubbers",
+        "parent": {
+            "name": "Metals, Minerals and Materials",
+            "id": "a522c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "6af1690c-6095-e211-a939-e4115bead28a",
+        "name": "Metals, Minerals and Materials : Metals",
+        "segment": "Metals",
+        "parent": {
+            "name": "Metals, Minerals and Materials",
+            "id": "a522c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "6bf1690c-6095-e211-a939-e4115bead28a",
+        "name": "Metals, Minerals and Materials : Minerals",
+        "segment": "Minerals",
+        "parent": {
+            "name": "Metals, Minerals and Materials",
+            "id": "a522c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "6cf1690c-6095-e211-a939-e4115bead28a",
+        "name": "Metals, Minerals and Materials : Plastics",
+        "segment": "Plastics",
+        "parent": {
+            "name": "Metals, Minerals and Materials",
+            "id": "a522c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "a622c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Mining",
+        "segment": "Mining",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "44329c18-6095-e211-a939-e4115bead28a",
+        "name": "More Sectors",
+        "segment": "More Sectors",
+        "parent": null,
+        "level": 0,
+        "disabled_on": "2013-08-06T15:51:32Z"
+    },
+    {
+        "id": "a722c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Oil and Gas",
+        "segment": "Oil and Gas",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "a822c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Ports and Logistics",
+        "segment": "Ports and Logistics",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "a922c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Power",
+        "segment": "Power",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "70f1690c-6095-e211-a939-e4115bead28a",
+        "name": "Power : Nuclear",
+        "segment": "Nuclear",
+        "parent": {
+            "name": "Power",
+            "id": "a922c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "632b6af2-b583-e511-a84e-e4115bead28a",
+        "name": "Power : Nuclear : Nuclear De-commissiong",
+        "segment": "Nuclear De-commissiong",
+        "parent": {
+            "name": "Power : Nuclear",
+            "id": "70f1690c-6095-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "aa22c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Railways",
+        "segment": "Railways",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "7ebb9fc6-5f95-e211-a939-e4115bead28a",
+        "name": "Renewable Energy",
+        "segment": "Renewable Energy",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "71f1690c-6095-e211-a939-e4115bead28a",
+        "name": "Renewable Energy : Biomass",
+        "segment": "Biomass",
+        "parent": {
+            "name": "Renewable Energy",
+            "id": "7ebb9fc6-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "72f1690c-6095-e211-a939-e4115bead28a",
+        "name": "Renewable Energy : Geothermal",
+        "segment": "Geothermal",
+        "parent": {
+            "name": "Renewable Energy",
+            "id": "7ebb9fc6-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "73f1690c-6095-e211-a939-e4115bead28a",
+        "name": "Renewable Energy : Hydro",
+        "segment": "Hydro",
+        "parent": {
+            "name": "Renewable Energy",
+            "id": "7ebb9fc6-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "74f1690c-6095-e211-a939-e4115bead28a",
+        "name": "Renewable Energy : Solar",
+        "segment": "Solar",
+        "parent": {
+            "name": "Renewable Energy",
+            "id": "7ebb9fc6-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "75f1690c-6095-e211-a939-e4115bead28a",
+        "name": "Renewable Energy : Tidal",
+        "segment": "Tidal",
+        "parent": {
+            "name": "Renewable Energy",
+            "id": "7ebb9fc6-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "76f1690c-6095-e211-a939-e4115bead28a",
+        "name": "Renewable Energy : Wave",
+        "segment": "Wave",
+        "parent": {
+            "name": "Renewable Energy",
+            "id": "7ebb9fc6-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "a4959812-6095-e211-a939-e4115bead28a",
+        "name": "Renewable Energy : Wind",
+        "segment": "Wind",
+        "parent": {
+            "name": "Renewable Energy",
+            "id": "7ebb9fc6-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "e331b3d4-5329-e511-b6bc-e4115bead28a",
+        "name": "Renewable Energy : Wind : Offshore",
+        "segment": "Offshore",
+        "parent": {
+            "name": "Renewable Energy : Wind",
+            "id": "a4959812-6095-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "034be3be-5329-e511-b6bc-e4115bead28a",
+        "name": "Renewable Energy : Wind : Onshore",
+        "segment": "Onshore",
+        "parent": {
+            "name": "Renewable Energy : Wind",
+            "id": "a4959812-6095-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "355f977b-8ac3-e211-a646-e4115bead28a",
+        "name": "Retail",
+        "segment": "Retail",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "a438cecc-5f95-e211-a939-e4115bead28a",
+        "name": "Security",
+        "segment": "Security",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "906f43f9-267e-e511-a84e-e4115bead28a",
+        "name": "Security : Cyber Security",
+        "segment": "Cyber Security",
+        "parent": {
+            "name": "Security",
+            "id": "a438cecc-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "ab22c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Software and Computer Services Business to Business (B2B)",
+        "segment": "Software and Computer Services Business to Business (B2B)",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "a9959812-6095-e211-a939-e4115bead28a",
+        "name": "Software and Computer Services Business to Business (B2B) : Biometrics",
+        "segment": "Biometrics",
+        "parent": {
+            "name": "Software and Computer Services Business to Business (B2B)",
+            "id": "ab22c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "ab959812-6095-e211-a939-e4115bead28a",
+        "name": "Software and Computer Services Business to Business (B2B) : E-Procurement",
+        "segment": "E-Procurement",
+        "parent": {
+            "name": "Software and Computer Services Business to Business (B2B)",
+            "id": "ab22c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "a6959812-6095-e211-a939-e4115bead28a",
+        "name": "Software and Computer Services Business to Business (B2B) : Financial Applications",
+        "segment": "Financial Applications",
+        "parent": {
+            "name": "Software and Computer Services Business to Business (B2B)",
+            "id": "ab22c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "a7959812-6095-e211-a939-e4115bead28a",
+        "name": "Software and Computer Services Business to Business (B2B) : Healthcare Applications",
+        "segment": "Healthcare Applications",
+        "parent": {
+            "name": "Software and Computer Services Business to Business (B2B)",
+            "id": "ab22c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "a5959812-6095-e211-a939-e4115bead28a",
+        "name": "Software and Computer Services Business to Business (B2B) : Industry Applications",
+        "segment": "Industry Applications",
+        "parent": {
+            "name": "Software and Computer Services Business to Business (B2B)",
+            "id": "ab22c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "aa959812-6095-e211-a939-e4115bead28a",
+        "name": "Software and Computer Services Business to Business (B2B) : Online Retailing",
+        "segment": "Online Retailing",
+        "parent": {
+            "name": "Software and Computer Services Business to Business (B2B)",
+            "id": "ab22c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "a8959812-6095-e211-a939-e4115bead28a",
+        "name": "Software and Computer Services Business to Business (B2B) : Security Related Software",
+        "segment": "Security Related Software",
+        "parent": {
+            "name": "Software and Computer Services Business to Business (B2B)",
+            "id": "ab22c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "ac959812-6095-e211-a939-e4115bead28a",
+        "name": "Software and Computer Services Business to Business (B2B) : Support Services",
+        "segment": "Support Services",
+        "parent": {
+            "name": "Software and Computer Services Business to Business (B2B)",
+            "id": "ab22c9d2-5f95-e211-a939-e4115bead28a"
+        },
+        "level": 1,
+        "disabled_on": null
+    },
+    {
+        "id": "ad959812-6095-e211-a939-e4115bead28a",
+        "name": "Software and Computer Services Business to Business (B2B) : Support Services : Equipment Maintenance and Repair",
+        "segment": "Equipment Maintenance and Repair",
+        "parent": {
+            "name": "Software and Computer Services Business to Business (B2B) : Support Services",
+            "id": "ac959812-6095-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "ae959812-6095-e211-a939-e4115bead28a",
+        "name": "Software and Computer Services Business to Business (B2B) : Support Services : Internet Service Providers",
+        "segment": "Internet Service Providers",
+        "parent": {
+            "name": "Software and Computer Services Business to Business (B2B) : Support Services",
+            "id": "ac959812-6095-e211-a939-e4115bead28a"
+        },
+        "level": 2,
+        "disabled_on": null
+    },
+    {
+        "id": "ad22c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Textiles, Interior Textiles and Carpets",
+        "segment": "Textiles, Interior Textiles and Carpets",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    },
+    {
+        "id": "ae22c9d2-5f95-e211-a939-e4115bead28a",
+        "name": "Water",
+        "segment": "Water",
+        "parent": null,
+        "level": 0,
+        "disabled_on": null
+    }
+]

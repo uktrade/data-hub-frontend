@@ -1,0 +1,497 @@
+{
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": "63010090-ba38-4894-84a7-dc039c84edb3",
+      "created_on": "2019-03-25T16:16:31.586619Z",
+      "modified_on": "2019-03-25T16:16:31.586664Z",
+      "investor_company": {
+        "name": "One List Corp",
+        "id": "375094ac-f79a-43e5-9c88-059a7caa17f0"
+      },
+      "incomplete_details_fields": [
+        "investor_description"
+      ],
+      "incomplete_requirements_fields": [
+        "deal_ticket_sizes",
+        "investment_types",
+        "minimum_return_rate",
+        "time_horizons",
+        "construction_risks",
+        "minimum_equity_percentage",
+        "desired_deal_roles",
+        "restrictions",
+        "asset_classes_of_interest"
+      ],
+      "incomplete_location_fields": [
+        "uk_region_locations",
+        "other_countries_being_considered"
+      ],
+      "investor_type": {
+        "id": "80168d31-fa91-494e-9ad5-b9255e01b5da",
+        "name": "Asset manager"
+      },
+      "investable_capital": 30000,
+      "global_assets_under_management": 1000000,
+      "investor_description": "",
+      "required_checks_conducted": {
+        "id": "02d6fc9b-fbb9-4621-b247-d86f2487898e",
+        "name": "Cleared"
+      },
+      "required_checks_conducted_on": "2019-04-29",
+      "required_checks_conducted_by": {
+        "name": "Aaron Chan",
+        "id": "b9d6b3dc-7af4-e411-bcbe-e4115bead28a"
+      },
+      "deal_ticket_sizes": [
+        {
+          "name": "Up to £49 million",
+          "id": "56492c50-aa12-404d-a14e-1eaae24ac6ee"
+        },
+        {
+          "name": "£50-99 million",
+          "id": "54df4ffb-5787-49b8-a7d2-ba33040fa32f"
+        },
+        {
+          "name": "£100-249 million",
+          "id": "359f4183-5617-47a9-a2ac-39e2c60d5088"
+        },
+        {
+          "id": "e5ae2715-aa2c-4aa2-b047-f247625322a3",
+          "name": "£250-499 million"
+        },
+        {
+          "id": "01eb55d6-167f-4c2f-b482-b0356605d3e1",
+          "name": "£500-999 million"
+        },
+        {
+          "id": "5e7601b5-becd-42ea-b885-1bbd88b85e4b",
+          "name": "£1 billion +"
+        }
+      ],
+      "investment_types": [
+        {
+          "id": "4170d99a-02fc-46ee-8fd4-3fe786717708",
+          "name": "Direct Investment in Project Equity"
+        },
+        {
+          "id": "06834da2-c9ac-4faf-b555-39762ce373ae",
+          "name": "Direct Investment in Project Debt"
+        },
+        {
+          "id": "942726e3-1b3f-4218-b06e-7cf983754de0",
+          "name": "Direct Investment in Corporate Equity"
+        },
+        {
+          "id": "f972c0d9-f480-4727-af39-dff10cf935a9",
+          "name": "Direct Investment in Corporate Debt"
+        },
+        {
+          "id": "703140ec-6990-4f36-8b22-52ebde63932c",
+          "name": "Mezzanine Debt (incl. preferred shares, convertibles)"
+        },
+        {
+          "id": "8feb6087-d61c-43bd-9bf1-3d9e1129432b",
+          "name": "Venture capital funds"
+        },
+        {
+          "id": "24826b7c-e3df-4a76-80d4-4fe2661b838e",
+          "name": "Energy / Infrastructure / Real Estate Funds (UKEIREFs)"
+        },
+        {
+          "id": "ef615dde-49d8-41dd-9ddd-a00c78004135",
+          "name": "Private Equity / Venture Capital"
+        }
+      ],
+      "minimum_return_rate": {
+        "id": "6ecbd7d2-e16a-4bfd-a4b9-8c9bca947302",
+        "name": "10-15%"
+      },
+      "time_horizons": [
+        {
+          "id": "d2d1bdbb-c42a-459c-adaa-fce45ce08cc9",
+          "name": "Up to 5 years"
+        },
+        {
+          "id": "d186343f-ed66-47e4-9ab0-258f583ff3cb",
+          "name": "5-9 years"
+        },
+        {
+          "id": "29a0a8e9-1c21-432a-bb4f-b9363b46a6aa",
+          "name": "10-14 years"
+        },
+        {
+          "id": "c4579a5e-4588-4952-a974-e03475a3f559",
+          "name": "15 years +"
+        }
+      ],
+      "construction_risks": [
+        {
+          "id": "79cc3963-9376-4771-9cba-c1b3cc0ade33",
+          "name": "Greenfield (construction risk)"
+        },
+        {
+          "id": "884deaf6-cb0c-4036-b78c-efd92cb10098",
+          "name": "Brownfield (some construction risk)"
+        },
+        {
+          "id": "9f554b26-70f2-4cac-89ae-758c2ef71c70",
+          "name": "Operational (no construction risk)"
+        }
+      ],
+      "minimum_equity_percentage": {
+        "id": "ec061f70-b287-41cf-aaf4-620aec79616b",
+        "name": "20-49%"
+      },
+      "desired_deal_roles": [
+        {
+          "id": "efadc6bb-2a73-4627-8ce3-9dc2c34c3f31",
+          "name": "Lead manager / deal structure"
+        },
+        {
+          "id": "29d930e6-de2f-403d-87dc-764bc418d33a",
+          "name": "Co-lead manager"
+        },
+        {
+          "id": "48cace6e-ec14-467b-b1b5-19b318ab5c51",
+          "name": "Co-investor / syndicate member"
+        }
+      ],
+      "restrictions": [
+        {
+          "id": "5b4f5dc5-c836-4572-afd2-013776ed00c5",
+          "name": "Liquidity / exchange listing"
+        },
+        {
+          "id": "daa293d4-e18e-44af-b139-bd1b4c4a9067",
+          "name": "Inflation adjustment"
+        },
+        {
+          "id": "24d90807-91de-4814-92f6-0a5ee43406d1",
+          "name": "Require FX hedge"
+        },
+        {
+          "id": "7dad0891-9174-437d-bb30-b610ac1ecd0a",
+          "name": "Require board seat"
+        },
+        {
+          "id": "bfa167ab-f98a-4c73-b34d-c34ba7bdf93b",
+          "name": "Require linked technology / knowledge transfer"
+        },
+        {
+          "id": "dbc0cdf0-5365-4cbf-8d55-7516b6ebc383",
+          "name": "Will participate in competitive bids / auctions"
+        }
+      ],
+      "asset_classes_of_interest": [
+        {
+          "id": "66507830-595d-432e-8521-9daf11785265",
+          "name": "Biofuel",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Energy and infrastructure",
+            "id": "f3eb86b0-d53c-488d-8d64-47ab3294a6bf"
+          }
+        },
+        {
+          "id": "f2b6c1a7-4d4f-4fd9-884b-5e1f5b3525be",
+          "name": "Biomass",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Energy and infrastructure",
+            "id": "f3eb86b0-d53c-488d-8d64-47ab3294a6bf"
+          }
+        },
+        {
+          "id": "bfab8ff2-e9bb-4fc8-b36c-5adddf8286b0",
+          "name": "Direct heating",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Energy and infrastructure",
+            "id": "f3eb86b0-d53c-488d-8d64-47ab3294a6bf"
+          }
+        },
+        {
+          "id": "7fe8bde8-72ef-45ac-8c2d-4627023514b4",
+          "name": "Energy from waste",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Energy and infrastructure",
+            "id": "f3eb86b0-d53c-488d-8d64-47ab3294a6bf"
+          }
+        },
+        {
+          "id": "f5a134fa-968f-4723-9255-9450d8f98869",
+          "name": "Energy storage",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Energy and infrastructure",
+            "id": "f3eb86b0-d53c-488d-8d64-47ab3294a6bf"
+          }
+        },
+        {
+          "id": "0ec0c3b8-6b79-40ae-945a-1a0e1b9a9c46",
+          "name": "Gas fired power",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Energy and infrastructure",
+            "id": "f3eb86b0-d53c-488d-8d64-47ab3294a6bf"
+          }
+        },
+        {
+          "id": "9e619e8d-af51-4abf-a83a-5c139851de82",
+          "name": "Nuclear",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Energy and infrastructure",
+            "id": "f3eb86b0-d53c-488d-8d64-47ab3294a6bf"
+          }
+        },
+        {
+          "id": "c50686e4-9700-4a9b-8ea9-3dac53c934ac",
+          "name": "Regulated assets",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Energy and infrastructure",
+            "id": "f3eb86b0-d53c-488d-8d64-47ab3294a6bf"
+          }
+        },
+        {
+          "id": "51d4f291-15ab-441f-b9e5-82b46a1ba145",
+          "name": "Smart energy",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Energy and infrastructure",
+            "id": "f3eb86b0-d53c-488d-8d64-47ab3294a6bf"
+          }
+        },
+        {
+          "id": "87d5c012-9f06-49ce-b2a7-a15d4943a976",
+          "name": "Solar power",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Energy and infrastructure",
+            "id": "f3eb86b0-d53c-488d-8d64-47ab3294a6bf"
+          }
+        },
+        {
+          "id": "096772cb-bd14-4bdf-bd5a-5b430e651048",
+          "name": "Transport",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Energy and infrastructure",
+            "id": "f3eb86b0-d53c-488d-8d64-47ab3294a6bf"
+          }
+        },
+        {
+          "id": "ea41c626-5464-484e-81a3-05906917aad6",
+          "name": "Wave and tidal",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Energy and infrastructure",
+            "id": "f3eb86b0-d53c-488d-8d64-47ab3294a6bf"
+          }
+        },
+        {
+          "id": "07046d37-60bc-4db4-942c-56c5cd31c3e1",
+          "name": "Windpower (offshore)",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Energy and infrastructure",
+            "id": "f3eb86b0-d53c-488d-8d64-47ab3294a6bf"
+          }
+        },
+        {
+          "id": "f081c413-0c01-4fc2-9061-3203041c71e2",
+          "name": "Windpower (onshore)",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Energy and infrastructure",
+            "id": "f3eb86b0-d53c-488d-8d64-47ab3294a6bf"
+          }
+        },
+        {
+          "id": "ce528446-a24d-4f05-b3b8-a033cf5d4720",
+          "name": "Upstream oil and gas",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Energy and infrastructure",
+            "id": "f3eb86b0-d53c-488d-8d64-47ab3294a6bf"
+          }
+        },
+        {
+          "id": "0fbceb4c-860a-4d1c-9c51-1da6997ba5fd",
+          "name": "Advanced manufacturing",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Real estate",
+            "id": "bdd34014-f73f-4a1e-91b6-0ef03b7d7f47"
+          }
+        },
+        {
+          "id": "a8818051-1618-466d-b2b8-7a4992dcd923",
+          "name": "Commerical led",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Real estate",
+            "id": "bdd34014-f73f-4a1e-91b6-0ef03b7d7f47"
+          }
+        },
+        {
+          "id": "f84e9340-d975-453e-895b-c63d388b1bf5",
+          "name": "Data centre",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Real estate",
+            "id": "bdd34014-f73f-4a1e-91b6-0ef03b7d7f47"
+          }
+        },
+        {
+          "id": "7df7000e-afd1-4301-8d65-7ab7d8d64fea",
+          "name": "Garden cities",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Real estate",
+            "id": "bdd34014-f73f-4a1e-91b6-0ef03b7d7f47"
+          }
+        },
+        {
+          "id": "b4516edf-c151-47d6-9c12-1c2185cacff0",
+          "name": "Hotel",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Real estate",
+            "id": "bdd34014-f73f-4a1e-91b6-0ef03b7d7f47"
+          }
+        },
+        {
+          "id": "1536f225-f755-44d1-8bdd-e89a1964966b",
+          "name": "Lesuire",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Real estate",
+            "id": "bdd34014-f73f-4a1e-91b6-0ef03b7d7f47"
+          }
+        },
+        {
+          "id": "38c8d05c-2899-4433-a15c-6598d76dd69b",
+          "name": "Life sciences",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Real estate",
+            "id": "bdd34014-f73f-4a1e-91b6-0ef03b7d7f47"
+          }
+        },
+        {
+          "id": "55bec24e-e107-4bae-9869-9a470dbe1cd7",
+          "name": "Logistics",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Real estate",
+            "id": "bdd34014-f73f-4a1e-91b6-0ef03b7d7f47"
+          }
+        },
+        {
+          "id": "2fcf4687-724b-44af-b6df-65a9cc6e037c",
+          "name": "Mixed use",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Real estate",
+            "id": "bdd34014-f73f-4a1e-91b6-0ef03b7d7f47"
+          }
+        },
+        {
+          "id": "814f4c5b-854b-48f8-80f3-5bd070f9f97e",
+          "name": "Private rented sector",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Real estate",
+            "id": "bdd34014-f73f-4a1e-91b6-0ef03b7d7f47"
+          }
+        },
+        {
+          "id": "2c2c0d6d-6a10-44fc-bdab-e6a0484394a5",
+          "name": "Regeneration",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Real estate",
+            "id": "bdd34014-f73f-4a1e-91b6-0ef03b7d7f47"
+          }
+        },
+        {
+          "id": "a865f307-2f73-43a2-8039-2b906237406c",
+          "name": "Research and development",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Real estate",
+            "id": "bdd34014-f73f-4a1e-91b6-0ef03b7d7f47"
+          }
+        },
+        {
+          "id": "1eae0983-7c94-4d3a-8888-40c84a9ae092",
+          "name": "Residential led",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Real estate",
+            "id": "bdd34014-f73f-4a1e-91b6-0ef03b7d7f47"
+          }
+        },
+        {
+          "id": "17755b4f-0aee-4675-baf5-5e592bd89c7d",
+          "name": "Retail",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Real estate",
+            "id": "bdd34014-f73f-4a1e-91b6-0ef03b7d7f47"
+          }
+        },
+        {
+          "id": "e0d2d653-dba4-4be9-9fb8-b91a8fcdbe9e",
+          "name": "Smart cities",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Real estate",
+            "id": "bdd34014-f73f-4a1e-91b6-0ef03b7d7f47"
+          }
+        },
+        {
+          "id": "3b95756d-a905-4abc-81f6-398fe6dc029d",
+          "name": "Student housing",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Real estate",
+            "id": "bdd34014-f73f-4a1e-91b6-0ef03b7d7f47"
+          }
+        },
+        {
+          "id": "f86ca55d-4512-4b71-a6fd-60ddc6c3bafe",
+          "name": "Transport hub / rail",
+          "disabled_on": null,
+          "asset_class_interest_sector": {
+            "name": "Real estate",
+            "id": "bdd34014-f73f-4a1e-91b6-0ef03b7d7f47"
+          }
+        }
+      ],
+      "uk_region_locations": [
+        {
+          "id": "874cd12a-6095-e211-a939-e4115bead28a",
+          "name": "London"
+        },
+        {
+          "id": "854cd12a-6095-e211-a939-e4115bead28a",
+          "name": "West Midlands"
+        }
+      ],
+      "notes_on_locations": "Notes go here please",
+      "other_countries_being_considered": [
+        {
+          "id": "85756b9a-5d95-e211-a939-e4115bead28a",
+          "name": "Japan"
+        }
+      ]
+    }
+  ]
+}

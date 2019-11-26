@@ -1,0 +1,72 @@
+[
+    {
+        "id": "42b8d11b-dbe7-45b8-985e-c9222c459287",
+        "name": "Assembly",
+        "disabled_on": null
+    },
+    {
+        "id": "410da69e-0247-48cf-9f72-fbc10ed7a4fc",
+        "name": "Call centre",
+        "disabled_on": null
+    },
+    {
+        "id": "7e7fbced-143a-43ac-822b-a8411e7400b4",
+        "name": "Distribution",
+        "disabled_on": null
+    },
+    {
+        "id": "2527f728-cc5f-4481-ba42-13957d249b3b",
+        "name": "E-commerce",
+        "disabled_on": null
+    },
+    {
+        "id": "fc68d540-a00a-40f8-8b39-05e12fcb856f",
+        "name": "European headquarters",
+        "disabled_on": null
+    },
+    {
+        "id": "257f720f-42df-4f85-8e43-c83e4e03dc79",
+        "name": "Global headquarters",
+        "disabled_on": null
+    },
+    {
+        "id": "30348f9d-a82e-4215-ba3f-85cbbd14763a",
+        "name": "Knowledge centre",
+        "disabled_on": null
+    },
+    {
+        "id": "77be20b3-05bf-4e06-a517-6989f8b9b922",
+        "name": "Manufacturing",
+        "disabled_on": null
+    },
+    {
+        "id": "befab707-5abd-4f47-8477-57f091e6dac9",
+        "name": "Other",
+        "disabled_on": null
+    },
+    {
+        "id": "c40e4af0-382e-44a7-b756-97f180230096",
+        "name": "Research & development (R&D)",
+        "disabled_on": null
+    },
+    {
+        "id": "a2dbd807-ae52-421c-8d1d-88adfc7a506b",
+        "name": "Retail",
+        "disabled_on": null
+    },
+    {
+        "id": "71946309-c92c-4c5b-9c42-8502cc74c72e",
+        "name": "Sales",
+        "disabled_on": null
+    },
+    {
+        "id": "2f51ea6a-ca2f-466a-87fd-5f79ebfec125",
+        "name": "Services",
+        "disabled_on": null
+    },
+    {
+        "id": "93959cec-7250-4c0a-9466-af4ebaf4a676",
+        "name": "Shared service centre",
+        "disabled_on": null
+    }
+]

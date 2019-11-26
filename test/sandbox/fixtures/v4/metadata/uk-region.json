@@ -1,0 +1,117 @@
+[
+    {
+        "id": "934cd12a-6095-e211-a939-e4115bead28a",
+        "name": "Alderney",
+        "disabled_on": "2013-03-25T14:25:00Z"
+    },
+    {
+        "id": "1718e330-6095-e211-a939-e4115bead28a",
+        "name": "All",
+        "disabled_on": null
+    },
+    {
+        "id": "7703f30f-20e0-49b7-b4e0-c23c80f5a205",
+        "name": "Benzonia",
+        "disabled_on": null
+    },
+    {
+        "id": "8b4cd12a-6095-e211-a939-e4115bead28a",
+        "name": "Channel Islands",
+        "disabled_on": "2013-03-25T14:25:00Z"
+    },
+    {
+        "id": "844cd12a-6095-e211-a939-e4115bead28a",
+        "name": "East Midlands",
+        "disabled_on": null
+    },
+    {
+        "id": "864cd12a-6095-e211-a939-e4115bead28a",
+        "name": "East of England",
+        "disabled_on": null
+    },
+    {
+        "id": "8a4cd12a-6095-e211-a939-e4115bead28a",
+        "name": "England",
+        "disabled_on": "2013-03-25T14:25:00Z"
+    },
+    {
+        "id": "804cd12a-6095-e211-a939-e4115bead28a",
+        "name": "FDI Hub",
+        "disabled_on": "2014-10-20T09:44:00Z"
+    },
+    {
+        "id": "904cd12a-6095-e211-a939-e4115bead28a",
+        "name": "Guernsey",
+        "disabled_on": "2013-03-25T14:25:00Z"
+    },
+    {
+        "id": "8f4cd12a-6095-e211-a939-e4115bead28a",
+        "name": "Isle of Man",
+        "disabled_on": "2013-03-25T14:25:00Z"
+    },
+    {
+        "id": "924cd12a-6095-e211-a939-e4115bead28a",
+        "name": "Jersey",
+        "disabled_on": "2013-03-25T14:25:00Z"
+    },
+    {
+        "id": "874cd12a-6095-e211-a939-e4115bead28a",
+        "name": "London",
+        "disabled_on": null
+    },
+    {
+        "id": "814cd12a-6095-e211-a939-e4115bead28a",
+        "name": "North East",
+        "disabled_on": null
+    },
+    {
+        "id": "8e4cd12a-6095-e211-a939-e4115bead28a",
+        "name": "Northern Ireland",
+        "disabled_on": null
+    },
+    {
+        "id": "824cd12a-6095-e211-a939-e4115bead28a",
+        "name": "North West",
+        "disabled_on": null
+    },
+    {
+        "id": "914cd12a-6095-e211-a939-e4115bead28a",
+        "name": "Sark",
+        "disabled_on": "2013-03-25T14:25:00Z"
+    },
+    {
+        "id": "8c4cd12a-6095-e211-a939-e4115bead28a",
+        "name": "Scotland",
+        "disabled_on": null
+    },
+    {
+        "id": "884cd12a-6095-e211-a939-e4115bead28a",
+        "name": "South East",
+        "disabled_on": null
+    },
+    {
+        "id": "894cd12a-6095-e211-a939-e4115bead28a",
+        "name": "South West",
+        "disabled_on": null
+    },
+    {
+        "id": "e1dd40e9-3dfd-e311-8a2b-e4115bead28a",
+        "name": "UKTI Dubai Hub",
+        "disabled_on": null
+    },
+    {
+        "id": "8d4cd12a-6095-e211-a939-e4115bead28a",
+        "name": "Wales",
+        "disabled_on": null
+    },
+    {
+        "id": "854cd12a-6095-e211-a939-e4115bead28a",
+        "name": "West Midlands",
+        "disabled_on": null
+    },
+    {
+        "id": "834cd12a-6095-e211-a939-e4115bead28a",
+        "name": "Yorkshire and The Humber",
+        "disabled_on": null
+    }
+]

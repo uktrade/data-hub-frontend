@@ -1,0 +1,57 @@
+[
+    {
+        "id": "a6d71fdd-5d95-e211-a939-e4115bead28a",
+        "name": "Business Card",
+        "disabled_on": "2013-03-25T14:08:00Z"
+    },
+    {
+        "id": "70c226d7-5d95-e211-a939-e4115bead28a",
+        "name": "Email/Website",
+        "disabled_on": null
+    },
+    {
+        "id": "a5d71fdd-5d95-e211-a939-e4115bead28a",
+        "name": "Face to Face",
+        "disabled_on": null
+    },
+    {
+        "id": "71c226d7-5d95-e211-a939-e4115bead28a",
+        "name": "Fax",
+        "disabled_on": "2013-03-25T14:08:00Z"
+    },
+    {
+        "id": "74c226d7-5d95-e211-a939-e4115bead28a",
+        "name": "Letter/Fax",
+        "disabled_on": null
+    },
+    {
+        "id": "a4d71fdd-5d95-e211-a939-e4115bead28a",
+        "name": "SMS",
+        "disabled_on": "2013-03-25T14:08:00Z"
+    },
+    {
+        "id": "a8d71fdd-5d95-e211-a939-e4115bead28a",
+        "name": "Social Media",
+        "disabled_on": null
+    },
+    {
+        "id": "72c226d7-5d95-e211-a939-e4115bead28a",
+        "name": "Telephone",
+        "disabled_on": null
+    },
+    {
+        "id": "73c226d7-5d95-e211-a939-e4115bead28a",
+        "name": "Telex",
+        "disabled_on": "2013-03-25T14:08:00Z"
+    },
+    {
+        "id": "75c226d7-5d95-e211-a939-e4115bead28a",
+        "name": "UKTI Website",
+        "disabled_on": "2013-03-25T14:08:00Z"
+    },
+    {
+        "id": "a7d71fdd-5d95-e211-a939-e4115bead28a",
+        "name": "Video/Teleconf.",
+        "disabled_on": null
+    }
+]
