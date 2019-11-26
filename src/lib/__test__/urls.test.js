@@ -60,6 +60,8 @@ describe('urls', () => {
 
       expect(urls.companies.subsidiaries(companyId)).to.equal(`/companies/${companyId}/subsidiaries`)
 
+      expect(urls.companies.investments.largeCapitalProfile(companyId)).to.equal(`/companies/${companyId}/investments/large-capital-profile`)
+
       const globalHqId = faker.random.uuid()
       expect(urls.companies.hierarchies.ghq.add.route).to.equal('/:companyId/hierarchies/ghq/:globalHqId/add')
       expect(urls.companies.hierarchies.ghq.add(companyId, globalHqId)).to.equal(`/companies/${companyId}/hierarchies/ghq/${globalHqId}/add`)
