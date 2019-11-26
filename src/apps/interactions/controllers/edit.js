@@ -93,6 +93,21 @@ function validateKind (requestParamsKind, existingKind) {
   }
 }
 
+function getOption (options) {
+  return function (id) {
+    return options.find((option) => option.value === id)
+  }
+}
+
+function addSelectedOptions (fields) {
+  return function (name) {
+    const field = fields.find((field) => field.name === name)
+    if (field && field.value) {
+      field.selectedOptions = [].concat(field.value).map(getOption(field.options))
+    }
+  }
+}
+
 async function renderEditPage (req, res, next) {
   try {
     const { interactionId, kind } = req.params
@@ -119,6 +134,14 @@ async function renderEditPage (req, res, next) {
     const title = interactionId
       ? `Edit ${kindName}`
       : `Add ${kindName + forEntityName}`
+
+    if (res.locals.features[ 'interaction-add-countries' ]) {
+      [
+        'future_countries',
+        'export_countries',
+        'no_interest_countries',
+      ].forEach(addSelectedOptions(interactionForm.children))
+    }
 
     res
       .breadcrumb(`${interactionId ? 'Edit' : 'Add'} ${kindName}`)
