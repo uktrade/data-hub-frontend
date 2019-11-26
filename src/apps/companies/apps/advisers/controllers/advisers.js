@@ -24,6 +24,7 @@ function renderLeadAdvisers (req, res) {
         companyId: company.id,
         confirmUrl: `${companies.advisers.confirm(company.id)}`,
         replaceUrl: `${companies.advisers.replace(company.id)}`,
+        removeUrl: `${companies.advisers.remove(company.id)}`,
         hasPermissionToAddIta: permissions.includes('company.change_regional_account_manager'),
       },
     })
