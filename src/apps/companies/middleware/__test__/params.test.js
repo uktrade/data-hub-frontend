@@ -1,5 +1,6 @@
 const proxyquire = require('proxyquire')
 const company = require('../../../../../test/unit/data/companies/company-v4.json')
+const oneListTypeDItaCompany = require('../../../../../test/unit/data/companies/one-list-group-tier-d-ita.json')
 
 describe('Companies form middleware', () => {
   let nextSpy
@@ -14,7 +15,7 @@ describe('Companies form middleware', () => {
   let resMock
   let middleware
 
-  beforeEach(() => {
+  before(() => {
     nextSpy = sinon.spy()
     getDitCompanyStub = sinon.stub()
     getDitCompanyFromListStub = sinon.stub()
@@ -42,19 +43,45 @@ describe('Companies form middleware', () => {
   })
 
   describe('getCompany', () => {
-    beforeEach(async () => {
-      getDitCompanyStub.resolves(company)
-      await middleware.getCompany(reqMock, resMock, nextSpy, 2)
-    })
+    context('when the company is not a One list Tier D ITA', () => {
+      before(async () => {
+        getDitCompanyStub.resolves(company)
+        await middleware.getCompany(reqMock, resMock, nextSpy, 2)
+      })
 
-    it('should return the company', () => {
-      expect(resMock.locals).to.have.deep.property('company', company)
+      it('should return the company', () => {
+        expect(resMock.locals).to.have.deep.property('company', {
+          ...company,
+          isItaTierDAccount: false,
+          hasAllocatedLeadIta: true,
+          hasManagedAccountDetails: true,
+          isGlobalHQ: null,
+          isUltimate: false,
+        })
+      })
+    })
+    context('when the company is a One list Tier D ITA', () => {
+      before(async () => {
+        getDitCompanyStub.resolves(oneListTypeDItaCompany)
+        await middleware.getCompany(reqMock, resMock, nextSpy, 2)
+      })
+
+      it('should return the company', () => {
+        expect(resMock.locals).to.have.deep.property('company', {
+          ...oneListTypeDItaCompany,
+          isItaTierDAccount: true,
+          hasAllocatedLeadIta: true,
+          hasManagedAccountDetails: true,
+          isGlobalHQ: null,
+          isUltimate: false,
+        })
+      })
     })
   })
 
   describe('setIsCompanyAlreadyAdded', () => {
     context('when the company is already added to the user company list', async () => {
-      beforeEach(async () => {
+      before(async () => {
         getDitCompanyFromListStub.resolves()
         await middleware.setIsCompanyAlreadyAdded(reqMock, resMock, nextSpy, 2)
       })
@@ -65,7 +92,7 @@ describe('Companies form middleware', () => {
     })
 
     context('when the company is not added to the user company list', async () => {
-      beforeEach(async () => {
+      before(async () => {
         getDitCompanyFromListStub.rejects()
         await middleware.setIsCompanyAlreadyAdded(reqMock, resMock, nextSpy, 2)
       })
@@ -78,7 +105,7 @@ describe('Companies form middleware', () => {
 
   describe('addCompanyOrRemoveFromList', () => {
     context('when adding a company to the user company list', async () => {
-      beforeEach(async () => {
+      before(async () => {
         resMock = {
           ...resMock,
           locals: {
@@ -106,7 +133,7 @@ describe('Companies form middleware', () => {
       })
     })
     context('when removing a company from the user company list', async () => {
-      beforeEach(async () => {
+      before(async () => {
         resMock = {
           ...resMock,
           locals: {
