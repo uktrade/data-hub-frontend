@@ -5,7 +5,7 @@ import Link from '@govuk-react/link'
 import { H2 } from '@govuk-react/heading'
 import Table from '@govuk-react/table'
 import { LEVEL_SIZE } from '@govuk-react/constants'
-
+import { FormActions } from 'data-hub-components'
 import { companies } from '../../../../../lib/urls'
 
 const RenderHasAccountManager = (
@@ -14,6 +14,7 @@ const RenderHasAccountManager = (
     name,
     email,
     replaceUrl,
+    removeUrl,
     hasPermissionToAddIta,
     companyName,
     companyId,
@@ -33,12 +34,15 @@ const RenderHasAccountManager = (
       </Table.Row>
     </Table>
     <p>You can <a href={companies.audit(companyId)}>see changes in the Audit trail</a></p>
-    {hasPermissionToAddIta && <Button
-      as={Link}
-      href={replaceUrl}
-    >
-      Replace Lead ITA
-    </Button>}
+    {hasPermissionToAddIta &&
+    <FormActions>
+      <Button as={Link} href={replaceUrl}>
+        Replace Lead ITA
+      </Button>
+      <Button as={Link} href={removeUrl}>
+        Remove Lead ITA
+      </Button>
+    </FormActions>}
   </div>
 
 const RenderHasNoAccountManager = (
@@ -70,6 +74,7 @@ const LeadAdvisers = (
     companyId,
     confirmUrl,
     replaceUrl,
+    removeUrl,
     hasPermissionToAddIta,
   }) => {
   return hasAccountManager
@@ -81,6 +86,7 @@ const LeadAdvisers = (
       companyName={companyName}
       hasPermissionToAddIta={hasPermissionToAddIta}
       replaceUrl={replaceUrl}
+      removeUrl={removeUrl}
     />
     : <RenderHasNoAccountManager
       companyName={companyName}
@@ -98,6 +104,7 @@ LeadAdvisers.propTypes = {
   companyId: PropTypes.string.isRequired,
   confirmUrl: PropTypes.string.isRequired,
   replaceUrl: PropTypes.string.isRequired,
+  removeUrl: PropTypes.string.isRequired,
   hasPermissionToAddIta: PropTypes.bool.isRequired,
 }
 
