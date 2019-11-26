@@ -8,7 +8,8 @@ ENV YARN_VERSION           1.16.0
 ENV NPM_CONFIG_LOGLEVEL    warn
 ENV NPM_CONFIG_UNSAFE_PERM true
 ENV TZ                     Europe/London
-ENV TERM xterm
+ENV TERM                   xterm
+ENV LANG                   C.UTF-8
 
 RUN apt-get update
 
@@ -61,6 +62,9 @@ RUN apt-get install -y xdg-utils libgtk-3-0 lsb-release libappindicator3-1 fonts
 
 # Install dependencies for acceptance tests
 RUN apt-get install -y openjdk-8-jre
+
+# Install sandbox
+RUN wget -O /usr/local/sandbox.jar https://dl.bintray.com/getsandbox/public/com/sandbox/sandbox/1.0.235/sandbox-1.0.235-all.jar
 
 # Versions of local tools
 RUN node -v

@@ -1,0 +1,37 @@
+[
+    {
+        "id": "3be91b40-6c5a-466c-a217-01b028701c08",
+        "name": "Email",
+        "disabled_on": null
+    },
+    {
+        "id": "36c51095-5b4e-49a7-ab1a-3df086988384",
+        "name": "Magazine",
+        "disabled_on": null
+    },
+    {
+        "id": "9227c6c2-2cb1-4284-8ce5-bc77d5cb1430",
+        "name": "Mail shot",
+        "disabled_on": null
+    },
+    {
+        "id": "0d46127c-7ef8-4e8f-a6b7-db66e1dfcd1d",
+        "name": "Press advertisement",
+        "disabled_on": null
+    },
+    {
+        "id": "38e278fe-c049-4573-b773-8993db0e0bcd",
+        "name": "Press article",
+        "disabled_on": null
+    },
+    {
+        "id": "305dd66b-e416-4cac-981b-bca32e18bd49",
+        "name": "Telemarketing",
+        "disabled_on": null
+    },
+    {
+        "id": "c28d95c6-f094-4f97-b372-38815829a0f0",
+        "name": "Television/radio",
+        "disabled_on": null
+    }
+]

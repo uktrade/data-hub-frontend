@@ -1,0 +1,22 @@
+[
+  {
+    "id": "02d6fc9b-fbb9-4621-b247-d86f2487898e",
+    "name": "Cleared",
+    "disabled_on": null
+  },
+  {
+    "id": "9beab8fc-1094-49b4-97d0-37bc7a9de631",
+    "name": "Issues identified",
+    "disabled_on": null
+  },
+  {
+    "id": "81fafe5a-ed32-4f46-bdc5-2cafedf828e8",
+    "name": "Not yet checked",
+    "disabled_on": null
+  },
+  {
+    "id": "e6f66f9d-ed12-4bfd-9dd0-ac7e44f35034",
+    "name": "Checks not required - See Investor Screening Report (ISR) guidance",
+    "disabled_on": null
+  }
+]

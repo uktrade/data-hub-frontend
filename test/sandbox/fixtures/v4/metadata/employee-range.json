@@ -1,0 +1,27 @@
+[
+    {
+        "id": "3dafd8d0-5d95-e211-a939-e4115bead28a",
+        "name": "1 to 9",
+        "disabled_on": null
+    },
+    {
+        "id": "3eafd8d0-5d95-e211-a939-e4115bead28a",
+        "name": "10 to 49",
+        "disabled_on": null
+    },
+    {
+        "id": "3fafd8d0-5d95-e211-a939-e4115bead28a",
+        "name": "50 to 249",
+        "disabled_on": null
+    },
+    {
+        "id": "40afd8d0-5d95-e211-a939-e4115bead28a",
+        "name": "250 to 499",
+        "disabled_on": null
+    },
+    {
+        "id": "41afd8d0-5d95-e211-a939-e4115bead28a",
+        "name": "500+",
+        "disabled_on": null
+    }
+]

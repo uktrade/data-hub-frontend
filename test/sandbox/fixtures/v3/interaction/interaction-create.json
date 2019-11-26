@@ -1,0 +1,71 @@
+{
+  "id": "ab3b8067-e1c7-4559-9c73-c0ee76d6e14b",
+  "company": {
+      "name": "Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978",
+      "id": "4cd4128b-1bad-4f1e-9146-5d4678c6a018"
+  },
+  "contact": {
+      "name": "Bob lawson",
+      "first_name": "Bob",
+      "last_name": "lawson",
+      "job_title": "Magician",
+      "id": "0e75d636-1d24-416a-aaf0-3fb220d594ce"
+  },
+  "contacts": [
+      {
+          "name": "Bob lawson",
+          "first_name": "Bob",
+          "last_name": "lawson",
+          "job_title": "Magician",
+          "id": "0e75d636-1d24-416a-aaf0-3fb220d594ce"
+      }
+  ],
+  "created_on": "2019-02-11T14:58:53.398740Z",
+  "created_by": {
+      "name": "DIT Staff",
+      "first_name": "DIT",
+      "last_name": "Staff",
+      "id": "7d19d407-9aec-4d06-b190-d3f404627f21"
+  },
+  "event": null,
+  "is_event": null,
+  "status": "complete",
+  "kind": "interaction",
+  "modified_by": {
+      "name": "DIT Staff",
+      "first_name": "DIT",
+      "last_name": "Staff",
+      "id": "7d19d407-9aec-4d06-b190-d3f404627f21"
+  },
+  "modified_on": "2019-02-11T14:58:53.398768Z",
+  "date": "2019-02-11",
+  "dit_adviser": {
+      "name": "DIT Staff",
+      "first_name": "DIT",
+      "last_name": "Staff",
+      "id": "7d19d407-9aec-4d06-b190-d3f404627f21"
+  },
+  "dit_team": {
+      "name": "UKTI Team East Midlands - International Trade Team",
+      "id": "9010dd28-9798-e211-a939-e4115bead28a"
+  },
+  "communication_channel": {
+      "name": "Letter/Fax",
+      "id": "74c226d7-5d95-e211-a939-e4115bead28a"
+  },
+  "grant_amount_offered": null,
+  "investment_project": null,
+  "net_company_receipt": null,
+  "service": {
+      "name": "Account Managment: Northern Powerhouse",
+      "id": "a4a733b6-eb95-e611-be23-e4115bead28a"
+  },
+  "service_delivery_status": null,
+  "subject": "This is a mocked interaction creation",
+  "notes": "Sandbox interaction",
+  "archived_documents_url_path": "",
+  "policy_areas": [],
+  "policy_feedback_notes": "",
+  "policy_issue_types": [],
+  "was_policy_feedback_provided": false
+}
