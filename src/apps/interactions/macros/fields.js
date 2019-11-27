@@ -18,6 +18,7 @@ module.exports = {
           multipleSelect: false,
           options: advisers,
           target: 'metadata',
+          autoSubmit: false,
         },
       ],
     }
