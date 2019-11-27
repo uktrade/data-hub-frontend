@@ -63,6 +63,7 @@ function addCountriesDiscussed (featureFlags) {
         multipleSelect: true,
         options: globalFields.countries.options(),
         target: 'metadata',
+        autoSubmit: false,
       })),
     ]
   }
