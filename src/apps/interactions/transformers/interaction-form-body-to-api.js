@@ -4,15 +4,15 @@ const castCompactArray = require('../../../lib/cast-compact-array')
 const { transformDateObjectToDateString } = require('../../transformers')
 const { INTERACTION_STATUS } = require('../constants')
 
-function transformInteractionFormBodyToApiRequest (props, services) {
-  const policyAreasArray = castCompactArray(props.policy_areas)
-  const policyIssueTypesArray = castCompactArray(props.policy_issue_types)
-  const contactTypesArray = castCompactArray(props.contacts)
-  const advisersArray = castCompactArray(props.dit_participants).map(
+function transformInteractionFormBodyToApiRequest (body, services) {
+  const policyAreasArray = castCompactArray(body.policy_areas)
+  const policyIssueTypesArray = castCompactArray(body.policy_issue_types)
+  const contactTypesArray = castCompactArray(body.contacts)
+  const advisersArray = castCompactArray(body.dit_participants).map(
     adviser => ({ adviser: adviser })
   )
   const selectedServiceOption = services.find(
-    service => service.value === props.service
+    service => service.value === body.service
   )
 
   const serviceAnswers = {}
@@ -21,7 +21,7 @@ function transformInteractionFormBodyToApiRequest (props, services) {
     const serviceHasSecondaryOptions = !!selectedServiceOption.secondaryOptions.length
 
     service = serviceHasSecondaryOptions
-      ? props.subService.find(id => id.length)
+      ? body.subService.find(id => id.length)
       : selectedServiceOption.value
 
     const serviceOptionStore = serviceHasSecondaryOptions
@@ -29,7 +29,7 @@ function transformInteractionFormBodyToApiRequest (props, services) {
       : selectedServiceOption
 
     serviceOptionStore.interactionQuestions.map(interactionQuestion => {
-      for (const [key, value] of Object.entries(props)) {
+      for (const [key, value] of Object.entries(body)) {
         if (key === interactionQuestion.value) {
           serviceAnswers[key] = {
             [value]: {},
@@ -41,12 +41,12 @@ function transformInteractionFormBodyToApiRequest (props, services) {
 
   return omit(
     {
-      ...props,
+      ...body,
       service,
       service_answers: serviceAnswers,
-      date: transformDateObjectToDateString('date')(props),
-      grant_amount_offered: props.grant_amount_offered || null,
-      net_company_receipt: props.net_company_receipt || null,
+      date: transformDateObjectToDateString('date')(body),
+      grant_amount_offered: body.grant_amount_offered || null,
+      net_company_receipt: body.net_company_receipt || null,
       contacts: contactTypesArray,
       dit_participants: advisersArray,
       policy_areas: policyAreasArray,
