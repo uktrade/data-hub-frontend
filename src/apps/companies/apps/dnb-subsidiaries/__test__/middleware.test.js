@@ -54,7 +54,7 @@ describe('Subsidiaries local navigation', () => {
           'permissions': [
             'company.view_company',
           ],
-          'url': urls.companies.subsidiaries('123'),
+          'url': urls.companies.subsidiaries.index('123'),
         },
       ])
     })
