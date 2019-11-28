@@ -23,8 +23,8 @@ function renderLeadAdvisers (req, res) {
         email,
         companyName: company.name,
         companyId: company.id,
-        addUrl: `${companies.advisers.add(company.id)}`,
-        removeUrl: `${companies.advisers.remove(company.id)}`,
+        addUrl: companies.advisers.assign(company.id),
+        removeUrl: companies.advisers.remove(company.id),
         hasPermissionToAddIta: permissions.includes('company.change_regional_account_manager'),
       },
     })

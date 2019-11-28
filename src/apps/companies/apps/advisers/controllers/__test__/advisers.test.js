@@ -66,10 +66,10 @@ describe('Company adviser list controller', () => {
           expect(middlewareParameters.resMock.render.args[0][1].props.companyId).to.equal(15387806)
         })
         it('should set a link to add and replae the account manager', () => {
-          expect(middlewareParameters.resMock.render.args[0][1].props.addUrl).to.equal(`${companies.advisers.add('15387806')}`)
+          expect(middlewareParameters.resMock.render.args[0][1].props.addUrl).to.equal(companies.advisers.assign('15387806'))
         })
         it('should set a link to remove the account manager', () => {
-          expect(middlewareParameters.resMock.render.args[0][1].props.removeUrl).to.equal(`${companies.advisers.remove('15387806')}`)
+          expect(middlewareParameters.resMock.render.args[0][1].props.removeUrl).to.equal(companies.advisers.remove('15387806'))
         })
         it('should set the permission flag', () => {
           expect(middlewareParameters.resMock.render.args[0][1].props.hasPermissionToAddIta).to.equal(true)

@@ -113,7 +113,7 @@ RenderHasAccountManager.propTypes = {
   team: PropTypes.string.isRequired,
   email: PropTypes.string,
   addUrl: PropTypes.string.isRequired,
-  addUrl: PropTypes.string.isRequired,
+  removeUrl: PropTypes.string.isRequired,
   hasPermissionToAddIta: PropTypes.bool.isRequired,
   companyName: PropTypes.string.isRequired,
   companyId: PropTypes.string.isRequired,
