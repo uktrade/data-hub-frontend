@@ -1,6 +1,13 @@
 {% extends "_layouts/template.njk" %}
 
 {% block content %}
+  <div id="investors-profiles-tab">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        {{ TabbedLocalNav({ items: investmentTabItems }) }}
+      </div>
+  </div>
+
   <div class="grid-row">
     <div class="column-one-third">
       {{

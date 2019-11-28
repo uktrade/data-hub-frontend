@@ -1,18 +1,20 @@
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const { assertBreadcrumbs } = require('../../support/assertions')
+const { dashboard, investments } = require('../../../../../src/lib/urls')
 
 describe('Investment Project Documents', () => {
   context('when there is a document link', () => {
     before(() => {
-      cy.visit(`/investments/projects/${fixtures.investment.investmentWithLink.id}/documents`)
+      cy.visit(investments.projects.documents(fixtures.investment.investmentWithLink.id))
     })
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        'Home': '/',
-        'Investments': '/investments',
-        'New hotel (commitment to invest)': '/investments/projects/fb5b5006-56af-40e0-8615-7aba53e0e4bf',
+        'Home': dashboard(),
+        'Investments': investments.index(),
+        'Projects': investments.projects.index(),
+        'New hotel (commitment to invest)': investments.projects.project('fb5b5006-56af-40e0-8615-7aba53e0e4bf'),
         'Documents': null,
       })
     })
@@ -26,14 +28,15 @@ describe('Investment Project Documents', () => {
 
   context('when there is not a document link', () => {
     before(() => {
-      cy.visit(`/investments/projects/${fixtures.investment.investmentWithNoLink.id}/documents`)
+      cy.visit(investments.projects.documents(fixtures.investment.investmentWithNoLink.id))
     })
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        'Home': '/',
-        'Investments': '/investments',
-        'Green tea plantation': '/investments/projects/addca042-5a00-412c-9d7c-acc04552756c',
+        'Home': dashboard(),
+        'Investments': investments.index(),
+        'Projects': investments.projects.index(),
+        'Green tea plantation': investments.projects.project('addca042-5a00-412c-9d7c-acc04552756c'),
         'Documents': null,
       })
     })
