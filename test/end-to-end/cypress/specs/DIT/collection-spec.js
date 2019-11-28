@@ -1,6 +1,10 @@
 const selectors = require('../../../../selectors')
 const { assertCollection } = require('../../support/assertions')
 
+const checkCollection = () => {
+  assertCollection(selectors.collection.headerCount, selectors.collection.items)
+}
+
 describe('Collection', () => {
   describe('contact', () => {
     before(() => {
@@ -8,7 +12,17 @@ describe('Collection', () => {
     })
 
     it('should return the results summary for orders collection', () => {
-      assertCollection(selectors.collection.headerCount, selectors.collection.items)
+      checkCollection()
+    })
+  })
+
+  describe('contact interaction', () => {
+    before(() => {
+      cy.visit('/contacts/952232d2-1d25-4c3a-bcac-2f3a30a94da9/interactions')
+    })
+
+    it('should return the results summary for contact interaction collection', () => {
+      checkCollection()
     })
   })
 })
