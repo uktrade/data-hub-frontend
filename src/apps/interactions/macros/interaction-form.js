@@ -1,5 +1,4 @@
 const { assign } = require('lodash')
-const { globalFields } = require('../../macros')
 
 const labels = require('../labels')
 const {
@@ -18,56 +17,8 @@ const {
   feedbackPolicyRequest,
   feedbackPolicyIssueType,
   feedbackPolicyNotes,
+  countriesDiscussed,
 } = require('./fields')
-
-function addCountriesDiscussed (featureFlags) {
-  if (!featureFlags['interaction-add-countries']) {
-    return []
-  } else {
-    return [
-      {
-        macroName: 'MultipleChoiceField',
-        type: 'radio',
-        name: 'was_country_discussed',
-        modifier: 'inline',
-        optional: false,
-        options: [
-          {
-            label: 'Yes',
-            value: 'true',
-          },
-          {
-            label: 'No',
-            value: 'false',
-          },
-        ],
-      },
-      ...[
-        'future_countries',
-        'export_countries',
-        'no_interest_countries',
-      ].map((name) => ({
-        macroName: 'Typeahead',
-        name,
-        hint: 'Add all that you discussed',
-        modifier: 'subfield',
-        condition: {
-          name: 'was_country_discussed',
-          value: 'true',
-        },
-        isAsync: false,
-        isLabelHidden: false,
-        useSubLabel: false,
-        placeholder: 'Search countries',
-        classes: 'c-form-group--no-filter',
-        multipleSelect: true,
-        options: globalFields.countries.options(),
-        target: 'metadata',
-        autoSubmit: false,
-      })),
-    ]
-  }
-}
 
 module.exports = function ({
   returnLink,
@@ -81,6 +32,7 @@ module.exports = function ({
   areas,
   types,
   company,
+  theme,
   featureFlags,
 }) {
   return {
@@ -111,7 +63,7 @@ module.exports = function ({
         },
       },
       feedbackPolicyNotes,
-      ...addCountriesDiscussed(featureFlags),
+      ...countriesDiscussed(theme, featureFlags),
     ].map(field => {
       return assign(field, {
         label: field.label || labels.interaction[field.name],

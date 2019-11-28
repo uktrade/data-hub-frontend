@@ -29,7 +29,7 @@ describe('Interaction edit controller (Interactions)', () => {
       title: sinon.stub().returnsThis(),
       render: sinon.spy(),
       redirect: sinon.spy(),
-      locals: {},
+      locals: { features: {} },
     }
 
     this.nextStub = sinon.stub()
@@ -125,6 +125,7 @@ describe('Interaction edit controller (Interactions)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -174,6 +175,7 @@ describe('Interaction edit controller (Interactions)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -223,6 +225,7 @@ describe('Interaction edit controller (Interactions)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -519,6 +522,7 @@ describe('Interaction edit controller (Interactions)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -572,6 +576,7 @@ describe('Interaction edit controller (Interactions)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -863,6 +868,7 @@ describe('Interaction edit controller (Interactions)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -928,6 +934,7 @@ describe('Interaction edit controller (Interactions)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -980,6 +987,7 @@ describe('Interaction edit controller (Interactions)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -1178,6 +1186,7 @@ describe('Interaction edit controller (Interactions)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -1230,6 +1239,7 @@ describe('Interaction edit controller (Interactions)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
