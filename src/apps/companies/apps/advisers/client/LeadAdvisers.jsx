@@ -39,9 +39,10 @@ const RenderHasAccountManager = (
       <Button as={Link} href={addUrl}>
         Replace Lead ITA
       </Button>
-      <Button as={Link} href={removeUrl}>
+      {/* TODO: Uncomment when the remove page is implemented */}
+      {/* <Button as={Link} href={removeUrl}>
         Remove Lead ITA
-      </Button>
+      </Button> */}
     </FormActions>}
   </div>
 

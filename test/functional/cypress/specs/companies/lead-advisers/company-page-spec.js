@@ -93,11 +93,12 @@ describe('Lead advisers', () => {
         .invoke('attr', 'href')
         .should('eq', companies.advisers.add(fixtures.company.oneListTierDita.id))
     })
-    it('should display a button to remove the Lead ITA', () => {
-      cy
-        .contains('Remove Lead ITA')
-        .invoke('attr', 'href')
-        .should('eq', companies.advisers.remove(fixtures.company.oneListTierDita.id))
-    })
+    // TODO: Uncomment when the remove page is implemented
+    // it('should display a button to remove the Lead ITA', () => {
+    //   cy
+    //     .contains('Remove Lead ITA')
+    //     .invoke('attr', 'href')
+    //     .should('eq', companies.advisers.remove(fixtures.company.oneListTierDita.id))
+    // })
   })
 })
