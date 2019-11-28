@@ -8,6 +8,7 @@ const { getDitCompany } = require('../../companies/repos')
 const { getAdviser } = require('../../adviser/repos')
 const { getInvestment } = require('../repos')
 const { mediumDateTimeFormat } = require('../../../config')
+const { companies, investments } = require('../../../lib/urls')
 
 function getNextStage (currentStage, projectStages) {
   const projectStageIndex = projectStages.findIndex((projectStage) => {
@@ -68,15 +69,13 @@ async function getInvestmentDetails (req, res, next) {
       investment.value_complete &&
       !incompleteFields.length
 
-    const { projects } = res.locals.paths
-
     res.locals.investmentStatus = {
       id: investment.id,
       meta: [
         {
           label: 'Status',
           value: upperFirst(investment.status),
-          url: `${projects}/${investment.id}/status`,
+          url: investments.projects.status(investment.id),
           urlLabel: 'change',
         },
         {
@@ -94,7 +93,7 @@ async function getInvestmentDetails (req, res, next) {
       ],
       company: {
         name: investment.investor_company.name,
-        url: `/companies/${get(investment, 'investor_company.id')}`,
+        url: companies.detail(investment.investor_company.id),
       },
       currentStage: {
         incompleteFields,
@@ -105,7 +104,9 @@ async function getInvestmentDetails (req, res, next) {
       nextStage: getNextStage(stageName, investmentProjectStages),
     }
 
-    res.breadcrumb(investment.name, `${projects}/${investment.id}`)
+    res
+      .breadcrumb('Projects', investments.projects.index())
+      .breadcrumb(investment.name, investments.projects.project(investment.id))
 
     next()
   } catch (error) {
