@@ -18,4 +18,19 @@ describe('DIT Permission', () => {
       ])
     })
   })
+
+  describe('contact', () => {
+    before(() => {
+      cy.visit('/contacts/9b1138ab-ec7b-497f-b8c3-27fed21694ef')
+    })
+
+    it('should display DIT only side navs', () => {
+      assertLocalNav(selectors.nav.sideNav, [
+        'Details',
+        'Interactions',
+        'Audit history',
+        'Documents',
+      ])
+    })
+  })
 })
