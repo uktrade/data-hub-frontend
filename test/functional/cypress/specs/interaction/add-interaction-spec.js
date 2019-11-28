@@ -7,194 +7,212 @@ const { companies, contacts, dashboard, investments } = require('../../../../../
 const serviceDeliveryDetails = selectors.interaction.details.serviceDelivery
 
 describe('Add Export', () => {
-  context('when adding an export interaction', () => {
-    context('when in the context of a company', () => {
-      beforeEach(() => {
-        cy.visit(companies.interactions.createType(fixtures.default.id, 'export', 'interaction'))
-      })
+  context('when the add countries feature flag is true', () => {
+    context('when adding an export interaction', () => {
+      context('when in the context of a company', () => {
+        beforeEach(() => {
+          cy.visit(companies.interactions.createType(fixtures.default.id, 'export', 'interaction'))
+        })
 
-      it('should render breadcrumbs', () => {
-        assertBreadcrumbs({
-          'Home': dashboard(),
-          'Companies': companies.index(),
-          'Add interaction': null,
+        it('should render breadcrumbs', () => {
+          assertBreadcrumbs({
+            'Home': dashboard(),
+            'Companies': companies.index(),
+            'Add interaction': null,
+          })
+        })
+
+        context('when answering yes to countries discussed', () => {
+          it('should add the interaction', () => {
+            const subject = utils.randomString()
+
+            populateInteractionForm(subject, 'A Specific DIT Export Service or Funding', 'Export Win', { visible: true, discussed: true })
+
+            cy.get(selectors.interactionForm.add).click()
+
+            assertDetails({ subject, flashMessage: 'Interaction created' })
+          })
+        })
+
+        context('when answering no to countries discussed', () => {
+          it('should add the interaction', () => {
+            const subject = utils.randomString()
+
+            populateInteractionForm(subject, 'A Specific DIT Export Service or Funding', 'Export Win', { visible: true, discussed: false })
+
+            cy.get(selectors.interactionForm.add).click()
+
+            assertDetails({ subject, flashMessage: 'Interaction created' })
+          })
         })
       })
 
-      it('should add the interaction', () => {
-        const subject = utils.randomString()
+      context('when in the context of a contact', () => {
+        beforeEach(() => {
+          cy.visit(contacts.interactions.createType(fixtures.default.id, 'export', 'interaction'))
+        })
 
-        populateInteractionForm(subject, 'A Specific DIT Export Service or Funding', 'Export Win')
+        it('should render breadcrumbs', () => {
+          assertBreadcrumbs({
+            'Home': dashboard(),
+            'Contacts': contacts.index(),
+            'Joseph Woof': contacts.contact('5e75d636-1d24-416a-aaf0-3fb220d594ce'),
+            'Add interaction': null,
+          })
+        })
 
-        cy.get(selectors.interactionForm.add).click()
+        it('should add the interaction', () => {
+          const subject = utils.randomString()
 
-        assertDetails({ subject, flashMessage: 'Interaction created' })
+          populateInteractionForm(subject, 'A Specific DIT Export Service or Funding', 'Export Win', { visible: true, discussed: true })
+
+          cy.get(selectors.interactionForm.add).click()
+
+          assertDetails({ subject, flashMessage: 'Interaction created' })
+        })
       })
     })
 
-    context('when in the context of a contact', () => {
-      beforeEach(() => {
-        cy.visit(contacts.interactions.createType(fixtures.default.id, 'export', 'interaction'))
-      })
+    context('when adding an export service delivery', () => {
+      context('when in the context of a company', () => {
+        beforeEach(() => {
+          cy.visit(companies.interactions.createType(fixtures.default.id, 'export', 'service-delivery'))
+        })
 
-      it('should render breadcrumbs', () => {
-        assertBreadcrumbs({
-          'Home': dashboard(),
-          'Contacts': contacts.index(),
-          'Joseph Woof': contacts.contact('5e75d636-1d24-416a-aaf0-3fb220d594ce'),
-          'Add interaction': null,
+        it('should render breadcrumbs', () => {
+          assertBreadcrumbs({
+            'Home': dashboard(),
+            'Companies': companies.index(),
+            'Add service delivery': null,
+          })
+        })
+
+        it('should add the service delivery', () => {
+          const subject = utils.randomString()
+
+          populateServiceDeliveryForm(subject, 'A Specific DIT Export Service or Funding', 'Export Win', { visible: true, discussed: true })
+
+          cy.get(selectors.interactionForm.add).click()
+
+          assertDetails({ subject, flashMessage: 'Service delivery created' })
         })
       })
 
-      it('should add the interaction', () => {
-        const subject = utils.randomString()
+      context('when in the context of a contact', () => {
+        beforeEach(() => {
+          cy.visit(contacts.interactions.createType(fixtures.default.id, 'export', 'service-delivery'))
+        })
 
-        populateInteractionForm(subject, 'A Specific DIT Export Service or Funding', 'Export Win')
+        it('should render breadcrumbs', () => {
+          assertBreadcrumbs({
+            'Home': dashboard(),
+            'Contacts': contacts.index(),
+            'Joseph Woof': contacts.contact('5e75d636-1d24-416a-aaf0-3fb220d594ce'),
+            'Add service delivery': null,
+          })
+        })
 
-        cy.get(selectors.interactionForm.add).click()
+        it('should add the service delivery', () => {
+          const subject = utils.randomString()
 
-        assertDetails({ subject, flashMessage: 'Interaction created' })
-      })
-    })
+          populateServiceDeliveryForm(subject, 'A Specific DIT Export Service or Funding', 'Export Win', { visible: true, discussed: true })
 
-    context('when in the context of an investment project', () => {
-      beforeEach(() => {
-        cy.visit(investments.projects.interactions.createType(fixtures.default.id, 'investment', 'interaction'))
-      })
+          cy.get(selectors.interactionForm.add).click()
 
-      it('should render breadcrumbs', () => {
-        assertBreadcrumbs({
-          'Home': dashboard(),
-          'Investments': investments.index(),
-          'Projects': investments.projects.index(),
-          'New hotel (commitment to invest)': investments.projects.project('fb5b5006-56af-40e0-8615-7aba53e0e4bf'),
-          'Add interaction': null,
+          assertDetails({ subject, flashMessage: 'Service delivery created' })
         })
       })
 
-      it('should add the interaction', () => {
-        const subject = utils.randomString()
+      context('when TAP service fields are empty', () => {
+        beforeEach(() => {
+          cy.visit(companies.interactions.createType(fixtures.default.id, 'export', 'service-delivery'))
+        })
 
-        populateInteractionForm(subject, 'Enquiry received', 'General Investment Enquiry')
+        it('should render breadcrumbs', () => {
+          assertBreadcrumbs({
+            'Home': dashboard(),
+            'Companies': companies.index(),
+            'Add service delivery': null,
+          })
+        })
 
-        cy.get(selectors.interactionForm.add).click()
+        it('should add the service delivery', () => {
+          const subject = utils.randomString()
 
-        assertDetails({ subject, flashMessage: 'Interaction created' })
-      })
-    })
-  })
+          cy.get(selectors.interactionForm.contact).select('Joseph Woof, Dog master')
+          cy.get(selectors.interactionForm.eventNo).click()
+          cy.get(selectors.interactionForm.service).select('A Specific DIT Export Service or Funding')
+          cy.get(selectors.interactionForm.subject).type(subject)
+          cy.get(selectors.interactionForm.notes).type('Conversation with potential client')
+          cy.get(selectors.interactionForm.policyFeedbackNo).click()
 
-  context('when adding an export service delivery', () => {
-    context('when in the context of a company', () => {
-      beforeEach(() => {
-        cy.visit(companies.interactions.createType(fixtures.default.id, 'export', 'service-delivery'))
-      })
+          cy.get(selectors.interactionForm.add).click()
 
-      it('should render breadcrumbs', () => {
-        assertBreadcrumbs({
-          'Home': dashboard(),
-          'Companies': companies.index(),
-          'Add service delivery': null,
+          cy.get(selectors.localHeader().heading).should('contain', subject)
         })
       })
 
-      it('should add the service delivery', () => {
-        const subject = utils.randomString()
+      context('when TAP service fields are populated', () => {
+        beforeEach(() => {
+          cy.visit(companies.interactions.createType(fixtures.default.id, 'export', 'service-delivery'))
+        })
 
-        populateServiceDeliveryForm(subject, 'A Specific DIT Export Service or Funding', 'Export Win')
+        it('should render breadcrumbs', () => {
+          assertBreadcrumbs({
+            'Home': dashboard(),
+            'Companies': companies.index(),
+            'Add service delivery': null,
+          })
+        })
 
-        cy.get(selectors.interactionForm.add).click()
+        it('should add the service delivery', () => {
+          const subject = utils.randomString()
 
-        assertDetails({ subject, flashMessage: 'Service delivery created' })
-      })
-    })
+          cy.get(selectors.interactionForm.contact).select('Joseph Woof, Dog master')
+          cy.get(selectors.interactionForm.eventNo).click()
+          cy.get(selectors.interactionForm.service).select('A Specific DIT Export Service or Funding')
+          cy.get(selectors.interactionForm.subService).select('Tradeshow Access Programme (TAP)')
+          cy.get(selectors.interactionForm.subject).type(subject)
+          cy.get(selectors.interactionForm.notes).type('Conversation with potential client')
+          cy.get(selectors.interactionForm.policyFeedbackNo).click()
 
-    context('when in the context of a contact', () => {
-      beforeEach(() => {
-        cy.visit(contacts.interactions.createType(fixtures.default.id, 'export', 'service-delivery'))
-      })
+          cy.get(selectors.interactionForm.add).click()
 
-      it('should render breadcrumbs', () => {
-        assertBreadcrumbs({
-          'Home': dashboard(),
-          'Contacts': contacts.index(),
-          'Joseph Woof': contacts.contact('5e75d636-1d24-416a-aaf0-3fb220d594ce'),
-          'Add service delivery': null,
+          cy.get(selectors.localHeader().heading).should('contain', subject)
+          // TODO assert TAP status fields are set in details
         })
       })
 
-      it('should add the service delivery', () => {
-        const subject = utils.randomString()
-
-        populateServiceDeliveryForm(subject, 'A Specific DIT Export Service or Funding', 'Export Win')
-
-        cy.get(selectors.interactionForm.add).click()
-
-        assertDetails({ subject, flashMessage: 'Service delivery created' })
-      })
+      // TODO test policy feedback fields
     })
 
-    context('when TAP service fields are empty', () => {
-      beforeEach(() => {
-        cy.visit(companies.interactions.createType(fixtures.default.id, 'export', 'service-delivery'))
-      })
+    context('when adding an investment interaction', () => {
+      context('when in the context of an investment project', () => {
+        beforeEach(() => {
+          cy.visit(investments.projects.interactions.createType(fixtures.default.id, 'investment', 'interaction'))
+        })
 
-      it('should render breadcrumbs', () => {
-        assertBreadcrumbs({
-          'Home': dashboard(),
-          'Companies': companies.index(),
-          'Add service delivery': null,
+        it('should render breadcrumbs', () => {
+          assertBreadcrumbs({
+            'Home': dashboard(),
+            'Investments': investments.index(),
+            'Projects': investments.projects.index(),
+            'New hotel (commitment to invest)': investments.projects.project('fb5b5006-56af-40e0-8615-7aba53e0e4bf'),
+            'Add interaction': null,
+          })
+        })
+
+        it('should add the interaction', () => {
+          const subject = utils.randomString()
+
+          populateInteractionForm(subject, 'Enquiry received', 'General Investment Enquiry', { visible: false })
+
+          cy.get(selectors.interactionForm.add).click()
+
+          assertDetails({ subject, flashMessage: 'Interaction created' })
         })
       })
-
-      it('should add the service delivery', () => {
-        const subject = utils.randomString()
-
-        cy.get(selectors.interactionForm.contact).select('Joseph Woof, Dog master')
-        cy.get(selectors.interactionForm.eventNo).click()
-        cy.get(selectors.interactionForm.service).select('A Specific DIT Export Service or Funding')
-        cy.get(selectors.interactionForm.subject).type(subject)
-        cy.get(selectors.interactionForm.notes).type('Conversation with potential client')
-        cy.get(selectors.interactionForm.policyFeedbackNo).click()
-
-        cy.get(selectors.interactionForm.add).click()
-
-        cy.get(selectors.localHeader().heading).should('contain', subject)
-      })
     })
-
-    context('when TAP service fields are populated', () => {
-      beforeEach(() => {
-        cy.visit(companies.interactions.createType(fixtures.default.id, 'export', 'service-delivery'))
-      })
-
-      it('should render breadcrumbs', () => {
-        assertBreadcrumbs({
-          'Home': dashboard(),
-          'Companies': companies.index(),
-          'Add service delivery': null,
-        })
-      })
-
-      it('should add the service delivery', () => {
-        const subject = utils.randomString()
-
-        cy.get(selectors.interactionForm.contact).select('Joseph Woof, Dog master')
-        cy.get(selectors.interactionForm.eventNo).click()
-        cy.get(selectors.interactionForm.service).select('A Specific DIT Export Service or Funding')
-        cy.get(selectors.interactionForm.subService).select('Tradeshow Access Programme (TAP)')
-        cy.get(selectors.interactionForm.subject).type(subject)
-        cy.get(selectors.interactionForm.notes).type('Conversation with potential client')
-        cy.get(selectors.interactionForm.policyFeedbackNo).click()
-
-        cy.get(selectors.interactionForm.add).click()
-
-        cy.get(selectors.localHeader().heading).should('contain', subject)
-        // TODO assert TAP status fields are set in details
-      })
-    })
-
-    // TODO test policy feedback fields
   })
 })
 
@@ -243,32 +261,61 @@ describe('Adding interaction or service', () => {
   })
 })
 
-const populateInteractionForm = (subject, service, subService) => {
-  cy.get(selectors.interactionForm.contact).select('Joseph Woof, Dog master')
-  cy.get(selectors.interactionForm.service).select(service)
+function selectCountry (id, text) {
+  const typeahead = `${id} .multiselect`
+  const textInput = `${id} .multiselect__input`
 
-  if (subService) {
-    cy.get(selectors.interactionForm.subService).select(subService)
-  }
-  cy.get(selectors.interactionForm.communicationChannel).select('Email/Website')
-  cy.get(selectors.interactionForm.subject).type(subject)
-  cy.get(selectors.interactionForm.notes).type('Conversation with potential client')
-  cy.get(selectors.interactionForm.policyFeedbackNo).click()
+  cy
+    .get(typeahead)
+    .click()
+    .get(textInput)
+    .type(text)
+    .type('{enter}')
+    .type('{esc}')
 }
 
-const populateServiceDeliveryForm = (subject, service, subService) => {
-  cy.get(selectors.interactionForm.contact).select('Joseph Woof, Dog master')
-  cy.get(selectors.interactionForm.eventNo).click()
-  cy.get(selectors.interactionForm.service).select(service)
-  if (subService) {
-    cy.get(selectors.interactionForm.subService).select(subService)
+function populateCountriesDiscussed (formSelectors, visible, discussed) {
+  if (!visible) { return }
+
+  if (discussed) {
+    cy.get(formSelectors.countriesDiscussed.yes).click()
+    selectCountry(formSelectors.countries.future, 'Alb')
+    selectCountry(formSelectors.countries.export, 'It')
+    selectCountry(formSelectors.countries.noInterest, 'Fr')
+  } else {
+    cy.get(formSelectors.countriesDiscussed.no).click()
   }
-  cy.get(selectors.interactionForm.subject).type(subject)
-  cy.get(selectors.interactionForm.notes).type('Conversation with potential client')
-  cy.get(selectors.interactionForm.policyFeedbackNo).click()
 }
 
-const assertDetails = ({
+function populateInteractionForm (subject, service, subService, { visible, discussed }) {
+  const formSelectors = selectors.interactionForm
+
+  cy.get(formSelectors.contact).select('Joseph Woof, Dog master')
+  cy.get(formSelectors.service).select(service)
+  cy.get(formSelectors.subService).select(subService)
+  cy.get(formSelectors.communicationChannel).select('Email/Website')
+  cy.get(formSelectors.subject).type(subject)
+  cy.get(formSelectors.notes).type('Conversation with potential client')
+  cy.get(formSelectors.policyFeedbackNo).click()
+
+  populateCountriesDiscussed(formSelectors, visible, discussed)
+}
+
+function populateServiceDeliveryForm (subject, service, subService, { visible, discussed }) {
+  const formSelectors = selectors.interactionForm
+
+  cy.get(formSelectors.contact).select('Joseph Woof, Dog master')
+  cy.get(formSelectors.eventNo).click()
+  cy.get(formSelectors.service).select(service)
+  cy.get(formSelectors.subService).select(subService)
+  cy.get(formSelectors.subject).type(subject)
+  cy.get(formSelectors.notes).type('Conversation with potential client')
+  cy.get(formSelectors.policyFeedbackNo).click()
+
+  populateCountriesDiscussed(formSelectors, visible, discussed)
+}
+
+function assertDetails ({
   flashMessage,
   company = 'Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978',
   contact = 'Bob lawson',
@@ -278,7 +325,7 @@ const assertDetails = ({
   ditAdviser = 'DIT Staff',
   communicationChannel = 'Social Media',
   documents = 'There are no files or documents',
-}) => {
+}) {
   cy.get(selectors.localHeader().flash).should('contain', flashMessage)
   cy.get(serviceDeliveryDetails.company).should('contain', company)
   cy.get(serviceDeliveryDetails.contacts).should('contain', contact)
