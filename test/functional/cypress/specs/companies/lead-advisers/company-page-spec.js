@@ -25,7 +25,8 @@ describe('Lead advisers', () => {
       cy.get(selectors.companyLeadAdviser.header).should('have.text', 'Lead ITA for Mars Exports Ltd')
     })
     it('should display a button to add myself as lead adviser', () => {
-      cy.contains('Add myself as Lead ITA').invoke('attr', 'href').should('eq', `/companies/${fixtures.company.marsExportsLtd.id}/advisers/add`)
+      cy.contains('Add myself as Lead ITA').invoke('attr', 'href')
+        .should('eq', companies.advisers.assign(fixtures.company.marsExportsLtd.id))
     })
   })
   context('when viewing a One List Tier company', () => {
@@ -91,7 +92,7 @@ describe('Lead advisers', () => {
       cy
         .contains('Replace Lead ITA')
         .invoke('attr', 'href')
-        .should('eq', companies.advisers.add(fixtures.company.oneListTierDita.id))
+        .should('eq', companies.advisers.assign(fixtures.company.oneListTierDita.id))
     })
     // TODO: Uncomment when the remove page is implemented
     // it('should display a button to remove the Lead ITA', () => {

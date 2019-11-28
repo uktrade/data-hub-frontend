@@ -1,8 +1,9 @@
 const { assertBreadcrumbs } = require('../../../support/assertions')
+const urls = require('../../../../../../src/lib/urls')
 
 const testCase = ({ companyId, companyName, replace }) =>
   it(`Should render the ${replace ? 'replace' : 'add'} variant`, () => {
-    cy.visit(`/companies/${companyId}/advisers/add`)
+    cy.visit(urls.companies.advisers.assign(companyId))
 
     const headline = replace
       ? 'Replace the Lead ITA'

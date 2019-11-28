@@ -35,7 +35,6 @@ function App () {
   const globalProps = parseProps(appWrapper)
   return (
     <>
-      <h1>true: {true} false: {false} undefined: {undefined} null: {null}</h1>
       <Mount selector="#add-company-form">
         {props => <AddCompanyForm csrfToken={globalProps.csrfToken} {...props} />}
       </Mount>

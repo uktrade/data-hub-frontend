@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import { Button, H3, Details, UnorderedList, Link, ListItem, InsetText } from 'govuk-react'
 import { FormActions } from 'data-hub-components'
 
-import urls from '../../../../../lib/urls'
-
 const AddAdviser = ({ cancelUrl, csrfToken, currentLeadITA }) =>
   <>
     <H3>Do you want to add yourself as the first point of contact?</H3>
