@@ -2,26 +2,28 @@ const { get } = require('lodash')
 const { kindForm } = require('../macros')
 const { joinPaths } = require('../../../lib/path')
 
+const { THEMES, KINDS } = require('../constants')
+
 const kindLookup = {
   export_interaction: {
-    kind: 'interaction',
-    theme: 'export',
+    kind: KINDS.INTERACTION,
+    theme: THEMES.EXPORT,
   },
   export_service_delivery: {
-    kind: 'service-delivery',
-    theme: 'export',
+    kind: KINDS.SERVICE_DELIVERY,
+    theme: THEMES.EXPORT,
   },
   other_interaction: {
-    kind: 'interaction',
-    theme: 'other',
+    kind: KINDS.INTERACTION,
+    theme: THEMES.OTHER,
   },
   other_service_delivery: {
-    kind: 'service-delivery',
-    theme: 'other',
+    kind: KINDS.SERVICE_DELIVERY,
+    theme: THEMES.OTHER,
   },
   other: {
-    kind: 'interaction',
-    theme: 'investment',
+    kind: KINDS.INTERACTION,
+    theme: THEMES.INVESTMENT,
   },
 }
 
