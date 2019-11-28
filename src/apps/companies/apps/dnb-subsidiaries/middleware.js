@@ -18,7 +18,7 @@ function setSubsidiariesLocalNav (req, res, next) {
         ],
       },
       {
-        url: urls.companies.subsidiaries(company.id),
+        url: urls.companies.subsidiaries.index(company.id),
         label: 'Manually linked subsidiaries',
         permissions: [
           'company.view_company',

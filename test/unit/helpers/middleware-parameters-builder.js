@@ -20,6 +20,7 @@ module.exports = ({
   features = {},
   userAgent = { isIE: false },
   user,
+  locals = {},
 } = {}) => {
   return {
     reqMock: {
@@ -57,6 +58,7 @@ module.exports = ({
         userAgent,
         user,
         csrfToken: 'csrf',
+        ...locals,
       },
     },
     nextSpy: sinon.spy(),
