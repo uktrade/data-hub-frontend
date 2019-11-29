@@ -19,8 +19,6 @@ describe('Contacts', () => {
     cy.visit('/contacts/create?company=0fb3379c-341c-4da4-b825-bf8d47b26baa')
     userActions.contacts.createWithNewAddress(data)
 
-    cy.visit('/companies/0fb3379c-341c-4da4-b825-bf8d47b26baa/contacts')
-    cy.contains('NewAddress Contact').click()
     cy.get(selectors.contactCreate.details)
       .should('contain', 'Coffee machine operator')
       .and('contain', '(44) 0778877778800')
