@@ -1,6 +1,5 @@
 const selectors = require('../../../../selectors')
-
-const { createContact } = require('../../support/user-actions')
+const userActions = require('../../support/user-actions')
 
 describe('Advisors', () => {
   const globalManagerTable = 2
@@ -39,7 +38,7 @@ describe('Contacts', () => {
 
   it('should list a newly created contact in collection page', () => {
     cy.visit('/contacts/create?company=0fb3379c-341c-4da4-b825-bf8d47b26baa')
-    createContact(data)
+    userActions.contacts.create(data)
 
     cy.visit('/companies/0fb3379c-341c-4da4-b825-bf8d47b26baa/contacts')
     cy.get(selectors.collection.items)
