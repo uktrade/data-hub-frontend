@@ -1,8 +1,8 @@
 require('dotenv').config()
+
 const path = require('path')
 const bodyParser = require('body-parser')
 const compression = require('compression')
-const config = require('./config')
 const express = require('express')
 const flash = require('connect-flash')
 const csrf = require('csurf')
@@ -13,6 +13,7 @@ const favicon = require('serve-favicon')
 const cookieParser = require('cookie-parser')
 const minifyHTML = require('express-minify-html')
 
+const config = require('./config')
 const title = require('./middleware/title')
 const breadcrumbs = require('./middleware/breadcrumbs')
 const currentJourney = require('./modules/form/current-journey')
