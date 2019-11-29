@@ -57,15 +57,16 @@ function createInteractionsSubApp (...mountPoints) {
   if (mountPoints.length === 0) {
     mountPoints.push(null)
   }
-
   return {
     create: url(...mountPoints, '/interactions/:interactionId?/create'),
+    createType: url(...mountPoints, '/interactions/create/:theme/:kind'),
   }
 }
 
 module.exports = {
   external: {
     greatProfile: (id) => config.greatProfileUrl.replace('{id}', id),
+    companiesHouse: (companyNumber) => `https://beta.companieshouse.gov.uk/company/${companyNumber}`,
   },
   dashboard: url('/'),
   companies: {
@@ -73,34 +74,44 @@ module.exports = {
       index: url('/companies', '/:companyId/activity'),
       data: url('/companies', '/:companyId/activity/data'),
     },
+    advisers: {
+      index: url('/companies', '/:companyId/advisers'),
+      assign: url('/companies', '/:companyId/advisers/assign'),
+      remove: url('/companies', '/:companyId/advisers/remove'),
+    },
+    audit: url('/companies', '/:companyId/audit'),
     businessDetails: url('/companies', '/:companyId/business-details'),
+    businessDetails2: url('/companies', '/:companyId/business-details2'),
     detail: url('/companies', '/:companyId'),
+    edit: url('/companies', '/:companyId/edit'),
+    archive: url('/companies', '/:companyId/archive'),
+    unarchive: url('/companies', '/:companyId/unarchive'),
     dnbSubsidiaries: {
       index: url('/companies', '/:companyId/dnb-subsidiaries'),
       data: url('/companies', '/:companyId/dnb-subsidiaries/data'),
     },
     exports: url('/companies', '/:companyId/exports'),
-    audit: url('/companies', '/:companyId/audit'),
     hierarchies: {
       ghq: {
         add: url('/companies', '/:companyId/hierarchies/ghq/:globalHqId/add'),
+        link: url('/companies', '/:companyId/hierarchies/ghq/search'),
+        remove: url('/companies', '/:companyId/hierarchies/ghq/remove'),
       },
     },
-    advisers: {
-      index: url('/companies', '/:companyId/advisers'),
-      confirm: url('/companies', '/:companyId/advisers/add'),
-      replace: url('/companies', '/:companyId/advisers/replace'),
-    },
     index: url('/companies'),
-    subsidiaries: url('/companies', '/:companyId/subsidiaries'),
     interactions: createInteractionsSubApp('/companies', '/:companyId'),
     orders: url('/companies', '/:companyId/orders'),
     investments: {
       largeCapitalProfile: url('/companies', '/:companyId/investments/large-capital-profile'),
     },
+    subsidiaries: {
+      index: url('/companies', '/:companyId/subsidiaries'),
+      link: url('/companies', '/:companyId/subsidiaries/link'),
+    },
   },
   contacts: {
     index: url('/contacts'),
+    contact: url('/contacts', '/:contactId'),
     interactions: createInteractionsSubApp('/contacts', '/:contactId'),
   },
   search: {
@@ -112,9 +123,17 @@ module.exports = {
   },
   investments: {
     index: url('/investments'),
+    projects: {
+      index: url('/investments', '/projects'),
+      documents: url('/investments', '/projects/:projectId/documents'),
+      interactions: createInteractionsSubApp('/investments', '/projects/:projectId'),
+      project: url('/investments', '/projects/:projectId'),
+      status: url('/investments', '/projects/:projectId/status'),
+    },
     profiles: {
       index: url('/investments', '/profiles'),
       data: url('/investments', '/profiles/data'),
     },
   },
+  support: url('/support'),
 }

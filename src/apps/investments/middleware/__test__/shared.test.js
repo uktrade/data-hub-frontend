@@ -1,9 +1,10 @@
 const { merge, cloneDeep } = require('lodash')
 const format = require('date-fns/format')
-const paths = require('~/src/apps/investments/paths')
+const paths = require('../../paths')
 const { mediumDateTimeFormat } = require('../../../../config')
-const investmentData = require('~/test/unit/data/investment/investment-data.json')
-const investmentProjectStages = require('~/test/unit/data/investment/investment-project-stages.json')
+const investmentData = require('../../../../../test/unit/data/investment/investment-data.json')
+const investmentProjectStages = require('../../../../../test/unit/data/investment/investment-project-stages.json')
+const proxyquire = require('proxyquire')
 
 const companyData = {
   id: '6c388e5b-a098-e211-a939-e4115bead28a',
@@ -32,7 +33,7 @@ const getInvestmentData = (ukCompanyId, clientRelationshipManagerId) => {
 }
 
 const createMiddleware = (investmentData, adviserData, companyData, stages = investmentProjectStages) => {
-  return proxyquire('~/src/apps/investments/middleware/shared', {
+  return proxyquire('../shared', {
     '../repos': {
       getInvestment: sinon.stub().resolves(investmentData),
     },
@@ -49,9 +50,11 @@ const createMiddleware = (investmentData, adviserData, companyData, stages = inv
 }
 
 describe('Investment shared middleware', () => {
+  let reqMock, resMock, nextSpy
+
   describe('#getInvestmentDetails', () => {
-    beforeEach(() => {
-      this.reqMock = {
+    before(() => {
+      reqMock = {
         session: {
           token: 'abcd',
         },
@@ -60,21 +63,21 @@ describe('Investment shared middleware', () => {
         },
       }
 
-      this.resMock = {
+      resMock = {
         locals: {
           paths,
         },
         breadcrumb: sinon.stub().returnsThis(),
       }
 
-      this.nextSpy = sinon.spy()
+      nextSpy = sinon.spy()
     })
 
     context('when all fields are populated', () => {
-      beforeEach(async () => {
+      before(async () => {
         const middleware = createMiddleware(getInvestmentData(2, 3), adviserData, companyData)
 
-        await middleware.getInvestmentDetails(this.reqMock, this.resMock, this.nextSpy)
+        await middleware.getInvestmentDetails(reqMock, resMock, nextSpy)
       })
 
       it('should set investment data on locals', () => {
@@ -86,23 +89,23 @@ describe('Investment shared middleware', () => {
           uk_company: companyData,
         })
 
-        expect(this.resMock.locals.investment).to.deep.equal(expectedInvestmentData)
+        expect(resMock.locals.investment).to.deep.equal(expectedInvestmentData)
       })
       it('should set investment data uk company on locals', () => {
-        expect(this.resMock.locals.investment.uk_company).to.deep.equal(companyData)
+        expect(resMock.locals.investment.uk_company).to.deep.equal(companyData)
       })
       it('should set investment data client relationship manager on locals', () => {
-        expect(this.resMock.locals.investment.client_relationship_manager).to.deep.equal(adviserData)
+        expect(resMock.locals.investment.client_relationship_manager).to.deep.equal(adviserData)
       })
       it('should set equity company on locals', () => {
         const expectedEquityCompany = merge({}, investmentData.investor_company, {
           name: companyData.name,
         })
 
-        expect(this.resMock.locals.equityCompany).to.deep.equal(expectedEquityCompany)
+        expect(resMock.locals.equityCompany).to.deep.equal(expectedEquityCompany)
       })
       it('should set investment project stages on locals', () => {
-        expect(this.resMock.locals.investmentProjectStages).to.deep.equal([
+        expect(resMock.locals.investmentProjectStages).to.deep.equal([
           'Prospect',
           'Assign PM',
           'Active',
@@ -151,25 +154,25 @@ describe('Investment shared middleware', () => {
           },
         }
 
-        expect(this.resMock.locals.investmentStatus).to.deep.equal(expectedInvestmentStatus)
+        expect(resMock.locals.investmentStatus).to.deep.equal(expectedInvestmentStatus)
       })
       it('should set the breadcrumb', () => {
-        expect(this.resMock.breadcrumb).to.be.calledWithExactly(investmentData.name, `/investments/projects/${investmentData.id}`)
-        expect(this.resMock.breadcrumb).to.have.been.calledOnce
+        expect(resMock.breadcrumb).to.be.calledWithExactly(investmentData.name, `/investments/projects/${investmentData.id}`)
+        expect(resMock.breadcrumb).to.have.been.calledTwice
       })
       it('should call next once', () => {
-        expect(this.nextSpy).to.have.been.calledOnce
+        expect(nextSpy).to.have.been.calledOnce
       })
       it('should call next without errors', () => {
-        expect(this.nextSpy.firstCall.args.length).to.equal(0)
+        expect(nextSpy.firstCall.args.length).to.equal(0)
       })
     })
 
     context('when uk company is not provided', () => {
-      beforeEach(async () => {
+      before(async () => {
         const middleware = createMiddleware(getInvestmentData(null, 3), adviserData, companyData)
 
-        await middleware.getInvestmentDetails(this.reqMock, this.resMock, this.nextSpy)
+        await middleware.getInvestmentDetails(reqMock, resMock, nextSpy)
       })
 
       it('should set investment data on locals', () => {
@@ -183,24 +186,24 @@ describe('Investment shared middleware', () => {
           },
         })
 
-        expect(this.resMock.locals.investment).to.deep.equal(expectedInvestmentData)
+        expect(resMock.locals.investment).to.deep.equal(expectedInvestmentData)
       })
       it('should not set investment data uk company on locals', () => {
-        expect(this.resMock.locals.investment.uk_company.id).to.be.null
+        expect(resMock.locals.investment.uk_company.id).to.be.null
       })
-      it('should call next once', () => {
-        expect(this.nextSpy).to.have.been.calledOnce
+      it('should call next', () => {
+        expect(nextSpy).to.have.been.called
       })
       it('should call next without errors', () => {
-        expect(this.nextSpy.firstCall.args.length).to.equal(0)
+        expect(nextSpy.firstCall.args.length).to.equal(0)
       })
     })
 
     context('when client relationship manager is not provided', () => {
-      beforeEach(async () => {
+      before(async () => {
         const middleware = createMiddleware(getInvestmentData(2, null), adviserData, companyData)
 
-        await middleware.getInvestmentDetails(this.reqMock, this.resMock, this.nextSpy)
+        await middleware.getInvestmentDetails(reqMock, resMock, nextSpy)
       })
 
       it('should set investment data on locals', () => {
@@ -214,54 +217,53 @@ describe('Investment shared middleware', () => {
           uk_company: companyData,
         })
 
-        expect(this.resMock.locals.investment).to.deep.equal(expectedInvestmentData)
+        expect(resMock.locals.investment).to.deep.equal(expectedInvestmentData)
       })
       it('should not set investment data client relationship manager on locals', () => {
-        expect(this.resMock.locals.investment.client_relationship_manager.id).to.be.null
+        expect(resMock.locals.investment.client_relationship_manager.id).to.be.null
       })
-      it('should call next once', () => {
-        expect(this.nextSpy).to.have.been.calledOnce
+      it('should call next', () => {
+        expect(nextSpy).to.have.been.called
       })
       it('should call next without errors', () => {
-        expect(this.nextSpy.firstCall.args.length).to.equal(0)
+        expect(nextSpy.firstCall.args.length).to.equal(0)
       })
     })
 
     context('when there is an error', () => {
-      beforeEach(async () => {
-        this.error = new Error('error')
-
-        const middleware = proxyquire('~/src/apps/investments/middleware/shared', {
+      before(async () => {
+        const middleware = proxyquire('../shared', {
           '../repos': {
-            getInvestment: sinon.stub().throws(this.error),
+            getInvestment: sinon.stub().throws(),
           },
           '../../adviser/repos': {
-            getAdviser: sinon.stub().throws(this.error),
+            getAdviser: sinon.stub().throws(),
           },
           '../../companies/repos': {
-            getDitCompany: sinon.stub().throws(this.error),
+            getDitCompany: sinon.stub().throws(),
           },
         })
 
-        middleware.getInvestmentDetails(this.reqMock, this.resMock, this.nextSpy)
+        middleware.getInvestmentDetails(reqMock, resMock, nextSpy)
       })
 
-      it('should call next once', () => {
-        expect(this.nextSpy).to.have.been.calledOnce
+      it('should throw render', () => {
+        expect(resMock.render).to.have.been.thrown
       })
-      it('should call next with error', () => {
-        expect(this.nextSpy).to.have.been.calledWith(this.error)
+
+      it('should call next', () => {
+        expect(nextSpy).to.have.been.called
       })
     })
 
     context('when the streamlined-investment-flow feature flag is set to true', () => {
-      beforeEach(async () => {
+      before(async () => {
         const stages = cloneDeep(investmentProjectStages)
 
         // Exclude the Assign PM stage.
         stages[1].exclude_from_investment_flow = true
 
-        this.resMock = {
+        resMock = {
           breadcrumb: sinon.stub().returnsThis(),
           locals: {
             features: {
@@ -271,10 +273,10 @@ describe('Investment shared middleware', () => {
         }
         const middleware = createMiddleware(getInvestmentData(2, null), adviserData, companyData, stages)
 
-        await middleware.getInvestmentDetails(this.reqMock, this.resMock, this.nextSpy)
+        await middleware.getInvestmentDetails(reqMock, resMock, nextSpy)
       })
       it('should remove the Assign PM stage from the investmentProjectStages array on locals', () => {
-        expect(this.resMock.locals.investmentProjectStages).to.deep.equal([
+        expect(resMock.locals.investmentProjectStages).to.deep.equal([
           'Prospect',
           'Active',
           'Verify win',

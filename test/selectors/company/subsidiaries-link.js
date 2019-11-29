@@ -1,5 +1,6 @@
 module.exports = () => {
   return {
+    removeSubsidiary: 'a:contains("Remove subsidiary")',
     search: {
       term: '.c-entity-search__input',
       button: '.c-entity-search__button',

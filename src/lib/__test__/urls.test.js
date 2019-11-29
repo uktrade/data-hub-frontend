@@ -17,6 +17,8 @@ describe('urls', () => {
     it('should have the correct urls', () => {
       const companyNumber = faker.random.alphaNumeric(8)
       expect(urls.external.greatProfile(companyNumber)).to.equal(`http://a.b.c.com/path/${companyNumber}`)
+
+      expect(urls.external.companiesHouse(companyNumber)).to.equal(`https://beta.companieshouse.gov.uk/company/${companyNumber}`)
     })
   })
 
@@ -41,30 +43,51 @@ describe('urls', () => {
       expect(urls.companies.detail.route).to.equal('/:companyId')
       expect(urls.companies.detail(companyId)).to.equal(`/companies/${companyId}`)
 
-      expect(urls.companies.activity.data(companyId)).to.equal(`/companies/${companyId}/activity/data`)
+      expect(urls.companies.edit(companyId)).to.equal(`/companies/${companyId}/edit`)
+      expect(urls.companies.edit.route).to.equal('/:companyId/edit')
+
+      expect(urls.companies.archive(companyId)).to.equal(`/companies/${companyId}/archive`)
+      expect(urls.companies.archive.route).to.equal('/:companyId/archive')
+      expect(urls.companies.unarchive(companyId)).to.equal(`/companies/${companyId}/unarchive`)
+      expect(urls.companies.unarchive.route).to.equal('/:companyId/unarchive')
+
+      expect(urls.companies.businessDetails(companyId)).to.equal(`/companies/${companyId}/business-details`)
+      expect(urls.companies.businessDetails.route).to.equal('/:companyId/business-details')
+
+      expect(urls.companies.businessDetails2(companyId)).to.equal(`/companies/${companyId}/business-details2`)
+      expect(urls.companies.businessDetails2.route).to.equal('/:companyId/business-details2')
+
       expect(urls.companies.activity.index(companyId)).to.equal(`/companies/${companyId}/activity`)
+      expect(urls.companies.activity.index.route).to.equal('/:companyId/activity')
+
+      expect(urls.companies.activity.data(companyId)).to.equal(`/companies/${companyId}/activity/data`)
+      expect(urls.companies.activity.data.route).to.equal('/:companyId/activity/data')
 
       expect(urls.companies.advisers.index(companyId)).to.equal(`/companies/${companyId}/advisers`)
+      expect(urls.companies.advisers.index.route).to.equal('/:companyId/advisers')
 
-      expect(urls.companies.advisers.confirm(companyId)).to.equal(`/companies/${companyId}/advisers/add`)
-      expect(urls.companies.advisers.replace(companyId)).to.equal(`/companies/${companyId}/advisers/replace`)
+      expect(urls.companies.advisers.assign(companyId)).to.equal(`/companies/${companyId}/advisers/assign`)
+      expect(urls.companies.advisers.remove(companyId)).to.equal(`/companies/${companyId}/advisers/remove`)
+      expect(urls.companies.advisers.remove.route).to.equal('/:companyId/advisers/remove')
 
-      expect(urls.companies.dnbSubsidiaries.index.route).to.equal('/:companyId/dnb-subsidiaries')
-      expect(urls.companies.dnbSubsidiaries.index(companyId)).to.equal(`/companies/${companyId}/dnb-subsidiaries`)
-
-      expect(urls.companies.dnbSubsidiaries.data.route).to.equal('/:companyId/dnb-subsidiaries/data')
-      expect(urls.companies.dnbSubsidiaries.data(companyId)).to.equal(`/companies/${companyId}/dnb-subsidiaries/data`)
-
-      expect(urls.companies.exports.route).to.equal('/:companyId/exports')
       expect(urls.companies.exports(companyId)).to.equal(`/companies/${companyId}/exports`)
+      expect(urls.companies.exports.route).to.equal('/:companyId/exports')
 
-      expect(urls.companies.subsidiaries(companyId)).to.equal(`/companies/${companyId}/subsidiaries`)
+      expect(urls.companies.subsidiaries.index(companyId)).to.equal(`/companies/${companyId}/subsidiaries`)
+      expect(urls.companies.subsidiaries.index.route).to.equal('/:companyId/subsidiaries')
+
+      expect(urls.companies.subsidiaries.link(companyId)).to.equal(`/companies/${companyId}/subsidiaries/link`)
+      expect(urls.companies.subsidiaries.link.route).to.equal('/:companyId/subsidiaries/link')
 
       expect(urls.companies.investments.largeCapitalProfile(companyId)).to.equal(`/companies/${companyId}/investments/large-capital-profile`)
 
       const globalHqId = faker.random.uuid()
-      expect(urls.companies.hierarchies.ghq.add.route).to.equal('/:companyId/hierarchies/ghq/:globalHqId/add')
       expect(urls.companies.hierarchies.ghq.add(companyId, globalHqId)).to.equal(`/companies/${companyId}/hierarchies/ghq/${globalHqId}/add`)
+      expect(urls.companies.hierarchies.ghq.add.route).to.equal('/:companyId/hierarchies/ghq/:globalHqId/add')
+      expect(urls.companies.hierarchies.ghq.link(companyId)).to.equal(`/companies/${companyId}/hierarchies/ghq/search`)
+      expect(urls.companies.hierarchies.ghq.link.route).to.equal('/:companyId/hierarchies/ghq/search')
+      expect(urls.companies.hierarchies.ghq.remove(companyId)).to.equal(`/companies/${companyId}/hierarchies/ghq/remove`)
+      expect(urls.companies.hierarchies.ghq.remove.route).to.equal('/:companyId/hierarchies/ghq/remove')
 
       const interactionId = faker.random.uuid()
       expect(urls.companies.interactions.create.route).to.equal(`/interactions/:interactionId?/create`)
@@ -72,6 +95,7 @@ describe('urls', () => {
       expect(urls.companies.interactions.create(companyId, interactionId)).to.equal(`/companies/${companyId}/interactions/${interactionId}/create`)
 
       expect(urls.companies.orders(companyId)).to.equal(`/companies/${companyId}/orders`)
+      expect(urls.companies.orders.route).to.equal('/:companyId/orders')
     })
   })
 
@@ -83,6 +107,7 @@ describe('urls', () => {
 
       const contactId = faker.random.uuid()
       expect(urls.contacts.interactions.create(contactId)).to.equal(`/contacts/${contactId}/interactions/create`)
+      expect(urls.contacts.interactions.create.route).to.equal('/interactions/:interactionId?/create')
     })
   })
 
@@ -98,12 +123,32 @@ describe('urls', () => {
     })
   })
 
+  describe('support', () => {
+    it('should return the correct values', () => {
+      expect(urls.support()).to.equal('/support')
+      expect(urls.support.route).to.equal('/')
+    })
+  })
+
   describe('interactions', () => {
     describe('subapp', () => {
       it('should return the correct values', () => {
         expect(urls.interactions.subapp.create.mountPoint).to.equal(null)
         expect(urls.interactions.subapp.create.route).to.equal('/interactions/:interactionId?/create')
       })
+    })
+  })
+
+  describe('investments', () => {
+    it('should return the correct values', () => {
+      expect(urls.investments.index()).to.equal('/investments')
+      expect(urls.investments.projects.index()).to.equal('/investments/projects')
+      expect(urls.investments.projects.project(123)).to.equal('/investments/projects/123')
+      expect(urls.investments.projects.interactions.createType('123', 'investment', 'interaction')).to.equal('/investments/projects/123/interactions/create/investment/interaction')
+      expect(urls.investments.projects.status(123)).to.equal('/investments/projects/123/status')
+      expect(urls.investments.projects.documents(123)).to.equal('/investments/projects/123/documents')
+      expect(urls.investments.profiles.index()).to.equal('/investments/profiles')
+      expect(urls.investments.profiles.data()).to.equal('/investments/profiles/data')
     })
   })
 })

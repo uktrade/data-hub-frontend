@@ -12,6 +12,8 @@ import DnbSubsidiaries from './apps/companies/apps/dnb-subsidiaries/client/DnbSu
 import LeadAdvisers from './apps/companies/apps/advisers/client/LeadAdvisers'
 import LargeCapitalProfileCollection from './apps/investments/client/LargeCapitalProfileCollection'
 import AddAdviser from './apps/companies/apps/advisers/client/AddAdviser'
+import CompanyBusinessDetails
+  from './apps/companies/apps/business-details/client/CompanyBusinessDetails'
 
 const appWrapper = document.getElementById('react-app')
 
@@ -58,11 +60,14 @@ function App () {
       <Mount selector="#dnb-subsidiaries">
         {props => <DnbSubsidiaries {...props} />}
       </Mount>
+      <Mount selector="#company-business-details">
+        {props => <CompanyBusinessDetails {...props} />}
+      </Mount>
       <Mount selector="#large-capital-profile-collection">
         {props => <LargeCapitalProfileCollection {...props} />}
       </Mount>
       <Mount selector="#add-adviser">
-        <AddAdviser csrfToken={globalProps.csrfToken}/>
+        {props => <AddAdviser {...props} csrfToken={globalProps.csrfToken} />}
       </Mount>
     </>
   )

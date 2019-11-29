@@ -2,7 +2,7 @@ const selectors = require('../../../../selectors')
 
 const todaysDate = Cypress.moment().format('DD MMM YYYY')
 
-describe('company', () => {
+describe('Company', () => {
   before(() => {
     cy.visit('/companies/0f5216e0-849f-11e6-ae22-56b6b6499611/edit')
   })
@@ -20,7 +20,7 @@ describe('company', () => {
   })
 })
 
-describe('contact', () => {
+describe('Contact', () => {
   before(() => {
     cy.visit('/contacts/9b1138ab-ec7b-497f-b8c3-27fed21694ef/edit')
   })

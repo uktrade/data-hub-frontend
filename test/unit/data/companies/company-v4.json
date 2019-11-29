@@ -24,7 +24,6 @@
     "name": "Private limited company",
     "id": "6f75408b-03e7-e611-bca1-e4115bead28a"
   },
-  "one_list_group_tier": null,
   "contacts": [],
   "employee_range": {
     "name": "500+",
@@ -49,7 +48,6 @@
     }
   ],
   "headquarter_type": null,
-  "one_list_group_global_account_manager": null,
   "global_headquarters": null,
   "sector": {
     "name": "Retail",
