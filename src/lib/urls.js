@@ -76,8 +76,7 @@ module.exports = {
     },
     advisers: {
       index: url('/companies', '/:companyId/advisers'),
-      confirm: url('/companies', '/:companyId/advisers/add'),
-      replace: url('/companies', '/:companyId/advisers/replace'),
+      assign: url('/companies', '/:companyId/advisers/assign'),
       remove: url('/companies', '/:companyId/advisers/remove'),
     },
     audit: url('/companies', '/:companyId/audit'),

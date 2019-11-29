@@ -13,7 +13,7 @@ const RenderHasAccountManager = (
     team,
     name,
     email,
-    replaceUrl,
+    addUrl,
     removeUrl,
     hasPermissionToAddIta,
     companyName,
@@ -36,19 +36,20 @@ const RenderHasAccountManager = (
     <p>You can <a href={companies.audit(companyId)}>see changes in the Audit trail</a></p>
     {hasPermissionToAddIta &&
     <FormActions>
-      <Button as={Link} href={replaceUrl}>
+      <Button as={Link} href={addUrl}>
         Replace Lead ITA
       </Button>
-      <Button as={Link} href={removeUrl}>
+      {/* TODO: Uncomment when the remove page is implemented */}
+      {/* <Button as={Link} href={removeUrl}>
         Remove Lead ITA
-      </Button>
+      </Button> */}
     </FormActions>}
   </div>
 
 const RenderHasNoAccountManager = (
   {
     hasPermissionToAddIta,
-    confirmUrl,
+    addUrl,
     companyName,
   }) =>
   <div>
@@ -58,7 +59,7 @@ const RenderHasNoAccountManager = (
       users on the company page and any of its subsidiaries.</p>
     {hasPermissionToAddIta && <Button
       as={Link}
-      href={confirmUrl}
+      href={addUrl}
     >
       Add myself as Lead ITA
     </Button>}
@@ -72,8 +73,7 @@ const LeadAdvisers = (
     email,
     companyName,
     companyId,
-    confirmUrl,
-    replaceUrl,
+    addUrl,
     removeUrl,
     hasPermissionToAddIta,
   }) => {
@@ -85,13 +85,14 @@ const LeadAdvisers = (
       companyId={companyId}
       companyName={companyName}
       hasPermissionToAddIta={hasPermissionToAddIta}
-      replaceUrl={replaceUrl}
+      addUrl={addUrl}
       removeUrl={removeUrl}
     />
     : <RenderHasNoAccountManager
       companyName={companyName}
       hasPermissionToAddIta={hasPermissionToAddIta}
-      confirmUrl={confirmUrl}
+      addUrl={addUrl}
+      removeUrl={removeUrl}
     />
 }
 
@@ -102,8 +103,7 @@ LeadAdvisers.propTypes = {
   email: PropTypes.string,
   companyName: PropTypes.string.isRequired,
   companyId: PropTypes.string.isRequired,
-  confirmUrl: PropTypes.string.isRequired,
-  replaceUrl: PropTypes.string.isRequired,
+  addUrl: PropTypes.string.isRequired,
   removeUrl: PropTypes.string.isRequired,
   hasPermissionToAddIta: PropTypes.bool.isRequired,
 }
@@ -112,14 +112,15 @@ RenderHasAccountManager.propTypes = {
   name: PropTypes.string.isRequired,
   team: PropTypes.string.isRequired,
   email: PropTypes.string,
-  replaceUrl: PropTypes.string.isRequired,
+  addUrl: PropTypes.string.isRequired,
+  removeUrl: PropTypes.string.isRequired,
   hasPermissionToAddIta: PropTypes.bool.isRequired,
   companyName: PropTypes.string.isRequired,
   companyId: PropTypes.string.isRequired,
 }
 
 RenderHasNoAccountManager.propTypes = {
-  confirmUrl: PropTypes.string.isRequired,
+  addUrl: PropTypes.string.isRequired,
   hasPermissionToAddIta: PropTypes.bool.isRequired,
   companyName: PropTypes.string.isRequired,
 }
