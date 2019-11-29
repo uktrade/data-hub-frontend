@@ -1,4 +1,4 @@
-const { get, kebabCase } = require('lodash')
+const { get } = require('lodash')
 const { kindForm } = require('../macros')
 const { joinPaths } = require('../../../lib/path')
 
@@ -8,7 +8,7 @@ const kindLookup = {
     theme: 'export',
   },
   export_service_delivery: {
-    kind: 'service_delivery',
+    kind: 'service-delivery',
     theme: 'export',
   },
   other_interaction: {
@@ -16,7 +16,7 @@ const kindLookup = {
     theme: 'other',
   },
   other_service_delivery: {
-    kind: 'service_delivery',
+    kind: 'service-delivery',
     theme: 'other',
   },
   other: {
@@ -52,8 +52,8 @@ function postCreate (req, res, next) {
       res.locals.interactions.returnLink,
       req.params.interactionId,
       req.params.interactionId ? 'edit' : 'create',
-      kebabCase(theme),
-      kebabCase(kind),
+      theme,
+      kind,
     ]
   )
 
