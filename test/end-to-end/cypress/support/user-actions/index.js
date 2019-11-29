@@ -1,0 +1,1 @@
+exports.contacts = require('./contacts')
