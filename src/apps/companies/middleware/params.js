@@ -5,9 +5,18 @@ const {
   removeDitCompanyFromList,
 } = require('../repos')
 
+const { isItaTierDAccount } = require('../../../lib/is-tier-type-company')
+
 async function getCompany (req, res, next, id) {
   try {
-    res.locals.company = await getDitCompany(req.session.token, id)
+    const company = await getDitCompany(req.session.token, id)
+    company.isItaTierDAccount = isItaTierDAccount(company)
+    company.hasAllocatedLeadIta = company.one_list_group_global_account_manager != null
+    company.hasManagedAccountDetails = company.one_list_group_tier && company.hasAllocatedLeadIta
+    company.isUltimate = !!company.is_global_ultimate && res.locals.features['companies-ultimate-hq']
+    company.isGlobalHQ = company.headquarter_type && company.headquarter_type.name === 'ghq'
+
+    res.locals.company = company
     next()
   } catch (error) {
     next(error)

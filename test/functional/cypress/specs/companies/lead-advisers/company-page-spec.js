@@ -25,7 +25,8 @@ describe('Lead advisers', () => {
       cy.get(selectors.companyLeadAdviser.header).should('have.text', 'Lead ITA for Mars Exports Ltd')
     })
     it('should display a button to add myself as lead adviser', () => {
-      cy.contains('Add myself as Lead ITA').invoke('attr', 'href').should('eq', `/companies/${fixtures.company.marsExportsLtd.id}/advisers/add`)
+      cy.contains('Add myself as Lead ITA').invoke('attr', 'href')
+        .should('eq', companies.advisers.assign(fixtures.company.marsExportsLtd.id))
     })
   })
   context('when viewing a One List Tier company', () => {
@@ -57,6 +58,12 @@ describe('Lead advisers', () => {
         'Lead adviser': null,
       })
     })
+    it('should show the allocated Lead adviser in the company header', () => {
+      cy.get(selectors.localHeader().description.paragraph(2)).should('contain', 'Lead ITA: Travis Greene')
+    })
+    it('should have a link to the Lead adviser tab', () => {
+      cy.contains('View Lead adviser').invoke('attr', 'href').should('eq', companies.advisers.index(fixtures.company.oneListTierDita.id))
+    })
     it('should display the "Lead Adviser" tab in the navigation', () => {
       cy.get(selectors.tabbedLocalNav().item(3)).should('contain', 'Lead adviser')
     })
@@ -82,7 +89,17 @@ describe('Lead advisers', () => {
       cy.get(selectors.companyLeadAdviser.table.email).should('have.text', 'travis@travis.com')
     })
     it('should display a button to replace the Lead ITA', () => {
-      cy.contains('Replace Lead ITA').invoke('attr', 'href').should('eq', companies.advisers.replace(fixtures.company.oneListTierDita.id))
+      cy
+        .contains('Replace Lead ITA')
+        .invoke('attr', 'href')
+        .should('eq', companies.advisers.assign(fixtures.company.oneListTierDita.id))
     })
+    // TODO: Uncomment when the remove page is implemented
+    // it('should display a button to remove the Lead ITA', () => {
+    //   cy
+    //     .contains('Remove Lead ITA')
+    //     .invoke('attr', 'href')
+    //     .should('eq', companies.advisers.remove(fixtures.company.oneListTierDita.id))
+    // })
   })
 })

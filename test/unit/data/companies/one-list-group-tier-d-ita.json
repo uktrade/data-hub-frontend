@@ -1,0 +1,115 @@
+{
+  "id": "a73efeba-8499-11e6-ae22-56b6b6499611",
+  "reference_code": "",
+  "name": "Ian's Camper Vans Ltd",
+  "trading_names": [],
+  "uk_based": true,
+  "company_number": "99919",
+  "vat_number": "",
+  "duns_number": null,
+  "created_on": "2016-06-05T12:00:00Z",
+  "modified_on": "2016-07-05T12:00:00Z",
+  "archived": false,
+  "archived_documents_url_path": "",
+  "archived_on": null,
+  "archived_reason": null,
+  "archived_by": null,
+  "description": "This is a dummy company for testing",
+  "transferred_by": null,
+  "transferred_on": null,
+  "transferred_to": null,
+  "transfer_reason": "",
+  "website": null,
+  "business_type": {
+    "name": "Private limited company",
+    "id": "6f75408b-03e7-e611-bca1-e4115bead28a"
+  },
+  "one_list_group_tier": {
+    "name": "Tier D - International Trade Adviser Accounts",
+    "id": "1929c808-99b4-4abf-a891-45f2e187b410"
+  },
+  "contacts": [],
+  "employee_range": {
+    "name": "500+",
+    "id": "41afd8d0-5d95-e211-a939-e4115bead28a"
+  },
+  "number_of_employees": null,
+  "is_number_of_employees_estimated": null,
+  "export_to_countries": [
+    {
+      "name": "Occupied Palestinian Territories",
+      "id": "35afd8d0-5d95-e211-a939-e4115bead28a"
+    },
+    {
+      "name": "Western Sahara",
+      "id": "36afd8d0-5d95-e211-a939-e4115bead28a"
+    }
+  ],
+  "future_interest_countries": [
+    {
+      "name": "Yemen",
+      "id": "37afd8d0-5d95-e211-a939-e4115bead28a"
+    }
+  ],
+  "headquarter_type": null,
+  "one_list_group_global_account_manager": {
+    "name": "Ian Leggett",
+    "first_name": "Ian",
+    "last_name": "Leggett",
+    "contact_email": "caravans@ian.com",
+    "dit_team": {
+      "name": "DSO Senior Management Team",
+      "uk_region": {
+        "name": "London",
+        "id": "874cd12a-6095-e211-a939-e4115bead28a"
+      },
+      "country": {
+        "name": "United Kingdom",
+        "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+      },
+      "id": "e9ad674d-16ad-e211-a646-e4115bead28a"
+    },
+    "id": "b2776473-e65f-4de3-a9c2-022de1902610"
+  },
+  "global_headquarters": null,
+  "sector": {
+    "name": "Retail",
+    "id": "355f977b-8ac3-e211-a646-e4115bead28a"
+  },
+  "turnover_range": {
+    "name": "£33.5M+",
+    "id": "7a4cd12a-6095-e211-a939-e4115bead28a"
+  },
+  "turnover": null,
+  "is_turnover_estimated": null,
+  "uk_region": {
+    "name": "North West",
+    "id": "824cd12a-6095-e211-a939-e4115bead28a"
+  },
+  "export_experience_category": {
+    "id": "8b05e8c7-1812-46bf-bab7-a0096ab5689f",
+    "name": "Increasing export markets"
+  },
+  "address": {
+    "line_1": "82 Ramsgate Rd",
+    "line_2": "",
+    "town": "Willington",
+    "county": "",
+    "postcode": "NE28 5JB",
+    "country": {
+      "name": "United Kingdom",
+      "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+    }
+  },
+  "registered_address": {
+    "line_1": "82 Ramsgate Rd",
+    "line_2": "",
+    "town": "Willington",
+    "county": "",
+    "postcode": "NE28 5JB",
+    "country": {
+      "name": "United Kingdom",
+      "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+    }
+  }
+}
