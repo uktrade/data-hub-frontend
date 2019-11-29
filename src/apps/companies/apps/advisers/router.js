@@ -5,7 +5,7 @@ const { renderAdvisers, renderAddAdviserForm, addAdviser } = require('./controll
 
 router.get('/', renderAdvisers)
 
-router.route('/add')
+router.route('/assign')
   .all(allFeaturesOr404('lead_advisers'))
   .all(allPermissionsOr403('company.change_regional_account_manager'))
   .get(renderAddAdviserForm)

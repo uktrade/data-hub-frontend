@@ -1,11 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, H3, Details, UnorderedList, Link, ListItem } from 'govuk-react'
+import { Button, H3, Details, UnorderedList, Link, ListItem, InsetText } from 'govuk-react'
 import { FormActions } from 'data-hub-components'
 
-const AddAdviser = ({ csrfToken }) =>
+const AddAdviser = ({ cancelUrl, csrfToken, currentLeadITA }) =>
   <>
     <H3>Do you want to add yourself as the first point of contact?</H3>
+    {currentLeadITA &&
+      <>
+        <p>
+          You would replace Lead ITA:
+        </p>
+        <InsetText>
+          Name: {currentLeadITA.name}
+          <br />
+          Team: {currentLeadITA.team}
+        </InsetText>
+      </>
+    }
     <Details summary="How do I add someone else as the Lead ITA?">
       You can only add yourself as the Lead ITA.
       If you think another International Trade Adviser is the first point of contact
@@ -28,13 +40,18 @@ const AddAdviser = ({ csrfToken }) =>
       <input type="hidden" name="_csrf" value={csrfToken}/>
       <FormActions>
         <Button>Add myself as Lead ITA</Button>
-        <Link href="../advisers">Cancel</Link>
+        <Link href={cancelUrl}>Cancel</Link>
       </FormActions>
     </form>
   </>
 
 AddAdviser.propTypes = {
+  cancelUrl: PropTypes.string.isRequired,
   csrfToken: PropTypes.string.isRequired,
+  currentLeadITA: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    team: PropTypes.string.isRequired,
+  }),
 }
 
 export default AddAdviser

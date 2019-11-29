@@ -67,7 +67,7 @@ function App () {
         {props => <LargeCapitalProfileCollection {...props} />}
       </Mount>
       <Mount selector="#add-adviser">
-        <AddAdviser csrfToken={globalProps.csrfToken}/>
+        {props => <AddAdviser {...props} csrfToken={globalProps.csrfToken} />}
       </Mount>
     </>
   )
