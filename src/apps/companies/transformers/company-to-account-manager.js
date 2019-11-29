@@ -4,7 +4,7 @@ const { get } = require('lodash')
 const transformAccountManager = ({ one_list_group_global_account_manager }) => ({
   name: get(one_list_group_global_account_manager, 'name'),
   email: get(one_list_group_global_account_manager, 'contact_email'),
-  team: get(one_list_group_global_account_manager, '["dit_team"].name'),
+  team: get(one_list_group_global_account_manager, 'dit_team.name'),
 })
 
 module.exports = transformAccountManager
