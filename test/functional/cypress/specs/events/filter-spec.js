@@ -3,6 +3,13 @@ const selectors = require('../../../../selectors')
 describe('Events Collections Filter', () => {
   before(() => {
     cy.visit('/events')
+    cy
+      .get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 7)
+    cy
+      .get(selectors.entityCollection.collection)
+      .should('contain', '7 events')
   })
 
   beforeEach(() => {
@@ -30,5 +37,43 @@ describe('Events Collections Filter', () => {
         'address_country=80756b9a-5d95-e211-a939-e4115bead28a'
       )
     })
+  })
+
+  it('should filter by name', () => {
+    cy
+      .get(selectors.filter.name)
+      .type('FilterByEvent')
+      .type('{enter}')
+
+    cy
+      .get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 1)
+    cy
+      .get(selectors.entityCollection.collection)
+      .should('contain', '1 event matching FilterByEvent')
+    cy.get(selectors.entityCollection.collectionRowButton).should('be.visible')
+  })
+
+  it('should filter by region', () => {
+    cy.get(selectors.filter.firstUkRegion).click()
+
+    cy.wait('@filterResults').then(xhr => {
+      expect(xhr.url).to.contain(
+        'uk_region=934cd12a-6095-e211-a939-e4115bead28a'
+      )
+    })
+
+    cy
+      .get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 1)
+  })
+
+  it('should remove all filters', () => {
+    cy.get(selectors.entityCollection.collectionRemoveAllFilter).click()
+    cy
+      .get(selectors.entityCollection.collection)
+      .should('contain', '7 events')
   })
 })
