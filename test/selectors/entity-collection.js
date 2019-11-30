@@ -1,5 +1,6 @@
 module.exports = {
   addCompany: '[data-auto-id="Add company"]',
+  addEvent: '[data-auto-id="Add event"]',
   addOrder: '[data-auto-id="Add order"]',
   collection: '.c-collection',
   collectionRowMessage: '.c-collection__export-message',
