@@ -11,6 +11,7 @@ const { getContact } = require('../../contacts/repos')
 const { getDitCompany } = require('../../companies/repos')
 const { joinPaths } = require('../../../lib/path')
 const { getReturnLink } = require('../helpers')
+const canAddCountries = require('../macros/can-add-countries')
 
 async function postDetails (req, res, next) {
   try {
@@ -20,7 +21,8 @@ async function postDetails (req, res, next) {
     })
     res.locals.requestBody = transformInteractionFormBodyToApiRequest(
       req.body,
-      serviceOptions
+      serviceOptions,
+      canAddCountries(req.params.theme, res.locals.features)
     )
     const result = await saveInteraction(
       req.session.token,
