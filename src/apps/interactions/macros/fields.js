@@ -3,6 +3,8 @@ const { flattenDeep } = require('lodash')
 const { globalFields } = require('../../macros')
 const canAddCountries = require('./can-add-countries')
 
+const { EXPORT_INTEREST_STATUS } = require('../constants')
+
 module.exports = {
   adviser (advisers) {
     return {
@@ -238,7 +240,7 @@ module.exports = {
         {
           macroName: 'MultipleChoiceField',
           type: 'radio',
-          name: 'was_country_discussed',
+          name: 'were_countries_discussed',
           modifier: 'inline',
           optional: false,
           options: [
@@ -253,16 +255,16 @@ module.exports = {
           ],
         },
         ...[
-          'future_countries',
-          'export_countries',
-          'no_interest_countries',
+          EXPORT_INTEREST_STATUS.FUTURE_INTEREST,
+          EXPORT_INTEREST_STATUS.EXPORTING_TO,
+          EXPORT_INTEREST_STATUS.NOT_INTERESTED,
         ].map((name) => ({
           macroName: 'Typeahead',
           name,
           hint: 'Add all that you discussed',
           modifier: 'subfield',
           condition: {
-            name: 'was_country_discussed',
+            name: 'were_countries_discussed',
             value: 'true',
           },
           isAsync: false,
