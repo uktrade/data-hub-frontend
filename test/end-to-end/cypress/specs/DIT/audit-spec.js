@@ -1,6 +1,6 @@
 const selectors = require('../../../../selectors')
 
-const todaysDate = Cypress.moment().format('DD MMM YYYY')
+const todaysDate = Cypress.moment().format('D MMM YYYY')
 
 describe('Company', () => {
   before(() => {
