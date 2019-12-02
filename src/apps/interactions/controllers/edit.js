@@ -46,6 +46,7 @@ async function buildForm (req, res, params) {
       : `Add ${lowerCase(kind)}`,
     company: get(res.locals, 'company.name'),
     theme,
+    interaction: res.locals.interaction,
     featureFlags: res.locals.features,
   }
 
@@ -145,7 +146,7 @@ async function renderEditPage (req, res, next) {
       ? `Edit ${kindName}`
       : `Add ${kindName + forEntityName}`
 
-    if (canAddCountries(theme, res.locals.features)) {
+    if (canAddCountries(theme, res.locals.interaction, res.locals.features)) {
       EXPORT_INTEREST_STATUS_VALUES.forEach(addSelectedOptions(interactionForm.children))
     }
 
