@@ -33,4 +33,17 @@ describe('DIT Permission', () => {
       ])
     })
   })
+
+  describe('event', () => {
+    before(() => {
+      cy.visit('/events/b93d4274-36fe-4008-ac40-fbc197910791/details')
+    })
+
+    it('should display DIT only side navs', () => {
+      assertLocalNav(selectors.nav.sideNav, [
+        'Details',
+        'Attendee',
+      ])
+    })
+  })
 })
