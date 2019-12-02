@@ -194,6 +194,7 @@ aliases:
       DISABLE_PAAS_IP_CHECK: 'True'
       DATA_HUB_FRONTEND_ACCESS_KEY_ID: frontend-key-id
       DATA_HUB_FRONTEND_SECRET_ACCESS_KEY: frontend-key
+      ADMIN_OAUTH2_ENABLED: 'False'
 
   - &docker_data_hub_backend_api
     <<: *docker_data_hub_backend_base
