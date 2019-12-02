@@ -71,7 +71,7 @@ describe('Company business details', () => {
               'urls': {
                 'archivedDocument': '/some/path',
                 'companiesHouse': urls.external.companiesHouse(companyMock.company_number),
-                'companyBusinessDetails': urls.companies.businessDetails2(companyMock.id),
+                'companyBusinessDetails': urls.companies.businessDetails(companyMock.id),
                 'companyEdit': urls.companies.edit(companyMock.id),
                 'companyArchive': `${urls.companies.archive(companyMock.id)}?_csrf=csrf`,
                 'companyUnarchive': `${urls.companies.unarchive(companyMock.id)}?_csrf=csrf`,
