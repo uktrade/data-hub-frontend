@@ -7,6 +7,7 @@ const { transformCompanyToForm, transformFormToCompany } = require('./transforme
 const { updateCompany } = require('../../repos')
 const { getHeadquarterOptions } = require('./repos')
 const { getOptions } = require('../../../../lib/options')
+const { isItaTierDAccount } = require('../../../../lib/is-tier-type-company')
 
 // Foreign companies can have a UK branch.
 const UK_BRANCH_OF_FOREIGN_COMPANY_ID = 'b0730fc6-fcce-4071-bdab-ba8de4f4fc98'
@@ -18,6 +19,7 @@ async function renderEditCompanyForm (req, res, next) {
 
     const companyDetails = transformCompanyToForm(company)
     const businessType = get(company, 'business_type.id')
+    const isOnOneList = !!(company.one_list_group_tier && !isItaTierDAccount(company))
 
     const [turnoverRanges, employeeRanges, regions, sectors, headquarterTypes] = await Promise.all([
       getOptions(token, 'turnover', { sorted: false }),
@@ -33,6 +35,7 @@ async function renderEditCompanyForm (req, res, next) {
       .breadcrumb('Edit business details')
       .render('companies/apps/edit-company/views/client-container', {
         props: {
+          isOnOneList,
           companyDetails,
           showCompanyNumberForUkBranch: businessType === UK_BRANCH_OF_FOREIGN_COMPANY_ID,
           oneListEmail: config.oneList.email,
