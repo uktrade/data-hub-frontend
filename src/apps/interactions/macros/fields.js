@@ -3,7 +3,7 @@ const { flattenDeep } = require('lodash')
 const { globalFields } = require('../../macros')
 const canAddCountries = require('./can-add-countries')
 
-const { EXPORT_INTEREST_STATUS } = require('../constants')
+const { EXPORT_INTEREST_STATUS_VALUES } = require('../constants')
 
 module.exports = {
   adviser (advisers) {
@@ -232,52 +232,44 @@ module.exports = {
       options: channels,
     }
   },
-  countriesDiscussed: (theme, featureFlags) => {
-    if (!canAddCountries(theme, featureFlags)) {
-      return []
-    } else {
-      return [
-        {
-          macroName: 'MultipleChoiceField',
-          type: 'radio',
-          name: 'were_countries_discussed',
-          modifier: 'inline',
-          optional: false,
-          options: [
-            {
-              label: 'Yes',
-              value: 'true',
-            },
-            {
-              label: 'No',
-              value: 'false',
-            },
-          ],
-        },
-        ...[
-          EXPORT_INTEREST_STATUS.FUTURE_INTEREST,
-          EXPORT_INTEREST_STATUS.EXPORTING_TO,
-          EXPORT_INTEREST_STATUS.NOT_INTERESTED,
-        ].map((name) => ({
-          macroName: 'Typeahead',
-          name,
-          hint: 'Add all that you discussed',
-          modifier: 'subfield',
-          condition: {
-            name: 'were_countries_discussed',
+  countriesDiscussed: (theme, interaction, featureFlags) => {
+    return !canAddCountries(theme, interaction, featureFlags) ? [] : [
+      {
+        macroName: 'MultipleChoiceField',
+        type: 'radio',
+        name: 'were_countries_discussed',
+        modifier: 'inline',
+        optional: false,
+        options: [
+          {
+            label: 'Yes',
             value: 'true',
           },
-          isAsync: false,
-          isLabelHidden: false,
-          useSubLabel: false,
-          placeholder: 'Search countries',
-          classes: 'c-form-group--no-filter',
-          multipleSelect: true,
-          options: globalFields.countries.options(),
-          target: 'metadata',
-          autoSubmit: false,
-        })),
-      ]
-    }
+          {
+            label: 'No',
+            value: 'false',
+          },
+        ],
+      },
+      ...EXPORT_INTEREST_STATUS_VALUES.map((name) => ({
+        macroName: 'Typeahead',
+        name,
+        hint: 'Add all that you discussed',
+        modifier: 'subfield',
+        condition: {
+          name: 'were_countries_discussed',
+          value: 'true',
+        },
+        isAsync: false,
+        isLabelHidden: false,
+        useSubLabel: false,
+        placeholder: 'Search countries',
+        classes: 'c-form-group--no-filter',
+        multipleSelect: true,
+        options: globalFields.countries.options(),
+        target: 'metadata',
+        autoSubmit: false,
+      })),
+    ]
   },
 }

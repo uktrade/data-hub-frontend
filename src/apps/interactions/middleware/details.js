@@ -22,8 +22,9 @@ async function postDetails (req, res, next) {
     res.locals.requestBody = transformInteractionFormBodyToApiRequest(
       req.body,
       serviceOptions,
-      canAddCountries(req.params.theme, res.locals.features)
+      canAddCountries(req.params.theme, res.locals.interaction, res.locals.features)
     )
+
     const result = await saveInteraction(
       req.session.token,
       res.locals.requestBody
