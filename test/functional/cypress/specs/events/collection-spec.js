@@ -2,7 +2,7 @@ import { assertBreadcrumbs } from '../../support/assertions'
 
 const selectors = require('../../../../selectors')
 
-describe('Company Collections', () => {
+describe('Event Collections', () => {
   before(() => {
     cy.visit('/events')
   })
