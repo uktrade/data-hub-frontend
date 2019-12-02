@@ -1,12 +1,6 @@
 @event-attendees
 Feature: Event attendees
 
-@event-attendees--collection-list
-Scenario: Event lists attendees
-  When I navigate to the `events.attendees` page using `event` `Grand exhibition` fixture
-  And the results summary for an attendee collection is present
-  And I can view the collection
-
 @event-attendees-add-attendee
 Scenario: Add/Remove event attendance at an event
   Given I create an event
@@ -22,9 +16,3 @@ Scenario: Add/Remove event attendance at an event
   And I see "Dean Cox" in the collection
   When I click the "View or edit service delivery" link
   Then I see the service delivery details
-
-@event-attendees-disable-add-event
-Scenario: Hide the add attendee button for disabled events
-  When I navigate to the `events.attendees` page using `event` `Teddy bear expo` fixture
-  And the results summary for an attendee collection is present
-  And I should not see the "Add attendee" button

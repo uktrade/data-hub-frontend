@@ -1,6 +1,7 @@
 module.exports = {
   addCompany: '[data-auto-id="Add company"]',
   addEvent: '[data-auto-id="Add event"]',
+  addAttendee: '[data-auto-id="Add attendee"]',
   editEvent: 'a:contains("Edit event")',
   addOrder: '[data-auto-id="Add order"]',
   collection: '.c-collection',
