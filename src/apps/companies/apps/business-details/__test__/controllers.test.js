@@ -11,6 +11,10 @@ const companyMock = {
   name: 'Test company',
   archived_documents_url_path: 'some/path',
   company_number: '222',
+  global_ultimate_duns_number: '2',
+  global_headquarters: {
+    id: '2233',
+  },
 }
 
 describe('Company business details', () => {
@@ -20,12 +24,18 @@ describe('Company business details', () => {
 
       before(async () => {
         nock(config.apiRoot)
-          .get('/v4/company?limit=10&offset=0&sortby=name&global_headquarters_id=1')
+          .get(`/v4/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`)
           .reply(200, { count: 999 })
 
         middlewareParams = buildMiddlewareParameters({
           company: companyMock,
           locals: {
+            globalUltimate: {
+              id: '222',
+              name: 'Test Global Ultimate',
+              url: '/test/222',
+            },
+            dnbRelatedCompaniesCount: 111,
             ARCHIVED_DOCUMENT_BASE_URL: '/',
           },
         })
@@ -41,7 +51,7 @@ describe('Company business details', () => {
         expect(middlewareParams.resMock.render).to.be.calledOnce
       })
 
-      it('should render the activity feed template', () => {
+      it('should render the template', () => {
         expect(middlewareParams.resMock.render).to.be.calledOnceWithExactly(
           'companies/apps/business-details/views/client-container', {
             'heading': 'Business details',
@@ -51,6 +61,12 @@ describe('Company business details', () => {
                 'name': 'Test company',
                 'company_number': '222',
               },
+              'globalUltimate': {
+                'name': 'Test Global Ultimate',
+                'url': '/test/222',
+              },
+              'isGlobalUltimateFlagEnabled': false,
+              'dnbRelatedCompaniesCount': 111,
               'subsidiariesCount': 999,
               'urls': {
                 'archivedDocument': '/some/path',
@@ -66,6 +82,8 @@ describe('Company business details', () => {
                 'linkSubsidiary': urls.companies.subsidiaries.link(companyMock.id),
                 'linkGlobalHQ': urls.companies.hierarchies.ghq.link(companyMock.id),
                 'removeGlobalHQ': urls.companies.hierarchies.ghq.remove(companyMock.id),
+                'globalHQ': urls.companies.detail(companyMock.global_headquarters.id),
+                'dnbHierarchy': urls.companies.dnbHierarchy.index(companyMock.id),
               },
             },
           })

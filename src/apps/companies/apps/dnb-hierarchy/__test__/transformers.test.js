@@ -1,10 +1,10 @@
-const { transformCompanyToSubsidiariesList } = require('../transformers')
+const { transformCompanyToDnbHierarchyList } = require('../transformers')
 const urls = require('../../../../../lib/urls')
 
 describe('Edit company form transformers', () => {
-  describe('#transformCompanyToSubsidiariesList', () => {
+  describe('#transformCompanyToDnbHierarchyList', () => {
     context('when called with a fully populated company', () => {
-      const actual = transformCompanyToSubsidiariesList({
+      const actual = transformCompanyToDnbHierarchyList({
         id: '123',
         name: 'Test company',
         sector: {
@@ -32,8 +32,8 @@ describe('Edit company form transformers', () => {
           'badges': [
             'Test country',
             'Test UK region',
-            'Global HQ',
             'Ultimate HQ',
+            'Global HQ',
           ],
           'headingText': 'Test company',
           'headingUrl': '/companies/123',
@@ -61,7 +61,7 @@ describe('Edit company form transformers', () => {
     })
 
     context('when called without ID', () => {
-      const actual = transformCompanyToSubsidiariesList({})
+      const actual = transformCompanyToDnbHierarchyList({})
 
       it('should return undefined', () => {
         expect(actual).to.be.undefined
@@ -69,7 +69,7 @@ describe('Edit company form transformers', () => {
     })
 
     context('when called only with ID', () => {
-      const actual = transformCompanyToSubsidiariesList({
+      const actual = transformCompanyToDnbHierarchyList({
         id: '123',
       })
 
