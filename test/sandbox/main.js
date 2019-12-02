@@ -5,6 +5,7 @@ var healthcheck = require('./routes/ping.js')
 var metadata = require('./routes/metadata.js')
 var user = require('./routes/whoami.js')
 var v3Contact = require('./routes/v3/contact/contact.js')
+var v3Event = require('./routes/v3/event/event.js')
 var v3FeatureFlag = require('./routes/v3/feature-flag/feature-flag.js')
 var v3Interaction = require('./routes/v3/interaction/interaction.js')
 var v3Investment = require('./routes/v3/investment/investment-projects.js')
@@ -356,6 +357,9 @@ Sandbox.define('/ping.xml', 'GET', healthcheck.ping)
 Sandbox.define('/v3/contact', 'GET', v3Contact.contact)
 Sandbox.define('/v3/contact', 'POST', v3Contact.contactCreate)
 Sandbox.define('/v3/contact/{contactId}', 'GET', v3Contact.contactById)
+
+// V3 Event
+Sandbox.define('/v3/event/{eventId}', 'GET', v3Event.eventById)
 
 // V3 Feature Flag
 Sandbox.define('/v3/feature-flag', 'GET', v3FeatureFlag.featureFlag)
