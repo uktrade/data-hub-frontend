@@ -15,7 +15,7 @@
     "develop": "run-p watch:js:*",
     "watch:test": "npm run test:unit -- -w",
     "watch:js:client": "webpack --watch --progress",
-    "watch:js:server": "nodemon $NODE_DEBUG_OPTION --inspect",
+    "watch:js:server": "nodemon $NODE_DEBUG_OPTION --inspect --ignore 'src/**/__test__/**/*'",
     "lint": "npm-run-all lint:all:*",
     "lint:all:js": "eslint ./test ./src ./assets ./circleci",
     "lint:all:styles": "sass-lint -v -q -c .sass-lint.yml assets/stylesheets/**/*.scss",
