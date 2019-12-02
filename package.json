@@ -63,9 +63,16 @@
   "nyc": {
     "extends": "@istanbuljs/nyc-config-babel",
     "all": true,
-    "include": ["src/**/*"],
-    "exclude": ["**/__test__/*"],
-    "extension": [".js", ".jsx"]
+    "include": [
+      "src/**/*"
+    ],
+    "exclude": [
+      "**/__test__/*"
+    ],
+    "extension": [
+      ".js",
+      ".jsx"
+    ]
   },
   "dependencies": {
     "@babel/core": "^7.0.0",
