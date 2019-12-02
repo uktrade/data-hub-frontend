@@ -8,7 +8,7 @@ import DeleteCompanyList from './apps/company-lists/client/DeleteCompanyList'
 import MyCompanies from './apps/dashboard/client/MyCompanies.jsx'
 import CreateListFormSection from './apps/company-lists/client/CreateListFormSection'
 import AddRemoveFromListSection from './apps/company-lists/client/AddRemoveFromListSection'
-import DnbSubsidiaries from './apps/companies/apps/dnb-subsidiaries/client/DnbSubsidiaries'
+import DnbHierarchy from './apps/companies/apps/dnb-hierarchy/client/DnbHierarchy'
 import LeadAdvisers from './apps/companies/apps/advisers/client/LeadAdvisers'
 import LargeCapitalProfileCollection from './apps/investments/client/LargeCapitalProfileCollection'
 import AddAdviser from './apps/companies/apps/advisers/client/AddAdviser'
@@ -57,8 +57,8 @@ function App () {
       <Mount selector="#lead-advisers">
         {props => <LeadAdvisers {...props} />}
       </Mount>
-      <Mount selector="#dnb-subsidiaries">
-        {props => <DnbSubsidiaries {...props} />}
+      <Mount selector="#dnb-hierarchy">
+        {props => <DnbHierarchy {...props} />}
       </Mount>
       <Mount selector="#company-business-details">
         {props => <CompanyBusinessDetails {...props} />}

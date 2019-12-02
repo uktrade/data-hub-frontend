@@ -70,6 +70,13 @@ describe('urls', () => {
       expect(urls.companies.advisers.remove(companyId)).to.equal(`/companies/${companyId}/advisers/remove`)
       expect(urls.companies.advisers.remove.route).to.equal('/:companyId/advisers/remove')
 
+      expect(urls.companies.dnbHierarchy.index.route).to.equal('/:companyId/dnb-hierarchy')
+      expect(urls.companies.dnbHierarchy.index(companyId)).to.equal(`/companies/${companyId}/dnb-hierarchy`)
+
+      expect(urls.companies.dnbHierarchy.data.route).to.equal('/:companyId/dnb-hierarchy/data')
+      expect(urls.companies.dnbHierarchy.data(companyId)).to.equal(`/companies/${companyId}/dnb-hierarchy/data`)
+
+      expect(urls.companies.exports.route).to.equal('/:companyId/exports')
       expect(urls.companies.exports(companyId)).to.equal(`/companies/${companyId}/exports`)
       expect(urls.companies.exports.route).to.equal('/:companyId/exports')
 

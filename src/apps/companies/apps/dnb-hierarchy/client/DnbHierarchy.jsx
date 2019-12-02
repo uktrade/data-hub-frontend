@@ -5,22 +5,21 @@ import { CollectionList } from 'data-hub-components'
 import axios from 'axios'
 import { LoadingBox } from 'govuk-react'
 
-const DnbSubsidiaries = ({ dataEndpoint }) => {
-  const [subsidiaries, setSubsidiaries] = useState([])
+const DnbHierarchy = ({ dataEndpoint }) => {
+  const [companies, setCompanies] = useState([])
   const [totalItems, setTotalItems] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
 
   const activePage = parseInt(useSearchParam('page'), 10) || 1
+  const getPageUrl = (page) => `${window.location.pathname}?page=${page}`
   const setActivePage = (page) =>
-    window.history.pushState({}, '', `${window.location.pathname}?page=${page}`)
+    window.history.pushState({}, '', getPageUrl(page))
 
   const onPageClick = (page, event) => {
     setActivePage(page)
     event.target.blur()
     event.preventDefault()
   }
-
-  const getPageUrl = (page) => `?page=${page}`
 
   useEffect(() => {
     async function fetchData () {
@@ -29,7 +28,7 @@ const DnbSubsidiaries = ({ dataEndpoint }) => {
           page: activePage,
         },
       })
-      setSubsidiaries(data.results)
+      setCompanies(data.results)
       setTotalItems(data.count)
       setIsLoading(false)
     }
@@ -44,8 +43,8 @@ const DnbSubsidiaries = ({ dataEndpoint }) => {
 
       <LoadingBox loading={isLoading}>
         <CollectionList
-          itemName="related company"
-          items={subsidiaries}
+          itemName="related company record"
+          items={companies}
           totalItems={totalItems}
           onPageClick={onPageClick}
           getPageUrl={getPageUrl}
@@ -56,8 +55,8 @@ const DnbSubsidiaries = ({ dataEndpoint }) => {
   )
 }
 
-DnbSubsidiaries.propTypes = {
+DnbHierarchy.propTypes = {
   dataEndpoint: PropTypes.string.isRequired,
 }
 
-export default DnbSubsidiaries
+export default DnbHierarchy

@@ -5,14 +5,14 @@ const selectors = require('../../../../selectors')
 const { company: { dnbGlobalUltimate, dnBGlobalUltimateAndGlobalHq } } = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
 
-describe('D&B Company subsidiaries', () => {
-  context('when viewing subsidiaries for a D&B Global Ultimate', () => {
+describe('D&B Company hierarchy', () => {
+  context('when viewing hierarchy for a D&B Global Ultimate', () => {
     before(() => {
-      cy.visit(urls.companies.dnbSubsidiaries.index(dnbGlobalUltimate.id))
+      cy.visit(urls.companies.dnbHierarchy.index(dnbGlobalUltimate.id))
     })
 
     it('should render the header', () => {
-      assertLocalHeader('Companies related to DnB Global Ultimate')
+      assertLocalHeader('Company records related to DnB Global Ultimate')
     })
 
     it('should render the helper text', () => {
@@ -29,21 +29,21 @@ describe('D&B Company subsidiaries', () => {
       })
     })
 
-    it('should render related companies', () => {
-      cy.get('#dnb-subsidiaries')
-        .should('contain', '2 related companies')
+    it('should render related company records counter', () => {
+      cy.get('#dnb-hierarchy')
+        .should('contain', '2 related company records')
         .and('contain', 'DnB Global Ultimate')
         .and('contain', 'DnB Global Ultimate subsidiary')
     })
   })
 
-  context('when viewing subsidiaries for a D&B Global Ultimate which is also Global HQ', () => {
+  context('when viewing hierarchy for a D&B Global Ultimate which is also Global HQ', () => {
     before(() => {
-      cy.visit(urls.companies.dnbSubsidiaries.index(dnBGlobalUltimateAndGlobalHq.id))
+      cy.visit(urls.companies.dnbHierarchy.index(dnBGlobalUltimateAndGlobalHq.id))
     })
 
     it('should render the header', () => {
-      assertLocalHeader('Companies related to DnB Global Ultimate')
+      assertLocalHeader('Company records related to DnB Global Ultimate')
     })
 
     it('should render breadcrumbs', () => {
@@ -56,9 +56,9 @@ describe('D&B Company subsidiaries', () => {
       })
     })
 
-    it('should render related companies', () => {
-      cy.get('#dnb-subsidiaries')
-        .should('contain', '2 related companies')
+    it('should render related company records counter', () => {
+      cy.get('#dnb-hierarchy')
+        .should('contain', '2 related company records')
         .and('contain', 'DnB Global Ultimate')
         .and('contain', 'DnB Global Ultimate subsidiary')
     })

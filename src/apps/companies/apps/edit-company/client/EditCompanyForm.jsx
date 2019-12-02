@@ -164,7 +164,7 @@ function EditCompanyForm ({
           {isOnOneList && (
             <>
               <FieldUneditable name="sector" label="Sector">
-                {sectorName}
+                {sectorName || 'Not set'}
               </FieldUneditable>
 
               <Details summary="Need to edit the sector?" data-test="sector-details">
@@ -173,7 +173,7 @@ function EditCompanyForm ({
               </Details>
 
               <FieldUneditable name="headquarter_type" label="Business hierarchy">
-                {headquarterType}
+                {headquarterType || 'Not set'}
               </FieldUneditable>
 
               <Details summary="Need to edit the headquarter type?" data-test="headquarter_type-details">
