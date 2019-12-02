@@ -3,7 +3,7 @@ const { assertKeyValueTable } = require('../../support/assertions')
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 
-describe('Company Details', () => {
+describe('Event Details', () => {
   it('should display event details', () => {
     cy.visit(`/events/${fixtures.event.oneDayExhibition.id}/details`)
 
