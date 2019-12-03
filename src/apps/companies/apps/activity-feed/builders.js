@@ -13,7 +13,7 @@ const {
 const FILTER_KEY_MAP = {
   [FILTER_KEYS.allActivity]: allActivity,
   [FILTER_KEYS.externalActivity]: externalActivity,
-  [FILTER_KEYS.myActivity]: dataHubActivity,
+  [FILTER_KEYS.myActivity]: [],
   [FILTER_KEYS.dataHubActivity]: dataHubActivity,
 }
 
@@ -29,18 +29,25 @@ function createESFilters (activityTypeFilter, ultimateHQSubsidiaryIds = [], comp
     ultimateHQSubsidiaryIds.forEach((id) => attributedToIds.push(`dit:DataHubCompany:${id}`))
   }
 
-  return [
-    {
-      terms: {
-        [ES_KEYS.type]: types,
+  const esQuery = []
+
+  if (types.length) {
+    esQuery.push(
+      {
+        terms: {
+          [ES_KEYS.type]: types,
+        },
       },
+    )
+  }
+
+  esQuery.push({
+    terms: {
+      [ES_KEYS.attributedTo]: attributedToIds,
     },
-    {
-      terms: {
-        [ES_KEYS.attributedTo]: attributedToIds,
-      },
-    },
-  ]
+  })
+
+  return esQuery
 }
 
 module.exports = {
