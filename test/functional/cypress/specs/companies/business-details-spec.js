@@ -1,57 +1,61 @@
 const { assertKeyValueTable, assertValueTable, assertBreadcrumbs } = require('../../support/assertions')
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
+const urls = require('../../../../../src/lib/urls')
 
-const assertDetailsContainer = ({ dataAutoId, heading, showEditLink, content }) => {
-  const detailsContainer = selectors.detailsContainer(dataAutoId)
-  const contentDataAutoId = dataAutoId.replace('Container', '')
+const HIERARCHY_STRINGS = {
+  dnbDescription: 'This hierarchy information from Dun & Bradstreet cannot be edited.',
+  dnbEmpty: 'This company is not related to any other company records.',
+  manualHierarchyDescription: 'This hierarchy information is manually recorded (linked) by Data Hub users. This means it can be different from the Dun & Bradstreet hierarchy, which in the future will replace this manually recorded information.',
+}
 
-  cy.get(detailsContainer.heading).should('have.text', heading)
-  cy.get(detailsContainer.editLink).should(showEditLink ? 'be.visible' : 'not.be.visible')
+const assertSummaryTable = ({ dataAutoId, heading, showEditLink, content }) => {
+  const summaryTableSelector = `[data-auto-id="${dataAutoId}"]`
+
+  cy.get(summaryTableSelector).find('caption').should('contain', heading)
+  cy.get(summaryTableSelector).contains('Edit').should(showEditLink ? 'be.visible' : 'not.be.visible')
 
   if (typeof content !== 'undefined') {
     Array.isArray(content)
-      ? assertValueTable(contentDataAutoId, content)
-      : assertKeyValueTable(contentDataAutoId, content)
+      ? assertValueTable(dataAutoId, content)
+      : assertKeyValueTable(dataAutoId, content)
   }
 }
 
 const assertAddress = ({ address, registeredAddress }) => {
-  const addressSelector1 = selectors.companyBusinessDetails().address(1)
-  const addressSelector2 = selectors.companyBusinessDetails().address(2)
+  const addressSelector1 = '[data-auto-id="addressesDetailsContainer"] td:nth-child(1)'
+  const addressSelector2 = '[data-auto-id="addressesDetailsContainer"] td:nth-child(2)'
 
-  if (Array.isArray(address)) {
-    cy.get(addressSelector1.badge(1)).should('not.exist')
+  if (address) {
+    cy.get(addressSelector1).contains('Registered').should('not.exist')
     address.map((line, index) => {
-      cy.get(addressSelector1.line(index + 1)).should('have.text', line)
+      cy.get(addressSelector1).find(`li:nth-child(${index + 1})`).should('have.text', line)
     })
   } else if (address === null) {
-    cy.get(addressSelector1.badge(1)).should('not.exist')
-    cy.get(addressSelector1.line(1)).should('not.exist')
+    cy.get(addressSelector1).should('not.exist')
   }
 
-  if (Array.isArray(registeredAddress)) {
-    cy.get(addressSelector2.badge(1)).should('have.text', 'Registered')
+  if (registeredAddress) {
+    cy.get(addressSelector2).contains('Registered').should('exist')
     registeredAddress.map((line, index) => {
-      cy.get(addressSelector2.line(index + 1)).should('have.text', line)
+      cy.get(addressSelector2).find(`li:nth-child(${index + 1})`).should('have.text', line)
     })
   } else if (registeredAddress === null) {
-    cy.get(addressSelector2.badge(1)).should('not.exist')
-    cy.get(addressSelector2.line(1)).should('not.exist')
+    cy.get(addressSelector2).should('not.exist')
   }
 }
 
 describe('Companies business details', () => {
   context('when viewing business details for a Dun & Bradstreet GHQ company on the One List not in the UK', () => {
     before(() => {
-      cy.visit(`/companies/${fixtures.company.oneListCorp.id}/business-details`)
+      cy.visit(urls.companies.businessDetails(fixtures.company.oneListCorp.id))
     })
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        'Home': '/',
-        'Companies': '/companies',
-        [fixtures.company.oneListCorp.name]: `/companies/${fixtures.company.oneListCorp.id}`,
+        'Home': urls.dashboard(),
+        'Companies': urls.companies.index(),
+        [fixtures.company.oneListCorp.name]: urls.companies.detail(fixtures.company.oneListCorp.id),
         'Business details': null,
       })
     })
@@ -69,7 +73,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "About" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'aboutDetailsContainer',
         heading: 'About One List Corp',
         showEditLink: false,
@@ -83,7 +87,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "Addresses" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'addressesDetailsContainer',
         heading: 'Addresses',
         showEditLink: false,
@@ -108,7 +112,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "Description" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'descriptionDetailsContainer',
         heading: 'Description',
         showEditLink: true,
@@ -123,7 +127,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "DIT sector" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'sectorDetailsContainer',
         heading: 'DIT sector',
         showEditLink: true,
@@ -134,7 +138,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "Global Account Manager - One List" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'oneListDetailsContainer',
         heading: 'Global Account Manager – One List',
         showEditLink: false,
@@ -146,13 +150,16 @@ describe('Companies business details', () => {
     })
 
     it('should display the "Business hierarchy" details container heading', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'businessHierarchyDetailsContainer',
         heading: 'Business hierarchy',
-        showEditLink: false,
+        showEditLink: true,
         content: {
+          [HIERARCHY_STRINGS.dnbDescription]: null,
+          [HIERARCHY_STRINGS.dnbEmpty]: null,
+          [HIERARCHY_STRINGS.manualHierarchyDescription]: null,
           'Headquarter type': 'Global HQ',
-          'Subsidiaries': 'None Link a subsidiary',
+          'Subsidiaries': 'NoneLink a subsidiary',
         },
       })
     })
@@ -168,14 +175,14 @@ describe('Companies business details', () => {
 
   context('when viewing business details for a Data Hub company on the One List in the UK', () => {
     before(() => {
-      cy.visit(`/companies/${fixtures.company.venusLtd.id}/business-details`)
+      cy.visit(urls.companies.businessDetails(fixtures.company.venusLtd.id))
     })
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        'Home': '/',
-        'Companies': '/companies',
-        [fixtures.company.venusLtd.name]: `/companies/${fixtures.company.venusLtd.id}`,
+        'Home': urls.dashboard(),
+        'Companies': urls.companies.index(),
+        [fixtures.company.venusLtd.name]: urls.companies.detail(fixtures.company.venusLtd.id),
         'Business details': null,
       })
     })
@@ -193,7 +200,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "About" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'aboutDetailsContainer',
         heading: 'About Venus Ltd',
         showEditLink: true,
@@ -209,7 +216,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "Addresses" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'addressesDetailsContainer',
         heading: 'Addresses',
         showEditLink: true,
@@ -234,7 +241,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "DIT region" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'regionDetailsContainer',
         heading: 'DIT region',
         showEditLink: true,
@@ -243,7 +250,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "DIT sector" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'sectorDetailsContainer',
         heading: 'DIT sector',
         showEditLink: true,
@@ -252,7 +259,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "Global Account Manager - One List" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'oneListDetailsContainer',
         heading: 'Global Account Manager – One List',
         showEditLink: true,
@@ -264,23 +271,24 @@ describe('Companies business details', () => {
     })
 
     it('should display the "Business hierarchy" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'businessHierarchyDetailsContainer',
         heading: 'Business hierarchy',
         showEditLink: true,
         content: {
-          'Global HQ': 'Archived Ltd Remove link',
+          [HIERARCHY_STRINGS.manualHierarchyDescription]: null,
+          'Global HQ': 'Archived LtdRemove link',
         },
       })
     })
 
     it('should display the "Documents from CDMS" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'documentsDetailsContainer',
         heading: 'Documents from CDMS',
         showEditLink: false,
         content: [
-          'View files and documents (will open another website)',
+          'View files and documents (Opens in a new window)',
         ],
       })
     })
@@ -292,14 +300,14 @@ describe('Companies business details', () => {
 
   context('when viewing business details for a Dun & Bradstreet company not on the One List', () => {
     before(() => {
-      cy.visit(`/companies/${fixtures.company.dnbCorp.id}/business-details`)
+      cy.visit(urls.companies.businessDetails(fixtures.company.dnbCorp.id))
     })
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        'Home': '/',
-        'Companies': '/companies',
-        [fixtures.company.dnbCorp.name]: `/companies/${fixtures.company.dnbCorp.id}`,
+        'Home': urls.dashboard(),
+        'Companies': urls.companies.index(),
+        [fixtures.company.dnbCorp.name]: urls.companies.detail(fixtures.company.dnbCorp.id),
         'Business details': null,
       })
     })
@@ -317,13 +325,13 @@ describe('Companies business details', () => {
     })
 
     it('should display the "About" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'aboutDetailsContainer',
         heading: 'About DnB Corp',
         showEditLink: false,
         content: {
           'Trading names': 'DnBD&B',
-          'Annual turnover': '£750,148.00This is an estimated numberWhat does that mean?Actual turnover is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
+          'Annual turnover': '£750,148This is an estimated numberWhat does that mean?Actual turnover is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
           'Number of employees': '95This is an estimated numberWhat does that mean?Actual number of employees is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
           'Website': 'Not set',
         },
@@ -331,7 +339,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "Addresses" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'addressesDetailsContainer',
         heading: 'Addresses',
         showEditLink: false,
@@ -360,7 +368,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "DIT sector" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'sectorDetailsContainer',
         heading: 'DIT sector',
         showEditLink: true,
@@ -373,13 +381,14 @@ describe('Companies business details', () => {
     })
 
     it('should display the "Business hierarchy" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'businessHierarchyDetailsContainer',
         heading: 'Business hierarchy',
         showEditLink: false,
-        content: {
-          'Global HQ': 'None Link to the Global HQ',
-        },
+        content: [
+          HIERARCHY_STRINGS.dnbDescription,
+          HIERARCHY_STRINGS.dnbEmpty,
+        ],
       })
     })
 
@@ -394,14 +403,14 @@ describe('Companies business details', () => {
 
   context('when viewing business details for an archived Data Hub company', () => {
     before(() => {
-      cy.visit(`/companies/${fixtures.company.archivedLtd.id}/business-details`)
+      cy.visit(urls.companies.businessDetails(fixtures.company.archivedLtd.id))
     })
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        'Home': '/',
-        'Companies': '/companies',
-        [fixtures.company.archivedLtd.name]: `/companies/${fixtures.company.archivedLtd.id}`,
+        'Home': urls.dashboard(),
+        'Companies': urls.companies.index(),
+        [fixtures.company.archivedLtd.name]: urls.companies.detail(fixtures.company.archivedLtd.id),
         'Business details': null,
       })
     })
@@ -415,11 +424,11 @@ describe('Companies business details', () => {
     })
 
     it('should display the "Unarchive" link', () => {
-      cy.get(selectors.companyBusinessDetails().unarchiveLink).should('be.visible')
+      cy.contains('Unarchive').should('be.visible')
     })
 
     it('should display the "About" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'aboutDetailsContainer',
         heading: 'About Archived Ltd',
         showEditLink: false,
@@ -434,7 +443,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "Addresses" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'addressesDetailsContainer',
         heading: 'Addresses',
         showEditLink: false,
@@ -463,7 +472,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "DIT sector" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'sectorDetailsContainer',
         heading: 'DIT sector',
         showEditLink: false,
@@ -472,7 +481,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "Global Account Manager - One List" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'oneListDetailsContainer',
         heading: 'Global Account Manager – One List',
         showEditLink: false,
@@ -484,11 +493,12 @@ describe('Companies business details', () => {
     })
 
     it('should display the "Business hierarchy" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'businessHierarchyDetailsContainer',
         heading: 'Business hierarchy',
         showEditLink: false,
         content: {
+          [HIERARCHY_STRINGS.manualHierarchyDescription]: null,
           'Headquarter type': 'Global HQ',
           'Subsidiaries': '1 subsidiary',
         },
@@ -506,14 +516,14 @@ describe('Companies business details', () => {
 
   context('when viewing business details for a company with minimal data', () => {
     before(() => {
-      cy.visit(`/companies/${fixtures.company.minimallyMinimalLtd.id}/business-details`)
+      cy.visit(urls.companies.businessDetails(fixtures.company.minimallyMinimalLtd.id))
     })
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        'Home': '/',
-        'Companies': '/companies',
-        [fixtures.company.minimallyMinimalLtd.name]: `/companies/${fixtures.company.minimallyMinimalLtd.id}`,
+        'Home': urls.dashboard(),
+        'Companies': urls.companies.index(),
+        [fixtures.company.minimallyMinimalLtd.name]: urls.companies.detail(fixtures.company.minimallyMinimalLtd.id),
         'Business details': null,
       })
     })
@@ -531,7 +541,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "About" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'aboutDetailsContainer',
         heading: 'About Minimally Minimal Ltd',
         showEditLink: true,
@@ -545,7 +555,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "Addresses" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'addressesDetailsContainer',
         heading: 'Addresses',
         showEditLink: true,
@@ -562,7 +572,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "DIT region" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'regionDetailsContainer',
         heading: 'DIT region',
         showEditLink: true,
@@ -571,7 +581,7 @@ describe('Companies business details', () => {
     })
 
     it('should display the "DIT sector" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'sectorDetailsContainer',
         heading: 'DIT sector',
         showEditLink: true,
@@ -584,12 +594,13 @@ describe('Companies business details', () => {
     })
 
     it('should display the "Business hierarchy" details container', () => {
-      assertDetailsContainer({
+      assertSummaryTable({
         dataAutoId: 'businessHierarchyDetailsContainer',
         heading: 'Business hierarchy',
         showEditLink: true,
         content: {
-          'Global HQ': 'None Link to the Global HQ',
+          [HIERARCHY_STRINGS.manualHierarchyDescription]: null,
+          'Global HQ': 'NoneLink to the Global HQ',
         },
       })
     })

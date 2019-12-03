@@ -54,9 +54,6 @@ describe('urls', () => {
       expect(urls.companies.businessDetails(companyId)).to.equal(`/companies/${companyId}/business-details`)
       expect(urls.companies.businessDetails.route).to.equal('/:companyId/business-details')
 
-      expect(urls.companies.businessDetails2(companyId)).to.equal(`/companies/${companyId}/business-details2`)
-      expect(urls.companies.businessDetails2.route).to.equal('/:companyId/business-details2')
-
       expect(urls.companies.activity.index(companyId)).to.equal(`/companies/${companyId}/activity`)
       expect(urls.companies.activity.index.route).to.equal('/:companyId/activity')
 

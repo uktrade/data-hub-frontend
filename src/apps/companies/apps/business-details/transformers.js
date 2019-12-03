@@ -50,7 +50,8 @@ const transformCompanyToBusinessDetails = (company) => {
     uk_region: get(company.uk_region, 'name'),
     global_headquarters: get(company.global_headquarters, 'name'),
     one_list_group_tier: get(company.one_list_group_tier, 'name'),
-    one_list_group_global_account_manager: company.one_list_group_tier && transformGlobalAccountManager(company.one_list_group_global_account_manager),
+    one_list_group_global_account_manager: company.one_list_group_tier &&
+      transformGlobalAccountManager(company.one_list_group_global_account_manager),
     headquarter_type_label: company.headquarter_type && hqLabels[company.headquarter_type.name],
   }, x => !x)
 }
