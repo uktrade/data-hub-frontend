@@ -105,11 +105,21 @@ describe('Activity feed controllers', () => {
       })
 
       it('should call fetchActivityFeed with a user id', async () => {
-        const { dataHubActivity } = ES_KEYS_GROUPED
-        commonTests(dataHubActivity, [
-          'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
-          'dit:DataHubAdviser:123',
-        ])
+        expect(fetchActivityFeedStub).to.be.calledWith({
+          token: '1234',
+          from: 0,
+          size: 20,
+          filter: [
+            {
+              terms: {
+                'object.attributedTo.id': [
+                  'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                  'dit:DataHubAdviser:123',
+                ],
+              },
+            },
+          ],
+        })
       })
     })
 
