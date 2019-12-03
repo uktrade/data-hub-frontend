@@ -13,5 +13,5 @@ module.exports = (body) => {
     }
   })
 
-  return data
+  return data.length ? data : null
 }
