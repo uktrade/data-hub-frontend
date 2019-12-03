@@ -359,6 +359,8 @@ describe('Interaction details middleware', () => {
         before(async () => {
           this.saveInteractionStub = sinon.stub()
           this.getServiceOptionsStub = sinon.stub()
+          this.mapErrorsStub = sinon.stub()
+          this.mapErrorsResponse = { mapErrors: true }
 
           this.middlewareParameters = buildMiddlewareParameters({
             requestBody: { ...interactionData },
@@ -376,7 +378,7 @@ describe('Interaction details middleware', () => {
               '../repos': {
                 saveInteraction: this.saveInteractionStub.rejects({
                   statusCode: 400,
-                  error: 'error',
+                  error: '400-error',
                 }),
               },
               '../../../lib/options': {
@@ -384,6 +386,7 @@ describe('Interaction details middleware', () => {
                   serviceOptionsTransformed
                 ),
               },
+              '../macros/map-errors': this.mapErrorsStub.returns(this.mapErrorsResponse),
             }
           )
 
@@ -402,10 +405,11 @@ describe('Interaction details middleware', () => {
           expect(this.middlewareParameters.resMock.redirect).to.not.be.called
         })
 
-        it('should set errors on locals', () => {
+        it('should map and set the errors on locals', () => {
+          expect(this.mapErrorsStub).to.have.been.calledOnceWithExactly('400-error')
           expect(this.middlewareParameters.resMock.locals.form).to.deep.equal({
             errors: {
-              messages: 'error',
+              messages: this.mapErrorsResponse,
             },
           })
         })
