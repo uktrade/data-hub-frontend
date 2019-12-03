@@ -1,6 +1,8 @@
 const selectors = require('../../../../selectors')
 const userActions = require('../../support/user-actions')
 
+const { assertKeyValueTable } = require('../../support/assertions')
+
 describe('Advisors', () => {
   const globalManagerTable = 2
   const adviserTable = 3
@@ -36,11 +38,25 @@ describe('Contacts', () => {
     email: 'company.contact@dit.com',
   }
 
-  it('should list a newly created contact in collection page', () => {
+  it('should create a contact for a given company', () => {
     cy.visit('/contacts/create?company=0fb3379c-341c-4da4-b825-bf8d47b26baa')
     userActions.contacts.create(data)
 
-    cy.visit('/companies/0fb3379c-341c-4da4-b825-bf8d47b26baa/contacts')
+    cy.get(selectors.message.successful).should('contain', 'Added new contact')
+
+    assertKeyValueTable('bodyMainContent', {
+      'Job title': 'Coffee machine operator',
+      'Phone number': '(44) 0778877778800',
+      'Address': '12 St George\'s Road, Paris, 75001, France',
+      'Email': 'company.contact@dit.com',
+      'Email marketing': 'Can be marketed to',
+    })
+  })
+
+  it('should display the newly created contact in company contact collection page', () => {
+    cy.visit('/companies/0fb3379c-341c-4da4-b825-bf8d47b26baa/activity')
+
+    cy.contains('Company contacts').click()
     cy.get(selectors.collection.items)
       .should('contain', 'Company Contact')
       .and('contain', 'Coffee machine operator')
