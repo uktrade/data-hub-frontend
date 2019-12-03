@@ -1,4 +1,5 @@
 const typeaheadId = '#group-field-dit_participants'
+const { EXPORT_INTEREST_STATUS } = require('../../src/apps/interactions/constants')
 
 module.exports = {
   subject: '#field-subject',
@@ -37,12 +38,12 @@ module.exports = {
   policyFeedbackNotes: '#field-policy_feedback_notes',
   teamSearch: '#dit_team__typeahead .multiselect__single',
   countriesDiscussed: {
-    yes: 'label[for=field-was_country_discussed-1]',
-    no: 'label[for=field-was_country_discussed-2]',
+    yes: 'label[for=field-were_countries_discussed-1]',
+    no: 'label[for=field-were_countries_discussed-2]',
   },
   countries: {
-    future: '#group-field-future_countries',
-    export: '#group-field-export_countries',
-    noInterest: '#group-field-no_interest_countries',
+    future: ('#group-field-' + EXPORT_INTEREST_STATUS.FUTURE_INTEREST),
+    export: ('#group-field-' + EXPORT_INTEREST_STATUS.EXPORTING_TO),
+    noInterest: ('#group-field-' + EXPORT_INTEREST_STATUS.NOT_INTERESTED),
   },
 }

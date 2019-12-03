@@ -12,6 +12,7 @@ const { getDitCompany } = require('../../companies/repos')
 const { joinPaths } = require('../../../lib/path')
 const { getReturnLink } = require('../helpers')
 const canAddCountries = require('../macros/can-add-countries')
+const mapErrors = require('../macros/map-errors')
 
 async function postDetails (req, res, next) {
   try {
@@ -42,7 +43,7 @@ async function postDetails (req, res, next) {
       return next(err)
     }
 
-    set(res.locals, 'form.errors.messages', err.error)
+    set(res.locals, 'form.errors.messages', mapErrors(err.error))
     next()
   }
 }
