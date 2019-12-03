@@ -2,6 +2,25 @@ const selectors = require('../../../../selectors')
 const { assertLocalNav } = require('../../support/assertions')
 
 describe('DIT Permission', () => {
+  describe('dashboard', () => {
+    before(() => {
+      cy.visit('')
+    })
+
+    it('should display DIT only header nav links', () => {
+      assertLocalNav(selectors.nav.headerNav, [
+        'Companies',
+        'Contacts',
+        'Events',
+        'Interactions',
+        'Investments',
+        'Orders',
+        'Dashboards',
+        'Market Access',
+      ])
+    })
+  })
+
   describe('activity', () => {
     before(() => {
       cy.visit('/companies/375094ac-f79a-43e5-9c88-059a7caa17f0')
