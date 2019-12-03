@@ -8,4 +8,4 @@ COPY . .
 
 EXPOSE 8001
 
-CMD java -XX:+UseG1GC -XX:+UseStringDeduplication ${JAVA_OPTS:--Xmx128m -Xmx128m} -jar /sandbox.jar --port=${PORT:-8001} --watch=false $JAVA_PARAMS run
+CMD java -XX:+UseG1GC -XX:+UseStringDeduplication ${JAVA_OPTS:--Xmx128m -Xmx128m} -jar /sandbox.jar --port=${PORT:-8001} --watch=true $JAVA_PARAMS run

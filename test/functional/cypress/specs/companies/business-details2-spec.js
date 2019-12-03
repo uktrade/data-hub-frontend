@@ -2,6 +2,12 @@ const { assertKeyValueTable, assertValueTable, assertBreadcrumbs } = require('..
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 
+const HIERARCHY_STRINGS = {
+  dnbDescription: 'This hierarchy information from Dun & Bradstreet cannot be edited.',
+  dnbEmpty: 'This company is not related to any other company records.',
+  manualHierarchyDescription: 'This hierarchy information is manually recorded (linked) by Data Hub users. This means it can be different from the Dun & Bradstreet hierarchy, which in the future will replace this manually recorded information.',
+}
+
 const assertSummaryTable = ({ dataAutoId, heading, showEditLink, content }) => {
   const summaryTableSelector = `[data-auto-id="${dataAutoId}"]`
 
@@ -146,8 +152,11 @@ describe('Companies business details', () => {
       assertSummaryTable({
         dataAutoId: 'businessHierarchyDetailsContainer',
         heading: 'Business hierarchy',
-        showEditLink: false,
+        showEditLink: true,
         content: {
+          [HIERARCHY_STRINGS.dnbDescription]: null,
+          [HIERARCHY_STRINGS.dnbEmpty]: null,
+          [HIERARCHY_STRINGS.manualHierarchyDescription]: null,
           'Headquarter type': 'Global HQ',
           'Subsidiaries': 'NoneLink a subsidiary',
         },
@@ -266,6 +275,7 @@ describe('Companies business details', () => {
         heading: 'Business hierarchy',
         showEditLink: true,
         content: {
+          [HIERARCHY_STRINGS.manualHierarchyDescription]: null,
           'Global HQ': 'Archived LtdRemove link',
         },
       })
@@ -374,9 +384,10 @@ describe('Companies business details', () => {
         dataAutoId: 'businessHierarchyDetailsContainer',
         heading: 'Business hierarchy',
         showEditLink: false,
-        content: {
-          'Global HQ': 'NoneLink to the Global HQ',
-        },
+        content: [
+          HIERARCHY_STRINGS.dnbDescription,
+          HIERARCHY_STRINGS.dnbEmpty,
+        ],
       })
     })
 
@@ -486,6 +497,7 @@ describe('Companies business details', () => {
         heading: 'Business hierarchy',
         showEditLink: false,
         content: {
+          [HIERARCHY_STRINGS.manualHierarchyDescription]: null,
           'Headquarter type': 'Global HQ',
           'Subsidiaries': '1 subsidiary',
         },
@@ -586,6 +598,7 @@ describe('Companies business details', () => {
         heading: 'Business hierarchy',
         showEditLink: true,
         content: {
+          [HIERARCHY_STRINGS.manualHierarchyDescription]: null,
           'Global HQ': 'NoneLink to the Global HQ',
         },
       })

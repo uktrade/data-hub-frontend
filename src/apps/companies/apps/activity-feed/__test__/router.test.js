@@ -1,13 +1,11 @@
-const router = require('~/src/apps/companies/apps/activity-feed/router')
+const router = require('../router')
 
 describe('Activity feed routes', () => {
-  it('should define route to activity feed app', () => {
+  it('should define all routes', () => {
     const paths = router.stack.filter(r => r.route).map(r => r.route.path)
-    expect(paths).to.contain('/')
-  })
-
-  it('should define route to activity feed data endpoint', () => {
-    const paths = router.stack.filter(r => r.route).map(r => r.route.path)
-    expect(paths).to.contain('/data')
+    expect(paths).to.deep.equal([
+      '/:companyId/activity',
+      '/:companyId/activity/data',
+    ])
   })
 })

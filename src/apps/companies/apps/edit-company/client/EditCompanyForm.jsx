@@ -36,6 +36,7 @@ function EditCompanyForm ({
   sectors,
   headquarterTypes,
   oneListEmail,
+  isOnOneList,
   showCompanyNumberForUkBranch,
 }) {
   const returnUrl = `/companies/${companyDetails.id}/business-details`
@@ -44,7 +45,6 @@ function EditCompanyForm ({
   const headquarterType = get(headquarterTypes.find(s => s.value === companyDetails.headquarter_type), 'label')
 
   const isBasedInUK = !!companyDetails.uk_based
-  const isOnOneList = !!companyDetails.one_list_group_tier
   const isDnbCompany = !!companyDetails.duns_number
 
   async function onSubmit (values) {
@@ -164,7 +164,7 @@ function EditCompanyForm ({
           {isOnOneList && (
             <>
               <FieldUneditable name="sector" label="Sector">
-                {sectorName}
+                {sectorName || 'Not set'}
               </FieldUneditable>
 
               <Details summary="Need to edit the sector?" data-test="sector-details">
@@ -173,7 +173,7 @@ function EditCompanyForm ({
               </Details>
 
               <FieldUneditable name="headquarter_type" label="Business hierarchy">
-                {headquarterType}
+                {headquarterType || 'Not set'}
               </FieldUneditable>
 
               <Details summary="Need to edit the headquarter type?" data-test="headquarter_type-details">
@@ -214,6 +214,7 @@ function EditCompanyForm ({
 }
 
 EditCompanyForm.propTypes = {
+  isOnOneList: PropTypes.bool.isRequired,
   csrfToken: PropTypes.string.isRequired,
   companyDetails: PropTypes.object.isRequired,
   turnoverRanges: PropTypes.arrayOf(PropTypes.shape({

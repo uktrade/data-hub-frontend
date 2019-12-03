@@ -6,8 +6,7 @@ const { fetchActivityFeed } = require('./repos')
 const config = require('../../../../config')
 
 async function renderActivityFeed (req, res, next) {
-  const { company, features } = res.locals
-  const { token } = req.session
+  const { company, features, dnbHierarchyCount } = res.locals
 
   try {
     const contentProps = company.archived ? {} : {
@@ -23,12 +22,9 @@ async function renderActivityFeed (req, res, next) {
     const props = {
       ...contentProps,
       apiEndpoint: companies.activity.data(company.id),
-    }
 
-    if (company.is_global_ultimate) {
-      const { results } = await getGlobalUltimateHierarchy(token, company.global_ultimate_duns_number)
-      props.dnbHierarchyCount = results.length
-      props.dnbSubsidiaryCount = results.length - 1 // Substract the Global Utlimate
+      // TODO: Fix typo on the ActivityFeedApp component.
+      dnbHierachyCount: dnbHierarchyCount,
     }
 
     res
