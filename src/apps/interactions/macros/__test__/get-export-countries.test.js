@@ -73,7 +73,7 @@ describe('getExportCountries', () => {
 
   context('When there are no countries', () => {
     it('should return an empty array', () => {
-      expect(getExportCountries({})).to.deep.equal([])
+      expect(getExportCountries({})).to.deep.equal(null)
     })
   })
 })
