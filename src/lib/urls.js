@@ -81,7 +81,6 @@ module.exports = {
     },
     audit: url('/companies', '/:companyId/audit'),
     businessDetails: url('/companies', '/:companyId/business-details'),
-    businessDetails2: url('/companies', '/:companyId/business-details2'),
     detail: url('/companies', '/:companyId'),
     edit: url('/companies', '/:companyId/edit'),
     archive: url('/companies', '/:companyId/archive'),
