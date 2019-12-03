@@ -1,22 +1,21 @@
 const urls = require('../../../../../lib/urls')
 const {
-  renderDnbSubsidiaries,
-  fetchSubsidiariesHandler,
+  renderDnbHierarchy,
+  fetchDnbHierarchyHandler,
 } = require('../controllers')
 
 const buildMiddlewareParameters = require('../../../../../../test/unit/helpers/middleware-parameters-builder')
-const subsidiaries = require('../../../../../../test/unit/data/companies/subsidiary-company-search-response')
-const { mockDnbSubsidiariesEndpoint } = require('./utils')
+const hierarchy = require('../../../../../../test/unit/data/companies/subsidiary-company-search-response')
+const { mockGetDnbHierarchy } = require('./utils')
 
 const companyMock = {
   id: '1',
   name: 'Test company',
-  duns_number: '999999',
-  is_global_ultimate: true,
+  global_ultimate_duns_number: '999999',
 }
 
-describe('D&B Company Subsidiaries', () => {
-  describe('#renderDnbSubsidiaries', () => {
+describe('D&B Company hierarchy', () => {
+  describe('#renderDnbHierarchy', () => {
     context('when the collection renders successfully', async () => {
       let middlewareParams
 
@@ -25,7 +24,7 @@ describe('D&B Company Subsidiaries', () => {
           company: companyMock,
         })
 
-        await renderDnbSubsidiaries(
+        await renderDnbHierarchy(
           middlewareParams.reqMock,
           middlewareParams.resMock,
           middlewareParams.nextSpy,
@@ -38,10 +37,10 @@ describe('D&B Company Subsidiaries', () => {
 
       it('should render the activity feed template', () => {
         expect(middlewareParams.resMock.render).to.be.calledOnceWithExactly(
-          'companies/apps/dnb-subsidiaries/views/client-container', {
-            heading: 'Companies related to Test company',
+          'companies/apps/dnb-hierarchy/views/client-container', {
+            heading: 'Company records related to Test company',
             props: {
-              dataEndpoint: urls.companies.dnbSubsidiaries.data('1'),
+              dataEndpoint: urls.companies.dnbHierarchy.data('1'),
             },
           })
       })
@@ -78,7 +77,7 @@ describe('D&B Company Subsidiaries', () => {
           },
         }
 
-        await renderDnbSubsidiaries(
+        await renderDnbHierarchy(
           middlewareParams.reqMock,
           errorRes,
           middlewareParams.nextSpy,
@@ -90,17 +89,17 @@ describe('D&B Company Subsidiaries', () => {
       })
     })
 
-    context('when a company is not a D&B Global Ultimate', async () => {
+    context('when a company does not belong to D&B hierarchy', async () => {
       let middlewareParams
 
       before(async () => {
         middlewareParams = buildMiddlewareParameters({
           company: {
-            is_global_ultimate: false,
+            global_ultimate_duns_number: null,
           },
         })
 
-        await renderDnbSubsidiaries(
+        await renderDnbHierarchy(
           middlewareParams.reqMock,
           middlewareParams.resMock,
           middlewareParams.nextSpy,
@@ -109,15 +108,15 @@ describe('D&B Company Subsidiaries', () => {
 
       it('should call next() with an error', async () => {
         expect(middlewareParams.nextSpy).to.have.been.calledOnceWithExactly(sinon.match({
-          message: 'This company is not a D&B Global Ultimate',
+          message: 'This company does not belong to any D&B hierarchy',
           statusCode: 403,
         }))
       })
     })
   })
 
-  describe('#fetchSubsidiariesHandler', () => {
-    context('when fetching D&B subsidiaries', async () => {
+  describe('#fetchDnbHierarchyHandler', () => {
+    context('when fetching D&B hierarchy', async () => {
       let middlewareParams
 
       before(async () => {
@@ -128,20 +127,20 @@ describe('D&B Company Subsidiaries', () => {
           },
         })
 
-        mockDnbSubsidiariesEndpoint({
-          globalUltimateSunsNumber: companyMock.duns_number,
-          responseBody: subsidiaries,
+        mockGetDnbHierarchy({
+          globalUltimateDunsNumber: companyMock.global_ultimate_duns_number,
+          responseBody: hierarchy,
           offset: 10,
         })
 
-        await fetchSubsidiariesHandler(
+        await fetchDnbHierarchyHandler(
           middlewareParams.reqMock,
           middlewareParams.resMock,
           middlewareParams.nextSpy,
         )
       })
 
-      it('should respond with a list of D&B subsidiaries', () => {
+      it('should respond with a list of D&B hierarchy', () => {
         expect(middlewareParams.resMock.json).to.be
           .calledOnceWithExactly(
             {
@@ -172,8 +171,8 @@ describe('D&B Company Subsidiaries', () => {
       let middlewareParams
 
       before(async () => {
-        mockDnbSubsidiariesEndpoint({
-          globalUltimateSunsNumber: companyMock.duns_number,
+        mockGetDnbHierarchy({
+          globalUltimateDunsNumber: companyMock.global_ultimate_duns_number,
           responseCode: 500,
           responseBody: 'Error message',
         })
@@ -183,7 +182,7 @@ describe('D&B Company Subsidiaries', () => {
           requestBody: companyMock,
         })
 
-        await fetchSubsidiariesHandler(
+        await fetchDnbHierarchyHandler(
           middlewareParams.reqMock,
           middlewareParams.resMock,
           middlewareParams.nextSpy,

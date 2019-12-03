@@ -189,7 +189,7 @@
       if (!this.useMultipleSelect) {
         this.setPlaceHolder = this.getLabelFromValue(this.selectedValue, this.multiSelectModel) || this.placeholder
       }
-      
+
       this.isCloseOnSelect = !this.useMultipleSelect
       this.multiSelectModel = null
 
@@ -230,17 +230,17 @@
         if (activeValue.length < 1) {
           return this.setPlaceHolder
         }
-        
+
         return `${activeValue[0].label}${activeValue[0].subLabel ? ', ' + activeValue[0].subLabel : ''}`
       },
       queryOptions: function (query) {
         this.isAsync ? this.asyncSearch(query) : this.search(query)
       },
-      search: debounce(function (query) {
+      search: function (query) {
         this.options = this.optionsData.filter((obj) => {
           return matchWords(obj.label, query)
         })
-      }, 500),
+      },
       asyncSearch: debounce(function (query) {
         if (query.length < 3) {return}
         this.isLoading = true

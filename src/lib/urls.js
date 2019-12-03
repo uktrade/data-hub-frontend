@@ -86,9 +86,9 @@ module.exports = {
     edit: url('/companies', '/:companyId/edit'),
     archive: url('/companies', '/:companyId/archive'),
     unarchive: url('/companies', '/:companyId/unarchive'),
-    dnbSubsidiaries: {
-      index: url('/companies', '/:companyId/dnb-subsidiaries'),
-      data: url('/companies', '/:companyId/dnb-subsidiaries/data'),
+    dnbHierarchy: {
+      index: url('/companies', '/:companyId/dnb-hierarchy'),
+      data: url('/companies', '/:companyId/dnb-hierarchy/data'),
     },
     exports: url('/companies', '/:companyId/exports'),
     hierarchies: {

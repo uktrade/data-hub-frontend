@@ -6,6 +6,7 @@ const {
 const buildMiddlewareParameters = require('../../../../../../test/unit/helpers/middleware-parameters-builder')
 
 const companyMock = require('../../../../../../test/unit/data/companies/company-v4.json')
+const companyTierDItaMock = require('../../../../../../test/unit/data/companies/one-list-group-tier-d-ita.json')
 
 const metadataMock = {
   turnoverRangeOptions: [
@@ -84,6 +85,38 @@ describe('Edit company form controllers', () => {
       nock(config.apiRoot)
         .get('/v4/metadata/headquarter-type')
         .reply(200, metadataMock.headquarterTypeOptions)
+    })
+
+    context('when editing a One List company', () => {
+      beforeEach(async () => {
+        middlewareParams = buildMiddlewareParameters({
+          company: companyMock,
+        })
+        await renderEditCompanyForm(
+          middlewareParams.reqMock,
+          middlewareParams.resMock,
+          middlewareParams.nextSpy,
+        )
+      })
+      it('should set the isOneList flag to true', () => {
+        expect(middlewareParams.resMock.render.firstCall.args[1].props.isOnOneList).to.be.true
+      })
+    })
+
+    context('when editing a One List Tier D ITA', () => {
+      beforeEach(async () => {
+        middlewareParams = buildMiddlewareParameters({
+          company: companyTierDItaMock,
+        })
+        await renderEditCompanyForm(
+          middlewareParams.reqMock,
+          middlewareParams.resMock,
+          middlewareParams.nextSpy,
+        )
+      })
+      it('should set the isOneList flag to false', () => {
+        expect(middlewareParams.resMock.render.firstCall.args[1].props.isOnOneList).to.be.false
+      })
     })
 
     context('when editing a foreign company', () => {
