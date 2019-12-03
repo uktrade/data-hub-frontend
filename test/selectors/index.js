@@ -23,6 +23,7 @@ exports.companyList = {
 }
 
 exports.contactCreate = require('./contact/create')
+exports.eventCreate = require('./event/create')
 
 exports.omisCreate = require('./omis/create')
 exports.omisSummary = require('./omis/summary')
