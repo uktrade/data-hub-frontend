@@ -16,6 +16,7 @@ const {
   feedbackPolicyRequest,
   feedbackPolicyIssueType,
   feedbackPolicyNotes,
+  countriesDiscussed,
 } = require('./fields')
 
 module.exports = function ({
@@ -34,6 +35,8 @@ module.exports = function ({
   areas,
   types,
   company,
+  theme,
+  featureFlags,
 }) {
   return {
     returnLink,
@@ -123,6 +126,7 @@ module.exports = function ({
         },
       },
       feedbackPolicyNotes,
+      ...countriesDiscussed(theme, featureFlags),
     ].map(field => {
       return assign(field, {
         label: field.label || labels.serviceDelivery[field.name],

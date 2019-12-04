@@ -6,6 +6,9 @@ const MyCompanies = (props) =>
     deleteListPropsAccessor={list =>
       ({ href: `/company-lists/${list.id}/delete` })
     }
+    addInteractionPropsAccessor={company =>
+      ({ href: `/companies/${company.id}/interactions/create` })
+    }
   >
     <MyCompaniesTile />
   </useMyCompaniesContext.Provider>
