@@ -51,6 +51,7 @@ function transformInteractionFormBodyToApiRequest (body, services, addCountries)
       policy_areas: castCompactArray(body.policy_areas),
       policy_issue_types: castCompactArray(body.policy_issue_types),
       status: INTERACTION_STATUS.COMPLETE,
+      were_countries_discussed: body.were_countries_discussed || null,
       export_countries: (addCountries ? getExportCountries(body) : null),
     },
     fieldsToOmit
