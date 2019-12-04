@@ -124,6 +124,6 @@ exports.getCompanyList = function (req, res) {
   res.json(200, companyList)
 }
 
-exports.advisersAdd = function (req, res) {
+exports.manageAdviser = function (req, res) {
   return res.json(204, {})
 }

@@ -11,7 +11,7 @@ import AddRemoveFromListSection from './apps/company-lists/client/AddRemoveFromL
 import DnbHierarchy from './apps/companies/apps/dnb-hierarchy/client/DnbHierarchy'
 import LeadAdvisers from './apps/companies/apps/advisers/client/LeadAdvisers'
 import LargeCapitalProfileCollection from './apps/investments/client/LargeCapitalProfileCollection'
-import AddAdviser from './apps/companies/apps/advisers/client/AddAdviser'
+import ManageAdviser from './apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails
   from './apps/companies/apps/business-details/client/CompanyBusinessDetails'
 
@@ -66,8 +66,10 @@ function App () {
       <Mount selector="#large-capital-profile-collection">
         {props => <LargeCapitalProfileCollection {...props} />}
       </Mount>
-      <Mount selector="#add-adviser">
-        {props => <AddAdviser {...props} csrfToken={globalProps.csrfToken} />}
+      <Mount selector="#manage-adviser">
+        {props =>
+          <ManageAdviser {...props} csrfToken={globalProps.csrfToken} />
+        }
       </Mount>
     </>
   )

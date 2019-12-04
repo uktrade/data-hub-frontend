@@ -70,10 +70,11 @@ async function renderAdvisers (req, res, next) {
     : await renderCoreTeamAdvisers(req, res, next)
 }
 
-// istanbul ignore next: Only testable with whitebox tests and alerady covered by functional tests
-const renderAddAdviserForm = (req, res) => {
+// istanbul ignore next: Covered by functional tests
+const form = (req, res) => {
   const rawLeadITA = res.locals.company.one_list_group_global_account_manager
   const { name, id } = res.locals.company
+  const isRemove = req.url === '/remove'
   const currentLeadITA = rawLeadITA && {
     name: rawLeadITA.name,
     team: rawLeadITA.dit_team.name,
@@ -81,26 +82,32 @@ const renderAddAdviserForm = (req, res) => {
   res
     .breadcrumb(name, urls.companies.detail(id))
     .breadcrumb(
-      currentLeadITA
-        ? 'Replace the Lead ITA'
-        : 'Confirm you are the Lead ITA'
+      isRemove
+        ? 'Remove the Lead ITA'
+        : currentLeadITA
+          ? 'Replace the Lead ITA'
+          : 'Confirm you are the Lead ITA'
     )
-    .render('companies/apps/advisers/views/add-adviser.njk', {
+    .render('companies/apps/advisers/views/manage-adviser.njk', {
       props: {
+        isRemove,
         currentLeadITA,
         cancelUrl: urls.companies.advisers.index(id),
       },
     })
 }
 
-// istanbul ignore next: Only testable with whitebox tests and alerady covered by functional tests
-async function addAdviser (req, res, next) {
+// istanbul ignore next: Covered by functional tests
+async function submit (req, res, next) {
   const { company: { id } } = res.locals
+  const action = req.url === '/remove'
+    ? 'remove'
+    : 'self-assign'
 
   try {
     await authorisedRequest(req.session.token, {
       method: 'POST',
-      url: `${config.apiRoot}/v4/company/${id}/self-assign-account-manager`,
+      url: `${config.apiRoot}/v4/company/${id}/${action}-account-manager`,
     })
 
     req.flash('success', 'Lead adviser information updated')
@@ -112,6 +119,6 @@ async function addAdviser (req, res, next) {
 
 module.exports = {
   renderAdvisers,
-  addAdviser,
-  renderAddAdviserForm,
+  submit,
+  form,
 }
