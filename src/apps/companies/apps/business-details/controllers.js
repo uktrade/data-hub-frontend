@@ -31,7 +31,7 @@ async function renderBusinessDetails (req, res) {
         globalUltimate: globalUltimate ? pick(globalUltimate, ['name', 'url']) : undefined,
         urls: {
           companiesHouse: urls.external.companiesHouse(company.company_number),
-          companyBusinessDetails: urls.companies.businessDetails2(company.id),
+          companyBusinessDetails: urls.companies.businessDetails(company.id),
           companyEdit: urls.companies.edit(company.id),
           companyArchive: `${urls.companies.archive(company.id)}?_csrf=${csrfToken}`,
           companyUnarchive: `${urls.companies.unarchive(company.id)}?_csrf=${csrfToken}`,

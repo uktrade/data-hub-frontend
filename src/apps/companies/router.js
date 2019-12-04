@@ -11,8 +11,7 @@ const { getCollection, exportCollection } = require('../../modules/search/middle
 const { renderCompanyList } = require('./controllers/list')
 const { renderDetails } = require('./controllers/details')
 
-const { renderBusinessDetails } = require('./controllers/business-details')
-const { renderBusinessDetails: renderBusinessDetails2 } = require('./apps/business-details/controllers')
+const { renderBusinessDetails } = require('./apps/business-details/controllers')
 
 const { renderOrders } = require('./controllers/orders')
 const { renderAuditLog } = require('./controllers/audit')
@@ -104,8 +103,7 @@ router.use('/:companyId', handleRoutePermissions(LOCAL_NAV), setCompaniesLocalNa
 router.get('/:companyId', redirectToFirstNavItem)
 router.get('/:companyId/details', renderDetails)
 
-router.get('/:companyId/business-details', renderBusinessDetails)
-router.get(urls.companies.businessDetails2.route, renderBusinessDetails2)
+router.get(urls.companies.businessDetails.route, renderBusinessDetails)
 
 router.get('/:companyId/hierarchies/ghq/search', getGlobalHQCompaniesCollection, renderAddGlobalHQ)
 router.get(urls.companies.hierarchies.ghq.add.route, setGlobalHQ)
