@@ -11,28 +11,45 @@ describe('Activity feed repos', () => {
 
     context('when called with filters', () => {
       const { dataHubActivity } = ES_KEYS_GROUPED
-      let filter, results
+      let body, results
       const token = 'abcd'
 
       before(async () => {
-        filter = [
-          {
-            terms: {
-              'object.type': dataHubActivity,
+        body = {
+          from: 0,
+          size: 20,
+          sort: [
+            {
+              'object.startTime': {
+                order: 'desc',
+              },
+            },
+          ],
+          query: {
+            bool: {
+              filter: {
+                bool: {
+                  must: [
+                    {
+                      terms: {
+                        'object.type': dataHubActivity,
+                      },
+                    },
+                    {
+                      term: {
+                        'object.attributedTo.id': 'dit:DataHubCompany:123',
+                      },
+                    },
+                  ],
+                },
+              },
             },
           },
-          {
-            terms: {
-              'object.attributedTo.id': ['dit:DataHubCompany:123'],
-            },
-          },
-        ]
+        }
 
         results = await repos.fetchActivityFeed({
           token,
-          from: 0,
-          size: 20,
-          filter,
+          body,
         })
       })
 
@@ -40,18 +57,7 @@ describe('Activity feed repos', () => {
         expect(authorisedRequestStub).to.be.calledOnceWith(
           token,
           {
-            body: {
-              from: 0,
-              size: 20,
-              query: {
-                bool: {
-                  filter,
-                },
-              },
-              sort: {
-                'object.startTime': 'desc',
-              },
-            },
+            body,
             url: `${config.apiRoot}/v4/activity-feed`,
           })
       })
