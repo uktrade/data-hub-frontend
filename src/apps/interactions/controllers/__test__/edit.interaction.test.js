@@ -29,7 +29,7 @@ describe('Interaction edit controller (Interactions)', () => {
       title: sinon.stub().returnsThis(),
       render: sinon.spy(),
       redirect: sinon.spy(),
-      locals: {},
+      locals: { features: {} },
     }
 
     this.nextStub = sinon.stub()
@@ -125,6 +125,7 @@ describe('Interaction edit controller (Interactions)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -174,6 +175,7 @@ describe('Interaction edit controller (Interactions)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -223,6 +225,7 @@ describe('Interaction edit controller (Interactions)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -519,6 +522,7 @@ describe('Interaction edit controller (Interactions)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -572,6 +576,7 @@ describe('Interaction edit controller (Interactions)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -863,6 +868,7 @@ describe('Interaction edit controller (Interactions)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -928,6 +934,7 @@ describe('Interaction edit controller (Interactions)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -980,6 +987,7 @@ describe('Interaction edit controller (Interactions)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -1178,6 +1186,7 @@ describe('Interaction edit controller (Interactions)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -1224,12 +1233,13 @@ describe('Interaction edit controller (Interactions)', () => {
   context('when a new interaction has a kind that does not match service-delivery or interaction', () => {
     beforeEach(async () => {
       this.req.params = {
-        ...this.req.parms,
+        ...this.req.params,
         theme: 'export',
         kind: 'not-really-an-interaction',
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -1270,6 +1280,60 @@ describe('Interaction edit controller (Interactions)', () => {
       expect(this.nextStub).to.have.been.called
       expect(this.nextStub.firstCall.args[0]).to.be.instanceof(Error)
       expect(this.nextStub.firstCall.args[0].message).to.equal('Invalid kind')
+    })
+  })
+
+  context('when a new interaction has a theme that does not match', () => {
+    beforeEach(async () => {
+      this.req.params = {
+        ...this.req.params,
+        theme: 'foo',
+        kind: 'not-really-an-interaction',
+      }
+
+      this.res.locals = {
+        ...this.res.locals,
+        company: {
+          id: '1',
+          name: 'Fred ltd.',
+        },
+        form: {
+          errors: {
+            messages: {
+              subject: ['Error message'],
+            },
+          },
+        },
+        requestBody: {
+          subject: 'a',
+        },
+      }
+
+      nock(config.apiRoot)
+        .get('/v3/contact?company_id=1&limit=500')
+        .reply(200, { results: this.contactsData })
+        .get('/v4/metadata/team')
+        .reply(200, this.metadataMock.teamOptions)
+        .get('/v4/metadata/service?contexts__has_any=export_service_delivery')
+        .reply(200, this.metadataMock.serviceOptions)
+        .get('/adviser/?limit=100000&offset=0')
+        .reply(200, { results: this.activeInactiveAdviserData })
+        .get('/v4/metadata/communication-channel')
+        .reply(200, this.metadataMock.channelOptions)
+        .get('/v4/metadata/service-delivery-status')
+        .reply(200, this.metadataMock.serviceDeliveryStatus)
+        .get('/v4/metadata/policy-area')
+        .reply(200, this.metadataMock.policyAreaOptions)
+        .get('/v4/metadata/policy-issue-type')
+        .reply(200, this.metadataMock.policyIssueType)
+
+      await controller.renderEditPage(this.req, this.res, this.nextStub)
+    })
+
+    it('should throw an error', () => {
+      expect(this.nextStub).to.have.been.called
+      expect(this.nextStub.firstCall.args[0]).to.be.instanceof(Error)
+      expect(this.nextStub.firstCall.args[0].message).to.equal('Invalid theme')
     })
   })
 })

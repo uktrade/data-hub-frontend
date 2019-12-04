@@ -1,5 +1,8 @@
 const { flattenDeep } = require('lodash')
 
+const { globalFields } = require('../../macros')
+const canAddCountries = require('./can-add-countries')
+
 module.exports = {
   adviser (advisers) {
     return {
@@ -225,6 +228,54 @@ module.exports = {
       name: 'communication_channel',
       initialOption: '-- Select communication channel --',
       options: channels,
+    }
+  },
+  countriesDiscussed: (theme, featureFlags) => {
+    if (!canAddCountries(theme, featureFlags)) {
+      return []
+    } else {
+      return [
+        {
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          name: 'was_country_discussed',
+          modifier: 'inline',
+          optional: false,
+          options: [
+            {
+              label: 'Yes',
+              value: 'true',
+            },
+            {
+              label: 'No',
+              value: 'false',
+            },
+          ],
+        },
+        ...[
+          'future_countries',
+          'export_countries',
+          'no_interest_countries',
+        ].map((name) => ({
+          macroName: 'Typeahead',
+          name,
+          hint: 'Add all that you discussed',
+          modifier: 'subfield',
+          condition: {
+            name: 'was_country_discussed',
+            value: 'true',
+          },
+          isAsync: false,
+          isLabelHidden: false,
+          useSubLabel: false,
+          placeholder: 'Search countries',
+          classes: 'c-form-group--no-filter',
+          multipleSelect: true,
+          options: globalFields.countries.options(),
+          target: 'metadata',
+          autoSubmit: false,
+        })),
+      ]
     }
   },
 }
