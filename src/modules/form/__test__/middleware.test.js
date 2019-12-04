@@ -5,7 +5,7 @@ const {
   setJourneyDetails,
   setBreadcrumbs,
   renderTemplate,
-} = require('~/src/modules/form/middleware.js')
+} = require('../middleware')
 const steps = require('../__fixtures__/steps')()
 
 describe('#postDetails', () => {

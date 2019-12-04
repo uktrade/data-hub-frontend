@@ -1,8 +1,8 @@
-const config = require('~/src/config')
+const config = require('../../../../config')
 
 describe('Collection middleware', () => {
   beforeEach(() => {
-    this.middleware = require('~/src/modules/search/middleware/collection')
+    this.middleware = require('../collection')
     this.reqMock = {
       session: {
         token: '1234',

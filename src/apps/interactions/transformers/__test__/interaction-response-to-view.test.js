@@ -1,8 +1,8 @@
-const config = require('~/src/config')
-const transformInteractionResponseToViewRecord = require('~/src/apps/interactions/transformers/interaction-response-to-view')
-const mcokDraftPastMeeting = require('~/test/unit/data/interactions/draft-past-meeting.json')
-const mockInteraction = require('~/test/unit/data/interactions/interaction.json')
-const mockInteractionWithPolicyFeedback = require('~/test/unit/data/interactions/interaction-with-feedback.json')
+const config = require('../../../../config')
+const transformInteractionResponseToViewRecord = require('../interaction-response-to-view')
+const mcokDraftPastMeeting = require('../../../../../test/unit/data/interactions/draft-past-meeting.json')
+const mockInteraction = require('../../../../../test/unit/data/interactions/interaction.json')
+const mockInteractionWithPolicyFeedback = require('../../../../../test/unit/data/interactions/interaction-with-feedback.json')
 
 config.archivedDocumentsBaseUrl = 'http://base'
 

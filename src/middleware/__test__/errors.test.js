@@ -11,7 +11,7 @@ describe('Error Middleware Test', () => {
     this.winstonInfoStub = sinon.stub()
 
     this.errorsStub = (isDev) => {
-      return proxyquire('~/src/middleware/errors', {
+      return proxyquire('../errors', {
         '../config': {
           isDev,
         },

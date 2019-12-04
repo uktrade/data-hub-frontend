@@ -1,4 +1,6 @@
-const investmentData = require('~/test/unit/data/investment/investment-data.json')
+const proxyquire = require('proxyquire')
+
+const investmentData = require('../../../../../test/unit/data/investment/investment-data.json')
 
 describe('Investment team middleware', () => {
   beforeEach(() => {
@@ -33,7 +35,7 @@ describe('Investment team middleware', () => {
       },
     }
 
-    this.teamMiddleware = proxyquire('~/src/apps/investments/middleware/team', {
+    this.teamMiddleware = proxyquire('../team', {
       '../transformers': {
         transformBriefInvestmentSummary: this.transformBriefInvestmentSummaryStub,
       },

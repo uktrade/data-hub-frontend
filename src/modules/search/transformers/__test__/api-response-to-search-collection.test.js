@@ -1,3 +1,5 @@
+const proxyquire = require('proxyquire')
+
 describe('Search transformers', () => {
   beforeEach(() => {
     this.transformApiResponseToCollectionInnerStub = sinon.stub().returns()
@@ -9,7 +11,7 @@ describe('Search transformers', () => {
       entityDetails: [],
     }
 
-    this.transformApiResponseToSearchCollection = proxyquire('~/src/modules/search/transformers/api-response-to-search-collection.js', {
+    this.transformApiResponseToSearchCollection = proxyquire('../api-response-to-search-collection', {
       '../../api/transformers': {
         transformApiResponseToCollection: this.transformApiResponseToCollectionStub,
       },

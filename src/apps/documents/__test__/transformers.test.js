@@ -1,9 +1,9 @@
-const mockFilesResponse = require('~/test/unit/data/documents/files-response.json')
+const mockFilesResponse = require('../../../../test/unit/data/documents/files-response.json')
 
 const {
   transformFilesResultsToDetails,
   transformLabelsToShowFiles,
-} = require('~/src/apps/documents/transformers')
+} = require('../transformers')
 
 const propositionId = '1'
 const investmentId = '2'

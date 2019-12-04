@@ -1,4 +1,4 @@
-const state = require('~/src/modules/form/state/current.js')
+const state = require('../current')
 
 describe('Current form state', () => {
   describe('#update', () => {
