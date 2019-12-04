@@ -2601,6 +2601,13 @@ body-parser@1.19.0, body-parser@^1.18.2, body-parser@^1.18.3:
     raw-body "2.4.0"
     type-is "~1.6.17"
 
+bodybuilder@^2.2.20:
+  version "2.2.20"
+  resolved "https://registry.yarnpkg.com/bodybuilder/-/bodybuilder-2.2.20.tgz#df593e73e3ba505931020b4e40d6dbb49c7b5122"
+  integrity sha512-yHxV/UrGBoA0pkEYsCmZ7TuONPJ/+LWIqBhNWT87bSwRH1lcSkzQHnMSuZm7wSJiltzlzALgF6301Xeaq5Hbfg==
+  dependencies:
+    lodash "^4.17.11"
+
 boolbase@^1.0.0, boolbase@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
