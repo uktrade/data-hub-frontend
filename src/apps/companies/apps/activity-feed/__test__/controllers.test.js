@@ -24,21 +24,39 @@ describe('Activity feed controllers', () => {
     const commonTests = (types, attributedTo) => {
       expect(fetchActivityFeedStub).to.be.calledWith({
         token: '1234',
-        from: 0,
-        size: 20,
-        filter: [
-          {
-            terms: {
-              'object.type': types,
+        body: {
+          from: 0,
+          size: 20,
+          sort: [
+            {
+              'object.startTime': {
+                order: 'desc',
+              },
+            },
+          ],
+          query: {
+            bool: {
+              filter: {
+                bool: {
+                  must: [
+                    {
+                      terms: {
+                        'object.type': types,
+                      },
+                    },
+                    {
+                      term: {
+                        'object.attributedTo.id': attributedTo,
+                      },
+                    },
+                  ],
+                },
+              },
             },
           },
-          {
-            terms: {
-              'object.attributedTo.id': attributedTo,
-            },
-          },
-        ],
+        },
       })
+
       expect(middlewareParameters.resMock.json).to.be.calledOnceWithExactly(activityFeedEsFixtures)
     }
 
@@ -57,7 +75,7 @@ describe('Activity feed controllers', () => {
 
       it('should call fetchActivityFeed with default params', async () => {
         const { dataHubActivity } = ES_KEYS_GROUPED
-        commonTests(dataHubActivity, ['dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a'])
+        commonTests(dataHubActivity, 'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a')
       })
     })
 
@@ -80,7 +98,7 @@ describe('Activity feed controllers', () => {
 
       it('should call fetchActivityFeed with the right params', async () => {
         const { allActivity } = ES_KEYS_GROUPED
-        commonTests(allActivity, ['dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a'])
+        commonTests(allActivity, 'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a')
       })
     })
 
@@ -105,20 +123,45 @@ describe('Activity feed controllers', () => {
       })
 
       it('should call fetchActivityFeed with a user id', async () => {
+        const { dataHubActivity } = ES_KEYS_GROUPED
         expect(fetchActivityFeedStub).to.be.calledWith({
           token: '1234',
-          from: 0,
-          size: 20,
-          filter: [
-            {
-              terms: {
-                'object.attributedTo.id': [
-                  'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
-                  'dit:DataHubAdviser:123',
-                ],
+          body: {
+            from: 0,
+            size: 20,
+            sort: [
+              {
+                'object.startTime': {
+                  order: 'desc',
+                },
+              },
+            ],
+            query: {
+              bool: {
+                filter: {
+                  bool: {
+                    must: [
+                      {
+                        terms: {
+                          'object.type': dataHubActivity,
+                        },
+                      },
+                      {
+                        term: {
+                          'object.attributedTo.id': 'dit:DataHubAdviser:123',
+                        },
+                      },
+                      {
+                        term: {
+                          'object.attributedTo.id': 'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                        },
+                      },
+                    ],
+                  },
+                },
               },
             },
-          ],
+          },
         })
       })
     })
@@ -142,7 +185,7 @@ describe('Activity feed controllers', () => {
 
       it('should call fetchActivityFeed with the right params', async () => {
         const { dataHubActivity } = ES_KEYS_GROUPED
-        commonTests(dataHubActivity, ['dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a'])
+        commonTests(dataHubActivity, 'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a')
       })
     })
 
@@ -165,11 +208,11 @@ describe('Activity feed controllers', () => {
 
       it('should call fetchActivityFeed with the right params', async () => {
         const { externalActivity } = ES_KEYS_GROUPED
-        commonTests(externalActivity, ['dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a'])
+        commonTests(externalActivity, 'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a')
       })
     })
 
-    context('when applying both Data Hub activity and Ultimate HQ subsidaries filters', () => {
+    context('when applying both Data Hub activity and DnB hierarchical filters', () => {
       before(async () => {
         middlewareParameters = buildMiddlewareParameters({
           company: {
@@ -179,6 +222,9 @@ describe('Activity feed controllers', () => {
           requestQuery: {
             activityTypeFilter: 'dataHubActivity',
             showDnbHierarchy: true,
+          },
+          user: {
+            id: 123,
           },
         })
 
@@ -191,11 +237,44 @@ describe('Activity feed controllers', () => {
 
       it('should call fetchActivityFeed with the right params', async () => {
         const { dataHubActivity } = ES_KEYS_GROUPED
-        commonTests(dataHubActivity, [
-          'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
-          'dit:DataHubCompany:123',
-          'dit:DataHubCompany:456',
-        ])
+        expect(fetchActivityFeedStub).to.be.calledWith({
+          token: '1234',
+          body: {
+            from: 0,
+            size: 20,
+            sort: [
+              {
+                'object.startTime': {
+                  order: 'desc',
+                },
+              },
+            ],
+            query: {
+              bool: {
+                filter: {
+                  bool: {
+                    must: [
+                      {
+                        terms: {
+                          'object.type': dataHubActivity,
+                        },
+                      },
+                      {
+                        terms: {
+                          'object.attributedTo.id': [
+                            'dit:DataHubCompany:123',
+                            'dit:DataHubCompany:456',
+                            'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+          },
+        })
       })
     })
 
@@ -218,7 +297,7 @@ describe('Activity feed controllers', () => {
 
       it('should call fetchActivityFeed with the right params', async () => {
         const { dataHubActivity } = ES_KEYS_GROUPED
-        commonTests(dataHubActivity, ['dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a'])
+        commonTests(dataHubActivity, 'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a')
       })
     })
 
@@ -244,22 +323,37 @@ describe('Activity feed controllers', () => {
         const { dataHubActivity } = ES_KEYS_GROUPED
         const expectedParams = {
           token: '1234',
-          from: 0,
-          size: 20,
-          filter: [
-            {
-              terms: {
-                'object.type': dataHubActivity,
+          body: {
+            from: 0,
+            size: 20,
+            sort: [
+              {
+                'object.startTime': {
+                  order: 'desc',
+                },
+              },
+            ],
+            query: {
+              bool: {
+                filter: {
+                  bool: {
+                    must: [
+                      {
+                        terms: {
+                          'object.type': dataHubActivity,
+                        },
+                      },
+                      {
+                        term: {
+                          'object.attributedTo.id': 'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                        },
+                      },
+                    ],
+                  },
+                },
               },
             },
-            {
-              terms: {
-                'object.attributedTo.id': [
-                  'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
-                ],
-              },
-            },
-          ],
+          },
         }
 
         expect(fetchActivityFeedStub).to.be.calledWith(expectedParams)
