@@ -1,8 +1,13 @@
 const { assertBreadcrumbs } = require('../../../support/assertions')
 const urls = require('../../../../../../src/lib/urls')
 
-const testCase = ({ companyId, companyName, replace }) =>
-  it(`Should render the ${replace ? 'replace' : 'add'} variant`, () => {
+const selectMainContent = () =>
+  cy.get('main')
+    .children()
+    .first()
+
+const addOrReplaceTestCase = ({ companyId, companyName, replace }) =>
+  it(`Should render the ${replace ? 'replace' : 'add'} page`, () => {
     cy.visit(urls.companies.advisers.assign(companyId))
 
     const headline = replace
@@ -19,7 +24,7 @@ const testCase = ({ companyId, companyName, replace }) =>
     cy.get('h1')
       .contains(headline)
 
-    cy.get('main')
+    selectMainContent()
       .children()
       .first()
       .get('h3').as('h3').eq(0).as('question')
@@ -29,6 +34,9 @@ const testCase = ({ companyId, companyName, replace }) =>
           .get($el)
           .next()
           .contains('You would replace Lead ITA:')
+          // We are using the govuk-react/Paragraph component,
+          // in which <p> is nested in a <div> so we need to step out of it.
+          .parent()
           .next()
           .contains(
             'Name: Andy Pipkin' +
@@ -43,7 +51,7 @@ const testCase = ({ companyId, companyName, replace }) =>
       .contains('What happens next?')
       .next()
       .as('list')
-      .should($element => expect($element.prop('tagName')).to.equal('UL'))
+      .should('have.prop', 'tagName', 'UL')
       .find('li')
       .contains(
         'Your name and team will be displayed on top of the company page, ' +
@@ -65,6 +73,7 @@ const testCase = ({ companyId, companyName, replace }) =>
       .as('submit')
       .next()
       .contains('Cancel')
+      .should('have.attr', 'href', `/companies/${companyId}/advisers`)
 
     cy
       .contains(
@@ -89,14 +98,78 @@ const testCase = ({ companyId, companyName, replace }) =>
       .contains('Lead adviser information updated')
   })
 
-describe('Lead ITA page', () => {
-  testCase({
+describe('Manage Lead ITA', () => {
+  addOrReplaceTestCase({
     companyId: 'not-managed',
     companyName: 'Not Managed Company',
   })
-  testCase({
+
+  addOrReplaceTestCase({
     companyId: 'managed',
     companyName: 'Managed Company',
     replace: true,
+  })
+
+  it(`Should render the remove page`, () => {
+    const HEADLINE = 'Remove the Lead ITA'
+    const COMPANY_NAME = 'Managed Company'
+    const COMPANY_ID = 'managed'
+
+    cy.visit(urls.companies.advisers.remove('managed'))
+
+    assertBreadcrumbs({
+      'Home': '/',
+      'Companies': '/companies',
+      [COMPANY_NAME]: `/companies/${COMPANY_ID}`,
+      [HEADLINE]: undefined,
+    })
+
+    cy.get('h1').contains(HEADLINE)
+
+    selectMainContent()
+      .children()
+      .first()
+      .as('before-paragraph')
+      .get('p')
+      .contains('This will remove the current Lead ITA')
+
+    cy.get('@before-paragraph')
+      .next()
+      .contains(
+        'Name: Andy Pipkin' +
+        'Team: Little Britain'
+      )
+      .next()
+      .contains('What happens next?')
+      .should('have.prop', 'tagName', 'H3')
+      .next()
+      .should('have.prop', 'tagName', 'UL')
+      .find('li')
+      .contains(
+        'This company will no longer show a Lead ITA ' +
+        'as the first point of contact'
+      )
+      .next()
+      .contains(
+        'This will also remove the Lead ITAs on any subsidiaries of this company',
+      )
+      .next()
+      .contains(
+        'This company and any subsidiaries will no longer be listed ' +
+        'as account managed companies (Partner led accounts)'
+      )
+      .parent()
+      .next()
+      .contains('Remove the Lead ITA')
+      .as('submit')
+      .next()
+      .contains('Cancel')
+      .should('have.attr', 'href', `/companies/${COMPANY_ID}/advisers`)
+
+    cy.get('@submit')
+      .click()
+
+    cy.get('[role="alert"]')
+      .contains('Lead adviser information updated')
   })
 })
