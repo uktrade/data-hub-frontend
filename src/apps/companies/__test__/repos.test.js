@@ -1,18 +1,19 @@
 /* eslint prefer-promise-reject-errors: 0 */
-const companyData = require('~/test/unit/data/company.json')
-const companyV4Data = require('~/test/unit/data/companies/company-v4.json')
-const myCompanyListData = require('~/test/unit/data/companies/my-company-list.json')
+const proxyquire = require('proxyquire')
 
-const config = require('~/src/config')
+const companyData = require('../../../../test/unit/data/company.json')
+const companyV4Data = require('../../../../test/unit/data/companies/company-v4.json')
+const myCompanyListData = require('../../../../test/unit/data/companies/my-company-list.json')
+const config = require('../../../config')
 
 const {
   getDitCompany,
   saveDnbCompany,
   saveDnbCompanyInvestigation,
-} = require('~/src/apps/companies/repos.js')
+} = require('../repos')
 
 function makeRepositoryWithAuthRequest (authorisedRequestStub) {
-  return proxyquire('~/src/apps/companies/repos', {
+  return proxyquire('../repos', {
     '../../lib/authorised-request': { authorisedRequest: authorisedRequestStub },
   })
 }

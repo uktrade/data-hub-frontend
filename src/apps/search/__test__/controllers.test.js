@@ -1,12 +1,11 @@
-
-const config = require('~/src/config')
-const { renderSearchResults } = require('~/src/apps/search/controllers')
+const config = require('../../../config')
+const { renderSearchResults } = require('../controllers')
 
 describe('Search Controller #renderSearchResults', () => {
-  const investmentResponse = require('~/test/unit/data/search/investment')
-  const contactResponse = require('~/test/unit/data/search/contact')
-  const companyResponse = require('~/test/unit/data/search/company')
-  const eventResponse = require('~/test/unit/data/search/event')
+  const investmentResponse = require('../../../../test/unit/data/search/investment.json')
+  const contactResponse = require('../../../../test/unit/data/search/contact.json')
+  const companyResponse = require('../../../../test/unit/data/search/company.json')
+  const eventResponse = require('../../../../test/unit/data/search/event.json')
 
   const searchQuery = {
     term: 'london',

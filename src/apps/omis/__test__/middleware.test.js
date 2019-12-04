@@ -1,6 +1,8 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
-const companyData = require('~/test/unit/data/company.json')
-const orderData = require('~/test/unit/data/omis/simple-order.json')
+const proxyquire = require('proxyquire')
+
+const buildMiddlewareParameters = require('../../../../test/unit/helpers/middleware-parameters-builder')
+const companyData = require('../../../../test/unit/data/company.json')
+const orderData = require('../../../../test/unit/data/omis/simple-order.json')
 
 describe('OMIS middleware', () => {
   beforeEach(() => {
@@ -20,11 +22,11 @@ describe('OMIS middleware', () => {
       },
     }
 
-    this.middleware = proxyquire('~/src/apps/omis/middleware', {
+    this.middleware = proxyquire('../middleware', {
       '../companies/repos': {
         getDitCompany: this.getDitCompanyStub,
       },
-      '../../../config/logger': {
+      '../../config/logger': {
         error: this.loggerSpy,
       },
       '../middleware': {

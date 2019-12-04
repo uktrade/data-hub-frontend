@@ -1,7 +1,7 @@
 const { find } = require('lodash')
-const transformInteractionToListItem = require('~/src/apps/interactions/transformers/interaction-to-list-item')
-const mockInteraction = require('~/test/unit/data/interactions/search-interaction.json')
-const mockInteractionWithFeedback = require('~/test/unit/data/interactions/search-interaction-with-feedback.json')
+const transformInteractionToListItem = require('../interaction-to-list-item')
+const mockInteraction = require('../../../../../test/unit/data/interactions/search-interaction.json')
+const mockInteractionWithFeedback = require('../../../../../test/unit/data/interactions/search-interaction-with-feedback.json')
 
 describe('#transformInteractionToListItem', () => {
   context('when the source is an interaction', () => {

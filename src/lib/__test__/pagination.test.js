@@ -1,4 +1,4 @@
-const { getPageLink, buildPagination } = require('~/src/lib/pagination')
+const { getPageLink, buildPagination } = require('../pagination')
 
 describe('Pagination', () => {
   describe('#getPageLink', () => {

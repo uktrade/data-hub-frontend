@@ -1,3 +1,5 @@
+const proxyquire = require('proxyquire')
+
 describe('Health check controller', () => {
   describe('#getHandler with healthy service dependencies', () => {
     beforeEach(() => {
@@ -10,7 +12,7 @@ describe('Health check controller', () => {
         },
       ]
       this.logger = sinon.stub().returns({ error: sinon.spy() })
-      this.controller = proxyquire.noCallThru().load('~/src/apps/healthcheck/controllers', {
+      this.controller = proxyquire.noCallThru().load('../controllers', {
         './serviceDependencies': this.serviceDependencies,
         '../../../config/logger': this.logger,
       })
@@ -64,7 +66,7 @@ describe('Health check controller', () => {
         },
       ]
       this.logger = { error: sinon.spy() }
-      this.controller = proxyquire.noCallThru().load('~/src/apps/healthcheck/controllers', {
+      this.controller = proxyquire.noCallThru().load('../controllers', {
         './serviceDependencies': this.serviceDependencies,
         '../../config/logger': this.logger,
       })
@@ -121,7 +123,7 @@ describe('Health check controller', () => {
         },
       ]
       this.logger = sinon.stub().returns({ error: sinon.spy() })
-      this.controller = proxyquire.noCallThru().load('~/src/apps/healthcheck/controllers', {
+      this.controller = proxyquire.noCallThru().load('../controllers', {
         './serviceDependencies': this.serviceDependencies,
         '../../../config/logger': this.logger,
       })
@@ -178,7 +180,7 @@ describe('Health check controller', () => {
         },
       ]
       this.logger = { error: sinon.spy() }
-      this.controller = proxyquire.noCallThru().load('~/src/apps/healthcheck/controllers', {
+      this.controller = proxyquire.noCallThru().load('../controllers', {
         './serviceDependencies': this.serviceDependencies,
         '../../config/logger': this.logger,
       })

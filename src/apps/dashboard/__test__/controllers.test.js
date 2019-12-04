@@ -1,6 +1,7 @@
 const nock = require('nock')
-const config = require('../../../config')
+const proxyquire = require('proxyquire')
 
+const config = require('../../../config')
 var rpErrors = require('request-promise/errors')
 const { mockCompanyListsServer } = require('./utils')
 
@@ -110,7 +111,7 @@ describe('dashboard controller', () => {
       token: '1',
     }
 
-    global.controllers = proxyquire('~/src/apps/dashboard/controllers', {
+    global.controllers = proxyquire('../controllers', {
       '../../config': {
         helpCentre: global.helpCentre,
       },

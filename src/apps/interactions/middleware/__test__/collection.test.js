@@ -1,6 +1,7 @@
 const { assign, times } = require('lodash')
+const proxyquire = require('proxyquire')
 
-const interactions = require('~/test/unit/data/interactions/attendees')
+const interactions = require('../../../../../test/unit/data/interactions/attendees.json')
 
 describe('interaction collection middleware', () => {
   beforeEach(async () => {
@@ -26,7 +27,7 @@ describe('interaction collection middleware', () => {
     this.next = sinon.spy()
     this.getInteractionsForEntityStub = sinon.stub()
 
-    this.middleware = proxyquire('~/src/apps/interactions/middleware/collection', {
+    this.middleware = proxyquire('../collection', {
       '../repos': {
         getInteractionsForEntity: this.getInteractionsForEntityStub.resolves({
           count: 20,
@@ -174,7 +175,7 @@ describe('interaction collection middleware', () => {
 
         this.error = new Error('error')
 
-        this.middleware = proxyquire('~/src/apps/interactions/middleware/collection', {
+        this.middleware = proxyquire('../collection', {
           '../repos': {
             getInteractionsForEntity: this.getInteractionsForEntityStub.rejects(this.error),
           },

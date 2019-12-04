@@ -1,6 +1,7 @@
 const { assign } = require('lodash')
+const proxyquire = require('proxyquire')
 
-const contact = require('~/test/unit/data/contacts/contact.json')
+const contact = require('../../../../../test/unit/data/contacts/contact.json')
 
 describe('Contact controller', () => {
   beforeEach(() => {
@@ -9,7 +10,7 @@ describe('Contact controller', () => {
 
     this.transformerStub = sinon.stub()
 
-    this.contactController = proxyquire('~/src/apps/contacts/controllers/details', {
+    this.contactController = proxyquire('../details', {
       '../repos': {
         getContact: this.getContactStub,
       },

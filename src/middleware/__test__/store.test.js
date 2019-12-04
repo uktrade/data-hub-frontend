@@ -1,6 +1,6 @@
 describe('Store middleware', () => {
   beforeEach(() => {
-    this.storeMiddleware = require('~/src/middleware/store')()
+    this.storeMiddleware = require('../store')()
     this.nextSpy = sinon.spy()
     this.reqMock = {
       session: {},

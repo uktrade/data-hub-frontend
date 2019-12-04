@@ -1,5 +1,7 @@
+const proxyquire = require('proxyquire')
+
 const API_KEY = 'postcode_key'
-const services = proxyquire('~/src/apps/api/services.js', {
+const services = proxyquire('../services', {
   '../../config': {
     postcodeLookup: {
       baseUrl: 'https://addresses.com/{postcode}?api-key={api-key}',

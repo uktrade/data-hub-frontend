@@ -1,5 +1,5 @@
 const qs = require('querystring')
-const { buildExportAction } = require('~/src/lib/export-helper')
+const { buildExportAction } = require('../export-helper')
 
 const queryString = {
   sortby: 'date:desc',

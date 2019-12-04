@@ -1,4 +1,6 @@
-const FormController = require('~/src/apps/omis/controllers/form')
+const proxyquire = require('proxyquire')
+
+const FormController = require('../../../../controllers/form')
 
 const saveMockData = {
   id: '1234567890',
@@ -32,7 +34,7 @@ describe('OMIS create confirm controller', () => {
     this.nextSpy = sinon.spy()
     this.orderSaveStub = sinon.stub()
 
-    this.ControllerClass = proxyquire('~/src/apps/omis/apps/create/controllers/confirm', {
+    this.ControllerClass = proxyquire('../confirm', {
       '../../../../../lib/metadata': {
         countryOptions: metadataCountryMockData,
         sectorOptions: metadataSectorMockData,

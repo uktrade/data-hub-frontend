@@ -1,9 +1,9 @@
-const companyProfile = require('~/test/unit/data/companies/investments/large-capital-profile-new.json')
-const companyMock = require('~/test/unit/data/companies/minimal-company.json')
-const config = require('~/src/config')
+const companyProfile = require('../../../../../../../../test/unit/data/companies/investments/large-capital-profile-new.json')
+const companyMock = require('../../../../../../../../test/unit/data/companies/minimal-company.json')
+const config = require('../../../../../../../config')
 
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
-const controller = require('~/src/apps/companies/apps/investments/large-capital-profile/controllers')
+const buildMiddlewareParameters = require('../../../../../../../../test/unit/helpers/middleware-parameters-builder')
+const controller = require('../../controllers')
 
 describe('Company Investments - Large capital profile', () => {
   describe('renderProfile', () => {

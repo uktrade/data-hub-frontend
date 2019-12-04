@@ -1,15 +1,15 @@
 const { pickBy } = require('lodash')
 
-const config = require('~/src/config')
-const ghqCompanySearchResponse = require('~/test/unit/data/companies/ghq-company-search-response.json')
-const ghqCompanyTransformedResults = require('~/test/unit/data/companies/ghq-company-transformed-results.json')
-const subsidiaryCompanySearchResponse = require('~/test/unit/data/companies/subsidiary-company-search-response.json')
-const subsidiaryCompanyTransformedResults = require('~/test/unit/data/companies/subsidiary-company-transformed-results.json')
+const config = require('../../../../config')
+const ghqCompanySearchResponse = require('../../../../../test/unit/data/companies/ghq-company-search-response.json')
+const ghqCompanyTransformedResults = require('../../../../../test/unit/data/companies/ghq-company-transformed-results.json')
+const subsidiaryCompanySearchResponse = require('../../../../../test/unit/data/companies/subsidiary-company-search-response.json')
+const subsidiaryCompanyTransformedResults = require('../../../../../test/unit/data/companies/subsidiary-company-transformed-results.json')
 
 const {
   getGlobalHQCompaniesCollection,
   getSubsidiaryCompaniesCollection,
-} = require('~/src/apps/companies/middleware/collection')
+} = require('../collection')
 
 const headquarterTypes = [{
   id: '3e6debb4-1596-40c5-aa25-f00da0e05af9',

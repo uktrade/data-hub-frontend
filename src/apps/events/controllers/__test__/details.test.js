@@ -1,6 +1,8 @@
+const proxyquire = require('proxyquire')
+
 describe('Event details controller', () => {
   beforeEach(() => {
-    this.controller = proxyquire('~/src/apps/events/controllers/details', {
+    this.controller = proxyquire('../details', {
       '../labels': {
         displayEventLabels: {
           label: 'Mare',

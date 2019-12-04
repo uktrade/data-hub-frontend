@@ -1,10 +1,10 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
-const draftFutureMeeting = require('~/test/unit/data/interactions/draft-future-meeting.json')
-const draftPastMeeting = require('~/test/unit/data/interactions/draft-past-meeting.json')
-const interaction = require('~/test/unit/data/interactions/interaction.json')
-const serviceDelivery = require('~/test/unit/data/interactions/service-delivery.json')
+const buildMiddlewareParameters = require('../../../../../test/unit/helpers/middleware-parameters-builder')
+const draftFutureMeeting = require('../../../../../test/unit/data/interactions/draft-future-meeting.json')
+const draftPastMeeting = require('../../../../../test/unit/data/interactions/draft-past-meeting.json')
+const interaction = require('../../../../../test/unit/data/interactions/interaction.json')
+const serviceDelivery = require('../../../../../test/unit/data/interactions/service-delivery.json')
 
-const { detailsController } = require('~/src/apps/interactions/controllers')
+const { detailsController } = require('../index')
 
 describe('Interaction details controller', () => {
   describe('#renderDetailsPage', () => {

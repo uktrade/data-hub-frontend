@@ -4,7 +4,6 @@ const { find, pick } = require('lodash')
 const config = require('../../../../config')
 const serviceDeliveryData = require('../../../../../test/unit/data/interactions/service-delivery.json')
 const serviceOptionData = require('../../../../../test/unit/data/interactions/service-options-data.json')
-
 const controller = require('../edit')
 
 describe('Interaction edit controller (Service delivery)', () => {

@@ -1,12 +1,12 @@
 const { forEach, isString } = require('lodash')
 
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const buildMiddlewareParameters = require('../../../../../test/unit/helpers/middleware-parameters-builder')
 
-const config = require('~/src/config')
-const { renderSubsidiaries } = require('~/src/apps/companies/controllers/subsidiaries')
+const config = require('../../../../config')
+const { renderSubsidiaries } = require('../subsidiaries')
 
-const companyMock = require('~/test/unit/data/companies/companies-house-company.json')
-const subsidiariesMock = require('~/test/unit/data/companies/subsidiaries.json')
+const companyMock = require('../../../../../test/unit/data/companies/companies-house-company.json')
+const subsidiariesMock = require('../../../../../test/unit/data/companies/subsidiaries.json')
 
 describe('company subsidiaries controller', () => {
   const commonTests = ({

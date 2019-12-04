@@ -1,8 +1,8 @@
-const investmentProjectsData = require('~/test/unit/data/investment/collection')
+const investmentProjectsData = require('../../../../../test/unit/data/investment/collection.json')
 const {
   transformInvestmentProjectToListItem,
   transformInvestmentListItemToDisableMetaLinks,
-} = require('~/src/apps/investments/transformers/collection')
+} = require('../collection')
 
 describe('Investment project transformers', () => {
   describe('#transformInvestmentProjectToListItem', () => {

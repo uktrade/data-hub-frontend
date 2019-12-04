@@ -1,6 +1,6 @@
 const { assign, set } = require('lodash')
 
-const { renderDocuments } = require('~/src/apps/contacts/controllers/documents')
+const { renderDocuments } = require('../documents')
 
 describe('Contacts documents controller', () => {
   beforeEach(() => {

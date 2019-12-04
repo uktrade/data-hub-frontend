@@ -1,9 +1,9 @@
-const config = require('~/src/config')
-const draftPastMeeting = require('~/test/unit/data/interactions/draft-past-meeting.json')
+const config = require('../../../config')
+const draftPastMeeting = require('../../../../test/unit/data/interactions/draft-past-meeting.json')
 
 const {
   archiveInteraction,
-} = require('~/src/apps/interactions/repos')
+} = require('../repos')
 
 describe('Interaction repository', () => {
   describe('#archiveInteraction', () => {

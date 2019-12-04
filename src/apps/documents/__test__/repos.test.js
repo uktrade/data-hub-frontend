@@ -1,4 +1,6 @@
 /* eslint-disable camelcase */
+const proxyquire = require('proxyquire')
+
 const config = require('../../../config/')
 
 describe('Documents Upload repos', () => {
@@ -6,7 +8,7 @@ describe('Documents Upload repos', () => {
     this.authorisedRequestStub = sinon.stub().resolves()
     this.getDocumentUploadS3UrlStub = sinon.stub()
 
-    this.repos = proxyquire('~/src/apps/documents/repos', {
+    this.repos = proxyquire('../repos', {
       '../../lib/authorised-request': { authorisedRequest: this.authorisedRequestStub },
       '/repos': {
         getDocumentUploadS3Url: this.getDocumentUploadS3UrlStub.onCall(0).returns({
