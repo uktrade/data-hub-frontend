@@ -10,6 +10,7 @@ const expectedRows = {
     {
       text: 'Here is a long interaction title some more text some more text some more text almost finished some more text nearly there more text finished',
       linksTo: '/interactions/79d92719-7402-45b6-b3d7-eff559d6b282',
+      shouldHaveEllipsis: true,
     },
   ],
   potatoes: [
@@ -35,6 +36,7 @@ const expectedRows = {
     {
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       linksTo: '/interactions/86f92719-7402-45b6-b3d7-eff559d6b678',
+      shouldHaveEllipsis: true,
     },
   ],
 }
@@ -60,62 +62,53 @@ const expectedLists = {
   },
   'List A': {
     deleteLinksTo: '/company-lists/70513f19-0df6-4c8d-bef1-f11b65641ae4/delete',
-    rows: [
-      expectedRows.bmw,
-      expectedRows.zebra,
-      expectedRows.potatoes,
-    ],
+    rows: [expectedRows.bmw, expectedRows.zebra, expectedRows.potatoes],
     searches: {
-      bmw: [
-        expectedRows.bmw,
-      ],
-      zebr: [
-        expectedRows.zebra,
-      ],
-      pot: [
-        expectedRows.potatoes,
-      ],
+      bmw: [expectedRows.bmw],
+      zebr: [expectedRows.zebra],
+      pot: [expectedRows.potatoes],
       foobar: [],
-      a: [
-        expectedRows.bmw,
-        expectedRows.zebra,
-        expectedRows.potatoes,
-      ],
+      a: [expectedRows.bmw, expectedRows.zebra, expectedRows.potatoes],
     },
   },
 }
 
-const describeTableCell = ({ row, col, text, linksTo }) =>
+const describeTableCell = ({ row, col, text, linksTo, shouldHaveEllipsis }) =>
   describe(`Cell in column ${col}, row ${row}`, () =>
     it('Should have the expected text and behavior', () => {
-      cy
-        .get('table')
+      cy.get('table')
         .find('tbody tr')
         .eq(row)
         .find('td')
         .eq(col)
-        .should('have.text', text)
+        .should($elm => {
+          // TODO: Once the CSS version of truncating long text is in place remove this test.
+          const elText = $elm.text()
+          if (shouldHaveEllipsis) {
+            const [nonTruncated] = elText.split('...')
+            expect(text.startsWith(nonTruncated)).equal(true)
+            expect(elText.endsWith('...')).equal(true)
+          } else {
+            expect(elText).equal(text)
+          }
+        })
         .as('cell')
 
       if (linksTo === undefined) {
         return
       }
 
-      cy
-        .get('@cell')
+      cy.get('@cell')
         .find('a')
         .invoke('attr', 'href')
         // Href doesn't have leading slash, so we need to remove it.
         .should('eq', linksTo.replace(/^\//, ''))
-    })
-  )
+    }))
 
-const describeTable = (rows) => {
+const describeTable = rows => {
   describe('Table', () => {
     it(`It should have ${rows.length} rows`, () =>
-      cy.get('table tbody tr')
-        .should('have.length', rows.length)
-    )
+      cy.get('table tbody tr').should('have.length', rows.length))
 
     describe('Cells', () => {
       rows.forEach((cells, row) =>
@@ -135,29 +128,27 @@ const describeSelectedList = ({ name, deleteLinksTo, rows = [], searches }) =>
   describe('Selected list', () => {
     describe('List selector', () =>
       it(`The "${name}" should be selected`, () =>
-        cy.contains('View list')
+        cy
+          .contains('View list')
           .find(':selected')
-          .should('have.text', name)
-      )
-    )
+          .should('have.text', name)))
 
     describe('Delete list link', () =>
       it('The link should go to the correct url', () =>
         cy
           .contains('Delete this list')
           .invoke('attr', 'href')
-          .should('eq', deleteLinksTo)
-      )
-    )
+          .should('eq', deleteLinksTo)))
 
     switch (rows.length) {
       case 0:
-        describe("If the list doesn't have any companies", () =>
+        describe('If the list doesn\'t have any companies', () =>
           it('Should display the empty state', () => {
             cy.contains('You have not added any companies to your list')
-            cy.contains('You can add companies to this list from a company page, and only you can see this list.')
-          })
-        )
+            cy.contains(
+              'You can add companies to this list from a company page, and only you can see this list.'
+            )
+          }))
         break
       case 1:
         describe('If the list only has one company', () => {
@@ -172,11 +163,11 @@ const describeSelectedList = ({ name, deleteLinksTo, rows = [], searches }) =>
         describeTable(rows)
         describeSortList(rows)
 
-        searches && Object.entries(searches).forEach(([query, rows]) => {
+        searches &&
+        Object.entries(searches).forEach(([query, rows]) => {
           describe(`When the search query is "${query}"`, () => {
             it('it should only display matching rows', () => {
-              cy
-                .contains('Search this list')
+              cy.contains('Search this list')
                 .find('input')
                 .clear()
                 .type(query)
@@ -195,17 +186,16 @@ const describeSortListBy = ({ option, rows }) =>
       cy.contains('Sort by')
         .children('select')
         .select(option)
-    }
-    )
+    })
     it(`The option "${option}" should be selected`, () =>
-      cy.contains('Sort by')
+      cy
+        .contains('Sort by')
         .find(':selected')
-        .should('have.text', option)
-    )
+        .should('have.text', option))
     describeTable(rows)
   })
 
-const describeSortList = (rows) => {
+const describeSortList = rows => {
   const recentRows = [...rows].sort(([, { text: a }], [, { text: b }]) =>
     b === '-'
       ? -1
@@ -213,10 +203,9 @@ const describeSortList = (rows) => {
   )
 
   Object.entries({
-    'Company name A-Z': [...rows]
-      .sort(([{ text: a }], [{ text: b }]) =>
-        a.localeCompare(b)
-      ),
+    'Company name A-Z': [...rows].sort(([{ text: a }], [{ text: b }]) =>
+      a.localeCompare(b)
+    ),
     'Least recent interaction': [...recentRows].reverse(),
     'Recent interaction': recentRows,
   }).forEach(([option, rows]) => describeSortListBy({ option, rows }))

@@ -17,6 +17,7 @@ const {
   feedbackPolicyRequest,
   feedbackPolicyIssueType,
   feedbackPolicyNotes,
+  countriesDiscussed,
 } = require('./fields')
 
 module.exports = function ({
@@ -25,13 +26,14 @@ module.exports = function ({
   buttonText,
   contacts = [],
   services = [],
-  teams = [],
   channels = [],
   advisers = [],
   hiddenFields,
   areas,
   types,
   company,
+  theme,
+  featureFlags,
 }) {
   return {
     returnLink,
@@ -61,6 +63,7 @@ module.exports = function ({
         },
       },
       feedbackPolicyNotes,
+      ...countriesDiscussed(theme, featureFlags),
     ].map(field => {
       return assign(field, {
         label: field.label || labels.interaction[field.name],

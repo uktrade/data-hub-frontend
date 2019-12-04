@@ -1,10 +1,11 @@
 const moment = require('moment')
 const { find, pick } = require('lodash')
 
-const config = require('~/src/config')
-const serviceDeliveryData = require('~/test/unit/data/interactions/service-delivery.json')
-const serviceOptionData = require('~/test/unit/data/interactions/service-options-data.json')
-const controller = require('~/src/apps/interactions/controllers/edit')
+const config = require('../../../../config')
+const serviceDeliveryData = require('../../../../../test/unit/data/interactions/service-delivery.json')
+const serviceOptionData = require('../../../../../test/unit/data/interactions/service-options-data.json')
+
+const controller = require('../edit')
 
 describe('Interaction edit controller (Service delivery)', () => {
   beforeEach(() => {
@@ -24,7 +25,7 @@ describe('Interaction edit controller (Service delivery)', () => {
       title: sinon.stub().returnsThis(),
       render: sinon.spy(),
       redirect: sinon.spy(),
-      locals: {},
+      locals: { features: {} },
     }
 
     this.nextStub = sinon.stub()
@@ -122,6 +123,7 @@ describe('Interaction edit controller (Service delivery)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -414,6 +416,7 @@ describe('Interaction edit controller (Service delivery)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -461,6 +464,7 @@ describe('Interaction edit controller (Service delivery)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -740,6 +744,7 @@ describe('Interaction edit controller (Service delivery)', () => {
       }
 
       this.res.locals = {
+        ...this.res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
