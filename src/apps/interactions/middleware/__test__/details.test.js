@@ -75,6 +75,7 @@ describe('Interaction details middleware', () => {
                 policy_areas: [],
                 policy_issue_types: [],
                 status: 'complete',
+                were_countries_discussed: null,
                 export_countries: null,
               }
             )
@@ -153,6 +154,7 @@ describe('Interaction details middleware', () => {
                 policy_areas: [],
                 policy_issue_types: [],
                 status: 'complete',
+                were_countries_discussed: null,
                 export_countries: null,
               }
             )
