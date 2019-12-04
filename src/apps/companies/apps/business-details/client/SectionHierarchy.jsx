@@ -77,7 +77,7 @@ SubsectionDnBHierarchy.propTypes = {
 const SubsidiariesCounter = ({ subsidiariesCount, isGlobalHQ, urls }) => {
   if (subsidiariesCount) {
     return (
-      <Link href={urls.linkSubsidiary}>
+      <Link href={urls.subsidiaries}>
         {subsidiariesCount} {pluralise(subsidiariesCount, 'subsidiary')}
       </Link>
     )
@@ -87,7 +87,7 @@ const SubsidiariesCounter = ({ subsidiariesCount, isGlobalHQ, urls }) => {
     return (
       <>
         None
-        <StyledRowActionLink href={urls.subsidiaries}>
+        <StyledRowActionLink href={urls.linkSubsidiary}>
           Link a subsidiary
         </StyledRowActionLink>
       </>
