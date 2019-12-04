@@ -1,4 +1,4 @@
-const typeaheadID = '#group-field-dit_participants'
+const typeaheadId = '#group-field-dit_participants'
 
 module.exports = {
   subject: '#field-subject',
@@ -14,13 +14,13 @@ module.exports = {
   grantOffered: '#field-grant_amount_offered',
   netReceipt: '#field-net_company_receipt',
   ditAdviserTypeahead: {
-    fieldset: typeaheadID,
-    placeHolder: `${typeaheadID} .multiselect__input`,
-    textInput: `${typeaheadID} .multiselect__tags`,
-    selectedOption: `${typeaheadID} .multiselect__single`,
-    addAnotherBtn: `${typeaheadID} .js-AddItems__add--typeahead`,
-    secondTypeahead: `${typeaheadID} .c-form-group__inner .c-form-group--AddItems:nth-child(2) .multiselect__input`,
-    secondTypeaheadRemoveLink: `${typeaheadID} .c-form-group__inner .c-form-group--AddItems:nth-child(2) .js-AddItems__remove`,
+    fieldset: typeaheadId,
+    placeHolder: `${typeaheadId} .multiselect__input`,
+    textInput: `${typeaheadId} .multiselect__tags`,
+    selectedOption: `${typeaheadId} .multiselect__single`,
+    addAnotherBtn: `${typeaheadId} .js-AddItems__add--typeahead`,
+    secondTypeahead: `${typeaheadId} .c-form-group__inner .c-form-group--AddItems:nth-child(2) .multiselect__input`,
+    secondTypeaheadRemoveLink: `${typeaheadId} .c-form-group__inner .c-form-group--AddItems:nth-child(2) .js-AddItems__remove`,
   },
   communicationChannel: '#field-communication_channel',
   eventYes: 'label[for=field-is_event-1]',
@@ -36,4 +36,13 @@ module.exports = {
   policyArea: '#field-policy_areas',
   policyFeedbackNotes: '#field-policy_feedback_notes',
   teamSearch: '#dit_team__typeahead .multiselect__single',
+  countriesDiscussed: {
+    yes: 'label[for=field-was_country_discussed-1]',
+    no: 'label[for=field-was_country_discussed-2]',
+  },
+  countries: {
+    future: '#group-field-future_countries',
+    export: '#group-field-export_countries',
+    noInterest: '#group-field-no_interest_countries',
+  },
 }

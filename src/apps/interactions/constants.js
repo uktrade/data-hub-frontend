@@ -106,6 +106,17 @@ const ARCHIVED_REASON = {
   RESCHEDULED: 'Rescheduled',
 }
 
+const THEMES = {
+  EXPORT: 'export',
+  INVESTMENT: 'investment',
+  OTHER: 'other',
+}
+
+const KINDS = {
+  INTERACTION: 'interaction',
+  SERVICE_DELIVERY: 'service-delivery',
+}
+
 module.exports = {
   QUERY_FIELDS,
   QUERY_DATE_FIELDS,
@@ -118,4 +129,6 @@ module.exports = {
   INTERACTION_STATUS,
   ARCHIVED_REASON,
   INTERACTION_CONTEXTS,
+  THEMES,
+  KINDS,
 }
