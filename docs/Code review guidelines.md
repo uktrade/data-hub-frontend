@@ -90,7 +90,7 @@
 - But don't be a perfectionist - allow some flexibility
 
 #### Levels of importance
-- Prefix non-critical comments with *Non-critical:* so that the author knows what is important and what is not
+- Prefix non-critical comments with *Optional:* so that the author knows what is important and what is not
 - If all your comments are non-critical, leave your feedback but accept the PR at the same time so that you are not a blocker and you keep [a positive attitude](#attitude)
 
 
