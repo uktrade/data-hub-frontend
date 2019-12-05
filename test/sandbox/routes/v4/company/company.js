@@ -102,8 +102,15 @@ exports.company = function (req, res) {
       one_list_group_global_account_manager: {
         name: 'Andy Pipkin',
         dit_team: {
-          name: 'Little Britain',
+          name: 'Andy & Lou',
         },
+      },
+    }),
+    'managed-no-team': _.assign({}, company, {
+      name: 'Managed Company With No Team',
+      id: 'managed-no-team',
+      one_list_group_global_account_manager: {
+        name: 'Andy Pipkin',
       },
     }),
   }
@@ -124,6 +131,6 @@ exports.getCompanyList = function (req, res) {
   res.json(200, companyList)
 }
 
-exports.advisersAdd = function (req, res) {
+exports.manageAdviser = function (req, res) {
   return res.json(204, {})
 }
