@@ -12,7 +12,7 @@ describe('#build', () => {
     this.breadcrumbSpy = sinon.spy()
     this.setOptionsStub1 = sinon.stub().callsFake((req, res, next) => { next() })
     this.setOptionsStub2 = sinon.stub().callsFake((req, res, next) => { next() })
-    this.journeyBuilder = require('~/src/modules/form/journey-builder.js')
+    this.journeyBuilder = require('../journey-builder')
 
     this.app = express()
     this.app.use(bodyParser.json())

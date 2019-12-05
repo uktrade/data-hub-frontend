@@ -1,8 +1,8 @@
-const serviceOptionData = require('~/test/unit/data/interactions/service-options-data.json')
+const serviceOptionData = require('../../../../../test/unit/data/interactions/service-options-data.json')
 
 describe('Global transformers', () => {
   beforeEach(() => {
-    this.transformers = require('~/src/apps/interactions/transformers')
+    this.transformers = require('../index')
   })
   describe('#transformServicesOptions', () => {
     context(

@@ -1,4 +1,4 @@
-const { transformInvestmentLandingForView } = require('~/src/apps/investments/transformers/landing')
+const { transformInvestmentLandingForView } = require('../landing')
 
 describe('Investment landing transformer', () => {
   describe('#transformInvestmentLandingForView', () => {

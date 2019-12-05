@@ -1,5 +1,7 @@
 /* eslint camelcase: 0 */
-const investmentData = require('~/test/unit/data/investment/investment-data.json')
+const proxyquire = require('proxyquire')
+
+const investmentData = require('../../../../../test/unit/data/investment/investment-data.json')
 
 describe('Investment archive controller', () => {
   beforeEach(() => {
@@ -7,7 +9,7 @@ describe('Investment archive controller', () => {
     this.token = '1234'
     this.archiveInvestmentProject = sinon.stub().resolves(investmentData)
     this.unarchiveInvestmentProject = sinon.stub().resolves(investmentData)
-    this.controller = proxyquire('~/src/apps/investments/controllers/archive', {
+    this.controller = proxyquire('../archive', {
       '../repos': {
         archiveInvestmentProject: this.archiveInvestmentProject,
         unarchiveInvestmentProject: this.unarchiveInvestmentProject,
@@ -112,7 +114,7 @@ describe('Investment archive controller', () => {
       })
     })
     it('should pass on the form values and error if validation failed.', (done) => {
-      this.controller = proxyquire('~/src/apps/investments/controllers/archive', {
+      this.controller = proxyquire('../archive', {
         '../repos': {
           archiveInvestmentProject: sinon.stub().rejects({
             statusCode: 400,
@@ -144,7 +146,7 @@ describe('Investment archive controller', () => {
     })
     it('should call the error page if any other error occours', (done) => {
       const error = new Error()
-      this.controller = proxyquire('~/src/apps/investments/controllers/archive', {
+      this.controller = proxyquire('../archive', {
         '../repos': {
           archiveInvestmentProject: sinon.stub().rejects(error),
           unarchiveInvestmentProject: this.unarchiveInvestmentProject,

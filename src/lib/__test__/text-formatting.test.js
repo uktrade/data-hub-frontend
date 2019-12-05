@@ -1,4 +1,4 @@
-const textFormatting = require('~/src/lib/text-formatting')
+const textFormatting = require('../text-formatting')
 
 describe('Text formatting', () => {
   describe('new line to br', () => {

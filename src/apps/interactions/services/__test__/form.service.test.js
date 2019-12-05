@@ -1,5 +1,7 @@
 /* eslint handle-callback-err: 0, camelcase: 0 */
 
+const proxyquire = require('proxyquire')
+
 describe('interaction form service', () => {
   let saveInteractionStub
   let company
@@ -36,7 +38,7 @@ describe('interaction form service', () => {
     })
 
     interactionFormService = proxyquire(
-      '~/src/apps/interactions/services/form',
+      '../form',
       {
         '../repos': {
           saveInteraction: saveInteractionStub,

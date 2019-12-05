@@ -8,7 +8,7 @@ describe('OMIS list middleware', () => {
     })
     this.res = assign({}, globalRes)
 
-    this.controller = require('~/src/apps/omis/apps/list/middleware')
+    this.controller = require('../middleware')
   })
 
   describe('#setRequestBody', () => {

@@ -1,4 +1,4 @@
-const { transformInvestmentFDIForView } = require('~/src/apps/investments/transformers/fdi')
+const { transformInvestmentFDIForView } = require('../fdi')
 
 const investment = {
   investment_type: {

@@ -1,6 +1,8 @@
-const advisersData = require('~/test/unit/data/advisers/advisers')
-const eventData = require('~/test/unit/data/events/event.json')
 const { merge, assign } = require('lodash')
+const proxyquire = require('proxyquire')
+
+const advisersData = require('../../../../../test/unit/data/advisers/advisers.json')
+const eventData = require('../../../../../test/unit/data/events/event.json')
 
 const expectedBody = {
   id: '123',
@@ -41,7 +43,7 @@ describe('Event details middleware', () => {
     this.getAdvisersStub = sinon.stub()
     this.transformEventFormBodyToApiRequestStub = sinon.stub()
     this.transformEventResponseToViewRecordStub = sinon.stub()
-    this.middleware = proxyquire('~/src/apps/events/middleware/details', {
+    this.middleware = proxyquire('../details', {
       '../repos': {
         saveEvent: this.saveEventStub.resolves({ id: '1' }),
         fetchEvent: this.fetchEventStub.resolves(eventData),

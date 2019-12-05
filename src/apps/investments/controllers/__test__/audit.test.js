@@ -1,4 +1,6 @@
-const investmentProjectAuditData = require('~/test/unit/data/investment/audit-log.json')
+const proxyquire = require('proxyquire')
+
+const investmentProjectAuditData = require('../../../../../test/unit/data/investment/audit-log.json')
 
 const token = 'abcd'
 
@@ -8,7 +10,7 @@ describe('Investment audit controller', () => {
     this.getInvestmentProjectAuditLog = sinon.stub().resolves(investmentProjectAuditData.results)
     this.breadcrumbStub = sinon.stub().returnsThis()
 
-    this.controller = proxyquire('~/src/apps/investments/controllers/audit', {
+    this.controller = proxyquire('../audit', {
       '../repos': {
         getInvestmentProjectAuditLog: this.getInvestmentProjectAuditLog,
       },
@@ -86,7 +88,7 @@ describe('Investment audit controller', () => {
 
     this.getInvestmentProjectAuditLog = sinon.stub().resolves(badDate)
 
-    this.controller = proxyquire('~/src/apps/investments/controllers/audit', {
+    this.controller = proxyquire('../audit', {
       '../repos': {
         getInvestmentProjectAuditLog: this.getInvestmentProjectAuditLog,
       },
@@ -133,7 +135,7 @@ describe('Investment audit controller', () => {
 
     this.getInvestmentProjectAuditLog = sinon.stub().resolves(nullChangeSet)
 
-    this.controller = proxyquire('~/src/apps/investments/controllers/audit', {
+    this.controller = proxyquire('../audit', {
       '../repos': {
         getInvestmentProjectAuditLog: this.getInvestmentProjectAuditLog,
       },
@@ -180,7 +182,7 @@ describe('Investment audit controller', () => {
 
     this.getInvestmentProjectAuditLog = sinon.stub().resolves(emptyChangeSet)
 
-    this.controller = proxyquire('~/src/apps/investments/controllers/audit', {
+    this.controller = proxyquire('../audit', {
       '../repos': {
         getInvestmentProjectAuditLog: this.getInvestmentProjectAuditLog,
       },

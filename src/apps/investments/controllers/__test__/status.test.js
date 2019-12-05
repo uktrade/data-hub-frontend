@@ -1,11 +1,13 @@
-const paths = require('~/src/apps/investments/paths')
 const { merge, find } = require('lodash')
+const proxyquire = require('proxyquire')
+
+const paths = require('../../paths')
 
 describe('investment status controller', () => {
   beforeEach(() => {
     this.updateInvestmentStub = sinon.stub().resolves()
 
-    this.controller = proxyquire('~/src/apps/investments/controllers/status', {
+    this.controller = proxyquire('../status', {
       '../repos': {
         updateInvestment: this.updateInvestmentStub,
       },

@@ -1,5 +1,6 @@
 /* eslint prefer-promise-reject-errors: 0 */
 const { assign } = require('lodash')
+const proxyquire = require('proxyquire')
 
 describe('contact form service', () => {
   let contactFormService
@@ -9,7 +10,7 @@ describe('contact form service', () => {
   beforeEach(() => {
     throwError = false
 
-    contactFormService = proxyquire('~/src/apps/contacts/services/form', {
+    contactFormService = proxyquire('../form', {
       '../repos': {
         savedContactForm: null,
         saveContact: function (token, contactForm) {

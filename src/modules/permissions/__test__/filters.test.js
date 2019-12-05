@@ -1,6 +1,6 @@
 const moment = require('moment')
 
-const { filterDisabledOption, filterNonPermittedItem } = require('~/src/modules/permissions/filters')
+const { filterDisabledOption, filterNonPermittedItem } = require('../filters')
 
 const lastMonth = moment().subtract(1, 'months').toISOString()
 const nextMonth = moment().add(1, 'months').toISOString()

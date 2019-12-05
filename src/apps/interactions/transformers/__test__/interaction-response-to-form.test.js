@@ -1,5 +1,5 @@
-const transformInteractionResponseToForm = require('~/src/apps/interactions/transformers/interaction-response-to-form')
-const mockInteraction = require('~/test/unit/data/interactions/interaction-with-feedback.json')
+const transformInteractionResponseToForm = require('../interaction-response-to-form')
+const mockInteraction = require('../../../../../test/unit/data/interactions/interaction-with-feedback.json')
 
 const mockInteractionNoFeedback = { ...mockInteraction }
 
