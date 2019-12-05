@@ -1,5 +1,7 @@
-const config = require('~/src/config')
-const { search } = require('~/src/modules/search/services')
+const proxyquire = require('proxyquire')
+
+const config = require('../../../config')
+const { search } = require('../../../modules/search/services')
 
 const token = 'abcd'
 
@@ -7,7 +9,7 @@ describe('Event repos', () => {
   beforeEach(() => {
     this.authorisedRequestStub = sinon.stub().resolves()
     this.searchSpy = sinon.spy(search)
-    this.repos = proxyquire('~/src/apps/events/repos', {
+    this.repos = proxyquire('../repos', {
       '../../lib/authorised-request': { authorisedRequest: this.authorisedRequestStub },
       '../../modules/search/services': {
         search: this.searchSpy,

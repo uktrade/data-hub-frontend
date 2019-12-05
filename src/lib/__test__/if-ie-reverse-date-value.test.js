@@ -1,4 +1,4 @@
-const reverseDateIfIE = require('~/src/lib/if-ie-reverse-date-value')
+const reverseDateIfIE = require('../if-ie-reverse-date-value')
 
 describe('Reverse date', () => {
   it('should reverse date if the user agent is IE', () => {

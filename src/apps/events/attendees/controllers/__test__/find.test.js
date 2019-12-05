@@ -1,9 +1,9 @@
-const config = require('~/src/config')
-const { renderFindAttendee, findAttendee } = require('~/src/apps/events/attendees/controllers/find')
-const event = require('~/test/unit/data/events/event-data.json')
-const attendeesData = require('~/test/unit/data/interactions/attendees.json')
+const config = require('../../../../../config')
+const { renderFindAttendee, findAttendee } = require('../find')
+const event = require('../../../../../../test/unit/data/events/event-data.json')
+const attendeesData = require('../../../../../../test/unit/data/interactions/attendees.json')
 
-const contacts = require('~/test/unit/data/contacts/contact-search-result.json')
+const contacts = require('../../../../../../test/unit/data/contacts/contact-search-result.json')
 
 describe('Find new event attendees controller', () => {
   beforeEach(() => {

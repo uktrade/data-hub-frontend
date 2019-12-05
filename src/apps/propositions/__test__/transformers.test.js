@@ -1,12 +1,12 @@
 const { assign } = require('lodash')
-const mockProposition = require('~/test/unit/data/propositions/proposition.json')
+const mockProposition = require('../../../../test/unit/data/propositions/proposition.json')
 
 const {
   transformPropositionResponseToForm,
   transformPropositionToListItem,
   transformPropositionResponseToViewRecord,
   transformPropositionListItemToHaveUrlPrefix,
-} = require('~/src/apps/propositions/transformers')
+} = require('../transformers')
 
 describe('Proposition transformers', () => {
   describe('#transformPropositionResponseToForm', () => {

@@ -1,7 +1,7 @@
-
 const { assign, merge } = require('lodash')
+const proxyquire = require('proxyquire')
 
-const propositionData = require('~/test/unit/data/propositions/proposition.json')
+const propositionData = require('../../../../../test/unit/data/propositions/proposition.json')
 
 const transformed = {
   id: '1',
@@ -15,7 +15,7 @@ describe('Proposition details middleware', () => {
     this.transformPropositionFormBodyToApiRequestStub = sinon.stub()
     this.transformPropositionResponseToViewRecordStub = sinon.stub()
 
-    this.middleware = proxyquire('~/src/apps/propositions/middleware/details', {
+    this.middleware = proxyquire('../details', {
       '../repos': {
         saveProposition: this.savePropositionStub.resolves({ id: '1' }),
         fetchProposition: this.fetchPropositionStub.resolves(propositionData),

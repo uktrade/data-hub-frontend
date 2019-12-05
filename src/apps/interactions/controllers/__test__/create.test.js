@@ -1,10 +1,11 @@
 const { assign } = require('lodash')
+const proxyquire = require('proxyquire')
 
 describe('Create interaction, step 1', () => {
   beforeEach(() => {
     this.kindFormStub = sinon.spy()
 
-    this.create = proxyquire('~/src/apps/interactions/controllers/create', {
+    this.create = proxyquire('../create', {
       '../macros': {
         kindForm: this.kindFormStub,
       },

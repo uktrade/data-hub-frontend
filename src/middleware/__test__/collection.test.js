@@ -1,6 +1,6 @@
 describe('Collection middleware', () => {
   beforeEach(() => {
-    this.middleware = require('~/src/middleware/collection')
+    this.middleware = require('../collection')
     this.req = {
       body: '',
       query: {

@@ -1,7 +1,7 @@
 const rewire = require('rewire')
 
-const builders = require('~/src/apps/builders')
-const config = require('~/src/config')
+const builders = require('../builders')
+const config = require('../../config')
 
 describe('Global builders', () => {
   describe('#getDeepObjectValuesForKey', () => {
@@ -278,7 +278,7 @@ describe('Global builders', () => {
 
   describe('#buildFormWithStateAndErrors', () => {
     beforeEach(() => {
-      this.builders = rewire('~/src/apps/builders')
+      this.builders = rewire('../builders')
       this.buildFormWithStateSpy = sinon.stub()
       this.buildFormWithErrorsSpy = sinon.stub()
       this.builders.__set__('buildFormWithState', this.buildFormWithStateSpy)

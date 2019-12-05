@@ -1,4 +1,6 @@
-const config = require('~/src/config')
+const proxyquire = require('proxyquire')
+
+const config = require('../../config')
 
 describe('feature flag middleware', () => {
   beforeEach(() => {
@@ -16,7 +18,7 @@ describe('feature flag middleware', () => {
 
     this.loggerStub = sinon.stub()
 
-    this.features = proxyquire('~/src/middleware/features', {
+    this.features = proxyquire('../features', {
       '../config/logger': {
         error: this.loggerStub,
       },

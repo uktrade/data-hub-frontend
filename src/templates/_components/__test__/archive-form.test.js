@@ -2,8 +2,8 @@ const jsdom = require('jsdom')
 
 const { JSDOM } = jsdom
 
-const ArchiveForm = require('~/assets/javascripts/modules/archive-form')
-const { domTokenToArray } = require('~/test/unit/component-helper')
+const ArchiveForm = require('../../../../assets/javascripts/modules/archive-form')
+const { domTokenToArray } = require('../../../../test/unit/component-helper')
 
 const HTML = `
   <form action="/companies/archive/f6a5beb3-d83e-e611-80e5-000d3a21b100" class="js-archiveForm" method="POST">

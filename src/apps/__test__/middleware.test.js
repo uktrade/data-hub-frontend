@@ -1,6 +1,6 @@
 describe('Apps middleware', () => {
   beforeEach(() => {
-    this.middleware = require('~/src/apps/middleware')
+    this.middleware = require('../middleware')
     this.nextSpy = sinon.spy()
   })
 

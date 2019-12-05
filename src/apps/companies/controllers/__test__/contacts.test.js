@@ -1,12 +1,13 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const proxyquire = require('proxyquire')
 
-const companyMock = require('~/test/unit/data/companies/company-v4.json')
+const buildMiddlewareParameters = require('../../../../../test/unit/helpers/middleware-parameters-builder')
+const companyMock = require('../../../../../test/unit/data/companies/company-v4.json')
 
 describe('Company contact list controller', () => {
   beforeEach(() => {
     this.buildSelectedFiltersSummaryStub = sinon.spy()
 
-    this.controller = proxyquire('~/src/apps/companies/controllers/contacts', {
+    this.controller = proxyquire('../contacts', {
       '../../builders': {
         buildSelectedFiltersSummary: this.buildSelectedFiltersSummaryStub,
       },

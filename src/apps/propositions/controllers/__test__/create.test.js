@@ -1,8 +1,10 @@
+const proxyquire = require('proxyquire')
+
 describe('Create proposition', () => {
   beforeEach(() => {
     this.propositionFormStub = sinon.spy()
 
-    this.create = proxyquire('~/src/apps/propositions/controllers/create', {
+    this.create = proxyquire('../create', {
       '../macros': {
         propositionForm: this.propositionFormStub,
       },

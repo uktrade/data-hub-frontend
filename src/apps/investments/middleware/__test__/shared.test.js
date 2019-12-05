@@ -1,10 +1,11 @@
 const { merge, cloneDeep } = require('lodash')
 const format = require('date-fns/format')
+const proxyquire = require('proxyquire')
+
 const paths = require('../../paths')
 const { mediumDateTimeFormat } = require('../../../../config')
 const investmentData = require('../../../../../test/unit/data/investment/investment-data.json')
 const investmentProjectStages = require('../../../../../test/unit/data/investment/investment-project-stages.json')
-const proxyquire = require('proxyquire')
 
 const companyData = {
   id: '6c388e5b-a098-e211-a939-e4115bead28a',

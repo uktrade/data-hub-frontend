@@ -1,3 +1,5 @@
+const proxyquire = require('proxyquire')
+
 const apiRoot = '/api-root'
 const token = 'abcd1234'
 const user = {
@@ -11,7 +13,7 @@ describe('user middleware', () => {
     this.authorisedRequestStub = sinon.stub()
     this.nextSpy = sinon.spy()
 
-    this.userMiddleware = proxyquire('~/src/middleware/user', {
+    this.userMiddleware = proxyquire('../user', {
       '../config': {
         apiRoot: apiRoot,
       },
