@@ -5,8 +5,16 @@ import Link from '@govuk-react/link'
 import { H2 } from '@govuk-react/heading'
 import Table from '@govuk-react/table'
 import { LEVEL_SIZE } from '@govuk-react/constants'
+import { TEXT_COLOUR, GREY_3 } from 'govuk-colours'
 import { FormActions } from 'data-hub-components'
 import { companies } from '../../../../../lib/urls'
+
+const ButtonSecondary = props =>
+  <Button
+    buttonColour={GREY_3}
+    buttonTextColour={TEXT_COLOUR}
+    {...props}
+  />
 
 const RenderHasAccountManager = (
   {
@@ -36,12 +44,12 @@ const RenderHasAccountManager = (
     <p>You can <a href={companies.audit(companyId)}>see changes in the Audit trail</a></p>
     {hasPermissionToAddIta &&
     <FormActions>
-      <Button as={Link} href={addUrl}>
+      <ButtonSecondary as={Link} href={addUrl}>
         Replace Lead ITA
-      </Button>
-      <Button as={Link} href={removeUrl}>
+      </ButtonSecondary>
+      <ButtonSecondary as={Link} href={removeUrl}>
         Remove Lead ITA
-      </Button>
+      </ButtonSecondary>
     </FormActions>}
   </div>
 
