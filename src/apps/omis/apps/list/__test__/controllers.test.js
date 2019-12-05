@@ -1,5 +1,5 @@
-const config = require('~/src/config')
-const controller = require('~/src/apps/omis/apps/list/controllers')
+const config = require('../../../../../config')
+const controller = require('../controllers')
 
 describe('OMIS list controllers', () => {
   beforeEach(() => {

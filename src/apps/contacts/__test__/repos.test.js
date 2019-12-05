@@ -1,10 +1,10 @@
-const config = require('~/src/config')
+const config = require('../../../config')
 
 const {
   getContactsForCompany,
-} = require('~/src/apps/contacts/repos')
+} = require('../repos')
 
-const contactsApiResult = require('~/test/unit/data/contacts/contact-api-result.json')
+const contactsApiResult = require('../../../../test/unit/data/contacts/contact-api-result.json')
 
 const companyId = '23232323'
 

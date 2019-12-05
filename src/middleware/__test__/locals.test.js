@@ -1,6 +1,6 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const buildMiddlewareParameters = require('../../../test/unit/helpers/middleware-parameters-builder')
 
-const locals = require('~/src/middleware/locals')
+const locals = require('../locals')
 
 describe('locals', () => {
   describe('#getBreadcrumbs', () => {

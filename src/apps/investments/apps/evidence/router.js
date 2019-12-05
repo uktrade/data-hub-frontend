@@ -2,7 +2,7 @@ const router = require('express').Router()
 
 const {
   renderAddEvidence,
-} = require('./controllers/index')
+} = require('./controllers')
 
 router.get('/evidence', renderAddEvidence)
 

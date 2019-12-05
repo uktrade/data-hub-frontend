@@ -1,4 +1,4 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const buildMiddlewareParameters = require('../../../../../test/unit/helpers/middleware-parameters-builder')
 
 const localNavigation = require('../local-navigation')
 

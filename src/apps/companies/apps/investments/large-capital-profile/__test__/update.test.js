@@ -1,6 +1,8 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
-const companyProfile = require('~/test/unit/data/companies/investments/large-capital-profile-new.json')
-const companyMock = require('~/test/unit/data/companies/minimal-company.json')
+const proxyquire = require('proxyquire')
+
+const buildMiddlewareParameters = require('../../../../../../../test/unit/helpers/middleware-parameters-builder')
+const companyProfile = require('../../../../../../../test/unit/data/companies/investments/large-capital-profile-new.json')
+const companyMock = require('../../../../../../../test/unit/data/companies/minimal-company.json')
 
 const route = `/companies/${companyMock.id}/investments/large-capital-profile`
 const config = require('../../../../../../config')
@@ -30,7 +32,7 @@ describe('HTTP PATCH - Large capital profile', () => {
       this.transformInvestorRequirementsStub = sinon.stub()
       this.updateCompanyProfileStub = sinon.stub()
 
-      this.controller = proxyquire('~/src/apps/companies/apps/investments/large-capital-profile/controllers/update', {
+      this.controller = proxyquire('../controllers/update', {
         '../transformers': {
           transformInvestorDetails: this.transformInvestorDetailsStub,
           transformInvestorRequirements: this.transformInvestorRequirementsStub,

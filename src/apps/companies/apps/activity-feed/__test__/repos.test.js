@@ -1,5 +1,5 @@
-const config = require('~/src/config')
-const activityFeedRawFixture = require('~/test/unit/data/activity-feed/activity-feed-from-es')
+const config = require('../../../../../config')
+const activityFeedRawFixture = require('../../../../../../test/unit/data/activity-feed/activity-feed-from-es.json')
 const { ES_KEYS_GROUPED } = require('../constants')
 
 describe('Activity feed repos', () => {

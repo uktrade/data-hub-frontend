@@ -1,7 +1,9 @@
+const proxyquire = require('proxyquire')
+
 describe('#transformApiResponseToCollection', () => {
   beforeEach(() => {
     this.buildPaginationSpy = sinon.spy()
-    this.transformApiResponseToCollection = proxyquire('~/src/modules/api/transformers/api-response-to-collection.js', {
+    this.transformApiResponseToCollection = proxyquire('../api-response-to-collection', {
       '../../../lib/pagination': {
         buildPagination: this.buildPaginationSpy,
       },

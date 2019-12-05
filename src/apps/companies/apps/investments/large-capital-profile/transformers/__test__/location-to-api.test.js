@@ -1,6 +1,6 @@
 const {
   transformLocation,
-} = require('~/src/apps/companies/apps/investments/large-capital-profile/transformers')
+} = require('../index')
 
 describe('Large capital profile, location form to API', () => {
   context('when translating location', () => {

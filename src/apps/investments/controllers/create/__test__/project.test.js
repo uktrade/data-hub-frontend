@@ -1,4 +1,6 @@
-const paths = require('~/src/apps/investments/paths')
+const proxyquire = require('proxyquire')
+
+const paths = require('../../../paths')
 
 const mockInvestmentDetails = {
   'investment_type': '1',
@@ -12,7 +14,7 @@ describe('Investment create controller', () => {
       return this
     }
 
-    this.controller = proxyquire('~/src/apps/investments/controllers/create/project', {
+    this.controller = proxyquire('../project', {
       '../../../../lib/metadata': {
         investmentTypeOptions: [
           { id: '1', name: 'Example investment type #1' },

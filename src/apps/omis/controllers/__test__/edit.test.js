@@ -1,4 +1,6 @@
-const FormController = require('~/src/apps/omis/controllers/form')
+const proxyquire = require('proxyquire')
+
+const FormController = require('../form')
 
 const updateMockData = {
   id: 'order-1234567890',
@@ -9,7 +11,7 @@ describe('OMIS EditController', () => {
     this.nextSpy = sinon.stub()
     this.orderUpdateStub = sinon.stub()
 
-    this.ControllerClass = proxyquire('~/src/apps/omis/controllers/edit', {
+    this.ControllerClass = proxyquire('../edit', {
       '../models': {
         Order: {
           update: this.orderUpdateStub,

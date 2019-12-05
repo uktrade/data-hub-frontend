@@ -1,7 +1,9 @@
+const proxyquire = require('proxyquire')
+
 describe('buildIncompleteFormList', () => {
   beforeEach(() => {
     this.loggerSpy = sinon.spy()
-    this.helpers = proxyquire('~/src/apps/investments/helpers', {
+    this.helpers = proxyquire('../helpers', {
       '../../config/logger': {
         error: this.loggerSpy,
       },

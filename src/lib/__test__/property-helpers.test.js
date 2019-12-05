@@ -1,4 +1,4 @@
-const propertyHelpers = require('~/src/lib/property-helpers')
+const propertyHelpers = require('../property-helpers')
 
 describe('PropertyHelpers: Conversion of empty values to nulls in an object with nullEmptyFields', () => {
   it('Should convert an empty string to a null', () => {

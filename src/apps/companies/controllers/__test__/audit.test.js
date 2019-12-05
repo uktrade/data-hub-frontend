@@ -1,7 +1,8 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const proxyquire = require('proxyquire')
 
-const auditLogMock = require('~/test/unit/data/audit/company-audit.json')
-const companyMock = require('~/test/unit/data/companies/company-v4.json')
+const buildMiddlewareParameters = require('../../../../../test/unit/helpers/middleware-parameters-builder')
+const auditLogMock = require('../../../../../test/unit/data/audit/company-audit.json')
+const companyMock = require('../../../../../test/unit/data/companies/company-v4.json')
 
 describe('Company audit controller', () => {
   beforeEach(() => {
@@ -9,7 +10,7 @@ describe('Company audit controller', () => {
     this.transformApiResponseToCollectionSpy = sinon.spy()
     this.transformAuditLogToListItemSpy = sinon.spy()
 
-    this.controller = proxyquire('~/src/apps/companies/controllers/audit', {
+    this.controller = proxyquire('../audit', {
       '../repos': {
         getCompanyAuditLog: this.getCompanyAuditLogStub,
       },

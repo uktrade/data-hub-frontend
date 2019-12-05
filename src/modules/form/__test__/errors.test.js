@@ -1,4 +1,4 @@
-const { getErrors } = require('~/src/modules/form/errors.js')
+const { getErrors } = require('../errors')
 
 describe('errors', () => {
   describe('#getErrors', () => {

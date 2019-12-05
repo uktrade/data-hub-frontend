@@ -1,6 +1,6 @@
-const config = require('~/src/config')
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder')
-const { createCompanyList, renderCreateListForm } = require('~/src/apps/company-lists/controllers/create')
+const config = require('../../../../config')
+const buildMiddlewareParameters = require('../../../../../test/unit/helpers/middleware-parameters-builder')
+const { createCompanyList, renderCreateListForm } = require('../create')
 
 describe('Creating company lists', () => {
   describe('#createCompanyList', () => {

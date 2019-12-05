@@ -1,3 +1,5 @@
+const proxyquire = require('proxyquire')
+
 describe('postcodeLookupHandler', () => {
   beforeEach(() => {
     this.req = { params: { postcode: 'dn21 6fg' } }
@@ -9,7 +11,7 @@ describe('postcodeLookupHandler', () => {
     this.lookupAddressStub = sinon.stub().resolves([
       { country: 'united kingdom' },
     ])
-    this.controller = proxyquire('~/src/apps/api/controllers/postcode-lookup', {
+    this.controller = proxyquire('../postcode-lookup', {
       '../services': {
         lookupAddress: postcode => this.lookupAddressStub(postcode),
       },

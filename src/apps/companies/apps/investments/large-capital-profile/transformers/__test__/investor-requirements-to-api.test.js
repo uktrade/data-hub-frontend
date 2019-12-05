@@ -1,6 +1,6 @@
 const {
   transformInvestorRequirements,
-} = require('~/src/apps/companies/apps/investments/large-capital-profile/transformers')
+} = require('../index')
 
 describe('Large capital profile, Investor requirements form to API', () => {
   context('when translating Investor requirements', () => {

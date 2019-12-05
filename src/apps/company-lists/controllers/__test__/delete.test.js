@@ -1,14 +1,14 @@
 const requestErrors = require('request-promise/errors')
 
-const config = require('~/src/config')
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const config = require('../../../../config')
+const buildMiddlewareParameters = require('../../../../../test/unit/helpers/middleware-parameters-builder')
 const {
   fetchCompanyList,
   handleDeleteCompanyList,
   renderDeleteCompanyListPage,
-} = require('~/src/apps/company-lists/controllers/delete')
+} = require('../delete')
 
-const companyList = require('~/test/unit/data/company-lists/list-with-multiple-items.json')
+const companyList = require('../../../../../test/unit/data/company-lists/list-with-multiple-items.json')
 
 const companyListId = '2a8fb06f-2099-44d6-b404-e0fae0b9ea59'
 
