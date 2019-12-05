@@ -50,14 +50,14 @@ describe('Company adviser list controller', () => {
         it('should set the account manager flag', () => {
           expect(middlewareParameters.resMock.render.args[0][1].props.hasAccountManager).to.equal(false)
         })
-        it('should set the name to null', () => {
-          expect(middlewareParameters.resMock.render.args[0][1].props.name).to.equal(null)
+        it('should set the name to be falsy', () => {
+          expect(middlewareParameters.resMock.render.args[0][1].props.name).not.to.be.ok
         })
-        it('should set the team to null', () => {
-          expect(middlewareParameters.resMock.render.args[0][1].props.team).to.equal(null)
+        it('should set the team to be falsy', () => {
+          expect(middlewareParameters.resMock.render.args[0][1].props.team).not.to.be.ok
         })
-        it('should set the email to null', () => {
-          expect(middlewareParameters.resMock.render.args[0][1].props.email).to.equal(null)
+        it('should set the email to be falsy', () => {
+          expect(middlewareParameters.resMock.render.args[0][1].props.email).not.to.be.ok
         })
         it('should set the company name', () => {
           expect(middlewareParameters.resMock.render.args[0][1].props.companyName).to.equal('Mercury Trading Ltd')

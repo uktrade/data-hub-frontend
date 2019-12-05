@@ -1,12 +1,15 @@
 const { assertBreadcrumbs } = require('../../../support/assertions')
 const urls = require('../../../../../../src/lib/urls')
 
+const EXPECTED_NAME = 'Andy Pipkin'
+const EXPECTED_TEAM = 'Andy & Lou'
+
 const selectMainContent = () =>
   cy.get('main')
     .children()
     .first()
 
-const addOrReplaceTestCase = ({ companyId, companyName, replace }) =>
+const addOrReplaceTestCase = ({ companyId, companyName, name, team, replace }) =>
   it(`Should render the ${replace ? 'replace' : 'add'} page`, () => {
     cy.visit(urls.companies.advisers.assign(companyId))
 
@@ -39,8 +42,8 @@ const addOrReplaceTestCase = ({ companyId, companyName, replace }) =>
           .parent()
           .next()
           .contains(
-            'Name: Andy Pipkin' +
-            'Team: Little Britain'
+            'Name: ' + name +
+            'Team: ' + team
           )
       )
       .next()
@@ -102,11 +105,23 @@ describe('Manage Lead ITA', () => {
   addOrReplaceTestCase({
     companyId: 'not-managed',
     companyName: 'Not Managed Company',
+    name: EXPECTED_NAME,
+    team: EXPECTED_TEAM,
   })
 
   addOrReplaceTestCase({
     companyId: 'managed',
     companyName: 'Managed Company',
+    name: EXPECTED_NAME,
+    team: EXPECTED_TEAM,
+    replace: true,
+  })
+
+  addOrReplaceTestCase({
+    companyId: 'managed-no-team',
+    companyName: 'Managed Company With No Team',
+    name: EXPECTED_NAME,
+    team: '',
     replace: true,
   })
 
@@ -136,8 +151,8 @@ describe('Manage Lead ITA', () => {
     cy.get('@before-paragraph')
       .next()
       .contains(
-        'Name: Andy Pipkin' +
-        'Team: Little Britain'
+        'Name: ' + EXPECTED_NAME +
+        'Team: ' + EXPECTED_TEAM
       )
       .next()
       .contains('What happens next?')
