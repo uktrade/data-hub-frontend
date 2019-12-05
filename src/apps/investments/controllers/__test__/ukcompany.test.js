@@ -1,5 +1,7 @@
+const proxyquire = require('proxyquire')
+
 const investmentData = { investor_company: { name: 'company' } }
-const paths = require('~/src/apps/investments/paths')
+const paths = require('../../paths')
 
 describe('investment uk company', () => {
   beforeEach(() => {
@@ -7,7 +9,7 @@ describe('investment uk company', () => {
     this.searchStub = sinon.stub().resolves()
     this.transformerStub = sinon.stub()
 
-    this.controller = proxyquire('~/src/apps/investments/controllers/ukcompany', {
+    this.controller = proxyquire('../ukcompany', {
       '../../../modules/search/services': {
         searchCompanies: this.searchStub,
       },

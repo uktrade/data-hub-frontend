@@ -1,5 +1,5 @@
-const { investmentTypes, fdiTypes } = require('~/src/apps/investments/types')
-const { getInvestmentTypeDetails } = require('~/src/apps/investments/transformers/shared')
+const { investmentTypes, fdiTypes } = require('../types')
+const { getInvestmentTypeDetails } = require('../transformers/shared')
 
 describe('Investment type details', () => {
   it('should return just the investment type: Non-FDI', () => {

@@ -1,11 +1,13 @@
-const investmentData = require('~/test/unit/data/investment/investment-data.json')
+const proxyquire = require('proxyquire')
+
+const investmentData = require('../../../../../test/unit/data/investment/investment-data.json')
 
 describe('Investment details controller', () => {
   beforeEach(() => {
     this.next = sinon.stub()
     this.transformInvestmentRequirementsForViewStub = sinon.stub()
 
-    this.controller = proxyquire('~/src/apps/investments/controllers/details', {
+    this.controller = proxyquire('../details', {
       '../transformers': {
         transformInvestmentRequirementsForView: this.transformInvestmentRequirementsForViewStub,
         transformInvestmentForView: sinon.stub(),

@@ -64,6 +64,10 @@ describe('Companies business details', () => {
       cy.get(selectors.localHeader().heading).should('have.text', 'Business details')
     })
 
+    it('should display the "Last updated" paragraph', () => {
+      cy.contains('Last updated on: 26 Nov 2017').should('be.visible')
+    })
+
     it('should display the "Where does information on this page come from?" details summary', () => {
       cy.get(selectors.companyBusinessDetails().whereDoesInformation).should('be.visible')
     })
@@ -191,6 +195,10 @@ describe('Companies business details', () => {
       cy.get(selectors.localHeader().heading).should('have.text', 'Business details')
     })
 
+    it('should display the "Last updated" paragraph', () => {
+      cy.contains('Last updated on: 15 Jul 2016').should('be.visible')
+    })
+
     it('should not display the "Where does information on this page come from?" details summary', () => {
       cy.get(selectors.companyBusinessDetails().whereDoesInformation).should('not.exist')
     })
@@ -282,6 +290,10 @@ describe('Companies business details', () => {
       })
     })
 
+    it('should display the "Last updated" paragraph', () => {
+      cy.contains('Last updated on: 15 Jul 2016').should('be.visible')
+    })
+
     it('should display the "Documents from CDMS" details container', () => {
       assertSummaryTable({
         dataAutoId: 'documentsDetailsContainer',
@@ -314,6 +326,10 @@ describe('Companies business details', () => {
 
     it('should display the "Business details" heading', () => {
       cy.get(selectors.localHeader().heading).should('have.text', 'Business details')
+    })
+
+    it('should display the "Last updated" paragraph', () => {
+      cy.contains('Last updated on: 26 Oct 2018').should('be.visible')
     })
 
     it('should display the "Where does information on this page come from?" details summary', () => {
@@ -417,6 +433,10 @@ describe('Companies business details', () => {
 
     it('should display the "Business details" heading', () => {
       cy.get(selectors.localHeader().heading).should('have.text', 'Business details')
+    })
+
+    it('should display the "Last updated" paragraph', () => {
+      cy.contains('Last updated on: 16 Jul 2017').should('be.visible')
     })
 
     it('should not display the "Where does information on this page come from?" details summary', () => {
@@ -530,6 +550,10 @@ describe('Companies business details', () => {
 
     it('should display the "Business details" heading', () => {
       cy.get(selectors.localHeader().heading).should('have.text', 'Business details')
+    })
+
+    it('should display the "Last updated" paragraph', () => {
+      cy.contains('Last updated on: 11 Dec 2015').should('be.visible')
     })
 
     it('should not display the "Where does information on this page come from?" details summary', () => {

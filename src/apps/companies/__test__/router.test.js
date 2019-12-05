@@ -1,4 +1,4 @@
-const router = require('~/src/apps/companies/router.js')
+const router = require('../router')
 
 describe('Company router', () => {
   it('should define all routes', () => {

@@ -5,7 +5,7 @@ const {
   setFormDetails,
   invalidateStateForChangedNextPath,
   invalidateStateForDependentSteps,
-} = require('~/src/modules/form/state/middleware.js')
+} = require('../middleware')
 const steps = require('../../__fixtures__/steps.js')()
 
 describe('Form state middleware', () => {

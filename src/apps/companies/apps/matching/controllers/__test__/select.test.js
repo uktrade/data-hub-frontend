@@ -1,8 +1,8 @@
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+const buildMiddlewareParameters = require('../../../../../../../test/unit/helpers/middleware-parameters-builder')
 
-const companyMock = require('~/test/unit/data/companies/company-v4.json')
+const companyMock = require('../../../../../../../test/unit/data/companies/company-v4.json')
 
-const { renderSelect } = require('~/src/apps/companies/apps/matching/controllers/select')
+const { renderSelect } = require('../select')
 
 describe('Companies matching select controller', () => {
   describe('#renderSelect', () => {

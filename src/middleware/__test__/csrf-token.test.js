@@ -1,6 +1,6 @@
 describe('CRSF token', () => {
   beforeEach(() => {
-    this.csrfMiddleware = require('~/src/middleware/csrf-token')()
+    this.csrfMiddleware = require('../csrf-token')()
   })
 
   describe('set a CSRF token', () => {

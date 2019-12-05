@@ -1,6 +1,6 @@
 const { each, isArray } = require('lodash')
 
-const validators = require('~/src/apps/omis/validators')
+const validators = require('../validators')
 
 function testName (input) {
   if (isArray(input)) {

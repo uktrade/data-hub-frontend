@@ -1,10 +1,12 @@
-const { contactAuditLabels } = require('~/src/apps/contacts/labels')
-const auditLog = require('~/test/unit/data/audit/contact-audit.json')
+const proxyquire = require('proxyquire')
+
+const { contactAuditLabels } = require('../../contacts/labels')
+const auditLog = require('../../../../test/unit/data/audit/contact-audit.json')
 
 describe('Audit transformers', () => {
   beforeEach(() => {
     this.buildPaginationStub = sinon.stub()
-    this.transformers = proxyquire('~/src/apps/audit/transformers', {
+    this.transformers = proxyquire('../transformers', {
       '../../lib/pagination': {
         buildPagination: this.buildPaginationStub,
       },

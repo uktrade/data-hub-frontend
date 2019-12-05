@@ -39,12 +39,18 @@ const CompanyBusinessDetails = ({
   const isDnbCompany = !!businessDetails.duns_number
   const isArchived = !!businessDetails.archived
   const isBasedInUK = !!businessDetails.uk_based
+  const lastUpdated = businessDetails.dnb_modified_on ||
+    businessDetails.modified_on ||
+    businessDetails.created_on
 
   return (
     <StyledRoot>
       <p>
         This page shows information about this business and how it is related to other businesses.<br />
         Changes made to this information can be found on the <Link href={urls.companyAudit}>Audit trail page</Link>.
+        {lastUpdated &&
+          <><br />Last updated on: {DateUtils.format(lastUpdated)}</>
+        }
       </p>
 
       {isArchived &&

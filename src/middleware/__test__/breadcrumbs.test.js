@@ -1,4 +1,4 @@
-const breadcrumbs = require('~/src/middleware/breadcrumbs')
+const breadcrumbs = require('../breadcrumbs')
 
 describe('breadcrumbs middleware', () => {
   beforeEach(() => {

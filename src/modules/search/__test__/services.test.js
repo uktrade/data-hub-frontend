@@ -1,4 +1,4 @@
-const config = require('~/src/config')
+const config = require('../../../config')
 const {
   search,
   searchCompanies,
@@ -7,8 +7,8 @@ const {
   exportSearch,
   searchAutocomplete,
   searchDnbCompanies,
-} = require('~/src/modules/search/services')
-const buildMiddlewareParameters = require('~/test/unit/helpers/middleware-parameters-builder.js')
+} = require('../services')
+const buildMiddlewareParameters = require('../../../../test/unit/helpers/middleware-parameters-builder')
 
 describe('Search service', () => {
   describe('#search', () => {

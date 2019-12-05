@@ -1,6 +1,6 @@
 const {
   transformInvestorDetails,
-} = require('~/src/apps/companies/apps/investments/large-capital-profile/transformers')
+} = require('../index')
 
 const getClearedPOSTData = ({
   day = '01',

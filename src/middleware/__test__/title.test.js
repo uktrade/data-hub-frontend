@@ -1,6 +1,6 @@
 describe('title middleware', () => {
   beforeEach(() => {
-    this.title = require('~/src/middleware/title')()
+    this.title = require('../title')()
   })
 
   describe('set title', () => {
