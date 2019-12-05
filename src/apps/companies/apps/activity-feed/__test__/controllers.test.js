@@ -397,7 +397,7 @@ describe('Activity feed controllers', () => {
               isGlobalUltimate: false,
               isTypeFilterFlagEnabled: undefined,
               isGlobalUltimateFlagEnabled: undefined,
-              dnbHierachyCount: undefined,
+              dnbHierarchyCount: undefined,
             },
           })
       })
@@ -445,7 +445,7 @@ describe('Activity feed controllers', () => {
               activityTypeFilters: FILTER_ITEMS,
               apiEndpoint: companies.activity.data(companyId),
               isGlobalUltimate: true,
-              dnbHierachyCount: 123,
+              dnbHierarchyCount: 123,
               isTypeFilterFlagEnabled: undefined,
               isGlobalUltimateFlagEnabled: undefined,
             },
@@ -477,7 +477,6 @@ describe('Activity feed controllers', () => {
         const expectedParams = {
           props: {
             apiEndpoint: '/companies/dcdabbc9-1781-e411-8955-e4115bead28a/activity/data',
-            dnbHierachyCount: undefined,
           },
         }
 

@@ -15,6 +15,7 @@ async function renderActivityFeed (req, res, next) {
       activityTypeFilter: FILTER_KEYS.dataHubActivity,
       activityTypeFilters: FILTER_ITEMS,
       isGlobalUltimate: company.is_global_ultimate,
+      dnbHierarchyCount,
       isTypeFilterFlagEnabled: features['activity-feed-type-filter-enabled'],
       isGlobalUltimateFlagEnabled: features['companies-ultimate-hq'],
     }
@@ -22,9 +23,6 @@ async function renderActivityFeed (req, res, next) {
     const props = {
       ...contentProps,
       apiEndpoint: companies.activity.data(company.id),
-
-      // TODO: Fix typo on the ActivityFeedApp component.
-      dnbHierachyCount: dnbHierarchyCount,
     }
 
     res
