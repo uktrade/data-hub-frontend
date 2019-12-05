@@ -38,22 +38,27 @@ function transformInteractionFormBodyToApiRequest (body, services, addCountries)
     })
   }
 
+  const fields = {
+    ...body,
+    service,
+    service_answers: serviceAnswers,
+    date: transformDateObjectToDateString('date')(body),
+    grant_amount_offered: body.grant_amount_offered || null,
+    net_company_receipt: body.net_company_receipt || null,
+    contacts: castCompactArray(body.contacts),
+    dit_participants: castCompactArray(body.dit_participants).map(adviser => ({ adviser })),
+    policy_areas: castCompactArray(body.policy_areas),
+    policy_issue_types: castCompactArray(body.policy_issue_types),
+    status: INTERACTION_STATUS.COMPLETE,
+    were_countries_discussed: body.were_countries_discussed || null,
+  }
+
+  if (addCountries && body.were_countries_discussed === 'true') {
+    fields.export_countries = getExportCountries(body)
+  }
+
   return omit(
-    {
-      ...body,
-      service,
-      service_answers: serviceAnswers,
-      date: transformDateObjectToDateString('date')(body),
-      grant_amount_offered: body.grant_amount_offered || null,
-      net_company_receipt: body.net_company_receipt || null,
-      contacts: castCompactArray(body.contacts),
-      dit_participants: castCompactArray(body.dit_participants).map(adviser => ({ adviser })),
-      policy_areas: castCompactArray(body.policy_areas),
-      policy_issue_types: castCompactArray(body.policy_issue_types),
-      status: INTERACTION_STATUS.COMPLETE,
-      were_countries_discussed: body.were_countries_discussed || null,
-      export_countries: (addCountries ? getExportCountries(body) : null),
-    },
+    fields,
     fieldsToOmit
   )
 }
