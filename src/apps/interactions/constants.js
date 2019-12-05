@@ -21,6 +21,7 @@ const QUERY_FIELDS = [
   'policy_areas',
   'policy_issue_types',
   'dit_participants__adviser',
+  'company_one_list_group_tier',
 ]
 
 const QUERY_DATE_FIELDS = ['date_after', 'date_before']
