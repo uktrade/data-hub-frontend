@@ -10,6 +10,7 @@
   "company_number": null,
   "vat_number": "",
   "duns_number": "000000001",
+  "dnb_modified_on": "2018-10-26T11:00:00Z",
   "created_on": "2015-10-26T11:00:00Z",
   "modified_on": "2017-11-26T11:00:00Z",
   "archived": false,
