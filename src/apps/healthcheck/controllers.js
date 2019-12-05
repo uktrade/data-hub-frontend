@@ -50,7 +50,7 @@ function renderPingdomXml (req, res, next) {
     .catch(next)
 }
 
-function getHandler (req, res, next) {
+function getMicroserviceHealthcheck (req, res, next) {
   return healthCheck(serviceDependencies)
     .then((results) => results.filter((result) => result.statusText !== 'OK'))
     .then((errors) => {
@@ -74,6 +74,6 @@ function getHandler (req, res, next) {
 }
 
 module.exports = {
-  getHandler,
+  getMicroserviceHealthcheck,
   renderPingdomXml,
 }

@@ -1,8 +1,8 @@
 const router = require('express').Router()
 
-const { renderPingdomXml, getHandler } = require('./controllers')
+const { renderPingdomXml, getMicroserviceHealthcheck } = require('./controllers')
 
-router.get('/', getHandler)
+router.get('/', getMicroserviceHealthcheck)
 
 router.get('/ping.xml', renderPingdomXml)
 
