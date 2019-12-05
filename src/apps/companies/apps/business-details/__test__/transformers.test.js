@@ -43,6 +43,8 @@ describe('Company business details transformers', () => {
           'name': 'Mercury Ltd',
           'trading_names': [],
           'company_number': '99919',
+          'created_on': '2016-06-05T12:00:00Z',
+          'modified_on': '2016-07-05T12:00:00Z',
           'uk_based': true,
           'headquarter_type': {
             'name': 'ghq',
