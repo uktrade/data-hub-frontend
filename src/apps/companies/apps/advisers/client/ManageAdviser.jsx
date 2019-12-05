@@ -40,7 +40,9 @@ const Add = ({ cancelUrl, csrfToken, currentLeadITA }) =>
       If you think another International Trade Adviser is the first point of contact
       for this company, they will need to add themselves.
     </Details>
+
     <H3>What happens next?</H3>
+
     <UnorderedList listStyleType="bullet">
       <ListItem>
         Your name and team will be displayed on top of the company page,
@@ -53,6 +55,7 @@ const Add = ({ cancelUrl, csrfToken, currentLeadITA }) =>
         Other ITAs will be able to replace you as the Lead ITA for the company
       </ListItem>
     </UnorderedList>
+    
     <form method="POST">
       <input type="hidden" name="_csrf" value={csrfToken}/>
       <FormActions>
