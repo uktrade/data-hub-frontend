@@ -1,23 +1,30 @@
+const { get } = require('lodash')
 const { getOneListGroupCoreTeam } = require('../../../repos')
 const config = require('../../../../../config')
-const { transformCoreTeamToCollection, transformAccountManager } = require('../../../transformers')
+const { transformCoreTeamToCollection } = require('../../../transformers')
 const { coreTeamLabels } = require('../../../labels')
 const { isItaTierDAccount } = require('../../../../../lib/is-tier-type-company')
 const { companies } = require('../../../../../../src/lib/urls')
 const { authorisedRequest } = require('../../../../../lib/authorised-request')
 const urls = require('../../../../../lib/urls')
 
+const companyToLeadITA = ({ one_list_group_global_account_manager: leadITA }) =>
+  leadITA && {
+    name: leadITA.name,
+    email: leadITA.contact_email,
+    team: get(leadITA, 'dit_team.name'),
+  }
+
 function renderLeadAdvisers (req, res) {
   const { company, user: { permissions } } = res.locals
-  const hasAccountManager = !!company.one_list_group_global_account_manager
-  const { name = null, team = null, email = null } = hasAccountManager ? transformAccountManager(company) : {}
+  const { name, team, email } = companyToLeadITA(company) || {}
 
   res
     .breadcrumb(company.name, `${companies.detail(company.id)}`)
     .breadcrumb('Lead adviser')
     .render('companies/views/lead-advisers', {
       props: {
-        hasAccountManager,
+        hasAccountManager: !!company.one_list_group_global_account_manager,
         name,
         team,
         email,
@@ -70,37 +77,40 @@ async function renderAdvisers (req, res, next) {
     : await renderCoreTeamAdvisers(req, res, next)
 }
 
-// istanbul ignore next: Only testable with whitebox tests and alerady covered by functional tests
-const renderAddAdviserForm = (req, res) => {
-  const rawLeadITA = res.locals.company.one_list_group_global_account_manager
+// istanbul ignore next: Covered by functional tests
+const form = (req, res) => {
   const { name, id } = res.locals.company
-  const currentLeadITA = rawLeadITA && {
-    name: rawLeadITA.name,
-    team: rawLeadITA.dit_team.name,
-  }
+  const isRemove = req.url === '/remove'
+  const currentLeadITA = companyToLeadITA(res.locals.company)
   res
     .breadcrumb(name, urls.companies.detail(id))
     .breadcrumb(
-      currentLeadITA
-        ? 'Replace the Lead ITA'
-        : 'Confirm you are the Lead ITA'
+      isRemove
+        ? 'Remove the Lead ITA'
+        : currentLeadITA
+          ? 'Replace the Lead ITA'
+          : 'Confirm you are the Lead ITA'
     )
-    .render('companies/apps/advisers/views/add-adviser.njk', {
+    .render('companies/apps/advisers/views/manage-adviser.njk', {
       props: {
+        isRemove,
         currentLeadITA,
         cancelUrl: urls.companies.advisers.index(id),
       },
     })
 }
 
-// istanbul ignore next: Only testable with whitebox tests and alerady covered by functional tests
-async function addAdviser (req, res, next) {
+// istanbul ignore next: Covered by functional tests
+async function submit (req, res, next) {
   const { company: { id } } = res.locals
+  const action = req.url === '/remove'
+    ? 'remove'
+    : 'self-assign'
 
   try {
     await authorisedRequest(req.session.token, {
       method: 'POST',
-      url: `${config.apiRoot}/v4/company/${id}/self-assign-account-manager`,
+      url: `${config.apiRoot}/v4/company/${id}/${action}-account-manager`,
     })
 
     req.flash('success', 'Lead adviser information updated')
@@ -112,6 +122,6 @@ async function addAdviser (req, res, next) {
 
 module.exports = {
   renderAdvisers,
-  addAdviser,
-  renderAddAdviserForm,
+  submit,
+  form,
 }
