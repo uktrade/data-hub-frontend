@@ -15,9 +15,9 @@ const addOrReplaceTestCase = ({ companyId, companyName, replace }) =>
       : 'Confirm you are the Lead ITA'
 
     assertBreadcrumbs({
-      'Home': '/',
-      'Companies': '/companies',
-      [companyName]: `/companies/${companyId}`,
+      'Home': urls.dashboard(),
+      'Companies': urls.companies.index(),
+      [companyName]: urls.companies.detail(companyId),
       [headline]: undefined,
     })
 
@@ -73,7 +73,7 @@ const addOrReplaceTestCase = ({ companyId, companyName, replace }) =>
       .as('submit')
       .next()
       .contains('Cancel')
-      .should('have.attr', 'href', `/companies/${companyId}/advisers`)
+      .should('have.attr', 'href', urls.companies.advisers.index(companyId))
 
     cy
       .contains(
@@ -118,9 +118,9 @@ describe('Manage Lead ITA', () => {
     cy.visit(urls.companies.advisers.remove('managed'))
 
     assertBreadcrumbs({
-      'Home': '/',
-      'Companies': '/companies',
-      [COMPANY_NAME]: `/companies/${COMPANY_ID}`,
+      'Home': urls.dashboard(),
+      'Companies': urls.companies.index(),
+      [COMPANY_NAME]: urls.companies.detail(COMPANY_ID),
       [HEADLINE]: undefined,
     })
 
@@ -164,7 +164,7 @@ describe('Manage Lead ITA', () => {
       .as('submit')
       .next()
       .contains('Cancel')
-      .should('have.attr', 'href', `/companies/${COMPANY_ID}/advisers`)
+      .should('have.attr', 'href', urls.companies.advisers.index(COMPANY_ID))
 
     cy.get('@submit')
       .click()
