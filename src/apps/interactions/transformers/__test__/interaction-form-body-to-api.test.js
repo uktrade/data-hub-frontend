@@ -9,7 +9,7 @@ const transformInteractionFormBodyToApiRequest = require('../interaction-form-bo
 
 const transformedServices = transformServicesOptions(serviceOptions)
 
-function defaultTests () {
+function defaultTests (addCountries) {
   context('when all fields are populated', function () {
     before(function () {
       this.transformed = transformInteractionFormBodyToApiRequest(
@@ -24,7 +24,7 @@ function defaultTests () {
           service: 'sv1',
         },
         transformedServices,
-        this.addCountries,
+        addCountries,
       )
     })
 
@@ -48,9 +48,15 @@ function defaultTests () {
       expect(this.transformed.policy_issue_types).to.deep.equal(['5555'])
     })
 
-    it('should set countries discussed to null', function () {
-      expect(this.transformed.were_countries_discussed).to.equal(null)
-    })
+    if (addCountries) {
+      it('should set countries discussed to null', function () {
+        expect(this.transformed.were_countries_discussed).to.equal(null)
+      })
+    } else {
+      it('should not include countries discussed', function () {
+        expect(this.transformed.were_countries_discussed).to.be.undefined
+      })
+    }
   })
 
   context('when the optional fields have not been entered', function () {
@@ -183,7 +189,7 @@ describe('#transformInteractionFormBodyToApiRequest', function () {
     before(function () {
       this.addCountries = true
     })
-    defaultTests()
+    defaultTests(true)
 
     context('when countries discussed is false', function () {
       it('should not add export_countries', function () {
@@ -195,6 +201,7 @@ describe('#transformInteractionFormBodyToApiRequest', function () {
           this.addCountries,
         )
 
+        expect(transformed.were_countries_discussed).to.equal('false')
         expect(transformed.export_countries).to.be.undefined
       })
     })
@@ -213,6 +220,7 @@ describe('#transformInteractionFormBodyToApiRequest', function () {
           this.addCountries,
         )
 
+        expect(transformed.were_countries_discussed).to.equal('true')
         expect(transformed.export_countries).to.deep.equal([
           {
             country: { id: futureCountries[ 0 ] },
