@@ -181,4 +181,23 @@ describe('Company Collections Filter', () => {
       .get(selectors.entityCollection.collection)
       .should('contain', '100,172 companies')
   })
+
+  it('should filter by Lead ITA and Global Account Manager', () => {
+    const leadIta = selectors.filter.leadIta
+    const { typeahead } = selectors.filter
+    cy
+      .get(typeahead(leadIta).selectedOption)
+      .click()
+      .get(typeahead(leadIta).textInput)
+      .type('Shawn Cohen')
+      .wait(2000)
+      .type('{enter}')
+      .type('{esc}')
+
+    cy.wait('@filterResults').then(xhr => {
+      expect(xhr.url).to.contain(
+        'one_list_group_global_account_manager=2c42c516-9898-e211-a939-e4115bead28a'
+      )
+    })
+  })
 })
