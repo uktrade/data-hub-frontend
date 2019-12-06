@@ -50,11 +50,14 @@ function transformInteractionFormBodyToApiRequest (body, services, addCountries)
     policy_areas: castCompactArray(body.policy_areas),
     policy_issue_types: castCompactArray(body.policy_issue_types),
     status: INTERACTION_STATUS.COMPLETE,
-    were_countries_discussed: body.were_countries_discussed || null,
   }
 
-  if (addCountries && body.were_countries_discussed === 'true') {
-    fields.export_countries = getExportCountries(body)
+  if (addCountries) {
+    fields.were_countries_discussed = body.were_countries_discussed || null
+
+    if (body.were_countries_discussed === 'true') {
+      fields.export_countries = getExportCountries(body)
+    }
   }
 
   return omit(
