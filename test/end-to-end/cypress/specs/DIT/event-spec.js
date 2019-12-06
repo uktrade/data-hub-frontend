@@ -67,7 +67,7 @@ describe('Event', () => {
       cy.contains('Attendees').click()
       cy.get(selectors.entityCollection.addAttendee).click()
 
-      cy.get(selectors.nav.search).type('dean cox').type('{enter}')
+      cy.get(selectors.nav.searchTerm).type('dean cox').type('{enter}')
       cy.get(selectors.collection.items).click()
 
       cy.get(selectors.message.successful)
