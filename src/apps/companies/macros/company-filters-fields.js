@@ -95,6 +95,16 @@ const companyFiltersFields = function ({ sectorOptions }) {
       ],
       modifier: 'option-select',
     },
+    {
+      macroName: 'Typeahead',
+      name: QUERY_FIELDS_MAP.leadIta,
+      placeholder: 'Search adviser',
+      useSubLabel: false,
+      entity: 'adviser',
+      hideInactive: false,
+      target: 'metadata',
+      label: 'Lead ITA or Global Account Manager',
+    },
   ].map(filter => {
     return Object.assign(filter, {
       modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
