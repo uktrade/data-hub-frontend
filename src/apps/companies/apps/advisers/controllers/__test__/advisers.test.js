@@ -24,9 +24,6 @@ describe('Company adviser list controller', () => {
             user: {
               permissions: ['company.change_regional_account_manager'],
             },
-            features: {
-              lead_advisers: true,
-            },
           })
 
           await renderAdvisers(
@@ -88,9 +85,6 @@ describe('Company adviser list controller', () => {
             user: {
               permissions: [],
             },
-            features: {
-              lead_advisers: true,
-            },
           })
 
           await renderAdvisers(
@@ -121,9 +115,6 @@ describe('Company adviser list controller', () => {
             },
             user: {
               permissions: [],
-            },
-            features: {
-              lead_advisers: true,
             },
           })
 

@@ -1,12 +1,11 @@
 const router = require('express').Router()
 
-const { allFeaturesOr404, allPermissionsOr403 } = require('../../../../middleware/conditionals')
+const { allPermissionsOr403 } = require('../../../../middleware/conditionals')
 const { submit, renderAdvisers, form } = require('./controllers/advisers')
 
 router.get('/', renderAdvisers)
 
-router.route(['/assign', '/remove'])
-  .all(allFeaturesOr404('lead_advisers'))
+router.route(['/assign', 'remove'])
   .all(allPermissionsOr403('company.change_regional_account_manager'))
   .get(form)
   .post(submit)
