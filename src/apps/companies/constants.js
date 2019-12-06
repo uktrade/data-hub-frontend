@@ -1,6 +1,7 @@
 const { concat } = require('lodash')
 
 const QUERY_FIELDS_MAP = {
+  leadIta: 'one_list_group_global_account_manager',
   archived: 'archived',
   name: 'name',
   sectorDescends: 'sector_descends',
