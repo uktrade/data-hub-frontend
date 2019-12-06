@@ -146,6 +146,7 @@ async function renderEditPage (req, res, next) {
       ? `Edit ${kindName}`
       : `Add ${kindName + forEntityName}`
 
+    // istanbul ignore next: Covered by functional tests
     if (canAddCountries(theme, res.locals.interaction, res.locals.features)) {
       EXPORT_INTEREST_STATUS_VALUES.forEach(addSelectedOptions(interactionForm.children))
     }
