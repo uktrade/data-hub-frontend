@@ -23,9 +23,8 @@ function getGreatProfileValue (profileStatus, companiesHouseNumber) {
       name: '"Find a supplier" profile',
       hint: '(opens in a new window)',
     }
-  } else {
-    return (profileStatus === 'unpublished' ? 'Profile not published' : 'No profile')
   }
+  return (profileStatus === 'unpublished' ? 'Profile not published' : 'No profile')
 }
 
 module.exports = function transformCompanyToExportDetailsView ({

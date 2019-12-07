@@ -1,7 +1,7 @@
 const faker = require('faker')
 
 const { transformServicesOptions } = require('../')
-const { EXPORT_INTEREST_STATUS } = require('../../constants')
+const { EXPORT_INTEREST_STATUS } = require('../../../constants')
 
 const serviceOptions = require('../../../../../test/unit/data/interactions/service-options-data.json')
 
