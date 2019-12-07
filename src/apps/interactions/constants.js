@@ -118,12 +118,6 @@ const KINDS = {
   SERVICE_DELIVERY: 'service-delivery',
 }
 
-const EXPORT_INTEREST_STATUS = {
-  FUTURE_INTEREST: 'future_interest',
-  EXPORTING_TO: 'currently_exporting',
-  NOT_INTERESTED: 'not_interested',
-}
-
 module.exports = {
   QUERY_FIELDS,
   QUERY_DATE_FIELDS,
@@ -138,6 +132,4 @@ module.exports = {
   INTERACTION_CONTEXTS,
   THEMES,
   KINDS,
-  EXPORT_INTEREST_STATUS,
-  EXPORT_INTEREST_STATUS_VALUES: Object.values(EXPORT_INTEREST_STATUS),
 }
