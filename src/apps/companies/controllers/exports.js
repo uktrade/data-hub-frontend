@@ -9,8 +9,9 @@ const { transformCompanyToExportDetailsView } = require('../transformers')
 const { exportDetailsLabels, exportPotentialLabels } = require('../labels')
 
 function renderExports (req, res) {
-  const { company } = res.locals
-  const exportDetails = transformCompanyToExportDetailsView(company)
+  const { company, features } = res.locals
+  const useNewCountries = features['interaction-add-countries']
+  const exportDetails = transformCompanyToExportDetailsView(company, useNewCountries)
 
   res
     .breadcrumb(company.name, urls.companies.detail(company.id))
