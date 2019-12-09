@@ -82,6 +82,7 @@ describe('Health check controller', () => {
     })
   })
 
+  // getMicroserviceHealthcheck() ought NOT check dependencies
   describe('#getMicroserviceHealthcheck with unhealthy service dependencies', () => {
     it('should set cache control', async () => {
       const { res } = await getMicroserviceHealthcheck(failureDependencies)
@@ -90,28 +91,24 @@ describe('Health check controller', () => {
       expect(res.set).to.have.been.calledOnce
     })
 
-    it('should return a 503 status code', async () => {
+    it('should return a 200 status code', async () => {
       const { res } = await getMicroserviceHealthcheck(failureDependencies)
 
-      expect(res.status).to.be.calledWith(503)
+      expect(res.status).to.be.calledWith(200)
       expect(res.status).to.have.been.calledOnce
     })
 
-    it('should return Service Unavailable', async () => {
+    it('should return OK', async () => {
       const { res } = await getMicroserviceHealthcheck(failureDependencies)
 
-      expect(res.status().send).to.be.calledWith('Service Unavailable')
+      expect(res.status().send).to.be.calledWith('OK')
       expect(res.status().send).to.have.been.calledOnce
     })
 
-    it('should call the logger', async () => {
+    it('should not call the logger', async () => {
       const { logger } = await getMicroserviceHealthcheck(failureDependencies)
 
-      expect(logger.error.calledOnce)
-      expect(logger.error.calledWith(
-        `${serviceDependencyError.name} health check failed`,
-        serviceDependencyError.error
-      ))
+      expect(logger.error.notCalled).to.be.true
     })
   })
 
