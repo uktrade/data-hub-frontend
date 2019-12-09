@@ -3,12 +3,27 @@ const { filter, flatten } = require('lodash')
 
 const metadataRepo = require('../../../lib/metadata')
 const urls = require('../../../lib/urls')
+const groupExportCountries = require('../../../lib/group-export-countries')
+
 const { saveCompany } = require('../repos')
 const { transformObjectToOption } = require('../../transformers')
 const { transformCompanyToExportDetailsView } = require('../transformers')
 const { exportDetailsLabels, exportPotentialLabels } = require('../labels')
 
-const { NEW_COUNTRIES_FEATURE } = require('../../constants')
+const { NEW_COUNTRIES_FEATURE, EXPORT_INTEREST_STATUS, EXPORT_INTEREST_STATUS_VALUES } = require('../../constants')
+
+function getId (obj) {
+  return obj.id
+}
+
+function getExportCountries (countries) {
+  const buckets = groupExportCountries(countries)
+  EXPORT_INTEREST_STATUS_VALUES.forEach((status) => {
+    buckets[ status ] = buckets[ status ].map(transformObjectToOption)
+  })
+
+  return buckets
+}
 
 function renderExports (req, res) {
   const { company, features } = res.locals
@@ -28,19 +43,27 @@ function populateExportForm (req, res, next) {
     export_to_countries,
     future_interest_countries,
     export_experience_category,
+    export_countries,
   } = res.locals.company
 
-  res.locals.formData = Object.assign({
-    export_experience_category,
-    export_to_countries: export_to_countries.map(country => country.id),
-    future_interest_countries: future_interest_countries.map(country => country.id),
-  }, req.body)
+  if (res.locals.features[ NEW_COUNTRIES_FEATURE ]) {
+    res.locals.formData = Object.assign({
+      export_experience_category,
+      ...getExportCountries(export_countries),
+    }, req.body)
+  } else {
+    res.locals.formData = Object.assign({
+      export_experience_category,
+      export_to_countries: export_to_countries.map(getId),
+      future_interest_countries: future_interest_countries.map(getId),
+    }, req.body)
+  }
 
   next()
 }
 
 function renderExportEdit (req, res) {
-  const { company } = res.locals
+  const { company, features } = res.locals
 
   res
     .breadcrumb(company.name, urls.companies.detail(company.id))
@@ -50,6 +73,12 @@ function renderExportEdit (req, res) {
       exportDetailsLabels,
       exportExperienceCategories: metadataRepo.exportExperienceCategory.map(transformObjectToOption),
       countryOptions: metadataRepo.countryOptions.map(transformObjectToOption),
+      useNewCountries: features[ NEW_COUNTRIES_FEATURE ],
+      countriesFields: {
+        [EXPORT_INTEREST_STATUS.EXPORTING_TO]: exportDetailsLabels.exportToCountries,
+        [EXPORT_INTEREST_STATUS.FUTURE_INTEREST]: exportDetailsLabels.futureInterestCountries,
+        [EXPORT_INTEREST_STATUS.NOT_INTERESTED]: exportDetailsLabels.noInterestCountries,
+      },
     })
 }
 
