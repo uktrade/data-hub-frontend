@@ -22,7 +22,7 @@ const failureDependencies = [
   },
 ]
 
-const getMicroserviceHealthcheck = async (dependencies) => {
+const callNamedHandler = async (handlerName, dependencies) => {
   const logger = { error: sinon.spy() }
   const controller = proxyquire.noCallThru().load('../controllers', {
     './serviceDependencies': dependencies,
@@ -36,32 +36,20 @@ const getMicroserviceHealthcheck = async (dependencies) => {
     }),
   }
   const next = sinon.spy()
-  await controller.getMicroserviceHealthcheck(req, res, next)
+  const handler = controller[handlerName]
+  await handler(req, res, next)
   return {
     logger,
     res,
   }
 }
 
+const getMicroserviceHealthcheck = async (dependencies) => {
+  return callNamedHandler('getMicroserviceHealthcheck', dependencies)
+}
+
 const renderPingdomXml = async (dependencies) => {
-  const logger = { error: sinon.spy() }
-  const controller = proxyquire.noCallThru().load('../controllers', {
-    './serviceDependencies': dependencies,
-    '../../../config/logger': logger,
-  })
-  const req = {}
-  const res = {
-    set: sinon.spy(),
-    status: sinon.stub().returns({
-      send: sinon.spy(),
-    }),
-  }
-  const next = sinon.spy()
-  await controller.renderPingdomXml(req, res, next)
-  return {
-    logger,
-    res,
-  }
+  return callNamedHandler('renderPingdomXml', dependencies)
 }
 
 describe('Health check controller', () => {
