@@ -8,10 +8,11 @@ const { transformObjectToOption } = require('../../transformers')
 const { transformCompanyToExportDetailsView } = require('../transformers')
 const { exportDetailsLabels, exportPotentialLabels } = require('../labels')
 
+const { NEW_COUNTRIES_FEATURE } = require('../../constants')
+
 function renderExports (req, res) {
   const { company, features } = res.locals
-  const useNewCountries = features['interaction-add-countries']
-  const exportDetails = transformCompanyToExportDetailsView(company, useNewCountries)
+  const exportDetails = transformCompanyToExportDetailsView(company, features[NEW_COUNTRIES_FEATURE])
 
   res
     .breadcrumb(company.name, urls.companies.detail(company.id))
