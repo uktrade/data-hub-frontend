@@ -206,7 +206,7 @@ describe('Company export controller', () => {
       })
 
       it('should redirect to exports routes', () => {
-        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledWith(urls.companies.exports(companyMock.id))
+        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledWith(urls.companies.exports.index(companyMock.id))
         expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
       })
 

@@ -43,7 +43,7 @@ function renderExportEdit (req, res) {
 
   res
     .breadcrumb(company.name, urls.companies.detail(company.id))
-    .breadcrumb('Exports', urls.companies.exports(company.id))
+    .breadcrumb('Exports', urls.companies.exports.index(company.id))
     .breadcrumb('Edit')
     .render('companies/views/exports-edit', {
       exportDetailsLabels,
@@ -65,7 +65,7 @@ async function handleEditFormPost (req, res, next) {
   try {
     const save = await saveCompany(req.session.token, data)
 
-    res.redirect(urls.companies.exports(save.id))
+    res.redirect(urls.companies.exports.index(save.id))
   } catch (error) {
     next(error)
   }

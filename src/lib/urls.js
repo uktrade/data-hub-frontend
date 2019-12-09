@@ -90,7 +90,10 @@ module.exports = {
       index: url('/companies', '/:companyId/dnb-hierarchy'),
       data: url('/companies', '/:companyId/dnb-hierarchy/data'),
     },
-    exports: url('/companies', '/:companyId/exports'),
+    exports: {
+      index: url('/companies', '/:companyId/exports'),
+      edit: url('/companies', '/:companyId/exports/edit'),
+    },
     hierarchies: {
       ghq: {
         add: url('/companies', '/:companyId/hierarchies/ghq/:globalHqId/add'),
