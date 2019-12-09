@@ -24,9 +24,6 @@ describe('Company adviser list controller', () => {
             user: {
               permissions: ['company.change_regional_account_manager'],
             },
-            features: {
-              lead_advisers: true,
-            },
           })
 
           await renderAdvisers(
@@ -88,9 +85,6 @@ describe('Company adviser list controller', () => {
             user: {
               permissions: [],
             },
-            features: {
-              lead_advisers: true,
-            },
           })
 
           await renderAdvisers(
@@ -122,9 +116,6 @@ describe('Company adviser list controller', () => {
             user: {
               permissions: [],
             },
-            features: {
-              lead_advisers: true,
-            },
           })
 
           await renderAdvisers(
@@ -150,6 +141,17 @@ describe('Company adviser list controller', () => {
           middlewareParameters = buildMiddlewareParameters({
             company: {
               ...companyMock,
+              one_list_group_tier: {
+                name: 'Tier A - Strategic Account',
+                id: 'b91bf800-8d53-e311-aef3-441ea13961e2',
+              },
+              one_list_group_global_account_manager: {
+                name: 'Travis Greene',
+                contact_email: 'travis@travis.com',
+                dit_team: {
+                  name: 'DIT Team',
+                },
+              },
             },
           })
 
