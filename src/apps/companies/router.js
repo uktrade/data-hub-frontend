@@ -54,6 +54,7 @@ const editCompanyFormRouter = require('./apps/edit-company/router')
 const activityFeedRouter = require('./apps/activity-feed/router')
 const dnbHierarchyRouter = require('./apps/dnb-hierarchy/router')
 const businessDetailsRouter = require('./apps/business-details/router')
+const editHistoryRouter = require('./apps/edit-history/router')
 
 const investmentsRouter = require('./apps/investments/router')
 const matchingRouter = require('./apps/matching/router')
@@ -90,6 +91,7 @@ router.get('/export',
 router.use('/create', addCompanyFormRouter)
 router.use('/:companyId/lists', companyListsRouter)
 router.use('/:companyId/edit', editCompanyFormRouter)
+router.use('/:companyId/edit-history', editHistoryRouter)
 
 router
   .route('/:companyId/exports/edit')
