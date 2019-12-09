@@ -109,9 +109,6 @@ describe('Companies local navigation', () => {
             'order.view_order',
           ],
         },
-        features: {
-          lead_advisers: true,
-        },
       })
 
       localNavigation(
@@ -146,9 +143,6 @@ describe('Companies local navigation', () => {
             'investment.view_all_investmentproject',
             'order.view_order',
           ],
-        },
-        features: {
-          lead_advisers: true,
         },
       })
 

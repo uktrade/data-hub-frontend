@@ -28,10 +28,6 @@
     "is_active": true
   },
   {
-    "code": "lead_advisers",
-    "is_active": true
-  },
-  {
     "code": "activity-feed-filters",
     "is_active": true
   },

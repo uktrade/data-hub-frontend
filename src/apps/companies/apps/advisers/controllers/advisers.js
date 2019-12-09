@@ -71,8 +71,8 @@ async function renderCoreTeamAdvisers (req, res, next) {
 }
 
 async function renderAdvisers (req, res, next) {
-  const { company, features } = res.locals
-  features.lead_advisers && (isItaTierDAccount(company) || company.one_list_group_tier === null)
+  const { company } = res.locals
+  isItaTierDAccount(company) || company.one_list_group_tier === null
     ? renderLeadAdvisers(req, res)
     : await renderCoreTeamAdvisers(req, res, next)
 }
