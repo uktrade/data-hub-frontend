@@ -58,12 +58,12 @@ const getMicroserviceHealthcheck = async (dependencies) => {
   return callNamedHandler('getMicroserviceHealthcheck', dependencies)
 }
 
-const renderPingdomXml = async (dependencies) => {
-  return callNamedHandler('renderPingdomXml', dependencies)
+const getPingdomFailures = async (dependencies) => {
+  return callNamedHandler('getPingdomFailures', dependencies)
 }
 
-const renderPingdomWarningXml = async (dependencies) => {
-  return callNamedHandler('renderPingdomWarningXml', dependencies)
+const getPingdomWarnings = async (dependencies) => {
+  return callNamedHandler('getPingdomWarnings', dependencies)
 }
 
 describe('Health check controller', () => {
@@ -126,9 +126,9 @@ describe('Health check controller', () => {
     })
   })
 
-  describe('#renderPingdomXml with healthy service dependencies', () => {
+  describe('#getPingdomFailures with healthy service dependencies', () => {
     it('should set content type and cache control', async () => {
-      const { res } = await renderPingdomXml(successDependencies)
+      const { res } = await getPingdomFailures(successDependencies)
 
       expect(res.set).to.be.calledWith({
         'Content-Type': 'text/xml',
@@ -138,29 +138,29 @@ describe('Health check controller', () => {
     })
 
     it('should return a 200 status code', async () => {
-      const { res } = await renderPingdomXml(successDependencies)
+      const { res } = await getPingdomFailures(successDependencies)
 
       expect(res.status).to.be.calledWith(200)
       expect(res.status).to.have.been.calledOnce
     })
 
     it('should return OK', async () => {
-      const { res } = await renderPingdomXml(successDependencies)
+      const { res } = await getPingdomFailures(successDependencies)
 
       expect(res.status().send.args[0][0]).to.contain('OK')
       expect(res.status().send.args[0][0]).to.not.contain('Service Unavailable')
     })
 
     it('should not call the logger', async () => {
-      const { logger } = await renderPingdomXml(successDependencies)
+      const { logger } = await getPingdomFailures(successDependencies)
 
       expect(logger.error.notCalled).to.be.true
     })
   })
 
-  describe('#renderPingdomXml with unhealthy service dependencies', () => {
+  describe('#getPingdomFailures with unhealthy service dependencies', () => {
     it('should set content type and cache control', async () => {
-      const { res } = await renderPingdomXml(failureDependencies)
+      const { res } = await getPingdomFailures(failureDependencies)
 
       expect(res.set).to.be.calledWith({
         'Content-Type': 'text/xml',
@@ -170,21 +170,21 @@ describe('Health check controller', () => {
     })
 
     it('should return a 503 status code', async () => {
-      const { res } = await renderPingdomXml(failureDependencies)
+      const { res } = await getPingdomFailures(failureDependencies)
 
       expect(res.status).to.be.calledWith(503)
       expect(res.status).to.have.been.calledOnce
     })
 
     it('should return Service Unavailable', async () => {
-      const { res } = await renderPingdomXml(failureDependencies)
+      const { res } = await getPingdomFailures(failureDependencies)
 
       expect(res.status().send.args[0][0]).to.contain('Service Unavailable')
       expect(res.status().send.args[0][0]).to.not.contain('OK')
     })
 
     it('should call the logger', async () => {
-      const { logger } = await renderPingdomXml(failureDependencies)
+      const { logger } = await getPingdomFailures(failureDependencies)
 
       expect(logger.error.calledOnce)
       expect(logger.error.calledWith(
@@ -194,9 +194,9 @@ describe('Health check controller', () => {
     })
   })
 
-  describe('#renderPingdomXml with unhealthy "warning only" service dependencies', () => {
+  describe('#getPingdomFailures with unhealthy "warning only" service dependencies', () => {
     it('should set content type and cache control', async () => {
-      const { res } = await renderPingdomXml(warningDependencies)
+      const { res } = await getPingdomFailures(warningDependencies)
 
       expect(res.set).to.be.calledWith({
         'Content-Type': 'text/xml',
@@ -206,29 +206,29 @@ describe('Health check controller', () => {
     })
 
     it('should return a 200 status code', async () => {
-      const { res } = await renderPingdomXml(warningDependencies)
+      const { res } = await getPingdomFailures(warningDependencies)
 
       expect(res.status).to.be.calledWith(200)
       expect(res.status).to.have.been.calledOnce
     })
 
     it('should return OK', async () => {
-      const { res } = await renderPingdomXml(warningDependencies)
+      const { res } = await getPingdomFailures(warningDependencies)
 
       expect(res.status().send.args[0][0]).to.contain('OK')
       expect(res.status().send.args[0][0]).to.not.contain('Service Unavailable')
     })
 
     it('should not call the logger', async () => {
-      const { logger } = await renderPingdomXml(warningDependencies)
+      const { logger } = await getPingdomFailures(warningDependencies)
 
       expect(logger.error.notCalled).to.be.true
     })
   })
 
-  describe('#renderPingdomWarningXml with unhealthy "warning only" service dependencies', () => {
+  describe('#getPingdomWarnings with unhealthy "warning only" service dependencies', () => {
     it('should set content type and cache control', async () => {
-      const { res } = await renderPingdomWarningXml(warningDependencies)
+      const { res } = await getPingdomWarnings(warningDependencies)
 
       expect(res.set).to.be.calledWith({
         'Content-Type': 'text/xml',
@@ -238,21 +238,21 @@ describe('Health check controller', () => {
     })
 
     it('should return a 503 status code', async () => {
-      const { res } = await renderPingdomWarningXml(warningDependencies)
+      const { res } = await getPingdomWarnings(warningDependencies)
 
       expect(res.status).to.be.calledWith(503)
       expect(res.status).to.have.been.calledOnce
     })
 
     it('should return Service Unavailable', async () => {
-      const { res } = await renderPingdomWarningXml(warningDependencies)
+      const { res } = await getPingdomWarnings(warningDependencies)
 
       expect(res.status().send.args[0][0]).to.contain('Service Unavailable')
       expect(res.status().send.args[0][0]).to.not.contain('OK')
     })
 
     it('should call the logger', async () => {
-      const { logger } = await renderPingdomWarningXml(warningDependencies)
+      const { logger } = await getPingdomWarnings(warningDependencies)
 
       expect(logger.error.calledOnce)
       expect(logger.error.calledWith(
@@ -262,10 +262,10 @@ describe('Health check controller', () => {
     })
   })
 
-  describe('#renderPingdomWarningXml with unhealthy primary service dependencies', () => {
+  describe('#getPingdomWarnings with unhealthy primary service dependencies', () => {
     // "primary" denoting NOT "warning only"
     it('should set content type and cache control', async () => {
-      const { res } = await renderPingdomWarningXml(failureDependencies)
+      const { res } = await getPingdomWarnings(failureDependencies)
 
       expect(res.set).to.be.calledWith({
         'Content-Type': 'text/xml',
@@ -275,21 +275,21 @@ describe('Health check controller', () => {
     })
 
     it('should return a 200 status code', async () => {
-      const { res } = await renderPingdomWarningXml(failureDependencies)
+      const { res } = await getPingdomWarnings(failureDependencies)
 
       expect(res.status).to.be.calledWith(200)
       expect(res.status).to.have.been.calledOnce
     })
 
     it('should return OK', async () => {
-      const { res } = await renderPingdomWarningXml(failureDependencies)
+      const { res } = await getPingdomWarnings(failureDependencies)
 
       expect(res.status().send.args[0][0]).to.contain('OK')
       expect(res.status().send.args[0][0]).to.not.contain('Service Unavailable')
     })
 
     it('should not call the logger', async () => {
-      const { logger } = await renderPingdomWarningXml(failureDependencies)
+      const { logger } = await getPingdomWarnings(failureDependencies)
 
       expect(logger.error.notCalled).to.be.true
     })
