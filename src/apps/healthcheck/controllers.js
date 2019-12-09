@@ -36,7 +36,7 @@ function healthCheckWarningsOnly (allDependencies) {
   return Promise.all(promiseArray)
 }
 
-function renderPingdomXml (req, res, next) {
+function getPingdomFailures (req, res, next) {
   return healthCheckFailuresOnly(serviceDependencies)
     .then((results) => {
       return results.filter((result) => result.statusText !== 'OK')
@@ -64,7 +64,7 @@ function renderPingdomXml (req, res, next) {
     .catch(next)
 }
 
-function renderPingdomWarningXml (req, res, next) {
+function getPingdomWarnings (req, res, next) {
   return healthCheckWarningsOnly(serviceDependencies)
     .then((results) => {
       return results.filter((result) => result.statusText !== 'OK')
@@ -101,6 +101,6 @@ function getMicroserviceHealthcheck (req, res, next) {
 
 module.exports = {
   getMicroserviceHealthcheck,
-  renderPingdomXml,
-  renderPingdomWarningXml,
+  getPingdomFailures,
+  getPingdomWarnings,
 }
