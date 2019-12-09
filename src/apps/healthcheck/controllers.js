@@ -10,8 +10,9 @@ function pingdomTemplate (statusMessage) {
   `.trim()
 }
 
-function healthCheck (dependencies) {
-  const promiseArray = dependencies.map((dependency) => {
+function healthCheckFailuresOnly (allDependencies) {
+  const failureDependencies = allDependencies.filter((dependency) => (!dependency.warningOnly))
+  const promiseArray = failureDependencies.map((dependency) => {
     return dependency.healthCheck()
       .then((result) => result)
       .catch((error) => {
@@ -23,7 +24,7 @@ function healthCheck (dependencies) {
 }
 
 function renderPingdomXml (req, res, next) {
-  return healthCheck(serviceDependencies)
+  return healthCheckFailuresOnly(serviceDependencies)
     .then((results) => {
       return results.filter((result) => result.statusText !== 'OK')
     })
