@@ -1,4 +1,5 @@
 const router = require('../router')
+const urls = require('../../../lib/urls')
 
 describe('Company router', () => {
   it('should define all routes', () => {
@@ -6,7 +7,8 @@ describe('Company router', () => {
     expect(paths).to.deep.equal([
       '/',
       '/export',
-      '/:companyId/exports/edit',
+      urls.companies.exports.index.route,
+      urls.companies.exports.edit.route,
       '/:companyId/archive',
       '/:companyId/unarchive',
       '/:companyId',
@@ -18,7 +20,6 @@ describe('Company router', () => {
       '/:companyId/hierarchies/subsidiaries/search',
       '/:companyId/hierarchies/subsidiaries/:subsidiaryCompanyId/add',
       '/:companyId/contacts',
-      '/:companyId/exports',
       '/:companyId/orders',
       '/:companyId/audit',
       '/:companyId/documents',
