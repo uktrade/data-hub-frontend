@@ -85,7 +85,7 @@ describe('Company Collections Filter', () => {
     cy.get(selectors.filter.firstInteractionDate).click()
 
     cy.wait('@filterResults').then(xhr => {
-      expect(xhr.url).to.contain('interaction_between=1')
+      expect(xhr.url).to.contain('interaction_between=0')
     })
 
     cy
