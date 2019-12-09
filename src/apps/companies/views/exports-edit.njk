@@ -9,7 +9,7 @@
   {% call Form({
     buttonText: 'Save and return',
     returnText: 'Return without saving',
-    returnLink: '/companies/' + company.id + '/exports',
+    returnLink: urls.companies.exports.index(company.id),
     hiddenFields: {
       id: company.id
     }

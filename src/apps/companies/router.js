@@ -93,8 +93,9 @@ router.use('/:companyId/lists', companyListsRouter)
 router.use('/:companyId/edit', editCompanyFormRouter)
 router.use('/:companyId/edit-history', editHistoryRouter)
 
+router.get(urls.companies.exports.index.route, renderExports)
 router
-  .route('/:companyId/exports/edit')
+  .route(urls.companies.exports.edit.route)
   .get(populateExportForm, renderExportEdit)
   .post(populateExportForm, handleEditFormPost, renderExportEdit)
 
@@ -120,8 +121,6 @@ router.get('/:companyId/contacts',
   getCompanyContactCollection,
   renderContacts
 )
-
-router.get(urls.companies.exports.route, renderExports)
 
 router.get('/:companyId/orders', renderOrders)
 router.get('/:companyId/audit', renderAuditLog)
