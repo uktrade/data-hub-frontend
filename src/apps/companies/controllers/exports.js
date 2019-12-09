@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { assign, filter, flatten } = require('lodash')
+const { filter, flatten } = require('lodash')
 
 const metadataRepo = require('../../../lib/metadata')
 const urls = require('../../../lib/urls')
@@ -29,7 +29,7 @@ function populateExportForm (req, res, next) {
     export_experience_category,
   } = res.locals.company
 
-  res.locals.formData = assign({}, {
+  res.locals.formData = Object.assign({
     export_experience_category,
     export_to_countries: export_to_countries.map(country => country.id),
     future_interest_countries: future_interest_countries.map(country => country.id),
@@ -56,7 +56,7 @@ async function handleEditFormPost (req, res, next) {
   const exportToCountries = flatten([req.body.export_to_countries])
   const futureInterestCountries = flatten([req.body.future_interest_countries])
 
-  const data = assign({}, res.locals.company, {
+  const data = Object.assign({}, res.locals.company, {
     export_experience_category: req.body.export_experience_category,
     export_to_countries: filter(exportToCountries),
     future_interest_countries: filter(futureInterestCountries),
