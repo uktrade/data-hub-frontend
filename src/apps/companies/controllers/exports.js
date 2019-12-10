@@ -17,7 +17,7 @@ function getId (obj) {
   return obj.id
 }
 
-function getExportCountryGroups (countries) {
+function getExportCountryGroups (countries = []) {
   const buckets = groupExportCountries(countries)
 
   EXPORT_INTEREST_STATUS_VALUES.forEach((status) => {
