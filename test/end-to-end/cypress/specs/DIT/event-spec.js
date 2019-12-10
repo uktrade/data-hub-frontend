@@ -2,6 +2,8 @@ const selectors = require('../../../../selectors')
 
 const { assertKeyValueTable } = require('../../support/assertions')
 
+const today = Cypress.moment()
+
 const createEvent = () => {
   cy.get(selectors.eventCreate.eventName).type('Eventful event')
   cy.get(selectors.eventCreate.eventType).select('Account management')
@@ -32,8 +34,6 @@ const createEvent = () => {
 
   cy.get(selectors.message.successful).should('contain', 'Event created')
 }
-
-const today = Cypress.moment()
 
 describe('Event', () => {
   describe('create', () => {
@@ -67,7 +67,7 @@ describe('Event', () => {
       cy.contains('Attendees').click()
       cy.get(selectors.entityCollection.addAttendee).click()
 
-      cy.get(selectors.nav.search).type('dean cox').type('{enter}')
+      cy.get(selectors.nav.searchTerm).type('dean cox').type('{enter}')
       cy.get(selectors.collection.items).click()
 
       cy.get(selectors.message.successful)
