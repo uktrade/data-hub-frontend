@@ -7,7 +7,13 @@ const START_DATE_PARAM = 'latest_interaction_date_before'
 const END_DATE_PARAM = 'latest_interaction_date_after'
 
 function getTimestamp (offset) {
-  return moment().subtract(offset, 'month').utc().format('YYYY-MM-DD')
+  let date = moment()
+
+  if (offset > 0) {
+    date.subtract(offset, 'month')
+  }
+
+  return date.utc().format('YYYY-MM-DD')
 }
 
 function callMiddleware (value) {
@@ -54,6 +60,13 @@ describe('Last interaction date middleware', () => {
   })
 
   describe('a single value param', () => {
+    describe('with a value of 0', () => {
+      it('should add today and 1 month', () => {
+        const reqMock = callMiddleware('0')
+        checkBody(reqMock, 0, 1)
+      })
+    })
+
     describe('with a value of 1', () => {
       it('should add 3 and 6 months', () => {
         const reqMock = callMiddleware('1')
