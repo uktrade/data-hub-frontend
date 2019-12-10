@@ -11,7 +11,7 @@ const { joinPaths } = require('../../../lib/path')
 const isValidTheme = require('../macros/is-valid-theme')
 const canAddCountries = require('../macros/can-add-countries')
 
-const { KINDS, THEMES } = require('../constants')
+const { KINDS, THEMES, EXPORT_INTEREST_STATUS_VALUES } = require('../constants')
 
 const formConfigs = {
   [KINDS.INTERACTION]: interactionForm,
@@ -46,6 +46,7 @@ async function buildForm (req, res, params) {
       : `Add ${lowerCase(kind)}`,
     company: get(res.locals, 'company.name'),
     theme,
+    interaction: res.locals.interaction,
     featureFlags: res.locals.features,
   }
 
@@ -145,12 +146,9 @@ async function renderEditPage (req, res, next) {
       ? `Edit ${kindName}`
       : `Add ${kindName + forEntityName}`
 
-    if (canAddCountries(theme, res.locals.features)) {
-      [
-        'future_countries',
-        'export_countries',
-        'no_interest_countries',
-      ].forEach(addSelectedOptions(interactionForm.children))
+    // istanbul ignore next: Covered by functional tests
+    if (canAddCountries(theme, res.locals.interaction, res.locals.features)) {
+      EXPORT_INTEREST_STATUS_VALUES.forEach(addSelectedOptions(interactionForm.children))
     }
 
     res

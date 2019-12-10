@@ -1,5 +1,6 @@
 const moment = require('moment')
 const { find, pick } = require('lodash')
+const { format } = require('date-fns')
 
 const config = require('../../../../config')
 const controller = require('../edit')
@@ -9,8 +10,13 @@ const serviceOptionData = require('../../../../../test/unit/data/interactions/se
 const currentUserTeam = '99887766553'
 
 describe('Interaction edit controller (Interactions)', () => {
+  let req
+  let res
+  let nextStub
+  let metadataMock
+
   beforeEach(() => {
-    this.req = {
+    req = {
       session: {
         token: 'abcd',
         user: {
@@ -24,7 +30,7 @@ describe('Interaction edit controller (Interactions)', () => {
       params: {},
     }
 
-    this.res = {
+    res = {
       breadcrumb: sinon.stub().returnsThis(),
       title: sinon.stub().returnsThis(),
       render: sinon.spy(),
@@ -32,13 +38,13 @@ describe('Interaction edit controller (Interactions)', () => {
       locals: { features: {} },
     }
 
-    this.nextStub = sinon.stub()
+    nextStub = sinon.stub()
 
     const yesterday = moment()
       .subtract(1, 'days')
       .toISOString()
 
-    this.metadataMock = {
+    metadataMock = {
       teamOptions: [
         { id: '1', name: 'te1', disabled_on: null },
         { id: '2', name: 'te2', disabled_on: yesterday },
@@ -118,20 +124,17 @@ describe('Interaction edit controller (Interactions)', () => {
 
   context('When adding an other interaction', () => {
     beforeEach(async () => {
-      this.req.params = {
-        ...this.req.parms,
+      req.params = {
+        ...req.params,
         theme: 'other',
         kind: 'interaction',
       }
 
-      this.res.locals = {
-        ...this.res.locals,
+      res.locals = {
+        ...res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
-        },
-        interaction: {
-          ...interactionData,
         },
         interactions: {
           returnLink: '/return',
@@ -143,48 +146,46 @@ describe('Interaction edit controller (Interactions)', () => {
         .get('/v3/contact?company_id=1&limit=500')
         .reply(200, { results: this.contactsData })
         .get('/v4/metadata/team')
-        .reply(200, this.metadataMock.teamOptions)
+        .reply(200, metadataMock.teamOptions)
         .get('/v4/metadata/service?contexts__has_any=other_interaction')
-        .reply(200, this.metadataMock.serviceOptions)
+        .reply(200, metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, { results: this.activeInactiveAdviserData })
         .get('/v4/metadata/communication-channel')
-        .reply(200, this.metadataMock.channelOptions)
+        .reply(200, metadataMock.channelOptions)
         .get('/v4/metadata/service-delivery-status')
-        .reply(200, this.metadataMock.serviceDeliveryStatus)
+        .reply(200, metadataMock.serviceDeliveryStatus)
         .get('/v4/metadata/policy-area')
-        .reply(200, this.metadataMock.policyAreaOptions)
+        .reply(200, metadataMock.policyAreaOptions)
         .get('/v4/metadata/policy-issue-type')
-        .reply(200, this.metadataMock.policyIssueType)
+        .reply(200, metadataMock.policyIssueType)
 
-      await controller.renderEditPage(this.req, this.res, this.nextStub)
-      this.interactionForm = this.res.render.getCall(0).args[1].interactionForm
+      await controller.renderEditPage(req, res, nextStub)
+      this.interactionForm = res.render.getCall(0).args[1].interactionForm
     })
+
     it('should render the interaction page', async () => {
-      expect(this.res.render).to.be.calledWith('interactions/views/edit')
-      expect(this.res.render).to.have.been.calledOnce
+      expect(res.render).to.be.calledWith('interactions/views/edit')
+      expect(res.render).to.have.been.calledOnce
     })
   })
 
   context('When adding an investment interaction', () => {
     beforeEach(async () => {
-      this.req.params = {
-        ...this.req.parms,
+      req.params = {
+        ...req.params,
         theme: 'investment',
         kind: 'interaction',
       }
 
-      this.res.locals = {
-        ...this.res.locals,
+      res.locals = {
+        ...res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
         },
         interaction: {
           ...interactionData,
-        },
-        interactions: {
-          returnLink: '/return',
         },
         entityName: 'Fred Bloggs',
       }
@@ -193,45 +194,42 @@ describe('Interaction edit controller (Interactions)', () => {
         .get('/v3/contact?company_id=1&limit=500')
         .reply(200, { results: this.contactsData })
         .get('/v4/metadata/team')
-        .reply(200, this.metadataMock.teamOptions)
+        .reply(200, metadataMock.teamOptions)
         .get('/v4/metadata/service?contexts__has_any=investment_interaction')
-        .reply(200, this.metadataMock.serviceOptions)
+        .reply(200, metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, { results: this.activeInactiveAdviserData })
         .get('/v4/metadata/communication-channel')
-        .reply(200, this.metadataMock.channelOptions)
+        .reply(200, metadataMock.channelOptions)
         .get('/v4/metadata/service-delivery-status')
-        .reply(200, this.metadataMock.serviceDeliveryStatus)
+        .reply(200, metadataMock.serviceDeliveryStatus)
         .get('/v4/metadata/policy-area')
-        .reply(200, this.metadataMock.policyAreaOptions)
+        .reply(200, metadataMock.policyAreaOptions)
         .get('/v4/metadata/policy-issue-type')
-        .reply(200, this.metadataMock.policyIssueType)
+        .reply(200, metadataMock.policyIssueType)
 
-      await controller.renderEditPage(this.req, this.res, this.nextStub)
-      this.interactionForm = this.res.render.getCall(0).args[1].interactionForm
+      await controller.renderEditPage(req, res, nextStub)
+      this.interactionForm = res.render.getCall(0).args[1].interactionForm
     })
     it('should render the interaction page', async () => {
-      expect(this.res.render).to.be.calledWith('interactions/views/edit')
-      expect(this.res.render).to.have.been.calledOnce
+      expect(res.render).to.be.calledWith('interactions/views/edit')
+      expect(res.render).to.have.been.calledOnce
     })
   })
 
   context('When adding an interaction from company contact', () => {
     beforeEach(async () => {
-      this.req.params = {
-        ...this.req.parms,
+      req.params = {
+        ...req.params,
         theme: 'export',
         kind: 'interaction',
       }
 
-      this.res.locals = {
-        ...this.res.locals,
+      res.locals = {
+        ...res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
-        },
-        interaction: {
-          ...interactionData,
         },
         interactions: {
           returnLink: '/return',
@@ -243,41 +241,41 @@ describe('Interaction edit controller (Interactions)', () => {
         .get('/v3/contact?company_id=1&limit=500')
         .reply(200, { results: this.contactsData })
         .get('/v4/metadata/team')
-        .reply(200, this.metadataMock.teamOptions)
+        .reply(200, metadataMock.teamOptions)
         .get('/v4/metadata/service?contexts__has_any=export_interaction')
-        .reply(200, this.metadataMock.serviceOptions)
+        .reply(200, metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, { results: this.activeInactiveAdviserData })
         .get('/v4/metadata/communication-channel')
-        .reply(200, this.metadataMock.channelOptions)
+        .reply(200, metadataMock.channelOptions)
         .get('/v4/metadata/service-delivery-status')
-        .reply(200, this.metadataMock.serviceDeliveryStatus)
+        .reply(200, metadataMock.serviceDeliveryStatus)
         .get('/v4/metadata/policy-area')
-        .reply(200, this.metadataMock.policyAreaOptions)
+        .reply(200, metadataMock.policyAreaOptions)
         .get('/v4/metadata/policy-issue-type')
-        .reply(200, this.metadataMock.policyIssueType)
+        .reply(200, metadataMock.policyIssueType)
 
-      await controller.renderEditPage(this.req, this.res, this.nextStub)
-      this.interactionForm = this.res.render.getCall(0).args[1].interactionForm
+      await controller.renderEditPage(req, res, nextStub)
+      this.interactionForm = res.render.getCall(0).args[1].interactionForm
     })
 
     it('should render the interaction page', async () => {
-      expect(this.res.render).to.be.calledWith('interactions/views/edit')
-      expect(this.res.render).to.have.been.calledOnce
+      expect(res.render).to.be.calledWith('interactions/views/edit')
+      expect(res.render).to.have.been.calledOnce
     })
 
     it('should add a breadcrumb', () => {
-      expect(this.res.breadcrumb.firstCall).to.be.calledWith('Add interaction')
+      expect(res.breadcrumb.firstCall).to.be.calledWith('Add interaction')
     })
 
     it('should add a title', () => {
-      expect(this.res.title.firstCall).to.be.calledWith(
+      expect(res.title.firstCall).to.be.calledWith(
         'Add interaction for Fred Bloggs'
       )
     })
 
     it('should include an interaction form', async () => {
-      const actual = this.res.render.firstCall.args[1].interactionForm.children
+      const actual = res.render.firstCall.args[1].interactionForm.children
       expect(actual).to.be.an('array')
     })
 
@@ -448,7 +446,6 @@ describe('Interaction edit controller (Interactions)', () => {
       )
       expect(communicationChannelField.options).to.deep.equal([
         { value: '1', label: 'c1' },
-        { value: '2', label: 'c2' },
         { value: '3', label: 'c3' },
       ])
     })
@@ -475,7 +472,7 @@ describe('Interaction edit controller (Interactions)', () => {
         this.interactionForm.children,
         ({ name }) => name === 'dit_participants'
       )
-      expect(adviserField.value).to.deep.equal([1])
+      expect(adviserField.value).to.deep.equal(['user1'])
     })
 
     it('should set the interaction date to the current date', () => {
@@ -483,9 +480,11 @@ describe('Interaction edit controller (Interactions)', () => {
         this.interactionForm.children,
         ({ name }) => name === 'date'
       )
-      expect(dateField.value).to.have.property('year', '2058')
-      expect(dateField.value).to.have.property('month', '11')
-      expect(dateField.value).to.have.property('day', '25')
+      const today = new Date()
+
+      expect(dateField.value).to.have.property('year', format(today, 'YYYY'))
+      expect(dateField.value).to.have.property('month', format(today, 'MM'))
+      expect(dateField.value).to.have.property('day', format(today, 'DD'))
     })
 
     it('should not include policy feedback as a service option', () => {
@@ -515,14 +514,14 @@ describe('Interaction edit controller (Interactions)', () => {
 
   context('When adding an interaction from a company', () => {
     beforeEach(async () => {
-      this.req.params = {
-        ...this.req.params,
+      req.params = {
+        ...req.params,
         theme: 'export',
         kind: 'interaction',
       }
 
-      this.res.locals = {
-        ...this.res.locals,
+      res.locals = {
+        ...res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -534,22 +533,22 @@ describe('Interaction edit controller (Interactions)', () => {
         .get('/v3/contact?company_id=1&limit=500')
         .reply(200, { results: this.contactsData })
         .get('/v4/metadata/team')
-        .reply(200, this.metadataMock.teamOptions)
+        .reply(200, metadataMock.teamOptions)
         .get('/v4/metadata/service?contexts__has_any=export_interaction')
-        .reply(200, this.metadataMock.serviceOptions)
+        .reply(200, metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, { results: this.activeInactiveAdviserData })
         .get('/v4/metadata/communication-channel')
-        .reply(200, this.metadataMock.channelOptions)
+        .reply(200, metadataMock.channelOptions)
         .get('/v4/metadata/service-delivery-status')
-        .reply(200, this.metadataMock.serviceDeliveryStatus)
+        .reply(200, metadataMock.serviceDeliveryStatus)
         .get('/v4/metadata/policy-area')
-        .reply(200, this.metadataMock.policyAreaOptions)
+        .reply(200, metadataMock.policyAreaOptions)
         .get('/v4/metadata/policy-issue-type')
-        .reply(200, this.metadataMock.policyIssueType)
+        .reply(200, metadataMock.policyIssueType)
 
-      await controller.renderEditPage(this.req, this.res, this.nextStub)
-      this.interactionForm = this.res.render.getCall(0).args[1].interactionForm
+      await controller.renderEditPage(req, res, nextStub)
+      this.interactionForm = res.render.getCall(0).args[1].interactionForm
     })
 
     it('should set the company id as a hidden field', () => {
@@ -568,15 +567,15 @@ describe('Interaction edit controller (Interactions)', () => {
 
   context('when editing an interaction from a company', () => {
     beforeEach(async () => {
-      this.req.params = {
-        ...this.req.parms,
+      req.params = {
+        ...req.params,
         theme: 'export',
         kind: 'interaction',
         interactionId: 'af4aac84-4d6a-47df-a733-5a54e3008c32',
       }
 
-      this.res.locals = {
-        ...this.res.locals,
+      res.locals = {
+        ...res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -590,39 +589,39 @@ describe('Interaction edit controller (Interactions)', () => {
         .get('/v3/contact?company_id=1&limit=500')
         .reply(200, { results: this.contactsData })
         .get('/v4/metadata/team')
-        .reply(200, this.metadataMock.teamOptions)
+        .reply(200, metadataMock.teamOptions)
         .get('/v4/metadata/service?contexts__has_any=export_interaction')
-        .reply(200, this.metadataMock.serviceOptions)
+        .reply(200, metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, { results: this.activeInactiveAdviserData })
         .get('/v4/metadata/communication-channel')
-        .reply(200, this.metadataMock.channelOptions)
+        .reply(200, metadataMock.channelOptions)
         .get('/v4/metadata/service-delivery-status')
-        .reply(200, this.metadataMock.serviceDeliveryStatus)
+        .reply(200, metadataMock.serviceDeliveryStatus)
         .get('/v4/metadata/policy-area')
-        .reply(200, this.metadataMock.policyAreaOptions)
+        .reply(200, metadataMock.policyAreaOptions)
         .get('/v4/metadata/policy-issue-type')
-        .reply(200, this.metadataMock.policyIssueType)
+        .reply(200, metadataMock.policyIssueType)
 
-      await controller.renderEditPage(this.req, this.res, this.nextStub)
-      this.interactionForm = this.res.render.getCall(0).args[1].interactionForm
+      await controller.renderEditPage(req, res, nextStub)
+      this.interactionForm = res.render.getCall(0).args[1].interactionForm
     })
 
     it('should render the interaction page', async () => {
-      expect(this.res.render).to.be.calledWith('interactions/views/edit')
-      expect(this.res.render).to.have.been.calledOnce
+      expect(res.render).to.be.calledWith('interactions/views/edit')
+      expect(res.render).to.have.been.calledOnce
     })
 
     it('should add a breadcrumb', () => {
-      expect(this.res.breadcrumb.firstCall).to.be.calledWith('Edit interaction')
+      expect(res.breadcrumb.firstCall).to.be.calledWith('Edit interaction')
     })
 
     it('should add a title', () => {
-      expect(this.res.title.firstCall).to.be.calledWith('Edit interaction')
+      expect(res.title.firstCall).to.be.calledWith('Edit interaction')
     })
 
     it('should include an interaction form', async () => {
-      const actual = this.res.render.firstCall.args[1].interactionForm.children
+      const actual = res.render.firstCall.args[1].interactionForm.children
       expect(actual).to.be.an('array')
     })
 
@@ -861,14 +860,14 @@ describe('Interaction edit controller (Interactions)', () => {
 
   context('When adding an interaction from an investment project', () => {
     beforeEach(async () => {
-      this.req.params = {
-        ...this.req.parms,
+      req.params = {
+        ...req.params,
         theme: 'investment',
         kind: 'interaction',
       }
 
-      this.res.locals = {
-        ...this.res.locals,
+      res.locals = {
+        ...res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -884,24 +883,24 @@ describe('Interaction edit controller (Interactions)', () => {
         .get('/v3/contact?company_id=1&limit=500')
         .reply(200, { results: this.contactsData })
         .get('/v4/metadata/team')
-        .reply(200, this.metadataMock.teamOptions)
+        .reply(200, metadataMock.teamOptions)
         .get(
           '/v4/metadata/service?contexts__has_any=investment_project_interaction'
         )
-        .reply(200, this.metadataMock.serviceOptions)
+        .reply(200, metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, { results: this.activeInactiveAdviserData })
         .get('/v4/metadata/communication-channel')
-        .reply(200, this.metadataMock.channelOptions)
+        .reply(200, metadataMock.channelOptions)
         .get('/v4/metadata/service-delivery-status')
-        .reply(200, this.metadataMock.serviceDeliveryStatus)
+        .reply(200, metadataMock.serviceDeliveryStatus)
         .get('/v4/metadata/policy-area')
-        .reply(200, this.metadataMock.policyAreaOptions)
+        .reply(200, metadataMock.policyAreaOptions)
         .get('/v4/metadata/policy-issue-type')
-        .reply(200, this.metadataMock.policyIssueType)
+        .reply(200, metadataMock.policyIssueType)
 
-      await controller.renderEditPage(this.req, this.res, this.nextStub)
-      this.interactionForm = this.res.render.getCall(0).args[1].interactionForm
+      await controller.renderEditPage(req, res, nextStub)
+      this.interactionForm = res.render.getCall(0).args[1].interactionForm
     })
 
     it('should set the investment project id as a hidden field', () => {
@@ -926,15 +925,15 @@ describe('Interaction edit controller (Interactions)', () => {
 
   context('when editing an interaction from an investment project', () => {
     beforeEach(async () => {
-      this.req.params = {
-        ...this.req.parms,
+      req.params = {
+        ...req.params,
         theme: 'investment',
         kind: 'interaction',
         interactionId: 'af4aac84-4d6a-47df-a733-5a54e3008c32',
       }
 
-      this.res.locals = {
-        ...this.res.locals,
+      res.locals = {
+        ...res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -951,24 +950,24 @@ describe('Interaction edit controller (Interactions)', () => {
         .get('/v3/contact?company_id=1&limit=500')
         .reply(200, { results: this.contactsData })
         .get('/v4/metadata/team')
-        .reply(200, this.metadataMock.teamOptions)
+        .reply(200, metadataMock.teamOptions)
         .get(
           '/v4/metadata/service?contexts__has_any=investment_project_interaction'
         )
-        .reply(200, this.metadataMock.serviceOptions)
+        .reply(200, metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, { results: this.activeInactiveAdviserData })
         .get('/v4/metadata/communication-channel')
-        .reply(200, this.metadataMock.channelOptions)
+        .reply(200, metadataMock.channelOptions)
         .get('/v4/metadata/service-delivery-status')
-        .reply(200, this.metadataMock.serviceDeliveryStatus)
+        .reply(200, metadataMock.serviceDeliveryStatus)
         .get('/v4/metadata/policy-area')
-        .reply(200, this.metadataMock.policyAreaOptions)
+        .reply(200, metadataMock.policyAreaOptions)
         .get('/v4/metadata/policy-issue-type')
-        .reply(200, this.metadataMock.policyIssueType)
+        .reply(200, metadataMock.policyIssueType)
 
-      await controller.renderEditPage(this.req, this.res, this.nextStub)
-      this.interactionForm = this.res.render.getCall(0).args[1].interactionForm
+      await controller.renderEditPage(req, res, nextStub)
+      this.interactionForm = res.render.getCall(0).args[1].interactionForm
     })
 
     it('should set the interaction id in a hidden field', () => {
@@ -979,15 +978,15 @@ describe('Interaction edit controller (Interactions)', () => {
 
   context('when displaying an interaction that failed to save', () => {
     beforeEach(async () => {
-      this.req.params = {
-        ...this.req.parms,
+      req.params = {
+        ...req.params,
         theme: 'export',
         kind: 'interaction',
         interactionId: 'af4aac84-4d6a-47df-a733-5a54e3008c32',
       }
 
-      this.res.locals = {
-        ...this.res.locals,
+      res.locals = {
+        ...res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -1011,22 +1010,22 @@ describe('Interaction edit controller (Interactions)', () => {
         .get('/v3/contact?company_id=1&limit=500')
         .reply(200, { results: this.contactsData })
         .get('/v4/metadata/team')
-        .reply(200, this.metadataMock.teamOptions)
+        .reply(200, metadataMock.teamOptions)
         .get('/v4/metadata/service?contexts__has_any=export_interaction')
-        .reply(200, this.metadataMock.serviceOptions)
+        .reply(200, metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, { results: this.activeInactiveAdviserData })
         .get('/v4/metadata/communication-channel')
-        .reply(200, this.metadataMock.channelOptions)
+        .reply(200, metadataMock.channelOptions)
         .get('/v4/metadata/service-delivery-status')
-        .reply(200, this.metadataMock.serviceDeliveryStatus)
+        .reply(200, metadataMock.serviceDeliveryStatus)
         .get('/v4/metadata/policy-area')
-        .reply(200, this.metadataMock.policyAreaOptions)
+        .reply(200, metadataMock.policyAreaOptions)
         .get('/v4/metadata/policy-issue-type')
-        .reply(200, this.metadataMock.policyIssueType)
+        .reply(200, metadataMock.policyIssueType)
 
-      await controller.renderEditPage(this.req, this.res, this.nextStub)
-      this.interactionForm = this.res.render.getCall(0).args[1].interactionForm
+      await controller.renderEditPage(req, res, nextStub)
+      this.interactionForm = res.render.getCall(0).args[1].interactionForm
     })
 
     it('should merge the changes on top of the original record', () => {
@@ -1179,14 +1178,14 @@ describe('Interaction edit controller (Interactions)', () => {
 
   context('when a new interaction has no kind', () => {
     beforeEach(async () => {
-      this.req.params = {
-        ...this.req.parms,
+      req.params = {
+        ...req.params,
         theme: 'export',
         kind: '',
       }
 
-      this.res.locals = {
-        ...this.res.locals,
+      res.locals = {
+        ...res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -1207,39 +1206,39 @@ describe('Interaction edit controller (Interactions)', () => {
         .get('/v3/contact?company_id=1&limit=500')
         .reply(200, { results: this.contactsData })
         .get('/v4/metadata/team')
-        .reply(200, this.metadataMock.teamOptions)
+        .reply(200, metadataMock.teamOptions)
         .get('/v4/metadata/service?contexts__has_any=export_service_delivery')
-        .reply(200, this.metadataMock.serviceOptions)
+        .reply(200, metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, { results: this.activeInactiveAdviserData })
         .get('/v4/metadata/communication-channel')
-        .reply(200, this.metadataMock.channelOptions)
+        .reply(200, metadataMock.channelOptions)
         .get('/v4/metadata/service-delivery-status')
-        .reply(200, this.metadataMock.serviceDeliveryStatus)
+        .reply(200, metadataMock.serviceDeliveryStatus)
         .get('/v4/metadata/policy-area')
-        .reply(200, this.metadataMock.policyAreaOptions)
+        .reply(200, metadataMock.policyAreaOptions)
         .get('/v4/metadata/policy-issue-type')
-        .reply(200, this.metadataMock.policyIssueType)
+        .reply(200, metadataMock.policyIssueType)
 
-      await controller.renderEditPage(this.req, this.res, this.nextStub)
+      await controller.renderEditPage(req, res, nextStub)
     })
     it('should throw an error', () => {
-      expect(this.nextStub).to.have.been.called
-      expect(this.nextStub.firstCall.args[0]).to.be.instanceof(Error)
-      expect(this.nextStub.firstCall.args[0].message).to.equal('Invalid kind')
+      expect(nextStub).to.have.been.called
+      expect(nextStub.firstCall.args[0]).to.be.instanceof(Error)
+      expect(nextStub.firstCall.args[0].message).to.equal('Invalid kind')
     })
   })
 
   context('when a new interaction has a kind that does not match service-delivery or interaction', () => {
     beforeEach(async () => {
-      this.req.params = {
-        ...this.req.params,
+      req.params = {
+        ...req.params,
         theme: 'export',
         kind: 'not-really-an-interaction',
       }
 
-      this.res.locals = {
-        ...this.res.locals,
+      res.locals = {
+        ...res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -1260,39 +1259,39 @@ describe('Interaction edit controller (Interactions)', () => {
         .get('/v3/contact?company_id=1&limit=500')
         .reply(200, { results: this.contactsData })
         .get('/v4/metadata/team')
-        .reply(200, this.metadataMock.teamOptions)
+        .reply(200, metadataMock.teamOptions)
         .get('/v4/metadata/service?contexts__has_any=export_service_delivery')
-        .reply(200, this.metadataMock.serviceOptions)
+        .reply(200, metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, { results: this.activeInactiveAdviserData })
         .get('/v4/metadata/communication-channel')
-        .reply(200, this.metadataMock.channelOptions)
+        .reply(200, metadataMock.channelOptions)
         .get('/v4/metadata/service-delivery-status')
-        .reply(200, this.metadataMock.serviceDeliveryStatus)
+        .reply(200, metadataMock.serviceDeliveryStatus)
         .get('/v4/metadata/policy-area')
-        .reply(200, this.metadataMock.policyAreaOptions)
+        .reply(200, metadataMock.policyAreaOptions)
         .get('/v4/metadata/policy-issue-type')
-        .reply(200, this.metadataMock.policyIssueType)
+        .reply(200, metadataMock.policyIssueType)
 
-      await controller.renderEditPage(this.req, this.res, this.nextStub)
+      await controller.renderEditPage(req, res, nextStub)
     })
     it('should throw an error', () => {
-      expect(this.nextStub).to.have.been.called
-      expect(this.nextStub.firstCall.args[0]).to.be.instanceof(Error)
-      expect(this.nextStub.firstCall.args[0].message).to.equal('Invalid kind')
+      expect(nextStub).to.have.been.called
+      expect(nextStub.firstCall.args[0]).to.be.instanceof(Error)
+      expect(nextStub.firstCall.args[0].message).to.equal('Invalid kind')
     })
   })
 
   context('when a new interaction has a theme that does not match', () => {
     beforeEach(async () => {
-      this.req.params = {
-        ...this.req.params,
+      req.params = {
+        ...req.params,
         theme: 'foo',
         kind: 'not-really-an-interaction',
       }
 
-      this.res.locals = {
-        ...this.res.locals,
+      res.locals = {
+        ...res.locals,
         company: {
           id: '1',
           name: 'Fred ltd.',
@@ -1313,27 +1312,27 @@ describe('Interaction edit controller (Interactions)', () => {
         .get('/v3/contact?company_id=1&limit=500')
         .reply(200, { results: this.contactsData })
         .get('/v4/metadata/team')
-        .reply(200, this.metadataMock.teamOptions)
+        .reply(200, metadataMock.teamOptions)
         .get('/v4/metadata/service?contexts__has_any=export_service_delivery')
-        .reply(200, this.metadataMock.serviceOptions)
+        .reply(200, metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
         .reply(200, { results: this.activeInactiveAdviserData })
         .get('/v4/metadata/communication-channel')
-        .reply(200, this.metadataMock.channelOptions)
+        .reply(200, metadataMock.channelOptions)
         .get('/v4/metadata/service-delivery-status')
-        .reply(200, this.metadataMock.serviceDeliveryStatus)
+        .reply(200, metadataMock.serviceDeliveryStatus)
         .get('/v4/metadata/policy-area')
-        .reply(200, this.metadataMock.policyAreaOptions)
+        .reply(200, metadataMock.policyAreaOptions)
         .get('/v4/metadata/policy-issue-type')
-        .reply(200, this.metadataMock.policyIssueType)
+        .reply(200, metadataMock.policyIssueType)
 
-      await controller.renderEditPage(this.req, this.res, this.nextStub)
+      await controller.renderEditPage(req, res, nextStub)
     })
 
     it('should throw an error', () => {
-      expect(this.nextStub).to.have.been.called
-      expect(this.nextStub.firstCall.args[0]).to.be.instanceof(Error)
-      expect(this.nextStub.firstCall.args[0].message).to.equal('Invalid theme')
+      expect(nextStub).to.have.been.called
+      expect(nextStub.firstCall.args[0]).to.be.instanceof(Error)
+      expect(nextStub.firstCall.args[0].message).to.equal('Invalid theme')
     })
   })
 })
