@@ -85,14 +85,13 @@ function renderExportEdit (req, res) {
 }
 
 async function handleEditFormPost (req, res, next) {
-  let data = Object.assign({}, res.locals.company, {
+  const data = {
+    ...res.locals.company,
     export_experience_category: req.body.export_experience_category,
-  })
+  }
 
   if (res.locals.features[ NEW_COUNTRIES_FEATURE ]) {
-    Object.assign(data, {
-      export_countries: getExportCountries(req.body),
-    })
+    data.export_countries = getExportCountries(req.body) || []
   } else {
     const exportToCountries = flatten([req.body.export_to_countries])
     const futureInterestCountries = flatten([req.body.future_interest_countries])

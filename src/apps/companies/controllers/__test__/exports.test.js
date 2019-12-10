@@ -1,6 +1,8 @@
 const proxyquire = require('proxyquire')
+const faker = require('faker')
 const urls = require('../../../../lib/urls')
 const buildMiddlewareParameters = require('../../../../../test/unit/helpers/middleware-parameters-builder')
+const { NEW_COUNTRIES_FEATURE, EXPORT_INTEREST_STATUS } = require('../../../constants')
 
 const companyMock = require('../../../../../test/unit/data/companies/company-v4.json')
 
@@ -175,43 +177,115 @@ describe('Company export controller', () => {
 
   describe('#handleEditFormPost', () => {
     context('when save is successful', () => {
-      beforeEach(async () => {
-        this.saveCompany.resolves(companyMock)
+      context('when the new countries feature flag is true', () => {
+        context('With countries specified', () => {
+          const countries = {
+            [EXPORT_INTEREST_STATUS.FUTURE_INTEREST]: faker.random.uuid(),
+            [EXPORT_INTEREST_STATUS.EXPORTING_TO]: faker.random.uuid(),
+            [EXPORT_INTEREST_STATUS.NOT_INTERESTED]: faker.random.uuid(),
+          }
+          beforeEach(async () => {
+            this.saveCompany.resolves(companyMock)
 
-        this.middlewareParameters = buildMiddlewareParameters({
-          requestBody: {
-            export_experience_category: '111',
-            export_to_countries: '222',
-            future_interest_countries: ['333', '444'],
-          },
-          company: companyMock,
+            this.middlewareParameters = buildMiddlewareParameters({
+              requestBody: {
+                export_experience_category: '111',
+                ...countries,
+              },
+              company: companyMock,
+              features: { [NEW_COUNTRIES_FEATURE]: true },
+            })
+
+            await this.controller.handleEditFormPost(
+              this.middlewareParameters.reqMock,
+              this.middlewareParameters.resMock,
+              this.middlewareParameters.nextSpy,
+            )
+          })
+
+          it('should call save method with token', () => {
+            expect(this.saveCompany.args[0][0]).to.equal('1234')
+          })
+
+          it('should call save method with flattened body data', () => {
+            const actualData = this.saveCompany.args[0][1]
+            expect(actualData.export_experience_category).to.equal('111')
+            expect(actualData.export_countries).to.deep.equal(Object.entries(countries).map(([status, id]) => ({ country: { id }, status })))
+          })
+
+          it('should redirect to exports routes', () => {
+            expect(this.middlewareParameters.resMock.redirect).to.have.been.calledWith(urls.companies.exports.index(companyMock.id))
+            expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
+          })
+
+          it('next should not have been called', () => {
+            expect(this.middlewareParameters.nextSpy).not.to.have.been.called
+          })
+        })
+        context('Without any countries', () => {
+          it('should call save method with flattened body data', async () => {
+            this.saveCompany.resolves(companyMock)
+
+            this.middlewareParameters = buildMiddlewareParameters({
+              requestBody: {
+                export_experience_category: '111',
+              },
+              company: companyMock,
+              features: { [NEW_COUNTRIES_FEATURE]: true },
+            })
+
+            await this.controller.handleEditFormPost(
+              this.middlewareParameters.reqMock,
+              this.middlewareParameters.resMock,
+              this.middlewareParameters.nextSpy,
+            )
+            const actualData = this.saveCompany.args[0][1]
+            expect(actualData.export_experience_category).to.equal('111')
+            expect(Array.isArray(actualData.export_countries)).to.equal(true)
+            expect(actualData.export_countries.length).to.equal(0)
+          })
+        })
+      })
+
+      context('without any feature flags', () => {
+        beforeEach(async () => {
+          this.saveCompany.resolves(companyMock)
+
+          this.middlewareParameters = buildMiddlewareParameters({
+            requestBody: {
+              export_experience_category: '111',
+              export_to_countries: '222',
+              future_interest_countries: ['333', '444'],
+            },
+            company: companyMock,
+          })
+
+          await this.controller.handleEditFormPost(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
         })
 
-        await this.controller.handleEditFormPost(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
-        )
-      })
+        it('should call save method with token', () => {
+          expect(this.saveCompany.args[0][0]).to.equal('1234')
+        })
 
-      it('should call save method with token', () => {
-        expect(this.saveCompany.args[0][0]).to.equal('1234')
-      })
+        it('should call save method with flattened body data', () => {
+          const actualData = this.saveCompany.args[0][1]
+          expect(actualData.export_experience_category).to.equal('111')
+          expect(actualData.export_to_countries).to.deep.equal(['222'])
+          expect(actualData.future_interest_countries).to.deep.equal(['333', '444'])
+        })
 
-      it('should call save method with flattened body data', () => {
-        const actualData = this.saveCompany.args[0][1]
-        expect(actualData.export_experience_category).to.equal('111')
-        expect(actualData.export_to_countries).to.deep.equal(['222'])
-        expect(actualData.future_interest_countries).to.deep.equal(['333', '444'])
-      })
+        it('should redirect to exports routes', () => {
+          expect(this.middlewareParameters.resMock.redirect).to.have.been.calledWith(urls.companies.exports.index(companyMock.id))
+          expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
+        })
 
-      it('should redirect to exports routes', () => {
-        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledWith(urls.companies.exports.index(companyMock.id))
-        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
-      })
-
-      it('next should not have been called', () => {
-        expect(this.middlewareParameters.nextSpy).not.to.have.been.called
+        it('next should not have been called', () => {
+          expect(this.middlewareParameters.nextSpy).not.to.have.been.called
+        })
       })
     })
 
