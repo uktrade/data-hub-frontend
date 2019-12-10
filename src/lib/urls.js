@@ -135,5 +135,6 @@ module.exports = {
       data: url('/investments', '/profiles/data'),
     },
   },
+  omis: url('/omis/create?company=', ':companyId'),
   support: url('/support'),
 }
