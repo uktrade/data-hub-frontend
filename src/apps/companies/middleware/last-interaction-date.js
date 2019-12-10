@@ -7,7 +7,13 @@ const END_DATE_PARAM = 'latest_interaction_date_after'
 const DATE_FORMAT = 'YYYY-MM-DD'
 
 function getTimestamp (offset) {
-  return moment().subtract(offset, 'month').utc().format(DATE_FORMAT)
+  let date = moment()
+
+  if (offset > 0) {
+    date.subtract(offset, 'month')
+  }
+
+  return date.utc().format(DATE_FORMAT)
 }
 
 module.exports = (req, res, next) => {
@@ -20,6 +26,9 @@ module.exports = (req, res, next) => {
 
     for (let i = 0; i < l; i++) {
       switch (range[i]) {
+        case '0':
+          values.push(0, 1)
+          break
         case '1':
           values.push(1, 3)
           break
