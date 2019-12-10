@@ -62,72 +62,145 @@ describe('Company export controller', () => {
   })
 
   describe('#populateExportForm', () => {
-    context('when no request body exists', () => {
-      beforeEach(() => {
-        this.middlewareParameters = buildMiddlewareParameters({
-          company: companyMock,
+    context('without any feature flags', () => {
+      context('when no request body exists', () => {
+        beforeEach(() => {
+          this.middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+          })
+
+          this.controller.populateExportForm(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
         })
 
-        this.controller.populateExportForm(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
-        )
-      })
+        it('should populate formData on locals', () => {
+          expect(this.middlewareParameters.resMock.locals.formData).to.deep.equal({
+            export_experience_category: {
+              id: '8b05e8c7-1812-46bf-bab7-a0096ab5689f',
+              name: 'Increasing export markets',
+            },
+            export_to_countries: [
+              '35afd8d0-5d95-e211-a939-e4115bead28a',
+              '36afd8d0-5d95-e211-a939-e4115bead28a',
+            ],
+            future_interest_countries: [
+              '37afd8d0-5d95-e211-a939-e4115bead28a',
+            ],
+          })
+        })
 
-      it('should populate formData on locals', () => {
-        expect(this.middlewareParameters.resMock.locals.formData).to.deep.equal({
-          export_experience_category: {
-            id: '8b05e8c7-1812-46bf-bab7-a0096ab5689f',
-            name: 'Increasing export markets',
-          },
-          export_to_countries: [
-            '35afd8d0-5d95-e211-a939-e4115bead28a',
-            '36afd8d0-5d95-e211-a939-e4115bead28a',
-          ],
-          future_interest_countries: [
-            '37afd8d0-5d95-e211-a939-e4115bead28a',
-          ],
+        it('should call next with no arguments', () => {
+          expect(this.middlewareParameters.nextSpy).to.have.been.calledWith()
+          expect(this.middlewareParameters.nextSpy).to.have.been.calledOnce
         })
       })
 
-      it('should call next with no arguments', () => {
-        expect(this.middlewareParameters.nextSpy).to.have.been.calledWith()
-        expect(this.middlewareParameters.nextSpy).to.have.been.calledOnce
-      })
-    })
+      context('when request body exists', () => {
+        beforeEach(() => {
+          this.middlewareParameters = buildMiddlewareParameters({
+            requestBody: {
+              export_to_countries: ['09876'],
+              future_interest_countries: ['67890'],
+            },
+            company: companyMock,
+          })
 
-    context('when request body exists', () => {
-      beforeEach(() => {
-        this.middlewareParameters = buildMiddlewareParameters({
-          requestBody: {
+          this.controller.populateExportForm(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
+
+        it('should populate formData on locals', () => {
+          expect(this.middlewareParameters.resMock.locals.formData).to.deep.equal({
+            export_experience_category: {
+              id: '8b05e8c7-1812-46bf-bab7-a0096ab5689f',
+              name: 'Increasing export markets',
+            },
             export_to_countries: ['09876'],
             future_interest_countries: ['67890'],
-          },
-          company: companyMock,
+          })
         })
 
-        this.controller.populateExportForm(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
-        )
+        it('should call next with no arguments', () => {
+          expect(this.middlewareParameters.nextSpy).to.have.been.calledWith()
+          expect(this.middlewareParameters.nextSpy).to.have.been.calledOnce
+        })
       })
+    })
+    context('when the new countries feature flag is true', () => {
+      context('when no request body exists', () => {
+        beforeEach(() => {
+          this.middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+            features: { [NEW_COUNTRIES_FEATURE]: true },
+          })
 
-      it('should populate formData on locals', () => {
-        expect(this.middlewareParameters.resMock.locals.formData).to.deep.equal({
-          export_experience_category: {
-            id: '8b05e8c7-1812-46bf-bab7-a0096ab5689f',
-            name: 'Increasing export markets',
-          },
-          export_to_countries: ['09876'],
-          future_interest_countries: ['67890'],
+          this.controller.populateExportForm(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
+
+        it('should populate formData on locals', () => {
+          expect(this.middlewareParameters.resMock.locals.formData).to.deep.equal({
+            export_experience_category: {
+              id: '8b05e8c7-1812-46bf-bab7-a0096ab5689f',
+              name: 'Increasing export markets',
+            },
+            [EXPORT_INTEREST_STATUS.FUTURE_INTEREST]: [],
+            [EXPORT_INTEREST_STATUS.EXPORTING_TO]: [],
+            [EXPORT_INTEREST_STATUS.NOT_INTERESTED]: [],
+          })
+        })
+
+        it('should call next with no arguments', () => {
+          expect(this.middlewareParameters.nextSpy).to.have.been.calledWith()
+          expect(this.middlewareParameters.nextSpy).to.have.been.calledOnce
         })
       })
 
-      it('should call next with no arguments', () => {
-        expect(this.middlewareParameters.nextSpy).to.have.been.calledWith()
-        expect(this.middlewareParameters.nextSpy).to.have.been.calledOnce
+      context('when request body exists', () => {
+        let countries
+
+        beforeEach(() => {
+          countries = {
+            [EXPORT_INTEREST_STATUS.FUTURE_INTEREST]: faker.random.uuid(),
+            [EXPORT_INTEREST_STATUS.NOT_INTERESTED]: faker.random.uuid(),
+            [EXPORT_INTEREST_STATUS.EXPORTING_TO]: faker.random.uuid(),
+          }
+          this.middlewareParameters = buildMiddlewareParameters({
+            requestBody: countries,
+            company: companyMock,
+            features: { [NEW_COUNTRIES_FEATURE]: true },
+          })
+
+          this.controller.populateExportForm(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy,
+          )
+        })
+
+        it('should populate formData on locals', () => {
+          expect(this.middlewareParameters.resMock.locals.formData).to.deep.equal({
+            export_experience_category: {
+              id: '8b05e8c7-1812-46bf-bab7-a0096ab5689f',
+              name: 'Increasing export markets',
+            },
+            ...countries,
+          })
+        })
+
+        it('should call next with no arguments', () => {
+          expect(this.middlewareParameters.nextSpy).to.have.been.calledWith()
+          expect(this.middlewareParameters.nextSpy).to.have.been.calledOnce
+        })
       })
     })
   })
