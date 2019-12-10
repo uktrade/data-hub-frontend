@@ -4,6 +4,7 @@ const { camelCase, pickBy, get } = require('lodash')
 const config = require('../../../config')
 const labels = require('../labels')
 const { getDataLabels } = require('../../../lib/controller-utils')
+const groupExportCountries = require('../../../lib/group-export-countries')
 
 function transformEntityLink (entity, entityPath, noLinkText = null) {
   return entity
@@ -75,6 +76,20 @@ function getCurrency (item) {
   return null
 }
 
+function getCountryName (country) {
+  return country.name
+}
+
+function getExportCountries (countries) {
+  const buckets = groupExportCountries(countries)
+
+  for (let status in buckets) {
+    buckets[status] = buckets[status].map(getCountryName).join(', ')
+  }
+
+  return buckets
+}
+
 function transformInteractionResponseToViewRecord (
   {
     company,
@@ -94,8 +109,10 @@ function transformInteractionResponseToViewRecord (
     event,
     kind,
     archived_documents_url_path,
+    export_countries,
   },
-  canShowDocuments = false
+  canShowDocuments = false,
+  useNewCountries
 ) {
   const defaultEventText = kind === 'service_delivery' ? 'No' : null
   const kindLabels = labels[camelCase(kind)]
@@ -122,6 +139,10 @@ function transformInteractionResponseToViewRecord (
     policy_issue_types: getNames(policy_issue_types),
     policy_areas: getNames(policy_areas),
     policy_feedback_notes: policy_feedback_notes,
+  }
+
+  if (useNewCountries) {
+    Object.assign(viewRecord, getExportCountries(export_countries))
   }
 
   return pickBy(getDataLabels(viewRecord, kindLabels))

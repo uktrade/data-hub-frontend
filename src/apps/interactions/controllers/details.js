@@ -5,13 +5,15 @@ const {
 
 const { transformInteractionResponseToViewRecord } = require('../transformers')
 const { INTERACTION_STATUS } = require('../constants')
+const { NEW_COUNTRIES_FEATURE } = require('../../constants')
 
 function renderDetailsPage (req, res, next) {
   try {
-    const { interaction } = res.locals
+    const { interaction, features } = res.locals
     const breadcrumb = capitalize(lowerCase(interaction.kind))
     const isComplete = interaction.status === INTERACTION_STATUS.COMPLETE
-    const interactionViewRecord = transformInteractionResponseToViewRecord(interaction, isComplete)
+    const useNewCountries = features[ NEW_COUNTRIES_FEATURE ]
+    const interactionViewRecord = transformInteractionResponseToViewRecord(interaction, isComplete, useNewCountries)
     const canComplete = interaction.status === INTERACTION_STATUS.DRAFT &&
       new Date(interaction.date) < new Date() &&
       !interaction.archived
