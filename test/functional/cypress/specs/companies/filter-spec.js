@@ -190,7 +190,11 @@ describe('Company Collections Filter', () => {
       .click()
       .get(typeahead(leadIta).textInput)
       .type('Shawn Cohen')
-      .wait(2000)
+      .get(typeahead(leadIta).options)
+      .should('have.length', 63)
+
+    cy
+      .get(typeahead(leadIta).selectedOption)
       .type('{enter}')
       .type('{esc}')
 
