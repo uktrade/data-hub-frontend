@@ -8,6 +8,7 @@ module.exports = {
   exportingTo: '#group-field-export_to_countries',
   interestedIn: '#group-field-future_interest_countries',
   firstInteractionDate: '[for="field-interaction_between-1"]',
+  leadIta: '#group-field-one_list_group_global_account_manager',
   contacts: {
     sector: '#group-field-company_sector_descends',
     companyName: '#field-company_name',
