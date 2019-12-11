@@ -446,7 +446,6 @@ jobs:
       - *docker_mock_sso
       - *docker_data_hub_backend_api
       - *docker_data_hub_backend_celery
-    parallelism: 2
     steps:
       - checkout
       - *wait_for_backend
@@ -458,8 +457,8 @@ jobs:
       - *wait_for_frontend
       - *create_cucumber_dirs
       - run:
-          name: Run LEP e2e tests
-          command: yarn test:e2e:dit --browser chrome --parallel --record --key $CYPRESS_DASHBOARD_KEY
+          name: Run DIT e2e tests
+          command: yarn test:e2e:dit --browser chrome
       - store_artifacts:
           path: cypress/screenshots
 
