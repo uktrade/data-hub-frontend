@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import { ActivityFeedApp } from 'data-hub-components'
 import AddCompanyForm from './apps/companies/apps/add-company/client/AddCompanyForm'
 import EditCompanyForm from './apps/companies/apps/edit-company/client/EditCompanyForm'
+import EditHistory from './apps/companies/apps/edit-history/client/EditHistory'
 import DeleteCompanyList from './apps/company-lists/client/DeleteCompanyList'
 import MyCompanies from './apps/dashboard/client/MyCompanies.jsx'
 import CreateListFormSection from './apps/company-lists/client/CreateListFormSection'
@@ -40,6 +41,9 @@ function App () {
       </Mount>
       <Mount selector="#edit-company-form">
         {props => <EditCompanyForm csrfToken={globalProps.csrfToken} {...props} />}
+      </Mount>
+      <Mount selector="#edit-history">
+        {props => <EditHistory csrfToken={globalProps.csrfToken} {...props} />}
       </Mount>
       <Mount selector="#activity-feed-app">
         {props => <ActivityFeedApp {...props} />}

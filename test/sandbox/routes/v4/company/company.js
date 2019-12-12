@@ -18,6 +18,7 @@ var companyWithInvestment2 = require('../../../fixtures/v4/company/company-with-
 var companyWithContacts = require('../../../fixtures/v4/company/company-with-contacts.json')
 var companyList = require('../../../fixtures/v4/user/company-list.json')
 var companyOneListTierDIta = require('../../../fixtures/v4/company/company-one-list-tier-d-ita.json')
+var companyWithValidationError = require('../../../fixtures/v4/company/company-validation-error.json')
 
 var largeCapitalProfileEmpty = require('../../../fixtures/v4/company/large-capital-profile-empty.json')
 var largeCapitalProfileNew = require('../../../fixtures/v4/company/large-capital-profile-new.json')
@@ -92,6 +93,7 @@ exports.company = function (req, res) {
     'a73efeba-8499-11e6-ae22-56b6b6499611': companyWithInvestment2,
     '0f5216e0-849f-11e6-ae22-56b6b6499622': companyWithContacts,
     'w2c34b41-1d5a-4b4b-7685-7c53ff2868dg': companyOneListTierDIta,
+    '4e6a4edb-55e3-4461-a88d-84d329ee7eb8': companyWithValidationError,
     'not-managed': _.assign({}, company, {
       name: 'Not Managed Company',
       id: 'not-managed',

@@ -87,12 +87,23 @@ const companyFiltersFields = function ({ sectorOptions }) {
       label: 'Last interaction between',
       groupClass: 'js-last-interaction-filter',
       options: [
+        { value: '0', label: '0 - 1 month' },
         { value: '1', label: '1 - 3 months' },
         { value: '2', label: '3 - 6 months' },
         { value: '3', label: '6 - 12 months' },
         { value: '4', label: '12 - 24 months' },
       ],
       modifier: 'option-select',
+    },
+    {
+      macroName: 'Typeahead',
+      name: QUERY_FIELDS_MAP.leadIta,
+      placeholder: 'Search adviser',
+      useSubLabel: false,
+      entity: 'adviser',
+      hideInactive: false,
+      target: 'metadata',
+      label: 'Lead ITA or Global Account Manager',
     },
   ].map(filter => {
     return Object.assign(filter, {

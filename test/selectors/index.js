@@ -38,6 +38,9 @@ exports.interaction = {
   complete: require('./interaction/complete'),
   details: require('./interaction/details'),
 }
+exports.investment = {
+  'proposition': require('./investment/proposition'),
+}
 exports.interactionForm = require('./interaction-form')
 exports.keyValueTable = require('./key-value-table')
 exports.localHeader = require('./local-header')

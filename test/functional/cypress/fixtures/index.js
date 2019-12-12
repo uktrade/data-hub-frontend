@@ -17,6 +17,7 @@ module.exports = {
     venusLtd: require('./company/venus-ltd.json'),
     withContacts: require('./company/with-contacts.json'),
     oneListTierDita: require('./company/one-list-tier-d-ita.json'),
+    addInteractionError: require('./company/add-interaction-error.json'),
   },
   contact: {
     deanCox: require('./contact/dean-cox'),
