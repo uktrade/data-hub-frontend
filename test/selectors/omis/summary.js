@@ -7,4 +7,6 @@ module.exports = {
   contact: '.c-answers-summary:nth-of-type(2)',
   country: '.c-answers-summary:nth-of-type(3)',
   sector: '.c-answers-summary:nth-of-type(4)',
+  summary: '.c-answers-summary',
+  header: '.govuk-grid-column-two-thirds',
 }
