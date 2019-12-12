@@ -3,7 +3,7 @@ const { flattenDeep } = require('lodash')
 const { globalFields } = require('../../macros')
 const canAddCountries = require('./can-add-countries')
 
-const { EXPORT_INTEREST_STATUS_VALUES } = require('../constants')
+const { EXPORT_INTEREST_STATUS_VALUES } = require('../../constants')
 
 module.exports = {
   adviser (advisers) {
