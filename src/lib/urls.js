@@ -104,8 +104,8 @@ module.exports = {
     index: url('/companies'),
     interactions: createInteractionsSubApp('/companies', '/:companyId'),
     orders: url('/companies', '/:companyId/orders'),
-    investment: url('/companies', '/:companyId/investments'),
     investments: {
+      companyInvestment: url('/companies', '/:companyId/investments'),
       largeCapitalProfile: url('/companies', '/:companyId/investments/large-capital-profile'),
     },
     subsidiaries: {
