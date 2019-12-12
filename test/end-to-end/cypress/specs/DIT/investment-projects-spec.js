@@ -43,7 +43,7 @@ describe('Investment project', () => {
 
   describe('FDI investment', () => {
     before(() => {
-      cy.visit(companies.investment('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
+      cy.visit(companies.investments.companyInvestment('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
     })
 
     it('should create a FDI investment project', () => {
@@ -105,7 +105,7 @@ describe('Investment project', () => {
 
   describe('non FDI investment', () => {
     before(() => {
-      cy.visit(companies.investment('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
+      cy.visit(companies.investments.companyInvestment('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
     })
 
     it('should create a non FDI investment project', () => {
@@ -163,7 +163,7 @@ describe('Investment project', () => {
 
   describe('FDI investment with different company source', () => {
     before(() => {
-      cy.visit(companies.investment('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
+      cy.visit(companies.investments.companyInvestment('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
     })
 
     it('should create a FDI investment project with a different source of equity company', () => {
@@ -199,7 +199,7 @@ describe('Investment project', () => {
 
   describe('Commitment investment project', () => {
     before(() => {
-      cy.visit(companies.investment('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
+      cy.visit(companies.investments.companyInvestment('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
     })
 
     it('should create a commitment to investment project', () => {
