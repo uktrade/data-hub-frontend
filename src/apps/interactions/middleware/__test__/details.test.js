@@ -5,7 +5,7 @@ const interactionData = require('../../../../../test/unit/data/interactions/new-
 const interactionDataWithCountries = require('../../../../../test/unit/data/interactions/new-interaction-with-countries')
 const serviceOptions = require('../../../../../test/unit/data/interactions/service-options-data')
 
-const { EXPORT_INTEREST_STATUS } = require('../../constants')
+const { EXPORT_INTEREST_STATUS } = require('../../../constants')
 
 const { transformServicesOptions } = require('../../transformers')
 

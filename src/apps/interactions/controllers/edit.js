@@ -11,7 +11,8 @@ const { joinPaths } = require('../../../lib/path')
 const isValidTheme = require('../macros/is-valid-theme')
 const canAddCountries = require('../macros/can-add-countries')
 
-const { KINDS, THEMES, EXPORT_INTEREST_STATUS_VALUES } = require('../constants')
+const { KINDS, THEMES } = require('../constants')
+const { EXPORT_INTEREST_STATUS_VALUES } = require('../../constants')
 
 const formConfigs = {
   [KINDS.INTERACTION]: interactionForm,
