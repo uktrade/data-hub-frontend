@@ -1,5 +1,7 @@
 const logger = require('../../config/logger')
 const serviceDependencies = require('./serviceDependencies')
+const failureDependencies = serviceDependencies.filter((dependency) => (!dependency.warningOnly))
+const warningDependencies = serviceDependencies.filter((dependency) => (dependency.warningOnly))
 
 function pingdomTemplate (statusMessage) {
   return `
@@ -22,8 +24,8 @@ function healthCheck (dependencies) {
   return Promise.all(promiseArray)
 }
 
-function renderPingdomXml (req, res, next) {
-  return healthCheck(serviceDependencies)
+function renderPingdomXml (req, res, next, dependencies) {
+  return healthCheck(dependencies)
     .then((results) => {
       return results.filter((result) => result.statusText !== 'OK')
     })
@@ -50,30 +52,23 @@ function renderPingdomXml (req, res, next) {
     .catch(next)
 }
 
-function getHandler (req, res, next) {
-  return healthCheck(serviceDependencies)
-    .then((results) => results.filter((result) => result.statusText !== 'OK'))
-    .then((errors) => {
-      res.set('Cache-Control', 'no-cache, no-store, must-revalidate')
+function getPingdomFailures (req, res, next) {
+  return renderPingdomXml(req, res, next, failureDependencies)
+}
 
-      if (errors.length) {
-        errors.forEach((dependency) => {
-          logger.error(`${dependency.name} health check failed`, dependency.error)
-        })
+function getPingdomWarnings (req, res, next) {
+  return renderPingdomXml(req, res, next, warningDependencies)
+}
 
-        return res
-          .status(503)
-          .send('Service Unavailable')
-      }
-
-      return res
-        .status(200)
-        .send('OK')
-    })
-    .catch(next)
+function getMicroserviceHealthcheck (req, res, next) {
+  res.set('Cache-Control', 'no-cache, no-store, must-revalidate')
+  return res
+    .status(200)
+    .send('OK')
 }
 
 module.exports = {
-  getHandler,
-  renderPingdomXml,
+  getMicroserviceHealthcheck,
+  getPingdomFailures,
+  getPingdomWarnings,
 }
