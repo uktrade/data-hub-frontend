@@ -457,7 +457,7 @@ jobs:
       - *wait_for_frontend
       - *create_cucumber_dirs
       - run:
-          name: Run DIT e2e tests
+          name: Run DIT staff e2e tests
           command: yarn test:e2e:dit --browser chrome
       - store_artifacts:
           path: cypress/screenshots
@@ -488,7 +488,7 @@ jobs:
       - *wait_for_frontend
       - *create_cucumber_dirs
       - run:
-          name: Run LEP e2e tests
+          name: Run LEP staff e2e tests
           command: yarn test:e2e:lep --browser chrome
       - store_artifacts:
           path: cypress/screenshots
@@ -519,7 +519,7 @@ jobs:
       - *wait_for_frontend
       - *create_cucumber_dirs
       - run:
-          name: Run DA e2e tests
+          name: Run DA staff e2e tests
           command: yarn test:e2e:da --browser chrome
       - store_artifacts:
           path: cypress/screenshots
