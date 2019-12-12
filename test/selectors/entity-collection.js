@@ -4,6 +4,7 @@ module.exports = {
   addAttendee: '[data-auto-id="Add attendee"]',
   editEvent: 'a:contains("Edit event")',
   addOrder: '[data-auto-id="Add order"]',
+  addProposition: '[data-auto-id="Add proposition"]',
   collection: '.c-collection',
   collectionRowMessage: '.c-collection__export-message',
   collectionRowButton: '.c-collection__header-actions > a',

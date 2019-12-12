@@ -33,6 +33,7 @@ module.exports = function ({
   types,
   company,
   theme,
+  interaction,
   featureFlags,
 }) {
   return {
@@ -63,7 +64,7 @@ module.exports = function ({
         },
       },
       feedbackPolicyNotes,
-      ...countriesDiscussed(theme, featureFlags),
+      ...countriesDiscussed(theme, interaction, featureFlags),
     ].map(field => {
       return assign(field, {
         label: field.label || labels.interaction[field.name],

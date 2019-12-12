@@ -1,8 +1,10 @@
+const { EXPORT_INTEREST_STATUS } = require('./constants')
+
 const countriesDiscussed = {
-  was_country_discussed: 'Were any countries discussed?',
-  future_countries: 'Future countries of interest',
-  export_countries: 'Countries currently exporting to',
-  no_interest_countries: 'Countries not interested in',
+  were_countries_discussed: 'Were any countries discussed?',
+  [EXPORT_INTEREST_STATUS.FUTURE_INTEREST]: 'Future countries of interest',
+  [EXPORT_INTEREST_STATUS.EXPORTING_TO]: 'Countries currently exporting to',
+  [EXPORT_INTEREST_STATUS.NOT_INTERESTED]: 'Countries not interested in',
 }
 
 const interaction = {

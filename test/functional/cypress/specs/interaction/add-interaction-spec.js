@@ -10,39 +10,56 @@ describe('Add Export', () => {
   context('when the add countries feature flag is true', () => {
     context('when adding an export interaction', () => {
       context('when in the context of a company', () => {
-        beforeEach(() => {
-          cy.visit(companies.interactions.createType(fixtures.default.id, 'export', 'interaction'))
-        })
+        context('When the fields have validtion errors', () => {
+          it('Should trigger a validation error', () => {
+            const formSelectors = selectors.interactionForm
+            cy.visit(companies.interactions.createType(fixtures.company.addInteractionError.id, 'export', 'interaction'))
 
-        it('should render breadcrumbs', () => {
-          assertBreadcrumbs({
-            'Home': dashboard(),
-            'Companies': companies.index(),
-            'Add interaction': null,
-          })
-        })
-
-        context('when answering yes to countries discussed', () => {
-          it('should add the interaction', () => {
-            const subject = utils.randomString()
-
-            populateInteractionForm(subject, 'A Specific DIT Export Service or Funding', 'Export Win', { visible: true, discussed: true })
+            populateCountriesDiscussed(formSelectors, true, true)
 
             cy.get(selectors.interactionForm.add).click()
 
-            assertDetails({ subject, flashMessage: 'Interaction created' })
+            cy.get(`${formSelectors.countries.future} .multiselect__tag`).should('contain', 'Albania')
+            cy.get(`${formSelectors.countries.export} .multiselect__tag`).should('contain', 'British Indian Ocean Territory')
+            cy.get(`${formSelectors.countries.noInterest} .multiselect__tag`).should('contain', 'Central African Republic')
           })
         })
 
-        context('when answering no to countries discussed', () => {
-          it('should add the interaction', () => {
-            const subject = utils.randomString()
+        context('When there are no validation errors', () => {
+          beforeEach(() => {
+            cy.visit(companies.interactions.createType(fixtures.default.id, 'export', 'interaction'))
+          })
 
-            populateInteractionForm(subject, 'A Specific DIT Export Service or Funding', 'Export Win', { visible: true, discussed: false })
+          it('should render breadcrumbs', () => {
+            assertBreadcrumbs({
+              'Home': dashboard(),
+              'Companies': companies.index(),
+              'Add interaction': null,
+            })
+          })
 
-            cy.get(selectors.interactionForm.add).click()
+          context('when answering yes to countries discussed', () => {
+            it('should add the interaction', () => {
+              const subject = utils.randomString()
 
-            assertDetails({ subject, flashMessage: 'Interaction created' })
+              populateInteractionForm(subject, 'A Specific DIT Export Service or Funding', 'Export Win', { visible: true, discussed: true })
+
+              cy.get(selectors.interactionForm.add).click()
+
+              assertDetails({ subject, flashMessage: 'Interaction created' })
+            })
+          })
+
+          context('when answering no to countries discussed', () => {
+            it('should add the interaction', () => {
+              const subject = utils.randomString()
+
+              populateInteractionForm(subject, 'A Specific DIT Export Service or Funding', 'Export Win', { visible: true, discussed: false })
+
+              cy.get(selectors.interactionForm.add).click()
+
+              assertDetails({ subject, flashMessage: 'Interaction created' })
+            })
           })
         })
       })

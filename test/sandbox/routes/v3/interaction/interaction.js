@@ -9,6 +9,7 @@ var interactionCancelledMeeting = require('../../../fixtures/v3/interaction/inte
 var interactionCreate = require('../../../fixtures/v3/interaction/interaction-create.json')
 var interactionDraftFutureMeeting = require('../../../fixtures/v3/interaction/interaction-draft-future-meeting.json')
 var interactionDraftPastMeeting = require('../../../fixtures/v3/interaction/interaction-draft-past-meeting.json')
+var interactionValidationError = require('../../../fixtures/v3/interaction/interaction-validation-error.json')
 
 var getInteractions = function (req, res) {
   if (req.query.contact_id) {
@@ -49,6 +50,10 @@ var getInteractionById = function (req, res) {
 }
 
 var createInteraction = function (req, res) {
+  if (req.body.company === '4e6a4edb-55e3-4461-a88d-84d329ee7eb8') {
+    return res.json(400, interactionValidationError)
+  }
+
   if (req.body.subject) {
     state.interaction = {
       subject: req.body.subject,
