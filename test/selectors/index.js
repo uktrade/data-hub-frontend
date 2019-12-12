@@ -41,6 +41,7 @@ exports.interaction = {
 exports.investment = {
   'proposition': require('./investment/proposition'),
   'form': require('./investment/form'),
+  'value': require('./investment/value'),
 }
 exports.interactionForm = require('./interaction-form')
 exports.keyValueTable = require('./key-value-table')
