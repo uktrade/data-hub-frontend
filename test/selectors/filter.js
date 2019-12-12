@@ -15,6 +15,9 @@ module.exports = {
     country: '#group-field-address_country',
     firstUkRegion: '[for="field-company_uk_region-1"]',
   },
+  interaction: {
+    myInteractions: '[for="field-dit_participants__adviser-1"]',
+  },
   investments: {
     companyName: '#group-field-sector_descends',
     country: '#group-field-investor_company_country',

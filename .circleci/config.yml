@@ -393,7 +393,7 @@ jobs:
       - *docker_mock_sso
       - *docker_data_hub_backend_api
       - *docker_data_hub_backend_celery
-    parallelism: 6
+    parallelism: 1
     steps:
       - checkout
       - *wait_for_backend
@@ -457,7 +457,7 @@ jobs:
       - *wait_for_frontend
       - *create_cucumber_dirs
       - run:
-          name: Run LEP e2e tests
+          name: Run DIT staff e2e tests
           command: yarn test:e2e:dit --browser chrome
       - store_artifacts:
           path: cypress/screenshots
@@ -488,7 +488,7 @@ jobs:
       - *wait_for_frontend
       - *create_cucumber_dirs
       - run:
-          name: Run LEP e2e tests
+          name: Run LEP staff e2e tests
           command: yarn test:e2e:lep --browser chrome
       - store_artifacts:
           path: cypress/screenshots
@@ -519,7 +519,7 @@ jobs:
       - *wait_for_frontend
       - *create_cucumber_dirs
       - run:
-          name: Run DA e2e tests
+          name: Run DA staff e2e tests
           command: yarn test:e2e:da --browser chrome
       - store_artifacts:
           path: cypress/screenshots
