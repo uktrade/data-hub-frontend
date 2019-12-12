@@ -131,6 +131,7 @@ module.exports = {
       index: url('/investments', '/projects'),
       documents: url('/investments', '/projects/:projectId/documents'),
       propositions: url('/investments', '/projects/:projectId/propositions'),
+      team: url('/investments', '/projects/:projectId/team'),
       interactions: createInteractionsSubApp('/investments', '/projects/:projectId'),
       interactionCollection: url('/investments', '/projects/:projectId/interactions'),
       project: url('/investments', '/projects/:projectId'),

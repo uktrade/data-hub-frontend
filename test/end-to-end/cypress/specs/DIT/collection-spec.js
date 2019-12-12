@@ -37,4 +37,14 @@ describe('Collection', () => {
       checkCollection()
     })
   })
+
+  describe('investment proposition', () => {
+    before(() => {
+      cy.visit(investments.projects.propositions('721e2a04-21c3-4172-a321-4368463a4b2d'))
+    })
+
+    it('should return the results summary for investment proposition collection', () => {
+      checkCollection()
+    })
+  })
 })
