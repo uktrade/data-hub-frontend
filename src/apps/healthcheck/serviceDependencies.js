@@ -25,6 +25,7 @@ module.exports = [
   },
   {
     name: 'getaddress postcode lookup',
+    warningOnly: true,
     healthCheck: () =>
       axios.get(
         `https://api.getaddress.io/usage?api-key=${
