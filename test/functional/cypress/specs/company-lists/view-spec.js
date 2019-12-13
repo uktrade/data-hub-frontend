@@ -44,6 +44,7 @@ const expectedRows = {
 const expectedLists = {
   'List B': {
     deleteLinksTo: '/company-lists/75e14e32-292e-4d1b-a361-992d548251f7/delete',
+    renameLinksTo: '/company-lists/75e14e32-292e-4d1b-a361-992d548251f7/rename',
     rows: [
       expectedRows.bmw,
     ],
@@ -59,9 +60,11 @@ const expectedLists = {
   },
   'List C': {
     deleteLinksTo: '/company-lists/a87af6bc-e117-47c7-ad3d-35f9900bbd0e/delete',
+    renameLinksTo: '/company-lists/a87af6bc-e117-47c7-ad3d-35f9900bbd0e/rename',
   },
   'List A': {
     deleteLinksTo: '/company-lists/70513f19-0df6-4c8d-bef1-f11b65641ae4/delete',
+    renameLinksTo: '/company-lists/70513f19-0df6-4c8d-bef1-f11b65641ae4/rename',
     rows: [expectedRows.bmw, expectedRows.zebra, expectedRows.potatoes],
     searches: {
       bmw: [expectedRows.bmw],
@@ -124,7 +127,13 @@ const describeTable = rows => {
   })
 }
 
-const describeSelectedList = ({ name, deleteLinksTo, rows = [], searches }) =>
+const describeSelectedList = ({
+  name,
+  deleteLinksTo,
+  renameLinksTo,
+  rows = [],
+  searches,
+}) =>
   describe('Selected list', () => {
     describe('List selector', () =>
       it(`The "${name}" should be selected`, () =>
@@ -136,9 +145,16 @@ const describeSelectedList = ({ name, deleteLinksTo, rows = [], searches }) =>
     describe('Delete list link', () =>
       it('The link should go to the correct url', () =>
         cy
-          .contains('Delete this list')
+          .contains('Delete list')
           .invoke('attr', 'href')
           .should('eq', deleteLinksTo)))
+
+    describe('Edit list name', () =>
+      it('The link should go to the correct url', () =>
+        cy
+          .contains('Edit list name')
+          .invoke('attr', 'href')
+          .should('eq', renameLinksTo)))
 
     switch (rows.length) {
       case 0:
