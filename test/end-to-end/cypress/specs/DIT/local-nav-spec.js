@@ -1,6 +1,8 @@
 const selectors = require('../../../../selectors')
 const { assertLocalNav } = require('../../support/assertions')
 
+const { investments } = require('../../../../../src/lib/urls')
+
 describe('DIT Permission', () => {
   describe('dashboard', () => {
     before(() => {
@@ -49,6 +51,24 @@ describe('DIT Permission', () => {
         'Interactions',
         'Audit history',
         'Documents',
+      ])
+    })
+  })
+
+  describe('investment', () => {
+    before(() => {
+      cy.visit(investments.projects.project('fb5b5006-56af-40e0-8615-7aba53e0e4bf'))
+    })
+
+    it('should display DIT only side navs', () => {
+      assertLocalNav(selectors.nav.sideNav, [
+        'Project details',
+        'Project team',
+        'Interactions',
+        'Evaluations',
+        'Propositions',
+        'Audit history',
+        'Evidence',
       ])
     })
   })
