@@ -1,3 +1,5 @@
+{% from "details/macro.njk" import govukDetails %}
+
 {% extends "_layouts/template.njk" %}
 
 {% set action %}
@@ -20,6 +22,15 @@
       <div class="c-meta-list">
         <div class="c-meta-list__item">
           <span class="c-badge">{{ "Ultimate" if company.isUltimate else "Global" }} HQ</span>
+        </div>
+        <div class="c-meta-list__item">
+          {% if company.isUltimate %}
+            {{ govukDetails({
+              summaryText: 'What does this mean?',
+              text: 'This HQ is in control of all related company records for ' + company.name + '.',
+              classes: 'govuk-details--inline'
+            }) }}
+          {% endif %}
         </div>
       </div>
     {% endif %}
