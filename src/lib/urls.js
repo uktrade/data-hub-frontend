@@ -105,6 +105,7 @@ module.exports = {
     interactions: createInteractionsSubApp('/companies', '/:companyId'),
     orders: url('/companies', '/:companyId/orders'),
     investments: {
+      companyInvestment: url('/companies', '/:companyId/investments'),
       largeCapitalProfile: url('/companies', '/:companyId/investments/large-capital-profile'),
     },
     subsidiaries: {
@@ -129,7 +130,10 @@ module.exports = {
     projects: {
       index: url('/investments', '/projects'),
       documents: url('/investments', '/projects/:projectId/documents'),
+      propositions: url('/investments', '/projects/:projectId/propositions'),
+      team: url('/investments', '/projects/:projectId/team'),
       interactions: createInteractionsSubApp('/investments', '/projects/:projectId'),
+      interactionCollection: url('/investments', '/projects/:projectId/interactions'),
       project: url('/investments', '/projects/:projectId'),
       status: url('/investments', '/projects/:projectId/status'),
     },

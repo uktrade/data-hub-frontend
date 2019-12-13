@@ -39,7 +39,10 @@ exports.interaction = {
   details: require('./interaction/details'),
 }
 exports.investment = {
-  'proposition': require('./investment/proposition'),
+  proposition: require('./investment/proposition'),
+  form: require('./investment/form'),
+  value: require('./investment/value'),
+  team: require('./investment/team'),
 }
 exports.interactionForm = require('./interaction-form')
 exports.keyValueTable = require('./key-value-table')
