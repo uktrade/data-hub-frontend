@@ -1,8 +1,10 @@
 const router = require('express').Router()
 
 const { APP_PERMISSIONS } = require('./constants')
-const { fetchCompanyList, handleDeleteCompanyList, renderDeleteCompanyListPage } = require('./controllers/delete')
+const { handleDeleteCompanyList, renderDeleteCompanyListPage } = require('./controllers/delete')
+const { renderEditCompanyListPage, handleEditCompanyList } = require('./controllers/edit')
 const { fetchListsCompanyIsOn, handleAddRemoveCompanyToList } = require('./controllers/add-remove')
+const { fetchCompanyList } = require('./repos')
 const { handleRoutePermissions } = require('../middleware')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
@@ -24,5 +26,8 @@ router.post('/add-remove', handleAddRemoveCompanyToList)
 
 router.get('/:listId/delete', fetchCompanyList, renderDeleteCompanyListPage)
 router.post('/:listId/delete', handleDeleteCompanyList)
+
+router.get('/:listId/rename', fetchCompanyList, renderEditCompanyListPage)
+router.patch('/:listId/rename', handleEditCompanyList)
 
 module.exports = router
