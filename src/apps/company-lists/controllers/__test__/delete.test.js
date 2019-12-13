@@ -3,7 +3,6 @@ const requestErrors = require('request-promise/errors')
 const config = require('../../../../config')
 const buildMiddlewareParameters = require('../../../../../test/unit/helpers/middleware-parameters-builder')
 const {
-  fetchCompanyList,
   handleDeleteCompanyList,
   renderDeleteCompanyListPage,
 } = require('../delete')
@@ -20,46 +19,6 @@ describe('Delete company list controller', () => {
       requestParams: {
         listId: companyListId,
       },
-    })
-  })
-
-  describe('#fetchCompanyList', () => {
-    context('when the list is successfully retrieved', () => {
-      beforeEach(async () => {
-        nock(config.apiRoot)
-          .get(`/v4/company-list/${companyListId}`)
-          .reply(200, companyList)
-
-        await fetchCompanyList(
-          middlewareParameters.reqMock,
-          middlewareParameters.resMock,
-          middlewareParameters.nextSpy,
-        )
-      })
-
-      it('adds the company list to res.locals', () => {
-        expect(middlewareParameters.resMock.locals.companyList).to.be.deep.equal(companyList)
-      })
-    })
-
-    context('when there is an error retrieving the list', () => {
-      beforeEach(async () => {
-        nock(config.apiRoot)
-          .get(`/v4/company-list/${companyListId}`)
-          .reply(404)
-
-        await fetchCompanyList(
-          middlewareParameters.reqMock,
-          middlewareParameters.resMock,
-          middlewareParameters.nextSpy,
-        )
-      })
-
-      it('forwards the error to the next middleware', () => {
-        expect(middlewareParameters.resMock.locals.companyList).to.be.undefined
-        expect(middlewareParameters.nextSpy).to.be.called
-        expect(middlewareParameters.nextSpy.firstCall.args[0]).to.be.instanceof(requestErrors.StatusCodeError)
-      })
     })
   })
 
