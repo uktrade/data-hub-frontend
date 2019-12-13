@@ -1,5 +1,5 @@
 const { editCompanyList } = require('../repos')
-
+// istanbul ignore next: Covered by functional tests
 async function handleEditCompanyList (req, res, next) {
   const { token } = req.session
   const { name, id } = req.body
@@ -11,7 +11,7 @@ async function handleEditCompanyList (req, res, next) {
     next(error)
   }
 }
-
+// istanbul ignore next: Covered by functional tests
 async function renderEditCompanyListPage (req, res, next) {
   const { companyList: { id, name } } = res.locals
   const props = {
