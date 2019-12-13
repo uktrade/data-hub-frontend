@@ -73,9 +73,11 @@ describe('urls', () => {
       expect(urls.companies.dnbHierarchy.data.route).to.equal('/:companyId/dnb-hierarchy/data')
       expect(urls.companies.dnbHierarchy.data(companyId)).to.equal(`/companies/${companyId}/dnb-hierarchy/data`)
 
-      expect(urls.companies.exports.route).to.equal('/:companyId/exports')
-      expect(urls.companies.exports(companyId)).to.equal(`/companies/${companyId}/exports`)
-      expect(urls.companies.exports.route).to.equal('/:companyId/exports')
+      expect(urls.companies.exports.index.route).to.equal('/:companyId/exports')
+      expect(urls.companies.exports.index(companyId)).to.equal(`/companies/${companyId}/exports`)
+
+      expect(urls.companies.exports.edit.route).to.equal('/:companyId/exports/edit')
+      expect(urls.companies.exports.edit(companyId)).to.equal(`/companies/${companyId}/exports/edit`)
 
       expect(urls.companies.subsidiaries.index(companyId)).to.equal(`/companies/${companyId}/subsidiaries`)
       expect(urls.companies.subsidiaries.index.route).to.equal('/:companyId/subsidiaries')

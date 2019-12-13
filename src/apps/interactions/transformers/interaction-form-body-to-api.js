@@ -2,7 +2,7 @@ const { omit } = require('lodash')
 
 const castCompactArray = require('../../../lib/cast-compact-array')
 const { transformDateObjectToDateString } = require('../../transformers')
-const getExportCountries = require('../macros/get-export-countries')
+const getExportCountries = require('../../../lib/get-export-countries')
 
 const { INTERACTION_STATUS } = require('../constants')
 
