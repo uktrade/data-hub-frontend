@@ -4,11 +4,10 @@ aliases:
   - &postgres_version           postgres:10
   - &mi_postgres_version        postgres:9.6
   - &elasticsearch_version      docker.elastic.co/elasticsearch/elasticsearch:6.8.2
+  - &api_image                  quay.io/uktrade/data-hub-api:master
   - &oauth2_dit_staff_token     ditStaffToken
   - &oauth2_da_staff_token      daStaffToken
   - &oauth2_lep_staff_token     lepStaffToken
-  - &api_develop_image          quay.io/uktrade/data-hub-api:develop
-  - &api_master_image           quay.io/uktrade/data-hub-api:master
 
   # Common steps
   - &restore_yarn_cache
@@ -63,26 +62,6 @@ aliases:
     run:
       name: Create cucumber directories
       command: mkdir -p ~/data-hub-frontend/cucumber/{reports,screenshots}
-
-  # Create cucumber reports
-  - &create_at_reports
-    run:
-      name: Create acceptance test reports
-      command: |
-        node ~/data-hub-frontend/.circleci/scripts/cucumber-report.js
-        ~/data-hub-frontend/.circleci/scripts/rename-reports.sh
-        ~/data-hub-frontend/.circleci/scripts/copy-screenshots.sh
-      when: always
-
-  # Store cucumber results in circleCi
-  - &store_test_results
-    store_test_results:
-      path: cucumber
-
-  # Store cucumber artifacts in circleCi
-  - &store_test_artifacts
-    store_artifacts:
-      path: cucumber
 
   # Data hub base environment variables
   - &data_hub_base_envs
@@ -166,7 +145,7 @@ aliases:
 
   # Data hub backend
   - &docker_data_hub_backend_base
-    image: *api_develop_image
+    image: *api_image
     environment:
       AWS_DEFAULT_REGION: eu-west-2
       AWS_ACCESS_KEY_ID: foo
@@ -221,19 +200,6 @@ aliases:
           - /^skip-tests.*/
           - /^release.*/
 
-  # Master branch common workflow config
-  - &master_common_at_workflow_config
-    requires:
-      - dependencies
-      - lint_code
-      - unit_tests
-      - unit_client_tests
-      - functional_tests
-    filters:
-      branches:
-        only:
-          - master
-          - /^release.*/
 jobs:
   # Save yarn dependencies to cache
   dependencies:
@@ -328,7 +294,7 @@ jobs:
       - store_artifacts:
           path: coverage
 
-# Run functional tests
+  # Run functional tests
   functional_tests:
     <<: *at_container_config
     docker:
@@ -354,7 +320,7 @@ jobs:
       - store_artifacts:
           path: cypress/screenshots
 
-# Run visual tests
+  # Run visual tests
   visual_tests:
     <<: *at_container_config
     docker:
@@ -382,7 +348,7 @@ jobs:
           path: visual-report
 
   # Run e2e tests for DIT staff
-  dit_staff_e2e: &dit_staff_e2e
+  dit_staff_e2e:
     <<: *at_container_config
     docker:
       - <<: *docker_data_hub_base
@@ -413,7 +379,7 @@ jobs:
           path: cypress/screenshots
 
   # Run e2e tests for LEP staff
-  lep_staff_e2e: &lep_staff_e2e
+  lep_staff_e2e:
     <<: *at_container_config
     docker:
       - <<: *docker_data_hub_base
@@ -444,7 +410,7 @@ jobs:
           path: cypress/screenshots
 
   # Run e2e tests for DA staff
-  da_staff_e2e: &da_staff_e2e
+  da_staff_e2e:
     <<: *at_container_config
     docker:
       - <<: *docker_data_hub_base
@@ -474,57 +440,6 @@ jobs:
       - store_artifacts:
           path: cypress/screenshots
 
-  # Run acceptance tests for DIT staff using the master version of the backend
-  master-dit_staff_e2e:
-    <<: *dit_staff_e2e
-    docker:
-      - *docker_data_hub_base
-      - *docker_redis
-      - *docker_elasticsearch
-      - *docker_postgres
-      - *docker_mi_postgres
-      - *docker_mock_sso
-      - <<: *docker_data_hub_backend_api
-        image: *api_master_image
-      - <<: *docker_data_hub_backend_celery
-        image: *api_master_image
-
-  # Run acceptance tests for LEP staff using the master version of the backend
-  master-lep_staff_e2e:
-    <<: *lep_staff_e2e
-    docker:
-      - <<: *docker_data_hub_base
-        environment:
-          <<: *data_hub_base_envs
-          OAUTH2_DEV_TOKEN: *oauth2_lep_staff_token
-      - *docker_redis
-      - *docker_elasticsearch
-      - *docker_postgres
-      - *docker_mi_postgres
-      - *docker_mock_sso
-      - <<: *docker_data_hub_backend_api
-        image: *api_master_image
-      - <<: *docker_data_hub_backend_celery
-        image: *api_master_image
-
-  # Run acceptance tests for DA staff using the master version of the backend
-  master-da_staff_e2e:
-    <<: *da_staff_e2e
-    docker:
-      - <<: *docker_data_hub_base
-        environment:
-          <<: *data_hub_base_envs
-          OAUTH2_DEV_TOKEN: *oauth2_da_staff_token
-      - *docker_redis
-      - *docker_elasticsearch
-      - *docker_postgres
-      - *docker_mi_postgres
-      - *docker_mock_sso
-      - <<: *docker_data_hub_backend_api
-        image: *api_master_image
-      - <<: *docker_data_hub_backend_celery
-        image: *api_master_image
-
 # CircleCI workflows
 workflows:
   version: 2
@@ -547,6 +462,3 @@ workflows:
       - dit_staff_e2e: *common_at_workflow_config
       - da_staff_e2e: *common_at_workflow_config
       - lep_staff_e2e: *common_at_workflow_config
-      - master-dit_staff_e2e: *master_common_at_workflow_config
-      - master-da_staff_e2e: *master_common_at_workflow_config
-      - master-lep_staff_e2e: *master_common_at_workflow_config

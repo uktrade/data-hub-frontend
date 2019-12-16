@@ -1,45 +1,79 @@
 const buildMiddlewareParameters = require('../../../test/unit/helpers/middleware-parameters-builder')
-
 const locals = require('../locals')
 
 describe('locals', () => {
-  describe('#getBreadcrumbs', () => {
-    beforeEach(() => {
-      this.middlewareParameters = buildMiddlewareParameters({
-        breadcrumb: sinon.stub().returns([
-          {
-            text: 'breadcrumb-1',
-            href: '/breadcrumb-1',
-          },
-          {
-            text: 'breadcrumb-2',
-            href: '/breadcrumb-2',
-          },
-        ]),
-      })
+  it('should set local variables', () => {
+    const middlewareParameters = buildMiddlewareParameters({
+      reqMock: {
+        encrypted: true,
+        xhr: false,
+        get: sinon.stub().returns('example.com'),
+        originalUrl: '/some-org-url',
+      },
+      requestPath: '/some-path',
+      requestQuery: '?page=1',
+    })
 
-      locals(
+    locals(
+      middlewareParameters.reqMock,
+      middlewareParameters.resMock,
+      middlewareParameters.nextSpy,
+    )
+
+    const {
+      APP_VERSION,
+      BASE_URL,
+      CANONICAL_URL,
+      ORIGINAL_URL,
+      CURRENT_PATH,
+      IS_XHR,
+      QUERY,
+    } = middlewareParameters.resMock.locals
+
+    expect(APP_VERSION).to.equal('unknown')
+    expect(BASE_URL).to.equal('https://example.com')
+    expect(CANONICAL_URL).to.equal('https://example.com/some-path')
+    expect(ORIGINAL_URL).to.equal('https://example.com/some-org-url')
+    expect(CURRENT_PATH).to.equal('/some-path')
+    expect(IS_XHR).to.equal(false)
+    expect(QUERY).to.equal('?page=1')
+  })
+
+  it('getBreadcrumbs() should return breadcrumbs', () => {
+    const middlewareParameters = buildMiddlewareParameters({
+      reqMock: {
+        get: sinon.spy(),
+        path: 'path',
+      },
+      breadcrumb: sinon.stub().returns([
         {
-          get: sinon.spy(),
-          path: 'path',
+          text: 'breadcrumb-1',
+          href: '/breadcrumb-1',
         },
-        this.middlewareParameters.resMock,
-        this.middlewareParameters.nextSpy,
-      )
-
-      this.breadcrumbs = this.middlewareParameters.resMock.locals.getBreadcrumbs()
+        {
+          text: 'breadcrumb-2',
+          href: '/breadcrumb-2',
+        },
+      ]),
     })
 
-    it('should return two breadcrumbs', () => {
-      expect(this.breadcrumbs.length).to.equal(2)
-    })
+    locals(
+      middlewareParameters.reqMock,
+      middlewareParameters.resMock,
+      middlewareParameters.nextSpy,
+    )
 
-    it('should return the first breadcrumb with a href', () => {
-      expect(this.breadcrumbs[0].href).to.exist
-    })
+    const breadcrumbs = middlewareParameters.resMock.locals.getBreadcrumbs()
 
-    it('should return the last breadcrumb without a href', () => {
-      expect(this.breadcrumbs[1].href).to.not.exist
-    })
+    expect(breadcrumbs).to.deep.equal([
+      {
+        'href': '/breadcrumb-1',
+        'text': 'breadcrumb-1',
+      },
+      {
+        'href': null,
+        'text': 'breadcrumb-2',
+      },
+    ])
   })
 })
