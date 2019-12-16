@@ -21,7 +21,7 @@ function EditCompanyList ({
   returnUrl,
 }) {
   const [errorMessage, setErrorMessage] = useState(null)
-  const onEdit = async ({ listName }) => {
+  const onSubmitHandler = async ({ listName }) => {
     try {
       await axios({
         method: 'PATCH',
@@ -46,7 +46,7 @@ function EditCompanyList ({
           errors={[]}
         />
       )}
-      <Form onSubmit={onEdit} initialValues={{ listName }}>
+      <Form onSubmit={onSubmitHandler} initialValues={{ listName }}>
         <FieldInput
           name={name}
           type="text"
@@ -69,7 +69,6 @@ function EditCompanyList ({
 }
 
 EditCompanyList.propTypes = {
-  onSubmitHandler: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   listName: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
