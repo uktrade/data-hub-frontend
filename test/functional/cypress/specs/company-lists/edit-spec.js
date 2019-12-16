@@ -1,10 +1,13 @@
 const selectors = require('../../../../selectors')
+const multipleList = require('../../fixtures/company-lists/multiple-items.json')
+const listWithError = require('../../fixtures/company-lists/list-with-error.json')
+const nonExistentList = require('../../fixtures/company-lists/non-existent-list.json')
 const { testBreadcrumbs } = require('../../support/assertions')
 
 describe('Edit company list page', () => {
   context('when viewing "Edit company list"', () => {
     before(() => {
-      cy.visit('/company-lists/2a8fb06f-2099-44d6-b404-e0fae0b9ea59/rename')
+      cy.visit(`/company-lists/${multipleList.id}/rename`)
     })
 
     testBreadcrumbs({
@@ -35,7 +38,7 @@ describe('Edit company list page', () => {
 
   context('After editing the list and clicking the "Save" button', () => {
     before(() => {
-      cy.visit('/company-lists/2a8fb06f-2099-44d6-b404-e0fae0b9ea59/rename')
+      cy.visit(`/company-lists/${multipleList.id}/rename`)
       cy.get(selectors.companyList.edit.form.input).clear().type('New list name')
       cy.get(selectors.companyList.edit.saveButton).click()
     })
@@ -54,7 +57,7 @@ describe('Edit company list page', () => {
 
   context('when there is an error editing the list', () => {
     before(() => {
-      cy.visit('/company-lists/0b89bb58-2769-4783-bb2f-7a22bb566473/rename')
+      cy.visit(`/company-lists/${listWithError.id}/rename`)
       cy.get(selectors.companyList.edit.form.input).clear().type('New list name')
       cy.get(selectors.companyList.edit.saveButton).click()
     })
@@ -66,7 +69,7 @@ describe('Edit company list page', () => {
 
   context("when the list you are trying to edit doesn't exist", () => {
     before(() => {
-      cy.visit('/company-lists/non-existent-list/rename', { failOnStatusCode: false })
+      cy.visit(`/company-lists/${nonExistentList}/rename`, { failOnStatusCode: false })
     })
 
     it('displays the 404 page', () => {
