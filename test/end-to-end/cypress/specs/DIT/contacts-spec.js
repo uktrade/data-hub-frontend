@@ -1,6 +1,8 @@
 const selectors = require('../../../../selectors')
 const userActions = require('../../support/user-actions')
 
+const { contacts } = require('../../../../../src/lib/urls')
+
 describe('Contacts', () => {
   const data = {
     name: 'NewAddress',
@@ -16,7 +18,7 @@ describe('Contacts', () => {
   }
 
   it('should create a primary contact with a different address to the companies address', () => {
-    cy.visit('/contacts/create?company=0fb3379c-341c-4da4-b825-bf8d47b26baa')
+    cy.visit(contacts.create('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
     userActions.contacts.createWithNewAddress(data)
 
     cy.get(selectors.contactCreate.details)

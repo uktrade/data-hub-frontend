@@ -1,6 +1,8 @@
 const selectors = require('../../../../selectors')
 const userActions = require('../../support/user-actions')
 
+const { companies, contacts } = require('../../../../../src/lib/urls')
+
 const { assertKeyValueTable } = require('../../support/assertions')
 
 describe('Advisors', () => {
@@ -8,7 +10,7 @@ describe('Advisors', () => {
   const adviserTable = 3
 
   it('should display advisers for a GHQ for a given company', () => {
-    cy.visit('/companies/375094ac-f79a-43e5-9c88-059a7caa17f0/advisers')
+    cy.visit(companies.advisers.index('375094ac-f79a-43e5-9c88-059a7caa17f0'))
 
     cy.get(selectors.collection.contentHeader)
       .should('contain', 'Advisers on the core team')
@@ -39,7 +41,7 @@ describe('Contacts', () => {
   }
 
   it('should create a contact for a given company', () => {
-    cy.visit('/contacts/create?company=0fb3379c-341c-4da4-b825-bf8d47b26baa')
+    cy.visit(contacts.create('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
     userActions.contacts.create(data)
 
     cy.get(selectors.message.successful).should('contain', 'Added new contact')
@@ -54,7 +56,7 @@ describe('Contacts', () => {
   })
 
   it('should display the newly created contact in company contact collection page', () => {
-    cy.visit('/companies/0fb3379c-341c-4da4-b825-bf8d47b26baa/activity')
+    cy.visit(companies.activity.index('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
 
     cy.contains('Company contacts').click()
     cy.get(selectors.collection.items)
@@ -67,7 +69,7 @@ describe('Contacts', () => {
 
 describe('Export', () => {
   it('should update export values when edit is made', () => {
-    cy.visit('/companies/0fb3379c-341c-4da4-b825-bf8d47b26baa/exports/edit')
+    cy.visit(companies.exports.edit('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
 
     cy.get(selectors.companyExport.winCategory).select('Export growth')
     cy.get(selectors.companyForm.save).click()
@@ -81,7 +83,7 @@ describe('Export', () => {
   })
 
   it('should update export values when edit is made', () => {
-    cy.visit('/companies/0fb3379c-341c-4da4-b825-bf8d47b26baa/exports/edit')
+    cy.visit(companies.exports.edit('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
 
     cy.get(selectors.companyExport.winCategory).select('Export growth')
     cy.get(selectors.companyForm.save).click()
