@@ -7,7 +7,7 @@ import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import ErrorSummary from '@govuk-react/error-summary'
 
-const notFoundMessage = 'The list you are trying to edit was not found. It may have already been deleted.'
+const NOT_FOUND_MESSAGE = 'The list you are trying to edit was not found. It may have already been deleted.'
 
 function EditCompanyList ({
   label,
@@ -31,7 +31,7 @@ function EditCompanyList ({
       return returnUrl
     } catch (error) {
       if (get(error, 'response.status') === 404) {
-        setErrorMessage(notFoundMessage)
+        setErrorMessage(NOT_FOUND_MESSAGE)
       } else {
         setErrorMessage(error.message || error.toString())
       }
