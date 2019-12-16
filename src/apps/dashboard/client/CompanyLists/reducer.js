@@ -10,7 +10,7 @@ export const initialState = {
 export default (state = initialState, { type, ...action }) => {
   switch (type) {
     case LIST_CHANGE:
-      return { ...state, selectedIdx: action.idx }
+      return { ...state, filter: '', selectedIdx: action.idx }
     case FILTER_CHANGE:
       return { ...state, filter: action.filter }
     case ORDER_CHANGE:
