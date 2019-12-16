@@ -356,6 +356,11 @@ describe('Company export controller', () => {
           expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
         })
 
+        it('should redirect to exports routes', () => {
+          expect(this.middlewareParameters.resMock.redirect).to.have.been.calledWith(urls.companies.exports.index(companyMock.id))
+          expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
+        })
+
         it('next should not have been called', () => {
           expect(this.middlewareParameters.nextSpy).not.to.have.been.called
         })
