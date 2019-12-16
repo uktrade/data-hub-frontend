@@ -1,15 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { H3 } from 'govuk-react'
+import { H3 } from '@govuk-react/heading'
+import pluralise from 'pluralise'
+
+import EditHistoryList from './EditHistoryList'
 
 function EditHistory ({ editHistory }) {
+  const numberOfChanges = `${editHistory.length} ${pluralise(editHistory.length, 'change')}`
   return (
-    <>
-      <H3>This page is hidden behind an Express route</H3>
-      {editHistory.map((item, index) => (
-        <pre key={index}>{JSON.stringify(item, null, 2)}</pre>
-      ))}
-    </>
+    <div>
+      <H3>{numberOfChanges}</H3>
+      <EditHistoryList items={editHistory} />
+    </div>
   )
 }
 

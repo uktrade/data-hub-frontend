@@ -4215,10 +4215,10 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-data-hub-components@^2.20.1:
-  version "2.20.1"
-  resolved "https://registry.yarnpkg.com/data-hub-components/-/data-hub-components-2.20.1.tgz#85976d50bc2b535694e6d0aca2ae80c473056b6c"
-  integrity sha512-Tylq3FS3SlJSUNDUtAPXCOCMe2bHtHOgR94IV2Oxk/hg5oVhXPdEr4NUuYiUWBYF0SHwj+mMZFA641tSyAE5Ew==
+data-hub-components@^2.21.0:
+  version "2.21.0"
+  resolved "https://registry.yarnpkg.com/data-hub-components/-/data-hub-components-2.21.0.tgz#f9116ec3942be2312e98a8994ea4ff2017ab7402"
+  integrity sha512-ZQ1QOXtnqzm5+jgtzyBaZ/Z0sy4udRKHeBVo9oYhmyKpGVbOV/3N9UOb59fEtSv8FZT1s6DRn4C9hucRq5sdVQ==
   dependencies:
     "@babel/runtime" "^7.4.5"
     "@govuk-react/button" "^0.7.1"
