@@ -87,3 +87,10 @@ details {
     }
   }
 }
+
+.govuk-details--inline {
+  margin-bottom: 0;
+  .govuk-details__summary-text, .govuk-details__text {
+    font-size: initial;
+  }
+}
