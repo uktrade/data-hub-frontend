@@ -1,9 +1,8 @@
-import React from 'react'
 import PropTypes from 'prop-types'
-import LabelText from '@govuk-react/label-text'
-import Label from '@govuk-react/label'
+import React from 'react'
 import { SPACING } from '@govuk-react/constants'
-
+import Label from '@govuk-react/label'
+import LabelText from '@govuk-react/label-text'
 import { stylesheet } from 'typestyle'
 
 const inlineLabelCss = stylesheet({
