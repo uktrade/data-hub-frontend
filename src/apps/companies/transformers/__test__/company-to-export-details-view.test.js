@@ -1,37 +1,12 @@
 const proxyquire = require('proxyquire')
 const faker = require('faker')
 
-const { EXPORT_INTEREST_STATUS } = require('../../../constants')
-
 const minimalCompany = require('../../../../../test/unit/data/companies/minimal-company.json')
 
 const transformerPath = '../company-to-export-details-view'
 const EXPORT_POTENTIAL_LABEL = 'Export potential'
 
-function generateCountries (length) {
-  return Array.from({ length }).map(() => [faker.random.uuid(), faker.address.country()])
-}
-
-function createExportCountry (status) {
-  return ([id, name]) => ({ country: { id, name }, status })
-}
-
-function generateExportCountries () {
-  const future = generateCountries(2)
-  const current = generateCountries(2)
-  const noInterest = generateCountries(2)
-
-  return {
-    future,
-    current,
-    noInterest,
-    exportCountries: [
-      ...future.map(createExportCountry(EXPORT_INTEREST_STATUS.FUTURE_INTEREST)),
-      ...current.map(createExportCountry(EXPORT_INTEREST_STATUS.EXPORTING_TO)),
-      ...noInterest.map(createExportCountry(EXPORT_INTEREST_STATUS.NOT_INTERESTED)),
-    ],
-  }
-}
+const { generateExportCountries } = require('../../../../../test/unit/helpers/generate-export-countries')
 
 describe('transformCompanyToExportDetailsView', () => {
   let transformCompanyToExportDetailsView
