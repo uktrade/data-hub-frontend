@@ -2,7 +2,6 @@ const { map } = require('lodash')
 
 const logger = require('../config/logger')
 const config = require('../config')
-const { version } = require('../../package.json')
 
 let webpackManifest = {}
 
@@ -16,7 +15,7 @@ module.exports = function locals (req, res, next) {
   const baseUrl = `${(req.encrypted ? 'https' : req.protocol)}://${req.get('host')}`
 
   Object.assign(res.locals, {
-    APP_VERSION: version,
+    APP_VERSION: process.env.GIT_BRANCH || process.env.GIT_COMMIT || 'unknown',
     BASE_URL: baseUrl,
     CANONICAL_URL: baseUrl + req.path,
     ORIGINAL_URL: baseUrl + req.originalUrl,
