@@ -43,6 +43,21 @@
 
   .c-meta-list {
     @include core-font(16);
+    @include media(tablet) {
+      display: table-row;
+    }
+  }
+
+  .c-meta-list__item {
+    @include media(tablet) {
+      display: table-cell;
+    }
+  }
+
+  .govuk-details--inline {
+    @include media(tablet) {
+      margin-left: $default-spacing-unit;
+    }
   }
 
   .c-entity-search__aggregations {
