@@ -2,7 +2,7 @@ import { GREY_2, GREY_3 } from 'govuk-colours'
 import {
   SPACING, BORDER_WIDTH_MOBILE, LEVEL_SIZE, MEDIA_QUERIES
 } from '@govuk-react/constants'
-import { H2, H4 } from '@govuk-react/heading'
+import { H2, H3 } from '@govuk-react/heading'
 import HintText from '@govuk-react/hint-text'
 import Input from '@govuk-react/input'
 import Link from '@govuk-react/link'
@@ -152,7 +152,7 @@ function CompanyLists (props) {
 
       {list && (
         <div className={css.listHeading}>
-          {list && <H4 className={css.listTitle}>{list.name}</H4>}
+          {list && <H3 className={css.listTitle}>{list.name}</H3>}
           <FormActions>
             <SecondaryButton
               as={Link}
