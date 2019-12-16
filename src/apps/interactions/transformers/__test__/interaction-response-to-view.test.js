@@ -6,6 +6,7 @@ const mockInteraction = require('../../../../../test/unit/data/interactions/inte
 const mockInteractionWithPolicyFeedback = require('../../../../../test/unit/data/interactions/interaction-with-feedback.json')
 
 const { generateExportCountries } = require('../../../../../test/unit/helpers/generate-export-countries')
+const urls = require('../../../../lib/urls')
 
 config.archivedDocumentsBaseUrl = 'http://base'
 
@@ -17,12 +18,12 @@ describe('#transformInteractionResponsetoViewRecord', () => {
   context('when the interaction-add-countries feature flag is true', () => {
     const transformedMockInteraction = {
       Company: {
-        url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
+        url: urls.companies.detail('0f5216e0-849f-11e6-ae22-56b6b6499611'),
         name: 'Venus Ltd',
       },
       'Contact(s)': [
         {
-          url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
+          url: urls.contacts.contact('7701587b-e88f-4f39-874f-0bd06321f7df'),
           name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
         },
       ],
@@ -47,7 +48,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
       },
       'Adviser(s)': ['Bob Lawson, The test team'],
       'Investment project': {
-        url: '/investments/projects/bac18331-ca4d-4501-960e-a1bd68b5d47e',
+        url: urls.investments.projects.project('bac18331-ca4d-4501-960e-a1bd68b5d47e'),
         name: 'Test project',
       },
       'Communication channel': {
