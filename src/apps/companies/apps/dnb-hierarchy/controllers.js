@@ -24,6 +24,7 @@ async function renderDnbHierarchy (req, res, next) {
         heading: `Company records related to ${company.name}`,
         props: {
           dataEndpoint: urls.companies.dnbHierarchy.data(company.id),
+          isGlobalHQ: company.isGlobalHQ,
         },
       })
   } catch (error) {
