@@ -1,8 +1,10 @@
 const selectors = require('../../../../selectors')
 
+const { dashboard } = require('../../../../../src/lib/urls')
+
 describe('Search', () => {
   before(() => {
-    cy.visit('')
+    cy.visit(dashboard())
 
     cy.get(selectors.nav.searchTerm)
       .type('fred')

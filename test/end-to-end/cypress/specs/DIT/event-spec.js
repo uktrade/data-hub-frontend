@@ -1,5 +1,7 @@
 const selectors = require('../../../../selectors')
 
+const { events } = require('../../../../../src/lib/urls')
+
 const { assertKeyValueTable } = require('../../support/assertions')
 
 const today = Cypress.moment()
@@ -38,7 +40,7 @@ const createEvent = () => {
 describe('Event', () => {
   describe('create', () => {
     beforeEach(() => {
-      cy.visit('/events/create')
+      cy.visit(events.create())
     })
 
     it('should throw validation messages for required fields', () => {
@@ -62,7 +64,7 @@ describe('Event', () => {
     it('should create an attendee on a event', () => {
       createEvent()
 
-      cy.visit('/events')
+      cy.visit(events.index())
       cy.contains('Eventful event').click()
       cy.contains('Attendees').click()
       cy.get(selectors.entityCollection.addAttendee).click()
@@ -78,7 +80,7 @@ describe('Event', () => {
 
   describe('edit', () => {
     before(() => {
-      cy.visit('/events')
+      cy.visit(events.index())
     })
 
     it('should display newly created event in collection page', () => {

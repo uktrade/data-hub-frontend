@@ -116,13 +116,23 @@ module.exports = {
   contacts: {
     index: url('/contacts'),
     contact: url('/contacts', '/:contactId'),
+    create: url('/contacts/create?company=', ':companyId'),
     interactions: createInteractionsSubApp('/contacts', '/:contactId'),
+    contactInteractions: url('/contacts', '/:contactId/interactions'),
+    edit: url('/contacts', '/:contactId/edit'),
+    audit: url('/contacts', '/:contactId/audit'),
+  },
+  events: {
+    index: url('/events'),
+    create: url('/events/create'),
+    details: url('/events', '/:eventId/details'),
   },
   search: {
     index: url('/search'),
     type: url('/search', '/:searchPath?'),
   },
   interactions: {
+    index: '/interactions',
     subapp: createInteractionsSubApp(),
   },
   investments: {
