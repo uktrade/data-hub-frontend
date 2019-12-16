@@ -16,7 +16,7 @@ const {
 const companyList = require('../../../../test/unit/data/company-lists/list-with-multiple-items.json')
 const companyListFixture = require('../../../../test/unit/data/company-lists/list-with-multiple-items.json')
 
-const companyListId = companyListFixture.id
+const listId = companyListFixture.id
 
 describe('Company list repository', () => {
   describe('#fetchCompanyList', () => {
@@ -25,14 +25,14 @@ describe('Company list repository', () => {
     beforeEach(() => {
       middlewareParameters = buildMiddlewareParameters({
         requestParams: {
-          listId: companyListId,
+          listId,
         },
       })
     })
     context('when the list is successfully retrieved', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
-          .get(`/v4/company-list/${companyListId}`)
+          .get(`/v4/company-list/${listId}`)
           .reply(200, companyList)
 
         await fetchCompanyList(
@@ -50,7 +50,7 @@ describe('Company list repository', () => {
     context('when there is an error retrieving the list', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
-          .get(`/v4/company-list/${companyListId}`)
+          .get(`/v4/company-list/${listId}`)
           .reply(404)
 
         await fetchCompanyList(
@@ -113,12 +113,12 @@ describe('Company list repository', () => {
   describe('#getCompanyList', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .get(`/v4/company-list/${companyListId}`)
+        .get(`/v4/company-list/${listId}`)
         .reply(200, companyListFixture)
     })
 
     it('returns a company list', async () => {
-      let companyList = await getCompanyList('token', companyListId)
+      let companyList = await getCompanyList('token', listId)
       expect(companyList).to.deep.equal(companyListFixture)
     })
   })
@@ -126,13 +126,13 @@ describe('Company list repository', () => {
   describe('#deleteCompanyList', () => {
     beforeEach(() => {
       nock(config.apiRoot)
-        .delete(`/v4/company-list/${companyListId}`)
+        .delete(`/v4/company-list/${listId}`)
         .reply(204)
     })
 
     it('deletes a company list', () => {
       expect(
-        () => deleteCompanyList('token', companyListId)
+        () => deleteCompanyList('token', listId)
       ).to.not.throw()
     })
   })
