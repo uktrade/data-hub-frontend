@@ -9,7 +9,7 @@ import urls from '../../../../lib/urls'
 import SecondaryButton from './SecondaryButton'
 import * as propTypes from './propTypes'
 
-const StyledSecondaryButton = styled(SecondaryButton)({
+const StyledCellLink = styled.a({
   whiteSpace: 'nowrap',
   marginBottom: 0,
 })
@@ -60,12 +60,12 @@ const CompaniesTable = ({ companies }) =>
           )}
         </Table.Cell>
         <Table.Cell>
-          <StyledSecondaryButton
-            as={Link}
+          <SecondaryButton
+            as={StyledCellLink}
             href={urls.companies.interactions.create(company.id)}
           >
             Add interaction
-          </StyledSecondaryButton>
+          </SecondaryButton>
         </Table.Cell>
       </Table.Row>
     )}

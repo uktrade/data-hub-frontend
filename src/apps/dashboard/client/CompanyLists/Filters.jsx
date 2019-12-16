@@ -30,20 +30,10 @@ const Filters = ({ onSearch, onOrderChange }) =>
       <StyledInput
         placeholder="Company name"
         onChange={e => onSearch(e.target.value)}
-        // onChange={e => dispatch({
-        //   type: actions.FILTER_CHANGE,
-        //   filter: e.target.value,
-        // })}
       />
     </InlineLabel>
     <InlineLabel text="Sort by">
-      <StyledSelect
-        // onChange={e => dispatch({
-        //   type: actions.ORDER_CHANGE,
-        //   sortBy: e.target.value,
-        // })}
-        onChange={e => onOrderChange(e.target.value)}
-      >
+      <StyledSelect onChange={e => onOrderChange(e.target.value)}>
         <option value="recent">Recent interaction</option>
         <option value="least-recent">Least recent interaction</option>
         <option value="alphabetical">Company name A-Z</option>
