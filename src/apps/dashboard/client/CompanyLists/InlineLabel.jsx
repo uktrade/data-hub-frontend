@@ -3,27 +3,26 @@ import React from 'react'
 import { SPACING } from '@govuk-react/constants'
 import Label from '@govuk-react/label'
 import LabelText from '@govuk-react/label-text'
-import { stylesheet } from 'typestyle'
+import styled from 'styled-components'
 
-const inlineLabelCss = stylesheet({
-  root: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'baseline',
-  },
-  text: {
-    marginRight: SPACING.SCALE_2,
-  },
+const StyledLabel = styled(Label)({
+  display: 'flex',
+  flexDirection: 'row',
+  alignItems: 'baseline',
+})
+
+const StyledLabelText = styled(LabelText)({
+  marginRight: SPACING.SCALE_2,
 })
 
 // TODO: Move to data-hub-components
 const InlineLabel = ({ text, children }) =>
-  <Label className={inlineLabelCss.root}>
-    <LabelText className={inlineLabelCss.text}>
+  <StyledLabel>
+    <StyledLabelText>
       {text}
-    </LabelText>
+    </StyledLabelText>
     {children}
-  </Label>
+  </StyledLabel>
 
 InlineLabel.propTypes = {
   text: PropTypes.string.isRequired,
