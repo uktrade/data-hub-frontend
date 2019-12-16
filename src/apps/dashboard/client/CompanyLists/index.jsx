@@ -9,7 +9,7 @@ import Link from '@govuk-react/link'
 import SectionBreak from '@govuk-react/section-break'
 import Select, { SelectInput } from '@govuk-react/select'
 import Table from '@govuk-react/table'
-import { orderBy } from 'lodash'
+import { get, orderBy } from 'lodash'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import React, { useReducer } from 'react'
@@ -110,14 +110,15 @@ function CompanyLists (props) {
   })
 
   const list = lists[selectedIdx]
-  const hasCompanies = list && list.companies && list.companies.length
+  const companies = get(list, 'companies', [])
   const orderByParams = {
     recent: [c => c.latestInteraction.date || '', 'desc'],
     'least-recent': [c => c.latestInteraction.date || '', 'asc'],
     alphabetical: [c => c.company.name, 'asc'],
   }[sortBy]
-  const filtered = list.companies
-    .filter(c => c.company.name.match(new RegExp(filter, 'i')))
+  const filtered = companies.filter(
+    c => c.company.name.match(new RegExp(filter, 'i'))
+  )
   const ordered = orderBy(filtered, ...orderByParams)
 
   return (
@@ -171,7 +172,7 @@ function CompanyLists (props) {
       )}
 
       {lists.length ? (
-        hasCompanies ? (
+        companies.length ? (
           <>
             {list.companies.length > 1 &&
               <div className={css.filters}>
