@@ -115,12 +115,14 @@ module.exports = {
   },
   contacts: {
     index: url('/contacts'),
+    audit: url('/contacts', '/:contactId/audit'),
     contact: url('/contacts', '/:contactId'),
     create: url('/contacts/create?company=', ':companyId'),
-    interactions: createInteractionsSubApp('/contacts', '/:contactId'),
     contactInteractions: url('/contacts', '/:contactId/interactions'),
+    details: url('/contacts', '/:contactId/details'),
+    documents: url('/contacts', '/:contactId/documents'),
     edit: url('/contacts', '/:contactId/edit'),
-    audit: url('/contacts', '/:contactId/audit'),
+    interactions: createInteractionsSubApp('/contacts', '/:contactId'),
   },
   events: {
     index: url('/events'),
@@ -139,6 +141,7 @@ module.exports = {
     index: url('/investments'),
     projects: {
       index: url('/investments', '/projects'),
+      details: url('/investments', '/projects/:projectId/details'),
       documents: url('/investments', '/projects/:projectId/documents'),
       propositions: url('/investments', '/projects/:projectId/propositions'),
       team: url('/investments', '/projects/:projectId/team'),
@@ -152,6 +155,9 @@ module.exports = {
       data: url('/investments', '/profiles/data'),
     },
   },
-  omis: url('/omis/create?company=', ':companyId'),
+  omis: {
+    index: url('/omis'),
+    create: url('/omis/create?company=', ':companyId'),
+  },
   support: url('/support'),
 }
