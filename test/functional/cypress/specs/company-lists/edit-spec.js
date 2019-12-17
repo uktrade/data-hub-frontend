@@ -69,7 +69,7 @@ describe('Edit company list page', () => {
 
   context("when the list you are trying to edit doesn't exist", () => {
     before(() => {
-      cy.visit(`/company-lists/${nonExistentList}/rename`, { failOnStatusCode: false })
+      cy.visit(`/company-lists/${nonExistentList.id}/rename`, { failOnStatusCode: false })
     })
 
     it('displays the 404 page', () => {

@@ -16,16 +16,15 @@ async function handleEditCompanyList (req, res, next) {
 async function renderEditCompanyListPage (req, res, next) {
   const { token } = req.session
   const { listId } = req.params
-  res.locals.companyList = await getCompanyList(token, listId)
-  const { companyList: { id, name } } = res.locals
-  const props = {
-    id,
-    cancelUrl: `${urls.dashboard()}`,
-    listName: name,
-    returnUrl: `${urls.dashboard()}`,
-  }
-
   try {
+    res.locals.companyList = await getCompanyList(token, listId)
+    const { companyList: { id, name } } = res.locals
+    const props = {
+      id,
+      cancelUrl: `${urls.dashboard()}`,
+      listName: name,
+      returnUrl: `${urls.dashboard()}`,
+    }
     res.breadcrumb('Edit list name').render('company-lists/views/edit-list', {
       props,
     })
