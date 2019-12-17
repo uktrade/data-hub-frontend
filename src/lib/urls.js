@@ -113,6 +113,10 @@ module.exports = {
       link: url('/companies', '/:companyId/subsidiaries/link'),
     },
   },
+  companyLists: {
+    delete: url('/company-lists', '/:listId/delete'),
+    rename: url('/company-lists', '/:listId/rename'),
+  },
   contacts: {
     index: url('/contacts'),
     contact: url('/contacts', '/:contactId'),
