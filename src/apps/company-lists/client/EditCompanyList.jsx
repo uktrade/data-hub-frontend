@@ -51,7 +51,7 @@ function EditCompanyList ({
           required="Enter a name for your list"
           hint="This is a name only you see, and can be up to 30 characters"
           validate={value =>
-            value && value.length > maxLength
+            value && value.length > 30
               ? `Enter list name which is no longer than 30 characters`
               : null
           }
@@ -71,7 +71,6 @@ EditCompanyList.propTypes = {
   cancelUrl: PropTypes.string.isRequired,
   returnUrl: PropTypes.string.isRequired,
   csrfToken: PropTypes.string.isRequired,
-  maxLength: PropTypes.number.isRequired,
 }
 
 EditCompanyList.defaultProps = {

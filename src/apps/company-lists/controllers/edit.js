@@ -1,4 +1,4 @@
-const { renameCompanyList } = require('../repos')
+const { renameCompanyList, getCompanyList } = require('../repos')
 const urls = require('../../../lib/urls')
 // istanbul ignore next: Covered by functional tests
 async function handleEditCompanyList (req, res, next) {
@@ -14,11 +14,13 @@ async function handleEditCompanyList (req, res, next) {
 }
 // istanbul ignore next: Covered by functional tests
 async function renderEditCompanyListPage (req, res, next) {
+  const { token } = req.session
+  const { listId } = req.params
+  res.locals.companyList = await getCompanyList(token, listId)
   const { companyList: { id, name } } = res.locals
   const props = {
     id,
     cancelUrl: `${urls.dashboard()}`,
-    maxLength: 30,
     listName: name,
     returnUrl: `${urls.dashboard()}`,
   }
