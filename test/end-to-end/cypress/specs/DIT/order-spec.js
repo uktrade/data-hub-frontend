@@ -6,7 +6,7 @@ const today = Cypress.moment().format('D MMM YYYY')
 
 describe('Order', () => {
   beforeEach(() => {
-    cy.visit(omis('0f5216e0-849f-11e6-ae22-56b6b6499611'))
+    cy.visit(omis.create('0f5216e0-849f-11e6-ae22-56b6b6499611'))
   })
 
   it('should create an order', () => {

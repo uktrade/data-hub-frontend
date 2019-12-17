@@ -1,6 +1,6 @@
 const selectors = require('../../../../selectors')
 
-const { companies } = require('../../../../../src/lib/urls')
+const { companies, interactions } = require('../../../../../src/lib/urls')
 
 const today = Cypress.moment().format('D MMMM YYYY')
 
@@ -24,7 +24,7 @@ describe('Interaction', () => {
     cy.get(selectors.interactionForm.add).click()
     cy.get(selectors.message.successful).should('contain', 'Interaction created')
 
-    cy.visit('/interactions')
+    cy.visit(interactions.index())
     cy.get(selectors.filter.interaction.myInteractions).click()
 
     cy.get(selectors.collection.items)
@@ -57,7 +57,7 @@ describe('Service delivery', () => {
     cy.get(selectors.interactionForm.add).click()
     cy.get(selectors.message.successful).should('contain', 'Service delivery created')
 
-    cy.visit('/interactions')
+    cy.visit(interactions.index())
     cy.get(selectors.filter.interaction.myInteractions).click()
 
     cy.get(selectors.collection.items)
