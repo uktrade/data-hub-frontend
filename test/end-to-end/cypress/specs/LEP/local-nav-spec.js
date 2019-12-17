@@ -7,7 +7,7 @@ const { assertLocalNav } = require('../../support/assertions')
 describe('LEP Permission', () => {
   describe('activity', () => {
     before(() => {
-      cy.visit(companies.details('375094ac-f79a-43e5-9c88-059a7caa17f0'))
+      cy.visit(companies.detail('375094ac-f79a-43e5-9c88-059a7caa17f0'))
     })
 
     it('should display LEP only tabs', () => {
