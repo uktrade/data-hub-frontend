@@ -10,9 +10,6 @@ import ErrorSummary from '@govuk-react/error-summary'
 const NOT_FOUND_MESSAGE = 'The list you are trying to edit was not found. It may have already been deleted.'
 
 function EditCompanyList ({
-  label,
-  hint,
-  name,
   maxLength,
   cancelUrl,
   listName,
@@ -48,11 +45,11 @@ function EditCompanyList ({
       )}
       <Form onSubmit={onSubmitHandler} initialValues={{ listName }}>
         <FieldInput
-          name={name}
+          name="listName"
           type="text"
-          label={label}
+          label="List name"
           required="Enter a name for your list"
-          hint={hint}
+          hint="This is a name only you see, and can be up to 30 characters"
           validate={value =>
             value && value.length > maxLength
               ? `Enter list name which is no longer than 30 characters`
@@ -69,14 +66,11 @@ function EditCompanyList ({
 }
 
 EditCompanyList.propTypes = {
-  name: PropTypes.string.isRequired,
   listName: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  hint: PropTypes.string,
   cancelUrl: PropTypes.string.isRequired,
   returnUrl: PropTypes.string.isRequired,
   csrfToken: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
   maxLength: PropTypes.number.isRequired,
 }
 

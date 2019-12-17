@@ -17,9 +17,6 @@ async function renderEditCompanyListPage (req, res, next) {
   const { companyList: { id, name } } = res.locals
   const props = {
     id,
-    name: 'listName',
-    label: 'List name',
-    hint: 'This is a name only you see, and can be up to 30 characters',
     cancelUrl: `${urls.dashboard}`,
     maxLength: 30,
     listName: name,
