@@ -381,56 +381,6 @@ jobs:
       - store_artifacts:
           path: visual-report
 
-  # Run acceptance tests for DIT staff
-  dit_staff_at: &dit_staff_at
-    <<: *at_container_config
-    docker:
-      - *docker_data_hub_base
-      - *docker_redis
-      - *docker_elasticsearch
-      - *docker_postgres
-      - *docker_mi_postgres
-      - *docker_mock_sso
-      - *docker_data_hub_backend_api
-      - *docker_data_hub_backend_celery
-    parallelism: 6
-    steps:
-      - checkout
-      - *wait_for_backend
-      - *wait_for_mock_sso
-      - *restore_yarn_cache
-      - run: yarn install --pure-lockfile
-      - run: yarn build:prod
-      - *start_frontend
-      - *wait_for_frontend
-      - run:
-          name: Split tests for parallelisation
-          command: |
-            # split .features for parallelisation
-            FEATURES="$(circleci tests glob "test/acceptance/features/**/*.feature" | circleci tests split)"
-
-            # move groups of .features to folder
-            mkdir -p ~/data-hub-frontend/test/acceptance/features_${CIRCLE_NODE_INDEX}
-            for featureFile in ${FEATURES}; do
-              FILENAME_WITH_FOLDER=$(basename $(dirname $featureFile))-$(basename $featureFile)
-              mv "$featureFile" ~/data-hub-frontend/test/acceptance/features_${CIRCLE_NODE_INDEX}/${FILENAME_WITH_FOLDER}
-              printf "including: $(basename $FILENAME_WITH_FOLDER)\n"
-            done
-
-            # assign .features folder name to env to pass to cucumber.js
-            export FEATURES_FOLDER=~/data-hub-frontend/test/acceptance/features_${CIRCLE_NODE_INDEX}
-            printf "Features folder created - ${FEATURES_FOLDER}\n"
-
-            # create cucumber directories
-            mkdir -p ~/data-hub-frontend/cucumber/{reports,screenshots}
-
-            # run acceptance tests
-            yarn circle:acceptance:dit-staff
-          when: always
-      - *create_at_reports
-      - *store_test_results
-      - *store_test_artifacts
-
   # Run e2e tests for DIT staff
   dit_staff_e2e: &dit_staff_e2e
     <<: *at_container_config
@@ -457,7 +407,7 @@ jobs:
       - *wait_for_frontend
       - *create_cucumber_dirs
       - run:
-          name: Run LEP e2e tests
+          name: Run DIT staff e2e tests
           command: yarn test:e2e:dit --browser chrome
       - store_artifacts:
           path: cypress/screenshots
@@ -488,7 +438,7 @@ jobs:
       - *wait_for_frontend
       - *create_cucumber_dirs
       - run:
-          name: Run LEP e2e tests
+          name: Run LEP staff e2e tests
           command: yarn test:e2e:lep --browser chrome
       - store_artifacts:
           path: cypress/screenshots
@@ -519,14 +469,14 @@ jobs:
       - *wait_for_frontend
       - *create_cucumber_dirs
       - run:
-          name: Run DA e2e tests
+          name: Run DA staff e2e tests
           command: yarn test:e2e:da --browser chrome
       - store_artifacts:
           path: cypress/screenshots
 
   # Run acceptance tests for DIT staff using the master version of the backend
-  master-dit_staff_at:
-    <<: *dit_staff_at
+  master-dit_staff_e2e:
+    <<: *dit_staff_e2e
     docker:
       - *docker_data_hub_base
       - *docker_redis
@@ -594,10 +544,9 @@ workflows:
           requires:
             - dependencies
       - visual_tests: *common_at_workflow_config
-      - dit_staff_at: *common_at_workflow_config
       - dit_staff_e2e: *common_at_workflow_config
       - da_staff_e2e: *common_at_workflow_config
       - lep_staff_e2e: *common_at_workflow_config
-      - master-dit_staff_at: *master_common_at_workflow_config
+      - master-dit_staff_e2e: *master_common_at_workflow_config
       - master-da_staff_e2e: *master_common_at_workflow_config
       - master-lep_staff_e2e: *master_common_at_workflow_config
