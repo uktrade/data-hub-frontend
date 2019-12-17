@@ -12,6 +12,7 @@ const companyMock = {
   id: '1',
   name: 'Test company',
   global_ultimate_duns_number: '999999',
+  isGlobalHQ: false,
 }
 
 describe('D&B Company hierarchy', () => {
@@ -40,6 +41,7 @@ describe('D&B Company hierarchy', () => {
           'companies/apps/dnb-hierarchy/views/client-container', {
             heading: 'Company records related to Test company',
             props: {
+              isGlobalHQ: false,
               dataEndpoint: urls.companies.dnbHierarchy.data('1'),
             },
           })

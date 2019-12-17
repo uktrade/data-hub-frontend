@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import { useSearchParam } from 'react-use'
 import { CollectionList } from 'data-hub-components'
 import axios from 'axios'
-import { LoadingBox } from 'govuk-react'
+import { Details, LoadingBox } from 'govuk-react'
 
-const DnbHierarchy = ({ dataEndpoint }) => {
+const DnbHierarchy = ({ dataEndpoint, isGlobalHQ }) => {
   const [companies, setCompanies] = useState([])
   const [totalItems, setTotalItems] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
@@ -41,6 +41,15 @@ const DnbHierarchy = ({ dataEndpoint }) => {
     <>
       <p>This hierarchy information from Dun & Bradstreet cannot be edited.</p>
 
+      {isGlobalHQ &&
+        <Details summary="Why aren't all manually linked subsidiaries listed here?">
+          This does not mean that Dun & Bradstreet does not know about those subsidiaries.<br />
+          The Dun & Bradstreet hierarchy information can only show the company records in Data Hub that have been matched
+          to a verified Dun & Bradstreet record. This matching process is ongoing and more related company records will appear
+          in the future.
+        </Details>
+      }
+
       <LoadingBox loading={isLoading}>
         <CollectionList
           itemName="related company record"
@@ -57,6 +66,7 @@ const DnbHierarchy = ({ dataEndpoint }) => {
 
 DnbHierarchy.propTypes = {
   dataEndpoint: PropTypes.string.isRequired,
+  isGlobalHQ: PropTypes.bool.isRequired,
 }
 
 export default DnbHierarchy
