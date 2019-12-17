@@ -3,10 +3,11 @@ var companyArchivedSubsidiaries = require('../../../fixtures/v4/company/company-
 var company = require('../../../fixtures/v4/company/company.json')
 var companyArchived = require('../../../fixtures/v4/company/company-archived.json')
 var companyDnBCorp = require('../../../fixtures/v4/company/company-dnb-corp.json')
+var companyDnBSubsidiary = require('../../../fixtures/v4/company/company-dnb-subsidiary.json')
 var companyDnBLtd = require('../../../fixtures/v4/company/company-dnb-ltd.json')
 var companyDnBGlobalUltimate = require('../../../fixtures/v4/company/company-dnb-global-ultimate.json')
 var companyDnBGlobalUltimateAndGlobalHq = require('../../../fixtures/v4/company/company-dnb-global-ultimate-and-global-hq.json')
-var companyDnBGlobalUltimateSubsidiaries = require('../../../fixtures/v4/company/company-dnb-global-ultimate-subsidaries.json')
+var companyDnBGlobalUltimateSubsidiaries = require('../../../fixtures/v4/company/company-dnb-global-ultimate-subsidaries')
 var companyInvestigationLtd = require('../../../fixtures/v4/company/company-investigation-ltd.json')
 var companyLambdaPlc = require('../../../fixtures/v4/company/company-lambda-plc.json')
 var companyMarsExportsLtd = require('../../../fixtures/v4/company/company-mars-exports-ltd.json')
@@ -80,6 +81,7 @@ exports.company = function (req, res) {
   var companies = {
     '4cd4128b-1bad-4f1e-9146-5d4678c6a018': company,
     '346f78a5-1d23-4213-b4c2-bf48246a13c3': companyArchived,
+    'cc7e2f19-7251-4a41-a27a-f98437720532': companyDnBSubsidiary,
     'cc7e2f19-7251-4a41-a27a-f98437720531': companyDnBCorp,
     's07e2f19-8251-1a41-h27a-f98737520831': companyDnBLtd,
     'd27bde24-6330-464b-a48c-0394831586fd': companyDnBGlobalUltimate,
