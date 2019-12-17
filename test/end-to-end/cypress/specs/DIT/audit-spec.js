@@ -6,14 +6,14 @@ const todaysDate = Cypress.moment().format('D MMM YYYY')
 
 describe('Company', () => {
   before(() => {
-    cy.visit('/companies/0f5216e0-849f-11e6-ae22-56b6b6499611/edit')
+    cy.visit(companies.edit('0f5216e0-849f-11e6-ae22-56b6b6499611'))
   })
 
   it('should display name of the person who made company record changes', () => {
     cy.get(selectors.companyAudit.save).click()
     cy.get(selectors.message.successful).should('be.visible')
 
-    cy.visit(companies.edit('0f5216e0-849f-11e6-ae22-56b6b6499611'))
+    cy.visit(companies.audit('0f5216e0-849f-11e6-ae22-56b6b6499611'))
 
     cy.get(selectors.collection.items)
       .should('contain', 'DIT Staff')
