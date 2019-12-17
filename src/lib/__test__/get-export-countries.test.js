@@ -1,6 +1,6 @@
 const faker = require('faker')
 
-const { EXPORT_INTEREST_STATUS } = require('../../constants')
+const { EXPORT_INTEREST_STATUS } = require('../../apps/constants')
 const getExportCountries = require('../get-export-countries')
 
 function generateCountries (length) {

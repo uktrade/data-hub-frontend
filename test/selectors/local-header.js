@@ -1,6 +1,7 @@
 module.exports = () => {
   const localHeaderSelector = '[data-auto-id="localHeader"]'
   return {
+    metaList: `${localHeaderSelector} .c-meta-list`,
     heading: `${localHeaderSelector} h1.c-local-header__heading`,
     headingAfter: `${localHeaderSelector} p.c-local-header__heading-after`,
     badge: (number) => `${localHeaderSelector} span.c-badge:nth-child(${number})`,

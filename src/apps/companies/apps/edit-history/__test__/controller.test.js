@@ -2,16 +2,36 @@ const buildMiddlewareParameters = require('../../../../../../test/unit/helpers/m
 const companyMock = require('../../../../../../test/unit/data/companies/company-v4.json')
 const urls = require('../../../../../../src/lib/urls')
 
-const { renderEditHistory } = require('../controller')
+const proxyquire = require('proxyquire')
 
 describe('rendering Edit History', () => {
+  const getCompanyAuditLogStub = sinon.stub()
+  const transformCompanyAuditLogStub = sinon.stub()
+  const controller = proxyquire('../controller', {
+    '../../repos': {
+      getCompanyAuditLog: getCompanyAuditLogStub,
+    },
+    './transformers': {
+      transformCompanyAuditLog: transformCompanyAuditLogStub,
+    },
+  })
+
   context('when "Edit History" renders successfully', () => {
-    let middlewareParams
-    beforeEach(async () => {
-      middlewareParams = buildMiddlewareParameters({
-        company: companyMock,
-      })
-      await renderEditHistory(
+    const middlewareParams = buildMiddlewareParameters({
+      company: companyMock,
+    })
+
+    getCompanyAuditLogStub.resolves({
+      count: 1,
+      next: null,
+      previous: null,
+      results: [],
+    })
+
+    transformCompanyAuditLogStub.returns([])
+
+    before(async () => {
+      await controller.renderEditHistory(
         middlewareParams.reqMock,
         middlewareParams.resMock,
         middlewareParams.nextSpy,
@@ -21,7 +41,9 @@ describe('rendering Edit History', () => {
     it('should render the add company form template with fields', () => {
       const expectedTemplate = 'companies/apps/edit-history/views/client-container'
       expect(middlewareParams.resMock.render).to.be.calledOnceWithExactly(expectedTemplate, {
-        props: {},
+        props: {
+          editHistory: [],
+        },
       })
     })
 
@@ -39,15 +61,14 @@ describe('rendering Edit History', () => {
   })
 
   context('when "Edit History" errors', async () => {
-    let middlewareParams
+    const middlewareParams = buildMiddlewareParameters({
+      company: companyMock,
+    })
+
+    middlewareParams.resMock.render.throws()
 
     before(async () => {
-      middlewareParams = buildMiddlewareParameters({
-        company: companyMock,
-      })
-      middlewareParams.resMock.render.throws()
-
-      await renderEditHistory(
+      await controller.renderEditHistory(
         middlewareParams.reqMock,
         middlewareParams.resMock,
         middlewareParams.nextSpy

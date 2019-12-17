@@ -1,6 +1,6 @@
-const castCompactArray = require('../../../lib/cast-compact-array')
+const castCompactArray = require('./cast-compact-array')
 
-const { EXPORT_INTEREST_STATUS_VALUES } = require('../constants')
+const { EXPORT_INTEREST_STATUS_VALUES } = require('../apps/constants')
 
 module.exports = (body) => {
   const data = []

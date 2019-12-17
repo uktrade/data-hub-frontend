@@ -90,7 +90,10 @@ module.exports = {
       index: url('/companies', '/:companyId/dnb-hierarchy'),
       data: url('/companies', '/:companyId/dnb-hierarchy/data'),
     },
-    exports: url('/companies', '/:companyId/exports'),
+    exports: {
+      index: url('/companies', '/:companyId/exports'),
+      edit: url('/companies', '/:companyId/exports/edit'),
+    },
     hierarchies: {
       ghq: {
         add: url('/companies', '/:companyId/hierarchies/ghq/:globalHqId/add'),
@@ -102,6 +105,7 @@ module.exports = {
     interactions: createInteractionsSubApp('/companies', '/:companyId'),
     orders: url('/companies', '/:companyId/orders'),
     investments: {
+      companyInvestment: url('/companies', '/:companyId/investments'),
       largeCapitalProfile: url('/companies', '/:companyId/investments/large-capital-profile'),
     },
     subsidiaries: {
@@ -126,7 +130,10 @@ module.exports = {
     projects: {
       index: url('/investments', '/projects'),
       documents: url('/investments', '/projects/:projectId/documents'),
+      propositions: url('/investments', '/projects/:projectId/propositions'),
+      team: url('/investments', '/projects/:projectId/team'),
       interactions: createInteractionsSubApp('/investments', '/projects/:projectId'),
+      interactionCollection: url('/investments', '/projects/:projectId/interactions'),
       project: url('/investments', '/projects/:projectId'),
       status: url('/investments', '/projects/:projectId/status'),
     },
@@ -135,5 +142,6 @@ module.exports = {
       data: url('/investments', '/profiles/data'),
     },
   },
+  omis: url('/omis/create?company=', ':companyId'),
   support: url('/support'),
 }

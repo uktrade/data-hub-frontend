@@ -418,6 +418,7 @@ Sandbox.define('/v4/company/{companyId}', 'GET', v4Company.company)
 Sandbox.define('/v4/company/{companyId}', 'PATCH', v4Company.companyPatched)
 Sandbox.define('/v4/company', 'GET', v4Company.companies)
 Sandbox.define('/v4/company/{companyId}/{action}-account-manager', 'POST', v4Company.manageAdviser)
+Sandbox.define('/v4/company/{companyId}/audit', 'GET', v4Company.companyAudit)
 
 // V4 DnB
 Sandbox.define('/v4/dnb/company-create', 'POST', v4Dnb.companyCreate)
