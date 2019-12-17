@@ -1,12 +1,12 @@
 const selectors = require('../../../../selectors')
 const { assertLocalNav } = require('../../support/assertions')
 
-const { investments } = require('../../../../../src/lib/urls')
+const { companies, contacts, dashboard, events, investments } = require('../../../../../src/lib/urls')
 
 describe('DIT Permission', () => {
   describe('dashboard', () => {
     before(() => {
-      cy.visit('')
+      cy.visit(dashboard())
     })
 
     it('should display DIT only header nav links', () => {
@@ -25,7 +25,7 @@ describe('DIT Permission', () => {
 
   describe('activity', () => {
     before(() => {
-      cy.visit('/companies/375094ac-f79a-43e5-9c88-059a7caa17f0')
+      cy.visit(companies.detail('375094ac-f79a-43e5-9c88-059a7caa17f0'))
     })
 
     it('should display DIT only tabs', () => {
@@ -42,7 +42,7 @@ describe('DIT Permission', () => {
 
   describe('contact', () => {
     before(() => {
-      cy.visit('/contacts/9b1138ab-ec7b-497f-b8c3-27fed21694ef')
+      cy.visit(contacts.contact('9b1138ab-ec7b-497f-b8c3-27fed21694ef'))
     })
 
     it('should display DIT only side navs', () => {
@@ -75,7 +75,7 @@ describe('DIT Permission', () => {
 
   describe('event', () => {
     before(() => {
-      cy.visit('/events/b93d4274-36fe-4008-ac40-fbc197910791/details')
+      cy.visit(events.details('b93d4274-36fe-4008-ac40-fbc197910791'))
     })
 
     it('should display DIT only side navs', () => {

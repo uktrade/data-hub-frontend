@@ -1,8 +1,10 @@
 const selectors = require('../../../../selectors')
 
+const { companies } = require('../../../../../src/lib/urls')
+
 describe('Company Subsidiary', () => {
   beforeEach(() => {
-    cy.visit('/companies/0fb3379c-341c-4da4-b825-bf8d47b26baa/business-details')
+    cy.visit(companies.businessDetails('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
   })
 
   it('should update business hierarchy type to Global HQ', () => {
@@ -43,7 +45,7 @@ describe('Company Subsidiary', () => {
 
 describe('Archived Company Subsidiary', () => {
   beforeEach(() => {
-    cy.visit('/companies/346f78a5-1d23-4213-b4c2-bf48246a13c3/business-details')
+    cy.visit(companies.businessDetails('346f78a5-1d23-4213-b4c2-bf48246a13c3'))
   })
 
   it('should hide subsidiaries links for archived companies', () => {
@@ -57,7 +59,7 @@ describe('Archived Company Subsidiary', () => {
 
 describe('DnB Company Subsidiary', () => {
   beforeEach(() => {
-    cy.visit('/companies/375094ac-f79a-43e5-9c88-059a7caa17f0/business-details')
+    cy.visit(companies.businessDetails('375094ac-f79a-43e5-9c88-059a7caa17f0'))
   })
 
   it('should display subsidiaries links for dnb companies', () => {
