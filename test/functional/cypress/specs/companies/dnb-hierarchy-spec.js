@@ -35,6 +35,11 @@ describe('D&B Company hierarchy', () => {
         .and('contain', 'DnB Global Ultimate')
         .and('contain', 'DnB Global Ultimate subsidiary')
     })
+
+    it('should now show explanation why the D&B hierarchy might have fewer records than manual one', () => {
+      cy.contains("Why aren't all manually linked subsidiaries listed here?")
+        .should('not.be.visible')
+    })
   })
 
   context('when viewing hierarchy for a D&B Global Ultimate which is also Global HQ', () => {
@@ -68,6 +73,17 @@ describe('D&B Company hierarchy', () => {
         'Dun & Bradstreet hierarchy',
         'Manually linked subsidiaries',
       ])
+    })
+
+    it('should show explanation why the D&B hierarchy might have fewer records than manual one', () => {
+      cy.get('details:contains("Why aren\'t all manually linked subsidiaries listed here?")')
+        .should('have.text', '' +
+        'Why aren\'t all manually linked subsidiaries listed here?This does not' +
+        ' mean that Dun & Bradstreet does not know about those subsidiaries.The' +
+        ' Dun & Bradstreet hierarchy information can only show the company records' +
+        ' in Data Hub that have been matched to a verified Dun & Bradstreet record.' +
+        ' This matching process is ongoing and more related company records will' +
+        ' appear in the future.')
     })
   })
 })
