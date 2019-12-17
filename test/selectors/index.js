@@ -20,6 +20,7 @@ exports.companyLeadAdviser = require('../selectors/company/lead-adviser')
 exports.companyList = {
   delete: require('./company-lists/delete'),
   create: require('./company-lists/create'),
+  edit: require('./company-lists/edit'),
 }
 
 exports.contactCreate = require('./contact/create')
