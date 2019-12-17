@@ -47,3 +47,12 @@ exports.deleteCompanyList = function (req, res) {
 
   res.send(404)
 }
+
+exports.editCompanyList = function (req, res) {
+  if (req.params.listId === multipleItemCompanyList.id) {
+    res.send(204)
+    return
+  }
+
+  res.send(404)
+}

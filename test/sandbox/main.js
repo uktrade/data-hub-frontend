@@ -435,6 +435,7 @@ Sandbox.define('/v4/company-list/{listId}', 'GET', v4CompanyList.getCompanyList)
 Sandbox.define('/v4/company-list/{listId}/item', 'GET', v4CompanyList.getCompanyListItems)
 Sandbox.define('/v4/company-list', 'POST', v4CompanyList.createCompanyList)
 Sandbox.define('/v4/company-list/{listId}', 'DELETE', v4CompanyList.deleteCompanyList)
+Sandbox.define('/v4/company-list/{listId}', 'PATCH', v4CompanyList.editCompanyList)
 
 // V4 Investment
 Sandbox.define(

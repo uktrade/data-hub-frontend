@@ -7,6 +7,7 @@ import EditCompanyForm from './apps/companies/apps/edit-company/client/EditCompa
 import EditHistory from './apps/companies/apps/edit-history/client/EditHistory'
 import DeleteCompanyList from './apps/company-lists/client/DeleteCompanyList'
 import CompanyLists from './apps/dashboard/client/CompanyLists'
+import EditCompanyList from './apps/company-lists/client/EditCompanyList'
 import CreateListFormSection from './apps/company-lists/client/CreateListFormSection'
 import AddRemoveFromListSection from './apps/company-lists/client/AddRemoveFromListSection'
 import DnbHierarchy from './apps/companies/apps/dnb-hierarchy/client/DnbHierarchy'
@@ -51,6 +52,9 @@ function App () {
       <Mount selector="#my-companies" children={CompanyLists} />
       <Mount selector="#delete-company-list">
         {props => <DeleteCompanyList csrfToken={globalProps.csrfToken} {...props} />}
+      </Mount>
+      <Mount selector="#edit-company-list">
+        {props => <EditCompanyList csrfToken={globalProps.csrfToken} {...props} />}
       </Mount>
       <Mount selector="#create-company-list-form">
         {props => <CreateListFormSection csrfToken={globalProps.csrfToken} {...props} />}

@@ -1,13 +1,4 @@
-const { deleteCompanyList, getCompanyList } = require('../repos')
-
-async function fetchCompanyList (req, res, next) {
-  try {
-    res.locals.companyList = await getCompanyList(req.session.token, req.params.listId)
-    next()
-  } catch (error) {
-    next(error)
-  }
-}
+const { deleteCompanyList } = require('../repos')
 
 async function renderDeleteCompanyListPage (req, res, next) {
   const props = {
@@ -37,7 +28,6 @@ async function handleDeleteCompanyList (req, res, next) {
 }
 
 module.exports = {
-  fetchCompanyList,
   handleDeleteCompanyList,
   renderDeleteCompanyListPage,
 }
