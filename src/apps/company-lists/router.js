@@ -27,7 +27,7 @@ router.post('/add-remove', handleAddRemoveCompanyToList)
 router.get('/:listId/delete', fetchCompanyList, renderDeleteCompanyListPage)
 router.post('/:listId/delete', handleDeleteCompanyList)
 
-router.get('/:listId/rename', fetchCompanyList, renderEditCompanyListPage)
+router.get('/:listId/rename', renderEditCompanyListPage)
 router.patch('/:listId/rename', handleEditCompanyList)
 
 module.exports = router
