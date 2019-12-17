@@ -76,6 +76,23 @@
 - If there are multiple PRs, the preferred method for selection is FIFO (first in first out). However, this could result in fewer PRs being reviewed by multiple developers, so use common sense
 - Whenever possible, review a PR in one go so that the author understands the amount of work needed and can plan with his/her team
 
+#### Attack window
+Bear in mind that when receiving feedback as an author of a PR, it's easy to feel overwhelmed in the face of a high
+volume of feedback. This is especially true if you receive a bunch of comments from several peers, then a little later
+on one of those reviewers adds some more points. It can feel like there's no end to it.
+
+So for these reasons you ought to observe the following rules when reviewing a PR:
+
+- Use the GitHub "start a review" feature when commenting. Don't just write "single comments" - bundle all your
+comments up into one batch which is shared with the author only when you finally submit your review as "Comment,
+Approve or Reject". This means that the author of the review can be safe in the knowledge that your input has
+concluded and that they have a complete picture of your thoughts on the PR.
+
+- You only get one shot at a review. You should see your involvement as a single, one-off interaction with that
+request. Once you've submitted it your only future involvement in the PR should be to respond to / resolve
+points that you're already raised. _If you think of something **incredibly important** after you've submitted
+your review then you need to contact the author directly and pick this point up with them as a personal conversation.
+
 #### Architectural feedback
 - Focus on big architectural issues or problems with overall design first. If you spot any, give your feedback immediately before continuing with the review
 - Check out the branch and run it locally for a broader view as GitHub tends to focus on single lines
