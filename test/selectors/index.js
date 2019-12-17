@@ -23,6 +23,10 @@ exports.companyList = {
   edit: require('./company-lists/edit'),
 }
 
+exports.companyDnbHierarchy = {
+  collection: '#dnb-hierarchy',
+}
+
 exports.contactCreate = require('./contact/create')
 exports.eventCreate = require('./event/create')
 

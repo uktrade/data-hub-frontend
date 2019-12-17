@@ -18,8 +18,8 @@ describe('Company Global Ultimate HQ', () => {
         .should('contain', 'This HQ is in control of all related company records for DnB Global Ultimate')
     })
 
-    it('should display a single subsidiary', () => {
-      const expected = 'Data Hub contains 1 other company record related to this company'
+    it('should display two subsidiaries', () => {
+      const expected = 'Data Hub contains 2 other company records related to this company'
       cy.get(selectors.localHeader().description.paragraph(1)).should('have.text', expected)
     })
   })
