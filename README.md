@@ -36,6 +36,8 @@ and be provided with a back end server to provide the API, data storage and sear
       - [Local checkout of staff SSO](#local-checkout-of-staff-sso)
   - [Other Scripts](#other-scripts)
 - [Making changes](#making-changes)
+- [Deployments](./docs/Deployments.md)
+- [Conventions](./docs/Conventions.md)
 - [Components](#components)
 - [Templates](#templates)
   - [Nunjucks base template blocks](#nunjucks-base-template-blocks)
@@ -66,7 +68,10 @@ and be provided with a back end server to provide the API, data storage and sear
   - [Data hub backend docker image](#data-hub-backend-docker-image)
   - [Mock SSO docker build](#mock-sso-docker-build)
   - [Job failure](#job-failure)
-- [Deployment](#deployment)
+- [Code Review guidelines](./docs/Code review guidelines.md)
+- [Folder structure](./docs/folder-structure.md)
+- [Sub-app structure](./docs/sub-apps.md)
+- [Feature flags](./docs/feature-flags.md)
 
 
 ## Getting started
@@ -470,7 +475,7 @@ To run tests against a specific user permissions type:
 The above permissions tokens are available on the dev api
 
 ##### Backend locally with user permission tokens
-If you are running the api locally please run the [https://github.com/uktrade/data-hub-api/blob/develop/setup-uat.sh](https://github.com/uktrade/data-hub-api/blob/develop/setup-uat.sh) to setup the relevant users and permission tokens
+If you are running the api locally please run the [https://github.com/uktrade/data-hub-api/blob/master/setup-uat.sh](https://github.com/uktrade/data-hub-api/blob/master/setup-uat.sh) to setup the relevant users and permission tokens
 
 ##### Adding tokens
 If you need to add a token have a look in confluence on how to do this `Data Hub team > Technical Documentation > Frontend > SSO for developers > Adding an Access token`.
@@ -556,7 +561,6 @@ Data hub uses [CircleCI](https://circleci.com/) for continuous integration.
 ### Running CI jobs
 - All branches run the `lint_code`, `unit_tests` and `user_acceptance_tests` CI jobs
 - You can skip the `user_acceptance_tests` CI job by using a branch starting with `/^skip-tests.*/`
-- The `user_acceptance_tests_master` job will run on branches that match the regex `release.*` or the `master` branch. This job runs a branch against the `master` branch of [data-hub-api](https://github.com/uktrade/data-hub-api/tree/master)
 
 ### Setting up users with different permissions
 On CircleCi we run Acceptance tests against users with different permissions. We do this via the environment variable `OAUTH2_DEV_TOKEN`. Essentially we have users with different permissions setup in a job via `OAUTH2_DEV_TOKEN` and then we run tests with the specified permissions tag.
@@ -574,8 +578,7 @@ Details can be found in the [GitHub](https://github.com/uktrade/docker-data-hub-
 The acceptance tests `user_acceptance_tests` job on circleCi uses its own version of [uktrade/data-hub-api](https://github.com/uktrade/data-hub-api).
 The `quay.io/uktrade/data-hub-api` docker image and tags that is used is automatically built via a Docker hub automated job. Details can be found [https://quay.io/repository/uktrade/data-hub-api](https://quay.io/repository/uktrade/data-hub-api).
 
-- `user_acceptance_tests` job uses `quay.io/uktrade/data-hub-api:develop`
-- `user_acceptance_tests_master` job uses `quay.io/uktrade/data-hub-api:master`
+- `user_acceptance_tests` job uses `quay.io/uktrade/data-hub-api`
 
 ### Mock SSO docker build
 The acceptance tests `user_acceptance_tests` job on circleCi uses [uktrade/mock-sso](https://github.com/uktrade/mock-sso)
@@ -583,7 +586,6 @@ to run the application through the SSO workflow. The `uktrade/mock-sso` docker i
 automatically built via a Docker hub automated job. Details can be found [https://hub.docker.com/r/ukti/mock-sso](https://hub.docker.com/r/ukti/mock-ssoo).
 
 - `user_acceptance_tests` job uses `uktrade/mock-sso:latest`
-- `user_acceptance_tests_master` job uses `uktrade/mock-sso:latest`
 
 ### Job failure
 CircleCI has been configured to show you a summary report of what has failed on the following workflows:
@@ -593,12 +595,3 @@ CircleCI has been configured to show you a summary report of what has failed on 
 
 When acceptance tests fail you can also have a look at the `Nightwatch.js` html report found in the jobs artifacts folder.
 This can be accessed by logging in to [CircleCI](https://circleci.com/)
-
-## Deployment
-
-Commits to `develop` are automatically deployed to a heroku instance. Pull
-requests deploy to a [review app](https://devcenter.heroku.com/articles/github-integration-review-apps)
-from this heroku instance.
-
-Deployments to staging and production are done manually through Jenkins and are
-deployed from the `master` branch.
