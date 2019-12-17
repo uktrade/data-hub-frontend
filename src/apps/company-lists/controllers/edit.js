@@ -1,10 +1,11 @@
-const { editCompanyList } = require('../repos')
+const { renameCompanyList } = require('../repos')
+const urls = require('../../../lib/urls')
 // istanbul ignore next: Covered by functional tests
 async function handleEditCompanyList (req, res, next) {
   const { token } = req.session
   const { name, id } = req.body
   try {
-    await editCompanyList(token, name, id)
+    await renameCompanyList(token, name, id)
     req.flash('success', 'List updated')
     res.send()
   } catch (error) {
@@ -19,10 +20,10 @@ async function renderEditCompanyListPage (req, res, next) {
     name: 'listName',
     label: 'List name',
     hint: 'This is a name only you see, and can be up to 30 characters',
-    cancelUrl: `/`,
+    cancelUrl: `${urls.dashboard}`,
     maxLength: 30,
     listName: name,
-    returnUrl: '/',
+    returnUrl: `${urls.dashboard}`,
   }
 
   try {
