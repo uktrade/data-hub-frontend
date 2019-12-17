@@ -17,10 +17,10 @@ async function renderEditCompanyListPage (req, res, next) {
   const { companyList: { id, name } } = res.locals
   const props = {
     id,
-    cancelUrl: `${urls.dashboard}`,
+    cancelUrl: `${urls.dashboard()}`,
     maxLength: 30,
     listName: name,
-    returnUrl: `${urls.dashboard}`,
+    returnUrl: `${urls.dashboard()}`,
   }
 
   try {
