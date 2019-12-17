@@ -134,7 +134,7 @@ module.exports = {
     type: url('/search', '/:searchPath?'),
   },
   interactions: {
-    index: '/interactions',
+    index: url('/interactions'),
     subapp: createInteractionsSubApp(),
   },
   investments: {

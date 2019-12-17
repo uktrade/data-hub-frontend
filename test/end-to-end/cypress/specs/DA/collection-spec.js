@@ -1,4 +1,7 @@
 const selectors = require('../../../../selectors')
+
+const { companies, contacts, investments } = require('../../../../../src/lib/urls')
+
 const { assertCollection } = require('../../support/assertions')
 
 const checkCollection = () => {
@@ -8,7 +11,7 @@ const checkCollection = () => {
 describe('Collection', () => {
   describe('company', () => {
     before(() => {
-      cy.visit('/companies')
+      cy.visit(companies.index())
     })
 
     it('should return the results summary for a company collection', () => {
@@ -18,7 +21,7 @@ describe('Collection', () => {
 
   describe('contact', () => {
     before(() => {
-      cy.visit('/contacts')
+      cy.visit(contacts.index())
     })
 
     it('should return the results summary for a contact collection', () => {
@@ -29,7 +32,7 @@ describe('Collection', () => {
   context('investment', () => {
     describe('projects', () => {
       before(() => {
-        cy.visit('/investments/projects')
+        cy.visit(investments.projects.index())
       })
 
       it('should return the results summary for a investment collection', () => {
@@ -39,7 +42,7 @@ describe('Collection', () => {
 
     describe('interaction', () => {
       before(() => {
-        cy.visit('/investments/projects/e32b3c33-80ac-4589-a8c4-dda305d726ba/interactions')
+        cy.visit(investments.projects.interactionCollection('e32b3c33-80ac-4589-a8c4-dda305d726ba'))
       })
 
       it('should return the results summary for a interaction collection', () => {
@@ -49,7 +52,7 @@ describe('Collection', () => {
 
     describe('proposition', () => {
       before(() => {
-        cy.visit('/investments/projects/e32b3c33-80ac-4589-a8c4-dda305d726ba/propositions')
+        cy.visit(investments.projects.propositions('e32b3c33-80ac-4589-a8c4-dda305d726ba'))
       })
 
       it('should return the results summary for a proposition collection', () => {
@@ -59,7 +62,7 @@ describe('Collection', () => {
 
     describe('team', () => {
       before(() => {
-        cy.visit('/investments/projects/e32b3c33-80ac-4589-a8c4-dda305d726ba/team')
+        cy.visit(investments.projects.team('e32b3c33-80ac-4589-a8c4-dda305d726ba'))
       })
 
       it('should return the investment project team summary', () => {
