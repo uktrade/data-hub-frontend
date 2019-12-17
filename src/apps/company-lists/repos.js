@@ -12,7 +12,7 @@ async function fetchCompanyList (req, res, next) {
   }
 }
 
-function editCompanyList (token, name, id) {
+function renameCompanyList (token, name, id) {
   return authorisedRequest(token, {
     url: `${config.apiRoot}/v4/company-list/${id}`,
     method: 'PATCH',
@@ -79,5 +79,5 @@ module.exports = {
   getListsCompanyIsIn,
   createUserCompanyList,
   fetchCompanyList,
-  editCompanyList,
+  renameCompanyList,
 }
