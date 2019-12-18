@@ -1,21 +1,30 @@
-/* eslint-disable camelcase */
 const { isArray, isEmpty } = require('lodash')
+
+const { AUTOMATIC_UPDATE } = require('./constants')
+
+const EXCLUDED_FIELDS = [
+  'dnb_modified_on',
+  'archived_on',
+  'archived_by',
+]
 
 const unwrapFromArray = change =>
   isArray(change)
     ? isEmpty(change)
       ? null
-      : change.pop()
+      : change.length === 1
+        ? change.pop()
+        : change
     : change
 
 const transformChanges = (changes) => {
-  return Object.keys(changes).map(key => {
-    return {
-      fieldName: key,
-      oldValue: unwrapFromArray(changes[key][0]),
-      newValue: unwrapFromArray(changes[key][1]),
-    }
-  })
+  return Object.keys(changes)
+    .filter(fieldName => !EXCLUDED_FIELDS.includes(fieldName))
+    .map(fieldName => ({
+      fieldName,
+      oldValue: unwrapFromArray(changes[fieldName][0]),
+      newValue: unwrapFromArray(changes[fieldName][1]),
+    }))
 }
 
 const transformCompanyAuditLogItem = ({
@@ -23,15 +32,24 @@ const transformCompanyAuditLogItem = ({
   user,
   changes,
 }) => {
+  const changedBy =
+    user
+      ? isEmpty(user.name)
+        ? user.email
+        : user.name
+      : AUTOMATIC_UPDATE
+
   return {
     timestamp,
-    adviserFullName: `${user.first_name} ${user.last_name}`,
+    changedBy,
     changes: transformChanges(changes),
   }
 }
 
-const transformCompanyAuditLog = (audit) => {
-  return audit.map((item) => transformCompanyAuditLogItem(item))
+const transformCompanyAuditLog = (auditLog) => {
+  return auditLog
+    .map((item) => transformCompanyAuditLogItem(item))
+    .filter(({ changes }) => changes.length)
 }
 
 module.exports = {

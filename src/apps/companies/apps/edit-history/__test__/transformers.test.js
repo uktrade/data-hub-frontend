@@ -41,7 +41,7 @@ describe('Edit history transformers', () => {
     ])).to.deep.equal([
       {
         timestamp: '2019-12-10T18:07:27.864590Z',
-        adviserFullName: 'Paul Gain',
+        changedBy: 'Paul Gain',
         changes: [
           {
             fieldName: 'archived',
@@ -49,19 +49,9 @@ describe('Edit history transformers', () => {
             newValue: true,
           },
           {
-            fieldName: 'archived_on',
-            oldValue: null,
-            newValue: '2019-12-10T18:07:27.974000Z',
-          },
-          {
             fieldName: 'archived_reason',
             oldValue: null,
             newValue: 'Company is dissolved',
-          },
-          {
-            fieldName: 'archived_by',
-            oldValue: null,
-            newValue: 'Paul Gain',
           },
         ],
       },
@@ -103,7 +93,7 @@ describe('Edit history transformers', () => {
     ])).to.deep.equal([
       {
         timestamp: '2019-12-10T18:12:37.649476Z',
-        adviserFullName: 'Paul Gain',
+        changedBy: 'Paul Gain',
         changes: [
           {
             fieldName: 'archived',
@@ -111,19 +101,9 @@ describe('Edit history transformers', () => {
             newValue: false,
           },
           {
-            fieldName: 'archived_on',
-            oldValue: '2019-12-10T18:07:27.974000Z',
-            newValue: null,
-          },
-          {
             fieldName: 'archived_reason',
             oldValue: 'Company is dissolved',
             newValue: '',
-          },
-          {
-            fieldName: 'archived_by',
-            oldValue: 'Paul Gain',
-            newValue: null,
           },
         ],
       },
@@ -169,7 +149,7 @@ describe('Edit history transformers', () => {
     ])).to.deep.equal([
       {
         timestamp: '2019-12-10T17:58:59.393078Z',
-        adviserFullName: 'Paul Gain',
+        changedBy: 'Paul Gain',
         changes: [
           {
             fieldName: 'address_1',
@@ -232,7 +212,7 @@ describe('Edit history transformers', () => {
     ])).to.deep.equal([
       {
         timestamp: '2019-12-10T18:04:54.287410Z',
-        adviserFullName: 'Paul Gain',
+        changedBy: 'Paul Gain',
         changes: [
           {
             fieldName: 'sector',
@@ -279,12 +259,45 @@ describe('Edit history transformers', () => {
     ])).to.deep.equal([
       {
         timestamp: '2019-12-10T18:00:52.265115Z',
-        adviserFullName: 'Paul Gain',
+        changedBy: 'Paul Gain',
         changes: [
           {
             fieldName: 'trading_names',
             oldValue: null,
             newValue: 'Edit History Enterprises',
+          },
+        ],
+      },
+    ])
+  })
+
+  it('should transform when the user is null - DnB update', () => {
+    expect(transformCompanyAuditLog([
+      {
+        id: 234,
+        user: null,
+        timestamp: '2019-12-10T14:39:28.768359Z',
+        comment: 'Updated from D&B [celery:company_update]',
+        changes: {
+          address_1: [
+            '1600 Amphitheatre Pkwyz',
+            '1600 Amphitheatre Pkwy',
+          ],
+          dnb_modified_on: [
+            null,
+            '2019-12-10T14:39:28.768000Z',
+          ],
+        },
+      },
+    ])).to.deep.equal([
+      {
+        timestamp: '2019-12-10T14:39:28.768359Z',
+        changedBy: 'automaticUpdate',
+        changes: [
+          {
+            fieldName: 'address_1',
+            oldValue: '1600 Amphitheatre Pkwyz',
+            newValue: '1600 Amphitheatre Pkwy',
           },
         ],
       },

@@ -11,7 +11,9 @@ const { mockGetDnbHierarchy } = require('./utils')
 const companyMock = {
   id: '1',
   name: 'Test company',
+  duns_number: '999999',
   global_ultimate_duns_number: '999999',
+  isGlobalHQ: false,
 }
 
 describe('D&B Company hierarchy', () => {
@@ -40,6 +42,7 @@ describe('D&B Company hierarchy', () => {
           'companies/apps/dnb-hierarchy/views/client-container', {
             heading: 'Company records related to Test company',
             props: {
+              isGlobalHQ: false,
               dataEndpoint: urls.companies.dnbHierarchy.data('1'),
             },
           })
@@ -144,14 +147,8 @@ describe('D&B Company hierarchy', () => {
         expect(middlewareParams.resMock.json).to.be
           .calledOnceWithExactly(
             {
-              count: 2,
+              count: 1,
               results: [{
-                badges: ['United States'],
-                headingText: 'Mars Exports Ltd',
-                headingUrl: '/companies/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd',
-                metadata: [{ label: 'Sector', value: 'Retail' }, { label: 'Address', value: '12 First Street, New York, 765413, United States' }],
-                subheading: 'Updated on 16 Nov 2017, 11:00am',
-              }, {
                 badges: ['United Kingdom', 'North West'],
                 headingText: 'Mars Components Ltd',
                 headingUrl: '/companies/731bdcc1-f685-4c8e-bd66-b356b2c16995',

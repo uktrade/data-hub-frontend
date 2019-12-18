@@ -1,6 +1,9 @@
+const requestErrors = require('request-promise/errors')
+const buildMiddlewareParameters = require('../../../../test/unit/helpers/middleware-parameters-builder')
 const config = require('../../../config')
 
 const {
+  fetchCompanyList,
   getCompanyList,
   deleteCompanyList,
   createUserCompanyList,
@@ -10,11 +13,61 @@ const {
   removeCompanyFromList,
 } = require('../../../../src/apps/company-lists/repos')
 
+const companyList = require('../../../../test/unit/data/company-lists/list-with-multiple-items.json')
 const companyListFixture = require('../../../../test/unit/data/company-lists/list-with-multiple-items.json')
 
-const companyListId = companyListFixture.id
+const listId = companyListFixture.id
 
 describe('Company list repository', () => {
+  describe('#fetchCompanyList', () => {
+    let middlewareParameters
+
+    beforeEach(() => {
+      middlewareParameters = buildMiddlewareParameters({
+        requestParams: {
+          listId,
+        },
+      })
+    })
+    context('when the list is successfully retrieved', () => {
+      beforeEach(async () => {
+        nock(config.apiRoot)
+          .get(`/v4/company-list/${listId}`)
+          .reply(200, companyList)
+
+        await fetchCompanyList(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy,
+        )
+      })
+
+      it('adds the company list to res.locals', () => {
+        expect(middlewareParameters.resMock.locals.companyList).to.be.deep.equal(companyList)
+      })
+    })
+
+    context('when there is an error retrieving the list', () => {
+      beforeEach(async () => {
+        nock(config.apiRoot)
+          .get(`/v4/company-list/${listId}`)
+          .reply(404)
+
+        await fetchCompanyList(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy,
+        )
+      })
+
+      it('forwards the error to the next middleware', () => {
+        expect(middlewareParameters.resMock.locals.companyList).to.be.undefined
+        expect(middlewareParameters.nextSpy).to.be.called
+        expect(middlewareParameters.nextSpy.firstCall.args[0]).to.be.instanceof(requestErrors.StatusCodeError)
+      })
+    })
+  })
+
   describe('#createUserCompanyList', () => {
     beforeEach(() => {
       nock(config.apiRoot)
@@ -60,12 +113,12 @@ describe('Company list repository', () => {
   describe('#getCompanyList', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .get(`/v4/company-list/${companyListId}`)
+        .get(`/v4/company-list/${listId}`)
         .reply(200, companyListFixture)
     })
 
     it('returns a company list', async () => {
-      let companyList = await getCompanyList('token', companyListId)
+      let companyList = await getCompanyList('token', listId)
       expect(companyList).to.deep.equal(companyListFixture)
     })
   })
@@ -73,13 +126,13 @@ describe('Company list repository', () => {
   describe('#deleteCompanyList', () => {
     beforeEach(() => {
       nock(config.apiRoot)
-        .delete(`/v4/company-list/${companyListId}`)
+        .delete(`/v4/company-list/${listId}`)
         .reply(204)
     })
 
     it('deletes a company list', () => {
       expect(
-        () => deleteCompanyList('token', companyListId)
+        () => deleteCompanyList('token', listId)
       ).to.not.throw()
     })
   })
