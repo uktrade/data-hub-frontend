@@ -1,6 +1,28 @@
 const config = require('../../config')
 const { authorisedRequest } = require('../../lib/authorised-request')
 
+async function fetchCompanyList (req, res, next) {
+  const { token } = req.session
+  const { listId } = req.params
+  try {
+    res.locals.companyList = await getCompanyList(token, listId)
+    next()
+  } catch (error) {
+    next(error)
+  }
+}
+
+function renameCompanyList (token, name, id) {
+  return authorisedRequest(token, {
+    url: `${config.apiRoot}/v4/company-list/${id}`,
+    method: 'PATCH',
+    body: {
+      id,
+      name,
+    },
+  })
+}
+
 function createUserCompanyList (token, id, name) {
   return authorisedRequest(token, {
     method: 'POST',
@@ -56,4 +78,6 @@ module.exports = {
   getAllCompanyLists,
   getListsCompanyIsIn,
   createUserCompanyList,
+  fetchCompanyList,
+  renameCompanyList,
 }

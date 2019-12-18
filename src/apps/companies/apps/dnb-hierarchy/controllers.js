@@ -24,11 +24,24 @@ async function renderDnbHierarchy (req, res, next) {
         heading: `Company records related to ${company.name}`,
         props: {
           dataEndpoint: urls.companies.dnbHierarchy.data(company.id),
+          isGlobalHQ: company.isGlobalHQ,
         },
       })
   } catch (error) {
     next(error)
   }
+}
+
+function removeCurrentCompany (dunsNumber, { count, results }) {
+  if (results.find(c => c.duns_number !== dunsNumber)) {
+    return {
+      count: count > 0 ? count - 1 : 0,
+      results: results.filter(c => c.duns_number !== dunsNumber),
+    }
+  }
+
+  // istanbul ignore next: Covered by functional tests
+  return { count, results }
 }
 
 async function fetchDnbHierarchyHandler (req, res, next) {
@@ -37,11 +50,14 @@ async function fetchDnbHierarchyHandler (req, res, next) {
     const { token } = req.session
     const { page } = req.query
 
-    const { count, results } = await getDnbHierarchy(
-      token,
-      company.global_ultimate_duns_number,
-      config.paginationDefaultSize,
-      page
+    const { count, results } = removeCurrentCompany(
+      company.duns_number,
+      await getDnbHierarchy(
+        token,
+        company.global_ultimate_duns_number,
+        config.paginationDefaultSize,
+        page
+      )
     )
 
     res.json({

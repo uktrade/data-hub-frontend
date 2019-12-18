@@ -6,7 +6,8 @@ import AddCompanyForm from './apps/companies/apps/add-company/client/AddCompanyF
 import EditCompanyForm from './apps/companies/apps/edit-company/client/EditCompanyForm'
 import EditHistory from './apps/companies/apps/edit-history/client/EditHistory'
 import DeleteCompanyList from './apps/company-lists/client/DeleteCompanyList'
-import MyCompanies from './apps/dashboard/client/MyCompanies.jsx'
+import CompanyLists from './apps/dashboard/client/CompanyLists'
+import EditCompanyList from './apps/company-lists/client/EditCompanyList'
 import CreateListFormSection from './apps/company-lists/client/CreateListFormSection'
 import AddRemoveFromListSection from './apps/company-lists/client/AddRemoveFromListSection'
 import DnbHierarchy from './apps/companies/apps/dnb-hierarchy/client/DnbHierarchy'
@@ -48,9 +49,12 @@ function App () {
       <Mount selector="#activity-feed-app">
         {props => <ActivityFeedApp {...props} />}
       </Mount>
-      <Mount selector="#my-companies" children={MyCompanies} />
+      <Mount selector="#my-companies" children={CompanyLists} />
       <Mount selector="#delete-company-list">
         {props => <DeleteCompanyList csrfToken={globalProps.csrfToken} {...props} />}
+      </Mount>
+      <Mount selector="#edit-company-list">
+        {props => <EditCompanyList csrfToken={globalProps.csrfToken} {...props} />}
       </Mount>
       <Mount selector="#create-company-list-form">
         {props => <CreateListFormSection csrfToken={globalProps.csrfToken} {...props} />}
