@@ -5,10 +5,6 @@ const { transformCompanyAuditLog } = require('./transformers')
 async function renderEditHistory (req, res, next) {
   try {
     const { company } = res.locals
-    const { token } = req.session
-
-    const companyAuditLog = await getCompanyAuditLog(token, company.id)
-    const editHistory = transformCompanyAuditLog(companyAuditLog.results)
 
     res
       .breadcrumb(company.name, companies.detail(company.id))
@@ -16,7 +12,7 @@ async function renderEditHistory (req, res, next) {
       .breadcrumb('Edit History')
       .render('companies/apps/edit-history/views/client-container', {
         props: {
-          editHistory,
+          dataEndpoint: companies.editHistory.data(company.id),
         },
       })
   } catch (error) {
@@ -24,6 +20,24 @@ async function renderEditHistory (req, res, next) {
   }
 }
 
+async function fetchCompanyAuditLog (req, res, next) {
+  try {
+    const { company } = res.locals
+    const { token } = req.session
+    const { page } = req.query
+
+    const { results, count } = await getCompanyAuditLog(token, company.id, page)
+
+    res.json({
+      results: transformCompanyAuditLog(results),
+      count,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   renderEditHistory,
+  fetchCompanyAuditLog,
 }

@@ -42,7 +42,7 @@ describe('rendering Edit History', () => {
       const expectedTemplate = 'companies/apps/edit-history/views/client-container'
       expect(middlewareParams.resMock.render).to.be.calledOnceWithExactly(expectedTemplate, {
         props: {
-          editHistory: [],
+          dataEndpoint: urls.companies.editHistory.data('a73efeba-8499-11e6-ae22-56b6b6499611'),
         },
       })
     })

@@ -1,7 +1,7 @@
 const router = require('../router')
 
 describe('Edit history route', () => {
-  it('should define an "Edit history" route', () => {
+  it('should define both "Edit history" and "data" routes', () => {
     const paths = router.stack.filter(r => r.route).map(r => {
       return {
         path: r.route.path,
@@ -12,6 +12,10 @@ describe('Edit history route', () => {
     expect(paths).to.deep.equal([
       {
         'path': '/',
+        'methods': [ 'get' ],
+      },
+      {
+        'path': '/data',
         'methods': [ 'get' ],
       },
     ])

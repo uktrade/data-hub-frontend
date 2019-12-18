@@ -4,8 +4,7 @@ import { isBoolean, capitalize } from 'lodash'
 import { FONT_SIZE } from '@govuk-react/constants'
 import moment from 'moment'
 import styled from 'styled-components'
-import { SummaryTable } from 'data-hub-components'
-import DateUtils from 'data-hub-components/dist/utils/DateUtils'
+import { SummaryTable, DateUtils } from 'data-hub-components'
 import { ARCHIVED, NOT_ARCHIVED, NOT_SET } from '../constants'
 
 const StyledSummaryTable = styled(SummaryTable)`
@@ -54,7 +53,7 @@ function getValue (value) {
 function EditHistoryChangeList ({ changes }) {
   return (
     <div>
-      {changes.map(({ fieldName, oldValue, newValue }, index) => (
+      {changes.map(({ fieldName, oldValue, newValue }) => (
         <div key={fieldName}>
           <StyledSummaryTable caption={getCaption(fieldName)}>
             <SummaryTable.Row heading="Information before change">
