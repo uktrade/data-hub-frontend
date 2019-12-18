@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import DateUtils from 'data-hub-components/dist/utils/DateUtils'
+import { DateUtils, Pagination } from 'data-hub-components'
 import { FONT_SIZE } from '@govuk-react/constants'
 import styled from 'styled-components'
 import { GREY_2 } from 'govuk-colours'
@@ -26,10 +26,11 @@ const getUpdatedBy = (timestamp, changedBy) => {
     : `Updated on ${formattedTime} by ${changedBy}`
 }
 
-function EditHistoryList ({ items }) {
+function EditHistoryList ({ items, totalPages, activePage, onPageClick }) {
   return (
     <div>
-      {items.map(({ timestamp, changes, changedBy }, index) => (
+
+      {items.map(({ timestamp, changes, changedBy }) => (
         <StyledListContainer key={timestamp}>
           <StyledUpdatedOn>{getUpdatedBy(timestamp, changedBy)}</StyledUpdatedOn>
           <EditHistoryChangeList
@@ -38,12 +39,21 @@ function EditHistoryList ({ items }) {
           />
         </StyledListContainer>
       ))}
+
+      <Pagination
+        totalPages={totalPages}
+        activePage={activePage}
+        onPageClick={onPageClick}
+      />
     </div>
   )
 }
 
 EditHistoryList.propTypes = {
   items: PropTypes.array.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  activePage: PropTypes.number.isRequired,
+  onPageClick: PropTypes.func.isRequired,
 }
 
 export default EditHistoryList

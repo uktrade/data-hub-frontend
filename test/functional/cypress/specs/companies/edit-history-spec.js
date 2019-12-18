@@ -5,7 +5,7 @@ const urls = require('../../../../../src/lib/urls')
 describe('Edit History', () => {
   context('when viewing the "Edit History" page', () => {
     before(() => {
-      cy.visit(urls.companies.editHistory(fixtures.company.venusLtd.id))
+      cy.visit(urls.companies.editHistory.index(fixtures.company.venusLtd.id))
     })
 
     it('should render the header', () => {

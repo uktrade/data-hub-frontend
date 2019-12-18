@@ -5,9 +5,7 @@ import Link from '@govuk-react/link'
 import { get } from 'lodash'
 import styled from 'styled-components'
 import { SPACING_POINTS } from '@govuk-react/constants'
-
-import { StatusMessage } from 'data-hub-components'
-import DateUtils from 'data-hub-components/dist/utils/DateUtils'
+import { StatusMessage, DateUtils } from 'data-hub-components'
 
 import SectionAbout from './SectionAbout'
 import SectionAddresses from './SectionAddresses'
