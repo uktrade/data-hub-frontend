@@ -20,7 +20,7 @@ const StyledSelect = styled(Select)({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'baseline',
-  marginRight: SPACING.SCALE_2,
+  marginRight: 0,
   span: {
     marginRight: SPACING.SCALE_2,
   },
@@ -34,7 +34,7 @@ const StyledSelect = styled(Select)({
 export const Header = ({ lists, onChange }) =>
   <StyledRoot>
     <StyledHeading size={LEVEL_SIZE[3]}>
-      My Companies Lists
+      My companies lists
     </StyledHeading>
     {lists.length > 1 &&
       <StyledSelect
