@@ -3,6 +3,7 @@ const { isArray, isEmpty } = require('lodash')
 const { AUTOMATIC_UPDATE } = require('./constants')
 
 const EXCLUDED_FIELDS = [
+  'global_ultimate_duns_number',
   'dnb_modified_on',
   'archived_on',
   'archived_by',

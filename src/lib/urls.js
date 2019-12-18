@@ -80,7 +80,10 @@ module.exports = {
       remove: url('/companies', '/:companyId/advisers/remove'),
     },
     audit: url('/companies', '/:companyId/audit'),
-    editHistory: url('/companies', '/:companyId/edit-history'),
+    editHistory: {
+      index: url('/companies', '/:companyId/edit-history'),
+      data: url('/companies', '/:companyId/edit-history/data'),
+    },
     businessDetails: url('/companies', '/:companyId/business-details'),
     detail: url('/companies', '/:companyId'),
     edit: url('/companies', '/:companyId/edit'),
