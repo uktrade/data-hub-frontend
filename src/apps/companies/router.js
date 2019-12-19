@@ -93,18 +93,18 @@ router.use('/:companyId/lists', companyListsRouter)
 router.use('/:companyId/edit', editCompanyFormRouter)
 router.use('/:companyId/edit-history', editHistoryRouter)
 
-router.get(urls.companies.exports.index.route, renderExports)
-router
-  .route(urls.companies.exports.edit.route)
-  .get(populateExportForm, renderExportEdit)
-  .post(populateExportForm, handleEditFormPost, renderExportEdit)
-
 router.post('/:companyId/archive', archiveCompany)
 router.get('/:companyId/unarchive', unarchiveCompany)
 
 router.use('/:companyId', handleRoutePermissions(LOCAL_NAV), setCompaniesLocalNav)
 router.get('/:companyId', redirectToFirstNavItem)
 router.get('/:companyId/details', renderDetails)
+
+router.get(urls.companies.exports.index.route, renderExports)
+router
+  .route(urls.companies.exports.edit.route)
+  .get(populateExportForm, renderExportEdit)
+  .post(populateExportForm, handleEditFormPost, renderExportEdit)
 
 router.get(urls.companies.businessDetails.route, renderBusinessDetails)
 
