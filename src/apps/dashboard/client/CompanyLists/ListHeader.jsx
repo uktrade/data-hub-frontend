@@ -1,4 +1,5 @@
 import { H3 } from '@govuk-react/heading'
+import { LEVEL_SIZE } from '@govuk-react/constants'
 import Link from '@govuk-react/link'
 import React from 'react'
 import styled from 'styled-components'
@@ -12,7 +13,7 @@ import * as propTypes from './propTypes'
 const StyledRoot = styled.div({
   display: 'flex',
   alignItems: 'baseline',
-  justifyContent: 'space-between'
+  justifyContent: 'space-between',
 })
 
 const StyledHeading = styled(H3)({
@@ -22,7 +23,7 @@ const StyledHeading = styled(H3)({
 
 const ListHeader = ({ list }) =>
   <StyledRoot>
-    <StyledHeading>{list.name}</StyledHeading>
+    <StyledHeading size={LEVEL_SIZE[4]}>{list.name}</StyledHeading>
     <FormActions>
       <SecondaryButton
         as={Link}

@@ -1,4 +1,4 @@
-import { GREY_3 } from 'govuk-colours'
+import { GREY_4 } from 'govuk-colours'
 import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
 import Input from '@govuk-react/input'
 import { SelectInput } from '@govuk-react/select'
@@ -11,7 +11,7 @@ import InlineLabel from './InlineLabel'
 const StyledRoot = styled.div({
   display: 'flex',
   justifyContent: 'space-between',
-  background: GREY_3,
+  background: GREY_4,
   padding: SPACING.SCALE_2,
 })
 
