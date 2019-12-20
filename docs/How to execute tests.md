@@ -8,7 +8,7 @@ Pre-requisites:
 
 Ensure you have [node](https://nodejs.org/en/download/) v10 installed then install dependencies:
 
-`$ yarn install`
+`$ yarn`
 
 #### Running the tests
 

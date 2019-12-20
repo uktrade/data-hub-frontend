@@ -169,7 +169,7 @@ and be provided with a back end server to provide the API, data storage and sear
 4.  Install node packages:
  
     ```bash
-    yarn install
+    yarn
     ```
 
 5.  Create a copy of a sample `.env` file which points to a mocked API:
@@ -428,7 +428,7 @@ Pre-requisites:
 
 Ensure you have [node](https://nodejs.org/en/download/) v10 installed then install dependencies:
 
-`$ yarn install`
+`$ yarn`
 
 #### Coding standards
 
