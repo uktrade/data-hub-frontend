@@ -7,7 +7,7 @@ const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
 
 const browserStackUser = process.env.BROWSERSTACK_USERNAME || ''
 const browserStackKey = process.env.BROWSERSTACK_ACCESS_KEY || ''
-const isRemote = !!process.env.IS_REMOTE
+const isRemote = process.env.IS_REMOTE || true
 let testName
 
 const remoteConfig = {

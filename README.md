@@ -169,7 +169,7 @@ and be provided with a back end server to provide the API, data storage and sear
 4.  Install node packages:
  
     ```bash
-    yarn install
+    yarn
     ```
 
 5.  Create a copy of a sample `.env` file which points to a mocked API:
@@ -428,13 +428,13 @@ Pre-requisites:
 
 Ensure you have [node](https://nodejs.org/en/download/) v10 installed then install dependencies:
 
-`$ npm install`
+`$ yarn`
 
 #### Coding standards
 
 StandardJS will run as part of the build, assure you run the command below before committing:
 
-`$ npm run lint`
+`$ yarn test:lint`
 
 #### Running the tests
 
@@ -444,116 +444,15 @@ By default cypress will run on electron headlessly, you can read more about it [
 
 Execute all the tests on `specs` in chrome browser:
 
-`$ npm run test:functional -- --browser chrome`
+`$ yarn test:functional -- --browser chrome`
 
 #### Running the tests manually in cypress interface
 
-`$ npm run test:functional:watch`
+`$ yarn test:functional:watch`
 
 #### Running a specific spec
 
-`$ npm run test:functional -- --spec test/functional/cypress/specs/nav-spec.js`
-
-### Acceptance Testing
-DEPRECATED - CURRENTLY BEING MIGRATED TO THE END-TO-END SUITE
-
-Data hub uses [Nightwatch.js](http://nightwatchjs.org), [nightwatch-cucumber](https://github.com/mucsi96/nightwatch-cucumber) and [cucumber.js](https://github.com/cucumber/cucumber-js) to run acceptance tests.
-
-#### Running acceptance tests
-For information on [cucumber-js](https://github.com/cucumber/cucumber-js) tags please see the `nightwatch-cucumber` docs [executing-individual-feature-files-or-scenarios](http://mucsi96.github.io/nightwatch-cucumber/#executing-individual-feature-files-or-scenarios)
-
-#### Running tests with specific user permissions
-To run tests against a specific user permissions type:
-- Change your `OAUTH2_DEV_TOKEN` environment variable to use one of:
-  - `lepStaffToken`
-  - `daStaffToken`
-  - `ditStaffToken`
-  - `policyFeedbackStaffToken`
-- Use the relevant `yarn` script `yarn circle:acceptance:<staff type>` (see [package.json](/package.json))
-
-##### Dev api tokens
-The above permissions tokens are available on the dev api
-
-##### Backend locally with user permission tokens
-If you are running the api locally please run the [https://github.com/uktrade/data-hub-api/blob/master/setup-uat.sh](https://github.com/uktrade/data-hub-api/blob/master/setup-uat.sh) to setup the relevant users and permission tokens
-
-##### Adding tokens
-If you need to add a token have a look in confluence on how to do this `Data Hub team > Technical Documentation > Frontend > SSO for developers > Adding an Access token`.
-
-You run acceptance tests via:
-```
-yarn test:acceptance
-```
-
-You can run a group (folder) of tests via:
-```
-yarn test:acceptance -- --group <folder-name>
-```
-e.g:
-```
-yarn test:acceptance -- --group audit
-```
-
-You can run a specific feature via:
-```
-yarn test:acceptance -- --tag <feature-tag>
-```
-e.g:
-```
-yarn test:acceptance -- --tag audit-company--name
-```
-
-You can also run the tests pointing to browserstack.
-Ensure you have the user and access key in your environment variables.
-You can find the browserstack credentials which lead to the info below on Rattic.
-e.g:
-```
-BROWSERSTACK_USERNAME=username
-BROWSERSTACK_ACCESS_KEY=accesskey
-```
-
-Then run:
-```
-REMOTE_RUN=true yarn test:acceptance:remote --env ie11,firefox --tag audit-company--name
-```
-
-If you don't want to install Java and selenium locally you can run them in a docker container:
-
-```
-docker run -d -p 4444:4444 selenium/standalone-chrome:3
-```
-
-Then run:
-```
-NIGHTWATCH_IN_DOCKER=true yarn test:acceptance
-```
-
-#### Naming conventions
-##### Folders
-We use singular or plural folder names. E.g `contacts`, `companies`, `audit`.
-
-##### Filenames
-
-We use singular names
-- `page-object` names with PascalCase case. E.g `Login`, `Contact`, `ContactList`.
-- `step_definitions` names with Kebabcase case. E.g `login`, `contact`, `company`.
-- `feature` names with Kebabcase case. E.g `create`, `login`, `list`.
-
-##### Feature tags
-We name features after the folder name and file name. So `/auth/login.feature` would have the feature tag `@auth-login`
-
-
-##### Scenario tags
-We name scenarios after the feature name with a double hyphen separating the scenarios tag. So a scenario in the `@auth-login` feature would be `@auth-login--logout`
-
-##### Permissions tags
-To run a scenario against a specific type of user you can use the following tags:
-- `@da` will run the test against a user with `da` permissions
-- `@lep` will run the test against a user with `lep` permissions
-
-#### Ignoring features
-You can tell `nightwatch.js` not to run a feature by adding the tag `@ignore`.
-
+`$ yarn test:functional -- --spec test/functional/cypress/specs/nav-spec.js`
 
 ## Continuous Integration
 Data hub uses [CircleCI](https://circleci.com/) for continuous integration.

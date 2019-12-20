@@ -8,35 +8,37 @@ Pre-requisites:
 
 Ensure you have [node](https://nodejs.org/en/download/) v10 installed then install dependencies:
 
-`$ npm install`
+`$ yarn`
 
 #### Running the tests
 
 Notice that before running the tests the application should be up and running.
 
-By default cypress will run on electron headlessly, you can read more about it [here](https://docs.cypress.io/guides/core-concepts/launching-browsers.html#Electron-Browser)
+You will also need data hub api application started with the initial fixutres loaded. This can be done
+by running `start-uat.sh` located on the root of the api repository.
 
-Execute all the tests on `specs` in chrome browser:
+The main e2e test suite is triggered by running the following command:
 
-`$ npm run test:e2e -- --browser chrome`
+`$ yarn test:e2e:dit -- --browser chrome`
 
 #### Permission tags
 
-If you'd like to run specific permission user tests, run one of the following commands below:
+There are also 2 other test suites, which run permission specs against users that have particular
+permissions for their roles, you can trigger these tests by running either of the commands below:
 
-`$ npm run test:e2e:lep -- --browser chrome`
+`$ yarn test:e2e:lep -- --browser chrome`
 
 or
 
-`$ npm run test:e2e:da -- --browser chrome`
+`$ yarn test:e2e:da -- --browser chrome`
 
 #### Running the tests manually in cypress interface
 
-`$ npm run test:e2e:watch`
+`$ yarn test:e2e:watch`
 
 #### Running a specific spec
 
-`$ npm run test:e2e -- --spec test/end-to-end/cypress/specs/LEP/permission-spec.js`
+`$ yarn test:e2e:dit -- --spec test/end-to-end/cypress/specs/DIT/local-nav-spec.js`
 
 
 ## Visual Testing
