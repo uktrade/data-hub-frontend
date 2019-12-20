@@ -1,0 +1,7 @@
+version: "3"
+services:
+  cypress:
+    image: cypress/included:3.8.0
+    volumes:
+      - ".:/test"
+    command: cypress run --project /test
