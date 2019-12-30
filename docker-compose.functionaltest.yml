@@ -2,6 +2,94 @@ version: "3"
 services:
   cypress:
     image: cypress/included:3.8.0
+    entrypoint: /project-root/cypress-wait-start.sh
+    command: ["http://frontend:3000", "--project",  "project-root"]
+    environment:
+      CYPRESS_BASE_URL: http://frontend:3000
     volumes:
-      - ".:/test"
-    command: cypress run --project /test
+      - ".:/project-root"
+    depends_on:
+      - frontend
+
+  frontend:
+    build:
+      context: .
+    command: ["dockerize", "-wait", "http://api:8000/admin/", "-wait", "http://mock-sso:8080/healthcheck", "-timeout", "150s", "yarn", "start"]
+    environment:
+      API_ROOT: http://api:8000
+      DATA_HUB_BACKEND_ACCESS_KEY_ID: frontend-key-id
+      DATA_HUB_BACKEND_SECRET_ACCESS_KEY: frontend-key
+      MOCK_SSO_ROOT: http://mock-sso:8080
+      OAUTH2_AUTH_URL: http://mock-sso:8080/o/authorize
+      OAUTH2_CLIENT_ID: randomClientId
+      OAUTH2_CLIENT_SECRET: mockSsoAuthToken
+      OAUTH2_REDIRECT_URL: http://frontend:3000/oauth/callback
+      OAUTH2_TOKEN_FETCH_URL: http://mock-sso:8080/o/token
+      OAUTH2_USER_PROFILE_URL: http://mock-sso:8080/api/v1/user/me
+      SESSION_SECRET: dummySessionSecretValue
+    volumes:
+      - ".:/usr/src/app"
+    depends_on:
+      - api
+      - mock-sso
+
+  api:
+    image: quay.io/uktrade/data-hub-api:master
+    command: ["dockerize", "-wait", "http://elasticsearch:9200", "-wait", "tcp://mi-postgres:5432", "-wait", "tcp://postgres:5432", "-wait", "tcp://redis:6379", "-timeout", "120s", "./start.sh"]
+    environment:
+      ACTIVITY_STREAM_ACCESS_KEY_ID: some-id
+      ACTIVITY_STREAM_SECRET_ACCESS_KEY: some-secret
+      ADMIN_OAUTH2_ENABLED: 'False'
+      AWS_ACCESS_KEY_ID: foo
+      AWS_DEFAULT_REGION: eu-west-2
+      AWS_SECRET_ACCESS_KEY: bar
+      DATABASE_URL: postgresql://postgres@postgres/datahub
+      DATA_HUB_FRONTEND_ACCESS_KEY_ID: frontend-key-id
+      DATA_HUB_FRONTEND_SECRET_ACCESS_KEY: frontend-key
+      DEBUG: 'False'
+      DEFAULT_BUCKET: baz
+      DISABLE_PAAS_IP_CHECK: 'True'
+      DJANGO_SECRET_KEY: topSecret
+      DJANGO_SETTINGS_MODULE: config.settings.local
+      ENABLE_CELERY_ES_SYNC_OBJECT: 'True'
+      ES5_URL: http://elasticsearch:9200
+      ES_INDEX_PREFIX: test_index
+      MI_DATABASE_URL: postgresql://postgres@mi-postgres/mi
+      MI_POSTGRES_URL: tcp://mi-postgres:5432
+      POSTGRES_URL: tcp://postgres:5432
+      REDIS_BASE_URL: redis://redis:6379
+      REDIS_CACHE_DB: 5
+      REDIS_CELERY_DB: 6
+      RESOURCE_SERVER_AUTH_TOKEN: mockSsoAuthToken
+      RESOURCE_SERVER_INTROSPECTION_URL: http://mock-sso:8080/o/introspect
+      SSO_ENABLED: 'True'
+      WEB_CONCURRENCY: 2
+    depends_on:
+      - elasticsearch
+      - mi-postgres
+      - mock-sso
+      - postgres
+      - redis
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.2
+
+  mock-sso:
+    image: quay.io/uktrade/mock-sso:latest
+    environment:
+      MOCK_SSO_SCOPE: data-hub:internal-front-end
+      MOCK_SSO_TOKEN: mockSsoAuthToken
+      MOCK_SSO_USERNAME: John.Rogers@example.com  # Named in data-hub-api/fixtures/test_data.yaml
+
+  postgres:
+    image: postgres:10
+    environment:
+      POSTGRES_DB: datahub
+
+  mi-postgres:
+    image: postgres:9.6
+    environment:
+      POSTGRES_DB: mi
+
+  redis:
+    image: redis:3.2.10

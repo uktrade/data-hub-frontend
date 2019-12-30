@@ -45,6 +45,7 @@ and be provided with a back end server to provide the API, data storage and sear
   - [Template inheritance diagram](#template-inheritance-diagram)
 - [Testing](#testing)
   - [Functional Testing](#functional-testing)
+  - [Functional Testing using Docker](#functional-testing-using-docker)
   - [E2E Testing](docs/How%20to%20execute%20tests.md#e2e-testing)
   - [Acceptance Testing](#acceptance-testing)
     - [Running acceptance tests](#running-acceptance-tests)
@@ -453,6 +454,21 @@ Execute all the tests on `specs` in chrome browser:
 #### Running a specific spec
 
 `$ yarn test:functional -- --spec test/functional/cypress/specs/nav-spec.js`
+
+### Functional Testing using Docker
+
+_THIS IS CURRENTLY EXPERIMENTAL!_
+
+It is possible to tun the Cypress functional tests on a vanilla host using just Docker, against a
+instance of the real Data Hub API.
+
+#### Building the stack
+
+`$ docker-compose -f docker-compose.functionaltest.yml build`
+
+#### Running the tests
+
+`$ docker-compose -f docker-compose.functionaltest.yml run cypress`
 
 ## Continuous Integration
 Data hub uses [CircleCI](https://circleci.com/) for continuous integration.
