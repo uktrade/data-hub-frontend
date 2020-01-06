@@ -3,7 +3,8 @@
 {% extends "_layouts/template.njk" %}
 
 {% set action %}
-  <a href="/companies/{{ company.id }}/lists/add-remove"
+{% set queryString = "?returnUrl=" +  (returnUrl if returnUrl else "/companies/" + company.id) %}
+  <a href="/companies/{{ company.id }}/lists/add-remove{{ queryString }}"
       class="govuk-button govuk-button--secondary">
     Add to or remove from lists
   </a>
