@@ -6,11 +6,11 @@ export const idName = {
 }
 
 export const companies = PropTypes.arrayOf(PropTypes.shape({
-  company: idName,
+  company: PropTypes.shape(idName),
   latestInteraction: PropTypes.shape({
-    date: PropTypes.instanceOf(Date),
-    id: PropTypes.string.isRequired,
-    subject: PropTypes.string.isRequired,
+    date: PropTypes.string,
+    id: PropTypes.string,
+    subject: PropTypes.string,
   }),
 }))
 
