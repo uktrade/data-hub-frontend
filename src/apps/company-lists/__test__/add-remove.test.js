@@ -225,7 +225,7 @@ describe('Adding and removing a company to a list', () => {
           companyId: '1',
           token: 'token',
           createNewListUrl: `/companies/1/lists/create`,
-          cancelLinkUrl: `/companies/1`,
+          cancelLinkUrl: `/`,
         },
       })
     })
