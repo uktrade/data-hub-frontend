@@ -23,7 +23,10 @@ Deployments to production are done manually through Jenkins where a Git tag can 
 4. Type your version number created in step `1` to the `Git_Commit` text field.
 
 5. Press the `Build` button.
-
-6. Release notes can be found using the tag-based comparison provided by GitHub, `github.com/uktrade/data-hub-frontend/compare/OLD_TAG…NEW_TAG`
    
+6. Create a GH release by clicking `Draft a new release` on the [releases page](https://github.com/uktrade/data-hub-frontend/releases).
+   
+   List of changes can be found using the tag-based comparison
+   provided by GitHub, i.e. `github.com/uktrade/data-hub-frontend/compare/OLD_TAG…NEW_TAG`
+
    Example: https://github.com/uktrade/data-hub-frontend/compare/v5.62.1...v5.62.2
