@@ -1511,10 +1511,10 @@
   resolved "https://registry.yarnpkg.com/@types/sizzle/-/sizzle-2.3.2.tgz#a811b8c18e2babab7d542b3365887ae2e4d9de47"
   integrity sha512-7EJYyKTL7tFR8+gDbB6Wwz/arpGa0Mywk1TJbNzKzHtzbwVmY4HR9WqS5VV7dsBUKQmPNr192jHr/VpBluj/hg==
 
-"@uktrade/client-matrix-js@^1.0.38":
-  version "1.0.62"
-  resolved "https://registry.yarnpkg.com/@uktrade/client-matrix-js/-/client-matrix-js-1.0.62.tgz#f189bbd21f647c34cea3fef59382ccdafa6b22cb"
-  integrity sha512-VvdAOnt9Pc/RAqUC0tT/wQvaTKL47PvcZ+KdfwX6ekUGrIv05+F99O/BpJYTk7qaR7hJtpmZ6Phe/ExLXticuQ==
+"@uktrade/client-matrix-js@^1.0.70":
+  version "1.0.70"
+  resolved "https://registry.yarnpkg.com/@uktrade/client-matrix-js/-/client-matrix-js-1.0.70.tgz#4b42464093a5f37a8e858e0eba478429f4534b47"
+  integrity sha512-Gavx00n/EPGNdpMw/YMCv5JOGLmjPM7Yk8gHeoT8thbU8lj//tkZhSRh5nhoXgyuAwIkQXec4q2GwUeJFPeoOg==
   dependencies:
     "@babel/runtime" "^7.5.5"
 
@@ -1523,10 +1523,10 @@
   resolved "https://registry.yarnpkg.com/@uktrade/datahub-header/-/datahub-header-1.2.0.tgz#45c380eb18c40994d5a0fc36a25cce1a942dbb0c"
   integrity sha512-OhzrnEuppfRbi3z+QZhbVKLQgwE3CCsG5dNQCz1WnQcqUDRJHvuqJJdGzDlEmnlJvUSwQn3ruyhs4BvKYDgKJw==
 
-"@uktrade/wdio-image-diff-js@1.0.180":
-  version "1.0.180"
-  resolved "https://registry.yarnpkg.com/@uktrade/wdio-image-diff-js/-/wdio-image-diff-js-1.0.180.tgz#cc23cbe5a0bb9b52de49c40b687ee38f864f8cfa"
-  integrity sha512-C30EWSrNhED7qQSfpYOJmEhOYMoJy+b7vDbehVnckoLW/ia5VNGdPlQzuIaFvZa7i5denIS1W+2TecEvjO6UIg==
+"@uktrade/wdio-image-diff-js@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@uktrade/wdio-image-diff-js/-/wdio-image-diff-js-1.1.0.tgz#35b3b37c7800b9e9bfc0d24c1140cd4dafe14497"
+  integrity sha512-hdBnzGVAKPIfntSohEoUqKCA2YPfImpMt+2Uck1J3WOvIRyNw0RthVVGr9KpD1rFgtmiH2RY2KIAEIWObYn9wg==
   dependencies:
     "@babel/runtime" "^7.5.5"
     arg "^4.1.1"
@@ -1534,7 +1534,7 @@
     esm "^3.2.25"
     fs "0.0.1-security"
     fs-extra "^8.1.0"
-    handlebars "^4.1.2"
+    handlebars "^4.5.3"
     inquirer "^7.0.0"
     pixelmatch "^4.0.2"
     pngjs "^3.4.0"
@@ -6725,10 +6725,21 @@ growl@1.9.2:
   resolved "https://registry.yarnpkg.com/growl/-/growl-1.9.2.tgz#0ea7743715db8d8de2c5ede1775e1b45ac85c02f"
   integrity sha1-Dqd0NxXbjY3ixe3hd14bRayFwC8=
 
-handlebars@^4.0.1, handlebars@^4.0.3, handlebars@^4.1.2:
+handlebars@^4.0.1, handlebars@^4.0.3:
   version "4.5.1"
   resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.5.1.tgz#8a01c382c180272260d07f2d1aa3ae745715c7ba"
   integrity sha512-C29UoFzHe9yM61lOsIlCE5/mQVGrnIOrOq7maQl76L7tYPCgC1og0Ajt6uWnX4ZTxBPnjw+CUvawphwCfJgUnA==
+  dependencies:
+    neo-async "^2.6.0"
+    optimist "^0.6.1"
+    source-map "^0.6.1"
+  optionalDependencies:
+    uglify-js "^3.1.4"
+
+handlebars@^4.5.3:
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.5.3.tgz#5cf75bd8714f7605713511a56be7c349becb0482"
+  integrity sha512-3yPecJoJHK/4c6aZhSvxOyG4vJKDshV36VHp0iVCDVh7o9w2vwi3NSnL2MMPj3YdduqaBcu7cGbggJQM0br9xA==
   dependencies:
     neo-async "^2.6.0"
     optimist "^0.6.1"
