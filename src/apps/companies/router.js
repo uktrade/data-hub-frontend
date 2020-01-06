@@ -107,12 +107,6 @@ router
   .get(populateExportForm, renderExportEdit)
   .post(populateExportForm, handleEditFormPost, renderExportEdit)
 
-router.get(urls.companies.exports.index.route, renderExports)
-router
-  .route(urls.companies.exports.edit.route)
-  .get(populateExportForm, renderExportEdit)
-  .post(populateExportForm, handleEditFormPost, renderExportEdit)
-
 router.get(urls.companies.businessDetails.route, renderBusinessDetails)
 
 router.get('/:companyId/hierarchies/ghq/search', getGlobalHQCompaniesCollection, renderAddGlobalHQ)
