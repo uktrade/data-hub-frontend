@@ -20,10 +20,7 @@ describe('OMIS reconciliation controllers', () => {
         buildSelectedFiltersSummary: this.buildSelectedFiltersSummaryStub,
       },
       './macros': {
-        filtersFields: [
-          { macroName: 'foo' },
-          { macroName: 'bar' },
-        ],
+        filtersFields: [{ macroName: 'foo' }, { macroName: 'bar' }],
       },
     })
   })
@@ -38,16 +35,25 @@ describe('OMIS reconciliation controllers', () => {
     })
 
     it('should pass the correct data to the view', () => {
-      expect(this.res.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('sortForm'))
-      expect(this.res.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('filtersFields'))
-      expect(this.res.render).to.have.been.calledWith(sinon.match.any, sinon.match.hasOwn('selectedFilters'))
+      expect(this.res.render).to.have.been.calledWith(
+        sinon.match.any,
+        sinon.match.hasOwn('sortForm')
+      )
+      expect(this.res.render).to.have.been.calledWith(
+        sinon.match.any,
+        sinon.match.hasOwn('filtersFields')
+      )
+      expect(this.res.render).to.have.been.calledWith(
+        sinon.match.any,
+        sinon.match.hasOwn('selectedFilters')
+      )
     })
 
     it('should build filters summary', () => {
-      expect(this.buildSelectedFiltersSummaryStub).to.have.been.calledWith([
-        { macroName: 'foo' },
-        { macroName: 'bar' },
-      ], this.req.query)
+      expect(this.buildSelectedFiltersSummaryStub).to.have.been.calledWith(
+        [{ macroName: 'foo' }, { macroName: 'bar' }],
+        this.req.query
+      )
     })
   })
 })

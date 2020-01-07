@@ -9,7 +9,7 @@
  * @returns {string} element selector
  */
 // FIXME is this still an issue https://github.com/nightwatchjs/nightwatch/issues/1635
-function getSectionElementSelector (value) {
+function getSectionElementSelector(value) {
   if (Array.isArray(value)) {
     return value[1].selector
   }

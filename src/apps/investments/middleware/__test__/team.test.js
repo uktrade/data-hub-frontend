@@ -6,14 +6,16 @@ describe('Investment team middleware', () => {
   beforeEach(() => {
     this.transformBriefInvestmentSummaryStub = sinon.stub()
     this.investmentData = Object.assign({}, investmentData, {
-      team_members: [{
-        adviser: {
-          id: '1234',
-          first_name: 'Fred',
-          last_name: 'Smith',
+      team_members: [
+        {
+          adviser: {
+            id: '1234',
+            first_name: 'Fred',
+            last_name: 'Smith',
+          },
+          role: 'Director',
         },
-        role: 'Director',
-      }],
+      ],
     })
 
     this.adviser = {
@@ -37,7 +39,8 @@ describe('Investment team middleware', () => {
 
     this.teamMiddleware = proxyquire('../team', {
       '../transformers': {
-        transformBriefInvestmentSummary: this.transformBriefInvestmentSummaryStub,
+        transformBriefInvestmentSummary: this
+          .transformBriefInvestmentSummaryStub,
       },
       '../../adviser/repos': {
         getAdviser: this.getAdviserStub,
@@ -47,27 +50,39 @@ describe('Investment team middleware', () => {
 
   describe('#getBriefInvestmentSummary', () => {
     it('should call brief investment summary formatter with expanded project', (done) => {
-      this.teamMiddleware.getBriefInvestmentSummary({
-        session: {
-          token: 'mock-token',
+      this.teamMiddleware.getBriefInvestmentSummary(
+        {
+          session: {
+            token: 'mock-token',
+          },
         },
-      }, this.resMock, () => {
-        expect(this.transformBriefInvestmentSummaryStub).to.be.calledWith(this.investmentData)
-        done()
-      })
+        this.resMock,
+        () => {
+          expect(this.transformBriefInvestmentSummaryStub).to.be.calledWith(
+            this.investmentData
+          )
+          done()
+        }
+      )
     })
   })
 
   describe('#expandTeamMembers', () => {
     it('should expand the team members adviser to includ team', (done) => {
-      this.teamMiddleware.expandTeamMembers({
-        session: {
-          token: 'mock-token',
+      this.teamMiddleware.expandTeamMembers(
+        {
+          session: {
+            token: 'mock-token',
+          },
         },
-      }, this.resMock, () => {
-        expect(this.resMock.locals.investment.team_members[0].adviser).to.deep.equal(this.adviser)
-        done()
-      })
+        this.resMock,
+        () => {
+          expect(
+            this.resMock.locals.investment.team_members[0].adviser
+          ).to.deep.equal(this.adviser)
+          done()
+        }
+      )
     })
   })
 })

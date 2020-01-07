@@ -27,8 +27,8 @@ const kindLookup = {
   },
 }
 
-function postCreate (req, res, next) {
-  const kindType = (req.body.kind_export || req.body.kind_other) || null
+function postCreate(req, res, next) {
+  const kindType = req.body.kind_export || req.body.kind_other || null
 
   if (!req.body.theme) {
     res.locals.errors = {
@@ -39,7 +39,11 @@ function postCreate (req, res, next) {
     return next()
   }
 
-  if ((!req.body.kind_export && !req.body.kind_other) && req.body.theme !== 'investment_interaction') {
+  if (
+    !req.body.kind_export &&
+    !req.body.kind_other &&
+    req.body.theme !== 'investment_interaction'
+  ) {
     res.locals.errors = {
       messages: {
         kind: ['You must select what you would like to record'],
@@ -49,20 +53,18 @@ function postCreate (req, res, next) {
   }
 
   const { kind, theme } = kindLookup[kindType] || kindLookup.other
-  const path = joinPaths(
-    [
-      res.locals.interactions.returnLink,
-      req.params.interactionId,
-      req.params.interactionId ? 'edit' : 'create',
-      theme,
-      kind,
-    ]
-  )
+  const path = joinPaths([
+    res.locals.interactions.returnLink,
+    req.params.interactionId,
+    req.params.interactionId ? 'edit' : 'create',
+    theme,
+    kind,
+  ])
 
   return res.redirect(path)
 }
 
-function renderCreate (req, res) {
+function renderCreate(req, res) {
   const selectKindForm = kindForm({
     errors: res.locals.errors || [],
     permissions: get(req, 'session.user.permissions'),

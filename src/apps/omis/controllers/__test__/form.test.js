@@ -23,7 +23,7 @@ describe('OMIS FormController', () => {
       })
     })
 
-    context('when a step heading doesn\'t exists', () => {
+    context("when a step heading doesn't exists", () => {
       it('should not set a breadcrumb item', () => {
         this.controller.render(this.reqMock, this.resMock, this.nextSpy)
 
@@ -99,7 +99,11 @@ describe('OMIS FormController', () => {
           FormController.prototype.saveValues = (req, res, next) => {
             next()
 
-            expect(this.reqMock.form.values.fieldName).to.deep.equal(['one', 'two', ''])
+            expect(this.reqMock.form.values.fieldName).to.deep.equal([
+              'one',
+              'two',
+              '',
+            ])
           }
 
           this.controller.process(this.reqMock, this.resMock, this.nextSpy)
@@ -128,7 +132,10 @@ describe('OMIS FormController', () => {
         FormController.prototype.saveValues = (req, res, next) => {
           next()
 
-          expect(this.reqMock.form.values.fieldName).to.deep.equal(['one', 'three'])
+          expect(this.reqMock.form.values.fieldName).to.deep.equal([
+            'one',
+            'three',
+          ])
         }
 
         this.controller.process(this.reqMock, this.resMock, this.nextSpy)
@@ -185,7 +192,13 @@ describe('OMIS FormController', () => {
 
       context('when a repeatable field has falsey values', () => {
         beforeEach(() => {
-          this.reqMock.form.values.repeatableField = ['', 'foo', undefined, 'bar', false]
+          this.reqMock.form.values.repeatableField = [
+            '',
+            'foo',
+            undefined,
+            'bar',
+            false,
+          ]
         })
 
         it('should filter falseys out', () => {
@@ -283,16 +296,26 @@ describe('OMIS FormController', () => {
       FormController.prototype.errorHandler = this.errorHandlerSpy
     })
 
-    context('when it doesn\'t return missing prereq error', () => {
+    context("when it doesn't return missing prereq error", () => {
       beforeEach(() => {
         this.errorMock = new Error()
         this.errorMock.code = 'OTHER_ERROR'
       })
 
       it('should call next', () => {
-        this.controller.errorHandler(this.errorMock, globalReq, this.resMock, this.nextSpy)
+        this.controller.errorHandler(
+          this.errorMock,
+          globalReq,
+          this.resMock,
+          this.nextSpy
+        )
 
-        expect(this.errorHandlerSpy).to.be.calledWith(this.errorMock, globalReq, this.resMock, this.nextSpy)
+        expect(this.errorHandlerSpy).to.be.calledWith(
+          this.errorMock,
+          globalReq,
+          this.resMock,
+          this.nextSpy
+        )
         expect(this.redirectSpy).not.to.be.called
       })
     })
@@ -303,7 +326,12 @@ describe('OMIS FormController', () => {
         this.errorMock.code = 'MISSING_PREREQ'
         this.errorMock.redirect = '/error-redirect-path/'
 
-        this.controller.errorHandler(this.errorMock, globalReq, this.resMock, this.nextSpy)
+        this.controller.errorHandler(
+          this.errorMock,
+          globalReq,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('redirect to specificed value', () => {
@@ -323,7 +351,12 @@ describe('OMIS FormController', () => {
           baseUrl: '/journey-base-url',
         })
 
-        this.controller.errorHandler(this.errorMock, this.reqMock, this.resMock, this.nextSpy)
+        this.controller.errorHandler(
+          this.errorMock,
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should set a breadcrumb item', () => {
@@ -331,7 +364,9 @@ describe('OMIS FormController', () => {
       })
 
       it('should render the timeout template', () => {
-        expect(this.renderSpy.args[0][0]).to.equal('omis/apps/create/views/timeout')
+        expect(this.renderSpy.args[0][0]).to.equal(
+          'omis/apps/create/views/timeout'
+        )
       })
 
       it('should pass the correct data to the view', () => {

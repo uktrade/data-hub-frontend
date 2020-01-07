@@ -1,8 +1,6 @@
 const config = require('../../../config')
 
-const {
-  getContactsForCompany,
-} = require('../repos')
+const { getContactsForCompany } = require('../repos')
 
 const contactsApiResult = require('../../../../test/unit/data/contacts/contact-api-result.json')
 

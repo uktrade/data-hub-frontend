@@ -1,6 +1,8 @@
 const transformCompanyToListItem = require('./company-to-list-item')
 
-module.exports = function transformCompanyToSubsidiaryListItem ({ archived: globalHeadquartersArchived }) {
+module.exports = function transformCompanyToSubsidiaryListItem({
+  archived: globalHeadquartersArchived,
+}) {
   return (company) => {
     const listItem = transformCompanyToListItem(company)
 

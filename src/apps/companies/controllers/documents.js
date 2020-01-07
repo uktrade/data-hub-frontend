@@ -1,4 +1,4 @@
-function renderDocuments (req, res) {
+function renderDocuments(req, res) {
   return res.redirect(301, 'business-details')
 }
 

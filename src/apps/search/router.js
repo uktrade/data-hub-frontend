@@ -6,7 +6,7 @@ const { ENTITIES } = require('./constants')
 const { handleRoutePermissions } = require('../middleware')
 const { renderSearchResults } = require('./controllers')
 
-function redirectToCompaniesSearch (req, res) {
+function redirectToCompaniesSearch(req, res) {
   res.redirect(`/search/companies?${queryString.stringify(req.query)}`)
 }
 

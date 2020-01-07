@@ -14,7 +14,8 @@ const grossValueAddedMessage = ({
   sector,
   investment_type,
   gross_value_added,
-  foreign_equity_investment }) => {
+  foreign_equity_investment,
+}) => {
   if (investment_type.name !== investmentTypes.FDI) {
     return null
   }

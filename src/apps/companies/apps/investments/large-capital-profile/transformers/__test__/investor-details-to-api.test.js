@@ -1,6 +1,4 @@
-const {
-  transformInvestorDetails,
-} = require('../index')
+const { transformInvestorDetails } = require('../index')
 
 const getClearedPOSTData = ({
   day = '01',

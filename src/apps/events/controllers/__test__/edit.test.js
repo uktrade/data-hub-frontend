@@ -6,10 +6,16 @@ const config = require('../../../../config')
 const eventData = require('../../../../../test/unit/data/events/event.json')
 const adviserFilters = require('../../../adviser/filters')
 const serviceOptionData = require('../../../../../test/unit/data/interactions/service-options-data.json')
-const { filterServiceNames } = require('../../../../../src/apps/events/controllers/edit')
+const {
+  filterServiceNames,
+} = require('../../../../../src/apps/events/controllers/edit')
 
-const yesterday = moment().subtract(1, 'days').toISOString()
-const lastMonth = moment().subtract(1, 'months').toISOString()
+const yesterday = moment()
+  .subtract(1, 'days')
+  .toISOString()
+const lastMonth = moment()
+  .subtract(1, 'months')
+  .toISOString()
 
 const metadataMock = {
   teamOptions: [
@@ -44,16 +50,19 @@ const metadataMock = {
   ],
 }
 
-function getFormFieldOptions (res, fieldName) {
+function getFormFieldOptions(res, fieldName) {
   const renderOptions = res.render.firstCall.args[1]
   const formFields = renderOptions.eventForm.children
-  const field = find(formFields, field => field.name === fieldName)
+  const field = find(formFields, (field) => field.name === fieldName)
   return field.options || field.children[0].options
 }
 
 describe('Event edit controller', () => {
   beforeEach(() => {
-    this.filterActiveAdvisersSpy = sinon.spy(adviserFilters, 'filterActiveAdvisers')
+    this.filterActiveAdvisersSpy = sinon.spy(
+      adviserFilters,
+      'filterActiveAdvisers'
+    )
 
     this.controller = proxyquire('../edit', {
       '../../adviser/filters': {
@@ -90,35 +99,40 @@ describe('Event edit controller', () => {
           dit_team: {
             name: 'London',
           },
-        }, {
+        },
+        {
           id: '2',
           name: 'John Smith',
           is_active: true,
           dit_team: {
             name: 'London',
           },
-        }, {
+        },
+        {
           id: '3',
           name: 'Zac Smith',
           is_active: true,
           dit_team: {
             name: 'London',
           },
-        }, {
+        },
+        {
           id: '4',
           name: 'Fred Smith',
           is_active: false,
           dit_team: {
             name: 'London',
           },
-        }, {
+        },
+        {
           id: '5',
           name: 'Jim Smith',
           is_active: false,
           dit_team: {
             name: 'London',
           },
-        }],
+        },
+      ],
     }
   })
 
@@ -159,7 +173,10 @@ describe('Event edit controller', () => {
       it('should render the event page with an event form', () => {
         const actual = this.res.render.getCall(0).args[1].eventForm
 
-        expect(actual).to.be.an('object').and.have.property('hiddenFields').and.have.property('id')
+        expect(actual)
+          .to.be.an('object')
+          .and.have.property('hiddenFields')
+          .and.have.property('id')
       })
     })
 
@@ -186,7 +203,10 @@ describe('Event edit controller', () => {
           { label: 'Zac Smith', value: '3' },
         ]
 
-        const formOrganizerFieldOptions = getFormFieldOptions(this.res, 'organiser')
+        const formOrganizerFieldOptions = getFormFieldOptions(
+          this.res,
+          'organiser'
+        )
         expect(formOrganizerFieldOptions).to.deep.equal(expectedOptions)
       })
 
@@ -222,7 +242,9 @@ describe('Event edit controller', () => {
       })
 
       it('should get all active service options', () => {
-        const options = sortBy(getFormFieldOptions(this.res, 'service'), ['value'])
+        const options = sortBy(getFormFieldOptions(this.res, 'service'), [
+          'value',
+        ])
         expect(options.length).to.equal(3)
         expect(options[0].value).to.equal('sv1')
         expect(options[1].value).to.equal('sv2')
@@ -258,7 +280,10 @@ describe('Event edit controller', () => {
       })
 
       it('should add a breadcrumb', () => {
-        expect(this.res.breadcrumb.firstCall).to.be.calledWith('name', '/events/123')
+        expect(this.res.breadcrumb.firstCall).to.be.calledWith(
+          'name',
+          '/events/123'
+        )
         expect(this.res.breadcrumb.secondCall).to.be.calledWith('Edit event')
       })
 
@@ -298,7 +323,9 @@ describe('Event edit controller', () => {
       })
 
       it('should get all active service options when the event was created', () => {
-        const options = sortBy(getFormFieldOptions(this.res, 'service'), ['value'])
+        const options = sortBy(getFormFieldOptions(this.res, 'service'), [
+          'value',
+        ])
         expect(options.length).to.equal(3)
         expect(options[0].value).to.equal('sv1')
         expect(options[1].value).to.equal('sv2')
@@ -369,7 +396,10 @@ describe('Event edit controller', () => {
 
   describe('#filterServiceNames', () => {
     this.testData = [
-      { label: 'A Specific DIT Export Service or Funding : label with excluded strings' },
+      {
+        label:
+          'A Specific DIT Export Service or Funding : label with excluded strings',
+      },
       { label: 'A Specific Service : label with excluded strings2' },
       { label: 'label without excluded strings' },
     ]

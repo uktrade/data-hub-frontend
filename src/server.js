@@ -51,9 +51,11 @@ if (!config.ci) {
 
 if (!config.isDev) {
   app.enable('trust proxy')
-  app.use(enforce.HTTPS({
-    trustProtoHeader: true,
-  }))
+  app.use(
+    enforce.HTTPS({
+      trustProtoHeader: true,
+    })
+  )
 }
 
 app.use(cookieParser())
@@ -62,19 +64,21 @@ app.use(compression())
 app.set('view engine', 'njk')
 nunjucks(app, config)
 
-app.use(minifyHTML({
-  override: true,
-  exception_url: false,
-  htmlMinifier: {
-    removeComments: true,
-    collapseInlineTagWhitespace: false,
-    collapseWhitespace: true,
-    collapseBooleanAttributes: true,
-    removeAttributeQuotes: true,
-    removeEmptyAttributes: true,
-    minifyJS: true,
-  },
-}))
+app.use(
+  minifyHTML({
+    override: true,
+    exception_url: false,
+    htmlMinifier: {
+      removeComments: true,
+      collapseInlineTagWhitespace: false,
+      collapseWhitespace: true,
+      collapseBooleanAttributes: true,
+      removeAttributeQuotes: true,
+      removeEmptyAttributes: true,
+      minifyJS: true,
+    },
+  })
+)
 
 // Static files
 app.use(favicon(path.join(config.root, 'public/images', 'favicon.ico')))
@@ -83,7 +87,10 @@ app.use('/js', express.static(path.join(config.buildDir, 'js')))
 app.use('/css', express.static(path.join(config.buildDir, 'css')))
 app.use('/images', express.static(path.join(config.buildDir, 'images')))
 app.use('/fonts', express.static(path.join(config.buildDir, 'fonts')))
-app.use('/assets', express.static(path.join(config.root, 'node_modules/govuk-frontend/assets')))
+app.use(
+  '/assets',
+  express.static(path.join(config.root, 'node_modules/govuk-frontend/assets'))
+)
 
 app.use(title())
 app.use(breadcrumbs.init())
@@ -124,7 +131,10 @@ app.use(errors.catchAll)
 
 metadata.fetchAll((errors) => {
   if (errors) {
-    logger.log('error', 'Unable to load all metadataRepository, cannot start app')
+    logger.log(
+      'error',
+      'Unable to load all metadataRepository, cannot start app'
+    )
 
     for (const err of errors) {
       throw err

@@ -9,15 +9,16 @@ if (useSentry) {
   // See https://docs.sentry.io/clients/node/config/
   // and https://docs.sentry.io/clients/node/usage/
   // for info on Raven config options
-  raven.config(config.sentryDsn, {
-    release: config.version,
-    autoBreadcrumbs: true,
-    captureUnhandledRejections: true,
-  }).install()
+  raven
+    .config(config.sentryDsn, {
+      release: config.version,
+      autoBreadcrumbs: true,
+      captureUnhandledRejections: true,
+    })
+    .install()
 }
 
 module.exports = {
-
   levels: {
     debug: 'debug',
     info: 'info',
@@ -26,19 +27,19 @@ module.exports = {
     fatal: 'fatal',
   },
 
-  setup: function (app) {
+  setup: function(app) {
     if (useSentry) {
       app.use(raven.requestHandler())
     }
   },
 
-  handleErrors: function (app) {
+  handleErrors: function(app) {
     if (useSentry) {
       app.use(raven.errorHandler())
     }
   },
 
-  message: function (level, msg, extra) {
+  message: function(level, msg, extra) {
     if (useSentry) {
       raven.captureMessage(msg, {
         level,
@@ -46,16 +47,20 @@ module.exports = {
       })
     } else {
       logger.warn(msg)
-      if (extra) { logger.warn(JSON.stringify(extra)) }
+      if (extra) {
+        logger.warn(JSON.stringify(extra))
+      }
     }
   },
 
-  captureException: function (err, extra) {
+  captureException: function(err, extra) {
     if (useSentry) {
       raven.captureException(err, { extra })
     } else {
       logger.error(err.stack)
-      if (extra) { logger.error(JSON.stringify(extra)) }
+      if (extra) {
+        logger.error(JSON.stringify(extra))
+      }
     }
   },
 }

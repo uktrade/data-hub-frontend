@@ -4,7 +4,8 @@ const selectors = require('../../../../selectors')
 describe('Omis Edit Draft', () => {
   const data = {
     contact: {
-      name: 'Kameron Durgan|1f19804c-8156-4bd7-80c0-5291d9c776f9, Regional Security Engineer',
+      name:
+        'Kameron Durgan|1f19804c-8156-4bd7-80c0-5291d9c776f9, Regional Security Engineer',
       email: 'Kameron_Durgan1f19804c-8156-4bd7-80c0-5291d9c776f983@yahoo.com',
     },
     country: 'Argentina',
@@ -12,10 +13,12 @@ describe('Omis Edit Draft', () => {
   }
 
   before(() => {
-    cy.visit(`/omis/create/?company=${fixtures.company.withContacts.id}&skip-company=true`)
+    cy.visit(
+      `/omis/create/?company=${fixtures.company.withContacts.id}&skip-company=true`
+    )
   })
 
-  beforeEach(function () {
+  beforeEach(function() {
     Cypress.Cookies.preserveOnce('datahub.sid')
   })
 
@@ -38,11 +41,9 @@ describe('Omis Edit Draft', () => {
       .should('contain', data.contact.name)
       .and('contain', data.contact.email)
 
-    cy.get(selectors.omisSummary.country)
-      .should('contain', data.country)
+    cy.get(selectors.omisSummary.country).should('contain', data.country)
 
-    cy.get(selectors.omisSummary.sector)
-      .should('contain', data.sector)
+    cy.get(selectors.omisSummary.sector).should('contain', data.sector)
   })
 
   it('should edit contact details', () => {
@@ -62,8 +63,7 @@ describe('Omis Edit Draft', () => {
     cy.get(selectors.omisCreate.country).select('Angola')
     cy.get(selectors.omisCreate.continue).click()
 
-    cy.get(selectors.omisSummary.country)
-      .should('contain', 'Angola')
+    cy.get(selectors.omisSummary.country).should('contain', 'Angola')
   })
 
   it('should edit sector details', () => {
@@ -72,7 +72,6 @@ describe('Omis Edit Draft', () => {
     cy.get(selectors.omisCreate.sectorYes).click()
     cy.get(selectors.omisCreate.continue).click()
 
-    cy.get(selectors.omisSummary.sector)
-      .should('contain', 'Retail')
+    cy.get(selectors.omisSummary.sector).should('contain', 'Retail')
   })
 })

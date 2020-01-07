@@ -1,7 +1,7 @@
 const nock = require('nock')
 const config = require('../../../../../config')
 
-function mockGetDnbHierarchy ({
+function mockGetDnbHierarchy({
   globalUltimateDunsNumber,
   responseBody,
   responseCode = 200,
@@ -9,7 +9,9 @@ function mockGetDnbHierarchy ({
   limit = 10,
 }) {
   nock(config.apiRoot)
-    .get(`/v4/company?limit=${limit}&offset=${offset}&sortby=name&global_ultimate_duns_number=${globalUltimateDunsNumber}`)
+    .get(
+      `/v4/company?limit=${limit}&offset=${offset}&sortby=name&global_ultimate_duns_number=${globalUltimateDunsNumber}`
+    )
     .reply(responseCode, responseBody)
 }
 

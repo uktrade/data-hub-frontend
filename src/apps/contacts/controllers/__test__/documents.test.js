@@ -33,14 +33,21 @@ describe('Contacts documents controller', () => {
       })
 
       it('should call render with', () => {
-        expect(this.resMock.render).to.be.calledWith('contacts/views/documents', { archivedDocumentPath: '' })
+        expect(this.resMock.render).to.be.calledWith(
+          'contacts/views/documents',
+          { archivedDocumentPath: '' }
+        )
       })
     })
 
     context('when documents path contains a url', () => {
       const mockDocumentUrl = 'mock-document-url'
       beforeEach(() => {
-        set(this.resMock, 'locals.contact.archived_documents_url_path', mockDocumentUrl)
+        set(
+          this.resMock,
+          'locals.contact.archived_documents_url_path',
+          mockDocumentUrl
+        )
         renderDocuments(this.reqMock, this.resMock, this.nextSpy)
       })
 
@@ -57,9 +64,12 @@ describe('Contacts documents controller', () => {
       })
 
       it('should call render with', () => {
-        expect(this.resMock.render).to.be.calledWith('contacts/views/documents', {
-          archivedDocumentPath: mockDocumentUrl,
-        })
+        expect(this.resMock.render).to.be.calledWith(
+          'contacts/views/documents',
+          {
+            archivedDocumentPath: mockDocumentUrl,
+          }
+        )
       })
     })
   })

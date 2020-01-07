@@ -4,10 +4,14 @@ const { assign, pick, mapValues, isArray } = require('lodash')
  * @param queryObj
  * @param replace
  */
-function removeArray (queryObj, replace) {
-  return assign({}, queryObj, mapValues(pick(queryObj, replace), (value) => {
-    return isArray(value) ? null : value
-  }))
+function removeArray(queryObj, replace) {
+  return assign(
+    {},
+    queryObj,
+    mapValues(pick(queryObj, replace), (value) => {
+      return isArray(value) ? null : value
+    })
+  )
 }
 
 module.exports = removeArray

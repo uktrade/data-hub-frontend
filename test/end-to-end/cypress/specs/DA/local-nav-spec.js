@@ -1,6 +1,11 @@
 const selectors = require('../../../../selectors')
 
-const { companies, contacts, dashboard, investments } = require('../../../../../src/lib/urls')
+const {
+  companies,
+  contacts,
+  dashboard,
+  investments,
+} = require('../../../../../src/lib/urls')
 
 const { assertLocalNav } = require('../../support/assertions')
 
@@ -44,16 +49,15 @@ describe('DA Permission', () => {
     })
 
     it('should display DA only tabs', () => {
-      assertLocalNav(selectors.nav.sideNav, [
-        'Details',
-        'Audit history',
-      ])
+      assertLocalNav(selectors.nav.sideNav, ['Details', 'Audit history'])
     })
   })
 
   describe('investment projects', () => {
     before(() => {
-      cy.visit(investments.projects.details('e32b3c33-80ac-4589-a8c4-dda305d726ba'))
+      cy.visit(
+        investments.projects.details('e32b3c33-80ac-4589-a8c4-dda305d726ba')
+      )
     })
 
     it('should display DA only tabs', () => {

@@ -10,13 +10,15 @@ describe('Contacts Collections', () => {
 
   it('should render breadcrumbs', () => {
     assertBreadcrumbs({
-      'Home': '/',
-      'Contacts': null,
+      Home: '/',
+      Contacts: null,
     })
   })
 
   it('should display a list of contacts', () => {
-    cy.get(selectors.entityCollection.entities).children().should('have.length', 100)
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 100)
   })
 
   it('should contain contacts badge', () => {
@@ -41,7 +43,9 @@ describe('Company Contacts Collections', () => {
   })
 
   it('should display a list of contacts', () => {
-    cy.get(selectors.entityCollection.entities).children().should('have.length', 9)
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 9)
   })
 
   it('should contain contacts badge', () => {

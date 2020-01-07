@@ -3,7 +3,7 @@ import { orderBy } from 'lodash'
 import {
   COMPANY_LIST_VIEWER__FILTER,
   COMPANY_LIST_VIEWER__LIST_CHANGE,
-  COMPANY_LIST_VIEWER__ORDER
+  COMPANY_LIST_VIEWER__ORDER,
 } from '../../../../client/actions'
 import { RECENT } from './constants'
 
@@ -18,9 +18,10 @@ export const resolvePreloadedData = () => {
   const element = document.querySelector('#my-companies')
   return element
     ? {
-      ...initialState,
-      lists: orderBy(JSON.parse(element.dataset.props).lists, 'name'),
-    } : initialState
+        ...initialState,
+        lists: orderBy(JSON.parse(element.dataset.props).lists, 'name'),
+      }
+    : initialState
 }
 
 export default (state = initialState, { type, ...action }) => {

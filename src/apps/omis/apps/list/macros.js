@@ -2,7 +2,7 @@ const { flatten } = require('lodash')
 
 const { ORDER_STATES } = require('../../constants')
 
-const omisFiltersFields = function ({
+const omisFiltersFields = function({
   omisMarketOptions,
   regionOptions,
   sectorOptions,
@@ -98,7 +98,7 @@ const omisFiltersFields = function ({
       modifier: 'option-select',
       options: regionOptions,
     },
-  ].map(filter => {
+  ].map((filter) => {
     return {
       ...filter,
       modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),

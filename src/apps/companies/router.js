@@ -3,11 +3,19 @@ const router = require('express').Router()
 const urls = require('../../lib/urls')
 
 const { ENTITIES } = require('../search/constants')
-const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS, QUERY_FIELDS } = require('./constants')
+const {
+  LOCAL_NAV,
+  DEFAULT_COLLECTION_QUERY,
+  APP_PERMISSIONS,
+  QUERY_FIELDS,
+} = require('./constants')
 
 const setReturnUrl = require('./middleware/set-return-url')
 const { getRequestBody } = require('../../middleware/collection')
-const { getCollection, exportCollection } = require('../../modules/search/middleware/collection')
+const {
+  getCollection,
+  exportCollection,
+} = require('../../modules/search/middleware/collection')
 
 const { renderCompanyList } = require('./controllers/list')
 const { renderDetails } = require('./controllers/details')
@@ -41,10 +49,21 @@ const {
   getSubsidiaryCompaniesCollection,
 } = require('./middleware/collection')
 
-const { setCompanyContactRequestBody, getCompanyContactCollection } = require('./middleware/contact-collection')
-const { getCompany, setIsCompanyAlreadyAdded, addCompanyOrRemoveFromList } = require('./middleware/params')
+const {
+  setCompanyContactRequestBody,
+  getCompanyContactCollection,
+} = require('./middleware/contact-collection')
+const {
+  getCompany,
+  setIsCompanyAlreadyAdded,
+  addCompanyOrRemoveFromList,
+} = require('./middleware/params')
 const { setInteractionsDetails } = require('./middleware/interactions')
-const { setGlobalHQ, removeGlobalHQ, addSubsidiary } = require('./middleware/hierarchies')
+const {
+  setGlobalHQ,
+  removeGlobalHQ,
+  addSubsidiary,
+} = require('./middleware/hierarchies')
 const setCompaniesLocalNav = require('./middleware/local-navigation')
 const lastInteractionDate = require('./middleware/last-interaction-date')
 
@@ -74,19 +93,21 @@ router.param('companyId', getCompany)
 router.param('companyId', setIsCompanyAlreadyAdded)
 router.param('companyId', setDnbHierarchyDetails)
 
-router.get(urls.companies.index.route,
+router.get(
+  urls.companies.index.route,
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   getRequestBody(QUERY_FIELDS),
   lastInteractionDate,
   getCollection('company', ENTITIES, transformCompanyToListItem),
-  renderCompanyList,
+  renderCompanyList
 )
 
-router.get(urls.companies.export.route,
+router.get(
+  urls.companies.export.route,
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   getRequestBody(QUERY_FIELDS),
   lastInteractionDate,
-  exportCollection('company'),
+  exportCollection('company')
 )
 
 router.use(urls.companies.create.route, addCompanyFormRouter)
@@ -97,7 +118,11 @@ router.use(urls.companies.editHistory.index.route, editHistoryRouter)
 router.post(urls.companies.archive.route, archiveCompany)
 router.get(urls.companies.unarchive.route, unarchiveCompany)
 
-router.use(urls.companies.detail.route, handleRoutePermissions(LOCAL_NAV), setCompaniesLocalNav)
+router.use(
+  urls.companies.detail.route,
+  handleRoutePermissions(LOCAL_NAV),
+  setCompaniesLocalNav
+)
 router.get(urls.companies.detail.route, redirectToFirstNavItem)
 router.get(urls.companies.details.route, renderDetails)
 
@@ -109,14 +134,23 @@ router
 
 router.get(urls.companies.businessDetails.route, renderBusinessDetails)
 
-router.get(urls.companies.hierarchies.ghq.link.route, getGlobalHQCompaniesCollection, renderAddGlobalHQ)
+router.get(
+  urls.companies.hierarchies.ghq.link.route,
+  getGlobalHQCompaniesCollection,
+  renderAddGlobalHQ
+)
 router.get(urls.companies.hierarchies.ghq.add.route, setGlobalHQ)
 router.get(urls.companies.hierarchies.ghq.remove.route, removeGlobalHQ)
 
-router.get(urls.companies.hierarchies.subsidiaries.search.route, getSubsidiaryCompaniesCollection, renderLinkSubsidiary)
+router.get(
+  urls.companies.hierarchies.subsidiaries.search.route,
+  getSubsidiaryCompaniesCollection,
+  renderLinkSubsidiary
+)
 router.get(urls.companies.hierarchies.subsidiaries.add.route, addSubsidiary)
 
-router.get(urls.companies.contacts.route,
+router.get(
+  urls.companies.contacts.route,
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   setCompanyContactRequestBody,
   getCompanyContactCollection,
@@ -127,9 +161,17 @@ router.get(urls.companies.contacts.route,
 router.get(urls.companies.orders.route, setReturnUrl, renderOrders)
 router.get(urls.companies.audit.route, renderAuditLog)
 router.get(urls.companies.documents.route, renderDocuments)
-router.use(urls.companies.investments.companyInvestment.route, setReturnUrl, investmentsRouter)
+router.use(
+  urls.companies.investments.companyInvestment.route,
+  setReturnUrl,
+  investmentsRouter
+)
 router.use(urls.companies.matching.route, matchingRouter)
-router.use(urls.companies.detail.route, setInteractionsDetails, interactionsRouter)
+router.use(
+  urls.companies.detail.route,
+  setInteractionsDetails,
+  interactionsRouter
+)
 router.use(urls.companies.advisers.index.route, setReturnUrl, advisersRouter)
 
 router.post(urls.companies.manageCompanyList.route, addCompanyOrRemoveFromList)

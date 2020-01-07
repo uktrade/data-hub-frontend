@@ -4,6 +4,9 @@
  * @param textContent
  * @returns this
  */
-exports.command = function clickListOption (name, textContent) {
-  return this.click('xpath', `//select[@name="${name}"]/option[normalize-space(.)="${textContent}"]`)
+exports.command = function clickListOption(name, textContent) {
+  return this.click(
+    'xpath',
+    `//select[@name="${name}"]/option[normalize-space(.)="${textContent}"]`
+  )
 }

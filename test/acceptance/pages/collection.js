@@ -20,13 +20,13 @@ module.exports = {
   commands: [
     {
       getSelectorForMetaListItemValue,
-      getSelectorForBadgeWithText (text) {
+      getSelectorForBadgeWithText(text) {
         return getListItemMetaElementWithText(text)
       },
-      getButtonSelectorWithText (text) {
+      getButtonSelectorWithText(text) {
         return getButtonWithText(text)
       },
-      captureResultCount (callback) {
+      captureResultCount(callback) {
         return this.section.collectionHeader
           .waitForElementVisible('@resultCount')
           .getText('@resultCount', (result) => {

@@ -17,18 +17,20 @@ const { getNextPath } = require('../helpers')
 const { joinPaths } = require('../../../lib/path')
 
 const mapStepsWithState = (steps, currentState) => {
-  return compact(map(steps, (step, stepId) => {
-    const completed = get(currentState, `steps.${step.path}.completed`, false)
-    const data = get(currentState, `steps.${step.path}.data`, {})
+  return compact(
+    map(steps, (step, stepId) => {
+      const completed = get(currentState, `steps.${step.path}.completed`, false)
+      const data = get(currentState, `steps.${step.path}.data`, {})
 
-    return {
-      completed,
-      id: stepId,
-      path: step.path,
-      nextPath: getNextPath(step, data),
-      validateJourney: step.validateJourney,
-    }
-  }))
+      return {
+        completed,
+        id: stepId,
+        path: step.path,
+        nextPath: getNextPath(step, data),
+        validateJourney: step.validateJourney,
+      }
+    })
+  )
 }
 
 const isValidJourney = (steps, currentStepId, currentState) => {
@@ -39,15 +41,23 @@ const isValidJourney = (steps, currentStepId, currentState) => {
       return true
     }
 
-    const previousStep = find(stepsWithState, stepWithState => stepWithState.nextPath === step.path)
-    return previousStep && previousStep.completed ? hasCompletedPreviousStep(previousStep) : false
+    const previousStep = find(
+      stepsWithState,
+      (stepWithState) => stepWithState.nextPath === step.path
+    )
+    return previousStep && previousStep.completed
+      ? hasCompletedPreviousStep(previousStep)
+      : false
   }
 
-  const currentStepWithState = find(stepsWithState, stepWithState => stepWithState.id === currentStepId)
+  const currentStepWithState = find(
+    stepsWithState,
+    (stepWithState) => stepWithState.id === currentStepId
+  )
   return hasCompletedPreviousStep(currentStepWithState)
 }
 
-function getDifference (object1, object2) {
+function getDifference(object1, object2) {
   const allKeys = union(keys(object1), keys(object2))
   return filter(allKeys, (key) => object1[key] !== object2[key])
 }
@@ -92,11 +102,16 @@ const setFormDetails = (req, res, next) => {
 
   if (currentState.browseHistory && currentStepId !== 0) {
     const isPresentingErrors = !isEmpty(res.locals.form.errors)
-    const browseHistoryIndex = currentState.browseHistory.length - (isPresentingErrors ? 2 : 1)
+    const browseHistoryIndex =
+      currentState.browseHistory.length - (isPresentingErrors ? 2 : 1)
     const previousPath = currentState.browseHistory[browseHistoryIndex]
-    const returnStep = find(steps, step => step.path === previousPath)
+    const returnStep = find(steps, (step) => step.path === previousPath)
 
-    set(res.locals, 'form.returnLink', joinPaths([ req.baseUrl, returnStep.path ]))
+    set(
+      res.locals,
+      'form.returnLink',
+      joinPaths([req.baseUrl, returnStep.path])
+    )
     set(res.locals, 'form.returnText', 'Back')
   } else {
     set(res.locals, 'form.returnLink', req.baseUrl)
@@ -126,13 +141,20 @@ const invalidateStateForDependentSteps = (req, res, next) => {
 const invalidateStateForChangedNextPath = (req, res, next) => {
   const { currentStep, key } = res.locals.journey
   const currentState = state.getCurrent(req.session, key)
-  const currentNextPath = get(currentState, `steps.${currentStep.path}.nextPath`)
+  const currentNextPath = get(
+    currentState,
+    `steps.${currentStep.path}.nextPath`
+  )
   const newNextPath = getNextPath(currentStep, req.body)
-  const hasChangedNextPath = currentNextPath && newNextPath && currentNextPath !== newNextPath
+  const hasChangedNextPath =
+    currentNextPath && newNextPath && currentNextPath !== newNextPath
 
   if (hasChangedNextPath) {
     const stepPathsInState = keys(currentState.steps)
-    const indexOfCurrentStepInState = indexOf(stepPathsInState, currentStep.path)
+    const indexOfCurrentStepInState = indexOf(
+      stepPathsInState,
+      currentStep.path
+    )
 
     stepPathsInState.forEach((stepPath, stepPathIndex) => {
       if (stepPathIndex > indexOfCurrentStepInState) {

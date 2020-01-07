@@ -25,30 +25,35 @@ describe('Investment evaluation controller', () => {
 
   describe('#renderEvaluationPage', () => {
     it('should return evaluation details', (done) => {
-      this.controller.renderEvaluationPage({
-        session: {
-          token: 'abcd',
+      this.controller.renderEvaluationPage(
+        {
+          session: {
+            token: 'abcd',
+          },
         },
-      }, {
-        locals: {
-          investment: investmentData,
+        {
+          locals: {
+            investment: investmentData,
+          },
+          breadcrumb: this.breadcrumbStub,
+          render: (template, data) => {
+            try {
+              expect(template).to.equal('investments/views/evaluation')
+              done()
+            } catch (error) {
+              done(error)
+            }
+          },
         },
-        breadcrumb: this.breadcrumbStub,
-        render: (template, data) => {
-          try {
-            expect(template).to.equal('investments/views/evaluation')
-            done()
-          } catch (error) {
-            done(error)
-          }
-        },
-      }, this.next)
+        this.next
+      )
     })
   })
 
   it('should return evaluation details with correct investment data', (done) => {
     const expectedValue = {
-      'Primary sector': 'Aerospace : Manufacturing and Assembly : Space Technology',
+      'Primary sector':
+        'Aerospace : Manufacturing and Assembly : Space Technology',
       'Total investment': {
         type: 'currency',
         name: '100000',
@@ -85,27 +90,31 @@ describe('Investment evaluation controller', () => {
       'Actual land date': null,
     }
 
-    this.controller.renderEvaluationPage({
-      session: {
-        token: 'abcd',
+    this.controller.renderEvaluationPage(
+      {
+        session: {
+          token: 'abcd',
+        },
       },
-    }, {
-      locals: {
-        investment: investmentData,
+      {
+        locals: {
+          investment: investmentData,
+        },
+        breadcrumb: this.breadcrumbStub,
+        render: (template, data) => {
+          try {
+            expect(template).to.equal('investments/views/evaluation')
+            expect(data.value).to.deep.equal(expectedValue)
+            expect(data.fdi).to.deep.equal(expectFDI)
+            expect(data.landing).to.deep.equal(expectedLanding)
+            done()
+          } catch (error) {
+            done(error)
+          }
+        },
       },
-      breadcrumb: this.breadcrumbStub,
-      render: (template, data) => {
-        try {
-          expect(template).to.equal('investments/views/evaluation')
-          expect(data.value).to.deep.equal(expectedValue)
-          expect(data.fdi).to.deep.equal(expectFDI)
-          expect(data.landing).to.deep.equal(expectedLanding)
-          done()
-        } catch (error) {
-          done(error)
-        }
-      },
-    }, this.next)
+      this.next
+    )
   })
 
   it('should return evaluation details with correct investment data with UK company', (done) => {
@@ -160,26 +169,30 @@ describe('Investment evaluation controller', () => {
       'Actual land date': '21 July 2018',
     }
 
-    this.controller.renderEvaluationPage({
-      session: {
-        token: 'abcd',
+    this.controller.renderEvaluationPage(
+      {
+        session: {
+          token: 'abcd',
+        },
       },
-    }, {
-      locals: {
-        investment: investmentDataUkCompany,
+      {
+        locals: {
+          investment: investmentDataUkCompany,
+        },
+        breadcrumb: this.breadcrumbStub,
+        render: (template, data) => {
+          try {
+            expect(template).to.equal('investments/views/evaluation')
+            expect(data.value).to.deep.equal(expectedValue)
+            expect(data.fdi).to.deep.equal(expectFDI)
+            expect(data.landing).to.deep.equal(expectedLanding)
+            done()
+          } catch (error) {
+            done(error)
+          }
+        },
       },
-      breadcrumb: this.breadcrumbStub,
-      render: (template, data) => {
-        try {
-          expect(template).to.equal('investments/views/evaluation')
-          expect(data.value).to.deep.equal(expectedValue)
-          expect(data.fdi).to.deep.equal(expectFDI)
-          expect(data.landing).to.deep.equal(expectedLanding)
-          done()
-        } catch (error) {
-          done(error)
-        }
-      },
-    }, this.next)
+      this.next
+    )
   })
 })

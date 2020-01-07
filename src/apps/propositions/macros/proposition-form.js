@@ -1,14 +1,9 @@
 const { assign } = require('lodash')
 
 const labels = require('../labels')
-const {
-  name,
-  scope,
-  deadline,
-  adviser,
-} = require('./fields')
+const { name, scope, deadline, adviser } = require('./fields')
 
-module.exports = function ({
+module.exports = function({
   returnLink,
   returnText,
   buttonText,
@@ -20,12 +15,7 @@ module.exports = function ({
     returnText,
     buttonText,
     hiddenFields,
-    children: [
-      name,
-      scope,
-      adviser(advisers),
-      deadline,
-    ].map(field => {
+    children: [name, scope, adviser(advisers), deadline].map((field) => {
       return assign(field, {
         label: labels.proposition[field.name],
       })

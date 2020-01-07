@@ -33,7 +33,12 @@ const getInvestmentData = (ukCompanyId, clientRelationshipManagerId) => {
   })
 }
 
-const createMiddleware = (investmentData, adviserData, companyData, stages = investmentProjectStages) => {
+const createMiddleware = (
+  investmentData,
+  adviserData,
+  companyData,
+  stages = investmentProjectStages
+) => {
   return proxyquire('../shared', {
     '../repos': {
       getInvestment: sinon.stub().resolves(investmentData),
@@ -76,7 +81,11 @@ describe('Investment shared middleware', () => {
 
     context('when all fields are populated', () => {
       before(async () => {
-        const middleware = createMiddleware(getInvestmentData(2, 3), adviserData, companyData)
+        const middleware = createMiddleware(
+          getInvestmentData(2, 3),
+          adviserData,
+          companyData
+        )
 
         await middleware.getInvestmentDetails(reqMock, resMock, nextSpy)
       })
@@ -96,14 +105,22 @@ describe('Investment shared middleware', () => {
         expect(resMock.locals.investment.uk_company).to.deep.equal(companyData)
       })
       it('should set investment data client relationship manager on locals', () => {
-        expect(resMock.locals.investment.client_relationship_manager).to.deep.equal(adviserData)
+        expect(
+          resMock.locals.investment.client_relationship_manager
+        ).to.deep.equal(adviserData)
       })
       it('should set equity company on locals', () => {
-        const expectedEquityCompany = merge({}, investmentData.investor_company, {
-          name: companyData.name,
-        })
+        const expectedEquityCompany = merge(
+          {},
+          investmentData.investor_company,
+          {
+            name: companyData.name,
+          }
+        )
 
-        expect(resMock.locals.equityCompany).to.deep.equal(expectedEquityCompany)
+        expect(resMock.locals.equityCompany).to.deep.equal(
+          expectedEquityCompany
+        )
       })
       it('should set investment project stages on locals', () => {
         expect(resMock.locals.investmentProjectStages).to.deep.equal([
@@ -130,7 +147,8 @@ describe('Investment shared middleware', () => {
           meta: [
             {
               label: 'Status',
-              url: '/investments/projects/f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7/status',
+              url:
+                '/investments/projects/f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7/status',
               urlLabel: 'change',
               value: '',
             },
@@ -155,10 +173,15 @@ describe('Investment shared middleware', () => {
           },
         }
 
-        expect(resMock.locals.investmentStatus).to.deep.equal(expectedInvestmentStatus)
+        expect(resMock.locals.investmentStatus).to.deep.equal(
+          expectedInvestmentStatus
+        )
       })
       it('should set the breadcrumb', () => {
-        expect(resMock.breadcrumb).to.be.calledWithExactly(investmentData.name, `/investments/projects/${investmentData.id}`)
+        expect(resMock.breadcrumb).to.be.calledWithExactly(
+          investmentData.name,
+          `/investments/projects/${investmentData.id}`
+        )
         expect(resMock.breadcrumb).to.have.been.calledTwice
       })
       it('should call next once', () => {
@@ -171,7 +194,11 @@ describe('Investment shared middleware', () => {
 
     context('when uk company is not provided', () => {
       before(async () => {
-        const middleware = createMiddleware(getInvestmentData(null, 3), adviserData, companyData)
+        const middleware = createMiddleware(
+          getInvestmentData(null, 3),
+          adviserData,
+          companyData
+        )
 
         await middleware.getInvestmentDetails(reqMock, resMock, nextSpy)
       })
@@ -202,7 +229,11 @@ describe('Investment shared middleware', () => {
 
     context('when client relationship manager is not provided', () => {
       before(async () => {
-        const middleware = createMiddleware(getInvestmentData(2, null), adviserData, companyData)
+        const middleware = createMiddleware(
+          getInvestmentData(2, null),
+          adviserData,
+          companyData
+        )
 
         await middleware.getInvestmentDetails(reqMock, resMock, nextSpy)
       })
@@ -221,7 +252,8 @@ describe('Investment shared middleware', () => {
         expect(resMock.locals.investment).to.deep.equal(expectedInvestmentData)
       })
       it('should not set investment data client relationship manager on locals', () => {
-        expect(resMock.locals.investment.client_relationship_manager.id).to.be.null
+        expect(resMock.locals.investment.client_relationship_manager.id).to.be
+          .null
       })
       it('should call next', () => {
         expect(nextSpy).to.have.been.called
@@ -257,33 +289,41 @@ describe('Investment shared middleware', () => {
       })
     })
 
-    context('when the streamlined-investment-flow feature flag is set to true', () => {
-      before(async () => {
-        const stages = cloneDeep(investmentProjectStages)
+    context(
+      'when the streamlined-investment-flow feature flag is set to true',
+      () => {
+        before(async () => {
+          const stages = cloneDeep(investmentProjectStages)
 
-        // Exclude the Assign PM stage.
-        stages[1].exclude_from_investment_flow = true
+          // Exclude the Assign PM stage.
+          stages[1].exclude_from_investment_flow = true
 
-        resMock = {
-          breadcrumb: sinon.stub().returnsThis(),
-          locals: {
-            features: {
-              'streamlined-investment-flow': true,
+          resMock = {
+            breadcrumb: sinon.stub().returnsThis(),
+            locals: {
+              features: {
+                'streamlined-investment-flow': true,
+              },
             },
-          },
-        }
-        const middleware = createMiddleware(getInvestmentData(2, null), adviserData, companyData, stages)
+          }
+          const middleware = createMiddleware(
+            getInvestmentData(2, null),
+            adviserData,
+            companyData,
+            stages
+          )
 
-        await middleware.getInvestmentDetails(reqMock, resMock, nextSpy)
-      })
-      it('should remove the Assign PM stage from the investmentProjectStages array on locals', () => {
-        expect(resMock.locals.investmentProjectStages).to.deep.equal([
-          'Prospect',
-          'Active',
-          'Verify win',
-          'Won',
-        ])
-      })
-    })
+          await middleware.getInvestmentDetails(reqMock, resMock, nextSpy)
+        })
+        it('should remove the Assign PM stage from the investmentProjectStages array on locals', () => {
+          expect(resMock.locals.investmentProjectStages).to.deep.equal([
+            'Prospect',
+            'Active',
+            'Verify win',
+            'Won',
+          ])
+        })
+      }
+    )
   })
 })

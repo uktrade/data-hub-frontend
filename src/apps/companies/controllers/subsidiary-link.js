@@ -1,6 +1,6 @@
 const { companyDetailsLabels } = require('../labels')
 
-function renderLinkSubsidiary (req, res) {
+function renderLinkSubsidiary(req, res) {
   const { company } = res.locals
 
   res

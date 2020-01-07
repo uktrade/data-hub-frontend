@@ -1,7 +1,9 @@
 const allLists = require('../../../../test/unit/data/company-lists/all-lists')
 const allListsCompaniesIn = require('../../../../test/unit/data/company-lists/all-lists-company-is-in')
 
-const { transformCompaniesInLists } = require('../../../../src/apps/company-lists/transformers')
+const {
+  transformCompaniesInLists,
+} = require('../../../../src/apps/company-lists/transformers')
 
 describe('#transformCompaniesInLists', () => {
   let transformed
@@ -22,7 +24,6 @@ describe('#transformCompaniesInLists', () => {
           isAdded: 'no',
         },
       ],
-    },
-    )
+    })
   })
 })

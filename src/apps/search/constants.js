@@ -5,9 +5,7 @@ const ENTITIES = [
     text: 'Companies',
     noun: 'company',
     count: 0,
-    permissions: [
-      'company.view_company',
-    ],
+    permissions: ['company.view_company'],
   },
   {
     entity: 'contact',
@@ -15,9 +13,7 @@ const ENTITIES = [
     text: 'Contacts',
     noun: 'contact',
     count: 0,
-    permissions: [
-      'company.view_contact',
-    ],
+    permissions: ['company.view_contact'],
   },
   {
     entity: 'event',
@@ -25,9 +21,7 @@ const ENTITIES = [
     text: 'Events',
     noun: 'event',
     count: 0,
-    permissions: [
-      'event.view_event',
-    ],
+    permissions: ['event.view_event'],
   },
   {
     entity: 'interaction',
@@ -35,9 +29,7 @@ const ENTITIES = [
     text: 'Interactions',
     noun: 'interaction',
     count: 0,
-    permissions: [
-      'interaction.view_all_interaction',
-    ],
+    permissions: ['interaction.view_all_interaction'],
   },
   {
     entity: 'investment_project',
@@ -56,9 +48,7 @@ const ENTITIES = [
     text: 'Orders',
     noun: 'order',
     count: 0,
-    permissions: [
-      'order.view_order',
-    ],
+    permissions: ['order.view_order'],
   },
 ]
 

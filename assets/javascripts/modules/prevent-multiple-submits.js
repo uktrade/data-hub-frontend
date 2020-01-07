@@ -18,17 +18,18 @@ const PreventMultipleSubmits = {
   isSubmitting: false,
   counter: 0,
 
-  init () {
+  init() {
     if (document.querySelectorAll(`.${CONSTANTS.selectors.button}`).length) {
       this.bindEvents()
     }
   },
 
-  handleFormSubmit (event) {
+  handleFormSubmit(event) {
     const target = event.target
     const targetForm = target.closest(CONSTANTS.selectors.form)
-    if (!targetForm ||
-      !target.classList.contains(CONSTANTS.selectors.button)) { return }
+    if (!targetForm || !target.classList.contains(CONSTANTS.selectors.button)) {
+      return
+    }
 
     event.preventDefault()
 
@@ -40,8 +41,11 @@ const PreventMultipleSubmits = {
     }
   },
 
-  bindEvents () {
-    document.addEventListener(CONSTANTS.events.click, this.handleFormSubmit.bind(this))
+  bindEvents() {
+    document.addEventListener(
+      CONSTANTS.events.click,
+      this.handleFormSubmit.bind(this)
+    )
   },
 }
 

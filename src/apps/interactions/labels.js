@@ -24,7 +24,8 @@ const interaction = {
   multiple_contacts: 'Multiple contacts',
   multiple_advisers: 'Multiple advisers',
   created_on: 'Created on',
-  was_policy_feedback_provided: 'Did the contact give any feedback on government policy?',
+  was_policy_feedback_provided:
+    'Did the contact give any feedback on government policy?',
   service_delivery_status: 'Service status',
   grant_amount_offered: 'Grant offered',
   ...countriesDiscussed,
@@ -49,7 +50,8 @@ const serviceDelivery = {
   policy_areas: 'Policy area',
   policy_feedback_notes: 'Policy feedback notes',
   is_event: 'Is this an event?',
-  was_policy_feedback_provided: 'Did the contact give any feedback on government policy?',
+  was_policy_feedback_provided:
+    'Did the contact give any feedback on government policy?',
   ...countriesDiscussed,
 }
 

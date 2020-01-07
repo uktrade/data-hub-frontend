@@ -8,9 +8,13 @@ describe('Contact audit controller', () => {
     this.transformed = {}
     this.getContactAuditLogStub = sinon.stub().resolves(auditLog)
     this.transformApiResponseToCollectionInnerStub = sinon.stub().returns()
-    this.transformApiResponseToCollectionStub = sinon.stub().returns(this.transformApiResponseToCollectionInnerStub)
+    this.transformApiResponseToCollectionStub = sinon
+      .stub()
+      .returns(this.transformApiResponseToCollectionInnerStub)
     this.generatedTransformer = sinon.stub()
-    this.transformAuditLogToListItemStub = sinon.stub().returns(this.generatedTransformer)
+    this.transformAuditLogToListItemStub = sinon
+      .stub()
+      .returns(this.generatedTransformer)
 
     this.breadcrumbStub = sinon.stub().returnsThis()
 
@@ -19,7 +23,8 @@ describe('Contact audit controller', () => {
         getContactAuditLog: this.getContactAuditLogStub,
       },
       '../../../modules/api/transformers': {
-        transformApiResponseToCollection: this.transformApiResponseToCollectionStub,
+        transformApiResponseToCollection: this
+          .transformApiResponseToCollectionStub,
       },
       '../../audit/transformers': {
         transformAuditLogToListItem: this.transformAuditLogToListItemStub,
@@ -39,13 +44,21 @@ describe('Contact audit controller', () => {
 
   it('should call the contact audit repository', (done) => {
     try {
-      this.controller.getAudit(this.req, {
-        breadcrumb: this.breadcrumbStub,
-        render: (template, data) => {
-          expect(this.getContactAuditLogStub).to.be.calledWith(this.req.session.token, this.req.params.contactId, 1)
-          done()
+      this.controller.getAudit(
+        this.req,
+        {
+          breadcrumb: this.breadcrumbStub,
+          render: (template, data) => {
+            expect(this.getContactAuditLogStub).to.be.calledWith(
+              this.req.session.token,
+              this.req.params.contactId,
+              1
+            )
+            done()
+          },
         },
-      }, done)
+        done
+      )
     } catch (error) {
       done(error)
     }
@@ -55,13 +68,21 @@ describe('Contact audit controller', () => {
     try {
       this.req.query.page = '3'
 
-      this.controller.getAudit(this.req, {
-        breadcrumb: this.breadcrumbStub,
-        render: (template, data) => {
-          expect(this.getContactAuditLogStub).to.be.calledWith(this.req.session.token, this.req.params.contactId, '3')
-          done()
+      this.controller.getAudit(
+        this.req,
+        {
+          breadcrumb: this.breadcrumbStub,
+          render: (template, data) => {
+            expect(this.getContactAuditLogStub).to.be.calledWith(
+              this.req.session.token,
+              this.req.params.contactId,
+              '3'
+            )
+            done()
+          },
         },
-      }, done)
+        done
+      )
     } catch (error) {
       done(error)
     }
@@ -71,14 +92,23 @@ describe('Contact audit controller', () => {
     try {
       const options = { entityType: 'audit', query: this.req.query }
 
-      this.controller.getAudit(this.req, {
-        breadcrumb: this.breadcrumbStub,
-        render: (template, data) => {
-          expect(this.transformApiResponseToCollectionStub).to.be.calledWith(options, this.generatedTransformer)
-          expect(this.transformAuditLogToListItemStub).to.be.calledWith(contactAuditLabels)
-          done()
+      this.controller.getAudit(
+        this.req,
+        {
+          breadcrumb: this.breadcrumbStub,
+          render: (template, data) => {
+            expect(this.transformApiResponseToCollectionStub).to.be.calledWith(
+              options,
+              this.generatedTransformer
+            )
+            expect(this.transformAuditLogToListItemStub).to.be.calledWith(
+              contactAuditLabels
+            )
+            done()
+          },
         },
-      }, done)
+        done
+      )
     } catch (error) {
       done(error)
     }

@@ -1,8 +1,11 @@
 /* eslint-disable camelcase */
-const { archiveCompany: archive, unarchiveCompany: unarchive } = require('../repos')
+const {
+  archiveCompany: archive,
+  unarchiveCompany: unarchive,
+} = require('../repos')
 const logger = require('../../../config/logger')
 
-async function archiveCompany (req, res) {
+async function archiveCompany(req, res) {
   const { company } = res.locals
   const { archived_reason, archived_reason_other } = req.body
   const reason = archived_reason_other || archived_reason
@@ -26,7 +29,7 @@ async function archiveCompany (req, res) {
   }
 }
 
-async function unarchiveCompany (req, res) {
+async function unarchiveCompany(req, res) {
   const { company } = res.locals
   const detailsUrl = `/companies/${company.id}/business-details`
 

@@ -3,31 +3,35 @@ const { assign, get } = require('lodash')
 
 const { CreateController } = require('../../../controllers')
 const { searchCompanies } = require('../../../../../modules/search/services')
-const { transformApiResponseToSearchCollection } = require('../../../../../modules/search/transformers')
-const { transformCompanyToListItem } = require('../../../../companies/transformers')
+const {
+  transformApiResponseToSearchCollection,
+} = require('../../../../../modules/search/transformers')
+const {
+  transformCompanyToListItem,
+} = require('../../../../companies/transformers')
 const { ENTITIES } = require('../../../../search/constants')
 
-function transformListItemForOrderSource (item) {
+function transformListItemForOrderSource(item) {
   return assign({}, item, {
     url: `?company=${item.id}`,
   })
 }
 
 class CompanyController extends CreateController {
-  middlewareChecks () {
+  middlewareChecks() {
     super.middlewareChecks()
 
     this.use(this.checkSkipCompany)
   }
 
-  middlewareLocals () {
+  middlewareLocals() {
     super.middlewareLocals()
 
     this.use(this.setTemplate)
     this.use(this.setResults)
   }
 
-  checkSkipCompany (req, res, next) {
+  checkSkipCompany(req, res, next) {
     const skip = req.sessionModel.get('skip-company')
 
     if (skip) {
@@ -38,7 +42,7 @@ class CompanyController extends CreateController {
     next()
   }
 
-  setTemplate (req, res, next) {
+  setTemplate(req, res, next) {
     const company = req.sessionModel.get('company')
     const options = get(req, 'form.options')
 
@@ -51,7 +55,7 @@ class CompanyController extends CreateController {
     next()
   }
 
-  async setResults (req, res, next) {
+  async setResults(req, res, next) {
     const searchTerm = req.query.term
 
     if (searchTerm) {
@@ -60,15 +64,14 @@ class CompanyController extends CreateController {
           token: req.session.token,
           page: req.query.page,
           searchTerm,
-        })
-          .then(
-            transformApiResponseToSearchCollection(
-              { query: req.query },
-              ENTITIES,
-              transformCompanyToListItem,
-              transformListItemForOrderSource
-            )
+        }).then(
+          transformApiResponseToSearchCollection(
+            { query: req.query },
+            ENTITIES,
+            transformCompanyToListItem,
+            transformListItemForOrderSource
           )
+        )
       } catch (error) {
         return next(error)
       }

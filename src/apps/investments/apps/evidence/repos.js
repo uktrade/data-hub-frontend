@@ -1,15 +1,21 @@
 const config = require('../../../../config')
 const { authorisedRequest } = require('../../../../lib/authorised-request')
 
-function getEvidenceForInvestment (token, investmentId) {
-  return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/evidence-document`)
+function getEvidenceForInvestment(token, investmentId) {
+  return authorisedRequest(
+    token,
+    `${config.apiRoot}/v3/investment/${investmentId}/evidence-document`
+  )
 }
 
-function fetchDownloadLink (token, investmentId, evidenceId) {
-  return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/evidence-document/${evidenceId}/download`)
+function fetchDownloadLink(token, investmentId, evidenceId) {
+  return authorisedRequest(
+    token,
+    `${config.apiRoot}/v3/investment/${investmentId}/evidence-document/${evidenceId}/download`
+  )
 }
 
-function requestDeleteEvidence (token, investmentId, evidenceId) {
+function requestDeleteEvidence(token, investmentId, evidenceId) {
   const options = {
     url: `${config.apiRoot}/v3/investment/${investmentId}/evidence-document/${evidenceId}`,
     method: 'DELETE',

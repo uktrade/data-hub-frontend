@@ -27,8 +27,7 @@ describe('Error Middleware Test', () => {
     it('should log a 404 and drop through to next middleware', () => {
       const nextSpy = sinon.spy()
       const mockResponse = {
-        locals: {
-        },
+        locals: {},
       }
 
       this.errorsStub(isDev).notFound(null, mockResponse, nextSpy)
@@ -50,15 +49,19 @@ describe('Error Middleware Test', () => {
       this.responseMock = {
         status: this.statusStub,
         render: this.renderSpy,
-        locals: {
-        },
+        locals: {},
       }
     })
 
     context('when header have already been sent', () => {
       beforeEach(() => {
         this.responseMock.headersSent = true
-        this.errorsStub(isDev).catchAll(this.error, null, this.responseMock, this.nextSpy)
+        this.errorsStub(isDev).catchAll(
+          this.error,
+          null,
+          this.responseMock,
+          this.nextSpy
+        )
       })
 
       it('should call next middleware with error', () => {
@@ -73,7 +76,12 @@ describe('Error Middleware Test', () => {
 
     context('when not in development mode', () => {
       beforeEach(() => {
-        this.errorsStub(false).catchAll(this.error, null, this.responseMock, this.nextSpy)
+        this.errorsStub(false).catchAll(
+          this.error,
+          null,
+          this.responseMock,
+          this.nextSpy
+        )
       })
 
       it('should send showStackTrace property to template', () => {
@@ -88,7 +96,12 @@ describe('Error Middleware Test', () => {
     context('with a 404 error status code', () => {
       beforeEach(() => {
         this.error.statusCode = errorCode404
-        this.errorsStub(isDev).catchAll(this.error, null, this.responseMock, this.nextSpy)
+        this.errorsStub(isDev).catchAll(
+          this.error,
+          null,
+          this.responseMock,
+          this.nextSpy
+        )
       })
 
       it('should set correct status code on response', () => {
@@ -127,7 +140,12 @@ describe('Error Middleware Test', () => {
     context('with a standard 403 error status code', () => {
       beforeEach(() => {
         this.error.statusCode = errorCode403
-        this.errorsStub(isDev).catchAll(this.error, null, this.responseMock, this.nextSpy)
+        this.errorsStub(isDev).catchAll(
+          this.error,
+          null,
+          this.responseMock,
+          this.nextSpy
+        )
       })
 
       it('should set correct status code on response', () => {
@@ -167,7 +185,12 @@ describe('Error Middleware Test', () => {
       beforeEach(() => {
         this.error.statusCode = errorCode403
         this.error.code = 'EBADCSRFTOKEN'
-        this.errorsStub(isDev).catchAll(this.error, null, this.responseMock, this.nextSpy)
+        this.errorsStub(isDev).catchAll(
+          this.error,
+          null,
+          this.responseMock,
+          this.nextSpy
+        )
       })
 
       it('should set correct status code on response', () => {
@@ -206,7 +229,12 @@ describe('Error Middleware Test', () => {
     context('with a 500 error status code', () => {
       beforeEach(() => {
         this.error.statusCode = errorCode500
-        this.errorsStub(isDev).catchAll(this.error, null, this.responseMock, this.nextSpy)
+        this.errorsStub(isDev).catchAll(
+          this.error,
+          null,
+          this.responseMock,
+          this.nextSpy
+        )
       })
 
       it('should set correct status code on response', () => {
@@ -245,7 +273,12 @@ describe('Error Middleware Test', () => {
     context('with no error status code', () => {
       beforeEach(() => {
         this.statusCode = 500
-        this.errorsStub(isDev).catchAll(this.error, null, this.responseMock, this.nextSpy)
+        this.errorsStub(isDev).catchAll(
+          this.error,
+          null,
+          this.responseMock,
+          this.nextSpy
+        )
       })
 
       it('should set correct status code on response', () => {

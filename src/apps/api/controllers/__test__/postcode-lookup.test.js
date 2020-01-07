@@ -8,18 +8,20 @@ describe('postcodeLookupHandler', () => {
       json: sinon.spy(),
       status: sinon.stub().returnsThis(),
     }
-    this.lookupAddressStub = sinon.stub().resolves([
-      { country: 'united kingdom' },
-    ])
+    this.lookupAddressStub = sinon
+      .stub()
+      .resolves([{ country: 'united kingdom' }])
     this.controller = proxyquire('../postcode-lookup', {
       '../services': {
-        lookupAddress: postcode => this.lookupAddressStub(postcode),
+        lookupAddress: (postcode) => this.lookupAddressStub(postcode),
       },
       '../../../lib/metadata': {
-        countryOptions: [{
-          id: '1234',
-          name: 'United Kingdom',
-        }],
+        countryOptions: [
+          {
+            id: '1234',
+            name: 'United Kingdom',
+          },
+        ],
       },
     })
   })
@@ -38,7 +40,8 @@ describe('postcodeLookupHandler', () => {
       this.statusCode = 400
       this.message = 'error'
       this.lookupAddressStub = sinon.stub().throws({
-        statusCode: this.statusCode, message: this.message,
+        statusCode: this.statusCode,
+        message: this.message,
       })
       await this.controller.postcodeLookupHandler(this.req, this.resMock)
     })

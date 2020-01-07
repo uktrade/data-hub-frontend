@@ -50,69 +50,84 @@ module.exports = {
   },
   commands: [
     {
-      selectListOption (listName, optionNumber) {
-        return this
-          .click(`select[name="${listName}"] option:nth-child(${optionNumber})`)
+      selectListOption(listName, optionNumber) {
+        return this.click(
+          `select[name="${listName}"] option:nth-child(${optionNumber})`
+        )
       },
-      assertVisibleTeamsList (listNumber) {
-        return this
-          .assert.visible('#group-field-teams #group-field-teams:nth-child(' + listNumber + ') select')
+      assertVisibleTeamsList(listNumber) {
+        return this.assert.visible(
+          '#group-field-teams #group-field-teams:nth-child(' +
+            listNumber +
+            ') select'
+        )
       },
-      assertVisibleRelatedProgrammesList (listNumber) {
-        return this
-          .assert.visible('#group-field-related_programmes #group-field-related_programmes:nth-child(' + listNumber + ') select')
+      assertVisibleRelatedProgrammesList(listNumber) {
+        return this.assert.visible(
+          '#group-field-related_programmes #group-field-related_programmes:nth-child(' +
+            listNumber +
+            ') select'
+        )
       },
-      populateCreateEventForm (details = {}, selectUkRegion, callback) {
+      populateCreateEventForm(details = {}, selectUkRegion, callback) {
         const today = new Date()
         const futureDate = addWeeks(today, 1)
-        const event = assign({}, {
-          name: appendUid(faker.company.companyName()),
-          address_1: faker.address.streetName(),
-          address_2: faker.address.secondaryAddress(),
-          address_town: faker.address.city(),
-          postcode: faker.address.zipCode(),
-          start_date_year: format(new Date(), 'YYYY'),
-          start_date_month: format(new Date(), 'MM'),
-          start_date_day: format(new Date(), 'D'),
-          end_date_year: format(futureDate, 'YYYY'),
-          end_date_month: format(futureDate, 'MM'),
-          end_date_day: format(futureDate, 'D'),
-          notes: faker.lorem.sentence(),
-          location_type: null,
-          service: null,
-          event_type: null,
-          address_country: null,
-          lead_team: null,
-          related_programmes: null,
-          teams: null,
-        }, details)
+        const event = assign(
+          {},
+          {
+            name: appendUid(faker.company.companyName()),
+            address_1: faker.address.streetName(),
+            address_2: faker.address.secondaryAddress(),
+            address_town: faker.address.city(),
+            postcode: faker.address.zipCode(),
+            start_date_year: format(new Date(), 'YYYY'),
+            start_date_month: format(new Date(), 'MM'),
+            start_date_day: format(new Date(), 'D'),
+            end_date_year: format(futureDate, 'YYYY'),
+            end_date_month: format(futureDate, 'MM'),
+            end_date_day: format(futureDate, 'D'),
+            notes: faker.lorem.sentence(),
+            location_type: null,
+            service: null,
+            event_type: null,
+            address_country: null,
+            lead_team: null,
+            related_programmes: null,
+            teams: null,
+          },
+          details
+        )
 
-        return this
-          .waitForElementPresent('@sharedYes')
+        return this.waitForElementPresent('@sharedYes')
           .click('@sharedYes')
           .api.perform((done) => {
             Promise.all(
               keys(pickBy(event, isNull)).map((key) => {
                 return new Promise((resolve) => {
                   const selector = `@${camelCase(key)}`
-                  this
-                    .waitForElementPresent(selector)
-                    .getListOption(selector, (optionText) => {
+                  this.waitForElementPresent(selector).getListOption(
+                    selector,
+                    (optionText) => {
                       event[key] = optionText.trim()
                       resolve()
-                    })
+                    }
+                  )
                 })
               })
             )
               .then(() => {
-                if (event.address_country === 'United Kingdom' && selectUkRegion) {
+                if (
+                  event.address_country === 'United Kingdom' &&
+                  selectUkRegion
+                ) {
                   return new Promise((resolve) => {
-                    this
-                      .waitForElementPresent('@ukRegion')
-                      .getListOption('@ukRegion', (ukRegion) => {
+                    this.waitForElementPresent('@ukRegion').getListOption(
+                      '@ukRegion',
+                      (ukRegion) => {
                         event.uk_region = ukRegion
                         resolve()
-                      })
+                      }
+                    )
                   })
                 }
               })
@@ -120,9 +135,10 @@ module.exports = {
                 for (const key in event) {
                   if (event[key]) {
                     const selector = `[name="${key}"]`
-                    this
-                      .waitForElementPresent(selector)
-                      .setValue(selector, event[key])
+                    this.waitForElementPresent(selector).setValue(
+                      selector,
+                      event[key]
+                    )
                   }
                 }
                 done()

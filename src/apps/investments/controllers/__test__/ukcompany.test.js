@@ -61,11 +61,16 @@ describe('investment uk company', () => {
         })
 
         it('should set a flash message to say it updated', () => {
-          expect(this.req.flash).to.be.calledWith('success', 'Investment details updated')
+          expect(this.req.flash).to.be.calledWith(
+            'success',
+            'Investment details updated'
+          )
         })
 
         it('should redirect the user back to the investment details page.', () => {
-          expect(this.res.redirect).to.be.calledWith('/investments/projects/1/details')
+          expect(this.res.redirect).to.be.calledWith(
+            '/investments/projects/1/details'
+          )
         })
       })
 
@@ -203,29 +208,36 @@ describe('investment uk company', () => {
       })
 
       it('should update the investment record', () => {
-        expect(this.updateInvestmentStub).to.be.calledWith('abcd', '1', { uk_company: null })
+        expect(this.updateInvestmentStub).to.be.calledWith('abcd', '1', {
+          uk_company: null,
+        })
       })
 
       it('should redirect back to the details page', () => {
-        expect(this.res.redirect).to.be.calledWith('/investments/projects/1/details')
+        expect(this.res.redirect).to.be.calledWith(
+          '/investments/projects/1/details'
+        )
       })
     })
 
-    context('when there is an error removing the company from the investment', () => {
-      beforeEach(async () => {
-        this.error = sinon.stub()
+    context(
+      'when there is an error removing the company from the investment',
+      () => {
+        beforeEach(async () => {
+          this.error = sinon.stub()
 
-        this.updateInvestmentStub.rejects(this.error)
-        await this.controller.removeUKCompany(this.req, this.res, this.next)
-      })
+          this.updateInvestmentStub.rejects(this.error)
+          await this.controller.removeUKCompany(this.req, this.res, this.next)
+        })
 
-      it('should call next with the error', () => {
-        expect(this.next).to.be.calledWith(this.error)
-      })
+        it('should call next with the error', () => {
+          expect(this.next).to.be.calledWith(this.error)
+        })
 
-      it('should not redirect the user', () => {
-        expect(this.res.redirect).to.not.be.called
-      })
-    })
+        it('should not redirect the user', () => {
+          expect(this.res.redirect).to.not.be.called
+        })
+      }
+    )
   })
 })

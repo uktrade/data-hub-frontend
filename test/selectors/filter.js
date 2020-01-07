@@ -36,7 +36,7 @@ module.exports = {
     country: '#group-field-address_country',
     sector: '#group-field-company_sector_descends',
   },
-  typeahead (id) {
+  typeahead(id) {
     return {
       fieldset: id,
       placeHolder: `${id} .multiselect__tags`,

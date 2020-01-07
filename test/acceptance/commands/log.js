@@ -3,7 +3,7 @@
  * @param message
  * @returns {*|{error}}
  */
-exports.command = function log (message) {
+exports.command = function log(message) {
   return this.perform((done) => {
     console.log(message)
     done()

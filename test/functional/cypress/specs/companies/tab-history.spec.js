@@ -5,7 +5,7 @@ const {
   tabbedLocalNav,
 } = require('../../../../selectors')
 
-const testTab = tabText => {
+const testTab = (tabText) => {
   it(`should return to the tab ${tabText}`, () => {
     cy.get(tabbedLocalNav().tabs)
       .contains(tabText)
@@ -21,8 +21,8 @@ const testTab = tabText => {
 describe('Company tab history', () => {
   before(() => {
     cy.visit(`/companies/${fixtures.company.marsExportsLtd.id}`)
-  });
-  [
+  })
+  ;[
     'Activity',
     'Company contacts',
     'Lead adviser',

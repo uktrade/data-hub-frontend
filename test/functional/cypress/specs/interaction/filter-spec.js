@@ -13,8 +13,7 @@ describe('Interactions Collections Filter', () => {
   it('should filter by sector', () => {
     const sector = selectors.filter.sector
     const { typeahead } = selectors.filter
-    cy
-      .get(typeahead(sector).selectedOption)
+    cy.get(typeahead(sector).selectedOption)
       .click()
       .get(typeahead(sector).textInput)
       .type('Advanced Engineering')
@@ -24,7 +23,7 @@ describe('Interactions Collections Filter', () => {
       .type('{enter}')
       .type('{esc}')
 
-    cy.wait('@filterResults').then(xhr => {
+    cy.wait('@filterResults').then((xhr) => {
       expect(xhr.url).to.contain(
         'sector_descends=af959812-6095-e211-a939-e4115bead28a'
       )

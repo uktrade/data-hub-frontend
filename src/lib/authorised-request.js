@@ -5,11 +5,11 @@ const requestPromise = require('request-promise')
 const config = require('../config')
 const logger = require('../config/logger')
 
-function hasValue (value) {
+function hasValue(value) {
   return !isNil(value)
 }
 
-function stripScript (text) {
+function stripScript(text) {
   const SCRIPT_REGEX = /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi
   while (SCRIPT_REGEX.test(text)) {
     logger.warn('Found script tag in response')
@@ -18,18 +18,18 @@ function stripScript (text) {
   return text
 }
 
-function stripScripts (key, value) {
+function stripScripts(key, value) {
   if (isString(value)) {
     return stripScript(value)
   }
   return value
 }
 
-function parseOptions (opts, token) {
+function parseOptions(opts, token) {
   const defaults = {
     headers: {
       ...opts.headers,
-      ...token ? { 'Authorization': `Bearer ${token}` } : null,
+      ...(token ? { Authorization: `Bearer ${token}` } : null),
     },
     json: true,
     method: 'GET',
@@ -55,7 +55,7 @@ function parseOptions (opts, token) {
 // Accepts options as keys on an object or encoded as a url
 // Responses are parsed to remove any embedded XSS attempts with
 // script tags
-function authorisedRequest (token, opts) {
+function authorisedRequest(token, opts) {
   const requestOptions = parseOptions(opts, token)
 
   logger.debug('Send authorised request: ', requestOptions)
@@ -68,7 +68,7 @@ function authorisedRequest (token, opts) {
 // Responses are not parsed for XSS attacks
 // See request-promise #90 does not work with streams
 // https://github.com/request/request-promise/issues/90
-function authorisedRawRequest (token, opts) {
+function authorisedRawRequest(token, opts) {
   const requestOptions = parseOptions(opts, token)
 
   logger.debug('Send authorised raw request: ', requestOptions)

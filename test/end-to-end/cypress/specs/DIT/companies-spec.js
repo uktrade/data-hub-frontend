@@ -12,8 +12,10 @@ describe('Advisors', () => {
   it('should display advisers for a GHQ for a given company', () => {
     cy.visit(companies.advisers.index('375094ac-f79a-43e5-9c88-059a7caa17f0'))
 
-    cy.get(selectors.collection.contentHeader)
-      .should('contain', 'Advisers on the core team')
+    cy.get(selectors.collection.contentHeader).should(
+      'contain',
+      'Advisers on the core team'
+    )
 
     cy.get(selectors.collection.contentTable(globalManagerTable))
       .should('contain', 'IST - Sector Advisory Services')
@@ -49,8 +51,8 @@ describe('Contacts', () => {
     assertKeyValueTable('bodyMainContent', {
       'Job title': 'Coffee machine operator',
       'Phone number': '(44) 0778877778800',
-      'Address': '12 St George\'s Road, Paris, 75001, France',
-      'Email': 'company.contact@dit.com',
+      Address: "12 St George's Road, Paris, 75001, France",
+      Email: 'company.contact@dit.com',
       'Email marketing': 'Can be marketed to',
     })
   })

@@ -5,7 +5,9 @@ describe('Event Collections Sort', () => {
     cy.server()
     cy.route('/events?*').as('sortResults')
     cy.visit('/events')
-    cy.get(selectors.entityCollection.entities).children().should('have.length', 7)
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 7)
     cy.get(selectors.entityCollection.collection).should('contain', '7 events')
   })
 
@@ -16,7 +18,9 @@ describe('Event Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=name:asc')
     })
 
-    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 2)
     cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort Event')
   })
 
@@ -27,7 +31,9 @@ describe('Event Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=modified_on:asc')
     })
 
-    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 2)
     cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort Event')
   })
 
@@ -38,7 +44,9 @@ describe('Event Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=start_date:asc')
     })
 
-    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 2)
     cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort Event')
   })
 
@@ -49,13 +57,14 @@ describe('Event Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=start_date:desc')
     })
 
-    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 2)
     cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort Event')
   })
 
   it('should only show sort option if there is more than 1 result', () => {
-    cy
-      .get(selectors.filter.name)
+    cy.get(selectors.filter.name)
       .type('FilterByEvent')
       .type('{enter}')
     cy.get(selectors.entityCollection.sort).should('not.be.visible')

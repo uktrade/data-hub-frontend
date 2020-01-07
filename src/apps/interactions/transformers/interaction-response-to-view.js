@@ -6,16 +6,16 @@ const labels = require('../labels')
 const { getDataLabels } = require('../../../lib/controller-utils')
 const groupExportCountries = require('../../../lib/group-export-countries')
 
-function transformEntityLink (entity, entityPath, noLinkText = null) {
+function transformEntityLink(entity, entityPath, noLinkText = null) {
   return entity
     ? {
-      url: `/${entityPath}/${entity.id}`,
-      name: entity.name,
-    }
+        url: `/${entityPath}/${entity.id}`,
+        name: entity.name,
+      }
     : noLinkText
 }
 
-function transformDocumentsLink (archived_documents_url_path) {
+function transformDocumentsLink(archived_documents_url_path) {
   if (archived_documents_url_path) {
     return {
       url: config.archivedDocumentsBaseUrl + archived_documents_url_path,
@@ -28,7 +28,7 @@ function transformDocumentsLink (archived_documents_url_path) {
   return { name: 'There are no files or documents' }
 }
 
-function formatParticipantName (participant) {
+function formatParticipantName(participant) {
   return get(participant, 'team')
     ? `${participant.adviser.name}, ${participant.team.name}`
     : participant.adviser.name
@@ -41,13 +41,12 @@ const excludedServiceStrings = [
   'Enquiry Received',
 ]
 
-function getServiceValues (service) {
+function getServiceValues(service) {
   if (!service) return
 
   const splitServiceName = service.name.split(' : ')
   const serviceName =
-    splitServiceName[1] &&
-    excludedServiceStrings.includes(splitServiceName[0])
+    splitServiceName[1] && excludedServiceStrings.includes(splitServiceName[0])
       ? splitServiceName[1]
       : service.name
 
@@ -57,15 +56,15 @@ function getServiceValues (service) {
   }
 }
 
-function getName (obj) {
+function getName(obj) {
   return obj.name
 }
 
-function getNames (arr = []) {
+function getNames(arr = []) {
   return arr.map(getName).join(', ')
 }
 
-function getCurrency (item) {
+function getCurrency(item) {
   if (item) {
     return {
       type: 'currency',
@@ -76,21 +75,21 @@ function getCurrency (item) {
   return null
 }
 
-function getCountryName (country) {
+function getCountryName(country) {
   return country.name
 }
 
-function getExportCountries (countries) {
+function getExportCountries(countries) {
   const buckets = groupExportCountries(countries)
 
-  for (let status in buckets) {
+  for (const status in buckets) {
     buckets[status] = buckets[status].map(getCountryName).join(', ')
   }
 
   return buckets
 }
 
-function transformInteractionResponseToViewRecord (
+function transformInteractionResponseToViewRecord(
   {
     company,
     notes,
@@ -119,7 +118,9 @@ function transformInteractionResponseToViewRecord (
 
   const viewRecord = {
     company: transformEntityLink(company, 'companies'),
-    contacts: contacts.map(contact => transformEntityLink(contact, 'contacts')),
+    contacts: contacts.map((contact) =>
+      transformEntityLink(contact, 'contacts')
+    ),
     service: getServiceValues(service),
     service_delivery_status,
     grant_amount_offered: getCurrency(grant_amount_offered),

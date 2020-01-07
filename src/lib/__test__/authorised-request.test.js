@@ -5,7 +5,7 @@ let NODE_TLS_REJECT_UNAUTHORIZED
 
 describe('In dev', () => {
   before(() => {
-    ({ PROXY, NODE_TLS_REJECT_UNAUTHORIZED } = process.env)
+    ;({ PROXY, NODE_TLS_REJECT_UNAUTHORIZED } = process.env)
   })
 
   afterEach(() => {

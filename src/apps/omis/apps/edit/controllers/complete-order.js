@@ -4,7 +4,7 @@ const { EditController } = require('../../../controllers')
 const { Order } = require('../../../models')
 
 class CompleteOrderController extends EditController {
-  async configure (req, res, next) {
+  async configure(req, res, next) {
     if (get(res.locals, 'order.status') !== 'paid') {
       return res.redirect(`/omis/${res.locals.order.id}`)
     }
@@ -27,16 +27,20 @@ class CompleteOrderController extends EditController {
     super.configure(req, res, next)
   }
 
-  process (req, res, next) {
-    req.form.values.assignee_actual_time = flatten([req.form.values.assignee_actual_time])
+  process(req, res, next) {
+    req.form.values.assignee_actual_time = flatten([
+      req.form.values.assignee_actual_time,
+    ])
     next()
   }
 
-  async saveValues (req, res, next) {
+  async saveValues(req, res, next) {
     const data = req.form.values
     const timeValues = flatten([data.assignee_actual_time])
     const assignees = timeValues.map((value, index) => {
-      if (!value) { return }
+      if (!value) {
+        return
+      }
 
       return {
         adviser: {
@@ -47,7 +51,11 @@ class CompleteOrderController extends EditController {
     })
 
     try {
-      await Order.saveAssignees(req.session.token, res.locals.order.id, filter(assignees))
+      await Order.saveAssignees(
+        req.session.token,
+        res.locals.order.id,
+        filter(assignees)
+      )
       await Order.complete(req.session.token, res.locals.order.id)
       next()
     } catch (error) {

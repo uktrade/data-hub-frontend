@@ -1,10 +1,12 @@
 const { addClass, removeClass } = require('../lib/helpers')
 
 const CompanyAdd = {
-  init () {
+  init() {
     this.form = document.getElementById('company-add-form')
 
-    if (!this.form) { return }
+    if (!this.form) {
+      return
+    }
 
     const step = this.form.getAttribute('data-step')
 
@@ -13,13 +15,15 @@ const CompanyAdd = {
     }
   },
 
-  step1 () {
+  step1() {
     const otherUkTypeWrapper = document.getElementById('other-uk-type-wrapper')
     const otherUkField = document.getElementById('ukother')
-    const otherForeignTypeWrapper = document.getElementById('other-for-type-wrapper')
+    const otherForeignTypeWrapper = document.getElementById(
+      'other-for-type-wrapper'
+    )
     const otherForeignField = document.getElementById('foreign')
 
-    function updateVisibility () {
+    function updateVisibility() {
       if (otherUkField.checked === true) {
         removeClass(otherUkTypeWrapper, 'u-hidden')
       } else {
@@ -33,7 +37,7 @@ const CompanyAdd = {
       }
     }
 
-    this.form.addEventListener('change', function (event) {
+    this.form.addEventListener('change', function(event) {
       if (event.target.name && event.target.name === 'business_type') {
         updateVisibility()
       }

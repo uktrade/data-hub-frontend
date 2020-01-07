@@ -1,8 +1,8 @@
 const { search, exportSearch } = require('../services')
 const { transformApiResponseToSearchCollection } = require('../transformers')
 
-function getCollection (searchEntity, entityDetails, ...itemTransformers) {
-  return async function (req, res, next) {
+function getCollection(searchEntity, entityDetails, ...itemTransformers) {
+  return async function(req, res, next) {
     try {
       res.locals.results = await search({
         searchEntity,
@@ -10,7 +10,13 @@ function getCollection (searchEntity, entityDetails, ...itemTransformers) {
         token: req.session.token,
         page: req.query.page,
         isAggregation: false,
-      }).then(transformApiResponseToSearchCollection({ query: req.query }, entityDetails, ...itemTransformers))
+      }).then(
+        transformApiResponseToSearchCollection(
+          { query: req.query },
+          entityDetails,
+          ...itemTransformers
+        )
+      )
 
       next()
     } catch (error) {
@@ -19,17 +25,19 @@ function getCollection (searchEntity, entityDetails, ...itemTransformers) {
   }
 }
 
-function exportCollection (searchEntity) {
-  return async function (req, res, next) {
+function exportCollection(searchEntity) {
+  return async function(req, res, next) {
     return exportSearch({
       searchEntity,
       requestBody: req.body,
       token: req.session.token,
-    }).then(apiReq => {
-      return apiReq.pipe(res)
-    }).catch(error => {
-      return next(error)
     })
+      .then((apiReq) => {
+        return apiReq.pipe(res)
+      })
+      .catch((error) => {
+        return next(error)
+      })
   }
 }
 

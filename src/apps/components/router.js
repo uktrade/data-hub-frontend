@@ -20,7 +20,9 @@ const {
 const { adviserLookup } = require('./middleware')
 const { renderFormElements } = require('./form/controllers')
 
-const { transformInvestmentProjectToListItem } = require('../investments/transformers')
+const {
+  transformInvestmentProjectToListItem,
+} = require('../investments/transformers')
 const { getCollection } = require('../../modules/search/middleware/collection')
 
 router
@@ -29,8 +31,13 @@ router
   .get('/entity-list', renderEntityList)
   .get('/local-header', renderLocalHeader)
   .get('/pagination', renderPagination)
-  .get('/collection',
-    getCollection('investment_project', ENTITIES, transformInvestmentProjectToListItem),
+  .get(
+    '/collection',
+    getCollection(
+      'investment_project',
+      ENTITIES,
+      transformInvestmentProjectToListItem
+    ),
     renderCollection
   )
   .get('/progress', renderProgress)

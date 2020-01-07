@@ -12,7 +12,8 @@ module.exports = {
         title: '#field-title',
         titleError: 'label[for=field-title] span:nth-child(2)',
         chooseOneOfThese: '#group-field-feedback_type',
-        chooseOneOfTheseError: '#group-field-feedback_type span.c-form-group__error-message',
+        chooseOneOfTheseError:
+          '#group-field-feedback_type span.c-form-group__error-message',
         description: '#field-description',
         email: '#field-email',
         emailError: 'label[for=field-email] span:nth-child(2)',

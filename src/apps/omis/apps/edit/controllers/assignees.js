@@ -6,7 +6,7 @@ const { transformObjectToOption } = require('../../../../transformers')
 const { Order } = require('../../../models')
 
 class EditAssigneesController extends EditController {
-  async configure (req, res, next) {
+  async configure(req, res, next) {
     try {
       const orderId = get(res.locals, 'order.id')
       const canEditOrder = get(res.locals, 'order.canEditOrder')
@@ -32,9 +32,11 @@ class EditAssigneesController extends EditController {
     }
   }
 
-  async saveValues (req, res, next) {
+  async saveValues(req, res, next) {
     const data = req.form.values
-    const assigneesArray = isString(data.assignees) ? [data.assignees] : data.assignees
+    const assigneesArray = isString(data.assignees)
+      ? [data.assignees]
+      : data.assignees
     const assignees = assigneesArray.map((id) => {
       return {
         adviser: { id },

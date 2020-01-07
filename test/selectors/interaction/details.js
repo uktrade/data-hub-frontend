@@ -1,7 +1,9 @@
 exports.interaction = {
   actions: {
-    completeInteraction: ({ companyId, interactionId }) => `[href="/companies/${companyId}/interactions/${interactionId}/complete"]`,
-    editInteraction: ({ companyId, interactionId }, theme, kind) => `[href="/companies/${companyId}/interactions/${interactionId}/edit/${theme}/${kind}"]`,
+    completeInteraction: ({ companyId, interactionId }) =>
+      `[href="/companies/${companyId}/interactions/${interactionId}/complete"]`,
+    editInteraction: ({ companyId, interactionId }, theme, kind) =>
+      `[href="/companies/${companyId}/interactions/${interactionId}/edit/${theme}/${kind}"]`,
     back: ({ companyId }) => `[href="/companies/${companyId}/interactions/"]`,
   },
   whyCanINotComplete: '[data-auto-id="interactionDetailsWhyCanINotComplete"]',

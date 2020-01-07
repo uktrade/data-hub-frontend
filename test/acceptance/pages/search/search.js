@@ -1,32 +1,26 @@
-const { getSelectorForElementWithText, getButtonWithText } = require('../../helpers/selectors')
+const {
+  getSelectorForElementWithText,
+  getButtonWithText,
+} = require('../../helpers/selectors')
 
 const getSearchResultsTabSelector = (text) =>
-  getSelectorForElementWithText(
-    text,
-    {
-      el: '//ul//li',
-      className: 'c-entity-search__aggregations-item',
-    }
-  )
+  getSelectorForElementWithText(text, {
+    el: '//ul//li',
+    className: 'c-entity-search__aggregations-item',
+  })
 
 const getSelectorForResultWithText = (text) =>
-  getSelectorForElementWithText(
-    text,
-    {
-      el: '//a',
-      className: 'c-entity__link',
-    }
-  )
+  getSelectorForElementWithText(text, {
+    el: '//a',
+    className: 'c-entity__link',
+  })
 
 const getSearchResultSelector = (text) =>
-  getSelectorForElementWithText(
-    text,
-    {
-      el: '//span',
-      className: 'c-meta-list__item-label',
-      child: '/following-sibling::span',
-    }
-  )
+  getSelectorForElementWithText(text, {
+    el: '//span',
+    className: 'c-meta-list__item-label',
+    child: '/following-sibling::span',
+  })
 
 module.exports = {
   url: process.env.QA_HOST,
@@ -38,11 +32,10 @@ module.exports = {
   },
   commands: [
     {
-      search (term) {
-        return this
-          .waitForElementPresent('@term')
+      search(term) {
+        return this.waitForElementPresent('@term')
           .setValue('@term', term)
-          .sendKeys('@term', [ this.api.Keys.ENTER ])
+          .sendKeys('@term', [this.api.Keys.ENTER])
           .waitForElementVisible('@resultsCount') // wait for xhr
       },
     },

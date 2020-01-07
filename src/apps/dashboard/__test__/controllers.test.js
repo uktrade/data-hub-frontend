@@ -134,7 +134,9 @@ describe('dashboard controller', () => {
     })
 
     it('should render the dashboard template', () => {
-      expect(global.resMock.render).to.be.calledWith('dashboard/views/dashboard')
+      expect(global.resMock.render).to.be.calledWith(
+        'dashboard/views/dashboard'
+      )
       expect(global.formatHelpCentreAnnouncementsStub).to.be.called
     })
 
@@ -147,8 +149,9 @@ describe('dashboard controller', () => {
     })
 
     it('should render the company lists', () => {
-      expect(global.resMock.render.firstCall.args[1].companyLists)
-        .to.deep.equal(expectedCompanyLists)
+      expect(
+        global.resMock.render.firstCall.args[1].companyLists
+      ).to.deep.equal(expectedCompanyLists)
     })
   })
 
@@ -167,7 +170,9 @@ describe('dashboard controller', () => {
 
     it('should show an error', () => {
       expect(global.nextSpy).to.have.been.called
-      expect(global.nextSpy.firstCall.args[0]).to.be.instanceof(rpErrors.StatusCodeError)
+      expect(global.nextSpy.firstCall.args[0]).to.be.instanceof(
+        rpErrors.StatusCodeError
+      )
     })
 
     it('should not render the page', () => {
@@ -258,8 +263,7 @@ describe('dashboard controller', () => {
     })
 
     it('company lists should not be rendered', () => {
-      expect(global.resMock.render.firstCall.args[1].companyLists)
-        .to.not.be.ok
+      expect(global.resMock.render.firstCall.args[1].companyLists).to.not.be.ok
     })
   })
 })

@@ -7,19 +7,30 @@ const { clientRelationshipManagementLabels } = require('../../labels')
 const { transformObjectToOption } = require('../../../transformers')
 const config = require('../../../../config')
 
-async function populateForm (req, res, next) {
+async function populateForm(req, res, next) {
   try {
     const { investment } = res.locals
     const { projects } = res.locals.paths
-    const clientRelationshipManager = get(investment, 'client_relationship_manager.id', null)
-    const firstName = get(investment, 'investor_company.one_list_group_global_account_manager.first_name')
-    const lastName = get(investment, 'investor_company.one_list_group_global_account_manager.last_name')
+    const clientRelationshipManager = get(
+      investment,
+      'client_relationship_manager.id',
+      null
+    )
+    const firstName = get(
+      investment,
+      'investor_company.one_list_group_global_account_manager.first_name'
+    )
+    const lastName = get(
+      investment,
+      'investor_company.one_list_group_global_account_manager.last_name'
+    )
     const advisersResponse = await getAdvisers(req.session.token)
     const clientRelationshipManagerOptions = filterActiveAdvisers({
       advisers: advisersResponse.results,
       includeAdviser: clientRelationshipManager,
     }).map(transformObjectToOption)
-    const globalAccountManager = firstName && lastName ? `${firstName} ${lastName}` : 'Not set'
+    const globalAccountManager =
+      firstName && lastName ? `${firstName} ${lastName}` : 'Not set'
 
     res.locals.form = Object.assign({}, res.locals.form, {
       labels: clientRelationshipManagementLabels.edit,
@@ -44,10 +55,12 @@ async function populateForm (req, res, next) {
   }
 }
 
-async function handleFormPost (req, res, next) {
+async function handleFormPost(req, res, next) {
   try {
     res.locals.projectId = req.params.investmentId
-    await updateInvestment(req.session.token, res.locals.projectId, { client_relationship_manager: req.body.client_relationship_manager })
+    await updateInvestment(req.session.token, res.locals.projectId, {
+      client_relationship_manager: req.body.client_relationship_manager,
+    })
     next()
   } catch (err) {
     if (err.statusCode === 400) {

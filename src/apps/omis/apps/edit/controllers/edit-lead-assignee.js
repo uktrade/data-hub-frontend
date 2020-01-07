@@ -2,7 +2,7 @@ const { find, get } = require('lodash')
 
 const { Order } = require('../../../models')
 
-async function editLeadAssignee (req, res, next) {
+async function editLeadAssignee(req, res, next) {
   const adviserId = req.body.adviserId
   const orderId = req.body.orderId
 
@@ -12,7 +12,7 @@ async function editLeadAssignee (req, res, next) {
 
   try {
     const allAssignees = await Order.getAssignees(req.session.token, orderId)
-    const assignees = allAssignees.map(assignee => {
+    const assignees = allAssignees.map((assignee) => {
       return Object.assign(assignee, {
         is_lead: assignee.adviser.id === adviserId,
       })
@@ -21,7 +21,10 @@ async function editLeadAssignee (req, res, next) {
 
     await Order.saveAssignees(req.session.token, orderId, assignees)
 
-    req.flash('success', `Lead adviser in the market set to ${get(leadAdviser, 'adviser.name')}`)
+    req.flash(
+      'success',
+      `Lead adviser in the market set to ${get(leadAdviser, 'adviser.name')}`
+    )
     res.redirect(res.locals.ORIGINAL_URL)
   } catch (error) {
     next(error)

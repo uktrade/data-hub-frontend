@@ -1,7 +1,7 @@
 const { THEMES } = require('../../constants')
 const isValidTheme = require('../is-valid-theme')
 
-function testTheme (assertion) {
+function testTheme(assertion) {
   return (theme) => expect(isValidTheme(theme)).to.equal(assertion)
 }
 
@@ -14,10 +14,7 @@ describe('isValidTheme macro', () => {
 
   context('with invalid themes', () => {
     it('returns false', () => {
-      [
-        'foo',
-        'bar',
-      ].forEach(testTheme(false))
+      ;['foo', 'bar'].forEach(testTheme(false))
     })
   })
 })

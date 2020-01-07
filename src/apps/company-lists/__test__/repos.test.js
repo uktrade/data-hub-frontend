@@ -38,12 +38,14 @@ describe('Company list repository', () => {
         await fetchCompanyList(
           middlewareParameters.reqMock,
           middlewareParameters.resMock,
-          middlewareParameters.nextSpy,
+          middlewareParameters.nextSpy
         )
       })
 
       it('adds the company list to res.locals', () => {
-        expect(middlewareParameters.resMock.locals.companyList).to.be.deep.equal(companyList)
+        expect(
+          middlewareParameters.resMock.locals.companyList
+        ).to.be.deep.equal(companyList)
       })
     })
 
@@ -56,14 +58,16 @@ describe('Company list repository', () => {
         await fetchCompanyList(
           middlewareParameters.reqMock,
           middlewareParameters.resMock,
-          middlewareParameters.nextSpy,
+          middlewareParameters.nextSpy
         )
       })
 
       it('forwards the error to the next middleware', () => {
         expect(middlewareParameters.resMock.locals.companyList).to.be.undefined
         expect(middlewareParameters.nextSpy).to.be.called
-        expect(middlewareParameters.nextSpy.firstCall.args[0]).to.be.instanceof(requestErrors.StatusCodeError)
+        expect(middlewareParameters.nextSpy.firstCall.args[0]).to.be.instanceof(
+          requestErrors.StatusCodeError
+        )
       })
     })
   })
@@ -79,8 +83,16 @@ describe('Company list repository', () => {
     })
 
     it('should return company', async () => {
-      const companyList = await createUserCompanyList('TEST_TOKEN', '1', 'listName')
-      expect(companyList).to.deep.equal({ id: '1', name: 'listName', created_on: '2019' })
+      const companyList = await createUserCompanyList(
+        'TEST_TOKEN',
+        '1',
+        'listName'
+      )
+      expect(companyList).to.deep.equal({
+        id: '1',
+        name: 'listName',
+        created_on: '2019',
+      })
     })
   })
 
@@ -118,7 +130,7 @@ describe('Company list repository', () => {
     })
 
     it('returns a company list', async () => {
-      let companyList = await getCompanyList('token', listId)
+      const companyList = await getCompanyList('token', listId)
       expect(companyList).to.deep.equal(companyListFixture)
     })
   })
@@ -131,9 +143,7 @@ describe('Company list repository', () => {
     })
 
     it('deletes a company list', () => {
-      expect(
-        () => deleteCompanyList('token', listId)
-      ).to.not.throw()
+      expect(() => deleteCompanyList('token', listId)).to.not.throw()
     })
   })
 
@@ -145,9 +155,7 @@ describe('Company list repository', () => {
     })
 
     it('should add a company to a list', () => {
-      expect(
-        () => addCompanyToList('TEST_TOKEN', '1', '2')
-      ).to.not.throw()
+      expect(() => addCompanyToList('TEST_TOKEN', '1', '2')).to.not.throw()
     })
   })
 
@@ -159,9 +167,7 @@ describe('Company list repository', () => {
     })
 
     it('should delete a company from a list', () => {
-      expect(
-        () => removeCompanyFromList('TEST_TOKEN', '1', '2')
-      ).to.not.throw()
+      expect(() => removeCompanyFromList('TEST_TOKEN', '1', '2')).to.not.throw()
     })
   })
 })

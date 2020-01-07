@@ -1,11 +1,10 @@
 const { getSelectorForElementWithText } = require('../helpers/selectors')
 
-const getDetailsTabSelector = (text) => getSelectorForElementWithText(text,
-  {
+const getDetailsTabSelector = (text) =>
+  getSelectorForElementWithText(text, {
     el: '//a',
     className: 'c-local-nav__link',
-  }
-)
+  })
 
 module.exports = {
   url: process.env.QA_HOST,
@@ -17,23 +16,19 @@ module.exports = {
       selector: '.c-local-header',
       commands: [
         {
-          getHeaderMetaValueSelector (text) {
-            return getSelectorForElementWithText(text,
-              {
-                el: '//span',
-                className: 'c-meta-list__item-label',
-                child: '/following-sibling::span',
-              }
-            )
+          getHeaderMetaValueSelector(text) {
+            return getSelectorForElementWithText(text, {
+              el: '//span',
+              className: 'c-meta-list__item-label',
+              child: '/following-sibling::span',
+            })
           },
-          getSelectorForHeaderDescriptionParagraph (text) {
-            return getSelectorForElementWithText(text,
-              {
-                el: '//div',
-                className: 'c-local-header__description',
-                child: '/p',
-              }
-            )
+          getSelectorForHeaderDescriptionParagraph(text) {
+            return getSelectorForElementWithText(text, {
+              el: '//div',
+              className: 'c-local-header__description',
+              child: '/p',
+            })
           },
         },
       ],
@@ -47,21 +42,17 @@ module.exports = {
       selector: '.c-local-nav',
       commands: [
         {
-          getLocalNavLinkSelector (text, className = 'c-local-nav__link') {
-            return getSelectorForElementWithText(text,
-              {
-                className,
-                el: '//a',
-              }
-            )
+          getLocalNavLinkSelector(text, className = 'c-local-nav__link') {
+            return getSelectorForElementWithText(text, {
+              className,
+              el: '//a',
+            })
           },
-          getBadge (text) {
-            return getSelectorForElementWithText(text,
-              {
-                el: '//span',
-                className: 'c-badge',
-              }
-            )
+          getBadge(text) {
+            return getSelectorForElementWithText(text, {
+              el: '//span',
+              className: 'c-badge',
+            })
           },
         },
       ],
@@ -80,13 +71,11 @@ module.exports = {
       selector: '.datahub-header__navigation',
       commands: [
         {
-          getGlobalNavLinkSelector (text) {
-            return getSelectorForElementWithText(text,
-              {
-                el: '//a',
-                className: 'datahub-header__navigation__item__link',
-              }
-            )
+          getGlobalNavLinkSelector(text) {
+            return getSelectorForElementWithText(text, {
+              el: '//a',
+              className: 'datahub-header__navigation__item__link',
+            })
           },
         },
       ],
@@ -94,7 +83,7 @@ module.exports = {
   },
   commands: [
     {
-      getHeading (el, text) {
+      getHeading(el, text) {
         return getSelectorForElementWithText(text, { el })
       },
     },

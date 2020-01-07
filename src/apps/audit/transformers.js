@@ -3,13 +3,13 @@ const { get } = require('lodash')
 const dateFns = require('date-fns')
 const { mediumDateTimeFormat } = require('../../config')
 
-function transformChanges (changes, labels) {
+function transformChanges(changes, labels) {
   return Object.keys(changes)
-    .map(key => labels[key] || key)
+    .map((key) => labels[key] || key)
     .join(', ')
 }
 
-function getChangeCountDisplay (changeCount) {
+function getChangeCountDisplay(changeCount) {
   if (changeCount === 0) {
     return 'No changes saved'
   }
@@ -21,25 +21,30 @@ function getChangeCountDisplay (changeCount) {
   return `${changeCount} changes`
 }
 
-function transformAuditLogToListItem (labels = {}) {
-  return function transformAuditLogItem (logEntry) {
-    const changeCount = (logEntry.changes && Object.keys(logEntry.changes).length) || 0
+function transformAuditLogToListItem(labels = {}) {
+  return function transformAuditLogItem(logEntry) {
+    const changeCount =
+      (logEntry.changes && Object.keys(logEntry.changes).length) || 0
 
     return {
       type: 'audit',
       name: dateFns.format(logEntry.timestamp, mediumDateTimeFormat),
       contentMetaModifier: 'stacked',
-      meta: [{
-        label: 'Adviser',
-        value: get(logEntry, 'user.name') || 'Unknown adviser',
-      }, {
-        label: 'Change count',
-        type: 'badge',
-        value: getChangeCountDisplay(changeCount),
-      }, {
-        label: 'Fields',
-        value: transformChanges(logEntry.changes, labels),
-      }],
+      meta: [
+        {
+          label: 'Adviser',
+          value: get(logEntry, 'user.name') || 'Unknown adviser',
+        },
+        {
+          label: 'Change count',
+          type: 'badge',
+          value: getChangeCountDisplay(changeCount),
+        },
+        {
+          label: 'Fields',
+          value: transformChanges(logEntry.changes, labels),
+        },
+      ],
     }
   }
 }

@@ -1,9 +1,13 @@
 module.exports = {
-  totalInvestmentRadioYes: '[for="field-client_cannot_provide_total_investment-1"]',
-  totalInvestmentRadioNo: '[for="field-client_cannot_provide_total_investment-2"]',
+  totalInvestmentRadioYes:
+    '[for="field-client_cannot_provide_total_investment-1"]',
+  totalInvestmentRadioNo:
+    '[for="field-client_cannot_provide_total_investment-2"]',
   totalInvestment: '#field-total_investment',
-  foreignEquityInvestmentRadioYes: '[for="field-client_cannot_provide_foreign_investment-1"]',
-  foreignEquityInvestmentRadioNo: '[for="field-client_cannot_provide_foreign_investment-2"]',
+  foreignEquityInvestmentRadioYes:
+    '[for="field-client_cannot_provide_foreign_investment-1"]',
+  foreignEquityInvestmentRadioNo:
+    '[for="field-client_cannot_provide_foreign_investment-2"]',
   foreignEquityInvestment: '#field-foreign_equity_investment',
   newJobs: '#field-number_new_jobs',
   safeguardedJobs: '#field-number_safeguarded_jobs',

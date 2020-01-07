@@ -4,7 +4,7 @@ const { getOptions } = require('../../../../../lib/options')
 const { CreateController } = require('../../../controllers')
 
 class SectorController extends CreateController {
-  async configure (req, res, next) {
+  async configure(req, res, next) {
     try {
       const sectors = await getOptions(req.session.token, 'sector')
 
@@ -15,7 +15,7 @@ class SectorController extends CreateController {
     }
   }
 
-  saveValues (req, res, next) {
+  saveValues(req, res, next) {
     if (get(req.form, 'values.use_sector_from_company') === 'true') {
       req.form.values.sector = get(res.locals, 'company.sector.id')
     }

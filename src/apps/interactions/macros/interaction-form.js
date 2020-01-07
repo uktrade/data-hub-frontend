@@ -20,7 +20,7 @@ const {
   countriesDiscussed,
 } = require('./fields')
 
-module.exports = function ({
+module.exports = function({
   returnLink,
   returnText,
   buttonText,
@@ -65,7 +65,7 @@ module.exports = function ({
       },
       feedbackPolicyNotes,
       ...countriesDiscussed(theme, interaction, featureFlags),
-    ].map(field => {
+    ].map((field) => {
       return assign(field, {
         label: field.label || labels.interaction[field.name],
       })

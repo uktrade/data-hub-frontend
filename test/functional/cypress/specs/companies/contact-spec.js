@@ -8,11 +8,18 @@ describe('Companies Contact', () => {
     })
 
     it('should not display the "Add contact" button', () => {
-      cy.get(selectors.companyCollection().contact.addButton(fixtures.company.oneListCorp.id)).should('not.exist')
+      cy.get(
+        selectors
+          .companyCollection()
+          .contact.addButton(fixtures.company.oneListCorp.id)
+      ).should('not.exist')
     })
 
     it('should display the archived summary', () => {
-      cy.get(selectors.companyCollection().archivedSummary).should('contain', 'Why can I not add a contact?')
+      cy.get(selectors.companyCollection().archivedSummary).should(
+        'contain',
+        'Why can I not add a contact?'
+      )
     })
   })
 })

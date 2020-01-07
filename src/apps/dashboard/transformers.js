@@ -3,7 +3,7 @@ const moment = require('moment')
 
 const formatHelpCentreAnnouncements = (feed = {}) => {
   const { articles = [] } = feed
-  return articles.map(item => {
+  return articles.map((item) => {
     if (item.title && item.html_url && item.created_at) {
       return {
         heading: item.title,
@@ -15,7 +15,7 @@ const formatHelpCentreAnnouncements = (feed = {}) => {
 }
 
 const transformCompanyList = ({ results }) => {
-  return results.map(result => {
+  return results.map((result) => {
     const { company, latest_interaction } = result
     return {
       company: {
@@ -25,18 +25,16 @@ const transformCompanyList = ({ results }) => {
       },
       latestInteraction: latest_interaction
         ? {
-          id: latest_interaction.id,
-          date: latest_interaction.date,
-          displayDate: moment(latest_interaction.date).format(
-            'DD MMM YY'
-          ),
-          subject: latest_interaction.subject,
-        }
+            id: latest_interaction.id,
+            date: latest_interaction.date,
+            displayDate: moment(latest_interaction.date).format('DD MMM YY'),
+            subject: latest_interaction.subject,
+          }
         : {
-          displayDate: '-',
-          date: null,
-          subject: 'No interactions have been recorded',
-        },
+            displayDate: '-',
+            date: null,
+            subject: 'No interactions have been recorded',
+          },
     }
   })
 }

@@ -53,7 +53,7 @@ const eventFiltersFields = ({ advisers, userAgent }) => {
       type: 'checkbox',
       modifier: 'option-select',
     }),
-  ].map(filter => {
+  ].map((filter) => {
     return assign(filter, {
       label: collectionFilterLabels.edit[filter.name],
       modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),

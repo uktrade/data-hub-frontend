@@ -24,14 +24,16 @@ module.exports = {
     modifier: ['inline'],
     validate: 'required',
     label: 'fields.use_sector_from_company.label',
-    options: [{
-      value: 'true',
-      label: 'Yes',
-    },
-    {
-      value: 'false',
-      label: 'No',
-    }],
+    options: [
+      {
+        value: 'true',
+        label: 'Yes',
+      },
+      {
+        value: 'false',
+        label: 'No',
+      },
+    ],
   },
   sector: {
     fieldType: 'MultipleChoiceField',

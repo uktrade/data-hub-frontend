@@ -5,20 +5,23 @@ const { buildFormWithStateAndErrors } = require('../../../../builders')
 const { getOptions } = require('../../../../../lib/options')
 const { evidenceForm } = require('../macros/index')
 
-async function renderAddEvidence (req, res) {
+async function renderAddEvidence(req, res) {
   const investment = get(res.locals, 'investment.id')
   const tags = await getOptions(req.session.token, 'evidence-tag')
 
-  const addEvidenceForm = buildFormWithStateAndErrors(evidenceForm(
-    assign({}, res.locals.options, res.locals.conditions, {
-      returnLink: res.locals.returnLink,
-      returnText: 'Cancel',
-      buttonText: 'Upload',
-      tags,
-      hiddenFields: {
-        investment,
-      },
-    })), get(res.locals, 'form.errors.messages'),
+  const addEvidenceForm = buildFormWithStateAndErrors(
+    evidenceForm(
+      assign({}, res.locals.options, res.locals.conditions, {
+        returnLink: res.locals.returnLink,
+        returnText: 'Cancel',
+        buttonText: 'Upload',
+        tags,
+        hiddenFields: {
+          investment,
+        },
+      })
+    ),
+    get(res.locals, 'form.errors.messages')
   )
 
   res

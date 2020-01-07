@@ -41,7 +41,10 @@ describe('HiddenContent macro', () => {
     context('caller', () => {
       beforeEach(() => {
         this.customHTML = '<span>Custom html</span>'
-        this.component = commonMacros.renderWithCallerToDom('HiddenContent', propsMock)(this.customHTML)
+        this.component = commonMacros.renderWithCallerToDom(
+          'HiddenContent',
+          propsMock
+        )(this.customHTML)
       })
 
       it('should render custom body', () => {

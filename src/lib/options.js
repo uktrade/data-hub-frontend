@@ -4,9 +4,7 @@ const config = require('../config')
 const { authorisedRequest } = require('../lib/authorised-request')
 const hawkRequest = require('../lib/hawk-request')
 const { filterDisabledOption } = require('../modules/permissions/filters')
-const {
-  transformObjectToOption,
-} = require('../apps/transformers')
+const { transformObjectToOption } = require('../apps/transformers')
 
 let client, redisAsyncGet
 
@@ -17,7 +15,7 @@ if (!config.isTest) {
   redisAsyncGet = redisClient.asyncGet()
 }
 
-async function fetchOptions (token, url) {
+async function fetchOptions(token, url) {
   let metaData = config.isTest ? null : await redisAsyncGet(url)
 
   if (metaData) {
@@ -31,7 +29,7 @@ async function fetchOptions (token, url) {
   return metaData
 }
 
-async function getOptions (
+async function getOptions(
   token,
   key,
   {
@@ -69,13 +67,13 @@ async function getOptions (
 
   if (term) {
     const lowercaseTerm = term.toLowerCase()
-    options = options.filter(option => {
+    options = options.filter((option) => {
       return option.name.toLowerCase().startsWith(lowercaseTerm)
     })
   }
 
   if (context) {
-    options = options.filter(option => {
+    options = options.filter((option) => {
       return !option.contexts || option.contexts.includes(context)
     })
   }
@@ -89,7 +87,7 @@ async function getOptions (
   return sorted ? sortBy(mappedOptions, sortPropertyName) : mappedOptions
 }
 
-async function getOptionsForId (token, key, id) {
+async function getOptionsForId(token, key, id) {
   const ids = castArray(id)
   const options = []
 

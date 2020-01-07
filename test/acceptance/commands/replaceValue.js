@@ -4,8 +4,6 @@
  * @param value
  * @returns this
  */
-exports.command = function replaceValue (selector, value) {
-  return this
-    .clearValue(selector)
-    .setValue(selector, value)
+exports.command = function replaceValue(selector, value) {
+  return this.clearValue(selector).setValue(selector, value)
 }

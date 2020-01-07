@@ -15,7 +15,7 @@ const { transformServicesOptions } = require('../transformers')
 
 const { SERVICE_DELIVERY_STATUS_COMPLETED } = require('../constants')
 
-async function getInteractionOptions (req, res) {
+async function getInteractionOptions(req, res) {
   const token = req.session.token
   const kind = req.params.kind
   const createdOn = get(res.locals, 'interaction.created_on')
@@ -41,17 +41,17 @@ async function getInteractionOptions (req, res) {
   }
 }
 
-async function getCommonOptions (token, createdOn, req, res) {
+async function getCommonOptions(token, createdOn, req, res) {
   const companyId = get(res.locals, 'company.id')
   const currentAdvisers =
     get(res.locals, 'interaction.dit_participants') &&
     res.locals.interaction.dit_participants.map(
-      participant => participant.adviser && participant.adviser.id
+      (participant) => participant.adviser && participant.adviser.id
     )
 
   const companyContacts = await getContactsForCompany(token, companyId)
   const contacts = companyContacts
-    .filter(contact => !contact.archived)
+    .filter((contact) => !contact.archived)
     .map(transformContactToOption)
 
   const advisers = await getAdvisers(token)
@@ -70,7 +70,7 @@ async function getCommonOptions (token, createdOn, req, res) {
   return commonOptions
 }
 
-async function getInteractionFormOptions (token, createdOn, req, res) {
+async function getInteractionFormOptions(token, createdOn, req, res) {
   const services = await getServiceOptions(req, res, createdOn)
 
   const formOptions = {
@@ -78,17 +78,18 @@ async function getInteractionFormOptions (token, createdOn, req, res) {
     areas: await getOptions(token, 'policy-area', { createdOn }),
     types: await getOptions(token, 'policy-issue-type', { createdOn }),
     channels: await getOptions(token, 'communication-channel', { createdOn }),
-    tapServices: services
-      .reduce(
-        (prev, current) => [
-          ...prev,
-          { ...current },
-          ...current.secondaryOptions,
-        ],
-        []
-      )
-      .filter(service => includes(service.label, '(TAP)'))
-      .map(service => service.value) || [],
+    tapServices:
+      services
+        .reduce(
+          (prev, current) => [
+            ...prev,
+            { ...current },
+            ...current.secondaryOptions,
+          ],
+          []
+        )
+        .filter((service) => includes(service.label, '(TAP)'))
+        .map((service) => service.value) || [],
     statuses: await getOptions(token, 'service-delivery-status', {
       createdOn,
       sorted: false,
@@ -98,7 +99,7 @@ async function getInteractionFormOptions (token, createdOn, req, res) {
   return formOptions
 }
 
-async function getServiceDeliveryFormOptions (token, createdOn, req, res) {
+async function getServiceDeliveryFormOptions(token, createdOn, req, res) {
   const services = await getServiceOptions(req, res, createdOn)
 
   const activeEvents = await getActiveEvents(token, createdOn)
@@ -118,8 +119,8 @@ async function getServiceDeliveryFormOptions (token, createdOn, req, res) {
         ],
         []
       )
-      .filter(service => includes(service.label, '(TAP)'))
-      .map(service => service.value),
+      .filter((service) => includes(service.label, '(TAP)'))
+      .map((service) => service.value),
     statuses: await getOptions(token, 'service-delivery-status', {
       createdOn,
       sorted: false,
@@ -130,13 +131,13 @@ async function getServiceDeliveryFormOptions (token, createdOn, req, res) {
   return formOptions
 }
 
-async function getServiceOptions (req, res, createdOn) {
+async function getServiceOptions(req, res, createdOn) {
   const context = getContextForInteraction(req, res)
   const transformationProps = isInteractionServiceForm(context)
     ? {
-      transformer: transformServicesOptions,
-      transformWithoutMapping: true,
-    }
+        transformer: transformServicesOptions,
+        transformWithoutMapping: true,
+      }
     : {}
   const services = await getOptions(req.session.token, 'service', {
     createdOn,
@@ -147,7 +148,7 @@ async function getServiceOptions (req, res, createdOn) {
   return services
 }
 
-function getContextForInteraction (req, res) {
+function getContextForInteraction(req, res) {
   const { theme = {}, kind } = req.params
 
   if (
@@ -158,9 +159,9 @@ function getContextForInteraction (req, res) {
   }
 
   const getContext = {
-    export: kind =>
+    export: (kind) =>
       kind === 'interaction' ? 'export_interaction' : 'export_service_delivery',
-    other: kind =>
+    other: (kind) =>
       kind === 'interaction' ? 'other_interaction' : 'other_service_delivery',
   }
   return getContext[theme] ? getContext[theme](kind) : 'investment_interaction'

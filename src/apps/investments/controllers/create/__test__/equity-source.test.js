@@ -25,7 +25,9 @@ const searchResults = {
 describe('Investment start controller', () => {
   beforeEach(() => {
     this.next = sinon.stub()
-    this.getCompanyInvestmentProjects = sinon.stub().resolves(investmentProjects)
+    this.getCompanyInvestmentProjects = sinon
+      .stub()
+      .resolves(investmentProjects)
     this.searchForeignCompanies = sinon.stub().resolves(searchResults)
     this.buildPagination = sinon.stub().returns(null)
     this.breadcrumbStub = sinon.stub().returnsThis()
@@ -53,17 +55,21 @@ describe('Investment start controller', () => {
           breadcrumb: this.breadcrumbStub,
         }
 
-        this.controller.getHandler({
-          session: {
-            token,
+        this.controller.getHandler(
+          {
+            session: {
+              token,
+            },
+            query: {},
           },
-          query: {},
-        }, this.resMock, () => {
-          expect(this.resMock.locals.company).to.be.undefined
-          expect(this.resMock.locals.company).to.be.undefined
-          expect(this.resMock.locals.showSearch).to.equal(false)
-          done()
-        })
+          this.resMock,
+          () => {
+            expect(this.resMock.locals.company).to.be.undefined
+            expect(this.resMock.locals.company).to.be.undefined
+            expect(this.resMock.locals.showSearch).to.equal(false)
+            done()
+          }
+        )
       })
     })
 
@@ -77,18 +83,27 @@ describe('Investment start controller', () => {
           breadcrumb: this.breadcrumbStub,
         }
 
-        this.controller.getHandler({
-          session: {
-            token,
+        this.controller.getHandler(
+          {
+            session: {
+              token,
+            },
+            query: {},
           },
-          query: {},
-        }, this.resMock, () => {
-          expect(this.getCompanyInvestmentProjects).to.be.calledWith(token, '12345')
-          expect(this.resMock.locals.company).to.deep.equal(ukCompany)
-          expect(this.resMock.locals.companyInvestments).to.deep.equal(investmentProjects)
-          expect(this.resMock.locals.showSearch).to.equal(true)
-          done()
-        })
+          this.resMock,
+          () => {
+            expect(this.getCompanyInvestmentProjects).to.be.calledWith(
+              token,
+              '12345'
+            )
+            expect(this.resMock.locals.company).to.deep.equal(ukCompany)
+            expect(this.resMock.locals.companyInvestments).to.deep.equal(
+              investmentProjects
+            )
+            expect(this.resMock.locals.showSearch).to.equal(true)
+            done()
+          }
+        )
       })
     })
 
@@ -102,18 +117,27 @@ describe('Investment start controller', () => {
           breadcrumb: this.breadcrumbStub,
         }
 
-        this.controller.getHandler({
-          session: {
-            token,
+        this.controller.getHandler(
+          {
+            session: {
+              token,
+            },
+            query: {},
           },
-          query: {},
-        }, this.resMock, () => {
-          expect(this.getCompanyInvestmentProjects).to.be.calledWith(token, '12345')
-          expect(this.resMock.locals.company).to.deep.equal(foreignCompany)
-          expect(this.resMock.locals.companyInvestments).to.deep.equal(investmentProjects)
-          expect(this.resMock.locals.showSearch).to.equal(false)
-          done()
-        })
+          this.resMock,
+          () => {
+            expect(this.getCompanyInvestmentProjects).to.be.calledWith(
+              token,
+              '12345'
+            )
+            expect(this.resMock.locals.company).to.deep.equal(foreignCompany)
+            expect(this.resMock.locals.companyInvestments).to.deep.equal(
+              investmentProjects
+            )
+            expect(this.resMock.locals.showSearch).to.equal(false)
+            done()
+          }
+        )
       })
 
       it('should render search', (done) => {
@@ -125,17 +149,21 @@ describe('Investment start controller', () => {
           breadcrumb: this.breadcrumbStub,
         }
 
-        this.controller.getHandler({
-          session: {
-            token,
+        this.controller.getHandler(
+          {
+            session: {
+              token,
+            },
+            query: {
+              search: true,
+            },
           },
-          query: {
-            'search': true,
-          },
-        }, this.resMock, () => {
-          expect(this.resMock.locals.showSearch).to.equal(true)
-          done()
-        })
+          this.resMock,
+          () => {
+            expect(this.resMock.locals.showSearch).to.equal(true)
+            done()
+          }
+        )
       })
     })
 
@@ -146,7 +174,7 @@ describe('Investment start controller', () => {
             token,
           },
           query: {
-            'term': 'samsung',
+            term: 'samsung',
           },
         }
         this.resMock = {
@@ -178,39 +206,51 @@ describe('Investment start controller', () => {
   describe('#postHandler', () => {
     describe('when client company is the equity source', () => {
       it('should redirect to the create step', (done) => {
-        this.controller.postHandler({
-          body: {
-            'company_id': '12345',
-            'is_equity_source': 'true',
+        this.controller.postHandler(
+          {
+            body: {
+              company_id: '12345',
+              is_equity_source: 'true',
+            },
           },
-        }, {
-          redirect: (path) => {
-            expect(path).to.equal('/investments/projects/create/project/12345')
-            done()
+          {
+            redirect: (path) => {
+              expect(path).to.equal(
+                '/investments/projects/create/project/12345'
+              )
+              done()
+            },
+            locals: {
+              paths,
+            },
           },
-          locals: {
-            paths,
-          },
-        }, this.next)
+          this.next
+        )
       })
     })
 
     describe('when client company is not the equity source', () => {
       it('should redirect to the start step with search param', (done) => {
-        this.controller.postHandler({
-          body: {
-            'company_id': '12345',
-            'is_equity_source': 'false',
+        this.controller.postHandler(
+          {
+            body: {
+              company_id: '12345',
+              is_equity_source: 'false',
+            },
           },
-        }, {
-          redirect: (path) => {
-            expect(path).to.equal('/investments/projects/create/equity-source/12345?search=true')
-            done()
+          {
+            redirect: (path) => {
+              expect(path).to.equal(
+                '/investments/projects/create/equity-source/12345?search=true'
+              )
+              done()
+            },
+            locals: {
+              paths,
+            },
           },
-          locals: {
-            paths,
-          },
-        }, this.next)
+          this.next
+        )
       })
     })
 
@@ -223,17 +263,23 @@ describe('Investment start controller', () => {
           breadcrumb: this.breadcrumbStub,
         }
 
-        this.controller.postHandler({
-          session: {
-            token,
+        this.controller.postHandler(
+          {
+            session: {
+              token,
+            },
+            body: {
+              company_id: '12345',
+            },
           },
-          body: {
-            'company_id': '12345',
-          },
-        }, this.resMock, () => {
-          expect(this.resMock.locals.form.errors.messages).to.have.property('is_equity_source')
-          done()
-        })
+          this.resMock,
+          () => {
+            expect(this.resMock.locals.form.errors.messages).to.have.property(
+              'is_equity_source'
+            )
+            done()
+          }
+        )
       })
     })
   })

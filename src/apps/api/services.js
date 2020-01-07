@@ -2,17 +2,19 @@ const rp = require('request-promise')
 const config = require('../../config')
 const { trim } = require('lodash')
 
-function lookupAddress (postcode) {
+function lookupAddress(postcode) {
   return new Promise((resolve, reject) => {
-    let formattedPostcode = tidyPostcode(postcode)
+    const formattedPostcode = tidyPostcode(postcode)
 
-    let baseUrl = config.postcodeLookup.baseUrl
-    let postcodeKey = config.postcodeLookup.apiKey
-    let url = baseUrl.replace('{postcode}', formattedPostcode).replace('{api-key}', postcodeKey)
+    const baseUrl = config.postcodeLookup.baseUrl
+    const postcodeKey = config.postcodeLookup.apiKey
+    const url = baseUrl
+      .replace('{postcode}', formattedPostcode)
+      .replace('{api-key}', postcodeKey)
 
     rp({ url, json: true })
       .then((data) => {
-        let parsed = parsePostcodeResult(data, postcode.toLocaleUpperCase())
+        const parsed = parsePostcodeResult(data, postcode.toLocaleUpperCase())
         resolve(parsed)
       })
       .catch((error) => {
@@ -21,18 +23,18 @@ function lookupAddress (postcode) {
   })
 }
 
-function tidyPostcode (postcode) {
+function tidyPostcode(postcode) {
   return postcode.replace(/\s+/g, '').toLocaleLowerCase()
 }
 
-function parsePostcodeResult (data, postcode) {
+function parsePostcodeResult(data, postcode) {
   if (!data || !data.Addresses) {
     return null
   }
 
   return data.Addresses.map((address) => {
-    let split = address.split(',').map(result => trim(result))
-    let parsedAddress = {}
+    const split = address.split(',').map((result) => trim(result))
+    const parsedAddress = {}
     if (split[5].trim().length > 0) {
       parsedAddress.county = split[6]
       parsedAddress.city = split[5]

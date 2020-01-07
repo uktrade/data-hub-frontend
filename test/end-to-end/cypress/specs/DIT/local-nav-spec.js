@@ -1,7 +1,13 @@
 const selectors = require('../../../../selectors')
 const { assertLocalNav } = require('../../support/assertions')
 
-const { companies, contacts, dashboard, events, investments } = require('../../../../../src/lib/urls')
+const {
+  companies,
+  contacts,
+  dashboard,
+  events,
+  investments,
+} = require('../../../../../src/lib/urls')
 
 describe('DIT Permission', () => {
   describe('dashboard', () => {
@@ -57,7 +63,9 @@ describe('DIT Permission', () => {
 
   describe('investment', () => {
     before(() => {
-      cy.visit(investments.projects.project('fb5b5006-56af-40e0-8615-7aba53e0e4bf'))
+      cy.visit(
+        investments.projects.project('fb5b5006-56af-40e0-8615-7aba53e0e4bf')
+      )
     })
 
     it('should display DIT only side navs', () => {
@@ -79,10 +87,7 @@ describe('DIT Permission', () => {
     })
 
     it('should display DIT only side navs', () => {
-      assertLocalNav(selectors.nav.sideNav, [
-        'Details',
-        'Attendee',
-      ])
+      assertLocalNav(selectors.nav.sideNav, ['Details', 'Attendee'])
     })
   })
 })

@@ -2,12 +2,12 @@ const { sortBy } = require('lodash')
 const { authorisedRequest } = require('../../lib/authorised-request')
 const config = require('../../config')
 
-function getContact (token, contactId) {
+function getContact(token, contactId) {
   return authorisedRequest(token, `${config.apiRoot}/v3/contact/${contactId}`)
 }
 
-function saveContact (token, contact) {
-  let options = {
+function saveContact(token, contact) {
+  const options = {
     body: contact,
   }
 
@@ -23,7 +23,7 @@ function saveContact (token, contact) {
   return authorisedRequest(token, options)
 }
 
-function archiveContact (token, contactId, reason) {
+function archiveContact(token, contactId, reason) {
   const options = {
     body: { reason },
     url: `${config.apiRoot}/v3/contact/${contactId}/archive`,
@@ -32,14 +32,14 @@ function archiveContact (token, contactId, reason) {
   return authorisedRequest(token, options)
 }
 
-function unarchiveContact (token, contactId) {
+function unarchiveContact(token, contactId) {
   return authorisedRequest(token, {
     method: 'POST',
     url: `${config.apiRoot}/v3/contact/${contactId}/unarchive`,
   })
 }
 
-async function getContactsForCompany (token, companyId) {
+async function getContactsForCompany(token, companyId) {
   const response = await authorisedRequest(token, {
     url: `${config.apiRoot}/v3/contact`,
     qs: {
@@ -50,10 +50,13 @@ async function getContactsForCompany (token, companyId) {
   return sortBy(response.results, [(name) => name.first_name])
 }
 
-function getContactAuditLog (token, contactId, page = 1) {
+function getContactAuditLog(token, contactId, page = 1) {
   const limit = 10
   const offset = limit * (page - 1)
-  return authorisedRequest(token, `${config.apiRoot}/v3/contact/${contactId}/audit?limit=${limit}&offset=${offset}`)
+  return authorisedRequest(
+    token,
+    `${config.apiRoot}/v3/contact/${contactId}/audit?limit=${limit}&offset=${offset}`
+  )
 }
 
 module.exports = {

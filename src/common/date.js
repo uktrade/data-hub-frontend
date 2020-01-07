@@ -1,7 +1,7 @@
 const { longDateFormat, mediumDateFormat } = require('../config')
 const format = require('date-fns/format')
 
-function formatLongDate (dateString = []) {
+function formatLongDate(dateString = []) {
   if (dateString) {
     return format(parseDateString(dateString), longDateFormat)
   }
@@ -9,7 +9,7 @@ function formatLongDate (dateString = []) {
   return null
 }
 
-function formatMediumDate (dateString = []) {
+function formatMediumDate(dateString = []) {
   if (dateString) {
     return format(parseDateString(dateString), mediumDateFormat)
   }
@@ -17,7 +17,7 @@ function formatMediumDate (dateString = []) {
   return null
 }
 
-function parseDateString (dateString) {
+function parseDateString(dateString) {
   if (dateString.indexOf('/') !== -1) {
     const parts = dateString.split('/')
     return new Date(parts[2], parts[1] - 1, parts[0])

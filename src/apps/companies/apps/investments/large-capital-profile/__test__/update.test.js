@@ -11,15 +11,22 @@ describe('HTTP PATCH - Large capital profile', () => {
   describe('#updateCompanyProfile', () => {
     const commonTests = () => {
       it('should call updateCompanyProfile with the correct arguments', () => {
-        expect(this.updateCompanyProfileStub).to.have.been.calledWith('1234', {}, '123')
+        expect(this.updateCompanyProfileStub).to.have.been.calledWith(
+          '1234',
+          {},
+          '123'
+        )
       })
 
       it('should call redirect once', () => {
-        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
+        expect(this.middlewareParameters.resMock.redirect).to.have.been
+          .calledOnce
       })
 
       it('should call redirect with the correct route', () => {
-        expect(this.middlewareParameters.resMock.redirect).to.be.calledWith(route)
+        expect(this.middlewareParameters.resMock.redirect).to.be.calledWith(
+          route
+        )
       })
 
       it('should not call next', () => {
@@ -43,69 +50,79 @@ describe('HTTP PATCH - Large capital profile', () => {
       })
     })
 
-    context('when updateCompanyProfile for Investor details returns successfully', () => {
-      beforeEach(async () => {
-        this.requestBody = {
-          profileId: '123',
-          editing: 'investor-details',
-        }
+    context(
+      'when updateCompanyProfile for Investor details returns successfully',
+      () => {
+        beforeEach(async () => {
+          this.requestBody = {
+            profileId: '123',
+            editing: 'investor-details',
+          }
 
-        this.middlewareParameters = buildMiddlewareParameters({
-          company: companyMock,
-          requestBody: this.requestBody,
+          this.middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+            requestBody: this.requestBody,
+          })
+
+          this.transformInvestorDetailsStub.returns({})
+
+          nock(config.apiRoot)
+            .patch(`/v4/large-investor-profile/123`)
+            .reply(200, companyProfile)
+
+          await this.controller.updateProfile(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy
+          )
         })
 
-        this.transformInvestorDetailsStub.returns({})
-
-        nock(config.apiRoot)
-          .patch(`/v4/large-investor-profile/123`)
-          .reply(200, companyProfile)
-
-        await this.controller.updateProfile(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
-        )
-      })
-
-      it('should call transformInvestorDetails with the request body', () => {
-        expect(this.transformInvestorDetailsStub).to.have.been.calledWith(this.requestBody)
-      })
-
-      commonTests()
-    })
-
-    context('when updateCompanyProfile for Investor requirements returns successfully', () => {
-      beforeEach(async () => {
-        this.requestBody = {
-          profileId: '123',
-          editing: 'investor-requirements',
-        }
-
-        this.middlewareParameters = buildMiddlewareParameters({
-          company: companyMock,
-          requestBody: this.requestBody,
+        it('should call transformInvestorDetails with the request body', () => {
+          expect(this.transformInvestorDetailsStub).to.have.been.calledWith(
+            this.requestBody
+          )
         })
 
-        this.transformInvestorRequirementsStub.returns({})
+        commonTests()
+      }
+    )
 
-        nock(config.apiRoot)
-          .patch(`/v4/large-investor-profile/123`)
-          .reply(200, companyProfile)
+    context(
+      'when updateCompanyProfile for Investor requirements returns successfully',
+      () => {
+        beforeEach(async () => {
+          this.requestBody = {
+            profileId: '123',
+            editing: 'investor-requirements',
+          }
 
-        await this.controller.updateProfile(
-          this.middlewareParameters.reqMock,
-          this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
-        )
-      })
+          this.middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+            requestBody: this.requestBody,
+          })
 
-      it('should call transformInvestorRequirements with the request body', () => {
-        expect(this.transformInvestorRequirementsStub).to.have.been.calledWith(this.requestBody)
-      })
+          this.transformInvestorRequirementsStub.returns({})
 
-      commonTests()
-    })
+          nock(config.apiRoot)
+            .patch(`/v4/large-investor-profile/123`)
+            .reply(200, companyProfile)
+
+          await this.controller.updateProfile(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock,
+            this.middlewareParameters.nextSpy
+          )
+        })
+
+        it('should call transformInvestorRequirements with the request body', () => {
+          expect(
+            this.transformInvestorRequirementsStub
+          ).to.have.been.calledWith(this.requestBody)
+        })
+
+        commonTests()
+      }
+    )
 
     context('when updateCompanyProfile rejects', () => {
       beforeEach(async () => {
@@ -126,12 +143,14 @@ describe('HTTP PATCH - Large capital profile', () => {
         await this.controller.updateProfile(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          this.middlewareParameters.nextSpy
         )
       })
 
       it('should call next with an error', () => {
-        expect(this.middlewareParameters.nextSpy).to.have.been.calledWith(this.errorMock)
+        expect(this.middlewareParameters.nextSpy).to.have.been.calledWith(
+          this.errorMock
+        )
         expect(this.middlewareParameters.nextSpy).to.have.been.calledOnce
       })
     })

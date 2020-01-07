@@ -1,12 +1,11 @@
-
 /* global JSON:true */
 const moment = require('moment')
 
-function capitalizeFirstLetter (string) {
+function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
-function replaceAll (str, find, replace) {
+function replaceAll(str, find, replace) {
   return str.replace(new RegExp(find, 'g'), replace)
 }
 
@@ -24,7 +23,7 @@ const filter = {}
  * @example {{ "hello world" | log }}
  * @example {{ "hello world" | log | safe }}  [for environments with autoescaping turned on]
  */
-filter.log = function log (a) {
+filter.log = function log(a) {
   return '<script>console.log(' + JSON.stringify(a, null, '\t') + ');</script>'
 }
 
@@ -34,11 +33,14 @@ filter.log = function log (a) {
  * @return {String} a string
  * @example {{ "Hello There" | toCamelCase }} // helloThere
  */
-filter.toCamelCase = function toCamelCase (s) {
-  return s.trim().split(/-| /).reduce(function (pw, cw, i) {
-    pw += (i === 0 ? cw[0].toLowerCase() : cw[0].toUpperCase()) + cw.slice(1)
-    return pw
-  }, '')
+filter.toCamelCase = function toCamelCase(s) {
+  return s
+    .trim()
+    .split(/-| /)
+    .reduce(function(pw, cw, i) {
+      pw += (i === 0 ? cw[0].toLowerCase() : cw[0].toUpperCase()) + cw.slice(1)
+      return pw
+    }, '')
 }
 
 /**
@@ -47,11 +49,14 @@ filter.toCamelCase = function toCamelCase (s) {
  * @return {String}
  * @example {{ "Hello there" | toHyphenated }} // hello-there
  */
-filter.toHyphenated = function toHyphenated (string) {
-  return string.trim().toLowerCase().replace(/\s+/g, '-')
+filter.toHyphenated = function toHyphenated(string) {
+  return string
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, '-')
 }
 
-filter.attributeArray = function attributeArray (list) {
+filter.attributeArray = function attributeArray(list) {
   if (!Array.isArray(list)) {
     return filter.attributeObject(list)
   }
@@ -67,10 +72,10 @@ filter.attributeArray = function attributeArray (list) {
   return result
 }
 
-filter.versionAssetUrl = function (asset) {
-  let env = process.env.NODE_ENV || 'develop'
+filter.versionAssetUrl = function(asset) {
+  const env = process.env.NODE_ENV || 'develop'
   if (env === 'production') {
-    let pos = asset.lastIndexOf('.')
+    const pos = asset.lastIndexOf('.')
     if (pos !== -1) {
       asset = asset.substr(0, pos) + '.min' + asset.substr(pos)
     }
@@ -79,12 +84,12 @@ filter.versionAssetUrl = function (asset) {
   return asset
 }
 
-filter.splitPart = function (value, seperator, part) {
+filter.splitPart = function(value, seperator, part) {
   if (!value || value.length === 0) {
     return ''
   }
 
-  let array = value.split('/')
+  const array = value.split('/')
 
   if (array && array.length < part) {
     return ''
@@ -94,7 +99,7 @@ filter.splitPart = function (value, seperator, part) {
 }
 
 // Accept dates in format dd/mm/yyyy or yyyy-mm-ddThh:MM:ss or yyyy-mm-dd
-function getDateParts (value) {
+function getDateParts(value) {
   if (!value || value.length === 0) {
     return
   }
@@ -103,7 +108,7 @@ function getDateParts (value) {
     value = moment(value).format('DD/MM/YYYY')
   }
 
-  const seperator = (value.indexOf('-') !== -1) ? '-' : '/'
+  const seperator = value.indexOf('-') !== -1 ? '-' : '/'
   if (value.indexOf('T') !== -1) {
     value = value.substr(0, value.indexOf('T'))
   }
@@ -116,7 +121,7 @@ function getDateParts (value) {
   return [parts[2], parts[1], parts[0]]
 }
 
-filter.dateParseDay = function (value) {
+filter.dateParseDay = function(value) {
   if (!value || value.length === 0) return
   const parts = getDateParts(value)
   if (!parts) return
@@ -125,7 +130,7 @@ filter.dateParseDay = function (value) {
   return day
 }
 
-filter.dateParseMonth = function (value) {
+filter.dateParseMonth = function(value) {
   if (!value || value.length === 0) return
   const parts = getDateParts(value)
   if (!parts) return
@@ -134,14 +139,14 @@ filter.dateParseMonth = function (value) {
   return month
 }
 
-filter.dateParseYear = function (value) {
+filter.dateParseYear = function(value) {
   if (!value || value.length === 0) return
   const parts = getDateParts(value)
   if (!parts) return
   return parts[2]
 }
 
-filter.attributeObject = function (myObject) {
+filter.attributeObject = function(myObject) {
   let result = '{'
 
   for (const key in myObject) {
@@ -152,19 +157,19 @@ filter.attributeObject = function (myObject) {
   return result
 }
 
-filter.humanFieldName = function (fieldName) {
+filter.humanFieldName = function(fieldName) {
   fieldName = fieldName.toLocaleLowerCase()
   fieldName = capitalizeFirstLetter(fieldName)
   fieldName = replaceAll(fieldName, '_', ' ')
   return fieldName
 }
 
-function escapeRegExp (str) {
+function escapeRegExp(str) {
   if (str || str.length === 0) return str
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
 }
 
-filter.highlightTerm = function highlightTerm (phrase, term = '') {
+filter.highlightTerm = function highlightTerm(phrase, term = '') {
   try {
     if (!phrase) phrase = ''
     if (phrase.length === 0 || term.length === 0) return phrase
@@ -182,9 +187,11 @@ filter.highlightTerm = function highlightTerm (phrase, term = '') {
  * @param  {String} d   A date string (must be) formatted yyyy-mm-dd
  * @return {String}     a javascript date string
  */
-filter.newDate = function (d) {
+filter.newDate = function(d) {
   const dateArr = d.split('-')
-  return dateArr.length === 3 ? new Date(dateArr[0], parseInt(dateArr[1]) - 1, dateArr[2]) : NaN
+  return dateArr.length === 3
+    ? new Date(dateArr[0], parseInt(dateArr[1]) - 1, dateArr[2])
+    : NaN
 }
 
 /**
@@ -195,10 +202,10 @@ filter.newDate = function (d) {
  * @param  {string} format moment.js format string (to override the default if needed)
  * @return {string} date string as per the current gov.uk standard 09/12/1981 -> 09 December 1981
  */
-filter.date = function (date, format) {
-  format = (format || 'DD MMMM YYYY, h:mm:ss a')
+filter.date = function(date, format) {
+  format = format || 'DD MMMM YYYY, h:mm:ss a'
 
-  let formatted = moment(date).format(format)
+  const formatted = moment(date).format(format)
 
   if (formatted === 'Invalid date') {
     return ''
@@ -207,7 +214,7 @@ filter.date = function (date, format) {
   return formatted
 }
 
-filter.pluralise = function (number, string) {
+filter.pluralise = function(number, string) {
   if (number !== 1) {
     string += 's'
   }
@@ -215,15 +222,15 @@ filter.pluralise = function (number, string) {
   return number + ' ' + string
 }
 
-filter.isArray = function (value) {
+filter.isArray = function(value) {
   return Array.isArray(value)
 }
 
-filter.keys = function (value) {
+filter.keys = function(value) {
   return Object.keys(value)
 }
 
-filter.cellValue = function (value) {
+filter.cellValue = function(value) {
   if (Array.isArray(value)) {
     let list = '<ul>'
     for (const item of value) {
@@ -236,12 +243,12 @@ filter.cellValue = function (value) {
   return value
 }
 
-filter.hasValue = function (value) {
+filter.hasValue = function(value) {
   return value !== null
 }
 
-filter.hasKey = function (value, key) {
-  return (value.hasOwnProperty(key) && value[key] !== null)
+filter.hasKey = function(value, key) {
+  return value.hasOwnProperty(key) && value[key] !== null
 }
 
 module.exports = filter

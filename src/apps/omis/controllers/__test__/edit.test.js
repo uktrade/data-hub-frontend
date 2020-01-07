@@ -46,14 +46,22 @@ describe('OMIS EditController', () => {
       beforeEach(async () => {
         this.orderUpdateStub.resolves(updateMockData)
 
-        await this.controller.saveValues(this.reqMock, this.resMock, this.nextSpy)
+        await this.controller.saveValues(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should call save method on order model', () => {
-        expect(this.orderUpdateStub).to.have.been.calledWith('sessionToken', updateMockData.id, {
-          foo: 'bar',
-          fizz: 'buzz',
-        })
+        expect(this.orderUpdateStub).to.have.been.calledWith(
+          'sessionToken',
+          updateMockData.id,
+          {
+            foo: 'bar',
+            fizz: 'buzz',
+          }
+        )
       })
 
       it('should call next with no arguments', () => {
@@ -67,7 +75,11 @@ describe('OMIS EditController', () => {
         this.errorMock = new Error('Save Error')
         this.orderUpdateStub.rejects(this.errorMock)
 
-        await this.controller.saveValues(this.reqMock, this.resMock, this.nextSpy)
+        await this.controller.saveValues(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should call next with the error', () => {
@@ -106,7 +118,7 @@ describe('OMIS EditController', () => {
       sinon.stub(FormController.prototype, 'getNextStep').returns(this.nextMock)
     })
 
-    context('when a success message doesn\'t exist', () => {
+    context("when a success message doesn't exist", () => {
       beforeEach(() => {
         this.controller.successHandler(this.reqMock, this.resMock)
       })
@@ -122,7 +134,10 @@ describe('OMIS EditController', () => {
 
       it('should get the next value', () => {
         expect(FormController.prototype.getNextStep).to.have.been.calledOnce
-        expect(FormController.prototype.getNextStep).to.have.been.calledWith(this.reqMock, this.resMock)
+        expect(FormController.prototype.getNextStep).to.have.been.calledWith(
+          this.reqMock,
+          this.resMock
+        )
       })
 
       it('should redirect with getNextStep value', () => {
@@ -139,7 +154,10 @@ describe('OMIS EditController', () => {
 
       it('should set a flash message', () => {
         expect(this.flashSpy).to.have.been.calledOnce
-        expect(this.flashSpy).to.have.been.calledWith('success', 'Successfully handled')
+        expect(this.flashSpy).to.have.been.calledWith(
+          'success',
+          'Successfully handled'
+        )
       })
     })
   })
@@ -287,25 +305,28 @@ describe('OMIS EditController', () => {
       })
     })
 
-    context('when a field marked as a date field doesn\'t contain a valid date', () => {
-      it('should return the value', (done) => {
-        const resMock = {
-          locals: {
-            order: {
-              delivery_date: 'not-a-date',
+    context(
+      "when a field marked as a date field doesn't contain a valid date",
+      () => {
+        it('should return the value', (done) => {
+          const resMock = {
+            locals: {
+              order: {
+                delivery_date: 'not-a-date',
+              },
             },
-          },
-        }
-        const nextMock = (e, values) => {
-          expect(values).to.deep.equal({
-            delivery_date: 'not-a-date',
-          })
-          done()
-        }
+          }
+          const nextMock = (e, values) => {
+            expect(values).to.deep.equal({
+              delivery_date: 'not-a-date',
+            })
+            done()
+          }
 
-        this.controller.getValues(this.reqMock, resMock, nextMock)
-      })
-    })
+          this.controller.getValues(this.reqMock, resMock, nextMock)
+        })
+      }
+    )
 
     context('when a field marked as a date field is null', () => {
       it('should not format field as a date', (done) => {
@@ -430,35 +451,38 @@ describe('OMIS EditController', () => {
         })
       })
 
-      context('when the value is an array that contains adviser objects', () => {
-        it('should return the id property', (done) => {
-          const resMock = {
-            locals: {
-              order: {
-                foo: [
-                  {
-                    adviser: { id: 'dcdabbc9-1781-e411-8955-e4115bead28a' },
-                  },
-                  {
-                    adviser: { id: '22651151-2149-465e-871b-ac45bc568a62' },
-                  },
-                ],
+      context(
+        'when the value is an array that contains adviser objects',
+        () => {
+          it('should return the id property', (done) => {
+            const resMock = {
+              locals: {
+                order: {
+                  foo: [
+                    {
+                      adviser: { id: 'dcdabbc9-1781-e411-8955-e4115bead28a' },
+                    },
+                    {
+                      adviser: { id: '22651151-2149-465e-871b-ac45bc568a62' },
+                    },
+                  ],
+                },
               },
-            },
-          }
-          const nextMock = (e, values) => {
-            expect(values).to.deep.equal({
-              foo: [
-                'dcdabbc9-1781-e411-8955-e4115bead28a',
-                '22651151-2149-465e-871b-ac45bc568a62',
-              ],
-            })
-            done()
-          }
+            }
+            const nextMock = (e, values) => {
+              expect(values).to.deep.equal({
+                foo: [
+                  'dcdabbc9-1781-e411-8955-e4115bead28a',
+                  '22651151-2149-465e-871b-ac45bc568a62',
+                ],
+              })
+              done()
+            }
 
-          this.controller.getValues(this.reqMock, resMock, nextMock)
-        })
-      })
+            this.controller.getValues(this.reqMock, resMock, nextMock)
+          })
+        }
+      )
 
       context('when field is a repeatable field', () => {
         it('should convert a string into an array', (done) => {

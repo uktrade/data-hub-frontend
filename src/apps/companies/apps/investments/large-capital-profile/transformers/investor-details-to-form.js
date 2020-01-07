@@ -3,7 +3,9 @@ const { find, get } = require('lodash')
 const moment = require('moment')
 const { requiredChecks: types } = require('../constants')
 
-const { transformAdviserToOption } = require('../../../../../adviser/transformers')
+const {
+  transformAdviserToOption,
+} = require('../../../../../adviser/transformers')
 
 const parseDate = (dateStr) => {
   const date = moment(dateStr, 'YYYY-MM-DD', true)
@@ -29,12 +31,27 @@ const transformInvestorTypes = (investorTypesMetadata, { investorType }) => {
   return investorTypesMetadata
 }
 
-const transformRequiredChecks = (requiredChecksMetadata, { requiredChecks }) => {
+const transformRequiredChecks = (
+  requiredChecksMetadata,
+  { requiredChecks }
+) => {
   const transformed = {
-    cleared: find(requiredChecksMetadata, item => item.text === types.CLEARED),
-    issuesIdentified: find(requiredChecksMetadata, item => item.text === types.ISSUES_IDENTIFIED),
-    notYetChecked: find(requiredChecksMetadata, item => item.text === types.NOT_YET_CHECKED),
-    notRequired: find(requiredChecksMetadata, item => item.text === types.CHECKS_NOT_REQUIRED),
+    cleared: find(
+      requiredChecksMetadata,
+      (item) => item.text === types.CLEARED
+    ),
+    issuesIdentified: find(
+      requiredChecksMetadata,
+      (item) => item.text === types.ISSUES_IDENTIFIED
+    ),
+    notYetChecked: find(
+      requiredChecksMetadata,
+      (item) => item.text === types.NOT_YET_CHECKED
+    ),
+    notRequired: find(
+      requiredChecksMetadata,
+      (item) => item.text === types.CHECKS_NOT_REQUIRED
+    ),
   }
 
   const type = get(requiredChecks, 'type.name')

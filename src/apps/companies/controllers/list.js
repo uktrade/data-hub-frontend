@@ -1,7 +1,10 @@
 const qs = require('querystring')
 const { get, omit, merge } = require('lodash')
 const { companyFiltersFields, companySortForm } = require('../macros')
-const { buildSelectedFiltersSummary, buildFieldsWithSelectedEntities } = require('../../builders')
+const {
+  buildSelectedFiltersSummary,
+  buildFieldsWithSelectedEntities,
+} = require('../../builders')
 const { getOptions } = require('../../../lib/options')
 const { buildExportAction } = require('../../../lib/export-helper')
 
@@ -17,15 +20,13 @@ const exportOptions = {
   entityName: 'company',
 }
 
-async function renderCompanyList (req, res, next) {
+async function renderCompanyList(req, res, next) {
   try {
     const { token, user } = req.session
     const queryString = QUERY_STRING
     const sortForm = merge({}, companySortForm, {
       hiddenFields: { ...omit(req.query, 'sortby') },
-      children: [
-        { value: req.query.sortby },
-      ],
+      children: [{ value: req.query.sortby }],
     })
 
     const sectorOptions = await getOptions(token, SECTOR, { queryString })
@@ -34,10 +35,21 @@ async function renderCompanyList (req, res, next) {
       sectorOptions,
     })
 
-    const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(token, filtersFields, req.query)
-    const selectedFilters = await buildSelectedFiltersSummary(filtersFieldsWithSelectedOptions, req.query)
+    const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(
+      token,
+      filtersFields,
+      req.query
+    )
+    const selectedFilters = await buildSelectedFiltersSummary(
+      filtersFieldsWithSelectedOptions,
+      req.query
+    )
 
-    const exportAction = await buildExportAction(qs.stringify(req.query), user.permissions, exportOptions)
+    const exportAction = await buildExportAction(
+      qs.stringify(req.query),
+      user.permissions,
+      exportOptions
+    )
 
     res.render('_layouts/collection', {
       sortForm,
@@ -47,10 +59,12 @@ async function renderCompanyList (req, res, next) {
       title: 'Companies',
       countLabel: 'company',
       highlightTerm: get(selectedFilters, 'name.valueLabel'),
-      actionButtons: [{
-        label: 'Add company',
-        url: '/companies/create',
-      }],
+      actionButtons: [
+        {
+          label: 'Add company',
+          url: '/companies/create',
+        },
+      ],
     })
   } catch (error) {
     next(error)

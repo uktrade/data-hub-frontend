@@ -32,7 +32,7 @@ var largeCapitalProfileList20 = require('../../../fixtures/v4/investment/large-c
 
 state.investor_description = state.investor_description || ''
 
-exports.largeInvestorProfile = function (req, res) {
+exports.largeInvestorProfile = function(req, res) {
   console.log(req.query.offset)
   console.log(req)
   if (req.query.investor_company_id === companyOneListCorp.id) {
@@ -41,7 +41,10 @@ exports.largeInvestorProfile = function (req, res) {
   if (req.query.investor_company_id === companyLambdaPlc.id) {
     return res.json(largeCapitalProfileNew)
   }
-  if (req.query.investor_company_id === undefined && req.query.offset === '10') {
+  if (
+    req.query.investor_company_id === undefined &&
+    req.query.offset === '10'
+  ) {
     return res.json(largeCapitalProfileList20)
   }
   if (req.query.investor_company_id === undefined && req.query.offset === '0') {
@@ -50,11 +53,11 @@ exports.largeInvestorProfile = function (req, res) {
   res.json(largeCapitalProfileEmpty)
 }
 
-exports.largeInvestorProfilePatched = function (req, res) {
+exports.largeInvestorProfilePatched = function(req, res) {
   res.json(largeCapitalProfile)
 }
 
-exports.largeInvestorProfilePostCreate = function (req, res) {
+exports.largeInvestorProfilePostCreate = function(req, res) {
   if (req.body.investor_company === '400094ac-f79a-43e5-9c88-059a7baa17f3') {
     return res.json(400, largeCapitalProfileCreateError)
   }
@@ -62,7 +65,7 @@ exports.largeInvestorProfilePostCreate = function (req, res) {
   res.json(largeCapitalProfileCreateSuccess)
 }
 
-exports.companies = function (req, res) {
+exports.companies = function(req, res) {
   var subsidiaries = {
     '346f78a5-1d23-4213-b4c2-bf48246a13c3': companyArchivedSubsidiaries,
     '079942718': companyDnBGlobalUltimateSubsidiaries,
@@ -77,7 +80,7 @@ exports.companies = function (req, res) {
   }
 }
 
-exports.company = function (req, res) {
+exports.company = function(req, res) {
   var companies = {
     '4cd4128b-1bad-4f1e-9146-5d4678c6a018': company,
     '346f78a5-1d23-4213-b4c2-bf48246a13c3': companyArchived,
@@ -101,7 +104,7 @@ exports.company = function (req, res) {
       name: 'Not Managed Company',
       id: 'not-managed',
     }),
-    'managed': _.assign({}, company, {
+    managed: _.assign({}, company, {
       name: 'Managed Company',
       id: 'managed',
       one_list_group_global_account_manager: {
@@ -123,11 +126,11 @@ exports.company = function (req, res) {
   res.json(companies[req.params.companyId] || company)
 }
 
-exports.companyPatched = function (req, res) {
+exports.companyPatched = function(req, res) {
   res.json(company)
 }
 
-exports.getCompanyList = function (req, res) {
+exports.getCompanyList = function(req, res) {
   if (req.params.companyId === '0fb3379c-341c-4da4-b825-bf8d47b26baa') {
     return res.json(204, {})
   } else if (req.params.companyId === 'b2c34b41-1d5a-4b4b-9249-7c53ff2868dd') {
@@ -136,10 +139,10 @@ exports.getCompanyList = function (req, res) {
   res.json(200, companyList)
 }
 
-exports.manageAdviser = function (req, res) {
+exports.manageAdviser = function(req, res) {
   return res.json(204, {})
 }
 
-exports.companyAudit = function (req, res) {
+exports.companyAudit = function(req, res) {
   res.json(companyAudit)
 }

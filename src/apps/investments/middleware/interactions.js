@@ -1,6 +1,6 @@
 const { getInvestment } = require('../repos')
 
-function setInteractionsDetails (req, res, next) {
+function setInteractionsDetails(req, res, next) {
   const { projects } = res.locals.paths
   const { name } = res.locals.investment
   const { investmentId } = req.params
@@ -19,9 +19,12 @@ function setInteractionsDetails (req, res, next) {
   next()
 }
 
-async function setCompanyDetails (req, res, next) {
+async function setCompanyDetails(req, res, next) {
   try {
-    const investment = await getInvestment(req.session.token, req.params.investmentId)
+    const investment = await getInvestment(
+      req.session.token,
+      req.params.investmentId
+    )
     res.locals.company = investment.investor_company
     next()
   } catch (error) {

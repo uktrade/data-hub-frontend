@@ -49,7 +49,9 @@ describe('Event details controller', () => {
 
     it('should return transformed events data', () => {
       const options = this.res.render.firstCall.args[1]
-      expect(options).to.have.property('displayEventLabels').and.deep.equal({ label: 'Mare' })
+      expect(options)
+        .to.have.property('displayEventLabels')
+        .and.deep.equal({ label: 'Mare' })
     })
   })
 })

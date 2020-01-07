@@ -1,14 +1,20 @@
-const { getAllCompanyLists, getListsCompanyIsIn, addCompanyToList, removeCompanyFromList } = require('../repos')
+const {
+  getAllCompanyLists,
+  getListsCompanyIsIn,
+  addCompanyToList,
+  removeCompanyFromList,
+} = require('../repos')
 const { transformCompaniesInLists } = require('../transformers')
 const urls = require('../../../lib/urls')
 
-async function handleAddRemoveCompanyToList (req, res, next) {
+async function handleAddRemoveCompanyToList(req, res, next) {
   const { list } = req.body
   const { id } = res.locals.company
   const listsToUpdate = []
   try {
-    for (let [listId, value] of Object.entries(list)) {
-      const addOrRemoveCompany = (value === 'yes' ? addCompanyToList : removeCompanyFromList)
+    for (const [listId, value] of Object.entries(list)) {
+      const addOrRemoveCompany =
+        value === 'yes' ? addCompanyToList : removeCompanyFromList
       listsToUpdate.push(addOrRemoveCompany(req.session.token, listId, id))
     }
     await Promise.all(listsToUpdate)
@@ -20,20 +26,23 @@ async function handleAddRemoveCompanyToList (req, res, next) {
   }
 }
 
-async function fetchListsCompanyIsOn (req, res, next) {
+async function fetchListsCompanyIsOn(req, res, next) {
   try {
     const [allLists, allListsCompaniesIn] = await Promise.all([
       getAllCompanyLists(req.session.token),
       getListsCompanyIsIn(req.session.token, res.locals.company.id),
     ])
-    res.locals.listsCompanyIsIn = await transformCompaniesInLists(allLists, allListsCompaniesIn)
+    res.locals.listsCompanyIsIn = await transformCompaniesInLists(
+      allLists,
+      allListsCompaniesIn
+    )
     next()
   } catch (error) {
     next(error)
   }
 }
 
-async function renderAddRemoveForm (req, res, next) {
+async function renderAddRemoveForm(req, res, next) {
   const { company, listsCompanyIsIn, csrfToken } = res.locals
   const cancelLinkUrl = req.query.returnUrl || urls.dashboard()
 

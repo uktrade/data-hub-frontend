@@ -2,10 +2,12 @@ const { get, merge, sumBy } = require('lodash')
 
 const { transformSubscriberToView } = require('../../transformers')
 
-function renderWorkOrder (req, res) {
+function renderWorkOrder(req, res) {
   const order = res.locals.order
   const assignees = res.locals.assignees
-  const subscribers = get(res.locals, 'subscribers', []).map(transformSubscriberToView(get(res.locals, 'user.id')))
+  const subscribers = get(res.locals, 'subscribers', []).map(
+    transformSubscriberToView(get(res.locals, 'user.id'))
+  )
 
   const values = merge({}, order, {
     assignees,
@@ -19,16 +21,14 @@ function renderWorkOrder (req, res) {
   })
 }
 
-function renderQuote (req, res) {
+function renderQuote(req, res) {
   const orderStatus = get(res.locals, 'order.status')
   const heading = `Quote${orderStatus === 'draft' ? ' preview' : ''}`
 
-  res
-    .breadcrumb(heading)
-    .render('omis/apps/view/views/quote')
+  res.breadcrumb(heading).render('omis/apps/view/views/quote')
 }
 
-function renderPaymentReceipt (req, res) {
+function renderPaymentReceipt(req, res) {
   const { id, status } = get(res.locals, 'order')
 
   if (!['paid', 'complete'].includes(status)) {

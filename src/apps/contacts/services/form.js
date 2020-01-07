@@ -14,7 +14,7 @@ const contactsRepository = require('../repos')
  * @param {Object} contact A contact in API format
  * @returns {Object} A flattened copy of the contact form in a format to use in a form
  */
-function getContactAsFormData (contact) {
+function getContactAsFormData(contact) {
   if (!contact) {
     return null
   }
@@ -31,13 +31,13 @@ function getContactAsFormData (contact) {
     first_name: contact.first_name,
     last_name: contact.last_name,
     job_title: contact.job_title,
-    primary: (contact.primary) ? 'yes' : 'no',
+    primary: contact.primary ? 'yes' : 'no',
     telephone_number: contact.telephone_number,
     telephone_countrycode: contact.telephone_countrycode,
     email: contact.email,
     accepts_dit_email_marketing: contact.accepts_dit_email_marketing,
     rejects_dit_email_marketing: !contact.accepts_dit_email_marketing,
-    address_same_as_company: (contact.address_same_as_company) ? 'yes' : 'no',
+    address_same_as_company: contact.address_same_as_company ? 'yes' : 'no',
     address_1: contact.address_1,
     address_2: contact.address_2,
     address_town: contact.address_town,
@@ -61,17 +61,25 @@ function getContactAsFormData (contact) {
  * @returns {Promise} Returns a promise that resolves to a copy of the saved contact in API
  * format after the server has saved it
  */
-function saveContactForm (token, contactForm) {
+function saveContactForm(token, contactForm) {
   return new Promise(async (resolve, reject) => {
     try {
       const contactFormWithYesNoAsBool = convertYesNoToBoolean(contactForm)
-      const contactFormWithEmptyAsNull = nullEmptyFields(contactFormWithYesNoAsBool)
-      const transformedContactForm = convertNestedObjects(contactFormWithEmptyAsNull, ['title', 'company', 'address_country'])
+      const contactFormWithEmptyAsNull = nullEmptyFields(
+        contactFormWithYesNoAsBool
+      )
+      const transformedContactForm = convertNestedObjects(
+        contactFormWithEmptyAsNull,
+        ['title', 'company', 'address_country']
+      )
       const contactFormForApiRequest = merge({}, transformedContactForm, {
         // database is positive on accepts, negative on rejects; UI is reverse, so flip that here
-        accepts_dit_email_marketing: !contactForm.rejects_dit_email_marketing }
+        accepts_dit_email_marketing: !contactForm.rejects_dit_email_marketing,
+      })
+      const savedContact = await contactsRepository.saveContact(
+        token,
+        contactFormForApiRequest
       )
-      const savedContact = await contactsRepository.saveContact(token, contactFormForApiRequest)
       resolve(savedContact)
     } catch (error) {
       reject(error)

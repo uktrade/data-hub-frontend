@@ -5,8 +5,13 @@ describe('Company Collections Sort', () => {
     cy.server()
     cy.route('/companies?*').as('sortResults')
     cy.visit('/companies?sortby=collectionTest')
-    cy.get(selectors.entityCollection.entities).children().should('have.length', 9)
-    cy.get(selectors.entityCollection.collection).should('contain', '100,172 companies')
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 9)
+    cy.get(selectors.entityCollection.collection).should(
+      'contain',
+      '100,172 companies'
+    )
   })
 
   it('should sort by AZ', () => {
@@ -16,7 +21,9 @@ describe('Company Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=name:asc')
     })
 
-    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 2)
     cy.get(selectors.entityCollection.entity(1)).should('contain', 'SortByAZ')
   })
 
@@ -27,8 +34,13 @@ describe('Company Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=modified_on:asc')
     })
 
-    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
-    cy.get(selectors.entityCollection.entity(1)).should('contain', 'SortByLeastRecent')
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 2)
+    cy.get(selectors.entityCollection.entity(1)).should(
+      'contain',
+      'SortByLeastRecent'
+    )
   })
 
   it('should sort by most recent', () => {
@@ -38,7 +50,12 @@ describe('Company Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=modified_on:desc')
     })
 
-    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
-    cy.get(selectors.entityCollection.entity(1)).should('contain', 'SortByMostRecent')
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 2)
+    cy.get(selectors.entityCollection.entity(1)).should(
+      'contain',
+      'SortByMostRecent'
+    )
   })
 })

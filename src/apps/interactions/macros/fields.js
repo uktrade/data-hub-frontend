@@ -6,7 +6,7 @@ const canAddCountries = require('./can-add-countries')
 const { EXPORT_INTEREST_STATUS_VALUES } = require('../../constants')
 
 module.exports = {
-  adviser (advisers) {
+  adviser(advisers) {
     return {
       macroName: 'AddAnother',
       buttonName: 'add_item',
@@ -28,7 +28,7 @@ module.exports = {
       ],
     }
   },
-  contact (contacts) {
+  contact(contacts) {
     return {
       macroName: 'AddAnother',
       buttonName: 'add_item',
@@ -46,7 +46,7 @@ module.exports = {
       ],
     }
   },
-  policyAreas (areas) {
+  policyAreas(areas) {
     return {
       macroName: 'AddAnother',
       buttonName: 'add_item',
@@ -64,7 +64,7 @@ module.exports = {
       ],
     }
   },
-  service (services) {
+  service(services) {
     const primaryOptionsValues = services.map(
       ({ value, label, isControlledBySecondary }) => {
         return {
@@ -84,17 +84,17 @@ module.exports = {
     })
 
     const serviceQuestions = flattenDeep(
-      services.map(service => {
+      services.map((service) => {
         if (!service.secondaryOptions.length) {
           return service.interactionQuestions
         }
-        return service.secondaryOptions.map(secondaryOption => {
+        return service.secondaryOptions.map((secondaryOption) => {
           return secondaryOption.interactionQuestions
         })
       })
     )
 
-    const serviceIds = primaryOptionsValues.map(service => service.value)
+    const serviceIds = primaryOptionsValues.map((service) => service.value)
     const primaryOptions = [
       {
         macroName: 'MultipleChoiceField',
@@ -122,7 +122,7 @@ module.exports = {
           },
         }
       })
-      .filter(x => x)
+      .filter((x) => x)
 
     const tertiaryOptions = serviceQuestions.map((option, index) => {
       return {
@@ -132,7 +132,7 @@ module.exports = {
         type: 'radio',
         value: option.label,
         modifier: 'subfield',
-        options: option.options.map(option => {
+        options: option.options.map((option) => {
           return {
             label: option.label,
             name: option.value,
@@ -148,7 +148,7 @@ module.exports = {
 
     return [...primaryOptions, ...secondaryOptions, ...tertiaryOptions]
   },
-  feedbackPolicyIssueType (types) {
+  feedbackPolicyIssueType(types) {
     return {
       macroName: 'MultipleChoiceField',
       type: 'checkbox',
@@ -209,7 +209,7 @@ module.exports = {
     macroName: 'FormSubHeading',
     heading: 'Service',
   },
-  participantsHeading (companyName) {
+  participantsHeading(companyName) {
     return {
       macroName: 'FormSubHeading',
       heading: 'Interaction Participants',
@@ -224,7 +224,7 @@ module.exports = {
     macroName: 'FormSubHeading',
     heading: 'Notes',
   },
-  communicationChannel (channels) {
+  communicationChannel(channels) {
     return {
       macroName: 'MultipleChoiceField',
       name: 'communication_channel',
@@ -233,43 +233,45 @@ module.exports = {
     }
   },
   countriesDiscussed: (theme, interaction, featureFlags) => {
-    return !canAddCountries(theme, interaction, featureFlags) ? [] : [
-      {
-        macroName: 'MultipleChoiceField',
-        type: 'radio',
-        name: 'were_countries_discussed',
-        modifier: 'inline',
-        optional: false,
-        options: [
+    return !canAddCountries(theme, interaction, featureFlags)
+      ? []
+      : [
           {
-            label: 'Yes',
-            value: 'true',
+            macroName: 'MultipleChoiceField',
+            type: 'radio',
+            name: 'were_countries_discussed',
+            modifier: 'inline',
+            optional: false,
+            options: [
+              {
+                label: 'Yes',
+                value: 'true',
+              },
+              {
+                label: 'No',
+                value: 'false',
+              },
+            ],
           },
-          {
-            label: 'No',
-            value: 'false',
-          },
-        ],
-      },
-      ...EXPORT_INTEREST_STATUS_VALUES.map((name) => ({
-        macroName: 'Typeahead',
-        name,
-        hint: 'Add all that you discussed',
-        modifier: 'subfield',
-        condition: {
-          name: 'were_countries_discussed',
-          value: 'true',
-        },
-        isAsync: false,
-        isLabelHidden: false,
-        useSubLabel: false,
-        placeholder: 'Search countries',
-        classes: 'c-form-group--no-filter',
-        multipleSelect: true,
-        options: globalFields.countries.options(),
-        target: 'metadata',
-        autoSubmit: false,
-      })),
-    ]
+          ...EXPORT_INTEREST_STATUS_VALUES.map((name) => ({
+            macroName: 'Typeahead',
+            name,
+            hint: 'Add all that you discussed',
+            modifier: 'subfield',
+            condition: {
+              name: 'were_countries_discussed',
+              value: 'true',
+            },
+            isAsync: false,
+            isLabelHidden: false,
+            useSubLabel: false,
+            placeholder: 'Search countries',
+            classes: 'c-form-group--no-filter',
+            multipleSelect: true,
+            options: globalFields.countries.options(),
+            target: 'metadata',
+            autoSubmit: false,
+          })),
+        ]
   },
 }

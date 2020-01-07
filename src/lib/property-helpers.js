@@ -6,19 +6,23 @@
  *
  * @param {any} data
  */
-function nullEmptyFields (data) {
+function nullEmptyFields(data) {
   const cleanedObject = Object.assign({}, data)
   const fieldNames = Object.keys(cleanedObject)
   for (const fieldName of fieldNames) {
     const fieldValue = cleanedObject[fieldName]
-    if (fieldValue !== null && typeof fieldValue === 'string' && fieldValue.length === 0) {
+    if (
+      fieldValue !== null &&
+      typeof fieldValue === 'string' &&
+      fieldValue.length === 0
+    ) {
       cleanedObject[fieldName] = null
     }
   }
   return cleanedObject
 }
 
-function deleteNulls (data) {
+function deleteNulls(data) {
   const nullableObject = Object.assign({}, data)
   const fieldNames = Object.keys(nullableObject)
   for (const fieldName of fieldNames) {
@@ -37,7 +41,7 @@ function deleteNulls (data) {
  * @param {string} key
  * @returns {string|null} the name for the object
  */
-function getPropertyName (object, key) {
+function getPropertyName(object, key) {
   if (object && typeof object === 'object' && object[key] && object[key].name) {
     return object[key].name
   }
@@ -51,7 +55,7 @@ function getPropertyName (object, key) {
  * @param {string} key
  * @returns {string|null} the ID for the object
  */
-function getPropertyId (object, key) {
+function getPropertyId(object, key) {
   if (object && typeof object === 'object' && object[key] && object[key].id) {
     return object[key].id
   }
@@ -63,7 +67,7 @@ function getPropertyId (object, key) {
  *
  * @param {Object} object
  */
-function convertYesNoToBoolean (object) {
+function convertYesNoToBoolean(object) {
   const convertedObject = Object.assign({}, object)
   const keys = Object.keys(convertedObject)
 
@@ -84,12 +88,12 @@ function convertYesNoToBoolean (object) {
 }
 
 /**
-* Convert fk relationships from flat to 1-level deep
-*
-* @param {Object} object
-* @param {Array} props
-*/
-function convertNestedObjects (object = {}, props = []) {
+ * Convert fk relationships from flat to 1-level deep
+ *
+ * @param {Object} object
+ * @param {Array} props
+ */
+function convertNestedObjects(object = {}, props = []) {
   const convertedObject = Object.assign({}, object)
 
   for (const prop of props) {

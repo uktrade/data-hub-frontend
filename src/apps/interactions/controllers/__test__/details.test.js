@@ -20,13 +20,16 @@ describe('Interaction details controller', () => {
         detailsController.renderDetailsPage(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          this.middlewareParameters.nextSpy
         )
       })
 
       it('should set the breadcrumb', () => {
-        expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWithExactly('Interaction')
-        expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledOnce
+        expect(
+          this.middlewareParameters.resMock.breadcrumb
+        ).to.be.calledWithExactly('Interaction')
+        expect(this.middlewareParameters.resMock.breadcrumb).to.have.been
+          .calledOnce
       })
 
       it('should set the title', () => {
@@ -34,23 +37,35 @@ describe('Interaction details controller', () => {
       })
 
       it('should render the interaction details template', () => {
-        expect(this.middlewareParameters.resMock.render).to.be.calledWith('interactions/views/details')
+        expect(this.middlewareParameters.resMock.render).to.be.calledWith(
+          'interactions/views/details'
+        )
       })
 
       it('should render the template with interaction data', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].interactionViewRecord).to.exist
+        expect(
+          this.middlewareParameters.resMock.render.firstCall.args[1]
+            .interactionViewRecord
+        ).to.exist
       })
 
       it('should render the template with Document details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].interactionViewRecord.Documents).to.exist
+        expect(
+          this.middlewareParameters.resMock.render.firstCall.args[1]
+            .interactionViewRecord.Documents
+        ).to.exist
       })
 
       it('should render the template with canComplete as false', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].canComplete).to.be.false
+        expect(
+          this.middlewareParameters.resMock.render.firstCall.args[1].canComplete
+        ).to.be.false
       })
 
       it('should render the template with canEdit as true', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].canEdit).to.be.true
+        expect(
+          this.middlewareParameters.resMock.render.firstCall.args[1].canEdit
+        ).to.be.true
       })
     })
 
@@ -66,37 +81,54 @@ describe('Interaction details controller', () => {
         detailsController.renderDetailsPage(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          this.middlewareParameters.nextSpy
         )
       })
 
       it('should set the breadcrumb', () => {
-        expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWithExactly('Service delivery')
-        expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledOnce
+        expect(
+          this.middlewareParameters.resMock.breadcrumb
+        ).to.be.calledWithExactly('Service delivery')
+        expect(this.middlewareParameters.resMock.breadcrumb).to.have.been
+          .calledOnce
       })
 
       it('should set the title', () => {
-        expect(this.middlewareParameters.resMock.title).to.be.calledWith('Test interactions')
+        expect(this.middlewareParameters.resMock.title).to.be.calledWith(
+          'Test interactions'
+        )
       })
 
       it('should render the interaction details template', () => {
-        expect(this.middlewareParameters.resMock.render).to.be.calledWith('interactions/views/details')
+        expect(this.middlewareParameters.resMock.render).to.be.calledWith(
+          'interactions/views/details'
+        )
       })
 
       it('should render the template with interaction data', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].interactionViewRecord).to.exist
+        expect(
+          this.middlewareParameters.resMock.render.firstCall.args[1]
+            .interactionViewRecord
+        ).to.exist
       })
 
       it('should render the template with Document details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].interactionViewRecord.Documents).to.exist
+        expect(
+          this.middlewareParameters.resMock.render.firstCall.args[1]
+            .interactionViewRecord.Documents
+        ).to.exist
       })
 
       it('should render the template with canComplete as false', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].canComplete).to.be.false
+        expect(
+          this.middlewareParameters.resMock.render.firstCall.args[1].canComplete
+        ).to.be.false
       })
 
       it('should render the template with canEdit as true', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].canEdit).to.be.true
+        expect(
+          this.middlewareParameters.resMock.render.firstCall.args[1].canEdit
+        ).to.be.true
       })
     })
 
@@ -112,37 +144,54 @@ describe('Interaction details controller', () => {
         detailsController.renderDetailsPage(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          this.middlewareParameters.nextSpy
         )
       })
 
       it('should set the breadcrumb', () => {
-        expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWithExactly('Interaction')
-        expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledOnce
+        expect(
+          this.middlewareParameters.resMock.breadcrumb
+        ).to.be.calledWithExactly('Interaction')
+        expect(this.middlewareParameters.resMock.breadcrumb).to.have.been
+          .calledOnce
       })
 
       it('should set the title', () => {
-        expect(this.middlewareParameters.resMock.title).to.be.calledWith('Future meeting between Brendan and Theodore')
+        expect(this.middlewareParameters.resMock.title).to.be.calledWith(
+          'Future meeting between Brendan and Theodore'
+        )
       })
 
       it('should render the interaction details template', () => {
-        expect(this.middlewareParameters.resMock.render).to.be.calledWith('interactions/views/details')
+        expect(this.middlewareParameters.resMock.render).to.be.calledWith(
+          'interactions/views/details'
+        )
       })
 
       it('should render the template without Document details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].interactionViewRecord.Documents).to.not.exist
+        expect(
+          this.middlewareParameters.resMock.render.firstCall.args[1]
+            .interactionViewRecord.Documents
+        ).to.not.exist
       })
 
       it('should render the template with interaction data', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].interactionViewRecord).to.exist
+        expect(
+          this.middlewareParameters.resMock.render.firstCall.args[1]
+            .interactionViewRecord
+        ).to.exist
       })
 
       it('should render the template with canComplete as true', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].canComplete).to.be.false
+        expect(
+          this.middlewareParameters.resMock.render.firstCall.args[1].canComplete
+        ).to.be.false
       })
 
       it('should render the template with canEdit as false', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].canEdit).to.be.false
+        expect(
+          this.middlewareParameters.resMock.render.firstCall.args[1].canEdit
+        ).to.be.false
       })
     })
 
@@ -158,37 +207,54 @@ describe('Interaction details controller', () => {
         detailsController.renderDetailsPage(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          this.middlewareParameters.nextSpy
         )
       })
 
       it('should set the breadcrumb', () => {
-        expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWithExactly('Interaction')
-        expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledOnce
+        expect(
+          this.middlewareParameters.resMock.breadcrumb
+        ).to.be.calledWithExactly('Interaction')
+        expect(this.middlewareParameters.resMock.breadcrumb).to.have.been
+          .calledOnce
       })
 
       it('should set the title', () => {
-        expect(this.middlewareParameters.resMock.title).to.be.calledWith('Past meeting between Brendan and Theodore')
+        expect(this.middlewareParameters.resMock.title).to.be.calledWith(
+          'Past meeting between Brendan and Theodore'
+        )
       })
 
       it('should render the interaction details template', () => {
-        expect(this.middlewareParameters.resMock.render).to.be.calledWith('interactions/views/details')
+        expect(this.middlewareParameters.resMock.render).to.be.calledWith(
+          'interactions/views/details'
+        )
       })
 
       it('should render the template without Document details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].interactionViewRecord.Documents).to.not.exist
+        expect(
+          this.middlewareParameters.resMock.render.firstCall.args[1]
+            .interactionViewRecord.Documents
+        ).to.not.exist
       })
 
       it('should render the template with interaction data', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].interactionViewRecord).to.exist
+        expect(
+          this.middlewareParameters.resMock.render.firstCall.args[1]
+            .interactionViewRecord
+        ).to.exist
       })
 
       it('should render the template with canComplete as true', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].canComplete).to.be.true
+        expect(
+          this.middlewareParameters.resMock.render.firstCall.args[1].canComplete
+        ).to.be.true
       })
 
       it('should render the template with canEdit as false', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].canEdit).to.be.false
+        expect(
+          this.middlewareParameters.resMock.render.firstCall.args[1].canEdit
+        ).to.be.false
       })
     })
 
@@ -207,37 +273,54 @@ describe('Interaction details controller', () => {
         detailsController.renderDetailsPage(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          this.middlewareParameters.nextSpy
         )
       })
 
       it('should set the breadcrumb', () => {
-        expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWithExactly('Interaction')
-        expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledOnce
+        expect(
+          this.middlewareParameters.resMock.breadcrumb
+        ).to.be.calledWithExactly('Interaction')
+        expect(this.middlewareParameters.resMock.breadcrumb).to.have.been
+          .calledOnce
       })
 
       it('should set the title', () => {
-        expect(this.middlewareParameters.resMock.title).to.be.calledWith('Past meeting between Brendan and Theodore')
+        expect(this.middlewareParameters.resMock.title).to.be.calledWith(
+          'Past meeting between Brendan and Theodore'
+        )
       })
 
       it('should render the interaction details template', () => {
-        expect(this.middlewareParameters.resMock.render).to.be.calledWith('interactions/views/details')
+        expect(this.middlewareParameters.resMock.render).to.be.calledWith(
+          'interactions/views/details'
+        )
       })
 
       it('should render the template without Document details', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].interactionViewRecord.Documents).to.not.exist
+        expect(
+          this.middlewareParameters.resMock.render.firstCall.args[1]
+            .interactionViewRecord.Documents
+        ).to.not.exist
       })
 
       it('should render the template with interaction data', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].interactionViewRecord).to.exist
+        expect(
+          this.middlewareParameters.resMock.render.firstCall.args[1]
+            .interactionViewRecord
+        ).to.exist
       })
 
       it('should render the template with canComplete as false', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].canComplete).to.be.false
+        expect(
+          this.middlewareParameters.resMock.render.firstCall.args[1].canComplete
+        ).to.be.false
       })
 
       it('should render the template with canEdit as false', () => {
-        expect(this.middlewareParameters.resMock.render.firstCall.args[1].canEdit).to.be.false
+        expect(
+          this.middlewareParameters.resMock.render.firstCall.args[1].canEdit
+        ).to.be.false
       })
     })
   })

@@ -10,13 +10,13 @@ const CONSTANTS = {
 const PreventLinkDoubleClick = {
   counter: 0,
 
-  init () {
+  init() {
     if (document.querySelectorAll(`.${CONSTANTS.selectors.anchor}`).length) {
       this.bindEvents()
     }
   },
 
-  preventDoubleClick (event) {
+  preventDoubleClick(event) {
     const target = event.target
     const targetAnchor = target.closest(`.${CONSTANTS.selectors.anchor}`)
 
@@ -31,8 +31,11 @@ const PreventLinkDoubleClick = {
     }
   },
 
-  bindEvents () {
-    document.addEventListener(CONSTANTS.events.click, this.preventDoubleClick.bind(this))
+  bindEvents() {
+    document.addEventListener(
+      CONSTANTS.events.click,
+      this.preventDoubleClick.bind(this)
+    )
   },
 }
 

@@ -1,9 +1,4 @@
-const {
-  isPlainObject,
-  isFunction,
-  isEmpty,
-  assign,
-} = require('lodash')
+const { isPlainObject, isFunction, isEmpty, assign } = require('lodash')
 
 const { buildPagination } = require('../../../lib/pagination') // TODO: We should not be dependent on this
 
@@ -14,31 +9,38 @@ const { buildPagination } = require('../../../lib/pagination') // TODO: We shoul
  * @param {...function} [itemTransformers] - an array of transformer functions to apply for each item in the list
  * @returns {object, undefined}
  */
-function transformApiResponseToCollection (options = {}, ...itemTransformers) {
+function transformApiResponseToCollection(options = {}, ...itemTransformers) {
   /**
    * @param {object} response - API response object
    * @returns {function}
    */
-  return function transformResponseToCollection (response) {
-    if (!isPlainObject(response)) { return }
+  return function transformResponseToCollection(response) {
+    if (!isPlainObject(response)) {
+      return
+    }
 
     let items = response.results || response.items
 
-    if (!items) { return }
+    if (!items) {
+      return
+    }
 
-    itemTransformers.forEach(transformer => {
-      if (!isFunction(transformer)) { return }
-      items = items
-        .map(transformer)
-        .filter(item => !isEmpty(item))
+    itemTransformers.forEach((transformer) => {
+      if (!isFunction(transformer)) {
+        return
+      }
+      items = items.map(transformer).filter((item) => !isEmpty(item))
     })
 
-    return assign({}, {
-      items,
-      count: response.count,
-      summary: response.summary,
-      pagination: buildPagination(options.query, response),
-    })
+    return assign(
+      {},
+      {
+        items,
+        count: response.count,
+        summary: response.summary,
+        pagination: buildPagination(options.query, response),
+      }
+    )
   }
 }
 

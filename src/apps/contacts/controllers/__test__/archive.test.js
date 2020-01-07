@@ -1,6 +1,6 @@
 const proxyquire = require('proxyquire')
 
-const next = function (error) {
+const next = function(error) {
   throw Error(error)
 }
 
@@ -24,7 +24,7 @@ describe('Contact controller, archive', () => {
     })
     flashStub = sinon.stub()
   })
-  it('should call the archive contact method for the id and reason', function (done) {
+  it('should call the archive contact method for the id and reason', function(done) {
     const req = {
       session: { token },
       body: { archived_reason: 'test', archived_reason_other: '' },
@@ -34,14 +34,18 @@ describe('Contact controller, archive', () => {
     const res = {
       locals: {},
       redirect: () => {
-        expect(contactRepositoryArchiveContactStub).to.be.calledWith(token, id, req.body.archived_reason)
+        expect(contactRepositoryArchiveContactStub).to.be.calledWith(
+          token,
+          id,
+          req.body.archived_reason
+        )
         done()
       },
     }
 
     contactArchiveController.archiveContact(req, res, next)
   })
-  it('should call the archive contact method for the id and other reason', function (done) {
+  it('should call the archive contact method for the id and other reason', function(done) {
     const req = {
       session: { token },
       body: { archived_reason: 'Other', archived_reason_other: 'otherreason' },
@@ -51,7 +55,11 @@ describe('Contact controller, archive', () => {
     const res = {
       locals: {},
       redirect: () => {
-        expect(contactRepositoryArchiveContactStub).to.be.calledWith(token, id, req.body.archived_reason_other)
+        expect(contactRepositoryArchiveContactStub).to.be.calledWith(
+          token,
+          id,
+          req.body.archived_reason_other
+        )
         done()
       },
     }
@@ -59,7 +67,7 @@ describe('Contact controller, archive', () => {
     contactArchiveController.archiveContact(req, res, next)
   })
 
-  it('should send a flash message that all went well', function (done) {
+  it('should send a flash message that all went well', function(done) {
     const req = {
       session: { token },
       body: { archived_reason: 'Other', archived_reason_other: 'otherreason' },
@@ -68,7 +76,7 @@ describe('Contact controller, archive', () => {
     }
     const res = {
       locals: {},
-      redirect: function (url) {
+      redirect: function(url) {
         expect(flashStub).to.be.calledWith('success', 'Contact record updated')
         done()
       },
@@ -76,7 +84,7 @@ describe('Contact controller, archive', () => {
 
     contactArchiveController.archiveContact(req, res, next)
   })
-  it('should sent a flash message if there was a problem', function (done) {
+  it('should sent a flash message if there was a problem', function(done) {
     const req = {
       session: { token },
       body: { archived_reason: 'Other', archived_reason_other: '' },
@@ -85,15 +93,18 @@ describe('Contact controller, archive', () => {
     }
     const res = {
       locals: {},
-      redirect: function (url) {
-        expect(flashStub).to.be.calledWith('error', 'Unable to archive contact, no reason given')
+      redirect: function(url) {
+        expect(flashStub).to.be.calledWith(
+          'error',
+          'Unable to archive contact, no reason given'
+        )
         done()
       },
     }
 
     contactArchiveController.archiveContact(req, res, next)
   })
-  it('should call unarchive', function (done) {
+  it('should call unarchive', function(done) {
     const req = {
       session: { token },
       params: { id },
@@ -102,14 +113,17 @@ describe('Contact controller, archive', () => {
     const res = {
       locals: {},
       redirect: () => {
-        expect(contactRepositoryUnArchiveContactStub).to.be.calledWith(token, id)
+        expect(contactRepositoryUnArchiveContactStub).to.be.calledWith(
+          token,
+          id
+        )
         done()
       },
     }
 
     contactArchiveController.unarchiveContact(req, res, next)
   })
-  it('should handle errors when you archive a contact', function (done) {
+  it('should handle errors when you archive a contact', function(done) {
     const error = Error('error')
     contactRepositoryArchiveContactStub = sinon.stub().rejects(error)
     contactArchiveController = proxyquire('../archive', {
@@ -130,14 +144,14 @@ describe('Contact controller, archive', () => {
         throw Error('Should have called next')
       },
     }
-    const next = function (_error) {
+    const next = function(_error) {
       expect(_error).to.deep.equal(error)
       done()
     }
 
     contactArchiveController.archiveContact(req, res, next)
   })
-  it('should handle errors when you unarchive a contact', function (done) {
+  it('should handle errors when you unarchive a contact', function(done) {
     const error = Error('error')
     contactRepositoryUnArchiveContactStub = sinon.stub().rejects(error)
     contactArchiveController = proxyquire('../archive', {
@@ -158,7 +172,7 @@ describe('Contact controller, archive', () => {
         throw Error('Should have called next')
       },
     }
-    const next = function (_error) {
+    const next = function(_error) {
       expect(_error).to.deep.equal(error)
       done()
     }

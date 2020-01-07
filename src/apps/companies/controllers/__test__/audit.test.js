@@ -15,7 +15,8 @@ describe('Company audit controller', () => {
         getCompanyAuditLog: this.getCompanyAuditLogStub,
       },
       '../../../modules/api/transformers': {
-        transformApiResponseToCollection: this.transformApiResponseToCollectionSpy,
+        transformApiResponseToCollection: this
+          .transformApiResponseToCollectionSpy,
       },
       '../../audit/transformers': {
         transformAuditLogToListItem: this.transformAuditLogToListItemSpy,
@@ -34,12 +35,16 @@ describe('Company audit controller', () => {
       await this.controller.renderAuditLog(
         this.middlewareParameters.reqMock,
         this.middlewareParameters.resMock,
-        this.middlewareParameters.nextSpy,
+        this.middlewareParameters.nextSpy
       )
     })
 
     it('should call audit log with correct arguments', () => {
-      expect(this.getCompanyAuditLogStub).to.have.been.calledWith('1234', companyMock.id, 1)
+      expect(this.getCompanyAuditLogStub).to.have.been.calledWith(
+        '1234',
+        companyMock.id,
+        1
+      )
     })
 
     it('should call api transformer', () => {
@@ -51,30 +56,47 @@ describe('Company audit controller', () => {
     })
 
     it('should set three breadcrumbs', () => {
-      expect(this.middlewareParameters.resMock.breadcrumb).to.have.been.calledThrice
+      expect(this.middlewareParameters.resMock.breadcrumb).to.have.been
+        .calledThrice
     })
 
     it('should set the company breadcrumb', () => {
-      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWithExactly(companyMock.name, `/companies/${companyMock.id}`)
+      expect(
+        this.middlewareParameters.resMock.breadcrumb
+      ).to.be.calledWithExactly(
+        companyMock.name,
+        `/companies/${companyMock.id}`
+      )
     })
 
     it('should set the business details breadcrumb', () => {
-      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWithExactly('Business details', `/companies/${companyMock.id}/business-details`)
+      expect(
+        this.middlewareParameters.resMock.breadcrumb
+      ).to.be.calledWithExactly(
+        'Business details',
+        `/companies/${companyMock.id}/business-details`
+      )
     })
 
     it('should set the audit breadcrumb', () => {
-      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWithExactly('Audit history')
+      expect(
+        this.middlewareParameters.resMock.breadcrumb
+      ).to.be.calledWithExactly('Audit history')
     })
 
     it('should render the correct template', () => {
-      expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal('companies/views/audit')
+      expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(
+        'companies/views/audit'
+      )
       expect(this.middlewareParameters.resMock.render).to.have.been.calledOnce
     })
 
     it('should send the correct template data', () => {
-      expect(this.middlewareParameters.resMock.render.args[0][1]).to.deep.equal({
-        auditLog: auditLogMock,
-      })
+      expect(this.middlewareParameters.resMock.render.args[0][1]).to.deep.equal(
+        {
+          auditLog: auditLogMock,
+        }
+      )
     })
   })
 
@@ -93,12 +115,14 @@ describe('Company audit controller', () => {
       await this.controller.renderAuditLog(
         this.middlewareParameters.reqMock,
         this.middlewareParameters.resMock,
-        this.middlewareParameters.nextSpy,
+        this.middlewareParameters.nextSpy
       )
     })
 
     it('should call next with error', () => {
-      expect(this.middlewareParameters.nextSpy).to.have.been.calledWith(this.errorMock)
+      expect(this.middlewareParameters.nextSpy).to.have.been.calledWith(
+        this.errorMock
+      )
       expect(this.middlewareParameters.nextSpy).to.have.been.calledOnce
     })
   })

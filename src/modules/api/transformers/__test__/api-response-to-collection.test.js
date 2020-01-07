@@ -3,17 +3,17 @@ const proxyquire = require('proxyquire')
 describe('#transformApiResponseToCollection', () => {
   beforeEach(() => {
     this.buildPaginationSpy = sinon.spy()
-    this.transformApiResponseToCollection = proxyquire('../api-response-to-collection', {
-      '../../../lib/pagination': {
-        buildPagination: this.buildPaginationSpy,
-      },
-    })
+    this.transformApiResponseToCollection = proxyquire(
+      '../api-response-to-collection',
+      {
+        '../../../lib/pagination': {
+          buildPagination: this.buildPaginationSpy,
+        },
+      }
+    )
     this.mockResponse = {
       count: 2,
-      results: [
-        { a: 'A' },
-        { b: 'B' },
-      ],
+      results: [{ a: 'A' }, { b: 'B' }],
     }
   })
 
@@ -37,7 +37,10 @@ describe('#transformApiResponseToCollection', () => {
     const actual = this.transformApiResponseToCollection()(this.mockResponse)
 
     expect(actual).to.have.property('count', 2)
-    expect(actual).to.have.property('items').to.be.an('array').and.have.length(2)
+    expect(actual)
+      .to.have.property('items')
+      .to.be.an('array')
+      .and.have.length(2)
     expect(actual).to.have.property('pagination')
     expect(this.buildPaginationSpy).to.be.called
   })
@@ -45,7 +48,9 @@ describe('#transformApiResponseToCollection', () => {
   context('when an item transformer is specified with arguments', () => {
     beforeEach(() => {
       this.itemTransformerInnerSpy = sinon.spy()
-      this.itemTransformerSpy = sinon.stub().returns(this.itemTransformerInnerSpy)
+      this.itemTransformerSpy = sinon
+        .stub()
+        .returns(this.itemTransformerInnerSpy)
       this.itemTransformerOptions = { query: { term: 'bobby' } }
 
       this.transformApiResponseToCollection(
@@ -55,19 +60,27 @@ describe('#transformApiResponseToCollection', () => {
     })
 
     it('call the item transformer with the arguments', () => {
-      expect(this.itemTransformerSpy).to.be.calledWith(this.itemTransformerOptions)
+      expect(this.itemTransformerSpy).to.be.calledWith(
+        this.itemTransformerOptions
+      )
     })
   })
 
   context('when there are multiple item transformers', () => {
     beforeEach(() => {
-      this.firstItemTransformerStub = sinon.stub()
-        .onCall(0).returns({ id: '0' })
-        .onCall(1).returns({ id: '1' })
+      this.firstItemTransformerStub = sinon
+        .stub()
+        .onCall(0)
+        .returns({ id: '0' })
+        .onCall(1)
+        .returns({ id: '1' })
 
-      this.secondItemTransformerStub = sinon.stub()
-        .onCall(0).returns({ id: 'a0' })
-        .onCall(1).returns({ id: 'a1' })
+      this.secondItemTransformerStub = sinon
+        .stub()
+        .onCall(0)
+        .returns({ id: 'a0' })
+        .onCall(1)
+        .returns({ id: 'a1' })
 
       this.result = this.transformApiResponseToCollection(
         undefined,
@@ -86,15 +99,20 @@ describe('#transformApiResponseToCollection', () => {
     })
 
     it('should pass all the items through', () => {
-      expect(this.result).to.have.property('items').to.have.length(2)
+      expect(this.result)
+        .to.have.property('items')
+        .to.have.length(2)
     })
   })
 
   context('when the item transformer fails for an item', () => {
     beforeEach(() => {
-      const itemTransformerStub = sinon.stub()
-        .onCall(0).returns(undefined)
-        .onCall(1).returns({ id: '1' })
+      const itemTransformerStub = sinon
+        .stub()
+        .onCall(0)
+        .returns(undefined)
+        .onCall(1)
+        .returns({ id: '1' })
 
       this.result = this.transformApiResponseToCollection(
         undefined,

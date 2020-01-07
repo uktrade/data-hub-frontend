@@ -3,7 +3,7 @@ const { get } = require('lodash')
 const { formatLongDate } = require('../../../common/date')
 const { getInvestmentProjectAuditLog } = require('../repos')
 
-function formatAuditLog (logEntry) {
+function formatAuditLog(logEntry) {
   return {
     name: get(logEntry, 'user.name'),
     timestamp: formatLongDate(logEntry.timestamp),
@@ -11,17 +11,18 @@ function formatAuditLog (logEntry) {
   }
 }
 
-async function getInvestmentAudit (req, res, next) {
+async function getInvestmentAudit(req, res, next) {
   try {
     if (get(res, 'locals.investment')) {
-      const rawAuditLog = await getInvestmentProjectAuditLog(req.session.token, req.params.investmentId)
+      const rawAuditLog = await getInvestmentProjectAuditLog(
+        req.session.token,
+        req.params.investmentId
+      )
       const auditLog = rawAuditLog.map(formatAuditLog)
 
-      return res
-        .breadcrumb('Audit history')
-        .render('investments/views/audit', {
-          auditLog,
-        })
+      return res.breadcrumb('Audit history').render('investments/views/audit', {
+        auditLog,
+      })
     }
 
     return next()

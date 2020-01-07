@@ -8,7 +8,7 @@ const { format } = require('date-fns')
 const Form = client.page.form()
 const Event = client.page.events.event()
 
-When(/^I change start date to decrease year by one$/, async function () {
+When(/^I change start date to decrease year by one$/, async function() {
   const currentDate = new Date()
   const form = {}
 
@@ -16,19 +16,19 @@ When(/^I change start date to decrease year by one$/, async function () {
     set(form, 'state', result.value)
   })
 
-  await Event
-    .api.perform(() => {
-      const start_date_year = form.state.start_date_year || format(currentDate, 'YYYY')
+  await Event.api.perform(() => {
+    const start_date_year =
+      form.state.start_date_year || format(currentDate, 'YYYY')
 
-      this.state = assign({}, this.state, {
-        start_date_year: parseInt(start_date_year, 10) - 1,
-        start_date_month: form.state.start_date_month || format(currentDate, 'MM'),
-        start_date_day: form.state.start_date_day || format(currentDate, 'DD'),
-      })
-
-      return Event
-        .replaceValue('@startDateYear', this.state.start_date_year)
-        .replaceValue('@startDateMonth', this.state.start_date_month)
-        .replaceValue('@startDateDay', this.state.start_date_day)
+    this.state = assign({}, this.state, {
+      start_date_year: parseInt(start_date_year, 10) - 1,
+      start_date_month:
+        form.state.start_date_month || format(currentDate, 'MM'),
+      start_date_day: form.state.start_date_day || format(currentDate, 'DD'),
     })
+
+    return Event.replaceValue('@startDateYear', this.state.start_date_year)
+      .replaceValue('@startDateMonth', this.state.start_date_month)
+      .replaceValue('@startDateDay', this.state.start_date_day)
+  })
 })

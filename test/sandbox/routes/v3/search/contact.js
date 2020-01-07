@@ -3,9 +3,9 @@ var contactFilter = require('../../../fixtures/v3/search/filter/contact-filter.j
 var contactWithAttributes = require('../../../fixtures/v3/search/contact-with-attributes.json')
 var contactSortBy = require('../../../fixtures/v3/search/sort/contact-sort-by.json')
 
-exports.contacts = function (req, res) {
+exports.contacts = function(req, res) {
   var contactsList = {
-    'collectionTest': contactWithAttributes,
+    collectionTest: contactWithAttributes,
     'created_on:desc': contactSortBy,
     'created_on:asc': contactSortBy,
     'modified_on:desc': contactSortBy,
@@ -15,11 +15,13 @@ exports.contacts = function (req, res) {
     'last_name:asc': contactSortBy,
   }
 
-  if (req.body.name === 'FilterByContacts' ||
+  if (
+    req.body.name === 'FilterByContacts' ||
     req.body.archived === 'false' ||
     req.body.archived === 'true' ||
     req.body.address_country === '87756b9a-5d95-e211-a939-e4115bead28a' ||
-    req.body.company_uk_region === '934cd12a-6095-e211-a939-e4115bead28a') {
+    req.body.company_uk_region === '934cd12a-6095-e211-a939-e4115bead28a'
+  ) {
     return res.json(contactFilter)
   }
 

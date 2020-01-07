@@ -1,14 +1,18 @@
 const qs = require('querystring')
 const { get, merge, omit } = require('lodash')
 
-const { buildSelectedFiltersSummary, buildFieldsWithSelectedEntities } = require('../../builders')
+const {
+  buildSelectedFiltersSummary,
+  buildFieldsWithSelectedEntities,
+} = require('../../builders')
 const { contactFiltersFields, contactSortForm } = require('../macros')
 const { getOptions } = require('../../../lib/options')
 const { buildExportAction } = require('../../../lib/export-helper')
 
 const FILTER_CONSTANTS = require('../../../lib/filter-constants')
 
-const QUERY_STRING = FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.PRIMARY.QUERY_STRING
+const QUERY_STRING =
+  FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.PRIMARY.QUERY_STRING
 const SECTOR = FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.NAME
 
 const exportOptions = {
@@ -18,15 +22,13 @@ const exportOptions = {
   entityName: 'contact',
 }
 
-async function renderContactList (req, res, next) {
+async function renderContactList(req, res, next) {
   try {
     const { token, user } = req.session
     const queryString = QUERY_STRING
     const sortForm = merge({}, contactSortForm, {
       hiddenFields: { ...omit(req.query, 'sortby') },
-      children: [
-        { value: req.query.sortby },
-      ],
+      children: [{ value: req.query.sortby }],
     })
 
     const sectorOptions = await getOptions(token, SECTOR, { queryString })
@@ -35,10 +37,21 @@ async function renderContactList (req, res, next) {
       sectorOptions,
     })
 
-    const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(token, filtersFields, req.query)
-    const selectedFilters = await buildSelectedFiltersSummary(filtersFieldsWithSelectedOptions, req.query)
+    const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(
+      token,
+      filtersFields,
+      req.query
+    )
+    const selectedFilters = await buildSelectedFiltersSummary(
+      filtersFieldsWithSelectedOptions,
+      req.query
+    )
 
-    const exportAction = await buildExportAction(qs.stringify(req.query), user.permissions, exportOptions)
+    const exportAction = await buildExportAction(
+      qs.stringify(req.query),
+      user.permissions,
+      exportOptions
+    )
 
     res.render('_layouts/collection', {
       sortForm,

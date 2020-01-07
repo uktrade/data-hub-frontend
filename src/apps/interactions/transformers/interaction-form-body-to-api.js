@@ -8,26 +8,31 @@ const { INTERACTION_STATUS } = require('../constants')
 
 const fieldsToOmit = ['date_day', 'date_month', 'date_year']
 
-function transformInteractionFormBodyToApiRequest (body, services, addCountries) {
+function transformInteractionFormBodyToApiRequest(
+  body,
+  services,
+  addCountries
+) {
   let service = null
   const serviceAnswers = {}
 
   const selectedServiceOption = services.find(
-    service => service.value === body.service
+    (service) => service.value === body.service
   )
 
   if (selectedServiceOption) {
-    const serviceHasSecondaryOptions = !!selectedServiceOption.secondaryOptions.length
+    const serviceHasSecondaryOptions = !!selectedServiceOption.secondaryOptions
+      .length
 
     service = serviceHasSecondaryOptions
-      ? body.subService.find(id => id.length)
+      ? body.subService.find((id) => id.length)
       : selectedServiceOption.value
 
     const serviceOptionStore = serviceHasSecondaryOptions
       ? selectedServiceOption.secondaryOptions[0]
       : selectedServiceOption
 
-    serviceOptionStore.interactionQuestions.map(interactionQuestion => {
+    serviceOptionStore.interactionQuestions.map((interactionQuestion) => {
       for (const [key, value] of Object.entries(body)) {
         if (key === interactionQuestion.value) {
           serviceAnswers[key] = {
@@ -46,7 +51,9 @@ function transformInteractionFormBodyToApiRequest (body, services, addCountries)
     grant_amount_offered: body.grant_amount_offered || null,
     net_company_receipt: body.net_company_receipt || null,
     contacts: castCompactArray(body.contacts),
-    dit_participants: castCompactArray(body.dit_participants).map(adviser => ({ adviser })),
+    dit_participants: castCompactArray(body.dit_participants).map(
+      (adviser) => ({ adviser })
+    ),
     policy_areas: castCompactArray(body.policy_areas),
     policy_issue_types: castCompactArray(body.policy_issue_types),
     status: INTERACTION_STATUS.COMPLETE,
@@ -60,10 +67,7 @@ function transformInteractionFormBodyToApiRequest (body, services, addCountries)
     }
   }
 
-  return omit(
-    fields,
-    fieldsToOmit
-  )
+  return omit(fields, fieldsToOmit)
 }
 
 module.exports = transformInteractionFormBodyToApiRequest

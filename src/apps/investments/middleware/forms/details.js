@@ -16,9 +16,13 @@ const {
   updateInvestment,
 } = require('../../repos')
 
-async function populateForm (req, res, next) {
+async function populateForm(req, res, next) {
   const clientCompanyId = req.query['client-company']
-  const equityCompanyId = get(res, 'locals.equityCompany.id', req.params.equityCompanyId)
+  const equityCompanyId = get(
+    res,
+    'locals.equityCompany.id',
+    req.params.equityCompanyId
+  )
   const { projects } = res.locals.paths
 
   if (!isValidGuid(equityCompanyId)) {
@@ -35,15 +39,27 @@ async function populateForm (req, res, next) {
       equityCompanyInvestment,
     } = await getEquityCompanyDetails(token, equityCompanyId)
 
-    const contacts = get(equityCompany, 'contacts', []).map(transformContactToOption)
+    const contacts = get(equityCompany, 'contacts', []).map(
+      transformContactToOption
+    )
 
-    const investmentTypes = await getOptions(token, 'investment-type', { createdOn })
-    const referralSourceActivities = await getOptions(token, 'referral-source-activity', { createdOn })
+    const investmentTypes = await getOptions(token, 'investment-type', {
+      createdOn,
+    })
+    const referralSourceActivities = await getOptions(
+      token,
+      'referral-source-activity',
+      { createdOn }
+    )
 
-    const state = assign({}, {
-      client_contacts: [''],
-      business_activities: [''],
-    }, investment)
+    const state = assign(
+      {},
+      {
+        client_contacts: [''],
+        business_activities: [''],
+      },
+      investment
+    )
 
     const advisersResponse = await getAdvisers(token)
 
@@ -72,13 +88,37 @@ async function populateForm (req, res, next) {
         investmentTypesObj: buildMetaDataObj(investmentTypes),
         fdi: await getOptions(token, 'fdi-type', { createdOn }),
         referralSourceActivitiesObj: buildMetaDataObj(referralSourceActivities),
-        referralSourceMarketing: await getOptions(token, 'referral-source-marketing', { createdOn }),
-        referralSourceWebsite: await getOptions(token, 'referral-source-website', { createdOn }),
+        referralSourceMarketing: await getOptions(
+          token,
+          'referral-source-marketing',
+          { createdOn }
+        ),
+        referralSourceWebsite: await getOptions(
+          token,
+          'referral-source-website',
+          { createdOn }
+        ),
         primarySectors: await getOptions(token, 'sector', { createdOn }),
-        businessActivities: await getOptions(token, 'investment-business-activity', { createdOn }),
-        investmentSpecificProgramme: await getOptions(token, 'investment-specific-programme', { createdOn }),
-        investmentInvestorType: await getOptions(token, 'investment-investor-type', { createdOn }),
-        investmentInvolvement: await getOptions(token, 'investment-involvement', { createdOn }),
+        businessActivities: await getOptions(
+          token,
+          'investment-business-activity',
+          { createdOn }
+        ),
+        investmentSpecificProgramme: await getOptions(
+          token,
+          'investment-specific-programme',
+          { createdOn }
+        ),
+        investmentInvestorType: await getOptions(
+          token,
+          'investment-investor-type',
+          { createdOn }
+        ),
+        investmentInvolvement: await getOptions(
+          token,
+          'investment-involvement',
+          { createdOn }
+        ),
       },
     })
 
@@ -87,13 +127,15 @@ async function populateForm (req, res, next) {
       // user is the CRM or adviser - this journey will be changed in the
       // future but until then this supports the settings of that data
       if (investment.client_relationship_manager === req.session.user.id) {
-        res.locals.form.state.is_relationship_manager = investment.client_relationship_manager
+        res.locals.form.state.is_relationship_manager =
+          investment.client_relationship_manager
       } else {
         res.locals.form.state.is_relationship_manager = 'false'
       }
 
       if (investment.referral_source_adviser === req.session.user.id) {
-        res.locals.form.state.is_referral_source = investment.referral_source_adviser
+        res.locals.form.state.is_referral_source =
+          investment.referral_source_adviser
       } else {
         res.locals.form.state.is_referral_source = 'false'
       }
@@ -106,7 +148,7 @@ async function populateForm (req, res, next) {
   }
 }
 
-function handleFormPost (req, res, next) {
+function handleFormPost(req, res, next) {
   const formattedBody = transformToApi(Object.assign({}, req.body))
   const projectId = res.locals.projectId || req.params.investmentId
   const addKey = req.body['add-item']
@@ -156,7 +198,7 @@ function handleFormPost (req, res, next) {
     })
 }
 
-function validateForm (req, res, next) {
+function validateForm(req, res, next) {
   const errorMessages = get(res.locals, 'form.errors.messages')
 
   if (isEmpty(errorMessages)) {

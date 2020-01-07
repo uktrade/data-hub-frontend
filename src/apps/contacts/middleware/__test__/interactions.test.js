@@ -35,7 +35,9 @@ describe('Contacts interactions middleware', () => {
     })
 
     it('should set the return URL', () => {
-      expect(this.res.locals.interactions.returnLink).to.equal('/contacts/1/interactions/')
+      expect(this.res.locals.interactions.returnLink).to.equal(
+        '/contacts/1/interactions/'
+      )
     })
 
     it('should set the entity name', () => {
@@ -43,7 +45,9 @@ describe('Contacts interactions middleware', () => {
     })
 
     it('should set the interactions query', () => {
-      expect(this.res.locals.interactions.query).to.deep.equal({ contacts__id: '1' })
+      expect(this.res.locals.interactions.query).to.deep.equal({
+        contacts__id: '1',
+      })
     })
 
     it('should allow interactions to be added', () => {

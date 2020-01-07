@@ -1,4 +1,5 @@
 const proxyquire = require('proxyquire')
+
 const successDependencies = [
   {
     name: 'success',
@@ -71,7 +72,10 @@ describe('Health check controller', () => {
     it('should set cache control', async () => {
       const { res } = await getMicroserviceHealthcheck(successDependencies)
 
-      expect(res.set).to.be.calledWith('Cache-Control', 'no-cache, no-store, must-revalidate')
+      expect(res.set).to.be.calledWith(
+        'Cache-Control',
+        'no-cache, no-store, must-revalidate'
+      )
       expect(res.set).to.have.been.calledOnce
     })
 
@@ -101,7 +105,10 @@ describe('Health check controller', () => {
     it('should set cache control', async () => {
       const { res } = await getMicroserviceHealthcheck(failureDependencies)
 
-      expect(res.set).to.be.calledWith('Cache-Control', 'no-cache, no-store, must-revalidate')
+      expect(res.set).to.be.calledWith(
+        'Cache-Control',
+        'no-cache, no-store, must-revalidate'
+      )
       expect(res.set).to.have.been.calledOnce
     })
 
@@ -187,10 +194,12 @@ describe('Health check controller', () => {
       const { logger } = await getPingdomFailures(failureDependencies)
 
       expect(logger.error.calledOnce)
-      expect(logger.error.calledWith(
-        `${serviceDependencyError.name} health check failed`,
-        serviceDependencyError.error
-      ))
+      expect(
+        logger.error.calledWith(
+          `${serviceDependencyError.name} health check failed`,
+          serviceDependencyError.error
+        )
+      )
     })
   })
 
@@ -255,10 +264,12 @@ describe('Health check controller', () => {
       const { logger } = await getPingdomWarnings(warningDependencies)
 
       expect(logger.error.calledOnce)
-      expect(logger.error.calledWith(
-        `${serviceDependencyError.name} health check failed`,
-        serviceDependencyError.error
-      ))
+      expect(
+        logger.error.calledWith(
+          `${serviceDependencyError.name} health check failed`,
+          serviceDependencyError.error
+        )
+      )
     })
   })
 

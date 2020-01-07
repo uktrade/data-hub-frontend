@@ -9,13 +9,10 @@ const { generateFutureDate } = require('../../helpers/date')
 const { appendUid } = require('../../helpers/uuid')
 
 const getRadioButtonWithText = (text) =>
-  getSelectorForElementWithText(
-    text,
-    {
-      el: '//span',
-      className: 'c-multiple-choice__label-text',
-    },
-  )
+  getSelectorForElementWithText(text, {
+    el: '//span',
+    className: 'c-multiple-choice__label-text',
+  })
 
 module.exports = {
   props: {},
@@ -27,7 +24,9 @@ module.exports = {
     anExportServiceDelivery: 'label[for=field-kind_export-2]',
     anOtherInteraction: 'label[for=field-kind_other-1]',
     anOtherServiceDelivery: 'label[for=field-kind_other-2]',
-    aServiceThatYouHaveProvided: getRadioButtonWithText('A service that you have provided'),
+    aServiceThatYouHaveProvided: getRadioButtonWithText(
+      'A service that you have provided'
+    ),
     continueButton: getButtonWithText('Continue'),
     interactionSaveButton: getButtonWithText('Add interaction'),
     serviceDeliverySaveButton: getButtonWithText('Add service delivery'),
@@ -62,11 +61,13 @@ module.exports = {
   },
   commands: [
     {
-      getButtonSelectorWithText (text) {
+      getButtonSelectorWithText(text) {
         return getButtonWithText(text)
       },
-      createInteraction (details = {}, isServiceDelivery, callback) {
-        const saveButton = isServiceDelivery ? 'serviceDeliverySaveButton' : 'interactionSaveButton'
+      createInteraction(details = {}, isServiceDelivery, callback) {
+        const saveButton = isServiceDelivery
+          ? 'serviceDeliverySaveButton'
+          : 'interactionSaveButton'
         const interactionDeliveryOpt = {
           service: 'Enquiry or Referral Received',
           subService: 'EiG National Referral',
@@ -75,18 +76,23 @@ module.exports = {
           service: 'Account Management',
           subService: 'General',
         }
-        const selectService = isServiceDelivery ? serviceDeliveryOpt : interactionDeliveryOpt
+        const selectService = isServiceDelivery
+          ? serviceDeliveryOpt
+          : interactionDeliveryOpt
         const futureDate = generateFutureDate()
-        const interaction = assign({}, {
-          subject: appendUid(faker.lorem.word()),
-          notes: faker.lorem.sentence(),
-          dateOfInteractionYear: futureDate.year,
-          dateOfInteractionMonth: futureDate.month,
-          dateOfInteractionDay: futureDate.day,
-        }, details)
+        const interaction = assign(
+          {},
+          {
+            subject: appendUid(faker.lorem.word()),
+            notes: faker.lorem.sentence(),
+            dateOfInteractionYear: futureDate.year,
+            dateOfInteractionMonth: futureDate.month,
+            dateOfInteractionDay: futureDate.day,
+          },
+          details
+        )
 
-        this
-          .waitForElementVisible(`@${saveButton}`)
+        this.waitForElementVisible(`@${saveButton}`)
           .api.perform((done) => {
             this.getListOption('@contact', (contact) => {
               interaction.contact = contact.split(',')[0].trim()
@@ -110,21 +116,23 @@ module.exports = {
               return done()
             }
 
-            this.click('@eventYes')
-              .getListOption('@event', (event) => {
-                interaction.event = event
-                done()
-              })
+            this.click('@eventYes').getListOption('@event', (event) => {
+              interaction.event = event
+              done()
+            })
           })
           .perform((done) => {
             if (isServiceDelivery) {
               return done()
             }
 
-            this.getListOption('@communicationChannel', (communicationChannel) => {
-              interaction.communicationChannel = communicationChannel
-              done()
-            })
+            this.getListOption(
+              '@communicationChannel',
+              (communicationChannel) => {
+                interaction.communicationChannel = communicationChannel
+                done()
+              }
+            )
           })
           .perform(() => {
             forEach(keys(interaction), (key) => {
@@ -137,19 +145,24 @@ module.exports = {
           callback(interaction)
         })
       },
-      createInteractionPolicyFeedback (details, isServiceDelivery, callback) {
-        const saveButton = isServiceDelivery ? 'serviceDeliverySaveButton' : 'interactionSaveButton'
+      createInteractionPolicyFeedback(details, isServiceDelivery, callback) {
+        const saveButton = isServiceDelivery
+          ? 'serviceDeliverySaveButton'
+          : 'interactionSaveButton'
         const futureDate = generateFutureDate()
-        const interaction = assign({}, {
-          policyFeedbackNotes: faker.lorem.sentence(),
-          subject: appendUid(faker.lorem.word()),
-          notes: faker.lorem.sentence(),
-          dateOfInteractionYear: futureDate.year,
-          dateOfInteractionMonth: futureDate.month,
-          dateOfInteractionDay: futureDate.day,
-        }, details)
-        this
-          .waitForElementVisible(`@${saveButton}`)
+        const interaction = assign(
+          {},
+          {
+            policyFeedbackNotes: faker.lorem.sentence(),
+            subject: appendUid(faker.lorem.word()),
+            notes: faker.lorem.sentence(),
+            dateOfInteractionYear: futureDate.year,
+            dateOfInteractionMonth: futureDate.month,
+            dateOfInteractionDay: futureDate.day,
+          },
+          details
+        )
+        this.waitForElementVisible(`@${saveButton}`)
           .api.perform((done) => {
             this.getListOption('@contact', (contact) => {
               interaction.contact = contact
@@ -177,21 +190,23 @@ module.exports = {
               return done()
             }
 
-            this.click('@eventYes')
-              .getListOption('@event', (event) => {
-                interaction.event = event
-                done()
-              })
+            this.click('@eventYes').getListOption('@event', (event) => {
+              interaction.event = event
+              done()
+            })
           })
           .perform((done) => {
             if (isServiceDelivery) {
               return done()
             }
 
-            this.getListOption('@communicationChannel', (communicationChannel) => {
-              interaction.communicationChannel = communicationChannel
-              done()
-            })
+            this.getListOption(
+              '@communicationChannel',
+              (communicationChannel) => {
+                interaction.communicationChannel = communicationChannel
+                done()
+              }
+            )
           })
           .perform((done) => {
             this.getListOption('@service', (service) => {

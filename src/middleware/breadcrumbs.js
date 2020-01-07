@@ -2,14 +2,7 @@
  * Easy to use generic breadcrumbs middleware for Express.
  */
 
-const {
-  isArray,
-  isObject,
-  each,
-  extend,
-  find,
-  includes,
-} = require('lodash')
+const { isArray, isObject, each, extend, find, includes } = require('lodash')
 
 /**
  * Breadcrumbs initialization.
@@ -20,17 +13,17 @@ const {
  *
  * @return {Function}
  */
-function init () {
-  return function (req, res, next) {
+function init() {
+  return function(req, res, next) {
     let breadcrumbs = []
 
-    function addBreadcrumb (item) {
+    function addBreadcrumb(item) {
       if (!includes(breadcrumbs, item)) {
         breadcrumbs.push(item)
       }
     }
 
-    function addBreadcrumbs (text, href) {
+    function addBreadcrumbs(text, href) {
       if (arguments.length === 0) {
         return breadcrumbs
       }
@@ -53,11 +46,11 @@ function init () {
       return this
     }
 
-    function removeBreadcrumb () {
+    function removeBreadcrumb() {
       breadcrumbs.pop()
     }
 
-    function cleanBreadcrumbs () {
+    function cleanBreadcrumbs() {
       breadcrumbs = []
     }
 
@@ -83,11 +76,11 @@ function init () {
  *  - href     home href, default `/`
  * @return {Function}
  */
-function setHome (options = {}) {
+function setHome(options = {}) {
   const homeText = options.text || 'Home'
   const homeHref = options.href || '/'
 
-  return function (req, res, next) {
+  return function(req, res, next) {
     const homeBreadcrumb = find(res.breadcrumb(), (breadcrumb) => {
       return breadcrumb._home
     })

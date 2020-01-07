@@ -31,31 +31,48 @@ module.exports = {
     },
     taskList: {
       investorType: {
-        name: '[data-auto-id="investorDetails"] ul > li:nth-child(1) .task-list__item-name',
-        complete: '[data-auto-id="investorDetails"] ul > li:nth-child(1) .task-list__item-complete',
-        incomplete: '[data-auto-id="investorDetails"] ul > li:nth-child(1) .task-list__item-incomplete',
+        name:
+          '[data-auto-id="investorDetails"] ul > li:nth-child(1) .task-list__item-name',
+        complete:
+          '[data-auto-id="investorDetails"] ul > li:nth-child(1) .task-list__item-complete',
+        incomplete:
+          '[data-auto-id="investorDetails"] ul > li:nth-child(1) .task-list__item-incomplete',
       },
       globalAssetsUnderManagement: {
-        name: '[data-auto-id="investorDetails"] ul > li:nth-child(2) .task-list__item-name',
-        complete: '[data-auto-id="investorDetails"] ul > li:nth-child(2) .task-list__item-complete',
-        incomplete: '[data-auto-id="investorDetails"] ul > li:nth-child(2) .task-list__item-incomplete',
+        name:
+          '[data-auto-id="investorDetails"] ul > li:nth-child(2) .task-list__item-name',
+        complete:
+          '[data-auto-id="investorDetails"] ul > li:nth-child(2) .task-list__item-complete',
+        incomplete:
+          '[data-auto-id="investorDetails"] ul > li:nth-child(2) .task-list__item-incomplete',
       },
       investableCapital: {
-        name: '[data-auto-id="investorDetails"] ul > li:nth-child(3) .task-list__item-name',
-        complete: '[data-auto-id="investorDetails"] ul > li:nth-child(3) .task-list__item-complete',
-        incomplete: '[data-auto-id="investorDetails"] ul > li:nth-child(3) .task-list__item-incomplete',
+        name:
+          '[data-auto-id="investorDetails"] ul > li:nth-child(3) .task-list__item-name',
+        complete:
+          '[data-auto-id="investorDetails"] ul > li:nth-child(3) .task-list__item-complete',
+        incomplete:
+          '[data-auto-id="investorDetails"] ul > li:nth-child(3) .task-list__item-incomplete',
       },
       investorDescription: {
-        name: '[data-auto-id="investorDetails"] ul > li:nth-child(4) .task-list__item-name',
-        complete: '[data-auto-id="investorDetails"] ul > li:nth-child(4) .task-list__item-complete',
-        incomplete: '[data-auto-id="investorDetails"] ul > li:nth-child(4) .task-list__item-incomplete',
+        name:
+          '[data-auto-id="investorDetails"] ul > li:nth-child(4) .task-list__item-name',
+        complete:
+          '[data-auto-id="investorDetails"] ul > li:nth-child(4) .task-list__item-complete',
+        incomplete:
+          '[data-auto-id="investorDetails"] ul > li:nth-child(4) .task-list__item-incomplete',
       },
       requiredChecks: {
-        name: '[data-auto-id="investorDetails"] ul > li:nth-child(5) .task-list__item-name',
-        complete: '[data-auto-id="investorDetails"] ul > li:nth-child(5) .task-list__item-complete',
-        completeDate: '[data-auto-id="investorDetails"] ul > li:nth-child(5) span:nth-child(3)',
-        adviser: '[data-auto-id="investorDetails"] ul > li:nth-child(5) span:nth-child(4)',
-        incomplete: '[data-auto-id="investorDetails"] ul > li:nth-child(5) .task-list__item-incomplete',
+        name:
+          '[data-auto-id="investorDetails"] ul > li:nth-child(5) .task-list__item-name',
+        complete:
+          '[data-auto-id="investorDetails"] ul > li:nth-child(5) .task-list__item-complete',
+        completeDate:
+          '[data-auto-id="investorDetails"] ul > li:nth-child(5) span:nth-child(3)',
+        adviser:
+          '[data-auto-id="investorDetails"] ul > li:nth-child(5) span:nth-child(4)',
+        incomplete:
+          '[data-auto-id="investorDetails"] ul > li:nth-child(5) .task-list__item-incomplete',
       },
     },
   },
@@ -68,9 +85,12 @@ module.exports = {
       name: '[data-auto-id=dealTicketSizes] legend',
       upTo49Million: '[data-auto-id=dealTicketSizes] #dealTicketSizes-1',
       fiftyTo99Million: '[data-auto-id=dealTicketSizes] #dealTicketSizes-2',
-      oneHundredTo249Million: '[data-auto-id=dealTicketSizes] #dealTicketSizes-3',
-      twoHundredFiftyTo499Million: '[data-auto-id=dealTicketSizes] #dealTicketSizes-4',
-      fiveHundredTo999Million: '[data-auto-id=dealTicketSizes] #dealTicketSizes-5',
+      oneHundredTo249Million:
+        '[data-auto-id=dealTicketSizes] #dealTicketSizes-3',
+      twoHundredFiftyTo499Million:
+        '[data-auto-id=dealTicketSizes] #dealTicketSizes-4',
+      fiveHundredTo999Million:
+        '[data-auto-id=dealTicketSizes] #dealTicketSizes-5',
       oneBillionPlus: '[data-auto-id=dealTicketSizes] #dealTicketSizes-6',
     },
     assetClasses: {
@@ -80,18 +100,23 @@ module.exports = {
         biofuel: '[data-auto-id=assetClasses] #energyAndInfrastructure-1',
         biomass: '[data-auto-id=assetClasses] #energyAndInfrastructure-2',
         directHeating: '[data-auto-id=assetClasses] #energyAndInfrastructure-3',
-        energyFromWaste: '[data-auto-id=assetClasses] #energyAndInfrastructure-4',
+        energyFromWaste:
+          '[data-auto-id=assetClasses] #energyAndInfrastructure-4',
         energyStorage: '[data-auto-id=assetClasses] #energyAndInfrastructure-5',
         gasFiredPower: '[data-auto-id=assetClasses] #energyAndInfrastructure-6',
         nuclear: '[data-auto-id=assetClasses] #energyAndInfrastructure-7',
-        regulatedAssets: '[data-auto-id=assetClasses] #energyAndInfrastructure-8',
+        regulatedAssets:
+          '[data-auto-id=assetClasses] #energyAndInfrastructure-8',
         smartEnergy: '[data-auto-id=assetClasses] #energyAndInfrastructure-9',
         solarPower: '[data-auto-id=assetClasses] #energyAndInfrastructure-10',
         transport: '[data-auto-id=assetClasses] #energyAndInfrastructure-11',
         waveAndTidal: '[data-auto-id=assetClasses] #energyAndInfrastructure-12',
-        windpowerOffshore: '[data-auto-id=assetClasses] #energyAndInfrastructure-13',
-        windpowerOnshore: '[data-auto-id=assetClasses] #energyAndInfrastructure-14',
-        upstreamOilAndGas: '[data-auto-id=assetClasses] #energyAndInfrastructure-15',
+        windpowerOffshore:
+          '[data-auto-id=assetClasses] #energyAndInfrastructure-13',
+        windpowerOnshore:
+          '[data-auto-id=assetClasses] #energyAndInfrastructure-14',
+        upstreamOilAndGas:
+          '[data-auto-id=assetClasses] #energyAndInfrastructure-15',
       },
       realEstate: {
         name: '[data-auto-id=assetClasses] legend',
@@ -156,10 +181,14 @@ module.exports = {
     },
     minimumEquityPercentage: {
       name: '[data-auto-id=minimumEquityPercentage] legend',
-      zeroPercent: '[data-auto-id=minimumEquityPercentage] #minimumEquityPercentage-1',
-      oneTo19Percent: '[data-auto-id=minimumEquityPercentage] #minimumEquityPercentage-2',
-      twentyTo49Percent: '[data-auto-id=minimumEquityPercentage] #minimumEquityPercentage-3',
-      fiftyPercentPlus: '[data-auto-id=minimumEquityPercentage] #minimumEquityPercentage-4',
+      zeroPercent:
+        '[data-auto-id=minimumEquityPercentage] #minimumEquityPercentage-1',
+      oneTo19Percent:
+        '[data-auto-id=minimumEquityPercentage] #minimumEquityPercentage-2',
+      twentyTo49Percent:
+        '[data-auto-id=minimumEquityPercentage] #minimumEquityPercentage-3',
+      fiftyPercentPlus:
+        '[data-auto-id=minimumEquityPercentage] #minimumEquityPercentage-4',
     },
     desiredDealRoles: {
       name: '[data-auto-id=desiredDealRoles] legend',
@@ -169,72 +198,122 @@ module.exports = {
     },
     taskList: {
       dealTicketSize: {
-        name: '[data-auto-id=investorRequirements] ul > li:nth-child(1) .task-list__item-name',
-        incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(1) .task-list__item-incomplete',
-        upTo49Million: '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(2)',
-        fiftyTo99Million: '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(3)',
-        oneHundredTo249Million: '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(4)',
-        twoHundredFiftyTo499Million: '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(5)',
-        fiveHundredTo999Million: '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(6)',
-        oneBillionPlus: '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(7)',
+        name:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(1) .task-list__item-name',
+        incomplete:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(1) .task-list__item-incomplete',
+        upTo49Million:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(2)',
+        fiftyTo99Million:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(3)',
+        oneHundredTo249Million:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(4)',
+        twoHundredFiftyTo499Million:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(5)',
+        fiveHundredTo999Million:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(6)',
+        oneBillionPlus:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(1) span:nth-child(7)',
       },
       assetClassesOfInterest: {
-        name: '[data-auto-id=investorRequirements] ul > li:nth-child(2) .task-list__item-name',
-        incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(2) .task-list__item-incomplete',
+        name:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(2) .task-list__item-name',
+        incomplete:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(2) .task-list__item-incomplete',
       },
       investmentTypes: {
-        name: '[data-auto-id=investorRequirements] ul > li:nth-child(3) .task-list__item-name',
-        incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(3) .task-list__item-incomplete',
-        projectEquity: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(2)',
-        projectDebt: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(3)',
-        corporateEquity: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(4)',
-        corporateDebt: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(5)',
-        mezzanineDebt: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(6)',
-        ventureCapitalFunds: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(7)',
-        energyInfrastructure: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(8)',
-        privateEquity: '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(9)',
+        name:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(3) .task-list__item-name',
+        incomplete:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(3) .task-list__item-incomplete',
+        projectEquity:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(2)',
+        projectDebt:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(3)',
+        corporateEquity:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(4)',
+        corporateDebt:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(5)',
+        mezzanineDebt:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(6)',
+        ventureCapitalFunds:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(7)',
+        energyInfrastructure:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(8)',
+        privateEquity:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(3) span:nth-child(9)',
       },
       minimumReturnRate: {
-        name: '[data-auto-id=investorRequirements] ul > li:nth-child(4) .task-list__item-name',
-        complete: '[data-auto-id=investorRequirements] ul > li:nth-child(4) .task-list__item-complete',
-        incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(4) .task-list__item-incomplete',
+        name:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(4) .task-list__item-name',
+        complete:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(4) .task-list__item-complete',
+        incomplete:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(4) .task-list__item-incomplete',
       },
       timeHorizon: {
-        name: '[data-auto-id=investorRequirements] ul > li:nth-child(5) .task-list__item-name',
-        incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(5) .task-list__item-incomplete',
-        upToFiveYears: '[data-auto-id=investorRequirements] ul > li:nth-child(5) span:nth-child(2)',
-        fiveTo9Years: '[data-auto-id=investorRequirements]  ul > li:nth-child(5) span:nth-child(3)',
-        tenTo14Years: '[data-auto-id=investorRequirements]  ul > li:nth-child(5) span:nth-child(4)',
-        fifteenYearsPlus: '[data-auto-id=investorRequirements]  ul > li:nth-child(5) span:nth-child(5)',
+        name:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(5) .task-list__item-name',
+        incomplete:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(5) .task-list__item-incomplete',
+        upToFiveYears:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(5) span:nth-child(2)',
+        fiveTo9Years:
+          '[data-auto-id=investorRequirements]  ul > li:nth-child(5) span:nth-child(3)',
+        tenTo14Years:
+          '[data-auto-id=investorRequirements]  ul > li:nth-child(5) span:nth-child(4)',
+        fifteenYearsPlus:
+          '[data-auto-id=investorRequirements]  ul > li:nth-child(5) span:nth-child(5)',
       },
       restrictions: {
-        name: '[data-auto-id=investorRequirements] ul > li:nth-child(6) .task-list__item-name',
-        incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(6) .task-list__item-incomplete',
-        liquidity: '[data-auto-id=investorRequirements] ul > li:nth-child(6) span:nth-child(2)',
-        inflationAdjustment: '[data-auto-id=investorRequirements] ul > li:nth-child(6) span:nth-child(3)',
-        requireFXHedge: '[data-auto-id=investorRequirements] ul > li:nth-child(6) span:nth-child(4)',
-        requireBoardSeat: '[data-auto-id=investorRequirements] ul > li:nth-child(6) span:nth-child(5)',
-        requireLinkedTech: '[data-auto-id=investorRequirements] ul > li:nth-child(6) span:nth-child(6)',
-        willParticipateInCompBids: '[data-auto-id=investorRequirements] ul > li:nth-child(6) span:nth-child(7)',
+        name:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(6) .task-list__item-name',
+        incomplete:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(6) .task-list__item-incomplete',
+        liquidity:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(6) span:nth-child(2)',
+        inflationAdjustment:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(6) span:nth-child(3)',
+        requireFXHedge:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(6) span:nth-child(4)',
+        requireBoardSeat:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(6) span:nth-child(5)',
+        requireLinkedTech:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(6) span:nth-child(6)',
+        willParticipateInCompBids:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(6) span:nth-child(7)',
       },
       constructionRisks: {
-        name: '[data-auto-id=investorRequirements] ul > li:nth-child(7) .task-list__item-name',
-        incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(7) .task-list__item-incomplete',
-        greenfield: '[data-auto-id=investorRequirements] ul > li:nth-child(7) span:nth-child(2)',
-        brownfield: '[data-auto-id=investorRequirements] ul > li:nth-child(7) span:nth-child(3)',
-        operational: '[data-auto-id=investorRequirements] ul > li:nth-child(7) span:nth-child(4)',
+        name:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(7) .task-list__item-name',
+        incomplete:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(7) .task-list__item-incomplete',
+        greenfield:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(7) span:nth-child(2)',
+        brownfield:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(7) span:nth-child(3)',
+        operational:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(7) span:nth-child(4)',
       },
       minimumEquityPercentage: {
-        name: '[data-auto-id=investorRequirements] ul > li:nth-child(8) .task-list__item-name',
-        complete: '[data-auto-id=investorRequirements] ul > li:nth-child(8) .task-list__item-complete',
-        incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(8) .task-list__item-incomplete',
+        name:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(8) .task-list__item-name',
+        complete:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(8) .task-list__item-complete',
+        incomplete:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(8) .task-list__item-incomplete',
       },
       desiredDealRoles: {
-        name: '[data-auto-id=investorRequirements] ul > li:nth-child(9) .task-list__item-name',
-        incomplete: '[data-auto-id=investorRequirements] ul > li:nth-child(9) .task-list__item-incomplete',
-        leadManager: '[data-auto-id=investorRequirements] ul > li:nth-child(9) span:nth-child(2)',
-        coLeadManager: '[data-auto-id=investorRequirements] ul > li:nth-child(9) span:nth-child(3)',
-        coInvestor: '[data-auto-id=investorRequirements] ul > li:nth-child(9) span:nth-child(4)',
+        name:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(9) .task-list__item-name',
+        incomplete:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(9) .task-list__item-incomplete',
+        leadManager:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(9) span:nth-child(2)',
+        coLeadManager:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(9) span:nth-child(3)',
+        coInvestor:
+          '[data-auto-id=investorRequirements] ul > li:nth-child(9) span:nth-child(4)',
       },
     },
   },
@@ -245,20 +324,30 @@ module.exports = {
     save: '[data-auto-id=locationSave]',
     taskList: {
       ukLocationsOfInterest: {
-        name: '[data-auto-id=location] ul > li:nth-child(1) .task-list__item-name',
-        incomplete: '[data-auto-id=location] ul > li:nth-child(1) .task-list__item-incomplete',
-        locationOne: '[data-auto-id="location"] > .govuk-details__text > .task-list > :nth-child(1) > :nth-child(2)',
-        locationTwo: '[data-auto-id="location"] > .govuk-details__text > .task-list > :nth-child(1) > :nth-child(3)',
+        name:
+          '[data-auto-id=location] ul > li:nth-child(1) .task-list__item-name',
+        incomplete:
+          '[data-auto-id=location] ul > li:nth-child(1) .task-list__item-incomplete',
+        locationOne:
+          '[data-auto-id="location"] > .govuk-details__text > .task-list > :nth-child(1) > :nth-child(2)',
+        locationTwo:
+          '[data-auto-id="location"] > .govuk-details__text > .task-list > :nth-child(1) > :nth-child(3)',
       },
       otherCountriesBeingConsidered: {
-        name: '[data-auto-id=location] ul > li:nth-child(2) .task-list__item-name',
-        incomplete: '[data-auto-id=location] ul > li:nth-child(2) .task-list__item-incomplete',
-        locationOne: '[data-auto-id="location"] > .govuk-details__text > .task-list > :nth-child(2) > :nth-child(2)',
+        name:
+          '[data-auto-id=location] ul > li:nth-child(2) .task-list__item-name',
+        incomplete:
+          '[data-auto-id=location] ul > li:nth-child(2) .task-list__item-incomplete',
+        locationOne:
+          '[data-auto-id="location"] > .govuk-details__text > .task-list > :nth-child(2) > :nth-child(2)',
       },
       notesOnInvestorsLocationPreferences: {
-        name: '[data-auto-id=location] ul > li:nth-child(3) .task-list__item-name',
-        complete: '[data-auto-id="location"] ul > li:nth-child(3) .task-list__item-complete',
-        incomplete: '[data-auto-id=location] ul > li:nth-child(3) .task-list__item-incomplete',
+        name:
+          '[data-auto-id=location] ul > li:nth-child(3) .task-list__item-name',
+        complete:
+          '[data-auto-id="location"] ul > li:nth-child(3) .task-list__item-complete',
+        incomplete:
+          '[data-auto-id=location] ul > li:nth-child(3) .task-list__item-incomplete',
       },
     },
   },

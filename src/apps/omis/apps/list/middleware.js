@@ -3,9 +3,9 @@ const { pick, pickBy } = require('lodash')
 const { QUERY_DATE_FIELDS } = require('../../constants')
 const reverseDateIfIE = require('../../../../lib/if-ie-reverse-date-value')
 
-function setRequestBody (req, res, next) {
+function setRequestBody(req, res, next) {
   if (res.locals.userAgent) {
-    QUERY_DATE_FIELDS.forEach(date => {
+    QUERY_DATE_FIELDS.forEach((date) => {
       req.query[date] = reverseDateIfIE(req.query[date], res.locals.userAgent)
     })
   }
@@ -30,7 +30,7 @@ function setRequestBody (req, res, next) {
   })
 
   const currencyFields = ['total_cost', 'net_cost']
-  currencyFields.forEach(field => {
+  currencyFields.forEach((field) => {
     if (req.body[field]) {
       req.body[field] = parseFloat(req.query[field]) * 100
     }

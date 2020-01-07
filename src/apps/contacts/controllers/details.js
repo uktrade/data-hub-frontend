@@ -9,17 +9,26 @@ const reasonForArchiveOptions = [
 ]
 const reasonForArchiveOptionsPrefix = 'This contact has:'
 
-async function getCommon (req, res, next) {
+async function getCommon(req, res, next) {
   try {
     const token = req.session.token
-    const contact = res.locals.contact = await contactsRepository.getContact(token, req.params.contactId)
+    const contact = (res.locals.contact = await contactsRepository.getContact(
+      token,
+      req.params.contactId
+    ))
 
-    res.locals.company = await companyRepository.getDitCompany(token, contact.company.id)
+    res.locals.company = await companyRepository.getDitCompany(
+      token,
+      contact.company.id
+    )
     res.locals.id = req.params.contactId
     res.locals.reasonForArchiveOptions = reasonForArchiveOptions
     res.locals.reasonForArchiveOptionsPrefix = reasonForArchiveOptionsPrefix
 
-    res.breadcrumb(`${contact.first_name} ${contact.last_name}`, `/contacts/${contact.id}`)
+    res.breadcrumb(
+      `${contact.first_name} ${contact.last_name}`,
+      `/contacts/${contact.id}`
+    )
 
     next()
   } catch (error) {
@@ -27,12 +36,16 @@ async function getCommon (req, res, next) {
   }
 }
 
-function getDetails (req, res, next) {
+function getDetails(req, res, next) {
   try {
     // database is positive on accepts, negative on rejects; UI is reverse, so flip that here
-    res.locals.contact.rejects_dit_email_marketing = !res.locals.contact.accepts_dit_email_marketing
+    res.locals.contact.rejects_dit_email_marketing = !res.locals.contact
+      .accepts_dit_email_marketing
     res.render('contacts/views/details', {
-      contactDetails: transformContactToView(res.locals.contact, res.locals.company),
+      contactDetails: transformContactToView(
+        res.locals.contact,
+        res.locals.company
+      ),
     })
   } catch (error) {
     next(error)
