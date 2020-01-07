@@ -15,6 +15,7 @@ import {
   COMPANY_LIST_VIEWER__LIST_CHANGE,
   COMPANY_LIST_VIEWER__ORDER
 } from '../../../../client/actions'
+import { ALPHABETICAL, LEAST_RECENT, RECENT } from './constants'
 import Filters from './Filters'
 import Header from './Header'
 import ListHeader from './ListHeader'
@@ -55,9 +56,9 @@ function CompanyLists ({
   const list = lists[selectedIdx]
   const companies = get(list, 'companies', [])
   const orderByParams = {
-    recent: [c => c.latestInteraction.date || '', 'desc'],
-    'least-recent': [c => c.latestInteraction.date || '', 'asc'],
-    alphabetical: [c => c.company.name, 'asc'],
+    [RECENT]: [c => c.latestInteraction.date || '', 'desc'],
+    [LEAST_RECENT]: [c => c.latestInteraction.date || '', 'asc'],
+    [ALPHABETICAL]: [c => c.company.name, 'asc'],
   }[sortBy]
   const filtered = companies.filter(
     c => c.company.name.match(new RegExp(filter, 'i'))
@@ -87,7 +88,7 @@ function CompanyLists ({
 CompanyLists.propTypes = {
   lists: propTypes.lists.isRequired,
   selectedIdx: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-  sortBy: PropTypes.oneOf(['alphabetical', 'recent', 'least-recent']).isRequired,
+  sortBy: PropTypes.oneOf([ALPHABETICAL, RECENT, LEAST_RECENT]).isRequired,
   filter: PropTypes.string.isRequired,
   onListChange: PropTypes.func,
   onOrderChange: PropTypes.func,
