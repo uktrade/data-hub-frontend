@@ -3,22 +3,33 @@ const { assign, get, merge, pick, pickBy, omit } = require('lodash')
 const { ENTITIES } = require('../../search/constants')
 const { QUERY_DATE_FIELDS } = require('../constants')
 
-const { transformApiResponseToCollection } = require('../../../modules/api/transformers')
-const { getCollection } = require('../../../modules/search/middleware/collection')
+const {
+  transformApiResponseToCollection,
+} = require('../../../modules/api/transformers')
+const {
+  getCollection,
+} = require('../../../modules/search/middleware/collection')
 const reverseDateIfIE = require('../../../lib/if-ie-reverse-date-value')
 
-const { buildInteractionSortForm, getDefaultInteractionSort } = require('../macros/collection-sort-form')
+const {
+  buildInteractionSortForm,
+  getDefaultInteractionSort,
+} = require('../macros/collection-sort-form')
 const { getInteractionsForEntity } = require('../repos')
-const { transformInteractionToListItem, transformInteractionListItemToHaveUrlPrefix } = require('../transformers')
+const {
+  transformInteractionToListItem,
+  transformInteractionListItemToHaveUrlPrefix,
+} = require('../transformers')
 
-async function getInteractionCollection (req, res, next) {
-  getCollection('interaction',
-    ENTITIES,
-    transformInteractionToListItem()
-  )(req, res, next)
+async function getInteractionCollection(req, res, next) {
+  getCollection('interaction', ENTITIES, transformInteractionToListItem())(
+    req,
+    res,
+    next
+  )
 }
 
-async function getInteractionCollectionForEntity (req, res, next) {
+async function getInteractionCollectionForEntity(req, res, next) {
   try {
     const { query: entityQuery, showCompany } = res.locals.interactions
     const params = {
@@ -28,12 +39,15 @@ async function getInteractionCollectionForEntity (req, res, next) {
       sortby: req.query.sortby || getDefaultInteractionSort(showCompany),
     }
 
-    res.locals.results = await getInteractionsForEntity(params)
-      .then(transformApiResponseToCollection(
+    res.locals.results = await getInteractionsForEntity(params).then(
+      transformApiResponseToCollection(
         { query: req.query },
         transformInteractionToListItem(showCompany),
-        transformInteractionListItemToHaveUrlPrefix(res.locals.interactions.returnLink)
-      ))
+        transformInteractionListItemToHaveUrlPrefix(
+          res.locals.interactions.returnLink
+        )
+      )
+    )
 
     next()
   } catch (error) {
@@ -41,7 +55,7 @@ async function getInteractionCollectionForEntity (req, res, next) {
   }
 }
 
-function getInteractionsRequestBody (req, res, next) {
+function getInteractionsRequestBody(req, res, next) {
   if (res.locals.userAgent) {
     QUERY_DATE_FIELDS.forEach((date) => {
       req.query[date] = reverseDateIfIE(req.query[date], res.locals.userAgent)
@@ -71,14 +85,12 @@ function getInteractionsRequestBody (req, res, next) {
   next()
 }
 
-function getInteractionSortForm (req, res, next) {
+function getInteractionSortForm(req, res, next) {
   const showCompany = get(res.locals, 'interactions.showCompany', true)
 
   res.locals.sortForm = merge({}, buildInteractionSortForm(showCompany), {
     hiddenFields: assign({}, omit(req.query, 'sortby')),
-    children: [
-      { value: req.query.sortby },
-    ],
+    children: [{ value: req.query.sortby }],
   })
 
   next()

@@ -49,7 +49,9 @@ describe('Create proposition', () => {
       })
 
       it('render the correct template', () => {
-        expect(this.res.render).to.be.calledWith('propositions/views/create.njk')
+        expect(this.res.render).to.be.calledWith(
+          'propositions/views/create.njk'
+        )
       })
     })
 

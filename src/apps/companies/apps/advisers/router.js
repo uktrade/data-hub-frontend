@@ -5,7 +5,8 @@ const { submit, renderAdvisers, form } = require('./controllers/advisers')
 
 router.get('/', renderAdvisers)
 
-router.route(['/assign', '/remove'])
+router
+  .route(['/assign', '/remove'])
   .all(allPermissionsOr403('company.change_regional_account_manager'))
   .get(form)
   .post(submit)

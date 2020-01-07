@@ -7,17 +7,17 @@ const { exportDetailsLabels, exportPotentialLabels } = require('../labels')
 const { EXPORT_INTEREST_STATUS } = require('../../constants')
 const groupExportCountries = require('../../../lib/group-export-countries')
 
-function getCountries (data) {
-  return flatMap(data, ({ name }) => (name || null)).join(', ') || 'None'
+function getCountries(data) {
+  return flatMap(data, ({ name }) => name || null).join(', ') || 'None'
 }
 
-function getExportPotentialLabel (key) {
-  const item = exportPotentialLabels[ key ]
+function getExportPotentialLabel(key) {
+  const item = exportPotentialLabels[key]
 
   return (item && item.text) || 'No score given'
 }
 
-function getGreatProfileValue (profileStatus, companiesHouseNumber) {
+function getGreatProfileValue(profileStatus, companiesHouseNumber) {
   if (profileStatus === 'published') {
     return {
       url: urls.external.greatProfile(companiesHouseNumber),
@@ -26,17 +26,25 @@ function getGreatProfileValue (profileStatus, companiesHouseNumber) {
       hint: '(opens in a new window)',
     }
   }
-  return (profileStatus === 'unpublished' ? 'Profile not published' : 'No profile')
+  return profileStatus === 'unpublished'
+    ? 'Profile not published'
+    : 'No profile'
 }
 
-function getCountriesFields (company, useNewCountries) {
+function getCountriesFields(company, useNewCountries) {
   if (useNewCountries) {
     const buckets = groupExportCountries(company.export_countries)
 
     return {
-      exportToCountries: getCountries(buckets[EXPORT_INTEREST_STATUS.EXPORTING_TO]),
-      futureInterestCountries: getCountries(buckets[EXPORT_INTEREST_STATUS.FUTURE_INTEREST]),
-      noInterestCountries: getCountries(buckets[EXPORT_INTEREST_STATUS.NOT_INTERESTED]),
+      exportToCountries: getCountries(
+        buckets[EXPORT_INTEREST_STATUS.EXPORTING_TO]
+      ),
+      futureInterestCountries: getCountries(
+        buckets[EXPORT_INTEREST_STATUS.FUTURE_INTEREST]
+      ),
+      noInterestCountries: getCountries(
+        buckets[EXPORT_INTEREST_STATUS.NOT_INTERESTED]
+      ),
     }
   }
   return {
@@ -45,7 +53,10 @@ function getCountriesFields (company, useNewCountries) {
   }
 }
 
-module.exports = function transformCompanyToExportDetailsView (company, useNewCountries) {
+module.exports = function transformCompanyToExportDetailsView(
+  company,
+  useNewCountries
+) {
   const labels = {
     ...exportDetailsLabels,
   }
@@ -53,7 +64,10 @@ module.exports = function transformCompanyToExportDetailsView (company, useNewCo
     exportExperienceCategory: company.export_experience_category || 'None',
     ...getCountriesFields(company, useNewCountries),
     exportPotential: getExportPotentialLabel(company.export_potential_score),
-    greatProfile: getGreatProfileValue(company.great_profile_status, company.company_number),
+    greatProfile: getGreatProfileValue(
+      company.great_profile_status,
+      company.company_number
+    ),
   }
 
   // Whilst we have the feature flag we have to delete the new label

@@ -4,10 +4,7 @@ const { mockGetDnbHierarchy } = require('./utils')
 
 const dnbHierarchyFixture = {
   count: 2,
-  results: [
-    { id: '1' },
-    { id: '2' },
-  ],
+  results: [{ id: '1' }, { id: '2' }],
 }
 const TOKEN = 'abcd'
 const DUNS_NUMBER = 999999
@@ -20,7 +17,12 @@ describe('D&B Subsidiaries repos', () => {
         responseBody: dnbHierarchyFixture,
       })
 
-      const actual = await getDnbHierarchy(TOKEN, DUNS_NUMBER, config.paginationDefaultSize, 1)
+      const actual = await getDnbHierarchy(
+        TOKEN,
+        DUNS_NUMBER,
+        config.paginationDefaultSize,
+        1
+      )
 
       expect(actual).to.deep.equal(dnbHierarchyFixture)
     })

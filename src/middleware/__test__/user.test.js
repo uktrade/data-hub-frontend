@@ -17,7 +17,9 @@ describe('user middleware', () => {
       '../config': {
         apiRoot: apiRoot,
       },
-      '../lib/authorised-request': { authorisedRequest: this.authorisedRequestStub },
+      '../lib/authorised-request': {
+        authorisedRequest: this.authorisedRequestStub,
+      },
     })
   })
 
@@ -80,7 +82,10 @@ describe('user middleware', () => {
       })
 
       it('should call authorised request', () => {
-        expect(this.authorisedRequestStub).to.be.calledWith(token, `${apiRoot}/whoami/`)
+        expect(this.authorisedRequestStub).to.be.calledWith(
+          token,
+          `${apiRoot}/whoami/`
+        )
       })
 
       it('should add user property on session', () => {

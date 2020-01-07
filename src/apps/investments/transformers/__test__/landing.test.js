@@ -51,26 +51,29 @@ describe('Investment landing transformer', () => {
       })
     })
 
-    context('when the investment UK company and actual land date are not known', () => {
-      beforeEach(() => {
-        this.transformed = transformInvestmentLandingForView({})
-      })
+    context(
+      'when the investment UK company and actual land date are not known',
+      () => {
+        beforeEach(() => {
+          this.transformed = transformInvestmentLandingForView({})
+        })
 
-      it('should not set the UK company', () => {
-        expect(this.transformed.uk_company).to.not.exist
-      })
+        it('should not set the UK company', () => {
+          expect(this.transformed.uk_company).to.not.exist
+        })
 
-      it('should not set the company number', () => {
-        expect(this.transformed.company_number).to.not.exist
-      })
+        it('should not set the company number', () => {
+          expect(this.transformed.company_number).to.not.exist
+        })
 
-      it('should not set the address', () => {
-        expect(this.transformed.registered_address).to.not.exist
-      })
+        it('should not set the address', () => {
+          expect(this.transformed.registered_address).to.not.exist
+        })
 
-      it('should not set the actual land date', () => {
-        expect(this.transformed.actual_land_date).to.not.exist
-      })
-    })
+        it('should not set the actual land date', () => {
+          expect(this.transformed.actual_land_date).to.not.exist
+        })
+      }
+    )
   })
 })

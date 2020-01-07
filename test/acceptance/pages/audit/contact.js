@@ -17,30 +17,31 @@ module.exports = {
 
   commands: [
     {
-      editContactDetails (details = {}, number, callback) {
-        const contact = merge({}, {
-          countryCode: faker.random.number(),
-          telephone: faker.phone.phoneNumber(),
-        }, details)
+      editContactDetails(details = {}, number, callback) {
+        const contact = merge(
+          {},
+          {
+            countryCode: faker.random.number(),
+            telephone: faker.phone.phoneNumber(),
+          },
+          details
+        )
 
-        this
-          .waitForElementVisible('@editContactDetailsButton')
-          .click('@editContactDetailsButton')
+        this.waitForElementVisible('@editContactDetailsButton').click(
+          '@editContactDetailsButton'
+        )
 
         if (number > 1) {
-          this
-            .waitForElementVisible('@telephoneCountryCode')
+          this.waitForElementVisible('@telephoneCountryCode')
             .clearValue('@telephoneCountryCode')
             .setValue('@telephoneCountryCode', contact.countryCode)
         }
 
-        this
-          .waitForElementVisible('@telephone')
+        this.waitForElementVisible('@telephone')
           .clearValue('@telephone')
           .setValue('@telephone', contact.telephone)
 
-        this
-          .click('@saveButton')
+        this.click('@saveButton')
 
         callback(contact)
 

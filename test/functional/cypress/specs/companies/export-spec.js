@@ -8,7 +8,11 @@ describe('Companies Export', () => {
     })
 
     it('should not display the "Add export" button', () => {
-      cy.get(selectors.companyCollection().export.editButton(fixtures.company.oneListCorp.id)).should('not.exist')
+      cy.get(
+        selectors
+          .companyCollection()
+          .export.editButton(fixtures.company.oneListCorp.id)
+      ).should('not.exist')
     })
   })
 })

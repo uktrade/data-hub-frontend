@@ -8,6 +8,9 @@
  *
  * @returns this
  */
-exports.command = function clickMultipleChoiceOption (name, labelContent) {
-  return this.click('xpath', `//input[@name="${name}"]/following-sibling::label[normalize-space(.)="${labelContent}"]`)
+exports.command = function clickMultipleChoiceOption(name, labelContent) {
+  return this.click(
+    'xpath',
+    `//input[@name="${name}"]/following-sibling::label[normalize-space(.)="${labelContent}"]`
+  )
 }

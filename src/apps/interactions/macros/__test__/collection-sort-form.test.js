@@ -1,40 +1,39 @@
-const { buildInteractionSortForm, getDefaultInteractionSort } = require('../collection-sort-form')
+const {
+  buildInteractionSortForm,
+  getDefaultInteractionSort,
+} = require('../collection-sort-form')
 
 describe('interactions collection sort form', () => {
   describe('#buildInteractionSortForm', () => {
     it('should render form with all options', () => {
       const actual = buildInteractionSortForm()
       const expected = {
-        'method': 'get',
-        'class': 'c-collection__sort-form js-AutoSubmit',
-        'hideFormActions': true,
-        'hiddenFields': {
-          'custom': true,
+        method: 'get',
+        class: 'c-collection__sort-form js-AutoSubmit',
+        hideFormActions: true,
+        hiddenFields: {
+          custom: true,
         },
-        'children': [
+        children: [
           {
-            'options': [
+            options: [
               {
-                'value': '-date',
-                'label': 'Newest',
+                value: '-date',
+                label: 'Newest',
               },
               {
-                'value': 'company__name',
-                'label': 'Company: A-Z',
+                value: 'company__name',
+                label: 'Company: A-Z',
               },
               {
-                'value': 'subject',
-                'label': 'Subject: A-Z',
+                value: 'subject',
+                label: 'Subject: A-Z',
               },
             ],
-            'macroName': 'MultipleChoiceField',
-            'label': 'Sort by',
-            'name': 'sortby',
-            'modifier': [
-              'small',
-              'inline',
-              'light',
-            ],
+            macroName: 'MultipleChoiceField',
+            label: 'Sort by',
+            name: 'sortby',
+            modifier: ['small', 'inline', 'light'],
           },
         ],
       }
@@ -45,32 +44,28 @@ describe('interactions collection sort form', () => {
     it('should render form without company option', () => {
       const actual = buildInteractionSortForm(false)
       const expected = {
-        'method': 'get',
-        'class': 'c-collection__sort-form js-AutoSubmit',
-        'hideFormActions': true,
-        'hiddenFields': {
-          'custom': true,
+        method: 'get',
+        class: 'c-collection__sort-form js-AutoSubmit',
+        hideFormActions: true,
+        hiddenFields: {
+          custom: true,
         },
-        'children': [
+        children: [
           {
-            'options': [
+            options: [
               {
-                'value': '-date',
-                'label': 'Newest',
+                value: '-date',
+                label: 'Newest',
               },
               {
-                'value': 'subject',
-                'label': 'Subject: A-Z',
+                value: 'subject',
+                label: 'Subject: A-Z',
               },
             ],
-            'macroName': 'MultipleChoiceField',
-            'label': 'Sort by',
-            'name': 'sortby',
-            'modifier': [
-              'small',
-              'inline',
-              'light',
-            ],
+            macroName: 'MultipleChoiceField',
+            label: 'Sort by',
+            name: 'sortby',
+            modifier: ['small', 'inline', 'light'],
           },
         ],
       }

@@ -2,17 +2,23 @@ const config = require('../../config')
 const { authorisedRequest } = require('../../lib/authorised-request')
 const { getDitCompany } = require('../companies/repos')
 
-function getCompanyInvestmentProjects (token, companyId, page = 1) {
+function getCompanyInvestmentProjects(token, companyId, page = 1) {
   const limit = 10
   const offset = limit * (page - 1)
-  return authorisedRequest(token, `${config.apiRoot}/v3/investment?investor_company_id=${companyId}&limit=${limit}&offset=${offset}`)
+  return authorisedRequest(
+    token,
+    `${config.apiRoot}/v3/investment?investor_company_id=${companyId}&limit=${limit}&offset=${offset}`
+  )
 }
 
-function getInvestment (token, investmentId) {
-  return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}`)
+function getInvestment(token, investmentId) {
+  return authorisedRequest(
+    token,
+    `${config.apiRoot}/v3/investment/${investmentId}`
+  )
 }
 
-function updateInvestment (token, investmentId, body) {
+function updateInvestment(token, investmentId, body) {
   return authorisedRequest(token, {
     url: `${config.apiRoot}/v3/investment/${investmentId}`,
     method: 'PATCH',
@@ -20,22 +26,23 @@ function updateInvestment (token, investmentId, body) {
   })
 }
 
-function getEquityCompanyDetails (token, equityCompanyId) {
+function getEquityCompanyDetails(token, equityCompanyId) {
   const promises = [
     getDitCompany(token, equityCompanyId),
     getCompanyInvestmentProjects(token, equityCompanyId),
   ]
 
-  return Promise.all(promises)
-    .then(([equityCompany, equityCompanyInvestments]) => {
+  return Promise.all(promises).then(
+    ([equityCompany, equityCompanyInvestments]) => {
       return {
         equityCompany,
         equityCompanyInvestments,
       }
-    })
+    }
+  )
 }
 
-function createInvestmentProject (token, body) {
+function createInvestmentProject(token, body) {
   return authorisedRequest(token, {
     url: `${config.apiRoot}/v3/investment`,
     method: 'POST',
@@ -43,14 +50,16 @@ function createInvestmentProject (token, body) {
   })
 }
 
-function getInvestmentProjectAuditLog (token, investmentId) {
-  return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/audit`)
-    .then((data) => {
-      return data.results
-    })
+function getInvestmentProjectAuditLog(token, investmentId) {
+  return authorisedRequest(
+    token,
+    `${config.apiRoot}/v3/investment/${investmentId}/audit`
+  ).then((data) => {
+    return data.results
+  })
 }
 
-function archiveInvestmentProject (token, investmentId, reason) {
+function archiveInvestmentProject(token, investmentId, reason) {
   return authorisedRequest(token, {
     url: `${config.apiRoot}/v3/investment/${investmentId}/archive`,
     method: 'POST',
@@ -60,14 +69,18 @@ function archiveInvestmentProject (token, investmentId, reason) {
   })
 }
 
-function unarchiveInvestmentProject (token, investmentId) {
+function unarchiveInvestmentProject(token, investmentId) {
   return authorisedRequest(token, {
     url: `${config.apiRoot}/v3/investment/${investmentId}/unarchive`,
     method: 'POST',
   })
 }
 
-async function updateInvestmentTeamMembers (token, investmentId, investmentTeamMembers) {
+async function updateInvestmentTeamMembers(
+  token,
+  investmentId,
+  investmentTeamMembers
+) {
   return authorisedRequest(token, {
     url: `${config.apiRoot}/v3/investment/${investmentId}/team-member`,
     method: 'PUT',
@@ -75,16 +88,16 @@ async function updateInvestmentTeamMembers (token, investmentId, investmentTeamM
   })
 }
 
-async function fetchLargeCapitalProfiles (token, limit, page = 1) {
+async function fetchLargeCapitalProfiles(token, limit, page = 1) {
   const offset = limit * (page - 1)
-  return authorisedRequest(token,
-    { url: `${config.apiRoot}/v4/large-investor-profile`,
-      qs: {
-        limit,
-        offset,
-        sortby: 'modified_on',
-      },
-    })
+  return authorisedRequest(token, {
+    url: `${config.apiRoot}/v4/large-investor-profile`,
+    qs: {
+      limit,
+      offset,
+      sortby: 'modified_on',
+    },
+  })
 }
 
 module.exports = {

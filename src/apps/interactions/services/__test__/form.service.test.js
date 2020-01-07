@@ -37,14 +37,11 @@ describe('interaction form service', () => {
       contact: contact.id,
     })
 
-    interactionFormService = proxyquire(
-      '../form',
-      {
-        '../repos': {
-          saveInteraction: saveInteractionStub,
-        },
-      }
-    )
+    interactionFormService = proxyquire('../form', {
+      '../repos': {
+        saveInteraction: saveInteractionStub,
+      },
+    })
   })
 
   describe('Convert API to Form', () => {

@@ -21,16 +21,20 @@ describe('Details container', () => {
     })
 
     it('should render any caller content', () => {
-      expect(this.component.querySelector('.c-details-container__content')).to.not.exist
+      expect(this.component.querySelector('.c-details-container__content')).to
+        .not.exist
     })
   })
 
   context('when there is all props', () => {
     beforeEach(() => {
-      this.component = detailsContainerMacro.renderWithCallerToDom('DetailsContainer', {
-        heading: 'heading',
-        editUrl: '/edit',
-      })('<caller></caller>')
+      this.component = detailsContainerMacro.renderWithCallerToDom(
+        'DetailsContainer',
+        {
+          heading: 'heading',
+          editUrl: '/edit',
+        }
+      )('<caller></caller>')
     })
 
     it('should render the container', () => {
@@ -38,7 +42,9 @@ describe('Details container', () => {
     })
 
     it('should render the heading', () => {
-      expect(this.component.querySelector('h2').textContent.trim()).to.equal('heading')
+      expect(this.component.querySelector('h2').textContent.trim()).to.equal(
+        'heading'
+      )
     })
 
     it('should render the edit link', () => {
@@ -49,7 +55,8 @@ describe('Details container', () => {
     })
 
     it('should render the caller content', () => {
-      expect(this.component.querySelector('.c-details-container__content')).to.exist
+      expect(this.component.querySelector('.c-details-container__content')).to
+        .exist
       expect(this.component.querySelector('caller')).to.exist
     })
   })

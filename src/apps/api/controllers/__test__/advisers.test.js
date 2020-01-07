@@ -56,11 +56,13 @@ describe('Adviser options API controller', () => {
     })
 
     it('should return the advisers found, transformed', () => {
-      expect(this.resMock.json).to.be.calledWith([{
-        value: '1',
-        label: 'Bert Smith',
-        subLabel: 'Team E',
-      }])
+      expect(this.resMock.json).to.be.calledWith([
+        {
+          value: '1',
+          label: 'Bert Smith',
+          subLabel: 'Team E',
+        },
+      ])
     })
   })
 })

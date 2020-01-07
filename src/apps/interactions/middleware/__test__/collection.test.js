@@ -71,13 +71,18 @@ describe('interaction collection middleware', () => {
           },
         }
 
-        await this.middleware.getInteractionCollectionForEntity(this.req, this.res, this.next)
+        await this.middleware.getInteractionCollectionForEntity(
+          this.req,
+          this.res,
+          this.next
+        )
       })
 
       commonTests()
 
       it('should use the specified sort', () => {
-        const actual = this.getInteractionsForEntityStub.getCall(0).args[0].sortby
+        const actual = this.getInteractionsForEntityStub.getCall(0).args[0]
+          .sortby
         expect(actual).to.equal('company__name')
       })
 
@@ -122,13 +127,18 @@ describe('interaction collection middleware', () => {
           },
         }
 
-        await this.middleware.getInteractionCollectionForEntity(this.req, this.res, this.next)
+        await this.middleware.getInteractionCollectionForEntity(
+          this.req,
+          this.res,
+          this.next
+        )
       })
 
       commonTests()
 
       it('should use the default sort', () => {
-        const actual = this.getInteractionsForEntityStub.getCall(0).args[0].sortby
+        const actual = this.getInteractionsForEntityStub.getCall(0).args[0]
+          .sortby
         expect(actual).to.equal('-date')
       })
 
@@ -177,11 +187,17 @@ describe('interaction collection middleware', () => {
 
         this.middleware = proxyquire('../collection', {
           '../repos': {
-            getInteractionsForEntity: this.getInteractionsForEntityStub.rejects(this.error),
+            getInteractionsForEntity: this.getInteractionsForEntityStub.rejects(
+              this.error
+            ),
           },
         })
 
-        await this.middleware.getInteractionCollectionForEntity(this.req, this.res, this.next)
+        await this.middleware.getInteractionCollectionForEntity(
+          this.req,
+          this.res,
+          this.next
+        )
       })
 
       it('should call next once with an error', () => {
@@ -195,7 +211,11 @@ describe('interaction collection middleware', () => {
       beforeEach(() => {
         this.req.query.sortby = 'name'
 
-        this.middleware.getInteractionsRequestBody(this.req, this.res, this.next)
+        this.middleware.getInteractionsRequestBody(
+          this.req,
+          this.res,
+          this.next
+        )
       })
 
       it('should set the sort order in the request body', () => {
@@ -215,14 +235,24 @@ describe('interaction collection middleware', () => {
           fruit: 'Orange',
         })
 
-        this.middleware.getInteractionsRequestBody(this.req, this.res, this.next)
+        this.middleware.getInteractionsRequestBody(
+          this.req,
+          this.res,
+          this.next
+        )
       })
 
       it('should put the criteria in the request body', () => {
         expect(this.req.body.kind).to.equal(this.req.query.kind)
-        expect(this.req.body.communication_channel).to.equal(this.req.query.communication_channel)
-        expect(this.req.body.dit_participants__adviser).to.equal(this.req.query.dit_participants__adviser)
-        expect(this.req.body.dit_participants__team).to.equal(this.req.query.dit_participants__team)
+        expect(this.req.body.communication_channel).to.equal(
+          this.req.query.communication_channel
+        )
+        expect(this.req.body.dit_participants__adviser).to.equal(
+          this.req.query.dit_participants__adviser
+        )
+        expect(this.req.body.dit_participants__team).to.equal(
+          this.req.query.dit_participants__team
+        )
         expect(this.req.body.date_after).to.equal(this.req.query.date_after)
         expect(this.req.body.date_before).to.equal(this.req.query.date_before)
       })
@@ -240,7 +270,11 @@ describe('interaction collection middleware', () => {
           date_before: '',
         })
 
-        this.middleware.getInteractionsRequestBody(this.req, this.res, this.next)
+        this.middleware.getInteractionsRequestBody(
+          this.req,
+          this.res,
+          this.next
+        )
       })
 
       it('should put the default criteria in the request body', () => {

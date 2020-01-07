@@ -11,7 +11,7 @@ const allLabels = assign(
   labels.requirementsLabels.view,
   labels.requirementsLabels.edit,
   labels.projectManagementLabels.edit,
-  labels.projectManagementLabels.edit,
+  labels.projectManagementLabels.edit
 )
 
 const formLinks = {
@@ -62,22 +62,30 @@ const toCompleteStageMessages = {
   ],
 }
 
-function buildIncompleteFormList (incompleteFields = []) {
+function buildIncompleteFormList(incompleteFields = []) {
   const formList = map(incompleteFields, (incompleteField) => {
     const incompleteFieldLabel = get(allLabels, incompleteField)
     const incompleteFieldFormLink = get(formFieldLinks, incompleteField)
 
     if (!incompleteFieldLabel) {
-      logger.error(`Could not find label for incomplete field ${incompleteField}`)
+      logger.error(
+        `Could not find label for incomplete field ${incompleteField}`
+      )
       return
     }
 
     if (!incompleteFieldFormLink) {
-      logger.error(`Could not find form link for incomplete field ${incompleteField}`)
+      logger.error(
+        `Could not find form link for incomplete field ${incompleteField}`
+      )
       return
     }
 
-    return assign({}, { url: incompleteFieldFormLink }, { text: incompleteFieldLabel })
+    return assign(
+      {},
+      { url: incompleteFieldFormLink },
+      { text: incompleteFieldLabel }
+    )
   })
 
   return sortBy(compact(formList), 'url')

@@ -6,7 +6,7 @@ const { transformCompanyToBusinessDetails } = require('./transformers')
 const { getCompanySubsidiaries } = require('../../repos')
 const urls = require('../../../../lib/urls')
 
-async function renderBusinessDetails (req, res) {
+async function renderBusinessDetails(req, res) {
   const { token } = req.session
   const {
     company,
@@ -28,13 +28,19 @@ async function renderBusinessDetails (req, res) {
         businessDetails: transformCompanyToBusinessDetails(company),
         subsidiariesCount: subsidiaries.count,
         dnbRelatedCompaniesCount,
-        globalUltimate: globalUltimate ? pick(globalUltimate, ['name', 'url']) : undefined,
+        globalUltimate: globalUltimate
+          ? pick(globalUltimate, ['name', 'url'])
+          : undefined,
         urls: {
           companiesHouse: urls.external.companiesHouse(company.company_number),
           companyBusinessDetails: urls.companies.businessDetails(company.id),
           companyEdit: urls.companies.edit(company.id),
-          companyArchive: `${urls.companies.archive(company.id)}?_csrf=${csrfToken}`,
-          companyUnarchive: `${urls.companies.unarchive(company.id)}?_csrf=${csrfToken}`,
+          companyArchive: `${urls.companies.archive(
+            company.id
+          )}?_csrf=${csrfToken}`,
+          companyUnarchive: `${urls.companies.unarchive(
+            company.id
+          )}?_csrf=${csrfToken}`,
           companyAdvisers: urls.companies.advisers.index(company.id),
           companyAudit: urls.companies.audit(company.id),
           support: urls.support(),

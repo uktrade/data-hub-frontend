@@ -15,7 +15,7 @@ const {
   renderTemplate,
 } = require('./middleware')
 
-function getMiddleware (currentStep) {
+function getMiddleware(currentStep) {
   return currentStep.middleware || []
 }
 
@@ -23,7 +23,8 @@ const build = (journey) => {
   const router = express.Router()
 
   journey.steps.forEach((currentStep, currentStepId) => {
-    router.route(currentStep.path)
+    router
+      .route(currentStep.path)
       .get(
         setJourneyDetails(journey, currentStep, currentStepId),
         validateState,
@@ -31,7 +32,7 @@ const build = (journey) => {
         setFormDetails,
         updateStateBrowseHistory,
         setBreadcrumbs,
-        renderTemplate,
+        renderTemplate
       )
       .post(
         setJourneyDetails(journey, currentStep, currentStepId),
@@ -43,7 +44,7 @@ const build = (journey) => {
         postDetails,
         setFormDetails,
         setBreadcrumbs,
-        renderTemplate,
+        renderTemplate
       )
   })
 

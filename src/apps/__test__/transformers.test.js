@@ -180,9 +180,9 @@ describe('Global transformers', () => {
       })
 
       expect(actual).to.deep.equal({
-        'key': '1',
-        'label': 'France',
-        'value': 'FR',
+        key: '1',
+        label: 'France',
+        value: 'FR',
       })
     })
   })

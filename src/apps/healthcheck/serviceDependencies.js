@@ -28,9 +28,7 @@ module.exports = [
     warningOnly: true,
     healthCheck: () =>
       axios.get(
-        `https://api.getaddress.io/usage?api-key=${
-          config.postcodeLookup.apiKey
-        }`
+        `https://api.getaddress.io/usage?api-key=${config.postcodeLookup.apiKey}`
       ),
   },
 ]

@@ -3,23 +3,35 @@ const selectors = require('../../../../selectors')
 const { assertKeyValueTable } = require('../../support/assertions')
 const { companies } = require('../../../../../src/lib/urls')
 
-const populateForm = data => {
+const populateForm = (data) => {
   cy.get(selectors.investment.form.name).type(data.name)
   cy.get(selectors.investment.form.description).type(data.description)
   cy.get(selectors.investment.form.primarySector).select(data.sector)
-  cy.get(selectors.investment.form.businessActivity).select(data.businessActivity)
+  cy.get(selectors.investment.form.businessActivity).select(
+    data.businessActivity
+  )
   cy.get(selectors.investment.form.clientContact).select(data.contact)
   cy.get(selectors.investment.form.clientRelationshipManagerYes).click()
   cy.get(selectors.investment.form.referralSourceYes).click()
-  cy.get(selectors.investment.form.referralSourceActivity).select(data.referralSource)
-  cy.get(selectors.investment.form.estimatedLandDateMonth).type(data.estimateMonth)
-  cy.get(selectors.investment.form.estimatedLandDateYear).type(data.estimateYear)
+  cy.get(selectors.investment.form.referralSourceActivity).select(
+    data.referralSource
+  )
+  cy.get(selectors.investment.form.estimatedLandDateMonth).type(
+    data.estimateMonth
+  )
+  cy.get(selectors.investment.form.estimatedLandDateYear).type(
+    data.estimateYear
+  )
   cy.get(selectors.investment.form.actualLandDateYear).type(data.year)
   cy.get(selectors.investment.form.actualLandDateMonth).type(data.month)
   cy.get(selectors.investment.form.actualLandDateDay).type(data.day)
   cy.get(selectors.investment.form.investorType).select(data.investor)
-  cy.get(selectors.investment.form.levelOfInvolvement).select(data.investorLevel)
-  cy.get(selectors.investment.form.specificInvestmentProgramme).select(data.investorProgramme)
+  cy.get(selectors.investment.form.levelOfInvolvement).select(
+    data.investorLevel
+  )
+  cy.get(selectors.investment.form.specificInvestmentProgramme).select(
+    data.investorProgramme
+  )
   cy.contains('Save').click()
 }
 
@@ -43,7 +55,11 @@ describe('Investment project', () => {
 
   describe('FDI investment', () => {
     before(() => {
-      cy.visit(companies.investments.companyInvestment('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
+      cy.visit(
+        companies.investments.companyInvestment(
+          '0fb3379c-341c-4da4-b825-bf8d47b26baa'
+        )
+      )
     })
 
     it('should create a FDI investment project', () => {
@@ -56,10 +72,13 @@ describe('Investment project', () => {
       cy.get(selectors.companyInvestmentProjects.continue).click()
 
       populateForm(data)
-      cy.get(selectors.message.successful).should('contain', 'Investment project created')
+      cy.get(selectors.message.successful).should(
+        'contain',
+        'Investment project created'
+      )
 
       assertKeyValueTable('summaryContainer', {
-        'Client': 'Lambda plc',
+        Client: 'Lambda plc',
         'Type of investment': 'FDI, Merger',
         'Primary sector': data.sector,
         'Business activity': data.businessActivity,
@@ -105,7 +124,11 @@ describe('Investment project', () => {
 
   describe('non FDI investment', () => {
     before(() => {
-      cy.visit(companies.investments.companyInvestment('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
+      cy.visit(
+        companies.investments.companyInvestment(
+          '0fb3379c-341c-4da4-b825-bf8d47b26baa'
+        )
+      )
     })
 
     it('should create a non FDI investment project', () => {
@@ -117,10 +140,13 @@ describe('Investment project', () => {
       cy.get(selectors.companyInvestmentProjects.continue).click()
 
       populateForm(data)
-      cy.get(selectors.message.successful).should('contain', 'Investment project created')
+      cy.get(selectors.message.successful).should(
+        'contain',
+        'Investment project created'
+      )
 
       assertKeyValueTable('summaryContainer', {
-        'Client': 'Lambda plc',
+        Client: 'Lambda plc',
         'Type of investment': 'Non-FDI',
         'Primary sector': data.sector,
         'Business activity': data.businessActivity,
@@ -163,7 +189,11 @@ describe('Investment project', () => {
 
   describe('FDI investment with different company source', () => {
     before(() => {
-      cy.visit(companies.investments.companyInvestment('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
+      cy.visit(
+        companies.investments.companyInvestment(
+          '0fb3379c-341c-4da4-b825-bf8d47b26baa'
+        )
+      )
     })
 
     it('should create a FDI investment project with a different source of equity company', () => {
@@ -175,14 +205,21 @@ describe('Investment project', () => {
       cy.get(selectors.companyInvestmentProjects.sourceOfEquityNo).click()
       cy.get(selectors.companyInvestmentProjects.continue).click()
 
-      cy.get(selectors.nav.searchTerm).type('Mars Exports Ltd').type('{enter}')
-      cy.get('a').contains('Mars Exports Ltd').click()
+      cy.get(selectors.nav.searchTerm)
+        .type('Mars Exports Ltd')
+        .type('{enter}')
+      cy.get('a')
+        .contains('Mars Exports Ltd')
+        .click()
 
       populateForm({ ...data, contact: 'Fred Peterson' })
-      cy.get(selectors.message.successful).should('contain', 'Investment project created')
+      cy.get(selectors.message.successful).should(
+        'contain',
+        'Investment project created'
+      )
 
       assertKeyValueTable('summaryContainer', {
-        'Client': 'Mars Exports Ltd',
+        Client: 'Mars Exports Ltd',
         'Type of investment': 'FDI, Merger',
         'Primary sector': data.sector,
         'Business activity': data.businessActivity,
@@ -199,7 +236,11 @@ describe('Investment project', () => {
 
   describe('Commitment investment project', () => {
     before(() => {
-      cy.visit(companies.investments.companyInvestment('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
+      cy.visit(
+        companies.investments.companyInvestment(
+          '0fb3379c-341c-4da4-b825-bf8d47b26baa'
+        )
+      )
     })
 
     it('should create a commitment to investment project', () => {
@@ -211,10 +252,13 @@ describe('Investment project', () => {
       cy.get(selectors.companyInvestmentProjects.continue).click()
 
       populateForm(data)
-      cy.get(selectors.message.successful).should('contain', 'Investment project created')
+      cy.get(selectors.message.successful).should(
+        'contain',
+        'Investment project created'
+      )
 
       assertKeyValueTable('summaryContainer', {
-        'Client': 'Lambda plc',
+        Client: 'Lambda plc',
         'Type of investment': 'Commitment to invest',
         'Primary sector': data.sector,
         'Business activity': data.businessActivity,

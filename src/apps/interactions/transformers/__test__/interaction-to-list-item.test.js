@@ -58,17 +58,20 @@ describe('#transformInteractionToListItem', () => {
     beforeEach(() => {
       this.transformed = transformInteractionToListItem()({
         ...mockInteraction,
-        contacts: [{
-          'id': 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
-          'first_name': 'Jackson',
-          'last_name': 'Whitfield',
-          'name': 'Jackson Whitfield',
-        }, {
-          'id': 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
-          'first_name': 'Jackson2',
-          'last_name': 'Whitfield2',
-          'name': 'Jackson2 Whitfield2',
-        }],
+        contacts: [
+          {
+            id: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
+            first_name: 'Jackson',
+            last_name: 'Whitfield',
+            name: 'Jackson Whitfield',
+          },
+          {
+            id: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
+            first_name: 'Jackson2',
+            last_name: 'Whitfield2',
+            name: 'Jackson2 Whitfield2',
+          },
+        ],
       })
     })
 
@@ -106,29 +109,36 @@ describe('#transformInteractionToListItem', () => {
     })
   })
 
-  context('when the source is an interaction with adviser and team name', () => {
-    it('should return adviser name and team', () => {
-      this.transformed = transformInteractionToListItem()({
-        ...mockInteraction,
-        dit_participants: [
-          {
-            adviser: {
-              id: 1,
-              first_name: 'Bob',
-              last_name: 'Lawson',
-              name: 'Bob Lawson',
+  context(
+    'when the source is an interaction with adviser and team name',
+    () => {
+      it('should return adviser name and team', () => {
+        this.transformed = transformInteractionToListItem()({
+          ...mockInteraction,
+          dit_participants: [
+            {
+              adviser: {
+                id: 1,
+                first_name: 'Bob',
+                last_name: 'Lawson',
+                name: 'Bob Lawson',
+              },
+              team: {
+                id: 1,
+                name: 'The test team',
+              },
             },
-            team: {
-              id: 1,
-              name: 'The test team',
-            },
-          }],
+          ],
+        })
+        const metadata = this.transformed.meta
+        const adviserName = find(
+          metadata,
+          (item) => item.label === 'Adviser(s)'
+        )
+        expect(adviserName.value).to.deep.equal(['Bob Lawson, The test team'])
       })
-      const metadata = this.transformed.meta
-      const adviserName = find(metadata, (item) => item.label === 'Adviser(s)')
-      expect(adviserName.value).to.deep.equal(['Bob Lawson, The test team'])
-    })
-  })
+    }
+  )
 
   context('when the source is an interaction with a null team name', () => {
     it('should return just an adviser name', () => {
@@ -143,7 +153,8 @@ describe('#transformInteractionToListItem', () => {
               name: 'Bob Lawson',
             },
             team: null,
-          }],
+          },
+        ],
       })
       const metadata = this.transformed.meta
       const adviserName = find(metadata, (item) => item.label === 'Adviser(s)')
@@ -162,7 +173,8 @@ describe('#transformInteractionToListItem', () => {
               id: 1,
               name: 'The test team',
             },
-          }],
+          },
+        ],
       })
       const metadata = this.transformed.meta
       const adviserName = find(metadata, (item) => item.label === 'Adviser(s)')
@@ -174,12 +186,14 @@ describe('#transformInteractionToListItem', () => {
     it('should return unknown name', () => {
       this.transformed = transformInteractionToListItem()({
         ...mockInteraction,
-        contacts: [{
-          id: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
-          first_name: 'Jackson',
-          last_name: 'Whitfield',
-          name: null,
-        }],
+        contacts: [
+          {
+            id: 'b4919d5d-8cfb-49d1-a3f8-e4eb4b61e306',
+            first_name: 'Jackson',
+            last_name: 'Whitfield',
+            name: null,
+          },
+        ],
       })
       const metadata = this.transformed.meta
       const contactName = find(metadata, (item) => item.label === 'Contact(s)')
@@ -241,7 +255,9 @@ describe('#transformInteractionToListItem', () => {
 
   context('when the source is an interaction and has feedback', () => {
     beforeEach(() => {
-      this.transformed = transformInteractionToListItem()(mockInteractionWithFeedback)
+      this.transformed = transformInteractionToListItem()(
+        mockInteractionWithFeedback
+      )
     })
     it('should transform data from interaction response to list item', () => {
       expect(this.transformed).to.deep.equal({
@@ -378,15 +394,11 @@ describe('#transformInteractionToListItem', () => {
             label: 'Date',
           },
           {
-            value: [
-              'Jackson Whitfield',
-            ],
+            value: ['Jackson Whitfield'],
             label: 'Contact(s)',
           },
           {
-            value: [
-              'Bob Lawson, The test team',
-            ],
+            value: ['Bob Lawson, The test team'],
             label: 'Adviser(s)',
           },
           {

@@ -42,8 +42,8 @@ module.exports = {
     no: 'label[for=field-were_countries_discussed-2]',
   },
   countries: {
-    future: ('#group-field-' + EXPORT_INTEREST_STATUS.FUTURE_INTEREST),
-    export: ('#group-field-' + EXPORT_INTEREST_STATUS.EXPORTING_TO),
-    noInterest: ('#group-field-' + EXPORT_INTEREST_STATUS.NOT_INTERESTED),
+    future: '#group-field-' + EXPORT_INTEREST_STATUS.FUTURE_INTEREST,
+    export: '#group-field-' + EXPORT_INTEREST_STATUS.EXPORTING_TO,
+    noInterest: '#group-field-' + EXPORT_INTEREST_STATUS.NOT_INTERESTED,
   },
 }

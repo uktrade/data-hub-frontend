@@ -11,7 +11,7 @@ var interactionDraftFutureMeeting = require('../../../fixtures/v3/interaction/in
 var interactionDraftPastMeeting = require('../../../fixtures/v3/interaction/interaction-draft-past-meeting.json')
 var interactionValidationError = require('../../../fixtures/v3/interaction/interaction-validation-error.json')
 
-var getInteractions = function (req, res) {
+var getInteractions = function(req, res) {
   if (req.query.contact_id) {
     return res.json(interactionByContactId)
   }
@@ -20,14 +20,16 @@ var getInteractions = function (req, res) {
     return res.json(interactionByCompanyId)
   }
 
-  if (req.query.investment_project_id === '5d341b34-1fc8-4638-b4b1-a0922ebf401e') {
+  if (
+    req.query.investment_project_id === '5d341b34-1fc8-4638-b4b1-a0922ebf401e'
+  ) {
     return res.json(interactionByInvestmentProjectId)
   }
 
   res.json(interactions)
 }
 
-var getInteractionById = function (req, res) {
+var getInteractionById = function(req, res) {
   var interactions = {
     'ec4a46ef-6e50-4a5c-bba0-e311f0471312': interactionWithDocumentLink,
     '0dcb3748-c097-4f20-b84f-0114bbb1a8e0': interactionWithoutDocumentLink,
@@ -36,7 +38,8 @@ var getInteractionById = function (req, res) {
     '888c12ee-91db-4964-908e-0f18ce823096': interactionDraftPastMeeting,
   }
 
-  var interactionResponse = interactions[req.params.interactionId] || interaction
+  var interactionResponse =
+    interactions[req.params.interactionId] || interaction
 
   if (state.interaction) {
     var merged = _.merge({}, interactionResponse, {
@@ -49,7 +52,7 @@ var getInteractionById = function (req, res) {
   return res.json(interactionResponse)
 }
 
-var createInteraction = function (req, res) {
+var createInteraction = function(req, res) {
   if (req.body.company === '4e6a4edb-55e3-4461-a88d-84d329ee7eb8') {
     return res.json(400, interactionValidationError)
   }
@@ -62,11 +65,11 @@ var createInteraction = function (req, res) {
   res.json(interactionCreate)
 }
 
-var archiveInteraction = function (req, res) {
+var archiveInteraction = function(req, res) {
   return getInteractionById(req, res)
 }
 
-var patchInteraction = function (req, res) {
+var patchInteraction = function(req, res) {
   return getInteractionById(req, res)
 }
 

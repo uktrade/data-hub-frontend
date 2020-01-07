@@ -9,7 +9,8 @@ describe('Investment details controller', () => {
 
     this.controller = proxyquire('../details', {
       '../transformers': {
-        transformInvestmentRequirementsForView: this.transformInvestmentRequirementsForViewStub,
+        transformInvestmentRequirementsForView: this
+          .transformInvestmentRequirementsForViewStub,
         transformInvestmentForView: sinon.stub(),
         transformInvestmentValueForView: sinon.stub(),
       },
@@ -18,31 +19,35 @@ describe('Investment details controller', () => {
 
   describe('#detailsGetHandler', () => {
     it('should return investment details', (done) => {
-      this.controller.detailsGetHandler({
-        session: {
-          token: 'abcd',
+      this.controller.detailsGetHandler(
+        {
+          session: {
+            token: 'abcd',
+          },
         },
-      }, {
-        locals: {
-          investment: investmentData,
+        {
+          locals: {
+            investment: investmentData,
+          },
+          render: (template, data) => {
+            try {
+              expect(template).to.equal('investments/views/details')
+              done()
+            } catch (error) {
+              done(error)
+            }
+          },
         },
-        render: (template, data) => {
-          try {
-            expect(template).to.equal('investments/views/details')
-            done()
-          } catch (error) {
-            done(error)
-          }
-        },
-      }, this.next)
+        this.next
+      )
     })
 
     context('when there are no requirements', () => {
       beforeEach(() => {
         this.transformInvestmentRequirementsForViewStub.returns({
-          'one': 'two',
-          'uk_company': null,
-          'strategic_drivers': null,
+          one: 'two',
+          uk_company: null,
+          strategic_drivers: null,
         })
 
         this.req = {
@@ -74,9 +79,9 @@ describe('Investment details controller', () => {
     context('when there is just a uk company requirement property', () => {
       beforeEach(() => {
         this.transformInvestmentRequirementsForViewStub.returns({
-          'one': 'two',
-          'uk_company': 'test company',
-          'strategic_drivers': null,
+          one: 'two',
+          uk_company: 'test company',
+          strategic_drivers: null,
         })
 
         this.req = {
@@ -110,9 +115,9 @@ describe('Investment details controller', () => {
     context('when requirements is fully populated', () => {
       beforeEach(() => {
         this.transformInvestmentRequirementsForViewStub.returns({
-          'strategic_drivers': 'Some drivers',
-          'uk_company': 'test company',
-          'client_requirements': null,
+          strategic_drivers: 'Some drivers',
+          uk_company: 'test company',
+          client_requirements: null,
         })
 
         this.req = {

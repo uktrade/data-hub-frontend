@@ -10,8 +10,12 @@ describe('#build', () => {
     this.req = { session: {} }
     this.flashSpy = sinon.spy()
     this.breadcrumbSpy = sinon.spy()
-    this.setOptionsStub1 = sinon.stub().callsFake((req, res, next) => { next() })
-    this.setOptionsStub2 = sinon.stub().callsFake((req, res, next) => { next() })
+    this.setOptionsStub1 = sinon.stub().callsFake((req, res, next) => {
+      next()
+    })
+    this.setOptionsStub2 = sinon.stub().callsFake((req, res, next) => {
+      next()
+    })
     this.journeyBuilder = require('../journey-builder')
 
     this.app = express()
@@ -31,10 +35,7 @@ describe('#build', () => {
     })
 
     this.journey = {
-      steps: steps([
-        this.setOptionsStub1,
-        this.setOptionsStub2,
-      ]),
+      steps: steps([this.setOptionsStub1, this.setOptionsStub2]),
     }
   })
 
@@ -96,9 +97,7 @@ describe('#build', () => {
                     completed: true,
                   },
                 },
-                browseHistory: [
-                  '/step-1',
-                ],
+                browseHistory: ['/step-1'],
               },
             },
           }
@@ -121,47 +120,52 @@ describe('#build', () => {
       })
     })
 
-    context('when rendering the first step of a multi step form having half completed another multi step form', () => {
-      beforeEach(async () => {
-        const stateFromAnotherFormJourney = {
-          'multi-step': {
-            '/base/another-step-1': {
-              steps: {
-                another_field_1: 'another_field_1',
+    context(
+      'when rendering the first step of a multi step form having half completed another multi step form',
+      () => {
+        beforeEach(async () => {
+          const stateFromAnotherFormJourney = {
+            'multi-step': {
+              '/base/another-step-1': {
+                steps: {
+                  another_field_1: 'another_field_1',
+                },
               },
             },
-          },
-        }
-        this.req.session = {
-          ...this.req.session,
-          ...stateFromAnotherFormJourney,
-        }
+          }
+          this.req.session = {
+            ...this.req.session,
+            ...stateFromAnotherFormJourney,
+          }
 
-        this.app.use((req, res, next) => {
-          req.session = this.req.session
-          next()
+          this.app.use((req, res, next) => {
+            req.session = this.req.session
+            next()
+          })
+
+          this.app.use(this.journeyBuilder.build(this.journey))
+
+          this.response = await request(this.app).get('/step-1')
         })
 
-        this.app.use(this.journeyBuilder.build(this.journey))
-
-        this.response = await request(this.app).get('/step-1')
-      })
-
-      commonTests({
-        children: [],
-        returnLink: '/base',
-        returnText: 'Cancel',
-        state: {},
-      })
-
-      it('should not alter state for the other form', async () => {
-        expect(this.req.session['multi-step']['/base/another-step-1']).to.deep.equal({
-          steps: {
-            another_field_1: 'another_field_1',
-          },
+        commonTests({
+          children: [],
+          returnLink: '/base',
+          returnText: 'Cancel',
+          state: {},
         })
-      })
-    })
+
+        it('should not alter state for the other form', async () => {
+          expect(
+            this.req.session['multi-step']['/base/another-step-1']
+          ).to.deep.equal({
+            steps: {
+              another_field_1: 'another_field_1',
+            },
+          })
+        })
+      }
+    )
   })
 
   context('when submitting the form', () => {
@@ -170,7 +174,9 @@ describe('#build', () => {
         beforeEach(async () => {
           this.app.use(this.journeyBuilder.build(this.journey))
 
-          this.response = await request(this.app).post('/step-1').send({ selectedAtStep1: 'step-2-value' })
+          this.response = await request(this.app)
+            .post('/step-1')
+            .send({ selectedAtStep1: 'step-2-value' })
         })
 
         it('should call the middleware', async () => {
@@ -184,7 +190,9 @@ describe('#build', () => {
         })
 
         it('should not render a template', () => {
-          expect(this.response.res.text).to.equal('Found. Redirecting to /base/step-2')
+          expect(this.response.res.text).to.equal(
+            'Found. Redirecting to /base/step-2'
+          )
         })
       })
 
@@ -192,7 +200,9 @@ describe('#build', () => {
         beforeEach(async () => {
           this.app.use(this.journeyBuilder.build(this.journey))
 
-          this.response = await request(this.app).post('/step-1').send({ selectedAtStep1: 'step-3-value' })
+          this.response = await request(this.app)
+            .post('/step-1')
+            .send({ selectedAtStep1: 'step-3-value' })
         })
 
         it('should call the middleware', async () => {
@@ -206,7 +216,9 @@ describe('#build', () => {
         })
 
         it('should not render a template', () => {
-          expect(this.response.res.text).to.equal('Found. Redirecting to /base/step-3')
+          expect(this.response.res.text).to.equal(
+            'Found. Redirecting to /base/step-3'
+          )
         })
       })
     })
@@ -216,8 +228,12 @@ describe('#build', () => {
         beforeEach(async () => {
           this.app.use(this.journeyBuilder.build(this.journey))
 
-          this.response = await request(this.app).post('/step-1').send({ selectedAtStep1: 'step-2-value' })
-          this.response = await request(this.app).post('/step-2').send({ selectedAtStep2: 'finish' })
+          this.response = await request(this.app)
+            .post('/step-1')
+            .send({ selectedAtStep1: 'step-2-value' })
+          this.response = await request(this.app)
+            .post('/step-2')
+            .send({ selectedAtStep2: 'finish' })
         })
 
         it('should redirect to finish', () => {
@@ -226,7 +242,9 @@ describe('#build', () => {
         })
 
         it('should not render a template', () => {
-          expect(this.response.res.text).to.equal('Found. Redirecting to /base/finish')
+          expect(this.response.res.text).to.equal(
+            'Found. Redirecting to /base/finish'
+          )
         })
       })
     })
@@ -235,7 +253,9 @@ describe('#build', () => {
       beforeEach(async () => {
         this.app.use(this.journeyBuilder.build(this.journey))
 
-        this.response = await request(this.app).post('/step-1').send({ selectedAtStep1: 'step-2-value' })
+        this.response = await request(this.app)
+          .post('/step-1')
+          .send({ selectedAtStep1: 'step-2-value' })
         this.response = await request(this.app).post('/step-2')
       })
 
@@ -245,7 +265,9 @@ describe('#build', () => {
       })
 
       it('should not render a template', () => {
-        expect(this.response.res.text).to.equal('Found. Redirecting to /base/finish')
+        expect(this.response.res.text).to.equal(
+          'Found. Redirecting to /base/finish'
+        )
       })
     })
 
@@ -284,7 +306,7 @@ describe('#build', () => {
           ...this.form,
           errors: {
             messages: {
-              selectedAtStep1: [ 'You must enter a value for selected' ],
+              selectedAtStep1: ['You must enter a value for selected'],
             },
           },
           state: {},
@@ -300,7 +322,9 @@ describe('#build', () => {
         beforeEach(async () => {
           this.app.use(this.journeyBuilder.build(this.journey))
 
-          await request(this.app).post('/step-1').send({ selectedAtStep1: 'step-2-value' })
+          await request(this.app)
+            .post('/step-1')
+            .send({ selectedAtStep1: 'step-2-value' })
         })
 
         it('should persist state for the first step', async () => {
@@ -326,8 +350,12 @@ describe('#build', () => {
         beforeEach(async () => {
           this.app.use(this.journeyBuilder.build(this.journey))
 
-          await request(this.app).post('/step-1').send({ selectedAtStep1: 'step-2-value' })
-          await request(this.app).post('/step-2').send({ selectedAtStep2: 'finish' })
+          await request(this.app)
+            .post('/step-1')
+            .send({ selectedAtStep1: 'step-2-value' })
+          await request(this.app)
+            .post('/step-2')
+            .send({ selectedAtStep2: 'finish' })
         })
 
         it('should persist state for the second step and subsequent steps', async () => {
@@ -357,171 +385,199 @@ describe('#build', () => {
       })
     })
 
-    context('when trying to start a form without completing previous steps', () => {
-      beforeEach(async () => {
-        this.app.use(this.journeyBuilder.build(this.journey))
+    context(
+      'when trying to start a form without completing previous steps',
+      () => {
+        beforeEach(async () => {
+          this.app.use(this.journeyBuilder.build(this.journey))
 
-        this.response = await request(this.app).get('/step-5')
-      })
-
-      it('should not call the middleware', async () => {
-        expect(this.setOptionsStub1).to.not.be.called
-        expect(this.setOptionsStub2).to.not.be.called
-      })
-
-      it('should redirect to step 1', () => {
-        expect(this.response.statusCode).to.equal(302)
-        expect(this.response.headers.location).to.equal('/base/step-1')
-      })
-
-      it('should not render a template', () => {
-        expect(this.response.res.text).to.equal('Found. Redirecting to /base/step-1')
-      })
-    })
-
-    context('when it is the final step and the API request is successful', () => {
-      beforeEach(async () => {
-        this.sendSpy = sinon.stub().callsFake(() => { return { id: 1 } })
-        this.journey.steps[4].done = {
-          send: this.sendSpy,
-          message: 'The entity has been added',
-          nextPath: ({ id }) => `/base/entities/${id}`,
-        }
-
-        this.app.use(this.journeyBuilder.build(this.journey))
-
-        await request(this.app).post('/step-1').send({ selectedAtStep1: 'step-3-value' })
-        await request(this.app).post('/step-3').send({ selectedAtStep3: 'step-5-value' })
-        this.response = await request(this.app).post('/step-5').send({ moreData: 'more' })
-      })
-
-      it('should POST to the API', () => {
-        expect(this.sendSpy).have.been.calledWith({
-          selectedAtStep1: 'step-3-value',
-          selectedAtStep3: 'step-5-value',
-          moreData: 'more',
+          this.response = await request(this.app).get('/step-5')
         })
-        expect(this.sendSpy).to.be.calledOnce
-      })
 
-      it('should remove state for the journey', () => {
-        expect(this.req.session['multi-step']['/base/step-1']).to.be.undefined
-      })
-
-      it('should set the success message', () => {
-        expect(this.flashSpy).to.be.calledWith('success', 'The entity has been added')
-        expect(this.flashSpy).to.be.calledOnce
-      })
-
-      it('should redirect to the finish', () => {
-        expect(this.response.statusCode).to.equal(302)
-        expect(this.response.headers.location).to.equal('base/entities/1')
-      })
-
-      it('should not render a template', () => {
-        expect(this.response.res.text).to.equal('Found. Redirecting to base/entities/1')
-      })
-    })
-
-    context('when it is the final step and the API request is erroneous', () => {
-      beforeEach(async () => {
-        this.sendSpy = sinon.stub().callsFake(() => {
-          const error = new Error()
-          error.statusCode = 400
-          error.error = 'Error messages'
-          throw error
+        it('should not call the middleware', async () => {
+          expect(this.setOptionsStub1).to.not.be.called
+          expect(this.setOptionsStub2).to.not.be.called
         })
-        this.journey.steps[4].done = {
-          send: this.sendSpy,
-          message: 'The entity has been added',
-          nextPath: ({ id }) => `/base/entities/${id}`,
-        }
 
-        this.app.use(this.journeyBuilder.build(this.journey))
-
-        await request(this.app).get('/step-1')
-        await request(this.app).post('/step-1').send({ selectedAtStep1: 'step-3-value' })
-        await request(this.app).get('/step-3')
-        await request(this.app).post('/step-3').send({ selectedAtStep3: 'step-5-value' })
-        await request(this.app).get('/step-5')
-        this.response = await request(this.app).post('/step-5').send({ moreData: 'more' })
-      })
-
-      it('should POST to the API', () => {
-        expect(this.sendSpy).have.been.calledWith({
-          selectedAtStep1: 'step-3-value',
-          selectedAtStep3: 'step-5-value',
-          moreData: 'more',
+        it('should redirect to step 1', () => {
+          expect(this.response.statusCode).to.equal(302)
+          expect(this.response.headers.location).to.equal('/base/step-1')
         })
-        expect(this.sendSpy).to.be.calledOnce
-      })
 
-      it('should not remove state for the journey', () => {
-        expect(this.req.session).to.deep.equal({
-          'multi-step': {
-            '/base/step-1': {
-              steps: {
-                '/step-1': {
-                  completed: true,
-                  data: {
-                    selectedAtStep1: 'step-3-value',
-                  },
-                  nextPath: '/step-3',
-                },
-                '/step-3': {
-                  completed: true,
-                  data: {
-                    selectedAtStep3: 'step-5-value',
-                  },
-                  nextPath: '/step-5',
-                },
-                '/step-5': {
-                  completed: false,
-                  data: {
-                    moreData: 'more',
-                  },
-                },
-              },
-              browseHistory: [
-                '/step-1',
-                '/step-3',
-                '/step-5',
-              ],
-            },
-          },
+        it('should not render a template', () => {
+          expect(this.response.res.text).to.equal(
+            'Found. Redirecting to /base/step-1'
+          )
         })
-      })
+      }
+    )
 
-      it('should not set the success message', () => {
-        expect(this.flashSpy).to.not.be.called
-      })
+    context(
+      'when it is the final step and the API request is successful',
+      () => {
+        beforeEach(async () => {
+          this.sendSpy = sinon.stub().callsFake(() => {
+            return { id: 1 }
+          })
+          this.journey.steps[4].done = {
+            send: this.sendSpy,
+            message: 'The entity has been added',
+            nextPath: ({ id }) => `/base/entities/${id}`,
+          }
 
-      it('should not redirect to anywhere', () => {
-        expect(this.response.statusCode).to.equal(200)
-        expect(this.response.headers.location).to.be.undefined
-      })
+          this.app.use(this.journeyBuilder.build(this.journey))
 
-      it('should render step 5', () => {
-        const render = JSON.parse(this.response.res.text)
-        expect(render.options.form).to.deep.equal({
-          children: [],
-          returnLink: '/base/step-3',
-          returnText: 'Back',
-          state: {
+          await request(this.app)
+            .post('/step-1')
+            .send({ selectedAtStep1: 'step-3-value' })
+          await request(this.app)
+            .post('/step-3')
+            .send({ selectedAtStep3: 'step-5-value' })
+          this.response = await request(this.app)
+            .post('/step-5')
+            .send({ moreData: 'more' })
+        })
+
+        it('should POST to the API', () => {
+          expect(this.sendSpy).have.been.calledWith({
             selectedAtStep1: 'step-3-value',
             selectedAtStep3: 'step-5-value',
             moreData: 'more',
-          },
-          errors: {
-            messages: 'Error messages',
-          },
+          })
+          expect(this.sendSpy).to.be.calledOnce
         })
-      })
-    })
+
+        it('should remove state for the journey', () => {
+          expect(this.req.session['multi-step']['/base/step-1']).to.be.undefined
+        })
+
+        it('should set the success message', () => {
+          expect(this.flashSpy).to.be.calledWith(
+            'success',
+            'The entity has been added'
+          )
+          expect(this.flashSpy).to.be.calledOnce
+        })
+
+        it('should redirect to the finish', () => {
+          expect(this.response.statusCode).to.equal(302)
+          expect(this.response.headers.location).to.equal('base/entities/1')
+        })
+
+        it('should not render a template', () => {
+          expect(this.response.res.text).to.equal(
+            'Found. Redirecting to base/entities/1'
+          )
+        })
+      }
+    )
+
+    context(
+      'when it is the final step and the API request is erroneous',
+      () => {
+        beforeEach(async () => {
+          this.sendSpy = sinon.stub().callsFake(() => {
+            const error = new Error()
+            error.statusCode = 400
+            error.error = 'Error messages'
+            throw error
+          })
+          this.journey.steps[4].done = {
+            send: this.sendSpy,
+            message: 'The entity has been added',
+            nextPath: ({ id }) => `/base/entities/${id}`,
+          }
+
+          this.app.use(this.journeyBuilder.build(this.journey))
+
+          await request(this.app).get('/step-1')
+          await request(this.app)
+            .post('/step-1')
+            .send({ selectedAtStep1: 'step-3-value' })
+          await request(this.app).get('/step-3')
+          await request(this.app)
+            .post('/step-3')
+            .send({ selectedAtStep3: 'step-5-value' })
+          await request(this.app).get('/step-5')
+          this.response = await request(this.app)
+            .post('/step-5')
+            .send({ moreData: 'more' })
+        })
+
+        it('should POST to the API', () => {
+          expect(this.sendSpy).have.been.calledWith({
+            selectedAtStep1: 'step-3-value',
+            selectedAtStep3: 'step-5-value',
+            moreData: 'more',
+          })
+          expect(this.sendSpy).to.be.calledOnce
+        })
+
+        it('should not remove state for the journey', () => {
+          expect(this.req.session).to.deep.equal({
+            'multi-step': {
+              '/base/step-1': {
+                steps: {
+                  '/step-1': {
+                    completed: true,
+                    data: {
+                      selectedAtStep1: 'step-3-value',
+                    },
+                    nextPath: '/step-3',
+                  },
+                  '/step-3': {
+                    completed: true,
+                    data: {
+                      selectedAtStep3: 'step-5-value',
+                    },
+                    nextPath: '/step-5',
+                  },
+                  '/step-5': {
+                    completed: false,
+                    data: {
+                      moreData: 'more',
+                    },
+                  },
+                },
+                browseHistory: ['/step-1', '/step-3', '/step-5'],
+              },
+            },
+          })
+        })
+
+        it('should not set the success message', () => {
+          expect(this.flashSpy).to.not.be.called
+        })
+
+        it('should not redirect to anywhere', () => {
+          expect(this.response.statusCode).to.equal(200)
+          expect(this.response.headers.location).to.be.undefined
+        })
+
+        it('should render step 5', () => {
+          const render = JSON.parse(this.response.res.text)
+          expect(render.options.form).to.deep.equal({
+            children: [],
+            returnLink: '/base/step-3',
+            returnText: 'Back',
+            state: {
+              selectedAtStep1: 'step-3-value',
+              selectedAtStep3: 'step-5-value',
+              moreData: 'more',
+            },
+            errors: {
+              messages: 'Error messages',
+            },
+          })
+        })
+      }
+    )
 
     context('when the user has changed direction in the journey', () => {
       beforeEach(async () => {
-        this.sendSpy = sinon.stub().callsFake(() => { return { id: 1 } })
+        this.sendSpy = sinon.stub().callsFake(() => {
+          return { id: 1 }
+        })
         this.journey.steps[1].done = {
           send: this.sendSpy,
           message: 'The entity has been added',
@@ -531,14 +587,24 @@ describe('#build', () => {
         this.app.use(this.journeyBuilder.build(this.journey))
 
         await request(this.app).get('/step-1')
-        await request(this.app).post('/step-1').send({ selectedAtStep1: 'step-3-value' }) // initially select step 3
+        await request(this.app)
+          .post('/step-1')
+          .send({ selectedAtStep1: 'step-3-value' }) // initially select step 3
         await request(this.app).get('/step-3')
-        await request(this.app).post('/step-3').send({ selectedAtStep3: 'step-5-value' })
+        await request(this.app)
+          .post('/step-3')
+          .send({ selectedAtStep3: 'step-5-value' })
         await request(this.app).get('/step-5')
-        await request(this.app).post('/step-5').send({ moreDataAtStep5: 'more' })
+        await request(this.app)
+          .post('/step-5')
+          .send({ moreDataAtStep5: 'more' })
         await request(this.app).get('/step-1') // go back to step 1
-        await request(this.app).post('/step-1').send({ selectedAtStep1: 'step-2-value' }) // change to step 2
-        this.response = await request(this.app).post('/step-2').send({ moreDataAtStep2: 'more' })
+        await request(this.app)
+          .post('/step-1')
+          .send({ selectedAtStep1: 'step-2-value' }) // change to step 2
+        this.response = await request(this.app)
+          .post('/step-2')
+          .send({ moreDataAtStep2: 'more' })
       })
 
       it('should POST only valid data to the API', () => {
@@ -550,38 +616,53 @@ describe('#build', () => {
       })
     })
 
-    context('when the user has changed a field that is depended on by a form', () => {
-      context('and attempting to skip to a previously completed step', () => {
-        beforeEach(async () => {
-          this.sendSpy = sinon.stub().callsFake((data, next) => { next() })
-          this.journey.steps[2].macro = () => {
-            return {
-              dependsOn: [ 'changing_field' ],
-              children: [],
+    context(
+      'when the user has changed a field that is depended on by a form',
+      () => {
+        context('and attempting to skip to a previously completed step', () => {
+          beforeEach(async () => {
+            this.sendSpy = sinon.stub().callsFake((data, next) => {
+              next()
+            })
+            this.journey.steps[2].macro = () => {
+              return {
+                dependsOn: ['changing_field'],
+                children: [],
+              }
             }
-          }
-          this.app.use(this.journeyBuilder.build(this.journey))
+            this.app.use(this.journeyBuilder.build(this.journey))
 
-          await request(this.app).get('/step-1')
-          await request(this.app).post('/step-1').send({ selectedAtStep1: 'step-3-value', changing_field: '1' }) // initial value
-          await request(this.app).get('/step-3')
-          await request(this.app).post('/step-3').send({ selectedAtStep3: 'step-5-value' })
-          await request(this.app).get('/step-5')
-          await request(this.app).post('/step-5').send({ moreDataAtStep5: 'more' })
-          await request(this.app).get('/step-1') // go back to step 1
-          await request(this.app).post('/step-1').send({ selectedAtStep1: 'step-3-value', changing_field: '2' }) // change value to invalidate
-          this.response = await request(this.app).get('/step-5') // attempt to jump to step 5 which has been invalidated
-        })
+            await request(this.app).get('/step-1')
+            await request(this.app)
+              .post('/step-1')
+              .send({ selectedAtStep1: 'step-3-value', changing_field: '1' }) // initial value
+            await request(this.app).get('/step-3')
+            await request(this.app)
+              .post('/step-3')
+              .send({ selectedAtStep3: 'step-5-value' })
+            await request(this.app).get('/step-5')
+            await request(this.app)
+              .post('/step-5')
+              .send({ moreDataAtStep5: 'more' })
+            await request(this.app).get('/step-1') // go back to step 1
+            await request(this.app)
+              .post('/step-1')
+              .send({ selectedAtStep1: 'step-3-value', changing_field: '2' }) // change value to invalidate
+            this.response = await request(this.app).get('/step-5') // attempt to jump to step 5 which has been invalidated
+          })
 
-        it('should redirect to step 1', () => {
-          expect(this.response.statusCode).to.equal(302)
-          expect(this.response.headers.location).to.equal('/base/step-1')
-        })
+          it('should redirect to step 1', () => {
+            expect(this.response.statusCode).to.equal(302)
+            expect(this.response.headers.location).to.equal('/base/step-1')
+          })
 
-        it('should not render a template', () => {
-          expect(this.response.res.text).to.equal('Found. Redirecting to /base/step-1')
+          it('should not render a template', () => {
+            expect(this.response.res.text).to.equal(
+              'Found. Redirecting to /base/step-1'
+            )
+          })
         })
-      })
-    })
+      }
+    )
   })
 })

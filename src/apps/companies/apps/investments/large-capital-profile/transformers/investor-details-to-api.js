@@ -21,7 +21,9 @@ const nullifyIfEmptyString = (value) => {
 const transformInvestorDetails = (body) => {
   return {
     investor_type: body.investorType || null,
-    global_assets_under_management: nullifyIfEmptyString(body.globalAssetsUnderManagement),
+    global_assets_under_management: nullifyIfEmptyString(
+      body.globalAssetsUnderManagement
+    ),
     investable_capital: nullifyIfEmptyString(body.investableCapital),
     investor_description: body.investorDescription,
     required_checks_conducted: body.requiredChecks,

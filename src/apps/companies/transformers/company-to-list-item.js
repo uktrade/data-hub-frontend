@@ -4,7 +4,7 @@ const { get } = require('lodash')
 const labels = require('../labels')
 const urls = require('../../../lib/urls')
 
-module.exports = function transformCompanyToListItem ({
+module.exports = function transformCompanyToListItem({
   id,
   name,
   sector,
@@ -17,7 +17,9 @@ module.exports = function transformCompanyToListItem ({
   global_headquarters,
   latest_interaction_date,
 } = {}) {
-  if (!id) { return }
+  if (!id) {
+    return
+  }
 
   const meta = []
 

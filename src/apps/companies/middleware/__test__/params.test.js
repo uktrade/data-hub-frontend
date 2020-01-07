@@ -29,17 +29,20 @@ describe('Companies form middleware', () => {
       locals: {},
     }
 
-    middleware = proxyquire('../../../../../src/apps/companies/middleware/params', {
-      '../repos': {
-        getDitCompany: getDitCompanyStub,
-        getDitCompanyFromList: getDitCompanyFromListStub,
-        addDitCompanyToList: addDitCompanyToListStub,
-        removeDitCompanyFromList: removeDitCompanyFromListStub,
-      },
-      '../../company-lists/repos': {
-        getAllCompanyLists: getAllCompanyListsStub,
-      },
-    })
+    middleware = proxyquire(
+      '../../../../../src/apps/companies/middleware/params',
+      {
+        '../repos': {
+          getDitCompany: getDitCompanyStub,
+          getDitCompanyFromList: getDitCompanyFromListStub,
+          addDitCompanyToList: addDitCompanyToListStub,
+          removeDitCompanyFromList: removeDitCompanyFromListStub,
+        },
+        '../../company-lists/repos': {
+          getAllCompanyLists: getAllCompanyListsStub,
+        },
+      }
+    )
   })
 
   describe('getCompany', () => {
@@ -80,27 +83,49 @@ describe('Companies form middleware', () => {
   })
 
   describe('setIsCompanyAlreadyAdded', () => {
-    context('when the company is already added to the user company list', async () => {
-      before(async () => {
-        getDitCompanyFromListStub.resolves()
-        await middleware.setIsCompanyAlreadyAdded(reqMock, resMock, nextSpy, 2)
-      })
+    context(
+      'when the company is already added to the user company list',
+      async () => {
+        before(async () => {
+          getDitCompanyFromListStub.resolves()
+          await middleware.setIsCompanyAlreadyAdded(
+            reqMock,
+            resMock,
+            nextSpy,
+            2
+          )
+        })
 
-      it('should set a local variable for displaying a user message', () => {
-        expect(resMock.locals).to.have.deep.property('isCompanyAlreadyAdded', true)
-      })
-    })
+        it('should set a local variable for displaying a user message', () => {
+          expect(resMock.locals).to.have.deep.property(
+            'isCompanyAlreadyAdded',
+            true
+          )
+        })
+      }
+    )
 
-    context('when the company is not added to the user company list', async () => {
-      before(async () => {
-        getDitCompanyFromListStub.rejects()
-        await middleware.setIsCompanyAlreadyAdded(reqMock, resMock, nextSpy, 2)
-      })
+    context(
+      'when the company is not added to the user company list',
+      async () => {
+        before(async () => {
+          getDitCompanyFromListStub.rejects()
+          await middleware.setIsCompanyAlreadyAdded(
+            reqMock,
+            resMock,
+            nextSpy,
+            2
+          )
+        })
 
-      it('should not set a local variable for displaying a user message', () => {
-        expect(resMock.locals).to.not.have.deep.property('isCompanyAlreadyAdded', true)
-      })
-    })
+        it('should not set a local variable for displaying a user message', () => {
+          expect(resMock.locals).to.not.have.deep.property(
+            'isCompanyAlreadyAdded',
+            true
+          )
+        })
+      }
+    )
   })
 
   describe('addCompanyOrRemoveFromList', () => {
@@ -126,10 +151,15 @@ describe('Companies form middleware', () => {
       })
       it('should add a company to the user list', () => {
         expect(addDitCompanyToListStub).to.be.calledOnce
-        expect(flashSpy).to.be.calledWith('success', 'This company has been added to your list of companies. You can find this list on your Data Hub Home page. Only you can see this list.')
+        expect(flashSpy).to.be.calledWith(
+          'success',
+          'This company has been added to your list of companies. You can find this list on your Data Hub Home page. Only you can see this list.'
+        )
       })
       it('should redirect to the company page', () => {
-        expect(redirectSpy).to.be.calledWithExactly(`${reqMock.baseUrl}/${resMock.locals.company.id}`)
+        expect(redirectSpy).to.be.calledWithExactly(
+          `${reqMock.baseUrl}/${resMock.locals.company.id}`
+        )
       })
     })
     context('when removing a company from the user company list', async () => {
@@ -155,10 +185,15 @@ describe('Companies form middleware', () => {
       })
       it('should remove a company from the user list', () => {
         expect(removeDitCompanyFromListStub).to.be.calledOnce
-        expect(flashSpy).to.be.calledWithExactly('success', 'This company has been removed from your list.')
+        expect(flashSpy).to.be.calledWithExactly(
+          'success',
+          'This company has been removed from your list.'
+        )
       })
       it('should redirect to the company page', () => {
-        expect(redirectSpy).to.be.calledWithExactly(`${reqMock.baseUrl}/${resMock.locals.company.id}`)
+        expect(redirectSpy).to.be.calledWithExactly(
+          `${reqMock.baseUrl}/${resMock.locals.company.id}`
+        )
       })
     })
   })

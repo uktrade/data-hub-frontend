@@ -30,14 +30,20 @@ describe('DateFieldset component', () => {
 
       it('should render a component with correct group class name and modifier', () => {
         expect(this.component.className.trim()).to.contain('c-form-group')
-        expect(this.component.className.trim()).to.contain('c-form-group--inline')
+        expect(this.component.className.trim()).to.contain(
+          'c-form-group--inline'
+        )
       })
 
       it('should render a component with correct legend, labels and input fields', () => {
         const inputElems = this.component.querySelectorAll('input')
         const labelElems = this.component.querySelectorAll('label')
 
-        expect(this.component.querySelector('legend').firstElementChild.textContent.trim()).to.equal('What is your favourite day?')
+        expect(
+          this.component
+            .querySelector('legend')
+            .firstElementChild.textContent.trim()
+        ).to.equal('What is your favourite day?')
         expect(inputElems.length).to.equal(2)
         expect(labelElems.length).to.equal(2)
         expect(labelElems[0].textContent.trim()).to.equal('Month')
@@ -87,15 +93,20 @@ describe('DateFieldset component', () => {
 
       it('should render a component with correct group class name and modifier', () => {
         expect(this.component.className.trim()).to.contain('c-form-group')
-        expect(this.component.className.trim()).to.contain('c-form-group--inline')
+        expect(this.component.className.trim()).to.contain(
+          'c-form-group--inline'
+        )
       })
 
       it('should render a component with correct legend, labels and input fields', () => {
         const inputElems = this.component.querySelectorAll('input')
         const labelElems = this.component.querySelectorAll('label')
 
-        expect(this.component.querySelector('legend').firstElementChild.textContent.trim())
-          .to.equal('What is your favourite day?')
+        expect(
+          this.component
+            .querySelector('legend')
+            .firstElementChild.textContent.trim()
+        ).to.equal('What is your favourite day?')
         expect(inputElems.length).to.equal(3)
         expect(labelElems.length).to.equal(3)
         expect(labelElems[0].textContent.trim()).to.equal('Day')
@@ -138,8 +149,12 @@ describe('DateFieldset component', () => {
           value: '2007-03-01T13:00:00',
         })
 
-        const inputsValues = Array.from(this.component.querySelectorAll('input')).map(x => x.value)
-        const labels = Array.from(this.component.querySelectorAll('label')).map(x => x.textContent.trim())
+        const inputsValues = Array.from(
+          this.component.querySelectorAll('input')
+        ).map((x) => x.value)
+        const labels = Array.from(this.component.querySelectorAll('label')).map(
+          (x) => x.textContent.trim()
+        )
 
         expect(labels[0]).to.equal('Day')
         expect(inputsValues[0]).to.equal('01')
@@ -158,8 +173,12 @@ describe('DateFieldset component', () => {
         value: '-03-',
       })
 
-      const inputsValues = Array.from(this.component.querySelectorAll('input')).map(x => x.value)
-      const labels = Array.from(this.component.querySelectorAll('label')).map(x => x.textContent.trim())
+      const inputsValues = Array.from(
+        this.component.querySelectorAll('input')
+      ).map((x) => x.value)
+      const labels = Array.from(this.component.querySelectorAll('label')).map(
+        (x) => x.textContent.trim()
+      )
 
       expect(labels[0]).to.equal('Day')
       expect(inputsValues[0]).to.equal('')
@@ -182,8 +201,11 @@ describe('DateFieldset component', () => {
         },
         error: 'Please enter a valid date',
       })
-      expect(component.querySelector('.c-form-group__error-message').textContent.trim())
-        .to.equal('Please enter a valid date')
+      expect(
+        component
+          .querySelector('.c-form-group__error-message')
+          .textContent.trim()
+      ).to.equal('Please enter a valid date')
     })
   })
 })

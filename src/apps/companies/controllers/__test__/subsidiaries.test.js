@@ -16,7 +16,9 @@ describe('company subsidiaries controller', () => {
     expectedCount,
   }) => {
     it(`should add ${expectedBreadcrumbs.length} breadcrumbs`, () => {
-      expect(this.middlewareParameters.resMock.breadcrumb).to.be.callCount(expectedBreadcrumbs.length)
+      expect(this.middlewareParameters.resMock.breadcrumb).to.be.callCount(
+        expectedBreadcrumbs.length
+      )
     })
 
     it('should add breadcrumbs', () => {
@@ -25,18 +27,23 @@ describe('company subsidiaries controller', () => {
         if (isString(expectedBreadcrumb)) {
           expect(breadcrumbSpy).to.be.calledWith(expectedBreadcrumb)
         } else {
-          expect(breadcrumbSpy).to.be.calledWith(expectedBreadcrumb.name, expectedBreadcrumb.url)
+          expect(breadcrumbSpy).to.be.calledWith(
+            expectedBreadcrumb.name,
+            expectedBreadcrumb.url
+          )
         }
       })
     })
 
     it('should render the correct template', () => {
-      const templateName = this.middlewareParameters.resMock.render.firstCall.args[0]
+      const templateName = this.middlewareParameters.resMock.render.firstCall
+        .args[0]
       expect(templateName).to.equal(expectedTemplate)
     })
 
     it('should set the heading', () => {
-      const actual = this.middlewareParameters.resMock.render.firstCall.args[1].heading
+      const actual = this.middlewareParameters.resMock.render.firstCall.args[1]
+        .heading
       expect(actual).to.equal(expectedHeading)
     })
 
@@ -49,7 +56,9 @@ describe('company subsidiaries controller', () => {
   context('when there are subsidiaries to list', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .get(`/v4/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`)
+        .get(
+          `/v4/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`
+        )
         .reply(200, subsidiariesMock)
 
       this.middlewareParameters = buildMiddlewareParameters({
@@ -59,7 +68,7 @@ describe('company subsidiaries controller', () => {
       await renderSubsidiaries(
         this.middlewareParameters.reqMock,
         this.middlewareParameters.resMock,
-        this.middlewareParameters.nextSpy,
+        this.middlewareParameters.nextSpy
       )
 
       this.subsidiaries = this.middlewareParameters.resMock.render.firstCall.args[1].subsidiaries
@@ -83,17 +92,22 @@ describe('company subsidiaries controller', () => {
     })
 
     it('should include a button to link a new subsidiary', () => {
-      expect(this.subsidiaries.actionButtons).to.deep.equal([{
-        label: 'Link a subsidiary',
-        url: '/companies/72fda78f-bdc3-44dc-9c22-c8ac82f7bda4/subsidiaries/link',
-      }])
+      expect(this.subsidiaries.actionButtons).to.deep.equal([
+        {
+          label: 'Link a subsidiary',
+          url:
+            '/companies/72fda78f-bdc3-44dc-9c22-c8ac82f7bda4/subsidiaries/link',
+        },
+      ])
     })
   })
 
   context('when the company is archived', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .get(`/v4/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`)
+        .get(
+          `/v4/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`
+        )
         .reply(200, subsidiariesMock)
 
       this.middlewareParameters = buildMiddlewareParameters({
@@ -106,7 +120,7 @@ describe('company subsidiaries controller', () => {
       await renderSubsidiaries(
         this.middlewareParameters.reqMock,
         this.middlewareParameters.resMock,
-        this.middlewareParameters.nextSpy,
+        this.middlewareParameters.nextSpy
       )
 
       this.subsidiaries = this.middlewareParameters.resMock.render.firstCall.args[1].subsidiaries
@@ -139,7 +153,9 @@ describe('company subsidiaries controller', () => {
   context('when there are no subsidiaries', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .get(`/v4/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`)
+        .get(
+          `/v4/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`
+        )
         .reply(200, {
           count: 0,
           next: null,
@@ -154,7 +170,7 @@ describe('company subsidiaries controller', () => {
       await renderSubsidiaries(
         this.middlewareParameters.reqMock,
         this.middlewareParameters.resMock,
-        this.middlewareParameters.nextSpy,
+        this.middlewareParameters.nextSpy
       )
 
       this.subsidiaries = this.middlewareParameters.resMock.render.firstCall.args[1].subsidiaries
@@ -178,10 +194,13 @@ describe('company subsidiaries controller', () => {
     })
 
     it('should include a button to link a new subsidiary', () => {
-      expect(this.subsidiaries.actionButtons).to.deep.equal([{
-        label: 'Link a subsidiary',
-        url: '/companies/72fda78f-bdc3-44dc-9c22-c8ac82f7bda4/subsidiaries/link',
-      }])
+      expect(this.subsidiaries.actionButtons).to.deep.equal([
+        {
+          label: 'Link a subsidiary',
+          url:
+            '/companies/72fda78f-bdc3-44dc-9c22-c8ac82f7bda4/subsidiaries/link',
+        },
+      ])
     })
   })
 })

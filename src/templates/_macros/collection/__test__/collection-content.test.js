@@ -9,7 +9,11 @@ describe('Collection macro', () => {
     expect(component.tagName).to.equal('ARTICLE')
     expect(component.className).to.equal('c-collection')
     expect(component.querySelector('.c-collection__header')).to.exist
-    expect(component.querySelector('.c-collection__result-count').parentNode.textContent.trim()).to.match(/0[\n ]results/)
+    expect(
+      component
+        .querySelector('.c-collection__result-count')
+        .parentNode.textContent.trim()
+    ).to.match(/0[\n ]results/)
   })
 
   it('should render results summary component with correct count', () => {
@@ -18,7 +22,11 @@ describe('Collection macro', () => {
       countLabel: 'cat',
     })
 
-    expect(component.querySelector('.c-collection__result-count').parentNode.textContent.trim()).to.match(/10[\n ]cats/)
+    expect(
+      component
+        .querySelector('.c-collection__result-count')
+        .parentNode.textContent.trim()
+    ).to.match(/10[\n ]cats/)
   })
 
   context('when filters are selected', () => {
@@ -36,12 +44,15 @@ describe('Collection macro', () => {
       })
     })
     it('should render selected filters', () => {
-      const selectedFilters = this.component.querySelectorAll('.c-collection__filter-tag')
+      const selectedFilters = this.component.querySelectorAll(
+        '.c-collection__filter-tag'
+      )
       expect(selectedFilters).to.have.length(2)
     })
 
     it('should render remove filters link', () => {
-      expect(this.component.querySelector('.c-collection__filter-remove-all')).to.exist
+      expect(this.component.querySelector('.c-collection__filter-remove-all'))
+        .to.exist
     })
   })
 
@@ -58,8 +69,12 @@ describe('Collection macro', () => {
     })
 
     it('should render an action button header', () => {
-      const actionHeader = this.component.querySelectorAll('.c-collection__header-actions')
-      const actionButton = this.component.querySelectorAll('.govuk-button--secondary')
+      const actionHeader = this.component.querySelectorAll(
+        '.c-collection__header-actions'
+      )
+      const actionButton = this.component.querySelectorAll(
+        '.govuk-button--secondary'
+      )
 
       expect(actionHeader).to.exist
       expect(actionButton).to.exist

@@ -3,13 +3,10 @@ const selectors = require('../../../../selectors')
 describe('Contacts Collections Filter', () => {
   before(() => {
     cy.visit('/contacts')
-    cy
-      .get(selectors.entityCollection.entities)
+    cy.get(selectors.entityCollection.entities)
       .children()
       .should('have.length', 1)
-    cy
-      .get(selectors.entityCollection.collection)
-      .should('contain', '1 contact')
+    cy.get(selectors.entityCollection.collection).should('contain', '1 contact')
   })
 
   beforeEach(() => {
@@ -22,38 +19,34 @@ describe('Contacts Collections Filter', () => {
   })
 
   it('should filter by contact name', () => {
-    cy
-      .get(selectors.filter.name)
+    cy.get(selectors.filter.name)
       .type('FilterByContacts')
       .type('{enter}')
 
-    cy
-      .get(selectors.entityCollection.entities)
+    cy.get(selectors.entityCollection.entities)
       .children()
       .should('have.length', 1)
-    cy
-      .get(selectors.entityCollection.collection)
-      .should('contain', '1 contact matching FilterByContacts')
-    cy
-      .get(selectors.entityCollection.collectionRowMessage)
-      .should('contain', 'You can now download this contact')
+    cy.get(selectors.entityCollection.collection).should(
+      'contain',
+      '1 contact matching FilterByContacts'
+    )
+    cy.get(selectors.entityCollection.collectionRowMessage).should(
+      'contain',
+      'You can now download this contact'
+    )
     cy.get(selectors.entityCollection.collectionRowButton).should('be.visible')
   })
 
   it('should filter by company name', () => {
-    cy
-      .get(selectors.filter.contacts.companyName)
+    cy.get(selectors.filter.contacts.companyName)
       .type('FilterByCompany')
       .type('{enter}')
 
-    cy.wait('@filterResults').then(xhr => {
-      expect(xhr.url).to.contain(
-        'company_name=FilterByCompany'
-      )
+    cy.wait('@filterResults').then((xhr) => {
+      expect(xhr.url).to.contain('company_name=FilterByCompany')
     })
 
-    cy
-      .get(selectors.entityCollection.entities)
+    cy.get(selectors.entityCollection.entities)
       .children()
       .should('have.length', 1)
   })
@@ -61,12 +54,11 @@ describe('Contacts Collections Filter', () => {
   it('should filter by inactive status', () => {
     cy.get(selectors.filter.statusInactive).click()
 
-    cy.wait('@filterResults').then(xhr => {
+    cy.wait('@filterResults').then((xhr) => {
       expect(xhr.url).to.contain('archived=true')
     })
 
-    cy
-      .get(selectors.entityCollection.entities)
+    cy.get(selectors.entityCollection.entities)
       .children()
       .should('have.length', 1)
   })
@@ -74,8 +66,7 @@ describe('Contacts Collections Filter', () => {
   it('should filter by sector', () => {
     const sector = selectors.filter.companies.sector
     const { typeahead } = selectors.filter
-    cy
-      .get(typeahead(sector).selectedOption)
+    cy.get(typeahead(sector).selectedOption)
       .click()
       .get(typeahead(sector).textInput)
       .type('Advanced Engineering')
@@ -85,7 +76,7 @@ describe('Contacts Collections Filter', () => {
       .type('{enter}')
       .type('{esc}')
 
-    cy.wait('@filterResults').then(xhr => {
+    cy.wait('@filterResults').then((xhr) => {
       expect(xhr.url).to.contain(
         'sector_descends=af959812-6095-e211-a939-e4115bead28a'
       )
@@ -96,8 +87,7 @@ describe('Contacts Collections Filter', () => {
     const country = selectors.filter.companies.country
     const { typeahead } = selectors.filter
 
-    cy
-      .get(typeahead(country).selectedOption)
+    cy.get(typeahead(country).selectedOption)
       .click()
       .get(typeahead(country).textInput)
       .type('United Kingdom')
@@ -107,7 +97,7 @@ describe('Contacts Collections Filter', () => {
       .type('{enter}')
       .type('{esc}')
 
-    cy.wait('@filterResults').then(xhr => {
+    cy.wait('@filterResults').then((xhr) => {
       expect(xhr.url).to.contain('country=80756b9a-5d95-e211-a939-e4115bead28a')
     })
   })
@@ -115,14 +105,13 @@ describe('Contacts Collections Filter', () => {
   it('should filter by region', () => {
     cy.get(selectors.filter.contacts.firstUkRegion).click()
 
-    cy.wait('@filterResults').then(xhr => {
+    cy.wait('@filterResults').then((xhr) => {
       expect(xhr.url).to.contain(
         'uk_region=934cd12a-6095-e211-a939-e4115bead28a'
       )
     })
 
-    cy
-      .get(selectors.entityCollection.entities)
+    cy.get(selectors.entityCollection.entities)
       .children()
       .should('have.length', 1)
   })
@@ -130,12 +119,11 @@ describe('Contacts Collections Filter', () => {
   it('should remove default active status filter', () => {
     cy.get(selectors.filter.statusActive).click()
 
-    cy.wait('@filterResults').then(xhr => {
+    cy.wait('@filterResults').then((xhr) => {
       expect(xhr.url).not.to.contain('archived=false')
     })
 
-    cy
-      .get(selectors.entityCollection.entities)
+    cy.get(selectors.entityCollection.entities)
       .children()
       .should('have.length', 1)
   })

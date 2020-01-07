@@ -1,9 +1,14 @@
 const logger = require('../../config/logger')
 const serviceDependencies = require('./serviceDependencies')
-const failureDependencies = serviceDependencies.filter((dependency) => (!dependency.warningOnly))
-const warningDependencies = serviceDependencies.filter((dependency) => (dependency.warningOnly))
 
-function pingdomTemplate (statusMessage) {
+const failureDependencies = serviceDependencies.filter(
+  (dependency) => !dependency.warningOnly
+)
+const warningDependencies = serviceDependencies.filter(
+  (dependency) => dependency.warningOnly
+)
+
+function pingdomTemplate(statusMessage) {
   return `
     <?xml version="1.0" encoding="UTF-8"?>
     <pingdom_http_custom_check>
@@ -12,9 +17,10 @@ function pingdomTemplate (statusMessage) {
   `.trim()
 }
 
-function healthCheck (dependencies) {
+function healthCheck(dependencies) {
   const promiseArray = dependencies.map((dependency) => {
-    return dependency.healthCheck()
+    return dependency
+      .healthCheck()
       .then((result) => result)
       .catch((error) => {
         return { name: dependency.name, error }
@@ -24,7 +30,7 @@ function healthCheck (dependencies) {
   return Promise.all(promiseArray)
 }
 
-function renderPingdomXml (req, res, next, dependencies) {
+function renderPingdomXml(req, res, next, dependencies) {
   return healthCheck(dependencies)
     .then((results) => {
       return results.filter((result) => result.statusText !== 'OK')
@@ -37,34 +43,31 @@ function renderPingdomXml (req, res, next, dependencies) {
 
       if (errors.length) {
         errors.forEach((dependency) => {
-          logger.error(`${dependency.name} health check failed`, dependency.error)
+          logger.error(
+            `${dependency.name} health check failed`,
+            dependency.error
+          )
         })
 
-        return res
-          .status(503)
-          .send(pingdomTemplate('Service Unavailable'))
+        return res.status(503).send(pingdomTemplate('Service Unavailable'))
       }
 
-      return res
-        .status(200)
-        .send(pingdomTemplate('OK'))
+      return res.status(200).send(pingdomTemplate('OK'))
     })
     .catch(next)
 }
 
-function getPingdomFailures (req, res, next) {
+function getPingdomFailures(req, res, next) {
   return renderPingdomXml(req, res, next, failureDependencies)
 }
 
-function getPingdomWarnings (req, res, next) {
+function getPingdomWarnings(req, res, next) {
   return renderPingdomXml(req, res, next, warningDependencies)
 }
 
-function getMicroserviceHealthcheck (req, res, next) {
+function getMicroserviceHealthcheck(req, res, next) {
   res.set('Cache-Control', 'no-cache, no-store, must-revalidate')
-  return res
-    .status(200)
-    .send('OK')
+  return res.status(200).send('OK')
 }
 
 module.exports = {

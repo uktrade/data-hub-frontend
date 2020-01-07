@@ -8,7 +8,7 @@ const { EditController } = require('../../../controllers')
 const { Order } = require('../../../models')
 
 class EditPaymentReconciliationController extends EditController {
-  async configure (req, res, next) {
+  async configure(req, res, next) {
     const orderStatus = get(res.locals, 'order.status')
 
     req.form.options = assign({}, req.form.options, {
@@ -26,7 +26,7 @@ class EditPaymentReconciliationController extends EditController {
     super.configure(req, res, next)
   }
 
-  process (req, res, next) {
+  process(req, res, next) {
     const paymentDateStr = req.body.received_on
     const parsedDate = chrono.en_GB.parseDate(paymentDateStr)
 
@@ -39,7 +39,7 @@ class EditPaymentReconciliationController extends EditController {
     next()
   }
 
-  validate (req, res, next) {
+  validate(req, res, next) {
     const submittedAmount = numeral(req.form.values.amount).value()
     const totalCost = res.locals.order.total_cost
 
@@ -55,7 +55,7 @@ class EditPaymentReconciliationController extends EditController {
     next()
   }
 
-  async getValues (req, res, next) {
+  async getValues(req, res, next) {
     let invoice
 
     try {
@@ -65,13 +65,16 @@ class EditPaymentReconciliationController extends EditController {
     }
 
     super.getValues(req, res, (err, values) => {
-      next(err, assign({}, values, {
-        invoice,
-      }))
+      next(
+        err,
+        assign({}, values, {
+          invoice,
+        })
+      )
     })
   }
 
-  async saveValues (req, res, next) {
+  async saveValues(req, res, next) {
     const data = req.form.values
     const penceAmount = Math.round(numeral(data.amount).value() * 100)
 

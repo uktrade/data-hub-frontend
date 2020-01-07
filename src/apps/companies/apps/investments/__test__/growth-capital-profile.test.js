@@ -13,7 +13,7 @@ describe('Company investments - growth capital profile', () => {
       controller.renderGrowthCapitalProfile(
         this.middlewareParameters.reqMock,
         this.middlewareParameters.resMock,
-        this.middlewareParameters.nextSpy,
+        this.middlewareParameters.nextSpy
       )
     })
 
@@ -22,7 +22,9 @@ describe('Company investments - growth capital profile', () => {
     })
 
     it('should call the render function with the correct view', () => {
-      expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal('companies/apps/investments/growth-capital-profile/views/list')
+      expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(
+        'companies/apps/investments/growth-capital-profile/views/list'
+      )
     })
   })
 })

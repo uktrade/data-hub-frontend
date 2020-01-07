@@ -2,10 +2,7 @@
 const moment = require('moment')
 const { companies } = require('../../../lib/urls')
 
-function transformLargeCapitalProfiles ({
-  investor_company,
-  created_on,
-}) {
+function transformLargeCapitalProfiles({ investor_company, created_on }) {
   return {
     headingText: investor_company.name,
     headingUrl: companies.investments.largeCapitalProfile(investor_company.id),

@@ -4,24 +4,24 @@ const { setLocalNav } = require('../../../middleware')
 const { getDnbHierarchy } = require('./repos')
 const urls = require('../../../../lib/urls')
 
-function setCompanyHierarchyLocalNav (req, res, next) {
+function setCompanyHierarchyLocalNav(req, res, next) {
   const { company, features } = res.locals
 
-  if (features['companies-ultimate-hq'] && company.isUltimate && company.isGlobalHQ) {
+  if (
+    features['companies-ultimate-hq'] &&
+    company.isUltimate &&
+    company.isGlobalHQ
+  ) {
     const navItems = [
       {
         url: urls.companies.dnbHierarchy.index(company.id),
         label: 'Dun & Bradstreet hierarchy',
-        permissions: [
-          'company.view_company',
-        ],
+        permissions: ['company.view_company'],
       },
       {
         url: urls.companies.subsidiaries.index(company.id),
         label: 'Manually linked subsidiaries',
-        permissions: [
-          'company.view_company',
-        ],
+        permissions: ['company.view_company'],
       },
     ]
     setLocalNav(navItems, false)(req, res, next)
@@ -30,11 +30,13 @@ function setCompanyHierarchyLocalNav (req, res, next) {
   }
 }
 
-async function getDnbHierarchyDetails (token, dunsNumber) {
+async function getDnbHierarchyDetails(token, dunsNumber) {
   if (dunsNumber) {
     const dnbHierarchy = await getDnbHierarchy(token, dunsNumber, 1)
     const dnbHierarchyCount = dnbHierarchy.count
-    const globalUltimate = dnbHierarchy.results.find(c => c.is_global_ultimate)
+    const globalUltimate = dnbHierarchy.results.find(
+      (c) => c.is_global_ultimate
+    )
 
     return {
       globalUltimate: globalUltimate && {
@@ -50,21 +52,20 @@ async function getDnbHierarchyDetails (token, dunsNumber) {
   }
 }
 
-async function setDnbHierarchyDetails (req, res, next) {
+async function setDnbHierarchyDetails(req, res, next) {
   const { company, features } = res.locals
   const { token } = req.session
 
   if (features['companies-ultimate-hq']) {
-    const {
-      globalUltimate,
-      dnbHierarchyCount,
-    } = await getDnbHierarchyDetails(token, company.global_ultimate_duns_number)
+    const { globalUltimate, dnbHierarchyCount } = await getDnbHierarchyDetails(
+      token,
+      company.global_ultimate_duns_number
+    )
 
     res.locals.globalUltimate = globalUltimate
     res.locals.dnbHierarchyCount = dnbHierarchyCount
-    res.locals.dnbRelatedCompaniesCount = dnbHierarchyCount > 1
-      ? dnbHierarchyCount - 1
-      : 0
+    res.locals.dnbRelatedCompaniesCount =
+      dnbHierarchyCount > 1 ? dnbHierarchyCount - 1 : 0
   }
 
   next()

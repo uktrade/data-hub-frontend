@@ -1,12 +1,14 @@
 const { get, isEmpty } = require('lodash')
 
 const { search } = require('../../../../modules/search/services')
-const { transformApiResponseToSearchCollection } = require('../../../../modules/search/transformers')
+const {
+  transformApiResponseToSearchCollection,
+} = require('../../../../modules/search/transformers')
 const { transformContactToListItem } = require('../../../contacts/transformers')
 const { createContactItemToAttendeeSearchResult } = require('../transformers')
 const { ENTITIES } = require('../../../search/constants')
 
-async function renderFindAttendee (req, res, next) {
+async function renderFindAttendee(req, res, next) {
   try {
     const event = res.locals.event
 
@@ -24,7 +26,7 @@ async function renderFindAttendee (req, res, next) {
   }
 }
 
-async function findAttendee (req, res, next) {
+async function findAttendee(req, res, next) {
   try {
     const event = res.locals.event
     const token = req.session.token
@@ -34,13 +36,16 @@ async function findAttendee (req, res, next) {
     }
 
     const query = req.query
-    const searchTerm = res.locals.searchTerm = (query.term || '').trim()
+    const searchTerm = (res.locals.searchTerm = (query.term || '').trim())
 
     if (isEmpty(searchTerm)) {
       return next()
     }
 
-    const transformListItemToAttendeeSearchResult = await createContactItemToAttendeeSearchResult(token, event)
+    const transformListItemToAttendeeSearchResult = await createContactItemToAttendeeSearchResult(
+      token,
+      event
+    )
 
     const contactsResponse = await search({
       token,

@@ -4,7 +4,7 @@ const { get } = require('lodash')
 
 const config = require('../../config')
 
-function createZenDeskMessage ({
+function createZenDeskMessage({
   email,
   title,
   description = '',
@@ -22,14 +22,19 @@ function createZenDeskMessage ({
     },
     custom_fields: [
       { id: get(config, 'zen.browser'), value: browser },
-      { id: get(config, 'zen.service'), value: get(config, 'zen.serviceChannel') },
+      {
+        id: get(config, 'zen.service'),
+        value: get(config, 'zen.serviceChannel'),
+      },
     ],
-    tags: [ feedback_type ],
+    tags: [feedback_type],
   }
 }
 
-function postToZenDesk (ticket) {
-  return axios.post(config.zen.url, { ticket },
+function postToZenDesk(ticket) {
+  return axios.post(
+    config.zen.url,
+    { ticket },
     {
       auth: {
         username: `${config.zen.email}/token`,

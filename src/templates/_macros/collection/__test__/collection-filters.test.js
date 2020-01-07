@@ -37,15 +37,16 @@ describe('CollectionFilters macro', () => {
 
     it('should render collection filters component', () => {
       const component = entitiesMacros.renderToDom('CollectionFilters', {
-        filtersFields: [
-          this.filter1,
-          this.filter2,
-        ],
+        filtersFields: [this.filter1, this.filter2],
       })
 
-      const renderedFilter1 = component.querySelector('#group-field-who-are-you')
+      const renderedFilter1 = component.querySelector(
+        '#group-field-who-are-you'
+      )
       const renderedFilter2 = component.querySelector('#group-field-fav-colour')
-      const rendererFilter1Inputs = renderedFilter1.querySelectorAll('[type=radio]')
+      const rendererFilter1Inputs = renderedFilter1.querySelectorAll(
+        '[type=radio]'
+      )
       const rendererFilter2Options = renderedFilter2.querySelectorAll('option')
 
       expect(component.className).not.to.contain('js-vue-wrapper')
@@ -65,9 +66,7 @@ describe('CollectionFilters macro', () => {
         query: {
           sortby: 'alphabetical',
         },
-        filtersFields: [
-          this.filter1,
-        ],
+        filtersFields: [this.filter1],
       })
 
       const hiddenFields = component.querySelectorAll('input[type=hidden]')

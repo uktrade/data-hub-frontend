@@ -1,9 +1,12 @@
 const { assign } = require('lodash')
 
-const { transformEventResponseToViewRecord, transformEventFormBodyToApiRequest } = require('../transformers')
+const {
+  transformEventResponseToViewRecord,
+  transformEventFormBodyToApiRequest,
+} = require('../transformers')
 const { fetchEvent, saveEvent } = require('../repos')
 
-async function postDetails (req, res, next) {
+async function postDetails(req, res, next) {
   res.locals.requestBody = transformEventFormBodyToApiRequest(req.body)
   if (req.body.add_team || req.body.add_related_programme) {
     return next()
@@ -30,10 +33,12 @@ async function postDetails (req, res, next) {
   }
 }
 
-async function getEventDetails (req, res, next, eventId) {
+async function getEventDetails(req, res, next, eventId) {
   try {
     res.locals.event = await fetchEvent(req.session.token, eventId)
-    res.locals.eventViewRecord = transformEventResponseToViewRecord(res.locals.event)
+    res.locals.eventViewRecord = transformEventResponseToViewRecord(
+      res.locals.event
+    )
     next()
   } catch (err) {
     next(err)

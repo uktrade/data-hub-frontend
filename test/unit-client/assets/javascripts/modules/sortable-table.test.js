@@ -1,8 +1,10 @@
 const SortableTable = require(`../../../../../assets/javascripts/modules/sortable-table`)
 const { domTokenToArray } = require('../../../../../test/unit/component-helper')
 
-const FIRST_NAME_SELECTOR = '.js-SortableTable tbody tr:first-child td:first-child'
-const LAST_NAME_SELECTOR = '.js-SortableTable tbody tr:last-child td:first-child'
+const FIRST_NAME_SELECTOR =
+  '.js-SortableTable tbody tr:first-child td:first-child'
+const LAST_NAME_SELECTOR =
+  '.js-SortableTable tbody tr:last-child td:first-child'
 const HOOK = '.js-SortableTable'
 
 const HTML = `
@@ -56,7 +58,9 @@ describe('Sortable Table', () => {
 
       expect(keys).to.have.length(4)
       for (let pos = 0; pos < headingElements.length; pos += 1) {
-        expect(headingElements.item(pos).getAttribute('data-key')).to.equal(keys[pos])
+        expect(headingElements.item(pos).getAttribute('data-key')).to.equal(
+          keys[pos]
+        )
       }
     })
   })
@@ -173,20 +177,26 @@ describe('Sortable Table', () => {
     })
     it('should indicate sort ascending when clicking on a column', () => {
       tableSort.handleHeadingClick({ target: nameHeaderElement })
-      expect(domTokenToArray(nameHeaderElement.classList)).to.include('is-ascending')
+      expect(domTokenToArray(nameHeaderElement.classList)).to.include(
+        'is-ascending'
+      )
     })
     it('should indicate sort descending when clicking on a column twice', () => {
       tableSort.handleHeadingClick({ target: nameHeaderElement })
       tableSort.handleHeadingClick({ target: nameHeaderElement })
 
-      expect(domTokenToArray(nameHeaderElement.classList)).to.include('is-descending')
+      expect(domTokenToArray(nameHeaderElement.classList)).to.include(
+        'is-descending'
+      )
     })
     it('should indicate sort ascending on a column and clear previous if previous ascending', () => {
       tableSort.handleHeadingClick({ target: nameHeaderElement })
       tableSort.handleHeadingClick({ target: roleHeaderElement })
 
       expect(nameHeaderElement.className).to.equal('')
-      expect(domTokenToArray(roleHeaderElement.classList)).to.include('is-ascending')
+      expect(domTokenToArray(roleHeaderElement.classList)).to.include(
+        'is-ascending'
+      )
     })
     it('should indicate sort ascending on a column and clear previous if previous descending', () => {
       tableSort.handleHeadingClick({ target: nameHeaderElement })
@@ -194,7 +204,9 @@ describe('Sortable Table', () => {
       tableSort.handleHeadingClick({ target: roleHeaderElement })
 
       expect(nameHeaderElement.className).to.equal('')
-      expect(domTokenToArray(roleHeaderElement.classList)).to.include('is-ascending')
+      expect(domTokenToArray(roleHeaderElement.classList)).to.include(
+        'is-ascending'
+      )
     })
   })
 })

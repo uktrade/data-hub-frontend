@@ -45,11 +45,15 @@ describe('Investment FDI transformer', () => {
       })
 
       it('should set investor retaining voting power', () => {
-        expect(this.transformed.investor_retain_voting_power).to.equal(expectedInvestorRetainingVotingPower)
+        expect(this.transformed.investor_retain_voting_power).to.equal(
+          expectedInvestorRetainingVotingPower
+        )
       })
 
       it('should set type of investment', () => {
-        expect(this.transformed.type_of_investment).to.equal('FDI, Creation of new site or activity')
+        expect(this.transformed.type_of_investment).to.equal(
+          'FDI, Creation of new site or activity'
+        )
       })
     }
 

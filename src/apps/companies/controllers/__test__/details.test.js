@@ -15,7 +15,9 @@ describe('Companies details controller', () => {
     })
 
     it('should permanently redirect to interactions', () => {
-      expect(this.middlewareParameters.resMock.redirect).to.have.been.calledWith(301, 'interactions')
+      expect(
+        this.middlewareParameters.resMock.redirect
+      ).to.have.been.calledWith(301, 'interactions')
       expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
     })
 

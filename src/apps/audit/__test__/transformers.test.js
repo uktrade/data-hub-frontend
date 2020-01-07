@@ -15,7 +15,9 @@ describe('Audit transformers', () => {
       query: {},
     }
 
-    this.transformer = this.transformers.transformAuditLogToListItem(contactAuditLabels)
+    this.transformer = this.transformers.transformAuditLogToListItem(
+      contactAuditLabels
+    )
   })
 
   it('should return a formatted audit history item when there are changes', () => {
@@ -33,7 +35,8 @@ describe('Audit transformers', () => {
 
     expect(transformedItem.meta[2]).to.deep.equal({
       label: 'Fields',
-      value: 'Address same as company, Address line 1, Address line 2, Town, County, Country, Postcode',
+      value:
+        'Address same as company, Address line 1, Address line 2, Town, County, Country, Postcode',
     })
   })
 
@@ -52,7 +55,9 @@ describe('Audit transformers', () => {
 
   context('when the user is blank', () => {
     it('should use default text', () => {
-      const logLine = Object.assign({}, auditLog.results[0], { user: undefined })
+      const logLine = Object.assign({}, auditLog.results[0], {
+        user: undefined,
+      })
       const transformedItem = this.transformer(logLine)
       expect(transformedItem.meta[0]).to.deep.equal({
         label: 'Adviser',

@@ -3,7 +3,7 @@ const { find, isString, castArray, compact } = require('lodash')
 const transformObjectToOption = ({ value, label }) => ({ value, text: label })
 
 const checkOptionByFindingMatchingId = (items) => {
-  return option => {
+  return (option) => {
     if (find(items, (item) => item.id === option.value)) {
       option.checked = true
     }
@@ -13,7 +13,7 @@ const checkOptionByFindingMatchingId = (items) => {
 }
 
 const checkOptionByMatchingId = (id) => {
-  return option => {
+  return (option) => {
     if (option.value === id) {
       option.checked = true
     }

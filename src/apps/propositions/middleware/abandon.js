@@ -3,7 +3,7 @@ const { assign } = require('lodash')
 const { transformPropositionFormBodyToApiRequest } = require('../transformers')
 const { abandonProposition, fetchProposition } = require('../repos')
 
-async function postAbandon (req, res, next) {
+async function postAbandon(req, res, next) {
   try {
     res.locals.requestBody = transformPropositionFormBodyToApiRequest(req.body)
     await abandonProposition(req.session.token, res.locals.requestBody)
@@ -29,11 +29,15 @@ async function postAbandon (req, res, next) {
   }
 }
 
-async function getPropositionDetails (req, res, next, propositionId) {
+async function getPropositionDetails(req, res, next, propositionId) {
   try {
     const token = req.session.token
     const { investment } = res.locals
-    res.locals.proposition = await fetchProposition(token, propositionId, investment.id)
+    res.locals.proposition = await fetchProposition(
+      token,
+      propositionId,
+      investment.id
+    )
 
     next()
   } catch (err) {

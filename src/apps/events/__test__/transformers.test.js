@@ -25,7 +25,9 @@ describe('Event transformers', () => {
     it('should return undefined for properties not in transform', () => {
       expect(transformEventToListItem({ a: 'b' })).to.be.undefined
       expect(transformEventToListItem({ id: 'abcd' })).to.be.undefined
-      expect(transformEventToListItem({ first_name: 'Peter', last_name: 'Great' })).to.be.undefined
+      expect(
+        transformEventToListItem({ first_name: 'Peter', last_name: 'Great' })
+      ).to.be.undefined
     })
 
     context('with mock event data', () => {
@@ -36,12 +38,16 @@ describe('Event transformers', () => {
       })
 
       it('should return expected id property', () => {
-        expect(event).to.have.property('id').a('string')
+        expect(event)
+          .to.have.property('id')
+          .a('string')
         expect(event.id).to.equal(mockEvent.id)
       })
 
       it('should return expected name property', () => {
-        expect(event).to.have.property('name').a('string')
+        expect(event)
+          .to.have.property('name')
+          .a('string')
         expect(event.name).to.equal(mockEvent.name)
       })
 
@@ -54,20 +60,25 @@ describe('Event transformers', () => {
       })
 
       it('should return expected type property', () => {
-        expect(event).to.have.property('type').a('string')
+        expect(event)
+          .to.have.property('type')
+          .a('string')
         expect(event.type).to.equal('event')
       })
 
       it('should return expected meta property', () => {
-        expect(event).to.have.property('meta').an('array').to.deep.equal([
-          { label: 'Type', value: 'Outward mission' },
-          { label: 'Begins', type: 'date', value: '2017-11-10' },
-          { label: 'Ends', type: 'date', value: '2017-11-11' },
-          { label: 'Organiser', value: 'Jeff Smith' },
-          { label: 'Country', type: 'badge', value: 'United Kingdom' },
-          { label: 'Lead team', value: 'Association of Dogs' },
-          { label: 'Region', type: 'badge', value: 'FDI Hub' },
-        ])
+        expect(event)
+          .to.have.property('meta')
+          .an('array')
+          .to.deep.equal([
+            { label: 'Type', value: 'Outward mission' },
+            { label: 'Begins', type: 'date', value: '2017-11-10' },
+            { label: 'Ends', type: 'date', value: '2017-11-11' },
+            { label: 'Organiser', value: 'Jeff Smith' },
+            { label: 'Country', type: 'badge', value: 'United Kingdom' },
+            { label: 'Lead team', value: 'Association of Dogs' },
+            { label: 'Region', type: 'badge', value: 'FDI Hub' },
+          ])
       })
     })
 
@@ -80,7 +91,9 @@ describe('Event transformers', () => {
       })
 
       it('should show a badge indicating the event was disabled', () => {
-        const disabledBadge = this.event.meta.find(metaItem => metaItem.label === 'Disabled')
+        const disabledBadge = this.event.meta.find(
+          (metaItem) => metaItem.label === 'Disabled'
+        )
         expect(disabledBadge).to.deep.equal({
           label: 'Disabled',
           value: 'Disabled',
@@ -98,7 +111,7 @@ describe('Event transformers', () => {
 
       it('should transform to a display event', () => {
         expect(this.transformedEvent).to.deep.equal({
-          'Address': {
+          Address: {
             address: {
               country: {
                 id: '80756b9a-5d95-e211-a939-e4115bead28a',
@@ -128,8 +141,8 @@ describe('Event transformers', () => {
             id: 'cf45bf02-8ea7-4e53-af0e-b5676a30cb96',
             name: 'Other',
           },
-          'Notes': 'An example event for testing',
-          'Organiser': {
+          Notes: 'An example event for testing',
+          Organiser: {
             id: '0919a99e-9798-e211-a939-e4115bead28a',
             first_name: 'Jeff',
             last_name: 'Smith',
@@ -140,18 +153,16 @@ describe('Event transformers', () => {
             type: 'date',
             name: '2017-11-10',
           },
-          'Other teams': [
-            'Association of Cats',
-          ],
-          'Region': {
+          'Other teams': ['Association of Cats'],
+          Region: {
             id: '804cd12a-6095-e211-a939-e4115bead28a',
             name: 'FDI Hub',
           },
-          'Service': {
+          Service: {
             id: '9484b82b-3499-e211-a939-e4115bead28a',
             name: 'Account Management',
           },
-          'Documents': {
+          Documents: {
             hint: '(will open another website)',
             hintId: 'external-link-label',
             name: 'View files and documents',
@@ -169,7 +180,7 @@ describe('Event transformers', () => {
 
       it('should transform to a display event', () => {
         expect(this.transformedEvent).to.deep.equal({
-          'Address': {
+          Address: {
             address: {
               country: {
                 id: '80756b9a-5d95-e211-a939-e4115bead28a',
@@ -183,7 +194,7 @@ describe('Event transformers', () => {
             },
             type: 'address',
           },
-          'Documents': {
+          Documents: {
             name: 'There are no files or documents',
           },
           'Type of event': {
@@ -192,16 +203,16 @@ describe('Event transformers', () => {
           },
           'Lead team': null,
           'Event location type': null,
-          'Notes': null,
-          'Organiser': null,
+          Notes: null,
+          Organiser: null,
           'Related programmes': [],
           'Event date': {
             type: 'date',
             name: null,
           },
           'Other teams': [],
-          'Region': null,
-          'Service': null,
+          Region: null,
+          Service: null,
         })
       })
     })
@@ -214,7 +225,7 @@ describe('Event transformers', () => {
 
       it('should transform to a display event', () => {
         expect(this.transformedEvent).to.deep.equal({
-          'Address': {
+          Address: {
             address: {
               country: {
                 id: '80756b9a-5d95-e211-a939-e4115bead28a',
@@ -228,7 +239,7 @@ describe('Event transformers', () => {
             },
             type: 'address',
           },
-          'Documents': {
+          Documents: {
             name: 'There are no files or documents',
           },
           'Event end date': {
@@ -247,8 +258,8 @@ describe('Event transformers', () => {
             id: 'cf45bf02-8ea7-4e53-af0e-b5676a30cb96',
             name: 'Other',
           },
-          'Notes': 'An example event for testing',
-          'Organiser': {
+          Notes: 'An example event for testing',
+          Organiser: {
             id: '0919a99e-9798-e211-a939-e4115bead28a',
             first_name: 'Jeff',
             last_name: 'Smith',
@@ -259,14 +270,12 @@ describe('Event transformers', () => {
             type: 'date',
             name: '2017-11-10',
           },
-          'Other teams': [
-            'Association of Cats',
-          ],
-          'Region': {
+          'Other teams': ['Association of Cats'],
+          Region: {
             id: '804cd12a-6095-e211-a939-e4115bead28a',
             name: 'FDI Hub',
           },
-          'Service': {
+          Service: {
             id: '9484b82b-3499-e211-a939-e4115bead28a',
             name: 'Account Management',
           },
@@ -282,7 +291,9 @@ describe('Event transformers', () => {
             end_date: '2017-11-11',
           })
 
-          this.transformedEvent = transformEventResponseToViewRecord(eventWithDates)
+          this.transformedEvent = transformEventResponseToViewRecord(
+            eventWithDates
+          )
         })
 
         it('should include a single date', () => {
@@ -302,7 +313,9 @@ describe('Event transformers', () => {
             end_date: null,
           })
 
-          this.transformedEvent = transformEventResponseToViewRecord(eventWithNoEndDate)
+          this.transformedEvent = transformEventResponseToViewRecord(
+            eventWithNoEndDate
+          )
         })
 
         it('should format the start date', () => {
@@ -327,7 +340,9 @@ describe('Event transformers', () => {
             end_date: '2017-11-11',
           })
 
-          this.transformedEvent = transformEventResponseToViewRecord(eventWithNoStartDate)
+          this.transformedEvent = transformEventResponseToViewRecord(
+            eventWithNoStartDate
+          )
         })
 
         it('should format the end date', () => {
@@ -358,7 +373,9 @@ describe('Event transformers', () => {
             teams: [lead_team],
           })
 
-          this.transformedEvent = transformEventResponseToViewRecord(eventWithNoTeams)
+          this.transformedEvent = transformEventResponseToViewRecord(
+            eventWithNoTeams
+          )
         })
 
         it('should indicate there are no other teams', () => {
@@ -375,13 +392,18 @@ describe('Event transformers', () => {
 
           const eventWithTwoTeams = Object.assign({}, mockEvent, {
             lead_team,
-            teams: [lead_team, {
-              id: '2',
-              name: 'Team 2',
-            }],
+            teams: [
+              lead_team,
+              {
+                id: '2',
+                name: 'Team 2',
+              },
+            ],
           })
 
-          this.transformedEvent = transformEventResponseToViewRecord(eventWithTwoTeams)
+          this.transformedEvent = transformEventResponseToViewRecord(
+            eventWithTwoTeams
+          )
         })
 
         it('should display the other team', () => {
@@ -398,20 +420,29 @@ describe('Event transformers', () => {
 
           const eventWithThreeTeams = Object.assign({}, mockEvent, {
             lead_team,
-            teams: [lead_team, {
-              id: '2',
-              name: 'Team 2',
-            }, {
-              id: '3',
-              name: 'Team 3',
-            }],
+            teams: [
+              lead_team,
+              {
+                id: '2',
+                name: 'Team 2',
+              },
+              {
+                id: '3',
+                name: 'Team 3',
+              },
+            ],
           })
 
-          this.transformedEvent = transformEventResponseToViewRecord(eventWithThreeTeams)
+          this.transformedEvent = transformEventResponseToViewRecord(
+            eventWithThreeTeams
+          )
         })
 
         it('should include a list of other teams', () => {
-          expect(this.transformedEvent['Other teams']).to.deep.equal(['Team 2', 'Team 3'])
+          expect(this.transformedEvent['Other teams']).to.deep.equal([
+            'Team 2',
+            'Team 3',
+          ])
         })
       })
 
@@ -419,20 +450,28 @@ describe('Event transformers', () => {
         beforeEach(() => {
           const eventWithThreeTeams = Object.assign({}, mockEvent, {
             lead_team: null,
-            teams: [{
-              id: '2',
-              name: 'Team 2',
-            }, {
-              id: '3',
-              name: 'Team 3',
-            }],
+            teams: [
+              {
+                id: '2',
+                name: 'Team 2',
+              },
+              {
+                id: '3',
+                name: 'Team 3',
+              },
+            ],
           })
 
-          this.transformedEvent = transformEventResponseToViewRecord(eventWithThreeTeams)
+          this.transformedEvent = transformEventResponseToViewRecord(
+            eventWithThreeTeams
+          )
         })
 
         it('should include a list of other teams', () => {
-          expect(this.transformedEvent['Other teams']).to.deep.equal(['Team 2', 'Team 3'])
+          expect(this.transformedEvent['Other teams']).to.deep.equal([
+            'Team 2',
+            'Team 3',
+          ])
         })
       })
     })
@@ -444,7 +483,9 @@ describe('Event transformers', () => {
             related_programmes: [],
           })
 
-          this.transformedEvent = transformEventResponseToViewRecord(eventWithNoProgrammes)
+          this.transformedEvent = transformEventResponseToViewRecord(
+            eventWithNoProgrammes
+          )
         })
 
         it('should indicate there are no related programmes', () => {
@@ -455,20 +496,28 @@ describe('Event transformers', () => {
       context('when there are related programmes', () => {
         beforeEach(() => {
           const eventWithNoProgrammes = Object.assign({}, mockEvent, {
-            related_programmes: [{
-              id: '1',
-              name: 'Programme 1',
-            }, {
-              id: '2',
-              name: 'Programme 2',
-            }],
+            related_programmes: [
+              {
+                id: '1',
+                name: 'Programme 1',
+              },
+              {
+                id: '2',
+                name: 'Programme 2',
+              },
+            ],
           })
 
-          this.transformedEvent = transformEventResponseToViewRecord(eventWithNoProgrammes)
+          this.transformedEvent = transformEventResponseToViewRecord(
+            eventWithNoProgrammes
+          )
         })
 
         it('should include the related programme', () => {
-          expect(this.transformedEvent['Related programmes']).to.deep.equal(['Programme 1', 'Programme 2'])
+          expect(this.transformedEvent['Related programmes']).to.deep.equal([
+            'Programme 1',
+            'Programme 2',
+          ])
         })
       })
     })
@@ -476,14 +525,16 @@ describe('Event transformers', () => {
 
   describe('#transformEventFormBodyToApiRequest', () => {
     it('should add combined date string from date object', () => {
-      this.requestBody = transformEventFormBodyToApiRequest(assign({}, mockEvent, {
-        start_date_year: '2017',
-        start_date_month: '10',
-        start_date_day: '31',
-        end_date_year: '2017',
-        end_date_month: '11',
-        end_date_day: '01',
-      }))
+      this.requestBody = transformEventFormBodyToApiRequest(
+        assign({}, mockEvent, {
+          start_date_year: '2017',
+          start_date_month: '10',
+          start_date_day: '31',
+          end_date_year: '2017',
+          end_date_month: '11',
+          end_date_day: '01',
+        })
+      )
 
       expect(this.requestBody).to.have.property('start_date', '2017-10-31')
       expect(this.requestBody).to.have.property('end_date', '2017-11-01')
@@ -491,30 +542,43 @@ describe('Event transformers', () => {
 
     context('when not selecting the lead team', () => {
       it('should not add to the teams', () => {
-        this.requestBody = transformEventFormBodyToApiRequest(assign({}, mockEvent, {
-          lead_team: null,
-        }))
+        this.requestBody = transformEventFormBodyToApiRequest(
+          assign({}, mockEvent, {
+            lead_team: null,
+          })
+        )
 
         expect(this.requestBody).to.have.property('lead_team', null)
-        expect(this.requestBody).to.have.property('teams').and.deep.equal(mockEvent.teams)
+        expect(this.requestBody)
+          .to.have.property('teams')
+          .and.deep.equal(mockEvent.teams)
       })
     })
 
     context('when there are event programmes', () => {
       it('should cast event programme into an array', async () => {
-        this.requestBody = transformEventFormBodyToApiRequest(assign({}, mockEvent, {
-          related_programmes: 'programme1',
-        }))
+        this.requestBody = transformEventFormBodyToApiRequest(
+          assign({}, mockEvent, {
+            related_programmes: 'programme1',
+          })
+        )
 
-        expect(this.requestBody).to.have.property('related_programmes').to.be.an('array')
+        expect(this.requestBody)
+          .to.have.property('related_programmes')
+          .to.be.an('array')
       })
 
       it('should prepopulate event programmes', async () => {
-        this.requestBody = transformEventFormBodyToApiRequest(assign({}, mockEvent, {
-          related_programmes: ['programme1', 'programme2', ''],
-        }))
+        this.requestBody = transformEventFormBodyToApiRequest(
+          assign({}, mockEvent, {
+            related_programmes: ['programme1', 'programme2', ''],
+          })
+        )
 
-        expect(this.requestBody).to.have.property('related_programmes').to.be.an('array').and.have.length(2)
+        expect(this.requestBody)
+          .to.have.property('related_programmes')
+          .to.be.an('array')
+          .and.have.length(2)
       })
     })
   })

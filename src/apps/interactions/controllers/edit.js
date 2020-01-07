@@ -19,7 +19,7 @@ const formConfigs = {
   [KINDS.SERVICE_DELIVERY]: serviceDeliveryForm,
 }
 
-async function getHiddenFields (req, res, interactionId) {
+async function getHiddenFields(req, res, interactionId) {
   const hiddenFields = {
     id: interactionId,
     company: get(res.locals, 'company.id'),
@@ -31,20 +31,21 @@ async function getHiddenFields (req, res, interactionId) {
   return hiddenFields
 }
 
-async function buildForm (req, res, params) {
+async function buildForm(req, res, params) {
   const { interactionId, theme, kind } = params
   const options = await getInteractionOptions(req, res)
   const hiddenFields = await getHiddenFields(req, res, interactionId)
-  const returnLink = joinPaths([ getReturnLink(res.locals.interactions), interactionId ])
+  const returnLink = joinPaths([
+    getReturnLink(res.locals.interactions),
+    interactionId,
+  ])
 
   const formProperties = {
     ...options,
     hiddenFields,
     returnLink,
     returnText: interactionId ? 'Return without saving' : 'Cancel',
-    buttonText: interactionId
-      ? 'Save and return'
-      : `Add ${lowerCase(kind)}`,
+    buttonText: interactionId ? 'Save and return' : `Add ${lowerCase(kind)}`,
     company: get(res.locals, 'company.name'),
     theme,
     interaction: res.locals.interaction,
@@ -55,9 +56,9 @@ async function buildForm (req, res, params) {
   return form
 }
 
-function setDefaultContact (interaction, contact) {
+function setDefaultContact(interaction, contact) {
   if (interaction) {
-    return interaction.contacts.map(contact => contact.id)
+    return interaction.contacts.map((contact) => contact.id)
   }
   if (contact) {
     return [get(contact, 'id')]
@@ -65,16 +66,16 @@ function setDefaultContact (interaction, contact) {
   return null
 }
 
-function setDefaultAdvisers (reqBody = {}) {
+function setDefaultAdvisers(reqBody = {}) {
   if (!get(reqBody, 'dit_participants')) return
   return {
     dit_participants: reqBody.dit_participants.map(
-      ditParticipant => ditParticipant.adviser
+      (ditParticipant) => ditParticipant.adviser
     ),
   }
 }
 
-function getMergedData (user, locals) {
+function getMergedData(user, locals) {
   const { interaction, contact, requestBody } = locals
   const interactionData = transformInteractionResponseToForm(interaction)
   const interactionDefaults = {
@@ -91,7 +92,7 @@ function getMergedData (user, locals) {
   }
 }
 
-function getValidatedKind (requestParamsKind, existingKind) {
+function getValidatedKind(requestParamsKind, existingKind) {
   if (existingKind) {
     return kebabCase(existingKind)
   }
@@ -101,22 +102,24 @@ function getValidatedKind (requestParamsKind, existingKind) {
   }
 }
 
-function getOption (options) {
-  return function (id) {
+function getOption(options) {
+  return function(id) {
     return options.find((option) => option.value === id)
   }
 }
 
-function addSelectedOptions (fields) {
-  return function (name) {
+function addSelectedOptions(fields) {
+  return function(name) {
     const field = fields.find((field) => field.name === name)
     if (field && field.value) {
-      field.selectedOptions = [].concat(field.value).map(getOption(field.options))
+      field.selectedOptions = []
+        .concat(field.value)
+        .map(getOption(field.options))
     }
   }
 }
 
-async function renderEditPage (req, res, next) {
+async function renderEditPage(req, res, next) {
   try {
     const { interactionId, kind, theme } = req.params
     const mergedInteractionData = getMergedData(req.session.user, res.locals)
@@ -130,7 +133,11 @@ async function renderEditPage (req, res, next) {
       throw new Error('Invalid kind')
     }
 
-    const form = await buildForm(req, res, { interactionId, theme, kind: validatedKind })
+    const form = await buildForm(req, res, {
+      interactionId,
+      theme,
+      kind: validatedKind,
+    })
     const errors = get(res.locals, 'form.errors.messages')
 
     const interactionForm = buildFormWithStateAndErrors(
@@ -149,7 +156,9 @@ async function renderEditPage (req, res, next) {
 
     // istanbul ignore next: Covered by functional tests
     if (canAddCountries(theme, res.locals.interaction, res.locals.features)) {
-      EXPORT_INTEREST_STATUS_VALUES.forEach(addSelectedOptions(interactionForm.children))
+      EXPORT_INTEREST_STATUS_VALUES.forEach(
+        addSelectedOptions(interactionForm.children)
+      )
     }
 
     res

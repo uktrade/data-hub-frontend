@@ -64,7 +64,9 @@ describe('Contact controller', () => {
     it('should get the reason for archive options prefix', async () => {
       await this.contactController.getCommon(this.req, this.res, this.next)
 
-      expect(this.res.locals.reasonForArchiveOptionsPrefix).to.equal('This contact has:')
+      expect(this.res.locals.reasonForArchiveOptionsPrefix).to.equal(
+        'This contact has:'
+      )
       expect(this.next).to.have.been.calledOnce
     })
 
@@ -74,7 +76,9 @@ describe('Contact controller', () => {
 
       await this.contactController.getCommon(this.req, this.res, this.next)
 
-      expect(this.next).to.be.calledWith(sinon.match({ message: error.message }))
+      expect(this.next).to.be.calledWith(
+        sinon.match({ message: error.message })
+      )
       expect(this.next).to.have.been.calledOnce
     })
   })

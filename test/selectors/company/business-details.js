@@ -1,7 +1,8 @@
 module.exports = () => {
   return {
     unarchiveLink: '[data-auto-id="bodyMainContent"] .c-message a',
-    whereDoesInformation: '[data-auto-id="businessDetailsWhereDoesInformation"]',
+    whereDoesInformation:
+      '[data-auto-id="businessDetailsWhereDoesInformation"]',
     address: (cellNumber) => {
       const cellSelector = `[data-auto-id="addressesDetailsContainer"] tr td:nth-child(${cellNumber})`
       return {

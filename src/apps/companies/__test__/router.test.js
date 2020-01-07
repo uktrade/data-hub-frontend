@@ -2,7 +2,7 @@ const router = require('../router')
 
 describe('Company router', () => {
   it('should define company routes', () => {
-    const paths = router.stack.filter(r => r.route).map(r => r.route.path)
+    const paths = router.stack.filter((r) => r.route).map((r) => r.route.path)
     expect(paths).to.deep.equal([
       '/',
       '/export',

@@ -9,13 +9,11 @@ const {
 const { appendUid, getUid } = require('../../helpers/uuid')
 const { getAddress } = require('../../helpers/address')
 
-const getCheckBoxLabel = (text) => getSelectorForElementWithText(
-  text,
-  {
+const getCheckBoxLabel = (text) =>
+  getSelectorForElementWithText(text, {
     el: '//span',
     className: 'c-multiple-choice__label-text',
-  }
-)
+  })
 
 module.exports = {
   url: process.env.QA_HOST,
@@ -31,11 +29,14 @@ module.exports = {
     primaryContactNo: '[for="field-primary-2"]',
     primaryContactError: '#group-field-primary > .c-form-group__error-message',
     telephoneCountryCode: '#field-telephone_countrycode',
-    telephoneCountryCodeError: 'label[for=field-telephone_countrycode] span:nth-child(2)',
+    telephoneCountryCodeError:
+      'label[for=field-telephone_countrycode] span:nth-child(2)',
     telephoneNumber: '#field-telephone_number',
     emailAddress: '#field-email',
     emailAddressError: 'label[for=field-email] span:nth-child(2)',
-    acceptsEmailMarketingFromDit: getCheckBoxLabel('Does not accept email marketing'),
+    acceptsEmailMarketingFromDit: getCheckBoxLabel(
+      'Does not accept email marketing'
+    ),
     sameAddressAsCompanyYes: '[for="field-address_same_as_company-1"]',
     sameAddressAsCompanyNo: '[for="field-address_same_as_company-2"]',
     alternativePhoneNumber: '#field-telephone_alternative',
@@ -45,29 +46,31 @@ module.exports = {
 
   commands: [
     {
-      clickOnFirstCompanyFromList () {
-        return this
-          .click('@firstCompanyFromList')
+      clickOnFirstCompanyFromList() {
+        return this.click('@firstCompanyFromList')
       },
 
-      createNewContact (details = {}, isPrimary, callback) {
+      createNewContact(details = {}, isPrimary, callback) {
         const firstName = faker.name.firstName()
         const lastName = appendUid(faker.name.lastName())
 
-        const contact = assign({}, {
-          firstName,
-          lastName,
-          jobTitle: faker.name.jobTitle(),
-          telephoneCountryCode: faker.random.number(),
-          telephoneNumber: faker.phone.phoneNumberFormat(),
-          emailAddress: faker.internet.email(firstName, lastName),
-          alternativePhoneNumber: '666555444',
-          alternativeEmail: faker.internet.email(lastName, firstName),
-          notes: `${faker.name.jobDescriptor() + firstName}`,
-        }, details)
+        const contact = assign(
+          {},
+          {
+            firstName,
+            lastName,
+            jobTitle: faker.name.jobTitle(),
+            telephoneCountryCode: faker.random.number(),
+            telephoneNumber: faker.phone.phoneNumberFormat(),
+            emailAddress: faker.internet.email(firstName, lastName),
+            alternativePhoneNumber: '666555444',
+            alternativeEmail: faker.internet.email(lastName, firstName),
+            notes: `${faker.name.jobDescriptor() + firstName}`,
+          },
+          details
+        )
 
-        return this
-          .waitForElementPresent('@primaryContactYes')
+        return this.waitForElementPresent('@primaryContactYes')
           .api.perform((done) => {
             this.click(`@primaryContact${isPrimary ? 'Yes' : 'No'}`)
 
@@ -82,31 +85,36 @@ module.exports = {
             done()
           })
           .perform(() => {
-            this
-              .click('@sameAddressAsCompanyYes')
+            this.click('@sameAddressAsCompanyYes')
 
-            callback(assign({}, contact, {
-              acceptsEmailMarketingFromDit: 'Can be marketed to',
-              primaryPhoneNumber: `(${contact.telephoneCountryCode}) ${contact.telephoneNumber}`,
-              uniqueSearchTerm: getUid(contact.lastName),
-            }))
+            callback(
+              assign({}, contact, {
+                acceptsEmailMarketingFromDit: 'Can be marketed to',
+                primaryPhoneNumber: `(${contact.telephoneCountryCode}) ${contact.telephoneNumber}`,
+                uniqueSearchTerm: getUid(contact.lastName),
+              })
+            )
           })
       },
 
-      createNewPrimaryContactWithNewCompanyAddress (details = {}, callback) {
+      createNewPrimaryContactWithNewCompanyAddress(details = {}, callback) {
         const firstName = faker.name.firstName()
         const lastName = appendUid(faker.name.lastName())
-        const contact = assign({}, {
-          firstName,
-          lastName,
-          jobTitle: faker.name.jobTitle(),
-          telephoneCountryCode: faker.random.number(),
-          telephoneNumber: faker.phone.phoneNumberFormat(),
-          emailAddress: faker.internet.email(firstName, lastName),
-          alternativePhoneNumber: '666555444',
-          alternativeEmail: faker.internet.email(lastName, firstName),
-          notes: `${faker.name.jobDescriptor() + firstName}`,
-        }, details)
+        const contact = assign(
+          {},
+          {
+            firstName,
+            lastName,
+            jobTitle: faker.name.jobTitle(),
+            telephoneCountryCode: faker.random.number(),
+            telephoneNumber: faker.phone.phoneNumberFormat(),
+            emailAddress: faker.internet.email(firstName, lastName),
+            alternativePhoneNumber: '666555444',
+            alternativeEmail: faker.internet.email(lastName, firstName),
+            notes: `${faker.name.jobDescriptor() + firstName}`,
+          },
+          details
+        )
         const postcodeLookup = {
           address1: 'postCodeLookupAddress1',
           address2: 'postCodeLookupAddress2',
@@ -116,12 +124,12 @@ module.exports = {
           postcode: 'postCode',
         }
 
-        this.api.page.location().section.localHeader
-          .waitForElementPresent('@header')
+        this.api.page
+          .location()
+          .section.localHeader.waitForElementPresent('@header')
 
         // setup form to use the postCode lookup functionality
-        this
-          .click('@primaryContactYes')
+        this.click('@primaryContactYes')
           .click('@sameAddressAsCompanyNo')
           .api.perform((done) => {
             for (const key in contact) {
@@ -132,21 +140,32 @@ module.exports = {
             done()
           })
 
-        return this.api
-          .perform((done) => {
-            this.api
-              .page.address()
-              .getAddressInputValues('EC2Y 9AE', postcodeLookup, '@postCodeLookupSuggestions', (addressInputValues) => {
-                callback(assign({}, {
-                  acceptsEmailMarketingFromDit: 'Can be marketed to',
-                  type: 'Primary',
-                  primaryPhoneNumber: `(${contact.telephoneCountryCode}) ${contact.telephoneNumber}`,
-                  address: getAddress(addressInputValues),
-                  uniqueSearchTerm: getUid(contact.lastName),
-                }, addressInputValues, contact))
+        return this.api.perform((done) => {
+          this.api.page
+            .address()
+            .getAddressInputValues(
+              'EC2Y 9AE',
+              postcodeLookup,
+              '@postCodeLookupSuggestions',
+              (addressInputValues) => {
+                callback(
+                  assign(
+                    {},
+                    {
+                      acceptsEmailMarketingFromDit: 'Can be marketed to',
+                      type: 'Primary',
+                      primaryPhoneNumber: `(${contact.telephoneCountryCode}) ${contact.telephoneNumber}`,
+                      address: getAddress(addressInputValues),
+                      uniqueSearchTerm: getUid(contact.lastName),
+                    },
+                    addressInputValues,
+                    contact
+                  )
+                )
                 done()
-              })
-          })
+              }
+            )
+        })
       },
     },
   ],
@@ -169,7 +188,9 @@ module.exports = {
         email: getKeyValueTableRowValueCell('Email'),
         emailMarketing: getKeyValueTableRowValueCell('Email marketing'),
         address: getKeyValueTableRowValueCell('Address'),
-        alternativeTelephone: getKeyValueTableRowValueCell('Alternative telephone'),
+        alternativeTelephone: getKeyValueTableRowValueCell(
+          'Alternative telephone'
+        ),
         alternativeEmail: getKeyValueTableRowValueCell('Alternative email'),
         notes: getKeyValueTableRowValueCell('Notes'),
       },

@@ -1,16 +1,18 @@
 const { pluralise } = require('../config/nunjucks/filters')
 
-function hasExportPermission (userPermissions, targetPermission) {
+function hasExportPermission(userPermissions, targetPermission) {
   return userPermissions.includes(targetPermission)
 }
 
-function invalidNumberOfItems (resultCount, maxItems) {
+function invalidNumberOfItems(resultCount, maxItems) {
   return resultCount === 0 || resultCount >= maxItems
 }
 
-function buildExportMessage (resultCount, exportOptions) {
+function buildExportMessage(resultCount, exportOptions) {
   if (resultCount >= exportOptions.maxItems) {
-    return `Filter to fewer than ${exportOptions.maxItems} ${pluralise(exportOptions.entityName)} to download`
+    return `Filter to fewer than ${exportOptions.maxItems} ${pluralise(
+      exportOptions.entityName
+    )} to download`
   }
   if (resultCount === 1) {
     return `You can now download this ${exportOptions.entityName}`
@@ -18,10 +20,12 @@ function buildExportMessage (resultCount, exportOptions) {
   if (resultCount === 0) {
     return `There are no ${pluralise(exportOptions.entityName)} to download`
   }
-  return `You can now download these ${resultCount} ${pluralise(exportOptions.entityName)}`
+  return `You can now download these ${resultCount} ${pluralise(
+    exportOptions.entityName
+  )}`
 }
 
-function buildExportAction (queryString, userPermissions, exportOptions) {
+function buildExportAction(queryString, userPermissions, exportOptions) {
   if (!hasExportPermission(userPermissions, exportOptions.targetPermission)) {
     return {
       enabled: false,

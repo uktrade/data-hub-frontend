@@ -5,7 +5,7 @@ const FILTER_CONSTANTS = require('../../../lib/filter-constants')
 
 const PRIMARY_SECTOR_NAME = FILTER_CONSTANTS.INTERACTIONS.SECTOR.PRIMARY.NAME
 
-module.exports = function ({
+module.exports = function({
   currentAdviserId,
   permissions,
   sectorOptions,
@@ -33,9 +33,7 @@ module.exports = function ({
       name: 'dit_participants__adviser',
       type: 'checkbox',
       modifier: ['option-select', 'hide-label'],
-      options: [
-        { value: currentAdviserId, label: 'My interactions' },
-      ],
+      options: [{ value: currentAdviserId, label: 'My interactions' }],
     },
     {
       macroName: 'Typeahead',
@@ -95,9 +93,7 @@ module.exports = function ({
       name: 'was_policy_feedback_provided',
       type: 'checkbox',
       modifier: 'option-select',
-      options: [
-        { value: 'true', label: 'Includes policy feedback' },
-      ],
+      options: [{ value: 'true', label: 'Includes policy feedback' }],
     },
     {
       macroName: 'MultipleChoiceField',
@@ -120,7 +116,7 @@ module.exports = function ({
       modifier: 'option-select',
       options: oneListTierOptions,
     },
-  ].map(filter => {
+  ].map((filter) => {
     return {
       ...filter,
       label: labels.filters[filter.name],

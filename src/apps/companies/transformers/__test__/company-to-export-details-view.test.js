@@ -6,7 +6,9 @@ const minimalCompany = require('../../../../../test/unit/data/companies/minimal-
 const transformerPath = '../company-to-export-details-view'
 const EXPORT_POTENTIAL_LABEL = 'Export potential'
 
-const { generateExportCountries } = require('../../../../../test/unit/helpers/generate-export-countries')
+const {
+  generateExportCountries,
+} = require('../../../../../test/unit/helpers/generate-export-countries')
 
 describe('transformCompanyToExportDetailsView', () => {
   let transformCompanyToExportDetailsView
@@ -39,11 +41,17 @@ describe('transformCompanyToExportDetailsView', () => {
       })
 
       it('should show the country currently exporting to', () => {
-        expect(this.viewRecord).to.have.property('Currently exporting to', 'None')
+        expect(this.viewRecord).to.have.property(
+          'Currently exporting to',
+          'None'
+        )
       })
 
       it('should not show the country the company wants to export to', () => {
-        expect(this.viewRecord).to.have.property('Future countries of interest', 'None')
+        expect(this.viewRecord).to.have.property(
+          'Future countries of interest',
+          'None'
+        )
       })
 
       it('should show the export win category', () => {
@@ -51,7 +59,10 @@ describe('transformCompanyToExportDetailsView', () => {
       })
 
       it('should show the export potential', () => {
-        expect(this.viewRecord).to.have.property(EXPORT_POTENTIAL_LABEL, 'No score given')
+        expect(this.viewRecord).to.have.property(
+          EXPORT_POTENTIAL_LABEL,
+          'No score given'
+        )
       })
 
       it('should not have the new label of countries of no interest', () => {
@@ -59,92 +70,129 @@ describe('transformCompanyToExportDetailsView', () => {
       })
     })
 
-    context('when single values have been selected for drop down fields', () => {
-      beforeEach(() => {
-        this.exportExperienceCategory = {
-          id: '8b05e8c7-1812-46bf-bab7-a0096ab5689f',
-          name: 'Increasing export markets',
-        }
-        const company = {
-          ...minimalCompany,
-          export_experience_category: this.exportExperienceCategory,
-          export_to_countries: [{
-            id: '1234',
-            name: 'France',
-          }],
-          future_interest_countries: [{
-            id: '4321',
-            name: 'Germany',
-          }],
-          export_potential_score: 'low',
-        }
+    context(
+      'when single values have been selected for drop down fields',
+      () => {
+        beforeEach(() => {
+          this.exportExperienceCategory = {
+            id: '8b05e8c7-1812-46bf-bab7-a0096ab5689f',
+            name: 'Increasing export markets',
+          }
+          const company = {
+            ...minimalCompany,
+            export_experience_category: this.exportExperienceCategory,
+            export_to_countries: [
+              {
+                id: '1234',
+                name: 'France',
+              },
+            ],
+            future_interest_countries: [
+              {
+                id: '4321',
+                name: 'Germany',
+              },
+            ],
+            export_potential_score: 'low',
+          }
 
-        this.viewRecord = transformCompanyToExportDetailsView(company)
-      })
+          this.viewRecord = transformCompanyToExportDetailsView(company)
+        })
 
-      it('should show the country currently exporting to', () => {
-        expect(this.viewRecord).to.have.property('Currently exporting to', 'France')
-      })
+        it('should show the country currently exporting to', () => {
+          expect(this.viewRecord).to.have.property(
+            'Currently exporting to',
+            'France'
+          )
+        })
 
-      it('should not show the country the company wants to export to', () => {
-        expect(this.viewRecord).to.have.property('Future countries of interest', 'Germany')
-      })
+        it('should not show the country the company wants to export to', () => {
+          expect(this.viewRecord).to.have.property(
+            'Future countries of interest',
+            'Germany'
+          )
+        })
 
-      it('should show the export win category', () => {
-        expect(this.viewRecord).to.have.property('Export win category', this.exportExperienceCategory)
-      })
+        it('should show the export win category', () => {
+          expect(this.viewRecord).to.have.property(
+            'Export win category',
+            this.exportExperienceCategory
+          )
+        })
 
-      it('should show the export potential', () => {
-        expect(this.viewRecord).to.have.property(EXPORT_POTENTIAL_LABEL, 'Low')
-      })
-    })
+        it('should show the export potential', () => {
+          expect(this.viewRecord).to.have.property(
+            EXPORT_POTENTIAL_LABEL,
+            'Low'
+          )
+        })
+      }
+    )
 
-    context('when multiple values have been selected for drop down fields', () => {
-      beforeEach(() => {
-        this.exportExperienceCategory = {
-          id: '8b05e8c7-1812-46bf-bab7-a0096ab5689f',
-          name: 'Increasing export markets',
-        }
-        const company = {
-          ...minimalCompany,
-          export_experience_category: this.exportExperienceCategory,
-          export_to_countries: [{
-            id: '1234',
-            name: 'France',
-          }, {
-            id: '5511',
-            name: 'Spain',
-          }],
-          future_interest_countries: [{
-            id: '4321',
-            name: 'Germany',
-          }, {
-            id: '4123',
-            name: 'Sweden',
-          }],
-        }
+    context(
+      'when multiple values have been selected for drop down fields',
+      () => {
+        beforeEach(() => {
+          this.exportExperienceCategory = {
+            id: '8b05e8c7-1812-46bf-bab7-a0096ab5689f',
+            name: 'Increasing export markets',
+          }
+          const company = {
+            ...minimalCompany,
+            export_experience_category: this.exportExperienceCategory,
+            export_to_countries: [
+              {
+                id: '1234',
+                name: 'France',
+              },
+              {
+                id: '5511',
+                name: 'Spain',
+              },
+            ],
+            future_interest_countries: [
+              {
+                id: '4321',
+                name: 'Germany',
+              },
+              {
+                id: '4123',
+                name: 'Sweden',
+              },
+            ],
+          }
 
-        this.viewRecord = transformCompanyToExportDetailsView(company)
-      })
+          this.viewRecord = transformCompanyToExportDetailsView(company)
+        })
 
-      it('should show the country currently exporting to', () => {
-        expect(this.viewRecord).to.have.property('Currently exporting to', 'France, Spain')
-      })
+        it('should show the country currently exporting to', () => {
+          expect(this.viewRecord).to.have.property(
+            'Currently exporting to',
+            'France, Spain'
+          )
+        })
 
-      it('should not show the country the company wants to export to', () => {
-        expect(this.viewRecord).to.have.property('Future countries of interest', 'Germany, Sweden')
-      })
+        it('should not show the country the company wants to export to', () => {
+          expect(this.viewRecord).to.have.property(
+            'Future countries of interest',
+            'Germany, Sweden'
+          )
+        })
 
-      it('should show the export win category', () => {
-        expect(this.viewRecord).to.have.property('Export win category', this.exportExperienceCategory)
-      })
-    })
+        it('should show the export win category', () => {
+          expect(this.viewRecord).to.have.property(
+            'Export win category',
+            this.exportExperienceCategory
+          )
+        })
+      }
+    )
 
     describe('great profile', () => {
       const GREAT_LABEL = 'great.gov.uk business profile'
       let companiesHouseNumber
 
-      function createRecord (props) {
+      function createRecord(props) {
         return transformCompanyToExportDetailsView({
           ...minimalCompany,
           export_experience_category: null,
@@ -169,14 +217,21 @@ describe('transformCompanyToExportDetailsView', () => {
           expect(data).to.have.property('name', '"Find a supplier" profile')
           expect(data).to.have.property('hint', '(opens in a new window)')
 
-          expect(urls.external.greatProfile).to.have.been.calledWith(companiesHouseNumber)
+          expect(urls.external.greatProfile).to.have.been.calledWith(
+            companiesHouseNumber
+          )
         })
       })
 
       context('when a profile is unpublished', () => {
         it('should return the label and data', () => {
-          const viewRecord = createRecord({ great_profile_status: 'unpublished' })
-          expect(viewRecord).to.have.property(GREAT_LABEL, 'Profile not published')
+          const viewRecord = createRecord({
+            great_profile_status: 'unpublished',
+          })
+          expect(viewRecord).to.have.property(
+            GREAT_LABEL,
+            'Profile not published'
+          )
         })
       })
 
@@ -192,22 +247,36 @@ describe('transformCompanyToExportDetailsView', () => {
   context('when the interaction-add-countries feature flag is true', () => {
     context('when multiple countries have been added', () => {
       it('should show the countries', () => {
-        const { future, current, noInterest, exportCountries } = generateExportCountries()
+        const {
+          future,
+          current,
+          noInterest,
+          exportCountries,
+        } = generateExportCountries()
 
         const company = {
           ...minimalCompany,
           export_countries: exportCountries,
         }
 
-        function getCountryText (countries) {
+        function getCountryText(countries) {
           return countries.map(([, name]) => name).join(', ')
         }
 
         const viewRecord = transformCompanyToExportDetailsView(company, true)
 
-        expect(viewRecord).to.have.property('Currently exporting to', getCountryText(current))
-        expect(viewRecord).to.have.property('Future countries of interest', getCountryText(future))
-        expect(viewRecord).to.have.property('Countries of no interest', getCountryText(noInterest))
+        expect(viewRecord).to.have.property(
+          'Currently exporting to',
+          getCountryText(current)
+        )
+        expect(viewRecord).to.have.property(
+          'Future countries of interest',
+          getCountryText(future)
+        )
+        expect(viewRecord).to.have.property(
+          'Countries of no interest',
+          getCountryText(noInterest)
+        )
       })
     })
   })

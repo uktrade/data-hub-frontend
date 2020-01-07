@@ -1,9 +1,7 @@
 const faker = require('faker')
 const { assign, forEach, keys } = require('lodash')
 
-const {
-  getButtonWithText,
-} = require('../../helpers/selectors')
+const { getButtonWithText } = require('../../helpers/selectors')
 
 module.exports = {
   props: {},
@@ -13,18 +11,19 @@ module.exports = {
   },
   commands: [
     {
-      abandonProposition (callback) {
-        const proposition = assign({}, {
-          details: faker.lorem.sentence(),
-        })
-        this
-          .waitForElementVisible('@abandonButton')
-          .api.perform(() => {
-            forEach(keys(proposition), (key) => {
-              this.replaceValue(`@${key}`, proposition[key])
-            })
-            proposition.heading = proposition.name
+      abandonProposition(callback) {
+        const proposition = assign(
+          {},
+          {
+            details: faker.lorem.sentence(),
+          }
+        )
+        this.waitForElementVisible('@abandonButton').api.perform(() => {
+          forEach(keys(proposition), (key) => {
+            this.replaceValue(`@${key}`, proposition[key])
           })
+          proposition.heading = proposition.name
+        })
         return this.click('@abandonButton', () => {
           callback(proposition)
         })

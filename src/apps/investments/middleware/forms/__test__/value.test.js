@@ -7,8 +7,12 @@ const config = require('../../../../../config')
 const moment = require('moment')
 
 const gvaMessage = gvaMessages.capitalExpenditureAndPrimarySectorRequired
-const yesterday = moment().subtract(1, 'days').toISOString()
-const lastMonth = moment().subtract(1, 'months').toISOString()
+const yesterday = moment()
+  .subtract(1, 'days')
+  .toISOString()
+const lastMonth = moment()
+  .subtract(1, 'months')
+  .toISOString()
 
 const metadataMock = {
   salaryRangeOptions: [
@@ -89,7 +93,9 @@ describe('Investment form middleware - investment value', () => {
           { label: 'sr3', value: '3' },
         ]
 
-        expect(this.resMock.locals.form.options.averageSalaryRange).to.deep.equal(expectedOptions)
+        expect(
+          this.resMock.locals.form.options.averageSalaryRange
+        ).to.deep.equal(expectedOptions)
       })
 
       it('should include active fdi value options', () => {
@@ -98,7 +104,9 @@ describe('Investment form middleware - investment value', () => {
           { label: 'f3', value: '3' },
         ]
 
-        expect(this.resMock.locals.form.options.fdiValue).to.deep.equal(expectedOptions)
+        expect(this.resMock.locals.form.options.fdiValue).to.deep.equal(
+          expectedOptions
+        )
       })
     })
 
@@ -135,7 +143,9 @@ describe('Investment form middleware - investment value', () => {
           { label: 'sr3', value: '3' },
         ]
 
-        expect(this.resMock.locals.form.options.averageSalaryRange).to.deep.equal(expectedOptions)
+        expect(
+          this.resMock.locals.form.options.averageSalaryRange
+        ).to.deep.equal(expectedOptions)
       })
 
       it('should include active fdi value options last month', () => {
@@ -145,7 +155,9 @@ describe('Investment form middleware - investment value', () => {
           { label: 'f3', value: '3' },
         ]
 
-        expect(this.resMock.locals.form.options.fdiValue).to.deep.equal(expectedOptions)
+        expect(this.resMock.locals.form.options.fdiValue).to.deep.equal(
+          expectedOptions
+        )
       })
     })
 
@@ -196,7 +208,9 @@ describe('Investment form middleware - investment value', () => {
           { label: 'sr3', value: '3' },
         ]
 
-        expect(this.resMock.locals.form.options.averageSalaryRange).to.deep.equal(expectedOptions)
+        expect(
+          this.resMock.locals.form.options.averageSalaryRange
+        ).to.deep.equal(expectedOptions)
       })
 
       it('should include active fdi value options last month', () => {
@@ -206,7 +220,9 @@ describe('Investment form middleware - investment value', () => {
           { label: 'f3', value: '3' },
         ]
 
-        expect(this.resMock.locals.form.options.fdiValue).to.deep.equal(expectedOptions)
+        expect(this.resMock.locals.form.options.fdiValue).to.deep.equal(
+          expectedOptions
+        )
       })
     })
   })
@@ -253,15 +269,24 @@ describe('Investment form middleware - investment value', () => {
           new_tech_to_uk: 'false',
           export_revenue: 'false',
         }
-        await controller.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
+        await controller.handleFormPost(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('redirects to the details screen', () => {
-        expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
+        expect(this.resMock.redirect).to.be.calledWith(
+          '/investments/projects/1234/details'
+        )
       })
 
       it('sends a flash message to inform the user of the change', () => {
-        expect(this.reqMock.flash).to.be.calledWith('success', 'Investment value updated')
+        expect(this.reqMock.flash).to.be.calledWith(
+          'success',
+          'Investment value updated'
+        )
       })
     })
     context('when called with invalid input', () => {
@@ -303,7 +328,11 @@ describe('Investment form middleware - investment value', () => {
           new_tech_to_uk: 'false',
           export_revenue: 'false',
         }
-        await controller.handleFormPost(this.reqMock, this.resMock, this.nextSpy)
+        await controller.handleFormPost(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('passes the request to the next middleware', () => {

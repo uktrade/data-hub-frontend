@@ -23,15 +23,27 @@ describe('Company controller, archive', () => {
     })
   })
 
-  const commonTests = ({ stubName, expectedReason, expectedFlash, expectedPath }) => {
+  const commonTests = ({
+    stubName,
+    expectedReason,
+    expectedFlash,
+    expectedPath,
+  }) => {
     if (stubName) {
       it('should call archive company with correct args', () => {
         const expectedToken = this.middlewareParameters.reqMock.session.token
 
         if (expectedReason) {
-          expect(this.stub[stubName]).to.have.been.calledWith(expectedToken, companyMock.id, expectedReason)
+          expect(this.stub[stubName]).to.have.been.calledWith(
+            expectedToken,
+            companyMock.id,
+            expectedReason
+          )
         } else {
-          expect(this.stub[stubName]).to.have.been.calledWith(expectedToken, companyMock.id)
+          expect(this.stub[stubName]).to.have.been.calledWith(
+            expectedToken,
+            companyMock.id
+          )
         }
 
         expect(this.stub[stubName]).to.have.been.calledOnce
@@ -39,12 +51,16 @@ describe('Company controller, archive', () => {
     }
 
     it('should set a success on flash', () => {
-      expect(this.middlewareParameters.reqMock.flash.args[0][0]).to.equal(expectedFlash)
+      expect(this.middlewareParameters.reqMock.flash.args[0][0]).to.equal(
+        expectedFlash
+      )
       expect(this.middlewareParameters.reqMock.flash).to.have.been.calledOnce
     })
 
     it('should redirect back to company', () => {
-      expect(this.middlewareParameters.resMock.redirect).to.have.been.calledWith(`/companies/${companyMock.id}/business-details`)
+      expect(
+        this.middlewareParameters.resMock.redirect
+      ).to.have.been.calledWith(`/companies/${companyMock.id}/business-details`)
       expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
     })
   }
@@ -57,7 +73,10 @@ describe('Company controller, archive', () => {
           company: companyMock,
         })
 
-        this.controller.archiveCompany(this.middlewareParameters.reqMock, this.middlewareParameters.resMock)
+        this.controller.archiveCompany(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock
+        )
       })
 
       commonTests({
@@ -82,7 +101,10 @@ describe('Company controller, archive', () => {
 
             this.stub.archiveCompany.resolves(companyMock)
 
-            await this.controller.archiveCompany(this.middlewareParameters.reqMock, this.middlewareParameters.resMock)
+            await this.controller.archiveCompany(
+              this.middlewareParameters.reqMock,
+              this.middlewareParameters.resMock
+            )
           })
 
           commonTests({
@@ -104,7 +126,10 @@ describe('Company controller, archive', () => {
 
             this.stub.archiveCompany.resolves(companyMock)
 
-            await this.controller.archiveCompany(this.middlewareParameters.reqMock, this.middlewareParameters.resMock)
+            await this.controller.archiveCompany(
+              this.middlewareParameters.reqMock,
+              this.middlewareParameters.resMock
+            )
           })
 
           commonTests({
@@ -128,7 +153,10 @@ describe('Company controller, archive', () => {
 
           this.stub.archiveCompany.rejects({ errorCode: 500 })
 
-          await this.controller.archiveCompany(this.middlewareParameters.reqMock, this.middlewareParameters.resMock)
+          await this.controller.archiveCompany(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock
+          )
         })
 
         commonTests({
@@ -139,7 +167,9 @@ describe('Company controller, archive', () => {
         })
 
         it('should send error to logger', () => {
-          expect(this.errorLoggerSpy).to.have.been.calledWith({ errorCode: 500 })
+          expect(this.errorLoggerSpy).to.have.been.calledWith({
+            errorCode: 500,
+          })
           expect(this.errorLoggerSpy).to.have.been.calledOnce
         })
       })
@@ -156,7 +186,10 @@ describe('Company controller, archive', () => {
 
           this.stub.unarchiveCompany.resolves(companyMock)
 
-          await this.controller.unarchiveCompany(this.middlewareParameters.reqMock, this.middlewareParameters.resMock)
+          await this.controller.unarchiveCompany(
+            this.middlewareParameters.reqMock,
+            this.middlewareParameters.resMock
+          )
         })
 
         commonTests({
@@ -174,7 +207,10 @@ describe('Company controller, archive', () => {
 
         this.stub.unarchiveCompany.rejects({ errorCode: 500 })
 
-        await this.controller.unarchiveCompany(this.middlewareParameters.reqMock, this.middlewareParameters.resMock)
+        await this.controller.unarchiveCompany(
+          this.middlewareParameters.reqMock,
+          this.middlewareParameters.resMock
+        )
       })
 
       commonTests({

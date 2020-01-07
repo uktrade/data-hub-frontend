@@ -1,9 +1,9 @@
 const { get, intersection } = require('lodash')
 
-function filterDisabledOption ({ currentValue = null, createdOn } = {}) {
+function filterDisabledOption({ currentValue = null, createdOn } = {}) {
   const createdOnTime = Date.parse(createdOn) || Date.now()
 
-  return function (item) {
+  return function(item) {
     if (!item.disabled_on) {
       return true
     }
@@ -11,16 +11,19 @@ function filterDisabledOption ({ currentValue = null, createdOn } = {}) {
     const isDisabled = Date.parse(item.disabled_on) > createdOnTime
     const isCurrentValue = item.id === currentValue
 
-    return (isDisabled || isCurrentValue)
+    return isDisabled || isCurrentValue
   }
 }
 
-function filterNonPermittedItem (userPermissions) {
-  return function (item) {
+function filterNonPermittedItem(userPermissions) {
+  return function(item) {
     const hasPermissions = get(item, 'permissions.length', 0)
-    if (!hasPermissions) { return true }
+    if (!hasPermissions) {
+      return true
+    }
 
-    const isPermitted = intersection(item.permissions, userPermissions).length > 0
+    const isPermitted =
+      intersection(item.permissions, userPermissions).length > 0
     return isPermitted
   }
 }

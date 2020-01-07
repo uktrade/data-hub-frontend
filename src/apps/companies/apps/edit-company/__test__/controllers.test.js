@@ -1,8 +1,5 @@
 const config = require('../../../../../config')
-const {
-  renderEditCompanyForm,
-  postEditCompany,
-} = require('../controllers')
+const { renderEditCompanyForm, postEditCompany } = require('../controllers')
 const buildMiddlewareParameters = require('../../../../../../test/unit/helpers/middleware-parameters-builder')
 
 const companyMock = require('../../../../../../test/unit/data/companies/company-v4.json')
@@ -36,13 +33,13 @@ const metadataMock = {
   ],
 }
 
-function assertCommonTemplate (actualTemplate) {
+function assertCommonTemplate(actualTemplate) {
   expect(actualTemplate).to.be.calledWith(
     'companies/apps/edit-company/views/client-container'
   )
 }
 
-function assertCommonBreadcrumbs (actualBreadcrumbs) {
+function assertCommonBreadcrumbs(actualBreadcrumbs) {
   expect(actualBreadcrumbs).to.deep.equal([
     ['Test Company', '/companies/1'],
     ['Business details', '/companies/1/business-details'],
@@ -50,7 +47,7 @@ function assertCommonBreadcrumbs (actualBreadcrumbs) {
   ])
 }
 
-function assertCommonProps (actualProps) {
+function assertCommonProps(actualProps) {
   expect(actualProps.companyDetails).to.not.be.null
   expect(actualProps.turnoverRanges).to.have.length(3)
   expect(actualProps.employeeRanges).to.have.length(3)
@@ -95,11 +92,13 @@ describe('Edit company form controllers', () => {
         await renderEditCompanyForm(
           middlewareParams.reqMock,
           middlewareParams.resMock,
-          middlewareParams.nextSpy,
+          middlewareParams.nextSpy
         )
       })
       it('should set the isOneList flag to true', () => {
-        expect(middlewareParams.resMock.render.firstCall.args[1].props.isOnOneList).to.be.true
+        expect(
+          middlewareParams.resMock.render.firstCall.args[1].props.isOnOneList
+        ).to.be.true
       })
     })
 
@@ -111,11 +110,13 @@ describe('Edit company form controllers', () => {
         await renderEditCompanyForm(
           middlewareParams.reqMock,
           middlewareParams.resMock,
-          middlewareParams.nextSpy,
+          middlewareParams.nextSpy
         )
       })
       it('should set the isOneList flag to false', () => {
-        expect(middlewareParams.resMock.render.firstCall.args[1].props.isOnOneList).to.be.false
+        expect(
+          middlewareParams.resMock.render.firstCall.args[1].props.isOnOneList
+        ).to.be.false
       })
     })
 
@@ -132,7 +133,7 @@ describe('Edit company form controllers', () => {
         await renderEditCompanyForm(
           middlewareParams.reqMock,
           middlewareParams.resMock,
-          middlewareParams.nextSpy,
+          middlewareParams.nextSpy
         )
 
         actualProps = middlewareParams.resMock.render.firstCall.args[1].props
@@ -163,8 +164,8 @@ describe('Edit company form controllers', () => {
             name: 'Test Company',
             uk_based: true,
             business_type: {
-              'name': 'UK branch of foreign company (BR)',
-              'id': 'b0730fc6-fcce-4071-bdab-ba8de4f4fc98',
+              name: 'UK branch of foreign company (BR)',
+              id: 'b0730fc6-fcce-4071-bdab-ba8de4f4fc98',
             },
           },
         })
@@ -172,7 +173,7 @@ describe('Edit company form controllers', () => {
         await renderEditCompanyForm(
           middlewareParams.reqMock,
           middlewareParams.resMock,
-          middlewareParams.nextSpy,
+          middlewareParams.nextSpy
         )
 
         actualProps = middlewareParams.resMock.render.firstCall.args[1].props
@@ -202,17 +203,21 @@ describe('Edit company form controllers', () => {
         middlewareParams = buildMiddlewareParameters({
           company: companyMock,
         })
-        middlewareParams.resMock.render = () => { throw error }
+        middlewareParams.resMock.render = () => {
+          throw error
+        }
 
         await renderEditCompanyForm(
           middlewareParams.reqMock,
           middlewareParams.resMock,
-          middlewareParams.nextSpy,
+          middlewareParams.nextSpy
         )
       })
 
       it('should call next() with an error', () => {
-        expect(middlewareParams.nextSpy).to.have.been.calledOnceWithExactly(error)
+        expect(middlewareParams.nextSpy).to.have.been.calledOnceWithExactly(
+          error
+        )
       })
     })
   })
@@ -234,18 +239,21 @@ describe('Edit company form controllers', () => {
         await postEditCompany(
           middlewareParams.reqMock,
           middlewareParams.resMock,
-          middlewareParams.nextSpy,
+          middlewareParams.nextSpy
         )
       })
 
       it('should flash a created message', () => {
-        expect(middlewareParams.reqMock.flash).to.be
-          .calledOnceWithExactly('success', 'Company record updated')
+        expect(middlewareParams.reqMock.flash).to.be.calledOnceWithExactly(
+          'success',
+          'Company record updated'
+        )
       })
 
       it('should respond with the created company', () => {
-        expect(middlewareParams.resMock.json).to.be
-          .calledOnceWithExactly({ all: 'good' })
+        expect(middlewareParams.resMock.json).to.be.calledOnceWithExactly({
+          all: 'good',
+        })
       })
 
       it('should not call next() with an error', async () => {
@@ -269,7 +277,7 @@ describe('Edit company form controllers', () => {
         await postEditCompany(
           middlewareParams.reqMock,
           middlewareParams.resMock,
-          middlewareParams.nextSpy,
+          middlewareParams.nextSpy
         )
       })
 
@@ -282,9 +290,11 @@ describe('Edit company form controllers', () => {
       })
 
       it('should call next() with an error', async () => {
-        expect(middlewareParams.nextSpy).to.have.been.calledOnceWithExactly(sinon.match({
-          message: '500 - "Error message"',
-        }))
+        expect(middlewareParams.nextSpy).to.have.been.calledOnceWithExactly(
+          sinon.match({
+            message: '500 - "Error message"',
+          })
+        )
       })
     })
   })

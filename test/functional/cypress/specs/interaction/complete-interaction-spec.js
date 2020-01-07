@@ -4,165 +4,275 @@ const { assertBreadcrumbs } = require('../../support/assertions')
 
 describe('Complete interaction', () => {
   context('Render form', () => {
-    let params = {}
+    const params = {}
 
     before(() => {
       params.companyId = fixtures.company.venusLtd.id
       params.interactionId = fixtures.interaction.draftPastMeeting.id
 
-      cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
+      cy.visit(
+        `/companies/${params.companyId}/interactions/${params.interactionId}`
+      )
 
-      cy.get(selectors.interaction.details.interaction.actions.completeInteraction(params)).click()
+      cy.get(
+        selectors.interaction.details.interaction.actions.completeInteraction(
+          params
+        )
+      ).click()
     })
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        'Home': '/',
-        'Companies': '/companies',
-        [fixtures.company.venusLtd.name]: `/companies/${fixtures.company.venusLtd.id}`,
-        'Interactions': `/companies/${fixtures.company.venusLtd.id}/interactions`,
-        'Interaction': null,
+        Home: '/',
+        Companies: '/companies',
+        [fixtures.company.venusLtd
+          .name]: `/companies/${fixtures.company.venusLtd.id}`,
+        Interactions: `/companies/${fixtures.company.venusLtd.id}/interactions`,
+        Interaction: null,
       })
     })
 
     it('should render the heading', () => {
-      cy.get(selectors.localHeader().heading).should('have.text', 'Did the meeting take place?')
+      cy.get(selectors.localHeader().heading).should(
+        'have.text',
+        'Did the meeting take place?'
+      )
     })
 
     it('should render the form', () => {
-      cy.get(selectors.interaction.complete.meetingHappen.yes).should('be.visible')
-      cy.get(selectors.interaction.complete.meetingHappen.no).should('be.visible')
-      cy.get(selectors.interaction.complete.archivedReason.clientCancelled).should('not.be.visible')
-      cy.get(selectors.interaction.complete.archivedReason.ditCancelled).should('not.be.visible')
-      cy.get(selectors.interaction.complete.archivedReason.rescheduled).should('not.be.visible')
-      cy.get(selectors.interaction.complete.rescheduledDate.field).should('not.be.visible')
-      cy.get(selectors.interaction.complete.actions.continue).should('be.visible')
-      cy.get(selectors.interaction.complete.actions.back(params)).should('be.visible')
+      cy.get(selectors.interaction.complete.meetingHappen.yes).should(
+        'be.visible'
+      )
+      cy.get(selectors.interaction.complete.meetingHappen.no).should(
+        'be.visible'
+      )
+      cy.get(
+        selectors.interaction.complete.archivedReason.clientCancelled
+      ).should('not.be.visible')
+      cy.get(selectors.interaction.complete.archivedReason.ditCancelled).should(
+        'not.be.visible'
+      )
+      cy.get(selectors.interaction.complete.archivedReason.rescheduled).should(
+        'not.be.visible'
+      )
+      cy.get(selectors.interaction.complete.rescheduledDate.field).should(
+        'not.be.visible'
+      )
+      cy.get(selectors.interaction.complete.actions.continue).should(
+        'be.visible'
+      )
+      cy.get(selectors.interaction.complete.actions.back(params)).should(
+        'be.visible'
+      )
     })
 
     it('should toggle field visibility in the form', () => {
       cy.get(selectors.interaction.complete.meetingHappen.no).click()
-      cy.get(selectors.interaction.complete.archivedReason.clientCancelled).should('be.visible')
-      cy.get(selectors.interaction.complete.archivedReason.ditCancelled).should('be.visible')
-      cy.get(selectors.interaction.complete.archivedReason.rescheduled).should('be.visible')
-      cy.get(selectors.interaction.complete.rescheduledDate.field).should('not.be.visible')
+      cy.get(
+        selectors.interaction.complete.archivedReason.clientCancelled
+      ).should('be.visible')
+      cy.get(selectors.interaction.complete.archivedReason.ditCancelled).should(
+        'be.visible'
+      )
+      cy.get(selectors.interaction.complete.archivedReason.rescheduled).should(
+        'be.visible'
+      )
+      cy.get(selectors.interaction.complete.rescheduledDate.field).should(
+        'not.be.visible'
+      )
 
       cy.get(selectors.interaction.complete.archivedReason.rescheduled).click()
-      cy.get(selectors.interaction.complete.rescheduledDate.field).should('be.visible')
+      cy.get(selectors.interaction.complete.rescheduledDate.field).should(
+        'be.visible'
+      )
 
-      cy.get(selectors.interaction.complete.archivedReason.clientCancelled).click()
-      cy.get(selectors.interaction.complete.rescheduledDate.field).should('not.be.visible')
+      cy.get(
+        selectors.interaction.complete.archivedReason.clientCancelled
+      ).click()
+      cy.get(selectors.interaction.complete.rescheduledDate.field).should(
+        'not.be.visible'
+      )
 
       cy.get(selectors.interaction.complete.meetingHappen.yes).click()
-      cy.get(selectors.interaction.complete.archivedReason.clientCancelled).should('not.be.visible')
-      cy.get(selectors.interaction.complete.archivedReason.ditCancelled).should('not.be.visible')
-      cy.get(selectors.interaction.complete.archivedReason.rescheduled).should('not.be.visible')
-      cy.get(selectors.interaction.complete.rescheduledDate.field).should('not.be.visible')
+      cy.get(
+        selectors.interaction.complete.archivedReason.clientCancelled
+      ).should('not.be.visible')
+      cy.get(selectors.interaction.complete.archivedReason.ditCancelled).should(
+        'not.be.visible'
+      )
+      cy.get(selectors.interaction.complete.archivedReason.rescheduled).should(
+        'not.be.visible'
+      )
+      cy.get(selectors.interaction.complete.rescheduledDate.field).should(
+        'not.be.visible'
+      )
     })
   })
 
   context('Submit form', () => {
     context('when no options are selected', () => {
-      let params = {}
+      const params = {}
 
       before(() => {
         params.companyId = fixtures.company.venusLtd.id
         params.interactionId = fixtures.interaction.draftPastMeeting.id
 
-        cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
+        cy.visit(
+          `/companies/${params.companyId}/interactions/${params.interactionId}`
+        )
 
-        cy.get(selectors.interaction.details.interaction.actions.completeInteraction(params)).click()
+        cy.get(
+          selectors.interaction.details.interaction.actions.completeInteraction(
+            params
+          )
+        ).click()
 
         cy.get(selectors.interaction.complete.actions.continue).click()
       })
 
       it('should not redirect to the interaction list', () => {
-        cy.location('pathname').should('eq', `/companies/${params.companyId}/interactions/${params.interactionId}/complete`)
+        cy.location('pathname').should(
+          'eq',
+          `/companies/${params.companyId}/interactions/${params.interactionId}/complete`
+        )
       })
 
       it('should show an error', () => {
-        cy.get(selectors.interaction.complete.meetingHappen.error).should('be.visible')
-        cy.get(selectors.interaction.complete.meetingHappen.error).should('have.text', 'You must select an option')
+        cy.get(selectors.interaction.complete.meetingHappen.error).should(
+          'be.visible'
+        )
+        cy.get(selectors.interaction.complete.meetingHappen.error).should(
+          'have.text',
+          'You must select an option'
+        )
       })
     })
 
     context('when the meeting did not happen', () => {
       context('no reason selected', () => {
-        let params = {}
+        const params = {}
 
         before(() => {
           params.companyId = fixtures.company.venusLtd.id
           params.interactionId = fixtures.interaction.draftPastMeeting.id
 
-          cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
+          cy.visit(
+            `/companies/${params.companyId}/interactions/${params.interactionId}`
+          )
 
-          cy.get(selectors.interaction.details.interaction.actions.completeInteraction(params)).click()
+          cy.get(
+            selectors.interaction.details.interaction.actions.completeInteraction(
+              params
+            )
+          ).click()
 
           cy.get(selectors.interaction.complete.meetingHappen.no).click()
           cy.get(selectors.interaction.complete.actions.continue).click()
         })
 
         it('should not redirect to the interaction list', () => {
-          cy.location('pathname').should('eq', `/companies/${params.companyId}/interactions/${params.interactionId}/complete`)
+          cy.location('pathname').should(
+            'eq',
+            `/companies/${params.companyId}/interactions/${params.interactionId}/complete`
+          )
         })
 
         it('should show an error', () => {
-          cy.get(selectors.interaction.complete.archivedReason.error).should('be.visible')
-          cy.get(selectors.interaction.complete.archivedReason.error).should('have.text', 'You must select an option')
+          cy.get(selectors.interaction.complete.archivedReason.error).should(
+            'be.visible'
+          )
+          cy.get(selectors.interaction.complete.archivedReason.error).should(
+            'have.text',
+            'You must select an option'
+          )
         })
       })
 
       context('and client cancelled', () => {
-        let params = {}
+        const params = {}
 
         before(() => {
           params.companyId = fixtures.company.venusLtd.id
           params.interactionId = fixtures.interaction.draftPastMeeting.id
 
-          cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
+          cy.visit(
+            `/companies/${params.companyId}/interactions/${params.interactionId}`
+          )
 
-          cy.get(selectors.interaction.details.interaction.actions.completeInteraction(params)).click()
+          cy.get(
+            selectors.interaction.details.interaction.actions.completeInteraction(
+              params
+            )
+          ).click()
 
           cy.get(selectors.interaction.complete.meetingHappen.no).click()
-          cy.get(selectors.interaction.complete.archivedReason.clientCancelled).click()
+          cy.get(
+            selectors.interaction.complete.archivedReason.clientCancelled
+          ).click()
           cy.get(selectors.interaction.complete.actions.continue).click()
         })
 
         it('should redirect to the company activity', () => {
-          cy.location('pathname').should('eq', `/companies/${params.companyId}/activity`)
+          cy.location('pathname').should(
+            'eq',
+            `/companies/${params.companyId}/activity`
+          )
         })
 
         it('should show the success message', () => {
-          cy.get(selectors.localHeader().flash).should('contain', 'The interaction has been updated')
-          cy.get(selectors.localHeader().flash).should('have.class', 'c-message--success')
+          cy.get(selectors.localHeader().flash).should(
+            'contain',
+            'The interaction has been updated'
+          )
+          cy.get(selectors.localHeader().flash).should(
+            'have.class',
+            'c-message--success'
+          )
         })
 
         // todo assert interaction changed state
       })
 
       context('and DIT cancelled', () => {
-        let params = {}
+        const params = {}
 
         before(() => {
           params.companyId = fixtures.company.venusLtd.id
           params.interactionId = fixtures.interaction.draftPastMeeting.id
 
-          cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
+          cy.visit(
+            `/companies/${params.companyId}/interactions/${params.interactionId}`
+          )
 
-          cy.get(selectors.interaction.details.interaction.actions.completeInteraction(params)).click()
+          cy.get(
+            selectors.interaction.details.interaction.actions.completeInteraction(
+              params
+            )
+          ).click()
 
           cy.get(selectors.interaction.complete.meetingHappen.no).click()
-          cy.get(selectors.interaction.complete.archivedReason.ditCancelled).click()
+          cy.get(
+            selectors.interaction.complete.archivedReason.ditCancelled
+          ).click()
           cy.get(selectors.interaction.complete.actions.continue).click()
         })
 
         it('should redirect to the company activity', () => {
-          cy.location('pathname').should('eq', `/companies/${params.companyId}/activity`)
+          cy.location('pathname').should(
+            'eq',
+            `/companies/${params.companyId}/activity`
+          )
         })
 
         it('should show the success message', () => {
-          cy.get(selectors.localHeader().flash).should('contain', 'The interaction has been updated')
-          cy.get(selectors.localHeader().flash).should('have.class', 'c-message--success')
+          cy.get(selectors.localHeader().flash).should(
+            'contain',
+            'The interaction has been updated'
+          )
+          cy.get(selectors.localHeader().flash).should(
+            'have.class',
+            'c-message--success'
+          )
         })
 
         // todo assert interaction changed state
@@ -170,55 +280,90 @@ describe('Complete interaction', () => {
 
       context('and rescheduled', () => {
         context('and a valid date is not entered', () => {
-          let params = {}
+          const params = {}
 
           before(() => {
             params.companyId = fixtures.company.venusLtd.id
             params.interactionId = fixtures.interaction.draftPastMeeting.id
 
-            cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
+            cy.visit(
+              `/companies/${params.companyId}/interactions/${params.interactionId}`
+            )
 
-            cy.get(selectors.interaction.details.interaction.actions.completeInteraction(params)).click()
+            cy.get(
+              selectors.interaction.details.interaction.actions.completeInteraction(
+                params
+              )
+            ).click()
 
             cy.get(selectors.interaction.complete.meetingHappen.no).click()
-            cy.get(selectors.interaction.complete.archivedReason.rescheduled).click()
+            cy.get(
+              selectors.interaction.complete.archivedReason.rescheduled
+            ).click()
             cy.get(selectors.interaction.complete.actions.continue).click()
           })
 
           it('should not redirect to the interaction list', () => {
-            cy.location('pathname').should('eq', `/companies/${params.companyId}/interactions/${params.interactionId}/complete`)
+            cy.location('pathname').should(
+              'eq',
+              `/companies/${params.companyId}/interactions/${params.interactionId}/complete`
+            )
           })
 
           it('should show an error', () => {
-            cy.get(selectors.interaction.complete.rescheduledDate.error).should('be.visible')
-            cy.get(selectors.interaction.complete.rescheduledDate.error).should('have.text', 'You must enter a date')
+            cy.get(selectors.interaction.complete.rescheduledDate.error).should(
+              'be.visible'
+            )
+            cy.get(selectors.interaction.complete.rescheduledDate.error).should(
+              'have.text',
+              'You must enter a date'
+            )
           })
         })
 
         context('and a valid date is entered', () => {
-          let params = {}
+          const params = {}
 
           before(() => {
             params.companyId = fixtures.company.venusLtd.id
             params.interactionId = fixtures.interaction.draftPastMeeting.id
 
-            cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
+            cy.visit(
+              `/companies/${params.companyId}/interactions/${params.interactionId}`
+            )
 
-            cy.get(selectors.interaction.details.interaction.actions.completeInteraction(params)).click()
+            cy.get(
+              selectors.interaction.details.interaction.actions.completeInteraction(
+                params
+              )
+            ).click()
 
             cy.get(selectors.interaction.complete.meetingHappen.no).click()
-            cy.get(selectors.interaction.complete.archivedReason.rescheduled).click()
-            cy.get(selectors.interaction.complete.rescheduledDate.field).type('2030-01-01')
+            cy.get(
+              selectors.interaction.complete.archivedReason.rescheduled
+            ).click()
+            cy.get(selectors.interaction.complete.rescheduledDate.field).type(
+              '2030-01-01'
+            )
             cy.get(selectors.interaction.complete.actions.continue).click()
           })
 
           it('should redirect to the company activity', () => {
-            cy.location('pathname').should('eq', `/companies/${params.companyId}/activity`)
+            cy.location('pathname').should(
+              'eq',
+              `/companies/${params.companyId}/activity`
+            )
           })
 
           it('should show the success message', () => {
-            cy.get(selectors.localHeader().flash).should('contain', 'The interaction has been updated')
-            cy.get(selectors.localHeader().flash).should('have.class', 'c-message--success')
+            cy.get(selectors.localHeader().flash).should(
+              'contain',
+              'The interaction has been updated'
+            )
+            cy.get(selectors.localHeader().flash).should(
+              'have.class',
+              'c-message--success'
+            )
           })
 
           // todo assert interaction changed state
@@ -227,22 +372,33 @@ describe('Complete interaction', () => {
     })
 
     context('when the meeting did happen', () => {
-      let params = {}
+      const params = {}
 
       before(() => {
         params.companyId = fixtures.company.venusLtd.id
         params.interactionId = fixtures.interaction.draftPastMeeting.id
 
-        cy.visit(`/companies/${params.companyId}/interactions/${params.interactionId}`)
+        cy.visit(
+          `/companies/${params.companyId}/interactions/${params.interactionId}`
+        )
 
-        cy.get(selectors.interaction.details.interaction.actions.completeInteraction(params)).click()
+        cy.get(
+          selectors.interaction.details.interaction.actions.completeInteraction(
+            params
+          )
+        ).click()
 
         cy.get(selectors.interaction.complete.meetingHappen.yes).click()
         cy.get(selectors.interaction.complete.actions.continue).click()
       })
 
       it('should redirect to the interaction create form', () => {
-        cy.location('pathname').should('eq', `/companies/${params.companyId}/interactions/${[params.interactionId]}/create`)
+        cy.location('pathname').should(
+          'eq',
+          `/companies/${params.companyId}/interactions/${[
+            params.interactionId,
+          ]}/create`
+        )
       })
     })
   })

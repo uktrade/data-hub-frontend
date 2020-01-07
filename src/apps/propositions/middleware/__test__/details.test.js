@@ -21,8 +21,12 @@ describe('Proposition details middleware', () => {
         fetchProposition: this.fetchPropositionStub.resolves(propositionData),
       },
       '../transformers': {
-        transformPropositionFormBodyToApiRequest: this.transformPropositionFormBodyToApiRequestStub.returns(transformed),
-        transformPropositionResponseToViewRecord: this.transformPropositionResponseToViewRecordStub.returns(transformed),
+        transformPropositionFormBodyToApiRequest: this.transformPropositionFormBodyToApiRequestStub.returns(
+          transformed
+        ),
+        transformPropositionResponseToViewRecord: this.transformPropositionResponseToViewRecordStub.returns(
+          transformed
+        ),
       },
     })
 
@@ -73,13 +77,20 @@ describe('Proposition details middleware', () => {
       })
 
       it('should post to the API', () => {
-        expect(this.savePropositionStub).to.have.been.calledWith(this.req.session.token)
+        expect(this.savePropositionStub).to.have.been.calledWith(
+          this.req.session.token
+        )
         expect(this.savePropositionStub).to.have.been.calledOnce
-        expect(this.savePropositionStub.firstCall.args[1]).to.deep.equal(transformed)
+        expect(this.savePropositionStub.firstCall.args[1]).to.deep.equal(
+          transformed
+        )
       })
 
       it('should flash a created message', () => {
-        expect(this.req.flash).to.be.calledWith('success', 'Proposition created')
+        expect(this.req.flash).to.be.calledWith(
+          'success',
+          'Proposition created'
+        )
       })
 
       it('should redirect on success', () => {
@@ -98,24 +109,30 @@ describe('Proposition details middleware', () => {
       })
 
       it('should flash an updated message', () => {
-        expect(this.req.flash).to.be.calledWith('success', 'Proposition created')
+        expect(this.req.flash).to.be.calledWith(
+          'success',
+          'Proposition created'
+        )
       })
     })
 
-    context('when all fields are valid for updating an proposition found from the top level navigation', () => {
-      it('should redirect on success', async () => {
-        const res = assign({}, this.res, {
-          breadcrumb: sinon.stub().returnsThis(),
-          render: sinon.spy(),
-          redirect: sinon.spy(),
-          locals: {},
+    context(
+      'when all fields are valid for updating an proposition found from the top level navigation',
+      () => {
+        it('should redirect on success', async () => {
+          const res = assign({}, this.res, {
+            breadcrumb: sinon.stub().returnsThis(),
+            render: sinon.spy(),
+            redirect: sinon.spy(),
+            locals: {},
+          })
+
+          await this.middleware.postDetails(this.req, res, this.nextSpy)
+
+          expect(res.redirect).to.be.calledWith('/propositions')
         })
-
-        await this.middleware.postDetails(this.req, res, this.nextSpy)
-
-        expect(res.redirect).to.be.calledWith('/propositions')
-      })
-    })
+      }
+    )
 
     context('when there is a 400', () => {
       beforeEach(async () => {
@@ -144,7 +161,10 @@ describe('Proposition details middleware', () => {
       })
 
       it('should call next with errors', () => {
-        expect(this.nextSpy).have.been.calledWith({ statusCode: 500, error: 'error' })
+        expect(this.nextSpy).have.been.calledWith({
+          statusCode: 500,
+          error: 'error',
+        })
         expect(this.nextSpy).have.been.calledOnce
       })
     })

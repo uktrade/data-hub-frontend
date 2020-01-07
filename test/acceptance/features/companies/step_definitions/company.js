@@ -12,69 +12,65 @@ const dashboardPage = `${process.env.QA_HOST}/`
 const Company = client.page.companies.company()
 const Search = client.page.search.search()
 
-When(/^a "UK private or public limited company" is created$/, async function () {
-  await client
-    .url(companySearchPage)
+When(/^a "UK private or public limited company" is created$/, async function() {
+  await client.url(companySearchPage)
 
-  await Company
-    .createUkPrivateOrPublicLimitedCompany(
-      companyFixtures.companiesHouse,
-      {},
-      (company) => set(this.state, 'company', company),
-    )
-    .wait() // wait for backend to sync
+  await Company.createUkPrivateOrPublicLimitedCompany(
+    companyFixtures.companiesHouse,
+    {},
+    (company) => set(this.state, 'company', company)
+  ).wait() // wait for backend to sync
 })
 
-When(/^a "UK non-private or non-public limited company" is created$/, async function () {
-  await client
-    .url(companySearchPage)
+When(
+  /^a "UK non-private or non-public limited company" is created$/,
+  async function() {
+    await client.url(companySearchPage)
 
-  await Company
-    .createUkNonPrivateOrNonPublicLimitedCompany({}, (company) => {
+    await Company.createUkNonPrivateOrNonPublicLimitedCompany({}, (company) => {
       set(this.state, 'company', company)
-    })
-    .wait() // wait for backend to sync
+    }).wait() // wait for backend to sync
+  }
+)
+
+When(/^a "Foreign company" is created$/, async function() {
+  await client.url(companySearchPage)
+
+  await Company.createForeignCompany({}, (company) =>
+    set(this.state, 'company', company)
+  ).wait() // wait for backend to sync
 })
 
-When(/^a "Foreign company" is created$/, async function () {
-  await client
-    .url(companySearchPage)
+When(/^a "UK branch of a foreign company" is created$/, async function() {
+  await client.url(companySearchPage)
 
-  await Company
-    .createForeignCompany({}, (company) => set(this.state, 'company', company))
-    .wait() // wait for backend to sync
+  await Company.createUkBranchOfForeignCompany({}, (company) =>
+    set(this.state, 'company', company)
+  ).wait() // wait for backend to sync
 })
 
-When(/^a "UK branch of a foreign company" is created$/, async function () {
-  await client
-    .url(companySearchPage)
+Then(/^the company is in the search results$/, async function() {
+  const companyName = get(
+    this.state,
+    'company.name',
+    get(this.state, 'company.tradingName')
+  )
 
-  await Company
-    .createUkBranchOfForeignCompany({}, (company) => set(this.state, 'company', company))
-    .wait() // wait for backend to sync
+  await client.url(dashboardPage)
+
+  await Company.findCompany(getUid(companyName)).assert.containsText(
+    '@collectionResultsCompanyName',
+    companyName
+  )
 })
 
-Then(/^the company is in the search results$/, async function () {
-  const companyName = get(this.state, 'company.name', get(this.state, 'company.tradingName'))
-
-  await client
-    .url(dashboardPage)
-
-  await Company
-    .findCompany(getUid(companyName))
-    .assert.containsText('@collectionResultsCompanyName', companyName)
-})
-
-Then(/^the company trading name is in the search results$/, async function () {
+Then(/^the company trading name is in the search results$/, async function() {
   const tradingName = get(this.state, 'company.tradingName')
 
-  await client
-    .url(dashboardPage)
+  await client.url(dashboardPage)
 
-  await Search
-    .navigate()
+  await Search.navigate()
     .search(tradingName)
-    .section.firstCompanySearchResult
-    .waitForElementPresent('@tradingNames')
+    .section.firstCompanySearchResult.waitForElementPresent('@tradingNames')
     .assert.containsText('@tradingNames', tradingName)
 })

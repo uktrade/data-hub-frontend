@@ -1,6 +1,10 @@
 const { sortBy } = require('lodash')
 const metadata = require('../lib/metadata')
-const { transformObjectToOption, transformStringToOption, transformHQCodeToLabelledOption } = require('./transformers')
+const {
+  transformObjectToOption,
+  transformStringToOption,
+  transformHQCodeToLabelledOption,
+} = require('./transformers')
 
 const foreignOtherCompanyOptions = [
   'Charity',
@@ -18,7 +22,7 @@ const globalFields = {
     name: 'country',
     label: 'Country',
     initialOption: '-- Select country --',
-    options () {
+    options() {
       return metadata.countryOptions.map(transformObjectToOption)
     },
   },
@@ -28,7 +32,7 @@ const globalFields = {
     name: 'uk_region',
     label: 'UK Region',
     initialOption: '-- Select region --',
-    options () {
+    options() {
       return metadata.regionOptions.map(transformObjectToOption)
     },
   },
@@ -38,8 +42,11 @@ const globalFields = {
     name: 'headquarter_type',
     type: 'checkbox',
     label: 'Type',
-    options () {
-      return sortBy(metadata.headquarterOptions.map(transformHQCodeToLabelledOption), ['order', 'label', 'value'])
+    options() {
+      return sortBy(
+        metadata.headquarterOptions.map(transformHQCodeToLabelledOption),
+        ['order', 'label', 'value']
+      )
     },
   },
 
@@ -48,7 +55,7 @@ const globalFields = {
     name: 'sector_descends',
     label: 'Sectors',
     initialOption: '-- Select sector --',
-    options () {
+    options() {
       return metadata.sectorOptions.map(transformObjectToOption)
     },
   },
@@ -58,7 +65,7 @@ const globalFields = {
     name: 'strategic_drivers',
     label: 'Strategic drivers',
     initialOption: '-- Select strategic driver --',
-    options () {
+    options() {
       return metadata.strategicDriverOptions.map(transformObjectToOption)
     },
   },
@@ -68,7 +75,7 @@ const globalFields = {
     type: 'radio',
     name: 'average_salary',
     label: 'Average salary range',
-    options () {
+    options() {
       return metadata.salaryRangeOptions.map(transformObjectToOption)
     },
   },
@@ -78,7 +85,7 @@ const globalFields = {
     name: 'foreign_other_company',
     label: 'Type of organisation',
     initialOption: '-- Select organisation type --',
-    options () {
+    options() {
       return foreignOtherCompanyOptions.map(transformStringToOption)
     },
   },
@@ -88,7 +95,7 @@ const globalFields = {
     name: 'event_type',
     label: 'Type of event',
     initialOption: '-- Select event type --',
-    options () {
+    options() {
       return metadata.eventTypeOptions.map(transformObjectToOption)
     },
   },
@@ -98,7 +105,7 @@ const globalFields = {
     name: 'location_type',
     label: 'Location type',
     initialOption: '-- Select event --',
-    options () {
+    options() {
       return metadata.locationTypeOptions.map(transformObjectToOption)
     },
   },
@@ -108,7 +115,7 @@ const globalFields = {
     name: 'service',
     label: 'Service',
     initialOption: '-- Select service --',
-    options () {
+    options() {
       return metadata.serviceDeliveryServiceOptions.map(transformObjectToOption)
     },
   },
@@ -118,7 +125,7 @@ const globalFields = {
     name: 'team',
     label: 'Team',
     initialOption: '-- Select team --',
-    options () {
+    options() {
       return metadata.teams.map(transformObjectToOption)
     },
   },
@@ -128,7 +135,7 @@ const globalFields = {
     name: 'programme',
     label: 'Programme',
     initialOption: '-- Select programme --',
-    options () {
+    options() {
       return metadata.programmeOptions.map(transformObjectToOption)
     },
   },

@@ -4,7 +4,9 @@ const mockInteraction = require('../../../../../test/unit/data/interactions/sear
 describe('#transformInteractionListItemToHaveUrlPrefix', () => {
   context('when there is a leading forward slash', () => {
     it('should set the URL prefix without a leading forward slash', () => {
-      const actualInteraction = transformInteractionListItemToHaveUrlPrefix('/url')(mockInteraction)
+      const actualInteraction = transformInteractionListItemToHaveUrlPrefix(
+        '/url'
+      )(mockInteraction)
       const expectedInteraction = { ...mockInteraction, urlPrefix: 'url' }
 
       expect(actualInteraction).to.deep.equal(expectedInteraction)
@@ -13,7 +15,9 @@ describe('#transformInteractionListItemToHaveUrlPrefix', () => {
 
   context('when there is not a leading forward slash', () => {
     it('should set the complete URL prefix', () => {
-      const actualInteraction = transformInteractionListItemToHaveUrlPrefix('url')(mockInteraction)
+      const actualInteraction = transformInteractionListItemToHaveUrlPrefix(
+        'url'
+      )(mockInteraction)
       const expectedInteraction = { ...mockInteraction, urlPrefix: 'url' }
 
       expect(actualInteraction).to.deep.equal(expectedInteraction)
@@ -22,7 +26,9 @@ describe('#transformInteractionListItemToHaveUrlPrefix', () => {
 
   context('when there is not a return link', () => {
     it('should not set the complete URL prefix', () => {
-      const actualInteraction = transformInteractionListItemToHaveUrlPrefix(undefined)(mockInteraction)
+      const actualInteraction = transformInteractionListItemToHaveUrlPrefix(
+        undefined
+      )(mockInteraction)
       expect(actualInteraction).to.deep.equal(mockInteraction)
     })
   })

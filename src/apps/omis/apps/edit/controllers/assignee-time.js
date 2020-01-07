@@ -4,7 +4,7 @@ const { EditController } = require('../../../controllers')
 const { Order } = require('../../../models')
 
 class EditAssigneeTimeController extends EditController {
-  async configure (req, res, next) {
+  async configure(req, res, next) {
     const orderId = get(res.locals, 'order.id')
     const token = get(req.session, 'token')
     const assignees = await Order.getAssignees(token, orderId)
@@ -18,12 +18,12 @@ class EditAssigneeTimeController extends EditController {
     super.configure(req, res, next)
   }
 
-  process (req, res, next) {
+  process(req, res, next) {
     req.form.values.assignee_time = flatten([req.form.values.assignee_time])
     next()
   }
 
-  async saveValues (req, res, next) {
+  async saveValues(req, res, next) {
     const data = req.form.values
     const timeValues = flatten([data.assignee_time])
     const assignees = timeValues.map((value, index) => {
@@ -36,7 +36,11 @@ class EditAssigneeTimeController extends EditController {
     })
 
     try {
-      await Order.saveAssignees(req.session.token, res.locals.order.id, filter(assignees))
+      await Order.saveAssignees(
+        req.session.token,
+        res.locals.order.id,
+        filter(assignees)
+      )
       next()
     } catch (error) {
       next(error)

@@ -2,7 +2,7 @@ const selectors = require('../../../../selectors')
 const { testBreadcrumbs } = require('../../support/assertions')
 
 describe('Delete company list page', () => {
-  beforeEach(function () {
+  beforeEach(function() {
     Cypress.Cookies.preserveOnce('datahub.sid')
   })
 
@@ -12,7 +12,7 @@ describe('Delete company list page', () => {
     })
 
     testBreadcrumbs({
-      'Home': '/',
+      Home: '/',
       'Delete list': undefined,
     })
 
@@ -21,21 +21,31 @@ describe('Delete company list page', () => {
     })
 
     it('displays the list name', () => {
-      cy.get(selectors.companyList.delete.insetListItem.byIndex(1))
-        .should('have.text', 'A list with multiple items')
+      cy.get(selectors.companyList.delete.insetListItem.byIndex(1)).should(
+        'have.text',
+        'A list with multiple items'
+      )
     })
 
     it('displays the number of companies on the list', () => {
-      cy.get(selectors.companyList.delete.insetListItem.byIndex(2))
-        .should('have.text', '13 companies')
+      cy.get(selectors.companyList.delete.insetListItem.byIndex(2)).should(
+        'have.text',
+        '13 companies'
+      )
     })
 
     it('displays the "Delete list" button', () => {
-      cy.get(selectors.companyList.delete.deleteButton).should('have.text', 'Delete list')
+      cy.get(selectors.companyList.delete.deleteButton).should(
+        'have.text',
+        'Delete list'
+      )
     })
 
     it('displays the "Return without deleting" link', () => {
-      cy.get(selectors.companyList.delete.returnAnchor).should('have.text', 'Return without deleting')
+      cy.get(selectors.companyList.delete.returnAnchor).should(
+        'have.text',
+        'Return without deleting'
+      )
     })
   })
 
@@ -53,7 +63,10 @@ describe('Delete company list page', () => {
     })
 
     it('displays the "List deleted" flash message', () => {
-      cy.get(selectors.localHeader().flash).should('contain.text', 'List deleted')
+      cy.get(selectors.localHeader().flash).should(
+        'contain.text',
+        'List deleted'
+      )
     })
   })
 
@@ -64,17 +77,25 @@ describe('Delete company list page', () => {
     })
 
     it('displays the "List deleted" flash message', () => {
-      cy.get(selectors.companyList.delete.errorHeader).should('have.text', 'There was an error deleting this list')
+      cy.get(selectors.companyList.delete.errorHeader).should(
+        'have.text',
+        'There was an error deleting this list'
+      )
     })
   })
 
   context("when the list doesn't exist", () => {
     before(() => {
-      cy.visit('/company-lists/non-existent-list/delete', { failOnStatusCode: false })
+      cy.visit('/company-lists/non-existent-list/delete', {
+        failOnStatusCode: false,
+      })
     })
 
     it('displays the "List deleted" flash message', () => {
-      cy.get(selectors.localHeader().heading).should('contain.text', 'Page not found')
+      cy.get(selectors.localHeader().heading).should(
+        'contain.text',
+        'Page not found'
+      )
     })
   })
 })

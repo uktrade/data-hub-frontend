@@ -1,6 +1,6 @@
 const config = require('../config')
 
-function getTokens (path) {
+function getTokens(path) {
   const tokens = []
   const parts = path.split('/')
 
@@ -13,7 +13,7 @@ function getTokens (path) {
   return tokens
 }
 
-function getPath (path, tokens, params) {
+function getPath(path, tokens, params) {
   if (path === '/') {
     return ''
   }
@@ -31,20 +31,20 @@ function getPath (path, tokens, params) {
   return path
 }
 
-function url (mountPoint, subMountPoint, path) {
+function url(mountPoint, subMountPoint, path) {
   let tokenPath
 
   if (path) {
-    tokenPath = (subMountPoint + path)
+    tokenPath = subMountPoint + path
   } else {
-    tokenPath = (subMountPoint || '/')
+    tokenPath = subMountPoint || '/'
     path = tokenPath
   }
 
   const tokens = getTokens(tokenPath)
 
-  function getUrl (...params) {
-    return (mountPoint + getPath(tokenPath, tokens, params))
+  function getUrl(...params) {
+    return mountPoint + getPath(tokenPath, tokens, params)
   }
 
   getUrl.mountPoint = mountPoint
@@ -53,7 +53,7 @@ function url (mountPoint, subMountPoint, path) {
   return getUrl
 }
 
-function createInteractionsSubApp (...mountPoints) {
+function createInteractionsSubApp(...mountPoints) {
   if (mountPoints.length === 0) {
     mountPoints.push(null)
   }
@@ -66,7 +66,8 @@ function createInteractionsSubApp (...mountPoints) {
 module.exports = {
   external: {
     greatProfile: (id) => config.greatProfileUrl.replace('{id}', id),
-    companiesHouse: (companyNumber) => `https://beta.companieshouse.gov.uk/company/${companyNumber}`,
+    companiesHouse: (companyNumber) =>
+      `https://beta.companieshouse.gov.uk/company/${companyNumber}`,
   },
   dashboard: url('/'),
   companies: {
@@ -115,13 +116,22 @@ module.exports = {
         remove: url('/companies', '/:companyId/hierarchies/ghq/remove'),
       },
       subsidiaries: {
-        search: url('/companies', '/:companyId/hierarchies/subsidiaries/search'),
-        add: url('/companies', '/:companyId/hierarchies/subsidiaries/:subsidiaryCompanyId/add'),
+        search: url(
+          '/companies',
+          '/:companyId/hierarchies/subsidiaries/search'
+        ),
+        add: url(
+          '/companies',
+          '/:companyId/hierarchies/subsidiaries/:subsidiaryCompanyId/add'
+        ),
       },
     },
     investments: {
       companyInvestment: url('/companies', '/:companyId/investments'),
-      largeCapitalProfile: url('/companies', '/:companyId/investments/large-capital-profile'),
+      largeCapitalProfile: url(
+        '/companies',
+        '/:companyId/investments/large-capital-profile'
+      ),
     },
     subsidiaries: {
       index: url('/companies', '/:companyId/subsidiaries'),
@@ -164,8 +174,14 @@ module.exports = {
       documents: url('/investments', '/projects/:projectId/documents'),
       propositions: url('/investments', '/projects/:projectId/propositions'),
       team: url('/investments', '/projects/:projectId/team'),
-      interactions: createInteractionsSubApp('/investments', '/projects/:projectId'),
-      interactionCollection: url('/investments', '/projects/:projectId/interactions'),
+      interactions: createInteractionsSubApp(
+        '/investments',
+        '/projects/:projectId'
+      ),
+      interactionCollection: url(
+        '/investments',
+        '/projects/:projectId/interactions'
+      ),
       project: url('/investments', '/projects/:projectId'),
       status: url('/investments', '/projects/:projectId/status'),
     },

@@ -15,8 +15,11 @@ const companyToLeadITA = ({ one_list_group_global_account_manager: leadITA }) =>
     team: get(leadITA, 'dit_team.name'),
   }
 
-function renderLeadAdvisers (req, res) {
-  const { company, user: { permissions } } = res.locals
+function renderLeadAdvisers(req, res) {
+  const {
+    company,
+    user: { permissions },
+  } = res.locals
   const { name, team, email } = companyToLeadITA(company) || {}
 
   res
@@ -32,30 +35,38 @@ function renderLeadAdvisers (req, res) {
         companyId: company.id,
         addUrl: companies.advisers.assign(company.id),
         removeUrl: companies.advisers.remove(company.id),
-        hasPermissionToAddIta: permissions.includes('company.change_regional_account_manager'),
+        hasPermissionToAddIta: permissions.includes(
+          'company.change_regional_account_manager'
+        ),
       },
     })
 }
 
-async function renderCoreTeamAdvisers (req, res, next) {
+async function renderCoreTeamAdvisers(req, res, next) {
   try {
     const { company } = res.locals
     const token = req.session.token
-    const { global_account_manager: globalAccountManager, adviser_on_core_team: adviserOnCoreTeam, location, team } = coreTeamLabels
+    const {
+      global_account_manager: globalAccountManager,
+      adviser_on_core_team: adviserOnCoreTeam,
+      location,
+      team,
+    } = coreTeamLabels
     const columns = {
-      'global_account_manager': {
+      global_account_manager: {
         team,
         location,
         name: globalAccountManager,
       },
-      'adviser_core_team': {
+      adviser_core_team: {
         team,
         location,
         name: adviserOnCoreTeam,
       },
     }
-    const coreTeam = await getOneListGroupCoreTeam(token, company.id)
-      .then(transformCoreTeamToCollection)
+    const coreTeam = await getOneListGroupCoreTeam(token, company.id).then(
+      transformCoreTeamToCollection
+    )
     res
       .breadcrumb(company.name, urls.companies.detail(company.id))
       .breadcrumb('Advisers')
@@ -70,7 +81,7 @@ async function renderCoreTeamAdvisers (req, res, next) {
   }
 }
 
-async function renderAdvisers (req, res, next) {
+async function renderAdvisers(req, res, next) {
   const { company } = res.locals
   isItaTierDAccount(company) || company.one_list_group_tier === null
     ? renderLeadAdvisers(req, res)
@@ -88,8 +99,8 @@ const form = (req, res) => {
       isRemove
         ? 'Remove the Lead ITA'
         : currentLeadITA
-          ? 'Replace the Lead ITA'
-          : 'Confirm you are the Lead ITA'
+        ? 'Replace the Lead ITA'
+        : 'Confirm you are the Lead ITA'
     )
     .render('companies/apps/advisers/views/manage-adviser.njk', {
       props: {
@@ -101,11 +112,11 @@ const form = (req, res) => {
 }
 
 // istanbul ignore next: Covered by functional tests
-async function submit (req, res, next) {
-  const { company: { id } } = res.locals
-  const action = req.url === '/remove'
-    ? 'remove'
-    : 'self-assign'
+async function submit(req, res, next) {
+  const {
+    company: { id },
+  } = res.locals
+  const action = req.url === '/remove' ? 'remove' : 'self-assign'
 
   try {
     await authorisedRequest(req.session.token, {

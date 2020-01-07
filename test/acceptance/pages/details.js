@@ -19,26 +19,28 @@ const getSelectorForTable = (title, className) => {
 }
 
 module.exports = {
-  elements: {
-  },
+  elements: {},
   commands: [
     {
-      getDetailFor (label) {
-        return getSelectorForElementWithText(label, { el: '//th', child: '/following-sibling::td' })
+      getDetailFor(label) {
+        return getSelectorForElementWithText(label, {
+          el: '//th',
+          child: '/following-sibling::td',
+        })
       },
-      getSelectorForKeyValueTable (title) {
+      getSelectorForKeyValueTable(title) {
         return getSelectorForTable(title, 'table--key-value')
       },
-      getSelectorForValueTable (title) {
+      getSelectorForValueTable(title) {
         return getSelectorForElementWithText(title, {
           el: '//h2',
           child: '//following-sibling::table[1]',
         })
       },
-      getSelectorForDataTable (title) {
+      getSelectorForDataTable(title) {
         return getSelectorForTable(title, 'data-table')
       },
-      getSelectorForDataTableNumber (number) {
+      getSelectorForDataTableNumber(number) {
         return getSelectorForTableNumber(number, 'data-table')
       },
     },

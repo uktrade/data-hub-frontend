@@ -10,7 +10,10 @@ describe('Company Investments and Investment projects', () => {
 
   context('when viewing the company header', () => {
     it('should display the "One List Corp" heading', () => {
-      cy.get(selectors.localHeader().heading).should('have.text', 'One List Corp')
+      cy.get(selectors.localHeader().heading).should(
+        'have.text',
+        'One List Corp'
+      )
     })
   })
 })

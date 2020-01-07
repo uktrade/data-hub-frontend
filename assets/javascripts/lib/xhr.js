@@ -8,14 +8,17 @@ history.listen((location, action) => {
   if (action === 'POP') {
     if (location.state) {
       XHR.injectResponseInHtml(location.state.data)
-    } else if (window.location.pathname !== location.pathname && window.location.search !== location.search) {
+    } else if (
+      window.location.pathname !== location.pathname &&
+      window.location.search !== location.search
+    ) {
       window.location.href = location.pathname + location.search
     }
   }
 })
 
 const XHR = {
-  injectResponseInHtml (data) {
+  injectResponseInHtml(data) {
     const dataDocument = document.createRange().createContextualFragment(data)
 
     const xhrContainers = document.querySelectorAll('[data-xhr]')
@@ -23,7 +26,9 @@ const XHR = {
       if (xhrContainers.hasOwnProperty(prop)) {
         const xhrContainer = xhrContainers[prop]
         const xhrContainerId = xhrContainer.getAttribute('data-xhr')
-        const newContent = dataDocument.querySelector(`[data-xhr="${xhrContainerId}"]`)
+        const newContent = dataDocument.querySelector(
+          `[data-xhr="${xhrContainerId}"]`
+        )
         if (newContent) {
           xhrContainer.outerHTML = newContent.outerHTML
         }
@@ -31,7 +36,7 @@ const XHR = {
     }
   },
 
-  updateOutlet (res, params) {
+  updateOutlet(res, params) {
     this.injectResponseInHtml(res.data)
 
     if (params) {
@@ -47,17 +52,20 @@ const XHR = {
     return res
   },
 
-  request (url, params = {}) {
+  request(url, params = {}) {
     if (params) {
       const url = `?${queryString.stringify(params)}`
       history.push(url)
     }
 
     return axios
-      .get(`${url}?${queryString.stringify(params, { arrayFormat: 'repeat' })}`, {
-        headers: { 'X-Requested-With': 'XMLHttpRequest' },
-      })
-      .then(res => this.updateOutlet(res, params))
+      .get(
+        `${url}?${queryString.stringify(params, { arrayFormat: 'repeat' })}`,
+        {
+          headers: { 'X-Requested-With': 'XMLHttpRequest' },
+        }
+      )
+      .then((res) => this.updateOutlet(res, params))
   },
 }
 

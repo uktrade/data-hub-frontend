@@ -1,13 +1,9 @@
 const { assign } = require('lodash')
 
 const labels = require('../labels')
-const {
-  tag,
-  documentUpload,
-  comment,
-} = require('./fields')
+const { tag, documentUpload, comment } = require('./fields')
 
-module.exports = function ({
+module.exports = function({
   returnLink,
   returnText,
   buttonText,
@@ -20,11 +16,7 @@ module.exports = function ({
     returnText,
     buttonText,
     hiddenFields,
-    children: [
-      documentUpload,
-      tag(tags),
-      comment,
-    ].map(field => {
+    children: [documentUpload, tag(tags), comment].map((field) => {
       return assign(field, {
         label: labels.evidenceForm[field.name],
       })

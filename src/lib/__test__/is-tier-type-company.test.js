@@ -12,15 +12,21 @@ describe('Check tier type', () => {
         id: '1',
       },
     }
-    context('when a company is in Tier D International Adviser Trade Accounts', () => {
-      it('should return true', () => {
-        expect(isItaTierDAccount(companyA)).to.equal(true)
-      })
-    })
-    context('when a company is not in Tier D International Adviser Trade Accounts but is in the One List', () => {
-      it('should return false', () => {
-        expect(isItaTierDAccount(companyB)).to.equal(false)
-      })
-    })
+    context(
+      'when a company is in Tier D International Adviser Trade Accounts',
+      () => {
+        it('should return true', () => {
+          expect(isItaTierDAccount(companyA)).to.equal(true)
+        })
+      }
+    )
+    context(
+      'when a company is not in Tier D International Adviser Trade Accounts but is in the One List',
+      () => {
+        it('should return false', () => {
+          expect(isItaTierDAccount(companyB)).to.equal(false)
+        })
+      }
+    )
   })
 })

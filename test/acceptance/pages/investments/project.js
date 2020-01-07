@@ -14,27 +14,30 @@ const {
   storeRadioSubFieldValues,
 } = require('../../helpers/state')
 
-const getHeaderSelector = (text, className = 'heading-medium') => getSelectorForElementWithText(text, {
-  className,
-  el: '//h2',
-})
+const getHeaderSelector = (text, className = 'heading-medium') =>
+  getSelectorForElementWithText(text, {
+    className,
+    el: '//h2',
+  })
 
-const getTableCellAnchorByName = (text) => getSelectorForElementWithText(text, {
-  el: '//th',
-  child: '/following-sibling::td/a',
-})
+const getTableCellAnchorByName = (text) =>
+  getSelectorForElementWithText(text, {
+    el: '//th',
+    child: '/following-sibling::td/a',
+  })
 
-const getHeaderMetaValueByName = (text) => getSelectorForElementWithText(text, {
-  el: '//header//span',
-  className: 'c-meta-list__item-label',
-  child: '/following-sibling::span',
-})
+const getHeaderMetaValueByName = (text) =>
+  getSelectorForElementWithText(text, {
+    el: '//header//span',
+    className: 'c-meta-list__item-label',
+    child: '/following-sibling::span',
+  })
 
 module.exports = {
   url: process.env.QA_HOST,
   commands: [
     {
-      storeProjectDetails (callback) {
+      storeProjectDetails(callback) {
         const projectDetails = {}
 
         return this.section.localHeader
@@ -52,7 +55,7 @@ module.exports = {
             callback(projectDetails)
           })
       },
-      selectFdiTypeOfInvestmentProject (projectDetails = {}, callback) {
+      selectFdiTypeOfInvestmentProject(projectDetails = {}, callback) {
         const typeOfInvestment = this.section.typeOfInvestment
 
         return typeOfInvestment
@@ -62,35 +65,45 @@ module.exports = {
             typeOfInvestment.getListOption('@fdiType', (subType) => {
               typeOfInvestment.setValue('@fdiType', subType)
               set(projectDetails, 'subType', subType)
-              set(projectDetails, 'typeAndSubType', `${projectDetails.type}, ${subType}`)
+              set(
+                projectDetails,
+                'typeAndSubType',
+                `${projectDetails.type}, ${subType}`
+              )
               callback(projectDetails)
               done()
             })
           })
           .submitForm('form')
       },
-      selectNonFdiTypeOfInvestmentProject () {
-        this
-          .section.typeOfInvestment
+      selectNonFdiTypeOfInvestmentProject() {
+        this.section.typeOfInvestment
           .waitForElementPresent('@nonFdi')
           .click('@nonFdi')
           .submitForm('form')
       },
-      selectCtiTypeOfInvestmentProject () {
-        this
-          .section.typeOfInvestment
+      selectCtiTypeOfInvestmentProject() {
+        this.section.typeOfInvestment
           .waitForElementPresent('@cti')
           .click('@cti')
           .submitForm('form')
       },
-      populateForm (callback) {
+      populateForm(callback) {
         const nextYear = getYear(addYears(Date.now(), 1))
         const projectForm = this.section.projectForm
         const promises = []
 
-        const actualLandDateYear = faker.random.number({ min: nextYear, max: nextYear + 40 })
+        const actualLandDateYear = faker.random.number({
+          min: nextYear,
+          max: nextYear + 40,
+        })
         const actualLandDateMonth = faker.random.number({ min: 1, max: 12 })
-        const actualLandDateDay = faker.random.number({ min: 1, max: getDaysInMonth(new Date(actualLandDateYear, (actualLandDateMonth - 1))) })
+        const actualLandDateDay = faker.random.number({
+          min: 1,
+          max: getDaysInMonth(
+            new Date(actualLandDateYear, actualLandDateMonth - 1)
+          ),
+        })
 
         const project = {
           actualLandDateYear,
@@ -102,7 +115,10 @@ module.exports = {
           primarySector: 'select',
           businessActivity: 'select',
           otherBusinessActivity: faker.lorem.word(),
-          estimatedLandDateYear: faker.random.number({ min: nextYear, max: nextYear + 40 }),
+          estimatedLandDateYear: faker.random.number({
+            min: nextYear,
+            max: nextYear + 40,
+          }),
           estimatedLandDateMonth: faker.random.number({ min: 1, max: 12 }),
           investorType: 'select',
           levelOfInvolvement: 'select',
@@ -122,10 +138,7 @@ module.exports = {
           },
           referralSource: {
             inputType: 'radio',
-            options: [
-              'referralSourceYes',
-              'referralSourceNo',
-            ],
+            options: ['referralSourceYes', 'referralSourceNo'],
             values: {
               referralSourceNo: {
                 inputType: 'select',
@@ -151,15 +164,19 @@ module.exports = {
           },
         }
 
-        return this
-          .api.perform((done) => {
+        return this.api
+          .perform((done) => {
             forEach(project, (value, key) => {
               if (value.inputType === 'radio') {
-                promises.push(storeRadioSubFieldValues(project, key, value, projectForm))
+                promises.push(
+                  storeRadioSubFieldValues(project, key, value, projectForm)
+                )
               }
 
               if (value.inputType === 'select') {
-                promises.push(storeSelectSubFieldValues(project, key, value, projectForm))
+                promises.push(
+                  storeSelectSubFieldValues(project, key, value, projectForm)
+                )
               }
 
               if (value === 'select') {
@@ -167,27 +184,25 @@ module.exports = {
               }
             })
 
-            Promise.all(promises)
-              .then(() => {
-                forEach(project, (value, key) => {
-                  projectForm.setValue(`@${key}`, value)
-                })
-                done()
+            Promise.all(promises).then(() => {
+              forEach(project, (value, key) => {
+                projectForm.setValue(`@${key}`, value)
               })
+              done()
+            })
           })
           .submitForm('form', () => {
             callback(project)
           })
       },
-      setEquitySource (choice) {
-        return this
-          .section.equitySource
+      setEquitySource(choice) {
+        return this.section.equitySource
           .waitForElementPresent('@yes')
           .waitForElementPresent('@no')
           .click(`@${lowerCase(choice)}`)
           .submitForm('form')
       },
-      searchForEquitySourceCompany (sourceOfForeignEquity) {
+      searchForEquitySourceCompany(sourceOfForeignEquity) {
         return this.section.equitySource
           .waitForElementPresent('@searchInput')
           .setValue('@searchInput', sourceOfForeignEquity)
@@ -224,15 +239,19 @@ module.exports = {
         businessActivity: '#field-business_activities',
         otherBusinessActivity: '#field-other_business_activity',
         clientRelationshipManager: '#field-client_relationship_manager',
-        clientRelationshipManagerYes: 'label[for=field-is_relationship_manager-1]',
-        clientRelationshipManagerNo: 'label[for=field-is_relationship_manager-2]',
+        clientRelationshipManagerYes:
+          'label[for=field-is_relationship_manager-1]',
+        clientRelationshipManagerNo:
+          'label[for=field-is_relationship_manager-2]',
         referralSource: '#field-referral_source_adviser',
         referralSourceYes: 'label[for=field-is_referral_source-1]',
         referralSourceNo: 'label[for=field-is_referral_source-1]',
         referralSourceActivity: '#field-referral_source_activity',
         referralSourceActivityEvent: '#field-referral_source_activity_event',
-        referralSourceActivityMarketing: '#field-referral_source_activity_marketing',
-        referralSourceActivityWebsite: '#field-referral_source_activity_website',
+        referralSourceActivityMarketing:
+          '#field-referral_source_activity_marketing',
+        referralSourceActivityWebsite:
+          '#field-referral_source_activity_website',
         estimatedLandDateYear: '#field-estimated_land_date_year',
         estimatedLandDateMonth: '#field-estimated_land_date_month',
         actualLandDateYear: '#field-actual_land_date_year',
@@ -245,7 +264,8 @@ module.exports = {
         saveButton: getButtonWithText('Save'),
       },
     },
-    localHeader: { // TODO move this work to Location feature
+    localHeader: {
+      // TODO move this work to Location feature
       selector: '.c-local-header',
       elements: {
         header: '.c-local-header__heading',
@@ -254,7 +274,8 @@ module.exports = {
         projectCode: getHeaderMetaValueByName('Project code'),
         valuation: getHeaderMetaValueByName('Valuation'),
         stage: {
-          selector: '//ol[contains(@class,"c-progress-bar")]/li[contains(@class,"is-active")]/span',
+          selector:
+            '//ol[contains(@class,"c-progress-bar")]/li[contains(@class,"is-active")]/span',
           locateStrategy: 'xpath',
         },
       },
@@ -265,19 +286,36 @@ module.exports = {
         summary: {
           selector: '.govuk-grid-column-three-quarters',
           elements: {
-            header: getHeaderSelector('Investment project summary', 'govuk-heading-m'),
+            header: getHeaderSelector(
+              'Investment project summary',
+              'govuk-heading-m'
+            ),
             clientLink: getTableCellAnchorByName('Client'),
-            typeOfInvestment: getKeyValueTableRowValueCell('Type of investment'),
+            typeOfInvestment: getKeyValueTableRowValueCell(
+              'Type of investment'
+            ),
             primarySector: getKeyValueTableRowValueCell('Primary sector'),
             businessActivity: getKeyValueTableRowValueCell('Business activity'),
             clientContact: getKeyValueTableRowValueCell('Client contacts'),
-            projectDescription: getKeyValueTableRowValueCell('Project description'),
-            anonDescription: getKeyValueTableRowValueCell('Anonymised description'),
-            estimatedLandDate: getKeyValueTableRowValueCell('Estimated land date'),
+            projectDescription: getKeyValueTableRowValueCell(
+              'Project description'
+            ),
+            anonDescription: getKeyValueTableRowValueCell(
+              'Anonymised description'
+            ),
+            estimatedLandDate: getKeyValueTableRowValueCell(
+              'Estimated land date'
+            ),
             actualLandDate: getKeyValueTableRowValueCell('Actual land date'),
-            newOrExistingInvestor: getKeyValueTableRowValueCell('New or existing investor'),
-            levelOfInvolvement: getKeyValueTableRowValueCell('Level of involvement'),
-            specificInvestmentProgramme: getKeyValueTableRowValueCell('Specific investment programme'),
+            newOrExistingInvestor: getKeyValueTableRowValueCell(
+              'New or existing investor'
+            ),
+            levelOfInvolvement: getKeyValueTableRowValueCell(
+              'Level of involvement'
+            ),
+            specificInvestmentProgramme: getKeyValueTableRowValueCell(
+              'Specific investment programme'
+            ),
           },
         },
         archive: {

@@ -4,7 +4,7 @@ const { investments } = require('../../../../../src/lib/urls')
 
 const today = Cypress.moment()
 
-const createProposition = data => {
+const createProposition = (data) => {
   cy.get(selectors.entityCollection.addProposition).click()
   cy.get(selectors.investment.proposition.name).type(data.name)
   cy.get(selectors.investment.proposition.scope).type(data.scope)
@@ -16,7 +16,9 @@ const createProposition = data => {
 
 describe('Proposition', () => {
   beforeEach(() => {
-    cy.visit(investments.projects.propositions('fb5b5006-56af-40e0-8615-7aba53e0e4bf'))
+    cy.visit(
+      investments.projects.propositions('fb5b5006-56af-40e0-8615-7aba53e0e4bf')
+    )
   })
 
   it('should create a proposition', () => {
@@ -27,7 +29,10 @@ describe('Proposition', () => {
     }
     createProposition(data)
 
-    cy.get(selectors.message.successful).should('contain', 'Proposition created')
+    cy.get(selectors.message.successful).should(
+      'contain',
+      'Proposition created'
+    )
 
     cy.get(selectors.collection.items)
       .should('contain', today.format('D MMMM YYYY'))
@@ -43,14 +48,22 @@ describe('Proposition', () => {
     }
     createProposition(data)
 
-    cy.get(selectors.message.successful).should('contain', 'Proposition created')
+    cy.get(selectors.message.successful).should(
+      'contain',
+      'Proposition created'
+    )
 
     cy.get(`${selectors.collection.items}:contains("${data.name}")`)
-      .find('a:contains("Abandon")').first().click()
+      .find('a:contains("Abandon")')
+      .first()
+      .click()
 
     cy.get(selectors.investment.proposition.details).type('Not useful anymore')
     cy.get(selectors.investment.proposition.button).click()
 
-    cy.get(selectors.message.successful).should('contain', 'Proposition abandoned')
+    cy.get(selectors.message.successful).should(
+      'contain',
+      'Proposition abandoned'
+    )
   })
 })

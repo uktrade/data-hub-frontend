@@ -46,7 +46,9 @@ describe('Find new event attendees controller', () => {
 
       it('should set the last part of the breadcrumb to incidate the user is adding an attendee', () => {
         expect(this.res.breadcrumb.callCount).to.eq(2)
-        expect(this.res.breadcrumb.secondCall.args).to.deep.equal(['Add attendee'])
+        expect(this.res.breadcrumb.secondCall.args).to.deep.equal([
+          'Add attendee',
+        ])
       })
 
       it('should set the page title to the title of the event', () => {
@@ -70,9 +72,11 @@ describe('Find new event attendees controller', () => {
 
       it('should call next', () => {
         expect(this.nextSpy).to.be.calledOnce
-        expect(this.nextSpy).to.be.calledWith(sinon.match({
-          message: 'Missing event',
-        }))
+        expect(this.nextSpy).to.be.calledWith(
+          sinon.match({
+            message: 'Missing event',
+          })
+        )
       })
     })
   })
@@ -93,7 +97,9 @@ describe('Find new event attendees controller', () => {
             this.req.query.page = '1'
 
             nock(config.apiRoot)
-              .get('/v3/interaction?limit=9999&offset=0&event_id=31a9f8bd-7796-4af4-8f8c-25450860e2d1')
+              .get(
+                '/v3/interaction?limit=9999&offset=0&event_id=31a9f8bd-7796-4af4-8f8c-25450860e2d1'
+              )
               .reply(200, attendeesData)
               .post('/v3/search/contact', {
                 archived: false,
@@ -123,7 +129,8 @@ describe('Find new event attendees controller', () => {
 
             expect(firstContact).to.deep.equal({
               id: '12651151-2149-465e-871b-ac45bc568a62',
-              url: '/events/31a9f8bd-7796-4af4-8f8c-25450860e2d1/attendees/create/12651151-2149-465e-871b-ac45bc568a62',
+              url:
+                '/events/31a9f8bd-7796-4af4-8f8c-25450860e2d1/attendees/create/12651151-2149-465e-871b-ac45bc568a62',
               type: 'contact',
               name: 'Fred Smith',
               subTitle: {
@@ -139,7 +146,12 @@ describe('Find new event attendees controller', () => {
                 { label: 'Country', value: 'United Kingdom' },
                 { label: 'Phone number', value: '(+44) 07814 333 777' },
                 { label: 'Email', value: 'fred@test.com' },
-                { label: 'Contact type', type: 'badge', value: 'Primary', badgeModifier: 'secondary' },
+                {
+                  label: 'Contact type',
+                  type: 'badge',
+                  value: 'Primary',
+                  badgeModifier: 'secondary',
+                },
               ],
             })
           })
@@ -165,7 +177,10 @@ describe('Find new event attendees controller', () => {
           })
 
           it('should highlight the search term', () => {
-            expect(this.res.locals.contacts).to.have.property('highlightTerm', 'Fred')
+            expect(this.res.locals.contacts).to.have.property(
+              'highlightTerm',
+              'Fred'
+            )
           })
 
           it('should call next to move to the next middleware', () => {
@@ -174,7 +189,10 @@ describe('Find new event attendees controller', () => {
           })
 
           it('should use the block link style for results', () => {
-            expect(this.res.locals.contacts).to.have.property('listModifier', 'block-links')
+            expect(this.res.locals.contacts).to.have.property(
+              'listModifier',
+              'block-links'
+            )
           })
 
           it('should include the search term in the locals', () => {
@@ -187,7 +205,9 @@ describe('Find new event attendees controller', () => {
             this.req.query.page = '2'
 
             nock(config.apiRoot)
-              .get('/v3/interaction?limit=9999&offset=0&event_id=31a9f8bd-7796-4af4-8f8c-25450860e2d1')
+              .get(
+                '/v3/interaction?limit=9999&offset=0&event_id=31a9f8bd-7796-4af4-8f8c-25450860e2d1'
+              )
               .reply(200, attendeesData)
               .post('/v3/search/contact', {
                 archived: false,
@@ -238,7 +258,9 @@ describe('Find new event attendees controller', () => {
             this.req.query.page = '1'
 
             nock(config.apiRoot)
-              .get('/v3/interaction?limit=9999&offset=0&event_id=31a9f8bd-7796-4af4-8f8c-25450860e2d1')
+              .get(
+                '/v3/interaction?limit=9999&offset=0&event_id=31a9f8bd-7796-4af4-8f8c-25450860e2d1'
+              )
               .reply(200, attendeesData)
               .post('/v3/search/contact', {
                 archived: false,
@@ -249,10 +271,12 @@ describe('Find new event attendees controller', () => {
               })
               .reply(200, {
                 count: 1,
-                results: [{
-                  ...contacts,
-                  id: '9b1138ab-ec7b-497f-b8c3-27fed21694ef',
-                }],
+                results: [
+                  {
+                    ...contacts,
+                    id: '9b1138ab-ec7b-497f-b8c3-27fed21694ef',
+                  },
+                ],
               })
 
             await findAttendee(this.req, this.res, this.nextSpy)
@@ -265,7 +289,7 @@ describe('Find new event attendees controller', () => {
 
           it('should include a badge to say it has previously been added', () => {
             const meta = this.res.locals.contacts.items[0].meta
-            const badges = meta.filter(metaItem => metaItem.type === 'badge')
+            const badges = meta.filter((metaItem) => metaItem.type === 'badge')
 
             expect(badges).to.have.length(1)
             expect(badges[0]).to.deep.equal({
@@ -281,7 +305,9 @@ describe('Find new event attendees controller', () => {
             this.req.query.page = '1'
 
             nock(config.apiRoot)
-              .get('/v3/interaction?limit=9999&offset=0&event_id=31a9f8bd-7796-4af4-8f8c-25450860e2d1')
+              .get(
+                '/v3/interaction?limit=9999&offset=0&event_id=31a9f8bd-7796-4af4-8f8c-25450860e2d1'
+              )
               .reply(200, attendeesData)
               .post('/v3/search/contact', {
                 archived: false,
@@ -298,9 +324,11 @@ describe('Find new event attendees controller', () => {
           it('should call next with the error', () => {
             expect(this.nextSpy.calledOnce).to.be.true
 
-            expect(this.nextSpy).to.be.calledWith(sinon.match({
-              message: '500 - "Error message"',
-            }))
+            expect(this.nextSpy).to.be.calledWith(
+              sinon.match({
+                message: '500 - "Error message"',
+              })
+            )
           })
         })
       })
@@ -314,9 +342,11 @@ describe('Find new event attendees controller', () => {
       it('should call next with the error', () => {
         expect(this.nextSpy.calledOnce).to.be.true
 
-        expect(this.nextSpy).to.be.calledWith(sinon.match({
-          message: 'No event supplied',
-        }))
+        expect(this.nextSpy).to.be.calledWith(
+          sinon.match({
+            message: 'No event supplied',
+          })
+        )
       })
     })
   })

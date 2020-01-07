@@ -1,6 +1,10 @@
 const selectors = require('../../../../selectors')
 
-const { companies, contacts, investments } = require('../../../../../src/lib/urls')
+const {
+  companies,
+  contacts,
+  investments,
+} = require('../../../../../src/lib/urls')
 
 const { assertCollection } = require('../../support/assertions')
 
@@ -42,7 +46,11 @@ describe('Collection', () => {
 
     describe('interaction', () => {
       before(() => {
-        cy.visit(investments.projects.interactionCollection('e32b3c33-80ac-4589-a8c4-dda305d726ba'))
+        cy.visit(
+          investments.projects.interactionCollection(
+            'e32b3c33-80ac-4589-a8c4-dda305d726ba'
+          )
+        )
       })
 
       it('should return the results summary for a interaction collection', () => {
@@ -52,7 +60,11 @@ describe('Collection', () => {
 
     describe('proposition', () => {
       before(() => {
-        cy.visit(investments.projects.propositions('e32b3c33-80ac-4589-a8c4-dda305d726ba'))
+        cy.visit(
+          investments.projects.propositions(
+            'e32b3c33-80ac-4589-a8c4-dda305d726ba'
+          )
+        )
       })
 
       it('should return the results summary for a proposition collection', () => {
@@ -62,7 +74,9 @@ describe('Collection', () => {
 
     describe('team', () => {
       before(() => {
-        cy.visit(investments.projects.team('e32b3c33-80ac-4589-a8c4-dda305d726ba'))
+        cy.visit(
+          investments.projects.team('e32b3c33-80ac-4589-a8c4-dda305d726ba')
+        )
       })
 
       it('should return the investment project team summary', () => {

@@ -1,6 +1,6 @@
 const { getInvestment } = require('../repos')
 
-function setPropositionsReturnUrl (req, res, next) {
+function setPropositionsReturnUrl(req, res, next) {
   const { projects } = res.locals.paths
   const { investmentId } = req.params
 
@@ -8,14 +8,17 @@ function setPropositionsReturnUrl (req, res, next) {
   next()
 }
 
-function setPropositionsEntityName (req, res, next) {
+function setPropositionsEntityName(req, res, next) {
   res.locals.entityName = res.locals.investment.name
   next()
 }
 
-async function setCompanyDetailsWithPropositions (req, res, next) {
+async function setCompanyDetailsWithPropositions(req, res, next) {
   try {
-    const investment = await getInvestment(req.session.token, req.params.investmentId)
+    const investment = await getInvestment(
+      req.session.token,
+      req.params.investmentId
+    )
     res.locals.company = investment.investor_company
     next()
   } catch (error) {

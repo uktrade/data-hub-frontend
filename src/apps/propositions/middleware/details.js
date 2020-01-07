@@ -1,12 +1,17 @@
 const { assign, get } = require('lodash')
 
 const { transformPropositionFormBodyToApiRequest } = require('../transformers')
-const { fetchProposition, fetchDownloadLink, fetchPropositionFiles, saveProposition } = require('../repos')
+const {
+  fetchProposition,
+  fetchDownloadLink,
+  fetchPropositionFiles,
+  saveProposition,
+} = require('../repos')
 const { getAdvisers } = require('../../adviser/repos')
 const { filterActiveAdvisers } = require('../../adviser/filters')
 const { transformObjectToOption } = require('../../transformers')
 
-async function postDetails (req, res, next) {
+async function postDetails(req, res, next) {
   res.locals.requestBody = transformPropositionFormBodyToApiRequest(req.body)
 
   try {
@@ -33,12 +38,20 @@ async function postDetails (req, res, next) {
   }
 }
 
-async function getPropositionDetails (req, res, next, propositionId) {
+async function getPropositionDetails(req, res, next, propositionId) {
   try {
     const token = req.session.token
     const { investment } = res.locals
-    res.locals.proposition = await fetchProposition(token, propositionId, investment.id)
-    res.locals.proposition.files = await fetchPropositionFiles(token, propositionId, investment.id)
+    res.locals.proposition = await fetchProposition(
+      token,
+      propositionId,
+      investment.id
+    )
+    res.locals.proposition.files = await fetchPropositionFiles(
+      token,
+      propositionId,
+      investment.id
+    )
 
     next()
   } catch (error) {
@@ -46,7 +59,7 @@ async function getPropositionDetails (req, res, next, propositionId) {
   }
 }
 
-async function getPropositionOptions (req, res, next) {
+async function getPropositionOptions(req, res, next) {
   try {
     const token = req.session.token
     const advisers = await getAdvisers(token)
@@ -66,12 +79,17 @@ async function getPropositionOptions (req, res, next) {
   }
 }
 
-async function getDownloadLink (req, res, next) {
+async function getDownloadLink(req, res, next) {
   try {
     const token = req.session.token
     const { propositionId, documentId } = req.params
     const { investment } = res.locals
-    const s3 = await fetchDownloadLink(token, propositionId, investment.id, documentId)
+    const s3 = await fetchDownloadLink(
+      token,
+      propositionId,
+      investment.id,
+      documentId
+    )
 
     return res.redirect(s3.document_url)
   } catch (error) {

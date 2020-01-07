@@ -5,20 +5,23 @@ const { createESFilters } = require('./builders')
 const { fetchActivityFeed } = require('./repos')
 const config = require('../../../../config')
 
-async function renderActivityFeed (req, res, next) {
+async function renderActivityFeed(req, res, next) {
   const { company, features, dnbHierarchyCount } = res.locals
 
   try {
-    const contentProps = company.archived ? {} : {
-      contentText: 'Add interaction',
-      contentLink: companies.interactions.create(company.id),
-      activityTypeFilter: FILTER_KEYS.dataHubActivity,
-      activityTypeFilters: FILTER_ITEMS,
-      isGlobalUltimate: company.is_global_ultimate,
-      dnbHierarchyCount,
-      isTypeFilterFlagEnabled: features['activity-feed-type-filter-enabled'],
-      isGlobalUltimateFlagEnabled: features['companies-ultimate-hq'],
-    }
+    const contentProps = company.archived
+      ? {}
+      : {
+          contentText: 'Add interaction',
+          contentLink: companies.interactions.create(company.id),
+          activityTypeFilter: FILTER_KEYS.dataHubActivity,
+          activityTypeFilters: FILTER_ITEMS,
+          isGlobalUltimate: company.is_global_ultimate,
+          dnbHierarchyCount,
+          isTypeFilterFlagEnabled:
+            features['activity-feed-type-filter-enabled'],
+          isGlobalUltimateFlagEnabled: features['companies-ultimate-hq'],
+        }
 
     const props = {
       ...contentProps,
@@ -34,7 +37,7 @@ async function renderActivityFeed (req, res, next) {
   }
 }
 
-async function fetchActivityFeedHandler (req, res, next) {
+async function fetchActivityFeedHandler(req, res, next) {
   try {
     const { token } = req.session
     const { company, user } = res.locals
@@ -47,13 +50,25 @@ async function fetchActivityFeedHandler (req, res, next) {
 
     let dnbHierarchyIds = []
     if (company.is_global_ultimate && showDnbHierarchy) {
-      const { results } = await getGlobalUltimateHierarchy(token, company.global_ultimate_duns_number)
-      dnbHierarchyIds = results.filter((company) => !company.is_global_ultimate).map((company) => company.id)
+      const { results } = await getGlobalUltimateHierarchy(
+        token,
+        company.global_ultimate_duns_number
+      )
+      dnbHierarchyIds = results
+        .filter((company) => !company.is_global_ultimate)
+        .map((company) => company.id)
     }
 
     const results = await fetchActivityFeed({
       token: req.session.token,
-      body: createESFilters(activityTypeFilter, dnbHierarchyIds, company, user, from, size),
+      body: createESFilters(
+        activityTypeFilter,
+        dnbHierarchyIds,
+        company,
+        user,
+        from,
+        size
+      ),
     })
 
     res.json(results)

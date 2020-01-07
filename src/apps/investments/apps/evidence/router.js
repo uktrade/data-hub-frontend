@@ -1,8 +1,6 @@
 const router = require('express').Router()
 
-const {
-  renderAddEvidence,
-} = require('./controllers')
+const { renderAddEvidence } = require('./controllers')
 
 router.get('/evidence', renderAddEvidence)
 

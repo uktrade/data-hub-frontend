@@ -54,7 +54,10 @@ describe('transformCompanyToListItem', () => {
     })
 
     it('should return a url to view the company', () => {
-      expect(listItem).to.have.property('url', urls.companies.detail(companyData.id))
+      expect(listItem).to.have.property(
+        'url',
+        urls.companies.detail(companyData.id)
+      )
     })
 
     it('should return a modifed on property', () => {
@@ -72,26 +75,32 @@ describe('transformCompanyToListItem', () => {
     })
 
     it('should return the business sector for the company', () => {
-      expect(listItem.meta).to.containSubset([{
-        label: 'Sector',
-        value: 'ICT',
-      }])
+      expect(listItem.meta).to.containSubset([
+        {
+          label: 'Sector',
+          value: 'ICT',
+        },
+      ])
     })
 
     it('should return the country', () => {
-      expect(listItem.meta).to.containSubset([{
-        label: 'Country',
-        type: 'badge',
-        value: 'United Kingdom',
-      }])
+      expect(listItem.meta).to.containSubset([
+        {
+          label: 'Country',
+          type: 'badge',
+          value: 'United Kingdom',
+        },
+      ])
     })
 
     it('should return the UK region', () => {
-      expect(listItem.meta).to.containSubset([{
-        label: 'UK region',
-        type: 'badge',
-        value: 'Yorkshire and The Humber',
-      }])
+      expect(listItem.meta).to.containSubset([
+        {
+          label: 'UK region',
+          type: 'badge',
+          value: 'Yorkshire and The Humber',
+        },
+      ])
     })
   })
 
@@ -104,26 +113,32 @@ describe('transformCompanyToListItem', () => {
     })
 
     it('should return the business sector for the company', () => {
-      expect(listItem.meta).to.containSubset([{
-        label: 'Sector',
-        value: 'ICT',
-      }])
+      expect(listItem.meta).to.containSubset([
+        {
+          label: 'Sector',
+          value: 'ICT',
+        },
+      ])
     })
 
     it('should return the country', () => {
-      expect(listItem.meta).to.containSubset([{
-        label: 'Country',
-        type: 'badge',
-        value: 'United Kingdom',
-      }])
+      expect(listItem.meta).to.containSubset([
+        {
+          label: 'Country',
+          type: 'badge',
+          value: 'United Kingdom',
+        },
+      ])
     })
 
     it('should not return the region', () => {
-      expect(listItem.meta).to.not.containSubset([{
-        label: 'UK region',
-        type: 'badge',
-        value: 'Yorkshire and The Humber',
-      }])
+      expect(listItem.meta).to.not.containSubset([
+        {
+          label: 'UK region',
+          type: 'badge',
+          value: 'Yorkshire and The Humber',
+        },
+      ])
     })
   })
 
@@ -146,21 +161,23 @@ describe('transformCompanyToListItem', () => {
     })
 
     it('should include the address in the result', () => {
-      expect(listItem.meta).to.containSubset([{
-        label: 'Address',
-        type: 'address',
-        value: {
-          line_1: 'line 1',
-          line_2: null,
-          town: 'town',
-          county: null,
-          postcode: 'postcode',
-          country: {
-            id: '80756b9a-5d95-e211-a939-e4115bead28a',
-            name: 'United Kingdom',
+      expect(listItem.meta).to.containSubset([
+        {
+          label: 'Address',
+          type: 'address',
+          value: {
+            line_1: 'line 1',
+            line_2: null,
+            town: 'town',
+            county: null,
+            postcode: 'postcode',
+            country: {
+              id: '80756b9a-5d95-e211-a939-e4115bead28a',
+              name: 'United Kingdom',
+            },
           },
         },
-      }])
+      ])
     })
   })
 
@@ -171,11 +188,13 @@ describe('transformCompanyToListItem', () => {
       })
 
       it('should not include the headquarter info in the result', () => {
-        expect(listItem.meta).to.containSubset([{
-          label: 'Headquarter type',
-          type: 'badge',
-          value: 'European HQ',
-        }])
+        expect(listItem.meta).to.containSubset([
+          {
+            label: 'Headquarter type',
+            type: 'badge',
+            value: 'European HQ',
+          },
+        ])
       })
     })
 
@@ -188,11 +207,13 @@ describe('transformCompanyToListItem', () => {
       })
 
       it('should not include the headquarter info in the result', () => {
-        expect(listItem.meta).to.not.containSubset([{
-          label: 'Headquarter type',
-          type: 'badge',
-          value: 'European HQ',
-        }])
+        expect(listItem.meta).to.not.containSubset([
+          {
+            label: 'Headquarter type',
+            type: 'badge',
+            value: 'European HQ',
+          },
+        ])
       })
     })
   })
@@ -204,11 +225,13 @@ describe('transformCompanyToListItem', () => {
       })
 
       it('should include the headquarter info in the result', () => {
-        expect(listItem.meta).to.containSubset([{
-          label: 'Global HQ',
-          value: 'Mars Exports Ltd',
-          url: '/companies/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd',
-        }])
+        expect(listItem.meta).to.containSubset([
+          {
+            label: 'Global HQ',
+            value: 'Mars Exports Ltd',
+            url: '/companies/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd',
+          },
+        ])
       })
     })
 
@@ -221,11 +244,13 @@ describe('transformCompanyToListItem', () => {
       })
 
       it('should not include the headquarter info in the result', () => {
-        expect(listItem.meta).to.not.containSubset([{
-          label: 'Global HQ',
-          value: 'Mars Exports Ltd',
-          url: '/companies/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd',
-        }])
+        expect(listItem.meta).to.not.containSubset([
+          {
+            label: 'Global HQ',
+            value: 'Mars Exports Ltd',
+            url: '/companies/b2c34b41-1d5a-4b4b-9249-7c53ff2868dd',
+          },
+        ])
       })
     })
   })
@@ -236,7 +261,10 @@ describe('transformCompanyToListItem', () => {
     })
 
     it('should not set a trading name meta item', () => {
-      const tradingNameMetaItem = find(listItem.meta, ({ label }) => label === 'Trading names')
+      const tradingNameMetaItem = find(
+        listItem.meta,
+        ({ label }) => label === 'Trading names'
+      )
       expect(tradingNameMetaItem).to.not.exist
     })
   })
@@ -245,12 +273,15 @@ describe('transformCompanyToListItem', () => {
     before(() => {
       listItem = transformCompanyToListItem({
         ...companyData,
-        trading_names: [ 'trading name' ],
+        trading_names: ['trading name'],
       })
     })
 
     it('should not set a trading name meta item', () => {
-      const tradingNameMetaItem = find(listItem.meta, ({ label }) => label === 'Trading names')
+      const tradingNameMetaItem = find(
+        listItem.meta,
+        ({ label }) => label === 'Trading names'
+      )
       expect(tradingNameMetaItem).to.exist
     })
   })
@@ -277,11 +308,13 @@ describe('transformCompanyToListItem', () => {
           ...companyData,
           latest_interaction_date: date,
         })
-        expect(listItem.meta).to.containSubset([{
-          label: 'Last interaction date',
-          type: 'date',
-          value: date,
-        }])
+        expect(listItem.meta).to.containSubset([
+          {
+            label: 'Last interaction date',
+            type: 'date',
+            value: date,
+          },
+        ])
       })
     })
 
@@ -291,10 +324,12 @@ describe('transformCompanyToListItem', () => {
           ...companyData,
           latest_interaction_date: null,
         })
-        expect(listItem.meta).to.not.containSubset([{
-          label: 'Last interaction date',
-          type: 'date',
-        }])
+        expect(listItem.meta).to.not.containSubset([
+          {
+            label: 'Last interaction date',
+            type: 'date',
+          },
+        ])
       })
     })
   })

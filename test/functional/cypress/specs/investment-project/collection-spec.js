@@ -1,5 +1,8 @@
 const selectors = require('../../../../selectors')
-const { assertTabbedLocalNav, assertBreadcrumbs } = require('../../support/assertions')
+const {
+  assertTabbedLocalNav,
+  assertBreadcrumbs,
+} = require('../../support/assertions')
 const { dashboard, investments } = require('../../../../../src/lib/urls')
 
 describe('Investment Project Collections', () => {
@@ -9,9 +12,9 @@ describe('Investment Project Collections', () => {
 
   it('should render breadcrumbs', () => {
     assertBreadcrumbs({
-      'Home': dashboard(),
-      'Investments': investments.index(),
-      'Projects': null,
+      Home: dashboard(),
+      Investments: investments.index(),
+      Projects: null,
     })
   })
 
@@ -21,13 +24,18 @@ describe('Investment Project Collections', () => {
   })
 
   it('should display a list of investments', () => {
-    cy.get(selectors.entityCollection.entities).children().should('have.length', 10)
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 10)
   })
 
   it('should contain investment badge', () => {
     cy.get(selectors.entityCollection.entityBadge(1)).should('contain', 'Won')
     cy.get(selectors.entityCollection.entityBadge(1)).should('contain', 'FDI')
-    cy.get(selectors.entityCollection.entityBadge(1)).should('contain', 'ongoing')
+    cy.get(selectors.entityCollection.entityBadge(1)).should(
+      'contain',
+      'ongoing'
+    )
   })
 
   it('should contain investor and sector', () => {

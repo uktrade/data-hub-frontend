@@ -3,7 +3,9 @@ const proxyquire = require('proxyquire')
 describe('Search transformers', () => {
   beforeEach(() => {
     this.transformApiResponseToCollectionInnerStub = sinon.stub().returns()
-    this.transformApiResponseToCollectionStub = sinon.stub().returns(this.transformApiResponseToCollectionInnerStub)
+    this.transformApiResponseToCollectionStub = sinon
+      .stub()
+      .returns(this.transformApiResponseToCollectionInnerStub)
     this.buildSearchAggregationStub = sinon.stub()
 
     this.responseMock = {
@@ -11,14 +13,18 @@ describe('Search transformers', () => {
       entityDetails: [],
     }
 
-    this.transformApiResponseToSearchCollection = proxyquire('../api-response-to-search-collection', {
-      '../../api/transformers': {
-        transformApiResponseToCollection: this.transformApiResponseToCollectionStub,
-      },
-      '../builders': {
-        buildSearchAggregation: this.buildSearchAggregationStub,
-      },
-    })
+    this.transformApiResponseToSearchCollection = proxyquire(
+      '../api-response-to-search-collection',
+      {
+        '../../api/transformers': {
+          transformApiResponseToCollection: this
+            .transformApiResponseToCollectionStub,
+        },
+        '../builders': {
+          buildSearchAggregation: this.buildSearchAggregationStub,
+        },
+      }
+    )
   })
 
   describe('#transformApiResponseToSearchCollection', () => {
@@ -31,17 +37,25 @@ describe('Search transformers', () => {
     })
 
     it('should return collection with response transformed into a collection object', () => {
-      const actual = this.transformApiResponseToSearchCollection()(this.responseMock)
+      const actual = this.transformApiResponseToSearchCollection()(
+        this.responseMock
+      )
 
-      expect(this.transformApiResponseToCollectionInnerStub).to.be.calledWith(this.responseMock)
+      expect(this.transformApiResponseToCollectionInnerStub).to.be.calledWith(
+        this.responseMock
+      )
       expect(actual).to.have.property('highlightTerm', undefined)
       expect(actual).to.have.property('aggregations', undefined)
     })
 
     it('should call transformApiResponseToCollection transformer returning augmented collection object', () => {
-      const actual = this.transformApiResponseToSearchCollection()(this.responseMock)
+      const actual = this.transformApiResponseToSearchCollection()(
+        this.responseMock
+      )
 
-      expect(this.transformApiResponseToCollectionInnerStub).to.be.calledWith(this.responseMock)
+      expect(this.transformApiResponseToCollectionInnerStub).to.be.calledWith(
+        this.responseMock
+      )
       expect(actual).to.have.property('highlightTerm', undefined)
       expect(actual).to.have.property('aggregations', undefined)
     })
@@ -52,8 +66,12 @@ describe('Search transformers', () => {
       }
       this.transformApiResponseToSearchCollection(options)(this.responseMock)
 
-      expect(this.transformApiResponseToCollectionInnerStub).to.be.calledWith(this.responseMock)
-      expect(this.transformApiResponseToCollectionStub).to.be.calledWith(options)
+      expect(this.transformApiResponseToCollectionInnerStub).to.be.calledWith(
+        this.responseMock
+      )
+      expect(this.transformApiResponseToCollectionStub).to.be.calledWith(
+        options
+      )
     })
 
     it('should call transformApiResponseToCollection transformer with given transformers', () => {
@@ -67,16 +85,27 @@ describe('Search transformers', () => {
         secondItemTransformerSpy
       )(this.responseMock)
 
-      expect(this.transformApiResponseToCollectionInnerStub).to.be.calledWith(this.responseMock)
-      expect(this.transformApiResponseToCollectionStub).to.be.calledWith({}, firstItemTransformerSpy, secondItemTransformerSpy)
+      expect(this.transformApiResponseToCollectionInnerStub).to.be.calledWith(
+        this.responseMock
+      )
+      expect(this.transformApiResponseToCollectionStub).to.be.calledWith(
+        {},
+        firstItemTransformerSpy,
+        secondItemTransformerSpy
+      )
     })
 
     it('should return a collection object with aggregation', () => {
       const aggregationsMock = [{ count: 5, entity: 'contact' }]
       const itemsMock = [{ a: 'A', b: 'B' }]
       this.buildSearchAggregationStub.returns(aggregationsMock)
-      this.transformApiResponseToCollectionInnerStub.returns({ count: 2, items: itemsMock })
-      const actual = this.transformApiResponseToSearchCollection()(this.responseMock)
+      this.transformApiResponseToCollectionInnerStub.returns({
+        count: 2,
+        items: itemsMock,
+      })
+      const actual = this.transformApiResponseToSearchCollection()(
+        this.responseMock
+      )
 
       expect(actual).to.have.property('count', 2)
       expect(actual).to.have.property('aggregations', aggregationsMock)
@@ -86,8 +115,13 @@ describe('Search transformers', () => {
     it('should return a collection object with highlight term', () => {
       const options = { searchTerm: 'loop' }
       const itemsMock = [{ a: 'A', b: 'B' }]
-      this.transformApiResponseToCollectionInnerStub.returns({ count: 2, items: itemsMock })
-      const actual = this.transformApiResponseToSearchCollection(options)(this.responseMock)
+      this.transformApiResponseToCollectionInnerStub.returns({
+        count: 2,
+        items: itemsMock,
+      })
+      const actual = this.transformApiResponseToSearchCollection(options)(
+        this.responseMock
+      )
 
       expect(actual).to.have.property('count', 2)
       expect(actual).to.have.property('highlightTerm', options.searchTerm)

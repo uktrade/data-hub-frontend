@@ -9,11 +9,16 @@ describe('Company OMIS Collections', () => {
 
   it('should display a list of orders with the total result', () => {
     cy.get(selectors.entityCollection.collectionResult).should('contain', 264)
-    cy.get(selectors.entityCollection.entities).children().should('have.length', 100)
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 100)
   })
 
   it('should display total value of orders', () => {
-    cy.get(selectors.entityCollection.totalValue).should('contain', '£12,803.29')
+    cy.get(selectors.entityCollection.totalValue).should(
+      'contain',
+      '£12,803.29'
+    )
   })
 
   it('should contain status and country badge', () => {

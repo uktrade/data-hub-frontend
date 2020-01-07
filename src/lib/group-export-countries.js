@@ -5,7 +5,7 @@ module.exports = (countries) => {
 
   if (Array.isArray(countries)) {
     EXPORT_INTEREST_STATUS_VALUES.forEach((status) => {
-      buckets[ status ] = []
+      buckets[status] = []
     }, {})
 
     countries.forEach((item) => {

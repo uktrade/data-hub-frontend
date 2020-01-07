@@ -3,9 +3,9 @@ module.exports = {
     macroName: 'TextField',
     type: 'textarea',
     name: 'details',
-    hint: 'Add the reason you\'re abandoning this proposition',
+    hint: "Add the reason you're abandoning this proposition",
   },
-  adviser (advisers) {
+  adviser(advisers) {
     return {
       macroName: 'MultipleChoiceField',
       name: 'adviser',
@@ -17,20 +17,22 @@ module.exports = {
     macroName: 'TextField',
     type: 'textarea',
     name: 'details',
-    hint: 'Add the document\'s Sharepoint URL, e.g. http://your-sharepoint-url~',
+    hint: "Add the document's Sharepoint URL, e.g. http://your-sharepoint-url~",
   },
   multipleDocumentUpload: {
     macroName: 'AddAnother',
     buttonName: 'add_item',
     label: 'Filename',
     name: 'filename',
-    children: [{
-      macroName: 'TextField',
-      type: 'file',
-      label: 'Filename',
-      name: 'filename',
-      isLabelHidden: true,
-    }],
+    children: [
+      {
+        macroName: 'TextField',
+        type: 'file',
+        label: 'Filename',
+        name: 'filename',
+        isLabelHidden: true,
+      },
+    ],
   },
   documentUpload: {
     macroName: 'TextField',

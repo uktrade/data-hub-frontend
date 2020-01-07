@@ -1,5 +1,4 @@
-
-function expectHiddenField (rootElement, name, value) {
+function expectHiddenField(rootElement, name, value) {
   const input = rootElement.querySelector(`input[type=hidden][name=${name}]`)
   expect(input).to.not.be.null
   if (value) {
@@ -9,7 +8,7 @@ function expectHiddenField (rootElement, name, value) {
 
 // TODO: Temporary solution to fix tests for new form refactor
 // (based on expectTextFieldWithLabel)
-function expectField (rootElement, name, label, value) {
+function expectField(rootElement, name, label, value) {
   const wrapper = rootElement.querySelector(`#group-field-${name}`)
   expect(wrapper).to.not.be.null
   const labelElement = wrapper.querySelector('label')
@@ -25,7 +24,7 @@ function expectField (rootElement, name, label, value) {
 
 // TODO: Temporary solution to fix tests for new form refactor
 // (based on expectRadioWithLabel)
-function expectRadioField (rootElement, name, label, value) {
+function expectRadioField(rootElement, name, label, value) {
   const wrapper = rootElement.querySelector(`#group-field-${name}`)
   expect(wrapper).to.not.be.null
   const selectedInput = wrapper.querySelector('input[type=radio]:checked')
@@ -35,7 +34,7 @@ function expectRadioField (rootElement, name, label, value) {
   expect(legend.textContent).to.include(label)
 }
 
-function expectTextFieldWithLabel (rootElement, name, label, value) {
+function expectTextFieldWithLabel(rootElement, name, label, value) {
   const wrapper = rootElement.querySelector(`div#${name}-wrapper`)
   expect(wrapper).to.not.be.null
   const labelElement = wrapper.querySelector('label')
@@ -49,7 +48,7 @@ function expectTextFieldWithLabel (rootElement, name, label, value) {
   }
 }
 
-function expectTextAreaWithLabel (rootElement, name, label) {
+function expectTextAreaWithLabel(rootElement, name, label) {
   const wrapper = rootElement.querySelector(`div#${name}-wrapper`)
   expect(wrapper).to.not.be.null
   const labelElement = wrapper.querySelector('label')
@@ -59,7 +58,7 @@ function expectTextAreaWithLabel (rootElement, name, label) {
   expect(input).to.not.be.null
 }
 
-function expectDateFieldWithLabel (rootElement, name, label) {
+function expectDateFieldWithLabel(rootElement, name, label) {
   const wrapper = rootElement.querySelector(`div#${name}-wrapper`)
   expect(wrapper).to.not.be.null
 
@@ -70,12 +69,15 @@ function expectDateFieldWithLabel (rootElement, name, label) {
   expect(rootElement.querySelector(`label[for=${name}_day]`)).to.not.be.null
   expect(rootElement.querySelector(`label[for=${name}_month]`)).to.not.be.null
   expect(rootElement.querySelector(`label[for=${name}_year]`)).to.not.be.null
-  expect(rootElement.querySelector(`input[type=text][name=${name}_day]`)).to.not.be.null
-  expect(rootElement.querySelector(`input[type=text][name=${name}_month]`)).to.not.be.null
-  expect(rootElement.querySelector(`input[type=text][name=${name}_year]`)).to.not.be.null
+  expect(rootElement.querySelector(`input[type=text][name=${name}_day]`)).to.not
+    .be.null
+  expect(rootElement.querySelector(`input[type=text][name=${name}_month]`)).to
+    .not.be.null
+  expect(rootElement.querySelector(`input[type=text][name=${name}_year]`)).to
+    .not.be.null
 }
 
-function expectDropdownWithLabel (rootElement, name, label, value) {
+function expectDropdownWithLabel(rootElement, name, label, value) {
   const wrapper = rootElement.querySelector(`div#${name}-wrapper`)
   expect(wrapper).to.not.be.null
   const labelElement = wrapper.querySelector('label')
@@ -88,7 +90,7 @@ function expectDropdownWithLabel (rootElement, name, label, value) {
   }
 }
 
-function expectRadioWithLabel (rootElement, name, label, value) {
+function expectRadioWithLabel(rootElement, name, label, value) {
   const wrapper = rootElement.querySelector(`#${name}-wrapper`)
   expect(wrapper).to.not.be.null
   const selectedLabel = wrapper.querySelector('.selected')

@@ -1,31 +1,37 @@
 const { addClass, removeClass } = require('../lib/helpers')
 
-function getControlLabel (control) {
-  if (control.type !== 'checkbox') { return }
+function getControlLabel(control) {
+  if (control.type !== 'checkbox') {
+    return
+  }
 
   const labelEl = control.parentElement
 
-  if (labelEl.className.indexOf('selection-button-checkbox') < 0) { return }
+  if (labelEl.className.indexOf('selection-button-checkbox') < 0) {
+    return
+  }
 
   return labelEl
 }
 
 const LabelSelect = {
-  init () {
+  init() {
     this.bindEvents()
   },
 
-  bindEvents () {
+  bindEvents() {
     document.addEventListener('change', this.onChangeHandler)
     document.addEventListener('focus', this.onFocusHandler, true)
   },
 
-  onChangeHandler (evt) {
+  onChangeHandler(evt) {
     const target = evt.target || evt.srcElement
     const labelEl = getControlLabel(target)
     const selectedClassName = 'selected'
 
-    if (!labelEl) { return }
+    if (!labelEl) {
+      return
+    }
 
     if (target.checked) {
       addClass(labelEl, selectedClassName)
@@ -34,16 +40,20 @@ const LabelSelect = {
     }
   },
 
-  onFocusHandler (evt) {
+  onFocusHandler(evt) {
     const target = evt.target || evt.srcElement
     const focusedEl = getControlLabel(target)
     const focusedClassName = 'focused'
 
-    if (!focusedEl) { return }
+    if (!focusedEl) {
+      return
+    }
 
     addClass(focusedEl, focusedClassName)
 
-    target.addEventListener('blur', () => removeClass(focusedEl, focusedClassName))
+    target.addEventListener('blur', () =>
+      removeClass(focusedEl, focusedClassName)
+    )
   },
 }
 

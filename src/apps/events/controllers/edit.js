@@ -9,7 +9,7 @@ const { filterActiveAdvisers } = require('../../adviser/filters')
 const { getOptions } = require('../../../lib/options')
 const { transformObjectToOption } = require('../../transformers')
 
-const filterServiceNames = services => {
+const filterServiceNames = (services) => {
   if (!services) return
 
   const excludedServiceStrings = [
@@ -17,21 +17,20 @@ const filterServiceNames = services => {
     'A Specific Service',
   ]
 
-  const filteredServiceNames = services
-    .map(service => {
-      const splitServiceName = service.label.split(' : ')
-      const name =
-        splitServiceName[1] &&
-        excludedServiceStrings.includes(splitServiceName[0])
-          ? splitServiceName[1]
-          : service.label
-      return { ...service, label: name }
-    })
+  const filteredServiceNames = services.map((service) => {
+    const splitServiceName = service.label.split(' : ')
+    const name =
+      splitServiceName[1] &&
+      excludedServiceStrings.includes(splitServiceName[0])
+        ? splitServiceName[1]
+        : service.label
+    return { ...service, label: name }
+  })
 
   return filteredServiceNames
 }
 
-async function getEditOptions (token, createdOn, currentAdviser) {
+async function getEditOptions(token, createdOn, currentAdviser) {
   const advisers = await getAdvisers(token)
   const activeAdvisers = filterActiveAdvisers({
     advisers: advisers.results,
@@ -55,23 +54,29 @@ async function getEditOptions (token, createdOn, currentAdviser) {
   }
 }
 
-async function renderEditPage (req, res, next) {
+async function renderEditPage(req, res, next) {
   try {
     const eventData = transformEventResponseToFormBody(res.locals.event)
 
     const eventId = get(eventData, 'id', '')
     const eventName = get(eventData, 'name')
-    const lead_team = eventData.lead_team || get(req, 'session.user.dit_team.id')
-    const mergedData = pickBy(merge({}, eventData, { lead_team }, res.locals.requestBody))
+    const lead_team =
+      eventData.lead_team || get(req, 'session.user.dit_team.id')
+    const mergedData = pickBy(
+      merge({}, eventData, { lead_team }, res.locals.requestBody)
+    )
     const currentAdviser = get(eventData, 'organiser')
-    const options = await getEditOptions(req.session.token, mergedData.created_on, currentAdviser)
+    const options = await getEditOptions(
+      req.session.token,
+      mergedData.created_on,
+      currentAdviser
+    )
 
-    const eventForm =
-      buildFormWithStateAndErrors(
-        eventFormConfig(assign({}, { eventId }, options)),
-        mergedData,
-        get(res.locals, 'form.errors.messages'),
-      )
+    const eventForm = buildFormWithStateAndErrors(
+      eventFormConfig(assign({}, { eventId }, options)),
+      mergedData,
+      get(res.locals, 'form.errors.messages')
+    )
 
     if (eventName) {
       res.breadcrumb(eventName, `/events/${eventId}`)

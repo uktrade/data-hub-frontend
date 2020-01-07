@@ -7,7 +7,7 @@ const { get, set, isUndefined } = require('lodash')
 const { saveSession } = require('./../../lib/session-helper')
 const config = require('../../config')
 
-function getAccessToken (code) {
+function getAccessToken(code) {
   const options = {
     method: 'POST',
     url: config.oauth.tokenFetchUrl,
@@ -24,7 +24,7 @@ function getAccessToken (code) {
   return request(options)
 }
 
-function handleMissingState (req, res, next) {
+function handleMissingState(req, res, next) {
   const sessionOAuthState = get(req.session, 'oauth.state')
 
   if (isUndefined(sessionOAuthState)) {
@@ -34,10 +34,10 @@ function handleMissingState (req, res, next) {
   next()
 }
 
-async function getSSOUserProfile (token) {
+async function getSSOUserProfile(token) {
   const options = {
     url: config.oauth.userProfileUrl,
-    headers: { 'Authorization': 'Bearer ' + token },
+    headers: { Authorization: 'Bearer ' + token },
     json: true,
   }
 
@@ -49,7 +49,7 @@ async function getSSOUserProfile (token) {
   }
 }
 
-async function callbackOAuth (req, res, next) {
+async function callbackOAuth(req, res, next) {
   const errorQueryParam = get(req.query, 'error')
   const stateQueryParam = get(req.query, 'state')
   const sessionOAuthState = get(req.session, 'oauth.state')
@@ -71,7 +71,9 @@ async function callbackOAuth (req, res, next) {
 
   // Session state does not match query param state
   if (sessionOAuthState !== stateQueryParam) {
-    return next(Error('There has been an OAuth stateId mismatch sessionOAuthState'))
+    return next(
+      Error('There has been an OAuth stateId mismatch sessionOAuthState')
+    )
   }
 
   try {
@@ -86,7 +88,7 @@ async function callbackOAuth (req, res, next) {
   }
 }
 
-async function redirectOAuth (req, res, next) {
+async function redirectOAuth(req, res, next) {
   const stateId = get(req.session, 'oauth.state', uuid())
   const urlParams = {
     response_type: 'code',
@@ -117,14 +119,13 @@ async function redirectOAuth (req, res, next) {
   }
 }
 
-function renderHelpPage (req, res, next) {
-  return res
-    .render('oauth/views/help-page', {
-      heading: 'You don\'t have permission to access this service',
-    })
+function renderHelpPage(req, res, next) {
+  return res.render('oauth/views/help-page', {
+    heading: "You don't have permission to access this service",
+  })
 }
 
-function signOutOAuth (req, res) {
+function signOutOAuth(req, res) {
   req.session = null
   res.clearCookie('datahub.sid')
   res.redirect(config.oauth.logoutUrl)

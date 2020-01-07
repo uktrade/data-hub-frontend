@@ -2,7 +2,7 @@
 const { get, isNil } = require('lodash')
 const { format, isValid } = require('date-fns')
 
-function transformInteractionResponseToForm ({
+function transformInteractionResponseToForm({
   id,
   contacts,
   dit_participants,
@@ -25,15 +25,23 @@ function transformInteractionResponseToForm ({
 } = {}) {
   if (!id) return null
   const isValidDate = isValid(new Date(date))
-  const displayPolicyAreas = (policy_areas || []).map(policy_area => policy_area.id)
-  const displayPolicyTypes = (policy_issue_types || []).map(policy_type => policy_type.id)
-  const displayContactTypes = (contacts || []).map(contact => contact.id)
-  const displayDitParticipants = (dit_participants || []).map(ditParticipant => ditParticipant.adviser.id)
+  const displayPolicyAreas = (policy_areas || []).map(
+    (policy_area) => policy_area.id
+  )
+  const displayPolicyTypes = (policy_issue_types || []).map(
+    (policy_type) => policy_type.id
+  )
+  const displayContactTypes = (contacts || []).map((contact) => contact.id)
+  const displayDitParticipants = (dit_participants || []).map(
+    (ditParticipant) => ditParticipant.adviser.id
+  )
   const serviceAnswers = {}
 
   if (serviceAnswers.length) {
-    for (let [questionKey, questionValue] of Object.entries(service_answers)) {
-      for (let [answerKey] of Object.entries(questionValue)) {
+    for (const [questionKey, questionValue] of Object.entries(
+      service_answers
+    )) {
+      for (const [answerKey] of Object.entries(questionValue)) {
         serviceAnswers[questionKey] = answerKey
       }
     }
@@ -55,7 +63,9 @@ function transformInteractionResponseToForm ({
     policy_areas: displayPolicyAreas,
     policy_issue_types: displayPolicyTypes,
     policy_feedback_notes,
-    was_policy_feedback_provided: was_policy_feedback_provided ? 'true' : 'false',
+    was_policy_feedback_provided: was_policy_feedback_provided
+      ? 'true'
+      : 'false',
     date: {
       day: isValidDate ? format(date, 'DD') : '',
       month: isValidDate ? format(date, 'MM') : '',

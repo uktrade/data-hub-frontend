@@ -3,7 +3,7 @@ const { find, get } = require('lodash')
 
 const { ORDER_STATES } = require('./constants')
 
-function transformOrderToListItem ({
+function transformOrderToListItem({
   id,
   reference,
   status,
@@ -16,7 +16,9 @@ function transformOrderToListItem ({
   created_on,
   sector,
 } = {}) {
-  if (!id || !reference) { return }
+  if (!id || !reference) {
+    return
+  }
 
   const orderState = find(ORDER_STATES, { value: status })
 
@@ -76,7 +78,7 @@ function transformOrderToListItem ({
   return item
 }
 
-function transformOrderToTableItem ({
+function transformOrderToTableItem({
   id,
   reference,
   payment_due_date,
@@ -84,7 +86,9 @@ function transformOrderToTableItem ({
   subtotal_cost,
   total_cost,
 } = {}) {
-  if (!id || !reference) { return }
+  if (!id || !reference) {
+    return
+  }
 
   return {
     id,
@@ -96,7 +100,7 @@ function transformOrderToTableItem ({
   }
 }
 
-function transformPaymentToView ({
+function transformPaymentToView({
   reference,
   created_on,
   transaction_reference,
@@ -105,7 +109,9 @@ function transformPaymentToView ({
   method,
   received_on,
 } = {}) {
-  if (!reference) { return }
+  if (!reference) {
+    return
+  }
 
   return {
     reference,
@@ -118,23 +124,17 @@ function transformPaymentToView ({
   }
 }
 
-function transformSubscriberToView (currentUserId) {
-  return function ({
-    name,
-    id,
-    dit_team,
-  } = {}) {
-    if (!id) { return }
+function transformSubscriberToView(currentUserId) {
+  return function({ name, id, dit_team } = {}) {
+    if (!id) {
+      return
+    }
 
     const ukTeam = get(dit_team, 'uk_region.name')
     const teamLabel = ukTeam ? `, ${ukTeam}` : ''
     const youLabel = id === currentUserId ? ' (you)' : ''
 
-    return [
-      name,
-      teamLabel,
-      youLabel,
-    ].join('')
+    return [name, teamLabel, youLabel].join('')
   }
 }
 

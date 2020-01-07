@@ -17,9 +17,7 @@ describe('Apps middleware', () => {
       {
         path: 'third',
         label: 'Third',
-        permissions: [
-          'permission1',
-        ],
+        permissions: ['permission1'],
       },
       {
         path: 'fourth',
@@ -110,7 +108,11 @@ describe('Apps middleware', () => {
           },
         }
 
-        this.middleware.setLocalNav([mockNavItem])(reqMock, resMock, this.nextSpy)
+        this.middleware.setLocalNav([mockNavItem])(
+          reqMock,
+          resMock,
+          this.nextSpy
+        )
 
         expect(resMock.locals.localNavItems[0].url).to.equal(url)
         expect(resMock.locals.localNavItems[0].isActive).to.be.false
@@ -131,7 +133,11 @@ describe('Apps middleware', () => {
           },
         }
 
-        this.middleware.setLocalNav([mockNavItem], false)(reqMock, resMock, this.nextSpy)
+        this.middleware.setLocalNav([mockNavItem], false)(
+          reqMock,
+          resMock,
+          this.nextSpy
+        )
 
         expect(resMock.locals.localNavItems[0].url).to.equal(url)
         expect(resMock.locals.localNavItems[0].isActive).to.be.true
@@ -148,9 +154,7 @@ describe('Apps middleware', () => {
           locals: {
             CURRENT_PATH: '/sub-app/id/first',
             user: {
-              permissions: [
-                'permission1',
-              ],
+              permissions: ['permission1'],
             },
           },
         }
@@ -170,9 +174,7 @@ describe('Apps middleware', () => {
           {
             path: 'third',
             label: 'Third',
-            permissions: [
-              'permission1',
-            ],
+            permissions: ['permission1'],
             url: '/sub-app/id/third',
             isActive: false,
           },
@@ -237,24 +239,27 @@ describe('Apps middleware', () => {
   })
 
   describe('redirectToFirstNavItem()', () => {
-    const NAV_ITEMS = [{
-      path: 'first',
-      label: 'First',
-      url: '/base-url/id/first',
-    }, {
-      path: 'second',
-      label: 'Second',
-      url: '/base-url/id/second',
-    }]
+    const NAV_ITEMS = [
+      {
+        path: 'first',
+        label: 'First',
+        url: '/base-url/id/first',
+      },
+      {
+        path: 'second',
+        label: 'Second',
+        url: '/base-url/id/second',
+      },
+    ]
 
     it('should redirect to the first item', () => {
       const redirectMock = sinon.spy()
-      const resMock = this.reqMock = Object.assign({}, globalRes, {
+      const resMock = (this.reqMock = Object.assign({}, globalRes, {
         redirect: redirectMock,
         locals: {
           localNavItems: NAV_ITEMS,
         },
-      })
+      }))
 
       this.middleware.redirectToFirstNavItem({}, resMock)
 
@@ -280,7 +285,9 @@ describe('Apps middleware', () => {
       })(reqMock, this.resMock, this.nextSpy)
 
       expect(this.nextSpy).to.not.have.been.called
-      expect(this.resMock.redirect).to.be.calledWith('/sub-app?filter=apple&sortby=sweetness')
+      expect(this.resMock.redirect).to.be.calledWith(
+        '/sub-app?filter=apple&sortby=sweetness'
+      )
     })
 
     it('should not redirect if query contains properties', () => {
@@ -311,9 +318,7 @@ describe('Apps middleware', () => {
       this.resMock = {
         locals: {
           user: {
-            permissions: [
-              'permission1',
-            ],
+            permissions: ['permission1'],
           },
         },
       }
@@ -324,9 +329,7 @@ describe('Apps middleware', () => {
         this.middleware.handleRoutePermissions([
           {
             path: mockUrl,
-            permissions: [
-              'permission1',
-            ],
+            permissions: ['permission1'],
           },
         ])(this.reqMock, this.resMock, this.nextSpy)
       })
@@ -345,9 +348,7 @@ describe('Apps middleware', () => {
         this.middleware.handleRoutePermissions([
           {
             path: mockUrl,
-            permissions: [
-              'permission2',
-            ],
+            permissions: ['permission2'],
           },
         ])(this.reqMock, this.resMock, this.nextSpy)
       })
@@ -382,9 +383,11 @@ describe('Apps middleware', () => {
 
     context('when route permissions are undefined', () => {
       beforeEach(() => {
-        this.middleware.handleRoutePermissions([
-          { path: mockUrl },
-        ])(this.reqMock, this.resMock, this.nextSpy)
+        this.middleware.handleRoutePermissions([{ path: mockUrl }])(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should call next', () => {
@@ -405,9 +408,7 @@ describe('Apps middleware', () => {
       this.routes = [
         {
           path: mockPathname,
-          permissions: [
-            'permission1',
-          ],
+          permissions: ['permission1'],
         },
         {
           path: 'mock-url-other',
@@ -420,10 +421,7 @@ describe('Apps middleware', () => {
         this.isPermittedRoute = this.middleware.isPermittedRoute(
           mockPathname,
           this.routes,
-          [
-            'permission1',
-            'permission2',
-          ]
+          ['permission1', 'permission2']
         )
       })
 
@@ -437,10 +435,7 @@ describe('Apps middleware', () => {
         this.isPermittedRoute = this.middleware.isPermittedRoute(
           mockPathname,
           this.routes,
-          [
-            'permission5',
-            'permission7',
-          ]
+          ['permission5', 'permission7']
         )
       })
 
@@ -454,10 +449,7 @@ describe('Apps middleware', () => {
         this.isPermittedRoute = this.middleware.isPermittedRoute(
           mockPathnameOther,
           this.routes,
-          [
-            'permission5',
-            'permission7',
-          ]
+          ['permission5', 'permission7']
         )
       })
 

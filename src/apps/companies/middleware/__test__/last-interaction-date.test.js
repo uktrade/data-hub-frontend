@@ -6,8 +6,8 @@ const QUERY_PARAM = 'interaction_between'
 const START_DATE_PARAM = 'latest_interaction_date_before'
 const END_DATE_PARAM = 'latest_interaction_date_after'
 
-function getTimestamp (offset) {
-  let date = moment()
+function getTimestamp(offset) {
+  const date = moment()
 
   if (offset > 0) {
     date.subtract(offset, 'month')
@@ -16,7 +16,7 @@ function getTimestamp (offset) {
   return date.utc().format('YYYY-MM-DD')
 }
 
-function callMiddleware (value) {
+function callMiddleware(value) {
   const { reqMock, resMock, nextSpy } = buildMiddlewareParameters({
     requestBody: {
       [QUERY_PARAM]: value,
@@ -28,7 +28,7 @@ function callMiddleware (value) {
   return reqMock
 }
 
-function checkBody (reqMock, startValue, endValue) {
+function checkBody(reqMock, startValue, endValue) {
   expect(reqMock.body[QUERY_PARAM]).to.be.undefined
   expect(reqMock.body[START_DATE_PARAM]).to.equal(getTimestamp(startValue))
   expect(reqMock.body[END_DATE_PARAM]).to.equal(getTimestamp(endValue))

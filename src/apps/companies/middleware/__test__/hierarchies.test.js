@@ -26,18 +26,24 @@ describe('Company hierarchies middleware', () => {
         await setGlobalHQ(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          this.middlewareParameters.nextSpy
         )
       })
 
       it('should redirect', () => {
-        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
-        expect(this.middlewareParameters.resMock.redirect).to.be.calledWith(`/companies/${subsidiaryCompanyId}/business-details`)
+        expect(this.middlewareParameters.resMock.redirect).to.have.been
+          .calledOnce
+        expect(this.middlewareParameters.resMock.redirect).to.be.calledWith(
+          `/companies/${subsidiaryCompanyId}/business-details`
+        )
       })
 
       it('should call flash', () => {
         expect(this.middlewareParameters.reqMock.flash).to.have.been.calledOnce
-        expect(this.middlewareParameters.reqMock.flash).to.be.calledWith('success', 'You’ve linked the Global Headquarters')
+        expect(this.middlewareParameters.reqMock.flash).to.be.calledWith(
+          'success',
+          'You’ve linked the Global Headquarters'
+        )
       })
     })
 
@@ -59,15 +65,17 @@ describe('Company hierarchies middleware', () => {
         await setGlobalHQ(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          this.middlewareParameters.nextSpy
         )
       })
 
       it('should call next with an error', () => {
         expect(this.middlewareParameters.nextSpy).to.have.been.calledOnce
-        expect(this.middlewareParameters.nextSpy).to.be.calledWith(sinon.match({
-          message: '500 - "Error message"',
-        }))
+        expect(this.middlewareParameters.nextSpy).to.be.calledWith(
+          sinon.match({
+            message: '500 - "Error message"',
+          })
+        )
       })
 
       it('should not set a flash message', () => {
@@ -93,18 +101,24 @@ describe('Company hierarchies middleware', () => {
         await setGlobalHQ(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          this.middlewareParameters.nextSpy
         )
       })
 
       it('should redirect', () => {
-        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
-        expect(this.middlewareParameters.resMock.redirect).to.be.calledWith(`/companies/${subsidiaryCompanyId}/business-details`)
+        expect(this.middlewareParameters.resMock.redirect).to.have.been
+          .calledOnce
+        expect(this.middlewareParameters.resMock.redirect).to.be.calledWith(
+          `/companies/${subsidiaryCompanyId}/business-details`
+        )
       })
 
       it('should call flash', () => {
         expect(this.middlewareParameters.reqMock.flash).to.have.been.calledOnce
-        expect(this.middlewareParameters.reqMock.flash).to.be.calledWith('error', 'There has been an error')
+        expect(this.middlewareParameters.reqMock.flash).to.be.calledWith(
+          'error',
+          'There has been an error'
+        )
       })
     })
   })
@@ -127,18 +141,24 @@ describe('Company hierarchies middleware', () => {
         await removeGlobalHQ(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          this.middlewareParameters.nextSpy
         )
       })
 
       it('should redirect', () => {
-        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
-        expect(this.middlewareParameters.resMock.redirect).to.be.calledWith(`/companies/${subsidiaryCompanyId}/business-details`)
+        expect(this.middlewareParameters.resMock.redirect).to.have.been
+          .calledOnce
+        expect(this.middlewareParameters.resMock.redirect).to.be.calledWith(
+          `/companies/${subsidiaryCompanyId}/business-details`
+        )
       })
 
       it('should call flash', () => {
         expect(this.middlewareParameters.reqMock.flash).to.have.been.calledOnce
-        expect(this.middlewareParameters.reqMock.flash).to.be.calledWith('success', 'You’ve removed the link to Global Headquarters')
+        expect(this.middlewareParameters.reqMock.flash).to.be.calledWith(
+          'success',
+          'You’ve removed the link to Global Headquarters'
+        )
       })
     })
 
@@ -159,15 +179,17 @@ describe('Company hierarchies middleware', () => {
         await removeGlobalHQ(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          this.middlewareParameters.nextSpy
         )
       })
 
       it('should call next with an error', () => {
         expect(this.middlewareParameters.nextSpy).to.have.been.calledOnce
-        expect(this.middlewareParameters.nextSpy).to.be.calledWith(sinon.match({
-          message: '500 - "Error message"',
-        }))
+        expect(this.middlewareParameters.nextSpy).to.be.calledWith(
+          sinon.match({
+            message: '500 - "Error message"',
+          })
+        )
       })
 
       it('should not set a flash message', () => {
@@ -192,18 +214,24 @@ describe('Company hierarchies middleware', () => {
         await removeGlobalHQ(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          this.middlewareParameters.nextSpy
         )
       })
 
       it('should redirect', () => {
-        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
-        expect(this.middlewareParameters.resMock.redirect).to.be.calledWith(`/companies/${subsidiaryCompanyId}/business-details`)
+        expect(this.middlewareParameters.resMock.redirect).to.have.been
+          .calledOnce
+        expect(this.middlewareParameters.resMock.redirect).to.be.calledWith(
+          `/companies/${subsidiaryCompanyId}/business-details`
+        )
       })
 
       it('should call flash', () => {
         expect(this.middlewareParameters.reqMock.flash).to.have.been.calledOnce
-        expect(this.middlewareParameters.reqMock.flash).to.be.calledWith('error', 'There has been an error')
+        expect(this.middlewareParameters.reqMock.flash).to.be.calledWith(
+          'error',
+          'There has been an error'
+        )
       })
     })
   })
@@ -227,18 +255,24 @@ describe('Company hierarchies middleware', () => {
         await addSubsidiary(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          this.middlewareParameters.nextSpy
         )
       })
 
       it('should redirect', () => {
-        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
-        expect(this.middlewareParameters.resMock.redirect).to.be.calledWith(`/companies/${globalHeadquartersId}/subsidiaries`)
+        expect(this.middlewareParameters.resMock.redirect).to.have.been
+          .calledOnce
+        expect(this.middlewareParameters.resMock.redirect).to.be.calledWith(
+          `/companies/${globalHeadquartersId}/subsidiaries`
+        )
       })
 
       it('should call flash', () => {
         expect(this.middlewareParameters.reqMock.flash).to.have.been.calledOnce
-        expect(this.middlewareParameters.reqMock.flash).to.be.calledWith('success', 'You’ve linked the subsidiary')
+        expect(this.middlewareParameters.reqMock.flash).to.be.calledWith(
+          'success',
+          'You’ve linked the subsidiary'
+        )
       })
     })
 
@@ -260,15 +294,17 @@ describe('Company hierarchies middleware', () => {
         await addSubsidiary(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          this.middlewareParameters.nextSpy
         )
       })
 
       it('should call next with an error', () => {
         expect(this.middlewareParameters.nextSpy).to.have.been.calledOnce
-        expect(this.middlewareParameters.nextSpy).to.be.calledWith(sinon.match({
-          message: '500 - "Error message"',
-        }))
+        expect(this.middlewareParameters.nextSpy).to.be.calledWith(
+          sinon.match({
+            message: '500 - "Error message"',
+          })
+        )
       })
 
       it('should not set a flash message', () => {
@@ -294,18 +330,24 @@ describe('Company hierarchies middleware', () => {
         await addSubsidiary(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          this.middlewareParameters.nextSpy
         )
       })
 
       it('should redirect', () => {
-        expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
-        expect(this.middlewareParameters.resMock.redirect).to.be.calledWith(`/companies/${globalHeadquartersId}/subsidiaries`)
+        expect(this.middlewareParameters.resMock.redirect).to.have.been
+          .calledOnce
+        expect(this.middlewareParameters.resMock.redirect).to.be.calledWith(
+          `/companies/${globalHeadquartersId}/subsidiaries`
+        )
       })
 
       it('should call flash', () => {
         expect(this.middlewareParameters.reqMock.flash).to.have.been.calledOnce
-        expect(this.middlewareParameters.reqMock.flash).to.be.calledWith('error', 'There has been an error')
+        expect(this.middlewareParameters.reqMock.flash).to.be.calledWith(
+          'error',
+          'There has been an error'
+        )
       })
     })
   })

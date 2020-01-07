@@ -7,14 +7,19 @@ const {
 
 const { isItaTierDAccount } = require('../../../lib/is-tier-type-company')
 
-async function getCompany (req, res, next, id) {
+async function getCompany(req, res, next, id) {
   try {
     const company = await getDitCompany(req.session.token, id)
     company.isItaTierDAccount = isItaTierDAccount(company)
-    company.hasAllocatedLeadIta = company.one_list_group_global_account_manager != null
-    company.hasManagedAccountDetails = company.one_list_group_tier && company.hasAllocatedLeadIta
-    company.isUltimate = !!company.is_global_ultimate && res.locals.features['companies-ultimate-hq']
-    company.isGlobalHQ = company.headquarter_type && company.headquarter_type.name === 'ghq'
+    company.hasAllocatedLeadIta =
+      company.one_list_group_global_account_manager != null
+    company.hasManagedAccountDetails =
+      company.one_list_group_tier && company.hasAllocatedLeadIta
+    company.isUltimate =
+      !!company.is_global_ultimate &&
+      res.locals.features['companies-ultimate-hq']
+    company.isGlobalHQ =
+      company.headquarter_type && company.headquarter_type.name === 'ghq'
 
     res.locals.company = company
     next()
@@ -23,7 +28,7 @@ async function getCompany (req, res, next, id) {
   }
 }
 
-async function setIsCompanyAlreadyAdded (req, res, next, id) {
+async function setIsCompanyAlreadyAdded(req, res, next, id) {
   let isCompanyAlreadyAdded = false
   try {
     await getDitCompanyFromList(req.session.token, id)
@@ -38,7 +43,10 @@ async function setIsCompanyAlreadyAdded (req, res, next, id) {
 const companyListActions = {
   add: async (req, res, next, companyId) => {
     await addDitCompanyToList(req.session.token, companyId)
-    req.flash('success', 'This company has been added to your list of companies. You can find this list on your Data Hub Home page. Only you can see this list.')
+    req.flash(
+      'success',
+      'This company has been added to your list of companies. You can find this list on your Data Hub Home page. Only you can see this list.'
+    )
   },
   remove: async (req, res, next, companyId) => {
     await removeDitCompanyFromList(req.session.token, companyId)
@@ -46,7 +54,7 @@ const companyListActions = {
   },
 }
 
-async function addCompanyOrRemoveFromList (req, res, next) {
+async function addCompanyOrRemoveFromList(req, res, next) {
   const companyId = res.locals.company.id
   try {
     await companyListActions[req.body.action](req, res, next, companyId)

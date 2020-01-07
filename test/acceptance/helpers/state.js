@@ -9,9 +9,17 @@ const { get, set, lowerCase, findKey } = require('lodash')
  * @param pageSection
  * @returns {Promise}
  */
-const storeRadioSubFieldValues = function (stateStore, subComponentName, componentSchema, pageSection) {
+const storeRadioSubFieldValues = function(
+  stateStore,
+  subComponentName,
+  componentSchema,
+  pageSection
+) {
   const subComponentTag = `@${subComponentName}`
-  const radioInputChoice = componentSchema.options[Math.floor((Math.random() * componentSchema.options.length))]
+  const radioInputChoice =
+    componentSchema.options[
+      Math.floor(Math.random() * componentSchema.options.length)
+    ]
 
   return new Promise((resolve) => {
     pageSection
@@ -44,18 +52,29 @@ const storeRadioSubFieldValues = function (stateStore, subComponentName, compone
  * @param pageSection
  * @returns {Promise}
  */
-const storeSelectSubFieldValues = function (stateStore, subComponentName, componentSchema, pageSection) {
+const storeSelectSubFieldValues = function(
+  stateStore,
+  subComponentName,
+  componentSchema,
+  pageSection
+) {
   const componentTag = `@${subComponentName}`
 
   return new Promise((resolve) => {
     pageSection
       .waitForElementVisible(componentTag)
       .getListOption(componentTag, (option) => {
-        const subFieldInputTag = findKey(componentSchema.values, (item) => item.value === lowerCase(option))
+        const subFieldInputTag = findKey(
+          componentSchema.values,
+          (item) => item.value === lowerCase(option)
+        )
         set(stateStore, subComponentName, option)
 
         if (subFieldInputTag) {
-          const subFieldInputType = get(componentSchema.values, `${subFieldInputTag}.inputType`)
+          const subFieldInputType = get(
+            componentSchema.values,
+            `${subFieldInputTag}.inputType`
+          )
 
           if (subFieldInputType === 'text') {
             set(stateStore, subFieldInputTag, faker.commerce.department())
@@ -84,7 +103,7 @@ const storeSelectSubFieldValues = function (stateStore, subComponentName, compon
  * @param pageSection
  * @returns {Promise}
  */
-const storeSelectValue = function (stateStore, subComponentName, pageSection) {
+const storeSelectValue = function(stateStore, subComponentName, pageSection) {
   const componentTag = `@${subComponentName}`
 
   return new Promise((resolve) => {

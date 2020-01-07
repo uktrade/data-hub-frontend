@@ -53,39 +53,45 @@ describe('#options', () => {
     })
   })
 
-  context('when asking for options for an existing record using disabled value', () => {
-    beforeEach(async () => {
-      this.options = await getOptions('1234', 'uk-region', {
-        currentValue: '2',
-        createdOn: today,
+  context(
+    'when asking for options for an existing record using disabled value',
+    () => {
+      beforeEach(async () => {
+        this.options = await getOptions('1234', 'uk-region', {
+          currentValue: '2',
+          createdOn: today,
+        })
       })
-    })
 
-    it('should return just active options', () => {
-      expect(this.options).to.deep.equal([
-        { label: 'r1', value: '1' },
-        { label: 'r2', value: '2' },
-        { label: 'r3', value: '3' },
-      ])
-    })
-  })
-
-  context('when asking for options for an existing record created before option disabled', () => {
-    beforeEach(async () => {
-      this.options = await getOptions('1234', 'uk-region', {
-        currentValue: '1',
-        createdOn: lastWeek,
+      it('should return just active options', () => {
+        expect(this.options).to.deep.equal([
+          { label: 'r1', value: '1' },
+          { label: 'r2', value: '2' },
+          { label: 'r3', value: '3' },
+        ])
       })
-    })
+    }
+  )
 
-    it('should return just active options', () => {
-      expect(this.options).to.deep.equal([
-        { label: 'r1', value: '1' },
-        { label: 'r2', value: '2' },
-        { label: 'r3', value: '3' },
-      ])
-    })
-  })
+  context(
+    'when asking for options for an existing record created before option disabled',
+    () => {
+      beforeEach(async () => {
+        this.options = await getOptions('1234', 'uk-region', {
+          currentValue: '1',
+          createdOn: lastWeek,
+        })
+      })
+
+      it('should return just active options', () => {
+        expect(this.options).to.deep.equal([
+          { label: 'r1', value: '1' },
+          { label: 'r2', value: '2' },
+          { label: 'r3', value: '3' },
+        ])
+      })
+    }
+  )
 
   context('when asking for all options for a filter form', () => {
     beforeEach(async () => {
@@ -152,8 +158,8 @@ describe('#options', () => {
           {
             label: 'Account Management',
             value: 'sv1',
-          }]
-        )
+          },
+        ])
       })
     })
   })
@@ -180,23 +186,27 @@ describe('#options', () => {
     })
   })
 
-  context('when a transformer is provided with transformWithoutMapping prop and non-mapping function', () => {
-    beforeEach(async () => {
-      this.options = await getOptions('1234', 'uk-region', {
-        includeDisabled: true,
-        transformWithoutMapping: true,
-        transformer: (options) => options.map(({ id, name }) => ({ value: id, text: name })),
+  context(
+    'when a transformer is provided with transformWithoutMapping prop and non-mapping function',
+    () => {
+      beforeEach(async () => {
+        this.options = await getOptions('1234', 'uk-region', {
+          includeDisabled: true,
+          transformWithoutMapping: true,
+          transformer: (options) =>
+            options.map(({ id, name }) => ({ value: id, text: name })),
+        })
       })
-    })
 
-    it('should transform the options without mapping', () => {
-      expect(this.options).to.deep.equal([
-        { text: 'r1', value: '1' },
-        { text: 'r3', value: '3' },
-        { text: 'r2', value: '2' },
-      ])
-    })
-  })
+      it('should transform the options without mapping', () => {
+        expect(this.options).to.deep.equal([
+          { text: 'r1', value: '1' },
+          { text: 'r3', value: '3' },
+          { text: 'r2', value: '2' },
+        ])
+      })
+    }
+  )
 
   context('when the options are sorted', () => {
     beforeEach(async () => {

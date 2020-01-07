@@ -1,26 +1,36 @@
 /* eslint-disable camelcase */
-const { assign, castArray, get, isEmpty, isPlainObject, mapValues, map } = require('lodash')
+const {
+  assign,
+  castArray,
+  get,
+  isEmpty,
+  isPlainObject,
+  mapValues,
+  map,
+} = require('lodash')
 const format = require('date-fns/format')
 const moment = require('moment')
 
 const { getInvestmentTypeDetails } = require('./shared')
 const { transformDateObjectToDateString } = require('../../transformers')
 
-function transformToApi (body) {
-  if (!isPlainObject(body)) { return }
+function transformToApi(body) {
+  if (!isPlainObject(body)) {
+    return
+  }
 
   const schema = {
-    'client_relationship_manager': Object,
-    'referral_source_adviser': Object,
-    'referral_source_activity': Object,
-    'referral_source_activity_marketing': Object,
-    'referral_source_activity_website': Object,
-    'investor_company': Object,
-    'investment_type': Object,
-    'fdi_type': Object,
-    'sector': Object,
-    'client_contacts': Array,
-    'business_activities': Array,
+    client_relationship_manager: Object,
+    referral_source_adviser: Object,
+    referral_source_activity: Object,
+    referral_source_activity_marketing: Object,
+    referral_source_activity_website: Object,
+    investor_company: Object,
+    investment_type: Object,
+    fdi_type: Object,
+    sector: Object,
+    client_contacts: Array,
+    business_activities: Array,
   }
 
   const relationshipMgr = body.is_relationship_manager
@@ -42,7 +52,7 @@ function transformToApi (body) {
 
     if (type === Array) {
       if (Array.isArray(value)) {
-        return value.map(item => {
+        return value.map((item) => {
           return { id: item }
         })
       }
@@ -62,32 +72,36 @@ function transformToApi (body) {
   } else {
     formatted.estimated_land_date = null
   }
-  formatted.actual_land_date = transformDateObjectToDateString('actual_land_date')(body)
+  formatted.actual_land_date = transformDateObjectToDateString(
+    'actual_land_date'
+  )(body)
 
   return assign({}, body, formatted)
 }
 
-function transformFromApi (body) {
-  if (!isPlainObject(body)) { return }
+function transformFromApi(body) {
+  if (!isPlainObject(body)) {
+    return
+  }
 
   const schema = {
-    'client_relationship_manager': String,
-    'referral_source_adviser': String,
-    'referral_source_activity': String,
-    'referral_source_activity_marketing': String,
-    'referral_source_activity_website': String,
-    'investor_company': String,
-    'investment_type': String,
-    'fdi_type': String,
-    'sector': String,
-    'client_contacts': Array,
-    'business_activities': Array,
+    client_relationship_manager: String,
+    referral_source_adviser: String,
+    referral_source_activity: String,
+    referral_source_activity_marketing: String,
+    referral_source_activity_website: String,
+    investor_company: String,
+    investment_type: String,
+    fdi_type: String,
+    sector: String,
+    client_contacts: Array,
+    business_activities: Array,
   }
 
   const formatted = mapValues(schema, (type, key) => {
     if (type === Array) {
       const items = get(body, key, [])
-      const ids = items.map(item => item.id)
+      const ids = items.map((item) => item.id)
       return ids
     } else if (type === Boolean) {
       const value = get(body, key, '')
@@ -106,7 +120,7 @@ function transformFromApi (body) {
   return assign({}, body, formatted)
 }
 
-function transformInvestmentForView ({
+function transformInvestmentForView({
   business_activities,
   other_business_activity,
   investment_type,
@@ -122,7 +136,7 @@ function transformInvestmentForView ({
   estimated_land_date,
   actual_land_date,
 } = {}) {
-  function transformClientContacts (contacts) {
+  function transformClientContacts(contacts) {
     return map(contacts, ({ name, id }) => {
       return {
         name,
@@ -130,35 +144,45 @@ function transformInvestmentForView ({
       }
     })[0]
   }
-  const businessActivities = castArray(business_activities).map(i => i.name)
+  const businessActivities = castArray(business_activities).map((i) => i.name)
   if (!isEmpty(other_business_activity)) {
     businessActivities.push(other_business_activity)
   }
 
   return {
-    investor_company: isPlainObject(investor_company) ? {
-      name: get(investor_company, 'name'),
-      url: `/companies/${investor_company.id}`,
-    } : null,
+    investor_company: isPlainObject(investor_company)
+      ? {
+          name: get(investor_company, 'name'),
+          url: `/companies/${investor_company.id}`,
+        }
+      : null,
     investment_type: getInvestmentTypeDetails(investment_type, fdi_type),
     sector,
     business_activities: businessActivities.join(', '),
-    client_contacts: !isEmpty(client_contacts) ? transformClientContacts(client_contacts) : null,
+    client_contacts: !isEmpty(client_contacts)
+      ? transformClientContacts(client_contacts)
+      : null,
     description,
     anonymous_description,
     investor_type,
     level_of_involvement,
     specific_programme,
-    estimated_land_date: !isEmpty(estimated_land_date) ? moment(estimated_land_date, 'YYYY-MM-DD').format('MMMM YYYY') : null,
-    actual_land_date: !isEmpty(actual_land_date) ? {
-      type: 'date',
-      name: actual_land_date,
-    } : null,
+    estimated_land_date: !isEmpty(estimated_land_date)
+      ? moment(estimated_land_date, 'YYYY-MM-DD').format('MMMM YYYY')
+      : null,
+    actual_land_date: !isEmpty(actual_land_date)
+      ? {
+          type: 'date',
+          name: actual_land_date,
+        }
+      : null,
   }
 }
 
-function transformBriefInvestmentSummary (data) {
-  if (!isPlainObject(data)) { return }
+function transformBriefInvestmentSummary(data) {
+  if (!isPlainObject(data)) {
+    return
+  }
 
   const investorCompany = data.investor_company
   const competitorCountries = data.competitor_countries || []
@@ -170,18 +194,33 @@ function transformBriefInvestmentSummary (data) {
       name: investorCompany.name,
       url: `/companies/${investorCompany.id}`,
     },
-    website: investorCompany.website ? {
-      name: investorCompany.website,
-      url: investorCompany.website,
-    } : null,
-    account_tier: (investorCompany.one_list_group_tier && investorCompany.one_list_group_tier !== null && investorCompany.one_list_group_tier.name) ? investorCompany.one_list_group_tier.name : 'None',
-    uk_region_locations: regionLocations.map(region => region.name).join(', '),
-    competitor_countries: competitorCountries.map(country => country.name).join(', '),
-    estimated_land_date: !isEmpty(data.estimated_land_date) ? moment(data.estimated_land_date, 'YYYY-MM-DD').format('MMMM YYYY') : null,
-    total_investment: data.total_investment ? {
-      type: 'currency',
-      name: data.total_investment,
-    } : null,
+    website: investorCompany.website
+      ? {
+          name: investorCompany.website,
+          url: investorCompany.website,
+        }
+      : null,
+    account_tier:
+      investorCompany.one_list_group_tier &&
+      investorCompany.one_list_group_tier !== null &&
+      investorCompany.one_list_group_tier.name
+        ? investorCompany.one_list_group_tier.name
+        : 'None',
+    uk_region_locations: regionLocations
+      .map((region) => region.name)
+      .join(', '),
+    competitor_countries: competitorCountries
+      .map((country) => country.name)
+      .join(', '),
+    estimated_land_date: !isEmpty(data.estimated_land_date)
+      ? moment(data.estimated_land_date, 'YYYY-MM-DD').format('MMMM YYYY')
+      : null,
+    total_investment: data.total_investment
+      ? {
+          type: 'currency',
+          name: data.total_investment,
+        }
+      : null,
   }
 }
 

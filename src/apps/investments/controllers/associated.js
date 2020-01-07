@@ -1,7 +1,9 @@
 const { find, assign } = require('lodash')
 
 const { searchInvestments } = require('../../../modules/search/services')
-const { transformApiResponseToSearchCollection } = require('../../../modules/search/transformers')
+const {
+  transformApiResponseToSearchCollection,
+} = require('../../../modules/search/transformers')
 const { updateInvestment } = require('../repos')
 const metadata = require('../../../lib/metadata')
 const {
@@ -10,7 +12,7 @@ const {
 } = require('../transformers')
 const { ENTITIES } = require('../../search/constants')
 
-async function selectAssociatedInvestmentProject (req, res, next) {
+async function selectAssociatedInvestmentProject(req, res, next) {
   if (!req.query.project) {
     return next()
   }
@@ -30,7 +32,7 @@ async function selectAssociatedInvestmentProject (req, res, next) {
   }
 }
 
-async function searchForAssociatedInvestmentProject (req, res, next) {
+async function searchForAssociatedInvestmentProject(req, res, next) {
   const searchTerm = req.query.term
   const page = req.query.page || '1'
   const token = req.session.token
@@ -55,8 +57,8 @@ async function searchForAssociatedInvestmentProject (req, res, next) {
       filters: {
         investment_type: nonFDIId,
       },
-    })
-      .then(transformApiResponseToSearchCollection(
+    }).then(
+      transformApiResponseToSearchCollection(
         { query: req.query },
         ENTITIES,
         transformInvestmentProjectToListItem,
@@ -64,7 +66,8 @@ async function searchForAssociatedInvestmentProject (req, res, next) {
         (item) => {
           return assign({}, item, { url: `?project=${item.id}` })
         }
-      ))
+      )
+    )
   } catch (error) {
     next(error)
   }
@@ -72,11 +75,11 @@ async function searchForAssociatedInvestmentProject (req, res, next) {
   next()
 }
 
-function renderAssociatedInvestmentProjectResults (req, res, next) {
+function renderAssociatedInvestmentProjectResults(req, res, next) {
   return res.render('investments/views/associated')
 }
 
-async function removeAssociatedInvestmentProject (req, res, next) {
+async function removeAssociatedInvestmentProject(req, res, next) {
   try {
     await updateInvestment(req.session.token, req.params.investmentId, {
       associated_non_fdi_r_and_d_project: null,

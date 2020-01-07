@@ -8,7 +8,8 @@ const expectedRows = {
       text: '14 Aug 2019',
     },
     {
-      text: 'Here is a long interaction title some more text some more text some more text almost finished some more text nearly there more text finished',
+      text:
+        'Here is a long interaction title some more text some more text some more text almost finished some more text nearly there more text finished',
       linksTo: '/interactions/79d92719-7402-45b6-b3d7-eff559d6b282',
       shouldHaveEllipsis: true,
     },
@@ -34,7 +35,8 @@ const expectedRows = {
       text: '21 Feb 2019',
     },
     {
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      text:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       linksTo: '/interactions/86f92719-7402-45b6-b3d7-eff559d6b678',
       shouldHaveEllipsis: true,
     },
@@ -45,17 +47,11 @@ const expectedLists = {
   'List B': {
     deleteLinksTo: '/company-lists/75e14e32-292e-4d1b-a361-992d548251f7/delete',
     renameLinksTo: '/company-lists/75e14e32-292e-4d1b-a361-992d548251f7/rename',
-    rows: [
-      expectedRows.bmw,
-    ],
+    rows: [expectedRows.bmw],
     searches: {
-      bmw: [
-        expectedRows.bmw,
-      ],
+      bmw: [expectedRows.bmw],
       foobar: [],
-      a: [
-        expectedRows.bmw,
-      ],
+      a: [expectedRows.bmw],
     },
   },
   'List C': {
@@ -84,7 +80,7 @@ const describeTableCell = ({ row, col, text, linksTo, shouldHaveEllipsis }) =>
         .eq(row)
         .find('td')
         .eq(col)
-        .should($elm => {
+        .should(($elm) => {
           // TODO: Once the CSS version of truncating long text is in place remove this test.
           const elText = $elm.text()
           if (shouldHaveEllipsis) {
@@ -108,7 +104,7 @@ const describeTableCell = ({ row, col, text, linksTo, shouldHaveEllipsis }) =>
         .should('eq', linksTo.replace(/^\//, ''))
     }))
 
-const describeTable = rows => {
+const describeTable = (rows) => {
   describe('Table', () => {
     it(`It should have ${rows.length} rows`, () =>
       cy.get('table tbody tr').should('have.length', rows.length))
@@ -158,7 +154,7 @@ const describeSelectedList = ({
 
     switch (rows.length) {
       case 0:
-        describe('If the list doesn\'t have any companies', () =>
+        describe("If the list doesn't have any companies", () =>
           it('Should display the empty state', () => {
             cy.contains('You have not added any companies to your list')
             cy.contains(
@@ -180,19 +176,19 @@ const describeSelectedList = ({
         describeSortList(rows)
 
         searches &&
-        Object.entries(searches).forEach(([query, rows]) => {
-          describe(`When the search query is "${query}"`, () => {
-            it('it should only display matching rows', () => {
-              cy.contains('Search this list')
-                .find('input')
-                .clear()
-                .type(query)
+          Object.entries(searches).forEach(([query, rows]) => {
+            describe(`When the search query is "${query}"`, () => {
+              it('it should only display matching rows', () => {
+                cy.contains('Search this list')
+                  .find('input')
+                  .clear()
+                  .type(query)
+              })
             })
-          })
 
-          describeTable(rows)
-          describeSortList(rows)
-        })
+            describeTable(rows)
+            describeSortList(rows)
+          })
     }
   })
 
@@ -211,11 +207,9 @@ const describeSortListBy = ({ option, rows }) =>
     describeTable(rows)
   })
 
-const describeSortList = rows => {
+const describeSortList = (rows) => {
   const recentRows = [...rows].sort(([, { text: a }], [, { text: b }]) =>
-    b === '-'
-      ? -1
-      : new Date(b) - new Date(a)
+    b === '-' ? -1 : new Date(b) - new Date(a)
   )
 
   Object.entries({

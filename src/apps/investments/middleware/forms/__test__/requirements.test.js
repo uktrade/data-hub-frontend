@@ -7,7 +7,9 @@ const paths = require('../../../paths')
 const investmentData = require('../../../../../../test/unit/data/investment/investment-data.json')
 const { handleFormPost, populateForm } = require('../requirements')
 
-const yesterday = moment().subtract(1, 'days').toISOString()
+const yesterday = moment()
+  .subtract(1, 'days')
+  .toISOString()
 
 const metadataMock = {
   strategicDriversOptions: [
@@ -31,10 +33,10 @@ const metadataMock = {
   ],
 }
 
-function getFieldValue (form, name) {
+function getFieldValue(form, name) {
   const fields = form.children || []
 
-  const field = fields.find(item => item.name === name)
+  const field = fields.find((item) => item.name === name)
 
   if (field) {
     return field.value
@@ -43,10 +45,10 @@ function getFieldValue (form, name) {
   return null
 }
 
-function getFieldError (form, name) {
+function getFieldError(form, name) {
   const fields = form.children || []
 
-  const field = fields.find(item => item.name === name)
+  const field = fields.find((item) => item.name === name)
 
   if (field) {
     return field.error
@@ -104,12 +106,17 @@ describe('Investment requirements form middleware', () => {
       })
 
       it('should build the form with the investment data', () => {
-        const clientRequirments = getFieldValue(this.resMock.locals.requirementsForm, 'client_requirements')
+        const clientRequirments = getFieldValue(
+          this.resMock.locals.requirementsForm,
+          'client_requirements'
+        )
         expect(clientRequirments).to.eq('Some interesting requirements here')
       })
 
       it('should set the return link', () => {
-        expect(this.resMock.locals.requirementsForm.returnLink).to.equal('/investments/projects/f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7')
+        expect(this.resMock.locals.requirementsForm.returnLink).to.equal(
+          '/investments/projects/f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7'
+        )
       })
     })
 
@@ -126,12 +133,17 @@ describe('Investment requirements form middleware', () => {
       })
 
       it('should build the form with the posted data', () => {
-        const clientRequirments = getFieldValue(this.resMock.locals.requirementsForm, 'client_requirements')
+        const clientRequirments = getFieldValue(
+          this.resMock.locals.requirementsForm,
+          'client_requirements'
+        )
         expect(clientRequirments).to.eq('some requirements')
       })
 
       it('should set the return link', () => {
-        expect(this.resMock.locals.requirementsForm.returnLink).to.equal('/investments/projects/f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7')
+        expect(this.resMock.locals.requirementsForm.returnLink).to.equal(
+          '/investments/projects/f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7'
+        )
       })
     })
 
@@ -147,7 +159,10 @@ describe('Investment requirements form middleware', () => {
       })
 
       it('should build the form with the errors', () => {
-        const error = getFieldError(this.resMock.locals.requirementsForm, 'client_requirements')
+        const error = getFieldError(
+          this.resMock.locals.requirementsForm,
+          'client_requirements'
+        )
         expect(error).to.deep.eq(['required'])
       })
     })
@@ -183,11 +198,16 @@ describe('Investment requirements form middleware', () => {
       })
 
       it('should redirect the user to the details screen', () => {
-        expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
+        expect(this.resMock.redirect).to.be.calledWith(
+          '/investments/projects/1234/details'
+        )
       })
 
       it('should send a flash message to inform the user of the change', () => {
-        expect(this.reqMock.flash).to.be.calledWith('success', 'Investment requirements updated')
+        expect(this.reqMock.flash).to.be.calledWith(
+          'success',
+          'Investment requirements updated'
+        )
       })
     })
 
@@ -198,9 +218,7 @@ describe('Investment requirements form middleware', () => {
             actual_uk_regions: [],
             competitor_countries: [],
             uk_region_locations: [],
-            strategic_drivers: [
-              '844cd12a-6095-e211-a939-e4115bead28a',
-            ],
+            strategic_drivers: ['844cd12a-6095-e211-a939-e4115bead28a'],
             client_requirements: 'some requirements',
             delivery_partners: [],
           })
@@ -217,11 +235,16 @@ describe('Investment requirements form middleware', () => {
       })
 
       it('should redirect the user to the details screen', () => {
-        expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
+        expect(this.resMock.redirect).to.be.calledWith(
+          '/investments/projects/1234/details'
+        )
       })
 
       it('should send a flash message to inform the user of the change', () => {
-        expect(this.reqMock.flash).to.be.calledWith('success', 'Investment requirements updated')
+        expect(this.reqMock.flash).to.be.calledWith(
+          'success',
+          'Investment requirements updated'
+        )
       })
     })
 
@@ -263,11 +286,16 @@ describe('Investment requirements form middleware', () => {
         })
 
         it('should redirect the user to the details screen', () => {
-          expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
+          expect(this.resMock.redirect).to.be.calledWith(
+            '/investments/projects/1234/details'
+          )
         })
 
         it('should send a flash message to inform the user of the change', () => {
-          expect(this.reqMock.flash).to.be.calledWith('success', 'Investment requirements updated')
+          expect(this.reqMock.flash).to.be.calledWith(
+            'success',
+            'Investment requirements updated'
+          )
         })
       })
 
@@ -279,9 +307,7 @@ describe('Investment requirements form middleware', () => {
               actual_uk_regions: [],
               strategic_drivers: [],
               uk_region_locations: [],
-              competitor_countries: [
-                '844cd12a-6095-e211-a939-e4115bead28a',
-              ],
+              competitor_countries: ['844cd12a-6095-e211-a939-e4115bead28a'],
               client_requirements: 'some requirements',
               delivery_partners: [],
             })
@@ -299,11 +325,16 @@ describe('Investment requirements form middleware', () => {
         })
 
         it('should redirect the user to the details screen', () => {
-          expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
+          expect(this.resMock.redirect).to.be.calledWith(
+            '/investments/projects/1234/details'
+          )
         })
 
         it('should send a flash message to inform the user of the change', () => {
-          expect(this.reqMock.flash).to.be.calledWith('success', 'Investment requirements updated')
+          expect(this.reqMock.flash).to.be.calledWith(
+            'success',
+            'Investment requirements updated'
+          )
         })
       })
     })
@@ -343,11 +374,16 @@ describe('Investment requirements form middleware', () => {
         })
 
         it('should redirect the user to the details screen', () => {
-          expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
+          expect(this.resMock.redirect).to.be.calledWith(
+            '/investments/projects/1234/details'
+          )
         })
 
         it('should send a flash message to inform the user of the change', () => {
-          expect(this.reqMock.flash).to.be.calledWith('success', 'Investment requirements updated')
+          expect(this.reqMock.flash).to.be.calledWith(
+            'success',
+            'Investment requirements updated'
+          )
         })
       })
 
@@ -377,11 +413,16 @@ describe('Investment requirements form middleware', () => {
         })
 
         it('should redirect the user to the details screen', () => {
-          expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
+          expect(this.resMock.redirect).to.be.calledWith(
+            '/investments/projects/1234/details'
+          )
         })
 
         it('should send a flash message to inform the user of the change', () => {
-          expect(this.reqMock.flash).to.be.calledWith('success', 'Investment requirements updated')
+          expect(this.reqMock.flash).to.be.calledWith(
+            'success',
+            'Investment requirements updated'
+          )
         })
       })
     })
@@ -415,11 +456,16 @@ describe('Investment requirements form middleware', () => {
       })
 
       it('should redirect the user to the details screen', () => {
-        expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
+        expect(this.resMock.redirect).to.be.calledWith(
+          '/investments/projects/1234/details'
+        )
       })
 
       it('should send a flash message to inform the user of the change', () => {
-        expect(this.reqMock.flash).to.be.calledWith('success', 'Investment requirements updated')
+        expect(this.reqMock.flash).to.be.calledWith(
+          'success',
+          'Investment requirements updated'
+        )
       })
     })
 
@@ -430,9 +476,7 @@ describe('Investment requirements form middleware', () => {
             actual_uk_regions: [],
             strategic_drivers: [],
             competitor_countries: [],
-            uk_region_locations: [
-              '844cd12a-6095-e211-a939-e4115bead28a',
-            ],
+            uk_region_locations: ['844cd12a-6095-e211-a939-e4115bead28a'],
             client_requirements: 'some requirements',
             delivery_partners: [],
           })
@@ -449,11 +493,16 @@ describe('Investment requirements form middleware', () => {
       })
 
       it('should redirect the user to the details screen', () => {
-        expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
+        expect(this.resMock.redirect).to.be.calledWith(
+          '/investments/projects/1234/details'
+        )
       })
 
       it('should send a flash message to inform the user of the change', () => {
-        expect(this.reqMock.flash).to.be.calledWith('success', 'Investment requirements updated')
+        expect(this.reqMock.flash).to.be.calledWith(
+          'success',
+          'Investment requirements updated'
+        )
       })
     })
 
@@ -489,11 +538,16 @@ describe('Investment requirements form middleware', () => {
         })
 
         it('should redirect the user to the details screen', () => {
-          expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
+          expect(this.resMock.redirect).to.be.calledWith(
+            '/investments/projects/1234/details'
+          )
         })
 
         it('should send a flash message to inform the user of the change', () => {
-          expect(this.reqMock.flash).to.be.calledWith('success', 'Investment requirements updated')
+          expect(this.reqMock.flash).to.be.calledWith(
+            'success',
+            'Investment requirements updated'
+          )
         })
       })
 
@@ -523,11 +577,16 @@ describe('Investment requirements form middleware', () => {
         })
 
         it('should redirect the user to the details screen', () => {
-          expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
+          expect(this.resMock.redirect).to.be.calledWith(
+            '/investments/projects/1234/details'
+          )
         })
 
         it('should send a flash message to inform the user of the change', () => {
-          expect(this.reqMock.flash).to.be.calledWith('success', 'Investment requirements updated')
+          expect(this.reqMock.flash).to.be.calledWith(
+            'success',
+            'Investment requirements updated'
+          )
         })
       })
     })
@@ -561,11 +620,16 @@ describe('Investment requirements form middleware', () => {
         })
 
         it('should redirect the user to the details screen', () => {
-          expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
+          expect(this.resMock.redirect).to.be.calledWith(
+            '/investments/projects/1234/details'
+          )
         })
 
         it('should send a flash message to inform the user of the change', () => {
-          expect(this.reqMock.flash).to.be.calledWith('success', 'Investment requirements updated')
+          expect(this.reqMock.flash).to.be.calledWith(
+            'success',
+            'Investment requirements updated'
+          )
         })
       })
 
@@ -595,11 +659,16 @@ describe('Investment requirements form middleware', () => {
         })
 
         it('should redirect the user to the details screen', () => {
-          expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
+          expect(this.resMock.redirect).to.be.calledWith(
+            '/investments/projects/1234/details'
+          )
         })
 
         it('should send a flash message to inform the user of the change', () => {
-          expect(this.reqMock.flash).to.be.calledWith('success', 'Investment requirements updated')
+          expect(this.reqMock.flash).to.be.calledWith(
+            'success',
+            'Investment requirements updated'
+          )
         })
       })
     })
@@ -735,11 +804,16 @@ describe('Investment requirements form middleware', () => {
       })
 
       it('should redirect the user to the details screen', () => {
-        expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
+        expect(this.resMock.redirect).to.be.calledWith(
+          '/investments/projects/1234/details'
+        )
       })
 
       it('should send a flash message to inform the user of the change', () => {
-        expect(this.reqMock.flash).to.be.calledWith('success', 'Investment requirements updated')
+        expect(this.reqMock.flash).to.be.calledWith(
+          'success',
+          'Investment requirements updated'
+        )
       })
     })
 
@@ -752,9 +826,7 @@ describe('Investment requirements form middleware', () => {
             competitor_countries: [],
             uk_region_locations: [],
             client_requirements: 'some requirements',
-            delivery_partners: [
-              '844cd12a-6095-e211-a939-e4115bead28a',
-            ],
+            delivery_partners: ['844cd12a-6095-e211-a939-e4115bead28a'],
           })
           .reply(200, {})
 
@@ -769,11 +841,16 @@ describe('Investment requirements form middleware', () => {
       })
 
       it('should redirect the user to the details screen', () => {
-        expect(this.resMock.redirect).to.be.calledWith('/investments/projects/1234/details')
+        expect(this.resMock.redirect).to.be.calledWith(
+          '/investments/projects/1234/details'
+        )
       })
 
       it('should send a flash message to inform the user of the change', () => {
-        expect(this.reqMock.flash).to.be.calledWith('success', 'Investment requirements updated')
+        expect(this.reqMock.flash).to.be.calledWith(
+          'success',
+          'Investment requirements updated'
+        )
       })
     })
   })

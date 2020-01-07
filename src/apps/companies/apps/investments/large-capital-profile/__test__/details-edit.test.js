@@ -52,7 +52,7 @@ describe('Company Investments - Large capital profile - Investor details', () =>
         await controller.renderProfile(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          this.middlewareParameters.nextSpy
         )
       })
 
@@ -83,27 +83,33 @@ describe('Company Investments - Large capital profile - Investor details', () =>
                 name: 'Holly Collins',
                 id: '379f390a-e083-4a2c-9cea-e3b9a08606a7',
               },
-              advisers: [{
-                label: 'Jeff Smith',
-                subLabel: 'Team A',
-                value: 'a0dae366-1134-e411-985c-e4115bead28a',
-              }, {
-                label: 'Aaron Mr',
-                subLabel: 'Team B',
-                value: 'e13209b8-8d61-e311-8255-e4115bead28a',
-              }, {
-                label: 'Mr Benjamin',
-                subLabel: 'Team C',
-                value: 'b9d6b3dc-7af4-e411-bcbe-e4115bead28a',
-              }, {
-                label: 'George Chan',
-                subLabel: 'Team D',
-                value: '0119a99e-9798-e211-a939-e4115bead28a',
-              }, {
-                label: 'Fred Rafters',
-                subLabel: 'Team E',
-                value: '0919a99e-9798-e211-a939-e4115bead28a',
-              }],
+              advisers: [
+                {
+                  label: 'Jeff Smith',
+                  subLabel: 'Team A',
+                  value: 'a0dae366-1134-e411-985c-e4115bead28a',
+                },
+                {
+                  label: 'Aaron Mr',
+                  subLabel: 'Team B',
+                  value: 'e13209b8-8d61-e311-8255-e4115bead28a',
+                },
+                {
+                  label: 'Mr Benjamin',
+                  subLabel: 'Team C',
+                  value: 'b9d6b3dc-7af4-e411-bcbe-e4115bead28a',
+                },
+                {
+                  label: 'George Chan',
+                  subLabel: 'Team D',
+                  value: '0119a99e-9798-e211-a939-e4115bead28a',
+                },
+                {
+                  label: 'Fred Rafters',
+                  subLabel: 'Team E',
+                  value: '0919a99e-9798-e211-a939-e4115bead28a',
+                },
+              ],
               date: {
                 day: 2,
                 month: 5,
@@ -147,7 +153,8 @@ describe('Company Investments - Large capital profile - Investor details', () =>
               value: '81fafe5a-ed32-4f46-bdc5-2cafedf828e8',
             },
             notRequired: {
-              text: 'Checks not required - See Investor Screening Report (ISR) guidance',
+              text:
+                'Checks not required - See Investor Screening Report (ISR) guidance',
               value: 'e6f66f9d-ed12-4bfd-9dd0-ac7e44f35034',
             },
           },
@@ -206,12 +213,17 @@ describe('Company Investments - Large capital profile - Investor details', () =>
       })
 
       it('should call the render function and pass the view', () => {
-        const view = 'companies/apps/investments/large-capital-profile/views/profile'
-        expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(view)
+        const view =
+          'companies/apps/investments/large-capital-profile/views/profile'
+        expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(
+          view
+        )
       })
 
       it('should call the render function and pass the profile', () => {
-        expect(this.middlewareParameters.resMock.render.args[0][1].profile).to.deep.equal(profile)
+        expect(
+          this.middlewareParameters.resMock.render.args[0][1].profile
+        ).to.deep.equal(profile)
       })
     })
   })

@@ -30,7 +30,11 @@ describe('Document Upload Transformers', () => {
           },
         ]
 
-        this.transformed = transformFilesResultsToDetails(response, propositionId, investmentId)
+        this.transformed = transformFilesResultsToDetails(
+          response,
+          propositionId,
+          investmentId
+        )
       })
 
       commonTests({
@@ -52,13 +56,18 @@ describe('Document Upload Transformers', () => {
           },
         ]
 
-        this.transformed = transformFilesResultsToDetails(response, propositionId, investmentId)
+        this.transformed = transformFilesResultsToDetails(
+          response,
+          propositionId,
+          investmentId
+        )
       })
 
       commonTests({
         expectedFileName: mockFilesResponse[0].original_filename,
         expectedItem: {
-          name: 'The file didn\'t pass virus scanning, contact your administrator',
+          name:
+            "The file didn't pass virus scanning, contact your administrator",
           type: 'error',
         },
       })
@@ -74,7 +83,11 @@ describe('Document Upload Transformers', () => {
           },
         ]
 
-        this.transformed = transformFilesResultsToDetails(response, propositionId, investmentId)
+        this.transformed = transformFilesResultsToDetails(
+          response,
+          propositionId,
+          investmentId
+        )
       })
 
       commonTests({
@@ -93,7 +106,11 @@ describe('Document Upload Transformers', () => {
           },
         ]
 
-        this.transformed = transformFilesResultsToDetails(response, propositionId, investmentId)
+        this.transformed = transformFilesResultsToDetails(
+          response,
+          propositionId,
+          investmentId
+        )
       })
 
       commonTests({
@@ -112,7 +129,11 @@ describe('Document Upload Transformers', () => {
           },
         ]
 
-        this.transformed = transformFilesResultsToDetails(response, propositionId, investmentId)
+        this.transformed = transformFilesResultsToDetails(
+          response,
+          propositionId,
+          investmentId
+        )
       })
 
       commonTests({
@@ -131,7 +152,11 @@ describe('Document Upload Transformers', () => {
           },
         ]
 
-        this.transformed = transformFilesResultsToDetails(response, propositionId, investmentId)
+        this.transformed = transformFilesResultsToDetails(
+          response,
+          propositionId,
+          investmentId
+        )
       })
 
       commonTests({
@@ -143,8 +168,8 @@ describe('Document Upload Transformers', () => {
 
   describe('#transformLabelsToShowFiles', () => {
     const mockLabels = {
-      'apples': 'Pears',
-      'cherries': 'Berries',
+      apples: 'Pears',
+      cherries: 'Berries',
     }
 
     context('when a file element is transformed', () => {

@@ -1,23 +1,21 @@
 const { deleteCompanyList } = require('../repos')
 
-async function renderDeleteCompanyListPage (req, res, next) {
+async function renderDeleteCompanyListPage(req, res, next) {
   const props = {
     companyList: res.locals.companyList,
     returnUrl: '/',
   }
 
   try {
-    res
-      .breadcrumb('Delete list')
-      .render('company-lists/views/delete-list', {
-        props,
-      })
+    res.breadcrumb('Delete list').render('company-lists/views/delete-list', {
+      props,
+    })
   } catch (error) {
     next(error)
   }
 }
 
-async function handleDeleteCompanyList (req, res, next) {
+async function handleDeleteCompanyList(req, res, next) {
   try {
     await deleteCompanyList(req.session.token, req.params.listId)
     req.flash('success', 'List deleted')

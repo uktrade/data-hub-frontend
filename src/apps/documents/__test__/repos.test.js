@@ -9,12 +9,16 @@ describe('Documents Upload repos', () => {
     this.getDocumentUploadS3UrlStub = sinon.stub()
 
     this.repos = proxyquire('../repos', {
-      '../../lib/authorised-request': { authorisedRequest: this.authorisedRequestStub },
+      '../../lib/authorised-request': {
+        authorisedRequest: this.authorisedRequestStub,
+      },
       '/repos': {
-        getDocumentUploadS3Url: this.getDocumentUploadS3UrlStub.onCall(0).returns({
-          id: '123',
-          signed_upload_url: 'http://s3.signed.url.com',
-        }),
+        getDocumentUploadS3Url: this.getDocumentUploadS3UrlStub
+          .onCall(0)
+          .returns({
+            id: '123',
+            signed_upload_url: 'http://s3.signed.url.com',
+          }),
       },
     })
 
@@ -35,8 +39,8 @@ describe('Documents Upload repos', () => {
             name: 'document.txt',
           },
           fields: {
-            'investment': '123',
-            'proposition': '345',
+            investment: '123',
+            proposition: '345',
           },
           url: {
             app: 'investment',
@@ -57,8 +61,8 @@ describe('Documents Upload repos', () => {
         name: 'document.txt',
       },
       fields: {
-        'investment': '123',
-        'proposition': '345',
+        investment: '123',
+        proposition: '345',
       },
       url: {
         app: 'investment',
@@ -68,45 +72,57 @@ describe('Documents Upload repos', () => {
   })
 
   describe('#getDocumentUploadS3Url', () => {
-    context('When there are multiple files submitted and no text fields in the form', () => {
-      beforeEach(async () => {
-        await this.repos.getDocumentUploadS3Url(this.token, this.documents)
-      })
+    context(
+      'When there are multiple files submitted and no text fields in the form',
+      () => {
+        beforeEach(async () => {
+          await this.repos.getDocumentUploadS3Url(this.token, this.documents)
+        })
 
-      it('should only post to the API the name of the document', () => {
-        const options = {
-          url: `${config.apiRoot}/v3/investment/123/proposition/345/document`,
-          body: {
+        it('should only post to the API the name of the document', () => {
+          const options = {
+            url: `${config.apiRoot}/v3/investment/123/proposition/345/document`,
+            body: {
+              original_filename: 'document.txt',
+            },
+            method: 'POST',
+          }
+
+          expect(this.authorisedRequestStub).to.be.calledWith(
+            this.req.session.token,
+            options
+          )
+        })
+      }
+    )
+
+    context(
+      'When there is a single file submitted and there are text fields in the form',
+      () => {
+        beforeEach(async () => {
+          this.documents.index = 1
+
+          await this.repos.getDocumentUploadS3Url(this.token, this.documents)
+        })
+
+        it('should only post to the API the name of the document and the text fields', () => {
+          const url = `${config.apiRoot}/v3/investment/123/proposition/345/document`
+          const body = {
             original_filename: 'document.txt',
-          },
-          method: 'POST',
-        }
+          }
 
-        expect(this.authorisedRequestStub).to.be.calledWith(this.req.session.token, options)
-      })
-    })
+          const options = {
+            body,
+            method: 'POST',
+            url,
+          }
 
-    context('When there is a single file submitted and there are text fields in the form', () => {
-      beforeEach(async () => {
-        this.documents.index = 1
-
-        await this.repos.getDocumentUploadS3Url(this.token, this.documents)
-      })
-
-      it('should only post to the API the name of the document and the text fields', () => {
-        const url = `${config.apiRoot}/v3/investment/123/proposition/345/document`
-        const body = {
-          original_filename: 'document.txt',
-        }
-
-        const options = {
-          body,
-          method: 'POST',
-          url,
-        }
-
-        expect(this.authorisedRequestStub).to.be.calledWith(this.req.session.token, options)
-      })
-    })
+          expect(this.authorisedRequestStub).to.be.calledWith(
+            this.req.session.token,
+            options
+          )
+        })
+      }
+    )
   })
 })

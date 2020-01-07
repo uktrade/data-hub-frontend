@@ -1,4 +1,6 @@
-const { transformObjectToGovUKOption } = require('../../../../../apps/transformers')
+const {
+  transformObjectToGovUKOption,
+} = require('../../../../../apps/transformers')
 const { transformAssetClasses } = require('./transformers')
 const { getOptions } = require('../../../../../lib/options')
 const { getAdvisers } = require('../../../../adviser/repos')
@@ -36,10 +38,7 @@ const getInvestorRequirementsOptions = (token) => {
 }
 
 const getLocationOptions = (token) => {
-  return [
-    getOptions(token, 'uk-region'),
-    getOptions(token, 'country'),
-  ]
+  return [getOptions(token, 'uk-region'), getOptions(token, 'country')]
 }
 
 module.exports = {

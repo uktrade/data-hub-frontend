@@ -3,7 +3,7 @@
  * @param req
  * @returns {Promise}
  */
-function saveSession (session) {
+function saveSession(session) {
   return new Promise((resolve, reject) => {
     session.save((error) => {
       if (error) {

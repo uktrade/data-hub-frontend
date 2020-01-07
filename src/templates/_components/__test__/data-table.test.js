@@ -1,20 +1,25 @@
-const { renderComponentToDom } = require('../../../../test/unit/component-helper')
+const {
+  renderComponentToDom,
+} = require('../../../../test/unit/component-helper')
 
-const data = [{
-  id: '1234',
-  name: 'Fred Smith',
-  address: '10 The Street',
-  uk: true,
-}, {
-  id: '5678',
-  name: 'John Brown',
-  address: '10 The Street',
-  uk: true,
-}]
+const data = [
+  {
+    id: '1234',
+    name: 'Fred Smith',
+    address: '10 The Street',
+    uk: true,
+  },
+  {
+    id: '5678',
+    name: 'John Brown',
+    address: '10 The Street',
+    uk: true,
+  },
+]
 
 const columns = {
-  'name': 'Name',
-  'address': 'Address',
+  name: 'Name',
+  address: 'Address',
 }
 
 describe('Data table component', () => {
@@ -34,7 +39,9 @@ describe('Data table component', () => {
     })
 
     it('should include all properties columns', () => {
-      const firstRow = this.component.querySelectorAll('tbody tr:first-child td')
+      const firstRow = this.component.querySelectorAll(
+        'tbody tr:first-child td'
+      )
 
       expect(firstRow.length).to.equal(4)
       expect(firstRow[0].textContent).to.equal('1234')
@@ -65,7 +72,9 @@ describe('Data table component', () => {
       })
 
       it('should only render data with headings', () => {
-        const bodyColumns = this.component.querySelectorAll('tbody tr:first-child td')
+        const bodyColumns = this.component.querySelectorAll(
+          'tbody tr:first-child td'
+        )
 
         expect(bodyColumns.length).to.equal(2)
       })
@@ -75,12 +84,16 @@ describe('Data table component', () => {
       it('should only render data for headings that exist', () => {
         const component = renderComponentToDom('data-table', {
           columns,
-          data: [{
-            id: '1234',
-            name: 'John Brown',
-          }],
+          data: [
+            {
+              id: '1234',
+              name: 'John Brown',
+            },
+          ],
         })
-        const bodyColumns = component.querySelectorAll('tbody tr:first-child td')
+        const bodyColumns = component.querySelectorAll(
+          'tbody tr:first-child td'
+        )
 
         expect(bodyColumns.length).to.equal(2)
         expect(bodyColumns[0].textContent).to.equal('John Brown')

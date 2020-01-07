@@ -13,7 +13,7 @@ describe('Subsidiary link controller', () => {
       renderLinkSubsidiary(
         this.middlewareParameters.reqMock,
         this.middlewareParameters.resMock,
-        this.middlewareParameters.nextSpy,
+        this.middlewareParameters.nextSpy
       )
     })
 
@@ -22,15 +22,22 @@ describe('Subsidiary link controller', () => {
     })
 
     it('should add the company breadcrumb', () => {
-      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWith(companyMock.name, `/companies/${companyMock.id}`)
+      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWith(
+        companyMock.name,
+        `/companies/${companyMock.id}`
+      )
     })
 
     it('should add the "Link subsidiary" breadcrumb', () => {
-      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWith('Link subsidiary')
+      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWith(
+        'Link subsidiary'
+      )
     })
 
     it('should render the view', () => {
-      expect(this.middlewareParameters.resMock.render).to.be.calledWith('companies/views/link-subsidiary.njk')
+      expect(this.middlewareParameters.resMock.render).to.be.calledWith(
+        'companies/views/link-subsidiary.njk'
+      )
       expect(this.middlewareParameters.resMock.render).to.be.calledOnce
     })
   })

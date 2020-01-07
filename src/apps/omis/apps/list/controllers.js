@@ -1,7 +1,10 @@
 const qs = require('querystring')
 const { omit, merge } = require('lodash')
 
-const { buildSelectedFiltersSummary, buildFieldsWithSelectedEntities } = require('../../../builders')
+const {
+  buildSelectedFiltersSummary,
+  buildFieldsWithSelectedEntities,
+} = require('../../../builders')
 const { getOptions } = require('../../../../lib/options')
 const { buildExportAction } = require('../../../../lib/export-helper')
 const { omisFiltersFields, collectionSortForm } = require('./macros')
@@ -19,10 +22,12 @@ const exportOptions = {
  * including a flat version of the sector list
  *
  */
-async function getFormOptions (token, res) {
+async function getFormOptions(token, res) {
   const omisMarketOptions = await getOptions(token, 'omis-market')
   const regionOptions = await getOptions(token, 'uk-region')
-  const sectorOptions = await getOptions(token, 'sector', { queryString: '?level__lte=0' })
+  const sectorOptions = await getOptions(token, 'sector', {
+    queryString: '?level__lte=0',
+  })
   return {
     omisMarketOptions,
     regionOptions,
@@ -38,9 +43,13 @@ async function getFormOptions (token, res) {
  * request query
  *
  */
-async function getFiltersFields (token, query, res) {
+async function getFiltersFields(token, query, res) {
   const filtersFields = omisFiltersFields(await getFormOptions(token, res))
-  const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(token, filtersFields, query)
+  const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(
+    token,
+    filtersFields,
+    query
+  )
 
   return filtersFieldsWithSelectedOptions
 }
@@ -48,21 +57,19 @@ async function getFiltersFields (token, query, res) {
 /**
  * Builds the sort form dropdown for the collection
  */
-function getSortForm (query) {
+function getSortForm(query) {
   return merge({}, collectionSortForm, {
     hiddenFields: {
       ...omit(query, 'sortby'),
     },
-    children: [
-      { value: query.sortby },
-    ],
+    children: [{ value: query.sortby }],
   })
 }
 
 /**
  *  List controller for omis. Gets a sort dropdown, filter form and renders the page
  */
-async function renderList (req, res, next) {
+async function renderList(req, res, next) {
   try {
     const { token, user } = req.session
     const query = req.query
@@ -70,7 +77,11 @@ async function renderList (req, res, next) {
     const sortForm = getSortForm(query)
     const filtersFields = await getFiltersFields(token, query, res)
     const selectedFilters = buildSelectedFiltersSummary(filtersFields, query)
-    const exportAction = await buildExportAction(qs.stringify(req.query), user.permissions, exportOptions)
+    const exportAction = await buildExportAction(
+      qs.stringify(req.query),
+      user.permissions,
+      exportOptions
+    )
 
     res.render('_layouts/collection', {
       sortForm,
@@ -78,10 +89,12 @@ async function renderList (req, res, next) {
       filtersFields,
       exportAction,
       countLabel: 'order',
-      actionButtons: [{
-        label: 'Add order',
-        url: '/omis/create',
-      }],
+      actionButtons: [
+        {
+          label: 'Add order',
+          url: '/omis/create',
+        },
+      ],
     })
   } catch (error) {
     next(error)

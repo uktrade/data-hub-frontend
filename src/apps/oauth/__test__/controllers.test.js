@@ -9,7 +9,7 @@ describe('OAuth controller', () => {
     this.saveSessionStub = sinon.stub()
     this.controller = proxyquire.noCallThru().load('../controllers', {
       './../../config': this.mockConfig,
-      'uuid': this.mockUuid,
+      uuid: this.mockUuid,
       './../../lib/session-helper': {
         saveSession: this.saveSessionStub,
       },
@@ -66,7 +66,11 @@ describe('OAuth controller', () => {
       context('with a successful session save', () => {
         beforeEach(async () => {
           this.saveSessionStub.resolves()
-          await this.controller.redirectOAuth(this.reqMock, this.resMock, this.nextSpy)
+          await this.controller.redirectOAuth(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should call saveSessionStub', () => {
@@ -82,7 +86,9 @@ describe('OAuth controller', () => {
         })
 
         it('should redirect to the correct Oauth url', () => {
-          expect(this.resMock.redirect).to.be.calledWith(`${this.mockOauthConfig.url}?${this.expectedOauthRedirectUrl}`)
+          expect(this.resMock.redirect).to.be.calledWith(
+            `${this.mockOauthConfig.url}?${this.expectedOauthRedirectUrl}`
+          )
         })
 
         it('session should hold correct UUID', () => {
@@ -99,10 +105,18 @@ describe('OAuth controller', () => {
             ...{ state: this.mockSessionStoredUUIDvalue },
           })
 
-          set(this.reqMock, 'session.oauth.state', this.mockSessionStoredUUIDvalue)
+          set(
+            this.reqMock,
+            'session.oauth.state',
+            this.mockSessionStoredUUIDvalue
+          )
 
           this.saveSessionStub.resolves()
-          await this.controller.redirectOAuth(this.reqMock, this.resMock, this.nextSpy)
+          await this.controller.redirectOAuth(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should call saveSessionStub', () => {
@@ -118,11 +132,15 @@ describe('OAuth controller', () => {
         })
 
         it('should redirect to the correct Oauth url', () => {
-          expect(this.resMock.redirect).to.be.calledWith(`${this.mockOauthConfig.url}?${this.expectedOauthRedirectUrl}`)
+          expect(this.resMock.redirect).to.be.calledWith(
+            `${this.mockOauthConfig.url}?${this.expectedOauthRedirectUrl}`
+          )
         })
 
         it('session should hold correct UUID', () => {
-          expect(this.reqMock.session.oauth.state).to.equal(this.mockSessionStoredUUIDvalue)
+          expect(this.reqMock.session.oauth.state).to.equal(
+            this.mockSessionStoredUUIDvalue
+          )
         })
       })
 
@@ -130,7 +148,11 @@ describe('OAuth controller', () => {
         beforeEach(async () => {
           this.returnedError = 'oh no!'
           this.saveSessionStub.rejects(this.returnedError)
-          await this.controller.redirectOAuth(this.reqMock, this.resMock, this.nextSpy)
+          await this.controller.redirectOAuth(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should call saveSessionStub', () => {
@@ -166,7 +188,11 @@ describe('OAuth controller', () => {
         })
 
         set(this.mockConfig, 'oauth', this.mockOauthConfig)
-        await this.controller.redirectOAuth(this.reqMock, this.resMock, this.nextSpy)
+        await this.controller.redirectOAuth(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should redirect', () => {
@@ -174,7 +200,9 @@ describe('OAuth controller', () => {
       })
 
       it('should redirect to the correct Oauth url', () => {
-        expect(this.resMock.redirect).to.be.calledWith(`${this.mockOauthConfig.url}?${this.expectedOauthRedirectUrl}`)
+        expect(this.resMock.redirect).to.be.calledWith(
+          `${this.mockOauthConfig.url}?${this.expectedOauthRedirectUrl}`
+        )
       })
 
       it('session should hold correct UUID', () => {
@@ -187,7 +215,11 @@ describe('OAuth controller', () => {
     context('with state in the session', () => {
       beforeEach(() => {
         set(this.reqMock, 'session.oauth.state', 'example-session-state')
-        this.controller.handleMissingState(this.reqMock, this.resMock, this.nextSpy)
+        this.controller.handleMissingState(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should call next', () => {
@@ -198,7 +230,11 @@ describe('OAuth controller', () => {
     context('without state in the session', () => {
       beforeEach(() => {
         set(this.reqMock, 'session.oauth.state', undefined)
-        this.controller.handleMissingState(this.reqMock, this.resMock, this.nextSpy)
+        this.controller.handleMissingState(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should redirect', () => {
@@ -219,7 +255,11 @@ describe('OAuth controller', () => {
           set(this.reqMock, 'query.state', this.mockStateId)
           set(this.reqMock, 'session.token', this.mockOauthAccessToken)
 
-          await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+          await this.controller.callbackOAuth(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should redirect', () => {
@@ -240,7 +280,11 @@ describe('OAuth controller', () => {
           set(this.reqMock, 'query.state', this.mockStateId)
           set(this.reqMock, 'session.oauth.state', 'non-matching-state-id')
 
-          this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+          this.controller.callbackOAuth(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should call next', () => {
@@ -252,7 +296,9 @@ describe('OAuth controller', () => {
         })
 
         it('should have expected error message', () => {
-          expect(this.nextSpy.args[0][0].message).to.have.string('There has been an OAuth stateId mismatch')
+          expect(this.nextSpy.args[0][0].message).to.have.string(
+            'There has been an OAuth stateId mismatch'
+          )
         })
 
         it('token should be undefined', () => {
@@ -272,7 +318,11 @@ describe('OAuth controller', () => {
             .post(this.mockFetchUrl.path)
             .reply(200, { access_token: this.mockOauthAccessToken })
 
-          await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+          await this.controller.callbackOAuth(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should redirect', () => {
@@ -290,15 +340,23 @@ describe('OAuth controller', () => {
 
       context('when there is an error query param', () => {
         it('should show help page', () => {
-          this.helpPageTitle = 'You don\'t have permission to access this service'
+          this.helpPageTitle =
+            "You don't have permission to access this service"
           this.mockError = 'invalid_scope'
 
           set(this.reqMock, 'query.error', this.mockError)
-          this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+          this.controller.callbackOAuth(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
 
-          expect(this.resMock.render).to.have.been.calledWith('oauth/views/help-page', sinon.match({
-            heading: this.helpPageTitle,
-          }))
+          expect(this.resMock.render).to.have.been.calledWith(
+            'oauth/views/help-page',
+            sinon.match({
+              heading: this.helpPageTitle,
+            })
+          )
 
           it('token should be undefined', () => {
             expect(this.reqMock.session.token).to.be.undefined
@@ -312,7 +370,11 @@ describe('OAuth controller', () => {
         beforeEach(async () => {
           set(this.reqMock, 'session.token', undefined)
           set(this.reqMock, 'query.state', undefined)
-          await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+          await this.controller.callbackOAuth(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should handle error as expected', () => {
@@ -341,7 +403,11 @@ describe('OAuth controller', () => {
             .post(this.mockFetchUrl.path)
             .reply(200, { access_token: this.mockOauthAccessToken })
 
-          await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+          await this.controller.callbackOAuth(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should call redirect', () => {
@@ -367,7 +433,11 @@ describe('OAuth controller', () => {
             .post(this.mockFetchUrl.path)
             .reply(200, { access_token: this.mockOauthAccessToken })
 
-          await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+          await this.controller.callbackOAuth(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should call redirect', () => {
@@ -375,7 +445,9 @@ describe('OAuth controller', () => {
         })
 
         it('should redirect to expected location', () => {
-          expect(this.resMock.redirect).to.have.been.calledWith(this.returnToUrl)
+          expect(this.resMock.redirect).to.have.been.calledWith(
+            this.returnToUrl
+          )
         })
 
         it('token should match expected value', () => {
@@ -391,12 +463,18 @@ describe('OAuth controller', () => {
             .post(this.mockFetchUrl.path)
             .replyWithError(this.returnedError)
 
-          await this.controller.callbackOAuth(this.reqMock, this.resMock, this.nextSpy)
+          await this.controller.callbackOAuth(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should handle error as expected', () => {
           expect(this.nextSpy).to.have.been.calledOnce
-          expect(this.nextSpy.args[0][0].message).to.equal(`Error: ${this.returnedError}`)
+          expect(this.nextSpy.args[0][0].message).to.equal(
+            `Error: ${this.returnedError}`
+          )
         })
 
         it('token should be undefined', () => {
@@ -434,7 +512,9 @@ describe('OAuth controller', () => {
     })
 
     it('should redirect', () => {
-      expect(this.resMock.redirect).to.be.calledWith(this.mockOauthConfig.logoutUrl)
+      expect(this.resMock.redirect).to.be.calledWith(
+        this.mockOauthConfig.logoutUrl
+      )
     })
   })
 })

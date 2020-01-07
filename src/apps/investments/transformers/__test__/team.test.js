@@ -19,15 +19,18 @@ describe('Investment project transformers', () => {
 
     it('should return formatted data for the project manager and assurance adviser if there are both', () => {
       const data = Object.assign({}, investmentData)
-      const expectedProjectManagementData = [{
-        role: 'Project Assurance Adviser',
-        adviser: 'John Brown',
-        team: 'Team B',
-      }, {
-        role: 'Project Manager',
-        adviser: 'Fred Smith',
-        team: 'Team A',
-      }]
+      const expectedProjectManagementData = [
+        {
+          role: 'Project Assurance Adviser',
+          adviser: 'John Brown',
+          team: 'Team B',
+        },
+        {
+          role: 'Project Manager',
+          adviser: 'Fred Smith',
+          team: 'Team A',
+        },
+      ]
 
       const projectManagementData = transformProjectManagementForView(data)
       expect(projectManagementData).to.deep.equal(expectedProjectManagementData)
@@ -38,15 +41,18 @@ describe('Investment project transformers', () => {
       data.project_assurance_adviser = null
       data.project_assurance_team = null
 
-      const expectedProjectManagementData = [{
-        role: 'Project Assurance Adviser',
-        adviser: 'To do',
-        team: null,
-      }, {
-        role: 'Project Manager',
-        adviser: 'Fred Smith',
-        team: 'Team A',
-      }]
+      const expectedProjectManagementData = [
+        {
+          role: 'Project Assurance Adviser',
+          adviser: 'To do',
+          team: null,
+        },
+        {
+          role: 'Project Manager',
+          adviser: 'Fred Smith',
+          team: 'Team A',
+        },
+      ]
 
       const projectManagementData = transformProjectManagementForView(data)
       expect(projectManagementData).to.deep.equal(expectedProjectManagementData)
@@ -57,15 +63,18 @@ describe('Investment project transformers', () => {
       data.project_manager = null
       data.project_manager_team = null
 
-      const expectedProjectManagementData = [{
-        role: 'Project Assurance Adviser',
-        adviser: 'John Brown',
-        team: 'Team B',
-      }, {
-        role: 'Project Manager',
-        adviser: 'To do',
-        team: null,
-      }]
+      const expectedProjectManagementData = [
+        {
+          role: 'Project Assurance Adviser',
+          adviser: 'John Brown',
+          team: 'Team B',
+        },
+        {
+          role: 'Project Manager',
+          adviser: 'To do',
+          team: null,
+        },
+      ]
 
       const projectManagementData = transformProjectManagementForView(data)
       expect(projectManagementData).to.deep.equal(expectedProjectManagementData)
@@ -84,15 +93,16 @@ describe('Investment project transformers', () => {
             name: 'Team Fred',
           },
         },
-        investor_company: {
-        },
+        investor_company: {},
       }
 
-      const expectedResult = [{
-        adviser: 'Fred Smith',
-        role: 'Client Relationship Manager',
-        team: 'Team Fred',
-      }]
+      const expectedResult = [
+        {
+          adviser: 'Fred Smith',
+          role: 'Client Relationship Manager',
+          team: 'Team Fred',
+        },
+      ]
 
       const actualResult = transformClientRelationshipManagementForView(data)
       expect(actualResult).to.deep.equal(expectedResult)
@@ -121,15 +131,18 @@ describe('Investment project transformers', () => {
         },
       }
 
-      const expectedResult = [{
-        adviser: 'Fred Smith',
-        role: 'Client Relationship Manager',
-        team: 'Team Fred',
-      }, {
-        adviser: 'John Brown',
-        role: 'Global Account Manager',
-        team: 'Johns Team',
-      }]
+      const expectedResult = [
+        {
+          adviser: 'Fred Smith',
+          role: 'Client Relationship Manager',
+          team: 'Team Fred',
+        },
+        {
+          adviser: 'John Brown',
+          role: 'Global Account Manager',
+          team: 'Johns Team',
+        },
+      ]
 
       const actualResult = transformClientRelationshipManagementForView(data)
       expect(actualResult).to.deep.equal(expectedResult)
@@ -138,25 +151,29 @@ describe('Investment project transformers', () => {
 
   describe('#transformTeamMembersForView', () => {
     it('should return a formatted version of team member data', () => {
-      const teamMembers = [{
-        adviser: {
-          id: '1234',
-          first_name: 'Fred',
-          last_name: 'Smith',
-          name: 'Fred Smith',
-          dit_team: {
-            id: '444',
-            name: 'Freds Team',
+      const teamMembers = [
+        {
+          adviser: {
+            id: '1234',
+            first_name: 'Fred',
+            last_name: 'Smith',
+            name: 'Fred Smith',
+            dit_team: {
+              id: '444',
+              name: 'Freds Team',
+            },
           },
+          role: 'Director',
         },
-        role: 'Director',
-      }]
+      ]
 
-      const expected = [{
-        adviser: 'Fred Smith',
-        team: 'Freds Team',
-        role: 'Director',
-      }]
+      const expected = [
+        {
+          adviser: 'Fred Smith',
+          team: 'Freds Team',
+          role: 'Director',
+        },
+      ]
 
       const actual = teamMembers.map(transformTeamMembersForView)
       expect(actual).to.deep.equal(expected)

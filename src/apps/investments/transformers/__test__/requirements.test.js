@@ -21,11 +21,15 @@ describe('Investment project transformers', () => {
 
     context('when called with a fully populated investment', () => {
       beforeEach(() => {
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(this.investmentData)
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
+          this.investmentData
+        )
       })
 
       it('should return the required properties', () => {
-        expect(Object.keys(this.transformedInvestmentRequirements)).to.deep.equal([
+        expect(
+          Object.keys(this.transformedInvestmentRequirements)
+        ).to.deep.equal([
           'strategic_drivers',
           'client_requirements',
           'competitor_countries',
@@ -43,11 +47,16 @@ describe('Investment project transformers', () => {
           strategic_drivers: [],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(data)
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
+          data
+        )
       })
 
       it('should return an empty string for strategic drivers', () => {
-        expect(this.transformedInvestmentRequirements).to.have.property('strategic_drivers', '')
+        expect(this.transformedInvestmentRequirements).to.have.property(
+          'strategic_drivers',
+          ''
+        )
       })
     })
 
@@ -57,11 +66,16 @@ describe('Investment project transformers', () => {
           strategic_drivers: [{ id: 'sd1', name: 'strategic driver 1' }],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(data)
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
+          data
+        )
       })
 
       it('should return the strategic driver', () => {
-        expect(this.transformedInvestmentRequirements).to.have.property('strategic_drivers', 'strategic driver 1')
+        expect(this.transformedInvestmentRequirements).to.have.property(
+          'strategic_drivers',
+          'strategic driver 1'
+        )
       })
     })
 
@@ -74,11 +88,16 @@ describe('Investment project transformers', () => {
           ],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(data)
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
+          data
+        )
       })
 
       it('should return the strategic drivers as a string list', () => {
-        expect(this.transformedInvestmentRequirements).to.have.property('strategic_drivers', 'strategic driver 1, strategic driver 2')
+        expect(this.transformedInvestmentRequirements).to.have.property(
+          'strategic_drivers',
+          'strategic driver 1, strategic driver 2'
+        )
       })
     })
 
@@ -88,11 +107,16 @@ describe('Investment project transformers', () => {
           client_requirements: 'Client requirement',
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(data)
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
+          data
+        )
       })
 
       it('should return the client requirement', () => {
-        expect(this.transformedInvestmentRequirements).to.have.property('client_requirements', 'Client requirement')
+        expect(this.transformedInvestmentRequirements).to.have.property(
+          'client_requirements',
+          'Client requirement'
+        )
       })
     })
 
@@ -102,11 +126,16 @@ describe('Investment project transformers', () => {
           client_requirements: '',
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(data)
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
+          data
+        )
       })
 
       it('should return the client requirement', () => {
-        expect(this.transformedInvestmentRequirements).to.have.property('client_requirements', '')
+        expect(this.transformedInvestmentRequirements).to.have.property(
+          'client_requirements',
+          ''
+        )
       })
     })
 
@@ -116,11 +145,16 @@ describe('Investment project transformers', () => {
           competitor_countries: [],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(data)
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
+          data
+        )
       })
 
       it('should return an empty string for competitor countries', () => {
-        expect(this.transformedInvestmentRequirements).to.have.property('competitor_countries', '')
+        expect(this.transformedInvestmentRequirements).to.have.property(
+          'competitor_countries',
+          ''
+        )
       })
     })
 
@@ -130,11 +164,16 @@ describe('Investment project transformers', () => {
           competitor_countries: [{ id: 'c1', name: 'country 1' }],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(data)
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
+          data
+        )
       })
 
       it('should return the competitor country', () => {
-        expect(this.transformedInvestmentRequirements).to.have.property('competitor_countries', 'country 1')
+        expect(this.transformedInvestmentRequirements).to.have.property(
+          'competitor_countries',
+          'country 1'
+        )
       })
     })
 
@@ -147,11 +186,16 @@ describe('Investment project transformers', () => {
           ],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(data)
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
+          data
+        )
       })
 
       it('should return the competitor countries as a string list', () => {
-        expect(this.transformedInvestmentRequirements).to.have.property('competitor_countries', 'country 1, country 2')
+        expect(this.transformedInvestmentRequirements).to.have.property(
+          'competitor_countries',
+          'country 1, country 2'
+        )
       })
     })
 
@@ -161,11 +205,16 @@ describe('Investment project transformers', () => {
           uk_region_locations: [],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(data)
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
+          data
+        )
       })
 
       it('should return an empty string for uk region locations', () => {
-        expect(this.transformedInvestmentRequirements).to.have.property('uk_region_locations', '')
+        expect(this.transformedInvestmentRequirements).to.have.property(
+          'uk_region_locations',
+          ''
+        )
       })
     })
 
@@ -175,11 +224,16 @@ describe('Investment project transformers', () => {
           uk_region_locations: [{ id: 'rl1', name: 'region location 1' }],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(data)
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
+          data
+        )
       })
 
       it('should return the uk region location', () => {
-        expect(this.transformedInvestmentRequirements).to.have.property('uk_region_locations', 'region location 1')
+        expect(this.transformedInvestmentRequirements).to.have.property(
+          'uk_region_locations',
+          'region location 1'
+        )
       })
     })
 
@@ -192,11 +246,16 @@ describe('Investment project transformers', () => {
           ],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(data)
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
+          data
+        )
       })
 
       it('should return the uk region locations as a string list', () => {
-        expect(this.transformedInvestmentRequirements).to.have.property('uk_region_locations', 'region location 1, region location 2')
+        expect(this.transformedInvestmentRequirements).to.have.property(
+          'uk_region_locations',
+          'region location 1, region location 2'
+        )
       })
     })
 
@@ -206,11 +265,16 @@ describe('Investment project transformers', () => {
           actual_uk_regions: [],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(data)
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
+          data
+        )
       })
 
       it('should return an empty string for actual uk regions', () => {
-        expect(this.transformedInvestmentRequirements).to.have.property('actual_uk_regions', '')
+        expect(this.transformedInvestmentRequirements).to.have.property(
+          'actual_uk_regions',
+          ''
+        )
       })
     })
 
@@ -220,11 +284,16 @@ describe('Investment project transformers', () => {
           actual_uk_regions: [{ id: 'a1', name: 'region 1' }],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(data)
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
+          data
+        )
       })
 
       it('should return the uk region location', () => {
-        expect(this.transformedInvestmentRequirements).to.have.property('actual_uk_regions', 'region 1')
+        expect(this.transformedInvestmentRequirements).to.have.property(
+          'actual_uk_regions',
+          'region 1'
+        )
       })
     })
 
@@ -237,11 +306,16 @@ describe('Investment project transformers', () => {
           ],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(data)
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
+          data
+        )
       })
 
       it('should return theactual uk regions as a string list', () => {
-        expect(this.transformedInvestmentRequirements).to.have.property('actual_uk_regions', 'region 1, region 2')
+        expect(this.transformedInvestmentRequirements).to.have.property(
+          'actual_uk_regions',
+          'region 1, region 2'
+        )
       })
     })
 
@@ -252,14 +326,18 @@ describe('Investment project transformers', () => {
           uk_company: null,
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(data)
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
+          data
+        )
       })
 
       it('should set the investment details to display a link to find a company', () => {
-        expect(this.transformedInvestmentRequirements.uk_company).to.deep.equal({
-          name: 'Find company',
-          url: `/investments/projects/1/edit-ukcompany`,
-        })
+        expect(this.transformedInvestmentRequirements.uk_company).to.deep.equal(
+          {
+            name: 'Find company',
+            url: `/investments/projects/1/edit-ukcompany`,
+          }
+        )
       })
     })
 
@@ -273,22 +351,30 @@ describe('Investment project transformers', () => {
           },
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(data)
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
+          data
+        )
       })
 
       it('should set the investment details to display the company name', () => {
-        expect(this.transformedInvestmentRequirements.uk_company.name).to.equal('Freds')
+        expect(this.transformedInvestmentRequirements.uk_company.name).to.equal(
+          'Freds'
+        )
       })
 
       it('should set the investment details to display an action to edit the company money is going through', () => {
-        expect(this.transformedInvestmentRequirements.uk_company.actions[0]).to.deep.equal({
+        expect(
+          this.transformedInvestmentRequirements.uk_company.actions[0]
+        ).to.deep.equal({
           label: 'Edit company',
           url: `/investments/projects/1/edit-ukcompany?term=Freds`,
         })
       })
 
       it('should set the investment details to display an action to remove the company the money is going through', () => {
-        expect(this.transformedInvestmentRequirements.uk_company.actions[1]).to.deep.equal({
+        expect(
+          this.transformedInvestmentRequirements.uk_company.actions[1]
+        ).to.deep.equal({
           label: 'Remove company',
           url: `/investments/projects/1/remove-ukcompany`,
         })
@@ -301,11 +387,16 @@ describe('Investment project transformers', () => {
           delivery_partners: [],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(data)
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
+          data
+        )
       })
 
       it('should return an empty string for delivery partners', () => {
-        expect(this.transformedInvestmentRequirements).to.have.property('delivery_partners', '')
+        expect(this.transformedInvestmentRequirements).to.have.property(
+          'delivery_partners',
+          ''
+        )
       })
     })
 
@@ -315,11 +406,16 @@ describe('Investment project transformers', () => {
           delivery_partners: [{ id: 'dp1', name: 'Delivery partner 1' }],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(data)
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
+          data
+        )
       })
 
       it('should return the delivery partner', () => {
-        expect(this.transformedInvestmentRequirements).to.have.property('delivery_partners', 'Delivery partner 1')
+        expect(this.transformedInvestmentRequirements).to.have.property(
+          'delivery_partners',
+          'Delivery partner 1'
+        )
       })
     })
 
@@ -332,11 +428,16 @@ describe('Investment project transformers', () => {
           ],
         })
 
-        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(data)
+        this.transformedInvestmentRequirements = transformInvestmentRequirementsForView(
+          data
+        )
       })
 
       it('should return the delivery partners as a string list', () => {
-        expect(this.transformedInvestmentRequirements).to.have.property('delivery_partners', 'Delivery partner 1, Delivery partner 2')
+        expect(this.transformedInvestmentRequirements).to.have.property(
+          'delivery_partners',
+          'Delivery partner 1, Delivery partner 2'
+        )
       })
     })
   })

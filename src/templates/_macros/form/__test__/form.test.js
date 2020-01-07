@@ -13,17 +13,19 @@ describe('Form component', () => {
   describe('valid call', () => {
     it('should render a `post` form by default', () => {
       const component = macros.renderWithCallerToDom('Form')(
-        macros.renderToDom('TextField'),
+        macros.renderToDom('TextField')
       )
       expect(component.method).to.equal('post')
     })
 
     it('should render with submit button by default', () => {
       const component = macros.renderWithCallerToDom('Form')(
-        macros.renderToDom('TextField'),
+        macros.renderToDom('TextField')
       )
       expect(component.querySelector('.c-form-actions')).to.exist
-      expect(component.querySelector('button.govuk-button').textContent).to.equal('Submit')
+      expect(
+        component.querySelector('button.govuk-button').textContent
+      ).to.equal('Submit')
     })
 
     it('should render form with custom props', () => {
@@ -35,13 +37,17 @@ describe('Form component', () => {
         actionsClass: 'u-js-hidden',
       }
       const component = macros.renderWithCallerToDom('Form', formProps)(
-        macros.renderToDom('TextField'),
+        macros.renderToDom('TextField')
       )
       expect(component.method).to.equal('get')
       expect(component.action).to.equal('/form-url?_csrf=')
       expect(component.className).to.equal('c-form-component')
       expect(component.getAttribute('role')).to.equal('search')
-      expect(component.querySelector('.c-form-actions').classList.contains('u-js-hidden')).to.be.true
+      expect(
+        component
+          .querySelector('.c-form-actions')
+          .classList.contains('u-js-hidden')
+      ).to.be.true
     })
 
     it('should render form with custom submit button text', () => {
@@ -49,9 +55,11 @@ describe('Form component', () => {
         buttonText: 'Save',
       }
       const component = macros.renderWithCallerToDom('Form', formProps)(
-        macros.renderToDom('TextField'),
+        macros.renderToDom('TextField')
       )
-      expect(component.querySelector('button.govuk-button').textContent).to.equal('Save')
+      expect(
+        component.querySelector('button.govuk-button').textContent
+      ).to.equal('Save')
     })
 
     it('should render form without form actions', () => {
@@ -59,7 +67,7 @@ describe('Form component', () => {
         hideFormActions: true,
       }
       const component = macros.renderWithCallerToDom('Form', formProps)(
-        macros.renderToDom('TextField'),
+        macros.renderToDom('TextField')
       )
       expect(component.querySelector('.c-form-actions')).to.not.exist
     })
@@ -70,12 +78,13 @@ describe('Form component', () => {
         returnLink: '/previous-page',
       }
       const component = macros.renderWithCallerToDom('Form', formProps)(
-        macros.renderToDom('TextField'),
+        macros.renderToDom('TextField')
       )
       const returnLink = component.querySelector('[href="/previous-page"]')
       expect(returnLink).to.exist
       expect(returnLink.textContent).to.equal('Back')
-      expect(component.querySelector('.c-form-actions .govuk-button')).to.not.exist
+      expect(component.querySelector('.c-form-actions .govuk-button')).to.not
+        .exist
     })
 
     it('should render form with button modifier as string', () => {
@@ -83,9 +92,13 @@ describe('Form component', () => {
         buttonModifiers: 'modifier',
       }
       const component = macros.renderWithCallerToDom('Form', formProps)(
-        macros.renderToDom('TextField'),
+        macros.renderToDom('TextField')
       )
-      expect(component.querySelector('button.govuk-button').classList.contains('modifier')).to.be.true
+      expect(
+        component
+          .querySelector('button.govuk-button')
+          .classList.contains('modifier')
+      ).to.be.true
     })
 
     it('should render form with button modifier as array', () => {
@@ -93,7 +106,7 @@ describe('Form component', () => {
         buttonModifiers: ['modifier-1', 'modifier-2'],
       }
       const component = macros.renderWithCallerToDom('Form', formProps)(
-        macros.renderToDom('TextField'),
+        macros.renderToDom('TextField')
       )
       const classList = component.querySelector('button.govuk-button').classList
 
@@ -106,7 +119,7 @@ describe('Form component', () => {
         returnLink: '/previous-page',
       }
       const component = macros.renderWithCallerToDom('Form', formProps)(
-        macros.renderToDom('TextField'),
+        macros.renderToDom('TextField')
       )
       const returnLink = component.querySelector('[href="/previous-page"]')
       expect(returnLink).to.exist
@@ -119,20 +132,22 @@ describe('Form component', () => {
         returnText: 'Go back',
       }
       const component = macros.renderWithCallerToDom('Form', formProps)(
-        macros.renderToDom('TextField'),
+        macros.renderToDom('TextField')
       )
-      expect(component.querySelector('[href="/previous-page"]').textContent).to.equal('Go back')
+      expect(
+        component.querySelector('[href="/previous-page"]').textContent
+      ).to.equal('Go back')
     })
 
     it('should render form with hidden fields', () => {
       const formProps = {
         hiddenFields: {
-          'csrf': 'abcd',
+          csrf: 'abcd',
           'company-id': '12345',
         },
       }
       const component = macros.renderWithCallerToDom('Form', formProps)(
-        macros.renderToDom('TextField'),
+        macros.renderToDom('TextField')
       )
 
       const hiddenInputs = component.querySelectorAll('[type="hidden"]')
@@ -153,16 +168,26 @@ describe('Form component', () => {
         },
       }
       const component = macros.renderWithCallerToDom('Form', formProps)(
-        macros.renderToDom('TextField'),
+        macros.renderToDom('TextField')
       )
 
       const formErrorsEl = component.querySelector('.c-error-summary')
-      const formErrorsMessagesEls = formErrorsEl.querySelectorAll('.c-error-summary__list-item')
+      const formErrorsMessagesEls = formErrorsEl.querySelectorAll(
+        '.c-error-summary__list-item'
+      )
       expect(formErrorsEl).to.exist
-      expect(formErrorsEl.querySelector('.c-error-summary__summary').textContent.trim()).to.equal('Error summary')
+      expect(
+        formErrorsEl
+          .querySelector('.c-error-summary__summary')
+          .textContent.trim()
+      ).to.equal('Error summary')
       expect(formErrorsMessagesEls).to.have.length(2)
-      expect(formErrorsMessagesEls[0].textContent.trim()).to.equal('Error message')
-      expect(formErrorsMessagesEls[1].textContent.trim()).to.equal('Another error message')
+      expect(formErrorsMessagesEls[0].textContent.trim()).to.equal(
+        'Error message'
+      )
+      expect(formErrorsMessagesEls[1].textContent.trim()).to.equal(
+        'Another error message'
+      )
     })
   })
 })

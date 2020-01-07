@@ -64,7 +64,7 @@ const AddItems = {
     encType: false,
   },
 
-  init (wrapper = document, options) {
+  init(wrapper = document, options) {
     this.wrapper = wrapper
     this.settings = assign({}, this.defaults, options)
 
@@ -74,7 +74,7 @@ const AddItems = {
     this.setEncType()
   },
 
-  cacheEls () {
+  cacheEls() {
     const lastItem = this.wrapper.querySelector(this.settings.itemSelector)
     if (lastItem) {
       this.itemContainer = lastItem.parentNode
@@ -83,11 +83,11 @@ const AddItems = {
     this.addButton = this.wrapper.querySelector(this.settings.addButtonSelector)
   },
 
-  bindEvents () {
+  bindEvents() {
     this.wrapper.addEventListener('click', this.clickHandler.bind(this))
   },
 
-  render () {
+  render() {
     this.insertAddButton()
     if (this.settings.canRemove) {
       this.insertRemoveButtons()
@@ -97,14 +97,23 @@ const AddItems = {
     this.updateButtonState()
   },
 
-  decorateButtons () {
-    const removeButtons = Array.from(this.wrapper.querySelectorAll(this.settings.removeButtonSelector))
-    const addButton = this.wrapper.querySelector(this.settings.addButtonSelector)
-    const addTypeaheadButton = this.wrapper.querySelector(this.settings.addTypeaheadButtonSelector)
+  decorateButtons() {
+    const removeButtons = Array.from(
+      this.wrapper.querySelectorAll(this.settings.removeButtonSelector)
+    )
+    const addButton = this.wrapper.querySelector(
+      this.settings.addButtonSelector
+    )
+    const addTypeaheadButton = this.wrapper.querySelector(
+      this.settings.addTypeaheadButtonSelector
+    )
 
     if (addButton) {
       addButton.setAttribute('data-method', 'add')
-      addButton.innerText = this.settings.addButtonText.replace('{{itemName}}', this.settings.itemName)
+      addButton.innerText = this.settings.addButtonText.replace(
+        '{{itemName}}',
+        this.settings.itemName
+      )
 
       if (removeButtons.length === 0) {
         addButton.innerText = addButton.innerText.replace('another', '')
@@ -113,21 +122,33 @@ const AddItems = {
 
     if (addTypeaheadButton) {
       addTypeaheadButton.setAttribute('data-method', 'add-typeahead')
-      addTypeaheadButton.innerText = this.settings.addButtonText.replace('{{itemName}}', this.settings.itemName)
+      addTypeaheadButton.innerText = this.settings.addButtonText.replace(
+        '{{itemName}}',
+        this.settings.itemName
+      )
 
       if (!removeButtons.length) {
-        addTypeaheadButton.innerText = addTypeaheadButton.innerText.replace('another', '')
+        addTypeaheadButton.innerText = addTypeaheadButton.innerText.replace(
+          'another',
+          ''
+        )
       }
     }
 
     removeButtons.forEach((element) => {
       element.setAttribute('data-method', 'remove')
-      element.innerHTML = this.settings.removeButtonText.replace('{{itemName}}', this.settings.itemName)
+      element.innerHTML = this.settings.removeButtonText.replace(
+        '{{itemName}}',
+        this.settings.itemName
+      )
     })
   },
 
-  insertAddButton () {
-    if (this.wrapper.querySelector(this.settings.addButtonSelector) || this.wrapper.querySelector(this.settings.addTypeaheadButtonSelector)) {
+  insertAddButton() {
+    if (
+      this.wrapper.querySelector(this.settings.addButtonSelector) ||
+      this.wrapper.querySelector(this.settings.addTypeaheadButtonSelector)
+    ) {
       return
     }
 
@@ -145,29 +166,32 @@ const AddItems = {
     this.wrapper.appendChild(addButtonWrapper)
   },
 
-  insertRemoveButtons () {
-    Array.from(this.wrapper.querySelectorAll(this.settings.itemSelector))
-      .forEach((item) => {
-        if (item.querySelector(this.settings.removeButtonSelector)) {
-          return
-        }
+  insertRemoveButtons() {
+    Array.from(
+      this.wrapper.querySelectorAll(this.settings.itemSelector)
+    ).forEach((item) => {
+      if (item.querySelector(this.settings.removeButtonSelector)) {
+        return
+      }
 
-        const removeButtonElement = this.document.createElement('button')
-        removeButtonElement.className = `govuk-button button--link ${removeButtonClass}`
+      const removeButtonElement = this.document.createElement('button')
+      removeButtonElement.className = `govuk-button button--link ${removeButtonClass}`
 
-        item.appendChild(removeButtonElement)
-      })
+      item.appendChild(removeButtonElement)
+    })
   },
 
-  updateButtonState () {
-    const removeButtons = Array.from(this.wrapper.querySelectorAll(this.settings.removeButtonSelector))
+  updateButtonState() {
+    const removeButtons = Array.from(
+      this.wrapper.querySelectorAll(this.settings.removeButtonSelector)
+    )
 
     if (removeButtons.length === 1 && !this.settings.canRemoveAll) {
       removeElement(removeButtons[0])
     }
   },
 
-  clickHandler (event) {
+  clickHandler(event) {
     const target = event.target
 
     if (!target.hasAttribute('data-method')) {
@@ -191,7 +215,7 @@ const AddItems = {
     this.render()
   },
 
-  setEncType () {
+  setEncType() {
     const pageForm = document.querySelector('form')
 
     if (pageForm && pageForm.enctype) {
@@ -199,7 +223,7 @@ const AddItems = {
     }
   },
 
-  getItemAttribute () {
+  getItemAttribute() {
     if (this.encType === 'multipart/form-data') {
       return 'name'
     } else {
@@ -207,8 +231,10 @@ const AddItems = {
     }
   },
 
-  addItem () {
-    const lastItem = this.wrapper.querySelector(`${this.settings.itemSelector}:last-of-type`)
+  addItem() {
+    const lastItem = this.wrapper.querySelector(
+      `${this.settings.itemSelector}:last-of-type`
+    )
     const attr = this.getItemAttribute()
     const newItem = regenIds(this.template.cloneNode(true), attr)
 
@@ -220,8 +246,10 @@ const AddItems = {
 
     insertAfter(newItem, lastItem)
   },
-  addTypeaheadItem () {
-    const lastItem = this.wrapper.querySelector(`${this.settings.itemSelector}:last-of-type`)
+  addTypeaheadItem() {
+    const lastItem = this.wrapper.querySelector(
+      `${this.settings.itemSelector}:last-of-type`
+    )
     const attr = this.getItemAttribute()
     const newItem = regenIds(this.template.cloneNode(true), attr)
     const typeaheadWrapper = newItem.querySelector('.js-vue-wrapper')
@@ -235,12 +263,12 @@ const AddItems = {
 
     insertAfter(newItem, lastItem)
   },
-  removeItem (item) {
+  removeItem(item) {
     if (this.settings.canRemove) {
       item.parentNode.removeChild(item)
     }
   },
-  buildTypeaheadTemplate (name) {
+  buildTypeaheadTemplate(name) {
     return `<typeahead
             entity="adviser"
             model="[]"
@@ -253,29 +281,33 @@ const AddItems = {
             value=""
             classes="c-form-group c-form-group--no-filter"></typeahead>`
   },
-  buildTypeahead (wrapper) {
+  buildTypeahead(wrapper) {
     new Vue({
       el: wrapper,
       components: {
-        'typeahead': Typeahead,
+        typeahead: Typeahead,
       },
     })
   },
 }
 
 module.exports = {
-  init (page = document) {
+  init(page = document) {
     const elements = Array.from(page.querySelectorAll('.js-AddItems'))
 
     elements.forEach((element) => {
       const settings = {
-        canRemove: !element.hasAttribute('data-can-remove') || (element.getAttribute('data-can-remove') === 'true'),
+        canRemove:
+          !element.hasAttribute('data-can-remove') ||
+          element.getAttribute('data-can-remove') === 'true',
         canRemoveAll: element.hasAttribute('data-can-remove-all'),
         itemSelector: element.getAttribute('data-item-selector'),
         itemName: element.getAttribute('data-item-name'),
         addButtonSelector: element.getAttribute('data-add-button-selector'),
         addButtonText: element.getAttribute('data-add-button-text'),
-        removeButtonSelector: element.getAttribute('data-remove-button-selector'),
+        removeButtonSelector: element.getAttribute(
+          'data-remove-button-selector'
+        ),
         removeButtonText: element.getAttribute('data-remove-button-text'),
       }
 
@@ -284,9 +316,12 @@ module.exports = {
           value: page,
         },
       })
-      addItems.init(element, pickBy(settings, (setting) => {
-        return setting !== null && setting !== undefined
-      }))
+      addItems.init(
+        element,
+        pickBy(settings, (setting) => {
+          return setting !== null && setting !== undefined
+        })
+      )
     })
   },
 }

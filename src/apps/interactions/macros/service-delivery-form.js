@@ -19,7 +19,7 @@ const {
   countriesDiscussed,
 } = require('./fields')
 
-module.exports = function ({
+module.exports = function({
   returnLink,
   returnText,
   buttonText,
@@ -76,7 +76,8 @@ module.exports = function ({
         modifier: ['subfield', 'medium'],
         condition: {
           name: 'service_delivery_status',
-          value: successfulServiceStatuses && successfulServiceStatuses.join('||'),
+          value:
+            successfulServiceStatuses && successfulServiceStatuses.join('||'),
         },
       },
       participantsHeading(company),
@@ -128,7 +129,7 @@ module.exports = function ({
       },
       feedbackPolicyNotes,
       ...countriesDiscussed(theme, interaction, featureFlags),
-    ].map(field => {
+    ].map((field) => {
       return assign(field, {
         label: field.label || labels.serviceDelivery[field.name],
       })

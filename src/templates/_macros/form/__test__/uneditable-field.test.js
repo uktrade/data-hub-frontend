@@ -28,15 +28,25 @@ describe('Uneditable field macro', () => {
     })
 
     it('should give the form group an id attribute', () => {
-      expect(this.component.getAttribute('id')).to.equal('group-field-uneditable_field')
+      expect(this.component.getAttribute('id')).to.equal(
+        'group-field-uneditable_field'
+      )
     })
 
     it('should render a label', () => {
-      expect(this.component.querySelector('.c-form-group__label-text').textContent.trim()).to.equal('Uneditable field')
+      expect(
+        this.component
+          .querySelector('.c-form-group__label-text')
+          .textContent.trim()
+      ).to.equal('Uneditable field')
     })
 
     it('should render the value', () => {
-      expect(this.component.querySelector('.c-form-group__inner p').textContent.trim()).to.equal('Uneditable value Change')
+      expect(
+        this.component
+          .querySelector('.c-form-group__inner p')
+          .textContent.trim()
+      ).to.equal('Uneditable value Change')
     })
 
     it('should render a "Change" link', () => {

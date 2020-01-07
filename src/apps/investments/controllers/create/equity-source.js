@@ -1,28 +1,36 @@
 const { assign, get } = require('lodash')
 const { getCompanyInvestmentProjects } = require('../../repos')
-const { searchForeignCompanies } = require('../../../../modules/search/services')
-const { transformApiResponseToSearchCollection } = require('../../../../modules/search/transformers')
-const { transformCompanyToListItem } = require('../../../companies/transformers')
+const {
+  searchForeignCompanies,
+} = require('../../../../modules/search/services')
+const {
+  transformApiResponseToSearchCollection,
+} = require('../../../../modules/search/transformers')
+const {
+  transformCompanyToListItem,
+} = require('../../../companies/transformers')
 const { ENTITIES } = require('../../../search/constants')
 
-function renderEquitySourcePage (req, res, next) {
+function renderEquitySourcePage(req, res, next) {
   return res
     .breadcrumb('Add investment project')
     .render('investments/views/create/equity-source')
 }
 
-function transformListItemForEquitySource (company, projects) {
-  return function augmentItem (item) {
-    if (!item || !company) { return }
+function transformListItemForEquitySource(company, projects) {
+  return function augmentItem(item) {
+    if (!item || !company) {
+      return
+    }
 
     return assign({}, item, {
       url: `${projects}/create/project/${item.id}?client-company=${company.id}`,
-      meta: item.meta.filter(x => x.label !== 'Sector'),
+      meta: item.meta.filter((x) => x.label !== 'Sector'),
     })
   }
 }
 
-async function getHandler (req, res, next) {
+async function getHandler(req, res, next) {
   const company = res.locals.company
   const { projects } = res.locals.paths
   const companyId = get(company, 'id')
@@ -32,22 +40,24 @@ async function getHandler (req, res, next) {
   res.locals.showSearch = !!req.query.search || get(company, 'uk_based', false)
 
   try {
-    const companyInvestments = await getCompanyInvestmentProjects(req.session.token, companyId)
+    const companyInvestments = await getCompanyInvestmentProjects(
+      req.session.token,
+      companyId
+    )
 
     if (searchTerm) {
       searchResult = await searchForeignCompanies({
         token: req.session.token,
         page: req.query.page,
         searchTerm,
-      })
-        .then(
-          transformApiResponseToSearchCollection(
-            { query: req.query },
-            ENTITIES,
-            transformCompanyToListItem,
-            transformListItemForEquitySource(company, projects)
-          )
+      }).then(
+        transformApiResponseToSearchCollection(
+          { query: req.query },
+          ENTITIES,
+          transformCompanyToListItem,
+          transformListItemForEquitySource(company, projects)
         )
+      )
     }
 
     res.locals = Object.assign({}, res.locals, {
@@ -63,7 +73,7 @@ async function getHandler (req, res, next) {
   }
 }
 
-function postHandler (req, res, next) {
+function postHandler(req, res, next) {
   const isEquitySource = req.body.is_equity_source
   const clientCompanyId = req.body.company_id
   const { projects } = res.locals.paths
@@ -73,13 +83,16 @@ function postHandler (req, res, next) {
   }
 
   if (isEquitySource === 'false') {
-    return res.redirect(`${projects}/create/equity-source/${clientCompanyId}?search=true`)
+    return res.redirect(
+      `${projects}/create/equity-source/${clientCompanyId}?search=true`
+    )
   }
 
   res.locals.form = {
     errors: {
       messages: {
-        is_equity_source: 'Please select whether this company will be the source of foreign equity',
+        is_equity_source:
+          'Please select whether this company will be the source of foreign equity',
       },
     },
   }

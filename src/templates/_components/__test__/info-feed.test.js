@@ -1,4 +1,6 @@
-const { renderComponentToDom } = require('../../../../test/unit/component-helper')
+const {
+  renderComponentToDom,
+} = require('../../../../test/unit/component-helper')
 
 const data = {
   heading: 'Data Hub Updates',
@@ -47,12 +49,8 @@ describe('Info feed component', () => {
   beforeEach(() => {
     component = renderComponentToDom('info-feed', data)
     heading = component.querySelector('.govuk-heading-m')
-    subHeading = component.querySelector(
-      '.dashboard-section__subheading'
-    )
-    outboundLink = component.querySelector(
-      '.dashboard-section__top-link'
-    )
+    subHeading = component.querySelector('.dashboard-section__subheading')
+    outboundLink = component.querySelector('.dashboard-section__top-link')
     infoFeedLink = component.querySelectorAll(
       '.dashboard-section__info-feed-link'
     )
@@ -95,10 +93,11 @@ describe('Info feed component', () => {
   })
   context('when there is no sub heading', () => {
     beforeEach(() => {
-      component = renderComponentToDom('info-feed', { ...data, subHeading: null })
-      subHeading = component.querySelector(
-        '.dashboard-section__subheading'
-      )
+      component = renderComponentToDom('info-feed', {
+        ...data,
+        subHeading: null,
+      })
+      subHeading = component.querySelector('.dashboard-section__subheading')
     })
     it('should not render a sub heading', () => {
       expect(subHeading).to.not.exist

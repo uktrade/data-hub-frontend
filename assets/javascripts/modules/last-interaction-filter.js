@@ -10,7 +10,7 @@ const checkboxesSelector = '.js-last-interaction-filter input'
   checked item and checking everything inbetween automatically (and disabling them)
 */
 const LastInteractionFilter = {
-  init () {
+  init() {
     const checkboxes = document.querySelectorAll(checkboxesSelector)
 
     if (checkboxes && checkboxes.length) {
@@ -20,10 +20,10 @@ const LastInteractionFilter = {
     }
   },
 
-  checkSelections () {
+  checkSelections() {
     let firstCheckedIndex
     let lastCheckedIndex
-    let l = this.checkboxes.length
+    const l = this.checkboxes.length
 
     if (this.getCheckedCount() <= 1) {
       return // nothing to do if we have one or less checkboxes checked
@@ -36,7 +36,7 @@ const LastInteractionFilter = {
       }
     }
 
-    for (let i = (l - 1); i >= 0; i--) {
+    for (let i = l - 1; i >= 0; i--) {
       if (this.checkboxes[i].checked) {
         lastCheckedIndex = i
         break
@@ -45,7 +45,7 @@ const LastInteractionFilter = {
 
     for (let i = 0; i < l; i++) {
       const checkbox = this.checkboxes[i]
-      const autoCheck = (i > firstCheckedIndex && i < lastCheckedIndex)
+      const autoCheck = i > firstCheckedIndex && i < lastCheckedIndex
 
       if (autoCheck) {
         checkbox.checked = true
@@ -56,7 +56,7 @@ const LastInteractionFilter = {
     }
   },
 
-  getCheckedCount () {
+  getCheckedCount() {
     let checkbox
     let count = 0
     let i = 0
@@ -70,7 +70,7 @@ const LastInteractionFilter = {
     return count
   },
 
-  onChangeHandler (e) {
+  onChangeHandler(e) {
     const target = e.target
 
     if (target && target.id) {

@@ -14,7 +14,7 @@ const { getReturnLink } = require('../helpers')
 const canAddCountries = require('../macros/can-add-countries')
 const mapErrors = require('../macros/map-errors')
 
-async function postDetails (req, res, next) {
+async function postDetails(req, res, next) {
   try {
     const serviceOptions = await getOptions(req.session.token, 'service', {
       transformer: transformServicesOptions,
@@ -23,7 +23,11 @@ async function postDetails (req, res, next) {
     res.locals.requestBody = transformInteractionFormBodyToApiRequest(
       req.body,
       serviceOptions,
-      canAddCountries(req.params.theme, res.locals.interaction, res.locals.features)
+      canAddCountries(
+        req.params.theme,
+        res.locals.interaction,
+        res.locals.features
+      )
     )
 
     const result = await saveInteraction(
@@ -48,7 +52,7 @@ async function postDetails (req, res, next) {
   }
 }
 
-async function getInteractionDetails (req, res, next, interactionId) {
+async function getInteractionDetails(req, res, next, interactionId) {
   try {
     const token = req.session.token
     const interaction = (res.locals.interaction = await fetchInteraction(

@@ -28,40 +28,56 @@ describe('Investment archive controller', () => {
     it('should call the archive investment project repo method for the id and reason', (done) => {
       const archived_reason = 'test'
 
-      this.controller.archiveInvestmentProjectHandler({
-        session: this.session,
-        body: {
-          archived_reason,
+      this.controller.archiveInvestmentProjectHandler(
+        {
+          session: this.session,
+          body: {
+            archived_reason,
+          },
+          params: {
+            investmentId: investmentData.id,
+          },
         },
-        params: {
-          investmentId: investmentData.id,
+        {
+          locals: {},
         },
-      }, {
-        locals: {},
-      }, () => {
-        expect(this.archiveInvestmentProject).to.be.calledWith(this.token, investmentData.id, archived_reason)
-        done()
-      })
+        () => {
+          expect(this.archiveInvestmentProject).to.be.calledWith(
+            this.token,
+            investmentData.id,
+            archived_reason
+          )
+          done()
+        }
+      )
     })
     it('should use the other reason in the call to the repo if it is provided', (done) => {
       const archived_reason = 'Other'
       const archived_reason_other = 'Some other reason'
 
-      this.controller.archiveInvestmentProjectHandler({
-        session: this.session,
-        body: {
-          archived_reason,
-          archived_reason_other,
+      this.controller.archiveInvestmentProjectHandler(
+        {
+          session: this.session,
+          body: {
+            archived_reason,
+            archived_reason_other,
+          },
+          params: {
+            investmentId: investmentData.id,
+          },
         },
-        params: {
-          investmentId: investmentData.id,
+        {
+          locals: {},
         },
-      }, {
-        locals: {},
-      }, () => {
-        expect(this.archiveInvestmentProject).to.be.calledWith(this.token, investmentData.id, archived_reason_other)
-        done()
-      })
+        () => {
+          expect(this.archiveInvestmentProject).to.be.calledWith(
+            this.token,
+            investmentData.id,
+            archived_reason_other
+          )
+          done()
+        }
+      )
     })
     it('should update the investment project being displayed with the reason selected', (done) => {
       const archived_reason = 'test'
@@ -69,23 +85,27 @@ describe('Investment archive controller', () => {
         investment: {},
       }
 
-      this.controller.archiveInvestmentProjectHandler({
-        session: this.session,
-        body: {
-          archived_reason,
+      this.controller.archiveInvestmentProjectHandler(
+        {
+          session: this.session,
+          body: {
+            archived_reason,
+          },
+          params: {
+            investmentId: investmentData.id,
+          },
         },
-        params: {
-          investmentId: investmentData.id,
+        {
+          locals,
         },
-      }, {
-        locals,
-      }, () => {
-        expect(locals.investment.archived).to.equal(true)
-        expect(locals.investment.archived_reason).to.equal(archived_reason)
-        expect(locals.investment.archived_by).to.deep.equal(this.session.user)
-        expect(locals.investment).to.have.property('archived_on')
-        done()
-      })
+        () => {
+          expect(locals.investment.archived).to.equal(true)
+          expect(locals.investment.archived_reason).to.equal(archived_reason)
+          expect(locals.investment.archived_by).to.deep.equal(this.session.user)
+          expect(locals.investment).to.have.property('archived_on')
+          done()
+        }
+      )
     })
     it('should update the investment project being displayed with the other reason if provided', (done) => {
       const archived_reason = 'Other'
@@ -94,24 +114,30 @@ describe('Investment archive controller', () => {
         investment: {},
       }
 
-      this.controller.archiveInvestmentProjectHandler({
-        session: this.session,
-        body: {
-          archived_reason,
-          archived_reason_other,
+      this.controller.archiveInvestmentProjectHandler(
+        {
+          session: this.session,
+          body: {
+            archived_reason,
+            archived_reason_other,
+          },
+          params: {
+            investmentId: investmentData.id,
+          },
         },
-        params: {
-          investmentId: investmentData.id,
+        {
+          locals,
         },
-      }, {
-        locals,
-      }, () => {
-        expect(locals.investment.archived).to.equal(true)
-        expect(locals.investment.archived_reason).to.equal(archived_reason_other)
-        expect(locals.investment.archived_by).to.deep.equal(this.session.user)
-        expect(locals.investment).to.have.property('archived_on')
-        done()
-      })
+        () => {
+          expect(locals.investment.archived).to.equal(true)
+          expect(locals.investment.archived_reason).to.equal(
+            archived_reason_other
+          )
+          expect(locals.investment.archived_by).to.deep.equal(this.session.user)
+          expect(locals.investment).to.have.property('archived_on')
+          done()
+        }
+      )
     })
     it('should pass on the form values and error if validation failed.', (done) => {
       this.controller = proxyquire('../archive', {
@@ -131,18 +157,22 @@ describe('Investment archive controller', () => {
         archived_reason: 'Stuff',
       }
 
-      this.controller.archiveInvestmentProjectHandler({
-        session: this.session,
-        body,
-        params: {
-          investmentId: investmentData.id,
+      this.controller.archiveInvestmentProjectHandler(
+        {
+          session: this.session,
+          body,
+          params: {
+            investmentId: investmentData.id,
+          },
         },
-      }, {
-        locals,
-      }, () => {
-        expect(locals.form.state).to.deep.equal(body)
-        done()
-      })
+        {
+          locals,
+        },
+        () => {
+          expect(locals.form.state).to.deep.equal(body)
+          done()
+        }
+      )
     })
     it('should call the error page if any other error occours', (done) => {
       const error = new Error()
@@ -160,78 +190,100 @@ describe('Investment archive controller', () => {
         archived_reason: 'Stuff',
       }
 
-      this.controller.archiveInvestmentProjectHandler({
-        session: this.session,
-        body,
-        params: {
-          investmentId: investmentData.id,
+      this.controller.archiveInvestmentProjectHandler(
+        {
+          session: this.session,
+          body,
+          params: {
+            investmentId: investmentData.id,
+          },
         },
-      }, {
-        locals,
-      }, (err) => {
-        expect(err).to.deep.equal(error)
-        done()
-      })
+        {
+          locals,
+        },
+        (err) => {
+          expect(err).to.deep.equal(error)
+          done()
+        }
+      )
     })
   })
 
   describe('unarchive', () => {
     it('should call unarchive on repository', (done) => {
-      this.controller.unarchiveInvestmentProjectHandler({
-        session: {
-          token: this.token,
+      this.controller.unarchiveInvestmentProjectHandler(
+        {
+          session: {
+            token: this.token,
+          },
+          params: {
+            investmentId: investmentData.id,
+          },
+          flash: this.flashStub,
         },
-        params: {
-          investmentId: investmentData.id,
+        {
+          redirect: () => {
+            expect(this.unarchiveInvestmentProject).to.be.calledWith(
+              this.token,
+              investmentData.id
+            )
+            done()
+          },
         },
-        flash: this.flashStub,
-      }, {
-        redirect: () => {
-          expect(this.unarchiveInvestmentProject).to.be.calledWith(this.token, investmentData.id)
-          done()
-        },
-      }, this.next)
+        this.next
+      )
     })
 
     it('should redirect to the investment project', (done) => {
-      this.controller.unarchiveInvestmentProjectHandler({
-        session: {
-          token: this.token,
+      this.controller.unarchiveInvestmentProjectHandler(
+        {
+          session: {
+            token: this.token,
+          },
+          body: {
+            archived_reason: 'test',
+          },
+          params: {
+            investmentId: investmentData.id,
+          },
+          flash: this.flashStub,
         },
-        body: {
-          archived_reason: 'test',
+        {
+          redirect: (url) => {
+            try {
+              expect(url).to.equal('details')
+              done()
+            } catch (e) {
+              done(e)
+            }
+          },
         },
-        params: {
-          investmentId: investmentData.id,
-        },
-        flash: this.flashStub,
-      }, {
-        redirect: (url) => {
-          try {
-            expect(url).to.equal('details')
-            done()
-          } catch (e) {
-            done(e)
-          }
-        },
-      }, this.next)
+        this.next
+      )
     })
 
     it('should send a flash message that all went well', (done) => {
-      this.controller.unarchiveInvestmentProjectHandler({
-        session: {
-          token: this.token,
+      this.controller.unarchiveInvestmentProjectHandler(
+        {
+          session: {
+            token: this.token,
+          },
+          params: {
+            investmentId: investmentData.id,
+          },
+          flash: this.flashStub,
         },
-        params: {
-          investmentId: investmentData.id,
+        {
+          redirect: () => {
+            expect(this.flashStub).to.be.calledWith(
+              'success',
+              'Investment project updated'
+            )
+            done()
+          },
         },
-        flash: this.flashStub,
-      }, {
-        redirect: () => {
-          expect(this.flashStub).to.be.calledWith('success', 'Investment project updated')
-          done()
-        },
-      }, this.next)
+        this.next
+      )
     })
   })
 })

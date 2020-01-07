@@ -34,7 +34,7 @@ const contactSortOptions = [
   { value: 'company.name:asc', label: 'Company: A-Z' },
 ]
 
-const contactFiltersFields = function ({ sectorOptions }) {
+const contactFiltersFields = function({ sectorOptions }) {
   return [
     {
       macroName: 'TextField',
@@ -84,7 +84,7 @@ const contactFiltersFields = function ({ sectorOptions }) {
       ],
       modifier: 'option-select',
     },
-  ].map(filter => {
+  ].map((filter) => {
     return assign(filter, {
       modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
     })
@@ -98,7 +98,7 @@ const contactSortForm = merge({}, sortFormBase, {
 const companyContactSortForm = merge({}, sortFormBase, {
   children: [
     {
-      options: reject(contactSortOptions, option => {
+      options: reject(contactSortOptions, (option) => {
         return option.value.includes('company.name:')
       }),
     },
