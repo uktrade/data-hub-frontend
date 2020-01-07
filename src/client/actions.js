@@ -8,6 +8,6 @@
  * The name should be the name of the component the action relates to and a verb
  * describing what it does, concattenated by double underscore.
  */
-export const COMPANY_LIST_VIEWER__CHANGE = 'COMPANY_LIST_VIEWER__CHANGE'
+export const COMPANY_LIST_VIEWER__LIST_CHANGE = 'COMPANY_LIST_VIEWER__LIST_CHANGE'
 export const COMPANY_LIST_VIEWER__FILTER = 'COMPANY_LIST_VIEWER__FILTER'
 export const COMPANY_LIST_VIEWER__ORDER = 'COMPANY_LIST_VIEWER__ORDER'
