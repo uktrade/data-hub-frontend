@@ -5,7 +5,7 @@ const urls = require('../../lib/urls')
 const { ENTITIES } = require('../search/constants')
 const { LOCAL_NAV, DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS, QUERY_FIELDS } = require('./constants')
 
-const setRetunUrl = require('./middleware/set-return-url')
+const setReturnUrl = require('./middleware/set-return-url')
 const { getRequestBody } = require('../../middleware/collection')
 const { getCollection, exportCollection } = require('../../modules/search/middleware/collection')
 
@@ -101,7 +101,7 @@ router.use(urls.companies.detail.route, handleRoutePermissions(LOCAL_NAV), setCo
 router.get(urls.companies.detail.route, redirectToFirstNavItem)
 router.get(urls.companies.details.route, renderDetails)
 
-router.get(urls.companies.exports.index.route, setRetunUrl, renderExports)
+router.get(urls.companies.exports.index.route, setReturnUrl, renderExports)
 router
   .route(urls.companies.exports.edit.route)
   .get(populateExportForm, renderExportEdit)
@@ -120,17 +120,17 @@ router.get(urls.companies.contacts.route,
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   setCompanyContactRequestBody,
   getCompanyContactCollection,
-  setRetunUrl,
+  setReturnUrl,
   renderContacts
 )
 
-router.get(urls.companies.orders.route, setRetunUrl, renderOrders)
+router.get(urls.companies.orders.route, setReturnUrl, renderOrders)
 router.get(urls.companies.audit.route, renderAuditLog)
 router.get(urls.companies.documents.route, renderDocuments)
-router.use(urls.companies.investments.companyInvestment, setRetunUrl, investmentsRouter)
+router.use(urls.companies.investments.companyInvestment.route, setReturnUrl, investmentsRouter)
 router.use(urls.companies.matching.route, matchingRouter)
 router.use(urls.companies.detail.route, setInteractionsDetails, interactionsRouter)
-router.use(urls.companies.detail.route, setRetunUrl, advisersRouter)
+router.use(urls.companies.advisers.index.route, setReturnUrl, advisersRouter)
 
 router.post(urls.companies.manageCompanyList.route, addCompanyOrRemoveFromList)
 
