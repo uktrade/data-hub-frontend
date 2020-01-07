@@ -12,7 +12,7 @@ import styled from 'styled-components'
 
 import {
   COMPANY_LIST_VIEWER__FILTER,
-  COMPANY_LIST_VIEWER__CHANGE,
+  COMPANY_LIST_VIEWER__LIST_CHANGE,
   COMPANY_LIST_VIEWER__ORDER
 } from '../../../../client/actions'
 import Filters from './Filters'
@@ -50,7 +50,7 @@ const NoListsMsg = () => (
 
 function CompanyLists ({
   lists, selectedIdx, sortBy, filter,
-  onChange, onOrderChange, onSearch,
+  onListChange, onOrderChange, onSearch,
 }) {
   const list = lists[selectedIdx]
   const companies = get(list, 'companies', [])
@@ -66,18 +66,14 @@ function CompanyLists ({
 
   return (
     <StyledRoot>
-      <Header lists={lists} onChange={onChange} />
+      <Header lists={lists} onListChange={onListChange} />
       <StyledSectionBreak visible={true} />
       {list && <ListHeader list={list} />}
       {lists.length ? (
         companies.length ? (
           <>
             {companies.length > 1 &&
-              <Filters
-                list={list}
-                onOrderChange={onOrderChange}
-                onSearch={onSearch}
-              />
+              <Filters onOrderChange={onOrderChange} onSearch={onSearch} />
             }
             <Table companies={ordered} />
           </>
@@ -93,7 +89,7 @@ CompanyLists.propTypes = {
   selectedIdx: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
   sortBy: PropTypes.oneOf(['alphabetical', 'recent', 'least-recent']).isRequired,
   filter: PropTypes.string.isRequired,
-  onChange: PropTypes.func,
+  onListChange: PropTypes.func,
   onOrderChange: PropTypes.func,
   onSearch: PropTypes.func,
 }
@@ -101,8 +97,8 @@ CompanyLists.propTypes = {
 export default connect(
   state => state.companyLists,
   dispatch => ({
-    onChange: idx => dispatch({
-      type: COMPANY_LIST_VIEWER__CHANGE,
+    onListChange: idx => dispatch({
+      type: COMPANY_LIST_VIEWER__LIST_CHANGE,
       idx,
     }),
     onOrderChange: sortBy => dispatch({
