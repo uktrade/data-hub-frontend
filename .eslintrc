@@ -1,24 +1,61 @@
 {
-  "extends": ["standard", "plugin:react/recommended"],
   "parser": "babel-eslint",
+  "extends": [
+    "standard",
+    "plugin:prettier/recommended",
+    "prettier/react"
+  ],
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "ecmaVersion": "es6",
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
   "plugins": [
-    "mocha"
+    "react",
+    "mocha",
+    "jsx-a11y",
+    "react-hooks"
   ],
   "rules": {
-    "comma-dangle": [
+    "no-async-promise-executor": "off",
+    "no-case-declarations": "off",
+    "no-prototype-builtins": "off",
+    "node/no-deprecated-api": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "off",
+    "react/prefer-stateless-function": "off",
+    "react/no-multi-comp": "off",
+    "react/forbid-prop-types": "off",
+    "react/jsx-boolean-value": [
       "error",
-      {
-        "arrays": "always-multiline",
-        "objects": "always-multiline",
-        "imports": "never",
-        "exports": "never",
-        "functions": "ignore"
-      }
+      "always"
     ],
-    "object-curly-spacing": ["error", "always"],
+    "react/jsx-one-expression-per-line": "off",
+    "object-curly-newline": "off",
+    "no-else-return": "off",
+    "arrow-body-style": "off",
     "dot-notation": "error",
     "mocha/no-exclusive-tests": "error",
-    "import/newline-after-import": ["warn", { "count": 1 }]
+    "import/newline-after-import": [
+      "warn",
+      {
+        "count": 1
+      }
+    ],
+    "eol-last": "error",
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 1
+      }
+    ]
   },
   "overrides": [
     {
@@ -43,16 +80,6 @@
         "mocha": true,
         "browser": true
       }
-    },
-    {
-      "globals": {
-        "Sandbox": true,
-        "state": true,
-        "_": true
-      },
-      "files": [
-        "test/sandbox/**"
-      ]
     }
   ]
 }
