@@ -82,24 +82,24 @@ router.get(urls.companies.index.route,
   renderCompanyList,
 )
 
-router.get('/export',
+router.get(urls.companies.export.route,
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   getRequestBody(QUERY_FIELDS),
   lastInteractionDate,
   exportCollection('company'),
 )
 
-router.use('/create', addCompanyFormRouter)
-router.use('/:companyId/lists', companyListsRouter)
-router.use('/:companyId/edit', editCompanyFormRouter)
-router.use('/:companyId/edit-history', editHistoryRouter)
+router.use(urls.companies.create.route, addCompanyFormRouter)
+router.use(urls.companies.lists.route, companyListsRouter)
+router.use(urls.companies.edit.route, editCompanyFormRouter)
+router.use(urls.companies.editHistory.index.route, editHistoryRouter)
 
-router.post('/:companyId/archive', archiveCompany)
-router.get('/:companyId/unarchive', unarchiveCompany)
+router.post(urls.companies.archive.route, archiveCompany)
+router.get(urls.companies.unarchive.route, unarchiveCompany)
 
-router.use('/:companyId', handleRoutePermissions(LOCAL_NAV), setCompaniesLocalNav)
-router.get('/:companyId', redirectToFirstNavItem)
-router.get('/:companyId/details', renderDetails)
+router.use(urls.companies.detail.route, handleRoutePermissions(LOCAL_NAV), setCompaniesLocalNav)
+router.get(urls.companies.detail.route, redirectToFirstNavItem)
+router.get(urls.companies.details.route, renderDetails)
 
 router.get(urls.companies.exports.index.route, setRetunUrl, renderExports)
 router
@@ -109,14 +109,14 @@ router
 
 router.get(urls.companies.businessDetails.route, renderBusinessDetails)
 
-router.get('/:companyId/hierarchies/ghq/search', getGlobalHQCompaniesCollection, renderAddGlobalHQ)
+router.get(urls.companies.hierarchies.ghq.link.route, getGlobalHQCompaniesCollection, renderAddGlobalHQ)
 router.get(urls.companies.hierarchies.ghq.add.route, setGlobalHQ)
-router.get('/:companyId/hierarchies/ghq/remove', removeGlobalHQ)
+router.get(urls.companies.hierarchies.ghq.remove.route, removeGlobalHQ)
 
-router.get('/:companyId/hierarchies/subsidiaries/search', getSubsidiaryCompaniesCollection, renderLinkSubsidiary)
-router.get('/:companyId/hierarchies/subsidiaries/:subsidiaryCompanyId/add', addSubsidiary)
+router.get(urls.companies.hierarchies.subsidiaries.search.route, getSubsidiaryCompaniesCollection, renderLinkSubsidiary)
+router.get(urls.companies.hierarchies.subsidiaries.add.route, addSubsidiary)
 
-router.get('/:companyId/contacts',
+router.get(urls.companies.contacts.route,
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   setCompanyContactRequestBody,
   getCompanyContactCollection,
@@ -124,19 +124,19 @@ router.get('/:companyId/contacts',
   renderContacts
 )
 
-router.get('/:companyId/orders', setRetunUrl, renderOrders)
-router.get('/:companyId/audit', renderAuditLog)
-router.get('/:companyId/documents', renderDocuments)
-router.use('/:companyId/investments', setRetunUrl, investmentsRouter)
-router.use('/:companyId/matching', matchingRouter)
-router.use('/:companyId', setInteractionsDetails, interactionsRouter)
-router.use('/:companyId/advisers', setRetunUrl, advisersRouter)
+router.get(urls.companies.orders.route, setRetunUrl, renderOrders)
+router.get(urls.companies.audit.route, renderAuditLog)
+router.get(urls.companies.documents.route, renderDocuments)
+router.use(urls.companies.investments.companyInvestment, setRetunUrl, investmentsRouter)
+router.use(urls.companies.matching.route, matchingRouter)
+router.use(urls.companies.detail.route, setInteractionsDetails, interactionsRouter)
+router.use(urls.companies.detail.route, setRetunUrl, advisersRouter)
 
-router.post('/:companyId/manage-company-list', addCompanyOrRemoveFromList)
+router.post(urls.companies.manageCompanyList.route, addCompanyOrRemoveFromList)
 
-router.use('/:companyId/subsidiaries', setCompanyHierarchyLocalNav)
-router.get('/:companyId/subsidiaries', renderSubsidiaries)
-router.get('/:companyId/subsidiaries/link', renderLinkSubsidiary)
+router.use(urls.companies.subsidiaries.index.route, setCompanyHierarchyLocalNav)
+router.get(urls.companies.subsidiaries.index.route, renderSubsidiaries)
+router.get(urls.companies.subsidiaries.link.route, renderLinkSubsidiary)
 
 router.use(activityFeedRouter)
 
