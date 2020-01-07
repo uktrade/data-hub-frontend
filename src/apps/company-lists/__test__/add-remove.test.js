@@ -1,5 +1,6 @@
 const proxyquire = require('proxyquire')
 const config = require('../../../config')
+const urls = require('../../../lib/urls')
 const buildMiddlewareParameters = require('../../../../test/unit/helpers/middleware-parameters-builder')
 const { handleAddRemoveCompanyToList, renderAddRemoveForm } = require('../../../../src/apps/company-lists/controllers/add-remove')
 
@@ -225,7 +226,7 @@ describe('Adding and removing a company to a list', () => {
           companyId: '1',
           token: 'token',
           createNewListUrl: `/companies/1/lists/create`,
-          cancelLinkUrl: `/`,
+          cancelLinkUrl: urls.dashboard(),
         },
       })
     })
