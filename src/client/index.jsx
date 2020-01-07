@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { createStore, combineReducers } from 'redux'
-import { devToolsEnhancer } from 'redux-devtools-extension'
 
 import { ActivityFeedApp } from 'data-hub-components'
 import AddCompanyForm from '../apps/companies/apps/add-company/client/AddCompanyForm'
@@ -28,7 +27,9 @@ const store = createStore(
   {
     companyLists: resolvePreloadedCompanyListsData(),
   },
-  devToolsEnhancer(),
+  process.env.NODE_ENV === 'production'
+    ? require('redux-devtools-extension').devToolsEnhancer()
+    : undefined,
 )
 
 const appWrapper = document.getElementById('react-app')
