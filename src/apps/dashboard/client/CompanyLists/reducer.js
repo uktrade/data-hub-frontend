@@ -5,11 +5,12 @@ import {
   COMPANY_LIST_VIEWER__LIST_CHANGE,
   COMPANY_LIST_VIEWER__ORDER
 } from '../../../../client/actions'
+import { RECENT } from './constants'
 
 export const initialState = {
   lists: [],
   selectedIdx: 0,
-  sortBy: 'recent',
+  sortBy: RECENT,
   filter: '',
 }
 
