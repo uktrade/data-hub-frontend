@@ -150,7 +150,7 @@ describe('Company Collections Filter', () => {
     })
   })
 
-  it('should filter by future markets of interest', () => {
+  it('should filter by future countries of interest', () => {
     const interestedIn = selectors.filter.interestedIn
     const { typeahead } = selectors.filter
 
