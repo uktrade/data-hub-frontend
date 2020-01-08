@@ -1,5 +1,6 @@
 const { getAllCompanyLists, getListsCompanyIsIn, addCompanyToList, removeCompanyFromList } = require('../repos')
 const { transformCompaniesInLists } = require('../transformers')
+const urls = require('../../../lib/urls')
 
 async function handleAddRemoveCompanyToList (req, res, next) {
   const { list } = req.body
@@ -34,6 +35,8 @@ async function fetchListsCompanyIsOn (req, res, next) {
 
 async function renderAddRemoveForm (req, res, next) {
   const { company, listsCompanyIsIn, csrfToken } = res.locals
+  const cancelLinkUrl = req.query.returnUrl || urls.dashboard()
+
   try {
     res
       .breadcrumb(company.name, `/companies/${company.id}`)
@@ -45,7 +48,7 @@ async function renderAddRemoveForm (req, res, next) {
           companyId: company.id,
           token: csrfToken,
           createNewListUrl: `/companies/${company.id}/lists/create`,
-          cancelLinkUrl: `/companies/${company.id}`,
+          cancelLinkUrl,
         },
       })
   } catch (error) {
