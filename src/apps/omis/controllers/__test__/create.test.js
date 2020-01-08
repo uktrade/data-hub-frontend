@@ -45,7 +45,11 @@ describe('OMIS CreateController', () => {
 
       it('should call parent method', () => {
         expect(FormController.prototype.process).to.have.been.calledOnce
-        expect(FormController.prototype.process).to.have.been.calledWith(this.reqMock, {}, this.nextSpy)
+        expect(FormController.prototype.process).to.have.been.calledWith(
+          this.reqMock,
+          {},
+          this.nextSpy
+        )
       })
 
       it('should set company to form value', () => {
@@ -62,7 +66,11 @@ describe('OMIS CreateController', () => {
 
       it('should call parent method', () => {
         expect(FormController.prototype.process).to.have.been.calledOnce
-        expect(FormController.prototype.process).to.have.been.calledWith(this.reqMock, {}, this.nextSpy)
+        expect(FormController.prototype.process).to.have.been.calledWith(
+          this.reqMock,
+          {},
+          this.nextSpy
+        )
       })
 
       it('should set company to form value', () => {
@@ -71,7 +79,7 @@ describe('OMIS CreateController', () => {
       })
     })
 
-    context('when company doesn\'t exist', () => {
+    context("when company doesn't exist", () => {
       beforeEach(() => {
         this.controller.process(this.reqMock, {}, this.nextSpy)
       })
@@ -95,7 +103,9 @@ describe('OMIS CreateController', () => {
     })
 
     it('should call save company method', () => {
-      expect(this.controller.use).to.have.been.calledWith(this.controller.saveCompany)
+      expect(this.controller.use).to.have.been.calledWith(
+        this.controller.saveCompany
+      )
     })
   })
 
@@ -112,7 +122,9 @@ describe('OMIS CreateController', () => {
     })
 
     it('should call set company method', () => {
-      expect(this.controller.use).to.have.been.calledWith(this.controller.setCompany)
+      expect(this.controller.use).to.have.been.calledWith(
+        this.controller.setCompany
+      )
     })
   })
 
@@ -129,7 +141,9 @@ describe('OMIS CreateController', () => {
     })
 
     it('should call skip company check method', () => {
-      expect(this.controller.use).to.have.been.calledWith(this.controller.checkSkipCompany)
+      expect(this.controller.use).to.have.been.calledWith(
+        this.controller.checkSkipCompany
+      )
     })
   })
 
@@ -155,7 +169,11 @@ describe('OMIS CreateController', () => {
 
       it('should call form wizard configure method', () => {
         expect(this.controller._configure).to.have.been.calledOnce
-        expect(this.controller._configure).to.have.been.calledWith(this.reqMock, {}, this.nextSpy)
+        expect(this.controller._configure).to.have.been.calledWith(
+          this.reqMock,
+          {},
+          this.nextSpy
+        )
       })
 
       it('should not call next', () => {
@@ -163,7 +181,7 @@ describe('OMIS CreateController', () => {
       })
     })
 
-    context('when company doesn\'t exist in query', () => {
+    context("when company doesn't exist in query", () => {
       beforeEach(() => {
         this.controller.saveCompany(this.reqMock, {}, this.nextSpy)
       })
@@ -211,7 +229,7 @@ describe('OMIS CreateController', () => {
       })
     })
 
-    context('when query doesn\'t contain skip company', () => {
+    context("when query doesn't contain skip company", () => {
       beforeEach(() => {
         this.controller.checkSkipCompany(this.reqMock, {}, this.nextSpy)
       })
@@ -245,12 +263,19 @@ describe('OMIS CreateController', () => {
 
       context('when company promise is resolved', () => {
         beforeEach(async () => {
-          await this.controller.setCompany(this.reqMock, this.resMock, this.nextSpy)
+          await this.controller.setCompany(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should call get company method', () => {
           expect(this.getDitCompanyStub).to.be.calledOnce
-          expect(this.getDitCompanyStub).to.be.calledWith('12345', companyMock.id)
+          expect(this.getDitCompanyStub).to.be.calledWith(
+            '12345',
+            companyMock.id
+          )
         })
 
         it('should set company property on locals', () => {
@@ -273,12 +298,19 @@ describe('OMIS CreateController', () => {
           this.errorMock = new Error()
           this.getDitCompanyStub.rejects(this.errorMock)
 
-          await this.controller.setCompany(this.reqMock, this.resMock, this.nextSpy)
+          await this.controller.setCompany(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should call get company method', () => {
           expect(this.getDitCompanyStub).to.be.calledOnce
-          expect(this.getDitCompanyStub).to.be.calledWith('12345', companyMock.id)
+          expect(this.getDitCompanyStub).to.be.calledWith(
+            '12345',
+            companyMock.id
+          )
         })
 
         it('should not set company property on locals', () => {
@@ -297,7 +329,7 @@ describe('OMIS CreateController', () => {
       })
     })
 
-    context('when a company doesn\'t exist in the session', () => {
+    context("when a company doesn't exist in the session", () => {
       beforeEach(async () => {
         const reqMock = assign({}, globalReq, {
           sessionModel: {

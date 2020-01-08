@@ -1,18 +1,18 @@
-const {
-  transformInvestorTypes,
-  transformRequiredChecks,
-} = require('../index')
+const { transformInvestorTypes, transformRequiredChecks } = require('../index')
 
 describe('Large capital profile, Investor details API to form', () => {
   context('when translating Investor types', () => {
     beforeEach(() => {
-      const investorTypes = [ {
-        text: 'Angel syndicate',
-        value: '1',
-      }, {
-        text: 'Asset manager',
-        value: '2',
-      }]
+      const investorTypes = [
+        {
+          text: 'Angel syndicate',
+          value: '1',
+        },
+        {
+          text: 'Asset manager',
+          value: '2',
+        },
+      ]
 
       const investorDetails = {
         investorType: {
@@ -24,36 +24,45 @@ describe('Large capital profile, Investor details API to form', () => {
     })
 
     it('should transform the Investor types', () => {
-      expect(this.transformed).to.deep.equal([ {
-        text: '-- Please select an investor type --',
-        value: null,
-      }, {
-        text: 'Angel syndicate',
-        value: '1',
-
-      }, {
-        selected: true,
-        text: 'Asset manager',
-        value: '2',
-      }])
+      expect(this.transformed).to.deep.equal([
+        {
+          text: '-- Please select an investor type --',
+          value: null,
+        },
+        {
+          text: 'Angel syndicate',
+          value: '1',
+        },
+        {
+          selected: true,
+          text: 'Asset manager',
+          value: '2',
+        },
+      ])
     })
   })
 
   context('when translating required checks', () => {
     beforeEach(() => {
-      this.requiredChecks = [ {
-        text: 'Cleared',
-        value: '1',
-      }, {
-        text: 'Issues identified',
-        value: '2',
-      }, {
-        text: 'Not yet checked',
-        value: '4',
-      }, {
-        text: 'Checks not required - See Investor Screening Report (ISR) guidance',
-        value: '3',
-      }]
+      this.requiredChecks = [
+        {
+          text: 'Cleared',
+          value: '1',
+        },
+        {
+          text: 'Issues identified',
+          value: '2',
+        },
+        {
+          text: 'Not yet checked',
+          value: '4',
+        },
+        {
+          text:
+            'Checks not required - See Investor Screening Report (ISR) guidance',
+          value: '3',
+        },
+      ]
     })
 
     it('should transform the required checks when the user selects "Cleared"', () => {
@@ -71,7 +80,10 @@ describe('Large capital profile, Investor details API to form', () => {
         },
       }
 
-      this.transformed = transformRequiredChecks(this.requiredChecks, this.investorDetails)
+      this.transformed = transformRequiredChecks(
+        this.requiredChecks,
+        this.investorDetails
+      )
 
       expect(this.transformed).to.deep.equal({
         cleared: {
@@ -93,7 +105,8 @@ describe('Large capital profile, Investor details API to form', () => {
           value: '2',
         },
         notRequired: {
-          text: 'Checks not required - See Investor Screening Report (ISR) guidance',
+          text:
+            'Checks not required - See Investor Screening Report (ISR) guidance',
           value: '3',
         },
         notYetChecked: {
@@ -118,7 +131,10 @@ describe('Large capital profile, Investor details API to form', () => {
         },
       }
 
-      this.transformed = transformRequiredChecks(this.requiredChecks, this.investorDetails)
+      this.transformed = transformRequiredChecks(
+        this.requiredChecks,
+        this.investorDetails
+      )
 
       expect(this.transformed).to.deep.equal({
         cleared: {
@@ -140,7 +156,8 @@ describe('Large capital profile, Investor details API to form', () => {
           },
         },
         notRequired: {
-          text: 'Checks not required - See Investor Screening Report (ISR) guidance',
+          text:
+            'Checks not required - See Investor Screening Report (ISR) guidance',
           value: '3',
         },
         notYetChecked: {
@@ -154,13 +171,17 @@ describe('Large capital profile, Investor details API to form', () => {
       this.investorDetails = {
         requiredChecks: {
           type: {
-            name: 'Checks not required - See Investor Screening Report (ISR) guidance',
+            name:
+              'Checks not required - See Investor Screening Report (ISR) guidance',
             id: '3',
           },
         },
       }
 
-      this.transformed = transformRequiredChecks(this.requiredChecks, this.investorDetails)
+      this.transformed = transformRequiredChecks(
+        this.requiredChecks,
+        this.investorDetails
+      )
 
       expect(this.transformed).to.deep.equal({
         cleared: {
@@ -173,7 +194,8 @@ describe('Large capital profile, Investor details API to form', () => {
         },
         notRequired: {
           checked: true,
-          text: 'Checks not required - See Investor Screening Report (ISR) guidance',
+          text:
+            'Checks not required - See Investor Screening Report (ISR) guidance',
           value: '3',
         },
         notYetChecked: {
@@ -193,7 +215,10 @@ describe('Large capital profile, Investor details API to form', () => {
         },
       }
 
-      this.transformed = transformRequiredChecks(this.requiredChecks, this.investorDetails)
+      this.transformed = transformRequiredChecks(
+        this.requiredChecks,
+        this.investorDetails
+      )
 
       expect(this.transformed).to.deep.equal({
         cleared: {
@@ -205,7 +230,8 @@ describe('Large capital profile, Investor details API to form', () => {
           value: '2',
         },
         notRequired: {
-          text: 'Checks not required - See Investor Screening Report (ISR) guidance',
+          text:
+            'Checks not required - See Investor Screening Report (ISR) guidance',
           value: '3',
         },
         notYetChecked: {

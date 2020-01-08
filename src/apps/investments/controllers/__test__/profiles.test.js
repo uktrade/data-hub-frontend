@@ -1,6 +1,9 @@
 const config = require('../../../../config')
 const buildMiddlewareParameters = require('../../../../../test/unit/helpers/middleware-parameters-builder')
-const { renderProfilesView, fetchLargeCapitalProfilesHandler } = require('../profiles')
+const {
+  renderProfilesView,
+  fetchLargeCapitalProfilesHandler,
+} = require('../profiles')
 
 describe('test profile controllers', () => {
   let middlewareParameters
@@ -18,7 +21,9 @@ describe('test profile controllers', () => {
       })
 
       it('should call breadcrumb with "Profiles"', () => {
-        expect(middlewareParameters.resMock.breadcrumb).to.be.calledWith('Profiles')
+        expect(middlewareParameters.resMock.breadcrumb).to.be.calledWith(
+          'Profiles'
+        )
       })
 
       it('should render', () => {
@@ -26,7 +31,10 @@ describe('test profile controllers', () => {
       })
 
       it('should render with a heading', () => {
-        expect(middlewareParameters.resMock.render).to.be.calledWith('investments/views/profiles', { heading: 'Investments' })
+        expect(middlewareParameters.resMock.render).to.be.calledWith(
+          'investments/views/profiles',
+          { heading: 'Investments' }
+        )
       })
 
       it('should not call next', () => {
@@ -65,7 +73,9 @@ describe('test profile controllers', () => {
         })
 
         nock(config.apiRoot)
-          .get(`/v4/large-investor-profile?limit=10&offset=0&sortby=modified_on`)
+          .get(
+            `/v4/large-investor-profile?limit=10&offset=0&sortby=modified_on`
+          )
           .reply(200, { count: 0, results: [] })
 
         await fetchLargeCapitalProfilesHandler(
@@ -76,7 +86,10 @@ describe('test profile controllers', () => {
       })
 
       it('should provide a json response', () => {
-        expect(middlewareParameters.resMock.json).to.be.calledOnceWithExactly({ count: 0, results: [] })
+        expect(middlewareParameters.resMock.json).to.be.calledOnceWithExactly({
+          count: 0,
+          results: [],
+        })
       })
 
       it('should not call next', () => {
@@ -93,7 +106,9 @@ describe('test profile controllers', () => {
         })
 
         nock(config.apiRoot)
-          .get(`/v4/large-investor-profile?limit=10&offset=0&sortby=modified_on`)
+          .get(
+            `/v4/large-investor-profile?limit=10&offset=0&sortby=modified_on`
+          )
           .reply(500)
 
         await fetchLargeCapitalProfilesHandler(

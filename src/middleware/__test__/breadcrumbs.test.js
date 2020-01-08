@@ -35,9 +35,11 @@ describe('breadcrumbs middleware', () => {
       it('should set name', () => {
         this.resMock.breadcrumb('Name')
 
-        expect(this.resMock.breadcrumb()).to.deep.equal([{
-          text: 'Name',
-        }])
+        expect(this.resMock.breadcrumb()).to.deep.equal([
+          {
+            text: 'Name',
+          },
+        ])
       })
     })
 
@@ -45,10 +47,12 @@ describe('breadcrumbs middleware', () => {
       it('should set url and name', () => {
         this.resMock.breadcrumb('Name', '/sample-url')
 
-        expect(this.resMock.breadcrumb()).to.deep.equal([{
-          text: 'Name',
-          href: '/sample-url',
-        }])
+        expect(this.resMock.breadcrumb()).to.deep.equal([
+          {
+            text: 'Name',
+            href: '/sample-url',
+          },
+        ])
       })
     })
 
@@ -59,32 +63,38 @@ describe('breadcrumbs middleware', () => {
           href: '/sample-url',
         })
 
-        expect(this.resMock.breadcrumb()).to.deep.equal([{
-          text: 'Name',
-          href: '/sample-url',
-        }])
+        expect(this.resMock.breadcrumb()).to.deep.equal([
+          {
+            text: 'Name',
+            href: '/sample-url',
+          },
+        ])
       })
     })
 
     describe('when called with an array of objects', () => {
       it('should add each object to breadcrumb', () => {
-        this.resMock.breadcrumb([{
-          name: 'First item',
-          url: '/first-item',
-        },
-        {
-          name: 'Second item',
-          url: '/second-item',
-        }])
+        this.resMock.breadcrumb([
+          {
+            name: 'First item',
+            url: '/first-item',
+          },
+          {
+            name: 'Second item',
+            url: '/second-item',
+          },
+        ])
 
-        expect(this.resMock.breadcrumb()).to.deep.equal([{
-          name: 'First item',
-          url: '/first-item',
-        },
-        {
-          name: 'Second item',
-          url: '/second-item',
-        }])
+        expect(this.resMock.breadcrumb()).to.deep.equal([
+          {
+            name: 'First item',
+            url: '/first-item',
+          },
+          {
+            name: 'Second item',
+            url: '/second-item',
+          },
+        ])
       })
     })
   })
@@ -155,11 +165,13 @@ describe('breadcrumbs middleware', () => {
 
       it('should set a default value for the home item', () => {
         expect(this.nextSpy.calledOnce).to.be.true
-        expect(this.resMock.breadcrumb()).to.deep.equal([{
-          text: 'Home',
-          href: '/',
-          _home: true,
-        }])
+        expect(this.resMock.breadcrumb()).to.deep.equal([
+          {
+            text: 'Home',
+            href: '/',
+            _home: true,
+          },
+        ])
       })
     })
 
@@ -173,11 +185,13 @@ describe('breadcrumbs middleware', () => {
 
       it('should set the object as the home item', () => {
         expect(this.nextSpy.calledOnce).to.be.true
-        expect(this.resMock.breadcrumb()).to.deep.equal([{
-          text: 'Root',
-          href: '/root',
-          _home: true,
-        }])
+        expect(this.resMock.breadcrumb()).to.deep.equal([
+          {
+            text: 'Root',
+            href: '/root',
+            _home: true,
+          },
+        ])
       })
     })
 
@@ -193,11 +207,13 @@ describe('breadcrumbs middleware', () => {
         })({}, this.resMock, this.nextSpy)
 
         expect(this.nextSpy.calledTwice).to.be.true
-        expect(this.resMock.breadcrumb()).to.deep.equal([{
-          text: 'Root',
-          href: '/root',
-          _home: true,
-        }])
+        expect(this.resMock.breadcrumb()).to.deep.equal([
+          {
+            text: 'Root',
+            href: '/root',
+            _home: true,
+          },
+        ])
       })
     })
   })

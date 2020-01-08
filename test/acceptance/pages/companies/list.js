@@ -4,16 +4,16 @@ const {
   getListItemMetaElementWithText,
 } = require('../../helpers/selectors')
 
-const getBadgeWithText = (text) => getSelectorForElementWithText(
-  text,
-  {
+const getBadgeWithText = (text) =>
+  getSelectorForElementWithText(text, {
     el: '//span',
     className: 'c-meta-list__item-label',
     child: '/following-sibling::span',
-  },
-)
-const getFirstListItemMetaElementWithText = (text) => getListItemMetaElementWithText(text)
-const getSecondListItemMetaElementWithText = (text) => getListItemMetaElementWithText(text, 2)
+  })
+const getFirstListItemMetaElementWithText = (text) =>
+  getListItemMetaElementWithText(text)
+const getSecondListItemMetaElementWithText = (text) =>
+  getListItemMetaElementWithText(text, 2)
 
 module.exports = {
   url: `${process.env.QA_HOST}/companies`,

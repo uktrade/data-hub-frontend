@@ -5,12 +5,15 @@ const { updateInvestment } = require('../../repos')
 const { projectManagementLabels } = require('../../labels')
 const { transformObjectToOption } = require('../../../transformers')
 
-async function populateForm (req, res, next) {
+async function populateForm(req, res, next) {
   try {
     const { investment } = res.locals
     const { projects } = res.locals.paths
     const projectManager = get(investment, 'project_manager.id')
-    const projectAssuranceAdviser = get(investment, 'project_assurance_adviser.id')
+    const projectAssuranceAdviser = get(
+      investment,
+      'project_assurance_adviser.id'
+    )
 
     const advisersResponse = await getAdvisers(req.session.token)
 
@@ -47,7 +50,7 @@ async function populateForm (req, res, next) {
   }
 }
 
-function handleFormPost (req, res, next) {
+function handleFormPost(req, res, next) {
   res.locals.projectId = req.params.investmentId
   updateInvestment(req.session.token, res.locals.projectId, req.body)
     .then(() => next())

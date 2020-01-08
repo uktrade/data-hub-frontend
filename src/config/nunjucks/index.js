@@ -17,10 +17,10 @@ const WHITESPACE_AT_NEWLINE = /\n\s+/g
 const WHITESPACE_BETWEEN_TAGS = />\s+</g
 const WHITESPACE_AT_END = /\s+$/
 
-function ComponentExtension (env) {
+function ComponentExtension(env) {
   this.tags = ['component']
 
-  this.parse = function parse (parser, nodes) {
+  this.parse = function parse(parser, nodes) {
     const tok = parser.nextToken()
     const args = parser.parseSignature(null, true)
 
@@ -29,12 +29,15 @@ function ComponentExtension (env) {
     return new nodes.CallExtension(this, 'run', args)
   }
 
-  this.run = function run (context, name, ...locals) {
+  this.run = function run(context, name, ...locals) {
     let result = ''
 
     try {
       const localsData = Object.assign(...locals)
-      result = env.render(`${COMPONENTS_PATH}${name}.${COMPONENT_EXT}`, localsData)
+      result = env.render(
+        `${COMPONENTS_PATH}${name}.${COMPONENT_EXT}`,
+        localsData
+      )
     } catch (e) {
       if (e.message.includes('template not found')) {
         result = `Component '${name}' does not exist`
@@ -49,10 +52,10 @@ function ComponentExtension (env) {
   }
 }
 
-function SafeSpacelessExtension () {
+function SafeSpacelessExtension() {
   this.tags = ['safespaceless']
 
-  this.parse = function (parser, nodes) {
+  this.parse = function(parser, nodes) {
     const token = parser.nextToken()
     const args = parser.parseSignature(null, true)
     parser.advanceAfterBlockEnd(token.value)
@@ -61,7 +64,7 @@ function SafeSpacelessExtension () {
     return new nodes.CallExtension(this, 'run', args, [body])
   }
 
-  this.run = function (context, body) {
+  this.run = function(context, body) {
     const result = body()
       .replace(WHITESPACE_AT_START, '')
       .replace(WHITESPACE_BETWEEN_TAGS, '><')
@@ -72,18 +75,21 @@ function SafeSpacelessExtension () {
 }
 
 module.exports = (app, config) => {
-  const env = nunjucks.configure([
-    `${config.root}/src/apps`,
-    `${config.root}/src/templates`,
-    `${config.root}/node_modules/govuk-frontend`,
-    `${config.root}/node_modules/govuk-frontend/components`,
-    `${config.root}/node_modules/@uktrade`,
-  ], {
-    autoescape: true,
-    express: app,
-    watch: config.isDev,
-    noCache: config.noCache,
-  })
+  const env = nunjucks.configure(
+    [
+      `${config.root}/src/apps`,
+      `${config.root}/src/templates`,
+      `${config.root}/node_modules/govuk-frontend`,
+      `${config.root}/node_modules/govuk-frontend/components`,
+      `${config.root}/node_modules/@uktrade`,
+    ],
+    {
+      autoescape: true,
+      express: app,
+      watch: config.isDev,
+      noCache: config.noCache,
+    }
+  )
   const tradeElementsFilters = require('./trade-elements-filters')
   const dataHubFilters = require('./filters')
   const filters = Object.assign({}, tradeElementsFilters, dataHubFilters)

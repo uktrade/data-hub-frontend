@@ -3,7 +3,7 @@ const { Controller } = require('hmpo-form-wizard')
 const labels = require('../locales/en/default')
 
 class FormController extends Controller {
-  render (req, res, next) {
+  render(req, res, next) {
     const heading = req.form.options.heading
 
     if (heading) {
@@ -13,7 +13,7 @@ class FormController extends Controller {
     super.render(req, res, next)
   }
 
-  getErrors (req, res) {
+  getErrors(req, res) {
     const errors = super.getErrors(req, res)
 
     errors.messages = mapValues(errors, (item) => {
@@ -31,7 +31,7 @@ class FormController extends Controller {
     return errors
   }
 
-  process (req, res, next) {
+  process(req, res, next) {
     const addKey = req.body['add-item']
     const removeKey = req.body['remove-item']
 
@@ -43,7 +43,7 @@ class FormController extends Controller {
       }
 
       if (removeKey) {
-        const [ key, index ] = removeKey.split('::')
+        const [key, index] = removeKey.split('::')
         req.form.values[key].splice(index, 1)
       }
 
@@ -62,7 +62,7 @@ class FormController extends Controller {
     next()
   }
 
-  errorHandler (err, req, res, next) {
+  errorHandler(err, req, res, next) {
     if (err.redirect) {
       return res.redirect(err.redirect)
     }

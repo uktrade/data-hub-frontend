@@ -19,9 +19,7 @@ describe('API services', () => {
         nock('https://addresses.com')
           .get(`/postcode?api-key=${API_KEY}`)
           .reply(200, {
-            Addresses: [
-              'zero, one, two, , , five, six',
-            ],
+            Addresses: ['zero, one, two, , , five, six'],
           })
 
         actual = await services.lookupAddress('postcode')
@@ -47,9 +45,7 @@ describe('API services', () => {
         nock('https://addresses.com')
           .get(`/postcode?api-key=${API_KEY}`)
           .reply(200, {
-            Addresses: [
-              'zero, one, two, , , , ',
-            ],
+            Addresses: ['zero, one, two, , , , '],
           })
 
         actual = await services.lookupAddress('postcode')
@@ -74,9 +70,7 @@ describe('API services', () => {
         nock('https://addresses.com')
           .get(`/postcode?api-key=${API_KEY}`)
           .reply(200, {
-            Addresses: [
-              'zero, one, , , , five, ',
-            ],
+            Addresses: ['zero, one, , , , five, '],
           })
 
         actual = await services.lookupAddress('postcode')

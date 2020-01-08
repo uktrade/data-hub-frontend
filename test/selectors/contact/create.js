@@ -27,5 +27,7 @@ module.exports = {
     phone: `#group-field-telephone_number > label > ${msgCls}`,
     email: `#group-field-email > label > ${msgCls}`,
   },
-  validationSummary: (index) => { return `.c-error-summary__list li:nth-child(${index + 1})` },
+  validationSummary: (index) => {
+    return `.c-error-summary__list li:nth-child(${index + 1})`
+  },
 }

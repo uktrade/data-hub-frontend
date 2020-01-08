@@ -3,7 +3,7 @@ const basicAuth = require('basic-auth')
 
 const config = require('../config')
 
-function basicAuthMiddleware (req, res, next) {
+function basicAuthMiddleware(req, res, next) {
   const bypassSSO = get(config, 'oauth.bypassSSO')
   const authUser = get(config, 'basicAuth.user')
   const authPassword = get(config, 'basicAuth.password')

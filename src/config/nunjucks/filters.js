@@ -43,11 +43,15 @@ numeral.locale('en-gb')
 
 const { longDateFormat, mediumDateTimeFormat, currencyFormat } = require('../')
 
-function isNotEmpty (value) {
-  return !isNil(value) && !/^\s*$/.test(value) && !(isPlainObject(value) && isEmpty(value))
+function isNotEmpty(value) {
+  return (
+    !isNil(value) &&
+    !/^\s*$/.test(value) &&
+    !(isPlainObject(value) && isEmpty(value))
+  )
 }
 
-function pluralise (string, count, pluralisedWord) {
+function pluralise(string, count, pluralisedWord) {
   if (parseInt(count, 10) !== 1) {
     if (pluralisedWord) {
       string = pluralisedWord
@@ -86,31 +90,42 @@ const filters = {
   joinPaths,
   sentenceCase: Case.sentence,
 
-  escapeHtml (contents) {
+  escapeHtml(contents) {
     return newlineToBr(escape(contents))
   },
 
-  reverseDate (dateString) {
-    if (isNil(dateString)) { return }
-    return dateString.split('/').reverse().join('/')
+  reverseDate(dateString) {
+    if (isNil(dateString)) {
+      return
+    }
+    return dateString
+      .split('/')
+      .reverse()
+      .join('/')
   },
 
-  encodeQueryString (value) {
+  encodeQueryString(value) {
     return encodeURIComponent(queryString.stringify(value))
   },
 
-  assignCopy (...args) {
+  assignCopy(...args) {
     return assign({}, ...args)
   },
 
-  split (value, separator) {
-    if (!isString(value)) { return value }
+  split(value, separator) {
+    if (!isString(value)) {
+      return value
+    }
 
     return value.split(separator)
   },
 
-  highlight (searchResultText, searchTerm, matchFullWord = false) {
-    if (!isString(searchResultText) || !isString(searchTerm) || !searchTerm.trim()) {
+  highlight(searchResultText, searchTerm, matchFullWord = false) {
+    if (
+      !isString(searchResultText) ||
+      !isString(searchTerm) ||
+      !searchTerm.trim()
+    ) {
       return searchResultText
     }
 
@@ -122,7 +137,10 @@ const filters = {
         ? new RegExp(`\\b(${cleanedSearchTerm})\\b`, 'gi')
         : new RegExp(`(${cleanedSearchTerm})`, 'gi')
 
-      const result = escape(searchResultText).replace(searchPattern, '<span class="u-highlight">$1</span>')
+      const result = escape(searchResultText).replace(
+        searchPattern,
+        '<span class="u-highlight">$1</span>'
+      )
       return new nunjucks.runtime.SafeString(result)
     } catch (error) {
       return searchResultText
@@ -176,7 +194,9 @@ const filters = {
     }
     const parsedDate = dateFns.parse(value)
 
-    if (!dateFns.isValid(parsedDate)) { return value }
+    if (!dateFns.isValid(parsedDate)) {
+      return value
+    }
     return dateFns.format(parsedDate, format)
   },
 
@@ -187,7 +207,9 @@ const filters = {
 
     const parsedDate = dateFns.parse(value)
 
-    if (!dateFns.isValid(parsedDate)) { return value }
+    if (!dateFns.isValid(parsedDate)) {
+      return value
+    }
 
     return dateFns.format(parsedDate, format)
   },
@@ -231,10 +253,15 @@ const filters = {
     return result
   },
 
-  applyClassModifiers (className, modifier) {
-    if (!isString(className) || !(isString(modifier) || isArray(modifier))) { return className }
+  applyClassModifiers(className, modifier) {
+    if (!isString(className) || !(isString(modifier) || isArray(modifier))) {
+      return className
+    }
 
-    const classModifier = flatten([modifier]).filter(isNotEmpty).map(mod => `${className}--${mod}`).join(' ')
+    const classModifier = flatten([modifier])
+      .filter(isNotEmpty)
+      .map((mod) => `${className}--${mod}`)
+      .join(' ')
 
     return `${className} ${classModifier}`.trim()
   },

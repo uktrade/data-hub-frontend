@@ -21,7 +21,9 @@ describe('LocalHeader macro', () => {
         heading: 'I am hot',
       })
       expect(component.className.trim()).to.equal('c-local-header')
-      expect(component.querySelector('.c-local-header__heading').textContent.trim()).to.equal('I am hot')
+      expect(
+        component.querySelector('.c-local-header__heading').textContent.trim()
+      ).to.equal('I am hot')
     })
   })
 
@@ -46,9 +48,13 @@ describe('LocalHeader macro', () => {
       headingBefore: '<strong>Superb</strong>',
     })
 
-    const headingBeforeEl = component.querySelector('.c-local-header__heading-before')
+    const headingBeforeEl = component.querySelector(
+      '.c-local-header__heading-before'
+    )
     expect(headingBeforeEl).to.exist
-    expect(headingBeforeEl.querySelector('strong').textContent.trim()).to.equal('Superb')
+    expect(headingBeforeEl.querySelector('strong').textContent.trim()).to.equal(
+      'Superb'
+    )
   })
 
   it('should render local header with string heading suffix', () => {

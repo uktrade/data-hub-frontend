@@ -1,7 +1,4 @@
-module.exports = function ({
-  returnLink,
-  errors = [],
-}) {
+module.exports = function({ returnLink, errors = [] }) {
   const interactionQuestion = 'What would you like to record?'
 
   return {
@@ -33,7 +30,8 @@ module.exports = function ({
                     value: 'export_interaction',
                     label: 'A standard interaction',
                     hint: 'For example, an email, phone call or meeting',
-                  }, {
+                  },
+                  {
                     value: 'export_service_delivery',
                     label: 'A service that you have provided',
                     hint: 'For example a significant assist or an event',
@@ -65,7 +63,8 @@ module.exports = function ({
                     value: 'other_interaction',
                     label: 'A standard interaction',
                     hint: 'For example, an email, phone call or meeting',
-                  }, {
+                  },
+                  {
                     value: 'other_service_delivery',
                     label: 'A service that you have provided',
                     hint: 'For example a significant assist or an event',

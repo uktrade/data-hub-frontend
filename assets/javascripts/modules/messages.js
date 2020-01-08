@@ -1,5 +1,5 @@
 const Messages = {
-  init (wrapper = document) {
+  init(wrapper = document) {
     this.wrapper = wrapper
     this.cacheEls()
 
@@ -8,11 +8,11 @@ const Messages = {
     }
   },
 
-  cacheEls () {
+  cacheEls() {
     this.messages = this.wrapper.children
   },
 
-  removeElement (element) {
+  removeElement(element) {
     const parent = element.parentNode
 
     parent.removeChild(element)
@@ -22,9 +22,9 @@ const Messages = {
     }
   },
 
-  appendClose (element) {
+  appendClose(element) {
     if (element.className.indexOf('error') === -1) {
-      let link = document.createElement('a')
+      const link = document.createElement('a')
 
       link.innerHTML = 'Dismiss'
       link.className = 'c-message__close'
@@ -38,14 +38,14 @@ const Messages = {
     }
   },
 
-  render () {
+  render() {
     Array.from(this.messages).forEach(this.appendClose.bind(this))
   },
 }
 
 module.exports = {
-  init () {
+  init() {
     const elements = document.querySelectorAll('.js-Messages')
-    Array.from(elements).forEach(element => Messages.init(element))
+    Array.from(elements).forEach((element) => Messages.init(element))
   },
 }

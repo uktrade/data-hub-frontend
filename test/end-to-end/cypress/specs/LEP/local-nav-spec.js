@@ -1,6 +1,11 @@
 const selectors = require('../../../../selectors')
 
-const { companies, contacts, dashboard, investments } = require('../../../../../src/lib/urls')
+const {
+  companies,
+  contacts,
+  dashboard,
+  investments,
+} = require('../../../../../src/lib/urls')
 
 const { assertLocalNav } = require('../../support/assertions')
 
@@ -40,16 +45,15 @@ describe('LEP Permission', () => {
     })
 
     it('should display LEP only tabs', () => {
-      assertLocalNav(selectors.nav.sideNav, [
-        'Details',
-        'Audit history',
-      ])
+      assertLocalNav(selectors.nav.sideNav, ['Details', 'Audit history'])
     })
   })
 
   describe('investment projects', () => {
     before(() => {
-      cy.visit(investments.projects.details('ba1f0b14-5fe4-4c36-bf6a-ddf115272977'))
+      cy.visit(
+        investments.projects.details('ba1f0b14-5fe4-4c36-bf6a-ddf115272977')
+      )
     })
 
     it('should display LEP only tabs', () => {

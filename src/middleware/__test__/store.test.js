@@ -32,7 +32,9 @@ describe('Store middleware', () => {
       this.reqMock.store('example_key', mockDataArray)
 
       expect(this.nextSpy.calledOnce).to.be.true
-      expect(this.reqMock.session.store).to.deep.equal({ 'example_key': mockDataArray })
+      expect(this.reqMock.session.store).to.deep.equal({
+        example_key: mockDataArray,
+      })
     })
 
     it('#get should get stored data', () => {
@@ -43,7 +45,9 @@ describe('Store middleware', () => {
       const storeData = this.reqMock.store.get('example_key')
 
       expect(this.nextSpy.calledOnce).to.be.true
-      expect(this.reqMock.session.store).to.deep.equal({ 'example_key': mockData })
+      expect(this.reqMock.session.store).to.deep.equal({
+        example_key: mockData,
+      })
       expect(storeData).to.equal(mockData)
     })
 
@@ -54,7 +58,9 @@ describe('Store middleware', () => {
       this.reqMock.store('example_key', mockDataObj)
 
       expect(this.nextSpy.calledOnce).to.be.true
-      expect(this.reqMock.session.store).to.deep.equal({ 'example_key': mockDataObj })
+      expect(this.reqMock.session.store).to.deep.equal({
+        example_key: mockDataObj,
+      })
 
       this.reqMock.store.remove('example_key')
       expect(this.reqMock.session.store).to.deep.equal({})

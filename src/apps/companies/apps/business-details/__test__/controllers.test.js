@@ -24,7 +24,9 @@ describe('Company business details', () => {
 
       before(async () => {
         nock(config.apiRoot)
-          .get(`/v4/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`)
+          .get(
+            `/v4/company?limit=10&offset=0&sortby=name&global_headquarters_id=${companyMock.id}`
+          )
           .reply(200, { count: 999 })
 
         middlewareParams = buildMiddlewareParameters({
@@ -43,7 +45,7 @@ describe('Company business details', () => {
         await renderBusinessDetails(
           middlewareParams.reqMock,
           middlewareParams.resMock,
-          middlewareParams.nextSpy,
+          middlewareParams.nextSpy
         )
       })
 
@@ -53,40 +55,58 @@ describe('Company business details', () => {
 
       it('should render the template', () => {
         expect(middlewareParams.resMock.render).to.be.calledOnceWithExactly(
-          'companies/apps/business-details/views/client-container', {
-            'heading': 'Business details',
-            'props': {
-              'businessDetails': {
-                'id': '1',
-                'name': 'Test company',
-                'company_number': '222',
+          'companies/apps/business-details/views/client-container',
+          {
+            heading: 'Business details',
+            props: {
+              businessDetails: {
+                id: '1',
+                name: 'Test company',
+                company_number: '222',
               },
-              'globalUltimate': {
-                'name': 'Test Global Ultimate',
-                'url': '/test/222',
+              globalUltimate: {
+                name: 'Test Global Ultimate',
+                url: '/test/222',
               },
-              'isGlobalUltimateFlagEnabled': false,
-              'dnbRelatedCompaniesCount': 111,
-              'subsidiariesCount': 999,
-              'urls': {
-                'archivedDocument': '/some/path',
-                'companiesHouse': urls.external.companiesHouse(companyMock.company_number),
-                'companyBusinessDetails': urls.companies.businessDetails(companyMock.id),
-                'companyEdit': urls.companies.edit(companyMock.id),
-                'companyArchive': `${urls.companies.archive(companyMock.id)}?_csrf=csrf`,
-                'companyUnarchive': `${urls.companies.unarchive(companyMock.id)}?_csrf=csrf`,
-                'companyAdvisers': urls.companies.advisers.index(companyMock.id),
-                'companyAudit': urls.companies.audit(companyMock.id),
-                'support': urls.support(),
-                'subsidiaries': urls.companies.subsidiaries.index(companyMock.id),
-                'linkSubsidiary': urls.companies.subsidiaries.link(companyMock.id),
-                'linkGlobalHQ': urls.companies.hierarchies.ghq.link(companyMock.id),
-                'removeGlobalHQ': urls.companies.hierarchies.ghq.remove(companyMock.id),
-                'globalHQ': urls.companies.detail(companyMock.global_headquarters.id),
-                'dnbHierarchy': urls.companies.dnbHierarchy.index(companyMock.id),
+              isGlobalUltimateFlagEnabled: false,
+              dnbRelatedCompaniesCount: 111,
+              subsidiariesCount: 999,
+              urls: {
+                archivedDocument: '/some/path',
+                companiesHouse: urls.external.companiesHouse(
+                  companyMock.company_number
+                ),
+                companyBusinessDetails: urls.companies.businessDetails(
+                  companyMock.id
+                ),
+                companyEdit: urls.companies.edit(companyMock.id),
+                companyArchive: `${urls.companies.archive(
+                  companyMock.id
+                )}?_csrf=csrf`,
+                companyUnarchive: `${urls.companies.unarchive(
+                  companyMock.id
+                )}?_csrf=csrf`,
+                companyAdvisers: urls.companies.advisers.index(companyMock.id),
+                companyAudit: urls.companies.audit(companyMock.id),
+                support: urls.support(),
+                subsidiaries: urls.companies.subsidiaries.index(companyMock.id),
+                linkSubsidiary: urls.companies.subsidiaries.link(
+                  companyMock.id
+                ),
+                linkGlobalHQ: urls.companies.hierarchies.ghq.link(
+                  companyMock.id
+                ),
+                removeGlobalHQ: urls.companies.hierarchies.ghq.remove(
+                  companyMock.id
+                ),
+                globalHQ: urls.companies.detail(
+                  companyMock.global_headquarters.id
+                ),
+                dnbHierarchy: urls.companies.dnbHierarchy.index(companyMock.id),
               },
             },
-          })
+          }
+        )
       })
 
       it('should add a breadcrumb', () => {

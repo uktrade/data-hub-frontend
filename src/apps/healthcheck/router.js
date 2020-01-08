@@ -1,6 +1,10 @@
 const router = require('express').Router()
 
-const { getPingdomFailures, getPingdomWarnings, getMicroserviceHealthcheck } = require('./controllers')
+const {
+  getPingdomFailures,
+  getPingdomWarnings,
+  getMicroserviceHealthcheck,
+} = require('./controllers')
 
 router.get('/', getMicroserviceHealthcheck)
 

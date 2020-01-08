@@ -22,9 +22,13 @@ describe('OMIS list transformers', () => {
     context('when given an unqualified result', () => {
       it('should return undefined', () => {
         expect(this.transformers.transformOrderToListItem()).to.be.undefined
-        expect(this.transformers.transformOrderToListItem({ a: 'b' })).to.be.undefined
-        expect(this.transformers.transformOrderToListItem({ id: 'abcd' })).to.be.undefined
-        expect(this.transformers.transformOrderToListItem({ reference: 'Z123/SD' })).to.be.undefined
+        expect(this.transformers.transformOrderToListItem({ a: 'b' })).to.be
+          .undefined
+        expect(this.transformers.transformOrderToListItem({ id: 'abcd' })).to.be
+          .undefined
+        expect(
+          this.transformers.transformOrderToListItem({ reference: 'Z123/SD' })
+        ).to.be.undefined
       })
     })
 
@@ -33,30 +37,43 @@ describe('OMIS list transformers', () => {
         it('should return a transformed object', () => {
           const actual = this.transformers.transformOrderToListItem(simpleOrder)
 
-          expect(actual).to.have.property('id').a('string')
-          expect(actual).to.have.property('name').a('string')
+          expect(actual)
+            .to.have.property('id')
+            .a('string')
+          expect(actual)
+            .to.have.property('name')
+            .a('string')
           expect(actual).to.have.property('type', 'order')
           expect(actual).to.have.property('urlPrefix', 'omis/')
-          expect(actual).to.have.property('subTitle').to.deep.equal({
-            type: 'datetime',
-            value: '2017-08-16T14:18:28.328729',
-            label: 'Updated on',
-          })
-          expect(actual).to.have.property('meta').an('array').to.deep.equal([
-            { label: 'Status', type: 'badge', value: 'Draft' },
-            { label: 'Market', type: 'badge', value: 'France' },
-            { label: 'Company', value: 'Venus Ltd' },
-            { label: 'Created', type: 'datetime', value: '2017-07-26T14:08:36.380979' },
-            { label: 'Contact', value: 'Jenny Cakeman' },
-            { label: 'UK region', value: 'London' },
-            {
-              label: 'Sector',
-              value: {
-                id: 'e74171b4-efe9-e511-8ffa-e4115bead28a',
-                name: 'Aerospace : Component Manufacturing',
+          expect(actual)
+            .to.have.property('subTitle')
+            .to.deep.equal({
+              type: 'datetime',
+              value: '2017-08-16T14:18:28.328729',
+              label: 'Updated on',
+            })
+          expect(actual)
+            .to.have.property('meta')
+            .an('array')
+            .to.deep.equal([
+              { label: 'Status', type: 'badge', value: 'Draft' },
+              { label: 'Market', type: 'badge', value: 'France' },
+              { label: 'Company', value: 'Venus Ltd' },
+              {
+                label: 'Created',
+                type: 'datetime',
+                value: '2017-07-26T14:08:36.380979',
               },
-            },
-          ])
+              { label: 'Contact', value: 'Jenny Cakeman' },
+              { label: 'UK region', value: 'London' },
+              {
+                label: 'Sector',
+                value: {
+                  id: 'e74171b4-efe9-e511-8ffa-e4115bead28a',
+                  name: 'Aerospace : Component Manufacturing',
+                },
+              },
+            ])
         })
       })
 
@@ -67,21 +84,28 @@ describe('OMIS list transformers', () => {
           })
           const actual = this.transformers.transformOrderToListItem(order)
 
-          expect(actual).to.have.property('meta').an('array').to.deep.equal([
-            { label: 'Status', type: 'badge', value: undefined },
-            { label: 'Market', type: 'badge', value: 'France' },
-            { label: 'Company', value: 'Venus Ltd' },
-            { label: 'Created', type: 'datetime', value: '2017-07-26T14:08:36.380979' },
-            { label: 'Contact', value: 'Jenny Cakeman' },
-            { label: 'UK region', value: 'London' },
-            {
-              label: 'Sector',
-              value: {
-                id: 'e74171b4-efe9-e511-8ffa-e4115bead28a',
-                name: 'Aerospace : Component Manufacturing',
+          expect(actual)
+            .to.have.property('meta')
+            .an('array')
+            .to.deep.equal([
+              { label: 'Status', type: 'badge', value: undefined },
+              { label: 'Market', type: 'badge', value: 'France' },
+              { label: 'Company', value: 'Venus Ltd' },
+              {
+                label: 'Created',
+                type: 'datetime',
+                value: '2017-07-26T14:08:36.380979',
               },
-            },
-          ])
+              { label: 'Contact', value: 'Jenny Cakeman' },
+              { label: 'UK region', value: 'London' },
+              {
+                label: 'Sector',
+                value: {
+                  id: 'e74171b4-efe9-e511-8ffa-e4115bead28a',
+                  name: 'Aerospace : Component Manufacturing',
+                },
+              },
+            ])
         })
       })
 
@@ -92,31 +116,48 @@ describe('OMIS list transformers', () => {
           })
           const actual = this.transformers.transformOrderToListItem(order)
 
-          expect(actual).to.have.property('id').a('string')
-          expect(actual).to.have.property('name').a('string')
+          expect(actual)
+            .to.have.property('id')
+            .a('string')
+          expect(actual)
+            .to.have.property('name')
+            .a('string')
           expect(actual).to.have.property('type', 'order')
           expect(actual).to.have.property('urlPrefix', 'omis/')
-          expect(actual).to.have.property('subTitle').to.deep.equal({
-            type: 'datetime',
-            value: '2017-08-16T14:18:28.328729',
-            label: 'Updated on',
-          })
-          expect(actual).to.have.property('meta').an('array').to.deep.equal([
-            { label: 'Status', type: 'badge', value: 'Draft' },
-            { label: 'Market', type: 'badge', value: 'France' },
-            { label: 'Company', value: 'Venus Ltd' },
-            { label: 'Created', type: 'datetime', value: '2017-07-26T14:08:36.380979' },
-            { label: 'Contact', value: 'Jenny Cakeman' },
-            { label: 'UK region', value: 'London' },
-            {
-              label: 'Sector',
-              value: {
-                id: 'e74171b4-efe9-e511-8ffa-e4115bead28a',
-                name: 'Aerospace : Component Manufacturing',
+          expect(actual)
+            .to.have.property('subTitle')
+            .to.deep.equal({
+              type: 'datetime',
+              value: '2017-08-16T14:18:28.328729',
+              label: 'Updated on',
+            })
+          expect(actual)
+            .to.have.property('meta')
+            .an('array')
+            .to.deep.equal([
+              { label: 'Status', type: 'badge', value: 'Draft' },
+              { label: 'Market', type: 'badge', value: 'France' },
+              { label: 'Company', value: 'Venus Ltd' },
+              {
+                label: 'Created',
+                type: 'datetime',
+                value: '2017-07-26T14:08:36.380979',
               },
-            },
-            { label: 'Delivery date', type: 'date', value: '2018-10-16T14:18:28.328729' },
-          ])
+              { label: 'Contact', value: 'Jenny Cakeman' },
+              { label: 'UK region', value: 'London' },
+              {
+                label: 'Sector',
+                value: {
+                  id: 'e74171b4-efe9-e511-8ffa-e4115bead28a',
+                  name: 'Aerospace : Component Manufacturing',
+                },
+              },
+              {
+                label: 'Delivery date',
+                type: 'date',
+                value: '2018-10-16T14:18:28.328729',
+              },
+            ])
         })
       })
     })
@@ -128,9 +169,13 @@ describe('OMIS list transformers', () => {
     context('when given an unqualified result', () => {
       it('should return undefined', () => {
         expect(this.transformers.transformOrderToTableItem()).to.be.undefined
-        expect(this.transformers.transformOrderToTableItem({ a: 'b' })).to.be.undefined
-        expect(this.transformers.transformOrderToTableItem({ id: 'abcd' })).to.be.undefined
-        expect(this.transformers.transformOrderToTableItem({ reference: 'Z123/SD' })).to.be.undefined
+        expect(this.transformers.transformOrderToTableItem({ a: 'b' })).to.be
+          .undefined
+        expect(this.transformers.transformOrderToTableItem({ id: 'abcd' })).to
+          .be.undefined
+        expect(
+          this.transformers.transformOrderToTableItem({ reference: 'Z123/SD' })
+        ).to.be.undefined
       })
     })
 
@@ -138,11 +183,21 @@ describe('OMIS list transformers', () => {
       it('should return a transformed object', () => {
         const actual = this.transformers.transformOrderToTableItem(simpleOrder)
 
-        expect(actual).to.have.property('id').a('string')
-        expect(actual).to.have.property('reference').a('string')
-        expect(actual).to.have.property('subtotal_cost').a('number')
-        expect(actual).to.have.property('total_cost').a('number')
-        expect(actual).to.have.property('company').a('string')
+        expect(actual)
+          .to.have.property('id')
+          .a('string')
+        expect(actual)
+          .to.have.property('reference')
+          .a('string')
+        expect(actual)
+          .to.have.property('subtotal_cost')
+          .a('number')
+        expect(actual)
+          .to.have.property('total_cost')
+          .a('number')
+        expect(actual)
+          .to.have.property('company')
+          .a('string')
       })
     })
   })
@@ -153,8 +208,10 @@ describe('OMIS list transformers', () => {
     context('when given an unqualified result', () => {
       it('should return undefined', () => {
         expect(this.transformers.transformPaymentToView()).to.be.undefined
-        expect(this.transformers.transformPaymentToView({ a: 'b' })).to.be.undefined
-        expect(this.transformers.transformPaymentToView({ id: 'abcd' })).to.be.undefined
+        expect(this.transformers.transformPaymentToView({ a: 'b' })).to.be
+          .undefined
+        expect(this.transformers.transformPaymentToView({ id: 'abcd' })).to.be
+          .undefined
       })
     })
 
@@ -162,13 +219,27 @@ describe('OMIS list transformers', () => {
       it('should return the correct properties', () => {
         const actual = this.transformers.transformPaymentToView(payment)
 
-        expect(actual).to.have.property('reference').a('string')
-        expect(actual).to.have.property('transaction_reference').a('string')
-        expect(actual).to.have.property('additional_reference').a('string')
-        expect(actual).to.have.property('method').a('string')
-        expect(actual).to.have.property('received_on').a('string')
-        expect(actual).to.have.property('created_on').a('string')
-        expect(actual).to.have.property('amount').a('number')
+        expect(actual)
+          .to.have.property('reference')
+          .a('string')
+        expect(actual)
+          .to.have.property('transaction_reference')
+          .a('string')
+        expect(actual)
+          .to.have.property('additional_reference')
+          .a('string')
+        expect(actual)
+          .to.have.property('method')
+          .a('string')
+        expect(actual)
+          .to.have.property('received_on')
+          .a('string')
+        expect(actual)
+          .to.have.property('created_on')
+          .a('string')
+        expect(actual)
+          .to.have.property('amount')
+          .a('number')
       })
 
       it('should convert amount to pounds', () => {
@@ -193,22 +264,28 @@ describe('OMIS list transformers', () => {
     context('when given an unqualified result', () => {
       it('should return undefined', () => {
         expect(this.transformers.transformSubscriberToView()()).to.be.undefined
-        expect(this.transformers.transformSubscriberToView()({ a: 'b' })).to.be.undefined
-        expect(this.transformers.transformSubscriberToView()({ name: 'abcd' })).to.be.undefined
+        expect(this.transformers.transformSubscriberToView()({ a: 'b' })).to.be
+          .undefined
+        expect(this.transformers.transformSubscriberToView()({ name: 'abcd' }))
+          .to.be.undefined
       })
     })
 
     context('when given a qualified result', () => {
       context('when the subscriber is not the current user', () => {
         it('should return just the name', () => {
-          const actual = this.transformers.transformSubscriberToView()(subscriber)
+          const actual = this.transformers.transformSubscriberToView()(
+            subscriber
+          )
 
           expect(actual).to.equal('Puck Head')
         })
 
         context('when the subscriber has a UK region', () => {
           it('should return the name and Uk region', () => {
-            const actual = this.transformers.transformSubscriberToView()(subscriberWithTeam)
+            const actual = this.transformers.transformSubscriberToView()(
+              subscriberWithTeam
+            )
 
             expect(actual).to.equal('Puck Head, London')
           })
@@ -217,14 +294,18 @@ describe('OMIS list transformers', () => {
 
       context('when the subscriber is the current user', () => {
         it('should return the name with suffix', () => {
-          const actual = this.transformers.transformSubscriberToView(subscriber.id)(subscriber)
+          const actual = this.transformers.transformSubscriberToView(
+            subscriber.id
+          )(subscriber)
 
           expect(actual).to.equal('Puck Head (you)')
         })
 
         context('when the subscriber has a UK region', () => {
           it('should return the name and Uk region', () => {
-            const actual = this.transformers.transformSubscriberToView(subscriber.id)(subscriberWithTeam)
+            const actual = this.transformers.transformSubscriberToView(
+              subscriber.id
+            )(subscriberWithTeam)
 
             expect(actual).to.equal('Puck Head, London (you)')
           })

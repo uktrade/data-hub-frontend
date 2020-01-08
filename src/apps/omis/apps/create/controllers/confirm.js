@@ -5,13 +5,15 @@ const { CreateController } = require('../../../controllers')
 const { Order } = require('../../../models')
 
 class ConfirmController extends CreateController {
-  getValues (req, res, next) {
+  getValues(req, res, next) {
     super.getValues(req, res, (err, values) => {
       const company = get(res.locals, 'company')
       const summaryValues = assign({}, values, {
         company,
         contact: find(company.contacts, { id: values.contact }),
-        primary_market: find(metadataRepo.countryOptions, { id: values.primary_market }),
+        primary_market: find(metadataRepo.countryOptions, {
+          id: values.primary_market,
+        }),
         sector: find(metadataRepo.sectorOptions, { id: values.sector }),
       })
 
@@ -19,7 +21,7 @@ class ConfirmController extends CreateController {
     })
   }
 
-  async saveValues (req, res, next) {
+  async saveValues(req, res, next) {
     const data = req.sessionModel.toJSON()
 
     // clean un-needed properties
@@ -36,7 +38,7 @@ class ConfirmController extends CreateController {
     }
   }
 
-  successHandler (req, res) {
+  successHandler(req, res) {
     const orderId = req.sessionModel.get('order-id')
 
     req.journeyModel.reset()

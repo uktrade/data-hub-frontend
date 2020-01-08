@@ -2,18 +2,20 @@ const { range, take, get, omitBy } = require('lodash')
 const queryString = require('qs')
 const config = require('../config')
 
-function getPageLink (page, query = {}) {
+function getPageLink(page, query = {}) {
   const newQuery = Object.assign({}, query, {
     page,
   })
-  return `?${queryString.stringify(omitBy(newQuery, val => val === ''))}`
+  return `?${queryString.stringify(omitBy(newQuery, (val) => val === ''))}`
 }
 
-function truncatePages (pagination, blockSize) {
+function truncatePages(pagination, blockSize) {
   const TRUNCATION_SYMBOL = '…'
   const pages = pagination.pages
 
-  if (pages.length <= blockSize) { return pagination }
+  if (pages.length <= blockSize) {
+    return pagination
+  }
 
   const currentPageNum = pagination.currentPage
   const currentPageIndex = pagination.currentPage - 1
@@ -23,11 +25,16 @@ function truncatePages (pagination, blockSize) {
   const blockPivot = Math.round(blockSize / 2)
   const startOfCurrentBlock = Math.abs(currentPageNum - blockPivot)
   const startOfLastBlock = lastPage.label - blockSize
-  const blockStartIndex = Math.min(startOfCurrentBlock, startOfLastBlock, currentPageIndex)
+  const blockStartIndex = Math.min(
+    startOfCurrentBlock,
+    startOfLastBlock,
+    currentPageIndex
+  )
 
-  let truncatedPages = take(pages.slice(blockStartIndex), blockSize)
+  const truncatedPages = take(pages.slice(blockStartIndex), blockSize)
   const firstOfTruncatedPagesNum = truncatedPages[0].label
-  const lastOfTruncatedPagesNum = truncatedPages[truncatedPages.length - 1].label
+  const lastOfTruncatedPagesNum =
+    truncatedPages[truncatedPages.length - 1].label
 
   if (firstOfTruncatedPagesNum > 3) {
     truncatedPages.unshift({ label: TRUNCATION_SYMBOL })
@@ -53,20 +60,26 @@ function truncatePages (pagination, blockSize) {
   return pagination
 }
 
-function buildPagination (query = {}, results, truncate = 4) {
-  const limit = results.limit || Math.max(get(results, 'results.length', 10), 10)
+function buildPagination(query = {}, results, truncate = 4) {
+  const limit =
+    results.limit || Math.max(get(results, 'results.length', 10), 10)
   const totalPages = results.count ? Math.ceil(results.count / limit) : 0
-  const totalPagesLimited = Math.round(Math.min(totalPages, config.paginationMaxResults / limit))
+  const totalPagesLimited = Math.round(
+    Math.min(totalPages, config.paginationMaxResults / limit)
+  )
 
   results.page = parseInt(query.page, 10) || 1
 
-  if (totalPages < 2) { return null }
+  if (totalPages < 2) {
+    return null
+  }
 
   const pagination = {
     totalPages: totalPagesLimited,
     currentPage: results.page,
     prev: results.page > 1 ? getPageLink(results.page - 1, query) : null,
-    next: results.page === totalPages ? null : getPageLink(results.page + 1, query),
+    next:
+      results.page === totalPages ? null : getPageLink(results.page + 1, query),
     pages: range(0, totalPagesLimited).map((page, idx) => {
       return {
         label: idx + 1,

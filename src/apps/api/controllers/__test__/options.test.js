@@ -22,19 +22,23 @@ describe('options API controller', () => {
 
     this.nextSpy = sinon.spy()
 
-    const regions = [{
-      id: '1',
-      name: 'Alderney',
-      disabled_on: '2013-03-25T14:25:00Z',
-    }, {
-      id: '2',
-      name: 'East Midlands',
-      disabled_on: null,
-    }, {
-      id: '3',
-      name: 'Isle of Man',
-      disabled_on: null,
-    }]
+    const regions = [
+      {
+        id: '1',
+        name: 'Alderney',
+        disabled_on: '2013-03-25T14:25:00Z',
+      },
+      {
+        id: '2',
+        name: 'East Midlands',
+        disabled_on: null,
+      },
+      {
+        id: '3',
+        name: 'Isle of Man',
+        disabled_on: null,
+      },
+    ]
 
     nock(config.apiRoot)
       .get('/v4/metadata/uk-region')
@@ -54,16 +58,20 @@ describe('options API controller', () => {
       })
 
       it('should return all the options', () => {
-        expect(this.resMock.json).to.be.calledWith([{
-          value: '1',
-          label: 'Alderney',
-        }, {
-          value: '2',
-          label: 'East Midlands',
-        }, {
-          value: '3',
-          label: 'Isle of Man',
-        }])
+        expect(this.resMock.json).to.be.calledWith([
+          {
+            value: '1',
+            label: 'Alderney',
+          },
+          {
+            value: '2',
+            label: 'East Midlands',
+          },
+          {
+            value: '3',
+            label: 'Isle of Man',
+          },
+        ])
       })
     })
 
@@ -82,10 +90,12 @@ describe('options API controller', () => {
       })
 
       it('should return filtered options', () => {
-        expect(this.resMock.json).to.be.calledWith([{
-          value: '3',
-          label: 'Isle of Man',
-        }])
+        expect(this.resMock.json).to.be.calledWith([
+          {
+            value: '3',
+            label: 'Isle of Man',
+          },
+        ])
       })
     })
   })
@@ -126,41 +136,44 @@ describe('options API controller', () => {
     })
   })
 
-  context('given target is search_autocomplete and list of options depends on another selection', () => {
-    beforeEach(async () => {
-      const reqMock = {
-        query: {
-          chained_param: 'chainedParam',
-          chained_value: 'chainedValue',
-          target: 'search_autocomplete',
-          is_active: true,
-          autocomplete: 'France',
-        },
-        session: {
+  context(
+    'given target is search_autocomplete and list of options depends on another selection',
+    () => {
+      beforeEach(async () => {
+        const reqMock = {
+          query: {
+            chained_param: 'chainedParam',
+            chained_value: 'chainedValue',
+            target: 'search_autocomplete',
+            is_active: true,
+            autocomplete: 'France',
+          },
+          session: {
+            token: '1234',
+          },
+          params: {
+            entity: 'company',
+          },
+        }
+
+        this.searchAutocomplete = sinon.stub().resolves({})
+
+        const controller = proxyquire('../options', {
+          '../../../modules/search/services': {
+            searchAutocomplete: this.searchAutocomplete,
+          },
+        })
+
+        await controller.getOptionsHandler(reqMock, this.resMock, this.nextSpy)
+      })
+
+      it('should define and pass chained params to getOptions', () => {
+        expect(this.searchAutocomplete).to.be.calledWith({
+          searchEntity: 'company',
+          searchTerm: 'France&chainedParam=chainedValue',
           token: '1234',
-        },
-        params: {
-          entity: 'company',
-        },
-      }
-
-      this.searchAutocomplete = sinon.stub().resolves({})
-
-      const controller = proxyquire('../options', {
-        '../../../modules/search/services': {
-          searchAutocomplete: this.searchAutocomplete,
-        },
+        })
       })
-
-      await controller.getOptionsHandler(reqMock, this.resMock, this.nextSpy)
-    })
-
-    it('should define and pass chained params to getOptions', () => {
-      expect(this.searchAutocomplete).to.be.calledWith({
-        searchEntity: 'company',
-        searchTerm: 'France&chainedParam=chainedValue',
-        token: '1234',
-      })
-    })
-  })
+    }
+  )
 })

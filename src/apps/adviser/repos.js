@@ -11,7 +11,7 @@ if (!config.isTest) {
   redisAsyncGet = redisClient.asyncGet()
 }
 
-async function getAdvisers (token) {
+async function getAdvisers(token) {
   let results
   const url = `${config.apiRoot}/adviser/?limit=100000&offset=0`
   const advisers = config.isTest ? null : await redisAsyncGet('advisers')
@@ -22,7 +22,7 @@ async function getAdvisers (token) {
     const response = await authorisedRequest(token, url)
 
     results = response.results.filter(
-      adviser => get(adviser, 'name', '').trim().length
+      (adviser) => get(adviser, 'name', '').trim().length
     )
     if (!config.isTest) {
       client.set(
@@ -40,15 +40,13 @@ async function getAdvisers (token) {
   }
 }
 
-function getAdviser (token, id) {
+function getAdviser(token, id) {
   return authorisedRequest(token, `${config.apiRoot}/adviser/${id}/`)
 }
 
-async function fetchAdviserSearchResults (token, params) {
+async function fetchAdviserSearchResults(token, params) {
   const isActive = params.is_active ? '&is_active=true' : ''
-  const url = `${config.apiRoot}/adviser/?autocomplete=${
-    params.term
-  }${isActive}`
+  const url = `${config.apiRoot}/adviser/?autocomplete=${params.term}${isActive}`
   const adviserResults = await authorisedRequest(token, { url })
   return adviserResults.results
 }

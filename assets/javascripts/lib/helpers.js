@@ -2,7 +2,7 @@
 const regularExp1 = '(\\s|^)'
 const regularExp2 = '(\\s|$)'
 
-function addClass (element, className) {
+function addClass(element, className) {
   if (!element) return
   if (isNodeList(element)) {
     for (let pos = element.length - 1; pos > -1; pos -= 1) {
@@ -15,7 +15,7 @@ function addClass (element, className) {
   }
 }
 
-function removeClass (element, className) {
+function removeClass(element, className) {
   if (!element) return
   if (isNodeList(element)) {
     for (let pos = element.length - 1; pos > -1; pos -= 1) {
@@ -29,15 +29,17 @@ function removeClass (element, className) {
   }
 }
 
-function hasClass (element, className) {
+function hasClass(element, className) {
   if (!element) return
   if (element.classList) {
     return element.classList.contains(className)
   }
-  return element.className.match(new RegExp(regularExp1 + className + regularExp2))
+  return element.className.match(
+    new RegExp(regularExp1 + className + regularExp2)
+  )
 }
 
-function toggleClass (element, className) {
+function toggleClass(element, className) {
   if (!element) return
   if (isNodeList(element)) {
     for (let pos = element.length - 1; pos > -1; pos -= 1) {
@@ -59,28 +61,31 @@ function toggleClass (element, className) {
  * @param {string} prefix
  * @returns {string} a unique string to use to indentify an element
  */
-function generateID (prefix) {
-  const _prefix = (prefix && prefix.length > 0) ? prefix : 'dh'
+function generateID(prefix) {
+  const _prefix = prefix && prefix.length > 0 ? prefix : 'dh'
   return `${_prefix}-${Math.floor(Math.random() * 1000000) + 1}`
 }
 
-function isNodeList (nodes) {
+function isNodeList(nodes) {
   const stringRepr = Object.prototype.toString.call(nodes)
 
-  return typeof nodes === 'object' &&
+  return (
+    typeof nodes === 'object' &&
     /^\[object (HTMLCollection|NodeList|Object)\]$/.test(stringRepr) &&
-    (typeof nodes.length === 'number') &&
-    (nodes.length === 0 || (typeof nodes[0] === 'object' && nodes[0].nodeType > 0))
+    typeof nodes.length === 'number' &&
+    (nodes.length === 0 ||
+      (typeof nodes[0] === 'object' && nodes[0].nodeType > 0))
+  )
 }
 
-function findDoc (el) {
+function findDoc(el) {
   while (el.parentNode) {
     el = el.parentNode
   }
   return el
 }
 
-function insertAfter (newElement, targetElement) {
+function insertAfter(newElement, targetElement) {
   // target is what you want it to go after. Look for this elements parent.
   const parent = targetElement.parentNode
 
@@ -94,24 +99,24 @@ function insertAfter (newElement, targetElement) {
   }
 }
 
-function hide (element) {
+function hide(element) {
   addClass(element, 'u-hidden')
   element.setAttribute('aria-hidden', true)
 }
 
-function show (element) {
+function show(element) {
   removeClass(element, 'u-hidden')
   element.setAttribute('aria-hidden', false)
 }
 
-function createElementFromMarkup (markup, docToCreateIn) {
+function createElementFromMarkup(markup, docToCreateIn) {
   const documentRef = docToCreateIn || document
-  let tmp = documentRef.createElement('body')
+  const tmp = documentRef.createElement('body')
   tmp.innerHTML = markup
   return tmp.firstElementChild
 }
 
-function removeElement (element) {
+function removeElement(element) {
   if (!element) return
   element.parentNode.removeChild(element)
 }
@@ -128,26 +133,28 @@ function removeElement (element) {
  *
  * @returns {nodeElement}
  */
-function resetFieldValues (element) {
-  Array.from(element.querySelectorAll('option:checked'))
-    .forEach(selectedElement => {
+function resetFieldValues(element) {
+  Array.from(element.querySelectorAll('option:checked')).forEach(
+    (selectedElement) => {
       selectedElement.selected = false
-    })
+    }
+  )
 
-  Array.from(element.querySelectorAll('input:checked'))
-    .forEach(checkedElement => {
+  Array.from(element.querySelectorAll('input:checked')).forEach(
+    (checkedElement) => {
       checkedElement.checked = false
-    })
+    }
+  )
 
-  Array.from(element.querySelectorAll('input[type="text"], textarea'))
-    .forEach(textField => {
+  Array.from(element.querySelectorAll('input[type="text"], textarea')).forEach(
+    (textField) => {
       textField.value = ''
-    })
+    }
+  )
 
-  Array.from(element.querySelectorAll('select'))
-    .forEach(field => {
-      field.selectedIndex = 0
-    })
+  Array.from(element.querySelectorAll('select')).forEach((field) => {
+    field.selectedIndex = 0
+  })
 
   return element
 }
@@ -163,34 +170,34 @@ function resetFieldValues (element) {
  *
  * @returns {nodeElement}
  */
-function regenIds (wrapper, attr = 'id') {
-  Array
-    .from(wrapper.querySelectorAll('*[id]'))
-    .forEach((element) => {
-      const oldId = element[attr]
+function regenIds(wrapper, attr = 'id') {
+  Array.from(wrapper.querySelectorAll('*[id]')).forEach((element) => {
+    const oldId = element[attr]
 
-      // If the element has a name, use that as part of the new ID
-      const item = element[attr] || ''
-      const newItem = generateID(item)
+    // If the element has a name, use that as part of the new ID
+    const item = element[attr] || ''
+    const newItem = generateID(item)
 
-      element[attr] = newItem
+    element[attr] = newItem
 
-      const relatedLabel = wrapper.querySelector(`[for="${oldId}"]`)
-      if (relatedLabel) {
-        relatedLabel.setAttribute('for', newItem)
-      }
-    })
+    const relatedLabel = wrapper.querySelector(`[for="${oldId}"]`)
+    if (relatedLabel) {
+      relatedLabel.setAttribute('for', newItem)
+    }
+  })
 
   return wrapper
 }
 
-function closest (element, selector) {
+function closest(element, selector) {
   if (!element) {
     return
   }
 
   if (!element.matches) {
-    element.prototype.matches = element.prototype.msMatchesSelector || element.prototype.webkitMatchesSelector
+    element.prototype.matches =
+      element.prototype.msMatchesSelector ||
+      element.prototype.webkitMatchesSelector
   }
 
   let parent
@@ -221,7 +228,7 @@ function closest (element, selector) {
  * @returns {boolean}
  */
 
-function matchWords (str, words) {
+function matchWords(str, words) {
   const queryWords = words.split(' ')
   const count = queryWords.reduce((allWords, word) => {
     if (str.search(new RegExp(word, 'i')) !== -1) {
@@ -244,7 +251,7 @@ function matchWords (str, words) {
  * @returns {boolean}
  */
 
-function checkDateFormat (value) {
+function checkDateFormat(value) {
   const dateFormat = /^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/i
   return dateFormat.test(value)
 }

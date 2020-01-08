@@ -12,9 +12,11 @@ const {
   saveDnbCompanyInvestigation,
 } = require('../repos')
 
-function makeRepositoryWithAuthRequest (authorisedRequestStub) {
+function makeRepositoryWithAuthRequest(authorisedRequestStub) {
   return proxyquire('../repos', {
-    '../../lib/authorised-request': { authorisedRequest: authorisedRequestStub },
+    '../../lib/authorised-request': {
+      authorisedRequest: authorisedRequestStub,
+    },
   })
 }
 
@@ -30,7 +32,10 @@ describe('Company repository', () => {
       })
 
       it('should call the API with a PATCH if an ID is provided.', async () => {
-        await this.repo.saveCompany('TEST_TOKEN', { id: 'TEST_TOKEN', name: 'fred' })
+        await this.repo.saveCompany('TEST_TOKEN', {
+          id: 'TEST_TOKEN',
+          name: 'fred',
+        })
         expect(this.authorisedRequestStub).calledOnceWithExactly('TEST_TOKEN', {
           body: { id: 'TEST_TOKEN', name: 'fred' },
           method: 'PATCH',
@@ -56,14 +61,19 @@ describe('Company repository', () => {
     })
 
     it('should make the correct call to the API', async () => {
-      await this.repo.updateCompany('TEST_TOKEN', '999', { global_headquarters: '1' })
-      expect(this.authorisedRequestStub).to.be.calledOnceWithExactly('TEST_TOKEN', {
-        url: `${config.apiRoot}/v4/company/999`,
-        method: 'PATCH',
-        body: {
-          global_headquarters: '1',
-        },
+      await this.repo.updateCompany('TEST_TOKEN', '999', {
+        global_headquarters: '1',
       })
+      expect(this.authorisedRequestStub).to.be.calledOnceWithExactly(
+        'TEST_TOKEN',
+        {
+          url: `${config.apiRoot}/v4/company/999`,
+          method: 'PATCH',
+          body: {
+            global_headquarters: '1',
+          },
+        }
+      )
     })
   })
 
@@ -108,7 +118,10 @@ describe('Company repository', () => {
     it('should call the API with a DELETE to remove company from the list', async () => {
       this.authorisedRequestStub = sinon.stub()
       this.repo = makeRepositoryWithAuthRequest(this.authorisedRequestStub)
-      await this.repo.removeDitCompanyFromList('TEST_TOKEN', myCompanyListData.id)
+      await this.repo.removeDitCompanyFromList(
+        'TEST_TOKEN',
+        myCompanyListData.id
+      )
       expect(this.authorisedRequestStub).calledOnceWithExactly('TEST_TOKEN', {
         method: 'DELETE',
         url: `${config.apiRoot}/v4/user/company-list/${myCompanyListData.id}`,

@@ -7,7 +7,9 @@ const orderData = require('../../../../test/unit/data/omis/simple-order.json')
 describe('OMIS middleware', () => {
   beforeEach(() => {
     this.setHomeBreadcrumbReturnSpy = sinon.spy()
-    this.setHomeBreadcrumbStub = sinon.stub().returns(this.setHomeBreadcrumbReturnSpy)
+    this.setHomeBreadcrumbStub = sinon
+      .stub()
+      .returns(this.setHomeBreadcrumbReturnSpy)
     this.getDitCompanyStub = sinon.stub()
     this.getByIdStub = sinon.stub()
     this.loggerSpy = sinon.spy()
@@ -51,20 +53,38 @@ describe('OMIS middleware', () => {
       })
 
       it('should call getDitCompany() with correct arguments', async () => {
-        await this.middleware.setCompany(this.reqMock, this.resMock, this.nextSpy, this.companyId)
+        await this.middleware.setCompany(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy,
+          this.companyId
+        )
 
-        expect(this.getDitCompanyStub).to.have.been.calledWith(this.reqMock.session.token, this.companyId)
+        expect(this.getDitCompanyStub).to.have.been.calledWith(
+          this.reqMock.session.token,
+          this.companyId
+        )
       })
 
       it('should set a company property on locals', async () => {
-        await this.middleware.setCompany(this.reqMock, this.resMock, this.nextSpy, this.companyId)
+        await this.middleware.setCompany(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy,
+          this.companyId
+        )
 
         expect(this.resMock.locals).to.have.property('company')
         expect(this.resMock.locals.company).to.deep.equal(companyData)
       })
 
       it('should call next with no errors', async () => {
-        await this.middleware.setCompany(this.reqMock, this.resMock, this.nextSpy, this.companyId)
+        await this.middleware.setCompany(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy,
+          this.companyId
+        )
 
         expect(this.nextSpy).to.have.been.calledWith()
       })
@@ -79,13 +99,23 @@ describe('OMIS middleware', () => {
       })
 
       it('should call next with an error', async () => {
-        await this.middleware.setCompany(this.reqMock, this.resMock, this.nextSpy, this.companyId)
+        await this.middleware.setCompany(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy,
+          this.companyId
+        )
 
         expect(this.nextSpy).to.have.been.calledWith(this.error)
       })
 
       it('should not set a company property on locals', async () => {
-        await this.middleware.setCompany(this.reqMock, this.resMock, this.nextSpy, this.companyId)
+        await this.middleware.setCompany(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy,
+          this.companyId
+        )
 
         expect(this.resMock.locals).to.not.have.property('company')
       })
@@ -103,13 +133,26 @@ describe('OMIS middleware', () => {
       })
 
       it('should call model methods with correct arguments', async () => {
-        await this.middleware.setOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
+        await this.middleware.setOrder(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy,
+          this.orderId
+        )
 
-        expect(this.getByIdStub).to.have.been.calledWith(this.reqMock.session.token, this.orderId)
+        expect(this.getByIdStub).to.have.been.calledWith(
+          this.reqMock.session.token,
+          this.orderId
+        )
       })
 
       it('should set a order property on locals', async () => {
-        await this.middleware.setOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
+        await this.middleware.setOrder(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy,
+          this.orderId
+        )
 
         const order = Object.assign({}, orderData, {
           canEditOrder: true,
@@ -122,7 +165,12 @@ describe('OMIS middleware', () => {
       })
 
       it('should call next with no errors', async () => {
-        await this.middleware.setOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
+        await this.middleware.setOrder(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy,
+          this.orderId
+        )
 
         expect(this.nextSpy).to.have.been.calledWith()
       })
@@ -134,7 +182,12 @@ describe('OMIS middleware', () => {
           })
           this.getByIdStub.resolves(draftOrder)
 
-          await this.middleware.setOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
+          await this.middleware.setOrder(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy,
+            this.orderId
+          )
         })
 
         it('should be able to edit order', () => {
@@ -157,7 +210,12 @@ describe('OMIS middleware', () => {
           })
           this.getByIdStub.resolves(quoteOrder)
 
-          await this.middleware.setOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
+          await this.middleware.setOrder(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy,
+            this.orderId
+          )
         })
 
         it('should not be able to edit order', () => {
@@ -184,7 +242,12 @@ describe('OMIS middleware', () => {
           })
           this.getByIdStub.resolves(quoteOrder)
 
-          await this.middleware.setOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
+          await this.middleware.setOrder(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy,
+            this.orderId
+          )
         })
 
         it('should not be able to edit order', () => {
@@ -196,11 +259,15 @@ describe('OMIS middleware', () => {
         })
 
         it('should not be able to edit invoice details', () => {
-          expect(this.resMock.locals.order.canEditInvoiceDetails).to.equal(false)
+          expect(this.resMock.locals.order.canEditInvoiceDetails).to.equal(
+            false
+          )
         })
 
         it('should not be able to edit contact details', () => {
-          expect(this.resMock.locals.order.canEditContactDetails).to.equal(false)
+          expect(this.resMock.locals.order.canEditContactDetails).to.equal(
+            false
+          )
         })
       })
 
@@ -211,7 +278,12 @@ describe('OMIS middleware', () => {
           })
           this.getByIdStub.resolves(quoteOrder)
 
-          await this.middleware.setOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
+          await this.middleware.setOrder(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy,
+            this.orderId
+          )
         })
 
         it('should not be able to edit order', () => {
@@ -223,11 +295,15 @@ describe('OMIS middleware', () => {
         })
 
         it('should not be able to edit invoice details', () => {
-          expect(this.resMock.locals.order.canEditInvoiceDetails).to.equal(false)
+          expect(this.resMock.locals.order.canEditInvoiceDetails).to.equal(
+            false
+          )
         })
 
         it('should not be able to edit contact details', () => {
-          expect(this.resMock.locals.order.canEditContactDetails).to.equal(false)
+          expect(this.resMock.locals.order.canEditContactDetails).to.equal(
+            false
+          )
         })
       })
     })
@@ -239,7 +315,12 @@ describe('OMIS middleware', () => {
         }
         this.getByIdStub.rejects(this.error)
 
-        await this.middleware.setOrder(this.reqMock, this.resMock, this.nextSpy, this.orderId)
+        await this.middleware.setOrder(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy,
+          this.orderId
+        )
       })
 
       it('should not set an order property on locals', () => {
@@ -267,7 +348,11 @@ describe('OMIS middleware', () => {
       expect(this.setHomeBreadcrumbStub).to.have.been.calledWith('12345/AS')
 
       expect(this.setHomeBreadcrumbReturnSpy).to.have.been.calledOnce
-      expect(this.setHomeBreadcrumbReturnSpy).to.have.been.calledWith({}, this.resMock, this.nextSpy)
+      expect(this.setHomeBreadcrumbReturnSpy).to.have.been.calledWith(
+        {},
+        this.resMock,
+        this.nextSpy
+      )
     })
   })
 
@@ -278,17 +363,21 @@ describe('OMIS middleware', () => {
       this.middleware.translate(
         this.middlewareParameters.reqMock,
         this.middlewareParameters.resMock,
-        this.middlewareParameters.nextSpy,
+        this.middlewareParameters.nextSpy
       )
     })
 
     it('should set the translate function', () => {
-      const actual = this.middlewareParameters.resMock.locals.translate('fields.contact.label')
+      const actual = this.middlewareParameters.resMock.locals.translate(
+        'fields.contact.label'
+      )
       expect(actual).to.equal('Contact responsible for the order')
     })
 
     it('should call next()', () => {
-      expect(this.middlewareParameters.nextSpy).to.have.been.calledOnceWithExactly()
+      expect(
+        this.middlewareParameters.nextSpy
+      ).to.have.been.calledOnceWithExactly()
     })
   })
 })

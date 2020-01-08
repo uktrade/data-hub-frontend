@@ -3,13 +3,11 @@ const {
   getMetaListItemValueSelector,
 } = require('../../helpers/selectors')
 
-const getFilterTagSelector = (text) => getSelectorForElementWithText(
-  text,
-  {
+const getFilterTagSelector = (text) =>
+  getSelectorForElementWithText(text, {
     el: '//span',
     className: 'c-collection__filter-label',
-  }
-)
+  })
 
 module.exports = {
   url: `${process.env.QA_HOST}/interactions`,

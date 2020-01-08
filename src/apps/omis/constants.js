@@ -1,9 +1,7 @@
 const GLOBAL_NAV_ITEM = {
   path: '/omis',
   headerKey: 'datahub-orders',
-  permissions: [
-    'order.view_order',
-  ],
+  permissions: ['order.view_order'],
   key: 'datahub-crm',
   order: 6,
 }
@@ -54,7 +52,7 @@ const QUERY_FIELDS = [
   ...QUERY_DATE_FIELDS,
 ]
 
-const APP_PERMISSIONS = [ GLOBAL_NAV_ITEM ]
+const APP_PERMISSIONS = [GLOBAL_NAV_ITEM]
 
 module.exports = {
   APP_PERMISSIONS,

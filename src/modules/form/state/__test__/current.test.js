@@ -34,44 +34,47 @@ describe('Current form state', () => {
       })
     })
 
-    context('when adding state for a step and state exists for another journey', () => {
-      beforeEach(() => {
-        const session = {
-          'multi-step': {
-            '/base/another-step-1': {
-              steps: {
-                '/another-step-1': {
-                  data: {
-                    another_field_1: 'another_field_1',
+    context(
+      'when adding state for a step and state exists for another journey',
+      () => {
+        beforeEach(() => {
+          const session = {
+            'multi-step': {
+              '/base/another-step-1': {
+                steps: {
+                  '/another-step-1': {
+                    data: {
+                      another_field_1: 'another_field_1',
+                    },
                   },
                 },
               },
             },
-          },
-        }
-        const data = {
-          field_1: 'field_1',
-        }
+          }
+          const data = {
+            field_1: 'field_1',
+          }
 
-        state.update(session, '/base/step-1', '/step-1', { data })
+          state.update(session, '/base/step-1', '/step-1', { data })
 
-        this.actual = state.getCurrent(session, '/base/another-step-1')
-      })
+          this.actual = state.getCurrent(session, '/base/another-step-1')
+        })
 
-      it('should not alter state for the other journey', () => {
-        const expected = {
-          steps: {
-            '/another-step-1': {
-              data: {
-                another_field_1: 'another_field_1',
+        it('should not alter state for the other journey', () => {
+          const expected = {
+            steps: {
+              '/another-step-1': {
+                data: {
+                  another_field_1: 'another_field_1',
+                },
               },
             },
-          },
-        }
+          }
 
-        expect(this.actual).to.deep.equal(expected)
-      })
-    })
+          expect(this.actual).to.deep.equal(expected)
+        })
+      }
+    )
 
     context('when appending state for a step', () => {
       beforeEach(() => {
@@ -251,7 +254,9 @@ describe('Current form state', () => {
           }
           const journeyKey = '/base/step-1'
 
-          state.update(session, journeyKey, '/step-1', { addBrowseHistory: true })
+          state.update(session, journeyKey, '/step-1', {
+            addBrowseHistory: true,
+          })
 
           this.actual = state.getCurrent(session, journeyKey)
         })
@@ -265,9 +270,7 @@ describe('Current form state', () => {
                 },
               },
             },
-            browseHistory: [
-              '/step-1',
-            ],
+            browseHistory: ['/step-1'],
           }
 
           expect(this.actual).to.deep.equal(expected)
@@ -286,15 +289,15 @@ describe('Current form state', () => {
                     },
                   },
                 },
-                browseHistory: [
-                  '/step-1',
-                ],
+                browseHistory: ['/step-1'],
               },
             },
           }
           const journeyKey = '/base/step-1'
 
-          state.update(session, journeyKey, '/step-1', { addBrowseHistory: true })
+          state.update(session, journeyKey, '/step-1', {
+            addBrowseHistory: true,
+          })
 
           this.actual = state.getCurrent(session, journeyKey)
         })
@@ -308,9 +311,7 @@ describe('Current form state', () => {
                 },
               },
             },
-            browseHistory: [
-              '/step-1',
-            ],
+            browseHistory: ['/step-1'],
           }
 
           expect(this.actual).to.deep.equal(expected)

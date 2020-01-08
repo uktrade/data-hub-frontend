@@ -3,7 +3,7 @@ const getSortOptions = (showCompany = true) => {
     { value: '-date', label: 'Newest' },
     { value: 'company__name', label: 'Company: A-Z' },
     { value: 'subject', label: 'Subject: A-Z' },
-  ].filter(o => o.value !== 'company__name' || showCompany)
+  ].filter((o) => o.value !== 'company__name' || showCompany)
 }
 
 const buildInteractionSortForm = (showCompany = true) => {
@@ -24,7 +24,8 @@ const buildInteractionSortForm = (showCompany = true) => {
   }
 }
 
-const getDefaultInteractionSort = (showCompany = true) => getSortOptions(showCompany)[0].value
+const getDefaultInteractionSort = (showCompany = true) =>
+  getSortOptions(showCompany)[0].value
 
 module.exports = {
   buildInteractionSortForm,

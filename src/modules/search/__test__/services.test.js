@@ -41,7 +41,9 @@ describe('Search service', () => {
     context('when all parameters are populated', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
-          .get(`/v3/search?field=true&limit=10&term=search&offset=0&entity=company`)
+          .get(
+            `/v3/search?field=true&limit=10&term=search&offset=0&entity=company`
+          )
           .reply(200, {
             count: 0,
             results: [],

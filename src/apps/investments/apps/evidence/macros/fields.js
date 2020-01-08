@@ -1,19 +1,21 @@
 module.exports = {
-  tag (tags) {
+  tag(tags) {
     return {
       macroName: 'AddAnother',
       buttonName: 'add_item',
       label: 'Tags',
       name: 'tags',
-      children: [{
-        macroName: 'MultipleChoiceField',
-        type: 'file',
-        label: 'Tag',
-        name: 'tags',
-        isLabelHidden: true,
-        initialOption: '-- Select criteria --',
-        options: tags,
-      }],
+      children: [
+        {
+          macroName: 'MultipleChoiceField',
+          type: 'file',
+          label: 'Tag',
+          name: 'tags',
+          isLabelHidden: true,
+          initialOption: '-- Select criteria --',
+          options: tags,
+        },
+      ],
     }
   },
   documentUpload: {

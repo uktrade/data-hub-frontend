@@ -4,8 +4,10 @@ const {
   transformObjectToOption,
 } = require('../../../transformers')
 
-function populateForm (req, res, next) {
-  const investmentTypes = metadata.investmentTypeOptions.map(transformObjectToOption)
+function populateForm(req, res, next) {
+  const investmentTypes = metadata.investmentTypeOptions.map(
+    transformObjectToOption
+  )
 
   res.locals.form = res.locals.form || {}
   res.locals.form.options = {
@@ -17,17 +19,24 @@ function populateForm (req, res, next) {
   next()
 }
 
-function validateForm (req, res, next) {
-  const investmentTypeOptions = buildMetaDataObj(metadata.investmentTypeOptions.map(transformObjectToOption))
+function validateForm(req, res, next) {
+  const investmentTypeOptions = buildMetaDataObj(
+    metadata.investmentTypeOptions.map(transformObjectToOption)
+  )
   const errors = {
     messages: {},
   }
 
   if (!req.body.investment_type) {
-    errors.messages.investment_type = ['Please choose the type of investment for this project']
+    errors.messages.investment_type = [
+      'Please choose the type of investment for this project',
+    ]
   }
 
-  if (req.body.investment_type === investmentTypeOptions.fdi.value && !req.body.fdi_type) {
+  if (
+    req.body.investment_type === investmentTypeOptions.fdi.value &&
+    !req.body.fdi_type
+  ) {
     errors.messages.fdi_type = ['Please choose FDI type']
   }
 

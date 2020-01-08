@@ -1,28 +1,28 @@
 /* eslint-disable camelcase */
 const { uniqBy, sortBy } = require('lodash')
 
-function transformServicesOptions (services) {
+function transformServicesOptions(services) {
   const deliminator = ' : '
 
-  const mapInteractionQuestions = service => {
+  const mapInteractionQuestions = (service) => {
     return service.interaction_questions && service.interaction_questions.length
-      ? service.interaction_questions.map(q => {
-        return {
-          value: q.id,
-          label: q.name,
-          options:
-            q.answer_options &&
-            q.answer_options.map(o => ({
-              label: o.name,
-              value: o.id,
-            })),
-        }
-      })
+      ? service.interaction_questions.map((q) => {
+          return {
+            value: q.id,
+            label: q.name,
+            options:
+              q.answer_options &&
+              q.answer_options.map((o) => ({
+                label: o.name,
+                value: o.id,
+              })),
+          }
+        })
       : []
   }
 
   const serviceList = uniqBy(
-    services.map(s => {
+    services.map((s) => {
       const splitName = s.name.split(deliminator)
       return {
         label: splitName[0],
@@ -34,7 +34,7 @@ function transformServicesOptions (services) {
   )
 
   const subServiceList = services
-    .map(s => {
+    .map((s) => {
       const splitName = s.name.split(deliminator)
       if (!splitName[1]) return
       return {
@@ -44,36 +44,36 @@ function transformServicesOptions (services) {
         interactionQuestions: mapInteractionQuestions(s),
       }
     })
-    .filter(s => s !== undefined)
+    .filter((s) => s !== undefined)
 
-  const nestedServiceList = serviceList.map(service => {
+  const nestedServiceList = serviceList.map((service) => {
     const isControlledBySecondary = service.label === service.value
 
     const interactionQuestions = isControlledBySecondary
       ? []
-      : service.interactionQuestions.map(question => ({
-        ...question,
-        serviceId: service.value,
-      }))
+      : service.interactionQuestions.map((question) => ({
+          ...question,
+          serviceId: service.value,
+        }))
 
     const secondaryOptions = isControlledBySecondary
       ? subServiceList
-        .map(option => {
-          // loops through sub service list to and matches it to its parent service
-          if (option.parent === service.label) {
-            return {
-              ...option,
-              interactionQuestions: option.interactionQuestions.map(
-                question => ({
-                  ...question,
-                  serviceId: option.value,
-                  isControlledBySecondary,
-                })
-              ),
+          .map((option) => {
+            // loops through sub service list to and matches it to its parent service
+            if (option.parent === service.label) {
+              return {
+                ...option,
+                interactionQuestions: option.interactionQuestions.map(
+                  (question) => ({
+                    ...question,
+                    serviceId: option.value,
+                    isControlledBySecondary,
+                  })
+                ),
+              }
             }
-          }
-        })
-        .filter(s => s !== undefined)
+          })
+          .filter((s) => s !== undefined)
       : []
 
     return {

@@ -31,7 +31,11 @@ describe('Collection middleware', () => {
       this.reqMock.query = {
         sortby: 'name:asc',
       }
-      await this.middleware.getCollection('entity')(this.reqMock, this.resMock, this.nextSpy)
+      await this.middleware.getCollection('entity')(
+        this.reqMock,
+        this.resMock,
+        this.nextSpy
+      )
 
       this.actual = this.resMock.locals.results
     })
@@ -41,7 +45,9 @@ describe('Collection middleware', () => {
     })
 
     it('should set the items', () => {
-      expect(this.actual).to.have.property('items').to.have.length(3)
+      expect(this.actual)
+        .to.have.property('items')
+        .to.have.length(3)
     })
 
     it('should set the pagination', () => {

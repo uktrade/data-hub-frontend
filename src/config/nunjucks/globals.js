@@ -7,29 +7,34 @@ const urls = require('../../lib/urls')
 module.exports = {
   serviceTitle: 'Data Hub',
   projectPhase: config.projectPhase,
-  description: 'Data Hub is a customer relationship, project management and analytical tool for Department for International Trade.',
+  description:
+    'Data Hub is a customer relationship, project management and analytical tool for Department for International Trade.',
   feedbackLink: '/support',
   findExportersUrl: config.findExportersUrl,
 
   assign,
   urls,
 
-  callAsMacro (name) {
+  callAsMacro(name) {
     const macro = this.ctx[name]
 
-    if (!isFunction(macro)) { return }
+    if (!isFunction(macro)) {
+      return
+    }
 
     return macro
   },
 
   // Constructs macro from a specially formatted object or array of objects:
   // { MacroName: { prop1: 'A', prop2: 'B' } }
-  applyMacro (config, sharedProps) {
-    function renderMacro (macroConfig) {
+  applyMacro(config, sharedProps) {
+    function renderMacro(macroConfig) {
       return map(macroConfig, (props, name) => {
         const macro = this.env.globals.callAsMacro.call(this, name)
 
-        if (!macro) { return }
+        if (!macro) {
+          return
+        }
 
         return macro({ ...sharedProps, ...props })
       })[0]
@@ -45,10 +50,12 @@ module.exports = {
 
   // Renders macro with object passed as props
   // { macroName: 'TextField', type: 'textarea', modifier: 'small' }
-  renderAsMacro (config, additionalProps) {
-    function renderMacro (props = {}) {
+  renderAsMacro(config, additionalProps) {
+    function renderMacro(props = {}) {
       const macroName = props.macroName
-      if (!macroName) { return }
+      if (!macroName) {
+        return
+      }
 
       const macro = this.env.globals.callAsMacro.call(this, macroName)
       if (!isFunction(macro)) {
@@ -66,10 +73,9 @@ module.exports = {
     return renderMacro.call(this, config)
   },
 
-  buildQuery (query = {}, include = {}, excludeKeys = []) {
-    return queryString.stringify(Object.assign(
-      include,
-      omit(query, [...excludeKeys], 'page'),
-    ))
+  buildQuery(query = {}, include = {}, excludeKeys = []) {
+    return queryString.stringify(
+      Object.assign(include, omit(query, [...excludeKeys], 'page'))
+    )
   },
 }

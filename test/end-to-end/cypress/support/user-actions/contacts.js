@@ -1,6 +1,6 @@
 const selectors = require('../../../../selectors')
 
-const create = data => {
+const create = (data) => {
   cy.get(selectors.contactCreate.name).type(data.name)
   cy.get(selectors.contactCreate.lastName).type(data.lastName)
   cy.get(selectors.contactCreate.jobTitle).type(data.jobTitle)
@@ -12,7 +12,7 @@ const create = data => {
   cy.get(selectors.companyForm.save).click()
 }
 
-const createWithNewAddress = data => {
+const createWithNewAddress = (data) => {
   cy.get(selectors.contactCreate.name).type(data.name)
   cy.get(selectors.contactCreate.lastName).type(data.lastName)
   cy.get(selectors.contactCreate.jobTitle).type(data.jobTitle)

@@ -26,7 +26,10 @@ describe('buildIncompleteFormList', () => {
 
   context('when the incomplete field label does not exist', () => {
     beforeEach(() => {
-      this.actual = this.helpers.buildIncompleteFormList([ 'field_does_not_exist', 'actual_land_date' ])
+      this.actual = this.helpers.buildIncompleteFormList([
+        'field_does_not_exist',
+        'actual_land_date',
+      ])
     })
 
     it('should provide an array', () => {
@@ -49,7 +52,9 @@ describe('buildIncompleteFormList', () => {
     })
 
     it('should log an error', () => {
-      expect(this.loggerSpy.args[0][0]).to.equal('Could not find label for incomplete field field_does_not_exist')
+      expect(this.loggerSpy.args[0][0]).to.equal(
+        'Could not find label for incomplete field field_does_not_exist'
+      )
     })
 
     it('should log once', () => {
@@ -59,7 +64,10 @@ describe('buildIncompleteFormList', () => {
 
   context('when the incomplete field form does not exist in the lookup', () => {
     beforeEach(() => {
-      this.actual = this.helpers.buildIncompleteFormList([ 'investor_company', 'actual_land_date' ])
+      this.actual = this.helpers.buildIncompleteFormList([
+        'investor_company',
+        'actual_land_date',
+      ])
     })
 
     it('should provide an array', () => {
@@ -82,7 +90,9 @@ describe('buildIncompleteFormList', () => {
     })
 
     it('should log an error', () => {
-      expect(this.loggerSpy.args[0][0]).to.equal('Could not find form link for incomplete field investor_company')
+      expect(this.loggerSpy.args[0][0]).to.equal(
+        'Could not find form link for incomplete field investor_company'
+      )
     })
 
     it('should log once', () => {
@@ -92,7 +102,11 @@ describe('buildIncompleteFormList', () => {
 
   context('when there are three incomplete fields', () => {
     beforeEach(() => {
-      this.actual = this.helpers.buildIncompleteFormList([ 'number_new_jobs', 'actual_land_date', 'number_safeguarded_jobs' ])
+      this.actual = this.helpers.buildIncompleteFormList([
+        'number_new_jobs',
+        'actual_land_date',
+        'number_safeguarded_jobs',
+      ])
     })
 
     it('should provide an array', () => {

@@ -4,14 +4,12 @@ const {
   getMetaListItemValueSelector,
 } = require('../../helpers/selectors')
 
-const getFilterTagRemoveBtnSelector = (text) => getSelectorForElementWithText(
-  text,
-  {
+const getFilterTagRemoveBtnSelector = (text) =>
+  getSelectorForElementWithText(text, {
     el: '//span',
     className: 'c-collection__filter-label',
     child: '/following-sibling::a',
-  }
-)
+  })
 
 module.exports = {
   url: `${process.env.QA_HOST}/events`,

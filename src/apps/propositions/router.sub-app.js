@@ -5,29 +5,28 @@ const { renderDetailsPage } = require('./controllers/details')
 const { renderAbandon } = require('./controllers/abandon')
 const { renderUpload } = require('./controllers/upload')
 
-const { postDetails, getDownloadLink, getPropositionOptions, getPropositionDetails } = require('./middleware/details')
+const {
+  postDetails,
+  getDownloadLink,
+  getPropositionOptions,
+  getPropositionDetails,
+} = require('./middleware/details')
 const { postAbandon } = require('./middleware/abandon')
 const { postComplete } = require('./middleware/complete')
-const { setPropositionDocumentUploadReturnUrl, setDocumentsOptions } = require('./middleware/document-upload')
+const {
+  setPropositionDocumentUploadReturnUrl,
+  setDocumentsOptions,
+} = require('./middleware/document-upload')
 const { postUpload } = require('../documents/middleware/upload')
 
 router.param('propositionId', getPropositionDetails)
 
 router
   .route('/propositions/:propositionId/abandon')
-  .post(
-    postAbandon,
-    renderAbandon,
-  )
-  .get(
-    renderAbandon,
-  )
+  .post(postAbandon, renderAbandon)
+  .get(renderAbandon)
 
-router
-  .route('/propositions/:propositionId/complete')
-  .get(
-    postComplete
-  )
+router.route('/propositions/:propositionId/complete').get(postComplete)
 
 router
   .route('/propositions/:propositionId/document')
@@ -35,30 +34,18 @@ router
     setPropositionDocumentUploadReturnUrl,
     setDocumentsOptions,
     postUpload,
-    renderUpload,
+    renderUpload
   )
-  .get(
-    renderUpload,
-  )
+  .get(renderUpload)
 
 router
   .route('/propositions/:propositionId/download/:documentId')
-  .get(
-    getDownloadLink
-  )
+  .get(getDownloadLink)
 
-router.route([
-  '/propositions/create/:kind',
-])
-  .post(
-    getPropositionOptions,
-    postDetails,
-    renderCreatePage,
-  )
-  .get(
-    getPropositionOptions,
-    renderCreatePage,
-  )
+router
+  .route(['/propositions/create/:kind'])
+  .post(getPropositionOptions, postDetails, renderCreatePage)
+  .get(getPropositionOptions, renderCreatePage)
 
 router.get('/propositions/:propositionId', renderDetailsPage)
 

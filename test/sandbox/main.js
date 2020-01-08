@@ -187,11 +187,7 @@ Sandbox.define(
   'GET',
   metadata.capitalInvestmentAssetClassInterest
 )
-Sandbox.define(
-  '/metadata/one-list-tier/',
-  'GET',
-  metadata.oneListTier
-)
+Sandbox.define('/metadata/one-list-tier/', 'GET', metadata.oneListTier)
 
 // V4 Metadata endpoints
 Sandbox.define(
@@ -274,7 +270,11 @@ Sandbox.define(
   'GET',
   v4Metadata.referralSourceActivity
 )
-Sandbox.define('/v4/metadata/headquarter-type', 'GET', v4Metadata.headquarterType)
+Sandbox.define(
+  '/v4/metadata/headquarter-type',
+  'GET',
+  v4Metadata.headquarterType
+)
 Sandbox.define('/v4/metadata/service', 'GET', v4Metadata.service)
 Sandbox.define(
   '/v4/metadata/communication-channel',
@@ -283,7 +283,11 @@ Sandbox.define(
 )
 Sandbox.define('/v4/metadata/team', 'GET', v4Metadata.team)
 Sandbox.define('/v4/metadata/policy-area', 'GET', v4Metadata.policyArea)
-Sandbox.define('/v4/metadata/policy-issue-type', 'GET', v4Metadata.policyIssueType)
+Sandbox.define(
+  '/v4/metadata/policy-issue-type',
+  'GET',
+  v4Metadata.policyIssueType
+)
 Sandbox.define(
   '/v4/metadata/service-delivery-status',
   'GET',
@@ -344,11 +348,7 @@ Sandbox.define(
   'GET',
   v4Metadata.capitalInvestmentAssetClassInterest
 )
-Sandbox.define(
-  '/v4/metadata/one-list-tier',
-  'GET',
-  v4Metadata.oneListTier
-)
+Sandbox.define('/v4/metadata/one-list-tier', 'GET', v4Metadata.oneListTier)
 
 // Ping
 Sandbox.define('/ping.xml', 'GET', healthcheck.ping)
@@ -385,11 +385,7 @@ Sandbox.define(
 
 // V3 Investment
 Sandbox.define('/v3/investment', 'GET', v3Investment.investmentProjects)
-Sandbox.define(
-  '/v3/investment/{id}',
-  'GET',
-  v3Investment.investmentProjectById
-)
+Sandbox.define('/v3/investment/{id}', 'GET', v3Investment.investmentProjectById)
 
 // V3 Search
 Sandbox.define('/v3/search/company', 'POST', v3SearchCompany.companies)
@@ -417,25 +413,49 @@ Sandbox.define('/v4/ch-company/{companyId}', 'GET', v4ChCompany.company)
 Sandbox.define('/v4/company/{companyId}', 'GET', v4Company.company)
 Sandbox.define('/v4/company/{companyId}', 'PATCH', v4Company.companyPatched)
 Sandbox.define('/v4/company', 'GET', v4Company.companies)
-Sandbox.define('/v4/company/{companyId}/{action}-account-manager', 'POST', v4Company.manageAdviser)
+Sandbox.define(
+  '/v4/company/{companyId}/{action}-account-manager',
+  'POST',
+  v4Company.manageAdviser
+)
 Sandbox.define('/v4/company/{companyId}/audit', 'GET', v4Company.companyAudit)
 
 // V4 DnB
 Sandbox.define('/v4/dnb/company-create', 'POST', v4Dnb.companyCreate)
-Sandbox.define('/v4/dnb/company-create-investigation', 'POST', v4Dnb.companyCreateInvestigation)
+Sandbox.define(
+  '/v4/dnb/company-create-investigation',
+  'POST',
+  v4Dnb.companyCreateInvestigation
+)
 Sandbox.define('/v4/dnb/company-search', 'POST', v4Dnb.companySearch)
 
 // V4 legacy company list
-Sandbox.define('/v4/user/company-list/{companyId}', 'GET', v4Company.getCompanyList)
+Sandbox.define(
+  '/v4/user/company-list/{companyId}',
+  'GET',
+  v4Company.getCompanyList
+)
 Sandbox.define('/v4/user/company-list', 'GET', v4Company.getCompanyList)
 
 // V4 new company list endpoints (with multiple list support)
 Sandbox.define('/v4/company-list', 'GET', v4CompanyList.getCompanyLists)
 Sandbox.define('/v4/company-list/{listId}', 'GET', v4CompanyList.getCompanyList)
-Sandbox.define('/v4/company-list/{listId}/item', 'GET', v4CompanyList.getCompanyListItems)
+Sandbox.define(
+  '/v4/company-list/{listId}/item',
+  'GET',
+  v4CompanyList.getCompanyListItems
+)
 Sandbox.define('/v4/company-list', 'POST', v4CompanyList.createCompanyList)
-Sandbox.define('/v4/company-list/{listId}', 'DELETE', v4CompanyList.deleteCompanyList)
-Sandbox.define('/v4/company-list/{listId}', 'PATCH', v4CompanyList.editCompanyList)
+Sandbox.define(
+  '/v4/company-list/{listId}',
+  'DELETE',
+  v4CompanyList.deleteCompanyList
+)
+Sandbox.define(
+  '/v4/company-list/{listId}',
+  'PATCH',
+  v4CompanyList.editCompanyList
+)
 
 // V4 Investment
 Sandbox.define(

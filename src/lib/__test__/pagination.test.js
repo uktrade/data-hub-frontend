@@ -33,7 +33,10 @@ describe('Pagination', () => {
     })
 
     it('should return pagination object with correct current page', () => {
-      const actual = buildPagination(Object.assign({}, query, { page: 2 }), { count: 10, limit: 5 })
+      const actual = buildPagination(Object.assign({}, query, { page: 2 }), {
+        count: 10,
+        limit: 5,
+      })
       const expected = {
         totalPages: 2,
         currentPage: 2,
@@ -83,7 +86,11 @@ describe('Pagination', () => {
     })
 
     it('should return pagination object with truncation in right place when current page is changed', () => {
-      const actual = buildPagination(Object.assign({}, query, { page: 4 }), { count: 10, limit: 2 }, 2)
+      const actual = buildPagination(
+        Object.assign({}, query, { page: 4 }),
+        { count: 10, limit: 2 },
+        2
+      )
       const expected = {
         totalPages: 5,
         currentPage: 4,
@@ -100,7 +107,11 @@ describe('Pagination', () => {
     })
 
     it('should return pagination object with no truncation when block start page is close to first or last pages', () => {
-      const actual = buildPagination(Object.assign({}, query, { page: 4 }), { count: 21, limit: 3 }, 4)
+      const actual = buildPagination(
+        Object.assign({}, query, { page: 4 }),
+        { count: 21, limit: 3 },
+        4
+      )
       const expected = {
         totalPages: 7,
         currentPage: 4,
@@ -120,8 +131,16 @@ describe('Pagination', () => {
     })
 
     it('should return pagination object with a maximum of 10000 results paginated', () => {
-      const limited1 = buildPagination(query, { count: 20000, limit: 10, page: 1 })
-      const limited2 = buildPagination(query, { count: 20000, limit: 3, page: 1 })
+      const limited1 = buildPagination(query, {
+        count: 20000,
+        limit: 10,
+        page: 1,
+      })
+      const limited2 = buildPagination(query, {
+        count: 20000,
+        limit: 3,
+        page: 1,
+      })
 
       expect(limited1).to.have.property('totalPages', 1000)
       expect(limited2).to.have.property('totalPages', 3333)

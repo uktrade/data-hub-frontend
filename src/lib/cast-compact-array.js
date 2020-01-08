@@ -1,6 +1,6 @@
 const { castArray, compact } = require('lodash')
 
-function castCompactArray (value) {
+function castCompactArray(value) {
   return compact(castArray(value))
 }
 

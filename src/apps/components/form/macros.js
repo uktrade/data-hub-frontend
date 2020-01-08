@@ -31,10 +31,7 @@ const standardFormConfig = {
       name: 'feedback_type',
       modifier: 'inline',
       label: 'Inline inputs',
-      options: [
-        { value: 'yes', label: 'Yes' },
-        { value: 'no', label: 'No' },
-      ],
+      options: [{ value: 'yes', label: 'Yes' }, { value: 'no', label: 'No' }],
     },
     {
       macroName: 'Fieldset',
@@ -64,7 +61,8 @@ const standardFormConfig = {
           value: 'ltd',
           label: 'UK private or public limited company',
           hint: 'Must be a company registered with Companies House',
-        }, {
+        },
+        {
           value: 'ukother',
           label: 'Other type of UK organisation',
           hint: 'UK organisation not registered with Companies House',
@@ -77,7 +75,8 @@ const standardFormConfig = {
               },
             }),
           ],
-        }, {
+        },
+        {
           value: 'foreign',
           label: 'Foreign organisation',
         },

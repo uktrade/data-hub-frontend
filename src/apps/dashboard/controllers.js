@@ -8,7 +8,7 @@ const { fetchCompanyLists } = require('./repos')
 const config = require('../../config')
 const { formatHelpCentreAnnouncements } = require('./transformers')
 
-async function renderDashboard (req, res, next) {
+async function renderDashboard(req, res, next) {
   try {
     const userPermissions = get(res, 'locals.user.permissions')
 
@@ -19,7 +19,7 @@ async function renderDashboard (req, res, next) {
       const helpCentreArticleFeed = await rp({
         uri: config.helpCentre.apiFeed,
         auth: {
-          'bearer': config.helpCentre.token,
+          bearer: config.helpCentre.token,
         },
         json: true,
         timeout: 1000,
@@ -32,8 +32,9 @@ async function renderDashboard (req, res, next) {
     }
 
     res.title('Dashboard').render('dashboard/views/dashboard', {
-      companyLists: userPermissions.includes('company_list.view_companylist') &&
-        await fetchCompanyLists(req.session.token),
+      companyLists:
+        userPermissions.includes('company_list.view_companylist') &&
+        (await fetchCompanyLists(req.session.token)),
       articleFeed,
       interactionsPermitted: isPermittedRoute(
         '/interactions',

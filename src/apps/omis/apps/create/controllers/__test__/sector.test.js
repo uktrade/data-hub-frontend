@@ -45,7 +45,11 @@ describe('OMIS create sector controller', () => {
 
       it('should call parent configure method', () => {
         expect(FormController.prototype.configure).to.be.calledOnce
-        expect(FormController.prototype.configure).to.be.calledWith(this.reqMock, globalRes, this.nextSpy)
+        expect(FormController.prototype.configure).to.be.calledWith(
+          this.reqMock,
+          globalRes,
+          this.nextSpy
+        )
       })
     })
 
@@ -65,7 +69,9 @@ describe('OMIS create sector controller', () => {
 
         expect(this.nextSpy).to.be.calledOnce
         expect(errorArgument instanceof Error).to.be.true
-        expect(errorArgument.message).to.equal(`Error: ${this.errorMessageMock}`)
+        expect(errorArgument.message).to.equal(
+          `Error: ${this.errorMessageMock}`
+        )
       })
     })
   })
@@ -91,15 +97,17 @@ describe('OMIS create sector controller', () => {
       sinon.stub(FormController.prototype, 'saveValues')
     })
 
-    context('when using company\'s sector', () => {
+    context("when using company's sector", () => {
       beforeEach(() => {
         this.reqMock.form.values.use_sector_from_company = 'true'
 
         this.controller.saveValues(this.reqMock, this.resMock, this.nextSpy)
       })
 
-      it('should set sector to company\'s sector value', () => {
-        expect(this.reqMock.form.values.sector).to.equal('b3959812-6095-e211-a939-e4115bead28a')
+      it("should set sector to company's sector value", () => {
+        expect(this.reqMock.form.values.sector).to.equal(
+          'b3959812-6095-e211-a939-e4115bead28a'
+        )
       })
 
       it('should call parent saveValues method', () => {
@@ -116,7 +124,9 @@ describe('OMIS create sector controller', () => {
       })
 
       it('should set sector to custom sector value', () => {
-        expect(this.reqMock.form.values.sector).to.equal('98d14e94-5d95-e211-a939-e4115bead28a')
+        expect(this.reqMock.form.values.sector).to.equal(
+          '98d14e94-5d95-e211-a939-e4115bead28a'
+        )
       })
 
       it('should call parent saveValues method', () => {

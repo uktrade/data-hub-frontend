@@ -99,15 +99,16 @@ const exportPotentialLabels = {
   },
   medium: {
     text: 'Medium',
-    description: 'Some businesses that look like this one export, others don\'t',
+    description: "Some businesses that look like this one export, others don't",
   },
   low: {
     text: 'Low',
-    description: 'This business shares many features with companies that do not export',
+    description:
+      'This business shares many features with companies that do not export',
   },
   very_low: {
     text: 'Very Low',
-    description: 'Most of the businesses like this aren\'t exporters',
+    description: "Most of the businesses like this aren't exporters",
   },
 }
 

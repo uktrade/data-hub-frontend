@@ -8,7 +8,9 @@ describe('Companies local navigation', () => {
   const commonTests = (expectedItems) => {
     it('should have items', () => {
       expectedItems.forEach((label) => {
-        const item = middlewareParameters.resMock.locals.localNavItems.find(item => item.label === label)
+        const item = middlewareParameters.resMock.locals.localNavItems.find(
+          (item) => item.label === label
+        )
         expect(item, label).to.exist
       })
     })
@@ -36,7 +38,7 @@ describe('Companies local navigation', () => {
       localNavigation(
         middlewareParameters.reqMock,
         middlewareParameters.resMock,
-        middlewareParameters.nextSpy,
+        middlewareParameters.nextSpy
       )
     })
 
@@ -75,7 +77,7 @@ describe('Companies local navigation', () => {
       localNavigation(
         middlewareParameters.reqMock,
         middlewareParameters.resMock,
-        middlewareParameters.nextSpy,
+        middlewareParameters.nextSpy
       )
     })
 
@@ -89,43 +91,46 @@ describe('Companies local navigation', () => {
     ])
   })
 
-  context('when the company is on the One List and is a Tier D - International Trade Adviser Accounts', () => {
-    beforeEach(() => {
-      middlewareParameters = buildMiddlewareParameters({
-        company: {
-          id: '1234',
-          headquarter_type: null,
-          company_number: null,
-          duns_number: '123456',
-          one_list_group_tier: {
-            id: '1929c808-99b4-4abf-a891-45f2e187b410',
+  context(
+    'when the company is on the One List and is a Tier D - International Trade Adviser Accounts',
+    () => {
+      beforeEach(() => {
+        middlewareParameters = buildMiddlewareParameters({
+          company: {
+            id: '1234',
+            headquarter_type: null,
+            company_number: null,
+            duns_number: '123456',
+            one_list_group_tier: {
+              id: '1929c808-99b4-4abf-a891-45f2e187b410',
+            },
           },
-        },
-        user: {
-          permissions: [
-            'interaction.view_all_interaction',
-            'company.view_contact',
-            'investment.view_all_investmentproject',
-            'order.view_order',
-          ],
-        },
-      })
+          user: {
+            permissions: [
+              'interaction.view_all_interaction',
+              'company.view_contact',
+              'investment.view_all_investmentproject',
+              'order.view_order',
+            ],
+          },
+        })
 
-      localNavigation(
-        middlewareParameters.reqMock,
-        middlewareParameters.resMock,
-        middlewareParameters.nextSpy,
-      )
-    })
-    commonTests([
-      'Activity',
-      'Company contacts',
-      'Lead adviser',
-      'Investment',
-      'Export',
-      'Orders',
-    ])
-  })
+        localNavigation(
+          middlewareParameters.reqMock,
+          middlewareParameters.resMock,
+          middlewareParameters.nextSpy
+        )
+      })
+      commonTests([
+        'Activity',
+        'Company contacts',
+        'Lead adviser',
+        'Investment',
+        'Export',
+        'Orders',
+      ])
+    }
+  )
   context('when the company is not on the One List', () => {
     beforeEach(() => {
       middlewareParameters = buildMiddlewareParameters({
@@ -149,7 +154,7 @@ describe('Companies local navigation', () => {
       localNavigation(
         middlewareParameters.reqMock,
         middlewareParameters.resMock,
-        middlewareParameters.nextSpy,
+        middlewareParameters.nextSpy
       )
     })
     commonTests([

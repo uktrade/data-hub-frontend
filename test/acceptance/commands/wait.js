@@ -4,7 +4,7 @@
  * @param duration
  * @returns {*|{error}}
  */
-exports.command = function wait (duration = this.globals.pauseDuration) {
+exports.command = function wait(duration = this.globals.pauseDuration) {
   return this.perform((done) => {
     this.pause(duration, done)
   })

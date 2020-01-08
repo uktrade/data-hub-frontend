@@ -27,11 +27,11 @@ const expectedBody = {
   notes: 'notes',
   lead_team: 'lead_team',
   organiser: {
-    'id': '1',
-    'name': 'abc',
+    id: '1',
+    name: 'abc',
   },
-  related_programmes: [ 'programme1', 'programme2' ],
-  teams: [ 'team1', 'team2', 'lead_team' ],
+  related_programmes: ['programme1', 'programme2'],
+  teams: ['team1', 'team2', 'lead_team'],
   services: 'services',
   service: '1783ae93-b78f-e611-8c55-e4115bed50dc',
 }
@@ -49,11 +49,15 @@ describe('Event details middleware', () => {
         fetchEvent: this.fetchEventStub.resolves(eventData),
       },
       '../transformers': {
-        transformEventViewRecordToApiRequest: this.transformEventFormBodyToApiRequestStub.returns(expectedBody),
-        transformEventResponseToViewRecord: this.transformEventResponseToViewRecordStub.returns({
-          id: '2',
-          data: 'transformed',
-        }),
+        transformEventViewRecordToApiRequest: this.transformEventFormBodyToApiRequestStub.returns(
+          expectedBody
+        ),
+        transformEventResponseToViewRecord: this.transformEventResponseToViewRecordStub.returns(
+          {
+            id: '2',
+            data: 'transformed',
+          }
+        ),
       },
       '../../adviser/repos': {
         getAdvisers: this.getAdvisersStub.resolves(advisersData),
@@ -79,7 +83,9 @@ describe('Event details middleware', () => {
     context('when all fields are valid', () => {
       it('should post to the API', async () => {
         await this.middleware.postDetails(this.req, this.res, this.nextSpy)
-        expect(this.saveEventStub).to.have.been.calledWith(this.req.session.token)
+        expect(this.saveEventStub).to.have.been.calledWith(
+          this.req.session.token
+        )
         expect(this.saveEventStub).to.have.been.calledOnce
         expect(this.saveEventStub.firstCall.args[1]).to.deep.equal(expectedBody)
       })
@@ -102,24 +108,34 @@ describe('Event details middleware', () => {
 
         await this.middleware.postDetails(req, this.res, this.nextSpy)
 
-        const expected = assign({}, expectedBody, { teams: [ 'team 1', 'lead_team' ] })
+        const expected = assign({}, expectedBody, {
+          teams: ['team 1', 'lead_team'],
+        })
 
-        expect(this.saveEventStub).to.have.been.calledWith(this.req.session.token, expected)
+        expect(this.saveEventStub).to.have.been.calledWith(
+          this.req.session.token,
+          expected
+        )
         expect(this.saveEventStub).to.have.been.calledOnce
       })
 
       it('should not add empty values to the event shared teams', async () => {
         const req = merge({}, this.req, {
           body: {
-            teams: [ 'team 1', '' ],
+            teams: ['team 1', ''],
           },
         })
 
         await this.middleware.postDetails(req, this.res, this.nextSpy)
 
-        const expected = assign({}, expectedBody, { teams: [ 'team 1', 'lead_team' ] })
+        const expected = assign({}, expectedBody, {
+          teams: ['team 1', 'lead_team'],
+        })
 
-        expect(this.saveEventStub).to.have.been.calledWith(this.req.session.token, expected)
+        expect(this.saveEventStub).to.have.been.calledWith(
+          this.req.session.token,
+          expected
+        )
         expect(this.saveEventStub).to.have.been.calledOnce
       })
     })
@@ -160,24 +176,34 @@ describe('Event details middleware', () => {
 
         await this.middleware.postDetails(req, this.res, this.nextSpy)
 
-        const expected = assign({}, expectedBody, { related_programmes: [ 'programme 1' ] })
+        const expected = assign({}, expectedBody, {
+          related_programmes: ['programme 1'],
+        })
 
-        expect(this.saveEventStub).to.have.been.calledWith(this.req.session.token, expected)
+        expect(this.saveEventStub).to.have.been.calledWith(
+          this.req.session.token,
+          expected
+        )
         expect(this.saveEventStub).to.have.been.calledOnce
       })
 
       it('should not add empty values to the event shared teams', async () => {
         const req = merge({}, this.req, {
           body: {
-            related_programmes: [ 'programme 1', '' ],
+            related_programmes: ['programme 1', ''],
           },
         })
 
         await this.middleware.postDetails(req, this.res, this.nextSpy)
 
-        const expected = assign({}, expectedBody, { related_programmes: [ 'programme 1' ] })
+        const expected = assign({}, expectedBody, {
+          related_programmes: ['programme 1'],
+        })
 
-        expect(this.saveEventStub).to.have.been.calledWith(this.req.session.token, expected)
+        expect(this.saveEventStub).to.have.been.calledWith(
+          this.req.session.token,
+          expected
+        )
         expect(this.saveEventStub).to.have.been.calledOnce
       })
     })
@@ -241,7 +267,10 @@ describe('Event details middleware', () => {
       it('should call next with errors', async () => {
         await this.middleware.postDetails(this.req, this.res, this.nextSpy)
 
-        expect(this.nextSpy).have.been.calledWith({ statusCode: 500, error: 'error' })
+        expect(this.nextSpy).have.been.calledWith({
+          statusCode: 500,
+          error: 'error',
+        })
         expect(this.nextSpy).have.been.calledOnce
       })
     })
@@ -250,11 +279,19 @@ describe('Event details middleware', () => {
   describe('#getEventDetails', () => {
     context('when success', () => {
       it('should set event data on locals', async () => {
-        await this.middleware.getEventDetails(this.req, this.res, this.nextSpy, eventData.id)
+        await this.middleware.getEventDetails(
+          this.req,
+          this.res,
+          this.nextSpy,
+          eventData.id
+        )
 
         expect(this.res.locals.event).to.deep.equal(eventData)
         expect(this.res.locals.eventViewRecord).to.have.property('id', '2')
-        expect(this.res.locals.eventViewRecord).to.have.property('data', 'transformed')
+        expect(this.res.locals.eventViewRecord).to.have.property(
+          'data',
+          'transformed'
+        )
       })
     })
   })

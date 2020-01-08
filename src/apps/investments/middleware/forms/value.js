@@ -1,11 +1,13 @@
-const { transformInvestmentValueFormBodyToApiRequest } = require('../../transformers/value')
+const {
+  transformInvestmentValueFormBodyToApiRequest,
+} = require('../../transformers/value')
 const { grossValueAddedMessage } = require('./gross-value-added-message')
 const { getOptions } = require('../../../../lib/options')
 const { updateInvestment } = require('../../repos')
 const { assign, get, merge } = require('lodash')
 const { valueLabels } = require('../../labels')
 
-async function populateForm (req, res, next) {
+async function populateForm(req, res, next) {
   const token = req.session.token
   const investment = get(res, 'locals.investment', {})
   const createdOn = investment.created_on
@@ -18,9 +20,17 @@ async function populateForm (req, res, next) {
       gross_value_added_message: grossValueAddedMessage(investment),
     }),
     options: {
-      averageSalaryRange: await getOptions(token, 'salary-range', { createdOn }),
-      fdiValue: await getOptions(token, 'fdi-value', { createdOn, sorted: false }),
-      likelihoodToLand: await getOptions(token, 'likelihood-to-land', { createdOn, sorted: false }),
+      averageSalaryRange: await getOptions(token, 'salary-range', {
+        createdOn,
+      }),
+      fdiValue: await getOptions(token, 'fdi-value', {
+        createdOn,
+        sorted: false,
+      }),
+      likelihoodToLand: await getOptions(token, 'likelihood-to-land', {
+        createdOn,
+        sorted: false,
+      }),
     },
   }
 
@@ -30,7 +40,7 @@ async function populateForm (req, res, next) {
   next()
 }
 
-async function handleFormPost (req, res, next) {
+async function handleFormPost(req, res, next) {
   const { projects } = res.locals.paths
   const { investmentId } = req.params
   const formattedBody = transformInvestmentValueFormBodyToApiRequest(req.body)

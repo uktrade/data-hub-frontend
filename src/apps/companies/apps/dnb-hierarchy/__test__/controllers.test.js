@@ -29,7 +29,7 @@ describe('D&B Company hierarchy', () => {
         await renderDnbHierarchy(
           middlewareParams.reqMock,
           middlewareParams.resMock,
-          middlewareParams.nextSpy,
+          middlewareParams.nextSpy
         )
       })
 
@@ -39,24 +39,31 @@ describe('D&B Company hierarchy', () => {
 
       it('should render the activity feed template', () => {
         expect(middlewareParams.resMock.render).to.be.calledOnceWithExactly(
-          'companies/apps/dnb-hierarchy/views/client-container', {
+          'companies/apps/dnb-hierarchy/views/client-container',
+          {
             heading: 'Company records related to Test company',
             props: {
               isGlobalHQ: false,
               dataEndpoint: urls.companies.dnbHierarchy.data('1'),
             },
-          })
+          }
+        )
       })
 
       it('should add a breadcrumb', () => {
         expect(middlewareParams.resMock.breadcrumb).to.have.been.calledWith(
-          'Test company', urls.companies.detail('1'))
+          'Test company',
+          urls.companies.detail('1')
+        )
 
         expect(middlewareParams.resMock.breadcrumb).to.have.been.calledWith(
-          'Business details', urls.companies.businessDetails('1'))
+          'Business details',
+          urls.companies.businessDetails('1')
+        )
 
         expect(middlewareParams.resMock.breadcrumb).to.have.been.calledWith(
-          'Related companies')
+          'Related companies'
+        )
       })
 
       it('should not call "next" with an error', async () => {
@@ -83,7 +90,7 @@ describe('D&B Company hierarchy', () => {
         await renderDnbHierarchy(
           middlewareParams.reqMock,
           errorRes,
-          middlewareParams.nextSpy,
+          middlewareParams.nextSpy
         )
       })
 
@@ -105,15 +112,17 @@ describe('D&B Company hierarchy', () => {
         await renderDnbHierarchy(
           middlewareParams.reqMock,
           middlewareParams.resMock,
-          middlewareParams.nextSpy,
+          middlewareParams.nextSpy
         )
       })
 
       it('should call next() with an error', async () => {
-        expect(middlewareParams.nextSpy).to.have.been.calledOnceWithExactly(sinon.match({
-          message: 'This company does not belong to any D&B hierarchy',
-          statusCode: 403,
-        }))
+        expect(middlewareParams.nextSpy).to.have.been.calledOnceWithExactly(
+          sinon.match({
+            message: 'This company does not belong to any D&B hierarchy',
+            statusCode: 403,
+          })
+        )
       })
     })
   })
@@ -139,24 +148,29 @@ describe('D&B Company hierarchy', () => {
         await fetchDnbHierarchyHandler(
           middlewareParams.reqMock,
           middlewareParams.resMock,
-          middlewareParams.nextSpy,
+          middlewareParams.nextSpy
         )
       })
 
       it('should respond with a list of D&B hierarchy', () => {
-        expect(middlewareParams.resMock.json).to.be
-          .calledOnceWithExactly(
+        expect(middlewareParams.resMock.json).to.be.calledOnceWithExactly({
+          count: 1,
+          results: [
             {
-              count: 1,
-              results: [{
-                badges: ['United Kingdom', 'North West'],
-                headingText: 'Mars Components Ltd',
-                headingUrl: '/companies/731bdcc1-f685-4c8e-bd66-b356b2c16995',
-                metadata: [{ label: 'Sector', value: 'Retail' }, { label: 'Address', value: '12 Alpha Street, Volcanus, NE28 5AQ, United Kingdom' }],
-                subheading: 'Updated on 16 Oct 2017, 12:00pm',
-              }],
-            }
-          )
+              badges: ['United Kingdom', 'North West'],
+              headingText: 'Mars Components Ltd',
+              headingUrl: '/companies/731bdcc1-f685-4c8e-bd66-b356b2c16995',
+              metadata: [
+                { label: 'Sector', value: 'Retail' },
+                {
+                  label: 'Address',
+                  value: '12 Alpha Street, Volcanus, NE28 5AQ, United Kingdom',
+                },
+              ],
+              subheading: 'Updated on 16 Oct 2017, 12:00pm',
+            },
+          ],
+        })
       })
 
       it('should not call next() with an error', async () => {
@@ -182,7 +196,7 @@ describe('D&B Company hierarchy', () => {
         await fetchDnbHierarchyHandler(
           middlewareParams.reqMock,
           middlewareParams.resMock,
-          middlewareParams.nextSpy,
+          middlewareParams.nextSpy
         )
       })
 
@@ -191,9 +205,11 @@ describe('D&B Company hierarchy', () => {
       })
 
       it('should call next() with an error', async () => {
-        expect(middlewareParams.nextSpy).to.have.been.calledOnceWithExactly(sinon.match({
-          message: '500 - "Error message"',
-        }))
+        expect(middlewareParams.nextSpy).to.have.been.calledOnceWithExactly(
+          sinon.match({
+            message: '500 - "Error message"',
+          })
+        )
       })
     })
   })

@@ -28,7 +28,10 @@ const companyListItemRegexp = /\/v4\/company-list\/([^/]+)\/item/
  * // Requests to /v4/company-list and /v4/company-list/<list-id>/item` will
  * // now be handled by _nock_ and will resolve with dummy data.
  */
-const mockCompanyListsServer = ({ companyIdString = '', listIds = {} } = {}) => {
+const mockCompanyListsServer = ({
+  companyIdString = '',
+  listIds = {},
+} = {}) => {
   const companies = [...companyIdString].reduce(
     (acc, id) => ({
       ...acc,
@@ -52,10 +55,10 @@ const mockCompanyListsServer = ({ companyIdString = '', listIds = {} } = {}) => 
         count: companyIds.length,
         next: null,
         previous: null,
-        results: [...companyIds].map(id => companies[id]),
+        results: [...companyIds].map((id) => companies[id]),
       },
     }),
-    {},
+    {}
   )
 
   const userLists = {
@@ -72,7 +75,7 @@ const mockCompanyListsServer = ({ companyIdString = '', listIds = {} } = {}) => 
           created_on: new Date().toISOString(),
         },
       ],
-      [],
+      []
     ),
   }
 
@@ -85,7 +88,7 @@ const mockCompanyListsServer = ({ companyIdString = '', listIds = {} } = {}) => 
     return scope
       .get(companyListItemRegexp)
       .times(numberOfLists)
-      .reply(200, uri => lists[uri.match(companyListItemRegexp)[1]])
+      .reply(200, (uri) => lists[uri.match(companyListItemRegexp)[1]])
   }
 
   return scope

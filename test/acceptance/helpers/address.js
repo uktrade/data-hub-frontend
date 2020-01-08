@@ -12,7 +12,7 @@ const { title } = require('case')
  */
 
 // FIXME - note use of title is because of its use in /src/lib/address.js this needs reviewing
-function getAddress ({ address1, address2, town, county, postcode, country }) {
+function getAddress({ address1, address2, town, county, postcode, country }) {
   return [
     title(address1),
     title(address2),
@@ -20,7 +20,8 @@ function getAddress ({ address1, address2, town, county, postcode, country }) {
     title(county),
     postcode,
     title(country),
-  ].filter(details => details)
+  ]
+    .filter((details) => details)
     .join(', ')
     .trim()
     .replace(/\s+/g, ' ')

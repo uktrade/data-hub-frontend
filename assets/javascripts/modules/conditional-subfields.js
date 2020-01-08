@@ -48,7 +48,7 @@ const ConditionalSubfields = {
   controllers: [],
   wrapper: null,
 
-  init (wrapper = document) {
+  init(wrapper = document) {
     this.wrapper = wrapper
 
     this.cacheEls()
@@ -59,20 +59,24 @@ const ConditionalSubfields = {
     }
   },
 
-  cacheEls () {
-    const conditionalSubFields = this.wrapper.getElementsByClassName(this.selector)
+  cacheEls() {
+    const conditionalSubFields = this.wrapper.getElementsByClassName(
+      this.selector
+    )
 
     this.onChangeHandler = this.onChange.bind(this)
-    this.controllers = uniq([...conditionalSubFields].map((controller, i) => {
-      return controller.getAttribute('data-controlled-by')
-    }))
+    this.controllers = uniq(
+      [...conditionalSubFields].map((controller, i) => {
+        return controller.getAttribute('data-controlled-by')
+      })
+    )
   },
 
-  bindEvents () {
+  bindEvents() {
     this.wrapper.addEventListener('change', this.onChangeHandler)
   },
 
-  render () {
+  render() {
     this.controllers.forEach((controller) => {
       const field = this.wrapper.querySelector(`[name="${controller}"]`)
 
@@ -80,11 +84,11 @@ const ConditionalSubfields = {
     })
   },
 
-  destroy () {
+  destroy() {
     this.wrapper.removeEventListener('change', this.onChangeHandler)
   },
 
-  onChange (evt) {
+  onChange(evt) {
     const field = evt.target
 
     if (includes(this.controllers, field.name)) {
@@ -92,11 +96,13 @@ const ConditionalSubfields = {
     }
   },
 
-  _handleField (controlInput) {
+  _handleField(controlInput) {
     if (!controlInput) {
       return
     }
-    const subFields = this.wrapper.querySelectorAll(`[data-controlled-by="${controlInput.name}"]`)
+    const subFields = this.wrapper.querySelectorAll(
+      `[data-controlled-by="${controlInput.name}"]`
+    )
     const tagName = controlInput.tagName
     let controlInputValue
 
@@ -106,7 +112,9 @@ const ConditionalSubfields = {
       const type = controlInput.type
 
       if (type === 'radio' || type === 'checkbox') {
-        const checked = this.wrapper.querySelector(`[name="${controlInput.name}"]:checked`)
+        const checked = this.wrapper.querySelector(
+          `[name="${controlInput.name}"]:checked`
+        )
 
         controlInputValue = checked ? checked.value : null
       } else {
@@ -115,16 +123,17 @@ const ConditionalSubfields = {
     }
 
     Array.from(subFields).forEach((subField) => {
-      const values = (subField.getAttribute('data-control-value') + '').split('||')
-      let isVisible
+      const values = (subField.getAttribute('data-control-value') + '').split(
+        '||'
+      )
 
-      isVisible = includes(values, controlInputValue)
+      const isVisible = includes(values, controlInputValue)
 
       this._toggleSubField(subField, isVisible)
     })
   },
 
-  _toggleSubField (subField, isVisible) {
+  _toggleSubField(subField, isVisible) {
     if (isVisible) {
       addClass(subField, this.activeClass)
     } else {
@@ -135,7 +144,9 @@ const ConditionalSubfields = {
     subField.setAttribute('aria-hidden', !isVisible)
 
     if (!isVisible && !subField.getAttribute('data-persist-values')) {
-      const children = subField.querySelectorAll('input, select, checkbox, textarea')
+      const children = subField.querySelectorAll(
+        'input, select, checkbox, textarea'
+      )
 
       Array.from(children).forEach((field) => {
         if (!field.getAttribute('data-persist-values')) {

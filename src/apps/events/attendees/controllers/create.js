@@ -4,7 +4,7 @@ const { saveInteraction } = require('../../../interactions/repos')
 const { getContact } = require('../../../contacts/repos')
 const { fetchEventAttendees } = require('../repos')
 
-async function createAttendee (req, res, next) {
+async function createAttendee(req, res, next) {
   try {
     const { user: adviser, token } = req.session
     const contactId = req.params.contactId
@@ -14,9 +14,16 @@ async function createAttendee (req, res, next) {
       throw new Error('Missing eventId or contactId')
     }
 
-    const attendees = await fetchEventAttendees({ token, contactId, eventId: event.id })
+    const attendees = await fetchEventAttendees({
+      token,
+      contactId,
+      eventId: event.id,
+    })
     if (attendees.count > 0) {
-      req.flash('failure', 'Event attendee not added - This contact has already been added as an event attendee')
+      req.flash(
+        'failure',
+        'Event attendee not added - This contact has already been added as an event attendee'
+      )
       return res.redirect(`/events/${event.id}/attendees`)
     }
 
@@ -26,9 +33,11 @@ async function createAttendee (req, res, next) {
       contacts: [contact.id],
       company: get(contact, 'company.id'),
       date: event.start_date,
-      dit_participants: [{
-        adviser: adviser.id,
-      }],
+      dit_participants: [
+        {
+          adviser: adviser.id,
+        },
+      ],
       event: event.id,
       is_event: true,
       kind: 'service_delivery',
@@ -40,7 +49,10 @@ async function createAttendee (req, res, next) {
 
     await saveInteraction(token, serviceDelivery)
 
-    req.flash('success', 'Event attendee added - This has created a service delivery record. If required, you can view or edit the service delivery directly from the attendee record.')
+    req.flash(
+      'success',
+      'Event attendee added - This has created a service delivery record. If required, you can view or edit the service delivery directly from the attendee record.'
+    )
     return res.redirect(`/events/${event.id}/attendees`)
   } catch (error) {
     next(error)

@@ -33,19 +33,16 @@ describe('Interaction details middleware', () => {
               },
             })
 
-            const middleware = proxyquire(
-              modulePath,
-              {
-                '../repos': {
-                  saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
-                },
-                '../../../lib/options': {
-                  getOptions: this.getServiceOptionsStub.resolves(
-                    serviceOptionsTransformed
-                  ),
-                },
-              }
-            )
+            const middleware = proxyquire(modulePath, {
+              '../repos': {
+                saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
+              },
+              '../../../lib/options': {
+                getOptions: this.getServiceOptionsStub.resolves(
+                  serviceOptionsTransformed
+                ),
+              },
+            })
 
             await middleware.postDetails(
               this.middlewareParameters.reqMock,
@@ -110,19 +107,16 @@ describe('Interaction details middleware', () => {
               },
             })
 
-            const middleware = proxyquire(
-              modulePath,
-              {
-                '../repos': {
-                  saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
-                },
-                '../../../lib/options': {
-                  getOptions: this.getServiceOptionsStub.resolves(
-                    serviceOptionsTransformed
-                  ),
-                },
-              }
-            )
+            const middleware = proxyquire(modulePath, {
+              '../repos': {
+                saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
+              },
+              '../../../lib/options': {
+                getOptions: this.getServiceOptionsStub.resolves(
+                  serviceOptionsTransformed
+                ),
+              },
+            })
 
             await middleware.postDetails(
               this.middlewareParameters.reqMock,
@@ -187,19 +181,16 @@ describe('Interaction details middleware', () => {
               },
               features: { 'interaction-add-countries': true },
             })
-            const middleware = proxyquire(
-              modulePath,
-              {
-                '../repos': {
-                  saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
-                },
-                '../../../lib/options': {
-                  getOptions: this.getServiceOptionsStub.resolves(
-                    serviceOptionsTransformed
-                  ),
-                },
-              }
-            )
+            const middleware = proxyquire(modulePath, {
+              '../repos': {
+                saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
+              },
+              '../../../lib/options': {
+                getOptions: this.getServiceOptionsStub.resolves(
+                  serviceOptionsTransformed
+                ),
+              },
+            })
 
             await middleware.postDetails(
               this.middlewareParameters.reqMock,
@@ -230,18 +221,25 @@ describe('Interaction details middleware', () => {
                 policy_issue_types: [],
                 status: 'complete',
                 were_countries_discussed: 'true',
-                [FUTURE_INTEREST]: interactionDataWithCountries[FUTURE_INTEREST],
+                [FUTURE_INTEREST]:
+                  interactionDataWithCountries[FUTURE_INTEREST],
                 [EXPORTING_TO]: interactionDataWithCountries[EXPORTING_TO],
                 [NOT_INTERESTED]: interactionDataWithCountries[NOT_INTERESTED],
                 export_countries: [
                   {
-                    country: { id: interactionDataWithCountries[FUTURE_INTEREST] },
+                    country: {
+                      id: interactionDataWithCountries[FUTURE_INTEREST],
+                    },
                     status: FUTURE_INTEREST,
-                  }, {
+                  },
+                  {
                     country: { id: interactionDataWithCountries[EXPORTING_TO] },
                     status: EXPORTING_TO,
-                  }, {
-                    country: { id: interactionDataWithCountries[NOT_INTERESTED] },
+                  },
+                  {
+                    country: {
+                      id: interactionDataWithCountries[NOT_INTERESTED],
+                    },
                     status: NOT_INTERESTED,
                   },
                 ],
@@ -281,19 +279,16 @@ describe('Interaction details middleware', () => {
               features: { 'interaction-add-countries': true },
             })
 
-            const middleware = proxyquire(
-              modulePath,
-              {
-                '../repos': {
-                  saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
-                },
-                '../../../lib/options': {
-                  getOptions: this.getServiceOptionsStub.resolves(
-                    serviceOptionsTransformed
-                  ),
-                },
-              }
-            )
+            const middleware = proxyquire(modulePath, {
+              '../repos': {
+                saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
+              },
+              '../../../lib/options': {
+                getOptions: this.getServiceOptionsStub.resolves(
+                  serviceOptionsTransformed
+                ),
+              },
+            })
 
             await middleware.postDetails(
               this.middlewareParameters.reqMock,
@@ -330,7 +325,8 @@ describe('Interaction details middleware', () => {
                 policy_issue_types: [],
                 status: 'complete',
                 were_countries_discussed: 'true',
-                [FUTURE_INTEREST]: interactionDataWithCountries[FUTURE_INTEREST],
+                [FUTURE_INTEREST]:
+                  interactionDataWithCountries[FUTURE_INTEREST],
                 [EXPORTING_TO]: interactionDataWithCountries[EXPORTING_TO],
                 [NOT_INTERESTED]: interactionDataWithCountries[NOT_INTERESTED],
               }
@@ -370,23 +366,22 @@ describe('Interaction details middleware', () => {
             },
           })
 
-          const middleware = proxyquire(
-            modulePath,
-            {
-              '../repos': {
-                saveInteraction: this.saveInteractionStub.rejects({
-                  statusCode: 400,
-                  error: '400-error',
-                }),
-              },
-              '../../../lib/options': {
-                getOptions: this.getServiceOptionsStub.resolves(
-                  serviceOptionsTransformed
-                ),
-              },
-              '../macros/map-errors': this.mapErrorsStub.returns(this.mapErrorsResponse),
-            }
-          )
+          const middleware = proxyquire(modulePath, {
+            '../repos': {
+              saveInteraction: this.saveInteractionStub.rejects({
+                statusCode: 400,
+                error: '400-error',
+              }),
+            },
+            '../../../lib/options': {
+              getOptions: this.getServiceOptionsStub.resolves(
+                serviceOptionsTransformed
+              ),
+            },
+            '../macros/map-errors': this.mapErrorsStub.returns(
+              this.mapErrorsResponse
+            ),
+          })
 
           await middleware.postDetails(
             this.middlewareParameters.reqMock,
@@ -404,7 +399,9 @@ describe('Interaction details middleware', () => {
         })
 
         it('should map and set the errors on locals', () => {
-          expect(this.mapErrorsStub).to.have.been.calledOnceWithExactly('400-error')
+          expect(this.mapErrorsStub).to.have.been.calledOnceWithExactly(
+            '400-error'
+          )
           expect(this.middlewareParameters.resMock.locals.form).to.deep.equal({
             errors: {
               messages: this.mapErrorsResponse,
@@ -434,22 +431,19 @@ describe('Interaction details middleware', () => {
             },
           })
 
-          const middleware = proxyquire(
-            modulePath,
-            {
-              '../repos': {
-                saveInteraction: this.saveInteractionStub.rejects({
-                  statusCode: 500,
-                  error: 'error',
-                }),
-              },
-              '../../../lib/options': {
-                getOptions: this.getServiceOptionsStub.resolves(
-                  serviceOptionsTransformed
-                ),
-              },
-            }
-          )
+          const middleware = proxyquire(modulePath, {
+            '../repos': {
+              saveInteraction: this.saveInteractionStub.rejects({
+                statusCode: 500,
+                error: 'error',
+              }),
+            },
+            '../../../lib/options': {
+              getOptions: this.getServiceOptionsStub.resolves(
+                serviceOptionsTransformed
+              ),
+            },
+          })
 
           await middleware.postDetails(
             this.middlewareParameters.reqMock,
@@ -488,25 +482,20 @@ describe('Interaction details middleware', () => {
       this.getContactStub = sinon.stub()
       this.getDitCompanyStub = sinon.stub()
 
-      this.middleware = proxyquire(
-        modulePath,
-        {
-          '../repos': {
-            fetchInteraction: this.fetchInteractionStub.resolves(
-              interactionData
-            ),
-          },
-          '../../adviser/filters': {
-            filterActiveAdvisers: this.filterActiveAdvisersSpy,
-          },
-          '../../contacts/repos': {
-            getContact: this.getContactStub,
-          },
-          '../../companies/repos': {
-            getDitCompany: this.getDitCompanyStub,
-          },
-        }
-      )
+      this.middleware = proxyquire(modulePath, {
+        '../repos': {
+          fetchInteraction: this.fetchInteractionStub.resolves(interactionData),
+        },
+        '../../adviser/filters': {
+          filterActiveAdvisers: this.filterActiveAdvisersSpy,
+        },
+        '../../contacts/repos': {
+          getContact: this.getContactStub,
+        },
+        '../../companies/repos': {
+          getDitCompany: this.getDitCompanyStub,
+        },
+      })
 
       this.middlewareParameters = buildMiddlewareParameters({
         requestBody: { ...interactionData },

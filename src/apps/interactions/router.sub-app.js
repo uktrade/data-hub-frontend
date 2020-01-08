@@ -6,34 +6,36 @@ const { renderCompletePage, postComplete } = require('./controllers/complete')
 const { postCreate, renderCreate } = require('./controllers/create')
 const { renderInteractionsForEntity } = require('./controllers/list')
 const { postDetails, getInteractionDetails } = require('./middleware/details')
-const { getInteractionsRequestBody, getInteractionCollectionForEntity, getInteractionSortForm } = require('./middleware/collection')
+const {
+  getInteractionsRequestBody,
+  getInteractionCollectionForEntity,
+  getInteractionSortForm,
+} = require('./middleware/collection')
 const { detectUserAgent } = require('../../middleware/detect-useragent')
 const urls = require('../../lib/urls')
 
 router.param('interactionId', getInteractionDetails)
 
-router.get('/interactions',
+router.get(
+  '/interactions',
   getInteractionsRequestBody,
   getInteractionCollectionForEntity,
   getInteractionSortForm,
-  renderInteractionsForEntity,
+  renderInteractionsForEntity
 )
 
 router
   .route(urls.interactions.subapp.create.route)
-  .post(
-    postCreate,
-    renderCreate,
-  )
-  .get(
-    renderCreate,
-  )
+  .post(postCreate, renderCreate)
+  .get(renderCreate)
 
-router.route('/interactions/create/:theme/:kind')
+router
+  .route('/interactions/create/:theme/:kind')
   .post(postDetails, renderEditPage)
   .get(renderEditPage)
 
-router.route('/interactions/:interactionId/edit/:theme/:kind')
+router
+  .route('/interactions/:interactionId/edit/:theme/:kind')
   .post(postDetails, renderEditPage)
   .get(renderEditPage)
 

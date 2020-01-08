@@ -2,10 +2,7 @@ const { getMacros } = require('../../../../../test/unit/macro-helper')
 
 const commonMacros = getMacros('common')
 
-const items = [
-  { label: 'Foo', value: 'Bar' },
-  { label: 'Fizz', value: 'Buzz' },
-]
+const items = [{ label: 'Foo', value: 'Bar' }, { label: 'Fizz', value: 'Buzz' }]
 
 describe('Answers Summary macro', () => {
   context('invalid props', () => {
@@ -27,10 +24,22 @@ describe('Answers Summary macro', () => {
         const rows = this.component.querySelectorAll('tr')
 
         expect(rows).to.have.lengthOf(2)
-        expect(rows[0].querySelector('.c-answers-summary__title').textContent.trim()).to.equal('Foo')
-        expect(rows[0].querySelector('.c-answers-summary__content').textContent.trim()).to.equal('Bar')
-        expect(rows[1].querySelector('.c-answers-summary__title').textContent.trim()).to.equal('Fizz')
-        expect(rows[1].querySelector('.c-answers-summary__content').textContent.trim()).to.equal('Buzz')
+        expect(
+          rows[0].querySelector('.c-answers-summary__title').textContent.trim()
+        ).to.equal('Foo')
+        expect(
+          rows[0]
+            .querySelector('.c-answers-summary__content')
+            .textContent.trim()
+        ).to.equal('Bar')
+        expect(
+          rows[1].querySelector('.c-answers-summary__title').textContent.trim()
+        ).to.equal('Fizz')
+        expect(
+          rows[1]
+            .querySelector('.c-answers-summary__content')
+            .textContent.trim()
+        ).to.equal('Buzz')
       })
 
       it('should not display a caption', () => {
@@ -52,7 +61,9 @@ describe('Answers Summary macro', () => {
       })
 
       it('should render row of items', () => {
-        expect(this.component.querySelector('tbody').textContent.trim()).to.equal('Custom body')
+        expect(
+          this.component.querySelector('tbody').textContent.trim()
+        ).to.equal('Custom body')
       })
 
       it('should not display a caption', () => {
@@ -74,13 +85,17 @@ describe('Answers Summary macro', () => {
       })
 
       it('should render fallback row', () => {
-        const rowContent = this.component.querySelector('.c-answers-summary__content').textContent.trim()
+        const rowContent = this.component
+          .querySelector('.c-answers-summary__content')
+          .textContent.trim()
 
         expect(rowContent).to.equal('Fallback text')
       })
 
       it('should render fallback with modifier class', () => {
-        const className = this.component.querySelector('.c-answers-summary__content').className
+        const className = this.component.querySelector(
+          '.c-answers-summary__content'
+        ).className
 
         expect(className).to.contain('c-answers-summary__content--muted')
       })
@@ -106,11 +121,17 @@ describe('Answers Summary macro', () => {
         it('should not render fallback row', () => {
           const rows = this.component.querySelectorAll('tr')
 
-          expect(rows[0].querySelector('.c-answers-summary__content').textContent.trim()).not.to.equal('Fallback text')
+          expect(
+            rows[0]
+              .querySelector('.c-answers-summary__content')
+              .textContent.trim()
+          ).not.to.equal('Fallback text')
         })
 
         it('should not contain modifier class', () => {
-          const className = this.component.querySelector('.c-answers-summary__content').className
+          const className = this.component.querySelector(
+            '.c-answers-summary__content'
+          ).className
 
           expect(className).not.to.contain('c-answers-summary__content--muted')
         })
@@ -126,7 +147,11 @@ describe('Answers Summary macro', () => {
           items,
         })
 
-        expect(component.querySelector('.c-answers-summary__heading').textContent.trim()).to.equal('Table heading')
+        expect(
+          component
+            .querySelector('.c-answers-summary__heading')
+            .textContent.trim()
+        ).to.equal('Table heading')
       })
     })
 
@@ -149,19 +174,25 @@ describe('Answers Summary macro', () => {
     context('with actions', () => {
       beforeEach(() => {
         this.component = commonMacros.renderToDom('AnswersSummary', {
-          actions: [{
-            url: '/edit',
-          }],
+          actions: [
+            {
+              url: '/edit',
+            },
+          ],
           items,
         })
       })
 
       it('should display summary heading', () => {
-        expect(this.component.querySelectorAll('.c-answers-summary__heading')).to.have.lengthOf(1)
+        expect(
+          this.component.querySelectorAll('.c-answers-summary__heading')
+        ).to.have.lengthOf(1)
       })
 
       it('should display action with default text', () => {
-        const action = this.component.querySelector('.c-answers-summary__heading-action')
+        const action = this.component.querySelector(
+          '.c-answers-summary__heading-action'
+        )
 
         expect(action.textContent.trim()).to.equal('Edit')
         expect(action.getAttribute('href').trim()).to.equal('/edit')
@@ -170,19 +201,25 @@ describe('Answers Summary macro', () => {
       context('with multiple actions', () => {
         beforeEach(() => {
           this.component = commonMacros.renderToDom('AnswersSummary', {
-            actions: [{
-              url: '/edit-1',
-            }, {
-              url: '/edit-2',
-            }, {
-              url: '/edit-3',
-            }],
+            actions: [
+              {
+                url: '/edit-1',
+              },
+              {
+                url: '/edit-2',
+              },
+              {
+                url: '/edit-3',
+              },
+            ],
             items,
           })
         })
 
         it('should render the correct amount', () => {
-          const actions = this.component.querySelectorAll('.c-answers-summary__heading-action')
+          const actions = this.component.querySelectorAll(
+            '.c-answers-summary__heading-action'
+          )
 
           expect(actions).to.have.lengthOf(3)
         })
@@ -191,16 +228,20 @@ describe('Answers Summary macro', () => {
       context('with custom label', () => {
         beforeEach(() => {
           this.component = commonMacros.renderToDom('AnswersSummary', {
-            actions: [{
-              url: '/edit',
-              label: 'Edit this item',
-            }],
+            actions: [
+              {
+                url: '/edit',
+                label: 'Edit this item',
+              },
+            ],
             items,
           })
         })
 
         it('should render the correct amount', () => {
-          const action = this.component.querySelector('.c-answers-summary__heading-action')
+          const action = this.component.querySelector(
+            '.c-answers-summary__heading-action'
+          )
 
           expect(action.textContent.trim()).to.equal('Edit this item')
         })
@@ -209,19 +250,25 @@ describe('Answers Summary macro', () => {
       context('with no url', () => {
         beforeEach(() => {
           this.component = commonMacros.renderToDom('AnswersSummary', {
-            actions: [{
-              url: '/edit-1',
-            }, {
-              label: 'No url value',
-            }, {
-              url: '/edit-2',
-            }],
+            actions: [
+              {
+                url: '/edit-1',
+              },
+              {
+                label: 'No url value',
+              },
+              {
+                url: '/edit-2',
+              },
+            ],
             items,
           })
         })
 
         it('should not render ', () => {
-          const actions = this.component.querySelectorAll('.c-answers-summary__heading-action')
+          const actions = this.component.querySelectorAll(
+            '.c-answers-summary__heading-action'
+          )
 
           expect(actions).to.have.lengthOf(2)
           expect(actions[0].getAttribute('href')).to.equal('/edit-1')
@@ -251,12 +298,18 @@ describe('Answers Summary macro', () => {
     it('should render fallback text as value', () => {
       const rows = this.component.querySelectorAll('tr')
 
-      expect(rows[0].querySelector('.c-answers-summary__title').textContent.trim()).to.equal('Foo')
-      expect(rows[0].querySelector('.c-answers-summary__content').textContent.trim()).to.equal('Fallback value')
+      expect(
+        rows[0].querySelector('.c-answers-summary__title').textContent.trim()
+      ).to.equal('Foo')
+      expect(
+        rows[0].querySelector('.c-answers-summary__content').textContent.trim()
+      ).to.equal('Fallback value')
     })
 
     it('should apply modifier class to fallback row', () => {
-      const className = this.component.querySelector('.c-answers-summary__content').className
+      const className = this.component.querySelector(
+        '.c-answers-summary__content'
+      ).className
 
       expect(className).to.contain('c-answers-summary__content--muted')
     })
@@ -273,16 +326,26 @@ describe('Answers Summary macro', () => {
       const rows = this.component.querySelectorAll('tr')
 
       expect(rows[0].querySelector('.c-answers-summary__title')).to.be.null
-      expect(rows[0].querySelector('.c-answers-summary__content').getAttribute('colspan')).to.equal('2')
+      expect(
+        rows[0]
+          .querySelector('.c-answers-summary__content')
+          .getAttribute('colspan')
+      ).to.equal('2')
     })
 
     it('should render all items', () => {
       const rows = this.component.querySelectorAll('tr')
 
       expect(rows).to.have.lengthOf(3)
-      expect(rows[0].querySelector('.c-answers-summary__content').textContent.trim()).to.equal('Item one')
-      expect(rows[1].querySelector('.c-answers-summary__content').textContent.trim()).to.equal('Item two')
-      expect(rows[2].querySelector('.c-answers-summary__content').textContent.trim()).to.equal('Item three')
+      expect(
+        rows[0].querySelector('.c-answers-summary__content').textContent.trim()
+      ).to.equal('Item one')
+      expect(
+        rows[1].querySelector('.c-answers-summary__content').textContent.trim()
+      ).to.equal('Item two')
+      expect(
+        rows[2].querySelector('.c-answers-summary__content').textContent.trim()
+      ).to.equal('Item three')
     })
   })
 })

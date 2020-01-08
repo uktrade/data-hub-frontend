@@ -31,22 +31,18 @@ const renderComponent = (name, input) => {
 
 const renderComponentToDom = (name, input) => {
   const renderedComponent = renderComponent(name, input)
-  return (new JSDOM(renderedComponent)).window.document.body.firstElementChild
+  return new JSDOM(renderedComponent).window.document.body.firstElementChild
 }
 
 const expectComponent = (name, input, expected) => {
   // Normalise HTML whitespace, to make diffing simpler
-  expect(
-    renderComponent(name, input)
-  ).to.equal(
-    normaliseHtml(expected)
-  )
+  expect(renderComponent(name, input)).to.equal(normaliseHtml(expected))
 }
 
-function domTokenToArray (obj) {
-  let array = []
+function domTokenToArray(obj) {
+  const array = []
   // iterate backwards ensuring that length is an UInt32
-  for (let i = obj.length >>> 0; i--;) {
+  for (let i = obj.length >>> 0; i--; ) {
     array[i] = obj[i]
   }
   return array

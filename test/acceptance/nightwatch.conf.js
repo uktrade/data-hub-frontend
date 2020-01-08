@@ -6,9 +6,12 @@ const seleniumServer = require('selenium-server')
 
 require('nightwatch-cucumber')({
   cucumberArgs: [
-    '--require', 'test/acceptance/global.cucumber.js',
-    '--require', 'test/acceptance/features',
-    '--format', 'json:cucumber/reports/tests.json',
+    '--require',
+    'test/acceptance/global.cucumber.js',
+    '--require',
+    'test/acceptance/features',
+    '--format',
+    'json:cucumber/reports/tests.json',
     process.env.FEATURES_FOLDER || 'test/acceptance/features',
   ],
 })
@@ -117,4 +120,6 @@ const dockerConfig = {
 
 module.exports = isRemote
   ? Object.assign({}, defaultConfig, remoteConfig)
-  : isDocker ? Object.assign({}, defaultConfig, dockerConfig) : defaultConfig
+  : isDocker
+  ? Object.assign({}, defaultConfig, dockerConfig)
+  : defaultConfig

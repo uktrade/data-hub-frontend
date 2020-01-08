@@ -37,7 +37,9 @@ describe('Investment projects interactions middleware', () => {
     })
 
     it('should set the return URL', () => {
-      expect(this.res.locals.interactions.returnLink).to.equal('/investments/projects/1/interactions/')
+      expect(this.res.locals.interactions.returnLink).to.equal(
+        '/investments/projects/1/interactions/'
+      )
     })
 
     it('should set the entity name', () => {
@@ -45,7 +47,9 @@ describe('Investment projects interactions middleware', () => {
     })
 
     it('should set the interactions query', () => {
-      expect(this.res.locals.interactions.query).to.deep.equal({ investment_project_id: '1' })
+      expect(this.res.locals.interactions.query).to.deep.equal({
+        investment_project_id: '1',
+      })
     })
 
     it('should allow interactions to be added', () => {
@@ -56,7 +60,9 @@ describe('Investment projects interactions middleware', () => {
   describe('#setCompanyDetails', () => {
     it('should set the entity name', async () => {
       await this.middleware.setCompanyDetails(this.req, this.res, this.nextSpy)
-      expect(this.res.locals.company).to.deep.equal(investmentData.investor_company)
+      expect(this.res.locals.company).to.deep.equal(
+        investmentData.investor_company
+      )
     })
   })
 })

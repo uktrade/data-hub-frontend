@@ -17,7 +17,7 @@ vueWrappers.forEach((wrapper) => {
   new Vue({
     el: wrapper,
     components: {
-      'typeahead': Typeahead,
+      typeahead: Typeahead,
     },
   })
 })

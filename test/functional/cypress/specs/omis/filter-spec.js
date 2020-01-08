@@ -13,7 +13,7 @@ describe('OMIS Collections Filter', () => {
   it('should filter by region', () => {
     cy.get(selectors.filter.omis.firstUkRegion).click()
 
-    cy.wait('@filterResults').then(xhr => {
+    cy.wait('@filterResults').then((xhr) => {
       expect(xhr.url).to.contain(
         'uk_region=1718e330-6095-e211-a939-e4115bead28a'
       )
@@ -24,8 +24,7 @@ describe('OMIS Collections Filter', () => {
     const country = selectors.filter.omis.country
     const { typeahead } = selectors.filter
 
-    cy
-      .get(typeahead(country).selectedOption)
+    cy.get(typeahead(country).selectedOption)
       .click()
       .get(typeahead(country).textInput)
       .type('United Kingdom')
@@ -35,7 +34,7 @@ describe('OMIS Collections Filter', () => {
       .type('{enter}')
       .type('{esc}')
 
-    cy.wait('@filterResults').then(xhr => {
+    cy.wait('@filterResults').then((xhr) => {
       expect(xhr.url).to.contain(
         'primary_market=80756b9a-5d95-e211-a939-e4115bead28a'
       )

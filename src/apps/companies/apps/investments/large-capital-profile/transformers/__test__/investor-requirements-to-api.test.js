@@ -1,6 +1,4 @@
-const {
-  transformInvestorRequirements,
-} = require('../index')
+const { transformInvestorRequirements } = require('../index')
 
 describe('Large capital profile, Investor requirements form to API', () => {
   context('when translating Investor requirements', () => {

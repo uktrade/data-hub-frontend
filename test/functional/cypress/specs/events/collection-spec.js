@@ -9,17 +9,22 @@ describe('Event Collections', () => {
 
   it('should render breadcrumbs', () => {
     assertBreadcrumbs({
-      'Home': '/',
-      'Events': null,
+      Home: '/',
+      Events: null,
     })
   })
 
   it('should display a list of events', () => {
-    cy.get(selectors.entityCollection.entities).children().should('have.length', 7)
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 7)
   })
 
   it('should contain event badge', () => {
-    cy.get(selectors.entityCollection.entityBadge(1)).should('contain', 'Turks and Caicos Islands')
+    cy.get(selectors.entityCollection.entityBadge(1)).should(
+      'contain',
+      'Turks and Caicos Islands'
+    )
   })
 
   it('should contain event details', () => {

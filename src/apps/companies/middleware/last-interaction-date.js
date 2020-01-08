@@ -6,8 +6,8 @@ const START_DATE_PARAM = 'latest_interaction_date_before'
 const END_DATE_PARAM = 'latest_interaction_date_after'
 const DATE_FORMAT = 'YYYY-MM-DD'
 
-function getTimestamp (offset) {
-  let date = moment()
+function getTimestamp(offset) {
+  const date = moment()
 
   if (offset > 0) {
     date.subtract(offset, 'month')

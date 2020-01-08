@@ -5,14 +5,16 @@ export const idName = {
   name: PropTypes.string.isRequired,
 }
 
-export const companies = PropTypes.arrayOf(PropTypes.shape({
-  company: PropTypes.shape(idName),
-  latestInteraction: PropTypes.shape({
-    date: PropTypes.string,
-    id: PropTypes.string,
-    subject: PropTypes.string,
-  }),
-}))
+export const companies = PropTypes.arrayOf(
+  PropTypes.shape({
+    company: PropTypes.shape(idName),
+    latestInteraction: PropTypes.shape({
+      date: PropTypes.string,
+      id: PropTypes.string,
+      subject: PropTypes.string,
+    }),
+  })
+)
 
 export const list = PropTypes.shape({
   ...idName,

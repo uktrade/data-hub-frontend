@@ -33,7 +33,7 @@ const renderProjectsView = async (req, res, next) => {
     const currentAdvisers =
       get(res.locals, 'interaction.dit_participants') &&
       res.locals.interaction.dit_participants.map(
-        participant => participant.adviser && participant.adviser.id
+        (participant) => participant.adviser && participant.adviser.id
       )
 
     const activeAdvisers = filterActiveAdvisers({

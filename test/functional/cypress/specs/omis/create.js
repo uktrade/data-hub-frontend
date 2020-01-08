@@ -3,10 +3,12 @@ const selectors = require('../../../../selectors')
 
 describe('Omis Create Required Fields', () => {
   before(() => {
-    cy.visit(`/omis/create/?company=${fixtures.company.withContacts.id}&skip-company=true`)
+    cy.visit(
+      `/omis/create/?company=${fixtures.company.withContacts.id}&skip-company=true`
+    )
   })
 
-  beforeEach(function () {
+  beforeEach(function() {
     Cypress.Cookies.preserveOnce('datahub.sid')
   })
 
@@ -23,7 +25,10 @@ describe('Omis Create Required Fields', () => {
   it('should validate market required field', () => {
     cy.get(selectors.omisCreate.continue).click()
     cy.get(selectors.omisCreate.validationMsg)
-      .should('contain', 'Country where the service is required cannot be blank')
+      .should(
+        'contain',
+        'Country where the service is required cannot be blank'
+      )
       .and('have.attr', 'href', '#group-field-primary_market')
 
     cy.get(selectors.omisCreate.country).select('Angola')
@@ -33,7 +38,10 @@ describe('Omis Create Required Fields', () => {
   it('should validate sector required fields', () => {
     cy.get(selectors.omisCreate.continue).click()
     cy.get(selectors.omisCreate.validationMsg)
-      .should('contain', 'Do you want to use the company’s primary sector (shown above) for this order? cannot be blank')
+      .should(
+        'contain',
+        'Do you want to use the company’s primary sector (shown above) for this order? cannot be blank'
+      )
       .and('have.attr', 'href', '#group-field-use_sector_from_company')
     cy.get(selectors.omisCreate.suggestedSectorMsg).should('contain', 'Retail')
 
@@ -59,7 +67,10 @@ describe('Omis Archived Company', () => {
 
   it('should not display orders tab for archived companies', () => {
     cy.get(selectors.omisCreate.archivedMsg)
-      .should('contain', 'This company was archived on 6 July 2018 by John Rogers.')
+      .should(
+        'contain',
+        'This company was archived on 6 July 2018 by John Rogers.'
+      )
       .and('contain', 'Reason: Company is dissolved')
   })
 })

@@ -2,7 +2,7 @@ const { getOptions } = require('../../../lib/options')
 const { searchAutocomplete } = require('./../../../modules/search/services')
 const { transformObjectToOption } = require('../../../apps/transformers')
 
-async function getOptionsHandler (req, res, next) {
+async function getOptionsHandler(req, res, next) {
   const token = req.session.token
   const key = req.params.entity
 

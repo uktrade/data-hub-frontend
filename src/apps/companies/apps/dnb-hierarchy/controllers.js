@@ -5,7 +5,7 @@ const { transformCompanyToDnbHierarchyList } = require('./transformers')
 const { getDnbHierarchy } = require('./repos')
 const urls = require('../../../../lib/urls')
 
-async function renderDnbHierarchy (req, res, next) {
+async function renderDnbHierarchy(req, res, next) {
   try {
     const { company } = res.locals
 
@@ -18,7 +18,10 @@ async function renderDnbHierarchy (req, res, next) {
 
     res
       .breadcrumb(company.name, urls.companies.detail(company.id))
-      .breadcrumb('Business details', urls.companies.businessDetails(company.id))
+      .breadcrumb(
+        'Business details',
+        urls.companies.businessDetails(company.id)
+      )
       .breadcrumb('Related companies')
       .render('companies/apps/dnb-hierarchy/views/client-container', {
         heading: `Company records related to ${company.name}`,
@@ -32,11 +35,11 @@ async function renderDnbHierarchy (req, res, next) {
   }
 }
 
-function removeCurrentCompany (dunsNumber, { count, results }) {
-  if (results.find(c => c.duns_number !== dunsNumber)) {
+function removeCurrentCompany(dunsNumber, { count, results }) {
+  if (results.find((c) => c.duns_number !== dunsNumber)) {
     return {
       count: count > 0 ? count - 1 : 0,
-      results: results.filter(c => c.duns_number !== dunsNumber),
+      results: results.filter((c) => c.duns_number !== dunsNumber),
     }
   }
 
@@ -44,7 +47,7 @@ function removeCurrentCompany (dunsNumber, { count, results }) {
   return { count, results }
 }
 
-async function fetchDnbHierarchyHandler (req, res, next) {
+async function fetchDnbHierarchyHandler(req, res, next) {
   try {
     const { company } = res.locals
     const { token } = req.session

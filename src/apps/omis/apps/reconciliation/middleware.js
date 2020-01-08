@@ -1,6 +1,6 @@
 const { assign, pick, pickBy } = require('lodash')
 
-function setRequestBody (req, res, next) {
+function setRequestBody(req, res, next) {
   const selectedSortBy = req.query.sortby ? { sortby: req.query.sortby } : null
   const selectedFiltersQuery = pick(req.query, [
     'status',
@@ -24,7 +24,7 @@ function setRequestBody (req, res, next) {
   next()
 }
 
-function setReconciliationJourney (req, res, next) {
+function setReconciliationJourney(req, res, next) {
   res.locals.reconciliationJourney = true
   next()
 }

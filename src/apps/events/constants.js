@@ -5,29 +5,23 @@ const DEFAULT_COLLECTION_QUERY = {
 const GLOBAL_NAV_ITEM = {
   path: '/events',
   headerKey: 'datahub-events',
-  permissions: [
-    'event.view_event',
-  ],
+  permissions: ['event.view_event'],
   key: 'datahub-crm',
   order: 3,
 }
 
-const APP_PERMISSIONS = [ GLOBAL_NAV_ITEM ]
+const APP_PERMISSIONS = [GLOBAL_NAV_ITEM]
 
 const LOCAL_NAV = [
   {
     path: 'details',
     label: 'Details',
-    permissions: [
-      'event.view_event',
-    ],
+    permissions: ['event.view_event'],
   },
   {
     path: 'attendees',
     label: 'Attendees',
-    permissions: [
-      'event.view_event',
-    ],
+    permissions: ['event.view_event'],
   },
 ]
 
@@ -39,10 +33,7 @@ const QUERY_FIELDS = [
   'uk_region',
 ]
 
-const QUERY_DATE_FIELDS = [
-  'start_date_after',
-  'start_date_before',
-]
+const QUERY_DATE_FIELDS = ['start_date_after', 'start_date_before']
 
 module.exports = {
   GLOBAL_NAV_ITEM,

@@ -10,8 +10,12 @@ describe('investment associated controller', () => {
     this.updateInvestmentStub = sinon.stub().resolves(investmentData)
     this.searchStub = sinon.stub().resolves(investmentCollection)
     this.transformerStub = sinon.stub()
-    this.transformInvestmentProjectToListItemStub = sinon.stub().returns({ id: 1 })
-    this.transformInvestmentListItemToDisableMetaLinksStub = sinon.stub().returns({ id: 1 })
+    this.transformInvestmentProjectToListItemStub = sinon
+      .stub()
+      .returns({ id: 1 })
+    this.transformInvestmentListItemToDisableMetaLinksStub = sinon
+      .stub()
+      .returns({ id: 1 })
 
     this.controller = proxyquire('../associated', {
       '../repos': {
@@ -21,23 +25,29 @@ describe('investment associated controller', () => {
         searchInvestments: this.searchStub,
       },
       '../../../lib/metadata': {
-        investmentTypeOptions: [{
-          id: '031269ab-b7ec-40e9-8a4e-7371404f0622',
-          name: 'Commitment to invest',
-          disabled_on: null,
-        }, {
-          id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
-          'name': 'FDI',
-          disabled_on: null,
-        }, {
-          id: '9c364e64-2b28-401b-b2df-50e08b0bca44',
-          name: 'Non-FDI',
-          disabled_on: null,
-        }],
+        investmentTypeOptions: [
+          {
+            id: '031269ab-b7ec-40e9-8a4e-7371404f0622',
+            name: 'Commitment to invest',
+            disabled_on: null,
+          },
+          {
+            id: '3e143372-496c-4d1e-8278-6fdd3da9b48b',
+            name: 'FDI',
+            disabled_on: null,
+          },
+          {
+            id: '9c364e64-2b28-401b-b2df-50e08b0bca44',
+            name: 'Non-FDI',
+            disabled_on: null,
+          },
+        ],
       },
       '../transformers': {
-        transformInvestmentProjectToListItem: this.transformInvestmentProjectToListItemStub,
-        transformInvestmentListItemToDisableMetaLinks: this.transformInvestmentListItemToDisableMetaLinksStub,
+        transformInvestmentProjectToListItem: this
+          .transformInvestmentProjectToListItemStub,
+        transformInvestmentListItemToDisableMetaLinks: this
+          .transformInvestmentListItemToDisableMetaLinksStub,
       },
     })
 
@@ -70,7 +80,11 @@ describe('investment associated controller', () => {
       context('server has no errors', () => {
         beforeEach(async () => {
           this.req.query.project = '1234'
-          await this.controller.selectAssociatedInvestmentProject(this.req, this.res, this.next)
+          await this.controller.selectAssociatedInvestmentProject(
+            this.req,
+            this.res,
+            this.next
+          )
         })
 
         it('should save the change to the investment project', () => {
@@ -80,11 +94,16 @@ describe('investment associated controller', () => {
         })
 
         it('should set a flash message to say it updated', () => {
-          expect(this.req.flash).to.be.calledWith('success', 'Investment details updated')
+          expect(this.req.flash).to.be.calledWith(
+            'success',
+            'Investment details updated'
+          )
         })
 
         it('should redirect the user back to the investment projects details page.', () => {
-          expect(this.res.redirect).to.be.calledWith('/investments/projects/1/details')
+          expect(this.res.redirect).to.be.calledWith(
+            '/investments/projects/1/details'
+          )
         })
       })
 
@@ -95,7 +114,11 @@ describe('investment associated controller', () => {
 
           this.updateInvestmentStub.rejects(this.error)
 
-          await this.controller.selectAssociatedInvestmentProject(this.req, this.res, this.next)
+          await this.controller.selectAssociatedInvestmentProject(
+            this.req,
+            this.res,
+            this.next
+          )
         })
 
         it('should call next with the error', () => {
@@ -110,7 +133,11 @@ describe('investment associated controller', () => {
 
     context('when a project is not selected', () => {
       beforeEach(async () => {
-        await this.controller.selectAssociatedInvestmentProject(this.req, this.res, this.next)
+        await this.controller.selectAssociatedInvestmentProject(
+          this.req,
+          this.res,
+          this.next
+        )
       })
 
       it('should not save anything', () => {
@@ -138,7 +165,11 @@ describe('investment associated controller', () => {
 
       context('and search returns results', () => {
         beforeEach(async () => {
-          await this.controller.searchForAssociatedInvestmentProject(this.req, this.res, this.next)
+          await this.controller.searchForAssociatedInvestmentProject(
+            this.req,
+            this.res,
+            this.next
+          )
         })
 
         it('should call search with the search term', () => {
@@ -150,7 +181,9 @@ describe('investment associated controller', () => {
 
         it('should filter search to only include non-FDI results', () => {
           const params = this.searchStub.firstCall.args[0]
-          expect(params.filters.investment_type).to.equal('9c364e64-2b28-401b-b2df-50e08b0bca44')
+          expect(params.filters.investment_type).to.equal(
+            '9c364e64-2b28-401b-b2df-50e08b0bca44'
+          )
         })
 
         it('should allow the user to page through results', () => {
@@ -163,7 +196,8 @@ describe('investment associated controller', () => {
         })
 
         it('should transform the result to disable meta item links', () => {
-          expect(this.transformInvestmentListItemToDisableMetaLinksStub).to.be.called
+          expect(this.transformInvestmentListItemToDisableMetaLinksStub).to.be
+            .called
         })
 
         it('should pass the result to the next controller', () => {
@@ -175,7 +209,11 @@ describe('investment associated controller', () => {
         beforeEach(async () => {
           this.error = sinon.stub()
           this.searchStub.rejects(this.error)
-          await this.controller.searchForAssociatedInvestmentProject(this.req, this.res, this.next)
+          await this.controller.searchForAssociatedInvestmentProject(
+            this.req,
+            this.res,
+            this.next
+          )
         })
 
         it('should call next with the error', () => {
@@ -186,7 +224,11 @@ describe('investment associated controller', () => {
 
     context('when no search term is provided', () => {
       beforeEach(async () => {
-        await this.controller.searchForAssociatedInvestmentProject(this.req, this.res, this.next)
+        await this.controller.searchForAssociatedInvestmentProject(
+          this.req,
+          this.res,
+          this.next
+        )
       })
 
       it('should not call search', () => {
@@ -201,7 +243,11 @@ describe('investment associated controller', () => {
 
   describe('#renderAssociatedInvestmentProjectResults', () => {
     beforeEach(() => {
-      this.controller.renderAssociatedInvestmentProjectResults(this.req, this.res, this.next)
+      this.controller.renderAssociatedInvestmentProjectResults(
+        this.req,
+        this.res,
+        this.next
+      )
     })
 
     it('should render the correct template', () => {
@@ -212,33 +258,48 @@ describe('investment associated controller', () => {
   describe('#removeAssociatedInvestmentProject', () => {
     context('when there is an id', () => {
       beforeEach(async () => {
-        await this.controller.removeAssociatedInvestmentProject(this.req, this.res, this.next)
+        await this.controller.removeAssociatedInvestmentProject(
+          this.req,
+          this.res,
+          this.next
+        )
       })
 
       it('should update the investment record', () => {
-        expect(this.updateInvestmentStub).to.be.calledWith('abcd', '1', { associated_non_fdi_r_and_d_project: null })
+        expect(this.updateInvestmentStub).to.be.calledWith('abcd', '1', {
+          associated_non_fdi_r_and_d_project: null,
+        })
       })
 
       it('should redirect back to the details page', () => {
-        expect(this.res.redirect).to.be.calledWith('/investments/projects/1/details')
+        expect(this.res.redirect).to.be.calledWith(
+          '/investments/projects/1/details'
+        )
       })
     })
 
-    context('when there is an error removing the association from the investment', () => {
-      beforeEach(async () => {
-        this.error = sinon.stub()
+    context(
+      'when there is an error removing the association from the investment',
+      () => {
+        beforeEach(async () => {
+          this.error = sinon.stub()
 
-        this.updateInvestmentStub.rejects(this.error)
-        await this.controller.removeAssociatedInvestmentProject(this.req, this.res, this.next)
-      })
+          this.updateInvestmentStub.rejects(this.error)
+          await this.controller.removeAssociatedInvestmentProject(
+            this.req,
+            this.res,
+            this.next
+          )
+        })
 
-      it('should call next with the error', () => {
-        expect(this.next).to.be.calledWith(this.error)
-      })
+        it('should call next with the error', () => {
+          expect(this.next).to.be.calledWith(this.error)
+        })
 
-      it('should not redirect the user', () => {
-        expect(this.res.redirect).to.not.be.called
-      })
-    })
+        it('should not redirect the user', () => {
+          expect(this.res.redirect).to.not.be.called
+        })
+      }
+    )
   })
 })

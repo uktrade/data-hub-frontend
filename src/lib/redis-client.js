@@ -6,7 +6,7 @@ const config = require('../config')
 const logger = require('../config/logger')
 const reporter = require('./reporter')
 
-function getRedisConfig () {
+function getRedisConfig() {
   let redisConfig = {
     port: config.redis.port,
     host: config.redis.host,
@@ -38,7 +38,7 @@ function getRedisConfig () {
 let client
 let asyncGet
 
-function getClient () {
+function getClient() {
   if (!client) {
     client = redis.createClient(getRedisConfig())
 
@@ -65,7 +65,6 @@ function getClient () {
 }
 
 module.exports = {
-
   get: getClient,
 
   asyncGet: () => {

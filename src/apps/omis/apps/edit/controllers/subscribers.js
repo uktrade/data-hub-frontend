@@ -2,11 +2,14 @@ const { get, sortBy, isString } = require('lodash')
 
 const { EditController } = require('../../../controllers')
 const { getAdvisers } = require('../../../../adviser/repos')
-const { transformObjectToOption, transformIdToObject } = require('../../../../transformers')
+const {
+  transformObjectToOption,
+  transformIdToObject,
+} = require('../../../../transformers')
 const { Order } = require('../../../models')
 
 class EditSubscribersController extends EditController {
-  async configure (req, res, next) {
+  async configure(req, res, next) {
     try {
       const orderId = get(res.locals, 'order.id')
       const canEditAdvisers = get(res.locals, 'order.canEditAdvisers')
@@ -30,13 +33,19 @@ class EditSubscribersController extends EditController {
     }
   }
 
-  async saveValues (req, res, next) {
+  async saveValues(req, res, next) {
     const data = req.form.values
-    const subscribersTransform = isString(data.subscribers) ? [data.subscribers] : data.subscribers
+    const subscribersTransform = isString(data.subscribers)
+      ? [data.subscribers]
+      : data.subscribers
     const subscribers = subscribersTransform.map(transformIdToObject)
 
     try {
-      await Order.saveSubscribers(req.session.token, res.locals.order.id, subscribers)
+      await Order.saveSubscribers(
+        req.session.token,
+        res.locals.order.id,
+        subscribers
+      )
       next()
     } catch (error) {
       next(error)

@@ -10,7 +10,7 @@ const filtersFields = [
     name: 'status',
     type: 'checkbox',
     modifier: 'option-select',
-    options: filter(ORDER_STATES, o => {
+    options: filter(ORDER_STATES, (o) => {
       return !includes(['draft', 'quote_awaiting_acceptance'], o.value)
     }),
   },
@@ -34,7 +34,7 @@ const filtersFields = [
     label: 'Gross amount',
     name: 'total_cost',
   },
-].map(filter => {
+].map((filter) => {
   return assign({}, filter, {
     modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
   })

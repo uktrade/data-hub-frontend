@@ -27,7 +27,9 @@ describe('Contact list controller', () => {
     }
 
     getContactsStub = sinon.stub().resolves(contactsListData)
-    transformApiResponseToCollectionStub = sinon.stub().returns(transformContactToListItem)
+    transformApiResponseToCollectionStub = sinon
+      .stub()
+      .returns(transformContactToListItem)
 
     buildSelectedFiltersSummaryStub = sinon.spy()
 
@@ -62,7 +64,10 @@ describe('Contact list controller', () => {
         })
 
         it('should call the transformer to convert investment project for display', () => {
-          expect(transformApiResponseToCollectionStub).to.be.calledWith({ entityType: 'interaction' }, transformContactToListItem)
+          expect(transformApiResponseToCollectionStub).to.be.calledWith(
+            { entityType: 'interaction' },
+            transformContactToListItem
+          )
         })
 
         it('should return investment projects', () => {

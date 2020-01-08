@@ -18,9 +18,14 @@ describe('Investment repository', () => {
   describe('#getCompanyInvestmentProjects', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
-        .get(`/v3/investment?investor_company_id=${companyData.id}&limit=10&offset=0`)
+        .get(
+          `/v3/investment?investor_company_id=${companyData.id}&limit=10&offset=0`
+        )
         .reply(200, companyData)
-      this.investmentProjects = await getCompanyInvestmentProjects('token', companyData.id)
+      this.investmentProjects = await getCompanyInvestmentProjects(
+        'token',
+        companyData.id
+      )
     })
 
     it('should return a company object', () => {
@@ -46,7 +51,9 @@ describe('Investment repository', () => {
       nock(config.apiRoot)
         .post(`/v3/investment`)
         .reply(200, { id: '12345' })
-      this.investmentProject = await createInvestmentProject('token', { foo: 'bar' })
+      this.investmentProject = await createInvestmentProject('token', {
+        foo: 'bar',
+      })
     })
 
     it('should return an investment requirements object', () => {
@@ -61,7 +68,11 @@ describe('Investment repository', () => {
       nock(config.apiRoot)
         .patch(`/v3/investment/${investmentData.id}`)
         .reply(200, investmentData)
-      this.investmentProject = await updateInvestment('token', investmentData.id, appendedData)
+      this.investmentProject = await updateInvestment(
+        'token',
+        investmentData.id,
+        appendedData
+      )
     })
 
     it('should return an investment requirements object', async () => {
@@ -74,11 +85,17 @@ describe('Investment repository', () => {
       nock(config.apiRoot)
         .post(`/v3/investment/${investmentData.id}/archive`, { reason: 'test' })
         .reply(200, investmentProjectAuditData)
-      this.investmentProjectAuditData = await archiveInvestmentProject('token', investmentData.id, 'test')
+      this.investmentProjectAuditData = await archiveInvestmentProject(
+        'token',
+        investmentData.id,
+        'test'
+      )
     })
 
     it('should call archive url and post reason', () => {
-      expect(this.investmentProjectAuditData).to.deep.equal(investmentProjectAuditData)
+      expect(this.investmentProjectAuditData).to.deep.equal(
+        investmentProjectAuditData
+      )
     })
   })
 
@@ -87,11 +104,16 @@ describe('Investment repository', () => {
       nock(config.apiRoot)
         .post(`/v3/investment/${investmentData.id}/unarchive`)
         .reply(200, investmentProjectAuditData)
-      this.investmentProjectAuditData = await unarchiveInvestmentProject('token', investmentData.id)
+      this.investmentProjectAuditData = await unarchiveInvestmentProject(
+        'token',
+        investmentData.id
+      )
     })
 
     it('should call unarchive url', async () => {
-      expect(this.investmentProjectAuditData).to.deep.equal(investmentProjectAuditData)
+      expect(this.investmentProjectAuditData).to.deep.equal(
+        investmentProjectAuditData
+      )
     })
   })
 

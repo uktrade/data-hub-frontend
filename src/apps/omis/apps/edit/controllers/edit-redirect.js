@@ -1,4 +1,4 @@
-function editRedirect (req, res) {
+function editRedirect(req, res) {
   res.redirect(`/omis/${res.locals.order.id}`)
 }
 

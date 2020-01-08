@@ -16,6 +16,7 @@ module.exports = {
   },
   actions: {
     continue: '.govuk-button',
-    back: ({ companyId, interactionId }) => `[href="/companies/${companyId}/interactions/${interactionId}"]`,
+    back: ({ companyId, interactionId }) =>
+      `[href="/companies/${companyId}/interactions/${interactionId}"]`,
   },
 }

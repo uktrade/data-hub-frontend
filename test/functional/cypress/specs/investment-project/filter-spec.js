@@ -3,8 +3,7 @@ const selectors = require('../../../../selectors')
 describe('Investments Collections Filter', () => {
   before(() => {
     cy.visit('/investments')
-    cy
-      .get(selectors.entityCollection.entities)
+    cy.get(selectors.entityCollection.entities)
       .children()
       .should('have.length', 10)
   })
@@ -17,8 +16,7 @@ describe('Investments Collections Filter', () => {
   it('should filter by sector', () => {
     const sector = selectors.filter.investments.sector
     const { typeahead } = selectors.filter
-    cy
-      .get(typeahead(sector).selectedOption)
+    cy.get(typeahead(sector).selectedOption)
       .click()
       .get(typeahead(sector).textInput)
       .type('Advanced Engineering')
@@ -28,7 +26,7 @@ describe('Investments Collections Filter', () => {
       .type('{enter}')
       .type('{esc}')
 
-    cy.wait('@filterResults').then(xhr => {
+    cy.wait('@filterResults').then((xhr) => {
       expect(xhr.url).to.contain(
         'sector_descends=af959812-6095-e211-a939-e4115bead28a'
       )
@@ -39,8 +37,7 @@ describe('Investments Collections Filter', () => {
     const country = selectors.filter.investments.country
     const { typeahead } = selectors.filter
 
-    cy
-      .get(typeahead(country).selectedOption)
+    cy.get(typeahead(country).selectedOption)
       .click()
       .get(typeahead(country).textInput)
       .type('United Kingdom')
@@ -50,7 +47,7 @@ describe('Investments Collections Filter', () => {
       .type('{enter}')
       .type('{esc}')
 
-    cy.wait('@filterResults').then(xhr => {
+    cy.wait('@filterResults').then((xhr) => {
       expect(xhr.url).to.contain('country=80756b9a-5d95-e211-a939-e4115bead28a')
     })
   })

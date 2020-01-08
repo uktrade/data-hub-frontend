@@ -1,8 +1,4 @@
-const {
-  isBlank,
-  isValidGuid,
-  getDataLabels,
-} = require('../controller-utils')
+const { isBlank, isValidGuid, getDataLabels } = require('../controller-utils')
 
 describe('isBlank', () => {
   it('should detects undefined variables', () => {
@@ -10,7 +6,7 @@ describe('isBlank', () => {
     expect(isBlank(e)).to.be.true
   })
   it('should detect passing an unknown key', () => {
-    let e = {}
+    const e = {}
     expect(isBlank(e.x)).to.be.true
   })
   it('should detect an empty string', () => {

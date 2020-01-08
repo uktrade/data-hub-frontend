@@ -67,7 +67,7 @@ describe('Investment project transformers', () => {
       })
     })
 
-    context('when a sector isn\'t provided', () => {
+    context("when a sector isn't provided", () => {
       beforeEach(() => {
         const data = assign({}, investmentData, {
           sector: null,
@@ -151,27 +151,36 @@ describe('Investment project transformers', () => {
       })
 
       it('should include the account tier', () => {
-        expect(this.result).to.have.property('account_tier', 'Tier A - Strategic Account')
+        expect(this.result).to.have.property(
+          'account_tier',
+          'Tier A - Strategic Account'
+        )
       })
     })
 
     context('when uk regions are provided', () => {
       beforeEach(() => {
         const data = assign({}, investmentData, {
-          uk_region_locations: [{
-            id: '4321',
-            name: 'Region 1',
-          }, {
-            id: '1234',
-            name: 'Region 2',
-          }],
+          uk_region_locations: [
+            {
+              id: '4321',
+              name: 'Region 1',
+            },
+            {
+              id: '1234',
+              name: 'Region 2',
+            },
+          ],
         })
 
         this.result = transformBriefInvestmentSummary(data)
       })
 
       it('should include the uk regions as a string list', () => {
-        expect(this.result).to.have.property('uk_region_locations', 'Region 1, Region 2')
+        expect(this.result).to.have.property(
+          'uk_region_locations',
+          'Region 1, Region 2'
+        )
       })
     })
 
@@ -192,20 +201,26 @@ describe('Investment project transformers', () => {
     context('when competitor countries are provided', () => {
       beforeEach(() => {
         const data = assign({}, investmentData, {
-          competitor_countries: [{
-            id: '4321',
-            name: 'Country 1',
-          }, {
-            id: '1234',
-            name: 'Country 2',
-          }],
+          competitor_countries: [
+            {
+              id: '4321',
+              name: 'Country 1',
+            },
+            {
+              id: '1234',
+              name: 'Country 2',
+            },
+          ],
         })
 
         this.result = transformBriefInvestmentSummary(data)
       })
 
       it('should include the competitor countries formatted as a string list', () => {
-        expect(this.result).to.have.property('competitor_countries', 'Country 1, Country 2')
+        expect(this.result).to.have.property(
+          'competitor_countries',
+          'Country 1, Country 2'
+        )
       })
     })
 
@@ -233,7 +248,10 @@ describe('Investment project transformers', () => {
       })
 
       it('should include the estimated land date formatted as Month Year', () => {
-        expect(this.result).to.have.property('estimated_land_date', 'January 2017')
+        expect(this.result).to.have.property(
+          'estimated_land_date',
+          'January 2017'
+        )
       })
     })
 
@@ -332,7 +350,10 @@ describe('Investment project transformers', () => {
       })
 
       it('should return a formatted investment type value', () => {
-        expect(this.result).to.have.property('investment_type', 'FDI, Capital only')
+        expect(this.result).to.have.property(
+          'investment_type',
+          'FDI, Capital only'
+        )
       })
     })
 
@@ -356,7 +377,7 @@ describe('Investment project transformers', () => {
       })
     })
 
-    context('when a sector isn\'t provided', () => {
+    context("when a sector isn't provided", () => {
       beforeEach(() => {
         const data = assign({}, investmentData, {
           sector: null,
@@ -370,41 +391,53 @@ describe('Investment project transformers', () => {
       })
     })
 
-    context('when there is are business activities but no other activities', () => {
-      beforeEach(() => {
-        const data = assign({}, investmentData, {
-          business_activities: [{
-            name: 'Call centre',
-            id: '410da69e-0247-48cf-9f72-fbc10ed7a4fc',
-          }, {
-            name: 'Sales',
-            id: '410da69e-0247-48cf-9f72-fbc10ed7a4fd',
-          }],
-          other_business_activity: '',
+    context(
+      'when there is are business activities but no other activities',
+      () => {
+        beforeEach(() => {
+          const data = assign({}, investmentData, {
+            business_activities: [
+              {
+                name: 'Call centre',
+                id: '410da69e-0247-48cf-9f72-fbc10ed7a4fc',
+              },
+              {
+                name: 'Sales',
+                id: '410da69e-0247-48cf-9f72-fbc10ed7a4fd',
+              },
+            ],
+            other_business_activity: '',
+          })
+
+          this.result = transformInvestmentForView(data)
         })
 
-        this.result = transformInvestmentForView(data)
-      })
+        it('should return business activities formatted as a string list', () => {
+          expect(this.result).to.have.property(
+            'business_activities',
+            'Call centre, Sales'
+          )
+        })
+      }
+    )
 
-      it('should return business activities formatted as a string list', () => {
-        expect(this.result).to.have.property('business_activities', 'Call centre, Sales')
-      })
-    })
+    context(
+      'when there are no business activies but there is another activity',
+      () => {
+        beforeEach(() => {
+          const data = assign({}, investmentData, {
+            business_activities: [],
+            other_business_activity: 'Surfing',
+          })
 
-    context('when there are no business activies but there is another activity', () => {
-      beforeEach(() => {
-        const data = assign({}, investmentData, {
-          business_activities: [],
-          other_business_activity: 'Surfing',
+          this.result = transformInvestmentForView(data)
         })
 
-        this.result = transformInvestmentForView(data)
-      })
-
-      it('should return business activities formatted as a string list', () => {
-        expect(this.result).to.have.property('business_activities', 'Surfing')
-      })
-    })
+        it('should return business activities formatted as a string list', () => {
+          expect(this.result).to.have.property('business_activities', 'Surfing')
+        })
+      }
+    )
 
     context('when there no business activities and no other activities', () => {
       beforeEach(() => {
@@ -424,19 +457,22 @@ describe('Investment project transformers', () => {
     context('when there are client contacts to show', () => {
       beforeEach(() => {
         const data = assign({}, investmentData, {
-          client_contacts: [{
-            name: 'Allen Connelly',
-            id: '7aac69c2-7af4-4c79-9622-f25eb7690f36',
-          }, {
-            name: 'John Brown',
-            id: '7aac69c2-7ae4-4c79-9622-f25eb7690f36',
-          }],
+          client_contacts: [
+            {
+              name: 'Allen Connelly',
+              id: '7aac69c2-7af4-4c79-9622-f25eb7690f36',
+            },
+            {
+              name: 'John Brown',
+              id: '7aac69c2-7ae4-4c79-9622-f25eb7690f36',
+            },
+          ],
         })
 
         this.result = transformInvestmentForView(data)
       })
 
-      it('should return the contact list as an object (including contact\' URL', () => {
+      it("should return the contact list as an object (including contact' URL", () => {
         expect(this.result.client_contacts).to.have.property('name')
       })
     })
@@ -444,21 +480,29 @@ describe('Investment project transformers', () => {
     context('when there is a single client contact', () => {
       beforeEach(() => {
         const data = assign({}, investmentData, {
-          client_contacts: [{
-            name: 'Allen Connelly',
-            id: '7aac69c2-7af4-4c79-9622-f25eb7690f36',
-          }],
+          client_contacts: [
+            {
+              name: 'Allen Connelly',
+              id: '7aac69c2-7af4-4c79-9622-f25eb7690f36',
+            },
+          ],
         })
 
         this.result = transformInvestmentForView(data)
       })
 
       it('should return an object with the contact name', () => {
-        expect(this.result.client_contacts).to.have.property('name', 'Allen Connelly')
+        expect(this.result.client_contacts).to.have.property(
+          'name',
+          'Allen Connelly'
+        )
       })
 
-      it('should return an object with the url pointing to the contact\'s page', () => {
-        expect(this.result.client_contacts).to.have.property('url', '/contacts/7aac69c2-7af4-4c79-9622-f25eb7690f36')
+      it("should return an object with the url pointing to the contact's page", () => {
+        expect(this.result.client_contacts).to.have.property(
+          'url',
+          '/contacts/7aac69c2-7af4-4c79-9622-f25eb7690f36'
+        )
       })
     })
 
@@ -490,7 +534,7 @@ describe('Investment project transformers', () => {
       })
     })
 
-    context('when a description isn\'t provided', () => {
+    context("when a description isn't provided", () => {
       beforeEach(() => {
         const data = assign({}, investmentData, {
           description: null,
@@ -514,11 +558,14 @@ describe('Investment project transformers', () => {
       })
 
       it('should include the description', () => {
-        expect(this.result).to.have.property('anonymous_description', 'My description')
+        expect(this.result).to.have.property(
+          'anonymous_description',
+          'My description'
+        )
       })
     })
 
-    context('when an anonymous description isn\'t provided', () => {
+    context("when an anonymous description isn't provided", () => {
       beforeEach(() => {
         const data = assign({}, investmentData, {
           anonymous_description: null,
@@ -552,7 +599,7 @@ describe('Investment project transformers', () => {
       })
     })
 
-    context('when an investor type isn\'t provided', () => {
+    context("when an investor type isn't provided", () => {
       beforeEach(() => {
         const data = assign({}, investmentData, {
           investor_type: null,
@@ -586,7 +633,7 @@ describe('Investment project transformers', () => {
       })
     })
 
-    context('when a level of involvement isn\'t provided', () => {
+    context("when a level of involvement isn't provided", () => {
       beforeEach(() => {
         const data = assign({}, investmentData, {
           level_of_involvement: null,
@@ -620,7 +667,7 @@ describe('Investment project transformers', () => {
       })
     })
 
-    context('when a specific programme isn\'t provided', () => {
+    context("when a specific programme isn't provided", () => {
       beforeEach(() => {
         const data = assign({}, investmentData, {
           specific_programme: null,
@@ -644,7 +691,10 @@ describe('Investment project transformers', () => {
       })
 
       it('should include the estimated land date formatted as Month Year', () => {
-        expect(this.result).to.have.property('estimated_land_date', 'January 2017')
+        expect(this.result).to.have.property(
+          'estimated_land_date',
+          'January 2017'
+        )
       })
     })
 

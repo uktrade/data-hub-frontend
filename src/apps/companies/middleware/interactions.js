@@ -1,4 +1,4 @@
-function setInteractionsDetails (req, res, next) {
+function setInteractionsDetails(req, res, next) {
   const { company } = res.locals
 
   if (req.path === '/interactions') {

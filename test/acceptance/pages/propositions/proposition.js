@@ -1,9 +1,7 @@
 const faker = require('faker')
 const { assign, forEach, keys } = require('lodash')
 
-const {
-  getButtonWithText,
-} = require('../../helpers/selectors')
+const { getButtonWithText } = require('../../helpers/selectors')
 const { generateFutureDate } = require('../../helpers/date')
 
 module.exports = {
@@ -19,17 +17,20 @@ module.exports = {
   },
   commands: [
     {
-      createProposition (details = {}, callback) {
+      createProposition(details = {}, callback) {
         const futureDate = generateFutureDate()
-        const proposition = assign({}, {
-          name: faker.lorem.sentence(),
-          scope: faker.lorem.sentence(),
-          deadlineOfPropositionYear: futureDate.year,
-          deadlineOfPropositionMonth: futureDate.month,
-          deadlineOfPropositionDay: futureDate.day,
-        }, details)
-        this
-          .waitForElementVisible('@saveButton')
+        const proposition = assign(
+          {},
+          {
+            name: faker.lorem.sentence(),
+            scope: faker.lorem.sentence(),
+            deadlineOfPropositionYear: futureDate.year,
+            deadlineOfPropositionMonth: futureDate.month,
+            deadlineOfPropositionDay: futureDate.day,
+          },
+          details
+        )
+        this.waitForElementVisible('@saveButton')
           .api.perform((done) => {
             this.getListOption('@adviser', (adviser) => {
               proposition.adviser = adviser

@@ -7,11 +7,11 @@ const AutoSubmit = {
   selector: '.js-AutoSubmit',
   isSubmitting: false,
 
-  init () {
+  init() {
     this.bindEvents()
   },
 
-  isCheckboxSynced (evt) {
+  isCheckboxSynced(evt) {
     // This is needed because checkboxes can go out of sync with posted values. We prevent
     // this by reverting the checkbox to it's previous state if there is already a submit in progress.
     // This intentionally affects all checkboxes that trigger form submits site-wide.
@@ -23,7 +23,7 @@ const AutoSubmit = {
     return true
   },
 
-  handleFormSubmit (evt) {
+  handleFormSubmit(evt) {
     if (!this.isCheckboxSynced(evt)) return
 
     if (evt.target.classList.contains('ie-date-field')) {
@@ -47,12 +47,12 @@ const AutoSubmit = {
     }
   },
 
-  bindEvents () {
+  bindEvents() {
     document.addEventListener('change', this.handleFormSubmit.bind(this))
     document.addEventListener('submit', this.handleFormSubmit.bind(this))
   },
 
-  submitForm (form) {
+  submitForm(form) {
     if (this.isSubmitting) {
       return
     }
@@ -64,7 +64,7 @@ const AutoSubmit = {
       .then(() => {
         this.isSubmitting = false
       })
-      .catch(error => {
+      .catch((error) => {
         this.isSubmitting = false
         console.error(`Could not fetch data: ${error}`)
       })

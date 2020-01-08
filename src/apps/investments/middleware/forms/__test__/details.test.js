@@ -7,7 +7,9 @@ const config = require('../../../../../config')
 const paths = require('../../../paths')
 const companyData = require('../../../../../../test/unit/data/companies/company-v4.json')
 
-const yesterday = moment().subtract(1, 'days').toISOString()
+const yesterday = moment()
+  .subtract(1, 'days')
+  .toISOString()
 
 const metadataMock = {
   investmentTypeOptions: [
@@ -103,7 +105,11 @@ describe('investment details middleware', () => {
   describe('#handleFormPost', () => {
     context('when saving a new investment project', () => {
       beforeEach(async () => {
-        await this.detailsMiddleware.handleFormPost(this.req, this.res, this.next)
+        await this.detailsMiddleware.handleFormPost(
+          this.req,
+          this.res,
+          this.next
+        )
       })
 
       it('should create a new investment', () => {
@@ -114,7 +120,11 @@ describe('investment details middleware', () => {
     context('when editing an existing investment project', () => {
       beforeEach(async () => {
         this.req.params.investmentId = '777'
-        await this.detailsMiddleware.handleFormPost(this.req, this.res, this.next)
+        await this.detailsMiddleware.handleFormPost(
+          this.req,
+          this.res,
+          this.next
+        )
       })
 
       it('should create a new investment', () => {
@@ -124,7 +134,11 @@ describe('investment details middleware', () => {
 
     context('when saving the form raises no errors', () => {
       beforeEach(async () => {
-        await this.detailsMiddleware.handleFormPost(this.req, this.res, this.next)
+        await this.detailsMiddleware.handleFormPost(
+          this.req,
+          this.res,
+          this.next
+        )
       })
 
       it('should call next', () => {
@@ -149,36 +163,56 @@ describe('investment details middleware', () => {
             business_activities: '4321',
           }
 
-          await this.detailsMiddleware.handleFormPost(this.req, this.res, this.next)
+          await this.detailsMiddleware.handleFormPost(
+            this.req,
+            this.res,
+            this.next
+          )
         })
 
         it('should return contacts to the form as an array', () => {
-          expect(this.res.locals.form.state.client_contacts).to.deep.equal(['1234'])
+          expect(this.res.locals.form.state.client_contacts).to.deep.equal([
+            '1234',
+          ])
         })
 
         it('should return activities to the form as an array', () => {
-          expect(this.res.locals.form.state.business_activities).to.deep.equal(['4321'])
+          expect(this.res.locals.form.state.business_activities).to.deep.equal([
+            '4321',
+          ])
         })
       })
 
-      context('and multiple contacts and business activities are provided', () => {
-        beforeEach(async () => {
-          this.req.body = {
-            client_contacts: ['1234', '5678'],
-            business_activities: ['4321', '8765'],
-          }
+      context(
+        'and multiple contacts and business activities are provided',
+        () => {
+          beforeEach(async () => {
+            this.req.body = {
+              client_contacts: ['1234', '5678'],
+              business_activities: ['4321', '8765'],
+            }
 
-          await this.detailsMiddleware.handleFormPost(this.req, this.res, this.next)
-        })
+            await this.detailsMiddleware.handleFormPost(
+              this.req,
+              this.res,
+              this.next
+            )
+          })
 
-        it('should return contacts to the form as an array', () => {
-          expect(this.res.locals.form.state.client_contacts).to.deep.equal(['1234', '5678'])
-        })
+          it('should return contacts to the form as an array', () => {
+            expect(this.res.locals.form.state.client_contacts).to.deep.equal([
+              '1234',
+              '5678',
+            ])
+          })
 
-        it('should return activities to the form as an array', () => {
-          expect(this.res.locals.form.state.business_activities).to.deep.equal(['4321', '8765'])
-        })
-      })
+          it('should return activities to the form as an array', () => {
+            expect(
+              this.res.locals.form.state.business_activities
+            ).to.deep.equal(['4321', '8765'])
+          })
+        }
+      )
     })
 
     context('the user select add another contact', () => {
@@ -189,7 +223,11 @@ describe('investment details middleware', () => {
           'add-item': 'client_contacts',
         }
 
-        await this.detailsMiddleware.handleFormPost(this.req, this.res, this.next)
+        await this.detailsMiddleware.handleFormPost(
+          this.req,
+          this.res,
+          this.next
+        )
       })
 
       it('should not save the data', () => {
@@ -197,7 +235,11 @@ describe('investment details middleware', () => {
       })
 
       it('should return a form state with an additional empty contact', () => {
-        expect(this.res.locals.form.state.client_contacts).to.deep.equal(['1234', '5678', ''])
+        expect(this.res.locals.form.state.client_contacts).to.deep.equal([
+          '1234',
+          '5678',
+          '',
+        ])
       })
     })
 
@@ -209,7 +251,11 @@ describe('investment details middleware', () => {
           'add-item': 'business_activities',
         }
 
-        await this.detailsMiddleware.handleFormPost(this.req, this.res, this.next)
+        await this.detailsMiddleware.handleFormPost(
+          this.req,
+          this.res,
+          this.next
+        )
       })
 
       it('should not save the data', () => {
@@ -217,7 +263,11 @@ describe('investment details middleware', () => {
       })
 
       it('should return a form state with an additional empty contact', () => {
-        expect(this.res.locals.form.state.business_activities).to.deep.equal(['4321', '8765', ''])
+        expect(this.res.locals.form.state.business_activities).to.deep.equal([
+          '4321',
+          '8765',
+          '',
+        ])
       })
     })
   })
@@ -262,7 +312,9 @@ describe('investment details middleware', () => {
           .get('/v4/metadata/investment-involvement')
           .reply(200, metadataMock.investmentInvolvementOptions)
 
-        this.req.params = assign({}, this.req.params, { equityCompanyId: uuid() })
+        this.req.params = assign({}, this.req.params, {
+          equityCompanyId: uuid(),
+        })
         await this.detailsMiddleware.populateForm(this.req, this.res, this.next)
       })
 
@@ -273,7 +325,9 @@ describe('investment details middleware', () => {
           { label: 'Zac Smith', value: '3' },
         ]
 
-        expect(this.res.locals.form.options.clientRelationshipManagers).to.deep.equal(expectedOptions)
+        expect(
+          this.res.locals.form.options.clientRelationshipManagers
+        ).to.deep.equal(expectedOptions)
       })
 
       it('includes all active adviser options for referral source adviser', () => {
@@ -283,13 +337,17 @@ describe('investment details middleware', () => {
           { label: 'Zac Smith', value: '3' },
         ]
 
-        expect(this.res.locals.form.options.referralSourceAdvisers).to.deep.equal(expectedOptions)
+        expect(
+          this.res.locals.form.options.referralSourceAdvisers
+        ).to.deep.equal(expectedOptions)
       })
     })
 
     context('when editing a project with an inactive adviser', () => {
       beforeEach(async () => {
-        this.req.params = assign({}, this.req.params, { equityCompanyId: uuid() })
+        this.req.params = assign({}, this.req.params, {
+          equityCompanyId: uuid(),
+        })
 
         nock(config.apiRoot)
           .get(`/adviser/?limit=100000&offset=0`)
@@ -340,7 +398,9 @@ describe('investment details middleware', () => {
           { label: 'Fred Smith', value: '4' },
         ]
 
-        expect(this.res.locals.form.options.clientRelationshipManagers).to.deep.equal(expectedOptions)
+        expect(
+          this.res.locals.form.options.clientRelationshipManagers
+        ).to.deep.equal(expectedOptions)
       })
 
       it('includes all active adviser options for referral source adviser', () => {
@@ -351,7 +411,9 @@ describe('investment details middleware', () => {
           { label: 'Jim Smith', value: '5' },
         ]
 
-        expect(this.res.locals.form.options.referralSourceAdvisers).to.deep.equal(expectedOptions)
+        expect(
+          this.res.locals.form.options.referralSourceAdvisers
+        ).to.deep.equal(expectedOptions)
       })
     })
   })

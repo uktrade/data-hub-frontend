@@ -1,11 +1,11 @@
 const PrintDialog = {
   selector: '.js-print-dialog',
 
-  init () {
+  init() {
     document.addEventListener('DOMContentLoaded', this.contentLoaded.bind(this))
   },
 
-  contentLoaded () {
+  contentLoaded() {
     const printLinks = document.querySelectorAll(this.selector)
 
     Array.from(printLinks).forEach((link) => {
@@ -13,7 +13,7 @@ const PrintDialog = {
     })
   },
 
-  handleClick (event) {
+  handleClick(event) {
     event.preventDefault()
     window.print()
   },

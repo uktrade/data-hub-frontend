@@ -7,8 +7,10 @@ describe('Event Attendees', () => {
   })
 
   it('should not display add attendees button for disabled events', () => {
-    cy.get(selectors.message.info)
-      .should('contain', 'This event was disabled on 5 September 2017 and can no longer be edited.')
+    cy.get(selectors.message.info).should(
+      'contain',
+      'This event was disabled on 5 September 2017 and can no longer be edited.'
+    )
     cy.get(selectors.entityCollection.addAttendee).should('not.be.visible')
   })
 

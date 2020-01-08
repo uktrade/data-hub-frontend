@@ -3,11 +3,11 @@ const uniqueId = require('lodash/uniqueId')
 const { parseDateString } = require('../../../src/common/date')
 const { addClass, removeClass } = require('../lib/helpers')
 
-function isDate (text) {
+function isDate(text) {
   return parseDateString(text) !== null
 }
 
-function convertToDate (dateString) {
+function convertToDate(dateString) {
   return parseDateString(dateString)
 }
 
@@ -15,7 +15,7 @@ const ASC_CLASS = 'is-ascending'
 const DESC_CLASS = 'is-descending'
 
 class SortableTable {
-  constructor (element, document) {
+  constructor(element, document) {
     this.element = element
     this.cacheElements()
     this.attachEvents()
@@ -25,23 +25,23 @@ class SortableTable {
     this.document = document
   }
 
-  cacheElements () {
+  cacheElements() {
     this.headingElements = this.element.querySelectorAll('thead th')
     this.tableBody = this.element.querySelector('tbody')
   }
 
-  attachEvents () {
+  attachEvents() {
     this.headingElements.forEach((element) => {
       element.addEventListener('click', this.handleHeadingClick.bind(this))
     })
   }
 
-  parseTable () {
+  parseTable() {
     this.keys = SortableTable.assignTableKeys(this.headingElements)
     this.data = SortableTable.parseTableBody(this.element, this.keys)
   }
 
-  handleHeadingClick (event) {
+  handleHeadingClick(event) {
     const key = event.target.getAttribute('data-key')
 
     if (this.currentKey && key === this.currentKey) {
@@ -63,13 +63,13 @@ class SortableTable {
     }
   }
 
-  clearSortClasses () {
+  clearSortClasses() {
     removeClass(this.headingElements, ASC_CLASS)
     removeClass(this.headingElements, DESC_CLASS)
   }
 
-  static assignTableKeys (headingElements) {
-    let keys = []
+  static assignTableKeys(headingElements) {
+    const keys = []
     // parse the headings into an array of keys.
     headingElements.forEach((headingElement) => {
       const key = uniqueId('SortableTable__Column-')
@@ -80,8 +80,8 @@ class SortableTable {
     return keys
   }
 
-  static parseTableBody (tableElement, keys) {
-    let rowsData = []
+  static parseTableBody(tableElement, keys) {
+    const rowsData = []
     const rows = tableElement.querySelectorAll('tbody tr')
 
     for (let rowPos = 0; rowPos < rows.length; rowPos += 1) {
@@ -96,7 +96,7 @@ class SortableTable {
     return rowsData
   }
 
-  static sort (data, key, sortAsc = true) {
+  static sort(data, key, sortAsc = true) {
     return data.sort((a, b) => {
       let aValue = a[key]
       let bValue = b[key]
@@ -116,14 +116,14 @@ class SortableTable {
       }
 
       if (!sortAsc) {
-        result = result - (result * 2)
+        result = result - result * 2
       }
 
       return result
     })
   }
 
-  static render (data) {
+  static render(data) {
     let html = ''
     for (const record of data) {
       let string = '<tr>'
@@ -136,7 +136,7 @@ class SortableTable {
     return html
   }
 
-  static init () {
+  static init() {
     const elements = document.querySelectorAll('.js-SortableTable')
     for (let pos = 0; pos < elements.length; pos += 1) {
       const element = elements.item(pos)

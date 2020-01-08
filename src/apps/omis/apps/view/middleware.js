@@ -7,7 +7,7 @@ const { getContact } = require('../../../contacts/repos')
 const { transformPaymentToView } = require('../../transformers')
 const editSteps = require('../edit/steps')
 
-function setCompany (req, res, next) {
+function setCompany(req, res, next) {
   const orderId = get(res.locals, 'order.company.id')
 
   if (!orderId) {
@@ -17,7 +17,7 @@ function setCompany (req, res, next) {
   setCompanyMW(req, res, next, orderId)
 }
 
-async function setContact (req, res, next) {
+async function setContact(req, res, next) {
   const contactId = get(res.locals, 'order.contact.id')
 
   if (!contactId) {
@@ -32,12 +32,15 @@ async function setContact (req, res, next) {
   }
 }
 
-async function setAssignees (req, res, next) {
+async function setAssignees(req, res, next) {
   const orderId = get(res.locals, 'order.id')
 
   if (orderId) {
     try {
-      res.locals.assignees = await Order.getAssignees(req.session.token, orderId)
+      res.locals.assignees = await Order.getAssignees(
+        req.session.token,
+        orderId
+      )
     } catch (error) {
       return next(error)
     }
@@ -45,12 +48,15 @@ async function setAssignees (req, res, next) {
   next()
 }
 
-async function setSubscribers (req, res, next) {
+async function setSubscribers(req, res, next) {
   const orderId = get(res.locals, 'order.id')
 
   if (orderId) {
     try {
-      res.locals.subscribers = await Order.getSubscribers(req.session.token, orderId)
+      res.locals.subscribers = await Order.getSubscribers(
+        req.session.token,
+        orderId
+      )
     } catch (error) {
       return next(error)
     }
@@ -58,7 +64,7 @@ async function setSubscribers (req, res, next) {
   next()
 }
 
-async function setQuoteSummary (req, res, next) {
+async function setQuoteSummary(req, res, next) {
   const orderId = get(res.locals, 'order.id')
   const orderStatus = get(res.locals, 'order.status')
 
@@ -78,7 +84,7 @@ async function setQuoteSummary (req, res, next) {
   next()
 }
 
-async function setQuotePreview (req, res, next) {
+async function setQuotePreview(req, res, next) {
   if (!get(res.locals, 'order')) {
     return next()
   }
@@ -101,13 +107,17 @@ async function setQuotePreview (req, res, next) {
     }
 
     const quoteErrors = mapValues(editSteps, (step) => {
-      if (!step.fields) { return false }
+      if (!step.fields) {
+        return false
+      }
 
       const stepErrors = filter(step.fields, (field) => {
         return error.error.hasOwnProperty(field)
       })
 
-      if (!stepErrors.length) { return false }
+      if (!stepErrors.length) {
+        return false
+      }
 
       return {
         heading: step.heading,
@@ -124,7 +134,7 @@ async function setQuotePreview (req, res, next) {
   next()
 }
 
-async function setQuote (req, res, next) {
+async function setQuote(req, res, next) {
   if (res.locals.quote) {
     return next()
   }
@@ -145,9 +155,12 @@ async function setQuote (req, res, next) {
   next()
 }
 
-async function setInvoice (req, res, next) {
+async function setInvoice(req, res, next) {
   try {
-    res.locals.invoice = await Order.getInvoice(req.session.token, res.locals.order.id)
+    res.locals.invoice = await Order.getInvoice(
+      req.session.token,
+      res.locals.order.id
+    )
   } catch (error) {
     logger.error(error)
   }
@@ -155,9 +168,12 @@ async function setInvoice (req, res, next) {
   next()
 }
 
-async function setPayments (req, res, next) {
+async function setPayments(req, res, next) {
   try {
-    const payments = await Order.getPayments(req.session.token, res.locals.order.id)
+    const payments = await Order.getPayments(
+      req.session.token,
+      res.locals.order.id
+    )
 
     res.locals.payments = payments.map(transformPaymentToView)
   } catch (error) {
@@ -167,7 +183,7 @@ async function setPayments (req, res, next) {
   next()
 }
 
-async function generateQuote (req, res, next) {
+async function generateQuote(req, res, next) {
   const orderId = get(res.locals, 'order.id')
   const clientEmail = get(res.locals, 'order.contact.email') || 'client'
 
@@ -180,12 +196,18 @@ async function generateQuote (req, res, next) {
     const errorCode = error.statusCode
 
     if (errorCode === 400) {
-      req.flash('error', 'Quote could not be sent to client. Some fields were missing.')
+      req.flash(
+        'error',
+        'Quote could not be sent to client. Some fields were missing.'
+      )
       return res.redirect(`/omis/${orderId}`)
     }
 
     if (errorCode === 409) {
-      req.flash('error', 'Quote could not be sent to client. A valid quote already exists.')
+      req.flash(
+        'error',
+        'Quote could not be sent to client. A valid quote already exists.'
+      )
       return res.redirect(`/omis/${orderId}`)
     }
 
@@ -193,7 +215,7 @@ async function generateQuote (req, res, next) {
   }
 }
 
-async function cancelQuote (req, res, next) {
+async function cancelQuote(req, res, next) {
   const orderId = get(res.locals, 'order.id')
 
   try {
@@ -208,7 +230,10 @@ async function cancelQuote (req, res, next) {
     }
 
     if (error.statusCode === 409) {
-      req.flash('error', 'Quote could not be cancelled. It has already been accepted.')
+      req.flash(
+        'error',
+        'Quote could not be cancelled. It has already been accepted.'
+      )
       return res.redirect(`/omis/${orderId}/quote`)
     }
 
@@ -216,7 +241,7 @@ async function cancelQuote (req, res, next) {
   }
 }
 
-function setQuoteForm (req, res, next) {
+function setQuoteForm(req, res, next) {
   const quote = res.locals.quote
   const orderId = get(res.locals, 'order.id')
   const orderStatus = get(res.locals, 'order.status')

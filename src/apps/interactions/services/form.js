@@ -9,7 +9,7 @@ const {
  * @param {Object} interaction An interaction in API format
  * @returns {Object} A flattened copy of the interaction form in a format to use in a form
  */
-function getInteractionAsFormData (interaction) {
+function getInteractionAsFormData(interaction) {
   if (!interaction) return null
 
   let result = {

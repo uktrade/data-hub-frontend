@@ -15,7 +15,7 @@ const feedbackFormConfig = (browserInfo) => ({
       options: [
         {
           value: 'user_admin',
-          label: 'I don\'t have access',
+          label: "I don't have access",
         },
         {
           value: 'bug',
@@ -23,7 +23,7 @@ const feedbackFormConfig = (browserInfo) => ({
         },
         {
           value: 'feedback',
-          label: 'I\'ve got some feedback',
+          label: "I've got some feedback",
         },
       ],
     },
@@ -32,7 +32,8 @@ const feedbackFormConfig = (browserInfo) => ({
       type: 'textarea',
       name: 'description',
       label: 'Description',
-      hint: 'If you were having a problem, explain what you did, what happened and what you expected to happen. If you want to provide feedback or a suggestion, describe it here.',
+      hint:
+        'If you were having a problem, explain what you did, what happened and what you expected to happen. If you want to provide feedback or a suggestion, describe it here.',
     },
     {
       macroName: 'TextField',

@@ -30,7 +30,9 @@ describe('LocalNav macro', () => {
         ],
       })
       expect(component.className.trim()).to.equal('c-local-nav')
-      expect(component.querySelectorAll('.c-local-nav__link.is-active')).to.have.length(1)
+      expect(
+        component.querySelectorAll('.c-local-nav__link.is-active')
+      ).to.have.length(1)
     })
   })
 })

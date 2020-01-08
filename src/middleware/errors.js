@@ -1,22 +1,21 @@
-
 const config = require('../config')
 const logger = require('../config/logger')
 
 class NotAuthorizedError extends Error {
-  constructor () {
+  constructor() {
     super('Not Authorized')
     this.statusCode = 403
   }
 }
 
 class NotFoundError extends Error {
-  constructor () {
+  constructor() {
     super('Not Found')
     this.statusCode = 404
   }
 }
 
-function getStatusMessage (error) {
+function getStatusMessage(error) {
   if (error.code === 'EBADCSRFTOKEN') {
     return 'This form has been tampered with'
   }
@@ -32,11 +31,11 @@ function getStatusMessage (error) {
   return 'Page unavailable'
 }
 
-function notFound (req, res, next) {
+function notFound(req, res, next) {
   next(new NotFoundError())
 }
 
-function catchAll (error, req, res, next) {
+function catchAll(error, req, res, next) {
   const statusCode = error.statusCode || 500
 
   if (res.headersSent) {
@@ -46,14 +45,12 @@ function catchAll (error, req, res, next) {
   logger[statusCode === 404 ? 'info' : 'error'](error)
 
   res.locals.BREADCRUMBS = null
-  res
-    .status(statusCode)
-    .render('errors', {
-      error,
-      statusCode,
-      statusMessage: getStatusMessage(error),
-      showStackTrace: config.isDev,
-    })
+  res.status(statusCode).render('errors', {
+    error,
+    statusCode,
+    statusMessage: getStatusMessage(error),
+    showStackTrace: config.isDev,
+  })
 }
 
 module.exports = {

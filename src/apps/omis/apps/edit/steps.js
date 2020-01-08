@@ -30,26 +30,19 @@ const steps = merge({}, createSteps, {
   },
   '/assignees': {
     heading: 'Add or remove advisers in the market',
-    fields: [
-      'assignees',
-    ],
+    fields: ['assignees'],
     controller: EditAssigneesController,
   },
   '/assignee-time': {
     heading: 'Edit estimated hours of work',
-    fields: [
-      'assignee_time',
-    ],
+    fields: ['assignee_time'],
     controller: EditAssigneeTimeController,
     templatePath: 'omis/apps/edit/views',
     template: 'assignee-time.njk',
   },
   '/quote-details': {
     heading: 'Edit quote information',
-    fields: [
-      'description',
-      'delivery_date',
-    ],
+    fields: ['description', 'delivery_date'],
     controller: EditQuoteDetailsController,
   },
   '/internal-details': {
@@ -65,12 +58,7 @@ const steps = merge({}, createSteps, {
   },
   '/invoice-details': {
     heading: 'Edit invoice details',
-    fields: [
-      'vat_status',
-      'vat_number',
-      'vat_verified',
-      'po_number',
-    ],
+    fields: ['vat_status', 'vat_number', 'vat_verified', 'po_number'],
     templatePath: 'omis/apps/edit/views',
     template: 'invoice-details.njk',
     controller: EditInvoiceDetailsController,
@@ -85,20 +73,13 @@ const steps = merge({}, createSteps, {
       'billing_address_postcode',
       'billing_address_country',
     ],
-    next: [
-      { fn: 'nextCondition', next: 'vat-status' },
-      'invoice-details',
-    ],
+    next: [{ fn: 'nextCondition', next: 'vat-status' }, 'invoice-details'],
     successMessage: 'Billing address saved',
     controller: EditBillingAddressController,
   },
   '/vat-status': {
     heading: 'Confirm VAT status',
-    fields: [
-      'vat_status',
-      'vat_number',
-      'vat_verified',
-    ],
+    fields: ['vat_status', 'vat_number', 'vat_verified'],
     templatePath: 'omis/apps/edit/views',
     template: 'vat-status.njk',
     buttonText: 'Confirm VAT status',
@@ -109,20 +90,14 @@ const steps = merge({}, createSteps, {
   },
   '/payment-reconciliation': {
     heading: 'Reconcile a payment',
-    fields: [
-      'amount',
-      'received_on',
-    ],
+    fields: ['amount', 'received_on'],
     templatePath: 'omis/apps/edit/views',
     template: 'payment-reconciliation.njk',
     controller: EditPaymentReconciliationController,
   },
   '/complete-order': {
     heading: 'Complete order',
-    fields: [
-      'assignee_actual_time',
-      'verify_work_sent',
-    ],
+    fields: ['assignee_actual_time', 'verify_work_sent'],
     templatePath: 'omis/apps/edit/views',
     template: 'complete-order.njk',
     successMessage: 'Order completed',
@@ -130,9 +105,7 @@ const steps = merge({}, createSteps, {
   },
   '/cancel-order': {
     heading: 'Cancel an order',
-    fields: [
-      'cancellation_reason',
-    ],
+    fields: ['cancellation_reason'],
     successMessage: 'Order cancelled',
     controller: CancelOrderController,
   },

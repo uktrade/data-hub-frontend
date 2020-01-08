@@ -5,7 +5,7 @@ const { setHomeBreadcrumb } = require('../middleware')
 const { Order } = require('./models')
 const labels = require('./locales/en/default')
 
-async function setCompany (req, res, next, companyId) {
+async function setCompany(req, res, next, companyId) {
   try {
     res.locals.company = await getDitCompany(req.session.token, companyId)
     next()
@@ -14,10 +14,10 @@ async function setCompany (req, res, next, companyId) {
   }
 }
 
-async function setOrder (req, res, next, orderId) {
+async function setOrder(req, res, next, orderId) {
   try {
     const order = await Order.getById(req.session.token, orderId)
-    const activeOrder = !(['cancelled', 'complete'].includes(order.status))
+    const activeOrder = !['cancelled', 'complete'].includes(order.status)
 
     res.locals.order = assign({}, order, {
       canEditOrder: order.status === 'draft',
@@ -43,7 +43,7 @@ async function setOrder (req, res, next, orderId) {
   }
 }
 
-function setOrderBreadcrumb (req, res, next) {
+function setOrderBreadcrumb(req, res, next) {
   const reference = get(res.locals, 'order.reference')
 
   return setHomeBreadcrumb(reference)(req, res, next)
@@ -55,7 +55,7 @@ function has been introduced to replace code which was
 calling the translation library. Translations are not
 required at this stage.
 */
-function translate (req, res, next) {
+function translate(req, res, next) {
   set(res.locals, 'translate', (key) => get(labels, key))
   next()
 }

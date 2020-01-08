@@ -42,13 +42,17 @@ describe('TextField component', () => {
     })
 
     it('should render a component with label and input field', () => {
-      expect(this.component.querySelector('label').textContent.trim()).to.equal('First name')
+      expect(this.component.querySelector('label').textContent.trim()).to.equal(
+        'First name'
+      )
       expect(this.component.querySelector('input')).to.not.be.null
     })
 
     it('should render a component which has input with name and id based on its name', () => {
       expect(this.component.querySelector('input').name).to.equal('firstName')
-      expect(this.component.querySelector('input').id).to.equal('field-firstName')
+      expect(this.component.querySelector('input').id).to.equal(
+        'field-firstName'
+      )
     })
 
     it('should render a component with text input by default', () => {
@@ -67,9 +71,13 @@ describe('TextField component', () => {
         name: 'description',
         label: 'Description',
       })
-      expect(component.querySelector('label').textContent.trim()).to.equal('Description')
+      expect(component.querySelector('label').textContent.trim()).to.equal(
+        'Description'
+      )
       expect(component.querySelector('textarea')).to.not.be.null
-      expect(component.querySelector('textarea').id).to.equal('field-description')
+      expect(component.querySelector('textarea').id).to.equal(
+        'field-description'
+      )
     })
 
     it('should render label with text optional when given "optional" flag', () => {
@@ -78,7 +86,9 @@ describe('TextField component', () => {
         name: 'firstName',
         label: 'First name',
       })
-      expect(component.querySelector('label').textContent.trim()).to.equal('First name (optional)')
+      expect(component.querySelector('label').textContent.trim()).to.equal(
+        'First name (optional)'
+      )
     })
 
     it('should render label with text optional when given "optional" flag', () => {
@@ -87,7 +97,9 @@ describe('TextField component', () => {
         name: 'firstName',
         label: 'First name',
       })
-      expect(component.querySelector('label').textContent.trim()).to.equal('First name (optional)')
+      expect(component.querySelector('label').textContent.trim()).to.equal(
+        'First name (optional)'
+      )
     })
 
     it('should render label with hint when hint text is given', () => {
@@ -96,7 +108,9 @@ describe('TextField component', () => {
         name: 'firstName',
         label: 'First name',
       })
-      expect(component.querySelector('.c-form-group__hint').textContent.trim()).to.equal('Additional info')
+      expect(
+        component.querySelector('.c-form-group__hint').textContent.trim()
+      ).to.equal('Additional info')
     })
   })
 
@@ -107,7 +121,11 @@ describe('TextField component', () => {
         label: 'Description',
         error: 'Field has error',
       })
-      expect(component.querySelector('.c-form-group__error-message').textContent.trim()).to.equal('Field has error')
+      expect(
+        component
+          .querySelector('.c-form-group__error-message')
+          .textContent.trim()
+      ).to.equal('Field has error')
     })
   })
 
@@ -123,7 +141,8 @@ describe('TextField component', () => {
     })
 
     it('should add the data attribute to the input control', () => {
-      expect(this.component.querySelector('input[data-test="text-value"]')).to.not.be.null
+      expect(this.component.querySelector('input[data-test="text-value"]')).to
+        .not.be.null
     })
   })
 
@@ -140,7 +159,11 @@ describe('TextField component', () => {
     })
 
     it('should add the data attributes to the input control', () => {
-      expect(this.component.querySelector('input[data-att1="att1-value"][data-att2="att2-value"]')).to.not.be.null
+      expect(
+        this.component.querySelector(
+          'input[data-att1="att1-value"][data-att2="att2-value"]'
+        )
+      ).to.not.be.null
     })
   })
 
@@ -157,7 +180,8 @@ describe('TextField component', () => {
     })
 
     it('should add the data attribute to the input control', () => {
-      expect(this.component.querySelector('textarea[data-test="text-value"]')).to.not.be.null
+      expect(this.component.querySelector('textarea[data-test="text-value"]'))
+        .to.not.be.null
     })
   })
 
@@ -175,7 +199,11 @@ describe('TextField component', () => {
     })
 
     it('should add the data attributes to the input control', () => {
-      expect(this.component.querySelector('textarea[data-att1="att1-value"][data-att2="att2-value"]')).to.not.be.null
+      expect(
+        this.component.querySelector(
+          'textarea[data-att1="att1-value"][data-att2="att2-value"]'
+        )
+      ).to.not.be.null
     })
   })
 })

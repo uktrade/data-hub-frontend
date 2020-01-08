@@ -1,12 +1,12 @@
 const { authorisedRequest } = require('../../../../../lib/authorised-request')
 const config = require('../../../../../config')
 
-function getCompanyProfiles (token, companyId) {
+function getCompanyProfiles(token, companyId) {
   const url = `${config.apiRoot}/v4/large-investor-profile?investor_company_id=${companyId}`
   return authorisedRequest(token, url)
 }
 
-function createCompanyProfile (token, body) {
+function createCompanyProfile(token, body) {
   return authorisedRequest(token, {
     body,
     method: 'POST',
@@ -14,7 +14,7 @@ function createCompanyProfile (token, body) {
   })
 }
 
-function updateCompanyProfile (token, body, profileId) {
+function updateCompanyProfile(token, body, profileId) {
   return authorisedRequest(token, {
     body,
     method: 'PATCH',

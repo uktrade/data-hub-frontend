@@ -26,11 +26,11 @@ describe('Collection middleware', () => {
           query: {},
         }
 
-        this.middleware.getRequestBody([
-          'archived',
-          'name',
-          'company_name',
-        ])(this.req, this.res, this.nextSpy)
+        this.middleware.getRequestBody(['archived', 'name', 'company_name'])(
+          this.req,
+          this.res,
+          this.nextSpy
+        )
       })
 
       it('should not set the request body', () => {
@@ -52,11 +52,11 @@ describe('Collection middleware', () => {
           },
         }
 
-        this.middleware.getRequestBody([
-          'archived',
-          'name',
-          'company_name',
-        ])(this.req, this.res, this.nextSpy)
+        this.middleware.getRequestBody(['archived', 'name', 'company_name'])(
+          this.req,
+          this.res,
+          this.nextSpy
+        )
       })
 
       it('should set the request body', () => {
@@ -78,18 +78,15 @@ describe('Collection middleware', () => {
           ...this.req,
           query: {
             ...this.req.query,
-            archived: [
-              'true',
-              'false',
-            ],
+            archived: ['true', 'false'],
           },
         }
 
-        this.middleware.getRequestBody([
-          'archived',
-          'name',
-          'company_name',
-        ])(this.req, this.res, this.nextSpy)
+        this.middleware.getRequestBody(['archived', 'name', 'company_name'])(
+          this.req,
+          this.res,
+          this.nextSpy
+        )
       })
 
       it('should not set archived on the request body', () => {
@@ -111,11 +108,11 @@ describe('Collection middleware', () => {
           },
         }
 
-        this.middleware.getRequestBody([
-          'archived',
-          'name',
-          'company_name',
-        ])(this.req, this.res, this.nextSpy)
+        this.middleware.getRequestBody(['archived', 'name', 'company_name'])(
+          this.req,
+          this.res,
+          this.nextSpy
+        )
       })
 
       it('should set sort on the request body', () => {
@@ -136,11 +133,11 @@ describe('Collection middleware', () => {
           },
         }
 
-        this.middleware.getRequestBody([
-          'archived',
-          'name',
-          'company_name',
-        ])(this.req, this.res, this.nextSpy)
+        this.middleware.getRequestBody(['archived', 'name', 'company_name'])(
+          this.req,
+          this.res,
+          this.nextSpy
+        )
       })
 
       it('should set sort on the request body', () => {

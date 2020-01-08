@@ -2,7 +2,7 @@
 const { isPlainObject, map } = require('lodash')
 const { projects } = require('../paths')
 
-function transformUKCompany (investmentId, ukCompany) {
+function transformUKCompany(investmentId, ukCompany) {
   if (!isPlainObject(ukCompany)) {
     return {
       name: 'Find company',
@@ -17,7 +17,9 @@ function transformUKCompany (investmentId, ukCompany) {
     actions: [
       {
         label: 'Edit company',
-        url: `${projects}/${investmentId}/edit-ukcompany?term=${encodeURIComponent(name)}`,
+        url: `${projects}/${investmentId}/edit-ukcompany?term=${encodeURIComponent(
+          name
+        )}`,
       },
       {
         label: 'Remove company',
@@ -27,7 +29,7 @@ function transformUKCompany (investmentId, ukCompany) {
   }
 }
 
-function transformInvestmentRequirementsForView ({
+function transformInvestmentRequirementsForView({
   actual_uk_regions,
   client_requirements,
   competitor_countries,

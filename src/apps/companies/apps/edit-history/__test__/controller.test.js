@@ -34,23 +34,37 @@ describe('rendering Edit History', () => {
       await controller.renderEditHistory(
         middlewareParams.reqMock,
         middlewareParams.resMock,
-        middlewareParams.nextSpy,
+        middlewareParams.nextSpy
       )
     })
 
     it('should render the add company form template with fields', () => {
-      const expectedTemplate = 'companies/apps/edit-history/views/client-container'
-      expect(middlewareParams.resMock.render).to.be.calledOnceWithExactly(expectedTemplate, {
-        props: {
-          dataEndpoint: urls.companies.editHistory.data('a73efeba-8499-11e6-ae22-56b6b6499611'),
-        },
-      })
+      const expectedTemplate =
+        'companies/apps/edit-history/views/client-container'
+      expect(middlewareParams.resMock.render).to.be.calledOnceWithExactly(
+        expectedTemplate,
+        {
+          props: {
+            dataEndpoint: urls.companies.editHistory.data(
+              'a73efeba-8499-11e6-ae22-56b6b6499611'
+            ),
+          },
+        }
+      )
     })
 
     it('should add 3 breadcrumbs', () => {
       expect(middlewareParams.resMock.breadcrumb.args).to.deep.equal([
-        ['Mercury Ltd', urls.companies.detail('a73efeba-8499-11e6-ae22-56b6b6499611')],
-        ['Business details', urls.companies.businessDetails('a73efeba-8499-11e6-ae22-56b6b6499611')],
+        [
+          'Mercury Ltd',
+          urls.companies.detail('a73efeba-8499-11e6-ae22-56b6b6499611'),
+        ],
+        [
+          'Business details',
+          urls.companies.businessDetails(
+            'a73efeba-8499-11e6-ae22-56b6b6499611'
+          ),
+        ],
         ['Edit History'],
       ])
     })

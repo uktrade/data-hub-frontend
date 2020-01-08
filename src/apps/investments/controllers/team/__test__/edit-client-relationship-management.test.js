@@ -19,75 +19,94 @@ describe('Investment project, client relationship management, edit controller', 
 
   describe('#getHandler', () => {
     it('should render edit client relationship management view', (done) => {
-      this.controller.getHandler({
-        session: {
-          token: 'abcd',
+      this.controller.getHandler(
+        {
+          session: {
+            token: 'abcd',
+          },
         },
-      }, {
-        locals: {
-          paths,
-          investment: investmentData,
+        {
+          locals: {
+            paths,
+            investment: investmentData,
+          },
+          breadcrumb: this.breadcrumbStub,
+          render: (template) => {
+            try {
+              expect(template).to.equal(
+                'investments/views/team/edit-client-relationship-management'
+              )
+              done()
+            } catch (e) {
+              done(e)
+            }
+          },
         },
-        breadcrumb: this.breadcrumbStub,
-        render: (template) => {
-          try {
-            expect(template).to.equal('investments/views/team/edit-client-relationship-management')
-            done()
-          } catch (e) {
-            done(e)
-          }
-        },
-      }, this.nextStub)
+        this.nextStub
+      )
     })
   })
 
   describe('#postHandler', () => {
     describe('without errors', () => {
       it('should redirect to the product team details page', (done) => {
-        this.controller.postHandler({
-          session: {
-            token: 'abcd',
-          },
-          flash: this.flashStub,
-        }, {
-          locals: {
-            paths,
-            form: {
-              errors: {},
+        this.controller.postHandler(
+          {
+            session: {
+              token: 'abcd',
             },
-            investment: investmentData,
+            flash: this.flashStub,
           },
-          breadcrumb: this.breadcrumbStub,
-          redirect: (url) => {
-            try {
-              expect(url).to.equal(`/investments/projects/${investmentData.id}/team`)
-              expect(this.flashStub).to.calledWith('success', 'Investment details updated')
-              done()
-            } catch (e) {
-              done(e)
-            }
+          {
+            locals: {
+              paths,
+              form: {
+                errors: {},
+              },
+              investment: investmentData,
+            },
+            breadcrumb: this.breadcrumbStub,
+            redirect: (url) => {
+              try {
+                expect(url).to.equal(
+                  `/investments/projects/${investmentData.id}/team`
+                )
+                expect(this.flashStub).to.calledWith(
+                  'success',
+                  'Investment details updated'
+                )
+                done()
+              } catch (e) {
+                done(e)
+              }
+            },
           },
-        }, this.nextStub)
+          this.nextStub
+        )
       })
     })
 
     describe('when form errors exist', () => {
       it('should pass the error onto the edit form', () => {
-        this.controller.postHandler({
-          session: {
-            token: 'abcd',
-          },
-        }, {
-          locals: {
-            paths,
-            form: {
-              errors: {
-                subject: 'example error',
-              },
+        this.controller.postHandler(
+          {
+            session: {
+              token: 'abcd',
             },
           },
-          breadcrumb: this.breadcrumbStub,
-        }, this.nextStub)
+          {
+            locals: {
+              paths,
+              form: {
+                errors: {
+                  subject: 'example error',
+                },
+              },
+            },
+            breadcrumb: this.breadcrumbStub,
+          },
+          this.nextStub
+        )
 
         expect(this.nextStub).to.be.calledOnce
       })

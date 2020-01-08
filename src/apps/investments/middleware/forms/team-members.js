@@ -6,19 +6,24 @@ const { updateInvestmentTeamMembers } = require('../../repos')
 const { teamMembersLabels } = require('../../labels')
 const { transformObjectToOption } = require('../../../transformers')
 
-function transformFormToTeamMemberArray ({ adviser, role }) {
+function transformFormToTeamMemberArray({ adviser, role }) {
   const advisersArray = castArray(adviser)
   const rolesArray = castArray(role)
 
-  const teamMembers = zipWith(advisersArray, rolesArray, (adviser, role) => ({ adviser, role }))
-  return teamMembers.filter(member => !isEmpty(member.adviser))
+  const teamMembers = zipWith(advisersArray, rolesArray, (adviser, role) => ({
+    adviser,
+    role,
+  }))
+  return teamMembers.filter((member) => !isEmpty(member.adviser))
 }
 
-function transformTeamMemberArrayToFields (teamMemberArray, advisers) {
-  return teamMemberArray.map((teamMember) => getTeamMemberField({ teamMember, advisers }))
+function transformTeamMemberArrayToFields(teamMemberArray, advisers) {
+  return teamMemberArray.map((teamMember) =>
+    getTeamMemberField({ teamMember, advisers })
+  )
 }
 
-function transformInvestmentTeamMemberstoTeamMemberArray (investment = {}) {
+function transformInvestmentTeamMemberstoTeamMemberArray(investment = {}) {
   const teamMembers = investment.team_members || []
 
   const teamMemberArray = teamMembers.map((teamMember) => {
@@ -31,7 +36,7 @@ function transformInvestmentTeamMemberstoTeamMemberArray (investment = {}) {
   return teamMemberArray
 }
 
-function getTeamMemberField ({ teamMember, advisers }) {
+function getTeamMemberField({ teamMember, advisers }) {
   const adviser = teamMember ? teamMember.adviser : undefined
 
   const options = filterActiveAdvisers({
@@ -46,7 +51,7 @@ function getTeamMemberField ({ teamMember, advisers }) {
   }
 }
 
-function makeForm (path, teamMembers) {
+function makeForm(path, teamMembers) {
   return {
     fields: { teamMembers },
     labels: teamMembersLabels.edit,
@@ -55,11 +60,11 @@ function makeForm (path, teamMembers) {
   }
 }
 
-function transformErrorResponseToFormErrors (error) {
+function transformErrorResponseToFormErrors(error) {
   const messages = {}
 
   castArray(error).forEach((errorItem, index) => {
-    forOwn(errorItem, function (value, key) {
+    forOwn(errorItem, function(value, key) {
       messages[`${key}-${index}`] = value[0]
     })
   })
@@ -67,7 +72,7 @@ function transformErrorResponseToFormErrors (error) {
   return messages
 }
 
-async function populateTeamEditForm (req, res, next) {
+async function populateTeamEditForm(req, res, next) {
   try {
     const { token } = req.session
     const { investmentId } = req.params
@@ -76,7 +81,9 @@ async function populateTeamEditForm (req, res, next) {
 
     const { results: advisers } = await getAdvisers(token)
 
-    const teamMembers = transformInvestmentTeamMemberstoTeamMemberArray(res.locals.investment)
+    const teamMembers = transformInvestmentTeamMemberstoTeamMemberArray(
+      res.locals.investment
+    )
 
     const fields = transformTeamMemberArrayToFields(teamMembers, advisers)
     fields.push(getTeamMemberField({ advisers }))
@@ -89,7 +96,7 @@ async function populateTeamEditForm (req, res, next) {
   }
 }
 
-async function postTeamEdit (req, res, next) {
+async function postTeamEdit(req, res, next) {
   const { token } = req.session
   const { investmentId } = req.params
   const { projects } = res.locals.paths

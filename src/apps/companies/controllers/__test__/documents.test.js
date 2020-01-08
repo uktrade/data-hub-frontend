@@ -15,7 +15,9 @@ describe('Companies documents controller', () => {
     })
 
     it('should permanently redirect to business details', () => {
-      expect(this.middlewareParameters.resMock.redirect).to.have.been.calledWith(301, 'business-details')
+      expect(
+        this.middlewareParameters.resMock.redirect
+      ).to.have.been.calledWith(301, 'business-details')
       expect(this.middlewareParameters.resMock.redirect).to.have.been.calledOnce
     })
 

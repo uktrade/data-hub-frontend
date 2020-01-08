@@ -6,58 +6,64 @@ const { getDateFor } = require('../../../helpers/date')
 const Search = client.page.search.search()
 const Dashboard = client.page.dashboard()
 
-When(/^I search for the created (.+)/, async function (entityType) {
-  await Dashboard
-    .navigate()
+When(/^I search for the created (.+)/, async function(entityType) {
+  await Dashboard.navigate()
 
-  await Search
-    .search(this.state[entityType].uniqueSearchTerm)
+  await Search.search(this.state[entityType].uniqueSearchTerm)
 })
 
 When(/^the (.+) search tab is clicked/, async (tabText) => {
-  const searchTabSelector = Search.section.tabs.getSearchResultsTabSelector(tabText)
+  const searchTabSelector = Search.section.tabs.getSearchResultsTabSelector(
+    tabText
+  )
 
-  await Search.section.tabs
-    .api.useXpath()
+  await Search.section.tabs.api
+    .useXpath()
     .waitForElementVisible(searchTabSelector.selector)
     .click(searchTabSelector.selector)
     .useCss()
 })
 
 When(/^the first search result is clicked/, async () => {
-  await Search
-    .section.firstSearchResult
+  await Search.section.firstSearchResult
     .waitForElementVisible('@resultLink')
     .click('@resultLink')
 })
 
 Then(/^I verify the search tabs are displayed$/, async (expectedSearchTabs) => {
   for (const expectedSearchTab of expectedSearchTabs.hashes()) {
-    const searchTabSelector = Search.section.tabs.getSearchResultsTabSelector(expectedSearchTab.text)
+    const searchTabSelector = Search.section.tabs.getSearchResultsTabSelector(
+      expectedSearchTab.text
+    )
 
-    await Search.section.tabs
-      .api.useXpath()
+    await Search.section.tabs.api
+      .useXpath()
       .waitForElementPresent(searchTabSelector.selector)
       .assert.visible(searchTabSelector.selector)
       .useCss()
   }
 })
 
-Then(/^the (.+) search tab has ([0-9]+) results/, async (tabText, resultsCount) => {
-  const searchTabSelector = Search.section.tabs.getSearchResultsTabSelector(tabText)
+Then(
+  /^the (.+) search tab has ([0-9]+) results/,
+  async (tabText, resultsCount) => {
+    const searchTabSelector = Search.section.tabs.getSearchResultsTabSelector(
+      tabText
+    )
 
-  await Search.section.tabs
-    .api.useXpath()
-    .waitForElementPresent(searchTabSelector.selector)
-    .assert.cssClassPresent(searchTabSelector.selector, 'is-active')
-    .useCss()
+    await Search.section.tabs.api
+      .useXpath()
+      .waitForElementPresent(searchTabSelector.selector)
+      .assert.cssClassPresent(searchTabSelector.selector, 'is-active')
+      .useCss()
 
-  await Search
-    .assert.visible('@resultsCount')
-    .assert.containsText('@resultsCount', resultsCount)
-})
+    await Search.assert
+      .visible('@resultsCount')
+      .assert.containsText('@resultsCount', resultsCount)
+  }
+)
 
-Then(/^I can view the event in the search results/, async function () {
+Then(/^I can view the event in the search results/, async function() {
   const {
     start_date_year,
     start_date_month,
@@ -67,8 +73,16 @@ Then(/^I can view the event in the search results/, async function () {
     end_date_day,
   } = this.state.event
 
-  const expectedStartDate = getDateFor({ year: start_date_year, month: start_date_month, day: start_date_day })
-  const expectedEndDate = getDateFor({ year: end_date_year, month: end_date_month, day: end_date_day })
+  const expectedStartDate = getDateFor({
+    year: start_date_year,
+    month: start_date_month,
+    day: start_date_day,
+  })
+  const expectedEndDate = getDateFor({
+    year: end_date_year,
+    month: end_date_month,
+    day: end_date_day,
+  })
 
   await Search.section.firstEventSearchResult
     .waitForElementPresent('@header')
@@ -78,17 +92,13 @@ Then(/^I can view the event in the search results/, async function () {
     .assert.containsText('@eventStart', expectedStartDate)
     .assert.containsText('@eventEnd', expectedEndDate)
     .assert.containsText('@leadTeam', this.state.event.lead_team)
-    // TODO
-    // need to refactor vue component to make it testable, atm it is not
-    // .assert.containsText('@organiser', this.state.event.organiser)
+  // TODO
+  // need to refactor vue component to make it testable, atm it is not
+  // .assert.containsText('@organiser', this.state.event.organiser)
 })
 
-Then(/^I can view the company in the search results/, async function () {
-  const {
-    name,
-    sector,
-    primaryAddress,
-  } = this.state.company
+Then(/^I can view the company in the search results/, async function() {
+  const { name, sector, primaryAddress } = this.state.company
 
   await Search.section.firstCompanySearchResult
     .waitForElementPresent('@header')
@@ -101,7 +111,7 @@ Then(/^I see (a|the) search box$/, async (messageType) => {
   await Search.waitForElementPresent('@term')
 })
 
-When('I search for {string}', async function (term) {
+When('I search for {string}', async function(term) {
   try {
     await Search.search(term)
   } catch (error) {
@@ -109,17 +119,23 @@ When('I search for {string}', async function (term) {
   }
 })
 
-Then(/^I see "([^"]*)?" in the (search results|collection)$/, async function (term, type) {
+Then(/^I see "([^"]*)?" in the (search results|collection)$/, async function(
+  term,
+  type
+) {
   await Search.section.firstSearchResult
     .waitForElementPresent('@header')
     .assert.containsText('@header', term)
 })
 
-When(/^I select "([^"]*)?" in the (search results|collection)$/, async function (title, type) {
+When(/^I select "([^"]*)?" in the (search results|collection)$/, async function(
+  title,
+  type
+) {
   const result = Search.section.results.getSelectorForResultWithText(title)
 
-  await Search.section.results
-    .api.useXpath()
+  await Search.section.results.api
+    .useXpath()
     .waitForElementVisible(result.selector)
     .click(result.selector)
     .useCss()
