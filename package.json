@@ -8,7 +8,7 @@
   },
   "scripts": {
     "clean": "del .build",
-    "start": "node --use-strict src/server.js",
+    "start": "NODE_ENV=test node --use-strict src/server.js",
     "build": "npm run clean && webpack",
     "build:prod": "NODE_ENV=production npm run build",
     "develop": "run-p watch:js:*",
@@ -152,6 +152,7 @@
     "winston": "^2.4.2"
   },
   "devDependencies": {
+    "@cypress/code-coverage": "^1.10.4",
     "@uktrade/client-matrix-js": "^1.0.70",
     "@uktrade/wdio-image-diff-js": "1.1.0",
     "@vue/test-utils": "^1.0.0-beta.25",
@@ -189,6 +190,7 @@
     "faker": "^4.1.0",
     "html": "^1.0.0",
     "istanbul": "^0.4.5",
+    "istanbul-lib-coverage": "^3.0.0",
     "js-beautify": "^1.7.5",
     "jsdom": "^11.11.0",
     "jsdom-global": "^3.0.2",
