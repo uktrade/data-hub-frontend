@@ -47,6 +47,12 @@ async function postDetails(req, res, next) {
       return next(err)
     }
 
+    const nonFieldErrors = get(err.error, 'non_field_errors')
+
+    if (nonFieldErrors) {
+      set(res.locals, 'form.errors.nonField', nonFieldErrors)
+    }
+
     set(res.locals, 'form.errors.messages', mapErrors(err.error))
     next()
   }

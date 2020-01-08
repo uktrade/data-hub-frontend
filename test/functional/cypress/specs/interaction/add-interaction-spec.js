@@ -30,6 +30,11 @@ describe('Add Export', () => {
 
             cy.get(selectors.interactionForm.add).click()
 
+            cy.get(formSelectors.form).contains(
+              'The export_countries field may not be null.'
+            )
+            cy.get(formSelectors.form).contains('A non field error message')
+
             cy.get(
               `${formSelectors.countries.future} .multiselect__tag`
             ).should('contain', 'Albania')
