@@ -5,11 +5,17 @@ import {
 import HintText from '@govuk-react/hint-text'
 import SectionBreak from '@govuk-react/section-break'
 import { get, orderBy } from 'lodash'
-import React, { useReducer } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-import * as actions from './actions'
-import reducer, { initialState } from './reducer'
+import {
+  COMPANY_LIST_VIEWER__FILTER,
+  COMPANY_LIST_VIEWER__LIST_CHANGE,
+  COMPANY_LIST_VIEWER__ORDER
+} from '../../../../client/actions'
+import { ALPHABETICAL, LEAST_RECENT, RECENT } from './constants'
 import Filters from './Filters'
 import Header from './Header'
 import ListHeader from './ListHeader'
@@ -43,22 +49,16 @@ const NoListsMsg = () => (
   </HintText>
 )
 
-function CompanyLists (props) {
-  const [
-    { lists, selectedIdx, sortBy, filter },
-    dispatch,
-  ] = useReducer(reducer, {
-    ...initialState,
-    // Reducer assumes the list of company lists is sorted.
-    lists: orderBy(props.lists, 'name'),
-  })
-
+function CompanyLists ({
+  lists, selectedIdx, sortBy, filter,
+  onListChange, onOrderChange, onSearch,
+}) {
   const list = lists[selectedIdx]
   const companies = get(list, 'companies', [])
   const orderByParams = {
-    recent: [c => c.latestInteraction.date || '', 'desc'],
-    'least-recent': [c => c.latestInteraction.date || '', 'asc'],
-    alphabetical: [c => c.company.name, 'asc'],
+    [RECENT]: [c => c.latestInteraction.date || '', 'desc'],
+    [LEAST_RECENT]: [c => c.latestInteraction.date || '', 'asc'],
+    [ALPHABETICAL]: [c => c.company.name, 'asc'],
   }[sortBy]
   const filtered = companies.filter(
     c => c.company.name.match(new RegExp(filter, 'i'))
@@ -67,29 +67,15 @@ function CompanyLists (props) {
 
   return (
     <StyledRoot>
-      <Header lists={lists}
-        onChange={idx => dispatch({ type: actions.LIST_CHANGE, idx })} />
+      <Header lists={lists} onListChange={onListChange} />
       <StyledSectionBreak visible={true} />
       {list && <ListHeader list={list} />}
       {lists.length ? (
         companies.length ? (
           <>
             {companies.length > 1 &&
-              <Filters
-                list={list}
-                onOrderChange={
-                  sortBy => dispatch({
-                    type: actions.ORDER_CHANGE,
-                    sortBy,
-                  })
-                }
-                onSearch={
-                  filter => dispatch({
-                    type: actions.FILTER_CHANGE,
-                    filter,
-                  }) 
-                }
-              />}
+              <Filters onOrderChange={onOrderChange} onSearch={onSearch} />
+            }
             <Table companies={ordered} />
           </>
         ) : <EmptyListMsg />
@@ -100,7 +86,29 @@ function CompanyLists (props) {
 }
 
 CompanyLists.propTypes = {
-  lists: propTypes.lists,
+  lists: propTypes.lists.isRequired,
+  selectedIdx: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  sortBy: PropTypes.oneOf([ALPHABETICAL, RECENT, LEAST_RECENT]).isRequired,
+  filter: PropTypes.string.isRequired,
+  onListChange: PropTypes.func,
+  onOrderChange: PropTypes.func,
+  onSearch: PropTypes.func,
 }
 
-export default CompanyLists
+export default connect(
+  state => state.companyLists,
+  dispatch => ({
+    onListChange: idx => dispatch({
+      type: COMPANY_LIST_VIEWER__LIST_CHANGE,
+      idx,
+    }),
+    onOrderChange: sortBy => dispatch({
+      type: COMPANY_LIST_VIEWER__ORDER,
+      sortBy,
+    }),
+    onSearch: filter => dispatch({
+      type: COMPANY_LIST_VIEWER__FILTER,
+      filter,
+    }),
+  })
+)(CompanyLists)

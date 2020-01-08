@@ -19,7 +19,7 @@ const common = {
     'react-app': [
       'react-app-polyfill/ie9',
       'react-app-polyfill/stable',
-      './src/client.jsx',
+      './src/client/index.jsx',
     ],
   },
   output: {
