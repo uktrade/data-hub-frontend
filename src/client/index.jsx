@@ -1,21 +1,36 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
+import { createStore, combineReducers } from 'redux'
 
 import { ActivityFeedApp } from 'data-hub-components'
-import AddCompanyForm from './apps/companies/apps/add-company/client/AddCompanyForm'
-import EditCompanyForm from './apps/companies/apps/edit-company/client/EditCompanyForm'
-import EditHistory from './apps/companies/apps/edit-history/client/EditHistory'
-import DeleteCompanyList from './apps/company-lists/client/DeleteCompanyList'
-import CompanyLists from './apps/dashboard/client/CompanyLists'
-import EditCompanyList from './apps/company-lists/client/EditCompanyList'
-import CreateListFormSection from './apps/company-lists/client/CreateListFormSection'
-import AddRemoveFromListSection from './apps/company-lists/client/AddRemoveFromListSection'
-import DnbHierarchy from './apps/companies/apps/dnb-hierarchy/client/DnbHierarchy'
-import LeadAdvisers from './apps/companies/apps/advisers/client/LeadAdvisers'
-import LargeCapitalProfileCollection from './apps/investments/client/LargeCapitalProfileCollection'
-import ManageAdviser from './apps/companies/apps/advisers/client/ManageAdviser'
+import AddCompanyForm from '../apps/companies/apps/add-company/client/AddCompanyForm'
+import EditCompanyForm from '../apps/companies/apps/edit-company/client/EditCompanyForm'
+import EditHistory from '../apps/companies/apps/edit-history/client/EditHistory'
+import DeleteCompanyList from '../apps/company-lists/client/DeleteCompanyList'
+import CompanyLists from '../apps/dashboard/client/CompanyLists'
+import companyLists, {
+  resolvePreloadedData as resolvePreloadedCompanyListsData
+} from '../apps/dashboard/client/CompanyLists/reducer'
+import EditCompanyList from '../apps/company-lists/client/EditCompanyList'
+import CreateListFormSection from '../apps/company-lists/client/CreateListFormSection'
+import AddRemoveFromListSection from '../apps/company-lists/client/AddRemoveFromListSection'
+import DnbHierarchy from '../apps/companies/apps/dnb-hierarchy/client/DnbHierarchy'
+import LeadAdvisers from '../apps/companies/apps/advisers/client/LeadAdvisers'
+import LargeCapitalProfileCollection from '../apps/investments/client/LargeCapitalProfileCollection'
+import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails
-  from './apps/companies/apps/business-details/client/CompanyBusinessDetails'
+  from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
+
+const store = createStore(
+  combineReducers({ companyLists }),
+  {
+    companyLists: resolvePreloadedCompanyListsData(),
+  },
+  process.env.NODE_ENV === 'production'
+    ? require('redux-devtools-extension').devToolsEnhancer()
+    : undefined,
+)
 
 const appWrapper = document.getElementById('react-app')
 
@@ -36,7 +51,7 @@ function Mount ({ selector, children }) {
 function App () {
   const globalProps = parseProps(appWrapper)
   return (
-    <>
+    <Provider store={store}>
       <Mount selector="#add-company-form">
         {props => <AddCompanyForm csrfToken={globalProps.csrfToken} {...props} />}
       </Mount>
@@ -49,7 +64,9 @@ function App () {
       <Mount selector="#activity-feed-app">
         {props => <ActivityFeedApp {...props} />}
       </Mount>
-      <Mount selector="#my-companies" children={CompanyLists} />
+      <Mount selector="#my-companies">
+        <CompanyLists/>
+      </Mount>
       <Mount selector="#delete-company-list">
         {props => <DeleteCompanyList csrfToken={globalProps.csrfToken} {...props} />}
       </Mount>
@@ -79,7 +96,7 @@ function App () {
           <ManageAdviser {...props} csrfToken={globalProps.csrfToken} />
         }
       </Mount>
-    </>
+    </Provider>
   )
 }
 
