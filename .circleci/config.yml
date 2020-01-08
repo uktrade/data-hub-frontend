@@ -321,6 +321,10 @@ jobs:
           when: always
       - store_artifacts:
           path: cypress/screenshots
+      - store_test_results:
+          path: coverage
+      - store_artifacts:
+          path: coverage
 
   # Run visual tests
   visual_tests:
