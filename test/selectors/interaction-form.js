@@ -2,6 +2,7 @@ const typeaheadId = '#group-field-dit_participants'
 const { EXPORT_INTEREST_STATUS } = require('../../src/apps/constants')
 
 module.exports = {
+  form: 'form',
   subject: '#field-subject',
   notes: '#field-notes',
   dateOfInteractionYear: '#field-date_year',
