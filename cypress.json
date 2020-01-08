@@ -3,7 +3,8 @@
   "baseUrl": "http://localhost:3000",
   "video": false,
   "screenshotOnRunFailure": false,
-  "pluginsFile": false,
+  "pluginsFile": "test/functional/cypress/plugins/index.js",
+  "supportFile": "test/functional/cypress/support/index.js",
   "defaultCommandTimeout": 10000,
   "projectId": "w97se2"
 }
