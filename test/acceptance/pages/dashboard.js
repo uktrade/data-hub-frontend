@@ -1,7 +1,12 @@
-const { getSelectorForElementWithText, getLinkWithText } = require('../helpers/selectors')
+const {
+  getSelectorForElementWithText,
+  getLinkWithText,
+} = require('../helpers/selectors')
 
-const getGlobalNavAnchorWithText = (text) => getLinkWithText(text, 'datahub-header__navigation__item__link')
-const getGlobalHeaderAnchorWithText = (text) => getLinkWithText(text, 'datahub-header__links__item')
+const getGlobalNavAnchorWithText = (text) =>
+  getLinkWithText(text, 'datahub-header__navigation__item__link')
+const getGlobalHeaderAnchorWithText = (text) =>
+  getLinkWithText(text, 'datahub-header__links__item')
 
 module.exports = {
   url: process.env.QA_HOST,
@@ -9,7 +14,8 @@ module.exports = {
   elements: {
     pageHeading: 'h2.dashboard-section-title',
     term: '#field-term',
-    firstMyLatestContact: '#main-content > div > div > div > div.govuk-grid-column-two-thirds > div:nth-child(2) > table > tbody > tr:nth-child(1) > td:nth-child(1) > a',
+    firstMyLatestContact:
+      '#main-content > div > div > div > div.govuk-grid-column-two-thirds > div:nth-child(2) > table > tbody > tr:nth-child(1) > td:nth-child(1) > a',
   },
   sections: {
     globalHeader: {
@@ -35,14 +41,11 @@ module.exports = {
   },
   commands: [
     {
-      getGlobalNavItemSelector (text) {
-        return getSelectorForElementWithText(
-          text,
-          {
-            el: '//a',
-            className: 'datahub-header__navigation__item__link',
-          },
-        )
+      getGlobalNavItemSelector(text) {
+        return getSelectorForElementWithText(text, {
+          el: '//a',
+          className: 'datahub-header__navigation__item__link',
+        })
       },
     },
   ],

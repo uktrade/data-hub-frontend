@@ -11,8 +11,10 @@ try {
   logger.error('Manifest file is not found. Ensure assets are built.')
 }
 
-module.exports = function locals (req, res, next) {
-  const baseUrl = `${(req.encrypted ? 'https' : req.protocol)}://${req.get('host')}`
+module.exports = function locals(req, res, next) {
+  const baseUrl = `${req.encrypted ? 'https' : req.protocol}://${req.get(
+    'host'
+  )}`
 
   Object.assign(res.locals, {
     APP_VERSION: process.env.GIT_BRANCH || process.env.GIT_COMMIT || 'unknown',
@@ -25,8 +27,8 @@ module.exports = function locals (req, res, next) {
     IS_XHR: req.xhr,
     QUERY: req.query,
 
-    getPageTitle () {
-      const items = res.breadcrumb().map(item => item.text)
+    getPageTitle() {
+      const items = res.breadcrumb().map((item) => item.text)
       const title = res.locals.title
 
       if (title) {
@@ -41,7 +43,7 @@ module.exports = function locals (req, res, next) {
       return items.reverse().slice(0, -1)
     },
 
-    getBreadcrumbs () {
+    getBreadcrumbs() {
       const breadcrumbs = res.breadcrumb()
 
       return map(breadcrumbs, ({ text, href }, i) => {
@@ -52,7 +54,7 @@ module.exports = function locals (req, res, next) {
       })
     },
 
-    getAssetPath (asset) {
+    getAssetPath(asset) {
       const assetsUrl = config.assetsHost || baseUrl
       const webpackAssetPath = webpackManifest[asset]
 
@@ -63,7 +65,7 @@ module.exports = function locals (req, res, next) {
       return `${assetsUrl}/${asset}`
     },
 
-    getLocal (key) {
+    getLocal(key) {
       return res.locals[key]
     },
   })

@@ -42,7 +42,9 @@ describe('Message macro', () => {
     context('caller', () => {
       beforeEach(() => {
         this.customHTML = '<span>Custom html</span>'
-        this.component = commonMacros.renderWithCallerToDom('Message')(this.customHTML)
+        this.component = commonMacros.renderWithCallerToDom('Message')(
+          this.customHTML
+        )
       })
 
       it('should render custom body', () => {
@@ -59,7 +61,9 @@ describe('Message macro', () => {
           type: 'error',
         })
 
-        expect(component.className.trim()).to.equal('c-message c-message--error')
+        expect(component.className.trim()).to.equal(
+          'c-message c-message--error'
+        )
       })
     })
 
@@ -118,7 +122,9 @@ describe('MessageList macro', () => {
       })
 
       it('should be dismissable', () => {
-        expect(this.component.className.trim()).to.equal('c-message-list js-Messages')
+        expect(this.component.className.trim()).to.equal(
+          'c-message-list js-Messages'
+        )
       })
     })
   })

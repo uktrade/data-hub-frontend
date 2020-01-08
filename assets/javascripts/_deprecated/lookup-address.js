@@ -3,7 +3,7 @@ const axios = require('axios')
 const { closest, hide } = require('../lib/helpers')
 
 class LookupAddress {
-  constructor (elementSelector) {
+  constructor(elementSelector) {
     this.cacheElements(elementSelector)
     this.suggestions = []
 
@@ -14,44 +14,63 @@ class LookupAddress {
     }
   }
 
-  cacheElements (elementSelector) {
+  cacheElements(elementSelector) {
     if (typeof elementSelector === 'string') {
       this.element = document.querySelector(elementSelector)
     } else {
       this.element = elementSelector
     }
 
-    this.postcodeLookupField = this.element.querySelector('.c-form-control--PostcodeLookup')
-    this.postcodeLookupButton = this.element.querySelector('.postcode-lookup-button')
+    this.postcodeLookupField = this.element.querySelector(
+      '.c-form-control--PostcodeLookup'
+    )
+    this.postcodeLookupButton = this.element.querySelector(
+      '.postcode-lookup-button'
+    )
     this.address1Field = this.element.querySelector('[name*="address_1"]')
     this.address2Field = this.element.querySelector('[name*="address_2"]')
     this.addressTownField = this.element.querySelector('[name*="address_town"]')
-    this.addressCountyField = this.element.querySelector('[name*="address_county"]')
-    this.addressPostcodeField = this.element.querySelector('[name*="address_postcode"]')
-    this.addressCountryField = this.element.querySelector('[name*="address_country"]')
-    this.addressSuggestionsDropdown = this.element.querySelector('.c-form-control--PostcodeLookupResult')
+    this.addressCountyField = this.element.querySelector(
+      '[name*="address_county"]'
+    )
+    this.addressPostcodeField = this.element.querySelector(
+      '[name*="address_postcode"]'
+    )
+    this.addressCountryField = this.element.querySelector(
+      '[name*="address_country"]'
+    )
+    this.addressSuggestionsDropdown = this.element.querySelector(
+      '.c-form-control--PostcodeLookupResult'
+    )
   }
 
-  addEvents () {
-    this.postcodeLookupButton.addEventListener('click', this.pressLookupButton.bind(this), true)
-    this.addressSuggestionsDropdown.addEventListener('change', this.selectAddressSuggestion.bind(this), true)
+  addEvents() {
+    this.postcodeLookupButton.addEventListener(
+      'click',
+      this.pressLookupButton.bind(this),
+      true
+    )
+    this.addressSuggestionsDropdown.addEventListener(
+      'change',
+      this.selectAddressSuggestion.bind(this),
+      true
+    )
   }
 
-  pressLookupButton (event) {
+  pressLookupButton(event) {
     const postcode = this.postcodeLookupField.value
-    axios.get(`/api/postcodelookup/${postcode}`)
-      .then((response) => {
-        this.suggestions = response.data
-        var html = '<option value="">Select an address</option>'
-        for (const index in this.suggestions) {
-          const suggestion = this.suggestions[index]
-          html += `<option value="${index}">${suggestion.address1}</option>`
-        }
-        this.addressSuggestionsDropdown.innerHTML = html
-      })
+    axios.get(`/api/postcodelookup/${postcode}`).then((response) => {
+      this.suggestions = response.data
+      var html = '<option value="">Select an address</option>'
+      for (const index in this.suggestions) {
+        const suggestion = this.suggestions[index]
+        html += `<option value="${index}">${suggestion.address1}</option>`
+      }
+      this.addressSuggestionsDropdown.innerHTML = html
+    })
   }
 
-  selectAddressSuggestion (event) {
+  selectAddressSuggestion(event) {
     if (event.target.value === '') {
       return
     }

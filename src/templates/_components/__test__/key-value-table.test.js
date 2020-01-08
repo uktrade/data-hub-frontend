@@ -1,4 +1,7 @@
-const { renderComponentToDom, normaliseHtml } = require('../../../../test/unit/component-helper')
+const {
+  renderComponentToDom,
+  normaliseHtml,
+} = require('../../../../test/unit/component-helper')
 
 describe('Key/value table component', () => {
   context('when no items are given', () => {
@@ -38,8 +41,12 @@ describe('Key/value table component', () => {
 
     it('should render a link that opens in a new window', () => {
       const link = this.rows[0].querySelector('td a')
-      expect(link.getAttribute('href')).to.equal('https://beta.companieshouse.gov.uk/company/123456')
-      expect(link.getAttribute('aria-labelledby')).to.equal('external-link-label')
+      expect(link.getAttribute('href')).to.equal(
+        'https://beta.companieshouse.gov.uk/company/123456'
+      )
+      expect(link.getAttribute('aria-labelledby')).to.equal(
+        'external-link-label'
+      )
       expect(link.getAttribute('target')).to.equal('_blank')
       expect(link.textContent).to.equal('View on Companies House website')
     })
@@ -101,7 +108,9 @@ describe('Key/value table component', () => {
     })
 
     it('should render the formatted value', () => {
-      expect(this.rows[0].querySelector('td').textContent).to.equal('10 October 2018')
+      expect(this.rows[0].querySelector('td').textContent).to.equal(
+        '10 October 2018'
+      )
     })
   })
 
@@ -161,8 +170,12 @@ describe('Key/value table component', () => {
     it('should render details container', () => {
       const detailsContainer = this.rows[0].querySelector('.table__details')
 
-      expect(detailsContainer.querySelector('.table__details-name').textContent).to.equal('This is an estimated number')
-      expect(detailsContainer.querySelector('.table__details-content').textContent).to.exist
+      expect(
+        detailsContainer.querySelector('.table__details-name').textContent
+      ).to.equal('This is an estimated number')
+      expect(
+        detailsContainer.querySelector('.table__details-content').textContent
+      ).to.exist
     })
   })
 
@@ -198,7 +211,9 @@ describe('Key/value table component', () => {
     })
 
     it('should render the formatted value', () => {
-      expect(this.rows[0].querySelector('td').textContent).to.equal('line 1, town, postcode, country')
+      expect(this.rows[0].querySelector('td').textContent).to.equal(
+        'line 1, town, postcode, country'
+      )
     })
   })
 
@@ -225,7 +240,9 @@ describe('Key/value table component', () => {
     })
 
     it('should render the error message', () => {
-      expect(this.rows[0].querySelector('td span.c-message--error').textContent).to.equal('Error message')
+      expect(
+        this.rows[0].querySelector('td span.c-message--error').textContent
+      ).to.equal('Error message')
     })
   })
 
@@ -236,15 +253,15 @@ describe('Key/value table component', () => {
           'Label 1': {
             name: 'Paragraph',
             type: 'paragraph',
-            value: [{
-              type: 'link',
-              value:
-                {
+            value: [
+              {
+                type: 'link',
+                value: {
                   url: 'https://world-is-a-stage',
                   name: 'https://world-is-a-stage',
                 },
-            },
-            { type: 'paragraph', value: 'and we are the actors' },
+              },
+              { type: 'paragraph', value: 'and we are the actors' },
             ],
           },
         },
@@ -262,35 +279,44 @@ describe('Key/value table component', () => {
     })
 
     it('should render the paragraph', () => {
-      expect(normaliseHtml(this.rows[0].querySelector('td').textContent)).to.equal(normaliseHtml('\n         https://world-is-a-stage and we\n          are the actors\n      '))
+      expect(
+        normaliseHtml(this.rows[0].querySelector('td').textContent)
+      ).to.equal(
+        normaliseHtml(
+          '\n         https://world-is-a-stage and we\n          are the actors\n      '
+        )
+      )
     })
   })
 
-  context('when there is one item and the data is an object with a name', () => {
-    beforeEach(() => {
-      const component = renderComponentToDom('key-value-table', {
-        items: {
-          'Label 1': {
-            name: 'name',
+  context(
+    'when there is one item and the data is an object with a name',
+    () => {
+      beforeEach(() => {
+        const component = renderComponentToDom('key-value-table', {
+          items: {
+            'Label 1': {
+              name: 'name',
+            },
           },
-        },
+        })
+
+        this.rows = component.querySelectorAll('tr')
       })
 
-      this.rows = component.querySelectorAll('tr')
-    })
+      it('should render one row', () => {
+        expect(this.rows.length).to.equal(1)
+      })
 
-    it('should render one row', () => {
-      expect(this.rows.length).to.equal(1)
-    })
+      it('should render a label', () => {
+        expect(this.rows[0].querySelector('th').textContent).to.equal('Label 1')
+      })
 
-    it('should render a label', () => {
-      expect(this.rows[0].querySelector('th').textContent).to.equal('Label 1')
-    })
-
-    it('should render the name', () => {
-      expect(this.rows[0].querySelector('td').textContent).to.equal('name')
-    })
-  })
+      it('should render the name', () => {
+        expect(this.rows[0].querySelector('td').textContent).to.equal('name')
+      })
+    }
+  )
 
   context('when there is one item and the data is a string', () => {
     beforeEach(() => {
@@ -410,8 +436,12 @@ describe('Key/value table component', () => {
 
     it('should render a link that opens in a new window', () => {
       const link = this.rows[0].querySelector('td a')
-      expect(link.getAttribute('href')).to.equal('https://beta.companieshouse.gov.uk/company/123456')
-      expect(link.getAttribute('aria-labelledby')).to.equal('external-link-label')
+      expect(link.getAttribute('href')).to.equal(
+        'https://beta.companieshouse.gov.uk/company/123456'
+      )
+      expect(link.getAttribute('aria-labelledby')).to.equal(
+        'external-link-label'
+      )
       expect(link.getAttribute('target')).to.equal('_blank')
       expect(link.textContent).to.equal('View on Companies House website')
     })
@@ -427,7 +457,9 @@ describe('Key/value table component', () => {
     })
 
     it('should render the date formatted value', () => {
-      expect(this.rows[2].querySelector('td').textContent).to.equal('10 October 2018')
+      expect(this.rows[2].querySelector('td').textContent).to.equal(
+        '10 October 2018'
+      )
     })
 
     it('should render the number formatted value', () => {
@@ -437,8 +469,12 @@ describe('Key/value table component', () => {
     it('should render details container', () => {
       const detailsContainer = this.rows[4].querySelector('.table__details')
 
-      expect(detailsContainer.querySelector('.table__details-name').textContent).to.equal('This is an estimated number')
-      expect(detailsContainer.querySelector('.table__details-content').textContent).to.exist
+      expect(
+        detailsContainer.querySelector('.table__details-name').textContent
+      ).to.equal('This is an estimated number')
+      expect(
+        detailsContainer.querySelector('.table__details-content').textContent
+      ).to.exist
     })
 
     it('should render the formatted value', () => {

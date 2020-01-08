@@ -4,7 +4,7 @@
  * Listens for a change on one form element and mirrors the value to another
  */
 const MirrorValue = {
-  init (wrapper = document) {
+  init(wrapper = document) {
     const sourceField = wrapper.querySelector('.js-MirrorValue')
 
     if (sourceField) {

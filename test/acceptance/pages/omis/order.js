@@ -1,14 +1,16 @@
 const { order: orderFixtures } = require('../../fixtures')
 
 module.exports = {
-  url: function companyFixtureUrl (order) {
+  url: function companyFixtureUrl(order) {
     const fixture = orderFixtures[order]
     const orderId = fixture ? fixture.id : orderFixtures.draft.id
 
     return `${process.env.QA_HOST}/omis/${orderId}`
   },
   props: {
-    urlMatch: new RegExp(/omis\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/work-order/),
+    urlMatch: new RegExp(
+      /omis\/([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\/work-order/
+    ),
   },
   elements: {},
   sections: {
@@ -16,15 +18,19 @@ module.exports = {
       selector: '.c-local-header',
       elements: {
         heading: '.c-local-header__heading',
-        status: '.c-meta-list:nth-of-type(2) .c-meta-list__item:nth-of-type(3) .c-meta-list__item-value',
+        status:
+          '.c-meta-list:nth-of-type(2) .c-meta-list__item:nth-of-type(3) .c-meta-list__item-value',
       },
       sections: {
         metadata: {
           selector: '.c-meta-list:first-of-type',
           elements: {
-            company: '.c-meta-list__item:nth-of-type(1) .c-meta-list__item-value',
-            market: '.c-meta-list__item:nth-of-type(2) .c-meta-list__item-value',
-            ukRegion: '.c-meta-list__item:nth-of-type(3) .c-meta-list__item-value',
+            company:
+              '.c-meta-list__item:nth-of-type(1) .c-meta-list__item-value',
+            market:
+              '.c-meta-list__item:nth-of-type(2) .c-meta-list__item-value',
+            ukRegion:
+              '.c-meta-list__item:nth-of-type(3) .c-meta-list__item-value',
           },
         },
       },

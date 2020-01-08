@@ -9,20 +9,15 @@ const { ARCHIVED_REASON } = require('../constants')
 const { joinPaths } = require('../../../lib/path')
 const { getReturnLink } = require('../helpers')
 
-function renderCompletePage (req, res) {
-  const {
-    interactions,
-    interaction,
-    userAgent,
-    errors,
-  } = res.locals
+function renderCompletePage(req, res) {
+  const { interactions, interaction, userAgent, errors } = res.locals
 
   const breadcrumbs = get(interactions, 'breadcrumbs', [])
   breadcrumbs.forEach(({ text, href }) => res.breadcrumb(text, href))
 
   const form = meetingHappenForm({
     userAgent,
-    returnLink: joinPaths([ getReturnLink(interactions), interaction.id ]),
+    returnLink: joinPaths([getReturnLink(interactions), interaction.id]),
   })
 
   return res
@@ -33,17 +28,20 @@ function renderCompletePage (req, res) {
     })
 }
 
-async function postComplete (req, res, next) {
+async function postComplete(req, res, next) {
   if (!req.body.meeting_happen) {
-    set(res.locals, 'errors.meeting_happen', [ ERROR.SELECT_AN_OPTION ])
+    set(res.locals, 'errors.meeting_happen', [ERROR.SELECT_AN_OPTION])
   }
 
   if (req.body.meeting_happen === 'false' && !req.body.archived_reason) {
-    set(res.locals, 'errors.archived_reason', [ ERROR.SELECT_AN_OPTION ])
+    set(res.locals, 'errors.archived_reason', [ERROR.SELECT_AN_OPTION])
   }
 
-  if (req.body.archived_reason === ARCHIVED_REASON.RESCHEDULED && !req.body.date) {
-    set(res.locals, 'errors.date', [ ERROR.ENTER_A_DATE ])
+  if (
+    req.body.archived_reason === ARCHIVED_REASON.RESCHEDULED &&
+    !req.body.date
+  ) {
+    set(res.locals, 'errors.date', [ERROR.ENTER_A_DATE])
   }
 
   if (!isEmpty(res.locals.errors)) {
@@ -62,7 +60,11 @@ async function postComplete (req, res, next) {
           date: req.body.date,
         })
       } else {
-        await archiveInteraction(token, interaction.id, req.body.archived_reason)
+        await archiveInteraction(
+          token,
+          interaction.id,
+          req.body.archived_reason
+        )
       }
 
       req.flash('success', 'The interaction has been updated')
@@ -73,7 +75,7 @@ async function postComplete (req, res, next) {
   }
 
   if (req.body.meeting_happen === 'true') {
-    const path = joinPaths([ companyInteractionsPath, interaction.id, 'create' ])
+    const path = joinPaths([companyInteractionsPath, interaction.id, 'create'])
     return res.redirect(path)
   }
 }

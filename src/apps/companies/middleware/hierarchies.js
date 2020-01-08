@@ -2,11 +2,11 @@ const { get } = require('lodash')
 
 const { updateCompany } = require('../repos')
 
-function transformErrorMessage (error) {
+function transformErrorMessage(error) {
   return get(error, 'global_headquarters', ['There has been an error'])[0]
 }
 
-async function setGlobalHQ (req, res, next) {
+async function setGlobalHQ(req, res, next) {
   const token = req.session.token
   const companyId = req.params.companyId
   const globalHqId = req.params.globalHqId
@@ -27,7 +27,7 @@ async function setGlobalHQ (req, res, next) {
   }
 }
 
-async function removeGlobalHQ (req, res, next) {
+async function removeGlobalHQ(req, res, next) {
   const token = req.session.token
   const companyId = req.params.companyId
   const body = { global_headquarters: null }
@@ -47,7 +47,7 @@ async function removeGlobalHQ (req, res, next) {
   }
 }
 
-async function addSubsidiary (req, res, next) {
+async function addSubsidiary(req, res, next) {
   const token = req.session.token
   const { companyId, subsidiaryCompanyId } = req.params
   const body = { global_headquarters: companyId }

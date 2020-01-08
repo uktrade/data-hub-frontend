@@ -6,16 +6,19 @@ const { Order } = require('../../../models')
 const metadataRepo = require('../../../../../lib/metadata')
 
 class CancelOrderController extends EditController {
-  async configure (req, res, next) {
+  async configure(req, res, next) {
     const orderStatus = get(res.locals, 'order.status')
 
     if (!['draft', 'quote_awaiting_acceptance'].includes(orderStatus)) {
       return res.redirect(`/omis/${res.locals.order.id}`)
     }
 
-    const filteredReasons = filter(metadataRepo.orderCancellationReasons, (reason) => {
-      return !reason.disabled_on
-    })
+    const filteredReasons = filter(
+      metadataRepo.orderCancellationReasons,
+      (reason) => {
+        return !reason.disabled_on
+      }
+    )
 
     req.form.options = merge({}, req.form.options, {
       disableFormAction: false,
@@ -32,7 +35,7 @@ class CancelOrderController extends EditController {
     super.configure(req, res, next)
   }
 
-  async saveValues (req, res, next) {
+  async saveValues(req, res, next) {
     const token = req.session.token
     const orderId = get(res.locals, 'order.id')
     const data = req.form.values

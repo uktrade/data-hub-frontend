@@ -4,7 +4,7 @@ const DEFAULT_COLLECTION_QUERY = {
 
 const GLOBAL_NAV_ITEM = {}
 
-const APP_PERMISSIONS = [ GLOBAL_NAV_ITEM ]
+const APP_PERMISSIONS = [GLOBAL_NAV_ITEM]
 
 const PROPOSITION_STATE = {
   ongoing: 'Ongoing',

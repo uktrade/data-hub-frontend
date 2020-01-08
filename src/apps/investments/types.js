@@ -11,7 +11,8 @@ const fdiTypes = {
   CAPITAL_ONLY: 'Capital only',
   JOINT_VENTURE: 'Joint venture',
   CREATION_OF_NEW_SITE_OR_ACTIVITY: 'Creation of new site or activity',
-  EXPANSION_OF_EXISTING_SITE_OR_ACTIVITY: 'Expansion of existing site or activity',
+  EXPANSION_OF_EXISTING_SITE_OR_ACTIVITY:
+    'Expansion of existing site or activity',
 }
 
 module.exports = {

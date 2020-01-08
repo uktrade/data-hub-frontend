@@ -4,20 +4,26 @@ const { getOptions } = require('../../../../../lib/options')
 const { EditController } = require('../../../controllers')
 
 class EditBillingAddressController extends EditController {
-  async configure (req, res, next) {
+  async configure(req, res, next) {
     const countries = await getOptions(req.session.token, 'country')
     req.form.options.fields.billing_address_country.options = countries
 
     if (req.form.options.disableFormAction) {
-      req.form.options.disableFormAction = !get(res.locals, 'order.canEditInvoiceDetails')
+      req.form.options.disableFormAction = !get(
+        res.locals,
+        'order.canEditInvoiceDetails'
+      )
     }
 
     super.configure(req, res, next)
   }
 
-  successHandler (req, res) {
+  successHandler(req, res) {
     const newBillingCountry = get(req, 'form.values.billing_address_country')
-    const oldBillingCountry = get(res.locals, 'order.billing_address_country.id')
+    const oldBillingCountry = get(
+      res.locals,
+      'order.billing_address_country.id'
+    )
     const hasBillingCountryChanged = newBillingCountry !== oldBillingCountry
 
     if (newBillingCountry && oldBillingCountry && hasBillingCountryChanged) {
@@ -28,7 +34,7 @@ class EditBillingAddressController extends EditController {
     super.successHandler(req, res)
   }
 
-  nextCondition (req, res, condition) {
+  nextCondition(req, res, condition) {
     return req.hasChanged
   }
 }

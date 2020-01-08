@@ -2,7 +2,7 @@ const { castArray } = require('lodash')
 
 const { getAdviser } = require('../adviser/repos')
 
-async function adviserLookup (req, res, next) {
+async function adviserLookup(req, res, next) {
   try {
     const token = req.session.token
     const adviserParam = req.query.adviser

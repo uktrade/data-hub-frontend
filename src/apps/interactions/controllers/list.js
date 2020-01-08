@@ -24,7 +24,7 @@ const exportOptions = {
   entityName: 'interaction',
 }
 
-const filterServiceNames = services => {
+const filterServiceNames = (services) => {
   if (!services) return
 
   const excludedServiceStrings = [
@@ -35,7 +35,7 @@ const filterServiceNames = services => {
   ]
 
   const filteredServiceNames = services
-    .map(service => {
+    .map((service) => {
       const splitServiceName = service.label.split(' : ')
       const name =
         splitServiceName[1] &&
@@ -44,7 +44,7 @@ const filterServiceNames = services => {
           : service.label
       return { ...service, label: name }
     })
-    .sort(function (a, b) {
+    .sort(function(a, b) {
       const textA = a.label
       const textB = b.label
 
@@ -54,7 +54,7 @@ const filterServiceNames = services => {
   return filteredServiceNames
 }
 
-async function getInteractionOptions (token, req, res) {
+async function getInteractionOptions(token, req, res) {
   if (req.xhr && get(req.session, 'interactions.options')) {
     return req.session.interactions.options
   }
@@ -77,7 +77,7 @@ async function getInteractionOptions (token, req, res) {
   const currentAdvisers =
     get(res.locals, 'interaction.dit_participants') &&
     res.locals.interaction.dit_participants.map(
-      participant => participant.adviser && participant.adviser.id
+      (participant) => participant.adviser && participant.adviser.id
     )
 
   const advisers = await getAdvisers(token)
@@ -105,7 +105,7 @@ async function getInteractionOptions (token, req, res) {
   return interactionOptions
 }
 
-async function renderInteractionList (req, res, next) {
+async function renderInteractionList(req, res, next) {
   try {
     const { token, user } = req.session
     const { id: currentAdviserId, permissions } = user
@@ -146,7 +146,7 @@ async function renderInteractionList (req, res, next) {
   }
 }
 
-function renderInteractionsForEntity (req, res, next) {
+function renderInteractionsForEntity(req, res, next) {
   try {
     const {
       view,
@@ -157,13 +157,13 @@ function renderInteractionsForEntity (req, res, next) {
     } = res.locals.interactions
     const actionButtons = canAdd
       ? [
-        {
-          label: 'Add interaction',
-          url: `${returnLink}create${
-            createKind ? `/${theme}/${createKind}` : ''
-          }`,
-        },
-      ]
+          {
+            label: 'Add interaction',
+            url: `${returnLink}create${
+              createKind ? `/${theme}/${createKind}` : ''
+            }`,
+          },
+        ]
       : undefined
 
     res.breadcrumb('Interactions').render(view, {

@@ -21,9 +21,8 @@ module.exports = {
   },
   commands: [
     {
-      getAddressInputValues (postcode, stateStore, suggestionsElem, callback) {
-        this
-          .setValue(`@${get(stateStore, 'postcode')}`, postcode)
+      getAddressInputValues(postcode, stateStore, suggestionsElem, callback) {
+        this.setValue(`@${get(stateStore, 'postcode')}`, postcode)
           .click('@postCodeLookupButton')
           .wait() // wait for xhr to come back for postcode lookup
           .waitForElementPresent(suggestionsElem)
@@ -38,30 +37,39 @@ module.exports = {
             // record information that has come from postcode lookup
             // select elements
             forEach(pick(stateStore, ['country']), (value, key) => {
-              promises.push(new Promise((resolve) => {
-                this.getValue(`@${value}`, (option) => {
-                  this.getText(`#field-address_country option[value="${option.value.trim()}"]`, (optionText) => {
-                    set(stateStore, key, optionText.value.trim())
-                    resolve()
+              promises.push(
+                new Promise((resolve) => {
+                  this.getValue(`@${value}`, (option) => {
+                    this.getText(
+                      `#field-address_country option[value="${option.value.trim()}"]`,
+                      (optionText) => {
+                        set(stateStore, key, optionText.value.trim())
+                        resolve()
+                      }
+                    )
                   })
                 })
-              }))
+              )
             })
             // text inputs
-            forEach(pick(stateStore, ['address1', 'address2', 'county', 'town']), (value, key) => {
-              promises.push(new Promise((resolve) => {
-                this.getValue(`@${value}`, (textInput) => {
-                  set(stateStore, key, textInput.value.trim())
-                  resolve()
-                })
-              }))
-            })
+            forEach(
+              pick(stateStore, ['address1', 'address2', 'county', 'town']),
+              (value, key) => {
+                promises.push(
+                  new Promise((resolve) => {
+                    this.getValue(`@${value}`, (textInput) => {
+                      set(stateStore, key, textInput.value.trim())
+                      resolve()
+                    })
+                  })
+                )
+              }
+            )
 
-            Promise.all(promises)
-              .then(() => {
-                callback(assign({}, stateStore, { postcode }))
-                done()
-              })
+            Promise.all(promises).then(() => {
+              callback(assign({}, stateStore, { postcode }))
+              done()
+            })
           })
       },
     },

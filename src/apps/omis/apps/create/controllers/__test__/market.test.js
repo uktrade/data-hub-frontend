@@ -37,7 +37,9 @@ describe('OMIS create market controller', () => {
       })
 
       it('should set list of markets dynamically', () => {
-        expect(this.reqMock.form.options.fields.primary_market.options).to.deep.equal([
+        expect(
+          this.reqMock.form.options.fields.primary_market.options
+        ).to.deep.equal([
           { value: '8888', label: 'Germany' },
           { value: '9999', label: 'United Kingdom' },
         ])
@@ -45,7 +47,11 @@ describe('OMIS create market controller', () => {
 
       it('should call parent configure method', () => {
         expect(FormController.prototype.configure).to.be.calledOnce
-        expect(FormController.prototype.configure).to.be.calledWith(this.reqMock, globalRes, this.nextSpy)
+        expect(FormController.prototype.configure).to.be.calledWith(
+          this.reqMock,
+          globalRes,
+          this.nextSpy
+        )
       })
     })
 
@@ -65,7 +71,9 @@ describe('OMIS create market controller', () => {
 
         expect(this.nextSpy).to.be.calledOnce
         expect(errorArgument instanceof Error).to.be.true
-        expect(errorArgument.message).to.equal(`Error: ${this.errorMessageMock}`)
+        expect(errorArgument.message).to.equal(
+          `Error: ${this.errorMessageMock}`
+        )
       })
     })
   })

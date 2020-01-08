@@ -1,6 +1,4 @@
-const {
-  transformToDnbCompanyInvestigationApi,
-} = require('../transformers')
+const { transformToDnbCompanyInvestigationApi } = require('../transformers')
 
 describe('Companies add company transformers', () => {
   describe('#transformToDnbCompanyInvestigationApi', () => {

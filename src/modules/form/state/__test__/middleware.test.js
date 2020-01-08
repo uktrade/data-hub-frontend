@@ -40,137 +40,146 @@ describe('Form state middleware', () => {
       })
     })
 
-    context('when steps 1 and 3 have been completed and then rendering step 5', () => {
-      beforeEach(() => {
-        this.req = {
-          session: {
-            'multi-step': {
-              '/base/step-1': {
-                steps: {
-                  '/step-1': {
-                    data: {
-                      selectedAtStep1: 'step-3-value',
+    context(
+      'when steps 1 and 3 have been completed and then rendering step 5',
+      () => {
+        beforeEach(() => {
+          this.req = {
+            session: {
+              'multi-step': {
+                '/base/step-1': {
+                  steps: {
+                    '/step-1': {
+                      data: {
+                        selectedAtStep1: 'step-3-value',
+                      },
+                      completed: true,
                     },
-                    completed: true,
-                  },
-                  '/step-3': {
-                    data: {
-                      selectedAtStep3: 'step-5-value',
-                    },
-                    completed: true,
-                  },
-                },
-              },
-            },
-          },
-          baseUrl: '/base',
-        }
-        this.res = {
-          locals: {
-            journey: {
-              steps,
-              currentStepId: 4,
-              key: '/base/step-1',
-            },
-          },
-          redirect: sinon.spy(),
-        }
-        this.nextSpy = sinon.spy()
-
-        validateState(this.req, this.res, this.nextSpy)
-      })
-
-      it('should call next once', () => {
-        expect(this.nextSpy).to.be.calledOnce
-      })
-
-      it('should not redirect', () => {
-        expect(this.res.redirect).to.not.be.called
-      })
-    })
-
-    context('when step 3 has not been completed and then rendering step 5', () => {
-      beforeEach(() => {
-        this.req = {
-          session: {
-            'multi-step': {
-              '/base/step-1': {
-                steps: {
-                  '/step-1': {
-                    data: {
-                      selectedAtStep1: 'step-3-value',
-                    },
-                    completed: true,
-                  },
-                  '/step-3': {
-                    data: {
-                      selectedAtStep3: 'step-5-value',
+                    '/step-3': {
+                      data: {
+                        selectedAtStep3: 'step-5-value',
+                      },
+                      completed: true,
                     },
                   },
                 },
               },
             },
-          },
-          baseUrl: '/base',
-        }
-        this.res = {
-          locals: {
-            journey: {
-              steps,
-              currentStepId: 4,
-              key: '/base/step-1',
+            baseUrl: '/base',
+          }
+          this.res = {
+            locals: {
+              journey: {
+                steps,
+                currentStepId: 4,
+                key: '/base/step-1',
+              },
             },
-          },
-          redirect: sinon.spy(),
-        }
-        this.nextSpy = sinon.spy()
+            redirect: sinon.spy(),
+          }
+          this.nextSpy = sinon.spy()
 
-        validateState(this.req, this.res, this.nextSpy)
-      })
+          validateState(this.req, this.res, this.nextSpy)
+        })
 
-      it('should not call next', () => {
-        expect(this.nextSpy).to.not.be.called
-      })
+        it('should call next once', () => {
+          expect(this.nextSpy).to.be.calledOnce
+        })
 
-      it('should redirect', () => {
-        expect(this.res.redirect).to.be.calledOnce
-        expect(this.res.redirect).to.be.calledWith('/base/step-1')
-      })
-    })
+        it('should not redirect', () => {
+          expect(this.res.redirect).to.not.be.called
+        })
+      }
+    )
 
-    context('when starting with step 2 which does not require previously completed steps', () => {
-      beforeEach(() => {
-        this.req = {
-          session: {
-            'multi-step': {
-              '/base/step-1': {},
+    context(
+      'when step 3 has not been completed and then rendering step 5',
+      () => {
+        beforeEach(() => {
+          this.req = {
+            session: {
+              'multi-step': {
+                '/base/step-1': {
+                  steps: {
+                    '/step-1': {
+                      data: {
+                        selectedAtStep1: 'step-3-value',
+                      },
+                      completed: true,
+                    },
+                    '/step-3': {
+                      data: {
+                        selectedAtStep3: 'step-5-value',
+                      },
+                    },
+                  },
+                },
+              },
             },
-          },
-          baseUrl: '/base',
-        }
-        this.res = {
-          locals: {
-            journey: {
-              steps,
-              currentStepId: 1,
-              key: '/base/step-1',
+            baseUrl: '/base',
+          }
+          this.res = {
+            locals: {
+              journey: {
+                steps,
+                currentStepId: 4,
+                key: '/base/step-1',
+              },
             },
-          },
-          redirect: sinon.spy(),
-        }
-        this.nextSpy = sinon.spy()
+            redirect: sinon.spy(),
+          }
+          this.nextSpy = sinon.spy()
 
-        validateState(this.req, this.res, this.nextSpy)
-      })
+          validateState(this.req, this.res, this.nextSpy)
+        })
 
-      it('should call next once', () => {
-        expect(this.nextSpy).to.be.calledOnce
-      })
+        it('should not call next', () => {
+          expect(this.nextSpy).to.not.be.called
+        })
 
-      it('should not redirect', () => {
-        expect(this.res.redirect).to.not.be.called
-      })
-    })
+        it('should redirect', () => {
+          expect(this.res.redirect).to.be.calledOnce
+          expect(this.res.redirect).to.be.calledWith('/base/step-1')
+        })
+      }
+    )
+
+    context(
+      'when starting with step 2 which does not require previously completed steps',
+      () => {
+        beforeEach(() => {
+          this.req = {
+            session: {
+              'multi-step': {
+                '/base/step-1': {},
+              },
+            },
+            baseUrl: '/base',
+          }
+          this.res = {
+            locals: {
+              journey: {
+                steps,
+                currentStepId: 1,
+                key: '/base/step-1',
+              },
+            },
+            redirect: sinon.spy(),
+          }
+          this.nextSpy = sinon.spy()
+
+          validateState(this.req, this.res, this.nextSpy)
+        })
+
+        it('should call next once', () => {
+          expect(this.nextSpy).to.be.calledOnce
+        })
+
+        it('should not redirect', () => {
+          expect(this.res.redirect).to.not.be.called
+        })
+      }
+    )
   })
 
   describe('#updateStateData', () => {
@@ -253,9 +262,7 @@ describe('Form state middleware', () => {
                 data: {},
               },
             },
-            browseHistory: [
-              '/step-1',
-            ],
+            browseHistory: ['/step-1'],
           },
         },
       })
@@ -310,73 +317,73 @@ describe('Form state middleware', () => {
         })
       })
 
-      context('when rendering the template having browsed to subsequent steps', () => {
-        beforeEach(() => {
-          this.req = {
-            session: {
-              'multi-step': {
-                '/base/step-1': {
-                  steps: {
-                    '/step-1': {
-                      data: {
-                        selectedAtStep1: 'step-3-value',
+      context(
+        'when rendering the template having browsed to subsequent steps',
+        () => {
+          beforeEach(() => {
+            this.req = {
+              session: {
+                'multi-step': {
+                  '/base/step-1': {
+                    steps: {
+                      '/step-1': {
+                        data: {
+                          selectedAtStep1: 'step-3-value',
+                        },
+                        completed: true,
                       },
-                      completed: true,
-                    },
-                    '/step-3': {
-                      data: {
-                        selectedAtStep3: 'step-5-value',
+                      '/step-3': {
+                        data: {
+                          selectedAtStep3: 'step-5-value',
+                        },
+                        completed: true,
                       },
-                      completed: true,
                     },
+                    browseHistory: ['/step-1', '/step-3'],
                   },
-                  browseHistory: [
-                    '/step-1',
-                    '/step-3',
-                  ],
                 },
               },
-            },
-            baseUrl: '/base',
-            body: {
-              selectedAtStep1: 'step-3-value',
-            },
-          }
-          this.res = {
-            locals: {
-              journey: {
-                steps,
-                currentStep: steps[0],
-                currentStepId: 0,
-                key: '/base/step-1',
+              baseUrl: '/base',
+              body: {
+                selectedAtStep1: 'step-3-value',
               },
-            },
-            redirect: sinon.spy(),
-          }
-          this.nextSpy = sinon.spy()
+            }
+            this.res = {
+              locals: {
+                journey: {
+                  steps,
+                  currentStep: steps[0],
+                  currentStepId: 0,
+                  key: '/base/step-1',
+                },
+              },
+              redirect: sinon.spy(),
+            }
+            this.nextSpy = sinon.spy()
 
-          setFormDetails(this.req, this.res, this.nextSpy)
-        })
-
-        it('should set state on locals', () => {
-          expect(this.res.locals.form.state).to.deep.equal({
-            selectedAtStep1: 'step-3-value',
-            selectedAtStep3: 'step-5-value',
+            setFormDetails(this.req, this.res, this.nextSpy)
           })
-        })
 
-        it('should set the return link', () => {
-          expect(this.res.locals.form.returnLink).to.equal('/base')
-        })
+          it('should set state on locals', () => {
+            expect(this.res.locals.form.state).to.deep.equal({
+              selectedAtStep1: 'step-3-value',
+              selectedAtStep3: 'step-5-value',
+            })
+          })
 
-        it('should set the return text', () => {
-          expect(this.res.locals.form.returnText).to.equal('Cancel')
-        })
+          it('should set the return link', () => {
+            expect(this.res.locals.form.returnLink).to.equal('/base')
+          })
 
-        it('should call next once', () => {
-          expect(this.nextSpy).to.be.calledOnce
-        })
-      })
+          it('should set the return text', () => {
+            expect(this.res.locals.form.returnText).to.equal('Cancel')
+          })
+
+          it('should call next once', () => {
+            expect(this.nextSpy).to.be.calledOnce
+          })
+        }
+      )
     })
 
     context('when setting form details for subsequent steps', () => {
@@ -399,10 +406,7 @@ describe('Form state middleware', () => {
                     completed: true,
                   },
                 },
-                browseHistory: [
-                  '/step-1',
-                  '/step-3',
-                ],
+                browseHistory: ['/step-1', '/step-3'],
               },
             },
           },
@@ -503,17 +507,23 @@ describe('Form state middleware', () => {
         })
 
         it('should not remove state for step 1', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps['/step-1']
+          const actual = this.req.session['multi-step']['/base/step-1'].steps[
+            '/step-1'
+          ]
           expect(actual).to.exist
         })
 
         it('should remove state for step 3', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps['/step-3']
+          const actual = this.req.session['multi-step']['/base/step-1'].steps[
+            '/step-3'
+          ]
           expect(actual).to.be.undefined
         })
 
         it('should remove state for step 5', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps['/step-5']
+          const actual = this.req.session['multi-step']['/base/step-1'].steps[
+            '/step-5'
+          ]
           expect(actual).to.be.undefined
         })
 
@@ -540,17 +550,23 @@ describe('Form state middleware', () => {
         })
 
         it('should not remove state for step 1', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps['/step-1']
+          const actual = this.req.session['multi-step']['/base/step-1'].steps[
+            '/step-1'
+          ]
           expect(actual).to.exist
         })
 
         it('should not remove state for step 3', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps['/step-3']
+          const actual = this.req.session['multi-step']['/base/step-1'].steps[
+            '/step-3'
+          ]
           expect(actual).to.exist
         })
 
         it('should not remove state for step 5', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps['/step-5']
+          const actual = this.req.session['multi-step']['/base/step-1'].steps[
+            '/step-5'
+          ]
           expect(actual).to.exist
         })
 
@@ -560,89 +576,103 @@ describe('Form state middleware', () => {
         })
       })
 
-      context('when the current next path does not exist because this step has not been completed before', () => {
-        beforeEach(() => {
-          this.req = {
-            body: {
-              selectedAtStep3: 'step-5-value',
-            },
-            session: {
-              'multi-step': {
-                '/base/step-1': {
-                  steps: {
-                    '/step-1': {
-                      data: {
-                        selectedAtStep1: 'step-3-value',
-                        moreDataAtStep1: 'more',
+      context(
+        'when the current next path does not exist because this step has not been completed before',
+        () => {
+          beforeEach(() => {
+            this.req = {
+              body: {
+                selectedAtStep3: 'step-5-value',
+              },
+              session: {
+                'multi-step': {
+                  '/base/step-1': {
+                    steps: {
+                      '/step-1': {
+                        data: {
+                          selectedAtStep1: 'step-3-value',
+                          moreDataAtStep1: 'more',
+                        },
+                        completed: true,
+                        nextPath: '/step-3',
                       },
-                      completed: true,
-                      nextPath: '/step-3',
                     },
                   },
                 },
               },
-            },
-          }
-          this.res = {
-            locals: {
-              journey: {
-                key: '/base/step-1',
-                currentStep: steps[2],
+            }
+            this.res = {
+              locals: {
+                journey: {
+                  key: '/base/step-1',
+                  currentStep: steps[2],
+                },
               },
-            },
-          }
-          this.nextSpy = sinon.spy()
+            }
+            this.nextSpy = sinon.spy()
 
-          invalidateStateForChangedNextPath(this.req, this.res, this.nextSpy)
-        })
+            invalidateStateForChangedNextPath(this.req, this.res, this.nextSpy)
+          })
 
-        it('should not remove state for step 1', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps['/step-1']
-          expect(actual).to.exist
-        })
+          it('should not remove state for step 1', () => {
+            const actual = this.req.session['multi-step']['/base/step-1'].steps[
+              '/step-1'
+            ]
+            expect(actual).to.exist
+          })
 
-        it('should call next once', () => {
-          expect(this.nextSpy).to.be.calledWithExactly()
-          expect(this.nextSpy).to.have.been.calledOnce
-        })
-      })
+          it('should call next once', () => {
+            expect(this.nextSpy).to.be.calledWithExactly()
+            expect(this.nextSpy).to.have.been.calledOnce
+          })
+        }
+      )
 
-      context('when the next path returns undefined because invalid data was entered', () => {
-        beforeEach(() => {
-          this.req = buildReq({ selectedAtStep1: 'invalid-value' })
-          this.res = {
-            locals: {
-              journey: {
-                key: '/base/step-1',
-                currentStep: steps[0],
+      context(
+        'when the next path returns undefined because invalid data was entered',
+        () => {
+          beforeEach(() => {
+            this.req = buildReq({ selectedAtStep1: 'invalid-value' })
+            this.res = {
+              locals: {
+                journey: {
+                  key: '/base/step-1',
+                  currentStep: steps[0],
+                },
               },
-            },
-          }
-          this.nextSpy = sinon.spy()
+            }
+            this.nextSpy = sinon.spy()
 
-          invalidateStateForChangedNextPath(this.req, this.res, this.nextSpy)
-        })
+            invalidateStateForChangedNextPath(this.req, this.res, this.nextSpy)
+          })
 
-        it('should not remove state for step 1', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps['/step-1']
-          expect(actual).to.exist
-        })
+          it('should not remove state for step 1', () => {
+            const actual = this.req.session['multi-step']['/base/step-1'].steps[
+              '/step-1'
+            ]
+            expect(actual).to.exist
+          })
 
-        it('should not remove state for step 3', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps['/step-3']
-          expect(actual).to.exist
-        })
+          it('should not remove state for step 3', () => {
+            const actual = this.req.session['multi-step']['/base/step-1'].steps[
+              '/step-3'
+            ]
+            expect(actual).to.exist
+          })
 
-        it('should not remove state for step 5', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps['/step-5']
-          expect(actual).to.exist
-        })
+          it('should not remove state for step 5', () => {
+            const actual = this.req.session['multi-step']['/base/step-1'].steps[
+              '/step-5'
+            ]
+            expect(actual).to.exist
+          })
 
-        it('should call next once', () => {
-          expect(this.nextSpy).to.be.calledWithExactly()
-          expect(this.nextSpy).to.have.been.calledOnce
-        })
-      })
+          it('should call next once', () => {
+            expect(this.nextSpy).to.be.calledWithExactly()
+            expect(this.nextSpy).to.have.been.calledOnce
+          })
+        }
+      )
     })
 
     describe('#invalidateStateForDependentSteps', () => {
@@ -676,17 +706,23 @@ describe('Form state middleware', () => {
         })
 
         it('should not remove state for step 1', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps['/step-1']
+          const actual = this.req.session['multi-step']['/base/step-1'].steps[
+            '/step-1'
+          ]
           expect(actual).to.exist
         })
 
         it('should remove state for step 3', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps['/step-3']
+          const actual = this.req.session['multi-step']['/base/step-1'].steps[
+            '/step-3'
+          ]
           expect(actual).to.be.undefined
         })
 
         it('should not remove state for step 5', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps['/step-5']
+          const actual = this.req.session['multi-step']['/base/step-1'].steps[
+            '/step-5'
+          ]
           expect(actual).to.exist
         })
 
@@ -707,17 +743,23 @@ describe('Form state middleware', () => {
         })
 
         it('should not remove state for step 1', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps['/step-1']
+          const actual = this.req.session['multi-step']['/base/step-1'].steps[
+            '/step-1'
+          ]
           expect(actual).to.exist
         })
 
         it('should not remove state for step 3', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps['/step-3']
+          const actual = this.req.session['multi-step']['/base/step-1'].steps[
+            '/step-3'
+          ]
           expect(actual).to.exist
         })
 
         it('should not remove state for step 5', () => {
-          const actual = this.req.session['multi-step']['/base/step-1'].steps['/step-5']
+          const actual = this.req.session['multi-step']['/base/step-1'].steps[
+            '/step-5'
+          ]
           expect(actual).to.exist
         })
 

@@ -19,13 +19,13 @@ describe('XHR', () => {
     global.document = global.window.document
     global.document.createRange = () => {
       return {
-        createContextualFragment (data) {
+        createContextualFragment(data) {
           return new JSDOM(data).window.document
         },
       }
     }
     XHR = proxyquire('../../assets/javascripts/lib/xhr', {
-      'history': { createBrowserHistory: () => history },
+      history: { createBrowserHistory: () => history },
     })
   })
 
@@ -54,7 +54,9 @@ describe('XHR', () => {
 
   describe('#injectResponseInHtml', () => {
     beforeEach(() => {
-      XHR.injectResponseInHtml('<div data-xhr="1"><p>Updated 1</p></div><div data-xhr="2"><p>Updated 2</p></div>')
+      XHR.injectResponseInHtml(
+        '<div data-xhr="1"><p>Updated 1</p></div><div data-xhr="2"><p>Updated 2</p></div>'
+      )
     })
 
     it('should update container 1', () => {

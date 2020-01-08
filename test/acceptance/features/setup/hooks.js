@@ -1,5 +1,5 @@
 const { Before } = require('cucumber')
 
-Before(function () {
+Before(function() {
   this.resetState()
 })

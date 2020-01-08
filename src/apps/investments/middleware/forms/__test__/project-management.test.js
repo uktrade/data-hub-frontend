@@ -42,71 +42,94 @@ describe('Investment form middleware - project magement', () => {
         project_assurance_adviser: investmentData.project_assurance_adviser.id,
       }
 
-      this.controller.populateForm({
-        session: {
-          token: 'mock-token',
-        },
-      }, this.resMock, () => {
-        expect(this.resMock.locals.form.state).to.deep.equal(expectedFormState)
-        done()
-      })
-    })
-
-    it('should include labels for the form', (done) => {
-      this.controller.populateForm({
-        session: {
-          token: 'mock-token',
-        },
-      }, this.resMock, () => {
-        expect(this.resMock.locals.form.labels).to.deep.equal(projectManagementLabels.edit)
-        done()
-      })
-    })
-
-    context('when the investment data contains project management information', () => {
-      beforeEach(async () => {
-        this.reqMock = {
+      this.controller.populateForm(
+        {
           session: {
             token: 'mock-token',
           },
+        },
+        this.resMock,
+        () => {
+          expect(this.resMock.locals.form.state).to.deep.equal(
+            expectedFormState
+          )
+          done()
         }
-
-        this.resMock = {
-          locals: {
-            paths,
-            form: {},
-            investment: assign({}, investmentData, {
-              project_manager: { id: '4', name: 'Fred Smith' },
-              project_assurance_adviser: { id: '5', name: 'Jim Smith' },
-            }),
-          },
-        }
-
-        await this.controller.populateForm(this.reqMock, this.resMock, this.nextSpy)
-      })
-
-      it('includes all active adviser options for project manager', () => {
-        const expectedOptions = [
-          { label: 'Jeff Smith', value: '1' },
-          { label: 'John Smith', value: '2' },
-          { label: 'Zac Smith', value: '3' },
-          { label: 'Fred Smith', value: '4' },
-        ]
-
-        expect(this.resMock.locals.form.options.projectManagers).to.deep.equal(expectedOptions)
-      })
-
-      it('includes all active adviser options for project assurance advisor', () => {
-        const expectedOptions = [
-          { label: 'Jeff Smith', value: '1' },
-          { label: 'John Smith', value: '2' },
-          { label: 'Zac Smith', value: '3' },
-          { label: 'Jim Smith', value: '5' },
-        ]
-
-        expect(this.resMock.locals.form.options.projectAssuranceAdvisers).to.deep.equal(expectedOptions)
-      })
+      )
     })
+
+    it('should include labels for the form', (done) => {
+      this.controller.populateForm(
+        {
+          session: {
+            token: 'mock-token',
+          },
+        },
+        this.resMock,
+        () => {
+          expect(this.resMock.locals.form.labels).to.deep.equal(
+            projectManagementLabels.edit
+          )
+          done()
+        }
+      )
+    })
+
+    context(
+      'when the investment data contains project management information',
+      () => {
+        beforeEach(async () => {
+          this.reqMock = {
+            session: {
+              token: 'mock-token',
+            },
+          }
+
+          this.resMock = {
+            locals: {
+              paths,
+              form: {},
+              investment: assign({}, investmentData, {
+                project_manager: { id: '4', name: 'Fred Smith' },
+                project_assurance_adviser: { id: '5', name: 'Jim Smith' },
+              }),
+            },
+          }
+
+          await this.controller.populateForm(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
+        })
+
+        it('includes all active adviser options for project manager', () => {
+          const expectedOptions = [
+            { label: 'Jeff Smith', value: '1' },
+            { label: 'John Smith', value: '2' },
+            { label: 'Zac Smith', value: '3' },
+            { label: 'Fred Smith', value: '4' },
+          ]
+
+          expect(
+            this.resMock.locals.form.options.projectManagers
+          ).to.deep.equal(expectedOptions)
+        })
+
+        it('includes all active adviser options for project assurance advisor', () => {
+          const expectedOptions = [
+            { label: 'Jeff Smith', value: '1' },
+            { label: 'John Smith', value: '2' },
+            { label: 'Zac Smith', value: '3' },
+            { label: 'Jim Smith', value: '5' },
+          ]
+
+          expect(
+            this.resMock.locals.form.options.projectAssuranceAdvisers
+          ).to.deep.equal(expectedOptions)
+        })
+      }
+    )
   })
 
   describe('#handleFormpost', () => {
@@ -133,33 +156,45 @@ describe('Investment form middleware - project magement', () => {
       })
 
       it('updates the investment data', (done) => {
-        this.controller.handleFormPost({
-          session: {
-            token: 'mock-token',
+        this.controller.handleFormPost(
+          {
+            session: {
+              token: 'mock-token',
+            },
+            params: {
+              investmentId: investmentData.id,
+            },
+            body: this.body,
           },
-          params: {
-            investmentId: investmentData.id,
-          },
-          body: this.body,
-        }, this.resMock, () => {
-          expect(this.updateInvestmentStub).to.be.calledWith('mock-token', investmentData.id, this.body)
-          done()
-        })
+          this.resMock,
+          () => {
+            expect(this.updateInvestmentStub).to.be.calledWith(
+              'mock-token',
+              investmentData.id,
+              this.body
+            )
+            done()
+          }
+        )
       })
 
       it('continues onto the next middleware with no errors', (done) => {
-        this.controller.handleFormPost({
-          session: {
-            token: 'mock-token',
+        this.controller.handleFormPost(
+          {
+            session: {
+              token: 'mock-token',
+            },
+            params: {
+              investmentId: investmentData.id,
+            },
+            body: this.body,
           },
-          params: {
-            investmentId: investmentData.id,
-          },
-          body: this.body,
-        }, this.resMock, (error) => {
-          expect(error).to.equal(undefined)
-          done()
-        })
+          this.resMock,
+          (error) => {
+            expect(error).to.equal(undefined)
+            done()
+          }
+        )
       })
     })
 
@@ -188,20 +223,26 @@ describe('Investment form middleware - project magement', () => {
 
         this.updateInvestmentStub.rejects(this.error)
 
-        this.controller.handleFormPost({
-          session: {
-            token: 'mock-token',
+        this.controller.handleFormPost(
+          {
+            session: {
+              token: 'mock-token',
+            },
+            params: {
+              investmentId: investmentData.id,
+            },
+            body: this.body,
           },
-          params: {
-            investmentId: investmentData.id,
-          },
-          body: this.body,
-        }, this.resMock, (error) => {
-          expect(error).to.equal(undefined)
-          expect(this.resMock.locals.form.state).to.deep.equal(this.body)
-          expect(this.resMock.locals.form.errors).to.deep.equal(this.error.error)
-          done()
-        })
+          this.resMock,
+          (error) => {
+            expect(error).to.equal(undefined)
+            expect(this.resMock.locals.form.state).to.deep.equal(this.body)
+            expect(this.resMock.locals.form.errors).to.deep.equal(
+              this.error.error
+            )
+            done()
+          }
+        )
       })
 
       it('passes a none form error to next middleware', (done) => {
@@ -211,18 +252,22 @@ describe('Investment form middleware - project magement', () => {
 
         this.updateInvestmentStub.rejects(this.error)
 
-        this.controller.handleFormPost({
-          session: {
-            token: 'mock-token',
+        this.controller.handleFormPost(
+          {
+            session: {
+              token: 'mock-token',
+            },
+            params: {
+              investmentId: investmentData.id,
+            },
+            body: this.body,
           },
-          params: {
-            investmentId: investmentData.id,
-          },
-          body: this.body,
-        }, this.resMock, (error) => {
-          expect(error).to.deep.equal(this.error)
-          done()
-        })
+          this.resMock,
+          (error) => {
+            expect(error).to.deep.equal(this.error)
+            done()
+          }
+        )
       })
     })
   })

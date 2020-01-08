@@ -9,29 +9,32 @@ const Event = client.page.events.event()
 
 const inputDateFormat = process.env.NW_CIRCLECI ? 'MM/DD/YYYY' : 'DD/MM/YYYY'
 
-When(/^I populate the create event form$/, async function () {
-  await Event
-    .populateCreateEventForm({}, true, (event) => {
-      set(this.state, 'event', event)
-      set(this.state, 'event.heading', get(this.state, 'event.name'))
-    })
-    .wait() // wait for backend to sync
-    // This will select the organiser, workaround for typeahead.
+When(/^I populate the create event form$/, async function() {
+  await Event.populateCreateEventForm({}, true, (event) => {
+    set(this.state, 'event', event)
+    set(this.state, 'event.heading', get(this.state, 'event.name'))
+  }).wait() // wait for backend to sync
+  // This will select the organiser, workaround for typeahead.
   client.keys([client.Keys.ENTER])
 })
 
-When(/^I populate the create event form with United Kingdom and without a region$/, async function () {
-  await Event
-    .populateCreateEventForm({ address_country: 'United Kingdom' }, false, (event) => {
-      set(this.state, 'event', event)
-      set(this.state, 'event.heading', event.name)
-    })
-    .wait() // wait for backend to sync
+When(
+  /^I populate the create event form with United Kingdom and without a region$/,
+  async function() {
+    await Event.populateCreateEventForm(
+      { address_country: 'United Kingdom' },
+      false,
+      (event) => {
+        set(this.state, 'event', event)
+        set(this.state, 'event.heading', event.name)
+      }
+    ).wait() // wait for backend to sync
     // This will select the organiser, workaround for typeahead.
-  client.keys([client.Keys.ENTER])
-})
+    client.keys([client.Keys.ENTER])
+  }
+)
 
-Then(/^I can view the event$/, async function () {
+Then(/^I can view the event$/, async function() {
   const startDate = getDateFor({
     year: get(this.state, 'event.start_date_year'),
     month: get(this.state, 'event.start_date_month'),
@@ -51,16 +54,16 @@ Then(/^I can view the event$/, async function () {
     .assert.containsText('@eventStart', startDate)
     .assert.containsText('@eventEnd', endDate)
     .assert.containsText('@leadTeam', this.state.event.lead_team)
-    // TODO
-    // need to refactor vue component to make it testable, atm it is not
-    // .assert.containsText('@organiser', this.state.event.organiser)
+  // TODO
+  // need to refactor vue component to make it testable, atm it is not
+  // .assert.containsText('@organiser', this.state.event.organiser)
 })
 
-Then(/^I filter the events list by name$/, async function () {
+Then(/^I filter the events list by name$/, async function() {
   await EventList.section.filters
     .waitForElementPresent('@nameInput')
     .setValue('@nameInput', this.state.event.name)
-    .sendKeys('@nameInput', [ client.Keys.ENTER ])
+    .sendKeys('@nameInput', [client.Keys.ENTER])
     .wait() // wait for xhr
 
   await EventList.section.firstEventInList
@@ -68,11 +71,11 @@ Then(/^I filter the events list by name$/, async function () {
     .assert.containsText('@header', this.state.event.name)
 })
 
-Then('I filter the events list by name {string}', async function (name) {
+Then('I filter the events list by name {string}', async function(name) {
   await EventList.section.filters
     .waitForElementPresent('@nameInput')
     .setValue('@nameInput', name)
-    .sendKeys('@nameInput', [ client.Keys.ENTER ])
+    .sendKeys('@nameInput', [client.Keys.ENTER])
     .wait() // wait for xhr
 
   await EventList.section.firstEventInList
@@ -80,39 +83,40 @@ Then('I filter the events list by name {string}', async function (name) {
     .assert.containsText('@header', name)
 })
 
-Then(/^I filter the events list by organiser$/, async function () {
+Then(/^I filter the events list by organiser$/, async function() {
   await EventList.section.filters
     .waitForElementPresent('@organiser')
     .clickMultipleChoiceOption('organiser', this.state.event.organiser)
     .wait() // wait for xhr
 })
 
-Then(/^I filter the events list by event type/, async function () {
+Then(/^I filter the events list by event type/, async function() {
   await EventList.section.filters
     .waitForElementPresent('@eventType')
     .clickMultipleChoiceOption('event_type', this.state.event.event_type)
     .wait() // wait for xhr
 })
 
-Then(/^I filter the events list by start date/, async function () {
+Then(/^I filter the events list by start date/, async function() {
   const event = this.state.event
-  const startDate = getDateFor({
-    day: event.start_date_day,
-    month: event.start_date_month,
-    year: event.start_date_year,
-  }, inputDateFormat)
+  const startDate = getDateFor(
+    {
+      day: event.start_date_day,
+      month: event.start_date_month,
+      year: event.start_date_year,
+    },
+    inputDateFormat
+  )
 
   await EventList.section.filters
     .waitForElementPresent('@startDateAfter')
     .setValue('@startDateAfter', startDate)
-    .sendKeys('@startDateAfter', [ client.Keys.ENTER ])
+    .sendKeys('@startDateAfter', [client.Keys.ENTER])
     .wait() // wait for xhr
 })
 
-When(/^I sort the events list name A-Z$/, async function () {
-  await EventList
-    .click('select[name="sortby"] option[value="name:asc"]')
-    .wait()// wait for xhr
+When(/^I sort the events list name A-Z$/, async function() {
+  await EventList.click('select[name="sortby"] option[value="name:asc"]').wait() // wait for xhr
 
   await EventList.section.firstEventInList
     .waitForElementVisible('@header')

@@ -18,7 +18,7 @@ describe('Converting query String types', () => {
       convertQueryTypes(
         middlewareParameters.reqMock,
         middlewareParameters.resMock,
-        middlewareParameters.nextSpy,
+        middlewareParameters.nextSpy
       )
     })
 
@@ -47,7 +47,7 @@ describe('Converting query String types', () => {
       convertQueryTypes(
         middlewareParameters.reqMock,
         middlewareParameters.resMock,
-        middlewareParameters.nextSpy,
+        middlewareParameters.nextSpy
       )
     })
 

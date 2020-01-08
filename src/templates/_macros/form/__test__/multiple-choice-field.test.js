@@ -40,7 +40,10 @@ describe('MultipleChoice component', () => {
 
   describe('valid props', () => {
     beforeEach(() => {
-      this.component = macros.renderToDom('MultipleChoice', minimumProps).parentElement
+      this.component = macros.renderToDom(
+        'MultipleChoice',
+        minimumProps
+      ).parentElement
       this.options = this.component.querySelectorAll('.c-multiple-choice')
     })
 
@@ -49,13 +52,27 @@ describe('MultipleChoice component', () => {
     })
 
     it('should render correct output for first option', () => {
-      expect(this.options[0].querySelector('.c-multiple-choice__label-text').textContent).to.equal('Foo')
-      expect(this.options[0].querySelector('.c-multiple-choice__input').getAttribute('value')).to.equal('bar')
+      expect(
+        this.options[0].querySelector('.c-multiple-choice__label-text')
+          .textContent
+      ).to.equal('Foo')
+      expect(
+        this.options[0]
+          .querySelector('.c-multiple-choice__input')
+          .getAttribute('value')
+      ).to.equal('bar')
     })
 
     it('should render correct output for second option', () => {
-      expect(this.options[1].querySelector('.c-multiple-choice__label-text').textContent).to.equal('Fizz')
-      expect(this.options[1].querySelector('.c-multiple-choice__input').getAttribute('value')).to.equal('buzz')
+      expect(
+        this.options[1].querySelector('.c-multiple-choice__label-text')
+          .textContent
+      ).to.equal('Fizz')
+      expect(
+        this.options[1]
+          .querySelector('.c-multiple-choice__input')
+          .getAttribute('value')
+      ).to.equal('buzz')
     })
   })
 
@@ -82,10 +99,15 @@ describe('MultipleChoice component', () => {
 
       context('value is a boolean', () => {
         it('should set option to selected if matches true', () => {
-          const component = macros.renderToDom('MultipleChoice', Object.assign({}, this.valueProps, {
-            value: true,
-          })).parentElement
-          const options = component.querySelectorAll('.c-multiple-choice__input')
+          const component = macros.renderToDom(
+            'MultipleChoice',
+            Object.assign({}, this.valueProps, {
+              value: true,
+            })
+          ).parentElement
+          const options = component.querySelectorAll(
+            '.c-multiple-choice__input'
+          )
 
           expect(options[0].getAttribute('checked')).to.equal('checked')
           expect(options[1].getAttribute('checked')).to.be.null
@@ -93,10 +115,15 @@ describe('MultipleChoice component', () => {
         })
 
         it('should set option to selected if matches false', () => {
-          const component = macros.renderToDom('MultipleChoice', Object.assign({}, this.valueProps, {
-            value: false,
-          })).parentElement
-          const options = component.querySelectorAll('.c-multiple-choice__input')
+          const component = macros.renderToDom(
+            'MultipleChoice',
+            Object.assign({}, this.valueProps, {
+              value: false,
+            })
+          ).parentElement
+          const options = component.querySelectorAll(
+            '.c-multiple-choice__input'
+          )
 
           expect(options[0].getAttribute('checked')).to.be.null
           expect(options[1].getAttribute('checked')).to.equal('checked')
@@ -104,10 +131,15 @@ describe('MultipleChoice component', () => {
         })
 
         it('should set option to selected if matches a string', () => {
-          const component = macros.renderToDom('MultipleChoice', Object.assign({}, this.valueProps, {
-            value: 'string',
-          })).parentElement
-          const options = component.querySelectorAll('.c-multiple-choice__input')
+          const component = macros.renderToDom(
+            'MultipleChoice',
+            Object.assign({}, this.valueProps, {
+              value: 'string',
+            })
+          ).parentElement
+          const options = component.querySelectorAll(
+            '.c-multiple-choice__input'
+          )
 
           expect(options[0].getAttribute('checked')).to.be.null
           expect(options[1].getAttribute('checked')).to.be.null
@@ -135,24 +167,39 @@ describe('MultipleChoice component', () => {
       })
 
       it('should display first child within form group inner', () => {
-        const component = macros.renderToDom('MultipleChoiceField', Object.assign({}, this.valueProps)).parentElement
-        const children = component.querySelectorAll('.c-form-group__inner .c-form-group')
+        const component = macros.renderToDom(
+          'MultipleChoiceField',
+          Object.assign({}, this.valueProps)
+        ).parentElement
+        const children = component.querySelectorAll(
+          '.c-form-group__inner .c-form-group'
+        )
         const firstChild = children[0]
 
         expect(firstChild.querySelector('input').name).to.equal('first-child')
       })
 
       it('should display second child within form group inner', () => {
-        const component = macros.renderToDom('MultipleChoiceField', Object.assign({}, this.valueProps)).parentElement
-        const children = component.querySelectorAll('.c-form-group__inner .c-form-group')
+        const component = macros.renderToDom(
+          'MultipleChoiceField',
+          Object.assign({}, this.valueProps)
+        ).parentElement
+        const children = component.querySelectorAll(
+          '.c-form-group__inner .c-form-group'
+        )
         const secondChild = children[1]
 
         expect(secondChild.querySelector('input').name).to.equal('second-child')
       })
 
       it('should display the correct number of children', () => {
-        const component = macros.renderToDom('MultipleChoiceField', Object.assign({}, this.valueProps)).parentElement
-        const children = component.querySelectorAll('.c-form-group__inner .c-form-group')
+        const component = macros.renderToDom(
+          'MultipleChoiceField',
+          Object.assign({}, this.valueProps)
+        ).parentElement
+        const children = component.querySelectorAll(
+          '.c-form-group__inner .c-form-group'
+        )
 
         expect(children).to.have.length(2)
       })
@@ -173,7 +220,8 @@ describe('MultipleChoice component', () => {
     })
 
     it('should attach data attributes to the select control', () => {
-      expect(this.component.querySelector('select[data-att1="att1-value"]')).to.not.be.null
+      expect(this.component.querySelector('select[data-att1="att1-value"]')).to
+        .not.be.null
     })
   })
 
@@ -192,7 +240,11 @@ describe('MultipleChoice component', () => {
     })
 
     it('should attach data attributes to the select control', () => {
-      expect(this.component.querySelector('select[data-att1="att1-value"][data-att2="att2-value"]')).to.not.be.null
+      expect(
+        this.component.querySelector(
+          'select[data-att1="att1-value"][data-att2="att2-value"]'
+        )
+      ).to.not.be.null
     })
   })
 })

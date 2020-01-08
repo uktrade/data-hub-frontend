@@ -119,7 +119,8 @@ describe('investment status controller', () => {
 
       it('should indicate there is an error for status', () => {
         const statusForm = this.res.render.getCall(0).args[1].statusForm
-        const actualStatusError = find(statusForm.children, { name: 'status' }).error
+        const actualStatusError = find(statusForm.children, { name: 'status' })
+          .error
 
         expect(actualStatusError).to.equal(this.messages.status)
       })
@@ -139,15 +140,24 @@ describe('investment status controller', () => {
       })
 
       it('should save the data to the API', () => {
-        expect(this.updateInvestmentStub).to.be.calledWith(this.req.session.token, this.req.params.investmentId, { status: 'test' })
+        expect(this.updateInvestmentStub).to.be.calledWith(
+          this.req.session.token,
+          this.req.params.investmentId,
+          { status: 'test' }
+        )
       })
 
       it('should send a flash message with an update', () => {
-        expect(this.req.flash).to.be.calledWith('success', 'Investment details updated')
+        expect(this.req.flash).to.be.calledWith(
+          'success',
+          'Investment details updated'
+        )
       })
 
       it('should redirect the user back to the details screen', () => {
-        expect(this.res.redirect).to.be.calledWith('/investments/projects/111/details')
+        expect(this.res.redirect).to.be.calledWith(
+          '/investments/projects/111/details'
+        )
       })
     })
 

@@ -35,7 +35,13 @@ router.use(setOrderBreadcrumb)
 router.use(setQuoteSummary)
 
 router.get('/', redirectToFirstNavItem)
-router.get('/work-order', setContact, setAssignees, setSubscribers, renderWorkOrder)
+router.get(
+  '/work-order',
+  setContact,
+  setAssignees,
+  setSubscribers,
+  renderWorkOrder
+)
 router.get('/payment-receipt', setInvoice, setPayments, renderPaymentReceipt)
 router
   .route('/quote')

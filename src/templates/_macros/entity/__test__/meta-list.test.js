@@ -27,7 +27,8 @@ describe('MetaList macro', () => {
               id: '12345',
               name: 'chocolate',
             },
-          }],
+          },
+        ],
       })
 
       expect(component.className.trim()).to.equal('c-meta-list')
@@ -44,10 +45,13 @@ describe('MetaList macro', () => {
               id: '12345',
               name: 'Chocolate',
             },
-          }],
+          },
+        ],
       })
 
-      expect(component.querySelector('.c-meta-list__item-label.u-visually-hidden')).to.exist
+      expect(
+        component.querySelector('.c-meta-list__item-label.u-visually-hidden')
+      ).to.exist
     })
 
     it('should render item formatted as date', () => {
@@ -58,10 +62,13 @@ describe('MetaList macro', () => {
             type: 'date',
             name: 'land_date',
             value: '2017-07-26',
-          }],
+          },
+        ],
       })
 
-      expect(component.querySelector('.c-meta-list__item-value').textContent).to.contain('26 July 2017')
+      expect(
+        component.querySelector('.c-meta-list__item-value').textContent
+      ).to.contain('26 July 2017')
     })
 
     it('should render item formatted as address', () => {
@@ -80,10 +87,13 @@ describe('MetaList macro', () => {
                 name: 'country',
               },
             },
-          }],
+          },
+        ],
       })
 
-      expect(component.querySelector('.c-meta-list__item-value').textContent).to.contain('line 1, town, postcode, country')
+      expect(
+        component.querySelector('.c-meta-list__item-value').textContent
+      ).to.contain('line 1, town, postcode, country')
     })
 
     it('should not render item formatted as date if it has no value', () => {
@@ -94,14 +104,18 @@ describe('MetaList macro', () => {
             type: 'date',
             name: 'land_date',
             value: '2017-07-26',
-          }, {
+          },
+          {
             label: 'Expiry date',
             type: 'date',
             name: 'expiry_date',
-          }],
+          },
+        ],
       })
 
-      expect(component.querySelector('.c-meta-list__item-value').textContent).to.contain('26 July 2017')
+      expect(
+        component.querySelector('.c-meta-list__item-value').textContent
+      ).to.contain('26 July 2017')
       expect(component.querySelectorAll('.c-meta-list__item')).to.have.length(1)
       expect(component.textContent).not.to.contain('Expiry date')
     })
@@ -115,7 +129,8 @@ describe('MetaList macro', () => {
             name: 'land_date',
             value: '2017-07-26',
             url: '/dessert',
-          }],
+          },
+        ],
       })
 
       expect(component.querySelector('a.c-meta-list__item-value')).to.exist
@@ -131,7 +146,8 @@ describe('MetaList macro', () => {
               id: '12345',
               name: 'Chocolate',
             },
-          }],
+          },
+        ],
       })
 
       expect(component.querySelector('span.c-meta-list__item-value')).to.exist
@@ -148,10 +164,13 @@ describe('MetaList macro', () => {
               id: '12345',
               name: 'Chocolate',
             },
-          }],
+          },
+        ],
       })
 
-      expect(component.querySelector('.c-meta-list__item-label').className).to.contain('u-visually-hidden')
+      expect(
+        component.querySelector('.c-meta-list__item-label').className
+      ).to.contain('u-visually-hidden')
       expect(component.querySelector('.c-badge')).to.exist
     })
 
@@ -166,10 +185,13 @@ describe('MetaList macro', () => {
               name: 'Chocolate',
             },
             url: '/dessert',
-          }],
+          },
+        ],
       })
 
-      expect(component.querySelector('a.c-meta-list__item-value').className).to.contain('is-selected')
+      expect(
+        component.querySelector('a.c-meta-list__item-value').className
+      ).to.contain('is-selected')
     })
   })
 })

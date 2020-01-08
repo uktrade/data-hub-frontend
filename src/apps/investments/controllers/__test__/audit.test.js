@@ -7,7 +7,9 @@ const token = 'abcd'
 describe('Investment audit controller', () => {
   beforeEach(() => {
     this.next = sinon.stub()
-    this.getInvestmentProjectAuditLog = sinon.stub().resolves(investmentProjectAuditData.results)
+    this.getInvestmentProjectAuditLog = sinon
+      .stub()
+      .resolves(investmentProjectAuditData.results)
     this.breadcrumbStub = sinon.stub().returnsThis()
 
     this.controller = proxyquire('../audit', {
@@ -18,73 +20,89 @@ describe('Investment audit controller', () => {
   })
 
   it('should get the audit log from the API', (done) => {
-    this.controller.getInvestmentAudit({
-      session: {
-        token,
+    this.controller.getInvestmentAudit(
+      {
+        session: {
+          token,
+        },
+        params: {
+          investmentId: '9999',
+        },
       },
-      params: {
-        investmentId: '9999',
+      {
+        locals: {
+          investment: {},
+        },
+        breadcrumb: this.breadcrumbStub,
+        render: (template, data) => {
+          try {
+            expect(this.getInvestmentProjectAuditLog).to.be.calledWith(
+              token,
+              '9999'
+            )
+            done()
+          } catch (error) {
+            done(error)
+          }
+        },
       },
-    }, {
-      locals: {
-        investment: {},
-      },
-      breadcrumb: this.breadcrumbStub,
-      render: (template, data) => {
-        try {
-          expect(this.getInvestmentProjectAuditLog).to.be.calledWith(token, '9999')
-          done()
-        } catch (error) {
-          done(error)
-        }
-      },
-    }, this.next)
+      this.next
+    )
   })
   it('should send a parsed copy of audit data to the view', (done) => {
-    const expected = [{
-      name: 'Duke Ellington',
-      timestamp: '2 June 2017',
-      changes: 3,
-    }, {
-      name: 'Fred Smith',
-      timestamp: '2 June 2017',
-      changes: 4,
-    }]
+    const expected = [
+      {
+        name: 'Duke Ellington',
+        timestamp: '2 June 2017',
+        changes: 3,
+      },
+      {
+        name: 'Fred Smith',
+        timestamp: '2 June 2017',
+        changes: 4,
+      },
+    ]
 
-    this.controller.getInvestmentAudit({
-      session: {
-        token,
+    this.controller.getInvestmentAudit(
+      {
+        session: {
+          token,
+        },
+        params: {
+          investmentId: '9999',
+        },
       },
-      params: {
-        investmentId: '9999',
+      {
+        locals: {
+          investment: {},
+        },
+        breadcrumb: this.breadcrumbStub,
+        render: (template, data) => {
+          try {
+            expect(data.auditLog).to.deep.equal(expected)
+            done()
+          } catch (error) {
+            done(error)
+          }
+        },
       },
-    }, {
-      locals: {
-        investment: {},
-      },
-      breadcrumb: this.breadcrumbStub,
-      render: (template, data) => {
-        try {
-          expect(data.auditLog).to.deep.equal(expected)
-          done()
-        } catch (error) {
-          done(error)
-        }
-      },
-    }, this.next)
+      this.next
+    )
   })
   it('should handle audit entry containing an empty timestamp', (done) => {
-    const badDate = [{
-      user: {
-        id: '41212312312321',
-        name: 'Fred Smith',
+    const badDate = [
+      {
+        user: {
+          id: '41212312312321',
+          name: 'Fred Smith',
+        },
+        timestamp: '',
+        comment: 'Optional changeset comment - we can stick anything here',
+        changes: {
+          fieldName1: [false, true],
+        },
       },
-      timestamp: '',
-      comment: 'Optional changeset comment - we can stick anything here',
-      changes: {
-        fieldName1: [false, true],
-      },
-    }]
+    ]
 
     this.getInvestmentProjectAuditLog = sinon.stub().resolves(badDate)
 
@@ -94,44 +112,52 @@ describe('Investment audit controller', () => {
       },
     })
 
-    const expected = [{
-      name: 'Fred Smith',
-      timestamp: null,
-      changes: 1,
-    }]
+    const expected = [
+      {
+        name: 'Fred Smith',
+        timestamp: null,
+        changes: 1,
+      },
+    ]
 
-    this.controller.getInvestmentAudit({
-      session: {
-        token,
+    this.controller.getInvestmentAudit(
+      {
+        session: {
+          token,
+        },
+        params: {
+          investmentId: '9999',
+        },
       },
-      params: {
-        investmentId: '9999',
+      {
+        locals: {
+          investment: {},
+        },
+        breadcrumb: this.breadcrumbStub,
+        render: (template, data) => {
+          try {
+            expect(data.auditLog).to.deep.equal(expected)
+            done()
+          } catch (error) {
+            done(error)
+          }
+        },
       },
-    }, {
-      locals: {
-        investment: {},
-      },
-      breadcrumb: this.breadcrumbStub,
-      render: (template, data) => {
-        try {
-          expect(data.auditLog).to.deep.equal(expected)
-          done()
-        } catch (error) {
-          done(error)
-        }
-      },
-    }, this.next)
+      this.next
+    )
   })
   it('should handle when changes is null', (done) => {
-    const nullChangeSet = [{
-      user: {
-        id: '41212312312321',
-        name: 'Fred Smith',
+    const nullChangeSet = [
+      {
+        user: {
+          id: '41212312312321',
+          name: 'Fred Smith',
+        },
+        timestamp: '2017-02-14T14:49:17',
+        comment: 'Optional changeset comment - we can stick anything here',
+        changes: null,
       },
-      timestamp: '2017-02-14T14:49:17',
-      comment: 'Optional changeset comment - we can stick anything here',
-      changes: null,
-    }]
+    ]
 
     this.getInvestmentProjectAuditLog = sinon.stub().resolves(nullChangeSet)
 
@@ -141,44 +167,52 @@ describe('Investment audit controller', () => {
       },
     })
 
-    const expected = [{
-      name: 'Fred Smith',
-      timestamp: '14 February 2017',
-      changes: 0,
-    }]
+    const expected = [
+      {
+        name: 'Fred Smith',
+        timestamp: '14 February 2017',
+        changes: 0,
+      },
+    ]
 
-    this.controller.getInvestmentAudit({
-      session: {
-        token,
+    this.controller.getInvestmentAudit(
+      {
+        session: {
+          token,
+        },
+        params: {
+          investmentId: '9999',
+        },
       },
-      params: {
-        investmentId: '9999',
+      {
+        locals: {
+          investment: {},
+        },
+        breadcrumb: this.breadcrumbStub,
+        render: (template, data) => {
+          try {
+            expect(data.auditLog).to.deep.equal(expected)
+            done()
+          } catch (error) {
+            done(error)
+          }
+        },
       },
-    }, {
-      locals: {
-        investment: {},
-      },
-      breadcrumb: this.breadcrumbStub,
-      render: (template, data) => {
-        try {
-          expect(data.auditLog).to.deep.equal(expected)
-          done()
-        } catch (error) {
-          done(error)
-        }
-      },
-    }, this.next)
+      this.next
+    )
   })
   it('should handle when the changeset is empty', (done) => {
-    const emptyChangeSet = [{
-      user: {
-        id: '41212312312321',
-        name: 'Fred Smith',
+    const emptyChangeSet = [
+      {
+        user: {
+          id: '41212312312321',
+          name: 'Fred Smith',
+        },
+        timestamp: '2017-02-14T14:49:17',
+        comment: 'Optional changeset comment - we can stick anything here',
+        changes: {},
       },
-      timestamp: '2017-02-14T14:49:17',
-      comment: 'Optional changeset comment - we can stick anything here',
-      changes: {},
-    }]
+    ]
 
     this.getInvestmentProjectAuditLog = sinon.stub().resolves(emptyChangeSet)
 
@@ -188,33 +222,39 @@ describe('Investment audit controller', () => {
       },
     })
 
-    const expected = [{
-      name: 'Fred Smith',
-      timestamp: '14 February 2017',
-      changes: 0,
-    }]
+    const expected = [
+      {
+        name: 'Fred Smith',
+        timestamp: '14 February 2017',
+        changes: 0,
+      },
+    ]
 
-    this.controller.getInvestmentAudit({
-      session: {
-        token,
+    this.controller.getInvestmentAudit(
+      {
+        session: {
+          token,
+        },
+        params: {
+          investmentId: '9999',
+        },
       },
-      params: {
-        investmentId: '9999',
+      {
+        locals: {
+          investment: {},
+        },
+        breadcrumb: this.breadcrumbStub,
+        render: (template, data) => {
+          try {
+            expect(data.auditLog).to.deep.equal(expected)
+            done()
+          } catch (error) {
+            done(error)
+          }
+        },
       },
-    }, {
-      locals: {
-        investment: {},
-      },
-      breadcrumb: this.breadcrumbStub,
-      render: (template, data) => {
-        try {
-          expect(data.auditLog).to.deep.equal(expected)
-          done()
-        } catch (error) {
-          done(error)
-        }
-      },
-    }, this.next)
+      this.next
+    )
   })
 
   describe('formatAuditLog', () => {
@@ -222,7 +262,7 @@ describe('Investment audit controller', () => {
       this.timestamp = '2017-08-09T13:25:29.568665Z'
       this.formattedDate = '9 August 2017'
       this.changes = {
-        'thing': 'a thing',
+        thing: 'a thing',
         'other thing': 'another thing',
       }
     })

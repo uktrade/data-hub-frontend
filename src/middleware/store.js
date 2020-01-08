@@ -4,7 +4,7 @@ const { get } = require('lodash')
  * @returns {store}
  */
 module.exports = () => {
-  return function store (req, res, next) {
+  return function store(req, res, next) {
     req.session.store = req.session.store || {}
 
     req.store = (key, item) => {

@@ -6,7 +6,13 @@ const today = Cypress.moment().format('D MMMM YYYY')
 
 describe('Interaction', () => {
   beforeEach(() => {
-    cy.visit(companies.interactions.createType('0f5216e0-849f-11e6-ae22-56b6b6499611', 'export', 'interaction'))
+    cy.visit(
+      companies.interactions.createType(
+        '0f5216e0-849f-11e6-ae22-56b6b6499611',
+        'export',
+        'interaction'
+      )
+    )
   })
 
   it('should add the interaction', () => {
@@ -22,7 +28,10 @@ describe('Interaction', () => {
     cy.get(formSelectors.policyFeedbackNo).click()
 
     cy.get(selectors.interactionForm.add).click()
-    cy.get(selectors.message.successful).should('contain', 'Interaction created')
+    cy.get(selectors.message.successful).should(
+      'contain',
+      'Interaction created'
+    )
 
     cy.visit(interactions.index())
     cy.get(selectors.filter.interaction.myInteractions).click()
@@ -31,7 +40,10 @@ describe('Interaction', () => {
       .should('contain', 'Johnny Cakeman')
       .and('contain', 'Some interesting interaction')
       .and('contain', 'Venus Ltd')
-      .and('contain', 'DIT Staff, UKTI Team East Midlands - International Trade Team')
+      .and(
+        'contain',
+        'DIT Staff, UKTI Team East Midlands - International Trade Team'
+      )
       .and('contain', 'Export Win')
       .and('contain', today)
   })
@@ -39,7 +51,13 @@ describe('Interaction', () => {
 
 describe('Service delivery', () => {
   beforeEach(() => {
-    cy.visit(companies.interactions.createType('0f5216e0-849f-11e6-ae22-56b6b6499611', 'export', 'service-delivery'))
+    cy.visit(
+      companies.interactions.createType(
+        '0f5216e0-849f-11e6-ae22-56b6b6499611',
+        'export',
+        'service-delivery'
+      )
+    )
   })
 
   it('should add the service delivery', () => {
@@ -55,7 +73,10 @@ describe('Service delivery', () => {
     cy.get(formSelectors.policyFeedbackNo).click()
 
     cy.get(selectors.interactionForm.add).click()
-    cy.get(selectors.message.successful).should('contain', 'Service delivery created')
+    cy.get(selectors.message.successful).should(
+      'contain',
+      'Service delivery created'
+    )
 
     cy.visit(interactions.index())
     cy.get(selectors.filter.interaction.myInteractions).click()
@@ -64,7 +85,10 @@ describe('Service delivery', () => {
       .should('contain', 'Johnny Cakeman')
       .and('contain', 'Some interesting service delivery')
       .and('contain', 'Venus Ltd')
-      .and('contain', 'DIT Staff, UKTI Team East Midlands - International Trade Team')
+      .and(
+        'contain',
+        'DIT Staff, UKTI Team East Midlands - International Trade Team'
+      )
       .and('contain', 'Export Win')
       .and('contain', today)
   })

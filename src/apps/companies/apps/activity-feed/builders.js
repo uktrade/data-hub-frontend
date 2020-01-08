@@ -1,15 +1,8 @@
 const bodybuilder = require('bodybuilder')
 
-const {
-  FILTER_KEYS,
-  ES_KEYS_GROUPED,
-} = require('./constants')
+const { FILTER_KEYS, ES_KEYS_GROUPED } = require('./constants')
 
-const {
-  allActivity,
-  externalActivity,
-  dataHubActivity,
-} = ES_KEYS_GROUPED
+const { allActivity, externalActivity, dataHubActivity } = ES_KEYS_GROUPED
 
 const FILTER_KEY_MAP = {
   [FILTER_KEYS.allActivity]: allActivity,
@@ -17,8 +10,17 @@ const FILTER_KEY_MAP = {
   [FILTER_KEYS.dataHubActivity]: dataHubActivity,
 }
 
-function createESFilters (activityTypeFilter, dnbHierarchyIds = [], company, user, from, size) {
-  const types = FILTER_KEY_MAP[activityTypeFilter] || FILTER_KEY_MAP[FILTER_KEYS.dataHubActivity]
+function createESFilters(
+  activityTypeFilter,
+  dnbHierarchyIds = [],
+  company,
+  user,
+  from,
+  size
+) {
+  const types =
+    FILTER_KEY_MAP[activityTypeFilter] ||
+    FILTER_KEY_MAP[FILTER_KEYS.dataHubActivity]
 
   const body = bodybuilder()
     .from(from)
@@ -30,7 +32,11 @@ function createESFilters (activityTypeFilter, dnbHierarchyIds = [], company, use
 
   // My activity
   if (activityTypeFilter === FILTER_KEYS.myActivity) {
-    body.filter('term', 'object.attributedTo.id', `dit:DataHubAdviser:${user.id}`)
+    body.filter(
+      'term',
+      'object.attributedTo.id',
+      `dit:DataHubAdviser:${user.id}`
+    )
   }
 
   // DnB Hierarchy IDs and Data Hub Company ID
@@ -39,7 +45,11 @@ function createESFilters (activityTypeFilter, dnbHierarchyIds = [], company, use
     ids.push(`dit:DataHubCompany:${company.id}`)
     body.filter('terms', 'object.attributedTo.id', ids)
   } else {
-    body.filter('term', 'object.attributedTo.id', `dit:DataHubCompany:${company.id}`)
+    body.filter(
+      'term',
+      'object.attributedTo.id',
+      `dit:DataHubCompany:${company.id}`
+    )
   }
 
   return body.build()

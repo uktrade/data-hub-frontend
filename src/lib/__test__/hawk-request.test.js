@@ -9,7 +9,8 @@ const testDataHubCredentials = {
   algorithm: 'sha256',
 }
 const testClientHeaderArtifacts = { fake: 'artifacts' }
-const testRequestOptions = { uri: `${config.apiRoot}/v4/metadata/countries`,
+const testRequestOptions = {
+  uri: `${config.apiRoot}/v4/metadata/countries`,
   method: 'GET',
   headers: { accept: 'application/json', Authorization: 'Fake header' },
 }
@@ -19,7 +20,8 @@ describe('#hawkRequest: check getHawkHeader', () => {
     this.hawkRequest = rewire(modulePath)
     this.configStub = sinon.stub()
     this.expectedHawkHeader = {
-      header: 'Hawk id="test-key-id", ts="1501545600", nonce="Sj_D4e", hash="B0weSUXsMcb5UhL41FZbrUJCAotzSI3HawE1NPLRUz8=", mac="eUfXrU30nDxsrP0+c6s54EaP8Dyuhp7JfBEFO4Ufllw="',
+      header:
+        'Hawk id="test-key-id", ts="1501545600", nonce="Sj_D4e", hash="B0weSUXsMcb5UhL41FZbrUJCAotzSI3HawE1NPLRUz8=", mac="eUfXrU30nDxsrP0+c6s54EaP8Dyuhp7JfBEFO4Ufllw="',
       artifacts: {
         ts: 1501545600,
         nonce: 'Sj_D4e',
@@ -41,11 +43,14 @@ describe('#hawkRequest: check getHawkHeader', () => {
   it('gets hawk header', () => {
     const getHawkHeader = this.hawkRequest.__get__('getHawkHeader')
 
-    let requestOptionsStub = sinon.stub()
+    const requestOptionsStub = sinon.stub()
     requestOptionsStub.uri = 'http://test-uri'
     requestOptionsStub.method = 'GET'
 
-    const completeHeader = getHawkHeader(testDataHubCredentials, requestOptionsStub)
+    const completeHeader = getHawkHeader(
+      testDataHubCredentials,
+      requestOptionsStub
+    )
 
     expect(this.hawkHeaderStub).to.have.been.calledOnceWith(
       requestOptionsStub.uri,
@@ -68,7 +73,10 @@ describe('#hawkRequest: check sendHawkRequest', () => {
     this.hawkRequest = rewire(modulePath)
     this.hawkRequest.__set__('config', this.configStub)
     this.createPromiseRequestSpy = sinon.spy()
-    this.hawkRequest.__set__('createPromiseRequest', this.createPromiseRequestSpy)
+    this.hawkRequest.__set__(
+      'createPromiseRequest',
+      this.createPromiseRequestSpy
+    )
 
     this.getHawkHeaderStub = sinon.stub().returns({
       artifacts: { fake: 'artifacts' },
@@ -87,7 +95,7 @@ describe('#hawkRequest: check sendHawkRequest', () => {
     expect(this.createPromiseRequestSpy).to.have.been.calledOnceWith(
       testRequestOptions,
       testDataHubCredentials,
-      { fake: 'artifacts' },
+      { fake: 'artifacts' }
     )
   })
 })
@@ -97,7 +105,10 @@ describe('#hawkRequest: check createPromiseRequest', () => {
     this.configStub = sinon.stub()
     this.hawkRequest = rewire(modulePath)
     this.hawkRequest.__set__('config', this.configStub)
-    this.hawkRequest.__set__('hawk.client.authenticate', sinon.stub().returns(true))
+    this.hawkRequest.__set__(
+      'hawk.client.authenticate',
+      sinon.stub().returns(true)
+    )
   })
 
   it('gets correct response', async () => {
@@ -110,7 +121,7 @@ describe('#hawkRequest: check createPromiseRequest', () => {
     await this.createPromiseRequest(
       testRequestOptions,
       testDataHubCredentials,
-      testClientHeaderArtifacts,
+      testClientHeaderArtifacts
     ).then((response) => {
       expect(response).to.deep.equal({ fake: 'reply' })
     })
@@ -123,11 +134,13 @@ describe('#hawkRequest: check createPromiseRequest', () => {
     })
     this.createPromiseRequest = this.hawkRequest.__get__('createPromiseRequest')
 
-    await expect(this.createPromiseRequest(
-      testRequestOptions,
-      testDataHubCredentials,
-      testClientHeaderArtifacts,
-    )).to.be.rejectedWith(Error)
+    await expect(
+      this.createPromiseRequest(
+        testRequestOptions,
+        testDataHubCredentials,
+        testClientHeaderArtifacts
+      )
+    ).to.be.rejectedWith(Error)
   })
 
   it('fails when response is not valid', async () => {
@@ -137,20 +150,22 @@ describe('#hawkRequest: check createPromiseRequest', () => {
     })
     this.createPromiseRequest = this.hawkRequest.__get__('createPromiseRequest')
 
-    let authenticateStub = sinon.stub().returns(true)
+    const authenticateStub = sinon.stub().returns(true)
     this.hawkRequest.__set__('hawk.client.authenticate', authenticateStub)
 
-    await expect(this.createPromiseRequest(
-      testRequestOptions,
-      testDataHubCredentials,
-      testClientHeaderArtifacts,
-    )).to.be.rejectedWith(Error)
+    await expect(
+      this.createPromiseRequest(
+        testRequestOptions,
+        testDataHubCredentials,
+        testClientHeaderArtifacts
+      )
+    ).to.be.rejectedWith(Error)
 
     expect(authenticateStub).to.be.calledOnceWith(
       { statusCode: 401 },
       testDataHubCredentials,
       testClientHeaderArtifacts,
-      { payload: '{}' },
+      { payload: '{}' }
     )
   })
 
@@ -161,20 +176,22 @@ describe('#hawkRequest: check createPromiseRequest', () => {
     })
     this.createPromiseRequest = this.hawkRequest.__get__('createPromiseRequest')
 
-    let authenticateStub = sinon.stub().throws(Error)
+    const authenticateStub = sinon.stub().throws(Error)
     this.hawkRequest.__set__('hawk.client.authenticate', authenticateStub)
 
-    await expect(this.createPromiseRequest(
-      testRequestOptions,
-      testDataHubCredentials,
-      testClientHeaderArtifacts,
-    )).to.be.rejectedWith(Error)
+    await expect(
+      this.createPromiseRequest(
+        testRequestOptions,
+        testDataHubCredentials,
+        testClientHeaderArtifacts
+      )
+    ).to.be.rejectedWith(Error)
 
     expect(authenticateStub).to.be.calledOnceWith(
       { statusCode: 200 },
       testDataHubCredentials,
       testClientHeaderArtifacts,
-      { payload: '{}' },
+      { payload: '{}' }
     )
   })
 })

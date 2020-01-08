@@ -8,14 +8,15 @@ const { hide, show, addClass, insertAfter } = require('../lib/helpers')
  * can be submitted
  */
 const ArchiveForm = {
-
   selector: '.js-archiveForm',
 
-  init (wrapper = document) {
+  init(wrapper = document) {
     this.wrapper = wrapper
     this.cacheElements()
 
-    if (!this.archiveForm) { return }
+    if (!this.archiveForm) {
+      return
+    }
 
     this.attachEvents()
 
@@ -35,15 +36,26 @@ const ArchiveForm = {
    * Finds important elements for this component and caches them
    * to make it easier to use them
    */
-  cacheElements () {
+  cacheElements() {
     this.archiveForm = this.wrapper.querySelector(this.selector)
 
-    if (!this.archiveForm) { return }
+    if (!this.archiveForm) {
+      return
+    }
 
-    this.document = (typeof document !== 'undefined') ? document : this.archiveForm.ownerDocument
-    this.archivedReasonLabel = this.archiveForm.querySelector('[for="archived_reason"]')
-    this.reasonInputElement = this.archiveForm.querySelector('[name=archived_reason]')
-    this.otherReasonTextInput = this.archiveForm.querySelector('[name=archived_reason_other]')
+    this.document =
+      typeof document !== 'undefined'
+        ? document
+        : this.archiveForm.ownerDocument
+    this.archivedReasonLabel = this.archiveForm.querySelector(
+      '[for="archived_reason"]'
+    )
+    this.reasonInputElement = this.archiveForm.querySelector(
+      '[name=archived_reason]'
+    )
+    this.otherReasonTextInput = this.archiveForm.querySelector(
+      '[name=archived_reason_other]'
+    )
     this.fieldset = this.archiveForm.querySelector('fieldset')
     const saveButton = this.archiveForm.querySelector('[type="submit"]')
 
@@ -54,18 +66,24 @@ const ArchiveForm = {
     insertAfter(this.hideArchiveFormButton, saveButton)
 
     this.showArchiveFormButton = this.createShowButton()
-    this.archiveForm.parentNode.insertBefore(this.showArchiveFormButton, this.archiveForm)
+    this.archiveForm.parentNode.insertBefore(
+      this.showArchiveFormButton,
+      this.archiveForm
+    )
   },
 
-  createShowButton () {
+  createShowButton() {
     const showArchiveFormButton = this.document.createElement('a')
-    showArchiveFormButton.classList.add('govuk-button', 'govuk-button--secondary')
+    showArchiveFormButton.classList.add(
+      'govuk-button',
+      'govuk-button--secondary'
+    )
     showArchiveFormButton.href = '#'
     showArchiveFormButton.textContent = 'Archive'
     return showArchiveFormButton
   },
 
-  createCancelButton () {
+  createCancelButton() {
     const hideArchiveFormButton = this.document.createElement('a')
     hideArchiveFormButton.href = '#'
     hideArchiveFormButton.textContent = 'Cancel'
@@ -77,10 +95,22 @@ const ArchiveForm = {
    * Attaches event handlers to key elements within the component.
    *
    */
-  attachEvents () {
-    this.showArchiveFormButton.addEventListener('click', this.showForm.bind(this), true)
-    this.hideArchiveFormButton.addEventListener('click', this.hideForm.bind(this), true)
-    this.archiveForm.addEventListener('submit', this.validateForm.bind(this), true)
+  attachEvents() {
+    this.showArchiveFormButton.addEventListener(
+      'click',
+      this.showForm.bind(this),
+      true
+    )
+    this.hideArchiveFormButton.addEventListener(
+      'click',
+      this.hideForm.bind(this),
+      true
+    )
+    this.archiveForm.addEventListener(
+      'submit',
+      this.validateForm.bind(this),
+      true
+    )
   },
 
   /**
@@ -88,7 +118,7 @@ const ArchiveForm = {
    * added to make it obvious to the user that there is an issue
    *
    */
-  showError () {
+  showError() {
     if (this.errorElement) {
       return
     }
@@ -109,7 +139,7 @@ const ArchiveForm = {
    * @param {object} event
    *
    */
-  showForm (event) {
+  showForm(event) {
     if (event) {
       event.preventDefault()
     }
@@ -125,7 +155,7 @@ const ArchiveForm = {
    * @param {any} event
    *
    */
-  hideForm (event) {
+  hideForm(event) {
     if (event) {
       event.preventDefault()
     }
@@ -141,9 +171,12 @@ const ArchiveForm = {
    * @param {any} event
    *
    */
-  validateForm (event) {
-    if (this.reasonInputElement.value === '' ||
-      (this.reasonInputElement.value.toLowerCase() === 'other' && this.otherReasonTextInput.value === '')) {
+  validateForm(event) {
+    if (
+      this.reasonInputElement.value === '' ||
+      (this.reasonInputElement.value.toLowerCase() === 'other' &&
+        this.otherReasonTextInput.value === '')
+    ) {
       this.showError()
       event.preventDefault()
       return false

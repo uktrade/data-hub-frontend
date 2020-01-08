@@ -1,15 +1,21 @@
 const { search } = require('../../../modules/search/services')
-const { transformApiResponseToCollection } = require('../../../modules/api/transformers')
+const {
+  transformApiResponseToCollection,
+} = require('../../../modules/api/transformers')
 const { transformOrderToListItem } = require('../../omis/transformers')
 
-async function renderOrders (req, res, next) {
+async function renderOrders(req, res, next) {
   const token = req.session.token
   const page = req.query.page || 1
   const { company } = res.locals
-  const actionButtons = company.archived ? undefined : [{
-    label: 'Add order',
-    url: `/omis/create?company=${company.id}&skip-company=true`,
-  }]
+  const actionButtons = company.archived
+    ? undefined
+    : [
+        {
+          label: 'Add order',
+          url: `/omis/create?company=${company.id}&skip-company=true`,
+        },
+      ]
 
   try {
     const results = await search({
@@ -20,11 +26,12 @@ async function renderOrders (req, res, next) {
         company: company.id,
       },
       isAggregation: false,
-    })
-      .then(transformApiResponseToCollection(
+    }).then(
+      transformApiResponseToCollection(
         { query: req.query },
-        transformOrderToListItem,
-      ))
+        transformOrderToListItem
+      )
+    )
 
     res
       .breadcrumb(company.name, `/companies/${company.id}`)

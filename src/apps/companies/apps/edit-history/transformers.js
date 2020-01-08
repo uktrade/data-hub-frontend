@@ -9,36 +9,31 @@ const EXCLUDED_FIELDS = [
   'archived_by',
 ]
 
-const unwrapFromArray = change =>
+const unwrapFromArray = (change) =>
   isArray(change)
     ? isEmpty(change)
       ? null
       : change.length === 1
-        ? change.pop()
-        : change
+      ? change.pop()
+      : change
     : change
 
 const transformChanges = (changes) => {
   return Object.keys(changes)
-    .filter(fieldName => !EXCLUDED_FIELDS.includes(fieldName))
-    .map(fieldName => ({
+    .filter((fieldName) => !EXCLUDED_FIELDS.includes(fieldName))
+    .map((fieldName) => ({
       fieldName,
       oldValue: unwrapFromArray(changes[fieldName][0]),
       newValue: unwrapFromArray(changes[fieldName][1]),
     }))
 }
 
-const transformCompanyAuditLogItem = ({
-  timestamp,
-  user,
-  changes,
-}) => {
-  const changedBy =
-    user
-      ? isEmpty(user.name)
-        ? user.email
-        : user.name
-      : AUTOMATIC_UPDATE
+const transformCompanyAuditLogItem = ({ timestamp, user, changes }) => {
+  const changedBy = user
+    ? isEmpty(user.name)
+      ? user.email
+      : user.name
+    : AUTOMATIC_UPDATE
 
   return {
     timestamp,

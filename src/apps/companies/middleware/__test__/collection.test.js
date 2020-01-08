@@ -11,19 +11,23 @@ const {
   getSubsidiaryCompaniesCollection,
 } = require('../collection')
 
-const headquarterTypes = [{
-  id: '3e6debb4-1596-40c5-aa25-f00da0e05af9',
-  name: 'ukhq',
-  disabled_on: null,
-}, {
-  id: 'eb59eaeb-eeb8-4f54-9506-a5e08773046b',
-  name: 'ehq',
-  disabled_on: null,
-}, {
-  id: '43281c5e-92a4-4794-867b-b4d5f801e6f3',
-  name: 'ghq',
-  disabled_on: null,
-}]
+const headquarterTypes = [
+  {
+    id: '3e6debb4-1596-40c5-aa25-f00da0e05af9',
+    name: 'ukhq',
+    disabled_on: null,
+  },
+  {
+    id: 'eb59eaeb-eeb8-4f54-9506-a5e08773046b',
+    name: 'ehq',
+    disabled_on: null,
+  },
+  {
+    id: '43281c5e-92a4-4794-867b-b4d5f801e6f3',
+    name: 'ghq',
+    disabled_on: null,
+  },
+]
 
 describe('Company collection middleware', () => {
   beforeEach(() => {
@@ -45,7 +49,11 @@ describe('Company collection middleware', () => {
     context('no searchTerm', () => {
       beforeEach(async () => {
         this.reqMock.query = {}
-        await getGlobalHQCompaniesCollection(this.reqMock, this.resMock, this.nextSpy)
+        await getGlobalHQCompaniesCollection(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should call next', () => {
@@ -68,11 +76,17 @@ describe('Company collection middleware', () => {
             .post('/v4/search/company?offset=0&limit=10')
             .reply(200, ghqCompanySearchResponse)
 
-          await getGlobalHQCompaniesCollection(this.reqMock, this.resMock, this.nextSpy)
+          await getGlobalHQCompaniesCollection(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('results should be as expected', () => {
-          expect(pickBy(this.resMock.locals.results)).to.deep.equal(ghqCompanyTransformedResults)
+          expect(pickBy(this.resMock.locals.results)).to.deep.equal(
+            ghqCompanyTransformedResults
+          )
         })
 
         it('should call next', () => {
@@ -91,7 +105,11 @@ describe('Company collection middleware', () => {
             .post('/v4/search/company?offset=0&limit=10')
             .replyWithError(this.errorMsg)
 
-          await getGlobalHQCompaniesCollection(this.reqMock, this.resMock, this.nextSpy)
+          await getGlobalHQCompaniesCollection(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should call next', () => {
@@ -99,7 +117,9 @@ describe('Company collection middleware', () => {
         })
 
         it('should have expected error message', () => {
-          expect(this.nextSpy.args[0][0].message).to.have.string(`Error: ${this.errorMsg}`)
+          expect(this.nextSpy.args[0][0].message).to.have.string(
+            `Error: ${this.errorMsg}`
+          )
         })
 
         it('results should be undefined', () => {
@@ -117,7 +137,11 @@ describe('Company collection middleware', () => {
     context('no searchTerm', () => {
       beforeEach(async () => {
         this.reqMock.query = {}
-        await getSubsidiaryCompaniesCollection(this.reqMock, this.resMock, this.nextSpy)
+        await getSubsidiaryCompaniesCollection(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should call next', () => {
@@ -151,7 +175,11 @@ describe('Company collection middleware', () => {
             })
             .reply(200, subsidiaryCompanySearchResponse)
 
-          await getSubsidiaryCompaniesCollection(this.reqMock, this.resMock, this.nextSpy)
+          await getSubsidiaryCompaniesCollection(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should return results', () => {
@@ -171,7 +199,9 @@ describe('Company collection middleware', () => {
         it('should include transformed result items', () => {
           const results = this.resMock.locals.results
           expect(results).to.have.property('items')
-          expect(results.items).to.deep.equal(subsidiaryCompanyTransformedResults.items)
+          expect(results.items).to.deep.equal(
+            subsidiaryCompanyTransformedResults.items
+          )
         })
 
         it('should call next', () => {
@@ -199,7 +229,11 @@ describe('Company collection middleware', () => {
               count: 50,
             })
 
-          await getSubsidiaryCompaniesCollection(this.reqMock, this.resMock, this.nextSpy)
+          await getSubsidiaryCompaniesCollection(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should include pagination information', () => {
@@ -230,7 +264,11 @@ describe('Company collection middleware', () => {
             })
             .reply(500, this.errorMsg)
 
-          await getSubsidiaryCompaniesCollection(this.reqMock, this.resMock, this.nextSpy)
+          await getSubsidiaryCompaniesCollection(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should call next', () => {
@@ -238,7 +276,9 @@ describe('Company collection middleware', () => {
         })
 
         it('should have expected error message', () => {
-          expect(this.nextSpy.firstCall.args[0].message).to.have.string(`500 - "${this.errorMsg}"`)
+          expect(this.nextSpy.firstCall.args[0].message).to.have.string(
+            `500 - "${this.errorMsg}"`
+          )
         })
 
         it('results should be undefined', () => {

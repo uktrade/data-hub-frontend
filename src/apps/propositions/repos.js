@@ -1,19 +1,28 @@
 const config = require('../../config')
 const { authorisedRequest } = require('../../lib/authorised-request')
 
-function fetchProposition (token, propositionId, investmentId) {
-  return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/proposition/${propositionId}`)
+function fetchProposition(token, propositionId, investmentId) {
+  return authorisedRequest(
+    token,
+    `${config.apiRoot}/v3/investment/${investmentId}/proposition/${propositionId}`
+  )
 }
 
-function fetchPropositionFiles (token, propositionId, investmentId) {
-  return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/proposition/${propositionId}/document`)
+function fetchPropositionFiles(token, propositionId, investmentId) {
+  return authorisedRequest(
+    token,
+    `${config.apiRoot}/v3/investment/${investmentId}/proposition/${propositionId}/document`
+  )
 }
 
-function fetchDownloadLink (token, propositionId, investmentId, documentId) {
-  return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/proposition/${propositionId}/document/${documentId}/download`)
+function fetchDownloadLink(token, propositionId, investmentId, documentId) {
+  return authorisedRequest(
+    token,
+    `${config.apiRoot}/v3/investment/${investmentId}/proposition/${propositionId}/document/${documentId}/download`
+  )
 }
 
-function saveProposition (token, proposition) {
+function saveProposition(token, proposition) {
   const options = {
     url: `${config.apiRoot}/v3/investment/${proposition.investment_project}/proposition`,
     method: 'POST',
@@ -28,7 +37,7 @@ function saveProposition (token, proposition) {
   return authorisedRequest(token, options)
 }
 
-function abandonProposition (token, proposition) {
+function abandonProposition(token, proposition) {
   const options = {
     url: `${config.apiRoot}/v3/investment/${proposition.investment_project}/proposition/${proposition.id}/abandon`,
     method: 'POST',
@@ -38,7 +47,7 @@ function abandonProposition (token, proposition) {
   return authorisedRequest(token, options)
 }
 
-function completeProposition (req, res) {
+function completeProposition(req, res) {
   const options = {
     url: `${config.apiRoot}/v3/investment/${res.locals.investment.id}/proposition/${req.params.propositionId}/complete`,
     method: 'POST',
@@ -55,10 +64,13 @@ function completeProposition (req, res) {
  * @param {number} page
  * @return {Promise<Object[]>} Returns a promise that resolves to an array of API proposition objects
  */
-function getPropositionsForInvestment (token, investmentId, page) {
+function getPropositionsForInvestment(token, investmentId, page) {
   const limit = 10
   const offset = limit * (page - 1)
-  return authorisedRequest(token, `${config.apiRoot}/v3/investment/${investmentId}/proposition?&limit=${limit}&offset=${offset}`)
+  return authorisedRequest(
+    token,
+    `${config.apiRoot}/v3/investment/${investmentId}/proposition?&limit=${limit}&offset=${offset}`
+  )
 }
 
 module.exports = {

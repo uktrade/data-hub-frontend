@@ -5,7 +5,7 @@ const castCompactArray = require('../../lib/cast-compact-array')
 const { transformDateObjectToDateString } = require('../transformers')
 const config = require('../../config')
 
-function transformEventToListItem ({
+function transformEventToListItem({
   id,
   name,
   event_type,
@@ -18,7 +18,9 @@ function transformEventToListItem ({
   uk_region,
   disabled_on,
 }) {
-  if (!id || !name) { return }
+  if (!id || !name) {
+    return
+  }
 
   const item = {
     id,
@@ -48,26 +50,23 @@ function transformEventToListItem ({
   }
 
   if (organiser) {
-    item.meta.push(
-      {
-        label: 'Organiser',
-        value: get(organiser, 'name'),
-      })
+    item.meta.push({
+      label: 'Organiser',
+      value: get(organiser, 'name'),
+    })
   }
 
-  item.meta.push(
-    {
-      label: 'Country',
-      type: 'badge',
-      value: get(address_country, 'name'),
-    })
+  item.meta.push({
+    label: 'Country',
+    type: 'badge',
+    value: get(address_country, 'name'),
+  })
 
   if (lead_team) {
-    item.meta.push(
-      {
-        label: 'Lead team',
-        value: get(lead_team, 'name'),
-      })
+    item.meta.push({
+      label: 'Lead team',
+      value: get(lead_team, 'name'),
+    })
   }
 
   if (disabled_on) {
@@ -78,19 +77,19 @@ function transformEventToListItem ({
     })
   }
 
-  if (get(address_country, 'id') === '80756b9a-5d95-e211-a939-e4115bead28a') { // United Kingdom
-    item.meta.push(
-      {
-        label: 'Region',
-        type: 'badge',
-        value: get(uk_region, 'name'),
-      })
+  if (get(address_country, 'id') === '80756b9a-5d95-e211-a939-e4115bead28a') {
+    // United Kingdom
+    item.meta.push({
+      label: 'Region',
+      type: 'badge',
+      value: get(uk_region, 'name'),
+    })
   }
 
   return item
 }
 
-function transformEventResponseToViewRecord ({
+function transformEventResponseToViewRecord({
   event_type,
   start_date,
   end_date,
@@ -138,7 +137,7 @@ function transformEventResponseToViewRecord ({
 
   const viewRecord = assign({}, transformedEvent, {
     'Event location type': location_type,
-    'Address': {
+    Address: {
       type: 'address',
       address: {
         line_1: address_1,
@@ -149,13 +148,13 @@ function transformEventResponseToViewRecord ({
         country: address_country,
       },
     },
-    'Region': uk_region,
-    'Notes': notes,
+    Region: uk_region,
+    Notes: notes,
     'Lead team': lead_team,
-    'Organiser': organiser,
-    'Other teams': otherTeams.map(x => x.name),
-    'Related programmes': related_programmes.map(item => item.name),
-    'Service': service,
+    Organiser: organiser,
+    'Other teams': otherTeams.map((x) => x.name),
+    'Related programmes': related_programmes.map((item) => item.name),
+    Service: service,
   })
 
   viewRecord.Documents = {
@@ -174,21 +173,23 @@ function transformEventResponseToViewRecord ({
   return viewRecord
 }
 
-function transformEventResponseToFormBody (props = {}) {
+function transformEventResponseToFormBody(props = {}) {
   const teams = props.teams || []
 
   return assign({}, props, {
-    teams: teams.map(team => get(team, 'id')),
+    teams: teams.map((team) => get(team, 'id')),
     service: get(props.service, 'id'),
     event_shared: !!teams.length,
     organiser: get(props.organiser, 'id'),
   })
 }
 
-function transformEventFormBodyToApiRequest (props) {
+function transformEventFormBodyToApiRequest(props) {
   const teamsArray = castCompactArray(props.teams)
   const related_programmes = castCompactArray(props.related_programmes)
-  const teams = props.lead_team ? teamsArray.concat(props.lead_team) : teamsArray
+  const teams = props.lead_team
+    ? teamsArray.concat(props.lead_team)
+    : teamsArray
   const organiser = props.organiser
 
   return assign({}, props, {

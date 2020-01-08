@@ -32,17 +32,20 @@ describe('Delete company list controller', () => {
         await renderDeleteCompanyListPage(
           middlewareParameters.reqMock,
           middlewareParameters.resMock,
-          middlewareParameters.nextSpy,
+          middlewareParameters.nextSpy
         )
       })
 
       it('renders the delete list page', () => {
-        expect(middlewareParameters.resMock.render).to.be.calledWith('company-lists/views/delete-list')
+        expect(middlewareParameters.resMock.render).to.be.calledWith(
+          'company-lists/views/delete-list'
+        )
         expect(middlewareParameters.resMock.render).to.have.been.calledOnce
       })
 
       it('passes props to react-slot', () => {
-        const actualProps = middlewareParameters.resMock.render.getCall(0).args[1].props
+        const actualProps = middlewareParameters.resMock.render.getCall(0)
+          .args[1].props
         expect(actualProps).to.be.deep.equal({
           companyList: companyList,
           returnUrl: '/',
@@ -50,7 +53,9 @@ describe('Delete company list controller', () => {
       })
 
       it('adds a breadcrumb', () => {
-        expect(middlewareParameters.resMock.breadcrumb.firstCall).to.be.calledWith('Delete list')
+        expect(
+          middlewareParameters.resMock.breadcrumb.firstCall
+        ).to.be.calledWith('Delete list')
       })
     })
 
@@ -61,13 +66,15 @@ describe('Delete company list controller', () => {
         await renderDeleteCompanyListPage(
           middlewareParameters.reqMock,
           middlewareParameters.resMock,
-          middlewareParameters.nextSpy,
+          middlewareParameters.nextSpy
         )
       })
 
       it('forwards the error to the next middleware', () => {
         expect(middlewareParameters.nextSpy).to.be.called
-        expect(middlewareParameters.nextSpy.firstCall.args[0]).to.be.instanceof(Error)
+        expect(middlewareParameters.nextSpy.firstCall.args[0]).to.be.instanceof(
+          Error
+        )
       })
     })
   })
@@ -82,12 +89,15 @@ describe('Delete company list controller', () => {
         await handleDeleteCompanyList(
           middlewareParameters.reqMock,
           middlewareParameters.resMock,
-          middlewareParameters.nextSpy,
+          middlewareParameters.nextSpy
         )
       })
 
       it('sets a flash message', () => {
-        expect(middlewareParameters.reqMock.flash).to.be.calledWith('success', 'List deleted')
+        expect(middlewareParameters.reqMock.flash).to.be.calledWith(
+          'success',
+          'List deleted'
+        )
       })
 
       it('sends a response', () => {
@@ -104,14 +114,16 @@ describe('Delete company list controller', () => {
         await handleDeleteCompanyList(
           middlewareParameters.reqMock,
           middlewareParameters.resMock,
-          middlewareParameters.nextSpy,
+          middlewareParameters.nextSpy
         )
       })
 
       it('forwards the error to the next middleware', () => {
         expect(middlewareParameters.resMock.send).to.not.be.called
         expect(middlewareParameters.nextSpy).to.be.called
-        expect(middlewareParameters.nextSpy.firstCall.args[0]).to.be.instanceof(requestErrors.StatusCodeError)
+        expect(middlewareParameters.nextSpy.firstCall.args[0]).to.be.instanceof(
+          requestErrors.StatusCodeError
+        )
       })
     })
   })

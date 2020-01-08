@@ -1,9 +1,23 @@
-const { assign, at, castArray, get, has, keyBy, isArray, isFunction, isEmpty, isString, map, pick, pickBy } = require('lodash')
+const {
+  assign,
+  at,
+  castArray,
+  get,
+  has,
+  keyBy,
+  isArray,
+  isFunction,
+  isEmpty,
+  isString,
+  map,
+  pick,
+  pickBy,
+} = require('lodash')
 const { getOptions } = require('../lib/options')
 
-function getDeepObjectValuesForKey (object, keyName, values = []) {
+function getDeepObjectValuesForKey(object, keyName, values = []) {
   if (isArray(object)) {
-    object.map(item => getDeepObjectValuesForKey(item, keyName, values))
+    object.map((item) => getDeepObjectValuesForKey(item, keyName, values))
   }
   map(object, (value, key) => {
     if (key === 'children' || key === 'options') {
@@ -17,17 +31,27 @@ function getDeepObjectValuesForKey (object, keyName, values = []) {
   return values
 }
 
-function assignPropsIfFoundInObject (children, sourceObject = {}, propName) {
-  if (!isArray(children) || isEmpty(sourceObject) || !propName) { return children }
+function assignPropsIfFoundInObject(children, sourceObject = {}, propName) {
+  if (!isArray(children) || isEmpty(sourceObject) || !propName) {
+    return children
+  }
 
-  return children.map(child => {
+  return children.map((child) => {
     if (child.children) {
-      child.children = assignPropsIfFoundInObject(child.children, sourceObject, propName)
+      child.children = assignPropsIfFoundInObject(
+        child.children,
+        sourceObject,
+        propName
+      )
     }
     if (isArray(child.options)) {
-      child.options.map(option => {
+      child.options.map((option) => {
         if (option.children) {
-          option.children = assignPropsIfFoundInObject(option.children, sourceObject, propName)
+          option.children = assignPropsIfFoundInObject(
+            option.children,
+            sourceObject,
+            propName
+          )
         }
         return option
       })
@@ -41,14 +65,16 @@ function assignPropsIfFoundInObject (children, sourceObject = {}, propName) {
   })
 }
 
-function buildFormWithErrors (form = {}, errorMessages = {}) {
-  if (!isArray(form.children) || isEmpty(errorMessages)) { return form }
+function buildFormWithErrors(form = {}, errorMessages = {}) {
+  if (!isArray(form.children) || isEmpty(errorMessages)) {
+    return form
+  }
 
   const formFieldNames = getDeepObjectValuesForKey(form, 'name')
   const messages = pick(pickBy(errorMessages), formFieldNames)
 
   const fieldLabels = form.children
-    .filter(x => Object.keys(messages).includes(x.name))
+    .filter((x) => Object.keys(messages).includes(x.name))
     .reduce((obj, item) => {
       obj[item.name] = item.label || item.name
       return obj
@@ -68,36 +94,48 @@ function buildFormWithErrors (form = {}, errorMessages = {}) {
   })
 }
 
-function buildFormWithState (form = {}, requestBody = {}) {
-  if (!isArray(form.children) || isEmpty(requestBody)) { return form }
+function buildFormWithState(form = {}, requestBody = {}) {
+  if (!isArray(form.children) || isEmpty(requestBody)) {
+    return form
+  }
 
-  const children = assignPropsIfFoundInObject(form.children, requestBody, 'value')
+  const children = assignPropsIfFoundInObject(
+    form.children,
+    requestBody,
+    'value'
+  )
 
   return assign({}, form, {
     children,
   })
 }
 
-function buildFormWithStateAndErrors (form, requestBody, errorsObject) {
-  if (isEmpty(requestBody)) { return form }
+function buildFormWithStateAndErrors(form, requestBody, errorsObject) {
+  if (isEmpty(requestBody)) {
+    return form
+  }
 
   const formWithState = buildFormWithState(form, requestBody)
   return buildFormWithErrors(formWithState, errorsObject)
 }
 
-function buildSelectedFiltersSummary (fields, query = {}) {
-  if (!isArray(fields)) { return }
+function buildSelectedFiltersSummary(fields, query = {}) {
+  if (!isArray(fields)) {
+    return
+  }
 
   return fields
-    .map(field => {
+    .map((field) => {
       field.value = query[field.name]
       return field
     })
-    .filter(field => field.value || get(field, 'selectedOptions', []).length > 0)
+    .filter(
+      (field) => field.value || get(field, 'selectedOptions', []).length > 0
+    )
     .reduce(buildSelectedFiltersSummaryReducer, {})
 }
 
-function buildSelectedFiltersSummaryReducer (fieldsObj, field) {
+function buildSelectedFiltersSummaryReducer(fieldsObj, field) {
   if (!isEmpty(field.selectedOptions)) {
     fieldsObj[field.name] = getFieldWithSelectedOptions(field)
     return fieldsObj
@@ -108,19 +146,27 @@ function buildSelectedFiltersSummaryReducer (fieldsObj, field) {
     valueLabel: field.value,
   }
 
-  const fieldValues = isString(field.value) ? field.value.split(',') : field.value
-  const fieldOptions = isFunction(field.options) ? field.options() : field.options
+  const fieldValues = isString(field.value)
+    ? field.value.split(',')
+    : field.value
+  const fieldOptions = isFunction(field.options)
+    ? field.options()
+    : field.options
 
   if (fieldOptions) {
-    const selectedValues = at(keyBy(fieldOptions, 'value'), fieldValues).filter(x => x)
-    fieldsObj[field.name].valueLabel = selectedValues.map(x => x.label).join(', ')
+    const selectedValues = at(keyBy(fieldOptions, 'value'), fieldValues).filter(
+      (x) => x
+    )
+    fieldsObj[field.name].valueLabel = selectedValues
+      .map((x) => x.label)
+      .join(', ')
   }
 
   return fieldsObj
 }
 
-function getFieldWithSelectedOptions (field) {
-  const values = field.selectedOptions.map(x => x.label).join(', ')
+function getFieldWithSelectedOptions(field) {
+  const values = field.selectedOptions.map((x) => x.label).join(', ')
 
   return {
     label: field.label,
@@ -128,7 +174,7 @@ function getFieldWithSelectedOptions (field) {
   }
 }
 
-async function buildFieldsWithSelectedEntities (token, fields = [], query = {}) {
+async function buildFieldsWithSelectedEntities(token, fields = [], query = {}) {
   const fieldsArray = castArray(fields)
   const processedFields = []
 

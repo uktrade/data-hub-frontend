@@ -7,7 +7,7 @@ const { saveDnbCompany, saveDnbCompanyInvestigation } = require('../../repos')
 const { getOptions } = require('../../../../lib/options')
 const { transformToDnbCompanyInvestigationApi } = require('./transformers')
 
-async function renderAddCompanyForm (req, res, next) {
+async function renderAddCompanyForm(req, res, next) {
   try {
     const { token } = req.session
     const [countries, organisationTypes, regions, sectors] = await Promise.all([
@@ -34,7 +34,7 @@ async function renderAddCompanyForm (req, res, next) {
   }
 }
 
-async function postSearchDnbCompanies (req, res, next) {
+async function postSearchDnbCompanies(req, res, next) {
   try {
     const results = await searchDnbCompanies({
       token: req.session.token,
@@ -47,9 +47,12 @@ async function postSearchDnbCompanies (req, res, next) {
   }
 }
 
-async function postAddDnbCompany (req, res, next) {
+async function postAddDnbCompany(req, res, next) {
   try {
-    const result = await saveDnbCompany(req.session.token, req.body.dnbCompany.duns_number)
+    const result = await saveDnbCompany(
+      req.session.token,
+      req.body.dnbCompany.duns_number
+    )
     req.flash('success', 'Company added to Data Hub')
     res.json(result)
   } catch (error) {
@@ -57,10 +60,13 @@ async function postAddDnbCompany (req, res, next) {
   }
 }
 
-async function postAddDnbCompanyInvestigation (req, res, next) {
+async function postAddDnbCompanyInvestigation(req, res, next) {
   try {
     const transformed = transformToDnbCompanyInvestigationApi(req.body)
-    const result = await saveDnbCompanyInvestigation(req.session.token, transformed)
+    const result = await saveDnbCompanyInvestigation(
+      req.session.token,
+      transformed
+    )
     req.flash('success', 'Company added to Data Hub')
     res.json(result)
   } catch (error) {

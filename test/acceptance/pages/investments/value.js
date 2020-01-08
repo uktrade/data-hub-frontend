@@ -5,11 +5,15 @@ const { getButtonWithText } = require('../../helpers/selectors')
 module.exports = {
   url: process.env.QA_HOST,
   elements: {
-    totalInvestmentRadioYes: '[for="field-client_cannot_provide_total_investment-1"]',
-    totalInvestmentRadioNo: '[for="field-client_cannot_provide_total_investment-2"]',
+    totalInvestmentRadioYes:
+      '[for="field-client_cannot_provide_total_investment-1"]',
+    totalInvestmentRadioNo:
+      '[for="field-client_cannot_provide_total_investment-2"]',
     totalInvestment: '#field-total_investment',
-    foreignEquityInvestmentRadioYes: '[for="field-client_cannot_provide_foreign_investment-1"]',
-    foreignEquityInvestmentRadioNo: '[for="field-client_cannot_provide_foreign_investment-2"]',
+    foreignEquityInvestmentRadioYes:
+      '[for="field-client_cannot_provide_foreign_investment-1"]',
+    foreignEquityInvestmentRadioNo:
+      '[for="field-client_cannot_provide_foreign_investment-2"]',
     foreignEquityInvestment: '#field-foreign_equity_investment',
     newJobs: '#field-number_new_jobs',
     safeguardedJobs: '#field-number_safeguarded_jobs',
@@ -27,18 +31,20 @@ module.exports = {
   },
   commands: [
     {
-      add (details = {}, callback) {
+      add(details = {}, callback) {
         this.waitForElementPresent('@saveButton')
 
-        const radioOptions = filter(keys(details), (key) => endsWith(key, 'Radio'))
+        const radioOptions = filter(keys(details), (key) =>
+          endsWith(key, 'Radio')
+        )
         forEach(radioOptions, (key) => {
           this.click(`@${key + details[key]}`)
         })
 
         const randomlySetRadioOptions = {}
 
-        return this
-          .api.perform((done) => {
+        return this.api
+          .perform((done) => {
             this.getRadioOption({ name: 'average_salary' }, (result) => {
               this.api.useCss().click(result.labelSelector)
               randomlySetRadioOptions.averageSalary = result
@@ -46,19 +52,22 @@ module.exports = {
             })
           })
           .perform(() => {
-            const textFields = filter(keys(details), (key) => !endsWith(key, 'Radio'))
+            const textFields = filter(
+              keys(details),
+              (key) => !endsWith(key, 'Radio')
+            )
             forEach(textFields, (key) => {
               this.replaceValue(`@${key}`, details[key])
             })
             forEach(keys(randomlySetRadioOptions), (key) => {
-              this.api.useCss().click(randomlySetRadioOptions[key].labelSelector)
+              this.api
+                .useCss()
+                .click(randomlySetRadioOptions[key].labelSelector)
               details[key] = randomlySetRadioOptions[key].text
             })
           })
           .perform(() => {
-            this
-              .waitForElementPresent('@saveButton')
-              .click('@saveButton')
+            this.waitForElementPresent('@saveButton').click('@saveButton')
 
             callback(details)
           })

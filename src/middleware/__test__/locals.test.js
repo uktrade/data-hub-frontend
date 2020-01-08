@@ -17,7 +17,7 @@ describe('locals', () => {
     locals(
       middlewareParameters.reqMock,
       middlewareParameters.resMock,
-      middlewareParameters.nextSpy,
+      middlewareParameters.nextSpy
     )
 
     const {
@@ -60,19 +60,19 @@ describe('locals', () => {
     locals(
       middlewareParameters.reqMock,
       middlewareParameters.resMock,
-      middlewareParameters.nextSpy,
+      middlewareParameters.nextSpy
     )
 
     const breadcrumbs = middlewareParameters.resMock.locals.getBreadcrumbs()
 
     expect(breadcrumbs).to.deep.equal([
       {
-        'href': '/breadcrumb-1',
-        'text': 'breadcrumb-1',
+        href: '/breadcrumb-1',
+        text: 'breadcrumb-1',
       },
       {
-        'href': null,
-        'text': 'breadcrumb-2',
+        href: null,
+        text: 'breadcrumb-2',
       },
     ])
   })

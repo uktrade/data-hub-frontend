@@ -1,9 +1,7 @@
 const APP_PERMISSIONS = [
   {
-    'path': 'delete',
-    'permissions': [
-      'company_list.delete_companylist',
-    ],
+    path: 'delete',
+    permissions: ['company_list.delete_companylist'],
   },
 ]
 

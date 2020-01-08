@@ -38,7 +38,9 @@ describe('archive form control', () => {
     this.document = window.document
     this.form = this.document.querySelector('.js-archiveForm')
     this.archiveFormControl = ArchiveForm.init(this.document)
-    this.otherWrapper = this.document.querySelector('#archived_reason_other-wrapper')
+    this.otherWrapper = this.document.querySelector(
+      '#archived_reason_other-wrapper'
+    )
     this.otherField = this.document.querySelector('#archived_reason_other')
     this.dropdownField = this.document.querySelector('#archived_reason')
   })
@@ -83,15 +85,21 @@ describe('archive form control', () => {
 
     const fieldsetElement = this.form.querySelector('fieldset')
     expect(domTokenToArray(fieldsetElement.classList)).to.include('error')
-    const errorMessage = this.document.querySelector('#archived_reason-wrapper .form-label-bold .error-message')
+    const errorMessage = this.document.querySelector(
+      '#archived_reason-wrapper .form-label-bold .error-message'
+    )
     expect(errorMessage).to.not.be.null
-    expect(errorMessage.textContent).to.include('You must provide a reason to archive.')
+    expect(errorMessage.textContent).to.include(
+      'You must provide a reason to archive.'
+    )
   })
 
   it('should not add 2 errors if you try to submit bad data twice', () => {
     this.archiveFormControl.validateForm(event)
     this.archiveFormControl.validateForm(event)
-    const errorMessages = this.document.querySelectorAll('#archived_reason-wrapper .form-label-bold .error-message')
+    const errorMessages = this.document.querySelectorAll(
+      '#archived_reason-wrapper .form-label-bold .error-message'
+    )
     expect(errorMessages.length).to.equal(1)
   })
 

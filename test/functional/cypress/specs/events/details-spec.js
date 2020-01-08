@@ -13,15 +13,16 @@ describe('Event Details', () => {
       'Type of event': 'Exhibition',
       'Event date': '1 January 2021',
       'Event location type': 'HQ',
-      'Address': 'Day Court Exhibition Centre, Day Court Lane, China, SW9 9AB, China',
-      'Region': '',
-      'Notes': 'This is a dummy event for testing.',
+      Address:
+        'Day Court Exhibition Centre, Day Court Lane, China, SW9 9AB, China',
+      Region: '',
+      Notes: 'This is a dummy event for testing.',
       'Lead team': 'CBBC Hangzhou',
-      'Organiser': 'John Rogers',
+      Organiser: 'John Rogers',
       'Other teams': 'CBBC North West',
       'Related programmes': 'Grown in Britain',
-      'Service': 'Events : UK Based',
-      'Documents': 'View files and documents (will open another website)',
+      Service: 'Events : UK Based',
+      Documents: 'View files and documents (will open another website)',
     })
   })
 
@@ -35,15 +36,16 @@ describe('Event Details', () => {
         'Type of event': 'Exhibition',
         'Event date': '1 January 2021',
         'Event location type': 'HQ',
-        'Address': 'Day Court Exhibition Centre, Day Court Lane, China, SW9 9AB, China',
-        'Region': '',
-        'Notes': 'This is a dummy event for testing.',
+        Address:
+          'Day Court Exhibition Centre, Day Court Lane, China, SW9 9AB, China',
+        Region: '',
+        Notes: 'This is a dummy event for testing.',
         'Lead team': 'CBBC Hangzhou',
-        'Organiser': 'John Rogers',
+        Organiser: 'John Rogers',
         'Other teams': 'CBBC North West',
         'Related programmes': 'Grown in Britain',
-        'Service': 'Events : UK Based',
-        'Documents': 'There are no files or documents',
+        Service: 'Events : UK Based',
+        Documents: 'There are no files or documents',
       })
     })
 

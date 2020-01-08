@@ -1,4 +1,4 @@
-async function renderSelect (req, res) {
+async function renderSelect(req, res) {
   const { company } = res.locals
 
   res

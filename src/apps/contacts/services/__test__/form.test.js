@@ -13,7 +13,7 @@ describe('contact form service', () => {
     contactFormService = proxyquire('../form', {
       '../repos': {
         savedContactForm: null,
-        saveContact: function (token, contactForm) {
+        saveContact: function(token, contactForm) {
           return new Promise((resolve, reject) => {
             postedData = contactForm
 
@@ -218,7 +218,8 @@ describe('contact form service', () => {
         notes: 'Some notes',
       }
 
-      return contactFormService.saveContactForm('1234', formData)
+      return contactFormService
+        .saveContactForm('1234', formData)
         .then((savedContact) => {
           expect(postedData).to.deep.equal(expected)
         })
@@ -227,7 +228,8 @@ describe('contact form service', () => {
     it('should return a copy of the saved contact', () => {
       delete formData.id
 
-      return contactFormService.saveContactForm('1234', formData)
+      return contactFormService
+        .saveContactForm('1234', formData)
         .then((savedContact) => {
           expect(savedContact.id).to.not.be.null
         })
@@ -236,7 +238,8 @@ describe('contact form service', () => {
     it('should throw errors received from the repository if the save fails', () => {
       throwError = true
 
-      return contactFormService.saveContactForm('1234', formData)
+      return contactFormService
+        .saveContactForm('1234', formData)
         .catch((error) => {
           expect(error.error).to.equal('test error')
         })

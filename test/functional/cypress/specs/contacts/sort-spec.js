@@ -6,8 +6,13 @@ describe('Contact Collections Sort', () => {
     cy.server()
     cy.route('/contacts?*').as('sortResults')
     cy.visit('/contacts?sortby=collectionTest')
-    cy.get(selectors.entityCollection.entities).children().should('have.length', 9)
-    cy.get(selectors.entityCollection.collection).should('contain', '9 contacts')
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 9)
+    cy.get(selectors.entityCollection.collection).should(
+      'contain',
+      '9 contacts'
+    )
   })
 
   it('should sort by country AZ', () => {
@@ -17,7 +22,9 @@ describe('Contact Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=address_country.name:asc')
     })
 
-    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 2)
     cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort By')
   })
 
@@ -28,7 +35,9 @@ describe('Contact Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=last_name:asc')
     })
 
-    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 2)
     cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort By')
   })
 
@@ -39,7 +48,9 @@ describe('Contact Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=company.name:asc')
     })
 
-    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 2)
     cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort By')
   })
 
@@ -50,7 +61,9 @@ describe('Contact Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=modified_on:asc')
     })
 
-    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 2)
     cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort By')
   })
 
@@ -61,7 +74,9 @@ describe('Contact Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=modified_on:desc')
     })
 
-    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 2)
     cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort By')
   })
 
@@ -72,7 +87,9 @@ describe('Contact Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=created_on:desc')
     })
 
-    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 2)
     cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort By')
   })
 
@@ -83,7 +100,9 @@ describe('Contact Collections Sort', () => {
       expect(xhr.url).to.contain('?custom=true&sortby=created_on:asc')
     })
 
-    cy.get(selectors.entityCollection.entities).children().should('have.length', 2)
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 2)
     cy.get(selectors.entityCollection.entity(1)).should('contain', 'Sort By')
   })
 })
@@ -94,14 +113,16 @@ describe('Company Contact Collections Sort', () => {
   })
 
   it('should load sort by dropdown', () => {
-    cy.get(`${selectors.entityCollection.sort} option`).then(options => {
-      const actual = [...options].map(o => o.value)
-      expect(actual).to.deep.eq(['created_on:desc',
+    cy.get(`${selectors.entityCollection.sort} option`).then((options) => {
+      const actual = [...options].map((o) => o.value)
+      expect(actual).to.deep.eq([
+        'created_on:desc',
         'created_on:asc',
         'modified_on:desc',
         'modified_on:asc',
         'last_name:asc',
-        'address_country.name:asc'])
+        'address_country.name:asc',
+      ])
     })
   })
 })

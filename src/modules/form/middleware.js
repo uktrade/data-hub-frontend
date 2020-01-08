@@ -11,7 +11,7 @@ const setJourneyDetails = (journey, currentStep, currentStepId) => {
       currentStep,
       currentStepId,
       ...journey,
-      key: joinPaths([ req.baseUrl, journey.steps[0].path ]),
+      key: joinPaths([req.baseUrl, journey.steps[0].path]),
     }
 
     next()
@@ -36,7 +36,9 @@ const postDetails = async (req, res, next) => {
 
       state.remove(req.session, key)
       req.flash('success', currentStep.done.message)
-      res.redirect(joinPaths([ res.locals.returnLink, currentStep.done.nextPath(response) ]))
+      res.redirect(
+        joinPaths([res.locals.returnLink, currentStep.done.nextPath(response)])
+      )
     } catch (err) {
       state.update(req.session, key, currentStep.path, { completed: false })
       if (err.statusCode === 400) {
@@ -48,8 +50,11 @@ const postDetails = async (req, res, next) => {
     }
   } else {
     const nextPath = getNextPath(currentStep, req.body)
-    state.update(req.session, key, currentStep.path, { completed: true, nextPath })
-    res.redirect(joinPaths([ req.baseUrl, nextPath ]))
+    state.update(req.session, key, currentStep.path, {
+      completed: true,
+      nextPath,
+    })
+    res.redirect(joinPaths([req.baseUrl, nextPath]))
   }
 }
 

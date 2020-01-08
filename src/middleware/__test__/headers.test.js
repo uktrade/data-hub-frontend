@@ -10,30 +10,12 @@ describe('headers middleware', () => {
       headers(reqMock, resMock, nextMock)
 
       expect(resMock.set.args).to.be.deep.equal([
-        [
-          'Cache-Control',
-          'no-cache, no-store, must-revalidate, private',
-        ],
-        [
-          'Pragma',
-          'no-cache',
-        ],
-        [
-          'X-Frame-Options',
-          'DENY',
-        ],
-        [
-          'X-Content-Type-Options',
-          'nosniff',
-        ],
-        [
-          'X-XSS-Protection',
-          '1; mode=block',
-        ],
-        [
-          'Strict-Transport-Security',
-          'max-age=15552000',
-        ],
+        ['Cache-Control', 'no-cache, no-store, must-revalidate, private'],
+        ['Pragma', 'no-cache'],
+        ['X-Frame-Options', 'DENY'],
+        ['X-Content-Type-Options', 'nosniff'],
+        ['X-XSS-Protection', '1; mode=block'],
+        ['Strict-Transport-Security', 'max-age=15552000'],
       ])
 
       expect(nextMock).to.be.called

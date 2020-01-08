@@ -13,7 +13,7 @@ describe('Companies hierarchies controller', () => {
       renderAddGlobalHQ(
         this.middlewareParameters.reqMock,
         this.middlewareParameters.resMock,
-        this.middlewareParameters.nextSpy,
+        this.middlewareParameters.nextSpy
       )
     })
 
@@ -22,16 +22,23 @@ describe('Companies hierarchies controller', () => {
     })
 
     it('should call breadcrumb with', () => {
-      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWith(companyMock.name, `/companies/${companyMock.id}`)
+      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWith(
+        companyMock.name,
+        `/companies/${companyMock.id}`
+      )
     })
 
     it('should call breadcrumb with', () => {
-      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWith('Link Global HQ')
+      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWith(
+        'Link Global HQ'
+      )
     })
 
     it('should call render', () => {
       expect(this.middlewareParameters.resMock.render).to.be.calledOnce
-      expect(this.middlewareParameters.resMock.render).to.be.calledWith('companies/views/add-global-hq.njk')
+      expect(this.middlewareParameters.resMock.render).to.be.calledWith(
+        'companies/views/add-global-hq.njk'
+      )
     })
   })
 })

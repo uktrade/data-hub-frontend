@@ -9,7 +9,7 @@ const FILTER_CONSTANTS = require('../../lib/filter-constants')
 const PRIMARY_SECTOR_NAME =
   FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.PRIMARY.NAME
 
-const investmentFiltersFields = function ({
+const investmentFiltersFields = function({
   currentAdviserId,
   sectorOptions,
   adviserOptions,
@@ -21,7 +21,7 @@ const investmentFiltersFields = function ({
       name: 'stage',
       type: 'checkbox',
       modifier: 'option-select',
-      options () {
+      options() {
         return metadata.investmentStageOptions.map(transformObjectToOption)
       },
     },
@@ -68,7 +68,7 @@ const investmentFiltersFields = function ({
       name: 'uk_region_location',
       type: 'checkbox',
       modifier: 'option-select',
-      options () {
+      options() {
         return metadata.regionOptions.map(transformObjectToOption)
       },
     },
@@ -84,7 +84,7 @@ const investmentFiltersFields = function ({
       name: 'investment_type',
       type: 'checkbox',
       modifier: 'option-select',
-      options () {
+      options() {
         return metadata.investmentTypeOptions.map(transformObjectToOption)
       },
     },
@@ -93,7 +93,7 @@ const investmentFiltersFields = function ({
       name: 'likelihood_to_land',
       type: 'checkbox',
       modifier: 'option-select',
-      options () {
+      options() {
         return metadata.likelihoodToLandOptions.map(transformObjectToOption)
       },
     },
@@ -136,7 +136,7 @@ const investmentFiltersFields = function ({
         { value: 'unspecified', label: 'Unspecified' },
       ],
     },
-  ].map(filter => {
+  ].map((filter) => {
     return Object.assign(filter, {
       label: collectionFilterLabels.edit[filter.name],
       modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
@@ -322,7 +322,7 @@ const requirementsFormConfig = ({
           },
         ],
       },
-    ].map(field => {
+    ].map((field) => {
       return assign(field, {
         label: requirementsLabels.edit[field.name],
       })
@@ -344,7 +344,7 @@ const statusFormConfig = {
   ],
 }
 
-const investmentProfilesFiltersFields = function ({
+const investmentProfilesFiltersFields = function({
   currentAdviserId,
   sectorOptions,
   userAgent,
@@ -361,7 +361,7 @@ const investmentProfilesFiltersFields = function ({
         { value: 'unspecified', label: 'Unspecified' },
       ],
     },
-  ].map(filter => {
+  ].map((filter) => {
     return Object.assign(filter, {
       label: collectionFilterLabels.edit[filter.name],
       modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),

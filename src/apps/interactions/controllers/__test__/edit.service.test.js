@@ -29,7 +29,9 @@ describe('Interaction edit controller (Service delivery)', () => {
 
     this.nextStub = sinon.stub()
 
-    const yesterday = moment().subtract(1, 'days').toISOString()
+    const yesterday = moment()
+      .subtract(1, 'days')
+      .toISOString()
 
     this.metadataMock = {
       teamOptions: [
@@ -65,46 +67,62 @@ describe('Interaction edit controller (Service delivery)', () => {
       ],
     }
 
-    this.activeInactiveAdviserData = [{
-      id: '1',
-      name: 'Jeff Smith',
-      is_active: true,
-      dit_team: {
-        name: 'London',
+    this.activeInactiveAdviserData = [
+      {
+        id: '1',
+        name: 'Jeff Smith',
+        is_active: true,
+        dit_team: {
+          name: 'London',
+        },
       },
-    }, {
-      id: '2',
-      name: 'John Smith',
-      is_active: true,
-      dit_team: {
-        name: 'London',
+      {
+        id: '2',
+        name: 'John Smith',
+        is_active: true,
+        dit_team: {
+          name: 'London',
+        },
       },
-    }, {
-      id: '3',
-      name: 'Zac Smith',
-      is_active: true,
-      dit_team: {
-        name: 'London',
+      {
+        id: '3',
+        name: 'Zac Smith',
+        is_active: true,
+        dit_team: {
+          name: 'London',
+        },
       },
-    }, {
-      id: '4',
-      name: 'Fred Smith',
-      is_active: false,
-      dit_team: {
-        name: 'London',
+      {
+        id: '4',
+        name: 'Fred Smith',
+        is_active: false,
+        dit_team: {
+          name: 'London',
+        },
       },
-    }, {
-      id: '5',
-      name: 'Jim Smith',
-      is_active: false,
-      dit_team: {
-        name: 'London',
+      {
+        id: '5',
+        name: 'Jim Smith',
+        is_active: false,
+        dit_team: {
+          name: 'London',
+        },
       },
-    }]
+    ]
 
     this.contactsData = [
-      { id: '999', first_name: 'Fred', last_name: 'Smith', job_title: 'Manager' },
-      { id: '998', first_name: 'Emily', last_name: 'Brown', job_title: 'Director' },
+      {
+        id: '999',
+        first_name: 'Fred',
+        last_name: 'Smith',
+        job_title: 'Manager',
+      },
+      {
+        id: '998',
+        first_name: 'Emily',
+        last_name: 'Brown',
+        job_title: 'Director',
+      },
     ]
 
     this.eventsData = [
@@ -128,10 +146,12 @@ describe('Interaction edit controller (Service delivery)', () => {
           name: 'Fred ltd.',
         },
         interaction: {
-          contacts: [{
-            id: '2',
-            name: 'Fred Bloggs',
-          }],
+          contacts: [
+            {
+              id: '2',
+              name: 'Fred Bloggs',
+            },
+          ],
         },
         interactions: {
           returnLink: '/return',
@@ -168,11 +188,15 @@ describe('Interaction edit controller (Service delivery)', () => {
     })
 
     it('should add a breadcrumb', () => {
-      expect(this.res.breadcrumb.firstCall).to.be.calledWith('Add service delivery')
+      expect(this.res.breadcrumb.firstCall).to.be.calledWith(
+        'Add service delivery'
+      )
     })
 
     it('should add a title', () => {
-      expect(this.res.title.firstCall).to.be.calledWith('Add service delivery for Fred Bloggs')
+      expect(this.res.title.firstCall).to.be.calledWith(
+        'Add service delivery for Fred Bloggs'
+      )
     })
 
     it('should include a service delivery form', async () => {
@@ -181,7 +205,16 @@ describe('Interaction edit controller (Service delivery)', () => {
     })
 
     it('should generate a form with the required fields', () => {
-      const fields = this.interactionForm.children.map(field => pick(field, ['name', 'label', 'macroName', 'type', 'heading', 'secondaryHeading']))
+      const fields = this.interactionForm.children.map((field) =>
+        pick(field, [
+          'name',
+          'label',
+          'macroName',
+          'type',
+          'heading',
+          'secondaryHeading',
+        ])
+      )
       expect(fields).to.deep.equal([
         {
           label: undefined,
@@ -302,11 +335,15 @@ describe('Interaction edit controller (Service delivery)', () => {
           label: 'Policy feedback notes',
           macroName: 'TextField',
           type: 'textarea',
-        }])
+        },
+      ])
     })
 
     it('should provide a list of contacts', () => {
-      const contactField = find(this.interactionForm.children, ({ name }) => name === 'contacts')
+      const contactField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'contacts'
+      )
       const contacts = contactField.children[0].options
       expect(contacts).to.deep.equal([
         { value: '998', label: 'Emily Brown, Director' },
@@ -315,7 +352,10 @@ describe('Interaction edit controller (Service delivery)', () => {
     })
 
     it('should provide a list of services', () => {
-      const serviceField = find(this.interactionForm.children, ({ name }) => name === 'service')
+      const serviceField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'service'
+      )
       expect(serviceField.options).to.deep.equal([
         {
           value: 'sv1',
@@ -331,12 +371,15 @@ describe('Interaction edit controller (Service delivery)', () => {
           value: 'sv3',
           label: 'Making Introductions (Export)',
           isControlledBySecondary: false,
-        }]
-      )
+        },
+      ])
     })
 
     it('should provide a list of advisers', () => {
-      const adviserField = find(this.interactionForm.children, ({ name }) => name === 'dit_participants')
+      const adviserField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'dit_participants'
+      )
       expect(adviserField.children[0].options).to.deep.equal([
         { value: '1', label: 'Jeff Smith', subLabel: 'London' },
         { value: '2', label: 'John Smith', subLabel: 'London' },
@@ -345,7 +388,10 @@ describe('Interaction edit controller (Service delivery)', () => {
     })
 
     it('should provide a list of events', () => {
-      const eventField = find(this.interactionForm.children, ({ name }) => name === 'event')
+      const eventField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'event'
+      )
       expect(eventField.options).to.deep.equal([
         { value: '888', label: 'event 1' },
         { value: '889', label: 'event 2' },
@@ -353,7 +399,10 @@ describe('Interaction edit controller (Service delivery)', () => {
     })
 
     it('should provide a list of delivery status options', () => {
-      const deliveryStatusField = find(this.interactionForm.children, ({ name }) => name === 'service_delivery_status')
+      const deliveryStatusField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'service_delivery_status'
+      )
       expect(deliveryStatusField.options).to.deep.equal([
         { value: '1', label: 'ss1' },
         { value: '2', label: 'ss2' },
@@ -367,17 +416,26 @@ describe('Interaction edit controller (Service delivery)', () => {
     })
 
     it('should set the default contact to the current contact', () => {
-      const contactField = find(this.interactionForm.children, ({ name }) => name === 'contacts')
+      const contactField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'contacts'
+      )
       expect(contactField.value).to.deep.equal(['2'])
     })
 
     it('should set the default for the adviser to the current user', () => {
-      const adviserField = find(this.interactionForm.children, ({ name }) => name === 'dit_participants')
+      const adviserField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'dit_participants'
+      )
       expect(adviserField.value).to.deep.equal(['user1'])
     })
 
     it('should set the interaction date to the current date', () => {
-      const dateField = find(this.interactionForm.children, ({ name }) => name === 'date')
+      const dateField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'date'
+      )
 
       const now = moment()
 
@@ -387,8 +445,14 @@ describe('Interaction edit controller (Service delivery)', () => {
     })
 
     it('should not include unrelated contexts as a service option', () => {
-      const serviceField = find(this.interactionForm.children, ({ name }) => name === 'service')
-      const policyFeedbackOption = find(serviceField.options, ({ label }) => label === 'Unrelated context')
+      const serviceField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'service'
+      )
+      const policyFeedbackOption = find(
+        serviceField.options,
+        ({ label }) => label === 'Unrelated context'
+      )
       expect(policyFeedbackOption).to.be.undefined
     })
 
@@ -501,7 +565,9 @@ describe('Interaction edit controller (Service delivery)', () => {
     })
 
     it('should add a breadcrumb', () => {
-      expect(this.res.breadcrumb.firstCall).to.be.calledWith('Edit service delivery')
+      expect(this.res.breadcrumb.firstCall).to.be.calledWith(
+        'Edit service delivery'
+      )
     })
 
     it('should add a title', () => {
@@ -514,7 +580,17 @@ describe('Interaction edit controller (Service delivery)', () => {
     })
 
     it('should generate a form with the required fields and values populated', () => {
-      const fields = this.interactionForm.children.map(field => pick(field, ['name', 'label', 'macroName', 'type', 'value', 'heading', 'secondaryHeading']))
+      const fields = this.interactionForm.children.map((field) =>
+        pick(field, [
+          'name',
+          'label',
+          'macroName',
+          'type',
+          'value',
+          'heading',
+          'secondaryHeading',
+        ])
+      )
       expect(fields).to.deep.equal([
         {
           label: undefined,
@@ -662,12 +738,15 @@ describe('Interaction edit controller (Service delivery)', () => {
           macroName: 'TextField',
           type: 'textarea',
           value: undefined,
-        }]
-      )
+        },
+      ])
     })
 
     it('should provide a list of contacts', () => {
-      const contactField = find(this.interactionForm.children, ({ name }) => name === 'contacts')
+      const contactField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'contacts'
+      )
       const contact = contactField.children[0]
       expect(contact.options).to.deep.equal([
         { value: '998', label: 'Emily Brown, Director' },
@@ -676,7 +755,10 @@ describe('Interaction edit controller (Service delivery)', () => {
     })
 
     it('should provide a list of services at creation time', () => {
-      const serviceField = find(this.interactionForm.children, ({ name }) => name === 'service')
+      const serviceField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'service'
+      )
       expect(serviceField.options).to.deep.equal([
         {
           value: 'sv1',
@@ -692,11 +774,15 @@ describe('Interaction edit controller (Service delivery)', () => {
           value: 'sv3',
           label: 'Making Introductions (Export)',
           isControlledBySecondary: false,
-        }])
+        },
+      ])
     })
 
     it('should provide a list of advisers', () => {
-      const adviserField = find(this.interactionForm.children, ({ name }) => name === 'dit_participants')
+      const adviserField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'dit_participants'
+      )
       expect(adviserField.children[0].options).to.deep.equal([
         { value: '1', label: 'Jeff Smith', subLabel: 'London' },
         { value: '2', label: 'John Smith', subLabel: 'London' },
@@ -715,13 +801,21 @@ describe('Interaction edit controller (Service delivery)', () => {
     })
 
     it('should not include unrelated contexts as a service option', () => {
-      const serviceField = find(this.interactionForm.children, ({ name }) => name === 'service')
-      const policyFeedbackOption = find(serviceField.options, ({ label }) => label === 'Unrelated context')
+      const serviceField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'service'
+      )
+      const policyFeedbackOption = find(
+        serviceField.options,
+        ({ label }) => label === 'Unrelated context'
+      )
       expect(policyFeedbackOption).to.be.undefined
     })
 
     it('should set the return link to the detail view', () => {
-      expect(this.interactionForm.returnLink).to.equal('/interactions/af4aac84-4d6a-47df-a733-5a54e3008c32')
+      expect(this.interactionForm.returnLink).to.equal(
+        '/interactions/af4aac84-4d6a-47df-a733-5a54e3008c32'
+      )
     })
 
     it('should set the appropriate return text', () => {
@@ -786,7 +880,17 @@ describe('Interaction edit controller (Service delivery)', () => {
     })
 
     it('should merge the changes on top of the original record', () => {
-      const fields = this.interactionForm.children.map(field => pick(field, ['name', 'label', 'macroName', 'type', 'value', 'heading', 'secondaryHeading']))
+      const fields = this.interactionForm.children.map((field) =>
+        pick(field, [
+          'name',
+          'label',
+          'macroName',
+          'type',
+          'value',
+          'heading',
+          'secondaryHeading',
+        ])
+      )
       expect(fields).to.deep.equal([
         {
           label: undefined,
@@ -934,11 +1038,15 @@ describe('Interaction edit controller (Service delivery)', () => {
           macroName: 'TextField',
           type: 'textarea',
           value: undefined,
-        }])
+        },
+      ])
     })
 
     it('should include the error in the form', () => {
-      const subjectField = find(this.interactionForm.children, ({ name }) => name === 'subject')
+      const subjectField = find(
+        this.interactionForm.children,
+        ({ name }) => name === 'subject'
+      )
       expect(subjectField.error).to.deep.equal(['Error message'])
     })
   })

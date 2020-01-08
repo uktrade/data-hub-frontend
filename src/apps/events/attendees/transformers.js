@@ -4,12 +4,28 @@ const { compact, get, pickBy } = require('lodash')
 const { attendeeLabels } = require('./labels')
 const { fetchEventAttendees } = require('./repos')
 
-function transformServiceDeliveryToAttendeeListItem ({ contacts = [], company, date, id }) {
+function transformServiceDeliveryToAttendeeListItem({
+  contacts = [],
+  company,
+  date,
+  id,
+}) {
   const metaItems = [
-    { key: 'company', value: get(company, 'name'), url: `/companies/${get(company, 'id')}` },
-    { key: 'job_title', value: contacts.length ? contacts[0].job_title : 'Not available' },
+    {
+      key: 'company',
+      value: get(company, 'name'),
+      url: `/companies/${get(company, 'id')}`,
+    },
+    {
+      key: 'job_title',
+      value: contacts.length ? contacts[0].job_title : 'Not available',
+    },
     { key: 'attended_date', value: date, type: 'date' },
-    { key: 'service_delivery', value: 'View or edit service delivery', url: `/interactions/${id}` },
+    {
+      key: 'service_delivery',
+      value: 'View or edit service delivery',
+      url: `/interactions/${id}`,
+    },
   ]
     .filter(({ value }) => value)
     .map(({ key, value, type, url }) => ({
@@ -19,23 +35,27 @@ function transformServiceDeliveryToAttendeeListItem ({ contacts = [], company, d
 
   const listItem = contacts.length
     ? {
-      id: contacts[0].id,
-      type: 'contact',
-      name: contacts[0].name,
-      meta: compact(metaItems),
-    }
+        id: contacts[0].id,
+        type: 'contact',
+        name: contacts[0].name,
+        meta: compact(metaItems),
+      }
     : {
-      id,
-      type: 'interaction',
-      name: 'No contact assigned',
-      meta: compact(metaItems),
-    }
+        id,
+        type: 'interaction',
+        name: 'No contact assigned',
+        meta: compact(metaItems),
+      }
 
   return listItem
 }
 
-async function createContactItemToAttendeeSearchResult (token, event) {
-  const attendees = await fetchEventAttendees({ token, eventId: event.id, limit: 9999 })
+async function createContactItemToAttendeeSearchResult(token, event) {
+  const attendees = await fetchEventAttendees({
+    token,
+    eventId: event.id,
+    limit: 9999,
+  })
 
   return (contact) => {
     const isExistingAttendee = existingAttendee(contact, attendees)
@@ -47,7 +67,7 @@ async function createContactItemToAttendeeSearchResult (token, event) {
       }
     }
 
-    const meta = contact.meta.filter(metaItem => metaItem.type !== 'badge')
+    const meta = contact.meta.filter((metaItem) => metaItem.type !== 'badge')
     meta.push({
       label: 'Existing',
       type: 'badge',
@@ -62,7 +82,7 @@ async function createContactItemToAttendeeSearchResult (token, event) {
   }
 }
 
-function existingAttendee ({ id }, attendees) {
+function existingAttendee({ id }, attendees) {
   return attendees.results.find((attendee) => {
     const contact = attendee.contacts && attendee.contacts[0]
     return contact ? contact.id === id : false

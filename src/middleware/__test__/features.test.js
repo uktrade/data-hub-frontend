@@ -24,13 +24,16 @@ describe('feature flag middleware', () => {
       },
     })
 
-    this.featuresData = [{
-      code: 'cfe1',
-      is_active: true,
-    }, {
-      code: 'tea1',
-      is_active: false,
-    }]
+    this.featuresData = [
+      {
+        code: 'cfe1',
+        is_active: true,
+      },
+      {
+        code: 'tea1',
+        is_active: false,
+      },
+    ]
   })
 
   context('when the user is not logged in', () => {
@@ -169,7 +172,9 @@ describe('feature flag middleware', () => {
     })
 
     it('should log the error', () => {
-      expect(this.loggerStub).to.be.calledWith('Unable to fetch feature flags: StatusCodeError: 500 - "Error message"')
+      expect(this.loggerStub).to.be.calledWith(
+        'Unable to fetch feature flags: StatusCodeError: 500 - "Error message"'
+      )
     })
   })
 })

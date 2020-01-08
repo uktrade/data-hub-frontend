@@ -14,11 +14,11 @@ module.exports = {
     foreign: {
       id: '0fb3379c-341c-4da4-b825-bf8d47b26baa',
       name: 'Lambda plc',
-      address1: '12 St George\'s Road',
+      address1: "12 St George's Road",
       town: 'Paris',
       postcode: '75001',
       country: 'France',
-      primaryAddress: '12 St George\'s Road, Paris, 75001, France',
+      primaryAddress: "12 St George's Road, Paris, 75001, France",
       businessType: 'Company',
       headquarterType: 'Not a headquarters',
       sector: 'Retail',
@@ -59,16 +59,17 @@ module.exports = {
       description: 'This is a dummy company for testing',
       referenceCode: 'ORG-10096257',
       oneListTier: 'Tier A - Strategic Account',
-      globalAccountManager: 'Travis Greene\nIST - Sector Advisory Services\nLondon',
+      globalAccountManager:
+        'Travis Greene\nIST - Sector Advisory Services\nLondon',
     },
     oneListCorp: {
       id: '375094ac-f79a-43e5-9c88-059a7caa17f0',
       name: 'One List Corp',
-      address1: '12 St George\'s Road',
+      address1: "12 St George's Road",
       town: 'Paris',
       postcode: '75001',
       country: 'France',
-      primaryAddress: '12 St George\'s Road, Paris, 75001, France',
+      primaryAddress: "12 St George's Road, Paris, 75001, France",
       businessType: 'Company',
       headquarterType: 'Global HQ',
       subsidiaries: '1 subsidiary',
@@ -77,7 +78,8 @@ module.exports = {
       employeeRange: '500+',
       turnoverRange: '£33.5M+',
       oneListTier: 'Tier A - Strategic Account',
-      globalAccountManager: 'Travis Greene\nIST - Sector Advisory Services\nLondon',
+      globalAccountManager:
+        'Travis Greene\nIST - Sector Advisory Services\nLondon',
       duns_number: 'abc123',
     },
     dnbCorp: {
@@ -92,9 +94,12 @@ module.exports = {
       businessType: 'Company',
       globalHq: 'None',
       sector: 'Retail',
-      description: 'This is a dummy company for testing companies with DnB data',
-      annualTurnover: 'USD 1000000\nThis is an estimated number\nWhat does that mean?\nThis is an estimated number',
-      numberOfEmployees: '95\nThis is an estimated number\nWhat does that mean?\nThis is an estimated number',
+      description:
+        'This is a dummy company for testing companies with DnB data',
+      annualTurnover:
+        'USD 1000000\nThis is an estimated number\nWhat does that mean?\nThis is an estimated number',
+      numberOfEmployees:
+        '95\nThis is an estimated number\nWhat does that mean?\nThis is an estimated number',
     },
     oneListSubsidiary: {
       id: '960e1fa9-cc25-478c-a548-a2e2047319bb',
@@ -109,9 +114,11 @@ module.exports = {
       headquarterType: 'Not a headquarters',
       globalHeadquarters: 'One List Corp\nRemove link',
       sector: 'Renewable Energy',
-      description: 'This is a dummy company for testing subsidiaries of One List GHQ',
+      description:
+        'This is a dummy company for testing subsidiaries of One List GHQ',
       oneListTier: 'Tier A - Strategic Account',
-      globalAccountManager: 'Travis Greene\nIST - Sector Advisory Services\nLondon',
+      globalAccountManager:
+        'Travis Greene\nIST - Sector Advisory Services\nLondon',
     },
     archived: {
       id: '346f78a5-1d23-4213-b4c2-bf48246a13c3',
@@ -129,7 +136,8 @@ module.exports = {
       employeeRange: '500+',
       turnoverRange: '£33.5M+',
       oneListTier: 'Tier A - Strategic Account',
-      globalAccountManager: 'Travis Greene\nIST - Sector Advisory Services\nLondon',
+      globalAccountManager:
+        'Travis Greene\nIST - Sector Advisory Services\nLondon',
     },
     archivedContactless: {
       id: '346f78a5-1d23-4213-b4c2-bf48246a13c4',
@@ -228,7 +236,8 @@ module.exports = {
         status: 'ongoing',
         name: 'Game-changing Proposition',
         scope: 'scope 0',
-        reason_abandoned: 'All the world`s a stage, and all the men and women merely players. They have their exits and their entrances; And one man in his time plays many parts.',
+        reason_abandoned:
+          'All the world`s a stage, and all the men and women merely players. They have their exits and their entrances; And one man in his time plays many parts.',
         modified_on: '2018-05-03T09:49:03.038168Z',
         modified_by: {
           first_name: 'Francisco',
@@ -278,7 +287,8 @@ module.exports = {
       status: 'ongoing',
       name: 'Game-changing Proposition',
       scope: 'scope 0',
-      reason_abandoned: 'All the world`s a stage, and all the men and women merely players. They have their exits and their entrances; And one man in his time plays many parts.',
+      reason_abandoned:
+        'All the world`s a stage, and all the men and women merely players. They have their exits and their entrances; And one man in his time plays many parts.',
       modified_on: '2018-05-03T09:49:03.038168Z',
       modified_by: {
         first_name: 'Francisco',

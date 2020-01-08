@@ -21,7 +21,10 @@ const generateFutureDate = () => {
   const nextYear = getYear(addYears(Date.now(), 1))
   const year = faker.random.number({ min: nextYear, max: nextYear + 40 })
   const month = faker.random.number({ min: 1, max: 12 })
-  const day = faker.random.number({ min: 1, max: getDaysInMonth(new Date(year, (month - 1))) })
+  const day = faker.random.number({
+    min: 1,
+    max: getDaysInMonth(new Date(year, month - 1)),
+  })
 
   return {
     year,

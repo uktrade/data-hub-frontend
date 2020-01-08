@@ -10,33 +10,55 @@ describe('Company activity feed', () => {
     expectedActivitiesHeading,
   }) => {
     it('should display the heading', () => {
-      cy.get(selectors.localHeader().heading).should('have.text', expectedHeading)
+      cy.get(selectors.localHeader().heading).should(
+        'have.text',
+        expectedHeading
+      )
     })
 
     it('should display the address', () => {
-      cy.get(selectors.localHeader().headingAfter).should('have.text', expectedAddress)
+      cy.get(selectors.localHeader().headingAfter).should(
+        'have.text',
+        expectedAddress
+      )
     })
 
     it('should display the "View full business details" link', () => {
-      const selector = selectors.localHeader().viewFullBusinessDetailsLink(expectedCompanyId)
+      const selector = selectors
+        .localHeader()
+        .viewFullBusinessDetailsLink(expectedCompanyId)
       cy.get(selector).should('have.text', 'View full business details')
     })
 
     it('should display the local nav', () => {
       cy.get(selectors.tabbedLocalNav().item(1)).should('have.text', 'Activity')
-      cy.get(selectors.tabbedLocalNav().item(2)).should('have.text', 'Company contacts')
-      cy.get(selectors.tabbedLocalNav().item(3)).should('have.text', 'Core team')
-      cy.get(selectors.tabbedLocalNav().item(4)).should('have.text', 'Investment')
+      cy.get(selectors.tabbedLocalNav().item(2)).should(
+        'have.text',
+        'Company contacts'
+      )
+      cy.get(selectors.tabbedLocalNav().item(3)).should(
+        'have.text',
+        'Core team'
+      )
+      cy.get(selectors.tabbedLocalNav().item(4)).should(
+        'have.text',
+        'Investment'
+      )
       cy.get(selectors.tabbedLocalNav().item(5)).should('have.text', 'Export')
       cy.get(selectors.tabbedLocalNav().item(6)).should('have.text', 'Orders')
     })
 
     it('should not display the pending D&B investigation message', () => {
-      cy.get(selectors.companyActivity.pendingDnbInvestigationMessage).should('not.be.visible')
+      cy.get(selectors.companyActivity.pendingDnbInvestigationMessage).should(
+        'not.be.visible'
+      )
     })
 
     it('should display the "Activities" heading', () => {
-      cy.get(selectors.companyCollection().heading).should('have.text', expectedActivitiesHeading)
+      cy.get(selectors.companyCollection().heading).should(
+        'have.text',
+        expectedActivitiesHeading
+      )
     })
   }
 
@@ -46,8 +68,8 @@ describe('Company activity feed', () => {
     })
 
     testBreadcrumbs({
-      'Home': '/',
-      'Companies': '/companies',
+      Home: '/',
+      Companies: '/companies',
       'Venus Ltd': '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
       'Activity Feed': null,
     })
@@ -60,15 +82,23 @@ describe('Company activity feed', () => {
     })
 
     it('should display "Add interaction" button', () => {
-      cy.get(selectors.companyCollection().interaction.addButton(fixtures.company.venusLtd.id)).should('have.text', 'Add interaction')
+      cy.get(
+        selectors
+          .companyCollection()
+          .interaction.addButton(fixtures.company.venusLtd.id)
+      ).should('have.text', 'Add interaction')
     })
 
     it('should not display the activity feed', () => {
-      cy.get(selectors.companyActivity.activityFeed.item(1)).should('not.be.visible')
+      cy.get(selectors.companyActivity.activityFeed.item(1)).should(
+        'not.be.visible'
+      )
     })
 
     it('should display the "There are no activities to show." message', () => {
-      cy.get(selectors.companyActivity.activityFeed.noActivites).should('be.visible')
+      cy.get(selectors.companyActivity.activityFeed.noActivites).should(
+        'be.visible'
+      )
     })
   })
 
@@ -78,8 +108,8 @@ describe('Company activity feed', () => {
     })
 
     testBreadcrumbs({
-      'Home': '/',
-      'Companies': '/companies',
+      Home: '/',
+      Companies: '/companies',
       'Archived Ltd': '/companies/346f78a5-1d23-4213-b4c2-bf48246a13c3',
       'Activity Feed': null,
     })
@@ -96,25 +126,40 @@ describe('Company activity feed', () => {
     })
 
     it('should display the One List tier', () => {
-      const expected = 'This is an account managed company (One List Tier A - Strategic Account)'
-      cy.get(selectors.localHeader().description.paragraph(1)).should('have.text', expected)
+      const expected =
+        'This is an account managed company (One List Tier A - Strategic Account)'
+      cy.get(selectors.localHeader().description.paragraph(1)).should(
+        'have.text',
+        expected
+      )
     })
 
     it('should display the Global Account Manager', () => {
       const expected = 'Global Account Manager: Travis Greene View core team'
-      cy.get(selectors.localHeader().description.paragraph(2)).should('have.text', expected)
+      cy.get(selectors.localHeader().description.paragraph(2)).should(
+        'have.text',
+        expected
+      )
     })
 
     it('should not display the "Add interaction" button', () => {
-      cy.get(selectors.companyCollection().interaction.addButton(fixtures.company.archivedLtd.id)).should('not.exist')
+      cy.get(
+        selectors
+          .companyCollection()
+          .interaction.addButton(fixtures.company.archivedLtd.id)
+      ).should('not.exist')
     })
 
     it('should display the activity feed', () => {
-      cy.get(selectors.companyActivity.activityFeed.item(1)).should('be.visible')
+      cy.get(selectors.companyActivity.activityFeed.item(1)).should(
+        'be.visible'
+      )
     })
 
     it('should not display the "There are no activities to show." message', () => {
-      cy.get(selectors.companyActivity.activityFeed.noActivites).should('not.be.visible')
+      cy.get(selectors.companyActivity.activityFeed.noActivites).should(
+        'not.be.visible'
+      )
     })
   })
 })

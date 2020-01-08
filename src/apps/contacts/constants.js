@@ -8,9 +8,7 @@ const DEFAULT_COLLECTION_QUERY = {
 const GLOBAL_NAV_ITEM = {
   path: '/contacts',
   headerKey: 'datahub-contacts',
-  permissions: [
-    'company.view_contact',
-  ],
+  permissions: ['company.view_contact'],
   key: 'datahub-crm',
   order: 2,
 }
@@ -23,9 +21,7 @@ const LOCAL_NAV = [
   {
     path: 'interactions',
     label: 'Interactions',
-    permissions: [
-      'interaction.view_all_interaction',
-    ],
+    permissions: ['interaction.view_all_interaction'],
   },
   {
     path: 'audit',
@@ -34,9 +30,7 @@ const LOCAL_NAV = [
   {
     path: 'documents',
     label: 'Documents',
-    permissions: [
-      'company.view_contact_document',
-    ],
+    permissions: ['company.view_contact_document'],
   },
 ]
 

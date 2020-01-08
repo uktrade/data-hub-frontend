@@ -47,12 +47,18 @@ describe('Investment form middleware - team members', () => {
 
     context('when the investment project contains team members', () => {
       beforeEach(async () => {
-        this.resMock.locals.investment.team_members = [{
-          adviser: { id: '4', name: 'Fred Smith' },
-          role: 'Manager',
-        }]
+        this.resMock.locals.investment.team_members = [
+          {
+            adviser: { id: '4', name: 'Fred Smith' },
+            role: 'Manager',
+          },
+        ]
 
-        await teamMembersController.populateTeamEditForm(this.reqMock, this.resMock, this.nextStub)
+        await teamMembersController.populateTeamEditForm(
+          this.reqMock,
+          this.resMock,
+          this.nextStub
+        )
       })
 
       it('should include transformed team members', () => {
@@ -105,22 +111,34 @@ describe('Investment form middleware - team members', () => {
       })
 
       it('should include labels for the form', () => {
-        expect(this.resMock.locals.form.labels).to.deep.equal(teamMembersLabels.edit)
+        expect(this.resMock.locals.form.labels).to.deep.equal(
+          teamMembersLabels.edit
+        )
       })
 
       it('should include button text and a return link', () => {
         expect(this.resMock.locals.form.buttonText).to.equal('Save')
-        expect(this.resMock.locals.form.returnLink).to.equal(`/investments/projects/${investmentData.id}/team`)
+        expect(this.resMock.locals.form.returnLink).to.equal(
+          `/investments/projects/${investmentData.id}/team`
+        )
       })
     })
 
     context('when the investment project contains no team member data', () => {
       beforeEach(async () => {
-        this.resMock.locals.investment = assign({}, this.resMock.locals.investment, {
-          team_members: [],
-        })
+        this.resMock.locals.investment = assign(
+          {},
+          this.resMock.locals.investment,
+          {
+            team_members: [],
+          }
+        )
 
-        await teamMembersController.populateTeamEditForm(this.reqMock, this.resMock, this.nextStub)
+        await teamMembersController.populateTeamEditForm(
+          this.reqMock,
+          this.resMock,
+          this.nextStub
+        )
       })
 
       it('should include a blank team member with no id', () => {
@@ -146,12 +164,16 @@ describe('Investment form middleware - team members', () => {
       })
 
       it('should include labels for the form', () => {
-        expect(this.resMock.locals.form.labels).to.deep.equal(teamMembersLabels.edit)
+        expect(this.resMock.locals.form.labels).to.deep.equal(
+          teamMembersLabels.edit
+        )
       })
 
       it('should include button text and a return link', () => {
         expect(this.resMock.locals.form.buttonText).to.equal('Save')
-        expect(this.resMock.locals.form.returnLink).to.equal(`/investments/projects/${investmentData.id}/team`)
+        expect(this.resMock.locals.form.returnLink).to.equal(
+          `/investments/projects/${investmentData.id}/team`
+        )
       })
     })
   })
@@ -166,20 +188,29 @@ describe('Investment form middleware - team members', () => {
         }
 
         nock(config.apiRoot)
-          .put(`/v3/investment/${investmentData.id}/team-member`, [{
-            adviser: '1',
-            role: 'manager',
-          }, {
-            adviser: '2',
-            role: 'supervisor',
-          }])
+          .put(`/v3/investment/${investmentData.id}/team-member`, [
+            {
+              adviser: '1',
+              role: 'manager',
+            },
+            {
+              adviser: '2',
+              role: 'supervisor',
+            },
+          ])
           .reply(200, {})
 
-        await teamMembersController.postTeamEdit(this.reqMock, this.resMock, this.nextStub)
+        await teamMembersController.postTeamEdit(
+          this.reqMock,
+          this.resMock,
+          this.nextStub
+        )
       })
 
       it('should redirect back to the details page', () => {
-        expect(this.resMock.redirect).to.be.calledWith('/investments/projects/f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7/team')
+        expect(this.resMock.redirect).to.be.calledWith(
+          '/investments/projects/f22ae6ac-b269-4fe5-aeba-d6a605b9a7a7/team'
+        )
       })
 
       it('should not carry onto the next middleware', () => {
@@ -193,10 +224,7 @@ describe('Investment form middleware - team members', () => {
 
     context('when a form is posted with a missing role', () => {
       beforeEach(async () => {
-        const error = [
-          {},
-          { role: ['This field may not be blank.'] },
-        ]
+        const error = [{}, { role: ['This field may not be blank.'] }]
 
         this.reqMock = assign({}, this.reqMock, {
           params: {
@@ -220,15 +248,22 @@ describe('Investment form middleware - team members', () => {
               { id: '5', name: 'Jim Smith', is_active: false },
             ],
           })
-          .put(`/v3/investment/${investmentData.id}/team-member`, [{
-            adviser: '1',
-            role: 'manager',
-          }, {
-            adviser: '2',
-          }])
+          .put(`/v3/investment/${investmentData.id}/team-member`, [
+            {
+              adviser: '1',
+              role: 'manager',
+            },
+            {
+              adviser: '2',
+            },
+          ])
           .reply(400, error)
 
-        await teamMembersController.postTeamEdit(this.reqMock, this.resMock, this.nextStub)
+        await teamMembersController.postTeamEdit(
+          this.reqMock,
+          this.resMock,
+          this.nextStub
+        )
       })
 
       it('should call the next middleware', () => {
@@ -237,7 +272,9 @@ describe('Investment form middleware - team members', () => {
       })
 
       it('should indicate which field has the error', () => {
-        expect(this.resMock.locals.form.errors.messages['role-1']).to.eq('This field may not be blank.')
+        expect(this.resMock.locals.form.errors.messages['role-1']).to.eq(
+          'This field may not be blank.'
+        )
       })
 
       it('should pass through the form state for re-rendering', () => {
@@ -267,7 +304,7 @@ describe('Investment form middleware - team members', () => {
     context('when a form is posted with a none field error', () => {
       beforeEach(async () => {
         const error = {
-          'non_field_errors': ['No data provided'],
+          non_field_errors: ['No data provided'],
         }
 
         this.reqMock = assign({}, this.reqMock, {
@@ -292,15 +329,22 @@ describe('Investment form middleware - team members', () => {
               { id: '5', name: 'Jim Smith', is_active: false },
             ],
           })
-          .put(`/v3/investment/${investmentData.id}/team-member`, [{
-            adviser: '1',
-            role: 'manager',
-          }, {
-            adviser: '2',
-          }])
+          .put(`/v3/investment/${investmentData.id}/team-member`, [
+            {
+              adviser: '1',
+              role: 'manager',
+            },
+            {
+              adviser: '2',
+            },
+          ])
           .reply(400, error)
 
-        await teamMembersController.postTeamEdit(this.reqMock, this.resMock, this.nextStub)
+        await teamMembersController.postTeamEdit(
+          this.reqMock,
+          this.resMock,
+          this.nextStub
+        )
       })
 
       it('should call the next middleware', () => {
@@ -309,7 +353,9 @@ describe('Investment form middleware - team members', () => {
       })
 
       it('should indicate the generic error', () => {
-        expect(this.resMock.locals.form.errors.messages['non_field_errors-0']).to.eq('No data provided')
+        expect(
+          this.resMock.locals.form.errors.messages['non_field_errors-0']
+        ).to.eq('No data provided')
       })
 
       it('should pass through the form state for re-rendering', () => {
@@ -344,10 +390,12 @@ describe('Investment form middleware - team members', () => {
         role: 'Director',
       }
 
-      const expected = [{
-        adviser: '1234',
-        role: 'Director',
-      }]
+      const expected = [
+        {
+          adviser: '1234',
+          role: 'Director',
+        },
+      ]
 
       const actual = teamMembersController.transformFormToTeamMemberArray(body)
 
@@ -360,13 +408,16 @@ describe('Investment form middleware - team members', () => {
         role: ['Director', 'Manager'],
       }
 
-      const expected = [{
-        adviser: '1234',
-        role: 'Director',
-      }, {
-        adviser: '4321',
-        role: 'Manager',
-      }]
+      const expected = [
+        {
+          adviser: '1234',
+          role: 'Director',
+        },
+        {
+          adviser: '4321',
+          role: 'Manager',
+        },
+      ]
 
       const actual = teamMembersController.transformFormToTeamMemberArray(body)
 
@@ -379,10 +430,12 @@ describe('Investment form middleware - team members', () => {
         role: ['manager', ''],
       }
 
-      const expected = [{
-        adviser: '1234',
-        role: 'manager',
-      }]
+      const expected = [
+        {
+          adviser: '1234',
+          role: 'manager',
+        },
+      ]
 
       const actual = teamMembersController.transformFormToTeamMemberArray(body)
 
@@ -416,12 +469,11 @@ describe('Investment form middleware - team members', () => {
   describe('#transformErrorResponseToFormErrors', () => {
     context('Called with a missing role', () => {
       beforeEach(() => {
-        const error = [
-          {},
-          { role: ['This field may not be blank.'] },
-        ]
+        const error = [{}, { role: ['This field may not be blank.'] }]
 
-        this.errorMessages = teamMembersController.transformErrorResponseToFormErrors(error)
+        this.errorMessages = teamMembersController.transformErrorResponseToFormErrors(
+          error
+        )
       })
 
       it('should convert the error into the correct format for the form', () => {

@@ -49,7 +49,11 @@ describe('Search Controller #renderSearchResults', () => {
         .query(Object.assign({}, searchQuery, { entity: 'investment_project' }))
         .reply(200, investmentResponse)
       this.req.params.searchPath = 'investment-projects'
-      this.searchResults = await renderSearchResults(this.req, this.res, this.next)
+      this.searchResults = await renderSearchResults(
+        this.req,
+        this.res,
+        this.next
+      )
     })
 
     it('should call render with investment projects data', async () => {
@@ -64,7 +68,9 @@ describe('Search Controller #renderSearchResults', () => {
     })
 
     it('should transform investment projects data', () => {
-      expect(this.renderFunction.getCall(0).args[1].results.items[0].type).to.equal('investments/project')
+      expect(
+        this.renderFunction.getCall(0).args[1].results.items[0].type
+      ).to.equal('investments/project')
     })
   })
 

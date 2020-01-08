@@ -9,7 +9,9 @@ describe('Investment project transformers', () => {
     context('when transforming a fully populated project', () => {
       beforeEach(() => {
         this.rawItem = investmentProjectsData.results[0]
-        const transformed = investmentProjectsData.results.map(transformInvestmentProjectToListItem)
+        const transformed = investmentProjectsData.results.map(
+          transformInvestmentProjectToListItem
+        )
         this.transformedItem = transformed[0]
       })
 
@@ -78,12 +80,16 @@ describe('Investment project transformers', () => {
     it('should mark any metaItem as inert', () => {
       const item = {
         id: '1234',
-        meta: [{
-          name: 'item',
-        }],
+        meta: [
+          {
+            name: 'item',
+          },
+        ],
       }
 
-      const transformedItem = transformInvestmentListItemToDisableMetaLinks(item)
+      const transformedItem = transformInvestmentListItemToDisableMetaLinks(
+        item
+      )
       expect(transformedItem.meta[0].isInert).to.equal(true)
     })
   })

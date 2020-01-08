@@ -24,10 +24,17 @@ describe('Nunjucks Pagination macro', () => {
       }
       const component = commonMacros.renderToDom('Pagination', paginationObj)
 
-      expect(component.querySelectorAll('.c-pagination__list-item')).to.have.lengthOf(2)
-      expect(component.querySelector('.c-pagination__label.is-current').textContent.trim()).to.equal('1')
+      expect(
+        component.querySelectorAll('.c-pagination__list-item')
+      ).to.have.lengthOf(2)
+      expect(
+        component
+          .querySelector('.c-pagination__label.is-current')
+          .textContent.trim()
+      ).to.equal('1')
       expect(component.querySelector('.c-pagination__label--prev')).to.be.null
-      expect(component.querySelector('.c-pagination__label--next')).to.not.be.null
+      expect(component.querySelector('.c-pagination__label--next')).to.not.be
+        .null
     })
 
     it('should render long pagination list with truncation', () => {
@@ -45,10 +52,17 @@ describe('Nunjucks Pagination macro', () => {
       }
       const component = commonMacros.renderToDom('Pagination', paginationObj)
 
-      expect(component.querySelectorAll('.c-pagination__list-item')).to.have.lengthOf(4)
-      expect(component.querySelector('.c-pagination__label--truncation').textContent.trim()).to.equal('…')
+      expect(
+        component.querySelectorAll('.c-pagination__list-item')
+      ).to.have.lengthOf(4)
+      expect(
+        component
+          .querySelector('.c-pagination__label--truncation')
+          .textContent.trim()
+      ).to.equal('…')
       expect(component.querySelector('.c-pagination__label--prev')).to.be.null
-      expect(component.querySelector('.c-pagination__label--next')).to.not.be.null
+      expect(component.querySelector('.c-pagination__label--next')).to.not.be
+        .null
     })
 
     it('should render long pagination list with truncation and set to different page', () => {
@@ -66,10 +80,18 @@ describe('Nunjucks Pagination macro', () => {
       }
       const component = commonMacros.renderToDom('Pagination', paginationObj)
 
-      expect(component.querySelectorAll('.c-pagination__list-item')).to.have.lengthOf(4)
-      expect(component.querySelector('.c-pagination__label--truncation').textContent.trim()).to.equal('…')
-      expect(component.querySelector('.c-pagination__label--prev')).to.not.be.null
-      expect(component.querySelector('.c-pagination__label--next')).to.not.be.null
+      expect(
+        component.querySelectorAll('.c-pagination__list-item')
+      ).to.have.lengthOf(4)
+      expect(
+        component
+          .querySelector('.c-pagination__label--truncation')
+          .textContent.trim()
+      ).to.equal('…')
+      expect(component.querySelector('.c-pagination__label--prev')).to.not.be
+        .null
+      expect(component.querySelector('.c-pagination__label--next')).to.not.be
+        .null
     })
   })
 
@@ -86,11 +108,18 @@ describe('Nunjucks Pagination macro', () => {
         ],
       }
 
-      const component = commonMacros.renderToDom('Pagination', paginationObj, false)
+      const component = commonMacros.renderToDom(
+        'Pagination',
+        paginationObj,
+        false
+      )
 
-      expect(component.querySelectorAll('.c-pagination__list-item')).to.have.lengthOf(0)
+      expect(
+        component.querySelectorAll('.c-pagination__list-item')
+      ).to.have.lengthOf(0)
       expect(component.querySelector('.c-pagination__label--prev')).to.be.null
-      expect(component.querySelector('.c-pagination__label--next')).to.not.be.null
+      expect(component.querySelector('.c-pagination__label--next')).to.not.be
+        .null
     })
   })
 })

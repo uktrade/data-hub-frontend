@@ -2,7 +2,7 @@ const { getOptions } = require('../../../../../lib/options')
 const { CreateController } = require('../../../controllers')
 
 class MarketController extends CreateController {
-  async configure (req, res, next) {
+  async configure(req, res, next) {
     try {
       const markets = await getOptions(req.session.token, 'omis-market')
 

@@ -7,7 +7,7 @@ const { QUERY_FIELDS_MAP } = require('../constants')
 
 const PRIMARY_SECTOR_NAME = FILTER_CONSTANTS.COMPANIES.SECTOR.PRIMARY.NAME
 
-const companyFiltersFields = function ({ sectorOptions }) {
+const companyFiltersFields = function({ sectorOptions }) {
   const countryOptions = globalFields.countries.options()
   return [
     Object.assign({}, globalFields.headquarter_type, {
@@ -105,7 +105,7 @@ const companyFiltersFields = function ({ sectorOptions }) {
       target: 'metadata',
       label: 'Lead ITA or Global Account Manager',
     },
-  ].map(filter => {
+  ].map((filter) => {
     return Object.assign(filter, {
       modifier: flatten([filter.modifier, 'smaller', 'light', 'filter']),
     })

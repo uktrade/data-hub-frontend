@@ -14,7 +14,7 @@ describe('Companies matching select controller', () => {
       await renderSelect(
         this.middlewareParameters.reqMock,
         this.middlewareParameters.resMock,
-        this.middlewareParameters.nextSpy,
+        this.middlewareParameters.nextSpy
       )
     })
 
@@ -23,19 +23,30 @@ describe('Companies matching select controller', () => {
     })
 
     it('should add a company breadcrumb', () => {
-      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWithExactly(companyMock.name, `/companies/${companyMock.id}`)
+      expect(
+        this.middlewareParameters.resMock.breadcrumb
+      ).to.be.calledWithExactly(
+        companyMock.name,
+        `/companies/${companyMock.id}`
+      )
     })
 
     it('should add a "Select match" breadcrumb', () => {
-      expect(this.middlewareParameters.resMock.breadcrumb).to.be.calledWithExactly('Select the match')
+      expect(
+        this.middlewareParameters.resMock.breadcrumb
+      ).to.be.calledWithExactly('Select the match')
     })
 
     it('should render the view', () => {
-      expect(this.middlewareParameters.resMock.render.firstCall.args[0]).to.equal('companies/apps/matching/views/select')
+      expect(
+        this.middlewareParameters.resMock.render.firstCall.args[0]
+      ).to.equal('companies/apps/matching/views/select')
     })
 
     it('should set the heading', () => {
-      expect(this.middlewareParameters.resMock.render.firstCall.args[1].heading).to.equal(`Select the match for ${companyMock.name}`)
+      expect(
+        this.middlewareParameters.resMock.render.firstCall.args[1].heading
+      ).to.equal(`Select the match for ${companyMock.name}`)
     })
   })
 })

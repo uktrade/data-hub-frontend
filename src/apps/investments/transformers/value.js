@@ -2,7 +2,10 @@
 const { get, isPlainObject, isNull } = require('lodash')
 const { projects } = require('../paths')
 
-function transformInvestmentAmount (clientCannotProvideInvestment, investmentAmount) {
+function transformInvestmentAmount(
+  clientCannotProvideInvestment,
+  investmentAmount
+) {
   if (clientCannotProvideInvestment) {
     return 'Client cannot provide this information'
   }
@@ -17,7 +20,7 @@ function transformInvestmentAmount (clientCannotProvideInvestment, investmentAmo
   }
 }
 
-function transformGrossValueAdded (grossValueAdded) {
+function transformGrossValueAdded(grossValueAdded) {
   if (!grossValueAdded) {
     return null
   }
@@ -28,7 +31,7 @@ function transformGrossValueAdded (grossValueAdded) {
   }
 }
 
-function transformInvestmentValueForView ({
+function transformInvestmentValueForView({
   client_cannot_provide_total_investment,
   total_investment,
   client_cannot_provide_foreign_investment,
@@ -49,21 +52,32 @@ function transformInvestmentValueForView ({
   associated_non_fdi_r_and_d_project,
   likelihood_to_land,
 }) {
-  function formatBoolean (boolean, { pos, neg }) {
-    if (isNull(boolean)) { return null }
+  function formatBoolean(boolean, { pos, neg }) {
+    if (isNull(boolean)) {
+      return null
+    }
     return boolean ? pos : neg
   }
 
-  const europeanOrGlobalHeadquartersBusinessActivities = business_activities.filter((activity) => {
-    return /^(european|global) headquarters$/i.test(activity.name)
-  })
+  const europeanOrGlobalHeadquartersBusinessActivities = business_activities.filter(
+    (activity) => {
+      return /^(european|global) headquarters$/i.test(activity.name)
+    }
+  )
 
   return {
-    total_investment: transformInvestmentAmount(client_cannot_provide_total_investment, total_investment),
-    foreign_equity_investment: transformInvestmentAmount(client_cannot_provide_foreign_investment, foreign_equity_investment),
+    total_investment: transformInvestmentAmount(
+      client_cannot_provide_total_investment,
+      total_investment
+    ),
+    foreign_equity_investment: transformInvestmentAmount(
+      client_cannot_provide_foreign_investment,
+      foreign_equity_investment
+    ),
     gross_value_added: transformGrossValueAdded(gross_value_added),
     number_new_jobs: number_new_jobs && `${number_new_jobs} new jobs`,
-    number_safeguarded_jobs: number_safeguarded_jobs && `${number_safeguarded_jobs} safeguarded jobs`,
+    number_safeguarded_jobs:
+      number_safeguarded_jobs && `${number_safeguarded_jobs} safeguarded jobs`,
     government_assistance: formatBoolean(government_assistance, {
       pos: 'Has government assistance',
       neg: 'No government assistance',
@@ -84,21 +98,25 @@ function transformInvestmentValueForView ({
     average_salary: get(average_salary, 'name'),
     sector_name: get(sector, 'name'),
     account_tier: get(investor_company, 'one_list_group_tier.name'),
-    business_activities: europeanOrGlobalHeadquartersBusinessActivities.length ? 'Yes' : 'No',
+    business_activities: europeanOrGlobalHeadquartersBusinessActivities.length
+      ? 'Yes'
+      : 'No',
     associated_non_fdi_r_and_d_project: non_fdi_r_and_d_budget
       ? transformAssociatedProject({ id, associated_non_fdi_r_and_d_project })
       : 'Not linked to a non-FDI R&D project',
   }
 }
 
-function transformInvestmentValueFormBodyToApiRequest (props) {
-  const totalInvestment = props.client_cannot_provide_total_investment === 'true'
-    ? null
-    : props.total_investment || null
+function transformInvestmentValueFormBodyToApiRequest(props) {
+  const totalInvestment =
+    props.client_cannot_provide_total_investment === 'true'
+      ? null
+      : props.total_investment || null
 
-  const foreignEquityInvestment = props.client_cannot_provide_foreign_investment === 'true'
-    ? null
-    : props.foreign_equity_investment || null
+  const foreignEquityInvestment =
+    props.client_cannot_provide_foreign_investment === 'true'
+      ? null
+      : props.foreign_equity_investment || null
 
   return {
     ...props,
@@ -111,7 +129,7 @@ function transformInvestmentValueFormBodyToApiRequest (props) {
   }
 }
 
-function transformAssociatedProject ({
+function transformAssociatedProject({
   id,
   associated_non_fdi_r_and_d_project,
 }) {
@@ -120,13 +138,16 @@ function transformAssociatedProject ({
 
     return {
       name,
-      actions: [{
-        label: 'Edit project',
-        url: `${projects}/${id}/edit-associated?term=${project_code}`,
-      }, {
-        label: 'Remove association',
-        url: `${projects}/${id}/remove-associated`,
-      }],
+      actions: [
+        {
+          label: 'Edit project',
+          url: `${projects}/${id}/edit-associated?term=${project_code}`,
+        },
+        {
+          label: 'Remove association',
+          url: `${projects}/${id}/remove-associated`,
+        },
+      ],
     }
   }
 

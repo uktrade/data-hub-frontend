@@ -1,4 +1,4 @@
-async function renderDetails (req, res) {
+async function renderDetails(req, res) {
   return res.redirect(301, 'interactions')
 }
 

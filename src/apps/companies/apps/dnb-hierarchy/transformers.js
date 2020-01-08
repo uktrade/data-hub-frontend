@@ -1,11 +1,14 @@
 /* eslint-disable camelcase */
 const { get } = require('lodash')
 
-const { formatAddress, formatDateTime } = require('../../../../config/nunjucks/filters')
+const {
+  formatAddress,
+  formatDateTime,
+} = require('../../../../config/nunjucks/filters')
 const urls = require('../../../../lib/urls')
 const labels = require('../../labels')
 
-function transformCompanyToDnbHierarchyList ({
+function transformCompanyToDnbHierarchyList({
   id,
   name,
   sector,
@@ -17,7 +20,9 @@ function transformCompanyToDnbHierarchyList ({
   headquarter_type,
   is_global_ultimate,
 } = {}) {
-  if (!id) { return }
+  if (!id) {
+    return
+  }
 
   const metadata = []
   const badges = []

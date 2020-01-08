@@ -4,15 +4,19 @@ const { buildFormWithStateAndErrors } = require('../../builders')
 const { statusFormConfig } = require('../macros')
 const { updateInvestment } = require('../repos')
 
-function renderStatusPage (req, res, next) {
+function renderStatusPage(req, res, next) {
   const status = req.body.status || res.locals.investment.status
 
   const { projects } = res.locals.paths
   const { id } = res.locals.investment
 
   const statusForm = assign(
-    buildFormWithStateAndErrors(statusFormConfig, { status }, res.locals.errors),
-    { returnLink: `${projects}/${id}/details` },
+    buildFormWithStateAndErrors(
+      statusFormConfig,
+      { status },
+      res.locals.errors
+    ),
+    { returnLink: `${projects}/${id}/details` }
   )
 
   res
@@ -20,7 +24,7 @@ function renderStatusPage (req, res, next) {
     .render('investments/views/status', { statusForm })
 }
 
-async function postStatus (req, res, next) {
+async function postStatus(req, res, next) {
   try {
     await updateInvestment(req.session.token, req.params.investmentId, {
       status: req.body.status,

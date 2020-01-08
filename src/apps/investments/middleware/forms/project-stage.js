@@ -1,7 +1,7 @@
 const logger = require('../../../../config/logger')
 const { updateInvestment } = require('../../repos')
 
-function handleFormPost (req, res, next, projectId = req.params.investmentId) {
+function handleFormPost(req, res, next, projectId = req.params.investmentId) {
   updateInvestment(req.session.token, projectId, {
     stage: {
       id: req.body.next_project_stage,
@@ -18,7 +18,12 @@ function handleFormPost (req, res, next, projectId = req.params.investmentId) {
     .catch((err) => {
       if (err.statusCode === 400) {
         logger.error(err)
-        req.flash('error', err.error.stage ? err.error.stage.toString() : 'Something has gone wrong')
+        req.flash(
+          'error',
+          err.error.stage
+            ? err.error.stage.toString()
+            : 'Something has gone wrong'
+        )
 
         const { projects } = res.locals.paths
         const { id } = res.locals.investment

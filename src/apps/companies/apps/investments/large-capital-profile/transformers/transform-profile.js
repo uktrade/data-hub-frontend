@@ -4,11 +4,18 @@ const { requiredChecks } = require('../constants')
 const { get } = require('lodash')
 
 const getRequiredChecksDetails = (type, date, adviser) => {
-  const details = [ type.name ]
+  const details = [type.name]
 
-  if (type.name === requiredChecks.CLEARED || type.name === requiredChecks.ISSUES_IDENTIFIED) {
-    details.push(`Date of most recent background checks: ${formatDate(date, 'DD MM YYYY')}`)
-    details.push(`Person responsible for most recent background checks: ${adviser.name}`)
+  if (
+    type.name === requiredChecks.CLEARED ||
+    type.name === requiredChecks.ISSUES_IDENTIFIED
+  ) {
+    details.push(
+      `Date of most recent background checks: ${formatDate(date, 'DD MM YYYY')}`
+    )
+    details.push(
+      `Person responsible for most recent background checks: ${adviser.name}`
+    )
   }
 
   return details

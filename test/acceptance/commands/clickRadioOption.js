@@ -4,6 +4,9 @@
  * @param textContent
  * @returns this
  */
-exports.command = function clickRadioOption (name, textContent) {
-  return this.click('xpath', `//form//label[normalize-space(.)="${textContent}"]`)
+exports.command = function clickRadioOption(name, textContent) {
+  return this.click(
+    'xpath',
+    `//form//label[normalize-space(.)="${textContent}"]`
+  )
 }

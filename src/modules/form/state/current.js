@@ -1,16 +1,13 @@
-const {
-  get,
-  set,
-  keys,
-  reduce,
-  last,
-  unset,
-  isNil,
-} = require('lodash')
+const { get, set, keys, reduce, last, unset, isNil } = require('lodash')
 
 const MULTI_STEP_KEY = 'multi-step'
 
-const update = (session, journeyKey, path, { data, completed, addBrowseHistory, nextPath }) => {
+const update = (
+  session,
+  journeyKey,
+  path,
+  { data, completed, addBrowseHistory, nextPath }
+) => {
   const currentState = getCurrent(session, journeyKey)
 
   const stepDataKey = `steps.${path}.data`
@@ -51,12 +48,16 @@ const reduceSteps = (session, journeyKey) => {
   const currentState = getCurrent(session, journeyKey)
   const paths = keys(currentState.steps)
 
-  return reduce(paths, (previousReduction, path) => {
-    return {
-      ...previousReduction,
-      ...get(currentState, `steps.${path}.data`),
-    }
-  }, {})
+  return reduce(
+    paths,
+    (previousReduction, path) => {
+      return {
+        ...previousReduction,
+        ...get(currentState, `steps.${path}.data`),
+      }
+    },
+    {}
+  )
 }
 
 const getField = (session, journeyKey, fieldName) => {

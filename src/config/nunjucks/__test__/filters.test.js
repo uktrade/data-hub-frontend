@@ -26,7 +26,9 @@ describe('nunjucks filters', () => {
 
     context('when the search term is not a string', () => {
       beforeEach(() => {
-        this.highlightedString = filters.highlight(this.mockString, { url: 'invalid' })
+        this.highlightedString = filters.highlight(this.mockString, {
+          url: 'invalid',
+        })
       })
       it('should return the original string', () => {
         expect(this.highlightedString).to.equal(this.mockString)
@@ -40,13 +42,19 @@ describe('nunjucks filters', () => {
         })
 
         it('should highlight a partial match', () => {
-          expect(this.highlightedString.val).to.equal('Here is an <span class="u-highlight">exam</span>ple phrase')
+          expect(this.highlightedString.val).to.equal(
+            'Here is an <span class="u-highlight">exam</span>ple phrase'
+          )
         })
       })
 
       context('and when told to highlight only exact match', () => {
         beforeEach(() => {
-          this.highlightedString = filters.highlight(this.mockString, 'exam', true)
+          this.highlightedString = filters.highlight(
+            this.mockString,
+            'exam',
+            true
+          )
         })
 
         it('should not highlight a partial match', () => {
@@ -57,7 +65,10 @@ describe('nunjucks filters', () => {
 
     context('when passed a term that is not found', () => {
       beforeEach(() => {
-        this.highlightedString = filters.highlight(this.mockString, 'example term')
+        this.highlightedString = filters.highlight(
+          this.mockString,
+          'example term'
+        )
       })
       it('should not render any highlights', () => {
         expect(this.highlightedString.val).to.equal(this.mockString)
@@ -70,7 +81,9 @@ describe('nunjucks filters', () => {
       })
 
       it('should ignore the * in the term', () => {
-        expect(this.highlightedString.val).to.equal('Here is an <span class="u-highlight">exam</span>ple phrase')
+        expect(this.highlightedString.val).to.equal(
+          'Here is an <span class="u-highlight">exam</span>ple phrase'
+        )
       })
     })
 
@@ -80,7 +93,9 @@ describe('nunjucks filters', () => {
       })
 
       it('ignore the + in the term', () => {
-        expect(this.highlightedString.val).to.equal('Here is an <span class="u-highlight">exam</span>ple phrase')
+        expect(this.highlightedString.val).to.equal(
+          'Here is an <span class="u-highlight">exam</span>ple phrase'
+        )
       })
     })
 
@@ -90,7 +105,9 @@ describe('nunjucks filters', () => {
       })
 
       it('should ignore the ? in the term', () => {
-        expect(this.highlightedString.val).to.equal('Here is an <span class="u-highlight">exam</span>ple phrase')
+        expect(this.highlightedString.val).to.equal(
+          'Here is an <span class="u-highlight">exam</span>ple phrase'
+        )
       })
     })
 
@@ -100,7 +117,9 @@ describe('nunjucks filters', () => {
       })
 
       it('should ignore the & in the term', () => {
-        expect(this.highlightedString.val).to.equal('Here is an <span class="u-highlight">exam</span>ple phrase')
+        expect(this.highlightedString.val).to.equal(
+          'Here is an <span class="u-highlight">exam</span>ple phrase'
+        )
       })
     })
 
@@ -110,7 +129,9 @@ describe('nunjucks filters', () => {
       })
 
       it('should ignore the < in the term', () => {
-        expect(this.highlightedString.val).to.equal('Here is an <span class="u-highlight">exam</span>ple phrase')
+        expect(this.highlightedString.val).to.equal(
+          'Here is an <span class="u-highlight">exam</span>ple phrase'
+        )
       })
     })
 
@@ -120,17 +141,24 @@ describe('nunjucks filters', () => {
       })
 
       it('should highlight only a word', () => {
-        expect(this.highlightedString.val).to.equal('Here is an<span class="u-highlight"> example </span>phrase')
+        expect(this.highlightedString.val).to.equal(
+          'Here is an<span class="u-highlight"> example </span>phrase'
+        )
       })
     })
 
     context('when search term is a text', () => {
       beforeEach(() => {
-        this.highlightedString = filters.highlight(this.mockString, 'Here is an example phrase')
+        this.highlightedString = filters.highlight(
+          this.mockString,
+          'Here is an example phrase'
+        )
       })
 
       it('should highlight matched text', () => {
-        expect(this.highlightedString.val).to.equal('<span class="u-highlight">Here is an example phrase</span>')
+        expect(this.highlightedString.val).to.equal(
+          '<span class="u-highlight">Here is an example phrase</span>'
+        )
       })
     })
 
@@ -141,7 +169,9 @@ describe('nunjucks filters', () => {
       })
 
       it('should escape the characters and transform them into character entity references', () => {
-        expect(this.highlightedString.val).to.equal('Here is &lt;&gt;an <span class="u-highlight">example</span> phrase')
+        expect(this.highlightedString.val).to.equal(
+          'Here is &lt;&gt;an <span class="u-highlight">example</span> phrase'
+        )
       })
     })
   })
@@ -213,7 +243,11 @@ describe('nunjucks filters', () => {
       const singularString = 'company'
       const customPluralisedString = 'companies'
 
-      const pluralisedString = filters.pluralise(singularString, 0, customPluralisedString)
+      const pluralisedString = filters.pluralise(
+        singularString,
+        0,
+        customPluralisedString
+      )
 
       expect(pluralisedString).to.equal(customPluralisedString)
     })
@@ -238,7 +272,11 @@ describe('nunjucks filters', () => {
       const singularString = 'company'
       const customPluralisedString = 'companies'
 
-      const pluralisedString = filters.pluralise(singularString, 1, customPluralisedString)
+      const pluralisedString = filters.pluralise(
+        singularString,
+        1,
+        customPluralisedString
+      )
 
       expect(pluralisedString).to.equal(singularString)
     })
@@ -300,7 +338,10 @@ describe('nunjucks filters', () => {
 
       context('when a format is specified', () => {
         it('should return datetime in that format', () => {
-          const formattedDate = filters.formatDateTime('2017-08-16T14:18:28', 'DD/MM/YY HH:mm')
+          const formattedDate = filters.formatDateTime(
+            '2017-08-16T14:18:28',
+            'DD/MM/YY HH:mm'
+          )
 
           expect(formattedDate).to.equal('16/08/17 14:18')
         })
@@ -324,7 +365,9 @@ describe('nunjucks filters', () => {
       })
 
       it('should format the address as a comma separated list', () => {
-        expect(this.actual).to.equal('line 1, line 2, town, county, postcode, country')
+        expect(this.actual).to.equal(
+          'line 1, line 2, town, county, postcode, country'
+        )
       })
     })
 
@@ -359,20 +402,25 @@ describe('nunjucks filters', () => {
 
     context('when specifying a custom join', () => {
       beforeEach(() => {
-        this.actual = filters.formatAddress({
-          line_1: 'line 1',
-          line_2: '',
-          town: 'town',
-          county: '',
-          postcode: 'postcode',
-          country: {
-            name: 'country',
+        this.actual = filters.formatAddress(
+          {
+            line_1: 'line 1',
+            line_2: '',
+            town: 'town',
+            county: '',
+            postcode: 'postcode',
+            country: {
+              name: 'country',
+            },
           },
-        }, '<br />')
+          '<br />'
+        )
       })
 
       it('should format the address as a comma separated list', () => {
-        expect(this.actual).to.equal('line 1<br />town<br />postcode<br />country')
+        expect(this.actual).to.equal(
+          'line 1<br />town<br />postcode<br />country'
+        )
       })
     })
   })
@@ -392,7 +440,7 @@ describe('nunjucks filters', () => {
     }
     const mockArrayWithEmpties = Object.values(mockObjectWithEmpties)
 
-    function expectedWithDefaults (expectedDefault, isArray = false) {
+    function expectedWithDefaults(expectedDefault, isArray = false) {
       const expected = {
         a: true,
         b: expectedDefault,
@@ -416,39 +464,64 @@ describe('nunjucks filters', () => {
       const expectedDefault = 'Not found'
       const collectionDefault = filters.collectionDefault(mockObjectWithEmpties)
 
-      expect(collectionDefault).to.deep.equal(expectedWithDefaults(expectedDefault))
+      expect(collectionDefault).to.deep.equal(
+        expectedWithDefaults(expectedDefault)
+      )
     })
 
     it('should correctly provide argument default for empty values in object', () => {
       const argumentDefault = 'Currently unknown'
-      const collectionDefault = filters.collectionDefault(mockObjectWithEmpties, argumentDefault)
+      const collectionDefault = filters.collectionDefault(
+        mockObjectWithEmpties,
+        argumentDefault
+      )
 
-      expect(collectionDefault).to.deep.equal(expectedWithDefaults(argumentDefault))
+      expect(collectionDefault).to.deep.equal(
+        expectedWithDefaults(argumentDefault)
+      )
     })
 
     it('should correctly provide argument default for empty values in array', () => {
       const argumentDefault = 'This is really not known'
-      const collectionDefault = filters.collectionDefault(mockArrayWithEmpties, argumentDefault)
+      const collectionDefault = filters.collectionDefault(
+        mockArrayWithEmpties,
+        argumentDefault
+      )
 
-      expect(collectionDefault).to.deep.equal(expectedWithDefaults(argumentDefault, true))
+      expect(collectionDefault).to.deep.equal(
+        expectedWithDefaults(argumentDefault, true)
+      )
     })
   })
 
   describe('#applyClassModifiers', () => {
     it('should return original class name when no valid modifier is given', () => {
-      expect(filters.applyClassModifiers('c-custom-component', undefined)).to.equal('c-custom-component')
-      expect(filters.applyClassModifiers('c-custom-component', {})).to.equal('c-custom-component')
-      expect(filters.applyClassModifiers('c-custom-component', { a: 'A' })).to.equal('c-custom-component')
+      expect(
+        filters.applyClassModifiers('c-custom-component', undefined)
+      ).to.equal('c-custom-component')
+      expect(filters.applyClassModifiers('c-custom-component', {})).to.equal(
+        'c-custom-component'
+      )
+      expect(
+        filters.applyClassModifiers('c-custom-component', { a: 'A' })
+      ).to.equal('c-custom-component')
     })
 
     it('should return original class name and BEM modifier for modifier string', () => {
-      expect(filters.applyClassModifiers('c-custom-component', 'modifier'))
-        .to.equal('c-custom-component c-custom-component--modifier')
+      expect(
+        filters.applyClassModifiers('c-custom-component', 'modifier')
+      ).to.equal('c-custom-component c-custom-component--modifier')
     })
 
     it('should return original class name and BEM modifier for modifiers array', () => {
-      expect(filters.applyClassModifiers('c-custom-component', ['modifier', 'another-modifier']))
-        .to.equal('c-custom-component c-custom-component--modifier c-custom-component--another-modifier')
+      expect(
+        filters.applyClassModifiers('c-custom-component', [
+          'modifier',
+          'another-modifier',
+        ])
+      ).to.equal(
+        'c-custom-component c-custom-component--modifier c-custom-component--another-modifier'
+      )
     })
   })
 

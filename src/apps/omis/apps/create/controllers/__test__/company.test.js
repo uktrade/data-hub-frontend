@@ -27,11 +27,14 @@ describe('OMIS create company controller', () => {
     })
 
     it('should call parent method', () => {
-      expect(CreateController.prototype.middlewareChecks).to.have.been.calledOnce
+      expect(CreateController.prototype.middlewareChecks).to.have.been
+        .calledOnce
     })
 
     it('should call check skip company method', () => {
-      expect(this.controller.use).to.have.been.calledWith(this.controller.checkSkipCompany)
+      expect(this.controller.use).to.have.been.calledWith(
+        this.controller.checkSkipCompany
+      )
     })
   })
 
@@ -44,15 +47,20 @@ describe('OMIS create company controller', () => {
     })
 
     it('should call parent method', () => {
-      expect(CreateController.prototype.middlewareLocals).to.have.been.calledOnce
+      expect(CreateController.prototype.middlewareLocals).to.have.been
+        .calledOnce
     })
 
     it('should call set template method', () => {
-      expect(this.controller.use).to.have.been.calledWith(this.controller.setTemplate)
+      expect(this.controller.use).to.have.been.calledWith(
+        this.controller.setTemplate
+      )
     })
 
     it('should call set results method', () => {
-      expect(this.controller.use).to.have.been.calledWith(this.controller.setResults)
+      expect(this.controller.use).to.have.been.calledWith(
+        this.controller.setResults
+      )
     })
   })
 
@@ -73,7 +81,9 @@ describe('OMIS create company controller', () => {
       this.controller.checkSkipCompany(this.reqMock, {}, this.nextSpy)
 
       expect(this.reqMock.sessionModel.get).to.have.been.calledOnce
-      expect(this.reqMock.sessionModel.get).to.have.been.calledWith('skip-company')
+      expect(this.reqMock.sessionModel.get).to.have.been.calledWith(
+        'skip-company'
+      )
     })
 
     context('when company exists in session', () => {
@@ -84,12 +94,18 @@ describe('OMIS create company controller', () => {
 
       it('should unset skip session variable', () => {
         expect(this.reqMock.sessionModel.unset).to.have.been.calledOnce
-        expect(this.reqMock.sessionModel.unset).to.have.been.calledWith('skip-company')
+        expect(this.reqMock.sessionModel.unset).to.have.been.calledWith(
+          'skip-company'
+        )
       })
 
       it('should call post method', () => {
         expect(this.controller.post).to.have.been.calledOnce
-        expect(this.controller.post).to.have.been.calledWith(this.reqMock, {}, this.nextSpy)
+        expect(this.controller.post).to.have.been.calledWith(
+          this.reqMock,
+          {},
+          this.nextSpy
+        )
       })
 
       it('should not call next', () => {
@@ -97,7 +113,7 @@ describe('OMIS create company controller', () => {
       })
     })
 
-    context('when company doesn\'t exist in session', () => {
+    context("when company doesn't exist in session", () => {
       beforeEach(() => {
         this.reqMock.sessionModel.get.returns(false)
         this.controller.checkSkipCompany(this.reqMock, {}, this.nextSpy)
@@ -150,7 +166,9 @@ describe('OMIS create company controller', () => {
         })
 
         it('should use default template', () => {
-          expect(this.reqMock.form.options.template).to.equal('default-template')
+          expect(this.reqMock.form.options.template).to.equal(
+            'default-template'
+          )
         })
 
         it('should call next', () => {
@@ -165,7 +183,9 @@ describe('OMIS create company controller', () => {
         })
 
         it('should set edit template', () => {
-          expect(this.reqMock.form.options.template).to.equal('/template-path/company--edit')
+          expect(this.reqMock.form.options.template).to.equal(
+            '/template-path/company--edit'
+          )
         })
 
         it('should call next', () => {
@@ -214,9 +234,13 @@ describe('OMIS create company controller', () => {
       }
     })
 
-    context('when search term doesn\'t exist', () => {
+    context("when search term doesn't exist", () => {
       beforeEach(async () => {
-        await this.controller.setResults(this.reqMock, this.resMock, this.nextSpy)
+        await this.controller.setResults(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should not set search results', () => {
@@ -238,7 +262,11 @@ describe('OMIS create company controller', () => {
         beforeEach(async () => {
           this.searchCompaniesStub.resolves(searchMock)
 
-          await this.controller.setResults(this.reqMock, this.resMock, this.nextSpy)
+          await this.controller.setResults(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should call search', () => {
@@ -276,7 +304,11 @@ describe('OMIS create company controller', () => {
           this.errorMock = new Error()
           this.searchCompaniesStub.rejects(this.errorMock)
 
-          await this.controller.setResults(this.reqMock, this.resMock, this.nextSpy)
+          await this.controller.setResults(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should not set search results', () => {

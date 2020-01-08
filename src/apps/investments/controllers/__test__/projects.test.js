@@ -59,27 +59,46 @@ describe('#renderProjectsView', () => {
 
     expect(res.render, 'should render').to.be.calledOnce
 
-    expect(res.breadcrumb, 'should render the breadcrumsb').to.be.calledWith('Projects')
-
-    expect(res.render.firstCall.args[0], 'should render the collection template').to.equal(
-      'investments/views/projects'
+    expect(res.breadcrumb, 'should render the breadcrumsb').to.be.calledWith(
+      'Projects'
     )
 
-    expect(res.render.firstCall.args[1].title, 'should render the view with a title').to.equal(
-      'Investment Projects'
-    )
+    expect(
+      res.render.firstCall.args[0],
+      'should render the collection template'
+    ).to.equal('investments/views/projects')
 
-    expect(res.render.firstCall.args[1].countLabel, 'should render the view with a count label').to.equal('project')
+    expect(
+      res.render.firstCall.args[1].title,
+      'should render the view with a title'
+    ).to.equal('Investment Projects')
 
-    expect(res.render.firstCall.args[1].sortForm, 'should render the view with a sort form').to.exist
+    expect(
+      res.render.firstCall.args[1].countLabel,
+      'should render the view with a count label'
+    ).to.equal('project')
 
-    expect(res.render.firstCall.args[1].selectedFilters, 'should render the view with selected filters').to.exist
+    expect(
+      res.render.firstCall.args[1].sortForm,
+      'should render the view with a sort form'
+    ).to.exist
 
-    expect(res.render.firstCall.args[1].exportAction, 'should render the view with an export action').to.deep.equal({
+    expect(
+      res.render.firstCall.args[1].selectedFilters,
+      'should render the view with selected filters'
+    ).to.exist
+
+    expect(
+      res.render.firstCall.args[1].exportAction,
+      'should render the view with an export action'
+    ).to.deep.equal({
       enabled: false,
     })
 
-    expect(res.render.firstCall.args[1].filtersFields, 'should render the view with filter fields').to.exist
+    expect(
+      res.render.firstCall.args[1].filtersFields,
+      'should render the view with filter fields'
+    ).to.exist
 
     it('should call an error if there is an error', async () => {
       const { req, res, next } = fixture(500)

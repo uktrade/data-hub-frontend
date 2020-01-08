@@ -7,15 +7,21 @@ describe('Companies interactions middleware', () => {
   describe('#setInteractionsDetails', () => {
     const commonTests = (expectedCompanyId, expectedCompanyName) => {
       it('should set the return URL', () => {
-        expect(this.middlewareParameters.resMock.locals.interactions.returnLink).to.equal(`/companies/${expectedCompanyId}/interactions/`)
+        expect(
+          this.middlewareParameters.resMock.locals.interactions.returnLink
+        ).to.equal(`/companies/${expectedCompanyId}/interactions/`)
       })
 
       it('should set the entity name', () => {
-        expect(this.middlewareParameters.resMock.locals.interactions.entityName).to.equal(expectedCompanyName)
+        expect(
+          this.middlewareParameters.resMock.locals.interactions.entityName
+        ).to.equal(expectedCompanyName)
       })
 
       it('should set the interactions query', () => {
-        expect(this.middlewareParameters.resMock.locals.interactions.query).to.deep.equal({ company_id: expectedCompanyId })
+        expect(
+          this.middlewareParameters.resMock.locals.interactions.query
+        ).to.deep.equal({ company_id: expectedCompanyId })
       })
     }
 
@@ -28,14 +34,15 @@ describe('Companies interactions middleware', () => {
         setInteractionsDetails(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          this.middlewareParameters.nextSpy
         )
       })
 
       commonTests(companyMock.id, companyMock.name)
 
       it('should allow interactions to be added', () => {
-        expect(this.middlewareParameters.resMock.locals.interactions.canAdd).to.be.true
+        expect(this.middlewareParameters.resMock.locals.interactions.canAdd).to
+          .be.true
       })
     })
 
@@ -51,14 +58,15 @@ describe('Companies interactions middleware', () => {
         setInteractionsDetails(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          this.middlewareParameters.nextSpy
         )
       })
 
       commonTests(companyMock.id, companyMock.name)
 
       it('should not allow interactions to be added', () => {
-        expect(this.middlewareParameters.resMock.locals.interactions.canAdd).to.be.false
+        expect(this.middlewareParameters.resMock.locals.interactions.canAdd).to
+          .be.false
       })
     })
   })

@@ -5,11 +5,11 @@ const { getAdvisers } = require('../../adviser/repos')
 const { filterActiveAdvisers } = require('../../adviser/filters')
 const { transformObjectToOption } = require('../../transformers')
 
-function transformErrorMessage (error) {
+function transformErrorMessage(error) {
   return get(error, 'non_field_errors', ['There has been an error'])[0]
 }
 
-async function postComplete (req, res, next) {
+async function postComplete(req, res, next) {
   try {
     await completeProposition(req, res, next)
 
@@ -36,11 +36,15 @@ async function postComplete (req, res, next) {
   }
 }
 
-async function getPropositionDetails (req, res, next, propositionId) {
+async function getPropositionDetails(req, res, next, propositionId) {
   try {
     const token = req.session.token
     const { investment } = res.locals
-    res.locals.proposition = await fetchProposition(token, propositionId, investment.id)
+    res.locals.proposition = await fetchProposition(
+      token,
+      propositionId,
+      investment.id
+    )
 
     next()
   } catch (err) {
@@ -48,7 +52,7 @@ async function getPropositionDetails (req, res, next, propositionId) {
   }
 }
 
-async function getPropositionOptions (req, res, next) {
+async function getPropositionOptions(req, res, next) {
   try {
     const token = req.session.token
     const advisers = await getAdvisers(token)

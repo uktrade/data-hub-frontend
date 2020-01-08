@@ -1,4 +1,6 @@
-const { transformServiceDeliveryToAttendeeListItem } = require('../transformers')
+const {
+  transformServiceDeliveryToAttendeeListItem,
+} = require('../transformers')
 
 describe('#transformEventToAttendeeListItem', () => {
   beforeEach(() => {
@@ -14,7 +16,9 @@ describe('#transformEventToAttendeeListItem', () => {
         id: '2222',
         name: 'Test company',
       }
-      this.result = transformServiceDeliveryToAttendeeListItem(this.serviceDelivery)
+      this.result = transformServiceDeliveryToAttendeeListItem(
+        this.serviceDelivery
+      )
     })
 
     it('should indicate no contact selected', () => {
@@ -33,17 +37,23 @@ describe('#transformEventToAttendeeListItem', () => {
 
   context('when the company is missing', () => {
     beforeEach(() => {
-      this.serviceDelivery.contacts = [{
-        id: '3333',
-        name: 'Test contact',
-        job_title: 'Director',
-      }]
+      this.serviceDelivery.contacts = [
+        {
+          id: '3333',
+          name: 'Test contact',
+          job_title: 'Director',
+        },
+      ]
 
-      this.result = transformServiceDeliveryToAttendeeListItem(this.serviceDelivery)
+      this.result = transformServiceDeliveryToAttendeeListItem(
+        this.serviceDelivery
+      )
     })
 
     it('not include a company in the meta data.', () => {
-      const companyItem = this.result.meta.find(item => item.label === 'Company')
+      const companyItem = this.result.meta.find(
+        (item) => item.label === 'Company'
+      )
       expect(companyItem).to.be.undefined
     })
   })
@@ -58,18 +68,25 @@ describe('#transformEventToAttendeeListItem', () => {
 
     context('when a valid contact is provided without a job title', () => {
       beforeEach(() => {
-        this.serviceDelivery.contacts = [{
-          id: '3333',
-          name: 'Test contact',
-        }]
+        this.serviceDelivery.contacts = [
+          {
+            id: '3333',
+            name: 'Test contact',
+          },
+        ]
 
-        this.transformedAttendee = transformServiceDeliveryToAttendeeListItem(this.serviceDelivery)
+        this.transformedAttendee = transformServiceDeliveryToAttendeeListItem(
+          this.serviceDelivery
+        )
       })
 
       it('should return a transformed attendee with the contact name and link', () => {
         expect(this.transformedAttendee).to.have.property('id', '3333')
         expect(this.transformedAttendee).to.have.property('type', 'contact')
-        expect(this.transformedAttendee).to.have.property('name', 'Test contact')
+        expect(this.transformedAttendee).to.have.property(
+          'name',
+          'Test contact'
+        )
       })
 
       it('should return a transformed attendee with the company name and link', () => {
@@ -99,13 +116,17 @@ describe('#transformEventToAttendeeListItem', () => {
 
     context('when a valid contact is provided with a job title', () => {
       beforeEach(() => {
-        this.serviceDelivery.contacts = [{
-          id: '3333',
-          name: 'Test contact',
-          job_title: 'Director',
-        }]
+        this.serviceDelivery.contacts = [
+          {
+            id: '3333',
+            name: 'Test contact',
+            job_title: 'Director',
+          },
+        ]
 
-        this.transformedAttendee = transformServiceDeliveryToAttendeeListItem(this.serviceDelivery)
+        this.transformedAttendee = transformServiceDeliveryToAttendeeListItem(
+          this.serviceDelivery
+        )
       })
 
       it('should return a transformed attendee with their job title', () => {

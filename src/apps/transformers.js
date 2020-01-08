@@ -1,29 +1,24 @@
 /* eslint-disable camelcase */
-const {
-  filter,
-  keyBy,
-  snakeCase,
-  upperFirst,
-} = require('lodash')
+const { filter, keyBy, snakeCase, upperFirst } = require('lodash')
 const { isValid, format, parse } = require('date-fns')
 
 const { hqLabels } = require('./companies/labels')
 
-function transformObjectToOption ({ id, name }) {
+function transformObjectToOption({ id, name }) {
   return {
     value: id,
     label: name,
   }
 }
 
-function transformObjectToGovUKOption ({ id, name }) {
+function transformObjectToGovUKOption({ id, name }) {
   return {
     value: id,
     text: name,
   }
 }
 
-function transformHQCodeToLabelledOption ({ id, name }) {
+function transformHQCodeToLabelledOption({ id, name }) {
   switch (name) {
     case 'ehq':
       return {
@@ -43,14 +38,14 @@ function transformHQCodeToLabelledOption ({ id, name }) {
   }
 }
 
-function transformStringToOption (string) {
+function transformStringToOption(string) {
   return {
     value: string,
     label: string,
   }
 }
 
-function transformContactToOption ({ id, first_name, last_name, job_title }) {
+function transformContactToOption({ id, first_name, last_name, job_title }) {
   return {
     value: id,
     label: upperFirst(
@@ -59,7 +54,7 @@ function transformContactToOption ({ id, first_name, last_name, job_title }) {
   }
 }
 
-function transformCountryToOptionWithIsoCode ({ id, name, iso_alpha2_code }) {
+function transformCountryToOptionWithIsoCode({ id, name, iso_alpha2_code }) {
   return {
     key: id,
     label: name,
@@ -67,26 +62,26 @@ function transformCountryToOptionWithIsoCode ({ id, name, iso_alpha2_code }) {
   }
 }
 
-function transformIdToObject (id) {
+function transformIdToObject(id) {
   return {
     id,
   }
 }
 
-function transformDateObjectToDateString (key) {
+function transformDateObjectToDateString(key) {
   if (!key) {
     throw Error('date object key is required to transform date')
   }
-  return function transformDateObjectToStringWithKey (props = {}) {
+  return function transformDateObjectToStringWithKey(props = {}) {
     const dateString = ['year', 'month', 'day']
-      .map(x => props[`${key}_${x}`])
+      .map((x) => props[`${key}_${x}`])
       .join('-')
 
     return dateString === '--' ? null : dateString
   }
 }
 
-function transformDateStringToDateObject (dateString) {
+function transformDateStringToDateObject(dateString) {
   const isValidDate = dateString && isValid(parse(dateString))
 
   return {
@@ -101,8 +96,8 @@ function transformDateStringToDateObject (dateString) {
  * by key rather than array index. Helpful when the array length changes.
  * @returns {{}}
  */
-function buildMetaDataObj (collection) {
-  return keyBy(collection, elem => {
+function buildMetaDataObj(collection) {
+  return keyBy(collection, (elem) => {
     return snakeCase(elem.label)
   })
 }

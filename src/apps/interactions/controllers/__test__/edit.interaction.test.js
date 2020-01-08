@@ -280,7 +280,7 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should generate a form with the required fields', () => {
-      const fieldNames = this.interactionForm.children.map(field =>
+      const fieldNames = this.interactionForm.children.map((field) =>
         pick(field, [
           'name',
           'label',
@@ -626,7 +626,7 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should generate a form with the required fields and values populated', () => {
-      const fields = this.interactionForm.children.map(field =>
+      const fields = this.interactionForm.children.map((field) =>
         pick(field, [
           'name',
           'label',
@@ -1029,7 +1029,7 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should merge the changes on top of the original record', () => {
-      const fields = this.interactionForm.children.map(field =>
+      const fields = this.interactionForm.children.map((field) =>
         pick(field, [
           'name',
           'label',
@@ -1229,58 +1229,61 @@ describe('Interaction edit controller (Interactions)', () => {
     })
   })
 
-  context('when a new interaction has a kind that does not match service-delivery or interaction', () => {
-    beforeEach(async () => {
-      req.params = {
-        ...req.params,
-        theme: 'export',
-        kind: 'not-really-an-interaction',
-      }
+  context(
+    'when a new interaction has a kind that does not match service-delivery or interaction',
+    () => {
+      beforeEach(async () => {
+        req.params = {
+          ...req.params,
+          theme: 'export',
+          kind: 'not-really-an-interaction',
+        }
 
-      res.locals = {
-        ...res.locals,
-        company: {
-          id: '1',
-          name: 'Fred ltd.',
-        },
-        form: {
-          errors: {
-            messages: {
-              subject: ['Error message'],
+        res.locals = {
+          ...res.locals,
+          company: {
+            id: '1',
+            name: 'Fred ltd.',
+          },
+          form: {
+            errors: {
+              messages: {
+                subject: ['Error message'],
+              },
             },
           },
-        },
-        requestBody: {
-          subject: 'a',
-        },
-      }
+          requestBody: {
+            subject: 'a',
+          },
+        }
 
-      nock(config.apiRoot)
-        .get('/v3/contact?company_id=1&limit=500')
-        .reply(200, { results: this.contactsData })
-        .get('/v4/metadata/team')
-        .reply(200, metadataMock.teamOptions)
-        .get('/v4/metadata/service?contexts__has_any=export_service_delivery')
-        .reply(200, metadataMock.serviceOptions)
-        .get('/adviser/?limit=100000&offset=0')
-        .reply(200, { results: this.activeInactiveAdviserData })
-        .get('/v4/metadata/communication-channel')
-        .reply(200, metadataMock.channelOptions)
-        .get('/v4/metadata/service-delivery-status')
-        .reply(200, metadataMock.serviceDeliveryStatus)
-        .get('/v4/metadata/policy-area')
-        .reply(200, metadataMock.policyAreaOptions)
-        .get('/v4/metadata/policy-issue-type')
-        .reply(200, metadataMock.policyIssueType)
+        nock(config.apiRoot)
+          .get('/v3/contact?company_id=1&limit=500')
+          .reply(200, { results: this.contactsData })
+          .get('/v4/metadata/team')
+          .reply(200, metadataMock.teamOptions)
+          .get('/v4/metadata/service?contexts__has_any=export_service_delivery')
+          .reply(200, metadataMock.serviceOptions)
+          .get('/adviser/?limit=100000&offset=0')
+          .reply(200, { results: this.activeInactiveAdviserData })
+          .get('/v4/metadata/communication-channel')
+          .reply(200, metadataMock.channelOptions)
+          .get('/v4/metadata/service-delivery-status')
+          .reply(200, metadataMock.serviceDeliveryStatus)
+          .get('/v4/metadata/policy-area')
+          .reply(200, metadataMock.policyAreaOptions)
+          .get('/v4/metadata/policy-issue-type')
+          .reply(200, metadataMock.policyIssueType)
 
-      await controller.renderEditPage(req, res, nextStub)
-    })
-    it('should throw an error', () => {
-      expect(nextStub).to.have.been.called
-      expect(nextStub.firstCall.args[0]).to.be.instanceof(Error)
-      expect(nextStub.firstCall.args[0].message).to.equal('Invalid kind')
-    })
-  })
+        await controller.renderEditPage(req, res, nextStub)
+      })
+      it('should throw an error', () => {
+        expect(nextStub).to.have.been.called
+        expect(nextStub.firstCall.args[0]).to.be.instanceof(Error)
+        expect(nextStub.firstCall.args[0].message).to.equal('Invalid kind')
+      })
+    }
+  )
 
   context('when a new interaction has a theme that does not match', () => {
     beforeEach(async () => {

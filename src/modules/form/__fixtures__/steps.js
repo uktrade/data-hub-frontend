@@ -5,10 +5,10 @@ module.exports = (middleware) => {
       path: '/step-1',
       type: 'form',
       heading: 'Add something',
-      breadcrumbs: [
-        { text: 'Add something', href: '/url' },
-      ],
-      macro: () => { return { children: [] } },
+      breadcrumbs: [{ text: 'Add something', href: '/url' }],
+      macro: () => {
+        return { children: [] }
+      },
       nextPath: ({ selectedAtStep1 }) => {
         const paths = {
           'step-2-value': '/step-2',
@@ -21,10 +21,10 @@ module.exports = (middleware) => {
       path: '/step-2',
       type: 'form',
       heading: 'Add something',
-      breadcrumbs: [
-        { text: 'Add something', href: '/url' },
-      ],
-      macro: () => { return { children: [] } },
+      breadcrumbs: [{ text: 'Add something', href: '/url' }],
+      macro: () => {
+        return { children: [] }
+      },
       nextPath: '/finish',
       validateJourney: false,
     },
@@ -32,10 +32,10 @@ module.exports = (middleware) => {
       path: '/step-3',
       type: 'form',
       heading: 'Add something',
-      breadcrumbs: [
-        { text: 'Add something', href: '/url' },
-      ],
-      macro: () => { return { children: [] } },
+      breadcrumbs: [{ text: 'Add something', href: '/url' }],
+      macro: () => {
+        return { children: [] }
+      },
       nextPath: ({ selectedAtStep3 }) => {
         const paths = {
           'step-4-value': '/step-4',
@@ -48,20 +48,20 @@ module.exports = (middleware) => {
       path: '/step-4',
       type: 'form',
       heading: 'Add something',
-      breadcrumbs: [
-        { text: 'Add something', href: '/url' },
-      ],
-      macro: () => { return { children: [] } },
+      breadcrumbs: [{ text: 'Add something', href: '/url' }],
+      macro: () => {
+        return { children: [] }
+      },
       nextPath: '/finish',
     },
     {
       path: '/step-5',
       type: 'form',
       heading: 'Add something',
-      breadcrumbs: [
-        { text: 'Add something', href: '/url' },
-      ],
-      macro: () => { return { children: [] } },
+      breadcrumbs: [{ text: 'Add something', href: '/url' }],
+      macro: () => {
+        return { children: [] }
+      },
       nextPath: '/finish',
     },
   ]

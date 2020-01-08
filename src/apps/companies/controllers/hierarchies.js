@@ -1,4 +1,4 @@
-function renderAddGlobalHQ (req, res) {
+function renderAddGlobalHQ(req, res) {
   const { company } = res.locals
 
   res

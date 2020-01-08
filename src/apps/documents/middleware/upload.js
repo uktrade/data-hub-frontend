@@ -4,7 +4,7 @@ const formidable = require('formidable')
 
 const { chainUploadSequence } = require('../repos')
 
-function parseForm (req, res) {
+function parseForm(req, res) {
   const form = new formidable.IncomingForm()
   const fiveGigabytes = 5000 * 1024 * 1024
 
@@ -36,11 +36,11 @@ function parseForm (req, res) {
   })
 }
 
-function getTextFields ({ collectTextFields = () => {} }, fields) {
+function getTextFields({ collectTextFields = () => {} }, fields) {
   return collectTextFields(fields)
 }
 
-function postUpload (req, res, next) {
+function postUpload(req, res, next) {
   try {
     parseForm(req, res)
   } catch (error) {

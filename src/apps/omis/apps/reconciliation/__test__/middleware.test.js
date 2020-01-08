@@ -1,4 +1,3 @@
-
 const { assign } = require('lodash')
 
 describe('OMIS reconciliation middleware', () => {

@@ -1,12 +1,19 @@
 const router = require('express').Router()
 
-const { DEFAULT_COLLECTION_QUERY, APP_PERMISSIONS, QUERY_FIELDS, QUERY_DATE_FIELDS } = require('./constants')
+const {
+  DEFAULT_COLLECTION_QUERY,
+  APP_PERMISSIONS,
+  QUERY_FIELDS,
+  QUERY_DATE_FIELDS,
+} = require('./constants')
 
 const { renderEditPage } = require('./controllers/edit')
 const { renderDetailsPage } = require('./controllers/details')
 const { renderCompletePage, postComplete } = require('./controllers/complete')
 const { renderInteractionList } = require('./controllers/list')
-const { exportCollection } = require('../../modules/search/middleware/collection')
+const {
+  exportCollection,
+} = require('../../modules/search/middleware/collection')
 const { getRequestBody } = require('../../middleware/collection')
 const { detectUserAgent } = require('../../middleware/detect-useragent')
 
@@ -23,7 +30,8 @@ router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.param('interactionId', getInteractionDetails)
 
-router.get('/',
+router.get(
+  '/',
   detectUserAgent,
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   getInteractionsRequestBody,
@@ -32,7 +40,8 @@ router.get('/',
   renderInteractionList
 )
 
-router.get('/export',
+router.get(
+  '/export',
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   getRequestBody(QUERY_FIELDS, QUERY_DATE_FIELDS),
   exportCollection('interaction')

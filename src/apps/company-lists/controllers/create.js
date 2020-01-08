@@ -1,6 +1,6 @@
 const { createUserCompanyList } = require('../repos')
 
-async function createCompanyList (req, res, next) {
+async function createCompanyList(req, res, next) {
   const { id, name } = req.body
   try {
     await createUserCompanyList(req.session.token, id, name)
@@ -12,7 +12,7 @@ async function createCompanyList (req, res, next) {
   }
 }
 
-async function renderCreateListForm (req, res, next) {
+async function renderCreateListForm(req, res, next) {
   const { company } = res.locals
   try {
     res

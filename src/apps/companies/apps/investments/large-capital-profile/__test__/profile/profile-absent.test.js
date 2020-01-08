@@ -10,7 +10,9 @@ describe('Company Investments - Large capital profile', () => {
     context('when the company does not have a profile', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
-          .get(`/v4/large-investor-profile?investor_company_id=${companyMock.id}`)
+          .get(
+            `/v4/large-investor-profile?investor_company_id=${companyMock.id}`
+          )
           .reply(200, absentCompanyProfile)
 
         this.middlewareParameters = buildMiddlewareParameters({
@@ -20,7 +22,7 @@ describe('Company Investments - Large capital profile', () => {
         await controller.renderProfile(
           this.middlewareParameters.reqMock,
           this.middlewareParameters.resMock,
-          this.middlewareParameters.nextSpy,
+          this.middlewareParameters.nextSpy
         )
       })
 
@@ -29,12 +31,17 @@ describe('Company Investments - Large capital profile', () => {
       })
 
       it('should call the render function and pass the view', () => {
-        const view = 'companies/apps/investments/large-capital-profile/views/profile'
-        expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(view)
+        const view =
+          'companies/apps/investments/large-capital-profile/views/profile'
+        expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(
+          view
+        )
       })
 
       it('should call the render function and pass the profile', () => {
-        expect(this.middlewareParameters.resMock.render.args[0][1].profile).to.deep.equal(undefined)
+        expect(
+          this.middlewareParameters.resMock.render.args[0][1].profile
+        ).to.deep.equal(undefined)
       })
     })
   })

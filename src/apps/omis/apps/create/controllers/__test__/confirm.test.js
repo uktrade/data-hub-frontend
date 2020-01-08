@@ -5,29 +5,38 @@ const FormController = require('../../../../controllers/form')
 const saveMockData = {
   id: '1234567890',
 }
-const metadataCountryMockData = [{
-  id: '1',
-  name: 'Country One',
-}, {
-  id: '2',
-  name: 'Country Two',
-}]
-const metadataSectorMockData = [{
-  id: '1',
-  name: 'ICT',
-}, {
-  id: '2',
-  name: 'Engineering',
-}]
-const contactsMockData = [{
-  id: '1',
-  first_name: 'Fred',
-  last_name: 'Stevens',
-}, {
-  id: '2',
-  first_name: 'Alex',
-  last_name: 'George',
-}]
+const metadataCountryMockData = [
+  {
+    id: '1',
+    name: 'Country One',
+  },
+  {
+    id: '2',
+    name: 'Country Two',
+  },
+]
+const metadataSectorMockData = [
+  {
+    id: '1',
+    name: 'ICT',
+  },
+  {
+    id: '2',
+    name: 'Engineering',
+  },
+]
+const contactsMockData = [
+  {
+    id: '1',
+    first_name: 'Fred',
+    last_name: 'Stevens',
+  },
+  {
+    id: '2',
+    first_name: 'Alex',
+    last_name: 'George',
+  },
+]
 
 describe('OMIS create confirm controller', () => {
   beforeEach(() => {
@@ -144,14 +153,17 @@ describe('OMIS create confirm controller', () => {
 
       it('should call next with no arguments', () => {
         expect(this.sessionSetSpy).to.have.been.calledOnce
-        expect(this.sessionSetSpy).to.have.been.calledWith('order-id', '1234567890')
+        expect(this.sessionSetSpy).to.have.been.calledWith(
+          'order-id',
+          '1234567890'
+        )
       })
     })
 
     describe('when the order save was successful', () => {
       beforeEach(async () => {
         this.errorMock = new Error('Save Error')
-        this.orderSaveStub.rejects(this.errorMock = new Error('Save Error'))
+        this.orderSaveStub.rejects((this.errorMock = new Error('Save Error')))
 
         await this.controller.saveValues(this.reqMock, {}, this.nextSpy)
       })
@@ -191,7 +203,7 @@ describe('OMIS create confirm controller', () => {
       }
     })
 
-    context('when a success message doesn\'t exist', () => {
+    context("when a success message doesn't exist", () => {
       beforeEach(() => {
         this.controller.successHandler(this.reqMock, this.resMock)
       })
@@ -207,7 +219,9 @@ describe('OMIS create confirm controller', () => {
 
       it('should redirect with to the order', () => {
         expect(this.resMock.redirect).to.have.been.calledOnce
-        expect(this.resMock.redirect).to.have.been.calledWith(`/omis/${saveMockData.id}`)
+        expect(this.resMock.redirect).to.have.been.calledWith(
+          `/omis/${saveMockData.id}`
+        )
       })
     })
 
@@ -219,7 +233,10 @@ describe('OMIS create confirm controller', () => {
 
       it('should set a flash message', () => {
         expect(this.flashSpy).to.have.been.calledOnce
-        expect(this.flashSpy).to.have.been.calledWith('success', 'Successfully handled')
+        expect(this.flashSpy).to.have.been.calledWith(
+          'success',
+          'Successfully handled'
+        )
       })
     })
   })

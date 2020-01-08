@@ -1,11 +1,7 @@
 const { merge } = require('lodash')
 
 const globalFields = require('../../fields')
-const {
-  arrayrequired,
-  duration,
-  euvatnumber,
-} = require('../../validators')
+const { arrayrequired, duration, euvatnumber } = require('../../validators')
 
 const editFields = merge({}, globalFields, {
   subscribers: {
@@ -14,18 +10,20 @@ const editFields = merge({}, globalFields, {
     label: 'fields.subscribers.label',
     hint: 'fields.subscribers.hint',
     name: 'subscribers',
-    children: [{
-      macroName: 'Typeahead',
-      entity: 'adviser',
-      name: 'subscribers',
-      label: 'subscribers',
-      placeholder: 'Search team member',
-      classes: 'c-form-group--no-filter',
-      options: [],
-      optional: false,
-      multipleSelect: false,
-      isLabelHidden: true,
-    }],
+    children: [
+      {
+        macroName: 'Typeahead',
+        entity: 'adviser',
+        name: 'subscribers',
+        label: 'subscribers',
+        placeholder: 'Search team member',
+        classes: 'c-form-group--no-filter',
+        options: [],
+        optional: false,
+        multipleSelect: false,
+        isLabelHidden: true,
+      },
+    ],
   },
   service_types: {
     fieldType: 'MultipleChoiceField',
@@ -76,18 +74,20 @@ const editFields = merge({}, globalFields, {
     label: 'fields.assignees.label',
     hint: 'fields.assignees.hint',
     name: 'assignees',
-    children: [{
-      macroName: 'Typeahead',
-      entity: 'adviser',
-      name: 'assignees',
-      label: 'subscribers',
-      placeholder: 'Search team member',
-      classes: 'c-form-group--no-filter',
-      options: [],
-      optional: false,
-      multipleSelect: false,
-      isLabelHidden: true,
-    }],
+    children: [
+      {
+        macroName: 'Typeahead',
+        entity: 'adviser',
+        name: 'assignees',
+        label: 'subscribers',
+        placeholder: 'Search team member',
+        classes: 'c-form-group--no-filter',
+        options: [],
+        optional: false,
+        multipleSelect: false,
+        isLabelHidden: true,
+      },
+    ],
   },
   assignee_time: {
     fieldType: 'TextField',
@@ -133,7 +133,8 @@ const editFields = merge({}, globalFields, {
       name: 'vat_status',
       value: 'eu',
     },
-    innerHTML: '<p><a href="http://ec.europa.eu/taxation_customs/vies/" aria-labelledby="external-link-label">Validate the EU VAT number</a> <span id="external-link-label">(will open another website)</span></p>',
+    innerHTML:
+      '<p><a href="http://ec.europa.eu/taxation_customs/vies/" aria-labelledby="external-link-label">Validate the EU VAT number</a> <span id="external-link-label">(will open another website)</span></p>',
   },
   vat_verified: {
     fieldType: 'MultipleChoiceField',
@@ -141,14 +142,16 @@ const editFields = merge({}, globalFields, {
     modifier: ['inline', 'subfield'],
     label: 'fields.vat_verified.label',
     validate: ['required'],
-    options: [{
-      value: 'true',
-      label: 'Yes',
-    },
-    {
-      value: 'false',
-      label: 'No',
-    }],
+    options: [
+      {
+        value: 'true',
+        label: 'Yes',
+      },
+      {
+        value: 'false',
+        label: 'No',
+      },
+    ],
     condition: {
       name: 'vat_status',
       value: 'eu',
@@ -224,10 +227,12 @@ const editFields = merge({}, globalFields, {
     fieldType: 'MultipleChoiceField',
     label: 'fields.verify_work_sent.label',
     type: 'checkbox',
-    options: [{
-      value: 'true',
-      label: 'I have completed the work and sent this to the contact',
-    }],
+    options: [
+      {
+        value: 'true',
+        label: 'I have completed the work and sent this to the contact',
+      },
+    ],
     validate: ['required'],
   },
 })

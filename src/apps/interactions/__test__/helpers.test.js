@@ -1,7 +1,4 @@
-const {
-  getReturnLink,
-  isInteractionServiceForm,
-} = require('../helpers')
+const { getReturnLink, isInteractionServiceForm } = require('../helpers')
 const {
   INTERACTION_CONTEXTS,
 } = require('../../../../src/apps/interactions/constants')
@@ -32,21 +29,11 @@ describe('Interaction helpers', () => {
   describe('#isInteractionServiceForm', () => {
     context('matching interaction form context values', () => {
       it('should return true', () => {
-        expect(
-          isInteractionServiceForm(INTERACTION_CONTEXTS[0])
-        ).to.equal(true)
-        expect(
-          isInteractionServiceForm(INTERACTION_CONTEXTS[1])
-        ).to.equal(true)
-        expect(
-          isInteractionServiceForm(INTERACTION_CONTEXTS[2])
-        ).to.equal(true)
-        expect(
-          isInteractionServiceForm(INTERACTION_CONTEXTS[3])
-        ).to.equal(true)
-        expect(
-          isInteractionServiceForm(INTERACTION_CONTEXTS[0])
-        ).to.equal(true)
+        expect(isInteractionServiceForm(INTERACTION_CONTEXTS[0])).to.equal(true)
+        expect(isInteractionServiceForm(INTERACTION_CONTEXTS[1])).to.equal(true)
+        expect(isInteractionServiceForm(INTERACTION_CONTEXTS[2])).to.equal(true)
+        expect(isInteractionServiceForm(INTERACTION_CONTEXTS[3])).to.equal(true)
+        expect(isInteractionServiceForm(INTERACTION_CONTEXTS[0])).to.equal(true)
       })
     })
 

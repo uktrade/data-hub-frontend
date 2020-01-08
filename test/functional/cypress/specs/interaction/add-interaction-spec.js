@@ -2,7 +2,12 @@ const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const utils = require('../../support/utils')
 const { assertBreadcrumbs } = require('../../support/assertions')
-const { companies, contacts, dashboard, investments } = require('../../../../../src/lib/urls')
+const {
+  companies,
+  contacts,
+  dashboard,
+  investments,
+} = require('../../../../../src/lib/urls')
 
 const serviceDeliveryDetails = selectors.interaction.details.serviceDelivery
 
@@ -13,27 +18,45 @@ describe('Add Export', () => {
         context('When the fields have validtion errors', () => {
           it('Should trigger a validation error', () => {
             const formSelectors = selectors.interactionForm
-            cy.visit(companies.interactions.createType(fixtures.company.addInteractionError.id, 'export', 'interaction'))
+            cy.visit(
+              companies.interactions.createType(
+                fixtures.company.addInteractionError.id,
+                'export',
+                'interaction'
+              )
+            )
 
             populateCountriesDiscussed(formSelectors, true, true)
 
             cy.get(selectors.interactionForm.add).click()
 
-            cy.get(`${formSelectors.countries.future} .multiselect__tag`).should('contain', 'Albania')
-            cy.get(`${formSelectors.countries.export} .multiselect__tag`).should('contain', 'British Indian Ocean Territory')
-            cy.get(`${formSelectors.countries.noInterest} .multiselect__tag`).should('contain', 'Central African Republic')
+            cy.get(
+              `${formSelectors.countries.future} .multiselect__tag`
+            ).should('contain', 'Albania')
+            cy.get(
+              `${formSelectors.countries.export} .multiselect__tag`
+            ).should('contain', 'British Indian Ocean Territory')
+            cy.get(
+              `${formSelectors.countries.noInterest} .multiselect__tag`
+            ).should('contain', 'Central African Republic')
           })
         })
 
         context('When there are no validation errors', () => {
           beforeEach(() => {
-            cy.visit(companies.interactions.createType(fixtures.default.id, 'export', 'interaction'))
+            cy.visit(
+              companies.interactions.createType(
+                fixtures.default.id,
+                'export',
+                'interaction'
+              )
+            )
           })
 
           it('should render breadcrumbs', () => {
             assertBreadcrumbs({
-              'Home': dashboard(),
-              'Companies': companies.index(),
+              Home: dashboard(),
+              Companies: companies.index(),
               'Add interaction': null,
             })
           })
@@ -42,7 +65,12 @@ describe('Add Export', () => {
             it('should add the interaction', () => {
               const subject = utils.randomString()
 
-              populateInteractionForm(subject, 'A Specific DIT Export Service or Funding', 'Export Win', { visible: true, discussed: true })
+              populateInteractionForm(
+                subject,
+                'A Specific DIT Export Service or Funding',
+                'Export Win',
+                { visible: true, discussed: true }
+              )
 
               cy.get(selectors.interactionForm.add).click()
 
@@ -54,7 +82,12 @@ describe('Add Export', () => {
             it('should add the interaction', () => {
               const subject = utils.randomString()
 
-              populateInteractionForm(subject, 'A Specific DIT Export Service or Funding', 'Export Win', { visible: true, discussed: false })
+              populateInteractionForm(
+                subject,
+                'A Specific DIT Export Service or Funding',
+                'Export Win',
+                { visible: true, discussed: false }
+              )
 
               cy.get(selectors.interactionForm.add).click()
 
@@ -66,14 +99,22 @@ describe('Add Export', () => {
 
       context('when in the context of a contact', () => {
         beforeEach(() => {
-          cy.visit(contacts.interactions.createType(fixtures.default.id, 'export', 'interaction'))
+          cy.visit(
+            contacts.interactions.createType(
+              fixtures.default.id,
+              'export',
+              'interaction'
+            )
+          )
         })
 
         it('should render breadcrumbs', () => {
           assertBreadcrumbs({
-            'Home': dashboard(),
-            'Contacts': contacts.index(),
-            'Joseph Woof': contacts.contact('5e75d636-1d24-416a-aaf0-3fb220d594ce'),
+            Home: dashboard(),
+            Contacts: contacts.index(),
+            'Joseph Woof': contacts.contact(
+              '5e75d636-1d24-416a-aaf0-3fb220d594ce'
+            ),
             'Add interaction': null,
           })
         })
@@ -81,7 +122,12 @@ describe('Add Export', () => {
         it('should add the interaction', () => {
           const subject = utils.randomString()
 
-          populateInteractionForm(subject, 'A Specific DIT Export Service or Funding', 'Export Win', { visible: true, discussed: true })
+          populateInteractionForm(
+            subject,
+            'A Specific DIT Export Service or Funding',
+            'Export Win',
+            { visible: true, discussed: true }
+          )
 
           cy.get(selectors.interactionForm.add).click()
 
@@ -93,13 +139,19 @@ describe('Add Export', () => {
     context('when adding an export service delivery', () => {
       context('when in the context of a company', () => {
         beforeEach(() => {
-          cy.visit(companies.interactions.createType(fixtures.default.id, 'export', 'service-delivery'))
+          cy.visit(
+            companies.interactions.createType(
+              fixtures.default.id,
+              'export',
+              'service-delivery'
+            )
+          )
         })
 
         it('should render breadcrumbs', () => {
           assertBreadcrumbs({
-            'Home': dashboard(),
-            'Companies': companies.index(),
+            Home: dashboard(),
+            Companies: companies.index(),
             'Add service delivery': null,
           })
         })
@@ -107,7 +159,12 @@ describe('Add Export', () => {
         it('should add the service delivery', () => {
           const subject = utils.randomString()
 
-          populateServiceDeliveryForm(subject, 'A Specific DIT Export Service or Funding', 'Export Win', { visible: true, discussed: true })
+          populateServiceDeliveryForm(
+            subject,
+            'A Specific DIT Export Service or Funding',
+            'Export Win',
+            { visible: true, discussed: true }
+          )
 
           cy.get(selectors.interactionForm.add).click()
 
@@ -117,14 +174,22 @@ describe('Add Export', () => {
 
       context('when in the context of a contact', () => {
         beforeEach(() => {
-          cy.visit(contacts.interactions.createType(fixtures.default.id, 'export', 'service-delivery'))
+          cy.visit(
+            contacts.interactions.createType(
+              fixtures.default.id,
+              'export',
+              'service-delivery'
+            )
+          )
         })
 
         it('should render breadcrumbs', () => {
           assertBreadcrumbs({
-            'Home': dashboard(),
-            'Contacts': contacts.index(),
-            'Joseph Woof': contacts.contact('5e75d636-1d24-416a-aaf0-3fb220d594ce'),
+            Home: dashboard(),
+            Contacts: contacts.index(),
+            'Joseph Woof': contacts.contact(
+              '5e75d636-1d24-416a-aaf0-3fb220d594ce'
+            ),
             'Add service delivery': null,
           })
         })
@@ -132,7 +197,12 @@ describe('Add Export', () => {
         it('should add the service delivery', () => {
           const subject = utils.randomString()
 
-          populateServiceDeliveryForm(subject, 'A Specific DIT Export Service or Funding', 'Export Win', { visible: true, discussed: true })
+          populateServiceDeliveryForm(
+            subject,
+            'A Specific DIT Export Service or Funding',
+            'Export Win',
+            { visible: true, discussed: true }
+          )
 
           cy.get(selectors.interactionForm.add).click()
 
@@ -142,13 +212,19 @@ describe('Add Export', () => {
 
       context('when TAP service fields are empty', () => {
         beforeEach(() => {
-          cy.visit(companies.interactions.createType(fixtures.default.id, 'export', 'service-delivery'))
+          cy.visit(
+            companies.interactions.createType(
+              fixtures.default.id,
+              'export',
+              'service-delivery'
+            )
+          )
         })
 
         it('should render breadcrumbs', () => {
           assertBreadcrumbs({
-            'Home': dashboard(),
-            'Companies': companies.index(),
+            Home: dashboard(),
+            Companies: companies.index(),
             'Add service delivery': null,
           })
         })
@@ -156,11 +232,17 @@ describe('Add Export', () => {
         it('should add the service delivery', () => {
           const subject = utils.randomString()
 
-          cy.get(selectors.interactionForm.contact).select('Joseph Woof, Dog master')
+          cy.get(selectors.interactionForm.contact).select(
+            'Joseph Woof, Dog master'
+          )
           cy.get(selectors.interactionForm.eventNo).click()
-          cy.get(selectors.interactionForm.service).select('A Specific DIT Export Service or Funding')
+          cy.get(selectors.interactionForm.service).select(
+            'A Specific DIT Export Service or Funding'
+          )
           cy.get(selectors.interactionForm.subject).type(subject)
-          cy.get(selectors.interactionForm.notes).type('Conversation with potential client')
+          cy.get(selectors.interactionForm.notes).type(
+            'Conversation with potential client'
+          )
           cy.get(selectors.interactionForm.policyFeedbackNo).click()
 
           cy.get(selectors.interactionForm.add).click()
@@ -171,13 +253,19 @@ describe('Add Export', () => {
 
       context('when TAP service fields are populated', () => {
         beforeEach(() => {
-          cy.visit(companies.interactions.createType(fixtures.default.id, 'export', 'service-delivery'))
+          cy.visit(
+            companies.interactions.createType(
+              fixtures.default.id,
+              'export',
+              'service-delivery'
+            )
+          )
         })
 
         it('should render breadcrumbs', () => {
           assertBreadcrumbs({
-            'Home': dashboard(),
-            'Companies': companies.index(),
+            Home: dashboard(),
+            Companies: companies.index(),
             'Add service delivery': null,
           })
         })
@@ -185,12 +273,20 @@ describe('Add Export', () => {
         it('should add the service delivery', () => {
           const subject = utils.randomString()
 
-          cy.get(selectors.interactionForm.contact).select('Joseph Woof, Dog master')
+          cy.get(selectors.interactionForm.contact).select(
+            'Joseph Woof, Dog master'
+          )
           cy.get(selectors.interactionForm.eventNo).click()
-          cy.get(selectors.interactionForm.service).select('A Specific DIT Export Service or Funding')
-          cy.get(selectors.interactionForm.subService).select('Tradeshow Access Programme (TAP)')
+          cy.get(selectors.interactionForm.service).select(
+            'A Specific DIT Export Service or Funding'
+          )
+          cy.get(selectors.interactionForm.subService).select(
+            'Tradeshow Access Programme (TAP)'
+          )
           cy.get(selectors.interactionForm.subject).type(subject)
-          cy.get(selectors.interactionForm.notes).type('Conversation with potential client')
+          cy.get(selectors.interactionForm.notes).type(
+            'Conversation with potential client'
+          )
           cy.get(selectors.interactionForm.policyFeedbackNo).click()
 
           cy.get(selectors.interactionForm.add).click()
@@ -206,15 +302,23 @@ describe('Add Export', () => {
     context('when adding an investment interaction', () => {
       context('when in the context of an investment project', () => {
         beforeEach(() => {
-          cy.visit(investments.projects.interactions.createType(fixtures.default.id, 'investment', 'interaction'))
+          cy.visit(
+            investments.projects.interactions.createType(
+              fixtures.default.id,
+              'investment',
+              'interaction'
+            )
+          )
         })
 
         it('should render breadcrumbs', () => {
           assertBreadcrumbs({
-            'Home': dashboard(),
-            'Investments': investments.index(),
-            'Projects': investments.projects.index(),
-            'New hotel (commitment to invest)': investments.projects.project('fb5b5006-56af-40e0-8615-7aba53e0e4bf'),
+            Home: dashboard(),
+            Investments: investments.index(),
+            Projects: investments.projects.index(),
+            'New hotel (commitment to invest)': investments.projects.project(
+              'fb5b5006-56af-40e0-8615-7aba53e0e4bf'
+            ),
             'Add interaction': null,
           })
         })
@@ -222,7 +326,12 @@ describe('Add Export', () => {
         it('should add the interaction', () => {
           const subject = utils.randomString()
 
-          populateInteractionForm(subject, 'Enquiry received', 'General Investment Enquiry', { visible: false })
+          populateInteractionForm(
+            subject,
+            'Enquiry received',
+            'General Investment Enquiry',
+            { visible: false }
+          )
 
           cy.get(selectors.interactionForm.add).click()
 
@@ -242,7 +351,10 @@ describe('Adding interaction or service', () => {
       cy.get(selectors.createInteractionContext.export.theme).click()
       cy.get(selectors.createInteractionContext.export.interaction).click()
       cy.get(selectors.createInteractionContext.button).click()
-      cy.get(selectors.createInteractionContext.header).should('have.text', 'Add interaction')
+      cy.get(selectors.createInteractionContext.header).should(
+        'have.text',
+        'Add interaction'
+      )
     })
   })
   context('when choosing export interaction service delivery', () => {
@@ -250,14 +362,20 @@ describe('Adding interaction or service', () => {
       cy.get(selectors.createInteractionContext.export.theme).click()
       cy.get(selectors.createInteractionContext.export.serviceDelivery).click()
       cy.get(selectors.createInteractionContext.button).click()
-      cy.get(selectors.createInteractionContext.header).should('have.text', 'Add service delivery')
+      cy.get(selectors.createInteractionContext.header).should(
+        'have.text',
+        'Add service delivery'
+      )
     })
   })
   context('when choosing investment interaction', () => {
     it('should direct you to "add interaction" form', () => {
       cy.get(selectors.createInteractionContext.investment.theme).click()
       cy.get(selectors.createInteractionContext.button).click()
-      cy.get(selectors.createInteractionContext.header).should('have.text', 'Add interaction')
+      cy.get(selectors.createInteractionContext.header).should(
+        'have.text',
+        'Add interaction'
+      )
     })
   })
   context('when choosing other interaction', () => {
@@ -265,7 +383,10 @@ describe('Adding interaction or service', () => {
       cy.get(selectors.createInteractionContext.other.theme).click()
       cy.get(selectors.createInteractionContext.other.interaction).click()
       cy.get(selectors.createInteractionContext.button).click()
-      cy.get(selectors.createInteractionContext.header).should('have.text', 'Add interaction')
+      cy.get(selectors.createInteractionContext.header).should(
+        'have.text',
+        'Add interaction'
+      )
     })
   })
   context('when choosing other service delivery', () => {
@@ -273,17 +394,19 @@ describe('Adding interaction or service', () => {
       cy.get(selectors.createInteractionContext.other.theme).click()
       cy.get(selectors.createInteractionContext.other.serviceDelivery).click()
       cy.get(selectors.createInteractionContext.button).click()
-      cy.get(selectors.createInteractionContext.header).should('have.text', 'Add service delivery')
+      cy.get(selectors.createInteractionContext.header).should(
+        'have.text',
+        'Add service delivery'
+      )
     })
   })
 })
 
-function selectCountry (id, text) {
+function selectCountry(id, text) {
   const typeahead = `${id} .multiselect`
   const textInput = `${id} .multiselect__input`
 
-  cy
-    .get(typeahead)
+  cy.get(typeahead)
     .click()
     .get(textInput)
     .type(text)
@@ -291,8 +414,10 @@ function selectCountry (id, text) {
     .type('{esc}')
 }
 
-function populateCountriesDiscussed (formSelectors, visible, discussed) {
-  if (!visible) { return }
+function populateCountriesDiscussed(formSelectors, visible, discussed) {
+  if (!visible) {
+    return
+  }
 
   if (discussed) {
     cy.get(formSelectors.countriesDiscussed.yes).click()
@@ -304,7 +429,12 @@ function populateCountriesDiscussed (formSelectors, visible, discussed) {
   }
 }
 
-function populateInteractionForm (subject, service, subService, { visible, discussed }) {
+function populateInteractionForm(
+  subject,
+  service,
+  subService,
+  { visible, discussed }
+) {
   const formSelectors = selectors.interactionForm
 
   cy.get(formSelectors.contact).select('Joseph Woof, Dog master')
@@ -318,7 +448,12 @@ function populateInteractionForm (subject, service, subService, { visible, discu
   populateCountriesDiscussed(formSelectors, visible, discussed)
 }
 
-function populateServiceDeliveryForm (subject, service, subService, { visible, discussed }) {
+function populateServiceDeliveryForm(
+  subject,
+  service,
+  subService,
+  { visible, discussed }
+) {
   const formSelectors = selectors.interactionForm
 
   cy.get(formSelectors.contact).select('Joseph Woof, Dog master')
@@ -332,7 +467,7 @@ function populateServiceDeliveryForm (subject, service, subService, { visible, d
   populateCountriesDiscussed(formSelectors, visible, discussed)
 }
 
-function assertDetails ({
+function assertDetails({
   flashMessage,
   company = 'Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978',
   contact = 'Bob lawson',
@@ -348,8 +483,14 @@ function assertDetails ({
   cy.get(serviceDeliveryDetails.contacts).should('contain', contact)
   cy.get(serviceDeliveryDetails.service).should('contain', service)
   cy.get(serviceDeliveryDetails.notes).should('contain', notes)
-  cy.get(serviceDeliveryDetails.dateOfInteraction).should('contain', dateOfInteraction)
+  cy.get(serviceDeliveryDetails.dateOfInteraction).should(
+    'contain',
+    dateOfInteraction
+  )
   cy.get(serviceDeliveryDetails.ditAdviser).should('contain', ditAdviser)
-  cy.get(serviceDeliveryDetails.communicationChannel).should('contain', communicationChannel)
+  cy.get(serviceDeliveryDetails.communicationChannel).should(
+    'contain',
+    communicationChannel
+  )
   cy.get(serviceDeliveryDetails.documents).should('contain', documents)
 }

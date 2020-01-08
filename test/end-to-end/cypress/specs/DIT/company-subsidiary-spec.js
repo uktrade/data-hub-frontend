@@ -13,7 +13,10 @@ describe('Company Subsidiary', () => {
     cy.get(selectors.companyEdit.globalHqHierarchy).click()
     cy.get(selectors.companyEdit.saveButton).click()
 
-    cy.get(selectors.message.successful).should('contain', 'Company record updated')
+    cy.get(selectors.message.successful).should(
+      'contain',
+      'Company record updated'
+    )
   })
 
   it('should link a subsidiary', () => {
@@ -23,14 +26,20 @@ describe('Company Subsidiary', () => {
     cy.get(selectors.companySubsidiariesLink().search.button).click()
     cy.get(selectors.companySubsidiariesLink().search.result(1).title).click()
 
-    cy.get(selectors.message.successful).should('contain', 'You’ve linked the subsidiary')
+    cy.get(selectors.message.successful).should(
+      'contain',
+      'You’ve linked the subsidiary'
+    )
   })
 
   it('should remove a subsidiary', () => {
     cy.get(selectors.companySubsidiaries().oneLinkedSubsidiary).click()
     cy.get(selectors.companySubsidiariesLink().removeSubsidiary).click()
 
-    cy.get(selectors.message.successful).should('contain', 'You’ve removed the link to Global Headquarters')
+    cy.get(selectors.message.successful).should(
+      'contain',
+      'You’ve removed the link to Global Headquarters'
+    )
   })
 
   it('should update business hierarchy type to not a HQ', () => {
@@ -39,7 +48,10 @@ describe('Company Subsidiary', () => {
     cy.get(selectors.companyEdit.notHqHierarchy).click()
     cy.get(selectors.companyEdit.saveButton).click()
 
-    cy.get(selectors.message.successful).should('contain', 'Company record updated')
+    cy.get(selectors.message.successful).should(
+      'contain',
+      'Company record updated'
+    )
   })
 })
 
@@ -49,10 +61,14 @@ describe('Archived Company Subsidiary', () => {
   })
 
   it('should hide subsidiaries links for archived companies', () => {
-    cy.get(selectors.companySubsidiaries().linkASubsidiaryToHierarchy).should('not.be.visible')
+    cy.get(selectors.companySubsidiaries().linkASubsidiaryToHierarchy).should(
+      'not.be.visible'
+    )
 
     cy.get(selectors.companySubsidiaries().oneLinkedSubsidiary).click()
-    cy.get(selectors.companySubsidiariesLink().removeSubsidiary).should('not.be.visible')
+    cy.get(selectors.companySubsidiariesLink().removeSubsidiary).should(
+      'not.be.visible'
+    )
     cy.get(selectors.companySubsidiaries().whyNoSubLink).should('be.visible')
   })
 })
@@ -64,6 +80,8 @@ describe('DnB Company Subsidiary', () => {
 
   it('should display subsidiaries links for dnb companies', () => {
     cy.get(selectors.companySubsidiaries().oneLinkedSubsidiary).click()
-    cy.get(selectors.companySubsidiariesLink().removeSubsidiary).should('be.visible')
+    cy.get(selectors.companySubsidiariesLink().removeSubsidiary).should(
+      'be.visible'
+    )
   })
 })

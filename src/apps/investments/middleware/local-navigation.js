@@ -13,7 +13,9 @@ const filterDocNavItemIfProjectIsNew = (investment) => {
 
 const setLocalNavigation = (req, res, next) => {
   const { investment } = res.locals
-  const navItems = investment ? filterDocNavItemIfProjectIsNew(investment) : LOCAL_NAV
+  const navItems = investment
+    ? filterDocNavItemIfProjectIsNew(investment)
+    : LOCAL_NAV
   setLocalNav(navItems)(req, res, next)
 }
 

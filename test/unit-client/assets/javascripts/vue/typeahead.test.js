@@ -69,7 +69,7 @@ describe('Typeahead', () => {
     })
 
     context('when there are suggestions to display', () => {
-      beforeEach(done => {
+      beforeEach((done) => {
         const dataWithOptions = Object.assign({}, defaultProps, {
           options: [
             {
@@ -107,7 +107,7 @@ describe('Typeahead', () => {
     })
 
     context('when advisers are selected that have names and team names', () => {
-      beforeEach(done => {
+      beforeEach((done) => {
         const dataWithSelectedAdvisers = Object.assign({}, defaultProps, {
           selectedOptions: [
             {
@@ -140,7 +140,7 @@ describe('Typeahead', () => {
     })
 
     context('when choosing not to display form labels', () => {
-      beforeEach(done => {
+      beforeEach((done) => {
         component = mount(Typeahead, {
           propsData: Object.assign({}, defaultProps, { isLabelHidden: true }),
         })
@@ -154,7 +154,7 @@ describe('Typeahead', () => {
     })
 
     context('when choosing not to display sub labels when selected', () => {
-      beforeEach(done => {
+      beforeEach((done) => {
         const dataWithHiddenSubLabel = Object.assign({}, defaultProps, {
           hasSubLabel: false,
           selectedOptions: [
@@ -255,7 +255,7 @@ describe('Typeahead', () => {
       })
 
       context('when the user enters more than 3 characters', () => {
-        beforeEach(done => {
+        beforeEach((done) => {
           axios.get = sinon.stub().resolves({
             data: [
               {
@@ -291,7 +291,7 @@ describe('Typeahead', () => {
       context(
         'when typehead depends (is chained with) on another typehead',
         () => {
-          beforeEach(done => {
+          beforeEach((done) => {
             instance = {
               name: 'adviser',
               entity: 'adviser',
@@ -334,7 +334,7 @@ describe('Typeahead', () => {
       )
 
       context('when the user enters less than 3 characters', () => {
-        beforeEach(done => {
+        beforeEach((done) => {
           axios.get = sinon.stub().resolves()
           asyncSearch('fr')
           setTimeout(done, 600)
@@ -350,7 +350,7 @@ describe('Typeahead', () => {
       })
 
       context('when choosing to not display inactive advisers', () => {
-        beforeEach(done => {
+        beforeEach((done) => {
           instance = {
             name: 'adviser',
             entity: 'adviser',
@@ -410,7 +410,7 @@ describe('Typeahead', () => {
       })
 
       context('when the user enters less than 3 characters', () => {
-        beforeEach(done => {
+        beforeEach((done) => {
           textInput.setValue('z')
           setTimeout(done, 600)
         })
@@ -423,7 +423,7 @@ describe('Typeahead', () => {
       })
 
       context('when the user enters a character that matches', () => {
-        beforeEach(done => {
+        beforeEach((done) => {
           textInput.setValue('a')
           setTimeout(done, 600)
         })
@@ -434,7 +434,7 @@ describe('Typeahead', () => {
       })
 
       context('when the user enters characters that match', () => {
-        beforeEach(done => {
+        beforeEach((done) => {
           textInput.setValue('aber')
           setTimeout(done, 600)
         })
@@ -445,7 +445,7 @@ describe('Typeahead', () => {
       })
 
       context('when the user enters words that match in reverse order', () => {
-        beforeEach(done => {
+        beforeEach((done) => {
           textInput.setValue('City Aberdeen')
           setTimeout(done, 600)
         })
@@ -456,7 +456,7 @@ describe('Typeahead', () => {
       })
 
       context('when the user enters words that match in all lowercase', () => {
-        beforeEach(done => {
+        beforeEach((done) => {
           textInput.setValue('aberdeen city')
           setTimeout(done, 600)
         })
@@ -467,7 +467,7 @@ describe('Typeahead', () => {
       })
 
       context('when the user enters words that match in all uppercase', () => {
-        beforeEach(done => {
+        beforeEach((done) => {
           textInput.setValue('ABERDEEN CITY')
           setTimeout(done, 600)
         })
@@ -514,7 +514,7 @@ describe('Typeahead', () => {
         })
 
         context('and when not already waiting for search results', () => {
-          beforeEach(done => {
+          beforeEach((done) => {
             selectedOptions([
               { value: '1234', label: 'Fred Smith', subLabel: 'Charters' },
             ])

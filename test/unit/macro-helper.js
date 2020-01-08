@@ -12,16 +12,16 @@ const nunjucks = nunjucksConfig(null, {
 const MACROS_PATH = '_macros/'
 const EXT = 'njk'
 
-function propsToJson (...props) {
+function propsToJson(...props) {
   return `${[...props]
-    .map(prop => JSON.stringify(prop, undefined, 1))
+    .map((prop) => JSON.stringify(prop, undefined, 1))
     .join(', ')}`
 }
 
-function getMacros (fileName, context = {}) {
+function getMacros(fileName, context = {}) {
   const filePath = `${MACROS_PATH}${fileName}.${EXT}`
 
-  function renderMacro (name, { caller = null, params = [] } = {}) {
+  function renderMacro(name, { caller = null, params = [] } = {}) {
     let importString
     let macroOutput
 
@@ -34,40 +34,46 @@ function getMacros (fileName, context = {}) {
     }
 
     if (caller) {
-      macroOutput = nunjucks.renderString(`
+      macroOutput = nunjucks.renderString(
+        `
         ${importString}
         {% call ${macroSignature} %}
           ${caller.join(' ')}
         {% endcall %}
-      `, context)
+      `,
+        context
+      )
     } else {
-      macroOutput = nunjucks.renderString(`${importString} {{ ${macroSignature} }}`, context)
+      macroOutput = nunjucks.renderString(
+        `${importString} {{ ${macroSignature} }}`,
+        context
+      )
     }
 
     return normaliseHtml(macroOutput)
   }
 
   return {
-    render (macroName, ...params) {
+    render(macroName, ...params) {
       return renderMacro(macroName, { params })
     },
 
-    renderWithCaller (macroName, caller, ...params) {
+    renderWithCaller(macroName, caller, ...params) {
       return renderMacro(macroName, { caller, params })
     },
 
-    renderToDom (macroName, ...params) {
+    renderToDom(macroName, ...params) {
       const macroOutput = this.render(macroName, ...params)
-      return (new JSDOM(macroOutput)).window.document.body.firstElementChild
+      return new JSDOM(macroOutput).window.document.body.firstElementChild
     },
 
-    renderWithCallerToDom (macroName, ...params) {
-      return function (...caller) {
+    renderWithCallerToDom(macroName, ...params) {
+      return function(...caller) {
         if (!caller.length) {
           return null
         }
         const macroOutput = this.renderWithCaller(macroName, caller, ...params)
-        return (new JSDOM(macroOutput)).window.document.body.firstElementChild
+        return new JSDOM(macroOutput).window.document.body.firstElementChild
       }.bind(this)
     },
   }

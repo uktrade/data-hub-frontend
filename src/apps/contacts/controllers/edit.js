@@ -14,7 +14,7 @@ const { getOptions } = require('../../../lib/options')
  * @param {Object} next
  */
 // Todo - rewrite to use form generator
-async function editDetails (req, res, next) {
+async function editDetails(req, res, next) {
   try {
     const token = req.session.token
 
@@ -29,7 +29,9 @@ async function editDetails (req, res, next) {
       res.locals.formData = req.body
     } else if (res.locals.contact) {
       companyId = res.locals.contact.company.id
-      res.locals.formData = contactFormService.getContactAsFormData(res.locals.contact)
+      res.locals.formData = contactFormService.getContactAsFormData(
+        res.locals.contact
+      )
     } else if (req.query.company) {
       companyId = req.query.company
       res.locals.formData = { company: req.query.company }
@@ -38,7 +40,10 @@ async function editDetails (req, res, next) {
     }
 
     if (!res.locals.company) {
-      res.locals.company = await companyRepository.getDitCompany(token, companyId)
+      res.locals.company = await companyRepository.getDitCompany(
+        token,
+        companyId
+      )
     }
 
     if (req.params.contactId) {
@@ -50,7 +55,9 @@ async function editDetails (req, res, next) {
     }
 
     res.locals.contactLabels = contactLabels
-    res.locals.countryOptions = await getOptions(token, 'country', { createdOn: get(res.locals, 'contact.created_on') })
+    res.locals.countryOptions = await getOptions(token, 'country', {
+      createdOn: get(res.locals, 'contact.created_on'),
+    })
 
     res.render('contacts/views/edit')
   } catch (error) {
@@ -65,11 +72,14 @@ async function editDetails (req, res, next) {
  * @param {Object} res
  * @param {Object} next
  */
-async function postDetails (req, res, next) {
+async function postDetails(req, res, next) {
   // Try and save the form data, if it fails
   // then attach the errors to the response and re-render edit
   try {
-    const newContact = await contactFormService.saveContactForm(req.session.token, req.body)
+    const newContact = await contactFormService.saveContactForm(
+      req.session.token,
+      req.body
+    )
 
     if (req.body.id) {
       req.flash('success', 'Contact record updated')

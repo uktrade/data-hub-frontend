@@ -65,34 +65,23 @@ describe('OMIS View middleware', () => {
       '../edit/steps': {
         '/one': {
           heading: 'Step one',
-          fields: [
-            'service_types',
-          ],
+          fields: ['service_types'],
         },
         '/two': {
           heading: 'Step two',
-          fields: [
-            'foo',
-            'bar',
-          ],
+          fields: ['foo', 'bar'],
         },
         '/three': {
           heading: 'Step three',
-          fields: [
-            'description',
-          ],
+          fields: ['description'],
         },
         '/four': {
           heading: 'Step four',
-          fields: [
-            'description',
-          ],
+          fields: ['description'],
         },
         '/vat-status': {
           heading: 'VAT status step',
-          fields: [
-            'description',
-          ],
+          fields: ['description'],
         },
         '@noCallThru': true,
       },
@@ -124,7 +113,12 @@ describe('OMIS View middleware', () => {
 
       it('should call company middleware with correct arguments', () => {
         expect(this.setCompanySpy).to.have.been.calledOnce
-        expect(this.setCompanySpy).to.have.been.calledWith({}, this.resMock, this.nextSpy, 'company-id')
+        expect(this.setCompanySpy).to.have.been.calledWith(
+          {},
+          this.resMock,
+          this.nextSpy,
+          'company-id'
+        )
       })
 
       it('should not call next itself', () => {
@@ -136,7 +130,11 @@ describe('OMIS View middleware', () => {
   describe('setContact()', () => {
     context('when no contact ID exists', () => {
       beforeEach(async () => {
-        await this.middleware.setContact(this.reqMock, this.resMock, this.nextSpy)
+        await this.middleware.setContact(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should not make an API request', () => {
@@ -155,12 +153,19 @@ describe('OMIS View middleware', () => {
         }
         this.getContactStub.resolves(contactMock)
 
-        await this.middleware.setContact(this.reqMock, this.resMock, this.nextSpy)
+        await this.middleware.setContact(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should call getContact with correct arguments', () => {
         expect(this.getContactStub).to.have.been.calledOnce
-        expect(this.getContactStub).to.have.been.calledWith('12345', 'contact-id')
+        expect(this.getContactStub).to.have.been.calledWith(
+          '12345',
+          'contact-id'
+        )
       })
 
       it('should set contact property on locals', () => {
@@ -186,7 +191,11 @@ describe('OMIS View middleware', () => {
         }
         this.getContactStub.rejects(this.error)
 
-        await this.middleware.setContact(this.reqMock, this.resMock, this.nextSpy)
+        await this.middleware.setContact(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should call next with error', () => {
@@ -199,7 +208,11 @@ describe('OMIS View middleware', () => {
     context('when no order ID exists', () => {
       beforeEach(async () => {
         this.resMock.locals.order = null
-        await this.middleware.setAssignees(this.reqMock, this.resMock, this.nextSpy)
+        await this.middleware.setAssignees(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should not make an API request', () => {
@@ -215,12 +228,19 @@ describe('OMIS View middleware', () => {
       beforeEach(async () => {
         this.getAssigneesStub.resolves(assigneesMock)
 
-        await this.middleware.setAssignees(this.reqMock, this.resMock, this.nextSpy)
+        await this.middleware.setAssignees(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should call getAssigneesStub with correct arguments', () => {
         expect(this.getAssigneesStub).to.have.been.calledOnce
-        expect(this.getAssigneesStub).to.have.been.calledWith('12345', '123456789')
+        expect(this.getAssigneesStub).to.have.been.calledWith(
+          '12345',
+          '123456789'
+        )
       })
 
       it('should set assignees property on locals', () => {
@@ -247,7 +267,11 @@ describe('OMIS View middleware', () => {
         }
         this.getAssigneesStub.rejects(this.error)
 
-        await this.middleware.setAssignees(this.reqMock, this.resMock, this.nextSpy)
+        await this.middleware.setAssignees(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should call next', () => {
@@ -260,7 +284,11 @@ describe('OMIS View middleware', () => {
     context('when no order ID exists', () => {
       beforeEach(async () => {
         this.resMock.locals.order = null
-        await this.middleware.setSubscribers(this.reqMock, this.resMock, this.nextSpy)
+        await this.middleware.setSubscribers(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should not make an API request', () => {
@@ -276,12 +304,19 @@ describe('OMIS View middleware', () => {
       beforeEach(async () => {
         this.getSubscribersStub.resolves(subscribersMock)
 
-        await this.middleware.setSubscribers(this.reqMock, this.resMock, this.nextSpy)
+        await this.middleware.setSubscribers(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should call getAssigneesStub with correct arguments', () => {
         expect(this.getSubscribersStub).to.have.been.calledOnce
-        expect(this.getSubscribersStub).to.have.been.calledWith('12345', '123456789')
+        expect(this.getSubscribersStub).to.have.been.calledWith(
+          '12345',
+          '123456789'
+        )
       })
 
       it('should set subscribers property on locals', () => {
@@ -308,7 +343,11 @@ describe('OMIS View middleware', () => {
         }
         this.getSubscribersStub.rejects(this.error)
 
-        await this.middleware.setSubscribers(this.reqMock, this.resMock, this.nextSpy)
+        await this.middleware.setSubscribers(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should call next', () => {
@@ -341,11 +380,18 @@ describe('OMIS View middleware', () => {
               expires_on: '2017-08-02',
             })
 
-            await this.middleware.setQuoteSummary(this.reqMock, this.resMock, this.nextSpy)
+            await this.middleware.setQuoteSummary(
+              this.reqMock,
+              this.resMock,
+              this.nextSpy
+            )
           })
 
           it('should make quote request', () => {
-            expect(this.getQuoteStub).to.have.been.calledWith(this.reqMock.session.token, this.resMock.locals.order.id)
+            expect(this.getQuoteStub).to.have.been.calledWith(
+              this.reqMock.session.token,
+              this.resMock.locals.order.id
+            )
           })
 
           it('should set response as quote property on locals', () => {
@@ -370,7 +416,11 @@ describe('OMIS View middleware', () => {
               expires_on: '2017-07-10',
             })
 
-            await this.middleware.setQuoteSummary(this.reqMock, this.resMock, this.nextSpy)
+            await this.middleware.setQuoteSummary(
+              this.reqMock,
+              this.resMock,
+              this.nextSpy
+            )
           })
 
           it('should set expired property to true', async () => {
@@ -391,11 +441,18 @@ describe('OMIS View middleware', () => {
           }
           this.getQuoteStub.rejects(this.error)
 
-          await this.middleware.setQuoteSummary(this.reqMock, this.resMock, this.nextSpy)
+          await this.middleware.setQuoteSummary(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should make quote request', () => {
-          expect(this.getQuoteStub).to.have.been.calledWith(this.reqMock.session.token, this.resMock.locals.order.id)
+          expect(this.getQuoteStub).to.have.been.calledWith(
+            this.reqMock.session.token,
+            this.resMock.locals.order.id
+          )
         })
 
         it('should log error', () => {
@@ -413,7 +470,11 @@ describe('OMIS View middleware', () => {
       beforeEach(async () => {
         this.resMock.locals.order.status = 'draft'
 
-        await this.middleware.setQuoteSummary(this.reqMock, this.resMock, this.nextSpy)
+        await this.middleware.setQuoteSummary(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should not make quote request', () => {
@@ -440,7 +501,11 @@ describe('OMIS View middleware', () => {
             expires_on: '2017-07-10',
           })
 
-          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+          await this.middleware.setQuotePreview(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should set response as quote property on locals', () => {
@@ -464,7 +529,11 @@ describe('OMIS View middleware', () => {
           }
           this.previewQuoteStub.rejects(this.error)
 
-          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+          await this.middleware.setQuotePreview(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should log error', () => {
@@ -477,109 +546,148 @@ describe('OMIS View middleware', () => {
         })
       })
 
-      context('when quote preview cannot be generated because of errors', () => {
-        beforeEach(() => {
-          const error = {
-            statusCode: 400,
-            error: {
-              'service_types': ['Required'],
-              'description': ['Required'],
-            },
-          }
-          this.previewQuoteStub.rejects(error)
-        })
-
-        it('should include incomplete fields object', async () => {
-          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
-
-          expect(this.resMock.locals).to.have.property('incompleteFields')
-        })
-
-        it('should contain the correct error step', async () => {
-          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
-
-          expect(this.resMock.locals.incompleteFields).to.have.ordered.keys([
-            '/one',
-            '/three',
-            '/four',
-          ])
-        })
-
-        it('should not contain the vat status step', async () => {
-          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
-
-          expect(this.resMock.locals.incompleteFields).not.to.have.property('/vat-status')
-        })
-
-        it('should contain correct object structure', async () => {
-          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
-
-          expect(this.resMock.locals.incompleteFields).to.deep.equal({
-            '/one': {
-              heading: 'Step one',
-              errors: [
-                'service_types',
-              ],
-            },
-            '/three': {
-              heading: 'Step three',
-              errors: [
-                'description',
-              ],
-            },
-            '/four': {
-              heading: 'Step four',
-              errors: [
-                'description',
-              ],
-            },
+      context(
+        'when quote preview cannot be generated because of errors',
+        () => {
+          beforeEach(() => {
+            const error = {
+              statusCode: 400,
+              error: {
+                service_types: ['Required'],
+                description: ['Required'],
+              },
+            }
+            this.previewQuoteStub.rejects(error)
           })
-        })
 
-        it('should set a missingLeadAssignee property', async () => {
-          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+          it('should include incomplete fields object', async () => {
+            await this.middleware.setQuotePreview(
+              this.reqMock,
+              this.resMock,
+              this.nextSpy
+            )
 
-          expect(this.resMock.locals).to.have.property('missingLeadAssignee')
-        })
+            expect(this.resMock.locals).to.have.property('incompleteFields')
+          })
 
-        it('should set a missingLeadAssignee to false', async () => {
-          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+          it('should contain the correct error step', async () => {
+            await this.middleware.setQuotePreview(
+              this.reqMock,
+              this.resMock,
+              this.nextSpy
+            )
 
-          expect(this.resMock.locals.missingLeadAssignee).to.equal(false)
-        })
+            expect(this.resMock.locals.incompleteFields).to.have.ordered.keys([
+              '/one',
+              '/three',
+              '/four',
+            ])
+          })
 
-        it('should return next without error', async () => {
-          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+          it('should not contain the vat status step', async () => {
+            await this.middleware.setQuotePreview(
+              this.reqMock,
+              this.resMock,
+              this.nextSpy
+            )
 
-          expect(this.nextSpy).to.have.been.calledWith()
-        })
-      })
+            expect(this.resMock.locals.incompleteFields).not.to.have.property(
+              '/vat-status'
+            )
+          })
+
+          it('should contain correct object structure', async () => {
+            await this.middleware.setQuotePreview(
+              this.reqMock,
+              this.resMock,
+              this.nextSpy
+            )
+
+            expect(this.resMock.locals.incompleteFields).to.deep.equal({
+              '/one': {
+                heading: 'Step one',
+                errors: ['service_types'],
+              },
+              '/three': {
+                heading: 'Step three',
+                errors: ['description'],
+              },
+              '/four': {
+                heading: 'Step four',
+                errors: ['description'],
+              },
+            })
+          })
+
+          it('should set a missingLeadAssignee property', async () => {
+            await this.middleware.setQuotePreview(
+              this.reqMock,
+              this.resMock,
+              this.nextSpy
+            )
+
+            expect(this.resMock.locals).to.have.property('missingLeadAssignee')
+          })
+
+          it('should set a missingLeadAssignee to false', async () => {
+            await this.middleware.setQuotePreview(
+              this.reqMock,
+              this.resMock,
+              this.nextSpy
+            )
+
+            expect(this.resMock.locals.missingLeadAssignee).to.equal(false)
+          })
+
+          it('should return next without error', async () => {
+            await this.middleware.setQuotePreview(
+              this.reqMock,
+              this.resMock,
+              this.nextSpy
+            )
+
+            expect(this.nextSpy).to.have.been.calledWith()
+          })
+        }
+      )
 
       context('when quote preview errors contains assignee_lead error', () => {
         beforeEach(() => {
           const error = {
             statusCode: 400,
             error: {
-              'assignee_lead': ['Required'],
+              assignee_lead: ['Required'],
             },
           }
           this.previewQuoteStub.rejects(error)
         })
 
         it('should set a missingLeadAssignee property', async () => {
-          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+          await this.middleware.setQuotePreview(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
 
           expect(this.resMock.locals).to.have.property('missingLeadAssignee')
         })
 
         it('should set a missingLeadAssignee to true', async () => {
-          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+          await this.middleware.setQuotePreview(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
 
           expect(this.resMock.locals.missingLeadAssignee).to.equal(true)
         })
 
         it('should return next without error', async () => {
-          await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+          await this.middleware.setQuotePreview(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
 
           expect(this.nextSpy).to.have.been.calledWith()
         })
@@ -589,7 +697,11 @@ describe('OMIS View middleware', () => {
     context('when an order is in draft', () => {
       beforeEach(async () => {
         this.resMock.locals.order.status = 'quote_accepted'
-        await this.middleware.setQuotePreview(this.reqMock, this.resMock, this.nextSpy)
+        await this.middleware.setQuotePreview(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should not make quote preview request', () => {
@@ -640,7 +752,11 @@ describe('OMIS View middleware', () => {
             expires_on: '2017-08-10',
           })
 
-          await this.middleware.setQuote(this.reqMock, this.resMock, this.nextSpy)
+          await this.middleware.setQuote(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         afterEach(() => {
@@ -669,7 +785,11 @@ describe('OMIS View middleware', () => {
           }
           this.getQuoteStub.rejects(this.error)
 
-          await this.middleware.setQuote(this.reqMock, this.resMock, this.nextSpy)
+          await this.middleware.setQuote(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should not log error', () => {
@@ -688,7 +808,11 @@ describe('OMIS View middleware', () => {
           }
           this.getQuoteStub.rejects(this.error)
 
-          await this.middleware.setQuote(this.reqMock, this.resMock, this.nextSpy)
+          await this.middleware.setQuote(
+            this.reqMock,
+            this.resMock,
+            this.nextSpy
+          )
         })
 
         it('should log error', () => {
@@ -708,7 +832,11 @@ describe('OMIS View middleware', () => {
       beforeEach(async () => {
         this.getInvoiceStub.resolves(invoiceMock)
 
-        await this.middleware.setInvoice(this.reqMock, this.resMock, this.nextSpy)
+        await this.middleware.setInvoice(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should set response as quote property on locals', () => {
@@ -728,7 +856,11 @@ describe('OMIS View middleware', () => {
         }
         this.getInvoiceStub.rejects(this.error)
 
-        await this.middleware.setInvoice(this.reqMock, this.resMock, this.nextSpy)
+        await this.middleware.setInvoice(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should log error', () => {
@@ -747,7 +879,11 @@ describe('OMIS View middleware', () => {
       beforeEach(async () => {
         this.getPaymentsStub.resolves(paymentsMock)
 
-        await this.middleware.setPayments(this.reqMock, this.resMock, this.nextSpy)
+        await this.middleware.setPayments(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should set payments property on locals', () => {
@@ -774,7 +910,11 @@ describe('OMIS View middleware', () => {
         }
         this.getPaymentsStub.rejects(this.error)
 
-        await this.middleware.setPayments(this.reqMock, this.resMock, this.nextSpy)
+        await this.middleware.setPayments(
+          this.reqMock,
+          this.resMock,
+          this.nextSpy
+        )
       })
 
       it('should log error', () => {
@@ -794,8 +934,8 @@ describe('OMIS View middleware', () => {
         this.createQuoteStub.resolves({
           created_on: '2017-08-31T15:10:41.119609',
           created_by: {
-            'name': 'Rebecca Bah',
-            'id': '3cfad090-8f7e-4a8b-beb0-14c909d6f052',
+            name: 'Rebecca Bah',
+            id: '3cfad090-8f7e-4a8b-beb0-14c909d6f052',
           },
         })
       })
@@ -899,13 +1039,13 @@ describe('OMIS View middleware', () => {
         this.cancelQuoteStub.resolves({
           created_on: '2017-08-31T15:10:41.119609',
           created_by: {
-            'name': 'Rebecca Bah',
-            'id': '3cfad090-8f7e-4a8b-beb0-14c909d6f052',
+            name: 'Rebecca Bah',
+            id: '3cfad090-8f7e-4a8b-beb0-14c909d6f052',
           },
           cancelled_on: '2017-09-02T15:10:41.119609',
           cancelled_by: {
-            'name': 'Rebecca Bah',
-            'id': '3cfad090-8f7e-4a8b-beb0-14c909d6f052',
+            name: 'Rebecca Bah',
+            id: '3cfad090-8f7e-4a8b-beb0-14c909d6f052',
           },
         })
       })
@@ -1041,7 +1181,10 @@ describe('OMIS View middleware', () => {
             expect(this.resMock.locals.quoteForm).to.have.property('buttonText')
             expect(this.resMock.locals.quoteForm).to.have.property('returnText')
             expect(this.resMock.locals.quoteForm).to.have.property('returnLink')
-            expect(this.resMock.locals.quoteForm).to.have.property('hidePrimaryFormAction', true)
+            expect(this.resMock.locals.quoteForm).to.have.property(
+              'hidePrimaryFormAction',
+              true
+            )
 
             done()
           } catch (error) {
@@ -1062,9 +1205,18 @@ describe('OMIS View middleware', () => {
       it('should set change quoteForm object', (done) => {
         const nextSpy = () => {
           try {
-            expect(this.resMock.locals.quoteForm).to.have.property('action', '/omis/123456789/quote/cancel')
-            expect(this.resMock.locals.quoteForm).to.have.property('buttonText', 'Withdraw quote')
-            expect(this.resMock.locals.quoteForm).to.have.property('buttonModifiers', 'govuk-button--warning')
+            expect(this.resMock.locals.quoteForm).to.have.property(
+              'action',
+              '/omis/123456789/quote/cancel'
+            )
+            expect(this.resMock.locals.quoteForm).to.have.property(
+              'buttonText',
+              'Withdraw quote'
+            )
+            expect(this.resMock.locals.quoteForm).to.have.property(
+              'buttonModifiers',
+              'govuk-button--warning'
+            )
 
             done()
           } catch (error) {
@@ -1091,9 +1243,18 @@ describe('OMIS View middleware', () => {
           it('should allow destructive cancel', (done) => {
             const nextSpy = () => {
               try {
-                expect(this.resMock.locals.quoteForm).to.have.property('action', '/omis/123456789/quote/cancel')
-                expect(this.resMock.locals.quoteForm).to.have.property('buttonText', 'Withdraw quote')
-                expect(this.resMock.locals.quoteForm).to.have.property('buttonModifiers', 'govuk-button--warning')
+                expect(this.resMock.locals.quoteForm).to.have.property(
+                  'action',
+                  '/omis/123456789/quote/cancel'
+                )
+                expect(this.resMock.locals.quoteForm).to.have.property(
+                  'buttonText',
+                  'Withdraw quote'
+                )
+                expect(this.resMock.locals.quoteForm).to.have.property(
+                  'buttonModifiers',
+                  'govuk-button--warning'
+                )
 
                 done()
               } catch (error) {
@@ -1109,7 +1270,10 @@ describe('OMIS View middleware', () => {
           it('should disable form actions', (done) => {
             const nextSpy = () => {
               try {
-                expect(this.resMock.locals.quoteForm).to.have.property('hidePrimaryFormAction', true)
+                expect(this.resMock.locals.quoteForm).to.have.property(
+                  'hidePrimaryFormAction',
+                  true
+                )
 
                 done()
               } catch (error) {
@@ -1127,10 +1291,21 @@ describe('OMIS View middleware', () => {
           it('should contain default form actions', (done) => {
             const nextSpy = () => {
               try {
-                expect(this.resMock.locals.quoteForm).to.have.property('buttonText', 'Send quote to client')
-                expect(this.resMock.locals.quoteForm).to.have.property('returnText', 'Return to order')
-                expect(this.resMock.locals.quoteForm).to.have.property('returnLink', '/omis/123456789')
-                expect(this.resMock.locals.quoteForm).to.not.have.property('hidePrimaryFormAction')
+                expect(this.resMock.locals.quoteForm).to.have.property(
+                  'buttonText',
+                  'Send quote to client'
+                )
+                expect(this.resMock.locals.quoteForm).to.have.property(
+                  'returnText',
+                  'Return to order'
+                )
+                expect(this.resMock.locals.quoteForm).to.have.property(
+                  'returnLink',
+                  '/omis/123456789'
+                )
+                expect(this.resMock.locals.quoteForm).to.not.have.property(
+                  'hidePrimaryFormAction'
+                )
 
                 done()
               } catch (error) {

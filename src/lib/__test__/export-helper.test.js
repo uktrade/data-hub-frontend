@@ -19,7 +19,11 @@ describe('#export helper', () => {
       const user = {
         permissions: [],
       }
-      this.exportAction = buildExportAction(qs.stringify(queryString), user.permissions, exportOptions)
+      this.exportAction = buildExportAction(
+        qs.stringify(queryString),
+        user.permissions,
+        exportOptions
+      )
     })
 
     it('should return false if the user has not got permission', () => {
@@ -30,11 +34,13 @@ describe('#export helper', () => {
   context('When a user has permission to export', () => {
     beforeEach(() => {
       const user = {
-        permissions: [
-          'interaction.export_interaction',
-        ],
+        permissions: ['interaction.export_interaction'],
       }
-      this.exportAction = buildExportAction(qs.stringify(queryString), user.permissions, exportOptions)
+      this.exportAction = buildExportAction(
+        qs.stringify(queryString),
+        user.permissions,
+        exportOptions
+      )
     })
 
     it('should return true if the user has permission', () => {
@@ -46,7 +52,9 @@ describe('#export helper', () => {
     })
 
     it('should return a url for the export link/button', () => {
-      expect(this.exportAction.url).to.equal('interactions/export?sortby=date%3Adesc&custom=true')
+      expect(this.exportAction.url).to.equal(
+        'interactions/export?sortby=date%3Adesc&custom=true'
+      )
     })
 
     it('should return a maximum of 5000 results to export', () => {

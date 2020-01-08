@@ -1,7 +1,7 @@
 const { get } = require('lodash')
 
-const isAccountManager = adviser => adviser.is_global_account_manager
-const isAdviser = adviser => !adviser.is_global_account_manager
+const isAccountManager = (adviser) => adviser.is_global_account_manager
+const isAdviser = (adviser) => !adviser.is_global_account_manager
 
 module.exports = (advisers) => {
   const mapAdviser = ({ adviser }) => {
@@ -15,13 +15,9 @@ module.exports = (advisers) => {
     }
   }
 
-  const accountManagers = advisers
-    .filter(isAccountManager)
-    .map(mapAdviser)
+  const accountManagers = advisers.filter(isAccountManager).map(mapAdviser)
 
-  const teamMembers = advisers
-    .filter(isAdviser)
-    .map(mapAdviser)
+  const teamMembers = advisers.filter(isAdviser).map(mapAdviser)
 
   return {
     accountManagers,

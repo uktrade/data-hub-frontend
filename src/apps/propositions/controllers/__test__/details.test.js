@@ -27,11 +27,14 @@ describe('Proposition details controller', () => {
 
     this.transformedPropositionDataMock = {}
 
-    this.transformPropositionResponseToViewRecordStub = sinon.stub().returns(this.transformedPropositionDataMock)
+    this.transformPropositionResponseToViewRecordStub = sinon
+      .stub()
+      .returns(this.transformedPropositionDataMock)
 
     this.controller = proxyquire('../details', {
       '../transformers': {
-        transformPropositionResponseToViewRecord: this.transformPropositionResponseToViewRecordStub,
+        transformPropositionResponseToViewRecord: this
+          .transformPropositionResponseToViewRecordStub,
       },
     })
   })
@@ -42,7 +45,9 @@ describe('Proposition details controller', () => {
     })
 
     it('should use the proposition details transformer', () => {
-      expect(this.transformPropositionResponseToViewRecordStub).to.be.calledWith(this.res.locals.proposition)
+      expect(
+        this.transformPropositionResponseToViewRecordStub
+      ).to.be.calledWith(this.res.locals.proposition)
     })
 
     it('should set the title', () => {
@@ -55,17 +60,23 @@ describe('Proposition details controller', () => {
 
     it('should include proposition data', () => {
       const renderOptions = this.res.render.firstCall.args[1]
-      expect(renderOptions.propositionViewRecord).to.deep.equal(this.transformedPropositionDataMock)
+      expect(renderOptions.propositionViewRecord).to.deep.equal(
+        this.transformedPropositionDataMock
+      )
     })
 
     context('When the user views an proposition', () => {
       beforeEach(() => {
-        this.res.locals.proposition = assign({}, propositionData, { kind: 'proposition' })
+        this.res.locals.proposition = assign({}, propositionData, {
+          kind: 'proposition',
+        })
         this.controller.renderDetailsPage(this.req, this.res, this.next)
       })
 
       it('should set the breadcrumb to proposition', () => {
-        expect(this.res.breadcrumb).to.be.calledWith('Game changing proposition')
+        expect(this.res.breadcrumb).to.be.calledWith(
+          'Game changing proposition'
+        )
       })
     })
   })

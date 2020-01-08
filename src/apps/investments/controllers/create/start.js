@@ -1,6 +1,6 @@
 const { get } = require('lodash')
 
-function redirectHandler (req, res, next) {
+function redirectHandler(req, res, next) {
   const companyId = get(res, 'locals.company.id')
 
   if (companyId) {
@@ -10,7 +10,7 @@ function redirectHandler (req, res, next) {
   next()
 }
 
-function renderCreatePage (req, res) {
+function renderCreatePage(req, res) {
   return res
     .breadcrumb('Add investment project')
     .render('investments/views/create/start')

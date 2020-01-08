@@ -1,10 +1,12 @@
 const { searchCompanies } = require('../../../modules/search/services')
 const { transformCompanyToListItem } = require('../../companies/transformers')
-const { transformApiResponseToSearchCollection } = require('../../../modules/search/transformers')
+const {
+  transformApiResponseToSearchCollection,
+} = require('../../../modules/search/transformers')
 const { updateInvestment } = require('../repos')
 const { ENTITIES } = require('../../search/constants')
 
-async function selectUKCompany (req, res, next) {
+async function selectUKCompany(req, res, next) {
   if (!req.query.company) {
     return next()
   }
@@ -24,7 +26,7 @@ async function selectUKCompany (req, res, next) {
   }
 }
 
-async function searchForUKCompany (req, res, next) {
+async function searchForUKCompany(req, res, next) {
   const searchTerm = req.query.term
   const token = req.session.token
 
@@ -58,13 +60,15 @@ async function searchForUKCompany (req, res, next) {
   next()
 }
 
-function renderCompanyResults (req, res, next) {
+function renderCompanyResults(req, res, next) {
   return res.render('investments/views/ukcompany')
 }
 
-async function removeUKCompany (req, res, next) {
+async function removeUKCompany(req, res, next) {
   try {
-    await updateInvestment(req.session.token, req.params.investmentId, { uk_company: null })
+    await updateInvestment(req.session.token, req.params.investmentId, {
+      uk_company: null,
+    })
 
     const { projects } = res.locals.paths
     const { investmentId } = req.params

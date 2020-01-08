@@ -11,24 +11,30 @@ describe('Investment project, team members, edit controller', () => {
 
   describe('#renderTeamEdit', () => {
     it('should render edit team management view', (done) => {
-      this.controller.renderTeamEdit({
-        session: {
-          token: 'abcd',
+      this.controller.renderTeamEdit(
+        {
+          session: {
+            token: 'abcd',
+          },
         },
-      }, {
-        locals: {
-          investment: investmentData,
+        {
+          locals: {
+            investment: investmentData,
+          },
+          breadcrumb: this.breadcrumbStub,
+          render: (template) => {
+            try {
+              expect(template).to.equal(
+                'investments/views/team/edit-team-members'
+              )
+              done()
+            } catch (e) {
+              done(e)
+            }
+          },
         },
-        breadcrumb: this.breadcrumbStub,
-        render: (template) => {
-          try {
-            expect(template).to.equal('investments/views/team/edit-team-members')
-            done()
-          } catch (e) {
-            done(e)
-          }
-        },
-      }, this.nextStub)
+        this.nextStub
+      )
     })
   })
 })

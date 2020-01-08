@@ -10,15 +10,19 @@ describe('Companies matching select', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        'Home': '/',
-        'Companies': '/companies',
-        [fixtures.company.oneListCorp.name]: `/companies/${fixtures.company.oneListCorp.id}`,
+        Home: '/',
+        Companies: '/companies',
+        [fixtures.company.oneListCorp
+          .name]: `/companies/${fixtures.company.oneListCorp.id}`,
         'Select the match': null,
       })
     })
 
     it('should display the heading', () => {
-      cy.get(selectors.localHeader().heading).should('have.text', `Select the match for ${fixtures.company.oneListCorp.name}`)
+      cy.get(selectors.localHeader().heading).should(
+        'have.text',
+        `Select the match for ${fixtures.company.oneListCorp.name}`
+      )
     })
   })
 })

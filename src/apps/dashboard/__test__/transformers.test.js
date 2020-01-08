@@ -101,7 +101,9 @@ describe('#formatHelpCentreAnnouncements', () => {
       expect(formatHelpCentreAnnouncements({})).to.deep.equal([])
       expect(formatHelpCentreAnnouncements(undefined)).to.deep.equal([])
       expect(formatHelpCentreAnnouncements([])).to.deep.equal([])
-      expect(formatHelpCentreAnnouncements(omit(expected, ['articles']))).to.deep.equal([])
+      expect(
+        formatHelpCentreAnnouncements(omit(expected, ['articles']))
+      ).to.deep.equal([])
     })
   })
 })
@@ -129,20 +131,21 @@ describe('#transformCompanyList', () => {
       },
     ],
   }
-  const expected = [{
-    company: {
-      name: 'A company',
-      id: '1',
-      isArchived: false,
-    },
-    latestInteraction:
-      {
+  const expected = [
+    {
+      company: {
+        name: 'A company',
+        id: '1',
+        isArchived: false,
+      },
+      latestInteraction: {
         id: '4db036cd-7444-46bb-9b51-67425e8ec189',
         date: '2019-08-06',
         displayDate: '06 Aug 19',
         subject: 'A subject',
       },
-  }]
+    },
+  ]
 
   it('should format company list', () => {
     this.transformed = transformCompanyList(mockResponse)

@@ -1,4 +1,8 @@
-const { assertTabbedLocalNav, assertLocalHeader, assertBreadcrumbs } = require('../../support/assertions')
+const {
+  assertTabbedLocalNav,
+  assertLocalHeader,
+  assertBreadcrumbs,
+} = require('../../support/assertions')
 const { investments } = require('../../../../../src/lib/urls')
 
 describe('Investor profiles', () => {
@@ -13,9 +17,9 @@ describe('Investor profiles', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        'Home': '/',
-        'Investments': '/investments',
-        'Profiles': null,
+        Home: '/',
+        Investments: '/investments',
+        Profiles: null,
       })
     })
 
@@ -52,9 +56,9 @@ describe('Investor profiles', () => {
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        'Home': '/',
-        'Investments': '/investments',
-        'Profiles': null,
+        Home: '/',
+        Investments: '/investments',
+        Profiles: null,
       })
     })
 

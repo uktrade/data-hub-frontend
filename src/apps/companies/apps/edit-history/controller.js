@@ -2,7 +2,7 @@ const { companies } = require('../../../../lib/urls')
 const { getCompanyAuditLog } = require('../../repos')
 const { transformCompanyAuditLog } = require('./transformers')
 
-async function renderEditHistory (req, res, next) {
+async function renderEditHistory(req, res, next) {
   try {
     const { company } = res.locals
 
@@ -20,7 +20,7 @@ async function renderEditHistory (req, res, next) {
   }
 }
 
-async function fetchCompanyAuditLog (req, res, next) {
+async function fetchCompanyAuditLog(req, res, next) {
   try {
     const { company } = res.locals
     const { token } = req.session

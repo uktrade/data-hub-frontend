@@ -2,7 +2,7 @@ const { each, isArray } = require('lodash')
 
 const validators = require('../validators')
 
-function testName (input) {
+function testName(input) {
   if (isArray(input)) {
     return `${testName(input[0])} with args: ${input.slice(1)}`
   } else {
@@ -30,7 +30,7 @@ describe('OMIS form validators', () => {
         [0, '1'],
         ['a', '1'],
       ]
-      each(inputs, i => {
+      each(inputs, (i) => {
         it(testName(i), () => {
           expect(validators.duration(i)).to.be.false
         })
@@ -38,13 +38,8 @@ describe('OMIS form validators', () => {
     })
 
     describe('valid values', () => {
-      const inputs = [
-        '',
-        '1',
-        [''],
-        ['1'],
-      ]
-      each(inputs, i => {
+      const inputs = ['', '1', [''], ['1']]
+      each(inputs, (i) => {
         it(testName(i), () => {
           expect(validators.duration(i)).to.be.true
         })
@@ -54,13 +49,8 @@ describe('OMIS form validators', () => {
 
   describe('arrayrequired()', () => {
     describe('invalid values', () => {
-      const inputs = [
-        [undefined],
-        [undefined, true],
-        [''],
-        ['', true],
-      ]
-      each(inputs, i => {
+      const inputs = [[undefined], [undefined, true], [''], ['', true]]
+      each(inputs, (i) => {
         it(testName(i), () => {
           expect(validators.arrayrequired(i)).to.be.false
         })
@@ -68,14 +58,8 @@ describe('OMIS form validators', () => {
     })
 
     describe('valid values', () => {
-      const inputs = [
-        [true],
-        [false],
-        [1],
-        [0],
-        ['a'],
-      ]
-      each(inputs, i => {
+      const inputs = [[true], [false], [1], [0], ['a']]
+      each(inputs, (i) => {
         it(testName(i), () => {
           expect(validators.arrayrequired(i)).to.be.true
         })
@@ -85,14 +69,8 @@ describe('OMIS form validators', () => {
 
   describe('euvatnumber()', () => {
     describe('invalid values', () => {
-      const inputs = [
-        null,
-        undefined,
-        true,
-        0,
-        'a',
-      ]
-      each(inputs, i => {
+      const inputs = [null, undefined, true, 0, 'a']
+      each(inputs, (i) => {
         it(testName(i), () => {
           expect(validators.euvatnumber(i)).to.be.false
         })
@@ -154,7 +132,7 @@ describe('OMIS form validators', () => {
         'SI12345678',
         'SK1234567890',
       ]
-      each(inputs, i => {
+      each(inputs, (i) => {
         it(testName(i), () => {
           expect(validators.euvatnumber(i)).to.be.true
         })

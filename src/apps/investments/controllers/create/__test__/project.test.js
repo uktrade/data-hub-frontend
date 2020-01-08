@@ -3,8 +3,8 @@ const proxyquire = require('proxyquire')
 const paths = require('../../../paths')
 
 const mockInvestmentDetails = {
-  'investment_type': '1',
-  'fdi_type': '2',
+  investment_type: '1',
+  fdi_type: '2',
 }
 
 describe('Investment create controller', () => {
@@ -31,24 +31,28 @@ describe('Investment create controller', () => {
   describe('#createGetHandler', () => {
     describe('when no company ID is provided', () => {
       it('should redirect to the start', (done) => {
-        this.controller.getHandler({
-          session: {
-            token: 'abcd',
+        this.controller.getHandler(
+          {
+            session: {
+              token: 'abcd',
+            },
           },
-        }, {
-          locals: {
-            paths,
+          {
+            locals: {
+              paths,
+            },
+            breadcrumb: this.breadcrumbStub,
+            redirect: (url) => {
+              try {
+                expect(url).to.equal('/investments/projects/create')
+                done()
+              } catch (e) {
+                done(e)
+              }
+            },
           },
-          breadcrumb: this.breadcrumbStub,
-          redirect: (url) => {
-            try {
-              expect(url).to.equal('/investments/projects/create')
-              done()
-            } catch (e) {
-              done(e)
-            }
-          },
-        }, this.next)
+          this.next
+        )
       })
     })
 
@@ -68,19 +72,25 @@ describe('Investment create controller', () => {
           breadcrumb: this.breadcrumbStub,
         }
 
-        this.controller.getHandler({
-          store: {
-            get: () => {
-              return mockInvestmentDetails
+        this.controller.getHandler(
+          {
+            store: {
+              get: () => {
+                return mockInvestmentDetails
+              },
+            },
+            session: {
+              token: 'abcd',
             },
           },
-          session: {
-            token: 'abcd',
-          },
-        }, this.resMock, () => {
-          expect(this.resMock.locals.form.options.investmentDetails).to.deep.equal(expectedInvestmentDetails)
-          done()
-        })
+          this.resMock,
+          () => {
+            expect(
+              this.resMock.locals.form.options.investmentDetails
+            ).to.deep.equal(expectedInvestmentDetails)
+            done()
+          }
+        )
       })
     })
   })
@@ -88,46 +98,54 @@ describe('Investment create controller', () => {
   describe('#createPostHandler', () => {
     describe('when resultId is set', () => {
       it('should redirect to the investment project', (done) => {
-        this.controller.postHandler({
-          flash: () => {},
-          session: {
-            token: 'abcd',
+        this.controller.postHandler(
+          {
+            flash: () => {},
+            session: {
+              token: 'abcd',
+            },
           },
-        }, {
-          locals: {
-            resultId: '12345',
-            form: {},
-            paths,
+          {
+            locals: {
+              resultId: '12345',
+              form: {},
+              paths,
+            },
+            breadcrumb: this.breadcrumbStub,
+            redirect: (url) => {
+              try {
+                expect(url).to.equal('/investments/projects/12345/details')
+                done()
+              } catch (e) {
+                done(e)
+              }
+            },
           },
-          breadcrumb: this.breadcrumbStub,
-          redirect: (url) => {
-            try {
-              expect(url).to.equal('/investments/projects/12345/details')
-              done()
-            } catch (e) {
-              done(e)
-            }
-          },
-        }, this.next)
+          this.next
+        )
       })
     })
 
     describe('when form errors exist', () => {
       it('should call next middleware to render create investment form', (done) => {
-        this.controller.postHandler({
-          session: {
-            token: 'abcd',
-          },
-        }, {
-          locals: {
-            form: {
-              errors: {},
+        this.controller.postHandler(
+          {
+            session: {
+              token: 'abcd',
             },
           },
-          breadcrumb: this.breadcrumbStub,
-        }, () => {
-          done()
-        })
+          {
+            locals: {
+              form: {
+                errors: {},
+              },
+            },
+            breadcrumb: this.breadcrumbStub,
+          },
+          () => {
+            done()
+          }
+        )
       })
     })
   })

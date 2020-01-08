@@ -10,15 +10,24 @@ const { buildSearchAggregation } = require('../builders')
  * @param {...function} [itemTransformers] - an array of transformer functions to apply for each item in the list
  * @returns {object, undefined}
  */
-function transformApiResponseToSearchCollection (options = {}, entityDetails, ...itemTransformers) {
+function transformApiResponseToSearchCollection(
+  options = {},
+  entityDetails,
+  ...itemTransformers
+) {
   /**
    * @param {object} response - API response object
    * @returns {function}
    */
-  return function transformResponseToCollection (response) {
-    if (!response) { return }
+  return function transformResponseToCollection(response) {
+    if (!response) {
+      return
+    }
 
-    const collection = transformApiResponseToCollection(options, ...itemTransformers)(response)
+    const collection = transformApiResponseToCollection(
+      options,
+      ...itemTransformers
+    )(response)
     const aggregations = buildSearchAggregation({
       entityDetails,
       aggregations: response.aggregations,
