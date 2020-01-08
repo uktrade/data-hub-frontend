@@ -28,8 +28,8 @@ const store = createStore(
     companyLists: resolvePreloadedCompanyListsData(),
   },
   process.env.NODE_ENV === 'production'
-    ? require('redux-devtools-extension').devToolsEnhancer()
-    : undefined,
+    ? undefined
+    : require('redux-devtools-extension').devToolsEnhancer(),
 )
 
 const appWrapper = document.getElementById('react-app')
