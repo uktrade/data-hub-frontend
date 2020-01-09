@@ -1,15 +1,13 @@
 const serviceOptionData = require('../../../../../test/unit/data/interactions/service-options-data.json')
+const transformers = require('../index')
 
 describe('Global transformers', () => {
-  beforeEach(() => {
-    this.transformers = require('../index')
-  })
   describe('#transformServicesOptions', () => {
     context(
       'when the service options have no interaction questions or secondary options',
       () => {
         it('should return the correct options', () => {
-          const actual = this.transformers.transformServicesOptions([
+          const actual = transformers.transformServicesOptions([
             serviceOptionData[0],
           ])
           expect(actual).to.deep.equal([
@@ -25,7 +23,7 @@ describe('Global transformers', () => {
     )
     context('when the service options have interaction questions', () => {
       it('should return the correct options', () => {
-        const actual = this.transformers.transformServicesOptions([
+        const actual = transformers.transformServicesOptions([
           serviceOptionData[1],
         ])
         expect(actual).to.deep.equal([
@@ -74,7 +72,7 @@ describe('Global transformers', () => {
     })
     context('when the service options have no interaction questions', () => {
       it('should return the correct options', () => {
-        const actual = this.transformers.transformServicesOptions([
+        const actual = transformers.transformServicesOptions([
           serviceOptionData[0],
         ])
         expect(actual).to.deep.equal([
@@ -90,7 +88,7 @@ describe('Global transformers', () => {
 
     context('when the service has questions but no sub service', () => {
       it('should return the correct options', () => {
-        const actual = this.transformers.transformServicesOptions([
+        const actual = transformers.transformServicesOptions([
           serviceOptionData[2],
         ])
         expect(actual).to.deep.equal([
