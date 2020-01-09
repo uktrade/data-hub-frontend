@@ -37,46 +37,62 @@ const CompanyBusinessDetails = ({
   const isDnbCompany = !!businessDetails.duns_number
   const isArchived = !!businessDetails.archived
   const isBasedInUK = !!businessDetails.uk_based
-  const lastUpdated = businessDetails.dnb_modified_on ||
+  const lastUpdated =
+    businessDetails.dnb_modified_on ||
     businessDetails.modified_on ||
     businessDetails.created_on
 
   return (
     <StyledRoot>
       <p>
-        This page shows information about this business and how it is related to other businesses.<br />
-        Changes made to this information can be found on the <Link href={urls.companyAudit}>Audit trail page</Link>.
-        {lastUpdated &&
-          <><br />Last updated on: {DateUtils.format(lastUpdated)}</>
-        }
+        This page shows information about this business and how it is related to
+        other businesses.
+        <br />
+        Changes made to this information can be found on the{' '}
+        <Link href={urls.companyAudit}>Audit trail page</Link>.
+        {lastUpdated && (
+          <>
+            <br />
+            Last updated on: {DateUtils.format(lastUpdated)}
+          </>
+        )}
       </p>
 
-      {isArchived &&
+      {isArchived && (
         <StatusMessage>
-          This company was archived on {DateUtils.format(businessDetails.archived_on)}
-          by {businessDetails.archived_by.first_name} {businessDetails.archived_by.last_name}.
+          This company was archived on{' '}
+          {DateUtils.format(businessDetails.archived_on)}
+          by {businessDetails.archived_by.first_name}{' '}
+          {businessDetails.archived_by.last_name}.
           <br />
-          <strong>Reason:</strong> {businessDetails.archived_reason}<br />
+          <strong>Reason:</strong> {businessDetails.archived_reason}
+          <br />
           <br />
           <Link href={urls.companyUnarchive}>Unarchive</Link>
         </StatusMessage>
-      }
+      )}
 
-      {isDnbCompany &&
+      {isDnbCompany && (
         <Details
           summary="Where does information on this page come from?"
           data-auto-id="businessDetailsWhereDoesInformation"
         >
           <p>
-            The information on this page that cannot be edited comes from <Link href="https://www.dnb.co.uk/about-us/data-cloud.html">Dun & Bradstreet</Link>.
-            This is an external and verified source.
-            The information is automatically updated. <Link href={urls.companyAudit}>View the audit history</Link>.
+            The information on this page that cannot be edited comes from{' '}
+            <Link href="https://www.dnb.co.uk/about-us/data-cloud.html">
+              Dun & Bradstreet
+            </Link>
+            . This is an external and verified source. The information is
+            automatically updated.{' '}
+            <Link href={urls.companyAudit}>View the audit history</Link>.
           </p>
           <p>
-            If you think the information is incomplete or incorrect, <Link href={urls.support}>get in touch using the support form</Link>.
+            If you think the information is incomplete or incorrect,{' '}
+            <Link href={urls.support}>get in touch using the support form</Link>
+            .
           </p>
         </Details>
-      }
+      )}
 
       <SectionAbout
         businessDetails={businessDetails}

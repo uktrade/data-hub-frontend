@@ -31,15 +31,13 @@ const StyledSelect = styled(Select)({
   },
 })
 
-export const Header = ({ lists, onListChange }) =>
+export const Header = ({ lists, onListChange }) => (
   <StyledRoot>
-    <StyledHeading size={LEVEL_SIZE[3]}>
-      My companies lists
-    </StyledHeading>
-    {lists.length > 1 &&
+    <StyledHeading size={LEVEL_SIZE[3]}>My companies lists</StyledHeading>
+    {lists.length > 1 && (
       <StyledSelect
         label="View list"
-        input={{ onChange: e => onListChange(e.target.value) }}
+        input={{ onChange: (e) => onListChange(e.target.value) }}
       >
         {lists.map(({ name }, idx) => (
           <option key={idx} value={idx}>
@@ -47,8 +45,9 @@ export const Header = ({ lists, onListChange }) =>
           </option>
         ))}
       </StyledSelect>
-    }
+    )}
   </StyledRoot>
+)
 
 Header.propTypes = {
   lists: propTypes.lists,

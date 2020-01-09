@@ -10,20 +10,28 @@ import { ISO_CODE, WEBSITE_REGEX } from './constants'
 import InformationList from './InformationList'
 
 // TODO: Move this validation to the component library
-const requiredWebsiteOrPhoneValidator = (value, name, { values: { website, telephone_number } }) => {
-  return !website && !telephone_number ? 'Enter at least a website or a phone number' : null
+const requiredWebsiteOrPhoneValidator = (
+  value,
+  name,
+  { values: { website, telephone_number } }
+) => {
+  return !website && !telephone_number
+    ? 'Enter at least a website or a phone number'
+    : null
 }
 
 // TODO: Move this validation to the component library
-const websiteValidator = (value) => !WEBSITE_REGEX.test(value) ? 'Enter a valid website URL' : null
+const websiteValidator = (value) =>
+  !WEBSITE_REGEX.test(value) ? 'Enter a valid website URL' : null
 
-function CompanyNotFoundStep ({ organisationTypes, regions, sectors, country }) {
+function CompanyNotFoundStep({ organisationTypes, regions, sectors, country }) {
   return (
     <Step name="unhappy" forwardButton="Add company">
       <Details summary="Why am I seeing this?">
-        The company you want to add to Data Hub cannot be found in the external databases Data Hub checks.
-        You will need to provide information about the company, so the company can be added to Data Hub
-        while the Data Hub support team checks with the company the information you have provided.
+        The company you want to add to Data Hub cannot be found in the external
+        databases Data Hub checks. You will need to provide information about
+        the company, so the company can be added to Data Hub while the Data Hub
+        support team checks with the company the information you have provided.
       </Details>
 
       <FieldRadios
@@ -44,10 +52,7 @@ function CompanyNotFoundStep ({ organisationTypes, regions, sectors, country }) 
         label="Company's website"
         name="website"
         type="url"
-        validate={[
-          requiredWebsiteOrPhoneValidator,
-          websiteValidator,
-        ]}
+        validate={[requiredWebsiteOrPhoneValidator, websiteValidator]}
       />
 
       <FieldInput
@@ -91,10 +96,12 @@ function CompanyNotFoundStep ({ organisationTypes, regions, sectors, country }) 
           you can continue to record interactions with the company
         </InformationList.Item>
         <InformationList.Item>
-          Data Hub’s external data provider will confirm with the company that the information on this page is correct
+          Data Hub’s external data provider will confirm with the company that
+          the information on this page is correct
         </InformationList.Item>
         <InformationList.Item>
-          within 3 weeks the Data Hub support team will send you an email to tell you whether the information on this page has been confirmed
+          within 3 weeks the Data Hub support team will send you an email to
+          tell you whether the information on this page has been confirmed
         </InformationList.Item>
       </InformationList>
     </Step>
@@ -102,18 +109,24 @@ function CompanyNotFoundStep ({ organisationTypes, regions, sectors, country }) 
 }
 
 CompanyNotFoundStep.propTypes = {
-  organisationTypes: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-  })).isRequired,
-  regions: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-  })).isRequired,
-  sectors: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-  })).isRequired,
+  organisationTypes: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  regions: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  sectors: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    })
+  ).isRequired,
   country: PropTypes.shape({
     key: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,

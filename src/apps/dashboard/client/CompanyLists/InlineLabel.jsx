@@ -16,13 +16,12 @@ const StyledLabelText = styled(LabelText)({
 })
 
 // TODO: Move to data-hub-components
-const InlineLabel = ({ text, children }) =>
+const InlineLabel = ({ text, children }) => (
   <StyledLabel>
-    <StyledLabelText>
-      {text}
-    </StyledLabelText>
+    <StyledLabelText>{text}</StyledLabelText>
     {children}
   </StyledLabel>
+)
 
 InlineLabel.propTypes = {
   text: PropTypes.string.isRequired,

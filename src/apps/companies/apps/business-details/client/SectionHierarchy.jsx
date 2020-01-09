@@ -46,20 +46,18 @@ const SubsectionDnBHierarchy = ({
       )}
 
       <WideSummaryTableRow>
-        {dnbRelatedCompaniesCount > 0
-          ? <>
-            Data Hub contains
-            {' '}
+        {dnbRelatedCompaniesCount > 0 ? (
+          <>
+            Data Hub contains{' '}
             <Link href={urls.dnbHierarchy}>
-              {dnbRelatedCompaniesCount}
-              {' '}
+              {dnbRelatedCompaniesCount}{' '}
               {pluralise(dnbRelatedCompaniesCount, 'other company record')}
-            </Link>
-            {' '}
+            </Link>{' '}
             related to this company
           </>
-          : 'This company is not related to any other company records.'
-        }
+        ) : (
+          'This company is not related to any other company records.'
+        )}
       </WideSummaryTableRow>
     </>
   )
@@ -104,7 +102,10 @@ SubsidiariesCounter.propTypes = {
 }
 
 const GlobalHQ = ({ businessDetails, urls }) => {
-  if (!businessDetails.headquarter_type && !businessDetails.global_headquarters) {
+  if (
+    !businessDetails.headquarter_type &&
+    !businessDetails.global_headquarters
+  ) {
     return (
       <>
         None
@@ -118,9 +119,7 @@ const GlobalHQ = ({ businessDetails, urls }) => {
   if (businessDetails.global_headquarters) {
     return (
       <>
-        <Link href={urls.globalHQ}>
-          {businessDetails.global_headquarters}
-        </Link>
+        <Link href={urls.globalHQ}>{businessDetails.global_headquarters}</Link>
         <StyledRowActionLink href={urls.removeGlobalHQ}>
           Remove link
         </StyledRowActionLink>
@@ -141,22 +140,24 @@ const SubsectionDataHubHierarchy = ({
   subsidiariesCount,
   isGlobalHQ,
 }) => {
-  const showGlobalHQ = businessDetails.global_headquarters ||
+  const showGlobalHQ =
+    businessDetails.global_headquarters ||
     (!businessDetails.headquarter_type && !businessDetails.global_headquarters)
 
   return (
     <>
       <WideSummaryTableRow addPadding={isDnbCompany}>
-        This hierarchy information is manually recorded (linked) by Data Hub users.
-        This means it can be different from the Dun & Bradstreet hierarchy,
-        which in the future will replace this manually recorded information.
+        This hierarchy information is manually recorded (linked) by Data Hub
+        users. This means it can be different from the Dun & Bradstreet
+        hierarchy, which in the future will replace this manually recorded
+        information.
       </WideSummaryTableRow>
 
       <SummaryTable.Row heading="Headquarter type">
         {businessDetails.headquarter_type_label}
       </SummaryTable.Row>
 
-      {businessDetails.headquarter_type &&
+      {businessDetails.headquarter_type && (
         <SummaryTable.Row heading="Subsidiaries">
           <SubsidiariesCounter
             isGlobalHQ={isGlobalHQ}
@@ -164,16 +165,13 @@ const SubsectionDataHubHierarchy = ({
             urls={urls}
           />
         </SummaryTable.Row>
-      }
+      )}
 
-      {showGlobalHQ &&
+      {showGlobalHQ && (
         <SummaryTable.Row heading="Global HQ">
-          <GlobalHQ
-            businessDetails={businessDetails}
-            urls={urls}
-          />
+          <GlobalHQ businessDetails={businessDetails} urls={urls} />
         </SummaryTable.Row>
-      }
+      )}
     </>
   )
 }
@@ -208,12 +206,14 @@ const SectionHierarchy = ({
     <SummaryTable
       caption="Business hierarchy"
       data-auto-id="businessHierarchyDetailsContainer"
-      actions={!isArchived &&
-        showDataHubHierarchy &&
-        <Link href={`${urls.companyEdit}#field-headquarter_type`}>Edit</Link>
+      actions={
+        !isArchived &&
+        showDataHubHierarchy && (
+          <Link href={`${urls.companyEdit}#field-headquarter_type`}>Edit</Link>
+        )
       }
     >
-      {showDnbHierarchy &&
+      {showDnbHierarchy && (
         <SubsectionDnBHierarchy
           globalUltimate={globalUltimate}
           isDnbCompany={isDnbCompany}
@@ -222,8 +222,8 @@ const SectionHierarchy = ({
           dnbRelatedCompaniesCount={dnbRelatedCompaniesCount}
           urls={urls}
         />
-      }
-      {showDataHubHierarchy &&
+      )}
+      {showDataHubHierarchy && (
         <SubsectionDataHubHierarchy
           businessDetails={businessDetails}
           isDnbCompany={isDnbCompany}
@@ -231,7 +231,7 @@ const SectionHierarchy = ({
           subsidiariesCount={subsidiariesCount}
           urls={urls}
         />
-      }
+      )}
     </SummaryTable>
   )
 }

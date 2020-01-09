@@ -36,18 +36,31 @@ Address.defaultProps = {
   isRegistered: false,
 }
 
-const SectionAddresses = ({ businessDetails, isDnbCompany, isArchived, urls }) => (
+const SectionAddresses = ({
+  businessDetails,
+  isDnbCompany,
+  isArchived,
+  urls,
+}) => (
   <SummaryTable
     caption="Addresses"
     data-auto-id="addressesDetailsContainer"
-    actions={!isDnbCompany && !isArchived && <Link href={`${urls.companyEdit}#field-address`}>Edit</Link>}
+    actions={
+      !isDnbCompany &&
+      !isArchived && (
+        <Link href={`${urls.companyEdit}#field-address`}>Edit</Link>
+      )
+    }
   >
     <Table.Row>
       <Address address={businessDetails.address} />
 
-      {businessDetails.registered_address &&
-      <Address address={businessDetails.registered_address} isRegistered={true} />
-      }
+      {businessDetails.registered_address && (
+        <Address
+          address={businessDetails.registered_address}
+          isRegistered={true}
+        />
+      )}
     </Table.Row>
   </SummaryTable>
 )

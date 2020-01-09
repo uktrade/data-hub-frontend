@@ -7,7 +7,13 @@ import { typography } from '@govuk-react/lib'
 import { SPACING } from '@govuk-react/constants'
 import axios from 'axios'
 
-import { ButtonLink, Form, FormActions, FieldRadios, FieldInput } from 'data-hub-components'
+import {
+  ButtonLink,
+  Form,
+  FormActions,
+  FieldRadios,
+  FieldInput,
+} from 'data-hub-components'
 
 const StyledSectionHeader = styled('div')`
   ${typography.font({ size: 24, weight: 'bold' })};
@@ -36,7 +42,7 @@ const SectionArchive = ({ isArchived, isDnbCompany, urls }) => {
 
       <p>Archive this company if it is no longer required or active.</p>
 
-      {formIsOpen &&
+      {formIsOpen && (
         <Form onSubmit={archiveSubmitCallback} scrollToTop={false}>
           <FieldRadios
             label="Archive reason"
@@ -47,19 +53,21 @@ const SectionArchive = ({ isArchived, isDnbCompany, urls }) => {
               {
                 label: 'Other',
                 value: 'Other',
-                children: <FieldInput label="Other" name="archived_reason_other" />
+                children: (
+                  <FieldInput label="Other" name="archived_reason_other" />
+                ),
               },
             ]}
           />
 
           <FormActions>
-            <Button >Archive</Button>
+            <Button>Archive</Button>
             <ButtonLink onClick={() => setFormIsOpen(false)}>Cancel</ButtonLink>
           </FormActions>
         </Form>
-      }
+      )}
 
-      {!formIsOpen &&
+      {!formIsOpen && (
         <Button
           onClick={() => setFormIsOpen(true)}
           buttonColour={GREY_3}
@@ -67,7 +75,7 @@ const SectionArchive = ({ isArchived, isDnbCompany, urls }) => {
         >
           Archive
         </Button>
-      }
+      )}
     </div>
   )
 }

@@ -10,9 +10,7 @@ const StyledUnorderedList = styled(UnorderedList)`
 `
 
 const Item = ({ children }) => {
-  return (
-    <ListItem>{children}</ListItem>
-  )
+  return <ListItem>{children}</ListItem>
 }
 
 Item.propTypes = {
@@ -24,9 +22,7 @@ const InformationList = ({ heading, description, children }) => {
     <>
       <H3>{heading}</H3>
       <p>{description}</p>
-      <StyledUnorderedList>
-        {children}
-      </StyledUnorderedList>
+      <StyledUnorderedList>{children}</StyledUnorderedList>
     </>
   )
 }

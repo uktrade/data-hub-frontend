@@ -14,7 +14,7 @@ const StyledCellLink = styled.a({
   marginBottom: 0,
 })
 
-const CompaniesTable = ({ companies }) =>
+const CompaniesTable = ({ companies }) => (
   <Table
     head={
       <Table.Row>
@@ -25,7 +25,7 @@ const CompaniesTable = ({ companies }) =>
       </Table.Row>
     }
   >
-    {companies.map(({ company, latestInteraction }) =>
+    {companies.map(({ company, latestInteraction }) => (
       <Table.Row key={company.id}>
         <Table.Cell setWidth="25%">
           <Link href={`companies/${company.id}`}>
@@ -41,8 +41,7 @@ const CompaniesTable = ({ companies }) =>
         <Table.Cell setWidth="15%">
           {latestInteraction.date
             ? moment(latestInteraction.date).format('D MMM YYYY')
-            : '-'
-          }
+            : '-'}
         </Table.Cell>
         <Table.Cell setWidth="50%">
           {latestInteraction.id ? (
@@ -68,8 +67,9 @@ const CompaniesTable = ({ companies }) =>
           </SecondaryButton>
         </Table.Cell>
       </Table.Row>
-    )}
+    ))}
   </Table>
+)
 
 CompaniesTable.propTypes = {
   companies: propTypes.companies,

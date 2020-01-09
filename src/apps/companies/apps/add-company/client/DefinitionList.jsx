@@ -39,15 +39,15 @@ const StyledDT = styled('dt')`
   font-weight: bold;
 `
 
-function Row ({ label, description }) {
+function Row({ label, description }) {
   if (!label || !description) {
     return null
   }
 
   return (
     <StyledInnerRow>
-      <StyledDT>{ label }</StyledDT>
-      <dd>{ description }</dd>
+      <StyledDT>{label}</StyledDT>
+      <dd>{description}</dd>
     </StyledInnerRow>
   )
 }
@@ -63,13 +63,11 @@ DefinitionList.defaultProps = {
 }
 
 // TODO: Replace this in the near future with SummaryList component and place it in the component library.
-function DefinitionList ({ header, children }) {
+function DefinitionList({ header, children }) {
   return (
     <StyledDLContainer>
       {header && <StyledListHeader>{header}</StyledListHeader>}
-      <StyledDL>
-        {children}
-      </StyledDL>
+      <StyledDL>{children}</StyledDL>
     </StyledDLContainer>
   )
 }
