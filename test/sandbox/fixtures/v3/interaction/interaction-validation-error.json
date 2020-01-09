@@ -1,5 +1,8 @@
 {
   "export_countries": [
-      "This field may not be null."
+      "The export_countries field may not be null."
+  ],
+  "non_field_errors": [
+    "A non field error message"
   ]
 }

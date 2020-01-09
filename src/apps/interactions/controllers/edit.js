@@ -1,5 +1,5 @@
 /* eslint camelcase: 0 */
-const { get, lowerCase, snakeCase, kebabCase } = require('lodash')
+const { get, set, lowerCase, snakeCase, kebabCase } = require('lodash')
 
 const { transformInteractionResponseToForm } = require('../transformers')
 const { transformDateStringToDateObject } = require('../../transformers')
@@ -52,8 +52,7 @@ async function buildForm(req, res, params) {
     featureFlags: res.locals.features,
   }
 
-  const form = formConfigs[kind](formProperties)
-  return form
+  return formConfigs[kind](formProperties)
 }
 
 function setDefaultContact(interaction, contact) {
@@ -139,12 +138,17 @@ async function renderEditPage(req, res, next) {
       kind: validatedKind,
     })
     const errors = get(res.locals, 'form.errors.messages')
+    const nonFieldErrors = get(res.locals, 'form.errors.nonField')
 
     const interactionForm = buildFormWithStateAndErrors(
       form,
       mergedInteractionData,
       errors
     )
+
+    if (nonFieldErrors) {
+      set(interactionForm, 'errors.nonField', nonFieldErrors)
+    }
 
     const forEntityName = res.locals.entityName
       ? ` for ${res.locals.entityName}`

@@ -3,11 +3,19 @@
  # @param {object} errors - A form error object
  # @param {string} errors.summary - A helpful summary
  # @param {object} errors.messages - A dictionary of errors with field name as key and message as value
+ # @param {object} errors.nonField - An array of non field errros to display
  #}
 {% macro ErrorSummary(errors) %}
-  {% if errors.messages | length or errors.summary %}
+  {% if errors.messages | length or errors.summary or errors.nonField %}
     <div class="c-error-summary js-ErrorSummary" role="alert">
       <h1 class="c-error-summary__heading heading-medium">There was a problem submitting this form</h1>
+      {% if errors.nonField %}
+        <ul class="c-error-summary__non-field">
+          {% for str in errors.nonField %}
+            <li class="c-error-summary__non-field__message">{{ str }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
       {% if errors.summary %}
         <p class="c-error-summary__summary">{{ errors.summary }}</p>
       {% endif %}
