@@ -8,15 +8,29 @@ import axios from 'axios'
 import { get } from 'lodash'
 import { H3 } from '@govuk-react/heading'
 
-import { FieldDnbCompany, FieldRadios, FieldSelect, Form, Step } from 'data-hub-components'
+import {
+  FieldDnbCompany,
+  FieldRadios,
+  FieldSelect,
+  Form,
+  Step,
+} from 'data-hub-components'
 
 import CompanyFoundStep from './CompanyFoundStep'
 import CompanyNotFoundStep from './CompanyNotFoundStep'
 import { ISO_CODE } from './constants'
 
-function AddCompanyForm ({ csrfToken, countries, organisationTypes, regions, sectors }) {
+function AddCompanyForm({
+  csrfToken,
+  countries,
+  organisationTypes,
+  regions,
+  sectors,
+}) {
   const optionCountryUK = countries.find(({ value }) => value === ISO_CODE.UK)
-  const overseasCountries = countries.filter(({ value }) => value && value !== ISO_CODE.UK)
+  const overseasCountries = countries.filter(
+    ({ value }) => value && value !== ISO_CODE.UK
+  )
 
   const COMPANY_LOCATION_OPTIONS = {
     uk: optionCountryUK,
@@ -35,19 +49,22 @@ function AddCompanyForm ({ csrfToken, countries, organisationTypes, regions, sec
     },
   }
 
-  function getCountry ({ companyLocation, companyOverseasCountry }) {
-    if (companyLocation && companyLocation === COMPANY_LOCATION_OPTIONS.uk.value) {
+  function getCountry({ companyLocation, companyOverseasCountry }) {
+    if (
+      companyLocation &&
+      companyLocation === COMPANY_LOCATION_OPTIONS.uk.value
+    ) {
       return COMPANY_LOCATION_OPTIONS.uk
     }
 
     if (companyOverseasCountry) {
-      return overseasCountries.find(c => c.value === companyOverseasCountry)
+      return overseasCountries.find((c) => c.value === companyOverseasCountry)
     }
 
     return {}
   }
 
-  async function onSubmit (values) {
+  async function onSubmit(values) {
     const path = values.cannotFind ? 'company-investigation' : 'company-create'
     const postUrl = `/companies/create/dnb/${path}?_csrf=${csrfToken}`
     const { data } = await axios.post(postUrl, values)
@@ -62,6 +79,7 @@ function AddCompanyForm ({ csrfToken, countries, organisationTypes, regions, sec
         const countryName = get(country, 'label')
         const countryIsoCode = get(country, 'value')
 
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         useEffect(() => {
           setFieldValue('country', countryID)
         }, [countryID])
@@ -89,7 +107,9 @@ function AddCompanyForm ({ csrfToken, countries, organisationTypes, regions, sec
               />
             </Step>
 
-            {!values.cannotFind && <CompanyFoundStep countryName={countryName} />}
+            {!values.cannotFind && (
+              <CompanyFoundStep countryName={countryName} />
+            )}
 
             {values.cannotFind && (
               <CompanyNotFoundStep
@@ -108,23 +128,31 @@ function AddCompanyForm ({ csrfToken, countries, organisationTypes, regions, sec
 
 AddCompanyForm.propTypes = {
   csrfToken: PropTypes.string.isRequired,
-  countries: PropTypes.arrayOf(PropTypes.shape({
-    key: PropTypes.string.isRequired,
-    label: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-  })).isRequired,
-  organisationTypes: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-  })).isRequired,
-  regions: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-  })).isRequired,
-  sectors: PropTypes.arrayOf(PropTypes.shape({
-    label: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
-  })).isRequired,
+  countries: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  organisationTypes: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  regions: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  sectors: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      value: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 }
 
 export default AddCompanyForm

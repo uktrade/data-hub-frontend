@@ -4,24 +4,20 @@ import Link from '@govuk-react/link'
 
 import { SummaryTable } from 'data-hub-components'
 
-const SectionRegion = ({
-  businessDetails,
-  isArchived,
-  isBasedInUK,
-  urls,
-}) => isBasedInUK
-  ? (
+const SectionRegion = ({ businessDetails, isArchived, isBasedInUK, urls }) =>
+  isBasedInUK ? (
     <SummaryTable
       caption="DIT region"
       data-auto-id="regionDetailsContainer"
-      actions={!isArchived && <Link href={`${urls.companyEdit}#uk_region`}>Edit</Link>}
+      actions={
+        !isArchived && <Link href={`${urls.companyEdit}#uk_region`}>Edit</Link>
+      }
     >
       <SummaryTable.Row>
         {businessDetails.uk_region || 'Not set'}
       </SummaryTable.Row>
     </SummaryTable>
-  )
-  : null
+  ) : null
 
 SectionRegion.propTypes = {
   businessDetails: PropTypes.object.isRequired,

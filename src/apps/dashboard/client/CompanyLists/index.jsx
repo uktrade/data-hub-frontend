@@ -1,7 +1,5 @@
 import { GREY_2 } from 'govuk-colours'
-import {
-  SPACING, BORDER_WIDTH_MOBILE
-} from '@govuk-react/constants'
+import { SPACING, BORDER_WIDTH_MOBILE } from '@govuk-react/constants'
 import HintText from '@govuk-react/hint-text'
 import SectionBreak from '@govuk-react/section-break'
 import { get, orderBy } from 'lodash'
@@ -13,7 +11,7 @@ import styled from 'styled-components'
 import {
   COMPANY_LIST_VIEWER__FILTER,
   COMPANY_LIST_VIEWER__LIST_CHANGE,
-  COMPANY_LIST_VIEWER__ORDER
+  COMPANY_LIST_VIEWER__ORDER,
 } from '../../../../client/actions'
 import { ALPHABETICAL, LEAST_RECENT, RECENT } from './constants'
 import Filters from './Filters'
@@ -49,19 +47,24 @@ const NoListsMsg = () => (
   </HintText>
 )
 
-function CompanyLists ({
-  lists, selectedIdx, sortBy, filter,
-  onListChange, onOrderChange, onSearch,
+function CompanyLists({
+  lists,
+  selectedIdx,
+  sortBy,
+  filter,
+  onListChange,
+  onOrderChange,
+  onSearch,
 }) {
   const list = lists[selectedIdx]
   const companies = get(list, 'companies', [])
   const orderByParams = {
-    [RECENT]: [c => c.latestInteraction.date || '', 'desc'],
-    [LEAST_RECENT]: [c => c.latestInteraction.date || '', 'asc'],
-    [ALPHABETICAL]: [c => c.company.name, 'asc'],
+    [RECENT]: [(c) => c.latestInteraction.date || '', 'desc'],
+    [LEAST_RECENT]: [(c) => c.latestInteraction.date || '', 'asc'],
+    [ALPHABETICAL]: [(c) => c.company.name, 'asc'],
   }[sortBy]
-  const filtered = companies.filter(
-    c => c.company.name.match(new RegExp(filter, 'i'))
+  const filtered = companies.filter((c) =>
+    c.company.name.match(new RegExp(filter, 'i'))
   )
   const ordered = orderBy(filtered, ...orderByParams)
 
@@ -73,21 +76,25 @@ function CompanyLists ({
       {lists.length ? (
         companies.length ? (
           <>
-            {companies.length > 1 &&
+            {companies.length > 1 && (
               <Filters onOrderChange={onOrderChange} onSearch={onSearch} />
-            }
+            )}
             <Table companies={ordered} />
           </>
-        ) : <EmptyListMsg />
-      ) : <NoListsMsg />
-      }
+        ) : (
+          <EmptyListMsg />
+        )
+      ) : (
+        <NoListsMsg />
+      )}
     </StyledRoot>
   )
 }
 
 CompanyLists.propTypes = {
   lists: propTypes.lists.isRequired,
-  selectedIdx: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+  selectedIdx: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
+    .isRequired,
   sortBy: PropTypes.oneOf([ALPHABETICAL, RECENT, LEAST_RECENT]).isRequired,
   filter: PropTypes.string.isRequired,
   onListChange: PropTypes.func,
@@ -96,19 +103,22 @@ CompanyLists.propTypes = {
 }
 
 export default connect(
-  state => state.companyLists,
-  dispatch => ({
-    onListChange: idx => dispatch({
-      type: COMPANY_LIST_VIEWER__LIST_CHANGE,
-      idx,
-    }),
-    onOrderChange: sortBy => dispatch({
-      type: COMPANY_LIST_VIEWER__ORDER,
-      sortBy,
-    }),
-    onSearch: filter => dispatch({
-      type: COMPANY_LIST_VIEWER__FILTER,
-      filter,
-    }),
+  (state) => state.companyLists,
+  (dispatch) => ({
+    onListChange: (idx) =>
+      dispatch({
+        type: COMPANY_LIST_VIEWER__LIST_CHANGE,
+        idx,
+      }),
+    onOrderChange: (sortBy) =>
+      dispatch({
+        type: COMPANY_LIST_VIEWER__ORDER,
+        sortBy,
+      }),
+    onSearch: (filter) =>
+      dispatch({
+        type: COMPANY_LIST_VIEWER__FILTER,
+        filter,
+      }),
   })
 )(CompanyLists)

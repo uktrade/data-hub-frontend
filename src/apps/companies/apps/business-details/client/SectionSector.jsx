@@ -4,16 +4,17 @@ import Link from '@govuk-react/link'
 
 import { SummaryTable } from 'data-hub-components'
 
-const SectionSector = ({ businessDetails, isArchived, urls }) =>
+const SectionSector = ({ businessDetails, isArchived, urls }) => (
   <SummaryTable
     caption="DIT sector"
     data-auto-id="sectorDetailsContainer"
-    actions={!isArchived && <Link href={`${urls.companyEdit}#sector`}>Edit</Link>}
+    actions={
+      !isArchived && <Link href={`${urls.companyEdit}#sector`}>Edit</Link>
+    }
   >
-    <SummaryTable.Row>
-      {businessDetails.sector || 'Not set'}
-    </SummaryTable.Row>
+    <SummaryTable.Row>{businessDetails.sector || 'Not set'}</SummaryTable.Row>
   </SummaryTable>
+)
 
 SectionSector.propTypes = {
   businessDetails: PropTypes.object.isRequired,

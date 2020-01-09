@@ -8,7 +8,7 @@ import { Step, useFormContext } from 'data-hub-components'
 import DefinitionList from './DefinitionList'
 import PropTypes from 'prop-types'
 
-function getCompanyAddress (dnbCompany) {
+function getCompanyAddress(dnbCompany) {
   if (dnbCompany) {
     return compact([
       dnbCompany.address_line_1,
@@ -19,10 +19,12 @@ function getCompanyAddress (dnbCompany) {
   }
 }
 
-function getCompaniesHouseNumber (dnbCompany) {
+function getCompaniesHouseNumber(dnbCompany) {
   if (dnbCompany) {
-    const companiesHouseAccount = dnbCompany.registration_numbers
-      .find(({ registration_type }) => registration_type === 'uk_companies_house_number')
+    const companiesHouseAccount = dnbCompany.registration_numbers.find(
+      ({ registration_type }) =>
+        registration_type === 'uk_companies_house_number'
+    )
 
     if (companiesHouseAccount) {
       return companiesHouseAccount.registration_number
@@ -30,7 +32,7 @@ function getCompaniesHouseNumber (dnbCompany) {
   }
 }
 
-function CompanyFoundStep ({ countryName }) {
+function CompanyFoundStep({ countryName }) {
   const { values } = useFormContext()
 
   const dnbCompany = get(values, 'dnbCompany')
@@ -47,14 +49,8 @@ function CompanyFoundStep ({ countryName }) {
           label="Companies House number"
           description={companiesHouseNumber}
         />
-        <DefinitionList.Row
-          label="Country"
-          description={countryName}
-        />
-        <DefinitionList.Row
-          label="Address"
-          description={companyAddress}
-        />
+        <DefinitionList.Row label="Country" description={countryName} />
+        <DefinitionList.Row label="Address" description={companyAddress} />
       </DefinitionList>
     </Step>
   )

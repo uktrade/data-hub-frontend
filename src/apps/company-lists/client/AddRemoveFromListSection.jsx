@@ -5,16 +5,15 @@ import { AddRemoveFromListForm } from 'data-hub-components'
 import ErrorSummary from '@govuk-react/error-summary'
 import PropTypes from 'prop-types'
 
-const AddRemoveFromListSection = (
-  {
-    list,
-    companyId,
-    token,
-    createNewListUrl,
-    cancelLinkUrl,
-  }) => {
+const AddRemoveFromListSection = ({
+  list,
+  companyId,
+  token,
+  createNewListUrl,
+  cancelLinkUrl,
+}) => {
   const [errorMessage, setErrorMessage] = useState(null)
-  async function onSubmit (list) {
+  async function onSubmit(list) {
     try {
       await addRemoveFromList(token, companyId, list, cancelLinkUrl)
       return cancelLinkUrl
@@ -27,7 +26,7 @@ const AddRemoveFromListSection = (
     }
   }
 
-  async function addRemoveFromList (token, companyId, list) {
+  async function addRemoveFromList(token, companyId, list) {
     await axios({
       method: 'POST',
       url: `/companies/${companyId}/lists/add-remove?_csrf=${token}`,
