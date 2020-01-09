@@ -1,5 +1,4 @@
 const {
-  assign,
   at,
   castArray,
   get,
@@ -56,12 +55,11 @@ function assignPropsIfFoundInObject(children, sourceObject = {}, propName) {
         return option
       })
     }
-    return assign(
-      {},
-      child,
-      { error: null }, // ensure error is reset if another property is set (e.g. value)
-      { [propName]: sourceObject[child.name] }
-    )
+    return {
+      ...child,
+      error: null, // ensure error is reset if another property is set (e.g. value)
+      [propName]: sourceObject[child.name],
+    }
   })
 }
 
@@ -88,7 +86,7 @@ function buildFormWithErrors(form = {}, errorMessages = {}) {
 
   const children = assignPropsIfFoundInObject(form.children, messages, 'error')
 
-  return assign({}, form, {
+  return Object.assign(form, {
     children,
     errors,
   })
@@ -105,7 +103,7 @@ function buildFormWithState(form = {}, requestBody = {}) {
     'value'
   )
 
-  return assign({}, form, {
+  return Object.assign(form, {
     children,
   })
 }
@@ -180,7 +178,7 @@ async function buildFieldsWithSelectedEntities(token, fields = [], query = {}) {
 
   for (let childIndex = 0; childIndex < fieldsArray.length; childIndex += 1) {
     const child = fieldsArray[childIndex]
-    const newChild = assign({}, child)
+    const newChild = { ...child }
 
     if (child.entity && has(query, child.name)) {
       const id = castArray(get(query, child.name))
