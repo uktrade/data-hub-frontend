@@ -1,7 +1,7 @@
 {% extends "_layouts/template.njk" %}
 
 {% block local_header %}
-  {% call LocalHeader({ heading: 'Edit export markets' }) %}{% endcall %}
+  {% call LocalHeader({ heading: 'Edit export countries' }) %}{% endcall %}
 {% endblock %}
 
 {% block body_main_content %}
@@ -46,14 +46,14 @@
       <div class="c-form-group js-AddItems" data-item-selector=".c-form-group--AddItems">
         <label class="c-form-group__label">
           <span class="c-form-group__label-text">
-            Select a market this company currently exports to (optional)
+            Select a country this company currently exports to (optional)
           </span>
         </label>
 
         {% for country in exportCountries %}
           {{ MultipleChoiceField({
             name: 'export_to_countries',
-            label: 'Select a market this company currently exports to',
+            label: 'Select a country this company currently exports to',
             value: country,
             options: countryOptions,
             initialOption: '-- Select country --',
@@ -70,14 +70,14 @@
       <div class="c-form-group js-AddItems" data-item-selector=".c-form-group--AddItems">
         <label class="c-form-group__label">
           <span class="c-form-group__label-text">
-            Future markets of interest (optional)
+            Future countries of interest (optional)
           </span>
         </label>
 
         {% for country in futureCountries %}
           {{ MultipleChoiceField({
             name: 'future_interest_countries',
-            label: 'Future markets of interest',
+            label: 'Future countries of interest',
             value: country,
             options: countryOptions,
             initialOption: '-- Select country --',
