@@ -190,7 +190,7 @@ describe('Company Collections Filter', () => {
           .blur()
       })
 
-    cy.wait('@filterResults').then(xhr => {
+    cy.wait('@filterResults').then((xhr) => {
       expect(xhr.url).to.contain(`uk_postcode=${POSTCODE}`)
     })
 
