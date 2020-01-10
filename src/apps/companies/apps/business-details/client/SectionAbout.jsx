@@ -70,7 +70,7 @@ const SectionAbout = ({ businessDetails, isDnbCompany, isArchived, urls }) => (
     <SummaryTable.Row heading="Annual turnover">
       {businessDetails.turnover &&
         <>
-          {NumberUtils.currency(businessDetails.turnover)}
+          {NumberUtils.currencyUSD(businessDetails.turnover)}
 
           {businessDetails.is_turnover_estimated &&
             <TableDetails>

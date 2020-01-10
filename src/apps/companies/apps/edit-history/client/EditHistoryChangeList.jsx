@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { isBoolean, capitalize } from 'lodash'
+import { isBoolean, isNumber } from 'lodash'
 import { FONT_SIZE } from '@govuk-react/constants'
 import moment from 'moment'
 import styled from 'styled-components'
-import { SummaryTable, DateUtils } from 'data-hub-components'
-import { ARCHIVED, NOT_ARCHIVED, NOT_SET } from '../constants'
+import { SummaryTable, DateUtils, NumberUtils } from 'data-hub-components'
+import { ARCHIVED, NOT_ARCHIVED, NOT_SET, YES, NO } from '../constants'
 
 const StyledSummaryTable = styled(SummaryTable)`
   caption {
@@ -27,45 +27,68 @@ const StyledSummaryTable = styled(SummaryTable)`
   }
 `
 
-const FIELD_TO_LABEL_MAP = {
-  uk_region: 'UK Region',
+const StyledNoChanges = styled('div')`
+  font-size: 16px;
+  padding: 30px 0;
+`
+const CURRENCY_FIELDS = ['Turnover']
+
+function isDate(dateStr) {
+  return moment(dateStr, moment.ISO_8601, true).isValid()
 }
 
-function getCaption (fieldName) {
-  return FIELD_TO_LABEL_MAP[fieldName] ||
-    fieldName
-      .split('_')
-      .map(word => capitalize(word))
-      .join(' ')
-}
+function getValueFromBoolean(value, field) {
+  if (
+    field === 'Is number of employees estimated' ||
+    field === 'Is turnover estimated'
+  ) {
+    return value ? YES : NO
+  }
 
-function getValue (value) {
-  if (isBoolean(value)) {
+  if (field === 'Archived') {
     return value ? ARCHIVED : NOT_ARCHIVED
   }
 
-  if (moment(value).isValid()) {
+  return value
+}
+
+function getValue(value, field) {
+  if (isBoolean(value)) {
+    return getValueFromBoolean(value, field)
+  }
+
+  if (isDate(value)) {
     return DateUtils.formatWithTime(value)
+  }
+
+  if (isNumber(value)) {
+    return CURRENCY_FIELDS.includes(field)
+      ? NumberUtils.currencyUSD(value)
+      : value.toString()
   }
 
   return value || NOT_SET
 }
-function EditHistoryChangeList ({ changes }) {
+
+function EditHistoryChangeList({ changes }) {
   return (
-    <div>
+    <>
       {changes.map(({ fieldName, oldValue, newValue }) => (
-        <div key={fieldName}>
-          <StyledSummaryTable caption={getCaption(fieldName)}>
-            <SummaryTable.Row heading="Information before change">
-              {getValue(oldValue)}
-            </SummaryTable.Row>
-            <SummaryTable.Row heading="Information after change">
-              {getValue(newValue)}
-            </SummaryTable.Row>
-          </StyledSummaryTable>
-        </div>
+        <StyledSummaryTable caption={fieldName} key={fieldName}>
+          <SummaryTable.Row heading="Information before change">
+            {getValue(oldValue, fieldName)}
+          </SummaryTable.Row>
+          <SummaryTable.Row heading="Information after change">
+            {getValue(newValue, fieldName)}
+          </SummaryTable.Row>
+        </StyledSummaryTable>
       ))}
-    </div>
+      {changes.length === 0 && (
+        <StyledNoChanges>
+          No changes were made to business details in this update
+        </StyledNoChanges>
+      )}
+    </>
   )
 }
 

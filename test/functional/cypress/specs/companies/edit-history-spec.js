@@ -3,14 +3,26 @@ const {
   assertBreadcrumbs,
 } = require('../../support/assertions')
 const fixtures = require('../../fixtures')
+const { companyEditHistory } = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
 
-describe('Edit History', () => {
-  context('when viewing the "Edit History" page', () => {
-    before(() => {
-      cy.visit(urls.companies.editHistory.index(fixtures.company.venusLtd.id))
-    })
+const assertChanges = (table, caption, beforeChange, afterChange) => {
+  cy.get(table.caption).should('have.text', caption)
+  cy.get(table.beforeChangeText).should(
+    'have.text',
+    'Information before change'
+  )
+  cy.get(table.beforeChangeValue).should('have.text', beforeChange)
+  cy.get(table.afterChangeText).should('have.text', 'Information after change')
+  cy.get(table.afterChangeValue).should('have.text', afterChange)
+}
 
+describe('Edit History', () => {
+  before(() => {
+    cy.visit(urls.companies.editHistory.index(fixtures.company.venusLtd.id))
+  })
+
+  context('when viewing the "Edit History" page', () => {
     it('should render the header', () => {
       assertLocalHeader('Edit History')
     })
@@ -25,6 +37,205 @@ describe('Edit History', () => {
         ),
         'Edit History': null,
       })
+    })
+  })
+
+  context('when viewing an address change', () => {
+    it('should display the date when the update occurred and by whom', () => {
+      cy.get(companyEditHistory.change(1).updated).should(
+        'have.text',
+        'Updated on 10 Dec 2019, 5:58pm by Paul Gain'
+      )
+    })
+
+    it('should display the changes to "Address line 1"', () => {
+      assertChanges(
+        companyEditHistory.change(1).table(2),
+        'Address line 1',
+        '14 Wharf Road',
+        '16 Wharf Road'
+      )
+    })
+
+    it('should display the changes to "Address line 2 (optional)"', () => {
+      assertChanges(
+        companyEditHistory.change(1).table(3),
+        'Address line 2 (optional)',
+        'Not set',
+        'Westminster'
+      )
+    })
+
+    it('should display the changes to "Address town"', () => {
+      assertChanges(
+        companyEditHistory.change(1).table(4),
+        'Address town',
+        'Brentwood',
+        'London'
+      )
+    })
+
+    it('should display the changes to "Address county"', () => {
+      assertChanges(
+        companyEditHistory.change(1).table(5),
+        'Address county',
+        'Essex',
+        'Greater London'
+      )
+    })
+
+    it('should display the changes to "Address postcode"', () => {
+      assertChanges(
+        companyEditHistory.change(1).table(6),
+        'Address postcode',
+        'CM14 4LQ',
+        'SW1H 9AJ'
+      )
+    })
+  })
+
+  context('when viewing a sector, region and description change', () => {
+    it('should display the changes to "Business description (optional)"', () => {
+      assertChanges(
+        companyEditHistory.change(2).table(2),
+        'Business description (optional)',
+        'Not set',
+        'Superior editing services'
+      )
+    })
+
+    it('should display the changes to "DIT sector"', () => {
+      assertChanges(
+        companyEditHistory.change(2).table(3),
+        'DIT sector',
+        'Biotechnology and Pharmaceuticals',
+        'Airports'
+      )
+    })
+
+    it('should display the changes to "DIT region"', () => {
+      assertChanges(
+        companyEditHistory.change(2).table(4),
+        'DIT region',
+        'South East',
+        'London'
+      )
+    })
+  })
+
+  context('when viewing a "Trading name" change', () => {
+    it('should display the changes to "Trading name(s)"', () => {
+      assertChanges(
+        companyEditHistory.change(3).table(2),
+        'Trading name(s)',
+        'Not set',
+        'Edit History Enterprises'
+      )
+    })
+  })
+
+  context('when the user does not have a first or last name', () => {
+    it("should display the user's email address", () => {
+      cy.get(companyEditHistory.change(4).updated).should(
+        'have.text',
+        'Updated on 10 Dec 2019, 6:01pm by paul.gain@digital.trade.gov.uk'
+      )
+    })
+  })
+
+  context('when the user is null it must be an "Automatic update"', () => {
+    it('should display that is was automatically updated', () => {
+      cy.get(companyEditHistory.change(5).updated).should(
+        'have.text',
+        'Automatically updated on 9 Jan 2020, 12:00am'
+      )
+    })
+
+    it('should update the turnover', () => {
+      assertChanges(
+        companyEditHistory.change(5).table(2),
+        'Turnover',
+        '$110,008',
+        '$83,257'
+      )
+    })
+
+    it('should show whether or not the turnover was estimated', () => {
+      assertChanges(
+        companyEditHistory.change(5).table(3),
+        'Is turnover estimated',
+        'Yes',
+        'Not set'
+      )
+    })
+
+    it('should show whether or not the number of employees was estimated', () => {
+      assertChanges(
+        companyEditHistory.change(5).table(4),
+        'Is number of employees estimated',
+        'Not set',
+        'Yes'
+      )
+    })
+  })
+
+  context('when the user saves without making changes', () => {
+    it('should display a message', () => {
+      cy.get(companyEditHistory.change(6).noChanges).should(
+        'have.text',
+        'No changes were made to business details in this update'
+      )
+    })
+  })
+
+  context('when the user updates "Number of employees (optional)"', () => {
+    it('should display the number of employees', () => {
+      assertChanges(
+        companyEditHistory.change(7).table(2),
+        'Number of employees (optional)',
+        '98771',
+        '98772'
+      )
+    })
+  })
+
+  context('when the user has unarchived a company', () => {
+    it('should show the company is no longer archived', () => {
+      assertChanges(
+        companyEditHistory.change(8).table(2),
+        'Archived',
+        'Archived',
+        'Not Archived'
+      )
+    })
+
+    it('should show the reason why it was unarchived', () => {
+      assertChanges(
+        companyEditHistory.change(8).table(3),
+        'Archived reason',
+        'Archived by mistake',
+        'Not set'
+      )
+    })
+  })
+
+  context('when the user has archived a company', () => {
+    it('should show the company is archived', () => {
+      assertChanges(
+        companyEditHistory.change(9).table(2),
+        'Archived',
+        'Not Archived',
+        'Archived'
+      )
+    })
+
+    it('should show the reason why it was archived', () => {
+      assertChanges(
+        companyEditHistory.change(9).table(3),
+        'Archived reason',
+        'Not set',
+        'Company is dissolved'
+      )
     })
   })
 })
