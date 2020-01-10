@@ -75,6 +75,7 @@ const activityFeedRouter = require('./apps/activity-feed/router')
 const dnbHierarchyRouter = require('./apps/dnb-hierarchy/router')
 const businessDetailsRouter = require('./apps/business-details/router')
 const editHistoryRouter = require('./apps/edit-history/router')
+const matchCompanyRouter = require('./apps/match-company/router')
 
 const investmentsRouter = require('./apps/investments/router')
 const matchingRouter = require('./apps/matching/router')
@@ -185,5 +186,7 @@ router.use(activityFeedRouter)
 router.use(dnbHierarchyRouter)
 
 router.use(businessDetailsRouter)
+
+router.use(matchCompanyRouter)
 
 module.exports = router
