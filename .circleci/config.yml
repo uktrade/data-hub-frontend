@@ -318,8 +318,9 @@ jobs:
       - *wait_for_frontend
       - run:
           name: Run functional tests
-          command: yarn test:functional --browser chrome --parallel --record --key $CYPRESS_DASHBOARD_KEY
+          command: yarn test:functional --browser chrome
           when: always
+      - run: yarn coverage:functional
       - store_artifacts:
           path: cypress/screenshots
       - store_test_results:
