@@ -133,6 +133,9 @@ module.exports = {
         '/:companyId/investments/large-capital-profile'
       ),
     },
+    match: {
+      index: url('/companies', '/:companyId/match'),
+    },
     subsidiaries: {
       index: url('/companies', '/:companyId/subsidiaries'),
       link: url('/companies', '/:companyId/subsidiaries/link'),
