@@ -42,6 +42,11 @@ const companyFiltersFields = function({ sectorOptions }) {
       target: 'metadata',
       label: 'Country',
     },
+    {
+      macroName: 'TextField',
+      label: 'UK postcode',
+      name: QUERY_FIELDS_MAP.ukPostcode,
+    },
     Object.assign({}, globalFields.ukRegions, {
       name: QUERY_FIELDS_MAP.ukRegion,
       type: 'checkbox',
