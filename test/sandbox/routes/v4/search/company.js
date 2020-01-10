@@ -14,7 +14,9 @@ exports.companies = function(req, res) {
   }
 
   if (req.body.uk_postcode) {
-    var postcodeFilteredResults = _.filter(companies.results, function (company) {
+    var postcodeFilteredResults = _.filter(companies.results, function(
+      company
+    ) {
       return _.startsWith(
         _.get(company, 'registered_address.postcode'),
         req.body.uk_postcode
@@ -26,11 +28,13 @@ exports.companies = function(req, res) {
     })
   }
 
-  if (req.body.name === 'FilterByCompany' ||
-      req.body.archived === 'false' ||
-      req.body.archived === 'true' ||
-      req.body.country === '87756b9a-5d95-e211-a939-e4115bead28a' ||
-      req.body.uk_region === '934cd12a-6095-e211-a939-e4115bead28a') {
+  if (
+    req.body.name === 'FilterByCompany' ||
+    req.body.archived === 'false' ||
+    req.body.archived === 'true' ||
+    req.body.country === '87756b9a-5d95-e211-a939-e4115bead28a' ||
+    req.body.uk_region === '934cd12a-6095-e211-a939-e4115bead28a'
+  ) {
     return res.json(companyFilter)
   }
 
