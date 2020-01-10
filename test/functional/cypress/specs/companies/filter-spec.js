@@ -199,4 +199,19 @@ describe('Company Collections Filter', () => {
       )
     })
   })
+
+  it('should filter by UK postcode', () => {
+    const POSTCODE = 'LE12'
+    cy.contains('UK postcode')
+      .closest('.c-form-group')
+      .within(() =>
+        cy.get('input')
+          .type(POSTCODE)
+          .blur()
+      )
+
+    cy.wait('@filterResults').then(xhr => {
+      expect(xhr.url).to.contain(`uk_postcode=${POSTCODE}`)
+    })
+  })
 })
