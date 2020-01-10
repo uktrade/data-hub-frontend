@@ -46,6 +46,7 @@ const companyFiltersFields = function({ sectorOptions }) {
       macroName: 'TextField',
       label: 'UK postcode',
       name: QUERY_FIELDS_MAP.ukPostcode,
+      hint: 'Search multiple postcodes separated by a comma',
     },
     Object.assign({}, globalFields.ukRegions, {
       name: QUERY_FIELDS_MAP.ukRegion,
