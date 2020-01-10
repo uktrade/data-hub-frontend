@@ -51,6 +51,7 @@ cypress/**
 visual-screenshots/comparison
 visual-screenshots/diff
 visual-report
+instrumented
 
 # IDE configurations
 .vscode/

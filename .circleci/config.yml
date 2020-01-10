@@ -309,6 +309,7 @@ jobs:
       - checkout
       - *wait_for_mock_sso
       - *restore_yarn_cache
+      - run: yarn instrument
       - *start_api_sandbox
       - *wait_for_api_sandbox
       - run: yarn install --pure-lockfile
