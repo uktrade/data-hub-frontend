@@ -34,12 +34,12 @@ describe('Edit history transformers', () => {
         changedBy: 'Paul Gain',
         changes: [
           {
-            fieldName: 'archived',
+            fieldName: 'Archived',
             oldValue: false,
             newValue: true,
           },
           {
-            fieldName: 'archived_reason',
+            fieldName: 'Archived reason',
             oldValue: null,
             newValue: 'Company is dissolved',
           },
@@ -76,12 +76,12 @@ describe('Edit history transformers', () => {
         changedBy: 'Paul Gain',
         changes: [
           {
-            fieldName: 'archived',
+            fieldName: 'Archived',
             oldValue: true,
             newValue: false,
           },
           {
-            fieldName: 'archived_reason',
+            fieldName: 'Archived reason',
             oldValue: 'Company is dissolved',
             newValue: '',
           },
@@ -122,28 +122,28 @@ describe('Edit history transformers', () => {
         changedBy: 'Paul Gain',
         changes: [
           {
-            fieldName: 'address_1',
+            fieldName: 'Address line 1',
             oldValue: '14 Wharf Road',
             newValue:
               'Her Majesty’s Courts and Tribunals Service - 102 Petty France',
           },
           {
-            fieldName: 'address_2',
+            fieldName: 'Address line 2 (optional)',
             oldValue: '',
             newValue: 'Westminster',
           },
           {
-            fieldName: 'address_town',
+            fieldName: 'Address town',
             oldValue: 'Brentwood',
             newValue: 'London',
           },
           {
-            fieldName: 'address_county',
+            fieldName: 'Address county',
             oldValue: 'Essex',
             newValue: 'Greater London',
           },
           {
-            fieldName: 'address_postcode',
+            fieldName: 'Address postcode',
             oldValue: 'CM14 4LQ',
             newValue: 'SW1H 9AJ',
           },
@@ -179,17 +179,17 @@ describe('Edit history transformers', () => {
         changedBy: 'Paul Gain',
         changes: [
           {
-            fieldName: 'sector',
+            fieldName: 'DIT sector',
             oldValue: 'Biotechnology and Pharmaceuticals',
             newValue: 'Airports',
           },
           {
-            fieldName: 'description',
+            fieldName: 'Business description (optional)',
             oldValue: null,
             newValue: 'Superior editing services',
           },
           {
-            fieldName: 'uk_region',
+            fieldName: 'DIT region',
             oldValue: 'South East',
             newValue: 'London',
           },
@@ -223,7 +223,7 @@ describe('Edit history transformers', () => {
         changedBy: 'Paul Gain',
         changes: [
           {
-            fieldName: 'trading_names',
+            fieldName: 'Trading name(s)',
             oldValue: null,
             newValue: 'Edit History Enterprises',
           },
@@ -252,7 +252,7 @@ describe('Edit history transformers', () => {
         changedBy: 'automaticUpdate',
         changes: [
           {
-            fieldName: 'address_1',
+            fieldName: 'Address line 1',
             oldValue: '1600 Amphitheatre Pkwyz',
             newValue: '1600 Amphitheatre Pkwy',
           },

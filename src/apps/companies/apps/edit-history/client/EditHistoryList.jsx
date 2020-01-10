@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { DateUtils, Pagination } from 'data-hub-components'
 import { FONT_SIZE } from '@govuk-react/constants'
 import styled from 'styled-components'
-import { GREY_2 } from 'govuk-colours'
+import { GREY_1, GREY_2 } from 'govuk-colours'
 
 import EditHistoryChangeList from './EditHistoryChangeList'
 import { AUTOMATIC_UPDATE } from '../constants'
@@ -13,7 +13,7 @@ const StyledListContainer = styled('div')`
 `
 
 const StyledUpdatedOn = styled('p')`
-  color: ${GREY_2};
+  color: ${GREY_1};
   margin-bottom: 0;
   font-size: ${FONT_SIZE.SIZE_16};
   float: right;
@@ -26,17 +26,15 @@ const getUpdatedBy = (timestamp, changedBy) => {
     : `Updated on ${formattedTime} by ${changedBy}`
 }
 
-function EditHistoryList ({ items, totalPages, activePage, onPageClick }) {
+function EditHistoryList({ items, totalPages, activePage, onPageClick }) {
   return (
-    <div>
-
+    <div data-auto-id="editHistory">
       {items.map(({ timestamp, changes, changedBy }) => (
         <StyledListContainer key={timestamp}>
-          <StyledUpdatedOn>{getUpdatedBy(timestamp, changedBy)}</StyledUpdatedOn>
-          <EditHistoryChangeList
-            changes={changes}
-            changedBy={changedBy}
-          />
+          <StyledUpdatedOn>
+            {getUpdatedBy(timestamp, changedBy)}
+          </StyledUpdatedOn>
+          <EditHistoryChangeList changes={changes} changedBy={changedBy} />
         </StyledListContainer>
       ))}
 

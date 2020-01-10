@@ -1,13 +1,17 @@
-const { isArray, isEmpty } = require('lodash')
+const { isArray, isEmpty, lowerCase, capitalize } = require('lodash')
 
-const { AUTOMATIC_UPDATE } = require('./constants')
+const {
+  AUTOMATIC_UPDATE,
+  EXCLUDED_FIELDS,
+  COMPANY_FIELD_NAME_TO_LABEL_MAP,
+} = require('./constants')
 
-const EXCLUDED_FIELDS = [
-  'global_ultimate_duns_number',
-  'dnb_modified_on',
-  'archived_on',
-  'archived_by',
-]
+function mapFieldNameToLabel(fieldName) {
+  return (
+    COMPANY_FIELD_NAME_TO_LABEL_MAP[fieldName] ||
+    capitalize(lowerCase(fieldName))
+  )
+}
 
 const unwrapFromArray = (change) =>
   isArray(change)
@@ -22,7 +26,7 @@ const transformChanges = (changes) => {
   return Object.keys(changes)
     .filter((fieldName) => !EXCLUDED_FIELDS.includes(fieldName))
     .map((fieldName) => ({
-      fieldName,
+      fieldName: mapFieldNameToLabel(fieldName),
       oldValue: unwrapFromArray(changes[fieldName][0]),
       newValue: unwrapFromArray(changes[fieldName][1]),
     }))
@@ -43,9 +47,7 @@ const transformCompanyAuditLogItem = ({ timestamp, user, changes }) => {
 }
 
 const transformCompanyAuditLog = (auditLog) => {
-  return auditLog
-    .map((item) => transformCompanyAuditLogItem(item))
-    .filter(({ changes }) => changes.length)
+  return auditLog.map((item) => transformCompanyAuditLogItem(item))
 }
 
 module.exports = {
