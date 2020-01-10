@@ -10,11 +10,11 @@ import axios from 'axios'
 import EditHistoryList from './EditHistoryList'
 import { DEFAULT_ITEMS_PER_PAGE } from '../constants'
 
-const StyledLoadingBox = styled(LoadingBox)` 
+const StyledLoadingBox = styled(LoadingBox)`
   ${({ loading, minHeight }) => loading && `min-height: ${minHeight}px;`}
 `
 
-function EditHistory ({ dataEndpoint }) {
+function EditHistory({ dataEndpoint }) {
   const [editHistory, setEditHistory] = useState([])
   const [totalItems, setTotalItems] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
@@ -32,7 +32,7 @@ function EditHistory ({ dataEndpoint }) {
   }
 
   useEffect(() => {
-    async function fetchData () {
+    async function fetchData() {
       try {
         const { data } = await axios.get(dataEndpoint, {
           params: {
@@ -51,25 +51,22 @@ function EditHistory ({ dataEndpoint }) {
     fetchData()
   }, [activePage])
 
-  return (
-    errorMessage ? (
-      <ErrorSummary
-        heading='There was an error in fetching the Edit history. Please try again.'
-        description={errorMessage}
-        errors={[]}
+  return errorMessage ? (
+    <ErrorSummary
+      heading="There was an error in fetching the Edit history. Please try again."
+      description={errorMessage}
+      errors={[]}
+    />
+  ) : (
+    <StyledLoadingBox minHeight={window.innerHeight} loading={isLoading}>
+      <H3>{`${totalItems} ${pluralise(totalItems, 'change')}`}</H3>
+      <EditHistoryList
+        items={editHistory}
+        totalPages={totalPages}
+        activePage={activePage}
+        onPageClick={onPageClick}
       />
-    )
-      : (
-        <StyledLoadingBox minHeight={window.innerHeight} loading={isLoading}>
-          <H3>{`${totalItems} ${pluralise(totalItems, 'change')}`}</H3>
-          <EditHistoryList
-            items={editHistory}
-            totalPages={totalPages}
-            activePage={activePage}
-            onPageClick={onPageClick}
-          />
-        </StyledLoadingBox>
-      )
+    </StyledLoadingBox>
   )
 }
 
