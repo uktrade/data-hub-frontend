@@ -4,6 +4,11 @@ module.exports = {
     '@babel/plugin-proposal-object-rest-spread',
     '@babel/plugin-proposal-class-properties',
   ],
+  env: {
+    test: {
+      plugins: ['istanbul'],
+    },
+  },
   presets: [
     ['@babel/preset-react'],
     [
