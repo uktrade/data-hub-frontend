@@ -304,7 +304,6 @@ jobs:
         environment: *data_hub_functional_envs
       - *docker_redis
       - *docker_mock_sso
-    parallelism: 9
     steps:
       - checkout
       - *wait_for_mock_sso
