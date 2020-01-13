@@ -8,7 +8,9 @@ const SectionDescription = ({ businessDetails, isArchived, urls }) => (
   <SummaryTable
     caption="Description"
     data-auto-id="descriptionDetailsContainer"
-    actions={!isArchived && <Link href={`${urls.companyEdit}#description`}>Edit</Link>}
+    actions={
+      !isArchived && <Link href={`${urls.companyEdit}#description`}>Edit</Link>
+    }
   >
     <SummaryTable.Row>
       {businessDetails.description || 'No description has been added'}

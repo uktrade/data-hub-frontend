@@ -9,24 +9,20 @@ import { TEXT_COLOUR, GREY_3 } from 'govuk-colours'
 import { FormActions } from 'data-hub-components'
 import { companies } from '../../../../../lib/urls'
 
-const ButtonSecondary = props =>
-  <Button
-    buttonColour={GREY_3}
-    buttonTextColour={TEXT_COLOUR}
-    {...props}
-  />
+const ButtonSecondary = (props) => (
+  <Button buttonColour={GREY_3} buttonTextColour={TEXT_COLOUR} {...props} />
+)
 
-const RenderHasAccountManager = (
-  {
-    team,
-    name,
-    email,
-    addUrl,
-    removeUrl,
-    hasPermissionToAddIta,
-    companyName,
-    companyId,
-  }) =>
+const RenderHasAccountManager = ({
+  team,
+  name,
+  email,
+  addUrl,
+  removeUrl,
+  hasPermissionToAddIta,
+  companyName,
+  companyId,
+}) => (
   <div>
     <H2 size={LEVEL_SIZE[3]}>Lead ITA for {companyName}</H2>
     <Table>
@@ -38,54 +34,62 @@ const RenderHasAccountManager = (
       <Table.Row>
         <Table.Cell>{team}</Table.Cell>
         <Table.Cell>{name}</Table.Cell>
-        <Table.Cell>{email ? <a href={`mailto:${email}`}>{email}</a> : '-'}</Table.Cell>
+        <Table.Cell>
+          {email ? <a href={`mailto:${email}`}>{email}</a> : '-'}
+        </Table.Cell>
       </Table.Row>
     </Table>
-    <p>You can <a href={companies.audit(companyId)}>see changes in the Audit trail</a></p>
-    {hasPermissionToAddIta &&
-    <FormActions>
-      <ButtonSecondary as={Link} href={addUrl}>
-        Replace Lead ITA
-      </ButtonSecondary>
-      <ButtonSecondary as={Link} href={removeUrl}>
-        Remove Lead ITA
-      </ButtonSecondary>
-    </FormActions>}
+    <p>
+      You can{' '}
+      <a href={companies.audit(companyId)}>see changes in the Audit trail</a>
+    </p>
+    {hasPermissionToAddIta && (
+      <FormActions>
+        <ButtonSecondary as={Link} href={addUrl}>
+          Replace Lead ITA
+        </ButtonSecondary>
+        <ButtonSecondary as={Link} href={removeUrl}>
+          Remove Lead ITA
+        </ButtonSecondary>
+      </FormActions>
+    )}
   </div>
+)
 
-const RenderHasNoAccountManager = (
-  {
-    hasPermissionToAddIta,
-    addUrl,
-    companyName,
-  }) =>
+const RenderHasNoAccountManager = ({
+  hasPermissionToAddIta,
+  addUrl,
+  companyName,
+}) => (
   <div>
     <H2 size={LEVEL_SIZE[3]}>Lead ITA for {companyName}</H2>
     <p>This company has no Lead ITA</p>
-    <p>An ITA (International Trade Adviser) can add themselves as the Lead ITA, which will be visible to all Data Hub
-      users on the company page and any of its subsidiaries.</p>
-    {hasPermissionToAddIta && <Button
-      as={Link}
-      href={addUrl}
-    >
-      Add myself as Lead ITA
-    </Button>}
+    <p>
+      An ITA (International Trade Adviser) can add themselves as the Lead ITA,
+      which will be visible to all Data Hub users on the company page and any of
+      its subsidiaries.
+    </p>
+    {hasPermissionToAddIta && (
+      <Button as={Link} href={addUrl}>
+        Add myself as Lead ITA
+      </Button>
+    )}
   </div>
+)
 
-const LeadAdvisers = (
-  {
-    hasAccountManager,
-    name,
-    team,
-    email,
-    companyName,
-    companyId,
-    addUrl,
-    removeUrl,
-    hasPermissionToAddIta,
-  }) => {
-  return hasAccountManager
-    ? <RenderHasAccountManager
+const LeadAdvisers = ({
+  hasAccountManager,
+  name,
+  team,
+  email,
+  companyName,
+  companyId,
+  addUrl,
+  removeUrl,
+  hasPermissionToAddIta,
+}) => {
+  return hasAccountManager ? (
+    <RenderHasAccountManager
       name={name}
       team={team}
       email={email}
@@ -95,12 +99,14 @@ const LeadAdvisers = (
       addUrl={addUrl}
       removeUrl={removeUrl}
     />
-    : <RenderHasNoAccountManager
+  ) : (
+    <RenderHasNoAccountManager
       companyName={companyName}
       hasPermissionToAddIta={hasPermissionToAddIta}
       addUrl={addUrl}
       removeUrl={removeUrl}
     />
+  )
 }
 
 LeadAdvisers.propTypes = {

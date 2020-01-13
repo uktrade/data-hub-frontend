@@ -22,7 +22,7 @@ const DnbHierarchy = ({ dataEndpoint, isGlobalHQ }) => {
   }
 
   useEffect(() => {
-    async function fetchData () {
+    async function fetchData() {
       const { data } = await axios.get(dataEndpoint, {
         params: {
           page: activePage,
@@ -41,14 +41,17 @@ const DnbHierarchy = ({ dataEndpoint, isGlobalHQ }) => {
     <>
       <p>This hierarchy information from Dun & Bradstreet cannot be edited.</p>
 
-      {isGlobalHQ &&
+      {isGlobalHQ && (
         <Details summary="Why aren't all manually linked subsidiaries listed here?">
-          This does not mean that Dun & Bradstreet does not know about those subsidiaries.<br />
-          The Dun & Bradstreet hierarchy information can only show the company records in Data Hub that have been matched
-          to a verified Dun & Bradstreet record. This matching process is ongoing and more related company records will appear
-          in the future.
+          This does not mean that Dun & Bradstreet does not know about those
+          subsidiaries.
+          <br />
+          The Dun & Bradstreet hierarchy information can only show the company
+          records in Data Hub that have been matched to a verified Dun &
+          Bradstreet record. This matching process is ongoing and more related
+          company records will appear in the future.
         </Details>
-      }
+      )}
 
       <LoadingBox loading={isLoading}>
         <CollectionList

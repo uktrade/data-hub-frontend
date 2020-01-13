@@ -232,8 +232,8 @@ jobs:
           name: Lint code
           command: |
             mkdir -p reports
-            yarn lint:all:js -- --format junit --output-file reports/eslint.xml
-            yarn lint:all:styles
+            yarn lint:js -- --format junit --output-file reports/eslint.xml
+            yarn lint:sass
           when: always
       - store_test_results:
           path: reports

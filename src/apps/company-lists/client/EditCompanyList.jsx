@@ -7,9 +7,10 @@ import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import ErrorSummary from '@govuk-react/error-summary'
 
-const NOT_FOUND_MESSAGE = 'The list you are trying to edit was not found. It may have already been deleted.'
+const NOT_FOUND_MESSAGE =
+  'The list you are trying to edit was not found. It may have already been deleted.'
 
-function EditCompanyList ({
+function EditCompanyList({
   maxLength,
   cancelUrl,
   listName,
@@ -50,7 +51,7 @@ function EditCompanyList ({
           label="List name"
           required="Enter a name for your list"
           hint="This is a name only you see, and can be up to 30 characters"
-          validate={value =>
+          validate={(value) =>
             value && value.length > 30
               ? `Enter list name which is no longer than 30 characters`
               : null

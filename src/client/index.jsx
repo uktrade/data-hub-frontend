@@ -10,7 +10,7 @@ import EditHistory from '../apps/companies/apps/edit-history/client/EditHistory'
 import DeleteCompanyList from '../apps/company-lists/client/DeleteCompanyList'
 import CompanyLists from '../apps/dashboard/client/CompanyLists'
 import companyLists, {
-  resolvePreloadedData as resolvePreloadedCompanyListsData
+  resolvePreloadedData as resolvePreloadedCompanyListsData,
 } from '../apps/dashboard/client/CompanyLists/reducer'
 import EditCompanyList from '../apps/company-lists/client/EditCompanyList'
 import CreateListFormSection from '../apps/company-lists/client/CreateListFormSection'
@@ -19,8 +19,7 @@ import DnbHierarchy from '../apps/companies/apps/dnb-hierarchy/client/DnbHierarc
 import LeadAdvisers from '../apps/companies/apps/advisers/client/LeadAdvisers'
 import LargeCapitalProfileCollection from '../apps/investments/client/LargeCapitalProfileCollection'
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
-import CompanyBusinessDetails
-  from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
+import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
 
 const store = createStore(
   combineReducers({ companyLists }),
@@ -29,17 +28,17 @@ const store = createStore(
   },
   process.env.NODE_ENV === 'production'
     ? undefined
-    : require('redux-devtools-extension').devToolsEnhancer(),
+    : require('redux-devtools-extension').devToolsEnhancer()
 )
 
 const appWrapper = document.getElementById('react-app')
 
-function parseProps (domNode) {
+function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
 }
 
-function Mount ({ selector, children }) {
-  return [...document.querySelectorAll(selector)].map(domNode => {
+function Mount({ selector, children }) {
+  return [...document.querySelectorAll(selector)].map((domNode) => {
     const props = parseProps(domNode)
     return ReactDOM.createPortal(
       typeof children === 'function' ? children(props) : children,
@@ -48,53 +47,65 @@ function Mount ({ selector, children }) {
   })
 }
 
-function App () {
+function App() {
   const globalProps = parseProps(appWrapper)
   return (
     <Provider store={store}>
       <Mount selector="#add-company-form">
-        {props => <AddCompanyForm csrfToken={globalProps.csrfToken} {...props} />}
+        {(props) => (
+          <AddCompanyForm csrfToken={globalProps.csrfToken} {...props} />
+        )}
       </Mount>
       <Mount selector="#edit-company-form">
-        {props => <EditCompanyForm csrfToken={globalProps.csrfToken} {...props} />}
+        {(props) => (
+          <EditCompanyForm csrfToken={globalProps.csrfToken} {...props} />
+        )}
       </Mount>
       <Mount selector="#edit-history">
-        {props => <EditHistory csrfToken={globalProps.csrfToken} {...props} />}
+        {(props) => (
+          <EditHistory csrfToken={globalProps.csrfToken} {...props} />
+        )}
       </Mount>
       <Mount selector="#activity-feed-app">
-        {props => <ActivityFeedApp {...props} />}
+        {(props) => <ActivityFeedApp {...props} />}
       </Mount>
       <Mount selector="#my-companies">
-        <CompanyLists/>
+        <CompanyLists />
       </Mount>
       <Mount selector="#delete-company-list">
-        {props => <DeleteCompanyList csrfToken={globalProps.csrfToken} {...props} />}
+        {(props) => (
+          <DeleteCompanyList csrfToken={globalProps.csrfToken} {...props} />
+        )}
       </Mount>
       <Mount selector="#edit-company-list">
-        {props => <EditCompanyList csrfToken={globalProps.csrfToken} {...props} />}
+        {(props) => (
+          <EditCompanyList csrfToken={globalProps.csrfToken} {...props} />
+        )}
       </Mount>
       <Mount selector="#create-company-list-form">
-        {props => <CreateListFormSection csrfToken={globalProps.csrfToken} {...props} />}
+        {(props) => (
+          <CreateListFormSection csrfToken={globalProps.csrfToken} {...props} />
+        )}
       </Mount>
       <Mount selector="#add-remove-list-form">
-        {props => <AddRemoveFromListSection {...props} />}
+        {(props) => <AddRemoveFromListSection {...props} />}
       </Mount>
       <Mount selector="#lead-advisers">
-        {props => <LeadAdvisers {...props} />}
+        {(props) => <LeadAdvisers {...props} />}
       </Mount>
       <Mount selector="#dnb-hierarchy">
-        {props => <DnbHierarchy {...props} />}
+        {(props) => <DnbHierarchy {...props} />}
       </Mount>
       <Mount selector="#company-business-details">
-        {props => <CompanyBusinessDetails {...props} />}
+        {(props) => <CompanyBusinessDetails {...props} />}
       </Mount>
       <Mount selector="#large-capital-profile-collection">
-        {props => <LargeCapitalProfileCollection {...props} />}
+        {(props) => <LargeCapitalProfileCollection {...props} />}
       </Mount>
       <Mount selector="#manage-adviser">
-        {props =>
+        {(props) => (
           <ManageAdviser {...props} csrfToken={globalProps.csrfToken} />
-        }
+        )}
       </Mount>
     </Provider>
   )
