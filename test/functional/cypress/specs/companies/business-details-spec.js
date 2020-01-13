@@ -399,7 +399,7 @@ describe('Companies business details', () => {
           content: {
             'Trading names': 'DnBD&B',
             'Annual turnover':
-              '$750,148This is an estimated numberWhat does that mean?Actual turnover is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
+              '£770,032This is an estimated numberWhat does that mean?Actual turnover is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
             'Number of employees':
               '95This is an estimated numberWhat does that mean?Actual number of employees is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
             Website: 'Not set',
