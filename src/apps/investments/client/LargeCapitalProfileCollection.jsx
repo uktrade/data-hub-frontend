@@ -25,7 +25,7 @@ const LargeCapitalProfileCollection = () => {
   const getPageUrl = (page) => `?page${page}`
 
   useEffect(() => {
-    async function fetchData () {
+    async function fetchData() {
       try {
         const { data } = await axios.get(investments.profiles.data(), {
           params: {
@@ -44,26 +44,23 @@ const LargeCapitalProfileCollection = () => {
     fetchData()
   }, [activePage])
 
-  return (
-    errorMessage ? (
-      <ErrorSummary
-        heading='There was an error getting the investor profiles'
-        description={errorMessage}
-        errors={[]}
+  return errorMessage ? (
+    <ErrorSummary
+      heading="There was an error getting the investor profiles"
+      description={errorMessage}
+      errors={[]}
+    />
+  ) : (
+    <LoadingBox loading={isLoading}>
+      <CollectionList
+        itemName="profile"
+        items={profiles}
+        totalItems={totalItems}
+        onPageClick={onPageClick}
+        getPageUrl={getPageUrl}
+        activePage={activePage}
       />
-    )
-      : (
-        <LoadingBox loading={isLoading} >
-          <CollectionList
-            itemName='profile'
-            items={profiles}
-            totalItems={totalItems}
-            onPageClick={onPageClick}
-            getPageUrl={getPageUrl}
-            activePage={activePage}
-          />
-        </LoadingBox>
-      )
+    </LoadingBox>
   )
 }
 

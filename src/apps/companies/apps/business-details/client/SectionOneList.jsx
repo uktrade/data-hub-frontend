@@ -11,18 +11,16 @@ const StyledSummaryFooterLink = styled(Link)`
   display: block;
 `
 
-const SectionOneList = ({
-  businessDetails,
-  isArchived,
-  isDnbCompany,
-  urls,
-}) => businessDetails.one_list_group_global_account_manager
-  ? (
+const SectionOneList = ({ businessDetails, isArchived, isDnbCompany, urls }) =>
+  businessDetails.one_list_group_global_account_manager ? (
     <>
       <SummaryTable
         caption="Global Account Manager – One List"
         data-auto-id="oneListDetailsContainer"
-        actions={!isArchived && !isDnbCompany && <Link href={urls.companyEdit}>Edit</Link>}
+        actions={
+          !isArchived &&
+          !isDnbCompany && <Link href={urls.companyEdit}>Edit</Link>
+        }
       >
         <SummaryTable.Row heading="One List tier">
           {businessDetails.one_list_group_tier}
@@ -37,8 +35,7 @@ const SectionOneList = ({
         See all advisers on the core team
       </StyledSummaryFooterLink>
     </>
-  )
-  : null
+  ) : null
 
 SectionOneList.propTypes = {
   businessDetails: PropTypes.object.isRequired,

@@ -24,22 +24,23 @@ const StyledSelect = styled(SelectInput)({
   [MEDIA_QUERIES.LARGESCREEN]: { width: 'auto' },
 })
 
-const Filters = ({ onSearch, onOrderChange }) =>
+const Filters = ({ onSearch, onOrderChange }) => (
   <StyledRoot>
     <InlineLabel text="Search this list">
       <StyledInput
         placeholder="Company name"
-        onChange={e => onSearch(e.target.value)}
+        onChange={(e) => onSearch(e.target.value)}
       />
     </InlineLabel>
     <InlineLabel text="Sort by">
-      <StyledSelect onChange={e => onOrderChange(e.target.value)}>
+      <StyledSelect onChange={(e) => onOrderChange(e.target.value)}>
         <option value="recent">Recent interaction</option>
         <option value="least-recent">Least recent interaction</option>
         <option value="alphabetical">Company name A-Z</option>
       </StyledSelect>
     </InlineLabel>
   </StyledRoot>
+)
 
 Filters.propTypes = {
   onSearch: PropTypes.func,

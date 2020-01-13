@@ -1,7 +1,6 @@
 {
   "parser": "babel-eslint",
   "extends": [
-    "standard",
     "plugin:prettier/recommended",
     "prettier/react"
   ],
@@ -11,17 +10,18 @@
     "node": true
   },
   "parserOptions": {
+    "ecmaVersion": 6,
     "ecmaFeatures": {
-      "ecmaVersion": "es6",
       "jsx": true
     },
     "sourceType": "module"
   },
   "plugins": [
     "react",
+    "react-hooks",
+    "import",
     "mocha",
-    "jsx-a11y",
-    "react-hooks"
+    "jsx-a11y"
   ],
   "rules": {
     "no-async-promise-executor": "off",
@@ -44,7 +44,7 @@
     "dot-notation": "error",
     "mocha/no-exclusive-tests": "error",
     "import/newline-after-import": [
-      "warn",
+      "error",
       {
         "count": 1
       }
