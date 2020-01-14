@@ -16,6 +16,7 @@ var v3SearchInvestmentProject = require('./routes/v3/search/investment-project.j
 var v3SearchOrder = require('./routes/v3/search/order.js')
 var v3SearchInteraction = require('./routes/v3/search/interaction.js')
 var helpCentre = require('./routes/helpCentre.js')
+var zendesk = require('./routes/zendesk.js')
 
 // V4
 var v4ActivityFeed = require('./routes/v4/activity-feed/activity-feed.js')
@@ -492,3 +493,6 @@ Sandbox.define('/whoami/', 'GET', user.whoami)
 
 // Help centre endpoint
 Sandbox.define('/help-centre/announcement', 'GET', helpCentre.announcement)
+
+// Zendesk tickets endpoint
+Sandbox.define('/zendesk/tickets', 'POST', zendesk.tickets)

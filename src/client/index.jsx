@@ -9,6 +9,7 @@ import EditCompanyForm from '../apps/companies/apps/edit-company/client/EditComp
 import EditHistory from '../apps/companies/apps/edit-history/client/EditHistory'
 import FindCompany from '../apps/companies/apps/match-company/client/FindCompany'
 import DeleteCompanyList from '../apps/company-lists/client/DeleteCompanyList'
+import MatchConfirmation from '../apps/companies/apps/match-company/client/MatchConfirmation'
 import CompanyLists from '../apps/dashboard/client/CompanyLists'
 import companyLists, {
   resolvePreloadedData as resolvePreloadedCompanyListsData,
@@ -65,6 +66,11 @@ function App() {
       <Mount selector="#edit-history">
         {(props) => (
           <EditHistory csrfToken={globalProps.csrfToken} {...props} />
+        )}
+      </Mount>
+      <Mount selector="#match-confirmation">
+        {(props) => (
+          <MatchConfirmation csrfToken={globalProps.csrfToken} {...props} />
         )}
       </Mount>
       <Mount selector="#find-company">

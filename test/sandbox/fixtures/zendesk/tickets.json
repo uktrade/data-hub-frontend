@@ -1,0 +1,189 @@
+{
+  "ticket": {
+    "url": "https://org-name.zendesk.com/api/v2/tickets/123.json",
+    "id": 123,
+    "external_id": null,
+    "via": {
+      "channel": "api",
+      "source": {
+        "from": {},
+        "to": {},
+        "rel": null
+      }
+    },
+    "created_at": "2020-01-15T12:39:47Z",
+    "updated_at": "2020-01-15T12:39:47Z",
+    "type": "task",
+    "subject": "D&B company match request for Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978",
+    "raw_subject": "D&B company match request for Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978",
+    "description": "User DIT Staff requested a match of Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978(http://localhost:3000/companies/4cd4128b-1bad-4f1e-9146-5d4678c6a018) with the following D&B company:\nRegistered company name: Some company name\nTrading name(s): N/A\nLocated at: 123 Fake Street, Brighton, BN1 4SE, United Kingdom\nRegistered address: Brighton, BN1 4SE, United Kingdom\nDUNS number: 12345678",
+    "priority": null,
+    "status": "new",
+    "recipient": null,
+    "requester_id": 369561342717,
+    "submitter_id": 369561342717,
+    "assignee_id": null,
+    "organization_id": null,
+    "group_id": null,
+    "collaborator_ids": [],
+    "follower_ids": [],
+    "email_cc_ids": [],
+    "forum_topic_id": null,
+    "problem_id": null,
+    "has_incidents": false,
+    "is_public": true,
+    "due_at": null,
+    "tags": [
+      "dnb_match_request"
+    ],
+    "custom_fields": [
+      {
+        "id": 44394765,
+        "value": false
+      },
+      {
+        "id": 44394785,
+        "value": null
+      },
+      {
+        "id": 44379689,
+        "value": null
+      },
+      {
+        "id": 44394805,
+        "value": null
+      },
+      {
+        "id": 44394825,
+        "value": false
+      },
+      {
+        "id": 44394845,
+        "value": null
+      },
+      {
+        "id": 44394605,
+        "value": null
+      },
+      {
+        "id": 44380149,
+        "value": null
+      }
+    ],
+    "satisfaction_rating": null,
+    "sharing_agreement_ids": [],
+    "fields": [
+      {
+        "id": 44394765,
+        "value": false
+      },
+      {
+        "id": 44394785,
+        "value": null
+      },
+      {
+        "id": 44379689,
+        "value": null
+      },
+      {
+        "id": 44394805,
+        "value": null
+      },
+      {
+        "id": 44394825,
+        "value": false
+      },
+      {
+        "id": 44394845,
+        "value": null
+      },
+      {
+        "id": 44394605,
+        "value": null
+      },
+      {
+        "id": 44380149,
+        "value": null
+      }
+    ],
+    "followup_ids": [],
+    "brand_id": 3155849,
+    "allow_channelback": false,
+    "allow_attachments": true
+  },
+  "audit": {
+    "id": 572858735358,
+    "ticket_id": 123,
+    "created_at": "2020-01-15T12:39:47Z",
+    "author_id": 10361731669,
+    "metadata": {
+      "system": {
+        "client": "axios/0.18.1",
+        "ip_address": "82.2.101.70",
+        "location": "London, ENG, United Kingdom",
+        "latitude": 51.4647,
+        "longitude": -0.0509
+      },
+      "custom": {}
+    },
+    "events": [
+      {
+        "id": 572858735438,
+        "type": "Comment",
+        "author_id": 369561342717,
+        "body": "User DIT Staff requested a match of Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978(http://localhost:3000/companies/4cd4128b-1bad-4f1e-9146-5d4678c6a018) with the following D&B company:\nRegistered company name: Some company name\nTrading name(s): N/A\nLocated at: 123 Fake Street, Brighton, BN1 4SE, United Kingdom\nRegistered address: Brighton, BN1 4SE, United Kingdom\nDUNS number: 12345678",
+        "html_body": "<div class=\"zd-comment\" dir=\"auto\"><p dir=\"auto\">User DIT Staff requested a match of Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978(<a href=\"http://localhost:3000/companies/4cd4128b-1bad-4f1e-9146-5d4678c6a018\" target=\"_blank\" rel=\"nofollow noreferrer\">http://localhost:3000/companies/4cd4128b-1bad-4f1e-9146-5d4678c6a018</a>) with the following D&amp;B company:\n<br>Registered company name: Some company name\n<br>Trading name(s): N/A\n<br>Located at: 123 Fake Street, Brighton, BN1 4SE, United Kingdom\n<br>Registered address: Brighton, BN1 4SE, United Kingdom\n<br>DUNS number: 12345678</p></div>",
+        "plain_body": "User DIT Staff requested a match of Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978(http://localhost:3000/companies/4cd4128b-1bad-4f1e-9146-5d4678c6a018) with the following D&amp;B company:\n\nRegistered company name: Some company name\n\nTrading name(s): N/A\n\nLocated at: 123 Fake Street, Brighton, BN1 4SE, United Kingdom\n\nRegistered address: Brighton, BN1 4SE, United Kingdom\n\nDUNS number: 12345678",
+        "public": true,
+        "attachments": [],
+        "audit_id": 572858735358
+      },
+      {
+        "id": 572858735498,
+        "type": "Create",
+        "value": "369561342717",
+        "field_name": "requester_id"
+      },
+      {
+        "id": 572858735558,
+        "type": "Create",
+        "value": "D&B company match request for Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978",
+        "field_name": "subject"
+      },
+      {
+        "id": 572858735618,
+        "type": "Create",
+        "value": [
+          "dnb_match_request"
+        ],
+        "field_name": "tags"
+      },
+      {
+        "id": 572858735658,
+        "type": "Create",
+        "value": "task",
+        "field_name": "type"
+      },
+      {
+        "id": 572858735718,
+        "type": "Create",
+        "value": "new",
+        "field_name": "status"
+      },
+      {
+        "id": 572858735758,
+        "type": "Create",
+        "value": null,
+        "field_name": "priority"
+      }
+    ],
+    "via": {
+      "channel": "api",
+      "source": {
+        "from": {},
+        "to": {},
+        "rel": null
+      }
+    }
+  }
+}

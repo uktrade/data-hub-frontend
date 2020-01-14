@@ -77,7 +77,6 @@ const dnbHierarchyRouter = require('./apps/dnb-hierarchy/router')
 const businessDetailsRouter = require('./apps/business-details/router')
 const editHistoryRouter = require('./apps/edit-history/router')
 const matchCompanyRouter = require('./apps/match-company/router')
-
 const investmentsRouter = require('./apps/investments/router')
 const matchingRouter = require('./apps/matching/router')
 const interactionsRouter = require('../interactions/router.sub-app')

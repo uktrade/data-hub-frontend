@@ -118,6 +118,22 @@ const assertTabbedLocalNav = (nav) => {
   cy.get(selectors.tabbedLocalNav).contains(nav)
 }
 
+const assertSummaryList = (listElement, specs) => {
+  const entries = Object.entries(specs)
+  cy.wrap(listElement)
+    .children()
+    .should('have.length', entries.length)
+    .each((x, i) => {
+      const [expectedLabel, expectedValue] = entries[i]
+      cy.get(x)
+        .find('dt')
+        .should('have.text', expectedLabel)
+      cy.get(x)
+        .find('dd')
+        .should('have.text', expectedValue)
+    })
+}
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
@@ -127,4 +143,5 @@ module.exports = {
   assertFieldUneditable,
   assertLocalHeader,
   assertTabbedLocalNav,
+  assertSummaryList,
 }

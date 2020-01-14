@@ -107,6 +107,7 @@ aliases:
     SESSION_SECRET: theStrongestAvenger
     DATA_HUB_BACKEND_ACCESS_KEY_ID: frontend-key-id
     DATA_HUB_BACKEND_SECRET_ACCESS_KEY: frontend-key
+    ZEN_TICKETS_URL: http://localhost:8001/zendesk/tickets
 
   # Data hub base docker container
   - &docker_data_hub_base
