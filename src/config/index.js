@@ -65,9 +65,7 @@ const config = {
   assetsHost: process.env.ASSETS_HOST,
   logLevel: process.env.LOG_LEVEL || (isDev ? 'debug' : 'error'),
   zen: {
-    // TODO tidy up the configuration of zendesk URLs
-    url: `https://${process.env.ZEN_DOMAIN}.zendesk.com/api/v2/tickets.json`,
-    announcementsURL: process.env.ZEN_ANNOUNCEMENT_URL,
+    ticketsURL: process.env.ZEN_TICKETS_URL,
     token: process.env.ZEN_TOKEN,
     email: process.env.ZEN_EMAIL,
     browser: process.env.ZEN_BROWSER,
