@@ -25,6 +25,7 @@ const expectedCompanyLists = [
           name: 'Company A',
         },
         latestInteraction: {},
+        ditParticipants: [],
       },
       {
         company: {
@@ -32,6 +33,7 @@ const expectedCompanyLists = [
           name: 'Company B',
         },
         latestInteraction: {},
+        ditParticipants: [],
       },
       {
         company: {
@@ -39,6 +41,7 @@ const expectedCompanyLists = [
           name: 'Company C',
         },
         latestInteraction: {},
+        ditParticipants: [],
       },
     ],
   },
@@ -52,6 +55,7 @@ const expectedCompanyLists = [
           name: 'Company D',
         },
         latestInteraction: {},
+        ditParticipants: [],
       },
       {
         company: {
@@ -59,6 +63,7 @@ const expectedCompanyLists = [
           name: 'Company E',
         },
         latestInteraction: {},
+        ditParticipants: [],
       },
       {
         company: {
@@ -66,11 +71,11 @@ const expectedCompanyLists = [
           name: 'Company F',
         },
         latestInteraction: {},
+        ditParticipants: [],
       },
     ],
   },
 ]
-
 const canSeeCompanyListsRequest = {
   locals: {
     user: {
