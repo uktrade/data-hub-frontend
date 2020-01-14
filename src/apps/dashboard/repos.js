@@ -19,6 +19,13 @@ const fetchRawCompanyList = (token) =>
 const transformRawCompany = ({ latest_interaction, company }) => ({
   company: pick(company, ['id', 'name']),
   latestInteraction: pick(latest_interaction, ['date', 'id', 'subject']),
+  /* eslint-disable-next-line camelcase */
+  ditParticipants: latest_interaction
+    ? latest_interaction.dit_participants.map((participant) => ({
+        name: participant.adviser ? participant.adviser.name : '',
+        team: participant.team ? participant.team.name : '',
+      }))
+    : [],
 })
 
 const fetchCompanyLists = (token) =>
