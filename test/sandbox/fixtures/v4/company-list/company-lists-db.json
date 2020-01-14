@@ -14,7 +14,18 @@
           "id": "79d92719-7402-45b6-b3d7-eff559d6b282",
           "date": "2019-08-14",
           "displayDate": "14 Aug 19",
-          "subject": "Here is a long interaction title some more text some more text some more text almost finished some more text nearly there more text finished"
+          "subject": "Here is a long interaction title some more text some more text some more text almost finished some more text nearly there more text finished",
+          "dit_participants": [
+            {
+                "team": {
+                    "id": "a4f924aa-9698-e211-a939-e4115bead28a",
+                    "name": "Isle of Wight Chamber of Commerce"
+                },
+                "adviser": {
+                    "id": "a80ff5fd-8904-4940-bf96-fe8047e34be5",
+                    "name": "Barry Oling"
+                }
+            }]
         }
       },
       {
@@ -26,7 +37,15 @@
         "latest_interaction": {
           "displayDate": "-",
           "date": null,
-          "subject": "No interactions have been recorded"
+          "subject": "No interactions have been recorded",
+          "dit_participants": [
+            {
+              "team": null,
+              "adviser": {
+                  "id": "8dcd2bb8-dc73-4a42-8655-4ae42d4d3c5a",
+                  "name": "Bernard Harris-Patel"
+              }
+          }]
         }
       },
       {
@@ -39,7 +58,61 @@
           "id": "86f92719-7402-45b6-b3d7-eff559d6b678",
           "displayDate": "21 Feb 2019",
           "date": "2019-02-21",
-          "subject": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+          "subject": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "dit_participants": [
+              {
+                  "team": {
+                      "id": "08d987f8-6525-e511-b6bc-e4115bead28a",
+                      "name": "Heart of the South West LEP"
+                  },
+                  "adviser": null
+              }
+          ]
+        }
+      },
+      {
+        "company": {
+          "name": "Lambda plc",
+          "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+          "isArchived": false
+        },
+        "latest_interaction": {
+          "id": "86f92719-7402-45b6-b3d7-eff559d6b678",
+          "displayDate": "21 Mar 2019",
+          "date": "2019-03-21",
+          "subject": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+          "dit_participants": []
+        }
+      },
+      {
+        "company": {
+          "name": "One List Corp",
+          "id": "375094ac-f79a-43e5-9c88-059a7caa17f0",
+          "isArchived": false
+        },
+        "latest_interaction": {
+          "id": "79d92719-7402-45b6-b3d7-eff559d6b282",
+          "date": "2019-08-15",
+          "displayDate": "15 Aug 19",
+          "subject": "Here is a long interaction title some more text some more text some more text almost finished some more text nearly there more text finished",
+          "dit_participants": [
+            {
+                "team": {
+                    "id": "a4f924aa-9698-e211-a939-e4115bead28a",
+                    "name": "Isle of Wight Chamber of Commerce"
+                },
+                "adviser": {
+                    "id": "a80ff5fd-8904-4940-bf96-fe8047e34be5",
+                    "name": "Barry Oling"
+                }
+            },
+            {
+              "team": null,
+              "adviser": {
+                  "id": "8dcd2bb8-dc73-4a42-8655-4ae42d4d3c5a",
+                  "name": "Bernard Harris-Patel"
+              }
+          }]
         }
       }
     ]
@@ -59,7 +132,19 @@
           "id": "79d92719-7402-45b6-b3d7-eff559d6b282",
           "date": "2019-08-14",
           "displayDate": "14 Aug 19",
-          "subject": "Here is a long interaction title some more text some more text some more text almost finished some more text nearly there more text finished"
+          "subject": "Here is a long interaction title some more text some more text some more text almost finished some more text nearly there more text finished",
+          "dit_participants": [
+            {
+              "team": {
+                  "id": "a4f924aa-9698-e211-a939-e4115bead28a",
+                  "name": "Isle of Wight Chamber of Commerce"
+              },
+              "adviser": {
+                  "id": "a80ff5fd-8904-4940-bf96-fe8047e34be5",
+                  "name": "Barry Oling"
+              }
+            }
+          ]
         }
       }
     ]

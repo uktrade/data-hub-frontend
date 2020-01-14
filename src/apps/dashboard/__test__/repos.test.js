@@ -35,6 +35,7 @@ describe('fetchCompanyLists', () => {
               name: 'Company A',
             },
             latestInteraction: {},
+            ditParticipants: [],
           },
           {
             company: {
@@ -42,6 +43,7 @@ describe('fetchCompanyLists', () => {
               name: 'Company C',
             },
             latestInteraction: {},
+            ditParticipants: [],
           },
           {
             company: {
@@ -49,6 +51,7 @@ describe('fetchCompanyLists', () => {
               name: 'Company E',
             },
             latestInteraction: {},
+            ditParticipants: [],
           },
           {
             company: {
@@ -56,6 +59,7 @@ describe('fetchCompanyLists', () => {
               name: 'Company G',
             },
             latestInteraction: {},
+            ditParticipants: [],
           },
         ],
       },
@@ -69,6 +73,7 @@ describe('fetchCompanyLists', () => {
               name: 'Company A',
             },
             latestInteraction: {},
+            ditParticipants: [],
           },
           {
             company: {
@@ -76,6 +81,7 @@ describe('fetchCompanyLists', () => {
               name: 'Company B',
             },
             latestInteraction: {},
+            ditParticipants: [],
           },
           {
             company: {
@@ -83,6 +89,7 @@ describe('fetchCompanyLists', () => {
               name: 'Company C',
             },
             latestInteraction: {},
+            ditParticipants: [],
           },
         ],
       },
@@ -96,6 +103,7 @@ describe('fetchCompanyLists', () => {
               name: 'Company B',
             },
             latestInteraction: {},
+            ditParticipants: [],
           },
           {
             company: {
@@ -103,6 +111,7 @@ describe('fetchCompanyLists', () => {
               name: 'Company D',
             },
             latestInteraction: {},
+            ditParticipants: [],
           },
           {
             company: {
@@ -110,6 +119,7 @@ describe('fetchCompanyLists', () => {
               name: 'Company F',
             },
             latestInteraction: {},
+            ditParticipants: [],
           },
           {
             company: {
@@ -117,6 +127,7 @@ describe('fetchCompanyLists', () => {
               name: 'Company H',
             },
             latestInteraction: {},
+            ditParticipants: [],
           },
         ],
       },
@@ -130,6 +141,7 @@ describe('fetchCompanyLists', () => {
               name: 'Company E',
             },
             latestInteraction: {},
+            ditParticipants: [],
           },
           {
             company: {
@@ -137,6 +149,7 @@ describe('fetchCompanyLists', () => {
               name: 'Company F',
             },
             latestInteraction: {},
+            ditParticipants: [],
           },
           {
             company: {
@@ -144,6 +157,7 @@ describe('fetchCompanyLists', () => {
               name: 'Company G',
             },
             latestInteraction: {},
+            ditParticipants: [],
           },
         ],
       },
