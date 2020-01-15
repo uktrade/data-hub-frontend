@@ -9,21 +9,6 @@ const { searchDnbCompanies } = require('../../../../modules/search/services')
 const ZENDESK_TICKET_TAG_MATCH_REQUEST = 'dnb_match_request'
 const ZENDESK_TICKET_TYPE_TASK = 'task'
 
-async function renderFindCompanyForm(req, res, next) {
-  try {
-    const { company } = res.locals
-
-    res
-      .breadcrumb(company.name, urls.companies.detail(company.id))
-      .breadcrumb('Find this company record')
-      .render('companies/apps/match-company/views/find-company', {
-        props: {},
-      })
-  } catch (error) {
-    next(error)
-  }
-}
-
 function parseCountry(country, countries) {
   return get(
     typeof country === 'string'
@@ -163,8 +148,39 @@ async function submitMatchRequest(req, res) {
   }
 }
 
+async function renderFindCompanyForm(req, res, next) {
+  try {
+    const { company } = res.locals
+
+    res
+      .breadcrumb(company.name, urls.companies.detail(company.id))
+      .breadcrumb('Find this company record')
+      .render('companies/apps/match-company/views/find-company', {
+        props: {
+          company: pick(company, ['id']),
+        },
+      })
+  } catch (error) {
+    next(error)
+  }
+}
+
+async function findDnbCompany(req, res, next) {
+  try {
+    const results = await searchDnbCompanies({
+      token: req.session.token,
+      requestBody: req.body,
+    })
+
+    res.json(results)
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
-  renderFindCompanyForm,
   renderMatchConfirmation,
   submitMatchRequest,
+  renderFindCompanyForm,
+  findDnbCompany,
 }

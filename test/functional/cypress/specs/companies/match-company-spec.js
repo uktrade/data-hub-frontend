@@ -1,11 +1,11 @@
+const fixtures = require('../../fixtures')
+const urls = require('../../../../../src/lib/urls')
+const { companyMatch, localHeader } = require('../../../../selectors')
 const {
   assertLocalHeader,
   assertBreadcrumbs,
   assertSummaryList,
 } = require('../../support/assertions')
-const fixtures = require('../../fixtures')
-const urls = require('../../../../../src/lib/urls')
-const selectors = require('../../../../selectors')
 
 const DUNS_NUMBER = '111222333'
 
@@ -27,7 +27,71 @@ describe('Match a company', () => {
         'Find this company record': null,
       })
     })
+
+    it('should render the sub header', () => {
+      cy.get(companyMatch.subHeader).should(
+        'have.text',
+        'Find the company record in the Dun & Bradstreet database'
+      )
+    })
+
+    it('should render a "Company name" label', () => {
+      cy.get(companyMatch.find.companyNameLabel).should(
+        'have.text',
+        'Company name'
+      )
+    })
+
+    it('should render a "Company postcode (optional)" label', () => {
+      cy.get(companyMatch.find.postcodeLabel).should(
+        'have.text',
+        'Company postcode (optional)'
+      )
+    })
+
+    it('should display a "Find company" button', () => {
+      cy.get(companyMatch.find.button).should('be.visible')
+    })
   })
+
+  context(
+    'when the "Find company" button is clicked without providing a company name',
+    () => {
+      before(() => {
+        cy.visit(urls.companies.match.index(fixtures.company.venusLtd.id))
+      })
+
+      it('should display error message', () => {
+        cy.get(companyMatch.find.button)
+          .click()
+          .get(companyMatch.form)
+          .contains('Enter company name')
+      })
+
+      it('should not display the search results', () => {
+        cy.get(companyMatch.find.results.someCompany).should('not.be.visible')
+        cy.get(companyMatch.find.results.someOtherCompany).should(
+          'not.be.visible'
+        )
+      })
+    }
+  )
+
+  context(
+    'when the "Find company" button is clicked providing a company name',
+    () => {
+      before(() => {
+        cy.visit(urls.companies.match.index(fixtures.company.venusLtd.id))
+        cy.get(companyMatch.find.companyNameInput).type('some company')
+        cy.get(companyMatch.find.button).click()
+      })
+
+      it('should display the company search results', () => {
+        cy.get(companyMatch.find.results.someCompany).should('be.visible')
+        cy.get(companyMatch.find.results.someOtherCompany).should('be.visible')
+      })
+    }
+  )
 
   context('when company matching is confirmed', () => {
     before(() => {
@@ -48,7 +112,7 @@ describe('Match a company', () => {
     })
 
     it('displays the "Company record update request sent" flash message', () => {
-      cy.get(selectors.localHeader().flash).should(
+      cy.get(localHeader().flash).should(
         'contain.text',
         'Company record update request sent'
       )
