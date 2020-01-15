@@ -1,5 +1,6 @@
 import Link from '@govuk-react/link'
 import Table from '@govuk-react/table'
+import VisuallyHidden from '@govuk-react/visually-hidden'
 import moment from 'moment'
 import React from 'react'
 import LinesEllipsis from 'react-lines-ellipsis'
@@ -17,18 +18,23 @@ const StyledCellLink = styled.a({
   marginBottom: 0,
 })
 
+const setDefaultText = (text, defaultText) =>
+  text && text.length ? text : defaultText
+
+const UNKNOWN_ADVISER_TEXT = upperFirst(UNKNOWN_ADVISER)
+const UNKNOWN_TEAM_TEXT = upperFirst(UNKNOWN_TEAM)
+
 const Advisers = ({ ditParticipants }) =>
   ditParticipants.length === 0
-    ? `${upperFirst(UNKNOWN_ADVISER)} - ${upperFirst(UNKNOWN_TEAM)}`
+    ? `${UNKNOWN_ADVISER_TEXT} - ${UNKNOWN_TEAM_TEXT}`
     : ditParticipants.length > 1
     ? MULTIPLE_ADVISERS
     : ditParticipants.map((adviser, index) => (
         <div key={index}>
-          {adviser.team
-            ? adviser.name
-              ? `${adviser.name} - ${adviser.team}`
-              : `${upperFirst(UNKNOWN_ADVISER)} - ${adviser.team}`
-            : `${adviser.name} - ${UNKNOWN_TEAM}`}
+          {`${setDefaultText(
+            adviser.name,
+            UNKNOWN_TEAM_TEXT
+          )} - ${setDefaultText(adviser.team, UNKNOWN_TEAM_TEXT)}`}
         </div>
       ))
 
@@ -40,13 +46,15 @@ const CompaniesTable = ({ companies }) => (
         <Table.CellHeader>Last interaction</Table.CellHeader>
         <Table.CellHeader>Subject</Table.CellHeader>
         <Table.CellHeader>Added by</Table.CellHeader>
-        {/* CellHeader complains if it has no children */}
-        <Table.CellHeader colSpan="2">{''}</Table.CellHeader>
+        <Table.CellHeader>
+          <VisuallyHidden>Action</VisuallyHidden>
+        </Table.CellHeader>
       </Table.Row>
     }
   >
     {companies.map(({ company, latestInteraction, ditParticipants }) => (
       <Table.Row key={company.id}>
+        {console.log(companies)}
         <Table.Cell setWidth="20%">
           <Link href={`companies/${company.id}`}>
             <LinesEllipsis
