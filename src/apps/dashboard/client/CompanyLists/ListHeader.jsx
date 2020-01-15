@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import { FormActions } from 'data-hub-components'
 
 import urls from '../../../../lib/urls'
-import SecondaryButton from './SecondaryButton'
+import SecondaryButton from '../../../../client/components/SecondaryButton'
 import * as propTypes from './propTypes'
 
 const StyledRoot = styled.div({
