@@ -30,10 +30,10 @@ describe('Edit company form transformers', () => {
       it('should return transformed values', () => {
         const expected = {
           badges: [
-            'Test country',
-            'Test UK region',
-            'Ultimate HQ',
-            'Global HQ',
+            { text: 'Test country' },
+            { text: 'Test UK region' },
+            { text: 'Ultimate HQ' },
+            { text: 'Global HQ' },
           ],
           headingText: 'Test company',
           headingUrl: '/companies/123',

@@ -157,7 +157,7 @@ describe('D&B Company hierarchy', () => {
           count: 1,
           results: [
             {
-              badges: ['United Kingdom', 'North West'],
+              badges: [{ text: 'United Kingdom' }, { text: 'North West' }],
               headingText: 'Mars Components Ltd',
               headingUrl: '/companies/731bdcc1-f685-4c8e-bd66-b356b2c16995',
               metadata: [
