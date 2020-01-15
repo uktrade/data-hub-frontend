@@ -1,8 +1,7 @@
 /* eslint-disable camelcase */
-
 const { get, pick, compact, omitBy } = require('lodash')
 const { hqLabels } = require('../../labels')
-const config = require('../../../../config')
+const { convertUSDToGBP } = require('../../../../common/currency')
 
 const transformGlobalAccountManager = ({ dit_team, name }) => {
   const region = get(dit_team, 'uk_region.name')
@@ -41,8 +40,7 @@ const transformCompanyToBusinessDetails = (company) => {
         'headquarter_type',
         'is_global_ultimate',
       ]),
-      turnover:
-        company.turnover && company.turnover * config.currencyRate.usdToGbp,
+      turnover: convertUSDToGBP(company.turnover),
       business_type: get(company.business_type, 'name'),
       turnover_range: get(company.turnover_range, 'name'),
       employee_range: get(company.employee_range, 'name'),

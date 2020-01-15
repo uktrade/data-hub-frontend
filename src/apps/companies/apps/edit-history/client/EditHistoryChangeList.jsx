@@ -6,6 +6,7 @@ import moment from 'moment'
 import styled from 'styled-components'
 import { SummaryTable, DateUtils, NumberUtils } from 'data-hub-components'
 import { ARCHIVED, NOT_ARCHIVED, NOT_SET, YES, NO } from '../constants'
+import { convertUSDToGBP } from '../../../../../common/currency'
 
 const StyledSummaryTable = styled(SummaryTable)`
   caption {
@@ -63,7 +64,7 @@ function getValue(value, field) {
 
   if (isNumber(value)) {
     return CURRENCY_FIELDS.includes(field)
-      ? NumberUtils.currencyUSD(value)
+      ? NumberUtils.currencyGBP(convertUSDToGBP(value))
       : value.toString()
   }
 

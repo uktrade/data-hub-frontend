@@ -113,7 +113,7 @@ const config = {
     email: process.env.ONE_LIST_EMAIL || 'one.list@example.com',
   },
   currencyRate: {
-    usdToGbp: 0.770032,
+    usdToGbp: 0.76755,
   },
   activityFeed: {
     paginationSize: 20,
