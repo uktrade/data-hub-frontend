@@ -179,6 +179,26 @@ describe('Company Collections Filter', () => {
     )
   })
 
+  it('should filter by UK postcode', () => {
+    const POSTCODE = 'GL11'
+    cy.contains('UK postcode')
+      .closest('.c-form-group')
+      .within(() => {
+        cy.contains('Search multiple postcodes separated by a comma')
+        cy.get('input')
+          .type(POSTCODE)
+          .blur()
+      })
+
+    cy.wait('@filterResults').then((xhr) => {
+      expect(xhr.url).to.contain(`uk_postcode=${POSTCODE}`)
+    })
+
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 24)
+  })
+
   it('should filter by Lead ITA and Global Account Manager', () => {
     const leadIta = selectors.filter.leadIta
     const { typeahead } = selectors.filter
