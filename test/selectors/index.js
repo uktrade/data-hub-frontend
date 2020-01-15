@@ -1,5 +1,6 @@
 exports.collection = require('./collection')
 exports.companyAdd = require('./company/add-company')
+exports.companyMatch = require('./company/match-company')
 exports.companyActivity = require('./company/activity')
 exports.companyAudit = require('./company/audit')
 exports.companyEditHistory = require('./company/edit-history')
