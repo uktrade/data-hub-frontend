@@ -33,7 +33,7 @@ const Advisers = ({ ditParticipants }) =>
         <div key={index}>
           {`${setDefaultText(
             adviser.name,
-            UNKNOWN_TEAM_TEXT
+            UNKNOWN_ADVISER_TEXT
           )} - ${setDefaultText(adviser.team, UNKNOWN_TEAM_TEXT)}`}
         </div>
       ))
@@ -54,7 +54,6 @@ const CompaniesTable = ({ companies }) => (
   >
     {companies.map(({ company, latestInteraction, ditParticipants }) => (
       <Table.Row key={company.id}>
-        {console.log(companies)}
         <Table.Cell setWidth="20%">
           <Link href={`companies/${company.id}`}>
             <LinesEllipsis
