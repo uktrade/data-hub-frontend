@@ -49,7 +49,7 @@ const CompanyBusinessDetails = ({
         other businesses.
         <br />
         Changes made to this information can be found on the{' '}
-        <Link href={urls.companyAudit}>Audit trail page</Link>.
+        <Link href={urls.companyEditHistory}>Edit history page</Link>.
         {lastUpdated && (
           <>
             <br />
@@ -84,7 +84,7 @@ const CompanyBusinessDetails = ({
             </Link>
             . This is an external and verified source. The information is
             automatically updated.{' '}
-            <Link href={urls.companyAudit}>View the audit history</Link>.
+            <Link href={urls.companyEditHistory}>View the edit history</Link>.
           </p>
           <p>
             If you think the information is incomplete or incorrect,{' '}
