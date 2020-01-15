@@ -87,7 +87,9 @@ describe('Company business details', () => {
                   companyMock.id
                 )}?_csrf=csrf`,
                 companyAdvisers: urls.companies.advisers.index(companyMock.id),
-                companyAudit: urls.companies.audit(companyMock.id),
+                companyEditHistory: urls.companies.editHistory.index(
+                  companyMock.id
+                ),
                 support: urls.support(),
                 subsidiaries: urls.companies.subsidiaries.index(companyMock.id),
                 linkSubsidiary: urls.companies.subsidiaries.link(
