@@ -11,6 +11,7 @@ const QUERY_FIELDS_MAP = {
   exportingTo: 'export_to_countries',
   interestedIn: 'future_interest_countries',
   lastInteractionDate: 'interaction_between',
+  ukPostcode: 'uk_postcode',
 }
 
 const DEFAULT_COLLECTION_QUERY = {

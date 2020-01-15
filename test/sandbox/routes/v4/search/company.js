@@ -13,6 +13,21 @@ exports.companies = function(req, res) {
     'name:asc': companySortByAZ,
   }
 
+  if (req.body.uk_postcode) {
+    var postcodeFilteredResults = _.filter(companies.results, function(
+      company
+    ) {
+      return _.startsWith(
+        _.get(company, 'registered_address.postcode'),
+        req.body.uk_postcode
+      )
+    })
+    return res.json({
+      count: postcodeFilteredResults.length,
+      results: postcodeFilteredResults,
+    })
+  }
+
   if (
     req.body.name === 'FilterByCompany' ||
     req.body.archived === 'false' ||
