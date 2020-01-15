@@ -83,7 +83,7 @@ const expectedRows = {
       text: 'No interactions have been recorded',
     },
     {
-      text: 'Bernard Harris-Patel - unknown team',
+      text: 'Bernard Harris-Patel - Unknown team',
     },
   ],
 }
