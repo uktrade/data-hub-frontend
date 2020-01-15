@@ -1,6 +1,4 @@
 /* eslint-disable camelcase */
-const { get } = require('lodash')
-
 const {
   formatAddress,
   formatDateTime,
@@ -34,27 +32,35 @@ function transformCompanyToDnbHierarchyList({
     })
   }
 
-  if (sector) {
+  if (sector && sector.name) {
     metadata.push({
       label: 'Sector',
-      value: get(sector, 'name'),
+      value: sector.name,
     })
   }
 
-  if (address && address.country) {
-    badges.push(get(address, 'country.name'))
+  if (address && address.country && address.country.name) {
+    badges.push({
+      text: address.country.name,
+    })
   }
 
-  if (uk_based) {
-    badges.push(get(uk_region, 'name'))
+  if (uk_based && uk_region && uk_region.name) {
+    badges.push({
+      text: uk_region.name,
+    })
   }
 
   if (is_global_ultimate) {
-    badges.push(labels.companyDetailsLabels.ultimate_hq)
+    badges.push({
+      text: labels.companyDetailsLabels.ultimate_hq,
+    })
   }
 
   if (headquarter_type) {
-    badges.push(labels.hqLabels[get(headquarter_type, 'name')])
+    badges.push({
+      text: labels.hqLabels[headquarter_type.name],
+    })
   }
 
   if (address) {
