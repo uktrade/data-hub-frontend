@@ -1,7 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { createStore, combineReducers } from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
+import createSagaMiddleware from 'redux-saga'
 
 import { ActivityFeedApp } from 'data-hub-components'
 import AddCompanyForm from '../apps/companies/apps/add-company/client/AddCompanyForm'
@@ -23,14 +25,23 @@ import LargeCapitalProfileCollection from '../apps/investments/client/LargeCapit
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
 
+import tasksSaga from './components/Task/saga'
+import tasks from './components/Task/reducer'
+
+const sagaMiddleware = createSagaMiddleware()
+
 const store = createStore(
-  combineReducers({ companyLists }),
+  combineReducers({ companyLists, tasks }),
   {
     companyLists: resolvePreloadedCompanyListsData(),
   },
-  process.env.NODE_ENV === 'production'
-    ? undefined
-    : require('redux-devtools-extension').devToolsEnhancer()
+  composeWithDevTools(applyMiddleware(sagaMiddleware))
+)
+
+sagaMiddleware.run(
+  tasksSaga({
+    // Add tasks here
+  })
 )
 
 const appWrapper = document.getElementById('react-app')
