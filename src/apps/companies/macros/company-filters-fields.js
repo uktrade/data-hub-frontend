@@ -9,6 +9,7 @@ const PRIMARY_SECTOR_NAME = FILTER_CONSTANTS.COMPANIES.SECTOR.PRIMARY.NAME
 
 const companyFiltersFields = function({ sectorOptions }) {
   const countryOptions = globalFields.countries.options()
+  const ukRegionOptions = globalFields.ukRegions.options()
   return [
     Object.assign({}, globalFields.headquarter_type, {
       name: QUERY_FIELDS_MAP.headquarterType,
@@ -48,11 +49,17 @@ const companyFiltersFields = function({ sectorOptions }) {
       name: QUERY_FIELDS_MAP.ukPostcode,
       hint: 'Search multiple postcodes separated by a comma',
     },
-    Object.assign({}, globalFields.ukRegions, {
+    {
+      macroName: 'Typeahead',
       name: QUERY_FIELDS_MAP.ukRegion,
-      type: 'checkbox',
-      modifier: 'option-select',
-    }),
+      isAsync: false,
+      placeholder: 'Search UK region',
+      useSubLabel: false,
+      options: ukRegionOptions,
+      hideInactive: false,
+      target: 'metadata',
+      label: 'UK region',
+    },
     {
       macroName: 'MultipleChoiceField',
       name: QUERY_FIELDS_MAP.archived,
