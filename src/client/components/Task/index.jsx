@@ -168,4 +168,33 @@ ConnectedTask.propTypes = {
   }),
 }
 
+/**
+ * @description A component which allows to start tasks imperatively.
+ * It expects a function as its single child, which will be passed an object
+ * with (for now) a single {start} property, which is a function you can use
+ * to start actions.
+ * @example
+ * <Task.Manager>
+ *   {({ start }) =>
+ *      <button onClick={() => start('foo', 'a', 'ON_SUCCESS', 123)}>
+ *        start
+ *      </button>
+ *   }
+ * </Task.manager>
+ */
+ConnectedTask.Manager = connect(
+  null,
+  (dispatch) => ({
+    start: (name, id, successActionType, payload, clearOnSuccess) =>
+      dispatch({
+        type: TASK__START,
+        payload,
+        id,
+        name,
+        successActionType,
+        clearOnSuccess,
+      }),
+  })
+)(({ start, children }) => children({ start }))
+
 export default ConnectedTask
