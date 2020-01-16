@@ -82,7 +82,6 @@ module.exports = {
     details: url('/companies', '/:companyId/details'),
     archive: url('/companies', '/:companyId/archive'),
     contacts: url('companies', '/:companyId/contacts'),
-    matching: url('/companies', '/:companyId/matching'),
     unarchive: url('/companies', '/:companyId/unarchive'),
     documents: url('/companies', '/:companyId/documents'),
     businessDetails: url('/companies', '/:companyId/business-details'),
