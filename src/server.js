@@ -120,14 +120,17 @@ app.use(store())
 app.use(csrf())
 app.use(csrfToken())
 
-app.use(proxy('/api-proxy', {
-  target: config.apiRoot,
-  pathRewrite: {
-    '^/api-proxy': '/',
-  },
-  onProxyReq: (req, res) =>
-    req.setHeader('authorization', `Bearer ${res.session.token}`),
-}))
+const API_PROXY_PATH = '/api-proxy'
+app.use(
+  proxy(config.apiProxyWhitelist.map((pth) => path.join(API_PROXY_PATH, pth)), {
+    target: config.apiRoot,
+    pathRewrite: {
+      ['^' + API_PROXY_PATH]: '/',
+    },
+    onProxyReq: (proxyReq, req) =>
+      proxyReq.setHeader('authorization', `Bearer ${req.session.token}`),
+  })
+)
 
 // routing
 app.use(slashify())

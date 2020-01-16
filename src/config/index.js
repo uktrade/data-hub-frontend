@@ -43,6 +43,7 @@ const config = {
   noCache: process.env.CACHE_ASSETS ? false : isDev,
   port: process.env.PORT || 3000,
   apiRoot: process.env.API_ROOT || 'http://localhost:8000',
+  apiProxyWhitelist: ['/v4/company-list', '/v4/company-list/:id/item'],
   api: {
     authUrl: '/token/',
   },
