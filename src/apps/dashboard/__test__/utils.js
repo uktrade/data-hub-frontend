@@ -42,7 +42,7 @@ const mockCompanyListsServer = ({
           archived: false,
           trading_names: [],
         },
-        latest_interaction: {},
+        latest_interaction: null,
       },
     }),
     {}
