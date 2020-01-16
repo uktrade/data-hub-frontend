@@ -26,6 +26,7 @@ class Task extends React.PureComponent {
       renderProgress = <ProgressIndicator />,
       payload,
       status,
+      renderBeforeStart,
       error,
       successActionType,
       clear,
@@ -33,6 +34,7 @@ class Task extends React.PureComponent {
     } = this.props
     return (
       <>
+        {!status && renderBeforeStart && children}
         {status === 'progress' && renderProgress}
         {status === 'success' && children}
         {status === 'error' &&
@@ -75,6 +77,9 @@ class Task extends React.PureComponent {
  * succeeds; and an optional {props.startOnMount.payload} property, which will
  * be used as the task's payload. This way you can send the result to whichever
  * component/reducer needs it.
+ * @param {any} props.renderBeforeStart - Whether children should be rendered
+ * even if the task hasn't started yet, i.e. when it's not in progress or errror
+ * state. This is usefull when you only want data to be loaded once.
  * @example
  * sagaMiddleware.run(tasksSaga({
  *   'Foo': payload => new Promise(resolve => setTimeout(resolve, 1000, payload)),
@@ -97,6 +102,26 @@ class Task extends React.PureComponent {
  *
  * // Subscribe only to the same task
  * <Task name="Foo" id="a">I'll be rendered on success</Task>
+ *
+ * // Load data only if it doesn't exist
+ * const fooReducer = (state = {}, action) =>
+ *   action.type === 'DATA_LOADED'
+ *     ? { data: action.result }
+ *     : state
+ * 
+ * const store = createStore(combineReducers({ foo: fooReducer }))
+ * 
+ * const Foo = connect(state => state.foo)({ data }) =>
+ *   <Task
+ *     name="Some data"
+ *     id="b"
+ *     // Render children if data is already loaded
+ *     renderBeforeStart={data}
+ *     // Only start loading if data is not yet loaded
+ *     startOnMount={data ? false : { successActionType: 'DATA_LOADED' }}
+ *   >
+ *    {data}
+ *   </Task>
  */
 const ConnectedTask = connect(
   (state, { name, id }) => _.get(state, ['tasks', name, id], {}),
@@ -124,6 +149,7 @@ ConnectedTask.propTypes = {
   noun: PropTypes.string,
   renderError: PropTypes.func,
   renderProgress: PropTypes.element,
+  renderBeforeStart: PropTypes.any,
   startOnMount: PropTypes.shape({
     payload: PropTypes.any,
     successActionType: PropTypes.string.isRequired,
