@@ -6,6 +6,7 @@ import {
   TASK__PROGRESS,
   TASK__SUCCESS,
   TASK__ERROR,
+  TASK__CLEAR,
 } from '../../actions'
 
 function* taskSaga(task, action) {
@@ -15,6 +16,12 @@ function* taskSaga(task, action) {
     const { id, name } = action
     yield put({ type: action.successActionType, result })
     yield put({ type: TASK__SUCCESS, id, name })
+    const clearOnSuccess = yield select((state) =>
+      _.get(state, ['tasks', name, id, 'clearOnSuccess'])
+    )
+    if (clearOnSuccess) {
+      yield put({ type: TASK__CLEAR, id, name })
+    }
   } catch (error) {
     const { id, name } = action
     yield put({
@@ -36,7 +43,7 @@ export default (registry) =>
         throw Error(`Task "${name}" is not registered!`)
       }
       const status = yield select((state) =>
-        _.get(state, ['task', name, id, 'status'])
+        _.get(state, ['tasks', name, id, 'status'])
       )
       if (status === 'progress') {
         throw Error(

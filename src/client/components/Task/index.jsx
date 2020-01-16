@@ -12,9 +12,9 @@ class Task extends React.PureComponent {
     if (this.props.startOnMount) {
       const {
         start,
-        startOnMount: { payload, successActionType },
+        startOnMount: { payload, successActionType, clearOnSuccess },
       } = this.props
-      start(payload, successActionType)
+      start(payload, successActionType, clearOnSuccess)
     }
   }
   render() {
@@ -50,6 +50,17 @@ class Task extends React.PureComponent {
 }
 
 /**
+ * The shape of the {Task.props.startOnMount} prop
+ * @typedef {Object} StartOnMount
+ * @property {string} successActionType - The type of the action which will be
+ * dispatched when the task succeeds. This is a mechanism which allows you to
+ * redirect the result to whichever component/reducer it needs to go to.
+ * @property {any} [payload=] - The task payload
+ * @property {any} [clearOnSuccess=] - If truthy, the task's state will be
+ * removed on success.
+ */
+
+/**
  * @description This component abstracts away the rendering of the progress,
  * failure and success states of an asynchronous task i.e. a function which
  * takes a {payload} as its only parameterand returns a Promise.
@@ -70,13 +81,9 @@ class Task extends React.PureComponent {
  * used in {props.renderError}.
  * @param {ReactNode} children - Whatever is passed as children will be rendered
  * when the task succeeeds.d
- * @param {Object} props.startOnMount - If set, the task will start when the
- * component is mounted to the DOM. The value must be an object with the
- * required {props.startOnMount.successActionType} property, which should be
- * string used as the type of the action that should be dispatched when the task
- * succeeds; and an optional {props.startOnMount.payload} property, which will
- * be used as the task's payload. This way you can send the result to whichever
- * component/reducer needs it.
+ *
+ * @param {StartOnMount} props.startOnMount - If set, the task will start when
+ * the component is mounted to the DOM.
  * @param {any} props.renderBeforeStart - Whether children should be rendered
  * even if the task hasn't started yet, i.e. when it's not in progress or errror
  * state. This is usefull when you only want data to be loaded once.
@@ -108,9 +115,9 @@ class Task extends React.PureComponent {
  *   action.type === 'DATA_LOADED'
  *     ? { data: action.result }
  *     : state
- * 
+ *
  * const store = createStore(combineReducers({ foo: fooReducer }))
- * 
+ *
  * const Foo = connect(state => state.foo)({ data }) =>
  *   <Task
  *     name="Some data"
@@ -118,7 +125,10 @@ class Task extends React.PureComponent {
  *     // Render children if data is already loaded
  *     renderBeforeStart={data}
  *     // Only start loading if data is not yet loaded
- *     startOnMount={data ? false : { successActionType: 'DATA_LOADED' }}
+ *     startOnMount={data ? undefined : {
+ *       successActionType: 'DATA_LOADED',
+ *       clearOnSuccess: true, // Removes the task from the state
+ *     }}
  *   >
  *    {data}
  *   </Task>
@@ -126,13 +136,14 @@ class Task extends React.PureComponent {
 const ConnectedTask = connect(
   (state, { name, id }) => _.get(state, ['tasks', name, id], {}),
   (dispatch, { id, name }) => ({
-    start: (payload, successActionType) =>
+    start: (payload, successActionType, clearOnSuccess) =>
       dispatch({
         type: TASK__START,
         payload,
         id,
         name,
         successActionType,
+        clearOnSuccess,
       }),
     clear: () =>
       dispatch({
@@ -151,8 +162,9 @@ ConnectedTask.propTypes = {
   renderProgress: PropTypes.element,
   renderBeforeStart: PropTypes.any,
   startOnMount: PropTypes.shape({
-    payload: PropTypes.any,
     successActionType: PropTypes.string.isRequired,
+    payload: PropTypes.any,
+    clearOnSuccess: PropTypes.any,
   }),
 }
 
