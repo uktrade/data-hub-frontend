@@ -1,4 +1,4 @@
-const { pick } = require('lodash')
+const { pick, get } = require('lodash')
 const { authorisedRequest } = require('../../lib/authorised-request')
 const config = require('../../config')
 
@@ -15,10 +15,15 @@ const fetchRawCompanyList = (token) =>
     url: `${config.apiRoot}/v4/company-list`,
   })
 
-/* eslint-disable-next-line camelcase */
 const transformRawCompany = ({ latest_interaction, company }) => ({
   company: pick(company, ['id', 'name']),
   latestInteraction: pick(latest_interaction, ['date', 'id', 'subject']),
+  ditParticipants: latest_interaction
+    ? latest_interaction.dit_participants.map((participant) => ({
+        name: get(participant, 'adviser.name'),
+        team: get(participant, 'team.name'),
+      }))
+    : [],
 })
 
 const fetchCompanyLists = (token) =>

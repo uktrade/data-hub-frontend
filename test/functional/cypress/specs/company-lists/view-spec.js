@@ -13,17 +13,44 @@ const expectedRows = {
       linksTo: '/interactions/79d92719-7402-45b6-b3d7-eff559d6b282',
       shouldHaveEllipsis: true,
     },
+    {
+      text: 'Barry Oling - Isle of Wight Chamber of Commerce',
+    },
   ],
-  potatoes: [
+  oneList: [
     {
-      text: 'Portable Potatoes',
-      linksTo: '/companies/a30b1db3-7140-44ca-ad7a-9824c3c2ed56',
+      text: 'One List Corp',
+      linksTo: '/companies/375094ac-f79a-43e5-9c88-059a7caa17f0',
     },
     {
-      text: '-',
+      text: '15 Aug 2019',
     },
     {
-      text: 'No interactions have been recorded',
+      text:
+        'Here is a long interaction title some more text some more text some more text almost finished some more text nearly there more text finished',
+      linksTo: '/interactions/79d92719-7402-45b6-b3d7-eff559d6b282',
+      shouldHaveEllipsis: true,
+    },
+    {
+      text: 'Multiple advisers',
+    },
+  ],
+  lambda: [
+    {
+      text: 'Lambda plc',
+      linksTo: '/companies/0fb3379c-341c-4da4-b825-bf8d47b26baa',
+    },
+    {
+      text: '21 Mar 2019',
+    },
+    {
+      text:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      linksTo: '/interactions/86f92719-7402-45b6-b3d7-eff559d6b678',
+      shouldHaveEllipsis: true,
+    },
+    {
+      text: 'Unknown adviser - Unknown team',
     },
   ],
   zebra: [
@@ -39,6 +66,24 @@ const expectedRows = {
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
       linksTo: '/interactions/86f92719-7402-45b6-b3d7-eff559d6b678',
       shouldHaveEllipsis: true,
+    },
+    {
+      text: 'Unknown adviser - Heart of the South West LEP',
+    },
+  ],
+  potatoes: [
+    {
+      text: 'Portable Potatoes',
+      linksTo: '/companies/a30b1db3-7140-44ca-ad7a-9824c3c2ed56',
+    },
+    {
+      text: '-',
+    },
+    {
+      text: 'No interactions have been recorded',
+    },
+    {
+      text: 'Bernard Harris-Patel - Unknown team',
     },
   ],
 }
@@ -61,13 +106,26 @@ const expectedLists = {
   'List A': {
     deleteLinksTo: '/company-lists/70513f19-0df6-4c8d-bef1-f11b65641ae4/delete',
     renameLinksTo: '/company-lists/70513f19-0df6-4c8d-bef1-f11b65641ae4/rename',
-    rows: [expectedRows.bmw, expectedRows.zebra, expectedRows.potatoes],
+    rows: [
+      expectedRows.oneList,
+      expectedRows.bmw,
+      expectedRows.lambda,
+      expectedRows.zebra,
+      expectedRows.potatoes,
+    ],
     searches: {
       bmw: [expectedRows.bmw],
+      one: [expectedRows.oneList],
+      lam: [expectedRows.lambda],
       zebr: [expectedRows.zebra],
       pot: [expectedRows.potatoes],
       foobar: [],
-      a: [expectedRows.bmw, expectedRows.zebra, expectedRows.potatoes],
+      a: [
+        expectedRows.bmw,
+        expectedRows.lambda,
+        expectedRows.zebra,
+        expectedRows.potatoes,
+      ],
     },
   },
 }
