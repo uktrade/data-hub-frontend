@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import {
-  TASK__START,
   TASK__PROGRESS,
   TASK__ERROR,
   TASK__SUCCESS,
@@ -25,8 +24,6 @@ const setTaskState = (state, { name, id, ...action }, status, omit) => {
 
 export default (state = {}, { type, ...action }) => {
   switch (type) {
-    case TASK__START:
-      return setTaskState(state, action, 'starting')
     case TASK__PROGRESS:
       return setTaskState(state, action, 'progress')
     case TASK__SUCCESS:
