@@ -157,14 +157,6 @@ describe('Company Collections Filter', () => {
     })
   })
 
-  it('should remove all filters', () => {
-    cy.get(selectors.entityCollection.collectionRemoveAllFilter).click()
-    cy.get(selectors.entityCollection.collection).should(
-      'contain',
-      '100,172 companies'
-    )
-  })
-
   it('should filter by UK postcode', () => {
     const POSTCODE = 'GL11'
     cy.contains('UK postcode')
@@ -207,15 +199,14 @@ describe('Company Collections Filter', () => {
   })
 
   it('should filter by uk region', () => {
-    const region = selectors.filter.UkRegion
-    const { typeahead } = selectors.filter
-    cy.get(typeahead(region).selectedOption)
+    const { ukRegion, typeahead } = selectors.filter
+    cy.get(typeahead(ukRegion).selectedOption)
       .click()
-      .get(typeahead(region).textInput)
+      .get(typeahead(ukRegion).textInput)
       .type('North West')
-      .get(typeahead(region).options)
+      .get(typeahead(ukRegion).options)
       .should('have.length', 1)
-      .get(typeahead(region).textInput)
+      .get(typeahead(ukRegion).textInput)
       .type('{enter}')
       .type('{esc}')
 
@@ -224,5 +215,13 @@ describe('Company Collections Filter', () => {
         'uk_region=824cd12a-6095-e211-a939-e4115bead28a'
       )
     })
+  })
+
+  it('should remove all filters', () => {
+    cy.get(selectors.entityCollection.collectionRemoveAllFilter).click()
+    cy.get(selectors.entityCollection.collection).should(
+      'contain',
+      '100,172 companies'
+    )
   })
 })

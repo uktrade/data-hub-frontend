@@ -2,7 +2,7 @@ module.exports = {
   name: '#field-name',
   statusActive: '[for="field-archived-1"]',
   statusInactive: '[for="field-archived-2"]',
-  UkRegion: '#group-field-uk_region',
+  ukRegion: '#group-field-uk_region',
   country: '#group-field-country',
   sector: '#group-field-sector_descends',
   exportingTo: '#group-field-export_to_countries',
@@ -31,6 +31,7 @@ module.exports = {
   },
   events: {
     country: '#group-field-address_country',
+    firstUkRegion: '[for="field-uk_region-1"]',
   },
   companies: {
     country: '#group-field-address_country',
