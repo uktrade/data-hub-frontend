@@ -58,14 +58,14 @@ function getValue(value, field) {
     return getValueFromBoolean(value, field)
   }
 
-  if (isDate(value)) {
-    return DateUtils.formatWithTime(value)
-  }
-
   if (isNumber(value)) {
     return CURRENCY_FIELDS.includes(field)
       ? NumberUtils.currencyGBP(convertUSDToGBP(value))
       : value.toString()
+  }
+
+  if (isDate(value)) {
+    return DateUtils.formatWithTime(value)
   }
 
   return value || NOT_SET
