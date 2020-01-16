@@ -15,9 +15,6 @@ const StyledCellLink = styled.a({
   marginBottom: 0,
 })
 
-const setDefaultText = (text, defaultText) =>
-  text && text.length ? text : defaultText
-
 const Advisers = ({ ditParticipants }) =>
   ditParticipants.length === 0
     ? 'Unknown adviser - Unknown team'
@@ -25,10 +22,8 @@ const Advisers = ({ ditParticipants }) =>
     ? 'Multiple advisers'
     : ditParticipants.map((adviser, index) => (
         <div key={index}>
-          {`${setDefaultText(
-            adviser.name,
-            'Unknown adviser'
-          )} - ${setDefaultText(adviser.team, 'Unknown team')}`}
+          {`${adviser.name || 'Unkown adviser'} - ${adviser.team ||
+            'Unknown team'}`}
         </div>
       ))
 
