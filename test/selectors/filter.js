@@ -2,7 +2,7 @@ module.exports = {
   name: '#field-name',
   statusActive: '[for="field-archived-1"]',
   statusInactive: '[for="field-archived-2"]',
-  firstUkRegion: '[for="field-uk_region-1"]',
+  UkRegion: '#group-field-uk_region',
   country: '#group-field-country',
   sector: '#group-field-sector_descends',
   exportingTo: '#group-field-export_to_countries',
