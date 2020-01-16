@@ -5,9 +5,6 @@ import moment from 'moment'
 import React from 'react'
 import LinesEllipsis from 'react-lines-ellipsis'
 import styled from 'styled-components'
-import { upperFirst } from 'lodash'
-
-import { UNKNOWN_ADVISER, UNKNOWN_TEAM, MULTIPLE_ADVISERS } from './constants'
 
 import urls from '../../../../lib/urls'
 import SecondaryButton from './SecondaryButton'
@@ -21,20 +18,17 @@ const StyledCellLink = styled.a({
 const setDefaultText = (text, defaultText) =>
   text && text.length ? text : defaultText
 
-const UNKNOWN_ADVISER_TEXT = upperFirst(UNKNOWN_ADVISER)
-const UNKNOWN_TEAM_TEXT = upperFirst(UNKNOWN_TEAM)
-
 const Advisers = ({ ditParticipants }) =>
   ditParticipants.length === 0
-    ? `${UNKNOWN_ADVISER_TEXT} - ${UNKNOWN_TEAM_TEXT}`
+    ? 'Unknown adviser - Unknown team'
     : ditParticipants.length > 1
-    ? MULTIPLE_ADVISERS
+    ? 'Multiple advisers'
     : ditParticipants.map((adviser, index) => (
         <div key={index}>
           {`${setDefaultText(
             adviser.name,
-            UNKNOWN_ADVISER_TEXT
-          )} - ${setDefaultText(adviser.team, UNKNOWN_TEAM_TEXT)}`}
+            'Unknown adviser'
+          )} - ${setDefaultText(adviser.team, 'Unknown team')}`}
         </div>
       ))
 
