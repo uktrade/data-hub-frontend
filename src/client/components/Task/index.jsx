@@ -20,7 +20,8 @@ class Task extends React.PureComponent {
   render() {
     const {
       children,
-      noun,
+      name,
+      noun = name,
       renderError = Err,
       renderProgress = <ProgressIndicator />,
       payload,
@@ -46,6 +47,57 @@ class Task extends React.PureComponent {
   }
 }
 
+/**
+ * @description This component abstracts away the rendering of the progress,
+ * failure and success states of an asynchronous task i.e. a function which
+ * takes a {payload} as its only parameterand returns a Promise.
+ * To run a task, you first need to register it under a {name} by the
+ * {tasksSaga} factory e.g. to register a task under the name "foo", you do
+ * `taskSaga({ foo: payload => Promise.resolve(payload) })`.
+ * The name under which a task is registered will be used in the default error
+ * view so you better keep it human readable.
+ * @param {Object} props - Props
+ * @param {string} props.name - The name of a _registered_ asynchronous task.
+ * @param {string} props.id - The id of a particular _instance_ of a task.
+ * @param {ReactNode} [props.renderProgress=ProgressIndicator] - An optional
+ * alternative progress indicator.
+ * @param {function} [props.renderError=Err] - An optional alternative error
+ * state view. As opposed to {renderProgress} this is a function (component)
+ * which will be passed the {noun}, {error}, {retry} and {clear} props.
+ * @param {string} props.noun - The name describing the item being loaded
+ * used in {props.renderError}.
+ * @param {ReactNode} children - Whatever is passed as children will be rendered
+ * when the task succeeeds.d
+ * @param {Object} props.startOnMount - If set, the task will start when the
+ * component is mounted to the DOM. The value must be an object with the
+ * required {props.startOnMount.successActionType} property, which should be
+ * string used as the type of the action that should be dispatched when the task
+ * succeeds; and an optional {props.startOnMount.payload} property, which will
+ * be used as the task's payload. This way you can send the result to whichever
+ * component/reducer needs it.
+ * @example
+ * sagaMiddleware.run(tasksSaga({
+ *   'Foo': payload => new Promise(resolve => setTimeout(resolve, 1000, payload)),
+ *   'Some data': () => axios.get('/api').catch(err => Promise.reject(err.response)),
+ * }))
+ *
+ * // This starts the "a" instance of the "foo" task and then renders:
+ * // - The default progress indicator while the task is in progress
+ * // - The default error view with a retry button if the task fails
+ * // - Its children when the task succeeds.
+ * // It will dispatch the {type: 'FOO_LOADED', result: 123} when the task
+ * // succeeds, just before it switches to its success state.
+ * <Task
+ *   name="Foo"
+ *   id="a"
+ *   startOnMount={{ payload: 123, successActionType: 'FOO_LOADED' }}
+ * >
+ *   I'll be rendered on success
+ * </Task>
+ *
+ * // Subscribe only to the same task
+ * <Task name="Foo" id="a">I'll be rendered on success</Task>
+ */
 const ConnectedTask = connect(
   (state, { name, id }) => _.get(state, ['tasks', name, id], {}),
   (dispatch, { id, name }) => ({
@@ -69,7 +121,7 @@ const ConnectedTask = connect(
 ConnectedTask.propTypes = {
   name: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  noun: PropTypes.string.isRequired,
+  noun: PropTypes.string,
   renderError: PropTypes.func,
   renderProgress: PropTypes.element,
   startOnMount: PropTypes.shape({
