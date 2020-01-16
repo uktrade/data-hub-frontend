@@ -103,8 +103,8 @@
         "comment": "Updated from D&B [celery:get_company_updates:ddf50721-d4bf-4482-84f1-74f4c78c46aa]",
         "changes": {
             "turnover": [
-                110008,
-                83257
+                2382813,
+                1808091
             ],
             "is_turnover_estimated": [
                 true,
