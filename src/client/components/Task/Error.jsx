@@ -32,11 +32,11 @@ const StyledRoot = styled.div(
   spacing.withWhiteSpace({ marginBottom: 6 })
 )
 
-const Err = ({ error, retry, clear, noun }) => (
+const Err = ({ errorMessage, retry, noun }) => (
   <StyledRoot>
     <H2 size="MEDIUM">Error</H2>
     <p>Could not load {noun}</p>
-    <pre>{error}</pre>
+    <pre>{errorMessage}</pre>
     <SecondaryButton onClick={retry}>Retry</SecondaryButton>
   </StyledRoot>
 )

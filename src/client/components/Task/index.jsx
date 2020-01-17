@@ -22,35 +22,29 @@ const Task = ({
   children,
   name,
   noun = name,
+  progress,
+  success,
+  error,
   renderError = Err,
   renderProgress = <ProgressIndicator />,
   payload,
-  status,
-  error,
+  errorMessage,
   successActionType,
   clear,
   start,
 }) => (
   <>
-    {status === 'progress' && renderProgress}
-    {status === 'success' && children()}
-    {status === 'error' &&
+    {progress && renderProgress}
+    {success && (typeof children === 'function' ? children() : children)}
+    {error &&
       renderError({
         noun,
-        error,
+        errorMessage,
         clear,
         retry: () => start(payload, successActionType),
       })}
   </>
 )
-
-const Subscribe = ({ children, status }) =>
-  children({
-    status,
-    progress: status === 'progress',
-    success: status === 'success',
-    error: status === 'error',
-  })
 
 const ConnectedTask = connect(
   mapStateToProps,
@@ -95,12 +89,23 @@ ConnectedTask.StartOnRender = connect(
         clearOnSuccess,
       }),
   })
-)(({ start, name, id, payload, successActionType, clearOnSuccess, unless }) => {
-  useEffect(() => {
-    unless || start(payload, successActionType, clearOnSuccess)
-  }, [unless, name, id, payload, successActionType, clearOnSuccess])
-  return null
-})
+)(
+  ({
+    start,
+    name,
+    id,
+    payload,
+    successActionType,
+    clearOnSuccess,
+    unless,
+    status,
+  }) => {
+    useEffect(() => {
+      unless || status || start(payload, successActionType, clearOnSuccess)
+    }, [unless, name, id, payload, successActionType, clearOnSuccess])
+    return null
+  }
+)
 
 ConnectedTask.StartOnRender.propTypes = {
   id: PropTypes.string.isRequired,

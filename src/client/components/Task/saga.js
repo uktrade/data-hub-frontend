@@ -32,7 +32,7 @@ function* taskSaga(task, action) {
       type: TASK__ERROR,
       id,
       name,
-      error: error.message,
+      errorMessage: error.message,
     })
   }
 }
