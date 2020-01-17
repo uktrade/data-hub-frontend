@@ -18,7 +18,7 @@ const mapStateToProps = (state, { name, id }) => {
   }
 }
 
-const Task = ({
+const _Task = ({
   children,
   name,
   id,
@@ -38,7 +38,7 @@ const Task = ({
 }) => (
   <>
     {!!startOnRender && (
-      <ConnectedTask.StartOnRender {...startOnRender} {...{ name, id }} />
+      <Task.StartOnRender {...startOnRender} {...{ name, id }} />
     )}
     {progress && renderProgress({ message: progressMessage })}
     {success &&
@@ -55,7 +55,7 @@ const Task = ({
   </>
 )
 
-const ConnectedTask = connect(
+const Task = connect(
   mapStateToProps,
   (dispatch, { id, name }) => ({
     start: (redirectToAction, { payload, clearOnSuccess }) =>
@@ -74,9 +74,9 @@ const ConnectedTask = connect(
         id,
       }),
   })
-)(Task)
+)(_Task)
 
-ConnectedTask.propTypes = {
+Task.propTypes = {
   name: PropTypes.string.isRequired,
   id: PropTypes.string,
   noun: PropTypes.string,
@@ -85,7 +85,23 @@ ConnectedTask.propTypes = {
   renderBeforeStart: PropTypes.any,
 }
 
-ConnectedTask.StartOnRender = connect(
+const _StartOnRender = ({
+  start,
+  name,
+  id,
+  payload,
+  redirectToAction,
+  clearOnSuccess,
+  unless,
+  status,
+}) => {
+  useEffect(() => {
+    unless || status || start(redirectToAction, { payload, clearOnSuccess })
+  }, [unless, name, id, payload, redirectToAction, clearOnSuccess])
+  return null
+}
+
+Task.StartOnRender = connect(
   (state, { name, id }) => _.get(state, ['tasks', name, id], {}),
   (dispatch, { id, name }) => ({
     start: (redirectToAction, options) =>
@@ -97,29 +113,25 @@ ConnectedTask.StartOnRender = connect(
         redirectToAction,
       }),
   })
-)(
-  ({
-    start,
-    name,
-    id,
-    payload,
-    redirectToAction,
-    clearOnSuccess,
-    unless,
-    status,
-  }) => {
-    useEffect(() => {
-      unless || status || start(redirectToAction, { payload, clearOnSuccess })
-    }, [unless, name, id, payload, redirectToAction, clearOnSuccess])
-    return null
-  }
-)
+)(_StartOnRender)
 
-ConnectedTask.StartOnRender.propTypes = {
+Task.StartOnRender.propTypes = {
   id: PropTypes.string.isRequired,
 }
 
-ConnectedTask.Manager = connect(
+const _TaskManager = ({ start, children, ...props }) =>
+  children((name, id) => {
+    const taskState = _.get(props, [name, id], {})
+    return {
+      ...taskState,
+      progress: taskState.status === 'progress',
+      success: taskState.status === 'success',
+      error: taskState.status === 'error',
+      start: (...args) => start(name, id, ...args),
+    }
+  })
+
+Task.Manager = connect(
   (state) => state.tasks,
   (dispatch) => ({
     start: (name, id, redirectToAction, payload, clearOnSuccess) =>
@@ -132,17 +144,6 @@ ConnectedTask.Manager = connect(
         clearOnSuccess,
       }),
   })
-)(({ start, children, ...props }) =>
-  children((name, id) => {
-    const taskState = _.get(props, [name, id], {})
-    return {
-      ...taskState,
-      progress: taskState.status === 'progress',
-      success: taskState.status === 'success',
-      error: taskState.status === 'error',
-      start: (...args) => start(name, id, ...args),
-    }
-  })
-)
+)(_TaskManager)
 
-export default ConnectedTask
+export default Task
