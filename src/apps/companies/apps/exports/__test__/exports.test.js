@@ -1,13 +1,13 @@
 const proxyquire = require('proxyquire')
 const faker = require('faker')
-const urls = require('../../../../lib/urls')
-const buildMiddlewareParameters = require('../../../../../test/unit/helpers/middleware-parameters-builder')
+const urls = require('../../../../../lib/urls')
+const buildMiddlewareParameters = require('../../../../../../test/unit/helpers/middleware-parameters-builder')
 const {
   NEW_COUNTRIES_FEATURE,
   EXPORT_INTEREST_STATUS,
-} = require('../../../constants')
+} = require('../../../../constants')
 
-const companyMock = require('../../../../../test/unit/data/companies/company-v4.json')
+const companyMock = require('../../../../../../test/unit/data/companies/company-v4.json')
 
 describe('Company export controller', () => {
   let saveCompany
@@ -23,7 +23,7 @@ describe('Company export controller', () => {
       '../repos': {
         saveCompany,
       },
-      '../../../lib/metadata': {
+      '../../../../lib/metadata': {
         countryOptions: [
           {
             id: '1234',
@@ -66,8 +66,8 @@ describe('Company export controller', () => {
     })
 
     it('should render the correct view', () => {
-      expect(middlewareParameters.resMock.render.args[0][0]).to.equal(
-        'companies/views/exports-view'
+      expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(
+        'companies/apps/exports/views/exports-view'
       )
       expect(middlewareParameters.resMock.render).to.have.been.calledOnce
     })
@@ -239,8 +239,8 @@ describe('Company export controller', () => {
     })
 
     it('should render the correct view', () => {
-      expect(middlewareParameters.resMock.render.args[0][0]).to.equal(
-        'companies/views/exports-edit'
+      expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(
+        'companies/apps/exports/views/exports-edit'
       )
       expect(middlewareParameters.resMock.render).to.have.been.calledOnce
     })

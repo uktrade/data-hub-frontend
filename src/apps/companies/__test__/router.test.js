@@ -5,13 +5,10 @@ describe('Company router', () => {
     const paths = router.stack.filter((r) => r.route).map((r) => r.route.path)
     expect(paths).to.deep.equal([
       '/',
-      '/export',
       '/:companyId/archive',
       '/:companyId/unarchive',
       '/:companyId',
       '/:companyId/details',
-      '/:companyId/exports',
-      '/:companyId/exports/edit',
       '/:companyId/business-details',
       '/:companyId/hierarchies/ghq/search',
       '/:companyId/hierarchies/ghq/:globalHqId/add',
