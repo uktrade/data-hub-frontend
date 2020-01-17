@@ -14,7 +14,11 @@ function* taskSaga(task, action) {
   try {
     const result = yield call(task, action.payload)
     const { id, name } = action
-    yield put({ type: action.successActionType, result })
+    yield put({
+      type: action.successActionType,
+      payload: action.payload,
+      result,
+    })
     yield put({ type: TASK__SUCCESS, id, name })
     const clearOnSuccess = yield select((state) =>
       _.get(state, ['tasks', name, id, 'clearOnSuccess'])
