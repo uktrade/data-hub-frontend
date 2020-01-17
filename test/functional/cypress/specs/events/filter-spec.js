@@ -51,7 +51,7 @@ describe('Events Collections Filter', () => {
   })
 
   it('should filter by region', () => {
-    cy.get(selectors.filter.firstUkRegion).click()
+    cy.get(selectors.filter.events.firstUkRegion).click()
 
     cy.wait('@filterResults').then((xhr) => {
       expect(xhr.url).to.contain(

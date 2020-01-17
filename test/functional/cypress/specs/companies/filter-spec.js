@@ -64,20 +64,6 @@ describe('Company Collections Filter', () => {
       .should('have.length', 1)
   })
 
-  it('should filter by region', () => {
-    cy.get(selectors.filter.firstUkRegion).click()
-
-    cy.wait('@filterResults').then((xhr) => {
-      expect(xhr.url).to.contain(
-        'uk_region=934cd12a-6095-e211-a939-e4115bead28a'
-      )
-    })
-
-    cy.get(selectors.entityCollection.entities)
-      .children()
-      .should('have.length', 1)
-  })
-
   it('should filter by last interaction date', () => {
     cy.get(selectors.filter.firstInteractionDate).click()
 
@@ -88,6 +74,14 @@ describe('Company Collections Filter', () => {
     cy.get(selectors.entityCollection.entities)
       .children()
       .should('have.length', 1)
+  })
+
+  it('should remove all filters', () => {
+    cy.get(selectors.entityCollection.collectionRemoveAllFilter).click()
+    cy.get(selectors.entityCollection.collection).should(
+      'contain',
+      '100,172 companies'
+    )
   })
 
   it('should filter by sector', () => {
@@ -171,14 +165,6 @@ describe('Company Collections Filter', () => {
     })
   })
 
-  it('should remove all filters', () => {
-    cy.get(selectors.entityCollection.collectionRemoveAllFilter).click()
-    cy.get(selectors.entityCollection.collection).should(
-      'contain',
-      '100,172 companies'
-    )
-  })
-
   it('should filter by UK postcode', () => {
     const POSTCODE = 'GL11'
     cy.contains('UK postcode')
@@ -216,6 +202,25 @@ describe('Company Collections Filter', () => {
     cy.wait('@filterResults').then((xhr) => {
       expect(xhr.url).to.contain(
         'one_list_group_global_account_manager=2c42c516-9898-e211-a939-e4115bead28a'
+      )
+    })
+  })
+
+  it('should filter by uk region', () => {
+    const { ukRegion, typeahead } = selectors.filter
+    cy.get(typeahead(ukRegion).selectedOption)
+      .click()
+      .get(typeahead(ukRegion).textInput)
+      .type('North West')
+      .get(typeahead(ukRegion).options)
+      .should('have.length', 1)
+      .get(typeahead(ukRegion).textInput)
+      .type('{enter}')
+      .type('{esc}')
+
+    cy.wait('@filterResults').then((xhr) => {
+      expect(xhr.url).to.contain(
+        'uk_region=824cd12a-6095-e211-a939-e4115bead28a'
       )
     })
   })
