@@ -33,8 +33,12 @@ const Task = ({
   redirectToAction,
   clear,
   start,
+  startOnRender,
 }) => (
   <>
+    {!!startOnRender && (
+      <ConnectedTask.StartOnRender {...startOnRender} {...{ name, id }} />
+    )}
     {progress && renderProgress}
     {success &&
       (typeof children === 'function'
