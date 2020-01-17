@@ -21,6 +21,7 @@ const mapStateToProps = (state, { name, id }) => {
 const Task = ({
   children,
   name,
+  id,
   noun = name,
   progress,
   success,
@@ -35,7 +36,10 @@ const Task = ({
 }) => (
   <>
     {progress && renderProgress}
-    {success && (typeof children === 'function' ? children() : children)}
+    {success &&
+      (typeof children === 'function'
+        ? children({ name, id, payload })
+        : children)}
     {error &&
       renderError({
         noun,
@@ -49,13 +53,13 @@ const Task = ({
 const ConnectedTask = connect(
   mapStateToProps,
   (dispatch, { id, name }) => ({
-    start: (payload, redirectToAction, clearOnSuccess) =>
+    start: (redirectToAction, { payload, clearOnSuccess }) =>
       dispatch({
         type: TASK__START,
-        payload,
-        id,
         name,
+        id,
         redirectToAction,
+        payload,
         clearOnSuccess,
       }),
     clear: () =>
@@ -79,14 +83,13 @@ ConnectedTask.propTypes = {
 ConnectedTask.StartOnRender = connect(
   (state, { name, id }) => _.get(state, ['tasks', name, id], {}),
   (dispatch, { id, name }) => ({
-    start: (payload, redirectToAction, clearOnSuccess) =>
+    start: (redirectToAction, options) =>
       dispatch({
+        ...options,
         type: TASK__START,
-        payload,
         id,
         name,
         redirectToAction,
-        clearOnSuccess,
       }),
   })
 )(
@@ -101,7 +104,7 @@ ConnectedTask.StartOnRender = connect(
     status,
   }) => {
     useEffect(() => {
-      unless || status || start(payload, redirectToAction, clearOnSuccess)
+      unless || status || start(redirectToAction, { payload, clearOnSuccess })
     }, [unless, name, id, payload, redirectToAction, clearOnSuccess])
     return null
   }
