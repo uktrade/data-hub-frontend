@@ -1,7 +1,5 @@
 const selectors = require('../../../../selectors')
 
-console.log(selectors.filter.contacts.firstUkRegion)
-
 describe('Contacts Collections Filter', () => {
   before(() => {
     cy.visit('/contacts')
