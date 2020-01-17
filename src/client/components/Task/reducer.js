@@ -27,10 +27,7 @@ export default (state = {}, { type, ...action }) => {
     case TASK__PROGRESS:
       return setTaskState(state, action, 'progress')
     case TASK__SUCCESS:
-      return setTaskState(state, action, 'success', [
-        'payload',
-        'redirectToAction',
-      ])
+      return setTaskState(state, action, 'success', ['redirectToAction'])
     case TASK__ERROR:
       return setTaskState(state, action, 'error')
     case TASK__CLEAR:
