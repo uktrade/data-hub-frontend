@@ -27,7 +27,8 @@ const Task = ({
   success,
   error,
   renderError = Err,
-  renderProgress = <ProgressIndicator />,
+  renderProgress = ProgressIndicator,
+  progressMessage,
   payload,
   errorMessage,
   redirectToAction,
@@ -39,7 +40,7 @@ const Task = ({
     {!!startOnRender && (
       <ConnectedTask.StartOnRender {...startOnRender} {...{ name, id }} />
     )}
-    {progress && renderProgress}
+    {progress && renderProgress({ message: progressMessage })}
     {success &&
       (typeof children === 'function'
         ? children({ name, id, payload })
