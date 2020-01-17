@@ -29,7 +29,7 @@ const Task = ({
   renderProgress = <ProgressIndicator />,
   payload,
   errorMessage,
-  successActionType,
+  redirectToAction,
   clear,
   start,
 }) => (
@@ -41,7 +41,7 @@ const Task = ({
         noun,
         errorMessage,
         clear,
-        retry: () => start(payload, successActionType),
+        retry: () => start(payload, redirectToAction),
       })}
   </>
 )
@@ -49,13 +49,13 @@ const Task = ({
 const ConnectedTask = connect(
   mapStateToProps,
   (dispatch, { id, name }) => ({
-    start: (payload, successActionType, clearOnSuccess) =>
+    start: (payload, redirectToAction, clearOnSuccess) =>
       dispatch({
         type: TASK__START,
         payload,
         id,
         name,
-        successActionType,
+        redirectToAction,
         clearOnSuccess,
       }),
     clear: () =>
@@ -79,13 +79,13 @@ ConnectedTask.propTypes = {
 ConnectedTask.StartOnRender = connect(
   (state, { name, id }) => _.get(state, ['tasks', name, id], {}),
   (dispatch, { id, name }) => ({
-    start: (payload, successActionType, clearOnSuccess) =>
+    start: (payload, redirectToAction, clearOnSuccess) =>
       dispatch({
         type: TASK__START,
         payload,
         id,
         name,
-        successActionType,
+        redirectToAction,
         clearOnSuccess,
       }),
   })
@@ -95,14 +95,14 @@ ConnectedTask.StartOnRender = connect(
     name,
     id,
     payload,
-    successActionType,
+    redirectToAction,
     clearOnSuccess,
     unless,
     status,
   }) => {
     useEffect(() => {
-      unless || status || start(payload, successActionType, clearOnSuccess)
-    }, [unless, name, id, payload, successActionType, clearOnSuccess])
+      unless || status || start(payload, redirectToAction, clearOnSuccess)
+    }, [unless, name, id, payload, redirectToAction, clearOnSuccess])
     return null
   }
 )
@@ -114,13 +114,13 @@ ConnectedTask.StartOnRender.propTypes = {
 ConnectedTask.Manager = connect(
   (state) => state.tasks,
   (dispatch) => ({
-    start: (name, id, successActionType, payload, clearOnSuccess) =>
+    start: (name, id, redirectToAction, payload, clearOnSuccess) =>
       dispatch({
         type: TASK__START,
         payload,
         id,
         name,
-        successActionType,
+        redirectToAction,
         clearOnSuccess,
       }),
   })
