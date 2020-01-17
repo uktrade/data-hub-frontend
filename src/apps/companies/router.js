@@ -12,10 +12,7 @@ const {
 
 const setReturnUrl = require('./middleware/set-return-url')
 const { getRequestBody } = require('../../middleware/collection')
-const {
-  getCollection,
-  exportCollection,
-} = require('../../modules/search/middleware/collection')
+const { getCollection } = require('../../modules/search/middleware/collection')
 
 const { renderCompanyList } = require('./controllers/list')
 const { renderDetails } = require('./controllers/details')
@@ -30,13 +27,6 @@ const { renderDocuments } = require('./controllers/documents')
 const { renderAddGlobalHQ } = require('./controllers/hierarchies')
 const { renderSubsidiaries } = require('./controllers/subsidiaries')
 const { renderLinkSubsidiary } = require('./controllers/subsidiary-link')
-
-const {
-  renderExports,
-  populateExportForm,
-  renderExportEdit,
-  handleEditFormPost,
-} = require('./controllers/exports')
 
 const {
   setDefaultQuery,
@@ -77,6 +67,7 @@ const dnbHierarchyRouter = require('./apps/dnb-hierarchy/router')
 const businessDetailsRouter = require('./apps/business-details/router')
 const editHistoryRouter = require('./apps/edit-history/router')
 const matchCompanyRouter = require('./apps/match-company/router')
+const exportsRouter = require('./apps/exports/router')
 const investmentsRouter = require('./apps/investments/router')
 const interactionsRouter = require('../interactions/router.sub-app')
 const companyListsRouter = require('../company-lists/router')
@@ -103,14 +94,6 @@ router.get(
   renderCompanyList
 )
 
-router.get(
-  urls.companies.export.route,
-  setDefaultQuery(DEFAULT_COLLECTION_QUERY),
-  getRequestBody(QUERY_FIELDS),
-  lastInteractionDate,
-  exportCollection('company')
-)
-
 router.use(urls.companies.create.route, addCompanyFormRouter)
 router.use(urls.companies.lists.route, companyListsRouter)
 router.use(urls.companies.edit.route, editCompanyFormRouter)
@@ -126,12 +109,6 @@ router.use(
 )
 router.get(urls.companies.detail.route, redirectToFirstNavItem)
 router.get(urls.companies.details.route, renderDetails)
-
-router.get(urls.companies.exports.index.route, setReturnUrl, renderExports)
-router
-  .route(urls.companies.exports.edit.route)
-  .get(populateExportForm, renderExportEdit)
-  .post(populateExportForm, handleEditFormPost, renderExportEdit)
 
 router.get(urls.companies.businessDetails.route, renderBusinessDetails)
 
@@ -187,5 +164,7 @@ router.use(dnbHierarchyRouter)
 router.use(businessDetailsRouter)
 
 router.use(matchCompanyRouter)
+
+router.use(exportsRouter)
 
 module.exports = router
