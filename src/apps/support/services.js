@@ -33,7 +33,7 @@ function createZenDeskMessage({
 
 function postToZenDesk(ticket) {
   return axios.post(
-    config.zen.url,
+    config.zen.ticketsURL,
     { ticket },
     {
       auth: {

@@ -14,7 +14,10 @@
     "OAUTH2_DEV_TOKEN": { "required": true },
     "OAUTH2_BYPASS_SSO": { "required": true },
     "POSTCODE_KEY": { "required": true },
-    "SESSION_SECRET": { "required": true }
+    "SESSION_SECRET": { "required": true },
+    "ZEN_TICKETS_URL": { "required": true },
+    "ZEN_EMAIL": { "required": true },
+    "ZEN_TOKEN": { "required": true }
   },
   "addons":["heroku-redis"]
 }

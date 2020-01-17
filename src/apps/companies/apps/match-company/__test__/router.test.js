@@ -16,6 +16,14 @@ describe('Match company route', () => {
         path: '/:companyId/match',
         methods: ['get'],
       },
+      {
+        methods: ['get'],
+        path: '/:companyId/match/:dunsNumber',
+      },
+      {
+        methods: ['post'],
+        path: '/:companyId/match/:dunsNumber',
+      },
     ])
   })
 })
