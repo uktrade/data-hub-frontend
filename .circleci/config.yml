@@ -308,12 +308,12 @@ jobs:
     parallelism: 9
     steps:
       - checkout
-      - *wait_for_mock_sso
       - *restore_yarn_cache
       - *start_api_sandbox
-      - *wait_for_api_sandbox
       - run: yarn install --pure-lockfile
       - run: yarn build:prod
+      - *wait_for_mock_sso
+      - *wait_for_api_sandbox
       - *start_frontend
       - *wait_for_frontend
       - run:
@@ -333,12 +333,12 @@ jobs:
       - *docker_mock_sso
     steps:
       - checkout
-      - *wait_for_mock_sso
       - *restore_yarn_cache
       - *start_api_sandbox
-      - *wait_for_api_sandbox
       - run: yarn install --pure-lockfile
       - run: yarn build:prod
+      - *wait_for_mock_sso
+      - *wait_for_api_sandbox
       - *start_frontend
       - *wait_for_frontend
       - run:
@@ -367,11 +367,11 @@ jobs:
       - *docker_data_hub_backend_celery
     steps:
       - checkout
-      - *wait_for_backend
-      - *wait_for_mock_sso
       - *restore_yarn_cache
       - run: yarn install --pure-lockfile
       - run: yarn build:prod
+      - *wait_for_backend
+      - *wait_for_mock_sso
       - *start_frontend
       - *wait_for_frontend
       - *create_cucumber_dirs
@@ -398,11 +398,11 @@ jobs:
       - *docker_data_hub_backend_celery
     steps:
       - checkout
-      - *wait_for_backend
-      - *wait_for_mock_sso
       - *restore_yarn_cache
       - run: yarn install --pure-lockfile
       - run: yarn build:prod
+      - *wait_for_backend
+      - *wait_for_mock_sso
       - *start_frontend
       - *wait_for_frontend
       - *create_cucumber_dirs
@@ -429,11 +429,11 @@ jobs:
       - *docker_data_hub_backend_celery
     steps:
       - checkout
-      - *wait_for_backend
-      - *wait_for_mock_sso
       - *restore_yarn_cache
       - run: yarn install --pure-lockfile
       - run: yarn build:prod
+      - *wait_for_backend
+      - *wait_for_mock_sso
       - *start_frontend
       - *wait_for_frontend
       - *create_cucumber_dirs
