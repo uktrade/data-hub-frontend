@@ -135,6 +135,7 @@ module.exports = {
     },
     match: {
       index: url('/companies', '/:companyId/match'),
+      confirmation: url('/companies', '/:companyId/match/:dunsNumber'),
     },
     subsidiaries: {
       index: url('/companies', '/:companyId/subsidiaries'),
