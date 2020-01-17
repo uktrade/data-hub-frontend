@@ -8,7 +8,7 @@ Deployments to production are done manually through Jenkins where a Git tag can 
 
 ## Deploying to production
 
-1. Create a GIT tag `v<MAJOR>.<MINOR>.<PATCH>`, e.g. `v5.1.2` pointing to the latest `master` and push it to the remote.
+1. Create a GIT tag `git tag v<MAJOR>.<MINOR>.<PATCH>`, e.g. `v5.1.2` pointing to the latest `master`
    
     | Release type | When to increase |
     | ------------- | ------------- |
@@ -16,7 +16,9 @@ Deployments to production are done manually through Jenkins where a Git tag can 
     | Minor (0.**1**.0) | When a release contains at least one new feature. |
     | Patch (0.0.**1**) | When a release contains only fixes. | 
 
-2. Go to Jenkins and open the job used for FE deployments.
+2. Push the tag to the remote - `git push origin v<VERSION_NUMBER>`
+
+2. Go to Jenkins and click on 'Build with Parameters.
 
 3. Select `production` for the environment.
 
