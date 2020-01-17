@@ -15,7 +15,7 @@ function* taskSaga(task, action) {
     const result = yield call(task, action.payload)
     const { id, name } = action
     yield put({
-      type: action.successActionType,
+      type: action.redirectToAction,
       payload: action.payload,
       result,
     })
