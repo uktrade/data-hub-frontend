@@ -76,6 +76,14 @@ describe('Company Collections Filter', () => {
       .should('have.length', 1)
   })
 
+  it('should remove all filters', () => {
+    cy.get(selectors.entityCollection.collectionRemoveAllFilter).click()
+    cy.get(selectors.entityCollection.collection).should(
+      'contain',
+      '100,172 companies'
+    )
+  })
+
   it('should filter by sector', () => {
     const sector = selectors.filter.sector
     const { typeahead } = selectors.filter
@@ -215,13 +223,5 @@ describe('Company Collections Filter', () => {
         'uk_region=824cd12a-6095-e211-a939-e4115bead28a'
       )
     })
-  })
-
-  it('should remove all filters', () => {
-    cy.get(selectors.entityCollection.collectionRemoveAllFilter).click()
-    cy.get(selectors.entityCollection.collection).should(
-      'contain',
-      '100,172 companies'
-    )
   })
 })
