@@ -13,10 +13,6 @@ describe('Exports route', () => {
 
     expect(paths).to.deep.equal([
       {
-        path: '/export',
-        methods: ['get'],
-      },
-      {
         path: '/:companyId/exports',
         methods: ['get'],
       },
