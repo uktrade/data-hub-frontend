@@ -5,6 +5,16 @@ const requestPromise = require('request-promise')
 const config = require('../config')
 const logger = require('../config/logger')
 
+const { logResponses: LOG_RESPONSE, logRequests: LOG_REQUEST } = config
+
+if (LOG_RESPONSE) {
+  logger.info('Logging responses from requests')
+}
+
+if (LOG_REQUEST) {
+  logger.info('Logging request options')
+}
+
 function hasValue(value) {
   return !isNil(value)
 }
@@ -52,16 +62,53 @@ function parseOptions(opts, token) {
   }
 }
 
+function logResponse(requestOpts) {
+  return (data) => {
+    const responseInfo = `Response for ${requestOpts.method} to ${requestOpts.url}:`
+    try {
+      logger.debug(responseInfo, JSON.stringify(data, null, 2))
+    } catch (e) {
+      logger.debug(responseInfo, data)
+    }
+    return data
+  }
+}
+
+function logRequest(opts) {
+  logger.debug(`Sending ${opts.method} to ${opts.url}`)
+
+  if (LOG_REQUEST) {
+    logger.debug(
+      'with request data:',
+      JSON.stringify(
+        {
+          headers: opts.headers,
+          body: opts.body,
+          qs: opts.qs,
+        },
+        null,
+        2
+      )
+    )
+  }
+}
+
 // Accepts options as keys on an object or encoded as a url
 // Responses are parsed to remove any embedded XSS attempts with
 // script tags
 function authorisedRequest(token, opts) {
   const requestOptions = parseOptions(opts, token)
 
-  logger.debug('Send authorised request: ', requestOptions)
+  logRequest(requestOptions)
   requestOptions.jsonReviver = stripScripts
 
-  return requestPromise(requestOptions)
+  const r = requestPromise(requestOptions)
+
+  if (LOG_RESPONSE) {
+    return r.then(logResponse(requestOptions))
+  }
+
+  return r
 }
 
 // Accepts options as keys on an object or encoded as a url
@@ -71,7 +118,7 @@ function authorisedRequest(token, opts) {
 function authorisedRawRequest(token, opts) {
   const requestOptions = parseOptions(opts, token)
 
-  logger.debug('Send authorised raw request: ', requestOptions)
+  logRequest(requestOptions)
 
   return Promise.resolve(request(requestOptions))
 }
