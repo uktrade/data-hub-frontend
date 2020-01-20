@@ -65,7 +65,7 @@ Task.StartOnRender = connect(
 Task.Status = ({
   name,
   id,
-  noun,
+  noun = name,
   startOnRender,
   progressMessage,
   children,
