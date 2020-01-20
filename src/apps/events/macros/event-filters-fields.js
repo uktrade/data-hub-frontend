@@ -43,11 +43,17 @@ const eventFiltersFields = ({ advisers, userAgent }) => {
       target: 'metadata',
       label: 'Country',
     },
-    assign({}, globalFields.ukRegions, {
+    {
+      macroName: 'Typeahead',
       name: 'uk_region',
-      type: 'checkbox',
-      modifier: 'option-select',
-    }),
+      isAsync: false,
+      placeholder: 'Search UK region',
+      useSubLabel: false,
+      options: globalFields.ukRegions.options(),
+      hideInactive: false,
+      target: 'metadata',
+      label: 'UK region',
+    },
     assign({}, globalFields.eventTypes, {
       name: 'event_type',
       type: 'checkbox',
