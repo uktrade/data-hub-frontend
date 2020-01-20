@@ -20,7 +20,7 @@ describe('Company export controller', () => {
     transformerSpy = sinon.spy()
 
     controller = proxyquire('../exports', {
-      '../repos': {
+      '../../repos': {
         saveCompany,
       },
       '../../../../lib/metadata': {
@@ -37,7 +37,7 @@ describe('Company export controller', () => {
           },
         ],
       },
-      '../transformers': {
+      '../../transformers': {
         transformCompanyToExportDetailsView: transformerSpy,
       },
     })
@@ -66,7 +66,7 @@ describe('Company export controller', () => {
     })
 
     it('should render the correct view', () => {
-      expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(
+      expect(middlewareParameters.resMock.render.args[0][0]).to.equal(
         'companies/apps/exports/views/exports-view'
       )
       expect(middlewareParameters.resMock.render).to.have.been.calledOnce
@@ -239,7 +239,7 @@ describe('Company export controller', () => {
     })
 
     it('should render the correct view', () => {
-      expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(
+      expect(middlewareParameters.resMock.render.args[0][0]).to.equal(
         'companies/apps/exports/views/exports-edit'
       )
       expect(middlewareParameters.resMock.render).to.have.been.calledOnce
