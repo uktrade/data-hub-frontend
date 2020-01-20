@@ -78,7 +78,6 @@ const businessDetailsRouter = require('./apps/business-details/router')
 const editHistoryRouter = require('./apps/edit-history/router')
 const matchCompanyRouter = require('./apps/match-company/router')
 const investmentsRouter = require('./apps/investments/router')
-const matchingRouter = require('./apps/matching/router')
 const interactionsRouter = require('../interactions/router.sub-app')
 const companyListsRouter = require('../company-lists/router')
 const advisersRouter = require('./apps/advisers/router')
@@ -168,7 +167,6 @@ router.use(
   setReturnUrl,
   investmentsRouter
 )
-router.use(urls.companies.matching.route, matchingRouter)
 router.use(
   urls.companies.detail.route,
   setInteractionsDetails,
