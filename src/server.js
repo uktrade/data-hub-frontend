@@ -12,6 +12,7 @@ const enforce = require('express-sslify')
 const favicon = require('serve-favicon')
 const cookieParser = require('cookie-parser')
 const minifyHTML = require('express-minify-html')
+const proxy = require('http-proxy-middleware')
 
 const config = require('./config')
 const title = require('./middleware/title')
@@ -118,6 +119,18 @@ app.use(headers)
 app.use(store())
 app.use(csrf())
 app.use(csrfToken())
+
+const API_PROXY_PATH = '/api-proxy'
+app.use(
+  proxy(config.apiProxyWhitelist.map((pth) => path.join(API_PROXY_PATH, pth)), {
+    target: config.apiRoot,
+    pathRewrite: {
+      ['^' + API_PROXY_PATH]: '/',
+    },
+    onProxyReq: (proxyReq, req) =>
+      proxyReq.setHeader('authorization', `Bearer ${req.session.token}`),
+  })
+)
 
 // routing
 app.use(slashify())
