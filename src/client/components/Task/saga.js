@@ -4,7 +4,6 @@ import { take, put, spawn, call, select } from 'redux-saga/effects'
 import {
   TASK__START,
   TASK__PROGRESS,
-  TASK__SUCCESS,
   TASK__ERROR,
   TASK__CLEAR,
 } from '../../actions'
@@ -17,6 +16,8 @@ function* taskSaga(task, action) {
     if (onSuccessDispatch) {
       yield put({
         type: onSuccessDispatch,
+        name,
+        id,
         payload,
         result,
       })
