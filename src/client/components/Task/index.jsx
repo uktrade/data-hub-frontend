@@ -3,87 +3,37 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { TASK__START, TASK__CLEAR } from '../../actions'
+import { TASK__START } from '../../actions'
 import Err from './Error'
 import ProgressIndicator from '../ProgressIndicator'
 import { useEffect } from 'react'
 
-const mapStateToProps = (state, { name, id }) => {
-  const taskState = _.get(state, ['tasks', name, id], {})
-  return {
-    ...taskState,
-    progress: taskState.status === 'progress',
-    success: taskState.status === 'success',
-    error: taskState.status === 'error',
-  }
-}
+const _Task = ({ start, children, ...props }) =>
+  children((name, id) => {
+    const taskState = _.get(props, [name, id], {})
+    return {
+      ...taskState,
+      progress: taskState.status === 'progress',
+      success: taskState.status === 'success',
+      error: taskState.status === 'error',
+      start: (...args) => start(name, id, ...args),
+    }
+  })
 
-const _Task = ({
-  children,
-  name,
-  id,
-  noun = name,
-  progress,
-  success,
-  error,
-  renderError = Err,
-  renderProgress = ProgressIndicator,
-  progressMessage,
-  payload,
-  errorMessage,
-  redirectToAction,
-  clear,
-  start,
-  startOnRender,
-}) => (
-  <>
-    {!!startOnRender && (
-      <Task.StartOnRender {...startOnRender} {...{ name, id }} />
-    )}
-    {progress && renderProgress({ message: progressMessage })}
-    {success &&
-      (typeof children === 'function'
-        ? children({ name, id, payload })
-        : children)}
-    {error &&
-      renderError({
-        noun,
-        errorMessage,
-        clear,
-        retry: () => start(payload, redirectToAction),
-      })}
-  </>
-)
-
-const Task = connect(
-  mapStateToProps,
-  (dispatch, { id, name }) => ({
-    start: (redirectToAction, { payload, clearOnSuccess }) =>
+Task = connect(
+  (state) => state.tasks,
+  (dispatch) => ({
+    start: (name, id, redirectToAction, { payload, clearOnSuccess }) =>
       dispatch({
         type: TASK__START,
-        name,
-        id,
-        redirectToAction,
         payload,
-        clearOnSuccess,
-      }),
-    clear: () =>
-      dispatch({
-        type: TASK__CLEAR,
-        name,
         id,
+        name,
+        redirectToAction,
+        clearOnSuccess,
       }),
   })
 )(_Task)
-
-Task.propTypes = {
-  name: PropTypes.string.isRequired,
-  id: PropTypes.string,
-  noun: PropTypes.string,
-  renderError: PropTypes.func,
-  renderProgress: PropTypes.element,
-  renderBeforeStart: PropTypes.any,
-}
 
 const _StartOnRender = ({
   start,
@@ -115,35 +65,48 @@ Task.StartOnRender = connect(
   })
 )(_StartOnRender)
 
-Task.StartOnRender.propTypes = {
-  id: PropTypes.string.isRequired,
-}
-
-const _TaskManager = ({ start, children, ...props }) =>
-  children((name, id) => {
-    const taskState = _.get(props, [name, id], {})
-    return {
-      ...taskState,
-      progress: taskState.status === 'progress',
-      success: taskState.status === 'success',
-      error: taskState.status === 'error',
-      start: (...args) => start(name, id, ...args),
-    }
-  })
-
-Task.Manager = connect(
-  (state) => state.tasks,
-  (dispatch) => ({
-    start: (name, id, redirectToAction, payload, clearOnSuccess) =>
-      dispatch({
-        type: TASK__START,
+Task.Status = ({
+  name,
+  id,
+  noun,
+  startOnRender,
+  progressMessage,
+  children,
+  renderError = Err,
+  renderProgress = ProgressIndicator,
+}) => (
+  <Task>
+    {(getTask) => {
+      const {
+        start,
+        progress,
+        success,
+        error,
         payload,
-        id,
-        name,
+        errorMessage,
         redirectToAction,
         clearOnSuccess,
-      }),
-  })
-)(_TaskManager)
+      } = getTask(name, id)
+      return (
+        <>
+          {!!startOnRender && (
+            <Task.StartOnRender {...startOnRender} {...{ name, id }} />
+          )}
+          {progress && renderProgress({ message: progressMessage })}
+          {success &&
+            (typeof children === 'function'
+              ? children({ name, id, payload })
+              : children)}
+          {error &&
+            renderError({
+              noun,
+              errorMessage,
+              retry: () => start(redirectToAction, { payload, clearOnSuccess }),
+            })}
+        </>
+      )
+    }}
+  </Task>
+)
 
 export default Task
