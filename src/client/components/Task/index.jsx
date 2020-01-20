@@ -8,17 +8,15 @@ import Err from './Error'
 import ProgressIndicator from '../ProgressIndicator'
 import { useEffect } from 'react'
 
-const _Task = ({ start, children, ...props }) =>
-  children((name, id) => {
-    const taskState = _.get(props, [name, id], {})
-    return {
-      ...taskState,
-      progress: taskState.status === 'progress',
-      success: taskState.status === 'success',
-      error: taskState.status === 'error',
-      start: (options) => start(name, id, options),
-    }
-  })
+const nameIdPropTypes = {
+  name: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+}
+
+const startOnRenderPropTypes = {
+  payload: PropTypes.any,
+  onSuccessDispatch: PropTypes.string,
+}
 
 const Task = connect(
   (state) => state.tasks,
@@ -32,21 +30,21 @@ const Task = connect(
         onSuccessDispatch,
       }),
   })
-)(_Task)
+)(({ start, children, ...props }) =>
+  children((name, id) => {
+    const taskState = _.get(props, [name, id], {})
+    return {
+      ...taskState,
+      progress: taskState.status === 'progress',
+      success: taskState.status === 'success',
+      error: taskState.status === 'error',
+      start: (options) => start(name, id, options),
+    }
+  })
+)
 
-const _StartOnRender = ({
-  start,
-  name,
-  id,
-  payload,
-  onSuccessDispatch,
-  clearOnSuccess,
-  status,
-}) => {
-  useEffect(() => {
-    status || start({ payload, onSuccessDispatch })
-  }, [name, id, payload, onSuccessDispatch, clearOnSuccess])
-  return null
+Task.propTypes = {
+  children: PropTypes.func.isRequired,
 }
 
 Task.StartOnRender = connect(
@@ -60,7 +58,17 @@ Task.StartOnRender = connect(
         name,
       }),
   })
-)(_StartOnRender)
+)(({ start, name, id, payload, onSuccessDispatch, status }) => {
+  useEffect(() => {
+    status || start({ payload, onSuccessDispatch })
+  }, [name, id, payload, onSuccessDispatch])
+  return null
+})
+
+Task.StartOnRender.propTypes = {
+  ...nameIdPropTypes,
+  ...startOnRenderPropTypes,
+}
 
 Task.Status = ({
   name,
@@ -68,7 +76,6 @@ Task.Status = ({
   noun = name,
   startOnRender,
   progressMessage,
-  children,
   renderError = Err,
   renderProgress = ProgressIndicator,
 }) => (
@@ -77,7 +84,6 @@ Task.Status = ({
       const {
         start,
         progress,
-        success,
         error,
         payload,
         errorMessage,
@@ -89,10 +95,6 @@ Task.Status = ({
             <Task.StartOnRender {...startOnRender} {...{ name, id }} />
           )}
           {progress && renderProgress({ message: progressMessage })}
-          {success &&
-            (typeof children === 'function'
-              ? children({ name, id, payload })
-              : children)}
           {error &&
             renderError({
               noun,
@@ -104,5 +106,14 @@ Task.Status = ({
     }}
   </Task>
 )
+
+Task.Status.propTypes = {
+  ...nameIdPropTypes,
+  noun: PropTypes.string,
+  progressMessage: PropTypes.string,
+  startOnRender: PropTypes.shape(startOnRenderPropTypes),
+  renderProgress: PropTypes.elementType,
+  renderError: PropTypes.elementType,
+}
 
 export default Task
