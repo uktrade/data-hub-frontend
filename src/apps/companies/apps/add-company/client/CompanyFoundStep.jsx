@@ -57,7 +57,7 @@ function CompanyFoundStep({ countryName }) {
 }
 
 CompanyFoundStep.propTypes = {
-  countryName: PropTypes.string.isRequired,
+  countryName: PropTypes.string,
 }
 
 export default CompanyFoundStep
