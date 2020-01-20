@@ -15,6 +15,5 @@ export const COMPANY_LIST_VIEWER__ORDER = 'COMPANY_LIST_VIEWER__ORDER'
 
 export const TASK__START = 'TASK__START'
 export const TASK__PROGRESS = 'TASK__PROGRESS'
-export const TASK__SUCCESS = 'TASK__SUCCESS'
 export const TASK__ERROR = 'TASK__ERROR'
 export const TASK__CLEAR = 'TASK__CLEAR'

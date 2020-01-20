@@ -16,21 +16,20 @@ const _Task = ({ start, children, ...props }) =>
       progress: taskState.status === 'progress',
       success: taskState.status === 'success',
       error: taskState.status === 'error',
-      start: (...args) => start(name, id, ...args),
+      start: (options) => start(name, id, options),
     }
   })
 
-Task = connect(
+const Task = connect(
   (state) => state.tasks,
   (dispatch) => ({
-    start: (name, id, redirectToAction, { payload, clearOnSuccess }) =>
+    start: (name, id, { payload, onSuccessDispatch }) =>
       dispatch({
         type: TASK__START,
         payload,
         id,
         name,
-        redirectToAction,
-        clearOnSuccess,
+        onSuccessDispatch,
       }),
   })
 )(_Task)
@@ -40,27 +39,25 @@ const _StartOnRender = ({
   name,
   id,
   payload,
-  redirectToAction,
+  onSuccessDispatch,
   clearOnSuccess,
-  unless,
   status,
 }) => {
   useEffect(() => {
-    unless || status || start(redirectToAction, { payload, clearOnSuccess })
-  }, [unless, name, id, payload, redirectToAction, clearOnSuccess])
+    status || start({ payload, onSuccessDispatch })
+  }, [name, id, payload, onSuccessDispatch, clearOnSuccess])
   return null
 }
 
 Task.StartOnRender = connect(
   (state, { name, id }) => _.get(state, ['tasks', name, id], {}),
   (dispatch, { id, name }) => ({
-    start: (redirectToAction, options) =>
+    start: (options) =>
       dispatch({
         ...options,
         type: TASK__START,
         id,
         name,
-        redirectToAction,
       }),
   })
 )(_StartOnRender)
@@ -84,8 +81,7 @@ Task.Status = ({
         error,
         payload,
         errorMessage,
-        redirectToAction,
-        clearOnSuccess,
+        onSuccessDispatch,
       } = getTask(name, id)
       return (
         <>
@@ -101,7 +97,7 @@ Task.Status = ({
             renderError({
               noun,
               errorMessage,
-              retry: () => start(redirectToAction, { payload, clearOnSuccess }),
+              retry: () => start({ payload, onSuccessDispatch }),
             })}
         </>
       )
