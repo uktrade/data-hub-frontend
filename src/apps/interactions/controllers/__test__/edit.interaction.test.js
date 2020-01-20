@@ -14,6 +14,8 @@ describe('Interaction edit controller (Interactions)', () => {
   let res
   let nextStub
   let metadataMock
+  let activeInactiveAdviserData
+  let contactsData
 
   beforeEach(() => {
     req = {
@@ -78,7 +80,7 @@ describe('Interaction edit controller (Interactions)', () => {
       ],
     }
 
-    this.activeInactiveAdviserData = [
+    activeInactiveAdviserData = [
       {
         id: '1',
         name: 'Jeff Smith',
@@ -106,7 +108,7 @@ describe('Interaction edit controller (Interactions)', () => {
       },
     ]
 
-    this.contactsData = [
+    contactsData = [
       {
         id: '999',
         first_name: 'Fred',
@@ -144,13 +146,13 @@ describe('Interaction edit controller (Interactions)', () => {
 
       nock(config.apiRoot)
         .get('/v3/contact?company_id=1&limit=500')
-        .reply(200, { results: this.contactsData })
+        .reply(200, { results: contactsData })
         .get('/v4/metadata/team')
         .reply(200, metadataMock.teamOptions)
         .get('/v4/metadata/service?contexts__has_any=other_interaction')
         .reply(200, metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
-        .reply(200, { results: this.activeInactiveAdviserData })
+        .reply(200, { results: activeInactiveAdviserData })
         .get('/v4/metadata/communication-channel')
         .reply(200, metadataMock.channelOptions)
         .get('/v4/metadata/service-delivery-status')
@@ -161,7 +163,6 @@ describe('Interaction edit controller (Interactions)', () => {
         .reply(200, metadataMock.policyIssueType)
 
       await controller.renderEditPage(req, res, nextStub)
-      this.interactionForm = res.render.getCall(0).args[1].interactionForm
     })
 
     it('should render the interaction page', async () => {
@@ -192,13 +193,13 @@ describe('Interaction edit controller (Interactions)', () => {
 
       nock(config.apiRoot)
         .get('/v3/contact?company_id=1&limit=500')
-        .reply(200, { results: this.contactsData })
+        .reply(200, { results: contactsData })
         .get('/v4/metadata/team')
         .reply(200, metadataMock.teamOptions)
         .get('/v4/metadata/service?contexts__has_any=investment_interaction')
         .reply(200, metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
-        .reply(200, { results: this.activeInactiveAdviserData })
+        .reply(200, { results: activeInactiveAdviserData })
         .get('/v4/metadata/communication-channel')
         .reply(200, metadataMock.channelOptions)
         .get('/v4/metadata/service-delivery-status')
@@ -209,7 +210,6 @@ describe('Interaction edit controller (Interactions)', () => {
         .reply(200, metadataMock.policyIssueType)
 
       await controller.renderEditPage(req, res, nextStub)
-      this.interactionForm = res.render.getCall(0).args[1].interactionForm
     })
     it('should render the interaction page', async () => {
       expect(res.render).to.be.calledWith('interactions/views/edit')
@@ -218,6 +218,7 @@ describe('Interaction edit controller (Interactions)', () => {
   })
 
   context('When adding an interaction from company contact', () => {
+    let interactionForm
     beforeEach(async () => {
       req.params = {
         ...req.params,
@@ -239,13 +240,13 @@ describe('Interaction edit controller (Interactions)', () => {
 
       nock(config.apiRoot)
         .get('/v3/contact?company_id=1&limit=500')
-        .reply(200, { results: this.contactsData })
+        .reply(200, { results: contactsData })
         .get('/v4/metadata/team')
         .reply(200, metadataMock.teamOptions)
         .get('/v4/metadata/service?contexts__has_any=export_interaction')
         .reply(200, metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
-        .reply(200, { results: this.activeInactiveAdviserData })
+        .reply(200, { results: activeInactiveAdviserData })
         .get('/v4/metadata/communication-channel')
         .reply(200, metadataMock.channelOptions)
         .get('/v4/metadata/service-delivery-status')
@@ -256,7 +257,7 @@ describe('Interaction edit controller (Interactions)', () => {
         .reply(200, metadataMock.policyIssueType)
 
       await controller.renderEditPage(req, res, nextStub)
-      this.interactionForm = res.render.getCall(0).args[1].interactionForm
+      interactionForm = res.render.getCall(0).args[1].interactionForm
     })
 
     it('should render the interaction page', async () => {
@@ -280,7 +281,7 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should generate a form with the required fields', () => {
-      const fieldNames = this.interactionForm.children.map((field) =>
+      const fieldNames = interactionForm.children.map((field) =>
         pick(field, [
           'name',
           'label',
@@ -395,7 +396,7 @@ describe('Interaction edit controller (Interactions)', () => {
 
     it('should provide a list of contacts', () => {
       const contactField = find(
-        this.interactionForm.children,
+        interactionForm.children,
         ({ name }) => name === 'contacts'
       )
       const contact = contactField.children[0].options
@@ -407,7 +408,7 @@ describe('Interaction edit controller (Interactions)', () => {
 
     it('should provide a list of services', () => {
       const serviceField = find(
-        this.interactionForm.children,
+        interactionForm.children,
         ({ name }) => name === 'service'
       )
       expect(serviceField.options).to.deep.equal([
@@ -431,7 +432,7 @@ describe('Interaction edit controller (Interactions)', () => {
 
     it('should provide a list of sub services', () => {
       const subServiceField = find(
-        this.interactionForm.children,
+        interactionForm.children,
         ({ name }) => name === 'subService'
       )
       expect(subServiceField.options).to.deep.equal([
@@ -441,7 +442,7 @@ describe('Interaction edit controller (Interactions)', () => {
 
     it('should provide a list of communication channels', () => {
       const communicationChannelField = find(
-        this.interactionForm.children,
+        interactionForm.children,
         ({ name }) => name === 'communication_channel'
       )
       expect(communicationChannelField.options).to.deep.equal([
@@ -451,13 +452,13 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should set the company id as a hidden field', () => {
-      const companyField = this.interactionForm.hiddenFields.company
+      const companyField = interactionForm.hiddenFields.company
       expect(companyField).to.equal('1')
     })
 
     it('should set the default contact to the current contact', () => {
       const contactField = find(
-        this.interactionForm.children,
+        interactionForm.children,
         ({ name }) => name === 'contacts'
       )
       const contact = contactField.children[0].options
@@ -469,7 +470,7 @@ describe('Interaction edit controller (Interactions)', () => {
 
     it('should set the default for the adviser to the current user', () => {
       const adviserField = find(
-        this.interactionForm.children,
+        interactionForm.children,
         ({ name }) => name === 'dit_participants'
       )
       expect(adviserField.value).to.deep.equal(['user1'])
@@ -477,7 +478,7 @@ describe('Interaction edit controller (Interactions)', () => {
 
     it('should set the interaction date to the current date', () => {
       const dateField = find(
-        this.interactionForm.children,
+        interactionForm.children,
         ({ name }) => name === 'date'
       )
       const today = new Date()
@@ -489,7 +490,7 @@ describe('Interaction edit controller (Interactions)', () => {
 
     it('should not include policy feedback as a service option', () => {
       const serviceField = find(
-        this.interactionForm.children,
+        interactionForm.children,
         ({ name }) => name === 'service'
       )
       const policyFeedbackOption = find(
@@ -500,19 +501,20 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should set the return link source of the add action', () => {
-      expect(this.interactionForm.returnLink).to.equal('/return')
+      expect(interactionForm.returnLink).to.equal('/return')
     })
 
     it('should set the appropriate return text', () => {
-      expect(this.interactionForm.returnText).to.equal('Cancel')
+      expect(interactionForm.returnText).to.equal('Cancel')
     })
 
     it('should set the appropriate save button text', () => {
-      expect(this.interactionForm.buttonText).to.equal('Add interaction')
+      expect(interactionForm.buttonText).to.equal('Add interaction')
     })
   })
 
   context('When adding an interaction from a company', () => {
+    let interactionForm
     beforeEach(async () => {
       req.params = {
         ...req.params,
@@ -531,13 +533,13 @@ describe('Interaction edit controller (Interactions)', () => {
 
       nock(config.apiRoot)
         .get('/v3/contact?company_id=1&limit=500')
-        .reply(200, { results: this.contactsData })
+        .reply(200, { results: contactsData })
         .get('/v4/metadata/team')
         .reply(200, metadataMock.teamOptions)
         .get('/v4/metadata/service?contexts__has_any=export_interaction')
         .reply(200, metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
-        .reply(200, { results: this.activeInactiveAdviserData })
+        .reply(200, { results: activeInactiveAdviserData })
         .get('/v4/metadata/communication-channel')
         .reply(200, metadataMock.channelOptions)
         .get('/v4/metadata/service-delivery-status')
@@ -548,17 +550,17 @@ describe('Interaction edit controller (Interactions)', () => {
         .reply(200, metadataMock.policyIssueType)
 
       await controller.renderEditPage(req, res, nextStub)
-      this.interactionForm = res.render.getCall(0).args[1].interactionForm
+      interactionForm = res.render.getCall(0).args[1].interactionForm
     })
 
     it('should set the company id as a hidden field', () => {
-      const companyField = this.interactionForm.hiddenFields.company
+      const companyField = interactionForm.hiddenFields.company
       expect(companyField).to.equal('1')
     })
 
     it('should include a contact dropdown with no preselected value', () => {
       const contactField = find(
-        this.interactionForm.children,
+        interactionForm.children,
         ({ name }) => name === 'contacts'
       )
       expect(contactField.value).to.be.null
@@ -566,6 +568,7 @@ describe('Interaction edit controller (Interactions)', () => {
   })
 
   context('when editing an interaction from a company', () => {
+    let interactionForm
     beforeEach(async () => {
       req.params = {
         ...req.params,
@@ -587,13 +590,13 @@ describe('Interaction edit controller (Interactions)', () => {
 
       nock(config.apiRoot)
         .get('/v3/contact?company_id=1&limit=500')
-        .reply(200, { results: this.contactsData })
+        .reply(200, { results: contactsData })
         .get('/v4/metadata/team')
         .reply(200, metadataMock.teamOptions)
         .get('/v4/metadata/service?contexts__has_any=export_interaction')
         .reply(200, metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
-        .reply(200, { results: this.activeInactiveAdviserData })
+        .reply(200, { results: activeInactiveAdviserData })
         .get('/v4/metadata/communication-channel')
         .reply(200, metadataMock.channelOptions)
         .get('/v4/metadata/service-delivery-status')
@@ -604,7 +607,7 @@ describe('Interaction edit controller (Interactions)', () => {
         .reply(200, metadataMock.policyIssueType)
 
       await controller.renderEditPage(req, res, nextStub)
-      this.interactionForm = res.render.getCall(0).args[1].interactionForm
+      interactionForm = res.render.getCall(0).args[1].interactionForm
     })
 
     it('should render the interaction page', async () => {
@@ -626,7 +629,7 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should generate a form with the required fields and values populated', () => {
-      const fields = this.interactionForm.children.map((field) =>
+      const fields = interactionForm.children.map((field) =>
         pick(field, [
           'name',
           'label',
@@ -765,7 +768,7 @@ describe('Interaction edit controller (Interactions)', () => {
 
     it('should provide a list of contacts', () => {
       const contactField = find(
-        this.interactionForm.children,
+        interactionForm.children,
         ({ name }) => name === 'contacts'
       )
       const contacts = contactField.children[0]
@@ -777,7 +780,7 @@ describe('Interaction edit controller (Interactions)', () => {
 
     it('should provide a list of services at creation time', () => {
       const serviceField = find(
-        this.interactionForm.children,
+        interactionForm.children,
         ({ name }) => name === 'service'
       )
       expect(serviceField.options).to.deep.equal([
@@ -801,7 +804,7 @@ describe('Interaction edit controller (Interactions)', () => {
 
     it('should provide a list of sub services at creation time', () => {
       const subSrviceField = find(
-        this.interactionForm.children,
+        interactionForm.children,
         ({ name }) => name === 'subService'
       )
       expect(subSrviceField.options).to.deep.equal([
@@ -811,7 +814,7 @@ describe('Interaction edit controller (Interactions)', () => {
 
     it('should provide a list of communication channels at creation time', () => {
       const communicationChannelField = find(
-        this.interactionForm.children,
+        interactionForm.children,
         ({ name }) => name === 'communication_channel'
       )
       expect(communicationChannelField.options).to.deep.equal([
@@ -822,18 +825,18 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should set the company id as a hidden field', () => {
-      const companyField = this.interactionForm.hiddenFields.company
+      const companyField = interactionForm.hiddenFields.company
       expect(companyField).to.equal('1')
     })
 
     it('should set the id in a hidden field', () => {
-      const idField = this.interactionForm.hiddenFields.id
+      const idField = interactionForm.hiddenFields.id
       expect(idField).to.equal('af4aac84-4d6a-47df-a733-5a54e3008c32')
     })
 
     it('should not include policy feedback as a service option', () => {
       const serviceField = find(
-        this.interactionForm.children,
+        interactionForm.children,
         ({ name }) => name === 'service'
       )
       const policyFeedbackOption = find(
@@ -844,21 +847,22 @@ describe('Interaction edit controller (Interactions)', () => {
     })
 
     it('should set the return link to the detail view', () => {
-      expect(this.interactionForm.returnLink).to.equal(
+      expect(interactionForm.returnLink).to.equal(
         '/interactions/af4aac84-4d6a-47df-a733-5a54e3008c32'
       )
     })
 
     it('should set the appropriate return text', () => {
-      expect(this.interactionForm.returnText).to.equal('Return without saving')
+      expect(interactionForm.returnText).to.equal('Return without saving')
     })
 
     it('should set the appropriate save button text', () => {
-      expect(this.interactionForm.buttonText).to.equal('Save and return')
+      expect(interactionForm.buttonText).to.equal('Save and return')
     })
   })
 
   context('When adding an interaction from an investment project', () => {
+    let interactionForm
     beforeEach(async () => {
       req.params = {
         ...req.params,
@@ -881,7 +885,7 @@ describe('Interaction edit controller (Interactions)', () => {
 
       nock(config.apiRoot)
         .get('/v3/contact?company_id=1&limit=500')
-        .reply(200, { results: this.contactsData })
+        .reply(200, { results: contactsData })
         .get('/v4/metadata/team')
         .reply(200, metadataMock.teamOptions)
         .get(
@@ -889,7 +893,7 @@ describe('Interaction edit controller (Interactions)', () => {
         )
         .reply(200, metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
-        .reply(200, { results: this.activeInactiveAdviserData })
+        .reply(200, { results: activeInactiveAdviserData })
         .get('/v4/metadata/communication-channel')
         .reply(200, metadataMock.channelOptions)
         .get('/v4/metadata/service-delivery-status')
@@ -900,23 +904,22 @@ describe('Interaction edit controller (Interactions)', () => {
         .reply(200, metadataMock.policyIssueType)
 
       await controller.renderEditPage(req, res, nextStub)
-      this.interactionForm = res.render.getCall(0).args[1].interactionForm
+      interactionForm = res.render.getCall(0).args[1].interactionForm
     })
 
     it('should set the investment project id as a hidden field', () => {
-      const investmentField = this.interactionForm.hiddenFields
-        .investment_project
+      const investmentField = interactionForm.hiddenFields.investment_project
       expect(investmentField).to.equal('3')
     })
 
     it('should set the company id as a hidden field', () => {
-      const companyField = this.interactionForm.hiddenFields.company
+      const companyField = interactionForm.hiddenFields.company
       expect(companyField).to.equal('1')
     })
 
     it('should include a contact dropdown with no preselected value', () => {
       const contactField = find(
-        this.interactionForm.children,
+        interactionForm.children,
         ({ name }) => name === 'contacts'
       )
       expect(contactField.value).to.be.null
@@ -948,7 +951,7 @@ describe('Interaction edit controller (Interactions)', () => {
 
       nock(config.apiRoot)
         .get('/v3/contact?company_id=1&limit=500')
-        .reply(200, { results: this.contactsData })
+        .reply(200, { results: contactsData })
         .get('/v4/metadata/team')
         .reply(200, metadataMock.teamOptions)
         .get(
@@ -956,7 +959,7 @@ describe('Interaction edit controller (Interactions)', () => {
         )
         .reply(200, metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
-        .reply(200, { results: this.activeInactiveAdviserData })
+        .reply(200, { results: activeInactiveAdviserData })
         .get('/v4/metadata/communication-channel')
         .reply(200, metadataMock.channelOptions)
         .get('/v4/metadata/service-delivery-status')
@@ -967,16 +970,17 @@ describe('Interaction edit controller (Interactions)', () => {
         .reply(200, metadataMock.policyIssueType)
 
       await controller.renderEditPage(req, res, nextStub)
-      this.interactionForm = res.render.getCall(0).args[1].interactionForm
     })
 
     it('should set the interaction id in a hidden field', () => {
-      const idField = this.interactionForm.hiddenFields.investment_project
+      const interactionForm = res.render.getCall(0).args[1].interactionForm
+      const idField = interactionForm.hiddenFields.investment_project
       expect(idField).to.equal('3')
     })
   })
 
   context('when displaying an interaction that failed to save', () => {
+    let interactionForm
     beforeEach(async () => {
       req.params = {
         ...req.params,
@@ -1008,13 +1012,13 @@ describe('Interaction edit controller (Interactions)', () => {
 
       nock(config.apiRoot)
         .get('/v3/contact?company_id=1&limit=500')
-        .reply(200, { results: this.contactsData })
+        .reply(200, { results: contactsData })
         .get('/v4/metadata/team')
         .reply(200, metadataMock.teamOptions)
         .get('/v4/metadata/service?contexts__has_any=export_interaction')
         .reply(200, metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
-        .reply(200, { results: this.activeInactiveAdviserData })
+        .reply(200, { results: activeInactiveAdviserData })
         .get('/v4/metadata/communication-channel')
         .reply(200, metadataMock.channelOptions)
         .get('/v4/metadata/service-delivery-status')
@@ -1025,11 +1029,11 @@ describe('Interaction edit controller (Interactions)', () => {
         .reply(200, metadataMock.policyIssueType)
 
       await controller.renderEditPage(req, res, nextStub)
-      this.interactionForm = res.render.getCall(0).args[1].interactionForm
+      interactionForm = res.render.getCall(0).args[1].interactionForm
     })
 
     it('should merge the changes on top of the original record', () => {
-      const fields = this.interactionForm.children.map((field) =>
+      const fields = interactionForm.children.map((field) =>
         pick(field, [
           'name',
           'label',
@@ -1169,7 +1173,7 @@ describe('Interaction edit controller (Interactions)', () => {
 
     it('should include the error in the form', () => {
       const subjectField = find(
-        this.interactionForm.children,
+        interactionForm.children,
         ({ name }) => name === 'subject'
       )
       expect(subjectField.error).to.deep.equal(['Error message'])
@@ -1204,13 +1208,13 @@ describe('Interaction edit controller (Interactions)', () => {
 
       nock(config.apiRoot)
         .get('/v3/contact?company_id=1&limit=500')
-        .reply(200, { results: this.contactsData })
+        .reply(200, { results: contactsData })
         .get('/v4/metadata/team')
         .reply(200, metadataMock.teamOptions)
         .get('/v4/metadata/service?contexts__has_any=export_service_delivery')
         .reply(200, metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
-        .reply(200, { results: this.activeInactiveAdviserData })
+        .reply(200, { results: activeInactiveAdviserData })
         .get('/v4/metadata/communication-channel')
         .reply(200, metadataMock.channelOptions)
         .get('/v4/metadata/service-delivery-status')
@@ -1259,13 +1263,13 @@ describe('Interaction edit controller (Interactions)', () => {
 
         nock(config.apiRoot)
           .get('/v3/contact?company_id=1&limit=500')
-          .reply(200, { results: this.contactsData })
+          .reply(200, { results: contactsData })
           .get('/v4/metadata/team')
           .reply(200, metadataMock.teamOptions)
           .get('/v4/metadata/service?contexts__has_any=export_service_delivery')
           .reply(200, metadataMock.serviceOptions)
           .get('/adviser/?limit=100000&offset=0')
-          .reply(200, { results: this.activeInactiveAdviserData })
+          .reply(200, { results: activeInactiveAdviserData })
           .get('/v4/metadata/communication-channel')
           .reply(200, metadataMock.channelOptions)
           .get('/v4/metadata/service-delivery-status')
@@ -1313,13 +1317,13 @@ describe('Interaction edit controller (Interactions)', () => {
 
       nock(config.apiRoot)
         .get('/v3/contact?company_id=1&limit=500')
-        .reply(200, { results: this.contactsData })
+        .reply(200, { results: contactsData })
         .get('/v4/metadata/team')
         .reply(200, metadataMock.teamOptions)
         .get('/v4/metadata/service?contexts__has_any=export_service_delivery')
         .reply(200, metadataMock.serviceOptions)
         .get('/adviser/?limit=100000&offset=0')
-        .reply(200, { results: this.activeInactiveAdviserData })
+        .reply(200, { results: activeInactiveAdviserData })
         .get('/v4/metadata/communication-channel')
         .reply(200, metadataMock.channelOptions)
         .get('/v4/metadata/service-delivery-status')
