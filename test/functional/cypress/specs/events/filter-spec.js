@@ -50,20 +50,6 @@ describe('Events Collections Filter', () => {
     cy.get(selectors.entityCollection.collectionRowButton).should('be.visible')
   })
 
-  // it('should filter by region', () => {
-  //   cy.get(selectors.filter.events.firstUkRegion).click()
-
-  //   cy.wait('@filterResults').then((xhr) => {
-  //     expect(xhr.url).to.contain(
-  //       'uk_region=934cd12a-6095-e211-a939-e4115bead28a'
-  //     )
-  //   })
-
-  //   cy.get(selectors.entityCollection.entities)
-  //     .children()
-  //     .should('have.length', 1)
-  // })
-
   it('should filter by uk region', () => {
     const { typeahead } = selectors.filter
     const { ukRegion } = selectors.filter.events
