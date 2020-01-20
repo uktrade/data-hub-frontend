@@ -12,7 +12,7 @@ const enforce = require('express-sslify')
 const favicon = require('serve-favicon')
 const cookieParser = require('cookie-parser')
 const minifyHTML = require('express-minify-html')
-var proxy = require('http-proxy-middleware')
+const proxy = require('http-proxy-middleware')
 
 const config = require('./config')
 const title = require('./middleware/title')
