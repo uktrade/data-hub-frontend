@@ -34,6 +34,12 @@ function* taskSaga(task, action) {
   }
 }
 
+/**
+ * Creates the saga required for the `Task` component
+ * @param {Object} registry - An object mapping _tasks_ to names.
+ * A task is a function which takes a payload and returns a {Promise}.
+ * @returns {Generator} - The saga
+ */
 export default (registry) =>
   function* tasksSaga() {
     while (true) {
