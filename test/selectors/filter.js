@@ -26,12 +26,12 @@ module.exports = {
   },
   omis: {
     country: '#group-field-primary_market',
-    firstUkRegion: '[for="field-uk_region-1"]',
+    ukRegion: '#group-field-company_uk_region',
     sector: '#group-field-sector_descends',
   },
   events: {
     country: '#group-field-address_country',
-    firstUkRegion: '[for="field-uk_region-1"]',
+    ukRegion: '#group-field-uk_region',
   },
   companies: {
     country: '#group-field-address_country',
