@@ -13,7 +13,7 @@ module.exports = {
     sector: '#group-field-company_sector_descends',
     companyName: '#field-company_name',
     country: '#group-field-address_country',
-    firstUkRegion: '[for="field-company_uk_region-1"]',
+    ukRegion: '#group-field-company_uk_region',
   },
   interaction: {
     myInteractions: '[for="field-dit_participants__adviser-1"]',
