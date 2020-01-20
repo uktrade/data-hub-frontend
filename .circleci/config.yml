@@ -189,19 +189,13 @@ aliases:
     command: celery worker -A config -l info -Q celery,long-running --concurrency 3
 
   # Non master branch Common workflow config
-  - &common_at_workflow_config
+  - &common_workflow_config
     requires:
       - dependencies
-      - lint_code
-      - unit_tests
-      - unit_client_tests
-      - functional_tests
     filters:
       branches:
         ignore:
           - master
-          - /^skip-tests.*/
-          - /^release.*/
 
 jobs:
   # Save yarn dependencies to cache
@@ -308,12 +302,12 @@ jobs:
     parallelism: 9
     steps:
       - checkout
-      - *wait_for_mock_sso
       - *restore_yarn_cache
       - *start_api_sandbox
-      - *wait_for_api_sandbox
       - run: yarn install --pure-lockfile
       - run: yarn build:prod
+      - *wait_for_mock_sso
+      - *wait_for_api_sandbox
       - *start_frontend
       - *wait_for_frontend
       - run:
@@ -333,12 +327,12 @@ jobs:
       - *docker_mock_sso
     steps:
       - checkout
-      - *wait_for_mock_sso
       - *restore_yarn_cache
       - *start_api_sandbox
-      - *wait_for_api_sandbox
       - run: yarn install --pure-lockfile
       - run: yarn build:prod
+      - *wait_for_mock_sso
+      - *wait_for_api_sandbox
       - *start_frontend
       - *wait_for_frontend
       - run:
@@ -367,11 +361,11 @@ jobs:
       - *docker_data_hub_backend_celery
     steps:
       - checkout
-      - *wait_for_backend
-      - *wait_for_mock_sso
       - *restore_yarn_cache
       - run: yarn install --pure-lockfile
       - run: yarn build:prod
+      - *wait_for_backend
+      - *wait_for_mock_sso
       - *start_frontend
       - *wait_for_frontend
       - *create_cucumber_dirs
@@ -398,11 +392,11 @@ jobs:
       - *docker_data_hub_backend_celery
     steps:
       - checkout
-      - *wait_for_backend
-      - *wait_for_mock_sso
       - *restore_yarn_cache
       - run: yarn install --pure-lockfile
       - run: yarn build:prod
+      - *wait_for_backend
+      - *wait_for_mock_sso
       - *start_frontend
       - *wait_for_frontend
       - *create_cucumber_dirs
@@ -429,11 +423,11 @@ jobs:
       - *docker_data_hub_backend_celery
     steps:
       - checkout
-      - *wait_for_backend
-      - *wait_for_mock_sso
       - *restore_yarn_cache
       - run: yarn install --pure-lockfile
       - run: yarn build:prod
+      - *wait_for_backend
+      - *wait_for_mock_sso
       - *start_frontend
       - *wait_for_frontend
       - *create_cucumber_dirs
@@ -449,19 +443,11 @@ workflows:
   datahub:
     jobs:
       - dependencies
-      - lint_code:
-          requires:
-            - dependencies
-      - unit_tests:
-          requires:
-            - dependencies
-      - unit_client_tests:
-          requires:
-            - dependencies
-      - functional_tests:
-          requires:
-            - dependencies
-      - visual_tests: *common_at_workflow_config
-      - dit_staff_e2e: *common_at_workflow_config
-      - da_staff_e2e: *common_at_workflow_config
-      - lep_staff_e2e: *common_at_workflow_config
+      - lint_code: *common_workflow_config
+      - unit_tests: *common_workflow_config
+      - unit_client_tests: *common_workflow_config
+      - functional_tests: *common_workflow_config
+      - visual_tests: *common_workflow_config
+      - dit_staff_e2e: *common_workflow_config
+      - da_staff_e2e: *common_workflow_config
+      - lep_staff_e2e: *common_workflow_config
