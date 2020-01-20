@@ -12,7 +12,10 @@ const {
 
 const setReturnUrl = require('./middleware/set-return-url')
 const { getRequestBody } = require('../../middleware/collection')
-const { getCollection } = require('../../modules/search/middleware/collection')
+const {
+  getCollection,
+  exportCollection,
+} = require('../../modules/search/middleware/collection')
 
 const { renderCompanyList } = require('./controllers/list')
 const { renderDetails } = require('./controllers/details')
@@ -92,6 +95,14 @@ router.get(
   search,
   getCollection('company', ENTITIES, transformCompanyToListItem),
   renderCompanyList
+)
+
+router.get(
+  urls.companies.export.route,
+  setDefaultQuery(DEFAULT_COLLECTION_QUERY),
+  getRequestBody(QUERY_FIELDS),
+  lastInteractionDate,
+  exportCollection('company')
 )
 
 router.use(urls.companies.create.route, addCompanyFormRouter)
