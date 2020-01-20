@@ -26,7 +26,7 @@ module.exports = {
   },
   omis: {
     country: '#group-field-primary_market',
-    ukRegion: '#group-field-company_uk_region',
+    firstUkRegion: '[for="field-uk_region-1"]',
     sector: '#group-field-sector_descends',
   },
   events: {
