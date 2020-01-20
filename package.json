@@ -40,7 +40,7 @@
     "circle:acceptance:da-staff": "yarn circle:acceptance --tag da --skiptags ignore",
     "heroku-postbuild": "yarn cache clean && npm rebuild && npm run build",
     "lint-staged": "lint-staged",
-    "wavy-check": "grep -rlE \"(proxyquire|rewire|require).*?\\(.*?~\" test src | wc -l | { read count; if [ $count -gt 0 ]; then echo \"wavy dependency still in use by $count files\"; else echo '🎉 wavy dependency can be removed 🎉'; fi; }"
+    "wavy-check": "grep -rlE \"((proxyquire|rewire|require).*?\\(|@import).*?~\" test src assets/stylesheets | wc -l | { read count; if [ $count -gt 0 ]; then echo \"wavy dependency still in use by $count files\"; else echo '🎉 wavy dependency can be removed 🎉'; fi; }"
   },
   "pre-commit": "lint-staged, wavy-check",
   "lint-staged": {
