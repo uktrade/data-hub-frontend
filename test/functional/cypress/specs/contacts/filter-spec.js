@@ -63,20 +63,6 @@ describe('Contacts Collections Filter', () => {
       .should('have.length', 1)
   })
 
-  // it('should filter by region', () => {
-  //   cy.get(selectors.filter.contacts.firstUkRegion).click()
-
-  //   cy.wait('@filterResults').then((xhr) => {
-  //     expect(xhr.url).to.contain(
-  //       'uk_region=934cd12a-6095-e211-a939-e4115bead28a'
-  //     )
-  //   })
-
-  //   cy.get(selectors.entityCollection.entities)
-  //     .children()
-  //     .should('have.length', 1)
-  // })
-
   it('should remove default active status filter', () => {
     cy.get(selectors.filter.statusActive).click()
 
