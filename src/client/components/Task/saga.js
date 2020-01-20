@@ -13,19 +13,15 @@ function* taskSaga(task, action) {
   yield put({ ...action, type: TASK__PROGRESS })
   try {
     const result = yield call(task, action.payload)
-    const { id, name } = action
-    yield put({
-      type: action.redirectToAction,
-      payload: action.payload,
-      result,
-    })
-    yield put({ type: TASK__SUCCESS, id, name })
-    const clearOnSuccess = yield select((state) =>
-      _.get(state, ['tasks', name, id, 'clearOnSuccess'])
-    )
-    if (clearOnSuccess) {
-      yield put({ type: TASK__CLEAR, id, name })
+    const { id, name, payload, onSuccessDispatch } = action
+    if (onSuccessDispatch) {
+      yield put({
+        type: onSuccessDispatch,
+        payload,
+        result,
+      })
     }
+    yield put({ type: TASK__CLEAR, id, name })
   } catch (error) {
     const { id, name } = action
     yield put({
