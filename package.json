@@ -39,10 +39,9 @@
     "circle:acceptance:dit-staff": "yarn circle:acceptance --skiptags ignore,da,lep",
     "circle:acceptance:da-staff": "yarn circle:acceptance --tag da --skiptags ignore",
     "heroku-postbuild": "yarn cache clean && npm rebuild && npm run build",
-    "lint-staged": "lint-staged",
-    "wavy-check": "grep -rlE \"((proxyquire|rewire|require).*?\\(|@import).*?~\" test src assets/stylesheets | wc -l | { read count; if [ $count -gt 0 ]; then echo \"wavy dependency still in use by $count files\"; else echo '🎉 wavy dependency can be removed 🎉'; fi; }"
+    "lint-staged": "lint-staged"
   },
-  "pre-commit": "lint-staged, wavy-check",
+  "pre-commit": "lint-staged",
   "lint-staged": {
     "*.{js,jsx}": "eslint",
     "*.scss": "sass-lint -v -q -c .sass-lint.yml"
@@ -212,7 +211,6 @@
     "sinon": "^5.0.10",
     "sinon-chai": "^3.1.0",
     "supertest": "^3.3.0",
-    "wavy": "^1.0.4",
     "wdio-chromedriver-service": "^5.0.1"
   },
   "sasslintConfig": ".sass-lint.yml",

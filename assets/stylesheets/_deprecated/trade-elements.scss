@@ -7,14 +7,14 @@ $asset-path: "../" !default;
 
 // GOV UK Toolkit
 // These govuk_frontend_toolkit helpers are used in govuk-elements-sass work
-@import "~govuk_frontend_toolkit/stylesheets/grid_layout";
-@import "~govuk_frontend_toolkit/stylesheets/typography";
+@import "../../../node_modules/govuk_frontend_toolkit/stylesheets/grid_layout";
+@import "../../../node_modules/govuk_frontend_toolkit/stylesheets/typography";
 // GOV UK Elements
-@import "~govuk-elements-sass/public/sass/elements/helpers";
-@import "~govuk-elements-sass/public/sass/elements/reset";
-@import "~govuk-elements-sass/public/sass/elements/elements-typography";
-@import "~govuk-elements-sass/public/sass/elements/layout";
-@import "~govuk-elements-sass/public/sass/elements/lists";
+@import "../../../node_modules/govuk-elements-sass/public/sass/elements/helpers";
+@import "../../../node_modules/govuk-elements-sass/public/sass/elements/reset";
+@import "../../../node_modules/govuk-elements-sass/public/sass/elements/elements-typography";
+@import "../../../node_modules/govuk-elements-sass/public/sass/elements/layout";
+@import "../../../node_modules/govuk-elements-sass/public/sass/elements/lists";
 
 
 // Component styles
