@@ -24,7 +24,13 @@ export default (state = {}, { type, ...action }) => {
     case TASK__ERROR:
       return setTaskState(state, action, 'error')
     case TASK__CLEAR:
-      return _.omit(state, `${action.name}.${action.id}`)
+      return _.omit(
+        state,
+        Object.entries(state[action.name]).length > 1
+          ? `${action.name}.${action.id}`
+          : // Remove the whole task group if removing its last task
+            action.name
+      )
     default:
       return state
   }
