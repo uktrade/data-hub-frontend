@@ -9,7 +9,7 @@ const {
   populateExportForm,
   renderExportEdit,
   handleEditFormPost,
-} = require('./exports')
+} = require('./controller')
 
 router.get(urls.companies.exports.index.route, setReturnUrl, renderExports)
 
