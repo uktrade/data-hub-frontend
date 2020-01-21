@@ -10,6 +10,18 @@ exports.events = function(req, res) {
     'name:asc': eventSort,
   }
 
+  if (req.body.uk_region) {
+    var regionQuery = req.body.uk_region
+    var regions = typeof regionQuery === 'string' ? [regionQuery] : regionQuery
+    var ukRegionFilteredResults = _.filter(events.results, function(contact) {
+      return _.intersection(regions, [_.get(contact, 'uk_region.id')]).length
+    })
+    return res.json({
+      count: ukRegionFilteredResults.length,
+      results: ukRegionFilteredResults,
+    })
+  }
+
   if (
     req.body.name ||
     req.body.archived ||

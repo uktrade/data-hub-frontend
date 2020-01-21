@@ -56,7 +56,7 @@ describe('Events Collections Filter', () => {
     cy.get(typeahead(ukRegion).selectedOption)
       .click()
       .get(typeahead(ukRegion).textInput)
-      .type('North West')
+      .type('North East')
       .get(typeahead(ukRegion).options)
       .should('have.length', 1)
       .get(typeahead(ukRegion).textInput)
@@ -65,9 +65,13 @@ describe('Events Collections Filter', () => {
 
     cy.wait('@filterResults').then((xhr) => {
       expect(xhr.url).to.contain(
-        'uk_region=824cd12a-6095-e211-a939-e4115bead28a'
+        'uk_region=814cd12a-6095-e211-a939-e4115bead28a'
       )
     })
+
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 1)
   })
 
   it('should remove all filters', () => {
