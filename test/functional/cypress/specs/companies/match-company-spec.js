@@ -93,6 +93,22 @@ describe('Match a company', () => {
     }
   )
 
+  context('when one of the search results is clicked', () => {
+    before(() => {
+      cy.visit(urls.companies.match.index(fixtures.company.dnbCorp.id))
+      cy.get(companyMatch.find.companyNameInput).type('some company')
+      cy.get(companyMatch.find.button).click()
+      cy.get(companyMatch.find.results.someCompany).click()
+    })
+
+    it('should redirect to the the match confirmation page', () => {
+      cy.location('pathname').should(
+        'eq',
+        urls.companies.match.confirmation(fixtures.company.dnbCorp.id, 12345678)
+      )
+    })
+  })
+
   context('when company matching is confirmed', () => {
     before(() => {
       cy.visit(

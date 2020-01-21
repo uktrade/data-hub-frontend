@@ -9,7 +9,17 @@ const { searchDnbCompanies } = require('../../../../modules/search/services')
 const ZENDESK_TICKET_TAG_MATCH_REQUEST = 'dnb_match_request'
 const ZENDESK_TICKET_TYPE_TASK = 'task'
 
-function parseCountry(country, countries) {
+function getCountries(token) {
+  return getOptions(token, 'country', {
+    transformer: ({ id, name, iso_alpha2_code }) => ({
+      id,
+      name,
+      iso_alpha2_code,
+    }),
+  })
+}
+
+function getCountryName(country, countries) {
   return get(
     typeof country === 'string'
       ? countries.find((c) => c.iso_alpha2_code === country)
@@ -18,12 +28,17 @@ function parseCountry(country, countries) {
   )
 }
 
+function getCountryCode(company, countries) {
+  const companyID = get(company, 'address.country.id')
+  return get(countries.find((c) => c.id === companyID), 'iso_alpha2_code')
+}
+
 function parseAddress(dnbCompany, countries, prefix = '') {
   return Object.values(
     pick(
       {
         ...dnbCompany,
-        [`${prefix}country`]: parseCountry(
+        [`${prefix}country`]: getCountryName(
           get(dnbCompany, `${prefix}country`),
           countries
         ),
@@ -44,10 +59,7 @@ async function renderMatchConfirmation(req, res, next) {
     const { company } = res.locals
     const { token } = req.session
     const { dunsNumber } = req.params
-
-    const countries = await getOptions(token, 'country', {
-      transformer: ({ name, iso_alpha2_code }) => ({ name, iso_alpha2_code }),
-    })
+    const countries = await getCountries(token)
 
     const results = await searchDnbCompanies({
       token,
@@ -151,13 +163,18 @@ async function submitMatchRequest(req, res) {
 async function renderFindCompanyForm(req, res, next) {
   try {
     const { company } = res.locals
+    const { token } = req.session
+    const countries = await getCountries(token)
 
     res
       .breadcrumb(company.name, urls.companies.detail(company.id))
       .breadcrumb('Find this company record')
       .render('companies/apps/match-company/views/find-company', {
         props: {
-          company: pick(company, ['id']),
+          company: {
+            ...pick(company, ['id']),
+            countryCode: getCountryCode(company, countries),
+          },
         },
       })
   } catch (error) {
