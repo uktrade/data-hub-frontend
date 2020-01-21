@@ -32,17 +32,17 @@
   "one_list_group_tier": null,
   "contacts": [],
   "employee_range": null,
-  "export_to_countries": [],
+  "export_countries": [],
   "headquarter_type": null,
   "one_list_group_global_account_manager": null,
   "sector": {
-      "name": "Aerospace : Manufacturing and Assembly : Space Technology",
-      "id": "b622c9d2-5f95-e211-a939-e4115bead28a"
+    "name": "Aerospace : Manufacturing and Assembly : Space Technology",
+    "id": "b622c9d2-5f95-e211-a939-e4115bead28a"
   },
   "turnover_range": null,
   "uk_region": {
-      "name": "North East",
-      "id": "814cd12a-6095-e211-a939-e4115bead28a"
+    "name": "North East",
+    "id": "814cd12a-6095-e211-a939-e4115bead28a"
   },
   "investment_projects_invested_in": [],
   "investment_projects_invested_in_count": 0,
