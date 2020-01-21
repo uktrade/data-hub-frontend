@@ -136,6 +136,10 @@ describe('Contacts Collections Filter', () => {
       expect(xhr.url).to.contain(
         'uk_region=824cd12a-6095-e211-a939-e4115bead28a'
       )
+
+      cy.get(selectors.entityCollection.entities)
+        .children()
+        .should('have.length', 5)
     })
   })
 })
