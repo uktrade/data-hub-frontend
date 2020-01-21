@@ -44,6 +44,8 @@ function renderExports(req, res) {
     .render('companies/apps/exports/views/exports-view', {
       exportDetails,
       exportPotentials: Object.values(exportPotentialLabels),
+      findExportersUrl: urls.external.findExporters(),
+      feedbackLink: urls.support(),
     })
 }
 
