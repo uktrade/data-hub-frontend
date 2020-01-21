@@ -86,7 +86,6 @@ const config = {
   paginationMaxResults: 10000,
   paginationDefaultSize: 10,
   performanceDashboardsUrl: process.env.PERFORMANCE_DASHBOARDS_URL,
-  findExportersUrl: process.env.FIND_EXPORTERS_URL,
   archivedDocumentsBaseUrl: process.env.ARCHIVED_DOCUMENTS_BASE_URL,
   oauth: {
     url: process.env.OAUTH2_AUTH_URL,

@@ -23,6 +23,10 @@ describe('urls', () => {
       expect(urls.external.companiesHouse(companyNumber)).to.equal(
         `https://beta.companieshouse.gov.uk/company/${companyNumber}`
       )
+
+      expect(urls.external.findExporters()).to.equal(
+        'https://find-exporters.datahub.trade.gov.uk/'
+      )
     })
   })
 

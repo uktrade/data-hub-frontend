@@ -68,6 +68,7 @@ module.exports = {
     greatProfile: (id) => config.greatProfileUrl.replace('{id}', id),
     companiesHouse: (companyNumber) =>
       `https://beta.companieshouse.gov.uk/company/${companyNumber}`,
+    findExporters: () => 'https://find-exporters.datahub.trade.gov.uk/',
   },
   dashboard: url('/'),
   companies: {
