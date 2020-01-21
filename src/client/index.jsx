@@ -21,6 +21,7 @@ import LeadAdvisers from '../apps/companies/apps/advisers/client/LeadAdvisers'
 import LargeCapitalProfileCollection from '../apps/investments/client/LargeCapitalProfileCollection'
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
+import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
 
 import tasksSaga from './components/Task/saga'
 import tasks from './components/Task/reducer'
@@ -135,6 +136,9 @@ function App() {
         {(props) => (
           <ManageAdviser {...props} csrfToken={globalProps.csrfToken} />
         )}
+      </Mount>
+      <Mount selector="#company-export-index-page">
+        {(props) => <ExportsIndex {...props} />}
       </Mount>
     </Provider>
   )

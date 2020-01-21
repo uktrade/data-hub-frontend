@@ -2,10 +2,7 @@
   "id": "cc7e2f19-7251-4a41-a27a-f98437720531",
   "reference_code": "",
   "name": "DnB Corp",
-  "trading_names": [
-    "DnB",
-    "D&B"
-  ],
+  "trading_names": ["DnB", "D&B"],
   "uk_based": false,
   "company_number": null,
   "vat_number": "",
@@ -36,8 +33,7 @@
   },
   "number_of_employees": 95,
   "is_number_of_employees_estimated": true,
-  "export_to_countries": [],
-  "future_interest_countries": [],
+  "export_countries": [],
   "headquarter_type": null,
   "one_list_group_global_account_manager": null,
   "global_headquarters": null,

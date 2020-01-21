@@ -16,7 +16,6 @@ const companyMock = require('../../../../../../test/unit/data/companies/company-
 describe('Company export controller', () => {
   let updateCompany
   let saveCompanyExportDetails
-  let transformerSpy
   let middlewareParameters
   let controller
   let metadata
@@ -46,7 +45,6 @@ describe('Company export controller', () => {
         saveCompanyExportDetails,
       },
       '../../../../lib/metadata': metadata,
-      './transformer': transformerSpy,
     })
   })
 
@@ -68,20 +66,16 @@ describe('Company export controller', () => {
       )
     })
 
-    it('should call the transformer to get the deails', () => {
-      expect(transformerSpy).to.be.calledWith(companyMock)
-    })
-
     it('should render the correct view', () => {
       expect(middlewareParameters.resMock.render.args[0][0]).to.equal(
-        'companies/apps/exports/views/exports-view'
+        'companies/apps/exports/views/index'
       )
       expect(middlewareParameters.resMock.render).to.have.been.calledOnce
     })
 
     it('should exports to view', () => {
       expect(middlewareParameters.resMock.render.args[0][1]).to.have.property(
-        'exportDetails'
+        'props'
       )
     })
   })
@@ -319,7 +313,7 @@ describe('Company export controller', () => {
 
     it('should render the correct view', () => {
       expect(middlewareParameters.resMock.render.args[0][0]).to.equal(
-        'companies/apps/exports/views/exports-edit'
+        'companies/apps/exports/views/edit'
       )
       expect(middlewareParameters.resMock.render).to.have.been.calledOnce
     })

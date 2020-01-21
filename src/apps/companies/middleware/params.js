@@ -22,13 +22,6 @@ async function getCompany(req, res, next, id) {
     company.isGlobalHQ =
       company.headquarter_type && company.headquarter_type.name === 'ghq'
 
-    if (features[NEW_COUNTRIES_FEATURE]) {
-      delete company.export_to_countries
-      delete company.future_interest_countries
-    } else {
-      delete company.export_countries
-    }
-
     res.locals.company = company
     next()
   } catch (error) {
