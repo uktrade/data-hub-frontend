@@ -14,6 +14,19 @@ exports.contacts = function(req, res) {
     'company.name:asc': contactSortBy,
     'last_name:asc': contactSortBy,
   }
+  if (req.body.company_uk_region) {
+    var regionQuery = req.body.company_uk_region
+    var regions = typeof regionQuery === 'string' ? [regionQuery] : regionQuery
+    var ukRegionFilteredResults = _.filter(contacts.results, function(contact) {
+      return _.intersection(regions, [
+        _.get(contact, 'company_uk_region.id'),
+      ]).length
+    })
+    return res.json({
+      count: ukRegionFilteredResults.length,
+      results: ukRegionFilteredResults,
+    })
+  }
 
   if (
     req.body.name === 'FilterByContacts' ||
