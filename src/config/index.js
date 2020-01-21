@@ -65,6 +65,8 @@ const config = {
   },
   assetsHost: process.env.ASSETS_HOST,
   logLevel: process.env.LOG_LEVEL || (isDev ? 'debug' : 'error'),
+  logResponses: process.env.LOG_RESPONSES === 'true',
+  logRequests: process.env.LOG_REQUESTS === 'true',
   zen: {
     ticketsURL: process.env.ZEN_TICKETS_URL,
     token: process.env.ZEN_TOKEN,
