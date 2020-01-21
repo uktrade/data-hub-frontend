@@ -19,7 +19,7 @@ describe('Company export controller', () => {
     saveCompany = sinon.stub()
     transformerSpy = sinon.spy()
 
-    controller = proxyquire('../exports', {
+    controller = proxyquire('../controller', {
       '../../repos': {
         saveCompany,
       },
@@ -37,9 +37,7 @@ describe('Company export controller', () => {
           },
         ],
       },
-      '../../transformers': {
-        transformCompanyToExportDetailsView: transformerSpy,
-      },
+      './transformer': transformerSpy,
     })
   })
 

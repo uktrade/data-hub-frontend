@@ -1,14 +1,14 @@
 const proxyquire = require('proxyquire')
 const faker = require('faker')
 
-const minimalCompany = require('../../../../../test/unit/data/companies/minimal-company.json')
+const minimalCompany = require('../../../../../../test/unit/data/companies/minimal-company.json')
 
-const transformerPath = '../company-to-export-details-view'
+const transformerPath = '../transformer'
 const EXPORT_POTENTIAL_LABEL = 'Export potential'
 
 const {
   generateExportCountries,
-} = require('../../../../../test/unit/helpers/generate-export-countries')
+} = require('../../../../../../test/unit/helpers/generate-export-countries')
 
 describe('transformCompanyToExportDetailsView', () => {
   let transformCompanyToExportDetailsView
@@ -23,7 +23,7 @@ describe('transformCompanyToExportDetailsView', () => {
       },
     }
     transformCompanyToExportDetailsView = proxyquire(transformerPath, {
-      '../../../lib/urls': urls,
+      '../../../../lib/urls': urls,
     })
   })
 
