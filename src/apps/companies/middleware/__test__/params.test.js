@@ -26,7 +26,9 @@ describe('Companies form middleware', () => {
     redirectSpy = sinon.spy()
     reqMock = { query: {}, session: { token: 2 } }
     resMock = {
-      locals: {},
+      locals: {
+        features: {},
+      },
     }
 
     middleware = proxyquire(
@@ -46,37 +48,94 @@ describe('Companies form middleware', () => {
   })
 
   describe('getCompany', () => {
-    context('when the company is not a One list Tier D ITA', () => {
-      before(async () => {
-        getDitCompanyStub.resolves(company)
-        await middleware.getCompany(reqMock, resMock, nextSpy, 2)
-      })
+    let expectedCompany
+    function removeOldCountries(company) {
+      delete company.export_to_countries
+      delete company.future_interest_countries
 
-      it('should return the company', () => {
-        expect(resMock.locals).to.have.deep.property('company', {
+      return company
+    }
+
+    function addFeatureFlag(res) {
+      res.locals.features['interaction-add-countries'] = true
+      return res
+    }
+    context('when the company is not a One list Tier D ITA', () => {
+      before(() => {
+        getDitCompanyStub.resolves(company)
+      })
+      beforeEach(async () => {
+        expectedCompany = {
           ...company,
           isItaTierDAccount: false,
           hasAllocatedLeadIta: true,
           hasManagedAccountDetails: true,
           isGlobalHQ: null,
           isUltimate: false,
+        }
+      })
+
+      context('With the interaction-add-countries set', () => {
+        it('should return the company without the old countries fields', async () => {
+          addFeatureFlag(resMock)
+          await middleware.getCompany(reqMock, resMock, nextSpy, 2)
+          expect(resMock.locals).to.have.deep.property(
+            'company',
+            removeOldCountries(expectedCompany)
+          )
+        })
+      })
+
+      context('With no features set', () => {
+        it('should return the company without the old countries fields', async () => {
+          await middleware.getCompany(reqMock, resMock, nextSpy, 2)
+          expect(resMock.locals).to.have.deep.property(
+            'company',
+            expectedCompany
+          )
         })
       })
     })
+
     context('when the company is a One list Tier D ITA', () => {
-      before(async () => {
+      before(() => {
         getDitCompanyStub.resolves(oneListTypeDItaCompany)
-        await middleware.getCompany(reqMock, resMock, nextSpy, 2)
       })
 
-      it('should return the company', () => {
-        expect(resMock.locals).to.have.deep.property('company', {
+      beforeEach(() => {
+        expectedCompany = {
           ...oneListTypeDItaCompany,
           isItaTierDAccount: true,
           hasAllocatedLeadIta: true,
           hasManagedAccountDetails: true,
           isGlobalHQ: null,
           isUltimate: false,
+        }
+      })
+
+      context('With the interaction-add-countries set', () => {
+        it('should return the company without the old countries fields', async () => {
+          addFeatureFlag(resMock)
+          await middleware.getCompany(reqMock, resMock, nextSpy, 2)
+
+          expect(resMock.locals).to.have.deep.property(
+            'company',
+            removeOldCountries(expectedCompany)
+          )
+        })
+      })
+
+      context('With no features set', () => {
+        it('should return the company without the old countries fields', async () => {
+          await middleware.getCompany(reqMock, resMock, nextSpy, 2)
+          expect(resMock.locals).to.have.deep.property('company', {
+            ...oneListTypeDItaCompany,
+            isItaTierDAccount: true,
+            hasAllocatedLeadIta: true,
+            hasManagedAccountDetails: true,
+            isGlobalHQ: null,
+            isUltimate: false,
+          })
         })
       })
     })
