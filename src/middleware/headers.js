@@ -1,14 +1,14 @@
 const logger = require('../config/logger')
 
+const STS_MAX_AGE = 180 * 24 * 60 * 60
+
 module.exports = function headers(req, res, next) {
   if (
     req.url.indexOf('/css') === -1 &&
     req.url.indexOf('/javascripts') === -1 &&
     req.url.indexOf('/images') === -1
   ) {
-    logger.debug('adding headers')
-
-    const STS_MAX_AGE = 180 * 24 * 60 * 60
+    logger.debug('Headers middleware -> Adding response headers')
 
     res.set('Cache-Control', 'no-cache, no-store, must-revalidate, private')
     res.set('Pragma', 'no-cache')
