@@ -32,13 +32,6 @@ const { renderSubsidiaries } = require('./controllers/subsidiaries')
 const { renderLinkSubsidiary } = require('./controllers/subsidiary-link')
 
 const {
-  renderExports,
-  populateExportForm,
-  renderExportEdit,
-  handleEditFormPost,
-} = require('./controllers/exports')
-
-const {
   setDefaultQuery,
   redirectToFirstNavItem,
   handleRoutePermissions,
@@ -77,6 +70,7 @@ const dnbHierarchyRouter = require('./apps/dnb-hierarchy/router')
 const businessDetailsRouter = require('./apps/business-details/router')
 const editHistoryRouter = require('./apps/edit-history/router')
 const matchCompanyRouter = require('./apps/match-company/router')
+const exportsRouter = require('./apps/exports/router')
 const investmentsRouter = require('./apps/investments/router')
 const interactionsRouter = require('../interactions/router.sub-app')
 const companyListsRouter = require('../company-lists/router')
@@ -126,12 +120,6 @@ router.use(
 )
 router.get(urls.companies.detail.route, redirectToFirstNavItem)
 router.get(urls.companies.details.route, renderDetails)
-
-router.get(urls.companies.exports.index.route, setReturnUrl, renderExports)
-router
-  .route(urls.companies.exports.edit.route)
-  .get(populateExportForm, renderExportEdit)
-  .post(populateExportForm, handleEditFormPost, renderExportEdit)
 
 router.get(urls.companies.businessDetails.route, renderBusinessDetails)
 
@@ -187,5 +175,7 @@ router.use(dnbHierarchyRouter)
 router.use(businessDetailsRouter)
 
 router.use(matchCompanyRouter)
+
+router.use(exportsRouter)
 
 module.exports = router

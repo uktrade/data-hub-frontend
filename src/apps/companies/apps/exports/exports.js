@@ -1,21 +1,21 @@
 /* eslint-disable camelcase */
 const { filter, flatten } = require('lodash')
 
-const metadataRepo = require('../../../lib/metadata')
-const urls = require('../../../lib/urls')
-const groupExportCountries = require('../../../lib/group-export-countries')
-const getExportCountries = require('../../../lib/get-export-countries')
+const metadataRepo = require('../../../../lib/metadata')
+const urls = require('../../../../lib/urls')
+const groupExportCountries = require('../../../../lib/group-export-countries')
+const getExportCountries = require('../../../../lib/get-export-countries')
 
-const { saveCompany } = require('../repos')
-const { transformObjectToOption } = require('../../transformers')
-const { transformCompanyToExportDetailsView } = require('../transformers')
-const { exportDetailsLabels, exportPotentialLabels } = require('../labels')
+const { saveCompany } = require('../../repos')
+const { transformObjectToOption } = require('../../../transformers')
+const { transformCompanyToExportDetailsView } = require('../../transformers')
+const { exportDetailsLabels, exportPotentialLabels } = require('../../labels')
 
 const {
   NEW_COUNTRIES_FEATURE,
   EXPORT_INTEREST_STATUS,
   EXPORT_INTEREST_STATUS_VALUES,
-} = require('../../constants')
+} = require('../../../constants')
 
 function getId(obj) {
   return obj.id
@@ -41,7 +41,7 @@ function renderExports(req, res) {
   res
     .breadcrumb(company.name, urls.companies.detail(company.id))
     .breadcrumb('Exports')
-    .render('companies/views/exports-view', {
+    .render('companies/apps/exports/views/exports-view', {
       exportDetails,
       exportPotentials: Object.values(exportPotentialLabels),
     })
@@ -84,7 +84,7 @@ function renderExportEdit(req, res) {
     .breadcrumb(company.name, urls.companies.detail(company.id))
     .breadcrumb('Exports', urls.companies.exports.index(company.id))
     .breadcrumb('Edit')
-    .render('companies/views/exports-edit', {
+    .render('companies/apps/exports/views/exports-edit', {
       exportDetailsLabels,
       exportExperienceCategories: metadataRepo.exportExperienceCategory.map(
         transformObjectToOption
