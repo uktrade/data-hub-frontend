@@ -24,20 +24,20 @@ describe('getExportCountries', () => {
         })
       ).to.deep.equal([
         {
-          country: { id: countries[0] },
-          status: EXPORT_INTEREST_STATUS.FUTURE_INTEREST,
-        },
-        {
-          country: { id: countries[1] },
-          status: EXPORT_INTEREST_STATUS.FUTURE_INTEREST,
-        },
-        {
           country: { id: countries[2] },
           status: EXPORT_INTEREST_STATUS.EXPORTING_TO,
         },
         {
           country: { id: countries[3] },
           status: EXPORT_INTEREST_STATUS.EXPORTING_TO,
+        },
+        {
+          country: { id: countries[0] },
+          status: EXPORT_INTEREST_STATUS.FUTURE_INTEREST,
+        },
+        {
+          country: { id: countries[1] },
+          status: EXPORT_INTEREST_STATUS.FUTURE_INTEREST,
         },
         {
           country: { id: countries[4] },
@@ -67,12 +67,12 @@ describe('getExportCountries', () => {
         })
       ).to.deep.equal([
         {
-          country: { id: countries[0] },
-          status: EXPORT_INTEREST_STATUS.FUTURE_INTEREST,
-        },
-        {
           country: { id: countries[1] },
           status: EXPORT_INTEREST_STATUS.EXPORTING_TO,
+        },
+        {
+          country: { id: countries[0] },
+          status: EXPORT_INTEREST_STATUS.FUTURE_INTEREST,
         },
         {
           country: { id: countries[2] },
