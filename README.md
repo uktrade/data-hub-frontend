@@ -39,10 +39,31 @@ and be provided with a back end server to provide the API, data storage and sear
 
 1.  Go to the project root.
 
-2.  Start the server:
+2.  Create a `.env` file with `cp docker.sample.env .env`.
+
+3.  By default, the frontend container will use the mock-sso instance specified
+    in `docker-compose.yml`.  To use this, you will also need to specify the `MOCK_SSO_USERNAME`
+    environment variable in `.env`.
+    This value should correspond with an `Advisor.email` value in the Data Hub backend
+
+4.  Optionally, you can point the frontend to a different backend by specifying
+    an `API_ROOT` in `.env`. e.g. To connect the frontend docker container to the
+    shared dev environment backend.
+
+    If you want to point `API_ROOT` to a data-hub-api docker container, ensure
+    that both containers are running under docker-compose with the same
+    `COMPOSE_PROJECT_NAME` specified in each `.env` file. This will make sure
+    that the containers share a network. The following snippet in `.env` should then
+    do the trick:
+
+    ```
+    API_ROOT=http://api:8000
+    ```
+  
+5.  Start the server:
 
     ```bash
-    docker-compose up
+    docker-compose up frontend
     ```
 
     The server will start in developer mode, which means that when you make local changes it will auto-compile assets, and will restart nodejs.
@@ -50,16 +71,6 @@ and be provided with a back end server to provide the API, data storage and sear
     You can access the server on port 3000,
     [http://localhost:3000](http://localhost:3000). You can also run a remote
     debug session over port 9229 if using webstorm/Intellij or Visual Studio Code.
-
-3.  Optionally, you can point the frontend to a different backend:
-
-    ```bash
-    API_ROOT=example.com docker-compose up frontend
-    ```
-
-    If using the mock-sso instance specified in `docker-compose.yml`, you will
-    also need to specify the `MOCK_SSO_USERNAME` environment variable in `.env`.
-    This value should correspond with an `Advisor.email` value in the Data Hub backend
 
 ### Running project natively
 
