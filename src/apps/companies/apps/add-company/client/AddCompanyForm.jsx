@@ -67,7 +67,10 @@ function AddCompanyForm({
   }
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form
+      onSubmit={onSubmit}
+      onExit={() => 'Changes that you made will not be saved.'}
+    >
       {({ values, setFieldValue }) => {
         const country = getCountry(values)
         const countryID = get(country, 'key')
