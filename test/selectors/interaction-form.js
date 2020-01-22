@@ -25,6 +25,7 @@ module.exports = {
     secondTypeaheadRemoveLink: `${typeaheadId} .c-form-group__inner .c-form-group--AddItems:nth-child(2) .js-AddItems__remove`,
   },
   communicationChannel: '#field-communication_channel',
+  eventLabel: '#group-field-is_event legend',
   eventYes: 'label[for=field-is_event-1]',
   eventNo: 'label[for=field-is_event-2]',
   event: '#field-event',

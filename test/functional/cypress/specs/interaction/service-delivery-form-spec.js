@@ -24,6 +24,10 @@ describe('Service delivery form', () => {
     cy.get(selectors.interactionForm.ditAdviserTypeahead.fieldset).should(
       'to.exist'
     )
+    cy.get(selectors.interactionForm.eventLabel).should(
+      'have.text',
+      'Is this an event?'
+    )
     cy.get(selectors.interactionForm.eventYes).should('be.visible')
     cy.get(selectors.interactionForm.eventNo).should('be.visible')
     cy.get(selectors.interactionForm.event).should('not.be.visible')
