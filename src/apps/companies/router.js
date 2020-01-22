@@ -23,7 +23,6 @@ const { renderDetails } = require('./controllers/details')
 const { renderBusinessDetails } = require('./apps/business-details/controllers')
 
 const { renderOrders } = require('./controllers/orders')
-const { renderAuditLog } = require('./controllers/audit')
 const { archiveCompany, unarchiveCompany } = require('./controllers/archive')
 const { renderContacts } = require('./controllers/contacts')
 const { renderDocuments } = require('./controllers/documents')
@@ -148,7 +147,6 @@ router.get(
 )
 
 router.get(urls.companies.orders.route, setReturnUrl, renderOrders)
-router.get(urls.companies.audit.route, renderAuditLog)
 router.get(urls.companies.documents.route, renderDocuments)
 router.use(
   urls.companies.investments.companyInvestment.route,

@@ -41,7 +41,9 @@ const RenderHasAccountManager = ({
     </Table>
     <p>
       You can{' '}
-      <a href={companies.audit(companyId)}>see changes in the Audit trail</a>
+      <a href={companies.editHistory.index(companyId)}>
+        see changes in the Edit history
+      </a>
     </p>
     {hasPermissionToAddIta && (
       <FormActions>
