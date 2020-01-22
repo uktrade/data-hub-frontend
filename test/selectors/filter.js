@@ -31,7 +31,7 @@ module.exports = {
   },
   events: {
     country: '#group-field-address_country',
-    firstUkRegion: '[for="field-uk_region-1"]',
+    ukRegion: '#group-field-uk_region',
   },
   companies: {
     country: '#group-field-address_country',
