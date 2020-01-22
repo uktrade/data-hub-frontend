@@ -68,11 +68,17 @@ const contactFiltersFields = function({ sectorOptions }) {
       target: 'metadata',
       label: 'Country',
     },
-    assign({}, globalFields.ukRegions, {
+    {
+      macroName: 'Typeahead',
       name: 'company_uk_region',
-      type: 'checkbox',
-      modifier: 'option-select',
-    }),
+      isAsync: false,
+      placeholder: 'Search UK region',
+      useSubLabel: false,
+      options: globalFields.ukRegions.options(),
+      hideInactive: false,
+      target: 'metadata',
+      label: 'UK region',
+    },
     {
       macroName: 'MultipleChoiceField',
       name: 'archived',
