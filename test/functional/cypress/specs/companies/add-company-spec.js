@@ -177,6 +177,17 @@ describe('Add company form', () => {
                   )
                 })
 
+                it('should display company name', () => {
+                  cy.get(selectors.companyAdd.summary).should(
+                    'contain',
+                    'Registered company name'
+                  )
+                  cy.get(selectors.companyAdd.summary).should(
+                    'contain',
+                    'Some other company'
+                  )
+                })
+
                 it('should display Companies House number', () => {
                   cy.get(selectors.companyAdd.summary).should(
                     'contain',
