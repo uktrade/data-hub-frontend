@@ -71,9 +71,7 @@ const common = {
             {
               loader: 'postcss-loader',
               options: {
-                plugins: (loader) => [
-                  require('autoprefixer')(),
-                ],
+                plugins: (loader) => [require('autoprefixer')()],
                 sourceMap: config.isDev,
               },
             },
@@ -83,7 +81,10 @@ const common = {
               options: {
                 sourceMap: true, // required for resolve-url-loader
                 includePaths: [
-                  path.resolve(__dirname, 'node_modules/govuk_frontend_toolkit/stylesheets'),
+                  path.resolve(
+                    __dirname,
+                    'node_modules/govuk_frontend_toolkit/stylesheets'
+                  ),
                   path.resolve(__dirname, 'node_modules/vue-multiselect/dist'),
                 ],
               },
@@ -94,19 +95,13 @@ const common = {
     ],
   },
   resolve: {
-    modules: [
-      'node_modules',
-      path.resolve(__dirname, 'src'),
-    ],
+    modules: ['node_modules', path.resolve(__dirname, 'src')],
     alias: {
-      'vue$': 'vue/dist/vue.common.js',
+      vue$: 'vue/dist/vue.common.js',
     },
     extensions: ['*', '.js', '.jsx', '.vue', '.json'],
   },
-  plugins: [
-    new WebpackAssetsManifest(),
-    new VueLoaderPlugin(),
-  ],
+  plugins: [new WebpackAssetsManifest(), new VueLoaderPlugin()],
   node: {
     fs: 'empty',
     child_process: 'empty',
@@ -116,7 +111,8 @@ const common = {
   },
 }
 
-const webpackEnv = process.env.WEBPACK_ENV || (config.isProd ? 'prod' : 'develop')
+const webpackEnv =
+  process.env.WEBPACK_ENV || (config.isProd ? 'prod' : 'develop')
 
 const envConfig = require(`./webpack.config.${webpackEnv}`)
 const webpackConfig = merge.smart(common, envConfig)
