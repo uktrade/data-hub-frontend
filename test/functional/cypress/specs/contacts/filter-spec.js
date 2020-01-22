@@ -63,20 +63,6 @@ describe('Contacts Collections Filter', () => {
       .should('have.length', 1)
   })
 
-  it('should filter by region', () => {
-    cy.get(selectors.filter.contacts.firstUkRegion).click()
-
-    cy.wait('@filterResults').then((xhr) => {
-      expect(xhr.url).to.contain(
-        'uk_region=934cd12a-6095-e211-a939-e4115bead28a'
-      )
-    })
-
-    cy.get(selectors.entityCollection.entities)
-      .children()
-      .should('have.length', 1)
-  })
-
   it('should remove default active status filter', () => {
     cy.get(selectors.filter.statusActive).click()
 
@@ -131,5 +117,29 @@ describe('Contacts Collections Filter', () => {
   it('should remove all filters', () => {
     cy.get(selectors.entityCollection.collectionRemoveAllFilter).click()
     cy.url().should('contain', 'custom=true&name=&company_name=')
+  })
+
+  it('should filter by uk region', () => {
+    const { typeahead } = selectors.filter
+    const { ukRegion } = selectors.filter.contacts
+    cy.get(typeahead(ukRegion).selectedOption)
+      .click()
+      .get(typeahead(ukRegion).textInput)
+      .type('North West')
+      .get(typeahead(ukRegion).options)
+      .should('have.length', 1)
+      .get(typeahead(ukRegion).textInput)
+      .type('{enter}')
+      .type('{esc}')
+
+    cy.wait('@filterResults').then((xhr) => {
+      expect(xhr.url).to.contain(
+        'uk_region=824cd12a-6095-e211-a939-e4115bead28a'
+      )
+
+      cy.get(selectors.entityCollection.entities)
+        .children()
+        .should('have.length', 5)
+    })
   })
 })
