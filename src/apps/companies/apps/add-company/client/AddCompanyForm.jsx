@@ -8,16 +8,11 @@ import axios from 'axios'
 import { get } from 'lodash'
 import { H3 } from '@govuk-react/heading'
 
-import {
-  FieldDnbCompany,
-  FieldRadios,
-  FieldSelect,
-  Form,
-  Step,
-} from 'data-hub-components'
+import { FieldRadios, FieldSelect, Form, Step } from 'data-hub-components'
 
 import CompanyFoundStep from './CompanyFoundStep'
 import CompanyNotFoundStep from './CompanyNotFoundStep'
+import CompanySearchStep from './CompanySearchStep'
 import { ISO_CODE } from './constants'
 
 function AddCompanyForm({
@@ -85,7 +80,7 @@ function AddCompanyForm({
         }, [countryID])
 
         return (
-          <div>
+          <>
             <Step name="companyLocation">
               <H3>Where is this company located?</H3>
 
@@ -96,16 +91,11 @@ function AddCompanyForm({
               />
             </Step>
 
-            <Step name="companySearch" forwardButton={null} backButton={null}>
-              <H3>Find the company</H3>
-
-              <FieldDnbCompany
-                apiEndpoint={`/companies/create/dnb/company-search?_csrf=${csrfToken}`}
-                queryParams={{ address_country: countryIsoCode }}
-                name="dnbCompany"
-                country={countryName}
-              />
-            </Step>
+            <CompanySearchStep
+              countryName={countryName}
+              countryIsoCode={countryIsoCode}
+              csrfToken={csrfToken}
+            />
 
             {!values.cannotFind && (
               <CompanyFoundStep countryName={countryName} />
@@ -119,7 +109,7 @@ function AddCompanyForm({
                 country={country}
               />
             )}
-          </div>
+          </>
         )
       }}
     </Form>
