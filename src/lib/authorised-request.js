@@ -62,9 +62,10 @@ function parseOptions(opts, token) {
   }
 }
 
-function logResponse(requestOpts) {
+function createResponseLogger(requestOpts) {
   return (data) => {
-    const responseInfo = `Response for ${requestOpts.method} to ${requestOpts.url}:`
+    const statusCode = (data && data.statusCode) || ''
+    const responseInfo = `Response ${statusCode} for ${requestOpts.method} to ${requestOpts.url}:`
     try {
       logger.debug(responseInfo, JSON.stringify(data, null, 2))
     } catch (e) {
@@ -105,7 +106,11 @@ function authorisedRequest(token, opts) {
   const r = requestPromise(requestOptions)
 
   if (LOG_RESPONSE) {
-    return r.then(logResponse(requestOptions))
+    const logResponse = createResponseLogger(requestOptions)
+    return r.then(logResponse, (err) => {
+      logResponse(err)
+      throw err
+    })
   }
 
   return r
