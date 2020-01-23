@@ -43,7 +43,7 @@ function parseOptions(opts, token) {
     },
     json: true,
     method: 'GET',
-    proxy: process.env.PROXY,
+    proxy: config.proxy,
   }
 
   if (isString(opts)) {
@@ -129,7 +129,7 @@ function authorisedRawRequest(token, opts) {
 }
 
 // accept untrusted certificates for dev environments
-if (config.isDev && process.env.PROXY) {
+if (config.isDev && config.proxy) {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 }
 

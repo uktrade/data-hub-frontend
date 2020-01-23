@@ -141,7 +141,7 @@ describe('Investment form middleware - client relationship management', () => {
             `/investments/projects/${investmentData.id}/team`
           )
           expect(this.resMock.locals.form.oneListEmail).to.equal(
-            'one.list@example.com'
+            config.oneList.email
           )
         }
       )

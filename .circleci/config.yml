@@ -4,109 +4,89 @@ aliases:
   - &postgres_version           postgres:10
   - &mi_postgres_version        postgres:9.6
   - &elasticsearch_version      docker.elastic.co/elasticsearch/elasticsearch:6.8.2
-  - &api_image                  quay.io/uktrade/data-hub-api:master
+  - &api_image                  quay.io/uktrade/data-hub-api
   - &oauth2_dit_staff_token     ditStaffToken
   - &oauth2_da_staff_token      daStaffToken
   - &oauth2_lep_staff_token     lepStaffToken
 
-  # Common steps
   - &restore_yarn_cache
     restore_cache:
       name: Restore yarn dependencies cache
       key: yarn-dependency-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
 
-  # Configuration shared between user_acceptance* jobs
-  - &at_container_config
-    working_directory: ~/data-hub-frontend
-
-  # Common steps for user_acceptance* jobs
   - &wait_for_backend
     run:
       name: Wait for backend
       command: dockerize -wait ${API_ROOT}/admin/ -timeout 300s
 
-  # Wait for mock-sso to report OK
   - &wait_for_mock_sso
     run:
       name: Wait for mock sso
       command: dockerize -wait ${MOCK_SSO_ROOT}/healthcheck -timeout 60s
 
-  # Start frontend
   - &start_frontend
     run:
       name: Start data hub frontend
       command: yarn start
       background: true
 
-  # Wait for frontend to report OK
   - &wait_for_frontend
     run:
       name: Wait for data hub frontend
       command: dockerize -wait ${QA_HOST}/healthcheck -timeout 180s
 
-  # Start sandbox
   - &start_api_sandbox
     run:
       name: Start API sandbox
       command: java -jar /usr/local/sandbox.jar --port=8001 --watch=false --base=./test/sandbox run
       background: true
 
-  # Wait for api sandbox to report OK
   - &wait_for_api_sandbox
     run:
       name: Wait for api sandbox
       command: dockerize -wait ${API_ROOT}/ping.xml -timeout 120s
 
-  # Create required cucumber directories
-  - &create_cucumber_dirs
-    run:
-      name: Create cucumber directories
-      command: mkdir -p ~/data-hub-frontend/cucumber/{reports,screenshots}
-
   # Data hub base environment variables
   - &data_hub_base_envs
+    NODE_ENV: development
+    WEBPACK_ENV: prod
     API_ROOT: http://localhost:8000
-    MOCK_SSO_ROOT: http://localhost:8080
     QA_HOST: http://localhost:3000
-    QA_SELENIUM_HOST: 127.0.0.1
-    QA_SELENIUM_PORT: 4444
     REDIS_HOST: localhost
     LOG_LEVEL: debug
+    MOCK_SSO_ROOT: http://localhost:8080
+    QA_SELENIUM_HOST: 127.0.0.1
+    QA_SELENIUM_PORT: 4444
     OAUTH2_TOKEN_FETCH_URL: http://localhost:8080/o/token
     OAUTH2_USER_PROFILE_URL: http://localhost:8080/api/v1/user/me
     OAUTH2_AUTH_URL: http://localhost:8080/o/authorize
     OAUTH2_REDIRECT_URL: http://localhost:3000/oauth/callback
+    OAUTH2_LOGOUT_URL:  http://localhost:8080/o/logout
     OAUTH2_CLIENT_SECRET: youAintSeenMyRight
     OAUTH2_CLIENT_ID: randomClientId
-    ARCHIVED_DOCUMENTS_BASE_URL: http://example-documents-url.io
-    OAUTH2_DEV_TOKEN: *oauth2_dit_staff_token
     SESSION_SECRET: theStrongestAvenger
     HELP_CENTRE_URL: https://datahub-helpcentre.london.cloudapps.digital
     HELP_CENTRE_ANNOUNCMENTS_URL: https://datahub-helpcentre.london.cloudapps.digital/updates/announcements
     HELP_CENTRE_API_FEED: https://datahub-helpcentre.london.cloudapps.digital/api/feeds/announcements
     DATA_HUB_BACKEND_ACCESS_KEY_ID: frontend-key-id
     DATA_HUB_BACKEND_SECRET_ACCESS_KEY: frontend-key
+    ZEN_TICKETS_URL: http://zendesk.example.com
+    ZEN_TOKEN: nobodyKnows
+    ZEN_EMAIL: zendesk@example.com
+    ONE_LIST_EMAIL: onelist@example.com
+    PERFORMANCE_DASHBOARDS_URL: http://dashboard.example.com
+    FIND_EXPORTERS_URL: http://exporters.example.com
+    ARCHIVED_DOCUMENTS_BASE_URL: http://documents.example.com
+    POSTCODE_KEY: fakeKey
+    CACHE_ASSETS: "true"
 
   - &data_hub_functional_envs
+    <<: *data_hub_base_envs
     API_ROOT: http://localhost:8001
-    QA_HOST: http://localhost:3000
-    LOG_LEVEL: debug
-    REDIS_HOST: localhost
-    MOCK_SSO_ROOT: http://localhost:8080
-    OAUTH2_TOKEN_FETCH_URL: http://localhost:8080/o/token
-    OAUTH2_USER_PROFILE_URL: http://localhost:8080/api/v1/user/me
-    OAUTH2_AUTH_URL: http://localhost:8080/o/authorize
-    OAUTH2_REDIRECT_URL: http://localhost:3000/oauth/callback
-    OAUTH2_CLIENT_SECRET: youAintSeenMyRight
-    OAUTH2_CLIENT_ID: randomClientId
     OAUTH2_DEV_TOKEN: ditStaffToken
     OAUTH2_BYPASS_SSO: true
-    CACHE_ASSETS: "true"
     HELP_CENTRE_API_FEED: http://localhost:8001/help-centre/announcement
     HELP_CENTRE_FEED_API_TOKEN: apiToken
-    SESSION_SECRET: theStrongestAvenger
-    DATA_HUB_BACKEND_ACCESS_KEY_ID: frontend-key-id
-    DATA_HUB_BACKEND_SECRET_ACCESS_KEY: frontend-key
     ZEN_TICKETS_URL: http://localhost:8001/zendesk/tickets
 
   # Data hub base docker container
@@ -200,7 +180,6 @@ aliases:
 jobs:
   # Save yarn dependencies to cache
   dependencies:
-    <<: *at_container_config
     docker:
       - <<: *docker_data_hub_base
     steps:
@@ -216,7 +195,6 @@ jobs:
 
   # Run linting jobs
   lint_code:
-    <<: *at_container_config
     docker:
       - <<: *docker_data_hub_base
     steps:
@@ -237,7 +215,6 @@ jobs:
 
   # Run unit tests and store results
   unit_tests:
-    <<: *at_container_config
     docker:
       - *docker_data_hub_base
     steps:
@@ -266,20 +243,20 @@ jobs:
 
   # Run unit client tests and store results
   unit_client_tests:
-    <<: *at_container_config
     docker:
       - <<: *docker_data_hub_base
     steps:
       - checkout
       - *restore_yarn_cache
       - run: yarn install --pure-lockfile
-      - run: yarn build:prod
+      - run: yarn build
       - run:
           name: Run client-side unit tests
           command: |
             mkdir junit
             yarn circle:unit-client
           environment:
+            WEBPACK_ENV: develop
             MOCHA_FILE: junit/test-results.xml
           when: always
       - store_test_results:
@@ -293,7 +270,6 @@ jobs:
 
   # Run functional tests
   functional_tests:
-    <<: *at_container_config
     docker:
       - <<: *docker_data_hub_base
         environment: *data_hub_functional_envs
@@ -305,7 +281,7 @@ jobs:
       - *restore_yarn_cache
       - *start_api_sandbox
       - run: yarn install --pure-lockfile
-      - run: yarn build:prod
+      - run: yarn build
       - *wait_for_mock_sso
       - *wait_for_api_sandbox
       - *start_frontend
@@ -319,7 +295,6 @@ jobs:
 
   # Run visual tests
   visual_tests:
-    <<: *at_container_config
     docker:
       - <<: *docker_data_hub_base
         environment: *data_hub_functional_envs
@@ -330,7 +305,7 @@ jobs:
       - *restore_yarn_cache
       - *start_api_sandbox
       - run: yarn install --pure-lockfile
-      - run: yarn build:prod
+      - run: yarn build
       - *wait_for_mock_sso
       - *wait_for_api_sandbox
       - *start_frontend
@@ -346,7 +321,6 @@ jobs:
 
   # Run e2e tests for DIT staff
   dit_staff_e2e:
-    <<: *at_container_config
     docker:
       - <<: *docker_data_hub_base
         environment:
@@ -363,12 +337,11 @@ jobs:
       - checkout
       - *restore_yarn_cache
       - run: yarn install --pure-lockfile
-      - run: yarn build:prod
+      - run: yarn build
       - *wait_for_backend
       - *wait_for_mock_sso
       - *start_frontend
       - *wait_for_frontend
-      - *create_cucumber_dirs
       - run:
           name: Run DIT staff e2e tests
           command: yarn test:e2e:dit --browser chrome
@@ -377,7 +350,6 @@ jobs:
 
   # Run e2e tests for LEP staff
   lep_staff_e2e:
-    <<: *at_container_config
     docker:
       - <<: *docker_data_hub_base
         environment:
@@ -394,12 +366,11 @@ jobs:
       - checkout
       - *restore_yarn_cache
       - run: yarn install --pure-lockfile
-      - run: yarn build:prod
+      - run: yarn build
       - *wait_for_backend
       - *wait_for_mock_sso
       - *start_frontend
       - *wait_for_frontend
-      - *create_cucumber_dirs
       - run:
           name: Run LEP staff e2e tests
           command: yarn test:e2e:lep --browser chrome
@@ -408,7 +379,6 @@ jobs:
 
   # Run e2e tests for DA staff
   da_staff_e2e:
-    <<: *at_container_config
     docker:
       - <<: *docker_data_hub_base
         environment:
@@ -425,12 +395,11 @@ jobs:
       - checkout
       - *restore_yarn_cache
       - run: yarn install --pure-lockfile
-      - run: yarn build:prod
+      - run: yarn build
       - *wait_for_backend
       - *wait_for_mock_sso
       - *start_frontend
       - *wait_for_frontend
-      - *create_cucumber_dirs
       - run:
           name: Run DA staff e2e tests
           command: yarn test:e2e:da --browser chrome

@@ -38,10 +38,14 @@ const {
   camelCase,
 } = require('lodash')
 require('numeral/locales/en-gb')
+const {
+  DATE_LONG_FORMAT,
+  DATE_TIME_MEDIUM_FORMAT,
+} = require('../../common/constants')
 
 numeral.locale('en-gb')
 
-const { longDateFormat, mediumDateTimeFormat, currencyFormat } = require('../')
+const { currencyFormat } = require('../')
 
 function isNotEmpty(value) {
   return (
@@ -188,7 +192,7 @@ const filters = {
     return number.toLocaleString(locales)
   },
 
-  formatDate: (value, format = longDateFormat) => {
+  formatDate: (value, format = DATE_LONG_FORMAT) => {
     if (!value) {
       return value
     }
@@ -200,7 +204,7 @@ const filters = {
     return dateFns.format(parsedDate, format)
   },
 
-  formatDateTime: (value, format = mediumDateTimeFormat) => {
+  formatDateTime: (value, format = DATE_TIME_MEDIUM_FORMAT) => {
     if (!value) {
       return value
     }
