@@ -44,7 +44,7 @@ and be provided with a back end server to provide the API, data storage and sear
 3.  By default, the frontend container will use the mock-sso instance specified
     in `docker-compose.yml`.  To use this, you will also need to specify the `MOCK_SSO_USERNAME`
     environment variable in `.env`.
-    This value should correspond with an `Advisor.email` value in the Data Hub backend
+    This value should correspond with an `Advisor.email` value in the Data Hub backend.
 
 4.  Optionally, you can point the frontend to a different backend by specifying
     an `API_ROOT` in `.env`. e.g. To connect the frontend docker container to the
