@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { filter, flatten } = require('lodash')
+const { filter, flatten, get, set } = require('lodash')
 
 const metadataRepo = require('../../../../lib/metadata')
 const urls = require('../../../../lib/urls')
@@ -29,6 +29,27 @@ function getExportCountryGroups(countries = []) {
   })
 
   return buckets
+}
+
+function getCountry(id) {
+  return metadataRepo.countryOptions.find((country) => country.id === id)
+}
+
+function getPostedFormData(body) {
+  const data = {
+    export_experience_category: body.export_experience_category,
+  }
+
+  EXPORT_INTEREST_STATUS_VALUES.forEach((status) => {
+    const options = []
+      .concat(body[status])
+      .filter((value) => value && value.length > 0)
+    if (options.length) {
+      data[status] = options.map(getCountry).map(transformObjectToOption)
+    }
+  })
+
+  return data
 }
 
 function renderExports(req, res) {
@@ -63,7 +84,7 @@ function populateExportForm(req, res, next) {
         export_experience_category,
         ...getExportCountryGroups(export_countries),
       },
-      req.body
+      req.method === 'POST' ? getPostedFormData(req.body) : {}
     )
   } else {
     res.locals.formData = Object.assign(
@@ -80,13 +101,14 @@ function populateExportForm(req, res, next) {
 }
 
 function renderExportEdit(req, res) {
-  const { company, features } = res.locals
+  const { company, features, errors } = res.locals
 
   res
     .breadcrumb(company.name, urls.companies.detail(company.id))
     .breadcrumb('Exports', urls.companies.exports.index(company.id))
     .breadcrumb('Edit')
     .render('companies/apps/exports/views/exports-edit', {
+      errors: errors || [],
       exportDetailsLabels,
       exportExperienceCategories: metadataRepo.exportExperienceCategory.map(
         transformObjectToOption
@@ -128,8 +150,17 @@ async function handleEditFormPost(req, res, next) {
     const save = await saveCompany(req.session.token, data)
 
     res.redirect(urls.companies.exports.index(save.id))
-  } catch (error) {
-    next(error)
+  } catch (err) {
+    if (err.statusCode !== 400) {
+      return next(err)
+    }
+
+    const nonFieldErrors = get(err.error, 'non_field_errors')
+
+    if (nonFieldErrors) {
+      set(res.locals, 'errors.nonField', nonFieldErrors)
+    }
+    next()
   }
 }
 
