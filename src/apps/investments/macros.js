@@ -64,13 +64,15 @@ const investmentFiltersFields = function({
       label: 'Country of origin',
     },
     {
-      macroName: 'MultipleChoiceField',
+      macroName: 'Typeahead',
       name: 'uk_region_location',
-      type: 'checkbox',
-      modifier: 'option-select',
-      options() {
-        return metadata.regionOptions.map(transformObjectToOption)
-      },
+      isAsync: false,
+      placeholder: 'Search UK region',
+      useSubLabel: false,
+      options: globalFields.ukRegions.options(),
+      hideInactive: false,
+      target: 'metadata',
+      label: 'UK region',
     },
     {
       macroName: 'MultipleChoiceField',
