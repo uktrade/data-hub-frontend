@@ -63,7 +63,7 @@ module.exports = function transformCompanyToExportDetailsView(
   const viewRecord = {
     exportExperienceCategory: company.export_experience_category || 'None',
     ...getCountriesFields(company, useNewCountries),
-    exportPotential: getExportPotentialLabel(company.export_potential_score),
+    exportPotential: getExportPotentialLabel(company.export_potential),
     greatProfile: getGreatProfileValue(
       company.great_profile_status,
       company.company_number
