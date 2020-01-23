@@ -1,11 +1,11 @@
 /* eslint-disable camelcase */
 const { flatMap } = require('lodash')
 
-const { getDataLabels } = require('../../../lib/controller-utils')
-const urls = require('../../../lib/urls')
-const { exportDetailsLabels, exportPotentialLabels } = require('../labels')
-const { EXPORT_INTEREST_STATUS } = require('../../constants')
-const groupExportCountries = require('../../../lib/group-export-countries')
+const { getDataLabels } = require('../../../../lib/controller-utils')
+const urls = require('../../../../lib/urls')
+const { exportDetailsLabels, exportPotentialLabels } = require('../../labels')
+const { EXPORT_INTEREST_STATUS } = require('../../../constants')
+const groupExportCountries = require('../../../../lib/group-export-countries')
 
 function getCountries(data) {
   return flatMap(data, ({ name }) => name || null).join(', ') || 'None'
