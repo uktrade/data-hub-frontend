@@ -7,6 +7,7 @@
 {% block body_main_content %}
 
   {% call Form({
+    errors: errors,
     buttonText: 'Save and return',
     returnText: 'Return without saving',
     returnLink: urls.companies.exports.index(company.id),

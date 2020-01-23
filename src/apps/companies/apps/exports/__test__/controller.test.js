@@ -3,6 +3,10 @@ const faker = require('faker')
 const urls = require('../../../../../lib/urls')
 const buildMiddlewareParameters = require('../../../../../../test/unit/helpers/middleware-parameters-builder')
 const {
+  generateCountries,
+} = require('../../../../../../test/unit/helpers/generate-export-countries')
+const { transformObjectToOption } = require('../../../../transformers')
+const {
   NEW_COUNTRIES_FEATURE,
   EXPORT_INTEREST_STATUS,
 } = require('../../../../constants')
@@ -14,29 +18,31 @@ describe('Company export controller', () => {
   let transformerSpy
   let middlewareParameters
   let controller
+  let metadata
 
   beforeEach(() => {
     saveCompany = sinon.stub()
     transformerSpy = sinon.spy()
+    metadata = {
+      countryOptions: [
+        {
+          id: '1234',
+          name: 'France',
+        },
+      ],
+      exportExperienceCategory: [
+        {
+          id: '73023b55-9568-4e3f-a134-53ec58451d3f',
+          name: 'Export growth',
+        },
+      ],
+    }
 
     controller = proxyquire('../controller', {
       '../../repos': {
         saveCompany,
       },
-      '../../../../lib/metadata': {
-        countryOptions: [
-          {
-            id: '1234',
-            name: 'France',
-          },
-        ],
-        exportExperienceCategory: [
-          {
-            id: '73023b55-9568-4e3f-a134-53ec58451d3f',
-            name: 'Export growth',
-          },
-        ],
-      },
+      '../../../../lib/metadata': metadata,
       './transformer': transformerSpy,
     })
   })
@@ -146,6 +152,7 @@ describe('Company export controller', () => {
         })
       })
     })
+
     context('when the new countries feature flag is true', () => {
       context('when no request body exists', () => {
         beforeEach(() => {
@@ -181,39 +188,110 @@ describe('Company export controller', () => {
 
       context('when request body exists', () => {
         let countries
+        let metadataCountries
+        let export_experience_category
+
+        function getExportCountry([id, name]) {
+          return [transformObjectToOption({ id, name })]
+        }
 
         beforeEach(() => {
-          countries = {
-            [EXPORT_INTEREST_STATUS.FUTURE_INTEREST]: faker.random.uuid(),
-            [EXPORT_INTEREST_STATUS.NOT_INTERESTED]: faker.random.uuid(),
-            [EXPORT_INTEREST_STATUS.EXPORTING_TO]: faker.random.uuid(),
+          export_experience_category = {
+            id: '8b05e8c7-1812-46bf-bab7-a0096ab5689f',
+            name: 'Increasing export markets',
           }
-          middlewareParameters = buildMiddlewareParameters({
-            requestBody: countries,
-            company: companyMock,
-            features: { [NEW_COUNTRIES_FEATURE]: true },
-          })
-
-          controller.populateExportForm(
-            middlewareParameters.reqMock,
-            middlewareParameters.resMock,
-            middlewareParameters.nextSpy
+          metadataCountries = generateCountries(3)
+          metadata.countryOptions.push(
+            ...metadataCountries.map(([id, name]) => ({
+              id,
+              name,
+            }))
           )
+          countries = {
+            [EXPORT_INTEREST_STATUS.FUTURE_INTEREST]: metadataCountries[0][0],
+            [EXPORT_INTEREST_STATUS.NOT_INTERESTED]: metadataCountries[1][0],
+            [EXPORT_INTEREST_STATUS.EXPORTING_TO]: metadataCountries[2][0],
+          }
         })
 
-        it('should populate formData on locals', () => {
-          expect(middlewareParameters.resMock.locals.formData).to.deep.equal({
-            export_experience_category: {
-              id: '8b05e8c7-1812-46bf-bab7-a0096ab5689f',
-              name: 'Increasing export markets',
-            },
-            ...countries,
+        context('when all fields have a value', () => {
+          beforeEach(() => {
+            middlewareParameters = buildMiddlewareParameters({
+              reqMock: { method: 'POST' },
+              requestBody: {
+                export_experience_category,
+                ...countries,
+              },
+              company: companyMock,
+              features: { [NEW_COUNTRIES_FEATURE]: true },
+            })
+
+            controller.populateExportForm(
+              middlewareParameters.reqMock,
+              middlewareParameters.resMock,
+              middlewareParameters.nextSpy
+            )
+          })
+
+          it('should populate formData on locals', () => {
+            expect(middlewareParameters.resMock.locals.formData).to.deep.equal({
+              export_experience_category,
+              [EXPORT_INTEREST_STATUS.FUTURE_INTEREST]: getExportCountry(
+                metadataCountries[0]
+              ),
+              [EXPORT_INTEREST_STATUS.NOT_INTERESTED]: getExportCountry(
+                metadataCountries[1]
+              ),
+              [EXPORT_INTEREST_STATUS.EXPORTING_TO]: getExportCountry(
+                metadataCountries[2]
+              ),
+            })
+          })
+
+          it('should call next with no arguments', () => {
+            expect(middlewareParameters.nextSpy).to.have.been.calledWith()
+            expect(middlewareParameters.nextSpy).to.have.been.calledOnce
           })
         })
 
-        it('should call next with no arguments', () => {
-          expect(middlewareParameters.nextSpy).to.have.been.calledWith()
-          expect(middlewareParameters.nextSpy).to.have.been.calledOnce
+        context('when two fields have a value', () => {
+          beforeEach(() => {
+            delete countries[EXPORT_INTEREST_STATUS.NOT_INTERESTED]
+
+            middlewareParameters = buildMiddlewareParameters({
+              reqMock: { method: 'POST' },
+              requestBody: {
+                export_experience_category,
+                ...countries,
+              },
+              company: companyMock,
+              features: { [NEW_COUNTRIES_FEATURE]: true },
+            })
+
+            controller.populateExportForm(
+              middlewareParameters.reqMock,
+              middlewareParameters.resMock,
+              middlewareParameters.nextSpy
+            )
+          })
+
+          it('should populate formData on locals', () => {
+            expect(middlewareParameters.resMock.locals.formData).to.deep.equal({
+              export_experience_category,
+              [EXPORT_INTEREST_STATUS.FUTURE_INTEREST]: getExportCountry(
+                metadataCountries[0]
+              ),
+              [EXPORT_INTEREST_STATUS.NOT_INTERESTED]: [],
+              [EXPORT_INTEREST_STATUS.EXPORTING_TO]: getExportCountry(
+                metadataCountries[2]
+              ),
+            })
+          })
+
+          it('should call next with no arguments', () => {
+            expect(middlewareParameters.nextSpy).to.have.been.calledWith()
+            expect(middlewareParameters.nextSpy).to.have.been.calledOnce
+          })
         })
       })
     })
@@ -284,8 +362,8 @@ describe('Company export controller', () => {
       context('when the new countries feature flag is true', () => {
         context('With countries specified', () => {
           const countries = {
-            [EXPORT_INTEREST_STATUS.FUTURE_INTEREST]: faker.random.uuid(),
             [EXPORT_INTEREST_STATUS.EXPORTING_TO]: faker.random.uuid(),
+            [EXPORT_INTEREST_STATUS.FUTURE_INTEREST]: faker.random.uuid(),
             [EXPORT_INTEREST_STATUS.NOT_INTERESTED]: faker.random.uuid(),
           }
           beforeEach(async () => {
