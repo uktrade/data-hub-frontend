@@ -90,7 +90,6 @@ module.exports = function({
         macroName: 'MultipleChoiceField',
         type: 'radio',
         name: 'is_event',
-        optional: true,
         modifier: 'inline',
         options: [
           {
