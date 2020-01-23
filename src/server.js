@@ -13,6 +13,7 @@ const favicon = require('serve-favicon')
 const cookieParser = require('cookie-parser')
 const minifyHTML = require('express-minify-html')
 const proxy = require('http-proxy-middleware')
+const Joi = require('@hapi/joi')
 
 const config = require('./config')
 const title = require('./middleware/title')
@@ -36,10 +37,17 @@ const features = require('./middleware/features')
 const redisCheck = require('./middleware/redis-check')
 const reporter = require('./lib/reporter')
 const permissions = require('./middleware/permissions')
+const envSchema = require('./config/envSchema')
 
 const routers = require('./apps/routers')
 
 const app = express()
+
+// Validate ENV vars
+Joi.assert(process.env, envSchema, {
+  allowUnknown: true,
+  abortEarly: false,
+})
 
 app.disable('x-powered-by')
 
@@ -50,7 +58,7 @@ if (!config.ci) {
   app.use(churchill(logger))
 }
 
-if (!config.isDev) {
+if (config.forceHttps) {
   app.enable('trust proxy')
   app.use(
     enforce.HTTPS({

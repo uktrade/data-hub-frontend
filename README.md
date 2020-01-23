@@ -19,7 +19,7 @@ and be provided with a back end server to provide the API, data storage and sear
 - [Getting started](#getting-started)
   - [Running project within Docker](#running-project-within-docker)
   - [Running project natively](#running-project-natively)
-- [Environment variables](./docs/Environment%20variables.md)
+- [Environment variables](#environment-variables)
 - [Deployments](./docs/Deployments.md)
 - [Conventions](./docs/Conventions.md)
 - [Templating With Nunjucks](./docs/Templating%20with%20Nunjucks.md)
@@ -144,6 +144,10 @@ and be provided with a back end server to provide the API, data storage and sear
     needed. Changes to server side code will result in the server autorestarting.
     The server will run with the node debug flag so you can debug with Webstorm
     or Visual Studio Code.
+
+### Environment variables
+
+List of all environment variables can be found in the source code of [envSchema.js](./src/config/envSchema.js).
 
 ## Making changes
 

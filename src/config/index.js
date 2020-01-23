@@ -1,20 +1,28 @@
+/**
+ * @file Configuration. Do not include within client side code.
+ */
+
 const path = require('path')
 
-const isDev = process.env.NODE_ENV !== 'production'
-const isProd = process.env.NODE_ENV === 'production'
-const isTest = process.env.NODE_ENV === 'test'
+const envSchema = require('./envSchema')
+
+const { value: envVars } = envSchema.validate(process.env, {
+  allowUnknown: true,
+  abortEarly: false,
+})
+
+const isDev = envVars.NODE_ENV === 'development'
+const isProd = envVars.NODE_ENV === 'production'
+const isTest = envVars.NODE_ENV === 'test'
 
 const root = path.normalize(`${__dirname}/../..`)
 
 const buildRedisConfig = () => {
-  const metadataTtl = process.env.METADATA_TTL || 15 * 60
-  const vcap = process.env.VCAP_SERVICES
-    ? JSON.parse(process.env.VCAP_SERVICES)
-    : JSON.parse('{}')
+  const vcap = envVars.VCAP_SERVICES
 
-  if (vcap.hasOwnProperty('redis')) {
+  if (vcap && vcap.hasOwnProperty('redis')) {
     return {
-      metadataTtl,
+      metadataTtl: envVars.METADATA_TTL,
       url: vcap.redis[0].credentials.uri,
       port: vcap.redis[0].credentials.port,
       host: vcap.redis[0].credentials.host,
@@ -23,106 +31,98 @@ const buildRedisConfig = () => {
   }
 
   return {
-    metadataTtl,
-    url: process.env.REDIS_URL || process.env.REDISTOGO_URL,
-    port: process.env.REDIS_PORT || 6379,
-    host: process.env.REDIS_HOST || 'redis',
-    useTLS: process.env.REDIS_USE_TLS,
+    metadataTtl: envVars.METADATA_TTL,
+    url: envVars.REDIS_URL || envVars.REDISTOGO_URL,
+    port: envVars.REDIS_PORT,
+    host: envVars.REDIS_HOST,
+    useTLS: envVars.REDIS_USE_TLS,
   }
 }
 
 const config = {
   root,
   buildDir: path.join(root, '.build'),
-  env: process.env.NODE_ENV,
-  ci: process.env.CI,
+  env: envVars.NODE_ENV,
+  ci: envVars.CI,
+  forceHttps: envVars.FORCE_HTTPS,
   isDev,
   isProd,
   isTest,
-  version: process.env.npm_package_version || 'unknown',
-  noCache: process.env.CACHE_ASSETS ? false : isDev,
-  port: process.env.PORT || 3000,
-  apiRoot: process.env.API_ROOT || 'http://localhost:8000',
+  version: envVars.GIT_BRANCH,
+  noCache: envVars.CACHE_ASSETS ? false : isDev,
+  port: envVars.PORT,
+  apiRoot: envVars.API_ROOT,
   apiProxyWhitelist: ['/v4/company-list', '/v4/company-list/:id/item'],
   api: {
     authUrl: '/token/',
   },
   postcodeLookup: {
-    apiKey: process.env.POSTCODE_KEY,
+    apiKey: envVars.POSTCODE_KEY,
     baseUrl: 'https://api.getAddress.io/v2/uk/{postcode}?api-key={api-key}',
   },
   regionLookup: {
     baseUrl: 'https://ukregionlookup.cloudapps.digital/pcode={postcode}',
   },
   redis: buildRedisConfig(),
-  cacheDurationShort: process.env.CACHE_DURATION_SHORT || 100,
-  cacheDurationLong: process.env.CACHE_DURATION_LONG || 1000,
-  googleTagManagerKey: process.env.GOOGLE_TAG_MANAGER_KEY,
+  proxy: envVars.PROXY,
+  cacheDurationShort: envVars.CACHE_DURATION_SHORT,
+  cacheDurationLong: envVars.CACHE_DURATION_LONG,
+  googleTagManagerKey: envVars.GOOGLE_TAG_MANAGER_KEY,
   session: {
-    secret: process.env.SESSION_SECRET,
-    // 2 hour timeout
-    ttl: process.env.SESSION_TTL || 2 * 60 * 60 * 1000,
+    secret: envVars.SESSION_SECRET,
+    ttl: envVars.SESSION_TTL,
   },
-  assetsHost: process.env.ASSETS_HOST,
-  logLevel: process.env.LOG_LEVEL || (isDev ? 'debug' : 'error'),
-  logResponses: process.env.LOG_RESPONSES === 'true',
-  logRequests: process.env.LOG_REQUESTS === 'true',
+  logLevel: envVars.LOG_LEVEL,
+  logResponses: envVars.LOG_RESPONSES,
+  logRequests: envVars.LOG_REQUESTS,
   zen: {
-    ticketsURL: process.env.ZEN_TICKETS_URL,
-    token: process.env.ZEN_TOKEN,
-    email: process.env.ZEN_EMAIL,
-    browser: process.env.ZEN_BROWSER,
-    impact: process.env.ZEN_IMPACT,
-    service: process.env.ZEN_SERVICE,
-    serviceChannel: process.env.ZEN_SERVICE_CHANNEL || 'datahub',
+    ticketsURL: envVars.ZEN_TICKETS_URL,
+    token: envVars.ZEN_TOKEN,
+    email: envVars.ZEN_EMAIL,
+    browser: envVars.ZEN_BROWSER,
+    service: envVars.ZEN_SERVICE,
+    serviceChannel: envVars.ZEN_SERVICE_CHANNEL,
   },
-  // @TODO - remove when demo site is decommissioned
-  projectPhase: process.env.PROJECT_PHASE || 'beta',
-  sentryDsn: process.env.SENTRY_DSN,
+  sentryDsn: envVars.SENTRY_DSN,
   currencyFormat: '$0,0.00',
-  longDateFormat: 'D MMMM YYYY',
-  mediumDateFormat: 'D MMM YYYY',
-  mediumDateTimeFormat: 'D MMM YYYY, h:mma',
   paginationMaxResults: 10000,
   paginationDefaultSize: 10,
-  performanceDashboardsUrl: process.env.PERFORMANCE_DASHBOARDS_URL,
-  archivedDocumentsBaseUrl: process.env.ARCHIVED_DOCUMENTS_BASE_URL,
+  performanceDashboardsUrl: envVars.PERFORMANCE_DASHBOARDS_URL,
+  findExportersUrl: envVars.FIND_EXPORTERS_URL,
+  archivedDocumentsBaseUrl: envVars.ARCHIVED_DOCUMENTS_BASE_URL,
   oauth: {
-    url: process.env.OAUTH2_AUTH_URL,
-    clientId: process.env.OAUTH2_CLIENT_ID,
-    clientSecret: process.env.OAUTH2_CLIENT_SECRET,
-    redirectUri: process.env.OAUTH2_REDIRECT_URL,
-    tokenFetchUrl: process.env.OAUTH2_TOKEN_FETCH_URL,
-    logoutUrl: process.env.OAUTH2_LOGOUT_URL,
-    devToken: process.env.OAUTH2_DEV_TOKEN,
-    bypassSSO: process.env.OAUTH2_BYPASS_SSO || false,
-    userProfileUrl: process.env.OAUTH2_USER_PROFILE_URL,
+    url: envVars.OAUTH2_AUTH_URL,
+    clientId: envVars.OAUTH2_CLIENT_ID,
+    clientSecret: envVars.OAUTH2_CLIENT_SECRET,
+    redirectUri: envVars.OAUTH2_REDIRECT_URL,
+    tokenFetchUrl: envVars.OAUTH2_TOKEN_FETCH_URL,
+    userProfileUrl: envVars.OAUTH2_USER_PROFILE_URL,
+    logoutUrl: envVars.OAUTH2_LOGOUT_URL,
+    devToken: envVars.OAUTH2_DEV_TOKEN,
+    bypassSSO: envVars.OAUTH2_BYPASS_SSO,
   },
   basicAuth: {
-    user: process.env.BASIC_AUTH_USER,
-    password: process.env.BASIC_AUTH_PASSWORD,
+    user: envVars.BASIC_AUTH_USER,
+    password: envVars.BASIC_AUTH_PASSWORD,
   },
   hawkCredentials: {
     dataHubBackend: {
-      id: process.env.DATA_HUB_BACKEND_ACCESS_KEY_ID,
-      key: process.env.DATA_HUB_BACKEND_SECRET_ACCESS_KEY,
+      id: envVars.DATA_HUB_BACKEND_ACCESS_KEY_ID,
+      key: envVars.DATA_HUB_BACKEND_SECRET_ACCESS_KEY,
       algorithm: 'sha256',
     },
   },
   oneList: {
-    email: process.env.ONE_LIST_EMAIL || 'one.list@example.com',
-  },
-  currencyRate: {
-    usdToGbp: 0.76755,
+    email: envVars.ONE_LIST_EMAIL,
   },
   activityFeed: {
     paginationSize: 20,
   },
   helpCentre: {
-    url: process.env.HELP_CENTRE_URL,
-    announcementsURL: process.env.HELP_CENTRE_ANNOUNCMENTS_URL,
-    apiFeed: process.env.HELP_CENTRE_API_FEED,
-    token: process.env.HELP_CENTRE_FEED_API_TOKEN,
+    url: envVars.HELP_CENTRE_URL,
+    announcementsURL: envVars.HELP_CENTRE_ANNOUNCMENTS_URL,
+    apiFeed: envVars.HELP_CENTRE_API_FEED,
+    token: envVars.HELP_CENTRE_FEED_API_TOKEN,
   },
   companies: {
     tierTypes: {
@@ -131,7 +131,7 @@ const config = {
       },
     },
   },
-  greatProfileUrl: process.env.GREAT_PROFILE_URL,
+  greatProfileUrl: envVars.GREAT_PROFILE_URL,
 }
 
 module.exports = config

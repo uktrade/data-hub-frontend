@@ -1,12 +1,12 @@
 const { isNumber } = require('lodash')
-const { currencyRate } = require('../config')
+const { CURRENCY_RATE_USD_TO_GBP } = require('./constants')
 
 const convertUSDToGBP = (usd) => {
   if (!isNumber(usd)) {
     return usd
   }
 
-  const gbp = usd * currencyRate.usdToGbp
+  const gbp = usd * CURRENCY_RATE_USD_TO_GBP
 
   if (usd === 1) {
     return gbp

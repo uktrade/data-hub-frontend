@@ -15,9 +15,7 @@ loggingTransports.push(
   })
 )
 
-if (config.env === 'production') {
-  // TODO: add a transport to log errors in service like Sentry
-  // before we go live with real users
+if (config.isProd) {
   exceptionTransports.push(
     new winston.transports.Console({
       json: true,

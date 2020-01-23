@@ -64,7 +64,7 @@ const common = {
             {
               loader: 'css-loader',
               options: {
-                sourceMap: config.isDev,
+                sourceMap: !config.isProd,
                 minimize: config.isProd,
               },
             },
@@ -72,7 +72,7 @@ const common = {
               loader: 'postcss-loader',
               options: {
                 plugins: (loader) => [require('autoprefixer')()],
-                sourceMap: config.isDev,
+                sourceMap: !config.isProd,
               },
             },
             'resolve-url-loader',

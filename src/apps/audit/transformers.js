@@ -1,7 +1,7 @@
 /* eslint camelcase: 0 */
 const { get } = require('lodash')
 const dateFns = require('date-fns')
-const { mediumDateTimeFormat } = require('../../config')
+const { DATE_TIME_MEDIUM_FORMAT } = require('../../common/constants')
 
 function transformChanges(changes, labels) {
   return Object.keys(changes)
@@ -28,7 +28,7 @@ function transformAuditLogToListItem(labels = {}) {
 
     return {
       type: 'audit',
-      name: dateFns.format(logEntry.timestamp, mediumDateTimeFormat),
+      name: dateFns.format(logEntry.timestamp, DATE_TIME_MEDIUM_FORMAT),
       contentMetaModifier: 'stacked',
       meta: [
         {
