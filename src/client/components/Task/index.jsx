@@ -1,12 +1,11 @@
-import _ from 'lodash'
+import { get } from 'lodash'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import { TASK__START } from '../../actions'
 import Err from './Error'
 import ProgressIndicator from '../ProgressIndicator'
-import { useEffect } from 'react'
 
 const nameIdPropTypes = {
   name: PropTypes.string.isRequired,
@@ -113,7 +112,7 @@ const Task = connect(
   })
 )(({ start, children, ...props }) =>
   children((name, id) => {
-    const taskState = _.get(props, [name, id], {})
+    const taskState = get(props, [name, id], {})
     return {
       ...taskState,
       progress: taskState.status === 'progress',
@@ -140,7 +139,7 @@ Task.propTypes = {
  * <Task.StartOnRender name="foo" id="a" payload={123} onSuccessDispatch="FOO"/>
  */
 Task.StartOnRender = connect(
-  (state, { name, id }) => _.get(state, ['tasks', name, id], {}),
+  (state, { name, id }) => get(state, ['tasks', name, id], {}),
   (dispatch, { id, name }) => ({
     start: (options) =>
       dispatch({

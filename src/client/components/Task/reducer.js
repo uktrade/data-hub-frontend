@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import { omit } from 'lodash'
 import { TASK__PROGRESS, TASK__ERROR, TASK__CLEAR } from '../../actions'
 
 const setTaskState = (state, { name, id, ...action }, status) => {
@@ -24,7 +24,7 @@ export default (state = {}, { type, ...action }) => {
     case TASK__ERROR:
       return setTaskState(state, action, 'error')
     case TASK__CLEAR:
-      return _.omit(
+      return omit(
         state,
         Object.entries(state[action.name]).length > 1
           ? `${action.name}.${action.id}`

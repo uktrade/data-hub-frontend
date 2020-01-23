@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import { get } from 'lodash'
 import { take, put, spawn, call, select } from 'redux-saga/effects'
 
 import {
@@ -50,7 +50,7 @@ export default (registry) =>
         throw Error(`Task "${name}" is not registered!`)
       }
       const status = yield select((state) =>
-        _.get(state, ['tasks', name, id, 'status'])
+        get(state, ['tasks', name, id, 'status'])
       )
       if (status === 'progress') {
         throw Error(
