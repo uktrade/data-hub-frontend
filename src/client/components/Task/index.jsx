@@ -177,6 +177,8 @@ Task.StartOnRender.propTypes = {
  * error view
  * @param {StartOptions} [props.startOnRender=] - If set to a {StartOptions}
  * object, it will also behave like the {StartOnRender} component
+ * @param {() => ReactNode} [props.children] - A function whose return value
+ * will be rendered if the task is not in progress or error
  * @example
  * <Task.Status
  *   name="foo"
@@ -194,11 +196,13 @@ Task.Status = ({
   progressMessage,
   renderError = Err,
   renderProgress = ProgressIndicator,
+  children = () => null,
 }) => (
   <Task>
     {(getTask) => {
       const {
         start,
+        status,
         progress,
         error,
         payload,
@@ -217,6 +221,7 @@ Task.Status = ({
               errorMessage,
               retry: () => start({ payload, onSuccessDispatch }),
             })}
+          {!status && children()}
         </>
       )
     }}
