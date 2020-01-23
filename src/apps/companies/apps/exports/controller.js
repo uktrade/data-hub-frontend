@@ -8,7 +8,7 @@ const getExportCountries = require('../../../../lib/get-export-countries')
 
 const { saveCompany } = require('../../repos')
 const { transformObjectToOption } = require('../../../transformers')
-const { transformCompanyToExportDetailsView } = require('../../transformers')
+const transformCompanyToExportDetailsView = require('./transformer')
 const { exportDetailsLabels, exportPotentialLabels } = require('../../labels')
 
 const {
