@@ -3,6 +3,7 @@ const path = require('path')
 const { compact, sortBy, concat, includes } = require('lodash')
 
 const config = require('../config')
+const urls = require('../lib/urls')
 
 const subApps = fs.readdirSync(__dirname)
 
@@ -33,7 +34,7 @@ const GLOBAL_NAV_ITEMS = concat(
     key: 'datahub-mi',
   },
   {
-    path: config.findExportersUrl,
+    path: urls.external.findExporters(),
     label: 'Find exporters',
     key: 'find-exporters',
   }
