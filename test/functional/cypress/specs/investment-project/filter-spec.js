@@ -51,4 +51,28 @@ describe('Investments Collections Filter', () => {
       expect(xhr.url).to.contain('country=80756b9a-5d95-e211-a939-e4115bead28a')
     })
   })
+
+  it('should filter by uk region', () => {
+    const { typeahead } = selectors.filter
+    const { ukRegion } = selectors.filter.investments
+    cy.get(typeahead(ukRegion).selectedOption)
+      .click()
+      .get(typeahead(ukRegion).textInput)
+      .type('North East')
+      .get(typeahead(ukRegion).options)
+      .should('have.length', 1)
+      .get(typeahead(ukRegion).textInput)
+      .type('{enter}')
+      .type('{esc}')
+
+    cy.wait('@filterResults').then((xhr) => {
+      expect(xhr.url).to.contain(
+        'uk_region_location=814cd12a-6095-e211-a939-e4115bead28a'
+      )
+    })
+
+    cy.get(selectors.entityCollection.entities)
+      .children()
+      .should('have.length', 2)
+  })
 })
