@@ -69,7 +69,7 @@ const investmentFiltersFields = function({
       isAsync: false,
       placeholder: 'Search UK region',
       useSubLabel: false,
-      options: globalFields.ukRegions.options(),
+      options: get(metadata, 'regionOptions', []).map(transformObjectToOption),
       hideInactive: false,
       target: 'metadata',
       label: 'UK region',
