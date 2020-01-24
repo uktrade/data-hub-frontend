@@ -2,11 +2,10 @@
 
 import React from 'react'
 import { compact, get } from 'lodash'
-import { H3 } from '@govuk-react/heading'
-import { Step, useFormContext } from 'data-hub-components'
-
-import DefinitionList from './DefinitionList'
 import PropTypes from 'prop-types'
+import { H3 } from '@govuk-react/heading'
+import InsetText from '@govuk-react/inset-text'
+import { Step, SummaryList, useFormContext } from 'data-hub-components'
 
 function getCompanyAddress(dnbCompany) {
   if (dnbCompany) {
@@ -44,14 +43,28 @@ function CompanyFoundStep({ countryName }) {
     <Step name="companyDetails" forwardButton="Add company">
       <H3>Confirm you want to add this company to Data Hub</H3>
 
-      <DefinitionList header={companyName}>
-        <DefinitionList.Row
-          label="Companies House number"
-          description={companiesHouseNumber}
+      <InsetText>
+        <SummaryList
+          rows={[
+            {
+              label: 'Registered company name',
+              value: companyName,
+            },
+            {
+              label: 'Companies House number',
+              value: companiesHouseNumber,
+            },
+            {
+              label: 'Country',
+              value: countryName,
+            },
+            {
+              label: 'Address',
+              value: companyAddress,
+            },
+          ]}
         />
-        <DefinitionList.Row label="Country" description={countryName} />
-        <DefinitionList.Row label="Address" description={companyAddress} />
-      </DefinitionList>
+      </InsetText>
     </Step>
   )
 }
