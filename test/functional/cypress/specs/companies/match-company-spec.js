@@ -9,6 +9,11 @@ const {
 
 const DUNS_NUMBER = '111222333'
 
+const performSearch = (companyName = 'some company') => {
+  cy.get(companyMatch.find.companyNameInput).type(companyName)
+  cy.get(companyMatch.find.button).click()
+}
+
 describe('Match a company', () => {
   context('when viewing "Find this company record" page', () => {
     before(() => {
@@ -82,8 +87,7 @@ describe('Match a company', () => {
     () => {
       before(() => {
         cy.visit(urls.companies.match.index(fixtures.company.venusLtd.id))
-        cy.get(companyMatch.find.companyNameInput).type('some company')
-        cy.get(companyMatch.find.button).click()
+        performSearch()
       })
 
       it('should display the company search results', () => {
@@ -96,8 +100,7 @@ describe('Match a company', () => {
   context('when one of the search results is clicked', () => {
     before(() => {
       cy.visit(urls.companies.match.index(fixtures.company.dnbCorp.id))
-      cy.get(companyMatch.find.companyNameInput).type('some company')
-      cy.get(companyMatch.find.button).click()
+      performSearch()
       cy.get(companyMatch.find.results.someCompany).click()
     })
 
@@ -106,6 +109,57 @@ describe('Match a company', () => {
         'eq',
         urls.companies.match.confirmation(fixtures.company.dnbCorp.id, 12345678)
       )
+    })
+  })
+
+  context('when "I still cannot find the company" is clicked', () => {
+    before(() => {
+      cy.visit(urls.companies.match.index(fixtures.company.venusLtd.id))
+      performSearch()
+      cy.contains('I cannot find the company I am looking for').click()
+      cy.contains('I still cannot find the company').click()
+    })
+
+    it('should redirect to the cannot find match page', () => {
+      cy.location('pathname').should(
+        'eq',
+        urls.companies.match.cannotFind(fixtures.company.venusLtd.id)
+      )
+    })
+
+    it('should render the header', () => {
+      assertLocalHeader('Unable to find matching company record')
+    })
+
+    it('should render breadcrumbs', () => {
+      assertBreadcrumbs({
+        Home: urls.dashboard(),
+        Companies: urls.companies.index(),
+        [fixtures.company.venusLtd.name]: urls.companies.detail(
+          fixtures.company.venusLtd.id
+        ),
+        'Unable to find matching company record': null,
+      })
+    })
+
+    it('should display the page content', () => {
+      cy.contains(
+        'The message on the company page asking to update this record will remain visible, so you or other Data Hub users can try (again) to find the matching Dun & Bradstreet record.'
+      )
+        .parent()
+        .next()
+        .should(
+          'have.text',
+          'In the meantime you can continue to add interaction or other activity for this company record.'
+        )
+        .next()
+        .should('have.text', 'Return to the company page')
+        .and('have.prop', 'tagName', 'A')
+        .and(
+          'have.attr',
+          'href',
+          urls.companies.detail(fixtures.company.venusLtd.id)
+        )
     })
   })
 
