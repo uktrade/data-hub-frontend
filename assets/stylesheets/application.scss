@@ -2,13 +2,13 @@ $images-dir: "/images/";
 
 $govuk-canvas-background-colour: #fff;
 $govuk-font-family: Arial, sans-serif;
-@import "~@uktrade/datahub-header/component/header.css";
-@import "~govuk-frontend/all";
+@import "../../node_modules/@uktrade/datahub-header/component/header.css";;
+@import "../../node_modules/govuk-frontend/all";
 
 $toolkit-font-stack: $govuk-font-family;
 @import "_deprecated/trade-elements";
 
-@import "~vue-multiselect/dist/vue-multiselect.min.css";
+@import "../../node_modules/vue-multiselect/dist/vue-multiselect.min.css";
 
 @import "settings";
 @import "tools";
