@@ -1,4 +1,4 @@
-# Sub-app structure
+# Sub-apps
 
 Sub-apps form the basis of the application. They are self-contained Express
 apps that can be mounted at a particular url.
