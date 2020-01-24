@@ -1,15 +1,15 @@
-In those cases it’s fine t# Conventions
+# Conventions
 
 This document was created to help DIT front-end developers use the same approach when writing JavaScript code.
 
 ## 1. Avoid using lodash functions if native alternative is available
 
 Reference: https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore
-   
+
 ## 2. Avoid using classes for React components
-  
+
 Use function with hooks instead.
-   
+
 ## 3. Avoid usage of the `this` keyword
 
 There are not many good reasons to use the `this` keyword in a React project (especially if we agree not to use classes). The `this` keyword indicates usage OO paradigm and imperative style, which is unnecessary with React. Moreover, we use `this` in a completely wrong way in the front-end unit tests. There are some valid reasons to use it though:
