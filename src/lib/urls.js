@@ -88,6 +88,7 @@ module.exports = {
     businessDetails: url('/companies', '/:companyId/business-details'),
     interactions: createInteractionsSubApp('/companies', '/:companyId'),
     manageCompanyList: url('/companies', '/:companyId/manage-company-list'),
+    sendReferral: url('/companies', '/:companyId/send-referral'),
     activity: {
       index: url('/companies', '/:companyId/activity'),
       data: url('/companies', '/:companyId/activity/data'),
