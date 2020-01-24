@@ -76,7 +76,7 @@ describe('transformCompanyToExportDetailsView', () => {
                 name: 'Germany',
               },
             ],
-            export_potential_score: 'low',
+            export_potential: 'low',
           }
 
           const viewRecord = transformCompanyToExportDetailsView(company)
