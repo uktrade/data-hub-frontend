@@ -21,7 +21,7 @@ module.exports = {
   investments: {
     companyName: '#group-field-sector_descends',
     country: '#group-field-investor_company_country',
-    firstUkRegion: '[for="field-uk_region_location-1"]',
+    ukRegion: '#group-field-uk_region_location',
     sector: '#group-field-sector_descends',
   },
   omis: {
