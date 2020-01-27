@@ -4,7 +4,6 @@ const rp = require('request-promise')
 const GLOBAL_NAV_ITEMS = require('../global-nav-items')
 
 const { isPermittedRoute } = require('../middleware')
-const { fetchCompanyLists } = require('./repos')
 const config = require('../../config')
 const { formatHelpCentreAnnouncements } = require('./transformers')
 
@@ -32,9 +31,6 @@ async function renderDashboard(req, res, next) {
     }
 
     res.title('Dashboard').render('dashboard/views/dashboard', {
-      companyLists:
-        userPermissions.includes('company_list.view_companylist') &&
-        (await fetchCompanyLists(req.session.token)),
       articleFeed,
       interactionsPermitted: isPermittedRoute(
         '/interactions',

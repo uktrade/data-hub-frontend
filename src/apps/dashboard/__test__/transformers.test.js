@@ -1,7 +1,6 @@
 const moment = require('moment')
 const {
   formatHelpCentreAnnouncements,
-  transformCompanyList,
 } = require('../../../../src/apps/dashboard/transformers')
 const { omit } = require('lodash')
 
@@ -105,50 +104,5 @@ describe('#formatHelpCentreAnnouncements', () => {
         formatHelpCentreAnnouncements(omit(expected, ['articles']))
       ).to.deep.equal([])
     })
-  })
-})
-
-describe('#transformCompanyList', () => {
-  const mockResponse = {
-    count: 2,
-    next: null,
-    previous: null,
-    results: [
-      {
-        company: {
-          archived: false,
-          name: 'A company',
-          trading_names: [],
-          id: '1',
-        },
-        created_on: '2019-08-01T12:06:01.980159Z',
-        latest_interaction: {
-          id: '4db036cd-7444-46bb-9b51-67425e8ec189',
-          created_on: '2019-08-06T15:16:50.425451Z',
-          date: '2019-08-06',
-          subject: 'A subject',
-        },
-      },
-    ],
-  }
-  const expected = [
-    {
-      company: {
-        name: 'A company',
-        id: '1',
-        isArchived: false,
-      },
-      latestInteraction: {
-        id: '4db036cd-7444-46bb-9b51-67425e8ec189',
-        date: '2019-08-06',
-        displayDate: '06 Aug 19',
-        subject: 'A subject',
-      },
-    },
-  ]
-
-  it('should format company list', () => {
-    this.transformed = transformCompanyList(mockResponse)
-    expect(this.transformed).to.deep.equal(expected)
   })
 })
