@@ -7,7 +7,8 @@ const {
   assertSummaryList,
 } = require('../../support/assertions')
 
-const DUNS_NUMBER = '111222333'
+const DUNS_NUMBER_NOT_MATCHED = '11111111'
+const DUNS_NUMBER_MATCHED = '22222222'
 
 const performSearch = (companyName = 'some company') => {
   cy.get(selectors.companyMatch.find.companyNameInput)
@@ -129,21 +130,6 @@ describe('Match a company', () => {
     }
   )
 
-  context('when one of the search results is clicked', () => {
-    before(() => {
-      cy.visit(urls.companies.match.index(fixtures.company.dnbCorp.id))
-      performSearch()
-      cy.get(selectors.companyMatch.find.results.someCompany).click()
-    })
-
-    it('should redirect to the the match confirmation page', () => {
-      cy.location('pathname').should(
-        'eq',
-        urls.companies.match.confirmation(fixtures.company.dnbCorp.id, 12345678)
-      )
-    })
-  })
-
   context('when "I still cannot find the company" is clicked', () => {
     before(() => {
       cy.visit(urls.companies.match.index(fixtures.company.venusLtd.id))
@@ -195,12 +181,105 @@ describe('Match a company', () => {
     })
   })
 
+  context(
+    'when an unmatched company from the search results is clicked',
+    () => {
+      before(() => {
+        cy.visit(urls.companies.match.index(fixtures.company.venusLtd.id))
+        performSearch()
+        cy.contains('Some unmatched company').click()
+      })
+
+      it('should redirect to the the match confirmation page', () => {
+        cy.location('pathname').should(
+          'eq',
+          urls.companies.match.confirmation(
+            fixtures.company.venusLtd.id,
+            DUNS_NUMBER_NOT_MATCHED
+          )
+        )
+      })
+
+      it('should render the header', () => {
+        assertLocalHeader('Confirm update')
+      })
+
+      it('should render breadcrumbs', () => {
+        assertBreadcrumbs({
+          Home: urls.dashboard(),
+          Companies: urls.companies.index(),
+          [fixtures.company.venusLtd.name]: urls.companies.detail(
+            fixtures.company.venusLtd.id
+          ),
+          'Confirm update': null,
+        })
+      })
+
+      it('should display matching confirmation details', () => {
+        cy.contains('Confirm you want to update this Data Hub company record')
+          .should('have.prop', 'tagName', 'H2')
+          .next()
+          .find('dl')
+          .then(($el) =>
+            assertSummaryList($el, {
+              'Company name': 'Venus Ltd',
+              'Located at':
+                '66 Marcham Road, Bordley, BD23 8RZ, United Kingdom',
+            })
+          )
+          .parent()
+          .parent()
+          .next()
+          .should(
+            'have.text',
+            'With this verified third party company information'
+          )
+          .and('have.prop', 'tagName', 'H2')
+          .next()
+          .find('dl')
+          .then(($el) =>
+            assertSummaryList($el, {
+              'Company name': 'Some unmatched company',
+              'Located at': '123 ABC Road, Brighton, BN2 9QB, United Kingdom',
+            })
+          )
+          .parent()
+          .parent()
+          .next()
+          .should('have.text', 'What happens next')
+          .and('have.prop', 'tagName', 'H2')
+          .next()
+          .children()
+          .should('have.length', 2)
+          .and(
+            'contain',
+            'This will send a request to the Support Team to update the business details for this company record, including any future changes to this information.'
+          )
+          .and(
+            'contain',
+            'This will NOT change any recorded activity (Interactions, OMIS orders or Investments projects) for this company record.'
+          )
+          .parent()
+          .next()
+          .contains('Send update request')
+          .and('have.prop', 'tagName', 'BUTTON')
+          .next()
+          .contains('Back')
+          .should(
+            'have.attr',
+            'href',
+            urls.companies.match.index(fixtures.company.venusLtd.id)
+          )
+      })
+    }
+  )
+
   context('when company matching is confirmed', () => {
     before(() => {
       cy.visit(
         urls.companies.match.confirmation(
           fixtures.company.venusLtd.id,
-          DUNS_NUMBER
+          DUNS_NUMBER_NOT_MATCHED
         )
       )
       cy.contains('Send update request').click()
@@ -223,84 +302,73 @@ describe('Match a company', () => {
     })
   })
 
-  context('when viewing "Confirm update" page', () => {
+  context('when a matched company from the search results is clicked', () => {
     before(() => {
-      cy.visit(
-        urls.companies.match.confirmation(
-          fixtures.company.dnbCorp.id,
-          DUNS_NUMBER
-        )
-      )
+      cy.visit(urls.companies.match.index(fixtures.company.venusLtd.id))
+      performSearch()
+      cy.contains('Some matched company').click()
     })
 
-    it('should render the header', () => {
-      assertLocalHeader('Confirm update')
+    it('should redirect to the the duplicated match page', () => {
+      cy.location('pathname').should(
+        'eq',
+        urls.companies.match.confirmation(
+          fixtures.company.venusLtd.id,
+          DUNS_NUMBER_MATCHED
+        )
+      )
     })
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: urls.dashboard(),
         Companies: urls.companies.index(),
-        [fixtures.company.dnbCorp.name]: urls.companies.detail(
-          fixtures.company.dnbCorp.id
-        ),
-        'Confirm update': null,
+        'Venus Ltd': urls.companies.detail(fixtures.company.venusLtd.id),
+        'Duplicated record': null,
       })
     })
 
-    it('should display matching confirmation details', () => {
-      cy.contains('Confirm you want to update this Data Hub company record')
-        .should('have.prop', 'tagName', 'H2')
-        .next()
-        .find('dl')
-        .then(($el) =>
-          assertSummaryList($el, {
-            'Company name': 'DnB Corp',
-            'Located at': '1 Main Road, Rome, 001122, Italy',
-          })
-        )
-        .parent()
+    it('should render the header', () => {
+      assertLocalHeader(
+        'This verified third party record has already been matched to' +
+          ' a different Data Hub company record'
+      )
+    })
+
+    it('should display the content of the duplicate match page', () => {
+      cy.contains(
+        'For some companies there are multiple (duplicate) records.' +
+          ' To resolve this, and have this record automatically updated, you' +
+          ' can contact support to request a merge of these records.'
+      )
+        .contains('contact support to request a merge of these records')
+        .and('have.prop', 'tagName', 'A')
+        .should('have.attr', 'href', urls.support())
         .parent()
         .next()
         .should(
           'have.text',
-          'With this verified third party company information'
+          'Copy and paste the following instructions in the Desciption' +
+            ' field of the form:'
         )
-        .and('have.prop', 'tagName', 'H2')
         .next()
-        .find('dl')
-        .then(($el) =>
-          assertSummaryList($el, {
-            'Company name': 'Some company name',
-            'Located at': '123 Fake Street, Brighton, BN1 4SE, United Kingdom',
-          })
-        )
-        .parent()
+        .contains('Company records merge request')
         .parent()
         .next()
-        .should('have.text', 'What happens next')
-        .and('have.prop', 'tagName', 'H2')
-        .next()
-        .children()
-        .should('have.length', 2)
-        .and(
-          'contain',
-          'This will send a request to the Support Team to update the business details for this company record, including any future changes to this information.'
-        )
-        .and(
-          'contain',
-          'This will NOT change any recorded activity (Interactions, OMIS orders or Investments projects) for this company record.'
+        .should(
+          'have.text',
+          'Please merge company record Venus Ltd' +
+            ' (0f5216e0-849f-11e6-ae22-56b6b6499611)' +
+            ' with company record Some matched company' +
+            ' (0fb3379c-341c-4da4-b825-bf8d47b26baa).'
         )
         .parent()
         .next()
-        .contains('Send update request')
-        .and('have.prop', 'tagName', 'BUTTON')
-        .next()
-        .contains('Back')
+        .contains('Back to search results')
         .should(
           'have.attr',
           'href',
-          urls.companies.match.index(fixtures.company.dnbCorp.id)
+          urls.companies.match.index(fixtures.company.venusLtd.id)
         )
     })
   })
