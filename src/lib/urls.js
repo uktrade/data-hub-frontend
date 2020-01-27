@@ -1,5 +1,3 @@
-const config = require('../config')
-
 function getTokens(path) {
   const tokens = []
   const parts = path.split('/')
@@ -65,7 +63,8 @@ function createInteractionsSubApp(...mountPoints) {
 
 module.exports = {
   external: {
-    greatProfile: (id) => config.greatProfileUrl.replace('{id}', id),
+    greatProfile: (id) =>
+      `https://www.great.gov.uk/international/trade/suppliers/${id}`,
     companiesHouse: (companyNumber) =>
       `https://beta.companieshouse.gov.uk/company/${companyNumber}`,
     findExporters: () => 'https://find-exporters.datahub.trade.gov.uk/',
