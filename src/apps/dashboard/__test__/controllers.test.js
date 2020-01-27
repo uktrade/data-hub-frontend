@@ -1,96 +1,6 @@
-const nock = require('nock')
 const proxyquire = require('proxyquire')
 
-const config = require('../../../config')
 var rpErrors = require('request-promise/errors')
-const { mockCompanyListsServer } = require('./utils')
-
-const withPopulatedCompanyLists = () =>
-  mockCompanyListsServer({
-    companyIdString: 'abcdef',
-    listIds: {
-      x: 'abc',
-      y: 'def',
-    },
-  })
-
-const expectedCompanyLists = [
-  {
-    id: 'x',
-    name: 'Company List X',
-    companies: [
-      {
-        company: {
-          id: 'a',
-          name: 'Company A',
-        },
-        latestInteraction: {},
-        ditParticipants: [],
-      },
-      {
-        company: {
-          id: 'b',
-          name: 'Company B',
-        },
-        latestInteraction: {},
-        ditParticipants: [],
-      },
-      {
-        company: {
-          id: 'c',
-          name: 'Company C',
-        },
-        latestInteraction: {},
-        ditParticipants: [],
-      },
-    ],
-  },
-  {
-    id: 'y',
-    name: 'Company List Y',
-    companies: [
-      {
-        company: {
-          id: 'd',
-          name: 'Company D',
-        },
-        latestInteraction: {},
-        ditParticipants: [],
-      },
-      {
-        company: {
-          id: 'e',
-          name: 'Company E',
-        },
-        latestInteraction: {},
-        ditParticipants: [],
-      },
-      {
-        company: {
-          id: 'f',
-          name: 'Company F',
-        },
-        latestInteraction: {},
-        ditParticipants: [],
-      },
-    ],
-  },
-]
-const canSeeCompanyListsRequest = {
-  locals: {
-    user: {
-      permissions: ['company_list.view_companylist'],
-    },
-  },
-}
-
-const cannotSeeCompanyListsRequest = {
-  locals: {
-    user: {
-      permissions: [],
-    },
-  },
-}
 
 describe('dashboard controller', () => {
   beforeEach(() => {
@@ -101,7 +11,6 @@ describe('dashboard controller', () => {
     })
 
     global.resMock = {
-      ...canSeeCompanyListsRequest,
       render: sinon.spy(),
       title: sinon.stub().returnsThis(),
     }
@@ -130,7 +39,6 @@ describe('dashboard controller', () => {
     beforeEach(async () => {
       global.rpStub.resolves([])
 
-      withPopulatedCompanyLists()
       await global.controllers.renderDashboard(
         global.reqMock,
         global.resMock,
@@ -152,50 +60,17 @@ describe('dashboard controller', () => {
     it('should set a page title', () => {
       expect(global.resMock.title).to.be.calledWith('Dashboard')
     })
-
-    it('should render the company lists', () => {
-      expect(
-        global.resMock.render.firstCall.args[1].companyLists
-      ).to.deep.equal(expectedCompanyLists)
-    })
-  })
-
-  context('when there is a problem fetching company lists from the API', () => {
-    beforeEach(async () => {
-      nock(config.apiRoot)
-        .get('/v4/company-list')
-        .reply(500)
-
-      await global.controllers.renderDashboard(
-        global.reqMock,
-        global.resMock,
-        global.nextSpy
-      )
-    })
-
-    it('should show an error', () => {
-      expect(global.nextSpy).to.have.been.called
-      expect(global.nextSpy.firstCall.args[0]).to.be.instanceof(
-        rpErrors.StatusCodeError
-      )
-    })
-
-    it('should not render the page', () => {
-      expect(global.resMock.render).to.not.have.been.called
-    })
   })
 
   context('when the Help centre API fails to return data', () => {
     // TODO: Before each is useless here as we only have one test case.
     beforeEach(async () => {
       global.resMock = {
-        ...canSeeCompanyListsRequest,
         render: sinon.spy(),
         title: sinon.stub().returnsThis(),
       }
       global.rpStub.rejects()
 
-      withPopulatedCompanyLists()
       await global.controllers.renderDashboard(
         global.reqMock,
         global.resMock,
@@ -205,7 +80,6 @@ describe('dashboard controller', () => {
 
     it('should return an empty array', () => {
       const expected = {
-        companyLists: expectedCompanyLists,
         articleFeed: [],
         interactionsPermitted: false,
         helpCentre: {
@@ -222,13 +96,11 @@ describe('dashboard controller', () => {
     // TODO: Before each is useless here as we only have one test case.
     beforeEach(async () => {
       global.resMock = {
-        ...canSeeCompanyListsRequest,
         render: sinon.spy(),
         title: sinon.stub().returnsThis(),
       }
       global.rpStub.throws(rpErrors.StatusCodeError(500))
 
-      withPopulatedCompanyLists()
       await global.controllers.renderDashboard(
         global.reqMock,
         global.resMock,
@@ -238,7 +110,6 @@ describe('dashboard controller', () => {
 
     it('should return an empty array', () => {
       const expected = {
-        companyLists: expectedCompanyLists,
         articleFeed: [],
         interactionsPermitted: false,
         helpCentre: {
@@ -248,27 +119,6 @@ describe('dashboard controller', () => {
         },
       }
       expect(global.resMock.render.firstCall.args[1]).to.deep.equal(expected)
-    })
-  })
-
-  context("when the user doesn't have the right permission", () => {
-    beforeEach(async () => {
-      global.resMock = {
-        ...cannotSeeCompanyListsRequest,
-        render: sinon.spy(),
-        title: sinon.stub().returnsThis(),
-      }
-
-      withPopulatedCompanyLists()
-      await global.controllers.renderDashboard(
-        global.reqMock,
-        global.resMock,
-        global.nextSpy
-      )
-    })
-
-    it('company lists should not be rendered', () => {
-      expect(global.resMock.render.firstCall.args[1].companyLists).to.not.be.ok
     })
   })
 })

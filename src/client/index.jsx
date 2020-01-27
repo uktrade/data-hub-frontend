@@ -98,7 +98,7 @@ function App() {
       <Mount selector="#activity-feed-app">
         {(props) => <CompanyActivityFeed {...props} />}
       </Mount>
-      <Mount selector="#my-companies">
+      <Mount selector="#company-lists">
         <CompanyLists />
       </Mount>
       <Mount selector="#delete-company-list">
