@@ -12,7 +12,7 @@
       {% if caller %}
         {{ caller() }}
       {% else %}
-        {{ props.text }}
+        {{ props.text | escapeHtml | safe }}
       {% endif %}
     </{{ element }}>
   {% endif %}
