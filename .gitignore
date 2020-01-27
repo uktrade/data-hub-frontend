@@ -43,6 +43,7 @@ package-lock.json
 coverage
 test-results.xml
 selenium-debug.log
+selenium-server.log
 test/acceptance/screenshots/
 cucumber
 seleniumLogs
