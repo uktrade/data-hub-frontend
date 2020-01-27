@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 import InlineLabel from '../InlineLabel'
-import { COMPANY_LIST_2__FILTER, COMPANY_LIST_2__ORDER } from '../../actions'
+import { COMPANY_LISTS__FILTER, COMPANY_LISTS__ORDER } from '../../actions'
 import { state2props } from './state'
 
 export const ALPHABETICAL = 'alphabetical'
@@ -59,12 +59,12 @@ export default connect(
   (dispatch) => ({
     onSearch: (query) =>
       dispatch({
-        type: COMPANY_LIST_2__FILTER,
+        type: COMPANY_LISTS__FILTER,
         query,
       }),
     onOrderChange: (orderBy) =>
       dispatch({
-        type: COMPANY_LIST_2__ORDER,
+        type: COMPANY_LISTS__ORDER,
         orderBy,
       }),
   })

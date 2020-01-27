@@ -7,8 +7,8 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 import {
-  COMPANY_LIST_2__LISTS_LOADED,
-  COMPANY_LIST_2__COMPANIES_LOADED,
+  COMPANY_LISTS__LISTS_LOADED,
+  COMPANY_LISTS__COMPANIES_LOADED,
 } from '../../actions'
 import Task from '../Task'
 import Filters, { ALPHABETICAL, LEAST_RECENT, RECENT } from './Filters'
@@ -48,7 +48,7 @@ const CompanyList = connect((state) => {
       progressMessage="loading companies"
       startOnRender={{
         payload: id,
-        onSuccessDispatch: COMPANY_LIST_2__COMPANIES_LOADED,
+        onSuccessDispatch: COMPANY_LISTS__COMPANIES_LOADED,
       }}
     >
       {() =>
@@ -91,7 +91,7 @@ export default connect(state2props)(({ lists }) =>
       name="Company lists"
       id="dashboard"
       progressMessage="Loading my companies lists"
-      startOnRender={{ onSuccessDispatch: COMPANY_LIST_2__LISTS_LOADED }}
+      startOnRender={{ onSuccessDispatch: COMPANY_LISTS__LISTS_LOADED }}
     />
   )
 )
