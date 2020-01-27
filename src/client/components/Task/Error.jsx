@@ -32,12 +32,15 @@ const StyledRoot = styled.div(
   spacing.withWhiteSpace({ marginBottom: 6 })
 )
 
+const StyledSecondaryButton = styled(SecondaryButton)({
+  marginBottom: 0,
+})
+
 const Err = ({ errorMessage, retry, noun }) => (
   <StyledRoot>
-    <H2 size="MEDIUM">Error</H2>
-    <p>Could not load {noun}</p>
-    <pre>{errorMessage}</pre>
-    <SecondaryButton onClick={retry}>Retry</SecondaryButton>
+    <H2 size="MEDIUM">Could not load {noun}</H2>
+    <p>Error: {errorMessage}</p>
+    <StyledSecondaryButton onClick={retry}>Retry</StyledSecondaryButton>
   </StyledRoot>
 )
 
