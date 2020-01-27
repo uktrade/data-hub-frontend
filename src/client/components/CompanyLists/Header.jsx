@@ -5,7 +5,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-import { COMPANY_LIST_2__SELECT } from '../../actions'
+import { COMPANY_LISTS__SELECT } from '../../actions'
 import { state2props } from './state'
 
 const StyledRoot = styled.div({
@@ -37,7 +37,7 @@ export const Header = connect(
   (dispatch) => ({
     onChange: (id) =>
       dispatch({
-        type: COMPANY_LIST_2__SELECT,
+        type: COMPANY_LISTS__SELECT,
         id,
       }),
   })
