@@ -194,7 +194,9 @@ describe('Match a company', () => {
     it('displays the "Company record update request sent" flash message', () => {
       cy.get(selectors.localHeader().flash).should(
         'contain.text',
-        'Company record update request sent'
+        'Your request to update this company record has been sent.' +
+          'In the near future the Support Team will update this company ' +
+          'record and enable automatic updates for future changes to the company information.'
       )
     })
   })

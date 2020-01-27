@@ -151,7 +151,12 @@ async function submitMatchRequest(req, res) {
     const ticket = createMatchRequestMessage(req, res)
     const result = await postToZenDesk(ticket)
 
-    req.flash('success', 'Company record update request sent')
+    req.flash(
+      'success',
+      'Your request to update this company record has been sent.\n' +
+        'In the near future the Support Team will update this company ' +
+        'record and enable automatic updates for future changes to the company information.'
+    )
     res.json({ message: 'OK', ticket: get(result, 'data.ticket.id') })
   } catch (error) {
     const statusCode = get(error, 'response.status', 500)
