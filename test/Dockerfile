@@ -1,7 +1,7 @@
 # This docker image is used ONLY with CircleCI to run tests.
 # For local development image see Dockerfile in the root directory of this project.
 
-FROM node:10.16.0
+FROM node:12.15.0
 
 ENV DOCKERIZE_VERSION      v0.3.0
 ENV YARN_VERSION           1.16.0
