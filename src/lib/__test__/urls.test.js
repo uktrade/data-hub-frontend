@@ -1,23 +1,12 @@
 const faker = require('faker')
-const proxyquire = require('proxyquire')
-
-const modulePath = '../urls'
+const urls = require('../urls')
 
 describe('urls', () => {
-  let urls
-  before(() => {
-    urls = proxyquire(modulePath, {
-      '../config': {
-        greatProfileUrl: 'http://a.b.c.com/path/{id}',
-      },
-    })
-  })
-
   describe('external', () => {
     it('should have the correct urls', () => {
       const companyNumber = faker.random.alphaNumeric(8)
       expect(urls.external.greatProfile(companyNumber)).to.equal(
-        `http://a.b.c.com/path/${companyNumber}`
+        `https://www.great.gov.uk/international/trade/suppliers/${companyNumber}`
       )
 
       expect(urls.external.companiesHouse(companyNumber)).to.equal(
