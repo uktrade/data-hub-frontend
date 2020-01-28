@@ -53,6 +53,7 @@ const LOCAL_NAV = [
   {
     path: 'exports',
     label: 'Export',
+    permissions: ['company.view_companyexportcountry'],
   },
   {
     path: 'orders',
