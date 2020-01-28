@@ -1,5 +1,5 @@
 ---
 applications:
-  - buildpack: https://github.com/cloudfoundry/nodejs-buildpack.git#v1.6.51
+  - buildpack: https://github.com/cloudfoundry/nodejs-buildpack.git#v1.7.11
     health-check-type: http
     health-check-http-endpoint: /healthcheck
