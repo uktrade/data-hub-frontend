@@ -7,7 +7,7 @@ import LinesEllipsis from 'react-lines-ellipsis'
 import styled from 'styled-components'
 
 import urls from '../../../../lib/urls'
-import SecondaryButton from './SecondaryButton'
+import SecondaryButton from '../../../../client/components/SecondaryButton'
 import * as propTypes from './propTypes'
 
 const StyledCellLink = styled.a({
