@@ -1,4 +1,5 @@
 const {
+  companies,
   contacts,
   events,
   interactions,
@@ -9,6 +10,24 @@ const {
 const { assertError } = require('../../support/assertions')
 
 describe('DA Permission', () => {
+  describe('companies', () => {
+    describe('exports', () => {
+      before(() => {
+        cy.visit(
+          companies.exports.index('0fb3379c-341c-4da4-b825-bf8d47b26baa'),
+          {
+            failOnStatusCode: false,
+          }
+        )
+      })
+
+      it('should prevent DA users from accessing the page', () => {
+        assertError('You don’t have permission to view this page')
+        assertError('403')
+      })
+    })
+  })
+
   describe('event', () => {
     before(() => {
       cy.visit(events.index(), { failOnStatusCode: false })
