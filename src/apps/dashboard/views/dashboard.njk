@@ -23,11 +23,13 @@
       } %}
     </div>
 {% if user.hasPermission('company_list.view_companylist') %}
-    <div class="govuk-grid-column-full">
+  <div class="govuk-grid-column-full">
+    <div class="dashboard-section">
       {% component 'react-slot', {
         id: 'company-lists'
       } %}
     </div>
+  </div>
 {% endif %}
 </div>
 

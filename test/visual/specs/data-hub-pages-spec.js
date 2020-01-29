@@ -7,6 +7,8 @@ describe('Data Hub', () => {
     })
 
     it('content', async () => {
+      // Wait for the company list progress indicator to disappear
+      await new Promise((resolve) => setTimeout(resolve, 500))
       await browser.imageDiff.takeElement('.grid-row')
       await browser.imageDiff.validate().then((result) => {
         assert.strictEqual(result, 0)
