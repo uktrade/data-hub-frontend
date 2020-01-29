@@ -1,3 +1,4 @@
+const { NEW_COUNTRIES_FEATURE } = require('../../constants')
 const {
   getDitCompany,
   addDitCompanyToList,
@@ -9,6 +10,7 @@ const { isItaTierDAccount } = require('../../../lib/is-tier-type-company')
 
 async function getCompany(req, res, next, id) {
   try {
+    const { features } = res.locals
     const company = await getDitCompany(req.session.token, id)
     company.isItaTierDAccount = isItaTierDAccount(company)
     company.hasAllocatedLeadIta =
@@ -16,14 +18,21 @@ async function getCompany(req, res, next, id) {
     company.hasManagedAccountDetails =
       company.one_list_group_tier && company.hasAllocatedLeadIta
     company.isUltimate =
-      !!company.is_global_ultimate &&
-      res.locals.features['companies-ultimate-hq']
+      !!company.is_global_ultimate && features['companies-ultimate-hq']
     company.isGlobalHQ =
       company.headquarter_type && company.headquarter_type.name === 'ghq'
+
+    if (features[NEW_COUNTRIES_FEATURE]) {
+      delete company.export_to_countries
+      delete company.future_interest_countries
+    } else {
+      delete company.export_countries
+    }
 
     res.locals.company = company
     next()
   } catch (error) {
+    console.log(error)
     next(error)
   }
 }

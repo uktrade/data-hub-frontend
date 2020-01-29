@@ -1,6 +1,9 @@
 const proxyquire = require('proxyquire')
-const company = require('../../../../../test/unit/data/companies/company-v4.json')
+const mockCompany = require('../../../../../test/unit/data/companies/company-v4.json')
 const oneListTypeDItaCompany = require('../../../../../test/unit/data/companies/one-list-group-tier-d-ita.json')
+const {
+  generateExportCountries,
+} = require('../../../../../test/unit/helpers/generate-export-countries')
 
 describe('Companies form middleware', () => {
   let nextSpy
@@ -14,8 +17,10 @@ describe('Companies form middleware', () => {
   let reqMock
   let resMock
   let middleware
+  let company
 
   before(() => {
+    company = JSON.parse(JSON.stringify(mockCompany))
     nextSpy = sinon.spy()
     getDitCompanyStub = sinon.stub()
     getDitCompanyFromListStub = sinon.stub()
@@ -26,7 +31,9 @@ describe('Companies form middleware', () => {
     redirectSpy = sinon.spy()
     reqMock = { query: {}, session: { token: 2 } }
     resMock = {
-      locals: {},
+      locals: {
+        features: {},
+      },
     }
 
     middleware = proxyquire(
@@ -46,37 +53,106 @@ describe('Companies form middleware', () => {
   })
 
   describe('getCompany', () => {
-    context('when the company is not a One list Tier D ITA', () => {
-      before(async () => {
-        getDitCompanyStub.resolves(company)
-        await middleware.getCompany(reqMock, resMock, nextSpy, 2)
-      })
+    let expectedCompany
 
-      it('should return the company', () => {
-        expect(resMock.locals).to.have.deep.property('company', {
+    function removeOldCountries(company) {
+      delete company.export_to_countries
+      delete company.future_interest_countries
+
+      return company
+    }
+
+    function removeNewCountries(company) {
+      delete company.export_countries
+
+      return company
+    }
+
+    function addFeatureFlag(res) {
+      res.locals.features['interaction-add-countries'] = true
+      return res
+    }
+
+    beforeEach(() => {
+      resMock.locals.features = {}
+      company = JSON.parse(JSON.stringify(mockCompany))
+      company.export_countries = generateExportCountries().exportCountries
+    })
+
+    context('when the company is not a One list Tier D ITA', () => {
+      beforeEach(async () => {
+        getDitCompanyStub.resolves(company)
+        expectedCompany = {
           ...company,
           isItaTierDAccount: false,
           hasAllocatedLeadIta: true,
           hasManagedAccountDetails: true,
           isGlobalHQ: null,
           isUltimate: false,
+        }
+      })
+
+      context('With the interaction-add-countries set', () => {
+        it('should return the company without the old countries fields', async () => {
+          addFeatureFlag(resMock)
+          await middleware.getCompany(reqMock, resMock, nextSpy, 2)
+          expect(resMock.locals).to.have.deep.property(
+            'company',
+            removeOldCountries(expectedCompany)
+          )
+        })
+      })
+
+      context('With no features set', () => {
+        it('should return the company without the new countries fields', async () => {
+          await middleware.getCompany(reqMock, resMock, nextSpy, 2)
+          expect(resMock.locals).to.have.deep.property(
+            'company',
+            removeNewCountries(expectedCompany)
+          )
         })
       })
     })
-    context('when the company is a One list Tier D ITA', () => {
-      before(async () => {
-        getDitCompanyStub.resolves(oneListTypeDItaCompany)
-        await middleware.getCompany(reqMock, resMock, nextSpy, 2)
-      })
 
-      it('should return the company', () => {
-        expect(resMock.locals).to.have.deep.property('company', {
+    context('when the company is a One list Tier D ITA', () => {
+      beforeEach(() => {
+        getDitCompanyStub.resolves(oneListTypeDItaCompany)
+        expectedCompany = {
           ...oneListTypeDItaCompany,
           isItaTierDAccount: true,
           hasAllocatedLeadIta: true,
           hasManagedAccountDetails: true,
           isGlobalHQ: null,
           isUltimate: false,
+        }
+      })
+
+      context('With the interaction-add-countries set', () => {
+        it('should return the company without the old countries fields', async () => {
+          addFeatureFlag(resMock)
+          await middleware.getCompany(reqMock, resMock, nextSpy, 2)
+
+          expect(resMock.locals).to.have.deep.property(
+            'company',
+            removeOldCountries(expectedCompany)
+          )
+        })
+      })
+
+      context('With no features set', () => {
+        it('should return the company without the new countries fields', async () => {
+          await middleware.getCompany(reqMock, resMock, nextSpy, 2)
+          expect(resMock.locals).to.have.deep.property(
+            'company',
+            removeNewCountries({
+              ...oneListTypeDItaCompany,
+              isItaTierDAccount: true,
+              hasAllocatedLeadIta: true,
+              hasManagedAccountDetails: true,
+              isGlobalHQ: null,
+              isUltimate: false,
+            })
+          )
         })
       })
     })
@@ -85,8 +161,8 @@ describe('Companies form middleware', () => {
   describe('setIsCompanyAlreadyAdded', () => {
     context(
       'when the company is already added to the user company list',
-      async () => {
-        before(async () => {
+      () => {
+        it('should set a local variable for displaying a user message', async () => {
           getDitCompanyFromListStub.resolves()
           await middleware.setIsCompanyAlreadyAdded(
             reqMock,
@@ -94,9 +170,6 @@ describe('Companies form middleware', () => {
             nextSpy,
             2
           )
-        })
-
-        it('should set a local variable for displaying a user message', () => {
           expect(resMock.locals).to.have.deep.property(
             'isCompanyAlreadyAdded',
             true
@@ -162,6 +235,7 @@ describe('Companies form middleware', () => {
         )
       })
     })
+
     context('when removing a company from the user company list', async () => {
       before(async () => {
         resMock = {

@@ -3,9 +3,11 @@ const ERROR = {
   ENTER_A_DATE: 'You must enter a date',
 }
 
+// The order here controls the order they are displayed to the user
+// either on a form or when displaying the values
 const EXPORT_INTEREST_STATUS = {
-  FUTURE_INTEREST: 'future_interest',
   EXPORTING_TO: 'currently_exporting',
+  FUTURE_INTEREST: 'future_interest',
   NOT_INTERESTED: 'not_interested',
 }
 

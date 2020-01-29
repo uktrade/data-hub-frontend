@@ -221,20 +221,20 @@ describe('Interaction details middleware', () => {
                 policy_issue_types: [],
                 status: 'complete',
                 were_countries_discussed: 'true',
+                [EXPORTING_TO]: interactionDataWithCountries[EXPORTING_TO],
                 [FUTURE_INTEREST]:
                   interactionDataWithCountries[FUTURE_INTEREST],
-                [EXPORTING_TO]: interactionDataWithCountries[EXPORTING_TO],
                 [NOT_INTERESTED]: interactionDataWithCountries[NOT_INTERESTED],
                 export_countries: [
+                  {
+                    country: { id: interactionDataWithCountries[EXPORTING_TO] },
+                    status: EXPORTING_TO,
+                  },
                   {
                     country: {
                       id: interactionDataWithCountries[FUTURE_INTEREST],
                     },
                     status: FUTURE_INTEREST,
-                  },
-                  {
-                    country: { id: interactionDataWithCountries[EXPORTING_TO] },
-                    status: EXPORTING_TO,
                   },
                   {
                     country: {
