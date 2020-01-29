@@ -1,6 +1,7 @@
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const { testBreadcrumbs } = require('../../support/assertions')
+const urls = require('../../../../../src/lib/urls')
 
 describe('Company activity feed', () => {
   const commonTests = ({
@@ -48,12 +49,6 @@ describe('Company activity feed', () => {
       cy.get(selectors.tabbedLocalNav().item(6)).should('have.text', 'Orders')
     })
 
-    it('should not display the pending D&B investigation message', () => {
-      cy.get(selectors.companyActivity.pendingDnbInvestigationMessage).should(
-        'not.be.visible'
-      )
-    })
-
     it('should display the "Activities" heading', () => {
       cy.get(selectors.companyCollection().heading).should(
         'have.text',
@@ -64,7 +59,7 @@ describe('Company activity feed', () => {
 
   context('when viewing Venus Ltd which has no activities', () => {
     before(() => {
-      cy.visit(`/companies/${fixtures.company.venusLtd.id}/activity`)
+      cy.visit(urls.companies.activity.index(fixtures.company.venusLtd.id))
     })
 
     testBreadcrumbs({
@@ -104,7 +99,7 @@ describe('Company activity feed', () => {
 
   context('when viewing activity feed for an archived company', () => {
     before(() => {
-      cy.visit(`/companies/${fixtures.company.archivedLtd.id}/activity`)
+      cy.visit(urls.companies.activity.index(fixtures.company.archivedLtd.id))
     })
 
     testBreadcrumbs({
@@ -159,6 +154,71 @@ describe('Company activity feed', () => {
     it('should not display the "There are no activities to show." message', () => {
       cy.get(selectors.companyActivity.activityFeed.noActivites).should(
         'not.be.visible'
+      )
+    })
+  })
+
+  context('when company has a DUNS number (is matched)', () => {
+    before(() => {
+      cy.visit(urls.companies.activity.index(fixtures.company.dnbCorp.id))
+    })
+
+    it('should not display the prompt for company matching', () => {
+      cy.contains(
+        "There might be wrong information on this company page because it doesn't get updated automatically."
+      ).should('not.exist')
+    })
+  })
+
+  context('when company does NOT have a DUNS number (is NOT matched)', () => {
+    before(() => {
+      cy.visit(urls.companies.activity.index(fixtures.company.lambdaPlc.id))
+    })
+
+    it('should display the prompt for company matching', () => {
+      cy.contains(
+        "There might be wrong information on this company page because it doesn't get updated automatically."
+      )
+        .parent()
+        .next()
+        .should(
+          'have.text',
+          'You can make sure it has the right information by selecting' +
+            ' the "update this record" button below.'
+        )
+        .next()
+        .should('have.text', 'Update this record')
+        .should(
+          'have.attr',
+          'href',
+          urls.companies.match.index(fixtures.company.lambdaPlc.id)
+        )
+    })
+
+    it('should not display the pending D&B investigation message', () => {
+      cy.get(selectors.companyActivity.pendingDnbInvestigationMessage).should(
+        'not.be.visible'
+      )
+    })
+  })
+
+  context('when company is pending D&B investigation', () => {
+    before(() => {
+      cy.visit(
+        urls.companies.activity.index(fixtures.company.investigationLimited.id)
+      )
+    })
+
+    it('should not display the prompt for company matching', () => {
+      cy.contains(
+        'There might be wrong information on this company page because' +
+          " it doesn't get updated automatically."
+      ).should('not.exist')
+    })
+
+    it('should display the pending D&B investigation message', () => {
+      cy.get(selectors.companyActivity.pendingDnbInvestigationMessage).should(
+        'be.visible'
       )
     })
   })

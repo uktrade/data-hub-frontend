@@ -42,5 +42,9 @@
   {
     "code": "interaction-add-countries",
     "is_active": true
+  },
+  {
+    "code": "companies-matching",
+    "is_active": true
   }
 ]
