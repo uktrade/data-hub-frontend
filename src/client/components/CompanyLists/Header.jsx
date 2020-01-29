@@ -52,9 +52,9 @@ export const Header = connect(
           value: selectedId,
         }}
       >
-        {Object.entries(lists).map(([id, { title }]) => (
+        {Object.entries(lists).map(([id, { name }]) => (
           <option key={id} value={id}>
-            {title}
+            {name}
           </option>
         ))}
       </StyledSelect>
