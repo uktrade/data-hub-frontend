@@ -37,6 +37,8 @@ and be provided with a back end server to provide the API, data storage and sear
 
 ### Running project within Docker
 
+**Note for Mac Users:** By default, docker on Mac will restrict itself to using just 2GB of memory. This [should be increased](https://docs.docker.com/docker-for-mac/#resources) to at least 4GB to avoid running in to unexpected problems.
+
 1.  Go to the project root.
 
 2.  Create a `.env` file with `cp docker.sample.env .env`.
