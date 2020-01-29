@@ -13,24 +13,39 @@ const initialState = {
   orderBy: RECENT,
 }
 
-export default (state = initialState, { type, ...action }) => ({
-  ...state,
-  ...({
-    [COMPANY_LISTS__LISTS_LOADED]: ({ result }) => ({
-      lists: _.mapValues(result, (title) => ({ title })),
-      selectedId: Object.keys(result)[0],
-    }),
-    [COMPANY_LISTS__COMPANIES_LOADED]: ({ payload, result }) => ({
-      lists: {
-        ...state.lists,
-        [payload]: {
-          ...state.lists[payload],
-          companies: result,
+export default (
+  state = initialState,
+  { type, id, result, payload, query, orderBy }
+) => {
+  switch (type) {
+    case COMPANY_LISTS__LISTS_LOADED:
+      return {
+        ...state,
+        lists: _.mapValues(result, (title) => ({ title })),
+        selectedId: Object.keys(result)[0],
+      }
+    case COMPANY_LISTS__COMPANIES_LOADED:
+      return {
+        ...state,
+        lists: {
+          ...state.lists,
+          [payload]: {
+            ...state.lists[payload],
+            companies: result,
+          },
         },
-      },
-    }),
-    [COMPANY_LISTS__SELECT]: ({ id }) => ({ selectedId: id, query: '' }),
-    [COMPANY_LISTS__FILTER]: _.identity,
-    [COMPANY_LISTS__ORDER]: _.identity,
-  }[type] || (() => state))(action),
-})
+      }
+    case COMPANY_LISTS__SELECT:
+      return {
+        ...state,
+        selectedId: id,
+        query: '',
+      }
+    case COMPANY_LISTS__FILTER:
+      return { ...state, query }
+    case COMPANY_LISTS__ORDER:
+      return { ...state, orderBy }
+    default:
+      return state
+  }
+}
