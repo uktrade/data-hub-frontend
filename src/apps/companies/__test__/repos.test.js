@@ -1,15 +1,20 @@
 /* eslint prefer-promise-reject-errors: 0 */
 const proxyquire = require('proxyquire')
+const faker = require('faker')
 
 const companyData = require('../../../../test/unit/data/company.json')
 const companyV4Data = require('../../../../test/unit/data/companies/company-v4.json')
 const myCompanyListData = require('../../../../test/unit/data/companies/my-company-list.json')
 const config = require('../../../config')
+const {
+  generateExportCountries,
+} = require('../../../../test/unit/helpers/generate-export-countries')
 
 const {
   getDitCompany,
   saveDnbCompany,
   saveDnbCompanyInvestigation,
+  saveCompanyExportDetails,
 } = require('../repos')
 
 function makeRepositoryWithAuthRequest(authorisedRequestStub) {
@@ -159,6 +164,26 @@ describe('Company repository', () => {
       const actual = await saveDnbCompanyInvestigation('1234', { name: 'name' })
 
       expect(actual).to.deep.equal({ hello: true })
+    })
+  })
+
+  describe('#saveCompanyExportDetails', () => {
+    it('should respond successfully', async () => {
+      const companyId = companyV4Data.id
+      const { exportCountries } = generateExportCountries()
+      const details = {
+        export_countries: exportCountries,
+      }
+
+      nock(config.apiRoot)
+        .patch(`/v4/company/${companyId}/export-detail`, details)
+        .reply(200, {
+          countries: true,
+        })
+
+      const actual = await saveCompanyExportDetails('1234', companyId, details)
+
+      expect(actual).to.deep.equal({ countries: true })
     })
   })
 })

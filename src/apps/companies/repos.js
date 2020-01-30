@@ -122,6 +122,14 @@ function saveDnbCompanyInvestigation(token, company) {
   })
 }
 
+function saveCompanyExportDetails(token, companyId, body) {
+  return authorisedRequest(token, {
+    body,
+    url: `${config.apiRoot}/v4/company/${companyId}/export-detail`,
+    method: 'PATCH',
+  })
+}
+
 module.exports = {
   saveCompany,
   getDitCompany,
@@ -137,4 +145,5 @@ module.exports = {
   getOneListGroupCoreTeam,
   saveDnbCompany,
   saveDnbCompanyInvestigation,
+  saveCompanyExportDetails,
 }
