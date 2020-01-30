@@ -5,8 +5,8 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
 import createSagaMiddleware from 'redux-saga'
 
-import { ActivityFeedApp } from 'data-hub-components'
 import AddCompanyForm from '../apps/companies/apps/add-company/client/AddCompanyForm'
+import CompanyActivityFeed from '../apps/companies/apps/activity-feed/client/CompanyActivityFeed'
 import EditCompanyForm from '../apps/companies/apps/edit-company/client/EditCompanyForm'
 import EditHistory from '../apps/companies/apps/edit-history/client/EditHistory'
 import FindCompany from '../apps/companies/apps/match-company/client/FindCompany'
@@ -94,7 +94,7 @@ function App() {
         )}
       </Mount>
       <Mount selector="#activity-feed-app">
-        {(props) => <ActivityFeedApp {...props} />}
+        {(props) => <CompanyActivityFeed {...props} />}
       </Mount>
       <Mount selector="#my-companies">
         <CompanyLists />

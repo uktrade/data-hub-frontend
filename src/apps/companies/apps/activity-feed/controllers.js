@@ -12,6 +12,7 @@ async function renderActivityFeed(req, res, next) {
     const contentProps = company.archived
       ? {}
       : {
+          companyId: company.id,
           contentText: 'Add interaction',
           contentLink: companies.interactions.create(company.id),
           activityTypeFilter: FILTER_KEYS.dataHubActivity,
@@ -21,6 +22,10 @@ async function renderActivityFeed(req, res, next) {
           isTypeFilterFlagEnabled:
             features['activity-feed-type-filter-enabled'],
           isGlobalUltimateFlagEnabled: features['companies-ultimate-hq'],
+          showMatchingPrompt:
+            features['companies-matching'] &&
+            !company.duns_number &&
+            !company.pending_dnb_investigation,
         }
 
     const props = {
