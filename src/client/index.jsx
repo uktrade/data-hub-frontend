@@ -12,6 +12,7 @@ import EditHistory from '../apps/companies/apps/edit-history/client/EditHistory'
 import FindCompany from '../apps/companies/apps/match-company/client/FindCompany'
 import DeleteCompanyList from '../apps/company-lists/client/DeleteCompanyList'
 import MatchConfirmation from '../apps/companies/apps/match-company/client/MatchConfirmation'
+import CannotFindMatch from '../apps/companies/apps/match-company/client/CannotFindMatch'
 import CompanyLists from '../apps/dashboard/client/CompanyLists'
 import companyLists, {
   resolvePreloadedData as resolvePreloadedCompanyListsData,
@@ -83,6 +84,9 @@ function App() {
         {(props) => (
           <MatchConfirmation csrfToken={globalProps.csrfToken} {...props} />
         )}
+      </Mount>
+      <Mount selector="#cannot-find-match">
+        {(props) => <CannotFindMatch {...props} />}
       </Mount>
       <Mount selector="#find-company">
         {(props) => (
