@@ -195,9 +195,26 @@ async function findDnbCompany(req, res, next) {
   }
 }
 
+async function renderCannotFindMatch(req, res, next) {
+  try {
+    const { company } = res.locals
+    res
+      .breadcrumb(company.name, urls.companies.detail(company.id))
+      .breadcrumb('Unable to find matching company record')
+      .render('companies/apps/match-company/views/cannot-find-match', {
+        props: {
+          companyId: company.id,
+        },
+      })
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
   renderMatchConfirmation,
   submitMatchRequest,
   renderFindCompanyForm,
   findDnbCompany,
+  renderCannotFindMatch,
 }
