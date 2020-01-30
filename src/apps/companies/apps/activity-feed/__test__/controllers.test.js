@@ -420,6 +420,7 @@ describe('Activity feed controllers', () => {
           'companies/apps/activity-feed/views/client-container',
           {
             props: {
+              companyId: 'dcdabbc9-1781-e411-8955-e4115bead28a',
               contentLink: companies.interactions.create(companyId),
               contentText: 'Add interaction',
               activityTypeFilter: FILTER_KEYS.dataHubActivity,
@@ -429,6 +430,7 @@ describe('Activity feed controllers', () => {
               isTypeFilterFlagEnabled: undefined,
               isGlobalUltimateFlagEnabled: undefined,
               dnbHierarchyCount: undefined,
+              showMatchingPrompt: undefined,
             },
           }
         )
@@ -476,6 +478,7 @@ describe('Activity feed controllers', () => {
           'companies/apps/activity-feed/views/client-container',
           {
             props: {
+              companyId: 'dcdabbc9-1781-e411-8955-e4115bead28a',
               contentLink: companies.interactions.create(companyId),
               contentText: 'Add interaction',
               activityTypeFilter: FILTER_KEYS.dataHubActivity,
@@ -485,6 +488,7 @@ describe('Activity feed controllers', () => {
               dnbHierarchyCount: 123,
               isTypeFilterFlagEnabled: undefined,
               isGlobalUltimateFlagEnabled: undefined,
+              showMatchingPrompt: undefined,
             },
           }
         )

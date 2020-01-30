@@ -1,6 +1,6 @@
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
-const { companyMatch, localHeader } = require('../../../../selectors')
+const selectors = require('../../../../selectors')
 const {
   assertLocalHeader,
   assertBreadcrumbs,
@@ -10,8 +10,8 @@ const {
 const DUNS_NUMBER = '111222333'
 
 const performSearch = (companyName = 'some company') => {
-  cy.get(companyMatch.find.companyNameInput).type(companyName)
-  cy.get(companyMatch.find.button).click()
+  cy.get(selectors.companyMatch.find.companyNameInput).type(companyName)
+  cy.get(selectors.companyMatch.find.button).click()
 }
 
 describe('Match a company', () => {
@@ -34,28 +34,28 @@ describe('Match a company', () => {
     })
 
     it('should render the sub header', () => {
-      cy.get(companyMatch.subHeader).should(
+      cy.get(selectors.companyMatch.subHeader).should(
         'have.text',
         'Find the company record in the Dun & Bradstreet database'
       )
     })
 
     it('should render a "Company name" label', () => {
-      cy.get(companyMatch.find.companyNameLabel).should(
+      cy.get(selectors.companyMatch.find.companyNameLabel).should(
         'have.text',
         'Company name'
       )
     })
 
     it('should render a "Company postcode (optional)" label', () => {
-      cy.get(companyMatch.find.postcodeLabel).should(
+      cy.get(selectors.companyMatch.find.postcodeLabel).should(
         'have.text',
         'Company postcode (optional)'
       )
     })
 
     it('should display a "Find company" button', () => {
-      cy.get(companyMatch.find.button).should('be.visible')
+      cy.get(selectors.companyMatch.find.button).should('be.visible')
     })
   })
 
@@ -67,15 +67,17 @@ describe('Match a company', () => {
       })
 
       it('should display error message', () => {
-        cy.get(companyMatch.find.button)
+        cy.get(selectors.companyMatch.find.button)
           .click()
-          .get(companyMatch.form)
+          .get(selectors.companyMatch.form)
           .contains('Enter company name')
       })
 
       it('should not display the search results', () => {
-        cy.get(companyMatch.find.results.someCompany).should('not.be.visible')
-        cy.get(companyMatch.find.results.someOtherCompany).should(
+        cy.get(selectors.companyMatch.find.results.someCompany).should(
+          'not.be.visible'
+        )
+        cy.get(selectors.companyMatch.find.results.someOtherCompany).should(
           'not.be.visible'
         )
       })
@@ -87,12 +89,19 @@ describe('Match a company', () => {
     () => {
       before(() => {
         cy.visit(urls.companies.match.index(fixtures.company.venusLtd.id))
-        performSearch()
+        cy.get(selectors.companyMatch.find.companyNameInput).type(
+          'some company'
+        )
+        cy.get(selectors.companyMatch.find.button).click()
       })
 
       it('should display the company search results', () => {
-        cy.get(companyMatch.find.results.someCompany).should('be.visible')
-        cy.get(companyMatch.find.results.someOtherCompany).should('be.visible')
+        cy.get(selectors.companyMatch.find.results.someCompany).should(
+          'be.visible'
+        )
+        cy.get(selectors.companyMatch.find.results.someOtherCompany).should(
+          'be.visible'
+        )
       })
     }
   )
@@ -100,8 +109,9 @@ describe('Match a company', () => {
   context('when one of the search results is clicked', () => {
     before(() => {
       cy.visit(urls.companies.match.index(fixtures.company.dnbCorp.id))
-      performSearch()
-      cy.get(companyMatch.find.results.someCompany).click()
+      cy.get(selectors.companyMatch.find.companyNameInput).type('some company')
+      cy.get(selectors.companyMatch.find.button).click()
+      cy.get(selectors.companyMatch.find.results.someCompany).click()
     })
 
     it('should redirect to the the match confirmation page', () => {
@@ -182,7 +192,7 @@ describe('Match a company', () => {
     })
 
     it('displays the "Company record update request sent" flash message', () => {
-      cy.get(localHeader().flash).should(
+      cy.get(selectors.localHeader().flash).should(
         'contain.text',
         'Company record update request sent'
       )
