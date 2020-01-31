@@ -1,14 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { H3 } from '@govuk-react/heading'
+import { H4 } from '@govuk-react/heading'
+import InsetText from '@govuk-react/inset-text'
 
 import urls from '../../../../../lib/urls'
-import { EntityListItem, FieldDnbCompany, Form } from 'data-hub-components'
+import {
+  EntityListItem,
+  FieldDnbCompany,
+  Form,
+  SummaryList,
+} from 'data-hub-components'
 
 function FindCompany({ company, csrfToken }) {
   return (
     <Form>
-      <H3>Find the company record in the Dun & Bradstreet database</H3>
+      <H4 as="h2">Existing Data Hub company record</H4>
+      <InsetText>
+        <SummaryList
+          rows={[
+            { label: 'Company name', value: company.name },
+            { label: 'Located at', value: company.address.join(', ') },
+          ]}
+        />
+      </InsetText>
+
+      <H4 as="h2">Find the verified third party company record</H4>
       <FieldDnbCompany
         apiEndpoint={`${urls.companies.match.index(
           company.id
@@ -40,6 +56,8 @@ FindCompany.propTypes = {
   csrfToken: PropTypes.string.isRequired,
   company: PropTypes.shape({
     id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    address: PropTypes.arrayOf(PropTypes.string),
     countryCode: PropTypes.string.isRequired,
   }),
 }

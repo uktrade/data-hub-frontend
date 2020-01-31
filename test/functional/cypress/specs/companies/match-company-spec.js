@@ -20,10 +20,6 @@ describe('Match a company', () => {
       cy.visit(urls.companies.match.index(fixtures.company.venusLtd.id))
     })
 
-    it('should render the header', () => {
-      assertLocalHeader('Find this company record')
-    })
-
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
         Home: urls.dashboard(),
@@ -33,29 +29,43 @@ describe('Match a company', () => {
       })
     })
 
-    it('should render the sub header', () => {
-      cy.get(selectors.companyMatch.subHeader).should(
-        'have.text',
-        'Find the company record in the Dun & Bradstreet database'
-      )
+    it('should render the header', () => {
+      assertLocalHeader('Find this company record')
     })
 
-    it('should render a "Company name" label', () => {
-      cy.get(selectors.companyMatch.find.companyNameLabel).should(
-        'have.text',
-        'Company name'
-      )
+    it('should render the Data Hub record', () => {
+      cy.contains('Existing Data Hub company record')
+        .should('have.prop', 'tagName', 'H2')
+        .next()
+        .find('dl')
+        .then(($el) =>
+          assertSummaryList($el, {
+            'Company name': 'Venus Ltd',
+            'Located at': '66 Marcham Road, Bordley, BD23 8RZ, United Kingdom',
+          })
+        )
     })
 
-    it('should render a "Company postcode (optional)" label', () => {
-      cy.get(selectors.companyMatch.find.postcodeLabel).should(
-        'have.text',
-        'Company postcode (optional)'
-      )
-    })
-
-    it('should display a "Find company" button', () => {
-      cy.get(selectors.companyMatch.find.button).should('be.visible')
+    it('should render both search input fields and a button', () => {
+      cy.contains('Find the verified third party company record')
+        .and('have.prop', 'tagName', 'H2')
+        .next()
+        .children()
+        .first()
+        .should('have.text', 'Company name')
+        .find('input')
+        .should('have.attr', 'type', 'search')
+        .parent()
+        .parent()
+        .next()
+        .should('have.text', 'Company postcode (optional)')
+        .find('input')
+        .should('have.attr', 'type', 'search')
+        .parent()
+        .parent()
+        .next()
+        .contains('Find company')
+        .and('have.prop', 'tagName', 'BUTTON')
     })
   })
 
