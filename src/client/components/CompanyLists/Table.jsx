@@ -44,7 +44,7 @@ const CompaniesTable = ({ companies }) => (
       ({ id, name, date, subject, interactionId, ditParticipants }) => (
         <Table.Row key={id}>
           <Table.Cell setWidth="20%">
-            <Link href={`companies/${id}`}>
+            <Link href={urls.companies.detail(id)}>
               <LinesEllipsis
                 text={name}
                 maxLine="2"
