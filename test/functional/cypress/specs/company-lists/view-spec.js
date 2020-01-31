@@ -157,9 +157,7 @@ const describeTableCell = ({ row, col, text, linksTo, shouldHaveEllipsis }) =>
 
       cy.get('@cell')
         .find('a')
-        .invoke('attr', 'href')
-        // Href doesn't have leading slash, so we need to remove it.
-        .should('eq', linksTo.replace(/^\//, ''))
+        .should('have.attr', 'href', linksTo)
     }))
 
 const describeTable = (rows) => {
@@ -198,17 +196,13 @@ const describeSelectedList = ({
 
     describe('Delete list link', () =>
       it('The link should go to the correct url', () =>
-        cy
-          .contains('Delete list')
-          .invoke('attr', 'href')
-          .should('eq', deleteLinksTo)))
+        cy.contains('Delete list').should('have.attr', 'href', deleteLinksTo)))
 
     describe('Edit list name', () =>
       it('The link should go to the correct url', () =>
         cy
           .contains('Edit list name')
-          .invoke('attr', 'href')
-          .should('eq', renameLinksTo)))
+          .should('have.attr', 'href', renameLinksTo)))
 
     switch (rows.length) {
       case 0:
