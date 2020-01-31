@@ -255,10 +255,8 @@ describe('Match a company', () => {
         .find('dl')
         .then(($el) =>
           assertSummaryList($el, {
-            'Registered company name': 'DnB Corp',
-            'Trading name(s)': 'DnB, D&B',
+            'Company name': 'DnB Corp',
             'Located at': '1 Main Road, Rome, 001122, Italy',
-            'Registered address': '1 Main Road, Rome, 001122, Italy',
           })
         )
         .parent()
@@ -266,17 +264,15 @@ describe('Match a company', () => {
         .next()
         .should(
           'have.text',
-          'With the information from this Dun & Bradstreet company record'
+          'With this verified third party company information'
         )
         .and('have.prop', 'tagName', 'H2')
         .next()
         .find('dl')
         .then(($el) =>
           assertSummaryList($el, {
-            'Registered company name': 'Some company name',
-            'Trading name(s)': 'Some trading name',
+            'Company name': 'Some company name',
             'Located at': '123 Fake Street, Brighton, BN1 4SE, United Kingdom',
-            'Registered address': 'Brighton, BN1 4SE, United Kingdom',
           })
         )
         .parent()
