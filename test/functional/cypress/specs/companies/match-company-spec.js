@@ -10,7 +10,9 @@ const {
 const DUNS_NUMBER = '111222333'
 
 const performSearch = (companyName = 'some company') => {
-  cy.get(selectors.companyMatch.find.companyNameInput).type(companyName)
+  cy.get(selectors.companyMatch.find.companyNameInput)
+    .clear()
+    .type(companyName)
   cy.get(selectors.companyMatch.find.button).click()
 }
 
@@ -67,6 +69,19 @@ describe('Match a company', () => {
         .contains('Find company')
         .and('have.prop', 'tagName', 'BUTTON')
     })
+
+    it('should prepopulate company name and postcode text fields', () => {
+      cy.get(selectors.companyMatch.find.companyNameInput).should(
+        'have.attr',
+        'value',
+        fixtures.company.venusLtd.name
+      )
+      cy.get(selectors.companyMatch.find.postcodeField).should(
+        'have.attr',
+        'value',
+        fixtures.company.venusLtd.address.postcode
+      )
+    })
   })
 
   context(
@@ -77,6 +92,7 @@ describe('Match a company', () => {
       })
 
       it('should display error message', () => {
+        cy.get(selectors.companyMatch.find.companyNameInput).clear()
         cy.get(selectors.companyMatch.find.button)
           .click()
           .get(selectors.companyMatch.form)
@@ -99,10 +115,7 @@ describe('Match a company', () => {
     () => {
       before(() => {
         cy.visit(urls.companies.match.index(fixtures.company.venusLtd.id))
-        cy.get(selectors.companyMatch.find.companyNameInput).type(
-          'some company'
-        )
-        cy.get(selectors.companyMatch.find.button).click()
+        performSearch()
       })
 
       it('should display the company search results', () => {
@@ -119,8 +132,7 @@ describe('Match a company', () => {
   context('when one of the search results is clicked', () => {
     before(() => {
       cy.visit(urls.companies.match.index(fixtures.company.dnbCorp.id))
-      cy.get(selectors.companyMatch.find.companyNameInput).type('some company')
-      cy.get(selectors.companyMatch.find.button).click()
+      performSearch()
       cy.get(selectors.companyMatch.find.results.someCompany).click()
     })
 
