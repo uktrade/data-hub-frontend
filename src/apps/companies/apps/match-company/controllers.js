@@ -179,6 +179,7 @@ async function renderFindCompanyForm(req, res, next) {
           company: {
             ...pick(company, ['id', 'name']),
             address: parseAddress(company.address, countries),
+            postcode: get(company, 'address.postcode'),
             countryCode: getCountryCode(company, countries),
           },
         },
