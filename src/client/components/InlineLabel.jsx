@@ -15,7 +15,6 @@ const StyledLabelText = styled(LabelText)({
   marginRight: SPACING.SCALE_2,
 })
 
-// TODO: Move to data-hub-components
 const InlineLabel = ({ text, children }) => (
   <StyledLabel>
     <StyledLabelText>{text}</StyledLabelText>

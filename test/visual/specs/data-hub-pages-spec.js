@@ -7,6 +7,8 @@ describe('Data Hub', () => {
     })
 
     it('content', async () => {
+      // Wait for the initial list to be loaded
+      await $('=Edit list name')
       await browser.imageDiff.takeElement('.grid-row')
       await browser.imageDiff.validate().then((result) => {
         assert.strictEqual(result, 0)

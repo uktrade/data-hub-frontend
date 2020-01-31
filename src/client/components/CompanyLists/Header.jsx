@@ -1,11 +1,12 @@
 import { LEVEL_SIZE, SPACING } from '@govuk-react/constants'
 import { H2 } from '@govuk-react/heading'
 import Select from '@govuk-react/select'
-import PropTypes from 'prop-types'
 import React from 'react'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-import * as propTypes from './propTypes'
+import { COMPANY_LISTS__SELECT } from '../../actions'
+import { state2props } from './state'
 
 const StyledRoot = styled.div({
   display: 'flex',
@@ -31,27 +32,34 @@ const StyledSelect = styled(Select)({
   },
 })
 
-export const Header = ({ lists, onListChange }) => (
+export const Header = connect(
+  state2props,
+  (dispatch) => ({
+    onChange: (id) =>
+      dispatch({
+        type: COMPANY_LISTS__SELECT,
+        id,
+      }),
+  })
+)(({ selectedId, lists, onChange }) => (
   <StyledRoot>
     <StyledHeading size={LEVEL_SIZE[3]}>My companies lists</StyledHeading>
-    {lists.length > 1 && (
+    {Object.keys(lists).length > 1 && (
       <StyledSelect
         label="View list"
-        input={{ onChange: (e) => onListChange(e.target.value) }}
+        input={{
+          onChange: (e) => onChange(e.target.value),
+          value: selectedId,
+        }}
       >
-        {lists.map(({ name }, idx) => (
-          <option key={idx} value={idx}>
+        {Object.entries(lists).map(([id, { name }]) => (
+          <option key={id} value={id}>
             {name}
           </option>
         ))}
       </StyledSelect>
     )}
   </StyledRoot>
-)
-
-Header.propTypes = {
-  lists: propTypes.lists,
-  onListChange: PropTypes.func,
-}
+))
 
 export default Header

@@ -6,9 +6,8 @@ import styled from 'styled-components'
 
 import { FormActions } from 'data-hub-components'
 
-import urls from '../../../../lib/urls'
-import SecondaryButton from '../../../../client/components/SecondaryButton'
-import * as propTypes from './propTypes'
+import urls from '../../../lib/urls'
+import SecondaryButton from '../SecondaryButton'
 
 const StyledRoot = styled.div({
   display: 'flex',
@@ -21,22 +20,18 @@ const StyledHeading = styled(H3)({
   marginBottom: 0,
 })
 
-const ListHeader = ({ list }) => (
+const ListHeader = ({ id, name }) => (
   <StyledRoot>
-    <StyledHeading size={LEVEL_SIZE[4]}>{list.name}</StyledHeading>
+    <StyledHeading size={LEVEL_SIZE[4]}>{name}</StyledHeading>
     <FormActions>
-      <SecondaryButton as={Link} href={urls.companyLists.rename(list.id)}>
+      <SecondaryButton as={Link} href={urls.companyLists.rename(id)}>
         Edit list name
       </SecondaryButton>
-      <SecondaryButton as={Link} href={urls.companyLists.delete(list.id)}>
+      <SecondaryButton as={Link} href={urls.companyLists.delete(id)}>
         Delete list
       </SecondaryButton>
     </FormActions>
   </StyledRoot>
 )
-
-ListHeader.propTypes = {
-  list: propTypes.list,
-}
 
 export default ListHeader
