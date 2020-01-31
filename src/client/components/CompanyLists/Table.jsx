@@ -59,7 +59,7 @@ const CompaniesTable = ({ companies }) => (
           </Table.Cell>
           <Table.Cell setWidth="30%">
             {interactionId ? (
-              <Link href={`interactions/${interactionId}`}>
+              <Link href={urls.interactions.detail(interactionId)}>
                 <LinesEllipsis
                   text={subject}
                   maxLine="2"
