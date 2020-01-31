@@ -8,10 +8,11 @@
  * The name should be the name of the component the action relates to and a verb
  * describing what it does, concattenated by double underscore.
  */
-export const COMPANY_LIST_VIEWER__LIST_CHANGE =
-  'COMPANY_LIST_VIEWER__LIST_CHANGE'
-export const COMPANY_LIST_VIEWER__FILTER = 'COMPANY_LIST_VIEWER__FILTER'
-export const COMPANY_LIST_VIEWER__ORDER = 'COMPANY_LIST_VIEWER__ORDER'
+export const COMPANY_LISTS__LISTS_LOADED = 'COMPANY_LISTS__LISTS_LOADED'
+export const COMPANY_LISTS__SELECT = 'COMPANY_LISTS__SELECT'
+export const COMPANY_LISTS__COMPANIES_LOADED = 'COMPANY_LISTS__COMPANIES_LOADED'
+export const COMPANY_LISTS__FILTER = 'COMPANY_LISTS__FILTER'
+export const COMPANY_LISTS__ORDER = 'COMPANY_LISTS__ORDER'
 
 export const TASK__START = 'TASK__START'
 export const TASK__PROGRESS = 'TASK__PROGRESS'

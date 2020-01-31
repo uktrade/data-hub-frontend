@@ -22,13 +22,14 @@
         outboundLinkText: 'View all updates'
       } %}
     </div>
-{% if companyLists %}
-    <div class="govuk-grid-column-full">
+{% if user.hasPermission('company_list.view_companylist') %}
+  <div class="govuk-grid-column-full">
+    <div class="dashboard-section">
       {% component 'react-slot', {
-        id: 'my-companies',
-        props: {lists: companyLists}
+        id: 'company-lists'
       } %}
     </div>
+  </div>
 {% endif %}
 </div>
 

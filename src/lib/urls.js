@@ -168,6 +168,7 @@ module.exports = {
   },
   interactions: {
     index: url('/interactions'),
+    detail: url('/interactions', '/:interactionId'),
     subapp: createInteractionsSubApp(),
   },
   investments: {

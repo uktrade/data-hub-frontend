@@ -13,10 +13,6 @@ import FindCompany from '../apps/companies/apps/match-company/client/FindCompany
 import DeleteCompanyList from '../apps/company-lists/client/DeleteCompanyList'
 import MatchConfirmation from '../apps/companies/apps/match-company/client/MatchConfirmation'
 import CannotFindMatch from '../apps/companies/apps/match-company/client/CannotFindMatch'
-import CompanyLists from '../apps/dashboard/client/CompanyLists'
-import companyLists, {
-  resolvePreloadedData as resolvePreloadedCompanyListsData,
-} from '../apps/dashboard/client/CompanyLists/reducer'
 import EditCompanyList from '../apps/company-lists/client/EditCompanyList'
 import CreateListFormSection from '../apps/company-lists/client/CreateListFormSection'
 import AddRemoveFromListSection from '../apps/company-lists/client/AddRemoveFromListSection'
@@ -29,19 +25,25 @@ import CompanyBusinessDetails from '../apps/companies/apps/business-details/clie
 import tasksSaga from './components/Task/saga'
 import tasks from './components/Task/reducer'
 
+import CompanyLists from './components/CompanyLists'
+import companyListsReducer from './components/CompanyLists/reducer'
+import { ID as COMPANY_LISTS_STATE_ID } from './components/CompanyLists/state'
+import * as companyListsTasks from './components/CompanyLists/tasks'
+
 const sagaMiddleware = createSagaMiddleware()
 
 const store = createStore(
-  combineReducers({ companyLists, tasks }),
-  {
-    companyLists: resolvePreloadedCompanyListsData(),
-  },
+  combineReducers({
+    tasks,
+    [COMPANY_LISTS_STATE_ID]: companyListsReducer,
+  }),
   composeWithDevTools(applyMiddleware(sagaMiddleware))
 )
 
 sagaMiddleware.run(
   tasksSaga({
-    // Add tasks here
+    'Company lists': companyListsTasks.fetchCompanyLists,
+    'Company list': companyListsTasks.fetchCompanyList,
   })
 )
 
@@ -96,7 +98,7 @@ function App() {
       <Mount selector="#activity-feed-app">
         {(props) => <CompanyActivityFeed {...props} />}
       </Mount>
-      <Mount selector="#my-companies">
+      <Mount selector="#company-lists">
         <CompanyLists />
       </Mount>
       <Mount selector="#delete-company-list">
