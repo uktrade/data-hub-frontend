@@ -52,41 +52,26 @@ function MatchConfirmation({ company, dnbCompany, urls, csrfToken }) {
             <InsetText>
               <SummaryList
                 rows={[
-                  { label: 'Registered company name', value: company.name },
-                  { label: 'Trading name(s)', value: company.trading_names },
+                  { label: 'Company name', value: company.name },
                   {
                     label: 'Located at',
                     value: company.address.join(', '),
-                  },
-                  {
-                    label: 'Registered address',
-                    value: company.registered_address.join(', '),
                   },
                 ]}
               />
             </InsetText>
 
-            <H4 as="h2">
-              With the information from this Dun &amp; Bradstreet company record
-            </H4>
+            <H4 as="h2">With this verified third party company information</H4>
             <InsetText>
               <SummaryList
                 rows={[
                   {
-                    label: 'Registered company name',
+                    label: 'Company name',
                     value: dnbCompany.primary_name,
-                  },
-                  {
-                    label: 'Trading name(s)',
-                    value: dnbCompany.trading_names,
                   },
                   {
                     label: 'Located at',
                     value: dnbCompany.address.join(', '),
-                  },
-                  {
-                    label: 'Registered address',
-                    value: dnbCompany.registered_address.join(', '),
                   },
                 ]}
               />
@@ -118,13 +103,10 @@ function MatchConfirmation({ company, dnbCompany, urls, csrfToken }) {
 MatchConfirmation.props = {
   company: PropTypes.shape({
     name: PropTypes.string,
-    trading_names: PropTypes.string,
     address: PropTypes.arrayOf(PropTypes.string),
-    registered_address: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
   dnbCompany: PropTypes.shape({
     primary_name: PropTypes.string,
-    trading_names: PropTypes.string,
     duns_number: PropTypes.string,
     address: PropTypes.arrayOf(PropTypes.string),
     registered_address: PropTypes.arrayOf(PropTypes.string),

@@ -84,19 +84,11 @@ async function renderMatchConfirmation(req, res, next) {
             ),
           },
           company: {
-            ...pick(company, ['name', 'trading_names']),
+            ...pick(company, ['name']),
             address: parseAddress(company.address, countries),
-            registered_address: parseAddress(
-              company.registered_address,
-              countries
-            ),
           },
           dnbCompany: {
-            ...pick(dnbCompany, [
-              'primary_name',
-              'trading_names',
-              'duns_number',
-            ]),
+            ...pick(dnbCompany, ['primary_name', 'duns_number']),
             address: parseAddress(dnbCompany, countries, 'address_'),
             registered_address: parseAddress(
               dnbCompany,
