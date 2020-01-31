@@ -14,14 +14,16 @@ const {
 const companyMock = require('../../../../../../test/unit/data/companies/company-v4.json')
 
 describe('Company export controller', () => {
-  let saveCompany
+  let updateCompany
+  let saveCompanyExportDetails
   let transformerSpy
   let middlewareParameters
   let controller
   let metadata
 
   beforeEach(() => {
-    saveCompany = sinon.stub()
+    updateCompany = sinon.stub()
+    saveCompanyExportDetails = sinon.spy()
     transformerSpy = sinon.spy()
     metadata = {
       countryOptions: [
@@ -40,7 +42,8 @@ describe('Company export controller', () => {
 
     controller = proxyquire('../controller', {
       '../../repos': {
-        saveCompany,
+        updateCompany,
+        saveCompanyExportDetails,
       },
       '../../../../lib/metadata': metadata,
       './transformer': transformerSpy,
@@ -367,7 +370,7 @@ describe('Company export controller', () => {
             [EXPORT_INTEREST_STATUS.NOT_INTERESTED]: faker.random.uuid(),
           }
           beforeEach(async () => {
-            saveCompany.resolves(companyMock)
+            updateCompany.resolves(companyMock)
 
             middlewareParameters = buildMiddlewareParameters({
               requestBody: {
@@ -385,13 +388,23 @@ describe('Company export controller', () => {
             )
           })
 
-          it('should call save method with token', () => {
-            expect(saveCompany.args[0][0]).to.equal('1234')
+          it('should call update method with token', () => {
+            expect(updateCompany.args[0][0]).to.equal('1234', companyMock.id)
           })
 
-          it('should call save method with flattened body data', () => {
-            const actualData = saveCompany.args[0][1]
+          it('should call update method with flattened body data', () => {
+            const actualData = updateCompany.args[0][2]
             expect(actualData.export_experience_category).to.equal('111')
+          })
+
+          it('should call saveCompanyExportDetails with the correct arguments and data', () => {
+            expect(saveCompanyExportDetails.args[0][0]).to.equal(
+              '1234',
+              companyMock.id
+            )
+
+            const actualData = saveCompanyExportDetails.args[0][2]
+
             expect(actualData.export_countries).to.deep.equal(
               Object.entries(countries).map(([status, id]) => ({
                 country: { id },
@@ -401,6 +414,7 @@ describe('Company export controller', () => {
           })
 
           it('should redirect to exports routes', () => {
+            expect(middlewareParameters.nextSpy).not.to.have.been.called
             expect(
               middlewareParameters.resMock.redirect
             ).to.have.been.calledWith(
@@ -414,9 +428,10 @@ describe('Company export controller', () => {
             expect(middlewareParameters.nextSpy).not.to.have.been.called
           })
         })
+
         context('Without any countries', () => {
-          it('should call save method with flattened body data', async () => {
-            saveCompany.resolves(companyMock)
+          it('should call update method with flattened body data', async () => {
+            updateCompany.resolves(companyMock)
 
             middlewareParameters = buildMiddlewareParameters({
               requestBody: {
@@ -431,17 +446,20 @@ describe('Company export controller', () => {
               middlewareParameters.resMock,
               middlewareParameters.nextSpy
             )
-            const actualData = saveCompany.args[0][1]
-            expect(actualData.export_experience_category).to.equal('111')
-            expect(Array.isArray(actualData.export_countries)).to.equal(true)
-            expect(actualData.export_countries.length).to.equal(0)
+
+            const updateData = updateCompany.args[0][2]
+            const exportData = saveCompanyExportDetails.args[0][2]
+
+            expect(updateData.export_experience_category).to.equal('111')
+            expect(Array.isArray(exportData.export_countries)).to.equal(true)
+            expect(exportData.export_countries.length).to.equal(0)
           })
         })
       })
 
       context('without any feature flags', () => {
         beforeEach(async () => {
-          saveCompany.resolves(companyMock)
+          updateCompany.resolves(companyMock)
 
           middlewareParameters = buildMiddlewareParameters({
             requestBody: {
@@ -459,12 +477,17 @@ describe('Company export controller', () => {
           )
         })
 
-        it('should call save method with token', () => {
-          expect(saveCompany.args[0][0]).to.equal('1234')
+        it('should call save method with token and companyId', () => {
+          expect(updateCompany.args[0][0]).to.equal('1234')
+          expect(updateCompany.args[0][1]).to.equal(companyMock.id)
+        })
+
+        it('Should not call saveCompanyExportDetails', () => {
+          expect(saveCompanyExportDetails.callCount).to.equal(0)
         })
 
         it('should call save method with flattened body data', () => {
-          const actualData = saveCompany.args[0][1]
+          const actualData = updateCompany.args[0][2]
           expect(actualData.export_experience_category).to.equal('111')
           expect(actualData.export_to_countries).to.deep.equal(['222'])
           expect(actualData.future_interest_countries).to.deep.equal([
@@ -496,7 +519,7 @@ describe('Company export controller', () => {
     context('when save rejects with error', () => {
       it('should call next with error', async () => {
         const errorMock = { statusCode: 500 }
-        saveCompany.rejects(errorMock)
+        updateCompany.rejects(errorMock)
 
         middlewareParameters = buildMiddlewareParameters({
           requestBody: {

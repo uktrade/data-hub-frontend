@@ -6,7 +6,7 @@ const urls = require('../../../../lib/urls')
 const groupExportCountries = require('../../../../lib/group-export-countries')
 const getExportCountries = require('../../../../lib/get-export-countries')
 
-const { saveCompany } = require('../../repos')
+const { updateCompany, saveCompanyExportDetails } = require('../../repos')
 const { transformObjectToOption } = require('../../../transformers')
 const transformCompanyToExportDetailsView = require('./transformer')
 const { exportDetailsLabels, exportPotentialLabels } = require('../../labels')
@@ -127,34 +127,36 @@ function renderExportEdit(req, res) {
 }
 
 async function handleEditFormPost(req, res, next) {
+  const { token } = req.session
+  const companyId = res.locals.company.id
   const data = {
-    ...res.locals.company,
     export_experience_category: req.body.export_experience_category,
   }
 
-  if (res.locals.features[NEW_COUNTRIES_FEATURE]) {
-    data.export_countries = getExportCountries(req.body) || []
-  } else {
-    const exportToCountries = flatten([req.body.export_to_countries])
-    const futureInterestCountries = flatten([
-      req.body.future_interest_countries,
-    ])
-
-    Object.assign(data, {
-      export_to_countries: filter(exportToCountries),
-      future_interest_countries: filter(futureInterestCountries),
-    })
-  }
-
   try {
-    const save = await saveCompany(req.session.token, data)
+    if (res.locals.features[NEW_COUNTRIES_FEATURE]) {
+      await saveCompanyExportDetails(token, companyId, {
+        export_countries: getExportCountries(req.body) || [],
+      })
+    } else {
+      const exportToCountries = flatten([req.body.export_to_countries])
+      const futureInterestCountries = flatten([
+        req.body.future_interest_countries,
+      ])
 
-    res.redirect(urls.companies.exports.index(save.id))
+      Object.assign(data, {
+        export_to_countries: filter(exportToCountries),
+        future_interest_countries: filter(futureInterestCountries),
+      })
+    }
+
+    await updateCompany(token, companyId, data)
+
+    res.redirect(urls.companies.exports.index(companyId))
   } catch (err) {
     if (err.statusCode !== 400) {
       return next(err)
     }
-
     const nonFieldErrors = get(err.error, 'non_field_errors')
 
     if (nonFieldErrors) {
