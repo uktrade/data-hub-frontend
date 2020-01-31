@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import { get, pick } from 'lodash'
 import axios from 'axios'
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
@@ -25,12 +25,12 @@ export const fetchCompanyList = (id) =>
       res.data.results.map(({ company: { id, name }, latest_interaction }) => ({
         id,
         name,
-        ..._.pick(latest_interaction, ['date', 'subject']),
-        interactionId: _.get(latest_interaction, 'id'),
-        ditParticipants: _.get(latest_interaction, 'dit_participants', []).map(
+        ...pick(latest_interaction, ['date', 'subject']),
+        interactionId: get(latest_interaction, 'id'),
+        ditParticipants: get(latest_interaction, 'dit_participants', []).map(
           (x) => ({
-            name: _.get(x, 'adviser.name'),
-            team: _.get(x, 'team.name'),
+            name: get(x, 'adviser.name'),
+            team: get(x, 'team.name'),
           })
         ),
       }))
