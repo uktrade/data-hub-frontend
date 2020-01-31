@@ -177,7 +177,8 @@ async function renderFindCompanyForm(req, res, next) {
       .render('companies/apps/match-company/views/find-company', {
         props: {
           company: {
-            ...pick(company, ['id']),
+            ...pick(company, ['id', 'name']),
+            address: parseAddress(company.address, countries),
             countryCode: getCountryCode(company, countries),
           },
         },
