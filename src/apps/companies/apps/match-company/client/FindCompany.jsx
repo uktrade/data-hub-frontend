@@ -13,7 +13,12 @@ import {
 
 function FindCompany({ company, csrfToken }) {
   return (
-    <Form>
+    <Form
+      initialValues={{
+        dnbCompanyName: company.name,
+        dnbPostalCode: company.postcode,
+      }}
+    >
       <H4 as="h2">Existing Data Hub company record</H4>
       <InsetText>
         <SummaryList
@@ -58,6 +63,7 @@ FindCompany.propTypes = {
     id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     address: PropTypes.arrayOf(PropTypes.string),
+    postcode: PropTypes.string.isRequired,
     countryCode: PropTypes.string.isRequired,
   }),
 }
