@@ -1,10 +1,10 @@
 import Link from '@govuk-react/link'
 import Table from '@govuk-react/table'
 import VisuallyHidden from '@govuk-react/visually-hidden'
-import moment from 'moment'
 import React from 'react'
 import LinesEllipsis from 'react-lines-ellipsis'
 import styled from 'styled-components'
+import { DateUtils } from 'data-hub-components'
 
 import urls from '../../../lib/urls'
 import SecondaryButton from '../SecondaryButton'
@@ -55,7 +55,7 @@ const CompaniesTable = ({ companies }) => (
             </Link>
           </Table.Cell>
           <Table.Cell setWidth="15%">
-            {date ? moment(date).format('D MMM YYYY') : '-'}
+            {date ? DateUtils.format(date) : '-'}
           </Table.Cell>
           <Table.Cell setWidth="30%">
             {interactionId ? (
