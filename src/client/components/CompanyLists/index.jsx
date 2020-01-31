@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import { orderBy as _orderBy } from 'lodash'
 import { SPACING } from '@govuk-react/constants'
 import HintText from '@govuk-react/hint-text'
 import SectionBreak from '@govuk-react/section-break'
@@ -22,7 +22,7 @@ const StyledSectionBreak = styled(SectionBreak)({
 })
 
 const applyFilters = (companies, query, orderBy) =>
-  _.orderBy(
+  _orderBy(
     companies.filter((c) => c.name.match(new RegExp(query, 'i'))),
     ...{
       [RECENT]: [(c) => c.date || '', 'desc'],

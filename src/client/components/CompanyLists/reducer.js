@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import { mapValues } from 'lodash'
 import {
   COMPANY_LISTS__LISTS_LOADED,
   COMPANY_LISTS__SELECT,
@@ -21,7 +21,7 @@ export default (
     case COMPANY_LISTS__LISTS_LOADED:
       return {
         ...state,
-        lists: _.mapValues(result, (name) => ({ name })),
+        lists: mapValues(result, (name) => ({ name })),
         selectedId: Object.keys(result)[0],
       }
     case COMPANY_LISTS__COMPANIES_LOADED:
