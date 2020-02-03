@@ -4,7 +4,7 @@ const { Given, When, Then } = require('cucumber')
 const moment = require('moment')
 
 const { pluralise } = require('../../../../src/config/nunjucks/filters')
-const { mediumDateTimeFormat } = require('../../../../src/config')
+const { DATE_TIME_MEDIUM_FORMAT } = require('../../../../src/common/constants')
 
 const Collection = client.page.collection()
 
@@ -205,13 +205,13 @@ Then(
     await Collection.section.firstCollectionItem
       .waitForElementPresent('@header')
       .getText('@updatedOn', (text) => {
-        updateValues.firstItem = moment(text.value, mediumDateTimeFormat)
+        updateValues.firstItem = moment(text.value, DATE_TIME_MEDIUM_FORMAT)
       })
 
     await Collection.section.lastCollectionItem
       .waitForElementPresent('@header')
       .getText('@updatedOn', (text) => {
-        updateValues.lastItem = moment(text.value, mediumDateTimeFormat)
+        updateValues.lastItem = moment(text.value, DATE_TIME_MEDIUM_FORMAT)
       })
 
     if (sortType === 'Recently updated') {

@@ -1,8 +1,8 @@
-const { convertUSDToGBP } = require(`../../common/currency`)
-const { currencyRate } = require('../../config/index')
+const { convertUSDToGBP } = require('../currency')
+const { CURRENCY_RATE_USD_TO_GBP } = require('../constants')
 
 function getExpectedValue(value) {
-  return Math.round(currencyRate.usdToGbp * value)
+  return Math.round(CURRENCY_RATE_USD_TO_GBP * value)
 }
 
 describe('Currency test', () => {
@@ -29,7 +29,7 @@ describe('Currency test', () => {
     })
 
     it('should convert $1', () => {
-      expect(convertUSDToGBP(1)).to.equal(currencyRate.usdToGbp)
+      expect(convertUSDToGBP(1)).to.equal(CURRENCY_RATE_USD_TO_GBP)
     })
 
     it('should convert $1M', () => {
