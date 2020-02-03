@@ -10,7 +10,7 @@ const { isValidGuid } = require('../../../lib/controller-utils')
 const { getDitCompany } = require('../../companies/repos')
 const { getAdviser } = require('../../adviser/repos')
 const { getInvestment } = require('../repos')
-const { mediumDateTimeFormat } = require('../../../config')
+const { DATE_TIME_MEDIUM_FORMAT } = require('../../../common/constants')
 const { companies, investments } = require('../../../lib/urls')
 
 function getNextStage(currentStage, projectStages) {
@@ -119,7 +119,7 @@ async function getInvestmentDetails(req, res, next) {
         },
         {
           label: 'Created on',
-          value: format(investment.created_on, mediumDateTimeFormat),
+          value: format(investment.created_on, DATE_TIME_MEDIUM_FORMAT),
         },
       ],
       company: {

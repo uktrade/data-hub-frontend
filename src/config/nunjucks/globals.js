@@ -1,12 +1,10 @@
 const nunjucks = require('nunjucks')
 const { assign, omit, isFunction, map } = require('lodash')
 const queryString = require('qs')
-const config = require('../')
 const urls = require('../../lib/urls')
 
 module.exports = {
   serviceTitle: 'Data Hub',
-  projectPhase: config.projectPhase,
   description:
     'Data Hub is a customer relationship, project management and analytical tool for Department for International Trade.',
   assign,

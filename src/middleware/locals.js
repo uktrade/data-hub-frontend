@@ -17,7 +17,7 @@ module.exports = function locals(req, res, next) {
   )}`
 
   Object.assign(res.locals, {
-    APP_VERSION: process.env.GIT_BRANCH || process.env.GIT_COMMIT || 'unknown',
+    APP_VERSION: config.version,
     BASE_URL: baseUrl,
     CANONICAL_URL: baseUrl + req.path,
     ORIGINAL_URL: baseUrl + req.originalUrl,
@@ -55,14 +55,13 @@ module.exports = function locals(req, res, next) {
     },
 
     getAssetPath(asset) {
-      const assetsUrl = config.assetsHost || baseUrl
       const webpackAssetPath = webpackManifest[asset]
 
       if (webpackAssetPath) {
-        return `${assetsUrl}/${webpackAssetPath}`
+        return `${baseUrl}/${webpackAssetPath}`
       }
 
-      return `${assetsUrl}/${asset}`
+      return `${baseUrl}/${asset}`
     },
 
     getLocal(key) {

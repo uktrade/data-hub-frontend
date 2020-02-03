@@ -13,8 +13,8 @@ const {
 } = require('lodash')
 const dateFns = require('date-fns')
 
-const { longDateFormat } = require('../../../config')
 const FormController = require('./form')
+const { DATE_LONG_FORMAT } = require('../../../common/constants')
 const { Order } = require('../models')
 
 class EditController extends FormController {
@@ -83,7 +83,7 @@ class EditController extends FormController {
           newValue &&
           dateFns.isValid(parsedDate)
         ) {
-          return dateFns.format(parsedDate, longDateFormat)
+          return dateFns.format(parsedDate, DATE_LONG_FORMAT)
         }
 
         return newValue

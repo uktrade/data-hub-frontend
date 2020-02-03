@@ -1,6 +1,8 @@
 const chai = require('chai')
 const sinon = require('sinon')
 const proxyquire = require('proxyquire')
+const { TextEncoder, TextDecoder } = require('util')
+
 require('jsdom-global')()
 
 global.rootPath = `${process.cwd()}`
@@ -21,6 +23,8 @@ chai.use(require('sinon-chai'))
 global.expect = chai.expect
 global.sinon = sinon
 global.proxyquire = proxyquire
+global.TextEncoder = TextEncoder
+global.TextDecoder = TextDecoder
 chai.config.truncateThreshold = 0
 
 process.setMaxListeners(0)

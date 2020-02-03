@@ -12,6 +12,7 @@ services:
       - mock-backend
       - mock-sso
     environment:
+      NODE_ENV: development
       API_ROOT: ${API_ROOT:-http://mock-backend:8001}
       QA_HOST: http://localhost:3000
       DATA_HUB_BACKEND_ACCESS_KEY_ID: frontend-key-id
