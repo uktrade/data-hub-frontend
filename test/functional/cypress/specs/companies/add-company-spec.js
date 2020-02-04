@@ -162,12 +162,10 @@ describe('Add company form', () => {
             })
 
             context(
-              'when the first company is clicked that does not exist on Data Hub',
+              'when a company is clicked that does not exist on Data Hub',
               () => {
                 before(() => {
-                  cy.get(
-                    selectors.companyAdd.entitySearch.results.someOtherCompany
-                  ).click()
+                  cy.contains('Some unmatched company').click()
                 })
 
                 it('should display "Confirm you want to add this company to Data Hub" subheader', () => {
@@ -184,7 +182,7 @@ describe('Add company form', () => {
                   )
                   cy.get(selectors.companyAdd.summary).should(
                     'contain',
-                    'Some other company'
+                    'Some unmatched company'
                   )
                 })
 

@@ -69,26 +69,22 @@ async function renderMatchConfirmation(req, res, next) {
     })
 
     const dnbCompany = get(results, 'results[0].dnb_company')
+    const dataHubCompanyId = get(results, 'results[0].datahub_company.id')
 
     res
       .breadcrumb(company.name, urls.companies.detail(company.id))
-      .breadcrumb('Confirm update')
+      .breadcrumb(dataHubCompanyId ? 'Duplicated record' : 'Confirm update')
       .render('companies/apps/match-company/views/match-confirmation', {
         props: {
-          urls: {
-            companyDetail: urls.companies.detail(company.id),
-            match: urls.companies.match.index(company.id),
-            matchConfirmation: urls.companies.match.confirmation(
-              company.id,
-              dunsNumber
-            ),
-          },
+          dnbCompanyIsMatched: !!dataHubCompanyId,
           company: {
+            ...pick(company, ['id', 'name', 'trading_names']),
             ...pick(company, ['name']),
             address: parseAddress(company.address, countries),
           },
           dnbCompany: {
             ...pick(dnbCompany, ['primary_name', 'duns_number']),
+            datahub_company_id: dataHubCompanyId,
             address: parseAddress(dnbCompany, countries, 'address_'),
             registered_address: parseAddress(
               dnbCompany,
