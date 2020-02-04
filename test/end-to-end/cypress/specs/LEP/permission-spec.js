@@ -11,16 +11,34 @@ const {
 const { assertError } = require('../../support/assertions')
 
 describe('LEP Permission', () => {
-  describe('orders', () => {
-    before(() => {
-      cy.visit(companies.orders('0fb3379c-341c-4da4-b825-bf8d47b26baa'), {
-        failOnStatusCode: false,
+  describe('companies', () => {
+    describe('orders', () => {
+      before(() => {
+        cy.visit(companies.orders('0fb3379c-341c-4da4-b825-bf8d47b26baa'), {
+          failOnStatusCode: false,
+        })
+      })
+
+      it('should prevent LEP users from accessing the page', () => {
+        assertError('You don’t have permission to view this page')
+        assertError('403')
       })
     })
 
-    it('should prevent LEP users from accessing the page', () => {
-      assertError('You don’t have permission to view this page')
-      assertError('403')
+    describe('exports', () => {
+      before(() => {
+        cy.visit(
+          companies.exports.index('0fb3379c-341c-4da4-b825-bf8d47b26baa'),
+          {
+            failOnStatusCode: false,
+          }
+        )
+      })
+
+      it('should prevent LEP users from accessing the page', () => {
+        assertError('You don’t have permission to view this page')
+        assertError('403')
+      })
     })
   })
 
