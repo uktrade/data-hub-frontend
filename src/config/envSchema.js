@@ -1,5 +1,20 @@
 const Joi = require('@hapi/joi')
 
+const ExtendedJoi = Joi.extend((joi) => ({
+  type: 'json',
+  base: joi.object(),
+  messages: {
+    'json.invalid': '"{{#label}}" has invalid JSON format',
+  },
+  coerce(value, helpers) {
+    try {
+      return { value: JSON.parse(value) }
+    } catch (ignoreErr) {
+      return { value, errors: helpers.error('json.invalid') }
+    }
+  },
+}))
+
 /* eslint-disable prettier/prettier */
 const OAUTH2_STR = Joi.string()
   .when('OAUTH2_BYPASS_SSO', { is: false, then: Joi.required() })
@@ -131,7 +146,7 @@ const envSchema = Joi.object({
   SESSION_TTL: Joi.number().integer().default(2 * 60 * 60 * 1000),
 
   // Configuration object (JSON) of Cloud Foundry services
-  VCAP_SERVICES: Joi.object().default({}),
+  VCAP_SERVICES: ExtendedJoi.json().default({}),
 
   // Zendesk field ID used to capture user's browser
   ZEN_BROWSER: Joi.string(),
