@@ -12,6 +12,8 @@ import { SPACING } from '@govuk-react/constants'
 import ErrorSummary from '@govuk-react/error-summary'
 
 import { Form, FormActions, SummaryList } from 'data-hub-components'
+import urls from '../../../../../lib/urls'
+import MatchDuplicate from './MatchDuplicate'
 
 const StyledRoot = styled('div')`
   h2:not(:first-child) {
@@ -25,17 +27,32 @@ const StyledList = styled(UnorderedList)`
   margin-bottom: ${SPACING.SCALE_6};
 `
 
-async function onMatchSubmit({ dnbCompany, urls, csrfToken }) {
-  await axios.post(`${urls.matchConfirmation}?_csrf=${csrfToken}`, {
-    dnbCompany,
-  })
-  return urls.companyDetail
+async function onMatchSubmit({ company, dnbCompany, csrfToken }) {
+  await axios.post(
+    `${urls.companies.match.confirmation(
+      company.id,
+      dnbCompany.duns_number
+    )}?_csrf=${csrfToken}`,
+    {
+      dnbCompany,
+    }
+  )
+  return urls.companies.detail(company.id)
 }
 
-function MatchConfirmation({ company, dnbCompany, urls, csrfToken }) {
+function MatchConfirmation({
+  dnbCompanyIsMatched,
+  company,
+  dnbCompany,
+  csrfToken,
+}) {
+  if (dnbCompanyIsMatched) {
+    return <MatchDuplicate company={company} dnbCompany={dnbCompany} />
+  }
+
   return (
     <StyledRoot>
-      <Form onSubmit={() => onMatchSubmit({ dnbCompany, urls, csrfToken })}>
+      <Form onSubmit={() => onMatchSubmit({ company, dnbCompany, csrfToken })}>
         {({ submissionError }) => (
           <>
             {submissionError && (
@@ -91,7 +108,7 @@ function MatchConfirmation({ company, dnbCompany, urls, csrfToken }) {
             </StyledList>
             <FormActions>
               <Button>Send update request</Button>
-              <Link href={urls.match}>Back</Link>
+              <Link href={urls.companies.match.index(company.id)}>Back</Link>
             </FormActions>
           </>
         )}
@@ -101,7 +118,9 @@ function MatchConfirmation({ company, dnbCompany, urls, csrfToken }) {
 }
 
 MatchConfirmation.props = {
+  dnbCompanyIsMatched: PropTypes.bool.isRequired,
   company: PropTypes.shape({
+    id: PropTypes.string,
     name: PropTypes.string,
     address: PropTypes.arrayOf(PropTypes.string),
   }).isRequired,
@@ -110,11 +129,7 @@ MatchConfirmation.props = {
     duns_number: PropTypes.string,
     address: PropTypes.arrayOf(PropTypes.string),
     registered_address: PropTypes.arrayOf(PropTypes.string),
-  }).isRequired,
-  urls: PropTypes.shape({
-    companyDetail: PropTypes.string,
-    match: PropTypes.string,
-    matchConfirmation: PropTypes.string,
+    datahub_company_id: PropTypes.string,
   }).isRequired,
   csrfToken: PropTypes.string.isRequired,
 }
