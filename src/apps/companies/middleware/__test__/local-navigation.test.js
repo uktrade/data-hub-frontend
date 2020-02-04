@@ -31,6 +31,7 @@ describe('Companies local navigation', () => {
             'company.view_contact',
             'investment.view_all_investmentproject',
             'order.view_order',
+            'company.view_companyexportcountry',
           ],
         },
       })
@@ -70,6 +71,7 @@ describe('Companies local navigation', () => {
             'company.view_contact',
             'investment.view_all_investmentproject',
             'order.view_order',
+            'company.view_companyexportcountry',
           ],
         },
       })
@@ -111,6 +113,7 @@ describe('Companies local navigation', () => {
               'company.view_contact',
               'investment.view_all_investmentproject',
               'order.view_order',
+              'company.view_companyexportcountry',
             ],
           },
         })
@@ -147,6 +150,7 @@ describe('Companies local navigation', () => {
             'company.view_contact',
             'investment.view_all_investmentproject',
             'order.view_order',
+            'company.view_companyexportcountry',
           ],
         },
       })

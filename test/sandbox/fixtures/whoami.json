@@ -1,4 +1,4 @@
-{  
+{
     "id":"7d19d407-9aec-4d06-b190-d3f404627f21",
     "name":"DIT Staff",
     "last_login":null,
@@ -7,19 +7,19 @@
     "email":"dit_staff@datahub.com",
     "contact_email":"",
     "telephone_number":"",
-    "dit_team":{  
+    "dit_team":{
        "id":"9010dd28-9798-e211-a939-e4115bead28a",
        "name":"UKTI Team East Midlands - International Trade Team",
        "disabled_on":null,
-       "role":{  
+       "role":{
           "name":"International Trade Team",
           "id":"5e329c18-6095-e211-a939-e4115bead28a"
        },
-       "uk_region":{  
+       "uk_region":{
           "name":"East Midlands",
           "id":"844cd12a-6095-e211-a939-e4115bead28a"
        },
-       "country":{  
+       "country":{
           "name":"United Kingdom",
           "id":"80756b9a-5d95-e211-a939-e4115bead28a"
        }
@@ -88,6 +88,7 @@
                     "company_list.add_companylistitem",
                     "company_list.change_companylistitem",
                     "company_list.delete_companylistitem",
-                    "company.change_regional_account_manager"
+                    "company.change_regional_account_manager",
+                    "company.view_companyexportcountry"
                   ]
  }
