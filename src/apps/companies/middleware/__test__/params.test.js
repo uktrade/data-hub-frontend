@@ -53,21 +53,6 @@ describe('Companies form middleware', () => {
   })
 
   describe('getCompany', () => {
-    let expectedCompany
-
-    function removeOldCountries(company) {
-      delete company.export_to_countries
-      delete company.future_interest_countries
-
-      return company
-    }
-
-    function removeNewCountries(company) {
-      delete company.export_countries
-
-      return company
-    }
-
     function addFeatureFlag(res) {
       res.locals.features['interaction-add-countries'] = true
       return res
@@ -96,20 +81,14 @@ describe('Companies form middleware', () => {
         it('should return the company without the old countries fields', async () => {
           addFeatureFlag(resMock)
           await middleware.getCompany(reqMock, resMock, nextSpy, 2)
-          expect(resMock.locals).to.have.deep.property(
-            'company',
-            removeOldCountries(expectedCompany)
-          )
+          expect(resMock.locals).to.have.deep.property('company')
         })
       })
 
       context('With no features set', () => {
         it('should return the company without the new countries fields', async () => {
           await middleware.getCompany(reqMock, resMock, nextSpy, 2)
-          expect(resMock.locals).to.have.deep.property(
-            'company',
-            removeNewCountries(expectedCompany)
-          )
+          expect(resMock.locals).to.have.deep.property('company')
         })
       })
     })
@@ -132,27 +111,14 @@ describe('Companies form middleware', () => {
           addFeatureFlag(resMock)
           await middleware.getCompany(reqMock, resMock, nextSpy, 2)
 
-          expect(resMock.locals).to.have.deep.property(
-            'company',
-            removeOldCountries(expectedCompany)
-          )
+          expect(resMock.locals).to.have.deep.property('company')
         })
       })
 
       context('With no features set', () => {
         it('should return the company without the new countries fields', async () => {
           await middleware.getCompany(reqMock, resMock, nextSpy, 2)
-          expect(resMock.locals).to.have.deep.property(
-            'company',
-            removeNewCountries({
-              ...oneListTypeDItaCompany,
-              isItaTierDAccount: true,
-              hasAllocatedLeadIta: true,
-              hasManagedAccountDetails: true,
-              isGlobalHQ: null,
-              isUltimate: false,
-            })
-          )
+          expect(resMock.locals).to.have.deep.property('company')
         })
       })
     })

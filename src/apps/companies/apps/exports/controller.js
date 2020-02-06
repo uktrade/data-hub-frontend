@@ -53,20 +53,31 @@ function getPostedFormData(body) {
 }
 
 function renderExports(req, res) {
-  const { company, features } = res.locals
-  const exportDetails = transformCompanyToExportDetailsView(
-    company,
-    features[NEW_COUNTRIES_FEATURE]
-  )
+  const { company } = res.locals
+
+  const isArchived = res.locals.company.archived
+
+  const {
+    exportWinCategory,
+    greatProfile,
+    exportPotential,
+    exportCountriesInformation,
+  } = transformCompanyToExportDetailsView(company)
 
   res
     .breadcrumb(company.name, urls.companies.detail(company.id))
     .breadcrumb('Exports')
-    .render('companies/apps/exports/views/exports-view', {
-      exportDetails,
-      exportPotentials: Object.values(exportPotentialLabels),
-      findExportersUrl: urls.external.findExporters(),
-      feedbackLink: urls.support(),
+    .render('companies/apps/exports/views/index', {
+      props: {
+        isArchived,
+        exportWinCategory,
+        greatProfile,
+        exportPotential,
+        exportCountriesInformation,
+        exportPotentials: Object.values(exportPotentialLabels),
+        companyId: company.id,
+        companyNumber: company.company_number,
+      },
     })
 }
 
@@ -107,7 +118,7 @@ function renderExportEdit(req, res) {
     .breadcrumb(company.name, urls.companies.detail(company.id))
     .breadcrumb('Exports', urls.companies.exports.index(company.id))
     .breadcrumb('Edit')
-    .render('companies/apps/exports/views/exports-edit', {
+    .render('companies/apps/exports/views/edit', {
       errors: errors || [],
       exportDetailsLabels,
       exportExperienceCategories: metadataRepo.exportExperienceCategory.map(

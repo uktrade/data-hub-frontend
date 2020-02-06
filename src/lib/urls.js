@@ -68,6 +68,7 @@ module.exports = {
     companiesHouse: (companyNumber) =>
       `https://beta.companieshouse.gov.uk/company/${companyNumber}`,
     findExporters: () => 'https://find-exporters.datahub.trade.gov.uk/',
+    exportWins: () => 'https://www.exportwins.service.trade.gov.uk/',
   },
   dashboard: url('/'),
   companies: {
