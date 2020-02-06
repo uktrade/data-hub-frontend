@@ -2,12 +2,9 @@
   "id": "s07e2f19-8251-1a41-h27a-f98737520831",
   "reference_code": "",
   "name": "DnB Ltd",
-  "trading_names": [
-    "DnB",
-    "D&B"
-  ],
+  "trading_names": ["DnB", "D&B"],
   "uk_based": false,
-  "company_number": null,
+  "company_number": "12345678",
   "vat_number": "",
   "duns_number": "000000001",
   "dnb_modified_on": "2018-10-11T11:00:00Z",
@@ -36,8 +33,38 @@
   },
   "number_of_employees": 95,
   "is_number_of_employees_estimated": true,
-  "export_to_countries": [],
-  "future_interest_countries": [],
+  "great_profile_status": "published",
+  "export_potential": "medium",
+  "export_countries": [
+    {
+      "country": {
+        "id": "1234",
+        "name": "France"
+      },
+      "status": "currently_exporting"
+    },
+    {
+      "country": {
+        "id": "5511",
+        "name": "Spain"
+      },
+      "status": "currently_exporting"
+    },
+    {
+      "country": {
+        "id": "4321",
+        "name": "Germany"
+      },
+      "status": "future_interest"
+    },
+    {
+      "country": {
+        "id": "4123",
+        "name": "Sweden"
+      },
+      "status": "not_interested"
+    }
+  ],
   "headquarter_type": null,
   "one_list_group_global_account_manager": null,
   "global_headquarters": null,
@@ -52,7 +79,10 @@
   "turnover": 1000000,
   "is_turnover_estimated": true,
   "uk_region": null,
-  "export_experience_category": null,
+  "export_experience_category": {
+    "name": "Increasing export turnover",
+    "id": "85ec7ed9-0113-429d-9ee9-626248eb5cf0"
+  },
   "address": {
     "line_1": "10 Main St",
     "line_2": "",

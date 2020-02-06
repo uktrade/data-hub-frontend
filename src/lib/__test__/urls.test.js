@@ -16,6 +16,10 @@ describe('urls', () => {
       expect(urls.external.findExporters()).to.equal(
         'https://find-exporters.datahub.trade.gov.uk/'
       )
+
+      expect(urls.external.exportWins()).to.equal(
+        'https://www.exportwins.service.trade.gov.uk/'
+      )
     })
   })
 
