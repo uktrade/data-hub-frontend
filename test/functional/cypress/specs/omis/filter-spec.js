@@ -16,17 +16,19 @@ describe('OMIS Collections Filter', () => {
     cy.get(typeahead(ukRegion).selectedOption)
       .click()
       .get(typeahead(ukRegion).textInput)
-      .type('All')
+      .type('North West')
       .get(typeahead(ukRegion).options)
 
     cy.get(typeahead(ukRegion).selectedOption)
       .type('{enter}')
       .type('{esc}')
 
-    cy.wait('@filterResults').then((xhr) => {
-      expect(xhr.url).to.contain(
-        'uk_region=1718e330-6095-e211-a939-e4115bead28a'
-      )
+    cy.wait('@filterResults').then(() => {
+      cy.get('article header').within(() => {
+        cy.contains('1 order')
+        cy.contains('North West')
+      })
+      cy.get('article ol').should('have.length', 1)
     })
   })
 
