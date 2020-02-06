@@ -91,12 +91,15 @@ const omisFiltersFields = function({
       label: 'Market (country)',
     },
     {
-      macroName: 'MultipleChoiceField',
-      label: 'UK region',
+      macroName: 'Typeahead',
       name: 'uk_region',
-      type: 'checkbox',
-      modifier: 'option-select',
+      isAsync: false,
+      placeholder: 'Search UK region',
+      useSubLabel: false,
       options: regionOptions,
+      hideInactive: false,
+      target: 'metadata',
+      label: 'UK region',
     },
   ].map((filter) => {
     return {

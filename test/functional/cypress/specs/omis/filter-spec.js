@@ -11,7 +11,17 @@ describe('OMIS Collections Filter', () => {
   })
 
   it('should filter by region', () => {
-    cy.get(selectors.filter.omis.firstUkRegion).click()
+    const ukRegion = selectors.filter.ukRegion
+    const { typeahead } = selectors.filter
+    cy.get(typeahead(ukRegion).selectedOption)
+      .click()
+      .get(typeahead(ukRegion).textInput)
+      .type('All')
+      .get(typeahead(ukRegion).options)
+
+    cy.get(typeahead(ukRegion).selectedOption)
+      .type('{enter}')
+      .type('{esc}')
 
     cy.wait('@filterResults').then((xhr) => {
       expect(xhr.url).to.contain(
