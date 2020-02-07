@@ -230,7 +230,7 @@ describe('Companies Export Countries', () => {
     })
 
     it('renders the title', () => {
-      cy.contains('Export markets history').should('exist')
+      cy.contains('Export countries history').should('exist')
     })
 
     it('renders the collection list with the 0 results', () => {
@@ -245,13 +245,41 @@ describe('Companies Export Countries', () => {
     })
 
     it('renders the title', () => {
-      cy.contains('Export markets history').should('exist')
+      cy.contains('Export countries history').should('exist')
     })
 
-    it('renders the collection list with the 7 results', () => {
-      cy.contains('7 results').should('exist')
-      cy.get(countrySelectors.listItemHeadings).should('have.length', 7)
+    it('renders the collection list with 10 of the 12 results', () => {
+      cy.contains('12 results').should('exist')
+      cy.get(countrySelectors.listItemHeadings).should('have.length', 10)
 
+      cy.contains('Belarus added to countries of no interest').should('exist')
+      cy.contains('Belarus added to countries of no interest')
+        .siblings()
+        .should('contain', 'By DIT Staff')
+        .should('contain', 'Date 11 Feb 2020, 10:47am')
+      cy.contains('Botswana added to future countries of interest').should(
+        'exist'
+      )
+      cy.contains('Botswana added to future countries of interest')
+        .siblings()
+        .should('contain', 'By DIT Staff')
+        .should('contain', 'Date 11 Feb 2020, 10:47am')
+      cy.contains('Georgia added to currently exporting').should('exist')
+      cy.contains('Georgia added to currently exporting')
+        .siblings()
+        .should('contain', 'By DIT Staff')
+        .should('contain', 'Date 11 Feb 2020, 10:47am')
+      cy.contains('France added to currently exporting').should('exist')
+      cy.contains('France added to currently exporting')
+        .siblings()
+        .should('contain', 'By DIT Staff')
+        .should('contain', 'Date 11 Feb 2020, 10:47am')
+      cy.contains('Fiji added to currently exporting').should('exist')
+      cy.contains('Fiji added to currently exporting')
+        .siblings()
+        .should('contain', 'By DIT Staff')
+        .should('contain', 'Date 11 Feb 2020, 10:47am')
+      cy.contains('Argentina added to currently exporting').should('exist')
       cy.contains('Argentina added to currently exporting')
         .siblings()
         .should('contain', 'By DIT Staff')
@@ -272,14 +300,41 @@ describe('Companies Export Countries', () => {
         .siblings()
         .should('contain', 'By DIT Staff')
         .should('contain', 'Date 6 Feb 2020, 3:41pm')
-      cy.contains('Andorra added to future countries of interest')
+    })
+
+    it('should display the next button', () => {
+      cy.get('ul:last li a:last').should('have.text', 'Next')
+    })
+
+    it('should not display the previous button', () => {
+      cy.get('ul:last li a:first').should('not.have.text', 'Previous')
+    })
+
+    it('the second page renders the collection list with 2 of the 12 results', () => {
+      cy.get('a')
+        .contains('2')
+        .click()
+      cy.get(countrySelectors.listItemHeadings).should('have.length', 2)
+      cy.contains('Andorra removed from future countries of interest').should(
+        'exist'
+      )
+      cy.contains('Andorra removed from future countries of interest')
         .siblings()
         .should('contain', 'By DIT Staff')
-        .should('contain', 'Date 6 Feb 2020, 3:40pm')
-      cy.contains('Albania added to currently exporting')
+        .should('contain', '6 Feb 2020, 3:41pm')
+      cy.contains('Angola added to countries of no interest').should('exist')
+      cy.contains('Angola added to countries of no interest')
         .siblings()
         .should('contain', 'By DIT Staff')
-        .should('contain', 'Date 6 Feb 2020, 3:40pm')
+        .should('contain', '6 Feb 2020, 3:41pm')
+    })
+
+    it('should not display the next button', () => {
+      cy.get('ul:last li a:last').should('not.have.text', 'Next')
+    })
+
+    it('should display the previous button', () => {
+      cy.get('ul:last li a:first').should('have.text', 'Previous')
     })
   })
 })

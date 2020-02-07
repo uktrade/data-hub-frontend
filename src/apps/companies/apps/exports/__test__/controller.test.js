@@ -39,7 +39,7 @@ describe('Company export controller', () => {
       ],
     }
 
-    controller = proxyquire('../controller', {
+    controller = proxyquire('../controllers', {
       '../../repos': {
         updateCompany,
         saveCompanyExportDetails,

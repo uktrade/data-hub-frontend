@@ -2,19 +2,8 @@
 const { flatMap } = require('lodash')
 
 const groupExportCountries = require('../../../../lib/group-export-countries')
-const { formatDateTime } = require('../../../../config/nunjucks/filters')
 const { exportDetailsLabels, exportPotentialLabels } = require('../../labels')
 const { EXPORT_INTEREST_STATUS } = require('../../../constants')
-
-const COUNTRY_HISTORY_TYPE_TEXT = {
-  insert: 'added to',
-  delete: 'removed from',
-}
-const COUNTRY_TYPE_TEXT = {
-  future_interest: 'future countries of interest',
-  currently_exporting: 'currently exporting',
-  not_interested: 'countries of no interest',
-}
 
 function getCountries(data) {
   return flatMap(data, ({ name }) => name || null).join(', ') || 'None'

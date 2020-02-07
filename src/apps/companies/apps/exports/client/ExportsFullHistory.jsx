@@ -1,42 +1,78 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { useSearchParam } from 'react-use'
+import urls from '../../../../../lib/urls'
 import { H2 } from '@govuk-react/heading'
 import { SPACING, LEVEL_SIZE } from '@govuk-react/constants'
 import { CollectionList } from 'data-hub-components'
+import LoadingBox from '@govuk-react/loading-box'
+import ErrorSummary from '@govuk-react/error-summary'
 
 const Wrapper = styled('div')`
   margin-top: ${SPACING.SCALE_3};
 `
 
-const DEFAULT_ITEMS_PER_PAGE = 10
+function ExportFullHistory({ companyId }) {
+  const [items, setitems] = useState([])
+  const [totalItems, setTotalItems] = useState(0)
+  const [isLoading, setIsLoading] = useState(true)
+  const [errorMessage, setErrorMessage] = useState(null)
 
-function ExportFullHistory({ data }) {
-  const [activePage, setActivePage] = useState(1)
+  const activePage = parseInt(useSearchParam('page'), 10) || 1
+  const getPageUrl = (page) => `${window.location.pathname}?page=${page}`
+  const setActivePage = (page) =>
+    window.history.pushState({}, '', `${window.location.pathname}?page=${page}`)
 
-  const index = activePage - 1
-  const offset = index * DEFAULT_ITEMS_PER_PAGE
-  const limit = (index + 1) * DEFAULT_ITEMS_PER_PAGE
+  const onPageClick = (page, event) => {
+    setActivePage(page)
+    event.target.blur()
+    event.preventDefault()
+  }
 
-  return (
-    <Wrapper>
-      <H2 size={LEVEL_SIZE[3]}>Export markets history</H2>
-      <CollectionList
-        items={data.results}
-        onPageClick={(page, event) => {
-          setActivePage(page)
-          event.preventDefault()
-        }}
-        activePage={activePage}
-        totalItems={data.count}
-        itemName="result"
-      />
-    </Wrapper>
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const { data } = await axios.get(urls.search.exportsHistory(), {
+          params: {
+            page: activePage,
+            companyId,
+          },
+        })
+        setitems(data.results)
+        setTotalItems(data.count)
+        setIsLoading(false)
+      } catch {
+        setErrorMessage('Please try again later')
+      }
+    }
+    setIsLoading(true)
+    window.scrollTo(0, 0)
+    fetchData()
+  }, [activePage])
+
+  return errorMessage ? (
+    <ErrorSummary
+      heading="There was an error getting the export countries history"
+      description={errorMessage}
+      errors={[]}
+    />
+  ) : (
+    <LoadingBox loading={isLoading}>
+      <Wrapper>
+        <H2 size={LEVEL_SIZE[3]}>Export countries history</H2>
+        <CollectionList
+          itemName="result"
+          items={items}
+          totalItems={totalItems}
+          onPageClick={onPageClick}
+          getPageUrl={getPageUrl}
+          activePage={activePage}
+        />
+      </Wrapper>
+    </LoadingBox>
   )
-}
-
-ExportFullHistory.propTypes = {
-  data: PropTypes.object.isRequired,
 }
 
 export default ExportFullHistory

@@ -10,7 +10,7 @@ const {
   renderExportEdit,
   handleEditFormPost,
   renderFullExportHistory,
-} = require('./controller')
+} = require('./controllers')
 
 router.get(urls.companies.exports.index.route, setReturnUrl, renderExports)
 
@@ -19,6 +19,6 @@ router
   .get(populateExportForm, renderExportEdit)
   .post(populateExportForm, handleEditFormPost, renderExportEdit)
 
-router.get(urls.companies.exports.history.route, renderFullExportHistory)
+router.get(urls.companies.exports.history.index.route, renderFullExportHistory)
 
 module.exports = router

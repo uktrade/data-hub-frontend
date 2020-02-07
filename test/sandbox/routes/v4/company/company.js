@@ -31,9 +31,6 @@ var largeCapitalProfileCreateSuccess = require('../../../fixtures/v4/company/lar
 var largeCapitalProfileList10 = require('../../../fixtures/v4/investment/large-capital-profile-list10.json')
 var largeCapitalProfileList20 = require('../../../fixtures/v4/investment/large-capital-profile-list20.json')
 
-var fullExportHistory = require('../../../fixtures/v4/export/fullExportHistory.json')
-var emptyFullExportHistory = require('../../../fixtures/v4/export/emptyFullExportHistory.json')
-
 state.investor_description = state.investor_description || ''
 
 exports.largeInvestorProfile = function(req, res) {
@@ -153,11 +150,4 @@ exports.manageAdviser = function(req, res) {
 
 exports.companyAudit = function(req, res) {
   res.json(companyAudit)
-}
-
-exports.renderFullExportHistory = function(req, res) {
-  if (req.body.company === 'cc7e2f19-7251-4a41-a27a-f98437720531') {
-    return res.json(fullExportHistory)
-  }
-  return res.json(emptyFullExportHistory)
 }

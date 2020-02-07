@@ -108,7 +108,9 @@ module.exports = {
     exports: {
       index: url('/companies', '/:companyId/exports'),
       edit: url('/companies', '/:companyId/exports/edit'),
-      history: url('/companies', '/:companyId/exports/history'),
+      history: {
+        index: url('/companies', '/:companyId/exports/history'),
+      },
     },
     hierarchies: {
       ghq: {
@@ -167,6 +169,7 @@ module.exports = {
   search: {
     index: url('/search'),
     type: url('/search', '/:searchPath?'),
+    exportsHistory: url('/search', '/exports/history/data'),
   },
   interactions: {
     index: url('/interactions'),
