@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
 import InsetText from '@govuk-react/inset-text'
 import styled from 'styled-components'
+import Button from '@govuk-react/button'
+import { FormActions } from 'data-hub-components'
 
 import urls from '../../../../../lib/urls'
 
@@ -16,16 +18,13 @@ function MatchDuplicate({ company, dnbCompany }) {
   return (
     <StyledRoot>
       <p>
-        For some companies there are multiple (duplicate) records. To resolve
-        this, and have this record automatically updated, you can{' '}
-        <Link href={urls.support()}>
-          contact support to request a merge of these records
-        </Link>
-        .
+        This can happen when there are duplicate company records in Data Hub. To
+        resolve this, you can ask the Support Team to merge these duplicates
+        into one record.
       </p>
       <p>
-        Copy and paste the following instructions in the Desciption field of the
-        form:
+        You can copy and paste the following instructions in the Description
+        field of the form:
       </p>
       <InsetText>
         <p>
@@ -37,9 +36,14 @@ function MatchDuplicate({ company, dnbCompany }) {
         </p>
       </InsetText>
 
-      <Link href={urls.companies.match.index(company.id)}>
-        Back to search results
-      </Link>
+      <FormActions>
+        <Button as="a" href={urls.support()}>
+          Request merge
+        </Button>
+        <Link href={urls.companies.match.index(company.id)}>
+          Back to search results
+        </Link>
+      </FormActions>
     </StyledRoot>
   )
 }
