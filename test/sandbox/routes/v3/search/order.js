@@ -9,6 +9,8 @@ exports.order = function(req, res) {
     return res.json(order)
   }
   if (
+    // uk_region can be a string or an array of strings so we need to unify it
+    // to allow the filter to work also when there are multiple regions selected.
     _([req.body.uk_region])
       .flatten()
       .indexOf(NORTH_WEST_REGION) >= 0
