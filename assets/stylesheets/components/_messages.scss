@@ -52,6 +52,11 @@
   }
 }
 
+.c-message__body {
+  font-weight: normal;
+  @include core-font(16);
+}
+
 .c-message--info,
 .c-message--success,
 .c-message--warning,
