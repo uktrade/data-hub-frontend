@@ -1,5 +1,6 @@
 const { get } = require('lodash')
 const config = require('../config')
+const reporter = require('../lib/reporter')
 const { filterNonPermittedItem } = require('../modules/permissions/filters')
 
 const GLOBAL_NAV_ITEMS = require('../apps/global-nav-items')
@@ -15,6 +16,15 @@ function getActiveHeaderKey(requestPath, permittedNavItems) {
         return headerKey
       }
     }
+  }
+}
+
+function convertValueToJson(value) {
+  try {
+    return JSON.parse(value)
+  } catch (e) {
+    reporter.captureException(e)
+    return value
   }
 }
 
@@ -39,7 +49,15 @@ module.exports = (req, res, next) => {
     ACTIVE_KEY: getActiveHeaderKey(req.path, permittedNavItems),
 
     getMessages() {
-      return req.flash()
+      const items = req.flash()
+
+      for (const [key, values] of Object.entries(items)) {
+        if (key.endsWith(':with-body')) {
+          items[key] = values.map(convertValueToJson)
+        }
+      }
+
+      return items
     },
   })
 
