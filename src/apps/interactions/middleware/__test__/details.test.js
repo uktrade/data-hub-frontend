@@ -1,9 +1,12 @@
 const proxyquire = require('proxyquire')
 
+const urls = require('../../../../lib/urls')
+
 const buildMiddlewareParameters = require('../../../../../test/unit/helpers/middleware-parameters-builder')
 const interactionData = require('../../../../../test/unit/data/interactions/new-interaction')
 const interactionDataWithCountries = require('../../../../../test/unit/data/interactions/new-interaction-with-countries')
 const serviceOptions = require('../../../../../test/unit/data/interactions/service-options-data')
+const company = require('../../../../../test/unit/data/company')
 
 const { EXPORT_INTEREST_STATUS } = require('../../../constants')
 
@@ -31,6 +34,7 @@ describe('Interaction details middleware', () => {
               interactions: {
                 returnLink: '/return/',
               },
+              company,
             })
 
             const middleware = proxyquire(modulePath, {
@@ -105,6 +109,7 @@ describe('Interaction details middleware', () => {
               interaction: {
                 ...interactionData,
               },
+              company,
             })
 
             const middleware = proxyquire(modulePath, {
@@ -166,97 +171,196 @@ describe('Interaction details middleware', () => {
 
       context('when the interaction-add-countries is true', () => {
         context('when creating a new interaction', () => {
-          before(async () => {
-            this.saveInteractionStub = sinon.stub()
-            this.getServiceOptionsStub = sinon.stub()
+          context('when countries were discussed', () => {
+            before(async () => {
+              this.saveInteractionStub = sinon.stub()
+              this.getServiceOptionsStub = sinon.stub()
 
-            this.middlewareParameters = buildMiddlewareParameters({
-              requestBody: { ...interactionDataWithCountries },
-              requestParams: {
-                theme: 'export',
-                kind: 'interaction',
-              },
-              interactions: {
-                returnLink: '/return/',
-              },
-              features: { 'interaction-add-countries': true },
+              this.middlewareParameters = buildMiddlewareParameters({
+                requestBody: { ...interactionDataWithCountries },
+                requestParams: {
+                  theme: 'export',
+                  kind: 'interaction',
+                },
+                interactions: {
+                  returnLink: '/return/',
+                },
+                features: { 'interaction-add-countries': true },
+                company,
+              })
+              const middleware = proxyquire(modulePath, {
+                '../repos': {
+                  saveInteraction: this.saveInteractionStub.resolves({
+                    id: '1',
+                    were_countries_discussed: true,
+                  }),
+                },
+                '../../../lib/options': {
+                  getOptions: this.getServiceOptionsStub.resolves(
+                    serviceOptionsTransformed
+                  ),
+                },
+              })
+
+              await middleware.postDetails(
+                this.middlewareParameters.reqMock,
+                this.middlewareParameters.resMock,
+                this.middlewareParameters.nextSpy
+              )
             })
-            const middleware = proxyquire(modulePath, {
-              '../repos': {
-                saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
-              },
-              '../../../lib/options': {
-                getOptions: this.getServiceOptionsStub.resolves(
-                  serviceOptionsTransformed
-                ),
-              },
+
+            it('should POST to the API', () => {
+              expect(
+                this.saveInteractionStub
+              ).to.have.been.calledOnceWithExactly(
+                this.middlewareParameters.reqMock.session.token,
+                {
+                  contact: interactionDataWithCountries.contact,
+                  dit_team: interactionDataWithCountries.dit_team,
+                  service: 'Providing Export Advice & Information',
+                  subService: ['Providing Export Advice & Information'],
+                  'sv2-q1': 'sv2-a1',
+                  subject: 'subject',
+                  notes: 'notes',
+                  dit_adviser: interactionDataWithCountries.dit_adviser,
+                  service_answers: { 'sv2-q1': { 'sv2-a1': {} } },
+                  date: '2017-10-03',
+                  grant_amount_offered: null,
+                  net_company_receipt: null,
+                  contacts: [],
+                  dit_participants: [],
+                  policy_areas: [],
+                  policy_issue_types: [],
+                  status: 'complete',
+                  were_countries_discussed: 'true',
+                  [EXPORTING_TO]: interactionDataWithCountries[EXPORTING_TO],
+                  [FUTURE_INTEREST]:
+                    interactionDataWithCountries[FUTURE_INTEREST],
+                  [NOT_INTERESTED]:
+                    interactionDataWithCountries[NOT_INTERESTED],
+                  export_countries: [
+                    {
+                      country: {
+                        id: interactionDataWithCountries[EXPORTING_TO],
+                      },
+                      status: EXPORTING_TO,
+                    },
+                    {
+                      country: {
+                        id: interactionDataWithCountries[FUTURE_INTEREST],
+                      },
+                      status: FUTURE_INTEREST,
+                    },
+                    {
+                      country: {
+                        id: interactionDataWithCountries[NOT_INTERESTED],
+                      },
+                      status: NOT_INTERESTED,
+                    },
+                  ],
+                }
+              )
             })
 
-            await middleware.postDetails(
-              this.middlewareParameters.reqMock,
-              this.middlewareParameters.resMock,
-              this.middlewareParameters.nextSpy
-            )
+            it('should flash a created message with a body', () => {
+              expect(
+                this.middlewareParameters.reqMock.flashWithBody
+              ).to.be.calledOnceWithExactly(
+                'success',
+                'Interaction created',
+                `You discussed some countries within the interaction, <a href="${urls.companies.exports.index(
+                  company.id
+                )}">click here to view all countries</a> within the export tab`
+              )
+            })
+
+            it('should redirect', () => {
+              expect(
+                this.middlewareParameters.resMock.redirect
+              ).to.be.calledOnceWithExactly('/return/1')
+            })
           })
 
-          it('should POST to the API', () => {
-            expect(this.saveInteractionStub).to.have.been.calledOnceWithExactly(
-              this.middlewareParameters.reqMock.session.token,
-              {
-                contact: interactionDataWithCountries.contact,
-                dit_team: interactionDataWithCountries.dit_team,
-                service: 'Providing Export Advice & Information',
-                subService: ['Providing Export Advice & Information'],
-                'sv2-q1': 'sv2-a1',
-                subject: 'subject',
-                notes: 'notes',
-                dit_adviser: interactionDataWithCountries.dit_adviser,
-                service_answers: { 'sv2-q1': { 'sv2-a1': {} } },
-                date: '2017-10-03',
-                grant_amount_offered: null,
-                net_company_receipt: null,
-                contacts: [],
-                dit_participants: [],
-                policy_areas: [],
-                policy_issue_types: [],
-                status: 'complete',
-                were_countries_discussed: 'true',
-                [EXPORTING_TO]: interactionDataWithCountries[EXPORTING_TO],
-                [FUTURE_INTEREST]:
-                  interactionDataWithCountries[FUTURE_INTEREST],
-                [NOT_INTERESTED]: interactionDataWithCountries[NOT_INTERESTED],
-                export_countries: [
-                  {
-                    country: { id: interactionDataWithCountries[EXPORTING_TO] },
-                    status: EXPORTING_TO,
-                  },
-                  {
-                    country: {
-                      id: interactionDataWithCountries[FUTURE_INTEREST],
-                    },
-                    status: FUTURE_INTEREST,
-                  },
-                  {
-                    country: {
-                      id: interactionDataWithCountries[NOT_INTERESTED],
-                    },
-                    status: NOT_INTERESTED,
-                  },
-                ],
-              }
-            )
-          })
+          context('when countries were NOT discussed', () => {
+            before(async () => {
+              this.saveInteractionStub = sinon.stub()
+              this.getServiceOptionsStub = sinon.stub()
 
-          it('should flash a created message', () => {
-            expect(
-              this.middlewareParameters.reqMock.flash
-            ).to.be.calledOnceWithExactly('success', 'Interaction created')
-          })
+              this.middlewareParameters = buildMiddlewareParameters({
+                requestBody: {
+                  ...interactionData,
+                  were_countries_discussed: 'false',
+                },
+                requestParams: {
+                  theme: 'export',
+                  kind: 'interaction',
+                },
+                interactions: {
+                  returnLink: '/return/',
+                },
+                features: { 'interaction-add-countries': true },
+                company,
+              })
+              const middleware = proxyquire(modulePath, {
+                '../repos': {
+                  saveInteraction: this.saveInteractionStub.resolves({
+                    id: '1',
+                    were_countries_discussed: false,
+                  }),
+                },
+                '../../../lib/options': {
+                  getOptions: this.getServiceOptionsStub.resolves(
+                    serviceOptionsTransformed
+                  ),
+                },
+              })
 
-          it('should redirect', () => {
-            expect(
-              this.middlewareParameters.resMock.redirect
-            ).to.be.calledOnceWithExactly('/return/1')
+              await middleware.postDetails(
+                this.middlewareParameters.reqMock,
+                this.middlewareParameters.resMock,
+                this.middlewareParameters.nextSpy
+              )
+            })
+
+            it('should POST to the API', () => {
+              expect(
+                this.saveInteractionStub
+              ).to.have.been.calledOnceWithExactly(
+                this.middlewareParameters.reqMock.session.token,
+                {
+                  contact: interactionData.contact,
+                  dit_team: interactionData.dit_team,
+                  service: 'Providing Export Advice & Information',
+                  subService: ['Providing Export Advice & Information'],
+                  'sv2-q1': 'sv2-a1',
+                  subject: 'subject',
+                  notes: 'notes',
+                  dit_adviser: interactionData.dit_adviser,
+                  service_answers: { 'sv2-q1': { 'sv2-a1': {} } },
+                  date: '2017-10-03',
+                  grant_amount_offered: null,
+                  net_company_receipt: null,
+                  contacts: [],
+                  dit_participants: [],
+                  policy_areas: [],
+                  policy_issue_types: [],
+                  status: 'complete',
+                  were_countries_discussed: 'false',
+                }
+              )
+            })
+
+            it('should flash a created message', () => {
+              expect(
+                this.middlewareParameters.reqMock.flash
+              ).to.be.calledOnceWithExactly('success', 'Interaction created')
+            })
+
+            it('should redirect', () => {
+              expect(
+                this.middlewareParameters.resMock.redirect
+              ).to.be.calledOnceWithExactly('/return/1')
+            })
           })
         })
 
@@ -277,6 +381,7 @@ describe('Interaction details middleware', () => {
                 ...interactionDataWithCountries,
               },
               features: { 'interaction-add-countries': true },
+              company,
             })
 
             const middleware = proxyquire(modulePath, {
@@ -364,6 +469,7 @@ describe('Interaction details middleware', () => {
             interactions: {
               returnLink: '/return/',
             },
+            company,
           })
 
           const middleware = proxyquire(modulePath, {
@@ -429,6 +535,7 @@ describe('Interaction details middleware', () => {
             interactions: {
               returnLink: '/return/',
             },
+            company,
           })
 
           const middleware = proxyquire(modulePath, {
