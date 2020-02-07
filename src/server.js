@@ -38,6 +38,7 @@ const redisCheck = require('./middleware/redis-check')
 const reporter = require('./lib/reporter')
 const permissions = require('./middleware/permissions')
 const envSchema = require('./config/envSchema')
+const flashWithBody = require('./middleware/flash-with-body')
 
 const routers = require('./apps/routers')
 
@@ -115,6 +116,7 @@ app.use(bodyParser.json())
 app.use(currentJourney())
 
 app.use(flash())
+app.use(flashWithBody)
 
 app.use(ssoBypass())
 app.use(basicAuth)
