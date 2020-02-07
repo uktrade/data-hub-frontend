@@ -19,7 +19,7 @@ function FindCompany({ company, csrfToken }) {
         dnbPostalCode: company.postcode,
       }}
     >
-      <H4 as="h2">Existing Data Hub company record</H4>
+      <H4 as="h2">Data Hub business details (un-verified)</H4>
       <InsetText>
         <SummaryList
           rows={[
@@ -29,7 +29,7 @@ function FindCompany({ company, csrfToken }) {
         />
       </InsetText>
 
-      <H4 as="h2">Find the verified third party company record</H4>
+      <H4 as="h2">Search third party supplier for business details</H4>
       <FieldDnbCompany
         apiEndpoint={`${urls.companies.match.index(
           company.id
@@ -52,6 +52,9 @@ function FindCompany({ company, csrfToken }) {
         onCannotFind={() => {
           window.location.assign(urls.companies.match.cannotFind(company.id))
         }}
+        searchResultsMessage="Choose the business details that best match this
+         company. You'll be given the chance to review the request before you
+          send it."
       />
     </Form>
   )

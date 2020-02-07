@@ -165,7 +165,7 @@ describe('Company activity feed', () => {
 
     it('should not display the prompt for company matching', () => {
       cy.contains(
-        "There might be wrong information on this company page because it doesn't get updated automatically."
+        'Business details on this company record have not been verified and could be wrong.'
       ).should('not.exist')
     })
   })
@@ -177,17 +177,21 @@ describe('Company activity feed', () => {
 
     it('should display the prompt for company matching', () => {
       cy.contains(
-        "There might be wrong information on this company page because it doesn't get updated automatically."
+        'Business details on this company record have not been verified and could be wrong.'
       )
         .parent()
         .next()
+        .should('match', 'details')
         .should(
           'have.text',
-          'You can make sure it has the right information by selecting' +
-            ' the "update this record" button below.'
+          'Why verify?Linking our existing records to a trusted third' +
+            ' party means we can keep our information about businesses up to date' +
+            ' automatically. It helps reduce duplicate records, provide a shared' +
+            ' view of complex companies, and make it more likely we can link' +
+            ' other data sources together.Linking can often be done in just four clicks.'
         )
         .next()
-        .should('have.text', 'Update this record')
+        .should('have.text', 'Verify business details')
         .should(
           'have.attr',
           'href',

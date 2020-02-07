@@ -18,7 +18,7 @@ const performSearch = (companyName = 'some company') => {
 }
 
 describe('Match a company', () => {
-  context('when viewing "Find this company record" page', () => {
+  context('when viewing "Search for verified business details" page', () => {
     before(() => {
       cy.visit(urls.companies.match.index(fixtures.company.venusLtd.id))
     })
@@ -28,16 +28,16 @@ describe('Match a company', () => {
         Home: urls.dashboard(),
         Companies: urls.companies.index(),
         'Venus Ltd': urls.companies.detail(fixtures.company.venusLtd.id),
-        'Find this company record': null,
+        'Search for verified business details': null,
       })
     })
 
     it('should render the header', () => {
-      assertLocalHeader('Find this company record')
+      assertLocalHeader('Search for verified business details')
     })
 
     it('should render the Data Hub record', () => {
-      cy.contains('Existing Data Hub company record')
+      cy.contains('Data Hub business details (un-verified)')
         .should('have.prop', 'tagName', 'H2')
         .next()
         .find('dl')
@@ -50,7 +50,7 @@ describe('Match a company', () => {
     })
 
     it('should render both search input fields and a button', () => {
-      cy.contains('Find the verified third party company record')
+      cy.contains('Search third party supplier for business details')
         .and('have.prop', 'tagName', 'H2')
         .next()
         .children()
@@ -130,12 +130,12 @@ describe('Match a company', () => {
     }
   )
 
-  context('when "I still cannot find the company" is clicked', () => {
+  context(`when "I still can't find what I'm looking for" is clicked`, () => {
     before(() => {
       cy.visit(urls.companies.match.index(fixtures.company.venusLtd.id))
       performSearch()
-      cy.contains('I cannot find the company I am looking for').click()
-      cy.contains('I still cannot find the company').click()
+      cy.contains("I can't find what I'm looking for").click()
+      cy.contains("I still can't find what I'm looking for").click()
     })
 
     it('should redirect to the cannot find match page', () => {
@@ -146,7 +146,7 @@ describe('Match a company', () => {
     })
 
     it('should render the header', () => {
-      assertLocalHeader('Unable to find matching company record')
+      assertLocalHeader("I still can't find what I'm looking for")
     })
 
     it('should render breadcrumbs', () => {
@@ -156,23 +156,22 @@ describe('Match a company', () => {
         [fixtures.company.venusLtd.name]: urls.companies.detail(
           fixtures.company.venusLtd.id
         ),
-        'Unable to find matching company record': null,
+        'Cannot find details': null,
       })
     })
 
     it('should display the page content', () => {
       cy.contains(
-        'The message on the company page asking to update this record will remain visible, so you or other Data Hub users can try (again) to find the matching Dun & Bradstreet record.'
+        'Thanks for trying to verify the business details on this Data Hub record.'
       )
         .parent()
         .next()
-        .should(
-          'have.text',
-          'In the meantime you can continue to add interaction or other activity for this company record.'
-        )
+        .should('have.text', 'You can continue to use Data Hub as normal.')
         .next()
-        .should('have.text', 'Return to the company page')
-        .and('have.prop', 'tagName', 'A')
+        .should('match', 'br')
+        .next()
+        .should('have.text', 'Return to company record')
+        .and('match', 'a')
         .and(
           'have.attr',
           'href',
@@ -201,7 +200,7 @@ describe('Match a company', () => {
       })
 
       it('should render the header', () => {
-        assertLocalHeader('Confirm update')
+        assertLocalHeader('Send request for verification')
       })
 
       it('should render breadcrumbs', () => {
@@ -211,12 +210,12 @@ describe('Match a company', () => {
           [fixtures.company.venusLtd.name]: urls.companies.detail(
             fixtures.company.venusLtd.id
           ),
-          'Confirm update': null,
+          'Send request': null,
         })
       })
 
       it('should display matching confirmation details', () => {
-        cy.contains('Confirm you want to update this Data Hub company record')
+        cy.contains('Data Hub business details (un-verified)')
           .should('have.prop', 'tagName', 'H2')
           .next()
           .find('dl')
@@ -230,10 +229,7 @@ describe('Match a company', () => {
           .parent()
           .parent()
           .next()
-          .should(
-            'have.text',
-            'With this verified third party company information'
-          )
+          .should('have.text', 'Data Hub business details (after verification)')
           .and('have.prop', 'tagName', 'H2')
           .next()
           .find('dl')
@@ -246,22 +242,46 @@ describe('Match a company', () => {
           .parent()
           .parent()
           .next()
-          .should('have.text', 'What happens next')
-          .and('have.prop', 'tagName', 'H2')
+          .find('summary')
+          .should('have.text', "Why can't I edit these details")
           .next()
-          .children()
-          .should('have.length', 2)
-          .and(
-            'contain',
-            'This will send a request to the Support Team to update the business details for this company record, including any future changes to this information.'
-          )
-          .and(
-            'contain',
-            'This will NOT change any recorded activity (Interactions, OMIS orders or Investments projects) for this company record.'
+          .should(
+            'have.text',
+            'These business details are from trusted third-party' +
+              ' suppliers of verified company records. Being editable would make' +
+              " them less reliable. If you think they're wrong, go back and select" +
+              ' "I can\'t find what I\'m looking for".'
           )
           .parent()
           .next()
-          .contains('Send update request')
+          .should('have.text', 'Requesting verification will:')
+          .and('have.prop', 'tagName', 'H2')
+          .next()
+          .children()
+          .should('have.length', 4)
+          .first()
+          .should(
+            'have.text',
+            'NOT change any recorded activity (interactions, OMIS orders or Investment projects)'
+          )
+          .next()
+          .should(
+            'have.text',
+            'send a request to the Support Team to verify the details'
+          )
+          .next()
+          .should(
+            'have.text',
+            'notify you when the Support Team update this record'
+          )
+          .next()
+          .should(
+            'have.text',
+            'ensure these business details are updated automatically in the future'
+          )
+          .parent()
+          .next()
+          .contains('Request verification')
           .and('have.prop', 'tagName', 'BUTTON')
           .next()
           .contains('Back')
@@ -282,7 +302,7 @@ describe('Match a company', () => {
           DUNS_NUMBER_NOT_MATCHED
         )
       )
-      cy.contains('Send update request').click()
+      cy.contains('Request verification').click()
     })
 
     it('should redirect to the company page', () => {
@@ -295,81 +315,81 @@ describe('Match a company', () => {
     it('displays the "Company record update request sent" flash message', () => {
       cy.get(selectors.localHeader().flash).should(
         'contain.text',
-        'Your request to update this company record has been sent.' +
-          'In the near future the Support Team will update this company ' +
-          'record and enable automatic updates for future changes to the company information.'
+        'Verification requested. Some business details may be wrong.' +
+          'Once verified, the warning message will disappear.'
       )
     })
   })
 
-  context('when a matched company from the search results is clicked', () => {
-    before(() => {
-      cy.visit(urls.companies.match.index(fixtures.company.venusLtd.id))
-      performSearch()
-      cy.contains('Some matched company').click()
-    })
-
-    it('should redirect to the the duplicated match page', () => {
-      cy.location('pathname').should(
-        'eq',
-        urls.companies.match.confirmation(
-          fixtures.company.venusLtd.id,
-          DUNS_NUMBER_MATCHED
-        )
-      )
-    })
-
-    it('should render breadcrumbs', () => {
-      assertBreadcrumbs({
-        Home: urls.dashboard(),
-        Companies: urls.companies.index(),
-        'Venus Ltd': urls.companies.detail(fixtures.company.venusLtd.id),
-        'Duplicated record': null,
+  context(
+    'when an already matched company from the search results is clicked',
+    () => {
+      before(() => {
+        cy.visit(urls.companies.match.index(fixtures.company.venusLtd.id))
+        performSearch()
+        cy.contains('Some matched company').click()
       })
-    })
 
-    it('should render the header', () => {
-      assertLocalHeader(
-        'This verified third party record has already been matched to' +
-          ' a different Data Hub company record'
-      )
-    })
+      it('should redirect to the the duplicated match page', () => {
+        cy.location('pathname').should(
+          'eq',
+          urls.companies.match.confirmation(
+            fixtures.company.venusLtd.id,
+            DUNS_NUMBER_MATCHED
+          )
+        )
+      })
 
-    it('should display the content of the duplicate match page', () => {
-      cy.contains(
-        'For some companies there are multiple (duplicate) records.' +
-          ' To resolve this, and have this record automatically updated, you' +
-          ' can contact support to request a merge of these records.'
-      )
-        .contains('contact support to request a merge of these records')
-        .and('have.prop', 'tagName', 'A')
-        .should('have.attr', 'href', urls.support())
-        .parent()
-        .next()
-        .should(
-          'have.text',
-          'Copy and paste the following instructions in the Desciption' +
-            ' field of the form:'
+      it('should render breadcrumbs', () => {
+        assertBreadcrumbs({
+          Home: urls.dashboard(),
+          Companies: urls.companies.index(),
+          [fixtures.company.venusLtd.name]: urls.companies.detail(
+            fixtures.company.venusLtd.id
+          ),
+          'Request merge': null,
+        })
+      })
+
+      it('should render the header', () => {
+        assertLocalHeader(
+          'These verified business details have already been matched to another company record'
         )
-        .next()
-        .contains('Company records merge request')
-        .parent()
-        .next()
-        .should(
-          'have.text',
-          'Please merge company record Venus Ltd' +
-            ' (0f5216e0-849f-11e6-ae22-56b6b6499611)' +
-            ' with company record Some matched company' +
-            ' (0fb3379c-341c-4da4-b825-bf8d47b26baa).'
+      })
+
+      it('should display the content of the duplicate match page', () => {
+        cy.contains(
+          'This can happen when there are duplicate company records in Data Hub. To resolve this, you can ask the Support Team to merge these duplicates into one record.'
         )
-        .parent()
-        .next()
-        .contains('Back to search results')
-        .should(
-          'have.attr',
-          'href',
-          urls.companies.match.index(fixtures.company.venusLtd.id)
-        )
-    })
-  })
+          .next()
+          .should(
+            'have.text',
+            'You can copy and paste the following instructions in the Description field of the form:'
+          )
+          .next()
+          .contains('Company records merge request')
+          .parent()
+          .next()
+          .should(
+            'have.text',
+            'Please merge company record Venus Ltd' +
+              ' (0f5216e0-849f-11e6-ae22-56b6b6499611)' +
+              ' with company record Some matched company' +
+              ' (0fb3379c-341c-4da4-b825-bf8d47b26baa).'
+          )
+          .parent()
+          .next()
+          .contains('Request merge')
+          .and('match', 'a')
+          .should('have.attr', 'href', urls.support())
+          .next()
+          .contains('Back to search results')
+          .should(
+            'have.attr',
+            'href',
+            urls.companies.match.index(fixtures.company.venusLtd.id)
+          )
+      })
+    }
+  )
 })

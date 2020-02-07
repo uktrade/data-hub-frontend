@@ -73,7 +73,7 @@ async function renderMatchConfirmation(req, res, next) {
 
     res
       .breadcrumb(company.name, urls.companies.detail(company.id))
-      .breadcrumb(dataHubCompanyId ? 'Duplicated record' : 'Confirm update')
+      .breadcrumb(dataHubCompanyId ? 'Request merge' : 'Send request')
       .render('companies/apps/match-company/views/match-confirmation', {
         props: {
           dnbCompanyIsMatched: !!dataHubCompanyId,
@@ -141,9 +141,8 @@ async function submitMatchRequest(req, res) {
 
     req.flash(
       'success',
-      'Your request to update this company record has been sent.\n' +
-        'In the near future the Support Team will update this company ' +
-        'record and enable automatic updates for future changes to the company information.'
+      'Verification requested. Some business details may be wrong.\n' +
+        'Once verified, the warning message will disappear.'
     )
     res.json({ message: 'OK', ticket: get(result, 'data.ticket.id') })
   } catch (error) {
@@ -161,7 +160,7 @@ async function renderFindCompanyForm(req, res, next) {
 
     res
       .breadcrumb(company.name, urls.companies.detail(company.id))
-      .breadcrumb('Find this company record')
+      .breadcrumb('Search for verified business details')
       .render('companies/apps/match-company/views/find-company', {
         props: {
           company: {
@@ -195,7 +194,7 @@ async function renderCannotFindMatch(req, res, next) {
     const { company } = res.locals
     res
       .breadcrumb(company.name, urls.companies.detail(company.id))
-      .breadcrumb('Unable to find matching company record')
+      .breadcrumb('Cannot find details')
       .render('companies/apps/match-company/views/cannot-find-match', {
         props: {
           companyId: company.id,

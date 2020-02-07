@@ -16,7 +16,7 @@ module.exports = {
     },
     cannotFind: {
       summary: 'details summary span',
-      stillCannotFind: 'button:contains("I still cannot find the company")',
+      stillCannotFind: `button:contains("I still can't find what I'm looking for")`,
     },
   },
   newCompanyRecordForm: {

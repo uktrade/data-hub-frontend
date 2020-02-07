@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { WarningText, Button } from 'govuk-react'
+import { Button, Details, Paragraph, WarningText } from 'govuk-react'
 import { BLACK } from 'govuk-colours'
 import styled from 'styled-components'
-import { SPACING } from '@govuk-react/constants'
 
 import { ActivityFeedApp, StatusMessage } from 'data-hub-components'
 import urls from '../../../../../lib/urls'
@@ -12,25 +11,26 @@ const StyledLink = styled('a')`
   margin-bottom: 0;
 `
 
-const StyledExtraMessage = styled('div')`
-  margin-top: ${SPACING.SCALE_3};
-  margin-bottom: ${SPACING.SCALE_3};
-`
-
 const CompanyActivityFeed = ({ companyId, showMatchingPrompt, ...rest }) => (
   <>
     {showMatchingPrompt && (
       <StatusMessage colour={BLACK}>
         <WarningText>
-          There might be wrong information on this company page because it
-          doesn't get updated automatically.
+          Business details on this company record have not been verified and
+          could be wrong.
         </WarningText>
-        <StyledExtraMessage>
-          You can make sure it has the right information by selecting the
-          "update this record" button below.
-        </StyledExtraMessage>
+        <Details summary="Why verify?">
+          <Paragraph>
+            Linking our existing records to a trusted third party means we can
+            keep our information about businesses up to date automatically. It
+            helps reduce duplicate records, provide a shared view of complex
+            companies, and make it more likely we can link other data sources
+            together.
+          </Paragraph>
+          <Paragraph>Linking can often be done in just four clicks.</Paragraph>
+        </Details>
         <Button as={StyledLink} href={urls.companies.match.index(companyId)}>
-          Update this record
+          Verify business details
         </Button>
       </StatusMessage>
     )}
