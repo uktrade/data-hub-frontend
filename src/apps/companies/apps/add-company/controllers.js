@@ -3,9 +3,13 @@
 const { transformCountryToOptionWithIsoCode } = require('../../../transformers')
 const { fetchOrganisationTypes } = require('./repos')
 const { searchDnbCompanies } = require('../../../../modules/search/services')
-const { saveDnbCompany, saveDnbCompanyInvestigation } = require('../../repos')
 const { getOptions } = require('../../../../lib/options')
 const { transformToDnbCompanyInvestigationApi } = require('./transformers')
+const {
+  saveDnbCompany,
+  updateCompany,
+  saveDnbCompanyInvestigation,
+} = require('../../repos')
 
 async function renderAddCompanyForm(req, res, next) {
   try {
@@ -48,11 +52,16 @@ async function postSearchDnbCompanies(req, res, next) {
 }
 
 async function postAddDnbCompany(req, res, next) {
+  const { token } = req.session
+  const { uk_region, sector, dnbCompany } = req.body
+
   try {
-    const result = await saveDnbCompany(
-      req.session.token,
-      req.body.dnbCompany.duns_number
-    )
+    const company = await saveDnbCompany(token, dnbCompany.duns_number)
+    const result = await updateCompany(token, company.id, {
+      uk_region,
+      sector,
+    })
+
     req.flash('success', 'Company added to Data Hub')
     res.json(result)
   } catch (error) {

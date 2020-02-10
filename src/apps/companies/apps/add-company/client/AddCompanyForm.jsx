@@ -13,6 +13,7 @@ import { FieldRadios, FieldSelect, Form, Step } from 'data-hub-components'
 import CompanyFoundStep from './CompanyFoundStep'
 import CompanyNotFoundStep from './CompanyNotFoundStep'
 import CompanySearchStep from './CompanySearchStep'
+import CompanyRegionAndSector from './CompanyRegionAndSector'
 import { ISO_CODE } from './constants'
 
 function AddCompanyForm({
@@ -102,6 +103,14 @@ function AddCompanyForm({
 
             {!values.cannotFind && (
               <CompanyFoundStep countryName={countryName} />
+            )}
+
+            {!values.cannotFind && (
+              <CompanyRegionAndSector
+                regions={regions}
+                sectors={sectors}
+                isUK={country.value === ISO_CODE.UK}
+              />
             )}
 
             {values.cannotFind && (

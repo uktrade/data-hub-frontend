@@ -40,7 +40,7 @@ function CompanyFoundStep({ countryName }) {
   const companiesHouseNumber = getCompaniesHouseNumber(dnbCompany)
 
   return (
-    <Step name="companyDetails" forwardButton="Add company">
+    <Step name="companyDetails">
       <H3>Confirm you want to add this company to Data Hub</H3>
 
       <InsetText>

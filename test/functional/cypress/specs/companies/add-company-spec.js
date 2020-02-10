@@ -5,6 +5,7 @@
 const selectors = require('../../../../selectors')
 const fixtures = require('../../fixtures')
 const { assertBreadcrumbs } = require('../../support/assertions')
+const urls = require('../../../../../src/lib/urls')
 
 describe('Add company form', () => {
   beforeEach(function() {
@@ -223,20 +224,61 @@ describe('Add company form', () => {
                   cy.get(selectors.companyAdd.backButton).should('be.visible')
                 })
 
-                it('should display "Add company" button', () => {
-                  cy.get(selectors.companyAdd.submitButton).should('be.visible')
+                it('should display "Continue" button', () => {
+                  cy.get(selectors.companyAdd.continueButton).should(
+                    'be.visible'
+                  )
                 })
 
-                context('when the "Add company" button is clicked', () => {
+                context('when the "Continue" button is clicked', () => {
                   before(() => {
+                    cy.get(selectors.companyAdd.continueButton).click()
+                  })
+
+                  it('should render the "Add company" page', () => {
+                    cy.get(selectors.companyAdd.title)
+                    cy.should('have.text', 'Add company').and(
+                      'have.prop',
+                      'tagName',
+                      'H1'
+                    )
+                  })
+
+                  it('should contain a form to add a sector', () => {
+                    cy.contains('DIT sector')
+                      .next()
+                      .get('select option:selected')
+                      .should('have.text', '-- Select DIT sector --')
+                      .parent()
+                      .parent()
+                      .parent()
+                      .next()
+                      .contains('Add company')
+                      .and('match', 'button')
+                      .next()
+                      .contains('Back')
+                      .and('match', 'button')
+                  })
+
+                  it('should display an error message', () => {
                     cy.get(selectors.companyAdd.submitButton).click()
+                    cy.get(selectors.companyAdd.form).contains(
+                      'Select DIT sector'
+                    )
                   })
 
                   it('should redirect to the new company activity', () => {
-                    cy.location('pathname').should(
-                      'eq',
-                      `/companies/${fixtures.company.someOtherCompany.id}/activity`
-                    )
+                    cy.get(selectors.companyAdd.sectorSelect)
+                      .select('Airports')
+                      .get(selectors.companyAdd.submitButton)
+                      .click()
+                      .location('pathname')
+                      .should(
+                        'eq',
+                        urls.companies.activity.index(
+                          fixtures.company.someOtherCompany.id
+                        )
+                      )
                   })
 
                   it('should display the flash message', () => {
@@ -259,23 +301,19 @@ describe('Add company form', () => {
     () => {
       before(() => {
         cy.visit('/companies/create')
-
         cy.get(selectors.companyAdd.form)
           .find('[type="radio"]')
           .check('GB')
         cy.get(selectors.companyAdd.continueButton).click()
-
         cy.get(selectors.companyAdd.entitySearch.companyNameField).type(
           'some company'
         )
         cy.get(selectors.companyAdd.entitySearch.searchButton).click()
-
         cy.get(selectors.companyAdd.entitySearch.cannotFind.summary).click()
         cy.get(
           selectors.companyAdd.entitySearch.cannotFind.stillCannotFind
         ).click()
       })
-
       it('should display the form', () => {
         cy.get(
           selectors.companyAdd.newCompanyRecordForm.organisationType.charity
@@ -318,7 +356,6 @@ describe('Add company form', () => {
           'be.visible'
         )
       })
-
       it('should display the UK-related fields', () => {
         cy.get(
           selectors.companyAdd.newCompanyRecordForm.address.findUkAddress
@@ -327,14 +364,12 @@ describe('Add company form', () => {
           'be.visible'
         )
       })
-
       context(
         'when the form is submitted without filling the required fields',
         () => {
           before(() => {
             cy.get(selectors.companyAdd.submitButton).click()
           })
-
           it('should display errors', () => {
             cy.get(selectors.companyAdd.form).contains(
               'Select organisation type'
@@ -350,7 +385,6 @@ describe('Add company form', () => {
           })
         }
       )
-
       context('when an invalid website URL is filled', () => {
         before(() => {
           cy.get(selectors.companyAdd.newCompanyRecordForm.website).type(
@@ -358,14 +392,12 @@ describe('Add company form', () => {
           )
           cy.get(selectors.companyAdd.submitButton).click()
         })
-
         it('should display invalid website URL error', () => {
           cy.get(selectors.companyAdd.form).contains(
             'Enter a valid website URL'
           )
         })
       })
-
       context(
         'when the form is submitted after filling the required fields',
         () => {
@@ -383,7 +415,6 @@ describe('Add company form', () => {
             cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).type(
               '0123456789'
             )
-
             cy.get(
               selectors.companyAdd.newCompanyRecordForm.address.postcode
             ).type('SW1H 9AJ')
@@ -393,31 +424,26 @@ describe('Add company form', () => {
             cy.get(
               selectors.companyAdd.newCompanyRecordForm.address.options
             ).select('Ministry of Justice')
-
             cy.get(selectors.companyAdd.newCompanyRecordForm.region).select(
               'London'
             )
             cy.get(selectors.companyAdd.newCompanyRecordForm.sector).select(
               'Advanced Engineering'
             )
-
             cy.get(selectors.companyAdd.submitButton).click()
           })
-
           it('should redirect to the new company activity', () => {
             cy.location('pathname').should(
               'eq',
               `/companies/${fixtures.company.investigationLimited.id}/activity`
             )
           })
-
           it('should display the flash message', () => {
             cy.get(selectors.localHeader().flash).should(
               'contain',
               'Company added to Data Hub'
             )
           })
-
           it('should display the pending D&B investigation message', () => {
             cy.get(
               selectors.companyActivity.pendingDnbInvestigationMessage
@@ -503,4 +529,76 @@ describe('Add company form', () => {
       })
     }
   )
+
+  context('when "UK" is selected for the company location', () => {
+    before(() => {
+      cy.visit('/companies/create')
+        .get(selectors.companyAdd.form)
+        .find('[type="radio"]')
+        .check('GB')
+        .get(selectors.companyAdd.continueButton)
+        .click()
+        .get(selectors.companyAdd.entitySearch.companyNameField)
+        .type('some company')
+        .get(selectors.companyAdd.entitySearch.searchButton)
+        .click()
+        .get(selectors.companyAdd.entitySearch.results.someCompanyName)
+        .click()
+        .get(selectors.companyAdd.continueButton)
+        .click()
+    })
+
+    it('should render an "Add a company" H1 element', () => {
+      cy.get(selectors.companyAdd.title).should('have.prop', 'tagName', 'H1')
+    })
+
+    it('should render a form with both "Region" and "Sector" selects', () => {
+      cy.contains('DIT region')
+        .next()
+        .find('select option:selected')
+        .should('have.text', '-- Select DIT region --')
+        .parent()
+        .parent()
+        .parent()
+        .next()
+        .contains('DIT sector')
+        .next()
+        .find('select option:selected')
+        .should('have.text', '-- Select DIT sector --')
+        .parent()
+        .parent()
+        .parent()
+        .next()
+        .contains('Add company')
+        .and('match', 'button')
+        .next()
+        .contains('Back')
+        .and('match', 'button')
+    })
+
+    it('should error when attempting to add a company without region or sector', () => {
+      cy.get(selectors.companyAdd.submitButton)
+        .click()
+        .get(selectors.companyAdd.form)
+        .contains('Select DIT region')
+        .get(selectors.companyAdd.form)
+        .contains('Select DIT sector')
+    })
+
+    it('should add a company after defining both region and sector', () => {
+      cy.get(selectors.companyAdd.regionSelect)
+        .select('London')
+        .get(selectors.companyAdd.sectorSelect)
+        .select('Airports')
+        .get(selectors.companyAdd.submitButton)
+        .click()
+        .location('pathname')
+        .should(
+          'eq',
+          `/companies/${fixtures.company.someOtherCompany.id}/activity`
+        )
+        .get(selectors.localHeader().flash)
+        .should('contain', 'Company added to Data Hub')
+    })
+  })
 })
