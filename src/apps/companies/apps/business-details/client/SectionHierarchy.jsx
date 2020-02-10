@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
-import pluralise from 'pluralise'
+import pluralize from 'pluralize'
 import styled from 'styled-components'
 
 import { SPACING_POINTS } from '@govuk-react/constants'
@@ -50,8 +50,11 @@ const SubsectionDnBHierarchy = ({
           <>
             Data Hub contains{' '}
             <Link href={urls.dnbHierarchy}>
-              {dnbRelatedCompaniesCount}{' '}
-              {pluralise(dnbRelatedCompaniesCount, 'other company record')}
+              {pluralize(
+                'other company record',
+                dnbRelatedCompaniesCount,
+                true
+              )}
             </Link>{' '}
             related to this company
           </>
@@ -76,7 +79,7 @@ const SubsidiariesCounter = ({ subsidiariesCount, isGlobalHQ, urls }) => {
   if (subsidiariesCount) {
     return (
       <Link href={urls.subsidiaries}>
-        {subsidiariesCount} {pluralise(subsidiariesCount, 'subsidiary')}
+        {pluralize('subsidiary', subsidiariesCount, true)}
       </Link>
     )
   }

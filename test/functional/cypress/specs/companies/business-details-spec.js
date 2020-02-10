@@ -576,7 +576,7 @@ describe('Companies business details', () => {
           content: {
             [HIERARCHY_STRINGS.manualHierarchyDescription]: null,
             'Headquarter type': 'Global HQ',
-            Subsidiaries: '1 subsidiary',
+            Subsidiaries: '2 subsidiaries',
           },
         })
       })
