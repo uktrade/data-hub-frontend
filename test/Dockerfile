@@ -28,7 +28,7 @@ RUN wget -q -O /tmp/libpng12.deb http://mirrors.kernel.org/ubuntu/pool/main/libp
   && rm /tmp/libpng12.deb
 
 # Use specific yarn version
-RUN npm install -g yarn@$YARN_VERSION
+RUN npm install -g --force yarn@$YARN_VERSION
 
 # Set timezone
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
