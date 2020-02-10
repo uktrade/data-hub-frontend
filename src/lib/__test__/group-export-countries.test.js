@@ -1,3 +1,4 @@
+const { uuid } = require('faker').random
 const { EXPORT_INTEREST_STATUS } = require('../../apps/constants')
 
 const {
@@ -6,8 +7,22 @@ const {
   createExportCountry,
 } = require('../../../test/unit/helpers/generate-export-countries')
 
-function convertToObjects(countries) {
-  return countries.map(([id, name]) => ({ id, name }))
+const { FUTURE_INTEREST, EXPORTING_TO, NOT_INTERESTED } = EXPORT_INTEREST_STATUS
+
+function createExpected(countries) {
+  return countries
+    .map(([id, name]) => ({ id, name }))
+    .sort((a, b) => a.name.localeCompare(b.name))
+}
+
+function createCountry(name, status) {
+  return {
+    country: {
+      id: uuid(),
+      name,
+    },
+    status,
+  }
 }
 
 const groupExportCountries = require('../group-export-countries')
@@ -20,30 +35,46 @@ describe('groupExportCountries', () => {
   })
 
   context('With countries for each status', () => {
-    it('Should separate out the countries', () => {
-      const {
-        future,
-        current,
-        noInterest,
-        exportCountries,
-      } = generateExportCountries()
+    context('With randomly generated countries', () => {
+      it('Should separate out the countries and order them alphabetially', () => {
+        const {
+          future,
+          current,
+          noInterest,
+          exportCountries,
+        } = generateExportCountries()
 
-      const buckets = groupExportCountries(exportCountries)
+        const buckets = groupExportCountries(exportCountries)
 
-      expect(buckets[EXPORT_INTEREST_STATUS.FUTURE_INTEREST]).to.deep.equal(
-        convertToObjects(future)
-      )
-      expect(buckets[EXPORT_INTEREST_STATUS.EXPORTING_TO]).to.deep.equal(
-        convertToObjects(current)
-      )
-      expect(buckets[EXPORT_INTEREST_STATUS.NOT_INTERESTED]).to.deep.equal(
-        convertToObjects(noInterest)
-      )
+        expect(buckets[FUTURE_INTEREST]).to.deep.equal(createExpected(future))
+        expect(buckets[EXPORTING_TO]).to.deep.equal(createExpected(current))
+        expect(buckets[NOT_INTERESTED]).to.deep.equal(
+          createExpected(noInterest)
+        )
+      })
+    })
+
+    context('With static countries', () => {
+      it('Should separate out the countries and order them alphabetically', () => {
+        const countries = [
+          createCountry('France', FUTURE_INTEREST),
+          createCountry('Spain', FUTURE_INTEREST),
+          createCountry('Germany', FUTURE_INTEREST),
+        ]
+
+        const buckets = groupExportCountries(countries)
+
+        expect(buckets[FUTURE_INTEREST]).to.deep.equal([
+          countries[0].country,
+          countries[2].country,
+          countries[1].country,
+        ])
+      })
     })
   })
 
   context('With unexpected statuses', () => {
-    it('Should only return the known statuses', () => {
+    it('Should only return the known statuses and order them alphabetically', () => {
       const FAKE_STATUS = 'fake-status'
       const {
         future,
@@ -58,15 +89,9 @@ describe('groupExportCountries', () => {
 
       const buckets = groupExportCountries(exportCountries)
 
-      expect(buckets[EXPORT_INTEREST_STATUS.FUTURE_INTEREST]).to.deep.equal(
-        convertToObjects(future)
-      )
-      expect(buckets[EXPORT_INTEREST_STATUS.EXPORTING_TO]).to.deep.equal(
-        convertToObjects(current)
-      )
-      expect(buckets[EXPORT_INTEREST_STATUS.NOT_INTERESTED]).to.deep.equal(
-        convertToObjects(noInterest)
-      )
+      expect(buckets[FUTURE_INTEREST]).to.deep.equal(createExpected(future))
+      expect(buckets[EXPORTING_TO]).to.deep.equal(createExpected(current))
+      expect(buckets[NOT_INTERESTED]).to.deep.equal(createExpected(noInterest))
       expect(buckets[FAKE_STATUS]).to.be.undefined
     })
   })
