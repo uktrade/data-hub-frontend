@@ -237,7 +237,10 @@ describe('interaction list', () => {
 
   context('#getInteractionOptions', () => {
     const expected = {
-      areas: [{ value: '1', label: 'pa1' }, { value: '3', label: 'pa3' }],
+      areas: [
+        { value: '1', label: 'pa1' },
+        { value: '3', label: 'pa3' },
+      ],
       sectorOptions: [
         { value: 's1', label: 's1' },
         { value: 's2', label: 's2' },
@@ -261,7 +264,10 @@ describe('interaction list', () => {
         { value: '3', label: 'tier3' },
       ],
       adviserOptions: [{ value: 'ad1', label: 'ad1', subLabel: 'ad1' }],
-      types: [{ value: '1', label: 'pt1' }, { value: '3', label: 'pt3' }],
+      types: [
+        { value: '1', label: 'pt1' },
+        { value: '3', label: 'pt3' },
+      ],
     }
 
     context('when the request is not XHR', () => {

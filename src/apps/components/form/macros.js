@@ -31,7 +31,10 @@ const standardFormConfig = {
       name: 'feedback_type',
       modifier: 'inline',
       label: 'Inline inputs',
-      options: [{ value: 'yes', label: 'Yes' }, { value: 'no', label: 'No' }],
+      options: [
+        { value: 'yes', label: 'Yes' },
+        { value: 'no', label: 'No' },
+      ],
     },
     {
       macroName: 'Fieldset',

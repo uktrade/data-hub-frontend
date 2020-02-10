@@ -33,7 +33,9 @@ describe('test profile controllers', () => {
       it('should render with a heading', () => {
         expect(middlewareParameters.resMock.render).to.be.calledWith(
           'investments/views/profiles',
-          { heading: 'Investments' }
+          {
+            heading: 'Investments',
+          }
         )
       })
 
