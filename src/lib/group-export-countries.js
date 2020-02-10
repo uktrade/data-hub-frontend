@@ -15,6 +15,12 @@ module.exports = (countries) => {
         bucket.push(item.country)
       }
     })
+
+    EXPORT_INTEREST_STATUS_VALUES.forEach((status) => {
+      buckets[status] = buckets[status].sort((a, b) =>
+        a.name.localeCompare(b.name)
+      )
+    })
   }
 
   return buckets
