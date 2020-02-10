@@ -488,6 +488,13 @@ Sandbox.define(
   v4SearchCompanyWithCountry.companiesAutocomplete
 )
 
+// V4 Export
+Sandbox.define(
+  '/v4/search/export-country-history',
+  'POST',
+  v4Company.renderFullExportHistory
+)
+
 // Whoami endpoint
 Sandbox.define('/whoami/', 'GET', user.whoami)
 

@@ -8,7 +8,11 @@ const getExportCountries = require('../../../../lib/get-export-countries')
 
 const { updateCompany, saveCompanyExportDetails } = require('../../repos')
 const { transformObjectToOption } = require('../../../transformers')
-const transformCompanyToExportDetailsView = require('./transformer')
+const {
+  transformCompanyToExportDetailsView,
+  transformFullExportHistory,
+} = require('./transformer')
+const { getFullExportHistory } = require('./repos')
 const { exportDetailsLabels, exportPotentialLabels } = require('../../labels')
 
 const {
@@ -77,6 +81,22 @@ function renderExports(req, res) {
         exportPotentials: Object.values(exportPotentialLabels),
         companyId: company.id,
         companyNumber: company.company_number,
+      },
+    })
+}
+
+async function renderFullExportHistory(req, res) {
+  const { token } = req.session
+  const { company } = res.locals
+  const data = await getFullExportHistory(token, company.id)
+
+  res
+    .breadcrumb(company.name, urls.companies.detail(company.id))
+    .breadcrumb('Exports', urls.companies.exports.index(company.id))
+    .breadcrumb('Full export history')
+    .render('companies/apps/exports/views/full-history', {
+      props: {
+        data: transformFullExportHistory(data),
       },
     })
 }
@@ -182,4 +202,5 @@ module.exports = {
   renderExports,
   renderExportEdit,
   handleEditFormPost,
+  renderFullExportHistory,
 }

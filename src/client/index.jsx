@@ -22,6 +22,7 @@ import LargeCapitalProfileCollection from '../apps/investments/client/LargeCapit
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
 import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
+import ExportsFullHistory from '../apps/companies/apps/exports/client/ExportsFullHistory'
 
 import tasksSaga from './components/Task/saga'
 import tasks from './components/Task/reducer'
@@ -139,6 +140,11 @@ function App() {
       </Mount>
       <Mount selector="#company-export-index-page">
         {(props) => <ExportsIndex {...props} />}
+      </Mount>
+      <Mount selector="#company-export-full-history">
+        {(props) => (
+          <ExportsFullHistory {...props} csrfToken={globalProps.csrfToken} />
+        )}
       </Mount>
     </Provider>
   )
