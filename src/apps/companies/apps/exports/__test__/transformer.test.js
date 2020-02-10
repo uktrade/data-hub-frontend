@@ -2,7 +2,7 @@ const faker = require('faker')
 
 const minimalCompany = require('../../../../../../test/unit/data/companies/minimal-company.json')
 
-const transformCompanyToExportDetailsView = require('../transformer')
+const { transformCompanyToExportDetailsView } = require('../transformer')
 
 const {
   generateExportCountries,
