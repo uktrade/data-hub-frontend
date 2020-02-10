@@ -4,7 +4,7 @@ import { useSearchParam } from 'react-use'
 import { H3 } from '@govuk-react/heading'
 import { ErrorSummary, LoadingBox } from 'govuk-react'
 import styled from 'styled-components'
-import pluralise from 'pluralise'
+import pluralize from 'pluralize'
 import axios from 'axios'
 
 import EditHistoryList from './EditHistoryList'
@@ -59,7 +59,7 @@ function EditHistory({ dataEndpoint }) {
     />
   ) : (
     <StyledLoadingBox minHeight={window.innerHeight} loading={isLoading}>
-      <H3>{`${totalItems} ${pluralise(totalItems, 'change')}`}</H3>
+      <H3>{pluralize('change', totalItems, true)}</H3>
       <EditHistoryList
         items={editHistory}
         totalPages={totalPages}

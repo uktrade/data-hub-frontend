@@ -1,5 +1,5 @@
 var companiesNoResults = require('../../../fixtures/v4/company/companies-no-results.json')
-var companyArchivedSubsidiaries = require('../../../fixtures/v4/company/company-archived-subsidiaries.json')
+var companyArchivedSubsidiaries = require('../../../fixtures/v4/company/company-archived-subsidiaries')
 var company = require('../../../fixtures/v4/company/company.json')
 var companyArchived = require('../../../fixtures/v4/company/company-archived.json')
 var companyDnBCorp = require('../../../fixtures/v4/company/company-dnb-corp.json')

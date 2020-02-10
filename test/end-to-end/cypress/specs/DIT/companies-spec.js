@@ -87,7 +87,7 @@ describe('Export', () => {
       .should('have.text', 'No score given')
     cy.get('td')
       .eq(3)
-      .should('have.text', 'Germany, France')
+      .should('have.text', 'France, Germany')
     cy.get('td')
       .eq(4)
       .should('have.text', 'Yemen')
