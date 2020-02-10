@@ -13,7 +13,10 @@ const urls = require('../../../../lib/urls')
 config.archivedDocumentsBaseUrl = 'http://base'
 
 function getCountryNames(countries) {
-  return countries.map(([, name]) => name).join(', ')
+  return countries
+    .map(([, name]) => name)
+    .sort((a, b) => a.localeCompare(b))
+    .join(', ')
 }
 
 describe('#transformInteractionResponsetoViewRecord', () => {

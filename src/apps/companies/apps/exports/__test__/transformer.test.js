@@ -230,7 +230,10 @@ describe('transformCompanyToExportDetailsView', () => {
       }
 
       function getCountryText(countries) {
-        return countries.map(([, name]) => name).join(', ')
+        return countries
+          .map(([, name]) => name)
+          .sort((a, b) => a.localeCompare(b))
+          .join(', ')
       }
 
       const viewRecord = transformCompanyToExportDetailsView(company)
