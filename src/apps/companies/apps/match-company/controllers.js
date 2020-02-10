@@ -30,7 +30,10 @@ function getCountryName(country, countries) {
 
 function getCountryCode(company, countries) {
   const companyID = get(company, 'address.country.id')
-  return get(countries.find((c) => c.id === companyID), 'iso_alpha2_code')
+  return get(
+    countries.find((c) => c.id === companyID),
+    'iso_alpha2_code'
+  )
 }
 
 function parseAddress(dnbCompany, countries, prefix = '') {

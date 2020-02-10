@@ -43,9 +43,10 @@ describe('metadata', () => {
     it('gets correct metadata item', async () => {
       const getMetadataItem = metadata.__get__('exports').getMetadataItem
 
-      hawkRequest = sinon
-        .stub()
-        .resolves([{ id: 1, name: 'Fake 1' }, { id: 2, name: 'Fake 2' }])
+      hawkRequest = sinon.stub().resolves([
+        { id: 1, name: 'Fake 1' },
+        { id: 2, name: 'Fake 2' },
+      ])
       metadata.__set__('hawkRequest', hawkRequest)
       const option = await getMetadataItem('fake', 2)
       expect(option).to.be.deep.equal({ id: 2, name: 'Fake 2' })

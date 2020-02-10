@@ -95,7 +95,9 @@ describe('#hawkRequest: check sendHawkRequest', () => {
     expect(this.createPromiseRequestSpy).to.have.been.calledOnceWith(
       testRequestOptions,
       testDataHubCredentials,
-      { fake: 'artifacts' }
+      {
+        fake: 'artifacts',
+      }
     )
   })
 })
