@@ -11294,11 +11294,6 @@ please-upgrade-node@^3.0.2:
   dependencies:
     semver-compare "^1.0.0"
 
-pluralise@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/pluralise/-/pluralise-1.0.1.tgz#c17a240ca8c6febb1439f7d2e78077defd128500"
-  integrity sha512-C2ddX33ihY6e3S7JYG8FspCf0o08D8tsXef2zcEx9geuX3vlOhkmUy6pXjRvmlVC60p7J5l3OxviKMFWLMs/0g==
-
 pluralize@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-1.2.1.tgz#d1a21483fd22bb41e58a12fa3421823140897c45"

@@ -1,5 +1,5 @@
 var companiesNoResults = require('../../../fixtures/v3/company/companies-no-results.json')
-var companyArchivedSubsidiaries = require('../../../fixtures/v3/company/company-archived-subsidiaries.json')
+var companyArchivedSubsidiaries = require('../../../fixtures/v3/company/company-archived-subsidiaries')
 
 exports.companies = function(req, res) {
   var subsidiaries = {
