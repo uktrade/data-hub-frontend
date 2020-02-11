@@ -75,4 +75,8 @@ function ExportFullHistory({ companyId }) {
   )
 }
 
+ExportFullHistory.propTypes = {
+  companyId: PropTypes.string.isRequired,
+}
+
 export default ExportFullHistory
