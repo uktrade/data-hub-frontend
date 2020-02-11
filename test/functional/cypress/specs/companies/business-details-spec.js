@@ -470,6 +470,29 @@ describe('Companies business details', () => {
   )
 
   context(
+    'when viewing business details for an automatically archived Data Hub company',
+    () => {
+      before(() => {
+        cy.visit(
+          urls.companies.businessDetails(
+            fixtures.company.automaticallyArchivedLtd.id
+          )
+        )
+      })
+
+      it('should display it was automatically archived and the date', () => {
+        cy.contains(
+          'This company was automatically archived on 06 Jul 2018.'
+        ).should('be.visible')
+      })
+
+      it('should display the reason it was archived', () => {
+        cy.contains('Reason: Company is dissolved').should('be.visible')
+      })
+    }
+  )
+
+  context(
     'when viewing business details for an archived Data Hub company',
     () => {
       before(() => {
@@ -504,6 +527,16 @@ describe('Companies business details', () => {
         cy.get(selectors.companyBusinessDetails().whereDoesInformation).should(
           'not.exist'
         )
+      })
+
+      it('should display the date the company was archived and by whom', () => {
+        cy.contains(
+          'This company was archived on 06 Jul 2018 by John Rogers'
+        ).should('be.visible')
+      })
+
+      it('should display the reason it was dissolved', () => {
+        cy.contains('Reason: Company is dissolved').should('be.visible')
       })
 
       it('should display the "Unarchive" link', () => {

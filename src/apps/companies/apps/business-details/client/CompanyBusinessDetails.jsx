@@ -24,6 +24,15 @@ const StyledRoot = styled('div')`
   }
 `
 
+const getArchivedBy = ({ archived_by, archived_on }) => {
+  const dateStr = DateUtils.format(archived_on)
+  if (archived_by) {
+    const { first_name, last_name } = archived_by
+    return `This company was archived on ${dateStr} by ${first_name} ${last_name}`
+  }
+  return `This company was automatically archived on ${dateStr}.`
+}
+
 const CompanyBusinessDetails = ({
   businessDetails,
   subsidiariesCount,
@@ -60,10 +69,7 @@ const CompanyBusinessDetails = ({
 
       {isArchived && (
         <StatusMessage>
-          This company was archived on{' '}
-          {DateUtils.format(businessDetails.archived_on)}
-          by {businessDetails.archived_by.first_name}{' '}
-          {businessDetails.archived_by.last_name}.
+          {getArchivedBy(businessDetails)}
           <br />
           <strong>Reason:</strong> {businessDetails.archived_reason}
           <br />
