@@ -53,6 +53,8 @@ describe('Companies form middleware', () => {
   })
 
   describe('getCompany', () => {
+    let expectedCompany
+
     function addFeatureFlag(res) {
       res.locals.features['interaction-add-countries'] = true
       return res

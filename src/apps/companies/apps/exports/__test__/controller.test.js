@@ -19,6 +19,7 @@ describe('Company export controller', () => {
   let middlewareParameters
   let controller
   let metadata
+  let transformerSpy
 
   beforeEach(() => {
     updateCompany = sinon.stub()
