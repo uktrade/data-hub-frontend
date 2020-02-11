@@ -4,6 +4,7 @@ module.exports = {
   },
   company: {
     archivedLtd: require('../../../../test/sandbox/fixtures/v4/company/company-archived.json'),
+    automaticallyArchivedLtd: require('../../../../test/sandbox/fixtures/v4/company/company-archived-automatically.json'),
     dnbCorp: require('../../../../test/sandbox/fixtures/v4/company/company-dnb-corp.json'),
     dnbLtd: require('../../../../test/sandbox/fixtures/v4/company/company-dnb-ltd.json'),
     dnbSubsidiary: require('../../../../test/sandbox/fixtures/v4/company/company-dnb-subsidiary.json'),

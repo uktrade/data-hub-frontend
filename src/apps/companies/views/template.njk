@@ -67,8 +67,12 @@
   {% if company.archived %}
     <div class="govuk-width-container govuk-!-margin-top-2">
       {% call Message({ type: 'info ' }) %}
-        This company was archived on {{ company.archived_on | formatDate }}
-        by {{ company.archived_by.first_name }} {{ company.archived_by.last_name }}.
+        {% if company.archived_by %}
+          This company was archived on {{ company.archived_on | formatDate }}
+          by {{ company.archived_by.first_name }} {{ company.archived_by.last_name }}.
+        {% else %}
+          This company was automatically archived on {{ company.archived_on | formatDate }}.
+        {% endif %}
         <br>
         <strong>Reason:</strong> {{ company.archived_reason }}<br>
         <br>
