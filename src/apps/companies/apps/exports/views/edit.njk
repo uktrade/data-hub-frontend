@@ -24,71 +24,22 @@
       optional: true
     }) }}
 
-    {% if useNewCountries and countriesFields %}
-      {% for name, label in countriesFields %}
-        {{ Typeahead({
-          name: name,
-          label: label,
-          isAsync: false,
-          isLabelHidden: false,
-          useSubLabel: false,
-          placeholder: 'Search countries',
-          classes: 'c-form-group--no-filter',
-          multipleSelect: true,
-          options: countryOptions,
-          target: 'metadata',
-          autoSubmit: false,
-          selectedOptions: formData[name]
-        }) }}
-      {% endfor %}
-    {% else %}
-      {# TODO: Make these work without JavaScript #}
-      {% set exportCountries = formData.export_to_countries if formData.export_to_countries.length else ['']%}
-      <div class="c-form-group js-AddItems" data-item-selector=".c-form-group--AddItems">
-        <label class="c-form-group__label">
-          <span class="c-form-group__label-text">
-            Select a country this company currently exports to (optional)
-          </span>
-        </label>
+    {% for name, label in countriesFields %}
+      {{ Typeahead({
+        name: name,
+        label: label,
+        isAsync: false,
+        isLabelHidden: false,
+        useSubLabel: false,
+        placeholder: 'Search countries',
+        classes: 'c-form-group--no-filter',
+        multipleSelect: true,
+        options: countryOptions,
+        target: 'metadata',
+        autoSubmit: false,
+        selectedOptions: formData[name]
+      }) }}
+    {% endfor %}
 
-        {% for country in exportCountries %}
-          {{ MultipleChoiceField({
-            name: 'export_to_countries',
-            label: 'Select a country this company currently exports to',
-            value: country,
-            options: countryOptions,
-            initialOption: '-- Select country --',
-            idSuffix: loop.index,
-            optional: true,
-            isLabelHidden: true,
-            modifier: ['compact', 'AddItems']
-          }) }}
-        {% endfor %}
-      </div>
-
-      {# TODO: Make these work without JavaScript #}
-      {% set futureCountries = formData.future_interest_countries if formData.future_interest_countries.length else ['']%}
-      <div class="c-form-group js-AddItems" data-item-selector=".c-form-group--AddItems">
-        <label class="c-form-group__label">
-          <span class="c-form-group__label-text">
-            Future countries of interest (optional)
-          </span>
-        </label>
-
-        {% for country in futureCountries %}
-          {{ MultipleChoiceField({
-            name: 'future_interest_countries',
-            label: 'Future countries of interest',
-            value: country,
-            options: countryOptions,
-            initialOption: '-- Select country --',
-            idSuffix: loop.index,
-            optional: true,
-            isLabelHidden: true,
-            modifier: ['compact', 'AddItems']
-          }) }}
-        {% endfor %}
-      </div>
-    {% endif %}
   {% endcall %}
 {% endblock %}
