@@ -1,4 +1,6 @@
 /* eslint-disable */
+require('dotenv').config({ path: './test/visual/.browserstack.env' })
+
 const WdioImage = require ('@uktrade/wdio-image-diff-js').default
 const browserstack = require('browserstack-local')
 
@@ -7,29 +9,27 @@ const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
 
 const browserStackUser = process.env.BROWSERSTACK_USERNAME || ''
 const browserStackKey = process.env.BROWSERSTACK_ACCESS_KEY || ''
-const isRemote = process.env.IS_REMOTE || true
 let testName
 
-const remoteConfig = {
-  services: ['browserstack'],
-  user: browserStackUser,
-  key: browserStackKey,
-  browserstackLocal: true,
+exports.config = {
+  specs: [
+    './test/visual/specs/**/*.js',
+  ],
   // Code to start browserstack local before start of test
   onPrepare: function () {
     console.log("Connecting local");
     return new Promise(function(resolve, reject){
-      exports.bs_local = new browserstack.Local();
+      exports.bs_local = new browserstack.Local()
       exports.bs_local.start({'key': exports.config.key }, function(error) {
-        if (error) return reject(error);
-        console.log('Connected. Now testing...');
-        resolve();
-      });
-    });
+        if (error) return reject(error)
+        console.log('Connected. Now testing...')
+        resolve()
+      })
+    })
   },
   // Code to stop browserstack local after end of test
   onComplete: function () {
-    exports.bs_local.stop(function() {});
+    exports.bs_local.stop(function() {})
   },
   capabilities: [
     {
@@ -46,26 +46,18 @@ const remoteConfig = {
       'browser_version': '11.0',
       'resolution': '1920x1080'
     },
-  ]
-}
-
-const localConfig = {
-  path: '/'
-}
-
-const defaultConfig = {
-  specs: [
-    './test/visual/specs/**/*.js',
   ],
   maxInstances: 10,
-  capabilities: [{ browser: 'Chrome' }],
   logLevel: 'error',
   bail: 0,
   baseUrl: BASE_URL,
   waitforTimeout: 10000,
   connectionRetryTimeout: 90000,
   connectionRetryCount: 3,
-  services: ['chromedriver'],
+  services: ['browserstack'],
+  user: browserStackUser,
+  key: browserStackKey,
+  browserstackLocal: true,
   framework: 'mocha',
   reporters: ['spec'],
   mochaOpts: {
@@ -84,7 +76,3 @@ const defaultConfig = {
     browser.imageDiff.generateReport()
   }
 }
-
-exports.config = isRemote
-  ? Object.assign({}, defaultConfig, remoteConfig)
-  : Object.assign({}, defaultConfig, localConfig)
