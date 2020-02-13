@@ -20,7 +20,7 @@ function getCountryNames(countries) {
 }
 
 describe('#transformInteractionResponsetoViewRecord', () => {
-  context('when the interaction-add-countries feature flag is true', () => {
+  context('with different values for export_countries', () => {
     const transformedMockInteraction = {
       Company: {
         url: urls.companies.detail('0f5216e0-849f-11e6-ae22-56b6b6499611'),
@@ -128,7 +128,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
     )
 
     context(
-      'when provided a fully populated interaction without export countries',
+      'with a fully populated interaction without export countries',
       () => {
         it('should transform to display format', () => {
           const transformed = transformInteractionResponseToViewRecord(
@@ -153,69 +153,64 @@ describe('#transformInteractionResponsetoViewRecord', () => {
     )
   })
 
-  context(
-    'when the interaction-add-countries feature flag is not present',
-    () => {
-      context('when provided a fully populated interaction', () => {
-        beforeEach(() => {
-          this.transformed = transformInteractionResponseToViewRecord(
-            {
-              ...mockInteraction,
-              archived_documents_url_path: '/documents/123',
-              investment_project: {
-                id: 'bac18331-ca4d-4501-960e-a1bd68b5d47e',
-                name: 'Test project',
-              },
-            },
-            true
-          )
-        })
+  context('when provided a fully populated interaction', () => {
+    beforeEach(() => {
+      this.transformed = transformInteractionResponseToViewRecord(
+        {
+          ...mockInteraction,
+          archived_documents_url_path: '/documents/123',
+          investment_project: {
+            id: 'bac18331-ca4d-4501-960e-a1bd68b5d47e',
+            name: 'Test project',
+          },
+        },
+        true
+      )
+    })
 
-        it('should transform to display format', () => {
-          expect(this.transformed).to.deep.equal({
-            Company: {
-              url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
-              name: 'Venus Ltd',
-            },
-            'Contact(s)': [
-              {
-                url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
-                name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
-              },
-            ],
-            Service: {
-              id: 'sv1',
-              name: 'Account Management',
-            },
-            Notes: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-            'Policy area': 'Access to Public Funding (inc. EU funding)',
-            'Policy feedback notes':
-              'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-            'Policy issue types': 'EU exit',
-            'Date of interaction': {
-              type: 'date',
-              name: '2058-11-25',
-            },
-            Documents: {
-              hint: '(will open another website)',
-              hintId: 'external-link-label',
-              name: 'View files and documents',
-              url: 'http://base/documents/123',
-            },
-            'Adviser(s)': ['Bob Lawson, The test team'],
-            'Investment project': {
-              url: '/investments/projects/bac18331-ca4d-4501-960e-a1bd68b5d47e',
-              name: 'Test project',
-            },
-            'Communication channel': {
-              id: '70c226d7-5d95-e211-a939-e4115bead28a',
-              name: 'Email/Website',
-            },
-          })
-        })
+    it('should transform to display format', () => {
+      expect(this.transformed).to.deep.equal({
+        Company: {
+          url: '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
+          name: 'Venus Ltd',
+        },
+        'Contact(s)': [
+          {
+            url: '/contacts/7701587b-e88f-4f39-874f-0bd06321f7df',
+            name: 'Cleve Wisoky|c95c0a3f-cc44-4419-bd34-648e74d652f5',
+          },
+        ],
+        Service: {
+          id: 'sv1',
+          name: 'Account Management',
+        },
+        Notes: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+        'Policy area': 'Access to Public Funding (inc. EU funding)',
+        'Policy feedback notes':
+          'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+        'Policy issue types': 'EU exit',
+        'Date of interaction': {
+          type: 'date',
+          name: '2058-11-25',
+        },
+        Documents: {
+          hint: '(will open another website)',
+          hintId: 'external-link-label',
+          name: 'View files and documents',
+          url: 'http://base/documents/123',
+        },
+        'Adviser(s)': ['Bob Lawson, The test team'],
+        'Investment project': {
+          url: '/investments/projects/bac18331-ca4d-4501-960e-a1bd68b5d47e',
+          name: 'Test project',
+        },
+        'Communication channel': {
+          id: '70c226d7-5d95-e211-a939-e4115bead28a',
+          name: 'Email/Website',
+        },
       })
-    }
-  )
+    })
+  })
 
   context(
     'when provided a fully populated interaction & service name has a deliminator',
