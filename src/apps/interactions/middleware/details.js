@@ -1,6 +1,7 @@
 const { get, set } = require('lodash')
 const { sentence } = require('case')
 
+const urls = require('../../../lib/urls')
 const { getOptions } = require('../../../lib/options')
 const {
   transformInteractionFormBodyToApiRequest,
@@ -16,6 +17,7 @@ const mapErrors = require('../macros/map-errors')
 
 async function postDetails(req, res, next) {
   try {
+    const companyId = res.locals.company.id
     const serviceOptions = await getOptions(req.session.token, 'service', {
       transformer: transformServicesOptions,
       transformWithoutMapping: true,
@@ -35,12 +37,22 @@ async function postDetails(req, res, next) {
       res.locals.requestBody
     )
 
-    req.flash(
-      'success',
-      `${sentence(req.params.kind)} ${
-        res.locals.interaction ? 'updated' : 'created'
-      }`
-    )
+    const flashMessage = `${sentence(req.params.kind)} ${
+      res.locals.interaction ? 'updated' : 'created'
+    }`
+
+    if (result.were_countries_discussed) {
+      req.flashWithBody(
+        'success',
+        flashMessage,
+        `You discussed some countries within the interaction, <a href="${urls.companies.exports.index(
+          companyId
+        )}">click here to view all countries</a> within the export tab`
+      )
+    } else {
+      req.flash('success', flashMessage)
+    }
+
     res.redirect(joinPaths([getReturnLink(res.locals.interactions), result.id]))
   } catch (err) {
     if (err.statusCode !== 400) {

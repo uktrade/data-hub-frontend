@@ -79,7 +79,17 @@ describe('Add Export', () => {
 
               cy.get(selectors.interactionForm.add).click()
 
-              assertDetails({ subject, flashMessage: 'Interaction created' })
+              assertDetails({
+                subject,
+                flashMessage: 'Interaction created',
+              })
+
+              cy.get(selectors.localHeader().flash)
+                .should(
+                  'contain',
+                  'You discussed some countries within the interaction'
+                )
+                .should('contain', 'within the export tab')
             })
           })
 
