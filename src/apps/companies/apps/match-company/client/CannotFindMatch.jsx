@@ -9,16 +9,13 @@ function CannotFindMatch({ companyId }) {
   return (
     <>
       <Paragraph>
-        The message on the company page asking to update this record will remain
-        visible, so you or other Data Hub users can try (again) to find the
-        matching Dun & Bradstreet record.
+        Thanks for trying to verify the business details on this Data Hub
+        record.
       </Paragraph>
-      <Paragraph>
-        In the meantime you can continue to add interaction or other activity
-        for this company record.
-      </Paragraph>
+      <Paragraph>You can continue to use Data Hub as normal.</Paragraph>
+      <br />
       <Link href={urls.companies.detail(companyId)}>
-        Return to the company page
+        Return to company record
       </Link>
     </>
   )

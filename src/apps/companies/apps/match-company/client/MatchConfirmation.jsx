@@ -10,6 +10,7 @@ import ListItem from '@govuk-react/list-item'
 import InsetText from '@govuk-react/inset-text'
 import { SPACING } from '@govuk-react/constants'
 import ErrorSummary from '@govuk-react/error-summary'
+import Details from '@govuk-react/details'
 
 import { Form, FormActions, SummaryList } from 'data-hub-components'
 import urls from '../../../../../lib/urls'
@@ -63,9 +64,7 @@ function MatchConfirmation({
               />
             )}
 
-            <H4 as="h2">
-              Confirm you want to update this Data Hub company record
-            </H4>
+            <H4 as="h2">Data Hub business details (un-verified)</H4>
             <InsetText>
               <SummaryList
                 rows={[
@@ -78,7 +77,7 @@ function MatchConfirmation({
               />
             </InsetText>
 
-            <H4 as="h2">With this verified third party company information</H4>
+            <H4 as="h2">Data Hub business details (after verification)</H4>
             <InsetText>
               <SummaryList
                 rows={[
@@ -94,20 +93,32 @@ function MatchConfirmation({
               />
             </InsetText>
 
-            <H4 as="h2">What happens next</H4>
+            <Details summary="Why can't I edit these details">
+              These business details are from trusted third-party suppliers of
+              verified company records. Being editable would make them less
+              reliable. If you think they're wrong, go back and select "I can't
+              find what I'm looking for".
+            </Details>
+
+            <H4 as="h2">Requesting verification will:</H4>
             <StyledList>
               <ListItem>
-                This will send a request to the Support Team to update the
-                business details for this company record, including any future
-                changes to this information.
+                NOT change any recorded activity (interactions, OMIS orders or
+                Investment projects)
               </ListItem>
               <ListItem>
-                This will NOT change any recorded activity (Interactions, OMIS
-                orders or Investments projects) for this company record.
+                send a request to the Support Team to verify the details
+              </ListItem>
+              <ListItem>
+                notify you when the Support Team update this record
+              </ListItem>
+              <ListItem>
+                ensure these business details are updated automatically in the
+                future
               </ListItem>
             </StyledList>
             <FormActions>
-              <Button>Send update request</Button>
+              <Button>Request verification</Button>
               <Link href={urls.companies.match.index(company.id)}>Back</Link>
             </FormActions>
           </>

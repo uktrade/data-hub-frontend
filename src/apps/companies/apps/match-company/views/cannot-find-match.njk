@@ -1,5 +1,14 @@
 {% extends "_layouts/template.njk" %}
 
+{% block local_header %}
+  {{
+    LocalHeader({
+      heading: "I still can't find what I'm looking for",
+      modifier: 'light-banner'
+    })
+  }}
+{% endblock %}
+
 {% block body_main_content %}
   {% component 'react-slot', {
     id: 'cannot-find-match',

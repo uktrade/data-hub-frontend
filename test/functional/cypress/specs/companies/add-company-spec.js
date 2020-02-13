@@ -255,7 +255,7 @@ describe('Add company form', () => {
   })
 
   context(
-    'when "I still cannot find the company" is clicked for a UK-based company',
+    `when "I still can't find what I'm looking for" is clicked for a UK-based company`,
     () => {
       before(() => {
         cy.visit('/companies/create')
@@ -429,7 +429,7 @@ describe('Add company form', () => {
   )
 
   context(
-    'when "I still cannot find the company" is clicked for an overseas country',
+    `when "I still can't find what I'm looking for" is clicked for an overseas country`,
     () => {
       before(() => {
         cy.visit('/companies/create')
