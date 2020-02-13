@@ -214,7 +214,7 @@ describe('Companies Export Countries', () => {
 
   context('when there is no history', () => {
     before(() => {
-      cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/exports/history`)
+      cy.visit(urls.companies.exports.history(fixtures.company.lambdaPlc.id))
     })
 
     it('should render breadcrumbs', () => {
@@ -241,7 +241,7 @@ describe('Companies Export Countries', () => {
 
   context('when there is history', () => {
     before(() => {
-      cy.visit(`/companies/${fixtures.company.dnbCorp.id}/exports/history`)
+      cy.visit(urls.companies.exports.history(fixtures.company.dnbCorp.id))
     })
 
     it('renders the title', () => {
@@ -252,43 +252,30 @@ describe('Companies Export Countries', () => {
       cy.contains('7 results').should('exist')
       cy.get(countrySelectors.listItemHeadings).should('have.length', 7)
 
-      cy.contains('Argentina added to currently exporting').should('exist')
       cy.contains('Argentina added to currently exporting')
         .siblings()
         .should('contain', 'By DIT Staff')
         .should('contain', 'Date 6 Feb 2020, 4:06pm')
-      cy.contains('Andorra added to currently exporting').should('exist')
       cy.contains('Andorra added to currently exporting')
         .siblings()
         .should('contain', 'By DIT Staff')
         .should('contain', 'Date 6 Feb 2020, 4:06pm')
-      cy.contains('Afghanistan added to future countries of interest').should(
-        'exist'
-      )
       cy.contains('Afghanistan added to future countries of interest')
         .siblings()
         .should('contain', 'By DIT Staff')
         .should('contain', '6 Feb 2020, 3:42pm')
-      cy.contains('Andorra removed from future countries of interest').should(
-        'exist'
-      )
       cy.contains('Andorra removed from future countries of interest')
         .siblings()
         .should('contain', 'By DIT Staff')
         .should('contain', 'Date 6 Feb 2020, 3:41pm')
-      cy.contains('Angola added to countries of no interest').should('exist')
       cy.contains('Angola added to countries of no interest')
         .siblings()
         .should('contain', 'By DIT Staff')
         .should('contain', 'Date 6 Feb 2020, 3:41pm')
-      cy.contains('Andorra added to future countries of interest').should(
-        'exist'
-      )
       cy.contains('Andorra added to future countries of interest')
         .siblings()
         .should('contain', 'By DIT Staff')
         .should('contain', 'Date 6 Feb 2020, 3:40pm')
-      cy.contains('Albania added to currently exporting').should('exist')
       cy.contains('Albania added to currently exporting')
         .siblings()
         .should('contain', 'By DIT Staff')
