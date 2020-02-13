@@ -129,6 +129,9 @@ exports.company = function(req, res) {
 }
 
 exports.companyPatched = function(req, res) {
+  if (req.body.sector === '9738cecc-5f95-e211-a939-e4115bead28a') {
+    return res.json(companySomeOtherCompany)
+  }
   res.json(company)
 }
 

@@ -1,4 +1,5 @@
 module.exports = {
+  title: 'header h1',
   form: 'form',
   continueButton: 'form button:contains("Continue")',
   submitButton: 'form button:contains("Add company")',
@@ -6,6 +7,8 @@ module.exports = {
   subheader: 'form p',
   stepHeader: 'form h3',
   summary: 'form dl',
+  regionSelect: 'form select#uk_region',
+  sectorSelect: 'form select#sector',
   entitySearch: {
     companyNameField: 'input[name="dnbCompanyName"]',
     postalCodeField: 'input[name="dnbPostalCode"]',
