@@ -238,6 +238,11 @@ describe('Add company form controllers', () => {
           .post('/v4/dnb/company-create', {
             duns_number: '123',
           })
+          .reply(200, { id: companyCreateResponse.id })
+          .patch(`/v4/company/${companyCreateResponse.id}`, {
+            uk_region: 'abc1',
+            sector: 'xyz1',
+          })
           .reply(200, companyCreateResponse)
 
         middlewareParameters = buildMiddlewareParameters({
@@ -245,6 +250,8 @@ describe('Add company form controllers', () => {
             dnbCompany: {
               duns_number: '123',
             },
+            uk_region: 'abc1',
+            sector: 'xyz1',
           },
         })
 
