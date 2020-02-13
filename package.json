@@ -54,7 +54,7 @@
   ],
   "license": "MIT",
   "engines": {
-    "yarn": "1.16.0",
+    "yarn": "1.22.0",
     "node": "12.15.0"
   },
   "dependencies": {

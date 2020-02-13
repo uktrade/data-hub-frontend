@@ -91,7 +91,7 @@ aliases:
 
   # Data hub base docker container
   - &docker_data_hub_base
-    image: ukti/data-hub-frontend-test:3.2.0
+    image: ukti/data-hub-frontend-test:3.2.1
     environment:
       *data_hub_base_envs
 
