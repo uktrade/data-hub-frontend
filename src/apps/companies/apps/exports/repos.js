@@ -7,7 +7,7 @@ module.exports = {
       url: `${config.apiRoot}/v4/search/export-country-history`,
       method: 'POST',
       body: {
-        company: `${companyId}`,
+        company: companyId,
       },
     })
   },

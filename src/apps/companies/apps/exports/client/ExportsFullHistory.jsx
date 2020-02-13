@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-
 import { H3 } from '@govuk-react/heading'
-
+import { SPACING } from '@govuk-react/constants'
 import { CollectionList } from 'data-hub-components'
 
 const Wrapper = styled('div')`
-  margin-top: 16px;
+  margin-top: ${SPACING.SCALE_3};
 `
 
 function ExportFullHistory({ data }) {

@@ -43,24 +43,26 @@ function getCountryText(country, historyType, status) {
   return [country, historyTypeText, typeText].join(' ')
 }
 
-function createCountry(item) {
+function createCountry({
+  country,
+  history_type,
+  status,
+  history_user,
+  history_date,
+}) {
   return {
-    headingText: getCountryText(
-      item.country.name,
-      item.history_type,
-      item.status
-    ),
+    headingText: getCountryText(country.name, history_type, status),
     metadata: [
-      { label: 'By', value: item.history_user.name },
-      { label: 'Date', value: formatDateTime(item.history_date) },
+      { label: 'By', value: history_user.name },
+      { label: 'Date', value: formatDateTime(history_date) },
     ],
   }
 }
 
 module.exports = {
-  transformFullExportHistory: (data) => ({
-    count: data.count,
-    results: data.results.map(createCountry),
+  transformFullExportHistory: ({ count, results }) => ({
+    count: count,
+    results: results.map(createCountry),
   }),
   transformCompanyToExportDetailsView: (company) => {
     const {
