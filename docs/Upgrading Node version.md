@@ -21,3 +21,5 @@ Engines in `package.json` needs updating:
 
 * [Image for local development](../Dockerfile)
 * [Image for tests (used by CircleCI)](../test/Dockerfile)
+
+Once the "Image for tests" has been updated, you will need to [follow the instructions to build and push](Running tests.md) a new version of the image.

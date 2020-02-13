@@ -4,7 +4,7 @@
 FROM node:12.15.0
 
 ENV DOCKERIZE_VERSION      v0.3.0
-ENV YARN_VERSION           1.16.0
+ENV YARN_VERSION           1.22.0
 ENV NPM_CONFIG_LOGLEVEL    warn
 ENV NPM_CONFIG_UNSAFE_PERM true
 ENV TZ                     Europe/London
