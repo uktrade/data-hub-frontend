@@ -11,6 +11,9 @@
     <{{ element }} class="c-message {{ 'c-message--' + props.type if props.type }}">
       {% if caller %}
         {{ caller() }}
+      {% elif props.hasBody %}
+        <h2 class="c-message__heading">{{ props.heading }}</h2>
+        <p class="c-message__body">{{ props.text | safe }}</p>
       {% else %}
         {{ props.text | escapeHtml | safe }}
       {% endif %}
@@ -28,11 +31,18 @@
     {% set isDismissable = props.isDismissable | default(true) %}
 
     <ul class="c-message-list {{ 'js-Messages' if isDismissable }}" tabindex="-1" role="alert">
-      {% for type, messages in props.items %}
-        {% for text in messages %}
+      {% for type, messages in props.items -%}
+
+        {% set parts = type | split(':') %}
+        {% set partsLength = parts | length %}
+        {% set hasBody = true if partsLength > 1 and parts[1] == 'with-body' else false %}
+
+        {%- for text in messages %}
           {{ Message({
-            text: text,
-            type: type,
+            hasBody: hasBody,
+            heading: (text.heading if hasBody),
+            text: (text.body if hasBody else text),
+            type: (parts[0] if hasBody else type),
             element: 'li'
           }) }}
         {% endfor %}

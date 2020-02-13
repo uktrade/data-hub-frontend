@@ -34,6 +34,7 @@ module.exports = ({
       path: requestPath,
       headers: requestHeaders,
       flash: sinon.spy(),
+      flashWithBody: sinon.spy(),
     },
     resMock: {
       ...resMock,
