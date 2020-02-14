@@ -98,7 +98,7 @@
     "file-loader": "^1.1.6",
     "formidable": "^1.2.1",
     "get-form-data": "^2.0.0",
-    "govuk-colours": "^1.0.3",
+    "govuk-colours": "1.0.3",
     "govuk-elements-sass": "^2.2.1",
     "govuk-frontend": "^2.11.0",
     "govuk-react": "^0.7.0",
