@@ -124,10 +124,10 @@ describe('urls', () => {
         `/companies/${companyId}/exports/edit`
       )
 
-      expect(urls.companies.exports.history.index.route).to.equal(
+      expect(urls.companies.exports.history.route).to.equal(
         '/:companyId/exports/history'
       )
-      expect(urls.companies.exports.history.index(companyId)).to.equal(
+      expect(urls.companies.exports.history(companyId)).to.equal(
         `/companies/${companyId}/exports/history`
       )
 
