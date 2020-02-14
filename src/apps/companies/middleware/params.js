@@ -1,4 +1,3 @@
-const { NEW_COUNTRIES_FEATURE } = require('../../constants')
 const {
   getDitCompany,
   addDitCompanyToList,
