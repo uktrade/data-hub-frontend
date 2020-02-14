@@ -1,6 +1,7 @@
 const fixtures = require('../../fixtures')
 const { assertBreadcrumbs } = require('../../support/assertions')
 const urls = require('../../../../../src/lib/urls')
+const exportSelectors = require('../../../../selectors/company/export')
 
 describe('Companies Export', () => {
   context(
@@ -202,8 +203,83 @@ describe('Companies Export', () => {
       cy.visit(urls.companies.exports.index(fixtures.company.archivedLtd.id))
     })
 
-    it('the edit expor countrie button should not exist', () => {
+    it('the edit expor countries button should not exist', () => {
       cy.contains('Edit export countries').should('not.exist')
+    })
+  })
+})
+
+describe('Companies Export Countries', () => {
+  const countrySelectors = exportSelectors.countries
+
+  context('when there is no history', () => {
+    before(() => {
+      cy.visit(urls.companies.exports.history(fixtures.company.lambdaPlc.id))
+    })
+
+    it('should render breadcrumbs', () => {
+      assertBreadcrumbs({
+        Home: urls.dashboard(),
+        Companies: urls.companies.index(),
+        [fixtures.company.lambdaPlc.name]: urls.companies.detail(
+          fixtures.company.lambdaPlc.id
+        ),
+        Exports: urls.companies.exports.index(fixtures.company.lambdaPlc.id),
+        'Full export history': null,
+      })
+    })
+
+    it('renders the title', () => {
+      cy.contains('Export markets history').should('exist')
+    })
+
+    it('renders the collection list with the 0 results', () => {
+      cy.contains('0 results').should('exist')
+      cy.get(countrySelectors.listItemHeadings).should('have.length', 0)
+    })
+  })
+
+  context('when there is history', () => {
+    before(() => {
+      cy.visit(urls.companies.exports.history(fixtures.company.dnbCorp.id))
+    })
+
+    it('renders the title', () => {
+      cy.contains('Export markets history').should('exist')
+    })
+
+    it('renders the collection list with the 7 results', () => {
+      cy.contains('7 results').should('exist')
+      cy.get(countrySelectors.listItemHeadings).should('have.length', 7)
+
+      cy.contains('Argentina added to currently exporting')
+        .siblings()
+        .should('contain', 'By DIT Staff')
+        .should('contain', 'Date 6 Feb 2020, 4:06pm')
+      cy.contains('Andorra added to currently exporting')
+        .siblings()
+        .should('contain', 'By DIT Staff')
+        .should('contain', 'Date 6 Feb 2020, 4:06pm')
+      cy.contains('Afghanistan added to future countries of interest')
+        .siblings()
+        .should('contain', 'By DIT Staff')
+        .should('contain', '6 Feb 2020, 3:42pm')
+      cy.contains('Andorra removed from future countries of interest')
+        .siblings()
+        .should('contain', 'By DIT Staff')
+        .should('contain', 'Date 6 Feb 2020, 3:41pm')
+      cy.contains('Angola added to countries of no interest')
+        .siblings()
+        .should('contain', 'By DIT Staff')
+        .should('contain', 'Date 6 Feb 2020, 3:41pm')
+      cy.contains('Andorra added to future countries of interest')
+        .siblings()
+        .should('contain', 'By DIT Staff')
+        .should('contain', 'Date 6 Feb 2020, 3:40pm')
+      cy.contains('Albania added to currently exporting')
+        .siblings()
+        .should('contain', 'By DIT Staff')
+        .should('contain', 'Date 6 Feb 2020, 3:40pm')
     })
   })
 })
