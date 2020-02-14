@@ -2,7 +2,10 @@ const { getMacros } = require('../../../../../test/unit/macro-helper')
 
 const commonMacros = getMacros('common')
 
-const items = [{ label: 'Foo', value: 'Bar' }, { label: 'Fizz', value: 'Buzz' }]
+const items = [
+  { label: 'Foo', value: 'Bar' },
+  { label: 'Fizz', value: 'Buzz' },
+]
 
 describe('Answers Summary macro', () => {
   context('invalid props', () => {

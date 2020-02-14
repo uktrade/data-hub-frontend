@@ -319,7 +319,10 @@ describe('Global builders', () => {
 
     it('should return form without calling any functions', () => {
       const formObject = {
-        children: [{ name: 'a', label: 'A' }, { name: 'b', label: 'B' }],
+        children: [
+          { name: 'a', label: 'A' },
+          { name: 'b', label: 'B' },
+        ],
       }
       const requestBody = {
         a: 'a',
@@ -353,13 +356,11 @@ describe('Global builders', () => {
           name: 'stage',
           label: 'State',
           type: 'checkbox',
-          options: sinon
-            .stub()
-            .returns([
-              { value: 'a', label: 'A' },
-              { value: 'b', label: 'B' },
-              { value: 'c', label: 'C' },
-            ]),
+          options: sinon.stub().returns([
+            { value: 'a', label: 'A' },
+            { value: 'b', label: 'B' },
+            { value: 'c', label: 'C' },
+          ]),
         },
         {
           macroName: 'MultipleChoiceField',

@@ -51,9 +51,9 @@ function transformInteractionFormBodyToApiRequest(
     grant_amount_offered: body.grant_amount_offered || null,
     net_company_receipt: body.net_company_receipt || null,
     contacts: castCompactArray(body.contacts),
-    dit_participants: castCompactArray(body.dit_participants).map(
-      (adviser) => ({ adviser })
-    ),
+    dit_participants: castCompactArray(
+      body.dit_participants
+    ).map((adviser) => ({ adviser })),
     policy_areas: castCompactArray(body.policy_areas),
     policy_issue_types: castCompactArray(body.policy_issue_types),
     status: INTERACTION_STATUS.COMPLETE,
