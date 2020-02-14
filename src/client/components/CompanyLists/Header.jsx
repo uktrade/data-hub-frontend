@@ -32,16 +32,13 @@ const StyledSelect = styled(Select)({
   },
 })
 
-export const Header = connect(
-  state2props,
-  (dispatch) => ({
-    onChange: (id) =>
-      dispatch({
-        type: COMPANY_LISTS__SELECT,
-        id,
-      }),
-  })
-)(({ selectedId, lists, onChange }) => (
+export const Header = connect(state2props, (dispatch) => ({
+  onChange: (id) =>
+    dispatch({
+      type: COMPANY_LISTS__SELECT,
+      id,
+    }),
+}))(({ selectedId, lists, onChange }) => (
   <StyledRoot>
     <StyledHeading size={LEVEL_SIZE[3]}>My companies lists</StyledHeading>
     {Object.keys(lists).length > 1 && (

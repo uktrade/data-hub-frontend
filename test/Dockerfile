@@ -1,10 +1,10 @@
 # This docker image is used ONLY with CircleCI to run tests.
 # For local development image see Dockerfile in the root directory of this project.
 
-FROM node:10.16.0
+FROM node:12.15.0
 
 ENV DOCKERIZE_VERSION      v0.3.0
-ENV YARN_VERSION           1.16.0
+ENV YARN_VERSION           1.22.0
 ENV NPM_CONFIG_LOGLEVEL    warn
 ENV NPM_CONFIG_UNSAFE_PERM true
 ENV TZ                     Europe/London
@@ -28,7 +28,7 @@ RUN wget -q -O /tmp/libpng12.deb http://mirrors.kernel.org/ubuntu/pool/main/libp
   && rm /tmp/libpng12.deb
 
 # Use specific yarn version
-RUN npm install -g yarn@$YARN_VERSION
+RUN npm install -g --force yarn@$YARN_VERSION
 
 # Set timezone
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \

@@ -54,18 +54,15 @@ const Filters = ({ query, orderBy, onSearch, onOrderChange }) => (
   </StyledRoot>
 )
 
-export default connect(
-  state2props,
-  (dispatch) => ({
-    onSearch: (query) =>
-      dispatch({
-        type: COMPANY_LISTS__FILTER,
-        query,
-      }),
-    onOrderChange: (orderBy) =>
-      dispatch({
-        type: COMPANY_LISTS__ORDER,
-        orderBy,
-      }),
-  })
-)(Filters)
+export default connect(state2props, (dispatch) => ({
+  onSearch: (query) =>
+    dispatch({
+      type: COMPANY_LISTS__FILTER,
+      query,
+    }),
+  onOrderChange: (orderBy) =>
+    dispatch({
+      type: COMPANY_LISTS__ORDER,
+      orderBy,
+    }),
+}))(Filters)

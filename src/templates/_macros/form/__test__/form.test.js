@@ -36,9 +36,10 @@ describe('Form component', () => {
         class: 'c-form-component',
         actionsClass: 'u-js-hidden',
       }
-      const component = macros.renderWithCallerToDom('Form', formProps)(
-        macros.renderToDom('TextField')
-      )
+      const component = macros.renderWithCallerToDom(
+        'Form',
+        formProps
+      )(macros.renderToDom('TextField'))
       expect(component.method).to.equal('get')
       expect(component.action).to.equal('/form-url?_csrf=')
       expect(component.className).to.equal('c-form-component')
@@ -54,9 +55,10 @@ describe('Form component', () => {
       const formProps = {
         buttonText: 'Save',
       }
-      const component = macros.renderWithCallerToDom('Form', formProps)(
-        macros.renderToDom('TextField')
-      )
+      const component = macros.renderWithCallerToDom(
+        'Form',
+        formProps
+      )(macros.renderToDom('TextField'))
       expect(
         component.querySelector('button.govuk-button').textContent
       ).to.equal('Save')
@@ -66,9 +68,10 @@ describe('Form component', () => {
       const formProps = {
         hideFormActions: true,
       }
-      const component = macros.renderWithCallerToDom('Form', formProps)(
-        macros.renderToDom('TextField')
-      )
+      const component = macros.renderWithCallerToDom(
+        'Form',
+        formProps
+      )(macros.renderToDom('TextField'))
       expect(component.querySelector('.c-form-actions')).to.not.exist
     })
 
@@ -77,9 +80,10 @@ describe('Form component', () => {
         hidePrimaryFormAction: true,
         returnLink: '/previous-page',
       }
-      const component = macros.renderWithCallerToDom('Form', formProps)(
-        macros.renderToDom('TextField')
-      )
+      const component = macros.renderWithCallerToDom(
+        'Form',
+        formProps
+      )(macros.renderToDom('TextField'))
       const returnLink = component.querySelector('[href="/previous-page"]')
       expect(returnLink).to.exist
       expect(returnLink.textContent).to.equal('Back')
@@ -91,9 +95,10 @@ describe('Form component', () => {
       const formProps = {
         buttonModifiers: 'modifier',
       }
-      const component = macros.renderWithCallerToDom('Form', formProps)(
-        macros.renderToDom('TextField')
-      )
+      const component = macros.renderWithCallerToDom(
+        'Form',
+        formProps
+      )(macros.renderToDom('TextField'))
       expect(
         component
           .querySelector('button.govuk-button')
@@ -105,9 +110,10 @@ describe('Form component', () => {
       const formProps = {
         buttonModifiers: ['modifier-1', 'modifier-2'],
       }
-      const component = macros.renderWithCallerToDom('Form', formProps)(
-        macros.renderToDom('TextField')
-      )
+      const component = macros.renderWithCallerToDom(
+        'Form',
+        formProps
+      )(macros.renderToDom('TextField'))
       const classList = component.querySelector('button.govuk-button').classList
 
       expect(classList.contains('modifier-1')).to.be.true
@@ -118,9 +124,10 @@ describe('Form component', () => {
       const formProps = {
         returnLink: '/previous-page',
       }
-      const component = macros.renderWithCallerToDom('Form', formProps)(
-        macros.renderToDom('TextField')
-      )
+      const component = macros.renderWithCallerToDom(
+        'Form',
+        formProps
+      )(macros.renderToDom('TextField'))
       const returnLink = component.querySelector('[href="/previous-page"]')
       expect(returnLink).to.exist
       expect(returnLink.textContent).to.equal('Back')
@@ -131,9 +138,10 @@ describe('Form component', () => {
         returnLink: '/previous-page',
         returnText: 'Go back',
       }
-      const component = macros.renderWithCallerToDom('Form', formProps)(
-        macros.renderToDom('TextField')
-      )
+      const component = macros.renderWithCallerToDom(
+        'Form',
+        formProps
+      )(macros.renderToDom('TextField'))
       expect(
         component.querySelector('[href="/previous-page"]').textContent
       ).to.equal('Go back')
@@ -146,9 +154,10 @@ describe('Form component', () => {
           'company-id': '12345',
         },
       }
-      const component = macros.renderWithCallerToDom('Form', formProps)(
-        macros.renderToDom('TextField')
-      )
+      const component = macros.renderWithCallerToDom(
+        'Form',
+        formProps
+      )(macros.renderToDom('TextField'))
 
       const hiddenInputs = component.querySelectorAll('[type="hidden"]')
       expect(hiddenInputs[0].name).to.equal('csrf')
@@ -167,9 +176,10 @@ describe('Form component', () => {
           },
         },
       }
-      const component = macros.renderWithCallerToDom('Form', formProps)(
-        macros.renderToDom('TextField')
-      )
+      const component = macros.renderWithCallerToDom(
+        'Form',
+        formProps
+      )(macros.renderToDom('TextField'))
 
       const formErrorsEl = component.querySelector('.c-error-summary')
       const formErrorsMessagesEls = formErrorsEl.querySelectorAll(

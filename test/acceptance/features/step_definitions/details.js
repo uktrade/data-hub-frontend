@@ -145,9 +145,11 @@ Then(/^the (.+) values are displayed$/, async function(tableTitle, dataTable) {
   const tableSelector = Details.getSelectorForValueTable(tableTitle)
 
   await assertTableRowCount(tableSelector, expectedKeyValues)
-  await assertTableContent.bind(
-    this
-  )(tableSelector, expectedKeyValues, TABLE_TYPE.VALUE)
+  await assertTableContent.bind(this)(
+    tableSelector,
+    expectedKeyValues,
+    TABLE_TYPE.VALUE
+  )
 })
 
 Then(/^the (.+) values are not displayed$/, async function(tableTitle) {
@@ -190,9 +192,11 @@ Then(/^the key value details are displayed$/, async function(dataTable) {
   const tableSelector = Details.getSelectorForKeyValueTable()
 
   await assertTableRowCount(tableSelector, expectedKeyValues)
-  await assertTableContent.bind(
-    this
-  )(tableSelector, expectedKeyValues, TABLE_TYPE.KEY_VALUE)
+  await assertTableContent.bind(this)(
+    tableSelector,
+    expectedKeyValues,
+    TABLE_TYPE.KEY_VALUE
+  )
 })
 
 Then(/^the (.+) data details are displayed$/, async function(

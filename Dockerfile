@@ -4,8 +4,8 @@
 
 FROM ubuntu:16.04
 
-ENV NODE_VERSION  10.16.0
-ENV YARN_VERSION  1.16.0
+ENV NODE_VERSION  12.15.0
+ENV YARN_VERSION  1.22.0
 ENV NVM_DIR       /usr/local/nvm
 ENV NODE_PATH     $NVM_DIR/versions/node/v$NODE_VERSION/lib/node_modules
 ENV PATH          $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
