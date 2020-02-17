@@ -15,8 +15,6 @@ const { transformOrderToListItem } = require('../omis/transformers')
 const {
   transformInteractionToListItem,
 } = require('../interactions/transformers')
-const { transformFullExportHistory } = require('./transformers')
-const { fetchFullExportHistory } = require('./repos')
 
 async function renderSearchResults(req, res) {
   const entity = find(ENTITIES, ['path', req.params.searchPath])
@@ -89,28 +87,6 @@ async function renderSearchResults(req, res) {
   })
 }
 
-async function fetchFullExportHistoryHandler(req, res, next) {
-  try {
-    const { token } = req.session
-    const { page, companyId } = req.query
-
-    const { count, results } = await fetchFullExportHistory(
-      token,
-      10,
-      parseInt(page, 10),
-      companyId
-    )
-
-    res.json({
-      count: count || 0,
-      results: results ? transformFullExportHistory(results) : [],
-    })
-  } catch (error) {
-    next(error)
-  }
-}
-
 module.exports = {
   renderSearchResults,
-  fetchFullExportHistoryHandler,
 }

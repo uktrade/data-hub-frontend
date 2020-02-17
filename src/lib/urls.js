@@ -167,7 +167,6 @@ module.exports = {
   search: {
     index: url('/search'),
     type: url('/search', '/:searchPath?'),
-    exportsHistory: url('/search', '/exports/history/data'),
   },
   interactions: {
     index: url('/interactions'),

@@ -25,34 +25,7 @@ function getCountriesFields(company) {
   }
 }
 
-function getCountryText(country, historyType, status) {
-  const historyTypeText = COUNTRY_HISTORY_TYPE_TEXT[historyType]
-  const typeText = COUNTRY_TYPE_TEXT[status]
-
-  return [country, historyTypeText, typeText].join(' ')
-}
-
-function createCountry({
-  country,
-  history_type,
-  status,
-  history_user,
-  history_date,
-}) {
-  return {
-    headingText: getCountryText(country.name, history_type, status),
-    metadata: [
-      { label: 'By', value: history_user.name },
-      { label: 'Date', value: formatDateTime(history_date) },
-    ],
-  }
-}
-
 module.exports = {
-  transformFullExportHistory: ({ count, results }) => ({
-    count,
-    results: results.map(createCountry),
-  }),
   transformCompanyToExportDetailsView: (company) => {
     const {
       exportToCountries,
