@@ -1,5 +1,5 @@
 # E2E docker image used to run tests locally
-FROM node:10.16.0
+FROM node:12.15.0
 
 ENV NPM_CONFIG_LOGLEVEL    warn
 ENV NPM_CONFIG_UNSAFE_PERM true

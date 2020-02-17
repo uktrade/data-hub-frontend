@@ -38,7 +38,7 @@ services:
       OAUTH2_TOKEN_FETCH_URL: https://sso.trade.uat.uktrade.io/o/token/
       OAUTH2_USER_PROFILE_URL: https://sso.trade.uat.uktrade.io/api/v1/user/me/
       OAUTH2_AUTH_URL: https://sso.trade.uat.uktrade.io/o/authorize/
-      OAUTH2_BYPASS_SSO: true
+      OAUTH2_BYPASS_SSO: "true"
       OAUTH2_CLIENT_SECRET: youAintSeenMyRight
       OAUTH2_CLIENT_ID: randomClientId
       OAUTH2_DEV_TOKEN: ditStaffToken
