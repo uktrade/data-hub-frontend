@@ -146,8 +146,7 @@ export BROWSERSTACK_ACCESS_KEY=xxx
 
 ### Running the tests
 
-`$ docker-compose -f visual-regression.yml build`
-`$ docker-compose -f visual-regression.yml up`
+`$ ./.bin.sample/visual`
 
 ### Updating the baseline image
 

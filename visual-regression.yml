@@ -6,6 +6,8 @@ services:
       dockerfile: ./test/visual/Dockerfile
     environment:
       BASE_URL: http://frontend:3000
+      BROWSERSTACK_USERNAME: ${BROWSERSTACK_USERNAME}
+      BROWSERSTACK_ACCESS_KEY: ${BROWSERSTACK_ACCESS_KEY}
     volumes:
       - ./:/project
     entrypoint: dockerize -wait tcp://frontend:3000 -timeout 120s
@@ -49,6 +51,7 @@ services:
       HELP_CENTRE_FEED_API_TOKEN: apiToken
       SESSION_SECRET: foobarbaz
     entrypoint: dockerize -wait tcp://sandbox:8001 -wait tcp://redis:6379 -timeout 120s
+    command: yarn build
     command: yarn start
     depends_on:
       - redis
