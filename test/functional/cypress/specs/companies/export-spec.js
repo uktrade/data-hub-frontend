@@ -230,11 +230,11 @@ describe('Companies Export Countries', () => {
     })
 
     it('renders the title', () => {
-      cy.contains('Export countries history').should('exist')
+      cy.contains('Export countries history')
     })
 
     it('renders the collection list with the 0 results', () => {
-      cy.contains('0 results').should('exist')
+      cy.contains('0 results')
       cy.get(countrySelectors.listItemHeadings).should('have.length', 0)
     })
   })
@@ -245,11 +245,11 @@ describe('Companies Export Countries', () => {
     })
 
     it('renders the title', () => {
-      cy.contains('Export countries history').should('exist')
+      cy.contains('Export countries history')
     })
 
     it('renders the collection list with 10 of the 12 results', () => {
-      cy.contains('12 results').should('exist')
+      cy.contains('12 results')
       cy.get(countrySelectors.listItemHeadings).should('have.length', 10)
 
       cy.contains('Belarus added to countries of no interest')
@@ -307,9 +307,6 @@ describe('Companies Export Countries', () => {
         .contains('2')
         .click()
       cy.get(countrySelectors.listItemHeadings).should('have.length', 2)
-      cy.contains('Andorra removed from future countries of interest').should(
-        'exist'
-      )
       cy.contains('Andorra removed from future countries of interest')
         .siblings()
         .should('contain', 'By DIT Staff')
