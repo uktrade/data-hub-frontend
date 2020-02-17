@@ -1,0 +1,56 @@
+version: '2'
+services:
+  visual-regression:
+    build:
+      context: .
+      dockerfile: ./test/visual/Dockerfile
+    environment:
+      BASE_URL: http://frontend:3000
+    volumes:
+      - ./:/project
+    entrypoint: dockerize -wait tcp://frontend:3000 -timeout 120s
+    command: yarn test:visual
+    depends_on:
+      - frontend
+
+  sandbox:
+    build:
+      context: ./test/sandbox
+    ports:
+      - "8001:8001"
+
+  redis:
+    image: redis:3.2
+    ports:
+      - 6379:6379
+
+  frontend:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      API_ROOT: http://sandbox:8001
+      REDIS_URL: redis://redis:6379
+      TZ: Europe/London
+      NODE_ENV: development
+      DATA_HUB_BACKEND_ACCESS_KEY_ID: frontend-key-id
+      DATA_HUB_BACKEND_SECRET_ACCESS_KEY: frontend-key
+      OAUTH2_TOKEN_FETCH_URL: https://sso.trade.uat.uktrade.io/o/token/
+      OAUTH2_USER_PROFILE_URL: https://sso.trade.uat.uktrade.io/api/v1/user/me/
+      OAUTH2_AUTH_URL: https://sso.trade.uat.uktrade.io/o/authorize/
+      OAUTH2_BYPASS_SSO: true
+      OAUTH2_CLIENT_SECRET: youAintSeenMyRight
+      OAUTH2_CLIENT_ID: randomClientId
+      OAUTH2_DEV_TOKEN: ditStaffToken
+      CACHE_ASSETS: "true"
+      HELP_CENTRE_URL: https://datahub-helpcentre.london.cloudapps.digital
+      HELP_CENTRE_ANNOUNCMENTS_URL: https://datahub-helpcentre.london.cloudapps.digital/updates/announcements
+      HELP_CENTRE_API_FEED: http://sandbox:8001/help-centre/announcement
+      HELP_CENTRE_FEED_API_TOKEN: apiToken
+      SESSION_SECRET: foobarbaz
+    entrypoint: dockerize -wait tcp://sandbox:8001 -wait tcp://redis:6379 -timeout 120s
+    command: yarn start
+    depends_on:
+      - redis
+      - sandbox
+
