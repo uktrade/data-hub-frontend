@@ -137,19 +137,17 @@ Screenshots will be stored in the root of the project. We commit the baselines a
 
 ### Browserstack environment variables
 
-to run in browserstack, ensure you have the following environment variables set:
+In order to run in browserstack, ensure you have the following variables in env file named `.browserstack.env`:
 
 ```
 export BROWSERSTACK_USERNAME=xxx
 export BROWSERSTACK_ACCESS_KEY=xxx
-export IS_REMOTE=true
 ```
 
 ### Running the tests
 
-After setting up the environment variables, run the following command to execute the tests:
-
-`$ yarn test:visual`
+`$ docker-compose -f visual-regression.yml build`
+`$ docker-compose -f visual-regression.yml up`
 
 ### Updating the baseline image
 
