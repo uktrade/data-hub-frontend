@@ -10,12 +10,17 @@ import { CollectionList } from 'data-hub-components'
 import LoadingBox from '@govuk-react/loading-box'
 import ErrorSummary from '@govuk-react/error-summary'
 
+import { connect } from 'react-redux'
+import Task from '../../../../../client/components/Task/index.jsx'
+import { state2props } from '../state'
+import { EXPORTS_HISTORY } from '../../../../../client/actions'
+
 const Wrapper = styled('div')`
   margin-top: ${SPACING.SCALE_3};
 `
 
 function ExportFullHistory({ companyId }) {
-  const [items, setitems] = useState([])
+  const [items, setItems] = useState([])
   const [totalItems, setTotalItems] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
@@ -40,7 +45,7 @@ function ExportFullHistory({ companyId }) {
             companyId,
           },
         })
-        setitems(data.results)
+        setItems(data.results)
         setTotalItems(data.count)
         setIsLoading(false)
       } catch {
@@ -79,4 +84,24 @@ ExportFullHistory.propTypes = {
   companyId: PropTypes.string.isRequired,
 }
 
-export default ExportFullHistory
+export default connect((state) => {
+  const { loading, count, results } = state2props(state)
+  return { loading, count, results }
+})(({ loading, count, results, companyId }) => {
+  return (
+    <>
+      <Task.Status
+        name="Exports history"
+        id="exportsHistory"
+        progressMessage="loading exports history"
+        startOnRender={{
+          payload: companyId,
+          onSuccessDispatch: EXPORTS_HISTORY,
+        }}
+      />
+      {!loading && (
+        <CollectionList itemName="result" items={results} totalItems={count} />
+      )}
+    </>
+  )
+})
