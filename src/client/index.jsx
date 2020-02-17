@@ -147,9 +147,7 @@ function App() {
         {(props) => <ExportsIndex {...props} />}
       </Mount>
       <Mount selector="#company-export-full-history">
-        {(props) => (
-          <ExportsFullHistory {...props} csrfToken={globalProps.csrfToken} />
-        )}
+        {(props) => <ExportsFullHistory {...props} />}
       </Mount>
     </Provider>
   )

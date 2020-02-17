@@ -117,7 +117,6 @@ app.use(currentJourney())
 
 app.use(flash())
 app.use(flashWithBody)
-
 app.use(ssoBypass())
 app.use(basicAuth)
 app.use(auth)
@@ -127,8 +126,6 @@ app.use(features)
 app.use(userLocals)
 app.use(headers)
 app.use(store())
-app.use(csrf())
-app.use(csrfToken())
 
 const API_PROXY_PATH = '/api-proxy'
 app.use(
@@ -140,12 +137,23 @@ app.use(
       pathRewrite: {
         ['^' + API_PROXY_PATH]: '',
       },
-      onProxyReq: (proxyReq, req) =>
-        proxyReq.setHeader('authorization', `Bearer ${req.session.token}`),
+      onProxyReq: (proxyReq, req) => {
+        proxyReq.setHeader('authorization', `Bearer ${req.session.token}`)
+        if (req.body) {
+          let bodyData = JSON.stringify(req.body)
+          // incase if content-type is application/x-www-form-urlencoded -> we need to change to application/json
+          proxyReq.setHeader('Content-Type', 'application/json')
+          proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData))
+          // stream the content
+          proxyReq.write(bodyData)
+        }
+      },
     }
   )
 )
 
+app.use(csrf())
+app.use(csrfToken())
 // routing
 app.use(slashify())
 app.use(routers)

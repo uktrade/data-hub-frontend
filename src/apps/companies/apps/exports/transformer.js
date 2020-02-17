@@ -50,7 +50,7 @@ function createCountry({
 
 module.exports = {
   transformFullExportHistory: ({ count, results }) => ({
-    count: count,
+    count,
     results: results.map(createCountry),
   }),
   transformCompanyToExportDetailsView: (company) => {

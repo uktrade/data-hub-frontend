@@ -20,3 +20,4 @@ export const TASK__ERROR = 'TASK__ERROR'
 export const TASK__CLEAR = 'TASK__CLEAR'
 
 export const EXPORTS_HISTORY = 'EXPORTS_HISTORY'
+export const EXPORTS_HISTORY__CLICK = 'EXPORTS_HISTORY__CLICK'
