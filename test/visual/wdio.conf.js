@@ -1,6 +1,4 @@
 /* eslint-disable */
-require('dotenv').config({ path: './test/visual/.browserstack.env' })
-
 const WdioImage = require ('@uktrade/wdio-image-diff-js').default
 const browserstack = require('browserstack-local')
 
