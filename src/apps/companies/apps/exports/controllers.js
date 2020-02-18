@@ -82,15 +82,17 @@ function renderExports(req, res) {
 }
 
 async function renderFullExportHistory(req, res) {
-  const { company } = res.locals
+  const {
+    company: { name, id },
+  } = res.locals
 
   res
-    .breadcrumb(company.name, urls.companies.detail(company.id))
-    .breadcrumb('Exports', urls.companies.exports.index(company.id))
+    .breadcrumb(name, urls.companies.detail(id))
+    .breadcrumb('Exports', urls.companies.exports.index(id))
     .breadcrumb('Full export history')
     .render('companies/apps/exports/views/full-history', {
       props: {
-        companyId: company.id,
+        companyId: id,
       },
     })
 }

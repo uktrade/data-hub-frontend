@@ -11,26 +11,24 @@ const COUNTRY_TYPE_TEXT = {
   not_interested: 'countries of no interest',
 }
 
-function getCountryText(country, historyType, status) {
+const getCountryText = (country, historyType, status) => {
   const historyTypeText = COUNTRY_HISTORY_TYPE_TEXT[historyType]
   const typeText = COUNTRY_TYPE_TEXT[status]
 
   return [country, historyTypeText, typeText].join(' ')
 }
 
-function createCountry(item) {
-  return {
-    headingText: getCountryText(
-      item.country.name,
-      item.history_type,
-      item.status
-    ),
-    metadata: [
-      { label: 'By', value: item.history_user.name },
-      { label: 'Date', value: DateUtils.formatWithTime(item.history_date) },
-    ],
-  }
-}
+const createCountry = (item) => ({
+  headingText: getCountryText(
+    item.country.name,
+    item.history_type,
+    item.status
+  ),
+  metadata: [
+    { label: 'By', value: item.history_user.name },
+    { label: 'Date', value: DateUtils.formatWithTime(item.history_date) },
+  ],
+})
 
 const transformFullExportHistory = ({ count, results }) => ({
   count,
