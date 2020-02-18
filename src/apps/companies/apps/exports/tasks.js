@@ -1,6 +1,5 @@
 import axios from 'axios'
-
-const { formatDateTime } = require('../../../../config/nunjucks/filters')
+import { DateUtils } from 'data-hub-components'
 
 const COUNTRY_HISTORY_TYPE_TEXT = {
   insert: 'added to',
@@ -28,7 +27,7 @@ function createCountry(item) {
     ),
     metadata: [
       { label: 'By', value: item.history_user.name },
-      { label: 'Date', value: formatDateTime(item.history_date) },
+      { label: 'Date', value: DateUtils.formatWithTime(item.history_date) },
     ],
   }
 }
