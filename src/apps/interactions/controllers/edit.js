@@ -19,22 +19,20 @@ const formConfigs = {
   [KINDS.SERVICE_DELIVERY]: serviceDeliveryForm,
 }
 
-async function getHiddenFields(req, res, interactionId) {
-  const hiddenFields = {
+function getHiddenFields(req, res, interactionId) {
+  return {
     id: interactionId,
     company: get(res.locals, 'company.id'),
     investment_project: get(res.locals, 'investment.id'),
     kind: snakeCase(req.params.kind),
     theme: snakeCase(req.params.theme) || THEMES.OTHER,
   }
-
-  return hiddenFields
 }
 
 async function buildForm(req, res, params) {
   const { interactionId, theme, kind } = params
   const options = await getInteractionOptions(req, res)
-  const hiddenFields = await getHiddenFields(req, res, interactionId)
+  const hiddenFields = getHiddenFields(req, res, interactionId)
   const returnLink = joinPaths([
     getReturnLink(res.locals.interactions),
     interactionId,
@@ -49,7 +47,6 @@ async function buildForm(req, res, params) {
     company: get(res.locals, 'company.name'),
     theme,
     interaction: res.locals.interaction,
-    featureFlags: res.locals.features,
   }
 
   return formConfigs[kind](formProperties)
@@ -159,7 +156,7 @@ async function renderEditPage(req, res, next) {
       : `Add ${kindName + forEntityName}`
 
     // istanbul ignore next: Covered by functional tests
-    if (canAddCountries(theme, res.locals.interaction, res.locals.features)) {
+    if (canAddCountries(theme, res.locals.interaction)) {
       EXPORT_INTEREST_STATUS_VALUES.forEach(
         addSelectedOptions(interactionForm.children)
       )
