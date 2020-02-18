@@ -84,6 +84,9 @@ const ExportsIndex = ({
       </Details>
 
       <H3>Export countries information</H3>
+      <Link href={urls.companies.exports.history(companyId)}>
+        View full export countries history
+      </Link>
       <StyledSummaryTable>
         {exportCountriesInformation.map(({ name, value }) => (
           <SummaryTable.Row heading={name} key={name}>
@@ -132,16 +135,10 @@ ExportsIndex.propTypes = {
     name: PropTypes.string,
     value: PropTypes.string,
   }).isRequired,
-  exportDetails: PropTypes.arrayOf(
+  exportCountriesInformation: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
-      value: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.shape({
-          url: PropTypes.string,
-          text: PropTypes.string,
-        }),
-      ]),
+      value: PropTypes.string,
     })
   ).isRequired,
   exportPotentials: PropTypes.arrayOf(
@@ -151,7 +148,11 @@ ExportsIndex.propTypes = {
     })
   ).isRequired,
   companyId: PropTypes.string.isRequired,
-  companyNumber: PropTypes.string.isRequired,
+  companyNumber: PropTypes.string,
+}
+
+ExportsIndex.defaultProps = {
+  companyNumber: null,
 }
 
 export default ExportsIndex

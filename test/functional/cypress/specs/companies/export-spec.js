@@ -70,6 +70,14 @@ describe('Companies Export', () => {
           .should('have.text', 'Export countries information')
       })
 
+      it('should render the link to exports history', () => {
+        cy.contains('View full export countries history').should(
+          'have.attr',
+          'href',
+          urls.companies.exports.history(fixtures.company.dnbCorp.id)
+        )
+      })
+
       it('should render the "Exports countries information" table', () => {
         cy.get('th')
           .eq(3)
@@ -175,6 +183,20 @@ describe('Companies Export', () => {
           .should('have.text', 'Medium')
       })
 
+      it('should render the "Export countries information header', () => {
+        cy.get('h3')
+          .first()
+          .should('have.text', 'Export countries information')
+      })
+
+      it('should render the link to exports history', () => {
+        cy.contains('View full export countries history').should(
+          'have.attr',
+          'href',
+          urls.companies.exports.history(fixtures.company.dnbLtd.id)
+        )
+      })
+
       it('should render the "Exports countries information" table', () => {
         cy.get('th')
           .eq(3)
@@ -203,7 +225,7 @@ describe('Companies Export', () => {
       cy.visit(urls.companies.exports.index(fixtures.company.archivedLtd.id))
     })
 
-    it('the edit expor countries button should not exist', () => {
+    it('the edit export countries button should not exist', () => {
       cy.contains('Edit export countries').should('not.exist')
     })
   })
