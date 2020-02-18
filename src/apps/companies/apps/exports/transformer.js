@@ -2,19 +2,8 @@
 const { flatMap } = require('lodash')
 
 const groupExportCountries = require('../../../../lib/group-export-countries')
-const { formatDateTime } = require('../../../../config/nunjucks/filters')
 const { exportDetailsLabels, exportPotentialLabels } = require('../../labels')
 const { EXPORT_INTEREST_STATUS } = require('../../../constants')
-
-const COUNTRY_HISTORY_TYPE_TEXT = {
-  insert: 'added to',
-  delete: 'removed from',
-}
-const COUNTRY_TYPE_TEXT = {
-  future_interest: 'future countries of interest',
-  currently_exporting: 'currently exporting',
-  not_interested: 'countries of no interest',
-}
 
 function getCountries(data) {
   return flatMap(data, ({ name }) => name || null).join(', ') || 'None'
@@ -36,34 +25,7 @@ function getCountriesFields(company) {
   }
 }
 
-function getCountryText(country, historyType, status) {
-  const historyTypeText = COUNTRY_HISTORY_TYPE_TEXT[historyType]
-  const typeText = COUNTRY_TYPE_TEXT[status]
-
-  return [country, historyTypeText, typeText].join(' ')
-}
-
-function createCountry({
-  country,
-  history_type,
-  status,
-  history_user,
-  history_date,
-}) {
-  return {
-    headingText: getCountryText(country.name, history_type, status),
-    metadata: [
-      { label: 'By', value: history_user.name },
-      { label: 'Date', value: formatDateTime(history_date) },
-    ],
-  }
-}
-
 module.exports = {
-  transformFullExportHistory: ({ count, results }) => ({
-    count: count,
-    results: results.map(createCountry),
-  }),
   transformCompanyToExportDetailsView: (company) => {
     const {
       exportToCountries,

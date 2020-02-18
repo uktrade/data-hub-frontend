@@ -153,7 +153,7 @@ app.use(
     }
   )
 )
-
+// csrf middleware needs to come after the proxy path as it is not needed for the proxy and would block requests
 app.use(csrf())
 app.use(csrfToken())
 // routing
