@@ -109,6 +109,7 @@ aliases:
     name: postgres
     environment:
       POSTGRES_DB: datahub
+      POSTGRES_PASSWORD: datahub
 
   # Data hub mi dashboard postgres container
   - &docker_mi_postgres
@@ -116,6 +117,7 @@ aliases:
     name: mi-postgres
     environment:
       POSTGRES_DB: mi
+      POSTGRES_PASSWORD: datahub
 
   # Mock SSO container used by Data hub frontend
   - &docker_mock_sso
@@ -131,8 +133,8 @@ aliases:
       AWS_DEFAULT_REGION: eu-west-2
       AWS_ACCESS_KEY_ID: foo
       AWS_SECRET_ACCESS_KEY: bar
-      DATABASE_URL: postgresql://postgres@postgres/datahub
-      MI_DATABASE_URL: postgresql://postgres@mi-postgres/mi
+      DATABASE_URL: postgresql://postgres:datahub@postgres/datahub
+      MI_DATABASE_URL: postgresql://postgres:datahub@mi-postgres/mi
       DEBUG: 'False'
       DEFAULT_BUCKET: baz
       DJANGO_SECRET_KEY: topSecret
