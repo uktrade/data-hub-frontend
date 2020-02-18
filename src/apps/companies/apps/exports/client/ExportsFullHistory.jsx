@@ -30,6 +30,11 @@ export default connect(
         page,
         event,
       })
+      window.history.pushState(
+        {},
+        '',
+        `${window.location.pathname}?page=${page}`
+      )
       window.scrollTo(0, 0)
     },
   })
