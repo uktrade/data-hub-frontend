@@ -69,7 +69,9 @@ const SectionAbout = ({ businessDetails, isDnbCompany, isArchived, urls }) => (
     <SummaryTable.Row heading="Annual turnover">
       {businessDetails.turnover && (
         <>
-          {NumberUtils.currencyGBP(businessDetails.turnover)}
+          {NumberUtils.currencyGBP(businessDetails.turnover, {
+            maximumSignificantDigits: 2,
+          })}
 
           {businessDetails.is_turnover_estimated && (
             <TableDetails>

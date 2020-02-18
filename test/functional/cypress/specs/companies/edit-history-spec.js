@@ -155,8 +155,8 @@ describe('Edit History', () => {
       assertChanges(
         companyEditHistory.change(5).table(2),
         'Turnover',
-        '£1,828,928',
-        '£1,387,800'
+        '£1,800,000',
+        '£1,400,000'
       )
     })
 
