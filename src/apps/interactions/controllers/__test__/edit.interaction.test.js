@@ -4,6 +4,7 @@ const { format } = require('date-fns')
 
 const config = require('../../../../config')
 const controller = require('../edit')
+const mockMetadata = require('../../../../../test/unit/helpers/mock-metadata')
 const interactionData = require('../../../../../test/unit/data/interactions/interaction.json')
 const serviceOptionData = require('../../../../../test/unit/data/interactions/service-options-data.json')
 
@@ -16,8 +17,14 @@ describe('Interaction edit controller (Interactions)', () => {
   let metadataMock
   let activeInactiveAdviserData
   let contactsData
+  let revertMetadataCountries
+
+  afterEach(() => {
+    revertMetadataCountries()
+  })
 
   beforeEach(() => {
+    revertMetadataCountries = mockMetadata.setCountries(3)
     req = {
       session: {
         token: 'abcd',
@@ -37,7 +44,7 @@ describe('Interaction edit controller (Interactions)', () => {
       title: sinon.stub().returnsThis(),
       render: sinon.spy(),
       redirect: sinon.spy(),
-      locals: { features: {} },
+      locals: {},
     }
 
     nextStub = sinon.stub()
@@ -208,16 +215,16 @@ describe('Interaction edit controller (Interactions)', () => {
         .reply(200, metadataMock.policyAreaOptions)
         .get('/v4/metadata/policy-issue-type')
         .reply(200, metadataMock.policyIssueType)
-
       await controller.renderEditPage(req, res, nextStub)
     })
+
     it('should render the interaction page', async () => {
       expect(res.render).to.be.calledWith('interactions/views/edit')
       expect(res.render).to.have.been.calledOnce
     })
   })
 
-  context('When adding an interaction from company contact', () => {
+  context('When adding an export interaction from company contact', () => {
     let interactionForm
     beforeEach(async () => {
       req.params = {
@@ -257,6 +264,7 @@ describe('Interaction edit controller (Interactions)', () => {
         .reply(200, metadataMock.policyIssueType)
 
       await controller.renderEditPage(req, res, nextStub)
+
       interactionForm = res.render.getCall(0).args[1].interactionForm
     })
 
@@ -291,6 +299,7 @@ describe('Interaction edit controller (Interactions)', () => {
           'secondaryHeading',
         ])
       )
+
       expect(fieldNames).to.deep.equal([
         {
           label: undefined,
@@ -391,6 +400,27 @@ describe('Interaction edit controller (Interactions)', () => {
           macroName: 'TextField',
           type: 'textarea',
         },
+        {
+          macroName: 'MultipleChoiceField',
+          type: 'radio',
+          name: 'were_countries_discussed',
+          label: 'Were any countries discussed?',
+        },
+        {
+          label: 'Countries currently exporting to',
+          macroName: 'Typeahead',
+          name: 'currently_exporting',
+        },
+        {
+          label: 'Future countries of interest',
+          macroName: 'Typeahead',
+          name: 'future_interest',
+        },
+        {
+          label: 'Countries not interested in',
+          macroName: 'Typeahead',
+          name: 'not_interested',
+        },
       ])
     })
 
@@ -400,6 +430,7 @@ describe('Interaction edit controller (Interactions)', () => {
         ({ name }) => name === 'contacts'
       )
       const contact = contactField.children[0].options
+
       expect(contact).to.deep.equal([
         { value: '998', label: 'Emily Brown, Director' },
         { value: '999', label: 'Fred Smith, Manager' },
@@ -411,6 +442,7 @@ describe('Interaction edit controller (Interactions)', () => {
         interactionForm.children,
         ({ name }) => name === 'service'
       )
+
       expect(serviceField.options).to.deep.equal([
         {
           value: 'sv1',
@@ -435,6 +467,7 @@ describe('Interaction edit controller (Interactions)', () => {
         interactionForm.children,
         ({ name }) => name === 'subService'
       )
+
       expect(subServiceField.options).to.deep.equal([
         { value: 'sv2', label: 'Advice & information' },
       ])
@@ -445,6 +478,7 @@ describe('Interaction edit controller (Interactions)', () => {
         interactionForm.children,
         ({ name }) => name === 'communication_channel'
       )
+
       expect(communicationChannelField.options).to.deep.equal([
         { value: '1', label: 'c1' },
         { value: '3', label: 'c3' },
@@ -453,6 +487,7 @@ describe('Interaction edit controller (Interactions)', () => {
 
     it('should set the company id as a hidden field', () => {
       const companyField = interactionForm.hiddenFields.company
+
       expect(companyField).to.equal('1')
     })
 
@@ -462,6 +497,7 @@ describe('Interaction edit controller (Interactions)', () => {
         ({ name }) => name === 'contacts'
       )
       const contact = contactField.children[0].options
+
       expect(contact).to.deep.equal([
         { value: '998', label: 'Emily Brown, Director' },
         { value: '999', label: 'Fred Smith, Manager' },
@@ -473,6 +509,7 @@ describe('Interaction edit controller (Interactions)', () => {
         interactionForm.children,
         ({ name }) => name === 'dit_participants'
       )
+
       expect(adviserField.value).to.deep.equal(['user1'])
     })
 
@@ -497,6 +534,7 @@ describe('Interaction edit controller (Interactions)', () => {
         serviceField.options,
         ({ label }) => label === 'Policy feedback'
       )
+
       expect(policyFeedbackOption).to.be.undefined
     })
 
@@ -513,7 +551,7 @@ describe('Interaction edit controller (Interactions)', () => {
     })
   })
 
-  context('When adding an interaction from a company', () => {
+  context('When adding an export interaction from a company', () => {
     let interactionForm
     beforeEach(async () => {
       req.params = {
@@ -550,6 +588,7 @@ describe('Interaction edit controller (Interactions)', () => {
         .reply(200, metadataMock.policyIssueType)
 
       await controller.renderEditPage(req, res, nextStub)
+
       interactionForm = res.render.getCall(0).args[1].interactionForm
     })
 
@@ -567,7 +606,7 @@ describe('Interaction edit controller (Interactions)', () => {
     })
   })
 
-  context('when editing an interaction from a company', () => {
+  context('when editing an export interaction from a company', () => {
     let interactionForm
     beforeEach(async () => {
       req.params = {
@@ -607,6 +646,7 @@ describe('Interaction edit controller (Interactions)', () => {
         .reply(200, metadataMock.policyIssueType)
 
       await controller.renderEditPage(req, res, nextStub)
+
       interactionForm = res.render.getCall(0).args[1].interactionForm
     })
 
@@ -640,6 +680,7 @@ describe('Interaction edit controller (Interactions)', () => {
           'secondaryHeading',
         ])
       )
+
       expect(fields).to.deep.equal([
         {
           label: undefined,
@@ -772,6 +813,7 @@ describe('Interaction edit controller (Interactions)', () => {
         ({ name }) => name === 'contacts'
       )
       const contacts = contactField.children[0]
+
       expect(contacts.options).to.deep.equal([
         { value: '998', label: 'Emily Brown, Director' },
         { value: '999', label: 'Fred Smith, Manager' },
@@ -783,6 +825,7 @@ describe('Interaction edit controller (Interactions)', () => {
         interactionForm.children,
         ({ name }) => name === 'service'
       )
+
       expect(serviceField.options).to.deep.equal([
         {
           value: 'sv1',
@@ -807,6 +850,7 @@ describe('Interaction edit controller (Interactions)', () => {
         interactionForm.children,
         ({ name }) => name === 'subService'
       )
+
       expect(subSrviceField.options).to.deep.equal([
         { value: 'sv2', label: 'Advice & information' },
       ])
@@ -817,6 +861,7 @@ describe('Interaction edit controller (Interactions)', () => {
         interactionForm.children,
         ({ name }) => name === 'communication_channel'
       )
+
       expect(communicationChannelField.options).to.deep.equal([
         { value: '1', label: 'c1' },
         { value: '2', label: 'c2' },
@@ -826,11 +871,13 @@ describe('Interaction edit controller (Interactions)', () => {
 
     it('should set the company id as a hidden field', () => {
       const companyField = interactionForm.hiddenFields.company
+
       expect(companyField).to.equal('1')
     })
 
     it('should set the id in a hidden field', () => {
       const idField = interactionForm.hiddenFields.id
+
       expect(idField).to.equal('af4aac84-4d6a-47df-a733-5a54e3008c32')
     })
 
@@ -843,6 +890,7 @@ describe('Interaction edit controller (Interactions)', () => {
         serviceField.options,
         ({ label }) => label === 'Policy feedback'
       )
+
       expect(policyFeedbackOption).to.be.undefined
     })
 
@@ -902,18 +950,19 @@ describe('Interaction edit controller (Interactions)', () => {
         .reply(200, metadataMock.policyAreaOptions)
         .get('/v4/metadata/policy-issue-type')
         .reply(200, metadataMock.policyIssueType)
-
       await controller.renderEditPage(req, res, nextStub)
       interactionForm = res.render.getCall(0).args[1].interactionForm
     })
 
     it('should set the investment project id as a hidden field', () => {
       const investmentField = interactionForm.hiddenFields.investment_project
+
       expect(investmentField).to.equal('3')
     })
 
     it('should set the company id as a hidden field', () => {
       const companyField = interactionForm.hiddenFields.company
+
       expect(companyField).to.equal('1')
     })
 
@@ -922,6 +971,7 @@ describe('Interaction edit controller (Interactions)', () => {
         interactionForm.children,
         ({ name }) => name === 'contacts'
       )
+
       expect(contactField.value).to.be.null
     })
   })
@@ -968,217 +1018,222 @@ describe('Interaction edit controller (Interactions)', () => {
         .reply(200, metadataMock.policyAreaOptions)
         .get('/v4/metadata/policy-issue-type')
         .reply(200, metadataMock.policyIssueType)
-
       await controller.renderEditPage(req, res, nextStub)
     })
 
     it('should set the interaction id in a hidden field', () => {
       const interactionForm = res.render.getCall(0).args[1].interactionForm
       const idField = interactionForm.hiddenFields.investment_project
+
       expect(idField).to.equal('3')
     })
   })
 
-  context('when displaying an interaction that failed to save', () => {
-    let interactionForm
-    beforeEach(async () => {
-      req.params = {
-        ...req.params,
-        theme: 'export',
-        kind: 'interaction',
-        interactionId: 'af4aac84-4d6a-47df-a733-5a54e3008c32',
-      }
+  context(
+    'when displaying an edit of an export interaction that failed to save',
+    () => {
+      let interactionForm
+      beforeEach(async () => {
+        req.params = {
+          ...req.params,
+          theme: 'export',
+          kind: 'interaction',
+          interactionId: 'af4aac84-4d6a-47df-a733-5a54e3008c32',
+        }
 
-      res.locals = {
-        ...res.locals,
-        company: {
-          id: '1',
-          name: 'Fred ltd.',
-        },
-        interaction: {
-          ...interactionData,
-        },
-        form: {
-          errors: {
-            messages: {
-              subject: ['Error message'],
+        res.locals = {
+          ...res.locals,
+          company: {
+            id: '1',
+            name: 'Fred ltd.',
+          },
+          interaction: {
+            ...interactionData,
+          },
+          form: {
+            errors: {
+              messages: {
+                subject: ['Error message'],
+              },
             },
           },
-        },
-        requestBody: {
-          subject: 'a',
-        },
-      }
+          requestBody: {
+            subject: 'a',
+          },
+        }
 
-      nock(config.apiRoot)
-        .get('/v3/contact?company_id=1&limit=500')
-        .reply(200, { results: contactsData })
-        .get('/v4/metadata/team')
-        .reply(200, metadataMock.teamOptions)
-        .get('/v4/metadata/service?contexts__has_any=export_interaction')
-        .reply(200, metadataMock.serviceOptions)
-        .get('/adviser/?limit=100000&offset=0')
-        .reply(200, { results: activeInactiveAdviserData })
-        .get('/v4/metadata/communication-channel')
-        .reply(200, metadataMock.channelOptions)
-        .get('/v4/metadata/service-delivery-status')
-        .reply(200, metadataMock.serviceDeliveryStatus)
-        .get('/v4/metadata/policy-area')
-        .reply(200, metadataMock.policyAreaOptions)
-        .get('/v4/metadata/policy-issue-type')
-        .reply(200, metadataMock.policyIssueType)
+        nock(config.apiRoot)
+          .get('/v3/contact?company_id=1&limit=500')
+          .reply(200, { results: contactsData })
+          .get('/v4/metadata/team')
+          .reply(200, metadataMock.teamOptions)
+          .get('/v4/metadata/service?contexts__has_any=export_interaction')
+          .reply(200, metadataMock.serviceOptions)
+          .get('/adviser/?limit=100000&offset=0')
+          .reply(200, { results: activeInactiveAdviserData })
+          .get('/v4/metadata/communication-channel')
+          .reply(200, metadataMock.channelOptions)
+          .get('/v4/metadata/service-delivery-status')
+          .reply(200, metadataMock.serviceDeliveryStatus)
+          .get('/v4/metadata/policy-area')
+          .reply(200, metadataMock.policyAreaOptions)
+          .get('/v4/metadata/policy-issue-type')
+          .reply(200, metadataMock.policyIssueType)
 
-      await controller.renderEditPage(req, res, nextStub)
-      interactionForm = res.render.getCall(0).args[1].interactionForm
-    })
+        await controller.renderEditPage(req, res, nextStub)
 
-    it('should merge the changes on top of the original record', () => {
-      const fields = interactionForm.children.map((field) =>
-        pick(field, [
-          'name',
-          'label',
-          'macroName',
-          'type',
-          'value',
-          'heading',
-          'secondaryHeading',
+        interactionForm = res.render.getCall(0).args[1].interactionForm
+      })
+
+      it('should merge the changes on top of the original record', () => {
+        const fields = interactionForm.children.map((field) =>
+          pick(field, [
+            'name',
+            'label',
+            'macroName',
+            'type',
+            'value',
+            'heading',
+            'secondaryHeading',
+          ])
+        )
+
+        expect(fields).to.deep.equal([
+          {
+            label: undefined,
+            macroName: 'FormSubHeading',
+            value: undefined,
+            heading: 'Service',
+          },
+          {
+            name: 'service',
+            label: 'Service',
+            macroName: 'MultipleChoiceField',
+            value: 'sv1',
+          },
+          {
+            name: 'subService',
+            label: 'Sub service',
+            macroName: 'MultipleChoiceField',
+            value: undefined,
+          },
+          {
+            name: 'sv2-q1',
+            label: 'What did you give advice about?',
+            macroName: 'MultipleChoiceField',
+            type: 'radio',
+            value: undefined,
+          },
+          {
+            name: 'sv2-q2',
+            label: 'Another question?',
+            macroName: 'MultipleChoiceField',
+            type: 'radio',
+            value: undefined,
+          },
+          {
+            name: 'sv3-q1',
+            label: 'Who was the company introduced to?',
+            macroName: 'MultipleChoiceField',
+            type: 'radio',
+            value: undefined,
+          },
+          {
+            label: undefined,
+            macroName: 'FormSubHeading',
+            value: undefined,
+            heading: 'Interaction Participants',
+            secondaryHeading: 'Fred ltd.',
+          },
+          {
+            name: 'contacts',
+            label: 'Contact(s)',
+            macroName: 'AddAnother',
+            value: ['7701587b-e88f-4f39-874f-0bd06321f7df'],
+          },
+          {
+            name: 'dit_participants',
+            label: 'Adviser(s)',
+            macroName: 'AddAnother',
+            value: [1],
+          },
+          {
+            label: undefined,
+            macroName: 'FormSubHeading',
+            value: undefined,
+            heading: 'Details',
+          },
+          {
+            name: 'date',
+            label: 'Date of interaction',
+            macroName: 'DateFieldset',
+            value: { day: '25', month: '11', year: '2058' },
+          },
+          {
+            name: 'communication_channel',
+            label: 'Communication channel',
+            macroName: 'MultipleChoiceField',
+            value: '70c226d7-5d95-e211-a939-e4115bead28a',
+          },
+          {
+            label: undefined,
+            macroName: 'FormSubHeading',
+            value: undefined,
+            heading: 'Notes',
+          },
+          {
+            name: 'subject',
+            label: 'Subject',
+            macroName: 'TextField',
+            value: 'a',
+          },
+          {
+            name: 'notes',
+            label: 'Notes',
+            macroName: 'TextField',
+            type: 'textarea',
+            value: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+          },
+          {
+            name: 'was_policy_feedback_provided',
+            label: 'Did the contact give any feedback on government policy?',
+            macroName: 'MultipleChoiceField',
+            type: 'radio',
+            value: 'true',
+          },
+          {
+            name: 'policy_issue_types',
+            label: 'Policy issue types',
+            macroName: 'MultipleChoiceField',
+            type: 'checkbox',
+            value: ['c1f1e29b-17ba-402f-ac98-aa23f9dc9bcb'],
+          },
+          {
+            name: 'policy_areas',
+            label: 'Policy area',
+            macroName: 'AddAnother',
+            value: ['9feefd50-7f4c-4b73-a33e-779121d40419'],
+          },
+          {
+            name: 'policy_feedback_notes',
+            label: 'Policy feedback notes',
+            macroName: 'TextField',
+            type: 'textarea',
+            value: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
+          },
         ])
-      )
+      })
 
-      expect(fields).to.deep.equal([
-        {
-          label: undefined,
-          macroName: 'FormSubHeading',
-          value: undefined,
-          heading: 'Service',
-        },
-        {
-          name: 'service',
-          label: 'Service',
-          macroName: 'MultipleChoiceField',
-          value: 'sv1',
-        },
-        {
-          name: 'subService',
-          label: 'Sub service',
-          macroName: 'MultipleChoiceField',
-          value: undefined,
-        },
-        {
-          name: 'sv2-q1',
-          label: 'What did you give advice about?',
-          macroName: 'MultipleChoiceField',
-          type: 'radio',
-          value: undefined,
-        },
-        {
-          name: 'sv2-q2',
-          label: 'Another question?',
-          macroName: 'MultipleChoiceField',
-          type: 'radio',
-          value: undefined,
-        },
-        {
-          name: 'sv3-q1',
-          label: 'Who was the company introduced to?',
-          macroName: 'MultipleChoiceField',
-          type: 'radio',
-          value: undefined,
-        },
-        {
-          label: undefined,
-          macroName: 'FormSubHeading',
-          value: undefined,
-          heading: 'Interaction Participants',
-          secondaryHeading: 'Fred ltd.',
-        },
-        {
-          name: 'contacts',
-          label: 'Contact(s)',
-          macroName: 'AddAnother',
-          value: ['7701587b-e88f-4f39-874f-0bd06321f7df'],
-        },
-        {
-          name: 'dit_participants',
-          label: 'Adviser(s)',
-          macroName: 'AddAnother',
-          value: [1],
-        },
-        {
-          label: undefined,
-          macroName: 'FormSubHeading',
-          value: undefined,
-          heading: 'Details',
-        },
-        {
-          name: 'date',
-          label: 'Date of interaction',
-          macroName: 'DateFieldset',
-          value: { day: '25', month: '11', year: '2058' },
-        },
-        {
-          name: 'communication_channel',
-          label: 'Communication channel',
-          macroName: 'MultipleChoiceField',
-          value: '70c226d7-5d95-e211-a939-e4115bead28a',
-        },
-        {
-          label: undefined,
-          macroName: 'FormSubHeading',
-          value: undefined,
-          heading: 'Notes',
-        },
-        {
-          name: 'subject',
-          label: 'Subject',
-          macroName: 'TextField',
-          value: 'a',
-        },
-        {
-          name: 'notes',
-          label: 'Notes',
-          macroName: 'TextField',
-          type: 'textarea',
-          value: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-        },
-        {
-          name: 'was_policy_feedback_provided',
-          label: 'Did the contact give any feedback on government policy?',
-          macroName: 'MultipleChoiceField',
-          type: 'radio',
-          value: 'true',
-        },
-        {
-          name: 'policy_issue_types',
-          label: 'Policy issue types',
-          macroName: 'MultipleChoiceField',
-          type: 'checkbox',
-          value: ['c1f1e29b-17ba-402f-ac98-aa23f9dc9bcb'],
-        },
-        {
-          name: 'policy_areas',
-          label: 'Policy area',
-          macroName: 'AddAnother',
-          value: ['9feefd50-7f4c-4b73-a33e-779121d40419'],
-        },
-        {
-          name: 'policy_feedback_notes',
-          label: 'Policy feedback notes',
-          macroName: 'TextField',
-          type: 'textarea',
-          value: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-        },
-      ])
-    })
+      it('should include the error in the form', () => {
+        const subjectField = find(
+          interactionForm.children,
+          ({ name }) => name === 'subject'
+        )
 
-    it('should include the error in the form', () => {
-      const subjectField = find(
-        interactionForm.children,
-        ({ name }) => name === 'subject'
-      )
-      expect(subjectField.error).to.deep.equal(['Error message'])
-    })
-  })
+        expect(subjectField.error).to.deep.equal(['Error message'])
+      })
+    }
+  )
 
   context('when a new interaction has no kind', () => {
     beforeEach(async () => {
@@ -1223,9 +1278,9 @@ describe('Interaction edit controller (Interactions)', () => {
         .reply(200, metadataMock.policyAreaOptions)
         .get('/v4/metadata/policy-issue-type')
         .reply(200, metadataMock.policyIssueType)
-
       await controller.renderEditPage(req, res, nextStub)
     })
+
     it('should throw an error', () => {
       expect(nextStub).to.have.been.called
       expect(nextStub.firstCall.args[0]).to.be.instanceof(Error)
@@ -1281,6 +1336,7 @@ describe('Interaction edit controller (Interactions)', () => {
 
         await controller.renderEditPage(req, res, nextStub)
       })
+
       it('should throw an error', () => {
         expect(nextStub).to.have.been.called
         expect(nextStub.firstCall.args[0]).to.be.instanceof(Error)
@@ -1332,7 +1388,6 @@ describe('Interaction edit controller (Interactions)', () => {
         .reply(200, metadataMock.policyAreaOptions)
         .get('/v4/metadata/policy-issue-type')
         .reply(200, metadataMock.policyIssueType)
-
       await controller.renderEditPage(req, res, nextStub)
     })
 

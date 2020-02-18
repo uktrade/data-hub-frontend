@@ -19,6 +19,7 @@ const serviceOptionsTransformed = transformServicesOptions(serviceOptions)
 
 describe('Interaction details middleware', () => {
   describe('#postDetails', () => {
+    let formBodyToApiRequestResponse
     context('when all fields are valid', () => {
       context('when the interaction-add-countries is false', () => {
         context('when creating a new interaction', () => {
@@ -37,9 +38,22 @@ describe('Interaction details middleware', () => {
               company,
             })
 
+            formBodyToApiRequestResponse = {
+              form: true,
+              transform: true,
+              apiRequest: true,
+              value: 'new interaction',
+            }
+
             const middleware = proxyquire(modulePath, {
               '../repos': {
                 saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
+              },
+              '../transformers': {
+                transformServicesOptions,
+                transformInteractionFormBodyToApiRequest: sinon
+                  .stub()
+                  .returns(formBodyToApiRequestResponse),
               },
               '../../../lib/options': {
                 getOptions: this.getServiceOptionsStub.resolves(
@@ -58,25 +72,7 @@ describe('Interaction details middleware', () => {
           it('should POST to the API', () => {
             expect(this.saveInteractionStub).to.have.been.calledOnceWithExactly(
               this.middlewareParameters.reqMock.session.token,
-              {
-                contact: '4c748e6e-05f4-478c-b07f-3d2e2290eb03',
-                dit_team: 'cff02898-9698-e211-a939-e4115bead28a',
-                service: 'Providing Export Advice & Information',
-                subService: ['Providing Export Advice & Information'],
-                'sv2-q1': 'sv2-a1',
-                subject: 'subject',
-                notes: 'notes',
-                dit_adviser: '4ae885a0-6db4-4929-848d-ef9c84d5a085',
-                service_answers: { 'sv2-q1': { 'sv2-a1': {} } },
-                date: '2017-10-03',
-                grant_amount_offered: null,
-                net_company_receipt: null,
-                contacts: [],
-                dit_participants: [],
-                policy_areas: [],
-                policy_issue_types: [],
-                status: 'complete',
-              }
+              formBodyToApiRequestResponse
             )
           })
 
@@ -112,9 +108,22 @@ describe('Interaction details middleware', () => {
               company,
             })
 
+            formBodyToApiRequestResponse = {
+              form: true,
+              transform: true,
+              apiRequest: true,
+              value: 'existing interaction',
+            }
+
             const middleware = proxyquire(modulePath, {
               '../repos': {
                 saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
+              },
+              '../transformers': {
+                transformServicesOptions,
+                transformInteractionFormBodyToApiRequest: sinon
+                  .stub()
+                  .returns(formBodyToApiRequestResponse),
               },
               '../../../lib/options': {
                 getOptions: this.getServiceOptionsStub.resolves(
@@ -133,25 +142,7 @@ describe('Interaction details middleware', () => {
           it('should PATCH to the API', () => {
             expect(this.saveInteractionStub).to.have.been.calledOnceWithExactly(
               this.middlewareParameters.reqMock.session.token,
-              {
-                contact: '4c748e6e-05f4-478c-b07f-3d2e2290eb03',
-                dit_team: 'cff02898-9698-e211-a939-e4115bead28a',
-                service: 'Providing Export Advice & Information',
-                subService: ['Providing Export Advice & Information'],
-                'sv2-q1': 'sv2-a1',
-                subject: 'subject',
-                notes: 'notes',
-                dit_adviser: '4ae885a0-6db4-4929-848d-ef9c84d5a085',
-                service_answers: { 'sv2-q1': { 'sv2-a1': {} } },
-                date: '2017-10-03',
-                grant_amount_offered: null,
-                net_company_receipt: null,
-                contacts: [],
-                dit_participants: [],
-                policy_areas: [],
-                policy_issue_types: [],
-                status: 'complete',
-              }
+              formBodyToApiRequestResponse
             )
           })
 
@@ -185,15 +176,28 @@ describe('Interaction details middleware', () => {
                 interactions: {
                   returnLink: '/return/',
                 },
-                features: { 'interaction-add-countries': true },
                 company,
               })
+
+              formBodyToApiRequestResponse = {
+                form: true,
+                transform: true,
+                apiRequest: true,
+                value: 'countries discussed true',
+              }
+
               const middleware = proxyquire(modulePath, {
                 '../repos': {
                   saveInteraction: this.saveInteractionStub.resolves({
                     id: '1',
                     were_countries_discussed: true,
                   }),
+                },
+                '../transformers': {
+                  transformServicesOptions,
+                  transformInteractionFormBodyToApiRequest: sinon
+                    .stub()
+                    .returns(formBodyToApiRequestResponse),
                 },
                 '../../../lib/options': {
                   getOptions: this.getServiceOptionsStub.resolves(
@@ -214,51 +218,7 @@ describe('Interaction details middleware', () => {
                 this.saveInteractionStub
               ).to.have.been.calledOnceWithExactly(
                 this.middlewareParameters.reqMock.session.token,
-                {
-                  contact: interactionDataWithCountries.contact,
-                  dit_team: interactionDataWithCountries.dit_team,
-                  service: 'Providing Export Advice & Information',
-                  subService: ['Providing Export Advice & Information'],
-                  'sv2-q1': 'sv2-a1',
-                  subject: 'subject',
-                  notes: 'notes',
-                  dit_adviser: interactionDataWithCountries.dit_adviser,
-                  service_answers: { 'sv2-q1': { 'sv2-a1': {} } },
-                  date: '2017-10-03',
-                  grant_amount_offered: null,
-                  net_company_receipt: null,
-                  contacts: [],
-                  dit_participants: [],
-                  policy_areas: [],
-                  policy_issue_types: [],
-                  status: 'complete',
-                  were_countries_discussed: 'true',
-                  [EXPORTING_TO]: interactionDataWithCountries[EXPORTING_TO],
-                  [FUTURE_INTEREST]:
-                    interactionDataWithCountries[FUTURE_INTEREST],
-                  [NOT_INTERESTED]:
-                    interactionDataWithCountries[NOT_INTERESTED],
-                  export_countries: [
-                    {
-                      country: {
-                        id: interactionDataWithCountries[EXPORTING_TO],
-                      },
-                      status: EXPORTING_TO,
-                    },
-                    {
-                      country: {
-                        id: interactionDataWithCountries[FUTURE_INTEREST],
-                      },
-                      status: FUTURE_INTEREST,
-                    },
-                    {
-                      country: {
-                        id: interactionDataWithCountries[NOT_INTERESTED],
-                      },
-                      status: NOT_INTERESTED,
-                    },
-                  ],
-                }
+                formBodyToApiRequestResponse
               )
             })
 
@@ -298,15 +258,28 @@ describe('Interaction details middleware', () => {
                 interactions: {
                   returnLink: '/return/',
                 },
-                features: { 'interaction-add-countries': true },
                 company,
               })
+
+              formBodyToApiRequestResponse = {
+                form: true,
+                transform: true,
+                apiRequest: true,
+                value: 'countries discussed false',
+              }
+
               const middleware = proxyquire(modulePath, {
                 '../repos': {
                   saveInteraction: this.saveInteractionStub.resolves({
                     id: '1',
                     were_countries_discussed: false,
                   }),
+                },
+                '../transformers': {
+                  transformServicesOptions,
+                  transformInteractionFormBodyToApiRequest: sinon
+                    .stub()
+                    .returns(formBodyToApiRequestResponse),
                 },
                 '../../../lib/options': {
                   getOptions: this.getServiceOptionsStub.resolves(
@@ -327,26 +300,7 @@ describe('Interaction details middleware', () => {
                 this.saveInteractionStub
               ).to.have.been.calledOnceWithExactly(
                 this.middlewareParameters.reqMock.session.token,
-                {
-                  contact: interactionData.contact,
-                  dit_team: interactionData.dit_team,
-                  service: 'Providing Export Advice & Information',
-                  subService: ['Providing Export Advice & Information'],
-                  'sv2-q1': 'sv2-a1',
-                  subject: 'subject',
-                  notes: 'notes',
-                  dit_adviser: interactionData.dit_adviser,
-                  service_answers: { 'sv2-q1': { 'sv2-a1': {} } },
-                  date: '2017-10-03',
-                  grant_amount_offered: null,
-                  net_company_receipt: null,
-                  contacts: [],
-                  dit_participants: [],
-                  policy_areas: [],
-                  policy_issue_types: [],
-                  status: 'complete',
-                  were_countries_discussed: 'false',
-                }
+                formBodyToApiRequestResponse
               )
             })
 
@@ -380,13 +334,25 @@ describe('Interaction details middleware', () => {
               interaction: {
                 ...interactionDataWithCountries,
               },
-              features: { 'interaction-add-countries': true },
               company,
             })
+
+            formBodyToApiRequestResponse = {
+              form: true,
+              transform: true,
+              apiRequest: true,
+              value: 'countries discussed false',
+            }
 
             const middleware = proxyquire(modulePath, {
               '../repos': {
                 saveInteraction: this.saveInteractionStub.resolves({ id: '1' }),
+              },
+              '../transformers': {
+                transformServicesOptions,
+                transformInteractionFormBodyToApiRequest: sinon
+                  .stub()
+                  .returns(formBodyToApiRequestResponse),
               },
               '../../../lib/options': {
                 getOptions: this.getServiceOptionsStub.resolves(
@@ -394,7 +360,6 @@ describe('Interaction details middleware', () => {
                 ),
               },
             })
-
             await middleware.postDetails(
               this.middlewareParameters.reqMock,
               this.middlewareParameters.resMock,
@@ -403,38 +368,9 @@ describe('Interaction details middleware', () => {
           })
 
           it('should PATCH to the API without export_countries', () => {
-            // Technically the POST data will not contain the following fields
-            // were_countries_discussed
-            // [FUTURE_INTEREST]
-            // [EXPORTING_TO]
-            // [NOT_INTERESTED]
-            // However this test ensures that even if they are there they are not getting passed to the API
             expect(this.saveInteractionStub).to.have.been.calledOnceWithExactly(
               this.middlewareParameters.reqMock.session.token,
-              {
-                contact: interactionDataWithCountries.contact,
-                dit_team: interactionDataWithCountries.dit_team,
-                service: 'Providing Export Advice & Information',
-                subService: ['Providing Export Advice & Information'],
-                'sv2-q1': 'sv2-a1',
-                subject: 'subject',
-                notes: 'notes',
-                dit_adviser: interactionDataWithCountries.dit_adviser,
-                service_answers: { 'sv2-q1': { 'sv2-a1': {} } },
-                date: '2017-10-03',
-                grant_amount_offered: null,
-                net_company_receipt: null,
-                contacts: [],
-                dit_participants: [],
-                policy_areas: [],
-                policy_issue_types: [],
-                status: 'complete',
-                were_countries_discussed: 'true',
-                [FUTURE_INTEREST]:
-                  interactionDataWithCountries[FUTURE_INTEREST],
-                [EXPORTING_TO]: interactionDataWithCountries[EXPORTING_TO],
-                [NOT_INTERESTED]: interactionDataWithCountries[NOT_INTERESTED],
-              }
+              formBodyToApiRequestResponse
             )
           })
 
