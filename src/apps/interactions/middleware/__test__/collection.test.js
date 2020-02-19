@@ -4,8 +4,12 @@ const proxyquire = require('proxyquire')
 const interactions = require('../../../../../test/unit/data/interactions/attendees.json')
 
 describe('interaction collection middleware', () => {
+  let req, res, next
+  let getInteractionsForEntityStub
+  let middleware
+
   beforeEach(async () => {
-    this.req = {
+    req = {
       body: {},
       session: {
         token: '1234',
@@ -16,7 +20,7 @@ describe('interaction collection middleware', () => {
       },
     }
 
-    this.res = {
+    res = {
       locals: {
         userAgent: {
           isIE: false,
@@ -24,12 +28,12 @@ describe('interaction collection middleware', () => {
       },
     }
 
-    this.next = sinon.spy()
-    this.getInteractionsForEntityStub = sinon.stub()
+    next = sinon.spy()
+    getInteractionsForEntityStub = sinon.stub()
 
-    this.middleware = proxyquire('../collection', {
+    middleware = proxyquire('../collection', {
       '../repos': {
-        getInteractionsForEntity: this.getInteractionsForEntityStub.resolves({
+        getInteractionsForEntity: getInteractionsForEntityStub.resolves({
           count: 20,
           limit: 10,
           results: times(10, interactions.results[0]),
@@ -41,28 +45,28 @@ describe('interaction collection middleware', () => {
   describe('#getInteractionCollectionForEntity', () => {
     const commonTests = () => {
       it('should get the interactions for the entity once', () => {
-        expect(this.getInteractionsForEntityStub).to.have.been.calledOnce
+        expect(getInteractionsForEntityStub).to.have.been.calledOnce
       })
 
       it('should set the results', () => {
-        expect(this.res.locals.results.items.length).to.equal(10)
+        expect(res.locals.results.items.length).to.equal(10)
       })
     }
 
     context('when a sort by is specified', () => {
       beforeEach(async () => {
-        this.req = {
-          ...this.req,
+        req = {
+          ...req,
           query: {
-            ...this.req.query,
+            ...req.query,
             sortby: 'company__name',
           },
         }
 
-        this.res = {
-          ...this.res,
+        res = {
+          ...res,
           locals: {
-            ...this.res.locals,
+            ...res.locals,
             interactions: {
               entityQuery: {
                 entity: '1',
@@ -71,23 +75,18 @@ describe('interaction collection middleware', () => {
           },
         }
 
-        await this.middleware.getInteractionCollectionForEntity(
-          this.req,
-          this.res,
-          this.next
-        )
+        await middleware.getInteractionCollectionForEntity(req, res, next)
       })
 
       commonTests()
 
       it('should use the specified sort', () => {
-        const actual = this.getInteractionsForEntityStub.getCall(0).args[0]
-          .sortby
+        const actual = getInteractionsForEntityStub.getCall(0).args[0].sortby
         expect(actual).to.equal('company__name')
       })
 
       it('should set the pagination', () => {
-        expect(this.res.locals.results.pagination).to.deep.equal({
+        expect(res.locals.results.pagination).to.deep.equal({
           currentPage: 2,
           next: null,
           pages: [
@@ -108,17 +107,17 @@ describe('interaction collection middleware', () => {
 
     context('when a sort by is not specified', () => {
       beforeEach(async () => {
-        this.req = {
-          ...this.req,
+        req = {
+          ...req,
           query: {
-            ...this.req.query,
+            ...req.query,
           },
         }
 
-        this.res = {
-          ...this.res,
+        res = {
+          ...res,
           locals: {
-            ...this.res.locals,
+            ...res.locals,
             interactions: {
               entityQuery: {
                 entity: '1',
@@ -127,23 +126,18 @@ describe('interaction collection middleware', () => {
           },
         }
 
-        await this.middleware.getInteractionCollectionForEntity(
-          this.req,
-          this.res,
-          this.next
-        )
+        await middleware.getInteractionCollectionForEntity(req, res, next)
       })
 
       commonTests()
 
       it('should use the default sort', () => {
-        const actual = this.getInteractionsForEntityStub.getCall(0).args[0]
-          .sortby
+        const actual = getInteractionsForEntityStub.getCall(0).args[0].sortby
         expect(actual).to.equal('-date')
       })
 
       it('should set the pagination', () => {
-        expect(this.res.locals.results.pagination).to.deep.equal({
+        expect(res.locals.results.pagination).to.deep.equal({
           currentPage: 2,
           next: null,
           pages: [
@@ -163,18 +157,20 @@ describe('interaction collection middleware', () => {
     })
 
     context('when there is an error', () => {
+      let error
+
       beforeEach(async () => {
-        this.req = {
-          ...this.req,
+        req = {
+          ...req,
           query: {
-            ...this.req.query,
+            ...req.query,
           },
         }
 
-        this.res = {
-          ...this.res,
+        res = {
+          ...res,
           locals: {
-            ...this.res.locals,
+            ...res.locals,
             interactions: {
               entityQuery: {
                 entity: '1',
@@ -183,25 +179,21 @@ describe('interaction collection middleware', () => {
           },
         }
 
-        this.error = new Error('error')
+        error = new Error('error')
 
-        this.middleware = proxyquire('../collection', {
+        middleware = proxyquire('../collection', {
           '../repos': {
-            getInteractionsForEntity: this.getInteractionsForEntityStub.rejects(
-              this.error
+            getInteractionsForEntity: getInteractionsForEntityStub.rejects(
+              error
             ),
           },
         })
 
-        await this.middleware.getInteractionCollectionForEntity(
-          this.req,
-          this.res,
-          this.next
-        )
+        await middleware.getInteractionCollectionForEntity(req, res, next)
       })
 
       it('should call next once with an error', () => {
-        expect(this.next.args[0][0].message).to.have.string('error')
+        expect(next.args[0][0].message).to.have.string('error')
       })
     })
   })
@@ -209,23 +201,19 @@ describe('interaction collection middleware', () => {
   describe('#getInteractionsRequestBody', () => {
     context('when called with sort order', () => {
       beforeEach(() => {
-        this.req.query.sortby = 'name'
+        req.query.sortby = 'name'
 
-        this.middleware.getInteractionsRequestBody(
-          this.req,
-          this.res,
-          this.next
-        )
+        middleware.getInteractionsRequestBody(req, res, next)
       })
 
       it('should set the sort order in the request body', () => {
-        expect(this.req.body.sortby).to.equal('name')
+        expect(req.body.sortby).to.equal('name')
       })
     })
 
     context('when called with filter criteria', () => {
       beforeEach(() => {
-        this.req.query = assign({}, this.req.query, {
+        req.query = assign({}, req.query, {
           kind: 'interaction',
           communication_channel: 'phone',
           dit_participants__adviser: '4321',
@@ -235,55 +223,47 @@ describe('interaction collection middleware', () => {
           fruit: 'Orange',
         })
 
-        this.middleware.getInteractionsRequestBody(
-          this.req,
-          this.res,
-          this.next
-        )
+        middleware.getInteractionsRequestBody(req, res, next)
       })
 
       it('should put the criteria in the request body', () => {
-        expect(this.req.body.kind).to.equal(this.req.query.kind)
-        expect(this.req.body.communication_channel).to.equal(
-          this.req.query.communication_channel
+        expect(req.body.kind).to.equal(req.query.kind)
+        expect(req.body.communication_channel).to.equal(
+          req.query.communication_channel
         )
-        expect(this.req.body.dit_participants__adviser).to.equal(
-          this.req.query.dit_participants__adviser
+        expect(req.body.dit_participants__adviser).to.equal(
+          req.query.dit_participants__adviser
         )
-        expect(this.req.body.dit_participants__team).to.equal(
-          this.req.query.dit_participants__team
+        expect(req.body.dit_participants__team).to.equal(
+          req.query.dit_participants__team
         )
-        expect(this.req.body.date_after).to.equal(this.req.query.date_after)
-        expect(this.req.body.date_before).to.equal(this.req.query.date_before)
+        expect(req.body.date_after).to.equal(req.query.date_after)
+        expect(req.body.date_before).to.equal(req.query.date_before)
       })
 
       it('should not include invalid parameters', () => {
-        expect(this.req.body).to.not.have.property('fruit')
+        expect(req.body).to.not.have.property('fruit')
       })
     })
 
     context('when called clear filters', () => {
       beforeEach(() => {
-        this.req.query = assign({}, this.req.query, {
+        req.query = assign({}, req.query, {
           sortby: 'date:desc',
           date_after: '',
           date_before: '',
         })
 
-        this.middleware.getInteractionsRequestBody(
-          this.req,
-          this.res,
-          this.next
-        )
+        middleware.getInteractionsRequestBody(req, res, next)
       })
 
       it('should put the default criteria in the request body', () => {
-        expect(this.req.body.sortby).to.equal(this.req.query.sortby)
+        expect(req.body.sortby).to.equal(req.query.sortby)
       })
 
       it('should not include empty parameters', () => {
-        expect(this.req.body).to.not.have.property('date_after')
-        expect(this.req.body).to.not.have.property('date_before')
+        expect(req.body).to.not.have.property('date_after')
+        expect(req.body).to.not.have.property('date_before')
       })
     })
   })
@@ -291,13 +271,13 @@ describe('interaction collection middleware', () => {
   describe('#getInteractionSortForm', () => {
     const commonTests = () => {
       it('should generate a sort form', () => {
-        expect(this.res.locals).to.have.property('sortForm')
+        expect(res.locals).to.have.property('sortForm')
       })
     }
 
     context('when called with no sort order', () => {
       beforeEach(() => {
-        this.middleware.getInteractionSortForm(this.req, this.res, this.next)
+        middleware.getInteractionSortForm(req, res, next)
       })
 
       commonTests()
@@ -305,21 +285,21 @@ describe('interaction collection middleware', () => {
 
     context('when called with a sort order', () => {
       beforeEach(() => {
-        this.req = {
-          ...this.req,
+        req = {
+          ...req,
           query: {
-            ...this.req.query,
+            ...req.query,
             sortby: 'name',
           },
         }
 
-        this.middleware.getInteractionSortForm(this.req, this.res, this.next)
+        middleware.getInteractionSortForm(req, res, next)
       })
 
       commonTests()
 
       it('should indicate the selected sort order', () => {
-        expect(this.res.locals.sortForm.children[0].value).to.equal('name')
+        expect(res.locals.sortForm.children[0].value).to.equal('name')
       })
     })
   })
