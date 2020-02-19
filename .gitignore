@@ -52,7 +52,6 @@ cypress/**
 visual-screenshots/comparison
 visual-screenshots/diff
 visual-report
-.browserstack.env
 
 # IDE configurations
 .vscode/
