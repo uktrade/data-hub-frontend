@@ -1,20 +1,14 @@
 const { isNumber } = require('lodash')
-const { CURRENCY_RATE_USD_TO_GBP } = require('./constants')
+const { EXCHANGE_RATE_USD_TO_GBP } = require('./constants')
 
-const convertUSDToGBP = (usd) => {
+const convertUsdToGbp = (usd) => {
   if (!isNumber(usd)) {
     return usd
   }
 
-  const gbp = usd * CURRENCY_RATE_USD_TO_GBP
-
-  if (usd === 1) {
-    return gbp
-  }
-
-  return gbp ? Math.round(gbp) : gbp
+  return usd * EXCHANGE_RATE_USD_TO_GBP
 }
 
 module.exports = {
-  convertUSDToGBP,
+  convertUsdToGbp,
 }
