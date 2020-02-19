@@ -4,14 +4,15 @@ const mockInteraction = require('../../../../../test/unit/data/interactions/sear
 const mockInteractionWithFeedback = require('../../../../../test/unit/data/interactions/search-interaction-with-feedback.json')
 
 describe('#transformInteractionToListItem', () => {
+  let transformed
   context('when the source is an interaction', () => {
     beforeEach(() => {
       mockInteraction.kind = 'interaction'
-      this.transformed = transformInteractionToListItem()(mockInteraction)
+      transformed = transformInteractionToListItem()(mockInteraction)
     })
 
     it('should transform data from interaction response to list item', () => {
-      expect(this.transformed).to.deep.equal({
+      expect(transformed).to.deep.equal({
         was_policy_feedback_provided: false,
         id: '7265dc3c-e89d-45ee-8106-d1e370c1c73d',
         type: 'interaction',
@@ -56,7 +57,7 @@ describe('#transformInteractionToListItem', () => {
 
   context('When the source is an interaction with multiple contacts', () => {
     beforeEach(() => {
-      this.transformed = transformInteractionToListItem()({
+      transformed = transformInteractionToListItem()({
         ...mockInteraction,
         contacts: [
           {
@@ -76,7 +77,7 @@ describe('#transformInteractionToListItem', () => {
     })
 
     it('should transform the contacts names value', () => {
-      const contacts = this.transformed.meta.find((element) => {
+      const contacts = transformed.meta.find((element) => {
         return element.label === 'Contact(s)'
       })
       expect(contacts.value).to.equal('Multiple contacts')
@@ -85,27 +86,27 @@ describe('#transformInteractionToListItem', () => {
 
   context('when the source is an interaction with an empty subject', () => {
     beforeEach(() => {
-      this.transformed = transformInteractionToListItem()({
+      transformed = transformInteractionToListItem()({
         ...mockInteraction,
         subject: '',
       })
     })
 
     it('should transform data from interaction response to list item', () => {
-      expect(this.transformed).have.property('name', 'No subject')
+      expect(transformed).have.property('name', 'No subject')
     })
   })
 
   context('when the source is an interaction with a null subject', () => {
     beforeEach(() => {
-      this.transformed = transformInteractionToListItem()({
+      transformed = transformInteractionToListItem()({
         ...mockInteraction,
         subject: null,
       })
     })
 
     it('should transform data from interaction response to list item', () => {
-      expect(this.transformed).have.property('name', 'No subject')
+      expect(transformed).have.property('name', 'No subject')
     })
   })
 
@@ -113,7 +114,7 @@ describe('#transformInteractionToListItem', () => {
     'when the source is an interaction with adviser and team name',
     () => {
       it('should return adviser name and team', () => {
-        this.transformed = transformInteractionToListItem()({
+        transformed = transformInteractionToListItem()({
           ...mockInteraction,
           dit_participants: [
             {
@@ -130,7 +131,7 @@ describe('#transformInteractionToListItem', () => {
             },
           ],
         })
-        const metadata = this.transformed.meta
+        const metadata = transformed.meta
         const adviserName = find(
           metadata,
           (item) => item.label === 'Adviser(s)'
@@ -142,7 +143,7 @@ describe('#transformInteractionToListItem', () => {
 
   context('when the source is an interaction with a null team name', () => {
     it('should return just an adviser name', () => {
-      this.transformed = transformInteractionToListItem()({
+      transformed = transformInteractionToListItem()({
         ...mockInteraction,
         dit_participants: [
           {
@@ -156,7 +157,7 @@ describe('#transformInteractionToListItem', () => {
           },
         ],
       })
-      const metadata = this.transformed.meta
+      const metadata = transformed.meta
       const adviserName = find(metadata, (item) => item.label === 'Adviser(s)')
       expect(adviserName.value).to.deep.equal(['Bob Lawson'])
     })
@@ -164,7 +165,7 @@ describe('#transformInteractionToListItem', () => {
 
   context('when the source is an interaction with a null adviser', () => {
     it('should return unknown name', () => {
-      this.transformed = transformInteractionToListItem()({
+      transformed = transformInteractionToListItem()({
         ...mockInteraction,
         dit_participants: [
           {
@@ -176,7 +177,7 @@ describe('#transformInteractionToListItem', () => {
           },
         ],
       })
-      const metadata = this.transformed.meta
+      const metadata = transformed.meta
       const adviserName = find(metadata, (item) => item.label === 'Adviser(s)')
       expect(adviserName.value).to.deep.equal(['Unknown adviser'])
     })
@@ -184,7 +185,7 @@ describe('#transformInteractionToListItem', () => {
 
   context('when the source is an interaction with a null contact name', () => {
     it('should return unknown name', () => {
-      this.transformed = transformInteractionToListItem()({
+      transformed = transformInteractionToListItem()({
         ...mockInteraction,
         contacts: [
           {
@@ -195,7 +196,7 @@ describe('#transformInteractionToListItem', () => {
           },
         ],
       })
-      const metadata = this.transformed.meta
+      const metadata = transformed.meta
       const contactName = find(metadata, (item) => item.label === 'Contact(s)')
       expect(contactName.value).to.deep.equal(['Unknown contact'])
     })
@@ -203,14 +204,14 @@ describe('#transformInteractionToListItem', () => {
 
   context('when the source is a service delivery', () => {
     beforeEach(() => {
-      this.transformed = transformInteractionToListItem()({
+      transformed = transformInteractionToListItem()({
         ...mockInteraction,
         kind: 'service_delivery',
       })
     })
 
     it('should transform data from interaction response to list item', () => {
-      expect(this.transformed).to.deep.equal({
+      expect(transformed).to.deep.equal({
         was_policy_feedback_provided: false,
         id: '7265dc3c-e89d-45ee-8106-d1e370c1c73d',
         type: 'interaction',
@@ -255,12 +256,12 @@ describe('#transformInteractionToListItem', () => {
 
   context('when the source is an interaction and has feedback', () => {
     beforeEach(() => {
-      this.transformed = transformInteractionToListItem()(
+      transformed = transformInteractionToListItem()(
         mockInteractionWithFeedback
       )
     })
     it('should transform data from interaction response to list item', () => {
-      expect(this.transformed).to.deep.equal({
+      expect(transformed).to.deep.equal({
         was_policy_feedback_provided: true,
         id: '7265dc3c-e89d-45ee-8106-d1e370c1c73d',
         type: 'interaction',
@@ -310,13 +311,13 @@ describe('#transformInteractionToListItem', () => {
 
   context('when the source is an service delivery and has feedback', () => {
     beforeEach(() => {
-      this.transformed = transformInteractionToListItem()({
+      transformed = transformInteractionToListItem()({
         ...mockInteractionWithFeedback,
         kind: 'service_delivery',
       })
     })
     it('should transform data from interaction response to list item', () => {
-      expect(this.transformed).to.deep.equal({
+      expect(transformed).to.deep.equal({
         was_policy_feedback_provided: true,
         id: '7265dc3c-e89d-45ee-8106-d1e370c1c73d',
         type: 'interaction',
@@ -366,13 +367,13 @@ describe('#transformInteractionToListItem', () => {
 
   context('when the interactions are rendered within company context', () => {
     beforeEach(() => {
-      this.transformed = transformInteractionToListItem(false)({
+      transformed = transformInteractionToListItem(false)({
         ...mockInteractionWithFeedback,
         kind: 'service_delivery',
       })
     })
     it('should transform data from interaction response to list item without company field included', () => {
-      expect(this.transformed).to.deep.equal({
+      expect(transformed).to.deep.equal({
         was_policy_feedback_provided: true,
         id: '7265dc3c-e89d-45ee-8106-d1e370c1c73d',
         type: 'interaction',
