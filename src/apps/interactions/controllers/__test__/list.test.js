@@ -10,11 +10,15 @@ const {
 const serviceOptionData = require('../../../../../test/unit/data/interactions/service-options-data.json')
 
 describe('interaction list', () => {
-  beforeEach(() => {
-    this.error = new Error('error')
+  let req, res, next
+  let error
+  let token
+  let metadataMock
 
-    this.token = ''
-    this.req = {
+  beforeEach(() => {
+    error = new Error('error')
+    token = ''
+    req = {
       session: {
         save: (cb) => cb(null),
         user: {
@@ -35,7 +39,7 @@ describe('interaction list', () => {
       },
     }
 
-    this.res = {
+    res = {
       render: sinon.stub(),
       breadcrumb: sinon.stub().returnsThis(),
       locals: {
@@ -45,13 +49,13 @@ describe('interaction list', () => {
       },
     }
 
-    this.next = sinon.stub()
+    next = sinon.stub()
 
     const yesterday = moment()
       .subtract(1, 'days')
       .toISOString()
 
-    this.metadataMock = {
+    metadataMock = {
       teamOptions: [
         { id: 'te1', name: 'te1', disabled_on: null },
         { id: 'te2', name: 'te2', disabled_on: null },
@@ -92,28 +96,28 @@ describe('interaction list', () => {
 
     nock(config.apiRoot)
       .get('/v4/metadata/service')
-      .reply(200, this.metadataMock.serviceOptions)
+      .reply(200, metadataMock.serviceOptions)
       .get('/v4/metadata/team')
-      .reply(200, this.metadataMock.teamOptions)
+      .reply(200, metadataMock.teamOptions)
       .get('/v4/metadata/sector?level__lte=0')
-      .reply(200, this.metadataMock.sectorOptions)
+      .reply(200, metadataMock.sectorOptions)
       .get('/adviser/?limit=100000&offset=0')
-      .reply(200, this.metadataMock.adviserOptions)
+      .reply(200, metadataMock.adviserOptions)
       .get('/v4/metadata/policy-area')
-      .reply(200, this.metadataMock.policyAreaOptions)
+      .reply(200, metadataMock.policyAreaOptions)
       .get('/v4/metadata/policy-issue-type')
-      .reply(200, this.metadataMock.policyIssueType)
+      .reply(200, metadataMock.policyIssueType)
       .get('/v4/metadata/one-list-tier')
-      .reply(200, this.metadataMock.oneListTierOptions)
+      .reply(200, metadataMock.oneListTierOptions)
   })
 
   context('#renderInteractionList', () => {
     beforeEach(async () => {
-      await renderInteractionList(this.req, this.res, this.next)
+      await renderInteractionList(req, res, next)
     })
 
     it('displays the kind filters', () => {
-      const options = this.res.render.firstCall.args[1]
+      const options = res.render.firstCall.args[1]
       const filterFields = options.filtersFields
 
       const kindField = filterFields.find((field) => field.name === 'kind')
@@ -124,7 +128,7 @@ describe('interaction list', () => {
     })
 
     it('displays the one list group tier filters', () => {
-      const options = this.res.render.firstCall.args[1]
+      const options = res.render.firstCall.args[1]
       const filterFields = options.filtersFields
 
       const oneListGroupTierField = filterFields.find(
@@ -141,20 +145,20 @@ describe('interaction list', () => {
     context('when everything is okay', () => {
       const commonTests = () => {
         it('should render breadcrumbs', () => {
-          expect(this.res.breadcrumb).to.have.been.calledWith('Interactions')
-          expect(this.res.breadcrumb).to.have.been.calledOnce
+          expect(res.breadcrumb).to.have.been.calledWith('Interactions')
+          expect(res.breadcrumb).to.have.been.calledOnce
         })
 
         it('should render the view', () => {
-          expect(this.res.render).to.be.calledWith('entity/interactions')
-          expect(this.res.render).to.have.been.calledOnce
+          expect(res.render).to.be.calledWith('entity/interactions')
+          expect(res.render).to.have.been.calledOnce
         })
       }
 
       context('when interactions can be added to the entity', () => {
         beforeEach(async () => {
-          this.res = {
-            ...this.res,
+          res = {
+            ...res,
             locals: {
               interactions: {
                 view: 'entity/interactions',
@@ -167,13 +171,13 @@ describe('interaction list', () => {
             },
           }
 
-          await renderInteractionsForEntity(this.req, this.res, this.next)
+          await renderInteractionsForEntity(req, res, next)
         })
 
         commonTests()
 
         it('should render action buttons', () => {
-          const actual = this.res.render.firstCall.args[1].actionButtons[0]
+          const actual = res.render.firstCall.args[1].actionButtons[0]
           expect(actual).to.deep.equal({
             label: 'Add interaction',
             url: 'entity/interactions/create/export/interaction',
@@ -183,8 +187,8 @@ describe('interaction list', () => {
 
       context('when interactions cannot be added to the entity', () => {
         beforeEach(async () => {
-          this.res = {
-            ...this.res,
+          res = {
+            ...res,
             locals: {
               interactions: {
                 view: 'entity/interactions',
@@ -195,13 +199,13 @@ describe('interaction list', () => {
             },
           }
 
-          await renderInteractionsForEntity(this.req, this.res, this.next)
+          await renderInteractionsForEntity(req, res, next)
         })
 
         commonTests()
 
         it('should not render action buttons', () => {
-          const actual = this.res.render.firstCall.args[1].actionButtons
+          const actual = res.render.firstCall.args[1].actionButtons
           expect(actual).to.be.undefined
         })
       })
@@ -209,9 +213,9 @@ describe('interaction list', () => {
 
     context('when there is an error', () => {
       beforeEach(async () => {
-        this.res = {
-          breadcrumb: sinon.stub().throws(this.error),
-          render: this.res.render,
+        res = {
+          breadcrumb: sinon.stub().throws(error),
+          render: res.render,
           locals: {
             interactions: {
               view: 'entity/interactions',
@@ -221,16 +225,16 @@ describe('interaction list', () => {
           },
         }
 
-        await renderInteractionsForEntity(this.req, this.res, this.next)
+        await renderInteractionsForEntity(req, res, next)
       })
 
       it('should not render the view', () => {
-        expect(this.res.render).to.have.not.been.called
+        expect(res.render).to.have.not.been.called
       })
 
       it('should call next with error', () => {
-        expect(this.next).to.have.been.calledWith(this.error)
-        expect(this.next).to.have.been.calledOnce
+        expect(next).to.have.been.calledWith(error)
+        expect(next).to.have.been.calledOnce
       })
     })
   })
@@ -272,21 +276,21 @@ describe('interaction list', () => {
 
     context('when the request is not XHR', () => {
       it(`should return all interaction options`, async () => {
-        expect(
-          await getInteractionOptions(this.token, this.req, this.res)
-        ).to.deep.equal(expected)
+        expect(await getInteractionOptions(token, req, res)).to.deep.equal(
+          expected
+        )
       })
     })
 
     context('when there are no interaction options in session', () => {
       beforeEach(async () => {
-        this.reqMock = { ...omit(this.req, 'session.interactions'), xhr: true }
+        req = { ...omit(req, 'session.interactions'), xhr: true }
       })
 
       it(`should return all interaction options`, async () => {
-        expect(
-          await getInteractionOptions(this.token, this.reqMock, this.res)
-        ).to.deep.equal(expected)
+        expect(await getInteractionOptions(token, req, res)).to.deep.equal(
+          expected
+        )
       })
     })
 
@@ -294,16 +298,16 @@ describe('interaction list', () => {
       'when request is XHR & interaction options exist in session',
       () => {
         beforeEach(async () => {
-          this.req = {
-            ...this.req,
+          req = {
+            ...req,
             xhr: true,
           }
         })
 
         it(`should return interaction options from session key`, async () => {
-          expect(
-            await getInteractionOptions(this.token, this.req, this.res)
-          ).to.equal(this.req.session.interactions.options)
+          expect(await getInteractionOptions(token, req, res)).to.equal(
+            req.session.interactions.options
+          )
         })
       }
     )
