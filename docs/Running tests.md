@@ -137,19 +137,14 @@ Screenshots will be stored in the root of the project. We commit the baselines a
 
 ### Browserstack environment variables
 
-to run in browserstack, ensure you have the following environment variables set:
-
-```
-export BROWSERSTACK_USERNAME=xxx
-export BROWSERSTACK_ACCESS_KEY=xxx
-export IS_REMOTE=true
-```
+Before attempting to run the tests, copy `.bin.sample/visual` into `.bin/` folder
+and update the browserstack username and key environment variables.
 
 ### Running the tests
 
-After setting up the environment variables, run the following command to execute the tests:
+Execute the command below:
 
-`$ yarn test:visual`
+`$ ./.bin/visual`
 
 ### Updating the baseline image
 
