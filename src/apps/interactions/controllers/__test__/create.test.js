@@ -1,4 +1,3 @@
-const { assign } = require('lodash')
 const proxyquire = require('proxyquire')
 
 describe('Create interaction, step 1', () => {
@@ -46,7 +45,8 @@ describe('Create interaction, step 1', () => {
       'when a request is made to add an interaction and the theme is "export" and the kind is "interaction"',
       () => {
         beforeEach(() => {
-          req = assign({}, req, {
+          req = {
+            ...req,
             body: {
               theme: 'interaction',
               kind_export: 'export_interaction',
@@ -55,7 +55,7 @@ describe('Create interaction, step 1', () => {
               company: '1234',
               contact: '4321',
             },
-          })
+          }
 
           create.postCreate(req, res, next)
         })
@@ -71,7 +71,8 @@ describe('Create interaction, step 1', () => {
       'when a request is made to add an interaction and the theme is "service_delivery" and the kind is "export_service_delivery"',
       () => {
         beforeEach(() => {
-          req = assign({}, req, {
+          req = {
+            ...req,
             body: {
               theme: 'service_delivery',
               kind_export: 'export_service_delivery',
@@ -80,7 +81,7 @@ describe('Create interaction, step 1', () => {
               company: '1234',
               contact: '4321',
             },
-          })
+          }
 
           create.postCreate(req, res, next)
         })
@@ -96,7 +97,8 @@ describe('Create interaction, step 1', () => {
       'when a request is made to add an interaction and the theme is "investment_interaction" and the kind is "interaction"',
       () => {
         beforeEach(() => {
-          req = assign({}, req, {
+          req = {
+            ...req,
             body: {
               theme: 'investment_interaction',
             },
@@ -104,7 +106,7 @@ describe('Create interaction, step 1', () => {
               company: '1234',
               contact: '4321',
             },
-          })
+          }
 
           create.postCreate(req, res, next)
         })
@@ -120,7 +122,8 @@ describe('Create interaction, step 1', () => {
       'when a request is made to add an interaction and the theme is "service_delivery" and the kind is "interaction"',
       () => {
         beforeEach(() => {
-          req = assign({}, req, {
+          req = {
+            ...req,
             body: {
               theme: 'service_delivery',
               kind_other: 'other_interaction',
@@ -129,7 +132,7 @@ describe('Create interaction, step 1', () => {
               company: '1234',
               contact: '4321',
             },
-          })
+          }
 
           create.postCreate(req, res, next)
         })
@@ -145,7 +148,8 @@ describe('Create interaction, step 1', () => {
       'when a request is made to add an interaction and the theme is "service_delivery" and the kind is "other_service_delivery"',
       () => {
         beforeEach(() => {
-          req = assign({}, req, {
+          req = {
+            ...req,
             body: {
               theme: 'service_delivery',
               kind_other: 'other_service_delivery',
@@ -154,7 +158,7 @@ describe('Create interaction, step 1', () => {
               company: '1234',
               contact: '4321',
             },
-          })
+          }
 
           create.postCreate(req, res, next)
         })
@@ -168,11 +172,12 @@ describe('Create interaction, step 1', () => {
 
     context('when a request is made with no theme selected', () => {
       beforeEach(() => {
-        req = assign({}, req, {
+        req = {
+          ...req,
           query: {
             company: '1234',
           },
-        })
+        }
 
         create.postCreate(req, res, next)
       })
@@ -192,7 +197,8 @@ describe('Create interaction, step 1', () => {
       'when a request is made with a theme selected but no kind export selected',
       () => {
         beforeEach(() => {
-          req = assign({}, req, {
+          req = {
+            ...req,
             body: {
               theme: 'a theme',
               kind_export: '',
@@ -200,7 +206,7 @@ describe('Create interaction, step 1', () => {
             query: {
               company: '1234',
             },
-          })
+          }
 
           create.postCreate(req, res, next)
         })
@@ -221,7 +227,8 @@ describe('Create interaction, step 1', () => {
       'when a request is made with a theme selected but no kind other selected',
       () => {
         beforeEach(() => {
-          req = assign({}, req, {
+          req = {
+            ...req,
             body: {
               theme: 'a theme',
               kind_other: '',
@@ -229,7 +236,7 @@ describe('Create interaction, step 1', () => {
             query: {
               company: '1234',
             },
-          })
+          }
 
           create.postCreate(req, res, next)
         })
@@ -248,7 +255,8 @@ describe('Create interaction, step 1', () => {
 
     context('when a request is made for an existing interaction', () => {
       beforeEach(() => {
-        req = assign({}, req, {
+        req = {
+          ...req,
           body: {
             theme: 'interaction',
             kind_export: 'export_interaction',
@@ -260,7 +268,7 @@ describe('Create interaction, step 1', () => {
           params: {
             interactionId: '1',
           },
-        })
+        }
 
         create.postCreate(req, res, next)
       })
