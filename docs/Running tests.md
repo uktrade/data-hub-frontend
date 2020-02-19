@@ -137,16 +137,14 @@ Screenshots will be stored in the root of the project. We commit the baselines a
 
 ### Browserstack environment variables
 
-In order to run in browserstack, ensure you have the following variables in env file named `.browserstack.env`:
-
-```
-export BROWSERSTACK_USERNAME=xxx
-export BROWSERSTACK_ACCESS_KEY=xxx
-```
+Before attempting to run the tests, copy `.bin.sample/visual` into `.bin/` folder
+and update the browserstack username and key environment variables.
 
 ### Running the tests
 
-`$ ./.bin.sample/visual`
+Execute the command below:
+
+`$ ./.bin/visual`
 
 ### Updating the baseline image
 
