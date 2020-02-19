@@ -7,16 +7,20 @@ const { transformServicesOptions } = require('../../transformers/index')
 const serviceOptionsTransformed = transformServicesOptions(serviceOptions)
 
 describe('Interaction options', () => {
-  beforeEach(() => {
-    this.getServiceOptionsStub = sinon.stub()
-    this.getCommonOptionsStub = sinon.stub()
+  let req, res
+  let getServiceOptionsStub
+  let getCommonOptionsStub
+  let activeInactiveAdviserData
 
-    this.req = { session: { token: 'abcd' }, params: { kind: 'interaction' } }
-    this.res = {
+  beforeEach(() => {
+    getServiceOptionsStub = sinon.stub()
+    getCommonOptionsStub = sinon.stub()
+
+    req = { session: { token: 'abcd' }, params: { kind: 'interaction' } }
+    res = {
       locals: { 'interaction.created_on': '2018-01-23T10:39:18.220321Z' },
     }
-    this.createdOn = '2018-01-23T10:39:18.220321Z'
-    this.activeInactiveAdviserData = [
+    activeInactiveAdviserData = [
       {
         id: '1',
         name: 'Jeff Smith',
@@ -44,7 +48,7 @@ describe('Interaction options', () => {
       },
     ]
 
-    this.contactsData = [
+    const contactsData = [
       {
         id: '999',
         first_name: 'Fred',
@@ -61,53 +65,41 @@ describe('Interaction options', () => {
 
     nock(config.apiRoot)
       .get('/v3/contact?limit=500')
-      .reply(200, { results: this.contactsData })
+      .reply(200, { results: contactsData })
       .get('/adviser/?limit=100000&offset=0')
-      .reply(200, { results: this.activeInactiveAdviserData })
+      .reply(200, { results: activeInactiveAdviserData })
   })
 
   context('when there is no tap services', () => {
-    beforeEach(() => {
-      this.interactionOption = proxyquire('../interaction-options', {
-        '../../../lib/options': {
-          getOptions: this.getServiceOptionsStub.resolves(
-            serviceOptionsTransformed
-          ),
-        },
-        getCommonOptions: this.getCommonOptionsStub.resolves(
-          this.commonOptions
-        ),
-      })
-    })
-
     it('should return an empty list for tapServices', async () => {
-      const formOptions = await this.interactionOption.getInteractionOptions(
-        this.req,
-        this.res
+      const interactionOption = proxyquire('../interaction-options', {
+        '../../../lib/options': {
+          getOptions: getServiceOptionsStub.resolves(serviceOptionsTransformed),
+        },
+        getCommonOptions: getCommonOptionsStub,
+      })
+
+      const formOptions = await interactionOption.getInteractionOptions(
+        req,
+        res
       )
       expect(formOptions.tapServices).to.deep.equal([])
     })
   })
 
   context('when there is a tap services', () => {
-    beforeEach(() => {
-      serviceOptionsTransformed[0].label = '(TAP)'
-      this.interactionOption = proxyquire('../interaction-options', {
-        '../../../lib/options': {
-          getOptions: this.getServiceOptionsStub.resolves(
-            serviceOptionsTransformed
-          ),
-        },
-        getCommonOptions: this.getCommonOptionsStub.resolves(
-          this.commonOptions
-        ),
-      })
-    })
-
     it('should return a single tap service', async () => {
-      const formOptions = await this.interactionOption.getInteractionOptions(
-        this.req,
-        this.res
+      serviceOptionsTransformed[0].label = '(TAP)'
+      const interactionOption = proxyquire('../interaction-options', {
+        '../../../lib/options': {
+          getOptions: getServiceOptionsStub.resolves(serviceOptionsTransformed),
+        },
+        getCommonOptions: getCommonOptionsStub,
+      })
+
+      const formOptions = await interactionOption.getInteractionOptions(
+        req,
+        res
       )
       expect(formOptions.tapServices).to.deep.equal(['sv1'])
     })
