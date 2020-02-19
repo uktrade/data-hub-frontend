@@ -45,13 +45,6 @@
     "*.{js,jsx}": "eslint",
     "*.scss": "sass-lint -v -q -c .sass-lint.yml"
   },
-  "contributors": [
-    "Ben Chidgey <ben@feedmypixel.com> (http://feedmypixel.com)",
-    "Dom Smith <dom@teneightfive.com> (http://github.com/teneightfive)",
-    "Lee Wilson <lee.wilson@coolestbananas.co.uk> (http://github.com/yeahfro)",
-    "Tyom Semonov <tyom@semonov.com> (https://github.com/tyom)",
-    "Zac Tolley <zac@thetolleys.com> (https://github.com/ztolley)"
-  ],
   "license": "MIT",
   "engines": {
     "yarn": "1.22.0",
