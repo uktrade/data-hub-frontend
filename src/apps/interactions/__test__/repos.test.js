@@ -5,22 +5,20 @@ const { archiveInteraction } = require('../repos')
 
 describe('Interaction repository', () => {
   describe('#archiveInteraction', () => {
-    beforeEach(async () => {
+    it('should return an investment requirements object', async () => {
       nock(config.apiRoot)
         .post(`/v3/interaction/${draftPastMeeting.id}/archive`, {
           reason: 'reason',
         })
         .reply(200, { id: draftPastMeeting.id })
 
-      this.interaction = await archiveInteraction(
+      const interaction = await archiveInteraction(
         'token',
         draftPastMeeting.id,
         'reason'
       )
-    })
 
-    it('should return an investment requirements object', () => {
-      expect(this.interaction).to.deep.equal({ id: draftPastMeeting.id })
+      expect(interaction).to.deep.equal({ id: draftPastMeeting.id })
     })
   })
 })
