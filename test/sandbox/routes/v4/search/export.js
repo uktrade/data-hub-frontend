@@ -1,7 +1,7 @@
-var fullExportHistoryPage1 = require('../../../fixtures/v4/export/fullExportHistoryPage1.json')
-var fullExportHistoryPage2 = require('../../../fixtures/v4/export/fullExportHistoryPage2.json')
-var emptyFullExportHistory = require('../../../fixtures/v4/export/emptyFullExportHistory.json')
-var unkownUserExportHistory = require('../../../fixtures/v4/export/unkownUserExportHistory.json')
+var fullExportHistoryPage1 = require('../../../fixtures/v4/export/full-export-history-page-1.json')
+var fullExportHistoryPage2 = require('../../../fixtures/v4/export/full-export-history-page-2.json')
+var emptyFullExportHistory = require('../../../fixtures/v4/export/empty-full-export-history.json')
+var unkownUserExportHistory = require('../../../fixtures/v4/export/unkown-user-export-history.json')
 var dnbCorp = require('../../../fixtures/v4/company/company-dnb-corp.json')
 var marsExportsLtd = require('../../../fixtures/v4/company/company-mars-exports-ltd.json')
 
