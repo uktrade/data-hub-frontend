@@ -8,11 +8,7 @@ const getExportCountries = require('../../../../lib/get-export-countries')
 
 const { updateCompany, saveCompanyExportDetails } = require('../../repos')
 const { transformObjectToOption } = require('../../../transformers')
-const {
-  transformCompanyToExportDetailsView,
-  transformFullExportHistory,
-} = require('./transformer')
-const { getFullExportHistory } = require('./repos')
+const { transformCompanyToExportDetailsView } = require('./transformer')
 const { exportDetailsLabels, exportPotentialLabels } = require('../../labels')
 
 const {
@@ -86,17 +82,17 @@ function renderExports(req, res) {
 }
 
 async function renderFullExportHistory(req, res) {
-  const { token } = req.session
-  const { company } = res.locals
-  const data = await getFullExportHistory(token, company.id)
+  const {
+    company: { name, id },
+  } = res.locals
 
   res
-    .breadcrumb(company.name, urls.companies.detail(company.id))
-    .breadcrumb('Exports', urls.companies.exports.index(company.id))
+    .breadcrumb(name, urls.companies.detail(id))
+    .breadcrumb('Exports', urls.companies.exports.index(id))
     .breadcrumb('Full export history')
     .render('companies/apps/exports/views/full-history', {
       props: {
-        data: transformFullExportHistory(data),
+        companyId: id,
       },
     })
 }

@@ -152,7 +152,7 @@ Task.StartOnRender = connect(
 )(({ start, name, id, payload, onSuccessDispatch, status }) => {
   useEffect(() => {
     status || start({ payload, onSuccessDispatch })
-  }, [name, id, payload, onSuccessDispatch])
+  }, [name, id, JSON.stringify(payload), onSuccessDispatch])
   return null
 })
 
