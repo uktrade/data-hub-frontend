@@ -31,6 +31,9 @@ import CompanyLists from './components/CompanyLists'
 import companyListsReducer from './components/CompanyLists/reducer'
 import { ID as COMPANY_LISTS_STATE_ID } from './components/CompanyLists/state'
 import * as companyListsTasks from './components/CompanyLists/tasks'
+import exportsHistoryReducer from '../apps/companies/apps/exports/reducer'
+import { ID as EXPORTS_HISTORY_ID } from '../apps/companies/apps/exports/state'
+import * as exportsHistoryTasks from '../apps/companies/apps/exports/tasks'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -38,6 +41,7 @@ const store = createStore(
   combineReducers({
     tasks,
     [COMPANY_LISTS_STATE_ID]: companyListsReducer,
+    [EXPORTS_HISTORY_ID]: exportsHistoryReducer,
   }),
   composeWithDevTools(applyMiddleware(sagaMiddleware))
 )
@@ -46,6 +50,7 @@ sagaMiddleware.run(
   tasksSaga({
     'Company lists': companyListsTasks.fetchCompanyLists,
     'Company list': companyListsTasks.fetchCompanyList,
+    'Exports history': exportsHistoryTasks.fetchExportsHistory,
   })
 )
 
@@ -142,9 +147,7 @@ function App() {
         {(props) => <ExportsIndex {...props} />}
       </Mount>
       <Mount selector="#company-export-full-history">
-        {(props) => (
-          <ExportsFullHistory {...props} csrfToken={globalProps.csrfToken} />
-        )}
+        {(props) => <ExportsFullHistory {...props} />}
       </Mount>
     </Provider>
   )
