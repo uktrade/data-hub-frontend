@@ -25,7 +25,10 @@ const createCountry = (item) => ({
     item.status
   ),
   metadata: [
-    { label: 'By', value: item.history_user.name },
+    {
+      label: 'By',
+      value: item.history_user?.name ?? 'unknown',
+    },
     { label: 'Date', value: DateUtils.formatWithTime(item.history_date) },
   ],
 })
