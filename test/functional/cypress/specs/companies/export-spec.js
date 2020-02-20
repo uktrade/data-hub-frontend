@@ -332,11 +332,11 @@ describe('Companies Export Countries', () => {
       cy.contains('Andorra removed from future countries of interest')
         .siblings()
         .should('contain', 'By DIT Staff')
-        .should('contain', '6 Feb 2020, 3:41pm')
+        .should('contain', 'Date 6 Feb 2020, 3:41pm')
       cy.contains('Angola added to countries of no interest')
         .siblings()
         .should('contain', 'By DIT Staff')
-        .should('contain', '6 Feb 2020, 3:41pm')
+        .should('contain', 'Date 6 Feb 2020, 3:41pm')
     })
 
     it('should not display the next button', () => {
@@ -345,6 +345,28 @@ describe('Companies Export Countries', () => {
 
     it('should display the previous button', () => {
       cy.get('ul:last li a:first').should('have.text', 'Previous')
+    })
+  })
+
+  context('when the user is unknown', () => {
+    before(() => {
+      cy.visit(
+        urls.companies.exports.history(fixtures.company.marsExportsLtd.id)
+      )
+    })
+
+    it('renders the title', () => {
+      cy.contains('Export countries history')
+    })
+
+    it('renders the collection list with the one result', () => {
+      cy.contains('1 result')
+      cy.get(countrySelectors.listItemHeadings).should('have.length', 1)
+
+      cy.contains('Andorra removed from future countries of interest')
+        .siblings()
+        .should('contain', 'By unknown')
+        .should('contain', 'Date 6 Feb 2020, 3:41pm')
     })
   })
 })
