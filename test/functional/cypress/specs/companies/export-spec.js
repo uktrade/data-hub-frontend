@@ -332,11 +332,11 @@ describe('Companies Export Countries', () => {
       cy.contains('Andorra removed from future countries of interest')
         .siblings()
         .should('contain', 'By DIT Staff')
-        .should('contain', '6 Feb 2020, 3:41pm')
+        .should('contain', 'Date 6 Feb 2020, 3:41pm')
       cy.contains('Angola added to countries of no interest')
         .siblings()
         .should('contain', 'By DIT Staff')
-        .should('contain', '6 Feb 2020, 3:41pm')
+        .should('contain', 'Date 6 Feb 2020, 3:41pm')
     })
 
     it('should not display the next button', () => {
@@ -366,7 +366,7 @@ describe('Companies Export Countries', () => {
       cy.contains('Andorra removed from future countries of interest')
         .siblings()
         .should('contain', 'By unknown')
-        .should('contain', '6 Feb 2020, 3:41pm')
+        .should('contain', 'Date 6 Feb 2020, 3:41pm')
     })
   })
 })
