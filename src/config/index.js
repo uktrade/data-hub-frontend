@@ -56,6 +56,8 @@ const config = {
     '/v4/company-list',
     '/v4/company-list/:id/item',
     '/v4/search/export-country-history',
+    '/v4/company-referral/',
+    '/v4/company-referral/:id',
   ],
   api: {
     authUrl: '/token/',

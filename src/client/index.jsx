@@ -23,17 +23,21 @@ import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
 import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
 import ExportsFullHistory from '../apps/companies/apps/exports/client/ExportsFullHistory'
+import ReferralDetails from '../apps/referrals/client/referralDetails'
 
 import tasksSaga from './components/Task/saga'
 import tasks from './components/Task/reducer'
 
 import CompanyLists from './components/CompanyLists'
 import companyListsReducer from './components/CompanyLists/reducer'
+import referralsReducer from '../apps/referrals/client/reducer'
 import { ID as COMPANY_LISTS_STATE_ID } from './components/CompanyLists/state'
+import { ID as REFERRALS_DETAILS_STATE_ID } from '../apps/referrals/client/state'
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import exportsHistoryReducer from '../apps/companies/apps/exports/reducer'
 import { ID as EXPORTS_HISTORY_ID } from '../apps/companies/apps/exports/state'
 import * as exportsHistoryTasks from '../apps/companies/apps/exports/tasks'
+import * as referralTasks from '../apps/referrals/client/tasks'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -42,6 +46,7 @@ const store = createStore(
     tasks,
     [COMPANY_LISTS_STATE_ID]: companyListsReducer,
     [EXPORTS_HISTORY_ID]: exportsHistoryReducer,
+    [REFERRALS_DETAILS_STATE_ID]: referralsReducer,
   }),
   composeWithDevTools(applyMiddleware(sagaMiddleware))
 )
@@ -51,6 +56,7 @@ sagaMiddleware.run(
     'Company lists': companyListsTasks.fetchCompanyLists,
     'Company list': companyListsTasks.fetchCompanyList,
     'Exports history': exportsHistoryTasks.fetchExportsHistory,
+    'Referral details': referralTasks.fetchReferralDetails,
   })
 )
 
@@ -148,6 +154,9 @@ function App() {
       </Mount>
       <Mount selector="#company-export-full-history">
         {(props) => <ExportsFullHistory {...props} />}
+      </Mount>
+      <Mount selector="#referral-details">
+        {(props) => <ReferralDetails {...props} />}
       </Mount>
     </Provider>
   )
