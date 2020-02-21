@@ -32,9 +32,7 @@ const SectionAbout = ({ businessDetails, isDnbCompany, isArchived, urls }) => (
   <SummaryTable
     caption={`About ${businessDetails.name}`}
     data-auto-id="aboutDetailsContainer"
-    actions={
-      !isDnbCompany && !isArchived && <Link href={urls.companyEdit}>Edit</Link>
-    }
+    actions={!isArchived && <Link href={urls.companyEdit}>Edit</Link>}
   >
     <SummaryTable.Row heading="VAT number">
       {businessDetails.vat_number}
@@ -118,6 +116,10 @@ const SectionAbout = ({ businessDetails, isDnbCompany, isArchived, urls }) => (
       ) : (
         'Not set'
       )}
+    </SummaryTable.Row>
+
+    <SummaryTable.Row heading="Business description">
+      {businessDetails.description || 'No description has been added'}
     </SummaryTable.Row>
   </SummaryTable>
 )
