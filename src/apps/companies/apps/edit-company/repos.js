@@ -15,7 +15,7 @@ async function getHeadquarterOptions(token) {
   }))
 
   headquarterOptions.unshift({
-    value: 'not_headquarters',
+    value: '',
     label: 'Not a headquarters',
   })
 
