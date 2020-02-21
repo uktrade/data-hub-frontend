@@ -1,4 +1,4 @@
-const { keys, forEach } = require('lodash')
+const { keys, forEach, omit, isEmpty, isObject } = require('lodash')
 
 const selectors = require('../../../selectors')
 
@@ -82,33 +82,162 @@ const assertBreadcrumbs = (specs) => {
 const testBreadcrumbs = (specs) =>
   it('Should render breadcrumbs', () => assertBreadcrumbs(specs))
 
-const assertFieldInput = ({ name, label = null, value = null }) => {
-  const inputElement = cy.get(`input[name="${name}"]`)
-  inputElement.should('be.visible')
+const assertFieldUneditable = ({ element, label, value = null }) =>
+  cy
+    .wrap(element)
+    .find('label')
+    .should('have.text', label)
+    .parent()
+    .then(($el) => value && cy.wrap($el).should('contain', value))
 
-  if (label) {
-    const labelElement = cy.get(`label[for="${name}"]`)
-    labelElement.should('have.text', label)
-  }
+const assertFieldSelect = ({
+  element,
+  label,
+  optionsCount = 0,
+  value = null,
+  newValue = null,
+}) =>
+  cy
+    .wrap(element)
+    .as('fieldSelect')
+    .find('label')
+    .first()
+    .should('have.text', label)
+    .next()
+    .find('option')
+    .should('have.length', optionsCount)
+    .then(
+      () =>
+        value &&
+        cy
+          .get('@fieldSelect')
+          .find('option[selected]')
+          .should('have.text', value)
+    )
+    .then(
+      () =>
+        newValue &&
+        cy
+          .get('@fieldSelect')
+          .find('select')
+          .select(newValue)
+    )
 
-  if (value) {
-    inputElement.should('have.value', value)
-  }
+const assertFieldRadios = ({
+  element,
+  label,
+  value = null,
+  newValue = null,
+  optionsCount,
+}) =>
+  cy
+    .wrap(element)
+    .as('fieldRadio')
+    .find('label')
+    .first()
+    .should('have.text', label)
+    .parent()
+    .find('input')
+    .should('have.length', optionsCount)
+    .then(
+      () =>
+        value &&
+        cy
+          .get('@fieldRadio')
+          .find('input[checked]')
+          .next()
+          .should('have.text', value)
+    )
+
+const assertFieldInput = ({ element, label, value = null, newValue = null }) =>
+  cy
+    .wrap(element)
+    .find('label')
+    .contains(label)
+    .next()
+    .find('input')
+    .then(($el) => value && cy.wrap($el).should('have.attr', 'value', value))
+    .then(
+      ($el) =>
+        newValue &&
+        cy
+          .wrap($el)
+          .clear()
+          .type(newValue)
+    )
+
+const assertFieldAddress = ({
+  element,
+  label,
+  hint = null,
+  value = {},
+  newValue = null,
+}) => {
+  const isUkBased = value.country.name === 'United Kingdom'
+  const addressElements = [
+    {
+      assert: ({ element }) => cy.wrap(element).should('have.text', 'Address'),
+    },
+    hint && {
+      assert: ({ element }) => cy.wrap(element).should('have.text', hint),
+    },
+    {
+      label: isUkBased ? 'Postcode' : 'Postcode (optional)',
+      value: value.postcode,
+      assert: assertFieldInput,
+    },
+    isUkBased && {
+      assert: ({ element }) =>
+        cy
+          .wrap(element)
+          .should('contain', 'Find UK address')
+          .and('match', 'button'),
+    },
+    {
+      label: 'Address line 1',
+      value: value.line_1,
+      assert: assertFieldInput,
+    },
+    {
+      label: 'Address line 2 (optional)',
+      value: value.line_2,
+      assert: assertFieldInput,
+    },
+    {
+      label: 'Town or city',
+      value: value.town,
+      assert: assertFieldInput,
+    },
+    {
+      label: 'County (optional)',
+      value: value.county,
+      assert: assertFieldInput,
+    },
+    {
+      label: 'Country',
+      value: value.country.name,
+      assert: assertFieldUneditable,
+    },
+  ].filter(isObject)
+  cy.wrap(element)
+    .as('field')
+    .get('fieldset')
+    .children()
+    .each((item, i) => {
+      if (addressElements[i]) {
+        const { assert, ...params } = addressElements[i]
+        assert({ element: item, ...params })
+      }
+    })
 }
 
-const assertFieldUneditable = ({ name, label = null, value = null }) => {
-  const fieldWrapperElement = cy.get(`label[for="${name}"]`).parent()
-  fieldWrapperElement.should('be.visible')
-
-  if (label) {
-    const labelElement = fieldWrapperElement.find('label')
-    labelElement.should('have.text', label)
-  }
-
-  if (value) {
-    fieldWrapperElement.should('contain', value)
-  }
-}
+const assertDetails = ({ element, summary, content }) =>
+  cy
+    .wrap(element)
+    .find('summary')
+    .should('have.text', summary)
+    .next()
+    .should('have.text', content)
 
 const assertLocalHeader = (header) => {
   cy.get(selectors.localHeader).contains(header)
@@ -140,7 +269,11 @@ module.exports = {
   assertBreadcrumbs,
   testBreadcrumbs,
   assertFieldInput,
+  assertFieldSelect,
+  assertFieldRadios,
+  assertFieldAddress,
   assertFieldUneditable,
+  assertDetails,
   assertLocalHeader,
   assertTabbedLocalNav,
   assertSummaryList,
