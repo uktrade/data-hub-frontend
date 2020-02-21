@@ -1,4 +1,4 @@
-const { keys, forEach, omit, isEmpty, isObject } = require('lodash')
+const { keys, forEach, isObject } = require('lodash')
 
 const selectors = require('../../../selectors')
 
@@ -90,13 +90,7 @@ const assertFieldUneditable = ({ element, label, value = null }) =>
     .parent()
     .then(($el) => value && cy.wrap($el).should('contain', value))
 
-const assertFieldSelect = ({
-  element,
-  label,
-  optionsCount = 0,
-  value = null,
-  newValue = null,
-}) =>
+const assertFieldSelect = ({ element, label, value, optionsCount = 0 }) =>
   cy
     .wrap(element)
     .as('fieldSelect')
@@ -108,28 +102,14 @@ const assertFieldSelect = ({
     .should('have.length', optionsCount)
     .then(
       () =>
-        value &&
+        value ??
         cy
           .get('@fieldSelect')
           .find('option[selected]')
-          .should('have.text', value)
-    )
-    .then(
-      () =>
-        newValue &&
-        cy
-          .get('@fieldSelect')
-          .find('select')
-          .select(newValue)
+          .should('have.text', value || '')
     )
 
-const assertFieldRadios = ({
-  element,
-  label,
-  value = null,
-  newValue = null,
-  optionsCount,
-}) =>
+const assertFieldRadios = ({ element, label, value = null, optionsCount }) =>
   cy
     .wrap(element)
     .as('fieldRadio')
@@ -149,30 +129,18 @@ const assertFieldRadios = ({
           .should('have.text', value)
     )
 
-const assertFieldInput = ({ element, label, value = null, newValue = null }) =>
+const assertFieldInput = ({ element, label, value }) =>
   cy
     .wrap(element)
     .find('label')
     .contains(label)
     .next()
     .find('input')
-    .then(($el) => value && cy.wrap($el).should('have.attr', 'value', value))
     .then(
-      ($el) =>
-        newValue &&
-        cy
-          .wrap($el)
-          .clear()
-          .type(newValue)
+      ($el) => value ?? cy.wrap($el).should('have.attr', 'value', value || '')
     )
 
-const assertFieldAddress = ({
-  element,
-  label,
-  hint = null,
-  value = {},
-  newValue = null,
-}) => {
+const assertFieldAddress = ({ element, label, hint = null, value = {} }) => {
   const isUkBased = value.country.name === 'United Kingdom'
   const addressElements = [
     {

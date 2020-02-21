@@ -44,7 +44,7 @@ const SectionAbout = ({ businessDetails, isDnbCompany, isArchived, urls }) => (
       </SummaryTable.Row>
     )}
 
-    <SummaryTable.Row heading="Trading names">
+    <SummaryTable.Row heading="Trading name">
       {isEmpty(businessDetails.trading_names)
         ? 'Not set'
         : businessDetails.trading_names}

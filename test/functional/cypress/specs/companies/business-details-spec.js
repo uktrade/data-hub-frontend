@@ -115,7 +115,7 @@ describe('Companies business details', () => {
           heading: 'About One List Corp',
           showEditLink: true,
           content: {
-            'Trading names': 'Not set',
+            'Trading name': 'Not set',
             'Annual turnover': '£33.5M+',
             'Number of employees': '500+',
             Website: 'Not set',
@@ -250,7 +250,7 @@ describe('Companies business details', () => {
           showEditLink: true,
           content: {
             'Business type': 'Company',
-            'Trading names': 'Not set',
+            'Trading name': 'Not set',
             'CDMS reference': 'ORG-10096257',
             'Annual turnover': 'Not set',
             'Number of employees': 'Not set',
@@ -391,7 +391,7 @@ describe('Companies business details', () => {
           heading: 'About DnB Corp',
           showEditLink: true,
           content: {
-            'Trading names': 'DnBD&B',
+            'Trading name': 'DnBD&B',
             'Annual turnover':
               '£770,000This is an estimated numberWhat does that mean?Actual turnover is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
             'Number of employees':
@@ -546,7 +546,7 @@ describe('Companies business details', () => {
           showEditLink: false,
           content: {
             'Business type': 'Company',
-            'Trading names': 'Not set',
+            'Trading name': 'Not set',
             'Annual turnover': '£33.5M+',
             'Number of employees': '500+',
             Website: 'Not set',
@@ -677,7 +677,7 @@ describe('Companies business details', () => {
           heading: 'About Minimally Minimal Ltd',
           showEditLink: true,
           content: {
-            'Trading names': 'Not set',
+            'Trading name': 'Not set',
             'Annual turnover': 'Not set',
             'Number of employees': 'Not set',
             Website: 'Not set',
