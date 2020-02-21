@@ -202,4 +202,8 @@ module.exports = {
     create: url('/omis/create?company=', ':companyId'),
   },
   support: url('/support'),
+  referrals: {
+    index: url('/referral'),
+    details: url('/referral', '/referral/:referralId'),
+  },
 }

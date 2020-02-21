@@ -19,6 +19,8 @@ exports.companyCreateListButton = require('./company')
 exports.companyAddRemoveFromLists = require('./company-lists/add-remove')
 exports.companyLeadAdviser = require('../selectors/company/lead-adviser')
 
+exports.referralDetails = require('../selectors/referrals/referral-details')
+
 exports.companyList = {
   delete: require('./company-lists/delete'),
   create: require('./company-lists/create'),
