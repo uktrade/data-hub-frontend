@@ -57,7 +57,7 @@ describe('Archive pipeline item form', () => {
 
     it('should render a 404 error message', () => {
       cy.contains('There is a problem')
-      cy.contains('Request failed with status code 404')
+      cy.contains('Not Found')
     })
   })
 

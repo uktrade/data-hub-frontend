@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { formatWithTime } from '../../../../../../client/utils/date-utils'
 import { GREEN } from 'govuk-colours'
 
@@ -9,6 +8,7 @@ import {
   EXPORT_INTEREST_STATUS_VALUES,
 } from '../../../../../constants'
 import { groupHistoryItems } from '../group-history-items'
+import { apiProxyAxios } from '../../../../../../client/components/Task/utils'
 
 const WHITELISTED_HISTORY_TYPES = ['insert', 'delete', 'update']
 
@@ -123,17 +123,11 @@ function transformFullExportHistory({ results }, activePage) {
   }
 }
 
-function handleError(e) {
-  const message = e?.response?.data?.detail || 'An unknown error occured'
-  return Promise.reject(new Error(message))
-}
-
 export function fetchExportsHistory({ companyId, countryId, activePage }) {
-  return axios
-    .post('/api-proxy/v4/search/export-country-history', {
+  return apiProxyAxios
+    .post('v4/search/export-country-history', {
       company: companyId,
       country: countryId,
     })
-    .catch(handleError)
     .then(({ data }) => transformFullExportHistory(data, activePage))
 }
