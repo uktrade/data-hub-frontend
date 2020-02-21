@@ -97,7 +97,7 @@ describe('Companies business details', () => {
         cy.contains('Last updated on: 26 Nov 2017').should('be.visible')
       })
 
-      it('should display the "Where does information on this page come from?" details summary', () => {
+      it('should display the "Are these business details right?" details summary', () => {
         cy.get(selectors.companyBusinessDetails().whereDoesInformation).should(
           'be.visible'
         )
@@ -113,12 +113,14 @@ describe('Companies business details', () => {
         assertSummaryTable({
           dataAutoId: 'aboutDetailsContainer',
           heading: 'About One List Corp',
-          showEditLink: false,
+          showEditLink: true,
           content: {
             'Trading names': 'Not set',
             'Annual turnover': '£33.5M+',
             'Number of employees': '500+',
             Website: 'Not set',
+            'Business description':
+              'This is a dummy company for testing the One List',
           },
         })
       })
@@ -140,15 +142,6 @@ describe('Companies business details', () => {
             '75001',
             'France',
           ],
-        })
-      })
-
-      it('should display the "Description" details container', () => {
-        assertSummaryTable({
-          dataAutoId: 'descriptionDetailsContainer',
-          heading: 'Description',
-          showEditLink: true,
-          content: ['This is a dummy company for testing the One List'],
         })
       })
 
@@ -238,7 +231,7 @@ describe('Companies business details', () => {
         cy.contains('Last updated on: 15 Jul 2016').should('be.visible')
       })
 
-      it('should not display the "Where does information on this page come from?" details summary', () => {
+      it('should not display the "Are these business details right?" details summary', () => {
         cy.get(selectors.companyBusinessDetails().whereDoesInformation).should(
           'not.exist'
         )
@@ -262,6 +255,7 @@ describe('Companies business details', () => {
             'Annual turnover': 'Not set',
             'Number of employees': 'Not set',
             Website: 'Not set',
+            'Business description': 'This is a dummy company for testing',
           },
         })
       })
@@ -379,7 +373,7 @@ describe('Companies business details', () => {
         cy.contains('Last updated on: 26 Oct 2018').should('be.visible')
       })
 
-      it('should display the "Where does information on this page come from?" details summary', () => {
+      it('should display the "Are these business details right?" details summary', () => {
         cy.get(selectors.companyBusinessDetails().whereDoesInformation).should(
           'be.visible'
         )
@@ -395,7 +389,7 @@ describe('Companies business details', () => {
         assertSummaryTable({
           dataAutoId: 'aboutDetailsContainer',
           heading: 'About DnB Corp',
-          showEditLink: false,
+          showEditLink: true,
           content: {
             'Trading names': 'DnBD&B',
             'Annual turnover':
@@ -403,6 +397,8 @@ describe('Companies business details', () => {
             'Number of employees':
               '95This is an estimated numberWhat does that mean?Actual number of employees is not available for this business. The number has been modelled by Dun & Bradstreet, based on similar businesses.',
             Website: 'Not set',
+            'Business description':
+              'This is a dummy company for testing companies with DnB data',
           },
         })
       })
@@ -523,7 +519,7 @@ describe('Companies business details', () => {
         cy.contains('Last updated on: 16 Jul 2017').should('be.visible')
       })
 
-      it('should not display the "Where does information on this page come from?" details summary', () => {
+      it('should not display the "Are these business details right?" details summary', () => {
         cy.get(selectors.companyBusinessDetails().whereDoesInformation).should(
           'not.exist'
         )
@@ -554,6 +550,8 @@ describe('Companies business details', () => {
             'Annual turnover': '£33.5M+',
             'Number of employees': '500+',
             Website: 'Not set',
+            'Business description':
+              'This is a dummy company for testing archived features',
           },
         })
       })
@@ -661,7 +659,7 @@ describe('Companies business details', () => {
         cy.contains('Last updated on: 11 Dec 2015').should('be.visible')
       })
 
-      it('should not display the "Where does information on this page come from?" details summary', () => {
+      it('should not display the "Are these business details right?" details summary', () => {
         cy.get(selectors.companyBusinessDetails().whereDoesInformation).should(
           'not.exist'
         )
@@ -683,6 +681,7 @@ describe('Companies business details', () => {
             'Annual turnover': 'Not set',
             'Number of employees': 'Not set',
             Website: 'Not set',
+            'Business description': 'No description has been added',
           },
         })
       })

@@ -10,7 +10,6 @@ import { StatusMessage, DateUtils } from 'data-hub-components'
 import SectionAbout from './SectionAbout'
 import SectionAddresses from './SectionAddresses'
 import SectionHierarchy from './SectionHierarchy'
-import SectionDescription from './SectionDescription'
 import SectionRegion from './SectionRegion'
 import SectionSector from './SectionSector'
 import SectionOneList from './SectionOneList'
@@ -80,23 +79,15 @@ const CompanyBusinessDetails = ({
 
       {isDnbCompany && (
         <Details
-          summary="Where does information on this page come from?"
+          summary="Are these business details right?"
           data-auto-id="businessDetailsWhereDoesInformation"
         >
-          <p>
-            The information on this page that cannot be edited comes from{' '}
-            <Link href="https://www.dnb.co.uk/about-us/data-cloud.html">
-              Dun & Bradstreet
-            </Link>
-            . This is an external and verified source. The information is
-            automatically updated.{' '}
-            <Link href={urls.companyEditHistory}>View the edit history</Link>.
-          </p>
-          <p>
-            If you think the information is incomplete or incorrect,{' '}
-            <Link href={urls.support}>get in touch using the support form</Link>
-            .
-          </p>
+          Most business details have been verified by trusted third-parties to
+          keep them updated automatically. Business description, region and
+          sector are not updated by third parties.
+          <br />
+          <strong>Think some details are wrong?</strong> ‘Edit’ and 'Submit' new
+          details for review.
         </Details>
       )}
 
@@ -111,12 +102,6 @@ const CompanyBusinessDetails = ({
         businessDetails={businessDetails}
         isArchived={isArchived}
         isDnbCompany={isDnbCompany}
-        urls={urls}
-      />
-
-      <SectionDescription
-        businessDetails={businessDetails}
-        isArchived={isArchived}
         urls={urls}
       />
 
