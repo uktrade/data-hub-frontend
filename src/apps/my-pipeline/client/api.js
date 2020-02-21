@@ -1,58 +1,26 @@
-import axios from 'axios'
+import { apiProxyAxios } from '../../../client/components/Task/utils'
 
-const endpoint = '/api-proxy/v4/pipeline-item'
+const endpoint = 'v4/pipeline-item'
 
-function handleSuccess(result) {
-  return result
-}
+const getPipelineItems = (filter) =>
+  apiProxyAxios.get(`${endpoint}`, { params: filter })
 
-function handleError(error) {
-  const message = error?.response?.data?.detail || error.message
-  return Promise.reject({
-    message,
-    ...error,
-  })
-}
+const getPipelineItem = (pipelineItemId) =>
+  apiProxyAxios.get(`${endpoint}/${pipelineItemId}`)
 
-function getPipelineItems(filter) {
-  return axios
-    .get(`${endpoint}`, { params: filter })
-    .then(handleSuccess, handleError)
-}
+const createPipelineItem = (values) => apiProxyAxios.post(`${endpoint}`, values)
 
-function getPipelineItem(pipelineItemId) {
-  return axios
-    .get(`${endpoint}/${pipelineItemId}`)
-    .then(handleSuccess, handleError)
-}
+const updatePipelineItem = (pipelineItemId, values) =>
+  apiProxyAxios.patch(`${endpoint}/${pipelineItemId}`, values)
 
-function createPipelineItem(values) {
-  return axios.post(`${endpoint}`, values).then(handleSuccess, handleError)
-}
+const archivePipelineItem = (pipelineItemId, values) =>
+  apiProxyAxios.post(`${endpoint}/${pipelineItemId}/archive`, values)
 
-function updatePipelineItem(pipelineItemId, values) {
-  return axios
-    .patch(`${endpoint}/${pipelineItemId}`, values)
-    .then(handleSuccess, handleError)
-}
+const unarchivePipelineItem = (pipelineItemId) =>
+  apiProxyAxios.post(`${endpoint}/${pipelineItemId}/unarchive`)
 
-function archivePipelineItem(pipelineItemId, values) {
-  return axios
-    .post(`${endpoint}/${pipelineItemId}/archive`, values)
-    .then(handleSuccess, handleError)
-}
-
-function unarchivePipelineItem(pipelineItemId) {
-  return axios
-    .post(`${endpoint}/${pipelineItemId}/unarchive`)
-    .then(handleSuccess, handleError)
-}
-
-function deletePipelineItem(pipelineItemId) {
-  return axios
-    .delete(`${endpoint}/${pipelineItemId}`)
-    .then(handleSuccess, handleError)
-}
+const deletePipelineItem = (pipelineItemId) =>
+  apiProxyAxios.delete(`${endpoint}/${pipelineItemId}`)
 
 const pipelineApi = {
   list: getPipelineItems,

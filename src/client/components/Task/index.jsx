@@ -52,7 +52,10 @@ const startOnRenderPropTypes = {
 /**
  * Enables starting and reading states of _registered tasks_. A _task_ is a
  * function which takes a _payload_ as its only argument and returns a
- * {Promise}. _Tasks_ are registered by passing a map of names to _tasks_ to the
+ * {Promise}. If the promise rejects with a value which is not an instance of
+ * {Error}, it will be rendered as the error message in {Task.Status}. If it
+ * rejects with an {Error} instance, the error will be rethrown.
+ * _Tasks_ are registered by passing a map of names to _tasks_ to the
  * `tasksSagaFactory` function and plugging in the resulting saga e.g.
  * To register a task that always succeeds with the value `123` under the name
  * `'foo'` you can do:

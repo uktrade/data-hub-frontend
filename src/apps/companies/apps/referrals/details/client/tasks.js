@@ -1,10 +1,8 @@
-const axios = require('axios')
+import { apiProxyAxios } from '../../../../../../client/components/Task/utils'
+
 const transformReferralDetails = require('../../transformer')
 
-const handleError = (e) => Promise.reject(Error(e.response.data.detail))
-
 export const fetchReferralDetails = (id) =>
-  axios
-    .get(`/api-proxy/v4/company-referral/${id}`)
-    .catch(handleError)
+  apiProxyAxios
+    .get(`v4/company-referral/${id}`)
     .then(({ data }) => transformReferralDetails(data))

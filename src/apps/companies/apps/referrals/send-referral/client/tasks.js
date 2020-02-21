@@ -1,6 +1,6 @@
-import axios from 'axios'
 import { ID as STORE_ID } from './state'
 import getContactFromQuery from '../../../../../../client/utils/getContactFromQuery'
+import { apiProxyAxios } from '../../../../../../client/components/Task/utils'
 
 export function openContactForm({ values, url }) {
   window.sessionStorage.setItem(
@@ -36,7 +36,7 @@ export async function saveReferral({ values, companyId }) {
   window.sessionStorage.removeItem(STORE_ID)
 
   const { adviser, subject, notes, contact } = values
-  await axios.post('/api-proxy/v4/company-referral', {
+  await apiProxyAxios.post('v4/company-referral', {
     company: companyId,
     recipient: adviser.value,
     subject,
