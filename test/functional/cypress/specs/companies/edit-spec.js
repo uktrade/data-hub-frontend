@@ -1,299 +1,278 @@
 import {
   assertBreadcrumbs,
   assertFieldUneditable,
+  assertFieldInput,
+  assertFieldAddress,
+  assertFieldSelect,
+  assertFieldRadios,
+  assertDetails,
 } from '../../support/assertions'
 
 const fixtures = require('../../fixtures')
-const selectors = require('../../../../selectors')
+const urls = require('../../../../../src/lib/urls')
 
-describe('Company edit', () => {
-  const commonTests = (expected) => {
-    it('should render breadcrumbs', () => {
-      assertBreadcrumbs({
-        Home: '/',
-        Companies: '/companies',
-        [expected.company.name]: `/companies/${expected.company.id}`,
-        'Business details': `/companies/${expected.company.id}/business-details`,
-        'Edit business details': null,
-      })
-    })
+const assertRegisteredAddress = ({ element }) =>
+  cy
+    .wrap(element)
+    .find('legend')
+    .should('have.text', 'Registered address')
+    .next()
+    .should(
+      'have.text',
+      'A registered office address is a legal requirement of all limited' +
+        ' companies and Limited Liability Partnerships (LLPs) incorporated' +
+        ' in the UK. Its purpose is to provide Companies House, HMRC and' +
+        ' other relevant government bodies with an official address for' +
+        ' delivering statutory mail and legal notices.'
+    )
 
-    it('should render the trading name text field', () => {
-      cy.get(selectors.companyEdit.tradingName).should('be.visible')
-    })
+const describeCompanyEditForm = ({ company, elements }) => {
+  beforeEach(() => {
+    cy.server()
+    cy.route('POST', urls.companies.edit(company.id) + '*').as(
+      'editCompanyResponse'
+    )
+    cy.visit(urls.companies.edit(company.id))
+  })
 
-    it('should render the annual turnover radio buttons', () => {
-      cy.get(selectors.companyEdit.annualTurnover.length).should('be', 4)
-    })
-
-    it('should render the number of employees radio buttons', () => {
-      cy.get(selectors.companyEdit.numberOfEmployees).should('be', 4)
-    })
-
-    it('should render the website text field', () => {
-      cy.get(selectors.companyEdit.website).should('be.visible')
-    })
-
-    it('should render the business description text field', () => {
-      cy.get(selectors.companyEdit.businessDescription)
-        .should('be.visible')
-        .and('have.value', expected.company.description || '')
-    })
-
-    it('should render a save button', () => {
-      cy.get(selectors.companyEdit.saveButton).should('be.visible')
-    })
-
-    it('should render a back link', () => {
-      cy.get(selectors.companyEdit.backLink).should('be.visible')
-      cy.get(selectors.companyEdit.backLink).should(
-        'have.attr',
-        'href',
-        `/companies/${expected.company.id}/business-details`
-      )
-    })
-  }
-
-  context('when editing a legacy UK company on the One List', () => {
-    before(() => {
-      cy.visit(`/companies/${fixtures.company.venusLtd.id}/edit`)
-    })
-
-    commonTests({
-      company: fixtures.company.venusLtd,
-    })
-
-    it('should render the business type uneditable field', () => {
-      assertFieldUneditable({ name: 'business_type', value: 'Company' })
-    })
-
-    it('should render the VAT number text field', () => {
-      cy.get(selectors.companyEdit.vatNumber).should('be.visible')
-    })
-
-    it('should render the address fields', () => {
-      cy.get(selectors.companyEdit.address.postcodeLookupButton).should(
-        'be.visible'
-      )
-
-      cy.get(selectors.companyEdit.address.postcode)
-        .should('be.visible')
-        .and('have.value', 'BD23 8RZ')
-
-      cy.get(selectors.companyEdit.address.line1)
-        .should('be.visible')
-        .and('have.value', '66 Marcham Road')
-
-      cy.get(selectors.companyEdit.address.line2)
-        .should('be.visible')
-        .and('have.value', '')
-
-      cy.get(selectors.companyEdit.address.town)
-        .should('be.visible')
-        .and('have.value', 'Bordley')
-
-      cy.get(selectors.companyEdit.address.county)
-        .should('be.visible')
-        .and('have.value', '')
-
-      assertFieldUneditable({ name: 'country', value: 'United Kingdom' })
-    })
-
-    it('should render the registered address fields', () => {
-      cy.get(selectors.companyEdit.registeredAddressLegend)
-        .parent()
-        .should('contain', '66 Marcham Road')
-        .and('contain', 'Bordley')
-        .and('contain', 'BD23 8RZ')
-        .and('contain', 'United Kingdom')
-    })
-
-    it('should render the region list', () => {
-      cy.get(selectors.companyEdit.region)
-        .should('be.visible')
-        .find(':selected')
-        .contains('North West')
-    })
-
-    it('should not render the sector list', () => {
-      cy.get(selectors.companyEdit.sector).should('not.exist')
-    })
-
-    it('should render the sector uneditable field', () => {
-      assertFieldUneditable({ name: 'sector', value: 'Retail' })
-    })
-
-    it('should render the sector details summary', () => {
-      cy.get(selectors.companyEdit.needToEditTheSector).should('be.visible')
-    })
-
-    it('should not render the business hierarchy radio buttons', () => {
-      cy.get(selectors.companyEdit.businessHierarchy).should('not.exist')
-    })
-
-    it('should render the business hierarchy uneditable field', () => {
-      assertFieldUneditable({
-        name: 'headquarter_type',
-        value: 'Not a headquarters',
-      })
-    })
-
-    it('should render the business hierarchy details summary', () => {
-      cy.get(selectors.companyEdit.needToEditTheHeadquarterType).should(
-        'be.visible'
-      )
+  it('should render breadcrumbs', () => {
+    assertBreadcrumbs({
+      Home: '/',
+      Companies: '/companies',
+      [company.name]: urls.companies.detail(company.id),
+      'Business details': urls.companies.businessDetails(company.id),
+      'Edit business details': null,
     })
   })
 
-  context(
-    'when editing a legacy UK company with minimal data and not on the One List',
-    () => {
-      before(() => {
-        cy.visit(`/companies/${fixtures.company.minimallyMinimalLtd.id}/edit`)
+  it('should render form elements and submit the form', () => {
+    const formElements = [
+      ...elements,
+      {
+        assert: ({ element }) =>
+          cy
+            .wrap(element)
+            .find('button')
+            .should('have.text', 'Save and return')
+            .next()
+            .should('have.text', 'Return without saving')
+            .and(
+              'have.attr',
+              'href',
+              urls.companies.businessDetails(company.id)
+            ),
+      },
+    ]
+
+    cy.get('#edit-company-form form div')
+      .as('formRoot')
+      .children()
+      .each((element, i) => {
+        if (formElements[i]) {
+          const { assert, ...params } = formElements[i]
+          assert({ element, ...params })
+        }
       })
 
-      commonTests({
-        company: fixtures.company.minimallyMinimalLtd,
-      })
+    cy.contains('Save and return').click()
+    cy.location('pathname').should(
+      'eq',
+      urls.companies.businessDetails(company.id)
+    )
+    cy.contains('Company record updated')
+  })
+}
 
-      it('should not render the business type uneditable field', () => {
-        cy.get('#field-business_type').should('not.exist')
-      })
-
-      it('should render the VAT number text field', () => {
-        cy.get(selectors.companyEdit.vatNumber).should('be.visible')
-      })
-
-      it('should render the address fields', () => {
-        cy.get(selectors.companyEdit.address.postcodeLookupButton).should(
-          'be.visible'
-        )
-
-        cy.get(selectors.companyEdit.address.postcode)
-          .should('be.visible')
-          .and('have.value', '')
-
-        cy.get(selectors.companyEdit.address.line1)
-          .should('be.visible')
-          .and('have.value', '')
-
-        cy.get(selectors.companyEdit.address.line2)
-          .should('be.visible')
-          .and('have.value', '')
-
-        cy.get(selectors.companyEdit.address.town)
-          .should('be.visible')
-          .and('have.value', '')
-
-        cy.get(selectors.companyEdit.address.county)
-          .should('be.visible')
-          .and('have.value', '')
-
-        assertFieldUneditable({ name: 'country', value: 'United Kingdom' })
-      })
-
-      it('should not render the registered address fieldset', () => {
-        cy.get(selectors.companyEdit.registeredAddressLegend).should(
-          'not.exist'
-        )
-      })
-
-      it('should render the region list', () => {
-        cy.get(selectors.companyEdit.region).should('be.visible')
-      })
-
-      it('should render the sector list', () => {
-        cy.get(selectors.companyEdit.sector).should('be.visible')
-      })
-
-      it('should not render the sector details summary', () => {
-        cy.get(selectors.companyEdit.needToEditTheSector).should('not.exist')
-      })
-
-      it('should render the business hierarchy radio buttons', () => {
-        cy.get(selectors.companyEdit.businessHierarchy.length).should('be', 4)
-      })
-
-      it('should not render the business hierarchy details summary', () => {
-        cy.get(selectors.companyEdit.needToEditTheHeadquarterType).should(
-          'not.exist'
-        )
-      })
-    }
-  )
-
-  context('when editing a legacy foreign company not on the One List', () => {
-    before(() => {
-      cy.visit(`/companies/${fixtures.company.marsExportsLtd.id}/edit`)
+describe('Company edit', () => {
+  context('when updating matched UK company NOT on the One List', () => {
+    const company = fixtures.company.dnbLtd
+    describeCompanyEditForm({
+      company,
+      elements: [
+        {
+          label: 'Business description (optional)',
+          value: company.description,
+          assert: assertFieldInput,
+        },
+        {
+          label: 'DIT sector',
+          value: company.sector.name,
+          optionsCount: 256,
+          assert: assertFieldSelect,
+        },
+      ],
     })
+  })
 
-    commonTests({
-      company: fixtures.company.marsExportsLtd,
+  context('when updating unmatched UK company on the One List', () => {
+    const company = fixtures.company.venusLtd
+    describeCompanyEditForm({
+      company,
+      elements: [
+        {
+          label: 'Business type',
+          value: 'Company',
+          assert: assertFieldUneditable,
+        },
+        {
+          label: 'Trading name (optional)',
+          value: company.trading_names[0],
+          assert: assertFieldInput,
+        },
+        {
+          label: 'VAT number (optional)',
+          value: company.vat_number,
+          assert: assertFieldInput,
+        },
+        {
+          label: 'Annual turnover (optional)',
+          value: null,
+          assert: assertFieldRadios,
+          optionsCount: 4,
+        },
+        {
+          label: 'Number of employees (optional)',
+          value: null,
+          assert: assertFieldRadios,
+          optionsCount: 5,
+        },
+        {
+          label: "Company's website (optional)",
+          value: company.website,
+          assert: assertFieldInput,
+        },
+        {
+          label: 'Address',
+          value: company.address,
+          hint:
+            'This should be the address for this particular office of the' +
+            ' business. If you need to record activity or a contact for a' +
+            ' different address, please add a new company record to Data Hub.',
+          assert: assertFieldAddress,
+        },
+        {
+          assert: assertRegisteredAddress,
+        },
+        {
+          label: 'Business description (optional)',
+          value: company.description,
+          assert: assertFieldInput,
+        },
+        {
+          label: 'DIT region',
+          value: company.uk_region.name,
+          optionsCount: 16,
+          assert: assertFieldSelect,
+        },
+        {
+          label: 'Sector',
+          value: company.sector.name,
+          assert: assertFieldUneditable,
+        },
+        {
+          summary: 'Need to edit the sector?',
+          content:
+            'If you need to change the sector for a company on the' +
+            ' One List, please email onelist@example.com',
+          assert: assertDetails,
+        },
+        {
+          label: 'Business hierarchy',
+          value: 'Not a headquarters',
+          assert: assertFieldUneditable,
+        },
+        {
+          summary: 'Need to edit the headquarter type?',
+          content:
+            'If you need to change the headquarter type for a company' +
+            ' on the One List, please email onelist@example.com',
+          assert: assertDetails,
+        },
+      ],
     })
+  })
 
-    it('should render the business type uneditable field', () => {
-      assertFieldUneditable({ name: 'business_type', value: 'Company' })
+  context('when updating unmatched foreign company NOT on the One List', () => {
+    const company = fixtures.company.marsExportsLtd
+    describeCompanyEditForm({
+      company,
+      elements: [
+        {
+          label: 'Business type',
+          value: 'Company',
+          assert: assertFieldUneditable,
+        },
+        {
+          label: 'Trading name (optional)',
+          value: company.trading_names[0],
+          assert: assertFieldInput,
+        },
+        {
+          label: 'Annual turnover (optional)',
+          value: company.turnover_range.name,
+          assert: assertFieldRadios,
+          optionsCount: 4,
+        },
+        {
+          label: 'Number of employees (optional)',
+          value: company.employee_range.name,
+          assert: assertFieldRadios,
+          optionsCount: 5,
+        },
+        {
+          label: "Company's website (optional)",
+          value: company.website,
+          assert: assertFieldInput,
+        },
+        {
+          label: 'Address',
+          value: company.address,
+          hint:
+            'This should be the address for this particular office of the' +
+            ' business. If you need to record activity or a contact for a' +
+            ' different address, please add a new company record to Data Hub.',
+          assert: assertFieldAddress,
+        },
+        {
+          assert: assertRegisteredAddress,
+        },
+        {
+          label: 'Business description (optional)',
+          value: company.description,
+          assert: assertFieldInput,
+        },
+        {
+          label: 'DIT sector',
+          value: company.sector.name,
+          optionsCount: 256,
+          assert: assertFieldSelect,
+        },
+        {
+          label: 'Business hierarchy',
+          value: null,
+          optionsCount: 4,
+          assert: assertFieldRadios,
+        },
+      ],
     })
+  })
 
-    it('should not render the VAT number text field', () => {
-      cy.get(selectors.companyEdit.vatNumber).should('not.exist')
-    })
-
-    it('should render the address fields', () => {
-      cy.get(selectors.companyEdit.address.postcodeLookup).should('not.exist')
-
-      cy.get(selectors.companyEdit.address.line1)
-        .should('be.visible')
-        .and('have.value', '12 First Street')
-
-      cy.get(selectors.companyEdit.address.line2)
-        .should('be.visible')
-        .and('have.value', '')
-
-      cy.get(selectors.companyEdit.address.town)
-        .should('be.visible')
-        .and('have.value', 'New York')
-
-      cy.get(selectors.companyEdit.address.county)
-        .should('be.visible')
-        .and('have.value', '')
-
-      cy.get(selectors.companyEdit.address.postcode)
-        .should('be.visible')
-        .and('have.value', '765413')
-
-      assertFieldUneditable({ name: 'country', value: 'United States' })
-    })
-
-    it('should render the registered address fieldset', () => {
-      cy.get(selectors.companyEdit.registeredAddressLegend)
-        .parent()
-        .should('contain', '12 First Street')
-        .and('contain', 'New York')
-        .and('contain', '765413')
-        .and('contain', 'United States')
-    })
-
-    it('should not render the region list', () => {
-      cy.get(selectors.companyEdit.region).should('not.exist')
-    })
-
-    it('should render the sector list', () => {
-      cy.get(selectors.companyEdit.sector).should('be.visible')
-    })
-
-    it('should not render the sector details summary', () => {
-      cy.get(selectors.companyEdit.needToEditTheSector).should('not.exist')
-    })
-
-    it('should render the business hierarchy radio buttons', () => {
-      cy.get(selectors.companyEdit.businessHierarchy.length).should('be', 4)
-    })
-
-    it('should not render the business hierarchy details summary', () => {
-      cy.get(selectors.companyEdit.needToEditTheHeadquarterType).should(
-        'not.exist'
-      )
+  context('when updating a matched UK company not on the One List', () => {
+    describeCompanyEditForm({
+      elements: [
+        {
+          label: 'Business description (optional)',
+          value: fixtures.company.dnbLtd.description,
+          assert: assertFieldInput,
+        },
+        {
+          label: 'DIT sector',
+          value: fixtures.company.dnbLtd.sector.name,
+          optionsCount: 256,
+          assert: assertFieldSelect,
+        },
+      ],
+      company: fixtures.company.dnbLtd,
     })
   })
 })
