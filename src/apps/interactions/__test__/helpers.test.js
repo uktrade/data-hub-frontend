@@ -6,22 +6,16 @@ const {
 describe('Interaction helpers', () => {
   describe('#getReturnLink', () => {
     context('when the return link exists', () => {
-      beforeEach(() => {
-        this.actual = getReturnLink({ returnLink: '/return' })
-      })
-
       it('should return the link', () => {
-        expect(this.actual).to.equal('/return')
+        const actual = getReturnLink({ returnLink: '/return' })
+        expect(actual).to.equal('/return')
       })
     })
 
     context('when the return link does not exist', () => {
-      beforeEach(() => {
-        this.actual = getReturnLink(null)
-      })
-
       it('should return the link', () => {
-        expect(this.actual).to.equal('/interactions')
+        const actual = getReturnLink(null)
+        expect(actual).to.equal('/interactions')
       })
     })
   })
