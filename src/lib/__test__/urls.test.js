@@ -33,8 +33,11 @@ describe('urls', () => {
 
   describe('companies', () => {
     let companyId
+    let countryId
+
     beforeEach(() => {
       companyId = faker.random.uuid()
+      countryId = faker.random.uuid()
     })
     it('should return the correct values', () => {
       expect(urls.companies.index.mountPoint).to.equal('/companies')
@@ -130,6 +133,13 @@ describe('urls', () => {
       expect(urls.companies.exports.history(companyId)).to.equal(
         `/companies/${companyId}/exports/history`
       )
+
+      expect(urls.companies.exports.countryHistory.route).to.equal(
+        '/:companyId/exports/history/:countryId'
+      )
+      expect(
+        urls.companies.exports.countryHistory(companyId, countryId)
+      ).to.equal(`/companies/${companyId}/exports/history/${countryId}`)
 
       expect(urls.companies.subsidiaries.index(companyId)).to.equal(
         `/companies/${companyId}/subsidiaries`

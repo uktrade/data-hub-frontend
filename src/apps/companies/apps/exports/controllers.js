@@ -20,7 +20,7 @@ function getExportCountryGroups(countries = []) {
   const buckets = groupExportCountries(countries)
 
   EXPORT_INTEREST_STATUS_VALUES.forEach((status) => {
-    buckets[status] = buckets[status].map(transformObjectToOption)
+    buckets[status] = buckets[status]
   })
 
   return buckets
