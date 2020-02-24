@@ -135,6 +135,19 @@ const ExportsIndex = ({
         </Link>{' '}
         on our Export Wins site
       </p>
+      <Details summary="What is an Export Win">
+        <p>
+          Export wins capture the export deals that Department of International
+          Trade (DIT) support and quantify their expected export value. If
+          applicable, they also quantify the non-export and outward direct
+          investment (ODI) value, up to a 5-year period. They give a picture of
+          DIT support for business.
+        </p>
+        <p>
+          The export win metric is currently the only way the department
+          measures export activity.
+        </p>
+      </Details>
     </>
   )
 }
