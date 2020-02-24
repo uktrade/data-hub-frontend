@@ -154,40 +154,23 @@ Updating the baseline consists in 2 steps:
 
 - 2:. Run `$ yarn test:visual:update` to update the failed tests with updated images of how the page in test should look like.
 
-
 ## Sandbox (API mocks)
 
 Sandbox is as a light replacement for API backend and it's used only by functional tests.
 
 ### Using sandbox within docker (preferred method)
 
-1. Clone this repo
+1. cd into `data-hub-frontend` and run `docker-compose up`. This will start up the sandbox api in conjunction with the frontend. Make sure nothing else is running at ports 8001 and 3000.
 
-2. `cd` into the folder you just cloned
+2. If you make changes to sandbox you will need to rebuild docker with `docker-compose up -d --no-deps --build mock-backend` before running it again with `docker-compose up`. If you've also made changes to the front end and need to rebuild the full stack, use `docker-compose up --build --force-recreate`.
 
-3. Build the image:
+### Using sandbox within docker with local frontend
 
-   ```bash
-   docker build -t data-hub-sandbox .
-   ```
+1. cd into `test/sandbox` and run `docker run --rm --name data-hub-sandbox -it -p 8001:8001 data-hub-sandbox`.
 
-4. Start sandbox server on port `8001`:
+2. Change your `API_ROOT` in your env file to point to `http://mock-backend:8001` and then run the frontend locally with `yarn develop`.
 
-   ```bash
-   docker run -it -p 8001:8001 data-hub-sandbox
-   ```
-
-   Stop the server by pressing `CTRL`+`C`
-
-### Additional steps if you're running sandbox with Data Hub Frontend for functional testing
-
-1. You'll also have to run redis as the sandbox does not come with this and will throw an error on the frontend without it. So open a new terminal window and run `docker run -it -p 6379:6379 redis:3.2`
-
-2. `cd` into your datahub-front-end folder
-
-3. Run `yarn run develop` and you should now be all set up
-
-4. When you make changes to the fixtures, you'll need to rebuild the docker image and then run the server again.
+3. If you make changes to sandbox rebuild docker with `docker build -t data-hub-sandbox`.
 
 ### Using sandbox on host machine
 
