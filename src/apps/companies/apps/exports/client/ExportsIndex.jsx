@@ -90,7 +90,23 @@ const ExportsIndex = ({
       <StyledSummaryTable>
         {exportCountriesInformation.map(({ name, value }) => (
           <SummaryTable.Row heading={name} key={name}>
-            {value ? value : 'None'}
+            <>
+              {value
+                ? value.map((country, i) => (
+                    <React.Fragment key={country.id}>
+                      <Link
+                        href={urls.companies.exports.countryHistory(
+                          companyId,
+                          country.id
+                        )}
+                      >
+                        {country.name}
+                      </Link>
+                      {i !== value.length - 1 ? ', ' : null}
+                    </React.Fragment>
+                  ))
+                : 'None'}
+            </>
           </SummaryTable.Row>
         ))}
       </StyledSummaryTable>
@@ -138,7 +154,12 @@ ExportsIndex.propTypes = {
   exportCountriesInformation: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
-      value: PropTypes.string,
+      value: PropTypes.arrayOf(
+        PropTypes.shape({
+          name: PropTypes.string,
+          id: PropTypes.string,
+        })
+      ),
     })
   ).isRequired,
   exportPotentials: PropTypes.arrayOf(

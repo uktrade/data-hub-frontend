@@ -1,27 +1,15 @@
 /* eslint-disable camelcase */
-const { flatMap } = require('lodash')
-
 const groupExportCountries = require('../../../../lib/group-export-countries')
 const { exportDetailsLabels, exportPotentialLabels } = require('../../labels')
 const { EXPORT_INTEREST_STATUS } = require('../../../constants')
-
-function getCountries(data) {
-  return flatMap(data, ({ name }) => name || null).join(', ') || 'None'
-}
 
 function getCountriesFields(company) {
   const buckets = groupExportCountries(company.export_countries)
 
   return {
-    exportToCountries: getCountries(
-      buckets[EXPORT_INTEREST_STATUS.EXPORTING_TO]
-    ),
-    futureInterestCountries: getCountries(
-      buckets[EXPORT_INTEREST_STATUS.FUTURE_INTEREST]
-    ),
-    noInterestCountries: getCountries(
-      buckets[EXPORT_INTEREST_STATUS.NOT_INTERESTED]
-    ),
+    exportToCountries: buckets[EXPORT_INTEREST_STATUS.EXPORTING_TO],
+    futureInterestCountries: buckets[EXPORT_INTEREST_STATUS.FUTURE_INTEREST],
+    noInterestCountries: buckets[EXPORT_INTEREST_STATUS.NOT_INTERESTED],
   }
 }
 
