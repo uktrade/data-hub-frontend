@@ -22,6 +22,7 @@ var companyList = require('../../../fixtures/v4/user/company-list.json')
 var companyOneListTierDIta = require('../../../fixtures/v4/company/company-one-list-tier-d-ita.json')
 var companyWithValidationError = require('../../../fixtures/v4/company/company-validation-error.json')
 var companyAudit = require('../../../fixtures/v4/company-audit/company-audit.json')
+var exportWins = require('../../../fixtures/v4/company-export-wins/export-wins.json')
 
 var largeCapitalProfileEmpty = require('../../../fixtures/v4/company/large-capital-profile-empty.json')
 var largeCapitalProfileNew = require('../../../fixtures/v4/company/large-capital-profile-new.json')
@@ -150,4 +151,8 @@ exports.manageAdviser = function(req, res) {
 
 exports.companyAudit = function(req, res) {
   res.json(companyAudit)
+}
+
+exports.exportWins = function(req, res) {
+  res.json(exportWins)
 }
