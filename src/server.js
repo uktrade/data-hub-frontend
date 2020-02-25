@@ -12,7 +12,6 @@ const enforce = require('express-sslify')
 const favicon = require('serve-favicon')
 const cookieParser = require('cookie-parser')
 const minifyHTML = require('express-minify-html')
-const proxy = require('http-proxy-middleware')
 const Joi = require('@hapi/joi')
 
 const config = require('./config')
@@ -39,6 +38,7 @@ const reporter = require('./lib/reporter')
 const permissions = require('./middleware/permissions')
 const envSchema = require('./config/envSchema')
 const flashWithBody = require('./middleware/flash-with-body')
+const apiProxy = require('./middleware/api-proxy')
 
 const routers = require('./apps/routers')
 
@@ -126,33 +126,7 @@ app.use(features)
 app.use(userLocals)
 app.use(headers)
 app.use(store())
-
-const API_PROXY_PATH = '/api-proxy'
-app.use(
-  proxy(
-    config.apiProxyWhitelist.map((pth) => path.join(API_PROXY_PATH, pth)),
-    {
-      changeOrigin: true,
-      target: config.apiRoot,
-      pathRewrite: {
-        ['^' + API_PROXY_PATH]: '',
-      },
-      onProxyReq: (proxyReq, req) => {
-        proxyReq.setHeader('authorization', `Bearer ${req.session.token}`)
-        // this is required to be able to handle POST requests and avoid a conflict with bodyParser
-        // issue here -> https://github.com/chimurai/http-proxy-middleware/issues/320
-        if (req.body) {
-          let bodyData = JSON.stringify(req.body)
-          // incase if content-type is application/x-www-form-urlencoded -> we need to change to application/json
-          proxyReq.setHeader('Content-Type', 'application/json')
-          proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData))
-          // stream the content
-          proxyReq.write(bodyData)
-        }
-      },
-    }
-  )
-)
+apiProxy(app)
 // csrf middleware needs to come after the proxy path as it is not needed for the proxy and would block requests
 app.use(csrf())
 app.use(csrfToken())
