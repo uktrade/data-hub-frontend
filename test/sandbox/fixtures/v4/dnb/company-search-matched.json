@@ -6,7 +6,7 @@
   "results": [
     {
       "dnb_company": {
-        "duns_number": "22222222",
+        "duns_number": "222222222",
         "primary_name": "Some matched company",
         "trading_names": [
           "Some matched company trading name"
