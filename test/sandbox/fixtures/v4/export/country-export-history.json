@@ -1,0 +1,41 @@
+{
+  "count": 2,
+  "results": [
+    {
+      "history_user": {
+        "id": "ed5b807d-9674-4424-b954-411f4aac6db1",
+        "name": "DIT Staff"
+      },
+      "country": {
+        "id": "975f66a0-5d95-e211-a939-e4115bead28a",
+        "name": "Andorra"
+      },
+      "company": {
+        "id": "960e1fa9-cc25-478c-a548-a2e2047319bb",
+        "name": "One List Subsidiary Ltd"
+      },
+      "id": "f3824d00-dcb9-405e-8160-128723a4f234",
+      "history_type": "insert",
+      "history_date": "2020-02-06T16:06:30.472874+00:00",
+      "status": "currently_exporting"
+    },
+    {
+      "history_user": {
+        "id": "ed5b807d-9674-4424-b954-411f4aac6db1",
+        "name": "DIT Staff"
+      },
+      "country": {
+        "id": "975f66a0-5d95-e211-a939-e4115bead28a",
+        "name": "Andorra"
+      },
+      "company": {
+        "id": "960e1fa9-cc25-478c-a548-a2e2047319bb",
+        "name": "One List Subsidiary Ltd"
+      },
+      "id": "15ea74cf-e384-4002-a5d9-8d13ea30ca2e",
+      "history_type": "delete",
+      "history_date": "2020-02-06T15:41:11.802460+00:00",
+      "status": "future_interest"
+    }
+  ]
+}

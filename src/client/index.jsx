@@ -22,12 +22,12 @@ import LargeCapitalProfileCollection from '../apps/investments/client/LargeCapit
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
 import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
-import ExportsFullHistory from '../apps/companies/apps/exports/client/ExportsFullHistory'
 import ReferralDetails from '../apps/referrals/apps/details/client/ReferralDetails'
 import ReferralHelp from '../apps/referrals/apps/help/client/ReferralHelp'
 import ValidatedInput from './components/ValidatedInput'
 import SendReferralForm from '../apps/referrals/apps/send-referral/client/SendReferralForm'
 import sendReferral from '../apps/referrals/apps/send-referral/client/reducer'
+import ExportsHistory from '../apps/companies/apps/exports/client/ExportsHistory'
 
 import tasksSaga from './components/Task/saga'
 import tasks from './components/Task/reducer'
@@ -164,7 +164,7 @@ function App() {
         {(props) => <SendReferralForm {...props} />}
       </Mount>
       <Mount selector="#company-export-full-history">
-        {(props) => <ExportsFullHistory {...props} />}
+        {(props) => <ExportsHistory {...props} />}
       </Mount>
       <Mount selector="#referral-details">
         {(props) => <ReferralDetails {...props} />}

@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-
 import Details from '@govuk-react/details'
 import Link from '@govuk-react/link'
 import { H3 } from '@govuk-react/heading'
 import { SummaryTable } from 'data-hub-components'
-import SecondaryButton from '../../../../../client/components/SecondaryButton'
 
+import SecondaryButton from '../../../../../client/components/SecondaryButton'
 import urls from '../../../../../lib/urls'
 
 const StyledSummaryTable = styled(SummaryTable)`
@@ -84,27 +83,30 @@ const ExportsIndex = ({
       </Details>
 
       <H3>Export countries information</H3>
-      <Link href={urls.companies.exports.history(companyId)}>
+      <Link href={urls.companies.exports.history.index(companyId)}>
         View full export countries history
       </Link>
       <StyledSummaryTable>
-        {exportCountriesInformation.map(({ name, value }) => (
+        {exportCountriesInformation.map(({ name, values }) => (
           <SummaryTable.Row heading={name} key={name}>
             <>
-              {value
-                ? value.map((country, i) => (
-                    <React.Fragment key={country.id}>
-                      <Link
-                        href={urls.companies.exports.countryHistory(
-                          companyId,
-                          country.id
-                        )}
-                      >
-                        {country.name}
-                      </Link>
-                      {i !== value.length - 1 ? ', ' : null}
-                    </React.Fragment>
-                  ))
+              {values?.length
+                ? values.map(({ id, name }, i) => {
+                    const isLastItem = i === values.length - 1
+                    return (
+                      <React.Fragment key={id}>
+                        <Link
+                          href={urls.companies.exports.history.country(
+                            companyId,
+                            id
+                          )}
+                        >
+                          {name}
+                        </Link>
+                        {isLastItem ? null : ', '}
+                      </React.Fragment>
+                    )
+                  })
                 : 'None'}
             </>
           </SummaryTable.Row>

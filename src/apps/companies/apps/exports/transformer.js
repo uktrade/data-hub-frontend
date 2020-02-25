@@ -4,12 +4,15 @@ const { exportDetailsLabels, exportPotentialLabels } = require('../../labels')
 const { EXPORT_INTEREST_STATUS } = require('../../../constants')
 
 function getCountriesFields(company) {
-  const buckets = groupExportCountries(company.export_countries)
+  const groupedExportCountries = groupExportCountries(company.export_countries)
 
   return {
-    exportToCountries: buckets[EXPORT_INTEREST_STATUS.EXPORTING_TO],
-    futureInterestCountries: buckets[EXPORT_INTEREST_STATUS.FUTURE_INTEREST],
-    noInterestCountries: buckets[EXPORT_INTEREST_STATUS.NOT_INTERESTED],
+    exportToCountries:
+      groupedExportCountries[EXPORT_INTEREST_STATUS.EXPORTING_TO],
+    futureInterestCountries:
+      groupedExportCountries[EXPORT_INTEREST_STATUS.FUTURE_INTEREST],
+    noInterestCountries:
+      groupedExportCountries[EXPORT_INTEREST_STATUS.NOT_INTERESTED],
   }
 }
 
@@ -43,15 +46,15 @@ module.exports = {
     const exportCountriesInformation = [
       {
         name: exportDetailsLabels.exportToCountries,
-        value: exportToCountries,
+        values: exportToCountries,
       },
       {
         name: exportDetailsLabels.futureInterestCountries,
-        value: futureInterestCountries,
+        values: futureInterestCountries,
       },
       {
         name: exportDetailsLabels.noInterestCountries,
-        value: noInterestCountries,
+        values: noInterestCountries,
       },
     ]
 

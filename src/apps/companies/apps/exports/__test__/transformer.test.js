@@ -33,9 +33,9 @@ describe('transformCompanyToExportDetailsView', () => {
           value: undefined,
         },
         exportCountriesInformation: [
-          { name: 'Currently exporting to', value: [] },
-          { name: 'Future countries of interest', value: [] },
-          { name: 'Countries of no interest', value: [] },
+          { name: 'Currently exporting to', values: [] },
+          { name: 'Future countries of interest', values: [] },
+          { name: 'Countries of no interest', values: [] },
         ],
       })
     })
@@ -87,13 +87,13 @@ describe('transformCompanyToExportDetailsView', () => {
         exportCountriesInformation: [
           {
             name: 'Currently exporting to',
-            value: [{ id: '1234', name: 'France' }],
+            values: [{ id: '1234', name: 'France' }],
           },
           {
             name: 'Future countries of interest',
-            value: [{ id: '4321', name: 'Germany' }],
+            values: [{ id: '4321', name: 'Germany' }],
           },
-          { name: 'Countries of no interest', value: [] },
+          { name: 'Countries of no interest', values: [] },
         ],
       })
     })
@@ -160,7 +160,7 @@ describe('transformCompanyToExportDetailsView', () => {
           exportCountriesInformation: [
             {
               name: 'Currently exporting to',
-              value: [
+              values: [
                 {
                   id: '1234',
                   name: 'France',
@@ -173,12 +173,12 @@ describe('transformCompanyToExportDetailsView', () => {
             },
             {
               name: 'Future countries of interest',
-              value: [
+              values: [
                 { id: '4321', name: 'Germany' },
                 { id: '4123', name: 'Sweden' },
               ],
             },
-            { name: 'Countries of no interest', value: [] },
+            { name: 'Countries of no interest', values: [] },
           ],
         })
       })
@@ -237,6 +237,12 @@ describe('transformCompanyToExportDetailsView', () => {
 
   context('when multiple countries have been added in all categories', () => {
     it('should show the countries', () => {
+      const getCountriesByStatus = (values, status) =>
+        values
+          .filter((item) => item.status === status)
+          .map((item) => item.country)
+          .sort((a, b) => a.name.localeCompare(b.name))
+
       const { exportCountries } = generateExportCountries()
 
       const company = {
@@ -256,30 +262,24 @@ describe('transformCompanyToExportDetailsView', () => {
         exportCountriesInformation: [
           {
             name: 'Currently exporting to',
-            value: exportCountries
-              .filter(
-                (item) => item.status === EXPORT_INTEREST_STATUS.EXPORTING_TO
-              )
-              .map((item) => item.country)
-              .sort((a, b) => (a.name < b.name ? -1 : 0)),
+            values: getCountriesByStatus(
+              exportCountries,
+              EXPORT_INTEREST_STATUS.EXPORTING_TO
+            ),
           },
           {
             name: 'Future countries of interest',
-            value: exportCountries
-              .filter(
-                (item) => item.status === EXPORT_INTEREST_STATUS.FUTURE_INTEREST
-              )
-              .map((item) => item.country)
-              .sort((a, b) => (a.name < b.name ? -1 : 0)),
+            values: getCountriesByStatus(
+              exportCountries,
+              EXPORT_INTEREST_STATUS.FUTURE_INTEREST
+            ),
           },
           {
             name: 'Countries of no interest',
-            value: exportCountries
-              .filter(
-                (item) => item.status === EXPORT_INTEREST_STATUS.NOT_INTERESTED
-              )
-              .map((item) => item.country)
-              .sort((a, b) => (a.name < b.name ? -1 : 0)),
+            values: getCountriesByStatus(
+              exportCountries,
+              EXPORT_INTEREST_STATUS.NOT_INTERESTED
+            ),
           },
         ],
       })
