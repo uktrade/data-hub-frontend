@@ -39,9 +39,37 @@ The aim of this test suite is perform functional tests of frontend components in
 
 ### Setup
 
-Pre-requisites:
+You will need to run the sandbox api to run functional tests.
 
-Ensure you have [node](https://nodejs.org/en/download/) v10 installed then install dependencies:
+Sandbox is as a light replacement for API backend and it's used only by functional tests.
+
+### Using sandbox within docker (preferred method)
+
+1. cd into `data-hub-frontend` and run `docker-compose up`. This will start up the sandbox api in conjunction with the frontend, mock-sso, webpack and redis. You don't need to rebuild the image when you make changes.
+
+### Using sandbox within docker with local frontend
+
+1. cd into `test/sandbox` and run `docker run --rm --name data-hub-sandbox -it -p 8001:8001 data-hub-sandbox`.
+
+2. Change your `API_ROOT` in your env file to point to `http://mock-backend:8001` and then run the frontend locally with `yarn develop`.
+
+3. If you make changes to sandbox rebuild docker with `docker build -t data-hub-sandbox`.
+
+### Using sandbox on host machine
+
+1. Install sandbox, for more info see [instructions](https://github.com/getsandbox/sandbox)
+
+```bash
+wget https://s3.amazonaws.com/sandbox-binaries/runtime-binary.tar \
+  && tar -C /usr/local/bin -xzvf runtime-binary.tar \
+  && rm runtime-binary.tar
+```
+
+2. Start sandbox on port `8001`:
+
+   ```bash
+   sandbox run --port="8001" --watch=true
+   ```
 
 `$ yarn`
 
@@ -50,6 +78,10 @@ Ensure you have [node](https://nodejs.org/en/download/) v10 installed then insta
 Notice that before running the tests the application should be up and running.
 
 By default cypress will run on electron headlessly, you can read more about it [here](https://docs.cypress.io/guides/core-concepts/launching-browsers.html#Electron-Browser)
+
+If you are not running the sandbox through docker using the preferred method and want to run against your native implementation you will need to pass an additional argument to the below commands:
+
+`--config baseUrl=http://localhost:3000`
 
 Execute all the tests on `specs` in chrome browser:
 
@@ -153,40 +185,6 @@ Updating the baseline consists in 2 steps:
 - 1:. Run the visual tests on your machine, if the baseline is no longer the correct representation of the page in test then execute step #2:
 
 - 2:. Run `$ yarn test:visual:update` to update the failed tests with updated images of how the page in test should look like.
-
-## Sandbox (API mocks)
-
-Sandbox is as a light replacement for API backend and it's used only by functional tests.
-
-### Using sandbox within docker (preferred method)
-
-1. cd into `data-hub-frontend` and run `docker-compose up`. This will start up the sandbox api in conjunction with the frontend. Make sure nothing else is running at ports 8001 and 3000.
-
-2. If you make changes to sandbox you will need to rebuild docker with `docker-compose up -d --no-deps --build mock-backend` before running it again with `docker-compose up`. If you've also made changes to the front end and need to rebuild the full stack, use `docker-compose up --build --force-recreate`.
-
-### Using sandbox within docker with local frontend
-
-1. cd into `test/sandbox` and run `docker run --rm --name data-hub-sandbox -it -p 8001:8001 data-hub-sandbox`.
-
-2. Change your `API_ROOT` in your env file to point to `http://mock-backend:8001` and then run the frontend locally with `yarn develop`.
-
-3. If you make changes to sandbox rebuild docker with `docker build -t data-hub-sandbox`.
-
-### Using sandbox on host machine
-
-1. Install sandbox, for more info see [instructions](https://github.com/getsandbox/sandbox)
-
-```bash
-wget https://s3.amazonaws.com/sandbox-binaries/runtime-binary.tar \
-  && tar -C /usr/local/bin -xzvf runtime-binary.tar \
-  && rm runtime-binary.tar
-```
-
-2. Start sandbox on port `8001`:
-
-   ```bash
-   sandbox run --port="8001" --watch=true
-   ```
 
 ### Creating Docker container for CircleCI
 
