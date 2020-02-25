@@ -109,11 +109,10 @@ module.exports = {
     exports: {
       index: url('/companies', '/:companyId/exports'),
       edit: url('/companies', '/:companyId/exports/edit'),
-      history: url('/companies', '/:companyId/exports/history'),
-      countryHistory: url(
-        '/companies',
-        '/:companyId/exports/history/:countryId'
-      ),
+      history: {
+        index: url('/companies', '/:companyId/exports/history'),
+        country: url('/companies', '/:companyId/exports/history/:countryId'),
+      },
     },
     hierarchies: {
       ghq: {

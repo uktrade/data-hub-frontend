@@ -127,18 +127,18 @@ describe('urls', () => {
         `/companies/${companyId}/exports/edit`
       )
 
-      expect(urls.companies.exports.history.route).to.equal(
+      expect(urls.companies.exports.history.index.route).to.equal(
         '/:companyId/exports/history'
       )
-      expect(urls.companies.exports.history(companyId)).to.equal(
+      expect(urls.companies.exports.history.index(companyId)).to.equal(
         `/companies/${companyId}/exports/history`
       )
 
-      expect(urls.companies.exports.countryHistory.route).to.equal(
+      expect(urls.companies.exports.history.country.route).to.equal(
         '/:companyId/exports/history/:countryId'
       )
       expect(
-        urls.companies.exports.countryHistory(companyId, countryId)
+        urls.companies.exports.history.country(companyId, countryId)
       ).to.equal(`/companies/${companyId}/exports/history/${countryId}`)
 
       expect(urls.companies.subsidiaries.index(companyId)).to.equal(
