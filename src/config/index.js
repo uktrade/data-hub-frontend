@@ -52,13 +52,6 @@ const config = {
   noCache: envVars.CACHE_ASSETS ? false : isDev,
   port: envVars.PORT,
   apiRoot: envVars.API_ROOT,
-  apiProxyWhitelist: [
-    '/v4/company-list',
-    '/v4/company-list/:id/item',
-    '/v4/search/export-country-history',
-    '/v4/company-referral/',
-    '/v4/company-referral/:id',
-  ],
   api: {
     authUrl: '/token/',
   },
