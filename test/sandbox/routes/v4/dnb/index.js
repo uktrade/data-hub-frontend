@@ -5,15 +5,15 @@ var companySearchNotMatched = require('../../../fixtures/v4/dnb/company-search-n
 var companyCreateInvestigation = require('../../../fixtures/v4/dnb/company-create-investigation.json')
 
 exports.companyCreate = function(req, res) {
-  if (req.body.duns_number === '11111111') {
+  if (req.body.duns_number === '111111111') {
     res.json(companyCreate)
   }
 }
 
 exports.companySearch = function(req, res) {
-  if (req.body.duns_number === '11111111') {
+  if (req.body.duns_number === '111111111') {
     return res.json(companySearchNotMatched)
-  } else if (req.body.duns_number === '22222222') {
+  } else if (req.body.duns_number === '222222222') {
     return res.json(companySearchMatched)
   }
   return res.json(companySearch)

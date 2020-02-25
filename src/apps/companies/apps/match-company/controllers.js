@@ -9,6 +9,14 @@ const { searchDnbCompanies } = require('../../../../modules/search/services')
 const ZENDESK_TICKET_TAG_MATCH_REQUEST = 'dnb_match_request'
 const ZENDESK_TICKET_TYPE_TASK = 'task'
 
+function getCompanyAbsoluteUrl(req, companyId) {
+  return url.format({
+    protocol: req.protocol,
+    host: req.get('host'),
+    pathname: urls.companies.detail(companyId),
+  })
+}
+
 function getCountries(token) {
   return getOptions(token, 'country', {
     transformer: ({ id, name, iso_alpha2_code }) => ({
@@ -105,15 +113,11 @@ async function renderMatchConfirmation(req, res, next) {
 function createMatchRequestMessage(req, res) {
   const { company, user } = res.locals
   const { dnbCompany } = req.body
-  const companyUrl = url.format({
-    protocol: req.protocol,
-    host: req.get('host'),
-    pathname: urls.companies.detail(company.id),
-  })
+  const companyUrl = getCompanyAbsoluteUrl(req, company.id)
 
   const messageBody =
     `User ${user.name} requested a match of ${company.name}` +
-    `(${companyUrl}) with the following D&B company:\n` +
+    ` (${companyUrl}) with the following D&B company:\n` +
     `Registered company name: ${dnbCompany.primary_name}\n` +
     `Trading name(s): ${
       !isEmpty(company.trading_names) ? company.trading_names.join(', ') : 'N/A'
@@ -210,10 +214,54 @@ async function renderCannotFindMatch(req, res, next) {
   }
 }
 
+async function submitMergeRequest(req, res, next) {
+  try {
+    const ticket = createMergeRequestMessage(req, res)
+    const result = await postToZenDesk(ticket)
+
+    req.flash(
+      'success',
+      'Company merge requested. Thanks for keeping Data Hub running smoothly.'
+    )
+    res.json({ message: 'OK', ticket: get(result, 'data.ticket.id') })
+  } catch (error) {
+    next(error)
+  }
+}
+
+function createMergeRequestMessage(req, res) {
+  const { company, user } = res.locals
+  const { dnbCompany } = req.body
+  const dataHubCompanyUrl = getCompanyAbsoluteUrl(req, company.id)
+  const duplicatedCompanyUrl = getCompanyAbsoluteUrl(
+    req,
+    dnbCompany.datahub_company_id
+  )
+
+  const messageBody =
+    `User ${user.name} requested a merge of ${company.name} (${dataHubCompanyUrl})` +
+    ` with ${dnbCompany.primary_name} (${duplicatedCompanyUrl})`
+
+  // See Zendesk API docs: https://developer.zendesk.com/rest_api/docs/support/tickets
+  return {
+    type: ZENDESK_TICKET_TYPE_TASK,
+    requester: {
+      name: `Data Hub user - ${user.name}`,
+      email: user.email,
+    },
+    subject: `Company merge request of ${company.name} with ${dnbCompany.primary_name}`,
+    comment: {
+      body: messageBody,
+    },
+    tags: [ZENDESK_TICKET_TAG_MATCH_REQUEST],
+  }
+}
+
 module.exports = {
   renderMatchConfirmation,
   submitMatchRequest,
   renderFindCompanyForm,
   findDnbCompany,
   renderCannotFindMatch,
+  submitMergeRequest,
 }

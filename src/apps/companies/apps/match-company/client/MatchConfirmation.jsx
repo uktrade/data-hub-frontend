@@ -30,10 +30,7 @@ const StyledList = styled(UnorderedList)`
 
 async function onMatchSubmit({ company, dnbCompany, csrfToken }) {
   await axios.post(
-    `${urls.companies.match.confirmation(
-      company.id,
-      dnbCompany.duns_number
-    )}?_csrf=${csrfToken}`,
+    `${urls.companies.match.link(company.id)}?_csrf=${csrfToken}`,
     {
       dnbCompany,
     }
@@ -48,7 +45,13 @@ function MatchConfirmation({
   csrfToken,
 }) {
   if (dnbCompanyIsMatched) {
-    return <MatchDuplicate company={company} dnbCompany={dnbCompany} />
+    return (
+      <MatchDuplicate
+        company={company}
+        dnbCompany={dnbCompany}
+        csrfToken={csrfToken}
+      />
+    )
   }
 
   return (
