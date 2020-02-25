@@ -435,6 +435,11 @@ Sandbox.define(
   v4Company.manageAdviser
 )
 Sandbox.define('/v4/company/{companyId}/audit', 'GET', v4Company.companyAudit)
+Sandbox.define(
+  '/v4/company/{companyId}/export-wins',
+  'GET',
+  v4Company.exportWins
+)
 
 // V4 DnB
 Sandbox.define('/v4/dnb/company-create', 'POST', v4Dnb.companyCreate)
