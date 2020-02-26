@@ -35,21 +35,27 @@ const createCountry = (item) => ({
   ],
 })
 
-const transformFullExportHistory = ({ count, results }) => ({
-  count,
-  results: results
-    .filter((result) => WHITELISTED_HISTORY_TYPES.includes(result.history_type))
-    .map(createCountry),
-})
+const transformFullExportHistory = ({ results }, offset) => {
+  const cleanedResults = results.filter((result) =>
+    WHITELISTED_HISTORY_TYPES.includes(result.history_type)
+  )
+  const count = cleanedResults.length + offset
+
+  return {
+    count,
+    results: cleanedResults.slice(0, 10).map(createCountry),
+  }
+}
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 
-export const fetchExportsHistory = ({ companyId, activePage }) =>
-  axios
+export const fetchExportsHistory = ({ companyId, activePage }) => {
+  const offset = activePage * 10 - 10
+  return axios
     .post('/api-proxy/v4/search/export-country-history', {
       company: companyId,
-      limit: 10,
-      offset: activePage * 10 - 10,
+      offset,
     })
     .catch(handleError)
-    .then(({ data }) => transformFullExportHistory(data))
+    .then(({ data }) => transformFullExportHistory(data, offset))
+}
