@@ -35,7 +35,9 @@ const createCountry = (item) => ({
 
 const transformFullExportHistory = ({ count, results }) => ({
   count,
-  results: results.map(createCountry),
+  results: results
+    .filter((result) => result.history_type === 'insert' || 'delete')
+    .map(createCountry),
 })
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
