@@ -39,10 +39,9 @@ const transformFullExportHistory = ({ results }, offset) => {
   const cleanedResults = results.filter((result) =>
     WHITELISTED_HISTORY_TYPES.includes(result.history_type)
   )
-  const count = cleanedResults.length + offset
 
   return {
-    count,
+    count: cleanedResults.length + offset,
     results: cleanedResults.slice(0, 10).map(createCountry),
   }
 }
