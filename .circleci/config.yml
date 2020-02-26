@@ -1,13 +1,13 @@
 version: 2 # Do not upgrade to 2.1 until CircleCI CLI supports it
 aliases:
-  - &redis_version              redis:3.2.10
-  - &postgres_version           postgres:10
-  - &mi_postgres_version        postgres:9.6
-  - &elasticsearch_version      docker.elastic.co/elasticsearch/elasticsearch:6.8.2
-  - &api_image                  quay.io/uktrade/data-hub-api
-  - &oauth2_dit_staff_token     ditStaffToken
-  - &oauth2_da_staff_token      daStaffToken
-  - &oauth2_lep_staff_token     lepStaffToken
+  - &redis_version redis:3.2.10
+  - &postgres_version postgres:10
+  - &mi_postgres_version postgres:9.6
+  - &elasticsearch_version docker.elastic.co/elasticsearch/elasticsearch:6.8.2
+  - &api_image quay.io/uktrade/data-hub-api
+  - &oauth2_dit_staff_token ditStaffToken
+  - &oauth2_da_staff_token daStaffToken
+  - &oauth2_lep_staff_token lepStaffToken
 
   - &restore_yarn_cache
     restore_cache:
@@ -61,7 +61,7 @@ aliases:
     OAUTH2_USER_PROFILE_URL: http://localhost:8080/api/v1/user/me
     OAUTH2_AUTH_URL: http://localhost:8080/o/authorize
     OAUTH2_REDIRECT_URL: http://localhost:3000/oauth/callback
-    OAUTH2_LOGOUT_URL:  http://localhost:8080/o/logout
+    OAUTH2_LOGOUT_URL: http://localhost:8080/o/logout
     OAUTH2_CLIENT_SECRET: youAintSeenMyRight
     OAUTH2_CLIENT_ID: randomClientId
     SESSION_SECRET: theStrongestAvenger
@@ -78,7 +78,7 @@ aliases:
     FIND_EXPORTERS_URL: http://exporters.example.com
     ARCHIVED_DOCUMENTS_BASE_URL: http://documents.example.com
     POSTCODE_KEY: fakeKey
-    CACHE_ASSETS: "true"
+    CACHE_ASSETS: 'true'
 
   - &data_hub_functional_envs
     <<: *data_hub_base_envs
@@ -92,8 +92,7 @@ aliases:
   # Data hub base docker container
   - &docker_data_hub_base
     image: ukti/data-hub-frontend-test:3.2.1
-    environment:
-      *data_hub_base_envs
+    environment: *data_hub_base_envs
 
   # Data hub redis container
   - &docker_redis
@@ -148,7 +147,7 @@ aliases:
       REDIS_CACHE_DB: 5
       REDIS_CELERY_DB: 6
       SSO_ENABLED: 'True'
-      RESOURCE_SERVER_INTROSPECTION_URL: http://localhost:8080/o/introspect  # required but not used as user with token has been created in backend setup script
+      RESOURCE_SERVER_INTROSPECTION_URL: http://localhost:8080/o/introspect # required but not used as user with token has been created in backend setup script
       RESOURCE_SERVER_AUTH_TOKEN: sso-token
       WEB_CONCURRENCY: 2
       ACTIVITY_STREAM_ACCESS_KEY_ID: some-id
@@ -290,7 +289,7 @@ jobs:
       - *wait_for_frontend
       - run:
           name: Run functional tests
-          command: yarn test:functional --browser chrome --parallel --record --key $CYPRESS_DASHBOARD_KEY
+          command: yarn test:functional --config baseUrl=http://localhost:3000 --browser chrome --parallel --record --key $CYPRESS_DASHBOARD_KEY
           when: always
       - store_artifacts:
           path: cypress/screenshots
