@@ -1,30 +1,51 @@
 /* eslint-disable camelcase */
 
-const { castArray, get, pick, omitBy, isUndefined } = require('lodash')
+const { castArray, get, isEmpty, omitBy, pick, isUndefined } = require('lodash')
+
+const UNMATCHED_COMPANY_EDITABLE_FIELDS = [
+  'business_type',
+  'employee_range',
+  'turnover_range',
+  'trading_names',
+  'vat_number',
+  'website',
+  'description',
+  'uk_region',
+  'sector',
+  'headquarter_type',
+  'address',
+]
+
+const MATCHED_COMPANY_EDITABLE_FIELDS = ['description', 'uk_region', 'sector']
+
+const MATCHED_COMPANY_VERIFIABLE_FIELDS = [
+  'name',
+  'number_of_employees',
+  'turnover',
+  'trading_names',
+  'vat_number',
+  'website',
+  'address1',
+  'address2',
+  'city',
+  'county',
+  'postcode',
+]
 
 const transformCompanyToForm = (company) => {
+  const whitelistedFields = company.duns_number
+    ? [...MATCHED_COMPANY_EDITABLE_FIELDS, ...MATCHED_COMPANY_VERIFIABLE_FIELDS]
+    : UNMATCHED_COMPANY_EDITABLE_FIELDS
+
   return omitBy(
     {
-      ...pick(company, [
-        'id',
-        'duns_number',
-        'company_number',
-        'trading_names',
-        'vat_number',
-        'website',
-        'description',
-        'registered_address',
-        'one_list_group_tier',
-        'uk_based',
-      ]),
+      ...pick(company, whitelistedFields),
       address1: get(company, 'address.line_1'),
       address2: get(company, 'address.line_2'),
       city: get(company, 'address.town'),
       county: get(company, 'address.county'),
       postcode: get(company, 'address.postcode'),
-      country: get(company, 'address.country'),
-      business_type: get(company.business_type, 'name'),
-      headquarter_type: get(company.headquarter_type, 'id', 'not_headquarters'),
+      headquarter_type: get(company.headquarter_type, 'id', ''),
       uk_region: get(company.uk_region, 'id'),
       sector: get(company.sector, 'id'),
       employee_range: get(company.employee_range, 'id'),
@@ -35,39 +56,45 @@ const transformCompanyToForm = (company) => {
   )
 }
 
-const transformFormToCompany = (values) => {
+const transformFormToApi = (company, formValues) => {
+  const whitelistedFields = company.duns_number
+    ? MATCHED_COMPANY_EDITABLE_FIELDS
+    : UNMATCHED_COMPANY_EDITABLE_FIELDS
+
   return omitBy(
     {
-      ...pick(values, [
-        'vat_number',
-        'turnover_range',
-        'employee_range',
-        'website',
-        'description',
-        'uk_region',
-        'sector',
-        'headquarter_type',
-      ]),
-      trading_names: values.trading_names
-        ? castArray(values.trading_names)
+      ...formValues,
+      trading_names: formValues.trading_names
+        ? castArray(formValues.trading_names)
         : [],
-      headquarter_type:
-        values.headquarter_type !== 'not_headquarters'
-          ? values.headquarter_type
-          : '',
+      headquarter_type: formValues.headquarter_type || '',
       address: {
-        line_1: values.address1,
-        line_2: values.address2 || '',
-        town: values.city,
-        county: values.county || '',
-        postcode: values.postcode,
+        line_1: formValues.address1,
+        line_2: formValues.address2 || '',
+        town: formValues.city,
+        county: formValues.county || '',
+        postcode: formValues.postcode,
       },
     },
-    isUndefined
+    (fieldValue, fieldName) =>
+      isUndefined(fieldValue) || !whitelistedFields.includes(fieldName)
+  )
+}
+
+const transformFormToZendesk = (company, formValues) => {
+  const originalFormValues = transformCompanyToForm(company)
+  return omitBy(
+    formValues,
+    (fieldValue, fieldName) =>
+      isUndefined(fieldValue) ||
+      isEmpty(fieldValue) ||
+      !MATCHED_COMPANY_VERIFIABLE_FIELDS.includes(fieldName) ||
+      originalFormValues[fieldName] === formValues[fieldName]
   )
 }
 
 module.exports = {
   transformCompanyToForm,
-  transformFormToCompany,
+  transformFormToApi,
+  transformFormToZendesk,
 }
