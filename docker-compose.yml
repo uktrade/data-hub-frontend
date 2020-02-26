@@ -4,15 +4,14 @@ services:
     build:
       context: .
     ports:
-      - 3000:3000
-      - 9229:9229
+      - 3001:3000
     depends_on:
       - redis
       - mock-backend
       - mock-sso
     environment:
       NODE_ENV: development
-      API_ROOT: ${API_ROOT:-http://mock-backend:8001}
+      API_ROOT: http://mock-backend:8001
       QA_HOST: http://localhost:3000
       DATA_HUB_BACKEND_ACCESS_KEY_ID: frontend-key-id
       DATA_HUB_BACKEND_SECRET_ACCESS_KEY: frontend-key
@@ -38,18 +37,12 @@ services:
       - ./config:/usr/src/app/config
       - ./src:/usr/src/app/src
       - ./test:/usr/src/app/test
-    # Must explicitly kill the process running under port 9229 due to an
-    # incompatibility between nodemon and docker detailed here:
-    # https://github.com/remy/nodemon/issues/1476
     entrypoint: dockerize -wait tcp://redis:6379 -wait tcp://mock-backend:8001 -wait tcp://mock-sso:8080 -timeout 180s
-    command: ./node_modules/.bin/nodemon $NODE_DEBUG_OPTION --delay 80ms --exec 'fuser -k 9229/tcp; sleep 0.1; node --inspect=0.0.0.0:9229 src/server.js' -L
+    command: yarn develop
 
   webpack:
     build:
       context: .
-    ports:
-      - 3001:3001
-      - 3002:3002
     depends_on:
       - frontend
     environment:
@@ -62,8 +55,6 @@ services:
 
   mock-sso:
     image: quay.io/uktrade/mock-sso:latest
-    ports:
-      - 8080:8080
     environment:
       MOCK_SSO_SCOPE: data-hub:internal-front-end
       MOCK_SSO_TOKEN: ditStaffToken
@@ -72,6 +63,8 @@ services:
   mock-backend:
     build:
       context: ./test/sandbox
+    volumes:
+      - './test/sandbox:/usr/src/app/test/sandbox'
     ports:
       - 8001:8001
 
