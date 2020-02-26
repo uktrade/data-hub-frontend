@@ -377,8 +377,7 @@ describe('Companies Export Countries', () => {
       )
     })
 
-    it('should filter out the update and show 0 results', () => {
-      cy.contains('0 results')
+    it('should filter out the update', () => {
       cy.get(countrySelectors.listItemHeadings).should('have.length', 0)
     })
   })
