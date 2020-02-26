@@ -1,10 +1,7 @@
 import axios from 'axios'
 import { DateUtils } from 'data-hub-components'
 
-const WHITELISTED_HISTORY_TYPES = {
-  insert: 'insert',
-  delete: 'delete',
-}
+const WHITELISTED_HISTORY_TYPES = ['insert', 'delete']
 
 const COUNTRY_HISTORY_TYPE_TEXT = {
   insert: 'added to',
