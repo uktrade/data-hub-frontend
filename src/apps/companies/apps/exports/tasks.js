@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { DateUtils } from 'data-hub-components'
 
+const WHITELISTED_HISTORY_TYPES = ['insert', 'delete']
+
 const COUNTRY_HISTORY_TYPE_TEXT = {
   insert: 'added to',
   delete: 'removed from',
@@ -35,7 +37,9 @@ const createCountry = (item) => ({
 
 const transformFullExportHistory = ({ count, results }) => ({
   count,
-  results: results.map(createCountry),
+  results: results
+    .filter((result) => WHITELISTED_HISTORY_TYPES.includes(result.history_type))
+    .map(createCountry),
 })
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
