@@ -369,4 +369,17 @@ describe('Companies Export Countries', () => {
         .should('contain', 'Date 6 Feb 2020, 3:41pm')
     })
   })
+
+  context('when the only item is an "update" item', () => {
+    before(() => {
+      cy.visit(
+        urls.companies.exports.history(fixtures.company.dnbSubsidiary.id)
+      )
+    })
+
+    it('should filter out the update and show 0 results', () => {
+      cy.contains('0 results')
+      cy.get(countrySelectors.listItemHeadings).should('have.length', 0)
+    })
+  })
 })
