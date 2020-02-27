@@ -203,7 +203,8 @@ module.exports = {
   },
   support: url('/support'),
   referrals: {
-    index: url('/referral'),
-    details: url('/referral', '/referral/:referralId'),
+    index: url('/referrals'),
+    details: url('/referrals', '/:referralId'),
+    help: url('/referrals', '/:referralId/help'),
   },
 }

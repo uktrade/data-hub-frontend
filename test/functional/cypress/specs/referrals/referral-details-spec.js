@@ -1,11 +1,17 @@
-const { assertBreadcrumbs } = require('../../support/assertions')
 const selectors = require('../../../../selectors')
-const urls = require('../../../../../src/lib/urls')
+const { assertBreadcrumbs } = require('../../support/assertions')
 
 describe('Referral details', () => {
   context('when viewing referral details', () => {
     before(() => {
-      cy.visit(urls.referrals.details.route)
+      cy.visit('/referrals/cc5b9953-894c-44b4-a4ac-d0f6a6f6128f')
+    })
+
+    it('should render breadcrumbs', () => {
+      assertBreadcrumbs({
+        Home: '/',
+        Referral: null,
+      })
     })
 
     it('should render the heading', () => {
