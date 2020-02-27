@@ -312,12 +312,11 @@ describe('Match a company', () => {
       )
     })
 
-    it('displays the "Company record update request sent" flash message', () => {
-      cy.get(selectors.localHeader().flash).should(
-        'contain.text',
-        'Verification requested. Some business details may be wrong.' +
+    it('displays the "Verification requested" flash message and the ID used in GA', () => {
+      cy.contains(
+        'Verification requested.Some business details may be wrong. ' +
           'Once verified, the warning message will disappear.'
-      )
+      ).should('have.attr', 'id', 'message-company-matched')
     })
   })
 
