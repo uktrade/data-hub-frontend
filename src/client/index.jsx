@@ -24,6 +24,7 @@ import CompanyBusinessDetails from '../apps/companies/apps/business-details/clie
 import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
 import ExportsFullHistory from '../apps/companies/apps/exports/client/ExportsFullHistory'
 import ReferralDetails from '../apps/referrals/client/referralDetails'
+import ValidatedInput from './components/ValidatedInput'
 
 import tasksSaga from './components/Task/saga'
 import tasks from './components/Task/reducer'
@@ -47,6 +48,7 @@ const store = createStore(
     [COMPANY_LISTS_STATE_ID]: companyListsReducer,
     [EXPORTS_HISTORY_ID]: exportsHistoryReducer,
     [REFERRALS_DETAILS_STATE_ID]: referralsReducer,
+    ...ValidatedInput.reducerSpread,
   }),
   composeWithDevTools(applyMiddleware(sagaMiddleware))
 )
