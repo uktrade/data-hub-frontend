@@ -142,11 +142,13 @@ async function submitMatchRequest(req, res) {
     const ticket = createMatchRequestMessage(req, res)
     const result = await postToZenDesk(ticket)
 
-    req.flash(
+    req.flashWithBody(
       'success',
-      'Verification requested. Some business details may be wrong.\n' +
-        'Once verified, the warning message will disappear.'
+      'Verification requested.',
+      'Some business details may be wrong. Once verified, the warning message will disappear.',
+      'message-company-matched'
     )
+
     res.json({ message: 'OK', ticket: get(result, 'data.ticket.id') })
   } catch (error) {
     const statusCode = get(error, 'response.status', 500)
