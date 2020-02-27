@@ -23,6 +23,8 @@ var companyOneListTierDIta = require('../../../fixtures/v4/company/company-one-l
 var companyWithValidationError = require('../../../fixtures/v4/company/company-validation-error.json')
 var companyAudit = require('../../../fixtures/v4/company-audit/company-audit.json')
 var exportWins = require('../../../fixtures/v4/company-export-wins/export-wins.json')
+var exportWinsPage1 = require('../../../fixtures/v4/company-export-wins/export-wins-page-1.json')
+var exportWinsPage2 = require('../../../fixtures/v4/company-export-wins/export-wins-page-2.json')
 
 var largeCapitalProfileEmpty = require('../../../fixtures/v4/company/large-capital-profile-empty.json')
 var largeCapitalProfileNew = require('../../../fixtures/v4/company/large-capital-profile-new.json')
@@ -154,5 +156,18 @@ exports.companyAudit = function(req, res) {
 }
 
 exports.exportWins = function(req, res) {
-  res.json(exportWins)
+  var companyId = req.params.companyId
+
+  if (companyId === companyLambdaPlc.id) {
+    res.status(501).send('')
+  } else if (companyId === companyOneListCorp.id) {
+    res.status(404).send('Not found')
+  } else if (companyId === companyMarsExportsLtd.id) {
+    if (req.query.offset) {
+      return res.json(exportWinsPage2)
+    }
+    res.json(exportWinsPage1)
+  } else {
+    res.json(exportWins)
+  }
 }

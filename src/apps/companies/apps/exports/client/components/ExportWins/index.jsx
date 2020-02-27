@@ -5,7 +5,7 @@ import { CollectionList } from 'data-hub-components'
 
 import { connect } from 'react-redux'
 import Task from '../../../../../../../client/components/Task/index.jsx'
-import { state2props } from './state'
+import { state2props, NOT_IMPLEMENTED } from './state'
 import {
   EXPORT_WINS__LOADED,
   EXPORT_WINS__SELECT_PAGE,
@@ -24,13 +24,19 @@ export default connect(state2props, (dispatch) => ({
       page,
     })
   },
-}))(({ count, results, onPageClick, activePage, companyId }) => {
+}))((state) => {
+  if (state[NOT_IMPLEMENTED]) {
+    return null
+  }
+
+  const { count, results, onPageClick, activePage, companyId } = state
+
   return (
     <Wrapper>
       <Task.Status
         name="Export wins"
         id="exportWins"
-        progressMessage="loading Exports Wins"
+        progressMessage="Loading Exports Wins..."
         startOnRender={{
           payload: { companyId, activePage },
           onSuccessDispatch: EXPORT_WINS__LOADED,
