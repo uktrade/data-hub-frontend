@@ -1,9 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { TEXT_COLOUR, GREY_3 } from 'govuk-colours'
 import Details from '@govuk-react/details'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import { SummaryTable, FormActions, DateUtils } from 'data-hub-components'
+import urls from '../../../../../lib/urls'
 
 import Task from '../../../../../client/components/Task'
 import { state2props } from './state'
@@ -70,6 +72,14 @@ export default connect(state2props)(
             <FormActions>
               <Button as={Link} href="/">
                 Complete referral
+              </Button>
+              <Button
+                buttonColour={GREY_3}
+                buttonTextColour={TEXT_COLOUR}
+                as={Link}
+                href={urls.referrals.help(id)}
+              >
+                I cannot complete the referral
               </Button>
               <Link href="/">Back</Link>
             </FormActions>
