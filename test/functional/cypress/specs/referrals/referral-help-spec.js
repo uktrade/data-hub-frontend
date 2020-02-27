@@ -28,7 +28,7 @@ describe('Referral help', () => {
         .should('match', 'p')
         .should(
           'have.text',
-          'If you need additional details or information about the referral, contact the adviser who sent the referral by email: Ian Leggett, caravans@campervans.com, Or find more contact details on Digital Workspace'
+          'If you need additional details or information about the referral, contact the adviser who sent the referral by email: Ian Leggett, caravans@campervans.com, Or find more contact details on Digital Workspace.'
         )
         .next()
         .should('have.prop', 'tagName', 'H2')

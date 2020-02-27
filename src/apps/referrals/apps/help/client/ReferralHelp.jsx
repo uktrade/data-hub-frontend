@@ -44,7 +44,11 @@ export default connect(state2props)(({ id, company, sendingAdviser }) => {
               If you need additional details or information about the referral,
               contact the adviser who sent the referral by email:{' '}
               <AdviserDetails {...sendingAdviser} />, Or find more contact
-              details on Digital Workspace
+              details on{' '}
+              <Link href="https://people.trade.gov.uk/teams/department-for-international-trade">
+                Digital Workspace
+              </Link>
+              .
             </p>
             <H2 size={LEVEL_SIZE[3]}>
               A different adviser should follow up on this referral
