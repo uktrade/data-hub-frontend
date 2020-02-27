@@ -1,5 +1,5 @@
 const renderReferralDetails = ({ params: { referralId } }, res) => {
-  res.breadcrumb('Referral').render('referrals/views/details-container', {
+  res.render('referrals/apps/details/views/details-container', {
     heading: 'Referral',
     props: {
       id: referralId,

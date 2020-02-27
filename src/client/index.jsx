@@ -23,7 +23,8 @@ import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
 import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
 import ExportsFullHistory from '../apps/companies/apps/exports/client/ExportsFullHistory'
-import ReferralDetails from '../apps/referrals/client/referralDetails'
+import ReferralDetails from '../apps/referrals/apps/details/client/ReferralDetails'
+import ReferralHelp from '../apps/referrals/apps/help/client/ReferralHelp'
 import ValidatedInput from './components/ValidatedInput'
 
 import tasksSaga from './components/Task/saga'
@@ -31,14 +32,14 @@ import tasks from './components/Task/reducer'
 
 import CompanyLists from './components/CompanyLists'
 import companyListsReducer from './components/CompanyLists/reducer'
-import referralsReducer from '../apps/referrals/client/reducer'
+import referralsReducer from '../apps/referrals/apps/details/client/reducer'
 import { ID as COMPANY_LISTS_STATE_ID } from './components/CompanyLists/state'
-import { ID as REFERRALS_DETAILS_STATE_ID } from '../apps/referrals/client/state'
+import { ID as REFERRALS_DETAILS_STATE_ID } from '../apps/referrals/apps/details/client/state'
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import exportsHistoryReducer from '../apps/companies/apps/exports/reducer'
 import { ID as EXPORTS_HISTORY_ID } from '../apps/companies/apps/exports/state'
 import * as exportsHistoryTasks from '../apps/companies/apps/exports/tasks'
-import * as referralTasks from '../apps/referrals/client/tasks'
+import * as referralTasks from '../apps/referrals/apps/details/client/tasks'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -159,6 +160,9 @@ function App() {
       </Mount>
       <Mount selector="#referral-details">
         {(props) => <ReferralDetails {...props} />}
+      </Mount>
+      <Mount selector="#referral-help">
+        {(props) => <ReferralHelp {...props} />}
       </Mount>
     </Provider>
   )

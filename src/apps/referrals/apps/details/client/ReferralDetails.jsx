@@ -5,10 +5,10 @@ import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import { SummaryTable, FormActions, DateUtils } from 'data-hub-components'
 
-import Task from '../../../client/components/Task'
+import Task from '../../../../../client/components/Task'
 import { state2props } from './state'
 
-import { REFERRAL_DETAILS } from '../../../client/actions'
+import { REFERRAL_DETAILS } from '../../../../../client/actions'
 
 const AdviserDetails = ({ name, email, team }) => (
   <>
