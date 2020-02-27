@@ -8,7 +8,10 @@
   {% if props.text or caller %}
     {% set element = props.element | default('p') %}
 
-    <{{ element }} class="c-message {{ 'c-message--' + props.type if props.type }}">
+    <{{ element }}
+      class="c-message {{ 'c-message--' + props.type if props.type }}"
+      {% if props.id %}id="{{ props.id }}"{% endif %}
+    >
       {% if caller %}
         {{ caller() }}
       {% elif props.hasBody %}
@@ -40,6 +43,7 @@
         {%- for text in messages %}
           {{ Message({
             hasBody: hasBody,
+            id: (text.id if hasBody),
             heading: (text.heading if hasBody),
             text: (text.body if hasBody else text),
             type: (parts[0] if hasBody else type),

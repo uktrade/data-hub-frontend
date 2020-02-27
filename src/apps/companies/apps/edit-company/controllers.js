@@ -116,9 +116,11 @@ async function postEditCompany(req, res, next) {
         ...createUpdateRequests(zendeskRequestFields, req, res),
       ])
 
-      req.flash(
+      req.flashWithBody(
         'success',
-        'Update sent for review. Thanks for keeping Data Hub running smoothly.'
+        'Update sent for review.',
+        'Thanks for keeping Data Hub running smoothly.',
+        'message-company-change-request'
       )
       res.json({
         changeRequests: zendeskResponses.map((r) => r.data.ticket.description),
