@@ -2,6 +2,8 @@ import axios from 'axios'
 import { DateUtils, NumberUtils } from 'data-hub-components'
 import { GREEN, BLUE } from 'govuk-colours'
 
+import { NOT_IMPLEMENTED } from './state'
+
 function getBadges(win) {
   const badges = []
 
@@ -38,7 +40,7 @@ function getMetadata(win) {
     [
       'Total export value',
       NumberUtils.currencyGBP(win.value.export.total, {
-        maximumSignificantDigits: 2,
+        maximumSignificantDigits: 3,
       }),
     ],
     ['Type of win', win.name_of_export],
@@ -63,16 +65,31 @@ function getMetadata(win) {
 
 export function fetchExportWins({ companyId, activePage }) {
   const offset = activePage * 10 - 10
+  const param = offset ? '?offset=' + offset : ''
+
   return axios
-    .get(`/api-proxy/v4/company/${companyId}/export-wins`)
-    .catch((e) => Promise.reject(new Error(e.message)))
-    .then(({ data }) => ({
-      count: data.count,
-      results: data.results.map((win) => ({
-        badges: getBadges(win),
-        headingText: win.title,
-        subheading: `Won on ${DateUtils.formatWithTime(win.date)}`,
-        metadata: getMetadata(win),
-      })),
-    }))
+    .get(`/api-proxy/v4/company/${companyId}/export-wins${param}`)
+    .catch((e) => {
+      if (e.response?.status === 501) {
+        return { [NOT_IMPLEMENTED]: true }
+      }
+
+      return Promise.reject(new Error(e.message))
+    })
+    .then((response) => {
+      if (response[NOT_IMPLEMENTED]) {
+        return response
+      }
+
+      const { data } = response
+      return {
+        count: data.count,
+        results: data.results.map((win) => ({
+          badges: getBadges(win),
+          headingText: win.title,
+          subheading: `Won on ${DateUtils.formatWithTime(win.date)}`,
+          metadata: getMetadata(win),
+        })),
+      }
+    })
 }
