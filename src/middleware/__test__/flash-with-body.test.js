@@ -20,12 +20,13 @@ describe('flashWithBody middleware', () => {
   it('Should stringify the data as JSON and change the type label', () => {
     const heading = words(5)
     const body = words(10)
+    const id = words(1)
 
-    req.flashWithBody('success', heading, body)
+    req.flashWithBody('success', heading, body, id)
 
     expect(req.flash).to.have.been.calledOnceWithExactly(
       'success:with-body',
-      JSON.stringify({ heading, body })
+      JSON.stringify({ heading, body, id })
     )
   })
 
