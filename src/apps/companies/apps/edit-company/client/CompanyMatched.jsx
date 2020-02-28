@@ -22,6 +22,7 @@ const CompanyMatched = ({
 
     <FieldInput
       label="Annual turnover (optional)"
+      hint="Amount in GBP"
       name="turnover"
       type="number"
     />
