@@ -48,7 +48,7 @@
   "license": "MIT",
   "engines": {
     "yarn": "1.22.0",
-    "node": "12.15.0"
+    "node": "12.16.1"
   },
   "dependencies": {
     "@babel/core": "^7.0.0",
