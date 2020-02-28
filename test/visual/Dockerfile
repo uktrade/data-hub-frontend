@@ -1,5 +1,5 @@
 # E2E docker image used to run tests locally
-FROM node:12.15.0
+FROM node:12.16.1
 
 ENV YARN_VERSION 1.22.0
 
