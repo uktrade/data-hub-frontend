@@ -122,6 +122,7 @@ describe('Company edit', () => {
         },
         {
           label: 'Annual turnover (optional)',
+          hint: 'Amount in GBP',
           assert: assertFieldRadios,
           optionsCount: 4,
         },
@@ -198,6 +199,7 @@ describe('Company edit', () => {
         },
         {
           label: 'Annual turnover (optional)',
+          hint: 'Amount in GBP',
           value: company.turnover_range.name,
           assert: assertFieldRadios,
           optionsCount: 4,
@@ -268,6 +270,7 @@ describe('Company edit', () => {
         },
         {
           label: 'Annual turnover (optional)',
+          hint: 'Amount in GBP',
           value: company.turnover,
           assert: assertFieldInput,
         },
