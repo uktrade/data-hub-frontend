@@ -1,4 +1,5 @@
 const url = require('url')
+const { isEmpty } = require('lodash')
 
 const config = require('../../../../config')
 const { updateCompany } = require('../../repos')
@@ -61,23 +62,25 @@ async function renderEditCompanyForm(req, res, next) {
   }
 }
 
-function createUpdateRequests(formValues, req, res) {
+function createUpdateRequest(formValues, req, res) {
   const { company } = res.locals
   const transformedCompanyValues = transformCompanyToForm(company)
-  return Object.keys(formValues).map((fieldName) =>
-    postToZenDesk(
-      createUpdateRequestMessage(
-        transformedCompanyValues[fieldName],
-        formValues[fieldName],
-        fieldName,
-        req,
-        res
-      )
-    )
+
+  if (isEmpty(formValues)) {
+    return
+  }
+
+  return postToZenDesk(
+    createUpdateRequestMessage(formValues, transformedCompanyValues, req, res)
   )
 }
 
-function createUpdateRequestMessage(oldValue, newValue, fieldName, req, res) {
+function createUpdateRequestMessage(
+  formValues,
+  transformedCompanyValues,
+  req,
+  res
+) {
   const { company, user } = res.locals
   const companyUrl = url.format({
     protocol: req.protocol,
@@ -85,10 +88,16 @@ function createUpdateRequestMessage(oldValue, newValue, fieldName, req, res) {
     pathname: urls.companies.detail(company.id),
   })
 
+  const changesMatrix = Object.keys(formValues).map(
+    (fieldName) =>
+      `Current ${fieldName}: ${transformedCompanyValues[fieldName] ||
+        'Not set'}\nRequested ${fieldName}: ${formValues[fieldName]}`
+  )
+
   const messageBody =
     `User ${user.name} requested company details change of ${company.name} (${companyUrl})\n\n` +
-    `Current ${fieldName}: ${oldValue}\n` +
-    `Requested ${fieldName}: ${newValue}\n`
+    `Company DUNS number: ${company.duns_number}\n\n` +
+    changesMatrix.join('\n\n')
 
   return {
     type: ZENDESK_TICKET_TYPE_TASK,
@@ -96,7 +105,7 @@ function createUpdateRequestMessage(oldValue, newValue, fieldName, req, res) {
       name: `Data Hub user - ${user.name}`,
       email: user.email,
     },
-    subject: `Change request of ${fieldName} for ${company.name}`,
+    subject: `Business details change request for ${company.name}`,
     comment: {
       body: messageBody,
     },
@@ -110,10 +119,10 @@ async function postEditCompany(req, res, next) {
     const apiRequestFields = transformFormToApi(company, req.body)
     const zendeskRequestFields = transformFormToZendesk(company, req.body)
 
-    if (company.duns_number) {
+    if (company.duns_number && !isEmpty(zendeskRequestFields)) {
       const [, ...zendeskResponses] = await Promise.all([
         updateCompany(req.session.token, company.id, apiRequestFields),
-        ...createUpdateRequests(zendeskRequestFields, req, res),
+        createUpdateRequest(zendeskRequestFields, req, res),
       ])
 
       req.flashWithBody(
