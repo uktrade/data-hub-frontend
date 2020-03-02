@@ -161,7 +161,9 @@ function App() {
         {(props) => <ExportsIndex {...props} />}
       </Mount>
       <Mount selector="#send-referral-form">
-        {(props) => <SendReferralForm {...props} />}
+        {(props) => (
+          <SendReferralForm {...props} csrfToken={globalProps.csrfToken} />
+        )}
       </Mount>
       <Mount selector="#company-export-full-history">
         {(props) => <ExportsHistory {...props} />}
