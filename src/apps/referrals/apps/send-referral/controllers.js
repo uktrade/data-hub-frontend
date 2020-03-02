@@ -15,6 +15,8 @@ function renderSendReferralForm(req, res) {
       heading: 'Send a referral',
       props: {
         companyContacts,
+        companyName: name,
+        companyId: id,
         cancelUrl: urls.companies.detail(id),
       },
     })

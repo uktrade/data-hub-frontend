@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { throttle } from 'lodash'
 import axios from 'axios'
 
+import SendReferralConfirmation from './SendReferralConfirmation.jsx'
 import ValidatedInput from '../../../../../client/components/ValidatedInput.jsx'
 import styled from 'styled-components'
 import {
@@ -246,9 +247,7 @@ export default connect(
   })
 )(({ confirm, ...props }) =>
   confirm ? (
-    <div>
-      Confirmation Page <button onClick={props.onBack}>Go back</button>
-    </div>
+    <SendReferralConfirmation {...props} />
   ) : (
     <SendReferralForm {...props} />
   )
