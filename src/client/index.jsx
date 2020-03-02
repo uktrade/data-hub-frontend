@@ -26,7 +26,7 @@ import ExportsFullHistory from '../apps/companies/apps/exports/client/ExportsFul
 import ReferralDetails from '../apps/referrals/apps/details/client/ReferralDetails'
 import ReferralHelp from '../apps/referrals/apps/help/client/ReferralHelp'
 import ValidatedInput from './components/ValidatedInput'
-import SendReferralForm from '../apps/referrals/apps/send-referral/client/SendReferralForm'
+import SendReferral from '../apps/referrals/apps/send-referral/client/SendReferralForm'
 import sendReferral from '../apps/referrals/apps/send-referral/client/reducer'
 
 import tasksSaga from './components/Task/saga'

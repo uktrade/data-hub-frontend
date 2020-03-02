@@ -1,4 +1,7 @@
 const urls = require('../../../../lib/urls')
+const { authorisedRequest } = require('../../../../lib/authorised-request')
+const { omit } = require('lodash')
+const config = require('../../../../config/index')
 
 function renderSendReferralForm(req, res) {
   const {
@@ -21,4 +24,23 @@ function renderSendReferralForm(req, res) {
       },
     })
 }
-module.exports = renderSendReferralForm
+
+async function submitSendReferralForm(req, res, next) {
+  try {
+    await authorisedRequest(req.session.token, {
+      method: 'POST',
+      url: `${config.apiRoot}/v4/company-referral`,
+      body: omit(req.body, '_csrf'),
+    })
+    req.flashWithBody(
+      'success',
+      'Referral sent',
+      `You can <a href="${urls.dashboard()}">find your referrals on the Homepage</a>.`
+    )
+    res.redirect(urls.companies.detail(res.locals.company.id))
+  } catch (error) {
+    next(error)
+  }
+}
+
+module.exports = { renderSendReferralForm, submitSendReferralForm }
