@@ -37,6 +37,12 @@ Sandbox.define(
   'GET',
   v4referralDetails.referralDetails
 )
+// Send a referral
+Sandbox.define(
+  '/v4/company-referral',
+  'POST',
+  v4referralDetails.referralDetails
+)
 
 // Adviser endpoint
 Sandbox.define('/adviser/', 'GET', adviser.advisers)
