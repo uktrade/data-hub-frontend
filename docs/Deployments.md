@@ -32,3 +32,9 @@ Deployments to production are done manually through Jenkins where a Git tag can 
    provided by GitHub, i.e. `github.com/uktrade/data-hub-frontend/compare/OLD_TAG…NEW_TAG`
 
    Example: https://github.com/uktrade/data-hub-frontend/compare/v5.62.1...v5.62.2
+
+   Copy both the PR title and PR number into the release notes allowing us to link a release to pull requests.
+
+   Example: https://github.com/uktrade/data-hub-frontend/releases/tag/v5.82.0
+
+   
