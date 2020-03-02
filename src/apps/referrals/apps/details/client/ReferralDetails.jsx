@@ -7,6 +7,7 @@ import Link from '@govuk-react/link'
 import { SummaryTable, FormActions, DateUtils } from 'data-hub-components'
 import urls from '../../../../../lib/urls'
 
+import SecondaryButton from '../../../../../client/components/SecondaryButton'
 import Task from '../../../../../client/components/Task'
 import { state2props } from './state'
 
@@ -73,14 +74,9 @@ export default connect(state2props)(
               <Button as={Link} href="/">
                 Complete referral
               </Button>
-              <Button
-                buttonColour={GREY_3}
-                buttonTextColour={TEXT_COLOUR}
-                as={Link}
-                href={urls.referrals.help(id)}
-              >
+              <SecondaryButton as={Link} href={urls.referrals.help(id)}>
                 I cannot complete the referral
-              </Button>
+              </SecondaryButton>
               <Link href="/">Back</Link>
             </FormActions>
           </>
