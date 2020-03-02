@@ -33,14 +33,14 @@ exports.config = {
     {
       'os': 'Windows',
       'os_version': '10',
-      'browser': 'Chrome',
+      'browserName': 'Chrome',
       'browser_version': '76.0 beta',
       'resolution': '1920x1080'
     },
     {
       'os': 'Windows',
       'os_version': '10',
-      'browser': 'IE',
+      'browserName': 'IE',
       'browser_version': '11.0',
       'resolution': '1920x1080'
     },
