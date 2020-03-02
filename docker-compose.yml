@@ -27,7 +27,7 @@ services:
       CACHE_ASSETS: 'true'
       HELP_CENTRE_URL: https://datahub-helpcentre.london.cloudapps.digital
       HELP_CENTRE_ANNOUNCMENTS_URL: https://datahub-helpcentre.london.cloudapps.digital/updates/announcements
-      HELP_CENTRE_API_FEED: https://data-hub-sandbox.getsandbox.com:443/help-centre/announcement
+      HELP_CENTRE_API_FEED: http://mock-backend:8001/help-centre/announcement
       HELP_CENTRE_FEED_API_TOKEN: apiToken
       SESSION_SECRET: foobarbaz
       REDIS_URL: redis://redis:6379
