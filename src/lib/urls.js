@@ -137,6 +137,8 @@ module.exports = {
     match: {
       index: url('/companies', '/:companyId/match'),
       confirmation: url('/companies', '/:companyId/match/:dunsNumber'),
+      link: url('/companies', '/:companyId/match/link'),
+      merge: url('/companies', '/:companyId/match/merge'),
       cannotFind: url('/companies', '/:companyId/match/cannot-find'),
     },
     subsidiaries: {

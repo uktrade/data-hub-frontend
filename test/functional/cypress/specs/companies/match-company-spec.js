@@ -7,8 +7,8 @@ const {
   assertSummaryList,
 } = require('../../support/assertions')
 
-const DUNS_NUMBER_NOT_MATCHED = '11111111'
-const DUNS_NUMBER_MATCHED = '22222222'
+const DUNS_NUMBER_NOT_MATCHED = '111111111'
+const DUNS_NUMBER_MATCHED = '222222222'
 
 const performSearch = (companyName = 'some company') => {
   cy.get(selectors.companyMatch.find.companyNameInput)
@@ -38,7 +38,7 @@ describe('Match a company', () => {
 
     it('should render the Data Hub record', () => {
       cy.contains('Data Hub business details (un-verified)')
-        .should('have.prop', 'tagName', 'H2')
+        .should('match', 'h2')
         .next()
         .find('dl')
         .then(($el) =>
@@ -51,7 +51,7 @@ describe('Match a company', () => {
 
     it('should render both search input fields and a button', () => {
       cy.contains('Search third party supplier for business details')
-        .and('have.prop', 'tagName', 'H2')
+        .and('match', 'h2')
         .next()
         .children()
         .first()
@@ -68,7 +68,7 @@ describe('Match a company', () => {
         .parent()
         .next()
         .contains('Find company')
-        .and('have.prop', 'tagName', 'BUTTON')
+        .and('match', 'button')
     })
 
     it('should prepopulate company name and postcode text fields', () => {
@@ -216,7 +216,7 @@ describe('Match a company', () => {
 
       it('should display matching confirmation details', () => {
         cy.contains('Data Hub business details (un-verified)')
-          .should('have.prop', 'tagName', 'H2')
+          .should('match', 'h2')
           .next()
           .find('dl')
           .then(($el) =>
@@ -230,7 +230,7 @@ describe('Match a company', () => {
           .parent()
           .next()
           .should('have.text', 'Data Hub business details (after verification)')
-          .and('have.prop', 'tagName', 'H2')
+          .and('match', 'h2')
           .next()
           .find('dl')
           .then(($el) =>
@@ -255,7 +255,7 @@ describe('Match a company', () => {
           .parent()
           .next()
           .should('have.text', 'Requesting verification will:')
-          .and('have.prop', 'tagName', 'H2')
+          .and('match', 'h2')
           .next()
           .children()
           .should('have.length', 4)
@@ -282,7 +282,7 @@ describe('Match a company', () => {
           .parent()
           .next()
           .contains('Request verification')
-          .and('have.prop', 'tagName', 'BUTTON')
+          .and('match', 'button')
           .next()
           .contains('Back')
           .should(
@@ -352,7 +352,7 @@ describe('Match a company', () => {
 
       it('should render the header', () => {
         assertLocalHeader(
-          'These verified business details have already been matched to another company record'
+          'These verified business details are already being used to verify another Data Hub record'
         )
       })
 
@@ -361,28 +361,34 @@ describe('Match a company', () => {
           'This can happen when there are duplicate company records in Data Hub. To resolve this, you can ask the Support Team to merge these duplicates into one record.'
         )
           .next()
+          .should('have.text', 'Requesting records merge will:')
+          .and('match', 'h2')
+          .next()
+          .children()
+          .should('have.length', 3)
+          .first()
           .should(
             'have.text',
-            'You can copy and paste the following instructions in the Description field of the form:'
+            'send a request to the Support Team to merge these records'
           )
           .next()
-          .contains('Company records merge request')
-          .parent()
+          .should(
+            'have.text',
+            'preserve all recorded activity (interactions, OMIS Orders' +
+              ' and Investment Projects) and contacts from BOTH records and' +
+              ' link them to the merged record'
+          )
           .next()
           .should(
             'have.text',
-            'Please merge company record Venus Ltd' +
-              ' (0f5216e0-849f-11e6-ae22-56b6b6499611)' +
-              ' with company record Some matched company' +
-              ' (0fb3379c-341c-4da4-b825-bf8d47b26baa).'
+            'ensure the business details are automatically updated in the future'
           )
           .parent()
           .next()
           .contains('Request merge')
-          .and('match', 'a')
-          .should('have.attr', 'href', urls.support())
+          .and('match', 'button')
           .next()
-          .contains('Back to search results')
+          .contains('Back')
           .should(
             'have.attr',
             'href',
@@ -391,4 +397,30 @@ describe('Match a company', () => {
       })
     }
   )
+
+  context('when company merge request is confirmed', () => {
+    before(() => {
+      cy.visit(
+        urls.companies.match.confirmation(
+          fixtures.company.venusLtd.id,
+          DUNS_NUMBER_MATCHED
+        )
+      )
+      cy.get('button:contains("Request merge")').click()
+    })
+
+    it('should redirect to the company page', () => {
+      cy.location('pathname').should(
+        'eq',
+        urls.companies.activity.index(fixtures.company.venusLtd.id)
+      )
+    })
+
+    it('displays the "Company record update request sent" flash message', () => {
+      cy.get(selectors.localHeader().flash).should(
+        'contain.text',
+        'Company merge requested. Thanks for keeping Data Hub running smoothly.'
+      )
+    })
+  })
 })
