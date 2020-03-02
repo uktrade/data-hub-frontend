@@ -44,6 +44,7 @@ const TabNav = ({
 
 TabNav.propTypes = {
   title: PropTypes.string.isRequired,
+  selectedIdx: PropTypes.number,
   tabs: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
