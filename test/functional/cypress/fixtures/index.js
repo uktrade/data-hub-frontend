@@ -41,4 +41,7 @@ module.exports = {
     oneDayExhibition: require('./event/one-day-exhibition'),
     teddyBearExpo: require('./event/teddy-bear-expo'),
   },
+  export: {
+    historyWithInteractions: require('../../../sandbox/fixtures/v4/export/history-with-interactions.json'),
+  },
 }
