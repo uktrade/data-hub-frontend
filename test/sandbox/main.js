@@ -438,6 +438,7 @@ Sandbox.define(
   v4Dnb.companyCreateInvestigation
 )
 Sandbox.define('/v4/dnb/company-search', 'POST', v4Dnb.companySearch)
+Sandbox.define('/v4/dnb/company-link', 'POST', v4Dnb.companyLink)
 
 // V4 legacy company list
 Sandbox.define(

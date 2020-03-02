@@ -130,6 +130,17 @@ function saveCompanyExportDetails(token, companyId, body) {
   })
 }
 
+function linkDataHubCompanyToDnBCompany(token, companyId, dunsNumber) {
+  return authorisedRequest(token, {
+    body: {
+      company_id: companyId,
+      duns_number: dunsNumber,
+    },
+    url: `${config.apiRoot}/v4/dnb/company-link`,
+    method: 'POST',
+  })
+}
+
 module.exports = {
   saveCompany,
   getDitCompany,
@@ -146,4 +157,5 @@ module.exports = {
   saveDnbCompany,
   saveDnbCompanyInvestigation,
   saveCompanyExportDetails,
+  linkDataHubCompanyToDnBCompany,
 }

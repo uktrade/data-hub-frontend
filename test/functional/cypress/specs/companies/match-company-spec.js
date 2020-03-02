@@ -200,7 +200,7 @@ describe('Match a company', () => {
       })
 
       it('should render the header', () => {
-        assertLocalHeader('Send request for verification')
+        assertLocalHeader('Link company record with verified business details')
       })
 
       it('should render breadcrumbs', () => {
@@ -254,11 +254,11 @@ describe('Match a company', () => {
           )
           .parent()
           .next()
-          .should('have.text', 'Requesting verification will:')
+          .should('have.text', 'Linking with verified business will:')
           .and('match', 'h2')
           .next()
           .children()
-          .should('have.length', 4)
+          .should('have.length', 2)
           .first()
           .should(
             'have.text',
@@ -267,21 +267,11 @@ describe('Match a company', () => {
           .next()
           .should(
             'have.text',
-            'send a request to the Support Team to verify the details'
-          )
-          .next()
-          .should(
-            'have.text',
-            'notify you when the Support Team update this record'
-          )
-          .next()
-          .should(
-            'have.text',
             'ensure these business details are updated automatically in the future'
           )
           .parent()
           .next()
-          .contains('Request verification')
+          .contains('Link with verified business')
           .and('match', 'button')
           .next()
           .contains('Back')
@@ -302,7 +292,7 @@ describe('Match a company', () => {
           DUNS_NUMBER_NOT_MATCHED
         )
       )
-      cy.contains('Request verification').click()
+      cy.contains('Link with verified business').click()
     })
 
     it('should redirect to the company page', () => {
@@ -312,10 +302,10 @@ describe('Match a company', () => {
       )
     })
 
-    it('displays the "Verification requested" flash message and the ID used in GA', () => {
+    it('displays the "Business details verified" flash message and the ID used in GA', () => {
       cy.contains(
-        'Verification requested.Some business details may be wrong. ' +
-          'Once verified, the warning message will disappear.'
+        'Business details verified.Thanks for helping to improve ' +
+          'the quality of records on Data Hub!'
       ).should('have.attr', 'id', 'message-company-matched')
     })
   })

@@ -1,10 +1,11 @@
 const { get, isEmpty, pick } = require('lodash')
-const url = require('url')
 
-const urls = require('../../../../lib/urls')
-const { postToZenDesk } = require('../../../support/services')
-const { getOptions } = require('../../../../lib/options')
 const { searchDnbCompanies } = require('../../../../modules/search/services')
+const { linkDataHubCompanyToDnBCompany } = require('../../repos')
+const { getOptions } = require('../../../../lib/options')
+const { postToZenDesk } = require('../../../support/services')
+const urls = require('../../../../lib/urls')
+const url = require('url')
 
 const ZENDESK_TICKET_TAG_MATCH_REQUEST = 'dnb_match_request'
 const ZENDESK_TICKET_TYPE_TASK = 'task'
@@ -110,50 +111,25 @@ async function renderMatchConfirmation(req, res, next) {
   }
 }
 
-function createMatchRequestMessage(req, res) {
-  const { company, user } = res.locals
-  const { dnbCompany } = req.body
-  const companyUrl = getCompanyAbsoluteUrl(req, company.id)
-
-  const messageBody =
-    `User ${user.name} requested a match of ${company.name}` +
-    ` (${companyUrl}) with the following D&B company:\n` +
-    `Registered company name: ${dnbCompany.primary_name}\n` +
-    `Trading name(s): ${
-      !isEmpty(company.trading_names) ? company.trading_names.join(', ') : 'N/A'
-    }\n` +
-    `Located at: ${dnbCompany.address.join(', ')}\n` +
-    `Registered address: ${dnbCompany.registered_address.join(', ')}\n` +
-    `DUNS number: ${dnbCompany.duns_number}`
-
-  // See Zendesk API docs: https://developer.zendesk.com/rest_api/docs/support/tickets
-  return {
-    type: ZENDESK_TICKET_TYPE_TASK,
-    requester: {
-      name: `Data Hub user - ${user.name}`,
-      email: user.email,
-    },
-    subject: `D&B company match request for ${company.name}`,
-    comment: {
-      body: messageBody,
-    },
-    tags: [ZENDESK_TICKET_TAG_MATCH_REQUEST],
-  }
-}
-
-async function submitMatchRequest(req, res) {
+async function linkCompanies(req, res) {
   try {
-    const ticket = createMatchRequestMessage(req, res)
-    const result = await postToZenDesk(ticket)
+    const { token } = req.session
+    const { company } = res.locals
+    const { dnbCompany } = req.body
+
+    const result = await linkDataHubCompanyToDnBCompany(
+      token,
+      company.id,
+      dnbCompany.duns_number
+    )
 
     req.flashWithBody(
       'success',
-      'Verification requested.',
-      'Some business details may be wrong. Once verified, the warning message will disappear.',
+      'Business details verified.',
+      'Thanks for helping to improve the quality of records on Data Hub!',
       'message-company-matched'
     )
-
-    res.json({ message: 'OK', ticket: get(result, 'data.ticket.id') })
+    res.json(result)
   } catch (error) {
     const statusCode = get(error, 'response.status', 500)
     const message = get(error, 'response.data.description')
@@ -259,9 +235,9 @@ function createMergeRequestMessage(req, res) {
 
 module.exports = {
   renderMatchConfirmation,
-  submitMatchRequest,
   renderFindCompanyForm,
   findDnbCompany,
   renderCannotFindMatch,
   submitMergeRequest,
+  linkCompanies,
 }

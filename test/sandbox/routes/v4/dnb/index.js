@@ -1,5 +1,6 @@
 var companyCreate = require('../../../fixtures/v4/dnb/company-create.json')
 var companySearch = require('../../../fixtures/v4/dnb/company-search.json')
+var companyLink = require('../../../fixtures/v4/dnb/company-link.json')
 var companySearchMatched = require('../../../fixtures/v4/dnb/company-search-matched.json')
 var companySearchNotMatched = require('../../../fixtures/v4/dnb/company-search-not-matched.json')
 var companyCreateInvestigation = require('../../../fixtures/v4/dnb/company-create-investigation.json')
@@ -21,4 +22,8 @@ exports.companySearch = function(req, res) {
 
 exports.companyCreateInvestigation = function(req, res) {
   res.json(companyCreateInvestigation)
+}
+
+exports.companyLink = function(req, res) {
+  res.json(companyLink)
 }
