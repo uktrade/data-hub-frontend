@@ -152,55 +152,131 @@ describe('Send a referral form', () => {
               .type('Example subject')
               .get(selectors.companySendReferral.continueButton)
               .click()
-            cy.get(selectors.companySendReferral.confirmationComponent).should(
-              'contain.text',
-              'Confirmation Page'
-            )
+            cy.contains('Check referral details').should('be.visible')
           })
         }
       )
-
-    context(
-      'when "Continue" button is clicked after all fields filled in',
-      () => {
-        it('should display confirmation component and persist the form values', () => {
-          cy.visit(
-            urls.companies.sendReferral(fixtures.company.withContacts.id)
-          )
-          selectTypeahead('Adviser', 'S', 3)
-          cy.get(selectors.companySendReferral.subjectField)
-            .click()
-            .type('Example subject')
-            .get(selectors.companySendReferral.notesField)
-            .click()
-            .type('Example notes')
-          selectTypeahead('Company contact', 'J', 2)
-            .get(selectors.companySendReferral.continueButton)
-            .click()
-          cy.get(selectors.companySendReferral.confirmationComponent).should(
-            'contain.text',
-            'Confirmation Page'
-          )
-          cy.get(selectors.companySendReferral.backButton).click()
-          cy.get(selectors.companySendReferral.adviserField).should(
-            'contain',
-            'Shawn Cohen'
-          )
-          cy.get(selectors.companySendReferral.subjectField).should(
-            'have.attr',
-            'value',
-            'Example subject'
-          )
-          cy.get(selectors.companySendReferral.notesField).should(
-            'have.text',
-            'Example notes'
-          )
-          cy.get(selectors.companySendReferral.contactField).should(
-            'contain',
-            'Johnny Cakeman'
-          )
-        })
-      }
-    )
   })
+
+  context(
+    'when "Continue" button is clicked after all fields filled in',
+    () => {
+      it('should display the confirmation component with the values just input', () => {
+        cy.visit(urls.companies.sendReferral(fixtures.company.withContacts.id))
+        selectTypeahead('Adviser', 'S', 3)
+        cy.get(selectors.companySendReferral.subjectField)
+          .click()
+          .type('Example subject')
+          .get(selectors.companySendReferral.notesField)
+          .click()
+          .type('Example notes')
+        selectTypeahead('Company contact', 'J', 2)
+          .get(selectors.companySendReferral.continueButton)
+          .click()
+        cy.get('table')
+          .should('contain', 'Shawn Cohen')
+          .and('contain', 'Example subject')
+          .and('contain', 'Example notes')
+          .and('contain', 'Johnny Cakeman')
+        cy.contains('Edit referral').should('be.visible')
+        cy.get('h4').should('contain', 'What happens next')
+        cy.get('p')
+          .eq(2)
+          .should(
+            'have.text',
+            'Clicking “Send referral” will show the referral in the activity of Venus Ltd, as well as in the Referrals section on both your Data Hub' +
+              ' Homepage and the Homepage of the recipient.' +
+              'It might take up to 24 hours for the referral to appear.' +
+              'You will not be able to edit the referral after this point.'
+          )
+        cy.get('button')
+          .eq(2)
+          .should('be.visible')
+        cy.contains('Cancel').should('be.visible')
+      })
+    }
+  )
+
+  context(
+    'when "Continue" button is clicked after all fields filled in',
+    () => {
+      it('the input data should appear in the form when "Edit referral" is clicked', () => {
+        cy.visit(urls.companies.sendReferral(fixtures.company.withContacts.id))
+        selectTypeahead('Adviser', 'S', 3)
+        cy.get(selectors.companySendReferral.subjectField)
+          .click()
+          .type('Example subject')
+          .get(selectors.companySendReferral.notesField)
+          .click()
+          .type('Example notes')
+        selectTypeahead('Company contact', 'J', 2)
+          .get(selectors.companySendReferral.continueButton)
+          .click()
+        cy.contains('Edit referral').click()
+        cy.get(selectors.companySendReferral.adviserField).should(
+          'contain',
+          'Shawn Cohen'
+        )
+        cy.get(selectors.companySendReferral.subjectField).should(
+          'have.attr',
+          'value',
+          'Example subject'
+        )
+        cy.get(selectors.companySendReferral.notesField).should(
+          'have.text',
+          'Example notes'
+        )
+        cy.get(selectors.companySendReferral.contactField).should(
+          'contain',
+          'Johnny Cakeman'
+        )
+      })
+    }
+  )
+
+  context(
+    'When the "Cancel" link is clicked from the confirmation component',
+    () => {
+      it('should return to the company page', () => {
+        selectTypeahead('Adviser', 'S', 3)
+        cy.get(selectors.companySendReferral.subjectField)
+          .click()
+          .type('Example subject')
+          .get(selectors.companySendReferral.continueButton)
+          .click()
+        cy.contains('Cancel').click()
+        cy.url().should(
+          'contain',
+          urls.companies.activity.index(fixtures.company.withContacts.id)
+        )
+      })
+    }
+  )
+
+  context(
+    'When the "Send referral" button is clicked from the confirmation component',
+    () => {
+      before(() => {
+        cy.visit(urls.companies.sendReferral(fixtures.company.withContacts.id))
+      })
+      it('should take user to the company page, display flash message and link to the homepage', () => {
+        selectTypeahead('Adviser', 'S', 3)
+        cy.get(selectors.companySendReferral.subjectField)
+          .click()
+          .type('Example subject')
+          .get(selectors.companySendReferral.continueButton)
+          .click()
+        cy.get('button')
+          .eq(2)
+          .click() //Fix reference to send referral button
+        cy.url().should(
+          'contain',
+          urls.companies.activity.index(fixtures.company.withContacts.id)
+        )
+        cy.get(selectors.localHeader().flash).should('contain', 'Referral sent')
+        cy.contains('find your referrals on the Homepage').click()
+        cy.url().should('contain', urls.dashboard())
+      })
+    }
+  )
 })
