@@ -14,14 +14,7 @@ const StyledTabsList = styled(Tabs.List)({
   },
 })
 
-const TabNav = ({
-  defaultSelected,
-  selectedIdx = defaultSelected,
-  onChange,
-  tabs = [],
-  title,
-  ...props
-}) => (
+const TabNav = ({ selectedIdx, onChange, tabs = [], title, ...props }) => (
   <div {...props}>
     <Tabs>
       <Tabs.Title>{title}</Tabs.Title>
@@ -54,7 +47,6 @@ TabNav.propTypes = {
       ]),
     })
   ),
-  defaultSelected: PropTypes.number,
 }
 
 export default multiInstance({
