@@ -103,17 +103,11 @@ function MatchConfirmation({
               find what I'm looking for".
             </Details>
 
-            <H4 as="h2">Requesting verification will:</H4>
+            <H4 as="h2">Linking with verified business will:</H4>
             <StyledList>
               <ListItem>
                 NOT change any recorded activity (interactions, OMIS orders or
                 Investment projects)
-              </ListItem>
-              <ListItem>
-                send a request to the Support Team to verify the details
-              </ListItem>
-              <ListItem>
-                notify you when the Support Team update this record
               </ListItem>
               <ListItem>
                 ensure these business details are updated automatically in the
@@ -121,7 +115,7 @@ function MatchConfirmation({
               </ListItem>
             </StyledList>
             <FormActions>
-              <Button>Request verification</Button>
+              <Button>Link with verified business</Button>
               <Link href={urls.companies.match.index(company.id)}>Back</Link>
             </FormActions>
           </>
