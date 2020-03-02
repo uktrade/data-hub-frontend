@@ -1,4 +1,3 @@
-import { get } from 'lodash'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Tabs } from 'govuk-react'
@@ -14,7 +13,16 @@ const StyledTabsList = styled(Tabs.List)({
   },
 })
 
-const TabNav = ({ selectedIdx, onChange, tabs = [], title, ...props }) => (
+const TabNav = ({
+  selectedIdx,
+  onChange,
+  tabs = [],
+  title,
+  // We are only destructuring dispatch from the props so that <div> won't
+  // complain about it being an unexpected prop.
+  dispatch,
+  ...props
+}) => (
   <div {...props}>
     <Tabs>
       <Tabs.Title>{title}</Tabs.Title>
@@ -30,7 +38,7 @@ const TabNav = ({ selectedIdx, onChange, tabs = [], title, ...props }) => (
         ))}
       </StyledTabsList>
     </Tabs>
-    {get(tabs, [selectedIdx, 'content'])}
+    {tabs[selectedIdx]?.content}
   </div>
 )
 
