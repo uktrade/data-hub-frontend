@@ -7,7 +7,7 @@ const { postToZenDesk } = require('../../../support/services')
 const urls = require('../../../../lib/urls')
 const url = require('url')
 
-const ZENDESK_TICKET_TAG_MATCH_REQUEST = 'dnb_match_request'
+const ZENDESK_TICKET_TAG_MERGE_REQUEST = 'dnb_merge_request'
 const ZENDESK_TICKET_TYPE_TASK = 'task'
 
 function getCompanyAbsoluteUrl(req, companyId) {
@@ -229,7 +229,7 @@ function createMergeRequestMessage(req, res) {
     comment: {
       body: messageBody,
     },
-    tags: [ZENDESK_TICKET_TAG_MATCH_REQUEST],
+    tags: [ZENDESK_TICKET_TAG_MERGE_REQUEST],
   }
 }
 
