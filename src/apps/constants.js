@@ -11,11 +11,8 @@ const EXPORT_INTEREST_STATUS = {
   NOT_INTERESTED: 'not_interested',
 }
 
-const NEW_COUNTRIES_FEATURE = 'interaction-add-countries'
-
 module.exports = {
   ERROR,
   EXPORT_INTEREST_STATUS,
   EXPORT_INTEREST_STATUS_VALUES: Object.values(EXPORT_INTEREST_STATUS),
-  NEW_COUNTRIES_FEATURE,
 }

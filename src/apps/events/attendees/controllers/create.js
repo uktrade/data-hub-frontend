@@ -1,6 +1,5 @@
 const { get } = require('lodash')
 
-const { NEW_COUNTRIES_FEATURE } = require('../../../constants')
 const { saveInteraction } = require('../../../interactions/repos')
 const { getContact } = require('../../../contacts/repos')
 const { fetchEventAttendees } = require('../repos')
@@ -9,7 +8,7 @@ async function createAttendee(req, res, next) {
   try {
     const { user: adviser, token } = req.session
     const contactId = req.params.contactId
-    const { event, features } = res.locals
+    const { event } = res.locals
 
     if (!event || !contactId) {
       throw new Error('Missing eventId or contactId')
@@ -47,10 +46,7 @@ async function createAttendee(req, res, next) {
       service: get(event, 'service.id'),
       subject: `Attended ${event.name}`,
       was_policy_feedback_provided: false,
-    }
-
-    if (features[NEW_COUNTRIES_FEATURE]) {
-      serviceDelivery.were_countries_discussed = false
+      were_countries_discussed: false,
     }
 
     await saveInteraction(token, serviceDelivery)
