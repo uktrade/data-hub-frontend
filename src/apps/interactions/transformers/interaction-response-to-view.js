@@ -15,10 +15,10 @@ function transformEntityLink(entity, entityPath, noLinkText = null) {
     : noLinkText
 }
 
-function transformDocumentsLink(archived_documents_url_path) {
-  if (archived_documents_url_path) {
+function transformDocumentsLink(archivedDocumentsUrlPath) {
+  if (archivedDocumentsUrlPath) {
     return {
-      url: config.archivedDocumentsBaseUrl + archived_documents_url_path,
+      url: config.archivedDocumentsBaseUrl + archivedDocumentsUrlPath,
       name: 'View files and documents',
       hint: '(will open another website)',
       hintId: 'external-link-label',
@@ -110,8 +110,7 @@ function transformInteractionResponseToViewRecord(
     archived_documents_url_path,
     export_countries,
   },
-  canShowDocuments = false,
-  useNewCountries
+  canShowDocuments = false
 ) {
   const defaultEventText = kind === 'service_delivery' ? 'No' : null
   const kindLabels = labels[camelCase(kind)]
@@ -140,10 +139,7 @@ function transformInteractionResponseToViewRecord(
     policy_issue_types: getNames(policy_issue_types),
     policy_areas: getNames(policy_areas),
     policy_feedback_notes: policy_feedback_notes,
-  }
-
-  if (useNewCountries) {
-    Object.assign(viewRecord, getExportCountries(export_countries))
+    ...getExportCountries(export_countries),
   }
 
   return pickBy(getDataLabels(viewRecord, kindLabels))

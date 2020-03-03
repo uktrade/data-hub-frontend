@@ -70,29 +70,105 @@ describe('Contacts', () => {
 })
 
 describe('Export', () => {
-  it('should update export values when edit is made', () => {
-    cy.visit(companies.exports.edit('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
+  function assertTable(values) {
+    cy.get('td').as('exportTds')
 
-    cy.get(selectors.companyExport.winCategory).select('Export growth')
-    cy.get(selectors.companyForm.save).click()
+    values.forEach((value, index) => {
+      cy.get('@exportTds')
+        .eq(index)
+        .should('have.text', value)
+    })
+  }
 
-    cy.get('td')
-      .first()
-      .should('have.text', 'Export growth')
-    cy.get('td')
-      .eq(1)
-      .should('have.text', 'No profile')
-    cy.get('td')
-      .eq(2)
-      .should('have.text', 'No score given')
-    cy.get('td')
-      .eq(3)
-      .should('have.text', 'France, Germany')
-    cy.get('td')
-      .eq(4)
-      .should('have.text', 'Yemen')
-    cy.get('td')
-      .eq(5)
-      .should('have.text', 'None')
+  context('Without any export countries', () => {
+    it('should update export win category when edit is made', () => {
+      cy.visit(companies.exports.edit('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
+
+      cy.get(selectors.companyExport.winCategory).select('Export growth')
+      cy.get(selectors.companyForm.save).click()
+
+      assertTable([
+        'Export growth',
+        'No profile',
+        'No score given',
+        'None',
+        'None',
+        'None',
+      ])
+    })
+  })
+
+  context('Adding export countries', () => {
+    function selectCountry(id, text) {
+      const typeahead = `${id} .multiselect`
+      const textInput = `${id} .multiselect__input`
+
+      cy.get(typeahead)
+        .click()
+        .get(textInput)
+        .type(text)
+        .type('{enter}')
+        .type('{esc}')
+    }
+
+    context('Adding two countries to currently exporting', () => {
+      it('Should add the countries and display them in alphabetical order', () => {
+        cy.visit(companies.exports.edit('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
+
+        selectCountry(selectors.companyExport.countries.export, 'Germ')
+        selectCountry(selectors.companyExport.countries.export, 'Fran')
+        cy.get(selectors.companyForm.save).click()
+
+        assertTable([
+          'Export growth',
+          'No profile',
+          'No score given',
+          'France, Germany',
+          'None',
+          'None',
+        ])
+      })
+    })
+
+    context('editing just export win category', () => {
+      it('should only edit the category', () => {
+        cy.visit(companies.exports.edit('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
+
+        cy.get(selectors.companyExport.winCategory).select('New exporter')
+        cy.get(selectors.companyForm.save).click()
+
+        assertTable([
+          'New exporter',
+          'No profile',
+          'No score given',
+          'France, Germany',
+          'None',
+          'None',
+        ])
+      })
+    })
+
+    context('Editing the export win category and all countries', () => {
+      it('should update the countries and edit the category', () => {
+        cy.visit(companies.exports.edit('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
+
+        cy.get(selectors.companyExport.winCategory).select(
+          'Increasing export turnover'
+        )
+        selectCountry(selectors.companyExport.countries.export, 'Bra')
+        selectCountry(selectors.companyExport.countries.future, 'Hon')
+        selectCountry(selectors.companyExport.countries.noInterest, 'Chi')
+        cy.get(selectors.companyForm.save).click()
+
+        assertTable([
+          'Increasing export turnover',
+          'No profile',
+          'No score given',
+          'Brazil, France, Germany',
+          'Honduras',
+          'Chile',
+        ])
+      })
+    })
   })
 })

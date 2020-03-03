@@ -26,6 +26,7 @@ describe('Interaction', () => {
     cy.get(formSelectors.subject).type(subject)
     cy.get(formSelectors.notes).type('Conversation with potential client')
     cy.get(formSelectors.policyFeedbackNo).click()
+    cy.get(formSelectors.countriesDiscussed.no).click()
 
     cy.get(selectors.interactionForm.add).click()
     cy.get(selectors.message.successful).should(
@@ -71,6 +72,7 @@ describe('Service delivery', () => {
     cy.get(formSelectors.subject).type(subject)
     cy.get(formSelectors.notes).type('Conversation with potential client')
     cy.get(formSelectors.policyFeedbackNo).click()
+    cy.get(formSelectors.countriesDiscussed.no).click()
 
     cy.get(selectors.interactionForm.add).click()
     cy.get(selectors.message.successful).should(

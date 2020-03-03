@@ -232,8 +232,8 @@ module.exports = {
       options: channels,
     }
   },
-  countriesDiscussed: (theme, interaction, featureFlags) => {
-    return !canAddCountries(theme, interaction, featureFlags)
+  countriesDiscussed: (theme, interaction) => {
+    return !canAddCountries(theme, interaction)
       ? []
       : [
           {

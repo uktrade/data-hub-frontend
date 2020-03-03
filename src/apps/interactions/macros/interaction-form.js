@@ -34,7 +34,6 @@ module.exports = function({
   company,
   theme,
   interaction,
-  featureFlags,
 }) {
   return {
     returnLink,
@@ -64,7 +63,7 @@ module.exports = function({
         },
       },
       feedbackPolicyNotes,
-      ...countriesDiscussed(theme, interaction, featureFlags),
+      ...countriesDiscussed(theme, interaction),
     ].map((field) => {
       return assign(field, {
         label: field.label || labels.interaction[field.name],
