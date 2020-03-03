@@ -40,6 +40,7 @@ import exportsHistoryReducer from '../apps/companies/apps/exports/reducer'
 import { ID as EXPORTS_HISTORY_ID } from '../apps/companies/apps/exports/state'
 import * as exportsHistoryTasks from '../apps/companies/apps/exports/tasks'
 import * as referralTasks from '../apps/referrals/apps/details/client/tasks'
+import TabNav from './components/TabNav'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -50,6 +51,7 @@ const store = createStore(
     [EXPORTS_HISTORY_ID]: exportsHistoryReducer,
     [REFERRALS_DETAILS_STATE_ID]: referralsReducer,
     ...ValidatedInput.reducerSpread,
+    ...TabNav.reducerSpread,
   }),
   composeWithDevTools(applyMiddleware(sagaMiddleware))
 )
