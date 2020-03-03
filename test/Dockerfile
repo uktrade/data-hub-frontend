@@ -52,13 +52,11 @@ RUN apt-get install -y \
 # Install visual test dependencies
 RUN apt-get install -y imagemagick
 
-# Install Chrome (74)
-# We decided to lock on Chrome 74 for now until we solve random error when running functional tests: "Error: There has been an OAuth stateId mismatch"
-# See related CircleCI build: https://circleci.com/gh/uktrade/data-hub-frontend/48022#tests/containers/3
-RUN apt-get install -y xdg-utils libgtk-3-0 lsb-release libappindicator3-1 fonts-liberation \
-  && curl https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_74.0.3729.169-1_amd64.deb -O \
-  && dpkg -i google-chrome-stable_74.0.3729.169-1_amd64.deb \
-  && rm google-chrome-stable_74.0.3729.169-1_amd64.deb
+# Install Chrome (Latest)
+RUN apt-get install -y xvfb xdg-utils libgtk-3-0 lsb-release libappindicator3-1 fonts-liberation libasound2 libnspr4 libnss3 \
+  && curl https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O \
+  && dpkg -i google-chrome-stable_current_amd64.deb \
+  && rm google-chrome-stable_current_amd64.deb
 
 # Install dependencies for acceptance tests
 RUN apt-get install -y openjdk-8-jre
