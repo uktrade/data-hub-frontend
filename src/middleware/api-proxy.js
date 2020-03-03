@@ -9,6 +9,7 @@ const WHITELIST = [
   '/v4/search/export-country-history',
   '/v4/company-referral/',
   '/v4/company-referral/:id',
+  '/adviser/',
 ]
 
 module.exports = (app) => {

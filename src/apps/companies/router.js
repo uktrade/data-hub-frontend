@@ -74,6 +74,7 @@ const investmentsRouter = require('./apps/investments/router')
 const interactionsRouter = require('../interactions/router.sub-app')
 const companyListsRouter = require('../company-lists/router')
 const advisersRouter = require('./apps/advisers/router')
+const renderSendReferralForm = require('../referrals/apps/send-referral/controllers')
 
 const {
   setCompanyHierarchyLocalNav,
@@ -165,6 +166,8 @@ router.post(urls.companies.manageCompanyList.route, addCompanyOrRemoveFromList)
 router.use(urls.companies.subsidiaries.index.route, setCompanyHierarchyLocalNav)
 router.get(urls.companies.subsidiaries.index.route, renderSubsidiaries)
 router.get(urls.companies.subsidiaries.link.route, renderLinkSubsidiary)
+
+router.get(urls.companies.sendReferral.route, renderSendReferralForm)
 
 router.use(activityFeedRouter)
 

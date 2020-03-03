@@ -22,6 +22,7 @@ describe('Company router', () => {
       '/:companyId/manage-company-list',
       '/:companyId/subsidiaries',
       '/:companyId/subsidiaries/link',
+      '/:companyId/send-referral',
     ])
   })
 })
