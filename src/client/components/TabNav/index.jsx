@@ -14,7 +14,7 @@ const StyledTabsList = styled(Tabs.List)({
 })
 
 const TabNav = ({
-  selectedIdx,
+  selectedIndex,
   onChange,
   tabs = [],
   title,
@@ -27,24 +27,24 @@ const TabNav = ({
     <Tabs>
       <Tabs.Title>{title}</Tabs.Title>
       <StyledTabsList>
-        {tabs.map(({ label }, idx) => (
+        {tabs.map(({ label }, index) => (
           <Tabs.Tab
-            key={idx}
-            onClick={() => onChange(idx)}
-            selected={idx === selectedIdx}
+            key={index}
+            onClick={() => onChange(index)}
+            selected={index === selectedIndex}
           >
             {label}
           </Tabs.Tab>
         ))}
       </StyledTabsList>
     </Tabs>
-    {tabs[selectedIdx]?.content}
+    {tabs[selectedIndex]?.content}
   </div>
 )
 
 TabNav.propTypes = {
   title: PropTypes.string.isRequired,
-  selectedIdx: PropTypes.number,
+  selectedIndex: PropTypes.number,
   tabs: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
@@ -61,10 +61,10 @@ TabNav.propTypes = {
 export default multiInstance({
   name: 'TabNav',
   dispatchToProps: (dispatch) => ({
-    onChange: (selectedIdx) =>
+    onChange: (selectedIndex) =>
       dispatch({
         type: TAB_NAV__SELECT,
-        selectedIdx,
+        selectedIndex,
       }),
   }),
   component: TabNav,
