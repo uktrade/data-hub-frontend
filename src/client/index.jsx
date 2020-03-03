@@ -26,6 +26,8 @@ import ExportsFullHistory from '../apps/companies/apps/exports/client/ExportsFul
 import ReferralDetails from '../apps/referrals/apps/details/client/ReferralDetails'
 import ReferralHelp from '../apps/referrals/apps/help/client/ReferralHelp'
 import ValidatedInput from './components/ValidatedInput'
+import SendReferralForm from '../apps/referrals/apps/send-referral/client/SendReferralForm'
+import sendReferral from '../apps/referrals/apps/send-referral/client/reducer'
 
 import tasksSaga from './components/Task/saga'
 import tasks from './components/Task/reducer'
@@ -47,6 +49,7 @@ const sagaMiddleware = createSagaMiddleware()
 const store = createStore(
   combineReducers({
     tasks,
+    sendReferral,
     [COMPANY_LISTS_STATE_ID]: companyListsReducer,
     [EXPORTS_HISTORY_ID]: exportsHistoryReducer,
     [REFERRALS_DETAILS_STATE_ID]: referralsReducer,
@@ -156,6 +159,9 @@ function App() {
       </Mount>
       <Mount selector="#company-export-index-page">
         {(props) => <ExportsIndex {...props} />}
+      </Mount>
+      <Mount selector="#send-referral-form">
+        {(props) => <SendReferralForm {...props} />}
       </Mount>
       <Mount selector="#company-export-full-history">
         {(props) => <ExportsFullHistory {...props} />}
