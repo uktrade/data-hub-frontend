@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { filter, flatten, get, set } = require('lodash')
+const { get, set } = require('lodash')
 
 const metadataRepo = require('../../../../lib/metadata')
 const urls = require('../../../../lib/urls')
@@ -15,10 +15,6 @@ const {
   EXPORT_INTEREST_STATUS,
   EXPORT_INTEREST_STATUS_VALUES,
 } = require('../../../constants')
-
-function getId(obj) {
-  return obj.id
-}
 
 function getExportCountryGroups(countries = []) {
   const buckets = groupExportCountries(countries)
@@ -111,7 +107,7 @@ function populateExportForm(req, res, next) {
 }
 
 function renderExportEdit(req, res) {
-  const { company, features, errors } = res.locals
+  const { company, errors } = res.locals
 
   res
     .breadcrumb(company.name, urls.companies.detail(company.id))
