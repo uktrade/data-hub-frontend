@@ -76,18 +76,26 @@ function renderExports(req, res) {
     })
 }
 
-async function renderFullExportHistory(req, res) {
+function renderExportHistory(req, res) {
   const {
     company: { name, id },
   } = res.locals
 
+  const { countryId } = req.params
+
+  const pageTitle = countryId
+    ? `${getCountry(countryId).name} exports history`
+    : 'Export countries history'
+
   res
     .breadcrumb(name, urls.companies.detail(id))
     .breadcrumb('Exports', urls.companies.exports.index(id))
-    .breadcrumb('Full export history')
+    .breadcrumb(pageTitle)
     .render('companies/apps/exports/views/full-history', {
       props: {
         companyId: id,
+        pageTitle,
+        countryId,
       },
     })
 }
@@ -165,5 +173,5 @@ module.exports = {
   renderExports,
   renderExportEdit,
   handleEditFormPost,
-  renderFullExportHistory,
+  renderExportHistory,
 }

@@ -10,9 +10,7 @@ const {
 const { FUTURE_INTEREST, EXPORTING_TO, NOT_INTERESTED } = EXPORT_INTEREST_STATUS
 
 function createExpected(countries) {
-  return countries
-    .map(([id, name]) => ({ id, name }))
-    .sort((a, b) => a.name.localeCompare(b.name))
+  return countries.sort((a, b) => a.name.localeCompare(b.name))
 }
 
 function createCountry(name, status) {
