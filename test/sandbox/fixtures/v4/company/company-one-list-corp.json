@@ -36,6 +36,7 @@
   "number_of_employees": null,
   "is_number_of_employees_estimated": null,
   "export_to_countries": [],
+  "export_countries": [],
   "future_interest_countries": [],
   "headquarter_type": {
     "name": "ghq",

@@ -14,7 +14,7 @@ config.archivedDocumentsBaseUrl = 'http://base'
 
 function getCountryNames(countries) {
   return countries
-    .map(([, name]) => name)
+    .map(({ name }) => name)
     .sort((a, b) => a.localeCompare(b))
     .join(', ')
 }
@@ -118,7 +118,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
 
             expect(transformed).to.deep.equal({
               ...transformedMockInteraction,
-              [LABELS.FUTURE]: countries.future[0][1],
+              [LABELS.FUTURE]: countries.future[0].name,
             })
             expect(transformed[LABELS.CURRENT]).to.be.undefined
             expect(transformed[LABELS.NOT_INTERESTED]).to.be.undefined

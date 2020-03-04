@@ -49,10 +49,11 @@ const transformFullExportHistory = ({ results }, activePage) => {
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 
-export const fetchExportsHistory = ({ companyId, activePage }) =>
+export const fetchExportsHistory = ({ companyId, countryId, activePage }) =>
   axios
     .post('/api-proxy/v4/search/export-country-history', {
       company: companyId,
+      country: countryId,
     })
     .catch(handleError)
     .then(({ data }) => transformFullExportHistory(data, activePage))
