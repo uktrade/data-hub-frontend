@@ -122,6 +122,7 @@ describe('Company edit', () => {
         },
         {
           label: 'Annual turnover (optional)',
+          hint: 'Amount in GBP',
           assert: assertFieldRadios,
           optionsCount: 4,
         },
@@ -198,6 +199,7 @@ describe('Company edit', () => {
         },
         {
           label: 'Annual turnover (optional)',
+          hint: 'Amount in GBP',
           value: company.turnover_range.name,
           assert: assertFieldRadios,
           optionsCount: 4,
@@ -268,6 +270,7 @@ describe('Company edit', () => {
         },
         {
           label: 'Annual turnover (optional)',
+          hint: 'Amount in GBP',
           value: company.turnover,
           assert: assertFieldInput,
         },
@@ -315,21 +318,33 @@ describe('Company edit', () => {
       cy.visit(urls.companies.edit(company.id))
     })
 
-    it('should create ZenDesk tickers and redirect to the business details', () => {
+    it('should create ZenDesk ticket and redirect to the business details', () => {
       cy.contains('Company name')
         .next()
         .find('input')
         .clear()
         .type('Test company name')
+
+      cy.contains('Trading name')
+        .next()
+        .find('input')
+        .clear()
+        .type('Test company trading name')
+
       cy.contains('Submit').click()
 
       cy.wait('@editCompanyResponse').then((xhr) => {
         expect(xhr.responseBody.changeRequests.length).to.equal(1)
-        expect(xhr.responseBody.changeRequests[0]).to.contain(
-          `User DIT Staff requested company details change of ${company.name}`
-        )
-        expect(xhr.responseBody.changeRequests[0]).to.contain(
-          'Current name: DnB Ltd\nRequested name: Test company name'
+
+        const companyUrl =
+          Cypress.config().baseUrl + urls.companies.detail(company.id)
+        expect(xhr.responseBody.changeRequests[0]).to.equal(
+          `User DIT Staff requested company details change of ${company.name} (${companyUrl})\n\n` +
+            `Company DUNS number: ${company.duns_number}\n\n` +
+            'Current name: DnB Ltd\n' +
+            'Requested name: Test company name\n\n' +
+            'Current trading_names: DnB\n' +
+            'Requested trading_names: Test company trading name'
         )
       })
 
