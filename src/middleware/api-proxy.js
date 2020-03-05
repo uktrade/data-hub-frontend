@@ -10,7 +10,7 @@ const WHITELIST = [
   '/v4/company-referral/',
   '/v4/company-referral/:id',
   '/adviser/',
-  '/v4/company/:id/export-wins',
+  '/v4/company/:id/export-win',
 ]
 
 module.exports = (app) => {
