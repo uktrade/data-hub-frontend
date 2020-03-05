@@ -7,9 +7,7 @@ const REFERRAL_ID = 'cc5b9953-894c-44b4-a4ac-d0f6a6f6128f'
 
 describe('Referral details', () => {
   context('when viewing referral details', () => {
-    before(() => {
-      cy.visit(`/referrals/${REFERRAL_ID}`)
-    })
+    before(() => cy.visit(urls.referrals.details(REFERRAL_ID)))
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
@@ -31,11 +29,10 @@ describe('Referral details', () => {
         .as('row')
         .eq(0)
         .should('have.text', 'CompanyLambda plc')
-        .parents()
-        .find('tbody tr')
+
+      cy.get('@row')
         .eq(1)
         .should('have.text', 'ContactJohnny Cakeman')
-        .parents()
 
       cy.get('@row')
         .eq(2)
