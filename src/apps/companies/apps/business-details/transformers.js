@@ -11,7 +11,7 @@ const transformGlobalAccountManager = (globalAccountManager) => {
   const region = get(dit_team, 'uk_region.name')
   const country = get(dit_team, 'country.name')
   const items = compact([name, get(dit_team, 'name'), region || country])
-  return items.length ? items : 'Not set'
+  return items.length ? items : null
 }
 
 const transformCompanyToBusinessDetails = (company) => {
