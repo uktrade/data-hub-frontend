@@ -27,6 +27,14 @@ const StyledRow = styled.div({
 })
 const StyledSummaryListWrapper = styled.div({
   flexGrow: 1,
+  marginRight: SPACING.SCALE_2,
+  dt: {
+    // Prevent he left column from shrinking,
+    // when the right column's content is too long.
+    flexShrink: 0,
+    // The original 30% column width doesn't work well in this usecase
+    flexBasis: 160,
+  },
 })
 const StyledHeader = styled.div({
   background: GREY_4,
