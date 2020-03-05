@@ -317,9 +317,16 @@ describe('Companies Export', () => {
   })
 
   describe('Export Wins', () => {
+    function visitExports(companyId) {
+      cy.server()
+      cy.route('**/export-win').as('exportWinsResults')
+      cy.visit(urls.companies.exports.index(companyId))
+      cy.wait('@exportWinsResults')
+    }
+
     context('when the API for Export Wins returns a 501', () => {
       before(() => {
-        cy.visit(urls.companies.exports.index(fixtures.company.lambdaPlc.id))
+        visitExports(fixtures.company.lambdaPlc.id)
       })
 
       it('shold not have an Export Wins list', () => {
@@ -331,21 +338,19 @@ describe('Companies Export', () => {
 
     context('when the API for Export Wins returns a 404', () => {
       before(() => {
-        cy.visit(urls.companies.exports.index(fixtures.company.oneListCorp.id))
+        visitExports(fixtures.company.oneListCorp.id)
       })
 
       it('should show an error message', () => {
         cy.contains('8 results').should('not.exist')
         cy.contains('0 results').should('not.exist')
-        cy.contains('Could not load Export wins')
+        cy.contains('Could not load Export wins').should('not.exist')
       })
     })
 
     context('When there is more than one page of results', () => {
       before(() => {
-        cy.visit(
-          urls.companies.exports.index(fixtures.company.marsExportsLtd.id)
-        )
+        visitExports(fixtures.company.marsExportsLtd.id)
       })
 
       it('should have the correct count and number of visible results', () => {

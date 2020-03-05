@@ -70,7 +70,8 @@ export function fetchExportWins({ companyId, activePage }) {
   return axios
     .get(`/api-proxy/v4/company/${companyId}/export-win${param}`)
     .catch((e) => {
-      if (e.response?.status === 501) {
+      // @TODO: Remove the 404 and handle separatly once API is in place to return a 501
+      if (e.response?.status === 501 || e.response?.status == 404) {
         return { [NOT_IMPLEMENTED]: true }
       }
 
