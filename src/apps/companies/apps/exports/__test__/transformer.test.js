@@ -1,12 +1,11 @@
 const faker = require('faker')
 
 const minimalCompany = require('../../../../../../test/unit/data/companies/minimal-company.json')
-
 const { transformCompanyToExportDetailsView } = require('../transformer')
-
 const {
   generateExportCountries,
 } = require('../../../../../../test/unit/helpers/generate-export-countries')
+const { EXPORT_INTEREST_STATUS } = require('../../../../../apps/constants')
 
 describe('transformCompanyToExportDetailsView', () => {
   context('when no export market information has been entered', () => {
@@ -34,9 +33,9 @@ describe('transformCompanyToExportDetailsView', () => {
           value: undefined,
         },
         exportCountriesInformation: [
-          { name: 'Currently exporting to', value: 'None' },
-          { name: 'Future countries of interest', value: 'None' },
-          { name: 'Countries of no interest', value: 'None' },
+          { name: 'Currently exporting to', values: [] },
+          { name: 'Future countries of interest', values: [] },
+          { name: 'Countries of no interest', values: [] },
         ],
       })
     })
@@ -86,9 +85,15 @@ describe('transformCompanyToExportDetailsView', () => {
           value: undefined,
         },
         exportCountriesInformation: [
-          { name: 'Currently exporting to', value: 'France' },
-          { name: 'Future countries of interest', value: 'Germany' },
-          { name: 'Countries of no interest', value: 'None' },
+          {
+            name: 'Currently exporting to',
+            values: [{ id: '1234', name: 'France' }],
+          },
+          {
+            name: 'Future countries of interest',
+            values: [{ id: '4321', name: 'Germany' }],
+          },
+          { name: 'Countries of no interest', values: [] },
         ],
       })
     })
@@ -153,12 +158,27 @@ describe('transformCompanyToExportDetailsView', () => {
             value: undefined,
           },
           exportCountriesInformation: [
-            { name: 'Currently exporting to', value: 'France, Spain' },
+            {
+              name: 'Currently exporting to',
+              values: [
+                {
+                  id: '1234',
+                  name: 'France',
+                },
+                {
+                  id: '5511',
+                  name: 'Spain',
+                },
+              ],
+            },
             {
               name: 'Future countries of interest',
-              value: 'Germany, Sweden',
+              values: [
+                { id: '4321', name: 'Germany' },
+                { id: '4123', name: 'Sweden' },
+              ],
             },
-            { name: 'Countries of no interest', value: 'None' },
+            { name: 'Countries of no interest', values: [] },
           ],
         })
       })
@@ -217,23 +237,17 @@ describe('transformCompanyToExportDetailsView', () => {
 
   context('when multiple countries have been added in all categories', () => {
     it('should show the countries', () => {
-      const {
-        future,
-        current,
-        noInterest,
-        exportCountries,
-      } = generateExportCountries()
+      const getCountriesByStatus = (values, status) =>
+        values
+          .filter((item) => item.status === status)
+          .map((item) => item.country)
+          .sort((a, b) => a.name.localeCompare(b.name))
+
+      const { exportCountries } = generateExportCountries()
 
       const company = {
         ...minimalCompany,
         export_countries: exportCountries,
-      }
-
-      function getCountryText(countries) {
-        return countries
-          .map(([, name]) => name)
-          .sort((a, b) => a.localeCompare(b))
-          .join(', ')
       }
 
       const viewRecord = transformCompanyToExportDetailsView(company)
@@ -248,15 +262,24 @@ describe('transformCompanyToExportDetailsView', () => {
         exportCountriesInformation: [
           {
             name: 'Currently exporting to',
-            value: getCountryText(current),
+            values: getCountriesByStatus(
+              exportCountries,
+              EXPORT_INTEREST_STATUS.EXPORTING_TO
+            ),
           },
           {
             name: 'Future countries of interest',
-            value: getCountryText(future),
+            values: getCountriesByStatus(
+              exportCountries,
+              EXPORT_INTEREST_STATUS.FUTURE_INTEREST
+            ),
           },
           {
             name: 'Countries of no interest',
-            value: getCountryText(noInterest),
+            values: getCountriesByStatus(
+              exportCountries,
+              EXPORT_INTEREST_STATUS.NOT_INTERESTED
+            ),
           },
         ],
       })

@@ -3,6 +3,8 @@ const { assertBreadcrumbs } = require('../../support/assertions')
 const urls = require('../../../../../src/lib/urls')
 const exportSelectors = require('../../../../selectors/company/export')
 
+const countrySelectors = exportSelectors.countries
+
 describe('Companies Export', () => {
   context(
     'when viewing the export tab for an active company with no export information',
@@ -74,7 +76,7 @@ describe('Companies Export', () => {
         cy.contains('View full export countries history').should(
           'have.attr',
           'href',
-          urls.companies.exports.history(fixtures.company.dnbCorp.id)
+          urls.companies.exports.history.index(fixtures.company.dnbCorp.id)
         )
       })
 
@@ -193,7 +195,7 @@ describe('Companies Export', () => {
         cy.contains('View full export countries history').should(
           'have.attr',
           'href',
-          urls.companies.exports.history(fixtures.company.dnbLtd.id)
+          urls.companies.exports.history.index(fixtures.company.dnbLtd.id)
         )
       })
 
@@ -232,11 +234,11 @@ describe('Companies Export', () => {
 })
 
 describe('Companies Export Countries', () => {
-  const countrySelectors = exportSelectors.countries
-
   context('when there is no history', () => {
     before(() => {
-      cy.visit(urls.companies.exports.history(fixtures.company.lambdaPlc.id))
+      cy.visit(
+        urls.companies.exports.history.index(fixtures.company.lambdaPlc.id)
+      )
     })
 
     it('should render breadcrumbs', () => {
@@ -247,7 +249,7 @@ describe('Companies Export Countries', () => {
           fixtures.company.lambdaPlc.id
         ),
         Exports: urls.companies.exports.index(fixtures.company.lambdaPlc.id),
-        'Full export history': null,
+        'Export countries history': null,
       })
     })
 
@@ -263,7 +265,9 @@ describe('Companies Export Countries', () => {
 
   context('when there is history', () => {
     before(() => {
-      cy.visit(urls.companies.exports.history(fixtures.company.dnbCorp.id))
+      cy.visit(
+        urls.companies.exports.history.index(fixtures.company.dnbCorp.id)
+      )
     })
 
     it('renders the title', () => {
@@ -351,7 +355,7 @@ describe('Companies Export Countries', () => {
   context('when the user is unknown', () => {
     before(() => {
       cy.visit(
-        urls.companies.exports.history(fixtures.company.marsExportsLtd.id)
+        urls.companies.exports.history.index(fixtures.company.marsExportsLtd.id)
       )
     })
 
@@ -373,12 +377,53 @@ describe('Companies Export Countries', () => {
   context('when the only item is an "update" item', () => {
     before(() => {
       cy.visit(
-        urls.companies.exports.history(fixtures.company.dnbSubsidiary.id)
+        urls.companies.exports.history.index(fixtures.company.dnbSubsidiary.id)
       )
     })
 
     it('should filter out the update', () => {
       cy.get(countrySelectors.listItemHeadings).should('have.length', 0)
     })
+  })
+})
+
+describe('Country Export History', () => {
+  before(() => {
+    cy.visit(
+      urls.companies.exports.history.country(
+        fixtures.company.dnbCorp.id,
+        '975f66a0-5d95-e211-a939-e4115bead28a'
+      )
+    )
+  })
+
+  it('should render breadcrumbs', () => {
+    assertBreadcrumbs({
+      Home: urls.dashboard(),
+      Companies: urls.companies.index(),
+      [fixtures.company.dnbCorp.name]: urls.companies.detail(
+        fixtures.company.dnbCorp.id
+      ),
+      Exports: urls.companies.exports.index(fixtures.company.dnbCorp.id),
+      'Andorra exports history': null,
+    })
+  })
+
+  it('renders the title', () => {
+    cy.contains('Andorra exports history')
+  })
+
+  it('renders the collection list with 2 results', () => {
+    cy.contains('2 results')
+    cy.get(countrySelectors.listItemHeadings).should('have.length', 2)
+
+    cy.contains('Andorra added to currently exporting')
+      .siblings()
+      .should('contain', 'By DIT Staff')
+      .should('contain', 'Date 6 Feb 2020, 4:06pm')
+    cy.contains('Andorra removed from future countries of interest')
+      .siblings()
+      .should('contain', 'By DIT Staff')
+      .should('contain', 'Date 6 Feb 2020, 3:41pm')
   })
 })

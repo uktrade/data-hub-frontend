@@ -5,7 +5,6 @@ const buildMiddlewareParameters = require('../../../../../../test/unit/helpers/m
 const {
   generateCountries,
 } = require('../../../../../../test/unit/helpers/generate-export-countries')
-const { transformObjectToOption } = require('../../../../transformers')
 const { EXPORT_INTEREST_STATUS } = require('../../../../constants')
 
 const companyMock = require('../../../../../../test/unit/data/companies/company-v4.json')
@@ -114,10 +113,7 @@ describe('Company export controller', () => {
       let countries
       let metadataCountries
       let export_experience_category
-
-      function getExportCountry([id, name]) {
-        return [transformObjectToOption({ id, name })]
-      }
+      let expectedCountries
 
       beforeEach(() => {
         export_experience_category = {
@@ -125,16 +121,17 @@ describe('Company export controller', () => {
           name: 'Increasing export markets',
         }
         metadataCountries = generateCountries(3)
-        metadata.countryOptions.push(
-          ...metadataCountries.map(([id, name]) => ({
-            id,
-            name,
-          }))
-        )
+        expectedCountries = metadataCountries.map(({ name, id }) => [
+          {
+            label: name,
+            value: id,
+          },
+        ])
+        metadata.countryOptions.push(...metadataCountries)
         countries = {
-          [EXPORT_INTEREST_STATUS.FUTURE_INTEREST]: metadataCountries[0][0],
-          [EXPORT_INTEREST_STATUS.NOT_INTERESTED]: metadataCountries[1][0],
-          [EXPORT_INTEREST_STATUS.EXPORTING_TO]: metadataCountries[2][0],
+          [EXPORT_INTEREST_STATUS.FUTURE_INTEREST]: metadataCountries[0].id,
+          [EXPORT_INTEREST_STATUS.NOT_INTERESTED]: metadataCountries[1].id,
+          [EXPORT_INTEREST_STATUS.EXPORTING_TO]: metadataCountries[2].id,
         }
       })
 
@@ -159,15 +156,9 @@ describe('Company export controller', () => {
         it('should populate formData on locals', () => {
           expect(middlewareParameters.resMock.locals.formData).to.deep.equal({
             export_experience_category,
-            [EXPORT_INTEREST_STATUS.FUTURE_INTEREST]: getExportCountry(
-              metadataCountries[0]
-            ),
-            [EXPORT_INTEREST_STATUS.NOT_INTERESTED]: getExportCountry(
-              metadataCountries[1]
-            ),
-            [EXPORT_INTEREST_STATUS.EXPORTING_TO]: getExportCountry(
-              metadataCountries[2]
-            ),
+            [EXPORT_INTEREST_STATUS.FUTURE_INTEREST]: expectedCountries[0],
+            [EXPORT_INTEREST_STATUS.NOT_INTERESTED]: expectedCountries[1],
+            [EXPORT_INTEREST_STATUS.EXPORTING_TO]: expectedCountries[2],
           })
         })
 
@@ -200,13 +191,9 @@ describe('Company export controller', () => {
         it('should populate formData on locals', () => {
           expect(middlewareParameters.resMock.locals.formData).to.deep.equal({
             export_experience_category,
-            [EXPORT_INTEREST_STATUS.FUTURE_INTEREST]: getExportCountry(
-              metadataCountries[0]
-            ),
+            [EXPORT_INTEREST_STATUS.FUTURE_INTEREST]: expectedCountries[0],
             [EXPORT_INTEREST_STATUS.NOT_INTERESTED]: [],
-            [EXPORT_INTEREST_STATUS.EXPORTING_TO]: getExportCountry(
-              metadataCountries[2]
-            ),
+            [EXPORT_INTEREST_STATUS.EXPORTING_TO]: expectedCountries[2],
           })
         })
 
