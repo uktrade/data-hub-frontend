@@ -41,8 +41,8 @@ const SendReferralConfirmation = ({
         <p>
           <p>
             Clicking “Send referral” will show the referral in the activity of{' '}
-            {` ${companyName}`}, as well as in the Referrals section on both
-            your Data Hub Homepage and the Homepage of the recipient.
+            {companyName}, as well as in the Referrals section on both your Data
+            Hub Homepage and the Homepage of the recipient.
           </p>
           <p>It might take up to 24 hours for the referral to appear.</p>
           <p>You will not be able to edit the referral after this point.</p>

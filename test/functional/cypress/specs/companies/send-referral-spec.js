@@ -184,7 +184,7 @@ describe('Send a referral form', () => {
           .eq(2)
           .should(
             'have.text',
-            'Clicking “Send referral” will show the referral in the activity of  Venus Ltd, as well as in the Referrals section on both your Data Hub' +
+            'Clicking “Send referral” will show the referral in the activity of Venus Ltd, as well as in the Referrals section on both your Data Hub' +
               ' Homepage and the Homepage of the recipient.' +
               'It might take up to 24 hours for the referral to appear.' +
               'You will not be able to edit the referral after this point.'
