@@ -385,6 +385,142 @@ describe('Companies Export Countries', () => {
       cy.get(countrySelectors.listItemHeadings).should('have.length', 0)
     })
   })
+
+  context('when viewing a company with interactions in the history', () => {
+    before(() => {
+      cy.visit(
+        urls.companies.exports.history.index(
+          fixtures.company.investigationLimited.id
+        )
+      )
+    })
+
+    it('renders the title', () => {
+      cy.contains('Export countries history')
+    })
+
+    it('renders the collection list with 5 results', () => {
+      const historyItems = fixtures.export.historyWithInteractions.results
+
+      function checkInteraction(assertions, index) {
+        const item = historyItems[index]
+        const interaction = 'interaction' + index
+        const link = 'interactionLink' + index
+        const subHeading = 'interactionSubHeading' + index
+        const assertionTasks = []
+
+        assertions.forEach(([assertion, values]) => {
+          values.forEach((value) => {
+            assertionTasks.push({ assertion, value })
+          })
+        })
+
+        cy.contains(item.subject)
+          .as(link)
+          .parent()
+          .siblings('h4')
+          .as(subHeading)
+          .parent()
+          .as(interaction)
+
+        cy.get('@' + link).should(
+          'have.attr',
+          'href',
+          urls.interactions.detail(item.id)
+        )
+
+        cy.get('@' + interaction)
+          .find('div span')
+          .should('contain', 'Interaction')
+
+        assertionTasks.reduce(($details, { assertion, value }) => {
+          return $details.should(assertion, value)
+        }, cy.get('@' + interaction).find('details'))
+      }
+
+      cy.contains('5 results')
+      cy.get(countrySelectors.listItemHeadings).should('have.length', 5)
+
+      const interactionDetails = [
+        [
+          [
+            'contain',
+            [
+              'Company contacts Stephan Padberg, Stephanie Stokes',
+              'Advisers Mr. Genesis Kub (et nihil repudiandae), Solon Lynch (ea est totam), Dr. Meda Mraz (fuga corporis architecto)',
+              'Service Deserunt magni sapiente soluta praesentium sapiente.',
+              'Countries currently exporting to Benin',
+              'Future countries of interest Brunei Darussalam, French Polynesia',
+            ],
+          ],
+          ['not.contain', ['Countries not intersted in']],
+        ],
+        [
+          [
+            'contain',
+            [
+              'Company contact Justus Simonis',
+              'Adviser Carolanne Langworth (sit delectus recusandae)',
+              'Service Ipsa dicta omnis pariatur.',
+              'Countries currently exporting to Christmas Island, Indonesia, Martinique',
+              'Countries not intersted in Serbia',
+            ],
+          ],
+          ['not.contain', ['Future countries of interest']],
+        ],
+        [
+          [
+            'contain',
+            [
+              'Company contacts Karen Mayer Jr., Ari Von',
+              'Adviser Horace Orn (nisi ipsa quisquam)',
+              'Service Architecto suscipit et aliquam architecto.',
+              'Countries currently exporting to Burkina Faso',
+              'Future countries of interest Kyrgyz Republic, Trinidad and Tobago',
+            ],
+          ],
+          ['not.contain', ['Countries not intersted in']],
+        ],
+        [
+          [
+            'contain',
+            [
+              'Company contact Leonie Deckow',
+              'Advisers Napoleon Powlowski (veritatis temporibus unde), Giovanna Anderson (delectus repellendus ducimus), Tessie Hane (perferendis nihil nam)',
+              'Service Repellat quia fugiat velit delectus expedita omnis doloribus.',
+              'Countries currently exporting to Bolivia, Cameroon',
+              'Future countries of interest Bolivia, Qatar',
+              'Countries not intersted in Australia, Greenland',
+            ],
+          ],
+        ],
+      ]
+
+      interactionDetails.forEach(checkInteraction)
+
+      cy.get('@interactionSubHeading0').should(
+        'contain',
+        'Created 8 Jun 2019, 7:24am'
+      )
+      cy.get('@interactionSubHeading1').should(
+        'contain',
+        'Created 21 Jun 2019, 5:07am'
+      )
+      cy.get('@interactionSubHeading2').should(
+        'contain',
+        'Created 17 Sep 2019, 12:13am'
+      )
+      cy.get('@interactionSubHeading3').should(
+        'contain',
+        'Created 5 Jan 2020, 1:27pm'
+      )
+
+      cy.contains('Belarus added to countries of no interest')
+        .siblings()
+        .should('contain', 'By DIT Staff')
+        .should('contain', 'Date 11 Feb 2020, 10:47am')
+    })
+  })
 })
 
 describe('Country Export History', () => {
