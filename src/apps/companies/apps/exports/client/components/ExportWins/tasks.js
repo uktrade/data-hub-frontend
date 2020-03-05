@@ -68,7 +68,7 @@ export function fetchExportWins({ companyId, activePage }) {
   const param = offset ? '?offset=' + offset : ''
 
   return axios
-    .get(`/api-proxy/v4/company/${companyId}/export-wins${param}`)
+    .get(`/api-proxy/v4/company/${companyId}/export-win${param}`)
     .catch((e) => {
       if (e.response?.status === 501) {
         return { [NOT_IMPLEMENTED]: true }

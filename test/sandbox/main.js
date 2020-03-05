@@ -436,7 +436,7 @@ Sandbox.define(
 )
 Sandbox.define('/v4/company/{companyId}/audit', 'GET', v4Company.companyAudit)
 Sandbox.define(
-  '/v4/company/{companyId}/export-wins',
+  '/v4/company/{companyId}/export-win',
   'GET',
   v4Company.exportWins
 )
