@@ -3,14 +3,14 @@ const faker = require('faker')
 const { EXPORT_INTEREST_STATUS } = require('../../../src/apps/constants')
 
 function generateCountries(length) {
-  return Array.from({ length }).map(() => [
-    faker.random.uuid(),
-    faker.address.country(),
-  ])
+  return Array.from({ length }).map(() => ({
+    id: faker.random.uuid(),
+    name: faker.address.country(),
+  }))
 }
 
 function createExportCountry(status) {
-  return ([id, name]) => ({ country: { id, name }, status })
+  return ({ id, name }) => ({ country: { id, name }, status })
 }
 
 function generateExportCountries() {

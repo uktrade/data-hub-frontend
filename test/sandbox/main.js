@@ -500,7 +500,7 @@ Sandbox.define(
 Sandbox.define(
   '/v4/search/export-country-history',
   'POST',
-  v4SearchExports.fetchFullExportHistory
+  v4SearchExports.fetchExportHistory
 )
 
 // Whoami endpoint

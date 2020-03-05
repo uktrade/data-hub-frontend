@@ -1,27 +1,18 @@
 /* eslint-disable camelcase */
-const { flatMap } = require('lodash')
-
 const groupExportCountries = require('../../../../lib/group-export-countries')
 const { exportDetailsLabels, exportPotentialLabels } = require('../../labels')
 const { EXPORT_INTEREST_STATUS } = require('../../../constants')
 
-function getCountries(data) {
-  return flatMap(data, ({ name }) => name || null).join(', ') || 'None'
-}
-
 function getCountriesFields(company) {
-  const buckets = groupExportCountries(company.export_countries)
+  const groupedExportCountries = groupExportCountries(company.export_countries)
 
   return {
-    exportToCountries: getCountries(
-      buckets[EXPORT_INTEREST_STATUS.EXPORTING_TO]
-    ),
-    futureInterestCountries: getCountries(
-      buckets[EXPORT_INTEREST_STATUS.FUTURE_INTEREST]
-    ),
-    noInterestCountries: getCountries(
-      buckets[EXPORT_INTEREST_STATUS.NOT_INTERESTED]
-    ),
+    exportToCountries:
+      groupedExportCountries[EXPORT_INTEREST_STATUS.EXPORTING_TO],
+    futureInterestCountries:
+      groupedExportCountries[EXPORT_INTEREST_STATUS.FUTURE_INTEREST],
+    noInterestCountries:
+      groupedExportCountries[EXPORT_INTEREST_STATUS.NOT_INTERESTED],
   }
 }
 
@@ -55,15 +46,15 @@ module.exports = {
     const exportCountriesInformation = [
       {
         name: exportDetailsLabels.exportToCountries,
-        value: exportToCountries,
+        values: exportToCountries,
       },
       {
         name: exportDetailsLabels.futureInterestCountries,
-        value: futureInterestCountries,
+        values: futureInterestCountries,
       },
       {
         name: exportDetailsLabels.noInterestCountries,
-        value: noInterestCountries,
+        values: noInterestCountries,
       },
     ]
 
