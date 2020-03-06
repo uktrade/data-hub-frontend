@@ -80,7 +80,7 @@ export const connect = (componentState2props, dispatch2props, ...rest) =>
     componentState2props = componentState2props || ((x) => x)
     const Connected = reactRedux.connect(
       (state, props) =>
-        componentState2props(state[name]?.[props.id], state, props),
+        componentState2props(state[name]?.[props.id] || {}, state, props),
       dispatch2props &&
         ((dispatch, props, ...rest) =>
           dispatch2props(

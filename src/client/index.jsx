@@ -51,6 +51,7 @@ import * as exportsHistoryTasks from '../apps/companies/apps/exports/client/Expo
 import TabNav from './components/TabNav'
 import referralListTask from './components/ReferralList/task'
 import ReferralList from './components/ReferralList'
+import Dashboard from './components/Dashboard'
 
 import { ID as EXPORTS_WINS_ID } from '../apps/companies/apps/exports/client/ExportWins/state'
 import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/reducer'
@@ -140,7 +141,7 @@ function App() {
         {(props) => <CompanyActivityFeed {...props} />}
       </Mount>
       <Mount selector="#company-lists">
-        <CompanyLists />
+        <Dashboard id="homepage" />
       </Mount>
       <Mount selector="#delete-company-list">
         {(props) => (
