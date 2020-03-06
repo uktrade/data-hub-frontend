@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { TEXT_COLOUR, GREY_3 } from 'govuk-colours'
 import Details from '@govuk-react/details'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
