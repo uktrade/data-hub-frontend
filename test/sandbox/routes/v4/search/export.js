@@ -4,11 +4,13 @@ var unkownUserExportHistory = require('../../../fixtures/v4/export/unkown-user-e
 var updateOnlyExportHistory = require('../../../fixtures/v4/export/update-only-export-history.json')
 var countryExportHistory = require('../../../fixtures/v4/export/country-export-history.json')
 var exportHistoryWithInteractions = require('../../../fixtures/v4/export/history-with-interactions.json')
+var exportHistoryGroups = require('../../../fixtures/v4/export/history-groups.json')
 
 var dnbCorp = require('../../../fixtures/v4/company/company-dnb-corp.json')
 var marsExportsLtd = require('../../../fixtures/v4/company/company-mars-exports-ltd.json')
 var dnbSubsidiary = require('../../../fixtures/v4/company/company-dnb-subsidiary.json')
 var investigationLtd = require('../../../fixtures/v4/company/company-investigation-ltd.json')
+var globalUltimate = require('../../../fixtures/v4/company/company-dnb-global-ultimate.json')
 
 exports.fetchExportHistory = function(req, res) {
   var companyId = req.body.company
@@ -28,6 +30,9 @@ exports.fetchExportHistory = function(req, res) {
   }
   if (companyId === investigationLtd.id) {
     return res.json(exportHistoryWithInteractions)
+  }
+  if (companyId === globalUltimate.id) {
+    return res.json(exportHistoryGroups)
   }
 
   return res.json(emptyFullExportHistory)
