@@ -53,11 +53,11 @@ const Referral = ({
       <SummaryList
         rows={[
           {
-            label: 'Sending adviser(s)',
+            label: 'Sending adviser',
             value: <AdviserDetails {...sender} />,
           },
           {
-            label: 'Receiving adviser(s)',
+            label: 'Receiving adviser',
             value: <AdviserDetails {...recipient} />,
           },
         ]}
