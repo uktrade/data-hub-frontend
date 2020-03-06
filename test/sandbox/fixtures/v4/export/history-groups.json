@@ -1,0 +1,366 @@
+{
+    "count": 19,
+    "results": [
+        {
+            "history_user": {
+                "id": "f4ba3387-4853-4ebf-be5f-e4088daefa16",
+                "name": "Stephan Padberg"
+            },
+            "country": {
+                "id": "a55f66a0-5d95-e211-a939-e4115bead28a",
+                "name": "Barbados"
+            },
+            "company": {
+                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+                "name": "Lambda plc"
+            },
+            "id": "766eece6-57dc-4a2a-892b-ce0007309f1c",
+            "date": "2020-03-04T16:33:57.438445+00:00",
+            "history_date": "2020-03-04T16:33:57.438445+00:00",
+            "status": "not_interested",
+            "history_type": "insert"
+        },
+        {
+            "history_user": {
+                "id": "f4ba3387-4853-4ebf-be5f-e4088daefa16",
+                "name": "Stephan Padberg"
+            },
+            "country": {
+                "id": "a45f66a0-5d95-e211-a939-e4115bead28a",
+                "name": "Bangladesh"
+            },
+            "company": {
+                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+                "name": "Lambda plc"
+            },
+            "id": "79febf69-6d6e-4664-bf3e-21d854ee725b",
+            "date": "2020-03-04T16:33:57.434436+00:00",
+            "history_date": "2020-03-04T16:33:57.434436+00:00",
+            "status": "not_interested",
+            "history_type": "insert"
+        },
+        {
+            "history_user": {
+                "id": "f4ba3387-4853-4ebf-be5f-e4088daefa16",
+                "name": "Stephan Padberg"
+            },
+            "country": {
+                "id": "a35f66a0-5d95-e211-a939-e4115bead28a",
+                "name": "Bahrain"
+            },
+            "company": {
+                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+                "name": "Lambda plc"
+            },
+            "id": "5a224916-3198-40e6-9a42-d961ab8ad36a",
+            "date": "2020-03-04T16:33:57.430419+00:00",
+            "history_date": "2020-03-04T16:33:57.430419+00:00",
+            "status": "not_interested",
+            "history_type": "insert"
+        },
+        {
+            "history_user": {
+                "id": "f4ba3387-4853-4ebf-be5f-e4088daefa16",
+                "name": "Stephan Padberg"
+            },
+            "country": {
+                "id": "87756b9a-5d95-e211-a939-e4115bead28a",
+                "name": "Afghanistan"
+            },
+            "company": {
+                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+                "name": "Lambda plc"
+            },
+            "id": "f17cdd60-da10-4cff-abe0-1e5e0e3e2808",
+            "date": "2020-03-04T16:33:57.425813+00:00",
+            "history_date": "2020-03-04T16:33:57.425813+00:00",
+            "status": "not_interested",
+            "history_type": "insert"
+        },
+        {
+            "history_user": {
+                "id": "f4ba3387-4853-4ebf-be5f-e4088daefa16",
+                "name": "Stephan Padberg"
+            },
+            "country": {
+                "id": "82756b9a-5d95-e211-a939-e4115bead28a",
+                "name": "France"
+            },
+            "company": {
+                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+                "name": "Lambda plc"
+            },
+            "id": "e01a4b2d-58be-4c3d-965c-d72c5e71ec67",
+            "date": "2020-03-04T16:33:11.387354+00:00",
+            "history_date": "2020-03-04T16:33:11.387354+00:00",
+            "status": "future_interest",
+            "history_type": "delete"
+        },
+        {
+            "history_user": {
+                "id": "f4ba3387-4853-4ebf-be5f-e4088daefa16",
+                "name": "Stephan Padberg"
+            },
+            "country": {
+                "id": "86756b9a-5d95-e211-a939-e4115bead28a",
+                "name": "Spain"
+            },
+            "company": {
+                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+                "name": "Lambda plc"
+            },
+            "id": "ce9bce4f-2f7a-4e71-8baa-3451a2616906",
+            "date": "2020-03-04T16:33:05.940300+00:00",
+            "history_date": "2020-03-04T16:33:05.940300+00:00",
+            "status": "currently_exporting",
+            "history_type": "insert"
+        },
+        {
+            "history_user": {
+                "id": "f4ba3387-4853-4ebf-be5f-e4088daefa16",
+                "name": "Stephan Padberg"
+            },
+            "country": {
+                "id": "945f66a0-5d95-e211-a939-e4115bead28a",
+                "name": "Albania"
+            },
+            "company": {
+                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+                "name": "Lambda plc"
+            },
+            "id": "fb2908ee-7dcd-434c-83fd-7bbb5116e667",
+            "date": "2020-03-04T08:55:49.061948+00:00",
+            "history_date": "2020-03-04T08:55:49.061948+00:00",
+            "status": "currently_exporting",
+            "history_type": "delete"
+        },
+        {
+            "history_user": {
+                "id": "f4ba3387-4853-4ebf-be5f-e4088daefa16",
+                "name": "Stephan Padberg"
+            },
+            "country": {
+                "id": "b05f66a0-5d95-e211-a939-e4115bead28a",
+                "name": "Brazil"
+            },
+            "company": {
+                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+                "name": "Lambda plc"
+            },
+            "id": "d7446c97-4866-429d-8beb-215ced89c69a",
+            "date": "2020-03-04T08:55:49.058041+00:00",
+            "history_date": "2020-03-04T08:55:49.058041+00:00",
+            "status": "currently_exporting",
+            "history_type": "delete"
+        },
+        {
+            "history_user": {
+                "id": "f4ba3387-4853-4ebf-be5f-e4088daefa16",
+                "name": "Stephan Padberg"
+            },
+            "country": {
+                "id": "e2f682ac-5d95-e211-a939-e4115bead28a",
+                "name": "Gibraltar"
+            },
+            "company": {
+                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+                "name": "Lambda plc"
+            },
+            "id": "8a5641fe-f38c-4438-834a-c49f0aeee861",
+            "date": "2020-03-04T08:55:49.054282+00:00",
+            "history_date": "2020-03-04T08:55:49.054282+00:00",
+            "status": "currently_exporting",
+            "history_type": "delete"
+        },
+        {
+            "history_user": {
+                "id": "f4ba3387-4853-4ebf-be5f-e4088daefa16",
+                "name": "Stephan Padberg"
+            },
+            "country": {
+                "id": "82756b9a-5d95-e211-a939-e4115bead28a",
+                "name": "France"
+            },
+            "company": {
+                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+                "name": "Lambda plc"
+            },
+            "id": "cd29598a-aace-4a4c-bced-380506102041",
+            "date": "2020-03-04T08:55:49.048400+00:00",
+            "history_date": "2020-03-04T08:55:49.048400+00:00",
+            "status": "future_interest",
+            "history_type": "insert"
+        },
+        {
+            "history_user": {
+                "id": "f4ba3387-4853-4ebf-be5f-e4088daefa16",
+                "name": "Stephan Padberg"
+            },
+            "country": {
+                "id": "945f66a0-5d95-e211-a939-e4115bead28a",
+                "name": "Albania"
+            },
+            "company": {
+                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+                "name": "Lambda plc"
+            },
+            "id": "e753a3eb-edee-4cac-8881-e5394d7f621d",
+            "date": "2020-03-04T08:55:06.094737+00:00",
+            "history_date": "2020-03-04T08:55:06.094737+00:00",
+            "status": "currently_exporting",
+            "history_type": "insert"
+        },
+        {
+            "history_user": {
+                "id": "f4ba3387-4853-4ebf-be5f-e4088daefa16",
+                "name": "Stephan Padberg"
+            },
+            "country": {
+                "id": "e2f682ac-5d95-e211-a939-e4115bead28a",
+                "name": "Gibraltar"
+            },
+            "company": {
+                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+                "name": "Lambda plc"
+            },
+            "id": "264ccd2c-539d-41f2-be71-f2955e5cf8fd",
+            "date": "2020-03-04T08:55:06.090659+00:00",
+            "history_date": "2020-03-04T08:55:06.090659+00:00",
+            "status": "currently_exporting",
+            "history_type": "insert"
+        },
+        {
+            "history_user": {
+                "id": "f4ba3387-4853-4ebf-be5f-e4088daefa16",
+                "name": "Stephan Padberg"
+            },
+            "country": {
+                "id": "b05f66a0-5d95-e211-a939-e4115bead28a",
+                "name": "Brazil"
+            },
+            "company": {
+                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+                "name": "Lambda plc"
+            },
+            "id": "f8aa97cf-8d45-43ab-8809-c4f61f86dc46",
+            "date": "2020-03-04T08:55:06.086296+00:00",
+            "history_date": "2020-03-04T08:55:06.086296+00:00",
+            "status": "currently_exporting",
+            "history_type": "insert"
+        },
+        {
+            "history_user": {
+                "id": "f4ba3387-4853-4ebf-be5f-e4088daefa16",
+                "name": "Stephan Padberg"
+            },
+            "country": {
+                "id": "83756b9a-5d95-e211-a939-e4115bead28a",
+                "name": "Germany"
+            },
+            "company": {
+                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+                "name": "Lambda plc"
+            },
+            "id": "22a8bd9c-b1fe-4407-85e3-cc06096e1bfa",
+            "date": "2020-03-04T08:54:53.350140+00:00",
+            "history_date": "2020-03-04T08:54:53.350140+00:00",
+            "status": "future_interest",
+            "history_type": "delete"
+        },
+        {
+            "history_user": {
+                "id": "f4ba3387-4853-4ebf-be5f-e4088daefa16",
+                "name": "Stephan Padberg"
+            },
+            "country": {
+                "id": "86756b9a-5d95-e211-a939-e4115bead28a",
+                "name": "Spain"
+            },
+            "company": {
+                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+                "name": "Lambda plc"
+            },
+            "id": "bb488da7-7101-4776-97c1-40670fc8ceb3",
+            "date": "2020-03-04T08:54:53.345805+00:00",
+            "history_date": "2020-03-04T08:54:53.345805+00:00",
+            "status": "future_interest",
+            "history_type": "delete"
+        },
+        {
+            "history_user": {
+                "id": "f4ba3387-4853-4ebf-be5f-e4088daefa16",
+                "name": "Stephan Padberg"
+            },
+            "country": {
+                "id": "82756b9a-5d95-e211-a939-e4115bead28a",
+                "name": "France"
+            },
+            "company": {
+                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+                "name": "Lambda plc"
+            },
+            "id": "5e62036d-393b-4e7b-9ae0-ec8781125f60",
+            "date": "2020-03-04T08:54:42.806088+00:00",
+            "history_date": "2020-03-04T08:54:42.806088+00:00",
+            "status": "currently_exporting",
+            "history_type": "delete"
+        },
+        {
+            "history_user": {
+                "id": "f4ba3387-4853-4ebf-be5f-e4088daefa16",
+                "name": "Stephan Padberg"
+            },
+            "country": {
+                "id": "83756b9a-5d95-e211-a939-e4115bead28a",
+                "name": "Germany"
+            },
+            "company": {
+                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+                "name": "Lambda plc"
+            },
+            "id": "e36e551f-88b6-4abd-a068-87c27e190345",
+            "date": "2020-03-04T08:54:42.800708+00:00",
+            "history_date": "2020-03-04T08:54:42.800708+00:00",
+            "status": "future_interest",
+            "history_type": "insert"
+        },
+        {
+            "history_user": {
+                "id": "f4ba3387-4853-4ebf-be5f-e4088daefa16",
+                "name": "Stephan Padberg"
+            },
+            "country": {
+                "id": "86756b9a-5d95-e211-a939-e4115bead28a",
+                "name": "Spain"
+            },
+            "company": {
+                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+                "name": "Lambda plc"
+            },
+            "id": "281f9aa5-9f40-41c4-83aa-4390e0b52858",
+            "date": "2020-03-04T08:54:42.795073+00:00",
+            "history_date": "2020-03-04T08:54:42.795073+00:00",
+            "status": "future_interest",
+            "history_type": "insert"
+        },
+        {
+            "history_user": {
+                "id": "f4ba3387-4853-4ebf-be5f-e4088daefa16",
+                "name": "Stephan Padberg"
+            },
+            "country": {
+                "id": "82756b9a-5d95-e211-a939-e4115bead28a",
+                "name": "France"
+            },
+            "company": {
+                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+                "name": "Lambda plc"
+            },
+            "id": "b713615c-eeba-4ff5-a3fd-de2fa6098262",
+            "date": "2020-03-04T08:53:19.444496+00:00",
+            "history_date": "2020-03-04T08:53:19.444496+00:00",
+            "status": "currently_exporting",
+            "history_type": "insert"
+        }
+    ]
+}
