@@ -33,18 +33,26 @@ import tasksSaga from './components/Task/saga'
 import tasks from './components/Task/reducer'
 
 import CompanyLists from './components/CompanyLists'
-import companyListsReducer from './components/CompanyLists/reducer'
-import referralsReducer from '../apps/referrals/apps/details/client/reducer'
+
 import { ID as COMPANY_LISTS_STATE_ID } from './components/CompanyLists/state'
-import { ID as REFERRALS_DETAILS_STATE_ID } from '../apps/referrals/apps/details/client/state'
+import companyListsReducer from './components/CompanyLists/reducer'
 import * as companyListsTasks from './components/CompanyLists/tasks'
-import exportsHistoryReducer from '../apps/companies/apps/exports/reducer'
-import { ID as EXPORTS_HISTORY_ID } from '../apps/companies/apps/exports/state'
-import * as exportsHistoryTasks from '../apps/companies/apps/exports/tasks'
+
+import { ID as REFERRALS_DETAILS_STATE_ID } from '../apps/referrals/apps/details/client/state'
+import referralsReducer from '../apps/referrals/apps/details/client/reducer'
 import * as referralTasks from '../apps/referrals/apps/details/client/tasks'
+
+import { ID as EXPORTS_HISTORY_ID } from '../apps/companies/apps/exports/state'
+import exportsHistoryReducer from '../apps/companies/apps/exports/reducer'
+import * as exportsHistoryTasks from '../apps/companies/apps/exports/tasks'
+
 import TabNav from './components/TabNav'
 import referralListTask from './components/ReferralList/task'
 import ReferralList from './components/ReferralList'
+
+import { ID as EXPORTS_WINS_ID } from '../apps/companies/apps/exports/client/components/ExportWins/state'
+import exportWinsReducer from '../apps/companies/apps/exports/client/components/ExportWins/reducer'
+import * as exportWinsTasks from '../apps/companies/apps/exports/client/components/ExportWins/tasks'
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -58,6 +66,7 @@ const store = createStore(
     ...ValidatedInput.reducerSpread,
     ...TabNav.reducerSpread,
     ...ReferralList.reducerSpread,
+    [EXPORTS_WINS_ID]: exportWinsReducer,
   }),
   composeWithDevTools(applyMiddleware(sagaMiddleware))
 )
@@ -69,6 +78,7 @@ sagaMiddleware.run(
     'Exports history': exportsHistoryTasks.fetchExportsHistory,
     'Referral details': referralTasks.fetchReferralDetails,
     Referrals: referralListTask,
+    'Export wins': exportWinsTasks.fetchExportWins,
   })
 )
 
