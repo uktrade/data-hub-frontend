@@ -13,23 +13,13 @@ export default () =>
     .get('/api-proxy/v4/company-referral')
     .catch(handleError)
     .then(({ data: { results } }) =>
-      results.map(
-        ({
-          id,
-          subject,
-          company,
-          status,
-          created_by,
-          recipient,
-          created_on,
-        }) => ({
-          id,
-          status,
-          subject,
-          companyName: company.name,
-          date: created_on,
-          sender: convertAdviser(created_by),
-          recipient: convertAdviser(recipient),
-        })
-      )
+      results.map((referral) => ({
+        id: referral.id,
+        status: referral.status,
+        subject: referral.subject,
+        companyName: referral.company.name,
+        date: referral.created_on,
+        sender: convertAdviser(referral.created_by),
+        recipient: convertAdviser(referral.recipient),
+      }))
     )
