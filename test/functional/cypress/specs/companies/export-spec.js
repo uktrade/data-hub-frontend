@@ -7,7 +7,7 @@ const countrySelectors = exportSelectors.countries
 
 describe('Companies Export', () => {
   context(
-    'when viewing the export tab for an active company with no export information',
+    'when viewing the export tab for an active company with no export information and 8 Export Wins',
     () => {
       before(() => {
         cy.visit(urls.companies.exports.index(fixtures.company.dnbCorp.id))
@@ -139,6 +139,90 @@ describe('Companies Export', () => {
           'opens in a new tab'
         )
       })
+
+      it('should render the "What is an Export Win" details', () => {
+        cy.contains('What is an Export Win')
+        cy.contains(
+          'Export wins capture the export deals that Department of International Trade (DIT)'
+        )
+      })
+
+      it('should render the list of Export Wins without pagination', () => {
+        cy.contains('8 results')
+        cy.get('ul:last li a:last').should('not.have.text', 'Next')
+        cy.get('ul:last li a:first').should('not.have.text', 'Previous')
+
+        cy.contains(
+          'Ut eius quisquam qui quaerat adipisci dolorum sit similique.'
+        )
+          .siblings()
+          .should('contain', 'Won on 4 Dec 2019, 9:14am')
+          .should('contain', 'HVC')
+          .should('contain', 'Confirmed')
+          .should(
+            'contain',
+            'Lead officer Lucinda McLaughlin (voluptate dolores vel sed atque beatae)'
+          )
+          .should(
+            'contain',
+            'Company contact Reyes Hamill (sint aut in - Patricia.Kemmer@hotmail.com)'
+          )
+          .should('contain', 'Customer nam consequatur iste')
+          .should('contain', 'Type of export dolor dolores magnam')
+          .should('contain', 'Total export value £47,100')
+          .should('contain', 'Type of win est cum hic')
+          .should('contain', 'Country exported to Burkina Faso')
+          .should('contain', 'Sector et aut adipisci')
+          .should('contain', 'Company type ut consequatur qui')
+          .should('contain', 'Date confirmed 23 Jul 2019, 3:48am')
+          .should('contain', 'HVC name E186: consequatur modi dolorem')
+
+        cy.contains('Ut repellendus sint.')
+          .siblings()
+          .should('contain', 'Won on 3 Nov 2019, 1:51am')
+          .should('not.contain', 'HVC')
+          .should('not.contain', 'Confirmed')
+          .should(
+            'contain',
+            'Lead officer Dejon Swift Sr. (totam officiis consequatur alias nostrum quod)'
+          )
+          .should(
+            'contain',
+            'Company contact Dell Heaney (temporibus vero rem - Pauline.McCullough37@hotmail.com)'
+          )
+          .should('contain', 'Customer tempora esse accusamus')
+          .should('contain', 'Type of export commodi enim id')
+          .should('contain', 'Total export value £41,800')
+          .should('contain', 'Type of win numquam et quo')
+          .should('contain', 'Country exported to French Guiana')
+          .should('contain', 'Sector molestiae rerum nostrum')
+          .should('contain', 'Company type quas ea ut')
+          .should('not.contain', 'Date confirmed')
+          .should('not.contain', 'HVC name')
+
+        cy.contains('Dolorem nesciunt adipisci optio')
+          .siblings()
+          .should('contain', 'Won on 19 Dec 2019, 12:37am')
+          .should('contain', 'HVC')
+          .should('not.contain', 'Confirmed')
+          .should(
+            'contain',
+            'Lead officer Noble Koss (ex laborum rerum ut itaque quibusdam)'
+          )
+          .should(
+            'contain',
+            'Company contact Darron Wisozk (maiores ex ut - Claudia.Mraz20@hotmail.com)'
+          )
+          .should('contain', 'Customer est nobis saepe')
+          .should('contain', 'Type of export omnis consequatur non')
+          .should('contain', 'Total export value £99,400')
+          .should('contain', 'Type of win ratione dolore dolorem')
+          .should('contain', 'Country exported to Lebanon')
+          .should('contain', 'Sector et inventore tempore')
+          .should('contain', 'Company type veritatis non ullam')
+          .should('not.contain', 'Date confirmed')
+          .should('contain', 'HVC name E198: quidem accusamus velit')
+      })
     }
   )
 
@@ -229,6 +313,88 @@ describe('Companies Export', () => {
 
     it('the edit export countries button should not exist', () => {
       cy.contains('Edit export countries').should('not.exist')
+    })
+  })
+
+  describe('Export Wins', () => {
+    function visitExports(companyId) {
+      cy.server()
+      cy.route('**/export-win').as('exportWinsResults')
+      cy.visit(urls.companies.exports.index(companyId))
+      cy.wait('@exportWinsResults')
+    }
+
+    context('when the API for Export Wins returns a 501', () => {
+      before(() => {
+        visitExports(fixtures.company.lambdaPlc.id)
+      })
+
+      it('shold not have an Export Wins list', () => {
+        cy.contains('8 results').should('not.exist')
+        cy.contains('0 results').should('not.exist')
+        cy.contains('Could not load Export wins').should('not.exist')
+      })
+    })
+
+    context('when the API for Export Wins returns a 404', () => {
+      before(() => {
+        visitExports(fixtures.company.oneListCorp.id)
+      })
+
+      it('should show an error message', () => {
+        cy.contains('8 results').should('not.exist')
+        cy.contains('0 results').should('not.exist')
+        cy.contains('Could not load Export wins').should('not.exist')
+      })
+    })
+
+    context('When there is more than one page of results', () => {
+      before(() => {
+        visitExports(fixtures.company.marsExportsLtd.id)
+      })
+
+      it('should have the correct count and number of visible results', () => {
+        cy.contains('15 results')
+        cy.get(exportSelectors.exportWins.listItemHeadings).should(
+          'have.length',
+          10
+        )
+      })
+
+      it('should display the next button', () => {
+        cy.get('ul:last li a:last').should('have.text', 'Next')
+      })
+
+      it('should not display the previous button', () => {
+        cy.get('ul:last li a:first').should('not.have.text', 'Previous')
+      })
+
+      it('the second page renders the collection list with 6 of the 15 results', () => {
+        cy.get('a')
+          .contains('2')
+          .click()
+
+        cy.get(exportSelectors.exportWins.listItemHeadings).should(
+          'have.length',
+          6
+        )
+        cy.contains(
+          'Quis vel quidem quo cum nesciunt recusandae laboriosam dolor.'
+        )
+        cy.contains('Ut nam velit quis et.')
+        cy.contains('Rerum ipsum eligendi quae rerum sunt.')
+        cy.contains('Et deleniti et at beatae asperiores illo aut molestiae.')
+        cy.contains('Et saepe ad praesentium quia illum voluptatum animi.')
+        cy.contains('Vero ut aut saepe suscipit blanditiis repudiandae.')
+      })
+
+      it('should not display the next button', () => {
+        cy.get('ul:last li a:last').should('not.have.text', 'Next')
+      })
+
+      it('should display the previous button', () => {
+        cy.get('ul:last li a:first').should('have.text', 'Previous')
+      })
     })
   })
 })
