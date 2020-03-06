@@ -1,10 +1,11 @@
 import React from 'react'
-import { SectionBreak, H3 } from 'govuk-react'
+import HintText from '@govuk-react/hint-text'
 import { SPACING } from '@govuk-react/constants'
 import PropTypes from 'prop-types'
 import pluralize from 'pluralize'
 import styled from 'styled-components'
 
+import ContentWithHeading from '../ContentWithHeading'
 import Task from '../Task'
 import Referral from './Referral'
 import { REFFERAL_LIST__LOADED } from '../../actions'
@@ -18,27 +19,23 @@ const StyledItemSpacer = styled.div({
 })
 
 const ReferralList = ({ referrals }) => (
-  <div>
-    <H3>{pluralize('Referral', referrals.length, true)}</H3>
-    <SectionBreak visible={true} />
+  <ContentWithHeading heading={pluralize('Referral', referrals.length, true)}>
     <StyledItemSpacer>
       {referrals.map(({ id, ...referral }) => (
         <Referral key={id} id={id} {...referral} />
       ))}
     </StyledItemSpacer>
-  </div>
+  </ContentWithHeading>
 )
 
 const EmptyState = () => (
-  <div>
-    <H3>My Referrals</H3>
-    <SectionBreak visible={true} />
-    <p>
+  <ContentWithHeading heading="My referrals">
+    <HintText>
       You have not received or sent any referrals.
       <br />
       You can refer companies to other advisers from a company page.
-    </p>
-  </div>
+    </HintText>
+  </ContentWithHeading>
 )
 
 ReferralList.propTypes = {
