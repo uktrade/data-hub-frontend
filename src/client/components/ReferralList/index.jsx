@@ -29,12 +29,23 @@ const ReferralList = ({ referrals }) => (
   </div>
 )
 
+const EmptyState = () => (
+  <div>
+    <H3>My Referrals</H3>
+    <SectionBreak visible={true} />
+    <p>
+      You have not received or sent any referrals.
+      <br />
+      You can refer companies to other advisers from a company page.
+    </p>
+  </div>
+)
+
 ReferralList.propTypes = {
   referrals: PropTypes.arrayOf(PropTypes.shape(Referral.propTypes)),
 }
 
 export default multiInstance({
-  componentStateToProps: (state) => ({ referrals: state }),
   name: 'ReferralList',
   reducer,
   component: ({ id, referrals }) => (
@@ -46,7 +57,13 @@ export default multiInstance({
         onSuccessDispatch: REFFERAL_LIST__LOADED,
       }}
     >
-      {() => referrals && <ReferralList referrals={referrals} />}
+      {() =>
+        referrals && referrals.length ? (
+          <ReferralList referrals={referrals} />
+        ) : (
+          <EmptyState />
+        )
+      }
     </Task.Status>
   ),
 })
