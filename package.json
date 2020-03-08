@@ -7,6 +7,8 @@
     "url": "https://github.com/uktrade/data-hub-frontend"
   },
   "scripts": {
+    "dev-stack": "docker-compose build --parallel && docker-compose -p dev up --abort-on-container-exit",
+    "mock-stack": "docker-compose -p mock -f docker-compose.mock.yml up --build --abort-on-container-exit",
     "clean": "del .build",
     "start": "node --use-strict src/server.js",
     "build": "npm run clean && webpack",
