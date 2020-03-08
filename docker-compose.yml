@@ -3,70 +3,54 @@ services:
   frontend:
     build:
       context: .
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
     ports:
-      - 3001:3000
+      - 3000:3000
+      - 9229:9229
     depends_on:
+      - api
+    env_file: dev-stack.env
+    command: sh -c './wait-for-it.sh api:8000 -t 240 -- yarn develop'
+
+  api:
+    build: ../data-hub-api
+    volumes:
+      - ../data-hub-api:/app
+    env_file: dev-stack.env
+    depends_on:
+      - celery
+    ports:
+      - 8000:8000
+
+  celery:
+    build: ../data-hub-api
+    volumes:
+      - ../data-hub-api:/app
+    entrypoint: dockerize -wait tcp://postgres:5432 -wait tcp://mi-postgres:5432 -wait tcp://elasticsearch:9200 -wait tcp://redis:6379 -timeout 120s
+    env_file: dev-stack.env
+    depends_on:
+      - elasticsearch
+      - postgres
+      - mi-postgres
       - redis
-      - mock-backend
-      - mock-sso
-    environment:
-      NODE_ENV: development
-      API_ROOT: http://mock-backend:8001
-      QA_HOST: http://localhost:3000
-      DATA_HUB_BACKEND_ACCESS_KEY_ID: frontend-key-id
-      DATA_HUB_BACKEND_SECRET_ACCESS_KEY: frontend-key
-      REDIS_HOST: redis
-      MOCK_SSO_ROOT: http://mock-sso:8080
-      OAUTH2_TOKEN_FETCH_URL: http://mock-sso:8080/o/token
-      OAUTH2_USER_PROFILE_URL: http://mock-sso:8080/api/v1/user/me
-      OAUTH2_AUTH_URL: http://localhost:8080/o/authorize # Redirects user in the browser hence 'localhost'
-      OAUTH2_REDIRECT_URL: http://localhost:3000/oauth/callback # Redirects user in the browser hence 'localhost'
-      OAUTH2_CLIENT_SECRET: youAintSeenMyRight
-      OAUTH2_CLIENT_ID: randomClientId
-      OAUTH2_DEV_TOKEN: ditStaffToken
-      CACHE_ASSETS: 'true'
-      HELP_CENTRE_URL: https://data-services-help.trade.gov.uk/data-hub/
-      HELP_CENTRE_ANNOUNCMENTS_URL: https://data-services-help.trade.gov.uk/data-hub/updates/announcements/
-      HELP_CENTRE_API_FEED: http://mock-backend:8001/help-centre/announcement
-      HELP_CENTRE_FEED_API_TOKEN: apiToken
-      SESSION_SECRET: foobarbaz
-      REDIS_URL: redis://redis:6379
-    volumes:
-      - ./assets:/usr/src/app/assets
-      - ./common:/usr/src/app/common
-      - ./config:/usr/src/app/config
-      - ./src:/usr/src/app/src
-      - ./test:/usr/src/app/test
-    entrypoint: dockerize -wait tcp://redis:6379 -wait tcp://mock-backend:8001 -wait tcp://mock-sso:8080 -timeout 180s
-    command: yarn develop
+    command: watchmedo auto-restart -d . -R -p '*.py' -- celery worker -A config -l info -Q celery -B
 
-  webpack:
-    build:
-      context: .
-    depends_on:
-      - frontend
-    environment:
-      - WEBPACK_ENV=prod
-    volumes:
-      - ./assets:/usr/src/app/assets
-      - ./common:/usr/src/app/common
-      - ./config:/usr/src/app/config
-    command: ./node_modules/.bin/webpack --watch --watch-poll --progress
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.2
 
-  mock-sso:
-    image: quay.io/uktrade/mock-sso:latest
+  postgres:
+    image: postgres:10
     environment:
-      MOCK_SSO_SCOPE: data-hub:internal-front-end
-      MOCK_SSO_TOKEN: ditStaffToken
-      MOCK_SSO_USERNAME: ${MOCK_SSO_USERNAME}
+      - POSTGRES_DB=datahub
+      - POSTGRES_PASSWORD=datahub
 
-  mock-backend:
-    build:
-      context: ./test/sandbox
-    volumes:
-      - './test/sandbox:/usr/src/app/test/sandbox'
-    ports:
-      - 8001:8001
+  mi-postgres:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_DB=mi
+      - POSTGRES_PASSWORD=mi
 
   redis:
-    image: redis:3.2
+    image: redis:3.2.10
