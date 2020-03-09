@@ -615,32 +615,70 @@ describe('Company History', () => {
           ],
         ])
       })
+
       it('should not display the pagination', () => {
         cy.get('#company-export-full-history ul').should('not.exist')
       })
     })
 
     context('when the user is unknown', () => {
-      before(() => {
-        cy.visit(
-          urls.companies.exports.history.index(
-            fixtures.company.marsExportsLtd.id
+      context('With a single history item', () => {
+        before(() => {
+          cy.visit(
+            urls.companies.exports.history.index(
+              fixtures.company.marsExportsLtd.id
+            )
           )
-        )
+        })
+
+        it('renders the title', () => {
+          cy.contains('Export countries history')
+        })
+
+        it('renders the collection list with the one result', () => {
+          cy.contains('1 result')
+          cy.get(countrySelectors.listItemHeadings).should('have.length', 1)
+
+          checkListItems([
+            [
+              'Andorra removed from future countries of interest',
+              'By unknown',
+              'Date 6 Feb 2020, 3:41pm',
+            ],
+          ])
+        })
       })
 
-      it('renders the title', () => {
-        cy.contains('Export countries history')
-      })
+      context('With grouped history items', () => {
+        before(() => {
+          cy.visit(
+            urls.companies.exports.history.index(
+              fixtures.company.minimallyMinimalLtd.id
+            )
+          )
+        })
 
-      it('renders the collection list with the one result', () => {
-        cy.contains('1 result')
-        cy.get(countrySelectors.listItemHeadings).should('have.length', 1)
+        it('renders the title', () => {
+          cy.contains('Export countries history')
+        })
 
-        cy.contains('Andorra removed from future countries of interest')
-          .siblings()
-          .should('contain', 'By unknown')
-          .should('contain', 'Date 6 Feb 2020, 3:41pm')
+        it('renders the collection list with the two results', () => {
+          cy.contains('2 results')
+          cy.get(countrySelectors.listItemHeadings).should('have.length', 2)
+
+          checkListItems([
+            [
+              'Maldives, Gibraltar, Andorra added to currently exporting',
+              'By unknown',
+              'Date 6 Feb 2020, 5:07pm',
+            ],
+            [
+              'Kiribati, Hong Kong, Czechia, Angola added to future countries of interest',
+              'By unknown',
+              'Date 6 Feb 2020, 5:06pm',
+            ],
+          ])
+        })
       })
     })
 
