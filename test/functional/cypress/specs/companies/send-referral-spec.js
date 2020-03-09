@@ -8,10 +8,13 @@ const {
 
 const selectTypeahead = (fieldName, input, spanNumber) =>
   cy.contains(fieldName).within(() => {
+    cy.server()
+    cy.route('/api-proxy/adviser/?*').as('adviserResults')
     cy.get('div')
       .eq(0)
       .type(input)
-      .type('{enter}')
+    cy.wait('@adviserResults')
+    cy.get('[class*="MenuList"] > div > span').click()
   })
 
 describe('Send a referral form', () => {
@@ -102,9 +105,10 @@ describe('Send a referral form', () => {
       'when "Continue" button is clicked without specifying a subject',
       () => {
         it('should display error message', () => {
-          selectTypeahead('Adviser', 'Shawn')
+          selectTypeahead('Adviser', 'shawn')
           cy.get(selectors.companySendReferral.continueButton).click()
-          cy.get(selectors.companySendReferral.form).contains(
+          cy.get(selectors.companySendReferral.form).should(
+            'contain',
             'Enter a subject for the referral'
           )
         })
@@ -120,7 +124,8 @@ describe('Send a referral form', () => {
             .type(
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nec interdum velit. Nulla facilisi. In ultricies sed ex at malesuada. Proin quis faucibus felis, iaculis malesuada sem. Maecenas semper elit magna, tincidunt consectetur risus volutpat at. Sed'
             )
-          cy.get(selectors.companySendReferral.form).contains(
+          cy.get(selectors.companySendReferral.form).should(
+            'contain',
             'Subject must be 255 characters or less'
           )
         })
@@ -133,7 +138,8 @@ describe('Send a referral form', () => {
           .click()
           .type('example subject')
         cy.get(selectors.companySendReferral.subjectField).clear()
-        cy.get(selectors.companySendReferral.form).contains(
+        cy.get(selectors.companySendReferral.form).should(
+          'contain',
           'Enter a subject for the referral'
         )
       })
@@ -142,7 +148,7 @@ describe('Send a referral form', () => {
         'when "Continue" button is clicked with just mandatory fields filled in',
         () => {
           it('should display confirmation component', () => {
-            selectTypeahead('Adviser', 'Shawn')
+            selectTypeahead('Adviser', 'shawn')
             cy.get(selectors.companySendReferral.subjectField)
               .click()
               .type('Example subject')
@@ -159,14 +165,14 @@ describe('Send a referral form', () => {
     () => {
       it('should display the confirmation component with the values just input', () => {
         cy.visit(urls.companies.sendReferral(fixtures.company.withContacts.id))
-        selectTypeahead('Adviser', 'Shawn')
+        selectTypeahead('Adviser', 'shawn')
         cy.get(selectors.companySendReferral.subjectField)
           .click()
           .type('Example subject')
           .get(selectors.companySendReferral.notesField)
           .click()
           .type('Example notes')
-        selectTypeahead('Company contact', 'Johnny')
+        selectTypeahead('Company contact', 'johnny')
           .get(selectors.companySendReferral.continueButton)
           .click()
         cy.get('table')
@@ -198,14 +204,14 @@ describe('Send a referral form', () => {
     () => {
       it('the input data should appear in the form when "Edit referral" is clicked', () => {
         cy.visit(urls.companies.sendReferral(fixtures.company.withContacts.id))
-        selectTypeahead('Adviser', 'Shawn')
+        selectTypeahead('Adviser', 'shawn')
         cy.get(selectors.companySendReferral.subjectField)
           .click()
           .type('Example subject')
           .get(selectors.companySendReferral.notesField)
           .click()
           .type('Example notes')
-        selectTypeahead('Company contact', 'Johnny')
+        selectTypeahead('Company contact', 'johnny')
           .get(selectors.companySendReferral.continueButton)
           .click()
         cy.contains('Edit referral').click()
@@ -234,7 +240,7 @@ describe('Send a referral form', () => {
     'When the "Cancel" link is clicked from the confirmation component',
     () => {
       it('should return to the company page', () => {
-        selectTypeahead('Adviser', 'Shawn')
+        selectTypeahead('Adviser', 'shawn')
         cy.get(selectors.companySendReferral.subjectField)
           .click()
           .type('Example subject')
@@ -256,7 +262,7 @@ describe('Send a referral form', () => {
         cy.visit(urls.companies.sendReferral(fixtures.company.withContacts.id))
       })
       it('should take user to the company page, display flash message and link to the homepage', () => {
-        selectTypeahead('Adviser', 'Shawn')
+        selectTypeahead('Adviser', 'shawn')
         cy.get(selectors.companySendReferral.subjectField)
           .click()
           .type('Example subject')
