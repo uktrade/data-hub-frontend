@@ -200,7 +200,7 @@ describe('Match a company', () => {
       })
 
       it('should render the header', () => {
-        assertLocalHeader('Link company record with verified business details')
+        assertLocalHeader('Verify business details')
       })
 
       it('should render breadcrumbs', () => {
@@ -254,7 +254,7 @@ describe('Match a company', () => {
           )
           .parent()
           .next()
-          .should('have.text', 'Linking with verified business will:')
+          .should('have.text', 'Verifying business details will:')
           .and('match', 'h2')
           .next()
           .children()
@@ -271,7 +271,7 @@ describe('Match a company', () => {
           )
           .parent()
           .next()
-          .contains('Link with verified business')
+          .contains('Verify')
           .and('match', 'button')
           .next()
           .contains('Back')
@@ -292,7 +292,8 @@ describe('Match a company', () => {
           DUNS_NUMBER_NOT_MATCHED
         )
       )
-      cy.contains('Link with verified business').click()
+
+      cy.get('button:contains("Verify")').click()
     })
 
     it('should redirect to the company page', () => {

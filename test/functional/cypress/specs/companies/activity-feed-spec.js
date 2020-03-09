@@ -184,11 +184,11 @@ describe('Company activity feed', () => {
         .should('match', 'details')
         .should(
           'have.text',
-          'Why verify?Linking our existing records to a trusted third' +
-            ' party means we can keep our information about businesses up to date' +
-            ' automatically. It helps reduce duplicate records, provide a shared' +
-            ' view of complex companies, and make it more likely we can link' +
-            ' other data sources together.Linking can often be done in just four clicks.'
+          'Why verify?Using verified business details from a trusted third-party supplier' +
+            ' means we can keep certain information up to date automatically. This' +
+            ' helps reduce duplicate records, provide a shared view of complex' +
+            ' companies and make it more likely we can link other data sources' +
+            ' together.Verification can often be done in just 4 clicks.'
         )
         .next()
         .should('have.text', 'Verify business details')
