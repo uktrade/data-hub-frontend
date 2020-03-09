@@ -3,12 +3,15 @@ const { get, pick, compact, omitBy } = require('lodash')
 const { hqLabels } = require('../../labels')
 const { convertUsdToGbp } = require('../../../../common/currency')
 
-const transformGlobalAccountManager = ({ dit_team, name }) => {
+const transformGlobalAccountManager = (globalAccountManager) => {
+  if (!globalAccountManager) {
+    return null
+  }
+  const { dit_team, name } = globalAccountManager
   const region = get(dit_team, 'uk_region.name')
   const country = get(dit_team, 'country.name')
   const items = compact([name, get(dit_team, 'name'), region || country])
-
-  return items.length ? items : 'Not set'
+  return items.length ? items : null
 }
 
 const transformCompanyToBusinessDetails = (company) => {
@@ -48,11 +51,9 @@ const transformCompanyToBusinessDetails = (company) => {
       uk_region: get(company.uk_region, 'name'),
       global_headquarters: get(company.global_headquarters, 'name'),
       one_list_group_tier: get(company.one_list_group_tier, 'name'),
-      one_list_group_global_account_manager:
-        company.one_list_group_tier &&
-        transformGlobalAccountManager(
-          company.one_list_group_global_account_manager
-        ),
+      one_list_group_global_account_manager: transformGlobalAccountManager(
+        company.one_list_group_global_account_manager
+      ),
       headquarter_type_label:
         company.headquarter_type && hqLabels[company.headquarter_type.name],
     },

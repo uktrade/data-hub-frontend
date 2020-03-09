@@ -1,11 +1,15 @@
 const selectors = require('../../../../selectors')
 const { assertBreadcrumbs } = require('../../support/assertions')
+const {
+  REFERRAL_ID,
+  REFERRAL_ID_NO_CONTACT,
+} = require('../../../../sandbox/constants/referrals')
+
+import urls from '../../../../../src/lib/urls'
 
 describe('Referral details', () => {
   context('when viewing referral details', () => {
-    before(() => {
-      cy.visit('/referrals/cc5b9953-894c-44b4-a4ac-d0f6a6f6128f')
-    })
+    before(() => cy.visit(urls.referrals.details(REFERRAL_ID)))
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
@@ -18,93 +22,141 @@ describe('Referral details', () => {
       cy.get(selectors.localHeader().heading).should('have.text', 'Referral')
     })
 
-    it('should render a caption', () => {
-      cy.get(selectors.referralDetails.table)
+    it('should render the content and elements in order', () => {
+      cy.get('#referral-details > table')
         .find('caption')
         .should('have.text', 'Referral sent - I am a subject')
-    })
-
-    it('should render company details', () => {
-      cy.get(selectors.referralDetails.table)
+        .parents()
         .find('tbody tr')
+        .as('row')
         .eq(0)
         .should('have.text', 'CompanyLambda plc')
-    })
-    it('should render contact details', () => {
-      cy.get(selectors.referralDetails.table)
-        .find('tbody tr')
+
+      cy.get('@row')
         .eq(1)
         .should('have.text', 'ContactJohnny Cakeman')
-    })
-    it('should render sending adviser details', () => {
-      cy.get(selectors.referralDetails.table)
-        .find('tbody tr')
+
+      cy.get('@row')
         .eq(2)
         .should(
           'have.text',
           'Sending adviserIan Leggett, caravans@campervans.com, Advanced Manufacturing Sector'
         )
-    })
-    it('should render the sending advisers email as a link', () => {
-      cy.get(selectors.referralDetails.table)
-        .find('tbody tr')
-        .eq(2)
         .find('a')
         .should('have.attr', 'href', 'mailto:caravans@campervans.com')
-    })
-    it('should render receiving adviser details', () => {
-      cy.get(selectors.referralDetails.table)
-        .find('tbody tr')
+
+      cy.get('@row')
         .eq(3)
         .should(
           'have.text',
           'Receiving adviserBarry Oling, barry@barry.com, Aberdeen City Council'
         )
-    })
-    it('should render the receiving advisers email as a link', () => {
-      cy.get(selectors.referralDetails.table)
-        .find('tbody tr')
-        .eq(3)
         .find('a')
         .should('have.attr', 'href', 'mailto:barry@barry.com')
-    })
-    it('should render the date of the referral', () => {
-      cy.get(selectors.referralDetails.table)
-        .find('tbody tr')
+
+      cy.get('@row')
         .eq(4)
         .should('have.text', 'Date of referral14 Feb 2020')
-    })
-    it('should render the referral notes', () => {
-      cy.get(selectors.referralDetails.table)
-        .find('tbody tr')
+
+      cy.get('@row')
         .eq(5)
         .should('have.text', 'NotesJust a note about a referral')
-    })
-    it('should render a details section', () => {
-      cy.get(selectors.referralDetails.details)
+        .parents()
         .find('summary')
         .should('have.text', 'Why can I not edit the referral?')
-      cy.get(selectors.referralDetails.details)
-        .find('div')
+        .next()
         .should(
           'have.text',
           'This referral has been placed in the "My referrals" section on the Homepage of both the recipient and sender. If necessary contact the receiving adviser directly if any of the information has changed.'
         )
+        .parents()
+        .find('details')
+        .next()
+        .find('a:first-child')
+        .should('have.text', 'Complete referral')
+        .parent()
+        .find('a:nth-child(2)')
+        .should('have.text', 'I cannot complete the referral')
+        .should('have.attr', 'href', urls.referrals.help(REFERRAL_ID))
+        .parent()
+        .find('a:nth-child(3)')
+        .should('have.text', 'Back')
     })
-    it('should render a button for completing a referral', () => {
-      cy.get(selectors.referralDetails.button).should(
-        'have.text',
-        'Complete referral'
-      )
-      cy.get(selectors.referralDetails.button).should('have.attr', 'href', '/')
+  })
+
+  context('when viewing referral details with no contact', () => {
+    before(() => cy.visit(urls.referrals.details(REFERRAL_ID_NO_CONTACT)))
+
+    it('should render breadcrumbs', () => {
+      assertBreadcrumbs({
+        Home: '/',
+        Referral: null,
+      })
     })
-    it('should render a back button', () => {
-      cy.get(selectors.referralDetails.backLink).should('have.text', 'Back')
-      cy.get(selectors.referralDetails.backLink).should(
-        'have.attr',
-        'href',
-        '/'
-      )
+
+    it('should render the heading', () => {
+      cy.get(selectors.localHeader().heading).should('have.text', 'Referral')
+    })
+
+    it('should render the content and elements in order', () => {
+      cy.get('#referral-details > table')
+        .find('caption')
+        .should('have.text', 'Referral sent - I am a subject')
+        .parents()
+        .find('tbody tr')
+        .as('row')
+        .eq(0)
+        .should('have.text', 'CompanyLambda plc')
+
+      cy.get('@row')
+        .eq(1)
+        .should(
+          'have.text',
+          'Sending adviserIan Leggett, caravans@campervans.com, Advanced Manufacturing Sector'
+        )
+        .find('a')
+        .should('have.attr', 'href', 'mailto:caravans@campervans.com')
+
+      cy.get('@row')
+        .eq(2)
+        .should(
+          'have.text',
+          'Receiving adviserBarry Oling, barry@barry.com, Aberdeen City Council'
+        )
+        .find('a')
+        .should('have.attr', 'href', 'mailto:barry@barry.com')
+
+      cy.get('@row')
+        .eq(3)
+        .should('have.text', 'Date of referral14 Feb 2020')
+
+      cy.get('@row')
+        .eq(4)
+        .should('have.text', 'NotesJust a note about a referral')
+        .parents()
+        .find('summary')
+        .should('have.text', 'Why can I not edit the referral?')
+        .next()
+        .should(
+          'have.text',
+          'This referral has been placed in the "My referrals" section on the Homepage of both the recipient and sender. If necessary contact the receiving adviser directly if any of the information has changed.'
+        )
+        .parents()
+        .find('details')
+        .next()
+        .find('a:first-child')
+        .should('have.text', 'Complete referral')
+        .parent()
+        .find('a:nth-child(2)')
+        .should('have.text', 'I cannot complete the referral')
+        .should(
+          'have.attr',
+          'href',
+          urls.referrals.help(REFERRAL_ID_NO_CONTACT)
+        )
+        .parent()
+        .find('a:nth-child(3)')
+        .should('have.text', 'Back')
     })
   })
 })

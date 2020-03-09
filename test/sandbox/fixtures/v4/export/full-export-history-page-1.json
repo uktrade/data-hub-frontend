@@ -17,7 +17,7 @@
       "id": "9e37e956-bc37-4a29-946f-4a6375d2fdd2",
       "status": "not_interested",
       "history_type": "insert",
-      "history_date": "2020-02-11T10:47:33.657731+00:00"
+      "date": "2020-02-11T10:47:33.657731+00:00"
     },
     {
       "history_user": {
@@ -35,7 +35,7 @@
       "id": "c28b5a48-5740-4572-b5b6-ce9a64125a6f",
       "status": "future_interest",
       "history_type": "insert",
-      "history_date": "2020-02-11T10:47:33.651790+00:00"
+      "date": "2020-02-11T10:47:33.651790+00:00"
     },
     {
       "history_user": {
@@ -53,7 +53,7 @@
       "id": "582a4b45-33e5-4331-9a1b-5f8051925e71",
       "status": "currently_exporting",
       "history_type": "insert",
-      "history_date": "2020-02-11T10:47:33.633742+00:00"
+      "date": "2020-02-11T10:48:33.633742+00:00"
     },
     {
       "history_user": {
@@ -71,7 +71,7 @@
       "id": "4e102d2d-e014-4c58-ae2c-af0d1d1829c5",
       "status": "currently_exporting",
       "history_type": "insert",
-      "history_date": "2020-02-11T10:47:33.629904+00:00"
+      "date": "2020-02-11T10:47:33.629904+00:00"
     },
     {
       "history_user": {
@@ -89,7 +89,7 @@
       "id": "6702fff9-7b63-4742-813c-4a8cc7cdfb56",
       "status": "currently_exporting",
       "history_type": "insert",
-      "history_date": "2020-02-11T10:47:33.618209+00:00"
+      "date": "2020-02-11T10:46:33.618209+00:00"
     },
     {
       "history_user": {
@@ -106,7 +106,7 @@
       },
       "id": "355c5a71-670c-4969-8c83-b0b117558635",
       "history_type": "insert",
-      "history_date": "2020-02-06T16:06:30.477414+00:00",
+      "date": "2020-02-06T16:06:30.477414+00:00",
       "status": "currently_exporting"
     },
     {
@@ -124,7 +124,7 @@
       },
       "id": "f3824d00-dcb9-405e-8160-128723a4f234",
       "history_type": "insert",
-      "history_date": "2020-02-06T16:06:30.472874+00:00",
+      "date": "2020-02-06T16:05:30.472874+00:00",
       "status": "currently_exporting"
     },
     {
@@ -142,7 +142,7 @@
       },
       "id": "c5171cb4-00d3-4e91-9f9b-c31c4ec9837a",
       "history_type": "insert",
-      "history_date": "2020-02-06T15:42:08.713400+00:00",
+      "date": "2020-02-06T15:42:08.713400+00:00",
       "status": "future_interest"
     },
     {
@@ -160,7 +160,7 @@
       },
       "id": "15ea74cf-e384-4002-a5d9-8d13ea30ca2e",
       "history_type": "delete",
-      "history_date": "2020-02-06T15:41:11.802460+00:00",
+      "date": "2020-02-06T15:41:11.802460+00:00",
       "status": "future_interest"
     },
     {
@@ -178,7 +178,7 @@
       },
       "id": "3c898164-4df8-4d87-9e0a-8528753e6ad9",
       "history_type": "insert",
-      "history_date": "2020-02-06T15:41:11.796334+00:00",
+      "date": "2020-02-06T15:41:11.796334+00:00",
       "status": "not_interested"
     },
     {
@@ -196,7 +196,7 @@
       },
       "id": "15ea74cf-e384-4002-a5d9-8d13ea30ca2e",
       "history_type": "delete",
-      "history_date": "2020-02-06T15:41:11.802460+00:00",
+      "date": "2020-02-06T15:41:11.802460+00:00",
       "status": "future_interest"
     },
     {
@@ -214,7 +214,7 @@
       },
       "id": "3c898164-4df8-4d87-9e0a-8528753e6ad9",
       "history_type": "insert",
-      "history_date": "2020-02-06T15:41:11.796334+00:00",
+      "date": "2020-02-06T15:41:11.796334+00:00",
       "status": "not_interested"
     }
   ]

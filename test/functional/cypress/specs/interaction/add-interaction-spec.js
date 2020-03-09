@@ -40,7 +40,7 @@ describe('Add Export', () => {
             ).should('contain', 'Albania')
             cy.get(
               `${formSelectors.countries.export} .multiselect__tag`
-            ).should('contain', 'British Indian Ocean Territory')
+            ).should('contain', 'Italy')
             cy.get(
               `${formSelectors.countries.noInterest} .multiselect__tag`
             ).should('contain', 'Central African Republic')
@@ -437,7 +437,7 @@ function populateCountriesDiscussed(formSelectors, visible, discussed) {
   if (discussed) {
     cy.get(formSelectors.countriesDiscussed.yes).click()
     selectCountry(formSelectors.countries.future, 'Alb')
-    selectCountry(formSelectors.countries.export, 'It')
+    selectCountry(formSelectors.countries.export, 'Ita')
     selectCountry(formSelectors.countries.noInterest, 'Fr')
   } else {
     cy.get(formSelectors.countriesDiscussed.no).click()
