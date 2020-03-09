@@ -1,0 +1,133 @@
+{
+  "count": 8,
+  "results": [
+      {
+          "history_user": null,
+          "country": {
+              "id": "0650bdb8-5d95-e211-a939-e4115bead28a",
+              "name": "Maldives"
+          },
+          "company": {
+              "id": "5bb239e4-b227-4a84-bc2e-3420fc129447",
+              "name": "Alphabet Inc."
+          },
+          "id": "033e3537-6c33-48ad-8e39-e817ddce440a",
+          "date": "2020-02-06T17:07:12.630612+00:00",
+          "status": "currently_exporting",
+          "history_date": "2020-02-06T17:07:12.630612+00:00",
+          "history_type": "insert"
+      },
+      {
+          "history_user": null,
+          "country": {
+              "id": "e2f682ac-5d95-e211-a939-e4115bead28a",
+              "name": "Gibraltar"
+          },
+          "company": {
+              "id": "5bb239e4-b227-4a84-bc2e-3420fc129447",
+              "name": "Alphabet Inc."
+          },
+          "id": "5621d6e8-915e-44ca-b8f2-4748dab2600d",
+          "date": "2020-02-06T17:07:12.627606+00:00",
+          "status": "currently_exporting",
+          "history_date": "2020-02-06T17:07:12.627606+00:00",
+          "history_type": "insert"
+      },
+      {
+          "history_user": null,
+          "country": {
+              "id": "985f66a0-5d95-e211-a939-e4115bead28a",
+              "name": "Angola"
+          },
+          "company": {
+              "id": "5bb239e4-b227-4a84-bc2e-3420fc129447",
+              "name": "Alphabet Inc."
+          },
+          "id": "b9879b82-9fc2-4d54-859f-59d757ac92c9",
+          "date": "2020-02-06T17:07:12.624890+00:00",
+          "status": "currently_exporting",
+          "history_date": "2020-02-06T17:07:12.624890+00:00",
+          "history_type": "update"
+      },
+      {
+          "history_user": null,
+          "country": {
+              "id": "975f66a0-5d95-e211-a939-e4115bead28a",
+              "name": "Andorra"
+          },
+          "company": {
+              "id": "5bb239e4-b227-4a84-bc2e-3420fc129447",
+              "name": "Alphabet Inc."
+          },
+          "id": "5a6ca1c7-c749-4668-9ea6-bd0976976667",
+          "date": "2020-02-06T17:07:12.619582+00:00",
+          "status": "currently_exporting",
+          "history_date": "2020-02-06T17:07:12.619582+00:00",
+          "history_type": "insert"
+      },
+      {
+          "history_user": null,
+          "country": {
+              "id": "7a6a9ab2-5d95-e211-a939-e4115bead28a",
+              "name": "Kiribati"
+          },
+          "company": {
+              "id": "5bb239e4-b227-4a84-bc2e-3420fc129447",
+              "name": "Alphabet Inc."
+          },
+          "id": "67957788-2708-4546-b75d-7c9cbabe30dd",
+          "date": "2020-02-06T17:06:53.701816+00:00",
+          "status": "future_interest",
+          "history_date": "2020-02-06T17:06:53.701816+00:00",
+          "history_type": "insert"
+      },
+      {
+          "history_user": null,
+          "country": {
+              "id": "f0f682ac-5d95-e211-a939-e4115bead28a",
+              "name": "Hong Kong"
+          },
+          "company": {
+              "id": "5bb239e4-b227-4a84-bc2e-3420fc129447",
+              "name": "Alphabet Inc."
+          },
+          "id": "52f34e7d-06b5-4966-99ef-45062d89d8b2",
+          "date": "2020-02-06T17:06:53.697971+00:00",
+          "status": "future_interest",
+          "history_date": "2020-02-06T17:06:53.697971+00:00",
+          "history_type": "insert"
+      },
+      {
+          "history_user": null,
+          "country": {
+              "id": "6faf72a6-5d95-e211-a939-e4115bead28a",
+              "name": "Czechia"
+          },
+          "company": {
+              "id": "5bb239e4-b227-4a84-bc2e-3420fc129447",
+              "name": "Alphabet Inc."
+          },
+          "id": "98c60ab1-d441-4a05-8bb7-b5e37065d520",
+          "date": "2020-02-06T17:06:53.694367+00:00",
+          "status": "future_interest",
+          "history_date": "2020-02-06T17:06:53.694367+00:00",
+          "history_type": "insert"
+      },
+      {
+          "history_user": null,
+          "country": {
+              "id": "985f66a0-5d95-e211-a939-e4115bead28a",
+              "name": "Angola"
+          },
+          "company": {
+              "id": "5bb239e4-b227-4a84-bc2e-3420fc129447",
+              "name": "Alphabet Inc."
+          },
+          "id": "2ff687fc-f671-47a2-9ef4-83b180df9294",
+          "date": "2020-02-06T17:06:53.691071+00:00",
+          "status": "future_interest",
+          "history_date": "2020-02-06T17:06:53.691071+00:00",
+          "history_type": "insert"
+      }
+  ]
+}

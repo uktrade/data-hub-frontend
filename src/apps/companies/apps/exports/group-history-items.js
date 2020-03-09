@@ -10,7 +10,7 @@ function isTimeMatch(timestampA, timestampB) {
 }
 
 function isHistoryItemMatch(a, b) {
-  const userMatch = a.history_user.id === b.history_user.id
+  const userMatch = a.history_user?.id === b.history_user?.id
   const typeMatch = a.history_type === b.history_type
   const statusMatch = a.status === b.status
 
