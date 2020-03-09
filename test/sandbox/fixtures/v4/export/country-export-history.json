@@ -16,7 +16,7 @@
       },
       "id": "f3824d00-dcb9-405e-8160-128723a4f234",
       "history_type": "insert",
-      "history_date": "2020-02-06T16:06:30.472874+00:00",
+      "date": "2020-02-06T16:06:30.472874+00:00",
       "status": "currently_exporting"
     },
     {
@@ -34,7 +34,7 @@
       },
       "id": "15ea74cf-e384-4002-a5d9-8d13ea30ca2e",
       "history_type": "delete",
-      "history_date": "2020-02-06T15:41:11.802460+00:00",
+      "date": "2020-02-06T15:41:11.802460+00:00",
       "status": "future_interest"
     }
   ]

@@ -65,6 +65,17 @@ describe('Company business details transformers', () => {
 
         expect(actual).to.deep.equal(expected)
       })
+
+      it('should not error when the "One list account owner" is not set', () => {
+        const company = {
+          one_list_group_tier: { name: 'Tier A - Strategic Account' },
+          one_list_group_global_account_manager: null,
+        }
+        const actual = transformCompanyToBusinessDetails(company)
+        expect(actual).to.deep.equal({
+          one_list_group_tier: 'Tier A - Strategic Account',
+        })
+      })
     })
 
     context('when called without any fields', () => {

@@ -23,6 +23,7 @@ describe('Company router', () => {
       '/:companyId/subsidiaries',
       '/:companyId/subsidiaries/link',
       '/:companyId/send-referral',
+      '/:companyId/send-referral',
     ])
   })
 })

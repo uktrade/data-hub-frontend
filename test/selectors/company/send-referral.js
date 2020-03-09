@@ -9,6 +9,4 @@ module.exports = {
     '#send-referral-form > form > label:nth-child(9) > div > div > div',
   continueButton: '#send-referral-form > form > div > button',
   cancelLink: '#send-referral-form > form > div > a',
-  confirmationComponent: '#send-referral-form > div',
-  backButton: '#send-referral-form > div > button',
 }
