@@ -6,7 +6,7 @@ const {
   assertBreadcrumbs,
 } = require('../../support/assertions')
 
-const selectTypeahead = (fieldName, input, spanNumber) =>
+const selectTypeahead = (fieldName, input) =>
   cy.contains(fieldName).within(() => {
     cy.server()
     cy.route('/api-proxy/adviser/?*').as('adviserResults')

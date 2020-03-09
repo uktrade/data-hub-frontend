@@ -85,8 +85,7 @@ describe('Service delivery', () => {
     cy.visit(interactions.index())
     cy.get(selectors.filter.interaction.myInteractions).click()
 
-    cy.reload()
-      .get(selectors.collection.items)
+    cy.get(selectors.collection.items)
       .should('contain', 'Johnny Cakeman')
       .and('contain', 'Some interesting service delivery')
       .and('contain', 'Venus Ltd')
