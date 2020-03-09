@@ -14,7 +14,7 @@ const selectTypeahead = (fieldName, input, spanNumber) =>
       .eq(0)
       .type(input)
     cy.wait('@adviserResults')
-    cy.get('[class*="MenuList"] > div > span').click()
+    cy.get('[class*="menu"] > div').click()
   })
 
 describe('Send a referral form', () => {
