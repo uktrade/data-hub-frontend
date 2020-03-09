@@ -1,4 +1,18 @@
-import { TAB_NAV__SELECT } from '../../actions'
+import { TAB_NAV__SELECT, TAB_NAV__FOCUS } from '../../actions'
 
-export default (state = {}, { type, ...action }) =>
-  type === TAB_NAV__SELECT ? action : state
+export default (state = {}, { type, focusIndex, selectedIndex }) => {
+  switch (type) {
+    case TAB_NAV__FOCUS:
+      return {
+        ...state,
+        focusIndex,
+      }
+    case TAB_NAV__SELECT:
+      return {
+        selectedIndex,
+        focusIndex: selectedIndex,
+      }
+    default:
+      return state
+  }
+}
