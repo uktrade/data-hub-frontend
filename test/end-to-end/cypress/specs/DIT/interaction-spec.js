@@ -61,7 +61,7 @@ describe('Service delivery', () => {
     )
   })
 
-  it('should add the service delivery', () => {
+  it('should create the service delivery', () => {
     const subject = 'Some interesting service delivery'
 
     const formSelectors = selectors.interactionForm
@@ -79,11 +79,14 @@ describe('Service delivery', () => {
       'contain',
       'Service delivery created'
     )
+  })
 
+  it('should display newly created service delivery', () => {
     cy.visit(interactions.index())
     cy.get(selectors.filter.interaction.myInteractions).click()
 
-    cy.get(selectors.collection.items)
+    cy.reload()
+      .get(selectors.collection.items)
       .should('contain', 'Johnny Cakeman')
       .and('contain', 'Some interesting service delivery')
       .and('contain', 'Venus Ltd')
