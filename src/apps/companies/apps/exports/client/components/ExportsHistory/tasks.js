@@ -10,11 +10,12 @@ import {
 } from '../../../../../../constants'
 import { groupHistoryItems } from '../../group-history-items'
 
-const WHITELISTED_HISTORY_TYPES = ['insert', 'delete']
+const WHITELISTED_HISTORY_TYPES = ['insert', 'delete', 'update']
 
 const COUNTRY_HISTORY_TYPE_TEXT = {
   insert: 'added to',
   delete: 'removed from',
+  update: 'moved to',
 }
 
 const COUNTRY_TYPE_TEXT = {

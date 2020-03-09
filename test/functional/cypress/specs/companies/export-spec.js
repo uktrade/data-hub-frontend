@@ -409,12 +409,17 @@ describe('Company History', () => {
     })
   }
 
+  function visitHistory(companyId) {
+    cy.server()
+    cy.route('POST', '**/export-country-history').as('exportHistoryResults')
+    cy.visit(urls.companies.exports.history.index(companyId))
+    cy.wait('@exportHistoryResults')
+  }
+
   describe('Full history', () => {
     context('when there is no history', () => {
       before(() => {
-        cy.visit(
-          urls.companies.exports.history.index(fixtures.company.lambdaPlc.id)
-        )
+        visitHistory(fixtures.company.lambdaPlc.id)
       })
 
       it('should render breadcrumbs', () => {
@@ -441,9 +446,7 @@ describe('Company History', () => {
 
     context('when there is history with multiple pages', () => {
       before(() => {
-        cy.visit(
-          urls.companies.exports.history.index(fixtures.company.dnbCorp.id)
-        )
+        visitHistory(fixtures.company.dnbCorp.id)
       })
 
       it('renders the title', () => {
@@ -547,11 +550,7 @@ describe('Company History', () => {
 
     context('when there is history that can be grouped', () => {
       before(() => {
-        cy.visit(
-          urls.companies.exports.history.index(
-            fixtures.company.dnbGlobalUltimate.id
-          )
-        )
+        visitHistory(fixtures.company.dnbGlobalUltimate.id)
       })
 
       it('renders the title', () => {
@@ -624,11 +623,7 @@ describe('Company History', () => {
     context('when the user is unknown', () => {
       context('With a single history item', () => {
         before(() => {
-          cy.visit(
-            urls.companies.exports.history.index(
-              fixtures.company.marsExportsLtd.id
-            )
-          )
+          visitHistory(fixtures.company.marsExportsLtd.id)
         })
 
         it('renders the title', () => {
@@ -651,24 +646,30 @@ describe('Company History', () => {
 
       context('With grouped history items', () => {
         before(() => {
-          cy.visit(
-            urls.companies.exports.history.index(
-              fixtures.company.minimallyMinimalLtd.id
-            )
-          )
+          visitHistory(fixtures.company.minimallyMinimalLtd.id)
         })
 
         it('renders the title', () => {
           cy.contains('Export countries history')
         })
 
-        it('renders the collection list with the two results', () => {
-          cy.contains('2 results')
-          cy.get(countrySelectors.listItemHeadings).should('have.length', 2)
+        it('renders the collection list with the four results', () => {
+          cy.contains('4 results')
+          cy.get(countrySelectors.listItemHeadings).should('have.length', 4)
 
           checkListItems([
             [
-              'Maldives, Gibraltar, Andorra added to currently exporting',
+              'Maldives, Gibraltar added to currently exporting',
+              'By unknown',
+              'Date 6 Feb 2020, 5:07pm',
+            ],
+            [
+              'Angola moved to currently exporting',
+              'By unknown',
+              'Date 6 Feb 2020, 5:07pm',
+            ],
+            [
+              'Andorra added to currently exporting',
               'By unknown',
               'Date 6 Feb 2020, 5:07pm',
             ],
@@ -684,25 +685,24 @@ describe('Company History', () => {
 
     context('when the only item is an "update" item', () => {
       before(() => {
-        cy.visit(
-          urls.companies.exports.history.index(
-            fixtures.company.dnbSubsidiary.id
-          )
-        )
+        visitHistory(fixtures.company.dnbSubsidiary.id)
       })
 
-      it('should filter out the update', () => {
-        cy.get(countrySelectors.listItemHeadings).should('have.length', 0)
+      it('should not filter out the update', () => {
+        cy.get(countrySelectors.listItemHeadings).should('have.length', 1)
+        checkListItems([
+          [
+            'Andorra moved to future countries of interest',
+            'By unknown',
+            'Date 6 Feb 2020, 3:41pm',
+          ],
+        ])
       })
     })
 
     context('when viewing a company with interactions in the history', () => {
       before(() => {
-        cy.visit(
-          urls.companies.exports.history.index(
-            fixtures.company.investigationLimited.id
-          )
-        )
+        visitHistory(fixtures.company.investigationLimited.id)
       })
 
       it('renders the title', () => {
@@ -834,12 +834,19 @@ describe('Company History', () => {
   })
 
   describe('Country specific history', () => {
+    function visitCountryHistory(companyId, countryId) {
+      cy.server()
+      cy.route('POST', '**/export-country-history').as(
+        'exportCountryHistoryResults'
+      )
+      cy.visit(urls.companies.exports.history.country(companyId, countryId))
+      cy.wait('@exportCountryHistoryResults')
+    }
+
     before(() => {
-      cy.visit(
-        urls.companies.exports.history.country(
-          fixtures.company.dnbCorp.id,
-          '975f66a0-5d95-e211-a939-e4115bead28a'
-        )
+      visitCountryHistory(
+        fixtures.company.dnbCorp.id,
+        '975f66a0-5d95-e211-a939-e4115bead28a'
       )
     })
 
