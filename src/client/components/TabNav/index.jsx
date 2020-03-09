@@ -51,6 +51,15 @@ const StyledTablist = styled.div({
   '& > *:not(:last-child)': {
     marginRight: 5,
   },
+}
+
+const StyledButton = styled(FocusableButton)({
+  ...buttonStyle,
+  padding: '10px 20px',
+  background: GREY_4,
+  border: 'none',
+  cursor: 'pointer',
+  ...focusStyle,
 })
 
 const StyledTabpanel = styled.div({
