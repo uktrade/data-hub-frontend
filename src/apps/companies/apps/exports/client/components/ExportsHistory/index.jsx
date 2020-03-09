@@ -5,12 +5,12 @@ import { SPACING, LEVEL_SIZE } from '@govuk-react/constants'
 import { CollectionList } from 'data-hub-components'
 import { connect } from 'react-redux'
 
-import Task from '../../../../../client/components/Task/index.jsx'
-import { state2props } from '../state'
+import Task from '../../../../../../../client/components/Task/index.jsx'
+import { state2props } from './state'
 import {
   EXPORTS_HISTORY__LOADED,
   EXPORTS_HISTORY__SELECT_PAGE,
-} from '../../../../../client/actions'
+} from '../../../../../../../client/actions'
 
 const Wrapper = styled('div')`
   margin-top: ${SPACING.SCALE_3};
