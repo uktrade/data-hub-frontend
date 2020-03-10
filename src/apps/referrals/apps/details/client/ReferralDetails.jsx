@@ -77,7 +77,7 @@ export default connect(state2props)(
               </p>
             </Details>
             <FormActions>
-              <Button as={Link} href="/">
+              <Button as={Link} href={urls.referrals.interactions.create(id)}>
                 Complete referral
               </Button>
               <SecondaryButton as={Link} href={urls.referrals.help(id)}>

@@ -30,21 +30,50 @@ async function postDetails(req, res, next) {
 
     const result = await saveInteraction(
       req.session.token,
-      res.locals.requestBody
+      res.locals.requestBody,
+      (res.locals.interaction && res.locals.interaction.company_referral) ||
+        (res.locals.interactions && res.locals.interactions.referralId) ||
+        undefined
     )
 
     const flashMessage = `${sentence(req.params.kind)} ${
       res.locals.interaction ? 'updated' : 'created'
     }`
 
-    if (result.were_countries_discussed) {
-      req.flashWithBody(
-        'success',
-        flashMessage,
-        `You discussed some countries within the interaction, <a href="${urls.companies.exports.index(
-          companyId
-        )}">click here to view all countries</a> within the export tab`
-      )
+    const referralAcceptedMessageHeader = 'and referral accepted'
+
+    const referralAcceptedMessageBody = `You can <a href="${urls.dashboard()}">find your referrals on the Homepage</a>`
+
+    const countriesDiscussedMessage = `You discussed some countries within the interaction, <a href="${urls.companies.exports.index(
+      companyId
+    )}">click here to view all countries</a> within the export tab`
+
+    // When creating a referral
+    if (res.locals.interactions) {
+      if (
+        result.were_countries_discussed &&
+        res.locals.interactions.referralId
+      ) {
+        req.flashWithBody(
+          'success',
+          `${flashMessage} ${referralAcceptedMessageHeader}`,
+          `${referralAcceptedMessageBody}<br/>${countriesDiscussedMessage}`
+        )
+      } else if (result.were_countries_discussed) {
+        req.flashWithBody('success', flashMessage, countriesDiscussedMessage)
+      } else if (res.locals.interactions.referralId) {
+        req.flashWithBody(
+          'success',
+          `${flashMessage} ${referralAcceptedMessageHeader}`,
+          referralAcceptedMessageBody
+        )
+      } else {
+        req.flash('success', flashMessage)
+      }
+    }
+    // When editing a referral
+    else if (result.were_countries_discussed) {
+      req.flashWithBody('success', flashMessage, countriesDiscussedMessage)
     } else {
       req.flash('success', flashMessage)
     }

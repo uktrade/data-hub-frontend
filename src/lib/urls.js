@@ -212,5 +212,6 @@ module.exports = {
     index: url('/referrals'),
     details: url('/referrals', '/:referralId'),
     help: url('/referrals', '/:referralId/help'),
+    interactions: createInteractionsSubApp('/referrals', '/:referralId'),
   },
 }

@@ -9,6 +9,7 @@ const WHITELIST = [
   '/v4/search/export-country-history',
   '/v4/company-referral/',
   '/v4/company-referral/:id',
+  '/v4/company-referral/:id/complete',
   '/adviser/',
   '/v4/company/:id/export-win',
 ]
