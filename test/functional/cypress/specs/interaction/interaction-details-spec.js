@@ -4,6 +4,11 @@ const {
   assertKeyValueTable,
   assertBreadcrumbs,
 } = require('../../support/assertions')
+const { interactions, companies } = require('../../../../../src/lib/urls')
+
+const {
+  interaction: { withReferral: interactionWithReferral },
+} = fixtures
 
 describe('Interaction details', () => {
   context('Past draft interaction', () => {
@@ -399,6 +404,38 @@ describe('Interaction details', () => {
       cy.get(
         selectors.interaction.details.interaction.whyCanINotComplete
       ).should('not.be.visible')
+    })
+  })
+
+  context('When an interaction is created from a referral', () => {
+    it('should display the linked referral on the interaction detail page', () => {
+      cy.visit(interactions.detail(interactionWithReferral.id))
+      cy.contains('This interaction is linked to a referral').should(
+        'be.visible'
+      )
+      cy.get('table')
+        .eq(1)
+        .should('contain', 'Subject')
+        .and('contain', interactionWithReferral.company_referral.subject)
+        .and('contain', 'Sent on')
+        .and('contain', '14 Feb 2020')
+        .and('contain', 'By')
+        .and(
+          'contain',
+          interactionWithReferral.company_referral.created_by.name
+        )
+        .and('contain', 'To')
+        .and('contain', interactionWithReferral.company_referral.recipient.name)
+    })
+    it('should take you to the referral details page when you click on the subject', () => {
+      cy.contains(interactionWithReferral.company_referral.subject).click()
+      cy.url().should(
+        'contain',
+        companies.referrals.details(
+          interactionWithReferral.company.id,
+          interactionWithReferral.company_referral.id
+        )
+      )
     })
   })
 })

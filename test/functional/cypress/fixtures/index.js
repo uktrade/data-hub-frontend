@@ -31,6 +31,7 @@ module.exports = {
     draftPastMeeting: require('./interaction/draft-past-meeting'),
     withNoLink: require('./interaction/with-no-link.json'),
     withLink: require('./interaction/with-link.json'),
+    withReferral: require('../../../sandbox/fixtures/v3/interaction/interaction-with-referral.json'),
   },
   investment: {
     investmentWithNoLink: require('./investment/investment-with-no-link.json'),
@@ -43,5 +44,8 @@ module.exports = {
   },
   export: {
     historyWithInteractions: require('../../../sandbox/fixtures/v4/export/history-with-interactions.json'),
+  },
+  referrals: {
+    referalDetails: require('../../../sandbox/fixtures/v4/referrals/referral-details.json'),
   },
 }

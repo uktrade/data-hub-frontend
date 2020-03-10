@@ -41,7 +41,7 @@ describe('Referral details', () => {
 
       cy.get('@row')
         .eq(1)
-        .should('have.text', 'ContactJohnny Cakeman')
+        .should('have.text', 'ContactHelena Referral')
 
       cy.get('@row')
         .eq(2)

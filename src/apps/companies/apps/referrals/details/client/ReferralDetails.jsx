@@ -74,7 +74,13 @@ export default connect(state2props)(
               <p>Contact the recipient if something's changed.</p>
             </Details>
             <FormActions>
-              <Button as={Link} href="/">
+              <Button
+                as={Link}
+                href={urls.companies.referrals.interactions.create(
+                  companyId,
+                  referralId
+                )}
+              >
                 Accept referral
               </Button>
               <SecondaryButton
