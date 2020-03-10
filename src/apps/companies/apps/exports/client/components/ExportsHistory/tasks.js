@@ -33,7 +33,10 @@ const COUNTRY_TYPE_LABEL = {
 function getCountryText(countries, historyType, status) {
   const historyTypeText = COUNTRY_HISTORY_TYPE_TEXT[historyType]
   const typeText = COUNTRY_TYPE_TEXT[status]
-  const countryText = countries.map((country) => country.name).join(', ')
+  const countryText = countries
+    .map((country) => country.name)
+    .sort()
+    .join(', ')
 
   return [countryText, historyTypeText, typeText].join(' ')
 }
