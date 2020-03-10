@@ -1,3 +1,4 @@
+const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const { assertCollection } = require('../../support/assertions')
 
@@ -14,7 +15,7 @@ const checkCollection = () => {
 describe('Collection', () => {
   describe('contact', () => {
     before(() => {
-      cy.visit(companies.orders('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
+      cy.visit(companies.orders(fixtures.company.lambdaPlc.id))
     })
 
     it('should return the results summary for orders collection', () => {
@@ -24,9 +25,7 @@ describe('Collection', () => {
 
   describe('contact interaction', () => {
     before(() => {
-      cy.visit(
-        contacts.contactInteractions('952232d2-1d25-4c3a-bcac-2f3a30a94da9')
-      )
+      cy.visit(contacts.contactInteractions(fixtures.contact.deanCox.id))
     })
 
     it('should return the results summary for contact interaction collection', () => {
@@ -38,7 +37,7 @@ describe('Collection', () => {
     before(() => {
       cy.visit(
         investments.projects.interactionCollection(
-          '721e2a04-21c3-4172-a321-4368463a4b2d'
+          fixtures.investmentProject.newHotelFdi.id
         )
       )
     })
@@ -52,7 +51,7 @@ describe('Collection', () => {
     before(() => {
       cy.visit(
         investments.projects.propositions(
-          '721e2a04-21c3-4172-a321-4368463a4b2d'
+          fixtures.investmentProject.newHotelFdi.id
         )
       )
     })

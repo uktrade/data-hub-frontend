@@ -1,3 +1,4 @@
+const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const userActions = require('../../support/user-actions')
 
@@ -18,7 +19,7 @@ describe('Contacts', () => {
   }
 
   it('should create a primary contact with a different address to the companies address', () => {
-    cy.visit(contacts.create('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
+    cy.visit(contacts.create(fixtures.company.lambdaPlc.id))
     userActions.contacts.createWithNewAddress(data)
 
     cy.get(selectors.contactCreate.details)

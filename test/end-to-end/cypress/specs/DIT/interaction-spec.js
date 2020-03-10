@@ -1,3 +1,4 @@
+const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 
 const { companies, interactions } = require('../../../../../src/lib/urls')
@@ -8,7 +9,7 @@ describe('Interaction', () => {
   beforeEach(() => {
     cy.visit(
       companies.interactions.createType(
-        '0f5216e0-849f-11e6-ae22-56b6b6499611',
+        fixtures.company.venusLtd.id,
         'export',
         'interaction'
       )
@@ -54,7 +55,7 @@ describe('Service delivery', () => {
   beforeEach(() => {
     cy.visit(
       companies.interactions.createType(
-        '0f5216e0-849f-11e6-ae22-56b6b6499611',
+        fixtures.company.venusLtd.id,
         'export',
         'service-delivery'
       )

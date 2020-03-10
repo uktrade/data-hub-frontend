@@ -1,3 +1,4 @@
+const fixtures = require('../../fixtures')
 const {
   companies,
   contacts,
@@ -14,7 +15,7 @@ describe('LEP Permission', () => {
   describe('companies', () => {
     describe('orders', () => {
       before(() => {
-        cy.visit(companies.orders('0fb3379c-341c-4da4-b825-bf8d47b26baa'), {
+        cy.visit(companies.orders(fixtures.company.lambdaPlc.id), {
           failOnStatusCode: false,
         })
       })
@@ -27,12 +28,9 @@ describe('LEP Permission', () => {
 
     describe('exports', () => {
       before(() => {
-        cy.visit(
-          companies.exports.index('0fb3379c-341c-4da4-b825-bf8d47b26baa'),
-          {
-            failOnStatusCode: false,
-          }
-        )
+        cy.visit(companies.exports.index(fixtures.company.lambdaPlc.id), {
+          failOnStatusCode: false,
+        })
       })
 
       it('should prevent LEP users from accessing the page', () => {
@@ -114,10 +112,10 @@ describe('LEP Permission', () => {
     describe('investment document', () => {
       before(() => {
         cy.visit(
-          investments.projects.documents(
-            'ba1f0b14-5fe4-4c36-bf6a-ddf115272977'
-          ),
-          { failOnStatusCode: false }
+          investments.projects.documents(fixtures.investmentProject.newZoo.id),
+          {
+            failOnStatusCode: false,
+          }
         )
       })
 
@@ -131,9 +129,11 @@ describe('LEP Permission', () => {
       before(() => {
         cy.visit(
           investments.projects.interactionCollection(
-            'e32b3c33-80ac-4589-a8c4-dda305d726ba'
+            fixtures.investmentProject.newGolfCourse.id
           ),
-          { failOnStatusCode: false }
+          {
+            failOnStatusCode: false,
+          }
         )
       })
 
@@ -146,8 +146,12 @@ describe('LEP Permission', () => {
     describe('team', () => {
       before(() => {
         cy.visit(
-          investments.projects.team('b30dee70-b2d6-48cf-9ce4-b9264854470c'),
-          { failOnStatusCode: false }
+          investments.projects.team(
+            fixtures.investmentProject.fancyDressManufacturing.id
+          ),
+          {
+            failOnStatusCode: false,
+          }
         )
       })
 
@@ -161,7 +165,7 @@ describe('LEP Permission', () => {
   context('contacts', () => {
     describe('documents', () => {
       before(() => {
-        cy.visit(contacts.documents('9b1138ab-ec7b-497f-b8c3-27fed21694ef'), {
+        cy.visit(contacts.documents(fixtures.contact.johnnyCakeman.id), {
           failOnStatusCode: false,
         })
       })
@@ -175,7 +179,7 @@ describe('LEP Permission', () => {
     describe('interactions', () => {
       before(() => {
         cy.visit(
-          contacts.contactInteractions('9b1138ab-ec7b-497f-b8c3-27fed21694ef'),
+          contacts.contactInteractions(fixtures.contact.johnnyCakeman.id),
           { failOnStatusCode: false }
         )
       })
