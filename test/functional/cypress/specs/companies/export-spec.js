@@ -557,13 +557,13 @@ describe('Company History', () => {
         cy.contains('Export countries history')
       })
 
-      it('renders the collection list with 10 results', () => {
+      it('renders the collection list with grouped countries in alphabetical order', () => {
         cy.contains('10 results')
         cy.get(countrySelectors.listItemHeadings).should('have.length', 10)
 
         checkListItems([
           [
-            'Barbados, Bangladesh, Bahrain, Afghanistan added to countries of no interest',
+            'Afghanistan, Bahrain, Bangladesh, Barbados added to countries of no interest',
             'By Stephan Padberg',
             'Date 4 Mar 2020, 4:33pm',
           ],
@@ -588,7 +588,7 @@ describe('Company History', () => {
             'Date 4 Mar 2020, 8:55am',
           ],
           [
-            'Albania, Gibraltar, Brazil added to currently exporting',
+            'Albania, Brazil, Gibraltar added to currently exporting',
             'By Stephan Padberg',
             'Date 4 Mar 2020, 8:55am',
           ],
@@ -653,13 +653,13 @@ describe('Company History', () => {
           cy.contains('Export countries history')
         })
 
-        it('renders the collection list with the four results', () => {
+        it('renders the collection list with grouped countries in alphabetical order', () => {
           cy.contains('4 results')
           cy.get(countrySelectors.listItemHeadings).should('have.length', 4)
 
           checkListItems([
             [
-              'Maldives, Gibraltar added to currently exporting',
+              'Gibraltar, Maldives added to currently exporting',
               'By unknown',
               'Date 6 Feb 2020, 5:07pm',
             ],
@@ -674,7 +674,7 @@ describe('Company History', () => {
               'Date 6 Feb 2020, 5:07pm',
             ],
             [
-              'Kiribati, Hong Kong, Czechia, Angola added to future countries of interest',
+              'Angola, Czechia, Hong Kong, Kiribati added to future countries of interest',
               'By unknown',
               'Date 6 Feb 2020, 5:06pm',
             ],
