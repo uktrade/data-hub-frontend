@@ -41,7 +41,9 @@ const Referral = ({
   <Card>
     <CardHeader
       company={{ name: companyName }}
-      heading={<Link href={urls.referrals.details(id)}>{subject}</Link>}
+      heading={
+        <Link href={urls.companies.referrals.details(id)}>{subject}</Link>
+      }
       startTime={date}
       badge={{
         text: `${capitalize(status)} referral`,

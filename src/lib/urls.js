@@ -96,6 +96,14 @@ module.exports = {
       send: url('/companies', '/:companyId/send-referral'),
       details: url('/companies', '/:companyId/referrals/:referralId'),
       help: url('/companies', '/:companyId/referrals/:referralId/help'),
+      interactions: createInteractionsSubApp(
+        '/companies',
+        '/:companyId/referrals/:referralId'
+      ),
+      interactionsIndex: url(
+        '/companies',
+        '/:companyId/referrals/:referralId/interactions'
+      ),
     },
     activity: {
       index: url('/companies', '/:companyId/activity'),

@@ -12,6 +12,10 @@ function renderDetailsPage(req, res, next) {
       interaction,
       isComplete
     )
+    const referral = interaction.company_referral
+    if (referral) {
+      referral.companyId = interaction.company.id
+    }
     const canComplete =
       interaction.status === INTERACTION_STATUS.DRAFT &&
       new Date(interaction.date) < new Date() &&
@@ -24,6 +28,7 @@ function renderDetailsPage(req, res, next) {
         interactionViewRecord,
         canComplete,
         canEdit: isComplete,
+        referral,
       })
   } catch (error) {
     next(error)
