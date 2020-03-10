@@ -61,7 +61,7 @@ describe('Service delivery', () => {
     )
   })
 
-  it('should add the service delivery', () => {
+  it('should create the service delivery', () => {
     const subject = 'Some interesting service delivery'
 
     const formSelectors = selectors.interactionForm
@@ -79,7 +79,9 @@ describe('Service delivery', () => {
       'contain',
       'Service delivery created'
     )
+  })
 
+  it('should display newly created service delivery', () => {
     cy.visit(interactions.index())
     cy.get(selectors.filter.interaction.myInteractions).click()
 
