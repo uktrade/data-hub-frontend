@@ -90,9 +90,13 @@ const expectedRows = {
 
 const describeTableCell = ({ row, col, text, linksTo, shouldHaveEllipsis }) =>
   describe(`Cell in column ${col}, row ${row}`, () => {
+    let table
+    before(() => {
+      table = cy.get('table').find('tbody tr')
+    })
+
     it('Should have the expected text and behavior', () => {
-      cy.get('table')
-        .find('tbody tr')
+      table
         .eq(row)
         .find('td')
         .eq(col)
@@ -140,7 +144,7 @@ const describeTable = (rows) => {
 
 const describeSortListBy = ({ option, rows }) =>
   describe(`Sort list by "${option}"`, () => {
-    beforeEach(() => {
+    before(() => {
       cy.contains('Sort by')
         .children('select')
         .select(option)
