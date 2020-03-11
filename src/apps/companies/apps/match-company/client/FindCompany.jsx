@@ -53,8 +53,8 @@ function FindCompany({ company, csrfToken }) {
           window.location.assign(urls.companies.match.cannotFind(company.id))
         }}
         searchResultsMessage="Choose the business details that best match this
-         company. You'll be given the chance to review the request before you
-          send it."
+         company. You'll be given a chance to review the new business details
+          before you verify."
       />
     </Form>
   )

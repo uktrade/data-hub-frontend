@@ -21,13 +21,15 @@ const CompanyActivityFeed = ({ companyId, showMatchingPrompt, ...rest }) => (
         </WarningText>
         <Details summary="Why verify?">
           <Paragraph>
-            Linking our existing records to a trusted third party means we can
-            keep our information about businesses up to date automatically. It
+            Using verified business details from a trusted third-party supplier
+            means we can keep certain information up to date automatically. This
             helps reduce duplicate records, provide a shared view of complex
-            companies, and make it more likely we can link other data sources
+            companies and make it more likely we can link other data sources
             together.
           </Paragraph>
-          <Paragraph>Linking can often be done in just four clicks.</Paragraph>
+          <Paragraph>
+            Verification can often be done in just 4 clicks.
+          </Paragraph>
         </Details>
         <Button as={StyledLink} href={urls.companies.match.index(companyId)}>
           Verify business details
