@@ -22,6 +22,7 @@ import LargeCapitalProfileCollection from '../apps/investments/client/LargeCapit
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
 import ReferralDetails from '../apps/referrals/apps/details/client/ReferralDetails'
+import InteractionReferralDetails from '../apps/referrals/apps/details/client/InteractionReferralDetails.jsx'
 import ReferralHelp from '../apps/referrals/apps/help/client/ReferralHelp'
 import ValidatedInput from './components/ValidatedInput'
 import SendReferralForm from '../apps/referrals/apps/send-referral/client/SendReferralForm'
@@ -187,6 +188,9 @@ function App() {
       </Mount>
       <Mount selector="#referral-help">
         {(props) => <ReferralHelp {...props} />}
+      </Mount>
+      <Mount selector="#interaction-referral-details">
+        {(props) => <InteractionReferralDetails {...props} />}
       </Mount>
     </Provider>
   )

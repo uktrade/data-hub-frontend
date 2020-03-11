@@ -27,6 +27,13 @@
     <a href="{{ returnLink }}">Back</a>
   </div>
 
+  {% if referral %}
+    {% component 'react-slot', {
+      id: 'interaction-referral-details',
+      props: referral
+    } %}
+  {% endif %}
+
   {% if not canComplete and not canEdit and not interaction.archived %}
     {{ govukDetails({
       summaryText: 'Why can I not complete this interaction?',
