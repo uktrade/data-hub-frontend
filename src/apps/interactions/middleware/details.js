@@ -39,7 +39,6 @@ async function postDetails(req, res, next) {
     const flashMessage = `${sentence(req.params.kind)} ${
       res.locals.interaction ? 'updated' : 'created'
     }`
-
     const referralAcceptedMessageHeader = 'and referral accepted'
 
     const referralAcceptedMessageBody = `You can <a href="${urls.dashboard()}">find your referrals on the Homepage</a>`
