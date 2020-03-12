@@ -2,13 +2,13 @@ import axios from 'axios'
 import { DateUtils } from 'data-hub-components'
 import { GREEN } from 'govuk-colours'
 
-import urls from '../../../../../../../lib/urls'
-import groupExportCountries from '../../../../../../../lib/group-export-countries'
+import urls from '../../../../../../lib/urls'
+import groupExportCountries from '../../../../../../lib/group-export-countries'
 import {
   EXPORT_INTEREST_STATUS,
   EXPORT_INTEREST_STATUS_VALUES,
-} from '../../../../../../constants'
-import { groupHistoryItems } from '../../group-history-items'
+} from '../../../../../constants'
+import { groupHistoryItems } from '../group-history-items'
 
 const WHITELISTED_HISTORY_TYPES = ['insert', 'delete', 'update']
 
