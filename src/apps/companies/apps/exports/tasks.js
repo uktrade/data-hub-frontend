@@ -26,7 +26,7 @@ const COUNTRY_TYPE_TEXT = {
 const COUNTRY_TYPE_LABEL = {
   [EXPORT_INTEREST_STATUS.EXPORTING_TO]: 'Countries currently exporting to',
   [EXPORT_INTEREST_STATUS.FUTURE_INTEREST]: 'Future countries of interest',
-  [EXPORT_INTEREST_STATUS.NOT_INTERESTED]: 'Countries not intersted in',
+  [EXPORT_INTEREST_STATUS.NOT_INTERESTED]: 'Countries not interested in',
 }
 
 function getCountryText(countries, historyType, status) {
