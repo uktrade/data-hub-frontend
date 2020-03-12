@@ -763,7 +763,7 @@ describe('Company History', () => {
                 'Future countries of interest Brunei Darussalam, French Polynesia',
               ],
             ],
-            ['not.contain', ['Countries not intersted in']],
+            ['not.contain', ['Countries not interested in']],
           ],
           [
             [
@@ -773,7 +773,7 @@ describe('Company History', () => {
                 'Adviser Carolanne Langworth (sit delectus recusandae)',
                 'Service Ipsa dicta omnis pariatur.',
                 'Countries currently exporting to Christmas Island, Indonesia, Martinique',
-                'Countries not intersted in Serbia',
+                'Countries not interested in Serbia',
               ],
             ],
             ['not.contain', ['Future countries of interest']],
@@ -789,7 +789,7 @@ describe('Company History', () => {
                 'Future countries of interest Kyrgyz Republic, Trinidad and Tobago',
               ],
             ],
-            ['not.contain', ['Countries not intersted in']],
+            ['not.contain', ['Countries not interested in']],
           ],
           [
             [
@@ -800,7 +800,7 @@ describe('Company History', () => {
                 'Service Repellat quia fugiat velit delectus expedita omnis doloribus.',
                 'Countries currently exporting to Bolivia, Cameroon',
                 'Future countries of interest Bolivia, Qatar',
-                'Countries not intersted in Australia, Greenland',
+                'Countries not interested in Australia, Greenland',
               ],
             ],
           ],
