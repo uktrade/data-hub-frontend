@@ -46,6 +46,10 @@ aliases:
       name: Wait for api sandbox
       command: dockerize -wait ${API_ROOT}/ping.xml -timeout 120s
 
+  - &store_artifacts_cypress_video
+    store_artifacts:
+      path: cypress/videos
+
   # Data hub base environment variables
   - &data_hub_base_envs
     NODE_ENV: development
@@ -293,6 +297,7 @@ jobs:
           when: always
       - store_artifacts:
           path: cypress/screenshots
+      - *store_artifacts_cypress_video
 
   # Run visual tests
   visual_tests:
@@ -348,6 +353,8 @@ jobs:
           command: yarn test:e2e:dit --browser chrome
       - store_artifacts:
           path: cypress/screenshots
+      - *store_artifacts_cypress_video
+   
 
   # Run e2e tests for LEP staff
   lep_staff_e2e:
@@ -377,6 +384,7 @@ jobs:
           command: yarn test:e2e:lep --browser chrome
       - store_artifacts:
           path: cypress/screenshots
+      - *store_artifacts_cypress_video
 
   # Run e2e tests for DA staff
   da_staff_e2e:
@@ -406,6 +414,7 @@ jobs:
           command: yarn test:e2e:da --browser chrome
       - store_artifacts:
           path: cypress/screenshots
+      - *store_artifacts_cypress_video
 
 # CircleCI workflows
 workflows:

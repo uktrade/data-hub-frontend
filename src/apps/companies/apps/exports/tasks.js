@@ -8,6 +8,7 @@ import {
   EXPORT_INTEREST_STATUS,
   EXPORT_INTEREST_STATUS_VALUES,
 } from '../../../constants'
+import { groupHistoryItems } from './group-history-items'
 
 const WHITELISTED_HISTORY_TYPES = ['insert', 'delete']
 
@@ -15,6 +16,7 @@ const COUNTRY_HISTORY_TYPE_TEXT = {
   insert: 'added to',
   delete: 'removed from',
 }
+
 const COUNTRY_TYPE_TEXT = {
   future_interest: 'future countries of interest',
   currently_exporting: 'currently exporting',
@@ -24,29 +26,26 @@ const COUNTRY_TYPE_TEXT = {
 const COUNTRY_TYPE_LABEL = {
   [EXPORT_INTEREST_STATUS.EXPORTING_TO]: 'Countries currently exporting to',
   [EXPORT_INTEREST_STATUS.FUTURE_INTEREST]: 'Future countries of interest',
-  [EXPORT_INTEREST_STATUS.NOT_INTERESTED]: 'Countries not intersted in',
+  [EXPORT_INTEREST_STATUS.NOT_INTERESTED]: 'Countries not interested in',
 }
 
-function getCountryText(country, historyType, status) {
+function getCountryText(countries, historyType, status) {
   const historyTypeText = COUNTRY_HISTORY_TYPE_TEXT[historyType]
   const typeText = COUNTRY_TYPE_TEXT[status]
+  const countryText = countries.map((country) => country.name).join(', ')
 
-  return [country, historyTypeText, typeText].join(' ')
+  return [countryText, historyTypeText, typeText].join(' ')
 }
 
 function createHistory(item) {
   return {
-    headingText: getCountryText(
-      item.country.name,
-      item.history_type,
-      item.status
-    ),
+    headingText: getCountryText(item.countries, item.history_type, item.status),
     metadata: [
       {
         label: 'By',
         value: item.history_user?.name ?? 'unknown',
       },
-      { label: 'Date', value: DateUtils.formatWithTime(item.history_date) },
+      { label: 'Date', value: DateUtils.formatWithTime(item.date) },
     ],
   }
 }
@@ -102,10 +101,12 @@ function createInteraction(item) {
 
 function transformFullExportHistory({ results }, activePage) {
   const offset = activePage * 10 - 10
-  const cleanedResults = results.filter(
-    (item) =>
-      isInteraction(item) ||
-      WHITELISTED_HISTORY_TYPES.includes(item.history_type)
+  const cleanedResults = groupHistoryItems(
+    results.filter(
+      (item) =>
+        isInteraction(item) ||
+        WHITELISTED_HISTORY_TYPES.includes(item.history_type)
+    )
   )
 
   return {

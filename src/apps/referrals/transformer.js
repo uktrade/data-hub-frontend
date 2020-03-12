@@ -1,7 +1,4 @@
-const { get } = require('lodash')
-
 const transformReferralDetails = ({
-  id,
   subject,
   company,
   contact,
@@ -13,16 +10,16 @@ const transformReferralDetails = ({
   return {
     subject,
     company: company.name,
-    contact: contact.name,
+    contact: contact && contact.name,
     sendingAdviser: {
       name: created_by.name,
-      email: get(created_by, 'contact_email'),
-      team: get(created_by.dit_team, 'name'),
+      email: created_by.contact_email,
+      team: created_by.dit_team && created_by.dit_team.name,
     },
     receivingAdviser: {
       name: recipient.name,
-      email: get(recipient, 'contact_email'),
-      team: get(recipient.dit_team, 'name'),
+      email: recipient.contact_email,
+      team: recipient.dit_team && recipient.dit_team.name,
     },
     date: created_on,
     notes,
