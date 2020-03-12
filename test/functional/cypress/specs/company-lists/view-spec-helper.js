@@ -88,7 +88,91 @@ const expectedRows = {
   ],
 }
 
-const expectedLists = {
+const describeTableCell = ({ row, col, text, linksTo, shouldHaveEllipsis }) =>
+  describe(`Cell in column ${col}, row ${row}`, () => {
+    let table
+    before(() => {
+      table = cy.get('table').find('tbody tr')
+    })
+
+    it('Should have the expected text and behavior', () => {
+      table
+        .eq(row)
+        .find('td')
+        .eq(col)
+        .should(($elm) => {
+          // TODO: Once the CSS version of truncating long text is in place remove this test.
+          const elText = $elm.text()
+          if (shouldHaveEllipsis) {
+            const [nonTruncated] = elText.split('...')
+            expect(text.startsWith(nonTruncated)).equal(true)
+            expect(elText.endsWith('...')).equal(true)
+          } else {
+            expect(elText).equal(text)
+          }
+        })
+        .as('cell')
+
+      if (linksTo === undefined) {
+        return
+      }
+
+      cy.get('@cell')
+        .find('a')
+        .should('have.attr', 'href', linksTo)
+    })
+  })
+
+const describeTable = (rows) => {
+  describe('Table', () => {
+    it(`It should have ${rows.length} rows`, () =>
+      cy.get('table tbody tr').should('have.length', rows.length))
+
+    describe('Cells', () => {
+      rows.forEach((cells, row) =>
+        cells.forEach((cell, col) =>
+          describeTableCell({
+            ...cell,
+            row,
+            col,
+          })
+        )
+      )
+    })
+  })
+}
+
+const describeSortListBy = ({ option, rows }) =>
+  describe(`Sort list by "${option}"`, () => {
+    before(() => {
+      cy.contains('Sort by')
+        .children('select')
+        .select(option)
+    })
+
+    it(`The option "${option}" should be selected`, () =>
+      cy
+        .contains('Sort by')
+        .find(':selected')
+        .should('have.text', option))
+    describeTable(rows)
+  })
+
+const describeSortList = (rows) => {
+  const recentRows = [...rows].sort(([, { text: a }], [, { text: b }]) =>
+    b === '-' ? -1 : new Date(b) - new Date(a)
+  )
+
+  Object.entries({
+    'Company name A-Z': [...rows].sort(([{ text: a }], [{ text: b }]) =>
+      a.localeCompare(b)
+    ),
+    'Least recent interaction': [...recentRows].reverse(),
+    'Recent interaction': recentRows,
+  }).forEach(([option, rows]) => describeSortListBy({ option, rows }))
+}
+
+exports.expectedLists = {
   'List B': {
     deleteLinksTo: '/company-lists/75e14e32-292e-4d1b-a361-992d548251f7/delete',
     renameLinksTo: '/company-lists/75e14e32-292e-4d1b-a361-992d548251f7/rename',
@@ -130,56 +214,7 @@ const expectedLists = {
   },
 }
 
-const describeTableCell = ({ row, col, text, linksTo, shouldHaveEllipsis }) =>
-  describe(`Cell in column ${col}, row ${row}`, () =>
-    it('Should have the expected text and behavior', () => {
-      cy.get('table')
-        .find('tbody tr')
-        .eq(row)
-        .find('td')
-        .eq(col)
-        .should(($elm) => {
-          // TODO: Once the CSS version of truncating long text is in place remove this test.
-          const elText = $elm.text()
-          if (shouldHaveEllipsis) {
-            const [nonTruncated] = elText.split('...')
-            expect(text.startsWith(nonTruncated)).equal(true)
-            expect(elText.endsWith('...')).equal(true)
-          } else {
-            expect(elText).equal(text)
-          }
-        })
-        .as('cell')
-
-      if (linksTo === undefined) {
-        return
-      }
-
-      cy.get('@cell')
-        .find('a')
-        .should('have.attr', 'href', linksTo)
-    }))
-
-const describeTable = (rows) => {
-  describe('Table', () => {
-    it(`It should have ${rows.length} rows`, () =>
-      cy.get('table tbody tr').should('have.length', rows.length))
-
-    describe('Cells', () => {
-      rows.forEach((cells, row) =>
-        cells.forEach((cell, col) =>
-          describeTableCell({
-            ...cell,
-            row,
-            col,
-          })
-        )
-      )
-    })
-  })
-}
-
-const describeSelectedList = ({
+exports.describeSelectedList = ({
   name,
   deleteLinksTo,
   renameLinksTo,
@@ -243,54 +278,3 @@ const describeSelectedList = ({
           })
     }
   })
-
-const describeSortListBy = ({ option, rows }) =>
-  describe(`Sort list by "${option}"`, () => {
-    beforeEach(() => {
-      cy.contains('Sort by')
-        .children('select')
-        .select(option)
-    })
-    it(`The option "${option}" should be selected`, () =>
-      cy
-        .contains('Sort by')
-        .find(':selected')
-        .should('have.text', option))
-    describeTable(rows)
-  })
-
-const describeSortList = (rows) => {
-  const recentRows = [...rows].sort(([, { text: a }], [, { text: b }]) =>
-    b === '-' ? -1 : new Date(b) - new Date(a)
-  )
-
-  Object.entries({
-    'Company name A-Z': [...rows].sort(([{ text: a }], [{ text: b }]) =>
-      a.localeCompare(b)
-    ),
-    'Least recent interaction': [...recentRows].reverse(),
-    'Recent interaction': recentRows,
-  }).forEach(([option, rows]) => describeSortListBy({ option, rows }))
-}
-
-describe('My companies lists', () => {
-  before(() => {
-    Cypress.Cookies.preserveOnce('datahub.sid')
-    cy.visit('/')
-  })
-
-  describeSelectedList({ name: 'List A', ...expectedLists['List A'] })
-
-  Object.entries(expectedLists).forEach(([name, expectedValues]) => {
-    describe(`After selecting list "${name}"`, () => {
-      before(() =>
-        cy
-          .contains('View list')
-          .find('select')
-          .select(name)
-      )
-
-      describeSelectedList({ name, ...expectedValues })
-    })
-  })
-})
