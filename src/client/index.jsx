@@ -27,7 +27,7 @@ import ValidatedInput from './components/ValidatedInput'
 import SendReferralForm from '../apps/referrals/apps/send-referral/client/SendReferralForm'
 import sendReferral from '../apps/referrals/apps/send-referral/client/reducer'
 import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
-import ExportsHistory from '../apps/companies/apps/exports/client/components/ExportsHistory'
+import ExportsHistory from '../apps/companies/apps/exports/client/ExportsHistory/'
 
 import tasksSaga from './components/Task/saga'
 import tasks from './components/Task/reducer'
@@ -42,17 +42,17 @@ import { ID as REFERRALS_DETAILS_STATE_ID } from '../apps/referrals/apps/details
 import referralsReducer from '../apps/referrals/apps/details/client/reducer'
 import * as referralTasks from '../apps/referrals/apps/details/client/tasks'
 
-import { ID as EXPORTS_HISTORY_ID } from '../apps/companies/apps/exports/client/components/ExportsHistory/state'
-import exportsHistoryReducer from '../apps/companies/apps/exports/client/components/ExportsHistory/reducer'
-import * as exportsHistoryTasks from '../apps/companies/apps/exports/client/components/ExportsHistory/tasks'
+import { ID as EXPORTS_HISTORY_ID } from '../apps/companies/apps/exports/client/ExportsHistory/state'
+import exportsHistoryReducer from '../apps/companies/apps/exports/client/ExportsHistory/reducer'
+import * as exportsHistoryTasks from '../apps/companies/apps/exports/client/ExportsHistory/tasks'
 
 import TabNav from './components/TabNav'
 import referralListTask from './components/ReferralList/task'
 import ReferralList from './components/ReferralList'
 
-import { ID as EXPORTS_WINS_ID } from '../apps/companies/apps/exports/client/components/ExportWins/state'
-import exportWinsReducer from '../apps/companies/apps/exports/client/components/ExportWins/reducer'
-import * as exportWinsTasks from '../apps/companies/apps/exports/client/components/ExportWins/tasks'
+import { ID as EXPORTS_WINS_ID } from '../apps/companies/apps/exports/client/ExportWins/state'
+import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/reducer'
+import * as exportWinsTasks from '../apps/companies/apps/exports/client/ExportWins/tasks'
 
 const sagaMiddleware = createSagaMiddleware()
 

@@ -8,7 +8,7 @@ import { SummaryTable } from 'data-hub-components'
 
 import SecondaryButton from '../../../../../client/components/SecondaryButton'
 import urls from '../../../../../lib/urls'
-import ExportWins from './components/ExportWins/index.jsx'
+import ExportWins from './ExportWins/'
 
 const StyledSummaryTable = styled(SummaryTable)`
   margin-top: 0;
