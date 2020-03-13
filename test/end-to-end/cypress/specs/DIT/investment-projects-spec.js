@@ -1,3 +1,4 @@
+const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 
 const { assertKeyValueTable } = require('../../support/assertions')
@@ -56,9 +57,7 @@ describe('Investment project', () => {
   describe('FDI investment', () => {
     before(() => {
       cy.visit(
-        companies.investments.companyInvestment(
-          '0fb3379c-341c-4da4-b825-bf8d47b26baa'
-        )
+        companies.investments.companyInvestment(fixtures.company.lambdaPlc.id)
       )
     })
 
@@ -125,9 +124,7 @@ describe('Investment project', () => {
   describe('non FDI investment', () => {
     before(() => {
       cy.visit(
-        companies.investments.companyInvestment(
-          '0fb3379c-341c-4da4-b825-bf8d47b26baa'
-        )
+        companies.investments.companyInvestment(fixtures.company.lambdaPlc.id)
       )
     })
 
@@ -190,9 +187,7 @@ describe('Investment project', () => {
   describe('FDI investment with different company source', () => {
     before(() => {
       cy.visit(
-        companies.investments.companyInvestment(
-          '0fb3379c-341c-4da4-b825-bf8d47b26baa'
-        )
+        companies.investments.companyInvestment(fixtures.company.lambdaPlc.id)
       )
     })
 
@@ -237,9 +232,7 @@ describe('Investment project', () => {
   describe('Commitment investment project', () => {
     before(() => {
       cy.visit(
-        companies.investments.companyInvestment(
-          '0fb3379c-341c-4da4-b825-bf8d47b26baa'
-        )
+        companies.investments.companyInvestment(fixtures.company.lambdaPlc.id)
       )
     })
 

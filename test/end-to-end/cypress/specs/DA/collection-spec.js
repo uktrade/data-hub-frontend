@@ -1,3 +1,4 @@
+const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 
 const {
@@ -48,7 +49,7 @@ describe('Collection', () => {
       before(() => {
         cy.visit(
           investments.projects.interactionCollection(
-            'e32b3c33-80ac-4589-a8c4-dda305d726ba'
+            fixtures.investmentProject.newGolfCourse.id
           )
         )
       })
@@ -62,7 +63,7 @@ describe('Collection', () => {
       before(() => {
         cy.visit(
           investments.projects.propositions(
-            'e32b3c33-80ac-4589-a8c4-dda305d726ba'
+            fixtures.investmentProject.newGolfCourse.id
           )
         )
       })
@@ -75,7 +76,7 @@ describe('Collection', () => {
     describe('team', () => {
       before(() => {
         cy.visit(
-          investments.projects.team('e32b3c33-80ac-4589-a8c4-dda305d726ba')
+          investments.projects.team(fixtures.investmentProject.newGolfCourse.id)
         )
       })
 

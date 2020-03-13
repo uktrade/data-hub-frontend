@@ -1,3 +1,4 @@
+const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 
 const { investments } = require('../../../../../src/lib/urls')
@@ -17,7 +18,9 @@ const createProposition = (data) => {
 describe('Proposition', () => {
   beforeEach(() => {
     cy.visit(
-      investments.projects.propositions('fb5b5006-56af-40e0-8615-7aba53e0e4bf')
+      investments.projects.propositions(
+        fixtures.investmentProject.newHotelCommitmentToInvest.id
+      )
     )
   })
 
