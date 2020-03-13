@@ -1,7 +1,7 @@
 import {
   EXPORTS_HISTORY__LOADED,
   EXPORTS_HISTORY__SELECT_PAGE,
-} from '../../../../client/actions'
+} from '../../../../../../client/actions'
 
 const initialState = {
   count: 0,

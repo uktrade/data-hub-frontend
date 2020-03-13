@@ -21,13 +21,13 @@ import LeadAdvisers from '../apps/companies/apps/advisers/client/LeadAdvisers'
 import LargeCapitalProfileCollection from '../apps/investments/client/LargeCapitalProfileCollection'
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
-import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
 import ReferralDetails from '../apps/referrals/apps/details/client/ReferralDetails'
 import ReferralHelp from '../apps/referrals/apps/help/client/ReferralHelp'
 import ValidatedInput from './components/ValidatedInput'
 import SendReferralForm from '../apps/referrals/apps/send-referral/client/SendReferralForm'
 import sendReferral from '../apps/referrals/apps/send-referral/client/reducer'
-import ExportsHistory from '../apps/companies/apps/exports/client/ExportsHistory'
+import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
+import ExportsHistory from '../apps/companies/apps/exports/client/ExportsHistory/'
 
 import tasksSaga from './components/Task/saga'
 import tasks from './components/Task/reducer'
@@ -42,17 +42,17 @@ import { ID as REFERRALS_DETAILS_STATE_ID } from '../apps/referrals/apps/details
 import referralsReducer from '../apps/referrals/apps/details/client/reducer'
 import * as referralTasks from '../apps/referrals/apps/details/client/tasks'
 
-import { ID as EXPORTS_HISTORY_ID } from '../apps/companies/apps/exports/state'
-import exportsHistoryReducer from '../apps/companies/apps/exports/reducer'
-import * as exportsHistoryTasks from '../apps/companies/apps/exports/tasks'
+import { ID as EXPORTS_HISTORY_ID } from '../apps/companies/apps/exports/client/ExportsHistory/state'
+import exportsHistoryReducer from '../apps/companies/apps/exports/client/ExportsHistory/reducer'
+import * as exportsHistoryTasks from '../apps/companies/apps/exports/client/ExportsHistory/tasks'
 
 import TabNav from './components/TabNav'
 import referralListTask from './components/ReferralList/task'
 import ReferralList from './components/ReferralList'
 
-import { ID as EXPORTS_WINS_ID } from '../apps/companies/apps/exports/client/components/ExportWins/state'
-import exportWinsReducer from '../apps/companies/apps/exports/client/components/ExportWins/reducer'
-import * as exportWinsTasks from '../apps/companies/apps/exports/client/components/ExportWins/tasks'
+import { ID as EXPORTS_WINS_ID } from '../apps/companies/apps/exports/client/ExportWins/state'
+import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/reducer'
+import * as exportWinsTasks from '../apps/companies/apps/exports/client/ExportWins/tasks'
 
 const sagaMiddleware = createSagaMiddleware()
 

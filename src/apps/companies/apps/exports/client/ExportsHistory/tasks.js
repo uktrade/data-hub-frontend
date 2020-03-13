@@ -2,19 +2,20 @@ import axios from 'axios'
 import { DateUtils } from 'data-hub-components'
 import { GREEN } from 'govuk-colours'
 
-import urls from '../../../../lib/urls'
-import groupExportCountries from '../../../../lib/group-export-countries'
+import urls from '../../../../../../lib/urls'
+import groupExportCountries from '../../../../../../lib/group-export-countries'
 import {
   EXPORT_INTEREST_STATUS,
   EXPORT_INTEREST_STATUS_VALUES,
-} from '../../../constants'
-import { groupHistoryItems } from './group-history-items'
+} from '../../../../../constants'
+import { groupHistoryItems } from '../group-history-items'
 
-const WHITELISTED_HISTORY_TYPES = ['insert', 'delete']
+const WHITELISTED_HISTORY_TYPES = ['insert', 'delete', 'update']
 
 const COUNTRY_HISTORY_TYPE_TEXT = {
   insert: 'added to',
   delete: 'removed from',
+  update: 'moved to',
 }
 
 const COUNTRY_TYPE_TEXT = {
@@ -32,7 +33,10 @@ const COUNTRY_TYPE_LABEL = {
 function getCountryText(countries, historyType, status) {
   const historyTypeText = COUNTRY_HISTORY_TYPE_TEXT[historyType]
   const typeText = COUNTRY_TYPE_TEXT[status]
-  const countryText = countries.map((country) => country.name).join(', ')
+  const countryText = countries
+    .map((country) => country.name)
+    .sort()
+    .join(', ')
 
   return [countryText, historyTypeText, typeText].join(' ')
 }
