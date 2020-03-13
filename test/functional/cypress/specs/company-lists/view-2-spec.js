@@ -6,6 +6,9 @@ describe('My companies lists', () => {
     cy.visit('/')
   })
 
+  it('My companies lists tab should be selected', () =>
+    cy.ariaTablistTabShouldBeSelected('Dashboard', 'My companies lists'))
+
   helper.describeSelectedList({
     name: 'List A',
     ...helper.expectedLists['List A'],
