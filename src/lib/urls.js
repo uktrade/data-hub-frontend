@@ -117,6 +117,7 @@ module.exports = {
     exports: {
       index: url('/companies', '/:companyId/exports'),
       edit: url('/companies', '/:companyId/exports/edit'),
+      editCountries: url('/companies', '/:companyId/exports/edit-countries'),
       history: {
         index: url('/companies', '/:companyId/exports/history'),
         country: url('/companies', '/:companyId/exports/history/:countryId'),

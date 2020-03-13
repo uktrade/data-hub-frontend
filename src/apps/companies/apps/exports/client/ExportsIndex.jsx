@@ -27,7 +27,14 @@ const ExportsIndex = ({
 }) => {
   return (
     <>
-      <SummaryTable caption="Exports">
+      <SummaryTable
+        caption="Exports"
+        actions={
+          !isArchived && (
+            <Link href={urls.companies.exports.edit(companyId)}>Edit</Link>
+          )
+        }
+      >
         <SummaryTable.Row
           heading={exportWinCategory.name}
           key={exportWinCategory.name}
@@ -106,7 +113,7 @@ const ExportsIndex = ({
       {isArchived ? null : (
         <SecondaryButton
           as={Link}
-          href={urls.companies.exports.edit(companyId)}
+          href={urls.companies.exports.editCountries(companyId)}
           data-test-id="editExportCountriesButton"
         >
           Edit export countries
