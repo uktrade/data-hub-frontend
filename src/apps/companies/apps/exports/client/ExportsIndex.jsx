@@ -9,6 +9,7 @@ import { SummaryTable } from 'data-hub-components'
 import SecondaryButton from '../../../../../client/components/SecondaryButton'
 import urls from '../../../../../lib/urls'
 import ExportWins from './ExportWins/'
+import GreatProfile from './GreatProfile'
 
 const StyledSummaryTable = styled(SummaryTable)`
   margin-top: 0;
@@ -34,19 +35,7 @@ const ExportsIndex = ({
           {exportWinCategory.value ? exportWinCategory.value : 'None'}
         </SummaryTable.Row>
         <SummaryTable.Row heading={greatProfile.name} key={greatProfile.name}>
-          {greatProfile.value === 'published' ? (
-            <Link
-              href={urls.external.greatProfile(companyNumber)}
-              target="_blank"
-              aria-label="opens in a new tab"
-            >
-              "Find a supplier" profile
-            </Link>
-          ) : greatProfile.value === 'unpublished' ? (
-            'Profile not published'
-          ) : (
-            'No profile'
-          )}
+          <GreatProfile profile={greatProfile} companyNumber={companyNumber} />
         </SummaryTable.Row>
         <SummaryTable.Row
           heading={exportPotential.name}
