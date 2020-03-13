@@ -6,7 +6,7 @@ const urls = require('../../../../lib/urls')
 const groupExportCountries = require('../../../../lib/group-export-countries')
 const getExportCountries = require('../../../../lib/get-export-countries')
 
-const { updateCompany, saveCompanyExportDetails } = require('../../repos')
+const { saveCompanyExportDetails } = require('../../repos')
 const { transformObjectToOption } = require('../../../transformers')
 const { transformCompanyToExportDetailsView } = require('./transformer')
 const { exportDetailsLabels, exportPotentialLabels } = require('../../labels')
@@ -31,9 +31,7 @@ function getCountry(id) {
 }
 
 function getPostedFormData(body) {
-  const data = {
-    export_experience_category: body.export_experience_category,
-  }
+  const data = {}
 
   EXPORT_INTEREST_STATUS_VALUES.forEach((status) => {
     const options = []
@@ -101,13 +99,10 @@ function renderExportHistory(req, res) {
 }
 
 function populateExportForm(req, res, next) {
-  const { export_experience_category, export_countries } = res.locals.company
+  const { export_countries } = res.locals.company
 
   res.locals.formData = Object.assign(
-    {
-      export_experience_category,
-      ...getExportCountryGroups(export_countries),
-    },
+    getExportCountryGroups(export_countries),
     req.method === 'POST' ? getPostedFormData(req.body) : {}
   )
 
@@ -115,18 +110,42 @@ function populateExportForm(req, res, next) {
 }
 
 function renderExportEdit(req, res) {
-  const { company, errors } = res.locals
+  const { company } = res.locals
+  const exportPotentialValue = exportPotentialLabels[company.export_potential]
+  const exportWinCategoryValue = company.export_experience_category
 
   res
     .breadcrumb(company.name, urls.companies.detail(company.id))
     .breadcrumb('Exports', urls.companies.exports.index(company.id))
     .breadcrumb('Edit')
     .render('companies/apps/exports/views/edit', {
+      props: {
+        companyId: company.id,
+        exportWinCategoryValue,
+        greatProfile: {
+          name: exportDetailsLabels.greatProfile,
+          value: company.great_profile_status,
+        },
+        exportPotential: {
+          name: exportDetailsLabels.exportPotential,
+          value: exportPotentialValue && exportPotentialValue.text,
+        },
+        exportWinCategories: metadataRepo.exportExperienceCategory.map(
+          transformObjectToOption
+        ),
+      },
+    })
+}
+
+function renderExportEditCountries(req, res) {
+  const { company, errors } = res.locals
+
+  res
+    .breadcrumb(company.name, urls.companies.detail(company.id))
+    .breadcrumb('Exports', urls.companies.exports.index(company.id))
+    .breadcrumb('Edit export countries')
+    .render('companies/apps/exports/views/edit-countries', {
       errors: errors || [],
-      exportDetailsLabels,
-      exportExperienceCategories: metadataRepo.exportExperienceCategory.map(
-        transformObjectToOption
-      ),
       countryOptions: metadataRepo.countryOptions.map(transformObjectToOption),
       countriesFields: {
         [EXPORT_INTEREST_STATUS.EXPORTING_TO]:
@@ -146,10 +165,6 @@ async function handleEditFormPost(req, res, next) {
   try {
     await saveCompanyExportDetails(token, companyId, {
       export_countries: getExportCountries(req.body) || [],
-    })
-
-    await updateCompany(token, companyId, {
-      export_experience_category: req.body.export_experience_category,
     })
 
     res.redirect(urls.companies.exports.index(companyId))
@@ -174,4 +189,5 @@ module.exports = {
   renderExportEdit,
   handleEditFormPost,
   renderExportHistory,
+  renderExportEditCountries,
 }
