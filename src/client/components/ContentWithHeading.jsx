@@ -9,11 +9,11 @@ const ContentWithHeading = ({
   children,
   headingComponent: Heading = H3,
 }) => (
-  <div>
+  <>
     <Heading>{heading}</Heading>
     <SpacedSectionBreak />
     {children}
-  </div>
+  </>
 )
 
 ContentWithHeading.propTypes = {
