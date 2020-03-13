@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import { GREY_4, TEXT_COLOUR, BORDER_COLOUR, FOCUS_COLOUR } from 'govuk-colours'
@@ -51,15 +52,6 @@ const StyledTablist = styled.div({
   '& > *:not(:last-child)': {
     marginRight: 5,
   },
-}
-
-const StyledButton = styled(FocusableButton)({
-  ...buttonStyle,
-  padding: '10px 20px',
-  background: GREY_4,
-  border: 'none',
-  cursor: 'pointer',
-  ...focusStyle,
 })
 
 const StyledTabpanel = styled.div({
@@ -140,6 +132,17 @@ const TabNav = ({
     </StyledTabpanel>
   </div>
 )
+
+TabNav.propTypes = {
+  label: PropTypes.string.isRequired,
+  tabs: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
+        .isRequired,
+      content: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+    })
+  ).isRequired,
+}
 
 export default multiInstance({
   name: 'TabNav',
