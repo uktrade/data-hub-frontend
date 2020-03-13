@@ -12,7 +12,8 @@ import { REFFERAL_LIST__LOADED } from '../../actions'
 import multiInstance from '../../utils/multiinstance'
 import reducer from './reducer'
 
-const StyledItemSpacer = styled.div({
+const StyledOl = styled.ol({
+  listStyleType: 'none',
   '& > *': {
     marginTop: SPACING.SCALE_4,
   },
@@ -20,11 +21,13 @@ const StyledItemSpacer = styled.div({
 
 const ReferralList = ({ referrals }) => (
   <ContentWithHeading heading={pluralize('Referral', referrals.length, true)}>
-    <StyledItemSpacer>
+    <StyledOl>
       {referrals.map(({ id, ...referral }) => (
-        <Referral key={id} id={id} {...referral} />
+        <li key={id}>
+          <Referral id={id} {...referral} />
+        </li>
       ))}
-    </StyledItemSpacer>
+    </StyledOl>
   </ContentWithHeading>
 )
 
