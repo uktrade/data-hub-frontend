@@ -1,3 +1,5 @@
+const fixtures = require('../../fixtures')
+
 const {
   companies,
   contacts,
@@ -13,12 +15,9 @@ describe('DA Permission', () => {
   describe('companies', () => {
     describe('exports', () => {
       before(() => {
-        cy.visit(
-          companies.exports.index('0fb3379c-341c-4da4-b825-bf8d47b26baa'),
-          {
-            failOnStatusCode: false,
-          }
-        )
+        cy.visit(companies.exports.index(fixtures.company.lambdaPlc.id), {
+          failOnStatusCode: false,
+        })
       })
 
       it('should prevent DA users from accessing the page', () => {
@@ -79,7 +78,7 @@ describe('DA Permission', () => {
       before(() => {
         cy.visit(
           investments.projects.documents(
-            'e32b3c33-80ac-4589-a8c4-dda305d726ba'
+            fixtures.investmentProject.newGolfCourse.id
           ),
           { failOnStatusCode: false }
         )
@@ -95,7 +94,7 @@ describe('DA Permission', () => {
       before(() => {
         cy.visit(
           investments.projects.interactionCollection(
-            'ba1f0b14-5fe4-4c36-bf6a-ddf115272977'
+            fixtures.investmentProject.newZoo.id
           ),
           { failOnStatusCode: false }
         )
@@ -111,7 +110,7 @@ describe('DA Permission', () => {
       before(() => {
         cy.visit(
           investments.projects.propositions(
-            'ba1f0b14-5fe4-4c36-bf6a-ddf115272977'
+            fixtures.investmentProject.newZoo.id
           ),
           { failOnStatusCode: false }
         )
@@ -126,8 +125,12 @@ describe('DA Permission', () => {
     describe('team', () => {
       before(() => {
         cy.visit(
-          investments.projects.team('b30dee70-b2d6-48cf-9ce4-b9264854470c'),
-          { failOnStatusCode: false }
+          investments.projects.team(
+            fixtures.investmentProject.fancyDressManufacturing.id
+          ),
+          {
+            failOnStatusCode: false,
+          }
         )
       })
 
@@ -141,7 +144,7 @@ describe('DA Permission', () => {
   context('contacts', () => {
     describe('documents', () => {
       before(() => {
-        cy.visit(contacts.documents('9b1138ab-ec7b-497f-b8c3-27fed21694ef'), {
+        cy.visit(contacts.documents(fixtures.contact.johnnyCakeman.id), {
           failOnStatusCode: false,
         })
       })
@@ -155,7 +158,7 @@ describe('DA Permission', () => {
     describe('interactions', () => {
       before(() => {
         cy.visit(
-          contacts.contactInteractions('9b1138ab-ec7b-497f-b8c3-27fed21694ef'),
+          contacts.contactInteractions(fixtures.contact.johnnyCakeman.id),
           { failOnStatusCode: false }
         )
       })
