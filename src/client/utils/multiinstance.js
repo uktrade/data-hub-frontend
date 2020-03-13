@@ -1,3 +1,4 @@
+import React from 'react'
 import { omit, isEmpty, curry } from 'lodash'
 import * as reactRedux from 'react-redux'
 import PropTypes from 'prop-types'
@@ -74,7 +75,7 @@ const interceptDispatch = (dispatch, id) => ({ type, ...action }) =>
  * }))
  */
 export const connect = (componentState2props, dispatch2props, ...rest) =>
-  curry((component, name) => {
+  curry((Component, name) => {
     // We use this instead of the default argument value to also allow for
     // ignoring this by passing null, to stick to the original connect signature
     componentState2props = componentState2props || ((x) => x)
@@ -89,9 +90,10 @@ export const connect = (componentState2props, dispatch2props, ...rest) =>
             ...rest
           )),
       ...rest
-    )(({ dispatch, ...props }) =>
-      component({ ...props, dispatch: interceptDispatch(dispatch, props.id) })
-    )
+    )(({ dispatch, ...props }) => (
+      <Component {...props} dispatch={interceptDispatch(dispatch, props.id)} />
+    ))
+
     Connected.propTypes = {
       id: PropTypes.string.isRequired,
     }
