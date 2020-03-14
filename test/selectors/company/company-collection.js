@@ -1,18 +1,30 @@
+const urls = require('../../../src/lib/urls')
+
 module.exports = () => {
   const bodyMainContentSelector = '[data-auto-id="bodyMainContent"]'
 
   return {
     interaction: {
       addButton: (companyId) =>
-        `${bodyMainContentSelector} [href="/companies/${companyId}/interactions/create"]`,
+        `${bodyMainContentSelector} [href="${urls.companies.interactions.create(
+          companyId
+        )}"]`,
+      referButton: (companyId) =>
+        `${bodyMainContentSelector} [href="${urls.companies.referrals.send(
+          companyId
+        )}"]`,
     },
     contact: {
       addButton: (companyId) =>
-        `${bodyMainContentSelector} [href="/contacts/create?company=${companyId}"]`,
+        `${bodyMainContentSelector} [href="${urls.contacts.create(
+          companyId
+        )}"]`,
     },
     export: {
       editButton: (companyId) =>
-        `${bodyMainContentSelector} [href="/companies/${companyId}/exports/edit"]`,
+        `${bodyMainContentSelector} [href="${urls.companies.exports.edit(
+          companyId
+        )}"]`,
     },
     heading: `${bodyMainContentSelector} h2`,
     archivedSummary: `${bodyMainContentSelector} .details__summary`,
