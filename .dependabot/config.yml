@@ -7,16 +7,3 @@ update_configs:
     update_schedule: live
     default_reviewers:
       - datahub-fed
-    allowed_updates:
-      - match:
-          update_type: "security"
-
-  - package_manager: javascript
-    directory: "/"
-    update_schedule: weekly
-    version_requirement_updates: increase_versions
-    default_reviewers:
-      - datahub-fed
-    allowed_updates:
-      - match:
-          dependency_name: "data-hub-components"
