@@ -1,5 +1,5 @@
 const axios = require('axios')
-const transformReferralDetails = require('../../../transformer')
+const transformReferralDetails = require('../../transformer')
 
 const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 

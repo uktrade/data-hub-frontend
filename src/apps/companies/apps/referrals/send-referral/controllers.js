@@ -1,7 +1,7 @@
-const urls = require('../../../../lib/urls')
-const { authorisedRequest } = require('../../../../lib/authorised-request')
+const urls = require('../../../../../lib/urls')
+const { authorisedRequest } = require('../../../../../lib/authorised-request')
 const { omit } = require('lodash')
-const config = require('../../../../config/index')
+const config = require('../../../../../config/index')
 
 function renderSendReferralForm(req, res) {
   const {
@@ -12,17 +12,20 @@ function renderSendReferralForm(req, res) {
     id: id,
   }))
   res
-    .breadcrumb(name, `/companies/${id}`)
+    .breadcrumb(name, urls.companies.detail(id))
     .breadcrumb('Send a referral')
-    .render('referrals/apps/send-referral/views/client-container.njk', {
-      heading: 'Send a referral',
-      props: {
-        companyContacts,
-        companyName: name,
-        companyId: id,
-        cancelUrl: urls.companies.detail(id),
-      },
-    })
+    .render(
+      'companies/apps/referrals/send-referral/views/client-container.njk',
+      {
+        heading: 'Send a referral',
+        props: {
+          companyContacts,
+          companyName: name,
+          companyId: id,
+          cancelUrl: urls.companies.detail(id),
+        },
+      }
+    )
 }
 
 async function submitSendReferralForm(req, res, next) {

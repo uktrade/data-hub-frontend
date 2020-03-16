@@ -5,7 +5,7 @@ import { throttle } from 'lodash'
 import axios from 'axios'
 
 import SendReferralConfirmation from './SendReferralConfirmation.jsx'
-import ValidatedInput from '../../../../../client/components/ValidatedInput.jsx'
+import ValidatedInput from '../../../../../../client/components/ValidatedInput.jsx'
 import styled from 'styled-components'
 import {
   SEND_REFERRAL_FORM__CONTINUE,
@@ -14,7 +14,7 @@ import {
   SEND_REFERRAL_FORM__SUBJECT_CHANGE,
   SEND_REFERRAL_FORM__ADVISER_CHANGE,
   SEND_REFERRAL_FORM__CONTACT_CHANGE,
-} from '../../../../../client/actions'
+} from '../../../../../../client/actions'
 import { FormActions, Typeahead } from 'data-hub-components'
 import {
   H4,
@@ -177,9 +177,9 @@ const SendReferralForm = ({
           }
           defaultValue={contact && { label: contact.name }}
           placeholder="Select a contact"
-          /* When a contact is removed a warning may appear stating the component switches between controlled 
-          and uncontrolled (despite the value being controlled by an onChange). 
-          The react-select library, used for the typeahead component, doesn't provide a way of controlling 
+          /* When a contact is removed a warning may appear stating the component switches between controlled
+          and uncontrolled (despite the value being controlled by an onChange).
+          The react-select library, used for the typeahead component, doesn't provide a way of controlling
           the input value under the hood and a fix for the warning couldn't be found.
           */
         />

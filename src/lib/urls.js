@@ -69,6 +69,10 @@ module.exports = {
       `https://beta.companieshouse.gov.uk/company/${companyNumber}`,
     findExporters: () => 'https://find-exporters.datahub.trade.gov.uk/',
     exportWins: () => 'https://www.exportwins.service.trade.gov.uk/',
+    digitalWorkspace: {
+      teams:
+        'https://people.trade.gov.uk/teams/department-for-international-trade',
+    },
   },
   dashboard: url('/'),
   companies: {
@@ -88,7 +92,11 @@ module.exports = {
     businessDetails: url('/companies', '/:companyId/business-details'),
     interactions: createInteractionsSubApp('/companies', '/:companyId'),
     manageCompanyList: url('/companies', '/:companyId/manage-company-list'),
-    sendReferral: url('/companies', '/:companyId/send-referral'),
+    referrals: {
+      send: url('/companies', '/:companyId/send-referral'),
+      details: url('/companies', '/:companyId/referrals/:referralId'),
+      help: url('/companies', '/:companyId/referrals/:referralId/help'),
+    },
     activity: {
       index: url('/companies', '/:companyId/activity'),
       data: url('/companies', '/:companyId/activity/data'),
@@ -208,9 +216,4 @@ module.exports = {
     create: url('/omis/create?company=', ':companyId'),
   },
   support: url('/support'),
-  referrals: {
-    index: url('/referrals'),
-    details: url('/referrals', '/:referralId'),
-    help: url('/referrals', '/:referralId/help'),
-  },
 }

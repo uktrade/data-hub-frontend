@@ -5,7 +5,7 @@ import {
   SEND_REFERRAL_FORM__SUBJECT_CHANGE,
   SEND_REFERRAL_FORM__ADVISER_CHANGE,
   SEND_REFERRAL_FORM__CONTACT_CHANGE,
-} from '../../../../../client/actions'
+} from '../../../../../../client/actions'
 
 export default (state = {}, { type, errors, ...action }) => {
   switch (type) {

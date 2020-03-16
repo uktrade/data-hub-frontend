@@ -34,6 +34,11 @@ var largeCapitalProfileCreateSuccess = require('../../../fixtures/v4/company/lar
 var largeCapitalProfileList10 = require('../../../fixtures/v4/investment/large-capital-profile-list10.json')
 var largeCapitalProfileList20 = require('../../../fixtures/v4/investment/large-capital-profile-list20.json')
 
+var referralDetails = require('../../../fixtures/v4/referrals/referral-details.json')
+var referralDetailsNoContact = require('../../../fixtures/v4/referrals/referral-details-no-contact.json')
+
+var ReferralIds = require('../../../constants/referrals')
+
 state.investor_description = state.investor_description || ''
 
 exports.largeInvestorProfile = function(req, res) {
@@ -170,4 +175,11 @@ exports.exportWins = function(req, res) {
   } else {
     res.json(exportWins)
   }
+}
+
+exports.referralDetails = function(req, res) {
+  if (req.params.id === ReferralIds.REFERRAL_ID_NO_CONTACT) {
+    return res.json(referralDetailsNoContact)
+  }
+  return res.json(referralDetails)
 }

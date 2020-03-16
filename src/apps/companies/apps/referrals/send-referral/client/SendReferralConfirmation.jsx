@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import { SummaryTable, FormActions } from 'data-hub-components'
 import { H4, Button, Link } from 'govuk-react'
-import SecondaryButton from '../../../../../client/components/SecondaryButton'
+import SecondaryButton from '../../../../../../client/components/SecondaryButton'
 
 const StyledParagraph = styled('p')`
   font-size: 16px;
