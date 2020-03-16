@@ -7,3 +7,7 @@ update_configs:
     update_schedule: live
     default_reviewers:
       - datahub-fed
+    ignored_updates:
+      - match:
+        dependency_name: "govuk-frontend"
+        dependency_name: "govuk-colours"
