@@ -1,19 +1,26 @@
-const selectors = require('../../../../selectors')
-const { assertBreadcrumbs } = require('../../support/assertions')
+const urls = require('../../../../../../src/lib/urls')
+const {
+  id: companyId,
+} = require('../../../../../sandbox/fixtures/v4/company/company-lambda-plc')
+
+const selectors = require('../../../../../selectors')
+const { assertBreadcrumbs } = require('../../../support/assertions')
 const {
   REFERRAL_ID,
   REFERRAL_ID_NO_CONTACT,
-} = require('../../../../sandbox/constants/referrals')
-
-import urls from '../../../../../src/lib/urls'
+} = require('../../../../../sandbox/constants/referrals')
 
 describe('Referral details', () => {
   context('when viewing referral details', () => {
-    before(() => cy.visit(urls.referrals.details(REFERRAL_ID)))
+    before(() =>
+      cy.visit(urls.companies.referrals.details(companyId, REFERRAL_ID))
+    )
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: '/',
+        Home: urls.dashboard.route,
+        Companies: '/companies',
+        'Lambda plc': urls.companies.detail(companyId),
         Referral: null,
       })
     })
@@ -77,7 +84,11 @@ describe('Referral details', () => {
         .parent()
         .find('a:nth-child(2)')
         .should('have.text', 'I cannot complete the referral')
-        .should('have.attr', 'href', urls.referrals.help(REFERRAL_ID))
+        .should(
+          'have.attr',
+          'href',
+          urls.companies.referrals.help(companyId, REFERRAL_ID)
+        )
         .parent()
         .find('a:nth-child(3)')
         .should('have.text', 'Back')
@@ -85,11 +96,17 @@ describe('Referral details', () => {
   })
 
   context('when viewing referral details with no contact', () => {
-    before(() => cy.visit(urls.referrals.details(REFERRAL_ID_NO_CONTACT)))
+    before(() =>
+      cy.visit(
+        urls.companies.referrals.details(companyId, REFERRAL_ID_NO_CONTACT)
+      )
+    )
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: '/',
+        Home: urls.dashboard.route,
+        Companies: '/companies',
+        'Lambda plc': urls.companies.detail(companyId),
         Referral: null,
       })
     })
@@ -152,7 +169,7 @@ describe('Referral details', () => {
         .should(
           'have.attr',
           'href',
-          urls.referrals.help(REFERRAL_ID_NO_CONTACT)
+          urls.companies.referrals.help(companyId, REFERRAL_ID_NO_CONTACT)
         )
         .parent()
         .find('a:nth-child(3)')

@@ -10,6 +10,7 @@ const transformReferralDetails = ({
   return {
     subject,
     company: company.name,
+    companyId: company.id,
     contact: contact && contact.name,
     sendingAdviser: {
       name: created_by.name,
