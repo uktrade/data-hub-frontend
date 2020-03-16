@@ -1,16 +1,24 @@
-const selectors = require('../../../../selectors')
-const { assertBreadcrumbs } = require('../../support/assertions')
+const urls = require('../../../../../../src/lib/urls')
+const {
+  id: companyId,
+} = require('../../../../../sandbox/fixtures/v4/company/company-lambda-plc')
+
+const selectors = require('../../../../../selectors')
+const { assertBreadcrumbs } = require('../../../support/assertions')
 
 describe('Referral help', () => {
   context('when viewing referral help', () => {
     before(() => {
-      cy.visit('/referrals/cc5b9953-894c-44b4-a4ac-d0f6a6f6128f/help')
+      cy.visit(urls.companies.referrals.help(companyId, '1'))
     })
 
     it('should render breadcrumbs', () => {
       assertBreadcrumbs({
-        Home: '/',
-        Referral: null,
+        Home: urls.dashboard.route,
+        Companies: '/companies',
+        'Lambda plc': urls.companies.detail(companyId),
+        Referral: urls.companies.referrals.details(companyId, '1'),
+        Help: null,
       })
     })
 
@@ -40,14 +48,17 @@ describe('Referral help', () => {
         .should('have.prop', 'tagName', 'P')
         .should(
           'have.text',
-          'If you are not the right person to help this business, ask a colleague to complete the referral. You can copy and send them a direct link to the referral: http://localhost:3000/referrals/cc5b9953-894c-44b4-a4ac-d0f6a6f6128f.'
+          `If you are not the right person to help this business, ask a colleague to complete the referral. You can copy and send them a direct link to the referral: http://localhost:3000${urls.companies.referrals.details(
+            companyId,
+            '1'
+          )}.`
         )
         .next()
         .should('have.prop', 'tagName', 'A')
         .should(
           'have.attr',
           'href',
-          '/referrals/cc5b9953-894c-44b4-a4ac-d0f6a6f6128f'
+          urls.companies.referrals.details(companyId, '1')
         )
         .should('have.text', 'Go back to the referral')
     })
