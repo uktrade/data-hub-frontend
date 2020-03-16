@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { get } from 'lodash'
 import PropTypes from 'prop-types'
-import { Form, FieldInput, FormActions } from 'data-hub-components'
+import { FormStateful, FieldInput, FormActions } from 'data-hub-components'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import ErrorSummary from '@govuk-react/error-summary'
@@ -44,7 +44,7 @@ function EditCompanyList({
           errors={[]}
         />
       )}
-      <Form onSubmit={onSubmitHandler} initialValues={{ listName }}>
+      <FormStateful onSubmit={onSubmitHandler} initialValues={{ listName }}>
         <FieldInput
           name="listName"
           type="text"
@@ -61,7 +61,7 @@ function EditCompanyList({
           <Button>Save</Button>
           <Link href={cancelUrl}>Cancel</Link>
         </FormActions>
-      </Form>
+      </FormStateful>
     </>
   )
 }

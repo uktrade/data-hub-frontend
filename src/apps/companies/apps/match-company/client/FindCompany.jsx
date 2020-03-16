@@ -7,13 +7,13 @@ import urls from '../../../../../lib/urls'
 import {
   EntityListItem,
   FieldDnbCompany,
-  Form,
+  FormStateful,
   SummaryList,
 } from 'data-hub-components'
 
 function FindCompany({ company, csrfToken }) {
   return (
-    <Form
+    <FormStateful
       initialValues={{
         dnbCompanyName: company.name,
         dnbPostalCode: company.postcode,
@@ -56,7 +56,7 @@ function FindCompany({ company, csrfToken }) {
          company. You'll be given a chance to review the new business details
           before you verify."
       />
-    </Form>
+    </FormStateful>
   )
 }
 
