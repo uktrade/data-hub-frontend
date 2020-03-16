@@ -1,10 +1,10 @@
-const fixtures = require('../../fixtures')
-const urls = require('../../../../../src/lib/urls')
-const selectors = require('../../../../selectors')
+const urls = require('../../../../../../src/lib/urls')
+const fixtures = require('../../../fixtures')
+const selectors = require('../../../../../selectors')
 const {
   assertLocalHeader,
   assertBreadcrumbs,
-} = require('../../support/assertions')
+} = require('../../../support/assertions')
 
 const selectTypeahead = (fieldName, input) =>
   cy.contains(fieldName).within(() => {
@@ -19,12 +19,12 @@ const selectTypeahead = (fieldName, input) =>
 
 describe('Send a referral form', () => {
   before(() => {
-    cy.visit(urls.companies.sendReferral(fixtures.company.withContacts.id))
+    cy.visit(urls.companies.referrals.send(fixtures.company.withContacts.id))
   })
 
   describe('All but successful completion', () => {
     beforeEach(() => {
-      cy.visit(urls.companies.sendReferral(fixtures.company.withContacts.id))
+      cy.visit(urls.companies.referrals.send(fixtures.company.withContacts.id))
     })
 
     context('when viewing the "send referral" form', () => {
@@ -164,7 +164,9 @@ describe('Send a referral form', () => {
     'when "Continue" button is clicked after all fields filled in',
     () => {
       it('should display the confirmation component with the values just input', () => {
-        cy.visit(urls.companies.sendReferral(fixtures.company.withContacts.id))
+        cy.visit(
+          urls.companies.referrals.send(fixtures.company.withContacts.id)
+        )
         selectTypeahead('Adviser', 'shawn')
         cy.get(selectors.companySendReferral.subjectField)
           .click()
@@ -203,7 +205,9 @@ describe('Send a referral form', () => {
     'when "Continue" button is clicked after all fields filled in',
     () => {
       it('the input data should appear in the form when "Edit referral" is clicked', () => {
-        cy.visit(urls.companies.sendReferral(fixtures.company.withContacts.id))
+        cy.visit(
+          urls.companies.referrals.send(fixtures.company.withContacts.id)
+        )
         selectTypeahead('Adviser', 'shawn')
         cy.get(selectors.companySendReferral.subjectField)
           .click()
@@ -259,7 +263,9 @@ describe('Send a referral form', () => {
     'When the "Send referral" button is clicked from the confirmation component',
     () => {
       before(() => {
-        cy.visit(urls.companies.sendReferral(fixtures.company.withContacts.id))
+        cy.visit(
+          urls.companies.referrals.send(fixtures.company.withContacts.id)
+        )
       })
       it('should take user to the company page, display flash message and link to the homepage', () => {
         selectTypeahead('Adviser', 'shawn')

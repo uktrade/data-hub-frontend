@@ -5,13 +5,13 @@ import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import PropTypes from 'prop-types'
 import { SummaryTable, FormActions, DateUtils } from 'data-hub-components'
-import urls from '../../../../../lib/urls'
+import urls from '../../../../../../lib/urls'
 
-import SecondaryButton from '../../../../../client/components/SecondaryButton'
-import Task from '../../../../../client/components/Task'
+import SecondaryButton from '../../../../../../client/components/SecondaryButton'
+import Task from '../../../../../../client/components/Task'
 import { state2props } from './state'
 
-import { REFERRAL_DETAILS } from '../../../../../client/actions'
+import { REFERRAL_DETAILS } from '../../../../../../client/actions'
 
 export const AdviserDetails = ({ name, email, team }) => (
   <>
@@ -34,8 +34,9 @@ AdviserDetails.propTypes = {
 export default connect(state2props)(
   ({
     subject,
-    id,
+    referralId,
     company,
+    companyId,
     contact,
     sendingAdviser,
     receivingAdviser,
@@ -47,7 +48,7 @@ export default connect(state2props)(
       id="referralDetails"
       progressMessage="loading referral details"
       startOnRender={{
-        payload: id,
+        payload: referralId,
         onSuccessDispatch: REFERRAL_DETAILS,
       }}
     >
@@ -80,7 +81,10 @@ export default connect(state2props)(
               <Button as={Link} href="/">
                 Complete referral
               </Button>
-              <SecondaryButton as={Link} href={urls.referrals.help(id)}>
+              <SecondaryButton
+                as={Link}
+                href={urls.companies.referrals.help(companyId, referralId)}
+              >
                 I cannot complete the referral
               </SecondaryButton>
               <Link href="/">Back</Link>
