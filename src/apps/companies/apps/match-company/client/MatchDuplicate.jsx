@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import Button from '@govuk-react/button'
 import { ErrorSummary, UnorderedList } from 'govuk-react'
 import { SPACING } from '@govuk-react/constants'
-import { Form, FormActions } from 'data-hub-components'
+import { FormStateful, FormActions } from 'data-hub-components'
 
 import urls from '../../../../../lib/urls'
 
@@ -30,7 +30,9 @@ async function onFormSubmit({ company, dnbCompany, csrfToken }) {
 
 function MatchDuplicate({ company, dnbCompany, csrfToken }) {
   return (
-    <Form onSubmit={() => onFormSubmit({ company, dnbCompany, csrfToken })}>
+    <FormStateful
+      onSubmit={() => onFormSubmit({ company, dnbCompany, csrfToken })}
+    >
       {({ submissionError }) => (
         <>
           {submissionError && (
@@ -68,7 +70,7 @@ function MatchDuplicate({ company, dnbCompany, csrfToken }) {
           </FormActions>
         </>
       )}
-    </Form>
+    </FormStateful>
   )
 }
 
