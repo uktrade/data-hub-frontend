@@ -121,6 +121,7 @@ function renderExportEdit(req, res) {
     .render('companies/apps/exports/views/edit', {
       props: {
         companyId: company.id,
+        companyNumber: company.company_number,
         exportWinCategoryValue,
         greatProfile: {
           name: exportDetailsLabels.greatProfile,

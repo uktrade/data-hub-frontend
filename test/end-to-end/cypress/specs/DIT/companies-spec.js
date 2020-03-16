@@ -81,94 +81,140 @@ describe('Export', () => {
     })
   }
 
-  context('Without any export countries', () => {
-    it('should update export win category when edit is made', () => {
-      cy.visit(companies.exports.edit(fixtures.company.lambdaPlc.id))
-
-      cy.get(selectors.companyExport.winCategory).select('Export growth')
-      cy.get(selectors.companyForm.save).click()
-
-      assertTable([
-        'Export growth',
-        'No profile',
-        'No score given',
-        'None',
-        'None',
-        'None',
-      ])
-    })
-  })
-
-  context('Adding export countries', () => {
-    function selectCountry(id, text) {
-      const typeahead = `${id} .multiselect`
-      const textInput = `${id} .multiselect__input`
-
-      cy.get(typeahead)
-        .click()
-        .get(textInput)
-        .type(text)
-        .type('{enter}')
-        .type('{esc}')
-    }
-
-    context('Adding two countries to currently exporting', () => {
-      it('Should add the countries and display them in alphabetical order', () => {
+  describe('Edit exports', () => {
+    context('Selecting a value', () => {
+      it('Should update the export win category', () => {
         cy.visit(companies.exports.edit(fixtures.company.lambdaPlc.id))
 
-        selectCountry(selectors.companyExport.countries.export, 'Germ')
-        selectCountry(selectors.companyExport.countries.export, 'Fran')
-        cy.get(selectors.companyForm.save).click()
+        cy.get(selectors.companyExport.winCategory).select('Export growth')
+        cy.contains('Save and return').click()
 
         assertTable([
           'Export growth',
           'No profile',
           'No score given',
-          'France, Germany',
           'None',
-          'None',
-        ])
-      })
-    })
-
-    context('editing just export win category', () => {
-      it('should only edit the category', () => {
-        cy.visit(companies.exports.edit(fixtures.company.lambdaPlc.id))
-
-        cy.get(selectors.companyExport.winCategory).select('New exporter')
-        cy.get(selectors.companyForm.save).click()
-
-        assertTable([
-          'New exporter',
-          'No profile',
-          'No score given',
-          'France, Germany',
           'None',
           'None',
         ])
       })
     })
 
-    context('Editing the export win category and all countries', () => {
-      it('should update the countries and edit the category', () => {
+    context('Selecting no value', () => {
+      it('Should remove the export win category', () => {
         cy.visit(companies.exports.edit(fixtures.company.lambdaPlc.id))
 
         cy.get(selectors.companyExport.winCategory).select(
-          'Increasing export turnover'
+          '-- Select category --'
         )
-        selectCountry(selectors.companyExport.countries.export, 'Bra')
-        selectCountry(selectors.companyExport.countries.future, 'Hon')
-        selectCountry(selectors.companyExport.countries.noInterest, 'Chi')
-        cy.get(selectors.companyForm.save).click()
+        cy.contains('Save and return').click()
 
         assertTable([
-          'Increasing export turnover',
+          'None',
           'No profile',
           'No score given',
-          'Brazil, France, Germany',
-          'Honduras',
-          'Chile',
+          'None',
+          'None',
+          'None',
         ])
+      })
+    })
+  })
+
+  context('Editing export countries', () => {
+    context(
+      'With no existing values and without changing the export countries',
+      () => {
+        it('Should return back to the export tab with no changes', () => {
+          cy.visit(
+            companies.exports.editCountries(fixtures.company.lambdaPlc.id)
+          )
+          cy.get(selectors.companyForm.save).click()
+
+          assertTable([
+            'None',
+            'No profile',
+            'No score given',
+            'None',
+            'None',
+            'None',
+          ])
+        })
+      }
+    )
+
+    context('Adding export countries', () => {
+      function selectCountry(id, text) {
+        const typeahead = `${id} .multiselect`
+        const textInput = `${id} .multiselect__input`
+
+        cy.get(typeahead)
+          .click()
+          .get(textInput)
+          .type(text)
+          .type('{enter}')
+          .type('{esc}')
+      }
+
+      context('Adding two countries to currently exporting', () => {
+        it('Should add the countries and display them in alphabetical order', () => {
+          cy.visit(
+            companies.exports.editCountries(fixtures.company.lambdaPlc.id)
+          )
+
+          selectCountry(selectors.companyExport.countries.export, 'Germ')
+          selectCountry(selectors.companyExport.countries.export, 'Fran')
+          cy.get(selectors.companyForm.save).click()
+
+          assertTable([
+            'None',
+            'No profile',
+            'No score given',
+            'France, Germany',
+            'None',
+            'None',
+          ])
+        })
+      })
+
+      context('Without changing the export countries again', () => {
+        it('Should return back to the export tab with no changes', () => {
+          cy.visit(
+            companies.exports.editCountries(fixtures.company.lambdaPlc.id)
+          )
+          cy.get(selectors.companyForm.save).click()
+
+          assertTable([
+            'None',
+            'No profile',
+            'No score given',
+            'France, Germany',
+            'None',
+            'None',
+          ])
+        })
+      })
+
+      context('Editing all countries', () => {
+        it('should update the countries', () => {
+          cy.visit(
+            companies.exports.editCountries(fixtures.company.lambdaPlc.id)
+          )
+
+          selectCountry(selectors.companyExport.countries.export, 'Bra')
+          selectCountry(selectors.companyExport.countries.future, 'Hon')
+          selectCountry(selectors.companyExport.countries.noInterest, 'Chi')
+          cy.get(selectors.companyForm.save).click()
+
+          assertTable([
+            'None',
+            'No profile',
+            'No score given',
+            'Brazil, France, Germany',
+            'Honduras',
+            'Chile',
+          ])
+        })
       })
     })
   })

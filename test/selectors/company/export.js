@@ -1,7 +1,7 @@
 const { EXPORT_INTEREST_STATUS } = require('../../../src/apps/constants')
 
 module.exports = {
-  winCategory: '#field-export_experience_category',
+  winCategory: '#export_experience_category',
   countries: {
     listItemHeadings: '#company-export-full-history > div > div > h3',
     future: '#group-field-' + EXPORT_INTEREST_STATUS.FUTURE_INTEREST,
