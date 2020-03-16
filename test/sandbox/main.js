@@ -44,6 +44,13 @@ Sandbox.define(
   v4referralDetails.referralDetails
 )
 
+// Complete referral
+Sandbox.define(
+  '/v4/company-referral/{id}/complete',
+  'POST',
+  v3Interaction.createInteraction
+)
+
 // Adviser endpoint
 Sandbox.define('/adviser/', 'GET', adviser.advisers)
 Sandbox.define('/adviser/{id}/', 'GET', adviser.singleAdviser)

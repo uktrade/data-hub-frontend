@@ -1,12 +1,17 @@
 var contact = require('../../../fixtures/v3/contact/contact.json')
 var contactById = require('../../../fixtures/v3/contact/contact-by-id.json')
 var contactByIdWithNoDocument = require('../../../fixtures/v3/contact/contact-by-id-with-no-document.json')
+var contactsForReferral = require('../../../fixtures/v3/contact/contacts-for-referral.json')
 
 var contactCreate = require('../../../fixtures/v3/contact/contact-create.json')
 var contactCreateValidation = require('../../../fixtures/v3/contact/contact-create-validation.json')
 
 exports.contact = function(req, res) {
-  res.json(contact)
+  if (req.query.company_id === 'a2c34b4f-1d5a-4b4b-9249-7c53ff2868dd') {
+    return res.json(contactsForReferral)
+  } else {
+    res.json(contact)
+  }
 }
 
 exports.contactCreate = function(req, res) {

@@ -7,15 +7,36 @@ const {
   contacts,
   dashboard,
   investments,
+  referrals,
 } = require('../../../../../src/lib/urls')
 
 const serviceDeliveryDetails = selectors.interaction.details.serviceDelivery
+
+const assertCountriesDiscussedMessage = () => {
+  cy.get(selectors.localHeader().flash)
+    .should('contain', 'You discussed some countries within the interaction')
+    .should('contain', 'within the export tab')
+}
+
+const assertReferralAcceptedMessageHeader = (subject, kind) => {
+  assertDetails({
+    subject,
+    flashMessage: `${kind} created and referral accepted`,
+  })
+}
+
+const assertReferralMessageBody = () => {
+  cy.get(selectors.localHeader().flash).should(
+    'contain',
+    'You can find your referrals on the Homepage'
+  )
+}
 
 describe('Add Export', () => {
   context('when the add countries feature flag is true', () => {
     context('when adding an export interaction', () => {
       context('when in the context of a company', () => {
-        context('When the fields have validtion errors', () => {
+        context('When the fields have validation errors', () => {
           it('Should trigger a validation error', () => {
             const formSelectors = selectors.interactionForm
             cy.visit(
@@ -84,12 +105,7 @@ describe('Add Export', () => {
                 flashMessage: 'Interaction created',
               })
 
-              cy.get(selectors.localHeader().flash)
-                .should(
-                  'contain',
-                  'You discussed some countries within the interaction'
-                )
-                .should('contain', 'within the export tab')
+              assertCountriesDiscussedMessage()
             })
           })
 
@@ -413,6 +429,278 @@ describe('Adding interaction or service', () => {
         'have.text',
         'Add service delivery'
       )
+    })
+  })
+})
+
+describe('Adding an interaction from a referral', () => {
+  context(
+    'When you click complete referral on the referral details page',
+    () => {
+      it('should take you to the create interaction form', () => {
+        cy.visit(referrals.details(fixtures.referrals.referalDetails.id))
+        cy.contains('Complete referral').click()
+        cy.contains('Export').click()
+        cy.contains('A standard interaction').click()
+        cy.contains('Continue').click()
+        assertBreadcrumbs({
+          Home: dashboard(),
+          Referrals: referrals.index(), // Fix after breadcrumbs updated
+          Referral: referrals.details(fixtures.referrals.referalDetails.id),
+          'Add interaction': null,
+        })
+      })
+      it('should prepopulate the interaction form with the referral contact', () => {
+        cy.get('fieldset')
+          .eq(2)
+          .find(':selected')
+          .should('have.text', 'Helena Referral')
+      })
+    }
+  )
+  context('When adding an export interaction', () => {
+    beforeEach(() => {
+      cy.visit(
+        referrals.interactions.createType(
+          fixtures.referrals.referalDetails.id,
+          'export',
+          'interaction'
+        )
+      )
+    })
+    context('When countries discussed', () => {
+      it('should add the interaction and display flash message', () => {
+        const subject = utils.randomString()
+        const formSelectors = selectors.interactionForm
+        assertBreadcrumbs({
+          Home: dashboard(),
+          Referrals: referrals.index(), // Fix after breadcrumbs updated
+          Referral: referrals.details(fixtures.referrals.referalDetails.id),
+          'Add interaction': null,
+        })
+
+        populateInteractionForm(
+          subject,
+          'A Specific DIT Export Service or Funding',
+          'Export Win',
+          { visible: true, discussed: true }
+        )
+
+        populateCountriesDiscussed(formSelectors, true, true)
+
+        cy.get(selectors.interactionForm.add).click()
+
+        assertReferralAcceptedMessageHeader(subject, 'Interaction')
+        assertReferralMessageBody()
+        assertCountriesDiscussedMessage()
+      })
+    })
+    context('When no countries discussed', () => {
+      it('should add the interaction and display flash message', () => {
+        const subject = utils.randomString()
+
+        populateInteractionForm(
+          subject,
+          'A Specific DIT Export Service or Funding',
+          'Export Win',
+          { visible: true, discussed: false }
+        )
+
+        cy.get(selectors.interactionForm.add).click()
+
+        assertReferralAcceptedMessageHeader(subject, 'Interaction')
+        assertReferralMessageBody()
+      })
+    })
+  })
+  context('When adding an export service delivery', () => {
+    beforeEach(() => {
+      cy.visit(
+        referrals.interactions.createType(
+          fixtures.referrals.referalDetails.id,
+          'export',
+          'service-delivery'
+        )
+      )
+    })
+    context('When countries discussed', () => {
+      it('should add the service delivery and display flash message', () => {
+        const subject = utils.randomString()
+        const formSelectors = selectors.interactionForm
+        assertBreadcrumbs({
+          Home: dashboard(),
+          Referrals: referrals.index(), // Fix after breadcrumbs updated
+          Referral: referrals.details(fixtures.referrals.referalDetails.id),
+          'Add service delivery': null,
+        })
+
+        populateServiceDeliveryForm(
+          subject,
+          'A Specific DIT Export Service or Funding',
+          'Export Win',
+          { visible: true, discussed: true }
+        )
+
+        populateCountriesDiscussed(formSelectors, true, true)
+
+        cy.get(selectors.interactionForm.add).click()
+
+        assertReferralAcceptedMessageHeader(subject, 'Service delivery')
+        assertReferralMessageBody()
+        assertCountriesDiscussedMessage()
+      })
+    })
+    context('When no countries discussed', () => {
+      it('should add the service delivery and display flash message', () => {
+        const subject = utils.randomString()
+
+        populateServiceDeliveryForm(
+          subject,
+          'A Specific DIT Export Service or Funding',
+          'Export Win',
+          { visible: true, discussed: false }
+        )
+
+        cy.get(selectors.interactionForm.add).click()
+
+        assertReferralAcceptedMessageHeader(subject, 'Service delivery')
+        assertReferralMessageBody()
+      })
+    })
+  })
+  context('When adding an investment interaction', () => {
+    it('should create the interaction and display flash message', () => {
+      const subject = utils.randomString()
+      cy.visit(
+        referrals.interactions.createType(
+          fixtures.referrals.referalDetails.id,
+          'investment',
+          'interaction'
+        )
+      )
+      assertBreadcrumbs({
+        Home: dashboard(),
+        Referrals: referrals.index(), // Fix after breadcrumbs updated
+        Referral: referrals.details(fixtures.referrals.referalDetails.id),
+        'Add interaction': null,
+      })
+      populateInteractionForm(
+        subject,
+        'Enquiry received',
+        'General Investment Enquiry',
+        { visible: false, discussed: false }
+      )
+
+      cy.get(selectors.interactionForm.add).click()
+
+      assertReferralAcceptedMessageHeader(subject, 'Interaction')
+      assertReferralMessageBody()
+    })
+  })
+  context('When adding an "other" interaction', () => {
+    beforeEach(() => {
+      cy.visit(
+        referrals.interactions.createType(
+          fixtures.referrals.referalDetails.id,
+          'other',
+          'interaction'
+        )
+      )
+    })
+    context('When countries discussed', () => {
+      it('should add the interaction and display flash message', () => {
+        const subject = utils.randomString()
+        const formSelectors = selectors.interactionForm
+        assertBreadcrumbs({
+          Home: dashboard(),
+          Referrals: referrals.index(), // Fix after breadcrumbs updated
+          Referral: referrals.details(fixtures.referrals.referalDetails.id),
+          'Add interaction': null,
+        })
+
+        populateInteractionForm(
+          subject,
+          'A Specific DIT Export Service or Funding',
+          'DSO Interaction',
+          { visible: true, discussed: true }
+        )
+
+        populateCountriesDiscussed(formSelectors, true, true)
+
+        cy.get(selectors.interactionForm.add).click()
+
+        assertReferralAcceptedMessageHeader(subject, 'Interaction')
+        assertReferralMessageBody()
+        assertCountriesDiscussedMessage()
+      })
+    })
+    context('When no countries discussed', () => {
+      it('should add the interaction and display flash message', () => {
+        const subject = utils.randomString()
+        populateInteractionForm(
+          subject,
+          'A Specific DIT Export Service or Funding',
+          'DSO Interaction',
+          { visible: true, discussed: false }
+        )
+        cy.get(selectors.interactionForm.add).click()
+        assertReferralAcceptedMessageHeader(subject, 'Interaction')
+        assertReferralMessageBody()
+      })
+    })
+  })
+  context('When adding an "other" service delivery', () => {
+    beforeEach(() => {
+      cy.visit(
+        referrals.interactions.createType(
+          fixtures.referrals.referalDetails.id,
+          'other',
+          'service-delivery'
+        )
+      )
+    })
+    context('When countries discussed', () => {
+      it('should add the service delivery and display flash message', () => {
+        const subject = utils.randomString()
+        const formSelectors = selectors.interactionForm
+        assertBreadcrumbs({
+          Home: dashboard(),
+          Referrals: referrals.index(), // Fix after breadcrumbs updated
+          Referral: referrals.details(fixtures.referrals.referalDetails.id),
+          'Add service delivery': null,
+        })
+        populateServiceDeliveryForm(
+          subject,
+          'A Specific DIT Service',
+          'UK Region Local',
+          { visible: true, discussed: true }
+        )
+
+        populateCountriesDiscussed(formSelectors, true, true)
+
+        cy.get(selectors.interactionForm.add).click()
+
+        assertReferralAcceptedMessageHeader(subject, 'Service delivery')
+        assertReferralMessageBody()
+        assertCountriesDiscussedMessage()
+      })
+    })
+    context('When no countries discussed', () => {
+      it('should add the service delivery and display flash message', () => {
+        const subject = utils.randomString()
+
+        populateServiceDeliveryForm(
+          subject,
+          'A Specific DIT Service',
+          'UK Region Local',
+          { visible: true, discussed: false }
+        )
+
+        cy.get(selectors.interactionForm.add).click()
+
+        assertReferralAcceptedMessageHeader(subject, 'Service delivery')
+        assertReferralMessageBody()
+      })
     })
   })
 })

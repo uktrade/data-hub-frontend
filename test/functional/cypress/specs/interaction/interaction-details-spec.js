@@ -5,6 +5,8 @@ const {
   assertBreadcrumbs,
 } = require('../../support/assertions')
 
+const { interactions } = require('../../../../../src/lib/urls')
+
 describe('Interaction details', () => {
   context('Past draft interaction', () => {
     const params = {}
@@ -399,6 +401,34 @@ describe('Interaction details', () => {
       cy.get(
         selectors.interaction.details.interaction.whyCanINotComplete
       ).should('not.be.visible')
+    })
+  })
+
+  context('When an interaction is created from a referral', () => {
+    it('should display the linked referral on the interaction detail page', () => {
+      cy.visit(interactions.detail(fixtures.interaction.withReferral.id))
+      cy.contains('This interaction is linked to a referral').should(
+        'be.visible'
+      )
+      cy.get('table')
+        .eq(1)
+        .should('contain', 'Subject')
+        .and(
+          'contain',
+          fixtures.interaction.withReferral.company_referral.subject
+        )
+        .and('contain', 'Sent on')
+        .and('contain', '14 Feb 2020')
+        .and('contain', 'By')
+        .and(
+          'contain',
+          fixtures.interaction.withReferral.company_referral.created_by.name
+        )
+        .and('contain', 'To')
+        .and(
+          'contain',
+          fixtures.interaction.withReferral.company_referral.recipient.name
+        )
     })
   })
 })

@@ -1,0 +1,29 @@
+{
+    "count": 2,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": "6891d583-7f52-41af-a0d3-d8d527f20d43",
+            "first_name": "Helena",
+            "last_name": "Referral",
+            "name": "Helena Referral",
+            "company": {
+              "name": "Great referrals ltd.",
+              "id": "a2c34b4f-1d5a-4b4b-9249-7c53ff2868dd"
+            }
+
+          },
+          {
+            "id": "5d43k9a2-868f-4d85-8e5f-631e5a8c9a3b",
+            "first_name": "Joseph Woof,",
+            "last_name": "Dog master",
+            "name": "Joseph Woof, Dog master",
+            "company": {
+                "name": "Great referrals ltd.",
+                "id": "a2c34b4f-1d5a-4b4b-9249-7c53ff2868dd"
+            }
+           
+          }
+    ]
+}
