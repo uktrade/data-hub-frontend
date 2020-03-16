@@ -238,4 +238,15 @@ describe('Edit History', () => {
       )
     })
   })
+
+  context('when a company becomes a "Global Ultimate"', () => {
+    it('should display the changes to the "Global Ultimate Duns Number"', () => {
+      assertChanges(
+        companyEditHistory.change(5).table(5),
+        'Global Ultimate Duns Number',
+        'Not set',
+        '561652707'
+      )
+    })
+  })
 })

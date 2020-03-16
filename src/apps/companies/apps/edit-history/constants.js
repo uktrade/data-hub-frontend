@@ -6,22 +6,18 @@ const NO = 'No'
 const AUTOMATIC_UPDATE = 'automaticUpdate'
 const DEFAULT_ITEMS_PER_PAGE = 10
 
-const EXCLUDED_FIELDS = [
-  'archived_by',
-  'archived_on',
-  'dnb_modified_on',
-  'global_ultimate_duns_number',
-]
+const EXCLUDED_FIELDS = ['archived_by', 'archived_on', 'dnb_modified_on']
 
 const COMPANY_FIELD_NAME_TO_LABEL_MAP = {
   address_1: 'Address line 1',
   address_2: 'Address line 2 (optional)',
+  archived_documents_url_path: 'Archived documents URL path',
   company_number: 'Companies House number',
   description: 'Business description (optional)',
-  archived_documents_url_path: 'Archived documents URL path',
   export_experience_category: 'Export win category',
   export_to_countries: 'Countries currently exporting to',
   future_interest_countries: 'Future countries of interest',
+  global_ultimate_duns_number: 'Global Ultimate Duns Number',
   great_profile_status: 'great.gov.uk business profile',
   is_turnover_estimated: 'Is turnover estimated',
   name: 'Name of company',
