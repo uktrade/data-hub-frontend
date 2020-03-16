@@ -153,6 +153,8 @@ aliases:
       SSO_ENABLED: 'True'
       RESOURCE_SERVER_INTROSPECTION_URL: http://localhost:8080/o/introspect # required but not used as user with token has been created in backend setup script
       RESOURCE_SERVER_AUTH_TOKEN: sso-token
+      STAFF_SSO_BASE_URL: http://localhost:8080/
+      STAFF_SSO_AUTH_TOKEN: sso-token
       WEB_CONCURRENCY: 2
       ACTIVITY_STREAM_ACCESS_KEY_ID: some-id
       ACTIVITY_STREAM_SECRET_ACCESS_KEY: some-secret
