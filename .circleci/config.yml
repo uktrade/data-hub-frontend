@@ -299,6 +299,10 @@ jobs:
           when: always
       - store_artifacts:
           path: cypress/screenshots
+      - store_test_results:
+          path: cypress-coverage
+      - store_artifacts:
+          path: cypress-coverage
       - *store_artifacts_cypress_video
 
   # Run visual tests
