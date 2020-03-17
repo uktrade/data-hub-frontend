@@ -3,11 +3,12 @@
 version: 1
 update_configs:
   - package_manager: javascript
-    directory: "/"
+    directory: '/'
     update_schedule: live
     default_reviewers:
       - datahub-fed
     ignored_updates:
       - match:
-        dependency_name: "govuk-frontend"
-        dependency_name: "govuk-colours"
+          dependency_name: 'govuk-frontend'
+      - match:
+          dependency_name: 'govuk-colours'
