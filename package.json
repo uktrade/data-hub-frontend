@@ -33,14 +33,17 @@
     "test:e2e:watch": "CYPRESS_integrationFolder=test/end-to-end/cypress/specs cypress open --config baseUrl=http://localhost:3000",
     "test:visual": "./node_modules/.bin/wdio test/visual/wdio.conf.js",
     "test:visual:update": "wdio-image-diff -u",
-    "coverage": "nyc --reporter=html --reporter=text --reporter=lcov npm run test:unit",
-    "circle:unit": "nyc --reporter=lcov npm run test:unit -- --reporter mocha-circleci-reporter && codeclimate-test-reporter < coverage/lcov.info",
+    "coverage": "nyc --reporter=html --reporter=text --reporter=lcov --report-dir=coverage npm run test:unit",
+    "circle:unit": "nyc --reporter=lcov --report-dir=coverage npm run test:unit -- --reporter mocha-circleci-reporter && codeclimate-test-reporter < coverage/lcov.info",
     "circle:unit-client": "npm run test:unit-client --reporter mocha-circleci-reporter",
     "circle:acceptance": "nightwatch --config test/acceptance/nightwatch.conf.js --env circleci",
     "circle:acceptance:dit-staff": "yarn circle:acceptance --skiptags ignore,da,lep",
     "circle:acceptance:da-staff": "yarn circle:acceptance --tag da --skiptags ignore",
     "heroku-postbuild": "yarn cache clean && npm rebuild && npm run build",
     "lint-staged": "lint-staged"
+  },
+  "nyc": {
+    "report-dir": "cypress-coverage"
   },
   "pre-commit": "lint-staged",
   "lint-staged": {
@@ -148,6 +151,7 @@
     "winston": "^2.4.2"
   },
   "devDependencies": {
+    "@cypress/code-coverage": "^1.14.0",
     "@uktrade/client-matrix-js": "^1.0.70",
     "@uktrade/wdio-image-diff-js": "1.2.0",
     "@vue/test-utils": "^1.0.0-beta.32",
@@ -160,6 +164,7 @@
     "@wdio/spec-reporter": "^5.18.7",
     "@wdio/sync": "5.20.1",
     "babel-eslint": "^10.1.0",
+    "babel-plugin-istanbul": "^6.0.0",
     "browser-sync": "^2.24.4",
     "browserstack-local": "^1.4.0",
     "chai": "^4.1.2",
@@ -183,6 +188,7 @@
     "faker": "^4.1.0",
     "html": "^1.0.0",
     "istanbul": "^0.4.5",
+    "istanbul-lib-coverage": "^3.0.0",
     "js-beautify": "^1.7.5",
     "jsdom": "^11.11.0",
     "jsdom-global": "^3.0.2",
@@ -197,7 +203,7 @@
     "nock": "^9.2.6",
     "nodemon": "^2.0.2",
     "npm-run-all": "^4.1.3",
-    "nyc": "^11.8.0",
+    "nyc": "^15.0.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.18.2",
     "proxyquire": "^2.0.0",
