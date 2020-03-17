@@ -42,6 +42,7 @@ package-lock.json
 # Tests
 .nyc_output
 coverage
+cypress-coverage
 test-results.xml
 selenium-debug.log
 selenium-server.log
