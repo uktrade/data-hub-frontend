@@ -23,15 +23,13 @@ describe('Company Export tab - Edit exports', () => {
     })
   }
 
-  function assertButtons() {
-    const BUTTONS_ALIAS = 'form-buttons'
-    cy.get('form button').as(BUTTONS_ALIAS)
-    cy.get('@' + BUTTONS_ALIAS)
-      .eq(0)
-      .should('have.text', 'Save and return')
-    cy.get('@' + BUTTONS_ALIAS)
-      .eq(1)
-      .should('have.text', 'Return without saving')
+  function assertButtons(companyId) {
+    cy.contains('button', 'Save and return')
+    cy.contains('a', 'Return without saving').should(
+      'have.attr',
+      'href',
+      urls.companies.exports.index(companyId)
+    )
   }
 
   function selectOption(selector, index) {
@@ -140,7 +138,7 @@ describe('Company Export tab - Edit exports', () => {
       })
 
       it('Should render the buttons and clicking Save should save the value', () => {
-        assertButtons()
+        assertButtons(dnbLimited.id)
 
         //selecting the first value should set the category back to null
         selectOption('#field-export_experience_category', 0)
