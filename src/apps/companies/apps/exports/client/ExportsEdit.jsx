@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Button } from 'govuk-react'
-import { FormActions, FieldSelect, Form, ButtonLink } from 'data-hub-components'
+import { Button, Link } from 'govuk-react'
+import { FormActions, FieldSelect, Form } from 'data-hub-components'
 import axios from 'axios'
 
 import GreatProfile from './GreatProfile'
@@ -59,7 +59,9 @@ export default ({
 
     <FormActions>
       <Button>Save and return</Button>
-      <ButtonLink>Return without saving</ButtonLink>
+      <Link href={urls.companies.exports.index(companyId)}>
+        Return without saving
+      </Link>
     </FormActions>
   </Form>
 )
