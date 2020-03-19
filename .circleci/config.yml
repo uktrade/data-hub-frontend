@@ -289,6 +289,7 @@ jobs:
       - *restore_yarn_cache
       - *start_api_sandbox
       - run: yarn install --pure-lockfile
+      - run: npx nyc instrument --compact=false --in-place src src
       - run: yarn build
       - *wait_for_mock_sso
       - *wait_for_api_sandbox
@@ -296,7 +297,7 @@ jobs:
       - *wait_for_frontend
       - run:
           name: Run functional tests
-          command: yarn test:functional --config baseUrl=http://localhost:3000 --browser chrome --parallel --record --key $CYPRESS_DASHBOARD_KEY
+          command: npx cypress run --config baseUrl=http://localhost:3000 --browser chrome --parallel --record --key $CYPRESS_DASHBOARD_KEY
           when: always
       - store_artifacts:
           path: cypress/screenshots
