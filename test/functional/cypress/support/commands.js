@@ -11,9 +11,10 @@ Cypress.Commands.add('selectFirstOption', (selector) => {
  * @param {Object} options
  * @param {String} options.name - The command name
  * @param {String} options.logName - The name of the log message e.g. 'GET'
- * @param {(...args) => Promise} options.body - The actual implementation of the
- * command It can take any number of arguments, but the last one is treated as
- * options. It should return the Cypress promise, if it's a continuation command.
+ * @param {(...args) => Promise} options.command - The actual implementation of
+ * the command It can take any number of arguments, but the last one is treated
+ * as options. It should return the Cypress promise, if it's a continuation
+ * command.
  * @param {(...args) => String} options.getLogMessage - A function which takes
  * all the command arguments an should return a string which will be used as
  * the log message.
@@ -22,7 +23,7 @@ Cypress.Commands.add('selectFirstOption', (selector) => {
 const addLoggedCommand = ({
   name,
   logName,
-  body,
+  command,
   getLogMessage,
   options = {},
 }) =>
@@ -32,7 +33,7 @@ const addLoggedCommand = ({
       name: logName,
       message: getLogMessage(...args),
     }
-    const result = body(...args)
+    const result = command(...args)
 
     if (!log) {
       return
@@ -69,7 +70,7 @@ addLoggedCommand({
   name: 'ariaTablist',
   logName: 'ARIA',
   getLogMessage: (label) => `TABLIST: ${label}`,
-  body: (label) =>
+  command: (label) =>
     cy.get(`[role=tablist][aria-label=${label}]`, { log: false }),
 })
 
@@ -81,7 +82,7 @@ addLoggedCommand({
   name: 'ariaTablistTabpanel',
   logName: 'ARIA',
   getLogMessage: (label) => `TABPANEL: ${label}`,
-  body: (label, options) =>
+  command: (label, options) =>
     cy
       .ariaTablist(label, { ...options, nestedLog: true })
       .parent(options)
@@ -97,7 +98,7 @@ addLoggedCommand({
   name: 'ariaTab',
   logName: 'ARIA',
   getLogMessage: (label) => `TAB: ${label}`,
-  body: (label, { verbose } = {}) =>
+  command: (label, { verbose } = {}) =>
     cy.get(`[role=tab]:contains(${label})`, { log: !!verbose }),
 })
 
@@ -132,7 +133,7 @@ addLoggedCommand({
   logName: 'ARIA',
   getLogMessage: (tabListLabel, tabLabel) =>
     `TABPANEL: ${tabListLabel} > ${tabLabel}`,
-  body: (tabListLabel, tabLabel, { verbose = false } = {}) => {
+  command: (tabListLabel, tabLabel, { verbose = false } = {}) => {
     const options = { log: verbose }
     cy.ariaTablistTab(tabListLabel, tabLabel, options).click(options)
     return cy.ariaTablistTabpanel(tabListLabel, options)
@@ -153,7 +154,7 @@ addLoggedCommand({
   logName: 'ARIA',
   getLogMessage: (tabListLabel, tabLabel) =>
     `TAB SELECTED: ${tabListLabel} > ${tabLabel}`,
-  body: (tabListLabel, tabLabel, { verbose = false, ...options } = {}) => {
+  command: (tabListLabel, tabLabel, { verbose = false, ...options } = {}) => {
     return cy
       .ariaTablistTab(tabListLabel, tabLabel, { log: verbose, ...options })
       .should('have.attr', 'aria-selected', 'true')
