@@ -1,21 +1,15 @@
-import { capitalize } from 'lodash'
 import React from 'react'
 import { Link } from 'govuk-react'
 import { SPACING } from '@govuk-react/constants'
 import { BLUE, GREEN } from 'govuk-colours'
 import PropTypes from 'prop-types'
-import { SummaryList } from 'data-hub-components'
+import { SummaryList, DateUtils } from 'data-hub-components'
 import styled from 'styled-components'
 import Card from 'data-hub-components/dist/activity-feed/activities/card/Card'
 import CardHeader from 'data-hub-components/dist/activity-feed/activities/card/CardHeader'
 
 import urls from '../../../lib/urls'
 import { AdviserDetails } from '../../../apps/companies/apps/referrals/details/client/ReferralDetails'
-
-const STATUS_COLOURS = {
-  outstanding: BLUE,
-  completed: GREEN,
-}
 
 const StyledSummaryListWrapper = styled.div({
   flexGrow: 1,
@@ -36,7 +30,7 @@ const Referral = ({
   date,
   sender,
   recipient,
-  status,
+  dateAccepted,
 }) => (
   <Card>
     <CardHeader
@@ -45,10 +39,17 @@ const Referral = ({
         <Link href={urls.companies.referrals.details(id)}>{subject}</Link>
       }
       startTime={date}
-      badge={{
-        text: `${capitalize(status)} referral`,
-        borderColour: STATUS_COLOURS[status],
-      }}
+      badge={
+        dateAccepted
+          ? {
+              text: 'Referral accepted',
+              borderColour: GREEN,
+            }
+          : {
+              text: 'Outstanding referral',
+              borderColour: BLUE,
+            }
+      }
     />
     {/* SummaryList is not stylable so we need to wrap it to tweak it's styles */}
     <StyledSummaryListWrapper>
@@ -62,6 +63,14 @@ const Referral = ({
             label: 'Receiving adviser',
             value: <AdviserDetails {...recipient} />,
           },
+          ...(dateAccepted
+            ? [
+                {
+                  label: 'Accepted on',
+                  value: DateUtils.format(dateAccepted),
+                },
+              ]
+            : []),
         ]}
       />
     </StyledSummaryListWrapper>
@@ -75,7 +84,7 @@ Referral.propTypes = {
   date: PropTypes.string.isRequired,
   sender: PropTypes.shape(AdviserDetails.propTypes).isRequired,
   recipient: PropTypes.shape(AdviserDetails.propTypes).isRequired,
-  status: PropTypes.oneOf(['outstanding', 'completed']),
+  dateAccepted: PropTypes.string,
 }
 
 export default Referral
