@@ -1,0 +1,14 @@
+envName='local'
+
+if [ $# -gt 0 ]; then
+  if [ -f .bin/envs/$1.env ]; then
+      source .bin/envs/$1.env
+      envName=$1
+    else
+      echo 'Env not found'
+      exit 1
+    fi
+fi
+
+echo "Starting $envName server with $API_ROOT"
+yarn run develop

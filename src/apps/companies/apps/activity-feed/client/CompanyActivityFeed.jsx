@@ -4,7 +4,11 @@ import { Button, Details, Paragraph, WarningText } from 'govuk-react'
 import { BLACK } from 'govuk-colours'
 import styled from 'styled-components'
 
-import { ActivityFeedApp, StatusMessage } from 'data-hub-components'
+import {
+  ActivityFeedApp,
+  ActivityFeedAction,
+  StatusMessage,
+} from 'data-hub-components'
 import urls from '../../../../../lib/urls'
 
 const StyledLink = styled('a')`
@@ -36,7 +40,15 @@ const CompanyActivityFeed = ({ companyId, showMatchingPrompt, ...rest }) => (
         </Button>
       </StatusMessage>
     )}
-    <ActivityFeedApp {...rest} />
+    <ActivityFeedApp
+      actions={
+        <ActivityFeedAction
+          text="Add interaction"
+          link={urls.companies.interactions.create(companyId)}
+        />
+      }
+      {...rest}
+    />
   </>
 )
 

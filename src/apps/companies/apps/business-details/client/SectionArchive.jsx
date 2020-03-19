@@ -9,7 +9,7 @@ import axios from 'axios'
 
 import {
   ButtonLink,
-  Form,
+  FormStateful,
   FormActions,
   FieldRadios,
   FieldInput,
@@ -43,7 +43,7 @@ const SectionArchive = ({ isArchived, isDnbCompany, urls }) => {
       <p>Archive this company if it is no longer required or active.</p>
 
       {formIsOpen && (
-        <Form onSubmit={archiveSubmitCallback} scrollToTop={false}>
+        <FormStateful onSubmit={archiveSubmitCallback} scrollToTop={false}>
           <FieldRadios
             label="Archive reason"
             name="archived_reason"
@@ -64,7 +64,7 @@ const SectionArchive = ({ isArchived, isDnbCompany, urls }) => {
             <Button>Archive</Button>
             <ButtonLink onClick={() => setFormIsOpen(false)}>Cancel</ButtonLink>
           </FormActions>
-        </Form>
+        </FormStateful>
       )}
 
       {!formIsOpen && (

@@ -29,20 +29,11 @@ var v4SearchCompany = require('./routes/v4/search/company.js')
 var v4SearchCompanyWithCountry = require('./routes/v4/search/company/autocomplete.js')
 var v4SearchLargeInvestorProfiles = require('./routes/v4/search/large-investor-profile/results.js')
 var v4SearchExports = require('./routes/v4/search/export')
-var v4referralDetails = require('./routes/v4/referrals/referral-details.js')
 
 // Referral details
-Sandbox.define(
-  '/v4/company-referral/{id}',
-  'GET',
-  v4referralDetails.referralDetails
-)
+Sandbox.define('/v4/company-referral/{id}', 'GET', v4Company.referralDetails)
 // Send a referral
-Sandbox.define(
-  '/v4/company-referral',
-  'POST',
-  v4referralDetails.referralDetails
-)
+Sandbox.define('/v4/company-referral', 'POST', v4Company.referralDetails)
 
 // Adviser endpoint
 Sandbox.define('/adviser/', 'GET', adviser.advisers)
