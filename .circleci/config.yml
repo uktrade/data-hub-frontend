@@ -86,6 +86,7 @@ aliases:
 
   - &data_hub_functional_envs
     <<: *data_hub_base_envs
+    NODE_ENV: test
     API_ROOT: http://localhost:8001
     OAUTH2_DEV_TOKEN: ditStaffToken
     OAUTH2_BYPASS_SSO: true

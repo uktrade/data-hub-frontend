@@ -6,7 +6,7 @@ module.exports = {
     '@babel/plugin-proposal-optional-chaining',
   ],
   env: {
-    development: {
+    test: {
       plugins: ['istanbul'],
     },
   },
