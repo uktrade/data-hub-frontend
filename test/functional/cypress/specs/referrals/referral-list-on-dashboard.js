@@ -1,6 +1,6 @@
 import '../../support/commands'
 
-const assertDescription = ({ term, name, email, team }) =>
+const assertDescription = ({ term, name, email, team, dateAccepted }) =>
   cy
     .contains(term)
     .should('have.prop', 'tagName', 'DT')
@@ -21,7 +21,8 @@ const assertReferralCard = ({
   subject,
   id,
   date,
-  status,
+  // status,
+  dateAccepted,
   sender,
   recipient,
 }) => {
@@ -41,7 +42,10 @@ const assertReferralCard = ({
     .eq(0)
     .should('have.text', date)
     .next()
-    .should('have.text', `${status} referral`)
+    .should(
+      'have.text',
+      dateAccepted ? 'Referral accepted' : 'Outstanding referral'
+    )
 
   assertDescription({
     term: 'Sending adviser',
@@ -52,6 +56,14 @@ const assertReferralCard = ({
     term: 'Receiving adviser',
     ...recipient,
   })
+
+  dateAccepted &&
+    cy
+      .contains('Accepted on')
+      .should('have.prop', 'tagName', 'DT')
+      .next()
+      .should('have.prop', 'tagName', 'DD')
+      .and('have.text', dateAccepted)
 }
 
 describe('Referall list on dashboard', () => {
@@ -80,7 +92,7 @@ describe('Referall list on dashboard', () => {
           subject: 'Andy to Lou',
           id: 'foo',
           date: '25 Nov 2021',
-          status: 'Completed',
+          dateAccepted: '25 Nov 2021',
           sender: {
             name: 'Andy Pipkin',
             email: 'andy.pipkin@gov.uk',
@@ -102,7 +114,6 @@ describe('Referall list on dashboard', () => {
           subject: 'Lou to Andy',
           id: 'bar',
           date: '25 Nov 2021',
-          status: 'Outstanding',
           sender: {
             name: 'Lou Todd',
             email: 'lou.todd@gov.uk',
@@ -124,7 +135,7 @@ describe('Referall list on dashboard', () => {
           subject: 'Have you got a bandage?',
           id: 'baz',
           date: '25 Nov 2021',
-          status: 'Completed',
+          dateAccepted: '25 Nov 2021',
           sender: {
             name: 'Andy Pipkin',
             team: 'Little Britain',
