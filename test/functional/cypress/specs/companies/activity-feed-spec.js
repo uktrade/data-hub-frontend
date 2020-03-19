@@ -199,6 +199,14 @@ describe('Company activity feed', () => {
         )
     })
 
+    it('should have the Analytics id', () => {
+      cy.get('#ga-company-details-matching-prompt').should(
+        'have.attr',
+        'id',
+        'ga-company-details-matching-prompt'
+      )
+    })
+
     it('should not display the pending D&B investigation message', () => {
       cy.get(selectors.companyActivity.pendingDnbInvestigationMessage).should(
         'not.be.visible'
