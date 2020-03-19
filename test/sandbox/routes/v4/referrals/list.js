@@ -4,9 +4,10 @@ module.exports = function(req, res) {
     results: [
       {
         id: 'foo',
-        status: 'completed',
+        status: 'complete',
         subject: 'Andy to Lou',
         created_on: '2021-11-25',
+        completed_on: '2021-11-25',
         company: {
           name: 'Andy & Lou',
         },
@@ -50,7 +51,8 @@ module.exports = function(req, res) {
       },
       {
         id: 'baz',
-        status: 'completed',
+        status: 'complete',
+        completed_on: '2021-11-25',
         subject: 'Have you got a bandage?',
         created_on: '2021-11-25',
         company: {
