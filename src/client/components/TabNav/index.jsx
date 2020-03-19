@@ -59,7 +59,7 @@ const StyledTabpanel = styled.div({
   marginTop: 10,
 })
 
-const createId = (id, index) => `${id}:tab-${index}`
+const createId = (id, index) => `${id}.tab-${index}`
 
 // Based on https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/Tab_Role
 const TabNav = ({
