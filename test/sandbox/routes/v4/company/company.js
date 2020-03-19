@@ -181,5 +181,24 @@ exports.referralDetails = function(req, res) {
   if (req.params.id === ReferralIds.REFERRAL_ID_NO_CONTACT) {
     return res.json(referralDetailsNoContact)
   }
+  if (req.params.id === 'complete') {
+    return res.json(
+      _.merge({}, referralDetailsNoContact, {
+        status: 'complete',
+        completed_on: '2020-03-19T10:38:00.841Z',
+        completed_by: {
+          name: 'Andy Pipkin',
+          contact_email: 'andy.pipkin@little.britain.co.uk',
+          dit_team: {
+            name: 'Andy & Lou',
+          },
+        },
+        interaction: {
+          subject: 'Covert action',
+          id: 'foo-bar-baz',
+        },
+      })
+    )
+  }
   return res.json(referralDetails)
 }

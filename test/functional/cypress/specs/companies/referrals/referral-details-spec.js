@@ -31,6 +31,7 @@ describe('Referral details', () => {
 
     it('should render the content and elements in order', () => {
       cy.get('#referral-details > table')
+        .eq(0)
         .find('caption')
         .should('have.text', 'I am a subject')
         .parents()
@@ -117,6 +118,7 @@ describe('Referral details', () => {
 
     it('should render the content and elements in order', () => {
       cy.get('#referral-details > table')
+        .eq(0)
         .find('caption')
         .should('have.text', 'I am a subject')
         .parents()
@@ -176,4 +178,53 @@ describe('Referral details', () => {
         .should('have.text', 'Back')
     })
   })
+
+  context('when viewing details of a complete referral', () =>
+    it('should display the Referral accepted summary instead of the buttons', () => {
+      cy.visit(urls.companies.referrals.details('any-id-will-do', 'complete'))
+
+      cy.contains('Complete referral').should('not.exist')
+      cy.contains('I cannot complete the referral').should('not.exist')
+
+      cy.contains('Referral accepted')
+        .next()
+        .within(() => {
+          cy.get('tr')
+            .as('row')
+            .eq(0)
+            .within(() => {
+              cy.get('th').should('have.text', 'Date')
+              cy.get('td').should('have.text', '19 Mar 2020')
+            })
+
+          cy.get('@row')
+            .eq(1)
+            .within(() => {
+              cy.get('th').should('have.text', 'By')
+              cy.get('td')
+                .should(
+                  'have.text',
+                  'Andy Pipkin, andy.pipkin@little.britain.co.uk, Andy & Lou'
+                )
+                .find('a')
+                .should('have.text', 'andy.pipkin@little.britain.co.uk')
+                .and(
+                  'have.attr',
+                  'href',
+                  'mailto:andy.pipkin@little.britain.co.uk'
+                )
+            })
+
+          cy.get('@row')
+            .eq(2)
+            .within(() => {
+              cy.get('th').should('have.text', 'With interaction')
+              cy.get('td')
+                .find('a')
+                .should('have.text', 'Covert action')
+                .and('have.attr', 'href', '/interactions/foo-bar-baz')
+            })
+        })
+    })
+  )
 })
