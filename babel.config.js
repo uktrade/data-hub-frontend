@@ -5,6 +5,11 @@ module.exports = {
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-proposal-optional-chaining',
   ],
+  env: {
+    development: {
+      plugins: ['istanbul'],
+    },
+  },
   presets: [
     ['@babel/preset-react'],
     [
