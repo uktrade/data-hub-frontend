@@ -76,3 +76,7 @@ local.log
 # Yalc packages
 .yalc
 yalc.lock
+
+# Ignore bin scripts
+.bin
+
