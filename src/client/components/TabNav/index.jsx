@@ -137,9 +137,8 @@ TabNav.propTypes = {
   label: PropTypes.string.isRequired,
   tabs: PropTypes.arrayOf(
     PropTypes.shape({
-      label: PropTypes.oneOfType([PropTypes.string, PropTypes.element])
-        .isRequired,
-      content: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+      label: PropTypes.node.isRequired,
+      content: PropTypes.node,
     })
   ).isRequired,
 }
