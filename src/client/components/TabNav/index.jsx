@@ -56,7 +56,7 @@ const StyledTablist = styled.div({
 
 const StyledTabpanel = styled.div({
   ...focusStyle,
-  marginTop: 10,
+  marginTop: 30,
 })
 
 const createId = (id, index) => `${id}.tab-${index}`
