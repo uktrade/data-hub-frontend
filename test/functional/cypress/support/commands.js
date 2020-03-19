@@ -7,7 +7,8 @@ Cypress.Commands.add('selectFirstOption', (selector) => {
 })
 
 /**
- * Adds a Cypress command whith nice logging.
+ * Adds a Cypress command whith nice logging. In particular, solves the problem
+ * when the created shapshot doesn't highlight the selected DOM element.
  * @param {Object} options
  * @param {String} options.name - The command name
  * @param {String} options.logName - The name of the log message e.g. 'GET'
