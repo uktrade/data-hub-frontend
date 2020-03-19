@@ -1872,10 +1872,10 @@
     lodash "^4.17.15"
     pretty "^2.0.0"
 
-"@wdio/browserstack-service@^5.18.7":
-  version "5.18.7"
-  resolved "https://registry.yarnpkg.com/@wdio/browserstack-service/-/browserstack-service-5.18.7.tgz#f40c319dbd03a71a55cb082eb30fd9ab226c92c1"
-  integrity sha512-5F8sz0eoPw4Dbf4++Ot2JmkScxVRUJklSR3ZC0iAcjD5lkgb3tCrcKo0swnsSe2QFGAn090FA3PtLQ6kDWE0Yg==
+"@wdio/browserstack-service@^5.22.1":
+  version "5.22.1"
+  resolved "https://registry.yarnpkg.com/@wdio/browserstack-service/-/browserstack-service-5.22.1.tgz#5253588cf5308118e8ef7aeb5c09e0a0ddbe6824"
+  integrity sha512-N2cAl2KoXdtBPo+c9q/vUZ049kbHLs7uUCUYzDNbxGTr173mFhOha13GZh2JBnENMBPglggJ1i8a4IwN7BlYuw==
   dependencies:
     "@wdio/logger" "5.16.10"
     browserstack-local "1.4.3"
@@ -12874,7 +12874,11 @@ request-promise@^4.2.2:
     stealthy-require "^1.1.1"
     tough-cookie "^2.3.3"
 
+<<<<<<< HEAD
 request@2.88.0, request@~2.88.0:
+=======
+request@2.88.0:
+>>>>>>> Bump @wdio/browserstack-service from 5.18.7 to 5.22.1
   version "2.88.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.0.tgz#9c2fca4f7d35b592efe57c7f0a55e81052124fef"
   integrity sha512-NAqBSrijGLZdM0WZNsInLJpkJokL72XYjUpnB0iwsRgxh7dB6COrHnTBNwN0E+lHDAJzu7kLAkDeY08z2/A0hg==
@@ -12900,7 +12904,11 @@ request@2.88.0, request@~2.88.0:
     tunnel-agent "^0.6.0"
     uuid "^3.3.2"
 
+<<<<<<< HEAD
 request@^2.83.0, request@^2.85.0, request@^2.87.0, request@^2.88.0, request@^2.88.2:
+=======
+request@^2.72.0, request@^2.83.0, request@^2.85.0, request@^2.87.0, request@^2.88.0, request@~2.88.0:
+>>>>>>> Bump @wdio/browserstack-service from 5.18.7 to 5.22.1
   version "2.88.2"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.2.tgz#d73c918731cb5a87da047e207234146f664d12b3"
   integrity sha512-MsvtOrfG9ZcrOwAW+Qi+F6HbD0CWXEh9ou77uOb7FM2WPhwT7smM833PzanhJLsgXjN89Ir6V2PczXNnMpwKhw==
