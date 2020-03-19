@@ -1881,10 +1881,10 @@
     browserstack-local "1.4.3"
     request "^2.85.0"
 
-"@wdio/cli@5.18.7":
-  version "5.18.7"
-  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-5.18.7.tgz#1ac56ad96137b3d838909f893eb3e296df6ffea0"
-  integrity sha512-ovqNuNnQmAJCYbz+m7mynkJ74j9DkO3OFTnfQguBY29Su9L/Fm2szKmJvuHkbhb2MtTqvFkBea7xsD87TAn9lA==
+"@wdio/cli@5.22.1":
+  version "5.22.1"
+  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-5.22.1.tgz#0b10d98d1dce87fd71c9bae51379028dd35ce1be"
+  integrity sha512-kcIT1mnUVe4J49sibL+CBa9NjymCzOCyXC8hHjrztzGAe9Cl5UBut8dpm56HtrMCcHZ56WEOxxv8KrnrUgDCKg==
   dependencies:
     "@wdio/config" "5.18.4"
     "@wdio/logger" "5.16.10"
@@ -1900,7 +1900,7 @@
     lodash.pickby "^4.6.0"
     lodash.union "^4.6.0"
     log-update "^3.2.0"
-    webdriverio "5.18.7"
+    webdriverio "5.22.1"
     yargs "^15.0.1"
     yarn-install "^1.0.0"
 
@@ -1947,6 +1947,11 @@
   version "5.18.7"
   resolved "https://registry.yarnpkg.com/@wdio/protocols/-/protocols-5.18.7.tgz#d470aeff16054195868341f9b74281fb3bb513bf"
   integrity sha512-Docjl1mGwjsd7xU/eEMspWPWiMUniHxtzXfr/7aDTIlkfh5fazR5NmBPVLHBZNYbe+wPndgc2i/WNZHAKVTx7A==
+
+"@wdio/protocols@5.22.1":
+  version "5.22.1"
+  resolved "https://registry.yarnpkg.com/@wdio/protocols/-/protocols-5.22.1.tgz#51fde0acb57d4ddf07d078fef0ad9c91d227229d"
+  integrity sha512-GdoWb/HTrb09Qb0S/7sLp1NU94LAhTsF1NnFj5sEFSUpecrl0S07pnhVg54pUImectN/woaqSl7uJGjlSGZcdQ==
 
 "@wdio/repl@5.18.6":
   version "5.18.6"
@@ -3627,7 +3632,7 @@ check-more-types@2.24.0:
   resolved "https://registry.yarnpkg.com/check-more-types/-/check-more-types-2.24.0.tgz#1420ffb10fd444dcfc79b43891bbfffd32a84600"
   integrity sha1-FCD/sQ/URNz8ebQ4kbv//TKoRgA=
 
-chokidar@3.3.0, chokidar@^3.0.0:
+chokidar@3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.3.0.tgz#12c0714668c55800f659e262d4962a97faf554a6"
   integrity sha512-dGmKLDdT3Gdl7fBUe8XK+gAtGmzy5Fn0XkkWQuYxGIgWVPPse2CxFA5mtrlD0TOHaHjEUqkWNyP1XdHoJES/4A==
@@ -3677,7 +3682,7 @@ chokidar@^2.0.0, chokidar@^2.0.2, chokidar@^2.0.4:
   optionalDependencies:
     fsevents "^1.2.7"
 
-chokidar@^3.2.2, chokidar@^3.3.0:
+chokidar@^3.0.0, chokidar@^3.2.2, chokidar@^3.3.0:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.3.1.tgz#c84e5b3d18d9a4d77558fef466b1bf16bbeb3450"
   integrity sha512-4QYCEWOcK3OJrxwvyyAOxFuhpvOVCYkr33LPfFNBjAD/w3sEzWsp2BUOkI4l9bHvWioAd0rc6NlHUOEaWkTeqg==
@@ -15436,6 +15441,18 @@ webdriver@5.18.7:
     lodash.merge "^4.6.1"
     request "^2.83.0"
 
+webdriver@5.22.1:
+  version "5.22.1"
+  resolved "https://registry.yarnpkg.com/webdriver/-/webdriver-5.22.1.tgz#fe2e7ec12f8e8f7623ab9956ea1fc9d998c180ea"
+  integrity sha512-Y3tKJhvRJTyKUm/oyqXwJALeDjSWmw9L00Cu1ZO62VGeDu5S6Jvz7Yln7HH9NSRttZNoN0kc3ISFB2WWjBQgWA==
+  dependencies:
+    "@wdio/config" "5.18.4"
+    "@wdio/logger" "5.16.10"
+    "@wdio/protocols" "5.22.1"
+    "@wdio/utils" "5.18.6"
+    lodash.merge "^4.6.1"
+    request "^2.83.0"
+
 webdriverio@5.18.7:
   version "5.18.7"
   resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-5.18.7.tgz#ccfd39f511c32a975a84d2ba977d61c82869eadc"
@@ -15456,6 +15473,27 @@ webdriverio@5.18.7:
     rgb2hex "^0.1.0"
     serialize-error "^5.0.0"
     webdriver "5.18.7"
+
+webdriverio@5.22.1:
+  version "5.22.1"
+  resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-5.22.1.tgz#7470f48f9f440ad917da8e1d343178665cfe8b2e"
+  integrity sha512-NyDSlaqe0Wb8BpEVzrmgP7CCdc3StYJYcb+EY8U0g/bw74XFRGaEhJXSKtjFXIT96VbG5FNZMQhJ5l4qlH7HLQ==
+  dependencies:
+    "@wdio/config" "5.18.4"
+    "@wdio/logger" "5.16.10"
+    "@wdio/repl" "5.18.6"
+    "@wdio/utils" "5.18.6"
+    archiver "^3.0.0"
+    css-value "^0.0.1"
+    grapheme-splitter "^1.0.2"
+    lodash.clonedeep "^4.5.0"
+    lodash.isobject "^3.0.2"
+    lodash.isplainobject "^4.0.6"
+    lodash.zip "^4.2.0"
+    resq "^1.6.0"
+    rgb2hex "^0.1.0"
+    serialize-error "^5.0.0"
+    webdriver "5.22.1"
 
 webidl-conversions@^4.0.2:
   version "4.0.2"
