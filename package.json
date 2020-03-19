@@ -61,7 +61,7 @@
     "@hapi/hawk": "^8.0.0",
     "@hapi/joi": "^17.1.0",
     "@uktrade/datahub-header": "1.2.0",
-    "autoprefixer": "^8.5.2",
+    "autoprefixer": "^9.7.4",
     "axios": "^0.18.0",
     "babel-loader": "^8.0.0",
     "basic-auth": "^2.0.0",
