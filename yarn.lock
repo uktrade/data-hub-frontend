@@ -1867,10 +1867,10 @@
     browserstack-local "1.4.3"
     request "^2.85.0"
 
-"@wdio/cli@5.22.2":
-  version "5.22.2"
-  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-5.22.2.tgz#13fd957878973c02f2028a7fe7b5c986ddb2cfa8"
-  integrity sha512-8ESUIoReTB/se6OvAYIh2hOaNge7pTGUiAlRyRYnE+idwOFtXbfsfPsnootm+NYxqW61pA3/2mIb1Sh+gzpqHQ==
+"@wdio/cli@5.22.1":
+  version "5.22.1"
+  resolved "https://registry.yarnpkg.com/@wdio/cli/-/cli-5.22.1.tgz#0b10d98d1dce87fd71c9bae51379028dd35ce1be"
+  integrity sha512-kcIT1mnUVe4J49sibL+CBa9NjymCzOCyXC8hHjrztzGAe9Cl5UBut8dpm56HtrMCcHZ56WEOxxv8KrnrUgDCKg==
   dependencies:
     "@wdio/config" "5.18.4"
     "@wdio/logger" "5.16.10"
@@ -1886,7 +1886,7 @@
     lodash.pickby "^4.6.0"
     lodash.union "^4.6.0"
     log-update "^3.2.0"
-    webdriverio "5.22.2"
+    webdriverio "5.22.1"
     yargs "^15.0.1"
     yarn-install "^1.0.0"
 
@@ -1899,14 +1899,14 @@
     deepmerge "^4.0.0"
     glob "^7.1.2"
 
-"@wdio/local-runner@^5.22.1":
-  version "5.22.1"
-  resolved "https://registry.yarnpkg.com/@wdio/local-runner/-/local-runner-5.22.1.tgz#ed573f7c1d93dd70607cbbfd339eeace8d49ea5b"
-  integrity sha512-vfm1L5HEzgU++dKcJeYWb8BwzLh/5LcU+r4Tv7rFFccJdTnEkwdl5529ShU5m87UppUGm0M3KmTQb7byc5GUdQ==
+"@wdio/local-runner@^5.22.2":
+  version "5.22.2"
+  resolved "https://registry.yarnpkg.com/@wdio/local-runner/-/local-runner-5.22.2.tgz#da3fb0dbbdb9bdd3ff43af8c2468dcf71ffc4337"
+  integrity sha512-AIL45oI1SbTZffgnjE/yEpeKlIrYn6LuwJhTgxgs+Kul49Cg9YS/qV0zA8ulBW/oJs0TrXMy3GRoc1yl24hO7Q==
   dependencies:
     "@wdio/logger" "5.16.10"
     "@wdio/repl" "5.18.6"
-    "@wdio/runner" "5.22.1"
+    "@wdio/runner" "5.22.2"
     async-exit-hook "^2.0.1"
     stream-buffers "^3.0.2"
 
@@ -1948,17 +1948,17 @@
   dependencies:
     fs-extra "^8.0.1"
 
-"@wdio/runner@5.22.1":
-  version "5.22.1"
-  resolved "https://registry.yarnpkg.com/@wdio/runner/-/runner-5.22.1.tgz#1262bb617fa698708455a07f170bb01fc1db60ac"
-  integrity sha512-qUyy+poov7lfx+ZozL9x7JKDVOL3GBAM9eNsXbAiPt5df4AvRfqvQ1caWbg0fjds4hlB2NMWf8qnJRdP2T2shg==
+"@wdio/runner@5.22.2":
+  version "5.22.2"
+  resolved "https://registry.yarnpkg.com/@wdio/runner/-/runner-5.22.2.tgz#89cbd091f5249b490d0a3a54b10ede68b8c44ef2"
+  integrity sha512-SjWNT81ZNHCxBICRb8Irj8EVAaIbf4FbjGgyIztuF6jESJ2BvbFSdWTD3PmxYIbTjnkwoaQ4tyOWjIUaUTEGSQ==
   dependencies:
     "@wdio/config" "5.18.4"
     "@wdio/logger" "5.16.10"
     "@wdio/utils" "5.18.6"
     deepmerge "^4.0.0"
     gaze "^1.1.2"
-    webdriverio "5.22.1"
+    webdriverio "5.22.2"
 
 "@wdio/selenium-standalone-service@^5.16.10":
   version "5.16.10"
