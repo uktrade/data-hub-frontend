@@ -1994,10 +1994,10 @@
     easy-table "^1.1.1"
     pretty-ms "^6.0.0"
 
-"@wdio/sync@5.18.7":
-  version "5.18.7"
-  resolved "https://registry.yarnpkg.com/@wdio/sync/-/sync-5.18.7.tgz#3d27f72c45edf03657d6d8fb01f65f272e7a0dc3"
-  integrity sha512-J1Is5T0gjOeWcnYCJhFP9rqVNIwoReznNVOYvIIDS8qZN3zkewSeh/KkV2E3uuwe6Fb8kXM4YZaRtXbYRs9OWQ==
+"@wdio/sync@5.20.1":
+  version "5.20.1"
+  resolved "https://registry.yarnpkg.com/@wdio/sync/-/sync-5.20.1.tgz#7423966e0e810187be13359ab53d07db9adbe464"
+  integrity sha512-HaXFSsVD7jtrvNJs2VOngCzvGZYZsekfg+OARO5twQHX5ajnwPEGGJebCGZ4I+1AQB0xRJjznyFwNpc6h4qyoQ==
   dependencies:
     "@wdio/logger" "5.16.10"
   optionalDependencies:
