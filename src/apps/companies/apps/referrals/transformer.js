@@ -1,3 +1,9 @@
+const convertAdviser = ({ name, contact_email, dit_team }) => ({
+  name,
+  email: contact_email,
+  team: dit_team?.name,
+})
+
 const transformReferralDetails = ({
   subject,
   company,
@@ -6,23 +12,25 @@ const transformReferralDetails = ({
   recipient,
   created_on,
   notes,
+  status,
+  completed_on,
+  completed_by,
+  interaction,
 }) => {
   return {
     subject,
+    status,
     company: company.name,
     companyId: company.id,
     contact: contact && contact.name,
-    sendingAdviser: {
-      name: created_by.name,
-      email: created_by.contact_email,
-      team: created_by.dit_team && created_by.dit_team.name,
-    },
-    receivingAdviser: {
-      name: recipient.name,
-      email: recipient.contact_email,
-      team: recipient.dit_team && recipient.dit_team.name,
-    },
+    sendingAdviser: convertAdviser(created_by),
+    receivingAdviser: convertAdviser(recipient),
     date: created_on,
+    interaction,
+    completed: status === 'complete' && {
+      on: completed_on,
+      by: convertAdviser(completed_by),
+    },
     notes,
   }
 }
