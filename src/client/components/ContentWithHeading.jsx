@@ -17,8 +17,8 @@ const ContentWithHeading = ({
 )
 
 ContentWithHeading.propTypes = {
-  heading: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  heading: PropTypes.node,
+  children: PropTypes.node,
   headingComponent: PropTypes.func,
 }
 
