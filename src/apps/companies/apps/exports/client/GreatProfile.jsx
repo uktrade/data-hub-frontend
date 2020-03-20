@@ -1,16 +1,12 @@
 import React from 'react'
 import urls from '../../../../../lib/urls'
-import { Link } from 'govuk-react'
+import { NewWindowLink } from 'data-hub-components'
 
 export default ({ profile, companyNumber }) =>
   profile.value === 'published' ? (
-    <Link
-      href={urls.external.greatProfile(companyNumber)}
-      target="_blank"
-      aria-label="opens in a new tab"
-    >
+    <NewWindowLink href={urls.external.greatProfile(companyNumber)}>
       "Find a supplier" profile
-    </Link>
+    </NewWindowLink>
   ) : profile.value === 'unpublished' ? (
     'Profile not published'
   ) : (

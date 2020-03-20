@@ -219,20 +219,17 @@ describe('Company Export tab', () => {
           { label: 'Export win category', value: 'Increasing export turnover' },
           {
             label: 'great.gov.uk business profile',
-            value: '"Find a supplier" profile',
+            value: '"Find a supplier" profile (Opens in a new window)',
           },
 
           { label: 'Export potential', value: 'Medium' },
         ])
 
-        cy.contains('"Find a supplier" profile')
-          .should(
-            'have.attr',
-            'href',
-            urls.external.greatProfile(fixtures.company.dnbLtd.company_number)
-          )
-          .should('have.attr', 'target', '_blank')
-          .should('have.attr', 'aria-label', 'opens in a new tab')
+        cy.contains('"Find a supplier" profile').should(
+          'have.attr',
+          'href',
+          urls.external.greatProfile(fixtures.company.dnbLtd.company_number)
+        )
       })
 
       it('should render the "Export countries information header', () => {
