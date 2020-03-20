@@ -59,7 +59,7 @@
     "@babel/preset-react": "^7.0.0",
     "@govuk-react/constants": "^0.7.1",
     "@hapi/hawk": "^8.0.0",
-    "@hapi/joi": "^17.1.0",
+    "@hapi/joi": "^17.1.1",
     "@uktrade/datahub-header": "1.2.0",
     "autoprefixer": "^9.7.4",
     "axios": "^0.18.0",
