@@ -1,3 +1,4 @@
+const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const { assertLocalNav } = require('../../support/assertions')
 
@@ -31,7 +32,7 @@ describe('DIT Permission', () => {
 
   describe('activity', () => {
     before(() => {
-      cy.visit(companies.detail('375094ac-f79a-43e5-9c88-059a7caa17f0'))
+      cy.visit(companies.detail(fixtures.company.oneListCorp.id))
     })
 
     it('should display DIT only tabs', () => {
@@ -48,7 +49,7 @@ describe('DIT Permission', () => {
 
   describe('contact', () => {
     before(() => {
-      cy.visit(contacts.contact('9b1138ab-ec7b-497f-b8c3-27fed21694ef'))
+      cy.visit(contacts.contact(fixtures.contact.johnnyCakeman.id))
     })
 
     it('should display DIT only side navs', () => {
@@ -64,7 +65,9 @@ describe('DIT Permission', () => {
   describe('investment', () => {
     before(() => {
       cy.visit(
-        investments.projects.project('fb5b5006-56af-40e0-8615-7aba53e0e4bf')
+        investments.projects.project(
+          fixtures.investmentProject.newHotelCommitmentToInvest.id
+        )
       )
     })
 
@@ -83,7 +86,7 @@ describe('DIT Permission', () => {
 
   describe('event', () => {
     before(() => {
-      cy.visit(events.details('b93d4274-36fe-4008-ac40-fbc197910791'))
+      cy.visit(events.details(fixtures.company.teddyBearExpo.id))
     })
 
     it('should display DIT only side navs', () => {

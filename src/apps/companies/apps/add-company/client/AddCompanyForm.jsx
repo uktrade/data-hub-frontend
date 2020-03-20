@@ -8,7 +8,12 @@ import axios from 'axios'
 import { get } from 'lodash'
 import { H3 } from '@govuk-react/heading'
 
-import { FieldRadios, FieldSelect, Form, Step } from 'data-hub-components'
+import {
+  FieldRadios,
+  FieldSelect,
+  FormStateful,
+  Step,
+} from 'data-hub-components'
 
 import CompanyFoundStep from './CompanyFoundStep'
 import CompanyNotFoundStep from './CompanyNotFoundStep'
@@ -68,7 +73,7 @@ function AddCompanyForm({
   }
 
   return (
-    <Form
+    <FormStateful
       onSubmit={onSubmit}
       onExit={() => 'Changes that you made will not be saved.'}
     >
@@ -124,7 +129,7 @@ function AddCompanyForm({
           </>
         )
       }}
-    </Form>
+    </FormStateful>
   )
 }
 

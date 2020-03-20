@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
-import { Form, FormActions, StatusMessage } from 'data-hub-components'
+import { FormStateful, FormActions, StatusMessage } from 'data-hub-components'
 
 import urls from '../../../../../lib/urls'
 import CompanyMatched from './CompanyMatched'
@@ -31,7 +31,7 @@ function EditCompanyForm({
 
   // TODO: Support nested form values to avoid transformation
   return (
-    <Form onSubmit={onSubmit} initialValues={formInitialValues}>
+    <FormStateful onSubmit={onSubmit} initialValues={formInitialValues}>
       {({ submissionError }) => (
         <>
           {submissionError && (
@@ -71,7 +71,7 @@ function EditCompanyForm({
           </FormActions>
         </>
       )}
-    </Form>
+    </FormStateful>
   )
 }
 

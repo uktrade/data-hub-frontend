@@ -1,3 +1,4 @@
+const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const userActions = require('../../support/user-actions')
 
@@ -10,7 +11,7 @@ describe('Advisors', () => {
   const adviserTable = 3
 
   it('should display advisers for a GHQ for a given company', () => {
-    cy.visit(companies.advisers.index('375094ac-f79a-43e5-9c88-059a7caa17f0'))
+    cy.visit(companies.advisers.index(fixtures.company.oneListCorp.id))
 
     cy.get(selectors.collection.contentHeader).should(
       'contain',
@@ -43,7 +44,7 @@ describe('Contacts', () => {
   }
 
   it('should create a contact for a given company', () => {
-    cy.visit(contacts.create('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
+    cy.visit(contacts.create(fixtures.company.lambdaPlc.id))
     userActions.contacts.create(data)
 
     cy.get(selectors.message.successful).should('contain', 'Added new contact')
@@ -58,7 +59,7 @@ describe('Contacts', () => {
   })
 
   it('should display the newly created contact in company contact collection page', () => {
-    cy.visit(companies.activity.index('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
+    cy.visit(companies.activity.index(fixtures.company.lambdaPlc.id))
 
     cy.contains('Company contacts').click()
     cy.get(selectors.collection.items)
@@ -82,7 +83,7 @@ describe('Export', () => {
 
   context('Without any export countries', () => {
     it('should update export win category when edit is made', () => {
-      cy.visit(companies.exports.edit('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
+      cy.visit(companies.exports.edit(fixtures.company.lambdaPlc.id))
 
       cy.get(selectors.companyExport.winCategory).select('Export growth')
       cy.get(selectors.companyForm.save).click()
@@ -113,7 +114,7 @@ describe('Export', () => {
 
     context('Adding two countries to currently exporting', () => {
       it('Should add the countries and display them in alphabetical order', () => {
-        cy.visit(companies.exports.edit('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
+        cy.visit(companies.exports.edit(fixtures.company.lambdaPlc.id))
 
         selectCountry(selectors.companyExport.countries.export, 'Germ')
         selectCountry(selectors.companyExport.countries.export, 'Fran')
@@ -132,7 +133,7 @@ describe('Export', () => {
 
     context('editing just export win category', () => {
       it('should only edit the category', () => {
-        cy.visit(companies.exports.edit('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
+        cy.visit(companies.exports.edit(fixtures.company.lambdaPlc.id))
 
         cy.get(selectors.companyExport.winCategory).select('New exporter')
         cy.get(selectors.companyForm.save).click()
@@ -150,7 +151,7 @@ describe('Export', () => {
 
     context('Editing the export win category and all countries', () => {
       it('should update the countries and edit the category', () => {
-        cy.visit(companies.exports.edit('0fb3379c-341c-4da4-b825-bf8d47b26baa'))
+        cy.visit(companies.exports.edit(fixtures.company.lambdaPlc.id))
 
         cy.get(selectors.companyExport.winCategory).select(
           'Increasing export turnover'

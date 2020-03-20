@@ -10,7 +10,7 @@ import Card from 'data-hub-components/dist/activity-feed/activities/card/Card'
 import CardHeader from 'data-hub-components/dist/activity-feed/activities/card/CardHeader'
 
 import urls from '../../../lib/urls'
-import { AdviserDetails } from '../../../apps/referrals/apps/details/client/ReferralDetails'
+import { AdviserDetails } from '../../../apps/companies/apps/referrals/details/client/ReferralDetails'
 
 const STATUS_COLOURS = {
   outstanding: BLUE,

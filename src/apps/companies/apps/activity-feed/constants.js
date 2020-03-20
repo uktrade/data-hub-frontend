@@ -8,6 +8,7 @@ const ES_KEYS = {
   omis: 'dit:OMISOrder',
   type: 'object.type',
   attributedTo: 'object.attributedTo.id',
+  companyReferral: 'dit:CompanyReferral',
 }
 
 const ES_KEYS_GROUPED = {
@@ -19,6 +20,7 @@ const ES_KEYS_GROUPED = {
     ES_KEYS.serviceDelivery, // Interaction
     ES_KEYS.investmentProject,
     ES_KEYS.omis,
+    ES_KEYS.companyReferral,
   ],
 
   externalActivity: [
@@ -32,6 +34,7 @@ const ES_KEYS_GROUPED = {
     ES_KEYS.serviceDelivery, // Interaction
     ES_KEYS.investmentProject,
     ES_KEYS.omis,
+    ES_KEYS.companyReferral,
   ],
 }
 
