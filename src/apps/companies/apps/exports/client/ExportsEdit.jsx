@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Button, Link } from 'govuk-react'
 import { SPACING_POINTS } from '@govuk-react/constants'
-import { FormActions, FieldSelect, Form } from 'data-hub-components'
+import { FormActions, FieldSelect, FormStateful } from 'data-hub-components'
 import axios from 'axios'
 
 import GreatProfile from './GreatProfile'
@@ -34,7 +34,7 @@ export default ({
   exportPotential,
   exportWinCategories,
 }) => (
-  <Form
+  <FormStateful
     onSubmit={saveWinCategory(companyId)}
     initialValues={{
       [EXPORT_WIN_FIELD_NAME]: exportWinCategoryValue?.id,
@@ -64,5 +64,5 @@ export default ({
         Return without saving
       </Link>
     </FormActions>
-  </Form>
+  </FormStateful>
 )
