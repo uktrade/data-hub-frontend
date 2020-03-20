@@ -81,17 +81,17 @@ const SendReferralForm = ({
             })
       }}
     >
-      <H4>Who do you want to send this referral to?</H4>
+      <H4>Who do you want to refer this company to?</H4>
       <Label error={emptyAdviserError}>
         <LabelText>Adviser</LabelText>
         {emptyAdviserError && (
           <ErrorText>Select an adviser for the referral</ErrorText>
         )}
         <HintText>
-          This can be a person in Post, a sector team or an ITA. If you are not
-          sure who this might be, you can{' '}
+          This can be an adviser at post, a sector specialist or an
+          international trade advisor. If you're not sure, you can{' '}
           <a href="https://people.trade.gov.uk/teams/department-for-international-trade">
-            find the relevant teams and people on Digital Workspace
+            find the right team and person on Digital Workspace
           </a>
           .
         </HintText>
@@ -128,7 +128,7 @@ const SendReferralForm = ({
         />
       </Label>
       <br />
-      <H4>What is this referral or introduction about?</H4>
+      <H4>Referral notes</H4>
       <ValidatedInput
         id="referralSubject"
         error={emptySubjectError && 'Enter a subject for the referral'}
@@ -146,18 +146,15 @@ const SendReferralForm = ({
       <Label>
         Notes
         <HintText>
-          For example the details of previous conversations with the company, or
-          a description of the purpose or opportunity this referral is about
+          Include reasons you're referring this company and any specific
+          opportunities.
         </HintText>
         <StyledTextArea input={{ name: 'notes', defaultValue: notes }} />
       </Label>
       <br />
       <Label>
         <LabelText>Company contact (optional)</LabelText>
-        <HintText>
-          Should the person you're referring the company to get in contact with
-          anyone in particular
-        </HintText>
+        <HintText>Who should the recipient of the referral talk to?</HintText>
         <StyledTypeahead
           isMulti={false}
           isClearable={true}

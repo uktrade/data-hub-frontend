@@ -55,7 +55,7 @@ export default connect(state2props)(
       {() =>
         company && (
           <>
-            <SummaryTable caption={`Referral sent - ${subject}`}>
+            <SummaryTable caption={subject}>
               <SummaryTable.Row heading="Company">{company}</SummaryTable.Row>
               <SummaryTable.Row heading="Contact">{contact}</SummaryTable.Row>
               <SummaryTable.Row heading="Sending adviser">
@@ -70,22 +70,18 @@ export default connect(state2props)(
               <SummaryTable.Row heading="Notes">{notes}</SummaryTable.Row>
             </SummaryTable>
             <Details summary="Why can I not edit the referral?">
-              <p>
-                This referral has been placed in the "My referrals" section on
-                the Homepage of both the recipient and sender. If necessary
-                contact the receiving adviser directly if any of the information
-                has changed.
-              </p>
+              <p>For now, you can't edit the referral once it's been sent.</p>
+              <p>Contact the recipient if something's changed.</p>
             </Details>
             <FormActions>
               <Button as={Link} href="/">
-                Complete referral
+                Accept referral
               </Button>
               <SecondaryButton
                 as={Link}
                 href={urls.companies.referrals.help(companyId, referralId)}
               >
-                I cannot complete the referral
+                I cannot accept the referral
               </SecondaryButton>
               <Link href="/">Back</Link>
             </FormActions>

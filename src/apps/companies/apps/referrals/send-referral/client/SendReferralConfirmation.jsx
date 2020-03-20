@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 
 import { SummaryTable, FormActions } from 'data-hub-components'
 import { H4, Button, Link } from 'govuk-react'
+import UnorderedList from '@govuk-react/unordered-list'
+import ListItem from '@govuk-react/list-item'
 import SecondaryButton from '../../../../../../client/components/SecondaryButton'
 
 const StyledParagraph = styled('p')`
@@ -24,7 +26,7 @@ const SendReferralConfirmation = ({
   return (
     <>
       <SummaryTable caption="Check referral details">
-        <SummaryTable.Row heading="Send this company record to">
+        <SummaryTable.Row heading="Refer this company to">
           {adviser.name}
         </SummaryTable.Row>
         <SummaryTable.Row heading="Subject">{subject}</SummaryTable.Row>
@@ -37,17 +39,16 @@ const SendReferralConfirmation = ({
       </SummaryTable>
       <SecondaryButton onClick={onBack}>Edit referral</SecondaryButton>
       <H4>What happens next</H4>
-      <StyledParagraph>
-        <p>
-          <p>
-            Clicking “Send referral” will show the referral in the activity of{' '}
-            {companyName}, as well as in the Referrals section on both your Data
-            Hub Homepage and the Homepage of the recipient.
-          </p>
-          <p>It might take up to 24 hours for the referral to appear.</p>
-          <p>You will not be able to edit the referral after this point.</p>
-        </p>
-      </StyledParagraph>
+      <UnorderedList listStyleType="bullet">
+        <ListItem>
+          You won't be able to edit the referral after this point
+        </ListItem>
+        <ListItem>
+          A link to the referral will appear on the company record, your
+          homepage and the recipient's homepage
+        </ListItem>
+        <ListItem>The referral might take 24 hours to appear</ListItem>
+      </UnorderedList>
       <form method="post">
         <input name="recipient" value={adviser.id} type="hidden"></input>
         <input name="subject" value={subject} type="hidden"></input>
