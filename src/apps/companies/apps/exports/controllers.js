@@ -101,10 +101,10 @@ function renderExportHistory(req, res) {
 function populateExportForm(req, res, next) {
   const { export_countries } = res.locals.company
 
-  res.locals.formData = Object.assign(
-    getExportCountryGroups(export_countries),
-    req.method === 'POST' ? getPostedFormData(req.body) : {}
-  )
+  res.locals.formData = {
+    ...getExportCountryGroups(export_countries),
+    ...(req.method === 'POST' ? getPostedFormData(req.body) : {}),
+  }
 
   next()
 }

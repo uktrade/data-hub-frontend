@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Button, Link } from 'govuk-react'
+import { SPACING_POINTS } from '@govuk-react/constants'
 import { FormActions, FieldSelect, Form } from 'data-hub-components'
 import axios from 'axios'
 
@@ -10,10 +11,10 @@ import urls from '../../../../../lib/urls'
 const EXPORT_WIN_FIELD_NAME = 'export_experience_category'
 
 const StyledDt = styled.dt`
-  margin-bottom: 5px;
+  margin-bottom: ${SPACING_POINTS[1]}px;
 `
 const StyledDd = styled.dd`
-  margin-bottom: 30px;
+  margin-bottom: ${SPACING_POINTS[6]}px;
 `
 
 function saveWinCategory(companyId) {
