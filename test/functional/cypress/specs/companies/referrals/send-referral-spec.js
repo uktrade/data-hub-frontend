@@ -41,6 +41,16 @@ describe('Send a referral form', () => {
         assertLocalHeader('Send a referral')
       })
 
+      it('should display link to digital workspace', () => {
+        cy.contains(
+          'find the right team and person on Digital Workspace (opens in a new window or tab)'
+        ).within(() =>
+          cy
+            .get('a')
+            .should('have.attr', 'href', urls.external.digitalWorkspace.teams)
+        )
+      })
+
       it('should display the headings and four fields', () => {
         cy.get(selectors.companySendReferral.form)
           .should('contain', 'Adviser')
