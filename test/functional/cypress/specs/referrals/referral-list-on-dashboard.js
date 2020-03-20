@@ -44,7 +44,7 @@ const assertReferralCard = ({
     .next()
     .should(
       'have.text',
-      dateAccepted ? 'Referral accepted' : 'Outstanding referral'
+      `${dateAccepted ? 'Accepted' : 'Outstanding'} referral`
     )
 
   assertDescription({
