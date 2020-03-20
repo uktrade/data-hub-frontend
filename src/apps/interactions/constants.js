@@ -118,6 +118,17 @@ const KINDS = {
   SERVICE_DELIVERY: 'service-delivery',
 }
 
+const SERVICE_CONTEXTS = {
+  INVESTMENT_PROJECT_INTERACTION: 'investment_project_interaction',
+  EXPORT_SERVICE_DELIVERY: 'export_service_delivery',
+  INTERACTION: 'interaction',
+  EVENT: 'event', // Not interaction context
+  OTHER_SERVICE_DELIVERY: 'other_service_delivery',
+  INVESTMENT_INTERACTION: 'investment_interaction',
+  EXPORT_INTERACTION: 'export_interaction',
+  OTHER_INTERACTION: 'other_interaction',
+}
+
 module.exports = {
   QUERY_FIELDS,
   QUERY_DATE_FIELDS,
@@ -132,4 +143,5 @@ module.exports = {
   INTERACTION_CONTEXTS,
   THEMES,
   KINDS,
+  SERVICE_CONTEXTS,
 }

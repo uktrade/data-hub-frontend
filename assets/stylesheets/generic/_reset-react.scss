@@ -1,0 +1,7 @@
+// Reset styles for React components.
+
+.react-slot {
+  *, *:before, *:after {
+    box-sizing: initial;
+  }
+}
