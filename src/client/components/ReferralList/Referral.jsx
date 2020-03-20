@@ -42,7 +42,7 @@ const Referral = ({
       badge={
         dateAccepted
           ? {
-              text: 'Referral accepted',
+              text: 'Accepted referral',
               borderColour: GREEN,
             }
           : {
