@@ -351,6 +351,7 @@ jobs:
       - checkout
       - *restore_yarn_cache
       - run: yarn install --pure-lockfile
+      - run: npx nyc instrument --compact=false --in-place src src
       - run: yarn build
       - *wait_for_backend
       - *wait_for_mock_sso
@@ -359,6 +360,10 @@ jobs:
       - run:
           name: Run DIT staff e2e tests
           command: yarn test:e2e:dit --browser chrome
+      - store_test_results:
+          path: cypress-coverage
+      - store_artifacts:
+          path: cypress-coverage
       - store_artifacts:
           path: cypress/screenshots
       - *store_artifacts_cypress_video
@@ -381,6 +386,7 @@ jobs:
       - checkout
       - *restore_yarn_cache
       - run: yarn install --pure-lockfile
+      - run: npx nyc instrument --compact=false --in-place src src
       - run: yarn build
       - *wait_for_backend
       - *wait_for_mock_sso
@@ -389,6 +395,10 @@ jobs:
       - run:
           name: Run LEP staff e2e tests
           command: yarn test:e2e:lep --browser chrome
+      - store_test_results:
+          path: cypress-coverage
+      - store_artifacts:
+          path: cypress-coverage
       - store_artifacts:
           path: cypress/screenshots
       - *store_artifacts_cypress_video
@@ -411,6 +421,7 @@ jobs:
       - checkout
       - *restore_yarn_cache
       - run: yarn install --pure-lockfile
+      - run: npx nyc instrument --compact=false --in-place src src
       - run: yarn build
       - *wait_for_backend
       - *wait_for_mock_sso
@@ -419,6 +430,10 @@ jobs:
       - run:
           name: Run DA staff e2e tests
           command: yarn test:e2e:da --browser chrome
+      - store_test_results:
+          path: cypress-coverage
+      - store_artifacts:
+          path: cypress-coverage
       - store_artifacts:
           path: cypress/screenshots
       - *store_artifacts_cypress_video
