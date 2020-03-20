@@ -122,19 +122,16 @@ describe('Company Export tab - Edit exports', () => {
         assertReadOnlyItems([
           {
             label: 'great.gov.uk business profile',
-            value: '"Find a supplier" profile',
+            value: '"Find a supplier" profile (Opens in a new window)',
           },
           { label: 'Export potential', value: 'Medium' },
         ])
 
-        cy.contains('"Find a supplier" profile')
-          .should(
-            'have.attr',
-            'href',
-            urls.external.greatProfile(dnbLimited.company_number)
-          )
-          .should('have.attr', 'target', '_blank')
-          .should('have.attr', 'aria-label', 'opens in a new tab')
+        cy.contains('"Find a supplier" profile').should(
+          'have.attr',
+          'href',
+          urls.external.greatProfile(dnbLimited.company_number)
+        )
       })
 
       it('Should render the buttons and clicking Save should save the value', () => {
