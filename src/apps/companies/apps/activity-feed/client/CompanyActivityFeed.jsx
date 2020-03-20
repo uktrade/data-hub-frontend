@@ -18,7 +18,7 @@ const StyledLink = styled('a')`
 const CompanyActivityFeed = ({ companyId, showMatchingPrompt, ...rest }) => (
   <>
     {showMatchingPrompt && (
-      <StatusMessage colour={BLACK}>
+      <StatusMessage colour={BLACK} id="ga-company-details-matching-prompt">
         <WarningText>
           Business details on this company record have not been verified and
           could be wrong.
