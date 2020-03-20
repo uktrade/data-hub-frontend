@@ -20,8 +20,8 @@ const assertReferralCard = ({
   company,
   subject,
   id,
+  companyId,
   date,
-  // status,
   dateAccepted,
   sender,
   recipient,
@@ -35,7 +35,7 @@ const assertReferralCard = ({
   cy.get('h3')
     .should('have.text', subject)
     .find('a')
-    .should('have.attr', 'href', `/referrals/${id}`)
+    .should('have.attr', 'href', `/companies/${companyId}/referrals/${id}`)
 
   cy.get('ul')
     .children()
@@ -91,6 +91,7 @@ describe('Referall list on dashboard', () => {
           company: 'Andy & Lou',
           subject: 'Andy to Lou',
           id: 'foo',
+          companyId: 'andy-and-lou',
           date: '25 Nov 2021',
           dateAccepted: '25 Nov 2021',
           sender: {
@@ -113,6 +114,7 @@ describe('Referall list on dashboard', () => {
           company: 'Andy & Lou',
           subject: 'Lou to Andy',
           id: 'bar',
+          companyId: 'andy-and-lou',
           date: '25 Nov 2021',
           sender: {
             name: 'Lou Todd',
@@ -134,6 +136,7 @@ describe('Referall list on dashboard', () => {
           company: 'Andy & Lou',
           subject: 'Have you got a bandage?',
           id: 'baz',
+          companyId: 'andy-and-lou',
           date: '25 Nov 2021',
           dateAccepted: '25 Nov 2021',
           sender: {
