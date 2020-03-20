@@ -46,27 +46,25 @@ export default connect(state2props)(
         {() =>
           company && (
             <>
-              <H2 size={LEVEL_SIZE[3]}>More information needed</H2>
+              <H2 size={LEVEL_SIZE[3]}>I need more information</H2>
+
               <p>
-                If you need additional details or information about the
-                referral, contact the adviser who sent the referral by email:{' '}
-                <AdviserDetails {...sendingAdviser} />, Or find more contact
-                details on{' '}
+                Contact the sender for more info:{' '}
+                <AdviserDetails {...sendingAdviser} />
+              </p>
+              <p>
+                Or{' '}
                 <Link href={urls.external.digitalWorkspace.teams}>
-                  Digital Workspace
+                  find their contact details on Digital Workspace
                 </Link>
-                .
               </p>
-              <H2 size={LEVEL_SIZE[3]}>
-                A different adviser should follow up on this referral
-              </H2>
+              <H2 size={LEVEL_SIZE[3]}>I'm not the right adviser for this</H2>
+
               <p>
-                If you are not the right person to help this business, ask a
-                colleague to complete the referral. You can copy and send them a
-                direct link to the referral:{' '}
-                <Link href={relReferralLink}>{absReferralLink}</Link>.
+                Forward this referral onto someone else. Paste this URL into an
+                email: <Link href={relReferralLink}>{absReferralLink}</Link>
               </p>
-              <Link href={relReferralLink}>Go back to the referral</Link>
+              <Link href={relReferralLink}>Back to the referral</Link>
             </>
           )
         }
