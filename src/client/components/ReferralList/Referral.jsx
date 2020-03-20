@@ -25,6 +25,7 @@ const StyledSummaryListWrapper = styled.div({
 
 const Referral = ({
   id,
+  companyId,
   companyName,
   subject,
   date,
@@ -36,7 +37,9 @@ const Referral = ({
     <CardHeader
       company={{ name: companyName }}
       heading={
-        <Link href={urls.companies.referrals.details(id)}>{subject}</Link>
+        <Link href={urls.companies.referrals.details(companyId, id)}>
+          {subject}
+        </Link>
       }
       startTime={date}
       badge={
@@ -79,6 +82,7 @@ const Referral = ({
 
 Referral.propTypes = {
   id: PropTypes.string.isRequired,
+  companyId: PropTypes.string.isRequired,
   subject: PropTypes.string.isRequired,
   companyName: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,

@@ -14,6 +14,7 @@ export default () =>
     .catch(handleError)
     .then(({ data: { results } }) =>
       results.map((referral) => ({
+        companyId: referral.company.id,
         id: referral.id,
         subject: referral.subject,
         companyName: referral.company.name,
