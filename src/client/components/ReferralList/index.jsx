@@ -19,32 +19,6 @@ const StyledOl = styled.ol({
   },
 })
 
-const ReferralList = ({ referrals }) => (
-  <ContentWithHeading heading={pluralize('Referral', referrals.length, true)}>
-    <StyledOl>
-      {referrals.map(({ id, ...referral }) => (
-        <li key={id}>
-          <Referral id={id} {...referral} />
-        </li>
-      ))}
-    </StyledOl>
-  </ContentWithHeading>
-)
-
-const EmptyState = () => (
-  <ContentWithHeading heading="My referrals">
-    <HintText>
-      You have not received or sent any referrals.
-      <br />
-      You can refer companies to other advisers from a company page.
-    </HintText>
-  </ContentWithHeading>
-)
-
-ReferralList.propTypes = {
-  referrals: PropTypes.arrayOf(PropTypes.shape(Referral.propTypes)),
-}
-
 export default multiInstance({
   name: 'ReferralList',
   reducer,
@@ -58,10 +32,26 @@ export default multiInstance({
       }}
     >
       {() =>
-        referrals && referrals.length ? (
-          <ReferralList referrals={referrals} />
-        ) : (
-          <EmptyState />
+        referrals && (
+          <ContentWithHeading
+            heading={pluralize('Referral', referrals.length, true)}
+          >
+            {referrals.length ? (
+              <StyledOl>
+                {referrals.map(({ id, ...referral }) => (
+                  <li key={id}>
+                    <Referral id={id} {...referral} />
+                  </li>
+                ))}
+              </StyledOl>
+            ) : (
+              <HintText>
+                You have not received or sent any referrals.
+                <br />
+                You can refer companies to other advisers from a company page.
+              </HintText>
+            )}
+          </ContentWithHeading>
         )
       }
     </Task.Status>
