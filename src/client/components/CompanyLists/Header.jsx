@@ -2,6 +2,7 @@ import { LEVEL_SIZE, SPACING } from '@govuk-react/constants'
 import { H2 } from '@govuk-react/heading'
 import Select from '@govuk-react/select'
 import React from 'react'
+import pluralize from 'pluralize'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
@@ -40,7 +41,9 @@ export const Header = connect(state2props, (dispatch) => ({
     }),
 }))(({ selectedId, lists, onChange }) => (
   <StyledRoot>
-    <StyledHeading size={LEVEL_SIZE[3]}>My companies lists</StyledHeading>
+    <StyledHeading size={LEVEL_SIZE[3]}>
+      {pluralize('My companies list', Object.keys(lists).length, true)}
+    </StyledHeading>
     {Object.keys(lists).length > 1 && (
       <StyledSelect
         label="View list"
