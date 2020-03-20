@@ -1,7 +1,6 @@
 import React from 'react'
 import HintText from '@govuk-react/hint-text'
 import { SPACING } from '@govuk-react/constants'
-import PropTypes from 'prop-types'
 import pluralize from 'pluralize'
 import styled from 'styled-components'
 
