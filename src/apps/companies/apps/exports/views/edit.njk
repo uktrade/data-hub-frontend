@@ -1,45 +1,15 @@
 {% extends "_layouts/template.njk" %}
 
 {% block local_header %}
-  {% call LocalHeader({ heading: 'Edit export countries' }) %}{% endcall %}
+  {% call LocalHeader({ heading: 'Edit exports' }) %}{% endcall %}
 {% endblock %}
 
 {% block body_main_content %}
 
-  {% call Form({
-    errors: errors,
-    buttonText: 'Save and return',
-    returnText: 'Return without saving',
-    returnLink: urls.companies.exports.index(company.id),
-    hiddenFields: {
-      id: company.id
-    }
-  }) %}
-    {{ MultipleChoiceField({
-      name: 'export_experience_category',
-      label: exportDetailsLabels.exportExperienceCategory,
-      value: formData.export_experience_category,
-      options: exportExperienceCategories,
-      initialOption: '-- Select category --',
-      optional: true
-    }) }}
+  {% component 'react-slot', {
+      id: 'company-exports-edit',
+      props: props
+      }
+    %}
 
-    {% for name, label in countriesFields %}
-      {{ Typeahead({
-        name: name,
-        label: label,
-        isAsync: false,
-        isLabelHidden: false,
-        useSubLabel: false,
-        placeholder: 'Search countries',
-        classes: 'c-form-group--no-filter',
-        multipleSelect: true,
-        options: countryOptions,
-        target: 'metadata',
-        autoSubmit: false,
-        selectedOptions: formData[name]
-      }) }}
-    {% endfor %}
-
-  {% endcall %}
 {% endblock %}

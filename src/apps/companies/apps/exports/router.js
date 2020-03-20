@@ -8,13 +8,17 @@ const {
   renderExportEdit,
   handleEditFormPost,
   renderExportHistory,
+  renderExportEditCountries,
 } = require('./controllers')
 
 router.get(urls.companies.exports.index.route, setReturnUrl, renderExports)
+router.get(urls.companies.exports.edit.route, renderExportEdit)
+
 router
-  .route(urls.companies.exports.edit.route)
-  .get(populateExportForm, renderExportEdit)
-  .post(populateExportForm, handleEditFormPost, renderExportEdit)
+  .route(urls.companies.exports.editCountries.route)
+  .get(populateExportForm, renderExportEditCountries)
+  .post(populateExportForm, handleEditFormPost, renderExportEditCountries)
+
 router.get(urls.companies.exports.history.index.route, renderExportHistory)
 router.get(urls.companies.exports.history.country.route, renderExportHistory)
 

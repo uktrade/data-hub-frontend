@@ -11,6 +11,7 @@ const WHITELIST = [
   '/v4/company-referral/:id',
   '/adviser/',
   '/v4/company/:id/export-win',
+  '/v4/company/:id',
 ]
 
 module.exports = (app) => {

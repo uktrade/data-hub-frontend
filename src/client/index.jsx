@@ -23,6 +23,7 @@ import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
 import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
 import ExportsHistory from '../apps/companies/apps/exports/client/ExportsHistory/'
+import ExportsEdit from '../apps/companies/apps/exports/client/ExportsEdit.jsx'
 import ReferralDetails from '../apps/companies/apps/referrals/details/client/ReferralDetails'
 import ReferralHelp from '../apps/companies/apps/referrals/help/client/ReferralHelp'
 import ValidatedInput from './components/ValidatedInput'
@@ -187,6 +188,9 @@ function App() {
       </Mount>
       <Mount selector="#referral-help">
         {(props) => <ReferralHelp {...props} />}
+      </Mount>
+      <Mount selector="#company-exports-edit">
+        {(props) => <ExportsEdit {...props} />}
       </Mount>
     </Provider>
   )
