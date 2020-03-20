@@ -193,6 +193,7 @@ module.exports = {
   },
   interactions: {
     index: url('/interactions'),
+    create: url('/interactions', '/create'),
     detail: url('/interactions', '/:interactionId'),
     subapp: createInteractionsSubApp(),
   },
