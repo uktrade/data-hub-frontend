@@ -43,7 +43,11 @@
     "lint-staged": "lint-staged"
   },
   "nyc": {
-    "report-dir": "cypress-coverage"
+    "report-dir": "cypress-coverage",
+    "extension": [
+      ".jsx",
+      ".js"
+    ]
   },
   "pre-commit": "lint-staged",
   "lint-staged": {
