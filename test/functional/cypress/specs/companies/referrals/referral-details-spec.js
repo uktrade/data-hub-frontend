@@ -32,7 +32,7 @@ describe('Referral details', () => {
     it('should render the content and elements in order', () => {
       cy.get('#referral-details > table')
         .find('caption')
-        .should('have.text', 'Referral sent - I am a subject')
+        .should('have.text', 'I am a subject')
         .parents()
         .find('tbody tr')
         .as('row')
@@ -74,16 +74,16 @@ describe('Referral details', () => {
         .next()
         .should(
           'have.text',
-          'This referral has been placed in the "My referrals" section on the Homepage of both the recipient and sender. If necessary contact the receiving adviser directly if any of the information has changed.'
+          "For now, you can't edit the referral once it's been sent.Contact the recipient if something's changed."
         )
         .parents()
         .find('details')
         .next()
         .find('a:first-child')
-        .should('have.text', 'Complete referral')
+        .should('have.text', 'Accept referral')
         .parent()
         .find('a:nth-child(2)')
-        .should('have.text', 'I cannot complete the referral')
+        .should('have.text', 'I cannot accept the referral')
         .should(
           'have.attr',
           'href',
@@ -118,7 +118,7 @@ describe('Referral details', () => {
     it('should render the content and elements in order', () => {
       cy.get('#referral-details > table')
         .find('caption')
-        .should('have.text', 'Referral sent - I am a subject')
+        .should('have.text', 'I am a subject')
         .parents()
         .find('tbody tr')
         .as('row')
@@ -156,16 +156,16 @@ describe('Referral details', () => {
         .next()
         .should(
           'have.text',
-          'This referral has been placed in the "My referrals" section on the Homepage of both the recipient and sender. If necessary contact the receiving adviser directly if any of the information has changed.'
+          "For now, you can't edit the referral once it's been sent.Contact the recipient if something's changed."
         )
         .parents()
         .find('details')
         .next()
         .find('a:first-child')
-        .should('have.text', 'Complete referral')
+        .should('have.text', 'Accept referral')
         .parent()
         .find('a:nth-child(2)')
-        .should('have.text', 'I cannot complete the referral')
+        .should('have.text', 'I cannot accept the referral')
         .should(
           'have.attr',
           'href',
