@@ -8,9 +8,9 @@ const renderReferralHelp = ({ params: { referralId } }, res) => {
   res
     .breadcrumb(companyName, urls.companies.detail(id))
     .breadcrumb('Referral', urls.companies.referrals.details(id, referralId))
-    .breadcrumb('Help')
+    .breadcrumb('I cannot accept this referral')
     .render('companies/apps/referrals/help/views/help-container', {
-      heading: 'Help to complete this Referral',
+      heading: 'I cannot accept this referral',
       props: {
         referralId,
       },

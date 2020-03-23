@@ -183,16 +183,22 @@ describe('Send a referral form', () => {
           .and('contain', 'Example notes')
           .and('contain', 'Johnny Cakeman')
         cy.contains('Edit referral').should('be.visible')
-        cy.get('h4').should('contain', 'What happens next')
-        cy.get('p')
-          .eq(2)
+        cy.get('h4')
+          .should('contain', 'What happens next')
+          .next('ul')
+          .find('li')
+          .eq(0)
           .should(
             'have.text',
-            'Clicking “Send referral” will show the referral in the activity of Venus Ltd, as well as in the Referrals section on both your Data Hub' +
-              ' Homepage and the Homepage of the recipient.' +
-              'It might take up to 24 hours for the referral to appear.' +
-              'You will not be able to edit the referral after this point.'
+            "You won't be able to edit the referral after this point"
           )
+          .next('li')
+          .should(
+            'have.text',
+            "A link to the referral will appear on the company record, your homepage and the recipient's homepage"
+          )
+          .next('li')
+          .should('have.text', 'The referral might take 24 hours to appear')
         cy.get('button')
           .eq(2)
           .should('be.visible')
@@ -282,7 +288,9 @@ describe('Send a referral form', () => {
           urls.companies.activity.index(fixtures.company.withContacts.id)
         )
         cy.get(selectors.localHeader().flash).should('contain', 'Referral sent')
-        cy.contains('find your referrals on the Homepage').click()
+        cy.contains(
+          'You can see all of your referrals on your Homepage'
+        ).click()
         cy.url().should('contain', urls.dashboard())
       })
     }

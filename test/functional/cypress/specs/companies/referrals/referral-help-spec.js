@@ -18,40 +18,42 @@ describe('Referral help', () => {
         Companies: '/companies',
         'Lambda plc': urls.companies.detail(companyId),
         Referral: urls.companies.referrals.details(companyId, '1'),
-        Help: null,
+        'I cannot accept this referral': null,
       })
     })
 
     it('should render the heading', () => {
       cy.get(selectors.localHeader().heading).should(
         'have.text',
-        'Help to complete this Referral'
+        'I cannot accept this referral'
       )
     })
 
     it('should render the content and conform to design', () => {
       cy.get('#referral-help h2:first-child')
-        .should('have.text', 'More information needed')
+        .should('have.text', 'I need more information')
         .next()
         .should('match', 'p')
         .should(
           'have.text',
-          'If you need additional details or information about the referral, contact the adviser who sent the referral by email: Ian Leggett, caravans@campervans.com, Or find more contact details on Digital Workspace.'
+          'Contact the sender for more info: Ian Leggett, caravans@campervans.com'
+        )
+        .next()
+        .should(
+          'have.text',
+          'Or find their contact details on Digital Workspace'
         )
         .next()
         .should('have.prop', 'tagName', 'H2')
-        .should(
-          'have.text',
-          'A different adviser should follow up on this referral'
-        )
+        .should('have.text', "I'm not the right adviser for this")
         .next()
         .should('have.prop', 'tagName', 'P')
         .should(
           'have.text',
-          `If you are not the right person to help this business, ask a colleague to complete the referral. You can copy and send them a direct link to the referral: http://localhost:3000${urls.companies.referrals.details(
+          `Forward this referral onto someone else. Paste this URL into an email: http://localhost:3000${urls.companies.referrals.details(
             companyId,
             '1'
-          )}.`
+          )}`
         )
         .next()
         .should('have.prop', 'tagName', 'A')
@@ -60,7 +62,7 @@ describe('Referral help', () => {
           'href',
           urls.companies.referrals.details(companyId, '1')
         )
-        .should('have.text', 'Go back to the referral')
+        .should('have.text', 'Back to the referral')
     })
   })
 })
