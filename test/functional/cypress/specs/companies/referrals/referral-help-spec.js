@@ -41,7 +41,7 @@ describe('Referral help', () => {
         .next()
         .should(
           'have.text',
-          'Or find their contact details on Digital Workspace'
+          'Or find their contact details on Digital Workspace (opens in a new window or tab)'
         )
         .next()
         .should('have.prop', 'tagName', 'H2')
