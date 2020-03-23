@@ -41,7 +41,7 @@ describe('Referral help', () => {
         .next()
         .should(
           'have.text',
-          'Or find their contact details on Digital Workspace'
+          'Or find their contact details on Digital Workspace (opens in a new window or tab)'
         )
         .next()
         .should('have.prop', 'tagName', 'H2')
@@ -63,6 +63,13 @@ describe('Referral help', () => {
           urls.companies.referrals.details(companyId, '1')
         )
         .should('have.text', 'Back to the referral')
+    })
+    it("should link to digital workspace's people finder", () => {
+      cy.contains('Digital Workspace').should(
+        'have.attr',
+        'href',
+        urls.external.digitalWorkspace.teams
+      )
     })
   })
 })

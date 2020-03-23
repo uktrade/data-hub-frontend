@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Link from '@govuk-react/link'
 import { H2 } from '@govuk-react/heading'
 import { LEVEL_SIZE } from '@govuk-react/constants'
+import { NewWindowLink } from 'data-hub-components'
 import urls from '../../../../../../lib/urls'
 
 import Task from '../../../../../../client/components/Task'
@@ -54,9 +55,9 @@ export default connect(state2props)(
               </p>
               <p>
                 Or{' '}
-                <Link href={urls.external.digitalWorkspace.teams}>
+                <NewWindowLink href={urls.external.digitalWorkspace.teams}>
                   find their contact details on Digital Workspace
-                </Link>
+                </NewWindowLink>
               </p>
               <H2 size={LEVEL_SIZE[3]}>I'm not the right adviser for this</H2>
 

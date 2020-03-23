@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { throttle } from 'lodash'
 import axios from 'axios'
 
+import urls from '../../../../../../lib/urls'
 import SendReferralConfirmation from './SendReferralConfirmation.jsx'
 import ValidatedInput from '../../../../../../client/components/ValidatedInput.jsx'
 import styled from 'styled-components'
@@ -15,7 +16,7 @@ import {
   SEND_REFERRAL_FORM__ADVISER_CHANGE,
   SEND_REFERRAL_FORM__CONTACT_CHANGE,
 } from '../../../../../../client/actions'
-import { FormActions, Typeahead } from 'data-hub-components'
+import { FormActions, Typeahead, NewWindowLink } from 'data-hub-components'
 import {
   H4,
   TextArea,
@@ -90,9 +91,9 @@ const SendReferralForm = ({
         <HintText>
           This can be an adviser at post, a sector specialist or an
           international trade advisor. If you're not sure, you can{' '}
-          <a href="https://people.trade.gov.uk/teams/department-for-international-trade">
+          <NewWindowLink href="https://people.trade.gov.uk/teams/department-for-international-trade">
             find the right team and person on Digital Workspace
-          </a>
+          </NewWindowLink>
           .
         </HintText>
         <StyledTypeahead
