@@ -332,7 +332,7 @@ describe('Companies business details', () => {
           dataAutoId: 'documentsDetailsContainer',
           heading: 'Documents from CDMS',
           showEditLink: false,
-          content: ['View files and documents (Opens in a new window)'],
+          content: ['View files and documents (opens in a new window or tab)'],
         })
       })
 
