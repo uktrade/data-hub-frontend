@@ -1802,10 +1802,10 @@
   dependencies:
     "@babel/runtime" "^7.5.5"
 
-"@uktrade/datahub-header@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@uktrade/datahub-header/-/datahub-header-1.2.0.tgz#45c380eb18c40994d5a0fc36a25cce1a942dbb0c"
-  integrity sha512-OhzrnEuppfRbi3z+QZhbVKLQgwE3CCsG5dNQCz1WnQcqUDRJHvuqJJdGzDlEmnlJvUSwQn3ruyhs4BvKYDgKJw==
+"@uktrade/datahub-header@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@uktrade/datahub-header/-/datahub-header-1.2.1.tgz#316d0ce84b9721052972170c4cce7ff4d429f11b"
+  integrity sha512-hDX2CXK4NYbkvq7x0xrWfTBDqwVGLf3qYuoDinYz2Jx0lwaDHaGC62hzUFGH063AOEMSLNDajjL8KX2n/AnK8w==
 
 "@uktrade/wdio-image-diff-js@1.2.0":
   version "1.2.0"
