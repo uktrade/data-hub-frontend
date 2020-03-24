@@ -1,6 +1,6 @@
-@import "../settings/colours";
-@import "../settings/typography";
-@import "../tools/mixins/addons";
+@import '../settings/colours';
+@import '../settings/typography';
+@import '../tools/mixins/addons';
 
 html {
   font-family: $dit-font-stack;
@@ -9,7 +9,7 @@ html {
 
 a {
   color: $link-colour;
-  text-decoration-skip: ink;
+  text-decoration-skip-ink: auto;
   outline-color: transparent;
 
   &:hover {
@@ -32,7 +32,7 @@ textarea {
 
   &:focus,
   &:focus + label::before {
-    transition: box-shadow .1s, outline-color .1s .1s;
+    transition: box-shadow 0.1s, outline-color 0.1s 0.1s;
     box-shadow: 0 0 0 3px $focus-colour;
     outline-color: $focus-colour;
     text-decoration: none;
@@ -43,4 +43,3 @@ textarea {
 input:focus + label::before {
   outline: none;
 }
-
