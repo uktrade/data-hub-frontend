@@ -30,6 +30,12 @@ aliases:
       command: yarn start
       background: true
 
+  - &start_frontend_coverage
+    run:
+      name: Start data hub frontend
+      command: yarn start:coverage
+      background: true
+
   - &wait_for_frontend
     run:
       name: Wait for data hub frontend
@@ -292,7 +298,7 @@ jobs:
       - run: yarn build
       - *wait_for_mock_sso
       - *wait_for_api_sandbox
-      - *start_frontend
+      - *start_frontend_coverage
       - *wait_for_frontend
       - run:
           name: Run functional tests
@@ -353,7 +359,7 @@ jobs:
       - run: yarn build
       - *wait_for_backend
       - *wait_for_mock_sso
-      - *start_frontend
+      - *start_frontend_coverage
       - *wait_for_frontend
       - run:
           name: Run DIT staff e2e tests
@@ -387,7 +393,7 @@ jobs:
       - run: yarn build
       - *wait_for_backend
       - *wait_for_mock_sso
-      - *start_frontend
+      - *start_frontend_coverage
       - *wait_for_frontend
       - run:
           name: Run LEP staff e2e tests
@@ -421,7 +427,7 @@ jobs:
       - run: yarn build
       - *wait_for_backend
       - *wait_for_mock_sso
-      - *start_frontend
+      - *start_frontend_coverage
       - *wait_for_frontend
       - run:
           name: Run DA staff e2e tests
