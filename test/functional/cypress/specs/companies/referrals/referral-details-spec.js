@@ -39,10 +39,22 @@ describe('Referral details', () => {
         .as('row')
         .eq(0)
         .should('have.text', 'CompanyLambda plc')
+        .find('a')
+        .should(
+          'have.attr',
+          'href',
+          urls.companies.detail(companyId, REFERRAL_ID)
+        )
 
       cy.get('@row')
         .eq(1)
         .should('have.text', 'ContactHelena Referral')
+        .find('a')
+        .and(
+          'have.attr',
+          'href',
+          urls.contacts.contact('6891d583-7f52-41af-a0d3-d8d527f20d43')
+        )
 
       cy.get('@row')
         .eq(2)
@@ -181,7 +193,7 @@ describe('Referral details', () => {
 
   context('when viewing details of a complete referral', () =>
     it('should display the Referral accepted summary instead of the buttons', () => {
-      cy.visit(urls.companies.referrals.details('any-id-will-do', 'complete'))
+      cy.visit(urls.companies.referrals.details('any-id-will-do', 'completed'))
 
       cy.contains('Complete referral').should('not.exist')
       cy.contains('I cannot complete the referral').should('not.exist')
