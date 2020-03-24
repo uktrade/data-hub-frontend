@@ -7,5 +7,10 @@
   "pluginsFile": "test/cypress/plugins/index.js",
   "supportFile": "test/cypress/support/index.js",
   "defaultCommandTimeout": 10000,
-  "projectId": "w97se2"
+  "projectId": "w97se2",
+  "env": {
+    "codeCoverage": {
+      "url": "http://localhost:3000/__coverage__"
+    }
+  }
 }
