@@ -41,16 +41,6 @@ describe('Send a referral form', () => {
         assertLocalHeader('Send a referral')
       })
 
-      it('should display link to digital workspace', () => {
-        cy.contains(
-          'find the right team and person on Digital Workspace (opens in a new window or tab)'
-        ).within(() =>
-          cy
-            .get('a')
-            .should('have.attr', 'href', urls.external.digitalWorkspace.teams)
-        )
-      })
-
       it('should display the headings and four fields', () => {
         cy.get(selectors.companySendReferral.form)
           .should('contain', 'Adviser')
@@ -103,8 +93,12 @@ describe('Send a referral form', () => {
           cy.get(selectors.companySendReferral.subjectField)
             .click()
             .type('Example subject')
+          cy.get(selectors.companySendReferral.notesField)
+            .click()
+            .type('Example notes')
           cy.get(selectors.companySendReferral.continueButton).click()
-          cy.get(selectors.companySendReferral.form).contains(
+          cy.get(selectors.companySendReferral.form).should(
+            'contain',
             'Select an adviser for the referral'
           )
         })
@@ -116,10 +110,29 @@ describe('Send a referral form', () => {
       () => {
         it('should display error message', () => {
           selectTypeahead('Adviser', 'shawn')
+          cy.get(selectors.companySendReferral.notesField)
+            .click()
+            .type('Example notes')
+          cy.get(selectors.companySendReferral.continueButton).click()
+          cy.get(selectors.companySendReferral.form).contains(
+            'Enter a subject for the referral'
+          )
+        })
+      }
+    )
+
+    context(
+      'when "Continue" button is clicked without specifying notes',
+      () => {
+        it('should display error message', () => {
+          selectTypeahead('Adviser', 'shawn')
+          cy.get(selectors.companySendReferral.subjectField)
+            .click()
+            .type('Example subject')
           cy.get(selectors.companySendReferral.continueButton).click()
           cy.get(selectors.companySendReferral.form).should(
             'contain',
-            'Enter a subject for the referral'
+            'Enter notes for the referral'
           )
         })
       }
@@ -134,41 +147,34 @@ describe('Send a referral form', () => {
             .type(
               'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris nec interdum velit. Nulla facilisi. In ultricies sed ex at malesuada. Proin quis faucibus felis, iaculis malesuada sem. Maecenas semper elit magna, tincidunt consectetur risus volutpat at. Sed'
             )
+          cy.get(selectors.companySendReferral.continueButton).click()
           cy.get(selectors.companySendReferral.form).should(
             'contain',
-            'Subject must be 255 characters or less'
+            'Enter a subject for the referral (Max 255 characters)'
           )
         })
       }
     )
+  })
 
-    context('when the text in the subject field is removed', () => {
-      it('should display error message', () => {
+  context(
+    'when "Continue" button is clicked with just mandatory fields filled in',
+    () => {
+      it('should display confirmation component', () => {
+        selectTypeahead('Adviser', 'shawn')
         cy.get(selectors.companySendReferral.subjectField)
           .click()
-          .type('example subject')
-        cy.get(selectors.companySendReferral.subjectField).clear()
-        cy.get(selectors.companySendReferral.form).should(
-          'contain',
-          'Enter a subject for the referral'
-        )
+          .clear()
+          .type('Example subject')
+          .get(selectors.companySendReferral.notesField)
+          .click()
+          .type('Example notes')
+          .get(selectors.companySendReferral.continueButton)
+          .click()
+        cy.contains('Check referral details').should('be.visible')
       })
-    }),
-      context(
-        'when "Continue" button is clicked with just mandatory fields filled in',
-        () => {
-          it('should display confirmation component', () => {
-            selectTypeahead('Adviser', 'shawn')
-            cy.get(selectors.companySendReferral.subjectField)
-              .click()
-              .type('Example subject')
-              .get(selectors.companySendReferral.continueButton)
-              .click()
-            cy.contains('Check referral details').should('be.visible')
-          })
-        }
-      )
-  })
+    }
+  )
 
   context(
     'when "Continue" button is clicked after all fields filled in',
@@ -192,27 +198,31 @@ describe('Send a referral form', () => {
           .and('contain', 'Example subject')
           .and('contain', 'Example notes')
           .and('contain', 'Johnny Cakeman')
-        cy.contains('Edit referral').should('be.visible')
-        cy.get('h4')
+          .parents()
+          .find('button')
+          .should('contain', 'Edit referral')
+          .next()
           .should('contain', 'What happens next')
-          .next('ul')
+          .next()
           .find('li')
           .eq(0)
           .should(
-            'have.text',
+            'contain',
             "You won't be able to edit the referral after this point"
           )
-          .next('li')
+          .next()
           .should(
-            'have.text',
+            'contain',
             "A link to the referral will appear on the company record, your homepage and the recipient's homepage"
           )
-          .next('li')
-          .should('have.text', 'The referral might take 24 hours to appear')
-        cy.get('button')
-          .eq(2)
-          .should('be.visible')
-        cy.contains('Cancel').should('be.visible')
+          .next()
+          .should('contain', 'The referral might take 24 hours to appear')
+          .parents()
+          .next()
+          .find('button')
+          .should('contain', 'Send referral')
+          .next()
+          .should('contain', 'Cancel')
       })
     }
   )
@@ -288,6 +298,9 @@ describe('Send a referral form', () => {
         cy.get(selectors.companySendReferral.subjectField)
           .click()
           .type('Example subject')
+          .get(selectors.companySendReferral.notesField)
+          .click()
+          .type('Example notes')
           .get(selectors.companySendReferral.continueButton)
           .click()
         cy.get('button')
