@@ -69,9 +69,9 @@ aliases:
     OAUTH2_CLIENT_SECRET: youAintSeenMyRight
     OAUTH2_CLIENT_ID: randomClientId
     SESSION_SECRET: theStrongestAvenger
-    HELP_CENTRE_URL: https://datahub-helpcentre.london.cloudapps.digital
-    HELP_CENTRE_ANNOUNCMENTS_URL: https://datahub-helpcentre.london.cloudapps.digital/updates/announcements
-    HELP_CENTRE_API_FEED: https://datahub-helpcentre.london.cloudapps.digital/api/feeds/announcements
+    HELP_CENTRE_URL: https://data-services-help.trade.gov.uk/data-hub/
+    HELP_CENTRE_ANNOUNCMENTS_URL: https://data-services-help.trade.gov.uk/data-hub/updates/announcements/
+    HELP_CENTRE_API_FEED: https://data-services-help.trade.gov.uk/api/feeds/data-hub/updates
     DATA_HUB_BACKEND_ACCESS_KEY_ID: frontend-key-id
     DATA_HUB_BACKEND_SECRET_ACCESS_KEY: frontend-key
     ZEN_TICKETS_URL: http://zendesk.example.com
@@ -356,7 +356,6 @@ jobs:
       - store_artifacts:
           path: cypress/screenshots
       - *store_artifacts_cypress_video
-   
 
   # Run e2e tests for LEP staff
   lep_staff_e2e:

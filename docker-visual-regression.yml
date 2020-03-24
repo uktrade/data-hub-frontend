@@ -40,8 +40,8 @@ services:
       OAUTH2_CLIENT_ID: randomClientId
       OAUTH2_DEV_TOKEN: ditStaffToken
       CACHE_ASSETS: "true"
-      HELP_CENTRE_URL: https://datahub-helpcentre.london.cloudapps.digital
-      HELP_CENTRE_ANNOUNCMENTS_URL: https://datahub-helpcentre.london.cloudapps.digital/updates/announcements
+      HELP_CENTRE_URL: https://data-services-help.trade.gov.uk/data-hub/
+      HELP_CENTRE_ANNOUNCMENTS_URL: https://data-services-help.trade.gov.uk/data-hub/updates/announcements/
       HELP_CENTRE_API_FEED: http://sandbox:8001/help-centre/announcement
       HELP_CENTRE_FEED_API_TOKEN: apiToken
       SESSION_SECRET: foobarbaz
