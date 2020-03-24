@@ -6,6 +6,7 @@ import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
 import createSagaMiddleware from 'redux-saga'
 
 import AddCompanyForm from '../apps/companies/apps/add-company/client/AddCompanyForm'
+import AddInteractionForm from '../apps/interactions/apps/add-interaction/client/AddInteractionForm'
 import CompanyActivityFeed from '../apps/companies/apps/activity-feed/client/CompanyActivityFeed'
 import EditCompanyForm from '../apps/companies/apps/edit-company/client/EditCompanyForm'
 import EditHistory from '../apps/companies/apps/edit-history/client/EditHistory'
@@ -107,6 +108,11 @@ function App() {
       <Mount selector="#add-company-form">
         {(props) => (
           <AddCompanyForm csrfToken={globalProps.csrfToken} {...props} />
+        )}
+      </Mount>
+      <Mount selector="#add-interaction-form">
+        {(props) => (
+          <AddInteractionForm csrfToken={globalProps.csrfToken} {...props} />
         )}
       </Mount>
       <Mount selector="#edit-company-form">
