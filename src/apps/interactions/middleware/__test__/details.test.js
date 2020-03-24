@@ -17,6 +17,8 @@ const { FUTURE_INTEREST, EXPORTING_TO, NOT_INTERESTED } = EXPORT_INTEREST_STATUS
 
 const serviceOptionsTransformed = transformServicesOptions(serviceOptions)
 
+let referralId
+
 describe('Interaction details middleware', () => {
   describe('#postDetails', () => {
     let formBodyToApiRequestResponse
@@ -72,7 +74,8 @@ describe('Interaction details middleware', () => {
           it('should POST to the API', () => {
             expect(this.saveInteractionStub).to.have.been.calledOnceWithExactly(
               this.middlewareParameters.reqMock.session.token,
-              formBodyToApiRequestResponse
+              formBodyToApiRequestResponse,
+              referralId
             )
           })
 
@@ -142,7 +145,8 @@ describe('Interaction details middleware', () => {
           it('should PATCH to the API', () => {
             expect(this.saveInteractionStub).to.have.been.calledOnceWithExactly(
               this.middlewareParameters.reqMock.session.token,
-              formBodyToApiRequestResponse
+              formBodyToApiRequestResponse,
+              referralId
             )
           })
 
@@ -218,7 +222,8 @@ describe('Interaction details middleware', () => {
                 this.saveInteractionStub
               ).to.have.been.calledOnceWithExactly(
                 this.middlewareParameters.reqMock.session.token,
-                formBodyToApiRequestResponse
+                formBodyToApiRequestResponse,
+                referralId
               )
             })
 
@@ -300,7 +305,8 @@ describe('Interaction details middleware', () => {
                 this.saveInteractionStub
               ).to.have.been.calledOnceWithExactly(
                 this.middlewareParameters.reqMock.session.token,
-                formBodyToApiRequestResponse
+                formBodyToApiRequestResponse,
+                referralId
               )
             })
 
@@ -370,7 +376,8 @@ describe('Interaction details middleware', () => {
           it('should PATCH to the API without export_countries', () => {
             expect(this.saveInteractionStub).to.have.been.calledOnceWithExactly(
               this.middlewareParameters.reqMock.session.token,
-              formBodyToApiRequestResponse
+              formBodyToApiRequestResponse,
+              referralId
             )
           })
 

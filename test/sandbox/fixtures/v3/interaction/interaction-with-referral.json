@@ -1,0 +1,126 @@
+{  
+    "id":"65e984ad-1ad5-4d89-9b12-71cdff5f412d",
+    "company":{  
+       "name":"Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978",
+       "id":"4cd4128b-1bad-4f1e-9146-5d4678c6a018"
+    },
+    "contact":{  
+       "name":"Bob lawson",
+       "first_name":"Bob",
+       "last_name":"lawson",
+       "job_title":"Magician",
+       "id":"0e75d636-1d24-416a-aaf0-3fb220d594ce"
+    },
+    "contacts":[  
+       {  
+          "name":"Bob lawson",
+          "first_name":"Bob",
+          "last_name":"lawson",
+          "job_title":"Magician",
+          "id":"0e75d636-1d24-416a-aaf0-3fb220d594ce"
+       }
+    ],
+    "created_on":"2019-02-07T15:54:01.435652Z",
+    "created_by":{  
+       "name":"DIT Staff",
+       "first_name":"DIT",
+       "last_name":"Staff",
+       "id":"7d19d407-9aec-4d06-b190-d3f404627f21"
+    },
+    "event":null,
+    "is_event":null,
+    "status": "complete",
+    "kind":"interaction",
+    "modified_by":{  
+       "name":"DIT Staff",
+       "first_name":"DIT",
+       "last_name":"Staff",
+       "id":"7d19d407-9aec-4d06-b190-d3f404627f21"
+    },
+    "modified_on":"2019-02-07T15:54:01.435681Z",
+    "date":"2019-02-07",
+    "dit_adviser":{
+      "name":"DIT Staff",
+      "first_name":"DIT",
+      "last_name":"Staff",
+      "id":"7d19d407-9aec-4d06-b190-d3f404627f21"
+    },
+    "dit_team":{
+      "name":"UKTI Team East Midlands - International Trade Team",
+      "id":"9010dd28-9798-e211-a939-e4115bead28a"
+    },
+    "company_referral": {
+        "id": "cc5b9953-894c-44b4-a4ac-d0f6a6f6128f",
+        "closed_by": null,
+        "closed_on": null,
+        "company": {
+            "name": "Lambda plc",
+            "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa"
+        },
+        "completed_by": null,
+        "completed_on": null,
+        "contact": {
+            "name": "Johnny Cakeman",
+            "id": "9b1138ab-ec7b-497f-b8c3-27fed21694ef"
+        },
+        "created_by": {
+            "name": "Ian Leggett",
+            "contact_email": "caravans@campervans.com",
+            "dit_team": {
+                "name": "Advanced Manufacturing Sector",
+                "id": "08c14624-2f50-e311-a56a-e4115bead28a"
+            },
+            "id": "0c004222-5626-4ef6-b663-18f99fc67cd6"
+        },
+        "created_on": "2020-02-14T15:07:59.341233Z",
+        "interaction": null,
+        "notes": "Just a note about a referral",
+        "recipient": {
+            "name": "Barry Oling",
+            "contact_email": "barry@barry.com",
+            "dit_team": {
+                "name": "Aberdeen City Council",
+                "id": "cff02898-9698-e211-a939-e4115bead28a"
+            },
+            "id": "a80ff5fd-8904-4940-bf96-fe8047e34be5"
+        },
+        "status": "outstanding",
+        "subject": "I am a subject"
+      },
+    "dit_participants": [
+      {
+        "adviser": {
+          "name":"DIT Staff",
+          "first_name":"DIT",
+          "last_name":"Staff",
+          "id":"7d19d407-9aec-4d06-b190-d3f404627f21"
+        },
+        "team": {
+          "name":"UKTI Team East Midlands - International Trade Team",
+          "id":"9010dd28-9798-e211-a939-e4115bead28a"
+        }
+      }],
+    "communication_channel":{  
+       "name":"Social Media",
+       "id":"a8d71fdd-5d95-e211-a939-e4115bead28a"
+    },
+    "grant_amount_offered":null,
+    "investment_project":null,
+    "net_company_receipt":null,
+    "service":{  
+       "name":"Account Managment: Northern Powerhouse",
+       "id":"a4a733b6-eb95-e611-be23-e4115bead28a"
+    },
+    "service_delivery_status":null,
+    "subject":"This is an automated interaction",
+    "notes":"Sandbox",
+    "archived_documents_url_path":"",
+    "policy_areas":[  
+  
+    ],
+    "policy_feedback_notes":"",
+    "policy_issue_types":[  
+  
+    ],
+    "was_policy_feedback_provided":false
+  }
