@@ -181,7 +181,7 @@ exports.referralDetails = function(req, res) {
   if (req.params.id === ReferralIds.REFERRAL_ID_NO_CONTACT) {
     return res.json(referralDetailsNoContact)
   }
-  if (req.params.id === 'complete') {
+  if (req.params.id === 'completed') {
     return res.json(
       _.merge({}, referralDetailsNoContact, {
         status: 'complete',
