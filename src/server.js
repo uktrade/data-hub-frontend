@@ -44,6 +44,10 @@ const routers = require('./apps/routers')
 
 const app = express()
 
+if (global.__coverage__) {
+  require('@cypress/code-coverage/middleware/express')(app)
+}
+
 // Validate ENV vars
 Joi.assert(process.env, envSchema, {
   allowUnknown: true,
