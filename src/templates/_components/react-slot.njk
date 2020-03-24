@@ -6,7 +6,6 @@
  # @example
  # {% component 'react-slot', {
  #    id: 'react-mount-my-companies',
- #    classes: 'gov-uk-column-one-third',
  #    props: data
  #  } %}
  #
@@ -14,6 +13,6 @@
 
 {% set props = props or {} %}
 
-<div id="{{id}}" class="{{classes}}" data-props="{{ props | dump }}">
+<div id="{{id}}" class="react-slot" data-props="{{ props | dump }}">
   <noscript>Please enable JavaScript in your browser to see the content.</noscript>
 </div>
