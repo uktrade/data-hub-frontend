@@ -29,6 +29,7 @@ import ReferralHelp from '../apps/companies/apps/referrals/help/client/ReferralH
 import ValidatedInput from './components/ValidatedInput'
 import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
 import sendReferral from '../apps/companies/apps/referrals/send-referral/client/reducer'
+import InteractionReferralDetails from '../apps/companies/apps/referrals/details/client/InteractionReferralDetails.jsx'
 
 import tasksSaga from './components/Task/saga'
 import tasks from './components/Task/reducer'
@@ -191,6 +192,9 @@ function App() {
       </Mount>
       <Mount selector="#company-exports-edit">
         {(props) => <ExportsEdit {...props} />}
+      </Mount>
+      <Mount selector="#interaction-referral-details">
+        {(props) => <InteractionReferralDetails {...props} />}
       </Mount>
     </Provider>
   )

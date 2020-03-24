@@ -8,9 +8,12 @@ function fetchInteraction(token, interactionId) {
   )
 }
 
-function saveInteraction(token, interaction) {
+function saveInteraction(token, interaction, referralId) {
   const options = {
-    url: `${config.apiRoot}/v3/interaction`,
+    url:
+      referralId && !interaction.id
+        ? `${config.apiRoot}/v4/company-referral/${referralId}/complete`
+        : `${config.apiRoot}/v3/interaction`,
     method: 'POST',
     body: interaction,
   }

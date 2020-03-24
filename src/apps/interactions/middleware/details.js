@@ -15,9 +15,50 @@ const { getReturnLink } = require('../helpers')
 const canAddCountries = require('../macros/can-add-countries')
 const mapErrors = require('../macros/map-errors')
 
+function getFlashMessage(
+  kind,
+  companyId,
+  countriesDiscussed,
+  newInteraction,
+  existingInteraction
+) {
+  const flashMessage = `${sentence(kind)} ${
+    existingInteraction ? 'updated' : 'created'
+  }`
+
+  const countriesDiscussedBody = `You discussed some countries within the interaction, <a href="${urls.companies.exports.index(
+    companyId
+  )}">click here to view all countries</a> within the export tab`
+
+  // When creating an interaction
+  if (newInteraction) {
+    const referralAcceptedHeader = 'and referral accepted'
+    const referralAcceptedBody = `You can <a href="${urls.dashboard()}">find your referrals on the Homepage</a>`
+
+    if (countriesDiscussed && newInteraction.referralId) {
+      return [
+        `${flashMessage} ${referralAcceptedHeader}`,
+        `${referralAcceptedBody}<br/>${countriesDiscussedBody}`,
+      ]
+    } else if (countriesDiscussed) {
+      return [flashMessage, countriesDiscussedBody]
+    } else if (newInteraction.referralId) {
+      return [`${flashMessage} ${referralAcceptedHeader}`, referralAcceptedBody]
+    } else {
+      return [flashMessage]
+    }
+  }
+
+  // When editing an interaction
+  else if (countriesDiscussed) {
+    return [flashMessage, countriesDiscussedBody]
+  } else {
+    return [flashMessage]
+  }
+}
+
 async function postDetails(req, res, next) {
   try {
-    const companyId = res.locals.company.id
     const serviceOptions = await getOptions(req.session.token, 'service', {
       transformer: transformServicesOptions,
       transformWithoutMapping: true,
@@ -28,25 +69,32 @@ async function postDetails(req, res, next) {
       canAddCountries(req.params.theme, res.locals.interaction)
     )
 
+    const {
+      interaction: existingInteraction,
+      interactions: newInteraction,
+      requestBody,
+      company: { id: companyId },
+    } = res.locals
+
     const result = await saveInteraction(
       req.session.token,
-      res.locals.requestBody
+      requestBody,
+      (existingInteraction && existingInteraction.company_referral) ||
+        (newInteraction && newInteraction.referralId)
     )
 
-    const flashMessage = `${sentence(req.params.kind)} ${
-      res.locals.interaction ? 'updated' : 'created'
-    }`
+    const [header, body] = getFlashMessage(
+      req.params.kind,
+      companyId,
+      result.were_countries_discussed,
+      newInteraction,
+      existingInteraction
+    )
 
-    if (result.were_countries_discussed) {
-      req.flashWithBody(
-        'success',
-        flashMessage,
-        `You discussed some countries within the interaction, <a href="${urls.companies.exports.index(
-          companyId
-        )}">click here to view all countries</a> within the export tab`
-      )
+    if (body) {
+      req.flashWithBody('success', header, body)
     } else {
-      req.flash('success', flashMessage)
+      req.flash('success', header)
     }
 
     res.redirect(joinPaths([getReturnLink(res.locals.interactions), result.id]))
