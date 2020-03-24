@@ -4,19 +4,47 @@ const urls = require('../../../../../../src/lib/urls')
 const exportSelectors = require('../../../../../selectors/company/export')
 
 describe('Company Export tab', () => {
-  function assertTable(rows, { start = 0 } = {}) {
-    const TR_ALIAS = 'tr-rows'
+  function assertTable({ rows, caption, action }) {
+    const TR_ALIAS = 'export-index-tr-rows'
+    const CAPTION_ALIAS = 'export-index-caption'
 
-    cy.get('tr').as(TR_ALIAS)
+    cy.contains('caption', caption)
+      .as(CAPTION_ALIAS)
+      .parent()
+      .find('tr')
+      .as(TR_ALIAS)
+
+    if (action) {
+      cy.get('@' + CAPTION_ALIAS)
+        .find('a')
+        .should('have.attr', 'href', action)
+        .should('have.text', 'Edit')
+    }
 
     rows.forEach((row, index) => {
       cy.get('@' + TR_ALIAS)
-        .eq(start + index)
+        .eq(index)
         .find('th')
         .should('have.text', row.label)
         .parent()
         .find('td')
         .should('have.text', row.value)
+    })
+  }
+
+  function assertExportsTable(companyId, rows) {
+    assertTable({
+      caption: 'Exports',
+      rows,
+      action: urls.companies.exports.edit(companyId),
+    })
+  }
+
+  function assertExportCountriesTable(companyId, rows) {
+    assertTable({
+      caption: 'Export countries information',
+      rows,
+      action: urls.companies.exports.editCountries(companyId),
     })
   }
 
@@ -38,12 +66,8 @@ describe('Company Export tab', () => {
         })
       })
 
-      it('should render "Exports" caption with an edit link', () => {
-        cy.get('table:first caption').should('have.text', 'ExportsEdit')
-      })
-
       it('should render the "Exports" table', () => {
-        assertTable([
+        assertExportsTable(fixtures.company.dnbCorp.id, [
           { label: 'Export win category', value: 'None' },
           { label: 'great.gov.uk business profile', value: 'No profile' },
           { label: 'Export potential', value: 'No score given' },
@@ -60,10 +84,12 @@ describe('Company Export tab', () => {
           .should('have.attr', 'aria-label', 'opens in a new tab')
       })
 
-      it('should render the "Export countries information header', () => {
-        cy.get('h3')
-          .first()
-          .should('have.text', 'Export countries information')
+      it('should render the "Export countries information table', () => {
+        assertExportCountriesTable(fixtures.company.dnbCorp.id, [
+          { label: 'Currently exporting to', value: 'None' },
+          { label: 'Future countries of interest', value: 'None' },
+          { label: 'Countries of no interest', value: 'None' },
+        ])
       })
 
       it('should render the link to exports history', () => {
@@ -74,38 +100,15 @@ describe('Company Export tab', () => {
         )
       })
 
-      it('should render the "Exports countries information" table', () => {
-        assertTable(
-          [
-            { label: 'Currently exporting to', value: 'None' },
-            { label: 'Future countries of interest', value: 'None' },
-            { label: 'Countries of no interest', value: 'None' },
-          ],
-          { start: 3 }
-        )
-      })
-
-      it('should render the "Edit export countries" button', () => {
-        cy.contains('Edit export countries').should('have.prop', 'tagName', 'A')
-      })
-
-      it('should render the "Edit export countries" button with the correct link', () => {
-        cy.contains('Edit export countries').should(
-          'have.attr',
-          'href',
-          urls.companies.exports.editCountries(fixtures.company.dnbCorp.id)
-        )
-      })
-
       it('should render the "Export wins" header', () => {
         cy.get('h3')
-          .eq(1)
+          .eq(0)
           .should('have.text', 'Export wins')
       })
 
       it('should render the "Record your win on our Exports Wins site" paragraph', () => {
         cy.get('h3')
-          .eq(1)
+          .eq(0)
           .siblings('p')
           .should('have.text', 'Record your win on our Export Wins site')
       })
@@ -215,7 +218,7 @@ describe('Company Export tab', () => {
       })
 
       it('should render the "Exports" table', () => {
-        assertTable([
+        assertExportsTable(fixtures.company.dnbLtd.id, [
           { label: 'Export win category', value: 'Increasing export turnover' },
           {
             label: 'great.gov.uk business profile',
@@ -232,12 +235,6 @@ describe('Company Export tab', () => {
         )
       })
 
-      it('should render the "Export countries information header', () => {
-        cy.get('h3')
-          .first()
-          .should('have.text', 'Export countries information')
-      })
-
       it('should render the link to exports history', () => {
         cy.contains('View full export countries history').should(
           'have.attr',
@@ -247,14 +244,11 @@ describe('Company Export tab', () => {
       })
 
       it('should render the "Exports countries information" table', () => {
-        assertTable(
-          [
-            { label: 'Currently exporting to', value: 'France, Spain' },
-            { label: 'Future countries of interest', value: 'Germany' },
-            { label: 'Countries of no interest', value: 'Sweden' },
-          ],
-          { start: 3 }
-        )
+        assertExportCountriesTable(fixtures.company.dnbLtd.id, [
+          { label: 'Currently exporting to', value: 'France, Spain' },
+          { label: 'Future countries of interest', value: 'Germany' },
+          { label: 'Countries of no interest', value: 'Sweden' },
+        ])
       })
     }
   )
@@ -264,8 +258,16 @@ describe('Company Export tab', () => {
       cy.visit(urls.companies.exports.index(fixtures.company.archivedLtd.id))
     })
 
-    it('the edit export countries button should not exist', () => {
-      cy.contains('Edit export countries').should('not.exist')
+    it('the edit exports link should not exist', () => {
+      cy.contains('caption', 'Exports')
+        .contains('a', 'Edit')
+        .should('not.exist')
+    })
+
+    it('the edit export countries link should not exist', () => {
+      cy.contains('caption', 'Export countries information')
+        .find('a', 'Edit')
+        .should('not.exist')
     })
   })
 
