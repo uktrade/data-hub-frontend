@@ -8,12 +8,7 @@ import UnorderedList from '@govuk-react/unordered-list'
 import ListItem from '@govuk-react/list-item'
 import SecondaryButton from '../../../../../../client/components/SecondaryButton'
 
-const StyledParagraph = styled('p')`
-  font-size: 16px;
-`
-
 const SendReferralConfirmation = ({
-  companyName,
   companyId,
   adviser,
   subject,

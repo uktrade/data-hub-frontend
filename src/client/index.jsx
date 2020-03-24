@@ -27,7 +27,6 @@ import ExportsHistory from '../apps/companies/apps/exports/client/ExportsHistory
 import ExportsEdit from '../apps/companies/apps/exports/client/ExportsEdit.jsx'
 import ReferralDetails from '../apps/companies/apps/referrals/details/client/ReferralDetails'
 import ReferralHelp from '../apps/companies/apps/referrals/help/client/ReferralHelp'
-import ValidatedInput from './components/ValidatedInput'
 import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
 import sendReferral from '../apps/companies/apps/referrals/send-referral/client/reducer'
 import InteractionReferralDetails from '../apps/companies/apps/referrals/details/client/InteractionReferralDetails.jsx'
@@ -66,7 +65,6 @@ const store = createStore(
     [COMPANY_LISTS_STATE_ID]: companyListsReducer,
     [EXPORTS_HISTORY_ID]: exportsHistoryReducer,
     [REFERRALS_DETAILS_STATE_ID]: referralsReducer,
-    ...ValidatedInput.reducerSpread,
     ...TabNav.reducerSpread,
     ...ReferralList.reducerSpread,
     [EXPORTS_WINS_ID]: exportWinsReducer,
