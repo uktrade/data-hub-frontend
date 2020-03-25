@@ -92,13 +92,9 @@ const expectedRows = {
 
 const describeTableCell = ({ row, col, text, linksTo, shouldHaveEllipsis }) =>
   describe(`Cell in column ${col}, row ${row}`, () => {
-    let table
-    before(() => {
-      table = cy.get('table').find('tbody tr')
-    })
-
     it('Should have the expected text and behavior', () => {
-      table
+      cy.get('table')
+        .find('tbody tr')
         .eq(row)
         .find('td')
         .eq(col)
