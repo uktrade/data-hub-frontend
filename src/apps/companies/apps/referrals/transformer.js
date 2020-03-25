@@ -1,7 +1,7 @@
 const transformAdviser = ({ name, contact_email, dit_team }) => ({
   name,
   email: contact_email,
-  team: dit_team?.name,
+  team: dit_team && dit_team.name,
 })
 
 const transformReferralDetails = ({
