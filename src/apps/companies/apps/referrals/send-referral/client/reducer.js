@@ -5,6 +5,7 @@ import {
   SEND_REFERRAL_FORM__SUBJECT_CHANGE,
   SEND_REFERRAL_FORM__ADVISER_CHANGE,
   SEND_REFERRAL_FORM__CONTACT_CHANGE,
+  SEND_REFERRAL_FORM__TEXTAREA_CHANGE,
 } from '../../../../../../client/actions'
 
 export default (state = {}, { type, errors, ...action }) => {
@@ -18,6 +19,11 @@ export default (state = {}, { type, errors, ...action }) => {
       return {
         ...state,
         emptyFields: state.emptyFields?.filter((item) => item !== 'subject'),
+      }
+    case SEND_REFERRAL_FORM__TEXTAREA_CHANGE:
+      return {
+        ...state,
+        emptyFields: state.emptyFields?.filter((item) => item !== 'notes'),
       }
     case SEND_REFERRAL_FORM__ADVISER_CHANGE:
       return {
