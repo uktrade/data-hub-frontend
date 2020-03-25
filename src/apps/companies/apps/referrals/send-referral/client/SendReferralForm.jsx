@@ -4,9 +4,7 @@ import PropTypes from 'prop-types'
 import { throttle } from 'lodash'
 import axios from 'axios'
 
-import urls from '../../../../../../lib/urls'
-import SendReferralConfirmation from './SendReferralConfirmation.jsx'
-import ValidatedInput from '../../../../../../client/components/ValidatedInput.jsx'
+import SendReferralConfirmation from './SendReferralConfirmation'
 import styled from 'styled-components'
 import {
   SEND_REFERRAL_FORM__CONTINUE,
@@ -15,20 +13,22 @@ import {
   SEND_REFERRAL_FORM__SUBJECT_CHANGE,
   SEND_REFERRAL_FORM__ADVISER_CHANGE,
   SEND_REFERRAL_FORM__CONTACT_CHANGE,
+  SEND_REFERRAL_FORM__TEXTAREA_CHANGE,
 } from '../../../../../../client/actions'
-import { FormActions, Typeahead, NewWindowLink } from 'data-hub-components'
+import { FormActions, Typeahead } from 'data-hub-components'
 import {
   H4,
-  TextArea,
   Label,
   Button,
   Link,
   HintText,
   ErrorText,
   LabelText,
+  TextArea,
 } from 'govuk-react'
 
 import { MEDIA_QUERIES } from '@govuk-react/constants'
+import InputField from '@govuk-react/input-field'
 
 const StyledTextArea = styled(TextArea)({
   textarea: {
@@ -57,20 +57,24 @@ const SendReferralForm = ({
   adviser,
   subjectError,
   emptyFields = [],
-  onSubjectChange,
   onAdviserChange,
   onContactChange,
 }) => {
   const emptyAdviserError = emptyFields.includes('adviser')
   const emptySubjectError = emptyFields.includes('subject')
+  const emptyNotesError = emptyFields.includes('notes')
+  const MAX_LENGTH = 255
 
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault()
         const emptyFields = [
-          !event.target.subject.value && 'subject',
+          (!event?.target?.subject?.value ||
+            event?.target?.subject?.value?.length >= MAX_LENGTH) &&
+            'subject',
           !adviser && 'adviser',
+          !event.target.notes.value && 'notes',
         ].filter(Boolean)
         emptyFields.length
           ? onError(emptyFields)
@@ -91,9 +95,9 @@ const SendReferralForm = ({
         <HintText>
           This can be an adviser at post, a sector specialist or an
           international trade advisor. If you're not sure, you can{' '}
-          <NewWindowLink href="https://people.trade.gov.uk/teams/department-for-international-trade">
+          <a href="https://people.trade.gov.uk/teams/department-for-international-trade">
             find the right team and person on Digital Workspace
-          </NewWindowLink>
+          </a>
           .
         </HintText>
         <StyledTypeahead
@@ -130,28 +134,28 @@ const SendReferralForm = ({
       </Label>
       <br />
       <H4>Referral notes</H4>
-      <ValidatedInput
-        id="referralSubject"
-        error={emptySubjectError && 'Enter a subject for the referral'}
-        onChange={onSubjectChange}
-        validator={(value) =>
-          value.length
-            ? value.length > 255 && 'Subject must be 255 characters or less'
-            : 'Enter a subject for the referral'
-        }
+      <InputField
+        meta={{
+          touched: true,
+          error:
+            emptySubjectError &&
+            `Enter a subject for the referral (Max ${MAX_LENGTH} characters)`,
+        }}
         input={{ name: 'subject', defaultValue: subject }}
       >
         Subject
-      </ValidatedInput>
+      </InputField>
       <br />
-      <Label>
+      <StyledTextArea
+        hint="Include reasons you're referring this company and any specific opportunities."
+        meta={{
+          touched: true,
+          error: emptyNotesError && 'Enter notes for the referral',
+        }}
+        input={{ name: 'notes', defaultValue: notes }}
+      >
         Notes
-        <HintText>
-          Include reasons you're referring this company and any specific
-          opportunities.
-        </HintText>
-        <StyledTextArea input={{ name: 'notes', defaultValue: notes }} />
-      </Label>
+      </StyledTextArea>
       <br />
       <Label>
         <LabelText>Company contact (optional)</LabelText>
@@ -184,9 +188,7 @@ const SendReferralForm = ({
       </Label>
       <br />
       <FormActions>
-        <Button disabled={subjectError || emptyFields.length ? true : false}>
-          Continue
-        </Button>
+        <Button>Continue</Button>
         <Link href={cancelUrl}>Cancel</Link>
       </FormActions>
     </form>
@@ -206,7 +208,6 @@ SendReferralForm.propTypes = {
 export default connect(
   (state) => ({
     ...state.sendReferral,
-    subjectError: state.ValidatedInput.referralSubject?.validationError,
   }),
   (dispatch) => ({
     onError: (emptyFields) => {
@@ -224,6 +225,11 @@ export default connect(
     onSubjectChange: () => {
       dispatch({
         type: SEND_REFERRAL_FORM__SUBJECT_CHANGE,
+      })
+    },
+    onTextAreaChange: () => {
+      dispatch({
+        type: SEND_REFERRAL_FORM__TEXTAREA_CHANGE,
       })
     },
     onContactChange: (contact) => {
