@@ -19,7 +19,6 @@ const transformReferralDetails = ({
 }) => {
   return {
     subject,
-    status,
     company,
     contact,
     sendingAdviser: transformAdviser(created_by),
