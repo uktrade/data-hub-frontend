@@ -36,12 +36,13 @@ export default connect(state2props)(
     subject,
     referralId,
     company,
-    companyId,
     contact,
     sendingAdviser,
     receivingAdviser,
     date,
     notes,
+    completed,
+    interaction,
   }) => (
     <Task.Status
       name="Referral details"
@@ -56,8 +57,18 @@ export default connect(state2props)(
         company && (
           <>
             <SummaryTable caption={subject}>
-              <SummaryTable.Row heading="Company">{company}</SummaryTable.Row>
-              <SummaryTable.Row heading="Contact">{contact}</SummaryTable.Row>
+              <SummaryTable.Row heading="Company">
+                <Link href={urls.companies.detail(company.id)}>
+                  {company.name}
+                </Link>
+              </SummaryTable.Row>
+              {contact && (
+                <SummaryTable.Row heading="Contact">
+                  <Link href={urls.contacts.contact(contact.id)}>
+                    {contact.name}
+                  </Link>
+                </SummaryTable.Row>
+              )}
               <SummaryTable.Row heading="Sending adviser">
                 {sendingAdviser && <AdviserDetails {...sendingAdviser} />}
               </SummaryTable.Row>
@@ -69,28 +80,48 @@ export default connect(state2props)(
               </SummaryTable.Row>
               <SummaryTable.Row heading="Notes">{notes}</SummaryTable.Row>
             </SummaryTable>
-            <Details summary="Why can I not edit the referral?">
-              <p>For now, you can't edit the referral once it's been sent.</p>
-              <p>Contact the recipient if something's changed.</p>
-            </Details>
-            <FormActions>
-              <Button
-                as={Link}
-                href={urls.companies.referrals.interactions.create(
-                  companyId,
-                  referralId
-                )}
-              >
-                Accept referral
-              </Button>
-              <SecondaryButton
-                as={Link}
-                href={urls.companies.referrals.help(companyId, referralId)}
-              >
-                I cannot accept the referral
-              </SecondaryButton>
-              <Link href="/">Back</Link>
-            </FormActions>
+            {completed ? (
+              <SummaryTable caption="Referral accepted">
+                <SummaryTable.Row heading="Date">
+                  {DateUtils.format(completed.on)}
+                </SummaryTable.Row>
+                <SummaryTable.Row heading="By">
+                  <AdviserDetails {...completed.by} />
+                </SummaryTable.Row>
+                <SummaryTable.Row heading="With interaction">
+                  <Link href={urls.interactions.detail(interaction.id)}>
+                    {interaction.subject}
+                  </Link>
+                </SummaryTable.Row>
+              </SummaryTable>
+            ) : (
+              <>
+                <Details summary="Why can I not edit the referral?">
+                  <p>
+                    For now, you can't edit the referral once it's been sent.
+                  </p>
+                  <p>Contact the recipient if something's changed.</p>
+                </Details>
+                <FormActions>
+                  <Button
+                    as={Link}
+                    href={urls.companies.referrals.interactions.create(
+                      company.id,
+                      referralId
+                    )}
+                  >
+                    Accept referral
+                  </Button>
+                  <SecondaryButton
+                    as={Link}
+                    href={urls.companies.referrals.help(company.id, referralId)}
+                  >
+                    I cannot accept the referral
+                  </SecondaryButton>
+                  <Link href={urls.dashboard()}>Back</Link>
+                </FormActions>
+              </>
+            )}
           </>
         )
       }
