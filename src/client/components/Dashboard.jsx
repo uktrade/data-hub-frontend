@@ -7,7 +7,7 @@ import TabNav from './TabNav'
 
 const Dashboard = ({ id }) => (
   <TabNav
-    id={`${id}:TabNav`}
+    id={`${id}.TabNav`}
     label="Dashboard"
     selectedIndex={0}
     tabs={[
