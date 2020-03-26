@@ -39,27 +39,30 @@ export const Header = connect(state2props, (dispatch) => ({
       type: COMPANY_LISTS__SELECT,
       id,
     }),
-}))(({ selectedId, lists, onChange }) => (
-  <StyledRoot>
-    <StyledHeading size={LEVEL_SIZE[3]}>
-      {pluralize('My companies list', Object.keys(lists).length, true)}
-    </StyledHeading>
-    {Object.keys(lists).length > 1 && (
-      <StyledSelect
-        label="View list"
-        input={{
-          onChange: (e) => onChange(e.target.value),
-          value: selectedId,
-        }}
-      >
-        {Object.entries(lists).map(([id, { name }]) => (
-          <option key={id} value={id}>
-            {name}
-          </option>
-        ))}
-      </StyledSelect>
-    )}
-  </StyledRoot>
-))
+}))(({ selectedId, lists, onChange }) => {
+  const listLength = Object.keys(lists).length
+  return (
+    <StyledRoot>
+      <StyledHeading size={LEVEL_SIZE[3]}>
+        {pluralize('My companies list', listLength, true)}
+      </StyledHeading>
+      {listLength > 1 && (
+        <StyledSelect
+          label="View list"
+          input={{
+            onChange: (e) => onChange(e.target.value),
+            value: selectedId,
+          }}
+        >
+          {Object.entries(lists).map(([id, { name }]) => (
+            <option key={id} value={id}>
+              {name}
+            </option>
+          ))}
+        </StyledSelect>
+      )}
+    </StyledRoot>
+  )
+})
 
 export default Header
