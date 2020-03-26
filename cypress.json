@@ -5,7 +5,7 @@
   "videoUploadOnPasses": false,
   "screenshotOnRunFailure": false,
   "pluginsFile": "test/cypress/plugins/index.js",
-  "supportFile": "test/cypress/support/index.js",
+  "supportFile": "test/functional/cypress/support/index.js",
   "defaultCommandTimeout": 10000,
   "projectId": "w97se2",
   "env": {
