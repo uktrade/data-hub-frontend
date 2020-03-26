@@ -202,3 +202,18 @@ docker push ukti/data-hub-sandbox:latest
 ```
 
 You image should be now listed at [Docker Hub](https://cloud.docker.com/u/ukti/repository/docker/ukti/data-hub-sandbox/tags).
+
+## Cypress code coverage
+
+As part of cypress test suites (functional and e2e), code coverage reports can be generated.
+
+### Code coverage locally
+
+Steps:
+- Ensure you NODE_ENV is either `test` or `development` in order for client side code to be instrumented.
+- Start the application by running `$ yarn start:coverage`, this will ensure server side code is instrumented.
+- Execute a spec or suite and look for `cypress-coverage` folder output in the root of the folder.
+
+### Code coverage in CI
+
+CI is configured to capture and save all code coverage reports as an artifact.
