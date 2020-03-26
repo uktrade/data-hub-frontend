@@ -1,4 +1,5 @@
 const helper = require('./view-spec-helper')
+const { assertAriaTablistTabSelected } = require('../../support/assertions')
 
 describe('My companies lists', () => {
   before(() => {
@@ -7,7 +8,7 @@ describe('My companies lists', () => {
   })
 
   it('my companies lists tab should be selected', () =>
-    cy.dhAriaTablistTabShouldBeSelected('Dashboard', 'My companies lists'))
+    assertAriaTablistTabSelected('Dashboard', 'My companies lists'))
 
   Object.entries(helper.expectedLists).forEach(([name, expectedValues]) => {
     describe(`After selecting list "${name}"`, () => {
