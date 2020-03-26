@@ -67,7 +67,10 @@ const store = createStore(
     ...TabNav.reducerSpread,
     ...ReferralList.reducerSpread,
     [EXPORTS_WINS_ID]: exportWinsReducer,
+    // A reducer is required to be able to set a preloadedState parameter
+    referrerUrl: (state = {}) => state,
   }),
+  { referrerUrl: window.document.referrer },
   composeWithDevTools(applyMiddleware(sagaMiddleware))
 )
 
