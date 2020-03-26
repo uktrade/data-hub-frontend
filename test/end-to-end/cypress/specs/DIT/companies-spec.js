@@ -151,8 +151,8 @@ describe('Export', () => {
           )
 
           cy.get(selectors.companyExport.countries.export)
-            .dh_typeahead_typeAndSelect('Germ')
-            .dh_typeahead_typeAndSelect('Fran')
+            .selectTypeaheadOption('Germ')
+            .selectTypeaheadOption('Fran')
 
           cy.contains('button', 'Save and return').click()
 
@@ -193,13 +193,13 @@ describe('Export', () => {
 
           cy.get(
             selectors.companyExport.countries.export
-          ).dh_typeahead_typeAndSelect('Bra')
+          ).selectTypeaheadOption('Bra')
           cy.get(
             selectors.companyExport.countries.future
-          ).dh_typeahead_typeAndSelect('Hon')
+          ).selectTypeaheadOption('Hon')
           cy.get(
             selectors.companyExport.countries.noInterest
-          ).dh_typeahead_typeAndSelect('Chi')
+          ).selectTypeaheadOption('Chi')
           cy.contains('button', 'Save and return').click()
 
           assertTable([

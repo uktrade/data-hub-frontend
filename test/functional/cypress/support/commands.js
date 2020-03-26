@@ -1,5 +1,5 @@
 Cypress.Commands.add(
-  'dh_typeahead_typeAndSelect',
+  'selectTypeaheadOption',
   { prevSubject: 'element' },
   (subject, text) => {
     cy.wrap(subject)
