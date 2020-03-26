@@ -6,10 +6,11 @@ import Link from '@govuk-react/link'
 import PropTypes from 'prop-types'
 import { SummaryTable, FormActions, DateUtils } from 'data-hub-components'
 import urls from '../../../../../../lib/urls'
+import url from 'url'
+import { ID as STATE_ID } from './state'
 
 import SecondaryButton from '../../../../../../client/components/SecondaryButton'
 import Task from '../../../../../../client/components/Task'
-import { state2props } from './state'
 
 import { REFERRAL_DETAILS } from '../../../../../../client/actions'
 
@@ -31,7 +32,10 @@ AdviserDetails.propTypes = {
   team: PropTypes.string,
 }
 
-export default connect(state2props)(
+export default connect(({ referrerUrl, ...state }) => ({
+  ...state[STATE_ID],
+  referrerUrl,
+}))(
   ({
     subject,
     referralId,
@@ -43,88 +47,104 @@ export default connect(state2props)(
     notes,
     completed,
     interaction,
-  }) => (
-    <Task.Status
-      name="Referral details"
-      id="referralDetails"
-      progressMessage="loading referral details"
-      startOnRender={{
-        payload: referralId,
-        onSuccessDispatch: REFERRAL_DETAILS,
-      }}
-    >
-      {() =>
-        company && (
-          <>
-            <SummaryTable caption={subject}>
-              <SummaryTable.Row heading="Company">
-                <Link href={urls.companies.detail(company.id)}>
-                  {company.name}
-                </Link>
-              </SummaryTable.Row>
-              {contact && (
-                <SummaryTable.Row heading="Contact">
-                  <Link href={urls.contacts.contact(contact.id)}>
-                    {contact.name}
+    referrerUrl,
+  }) => {
+    const cameFromHomePage = url.parse(referrerUrl).pathname === '/'
+
+    return (
+      <Task.Status
+        name="Referral details"
+        id="referralDetails"
+        progressMessage="loading referral details"
+        startOnRender={{
+          payload: referralId,
+          onSuccessDispatch: REFERRAL_DETAILS,
+        }}
+      >
+        {() =>
+          company && (
+            <>
+              <SummaryTable caption={subject}>
+                <SummaryTable.Row heading="Company">
+                  <Link href={urls.companies.detail(company.id)}>
+                    {company.name}
                   </Link>
                 </SummaryTable.Row>
-              )}
-              <SummaryTable.Row heading="Sending adviser">
-                {sendingAdviser && <AdviserDetails {...sendingAdviser} />}
-              </SummaryTable.Row>
-              <SummaryTable.Row heading="Receiving adviser">
-                {receivingAdviser && <AdviserDetails {...receivingAdviser} />}
-              </SummaryTable.Row>
-              <SummaryTable.Row heading="Date of referral">
-                {DateUtils.format(date)}
-              </SummaryTable.Row>
-              <SummaryTable.Row heading="Notes">{notes}</SummaryTable.Row>
-            </SummaryTable>
-            {completed ? (
-              <SummaryTable caption="Referral accepted">
-                <SummaryTable.Row heading="Date">
-                  {DateUtils.format(completed.on)}
+                {contact && (
+                  <SummaryTable.Row heading="Contact">
+                    <Link href={urls.contacts.contact(contact.id)}>
+                      {contact.name}
+                    </Link>
+                  </SummaryTable.Row>
+                )}
+                <SummaryTable.Row heading="Sending adviser">
+                  {sendingAdviser && <AdviserDetails {...sendingAdviser} />}
                 </SummaryTable.Row>
-                <SummaryTable.Row heading="By">
-                  <AdviserDetails {...completed.by} />
+                <SummaryTable.Row heading="Receiving adviser">
+                  {receivingAdviser && <AdviserDetails {...receivingAdviser} />}
                 </SummaryTable.Row>
-                <SummaryTable.Row heading="With interaction">
-                  <Link href={urls.interactions.detail(interaction.id)}>
-                    {interaction.subject}
-                  </Link>
+                <SummaryTable.Row heading="Date of referral">
+                  {DateUtils.format(date)}
                 </SummaryTable.Row>
+                <SummaryTable.Row heading="Notes">{notes}</SummaryTable.Row>
               </SummaryTable>
-            ) : (
-              <>
-                <Details summary="Why can I not edit the referral?">
-                  <p>
-                    For now, you can't edit the referral once it's been sent.
-                  </p>
-                  <p>Contact the recipient if something's changed.</p>
-                </Details>
-                <FormActions>
-                  <Button
-                    as={Link}
-                    href={urls.companies.referrals.interactions.create(
-                      company.id,
-                      referralId
-                    )}
-                  >
-                    Accept referral
-                  </Button>
-                  <SecondaryButton
-                    as={Link}
-                    href={urls.companies.referrals.help(company.id, referralId)}
-                  >
-                    I cannot accept the referral
-                  </SecondaryButton>
-                  <Link href={urls.dashboard()}>Back</Link>
-                </FormActions>
-              </>
-            )}
-          </>
-        )
-      }
-    </Task.Status>
-  )
+              {completed ? (
+                <SummaryTable caption="Referral accepted">
+                  <SummaryTable.Row heading="Date">
+                    {DateUtils.format(completed.on)}
+                  </SummaryTable.Row>
+                  <SummaryTable.Row heading="By">
+                    <AdviserDetails {...completed.by} />
+                  </SummaryTable.Row>
+                  <SummaryTable.Row heading="With interaction">
+                    <Link href={urls.interactions.detail(interaction.id)}>
+                      {interaction.subject}
+                    </Link>
+                  </SummaryTable.Row>
+                </SummaryTable>
+              ) : (
+                <>
+                  <Details summary="Why can I not edit the referral?">
+                    <p>
+                      For now, you can't edit the referral once it's been sent.
+                    </p>
+                    <p>Contact the recipient if something's changed.</p>
+                  </Details>
+                  <FormActions>
+                    <Button
+                      as={Link}
+                      href={urls.companies.referrals.interactions.create(
+                        company.id,
+                        referralId
+                      )}
+                    >
+                      Accept referral
+                    </Button>
+                    <SecondaryButton
+                      as={Link}
+                      href={urls.companies.referrals.help(
+                        company.id,
+                        referralId
+                      )}
+                    >
+                      I cannot accept the referral
+                    </SecondaryButton>
+                    <Link
+                      href={
+                        cameFromHomePage
+                          ? urls.dashboard()
+                          : urls.companies.detail(company.id)
+                      }
+                    >
+                      Back
+                    </Link>
+                  </FormActions>
+                </>
+              )}
+            </>
+          )
+        }
+      </Task.Status>
+    )
+  }
 )
