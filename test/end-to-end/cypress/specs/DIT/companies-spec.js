@@ -129,7 +129,7 @@ describe('Export', () => {
           cy.visit(
             companies.exports.editCountries(fixtures.company.lambdaPlc.id)
           )
-          cy.get(selectors.companyForm.save).click()
+          cy.contains('button', 'Save and return').click()
 
           assertTable([
             'None',
@@ -144,27 +144,17 @@ describe('Export', () => {
     )
 
     context('Adding export countries', () => {
-      function selectCountry(id, text) {
-        const typeahead = `${id} .multiselect`
-        const textInput = `${id} .multiselect__input`
-
-        cy.get(typeahead)
-          .click()
-          .get(textInput)
-          .type(text)
-          .type('{enter}')
-          .type('{esc}')
-      }
-
       context('Adding two countries to currently exporting', () => {
         it('Should add the countries and display them in alphabetical order', () => {
           cy.visit(
             companies.exports.editCountries(fixtures.company.lambdaPlc.id)
           )
 
-          selectCountry(selectors.companyExport.countries.export, 'Germ')
-          selectCountry(selectors.companyExport.countries.export, 'Fran')
-          cy.get(selectors.companyForm.save).click()
+          cy.get(selectors.companyExport.countries.export)
+            .dh_typeahead_typeAndSelect('Germ')
+            .dh_typeahead_typeAndSelect('Fran')
+
+          cy.contains('button', 'Save and return').click()
 
           assertTable([
             'None',
@@ -182,7 +172,7 @@ describe('Export', () => {
           cy.visit(
             companies.exports.editCountries(fixtures.company.lambdaPlc.id)
           )
-          cy.get(selectors.companyForm.save).click()
+          cy.contains('button', 'Save and return').click()
 
           assertTable([
             'None',
@@ -201,10 +191,16 @@ describe('Export', () => {
             companies.exports.editCountries(fixtures.company.lambdaPlc.id)
           )
 
-          selectCountry(selectors.companyExport.countries.export, 'Bra')
-          selectCountry(selectors.companyExport.countries.future, 'Hon')
-          selectCountry(selectors.companyExport.countries.noInterest, 'Chi')
-          cy.get(selectors.companyForm.save).click()
+          cy.get(
+            selectors.companyExport.countries.export
+          ).dh_typeahead_typeAndSelect('Bra')
+          cy.get(
+            selectors.companyExport.countries.future
+          ).dh_typeahead_typeAndSelect('Hon')
+          cy.get(
+            selectors.companyExport.countries.noInterest
+          ).dh_typeahead_typeAndSelect('Chi')
+          cy.contains('button', 'Save and return').click()
 
           assertTable([
             'None',
