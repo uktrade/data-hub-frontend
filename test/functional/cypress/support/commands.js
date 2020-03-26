@@ -1,11 +1,3 @@
-Cypress.Commands.add('selectFirstOption', (selector) => {
-  cy.get(selector)
-    .find('option')
-    .then(($els) => $els.get(1).setAttribute('selected', 'selected'))
-    .parent()
-    .trigger('change')
-})
-
 /**
  * Adds a Cypress command whith nice logging. In particular, solves the problem
  * when the created shapshot doesn't highlight the selected DOM element.
