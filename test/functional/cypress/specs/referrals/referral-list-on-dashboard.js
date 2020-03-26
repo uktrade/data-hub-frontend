@@ -69,7 +69,7 @@ const assertReferralCard = ({
 describe('Referall list on dashboard', () => {
   it('should live under the My referrals tab on dashboard', () => {
     cy.visit('/')
-    cy.ariaActiveTabpanel('Dashboard', 'My referrals')
+    cy.dhAriaActiveTabpanel('Dashboard', 'My referrals')
       .as('tabpanel')
       // This is only to wait for the content to be loaded
       .within(() => cy.get('ol'))
