@@ -5,14 +5,19 @@ import Details from '@govuk-react/details'
 import Link from '@govuk-react/link'
 import { H3 } from '@govuk-react/heading'
 import { SummaryTable } from 'data-hub-components'
+import { SPACING } from '@govuk-react/constants'
 
-import SecondaryButton from '../../../../../client/components/SecondaryButton'
 import urls from '../../../../../lib/urls'
 import ExportWins from './ExportWins/'
 import GreatProfile from './GreatProfile'
 
 const StyledSummaryTable = styled(SummaryTable)`
   margin-top: 0;
+`
+
+const StyledLink = styled(Link)`
+  display: inline-block;
+  margin-bottom: ${SPACING.SCALE_5};
 `
 
 const ExportsIndex = ({
@@ -79,11 +84,19 @@ const ExportsIndex = ({
         <a href={urls.support()}>support channel</a>.
       </Details>
 
-      <H3>Export countries information</H3>
-      <Link href={urls.companies.exports.history.index(companyId)}>
-        View full export countries history
-      </Link>
-      <StyledSummaryTable>
+      <StyledSummaryTable
+        caption="Export countries information"
+        actions={
+          !isArchived && (
+            <Link
+              href={urls.companies.exports.editCountries(companyId)}
+              data-test-id="edit-export-countries"
+            >
+              Edit
+            </Link>
+          )
+        }
+      >
         {exportCountriesInformation.map(({ name, values }) => (
           <SummaryTable.Row heading={name} key={name}>
             <>
@@ -110,15 +123,9 @@ const ExportsIndex = ({
         ))}
       </StyledSummaryTable>
 
-      {isArchived ? null : (
-        <SecondaryButton
-          as={Link}
-          href={urls.companies.exports.editCountries(companyId)}
-          data-test-id="editExportCountriesButton"
-        >
-          Edit export countries
-        </SecondaryButton>
-      )}
+      <StyledLink href={urls.companies.exports.history.index(companyId)}>
+        View full export countries history
+      </StyledLink>
 
       <H3>Export wins</H3>
       <p>
