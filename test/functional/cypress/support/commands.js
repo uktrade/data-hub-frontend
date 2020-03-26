@@ -132,24 +132,3 @@ addLoggedCommand({
     return cy.dhAriaTablistTabpanel(tabListLabel, options)
   },
 })
-
-/**
- * Asserts that a _tab_ of an accessible TabNav is selected
- * @param {string} tabListLabel - The _tablist_ label
- * @param {string} tabLabel - The _tab_ label
- * @param {options} options
- * @param {Boolean} options.log - Whether the command should log
- * @param {Boolean} options.nestedLog - Whether the log name should be prefixed
- * @param {Boolean} options.verbose - If true, also logs the underlying commands.
- */
-addLoggedCommand({
-  name: 'dhAriaTablistTabShouldBeSelected',
-  logName: 'ARIA',
-  getLogMessage: (tabListLabel, tabLabel) =>
-    `TAB SELECTED: ${tabListLabel} > ${tabLabel}`,
-  command: (tabListLabel, tabLabel, { verbose = false, ...options } = {}) => {
-    return cy
-      .dhAriaTablistTab(tabListLabel, tabLabel, { log: verbose, ...options })
-      .should('have.attr', 'aria-selected', 'true')
-  },
-})
