@@ -6,32 +6,10 @@
 
 {% block body_main_content %}
 
-  {% call Form({
-    errors: errors,
-    buttonText: 'Save and return',
-    returnText: 'Return without saving',
-    returnLink: urls.companies.exports.index(company.id),
-    hiddenFields: {
-      id: company.id
+  {% component 'react-slot', {
+      id: 'company-exports-edit-countries',
+      props: props
     }
-  }) %}
+  %}
 
-  {% for name, label in countriesFields %}
-    {{ Typeahead({
-      name: name,
-      label: label,
-      isAsync: false,
-      isLabelHidden: false,
-      useSubLabel: false,
-      placeholder: 'Search countries',
-      classes: 'c-form-group--no-filter',
-      multipleSelect: true,
-      options: countryOptions,
-      target: 'metadata',
-      autoSubmit: false,
-      selectedOptions: formData[name]
-    }) }}
-  {% endfor %}
-
-  {% endcall %}
 {% endblock %}
