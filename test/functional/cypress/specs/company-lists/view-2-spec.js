@@ -7,7 +7,7 @@ describe('My companies lists', () => {
   })
 
   it('my companies lists tab should be selected', () =>
-    cy.ariaTablistTabShouldBeSelected('Dashboard', 'My companies lists'))
+    cy.dhAriaTablistTabShouldBeSelected('Dashboard', 'My companies lists'))
 
   helper.describeSelectedList({
     name: 'List A',

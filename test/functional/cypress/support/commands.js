@@ -68,7 +68,7 @@ const addLoggedCommand = ({
  * @param {string} label - The label to look for
  */
 addLoggedCommand({
-  name: 'ariaTablist',
+  name: 'dhAriaTablist',
   logName: 'ARIA',
   getLogMessage: (label) => `TABLIST: ${label}`,
   command: (label) =>
@@ -80,12 +80,12 @@ addLoggedCommand({
  * @param {string} label - The TabNav label to look for
  */
 addLoggedCommand({
-  name: 'ariaTablistTabpanel',
+  name: 'dhAriaTablistTabpanel',
   logName: 'ARIA',
   getLogMessage: (label) => `TABPANEL: ${label}`,
   command: (label, options) =>
     cy
-      .ariaTablist(label, { ...options, nestedLog: true })
+      .dhAriaTablist(label, { ...options, nestedLog: true })
       .parent(options)
       .find('[role=tabpanel]', options),
 })
@@ -96,7 +96,7 @@ addLoggedCommand({
  * @param {string} label - The label to look for
  */
 addLoggedCommand({
-  name: 'ariaTab',
+  name: 'dhAriaTab',
   logName: 'ARIA',
   getLogMessage: (label) => `TAB: ${label}`,
   command: (label, { verbose } = {}) =>
@@ -113,10 +113,10 @@ addLoggedCommand({
  * @param {Boolean} options.nestedLog - Whether the log name should be prefixed
  * with a dash e.g. `'-GET'` if in a nested context like `.witin()`
  */
-Cypress.Commands.add('ariaTablistTab', (tablistLabel, tabLabel, options) => {
-  cy.ariaTablist(tablistLabel, options).within(
+Cypress.Commands.add('dhAriaTablistTab', (tablistLabel, tabLabel, options) => {
+  cy.dhAriaTablist(tablistLabel, options).within(
     { log: !!options?.verbose },
-    () => cy.ariaTab(tabLabel, { ...options, nestedLog: true })
+    () => cy.dhAriaTab(tabLabel, { ...options, nestedLog: true })
   )
 })
 
@@ -130,14 +130,14 @@ Cypress.Commands.add('ariaTablistTab', (tablistLabel, tabLabel, options) => {
  * @param {Boolean} options.verbose - If true, also logs the underlying commands.
  */
 addLoggedCommand({
-  name: 'ariaActiveTabpanel',
+  name: 'dhAriaActiveTabpanel',
   logName: 'ARIA',
   getLogMessage: (tabListLabel, tabLabel) =>
     `TABPANEL: ${tabListLabel} > ${tabLabel}`,
   command: (tabListLabel, tabLabel, { verbose = false } = {}) => {
     const options = { log: verbose }
-    cy.ariaTablistTab(tabListLabel, tabLabel, options).click(options)
-    return cy.ariaTablistTabpanel(tabListLabel, options)
+    cy.dhAriaTablistTab(tabListLabel, tabLabel, options).click(options)
+    return cy.dhAriaTablistTabpanel(tabListLabel, options)
   },
 })
 
@@ -151,13 +151,13 @@ addLoggedCommand({
  * @param {Boolean} options.verbose - If true, also logs the underlying commands.
  */
 addLoggedCommand({
-  name: 'ariaTablistTabShouldBeSelected',
+  name: 'dhAriaTablistTabShouldBeSelected',
   logName: 'ARIA',
   getLogMessage: (tabListLabel, tabLabel) =>
     `TAB SELECTED: ${tabListLabel} > ${tabLabel}`,
   command: (tabListLabel, tabLabel, { verbose = false, ...options } = {}) => {
     return cy
-      .ariaTablistTab(tabListLabel, tabLabel, { log: verbose, ...options })
+      .dhAriaTablistTab(tabListLabel, tabLabel, { log: verbose, ...options })
       .should('have.attr', 'aria-selected', 'true')
   },
 })
