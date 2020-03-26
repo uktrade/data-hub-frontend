@@ -138,23 +138,54 @@ function renderExportEdit(req, res) {
     })
 }
 
+function createCountryOption(country) {
+  return { value: country.id, label: country.name }
+}
+
+function getCountryValues(countries) {
+  if (countries) {
+    return countries.map(createCountryOption)
+  }
+
+  return []
+}
+
 function renderExportEditCountries(req, res) {
-  const { company, errors } = res.locals
+  const { company } = res.locals
+  const exportCountries = groupExportCountries(company.export_countries)
+  const {
+    EXPORTING_TO,
+    FUTURE_INTEREST,
+    NOT_INTERESTED,
+  } = EXPORT_INTEREST_STATUS
 
   res
     .breadcrumb(company.name, urls.companies.detail(company.id))
     .breadcrumb('Exports', urls.companies.exports.index(company.id))
     .breadcrumb('Edit export countries')
     .render('companies/apps/exports/views/edit-countries', {
-      errors: errors || [],
-      countryOptions: metadataRepo.countryOptions.map(transformObjectToOption),
-      countriesFields: {
-        [EXPORT_INTEREST_STATUS.EXPORTING_TO]:
-          exportDetailsLabels.exportToCountries,
-        [EXPORT_INTEREST_STATUS.FUTURE_INTEREST]:
-          exportDetailsLabels.futureInterestCountries,
-        [EXPORT_INTEREST_STATUS.NOT_INTERESTED]:
-          exportDetailsLabels.noInterestCountries,
+      props: {
+        companyId: company.id,
+        countryOptions: metadataRepo.countryOptions.map(
+          transformObjectToOption
+        ),
+        fields: [
+          {
+            name: EXPORTING_TO,
+            label: exportDetailsLabels.exportToCountries,
+            values: getCountryValues(exportCountries[EXPORTING_TO]),
+          },
+          {
+            name: FUTURE_INTEREST,
+            label: exportDetailsLabels.futureInterestCountries,
+            values: getCountryValues(exportCountries[FUTURE_INTEREST]),
+          },
+          {
+            name: NOT_INTERESTED,
+            label: exportDetailsLabels.noInterestCountries,
+            values: getCountryValues(exportCountries[NOT_INTERESTED]),
+          },
+        ],
       },
     })
 }

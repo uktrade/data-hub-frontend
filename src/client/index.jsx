@@ -25,6 +25,7 @@ import CompanyBusinessDetails from '../apps/companies/apps/business-details/clie
 import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
 import ExportsHistory from '../apps/companies/apps/exports/client/ExportsHistory/'
 import ExportsEdit from '../apps/companies/apps/exports/client/ExportsEdit.jsx'
+import ExportCountriesEdit from '../apps/companies/apps/exports/client/ExportCoutriesEdit'
 import ReferralDetails from '../apps/companies/apps/referrals/details/client/ReferralDetails'
 import ReferralHelp from '../apps/companies/apps/referrals/help/client/ReferralHelp'
 import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
@@ -203,6 +204,9 @@ function App() {
       </Mount>
       <Mount selector="#interaction-referral-details">
         {(props) => <InteractionReferralDetails {...props} />}
+      </Mount>
+      <Mount selector="#company-exports-edit-countries">
+        {(props) => <ExportCountriesEdit {...props} />}
       </Mount>
     </Provider>
   )
