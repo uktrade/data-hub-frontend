@@ -1,3 +1,5 @@
+import '../../support/commands'
+
 const expectedRows = {
   bmw: [
     {

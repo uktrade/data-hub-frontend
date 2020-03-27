@@ -34,8 +34,6 @@ import InteractionReferralDetails from '../apps/companies/apps/referrals/details
 import tasksSaga from './components/Task/saga'
 import tasks from './components/Task/reducer'
 
-import CompanyLists from './components/CompanyLists'
-
 import { ID as COMPANY_LISTS_STATE_ID } from './components/CompanyLists/state'
 import companyListsReducer from './components/CompanyLists/reducer'
 import * as companyListsTasks from './components/CompanyLists/tasks'
@@ -51,6 +49,7 @@ import * as exportsHistoryTasks from '../apps/companies/apps/exports/client/Expo
 import TabNav from './components/TabNav'
 import referralListTask from './components/ReferralList/task'
 import ReferralList from './components/ReferralList'
+import Dashboard from './components/Dashboard'
 
 import { ID as EXPORTS_WINS_ID } from '../apps/companies/apps/exports/client/ExportWins/state'
 import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/reducer'
@@ -140,7 +139,7 @@ function App() {
         {(props) => <CompanyActivityFeed {...props} />}
       </Mount>
       <Mount selector="#company-lists">
-        <CompanyLists />
+        <Dashboard id="homepage" />
       </Mount>
       <Mount selector="#delete-company-list">
         {(props) => (
