@@ -36,7 +36,7 @@ describe('Investment evaluation controller', () => {
             investment: investmentData,
           },
           breadcrumb: this.breadcrumbStub,
-          render: (template, data) => {
+          render: (template) => {
             try {
               expect(template).to.equal('investments/views/evaluation')
               done()

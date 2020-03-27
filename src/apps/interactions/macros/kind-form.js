@@ -1,4 +1,4 @@
-module.exports = function({ returnLink, errors = [] }) {
+module.exports = function({ errors = [] }) {
   const interactionQuestion = 'What would you like to record?'
 
   return {

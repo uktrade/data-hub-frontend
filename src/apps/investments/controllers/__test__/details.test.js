@@ -29,7 +29,7 @@ describe('Investment details controller', () => {
           locals: {
             investment: investmentData,
           },
-          render: (template, data) => {
+          render: (template) => {
             try {
               expect(template).to.equal('investments/views/details')
               done()

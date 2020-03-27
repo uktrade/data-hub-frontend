@@ -8,12 +8,9 @@ const interactionDataWithCountries = require('../../../../../test/unit/data/inte
 const serviceOptions = require('../../../../../test/unit/data/interactions/service-options-data')
 const company = require('../../../../../test/unit/data/company')
 
-const { EXPORT_INTEREST_STATUS } = require('../../../constants')
-
 const { transformServicesOptions } = require('../../transformers')
 
 const modulePath = '../details'
-const { FUTURE_INTEREST, EXPORTING_TO, NOT_INTERESTED } = EXPORT_INTEREST_STATUS
 
 const serviceOptionsTransformed = transformServicesOptions(serviceOptions)
 

@@ -158,7 +158,7 @@ describe('Investment team details controller', () => {
           investment: Object.assign({}, investmentData),
         },
         breadcrumb: this.breadcrumbStub,
-        render: (template, options) => {
+        render: (template) => {
           expect(template).to.equal('investments/views/team/details')
           done()
         },

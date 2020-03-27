@@ -53,8 +53,6 @@ describe('Companies form middleware', () => {
   })
 
   describe('getCompany', () => {
-    let expectedCompany
-
     function addFeatureFlag(res) {
       res.locals.features['interaction-add-countries'] = true
       return res
@@ -69,14 +67,6 @@ describe('Companies form middleware', () => {
     context('when the company is not a One list Tier D ITA', () => {
       beforeEach(async () => {
         getDitCompanyStub.resolves(company)
-        expectedCompany = {
-          ...company,
-          isItaTierDAccount: false,
-          hasAllocatedLeadIta: true,
-          hasManagedAccountDetails: true,
-          isGlobalHQ: null,
-          isUltimate: false,
-        }
       })
 
       context('With the interaction-add-countries set', () => {
@@ -98,14 +88,6 @@ describe('Companies form middleware', () => {
     context('when the company is a One list Tier D ITA', () => {
       beforeEach(() => {
         getDitCompanyStub.resolves(oneListTypeDItaCompany)
-        expectedCompany = {
-          ...oneListTypeDItaCompany,
-          isItaTierDAccount: true,
-          hasAllocatedLeadIta: true,
-          hasManagedAccountDetails: true,
-          isGlobalHQ: null,
-          isUltimate: false,
-        }
       })
 
       context('With the interaction-add-countries set', () => {

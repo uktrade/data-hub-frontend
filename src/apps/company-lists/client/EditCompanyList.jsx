@@ -10,14 +10,7 @@ import ErrorSummary from '@govuk-react/error-summary'
 const NOT_FOUND_MESSAGE =
   'The list you are trying to edit was not found. It may have already been deleted.'
 
-function EditCompanyList({
-  maxLength,
-  cancelUrl,
-  listName,
-  csrfToken,
-  id,
-  returnUrl,
-}) {
+function EditCompanyList({ cancelUrl, listName, csrfToken, id, returnUrl }) {
   const [errorMessage, setErrorMessage] = useState(null)
   const onSubmitHandler = async ({ listName }) => {
     try {

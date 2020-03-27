@@ -29,7 +29,6 @@ module.exports = function({
   tapServices = [],
   successfulServiceStatuses = [],
   statuses = [],
-  teams = [],
   events = [],
   hiddenFields,
   areas,

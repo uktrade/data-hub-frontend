@@ -1,6 +1,6 @@
 import '../../support/commands'
 
-const assertDescription = ({ term, name, email, team, dateAccepted }) =>
+const assertDescription = ({ term, name, email, team }) =>
   cy
     .contains(term)
     .should('have.prop', 'tagName', 'DT')

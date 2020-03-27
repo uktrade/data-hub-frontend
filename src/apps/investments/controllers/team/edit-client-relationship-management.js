@@ -1,6 +1,6 @@
 const { isEmpty } = require('lodash')
 
-function getHandler(req, res, next) {
+function getHandler(req, res) {
   res
     .breadcrumb('Project team', 'team')
     .breadcrumb('Client relationship management')

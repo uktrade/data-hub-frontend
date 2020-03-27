@@ -148,7 +148,7 @@ const assertFieldInput = ({ element, label, hint, value }) =>
       ($el) => value ?? cy.wrap($el).should('have.attr', 'value', value || '')
     )
 
-const assertFieldAddress = ({ element, label, hint = null, value = {} }) => {
+const assertFieldAddress = ({ element, hint = null, value = {} }) => {
   const isUkBased = value.country.name === 'United Kingdom'
   const addressElements = [
     {

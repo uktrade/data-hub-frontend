@@ -1,6 +1,5 @@
 /* eslint prefer-promise-reject-errors: 0 */
 const proxyquire = require('proxyquire')
-const faker = require('faker')
 
 const companyData = require('../../../../test/unit/data/company.json')
 const companyV4Data = require('../../../../test/unit/data/companies/company-v4.json')

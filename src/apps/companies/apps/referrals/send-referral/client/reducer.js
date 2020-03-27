@@ -8,6 +8,7 @@ import {
   SEND_REFERRAL_FORM__TEXTAREA_CHANGE,
 } from '../../../../../../client/actions'
 
+// eslint-disable-next-line no-unused-vars
 export default (state = {}, { type, errors, ...action }) => {
   switch (type) {
     case SEND_REFERRAL_FORM__ERROR:

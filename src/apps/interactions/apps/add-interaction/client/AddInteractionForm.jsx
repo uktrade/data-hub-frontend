@@ -23,7 +23,7 @@ import {
 } from '../../../constants'
 import InteractionTypeStep from './InteractionTypeStep'
 
-const onSubmit = async (values, csrfToken) => {}
+const onSubmit = () => {}
 
 const getServiceContext = (values) => {
   switch (values.theme) {

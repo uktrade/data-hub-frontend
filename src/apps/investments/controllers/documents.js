@@ -1,6 +1,6 @@
 const { get } = require('lodash')
 
-async function renderDocuments(req, res, next) {
+async function renderDocuments(req, res) {
   const archivedDocumentPath = get(
     res.locals,
     'investment.archived_documents_url_path'

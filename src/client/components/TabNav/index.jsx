@@ -72,6 +72,7 @@ const TabNav = ({
   id,
   // We are only destructuring dispatch from the props so that <div> won't
   // complain about it being an unexpected prop.
+  // eslint-disable-next-line no-unused-vars
   dispatch,
   ...props
 }) => (

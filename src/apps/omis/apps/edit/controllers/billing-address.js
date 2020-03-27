@@ -34,7 +34,7 @@ class EditBillingAddressController extends EditController {
     super.successHandler(req, res)
   }
 
-  nextCondition(req, res, condition) {
+  nextCondition(req) {
     return req.hasChanged
   }
 }
