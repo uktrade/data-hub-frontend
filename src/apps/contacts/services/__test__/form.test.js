@@ -218,11 +218,9 @@ describe('contact form service', () => {
         notes: 'Some notes',
       }
 
-      return contactFormService
-        .saveContactForm('1234', formData)
-        .then((savedContact) => {
-          expect(postedData).to.deep.equal(expected)
-        })
+      return contactFormService.saveContactForm('1234', formData).then(() => {
+        expect(postedData).to.deep.equal(expected)
+      })
     })
 
     it('should return a copy of the saved contact', () => {

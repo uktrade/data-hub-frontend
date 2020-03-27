@@ -6,7 +6,6 @@ exports.investmentProjects = function(req, res) {
   if (req.body.uk_region_location) {
     var regionQuery = req.body.uk_region_location
     var regions = typeof regionQuery === 'string' ? [regionQuery] : regionQuery
-    var regionResultIds = _.get(investmentProjects.results, 'actual_uk_regions')
     var ukRegionFilteredResults = _.filter(investmentProjects.results, function(
       investmentProject
     ) {

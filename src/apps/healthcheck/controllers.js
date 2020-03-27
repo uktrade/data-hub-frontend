@@ -65,7 +65,7 @@ function getPingdomWarnings(req, res, next) {
   return renderPingdomXml(req, res, next, warningDependencies)
 }
 
-function getMicroserviceHealthcheck(req, res, next) {
+function getMicroserviceHealthcheck(req, res) {
   res.set('Cache-Control', 'no-cache, no-store, must-revalidate')
   return res.status(200).send('OK')
 }

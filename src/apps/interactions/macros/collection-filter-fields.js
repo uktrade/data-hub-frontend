@@ -7,7 +7,6 @@ const PRIMARY_SECTOR_NAME = FILTER_CONSTANTS.INTERACTIONS.SECTOR.PRIMARY.NAME
 
 module.exports = function({
   currentAdviserId,
-  permissions,
   sectorOptions,
   serviceOptions,
   teamOptions,

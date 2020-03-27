@@ -198,7 +198,6 @@ function transformPropositionResponseToViewRecord({
   files = {},
   id,
   investment_project,
-  features,
 }) {
   const detailLabels = labels.proposition
   const formattedDetails = formatDetails(details)

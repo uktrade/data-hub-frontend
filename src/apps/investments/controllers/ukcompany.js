@@ -60,7 +60,7 @@ async function searchForUKCompany(req, res, next) {
   next()
 }
 
-function renderCompanyResults(req, res, next) {
+function renderCompanyResults(req, res) {
   return res.render('investments/views/ukcompany')
 }
 

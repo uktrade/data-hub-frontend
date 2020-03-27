@@ -4,7 +4,7 @@ const { buildFormWithStateAndErrors } = require('../../builders')
 const { statusFormConfig } = require('../macros')
 const { updateInvestment } = require('../repos')
 
-function renderStatusPage(req, res, next) {
+function renderStatusPage(req, res) {
   const status = req.body.status || res.locals.investment.status
 
   const { projects } = res.locals.paths

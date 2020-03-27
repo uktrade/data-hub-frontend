@@ -108,7 +108,6 @@ function transformEventResponseToViewRecord({
   related_programmes,
   service,
   archived_documents_url_path,
-  disabled_on,
 }) {
   teams = teams || []
   related_programmes = related_programmes || []

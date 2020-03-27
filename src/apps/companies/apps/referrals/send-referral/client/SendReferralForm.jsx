@@ -55,7 +55,6 @@ const SendReferralForm = ({
   notes,
   contact,
   adviser,
-  subjectError,
   emptyFields = [],
   onAdviserChange,
   onContactChange,
