@@ -194,6 +194,29 @@ describe('urls', () => {
         `/companies/${companyId}/orders`
       )
       expect(urls.companies.orders.route).to.equal('/:companyId/orders')
+
+      const referralId = faker.random.uuid()
+      expect(urls.companies.referrals.send(companyId)).to.equal(
+        `/companies/${companyId}/referrals/send`
+      )
+
+      expect(urls.companies.referrals.details(companyId, referralId)).to.equal(
+        `/companies/${companyId}/referrals/${referralId}`
+      )
+
+      expect(urls.companies.referrals.help(companyId, referralId)).to.equal(
+        `/companies/${companyId}/referrals/${referralId}/help`
+      )
+
+      expect(
+        urls.companies.referrals.interactions.create(companyId, referralId)
+      ).to.equal(
+        `/companies/${companyId}/referrals/${referralId}/interactions/create`
+      )
+
+      expect(
+        urls.companies.referrals.interactionsIndex(companyId, referralId)
+      ).to.equal(`/companies/${companyId}/referrals/${referralId}/interactions`)
     })
   })
 

@@ -13,10 +13,13 @@ const {
   setInteractionsDetails,
 } = require('./middleware/interactions')
 
+router
+  .route(urls.companies.referrals.send.route)
+  .get(renderSendReferralForm)
+  .post(submitSendReferralForm)
+// the details route needs to go below the send route so that it does not try to handle the send route
 router.get(urls.companies.referrals.details.route, renderReferralDetails)
 router.get(urls.companies.referrals.help.route, renderReferralHelp)
-router.get(urls.companies.referrals.send.route, renderSendReferralForm)
-router.post(urls.companies.referrals.send.route, submitSendReferralForm)
 
 // Adding an interaction to complete a referral
 // This mounts the interactions sub app on the details route
