@@ -9,9 +9,9 @@
   "scripts": {
     "dev-stack": "docker-compose build --parallel && docker-compose -p dev up --abort-on-container-exit",
     "mock-stack": "docker-compose -p mock -f docker-compose.mock.yml up --build --abort-on-container-exit",
-    "clean": "del .build",
+    "clean": "del .build cypress-coverage",
     "start": "node --use-strict src/server.js",
-    "start:coverage": "nyc --silent node --use-strict src/server.js",
+    "start:coverage": "nyc --silent npm run start",
     "build": "npm run clean && webpack",
     "develop": "NODE_ENV=development run-p watch:js:*",
     "watch:test": "npm run test:unit -- -w",
