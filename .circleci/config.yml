@@ -32,7 +32,7 @@ aliases:
 
   - &start_frontend_coverage
     run:
-      name: Start data hub frontend
+      name: Start data hub frontend instrumenting the code
       command: yarn start:coverage
       background: true
 
