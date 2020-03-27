@@ -239,4 +239,28 @@ describe('Referral details', () => {
         })
     })
   )
+  context('When you come to the details page from the homepage', () => {
+    it('should take you to the homepage when you click "back"', () => {
+      cy.visit(urls.dashboard())
+      cy.contains('My referrals').click()
+      cy.contains('Andy to Lou').click()
+      cy.contains('Back').click()
+      cy.location('pathname').should('eq', urls.dashboard())
+    })
+  })
+  context(
+    'When you come to the details page from anywhere but the homepage',
+    () => {
+      it('should take you to the company page when you click "back"', () => {
+        cy.visit(
+          urls.companies.referrals.details(companyId, REFERRAL_ID_NO_CONTACT)
+        )
+        cy.contains('Back').click()
+        cy.location('pathname').should(
+          'eq',
+          urls.companies.activity.index(companyId)
+        )
+      })
+    }
+  )
 })
