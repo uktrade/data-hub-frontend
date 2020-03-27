@@ -3,7 +3,7 @@ const { get, isEmpty } = require('lodash')
 const { briefInvestmentSummaryLabels } = require('../../labels')
 const { getDataLabels } = require('../../../../lib/controller-utils')
 
-function getHandler(req, res, next) {
+function getHandler(req, res) {
   const briefInvestmentSummary = getDataLabels(
     res.locals.briefInvestmentSummaryData,
     briefInvestmentSummaryLabels.view

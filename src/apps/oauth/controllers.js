@@ -119,7 +119,7 @@ async function redirectOAuth(req, res, next) {
   }
 }
 
-function renderHelpPage(req, res, next) {
+function renderHelpPage(req, res) {
   return res.render('oauth/views/help-page', {
     heading: "You don't have permission to access this service",
   })

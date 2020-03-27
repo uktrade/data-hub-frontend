@@ -57,7 +57,7 @@ class LookupAddress {
     )
   }
 
-  pressLookupButton(event) {
+  pressLookupButton() {
     const postcode = this.postcodeLookupField.value
     axios.get(`/api/postcodelookup/${postcode}`).then((response) => {
       this.suggestions = response.data

@@ -2,7 +2,7 @@ const { assign, get } = require('lodash')
 const { buildFormWithStateAndErrors } = require('../../builders')
 const { uploadForm } = require('../macros')
 
-function renderUpload(req, res, next) {
+function renderUpload(req, res) {
   const proposition = get(res.locals, 'proposition.id')
   const investment = get(res.locals, 'investment.id')
   const selectUploadForm = buildFormWithStateAndErrors(

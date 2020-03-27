@@ -23,12 +23,7 @@ describe('Company controller, archive', () => {
     })
   })
 
-  const commonTests = ({
-    stubName,
-    expectedReason,
-    expectedFlash,
-    expectedPath,
-  }) => {
+  const commonTests = ({ stubName, expectedReason, expectedFlash }) => {
     if (stubName) {
       it('should call archive company with correct args', () => {
         const expectedToken = this.middlewareParameters.reqMock.session.token

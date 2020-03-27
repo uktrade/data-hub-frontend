@@ -48,7 +48,7 @@ describe('Contact audit controller', () => {
         this.req,
         {
           breadcrumb: this.breadcrumbStub,
-          render: (template, data) => {
+          render: () => {
             expect(this.getContactAuditLogStub).to.be.calledWith(
               this.req.session.token,
               this.req.params.contactId,
@@ -72,7 +72,7 @@ describe('Contact audit controller', () => {
         this.req,
         {
           breadcrumb: this.breadcrumbStub,
-          render: (template, data) => {
+          render: () => {
             expect(this.getContactAuditLogStub).to.be.calledWith(
               this.req.session.token,
               this.req.params.contactId,
@@ -96,7 +96,7 @@ describe('Contact audit controller', () => {
         this.req,
         {
           breadcrumb: this.breadcrumbStub,
-          render: (template, data) => {
+          render: () => {
             expect(this.transformApiResponseToCollectionStub).to.be.calledWith(
               options,
               this.generatedTransformer

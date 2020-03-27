@@ -1,4 +1,4 @@
-function renderTeamEdit(req, res, next) {
+function renderTeamEdit(req, res) {
   res
     .breadcrumb('Project team', 'team')
     .breadcrumb('Team members')

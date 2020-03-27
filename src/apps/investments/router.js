@@ -17,7 +17,7 @@ const redirectToProjects = (res) => {
   res.redirect(projects)
 }
 
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
   redirectToProjects(res)
 })
 

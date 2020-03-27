@@ -3,13 +3,7 @@ const { assign } = require('lodash')
 const labels = require('../labels')
 const { abandon } = require('./fields')
 
-module.exports = function({
-  returnLink,
-  returnText,
-  buttonText,
-  buttonModifiers,
-  hiddenFields,
-}) {
+module.exports = function({ returnLink, returnText, hiddenFields }) {
   return {
     returnLink,
     returnText,
