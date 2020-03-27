@@ -56,48 +56,46 @@ const addLoggedCommand = ({
   })
 
 /**
- * Selects an accessible TabNav's _tablist_ by its label.
+ * _Gets_ the accessible _tablist_ element.
  * @param {string} label - The label to look for
  */
 addLoggedCommand({
-  name: 'dhAriaTablist',
-  logName: 'ARIA',
+  name: 'getDhTablist',
+  logName: 'DH GET',
   getLogMessage: (label) => `TABLIST: ${label}`,
   command: (label) =>
     cy.get(`[role=tablist][aria-label=${label}]`, { log: false }),
 })
 
 /**
- * Selects the _tabpanel_ of an accessible TabNav
+ * _Gets_ the _tabpanel_ element of the `TabNav` component by its _tablist_ label.
  * @param {string} label - The TabNav label to look for
  */
 addLoggedCommand({
-  name: 'dhAriaTablistTabpanel',
-  logName: 'ARIA',
+  name: 'getDhTabNavPanel',
+  logName: 'DH GET',
   getLogMessage: (label) => `TABPANEL: ${label}`,
   command: (label, options) =>
     cy
-      .dhAriaTablist(label, { ...options, nestedLog: true })
+      .getDhTablist(label, { ...options, nestedLog: true })
       .parent(options)
       .find('[role=tabpanel]', options),
 })
 
 /**
- * Selects an accessible TabNav's _tab_ by its label regardless of the
- * _tablist_ it belongs to.
+ * _Gets_ an accessible _tab_ element by its label.
  * @param {string} label - The label to look for
  */
 addLoggedCommand({
-  name: 'dhAriaTab',
-  logName: 'ARIA',
+  name: 'getDhTab',
+  logName: 'DH GET',
   getLogMessage: (label) => `TAB: ${label}`,
   command: (label, { verbose } = {}) =>
     cy.get(`[role=tab]:contains(${label})`, { log: !!verbose }),
 })
 
 /**
- * Selects a _tab_ of a particular accessible TabNav's _tablist_,
- * both by their labels.
+ * _Gets_ the _tab_ element of an accessible _tablist_ element.
  * @param {string} tabListLabel - The _tablist_ label
  * @param {string} tabLabel - The _tab_ label
  * @param {options} options
@@ -105,15 +103,16 @@ addLoggedCommand({
  * @param {Boolean} options.nestedLog - Whether the log name should be prefixed
  * with a dash e.g. `'-GET'` if in a nested context like `.witin()`
  */
-Cypress.Commands.add('dhAriaTablistTab', (tablistLabel, tabLabel, options) => {
-  cy.dhAriaTablist(tablistLabel, options).within(
+Cypress.Commands.add('getDhTablistTab', (tablistLabel, tabLabel, options) => {
+  cy.getDhTablist(tablistLabel, options).within(
     { log: !!options?.verbose },
-    () => cy.dhAriaTab(tabLabel, { ...options, nestedLog: true })
+    () => cy.getDhTab(tabLabel, { ...options, nestedLog: true })
   )
 })
 
 /**
- * Activates a _tab_ of an accessible TabNav and selects its tabpanel.
+ * _Selects_ a _tab_ element of the `TabNav` component and _gets_ its _tabpanel_
+ * element.
  * @param {string} tabListLabel - The _tablist_ label
  * @param {string} tabLabel - The _tab_ label
  * @param {options} options
@@ -122,13 +121,13 @@ Cypress.Commands.add('dhAriaTablistTab', (tablistLabel, tabLabel, options) => {
  * @param {Boolean} options.verbose - If true, also logs the underlying commands.
  */
 addLoggedCommand({
-  name: 'dhAriaActiveTabpanel',
-  logName: 'ARIA',
+  name: 'selectDhTablistTab',
+  logName: 'DH SELECT',
   getLogMessage: (tabListLabel, tabLabel) =>
     `TABPANEL: ${tabListLabel} > ${tabLabel}`,
   command: (tabListLabel, tabLabel, { verbose = false } = {}) => {
     const options = { log: verbose }
-    cy.dhAriaTablistTab(tabListLabel, tabLabel, options).click(options)
-    return cy.dhAriaTablistTabpanel(tabListLabel, options)
+    cy.getDhTablistTab(tabListLabel, tabLabel, options).click(options)
+    return cy.getDhTabNavPanel(tabListLabel, options)
   },
 })

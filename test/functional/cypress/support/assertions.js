@@ -241,7 +241,7 @@ const assertSummaryList = (listElement, specs) => {
 
 const assertAriaTablistTabSelected = (tabListLabel, tabLabel) =>
   cy
-    .dhAriaTablistTab(tabListLabel, tabLabel)
+    .getDhTablistTab(tabListLabel, tabLabel)
     .should('have.attr', 'aria-selected', 'true')
 
 module.exports = {
