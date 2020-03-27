@@ -4,7 +4,7 @@ const growthCapitalProfileRouter = require('./growth-capital-profile/router')
 
 const router = require('express').Router()
 
-router.get('/', (req, res, next) =>
+router.get('/', (req, res) =>
   res.redirect(`${res.locals.ORIGINAL_URL}/projects`)
 )
 router.use('/projects', projectsRouter)

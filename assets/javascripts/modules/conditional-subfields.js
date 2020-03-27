@@ -66,7 +66,7 @@ const ConditionalSubfields = {
 
     this.onChangeHandler = this.onChange.bind(this)
     this.controllers = uniq(
-      [...conditionalSubFields].map((controller, i) => {
+      [...conditionalSubFields].map((controller) => {
         return controller.getAttribute('data-controlled-by')
       })
     )

@@ -346,11 +346,7 @@ const statusFormConfig = {
   ],
 }
 
-const investmentProfilesFiltersFields = function({
-  currentAdviserId,
-  sectorOptions,
-  userAgent,
-}) {
+const investmentProfilesFiltersFields = function() {
   return [
     {
       macroName: 'MultipleChoiceField',

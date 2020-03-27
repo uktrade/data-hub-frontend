@@ -29,7 +29,6 @@ var v4SearchCompany = require('./routes/v4/search/company.js')
 var v4SearchCompanyWithCountry = require('./routes/v4/search/company/autocomplete.js')
 var v4SearchLargeInvestorProfiles = require('./routes/v4/search/large-investor-profile/results.js')
 var v4SearchExports = require('./routes/v4/search/export')
-var v4referralDetails = require('./routes/v4/referrals/referral-details.js')
 var v4referralList = require('./routes/v4/referrals/list.js')
 
 // Referral details

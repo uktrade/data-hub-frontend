@@ -34,7 +34,7 @@ describe('Investment audit controller', () => {
           investment: {},
         },
         breadcrumb: this.breadcrumbStub,
-        render: (template, data) => {
+        render: () => {
           try {
             expect(this.getInvestmentProjectAuditLog).to.be.calledWith(
               token,

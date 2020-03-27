@@ -124,7 +124,7 @@ module.exports = {
       })
       .filter((x) => x)
 
-    const tertiaryOptions = serviceQuestions.map((option, index) => {
+    const tertiaryOptions = serviceQuestions.map((option) => {
       return {
         macroName: 'MultipleChoiceField',
         label: option.label,
