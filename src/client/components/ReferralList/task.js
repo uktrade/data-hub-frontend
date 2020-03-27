@@ -14,11 +14,12 @@ export default () =>
     .catch(handleError)
     .then(({ data: { results } }) =>
       results.map((referral) => ({
+        companyId: referral.company.id,
         id: referral.id,
-        status: referral.status,
         subject: referral.subject,
         companyName: referral.company.name,
         date: referral.created_on,
+        dateAccepted: referral.completed_on,
         sender: convertAdviser(referral.created_by),
         recipient: convertAdviser(referral.recipient),
       }))

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
 import { GREY_4, TEXT_COLOUR, BORDER_COLOUR, FOCUS_COLOUR } from 'govuk-colours'
@@ -55,10 +56,10 @@ const StyledTablist = styled.div({
 
 const StyledTabpanel = styled.div({
   ...focusStyle,
-  marginTop: 10,
+  marginTop: 30,
 })
 
-const createId = (id, index) => `${id}:tab-${index}`
+const createId = (id, index) => `${id}.tab-${index}`
 
 // Based on https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/Tab_Role
 const TabNav = ({
@@ -131,6 +132,16 @@ const TabNav = ({
     </StyledTabpanel>
   </div>
 )
+
+TabNav.propTypes = {
+  label: PropTypes.string.isRequired,
+  tabs: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.node.isRequired,
+      content: PropTypes.node,
+    })
+  ).isRequired,
+}
 
 export default multiInstance({
   name: 'TabNav',

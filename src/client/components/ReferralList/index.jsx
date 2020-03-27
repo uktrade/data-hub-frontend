@@ -1,49 +1,22 @@
 import React from 'react'
-import { SectionBreak, H3 } from 'govuk-react'
+import HintText from '@govuk-react/hint-text'
 import { SPACING } from '@govuk-react/constants'
-import PropTypes from 'prop-types'
 import pluralize from 'pluralize'
 import styled from 'styled-components'
 
+import ContentWithHeading from '../ContentWithHeading'
 import Task from '../Task'
 import Referral from './Referral'
 import { REFFERAL_LIST__LOADED } from '../../actions'
 import multiInstance from '../../utils/multiinstance'
 import reducer from './reducer'
 
-const StyledItemSpacer = styled.div({
+const StyledOl = styled.ol({
+  listStyleType: 'none',
   '& > *': {
     marginTop: SPACING.SCALE_4,
   },
 })
-
-const ReferralList = ({ referrals }) => (
-  <div>
-    <H3>{pluralize('Referral', referrals.length, true)}</H3>
-    <SectionBreak visible={true} />
-    <StyledItemSpacer>
-      {referrals.map(({ id, ...referral }) => (
-        <Referral key={id} id={id} {...referral} />
-      ))}
-    </StyledItemSpacer>
-  </div>
-)
-
-const EmptyState = () => (
-  <div>
-    <H3>My Referrals</H3>
-    <SectionBreak visible={true} />
-    <p>
-      You have not received or sent any referrals.
-      <br />
-      You can refer companies to other advisers from a company page.
-    </p>
-  </div>
-)
-
-ReferralList.propTypes = {
-  referrals: PropTypes.arrayOf(PropTypes.shape(Referral.propTypes)),
-}
 
 export default multiInstance({
   name: 'ReferralList',
@@ -58,10 +31,26 @@ export default multiInstance({
       }}
     >
       {() =>
-        referrals && referrals.length ? (
-          <ReferralList referrals={referrals} />
-        ) : (
-          <EmptyState />
+        referrals && (
+          <ContentWithHeading
+            heading={pluralize('Referral', referrals.length, true)}
+          >
+            {referrals.length ? (
+              <StyledOl>
+                {referrals.map(({ id, ...referral }) => (
+                  <li key={id}>
+                    <Referral id={id} {...referral} />
+                  </li>
+                ))}
+              </StyledOl>
+            ) : (
+              <HintText>
+                You have not received or sent any referrals.
+                <br />
+                You can refer companies to other advisers from a company page.
+              </HintText>
+            )}
+          </ContentWithHeading>
         )
       }
     </Task.Status>
