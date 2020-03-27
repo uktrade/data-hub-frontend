@@ -34,8 +34,6 @@ import InteractionReferralDetails from '../apps/companies/apps/referrals/details
 import tasksSaga from './components/Task/saga'
 import tasks from './components/Task/reducer'
 
-import CompanyLists from './components/CompanyLists'
-
 import { ID as COMPANY_LISTS_STATE_ID } from './components/CompanyLists/state'
 import companyListsReducer from './components/CompanyLists/reducer'
 import * as companyListsTasks from './components/CompanyLists/tasks'
