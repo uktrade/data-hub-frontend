@@ -56,6 +56,8 @@ import { ID as EXPORTS_WINS_ID } from '../apps/companies/apps/exports/client/Exp
 import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/reducer'
 import * as exportWinsTasks from '../apps/companies/apps/exports/client/ExportWins/tasks'
 
+import Form from './components/Form'
+
 import {
   ID as EXPORT_COUNTRIES_EDIT_ID,
   TASK_NAME as EXPORT_COUNTRIES_EDIT_NAME,
@@ -72,12 +74,13 @@ const store = createStore(
     [COMPANY_LISTS_STATE_ID]: companyListsReducer,
     [EXPORTS_HISTORY_ID]: exportsHistoryReducer,
     [REFERRALS_DETAILS_STATE_ID]: referralsReducer,
+    [EXPORTS_WINS_ID]: exportWinsReducer,
+    [EXPORT_COUNTRIES_EDIT_ID]: exportCountriesEditReducer,
     ...TabNav.reducerSpread,
     ...ReferralList.reducerSpread,
-    [EXPORTS_WINS_ID]: exportWinsReducer,
+    ...Form.reducerSpread,
     // A reducer is required to be able to set a preloadedState parameter
     referrerUrl: (state = {}) => state,
-    [EXPORT_COUNTRIES_EDIT_ID]: exportCountriesEditReducer,
   }),
   { referrerUrl: window.document.referrer },
   composeWithDevTools(applyMiddleware(sagaMiddleware))
