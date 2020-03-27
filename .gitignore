@@ -28,7 +28,8 @@ test.sh
 apitest.js
 reports
 .idea/
-.env
+*.env
+!*.sample.env
 npm*.log
 yarn-error.log
 stats.json
