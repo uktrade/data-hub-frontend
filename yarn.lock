@@ -826,14 +826,7 @@
     core-js-pure "^3.0.0"
     regenerator-runtime "^0.13.2"
 
-"@babel/runtime@^7.1.2", "@babel/runtime@^7.4.4", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.4":
-  version "7.8.4"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.8.4.tgz#d79f5a2040f7caa24d53e563aad49cbc05581308"
-  integrity sha512-neAp3zt80trRVBI1x0azq6c57aNBqYZH8KhMm3TaB7wEI5Q4A2SHfBHE8w9gOhI/lrqxtEbXZgQIrHP+wvSGwQ==
-  dependencies:
-    regenerator-runtime "^0.13.2"
-
-"@babel/runtime@^7.8.4":
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.4.4", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.4", "@babel/runtime@^7.8.4":
   version "7.9.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.9.2.tgz#d90df0583a3a252f09aaa619665367bae518db06"
   integrity sha512-NE2DtOdufG7R5vnfQUTehdTfNycfUANEtCa9PssN9O/xmTzP4E08UI797ixaei6hBEVL9BI/PsdJS5x7mWoB9Q==
@@ -4827,10 +4820,10 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-data-hub-components@^5.3.1:
-  version "5.3.1"
-  resolved "https://registry.yarnpkg.com/data-hub-components/-/data-hub-components-5.3.1.tgz#8f97a0e2924541f0132df3e8c6bf95611e6eaf72"
-  integrity sha512-UU9JAZ5Le4wWvcm3FA9fqFNcf8TxXxXCC6Kp8CS/qbitrUTk0J7maptfWGhr7tsCAdsyIvkQy5QP37fLUYJoxg==
+data-hub-components@^5.3.4:
+  version "5.3.4"
+  resolved "https://registry.yarnpkg.com/data-hub-components/-/data-hub-components-5.3.4.tgz#eb7e1a11574732baa893aa7e65ef4c961c3b1ded"
+  integrity sha512-RL4FGOiJARdddKiwYHfkppjamnLr16rF3ou212uKJfMp5Ip5NEY509f8g5oJCLjxFH1TCkv6XyagFngfCix6UQ==
   dependencies:
     "@babel/runtime" "^7.4.5"
     "@govuk-react/button" "^0.7.1"
