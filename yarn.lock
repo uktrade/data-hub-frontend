@@ -3790,10 +3790,10 @@ chromedriver@^80.0.1:
     mkdirp "^1.0.3"
     tcp-port-used "^1.0.1"
 
-chrono-node@^1.3.5:
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/chrono-node/-/chrono-node-1.4.3.tgz#4c8e24643ec5e576f6f8fe0429370c3b554491b4"
-  integrity sha512-ZyKcnTcr8i7Mt9p4+ixMHEuR6+eMTrjYCL9Rm9TZHviLleCtcZoVzmr2uSc+Vg8MX1YbNCnPbEd4rfV8WvzLcw==
+chrono-node@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/chrono-node/-/chrono-node-1.4.4.tgz#a6248257d3198996ea3d023b2bd20a268545350f"
+  integrity sha512-vwsQ2Z6RhkfIsFYvcZtifa0eSQC6pl08fgXkcZXkfGAJk/OkdYAuGqM2yLhPzsuK3N+BmaKFBie/jGvLsiYMbA==
   dependencies:
     dayjs "^1.8.19"
 
@@ -4827,10 +4827,10 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-data-hub-components@^5.3.1:
-  version "5.3.1"
-  resolved "https://registry.yarnpkg.com/data-hub-components/-/data-hub-components-5.3.1.tgz#8f97a0e2924541f0132df3e8c6bf95611e6eaf72"
-  integrity sha512-UU9JAZ5Le4wWvcm3FA9fqFNcf8TxXxXCC6Kp8CS/qbitrUTk0J7maptfWGhr7tsCAdsyIvkQy5QP37fLUYJoxg==
+data-hub-components@^5.3.4:
+  version "5.3.4"
+  resolved "https://registry.yarnpkg.com/data-hub-components/-/data-hub-components-5.3.4.tgz#eb7e1a11574732baa893aa7e65ef4c961c3b1ded"
+  integrity sha512-RL4FGOiJARdddKiwYHfkppjamnLr16rF3ou212uKJfMp5Ip5NEY509f8g5oJCLjxFH1TCkv6XyagFngfCix6UQ==
   dependencies:
     "@babel/runtime" "^7.4.5"
     "@govuk-react/button" "^0.7.1"
