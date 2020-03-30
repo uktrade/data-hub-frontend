@@ -450,6 +450,11 @@ Sandbox.define(
 )
 Sandbox.define('/v4/dnb/company-search', 'POST', v4Dnb.companySearch)
 Sandbox.define('/v4/dnb/company-link', 'POST', v4Dnb.companyLink)
+Sandbox.define(
+  '/v4/dnb/company-change-request',
+  'POST',
+  v4Dnb.companyChangeRequest
+)
 
 // V4 legacy company list
 Sandbox.define(
