@@ -2,7 +2,7 @@ const url = require('url')
 const { isEmpty } = require('lodash')
 
 const config = require('../../../../config')
-const { updateCompany } = require('../../repos')
+const { updateCompany, createDnbChangeRequest } = require('../../repos')
 const { getHeadquarterOptions } = require('./repos')
 const { getOptions } = require('../../../../lib/options')
 const urls = require('../../../../lib/urls')
@@ -10,6 +10,7 @@ const {
   transformCompanyToForm,
   transformFormToApi,
   transformFormToZendesk,
+  transformFormToDnbChangeRequest,
 } = require('./transformers')
 const { postToZenDesk } = require('../../../support/services')
 const { isItaTierDAccount } = require('../../../../lib/is-tier-type-company')
@@ -116,18 +117,25 @@ function createUpdateRequestMessage(
 async function postEditCompany(req, res, next) {
   try {
     const { company } = res.locals
+    const { token } = req.session
+
     const apiRequestFields = transformFormToApi(company, req.body)
     const zendeskRequestFields = transformFormToZendesk(company, req.body)
 
+    const dnbChanges = company.duns_number
+      ? transformFormToDnbChangeRequest(company, req.body)
+      : null
+
     if (company.duns_number && !isEmpty(zendeskRequestFields)) {
-      const [, ...zendeskResponses] = await Promise.all([
-        updateCompany(req.session.token, company.id, apiRequestFields),
+      const [, , ...zendeskResponses] = await Promise.all([
+        updateCompany(token, company.id, apiRequestFields),
+        createDnbChangeRequest(token, company.duns_number, dnbChanges),
         createUpdateRequest(zendeskRequestFields, req, res),
       ])
 
       req.flashWithBody(
         'success',
-        'Update sent for review.',
+        'Update sent for third party review.',
         'Thanks for keeping Data Hub running smoothly.',
         'message-company-change-request'
       )
