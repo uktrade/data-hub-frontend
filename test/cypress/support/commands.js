@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * Adds a Cypress command whith nice logging. In particular, solves the problem
  * when the created shapshot doesn't highlight the selected DOM element.
