@@ -1,4 +1,4 @@
-import '../../support/commands'
+import '../../../../cypress/support/commands'
 
 const assertDescription = ({ term, name, email, team }) =>
   cy
