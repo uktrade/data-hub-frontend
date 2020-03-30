@@ -38,14 +38,6 @@ const StyledTextArea = styled(TextArea)({
   },
 })
 
-// Override the unecessary outlining of text within the input
-
-const StyledTypeahead = styled(Typeahead)`
-  input:focus {
-    box-shadow: none;
-  }
-`
-
 const SendReferralForm = ({
   companyContacts,
   cancelUrl,
@@ -99,7 +91,7 @@ const SendReferralForm = ({
           </a>
           .
         </HintText>
-        <StyledTypeahead
+        <Typeahead
           onChange={(event) =>
             onAdviserChange({
               name: event.label,
@@ -159,7 +151,7 @@ const SendReferralForm = ({
       <Label>
         <LabelText>Company contact (optional)</LabelText>
         <HintText>Who should the recipient of the referral talk to?</HintText>
-        <StyledTypeahead
+        <Typeahead
           isMulti={false}
           isClearable={true}
           name="contact"
