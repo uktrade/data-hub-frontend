@@ -359,7 +359,7 @@ jobs:
       - run: yarn build
       - *wait_for_backend
       - *wait_for_mock_sso
-      - *start_frontend_coverage
+      - *start_frontend
       - *wait_for_frontend
       - run:
           name: Run DIT staff e2e tests
@@ -393,7 +393,7 @@ jobs:
       - run: yarn build
       - *wait_for_backend
       - *wait_for_mock_sso
-      - *start_frontend_coverage
+      - *start_frontend
       - *wait_for_frontend
       - run:
           name: Run LEP staff e2e tests
@@ -427,7 +427,7 @@ jobs:
       - run: yarn build
       - *wait_for_backend
       - *wait_for_mock_sso
-      - *start_frontend_coverage
+      - *start_frontend
       - *wait_for_frontend
       - run:
           name: Run DA staff e2e tests

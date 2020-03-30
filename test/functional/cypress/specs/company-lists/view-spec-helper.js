@@ -1,4 +1,4 @@
-import '../../support/commands'
+import '../../../../cypress/support/commands'
 
 const expectedRows = {
   bmw: [
