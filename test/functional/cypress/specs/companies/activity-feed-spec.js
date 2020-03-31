@@ -84,6 +84,14 @@ describe('Company activity feed', () => {
       ).should('have.text', 'Add interaction')
     })
 
+    it('should display "Refer this company" button', () => {
+      cy.get(
+        selectors
+          .companyCollection()
+          .interaction.referButton(fixtures.company.venusLtd.id)
+      ).should('have.text', 'Refer this company')
+    })
+
     it('should not display the activity feed', () => {
       cy.get(selectors.companyActivity.activityFeed.item(1)).should(
         'not.be.visible'
@@ -138,11 +146,11 @@ describe('Company activity feed', () => {
     })
 
     it('should not display the "Add interaction" button', () => {
-      cy.get(
-        selectors
-          .companyCollection()
-          .interaction.addButton(fixtures.company.archivedLtd.id)
-      ).should('not.exist')
+      cy.contains('Add interaction').should('not.exist')
+    })
+
+    it('should not display "Refer this company" button', () => {
+      cy.contains('Refer this company').should('not.exist')
     })
 
     it('should display the activity feed', () => {

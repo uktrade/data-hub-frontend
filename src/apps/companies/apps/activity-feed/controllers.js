@@ -13,8 +13,6 @@ async function renderActivityFeed(req, res, next) {
       ? {}
       : {
           companyId: company.id,
-          contentText: 'Add interaction',
-          contentLink: companies.interactions.create(company.id),
           activityTypeFilter: FILTER_KEYS.dataHubActivity,
           activityTypeFilters: FILTER_ITEMS,
           isGlobalUltimate: company.is_global_ultimate,
