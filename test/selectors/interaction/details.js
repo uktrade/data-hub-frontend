@@ -7,6 +7,7 @@ exports.interaction = {
     back: ({ companyId }) => `[href="/companies/${companyId}/interactions/"]`,
   },
   whyCanINotComplete: '[data-auto-id="interactionDetailsWhyCanINotComplete"]',
+  referralDetails: '#interaction-referral-details',
 }
 
 exports.serviceDelivery = {
