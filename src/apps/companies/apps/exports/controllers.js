@@ -138,16 +138,12 @@ function renderExportEdit(req, res) {
     })
 }
 
-function createCountryOption(country) {
+function countryToTypeaheadOption(country) {
   return { value: country.id, label: country.name }
 }
 
-function getCountryValues(countries) {
-  if (countries) {
-    return countries.map(createCountryOption)
-  }
-
-  return []
+function countriesToTypeaheadOptions(countries = []) {
+  return countries.map(countryToTypeaheadOption)
 }
 
 function renderExportEditCountries(req, res) {
@@ -173,17 +169,21 @@ function renderExportEditCountries(req, res) {
           {
             name: EXPORTING_TO,
             label: exportDetailsLabels.exportToCountries,
-            values: getCountryValues(exportCountries[EXPORTING_TO]),
+            values: countriesToTypeaheadOptions(exportCountries[EXPORTING_TO]),
           },
           {
             name: FUTURE_INTEREST,
             label: exportDetailsLabels.futureInterestCountries,
-            values: getCountryValues(exportCountries[FUTURE_INTEREST]),
+            values: countriesToTypeaheadOptions(
+              exportCountries[FUTURE_INTEREST]
+            ),
           },
           {
             name: NOT_INTERESTED,
             label: exportDetailsLabels.noInterestCountries,
-            values: getCountryValues(exportCountries[NOT_INTERESTED]),
+            values: countriesToTypeaheadOptions(
+              exportCountries[NOT_INTERESTED]
+            ),
           },
         ],
       },
