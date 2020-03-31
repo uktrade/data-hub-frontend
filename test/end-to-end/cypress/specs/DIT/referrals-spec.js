@@ -40,9 +40,9 @@ describe('Referrals', () => {
     cy.contains('Referral sent')
   })
 
-  // it('should display in the companies activity feed', () => {
-  //   Todo currently we cannot view the activity feed, once this is fixed we should add this test
-  // })
+  it('should display in the companies activity feed', () => {
+    // TODO - currently we cannot view the activity feed, once this is fixed we should add this test
+  })
 
   it('should display the new referral on the homepage', () => {
     cy.get(selectors.localHeader().flash)
