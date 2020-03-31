@@ -40,6 +40,12 @@ describe('Company Export tab - Export countries history', () => {
         })
       })
 
+      it('renders the help message', () => {
+        cy.contains(
+          'You can only see the history of countries that were added or edited after 6th February 2020'
+        )
+      })
+
       it('renders the title', () => {
         cy.contains('Export countries history')
       })
@@ -53,6 +59,12 @@ describe('Company Export tab - Export countries history', () => {
     context('when there is history with multiple pages', () => {
       before(() => {
         visitHistory(fixtures.company.dnbCorp.id)
+      })
+
+      it('renders the help message', () => {
+        cy.contains(
+          'You can only see the history of countries that were added or edited after 6th February 2020'
+        )
       })
 
       it('renders the title', () => {
@@ -159,6 +171,12 @@ describe('Company Export tab - Export countries history', () => {
         visitHistory(fixtures.company.dnbGlobalUltimate.id)
       })
 
+      it('renders the help message', () => {
+        cy.contains(
+          'You can only see the history of countries that were added or edited after 6th February 2020'
+        )
+      })
+
       it('renders the title', () => {
         cy.contains('Export countries history')
       })
@@ -232,6 +250,12 @@ describe('Company Export tab - Export countries history', () => {
           visitHistory(fixtures.company.marsExportsLtd.id)
         })
 
+        it('renders the help message', () => {
+          cy.contains(
+            'You can only see the history of countries that were added or edited after 6th February 2020'
+          )
+        })
+
         it('renders the title', () => {
           cy.contains('Export countries history')
         })
@@ -253,6 +277,12 @@ describe('Company Export tab - Export countries history', () => {
       context('With grouped history items', () => {
         before(() => {
           visitHistory(fixtures.company.minimallyMinimalLtd.id)
+        })
+
+        it('renders the help message', () => {
+          cy.contains(
+            'You can only see the history of countries that were added or edited after 6th February 2020'
+          )
         })
 
         it('renders the title', () => {
@@ -309,6 +339,12 @@ describe('Company Export tab - Export countries history', () => {
     context('when viewing a company with interactions in the history', () => {
       before(() => {
         visitHistory(fixtures.company.investigationLimited.id)
+      })
+
+      it('renders the help message', () => {
+        cy.contains(
+          'You can only see the history of countries that were added or edited after 6th February 2020'
+        )
       })
 
       it('renders the title', () => {
@@ -466,6 +502,12 @@ describe('Company Export tab - Export countries history', () => {
         Exports: urls.companies.exports.index(fixtures.company.dnbCorp.id),
         'Andorra exports history': null,
       })
+    })
+
+    it('renders the help message', () => {
+      cy.contains(
+        'You can only see the history of countries that were added or edited after 6th February 2020'
+      )
     })
 
     it('renders the title', () => {

@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { H2 } from '@govuk-react/heading'
 import { SPACING, LEVEL_SIZE } from '@govuk-react/constants'
+import InsetText from '@govuk-react/inset-text'
 import { CollectionList } from 'data-hub-components'
 import { connect } from 'react-redux'
 
@@ -48,6 +49,10 @@ export default connect(state2props, (dispatch) => ({
         >
           {() => (
             <>
+              <InsetText>
+                You can only see the history of countries that were added or
+                edited after 6th February 2020
+              </InsetText>
               <H2 size={LEVEL_SIZE[3]}>{pageTitle}</H2>
               <CollectionList
                 itemName="result"
