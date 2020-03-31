@@ -421,8 +421,6 @@ describe('Activity feed controllers', () => {
           {
             props: {
               companyId: 'dcdabbc9-1781-e411-8955-e4115bead28a',
-              contentLink: companies.interactions.create(companyId),
-              contentText: 'Add interaction',
               activityTypeFilter: FILTER_KEYS.dataHubActivity,
               activityTypeFilters: FILTER_ITEMS,
               apiEndpoint: companies.activity.data(companyId),
@@ -479,8 +477,6 @@ describe('Activity feed controllers', () => {
           {
             props: {
               companyId: 'dcdabbc9-1781-e411-8955-e4115bead28a',
-              contentLink: companies.interactions.create(companyId),
-              contentText: 'Add interaction',
               activityTypeFilter: FILTER_KEYS.dataHubActivity,
               activityTypeFilters: FILTER_ITEMS,
               apiEndpoint: companies.activity.data(companyId),
