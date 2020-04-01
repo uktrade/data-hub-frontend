@@ -4,7 +4,11 @@ services:
     build:
       context: .
     volumes:
-      - .:/usr/src/app
+      - ./assets:/usr/src/app/assets
+      - ./scripts:/usr/src/app/scripts
+      - ./src:/usr/src/app/src
+      - ./test:/usr/src/app/test
+      - ./visual-screenshots:/usr/src/app/visual-screenshots
     ports:
       - 3000:3000
       - 9229:9229
