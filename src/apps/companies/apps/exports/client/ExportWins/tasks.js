@@ -49,7 +49,7 @@ function getMetadata(win) {
     ['Company type', win.business_potential],
   ]
 
-  if (win.response.confirmed) {
+  if (win.response?.confirmed) {
     metadata.push([
       'Date confirmed',
       DateUtils.formatWithTime(win.response.date),
