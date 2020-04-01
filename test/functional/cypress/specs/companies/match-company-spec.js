@@ -146,7 +146,9 @@ describe('Match a company', () => {
     })
 
     it('should render the header', () => {
-      assertLocalHeader("I still can't find what I'm looking for")
+      assertLocalHeader(
+        'Send these business details to our third party data supplier for verification'
+      )
     })
 
     it('should render breadcrumbs', () => {
@@ -156,29 +158,154 @@ describe('Match a company', () => {
         [fixtures.company.venusLtd.name]: urls.companies.detail(
           fixtures.company.venusLtd.id
         ),
-        'Cannot find details': null,
+        'Send business details': null,
       })
     })
 
-    it('should display the page content', () => {
-      cy.contains(
-        'Thanks for trying to verify the business details on this Data Hub record.'
-      )
+    it('should contain the Data Hub record', () => {
+      cy.contains('Data Hub business details (un-verified)')
+        .should('match', 'h2')
+        .next()
+        .find('dl')
+        .then(($el) =>
+          assertSummaryList($el, {
+            'Company name': 'Venus Ltd',
+            'Located at': '66 Marcham Road, Bordley, BD23 8RZ, United Kingdom',
+          })
+        )
+    })
+
+    it('should render the rest of the page', () => {
+      cy.contains('Contact details of the business for verification')
+        .and('match', 'h2')
+        .next()
+        .children()
+        .should('have.length', 2)
+        .first()
+        .should('have.text', "Company's website")
+        .next()
+        .find('input')
+        .should('have.attr', 'type', 'url')
+        .parent()
         .parent()
         .next()
-        .should('have.text', 'You can continue to use Data Hub as normal.')
+        .children()
+        .should('have.length', 3)
+        .first()
+        .should('have.text', "Company's telephone number")
         .next()
-        .should('match', 'br')
+        .should(
+          'have.text',
+          'If the website of the business does not show the name and address of' +
+            ' the business as you want it to appear in Data Hub, it is important' +
+            ' to provide a valid phone number, so the company can be contacted' +
+            ' when verifying the business details.'
+        )
         .next()
-        .should('have.text', 'Return to company record')
-        .and('match', 'a')
-        .and(
+        .find('input')
+        .should('have.attr', 'type', 'tel')
+        .parent()
+        .parent()
+        .next()
+        .should('have.text', 'What happens next')
+        .and('match', 'h2')
+        .next()
+        .should(
+          'have.text',
+          'These business details will be sent to our third party data' +
+            ' suppliers, so it is important you have consent from the' +
+            ' business to share these details.'
+        )
+        .next()
+        .should(
+          'have.text',
+          'Our data suppliers might need to contact the company to verify the' +
+            ' details, so it is important that the website and phone number' +
+            ' are valid.'
+        )
+        .next()
+        .should(
+          'have.text',
+          'It will NOT change any recorded activity (interactions, OMIS orders' +
+            ' or Investment projects).'
+        )
+        .next()
+        .contains('Send')
+        .and('match', 'button')
+        .next()
+        .contains('Back')
+        .should(
           'have.attr',
           'href',
-          urls.companies.detail(fixtures.company.venusLtd.id)
+          urls.companies.match.index(fixtures.company.venusLtd.id)
         )
     })
   })
+
+  context(
+    `when the "Send" button is clicked without completing either field`,
+    () => {
+      before(() => {
+        cy.visit(urls.companies.match.cannotFind(fixtures.company.venusLtd.id))
+        cy.contains('button', 'Send').click()
+      })
+
+      it('should display two error message', () => {
+        cy.contains("Company's website")
+          .next()
+          .children()
+          .first()
+          .should('have.text', 'Enter a website or phone number')
+
+        cy.contains("Company's telephone number")
+          .next()
+          .next()
+          .children()
+          .first()
+          .should('have.text', 'Enter a website or phone number')
+
+        cy.location('pathname').should(
+          'eq',
+          urls.companies.match.cannotFind(fixtures.company.venusLtd.id)
+        )
+      })
+    }
+  )
+
+  context(
+    `when the "Send" button is clicked after completing both fields`,
+    () => {
+      before(() => {
+        cy.visit(urls.companies.match.cannotFind(fixtures.company.venusLtd.id))
+      })
+
+      it('should submit both fields', () => {
+        cy.contains("Company's website")
+          .next()
+          .find('input')
+          .type('01185673456')
+
+        cy.contains("Company's telephone number")
+          .next()
+          .next()
+          .find('input')
+          .type('http://wwww.google.com')
+
+        cy.contains('button', 'Send').click()
+
+        cy.location('pathname').should(
+          'eq',
+          urls.companies.activity.index(fixtures.company.venusLtd.id)
+        )
+
+        cy.get(selectors.localHeader().flash).should(
+          'contain.text',
+          'Verification request sent.Once verified, the below message' +
+            ' asking you to verify the business details will disappear.'
+        )
+      })
+    }
+  )
 
   context(
     'when an unmatched company from the search results is clicked',

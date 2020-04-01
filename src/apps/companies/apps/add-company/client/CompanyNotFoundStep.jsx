@@ -16,7 +16,7 @@ const requiredWebsiteOrPhoneValidator = (
   { values: { website, telephone_number } }
 ) => {
   return !website && !telephone_number
-    ? 'Enter at least a website or a phone number'
+    ? 'Enter a website or phone number'
     : null
 }
 
