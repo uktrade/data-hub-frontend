@@ -140,7 +140,7 @@ describe('Company Export tab', () => {
           'Ut eius quisquam qui quaerat adipisci dolorum sit similique.'
         )
           .siblings()
-          .should('contain', 'Won on 4 Dec 2019, 9:14am')
+          .should('contain', 'Won on 4 Dec 2019')
           .should('contain', 'HVC')
           .should('contain', 'Confirmed')
           .should(
@@ -163,7 +163,7 @@ describe('Company Export tab', () => {
 
         cy.contains('Ut repellendus sint.')
           .siblings()
-          .should('contain', 'Won on 3 Nov 2019, 1:51am')
+          .should('contain', 'Won on 3 Nov 2019')
           .should('not.contain', 'HVC')
           .should('not.contain', 'Confirmed')
           .should(
@@ -186,7 +186,7 @@ describe('Company Export tab', () => {
 
         cy.contains('Dolorem nesciunt adipisci optio')
           .siblings()
-          .should('contain', 'Won on 19 Dec 2019, 12:37am')
+          .should('contain', 'Won on 19 Dec 2019')
           .should('contain', 'HVC')
           .should('not.contain', 'Confirmed')
           .should(
