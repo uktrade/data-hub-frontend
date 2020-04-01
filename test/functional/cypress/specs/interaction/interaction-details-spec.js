@@ -63,7 +63,7 @@ describe('Interaction details', () => {
         selectors.interaction.details.interaction.actions.completeInteraction(
           params
         )
-      ).should('have.text', 'Complete interaction ')
+      ).should('have.text', 'Complete interaction')
     })
 
     it('should not render the "Edit interaction" button', () => {
@@ -74,15 +74,6 @@ describe('Interaction details', () => {
           'service-delivery'
         )
       ).should('not.be.visible')
-    })
-
-    it('should render the "Back" link', () => {
-      cy.get(
-        selectors.interaction.details.interaction.actions.back(params)
-      ).should('be.visible')
-      cy.get(
-        selectors.interaction.details.interaction.actions.back(params)
-      ).should('have.text', 'Back')
     })
 
     it('should not render the "Why can I not complete this interaction?" details summary', () => {
@@ -152,15 +143,6 @@ describe('Interaction details', () => {
       ).should('not.be.visible')
     })
 
-    it('should render the "Back" link', () => {
-      cy.get(
-        selectors.interaction.details.interaction.actions.back(params)
-      ).should('be.visible')
-      cy.get(
-        selectors.interaction.details.interaction.actions.back(params)
-      ).should('have.text', 'Back')
-    })
-
     it('should render the "Why can I not complete this interaction?" details summary', () => {
       cy.get(
         selectors.interaction.details.interaction.whyCanINotComplete
@@ -226,15 +208,6 @@ describe('Interaction details', () => {
           'service-delivery'
         )
       ).should('not.be.visible')
-    })
-
-    it('should render the "Back" link', () => {
-      cy.get(
-        selectors.interaction.details.interaction.actions.back(params)
-      ).should('be.visible')
-      cy.get(
-        selectors.interaction.details.interaction.actions.back(params)
-      ).should('have.text', 'Back')
     })
 
     it('should not render the "Why can I not complete this interaction?" details summary', () => {
@@ -307,15 +280,7 @@ describe('Interaction details', () => {
         'service-delivery'
       )
       cy.get(editInteraction).should('be.visible')
-      cy.get(editInteraction).should('have.text', 'Edit service delivery ')
-    })
-
-    it('should render the "Back" link', () => {
-      const back = selectors.interaction.details.interaction.actions.back(
-        params
-      )
-      cy.get(back).should('be.visible')
-      cy.get(back).should('have.text', 'Back')
+      cy.get(editInteraction).should('have.text', 'Edit service delivery')
     })
 
     it('should not render the "Why can I not complete this interaction?" details summary', () => {
@@ -389,15 +354,7 @@ describe('Interaction details', () => {
         'interaction'
       )
       cy.get(editInteraction).should('be.visible')
-      cy.get(editInteraction).should('have.text', 'Edit interaction ')
-    })
-
-    it('should render the "Back" link', () => {
-      const back = selectors.interaction.details.interaction.actions.back(
-        params
-      )
-      cy.get(back).should('be.visible')
-      cy.get(back).should('have.text', 'Back')
+      cy.get(editInteraction).should('have.text', 'Edit interaction')
     })
 
     it('should not render the "Why can I not complete this interaction?" details summary', () => {
