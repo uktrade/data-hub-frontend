@@ -10,6 +10,7 @@ const editFields = merge({}, globalFields, {
     label: 'fields.subscribers.label',
     hint: 'fields.subscribers.hint',
     name: 'subscribers',
+    multiple: true,
     children: [
       {
         macroName: 'Typeahead',
@@ -73,6 +74,7 @@ const editFields = merge({}, globalFields, {
     legend: 'fields.assignees.legend',
     label: 'fields.assignees.label',
     hint: 'fields.assignees.hint',
+    multiple: true,
     name: 'assignees',
     children: [
       {
@@ -93,12 +95,14 @@ const editFields = merge({}, globalFields, {
     fieldType: 'TextField',
     label: 'fields.assignee_time.label',
     modifier: ['shorter', 'soft'],
+    multiple: true,
     validate: [duration],
   },
   assignee_actual_time: {
     fieldType: 'TextField',
     label: 'fields.assignee_actual_time.label',
     modifier: ['shorter', 'soft'],
+    multiple: true,
     validate: [arrayrequired, duration],
   },
   vat_status: {
