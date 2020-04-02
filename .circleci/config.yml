@@ -311,6 +311,14 @@ jobs:
       - store_artifacts:
           path: cypress-coverage
       - *store_artifacts_cypress_video
+      - run: mkdir partial-coverage || true
+      - run: touch partial-coverage/.placeholder || true
+      - run: cp cypress-coverage/coverage-final.json partial-coverage/cypress-coverage-$CIRCLE_WORKFLOW_JOB_ID-index-$CIRCLE_NODE_INDEX.json || true
+      - run: ls -la partial-coverage
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - 'project/partial-coverage/*'
 
   # Run visual tests
   visual_tests:
