@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-
 const { castArray, get, isEmpty, omitBy, pick, isUndefined } = require('lodash')
 
 const UNMATCHED_COMPANY_EDITABLE_FIELDS = [
@@ -93,8 +92,49 @@ const transformFormToZendesk = (company, formValues) => {
   )
 }
 
+const transformFormToDnbChangeRequest = (company, formValues) => {
+  const obj = transformFormToZendesk(company, formValues)
+  const address = omitBy(
+    {
+      line_1: obj.address1,
+      line_2: obj.address2,
+      town: obj.city,
+      county: obj.county,
+      postcode: obj.postcode,
+    },
+    (fieldValue) => isEmpty(fieldValue)
+  )
+
+  delete obj.address1
+  delete obj.address2
+  delete obj.city
+  delete obj.county
+  delete obj.postcode
+
+  const tradingNames = omitBy(
+    {
+      trading_names: obj.trading_names ? castArray(obj.trading_names) : [],
+    },
+    (fieldValue) => isEmpty(fieldValue)
+  )
+
+  delete obj.trading_names
+
+  const dnbChangeRequest = {
+    ...obj,
+    ...tradingNames,
+  }
+
+  if (!isEmpty(address)) {
+    dnbChangeRequest.address = address
+  }
+
+  return dnbChangeRequest
+}
+
 module.exports = {
   transformCompanyToForm,
   transformFormToApi,
   transformFormToZendesk,
+  transformFormToDnbChangeRequest,
 }
