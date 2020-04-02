@@ -24,7 +24,6 @@ async function getCompany(req, res, next, id) {
     res.locals.company = company
     next()
   } catch (error) {
-    console.log(error)
     next(error)
   }
 }

@@ -22,8 +22,7 @@ describe('Contact controller, edit', () => {
   let getContactAsFormDataStub
   let company
   const next = function(error) {
-    console.log(error)
-    throw Error('error')
+    throw error
   }
 
   beforeEach(() => {

@@ -64,9 +64,8 @@ const AutoSubmit = {
       .then(() => {
         this.isSubmitting = false
       })
-      .catch((error) => {
+      .catch(() => {
         this.isSubmitting = false
-        console.error(`Could not fetch data: ${error}`)
       })
   },
 }
