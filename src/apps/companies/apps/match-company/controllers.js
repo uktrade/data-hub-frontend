@@ -7,6 +7,7 @@ const { postToZenDesk } = require('../../../support/services')
 const urls = require('../../../../lib/urls')
 const url = require('url')
 
+const ZENDESK_TICKET_TAG_NEW_RECORD_REQUEST = 'dnb_new_record_request'
 const ZENDESK_TICKET_TAG_MERGE_REQUEST = 'dnb_merge_request'
 const ZENDESK_TICKET_TYPE_TASK = 'task'
 
@@ -177,16 +178,62 @@ async function findDnbCompany(req, res, next) {
 async function renderCannotFindMatch(req, res, next) {
   try {
     const { company } = res.locals
+    const { token } = req.session
+    const countries = await getCountries(token)
+
     res
       .breadcrumb(company.name, urls.companies.detail(company.id))
-      .breadcrumb('Cannot find details')
+      .breadcrumb('Send business details')
       .render('companies/apps/match-company/views/cannot-find-match', {
         props: {
-          companyId: company.id,
+          company: {
+            ...pick(company, ['id', 'name']),
+            address: parseAddress(company.address, countries),
+          },
         },
       })
   } catch (error) {
     next(error)
+  }
+}
+
+async function submitNewDnbRecordRequest(req, res, next) {
+  try {
+    const ticket = createNewDnbRecordRequestMessage(req, res)
+    const result = await postToZenDesk(ticket)
+
+    req.flashWithBody(
+      'success',
+      'Verification request sent.',
+      'Once verified, the below message asking you to verify ' +
+        'the business details will disappear.'
+    )
+    res.json({ message: 'OK', ticket: get(result, 'data.ticket.id') })
+  } catch (error) {
+    next(error)
+  }
+}
+
+function createNewDnbRecordRequestMessage(req, res) {
+  const { company, user } = res.locals
+  const { address, website, telephoneNumber } = req.body
+  const dataHubCompanyUrl = getCompanyAbsoluteUrl(req, company.id)
+
+  const messageBody =
+    `User ${user.name} cannot match ${company.name}, ${address} (${dataHubCompanyUrl}) to a D&B company. ` +
+    ` They have provided a website URL: ${website} and or a telephone number: ${telephoneNumber}. `
+
+  return {
+    type: ZENDESK_TICKET_TYPE_TASK,
+    requester: {
+      name: `Data Hub user - ${user.name}`,
+      email: user.email,
+    },
+    subject: `New D&B record request for ${company.name}`,
+    comment: {
+      body: messageBody,
+    },
+    tags: [ZENDESK_TICKET_TAG_NEW_RECORD_REQUEST],
   }
 }
 
@@ -238,6 +285,7 @@ module.exports = {
   renderFindCompanyForm,
   findDnbCompany,
   renderCannotFindMatch,
+  submitNewDnbRecordRequest,
   submitMergeRequest,
   linkCompanies,
 }
