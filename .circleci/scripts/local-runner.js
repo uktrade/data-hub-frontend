@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable no-console */
 var Nightwatch = require('nightwatch')
 var browserstack = require('browserstack-local')
 
