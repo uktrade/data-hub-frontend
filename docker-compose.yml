@@ -10,12 +10,12 @@ services:
       - ./test:/usr/src/app/test
       - ./visual-screenshots:/usr/src/app/visual-screenshots
     ports:
-      - 3000:3000
+      - 13000:3000
       - 9229:9229
     depends_on:
       - api
     env_file: dev-stack.env
-    command: sh -c './wait-for-it.sh api:8000 -t 240 -- yarn develop'
+    command: ./wait-for-it.sh api:8000 -t 240 -- ./node_modules/.bin/nodemon --ext jsx,js $NODE_DEBUG_OPTION --delay 80ms --exec 'fuser -k 9229/tcp; sleep 0.1; yarn develop' -L
 
   api:
     build: ../data-hub-api
@@ -25,7 +25,7 @@ services:
     depends_on:
       - celery
     ports:
-      - 8000:8000
+      - 18000:8000
 
   celery:
     build: ../data-hub-api

@@ -27,11 +27,13 @@ const {
 const { postDetails, getInteractionDetails } = require('./middleware/details')
 
 const addInteractionRouter = require('./apps/add-interaction/router')
+const addInteractionStubRouter = require('./apps/add-interaction-stub/router')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.param('interactionId', getInteractionDetails)
 
+router.use(addInteractionStubRouter)
 router.use(addInteractionRouter)
 
 router.get(

@@ -8,5 +8,7 @@ RUN yarn
 
 COPY . .
 RUN yarn build
+RUN apt-get update
+RUN apt-get install psmisc
 
 CMD ["yarn", "develop"]

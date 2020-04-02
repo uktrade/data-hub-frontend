@@ -99,7 +99,7 @@ const AddInteractionForm = ({
             <InteractionTypeStep />
 
             <Step name="interaction_details" forwardButton="Add interaction">
-              <H3 as="h2">Service UH</H3>
+              <H3 as="h2">Service</H3>
 
               <FieldTypeahead
                 name="service"
@@ -143,7 +143,7 @@ const AddInteractionForm = ({
                 </>
               )}
 
-              <H3 as="h2">Participant</H3>
+              <H3 as="h2">Participants</H3>
 
               <FieldTypeahead
                 name="contacts"
