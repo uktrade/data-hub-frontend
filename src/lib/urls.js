@@ -194,11 +194,9 @@ module.exports = {
   interactions: {
     index: url('/interactions'),
     create: url('/interactions', '/create'),
+    createStub: url('/interaction', '/create-stub'),
     detail: url('/interactions', '/:interactionId'),
     subapp: createInteractionsSubApp(),
-  },
-  interactionStubs: {
-    create: url('/interaction-stubs', '/create'),
   },
   investments: {
     index: url('/investments'),
