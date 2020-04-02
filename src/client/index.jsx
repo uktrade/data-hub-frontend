@@ -131,7 +131,9 @@ function App() {
         )}
       </Mount>
       <Mount selector="#cannot-find-match">
-        {(props) => <CannotFindMatch {...props} />}
+        {(props) => (
+          <CannotFindMatch csrfToken={globalProps.csrfToken} {...props} />
+        )}
       </Mount>
       <Mount selector="#find-company">
         {(props) => (

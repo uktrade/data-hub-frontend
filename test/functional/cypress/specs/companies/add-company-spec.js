@@ -376,7 +376,7 @@ describe('Add company form', () => {
             )
             cy.get(selectors.companyAdd.form).contains('Enter name')
             cy.get(selectors.companyAdd.form).contains(
-              'Enter at least a website or a phone number'
+              'Enter a website or phone number'
             )
             cy.get(selectors.companyAdd.form).contains('Enter address line 1')
             cy.get(selectors.companyAdd.form).contains('Enter town or city')
