@@ -25,6 +25,7 @@ import CompanyBusinessDetails from '../apps/companies/apps/business-details/clie
 import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
 import ExportsHistory from '../apps/companies/apps/exports/client/ExportsHistory/'
 import ExportsEdit from '../apps/companies/apps/exports/client/ExportsEdit.jsx'
+import ExportCountriesEdit from '../apps/companies/apps/exports/client/ExportCountriesEdit/'
 import ReferralDetails from '../apps/companies/apps/referrals/details/client/ReferralDetails'
 import ReferralHelp from '../apps/companies/apps/referrals/help/client/ReferralHelp'
 import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
@@ -55,6 +56,13 @@ import { ID as EXPORTS_WINS_ID } from '../apps/companies/apps/exports/client/Exp
 import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/reducer'
 import * as exportWinsTasks from '../apps/companies/apps/exports/client/ExportWins/tasks'
 
+import {
+  ID as EXPORT_COUNTRIES_EDIT_ID,
+  TASK_NAME as EXPORT_COUNTRIES_EDIT_NAME,
+} from '../apps/companies/apps/exports/client/ExportCountriesEdit/state'
+import exportCountriesEditReducer from '../apps/companies/apps/exports/client/ExportCountriesEdit/reducer'
+import * as exportCountriesEditTasks from '../apps/companies/apps/exports/client/ExportCountriesEdit/tasks'
+
 const sagaMiddleware = createSagaMiddleware()
 
 const store = createStore(
@@ -69,6 +77,7 @@ const store = createStore(
     [EXPORTS_WINS_ID]: exportWinsReducer,
     // A reducer is required to be able to set a preloadedState parameter
     referrerUrl: (state = {}) => state,
+    [EXPORT_COUNTRIES_EDIT_ID]: exportCountriesEditReducer,
   }),
   { referrerUrl: window.document.referrer },
   composeWithDevTools(applyMiddleware(sagaMiddleware))
@@ -82,6 +91,7 @@ sagaMiddleware.run(
     'Referral details': referralTasks.fetchReferralDetails,
     Referrals: referralListTask,
     'Export wins': exportWinsTasks.fetchExportWins,
+    [EXPORT_COUNTRIES_EDIT_NAME]: exportCountriesEditTasks.saveExportCountries,
   })
 )
 
@@ -198,11 +208,14 @@ function App() {
       <Mount selector="#referral-help">
         {(props) => <ReferralHelp {...props} />}
       </Mount>
-      <Mount selector="#company-exports-edit">
+      <Mount selector="#company-export-exports-edit">
         {(props) => <ExportsEdit {...props} />}
       </Mount>
       <Mount selector="#interaction-referral-details">
         {(props) => <InteractionReferralDetails {...props} />}
+      </Mount>
+      <Mount selector="#company-export-countries-edit">
+        {(props) => <ExportCountriesEdit {...props} />}
       </Mount>
     </Provider>
   )

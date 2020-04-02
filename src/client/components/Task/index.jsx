@@ -110,8 +110,8 @@ const Task = connect(
         onSuccessDispatch,
       }),
   })
-)(({ start, children, ...props }) =>
-  children((name, id) => {
+)(function Task({ start, children, ...props }) {
+  return children((name, id) => {
     const taskState = get(props, [name, id], {})
     return {
       ...taskState,
@@ -120,7 +120,7 @@ const Task = connect(
       start: (options) => start(name, id, options),
     }
   })
-)
+})
 
 Task.propTypes = {
   children: PropTypes.func.isRequired,

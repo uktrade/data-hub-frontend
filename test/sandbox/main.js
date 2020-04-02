@@ -440,6 +440,11 @@ Sandbox.define(
   'GET',
   v4Company.exportWins
 )
+Sandbox.define(
+  '/v4/company/{companyId}/export-detail',
+  'PATCH',
+  v4Company.exportDetail
+)
 
 // V4 DnB
 Sandbox.define('/v4/dnb/company-create', 'POST', v4Dnb.companyCreate)
