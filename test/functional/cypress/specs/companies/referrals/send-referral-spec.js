@@ -43,14 +43,33 @@ describe('Send a referral form', () => {
 
       it('should display the headings and four fields', () => {
         cy.get(selectors.companySendReferral.form)
+          .find('h4')
+          .should('contain', 'Who do you want to refer this company to?')
+          .next()
           .should('contain', 'Adviser')
-          .and('contain', 'Subject')
-          .and('contain', 'Notes')
-          .and('contain', 'Company contact (optional')
-        cy.get(selectors.companySendReferral.adviserField).should('be.visible')
-        cy.get(selectors.companySendReferral.subjectField).should('be.visible')
-        cy.get(selectors.companySendReferral.notesField).should('be.visible')
-        cy.get(selectors.companySendReferral.contactField).should('be.visible')
+          .should(
+            'contain',
+            "This can be an adviser at post, a sector specialist or an international trade advisor. If you're not sure, you can find the right team and person on Digital Workspace (opens in a new window or tab)."
+          )
+          .find('a')
+          .should('have.attr', 'href', urls.external.digitalWorkspace.teams)
+          .parent()
+          .parent()
+          .next()
+          .next()
+          .should('contain', 'Referral notes')
+          .next()
+          .should('contain', 'Subject')
+          .next()
+          .next()
+          .should('contain', 'Notes')
+          .and(
+            'contain',
+            "Include reasons you're referring this company and any specific opportunities."
+          )
+          .next()
+          .next()
+          .should('contain', 'Company contact (optional')
       })
 
       it('should display "Continue" button', () => {
