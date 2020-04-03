@@ -15,55 +15,44 @@ const transformServiceToOption = (service) => ({
 })
 
 async function renderAddInteractionStubForm(req, res, next) {
-  throw new Error("OOOF");
   try {
     const { user, token } = req.session
     const { company_id: companyId } = req.query
+    const contactIds = [].concat(req.query['contact_id'] || []);
+    const initialSubject = req.query['subject'] || '';
+    const initialDate = (req.query['date'] || new Date().toISOString()).split('T')[0].split('-');
+    var adviserIds = [].concat(req.query['adviser_id'] || []);
+
 
     const [
       company,
       { results: advisers },
-      services,
-      serviceDeliveryStatuses,
-      policyAreas,
-      policyIssueTypes,
-      communicationChannels,
-      countries,
-      activeEvents,
       ,
     ] = await Promise.all([
       getDitCompany(req.session.token, companyId),
       getAdvisers(token),
-      getOptions(token, 'service', {
-        transformer: transformServiceToOption,
-      }),
-      getOptions(token, 'service-delivery-status', { sorted: false }),
-      getOptions(token, 'policy-area'),
-      getOptions(token, 'policy-issue-type'),
-      getOptions(token, 'communication-channel'),
-      getOptions(token, 'country', {
-        transformer: transformServiceToOption,
-      }),
-      getActiveEvents(token),
     ])
+    const companyContacts = company.contacts.map(transformContactToOption)
+    const initialContacts = companyContacts.filter(contact => contactIds.includes(contact['value']))
+    adviserIds.push(user.id);
+    activeAdvisers = advisers.filter((adviser) => !adviser.archived).map(transformObjectToOption)
+    const initialAdvisers = activeAdvisers.filter(adviser => adviserIds.includes(adviser['value']))
 
     res
-      .breadcrumb(`Add interaction for ${company.name}`)
-      .render('interactions/apps/add-interaction/views/add-interaction-form', {
+      .breadcrumb(`Add stub interaction for ${company.name}`)
+      .render('interactions/apps/add-interaction-stub/views/add-interaction-form', {
         props: {
           company,
-          advisers: advisers
-            .filter((adviser) => !adviser.archived)
-            .map(transformObjectToOption),
-          defaultAdviser: { label: user.name, value: user.id },
-          contacts: company.contacts.map(transformContactToOption),
-          services,
-          serviceDeliveryStatuses,
-          policyAreas,
-          policyIssueTypes,
-          communicationChannels,
-          countries,
-          activeEvents: activeEvents.map(transformObjectToOption),
+          advisers: activeAdvisers,
+          initialAdvisers: initialAdvisers,
+          contacts: companyContacts,
+          initialContacts: initialContacts,
+          initialDate: {
+            day: initialDate[2],
+            month: initialDate[1],
+            year: initialDate[0],
+          },
+          initialSubject: initialSubject,
         },
       })
   } catch (error) {

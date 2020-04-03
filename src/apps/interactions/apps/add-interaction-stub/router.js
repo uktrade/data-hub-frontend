@@ -5,5 +5,4 @@ const { renderAddInteractionStubForm } = require('./controllers')
 
 router.get(urls.interactions.createStub.route, renderAddInteractionStubForm)
 
-
 module.exports = router

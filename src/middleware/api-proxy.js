@@ -13,6 +13,7 @@ const WHITELIST = [
   '/adviser/',
   '/v4/company/:id/export-win',
   '/v4/company/:id',
+  '/v3/interaction',
 ]
 
 module.exports = (app) => {
