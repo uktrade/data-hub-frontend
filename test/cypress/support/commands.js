@@ -111,6 +111,19 @@ Cypress.Commands.add('getDhTablistTab', (tablistLabel, tabLabel, options) => {
   )
 })
 
+Cypress.Commands.add(
+  'selectTypeaheadOption',
+  { prevSubject: 'element' },
+  (subject, text) => {
+    cy.wrap(subject)
+      .find('input')
+      .type(text, { force: true })
+      .type('{enter}')
+
+    return cy.wrap(subject)
+  }
+)
+
 /**
  * _Selects_ a _tab_ element of the `TabNav` component and _gets_ its _tabpanel_
  * element.
