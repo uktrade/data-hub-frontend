@@ -1,6 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter } from 'react-router-dom'
+import { createBrowserHistory } from 'history'
+import {
+  connectRouter,
+  routerMiddleware,
+  ConnectedRouter,
+} from 'connected-react-router'
 import { Provider } from 'react-redux'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
@@ -67,9 +72,11 @@ import exportCountriesEditReducer from '../apps/companies/apps/exports/client/Ex
 import * as exportCountriesEditTasks from '../apps/companies/apps/exports/client/ExportCountriesEdit/tasks'
 
 const sagaMiddleware = createSagaMiddleware()
+const history = createBrowserHistory()
 
 const store = createStore(
   combineReducers({
+    router: connectRouter(history),
     tasks,
     sendReferral,
     [COMPANY_LISTS_STATE_ID]: companyListsReducer,
@@ -84,7 +91,9 @@ const store = createStore(
     referrerUrl: (state = {}) => state,
   }),
   { referrerUrl: window.document.referrer },
-  composeWithDevTools(applyMiddleware(sagaMiddleware))
+  composeWithDevTools(
+    applyMiddleware(sagaMiddleware, routerMiddleware(history))
+  )
 )
 
 sagaMiddleware.run(
@@ -119,12 +128,13 @@ function App() {
   const globalProps = parseProps(appWrapper)
   return (
     <Provider store={store}>
-      {/*
-      The baseURI is set to the <base/> tag by the spaFallbackMixin middleware
-      which should be applied to each Express route where react-router is
-      expected to be used.
-      */}
-      <BrowserRouter basename={new URL(document.baseURI).pathname}>
+      <ConnectedRouter
+        history={history}
+        // The baseURI is set to the <base/> tag by the spaFallbackSpread
+        // middleware, which should be applied to each Express route where
+        // react-router is expected to be used.
+        basename={new URL(document.baseURI).pathname}
+      >
         <Mount selector="#add-company-form">
           {(props) => (
             <AddCompanyForm csrfToken={globalProps.csrfToken} {...props} />
@@ -230,7 +240,7 @@ function App() {
         <Mount selector="#company-export-countries-edit">
           {(props) => <ExportCountriesEdit {...props} />}
         </Mount>
-      </BrowserRouter>
+      </ConnectedRouter>
     </Provider>
   )
 }
