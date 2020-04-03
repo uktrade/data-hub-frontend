@@ -42,8 +42,6 @@ var ReferralIds = require('../../../constants/referrals')
 state.investor_description = state.investor_description || ''
 
 exports.largeInvestorProfile = function(req, res) {
-  console.log(req.query.offset)
-  console.log(req)
   if (req.query.investor_company_id === companyOneListCorp.id) {
     return res.json(largeCapitalProfile)
   }

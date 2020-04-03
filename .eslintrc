@@ -28,7 +28,7 @@
     "no-case-declarations": "off",
     "no-prototype-builtins": "off",
     "no-unused-vars": "error",
-    "react/jsx-uses-react": "error",   
+    "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "node/no-deprecated-api": "off",
     "react-hooks/rules-of-hooks": "error",
@@ -59,7 +59,8 @@
         "max": 1
       }
     ],
-    "no-undef": "error"
+    "no-undef": "error",
+    "no-console": ["error", {"allow": ["assert"]}]
   },
   "overrides": [
     {

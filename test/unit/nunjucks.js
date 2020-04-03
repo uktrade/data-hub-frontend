@@ -33,6 +33,7 @@ function render(template, options) {
       const { document } = new JSDOM(markup).window
       resolve(document)
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error)
       reject(error)
     }
