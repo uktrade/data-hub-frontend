@@ -1,15 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-<<<<<<< HEAD
 import { createBrowserHistory } from 'history'
 import {
   connectRouter,
   routerMiddleware,
   ConnectedRouter,
 } from 'connected-react-router'
-=======
-import { BrowserRouter } from 'react-router-dom'
->>>>>>> Add react-router
 import { Provider } from 'react-redux'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
@@ -92,12 +88,8 @@ const history = createBrowserHistory({
   basename: new URL(
     document.baseURI ||
       // IE doesn't support baseURI so we need to access base.href manually
-<<<<<<< HEAD
       document.querySelector('base')?.href ||
       document.location.href
-=======
-      document.querySelector('base').href
->>>>>>> Fix IE11 not supporting document.baseURI
   ).pathname,
 })
 

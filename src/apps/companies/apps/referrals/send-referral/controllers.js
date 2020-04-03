@@ -35,7 +35,7 @@ async function submitSendReferralForm(req, res, next) {
     req.flashWithBody(
       'success',
       'Referral sent.',
-      `You can <a href="${urls.dashboard()}">see all of your referrals on your Homepage</a>.`
+      `You can <a href="${urls.companies.referrals.list()}">see all of your referrals on your Homepage</a>.`
     )
     res.redirect(urls.companies.detail(res.locals.company.id))
   } catch (error) {
