@@ -9,6 +9,7 @@ var contactCreateValidation = require('../../../fixtures/v3/contact/contact-crea
 
 exports.contact = function(req, res) {
   if (req.query.company_id === lambdaPlc.id) {
+    // eslint-disable-next-line no-console
     console.log(
       'BEWARE: Lambda PLC uses contacts-for-referral.json rather than contact.json'
     )

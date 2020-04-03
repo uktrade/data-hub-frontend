@@ -381,7 +381,6 @@ describe('Company edit', () => {
       cy.contains('Submit').click()
 
       cy.wait('@editCompanyResponse').then((xhr) => {
-        console.log(xhr)
         expect(xhr.request.body.trading_names).to.equal(
           'Test company trading name'
         )
