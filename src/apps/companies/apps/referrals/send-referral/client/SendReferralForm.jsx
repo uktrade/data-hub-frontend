@@ -15,7 +15,8 @@ import {
   SEND_REFERRAL_FORM__CONTACT_CHANGE,
   SEND_REFERRAL_FORM__TEXTAREA_CHANGE,
 } from '../../../../../../client/actions'
-import { FormActions, Typeahead } from 'data-hub-components'
+
+import { NewWindowLink, FormActions, Typeahead } from 'data-hub-components'
 import {
   H4,
   Label,
@@ -86,9 +87,9 @@ const SendReferralForm = ({
         <HintText>
           This can be an adviser at post, a sector specialist or an
           international trade advisor. If you're not sure, you can{' '}
-          <a href="https://people.trade.gov.uk/teams/department-for-international-trade">
+          <NewWindowLink href="https://people.trade.gov.uk/teams/department-for-international-trade">
             find the right team and person on Digital Workspace
-          </a>
+          </NewWindowLink>
           .
         </HintText>
         <Typeahead
