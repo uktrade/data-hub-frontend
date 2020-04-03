@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'govuk-react'
-import { SPACING } from '@govuk-react/constants'
+import { SPACING, FONT_SIZE } from '@govuk-react/constants'
 import { BLUE, GREEN } from 'govuk-colours'
 import PropTypes from 'prop-types'
 import { SummaryList, DateUtils } from 'data-hub-components'
@@ -15,11 +15,15 @@ const StyledSummaryListWrapper = styled.div({
   flexGrow: 1,
   marginRight: SPACING.SCALE_2,
   dt: {
+    fontSize: `${FONT_SIZE.SIZE_16}`,
     // Prevent the left column from shrinking,
     // when the right column's content is too long.
     flexShrink: 0,
     // The original 30% column width doesn't work well in this usecase
     flexBasis: 160,
+  },
+  dd: {
+    fontSize: `${FONT_SIZE.SIZE_16}`,
   },
 })
 
