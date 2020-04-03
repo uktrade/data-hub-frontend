@@ -226,6 +226,22 @@ jobs:
           path: reports
       - store_artifacts:
           path: reports
+  
+  merge-coverage:
+    docker:
+      - <<: *docker_data_hub_base
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: yarn global add nyc
+      - run: ls -la .
+      - run: ls -la partial-coverage || true
+      - run: npx nyc merge partial-coverage
+      - run: mkdir .nyc_output || true
+      # storing the combined report in ".nyc_output/out.json"
+      # allows other NYC commands to find it right away
+      - run: mv coverage.json .nyc_output/out.json
+      - run: ls -la .nyc_output
 
   # Run unit tests and store results
   unit_tests:
@@ -462,3 +478,6 @@ workflows:
       - dit_staff_e2e: *common_workflow_config
       - da_staff_e2e: *common_workflow_config
       - lep_staff_e2e: *common_workflow_config
+      - merge-coverage:
+          requires:
+            - functional_tests
