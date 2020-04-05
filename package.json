@@ -86,7 +86,7 @@
     "csurf": "^1.9.0",
     "data-hub-components": "^5.3.4",
     "date-fns": "^1.29.0",
-    "del-cli": "^2.0.0",
+    "del-cli": "^3.0.0",
     "dotenv": "^5.0.0",
     "element-closest": "^2.0.2",
     "express": "^4.16.2",
