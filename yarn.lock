@@ -3100,13 +3100,23 @@
     loglevel-plugin-prefix "^0.8.4"
     strip-ansi "^6.0.0"
 
-"@wdio/mocha-framework@^5.18.7":
-  version "5.18.7"
-  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-5.18.7.tgz#816c6f21f985a5c407758e48456cbd953deeca54"
-  integrity sha512-+lzOTnGjlI6jusNV5uq4fXF0pE1nKkRxNbZ+WdspvYXYrTv4/PtYFnN7zCx65d6vRisZ8tk2XP+xoYcED3kHbw==
+"@wdio/logger@6.0.16":
+  version "6.0.16"
+  resolved "https://registry.yarnpkg.com/@wdio/logger/-/logger-6.0.16.tgz#eef00e8369d8a5c86080a27d8bab41ad7dcdd2b2"
+  integrity sha512-VbH5UnQIG/3sSMV+Y38+rOdwyK9mVA9vuL7iOngoTafHwUjL1MObfN/Cex84L4mGxIgfxCu6GV48iUmSuQ7sqA==
   dependencies:
-    "@wdio/logger" "5.16.10"
-    "@wdio/utils" "5.18.6"
+    chalk "^4.0.0"
+    loglevel "^1.6.0"
+    loglevel-plugin-prefix "^0.8.4"
+    strip-ansi "^6.0.0"
+
+"@wdio/mocha-framework@^6.0.13":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@wdio/mocha-framework/-/mocha-framework-6.1.0.tgz#23be313e6ca668fb7ad29c7e2ca73d269095d5ff"
+  integrity sha512-f+A/xpIQTOU6OAIeWqLoClVvgHM24K5KC9k1K4lc1wCb14E9tHmZ2E0swXtHCHisTmaxzXWfmZcJYBUTbbeaKg==
+  dependencies:
+    "@wdio/logger" "6.0.16"
+    "@wdio/utils" "6.1.0"
     mocha "^7.0.1"
 
 "@wdio/protocols@5.22.1":
@@ -3184,6 +3194,13 @@
   dependencies:
     "@wdio/logger" "5.16.10"
     deepmerge "^4.0.0"
+
+"@wdio/utils@6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@wdio/utils/-/utils-6.1.0.tgz#34b5d47e9a686a975d8e855568c21d57357f7297"
+  integrity sha512-DTIdSF0aNBfF5piJYYbWbxrhxes8XxTXJK0oIX9+HqWTlwp6W/RNbeGsJGD/FziS6XbToQeehYSfVSQowHQejw==
+  dependencies:
+    "@wdio/logger" "6.0.16"
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
@@ -5529,6 +5546,14 @@ chalk@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-3.0.0.tgz#3f73c2bf526591f574cc492c51e2456349f844e4"
   integrity sha512-4D3B6Wf41KOYRFdszmDqMCGq5VV/uMAB273JILmO+3jAlh8X4qDtdtgCR3fxtbLEMzSx22QdhnDcJvu2u1fVwg==
+  dependencies:
+    ansi-styles "^4.1.0"
+    supports-color "^7.1.0"
+
+chalk@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.0.0.tgz#6e98081ed2d17faab615eb52ac66ec1fe6209e72"
+  integrity sha512-N9oWFcegS0sFr9oh1oz2d7Npos6vNoWW9HvtCg5N1KRFpUhaAhvTv5Y58g880fZaEYSNm3qDz8SU1UrGvp+n7A==
   dependencies:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
