@@ -38,6 +38,18 @@ module.exports = (app) => {
           proxyReq.write(bodyData)
         }
       },
+      onProxyRes: (proxyRes, req, res) => {
+        // TODO: Enriching proxy responses should be done through a generic mechanism
+        // this will quickly become unscalable as-is
+        const isInteractionCreate = (
+          proxyRes.req.path == '/v3/interaction' &&
+          proxyRes.statusCode == 201 && 
+          proxyRes.req.method == 'POST'
+        )
+        if (isInteractionCreate) {
+          req.flash('success', 'Interaction added to Data Hub')
+        }
+      },
     })
   )
 }
