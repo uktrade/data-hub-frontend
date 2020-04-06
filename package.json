@@ -33,8 +33,8 @@
     "test:e2e:watch": "CYPRESS_integrationFolder=test/end-to-end/cypress/specs cypress open --config baseUrl=http://localhost:3000",
     "test:visual": "./node_modules/.bin/wdio test/visual/wdio.conf.js",
     "test:visual:update": "wdio-image-diff -u",
-    "coverage": "nyc --reporter=html --reporter=text --reporter=lcov --report-dir=coverage npm run test:unit",
-    "circle:unit": "nyc --reporter=lcov --report-dir=coverage npm run test:unit -- --reporter mocha-circleci-reporter && codeclimate-test-reporter < coverage/lcov.info",
+    "coverage": "nyc --reporter=html --reporter=json --reporter=text --reporter=lcov --report-dir=coverage npm run test:unit",
+    "circle:unit": "nyc --reporter=lcov --reporter=json --report-dir=coverage npm run test:unit -- --reporter mocha-circleci-reporter && codeclimate-test-reporter < coverage/lcov.info",
     "circle:unit-client": "npm run test:unit-client --reporter mocha-circleci-reporter",
     "heroku-postbuild": "yarn cache clean && npm rebuild && npm run build",
     "lint-staged": "lint-staged"
