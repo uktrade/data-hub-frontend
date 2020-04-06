@@ -242,6 +242,13 @@ jobs:
       # allows other NYC commands to find it right away
       - run: mv coverage.json .nyc_output/out.json
       - run: ls -la .nyc_output
+      - run:
+          command: |
+            npx nyc report \
+            --reporter lcov --reporter text-summary \
+            --report-dir coverage
+      - store_artifacts:
+          path: coverage
 
   # Run unit tests and store results
   unit_tests:
@@ -267,6 +274,13 @@ jobs:
           path: coverage
       - store_artifacts:
           path: coverage
+      - run: mkdir partial-coverage || true
+      - run: touch partial-coverage/.placeholder || true
+      - run: cp coverage/coverage-final.json partial-coverage/unit-coverag.json || true
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - 'project/partial-coverage/*'
       - run:
           name: Publish coverage to Codecov
           command: bash <(curl -s https://codecov.io/bash)
@@ -330,7 +344,6 @@ jobs:
       - run: mkdir partial-coverage || true
       - run: touch partial-coverage/.placeholder || true
       - run: cp cypress-coverage/coverage-final.json partial-coverage/cypress-coverage-$CIRCLE_WORKFLOW_JOB_ID-index-$CIRCLE_NODE_INDEX.json || true
-      - run: ls -la partial-coverage
       - persist_to_workspace:
           root: ~/
           paths:
