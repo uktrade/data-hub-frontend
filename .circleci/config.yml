@@ -234,14 +234,12 @@ jobs:
       - attach_workspace:
           at: ~/
       - run: yarn global add nyc
-      - run: ls -la .
-      - run: ls -la partial-coverage || true
+      - run: cp unit-coverage/unit-coverage.json partial-coverage
       - run: npx nyc merge partial-coverage
       - run: mkdir .nyc_output || true
       # storing the combined report in ".nyc_output/out.json"
       # allows other NYC commands to find it right away
       - run: mv coverage.json .nyc_output/out.json
-      - run: ls -la .nyc_output
       - run:
           command: |
             npx nyc report \
@@ -274,13 +272,12 @@ jobs:
           path: coverage
       - store_artifacts:
           path: coverage
-      - run: mkdir partial-coverage || true
-      - run: touch partial-coverage/.placeholder || true
-      - run: cp coverage/coverage-final.json partial-coverage/unit-coverag.json || true
+      - run: mkdir unit-coverage || true
+      - run: cp coverage/coverage-final.json unit-coverage/unit-coverage.json || true
       - persist_to_workspace:
           root: ~/
           paths:
-            - 'project/partial-coverage/*'
+            - 'project/unit-coverage/*'
       - run:
           name: Publish coverage to Codecov
           command: bash <(curl -s https://codecov.io/bash)
@@ -494,3 +491,4 @@ workflows:
       - merge-coverage:
           requires:
             - functional_tests
+            - unit_tests
