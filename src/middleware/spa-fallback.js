@@ -24,11 +24,11 @@ const spaFallback = (req, res, next) => {
  * Combines the two steps of appending an asterisk to the end of a route and
  * adding the `spaFallback` middleware into one step. The result of the call
  * is an array, which should be spread into the Express route definition
+ * @param {String} route - An Express route string
  * @example
  * // The following expressions are equivalent
- * app.get(...spaFallback('/foo'), requestHandler)
- * app.get('/foo' + '*', spaFallbackSpread, requestHandler)
- * @param {String} route - An Express route string
+ * app.get('/foo' + '*', spaFallback, requestHandler)
+ * app.get(...spaFallbackSpread('/foo'), requestHandler)
  */
 const spaFallbackSpread = (route) => [`${route}*`, spaFallback]
 
