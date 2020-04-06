@@ -1,5 +1,8 @@
 import Link from '@govuk-react/link'
 import Table from '@govuk-react/table'
+import { FONT_WEIGHTS, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
+import { spacing } from '@govuk-react/lib'
+import { BORDER_COLOUR } from 'govuk-colours'
 import VisuallyHidden from '@govuk-react/visually-hidden'
 import React from 'react'
 import LinesEllipsis from 'react-lines-ellipsis'
@@ -12,6 +15,75 @@ import SecondaryButton from '../SecondaryButton'
 const StyledCellLink = styled.a({
   whiteSpace: 'nowrap',
   marginBottom: 0,
+})
+
+const StyledTableRow = styled.tr({
+  borderBottom: `1px solid ${BORDER_COLOUR}`,
+
+  [MEDIA_QUERIES.TABLET]: {
+    borderBottom: 'none',
+  },
+})
+
+const StyledCell = styled.td({
+  padding: 0,
+  borderBottom: 'none',
+})
+// based on: https://github.com/govuk-react/govuk-react/blob/master/components/table/src/atoms/Cell/index.js
+const StyledTableCell = styled(StyledCell)(
+  {
+    display: 'inline-block',
+    [MEDIA_QUERIES.TABLET]: {
+      display: 'table-cell',
+      padding: `${SPACING.SCALE_2} ${SPACING.SCALE_4} ${SPACING.SCALE_2} 0px`,
+      borderBottom: `1px solid ${BORDER_COLOUR}`,
+    },
+  },
+  spacing.withWidth()
+)
+
+const StyledHeaderCell = styled(StyledCell)({
+  display: 'none',
+  fontWeight: FONT_WEIGHTS.bold,
+  [MEDIA_QUERIES.TABLET]: {
+    display: 'table-cell',
+    borderBottom: `1px solid ${BORDER_COLOUR}`,
+  },
+})
+
+const TitleCell = styled(StyledTableCell)({
+  paddingTop: SPACING.SCALE_3,
+  [MEDIA_QUERIES.TABLET]: {
+    paddingTop: SPACING.SCALE_2,
+  },
+})
+
+const ColumnLabelCell = styled(StyledTableCell)({
+  position: 'relative',
+  marginTop: `${SPACING.SCALE_5}`,
+  '::before': {
+    content: "'Last interaction'",
+    position: 'absolute',
+    top: `-${SPACING.SCALE_4}`,
+    // the table element seems to have the font size hard coded to 19px, not a variable
+    fontSize: 'smaller',
+  },
+  [MEDIA_QUERIES.TABLET]: {
+    marginTop: 0,
+    '::before': {
+      content: 'none',
+    },
+  },
+})
+
+const ActionCell = styled(StyledTableCell)({
+  paddingTop: SPACING.SCALE_2,
+  paddingBottom: SPACING.SCALE_4,
+  width: '100%',
+  [MEDIA_QUERIES.TABLET]: {
+    paddingRight: 0,
+    paddingBottom: `${SPACING.SCALE_2}`,
+  },
 })
 
 const Advisers = ({ ditParticipants }) =>
@@ -30,20 +102,20 @@ const CompaniesTable = ({ companies }) => (
   <Table
     head={
       <Table.Row>
-        <Table.CellHeader>Company name</Table.CellHeader>
-        <Table.CellHeader>Last interaction</Table.CellHeader>
-        <Table.CellHeader>Subject</Table.CellHeader>
-        <Table.CellHeader>Added by</Table.CellHeader>
-        <Table.CellHeader>
+        <StyledHeaderCell>Company name</StyledHeaderCell>
+        <StyledHeaderCell>Last interaction</StyledHeaderCell>
+        <StyledHeaderCell>Subject</StyledHeaderCell>
+        <StyledHeaderCell>Added by</StyledHeaderCell>
+        <StyledHeaderCell>
           <VisuallyHidden>Action</VisuallyHidden>
-        </Table.CellHeader>
+        </StyledHeaderCell>
       </Table.Row>
     }
   >
     {companies.map(
       ({ id, name, date, subject, interactionId, ditParticipants }) => (
-        <Table.Row key={id}>
-          <Table.Cell setWidth="20%">
+        <StyledTableRow key={id}>
+          <TitleCell setWidth="20%">
             <Link href={urls.companies.detail(id)}>
               <LinesEllipsis
                 text={name}
@@ -53,11 +125,11 @@ const CompaniesTable = ({ companies }) => (
                 basedOn="words"
               />
             </Link>
-          </Table.Cell>
-          <Table.Cell setWidth="15%">
+          </TitleCell>
+          <ColumnLabelCell setWidth="15%">
             {date ? DateUtils.format(date) : '-'}
-          </Table.Cell>
-          <Table.Cell setWidth="30%">
+          </ColumnLabelCell>
+          <StyledTableCell setWidth="30%">
             {interactionId ? (
               <Link href={urls.interactions.detail(interactionId)}>
                 <LinesEllipsis
@@ -71,19 +143,19 @@ const CompaniesTable = ({ companies }) => (
             ) : (
               'No interactions have been recorded'
             )}
-          </Table.Cell>
-          <Table.Cell setWidth="20%">
+          </StyledTableCell>
+          <StyledTableCell setWidth="20%">
             <Advisers ditParticipants={ditParticipants} />
-          </Table.Cell>
-          <Table.Cell>
+          </StyledTableCell>
+          <ActionCell>
             <SecondaryButton
               as={StyledCellLink}
               href={urls.companies.interactions.create(id)}
             >
               Add interaction
             </SecondaryButton>
-          </Table.Cell>
-        </Table.Row>
+          </ActionCell>
+        </StyledTableRow>
       )
     )}
   </Table>

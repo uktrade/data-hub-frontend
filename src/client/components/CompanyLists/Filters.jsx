@@ -1,7 +1,9 @@
 import { GREY_4 } from 'govuk-colours'
-import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
+import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import Input from '@govuk-react/input'
 import { SelectInput } from '@govuk-react/select'
+import GridRow from '@govuk-react/grid-row'
+import GridCol from '@govuk-react/grid-col'
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
@@ -14,43 +16,58 @@ export const ALPHABETICAL = 'alphabetical'
 export const RECENT = 'recent'
 export const LEAST_RECENT = 'least-recent'
 
-const StyledRoot = styled.div({
-  display: 'flex',
-  justifyContent: 'space-between',
+const StyledRoot = styled(GridRow)({
   background: GREY_4,
   padding: SPACING.SCALE_2,
 })
 
+const StyledCol = styled(GridCol)({
+  ['&:not(:first-child)']: {
+    paddingTop: SPACING.SCALE_2,
+    [MEDIA_QUERIES.TABLET]: {
+      paddingTop: 0,
+    },
+  },
+})
+
 const StyledInput = styled(Input)({
-  width: 200,
-  marginRight: SPACING.SCALE_6,
+  width: '100%',
+  [MEDIA_QUERIES.TABLET]: {
+    width: 200,
+    marginRight: SPACING.SCALE_6,
+  },
 })
 
 const StyledSelect = styled(SelectInput)({
+  width: '100%',
   [MEDIA_QUERIES.LARGESCREEN]: { width: 'auto' },
 })
 
 const Filters = ({ query, orderBy, onSearch, onOrderChange }) => (
   <StyledRoot>
-    <InlineLabel text="Search this list">
-      <StyledInput
-        // We need to default to empty string here,
-        // only to prevent React's uncontrolled input warning.
-        value={query || ''}
-        placeholder="Company name"
-        onChange={(e) => onSearch(e.target.value)}
-      />
-    </InlineLabel>
-    <InlineLabel text="Sort by">
-      <StyledSelect
-        value={orderBy}
-        onChange={(e) => onOrderChange(e.target.value)}
-      >
-        <option value={RECENT}>Recent interaction</option>
-        <option value={LEAST_RECENT}>Least recent interaction</option>
-        <option value={ALPHABETICAL}>Company name A-Z</option>
-      </StyledSelect>
-    </InlineLabel>
+    <StyledCol>
+      <InlineLabel text="Search this list">
+        <StyledInput
+          // We need to default to empty string here,
+          // only to prevent React's uncontrolled input warning.
+          value={query || ''}
+          placeholder="Company name"
+          onChange={(e) => onSearch(e.target.value)}
+        />
+      </InlineLabel>
+    </StyledCol>
+    <StyledCol>
+      <InlineLabel text="Sort by" justifyRight={true}>
+        <StyledSelect
+          value={orderBy}
+          onChange={(e) => onOrderChange(e.target.value)}
+        >
+          <option value={RECENT}>Recent interaction</option>
+          <option value={LEAST_RECENT}>Least recent interaction</option>
+          <option value={ALPHABETICAL}>Company name A-Z</option>
+        </StyledSelect>
+      </InlineLabel>
+    </StyledCol>
   </StyledRoot>
 )
 
