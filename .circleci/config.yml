@@ -454,6 +454,7 @@ jobs:
     docker:
       - <<: *docker_data_hub_base
     steps:
+      - checkout
       - attach_workspace:
           at: ~/
       - run: yarn global add nyc
@@ -461,7 +462,6 @@ jobs:
       - run: npx nyc merge partial-coverage
       - run: mkdir .nyc_output || true
       - run: mv coverage.json .nyc_output/out.json
-      - run: ls -lrt
       - run:
           command: |
             npx nyc report \
