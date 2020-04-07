@@ -11,6 +11,7 @@ var interactionDraftFutureMeeting = require('../../../fixtures/v3/interaction/in
 var interactionDraftPastMeeting = require('../../../fixtures/v3/interaction/interaction-draft-past-meeting.json')
 var interactionValidationError = require('../../../fixtures/v3/interaction/interaction-validation-error.json')
 var interactionWithReferral = require('../../../fixtures/v3/interaction/interaction-with-referral.json')
+var interactionFromMail = require('../../../fixtures/v3/interaction/interaction-from-mail.json')
 
 var getInteractions = function(req, res) {
   if (req.query.contact_id) {
@@ -82,8 +83,13 @@ var patchInteraction = function(req, res) {
   return getInteractionById(req, res)
 }
 
+var fromMail = function(req, res) {
+  res.json(interactionFromMail)
+}
+
 exports.getInteractions = getInteractions
 exports.getInteractionById = getInteractionById
 exports.createInteraction = createInteraction
 exports.archiveInteraction = archiveInteraction
 exports.patchInteraction = patchInteraction
+exports.fromMail = fromMail

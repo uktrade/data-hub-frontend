@@ -1,0 +1,16 @@
+{
+  "company": "4cd4128b-1bad-4f1e-9146-5d4678c6a018",
+  "subject": "Meeting with John Doe and Foo Bar",
+  "contacts": [
+    "0e75d636-1d24-416a-aaf0-3fb220d594ce",
+    "0a75d636-1d24-416a-aaf0-3fb220d594ce"
+  ],
+  "date": "2019-02-11T14:58:53.398740Z",
+  "dit_participants": [
+    "7d19d407-9aec-4d06-b190-d3f404627f21",
+    "ad19d407-9aec-4d06-b190-d3f404627f21"
+  ],
+  "kind": "interaction",
+  "status": "draft",
+  "was_policy_feedback_provided": false
+}

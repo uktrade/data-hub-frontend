@@ -399,6 +399,12 @@ Sandbox.define(
   v3Interaction.archiveInteraction
 )
 
+Sandbox.define(
+  '/v3/interaction/mail',
+  'POST',
+  v3Interaction.fromMail
+)
+
 // V3 Investment
 Sandbox.define('/v3/investment', 'GET', v3Investment.investmentProjects)
 Sandbox.define('/v3/investment/{id}', 'GET', v3Investment.investmentProjectById)
