@@ -461,11 +461,12 @@ jobs:
       - run: npx nyc merge partial-coverage
       - run: mkdir .nyc_output || true
       - run: mv coverage.json .nyc_output/out.json
+      - run: ls -lrt
       - run:
           command: |
             npx nyc report \
-            --reporter lcov --reporter text-summary \
-            --report-dir coverage
+            --reporter lcov --reporter text \
+            --reporter=html --report-dir coverage
       - store_artifacts:
           path: coverage
       - run:
