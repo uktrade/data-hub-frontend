@@ -226,27 +226,6 @@ jobs:
           path: reports
       - store_artifacts:
           path: reports
-  
-  merge-coverage:
-    docker:
-      - <<: *docker_data_hub_base
-    steps:
-      - attach_workspace:
-          at: ~/
-      - run: yarn global add nyc
-      - run: cp unit-coverage/unit-coverage.json partial-coverage
-      - run: npx nyc merge partial-coverage
-      - run: mkdir .nyc_output || true
-      # storing the combined report in ".nyc_output/out.json"
-      # allows other NYC commands to find it right away
-      - run: mv coverage.json .nyc_output/out.json
-      - run:
-          command: |
-            npx nyc report \
-            --reporter lcov --reporter text-summary \
-            --report-dir coverage
-      - store_artifacts:
-          path: coverage
 
   # Run unit tests and store results
   unit_tests:
@@ -278,9 +257,6 @@ jobs:
           root: ~/
           paths:
             - 'project/unit-coverage/*'
-      - run:
-          name: Publish coverage to Codecov
-          command: bash <(curl -s https://codecov.io/bash)
 
   # Run unit client tests and store results
   unit_client_tests:
@@ -474,6 +450,28 @@ jobs:
           path: cypress/screenshots
       - *store_artifacts_cypress_video
 
+  merge-and-publish-coverage:
+    docker:
+      - <<: *docker_data_hub_base
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: yarn global add nyc
+      - run: cp unit-coverage/unit-coverage.json partial-coverage
+      - run: npx nyc merge partial-coverage
+      - run: mkdir .nyc_output || true
+      - run: mv coverage.json .nyc_output/out.json
+      - run:
+          command: |
+            npx nyc report \
+            --reporter lcov --reporter text-summary \
+            --report-dir coverage
+      - store_artifacts:
+          path: coverage
+      - run:
+          name: Publish coverage to Codecov
+          command: bash <(curl -s https://codecov.io/bash)
+
 # CircleCI workflows
 workflows:
   version: 2
@@ -488,7 +486,7 @@ workflows:
       - dit_staff_e2e: *common_workflow_config
       - da_staff_e2e: *common_workflow_config
       - lep_staff_e2e: *common_workflow_config
-      - merge-coverage:
+      - merge-and-publish-coverage:
           requires:
             - functional_tests
             - unit_tests
