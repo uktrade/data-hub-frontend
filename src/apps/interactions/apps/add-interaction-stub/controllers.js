@@ -25,6 +25,8 @@ async function renderAddInteractionStubForm(req, res, next) {
     const initialDate = (req.query['date'] || new Date().toISOString()).split('T')[0].split('-');
     var adviserIds = [].concat(req.query['adviser_id'] || []);
     if (!companyId) {
+      // TODO: This is a hack where we get all contacts and filter in the client.
+      // Instead, we need an API endpoint which returns all contacts matching a set of email addresses
       var participantContacts = await getAllContacts(token)
       participantContacts = participantContacts.filter(
         (contact) => participantEmails.includes(contact.email)
