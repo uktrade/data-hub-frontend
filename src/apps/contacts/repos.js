@@ -50,6 +50,13 @@ async function getContactsForCompany(token, companyId) {
   return sortBy(response.results, [(name) => name.first_name])
 }
 
+async function getAllContacts(token) {
+  const response = await authorisedRequest(token, {
+    url: `${config.apiRoot}/v3/contact`,
+  })
+  return sortBy(response.results, [(name) => name.first_name])
+}
+
 function getContactAuditLog(token, contactId, page = 1) {
   const limit = 10
   const offset = limit * (page - 1)
@@ -66,4 +73,5 @@ module.exports = {
   unarchiveContact,
   getContactsForCompany,
   getContactAuditLog,
+  getAllContacts,
 }

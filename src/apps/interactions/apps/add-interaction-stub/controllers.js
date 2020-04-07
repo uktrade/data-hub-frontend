@@ -4,6 +4,7 @@ const {
   transformObjectToOption,
 } = require('../../../transformers')
 const { getDitCompany } = require('../../../companies/repos')
+const { getAllContacts } = require('../../../contacts/repos')
 const { getAdvisers } = require('../../../adviser/repos')
 const { getOptions } = require('../../../../lib/options')
 
@@ -17,13 +18,20 @@ const transformServiceToOption = (service) => ({
 async function renderAddInteractionStubForm(req, res, next) {
   try {
     const { user, token } = req.session
-    const { company_id: companyId } = req.query
+    var { company_id: companyId } = req.query
     const contactIds = [].concat(req.query['contact_id'] || []);
     const participantEmails = [].concat(req.query['participant_email'] || []);
     const initialSubject = req.query['subject'] || '';
     const initialDate = (req.query['date'] || new Date().toISOString()).split('T')[0].split('-');
     var adviserIds = [].concat(req.query['adviser_id'] || []);
-
+    if (!companyId) {
+      var participantContacts = await getAllContacts(token)
+      participantContacts = participantContacts.filter(
+        (contact) => participantEmails.includes(contact.email)
+      )
+      console.log(participantContacts)
+      companyId = participantContacts[0].company.id;
+    }
 
     const [
       company,
