@@ -19,6 +19,7 @@ async function renderAddInteractionStubForm(req, res, next) {
     const { user, token } = req.session
     const { company_id: companyId } = req.query
     const contactIds = [].concat(req.query['contact_id'] || []);
+    const participantEmails = [].concat(req.query['participant_email'] || []);
     const initialSubject = req.query['subject'] || '';
     const initialDate = (req.query['date'] || new Date().toISOString()).split('T')[0].split('-');
     var adviserIds = [].concat(req.query['adviser_id'] || []);
@@ -33,10 +34,15 @@ async function renderAddInteractionStubForm(req, res, next) {
       getAdvisers(token),
     ])
     const companyContacts = company.contacts.map(transformContactToOption)
-    const initialContacts = companyContacts.filter(contact => contactIds.includes(contact['value']))
+    const initialContacts = company.contacts.filter(
+      contact => contactIds.includes(contact.id) || participantEmails.includes(contact.email)
+    ).map(transformContactToOption)
+    // Ensure current adviser is in the list of initial advisers
     adviserIds.push(user.id);
     activeAdvisers = advisers.filter((adviser) => !adviser.archived).map(transformObjectToOption)
-    const initialAdvisers = activeAdvisers.filter(adviser => adviserIds.includes(adviser['value']))
+    const initialAdvisers = advisers.filter(
+      adviser => adviserIds.includes(adviser.id) || participantEmails.includes(adviser.email)
+    ).map(transformObjectToOption)
 
     res
       .breadcrumb(`Add stub interaction for ${company.name}`)
