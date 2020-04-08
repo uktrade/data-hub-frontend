@@ -49,11 +49,8 @@ function getMetadata(win) {
     ['Company type', win.business_potential],
   ]
 
-  if (win.response.confirmed) {
-    metadata.push([
-      'Date confirmed',
-      DateUtils.formatWithTime(win.response.date),
-    ])
+  if (win.response?.confirmed) {
+    metadata.push(['Date confirmed', DateUtils.format(win.response.date)])
   }
 
   if (win.hvc) {
@@ -88,7 +85,7 @@ export function fetchExportWins({ companyId, activePage }) {
         results: data.results.map((win) => ({
           badges: getBadges(win),
           headingText: win.title,
-          subheading: `Won on ${DateUtils.formatWithTime(win.date)}`,
+          subheading: `Won on ${DateUtils.format(win.date)}`,
           metadata: getMetadata(win),
         })),
       }
