@@ -459,12 +459,12 @@ jobs:
           at: ~/
       - run: yarn global add nyc
       - run: cp unit-coverage/unit-coverage.json partial-coverage
-      - run: npx nyc merge partial-coverage
+      - run: nyc merge partial-coverage
       - run: mkdir .nyc_output || true
       - run: mv coverage.json .nyc_output/out.json
       - run:
           command: |
-            npx nyc report \
+            nyc report \
             --reporter lcov --reporter text \
             --reporter=html --report-dir coverage
       - store_artifacts:
