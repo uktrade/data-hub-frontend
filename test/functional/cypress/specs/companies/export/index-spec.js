@@ -3,6 +3,13 @@ const { assertBreadcrumbs } = require('../../../support/assertions')
 const urls = require('../../../../../../src/lib/urls')
 const exportSelectors = require('../../../../../selectors/company/export')
 
+function visitExportIndex(companyId) {
+  cy.server()
+  cy.route('GET', '**/export-win').as('exportWinResults')
+  cy.visit(urls.companies.exports.index(companyId))
+  cy.wait('@exportWinResults')
+}
+
 describe('Company Export tab', () => {
   function assertTable({ rows, caption, action }) {
     const TR_ALIAS = 'export-index-tr-rows'
@@ -52,7 +59,7 @@ describe('Company Export tab', () => {
     'when viewing the export tab for an active company with no export information and 8 Export Wins',
     () => {
       before(() => {
-        cy.visit(urls.companies.exports.index(fixtures.company.dnbCorp.id))
+        visitExportIndex(fixtures.company.dnbCorp.id)
       })
 
       it('should render breadcrumbs', () => {
@@ -132,15 +139,26 @@ describe('Company Export tab', () => {
       })
 
       it('should render the list of Export Wins without pagination', () => {
+        const LIST_ALIAS = 'export-wins-colleciton-list'
+
         cy.contains('8 results')
-        cy.get('ul:last li a:last').should('not.have.text', 'Next')
-        cy.get('ul:last li a:first').should('not.have.text', 'Previous')
+          .parent()
+          .parent()
+          .as(LIST_ALIAS)
+
+        cy.get('@' + LIST_ALIAS)
+          .find('ul:last li a:last')
+          .should('not.have.text', 'Next')
+
+        cy.get('@' + LIST_ALIAS)
+          .find('ul:last li a:first')
+          .should('not.have.text', 'Previous')
 
         cy.contains(
           'Ut eius quisquam qui quaerat adipisci dolorum sit similique.'
         )
           .siblings()
-          .should('contain', 'Won on 4 Dec 2019, 9:14am')
+          .should('contain', 'Won on 04 Dec 2019')
           .should('contain', 'HVC')
           .should('contain', 'Confirmed')
           .should(
@@ -158,12 +176,12 @@ describe('Company Export tab', () => {
           .should('contain', 'Country exported to Burkina Faso')
           .should('contain', 'Sector et aut adipisci')
           .should('contain', 'Company type ut consequatur qui')
-          .should('contain', 'Date confirmed 23 Jul 2019, 3:48am')
+          .should('contain', 'Date confirmed 23 Jul 2019')
           .should('contain', 'HVC name E186: consequatur modi dolorem')
 
         cy.contains('Ut repellendus sint.')
           .siblings()
-          .should('contain', 'Won on 3 Nov 2019, 1:51am')
+          .should('contain', 'Won on 03 Nov 2019')
           .should('not.contain', 'HVC')
           .should('not.contain', 'Confirmed')
           .should(
@@ -186,7 +204,7 @@ describe('Company Export tab', () => {
 
         cy.contains('Dolorem nesciunt adipisci optio')
           .siblings()
-          .should('contain', 'Won on 19 Dec 2019, 12:37am')
+          .should('contain', 'Won on 19 Dec 2019')
           .should('contain', 'HVC')
           .should('not.contain', 'Confirmed')
           .should(
