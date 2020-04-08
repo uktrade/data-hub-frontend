@@ -20,7 +20,14 @@ function ExportWins(state) {
     return null
   }
 
-  const { count, results, onPageClick, activePage, companyId } = state
+  const {
+    count,
+    results,
+    onPageClick,
+    activePage,
+    companyId,
+    companyName,
+  } = state
 
   return (
     <Wrapper>
@@ -29,7 +36,7 @@ function ExportWins(state) {
         id="exportWins"
         progressMessage="Loading Exports Wins..."
         startOnRender={{
-          payload: { companyId, activePage },
+          payload: { companyId, companyName, activePage },
           onSuccessDispatch: EXPORT_WINS__LOADED,
         }}
       >

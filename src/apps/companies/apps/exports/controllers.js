@@ -70,6 +70,7 @@ function renderExports(req, res) {
         exportPotentials: Object.values(exportPotentialLabels),
         companyId: company.id,
         companyNumber: company.company_number,
+        companyName: company.name,
       },
     })
 }
