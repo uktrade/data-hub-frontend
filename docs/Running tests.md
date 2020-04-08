@@ -172,6 +172,8 @@ Screenshots will be stored in the root of the project. We commit the baselines a
 Before attempting to run the tests, copy `.bin.sample/visual` into `.bin/` folder
 and update the browserstack username and key environment variables.
 
+Also, copy `visual-stack.sample.env` to `visual-stack.env` and add the correct environment variables.
+
 ### Running the tests
 
 Execute the command below:
