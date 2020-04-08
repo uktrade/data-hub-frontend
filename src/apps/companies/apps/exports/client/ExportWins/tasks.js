@@ -60,16 +60,23 @@ function getMetadata(win) {
   return metadata.map(([label, value]) => ({ label, value }))
 }
 
-export function fetchExportWins({ companyId, activePage }) {
+export function fetchExportWins({ companyId, companyName, activePage }) {
   const offset = activePage * 10 - 10
   const param = offset ? '?offset=' + offset : ''
 
   return axios
     .get(`/api-proxy/v4/company/${companyId}/export-win${param}`)
     .catch((e) => {
-      // @TODO: Remove the 404 and handle separatly once API is in place to return a 501
-      if (e.response?.status === 501 || e.response?.status == 404) {
+      if (e.response?.status === 501) {
         return { [NOT_IMPLEMENTED]: true }
+      }
+
+      if (e.response?.status === 404) {
+        return Promise.reject(
+          new Error(
+            `We were unable to lookup Export Wins for ${companyName}, please try again later.`
+          )
+        )
       }
 
       return Promise.reject(new Error(e.message))
