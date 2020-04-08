@@ -15,16 +15,7 @@ const Wrapper = styled('div')`
   margin-top: ${SPACING.SCALE_3};
 `
 
-export default connect(state2props, (dispatch) => ({
-  onPageClick: (page, event) => {
-    event.target.blur()
-    event.preventDefault()
-    dispatch({
-      type: EXPORT_WINS__SELECT_PAGE,
-      page,
-    })
-  },
-}))((state) => {
+function ExportWins(state) {
   if (state[NOT_IMPLEMENTED]) {
     return null
   }
@@ -54,4 +45,15 @@ export default connect(state2props, (dispatch) => ({
       </Task.Status>
     </Wrapper>
   )
-})
+}
+
+export default connect(state2props, (dispatch) => ({
+  onPageClick: (page, event) => {
+    event.target.blur()
+    event.preventDefault()
+    dispatch({
+      type: EXPORT_WINS__SELECT_PAGE,
+      page,
+    })
+  },
+}))(ExportWins)
