@@ -97,7 +97,7 @@
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^2.0.0",
     "formidable": "^1.2.1",
-    "get-form-data": "^2.0.0",
+    "get-form-data": "^3.0.0",
     "govuk-colours": "1.0.3",
     "govuk-elements-sass": "^2.2.1",
     "govuk-frontend": "^2.11.0",
