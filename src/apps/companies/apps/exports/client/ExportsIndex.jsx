@@ -28,6 +28,7 @@ const ExportsIndex = ({
   exportCountriesInformation,
   exportPotentials,
   companyId,
+  companyName,
   companyNumber,
 }) => {
   return (
@@ -152,7 +153,7 @@ const ExportsIndex = ({
           measures export activity.
         </p>
       </Details>
-      <ExportWins companyId={companyId}></ExportWins>
+      <ExportWins companyId={companyId} companyName={companyName}></ExportWins>
     </>
   )
 }

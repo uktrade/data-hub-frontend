@@ -317,7 +317,13 @@ describe('Company Export tab', () => {
       it('should show an error message', () => {
         cy.contains('8 results').should('not.exist')
         cy.contains('0 results').should('not.exist')
-        cy.contains('Could not load Export wins').should('not.exist')
+        cy.contains('Could not load Export wins')
+          .should('exist')
+          .siblings()
+          .should(
+            'contain',
+            'We were unable to lookup Export Wins for One List Corp, please try again later.'
+          )
       })
     })
 
