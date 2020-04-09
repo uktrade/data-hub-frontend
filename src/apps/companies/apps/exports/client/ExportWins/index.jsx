@@ -15,21 +15,19 @@ const Wrapper = styled('div')`
   margin-top: ${SPACING.SCALE_3};
 `
 
-export default connect(state2props, (dispatch) => ({
-  onPageClick: (page, event) => {
-    event.target.blur()
-    event.preventDefault()
-    dispatch({
-      type: EXPORT_WINS__SELECT_PAGE,
-      page,
-    })
-  },
-}))((state) => {
+function ExportWins(state) {
   if (state[NOT_IMPLEMENTED]) {
     return null
   }
 
-  const { count, results, onPageClick, activePage, companyId } = state
+  const {
+    count,
+    results,
+    onPageClick,
+    activePage,
+    companyId,
+    companyName,
+  } = state
 
   return (
     <Wrapper>
@@ -38,7 +36,7 @@ export default connect(state2props, (dispatch) => ({
         id="exportWins"
         progressMessage="Loading Exports Wins..."
         startOnRender={{
-          payload: { companyId, activePage },
+          payload: { companyId, companyName, activePage },
           onSuccessDispatch: EXPORT_WINS__LOADED,
         }}
       >
@@ -54,4 +52,15 @@ export default connect(state2props, (dispatch) => ({
       </Task.Status>
     </Wrapper>
   )
-})
+}
+
+export default connect(state2props, (dispatch) => ({
+  onPageClick: (page, event) => {
+    event.target.blur()
+    event.preventDefault()
+    dispatch({
+      type: EXPORT_WINS__SELECT_PAGE,
+      page,
+    })
+  },
+}))(ExportWins)
