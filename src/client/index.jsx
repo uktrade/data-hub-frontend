@@ -88,8 +88,12 @@ const history = createBrowserHistory({
   basename: new URL(
     document.baseURI ||
       // IE doesn't support baseURI so we need to access base.href manually
+<<<<<<< HEAD
       document.querySelector('base')?.href ||
       document.location.href
+=======
+      document.querySelector('base').href
+>>>>>>> Fix IE11 not supporting document.baseURI
   ).pathname,
 })
 
