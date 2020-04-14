@@ -145,3 +145,16 @@ addLoggedCommand({
     return cy.getDhTabNavPanel(tabListLabel, options)
   },
 })
+
+Cypress.Commands.add(
+  'removeAllTypeaheadValues',
+  { prevSubject: 'element' },
+  (subject) => {
+    cy.wrap(subject)
+      .find('div[class*="-IndicatorsContainer"] > div:first-of-type')
+      .click()
+
+
+    return cy.wrap(subject)
+  }
+)
