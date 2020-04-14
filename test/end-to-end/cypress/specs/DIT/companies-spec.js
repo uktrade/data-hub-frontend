@@ -6,12 +6,14 @@ const { companies, contacts } = require('../../../../../src/lib/urls')
 
 const { assertKeyValueTable } = require('../../support/assertions')
 
+const { oneListCorp, lambdaPlc } = fixtures.company
+
 describe('Advisors', () => {
   const globalManagerTable = 2
   const adviserTable = 3
 
   it('should display advisers for a GHQ for a given company', () => {
-    cy.visit(companies.advisers.index(fixtures.company.oneListCorp.id))
+    cy.visit(companies.advisers.index(oneListCorp.id))
 
     cy.get(selectors.collection.contentHeader).should(
       'contain',
@@ -44,7 +46,7 @@ describe('Contacts', () => {
   }
 
   it('should create a contact for a given company', () => {
-    cy.visit(contacts.create(fixtures.company.lambdaPlc.id))
+    cy.visit(contacts.create(lambdaPlc.id))
     userActions.contacts.create(data)
 
     cy.get(selectors.message.successful).should('contain', 'Added new contact')
@@ -59,7 +61,7 @@ describe('Contacts', () => {
   })
 
   it('should display the newly created contact in company contact collection page', () => {
-    cy.visit(companies.activity.index(fixtures.company.lambdaPlc.id))
+    cy.visit(companies.activity.index(lambdaPlc.id))
 
     cy.contains('Company contacts').click()
     cy.get(selectors.collection.items)
@@ -84,7 +86,7 @@ describe('Export', () => {
   describe('Edit exports', () => {
     context('Selecting a value', () => {
       it('Should update the export win category', () => {
-        cy.visit(companies.exports.edit(fixtures.company.lambdaPlc.id))
+        cy.visit(companies.exports.edit(lambdaPlc.id))
 
         cy.get(selectors.companyExport.winCategory).select('Export growth')
         cy.contains('Save and return').click()
@@ -102,7 +104,7 @@ describe('Export', () => {
 
     context('Selecting no value', () => {
       it('Should remove the export win category', () => {
-        cy.visit(companies.exports.edit(fixtures.company.lambdaPlc.id))
+        cy.visit(companies.exports.edit(lambdaPlc.id))
 
         cy.get(selectors.companyExport.winCategory).select(
           '-- Select category --'
@@ -126,9 +128,7 @@ describe('Export', () => {
       'With no existing values and without changing the export countries',
       () => {
         it('Should return back to the export tab with no changes', () => {
-          cy.visit(
-            companies.exports.editCountries(fixtures.company.lambdaPlc.id)
-          )
+          cy.visit(companies.exports.editCountries(lambdaPlc.id))
           cy.contains('button', 'Save and return').click()
 
           assertTable([
@@ -146,9 +146,7 @@ describe('Export', () => {
     context('Adding export countries', () => {
       context('Adding two countries to currently exporting', () => {
         it('Should add the countries and display them in alphabetical order', () => {
-          cy.visit(
-            companies.exports.editCountries(fixtures.company.lambdaPlc.id)
-          )
+          cy.visit(companies.exports.editCountries(lambdaPlc.id))
 
           cy.get(selectors.companyExport.countries.export)
             .selectTypeaheadOption('Germ')
@@ -169,9 +167,7 @@ describe('Export', () => {
 
       context('Without changing the export countries again', () => {
         it('Should return back to the export tab with no changes', () => {
-          cy.visit(
-            companies.exports.editCountries(fixtures.company.lambdaPlc.id)
-          )
+          cy.visit(companies.exports.editCountries(lambdaPlc.id))
           cy.contains('button', 'Save and return').click()
 
           assertTable([
@@ -187,9 +183,7 @@ describe('Export', () => {
 
       context('Editing all countries', () => {
         it('should update the countries', () => {
-          cy.visit(
-            companies.exports.editCountries(fixtures.company.lambdaPlc.id)
-          )
+          cy.visit(companies.exports.editCountries(lambdaPlc.id))
 
           cy.get(
             selectors.companyExport.countries.export
