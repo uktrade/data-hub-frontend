@@ -230,7 +230,7 @@ function App() {
         <Mount selector="#referral-help">
           {(props) => <ReferralHelp {...props} />}
         </Mount>
-        <Mount selector="#company-exports-edit">
+        <Mount selector="#company-export-exports-edit">
           {(props) => <ExportsEdit {...props} />}
         </Mount>
         <Mount selector="#interaction-referral-details">
