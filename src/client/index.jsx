@@ -76,7 +76,12 @@ const history = createBrowserHistory({
   // The baseURI is set to the <base/> tag by the spaFallbackSpread
   // middleware, which should be applied to each Express route where
   // react-router is expected to be used.
-  basename: new URL(document.baseURI).pathname,
+  basename: new URL(
+    document.baseURI ||
+      // IE doesn't support baseURI so we need to access base.href manually
+      document.querySelector('base')?.href ||
+      document.location.href
+  ).pathname,
 })
 
 const store = createStore(
