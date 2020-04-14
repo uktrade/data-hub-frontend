@@ -205,6 +205,7 @@ describe('Export', () => {
           cy.get(
             selectors.companyExport.countries.noInterest
           ).selectTypeaheadOption('Chi')
+
           cy.contains('button', 'Save and return').click()
 
           assertTable([
@@ -214,6 +215,33 @@ describe('Export', () => {
             'Brazil, France, Germany',
             'Honduras',
             'Chile',
+          ])
+        })
+      })
+
+      context('Removing all countries', () => {
+        it('Should save the export countries as empty', () => {
+          cy.visit(companies.exports.editCountries(lambdaPlc.id))
+
+          cy.get(
+            selectors.companyExport.countries.export
+          ).removeAllTypeaheadValues()
+          cy.get(
+            selectors.companyExport.countries.future
+          ).removeAllTypeaheadValues()
+          cy.get(
+            selectors.companyExport.countries.noInterest
+          ).removeAllTypeaheadValues()
+
+          cy.contains('button', 'Save and return').click()
+
+          assertTable([
+            'None',
+            'No profile',
+            'No score given',
+            'None',
+            'None',
+            'None',
           ])
         })
       })
