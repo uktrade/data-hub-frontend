@@ -1,4 +1,4 @@
-const proxy = require('http-proxy-middleware')
+const { createProxyMiddleware } = require('http-proxy-middleware')
 
 const config = require('../config/')
 
@@ -18,7 +18,7 @@ const WHITELIST = [
 module.exports = (app) => {
   app.use(
     WHITELIST.map((apiPath) => API_PROXY_PATH + apiPath),
-    proxy('/', {
+    createProxyMiddleware('/', {
       changeOrigin: true,
       target: config.apiRoot,
       pathRewrite: {
