@@ -1,5 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { createBrowserHistory } from 'history'
+import {
+  connectRouter,
+  routerMiddleware,
+  ConnectedRouter,
+} from 'connected-react-router'
 import { Provider } from 'react-redux'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
@@ -66,9 +72,21 @@ import exportCountriesEditReducer from '../apps/companies/apps/exports/client/Ex
 import * as exportCountriesEditTasks from '../apps/companies/apps/exports/client/ExportCountriesEdit/tasks'
 
 const sagaMiddleware = createSagaMiddleware()
+const history = createBrowserHistory({
+  // The baseURI is set to the <base/> tag by the spaFallbackSpread
+  // middleware, which should be applied to each Express route where
+  // react-router is expected to be used.
+  basename: new URL(
+    document.baseURI ||
+      // IE doesn't support baseURI so we need to access base.href manually
+      document.querySelector('base')?.href ||
+      document.location.href
+  ).pathname,
+})
 
 const store = createStore(
   combineReducers({
+    router: connectRouter(history),
     tasks,
     sendReferral,
     [COMPANY_LISTS_STATE_ID]: companyListsReducer,
@@ -83,7 +101,9 @@ const store = createStore(
     referrerUrl: (state = {}) => state,
   }),
   { referrerUrl: window.document.referrer },
-  composeWithDevTools(applyMiddleware(sagaMiddleware))
+  composeWithDevTools(
+    applyMiddleware(sagaMiddleware, routerMiddleware(history))
+  )
 )
 
 sagaMiddleware.run(
@@ -118,108 +138,113 @@ function App() {
   const globalProps = parseProps(appWrapper)
   return (
     <Provider store={store}>
-      <Mount selector="#add-company-form">
-        {(props) => (
-          <AddCompanyForm csrfToken={globalProps.csrfToken} {...props} />
-        )}
-      </Mount>
-      <Mount selector="#add-interaction-form">
-        {(props) => (
-          <AddInteractionForm csrfToken={globalProps.csrfToken} {...props} />
-        )}
-      </Mount>
-      <Mount selector="#edit-company-form">
-        {(props) => (
-          <EditCompanyForm csrfToken={globalProps.csrfToken} {...props} />
-        )}
-      </Mount>
-      <Mount selector="#edit-history">
-        {(props) => (
-          <EditHistory csrfToken={globalProps.csrfToken} {...props} />
-        )}
-      </Mount>
-      <Mount selector="#match-confirmation">
-        {(props) => (
-          <MatchConfirmation csrfToken={globalProps.csrfToken} {...props} />
-        )}
-      </Mount>
-      <Mount selector="#cannot-find-match">
-        {(props) => (
-          <CannotFindMatch csrfToken={globalProps.csrfToken} {...props} />
-        )}
-      </Mount>
-      <Mount selector="#find-company">
-        {(props) => (
-          <FindCompany csrfToken={globalProps.csrfToken} {...props} />
-        )}
-      </Mount>
-      <Mount selector="#activity-feed-app">
-        {(props) => <CompanyActivityFeed {...props} />}
-      </Mount>
-      <Mount selector="#company-lists">
-        <Dashboard id="homepage" />
-      </Mount>
-      <Mount selector="#delete-company-list">
-        {(props) => (
-          <DeleteCompanyList csrfToken={globalProps.csrfToken} {...props} />
-        )}
-      </Mount>
-      <Mount selector="#edit-company-list">
-        {(props) => (
-          <EditCompanyList csrfToken={globalProps.csrfToken} {...props} />
-        )}
-      </Mount>
-      <Mount selector="#create-company-list-form">
-        {(props) => (
-          <CreateListFormSection csrfToken={globalProps.csrfToken} {...props} />
-        )}
-      </Mount>
-      <Mount selector="#add-remove-list-form">
-        {(props) => <AddRemoveFromListSection {...props} />}
-      </Mount>
-      <Mount selector="#lead-advisers">
-        {(props) => <LeadAdvisers {...props} />}
-      </Mount>
-      <Mount selector="#dnb-hierarchy">
-        {(props) => <DnbHierarchy {...props} />}
-      </Mount>
-      <Mount selector="#company-business-details">
-        {(props) => <CompanyBusinessDetails {...props} />}
-      </Mount>
-      <Mount selector="#large-capital-profile-collection">
-        {(props) => <LargeCapitalProfileCollection {...props} />}
-      </Mount>
-      <Mount selector="#manage-adviser">
-        {(props) => (
-          <ManageAdviser {...props} csrfToken={globalProps.csrfToken} />
-        )}
-      </Mount>
-      <Mount selector="#company-export-index-page">
-        {(props) => <ExportsIndex {...props} />}
-      </Mount>
-      <Mount selector="#send-referral-form">
-        {(props) => (
-          <SendReferralForm {...props} csrfToken={globalProps.csrfToken} />
-        )}
-      </Mount>
-      <Mount selector="#company-export-full-history">
-        {(props) => <ExportsHistory {...props} />}
-      </Mount>
-      <Mount selector="#referral-details">
-        {(props) => <ReferralDetails {...props} />}
-      </Mount>
-      <Mount selector="#referral-help">
-        {(props) => <ReferralHelp {...props} />}
-      </Mount>
-      <Mount selector="#company-export-exports-edit">
-        {(props) => <ExportsEdit {...props} />}
-      </Mount>
-      <Mount selector="#interaction-referral-details">
-        {(props) => <InteractionReferralDetails {...props} />}
-      </Mount>
-      <Mount selector="#company-export-countries-edit">
-        {(props) => <ExportCountriesEdit {...props} />}
-      </Mount>
+      <ConnectedRouter history={history}>
+        <Mount selector="#add-company-form">
+          {(props) => (
+            <AddCompanyForm csrfToken={globalProps.csrfToken} {...props} />
+          )}
+        </Mount>
+        <Mount selector="#add-interaction-form">
+          {(props) => (
+            <AddInteractionForm csrfToken={globalProps.csrfToken} {...props} />
+          )}
+        </Mount>
+        <Mount selector="#edit-company-form">
+          {(props) => (
+            <EditCompanyForm csrfToken={globalProps.csrfToken} {...props} />
+          )}
+        </Mount>
+        <Mount selector="#edit-history">
+          {(props) => (
+            <EditHistory csrfToken={globalProps.csrfToken} {...props} />
+          )}
+        </Mount>
+        <Mount selector="#match-confirmation">
+          {(props) => (
+            <MatchConfirmation csrfToken={globalProps.csrfToken} {...props} />
+          )}
+        </Mount>
+        <Mount selector="#cannot-find-match">
+          {(props) => (
+            <CannotFindMatch csrfToken={globalProps.csrfToken} {...props} />
+          )}
+        </Mount>
+        <Mount selector="#find-company">
+          {(props) => (
+            <FindCompany csrfToken={globalProps.csrfToken} {...props} />
+          )}
+        </Mount>
+        <Mount selector="#activity-feed-app">
+          {(props) => <CompanyActivityFeed {...props} />}
+        </Mount>
+        <Mount selector="#company-lists">
+          <Dashboard id="homepage" />
+        </Mount>
+        <Mount selector="#delete-company-list">
+          {(props) => (
+            <DeleteCompanyList csrfToken={globalProps.csrfToken} {...props} />
+          )}
+        </Mount>
+        <Mount selector="#edit-company-list">
+          {(props) => (
+            <EditCompanyList csrfToken={globalProps.csrfToken} {...props} />
+          )}
+        </Mount>
+        <Mount selector="#create-company-list-form">
+          {(props) => (
+            <CreateListFormSection
+              csrfToken={globalProps.csrfToken}
+              {...props}
+            />
+          )}
+        </Mount>
+        <Mount selector="#add-remove-list-form">
+          {(props) => <AddRemoveFromListSection {...props} />}
+        </Mount>
+        <Mount selector="#lead-advisers">
+          {(props) => <LeadAdvisers {...props} />}
+        </Mount>
+        <Mount selector="#dnb-hierarchy">
+          {(props) => <DnbHierarchy {...props} />}
+        </Mount>
+        <Mount selector="#company-business-details">
+          {(props) => <CompanyBusinessDetails {...props} />}
+        </Mount>
+        <Mount selector="#large-capital-profile-collection">
+          {(props) => <LargeCapitalProfileCollection {...props} />}
+        </Mount>
+        <Mount selector="#manage-adviser">
+          {(props) => (
+            <ManageAdviser {...props} csrfToken={globalProps.csrfToken} />
+          )}
+        </Mount>
+        <Mount selector="#company-export-index-page">
+          {(props) => <ExportsIndex {...props} />}
+        </Mount>
+        <Mount selector="#send-referral-form">
+          {(props) => (
+            <SendReferralForm {...props} csrfToken={globalProps.csrfToken} />
+          )}
+        </Mount>
+        <Mount selector="#company-export-full-history">
+          {(props) => <ExportsHistory {...props} />}
+        </Mount>
+        <Mount selector="#referral-details">
+          {(props) => <ReferralDetails {...props} />}
+        </Mount>
+        <Mount selector="#referral-help">
+          {(props) => <ReferralHelp {...props} />}
+        </Mount>
+        <Mount selector="#company-export-exports-edit">
+          {(props) => <ExportsEdit {...props} />}
+        </Mount>
+        <Mount selector="#interaction-referral-details">
+          {(props) => <InteractionReferralDetails {...props} />}
+        </Mount>
+        <Mount selector="#company-export-countries-edit">
+          {(props) => <ExportCountriesEdit {...props} />}
+        </Mount>
+      </ConnectedRouter>
     </Provider>
   )
 }
