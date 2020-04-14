@@ -44,6 +44,7 @@ const validateForm = (state) =>
 const Form = ({
   onSubmit,
   children,
+  submissionError = null,
   errors = {},
   values = {},
   touched = {},
@@ -84,12 +85,12 @@ const Form = ({
 
           if (isEmpty(errors)) {
             contextProps.isLastStep()
-              ? onSubmit(props.values, contextProps)
+              ? onSubmit(values, contextProps)
               : props.goForward()
           }
         }}
       >
-        {!!Object.keys(errors).length && (
+        {(!isEmpty(errors) || submissionError) && (
           <ErrorSummary
             heading="There is a problem"
             onHandleErrorClick={(targetName) => {
@@ -105,9 +106,10 @@ const Form = ({
               targetName: name,
               text: error,
             }))}
+            description={isEmpty(errors) && submissionError}
           />
         )}
-        {typeof children === 'function' ? children(props) : children}
+        {typeof children === 'function' ? children(contextProps) : children}
       </form>
     </useFormContext.Provider>
   )

@@ -4,7 +4,6 @@ const {
   transformObjectToOption,
 } = require('../../../transformers')
 const { getDitCompany } = require('../../../companies/repos')
-const { getAdvisers } = require('../../../adviser/repos')
 const { getOptions } = require('../../../../lib/options')
 
 const transformServiceToOption = (service) => ({
@@ -21,7 +20,6 @@ async function renderAddInteractionForm(req, res, next) {
 
     const [
       company,
-      { results: advisers },
       services,
       serviceDeliveryStatuses,
       policyAreas,
@@ -32,7 +30,6 @@ async function renderAddInteractionForm(req, res, next) {
       ,
     ] = await Promise.all([
       getDitCompany(req.session.token, companyId),
-      getAdvisers(token),
       getOptions(token, 'service', {
         transformer: transformServiceToOption,
       }),
@@ -50,11 +47,13 @@ async function renderAddInteractionForm(req, res, next) {
       .breadcrumb(`Add interaction for ${company.name}`)
       .render('interactions/apps/add-interaction/views/add-interaction-form', {
         props: {
-          company,
-          advisers: advisers
-            .filter((adviser) => !adviser.archived)
-            .map(transformObjectToOption),
-          defaultAdviser: { label: user.name, value: user.id },
+          companyId: company.id,
+          defaultAdviser: {
+            label: `${user.name}${
+              user.dit_team ? ', ' + user.dit_team.name : ''
+            }`,
+            value: user.id,
+          },
           contacts: company.contacts.map(transformContactToOption),
           services,
           serviceDeliveryStatuses,
