@@ -163,6 +163,10 @@ exports.exportWins = function(req, res) {
 
   if (companyId === companyLambdaPlc.id) {
     res.status(501).send('')
+  } else if (companyId === companyMinimallyMinimal.id) {
+    res.status(500).send('')
+  } else if (companyId === companyInvestigationLtd.id) {
+    res.status(502).send('')
   } else if (companyId === companyOneListCorp.id) {
     res.status(404).send('Not found')
   } else if (companyId === companyMarsExportsLtd.id) {
