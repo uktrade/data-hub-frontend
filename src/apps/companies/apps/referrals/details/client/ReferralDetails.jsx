@@ -49,7 +49,8 @@ export default connect(({ referrerUrl, ...state }) => ({
     interaction,
     referrerUrl,
   }) => {
-    const cameFromHomePage = url.parse(referrerUrl).pathname === '/'
+    const cameFromHomePage =
+      url.parse(referrerUrl).pathname === urls.companies.referrals.list()
 
     return (
       <Task.Status
@@ -132,7 +133,7 @@ export default connect(({ referrerUrl, ...state }) => ({
                     <Link
                       href={
                         cameFromHomePage
-                          ? urls.dashboard()
+                          ? urls.companies.referrals.list()
                           : urls.companies.detail(company.id)
                       }
                     >
