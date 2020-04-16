@@ -1,11 +1,13 @@
 const router = require('express').Router()
 const urls = require('../../lib/urls')
-const { spaFallbackSpread } = require('../../middleware/spa-fallback')
 const { renderDashboard } = require('./controllers')
+const spaBasePath = require('../../middleware/spa-base-path')
 
 module.exports = {
   router: router.get(
-    ...spaFallbackSpread(urls.dashboard.route),
+    // These two paths are handled by react-router
+    [urls.dashboard.route, '/my-referrals'],
+    spaBasePath(urls.dashboard.route),
     renderDashboard
   ),
 }
