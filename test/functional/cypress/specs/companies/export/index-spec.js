@@ -297,6 +297,18 @@ describe('Company Export tab', () => {
       cy.wait('@exportWinsResults')
     }
 
+    function assertErrorMessage(companyName) {
+      cy.contains('8 results').should('not.exist')
+      cy.contains('0 results').should('not.exist')
+      cy.contains('Could not load Export wins')
+        .should('exist')
+        .siblings()
+        .should(
+          'contain',
+          `We were unable to lookup Export Wins for ${companyName}, please try again later.`
+        )
+    }
+
     context('when the API for Export Wins returns a 501', () => {
       before(() => {
         visitExports(fixtures.company.lambdaPlc.id)
@@ -309,21 +321,33 @@ describe('Company Export tab', () => {
       })
     })
 
+    context('when the API for Export Wins returns a 500', () => {
+      before(() => {
+        visitExports(fixtures.company.minimallyMinimalLtd.id)
+      })
+
+      it('should show an error message', () => {
+        assertErrorMessage(fixtures.company.minimallyMinimalLtd.name)
+      })
+    })
+
+    context('when the API for Export Wins returns a 502', () => {
+      before(() => {
+        visitExports(fixtures.company.investigationLimited.id)
+      })
+
+      it('should show an error message', () => {
+        assertErrorMessage(fixtures.company.investigationLimited.name)
+      })
+    })
+
     context('when the API for Export Wins returns a 404', () => {
       before(() => {
         visitExports(fixtures.company.oneListCorp.id)
       })
 
       it('should show an error message', () => {
-        cy.contains('8 results').should('not.exist')
-        cy.contains('0 results').should('not.exist')
-        cy.contains('Could not load Export wins')
-          .should('exist')
-          .siblings()
-          .should(
-            'contain',
-            'We were unable to lookup Export Wins for One List Corp, please try again later.'
-          )
+        assertErrorMessage(fixtures.company.oneListCorp.name)
       })
     })
 

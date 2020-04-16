@@ -71,7 +71,7 @@ export function fetchExportWins({ companyId, companyName, activePage }) {
         return { [NOT_IMPLEMENTED]: true }
       }
 
-      if (e.response?.status === 404) {
+      if ([404, 500, 502].includes(e.response?.status)) {
         return Promise.reject(
           new Error(
             `We were unable to lookup Export Wins for ${companyName}, please try again later.`
