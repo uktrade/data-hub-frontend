@@ -1,6 +1,6 @@
 ### Import
 ```js
-import Panel from 'Panel
+import Panel from 'Panel'
 ```
 
 ### Output
