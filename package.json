@@ -7,6 +7,7 @@
     "url": "https://github.com/uktrade/data-hub-frontend"
   },
   "scripts": {
+    "storybook": "start-storybook",
     "dev-stack": "docker-compose build --parallel && docker-compose -p dev up --abort-on-container-exit",
     "mock-stack": "docker-compose -p mock -f docker-compose.mock.yml up --build --abort-on-container-exit",
     "clean": "del .build cypress-coverage",
@@ -67,6 +68,10 @@
     "@govuk-react/constants": "^0.7.1",
     "@hapi/hawk": "^8.0.0",
     "@hapi/joi": "^17.1.1",
+    "@storybook/addon-actions": "^5.3.18",
+    "@storybook/addon-knobs": "^5.3.18",
+    "@storybook/addons": "^5.3.18",
+    "@storybook/react": "^5.3.18",
     "@uktrade/datahub-header": "1.2.1",
     "autoprefixer": "^9.7.4",
     "axios": "^0.18.0",
@@ -142,7 +147,7 @@
     "slashify": "^1.0.0",
     "sniffr": "^1.1.4",
     "style-loader": "^0.21.0",
-    "styled-components": "^4.3.2",
+    "styled-components": "^5.1.0",
     "tar": "^6.0.1",
     "uuid": "^3.1.0",
     "vue": "^2.5.13",
@@ -217,6 +222,7 @@
     "selenium-server": "^3.12.0",
     "sinon": "^8.1.1",
     "sinon-chai": "^3.1.0",
+    "storybook-readme": "^5.0.8",
     "supertest": "^3.3.0",
     "wdio-chromedriver-service": "^5.0.1"
   },
