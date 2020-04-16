@@ -71,7 +71,7 @@ const common = {
             {
               loader: 'postcss-loader',
               options: {
-                plugins: (loader) => [require('autoprefixer')()],
+                plugins: () => [require('autoprefixer')()],
                 sourceMap: !config.isProd,
               },
             },
@@ -95,7 +95,11 @@ const common = {
     ],
   },
   resolve: {
-    modules: ['node_modules', path.resolve(__dirname, 'src')],
+    modules: [
+      'node_modules',
+      path.resolve(__dirname, 'src'),
+      path.resolve(__dirname, 'src', 'client', 'components'),
+    ],
     alias: {
       vue$: 'vue/dist/vue.common.js',
     },
