@@ -2,22 +2,32 @@ import React from 'react'
 import { H3 } from '@govuk-react/heading'
 import moment from 'moment'
 import PropTypes from 'prop-types'
+import { throttle } from 'lodash'
+import axios from 'axios'
 import {
-  FieldRadios,
-  useFormContext,
-  FieldTypeahead,
-  FieldSelect,
-  FieldInput,
-  FieldDate,
-  FieldTextarea,
   FieldCheckboxes,
+  FieldDate,
+  FieldInput,
+  FieldRadios,
+  FieldSelect,
+  FieldTextarea,
+  FieldTypeahead,
+  useFormContext,
 } from 'data-hub-components'
 
 import {
-  THEMES,
   SERVICE_CONTEXTS,
   SERVICE_DELIVERY_STATUS_COMPLETED,
+  THEMES,
+  KINDS,
 } from '../../../constants'
+
+import {
+  EXPORT_INTEREST_STATUS,
+  EXPORT_INTEREST_STATUS_VALUES,
+} from '../../../../constants'
+
+import getInteractionKind from './utils'
 
 const getServiceContext = (values) => {
   switch (values.theme) {
@@ -37,11 +47,19 @@ const isTapService = (service) => service?.label?.includes('(TAP)')
 const filterServices = (services, values) =>
   services.filter((s) => s.contexts.includes(getServiceContext(values)))
 
-const validateCountries = (value, field, { values }) =>
-  !values.countries_currently_exporting &&
-  !values.countries_future_interest &&
-  !values.countries_not_interested_in
+const validateRequiredCountries = (countries, field, { values }) =>
+  !EXPORT_INTEREST_STATUS_VALUES.some((status) => values[status])
     ? 'Select at least one country in one of the three fields'
+    : null
+
+const validatedDuplicatedCountries = (countries, field, { values }) =>
+  EXPORT_INTEREST_STATUS_VALUES.filter((status) => status !== field.name).some(
+    (status) =>
+      countries &&
+      values[status] &&
+      countries.some((country) => values[status].includes(country))
+  )
+    ? 'A country that was discussed cannot be entered in multiple fields'
     : null
 
 const OPTION_YES = 'yes'
@@ -53,7 +71,6 @@ const OPTIONS_YES_NO = [
 
 const StepInteractionDetails = ({
   contacts,
-  advisers,
   defaultAdviser,
   services,
   serviceDeliveryStatuses,
@@ -72,10 +89,7 @@ const StepInteractionDetails = ({
     (s) => s.value === values.service?.value
   )
   const isServiceDelivery =
-    (values.theme === THEMES.EXPORT &&
-      values.kind_export === SERVICE_CONTEXTS.EXPORT_SERVICE_DELIVERY) ||
-    (values.theme === THEMES.OTHER &&
-      values.kind_other === SERVICE_CONTEXTS.OTHER_SERVICE_DELIVERY)
+    getInteractionKind(values) === KINDS.SERVICE_DELIVERY
 
   return (
     <>
@@ -90,9 +104,9 @@ const StepInteractionDetails = ({
 
       {selectedService?.interaction_questions?.map((question) => (
         <FieldRadios
-          name={question.id}
+          name={`service_answers[${question.id}]`}
           label={question.name}
-          required={`Give answer to "${question.name}`}
+          required={`Give answer to "${question.name}"`}
           options={question.answer_options.map(({ id, name }) => ({
             label: name,
             value: id,
@@ -140,8 +154,26 @@ const StepInteractionDetails = ({
         label="Adviser(s)"
         placeholder="-- Select adviser --"
         required="Select at least one adviser"
-        options={advisers}
+        loadOptions={throttle(
+          (searchString) =>
+            axios
+              .get('/api-proxy/adviser/', {
+                params: {
+                  autocomplete: searchString,
+                },
+              })
+              .then(({ data: { results } }) =>
+                results
+                  .filter((adviser) => adviser?.name.trim().length)
+                  .map(({ id, name, dit_team }) => ({
+                    label: `${name}${dit_team ? ', ' + dit_team.name : ''}`,
+                    value: id,
+                  }))
+              ),
+          500
+        )}
         initialValue={[defaultAdviser]}
+        defaultValue={[defaultAdviser]}
         isMulti={true}
       />
 
@@ -226,7 +258,8 @@ const StepInteractionDetails = ({
           />
           <FieldTextarea
             name="policy_feedback_notes"
-            label="Policy feedback notes (optional)"
+            label="Policy feedback notes"
+            required="Enter policy feedback notes"
             hint="These notes will be visible to other Data Hub users and may be shared within the department"
           />
         </>
@@ -244,30 +277,39 @@ const StepInteractionDetails = ({
           {values.were_countries_discussed === OPTION_YES && (
             <>
               <FieldTypeahead
-                name="countries_currently_exporting"
+                name={EXPORT_INTEREST_STATUS.EXPORTING_TO}
                 label="Countries currently exporting to"
                 hint="Add all that you discussed"
                 placeholder="-- Search countries --"
                 options={countries}
-                validate={validateCountries}
+                validate={[
+                  validateRequiredCountries,
+                  validatedDuplicatedCountries,
+                ]}
                 isMulti={true}
               />
               <FieldTypeahead
-                name="countries_future_interest"
+                name={EXPORT_INTEREST_STATUS.FUTURE_INTEREST}
                 label="Future countries of interest"
                 hint="Add all that you discussed"
                 placeholder="-- Search countries --"
                 options={countries}
-                validate={validateCountries}
+                validate={[
+                  validateRequiredCountries,
+                  validatedDuplicatedCountries,
+                ]}
                 isMulti={true}
               />
               <FieldTypeahead
-                name="countries_not_interested_in"
+                name={EXPORT_INTEREST_STATUS.NOT_INTERESTED}
                 label="Countries not interested in"
                 hint="Add all that you discussed"
                 placeholder="-- Search countries --"
                 options={countries}
-                validate={validateCountries}
+                validate={[
+                  validateRequiredCountries,
+                  validatedDuplicatedCountries,
+                ]}
                 isMulti={true}
               />
             </>
@@ -286,7 +328,6 @@ const typeaheadOptionProp = PropTypes.shape({
 const typeaheadOptionsListProp = PropTypes.arrayOf(typeaheadOptionProp)
 
 StepInteractionDetails.propTypes = {
-  advisers: typeaheadOptionsListProp.isRequired,
   defaultAdviser: typeaheadOptionProp.isRequired,
   services: typeaheadOptionsListProp.isRequired,
   serviceDeliveryStatuses: typeaheadOptionsListProp.isRequired,
