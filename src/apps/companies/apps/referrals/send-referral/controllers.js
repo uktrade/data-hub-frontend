@@ -11,21 +11,18 @@ function renderSendReferralForm(req, res) {
     name: `${first_name} ${last_name}`,
     id: id,
   }))
-  res
-    .breadcrumb(name, urls.companies.detail(id))
-    .breadcrumb('Send a referral')
-    .render(
-      'companies/apps/referrals/send-referral/views/client-container.njk',
-      {
-        heading: 'Send a referral',
-        props: {
-          companyContacts,
-          companyName: name,
-          companyId: id,
-          cancelUrl: urls.companies.detail(id),
-        },
-      }
-    )
+  res.locals.title = `Send a referral - ${name} - Companies`
+  res.render(
+    'companies/apps/referrals/send-referral/views/client-container.njk',
+    {
+      props: {
+        companyContacts,
+        companyName: name,
+        companyId: id,
+        cancelUrl: urls.companies.detail(id),
+      },
+    }
+  )
 }
 
 async function submitSendReferralForm(req, res, next) {
