@@ -87,6 +87,7 @@ module.exports = {
     edit: url('/companies', '/:companyId/edit'),
     audit: url('/companies', '/:companyId/audit'),
     lists: url('/companies', '/:companyId/lists'),
+    pipeline: url('/companies', '/:companyId/pipeline'),
     orders: url('/companies', '/:companyId/orders'),
     details: url('/companies', '/:companyId/details'),
     archive: url('/companies', '/:companyId/archive'),
@@ -236,4 +237,7 @@ module.exports = {
     create: url('/omis/create?company=', ':companyId'),
   },
   support: url('/support'),
+  pipeline: {
+    index: url('/pipeline'),
+  },
 }
