@@ -4,6 +4,7 @@ const config = require('../config/')
 
 const API_PROXY_PATH = '/api-proxy'
 const WHITELIST = [
+  '/v3/interaction',
   '/v4/company-list',
   '/v4/company-list/:id/item',
   '/v4/search/export-country-history',
