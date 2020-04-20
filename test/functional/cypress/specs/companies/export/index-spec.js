@@ -245,7 +245,7 @@ describe('Company Export tab', () => {
           .should('contain', 'Type of export quis qui consequuntur')
           .should('contain', 'Total export value £36,300')
           .should('contain', 'Type of win et quisquam voluptatem')
-          .should('contain', 'Country exported to Guam')
+          .should('contain', 'Country exported to Unknown')
           .should('contain', 'Sector voluptates molestiae cupiditate')
           .should('not.contain', 'Company type')
           .should('not.contain', 'Date confirmed')
