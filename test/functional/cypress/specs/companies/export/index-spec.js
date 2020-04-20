@@ -139,7 +139,7 @@ describe('Company Export tab', () => {
       })
 
       it('should render the list of Export Wins without pagination', () => {
-        const LIST_ALIAS = 'export-wins-colleciton-list'
+        const LIST_ALIAS = 'export-wins-collection-list'
 
         cy.contains('8 results')
           .parent()
