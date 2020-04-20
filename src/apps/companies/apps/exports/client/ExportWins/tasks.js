@@ -44,7 +44,7 @@ function getMetadata(win) {
       }),
     ],
     ['Type of win', win.name_of_export],
-    ['Country exported to', win.country],
+    ['Country exported to', win.country || 'Unknown'],
     ['Sector', win.sector],
   ]
 
