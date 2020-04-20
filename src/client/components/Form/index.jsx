@@ -87,11 +87,16 @@ const Form = ({
             contextProps.isLastStep()
               ? onSubmit(values, contextProps)
               : props.goForward()
+          } else {
+            setTimeout(() => {
+              ref.current.querySelector('#form-errors')?.focus()
+            }, 0)
           }
         }}
       >
         {(!isEmpty(errors) || submissionError) && (
           <ErrorSummary
+            id="form-errors"
             heading="There is a problem"
             onHandleErrorClick={(targetName) => {
               const $el =
