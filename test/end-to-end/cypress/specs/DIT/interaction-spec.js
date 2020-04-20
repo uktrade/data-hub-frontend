@@ -16,38 +16,91 @@ describe('Interaction', () => {
     )
   })
 
-  it('should add the interaction', () => {
-    const subject = 'Some interesting interaction'
+  context('An interaction with no countries discussed', () => {
+    it('should add the interaction', () => {
+      const subject = 'Some interesting interaction'
+      const formSelectors = selectors.interactionForm
 
-    const formSelectors = selectors.interactionForm
+      cy.get(formSelectors.service).select('Export Win')
+      cy.get(formSelectors.contact).select('Johnny Cakeman')
+      cy.get(formSelectors.communicationChannel).select('Email/Website')
+      cy.get(formSelectors.subject).type(subject)
+      cy.get(formSelectors.notes).type('Conversation with potential client')
+      cy.get(formSelectors.policyFeedbackNo).click()
+      cy.get(formSelectors.countriesDiscussed.no).click()
 
-    cy.get(formSelectors.service).select('Export Win')
-    cy.get(formSelectors.contact).select('Johnny Cakeman')
-    cy.get(formSelectors.communicationChannel).select('Email/Website')
-    cy.get(formSelectors.subject).type(subject)
-    cy.get(formSelectors.notes).type('Conversation with potential client')
-    cy.get(formSelectors.policyFeedbackNo).click()
-    cy.get(formSelectors.countriesDiscussed.no).click()
-
-    cy.get(selectors.interactionForm.add).click()
-    cy.get(selectors.message.successful).should(
-      'contain',
-      'Interaction created'
-    )
-
-    cy.visit(interactions.index())
-    cy.get(selectors.filter.interaction.myInteractions).click()
-
-    cy.get(selectors.collection.items)
-      .should('contain', 'Johnny Cakeman')
-      .and('contain', 'Some interesting interaction')
-      .and('contain', 'Venus Ltd')
-      .and(
+      cy.get(selectors.interactionForm.add).click()
+      cy.get(selectors.message.successful).should(
         'contain',
-        'DIT Staff, UKTI Team East Midlands - International Trade Team'
+        'Interaction created'
       )
-      .and('contain', 'Export Win')
-      .and('contain', today)
+
+      cy.visit(interactions.index())
+      cy.get(selectors.filter.interaction.myInteractions).click()
+
+      cy.get(selectors.collection.items)
+        .should('contain', 'Johnny Cakeman')
+        .and('contain', 'Some interesting interaction')
+        .and('contain', 'Venus Ltd')
+        .and(
+          'contain',
+          'DIT Staff, UKTI Team East Midlands - International Trade Team'
+        )
+        .and('contain', 'Export Win')
+        .and('contain', today)
+    })
+  })
+
+  context('An interaction where countries were discussed', () => {
+    function selectCountry(id, text) {
+      const typeahead = `${id} .multiselect`
+      const textInput = `${id} .multiselect__input`
+
+      cy.get(typeahead)
+        .click()
+        .get(textInput)
+        .type(text)
+        .type('{enter}')
+        .type('{esc}')
+    }
+
+    context('A unique country is added to each category', () => {
+      it('should add the interaction', () => {
+        const subject = 'Some interesting interaction about countries'
+        const formSelectors = selectors.interactionForm
+
+        cy.get(formSelectors.service).select('Export Win')
+        cy.get(formSelectors.contact).select('Johnny Cakeman')
+        cy.get(formSelectors.communicationChannel).select('Email/Website')
+        cy.get(formSelectors.subject).type(subject)
+        cy.get(formSelectors.notes).type(
+          'Conversation with potential client about countries'
+        )
+        cy.get(formSelectors.policyFeedbackNo).click()
+        cy.get(formSelectors.countriesDiscussed.yes).click()
+        selectCountry(formSelectors.countries.export, 'Fran')
+        selectCountry(formSelectors.countries.future, 'Germ')
+        selectCountry(formSelectors.countries.noInterest, 'Spai')
+
+        cy.get(selectors.interactionForm.add).click()
+        cy.get(selectors.message.successful)
+          .should('contain', 'Interaction created')
+          .and('contain', 'You discussed some countries within the interaction')
+
+        cy.get('.table--key-value')
+          .should('contain', 'Countries currently exporting toFrance')
+          .and('contain', 'Future countries of interestGermany')
+          .and('contain', 'Countries not interested inSpain')
+
+        cy.visit(companies.exports.index(fixtures.company.venusLtd.id))
+
+        cy.contains('Export countries information')
+          .parent()
+          .should('contain', 'Currently exporting toFrance')
+          .and('contain', 'Future countries of interestGermany')
+          .and('contain', 'Countries of no interestSpain')
+      })
+    })
   })
 })
 
