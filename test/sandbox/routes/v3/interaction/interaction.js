@@ -71,7 +71,7 @@ var createInteraction = function(req, res) {
     return res.json(newInteraction)
   }
 
-  res.json(interactionCreate)
+  res.json(201, interactionCreate)
 }
 
 var archiveInteraction = function(req, res) {
