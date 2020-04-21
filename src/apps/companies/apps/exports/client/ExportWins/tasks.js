@@ -44,10 +44,13 @@ function getMetadata(win) {
       }),
     ],
     ['Type of win', win.name_of_export],
-    ['Country exported to', win.country],
+    ['Country exported to', win.country || 'Unknown'],
     ['Sector', win.sector],
-    ['Company type', win.business_potential],
   ]
+
+  if (win.business_potential) {
+    metadata.push(['Company type', win.business_potential])
+  }
 
   if (win.response?.confirmed) {
     metadata.push(['Date confirmed', DateUtils.format(win.response.date)])

@@ -139,7 +139,7 @@ describe('Company Export tab', () => {
       })
 
       it('should render the list of Export Wins without pagination', () => {
-        const LIST_ALIAS = 'export-wins-colleciton-list'
+        const LIST_ALIAS = 'export-wins-collection-list'
 
         cy.contains('8 results')
           .parent()
@@ -224,6 +224,32 @@ describe('Company Export tab', () => {
           .should('contain', 'Company type veritatis non ullam')
           .should('not.contain', 'Date confirmed')
           .should('contain', 'HVC name E198: quidem accusamus velit')
+
+        // company without a business_potential - this was added in Jun 2018
+        cy.contains(
+          'Labore quibusdam ut hic deleniti et harum ducimus repellendus.'
+        )
+          .siblings()
+          .should('contain', 'Won on 11 Mar 2019')
+          .should('contain', 'HVC')
+          .should('not.contain', 'Confirmed')
+          .should(
+            'contain',
+            'Lead officer Elias Hamill (nostrum quaerat maxime fugiat voluptatum quo)'
+          )
+          .should(
+            'contain',
+            'Company contact Damian Daugherty (qui minus quo - Georgianna78@gmail.com)'
+          )
+          .should('contain', 'Customer explicabo iusto quo')
+          .should('contain', 'Type of export quis qui consequuntur')
+          .should('contain', 'Total export value £36,300')
+          .should('contain', 'Type of win et quisquam voluptatem')
+          .should('contain', 'Country exported to Unknown')
+          .should('contain', 'Sector voluptates molestiae cupiditate')
+          .should('not.contain', 'Company type')
+          .should('not.contain', 'Date confirmed')
+          .should('contain', 'HVC name E188: sed culpa saepe')
       })
     }
   )
