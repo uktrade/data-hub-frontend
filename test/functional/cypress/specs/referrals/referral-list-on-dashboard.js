@@ -1,4 +1,5 @@
 import '../../../../cypress/support/commands'
+import urls from '../../../../../src/lib/urls'
 
 const assertDescription = ({ term, name, email, team }) =>
   cy
@@ -73,6 +74,11 @@ describe('Referall list on dashboard', () => {
       .as('tabpanel')
       // This is only to wait for the content to be loaded
       .within(() => cy.get('ol'))
+
+    cy.url().should(
+      'eq',
+      Cypress.config().baseUrl + urls.companies.referrals.list()
+    )
 
     cy.get('@tabpanel')
       .children()
