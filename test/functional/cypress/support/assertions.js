@@ -80,7 +80,7 @@ const assertBreadcrumbs = (specs) => {
  * @param {Object} specs - A map of expected breadcrumb item labels to hrefs.
  */
 const testBreadcrumbs = (specs) =>
-  it('Should render breadcrumbs', () => assertBreadcrumbs(specs))
+  it('should render breadcrumbs', () => assertBreadcrumbs(specs))
 
 const assertFieldUneditable = ({ element, label, value = null }) =>
   cy
@@ -109,7 +109,7 @@ const assertFieldSelect = ({ element, label, value, optionsCount = 0 }) =>
           .should('have.text', value || '')
     )
 
-const assertFieldRadios = ({ element, label, value = null, optionsCount }) =>
+const assertFieldRadios = ({ element, label, value, optionsCount }) =>
   cy
     .wrap(element)
     .as('fieldRadio')
@@ -129,6 +129,17 @@ const assertFieldRadios = ({ element, label, value = null, optionsCount }) =>
           .should('have.text', value)
     )
 
+const assertFieldTypeahead = ({ element, label, value, placeholder = '' }) =>
+  cy.wrap(element).should(($typeahead) => {
+    placeholder && expect($typeahead).to.contain(placeholder)
+
+    label
+      ? expect($typeahead.find('label')).to.contain(label)
+      : expect($typeahead.find('label')).to.not.exist
+
+    value && expect($typeahead).to.contain(value)
+  })
+
 const assertFieldInput = ({ element, label, hint, value }) =>
   cy
     .wrap(element)
@@ -147,6 +158,23 @@ const assertFieldInput = ({ element, label, hint, value }) =>
     .then(
       ($el) => value ?? cy.wrap($el).should('have.attr', 'value', value || '')
     )
+
+const assertFieldTextarea = ({ element, label, hint, value }) =>
+  cy
+    .wrap(element)
+    .find('label')
+    .contains(label)
+    .next()
+    .then(
+      ($el) =>
+        hint &&
+        cy
+          .wrap($el)
+          .should('have.text', hint || '')
+          .next()
+    )
+    .find('textarea')
+    .then(($el) => value ?? cy.wrap($el).should('have.text', value || ''))
 
 const assertFieldAddress = ({ element, hint = null, value = {} }) => {
   const isUkBased = value.country.name === 'United Kingdom'
@@ -207,6 +235,44 @@ const assertFieldAddress = ({ element, hint = null, value = {} }) => {
     })
 }
 
+const assertFieldDate = ({ element, label, value = {} }) => {
+  const labels = element.find('label')
+  const inputs = element.find('input')
+
+  label && expect(labels[0]).to.have.text(label)
+
+  expect(labels[1]).to.have.text('Day')
+  expect(labels[2]).to.have.text('Month')
+  expect(labels[3]).to.have.text('Year')
+
+  value.day && expect(inputs[0]).to.have.value(value.day)
+  value.month && expect(inputs[1]).to.have.value(value.month)
+  value.year && expect(inputs[2]).to.have.value(value.year)
+}
+
+const assertFormActions = ({ element, buttons }) =>
+  cy
+    .wrap(element)
+    .children()
+    .each((element, i) => {
+      cy.wrap(element)
+        .should('have.text', buttons[i])
+        .should('match', 'button')
+    })
+
+const assertFormFields = (formElement, specs) =>
+  formElement.children().each((element, i) => {
+    if (specs[i]) {
+      const spec = specs[i]
+      if (spec instanceof Function) {
+        spec(element)
+      } else {
+        const { assert, ...params } = spec
+        assert({ element, ...params })
+      }
+    }
+  })
+
 const assertDetails = ({ element, summary, content }) =>
   cy
     .wrap(element)
@@ -249,11 +315,16 @@ module.exports = {
   assertValueTable,
   assertBreadcrumbs,
   testBreadcrumbs,
+  assertFieldTypeahead,
   assertFieldInput,
+  assertFieldTextarea,
   assertFieldSelect,
   assertFieldRadios,
   assertFieldAddress,
   assertFieldUneditable,
+  assertFormActions,
+  assertFieldDate,
+  assertFormFields,
   assertDetails,
   assertLocalHeader,
   assertTabbedLocalNav,
