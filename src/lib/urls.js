@@ -93,6 +93,7 @@ module.exports = {
     interactions: createInteractionsSubApp('/companies', '/:companyId'),
     manageCompanyList: url('/companies', '/:companyId/manage-company-list'),
     referrals: {
+      list: url('/my-referrals'),
       send: url('/companies', '/:companyId/referrals/send'),
       details: url('/companies', '/:companyId/referrals/:referralId'),
       help: url('/companies', '/:companyId/referrals/:referralId/help'),
