@@ -137,4 +137,23 @@ describe('Event', () => {
       })
     })
   })
+
+  describe('Add attendee', () => {
+    it('Should add an interaction with the attendee', () => {
+      cy.visit(events.index())
+
+      cy.contains('One-day exhibition').click()
+      cy.contains('a', 'Attendees').click()
+      cy.contains('Add attendee').click()
+
+      cy.get('input').type('John')
+      cy.contains('button', 'Search').click()
+
+      cy.get('main li > a')
+        .should('contain', 'Johnny Cakeman')
+        .click()
+
+      cy.contains('Event attendee added')
+    })
+  })
 })
