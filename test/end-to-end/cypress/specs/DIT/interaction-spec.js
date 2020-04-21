@@ -101,6 +101,30 @@ describe('Interaction', () => {
           .and('contain', 'Countries of no interestSpain')
       })
     })
+
+    context('The same country is added to two categories', () => {
+      it('should get an error saving the interaction', () => {
+        const subject = 'Some interesting interaction about countries'
+        const formSelectors = selectors.interactionForm
+
+        cy.get(formSelectors.service).select('Export Win')
+        cy.get(formSelectors.contact).select('Johnny Cakeman')
+        cy.get(formSelectors.communicationChannel).select('Email/Website')
+        cy.get(formSelectors.subject).type(subject)
+        cy.get(formSelectors.notes).type(
+          'Conversation with potential client about countries'
+        )
+        cy.get(formSelectors.policyFeedbackNo).click()
+        cy.get(formSelectors.countriesDiscussed.yes).click()
+        selectCountry(formSelectors.countries.export, 'Fran')
+        selectCountry(formSelectors.countries.future, 'Fran')
+
+        cy.get(selectors.interactionForm.add).click()
+        cy.contains(
+          'A country that was discussed cannot be entered in multiple fields.'
+        )
+      })
+    })
   })
 })
 
