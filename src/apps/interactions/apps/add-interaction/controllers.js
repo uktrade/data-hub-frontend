@@ -16,10 +16,10 @@ const transformServiceToOption = (service) => ({
 async function renderAddInteractionForm(req, res, next) {
   try {
     const { user, token } = req.session
-    const { company_id: companyId } = req.query
+    const { company: companyId } = req.query
 
     const [
-      company,
+      companyDetails,
       services,
       serviceDeliveryStatuses,
       policyAreas,
@@ -44,17 +44,17 @@ async function renderAddInteractionForm(req, res, next) {
     ])
 
     res
-      .breadcrumb(`Add interaction for ${company.name}`)
+      .breadcrumb(`Add interaction for ${companyDetails.name}`)
       .render('interactions/apps/add-interaction/views/add-interaction-form', {
         props: {
-          companyId: company.id,
+          companyId: companyDetails.id,
           defaultAdviser: {
             label: `${user.name}${
               user.dit_team ? ', ' + user.dit_team.name : ''
             }`,
             value: user.id,
           },
-          contacts: company.contacts.map(transformContactToOption),
+          contacts: companyDetails.contacts.map(transformContactToOption),
           services,
           serviceDeliveryStatuses,
           policyAreas,
