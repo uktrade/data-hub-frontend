@@ -174,6 +174,7 @@ const MultiInstanceForm = multiInstance({
   reducer,
   component: Form,
   dispatchToProps,
+  actionPattern: 'FORM__',
 })
 
 MultiInstanceForm.Step = Step

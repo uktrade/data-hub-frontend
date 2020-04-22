@@ -12,12 +12,18 @@ import PropTypes from 'prop-types'
  * decorated reducer. On each call of the reducer the state corresponding to
  * the ID of the action is updated. You wou
  * @param {(state, action: {type: string})} reducer - An _id unaware_ reducer.
+ * @param {String | Array | RegExp} actionPattern - A pattern which specifies
+ * which action type the reducer will subscribe to. This is needed, because
+ * in Redux a reducer will receive each and every action.
+ * If it's a string, it will match if the action type starts with it.
+ * If it's an array, it will match if the action type is included in the array.
+ * If it's a regex, it will match if the action type matches the regex
  * @returns An _id aware_ reducer.
  * @example
  * const reducer = (state = 0, {type}) =>
  *   type === 'INC' ? state + 1 : state
  *
- * const idAwareReducer = reducerDecorator(reducer)
+ * const idAwareReducer = reducerDecorator(reducer, 'INC')
  *
  * const state1 = idAwareReducer(undefined, { type: 'INC', id: 'foo' })
  * // {foo: 1}
@@ -26,11 +32,18 @@ import PropTypes from 'prop-types'
  * const state3 = idAwareReducer(state2, { type: 'INC', id: 'foo' })
  * // {foo: 2, bar: 1}
  */
-export const reducerDecorator = (reducer) => (
+export const reducerDecorator = (reducer, actionPattern) => (
   state = {},
   { id, type, ...action }
 ) => {
-  if (id) {
+  const handleAction = {
+    String: () => type.startsWith(actionPattern),
+    Object: () => Object.values(actionPattern).includes(type),
+    Array: () => actionPattern.includes(type),
+    RegExp: () => type.match(actionPattern),
+  }[Object.prototype.toString.apply(actionPattern).slice(8, -1)]?.()
+
+  if (handleAction && id) {
     const nextState = reducer(state[id], { type, ...action })
     return isEmpty(nextState) ? omit(state, id) : { ...state, [id]: nextState }
   }
@@ -127,6 +140,7 @@ export const connect = (componentState2props, dispatch2props, ...rest) =>
  * @example
  * const Counter = multiinstance({
  *   name: 'counterState',
+ *   actionPattern: 'INC',
  *   reducer: (state = 0, {type}) => type === 'INC' ? state + 1 : state,
  *   component:({count, onIncrease}) =>
  *     <button onClick={onIncrease}>{count}</button>,
@@ -155,6 +169,7 @@ export default ({
   name,
   component,
   reducer,
+  actionPattern,
   connectArgs = [],
   componentStateToProps = (x) => x,
   dispatchToProps,
@@ -162,12 +177,13 @@ export default ({
   console.assert(component, 'component is required')
   console.assert(reducer, 'reducer is required')
   console.assert(name, 'name is required')
+  console.assert(actionPattern, 'actionPattern is required')
   const Connected = connect(
     componentStateToProps,
     dispatchToProps,
     ...connectArgs
   )(component)(name)
 
-  Connected.reducerSpread = { [name]: reducerDecorator(reducer) }
+  Connected.reducerSpread = { [name]: reducerDecorator(reducer, actionPattern) }
   return withRouter(Connected)
 }
