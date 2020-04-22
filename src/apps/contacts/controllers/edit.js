@@ -5,6 +5,7 @@ const contactFormService = require('../services/form')
 const { contactLabels } = require('../labels')
 const companyRepository = require('../../companies/repos')
 const { getOptions } = require('../../../lib/options')
+const urls = require('../../../lib/urls')
 
 /**
  * GET the edit detail screen, used for editing contacts.
@@ -16,25 +17,32 @@ const { getOptions } = require('../../../lib/options')
 // Todo - rewrite to use form generator
 async function editDetails(req, res, next) {
   try {
-    const token = req.session.token
+    const { token } = req.session
+    const { contactId } = req.params
 
     // Work out what to use for the form data
     // This can either be data recently posted, to be re-rendered with errors
     // or a contact that the user wishes to edit
     // or a new contact for a company
-    let companyId
+    let { from_interaction: fromInteraction, company: companyId } = req.query
 
     if (containsFormData(req)) {
       companyId = req.body.company
+      fromInteraction = req.body.from_interaction
       res.locals.formData = req.body
     } else if (res.locals.contact) {
       companyId = res.locals.contact.company.id
       res.locals.formData = contactFormService.getContactAsFormData(
         res.locals.contact
       )
-    } else if (req.query.company) {
+    } else if (companyId) {
       companyId = req.query.company
-      res.locals.formData = { company: req.query.company }
+      res.locals.formData = {
+        company: companyId,
+      }
+      if (fromInteraction) {
+        res.locals.formData.from_interaction = fromInteraction
+      }
     } else {
       return next('Unable to edit contact')
     }
@@ -46,11 +54,16 @@ async function editDetails(req, res, next) {
       )
     }
 
-    if (req.params.contactId) {
-      res.locals.backUrl = `/contacts/${req.params.contactId}`
+    if (contactId) {
+      res.locals.returnLink = urls.contacts.details(contactId)
       res.breadcrumb('Edit')
-    } else if (req.query.company) {
-      res.locals.backUrl = `/companies/${req.query.company}/contacts`
+    } else if (fromInteraction) {
+      res.locals.returnLink = urls.interactions.create({
+        company: companyId,
+      })
+      res.breadcrumb(`Add contact at ${res.locals.company.name}`)
+    } else if (companyId) {
+      res.locals.returnLink = urls.companies.contacts(companyId)
       res.breadcrumb(`Add contact at ${res.locals.company.name}`)
     }
 
@@ -76,18 +89,31 @@ async function postDetails(req, res, next) {
   // Try and save the form data, if it fails
   // then attach the errors to the response and re-render edit
   try {
+    const { from_interaction: fromInteraction, ...body } = req.body
+
     const newContact = await contactFormService.saveContactForm(
       req.session.token,
-      req.body
+      body
     )
 
     if (req.body.id) {
       req.flash('success', 'Contact record updated')
+    } else if (fromInteraction) {
+      req.flash(
+        'success',
+        `You added ${newContact.name}.\nYou can now continue recording the interaction.`
+      )
     } else {
       req.flash('success', 'Added new contact')
     }
 
-    res.redirect(`/contacts/${newContact.id}/details`)
+    res.redirect(
+      fromInteraction
+        ? urls.interactions.create({
+            company: body.company,
+          })
+        : urls.contacts.details(newContact.id)
+    )
   } catch (errors) {
     if (errors.error) {
       if (errors.error.errors) {

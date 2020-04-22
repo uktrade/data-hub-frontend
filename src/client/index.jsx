@@ -71,12 +71,9 @@ import {
 import exportCountriesEditReducer from '../apps/companies/apps/exports/client/ExportCountriesEdit/reducer'
 import * as exportCountriesEditTasks from '../apps/companies/apps/exports/client/ExportCountriesEdit/tasks'
 
-import {
-  ID as ADD_INTERACTION_FORM_STATE_ID,
-  TASK_NAME as ADD_INTERACTION_FORM_TASK_NAME,
-} from '../apps/interactions/apps/add-interaction/client/state'
-import addInteractionFormReducer from '../apps/interactions/apps/add-interaction/client/reducer'
+import * as addInteractionFormState from '../apps/interactions/apps/add-interaction/client/state'
 import * as addInteractionFormTasks from '../apps/interactions/apps/add-interaction/client/tasks'
+import addInteractionFormReducer from '../apps/interactions/apps/add-interaction/client/reducer'
 
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
@@ -101,14 +98,27 @@ const store = createStore(
     [REFERRALS_DETAILS_STATE_ID]: referralsReducer,
     [EXPORTS_WINS_ID]: exportWinsReducer,
     [EXPORT_COUNTRIES_EDIT_ID]: exportCountriesEditReducer,
-    [ADD_INTERACTION_FORM_STATE_ID]: addInteractionFormReducer,
+    [addInteractionFormState.ID]: addInteractionFormReducer,
     ...TabNav.reducerSpread,
     ...ReferralList.reducerSpread,
     ...Form.reducerSpread,
     // A reducer is required to be able to set a preloadedState parameter
     referrerUrl: (state = {}) => state,
   }),
-  { referrerUrl: window.document.referrer },
+  {
+    referrerUrl: window.document.referrer,
+    Form: {
+      [addInteractionFormState.ID]: {
+        values: {},
+        touched: {},
+        errors: {},
+        fields: {},
+        steps: [],
+        currentStep: 0,
+        ...addInteractionFormTasks.restoreState(),
+      },
+    },
+  },
   composeWithDevTools(
     applyMiddleware(sagaMiddleware, routerMiddleware(history))
   )
@@ -123,7 +133,10 @@ sagaMiddleware.run(
     Referrals: referralListTask,
     'Export wins': exportWinsTasks.fetchExportWins,
     [EXPORT_COUNTRIES_EDIT_NAME]: exportCountriesEditTasks.saveExportCountries,
-    [ADD_INTERACTION_FORM_TASK_NAME]: addInteractionFormTasks.createInteraction,
+    [addInteractionFormState.TASK_CREATE_INTERACTION]:
+      addInteractionFormTasks.createInteraction,
+    [addInteractionFormState.TASK_OPEN_CONTACT_FORM]:
+      addInteractionFormTasks.openContactForm,
   })
 )
 

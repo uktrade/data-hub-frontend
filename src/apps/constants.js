@@ -11,8 +11,18 @@ const EXPORT_INTEREST_STATUS = {
   NOT_INTERESTED: 'not_interested',
 }
 
+const OPTION_YES = 'yes'
+const OPTION_NO = 'no'
+const OPTIONS_YES_NO = [
+  { label: 'Yes', value: OPTION_YES },
+  { label: 'No', value: OPTION_NO },
+]
+
 module.exports = {
   ERROR,
   EXPORT_INTEREST_STATUS,
   EXPORT_INTEREST_STATUS_VALUES: Object.values(EXPORT_INTEREST_STATUS),
+  OPTION_YES,
+  OPTION_NO,
+  OPTIONS_YES_NO,
 }
