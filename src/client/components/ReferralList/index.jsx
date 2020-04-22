@@ -9,8 +9,8 @@ import ContentWithHeading from '../ContentWithHeading'
 import Task from '../Task'
 import Referral from './Referral'
 import {
-  REFFERAL_LIST__LOADED,
-  REFFERAL_LIST__FILTER_CHANGE,
+  REFERRAL_LIST__LOADED,
+  REFERRAL_LIST__FILTER_CHANGE,
 } from '../../actions'
 import multiInstance from '../../utils/multiinstance'
 import { SENT, RECEIVED } from './constants'
@@ -42,17 +42,18 @@ export default multiInstance({
   dispatchToProps: (dispatch) => ({
     onFilterChange: (filter) =>
       dispatch({
-        type: REFFERAL_LIST__FILTER_CHANGE,
+        type: REFERRAL_LIST__FILTER_CHANGE,
         filter,
       }),
   }),
+  actionPattern: 'REFERRAL_LIST__',
   component: ({ id, referrals, onFilterChange, filter }) => (
     <Task.Status
       name="Referrals"
       id={id}
       progressMessage="Loading referrals"
       startOnRender={{
-        onSuccessDispatch: REFFERAL_LIST__LOADED,
+        onSuccessDispatch: REFERRAL_LIST__LOADED,
       }}
     >
       {() => {

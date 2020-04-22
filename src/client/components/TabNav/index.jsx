@@ -167,6 +167,7 @@ TabNav.propTypes = {
 
 export default multiInstance({
   name: 'TabNav',
+  actionPattern: 'TAB_NAV__',
   dispatchToProps: (dispatch) => ({
     onChange: (selectedIndex, focusIndex) =>
       dispatch({
