@@ -1,16 +1,25 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { H3 } from 'govuk-react'
+import styled from 'styled-components'
 
 import SpacedSectionBreak from './SpacedSectionBreak'
 
-const ContentWithHeading = ({
-  heading,
-  children,
-  headingComponent: Heading = H3,
-}) => (
+const StyledH3 = styled(H3)({
+  flexGrow: 1,
+})
+
+const StyledHeader = styled.div({
+  display: 'flex',
+  alignItems: 'baseline',
+})
+
+const ContentWithHeading = ({ heading, children, headingActions }) => (
   <>
-    <Heading>{heading}</Heading>
+    <StyledHeader>
+      <StyledH3>{heading}</StyledH3>
+      {headingActions}
+    </StyledHeader>
     <SpacedSectionBreak />
     {children}
   </>

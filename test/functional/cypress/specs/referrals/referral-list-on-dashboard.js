@@ -1,6 +1,112 @@
 import '../../../../cypress/support/commands'
 import urls from '../../../../../src/lib/urls'
 
+const EXPECTED_REFERRALS = {
+  computerSaysNo: {
+    company: 'Computer supply inc',
+    subject: 'Computer says no',
+    id: 'fff',
+    companyId: 'cosuplyinc',
+    date: '02 Jan 2020',
+    dateAccepted: '25 Nov 2021',
+    sender: {
+      name: 'Carol Beer',
+      team: 'Little Britain',
+    },
+    recipient: {
+      name: 'Daffyd Thomas',
+    },
+  },
+  andy2lou: {
+    company: 'Andy & Lou',
+    subject: 'Andy to Lou',
+    id: 'bbb',
+    companyId: 'andy-and-lou',
+    date: '03 Jan 2020',
+    dateAccepted: '25 Nov 2021',
+    sender: {
+      name: 'Andy Pipkin',
+      email: 'andy.pipkin@gov.uk',
+      team: 'Little Britain',
+    },
+    recipient: {
+      name: 'Lou Todd',
+      email: 'lou.todd@gov.uk',
+      team: 'Little Britain',
+    },
+  },
+  lou2andy: {
+    company: 'Andy & Lou',
+    subject: 'Lou to Andy',
+    id: 'ccc',
+    companyId: 'andy-and-lou',
+    date: '02 Jan 2020',
+    sender: {
+      name: 'Lou Todd',
+      email: 'lou.todd@gov.uk',
+      team: 'Little Britain',
+    },
+    recipient: {
+      name: 'Andy Pipkin',
+      email: 'andy.pipkin@gov.uk',
+      team: 'Little Britain',
+    },
+  },
+  yeahButNo: {
+    company: 'Chav Fashion Outlet',
+    subject: 'Yeah, but no, but yeah, but no',
+    id: 'aaa',
+    companyId: 'chav-fashion-outlet',
+    date: '04 Jan 2020',
+    sender: {
+      name: 'Vicky Pollard',
+      email: 'vickypollard@gmail.com',
+      team: 'Little Britain',
+    },
+    recipient: {
+      name: 'Coach',
+      email: 'coach@wlbc.com',
+      team: 'Wilderness Lodge Boot Camp',
+    },
+  },
+  yeahIKnow: {
+    company: 'Andy & Lou',
+    subject: 'Yeah, I know',
+    id: 'eee',
+    companyId: 'andy-and-lou',
+    date: '06 Jan 2020',
+    dateAccepted: '25 Nov 2021',
+    sender: {
+      name: 'Andy Pipkin',
+      team: 'Little Britain',
+    },
+    recipient: {
+      name: 'Lou Todd',
+    },
+  },
+  zoo: {
+    company: 'Andy & Lou',
+    subject: 'Have you got a bandage?',
+    id: 'ddd',
+    companyId: 'andy-and-lou',
+    date: '05 Jan 2020',
+    dateAccepted: '25 Nov 2021',
+    sender: {
+      name: 'Andy Pipkin',
+      team: 'Little Britain',
+    },
+    recipient: {
+      name: 'Lou Todd',
+    },
+  },
+}
+
+const selectFilter = (option) =>
+  cy
+    .contains('label', 'View')
+    .find('select')
+    .select(option)
+
 const assertDescription = ({ term, name, email, team }) =>
   cy
     .contains(term)
@@ -67,92 +173,58 @@ const assertReferralCard = ({
       .and('have.text', dateAccepted)
 }
 
+const assertResultList = (expectedItems) => {
+  cy.getDhTabNavPanel('Dashboard')
+    .find('ol')
+    .children()
+    .as('items')
+
+  expectedItems.forEach((expected, i) =>
+    cy
+      .get('@items')
+      .eq(i)
+      .within(() => assertReferralCard(expected))
+  )
+}
+
 describe('Referall list on dashboard', () => {
-  it('should live under the My referrals tab on dashboard', () => {
+  before(() => {
     cy.visit('/')
     cy.selectDhTablistTab('Dashboard', 'My referrals')
-      .as('tabpanel')
       // This is only to wait for the content to be loaded
       .within(() => cy.get('ol'))
+  })
 
-    cy.url().should(
-      'eq',
-      Cypress.config().baseUrl + urls.companies.referrals.list()
-    )
+  it('The path should be /my-referrals', () =>
+    cy
+      .url()
+      .should('eq', Cypress.config().baseUrl + urls.companies.referrals.list()))
 
-    cy.get('@tabpanel')
+  it('All referrals should be visible by default', () => {
+    cy.selectDhTablistTab('Dashboard', 'My referrals')
       .children()
       .eq(0)
-      .should('have.text', '3 Referrals')
-      .and('have.prop', 'tagName', 'H3')
-      .next()
-      .should('have.prop', 'tagName', 'HR')
-      .next()
-      .should('have.prop', 'tagName', 'OL')
-      .children()
-      .as('list-items')
-      .eq(0)
       .within(() =>
-        assertReferralCard({
-          company: 'Andy & Lou',
-          subject: 'Andy to Lou',
-          id: 'foo',
-          companyId: 'andy-and-lou',
-          date: '25 Nov 2021',
-          dateAccepted: '25 Nov 2021',
-          sender: {
-            name: 'Andy Pipkin',
-            email: 'andy.pipkin@gov.uk',
-            team: 'Little Britain',
-          },
-          recipient: {
-            name: 'Lou Todd',
-            email: 'lou.todd@gov.uk',
-            team: 'Little Britain',
-          },
-        })
+        cy
+          .contains('h3', '3 received referrals')
+          .next()
+          .contains('View')
+          .contains('select', 'Received referrals')
       )
 
-    cy.get('@list-items')
-      .eq(1)
-      .within(() =>
-        assertReferralCard({
-          company: 'Andy & Lou',
-          subject: 'Lou to Andy',
-          id: 'bar',
-          companyId: 'andy-and-lou',
-          date: '25 Nov 2021',
-          sender: {
-            name: 'Lou Todd',
-            email: 'lou.todd@gov.uk',
-            team: 'Little Britain',
-          },
-          recipient: {
-            name: 'Andy Pipkin',
-            email: 'andy.pipkin@gov.uk',
-            team: 'Little Britain',
-          },
-        })
-      )
+    assertResultList([
+      EXPECTED_REFERRALS.lou2andy,
+      EXPECTED_REFERRALS.andy2lou,
+      EXPECTED_REFERRALS.yeahButNo,
+    ])
+  })
 
-    cy.get('@list-items')
-      .eq(2)
-      .within(() =>
-        assertReferralCard({
-          company: 'Andy & Lou',
-          subject: 'Have you got a bandage?',
-          id: 'baz',
-          companyId: 'andy-and-lou',
-          date: '25 Nov 2021',
-          dateAccepted: '25 Nov 2021',
-          sender: {
-            name: 'Andy Pipkin',
-            team: 'Little Britain',
-          },
-          recipient: {
-            name: 'Lou Todd',
-          },
-        })
-      )
+  it('Only sent referrals shold be visible when sent filter is set', () => {
+    selectFilter('Sent referrals')
+    assertResultList([
+      EXPECTED_REFERRALS.computerSaysNo,
+      EXPECTED_REFERRALS.zoo,
+      EXPECTED_REFERRALS.yeahIKnow,
+    ])
   })
 })

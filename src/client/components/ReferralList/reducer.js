@@ -1,4 +1,17 @@
-import { REFFERAL_LIST__LOADED } from '../../actions'
+import {
+  REFFERAL_LIST__LOADED,
+  REFFERAL_LIST__FILTER_CHANGE,
+} from '../../actions'
 
-export default (state = null, { type, result }) =>
-  type === REFFERAL_LIST__LOADED ? { referrals: result } : state
+import { RECEIVED } from './constants'
+
+export default (state = { filter: RECEIVED }, { type, result, filter }) => {
+  switch (type) {
+    case REFFERAL_LIST__LOADED:
+      return { ...state, referrals: result }
+    case REFFERAL_LIST__FILTER_CHANGE:
+      return { ...state, filter }
+    default:
+      return state
+  }
+}
