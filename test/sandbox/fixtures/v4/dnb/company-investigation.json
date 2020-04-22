@@ -1,0 +1,16 @@
+{
+  "id": "80756b9a-5d95-e211-a939-e4115bead28a",
+  "status": "pending",
+  "created_on": "2020-01-05T11:00:00",
+  "company_details": {
+      "primary_name": "INVESTIGATION LIMITED",
+      "domain": "www.investigationlimited.com", 
+      "telephone_number": "123456789",
+      "address_line_1": "Unit 10, Ockham Drive",
+      "address_line_2": "",
+      "address_town": "GREENFORD",
+      "address_county": "",
+      "address_postcode": "UB6 0F2",
+      "address_country": "GB"
+  }
+}
