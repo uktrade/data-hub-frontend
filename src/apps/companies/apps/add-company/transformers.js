@@ -1,20 +1,19 @@
 /* eslint-disable camelcase */
-const transformToDnbCompanyInvestigationApi = ({
-  business_type,
-  name,
-  website,
-  telephone_number,
-  address1,
-  address2,
-  city,
-  county,
-  postcode,
-  country,
-  uk_region,
-  sector,
-}) => {
+const transformFormData = (
+  {
+    name,
+    website,
+    telephone_number,
+    address1,
+    address2,
+    city,
+    county,
+    postcode,
+    country,
+  },
+  countryAsObject = true
+) => {
   return {
-    business_type,
     name,
     website,
     telephone_number,
@@ -24,15 +23,28 @@ const transformToDnbCompanyInvestigationApi = ({
       town: city,
       county: county || '',
       postcode: postcode,
-      country: {
-        id: country,
-      },
+      country: countryAsObject ? { id: country } : country,
     },
-    sector,
-    uk_region,
+  }
+}
+
+const transformToSaveDnBCompanyInvestigation = (formData) => {
+  return {
+    ...transformFormData(formData),
+    business_type: formData.business_type,
+    uk_region: formData.uk_region,
+    sector: formData.sector,
+  }
+}
+
+const transformToCreateDnbCompanyInvestigation = (formData, companyId) => {
+  return {
+    ...transformFormData(formData, false),
+    company: companyId,
   }
 }
 
 module.exports = {
-  transformToDnbCompanyInvestigationApi,
+  transformToSaveDnBCompanyInvestigation,
+  transformToCreateDnbCompanyInvestigation,
 }
