@@ -43,8 +43,8 @@ const LOCAL_NAV = [
     label: 'Evaluations',
   },
   {
-    path: 'audit',
-    label: 'Audit history',
+    path: 'edit-history',
+    label: 'Edit history',
   },
   {
     path: 'documents',
@@ -99,6 +99,14 @@ const QUERY_DATE_FIELDS = [
   'likelihood_to_land',
 ]
 
+const CHANGE_TYPE_TEXT = 'the project'
+const TRUE = 'True'
+const FALSE = 'False'
+const NOT_SET = 'Not set'
+
+// TODO: When receive list of updated edit-history fields from users,
+// add EXCLUDED_FIELDS, FIELD_NAME_TO_LABEL_MAP
+
 module.exports = {
   GLOBAL_NAV_ITEM,
   LOCAL_NAV,
@@ -107,4 +115,8 @@ module.exports = {
   APP_PERMISSIONS,
   QUERY_FIELDS,
   QUERY_DATE_FIELDS,
+  CHANGE_TYPE_TEXT,
+  TRUE,
+  FALSE,
+  NOT_SET,
 }

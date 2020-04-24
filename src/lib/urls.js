@@ -207,6 +207,7 @@ module.exports = {
     projects: {
       index: url('/investments', '/projects'),
       details: url('/investments', '/projects/:projectId/details'),
+      editDetails: url('/investments', '/projects/:projectId/edit-details'),
       documents: url('/investments', '/projects/:projectId/documents'),
       propositions: url('/investments', '/projects/:projectId/propositions'),
       team: url('/investments', '/projects/:projectId/team'),
@@ -224,6 +225,10 @@ module.exports = {
     profiles: {
       index: url('/investments', '/profiles'),
       data: url('/investments', '/profiles/data'),
+    },
+    editHistory: {
+      index: url('/investments/projects', '/:investmentId/edit-history'),
+      data: url('/investments/projects', '/:investmentId/edit-history/data'),
     },
   },
   omis: {

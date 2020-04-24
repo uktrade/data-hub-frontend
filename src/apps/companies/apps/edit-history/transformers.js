@@ -1,7 +1,8 @@
-const { isArray, isEmpty, lowerCase, capitalize } = require('lodash')
+const { isEmpty, capitalize, lowerCase } = require('lodash')
+
+const { AUTOMATIC_UPDATE } = require('./constants')
 
 const {
-  AUTOMATIC_UPDATE,
   EXCLUDED_FIELDS,
   COMPANY_FIELD_NAME_TO_LABEL_MAP,
 } = require('./constants')
@@ -13,14 +14,12 @@ function mapFieldNameToLabel(fieldName) {
   )
 }
 
-const unwrapFromArray = (change) =>
-  isArray(change)
-    ? isEmpty(change)
-      ? null
-      : change.length === 1
-      ? change.pop()
-      : change
-    : change
+const unwrapFromArray = (change) => {
+  if (Array.isArray(change)) {
+    return change.length > 1 ? change : change[0] || null
+  }
+  return change
+}
 
 const transformChanges = (changes) => {
   return Object.keys(changes)
@@ -47,9 +46,7 @@ const transformCompanyAuditLogItem = ({ timestamp, user, changes }) => {
 }
 
 const transformCompanyAuditLog = (auditLog) => {
-  return auditLog.map((item) => transformCompanyAuditLogItem(item))
+  return auditLog.map(transformCompanyAuditLogItem)
 }
 
-module.exports = {
-  transformCompanyAuditLog,
-}
+module.exports = { transformCompanyAuditLog }

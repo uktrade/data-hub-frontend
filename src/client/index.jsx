@@ -15,7 +15,7 @@ import AddCompanyForm from '../apps/companies/apps/add-company/client/AddCompany
 import AddInteractionForm from '../apps/interactions/apps/add-interaction/client/AddInteractionForm'
 import CompanyActivityFeed from '../apps/companies/apps/activity-feed/client/CompanyActivityFeed'
 import EditCompanyForm from '../apps/companies/apps/edit-company/client/EditCompanyForm'
-import EditHistory from '../apps/companies/apps/edit-history/client/EditHistory'
+import CompanyEditHistory from '../apps/companies/apps/edit-history/client/CompanyEditHistory'
 import FindCompany from '../apps/companies/apps/match-company/client/FindCompany'
 import DeleteCompanyList from '../apps/company-lists/client/DeleteCompanyList'
 import MatchConfirmation from '../apps/companies/apps/match-company/client/MatchConfirmation'
@@ -26,6 +26,7 @@ import AddRemoveFromListSection from '../apps/company-lists/client/AddRemoveFrom
 import DnbHierarchy from '../apps/companies/apps/dnb-hierarchy/client/DnbHierarchy'
 import LeadAdvisers from '../apps/companies/apps/advisers/client/LeadAdvisers'
 import LargeCapitalProfileCollection from '../apps/investments/client/LargeCapitalProfileCollection'
+import InvestmentEditHistory from '../apps/investments/client/InvestmentEditHistory'
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
 import ExportsIndex from '../apps/companies/apps/exports/client/ExportsIndex'
@@ -176,9 +177,17 @@ function App() {
             <EditCompanyForm csrfToken={globalProps.csrfToken} {...props} />
           )}
         </Mount>
-        <Mount selector="#edit-history">
+        <Mount selector="#company-edit-history">
           {(props) => (
-            <EditHistory csrfToken={globalProps.csrfToken} {...props} />
+            <CompanyEditHistory csrfToken={globalProps.csrfToken} {...props} />
+          )}
+        </Mount>
+        <Mount selector="#investment-edit-history">
+          {(props) => (
+            <InvestmentEditHistory
+              csrfToken={globalProps.csrfToken}
+              {...props}
+            />
           )}
         </Mount>
         <Mount selector="#match-confirmation">

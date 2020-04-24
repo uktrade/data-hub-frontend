@@ -2,22 +2,18 @@ const { companies } = require('../../../../lib/urls')
 const { getCompanyAuditLog } = require('../../repos')
 const { transformCompanyAuditLog } = require('./transformers')
 
-async function renderEditHistory(req, res, next) {
-  try {
-    const { company } = res.locals
+function renderEditHistory(req, res) {
+  const { company } = res.locals
 
-    res
-      .breadcrumb(company.name, companies.detail(company.id))
-      .breadcrumb('Business details', companies.businessDetails(company.id))
-      .breadcrumb('Edit History')
-      .render('companies/apps/edit-history/views/client-container', {
-        props: {
-          dataEndpoint: companies.editHistory.data(company.id),
-        },
-      })
-  } catch (error) {
-    next(error)
-  }
+  res
+    .breadcrumb(company.name, companies.detail(company.id))
+    .breadcrumb('Business details', companies.businessDetails(company.id))
+    .breadcrumb('Edit History')
+    .render('companies/apps/edit-history/views/client-container', {
+      props: {
+        dataEndpoint: companies.editHistory.data(company.id),
+      },
+    })
 }
 
 async function fetchCompanyAuditLog(req, res, next) {

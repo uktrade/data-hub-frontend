@@ -24,4 +24,5 @@ module.exports = {
   levelOfInvolvement: '#field-level_of_involvement',
   specificInvestmentProgramme: '#field-specific_programme',
   clientContact: '#field-client_contacts',
+  saveButton: 'button:contains("Save")',
 }

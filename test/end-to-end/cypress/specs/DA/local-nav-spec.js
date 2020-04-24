@@ -69,7 +69,7 @@ describe('DA Permission', () => {
         'Interactions',
         'Evaluations',
         'Propositions',
-        'Audit history',
+        'Edit history',
         'Evidence',
       ])
     })
