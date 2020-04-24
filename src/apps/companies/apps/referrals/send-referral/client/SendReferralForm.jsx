@@ -6,7 +6,6 @@ import axios from 'axios'
 
 import SendReferralConfirmation from './SendReferralConfirmation'
 import LocalHeader from '../../../../../../client/components/LocalHeader.jsx'
-import Body from '../../../../../../client/components/Body.jsx'
 import styled from 'styled-components'
 import {
   SEND_REFERRAL_FORM__CONTINUE,
@@ -28,11 +27,12 @@ import {
   ErrorText,
   LabelText,
   TextArea,
+  Main,
+  InputField,
 } from 'govuk-react'
 import { companies, dashboard } from '../../../../../../lib/urls'
 
 import { MEDIA_QUERIES } from '@govuk-react/constants'
-import InputField from '@govuk-react/input-field'
 
 const StyledTextArea = styled(TextArea)({
   textarea: {
@@ -73,7 +73,7 @@ const SendReferralForm = ({
           { text: 'Send a referral' },
         ]}
       />
-      <Body>
+      <Main>
         <form
           onSubmit={(event) => {
             event.preventDefault()
@@ -205,7 +205,7 @@ const SendReferralForm = ({
             <Link href={cancelUrl}>Cancel</Link>
           </FormActions>
         </form>
-      </Body>
+      </Main>
     </>
   )
 }
