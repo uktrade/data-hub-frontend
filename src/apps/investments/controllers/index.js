@@ -1,6 +1,6 @@
 const create = require('./create')
 const archive = require('./archive')
-const audit = require('./audit')
+const editHistory = require('./edit-history')
 const details = require('./details')
 const documents = require('./documents')
 const edit = require('./edit')
@@ -11,10 +11,10 @@ const team = require('./team')
 module.exports = {
   create,
   archive,
-  audit,
   details,
   documents,
   edit,
+  editHistory,
   evaluation,
   propositions,
   team,

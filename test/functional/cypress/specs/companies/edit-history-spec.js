@@ -3,7 +3,7 @@ const {
   assertBreadcrumbs,
 } = require('../../support/assertions')
 const fixtures = require('../../fixtures')
-const { companyEditHistory } = require('../../../../selectors')
+const { editHistory } = require('../../../../selectors')
 const urls = require('../../../../../src/lib/urls')
 
 const assertChanges = (table, caption, beforeChange, afterChange) => {
@@ -42,7 +42,7 @@ describe('Edit History', () => {
 
   context('when viewing an address change', () => {
     it('should display the date when the update occurred and by whom', () => {
-      cy.get(companyEditHistory.change(1).updated).should(
+      cy.get(editHistory.change(1).updated).should(
         'have.text',
         'Updated on 10 Dec 2019, 5:58pm by Paul Gain'
       )
@@ -50,7 +50,7 @@ describe('Edit History', () => {
 
     it('should display the changes to "Address line 1"', () => {
       assertChanges(
-        companyEditHistory.change(1).table(2),
+        editHistory.change(1).table(2),
         'Address line 1',
         '14 Wharf Road',
         '16 Wharf Road'
@@ -59,7 +59,7 @@ describe('Edit History', () => {
 
     it('should display the changes to "Address line 2 (optional)"', () => {
       assertChanges(
-        companyEditHistory.change(1).table(3),
+        editHistory.change(1).table(3),
         'Address line 2 (optional)',
         'Not set',
         'Westminster'
@@ -68,7 +68,7 @@ describe('Edit History', () => {
 
     it('should display the changes to "Address town"', () => {
       assertChanges(
-        companyEditHistory.change(1).table(4),
+        editHistory.change(1).table(4),
         'Address town',
         'Brentwood',
         'London'
@@ -77,7 +77,7 @@ describe('Edit History', () => {
 
     it('should display the changes to "Address county"', () => {
       assertChanges(
-        companyEditHistory.change(1).table(5),
+        editHistory.change(1).table(5),
         'Address county',
         'Essex',
         'Greater London'
@@ -86,7 +86,7 @@ describe('Edit History', () => {
 
     it('should display the changes to "Address postcode"', () => {
       assertChanges(
-        companyEditHistory.change(1).table(6),
+        editHistory.change(1).table(6),
         'Address postcode',
         'CM14 4LQ',
         'SW1H 9AJ'
@@ -97,7 +97,7 @@ describe('Edit History', () => {
   context('when viewing a sector, region and description change', () => {
     it('should display the changes to "Business description (optional)"', () => {
       assertChanges(
-        companyEditHistory.change(2).table(2),
+        editHistory.change(2).table(2),
         'Business description (optional)',
         'Not set',
         'Superior editing services'
@@ -106,7 +106,7 @@ describe('Edit History', () => {
 
     it('should display the changes to "DIT sector"', () => {
       assertChanges(
-        companyEditHistory.change(2).table(3),
+        editHistory.change(2).table(3),
         'DIT sector',
         'Biotechnology and Pharmaceuticals',
         'Airports'
@@ -115,7 +115,7 @@ describe('Edit History', () => {
 
     it('should display the changes to "DIT region"', () => {
       assertChanges(
-        companyEditHistory.change(2).table(4),
+        editHistory.change(2).table(4),
         'DIT region',
         'South East',
         'London'
@@ -126,7 +126,7 @@ describe('Edit History', () => {
   context('when viewing a "Trading name" change', () => {
     it('should display the changes to "Trading name(s)"', () => {
       assertChanges(
-        companyEditHistory.change(3).table(2),
+        editHistory.change(3).table(2),
         'Trading name(s)',
         'Not set',
         'Edit History Enterprises'
@@ -136,7 +136,7 @@ describe('Edit History', () => {
 
   context('when the user does not have a first or last name', () => {
     it("should display the user's email address", () => {
-      cy.get(companyEditHistory.change(4).updated).should(
+      cy.get(editHistory.change(4).updated).should(
         'have.text',
         'Updated on 10 Dec 2019, 6:01pm by paul.gain@digital.trade.gov.uk'
       )
@@ -145,7 +145,7 @@ describe('Edit History', () => {
 
   context('when the user is null it must be an "Automatic update"', () => {
     it('should display that is was automatically updated', () => {
-      cy.get(companyEditHistory.change(5).updated).should(
+      cy.get(editHistory.change(5).updated).should(
         'have.text',
         'Automatically updated on 9 Jan 2020, 12:00am'
       )
@@ -153,7 +153,7 @@ describe('Edit History', () => {
 
     it('should update the turnover', () => {
       assertChanges(
-        companyEditHistory.change(5).table(2),
+        editHistory.change(5).table(2),
         'Turnover',
         '£1,800,000',
         '£1,400,000'
@@ -162,7 +162,7 @@ describe('Edit History', () => {
 
     it('should show whether or not the turnover was estimated', () => {
       assertChanges(
-        companyEditHistory.change(5).table(3),
+        editHistory.change(5).table(3),
         'Is turnover estimated',
         'Yes',
         'Not set'
@@ -171,7 +171,7 @@ describe('Edit History', () => {
 
     it('should show whether or not the number of employees was estimated', () => {
       assertChanges(
-        companyEditHistory.change(5).table(4),
+        editHistory.change(5).table(4),
         'Is number of employees estimated',
         'Not set',
         'Yes'
@@ -181,7 +181,7 @@ describe('Edit History', () => {
 
   context('when the user saves without making changes', () => {
     it('should display a message', () => {
-      cy.get(companyEditHistory.change(6).noChanges).should(
+      cy.get(editHistory.change(6).noChanges).should(
         'have.text',
         'No changes were made to business details in this update'
       )
@@ -191,7 +191,7 @@ describe('Edit History', () => {
   context('when the user updates "Number of employees (optional)"', () => {
     it('should display the number of employees', () => {
       assertChanges(
-        companyEditHistory.change(7).table(2),
+        editHistory.change(7).table(2),
         'Number of employees (optional)',
         '98771',
         '98772'
@@ -202,7 +202,7 @@ describe('Edit History', () => {
   context('when the user has unarchived a company', () => {
     it('should show the company is no longer archived', () => {
       assertChanges(
-        companyEditHistory.change(8).table(2),
+        editHistory.change(8).table(2),
         'Archived',
         'Archived',
         'Not Archived'
@@ -211,7 +211,7 @@ describe('Edit History', () => {
 
     it('should show the reason why it was unarchived', () => {
       assertChanges(
-        companyEditHistory.change(8).table(3),
+        editHistory.change(8).table(3),
         'Archived reason',
         'Archived by mistake',
         'Not set'
@@ -222,7 +222,7 @@ describe('Edit History', () => {
   context('when the user has archived a company', () => {
     it('should show the company is archived', () => {
       assertChanges(
-        companyEditHistory.change(9).table(2),
+        editHistory.change(9).table(2),
         'Archived',
         'Not Archived',
         'Archived'
@@ -231,7 +231,7 @@ describe('Edit History', () => {
 
     it('should show the reason why it was archived', () => {
       assertChanges(
-        companyEditHistory.change(9).table(3),
+        editHistory.change(9).table(3),
         'Archived reason',
         'Not set',
         'Company is dissolved'
@@ -242,7 +242,7 @@ describe('Edit History', () => {
   context('when a company becomes a "Global Ultimate"', () => {
     it('should display the changes to the "Global Ultimate Duns Number"', () => {
       assertChanges(
-        companyEditHistory.change(5).table(5),
+        editHistory.change(5).table(5),
         'Global Ultimate Duns Number',
         'Not set',
         '561652707'

@@ -38,7 +38,7 @@ describe('rendering Edit History', () => {
       )
     })
 
-    it('should render the add company form template with fields', () => {
+    it('should render the edit history template', () => {
       const expectedTemplate =
         'companies/apps/edit-history/views/client-container'
       expect(middlewareParams.resMock.render).to.be.calledOnceWithExactly(
@@ -71,30 +71,6 @@ describe('rendering Edit History', () => {
 
     it('should not call next() with an error', () => {
       expect(middlewareParams.nextSpy).to.not.have.been.called
-    })
-  })
-
-  context('when "Edit History" errors', async () => {
-    const middlewareParams = buildMiddlewareParameters({
-      company: companyMock,
-    })
-
-    middlewareParams.resMock.render.throws()
-
-    before(async () => {
-      await controller.renderEditHistory(
-        middlewareParams.reqMock,
-        middlewareParams.resMock,
-        middlewareParams.nextSpy
-      )
-    })
-
-    it('should not call render', () => {
-      expect(middlewareParams.resMock.render).to.be.thrown
-    })
-
-    it('should call next in the catch', () => {
-      expect(middlewareParams.nextSpy).to.be.calledOnce
     })
   })
 })
