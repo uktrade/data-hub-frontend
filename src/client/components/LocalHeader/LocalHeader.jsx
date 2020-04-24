@@ -69,6 +69,7 @@ LocalHeader.propTypes = {
 
 LocalHeader.defaultProps = {
   breadcrumbs: null,
+  flash: null,
   heading: null,
   children: null,
 }

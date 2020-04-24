@@ -4,9 +4,8 @@ const config = require('../../../../../config')
 const { transformCoreTeamToCollection } = require('../../../transformers')
 const { coreTeamLabels } = require('../../../labels')
 const { isItaTierDAccount } = require('../../../../../lib/is-tier-type-company')
-const { companies } = require('../../../../../../src/lib/urls')
 const { authorisedRequest } = require('../../../../../lib/authorised-request')
-const urls = require('../../../../../lib/urls')
+const { companies, dashboard } = require('../../../../../lib/urls')
 
 const companyToLeadITA = ({ one_list_group_global_account_manager: leadITA }) =>
   leadITA && {
@@ -19,32 +18,41 @@ function renderLeadAdvisers(req, res) {
   const {
     company,
     user: { permissions },
+    returnUrl,
+    dnbRelatedCompaniesCount,
   } = res.locals
   const { name, team, email } = companyToLeadITA(company) || {}
 
-  res
-    .breadcrumb(company.name, `${companies.detail(company.id)}`)
-    .breadcrumb('Lead adviser')
-    .render('companies/views/lead-advisers', {
-      props: {
-        hasAccountManager: !!company.one_list_group_global_account_manager,
-        name,
-        team,
-        email,
-        companyName: company.name,
-        companyId: company.id,
-        addUrl: companies.advisers.assign(company.id),
-        removeUrl: companies.advisers.remove(company.id),
-        hasPermissionToAddIta: permissions.includes(
-          'company.change_regional_account_manager'
-        ),
-      },
-    })
+  res.render('companies/views/lead-advisers', {
+    props: {
+      hasAccountManager: !!company.one_list_group_global_account_manager,
+      name,
+      team,
+      email,
+      companyName: company.name,
+      companyId: company.id,
+      addUrl: companies.advisers.assign(company.id),
+      removeUrl: companies.advisers.remove(company.id),
+      hasPermissionToAddIta: permissions.includes(
+        'company.change_regional_account_manager'
+      ),
+      company,
+      breadcrumbs: [
+        { link: dashboard(), text: 'Home' },
+        { link: companies.index(), text: 'Companies' },
+        { link: companies.detail(company.id), text: company.name },
+        { text: 'Lead adviser' },
+      ],
+      returnUrl,
+      dnbRelatedCompaniesCount,
+      flashMessages: { ...res.locals.getMessages(), ...req.flashWithBody },
+    },
+  })
 }
 
 async function renderCoreTeamAdvisers(req, res, next) {
   try {
-    const { company } = res.locals
+    const { company, returnUrl, dnbRelatedCompaniesCount } = res.locals
     const token = req.session.token
     const {
       global_account_manager: globalAccountManager,
@@ -67,15 +75,24 @@ async function renderCoreTeamAdvisers(req, res, next) {
     const coreTeam = await getOneListGroupCoreTeam(token, company.id).then(
       transformCoreTeamToCollection
     )
-    res
-      .breadcrumb(company.name, urls.companies.detail(company.id))
-      .breadcrumb('Advisers')
-      .render('companies/views/advisers', {
-        coreTeam,
-        columns,
-        oneListEmail: config.oneList.email,
-        companyName: company.name,
-      })
+    res.render('companies/views/advisers', {
+      coreTeam,
+      columns,
+      oneListEmail: config.oneList.email,
+      companyName: company.name,
+      props: {
+        company,
+        breadcrumbs: [
+          { link: dashboard(), text: 'Home' },
+          { link: companies.index(), text: 'Companies' },
+          { link: companies.detail(company.id), text: company.name },
+          { text: 'Core Team' },
+        ],
+        returnUrl,
+        dnbRelatedCompaniesCount,
+        flashMessages: { ...res.locals.getMessages(), ...req.flashWithBody },
+      },
+    })
   } catch (error) {
     next(error)
   }
@@ -94,7 +111,7 @@ const form = (req, res) => {
   const isRemove = req.url === '/remove'
   const currentLeadITA = companyToLeadITA(res.locals.company)
   res
-    .breadcrumb(name, urls.companies.detail(id))
+    .breadcrumb(name, companies.detail(id))
     .breadcrumb(
       isRemove
         ? 'Remove the Lead ITA'
@@ -106,7 +123,7 @@ const form = (req, res) => {
       props: {
         isRemove,
         currentLeadITA,
-        cancelUrl: urls.companies.advisers.index(id),
+        cancelUrl: companies.advisers.index(id),
       },
     })
 }
@@ -125,7 +142,7 @@ async function submit(req, res, next) {
     })
 
     req.flash('success', 'Lead adviser information updated')
-    res.redirect(urls.companies.advisers.index(id))
+    res.redirect(companies.advisers.index(id))
   } catch (error) {
     next(error)
   }

@@ -1,10 +1,11 @@
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
+const urls = require('../../../../../src/lib/urls')
 
 describe('Omis Create Required Fields', () => {
   before(() => {
     cy.visit(
-      `/omis/create/?company=${fixtures.company.withContacts.id}&skip-company=true`
+      `${urls.omis.create(fixtures.company.withContacts.id)}&skip-company=true`
     )
   })
 
@@ -62,15 +63,18 @@ describe('Omis Create Required Fields', () => {
 
 describe('Omis Archived Company', () => {
   before(() => {
-    cy.visit(`/companies/${fixtures.company.archivedLtd.id}/orders`)
+    cy.visit(urls.companies.orders(fixtures.company.archivedLtd.id))
   })
 
-  it('should not display orders tab for archived companies', () => {
-    cy.get(selectors.omisCreate.archivedMsg)
-      .should(
-        'contain',
-        'This company was archived on 6 July 2018 by John Rogers.'
-      )
-      .and('contain', 'Reason: Company is dissolved')
+  it('should display "Why can I not add an order?" message', () => {
+    cy.contains('Why can I not add an order?').click()
+    cy.contains(
+      'Orders cannot be added to an archived company. Click here to unarchive'
+    )
+    cy.contains('Click here to unarchive').should(
+      'have.attr',
+      'href',
+      urls.companies.unarchive(fixtures.company.archivedLtd.id)
+    )
   })
 })

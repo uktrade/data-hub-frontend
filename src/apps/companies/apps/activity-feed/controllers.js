@@ -1,22 +1,44 @@
 const { FILTER_ITEMS, FILTER_KEYS } = require('./constants')
 const { getGlobalUltimateHierarchy } = require('../../repos')
-const { companies } = require('../../../../lib/urls')
+const { companies, dashboard } = require('../../../../lib/urls')
 const { createESFilters } = require('./builders')
 const { fetchActivityFeed } = require('./repos')
 const config = require('../../../../config')
 
 async function renderActivityFeed(req, res, next) {
-  const { company, features, dnbHierarchyCount } = res.locals
+  const {
+    company,
+    features,
+    dnbHierarchyCount,
+    dnbRelatedCompaniesCount,
+  } = res.locals
 
   try {
     const contentProps = company.archived
-      ? {}
+      ? {
+          company,
+          breadcrumbs: [
+            { link: dashboard(), text: 'Home' },
+            { link: companies.index(), text: 'Companies' },
+            { link: companies.detail(company.id), text: company.name },
+            { text: 'Activity Feed' },
+          ],
+          flashMessages: { ...res.locals.getMessages(), ...req.flashWithBody },
+        }
       : {
-          companyId: company.id,
+          company,
+          breadcrumbs: [
+            { link: dashboard(), text: 'Home' },
+            { link: companies.index(), text: 'Companies' },
+            { link: companies.detail(company.id), text: company.name },
+            { text: 'Activity Feed' },
+          ],
+          flashMessages: res.locals.getMessages(),
           activityTypeFilter: FILTER_KEYS.dataHubActivity,
           activityTypeFilters: FILTER_ITEMS,
           isGlobalUltimate: company.is_global_ultimate,
           dnbHierarchyCount,
+          dnbRelatedCompaniesCount,
           isTypeFilterFlagEnabled:
             features['activity-feed-type-filter-enabled'],
           isGlobalUltimateFlagEnabled: features['companies-ultimate-hq'],
@@ -31,10 +53,7 @@ async function renderActivityFeed(req, res, next) {
       apiEndpoint: companies.activity.data(company.id),
     }
 
-    res
-      .breadcrumb(company.name, companies.detail(company.id))
-      .breadcrumb('Activity Feed')
-      .render('companies/apps/activity-feed/views/client-container', { props })
+    res.render('companies/apps/activity-feed/views/client-container', { props })
   } catch (error) {
     next(error)
   }

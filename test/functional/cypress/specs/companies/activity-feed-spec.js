@@ -1,79 +1,18 @@
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
-const { testBreadcrumbs } = require('../../support/assertions')
-const urls = require('../../../../../src/lib/urls')
+const { companies } = require('../../../../../src/lib/urls')
 
 describe('Company activity feed', () => {
-  const commonTests = ({
-    expectedHeading,
-    expectedAddress,
-    expectedCompanyId,
-    expectedActivitiesHeading,
-  }) => {
-    it('should display the heading', () => {
-      cy.get(selectors.localHeader().heading).should(
-        'have.text',
-        expectedHeading
-      )
-    })
-
-    it('should display the address', () => {
-      cy.get(selectors.localHeader().headingAfter).should(
-        'have.text',
-        expectedAddress
-      )
-    })
-
-    it('should display the "View full business details" link', () => {
-      const selector = selectors
-        .localHeader()
-        .viewFullBusinessDetailsLink(expectedCompanyId)
-      cy.get(selector).should('have.text', 'View full business details')
-    })
-
-    it('should display the local nav', () => {
-      cy.get(selectors.tabbedLocalNav().item(1)).should('have.text', 'Activity')
-      cy.get(selectors.tabbedLocalNav().item(2)).should(
-        'have.text',
-        'Company contacts'
-      )
-      cy.get(selectors.tabbedLocalNav().item(3)).should(
-        'have.text',
-        'Core team'
-      )
-      cy.get(selectors.tabbedLocalNav().item(4)).should(
-        'have.text',
-        'Investment'
-      )
-      cy.get(selectors.tabbedLocalNav().item(5)).should('have.text', 'Export')
-      cy.get(selectors.tabbedLocalNav().item(6)).should('have.text', 'Orders')
-    })
-
-    it('should display the "Activities" heading', () => {
-      cy.get(selectors.companyCollection().heading).should(
-        'have.text',
-        expectedActivitiesHeading
-      )
-    })
-  }
-
   context('when viewing Venus Ltd which has no activities', () => {
     before(() => {
-      cy.visit(urls.companies.activity.index(fixtures.company.venusLtd.id))
+      cy.visit(companies.activity.index(fixtures.company.venusLtd.id))
     })
 
-    testBreadcrumbs({
-      Home: '/',
-      Companies: '/companies',
-      'Venus Ltd': '/companies/0f5216e0-849f-11e6-ae22-56b6b6499611',
-      'Activity Feed': null,
-    })
-
-    commonTests({
-      expectedHeading: fixtures.company.venusLtd.name,
-      expectedAddress: '66 Marcham Road, Bordley, BD23 8RZ, United Kingdom',
-      expectedCompanyId: fixtures.company.venusLtd.id,
-      expectedActivitiesHeading: 'Activities',
+    it('should display the activity header', () => {
+      cy.get(selectors.companyCollection().heading).should(
+        'have.text',
+        'Activities'
+      )
     })
 
     it('should display "Add interaction" button', () => {
@@ -107,31 +46,20 @@ describe('Company activity feed', () => {
 
   context('when viewing activity feed for an archived company', () => {
     before(() => {
-      cy.visit(urls.companies.activity.index(fixtures.company.archivedLtd.id))
-    })
-
-    testBreadcrumbs({
-      Home: '/',
-      Companies: '/companies',
-      'Archived Ltd': '/companies/346f78a5-1d23-4213-b4c2-bf48246a13c3',
-      'Activity Feed': null,
-    })
-
-    commonTests({
-      expectedHeading: fixtures.company.archivedLtd.name,
-      expectedAddress: '16 Getabergsvagen, Geta, 22340, Malta',
-      expectedCompanyId: fixtures.company.archivedLtd.id,
-      expectedActivitiesHeading: '1 activity',
+      cy.visit(companies.activity.index(fixtures.company.archivedLtd.id))
     })
 
     it('should display the badge', () => {
-      cy.get(selectors.localHeader().badge(1)).should('have.text', 'Global HQ')
+      cy.get(selectors.companyLocalHeader().badge).should(
+        'have.text',
+        'Global HQ'
+      )
     })
 
     it('should display the One List tier', () => {
       const expected =
         'This is an account managed company (One List Tier A - Strategic Account)'
-      cy.get(selectors.localHeader().description.paragraph(1)).should(
+      cy.get(selectors.companyLocalHeader().description.paragraph(1)).should(
         'have.text',
         expected
       )
@@ -139,7 +67,7 @@ describe('Company activity feed', () => {
 
     it('should display the Global Account Manager', () => {
       const expected = 'Global Account Manager: Travis Greene View core team'
-      cy.get(selectors.localHeader().description.paragraph(2)).should(
+      cy.get(selectors.companyLocalHeader().description.paragraph(2)).should(
         'have.text',
         expected
       )
@@ -168,7 +96,7 @@ describe('Company activity feed', () => {
 
   context('when company has a DUNS number (is matched)', () => {
     before(() => {
-      cy.visit(urls.companies.activity.index(fixtures.company.dnbCorp.id))
+      cy.visit(companies.activity.index(fixtures.company.dnbCorp.id))
     })
 
     it('should not display the prompt for company matching', () => {
@@ -180,7 +108,7 @@ describe('Company activity feed', () => {
 
   context('when company does NOT have a DUNS number (is NOT matched)', () => {
     before(() => {
-      cy.visit(urls.companies.activity.index(fixtures.company.lambdaPlc.id))
+      cy.visit(companies.activity.index(fixtures.company.lambdaPlc.id))
     })
 
     it('should display the prompt for company matching', () => {
@@ -203,7 +131,7 @@ describe('Company activity feed', () => {
         .should(
           'have.attr',
           'href',
-          urls.companies.match.index(fixtures.company.lambdaPlc.id)
+          companies.match.index(fixtures.company.lambdaPlc.id)
         )
     })
 
@@ -221,7 +149,7 @@ describe('Company activity feed', () => {
   context('when company is pending D&B investigation', () => {
     before(() => {
       cy.visit(
-        urls.companies.activity.index(fixtures.company.investigationLimited.id)
+        companies.activity.index(fixtures.company.investigationLimited.id)
       )
     })
 

@@ -1,94 +1,11 @@
-{% from "details/macro.njk" import govukDetails %}
-
 {% extends "_layouts/template.njk" %}
 
-{% set action %}
-{% set queryString = "?returnUrl=" +  (returnUrl if returnUrl else "/companies/" + company.id) %}
-  <a href="/companies/{{ company.id }}/lists/add-remove{{ queryString }}"
-      class="govuk-button govuk-button--secondary">
-    Add to or remove from lists
-  </a>
-{% endset %}
-
 {% block local_header %}
-  {% call LocalHeader({
-    heading: company.name,
-    actions: action if user.permissions.includes('company_list.add_companylist'),
-    modifier: 'light-banner',
-    fullWidthContent: true
-  }) %}
-    <p class="c-local-header__heading-after">{{ company.address | formatAddress }}</p>
 
-    {% if company.isUltimate or company.isGlobalHQ %}
-      <div class="c-meta-list">
-        <div class="c-meta-list__item">
-          <span class="c-badge">{{ "Ultimate" if company.isUltimate else "Global" }} HQ</span>
-        </div>
-        <div class="c-meta-list__item">
-          {% if company.isUltimate %}
-            {{ govukDetails({
-              summaryText: 'What does this mean?',
-              text: 'This HQ is in control of all related company records for ' + company.name + '.',
-              classes: 'govuk-details--inline'
-            }) }}
-          {% endif %}
-        </div>
-      </div>
-    {% endif %}
-
-    {% if dnbRelatedCompaniesCount or company.hasManagedAccountDetails %}
-      <div class="c-local-header__description">
-        {% if dnbRelatedCompaniesCount %}
-          {% set link =  dnbRelatedCompaniesCount + ' other company ' + 'record' | pluralise(dnbRelatedCompaniesCount) %}
-          <p>
-            Data Hub contains
-            <a class="subsidiaries" href={{ urls.companies.dnbHierarchy.index(company.id) }}>
-              {{ link }}
-            </a>
-            related to this company
-          </p>
-        {% endif %}
-
-        {% if company.hasManagedAccountDetails %}
-          <p>This is an account managed company (One List {{ company.one_list_group_tier.name }})</p>
-          <p>
-            {{ "Lead ITA" if company.isItaTierDAccount else "Global Account Manager" }}: {{ company.one_list_group_global_account_manager.name }}
-            <a href={{ urls.companies.advisers.index(company.id) }}>{{ "View Lead adviser" if company.isItaTierDAccount else "View core team" }}</a>
-          </p>
-        {% endif %}
-      </div>
-    {% endif %}
-
-    <p>
-      <a href="/companies/{{ company.id }}/business-details">View full business details</a>
-    </p>
-  {% endcall %}
-
-  {% if company.archived %}
-    <div class="govuk-width-container govuk-!-margin-top-2">
-      {% call Message({ type: 'info ' }) %}
-        {% if company.archived_by %}
-          This company was archived on {{ company.archived_on | formatDate }}
-          by {{ company.archived_by.first_name }} {{ company.archived_by.last_name }}.
-        {% else %}
-          This company was automatically archived on {{ company.archived_on | formatDate }}.
-        {% endif %}
-        <br>
-        <strong>Reason:</strong> {{ company.archived_reason }}<br>
-        <br>
-        <a href="/companies/{{ company.id }}/unarchive">Unarchive</a>
-      {% endcall %}
-    </div>
-  {% endif %}
-
-  {% if company.pending_dnb_investigation %}
-    <div class="govuk-width-container govuk-!-margin-top-2">
-      {% call Message({ type: 'info ', element: 'div' }) %}
-        This company record is based on information that has not yet been validated. This information is currently
-        being checked by the Data Hub support team.
-      {% endcall %}
-    </div>
-  {% endif %}
+  {% component 'react-slot', {
+    id: 'company-local-header',
+    props: props
+  } %}
 
 {% endblock %}
 

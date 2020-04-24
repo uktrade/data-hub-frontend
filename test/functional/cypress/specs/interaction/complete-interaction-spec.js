@@ -220,13 +220,8 @@ describe('Complete interaction', () => {
         })
 
         it('should show the success message', () => {
-          cy.get(selectors.localHeader().flash).should(
-            'contain',
+          cy.get(selectors.companyLocalHeader().flash).contains(
             'The interaction has been updated'
-          )
-          cy.get(selectors.localHeader().flash).should(
-            'have.class',
-            'c-message--success'
           )
         })
 
@@ -265,13 +260,8 @@ describe('Complete interaction', () => {
         })
 
         it('should show the success message', () => {
-          cy.get(selectors.localHeader().flash).should(
-            'contain',
+          cy.get(selectors.companyLocalHeader().flash).contains(
             'The interaction has been updated'
-          )
-          cy.get(selectors.localHeader().flash).should(
-            'have.class',
-            'c-message--success'
           )
         })
 
@@ -356,13 +346,8 @@ describe('Complete interaction', () => {
           })
 
           it('should show the success message', () => {
-            cy.get(selectors.localHeader().flash).should(
-              'contain',
+            cy.get(selectors.companyLocalHeader().flash).contains(
               'The interaction has been updated'
-            )
-            cy.get(selectors.localHeader().flash).should(
-              'have.class',
-              'c-message--success'
             )
           })
 

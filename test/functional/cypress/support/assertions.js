@@ -310,6 +310,53 @@ const assertAriaTablistTabSelected = (tabListLabel, tabLabel) =>
     .getDhTablistTab(tabListLabel, tabLabel)
     .should('have.attr', 'aria-selected', 'true')
 
+const commonCompanyTests = ({
+  expectedHeading,
+  expectedAddress,
+  expectedCompanyId,
+  expectedActivitiesHeading,
+}) => {
+  it('should display the heading', () => {
+    cy.get(selectors.companyLocalHeader().heading).should(
+      'have.text',
+      expectedHeading
+    )
+  })
+
+  it('should display the address', () => {
+    cy.get(selectors.companyLocalHeader().headingAfter).should(
+      'have.text',
+      expectedAddress
+    )
+  })
+
+  it('should display the "View full business details" link', () => {
+    const selector = selectors
+      .companyLocalHeader()
+      .viewFullBusinessDetailsLink(expectedCompanyId)
+    cy.get(selector).should('have.text', 'View full business details')
+  })
+
+  it('should display the local nav', () => {
+    cy.get(selectors.tabbedLocalNav().item(1)).should('have.text', 'Activity')
+    cy.get(selectors.tabbedLocalNav().item(2)).should(
+      'have.text',
+      'Company contacts'
+    )
+    cy.get(selectors.tabbedLocalNav().item(3)).should('have.text', 'Core team')
+    cy.get(selectors.tabbedLocalNav().item(4)).should('have.text', 'Investment')
+    cy.get(selectors.tabbedLocalNav().item(5)).should('have.text', 'Export')
+    cy.get(selectors.tabbedLocalNav().item(6)).should('have.text', 'Orders')
+  })
+
+  it('should display the "Activities" heading', () => {
+    cy.get(selectors.companyCollection().heading).should(
+      'have.text',
+      expectedActivitiesHeading
+    )
+  })
+}
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
@@ -330,4 +377,5 @@ module.exports = {
   assertTabbedLocalNav,
   assertSummaryList,
   assertAriaTablistTabSelected,
+  commonCompanyTests,
 }

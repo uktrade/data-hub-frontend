@@ -321,9 +321,9 @@ describe('Send a referral form', () => {
           'contain',
           urls.companies.activity.index(fixtures.company.withContacts.id)
         )
-        cy.get(selectors.localHeader().flash).should('contain', 'Referral sent')
-        cy.contains('You can see all of your referrals on your Homepage')
-          .find('a')
+        cy.get(selectors.companyLocalHeader().flash).contains('Referral sent')
+        cy.contains('You can see all of your referrals on your Homepage.')
+          .contains('see all of your referrals on your Homepage')
           .should('have.attr', 'href', urls.companies.referrals.list())
       })
     }

@@ -135,9 +135,9 @@ const CompanyLocalHeader = ({
             )}
           </TypeWrapper>
         )}
-        {(dnbRelatedCompaniesCount || company.hasManagedAccountDetails) && (
+        {(dnbRelatedCompaniesCount > 0 || company.hasManagedAccountDetails) && (
           <StyledDescription data-auto-id="description">
-            {dnbRelatedCompaniesCount && (
+            {dnbRelatedCompaniesCount > 0 && (
               <p>
                 Data Hub contains{' '}
                 <a href={companies.dnbHierarchy.index(company.id)}>
@@ -177,7 +177,7 @@ const CompanyLocalHeader = ({
 
       {company.archived && (
         <StyledMain>
-          <StatusMessage>
+          <StatusMessage data-auto-id="archivedMessage">
             {company.archived_by
               ? `This company was archived on ${DateUtils.format(
                   company.archived_on
@@ -197,7 +197,7 @@ const CompanyLocalHeader = ({
       )}
 
       {company.pending_dnb_investigation && (
-        <StyledMain>
+        <StyledMain data-auto-id="investigationMessage">
           This company record is based on information that has not yet been
           validated. This information is currently being checked by the Data Hub
           support team.

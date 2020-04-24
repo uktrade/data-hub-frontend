@@ -298,8 +298,7 @@ describe('Match a company', () => {
           urls.companies.activity.index(fixtures.company.venusLtd.id)
         )
 
-        cy.get(selectors.localHeader().flash).should(
-          'contain.text',
+        cy.get(selectors.companyLocalHeader().flash).contains(
           'Verification request sent for third party review'
         )
       })
@@ -430,10 +429,10 @@ describe('Match a company', () => {
     })
 
     it('displays the "Business details verified" flash message and the ID used in GA', () => {
-      cy.contains(
+      cy.get(selectors.companyLocalHeader().flash).contains(
         'Business details verified.Thanks for helping to improve ' +
           'the quality of records on Data Hub!'
-      ).should('have.attr', 'id', 'message-company-matched')
+      )
     })
   })
 
@@ -534,8 +533,7 @@ describe('Match a company', () => {
     })
 
     it('displays the "Company record update request sent" flash message', () => {
-      cy.get(selectors.localHeader().flash).should(
-        'contain.text',
+      cy.get(selectors.companyLocalHeader().flash).contains(
         'Company merge requested. Thanks for keeping Data Hub running smoothly.'
       )
     })

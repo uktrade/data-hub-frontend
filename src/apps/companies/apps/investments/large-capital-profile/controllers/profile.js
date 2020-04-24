@@ -20,6 +20,7 @@ const {
 const { assetClassSectors } = require('../constants')
 const { getCompanyProfiles } = require('../repos')
 const { get } = require('lodash')
+const { companies, dashboard } = require('../../../../../../lib/urls')
 
 const getCompanyProfile = async (token, company, editing) => {
   const profiles = await getCompanyProfiles(token, company.id)
@@ -29,7 +30,7 @@ const getCompanyProfile = async (token, company, editing) => {
 
 const renderProfile = async (req, res, next) => {
   const { token } = req.session
-  const { company } = res.locals
+  const { company, returnUrl, dnbRelatedCompaniesCount } = res.locals
   const { editing } = req.query
 
   try {
@@ -144,7 +145,20 @@ const renderProfile = async (req, res, next) => {
 
     res.render(
       'companies/apps/investments/large-capital-profile/views/profile',
-      { profile }
+      {
+        profile,
+        props: {
+          company,
+          breadcrumbs: [
+            { link: dashboard(), text: 'Home' },
+            { link: companies.index(), text: 'Companies' },
+            { link: companies.detail(company.id), text: company.name },
+            { text: 'Investment' },
+          ],
+          returnUrl,
+          dnbRelatedCompaniesCount,
+        },
+      }
     )
   } catch (error) {
     next(error)

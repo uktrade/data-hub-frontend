@@ -445,6 +445,11 @@ Sandbox.define(
   'PATCH',
   v4Company.exportDetail
 )
+Sandbox.define(
+  '/v4/company/{companyId}/one-list-group-core-team',
+  'GET',
+  v4Company.getOneListGroupCoreTeam
+)
 
 // V4 DnB
 Sandbox.define('/v4/dnb/company-create', 'POST', v4Dnb.companyCreate)

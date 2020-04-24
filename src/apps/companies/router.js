@@ -106,7 +106,7 @@ router.get(
 )
 
 router.use(urls.companies.create.route, addCompanyFormRouter)
-router.use(urls.companies.lists.route, companyListsRouter)
+router.use(urls.companies.lists.index.route, companyListsRouter)
 router.use(urls.companies.edit.route, editCompanyFormRouter)
 router.use(urls.companies.editHistory.index.route, editHistoryRouter)
 

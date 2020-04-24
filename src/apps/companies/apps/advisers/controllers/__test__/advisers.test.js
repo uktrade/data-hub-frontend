@@ -1,7 +1,7 @@
 const buildMiddlewareParameters = require('../../../../../../../test/unit/helpers/middleware-parameters-builder.js')
 const config = require('../../../../../../config')
 const companyMock = require('../../../../../../../test/unit/data/companies/companies-house.json')
-const coreTeamMock = require('../../../../../../../test/unit/data/companies/one-list-group-core-team.json')
+const coreTeamMock = require('../../../../../../../test/sandbox/fixtures/v4/company/one-list-group-core-team.json')
 
 const { renderAdvisers } = require('../advisers')
 const { companies } = require('../../../../../../lib/urls')

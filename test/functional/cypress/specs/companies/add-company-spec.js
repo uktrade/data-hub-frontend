@@ -5,7 +5,7 @@
 const selectors = require('../../../../selectors')
 const fixtures = require('../../fixtures')
 const { assertBreadcrumbs } = require('../../support/assertions')
-const urls = require('../../../../../src/lib/urls')
+const { companies } = require('../../../../../src/lib/urls')
 
 describe('Add company form', () => {
   beforeEach(function() {
@@ -14,7 +14,7 @@ describe('Add company form', () => {
 
   context('when viewing the "Add company form"', () => {
     before(() => {
-      cy.visit('/companies/create')
+      cy.visit(companies.create())
     })
 
     it('should render breadcrumbs', () => {
@@ -275,17 +275,14 @@ describe('Add company form', () => {
                       .location('pathname')
                       .should(
                         'eq',
-                        urls.companies.activity.index(
+                        companies.activity.index(
                           fixtures.company.someOtherCompany.id
                         )
                       )
                   })
 
                   it('should display the flash message', () => {
-                    cy.get(selectors.localHeader().flash).should(
-                      'contain',
-                      'Company added to Data Hub'
-                    )
+                    cy.contains('Company added to Data Hub')
                   })
                 })
               }
@@ -300,7 +297,7 @@ describe('Add company form', () => {
     `when "I still can't find what I'm looking for" is clicked for a UK-based company`,
     () => {
       before(() => {
-        cy.visit('/companies/create')
+        cy.visit(companies.create())
         cy.get(selectors.companyAdd.form)
           .find('[type="radio"]')
           .check('GB')
@@ -439,10 +436,7 @@ describe('Add company form', () => {
             )
           })
           it('should display the flash message', () => {
-            cy.get(selectors.localHeader().flash).should(
-              'contain',
-              'Company added to Data Hub'
-            )
+            cy.contains('Company added to Data Hub')
           })
           it('should display the pending D&B investigation message', () => {
             cy.get(
@@ -458,7 +452,7 @@ describe('Add company form', () => {
     `when "I still can't find what I'm looking for" is clicked for an overseas country`,
     () => {
       before(() => {
-        cy.visit('/companies/create')
+        cy.visit(companies.create())
 
         cy.get(selectors.companyAdd.form)
           .find('[type="radio"]')
@@ -532,7 +526,7 @@ describe('Add company form', () => {
 
   context('when "UK" is selected for the company location', () => {
     before(() => {
-      cy.visit('/companies/create')
+      cy.visit(companies.create())
         .get(selectors.companyAdd.form)
         .find('[type="radio"]')
         .check('GB')
@@ -597,8 +591,7 @@ describe('Add company form', () => {
           'eq',
           `/companies/${fixtures.company.someOtherCompany.id}/activity`
         )
-        .get(selectors.localHeader().flash)
-        .should('contain', 'Company added to Data Hub')
+      cy.contains('Company added to Data Hub')
     })
   })
 })
