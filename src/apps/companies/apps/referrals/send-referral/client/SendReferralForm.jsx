@@ -3,19 +3,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { throttle } from 'lodash'
 import axios from 'axios'
-
-import SendReferralConfirmation from './SendReferralConfirmation'
-import LocalHeader from '../../../../../../client/components/LocalHeader.jsx'
 import styled from 'styled-components'
-import {
-  SEND_REFERRAL_FORM__CONTINUE,
-  SEND_REFERRAL_FORM__BACK,
-  SEND_REFERRAL_FORM__ERROR,
-  SEND_REFERRAL_FORM__SUBJECT_CHANGE,
-  SEND_REFERRAL_FORM__ADVISER_CHANGE,
-  SEND_REFERRAL_FORM__CONTACT_CHANGE,
-  SEND_REFERRAL_FORM__TEXTAREA_CHANGE,
-} from '../../../../../../client/actions'
 
 import { NewWindowLink, FormActions, Typeahead } from 'data-hub-components'
 import {
@@ -30,9 +18,20 @@ import {
   Main,
   InputField,
 } from 'govuk-react'
-import { companies, dashboard } from '../../../../../../lib/urls'
-
 import { MEDIA_QUERIES } from '@govuk-react/constants'
+
+import {
+  SEND_REFERRAL_FORM__CONTINUE,
+  SEND_REFERRAL_FORM__BACK,
+  SEND_REFERRAL_FORM__ERROR,
+  SEND_REFERRAL_FORM__SUBJECT_CHANGE,
+  SEND_REFERRAL_FORM__ADVISER_CHANGE,
+  SEND_REFERRAL_FORM__CONTACT_CHANGE,
+  SEND_REFERRAL_FORM__TEXTAREA_CHANGE,
+} from '../../../../../../client/actions'
+import SendReferralConfirmation from './SendReferralConfirmation'
+import LocalHeader from '../../../../../../client/components/LocalHeader'
+import { companies, dashboard } from '../../../../../../lib/urls'
 
 const StyledTextArea = styled(TextArea)({
   textarea: {
@@ -73,6 +72,7 @@ const SendReferralForm = ({
           { text: 'Send a referral' },
         ]}
       />
+
       <Main>
         <form
           onSubmit={(event) => {
