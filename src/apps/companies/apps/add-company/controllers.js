@@ -4,11 +4,15 @@ const { transformCountryToOptionWithIsoCode } = require('../../../transformers')
 const { fetchOrganisationTypes } = require('./repos')
 const { searchDnbCompanies } = require('../../../../modules/search/services')
 const { getOptions } = require('../../../../lib/options')
-const { transformToDnbCompanyInvestigationApi } = require('./transformers')
+const {
+  transformToSaveDnBCompanyInvestigation,
+  transformToCreateDnbCompanyInvestigation,
+} = require('./transformers')
 const {
   saveDnbCompany,
   updateCompany,
   saveDnbCompanyInvestigation,
+  createDnbCompanyInvestigation,
 } = require('../../repos')
 
 async function renderAddCompanyForm(req, res, next) {
@@ -70,14 +74,22 @@ async function postAddDnbCompany(req, res, next) {
 }
 
 async function postAddDnbCompanyInvestigation(req, res, next) {
+  const { token } = req.session
+  const { body } = req
+
   try {
-    const transformed = transformToDnbCompanyInvestigationApi(req.body)
-    const result = await saveDnbCompanyInvestigation(
-      req.session.token,
-      transformed
-    )
+    // 1. Saves a stubbed record in Data Hub.
+    // 2. Sends a single notification to request an investigation.
+    const save = transformToSaveDnBCompanyInvestigation(body)
+    const company = await saveDnbCompanyInvestigation(token, save)
+
+    // 1. Creates a record which is proxied through to the DnB Service.
+    // 2. Generates an excel spreadsheet for the support team to investigate.
+    const create = transformToCreateDnbCompanyInvestigation(body, company.id)
+    await createDnbCompanyInvestigation(token, create)
+
     req.flash('success', 'Company added to Data Hub')
-    res.json(result)
+    res.json(company)
   } catch (error) {
     next(error)
   }

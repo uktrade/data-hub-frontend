@@ -1,12 +1,15 @@
-const { transformToDnbCompanyInvestigationApi } = require('../transformers')
+const {
+  transformToSaveDnBCompanyInvestigation,
+  transformToCreateDnbCompanyInvestigation,
+} = require('../transformers')
 
 describe('Companies add company transformers', () => {
-  describe('#transformToDnbCompanyInvestigationApi', () => {
+  describe('#transformToSaveDnBCompanyInvestigation', () => {
     context('when all fields are populated', () => {
       let actual
 
       beforeEach(() => {
-        actual = transformToDnbCompanyInvestigationApi({
+        actual = transformToSaveDnBCompanyInvestigation({
           business_type: '1',
           name: 'name',
           website: 'website',
@@ -48,7 +51,7 @@ describe('Companies add company transformers', () => {
       let actual
 
       beforeEach(() => {
-        actual = transformToDnbCompanyInvestigationApi({
+        actual = transformToSaveDnBCompanyInvestigation({
           business_type: '1',
           name: 'name',
           website: 'website',
@@ -82,6 +85,42 @@ describe('Companies add company transformers', () => {
           telephone_number: '123',
           uk_region: '2',
           website: 'website',
+        })
+      })
+    })
+  })
+
+  describe('#transformToCreateDnbCompanyInvestigation', () => {
+    context('when all fields are populated', () => {
+      let actual = transformToCreateDnbCompanyInvestigation(
+        {
+          name: 'name',
+          website: 'website',
+          telephone_number: '123',
+          address1: 'line 1',
+          address2: 'line 2',
+          city: 'town',
+          county: 'county',
+          postcode: 'postcode',
+          country: 'country',
+        },
+        '123'
+      )
+
+      it('should transform the request body', () => {
+        expect(actual).to.deep.equal({
+          company: '123',
+          name: 'name',
+          website: 'website',
+          telephone_number: '123',
+          address: {
+            line_1: 'line 1',
+            line_2: 'line 2',
+            town: 'town',
+            county: 'county',
+            postcode: 'postcode',
+            country: 'country',
+          },
         })
       })
     })

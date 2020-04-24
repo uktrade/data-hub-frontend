@@ -5,6 +5,7 @@ var companyChangeRequest = require('../../../fixtures/v4/dnb/company-change-requ
 var companySearchMatched = require('../../../fixtures/v4/dnb/company-search-matched.json')
 var companySearchNotMatched = require('../../../fixtures/v4/dnb/company-search-not-matched.json')
 var companyCreateInvestigation = require('../../../fixtures/v4/dnb/company-create-investigation.json')
+var companyInvestigation = require('../../../fixtures/v4/dnb/company-investigation.json')
 
 exports.companyCreate = function(req, res) {
   if (req.body.duns_number === '111111111') {
@@ -23,6 +24,10 @@ exports.companySearch = function(req, res) {
 
 exports.companyCreateInvestigation = function(req, res) {
   res.json(companyCreateInvestigation)
+}
+
+exports.companyInvestigation = function(req, res) {
+  res.json(companyInvestigation)
 }
 
 exports.companyLink = function(req, res) {
