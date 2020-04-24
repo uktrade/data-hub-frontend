@@ -92,24 +92,20 @@ describe('Companies add company transformers', () => {
 
   describe('#transformToCreateDnbCompanyInvestigation', () => {
     context('when all fields are populated', () => {
-      let actual
-
-      beforeEach(() => {
-        actual = transformToCreateDnbCompanyInvestigation(
-          {
-            name: 'name',
-            website: 'website',
-            telephone_number: '123',
-            address1: 'line 1',
-            address2: 'line 2',
-            city: 'town',
-            county: 'county',
-            postcode: 'postcode',
-            country: 'country',
-          },
-          '123'
-        )
-      })
+      let actual = transformToCreateDnbCompanyInvestigation(
+        {
+          name: 'name',
+          website: 'website',
+          telephone_number: '123',
+          address1: 'line 1',
+          address2: 'line 2',
+          city: 'town',
+          county: 'county',
+          postcode: 'postcode',
+          country: 'country',
+        },
+        '123'
+      )
 
       it('should transform the request body', () => {
         expect(actual).to.deep.equal({
