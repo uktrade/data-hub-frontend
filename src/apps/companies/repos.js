@@ -122,6 +122,14 @@ function saveDnbCompanyInvestigation(token, company) {
   })
 }
 
+function createDnbCompanyInvestigation(token, body) {
+  return authorisedRequest(token, {
+    body,
+    url: `${config.apiRoot}/v4/dnb/company-investigation`,
+    method: 'POST',
+  })
+}
+
 function saveCompanyExportDetails(token, companyId, body) {
   return authorisedRequest(token, {
     body,
@@ -167,6 +175,7 @@ module.exports = {
   getOneListGroupCoreTeam,
   saveDnbCompany,
   saveDnbCompanyInvestigation,
+  createDnbCompanyInvestigation,
   saveCompanyExportDetails,
   linkDataHubCompanyToDnBCompany,
   createDnbChangeRequest,

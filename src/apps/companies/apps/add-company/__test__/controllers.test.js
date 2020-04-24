@@ -326,24 +326,39 @@ describe('Add company form controllers', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
           .post('/v4/dnb/company-create-investigation', {
+            name: 'name',
+            telephone_number: '123',
+            website: 'website',
+            business_type: '1',
+            sector: '3',
+            uk_region: '2',
             address: {
+              line_1: 'line 1',
+              line_2: '',
+              town: 'town',
+              county: '',
+              postcode: 'postcode',
               country: {
                 id: 'country',
               },
-              county: '',
-              line_1: 'line 1',
-              line_2: '',
-              postcode: 'postcode',
-              town: 'town',
             },
-            business_type: '1',
-            name: 'name',
-            sector: '3',
-            telephone_number: '123',
-            uk_region: '2',
-            website: 'website',
           })
           .reply(200, companyCreateInvestigationResponse)
+          .post('/v4/dnb/company-investigation', {
+            company: 'ca8fae21-2895-47cf-90ba-9273c94dab81',
+            name: 'name',
+            website: 'website',
+            telephone_number: '123',
+            address: {
+              line_1: 'line 1',
+              line_2: '',
+              town: 'town',
+              county: '',
+              postcode: 'postcode',
+              country: 'country',
+            },
+          })
+          .reply(200, {})
 
         middlewareParameters = buildMiddlewareParameters({
           requestBody: {
