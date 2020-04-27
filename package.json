@@ -198,7 +198,7 @@
     "html": "^1.0.0",
     "istanbul": "^0.4.5",
     "istanbul-lib-coverage": "^2.0.5",
-    "js-beautify": "^1.7.5",
+    "js-beautify": "^1.11.0",
     "jsdom": "^11.11.0",
     "jsdom-global": "^3.0.2",
     "lint-staged": "^10.1.2",
