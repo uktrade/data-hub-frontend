@@ -300,8 +300,7 @@ describe('Match a company', () => {
 
         cy.get(selectors.localHeader().flash).should(
           'contain.text',
-          'Verification request sent.Once verified, the below message' +
-            ' asking you to verify the business details will disappear.'
+          'Verification request sent for third party review'
         )
       })
     }

@@ -1,13 +1,16 @@
 const { get, isEmpty, pick } = require('lodash')
 
 const { searchDnbCompanies } = require('../../../../modules/search/services')
-const { linkDataHubCompanyToDnBCompany } = require('../../repos')
+const {
+  linkDataHubCompanyToDnBCompany,
+  createDnbCompanyInvestigation,
+} = require('../../repos')
+const { transformToDnbInvestigation } = require('./transformers')
 const { getOptions } = require('../../../../lib/options')
 const { postToZenDesk } = require('../../../support/services')
 const urls = require('../../../../lib/urls')
 const url = require('url')
 
-const ZENDESK_TICKET_TAG_NEW_RECORD_REQUEST = 'dnb_new_record_request'
 const ZENDESK_TICKET_TAG_MERGE_REQUEST = 'dnb_merge_request'
 const ZENDESK_TICKET_TYPE_TASK = 'task'
 
@@ -199,41 +202,22 @@ async function renderCannotFindMatch(req, res, next) {
 
 async function submitNewDnbRecordRequest(req, res, next) {
   try {
-    const ticket = createNewDnbRecordRequestMessage(req, res)
-    const result = await postToZenDesk(ticket)
+    const { company } = res.locals
+    const { website, telephone_number } = req.body
+    const { token } = req.session
 
-    req.flashWithBody(
-      'success',
-      'Verification request sent.',
-      'Once verified, the below message asking you to verify ' +
-        'the business details will disappear.'
+    const transformed = transformToDnbInvestigation(
+      company,
+      website,
+      telephone_number
     )
-    res.json({ message: 'OK', ticket: get(result, 'data.ticket.id') })
+
+    const dnbResponse = await createDnbCompanyInvestigation(token, transformed)
+
+    req.flash('success', 'Verification request sent for third party review')
+    res.json(dnbResponse)
   } catch (error) {
     next(error)
-  }
-}
-
-function createNewDnbRecordRequestMessage(req, res) {
-  const { company, user } = res.locals
-  const { address, website, telephoneNumber } = req.body
-  const dataHubCompanyUrl = getCompanyAbsoluteUrl(req, company.id)
-
-  const messageBody =
-    `User ${user.name} cannot match ${company.name}, ${address} (${dataHubCompanyUrl}) to a D&B company. ` +
-    ` They have provided a website URL: ${website} and or a telephone number: ${telephoneNumber}. `
-
-  return {
-    type: ZENDESK_TICKET_TYPE_TASK,
-    requester: {
-      name: `Data Hub user - ${user.name}`,
-      email: user.email,
-    },
-    subject: `New D&B record request for ${company.name}`,
-    comment: {
-      body: messageBody,
-    },
-    tags: [ZENDESK_TICKET_TAG_NEW_RECORD_REQUEST],
   }
 }
 

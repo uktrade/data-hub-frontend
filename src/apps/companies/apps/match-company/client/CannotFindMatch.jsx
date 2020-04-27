@@ -34,9 +34,8 @@ async function onFormSubmit(values, csrfToken) {
   const url = urls.companies.match.cannotFind(values.companyId)
   await axios.post(url, {
     _csrf: csrfToken,
-    address: values.address,
     website: values.website,
-    telephoneNumber: values.telephoneNumber,
+    telephone_number: values.telephoneNumber,
   })
   return urls.companies.detail(values.companyId)
 }
