@@ -1,3 +1,5 @@
+const queryString = require('qs')
+
 function getTokens(path) {
   const tokens = []
   const parts = path.split('/')
@@ -11,22 +13,24 @@ function getTokens(path) {
   return tokens
 }
 
-function getPath(path, tokens, params) {
+function getPath(mountPoint, path, tokens, params) {
   if (path === '/') {
-    return ''
+    return mountPoint
   }
 
-  tokens.forEach((token, index) => {
-    const value = params[index]
-
-    if (typeof value !== 'undefined') {
-      path = path.replace(token, value)
-    } else {
-      path = path.replace('/' + token, '')
-    }
-  })
-
-  return path
+  return []
+    .concat(params)
+    .reduce((acc, param, index) => {
+      if (param && param.constructor === Object) {
+        return (
+          acc + (acc.includes('?') ? '&' : '?') + queryString.stringify(param)
+        )
+      } else if (tokens[index]) {
+        return acc.replace(tokens[index], param)
+      }
+      return acc
+    }, mountPoint + path)
+    .replace(/\/:\w+\?\//, '/')
 }
 
 function url(mountPoint, subMountPoint, path) {
@@ -42,7 +46,7 @@ function url(mountPoint, subMountPoint, path) {
   const tokens = getTokens(tokenPath)
 
   function getUrl(...params) {
-    return mountPoint + getPath(tokenPath, tokens, params)
+    return getPath(mountPoint, tokenPath, tokens, params)
   }
 
   getUrl.mountPoint = mountPoint
@@ -86,7 +90,7 @@ module.exports = {
     orders: url('/companies', '/:companyId/orders'),
     details: url('/companies', '/:companyId/details'),
     archive: url('/companies', '/:companyId/archive'),
-    contacts: url('companies', '/:companyId/contacts'),
+    contacts: url('/companies', '/:companyId/contacts'),
     unarchive: url('/companies', '/:companyId/unarchive'),
     documents: url('/companies', '/:companyId/documents'),
     businessDetails: url('/companies', '/:companyId/business-details'),
