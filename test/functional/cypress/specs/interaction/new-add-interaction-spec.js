@@ -163,6 +163,7 @@ function fillCommonFields(service) {
 
   cy.contains(ELEMENT_CONTACT.label)
     .next()
+    .next()
     .selectTypeaheadOption('Johnny Cakeman')
 
   cy.contains(ELEMENT_SUBJECT.label)
@@ -217,13 +218,86 @@ function fillExportCountriesFields() {
 describe('Add interaction form', () => {
   const company = fixtures.company.venusLtd
 
+  context('when a contact does not exists and user wants to add one', () => {
+    beforeEach(() => {
+      cy.visit(urls.interactions.create({ company: company.id }))
+
+      cy.contains('label', 'Export').click()
+      cy.contains('label', 'A standard interaction').click()
+      cy.contains('button', 'Continue').click()
+    })
+
+    after(() => {
+      window.sessionStorage.clear()
+    })
+
+    it('should redirect the user back to the interaction form after the contact is added', () => {
+      cy.contains(ELEMENT_SUBJECT.label)
+        .next()
+        .find('input')
+        .type('Test if values is restored')
+
+      cy.contains('a', 'add a new contact').click()
+
+      cy.contains('a', 'Cancel').should(
+        'have.attr',
+        'href',
+        urls.interactions.create({ company: company.id })
+      )
+
+      cy.contains('div', 'First name')
+        .find('input')
+        .type('John')
+      cy.contains('div', 'Last name')
+        .find('input')
+        .type('Doe')
+      cy.contains('div', 'Job title')
+        .find('input')
+        .type('Full-stack dev')
+      cy.contains('fieldset', 'Is this person a primary contact?')
+        .contains('label', 'Yes')
+        .click()
+      cy.contains('div', 'Telephone country code')
+        .find('input')
+        .type('+44')
+      cy.contains('div', 'Telephone number')
+        .find('input')
+        .type('123 567 789')
+      cy.contains('div', 'Email')
+        .find('input')
+        .type('john@example.com')
+      cy.contains(
+        'fieldset',
+        'Is the contact’s address the same as the company address?'
+      )
+        .contains('label', 'Yes')
+        .click()
+      cy.contains('button', 'Add contact').click()
+
+      cy.url().should(
+        'include',
+        urls.interactions.create({ company: company.id })
+      )
+
+      cy.contains(ELEMENT_SUBJECT.label)
+        .next()
+        .find('input')
+        .should('have.attr', 'value', 'Test if values is restored')
+
+      cy.get('.c-message--success').should(
+        'contain',
+        'You added Json Russel.You can now continue recording the interaction.'
+      )
+    })
+  })
+
   context('when viewing the form', () => {
     beforeEach(() => {
       cy.server()
       cy.route('POST', '/api-proxy/v3/interaction').as(
         'createInteractionRequest'
       )
-      cy.visit(urls.interactions.create() + `?company_id=${company.id}`)
+      cy.visit(urls.interactions.create({ company: company.id }))
     })
 
     describeBreadcrumbs(company)
@@ -249,7 +323,7 @@ describe('Add interaction form', () => {
       cy.route('POST', '/api-proxy/v3/interaction').as(
         'createInteractionRequest'
       )
-      cy.visit(urls.interactions.create() + `?company_id=${company.id}`)
+      cy.visit(urls.interactions.create({ company: company.id }))
 
       cy.contains('label', 'Export').click()
       cy.contains('label', 'A standard interaction').click()
@@ -356,7 +430,7 @@ describe('Add interaction form', () => {
       cy.route('POST', '/api-proxy/v3/interaction').as(
         'createInteractionRequest'
       )
-      cy.visit(urls.interactions.create() + `?company_id=${company.id}`)
+      cy.visit(urls.interactions.create({ company: company.id }))
 
       cy.contains('label', 'Export').click()
       cy.contains('label', 'A service that you have provided').click()
@@ -487,7 +561,7 @@ describe('Add interaction form', () => {
       cy.route('POST', '/api-proxy/v3/interaction').as(
         'createInteractionRequest'
       )
-      cy.visit(urls.interactions.create() + `?company_id=${company.id}`)
+      cy.visit(urls.interactions.create({ company: company.id }))
 
       cy.contains('label', 'Investment').click()
       cy.contains('button', 'Continue').click()

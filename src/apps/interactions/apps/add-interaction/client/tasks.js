@@ -1,8 +1,9 @@
 import axios from 'axios'
 
 import { INTERACTION_STATUS } from '../../../constants'
+import { EXPORT_INTEREST_STATUS_VALUES, OPTION_NO } from '../../../../constants'
+import { ID as STORE_ID } from './state'
 import getInteractionKind from './utils'
-import { EXPORT_INTEREST_STATUS_VALUES } from '../../../../constants'
 
 function transformOption(option) {
   if (!option || !option.value) {
@@ -19,7 +20,7 @@ function transformArrayOfOptions(options) {
 }
 
 function transformExportCountries(values) {
-  if (values.were_countries_discussed === 'no') {
+  if (values.were_countries_discussed === OPTION_NO) {
     return
   }
   return EXPORT_INTEREST_STATUS_VALUES.filter(
@@ -48,7 +49,24 @@ function transformServiceAnswers(values) {
   )
 }
 
+export function openContactForm({ values, url }) {
+  window.sessionStorage.setItem(
+    STORE_ID,
+    JSON.stringify({
+      values,
+      currentStep: 1,
+    })
+  )
+  window.location.href = url
+}
+
+export function restoreState() {
+  const stateFromStorage = window.sessionStorage.getItem(STORE_ID)
+  return stateFromStorage ? JSON.parse(stateFromStorage) : {}
+}
+
 export function createInteraction({ values, companyId }) {
+  window.sessionStorage.removeItem(STORE_ID)
   return axios.post(`/api-proxy/v3/interaction`, {
     ...values,
     company: {

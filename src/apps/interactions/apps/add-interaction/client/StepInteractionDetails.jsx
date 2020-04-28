@@ -1,5 +1,6 @@
 import React from 'react'
 import { H3 } from '@govuk-react/heading'
+import Link from '@govuk-react/link'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import { throttle } from 'lodash'
@@ -25,9 +26,12 @@ import {
 import {
   EXPORT_INTEREST_STATUS,
   EXPORT_INTEREST_STATUS_VALUES,
+  OPTION_YES,
+  OPTIONS_YES_NO,
 } from '../../../../constants'
 
 import getInteractionKind from './utils'
+import urls from '../../../../../lib/urls'
 
 const getServiceContext = (values) => {
   switch (values.theme) {
@@ -62,14 +66,8 @@ const validatedDuplicatedCountries = (countries, field, { values }) =>
     ? 'A country that was discussed cannot be entered in multiple fields'
     : null
 
-const OPTION_YES = 'yes'
-const OPTION_NO = 'no'
-const OPTIONS_YES_NO = [
-  { label: 'Yes', value: OPTION_YES },
-  { label: 'No', value: OPTION_NO },
-]
-
 const StepInteractionDetails = ({
+  companyId,
   contacts,
   defaultAdviser,
   services,
@@ -79,6 +77,7 @@ const StepInteractionDetails = ({
   communicationChannels,
   countries,
   activeEvents,
+  onOpenContactForm,
 }) => {
   const { values = {} } = useFormContext()
 
@@ -147,6 +146,20 @@ const StepInteractionDetails = ({
         required="Select at least one contact"
         options={contacts}
         isMulti={true}
+        hint={
+          <>
+            If the contact you are looking for is not listed you can{' '}
+            <Link
+              onClick={onOpenContactForm}
+              href={urls.contacts.create(companyId, {
+                from_interaction: true,
+              })}
+            >
+              add a new contact
+            </Link>
+            .
+          </>
+        }
       />
 
       <FieldTypeahead
@@ -173,7 +186,6 @@ const StepInteractionDetails = ({
           500
         )}
         initialValue={[defaultAdviser]}
-        defaultValue={[defaultAdviser]}
         isMulti={true}
       />
 
@@ -328,6 +340,7 @@ const typeaheadOptionProp = PropTypes.shape({
 const typeaheadOptionsListProp = PropTypes.arrayOf(typeaheadOptionProp)
 
 StepInteractionDetails.propTypes = {
+  companyId: PropTypes.string.isRequired,
   defaultAdviser: typeaheadOptionProp.isRequired,
   services: typeaheadOptionsListProp.isRequired,
   serviceDeliveryStatuses: typeaheadOptionsListProp.isRequired,
