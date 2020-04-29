@@ -99,7 +99,7 @@
       error: errors.messages.number_safeguarded_jobs
     }) }}
 
-    {% if investment.investment_type.name == 'FDI' %}
+    {% if projectValueNeeded and investment.investment_type.name == 'FDI' %}
       {{ MultipleChoiceField({
         name: 'fdi_value',
         label: form.labels.fdi_value,
