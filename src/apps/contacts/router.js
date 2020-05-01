@@ -27,10 +27,7 @@ const { archiveContact, unarchiveContact } = require('./controllers/archive')
 const { renderDocuments } = require('./controllers/documents')
 const { getAudit } = require('./controllers/audit')
 
-const {
-  setInteractionsDetails,
-  setCompanyDetails,
-} = require('./middleware/interactions')
+const { setInteractionsDetails } = require('./middleware/interactions')
 
 const { transformContactToListItem } = require('./transformers')
 
@@ -79,9 +76,8 @@ router.get('/:contactId/audit', getAudit)
 router.get('/:contactId/documents', renderDocuments)
 
 router.use(
-  '/:contactId',
+  urls.contacts.interactions.index.route,
   setInteractionsDetails,
-  setCompanyDetails,
   interactionsRouter
 )
 

@@ -69,9 +69,7 @@ describe('Interaction details', () => {
     it('should not render the "Edit interaction" button', () => {
       cy.get(
         selectors.interaction.details.interaction.actions.editInteraction(
-          params,
-          'other',
-          'service-delivery'
+          params
         )
       ).should('not.be.visible')
     })
@@ -136,9 +134,7 @@ describe('Interaction details', () => {
     it('should not render the "Edit interaction" button', () => {
       cy.get(
         selectors.interaction.details.interaction.actions.editInteraction(
-          params,
-          'other',
-          'service-delivery'
+          params
         )
       ).should('not.be.visible')
     })
@@ -203,9 +199,7 @@ describe('Interaction details', () => {
     it('should not render the "Edit interaction" button', () => {
       cy.get(
         selectors.interaction.details.interaction.actions.editInteraction(
-          params,
-          'other',
-          'service-delivery'
+          params
         )
       ).should('not.be.visible')
     })
@@ -275,9 +269,7 @@ describe('Interaction details', () => {
 
     it('should render the "Edit interaction" button', () => {
       const editInteraction = selectors.interaction.details.interaction.actions.editInteraction(
-        params,
-        'other',
-        'service-delivery'
+        params
       )
       cy.get(editInteraction).should('be.visible')
       cy.get(editInteraction).should('have.text', 'Edit service delivery')
@@ -349,9 +341,7 @@ describe('Interaction details', () => {
 
     it('should render the "Edit interaction" button', () => {
       const editInteraction = selectors.interaction.details.interaction.actions.editInteraction(
-        params,
-        'other',
-        'interaction'
+        params
       )
       cy.get(editInteraction).should('be.visible')
       cy.get(editInteraction).should('have.text', 'Edit interaction')

@@ -1,7 +1,6 @@
 import React from 'react'
 import { H3 } from '@govuk-react/heading'
 import Link from '@govuk-react/link'
-import moment from 'moment'
 import PropTypes from 'prop-types'
 import { throttle } from 'lodash'
 import axios from 'axios'
@@ -32,7 +31,11 @@ import {
 
 import urls from '../../../../../lib/urls'
 
-const getServiceContext = (theme, kind) => {
+const getServiceContext = (theme, kind, investmentProject) => {
+  if (investmentProject) {
+    return SERVICE_CONTEXTS.INVESTMENT_PROJECT_INTERACTION
+  }
+
   const mapping = {
     [THEMES.EXPORT]: {
       [KINDS.INTERACTION]: SERVICE_CONTEXTS.EXPORT_INTERACTION,
@@ -50,8 +53,8 @@ const getServiceContext = (theme, kind) => {
 
 const isTapService = (service) => service?.label?.includes('(TAP)')
 
-const filterServices = (services, theme, kind) =>
-  services.filter((s) => s.contexts.includes(getServiceContext(theme, kind)))
+const filterServices = (services, serviceContext) =>
+  services.filter((s) => s.contexts.includes(serviceContext))
 
 const validateRequiredCountries = (countries, field, { values }) =>
   !EXPORT_INTEREST_STATUS_VALUES.some((status) => values[status])
@@ -71,7 +74,6 @@ const validatedDuplicatedCountries = (countries, field, { values }) =>
 const StepInteractionDetails = ({
   companyId,
   contacts,
-  defaultValues,
   services,
   serviceDeliveryStatuses,
   policyAreas,
@@ -82,16 +84,14 @@ const StepInteractionDetails = ({
   onOpenContactForm,
 }) => {
   const { values = {} } = useFormContext()
-
-  const today = moment()
-  const theme = defaultValues.theme || values.theme
-  const kind = defaultValues.kind || values.kind
-
-  const filteredServices = filterServices(services, theme, kind)
+  const filteredServices = filterServices(
+    services,
+    getServiceContext(values.theme, values.kind, values.investment_project)
+  )
   const selectedService = services.find(
     (s) => s.value === values.service?.value
   )
-  const isServiceDelivery = kind === KINDS.SERVICE_DELIVERY
+  const isServiceDelivery = values.kind === KINDS.SERVICE_DELIVERY
 
   return (
     <>
@@ -166,9 +166,10 @@ const StepInteractionDetails = ({
       />
 
       <FieldTypeahead
-        name="advisers"
+        name="dit_participants"
         label="Adviser(s)"
         placeholder="-- Select adviser --"
+        noOptionsMessage={() => 'Type to search for advisers'}
         required="Select at least one adviser"
         loadOptions={throttle(
           (searchString) =>
@@ -188,7 +189,6 @@ const StepInteractionDetails = ({
               ),
           500
         )}
-        initialValue={defaultValues.advisers}
         isMulti={true}
       />
 
@@ -198,11 +198,6 @@ const StepInteractionDetails = ({
         name="date"
         label="Date of interaction"
         required="Enter a valid date"
-        initialValue={{
-          day: today.format('DD'),
-          month: today.format('MM'),
-          year: today.format('YYYY'),
-        }}
       />
 
       {!isServiceDelivery && (
@@ -280,7 +275,7 @@ const StepInteractionDetails = ({
         </>
       )}
 
-      {values.theme !== THEMES.INVESTMENT && (
+      {!values.id && values.theme !== THEMES.INVESTMENT && (
         <>
           <FieldRadios
             inline={true}
@@ -344,7 +339,6 @@ const typeaheadOptionsListProp = PropTypes.arrayOf(typeaheadOptionProp)
 
 StepInteractionDetails.propTypes = {
   companyId: PropTypes.string.isRequired,
-  defaultValues: PropTypes.object,
   services: typeaheadOptionsListProp.isRequired,
   serviceDeliveryStatuses: typeaheadOptionsListProp.isRequired,
   policyAreas: typeaheadOptionsListProp.isRequired,

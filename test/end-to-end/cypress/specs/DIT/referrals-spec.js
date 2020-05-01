@@ -54,12 +54,13 @@ describe('Referrals', () => {
       cy.get(selectors.tabbedNav().item(2)).click()
       cy.selectDhTablistTab('Dashboard', 'My referrals').within(() => {
         cy.get('select').select('Sent referrals')
-        cy.contains('h3', '1 sent referral')
+        cy.contains('h3', 'sent referral')
           .parent()
           .parent()
           .find('ol li')
           .should('contain', 'Lambda plc')
           .find('h3 a')
+          .last()
           .should('contain', 'Example subject')
           .click()
       })
@@ -75,20 +76,21 @@ describe('Referrals', () => {
       cy.get(selectors.createInteractionContext.export.theme).click()
       cy.get(selectors.createInteractionContext.export.interaction).click()
       cy.get(selectors.createInteractionContext.button).click()
-      cy.get(formSelectors.service).select('Export Win')
-      cy.get(formSelectors.contact).select('Dean Cox')
-      cy.get(formSelectors.communicationChannel).select('Email/Website')
+
+      cy.get(formSelectors.service).selectTypeaheadOption('Export Win')
+      cy.get(formSelectors.contact).selectTypeaheadOption('Dean Cox')
+      cy.get(formSelectors.communicationChannel).selectTypeaheadOption(
+        'Email/Website'
+      )
       cy.get(formSelectors.subject).type('Subject')
       cy.get(formSelectors.notes).type('Conversation with potential client')
       cy.get(formSelectors.policyFeedbackNo).click()
       cy.get(formSelectors.countriesDiscussed.no).click()
       cy.get(selectors.interactionForm.add).click()
     })
+
     it('should display the referral in the interaction', () => {
-      cy.get(selectors.localHeader().flash)
-        .should('contain', 'Interaction created and referral accepted')
-        .parents()
-        .find(selectors.interaction.details.interaction.referralDetails)
+      cy.get(selectors.interaction.details.interaction.referralDetails)
         .should('contain', 'This interaction is linked to a referral')
         .parents()
         .find(selectors.interaction.details.interaction.referralDetails)

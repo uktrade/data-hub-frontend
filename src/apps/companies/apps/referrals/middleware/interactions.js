@@ -17,10 +17,7 @@ function setInteractionsDetails(req, res, next) {
   const { referralId } = req.params
   const { company } = res.locals
   res.locals.interactions = {
-    returnLink: urls.companies.referrals.interactionsIndex(
-      company.id,
-      referralId
-    ),
+    returnLink: urls.companies.referrals.details(company.id, referralId),
     referralId: referralId,
     canAdd: true,
     showCompany: true,

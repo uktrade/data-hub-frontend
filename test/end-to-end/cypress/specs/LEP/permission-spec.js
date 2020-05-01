@@ -128,7 +128,7 @@ describe('LEP Permission', () => {
     describe('interaction', () => {
       before(() => {
         cy.visit(
-          investments.projects.interactionCollection(
+          investments.projects.interactions.index(
             fixtures.investmentProject.newGolfCourse.id
           ),
           {

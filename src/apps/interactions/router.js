@@ -6,10 +6,6 @@ const {
   QUERY_FIELDS,
   QUERY_DATE_FIELDS,
 } = require('./constants')
-
-const { renderEditPage } = require('./controllers/edit')
-const { renderDetailsPage } = require('./controllers/details')
-const { renderCompletePage, postComplete } = require('./controllers/complete')
 const { renderInteractionList } = require('./controllers/list')
 const {
   exportCollection,
@@ -24,11 +20,9 @@ const {
   getInteractionSortForm,
 } = require('./middleware/collection')
 
-const { postDetails, getInteractionDetails } = require('./middleware/details')
+const subAppRouter = require('./router.sub-app')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
-
-router.param('interactionId', getInteractionDetails)
 
 router.get(
   '/',
@@ -47,16 +41,6 @@ router.get(
   exportCollection('interaction')
 )
 
-router
-  .route('/:interactionId/edit/:theme/:kind')
-  .post(postDetails, renderEditPage)
-  .get(renderEditPage)
-
-router.get('/:interactionId', renderDetailsPage)
-
-router
-  .route('/:interactionId/complete')
-  .post(detectUserAgent, postComplete, renderCompletePage)
-  .get(detectUserAgent, renderCompletePage)
+router.use(subAppRouter)
 
 module.exports = router

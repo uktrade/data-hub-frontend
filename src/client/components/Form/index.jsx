@@ -1,9 +1,10 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { isEmpty } from 'lodash'
 import { ErrorSummary } from 'govuk-react'
 import { useFormContext, Step } from 'data-hub-components'
 
 import {
+  FORM__LOADED,
   FORM__BACK,
   FORM__FIELD_DEREGISTER,
   FORM__FIELD_REGISTER,
@@ -42,15 +43,21 @@ const validateForm = (state) =>
     )
 
 const Form = ({
+  onLoad,
   onSubmit,
   children,
   submissionError = null,
   errors = {},
+  initialValues = {},
   values = {},
   touched = {},
   steps = [],
   ...props
 }) => {
+  useEffect(() => {
+    onLoad(initialValues)
+  }, [])
+
   const contextProps = {
     ...props,
     errors,
@@ -121,6 +128,11 @@ const Form = ({
 }
 
 const dispatchToProps = (dispatch) => ({
+  onLoad: (initialValues) =>
+    dispatch({
+      type: FORM__LOADED,
+      initialValues,
+    }),
   registerField: (field) =>
     dispatch({
       type: FORM__FIELD_REGISTER,
