@@ -28,9 +28,20 @@ function getDataLabels(data, labels) {
   }, {})
 }
 
+// Prevent XSS
+// See: https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html
+function isUrlSafe(req, url) {
+  const baseUrl = `${req.encrypted ? 'https' : req.protocol}://${req.get(
+    'host'
+  )}`
+  const parsedUrl = new URL(url, baseUrl)
+  return url && parsedUrl.origin === baseUrl
+}
+
 module.exports = {
   getDataLabels,
   isBlank,
   isValidGuid,
   containsFormData,
+  isUrlSafe,
 }

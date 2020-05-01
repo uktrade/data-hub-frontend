@@ -88,7 +88,7 @@ describe('Create interaction, step 1', () => {
 
         it('should forward the user to the create interaction page', () => {
           const redirectUrl = res.redirect.firstCall.args[0]
-          expect(redirectUrl).to.equal('/return/create/export/service-delivery')
+          expect(redirectUrl).to.equal('/return/create/export/service_delivery')
         })
       }
     )
@@ -165,7 +165,7 @@ describe('Create interaction, step 1', () => {
 
         it('should forward the user to the create service delivery page', () => {
           const redirectUrl = res.redirect.firstCall.args[0]
-          expect(redirectUrl).to.equal('/return/create/other/service-delivery')
+          expect(redirectUrl).to.equal('/return/create/other/service_delivery')
         })
       }
     )

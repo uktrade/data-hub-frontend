@@ -14,8 +14,10 @@ export default (state = {}, { type, result }) => {
     case ADD_INTERACTION_FORM__SUBMIT:
       return {
         ...state,
-        newInteractionId: result.status === 201 ? result.data.id : undefined,
-        // Keep showing the loader while we redirect user a new page.
+        updatedInteractionId: [200, 201].includes(result.status)
+          ? result.data.id
+          : undefined,
+        // Keep showing the loader while we redirect user to a new page.
         progress: true,
       }
 

@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 const { isEmpty, set, get } = require('lodash')
 
+const urls = require('../../../lib/urls')
 const { meetingHappenForm } = require('../macros/index')
 const { saveInteraction, archiveInteraction } = require('../repos')
 const { buildFormWithStateAndErrors } = require('../../builders')
@@ -50,7 +51,6 @@ async function postComplete(req, res, next) {
 
   const { token } = req.session
   const { interaction } = res.locals
-  const companyInteractionsPath = `/companies/${interaction.company.id}/interactions`
 
   if (req.body.meeting_happen === 'false') {
     try {
@@ -68,15 +68,18 @@ async function postComplete(req, res, next) {
       }
 
       req.flash('success', 'The interaction has been updated')
-      return res.redirect(companyInteractionsPath)
+      return res.redirect(
+        urls.companies.interactions.index(interaction.company.id)
+      )
     } catch (e) {
       return next(e)
     }
   }
 
   if (req.body.meeting_happen === 'true') {
-    const path = joinPaths([companyInteractionsPath, interaction.id, 'create'])
-    return res.redirect(path)
+    return res.redirect(
+      urls.companies.interactions.edit(interaction.company.id, interaction.id)
+    )
   }
 }
 

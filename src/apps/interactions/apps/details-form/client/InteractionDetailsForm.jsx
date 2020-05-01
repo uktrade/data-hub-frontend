@@ -13,55 +13,83 @@ import {
 } from '../../../../../client/actions'
 import {
   ID as STATE_ID,
-  TASK_CREATE_INTERACTION,
+  TASK_SAVE_INTERACTION,
   TASK_OPEN_CONTACT_FORM,
 } from './state'
 import urls from '../../../../../lib/urls'
 
-const AddInteractionForm = ({
+const getReturnLink = (
   companyId,
-  referral,
+  referralId,
+  investmentId,
+  contactId,
+  interactionId
+) => {
+  if (referralId) {
+    return urls.companies.referrals.interactions.detail(
+      companyId,
+      referralId,
+      interactionId
+    )
+  } else if (investmentId) {
+    return urls.investments.projects.interactions.detail(
+      investmentId,
+      interactionId
+    )
+  } else if (contactId) {
+    return urls.contacts.interactions.detail(contactId, interactionId)
+  }
+
+  return urls.companies.interactions.detail(companyId, interactionId)
+}
+
+const InteractionDetailsForm = ({
+  companyId,
+  referralId,
+  investmentId,
+  contactId,
   returnLink,
-  newInteractionId,
-  defaultValues,
+  updatedInteractionId,
+  initialValues,
   progress = false,
   ...props
 }) => {
   useEffect(() => {
-    if (newInteractionId) {
-      window.location.href =
-        `${returnLink}/${newInteractionId}`.replace('//', '/') ||
-        urls.interactions.detail(newInteractionId)
+    if (updatedInteractionId) {
+      window.location.href = getReturnLink(
+        companyId,
+        referralId,
+        investmentId,
+        contactId,
+        updatedInteractionId
+      )
     }
-  }, [newInteractionId, returnLink])
-
+  }, [updatedInteractionId, returnLink])
   return (
     <Task>
       {(getTask) => {
-        const createInteractionTask = getTask(TASK_CREATE_INTERACTION, STATE_ID)
+        const saveInteractionTask = getTask(TASK_SAVE_INTERACTION, STATE_ID)
         const openContactFormTask = getTask(TASK_OPEN_CONTACT_FORM, STATE_ID)
 
         return (
           <Form
             id={STATE_ID}
+            initialValues={initialValues}
             onSubmit={(values) => {
-              createInteractionTask.start({
+              saveInteractionTask.start({
                 payload: {
-                  values: {
-                    ...defaultValues,
-                    ...values,
-                  },
+                  values,
                   companyId,
-                  referral,
+                  referralId,
                 },
                 onSuccessDispatch: ADD_INTERACTION_FORM__SUBMIT,
               })
             }}
-            submissionError={createInteractionTask.errorMessage}
+            submissionError={saveInteractionTask.errorMessage}
           >
             {({ values, currentStep }) => (
               <LoadingBox loading={progress}>
-                {!defaultValues.theme && !defaultValues.kind && (
+                {(!initialValues.theme || !initialValues.kind) && (
                   <Form.Step name="interaction_type">
                     {() => <StepInteractionType />}
                   </Form.Step>
@@ -69,12 +97,13 @@ const AddInteractionForm = ({
 
                 <Form.Step
                   name="interaction_details"
-                  forwardButton="Add interaction"
+                  forwardButton={
+                    initialValues.id ? 'Save interaction' : 'Add interaction'
+                  }
                 >
                   {() => (
                     <StepInteractionDetails
                       companyId={companyId}
-                      defaultValues={defaultValues}
                       onOpenContactForm={(e) => {
                         e.preventDefault()
                         openContactFormTask.start({
@@ -100,11 +129,15 @@ const AddInteractionForm = ({
   )
 }
 
-AddInteractionForm.propTypes = {
-  newInteractionId: PropTypes.string,
-  referral: PropTypes.object,
+InteractionDetailsForm.propTypes = {
+  updatedInteractionId: PropTypes.string,
+  companyId: PropTypes.string,
+  referralId: PropTypes.string,
+  investmentId: PropTypes.string,
+  contactId: PropTypes.string,
   returnLink: PropTypes.string,
   progress: PropTypes.bool,
+  initialValues: PropTypes.object,
   ...StepInteractionDetails.propTypes,
 }
 
@@ -123,4 +156,4 @@ export default connect(
       })
     },
   })
-)(AddInteractionForm)
+)(InteractionDetailsForm)

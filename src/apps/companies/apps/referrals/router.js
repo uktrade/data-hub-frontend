@@ -24,7 +24,7 @@ router.get(urls.companies.referrals.help.route, renderReferralHelp)
 // Adding an interaction to complete a referral
 // This mounts the interactions sub app on the details route
 router.use(
-  urls.companies.referrals.details.route,
+  urls.companies.referrals.interactions.index.route,
   setReferralDetails,
   setInteractionsDetails,
   interactionsRouter

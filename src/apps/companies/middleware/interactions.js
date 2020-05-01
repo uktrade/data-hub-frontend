@@ -1,7 +1,7 @@
 function setInteractionsDetails(req, res, next) {
   const { company } = res.locals
 
-  if (req.path === '/interactions') {
+  if (req.path === '/') {
     return res.redirect(301, 'activity')
   }
 

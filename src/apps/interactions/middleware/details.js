@@ -8,7 +8,6 @@ const {
   transformServicesOptions,
 } = require('../transformers')
 const { fetchInteraction, saveInteraction } = require('../repos')
-const { getContact } = require('../../contacts/repos')
 const { getDitCompany } = require('../../companies/repos')
 const { joinPaths } = require('../../../lib/path')
 const { getReturnLink } = require('../helpers')
@@ -116,31 +115,14 @@ async function postDetails(req, res, next) {
 
 async function getInteractionDetails(req, res, next, interactionId) {
   try {
-    const token = req.session.token
-    const interaction = (res.locals.interaction = await fetchInteraction(
-      token,
-      interactionId
-    ))
+    const { token } = req.session
 
-    // Get the company associated with the interaction. This can be in the interaction
-    // record, or in the case of editing investment interactions it is the company
-    // associated with the interaction contact.
-    if (interaction.company) {
-      res.locals.company = interaction.company
-      return next()
+    const interaction = await fetchInteraction(token, interactionId)
+    res.locals.interaction = interaction
+
+    if (!res.locals.company) {
+      res.locals.company = await getDitCompany(token, interaction.company.id)
     }
-
-    const contactId = get(interaction, 'contact.id')
-    if (!contactId) {
-      return next(
-        new Error(
-          'An interaction must have a company or contact associated with it'
-        )
-      )
-    }
-
-    const contact = await getContact(token, contactId)
-    res.locals.company = await getDitCompany(token, contact.company.id)
 
     next()
   } catch (err) {
