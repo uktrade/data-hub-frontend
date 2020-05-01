@@ -5,7 +5,9 @@ import { GREY_4 } from 'govuk-colours'
 import { SPACING } from '@govuk-react/constants'
 import Main from '@govuk-react/main'
 import Breadcrumbs from '@govuk-react/breadcrumbs'
-import { typography } from '@govuk-react/lib'
+
+import LocalHeaderHeading from './LocalHeaderHeading'
+import FlashMessages from './FlashMessages'
 
 const StyledHeader = styled('header')`
   padding-bottom: ${SPACING.SCALE_5};
@@ -21,12 +23,7 @@ const BreadcrumbsWrapper = styled(Breadcrumbs)`
   margin-bottom: ${SPACING.SCALE_5};
   margin-top: 0;
 `
-
-const StyledH1 = styled('h1')`
-  ${typography.font({ size: 36, weight: 'bold' })};
-`
-
-const LocalHeader = ({ breadcrumbs, heading, children }) => (
+const LocalHeader = ({ breadcrumbs, flashMessages, heading, children }) => (
   <StyledHeader aria-label="local header" data-auto-id="localHeader">
     <StyledMain>
       <BreadcrumbsWrapper>
@@ -40,7 +37,8 @@ const LocalHeader = ({ breadcrumbs, heading, children }) => (
           )
         )}
       </BreadcrumbsWrapper>
-      {heading && <StyledH1>{heading}</StyledH1>}
+      {flashMessages && <FlashMessages flashMessages={flashMessages} />}
+      {heading && <LocalHeaderHeading>{heading}</LocalHeaderHeading>}
       {children}
     </StyledMain>
   </StyledHeader>
@@ -53,6 +51,18 @@ LocalHeader.propTypes = {
       text: PropTypes.string.isRequired,
     })
   ),
+  flashMessages: PropTypes.shape({
+    type: PropTypes.oneOfType([
+      PropTypes.arrayOf(
+        PropTypes.shape({
+          body: PropTypes.string.isRequired,
+          heading: PropTypes.string.isRequired,
+          id: PropTypes.string,
+        })
+      ),
+      PropTypes.arrayOf(PropTypes.string).isRequired,
+    ]),
+  }),
   heading: PropTypes.string,
   children: PropTypes.node,
 }
