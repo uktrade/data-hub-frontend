@@ -15,7 +15,7 @@ const { assertFormFields } = require('../../support/assertions')
 const describeBreadcrumbs = (company) => {
   testBreadcrumbs({
     Home: urls.dashboard(),
-    Interactions: urls.interactions.index(),
+    Companies: urls.companies.index(),
     [`Add interaction for ${company.name}`]: null,
   })
 }
@@ -220,7 +220,7 @@ describe('Add interaction form', () => {
 
   context('when a contact does not exists and user wants to add one', () => {
     beforeEach(() => {
-      cy.visit(urls.interactions.create({ company: company.id }))
+      cy.visit(urls.companies.interactions.create(company.id))
 
       cy.contains('label', 'Export').click()
       cy.contains('label', 'A standard interaction').click()
@@ -242,7 +242,7 @@ describe('Add interaction form', () => {
       cy.contains('a', 'Cancel').should(
         'have.attr',
         'href',
-        urls.interactions.create({ company: company.id })
+        urls.companies.interactions.create(company.id)
       )
 
       cy.contains('div', 'First name')
@@ -274,10 +274,7 @@ describe('Add interaction form', () => {
         .click()
       cy.contains('button', 'Add contact').click()
 
-      cy.url().should(
-        'include',
-        urls.interactions.create({ company: company.id })
-      )
+      cy.url().should('include', urls.companies.interactions.create(company.id))
 
       cy.contains(ELEMENT_SUBJECT.label)
         .next()
@@ -297,7 +294,7 @@ describe('Add interaction form', () => {
       cy.route('POST', '/api-proxy/v3/interaction').as(
         'createInteractionRequest'
       )
-      cy.visit(urls.interactions.create({ company: company.id }))
+      cy.visit(urls.companies.interactions.create(company.id))
     })
 
     describeBreadcrumbs(company)
@@ -323,7 +320,7 @@ describe('Add interaction form', () => {
       cy.route('POST', '/api-proxy/v3/interaction').as(
         'createInteractionRequest'
       )
-      cy.visit(urls.interactions.create({ company: company.id }))
+      cy.visit(urls.companies.interactions.create(company.id))
 
       cy.contains('label', 'Export').click()
       cy.contains('label', 'A standard interaction').click()
@@ -384,7 +381,6 @@ describe('Add interaction form', () => {
         expect(xhr.requestBody).to.deep.equal({
           ...COMMON_REQUEST_BODY,
           theme: 'export',
-          kind_export: 'export_interaction',
           service: '380bba2b-3499-e211-a939-e4115bead28a',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
           were_countries_discussed: 'yes',
@@ -418,7 +414,7 @@ describe('Add interaction form', () => {
 
         cy.location('pathname').should(
           'eq',
-          urls.interactions.detail(xhr.responseBody.id)
+          urls.companies.interactions.detail(company.id, xhr.responseBody.id)
         )
       })
     })
@@ -430,7 +426,7 @@ describe('Add interaction form', () => {
       cy.route('POST', '/api-proxy/v3/interaction').as(
         'createInteractionRequest'
       )
-      cy.visit(urls.interactions.create({ company: company.id }))
+      cy.visit(urls.companies.interactions.create(company.id))
 
       cy.contains('label', 'Export').click()
       cy.contains('label', 'A service that you have provided').click()
@@ -511,7 +507,6 @@ describe('Add interaction form', () => {
         expect(xhr.requestBody).to.deep.equal({
           ...COMMON_REQUEST_BODY,
           theme: 'export',
-          kind_export: 'export_service_delivery',
           service: '380bba2b-3499-e211-a939-e4115bead28a',
           is_event: 'yes',
           were_countries_discussed: 'yes',
@@ -549,7 +544,7 @@ describe('Add interaction form', () => {
 
         cy.location('pathname').should(
           'eq',
-          urls.interactions.detail(xhr.responseBody.id)
+          urls.companies.interactions.detail(company.id, xhr.responseBody.id)
         )
       })
     })
@@ -561,7 +556,7 @@ describe('Add interaction form', () => {
       cy.route('POST', '/api-proxy/v3/interaction').as(
         'createInteractionRequest'
       )
-      cy.visit(urls.interactions.create({ company: company.id }))
+      cy.visit(urls.companies.interactions.create(company.id))
 
       cy.contains('label', 'Investment').click()
       cy.contains('button', 'Continue').click()
@@ -627,7 +622,7 @@ describe('Add interaction form', () => {
 
         cy.location('pathname').should(
           'eq',
-          urls.interactions.detail(xhr.responseBody.id)
+          urls.companies.interactions.detail(company.id, xhr.responseBody.id)
         )
       })
     })

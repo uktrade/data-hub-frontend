@@ -1,11 +1,12 @@
 const { getReferral } = require('../repos')
 const urls = require('../../../../../lib/urls')
 
-async function setCompanyDetails(req, res, next) {
+async function setReferralDetails(req, res, next) {
   try {
-    const referral = await getReferral(req.session.token, req.params.referralId)
-    res.locals.company = referral.company
-    res.locals.contact = referral.contact
+    res.locals.referral = await getReferral(
+      req.session.token,
+      req.params.referralId
+    )
     next()
   } catch (error) {
     next(error)
@@ -33,11 +34,11 @@ function setInteractionsDetails(req, res, next) {
       text: 'Referral',
       href: urls.companies.referrals.details(company.id, referralId),
     },
-  ]),
-    next()
+  ])
+  next()
 }
 
 module.exports = {
   setInteractionsDetails,
-  setCompanyDetails,
+  setReferralDetails,
 }

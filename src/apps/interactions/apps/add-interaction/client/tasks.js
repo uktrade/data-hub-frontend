@@ -3,7 +3,6 @@ import axios from 'axios'
 import { INTERACTION_STATUS } from '../../../constants'
 import { EXPORT_INTEREST_STATUS_VALUES, OPTION_NO } from '../../../../constants'
 import { ID as STORE_ID } from './state'
-import getInteractionKind from './utils'
 
 function transformOption(option) {
   if (!option || !option.value) {
@@ -49,12 +48,12 @@ function transformServiceAnswers(values) {
   )
 }
 
-export function openContactForm({ values, url }) {
+export function openContactForm({ values, currentStep, url }) {
   window.sessionStorage.setItem(
     STORE_ID,
     JSON.stringify({
       values,
-      currentStep: 1,
+      currentStep,
     })
   )
   window.location.href = url
@@ -65,15 +64,19 @@ export function restoreState() {
   return stateFromStorage ? JSON.parse(stateFromStorage) : {}
 }
 
-export function createInteraction({ values, companyId }) {
+export function createInteraction({ values, companyId, referral }) {
   window.sessionStorage.removeItem(STORE_ID)
-  return axios.post(`/api-proxy/v3/interaction`, {
+
+  const endpoint = referral
+    ? `/api-proxy/v4/company-referral/${referral.id}/complete`
+    : '/api-proxy/v3/interaction'
+
+  return axios.post(endpoint, {
     ...values,
     company: {
       id: companyId,
     },
     status: INTERACTION_STATUS.COMPLETE,
-    kind: getInteractionKind(values),
     service: transformOption(values.service),
     service_answers: transformServiceAnswers(values),
     contacts: transformArrayOfOptions(values.contacts),
