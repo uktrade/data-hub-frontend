@@ -182,7 +182,7 @@
     "chromedriver": "^80.0.1",
     "codeclimate-test-reporter": "^0.5.0",
     "cucumber": "^4.2.1",
-    "cucumber-html-reporter": "^4.0.0",
+    "cucumber-html-reporter": "^5.2.0",
     "cypress": "^4.2.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.1",
