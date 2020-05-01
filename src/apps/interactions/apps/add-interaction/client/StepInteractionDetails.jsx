@@ -30,26 +30,28 @@ import {
   OPTIONS_YES_NO,
 } from '../../../../constants'
 
-import getInteractionKind from './utils'
 import urls from '../../../../../lib/urls'
 
-const getServiceContext = (values) => {
-  switch (values.theme) {
-    case THEMES.EXPORT:
-      return values.kind_export
-    case THEMES.INVESTMENT:
-      return SERVICE_CONTEXTS.INVESTMENT_INTERACTION
-    case THEMES.OTHER:
-      return values.kind_other
-    default:
-      return null
+const getServiceContext = (theme, kind) => {
+  const mapping = {
+    [THEMES.EXPORT]: {
+      [KINDS.INTERACTION]: SERVICE_CONTEXTS.EXPORT_INTERACTION,
+      [KINDS.SERVICE_DELIVERY]: SERVICE_CONTEXTS.EXPORT_SERVICE_DELIVERY,
+    },
+    [THEMES.INVESTMENT]: SERVICE_CONTEXTS.INVESTMENT_INTERACTION,
+    [THEMES.OTHER]: {
+      [KINDS.INTERACTION]: SERVICE_CONTEXTS.OTHER_INTERACTION,
+      [KINDS.SERVICE_DELIVERY]: SERVICE_CONTEXTS.OTHER_SERVICE_DELIVERY,
+    },
   }
+
+  return kind && mapping[theme][kind] ? mapping[theme][kind] : mapping[theme]
 }
 
 const isTapService = (service) => service?.label?.includes('(TAP)')
 
-const filterServices = (services, values) =>
-  services.filter((s) => s.contexts.includes(getServiceContext(values)))
+const filterServices = (services, theme, kind) =>
+  services.filter((s) => s.contexts.includes(getServiceContext(theme, kind)))
 
 const validateRequiredCountries = (countries, field, { values }) =>
   !EXPORT_INTEREST_STATUS_VALUES.some((status) => values[status])
@@ -69,7 +71,7 @@ const validatedDuplicatedCountries = (countries, field, { values }) =>
 const StepInteractionDetails = ({
   companyId,
   contacts,
-  defaultAdviser,
+  defaultValues,
   services,
   serviceDeliveryStatuses,
   policyAreas,
@@ -82,13 +84,14 @@ const StepInteractionDetails = ({
   const { values = {} } = useFormContext()
 
   const today = moment()
+  const theme = defaultValues.theme || values.theme
+  const kind = defaultValues.kind || values.kind
 
-  const filteredServices = filterServices(services, values)
+  const filteredServices = filterServices(services, theme, kind)
   const selectedService = services.find(
     (s) => s.value === values.service?.value
   )
-  const isServiceDelivery =
-    getInteractionKind(values) === KINDS.SERVICE_DELIVERY
+  const isServiceDelivery = kind === KINDS.SERVICE_DELIVERY
 
   return (
     <>
@@ -152,7 +155,7 @@ const StepInteractionDetails = ({
             <Link
               onClick={onOpenContactForm}
               href={urls.contacts.create(companyId, {
-                from_interaction: true,
+                from_interaction: window.location.pathname,
               })}
             >
               add a new contact
@@ -185,7 +188,7 @@ const StepInteractionDetails = ({
               ),
           500
         )}
-        initialValue={[defaultAdviser]}
+        initialValue={defaultValues.advisers}
         isMulti={true}
       />
 
@@ -341,7 +344,7 @@ const typeaheadOptionsListProp = PropTypes.arrayOf(typeaheadOptionProp)
 
 StepInteractionDetails.propTypes = {
   companyId: PropTypes.string.isRequired,
-  defaultAdviser: typeaheadOptionProp.isRequired,
+  defaultValues: PropTypes.object,
   services: typeaheadOptionsListProp.isRequired,
   serviceDeliveryStatuses: typeaheadOptionsListProp.isRequired,
   policyAreas: typeaheadOptionsListProp.isRequired,

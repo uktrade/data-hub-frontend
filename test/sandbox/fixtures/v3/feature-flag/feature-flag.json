@@ -46,5 +46,9 @@
   {
     "code": "companies-matching",
     "is_active": true
+  },
+  {
+    "code": "enable-new-interaction-form",
+    "is_active": true
   }
 ]

@@ -1,9 +1,9 @@
+const { get } = require('lodash')
 const { getActiveEvents } = require('../../../events/repos')
 const {
   transformContactToOption,
   transformObjectToOption,
 } = require('../../../transformers')
-const { getDitCompany } = require('../../../companies/repos')
 const { getOptions } = require('../../../../lib/options')
 
 const transformServiceToOption = (service) => ({
@@ -16,10 +16,10 @@ const transformServiceToOption = (service) => ({
 async function renderAddInteractionForm(req, res, next) {
   try {
     const { user, token } = req.session
-    const { company: companyId } = req.query
+    const { company, referral } = res.locals
+    const { theme, kind } = req.params
 
     const [
-      companyDetails,
       services,
       serviceDeliveryStatuses,
       policyAreas,
@@ -29,7 +29,6 @@ async function renderAddInteractionForm(req, res, next) {
       activeEvents,
       ,
     ] = await Promise.all([
-      getDitCompany(req.session.token, companyId),
       getOptions(token, 'service', {
         transformer: transformServiceToOption,
       }),
@@ -44,24 +43,32 @@ async function renderAddInteractionForm(req, res, next) {
     ])
 
     res
-      .breadcrumb(`Add interaction for ${companyDetails.name}`)
+      .breadcrumb(`Add interaction for ${company.name}`)
       .render('interactions/apps/add-interaction/views/add-interaction-form', {
         props: {
-          companyId: companyDetails.id,
-          defaultAdviser: {
-            label: `${user.name}${
-              user.dit_team ? ', ' + user.dit_team.name : ''
-            }`,
-            value: user.id,
+          defaultValues: {
+            theme,
+            kind,
+            advisers: [
+              {
+                label: `${user.name}${
+                  user.dit_team ? ', ' + user.dit_team.name : ''
+                }`,
+                value: user.id,
+              },
+            ],
           },
-          contacts: companyDetails.contacts.map(transformContactToOption),
+          companyId: company.id,
+          referral,
+          contacts: company.contacts.map(transformContactToOption),
+          activeEvents: activeEvents.map(transformObjectToOption),
+          returnLink: get(res.locals, 'interactions.returnLink'),
           services,
           serviceDeliveryStatuses,
           policyAreas,
           policyIssueTypes,
           communicationChannels,
           countries,
-          activeEvents: activeEvents.map(transformObjectToOption),
         },
       })
   } catch (error) {

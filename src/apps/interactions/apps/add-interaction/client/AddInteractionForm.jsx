@@ -20,15 +20,20 @@ import urls from '../../../../../lib/urls'
 
 const AddInteractionForm = ({
   companyId,
+  referral,
+  returnLink,
   newInteractionId,
+  defaultValues,
   progress = false,
   ...props
 }) => {
   useEffect(() => {
     if (newInteractionId) {
-      window.location.href = urls.interactions.detail(newInteractionId)
+      window.location.href =
+        `${returnLink}/${newInteractionId}`.replace('//', '/') ||
+        urls.interactions.detail(newInteractionId)
     }
-  }, [newInteractionId])
+  }, [newInteractionId, returnLink])
 
   return (
     <Task>
@@ -41,17 +46,26 @@ const AddInteractionForm = ({
             id={STATE_ID}
             onSubmit={(values) => {
               createInteractionTask.start({
-                payload: { values, companyId },
+                payload: {
+                  values: {
+                    ...defaultValues,
+                    ...values,
+                  },
+                  companyId,
+                  referral,
+                },
                 onSuccessDispatch: ADD_INTERACTION_FORM__SUBMIT,
               })
             }}
             submissionError={createInteractionTask.errorMessage}
           >
-            {({ values }) => (
+            {({ values, currentStep }) => (
               <LoadingBox loading={progress}>
-                <Form.Step name="interaction_type">
-                  {() => <StepInteractionType />}
-                </Form.Step>
+                {!defaultValues.theme && !defaultValues.kind && (
+                  <Form.Step name="interaction_type">
+                    {() => <StepInteractionType />}
+                  </Form.Step>
+                )}
 
                 <Form.Step
                   name="interaction_details"
@@ -60,10 +74,16 @@ const AddInteractionForm = ({
                   {() => (
                     <StepInteractionDetails
                       companyId={companyId}
+                      defaultValues={defaultValues}
                       onOpenContactForm={(e) => {
                         e.preventDefault()
                         openContactFormTask.start({
-                          payload: { values, companyId, url: e.target.href },
+                          payload: {
+                            values,
+                            currentStep,
+                            companyId,
+                            url: e.target.href,
+                          },
                           onSuccessDispatch: ADD_INTERACTION_FORM__CONTACT_FORM_OPENED,
                         })
                       }}
@@ -82,6 +102,8 @@ const AddInteractionForm = ({
 
 AddInteractionForm.propTypes = {
   newInteractionId: PropTypes.string,
+  referral: PropTypes.object,
+  returnLink: PropTypes.string,
   progress: PropTypes.bool,
   ...StepInteractionDetails.propTypes,
 }

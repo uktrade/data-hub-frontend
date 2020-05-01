@@ -58,9 +58,7 @@ async function editDetails(req, res, next) {
       res.locals.returnLink = urls.contacts.details(contactId)
       res.breadcrumb('Edit')
     } else if (fromInteraction) {
-      res.locals.returnLink = urls.interactions.create({
-        company: companyId,
-      })
+      res.locals.returnLink = fromInteraction
       res.breadcrumb(`Add contact at ${res.locals.company.name}`)
     } else if (companyId) {
       res.locals.returnLink = urls.companies.contacts(companyId)
@@ -107,13 +105,7 @@ async function postDetails(req, res, next) {
       req.flash('success', 'Added new contact')
     }
 
-    res.redirect(
-      fromInteraction
-        ? urls.interactions.create({
-            company: body.company,
-          })
-        : urls.contacts.details(newContact.id)
-    )
+    res.redirect(fromInteraction || urls.contacts.details(newContact.id))
   } catch (errors) {
     if (errors.error) {
       if (errors.error.errors) {

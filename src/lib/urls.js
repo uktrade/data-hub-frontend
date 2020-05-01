@@ -60,6 +60,7 @@ function createInteractionsSubApp(...mountPoints) {
     mountPoints.push(null)
   }
   return {
+    detail: url(...mountPoints, '/interactions/:interactionId'),
     create: url(...mountPoints, '/interactions/:interactionId?/create'),
     createType: url(...mountPoints, '/interactions/create/:theme/:kind'),
   }
@@ -199,7 +200,6 @@ module.exports = {
   },
   interactions: {
     index: url('/interactions'),
-    create: url('/interactions', '/create'),
     detail: url('/interactions', '/:interactionId'),
     subapp: createInteractionsSubApp(),
   },
