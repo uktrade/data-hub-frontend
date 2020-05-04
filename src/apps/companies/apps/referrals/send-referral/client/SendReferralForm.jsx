@@ -30,7 +30,7 @@ import {
   SEND_REFERRAL_FORM__TEXTAREA_CHANGE,
 } from '../../../../../../client/actions'
 import SendReferralConfirmation from './SendReferralConfirmation'
-import LocalHeader from '../../../../../../client/components/LocalHeader'
+import LocalHeader from '../../../../../../client/components/LocalHeader/LocalHeader'
 import { companies, dashboard } from '../../../../../../lib/urls'
 
 const StyledTextArea = styled(TextArea)({
