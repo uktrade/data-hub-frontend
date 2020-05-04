@@ -58,11 +58,7 @@ and be provided with a back end server to provide the API, data storage and sear
 
 4. Run `docker-compose build --parallel && docker-compose -p dev up --abort-on-container-exit`. This is provided for you in the `dev-stack` file in the `.bin/sample` folder. Feel free to move it to your own `.bin` file. Alternatively, if you already have yarn installed globally on your machine, you can run `yarn dev-stack`.
 
-5. Once the process has completed you will need to set up an access token. Login into the Django admin at `http://localhost:8000/admin/` with the superuser username and password in your `dev-stack.env` file.
-
-6. Navigate to access tokens, find your superuser account, add `ditStaffToken` as the access token. Set an expiry time and date for your token. The easiest way to do this is to just click today and now and then increase the year by one. Finally, define the scope as `data-hub:internal-front-end`
-
-7. You can now access the frontend at `http://localhost:3000` and the api at `http://localhost:8000`.
+5. Once the process has completed you can access the frontend at `http://localhost:3000` and the api at `http://localhost:8000`.
 
 #### Option 2 (the mock stack - using the sandbox api for running functional tests)
 
