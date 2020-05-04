@@ -7,7 +7,7 @@ import UnorderedList from '@govuk-react/unordered-list'
 import ListItem from '@govuk-react/list-item'
 
 import SecondaryButton from '../../../../../../client/components/SecondaryButton'
-import LocalHeader from '../../../../../../client/components/LocalHeader'
+import LocalHeader from '../../../../../../client/components/LocalHeader/LocalHeader'
 import { companies, dashboard } from '../../../../../../lib/urls'
 
 const SendReferralConfirmation = ({
