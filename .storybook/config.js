@@ -1,5 +1,5 @@
 import React from 'react'
-import { addDecorator, configure } from '@storybook/react'
+import { addDecorator, configure, addParameters } from '@storybook/react'
 import { addReadme } from 'storybook-readme'
 import { FONT_SIZE, FONT_STACK, MEDIA_QUERIES } from '@govuk-react/constants'
 import { createGlobalStyle } from 'styled-components'
@@ -15,9 +15,14 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 `
+
+addParameters({
+  options: {
+    theme: {}
+  },
+})
+
 addDecorator(addReadme)
 addDecorator(s => <><GlobalStyle />{s()}</>)
 
-const loadStories = () => req.keys().forEach(filename => req(filename))
-
-configure(loadStories, module)
+configure(req, module);
