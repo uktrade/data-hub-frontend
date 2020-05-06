@@ -45,6 +45,9 @@ exports.config = {
       'resolution': '1920x1080'
     },
   ],
+  featureFlags: {
+    specFiltering: true
+  },
   maxInstances: 10,
   logLevel: 'error',
   bail: 0,
@@ -52,7 +55,13 @@ exports.config = {
   waitforTimeout: 10000,
   connectionRetryTimeout: 90000,
   connectionRetryCount: 3,
-  services: ['browserstack'],
+  services: [
+    [
+      'browserstack', {
+        browserstackLocal: true
+      }
+    ]
+  ],
   user: browserStackUser,
   key: browserStackKey,
   browserstackLocal: true,
