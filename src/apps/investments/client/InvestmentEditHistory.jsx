@@ -1,0 +1,52 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+import moment from 'moment'
+import { isBoolean, isNumber } from 'lodash'
+import { DateUtils } from 'data-hub-components'
+
+import { CHANGE_TYPE_TEXT, TRUE, FALSE, NOT_SET } from '../constants'
+
+import EditHistory from '../../../client/components/EditHistory/EditHistory'
+
+function isDate(dateStr) {
+  return moment(dateStr, moment.ISO_8601, true).isValid()
+}
+
+function getValue(value) {
+  if (isBoolean(value)) {
+    return value ? TRUE : FALSE
+  }
+
+  if (isNumber(value)) {
+    // TODO: update with currency fields when confirmed (see CompanyEditHistory.jsx)
+    return value.toString()
+  }
+
+  if (isDate(value)) {
+    return DateUtils.formatWithTime(value)
+  }
+
+  return value || NOT_SET
+}
+
+function getUpdatedBy(timestamp, changedBy) {
+  const formattedTime = DateUtils.formatWithTime(timestamp)
+  return `Updated on ${formattedTime} by ${changedBy}`
+}
+
+function InvestmentEditHistory({ dataEndpoint }) {
+  return (
+    <EditHistory
+      dataEndpoint={dataEndpoint}
+      changeType={CHANGE_TYPE_TEXT}
+      getUpdatedBy={getUpdatedBy}
+      getValue={getValue}
+    />
+  )
+}
+
+InvestmentEditHistory.propTypes = {
+  dataEndpoint: PropTypes.string.isRequired,
+}
+
+export default InvestmentEditHistory

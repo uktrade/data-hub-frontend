@@ -1,10 +1,9 @@
 const ARCHIVED = 'Archived'
 const NOT_ARCHIVED = 'Not Archived'
-const NOT_SET = 'Not set'
 const YES = 'Yes'
 const NO = 'No'
-const AUTOMATIC_UPDATE = 'automaticUpdate'
-const DEFAULT_ITEMS_PER_PAGE = 10
+
+const CHANGE_TYPE_TEXT = 'business details'
 
 const EXCLUDED_FIELDS = ['archived_by', 'archived_on', 'dnb_modified_on']
 
@@ -35,14 +34,17 @@ const COMPANY_FIELD_NAME_TO_LABEL_MAP = {
   website: "Company's website (optional)",
 }
 
+const AUTOMATIC_UPDATE = 'automaticUpdate'
+const NOT_SET = 'Not set'
+
 module.exports = {
   ARCHIVED,
   NOT_ARCHIVED,
-  NOT_SET,
   YES,
   NO,
   AUTOMATIC_UPDATE,
-  DEFAULT_ITEMS_PER_PAGE,
+  CHANGE_TYPE_TEXT,
   EXCLUDED_FIELDS,
   COMPANY_FIELD_NAME_TO_LABEL_MAP,
+  NOT_SET,
 }
