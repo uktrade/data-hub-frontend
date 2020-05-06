@@ -50,12 +50,12 @@ function createInvestmentProject(token, body) {
   })
 }
 
-function getInvestmentProjectAuditLog(token, investmentId) {
-  return authorisedRequest(
-    token,
-    `${config.apiRoot}/v3/investment/${investmentId}/audit`
-  ).then((data) => {
-    return data.results
+function getInvestmentProjectAuditLog(token, investmentId, page = 1) {
+  const limit = 10
+  const offset = limit * (page - 1)
+  return authorisedRequest(token, {
+    url: `${config.apiRoot}/v3/investment/${investmentId}/audit`,
+    qs: { limit, offset },
   })
 }
 

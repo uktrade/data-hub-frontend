@@ -8,19 +8,24 @@ import pluralize from 'pluralize'
 import axios from 'axios'
 
 import EditHistoryList from './EditHistoryList'
-import { DEFAULT_ITEMS_PER_PAGE } from '../constants'
 
 const StyledLoadingBox = styled(LoadingBox)`
   ${({ loading, minHeight }) => loading && `min-height: ${minHeight}px;`}
 `
 
-function EditHistory({ dataEndpoint }) {
+function EditHistory({
+  dataEndpoint,
+  changeType,
+  getUpdatedBy,
+  getValue,
+  itemsPerPage,
+}) {
   const [editHistory, setEditHistory] = useState([])
   const [totalItems, setTotalItems] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
 
-  const totalPages = Math.floor(totalItems / DEFAULT_ITEMS_PER_PAGE) + 1
+  const totalPages = Math.floor(totalItems / itemsPerPage) + 1
   const activePage = parseInt(useSearchParam('page'), 10) || 1
   const setActivePage = (page) =>
     window.history.pushState({}, '', `${window.location.pathname}?page=${page}`)
@@ -65,6 +70,9 @@ function EditHistory({ dataEndpoint }) {
         totalPages={totalPages}
         activePage={activePage}
         onPageClick={onPageClick}
+        changeType={changeType}
+        getUpdatedBy={getUpdatedBy}
+        getValue={getValue}
       />
     </StyledLoadingBox>
   )
@@ -72,6 +80,14 @@ function EditHistory({ dataEndpoint }) {
 
 EditHistory.propTypes = {
   dataEndpoint: PropTypes.string.isRequired,
+  changeType: PropTypes.string.isRequired,
+  getUpdatedBy: PropTypes.func.isRequired,
+  getValue: PropTypes.func.isRequired,
+  itemsPerPage: PropTypes.number,
+}
+
+EditHistory.defaultProps = {
+  itemsPerPage: 10,
 }
 
 export default EditHistory

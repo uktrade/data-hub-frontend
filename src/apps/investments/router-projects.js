@@ -1,5 +1,7 @@
 const router = require('express').Router()
 
+const urls = require('../../lib/urls')
+
 const { ENTITIES } = require('../search/constants')
 const {
   DEFAULT_COLLECTION_QUERY,
@@ -31,7 +33,7 @@ const {
 const {
   create,
   archive,
-  audit,
+  editHistory,
   details,
   documents,
   edit,
@@ -131,7 +133,14 @@ router.get(
   archive.unarchiveInvestmentProjectHandler
 )
 
-router.get('/:investmentId/audit', audit.getInvestmentAudit)
+router.get(
+  urls.investments.editHistory.index.route,
+  editHistory.renderProjectsView
+)
+router.get(
+  urls.investments.editHistory.data.route,
+  editHistory.fetchProjectsHistoryHandler
+)
 
 router.get(
   '/create/:companyId?',

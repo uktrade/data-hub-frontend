@@ -1,12 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { isBoolean, isNumber } from 'lodash'
 import { FONT_SIZE } from '@govuk-react/constants'
-import moment from 'moment'
 import styled from 'styled-components'
-import { SummaryTable, DateUtils, NumberUtils } from 'data-hub-components'
-import { ARCHIVED, NOT_ARCHIVED, NOT_SET, YES, NO } from '../constants'
-import { convertUsdToGbp } from '../../../../../common/currency'
+import { SummaryTable } from 'data-hub-components'
 
 const StyledSummaryTable = styled(SummaryTable)`
   caption {
@@ -32,48 +28,8 @@ const StyledNoChanges = styled('div')`
   font-size: 16px;
   padding: 30px 0;
 `
-const CURRENCY_FIELDS = ['Turnover']
 
-function isDate(dateStr) {
-  return moment(dateStr, moment.ISO_8601, true).isValid()
-}
-
-function getValueFromBoolean(value, field) {
-  if (
-    field === 'Is number of employees estimated' ||
-    field === 'Is turnover estimated'
-  ) {
-    return value ? YES : NO
-  }
-
-  if (field === 'Archived') {
-    return value ? ARCHIVED : NOT_ARCHIVED
-  }
-
-  return value
-}
-
-function getValue(value, field) {
-  if (isBoolean(value)) {
-    return getValueFromBoolean(value, field)
-  }
-
-  if (isNumber(value)) {
-    return CURRENCY_FIELDS.includes(field)
-      ? NumberUtils.currencyGBP(convertUsdToGbp(value), {
-          maximumSignificantDigits: 2,
-        })
-      : value.toString()
-  }
-
-  if (isDate(value)) {
-    return DateUtils.formatWithTime(value)
-  }
-
-  return value || NOT_SET
-}
-
-function EditHistoryChangeList({ changes }) {
+function EditHistoryChangeList({ changes, changeType, getValue }) {
   return (
     <>
       {changes.map(({ fieldName, oldValue, newValue }) => (
@@ -88,7 +44,7 @@ function EditHistoryChangeList({ changes }) {
       ))}
       {changes.length === 0 && (
         <StyledNoChanges>
-          No changes were made to business details in this update
+          No changes were made to {changeType} in this update
         </StyledNoChanges>
       )}
     </>
@@ -98,6 +54,8 @@ function EditHistoryChangeList({ changes }) {
 EditHistoryChangeList.propTypes = {
   changes: PropTypes.array.isRequired,
   changedBy: PropTypes.string.isRequired,
+  changeType: PropTypes.string.isRequired,
+  getValue: PropTypes.func.isRequired,
 }
 
 export default EditHistoryChangeList
