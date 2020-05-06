@@ -45,6 +45,9 @@ exports.config = {
       'resolution': '1920x1080'
     },
   ],
+  featureFlags: {
+    specFiltering: true
+  },
   maxInstances: 10,
   logLevel: 'error',
   bail: 0,
