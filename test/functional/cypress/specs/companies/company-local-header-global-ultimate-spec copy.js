@@ -9,15 +9,13 @@ describe('Local header for global ultimate company', () => {
       cy.visit(companies.activity.index(fixtures.company.dnbGlobalUltimate.id))
     })
 
-    it('should correctly display the breadcrumbs', () => {
-      testBreadcrumbs({
-        Home: dashboard(),
-        Companies: companies.index(),
-        'DnB Global Ultimate': companies.detail(
-          fixtures.company.dnbGlobalUltimate.id
-        ),
-        'Activity Feed': null,
-      })
+    testBreadcrumbs({
+      Home: dashboard(),
+      Companies: companies.index(),
+      [fixtures.company.dnbGlobalUltimate.name]: companies.detail(
+        fixtures.company.dnbGlobalUltimate.id
+      ),
+      'Activity Feed': null,
     })
 
     it('should display the company name', () => {
@@ -92,15 +90,13 @@ describe('Local header for global ultimate company', () => {
       cy.visit(companies.contacts(fixtures.company.dnbGlobalUltimate.id))
     })
 
-    it('should correctly display the breadcrumbs', () => {
-      testBreadcrumbs({
-        Home: dashboard(),
-        Companies: companies.index(),
-        'DnB Global Ultimate': companies.detail(
-          fixtures.company.dnbGlobalUltimate.id
-        ),
-        Contacts: null,
-      })
+    testBreadcrumbs({
+      Home: dashboard(),
+      Companies: companies.index(),
+      [fixtures.company.dnbGlobalUltimate.name]: companies.detail(
+        fixtures.company.dnbGlobalUltimate.id
+      ),
+      Contacts: null,
     })
 
     it('should display the company name', () => {
@@ -177,15 +173,13 @@ describe('Local header for global ultimate company', () => {
       cy.visit(companies.advisers.index(fixtures.company.dnbGlobalUltimate.id))
     })
 
-    it('should correctly display the breadcrumbs', () => {
-      testBreadcrumbs({
-        Home: dashboard(),
-        Companies: companies.index(),
-        'DnB Global Ultimate': companies.detail(
-          fixtures.company.dnbGlobalUltimate.id
-        ),
-        'Core Team': null,
-      })
+    testBreadcrumbs({
+      Home: dashboard(),
+      Companies: companies.index(),
+      [fixtures.company.dnbGlobalUltimate.name]: companies.detail(
+        fixtures.company.dnbGlobalUltimate.id
+      ),
+      'Core Team': null,
     })
 
     it('should display the company name', () => {
@@ -268,15 +262,13 @@ describe('Local header for global ultimate company', () => {
         )
       })
 
-      it('should correctly display the breadcrumbs', () => {
-        testBreadcrumbs({
-          Home: dashboard(),
-          Companies: companies.index(),
-          'DnB Global Ultimate': companies.detail(
-            fixtures.company.dnbGlobalUltimate.id
-          ),
-          Investment: null,
-        })
+      testBreadcrumbs({
+        Home: dashboard(),
+        Companies: companies.index(),
+        [fixtures.company.dnbGlobalUltimate.name]: companies.detail(
+          fixtures.company.dnbGlobalUltimate.id
+        ),
+        Investment: null,
       })
 
       it('should display the company name', () => {
@@ -362,15 +354,13 @@ describe('Local header for global ultimate company', () => {
         )
       })
 
-      it('should correctly display the breadcrumbs', () => {
-        testBreadcrumbs({
-          Home: dashboard(),
-          Companies: companies.index(),
-          'DnB Global Ultimate': companies.detail(
-            fixtures.company.dnbGlobalUltimate.id
-          ),
-          Investment: null,
-        })
+      testBreadcrumbs({
+        Home: dashboard(),
+        Companies: companies.index(),
+        [fixtures.company.dnbGlobalUltimate.name]: companies.detail(
+          fixtures.company.dnbGlobalUltimate.id
+        ),
+        Investment: null,
       })
 
       it('should display the company name', () => {
@@ -450,15 +440,13 @@ describe('Local header for global ultimate company', () => {
       cy.visit(companies.exports.index(fixtures.company.dnbGlobalUltimate.id))
     })
 
-    it('should correctly display the breadcrumbs', () => {
-      testBreadcrumbs({
-        Home: dashboard(),
-        Companies: companies.index(),
-        'DnB Global Ultimate': companies.detail(
-          fixtures.company.dnbGlobalUltimate.id
-        ),
-        Exports: null,
-      })
+    testBreadcrumbs({
+      Home: dashboard(),
+      Companies: companies.index(),
+      [fixtures.company.dnbGlobalUltimate.name]: companies.detail(
+        fixtures.company.dnbGlobalUltimate.id
+      ),
+      Exports: null,
     })
 
     it('should display the company name', () => {
@@ -537,18 +525,14 @@ describe('Local header for global ultimate company', () => {
       )
     })
 
-    it('should correctly display the breadcrumbs', () => {
-      testBreadcrumbs({
-        Home: dashboard(),
-        Companies: companies.index(),
-        'DnB Global Ultimate': companies.detail(
-          fixtures.company.dnbGlobalUltimate.id
-        ),
-        Exports: companies.exports.history.index(
-          fixtures.company.dnbGlobalUltimate.id
-        ),
-        'Export countries history': null,
-      })
+    testBreadcrumbs({
+      Home: dashboard(),
+      Companies: companies.index(),
+      [fixtures.company.dnbGlobalUltimate.name]: companies.detail(
+        fixtures.company.dnbGlobalUltimate.id
+      ),
+      Exports: companies.exports.index(fixtures.company.dnbGlobalUltimate.id),
+      'Export countries history': null,
     })
 
     it('should display the company name', () => {
@@ -625,15 +609,13 @@ describe('Local header for global ultimate company', () => {
       cy.visit(companies.orders(fixtures.company.dnbGlobalUltimate.id))
     })
 
-    it('should correctly display the breadcrumbs', () => {
-      testBreadcrumbs({
-        Home: dashboard(),
-        Companies: companies.index(),
-        'DnB Global Ultimate': companies.detail(
-          fixtures.company.dnbGlobalUltimate.id
-        ),
-        'Orders (OMIS)': null,
-      })
+    testBreadcrumbs({
+      Home: dashboard(),
+      Companies: companies.index(),
+      [fixtures.company.dnbGlobalUltimate.name]: companies.detail(
+        fixtures.company.dnbGlobalUltimate.id
+      ),
+      'Orders (OMIS)': null,
     })
 
     it('should display the company name', () => {
@@ -705,6 +687,4 @@ describe('Local header for global ultimate company', () => {
       )
     })
   })
-
-  // context('when visting a company under DnB investigation', () => {})
 })

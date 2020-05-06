@@ -13,15 +13,13 @@ describe('Local header for company under dnb investigation', () => {
         )
       })
 
-      it('should correctly display the breadcrumbs', () => {
-        testBreadcrumbs({
-          Home: dashboard(),
-          Companies: companies.index(),
-          'DnB Global Ultimate': companies.detail(
-            fixtures.company.investigationLimited.id
-          ),
-          'Activity Feed': null,
-        })
+      testBreadcrumbs({
+        Home: dashboard(),
+        Companies: companies.index(),
+        [fixtures.company.investigationLimited.name]: companies.detail(
+          fixtures.company.investigationLimited.id
+        ),
+        'Activity Feed': null,
       })
 
       it('should display the company name', () => {
@@ -84,15 +82,13 @@ describe('Local header for company under dnb investigation', () => {
         cy.visit(companies.contacts(fixtures.company.investigationLimited.id))
       })
 
-      it('should correctly display the breadcrumbs', () => {
-        testBreadcrumbs({
-          Home: dashboard(),
-          Companies: companies.index(),
-          'DnB Global Ultimate': companies.detail(
-            fixtures.company.investigationLimited.id
-          ),
-          Contacts: null,
-        })
+      testBreadcrumbs({
+        Home: dashboard(),
+        Companies: companies.index(),
+        [fixtures.company.investigationLimited.name]: companies.detail(
+          fixtures.company.investigationLimited.id
+        ),
+        Contacts: null,
       })
 
       it('should display the company name', () => {
@@ -149,7 +145,7 @@ describe('Local header for company under dnb investigation', () => {
     }
   )
   context(
-    'when visting a company under dnb investigation core team page',
+    'when visting a company under dnb investigation lead adviser page',
     () => {
       before(() => {
         cy.visit(
@@ -157,15 +153,13 @@ describe('Local header for company under dnb investigation', () => {
         )
       })
 
-      it('should correctly display the breadcrumbs', () => {
-        testBreadcrumbs({
-          Home: dashboard(),
-          Companies: companies.index(),
-          'DnB Global Ultimate': companies.detail(
-            fixtures.company.investigationLimited.id
-          ),
-          'Core Team': null,
-        })
+      testBreadcrumbs({
+        Home: dashboard(),
+        Companies: companies.index(),
+        [fixtures.company.investigationLimited.name]: companies.detail(
+          fixtures.company.investigationLimited.id
+        ),
+        'Lead adviser': null,
       })
 
       it('should display the company name', () => {
@@ -232,15 +226,13 @@ describe('Local header for company under dnb investigation', () => {
         )
       })
 
-      it('should correctly display the breadcrumbs', () => {
-        testBreadcrumbs({
-          Home: dashboard(),
-          Companies: companies.index(),
-          'DnB Global Ultimate': companies.detail(
-            fixtures.company.investigationLimited.id
-          ),
-          Investment: null,
-        })
+      testBreadcrumbs({
+        Home: dashboard(),
+        Companies: companies.index(),
+        [fixtures.company.investigationLimited.name]: companies.detail(
+          fixtures.company.investigationLimited.id
+        ),
+        Investment: null,
       })
 
       it('should display the company name', () => {
@@ -307,15 +299,13 @@ describe('Local header for company under dnb investigation', () => {
         )
       })
 
-      it('should correctly display the breadcrumbs', () => {
-        testBreadcrumbs({
-          Home: dashboard(),
-          Companies: companies.index(),
-          'DnB Global Ultimate': companies.detail(
-            fixtures.company.investigationLimited.id
-          ),
-          Investment: null,
-        })
+      testBreadcrumbs({
+        Home: dashboard(),
+        Companies: companies.index(),
+        [fixtures.company.investigationLimited.name]: companies.detail(
+          fixtures.company.investigationLimited.id
+        ),
+        Investment: null,
       })
 
       it('should display the company name', () => {
@@ -378,15 +368,13 @@ describe('Local header for company under dnb investigation', () => {
       )
     })
 
-    it('should correctly display the breadcrumbs', () => {
-      testBreadcrumbs({
-        Home: dashboard(),
-        Companies: companies.index(),
-        'DnB Global Ultimate': companies.detail(
-          fixtures.company.investigationLimited.id
-        ),
-        Exports: null,
-      })
+    testBreadcrumbs({
+      Home: dashboard(),
+      Companies: companies.index(),
+      [fixtures.company.investigationLimited.name]: companies.detail(
+        fixtures.company.investigationLimited.id
+      ),
+      Exports: null,
     })
 
     it('should display the company name', () => {
@@ -452,18 +440,16 @@ describe('Local header for company under dnb investigation', () => {
         )
       })
 
-      it('should correctly display the breadcrumbs', () => {
-        testBreadcrumbs({
-          Home: dashboard(),
-          Companies: companies.index(),
-          'DnB Global Ultimate': companies.detail(
-            fixtures.company.investigationLimited.id
-          ),
-          Exports: companies.exports.history.index(
-            fixtures.company.investigationLimited.id
-          ),
-          'Export countries history': null,
-        })
+      testBreadcrumbs({
+        Home: dashboard(),
+        Companies: companies.index(),
+        [fixtures.company.investigationLimited.name]: companies.detail(
+          fixtures.company.investigationLimited.id
+        ),
+        Exports: companies.exports.index(
+          fixtures.company.investigationLimited.id
+        ),
+        'Export countries history': null,
       })
 
       it('should display the company name', () => {
@@ -524,15 +510,13 @@ describe('Local header for company under dnb investigation', () => {
       cy.visit(companies.orders(fixtures.company.investigationLimited.id))
     })
 
-    it('should correctly display the breadcrumbs', () => {
-      testBreadcrumbs({
-        Home: dashboard(),
-        Companies: companies.index(),
-        'DnB Global Ultimate': companies.detail(
-          fixtures.company.investigationLimited.id
-        ),
-        'Orders (OMIS)': null,
-      })
+    testBreadcrumbs({
+      Home: dashboard(),
+      Companies: companies.index(),
+      [fixtures.company.investigationLimited.name]: companies.detail(
+        fixtures.company.investigationLimited.id
+      ),
+      'Orders (OMIS)': null,
     })
 
     it('should display the company name', () => {

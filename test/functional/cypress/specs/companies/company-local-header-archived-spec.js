@@ -8,18 +8,14 @@ describe('Local header for archived company', () => {
     before(() => {
       cy.visit(companies.activity.index(fixtures.company.archivedLtd.id))
     })
-
-    it('should correctly display the breadcrumbs', () => {
-      testBreadcrumbs({
-        Home: dashboard(),
-        Companies: companies.index(),
-        'DnB Global Ultimate': companies.detail(
-          fixtures.company.archivedLtd.id
-        ),
-        'Activity Feed': null,
-      })
+    testBreadcrumbs({
+      Home: dashboard(),
+      Companies: companies.index(),
+      [fixtures.company.archivedLtd.name]: companies.detail(
+        fixtures.company.archivedLtd.id
+      ),
+      'Activity Feed': null,
     })
-
     it('should display the company name', () => {
       cy.get(selectors.companyLocalHeader().companyName).contains(
         fixtures.company.archivedLtd.name
@@ -86,15 +82,13 @@ describe('Local header for archived company', () => {
       cy.visit(companies.contacts(fixtures.company.archivedLtd.id))
     })
 
-    it('should correctly display the breadcrumbs', () => {
-      testBreadcrumbs({
-        Home: dashboard(),
-        Companies: companies.index(),
-        'DnB Global Ultimate': companies.detail(
-          fixtures.company.archivedLtd.id
-        ),
-        Contacts: null,
-      })
+    testBreadcrumbs({
+      Home: dashboard(),
+      Companies: companies.index(),
+      [fixtures.company.archivedLtd.name]: companies.detail(
+        fixtures.company.archivedLtd.id
+      ),
+      Contacts: null,
     })
 
     it('should display the company name', () => {
@@ -164,18 +158,14 @@ describe('Local header for archived company', () => {
     before(() => {
       cy.visit(companies.advisers.index(fixtures.company.archivedLtd.id))
     })
-
-    it('should correctly display the breadcrumbs', () => {
-      testBreadcrumbs({
-        Home: dashboard(),
-        Companies: companies.index(),
-        'DnB Global Ultimate': companies.detail(
-          fixtures.company.archivedLtd.id
-        ),
-        'Core Team': null,
-      })
+    testBreadcrumbs({
+      Home: dashboard(),
+      Companies: companies.index(),
+      [fixtures.company.archivedLtd.name]: companies.detail(
+        fixtures.company.archivedLtd.id
+      ),
+      'Core Team': null,
     })
-
     it('should display the company name', () => {
       cy.get(selectors.companyLocalHeader().companyName).contains(
         fixtures.company.archivedLtd.name
@@ -246,15 +236,13 @@ describe('Local header for archived company', () => {
       )
     })
 
-    it('should correctly display the breadcrumbs', () => {
-      testBreadcrumbs({
-        Home: dashboard(),
-        Companies: companies.index(),
-        'DnB Global Ultimate': companies.detail(
-          fixtures.company.archivedLtd.id
-        ),
-        Investment: null,
-      })
+    testBreadcrumbs({
+      Home: dashboard(),
+      Companies: companies.index(),
+      [fixtures.company.archivedLtd.name]: companies.detail(
+        fixtures.company.archivedLtd.id
+      ),
+      Investment: null,
     })
 
     it('should display the company name', () => {
@@ -330,15 +318,13 @@ describe('Local header for archived company', () => {
         )
       })
 
-      it('should correctly display the breadcrumbs', () => {
-        testBreadcrumbs({
-          Home: dashboard(),
-          Companies: companies.index(),
-          'DnB Global Ultimate': companies.detail(
-            fixtures.company.archivedLtd.id
-          ),
-          Investment: null,
-        })
+      testBreadcrumbs({
+        Home: dashboard(),
+        Companies: companies.index(),
+        [fixtures.company.archivedLtd.name]: companies.detail(
+          fixtures.company.archivedLtd.id
+        ),
+        Investment: null,
       })
 
       it('should display the company name', () => {
@@ -411,15 +397,13 @@ describe('Local header for archived company', () => {
       cy.visit(companies.exports.index(fixtures.company.archivedLtd.id))
     })
 
-    it('should correctly display the breadcrumbs', () => {
-      testBreadcrumbs({
-        Home: dashboard(),
-        Companies: companies.index(),
-        'DnB Global Ultimate': companies.detail(
-          fixtures.company.archivedLtd.id
-        ),
-        Exports: null,
-      })
+    testBreadcrumbs({
+      Home: dashboard(),
+      Companies: companies.index(),
+      [fixtures.company.archivedLtd.name]: companies.detail(
+        fixtures.company.archivedLtd.id
+      ),
+      Exports: null,
     })
 
     it('should display the company name', () => {
@@ -490,18 +474,14 @@ describe('Local header for archived company', () => {
       cy.visit(companies.exports.history.index(fixtures.company.archivedLtd.id))
     })
 
-    it('should correctly display the breadcrumbs', () => {
-      testBreadcrumbs({
-        Home: dashboard(),
-        Companies: companies.index(),
-        'DnB Global Ultimate': companies.detail(
-          fixtures.company.archivedLtd.id
-        ),
-        Exports: companies.exports.history.index(
-          fixtures.company.archivedLtd.id
-        ),
-        'Export countries history': null,
-      })
+    testBreadcrumbs({
+      Home: dashboard(),
+      Companies: companies.index(),
+      [fixtures.company.archivedLtd.name]: companies.detail(
+        fixtures.company.archivedLtd.id
+      ),
+      Exports: companies.exports.index(fixtures.company.archivedLtd.id),
+      'Export countries history': null,
     })
 
     it('should display the company name', () => {
@@ -572,15 +552,13 @@ describe('Local header for archived company', () => {
       cy.visit(companies.orders(fixtures.company.archivedLtd.id))
     })
 
-    it('should correctly display the breadcrumbs', () => {
-      testBreadcrumbs({
-        Home: dashboard(),
-        Companies: companies.index(),
-        'DnB Global Ultimate': companies.detail(
-          fixtures.company.archivedLtd.id
-        ),
-        'Orders (OMIS)': null,
-      })
+    testBreadcrumbs({
+      Home: dashboard(),
+      Companies: companies.index(),
+      [fixtures.company.archivedLtd.name]: companies.detail(
+        fixtures.company.archivedLtd.id
+      ),
+      'Orders (OMIS)': null,
     })
 
     it('should display the company name', () => {
