@@ -37,7 +37,8 @@ describe('Referrals', () => {
         .find('button')
         .eq(2)
         .click()
-      cy.get(selectors.companyLocalHeader()).contains('Referral sent')
+      cy.get(selectors.companyLocalHeader())
+      cy.contains('Referral sent')
     })
   })
   context('when viewing a referral', () => {
@@ -84,7 +85,7 @@ describe('Referrals', () => {
       cy.get(selectors.interactionForm.add).click()
     })
     it('should display the referral in the interaction', () => {
-      cy.get(selectors.companyLocalHeader().flash)
+      cy.get(selectors.localHeader().flash)
         .should('contain', 'Interaction created and referral accepted')
         .parents()
         .find(selectors.interaction.details.interaction.referralDetails)
