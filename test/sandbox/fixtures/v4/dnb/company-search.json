@@ -99,6 +99,48 @@
           "subject": "Meeting between DIT and Joe Bloggs"
         }
       }
+    },
+    {
+      "dnb_company": {
+        "duns_number": "333333333",
+        "primary_name": "Some company (unknown postcode)",
+        "trading_names": [],
+        "registration_numbers": [
+          {
+            "registration_type": "uk_companies_house_number",
+            "registration_number": "1234567"
+          }
+        ],
+        "global_ultimate_duns_number": "123456789",
+        "global_ultimate_primary_name": "Some parent company name",
+        "domain": "example.co.uk",
+        "is_out_of_business": false,
+        "address_line_1": "456 Fake Street",
+        "address_line_2": "",
+        "address_town": "Brighton",
+        "address_county": "",
+        "address_postcode": "UNK N0WN",
+        "address_country": "GB",
+        "registered_address_line_1": "",
+        "registered_address_line_2": "",
+        "registered_address_town": "Brighton",
+        "registered_address_county": "",
+        "registered_address_postcode": "UNK N0WN",
+        "registered_address_country": "GB",
+        "annual_sales": 1860000000,
+        "annual_sales_currency": "USD",
+        "is_annual_sales_estimated": null,
+        "employee_number": 2000,
+        "is_employees_number_estimated": true,
+        "industry_codes": [
+          {
+            "usSicV4": "1623",
+            "usSicV4Description": "Water/sewer/utility construction"
+          }
+        ],
+        "legal_status": "corporation"
+      },
+      "datahub_company": null
     }
   ]
 }

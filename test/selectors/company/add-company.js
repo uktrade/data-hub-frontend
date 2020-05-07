@@ -16,6 +16,7 @@ module.exports = {
     results: {
       someCompanyName: 'form ol li:nth-child(1)',
       someOtherCompany: 'form ol li:nth-child(2)',
+      companyUnknownPostcode: 'form ol li:nth-child(3)',
     },
     cannotFind: {
       summary: 'details summary span',

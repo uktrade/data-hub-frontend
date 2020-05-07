@@ -64,7 +64,10 @@ function createPromiseRequest(
   })
 }
 
-async function sendHawkRequest(uri) {
+async function sendHawkRequest(
+  uri,
+  credentials = config.hawkCredentials.dataHubBackend
+) {
   if (!uri) {
     throw new Error('Uri is required')
   }
@@ -76,9 +79,9 @@ async function sendHawkRequest(uri) {
     },
   }
 
-  const credentials = config.hawkCredentials.dataHubBackend
   const clientHeader = getHawkHeader(credentials, requestOptions)
   requestOptions.headers.Authorization = clientHeader.header
+
   return createPromiseRequest(
     requestOptions,
     credentials,
@@ -86,4 +89,4 @@ async function sendHawkRequest(uri) {
   )
 }
 
-module.exports = (uri) => sendHawkRequest(uri)
+module.exports = sendHawkRequest

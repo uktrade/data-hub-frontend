@@ -49,6 +49,13 @@ const envSchema = Joi.object({
   // Secret Hawk key required to access the backend metadata endpoints
   DATA_HUB_BACKEND_SECRET_ACCESS_KEY: Joi.string().required(),
 
+  // Data store service API Hawk Auth ID
+  DATA_STORE_SERVICE_ACCESS_KEY_ID: Joi.string().required(),
+  // Data store service API Hawk Auth key
+  DATA_STORE_SERVICE_SECRET_ACCESS_KEY: Joi.string().required(),
+  // Data store service API endpoint
+  DATA_STORE_SERVICE_POSTCODE_TO_REGION_URL: Joi.string().required(),
+
   // Url to Find Exporters app
   FIND_EXPORTERS_URL: Joi.string().uri().required(),
 

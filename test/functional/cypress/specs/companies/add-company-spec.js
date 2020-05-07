@@ -7,6 +7,23 @@ const fixtures = require('../../fixtures')
 const { assertBreadcrumbs } = require('../../support/assertions')
 const urls = require('../../../../../src/lib/urls')
 
+const selectUKCompanyAndSelectListItem = (listItem) => {
+  cy.visit(urls.companies.create())
+    .get(selectors.companyAdd.form)
+    .find('[type="radio"]')
+    .check('GB')
+    .get(selectors.companyAdd.continueButton)
+    .click()
+    .get(selectors.companyAdd.entitySearch.companyNameField)
+    .type('some company')
+    .get(selectors.companyAdd.entitySearch.searchButton)
+    .click()
+    .get(listItem)
+    .click()
+    .get(selectors.companyAdd.continueButton)
+    .click()
+}
+
 describe('Add company form', () => {
   beforeEach(function() {
     Cypress.Cookies.preserveOnce('datahub.sid')
@@ -526,20 +543,8 @@ describe('Add company form', () => {
 
   context('when "UK" is selected for the company location', () => {
     before(() => {
-      cy.visit(urls.companies.create())
-        .get(selectors.companyAdd.form)
-        .find('[type="radio"]')
-        .check('GB')
-        .get(selectors.companyAdd.continueButton)
-        .click()
-        .get(selectors.companyAdd.entitySearch.companyNameField)
-        .type('some company')
-        .get(selectors.companyAdd.entitySearch.searchButton)
-        .click()
-        .get(selectors.companyAdd.entitySearch.results.someCompanyName)
-        .click()
-        .get(selectors.companyAdd.continueButton)
-        .click()
+      const { results } = selectors.companyAdd.entitySearch
+      selectUKCompanyAndSelectListItem(results.someCompanyName)
     })
 
     it('should render an "Add a company" H1 element', () => {
@@ -550,7 +555,7 @@ describe('Add company form', () => {
       cy.contains('DIT region')
         .next()
         .find('select option:selected')
-        .should('have.text', '-- Select DIT region --')
+        .should('have.text', 'London')
         .parent()
         .parent()
         .parent()
@@ -581,7 +586,7 @@ describe('Add company form', () => {
 
     it('should add a company after defining both region and sector', () => {
       cy.get(selectors.companyAdd.regionSelect)
-        .select('London')
+        .select('South East')
         .get(selectors.companyAdd.sectorSelect)
         .select('Airports')
         .get(selectors.companyAdd.submitButton)
@@ -594,4 +599,21 @@ describe('Add company form', () => {
       cy.contains('Company added to Data Hub')
     })
   })
+
+  context(
+    'when "UK" is selected and the company postcode is unknown to the Data Store Service',
+    () => {
+      before(() => {
+        const { results } = selectors.companyAdd.entitySearch
+        selectUKCompanyAndSelectListItem(results.companyUnknownPostcode)
+      })
+
+      it('should prompt the user to select a "Region"', () => {
+        cy.contains('DIT region')
+          .next()
+          .find('select option:selected')
+          .should('have.text', '-- Select DIT region --')
+      })
+    }
+  )
 })
