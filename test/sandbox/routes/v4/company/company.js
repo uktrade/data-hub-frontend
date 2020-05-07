@@ -37,6 +37,8 @@ var largeCapitalProfileList20 = require('../../../fixtures/v4/investment/large-c
 var referralDetails = require('../../../fixtures/v4/referrals/referral-details.json')
 var referralDetailsNoContact = require('../../../fixtures/v4/referrals/referral-details-no-contact.json')
 
+var oneListGroupCoreTeam = require('../../../fixtures/v4/company/one-list-group-core-team.json')
+
 var ReferralIds = require('../../../constants/referrals')
 
 state.investor_description = state.investor_description || ''
@@ -215,4 +217,8 @@ exports.exportDetail = function(req, res) {
   } else {
     res.send('')
   }
+}
+
+exports.getOneListGroupCoreTeam = function(req, res) {
+  res.json(oneListGroupCoreTeam)
 }

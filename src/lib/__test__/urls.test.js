@@ -218,6 +218,14 @@ describe('urls', () => {
         urls.companies.referrals.interactions.index(companyId, referralId)
       ).to.equal(`/companies/${companyId}/referrals/${referralId}/interactions`)
 
+      expect(urls.companies.lists.index(companyId)).to.equal(
+        `/companies/${companyId}/lists`
+      )
+
+      expect(urls.companies.lists.addRemove(companyId)).to.equal(
+        `/companies/${companyId}/lists/add-remove`
+      )
+
       expect(urls.companies.pipeline(companyId)).to.equal(
         `/companies/${companyId}/pipeline`
       )
