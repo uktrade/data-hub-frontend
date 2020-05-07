@@ -310,6 +310,11 @@ const assertAriaTablistTabSelected = (tabListLabel, tabLabel) =>
     .getDhTablistTab(tabListLabel, tabLabel)
     .should('have.attr', 'aria-selected', 'true')
 
+const assertFormButtons = ({ submitText, cancelText, cancelLink }) => {
+  cy.contains('button', submitText)
+  cy.contains('a', cancelText).should('have.attr', 'href', cancelLink)
+}
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
@@ -330,4 +335,5 @@ module.exports = {
   assertTabbedLocalNav,
   assertSummaryList,
   assertAriaTablistTabSelected,
+  assertFormButtons,
 }

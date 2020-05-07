@@ -217,6 +217,10 @@ describe('urls', () => {
       expect(
         urls.companies.referrals.interactionsIndex(companyId, referralId)
       ).to.equal(`/companies/${companyId}/referrals/${referralId}/interactions`)
+
+      expect(urls.companies.pipeline(companyId)).to.equal(
+        `/companies/${companyId}/pipeline`
+      )
     })
   })
 
@@ -296,6 +300,13 @@ describe('urls', () => {
       expect(urls.investments.profiles.data()).to.equal(
         '/investments/profiles/data'
       )
+    })
+  })
+
+  describe('pipeline', () => {
+    it('should return the correct value', () => {
+      expect(urls.pipeline.index()).to.equal('/pipeline')
+      expect(urls.pipeline.index.route).to.equal('/')
     })
   })
 })
