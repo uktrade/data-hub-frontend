@@ -10,6 +10,6 @@ module.exports = () => {
     },
     archivedMessage: '[data-auto-id="archivedMessage"]',
     investigationMessage: '[data-auto-id="investigationMessage"]',
-    flash: '[data-auto-id="flash"]',
+    flashMessageList: '[data-auto-id="flash"]',
   }
 }

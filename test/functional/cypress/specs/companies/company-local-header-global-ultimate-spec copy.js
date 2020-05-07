@@ -3,6 +3,8 @@ const { testBreadcrumbs } = require('../../support/assertions')
 const fixtures = require('../../fixtures')
 const { companies, dashboard } = require('../../../../../src/lib/urls')
 
+const companyLocalHeader = selectors.companyLocalHeader()
+
 describe('Local header for global ultimate company', () => {
   context('when visting a global ultimate company activity page', () => {
     before(() => {
@@ -19,13 +21,13 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the company name', () => {
-      cy.get(selectors.companyLocalHeader().companyName).contains(
+      cy.get(companyLocalHeader.companyName).contains(
         fixtures.company.dnbGlobalUltimate.name
       )
     })
 
     it('should display the company address', () => {
-      cy.get(selectors.companyLocalHeader().address).contains(
+      cy.get(companyLocalHeader.address).contains(
         '1700 Amphitheatre Way, Mountain Range, 95543-1771, United States'
       )
     })
@@ -41,11 +43,11 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display an "Ultimate HQ" badge', () => {
-      cy.get(selectors.companyLocalHeader().badge).contains('Ultimate HQ')
+      cy.get(companyLocalHeader.badge).contains('Ultimate HQ')
     })
 
     it('should display an "What does this mean?" details', () => {
-      cy.get(selectors.companyLocalHeader().metaList)
+      cy.get(companyLocalHeader.metaList)
         .should('contain', 'What does this mean?')
         .should(
           'contain',
@@ -54,7 +56,7 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the correct description', () => {
-      cy.get(selectors.companyLocalHeader().description.paragraph(1))
+      cy.get(companyLocalHeader.description.paragraph(1))
         .contains(
           'Data Hub contains 2 other company records related to this company'
         )
@@ -64,10 +66,10 @@ describe('Local header for global ultimate company', () => {
           'href',
           companies.dnbHierarchy.index(fixtures.company.dnbGlobalUltimate.id)
         )
-      cy.get(selectors.companyLocalHeader().description.paragraph(2)).contains(
+      cy.get(companyLocalHeader.description.paragraph(2)).contains(
         'This is an account managed company (One List Tier A - Strategic Account)'
       )
-      cy.get(selectors.companyLocalHeader().description.paragraph(3))
+      cy.get(companyLocalHeader.description.paragraph(3))
         .contains('Global Account Manager: Travis Greene View core team')
         .contains('View core team')
         .should(
@@ -100,13 +102,13 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the company name', () => {
-      cy.get(selectors.companyLocalHeader().companyName).contains(
+      cy.get(companyLocalHeader.companyName).contains(
         fixtures.company.dnbGlobalUltimate.name
       )
     })
 
     it('should display the company address', () => {
-      cy.get(selectors.companyLocalHeader().address).contains(
+      cy.get(companyLocalHeader.address).contains(
         '1700 Amphitheatre Way, Mountain Range, 95543-1771, United States'
       )
     })
@@ -124,11 +126,11 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display an "Ultimate HQ" badge', () => {
-      cy.get(selectors.companyLocalHeader().badge).contains('Ultimate HQ')
+      cy.get(companyLocalHeader.badge).contains('Ultimate HQ')
     })
 
     it('should display an "What does this mean?" details', () => {
-      cy.get(selectors.companyLocalHeader().metaList)
+      cy.get(companyLocalHeader.metaList)
         .should('contain', 'What does this mean?')
         .should(
           'contain',
@@ -137,7 +139,7 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the correct description', () => {
-      cy.get(selectors.companyLocalHeader().description.paragraph(1))
+      cy.get(companyLocalHeader.description.paragraph(1))
         .contains(
           'Data Hub contains 2 other company records related to this company'
         )
@@ -147,10 +149,10 @@ describe('Local header for global ultimate company', () => {
           'href',
           companies.dnbHierarchy.index(fixtures.company.dnbGlobalUltimate.id)
         )
-      cy.get(selectors.companyLocalHeader().description.paragraph(2)).contains(
+      cy.get(companyLocalHeader.description.paragraph(2)).contains(
         'This is an account managed company (One List Tier A - Strategic Account)'
       )
-      cy.get(selectors.companyLocalHeader().description.paragraph(3))
+      cy.get(companyLocalHeader.description.paragraph(3))
         .contains('Global Account Manager: Travis Greene View core team')
         .contains('View core team')
         .should(
@@ -183,13 +185,13 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the company name', () => {
-      cy.get(selectors.companyLocalHeader().companyName).contains(
+      cy.get(companyLocalHeader.companyName).contains(
         fixtures.company.dnbGlobalUltimate.name
       )
     })
 
     it('should display the company address', () => {
-      cy.get(selectors.companyLocalHeader().address).contains(
+      cy.get(companyLocalHeader.address).contains(
         '1700 Amphitheatre Way, Mountain Range, 95543-1771, United States'
       )
     })
@@ -207,11 +209,11 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display an "Ultimate HQ" badge', () => {
-      cy.get(selectors.companyLocalHeader().badge).contains('Ultimate HQ')
+      cy.get(companyLocalHeader.badge).contains('Ultimate HQ')
     })
 
     it('should display an "What does this mean?" details', () => {
-      cy.get(selectors.companyLocalHeader().metaList)
+      cy.get(companyLocalHeader.metaList)
         .should('contain', 'What does this mean?')
         .should(
           'contain',
@@ -220,7 +222,7 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the correct description', () => {
-      cy.get(selectors.companyLocalHeader().description.paragraph(1))
+      cy.get(companyLocalHeader.description.paragraph(1))
         .contains(
           'Data Hub contains 2 other company records related to this company'
         )
@@ -230,10 +232,10 @@ describe('Local header for global ultimate company', () => {
           'href',
           companies.dnbHierarchy.index(fixtures.company.dnbGlobalUltimate.id)
         )
-      cy.get(selectors.companyLocalHeader().description.paragraph(2)).contains(
+      cy.get(companyLocalHeader.description.paragraph(2)).contains(
         'This is an account managed company (One List Tier A - Strategic Account)'
       )
-      cy.get(selectors.companyLocalHeader().description.paragraph(3))
+      cy.get(companyLocalHeader.description.paragraph(3))
         .contains('Global Account Manager: Travis Greene View core team')
         .contains('View core team')
         .should(
@@ -272,13 +274,13 @@ describe('Local header for global ultimate company', () => {
       })
 
       it('should display the company name', () => {
-        cy.get(selectors.companyLocalHeader().companyName).contains(
+        cy.get(companyLocalHeader.companyName).contains(
           fixtures.company.dnbGlobalUltimate.name
         )
       })
 
       it('should display the company address', () => {
-        cy.get(selectors.companyLocalHeader().address).contains(
+        cy.get(companyLocalHeader.address).contains(
           '1700 Amphitheatre Way, Mountain Range, 95543-1771, United States'
         )
       })
@@ -296,11 +298,11 @@ describe('Local header for global ultimate company', () => {
       })
 
       it('should display an "Ultimate HQ" badge', () => {
-        cy.get(selectors.companyLocalHeader().badge).contains('Ultimate HQ')
+        cy.get(companyLocalHeader.badge).contains('Ultimate HQ')
       })
 
       it('should display an "What does this mean?" details', () => {
-        cy.get(selectors.companyLocalHeader().metaList)
+        cy.get(companyLocalHeader.metaList)
           .should('contain', 'What does this mean?')
           .should(
             'contain',
@@ -309,7 +311,7 @@ describe('Local header for global ultimate company', () => {
       })
 
       it('should display the correct description', () => {
-        cy.get(selectors.companyLocalHeader().description.paragraph(1))
+        cy.get(companyLocalHeader.description.paragraph(1))
           .contains(
             'Data Hub contains 2 other company records related to this company'
           )
@@ -319,12 +321,10 @@ describe('Local header for global ultimate company', () => {
             'href',
             companies.dnbHierarchy.index(fixtures.company.dnbGlobalUltimate.id)
           )
-        cy.get(
-          selectors.companyLocalHeader().description.paragraph(2)
-        ).contains(
+        cy.get(companyLocalHeader.description.paragraph(2)).contains(
           'This is an account managed company (One List Tier A - Strategic Account)'
         )
-        cy.get(selectors.companyLocalHeader().description.paragraph(3))
+        cy.get(companyLocalHeader.description.paragraph(3))
           .contains('Global Account Manager: Travis Greene View core team')
           .contains('View core team')
           .should(
@@ -364,13 +364,13 @@ describe('Local header for global ultimate company', () => {
       })
 
       it('should display the company name', () => {
-        cy.get(selectors.companyLocalHeader().companyName).contains(
+        cy.get(companyLocalHeader.companyName).contains(
           fixtures.company.dnbGlobalUltimate.name
         )
       })
 
       it('should display the company address', () => {
-        cy.get(selectors.companyLocalHeader().address).contains(
+        cy.get(companyLocalHeader.address).contains(
           '1700 Amphitheatre Way, Mountain Range, 95543-1771, United States'
         )
       })
@@ -388,11 +388,11 @@ describe('Local header for global ultimate company', () => {
       })
 
       it('should display an "Ultimate HQ" badge', () => {
-        cy.get(selectors.companyLocalHeader().badge).contains('Ultimate HQ')
+        cy.get(companyLocalHeader.badge).contains('Ultimate HQ')
       })
 
       it('should display an "What does this mean?" details', () => {
-        cy.get(selectors.companyLocalHeader().metaList)
+        cy.get(companyLocalHeader.metaList)
           .should('contain', 'What does this mean?')
           .should(
             'contain',
@@ -401,7 +401,7 @@ describe('Local header for global ultimate company', () => {
       })
 
       it('should display the correct description', () => {
-        cy.get(selectors.companyLocalHeader().description.paragraph(1))
+        cy.get(companyLocalHeader.description.paragraph(1))
           .contains(
             'Data Hub contains 2 other company records related to this company'
           )
@@ -411,12 +411,10 @@ describe('Local header for global ultimate company', () => {
             'href',
             companies.dnbHierarchy.index(fixtures.company.dnbGlobalUltimate.id)
           )
-        cy.get(
-          selectors.companyLocalHeader().description.paragraph(2)
-        ).contains(
+        cy.get(companyLocalHeader.description.paragraph(2)).contains(
           'This is an account managed company (One List Tier A - Strategic Account)'
         )
-        cy.get(selectors.companyLocalHeader().description.paragraph(3))
+        cy.get(companyLocalHeader.description.paragraph(3))
           .contains('Global Account Manager: Travis Greene View core team')
           .contains('View core team')
           .should(
@@ -450,13 +448,13 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the company name', () => {
-      cy.get(selectors.companyLocalHeader().companyName).contains(
+      cy.get(companyLocalHeader.companyName).contains(
         fixtures.company.dnbGlobalUltimate.name
       )
     })
 
     it('should display the company address', () => {
-      cy.get(selectors.companyLocalHeader().address).contains(
+      cy.get(companyLocalHeader.address).contains(
         '1700 Amphitheatre Way, Mountain Range, 95543-1771, United States'
       )
     })
@@ -474,11 +472,11 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display an "Ultimate HQ" badge', () => {
-      cy.get(selectors.companyLocalHeader().badge).contains('Ultimate HQ')
+      cy.get(companyLocalHeader.badge).contains('Ultimate HQ')
     })
 
     it('should display an "What does this mean?" details', () => {
-      cy.get(selectors.companyLocalHeader().metaList)
+      cy.get(companyLocalHeader.metaList)
         .should('contain', 'What does this mean?')
         .should(
           'contain',
@@ -487,7 +485,7 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the correct description', () => {
-      cy.get(selectors.companyLocalHeader().description.paragraph(1))
+      cy.get(companyLocalHeader.description.paragraph(1))
         .contains(
           'Data Hub contains 2 other company records related to this company'
         )
@@ -497,10 +495,10 @@ describe('Local header for global ultimate company', () => {
           'href',
           companies.dnbHierarchy.index(fixtures.company.dnbGlobalUltimate.id)
         )
-      cy.get(selectors.companyLocalHeader().description.paragraph(2)).contains(
+      cy.get(companyLocalHeader.description.paragraph(2)).contains(
         'This is an account managed company (One List Tier A - Strategic Account)'
       )
-      cy.get(selectors.companyLocalHeader().description.paragraph(3))
+      cy.get(companyLocalHeader.description.paragraph(3))
         .contains('Global Account Manager: Travis Greene View core team')
         .contains('View core team')
         .should(
@@ -536,13 +534,13 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the company name', () => {
-      cy.get(selectors.companyLocalHeader().companyName).contains(
+      cy.get(companyLocalHeader.companyName).contains(
         fixtures.company.dnbGlobalUltimate.name
       )
     })
 
     it('should display the company address', () => {
-      cy.get(selectors.companyLocalHeader().address).contains(
+      cy.get(companyLocalHeader.address).contains(
         '1700 Amphitheatre Way, Mountain Range, 95543-1771, United States'
       )
     })
@@ -560,11 +558,11 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display an "Ultimate HQ" badge', () => {
-      cy.get(selectors.companyLocalHeader().badge).contains('Ultimate HQ')
+      cy.get(companyLocalHeader.badge).contains('Ultimate HQ')
     })
 
     it('should display an "What does this mean?" details', () => {
-      cy.get(selectors.companyLocalHeader().metaList)
+      cy.get(companyLocalHeader.metaList)
         .should('contain', 'What does this mean?')
         .should(
           'contain',
@@ -573,7 +571,7 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the correct description', () => {
-      cy.get(selectors.companyLocalHeader().description.paragraph(1))
+      cy.get(companyLocalHeader.description.paragraph(1))
         .contains(
           'Data Hub contains 2 other company records related to this company'
         )
@@ -583,10 +581,10 @@ describe('Local header for global ultimate company', () => {
           'href',
           companies.dnbHierarchy.index(fixtures.company.dnbGlobalUltimate.id)
         )
-      cy.get(selectors.companyLocalHeader().description.paragraph(2)).contains(
+      cy.get(companyLocalHeader.description.paragraph(2)).contains(
         'This is an account managed company (One List Tier A - Strategic Account)'
       )
-      cy.get(selectors.companyLocalHeader().description.paragraph(3))
+      cy.get(companyLocalHeader.description.paragraph(3))
         .contains('Global Account Manager: Travis Greene View core team')
         .contains('View core team')
         .should(
@@ -619,13 +617,13 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the company name', () => {
-      cy.get(selectors.companyLocalHeader().companyName).contains(
+      cy.get(companyLocalHeader.companyName).contains(
         fixtures.company.dnbGlobalUltimate.name
       )
     })
 
     it('should display the company address', () => {
-      cy.get(selectors.companyLocalHeader().address).contains(
+      cy.get(companyLocalHeader.address).contains(
         '1700 Amphitheatre Way, Mountain Range, 95543-1771, United States'
       )
     })
@@ -643,11 +641,11 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display an "Ultimate HQ" badge', () => {
-      cy.get(selectors.companyLocalHeader().badge).contains('Ultimate HQ')
+      cy.get(companyLocalHeader.badge).contains('Ultimate HQ')
     })
 
     it('should display an "What does this mean?" details', () => {
-      cy.get(selectors.companyLocalHeader().metaList)
+      cy.get(companyLocalHeader.metaList)
         .should('contain', 'What does this mean?')
         .should(
           'contain',
@@ -656,7 +654,7 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the correct description', () => {
-      cy.get(selectors.companyLocalHeader().description.paragraph(1))
+      cy.get(companyLocalHeader.description.paragraph(1))
         .contains(
           'Data Hub contains 2 other company records related to this company'
         )
@@ -666,10 +664,10 @@ describe('Local header for global ultimate company', () => {
           'href',
           companies.dnbHierarchy.index(fixtures.company.dnbGlobalUltimate.id)
         )
-      cy.get(selectors.companyLocalHeader().description.paragraph(2)).contains(
+      cy.get(companyLocalHeader.description.paragraph(2)).contains(
         'This is an account managed company (One List Tier A - Strategic Account)'
       )
-      cy.get(selectors.companyLocalHeader().description.paragraph(3))
+      cy.get(companyLocalHeader.description.paragraph(3))
         .contains('Global Account Manager: Travis Greene View core team')
         .contains('View core team')
         .should(

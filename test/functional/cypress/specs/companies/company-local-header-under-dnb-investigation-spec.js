@@ -3,6 +3,8 @@ const { testBreadcrumbs } = require('../../support/assertions')
 const fixtures = require('../../fixtures')
 const { companies, dashboard } = require('../../../../../src/lib/urls')
 
+const companyLocalHeader = selectors.companyLocalHeader()
+
 describe('Local header for company under dnb investigation', () => {
   context(
     'when visting a company under dnb investigation activity page',
@@ -23,13 +25,13 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the company name', () => {
-        cy.get(selectors.companyLocalHeader().companyName).contains(
+        cy.get(companyLocalHeader.companyName).contains(
           fixtures.company.investigationLimited.name
         )
       })
 
       it('should display the company address', () => {
-        cy.get(selectors.companyLocalHeader().address).contains(
+        cy.get(companyLocalHeader.address).contains(
           'Unit 10, Ockham Drive, GREENFORD, UB6 0F2, United Kingdom'
         )
       })
@@ -47,17 +49,15 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should not display a badge', () => {
-        cy.get(selectors.companyLocalHeader().badge).should('not.exist')
+        cy.get(companyLocalHeader.badge).should('not.exist')
       })
 
       it('should not display an "What does this mean?" details', () => {
-        cy.get(selectors.companyLocalHeader().metaList).should('not.exist')
+        cy.get(companyLocalHeader.metaList).should('not.exist')
       })
 
       it('should display the correct description', () => {
-        cy.get(selectors.companyLocalHeader().description.paragraph(1)).should(
-          'not.exist'
-        )
+        cy.get(companyLocalHeader.description.paragraph(1)).should('not.exist')
       })
 
       it('should display the link to the full business details', () => {
@@ -69,7 +69,7 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the investigation message', () => {
-        cy.get(selectors.companyLocalHeader().investigationMessage).contains(
+        cy.get(companyLocalHeader.investigationMessage).contains(
           'This company record is based on information that has not yet been validated. This information is currently being checked by the Data Hub support team.'
         )
       })
@@ -92,13 +92,13 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the company name', () => {
-        cy.get(selectors.companyLocalHeader().companyName).contains(
+        cy.get(companyLocalHeader.companyName).contains(
           fixtures.company.investigationLimited.name
         )
       })
 
       it('should display the company address', () => {
-        cy.get(selectors.companyLocalHeader().address).contains(
+        cy.get(companyLocalHeader.address).contains(
           'Unit 10, Ockham Drive, GREENFORD, UB6 0F2, United Kingdom'
         )
       })
@@ -116,17 +116,15 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should not display a badge', () => {
-        cy.get(selectors.companyLocalHeader().badge).should('not.exist')
+        cy.get(companyLocalHeader.badge).should('not.exist')
       })
 
       it('should not display an "What does this mean?" details', () => {
-        cy.get(selectors.companyLocalHeader().metaList).should('not.exist')
+        cy.get(companyLocalHeader.metaList).should('not.exist')
       })
 
       it('should display the correct description', () => {
-        cy.get(selectors.companyLocalHeader().description.paragraph(1)).should(
-          'not.exist'
-        )
+        cy.get(companyLocalHeader.description.paragraph(1)).should('not.exist')
       })
 
       it('should display the link to the full business details', () => {
@@ -138,7 +136,7 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the investigation message', () => {
-        cy.get(selectors.companyLocalHeader().investigationMessage).contains(
+        cy.get(companyLocalHeader.investigationMessage).contains(
           'This company record is based on information that has not yet been validated. This information is currently being checked by the Data Hub support team.'
         )
       })
@@ -163,13 +161,13 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the company name', () => {
-        cy.get(selectors.companyLocalHeader().companyName).contains(
+        cy.get(companyLocalHeader.companyName).contains(
           fixtures.company.investigationLimited.name
         )
       })
 
       it('should display the company address', () => {
-        cy.get(selectors.companyLocalHeader().address).contains(
+        cy.get(companyLocalHeader.address).contains(
           'Unit 10, Ockham Drive, GREENFORD, UB6 0F2, United Kingdom'
         )
       })
@@ -187,17 +185,15 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should not display a badge', () => {
-        cy.get(selectors.companyLocalHeader().badge).should('not.exist')
+        cy.get(companyLocalHeader.badge).should('not.exist')
       })
 
       it('should not display an "What does this mean?" details', () => {
-        cy.get(selectors.companyLocalHeader().metaList).should('not.exist')
+        cy.get(companyLocalHeader.metaList).should('not.exist')
       })
 
       it('should display the correct description', () => {
-        cy.get(selectors.companyLocalHeader().description.paragraph(1)).should(
-          'not.exist'
-        )
+        cy.get(companyLocalHeader.description.paragraph(1)).should('not.exist')
       })
 
       it('should display the link to the full business details', () => {
@@ -209,7 +205,7 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the investigation message', () => {
-        cy.get(selectors.companyLocalHeader().investigationMessage).contains(
+        cy.get(companyLocalHeader.investigationMessage).contains(
           'This company record is based on information that has not yet been validated. This information is currently being checked by the Data Hub support team.'
         )
       })
@@ -236,13 +232,13 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the company name', () => {
-        cy.get(selectors.companyLocalHeader().companyName).contains(
+        cy.get(companyLocalHeader.companyName).contains(
           fixtures.company.investigationLimited.name
         )
       })
 
       it('should display the company address', () => {
-        cy.get(selectors.companyLocalHeader().address).contains(
+        cy.get(companyLocalHeader.address).contains(
           'Unit 10, Ockham Drive, GREENFORD, UB6 0F2, United Kingdom'
         )
       })
@@ -260,17 +256,15 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should not display a badge', () => {
-        cy.get(selectors.companyLocalHeader().badge).should('not.exist')
+        cy.get(companyLocalHeader.badge).should('not.exist')
       })
 
       it('should not display an "What does this mean?" details', () => {
-        cy.get(selectors.companyLocalHeader().metaList).should('not.exist')
+        cy.get(companyLocalHeader.metaList).should('not.exist')
       })
 
       it('should display the correct description', () => {
-        cy.get(selectors.companyLocalHeader().description.paragraph(1)).should(
-          'not.exist'
-        )
+        cy.get(companyLocalHeader.description.paragraph(1)).should('not.exist')
       })
 
       it('should display the link to the full business details', () => {
@@ -282,7 +276,7 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the investigation message', () => {
-        cy.get(selectors.companyLocalHeader().investigationMessage).contains(
+        cy.get(companyLocalHeader.investigationMessage).contains(
           'This company record is based on information that has not yet been validated. This information is currently being checked by the Data Hub support team.'
         )
       })
@@ -309,13 +303,13 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the company name', () => {
-        cy.get(selectors.companyLocalHeader().companyName).contains(
+        cy.get(companyLocalHeader.companyName).contains(
           fixtures.company.investigationLimited.name
         )
       })
 
       it('should display the company address', () => {
-        cy.get(selectors.companyLocalHeader().address).contains(
+        cy.get(companyLocalHeader.address).contains(
           'Unit 10, Ockham Drive, GREENFORD, UB6 0F2, United Kingdom'
         )
       })
@@ -333,17 +327,15 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should not display a badge', () => {
-        cy.get(selectors.companyLocalHeader().badge).should('not.exist')
+        cy.get(companyLocalHeader.badge).should('not.exist')
       })
 
       it('should not display an "What does this mean?" details', () => {
-        cy.get(selectors.companyLocalHeader().metaList).should('not.exist')
+        cy.get(companyLocalHeader.metaList).should('not.exist')
       })
 
       it('should display the correct description', () => {
-        cy.get(selectors.companyLocalHeader().description.paragraph(1)).should(
-          'not.exist'
-        )
+        cy.get(companyLocalHeader.description.paragraph(1)).should('not.exist')
       })
 
       it('should display the link to the full business details', () => {
@@ -355,7 +347,7 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the investigation message', () => {
-        cy.get(selectors.companyLocalHeader().investigationMessage).contains(
+        cy.get(companyLocalHeader.investigationMessage).contains(
           'This company record is based on information that has not yet been validated. This information is currently being checked by the Data Hub support team.'
         )
       })
@@ -378,13 +370,13 @@ describe('Local header for company under dnb investigation', () => {
     })
 
     it('should display the company name', () => {
-      cy.get(selectors.companyLocalHeader().companyName).contains(
+      cy.get(companyLocalHeader.companyName).contains(
         fixtures.company.investigationLimited.name
       )
     })
 
     it('should display the company address', () => {
-      cy.get(selectors.companyLocalHeader().address).contains(
+      cy.get(companyLocalHeader.address).contains(
         'Unit 10, Ockham Drive, GREENFORD, UB6 0F2, United Kingdom'
       )
     })
@@ -402,17 +394,15 @@ describe('Local header for company under dnb investigation', () => {
     })
 
     it('should not display a badge', () => {
-      cy.get(selectors.companyLocalHeader().badge).should('not.exist')
+      cy.get(companyLocalHeader.badge).should('not.exist')
     })
 
     it('should not display an "What does this mean?" details', () => {
-      cy.get(selectors.companyLocalHeader().metaList).should('not.exist')
+      cy.get(companyLocalHeader.metaList).should('not.exist')
     })
 
     it('should display the correct description', () => {
-      cy.get(selectors.companyLocalHeader().description.paragraph(1)).should(
-        'not.exist'
-      )
+      cy.get(companyLocalHeader.description.paragraph(1)).should('not.exist')
     })
 
     it('should display the link to the full business details', () => {
@@ -424,7 +414,7 @@ describe('Local header for company under dnb investigation', () => {
     })
 
     it('should display the investigation message', () => {
-      cy.get(selectors.companyLocalHeader().investigationMessage).contains(
+      cy.get(companyLocalHeader.investigationMessage).contains(
         'This company record is based on information that has not yet been validated. This information is currently being checked by the Data Hub support team.'
       )
     })
@@ -453,13 +443,13 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the company name', () => {
-        cy.get(selectors.companyLocalHeader().companyName).contains(
+        cy.get(companyLocalHeader.companyName).contains(
           fixtures.company.investigationLimited.name
         )
       })
 
       it('should display the company address', () => {
-        cy.get(selectors.companyLocalHeader().address).contains(
+        cy.get(companyLocalHeader.address).contains(
           'Unit 10, Ockham Drive, GREENFORD, UB6 0F2, United Kingdom'
         )
       })
@@ -477,17 +467,15 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should not display a badge', () => {
-        cy.get(selectors.companyLocalHeader().badge).should('not.exist')
+        cy.get(companyLocalHeader.badge).should('not.exist')
       })
 
       it('should not display an "What does this mean?" details', () => {
-        cy.get(selectors.companyLocalHeader().metaList).should('not.exist')
+        cy.get(companyLocalHeader.metaList).should('not.exist')
       })
 
       it('should display the correct description', () => {
-        cy.get(selectors.companyLocalHeader().description.paragraph(1)).should(
-          'not.exist'
-        )
+        cy.get(companyLocalHeader.description.paragraph(1)).should('not.exist')
       })
 
       it('should display the link to the full business details', () => {
@@ -499,7 +487,7 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the investigation message', () => {
-        cy.get(selectors.companyLocalHeader().investigationMessage).contains(
+        cy.get(companyLocalHeader.investigationMessage).contains(
           'This company record is based on information that has not yet been validated. This information is currently being checked by the Data Hub support team.'
         )
       })
@@ -520,13 +508,13 @@ describe('Local header for company under dnb investigation', () => {
     })
 
     it('should display the company name', () => {
-      cy.get(selectors.companyLocalHeader().companyName).contains(
+      cy.get(companyLocalHeader.companyName).contains(
         fixtures.company.investigationLimited.name
       )
     })
 
     it('should display the company address', () => {
-      cy.get(selectors.companyLocalHeader().address).contains(
+      cy.get(companyLocalHeader.address).contains(
         'Unit 10, Ockham Drive, GREENFORD, UB6 0F2, United Kingdom'
       )
     })
@@ -544,17 +532,15 @@ describe('Local header for company under dnb investigation', () => {
     })
 
     it('should not display a badge', () => {
-      cy.get(selectors.companyLocalHeader().badge).should('not.exist')
+      cy.get(companyLocalHeader.badge).should('not.exist')
     })
 
     it('should not display an "What does this mean?" details', () => {
-      cy.get(selectors.companyLocalHeader().metaList).should('not.exist')
+      cy.get(companyLocalHeader.metaList).should('not.exist')
     })
 
     it('should display the correct description', () => {
-      cy.get(selectors.companyLocalHeader().description.paragraph(1)).should(
-        'not.exist'
-      )
+      cy.get(companyLocalHeader.description.paragraph(1)).should('not.exist')
     })
 
     it('should display the link to the full business details', () => {
@@ -566,7 +552,7 @@ describe('Local header for company under dnb investigation', () => {
     })
 
     it('should display the investigation message', () => {
-      cy.get(selectors.companyLocalHeader().investigationMessage).contains(
+      cy.get(companyLocalHeader.investigationMessage).contains(
         'This company record is based on information that has not yet been validated. This information is currently being checked by the Data Hub support team.'
       )
     })

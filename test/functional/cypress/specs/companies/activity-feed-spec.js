@@ -2,6 +2,8 @@ const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const { companies } = require('../../../../../src/lib/urls')
 
+const companyLocalHeader = selectors.companyLocalHeader()
+
 describe('Company activity feed', () => {
   context('when viewing Venus Ltd which has no activities', () => {
     before(() => {
@@ -50,16 +52,13 @@ describe('Company activity feed', () => {
     })
 
     it('should display the badge', () => {
-      cy.get(selectors.companyLocalHeader().badge).should(
-        'have.text',
-        'Global HQ'
-      )
+      cy.get(companyLocalHeader.badge).should('have.text', 'Global HQ')
     })
 
     it('should display the One List tier', () => {
       const expected =
         'This is an account managed company (One List Tier A - Strategic Account)'
-      cy.get(selectors.companyLocalHeader().description.paragraph(1)).should(
+      cy.get(companyLocalHeader.description.paragraph(1)).should(
         'have.text',
         expected
       )
@@ -67,7 +66,7 @@ describe('Company activity feed', () => {
 
     it('should display the Global Account Manager', () => {
       const expected = 'Global Account Manager: Travis Greene View core team'
-      cy.get(selectors.companyLocalHeader().description.paragraph(2)).should(
+      cy.get(companyLocalHeader.description.paragraph(2)).should(
         'have.text',
         expected
       )

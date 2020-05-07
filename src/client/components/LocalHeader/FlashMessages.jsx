@@ -38,11 +38,8 @@ const FlashMessages = ({ flashMessages }) => (
       const parts = String(type).split(':')
       return parts.length > 1
         ? message.map((message) => (
-            <li>
-              <StatusMessage
-                colour={messageColours[parts[0]]}
-                key={message.body}
-              >
+            <li key={message.body}>
+              <StatusMessage colour={messageColours[parts[0]]}>
                 <StyledHeading>{message.heading}</StyledHeading>
                 <StyledBody
                   dangerouslySetInnerHTML={{ __html: message.body }}
@@ -51,8 +48,8 @@ const FlashMessages = ({ flashMessages }) => (
             </li>
           ))
         : message.map((message) => (
-            <li>
-              <StatusMessage colour={messageColours[type]} key={message}>
+            <li key={message}>
+              <StatusMessage colour={messageColours[type]}>
                 <StyledMessage dangerouslySetInnerHTML={{ __html: message }} />
               </StatusMessage>
             </li>

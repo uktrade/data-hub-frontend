@@ -5,6 +5,8 @@ const selectors = require('../../../../../selectors/index')
 const EXPECTED_NAME = 'Andy Pipkin'
 const EXPECTED_TEAM = 'Andy & Lou'
 
+const companyLocalHeader = selectors.companyLocalHeader()
+
 const selectMainContent = () =>
   cy
     .get('main')
@@ -103,7 +105,7 @@ const addOrReplaceTestCase = ({
 
     cy.get('@submit').click()
 
-    cy.get(selectors.companyLocalHeader().flash).contains(
+    cy.get(companyLocalHeader.flashMessageList).contains(
       'Lead adviser information updated'
     )
   })
@@ -187,7 +189,7 @@ describe('Manage Lead ITA', () => {
 
     cy.get('@submit').click()
 
-    cy.get(selectors.companyLocalHeader().flash).contains(
+    cy.get(companyLocalHeader.flashMessageList).contains(
       'Lead adviser information updated'
     )
   })

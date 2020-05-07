@@ -9,7 +9,7 @@ const { saveCompanyExportDetails } = require('../../repos')
 const { transformObjectToOption } = require('../../../transformers')
 const { transformCompanyToExportDetailsView } = require('./transformer')
 const { exportDetailsLabels, exportPotentialLabels } = require('../../labels')
-const { companies, dashboard } = require('../../../../lib/urls')
+const urls = require('../../../../lib/urls')
 
 const {
   EXPORT_INTEREST_STATUS,
@@ -70,9 +70,9 @@ function renderExports(req, res) {
       companyName: company.name,
       company,
       breadcrumbs: [
-        { link: dashboard(), text: 'Home' },
-        { link: companies.index(), text: 'Companies' },
-        { link: companies.detail(company.id), text: company.name },
+        { link: urls.dashboard(), text: 'Home' },
+        { link: urls.companies.index(), text: 'Companies' },
+        { link: urls.companies.detail(company.id), text: company.name },
         { text: 'Exports' },
       ],
       returnUrl,
@@ -97,10 +97,10 @@ function renderExportHistory(req, res) {
       countryId,
       company,
       breadcrumbs: [
-        { link: dashboard(), text: 'Home' },
-        { link: companies.index(), text: 'Companies' },
-        { link: companies.detail(company.id), text: company.name },
-        { link: companies.exports.index(company.id), text: 'Exports' },
+        { link: urls.dashboard(), text: 'Home' },
+        { link: urls.companies.index(), text: 'Companies' },
+        { link: urls.companies.detail(company.id), text: company.name },
+        { link: urls.companies.exports.index(company.id), text: 'Exports' },
         { text: pageTitle },
       ],
       returnUrl,
@@ -126,8 +126,8 @@ function renderExportEdit(req, res) {
   const exportWinCategoryValue = company.export_experience_category
 
   res
-    .breadcrumb(company.name, companies.detail(company.id))
-    .breadcrumb('Exports', companies.exports.index(company.id))
+    .breadcrumb(company.name, urls.companies.detail(company.id))
+    .breadcrumb('Exports', urls.companies.exports.index(company.id))
     .breadcrumb('Edit')
     .render('companies/apps/exports/views/edit', {
       props: {
@@ -167,8 +167,8 @@ function renderExportEditCountries(req, res) {
   } = EXPORT_INTEREST_STATUS
 
   res
-    .breadcrumb(company.name, companies.detail(company.id))
-    .breadcrumb('Exports', companies.exports.index(company.id))
+    .breadcrumb(company.name, urls.companies.detail(company.id))
+    .breadcrumb('Exports', urls.companies.exports.index(company.id))
     .breadcrumb('Edit export countries')
     .render('companies/apps/exports/views/edit-countries', {
       props: {
@@ -210,7 +210,7 @@ async function handleEditFormPost(req, res, next) {
       export_countries: getExportCountries(req.body) || [],
     })
 
-    res.redirect(companies.exports.index(companyId))
+    res.redirect(urls.companies.exports.index(companyId))
   } catch (err) {
     if (err.statusCode !== 400) {
       return next(err)

@@ -1,6 +1,6 @@
 const { FILTER_ITEMS, FILTER_KEYS } = require('./constants')
 const { getGlobalUltimateHierarchy } = require('../../repos')
-const { companies, dashboard } = require('../../../../lib/urls')
+const urls = require('../../../../lib/urls')
 const { createESFilters } = require('./builders')
 const { fetchActivityFeed } = require('./repos')
 const config = require('../../../../config')
@@ -13,26 +13,23 @@ async function renderActivityFeed(req, res, next) {
     dnbRelatedCompaniesCount,
   } = res.locals
 
+  const breadcrumbs = [
+    { link: urls.dashboard(), text: 'Home' },
+    { link: urls.companies.index(), text: 'Companies' },
+    { link: urls.companies.detail(company.id), text: company.name },
+    { text: 'Activity Feed' },
+  ]
+
   try {
     const contentProps = company.archived
       ? {
           company,
-          breadcrumbs: [
-            { link: dashboard(), text: 'Home' },
-            { link: companies.index(), text: 'Companies' },
-            { link: companies.detail(company.id), text: company.name },
-            { text: 'Activity Feed' },
-          ],
-          flashMessages: { ...res.locals.getMessages(), ...req.flashWithBody },
+          breadcrumbs,
+          flashMessages: res.locals.getMessages(),
         }
       : {
           company,
-          breadcrumbs: [
-            { link: dashboard(), text: 'Home' },
-            { link: companies.index(), text: 'Companies' },
-            { link: companies.detail(company.id), text: company.name },
-            { text: 'Activity Feed' },
-          ],
+          breadcrumbs,
           flashMessages: res.locals.getMessages(),
           activityTypeFilter: FILTER_KEYS.dataHubActivity,
           activityTypeFilters: FILTER_ITEMS,
@@ -50,7 +47,7 @@ async function renderActivityFeed(req, res, next) {
 
     const props = {
       ...contentProps,
-      apiEndpoint: companies.activity.data(company.id),
+      apiEndpoint: urls.companies.activity.data(company.id),
     }
 
     res.render('companies/apps/activity-feed/views/client-container', { props })

@@ -2,6 +2,8 @@ const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 const { assertBreadcrumbs } = require('../../support/assertions')
 
+const companyLocalHeader = selectors.companyLocalHeader()
+
 describe('Complete interaction', () => {
   context('Render form', () => {
     const params = {}
@@ -220,7 +222,7 @@ describe('Complete interaction', () => {
         })
 
         it('should show the success message', () => {
-          cy.get(selectors.companyLocalHeader().flash).contains(
+          cy.get(companyLocalHeader.flashMessageList).contains(
             'The interaction has been updated'
           )
         })
@@ -260,7 +262,7 @@ describe('Complete interaction', () => {
         })
 
         it('should show the success message', () => {
-          cy.get(selectors.companyLocalHeader().flash).contains(
+          cy.get(companyLocalHeader.flashMessageList).contains(
             'The interaction has been updated'
           )
         })
@@ -346,7 +348,7 @@ describe('Complete interaction', () => {
           })
 
           it('should show the success message', () => {
-            cy.get(selectors.companyLocalHeader().flash).contains(
+            cy.get(companyLocalHeader.flashMessageList).contains(
               'The interaction has been updated'
             )
           })

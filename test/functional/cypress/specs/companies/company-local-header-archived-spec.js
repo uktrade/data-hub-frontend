@@ -3,6 +3,8 @@ const { testBreadcrumbs } = require('../../support/assertions')
 const fixtures = require('../../fixtures')
 const { companies, dashboard } = require('../../../../../src/lib/urls')
 
+const companyLocalHeader = selectors.companyLocalHeader()
+
 describe('Local header for archived company', () => {
   context('when visting an archived company activity page', () => {
     before(() => {
@@ -17,13 +19,13 @@ describe('Local header for archived company', () => {
       'Activity Feed': null,
     })
     it('should display the company name', () => {
-      cy.get(selectors.companyLocalHeader().companyName).contains(
+      cy.get(companyLocalHeader.companyName).contains(
         fixtures.company.archivedLtd.name
       )
     })
 
     it('should display the company address', () => {
-      cy.get(selectors.companyLocalHeader().address).contains(
+      cy.get(companyLocalHeader.address).contains(
         '16 Getabergsvagen, Geta, 22340, Malta'
       )
     })
@@ -39,15 +41,15 @@ describe('Local header for archived company', () => {
     })
 
     it('should display an "Ultimate HQ" badge', () => {
-      cy.get(selectors.companyLocalHeader().badge).contains('Global HQ')
+      cy.get(companyLocalHeader.badge).contains('Global HQ')
     })
 
     it('should display the correct description', () => {
-      cy.get(selectors.companyLocalHeader().description.paragraph(1)).contains(
+      cy.get(companyLocalHeader.description.paragraph(1)).contains(
         'This is an account managed company (One List Tier A - Strategic Account)'
       )
 
-      cy.get(selectors.companyLocalHeader().description.paragraph(2))
+      cy.get(companyLocalHeader.description.paragraph(2))
         .contains('Global Account Manager: Travis Greene View core team')
         .contains('View core team')
         .should(
@@ -66,7 +68,7 @@ describe('Local header for archived company', () => {
     })
 
     it('should display the archived message', () => {
-      cy.get(selectors.companyLocalHeader().archivedMessage)
+      cy.get(companyLocalHeader.archivedMessage)
         .contains('This company was archived on 06 Jul 2018 by John Rogers.')
         .contains('Reason: Company is dissolved')
         .contains('Unarchive')
@@ -92,13 +94,13 @@ describe('Local header for archived company', () => {
     })
 
     it('should display the company name', () => {
-      cy.get(selectors.companyLocalHeader().companyName).contains(
+      cy.get(companyLocalHeader.companyName).contains(
         fixtures.company.archivedLtd.name
       )
     })
 
     it('should display the company address', () => {
-      cy.get(selectors.companyLocalHeader().address).contains(
+      cy.get(companyLocalHeader.address).contains(
         '16 Getabergsvagen, Geta, 22340, Malta'
       )
     })
@@ -116,15 +118,15 @@ describe('Local header for archived company', () => {
     })
 
     it('should display an "Ultimate HQ" badge', () => {
-      cy.get(selectors.companyLocalHeader().badge).contains('Global HQ')
+      cy.get(companyLocalHeader.badge).contains('Global HQ')
     })
 
     it('should display the correct description', () => {
-      cy.get(selectors.companyLocalHeader().description.paragraph(1)).contains(
+      cy.get(companyLocalHeader.description.paragraph(1)).contains(
         'This is an account managed company (One List Tier A - Strategic Account)'
       )
 
-      cy.get(selectors.companyLocalHeader().description.paragraph(2))
+      cy.get(companyLocalHeader.description.paragraph(2))
         .contains('Global Account Manager: Travis Greene View core team')
         .contains('View core team')
         .should(
@@ -143,7 +145,7 @@ describe('Local header for archived company', () => {
     })
 
     it('should display the archived message', () => {
-      cy.get(selectors.companyLocalHeader().archivedMessage)
+      cy.get(companyLocalHeader.archivedMessage)
         .contains('This company was archived on 06 Jul 2018 by John Rogers.')
         .contains('Reason: Company is dissolved')
         .contains('Unarchive')
@@ -167,13 +169,13 @@ describe('Local header for archived company', () => {
       'Core Team': null,
     })
     it('should display the company name', () => {
-      cy.get(selectors.companyLocalHeader().companyName).contains(
+      cy.get(companyLocalHeader.companyName).contains(
         fixtures.company.archivedLtd.name
       )
     })
 
     it('should display the company address', () => {
-      cy.get(selectors.companyLocalHeader().address).contains(
+      cy.get(companyLocalHeader.address).contains(
         '16 Getabergsvagen, Geta, 22340, Malta'
       )
     })
@@ -191,15 +193,15 @@ describe('Local header for archived company', () => {
     })
 
     it('should display an "Ultimate HQ" badge', () => {
-      cy.get(selectors.companyLocalHeader().badge).contains('Global HQ')
+      cy.get(companyLocalHeader.badge).contains('Global HQ')
     })
 
     it('should display the correct description', () => {
-      cy.get(selectors.companyLocalHeader().description.paragraph(1)).contains(
+      cy.get(companyLocalHeader.description.paragraph(1)).contains(
         'This is an account managed company (One List Tier A - Strategic Account)'
       )
 
-      cy.get(selectors.companyLocalHeader().description.paragraph(2))
+      cy.get(companyLocalHeader.description.paragraph(2))
         .contains('Global Account Manager: Travis Greene View core team')
         .contains('View core team')
         .should(
@@ -218,7 +220,7 @@ describe('Local header for archived company', () => {
     })
 
     it('should display the archived message', () => {
-      cy.get(selectors.companyLocalHeader().archivedMessage)
+      cy.get(companyLocalHeader.archivedMessage)
         .contains('This company was archived on 06 Jul 2018 by John Rogers.')
         .contains('Reason: Company is dissolved')
         .contains('Unarchive')
@@ -246,13 +248,13 @@ describe('Local header for archived company', () => {
     })
 
     it('should display the company name', () => {
-      cy.get(selectors.companyLocalHeader().companyName).contains(
+      cy.get(companyLocalHeader.companyName).contains(
         fixtures.company.archivedLtd.name
       )
     })
 
     it('should display the company address', () => {
-      cy.get(selectors.companyLocalHeader().address).contains(
+      cy.get(companyLocalHeader.address).contains(
         '16 Getabergsvagen, Geta, 22340, Malta'
       )
     })
@@ -270,14 +272,14 @@ describe('Local header for archived company', () => {
     })
 
     it('should display an "Ultimate HQ" badge', () => {
-      cy.get(selectors.companyLocalHeader().badge).contains('Global HQ')
+      cy.get(companyLocalHeader.badge).contains('Global HQ')
     })
 
     it('should display the correct description', () => {
-      cy.get(selectors.companyLocalHeader().description.paragraph(1)).contains(
+      cy.get(companyLocalHeader.description.paragraph(1)).contains(
         'This is an account managed company (One List Tier A - Strategic Account)'
       )
-      cy.get(selectors.companyLocalHeader().description.paragraph(2))
+      cy.get(companyLocalHeader.description.paragraph(2))
         .contains('Global Account Manager: Travis Greene View core team')
         .contains('View core team')
         .should(
@@ -296,7 +298,7 @@ describe('Local header for archived company', () => {
     })
 
     it('should display the archived message', () => {
-      cy.get(selectors.companyLocalHeader().archivedMessage)
+      cy.get(companyLocalHeader.archivedMessage)
         .contains('This company was archived on 06 Jul 2018 by John Rogers.')
         .contains('Reason: Company is dissolved')
         .contains('Unarchive')
@@ -328,13 +330,13 @@ describe('Local header for archived company', () => {
       })
 
       it('should display the company name', () => {
-        cy.get(selectors.companyLocalHeader().companyName).contains(
+        cy.get(companyLocalHeader.companyName).contains(
           fixtures.company.archivedLtd.name
         )
       })
 
       it('should display the company address', () => {
-        cy.get(selectors.companyLocalHeader().address).contains(
+        cy.get(companyLocalHeader.address).contains(
           '16 Getabergsvagen, Geta, 22340, Malta'
         )
       })
@@ -352,16 +354,14 @@ describe('Local header for archived company', () => {
       })
 
       it('should display an "Ultimate HQ" badge', () => {
-        cy.get(selectors.companyLocalHeader().badge).contains('Global HQ')
+        cy.get(companyLocalHeader.badge).contains('Global HQ')
       })
       it('should display the correct description', () => {
-        cy.get(
-          selectors.companyLocalHeader().description.paragraph(1)
-        ).contains(
+        cy.get(companyLocalHeader.description.paragraph(1)).contains(
           'This is an account managed company (One List Tier A - Strategic Account)'
         )
 
-        cy.get(selectors.companyLocalHeader().description.paragraph(2))
+        cy.get(companyLocalHeader.description.paragraph(2))
           .contains('Global Account Manager: Travis Greene View core team')
           .contains('View core team')
           .should(
@@ -380,7 +380,7 @@ describe('Local header for archived company', () => {
       })
 
       it('should display the archived message', () => {
-        cy.get(selectors.companyLocalHeader().archivedMessage)
+        cy.get(companyLocalHeader.archivedMessage)
           .contains('This company was archived on 06 Jul 2018 by John Rogers.')
           .contains('Reason: Company is dissolved')
           .contains('Unarchive')
@@ -407,13 +407,13 @@ describe('Local header for archived company', () => {
     })
 
     it('should display the company name', () => {
-      cy.get(selectors.companyLocalHeader().companyName).contains(
+      cy.get(companyLocalHeader.companyName).contains(
         fixtures.company.archivedLtd.name
       )
     })
 
     it('should display the company address', () => {
-      cy.get(selectors.companyLocalHeader().address).contains(
+      cy.get(companyLocalHeader.address).contains(
         '16 Getabergsvagen, Geta, 22340, Malta'
       )
     })
@@ -431,15 +431,15 @@ describe('Local header for archived company', () => {
     })
 
     it('should display an "Ultimate HQ" badge', () => {
-      cy.get(selectors.companyLocalHeader().badge).contains('Global HQ')
+      cy.get(companyLocalHeader.badge).contains('Global HQ')
     })
 
     it('should display the correct description', () => {
-      cy.get(selectors.companyLocalHeader().description.paragraph(1)).contains(
+      cy.get(companyLocalHeader.description.paragraph(1)).contains(
         'This is an account managed company (One List Tier A - Strategic Account)'
       )
 
-      cy.get(selectors.companyLocalHeader().description.paragraph(2))
+      cy.get(companyLocalHeader.description.paragraph(2))
         .contains('Global Account Manager: Travis Greene View core team')
         .contains('View core team')
         .should(
@@ -458,7 +458,7 @@ describe('Local header for archived company', () => {
     })
 
     it('should display the archived message', () => {
-      cy.get(selectors.companyLocalHeader().archivedMessage)
+      cy.get(companyLocalHeader.archivedMessage)
         .contains('This company was archived on 06 Jul 2018 by John Rogers.')
         .contains('Reason: Company is dissolved')
         .contains('Unarchive')
@@ -485,13 +485,13 @@ describe('Local header for archived company', () => {
     })
 
     it('should display the company name', () => {
-      cy.get(selectors.companyLocalHeader().companyName).contains(
+      cy.get(companyLocalHeader.companyName).contains(
         fixtures.company.archivedLtd.name
       )
     })
 
     it('should display the company address', () => {
-      cy.get(selectors.companyLocalHeader().address).contains(
+      cy.get(companyLocalHeader.address).contains(
         '16 Getabergsvagen, Geta, 22340, Malta'
       )
     })
@@ -509,15 +509,15 @@ describe('Local header for archived company', () => {
     })
 
     it('should display an "Ultimate HQ" badge', () => {
-      cy.get(selectors.companyLocalHeader().badge).contains('Global HQ')
+      cy.get(companyLocalHeader.badge).contains('Global HQ')
     })
 
     it('should display the correct description', () => {
-      cy.get(selectors.companyLocalHeader().description.paragraph(1)).contains(
+      cy.get(companyLocalHeader.description.paragraph(1)).contains(
         'This is an account managed company (One List Tier A - Strategic Account)'
       )
 
-      cy.get(selectors.companyLocalHeader().description.paragraph(2))
+      cy.get(companyLocalHeader.description.paragraph(2))
         .contains('Global Account Manager: Travis Greene View core team')
         .contains('View core team')
         .should(
@@ -536,7 +536,7 @@ describe('Local header for archived company', () => {
     })
 
     it('should display the archived message', () => {
-      cy.get(selectors.companyLocalHeader().archivedMessage)
+      cy.get(companyLocalHeader.archivedMessage)
         .contains('This company was archived on 06 Jul 2018 by John Rogers.')
         .contains('Reason: Company is dissolved')
         .contains('Unarchive')
@@ -562,13 +562,13 @@ describe('Local header for archived company', () => {
     })
 
     it('should display the company name', () => {
-      cy.get(selectors.companyLocalHeader().companyName).contains(
+      cy.get(companyLocalHeader.companyName).contains(
         fixtures.company.archivedLtd.name
       )
     })
 
     it('should display the company address', () => {
-      cy.get(selectors.companyLocalHeader().address).contains(
+      cy.get(companyLocalHeader.address).contains(
         '16 Getabergsvagen, Geta, 22340, Malta'
       )
     })
@@ -586,15 +586,15 @@ describe('Local header for archived company', () => {
     })
 
     it('should display an "Ultimate HQ" badge', () => {
-      cy.get(selectors.companyLocalHeader().badge).contains('Global HQ')
+      cy.get(companyLocalHeader.badge).contains('Global HQ')
     })
 
     it('should display the correct description', () => {
-      cy.get(selectors.companyLocalHeader().description.paragraph(1)).contains(
+      cy.get(companyLocalHeader.description.paragraph(1)).contains(
         'This is an account managed company (One List Tier A - Strategic Account)'
       )
 
-      cy.get(selectors.companyLocalHeader().description.paragraph(2))
+      cy.get(companyLocalHeader.description.paragraph(2))
         .contains('Global Account Manager: Travis Greene View core team')
         .contains('View core team')
         .should(
@@ -613,7 +613,7 @@ describe('Local header for archived company', () => {
     })
 
     it('should display the archived message', () => {
-      cy.get(selectors.companyLocalHeader().archivedMessage)
+      cy.get(companyLocalHeader.archivedMessage)
         .contains('This company was archived on 06 Jul 2018 by John Rogers.')
         .contains('Reason: Company is dissolved')
         .contains('Unarchive')
