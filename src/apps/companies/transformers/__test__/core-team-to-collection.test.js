@@ -1,6 +1,6 @@
 const transformOneListCoreTeamToCollection = require('../one-list-core-team-to-collection')
 
-const coreTeamMock = require('../../../../../test/unit/data/companies/one-list-group-core-team.json')
+const coreTeamMock = require('../../../../../test/sandbox/fixtures/v4/company/one-list-group-core-team.json')
 
 describe('#transformOneListCoreTeamToCollection', () => {
   context(

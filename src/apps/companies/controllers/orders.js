@@ -3,11 +3,12 @@ const {
   transformApiResponseToCollection,
 } = require('../../../modules/api/transformers')
 const { transformOrderToListItem } = require('../../omis/transformers')
+const urls = require('../../../lib/urls')
 
 async function renderOrders(req, res, next) {
   const token = req.session.token
   const page = req.query.page || 1
-  const { company } = res.locals
+  const { company, returnUrl, dnbRelatedCompaniesCount } = res.locals
   const actionButtons = company.archived
     ? undefined
     : [
@@ -33,13 +34,21 @@ async function renderOrders(req, res, next) {
       )
     )
 
-    res
-      .breadcrumb(company.name, `/companies/${company.id}`)
-      .breadcrumb('Orders (OMIS)')
-      .render('companies/views/orders', {
-        results,
-        actionButtons,
-      })
+    res.render('companies/views/orders', {
+      results,
+      actionButtons,
+      props: {
+        company,
+        breadcrumbs: [
+          { link: urls.dashboard(), text: 'Home' },
+          { link: urls.companies.index(), text: 'Companies' },
+          { link: urls.companies.detail(company.id), text: company.name },
+          { text: 'Orders (OMIS)' },
+        ],
+        returnUrl,
+        dnbRelatedCompaniesCount,
+      },
+    })
   } catch (error) {
     next(error)
   }

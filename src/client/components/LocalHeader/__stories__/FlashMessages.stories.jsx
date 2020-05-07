@@ -28,7 +28,7 @@ storiesOf('Flash Messages', module)
             body: 'Info message body',
           },
         ],
-        error: ['Error test message'],
+        error: ['Error test message', 'Another error message'],
         warning: ['Warning test message'],
         muted: ['Muted test message'],
       }}

@@ -1,8 +1,11 @@
 const { assertBreadcrumbs } = require('../../../support/assertions')
 const urls = require('../../../../../../src/lib/urls')
+const selectors = require('../../../../../selectors/index')
 
 const EXPECTED_NAME = 'Andy Pipkin'
 const EXPECTED_TEAM = 'Andy & Lou'
+
+const companyLocalHeader = selectors.companyLocalHeader()
 
 const selectMainContent = () =>
   cy
@@ -102,7 +105,9 @@ const addOrReplaceTestCase = ({
 
     cy.get('@submit').click()
 
-    cy.get('[role="alert"]').contains('Lead adviser information updated')
+    cy.get(companyLocalHeader.flashMessageList).contains(
+      'Lead adviser information updated'
+    )
   })
 
 describe('Manage Lead ITA', () => {
@@ -184,6 +189,8 @@ describe('Manage Lead ITA', () => {
 
     cy.get('@submit').click()
 
-    cy.get('[role="alert"]').contains('Lead adviser information updated')
+    cy.get(companyLocalHeader.flashMessageList).contains(
+      'Lead adviser information updated'
+    )
   })
 })

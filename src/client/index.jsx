@@ -39,6 +39,7 @@ import SendReferralForm from '../apps/companies/apps/referrals/send-referral/cli
 import sendReferral from '../apps/companies/apps/referrals/send-referral/client/reducer'
 import InteractionReferralDetails from '../apps/companies/apps/referrals/details/client/InteractionReferralDetails.jsx'
 import AddToPipelineForm from '../apps/pipeline/client/AddToPipelineForm'
+import CompanyLocalHeader from '../apps/companies/client/CompanyLocalHeader.jsx'
 
 import tasksSaga from './components/Task/saga'
 import tasks from './components/Task/reducer'
@@ -294,6 +295,9 @@ function App() {
           {(props) => (
             <AddToPipelineForm {...props} csrfToken={globalProps.csrfToken} />
           )}
+        </Mount>
+        <Mount selector="#company-local-header">
+          {(props) => <CompanyLocalHeader {...props} />}
         </Mount>
       </ConnectedRouter>
     </Provider>

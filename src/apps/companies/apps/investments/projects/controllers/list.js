@@ -7,10 +7,11 @@ const {
 const {
   transformApiResponseToCollection,
 } = require('../../../../../../modules/api/transformers')
+const urls = require('../../../../../../lib/urls')
 
 async function renderProjects(req, res, next) {
   const { token } = req.session
-  const { company } = res.locals
+  const { company, returnUrl, dnbRelatedCompaniesCount } = res.locals
   const actionButtons = company.archived
     ? undefined
     : [
@@ -32,13 +33,21 @@ async function renderProjects(req, res, next) {
       )
     )
 
-    res
-      .breadcrumb(company.name, `/companies/${company.id}`)
-      .breadcrumb('Investment')
-      .render('companies/apps/investments/projects/views/list', {
-        results,
-        actionButtons,
-      })
+    res.render('companies/apps/investments/projects/views/list', {
+      results,
+      actionButtons,
+      props: {
+        company,
+        breadcrumbs: [
+          { link: urls.dashboard(), text: 'Home' },
+          { link: urls.companies.index(), text: 'Companies' },
+          { link: urls.companies.detail(company.id), text: company.name },
+          { text: 'Investment' },
+        ],
+        returnUrl,
+        dnbRelatedCompaniesCount,
+      },
+    })
   } catch (error) {
     next(error)
   }
