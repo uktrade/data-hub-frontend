@@ -15,7 +15,12 @@ const UNMATCHED_COMPANY_EDITABLE_FIELDS = [
   'address',
 ]
 
-const MATCHED_COMPANY_EDITABLE_FIELDS = ['description', 'uk_region', 'sector']
+const MATCHED_COMPANY_EDITABLE_FIELDS = [
+  'description',
+  'uk_region',
+  'sector',
+  'website',
+]
 
 const MATCHED_COMPANY_VERIFIABLE_FIELDS = [
   'name',
@@ -23,7 +28,6 @@ const MATCHED_COMPANY_VERIFIABLE_FIELDS = [
   'turnover',
   'trading_names',
   'vat_number',
-  'website',
   'address1',
   'address2',
   'city',
