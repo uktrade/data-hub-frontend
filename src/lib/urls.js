@@ -87,7 +87,10 @@ module.exports = {
     detail: url('/companies', '/:companyId'),
     edit: url('/companies', '/:companyId/edit'),
     audit: url('/companies', '/:companyId/audit'),
-    lists: url('/companies', '/:companyId/lists'),
+    lists: {
+      index: url('/companies', '/:companyId/lists'),
+      addRemove: url('/companies', '/:companyId/lists/add-remove'),
+    },
     pipeline: url('/companies', '/:companyId/pipeline'),
     orders: url('/companies', '/:companyId/orders'),
     details: url('/companies', '/:companyId/details'),
