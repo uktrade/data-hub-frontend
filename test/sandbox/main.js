@@ -4,6 +4,11 @@ var healthcheck = require('./routes/ping.js')
 // TODO: `/metadata/*` endpoints are deprecated and should be removed or on after 17th October 2019
 var metadata = require('./routes/metadata.js')
 var user = require('./routes/whoami.js')
+var helpCentre = require('./routes/helpCentre.js')
+var zendesk = require('./routes/zendesk.js')
+var postcodeToRegion = require('./routes/postcodeToRegion.js')
+
+// V3
 var v3Contact = require('./routes/v3/contact/contact.js')
 var v3Event = require('./routes/v3/event/event.js')
 var v3FeatureFlag = require('./routes/v3/feature-flag/feature-flag.js')
@@ -15,8 +20,6 @@ var v3SearchEvent = require('./routes/v3/search/event.js')
 var v3SearchInvestmentProject = require('./routes/v3/search/investment-project.js')
 var v3SearchOrder = require('./routes/v3/search/order.js')
 var v3SearchInteraction = require('./routes/v3/search/interaction.js')
-var helpCentre = require('./routes/helpCentre.js')
-var zendesk = require('./routes/zendesk.js')
 
 // V4
 var v4ActivityFeed = require('./routes/v4/activity-feed/activity-feed.js')
@@ -31,6 +34,9 @@ var v4SearchLargeInvestorProfiles = require('./routes/v4/search/large-investor-p
 var v4SearchExports = require('./routes/v4/search/export')
 var v4referralList = require('./routes/v4/referrals/list.js')
 var v4pipelineItem = require('./routes/v4/pipeline-item/index.js')
+
+// Data store service (github.com/uktrade/data-store-service)
+Sandbox.define('/api/v1/get-postcode-data/', 'GET', postcodeToRegion.lookup)
 
 // Referral details
 Sandbox.define('/v4/company-referral/{id}', 'GET', v4Company.referralDetails)
