@@ -299,6 +299,9 @@ function App() {
         <Mount selector="#company-local-header">
           {(props) => <CompanyLocalHeader {...props} />}
         </Mount>
+        <Mount selector="#company-local-header">
+          {(props) => <CompanyLocalHeader {...props} />}
+        </Mount>
       </ConnectedRouter>
     </Provider>
   )
