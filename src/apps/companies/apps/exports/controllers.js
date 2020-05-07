@@ -2,7 +2,6 @@
 const { get, set } = require('lodash')
 
 const metadataRepo = require('../../../../lib/metadata')
-const urls = require('../../../../lib/urls')
 const groupExportCountries = require('../../../../lib/group-export-countries')
 const getExportCountries = require('../../../../lib/get-export-countries')
 
@@ -10,6 +9,7 @@ const { saveCompanyExportDetails } = require('../../repos')
 const { transformObjectToOption } = require('../../../transformers')
 const { transformCompanyToExportDetailsView } = require('./transformer')
 const { exportDetailsLabels, exportPotentialLabels } = require('../../labels')
+const urls = require('../../../../lib/urls')
 
 const {
   EXPORT_INTEREST_STATUS,
@@ -46,7 +46,7 @@ function getPostedFormData(body) {
 }
 
 function renderExports(req, res) {
-  const { company } = res.locals
+  const { company, returnUrl, dnbRelatedCompaniesCount } = res.locals
 
   const isArchived = res.locals.company.archived
 
@@ -57,28 +57,32 @@ function renderExports(req, res) {
     exportCountriesInformation,
   } = transformCompanyToExportDetailsView(company)
 
-  res
-    .breadcrumb(company.name, urls.companies.detail(company.id))
-    .breadcrumb('Exports')
-    .render('companies/apps/exports/views/index', {
-      props: {
-        isArchived,
-        exportWinCategory,
-        greatProfile,
-        exportPotential,
-        exportCountriesInformation,
-        exportPotentials: Object.values(exportPotentialLabels),
-        companyId: company.id,
-        companyNumber: company.company_number,
-        companyName: company.name,
-      },
-    })
+  res.render('companies/apps/exports/views/index', {
+    props: {
+      isArchived,
+      exportWinCategory,
+      greatProfile,
+      exportPotential,
+      exportCountriesInformation,
+      exportPotentials: Object.values(exportPotentialLabels),
+      companyId: company.id,
+      companyNumber: company.company_number,
+      companyName: company.name,
+      company,
+      breadcrumbs: [
+        { link: urls.dashboard(), text: 'Home' },
+        { link: urls.companies.index(), text: 'Companies' },
+        { link: urls.companies.detail(company.id), text: company.name },
+        { text: 'Exports' },
+      ],
+      returnUrl,
+      dnbRelatedCompaniesCount,
+    },
+  })
 }
 
 function renderExportHistory(req, res) {
-  const {
-    company: { name, id },
-  } = res.locals
+  const { company, dnbRelatedCompaniesCount, returnUrl } = res.locals
 
   const { countryId } = req.params
 
@@ -86,17 +90,23 @@ function renderExportHistory(req, res) {
     ? `${getCountry(countryId).name} exports history`
     : 'Export countries history'
 
-  res
-    .breadcrumb(name, urls.companies.detail(id))
-    .breadcrumb('Exports', urls.companies.exports.index(id))
-    .breadcrumb(pageTitle)
-    .render('companies/apps/exports/views/full-history', {
-      props: {
-        companyId: id,
-        pageTitle,
-        countryId,
-      },
-    })
+  res.render('companies/apps/exports/views/full-history', {
+    props: {
+      companyId: company.id,
+      pageTitle,
+      countryId,
+      company,
+      breadcrumbs: [
+        { link: urls.dashboard(), text: 'Home' },
+        { link: urls.companies.index(), text: 'Companies' },
+        { link: urls.companies.detail(company.id), text: company.name },
+        { link: urls.companies.exports.index(company.id), text: 'Exports' },
+        { text: pageTitle },
+      ],
+      returnUrl,
+      dnbRelatedCompaniesCount,
+    },
+  })
 }
 
 function populateExportForm(req, res, next) {

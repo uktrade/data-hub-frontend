@@ -1,5 +1,4 @@
 module.exports = {
-  addRemoveButton: `.c-local-header__actions a`,
   listA: {
     legend: `#add-remove-list-form > form > div > div:nth-child(2) > div > fieldset > legend`,
     radios:

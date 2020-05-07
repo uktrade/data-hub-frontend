@@ -5,9 +5,10 @@ const {
   companyContactSortForm,
 } = require('../../contacts/macros')
 const { buildSelectedFiltersSummary } = require('../../builders')
+const urls = require('../../../lib/urls')
 
 function renderContacts(req, res) {
-  const { company } = res.locals
+  const { company, returnUrl, dnbRelatedCompaniesCount } = res.locals
   const filtersFields = filter(contactFiltersFields, (field) => {
     return ['name', 'archived'].includes(field.name)
   })
@@ -26,15 +27,23 @@ function renderContacts(req, res) {
         },
       ]
 
-  res
-    .breadcrumb(company.name, `/companies/${company.id}`)
-    .breadcrumb('Contacts')
-    .render('companies/views/contacts', {
-      sortForm,
-      filtersFields,
-      actionButtons,
-      selectedFilters: buildSelectedFiltersSummary(filtersFields, req.query),
-    })
+  res.render('companies/views/contacts', {
+    sortForm,
+    filtersFields,
+    actionButtons,
+    selectedFilters: buildSelectedFiltersSummary(filtersFields, req.query),
+    props: {
+      company,
+      breadcrumbs: [
+        { link: urls.dashboard(), text: 'Home' },
+        { link: urls.companies.index(), text: 'Companies' },
+        { link: urls.companies.detail(company.id), text: company.name },
+        { text: 'Contacts' },
+      ],
+      returnUrl,
+      dnbRelatedCompaniesCount,
+    },
+  })
 }
 
 module.exports = {

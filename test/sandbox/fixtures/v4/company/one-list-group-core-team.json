@@ -1,0 +1,61 @@
+[
+  {
+    "adviser": {
+      "name": "Travis Greene",
+      "first_name": "Travis",
+      "last_name": "Greene",
+      "dit_team": {
+        "name": "IST - Sector Advisory Services",
+        "uk_region": {
+          "name": "London",
+          "id": "874cd12a-6095-e211-a939-e4115bead28a"
+        },
+        "country": {
+          "name": "United Kingdom",
+          "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+        },
+        "id": "fc3a6667-cfe9-e511-8ffa-e4115bead28a"
+      },
+      "id": "8eefe6b4-2816-4e47-94b5-a13409dcef70"
+    },
+    "is_global_account_manager": true
+  },
+  {
+    "adviser": {
+      "name": "Holly Collins",
+      "first_name": "Holly",
+      "last_name": "Collins",
+      "dit_team": {
+        "name": "Heart of the South West LEP",
+        "country": {
+          "name": "United Kingdom",
+          "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+        },
+        "id": "08d987f8-6525-e511-b6bc-e4115bead28a"
+      },
+      "id": "379f390a-e083-4a2c-9cea-e3b9a08606a7"
+    },
+    "is_global_account_manager": false
+  },
+  {
+    "adviser": {
+      "name": "Jenny Carey",
+      "first_name": "Jenny",
+      "last_name": "Carey",
+      "dit_team": {
+        "name": "IG - Specialists - Knowledge Intensive Industry",
+        "uk_region": {
+          "name": "London",
+          "id": "874cd12a-6095-e211-a939-e4115bead28a"
+        },
+        "country": {
+          "name": "United Kingdom",
+          "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+        },
+        "id": "c833d869-2f50-e311-a56a-e4115bead28a"
+      },
+      "id": "f1eb4363-0a37-4344-bd96-e90abeaf483e"
+    },
+    "is_global_account_manager": false
+  }
+]

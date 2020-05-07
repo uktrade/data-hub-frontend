@@ -13,7 +13,7 @@ const StyledLink = styled('a')`
 `
 
 const CompanyActivityFeed = ({
-  companyId,
+  company,
   showMatchingPrompt,
   activityTypeFilter,
   activityTypeFilters,
@@ -27,11 +27,11 @@ const CompanyActivityFeed = ({
     <>
       <ActivityFeedAction
         text="Refer this company"
-        link={companies.referrals.send(companyId)}
+        link={companies.referrals.send(company.id)}
       />
       <ActivityFeedAction
         text="Add interaction"
-        link={companies.interactions.create(companyId)}
+        link={companies.interactions.create(company.id)}
       />
     </>
   )
@@ -56,13 +56,13 @@ const CompanyActivityFeed = ({
               Verification can often be done in just 4 clicks.
             </Paragraph>
           </Details>
-          <Button as={StyledLink} href={companies.match.index(companyId)}>
+          <Button as={StyledLink} href={companies.match.index(company.id)}>
             Verify business details
           </Button>
         </StatusMessage>
       )}
       <ActivityFeedApp
-        actions={companyId && actions}
+        actions={!company.archived && actions}
         activityTypeFilter={activityTypeFilter}
         activityTypeFilters={activityTypeFilters}
         isGlobalUltimate={isGlobalUltimate}

@@ -1,25 +1,14 @@
-import { assertBreadcrumbs } from '../../../support/assertions'
-
 const fixtures = require('../../../fixtures')
 const selectors = require('../../../../../selectors')
-const { companies, dashboard } = require('../../../../../../src/lib/urls')
+const urls = require('../../../../../../src/lib/urls')
 
 describe('Lead advisers', () => {
   context('when viewing a non One List tier company', () => {
     before(() => {
-      cy.visit(companies.detail(fixtures.company.marsExportsLtd.id))
+      cy.visit(urls.companies.detail(fixtures.company.marsExportsLtd.id))
       cy.get(selectors.tabbedLocalNav().item(3)).click()
     })
-    it('should render breadcrumbs', () => {
-      assertBreadcrumbs({
-        Home: dashboard(),
-        Companies: companies.index(),
-        [fixtures.company.marsExportsLtd.name]: companies.detail(
-          fixtures.company.marsExportsLtd.id
-        ),
-        'Lead adviser': null,
-      })
-    })
+
     it('should display the "Lead Adviser" tab in the navigation', () => {
       cy.get(selectors.tabbedLocalNav().item(3)).should(
         'contain',
@@ -37,24 +26,15 @@ describe('Lead advisers', () => {
         .invoke('attr', 'href')
         .should(
           'eq',
-          companies.advisers.assign(fixtures.company.marsExportsLtd.id)
+          urls.companies.advisers.assign(fixtures.company.marsExportsLtd.id)
         )
     })
   })
   context('when viewing a One List Tier company', () => {
     before(() => {
-      cy.visit(companies.detail(fixtures.company.oneListCorp.id))
+      cy.visit(urls.companies.detail(fixtures.company.oneListCorp.id))
     })
-    it('should render breadcrumbs', () => {
-      assertBreadcrumbs({
-        Home: dashboard(),
-        Companies: companies.index(),
-        [fixtures.company.oneListCorp.name]: companies.detail(
-          fixtures.company.oneListCorp.id
-        ),
-        'Activity Feed': null,
-      })
-    })
+
     it('should display the "Core team" tab in the navigation', () => {
       cy.get(selectors.tabbedLocalNav().item(3)).should('contain', 'Core team')
     })
@@ -63,31 +43,16 @@ describe('Lead advisers', () => {
     'when viewing a One List tier D - ITA company with an allocated Account manager',
     () => {
       before(() => {
-        cy.visit(companies.detail(fixtures.company.oneListTierDita.id))
+        cy.visit(urls.companies.detail(fixtures.company.oneListTierDita.id))
         cy.get(selectors.tabbedLocalNav().item(3)).click()
       })
-      it('should render breadcrumbs', () => {
-        assertBreadcrumbs({
-          Home: dashboard(),
-          Companies: companies.index(),
-          [fixtures.company.oneListTierDita.name]: companies.detail(
-            fixtures.company.oneListTierDita.id
-          ),
-          'Lead adviser': null,
-        })
-      })
-      it('should show the allocated Lead adviser in the company header', () => {
-        cy.get(selectors.localHeader().description.paragraph(2)).should(
-          'contain',
-          'Lead ITA: Travis Greene'
-        )
-      })
+
       it('should have a link to the Lead adviser tab', () => {
         cy.contains('View Lead adviser')
           .invoke('attr', 'href')
           .should(
             'eq',
-            companies.advisers.index(fixtures.company.oneListTierDita.id)
+            urls.companies.advisers.index(fixtures.company.oneListTierDita.id)
           )
       })
       it('should display the "Lead Adviser" tab in the navigation', () => {
@@ -143,7 +108,7 @@ describe('Lead advisers', () => {
           .invoke('attr', 'href')
           .should(
             'eq',
-            companies.advisers.assign(fixtures.company.oneListTierDita.id)
+            urls.companies.advisers.assign(fixtures.company.oneListTierDita.id)
           )
       })
       it('should display a button to remove the Lead ITA', () => {
@@ -151,7 +116,7 @@ describe('Lead advisers', () => {
           .invoke('attr', 'href')
           .should(
             'eq',
-            companies.advisers.remove(fixtures.company.oneListTierDita.id)
+            urls.companies.advisers.remove(fixtures.company.oneListTierDita.id)
           )
       })
     }

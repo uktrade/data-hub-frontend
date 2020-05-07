@@ -1,10 +1,11 @@
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
+const urls = require('../../../../../src/lib/urls')
 
 describe('Companies Contact', () => {
   context('when viewing contacts for an archived company', () => {
     before(() => {
-      cy.visit(`/companies/${fixtures.company.archivedLtd.id}/contacts`)
+      cy.visit(urls.companies.contacts(fixtures.company.archivedLtd.id))
     })
 
     it('should not display the "Add contact" button', () => {
