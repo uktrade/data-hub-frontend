@@ -38,6 +38,7 @@ import ReferralHelp from '../apps/companies/apps/referrals/help/client/ReferralH
 import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
 import sendReferral from '../apps/companies/apps/referrals/send-referral/client/reducer'
 import InteractionReferralDetails from '../apps/companies/apps/referrals/details/client/InteractionReferralDetails.jsx'
+import AddToPipelineForm from '../apps/pipeline/client/AddToPipelineForm'
 
 import tasksSaga from './components/Task/saga'
 import tasks from './components/Task/reducer'
@@ -76,6 +77,13 @@ import * as addInteractionFormState from '../apps/interactions/apps/add-interact
 import * as addInteractionFormTasks from '../apps/interactions/apps/add-interaction/client/tasks'
 import addInteractionFormReducer from '../apps/interactions/apps/add-interaction/client/reducer'
 
+import {
+  ID as ADD_TO_PIPELINE_ID,
+  TASK_NAME as ADD_TO_PIPELINE_TASK_NAME,
+} from '../apps/pipeline/client/state'
+import addToPipelineReducer from '../apps/pipeline/client/reducer'
+import * as pipelineReducer from '../apps/pipeline/client/tasks'
+
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
   // The baseURI is set to the <base/> tag by the spaFallbackSpread
@@ -100,6 +108,7 @@ const store = createStore(
     [EXPORTS_WINS_ID]: exportWinsReducer,
     [EXPORT_COUNTRIES_EDIT_ID]: exportCountriesEditReducer,
     [addInteractionFormState.ID]: addInteractionFormReducer,
+    [ADD_TO_PIPELINE_ID]: addToPipelineReducer,
     ...TabNav.reducerSpread,
     ...ReferralList.reducerSpread,
     ...Form.reducerSpread,
@@ -138,6 +147,7 @@ sagaMiddleware.run(
       addInteractionFormTasks.createInteraction,
     [addInteractionFormState.TASK_OPEN_CONTACT_FORM]:
       addInteractionFormTasks.openContactForm,
+    [ADD_TO_PIPELINE_TASK_NAME]: pipelineReducer.checkIfOnPipeline,
   })
 )
 
@@ -274,6 +284,9 @@ function App() {
         </Mount>
         <Mount selector="#company-export-countries-edit">
           {(props) => <ExportCountriesEdit {...props} />}
+        </Mount>
+        <Mount selector="#add-to-pipeline-form">
+          {(props) => <AddToPipelineForm {...props} />}
         </Mount>
       </ConnectedRouter>
     </Provider>
