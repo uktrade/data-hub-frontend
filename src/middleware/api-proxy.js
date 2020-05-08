@@ -15,6 +15,7 @@ const WHITELIST = [
   '/adviser/',
   '/v4/company/:id/export-win',
   '/v4/company/:id',
+  '/v4/pipeline-item',
 ]
 
 module.exports = (app) => {
