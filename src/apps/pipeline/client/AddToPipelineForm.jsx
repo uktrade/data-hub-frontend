@@ -1,70 +1,130 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
+import ErrorSummary from '@govuk-react/error-summary'
 import { FormStateful, FieldRadios, FormActions } from 'data-hub-components'
 import { connect } from 'react-redux'
 import Task from '../../../client/components/Task'
-
-import { PIPELINE__CHECKED_IF_ON_PIPELINE } from '../../../client/actions'
-import { state2props } from './state'
+import LoadingBox from '@govuk-react/loading-box'
+import ProgressIndicator from '../../../client/components/ProgressIndicator'
+import {
+  PIPELINE__CHECKED_IF_ON_PIPELINE,
+  PIPELINE__ADD_COMPANY_SUCCESS,
+} from '../../../client/actions'
+import {
+  state2props,
+  ID as STATE_ID,
+  TASK_GET_PIPELINE_BY_COMPANY,
+  TASK_ADD_COMPANY_TO_PIPELINE,
+} from './state'
 import urls from '../../../lib/urls'
 
-function saveCompanyToPipeline() {
-  return async () => {
-    // TODO: need to post tp the pipelines endpoint once it is built following the example below:
-    // await axios.patch(`/api-proxy/v4/company/${companyId}`, {
-    //   [EXPORT_WIN_FIELD_NAME]: status[EXPORT_WIN_FIELD_NAME] || null,
-    // })
-
-    return urls.dashboard()
-    // TODO: I need to set an error message in the state and show the error here in this component if there was a problem with the post request
+function isOnPipeline(pipelineStatus, companyId) {
+  if (pipelineStatus?.companyId === companyId) {
+    return Boolean(pipelineStatus.count)
   }
+  return null
+}
+function PipelineCheck({
+  pipelineStatus,
+  companyName,
+  companyId,
+  getPipelineByCompany,
+  children,
+}) {
+  const onPipeline = isOnPipeline(pipelineStatus, companyId)
+  useEffect(() => {
+    getPipelineByCompany.start({
+      payload: { companyId },
+      onSuccessDispatch: PIPELINE__CHECKED_IF_ON_PIPELINE,
+    })
+  }, [companyId])
+
+  if (onPipeline == null) {
+    return <ProgressIndicator message="checking pipeline..." />
+  }
+  return (
+    <>
+      {onPipeline && <p>{companyName} is already in your pipeline</p>}
+      {children}
+    </>
+  )
 }
 
-function AddToPipelineForm({ companyId, companyName, isOnPipeline }) {
+function AddToPipelineForm({
+  companyId,
+  companyName,
+  pipelineStatus,
+  csrfToken,
+  savedId,
+}) {
+  useEffect(() => {
+    if (savedId) {
+      /**
+       * TODO: Replace with react router navigation.
+       * As we move to SPA clear the saveId from the state before navigation.
+       */
+      window.location.href = urls.dashboard()
+    }
+  }, [savedId])
+
   return (
-    <Task.Status
-      name="Check if on pipeline"
-      id="checkIfOnPipeline"
-      progressMessage="checking pipeline..."
-      startOnRender={{
-        payload: { companyId },
-        onSuccessDispatch: PIPELINE__CHECKED_IF_ON_PIPELINE,
-      }}
-    >
-      {() =>
-        isOnPipeline ? (
-          <>
-            <p>{companyName} is already in your pipeline</p>
-            <p>
-              <a href={urls.companies.detail(companyId)}>
-                Go back to {companyName}
-              </a>
-            </p>
-            <p>
-              <a href={urls.dashboard()}>Go to your dashboard</a>
-            </p>
-          </>
-        ) : (
-          <FormStateful onSubmit={saveCompanyToPipeline()}>
-            <FieldRadios
-              name="category"
-              label="Choose a status"
-              required="Choose a status"
-              options={[
-                { value: 'lead', label: 'Lead' },
-                { value: 'in_progress', label: 'In progress' },
-                { value: 'win', label: 'Win' },
-              ]}
-            />
-            <FormActions>
-              <Button>Add</Button>
-              <Link href={urls.companies.detail(companyId)}>Cancel</Link>
-            </FormActions>
-          </FormStateful>
+    <Task>
+      {(getTask) => {
+        const getPipelineByCompany = getTask(
+          TASK_GET_PIPELINE_BY_COMPANY,
+          STATE_ID
         )
-      }
-    </Task.Status>
+        const addCompanyToPipeline = getTask(
+          TASK_ADD_COMPANY_TO_PIPELINE,
+          STATE_ID
+        )
+        return (
+          <>
+            {addCompanyToPipeline.error && (
+              <ErrorSummary
+                heading={`There was an error adding ${companyName} to a pipeline`}
+                description={addCompanyToPipeline.errorMessage}
+                errors={[]}
+              />
+            )}
+            <PipelineCheck
+              getPipelineByCompany={getPipelineByCompany}
+              pipelineStatus={pipelineStatus}
+              companyId={companyId}
+              companyName={companyName}
+            >
+              <LoadingBox loading={addCompanyToPipeline.progress}>
+                <FormStateful
+                  onSubmit={(values) => {
+                    addCompanyToPipeline.start({
+                      payload: { values, companyId, csrfToken },
+                      onSuccessDispatch: PIPELINE__ADD_COMPANY_SUCCESS,
+                    })
+                  }}
+                  submissionError={addCompanyToPipeline.errorMessage}
+                >
+                  <FieldRadios
+                    name="category"
+                    label="Choose a status"
+                    required="Choose a status"
+                    options={[
+                      { value: 'leads', label: 'Lead' },
+                      { value: 'in_progress', label: 'In progress' },
+                      { value: 'win', label: 'Win' },
+                    ]}
+                  />
+                  <FormActions>
+                    <Button>Add</Button>
+                    <Link href={urls.companies.detail(companyId)}>Cancel</Link>
+                  </FormActions>
+                </FormStateful>
+              </LoadingBox>
+            </PipelineCheck>
+          </>
+        )
+      }}
+    </Task>
   )
 }
 

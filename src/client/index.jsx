@@ -291,7 +291,9 @@ function App() {
           {(props) => <ExportCountriesEdit {...props} />}
         </Mount>
         <Mount selector="#add-to-pipeline-form">
-          {(props) => <AddToPipelineForm {...props} />}
+          {(props) => (
+            <AddToPipelineForm {...props} csrfToken={globalProps.csrfToken} />
+          )}
         </Mount>
       </ConnectedRouter>
     </Provider>

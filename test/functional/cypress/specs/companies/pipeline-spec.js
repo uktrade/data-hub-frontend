@@ -74,19 +74,36 @@ describe('Company add to pipeline form', () => {
       cy.contains(`${lambdaPlc.name} is already in your pipeline`)
     })
 
-    it('should render a link to the company', () => {
-      cy.contains(`Go back to ${lambdaPlc.name}`).should(
-        'have.attr',
-        'href',
-        urls.companies.detail(lambdaPlc.id)
-      )
+    it('should render the status radio buttons', () => {
+      cy.get('#field-category').then((element) => {
+        assertFieldRadios({
+          element,
+          label: 'Choose a status',
+          optionsCount: 3,
+        })
+      })
     })
-
-    it('should render a link to the dashboard', () => {
-      cy.contains('Go to your dashboard').should(
-        'have.attr',
-        'href',
-        urls.dashboard()
+  })
+  context('when form is submitted to add a company to pipeline', () => {
+    beforeEach(() => {
+      cy.visit(urls.companies.pipeline(minimallyMinimal.id))
+    })
+    it('should render the status radio buttons', () => {
+      cy.get('#field-category').then((element) => {
+        assertFieldRadios({
+          element,
+          label: 'Choose a status',
+          optionsCount: 3,
+        })
+      })
+    })
+    it('should redirect to dashboard with a flash message', () => {
+      cy.get('input[value=win').click()
+      cy.contains('button', 'Add').click()
+      cy.url().should('include', urls.dashboard())
+      cy.get(selectors.localHeader().flash).should(
+        'contain',
+        'Pipeline changes for this company have been saved'
       )
     })
   })
