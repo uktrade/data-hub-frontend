@@ -36,7 +36,7 @@ describe('Collection', () => {
   describe('investment interaction', () => {
     before(() => {
       cy.visit(
-        investments.projects.interactionCollection(
+        investments.projects.interactions.index(
           fixtures.investmentProject.newHotelFdi.id
         )
       )

@@ -56,13 +56,4 @@ describe('Investment projects interactions middleware', () => {
       expect(this.res.locals.interactions.canAdd).to.be.true
     })
   })
-
-  describe('#setCompanyDetails', () => {
-    it('should set the entity name', async () => {
-      await this.middleware.setCompanyDetails(this.req, this.res, this.nextSpy)
-      expect(this.res.locals.company).to.deep.equal(
-        investmentData.investor_company
-      )
-    })
-  })
 })

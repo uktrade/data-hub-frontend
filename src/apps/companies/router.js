@@ -157,7 +157,7 @@ router.use(
   investmentsRouter
 )
 router.use(
-  urls.companies.detail.route,
+  urls.companies.interactions.index.route,
   setInteractionsDetails,
   interactionsRouter
 )

@@ -1,6 +1,6 @@
 const { get } = require('lodash')
 
-const { containsFormData } = require('../../../lib/controller-utils')
+const { containsFormData, isUrlSafe } = require('../../../lib/controller-utils')
 const contactFormService = require('../services/form')
 const { contactLabels } = require('../labels')
 const companyRepository = require('../../companies/repos')
@@ -57,10 +57,8 @@ async function editDetails(req, res, next) {
     if (contactId) {
       res.locals.returnLink = urls.contacts.details(contactId)
       res.breadcrumb('Edit')
-    } else if (fromInteraction) {
-      res.locals.returnLink = urls.interactions.create({
-        company: companyId,
-      })
+    } else if (fromInteraction && isUrlSafe(req, fromInteraction)) {
+      res.locals.returnLink = fromInteraction
       res.breadcrumb(`Add contact at ${res.locals.company.name}`)
     } else if (companyId) {
       res.locals.returnLink = urls.companies.contacts(companyId)
@@ -107,13 +105,11 @@ async function postDetails(req, res, next) {
       req.flash('success', 'Added new contact')
     }
 
-    res.redirect(
-      fromInteraction
-        ? urls.interactions.create({
-            company: body.company,
-          })
+    const redirectUrl =
+      fromInteraction && isUrlSafe(req, fromInteraction)
+        ? fromInteraction
         : urls.contacts.details(newContact.id)
-    )
+    res.redirect(redirectUrl)
   } catch (errors) {
     if (errors.error) {
       if (errors.error.errors) {

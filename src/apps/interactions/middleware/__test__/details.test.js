@@ -577,12 +577,6 @@ describe('Interaction details middleware', () => {
           this.middlewareParameters.resMock.locals.interaction
         ).to.deep.equal(this.interaction)
       })
-
-      it('should set company to the one associated with the interaction', () => {
-        expect(this.middlewareParameters.resMock.locals.company).to.deep.equal(
-          this.company
-        )
-      })
     })
 
     context('when provided an investment interaction with no company', () => {
@@ -618,12 +612,6 @@ describe('Interaction details middleware', () => {
         expect(
           this.middlewareParameters.resMock.locals.interaction
         ).to.deep.equal(this.interaction)
-      })
-
-      it('should set company to the one associated with the interaction contact', () => {
-        expect(this.middlewareParameters.resMock.locals.company).to.deep.equal(
-          this.company
-        )
       })
     })
   })

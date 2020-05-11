@@ -1,5 +1,3 @@
-const { getContact } = require('../../contacts/repos')
-
 function setInteractionsDetails(req, res, next) {
   res.locals.interactions = {
     returnLink: `/contacts/${req.params.contactId}/interactions/`,
@@ -13,17 +11,6 @@ function setInteractionsDetails(req, res, next) {
   next()
 }
 
-async function setCompanyDetails(req, res, next) {
-  try {
-    const contact = await getContact(req.session.token, req.params.contactId)
-    res.locals.company = contact.company
-    next()
-  } catch (error) {
-    next(error)
-  }
-}
-
 module.exports = {
   setInteractionsDetails,
-  setCompanyDetails,
 }

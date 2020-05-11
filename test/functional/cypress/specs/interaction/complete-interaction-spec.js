@@ -397,7 +397,7 @@ describe('Complete interaction', () => {
           'eq',
           `/companies/${params.companyId}/interactions/${[
             params.interactionId,
-          ]}/create`
+          ]}/edit`
         )
       })
     })

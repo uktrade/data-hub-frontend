@@ -1,48 +1,35 @@
 const router = require('express').Router()
 
-const { renderEditPage } = require('./controllers/edit')
+const urls = require('../../lib/urls')
 const { renderDetailsPage } = require('./controllers/details')
 const { renderCompletePage, postComplete } = require('./controllers/complete')
-const { postCreate, renderCreate } = require('./controllers/create')
 const { renderInteractionsForEntity } = require('./controllers/list')
-const { postDetails, getInteractionDetails } = require('./middleware/details')
+const { getInteractionDetails } = require('./middleware/details')
 const {
   getInteractionsRequestBody,
   getInteractionCollectionForEntity,
   getInteractionSortForm,
 } = require('./middleware/collection')
 const { detectUserAgent } = require('../../middleware/detect-useragent')
-const urls = require('../../lib/urls')
+
+const detailsFormRouter = require('./apps/details-form/router')
 
 router.param('interactionId', getInteractionDetails)
 
 router.get(
-  '/interactions',
+  urls.interactions.index.route,
   getInteractionsRequestBody,
   getInteractionCollectionForEntity,
   getInteractionSortForm,
   renderInteractionsForEntity
 )
 
-router
-  .route(urls.interactions.subapp.create.route)
-  .post(postCreate, renderCreate)
-  .get(renderCreate)
+router.use(detailsFormRouter)
+
+router.get(urls.interactions.detail.route, renderDetailsPage)
 
 router
-  .route('/interactions/create/:theme/:kind')
-  .post(postDetails, renderEditPage)
-  .get(renderEditPage)
-
-router
-  .route('/interactions/:interactionId/edit/:theme/:kind')
-  .post(postDetails, renderEditPage)
-  .get(renderEditPage)
-
-router.get('/interactions/:interactionId', renderDetailsPage)
-
-router
-  .route('/interactions/:interactionId/complete')
+  .route(urls.interactions.complete.route)
   .post(detectUserAgent, postComplete, renderCompletePage)
   .get(detectUserAgent, renderCompletePage)
 

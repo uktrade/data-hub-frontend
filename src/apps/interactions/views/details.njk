@@ -19,7 +19,7 @@
     {% if canEdit %}
       {{ govukButton({
         text: 'Edit ' + kindWord,
-        href: [ returnLink, interaction.id, 'edit', themePath, kindPath ] | joinPaths,
+        href: [ returnLink, interaction.id, 'edit' ] | joinPaths,
         classes: 'govuk-button govuk-button--secondary'
       }) }}
     {% endif %}

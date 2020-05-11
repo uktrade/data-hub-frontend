@@ -1,7 +1,6 @@
 import React from 'react'
 import { H3 } from '@govuk-react/heading'
 import Link from '@govuk-react/link'
-import moment from 'moment'
 import PropTypes from 'prop-types'
 import { throttle } from 'lodash'
 import axios from 'axios'
@@ -30,26 +29,32 @@ import {
   OPTIONS_YES_NO,
 } from '../../../../constants'
 
-import getInteractionKind from './utils'
 import urls from '../../../../../lib/urls'
 
-const getServiceContext = (values) => {
-  switch (values.theme) {
-    case THEMES.EXPORT:
-      return values.kind_export
-    case THEMES.INVESTMENT:
-      return SERVICE_CONTEXTS.INVESTMENT_INTERACTION
-    case THEMES.OTHER:
-      return values.kind_other
-    default:
-      return null
+const getServiceContext = (theme, kind, investmentProject) => {
+  if (investmentProject) {
+    return SERVICE_CONTEXTS.INVESTMENT_PROJECT_INTERACTION
   }
+
+  const mapping = {
+    [THEMES.EXPORT]: {
+      [KINDS.INTERACTION]: SERVICE_CONTEXTS.EXPORT_INTERACTION,
+      [KINDS.SERVICE_DELIVERY]: SERVICE_CONTEXTS.EXPORT_SERVICE_DELIVERY,
+    },
+    [THEMES.INVESTMENT]: SERVICE_CONTEXTS.INVESTMENT_INTERACTION,
+    [THEMES.OTHER]: {
+      [KINDS.INTERACTION]: SERVICE_CONTEXTS.OTHER_INTERACTION,
+      [KINDS.SERVICE_DELIVERY]: SERVICE_CONTEXTS.OTHER_SERVICE_DELIVERY,
+    },
+  }
+
+  return kind && mapping[theme][kind] ? mapping[theme][kind] : mapping[theme]
 }
 
 const isTapService = (service) => service?.label?.includes('(TAP)')
 
-const filterServices = (services, values) =>
-  services.filter((s) => s.contexts.includes(getServiceContext(values)))
+const filterServices = (services, serviceContext) =>
+  services.filter((s) => s.contexts.includes(serviceContext))
 
 const validateRequiredCountries = (countries, field, { values }) =>
   !EXPORT_INTEREST_STATUS_VALUES.some((status) => values[status])
@@ -69,7 +74,6 @@ const validatedDuplicatedCountries = (countries, field, { values }) =>
 const StepInteractionDetails = ({
   companyId,
   contacts,
-  defaultAdviser,
   services,
   serviceDeliveryStatuses,
   policyAreas,
@@ -80,15 +84,14 @@ const StepInteractionDetails = ({
   onOpenContactForm,
 }) => {
   const { values = {} } = useFormContext()
-
-  const today = moment()
-
-  const filteredServices = filterServices(services, values)
+  const filteredServices = filterServices(
+    services,
+    getServiceContext(values.theme, values.kind, values.investment_project)
+  )
   const selectedService = services.find(
     (s) => s.value === values.service?.value
   )
-  const isServiceDelivery =
-    getInteractionKind(values) === KINDS.SERVICE_DELIVERY
+  const isServiceDelivery = values.kind === KINDS.SERVICE_DELIVERY
 
   return (
     <>
@@ -152,7 +155,7 @@ const StepInteractionDetails = ({
             <Link
               onClick={onOpenContactForm}
               href={urls.contacts.create(companyId, {
-                from_interaction: true,
+                from_interaction: window.location.pathname,
               })}
             >
               add a new contact
@@ -163,9 +166,10 @@ const StepInteractionDetails = ({
       />
 
       <FieldTypeahead
-        name="advisers"
+        name="dit_participants"
         label="Adviser(s)"
         placeholder="-- Select adviser --"
+        noOptionsMessage={() => 'Type to search for advisers'}
         required="Select at least one adviser"
         loadOptions={throttle(
           (searchString) =>
@@ -185,7 +189,6 @@ const StepInteractionDetails = ({
               ),
           500
         )}
-        initialValue={[defaultAdviser]}
         isMulti={true}
       />
 
@@ -195,11 +198,6 @@ const StepInteractionDetails = ({
         name="date"
         label="Date of interaction"
         required="Enter a valid date"
-        initialValue={{
-          day: today.format('DD'),
-          month: today.format('MM'),
-          year: today.format('YYYY'),
-        }}
       />
 
       {!isServiceDelivery && (
@@ -277,7 +275,7 @@ const StepInteractionDetails = ({
         </>
       )}
 
-      {values.theme !== THEMES.INVESTMENT && (
+      {!values.id && values.theme !== THEMES.INVESTMENT && (
         <>
           <FieldRadios
             inline={true}
@@ -341,7 +339,6 @@ const typeaheadOptionsListProp = PropTypes.arrayOf(typeaheadOptionProp)
 
 StepInteractionDetails.propTypes = {
   companyId: PropTypes.string.isRequired,
-  defaultAdviser: typeaheadOptionProp.isRequired,
   services: typeaheadOptionsListProp.isRequired,
   serviceDeliveryStatuses: typeaheadOptionsListProp.isRequired,
   policyAreas: typeaheadOptionsListProp.isRequired,

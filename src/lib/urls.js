@@ -55,13 +55,14 @@ function url(mountPoint, subMountPoint, path) {
   return getUrl
 }
 
-function createInteractionsSubApp(...mountPoints) {
-  if (mountPoints.length === 0) {
-    mountPoints.push(null)
-  }
+function createInteractionsSubApp(mountPoint, pathPrefix = '') {
   return {
-    create: url(...mountPoints, '/interactions/:interactionId?/create'),
-    createType: url(...mountPoints, '/interactions/create/:theme/:kind'),
+    index: url(mountPoint, pathPrefix),
+    detail: url(mountPoint, pathPrefix + '/:interactionId'),
+    create: url(mountPoint, pathPrefix + '/create'),
+    createType: url(mountPoint, pathPrefix + '/create/:theme/:kind'),
+    edit: url(mountPoint, pathPrefix + '/:interactionId/edit'),
+    complete: url(mountPoint, pathPrefix + '/:interactionId/complete'),
   }
 }
 
@@ -95,7 +96,10 @@ module.exports = {
     unarchive: url('/companies', '/:companyId/unarchive'),
     documents: url('/companies', '/:companyId/documents'),
     businessDetails: url('/companies', '/:companyId/business-details'),
-    interactions: createInteractionsSubApp('/companies', '/:companyId'),
+    interactions: createInteractionsSubApp(
+      '/companies',
+      '/:companyId/interactions'
+    ),
     manageCompanyList: url('/companies', '/:companyId/manage-company-list'),
     referrals: {
       list: url('/my-referrals'),
@@ -103,10 +107,6 @@ module.exports = {
       details: url('/companies', '/:companyId/referrals/:referralId'),
       help: url('/companies', '/:companyId/referrals/:referralId/help'),
       interactions: createInteractionsSubApp(
-        '/companies',
-        '/:companyId/referrals/:referralId'
-      ),
-      interactionsIndex: url(
         '/companies',
         '/:companyId/referrals/:referralId/interactions'
       ),
@@ -186,7 +186,10 @@ module.exports = {
     details: url('/contacts', '/:contactId/details'),
     documents: url('/contacts', '/:contactId/documents'),
     edit: url('/contacts', '/:contactId/edit'),
-    interactions: createInteractionsSubApp('/contacts', '/:contactId'),
+    interactions: createInteractionsSubApp(
+      '/contacts',
+      '/:contactId/interactions'
+    ),
   },
   events: {
     index: url('/events'),
@@ -198,30 +201,23 @@ module.exports = {
     type: url('/search', '/:searchPath?'),
   },
   interactions: {
-    index: url('/interactions'),
-    create: url('/interactions', '/create'),
-    detail: url('/interactions', '/:interactionId'),
-    subapp: createInteractionsSubApp(),
+    ...createInteractionsSubApp('/interactions'),
   },
   investments: {
     index: url('/investments'),
     projects: {
       index: url('/investments', '/projects'),
-      details: url('/investments', '/projects/:projectId/details'),
-      editDetails: url('/investments', '/projects/:projectId/edit-details'),
-      documents: url('/investments', '/projects/:projectId/documents'),
-      propositions: url('/investments', '/projects/:projectId/propositions'),
-      team: url('/investments', '/projects/:projectId/team'),
+      details: url('/investments', '/projects/:investmentId/details'),
+      editDetails: url('/investments', '/projects/:investmentId/edit-details'),
+      documents: url('/investments', '/projects/:investmentId/documents'),
+      propositions: url('/investments', '/projects/:investmentId/propositions'),
+      team: url('/investments', '/projects/:investmentId/team'),
       interactions: createInteractionsSubApp(
-        '/investments',
-        '/projects/:projectId'
+        '/investments/projects',
+        '/:investmentId/interactions'
       ),
-      interactionCollection: url(
-        '/investments',
-        '/projects/:projectId/interactions'
-      ),
-      project: url('/investments', '/projects/:projectId'),
-      status: url('/investments', '/projects/:projectId/status'),
+      project: url('/investments', '/projects/:investmentId'),
+      status: url('/investments', '/projects/:investmentId/status'),
     },
     profiles: {
       index: url('/investments', '/profiles'),

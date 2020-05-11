@@ -293,7 +293,7 @@ router.post(
 )
 
 router.use(
-  '/:investmentId',
+  urls.investments.projects.interactions.index.route,
   setInteractionsDetails,
   setCompanyDetails,
   interactionsRouter
