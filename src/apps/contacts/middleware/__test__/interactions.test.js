@@ -56,11 +56,4 @@ describe('Contacts interactions middleware', () => {
       expect(res.locals.interactions.canAdd).to.be.true
     })
   })
-
-  describe('#setCompanyDetails', () => {
-    it('should set the entiity name', async () => {
-      await middleware.setCompanyDetails(req, res, next)
-      expect(res.locals.company).to.deep.equal(contactData.company)
-    })
-  })
 })

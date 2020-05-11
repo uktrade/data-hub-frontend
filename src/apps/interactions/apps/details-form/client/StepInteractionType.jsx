@@ -1,10 +1,16 @@
 import React from 'react'
 import { FieldRadios, useFormContext } from 'data-hub-components'
-import { THEMES, SERVICE_CONTEXTS } from '../../../constants'
+import { THEMES, KINDS } from '../../../constants'
 
 const getOnChangeHandler = (fieldName, setFieldValue) => (e) => {
   setFieldValue('service', '')
   setFieldValue(fieldName, e.target.value)
+}
+
+const getInvestmentOnChangeHandler = (setFieldValue) => (e) => {
+  setFieldValue('service', '')
+  setFieldValue('theme', e.target.value)
+  setFieldValue('kind', KINDS.INTERACTION)
 }
 
 const StepInteractionType = () => {
@@ -22,18 +28,20 @@ const StepInteractionType = () => {
           children: (
             <FieldRadios
               label="What would you like to record?"
-              name="kind_export"
+              name="kind"
               required="Select what you would like to record"
               options={[
                 {
                   label: 'A standard interaction',
                   hint: 'For example, an email, phone call or meeting',
-                  value: SERVICE_CONTEXTS.EXPORT_INTERACTION,
+                  value: KINDS.INTERACTION,
+                  onChange: getOnChangeHandler('kind', setFieldValue),
                 },
                 {
                   label: 'A service that you have provided',
                   hint: 'For example a significant assist or an event',
-                  value: SERVICE_CONTEXTS.EXPORT_SERVICE_DELIVERY,
+                  value: KINDS.SERVICE_DELIVERY,
+                  onChange: getOnChangeHandler('kind', setFieldValue),
                 },
               ]}
             />
@@ -42,7 +50,7 @@ const StepInteractionType = () => {
         {
           label: 'Investment',
           value: THEMES.INVESTMENT,
-          onChange: getOnChangeHandler('theme', setFieldValue),
+          onChange: getInvestmentOnChangeHandler(setFieldValue),
         },
         {
           label: 'Other',
@@ -51,21 +59,21 @@ const StepInteractionType = () => {
           children: (
             <FieldRadios
               label="What would you like to record?"
-              name="kind_other"
+              name="kind"
               required="Select what you would like to record"
-              onChange={getOnChangeHandler('kind_other', setFieldValue)}
+              onChange={getOnChangeHandler('kind', setFieldValue)}
               options={[
                 {
                   label: 'A standard interaction',
                   hint: 'For example, an email, phone call or meeting',
-                  value: SERVICE_CONTEXTS.OTHER_INTERACTION,
-                  onChange: getOnChangeHandler('kind_other', setFieldValue),
+                  value: KINDS.INTERACTION,
+                  onChange: getOnChangeHandler('kind', setFieldValue),
                 },
                 {
                   label: 'A service that you have provided',
                   hint: 'For example a significant assist or an event',
-                  value: SERVICE_CONTEXTS.OTHER_SERVICE_DELIVERY,
-                  onChange: getOnChangeHandler('kind_other', setFieldValue),
+                  value: KINDS.SERVICE_DELIVERY,
+                  onChange: getOnChangeHandler('kind', setFieldValue),
                 },
               ]}
             />

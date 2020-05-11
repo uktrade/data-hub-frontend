@@ -8,7 +8,7 @@ describe('Interactions middleware', () => {
     context('when browsing and the route is "/interactions"', () => {
       beforeEach(() => {
         this.middlewareParameters = buildMiddlewareParameters({
-          requestPath: '/interactions',
+          requestPath: '/',
           company: companyMock,
         })
 

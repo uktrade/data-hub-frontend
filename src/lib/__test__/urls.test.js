@@ -181,14 +181,14 @@ describe('urls', () => {
 
       const interactionId = faker.random.uuid()
       expect(urls.companies.interactions.create.route).to.equal(
-        `/interactions/:interactionId?/create`
+        '/:companyId/interactions/create'
       )
       expect(urls.companies.interactions.create(companyId)).to.equal(
         `/companies/${companyId}/interactions/create`
       )
       expect(
-        urls.companies.interactions.create(companyId, interactionId)
-      ).to.equal(`/companies/${companyId}/interactions/${interactionId}/create`)
+        urls.companies.interactions.edit(companyId, interactionId)
+      ).to.equal(`/companies/${companyId}/interactions/${interactionId}/edit`)
 
       expect(urls.companies.orders(companyId)).to.equal(
         `/companies/${companyId}/orders`
@@ -215,7 +215,7 @@ describe('urls', () => {
       )
 
       expect(
-        urls.companies.referrals.interactionsIndex(companyId, referralId)
+        urls.companies.referrals.interactions.index(companyId, referralId)
       ).to.equal(`/companies/${companyId}/referrals/${referralId}/interactions`)
 
       expect(urls.companies.pipeline(companyId)).to.equal(
@@ -235,7 +235,7 @@ describe('urls', () => {
         `/contacts/${contactId}/interactions/create`
       )
       expect(urls.contacts.interactions.create.route).to.equal(
-        '/interactions/:interactionId?/create'
+        '/:contactId/interactions/create'
       )
     })
   })
@@ -260,13 +260,9 @@ describe('urls', () => {
   })
 
   describe('interactions', () => {
-    describe('subapp', () => {
-      it('should return the correct values', () => {
-        expect(urls.interactions.subapp.create.mountPoint).to.equal(null)
-        expect(urls.interactions.subapp.create.route).to.equal(
-          '/interactions/:interactionId?/create'
-        )
-      })
+    it('should return the correct values', () => {
+      expect(urls.interactions.create.mountPoint).to.equal('/interactions')
+      expect(urls.interactions.create.route).to.equal('/create')
     })
   })
 

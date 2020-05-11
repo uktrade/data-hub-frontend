@@ -9,7 +9,7 @@ const {
 } = require('./send-referral/controllers')
 const interactionsRouter = require('../../../interactions/router.sub-app')
 const {
-  setCompanyDetails,
+  setReferralDetails,
   setInteractionsDetails,
 } = require('./middleware/interactions')
 
@@ -24,8 +24,8 @@ router.get(urls.companies.referrals.help.route, renderReferralHelp)
 // Adding an interaction to complete a referral
 // This mounts the interactions sub app on the details route
 router.use(
-  urls.companies.referrals.details.route,
-  setCompanyDetails,
+  urls.companies.referrals.interactions.index.route,
+  setReferralDetails,
   setInteractionsDetails,
   interactionsRouter
 )

@@ -1,6 +1,7 @@
 import { omit } from 'lodash'
 
 import {
+  FORM__LOADED,
   FORM__FIELD_SET_VALUE,
   FORM__FIELD_TOUCHED,
   FORM__FIELD_REGISTER,
@@ -24,6 +25,14 @@ export default (
   { type, ...action }
 ) => {
   switch (type) {
+    case FORM__LOADED:
+      return {
+        ...state,
+        values: {
+          ...action.initialValues,
+          ...state.values,
+        },
+      }
     case FORM__FIELD_REGISTER:
       return {
         ...state,

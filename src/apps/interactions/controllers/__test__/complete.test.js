@@ -4,6 +4,7 @@ const buildMiddlewareParameters = require('../../../../../test/unit/helpers/midd
 const draftPastMeeting = require('../../../../../test/unit/data/interactions/draft-past-meeting.json')
 const { completeController } = require('../index')
 const { ERROR } = require('../../../constants')
+const urls = require('../../../../lib/urls')
 
 describe('Interaction details controller', () => {
   let middlewareParameters
@@ -162,7 +163,7 @@ describe('Interaction details controller', () => {
 
       it('should redirect to the interactions', () => {
         expect(middlewareParameters.resMock.redirect).calledOnceWithExactly(
-          `/companies/${draftPastMeeting.company.id}/interactions`
+          urls.companies.interactions.index(draftPastMeeting.company.id)
         )
       })
 
@@ -338,7 +339,7 @@ describe('Interaction details controller', () => {
 
         it('should redirect to the interactions', () => {
           expect(middlewareParameters.resMock.redirect).calledOnceWithExactly(
-            `/companies/${draftPastMeeting.company.id}/interactions`
+            urls.companies.interactions.index(draftPastMeeting.company.id)
           )
         })
 
@@ -448,7 +449,10 @@ describe('Interaction details controller', () => {
       })
 
       it('should redirect to the interaction create journey', () => {
-        const expectedPath = `/companies/${draftPastMeeting.company.id}/interactions/${draftPastMeeting.id}/create`
+        const expectedPath = urls.companies.interactions.edit(
+          draftPastMeeting.company.id,
+          draftPastMeeting.id
+        )
         expect(middlewareParameters.resMock.redirect).calledOnceWithExactly(
           expectedPath
         )

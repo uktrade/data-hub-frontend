@@ -115,7 +115,7 @@ const THEMES = {
 
 const KINDS = {
   INTERACTION: 'interaction',
-  SERVICE_DELIVERY: 'service-delivery',
+  SERVICE_DELIVERY: 'service_delivery',
 }
 
 const SERVICE_CONTEXTS = {

@@ -12,7 +12,7 @@ import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
 import createSagaMiddleware from 'redux-saga'
 
 import AddCompanyForm from '../apps/companies/apps/add-company/client/AddCompanyForm'
-import AddInteractionForm from '../apps/interactions/apps/add-interaction/client/AddInteractionForm'
+import InteractionDetailsForm from '../apps/interactions/apps/details-form/client/InteractionDetailsForm'
 import CompanyActivityFeed from '../apps/companies/apps/activity-feed/client/CompanyActivityFeed'
 import EditCompanyForm from '../apps/companies/apps/edit-company/client/EditCompanyForm'
 import CompanyEditHistory from '../apps/companies/apps/edit-history/client/CompanyEditHistory'
@@ -73,9 +73,9 @@ import {
 import exportCountriesEditReducer from '../apps/companies/apps/exports/client/ExportCountriesEdit/reducer'
 import * as exportCountriesEditTasks from '../apps/companies/apps/exports/client/ExportCountriesEdit/tasks'
 
-import * as addInteractionFormState from '../apps/interactions/apps/add-interaction/client/state'
-import * as addInteractionFormTasks from '../apps/interactions/apps/add-interaction/client/tasks'
-import addInteractionFormReducer from '../apps/interactions/apps/add-interaction/client/reducer'
+import * as addInteractionFormState from '../apps/interactions/apps/details-form/client/state'
+import * as addInteractionFormTasks from '../apps/interactions/apps/details-form/client/tasks'
+import addInteractionFormReducer from '../apps/interactions/apps/details-form/client/reducer'
 
 import {
   ID as ADD_TO_PIPELINE_ID,
@@ -143,8 +143,8 @@ sagaMiddleware.run(
     Referrals: referralListTask,
     'Export wins': exportWinsTasks.fetchExportWins,
     [EXPORT_COUNTRIES_EDIT_NAME]: exportCountriesEditTasks.saveExportCountries,
-    [addInteractionFormState.TASK_CREATE_INTERACTION]:
-      addInteractionFormTasks.createInteraction,
+    [addInteractionFormState.TASK_SAVE_INTERACTION]:
+      addInteractionFormTasks.saveInteraction,
     [addInteractionFormState.TASK_OPEN_CONTACT_FORM]:
       addInteractionFormTasks.openContactForm,
     [ADD_TO_PIPELINE_TASK_NAME]: pipelineReducer.checkIfOnPipeline,
@@ -177,9 +177,12 @@ function App() {
             <AddCompanyForm csrfToken={globalProps.csrfToken} {...props} />
           )}
         </Mount>
-        <Mount selector="#add-interaction-form">
+        <Mount selector="#interaction-details-form">
           {(props) => (
-            <AddInteractionForm csrfToken={globalProps.csrfToken} {...props} />
+            <InteractionDetailsForm
+              csrfToken={globalProps.csrfToken}
+              {...props}
+            />
           )}
         </Mount>
         <Mount selector="#edit-company-form">
