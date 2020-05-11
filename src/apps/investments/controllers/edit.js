@@ -10,11 +10,12 @@ function editValueGet(req, res) {
     estimated_land_date: estimatedLandDate,
     actual_land_date: actualLandDate,
   } = res.locals.form.state
+  const datesBeforeCutOff = [estimatedLandDate, actualLandDate].some(
+    (date) => date !== null && new Date(date) < valueCutOffDate
+  )
 
   res.breadcrumb('Edit value').render('investments/views/value-edit', {
-    projectValueNeeded:
-      (estimatedLandDate || actualLandDate) &&
-      new Date(estimatedLandDate || actualLandDate) < valueCutOffDate,
+    projectValueNeeded: datesBeforeCutOff,
   })
 }
 
