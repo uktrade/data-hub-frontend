@@ -1,0 +1,19 @@
+{
+    "count": 1,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+            "company": {
+                "name": "Lambda plc",
+                "turnover": null,
+                "export_potential": null,
+                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa"
+            },
+            "name": "TEST",
+            "status": "in_progress",
+            "created_on": "2020-05-05T18:30:07.869217Z"
+        }
+    ]
+}
