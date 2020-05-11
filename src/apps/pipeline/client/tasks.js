@@ -16,7 +16,7 @@ export async function addCompanyToPipeline({ values, companyId, csrfToken }) {
   await axios.post(
     `${urls.companies.pipeline(companyId, { _csrf: csrfToken })}`,
     {
-      name: null,
+      name: values.name,
       status: values.category,
     }
   )

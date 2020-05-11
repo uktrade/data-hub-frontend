@@ -2,7 +2,12 @@ import React, { useEffect } from 'react'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import ErrorSummary from '@govuk-react/error-summary'
-import { FormStateful, FieldRadios, FormActions } from 'data-hub-components'
+import {
+  FormStateful,
+  FieldRadios,
+  FormActions,
+  FieldInput,
+} from 'data-hub-components'
 import { connect } from 'react-redux'
 import Task from '../../../client/components/Task'
 import LoadingBox from '@govuk-react/loading-box'
@@ -113,6 +118,11 @@ function AddToPipelineForm({
                   }}
                   submissionError={addCompanyToPipeline.errorMessage}
                 >
+                  <FieldInput
+                    name="name"
+                    label="Give a project name (Optional)"
+                    type="text"
+                  />
                   <FieldRadios
                     name="category"
                     label="Choose a status"
