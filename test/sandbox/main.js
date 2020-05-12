@@ -30,6 +30,7 @@ var v4SearchCompanyWithCountry = require('./routes/v4/search/company/autocomplet
 var v4SearchLargeInvestorProfiles = require('./routes/v4/search/large-investor-profile/results.js')
 var v4SearchExports = require('./routes/v4/search/export')
 var v4referralList = require('./routes/v4/referrals/list.js')
+var v4pipelineItem = require('./routes/v4/pipeline-item/index.js')
 
 // Referral details
 Sandbox.define('/v4/company-referral/{id}', 'GET', v4Company.referralDetails)
@@ -542,3 +543,7 @@ Sandbox.define('/help-centre/announcement', 'GET', helpCentre.announcement)
 
 // Zendesk tickets endpoint
 Sandbox.define('/zendesk/tickets', 'POST', zendesk.tickets)
+
+// Pipeline endpoint
+Sandbox.define('/v4/pipeline-item', 'GET', v4pipelineItem.getPipelineItems)
+Sandbox.define('/v4/pipeline-item', 'POST', v4pipelineItem.postPipelineItems)

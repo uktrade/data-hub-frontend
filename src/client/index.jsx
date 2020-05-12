@@ -79,10 +79,11 @@ import addInteractionFormReducer from '../apps/interactions/apps/details-form/cl
 
 import {
   ID as ADD_TO_PIPELINE_ID,
-  TASK_NAME as ADD_TO_PIPELINE_TASK_NAME,
+  TASK_GET_PIPELINE_BY_COMPANY,
+  TASK_ADD_COMPANY_TO_PIPELINE,
 } from '../apps/pipeline/client/state'
 import addToPipelineReducer from '../apps/pipeline/client/reducer'
-import * as pipelineReducer from '../apps/pipeline/client/tasks'
+import * as pipelineTasks from '../apps/pipeline/client/tasks'
 
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
@@ -147,7 +148,8 @@ sagaMiddleware.run(
       addInteractionFormTasks.saveInteraction,
     [addInteractionFormState.TASK_OPEN_CONTACT_FORM]:
       addInteractionFormTasks.openContactForm,
-    [ADD_TO_PIPELINE_TASK_NAME]: pipelineReducer.checkIfOnPipeline,
+    [TASK_GET_PIPELINE_BY_COMPANY]: pipelineTasks.getPipelineByCompany,
+    [TASK_ADD_COMPANY_TO_PIPELINE]: pipelineTasks.addCompanyToPipeline,
   })
 )
 
@@ -289,7 +291,9 @@ function App() {
           {(props) => <ExportCountriesEdit {...props} />}
         </Mount>
         <Mount selector="#add-to-pipeline-form">
-          {(props) => <AddToPipelineForm {...props} />}
+          {(props) => (
+            <AddToPipelineForm {...props} csrfToken={globalProps.csrfToken} />
+          )}
         </Mount>
       </ConnectedRouter>
     </Provider>
