@@ -40,6 +40,15 @@ function PipelineCheck({
     })
   }, [companyId])
 
+  if (getPipelineByCompany.error) {
+    return (
+      <ErrorSummary
+        heading={`There was an error checking the status of ${companyName}`}
+        description={getPipelineByCompany.errorMessage}
+        errors={[]}
+      />
+    )
+  }
   if (onPipeline == null) {
     return <ProgressIndicator message="checking pipeline..." />
   }
