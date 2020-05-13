@@ -35,7 +35,7 @@ describe('Company add to pipeline form', () => {
       cy.get('#field-name').then((element) => {
         assertFieldInput({
           element,
-          label: 'Give a project name (Optional)',
+          label: 'Project name (Optional)',
           optionsCount: 3,
         })
       })
@@ -89,7 +89,7 @@ describe('Company add to pipeline form', () => {
       cy.get('#field-name').then((element) => {
         assertFieldInput({
           element,
-          label: 'Give a project name (Optional)',
+          label: 'Project name (Optional)',
           optionsCount: 3,
         })
       })
@@ -124,7 +124,7 @@ describe('Company add to pipeline form', () => {
       cy.get('#field-name').then((element) => {
         assertFieldInput({
           element,
-          label: 'Give a project name (Optional)',
+          label: 'Project name (Optional)',
           optionsCount: 3,
         })
       })
