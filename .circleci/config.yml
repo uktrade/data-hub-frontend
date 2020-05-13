@@ -80,6 +80,9 @@ aliases:
     HELP_CENTRE_API_FEED: https://data-services-help.trade.gov.uk/api/feeds/data-hub/updates
     DATA_HUB_BACKEND_ACCESS_KEY_ID: frontend-key-id
     DATA_HUB_BACKEND_SECRET_ACCESS_KEY: frontend-key
+    DATA_STORE_SERVICE_ACCESS_KEY_ID: data-store-service-id
+    DATA_STORE_SERVICE_SECRET_ACCESS_KEY: data-store-service-key
+    DATA_STORE_SERVICE_POSTCODE_TO_REGION_URL: http://localhost:8001/api/v1/get-postcode-data/
     ZEN_TICKETS_URL: http://zendesk.example.com
     ZEN_TOKEN: nobodyKnows
     ZEN_EMAIL: zendesk@example.com

@@ -78,6 +78,10 @@ import * as addInteractionFormState from '../apps/interactions/apps/details-form
 import * as addInteractionFormTasks from '../apps/interactions/apps/details-form/client/tasks'
 import addInteractionFormReducer from '../apps/interactions/apps/details-form/client/reducer'
 
+import * as addCompanyState from '../apps/companies/apps/add-company/client/state'
+import addCompanyPostcodeToRegionReducer from '../apps/companies/apps/add-company/client/reducer'
+import addCompanyPostcodeToRegionTask from '../apps/companies/apps/add-company/client/tasks'
+
 import {
   ID as ADD_TO_PIPELINE_ID,
   TASK_GET_PIPELINE_BY_COMPANY,
@@ -110,6 +114,7 @@ const store = createStore(
     [EXPORTS_WINS_ID]: exportWinsReducer,
     [EXPORT_COUNTRIES_EDIT_ID]: exportCountriesEditReducer,
     [addInteractionFormState.ID]: addInteractionFormReducer,
+    [addCompanyState.ID]: addCompanyPostcodeToRegionReducer,
     [ADD_TO_PIPELINE_ID]: addToPipelineReducer,
     ...TabNav.reducerSpread,
     ...ReferralList.reducerSpread,
@@ -145,12 +150,13 @@ sagaMiddleware.run(
     Referrals: referralListTask,
     'Export wins': exportWinsTasks.fetchExportWins,
     [EXPORT_COUNTRIES_EDIT_NAME]: exportCountriesEditTasks.saveExportCountries,
+    [TASK_GET_PIPELINE_BY_COMPANY]: pipelineTasks.getPipelineByCompany,
+    [TASK_ADD_COMPANY_TO_PIPELINE]: pipelineTasks.addCompanyToPipeline,
+    [addCompanyState.TASK_POSTCODE_TO_REGION]: addCompanyPostcodeToRegionTask,
     [addInteractionFormState.TASK_SAVE_INTERACTION]:
       addInteractionFormTasks.saveInteraction,
     [addInteractionFormState.TASK_OPEN_CONTACT_FORM]:
       addInteractionFormTasks.openContactForm,
-    [TASK_GET_PIPELINE_BY_COMPANY]: pipelineTasks.getPipelineByCompany,
-    [TASK_ADD_COMPANY_TO_PIPELINE]: pipelineTasks.addCompanyToPipeline,
   })
 )
 
