@@ -1,6 +1,8 @@
 const rp = require('request-promise')
-const config = require('../../config')
 const { trim } = require('lodash')
+
+const hawkRequest = require('../../lib/hawk-request')
+const config = require('../../config')
 
 function lookupAddress(postcode) {
   return new Promise((resolve, reject) => {
@@ -53,6 +55,12 @@ function parsePostcodeResult(data, postcode) {
   })
 }
 
+function getDITRegionFromUKPostcode(ukPostcode) {
+  const url = `${config.regionLookupUrl}?postcode=${ukPostcode}&orientation=records`
+  return hawkRequest(url, config.hawkCredentials.dataStoreService)
+}
+
 module.exports = {
   lookupAddress,
+  getDITRegionFromUKPostcode,
 }
