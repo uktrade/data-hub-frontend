@@ -22,12 +22,6 @@ describe('Company export controller', () => {
       )
     })
 
-    it('should set correct breadcrumbs', () => {
-      expect(middlewareParameters.resMock.breadcrumb).to.be.calledWith(
-        'Exports'
-      )
-    })
-
     it('should render the correct view', () => {
       expect(middlewareParameters.resMock.render.args[0][0]).to.equal(
         'companies/apps/exports/views/index'

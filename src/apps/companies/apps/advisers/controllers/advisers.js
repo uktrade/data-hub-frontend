@@ -4,7 +4,6 @@ const config = require('../../../../../config')
 const { transformCoreTeamToCollection } = require('../../../transformers')
 const { coreTeamLabels } = require('../../../labels')
 const { isItaTierDAccount } = require('../../../../../lib/is-tier-type-company')
-const { companies } = require('../../../../../../src/lib/urls')
 const { authorisedRequest } = require('../../../../../lib/authorised-request')
 const urls = require('../../../../../lib/urls')
 
@@ -19,32 +18,41 @@ function renderLeadAdvisers(req, res) {
   const {
     company,
     user: { permissions },
+    returnUrl,
+    dnbRelatedCompaniesCount,
   } = res.locals
   const { name, team, email } = companyToLeadITA(company) || {}
 
-  res
-    .breadcrumb(company.name, `${companies.detail(company.id)}`)
-    .breadcrumb('Lead adviser')
-    .render('companies/views/lead-advisers', {
-      props: {
-        hasAccountManager: !!company.one_list_group_global_account_manager,
-        name,
-        team,
-        email,
-        companyName: company.name,
-        companyId: company.id,
-        addUrl: companies.advisers.assign(company.id),
-        removeUrl: companies.advisers.remove(company.id),
-        hasPermissionToAddIta: permissions.includes(
-          'company.change_regional_account_manager'
-        ),
-      },
-    })
+  res.render('companies/views/lead-advisers', {
+    props: {
+      hasAccountManager: !!company.one_list_group_global_account_manager,
+      name,
+      team,
+      email,
+      companyName: company.name,
+      companyId: company.id,
+      addUrl: urls.companies.advisers.assign(company.id),
+      removeUrl: urls.companies.advisers.remove(company.id),
+      hasPermissionToAddIta: permissions.includes(
+        'company.change_regional_account_manager'
+      ),
+      company,
+      breadcrumbs: [
+        { link: urls.dashboard(), text: 'Home' },
+        { link: urls.companies.index(), text: 'Companies' },
+        { link: urls.companies.detail(company.id), text: company.name },
+        { text: 'Lead adviser' },
+      ],
+      returnUrl,
+      dnbRelatedCompaniesCount,
+      flashMessages: res.locals.getMessages(),
+    },
+  })
 }
 
 async function renderCoreTeamAdvisers(req, res, next) {
   try {
-    const { company } = res.locals
+    const { company, returnUrl, dnbRelatedCompaniesCount } = res.locals
     const token = req.session.token
     const {
       global_account_manager: globalAccountManager,
@@ -67,15 +75,24 @@ async function renderCoreTeamAdvisers(req, res, next) {
     const coreTeam = await getOneListGroupCoreTeam(token, company.id).then(
       transformCoreTeamToCollection
     )
-    res
-      .breadcrumb(company.name, urls.companies.detail(company.id))
-      .breadcrumb('Advisers')
-      .render('companies/views/advisers', {
-        coreTeam,
-        columns,
-        oneListEmail: config.oneList.email,
-        companyName: company.name,
-      })
+    res.render('companies/views/advisers', {
+      coreTeam,
+      columns,
+      oneListEmail: config.oneList.email,
+      companyName: company.name,
+      props: {
+        company,
+        breadcrumbs: [
+          { link: urls.dashboard(), text: 'Home' },
+          { link: urls.companies.index(), text: 'Companies' },
+          { link: urls.companies.detail(company.id), text: company.name },
+          { text: 'Core Team' },
+        ],
+        returnUrl,
+        dnbRelatedCompaniesCount,
+        flashMessages: res.locals.getMessages(),
+      },
+    })
   } catch (error) {
     next(error)
   }

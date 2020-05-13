@@ -56,30 +56,11 @@ describe('Company investments project controlle', () => {
         expect(this.transformApiResponseToCollectionSpy).to.have.been.calledOnce
       })
 
-      it('should set the correct number of breadcrumbs', () => {
-        expect(this.middlewareParameters.resMock.breadcrumb).to.have.been
-          .calledTwice
-      })
-
       it('should render the correct template', () => {
         expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(
           'companies/apps/investments/projects/views/list'
         )
         expect(this.middlewareParameters.resMock.render).to.have.been.calledOnce
-      })
-
-      it('should send the correct template data', () => {
-        expect(
-          this.middlewareParameters.resMock.render.args[0][1]
-        ).to.deep.equal({
-          results: investmentsMock.results,
-          actionButtons: [
-            {
-              label: 'Add investment project',
-              url: `/investments/projects/create/${companyMock.id}`,
-            },
-          ],
-        })
       })
     })
 

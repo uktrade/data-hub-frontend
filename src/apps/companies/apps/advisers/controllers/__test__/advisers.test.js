@@ -1,7 +1,7 @@
-const buildMiddlewareParameters = require('../../../../../../../test/unit/helpers/middleware-parameters-builder.js')
+const buildMiddlewareParameters = require('../../../../../../../test/unit/helpers/middleware-parameters-builder')
 const config = require('../../../../../../config')
 const companyMock = require('../../../../../../../test/unit/data/companies/companies-house.json')
-const coreTeamMock = require('../../../../../../../test/unit/data/companies/one-list-group-core-team.json')
+const coreTeamMock = require('../../../../../../../test/sandbox/fixtures/v4/company/one-list-group-core-team.json')
 
 const { renderAdvisers } = require('../advisers')
 const { companies } = require('../../../../../../lib/urls')
@@ -26,27 +26,15 @@ describe('Company adviser list controller', () => {
               user: {
                 permissions: ['company.change_regional_account_manager'],
               },
+              locals: {
+                getMessages: sinon.spy(),
+              },
             })
 
             await renderAdvisers(
               middlewareParameters.reqMock,
               middlewareParameters.resMock,
               middlewareParameters.nextSpy
-            )
-          })
-          it('should add two breadcrumbs', () => {
-            expect(middlewareParameters.resMock.breadcrumb).to.have.been
-              .calledTwice
-          })
-          it('should add the company breadcrumb', () => {
-            expect(middlewareParameters.resMock.breadcrumb).to.be.calledWith(
-              companyMock.name,
-              `${companies.index()}/${companyMock.id}`
-            )
-          })
-          it('should add the Lead Advisers breadcrumb', () => {
-            expect(middlewareParameters.resMock.breadcrumb).to.be.calledWith(
-              'Lead adviser'
             )
           })
           it('should render the correct template', () => {
@@ -115,6 +103,9 @@ describe('Company adviser list controller', () => {
               user: {
                 permissions: [],
               },
+              locals: {
+                getMessages: sinon.spy(),
+              },
             })
 
             await renderAdvisers(
@@ -151,6 +142,9 @@ describe('Company adviser list controller', () => {
               },
               user: {
                 permissions: [],
+              },
+              locals: {
+                getMessages: sinon.spy(),
               },
             })
 
@@ -198,6 +192,9 @@ describe('Company adviser list controller', () => {
                   },
                 },
               },
+              locals: {
+                getMessages: sinon.spy(),
+              },
             })
 
             nock(config.apiRoot)
@@ -208,24 +205,6 @@ describe('Company adviser list controller', () => {
               middlewareParameters.reqMock,
               middlewareParameters.resMock,
               middlewareParameters.nextSpy
-            )
-          })
-
-          it('should add two breadcrumbs', () => {
-            expect(middlewareParameters.resMock.breadcrumb).to.have.been
-              .calledTwice
-          })
-
-          it('should add the company breadcrumb', () => {
-            expect(middlewareParameters.resMock.breadcrumb).to.be.calledWith(
-              companyMock.name,
-              `${companies.detail(companyMock.id)}`
-            )
-          })
-
-          it('should add the Advisers breadcrumb', () => {
-            expect(middlewareParameters.resMock.breadcrumb).to.be.calledWith(
-              'Advisers'
             )
           })
 

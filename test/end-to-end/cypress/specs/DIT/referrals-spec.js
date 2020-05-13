@@ -3,6 +3,7 @@ const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 
 const formSelectors = selectors.interactionForm
+const companyLocalHeader = selectors.companyLocalHeader()
 
 const selectTypeahead = (fieldName, input) =>
   cy.contains(fieldName).within(() => {
@@ -37,7 +38,7 @@ describe('Referrals', () => {
         .find('button')
         .eq(2)
         .click()
-      cy.get(selectors.localHeader())
+      cy.get(companyLocalHeader.flashMessageList)
       cy.contains('Referral sent')
     })
   })
@@ -47,7 +48,7 @@ describe('Referrals', () => {
     })
 
     it('should display the new referral on the homepage', () => {
-      cy.get(selectors.localHeader().flash)
+      cy.get(companyLocalHeader.flashMessageList)
         .find('a')
         .eq(0)
         .click()

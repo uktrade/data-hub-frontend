@@ -1,7 +1,4 @@
-const {
-  localHeader,
-  companyInvestment: selectors,
-} = require('../../../../../selectors')
+const { companyInvestment: selectors } = require('../../../../../selectors')
 const fixtures = require('../../../fixtures')
 
 const baseUrl = Cypress.config().baseUrl
@@ -12,10 +9,6 @@ const largeCapitalProfileNew = `/companies/${lambdaPlc.id}/investments/large-cap
 describe('Company Investments and Large capital profile', () => {
   context('when viewing the company header', () => {
     before(() => cy.visit(largeCapitalProfile))
-
-    it('should display the "One List Corp" heading', () => {
-      cy.get(localHeader().heading).should('have.text', 'One List Corp')
-    })
   })
 
   context('when viewing the 3 tabs', () => {

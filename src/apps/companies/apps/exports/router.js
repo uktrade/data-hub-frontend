@@ -19,7 +19,15 @@ router
   .get(populateExportForm, renderExportEditCountries)
   .post(populateExportForm, handleEditFormPost, renderExportEditCountries)
 
-router.get(urls.companies.exports.history.index.route, renderExportHistory)
-router.get(urls.companies.exports.history.country.route, renderExportHistory)
+router.get(
+  urls.companies.exports.history.index.route,
+  setReturnUrl,
+  renderExportHistory
+)
+router.get(
+  urls.companies.exports.history.country.route,
+  setReturnUrl,
+  renderExportHistory
+)
 
 module.exports = router
