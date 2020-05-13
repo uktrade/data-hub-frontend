@@ -10,6 +10,8 @@ const {
 const DUNS_NUMBER_NOT_MATCHED = '111111111'
 const DUNS_NUMBER_MATCHED = '222222222'
 
+const companyLocalHeader = selectors.companyLocalHeader()
+
 const performSearch = (companyName = 'some company') => {
   cy.get(selectors.companyMatch.find.companyNameInput)
     .clear()
@@ -298,8 +300,7 @@ describe('Match a company', () => {
           urls.companies.activity.index(fixtures.company.venusLtd.id)
         )
 
-        cy.get(selectors.localHeader().flash).should(
-          'contain.text',
+        cy.get(companyLocalHeader.flashMessageList).contains(
           'Verification request sent for third party review'
         )
       })
@@ -430,10 +431,10 @@ describe('Match a company', () => {
     })
 
     it('displays the "Business details verified" flash message and the ID used in GA', () => {
-      cy.contains(
+      cy.get(companyLocalHeader.flashMessageList).contains(
         'Business details verified.Thanks for helping to improve ' +
           'the quality of records on Data Hub!'
-      ).should('have.attr', 'id', 'message-company-matched')
+      )
     })
   })
 
@@ -534,8 +535,7 @@ describe('Match a company', () => {
     })
 
     it('displays the "Company record update request sent" flash message', () => {
-      cy.get(selectors.localHeader().flash).should(
-        'contain.text',
+      cy.get(companyLocalHeader.flashMessageList).contains(
         'Company merge requested. Thanks for keeping Data Hub running smoothly.'
       )
     })

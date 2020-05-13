@@ -1,7 +1,7 @@
 const fixtures = require('../../fixtures')
 
 const {
-  companyAddRemoveFromLists: { addRemoveButton, cancelLink },
+  companyAddRemoveFromLists: { cancelLink },
   tabbedLocalNav,
 } = require('../../../../selectors')
 
@@ -10,7 +10,7 @@ const testTab = (tabText) => {
     cy.get(tabbedLocalNav().tabs)
       .contains(tabText)
       .click()
-    cy.get(addRemoveButton).click()
+    cy.contains('Add to or remove from lists').click()
     cy.get(cancelLink).click()
     cy.get(tabbedLocalNav().tabs)
       .contains(tabText)

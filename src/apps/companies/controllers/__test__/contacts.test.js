@@ -57,11 +57,6 @@ describe('Company contact list controller', () => {
         )
       })
 
-      it('should set the correct number of breadcrumbs', () => {
-        expect(this.middlewareParameters.resMock.breadcrumb).to.have.been
-          .calledTwice
-      })
-
       it('should render the correct template', () => {
         expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(
           expectedTemplate

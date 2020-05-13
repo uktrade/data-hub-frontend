@@ -56,11 +56,6 @@ describe('Company orders controller', () => {
         expect(this.transformApiResponseToCollectionSpy).to.have.been.calledOnce
       })
 
-      it('should set the correct number of breadcrumbs', () => {
-        expect(this.middlewareParameters.resMock.breadcrumb).to.have.been
-          .calledTwice
-      })
-
       it('should render the correct template', () => {
         expect(this.middlewareParameters.resMock.render.args[0][0]).to.equal(
           'companies/views/orders'
