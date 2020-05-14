@@ -10,20 +10,20 @@ import {
   FieldInput,
 } from 'data-hub-components'
 import { connect } from 'react-redux'
-import Task from '../../../client/components/Task'
+import Task from '../../../../../client/components/Task'
 import LoadingBox from '@govuk-react/loading-box'
-import ProgressIndicator from '../../../client/components/ProgressIndicator'
+import ProgressIndicator from '../../../../../client/components/ProgressIndicator'
 import {
   PIPELINE__CHECKED_IF_ON_PIPELINE,
   PIPELINE__ADD_COMPANY_SUCCESS,
-} from '../../../client/actions'
+} from '../../../../../client/actions'
 import {
   state2props,
   ID as STATE_ID,
   TASK_GET_PIPELINE_BY_COMPANY,
   TASK_ADD_COMPANY_TO_PIPELINE,
 } from './state'
-import urls from '../../../lib/urls'
+import urls from '../../../../../lib/urls'
 
 function isOnPipeline(pipelineStatus, companyId) {
   if (pipelineStatus?.companyId === companyId) {
@@ -85,7 +85,7 @@ function AddToPipelineForm({
        * TODO: Replace with react router navigation.
        * As we move to SPA clear the saveId from the state before navigation.
        */
-      window.location.href = urls.dashboard()
+      window.location.href = urls.pipeline.index()
     }
   }, [savedId])
 

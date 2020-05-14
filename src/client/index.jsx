@@ -38,7 +38,7 @@ import ReferralHelp from '../apps/companies/apps/referrals/help/client/ReferralH
 import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
 import sendReferral from '../apps/companies/apps/referrals/send-referral/client/reducer'
 import InteractionReferralDetails from '../apps/companies/apps/referrals/details/client/InteractionReferralDetails.jsx'
-import AddToPipelineForm from '../apps/pipeline/client/AddToPipelineForm'
+import AddToPipelineForm from '../apps/companies/apps/pipeline/client/AddToPipelineForm'
 import CompanyLocalHeader from '../apps/companies/client/CompanyLocalHeader.jsx'
 import InvestmentProjectAdmin from '../apps/investments/views/admin/client/InvestmentProjectAdmin.jsx'
 import FlashMessages from './components/LocalHeader/FlashMessages.jsx'
@@ -88,9 +88,9 @@ import {
   ID as ADD_TO_PIPELINE_ID,
   TASK_GET_PIPELINE_BY_COMPANY,
   TASK_ADD_COMPANY_TO_PIPELINE,
-} from '../apps/pipeline/client/state'
-import addToPipelineReducer from '../apps/pipeline/client/reducer'
-import * as pipelineTasks from '../apps/pipeline/client/tasks'
+} from '../apps/companies/apps/pipeline/client/state'
+import addToPipelineReducer from '../apps/companies/apps/pipeline/client/reducer'
+import * as pipelineTasks from '../apps/companies/apps/pipeline/client/tasks'
 
 import {
   ID as INVESTEMENT_PROJECT_ADMIN_ID,
