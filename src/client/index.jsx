@@ -41,6 +41,7 @@ import InteractionReferralDetails from '../apps/companies/apps/referrals/details
 import AddToPipelineForm from '../apps/pipeline/client/AddToPipelineForm'
 import CompanyLocalHeader from '../apps/companies/client/CompanyLocalHeader.jsx'
 import InvestmentProjectAdmin from '../apps/investments/views/admin/client/InvestmentProjectAdmin.jsx'
+import FlashMessages from './components/LocalHeader/FlashMessages.jsx'
 
 import tasksSaga from './components/Task/saga'
 import tasks from './components/Task/reducer'
@@ -317,6 +318,9 @@ function App() {
         </Mount>
         <Mount selector="#investment-project-admin">
           {(props) => <InvestmentProjectAdmin {...props} />}
+        </Mount>
+        <Mount selector="#flash-messages">
+          {(props) => <FlashMessages {...props} />}
         </Mount>
       </ConnectedRouter>
     </Provider>
