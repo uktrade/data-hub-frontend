@@ -239,5 +239,7 @@ module.exports = {
   support: url('/support'),
   pipeline: {
     index: url('/my-pipeline'),
+    active: url('/my-pipeline/active'),
+    won: url('/my-pipeline/won'),
   },
 }
