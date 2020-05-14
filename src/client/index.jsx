@@ -40,6 +40,7 @@ import sendReferral from '../apps/companies/apps/referrals/send-referral/client/
 import InteractionReferralDetails from '../apps/companies/apps/referrals/details/client/InteractionReferralDetails.jsx'
 import AddToPipelineForm from '../apps/pipeline/client/AddToPipelineForm'
 import CompanyLocalHeader from '../apps/companies/client/CompanyLocalHeader.jsx'
+import InvestmentProjectAdmin from '../apps/investments/views/admin/client/InvestmentProjectAdmin.jsx'
 
 import tasksSaga from './components/Task/saga'
 import tasks from './components/Task/reducer'
@@ -90,6 +91,13 @@ import {
 import addToPipelineReducer from '../apps/pipeline/client/reducer'
 import * as pipelineTasks from '../apps/pipeline/client/tasks'
 
+import {
+  ID as INVESTEMENT_PROJECT_ADMIN_ID,
+  TASK_UPDATE_STAGE,
+} from '../apps/investments/views/admin/client/state'
+import * as investmentAdminTasks from '../apps/investments/views/admin/client/tasks'
+import investmentProjectAdminReducer from '../apps/investments/views/admin/client/reducer'
+
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
   // The baseURI is set to the <base/> tag by the spaFallbackSpread
@@ -121,6 +129,7 @@ const store = createStore(
     ...Form.reducerSpread,
     // A reducer is required to be able to set a preloadedState parameter
     referrerUrl: (state = {}) => state,
+    [INVESTEMENT_PROJECT_ADMIN_ID]: investmentProjectAdminReducer,
   }),
   {
     referrerUrl: window.document.referrer,
@@ -157,6 +166,7 @@ sagaMiddleware.run(
       addInteractionFormTasks.saveInteraction,
     [addInteractionFormState.TASK_OPEN_CONTACT_FORM]:
       addInteractionFormTasks.openContactForm,
+    [TASK_UPDATE_STAGE]: investmentAdminTasks.updateProjectStage,
   })
 )
 
@@ -304,6 +314,9 @@ function App() {
         </Mount>
         <Mount selector="#company-local-header">
           {(props) => <CompanyLocalHeader {...props} />}
+        </Mount>
+        <Mount selector="#investment-project-admin">
+          {(props) => <InvestmentProjectAdmin {...props} />}
         </Mount>
       </ConnectedRouter>
     </Provider>
