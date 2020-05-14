@@ -309,7 +309,7 @@ describe('urls', () => {
 
   describe('pipeline', () => {
     it('should return the correct value', () => {
-      expect(urls.pipeline.index()).to.equal('/pipeline')
+      expect(urls.pipeline.index()).to.equal('/my-pipeline')
       expect(urls.pipeline.index.route).to.equal('/')
     })
   })
