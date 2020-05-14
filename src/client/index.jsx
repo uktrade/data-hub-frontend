@@ -38,7 +38,7 @@ import ReferralHelp from '../apps/companies/apps/referrals/help/client/ReferralH
 import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
 import sendReferral from '../apps/companies/apps/referrals/send-referral/client/reducer'
 import InteractionReferralDetails from '../apps/companies/apps/referrals/details/client/InteractionReferralDetails.jsx'
-import AddToPipelineForm from '../apps/pipeline/client/AddToPipelineForm'
+import AddToPipelineForm from '../apps/companies/apps/pipeline/client/AddToPipelineForm'
 import CompanyLocalHeader from '../apps/companies/client/CompanyLocalHeader.jsx'
 
 import tasksSaga from './components/Task/saga'
@@ -86,9 +86,9 @@ import {
   ID as ADD_TO_PIPELINE_ID,
   TASK_GET_PIPELINE_BY_COMPANY,
   TASK_ADD_COMPANY_TO_PIPELINE,
-} from '../apps/pipeline/client/state'
-import addToPipelineReducer from '../apps/pipeline/client/reducer'
-import * as pipelineTasks from '../apps/pipeline/client/tasks'
+} from '../apps/companies/apps/pipeline/client/state'
+import addToPipelineReducer from '../apps/companies/apps/pipeline/client/reducer'
+import * as pipelineTasks from '../apps/companies/apps/pipeline/client/tasks'
 
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
