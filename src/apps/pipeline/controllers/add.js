@@ -17,15 +17,11 @@ function renderAddToPipeline(req, res) {
 }
 
 async function addCompanyToPipeline(req, res) {
-  const { company } = res.locals
   try {
     const response = await authorisedRequest(req.session.token, {
       url: `${config.apiRoot}/v4/pipeline-item`,
       method: 'POST',
-      body: {
-        company: company.id,
-        ...req.body,
-      },
+      body: req.body,
     })
     req.flash('success', 'Pipeline changes for this company have been saved')
     return res.send(response)

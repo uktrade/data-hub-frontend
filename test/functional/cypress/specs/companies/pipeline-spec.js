@@ -5,6 +5,7 @@ const {
   assertFieldRadios,
   assertBreadcrumbs,
   assertFormButtons,
+  assertFieldInput,
 } = require('../../support/assertions')
 const selectors = require('../../../../selectors')
 
@@ -28,6 +29,16 @@ describe('Company add to pipeline form', () => {
         'have.text',
         `Add ${minimallyMinimal.name} to your pipeline`
       )
+    })
+
+    it('should render the project name text input', () => {
+      cy.get('#field-name').then((element) => {
+        assertFieldInput({
+          element,
+          label: 'Project name (Optional)',
+          optionsCount: 3,
+        })
+      })
     })
 
     it('should render the status radio buttons', () => {
@@ -74,6 +85,16 @@ describe('Company add to pipeline form', () => {
       cy.contains(`${lambdaPlc.name} is already in your pipeline`)
     })
 
+    it('should render the project name text input', () => {
+      cy.get('#field-name').then((element) => {
+        assertFieldInput({
+          element,
+          label: 'Project name (Optional)',
+          optionsCount: 3,
+        })
+      })
+    })
+
     it('should render the status radio buttons', () => {
       cy.get('#field-category').then((element) => {
         assertFieldRadios({
@@ -88,6 +109,7 @@ describe('Company add to pipeline form', () => {
     beforeEach(() => {
       cy.visit(urls.companies.pipeline(minimallyMinimal.id))
     })
+
     it('should render the status radio buttons', () => {
       cy.get('#field-category').then((element) => {
         assertFieldRadios({
@@ -97,6 +119,17 @@ describe('Company add to pipeline form', () => {
         })
       })
     })
+
+    it('should render the project name text input', () => {
+      cy.get('#field-name').then((element) => {
+        assertFieldInput({
+          element,
+          label: 'Project name (Optional)',
+          optionsCount: 3,
+        })
+      })
+    })
+
     it('should redirect to dashboard with a flash message', () => {
       cy.get('input[value=win').click()
       cy.contains('button', 'Add').click()
