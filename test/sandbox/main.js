@@ -414,6 +414,11 @@ Sandbox.define(
   'GET',
   v3Investment.investmentProjectAudit
 )
+Sandbox.define(
+  '/v3/investment/{id}/update-stage',
+  'POST',
+  v3Investment.investmentProjectById
+)
 
 // V3 Search
 Sandbox.define('/v3/search/company', 'POST', v3SearchCompany.companies)

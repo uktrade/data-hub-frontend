@@ -37,6 +37,7 @@
     "investment.export_investmentproject",
     "investment.add_investmentprojectcode",
     "investment.add_investmentproject",
+    "investment.change_to_any_stage_investmentproject",
     "order.add_order",
     "interaction.add_all_interaction",
     "company.view_contact",
