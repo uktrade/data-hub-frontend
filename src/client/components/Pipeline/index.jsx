@@ -13,7 +13,7 @@ const SubTabs = styled(TabNav)`
     margin: 0 0 2px 0;
     display: flex;
     flex-direction: row;
-    flext-wrap: wrap;
+    flex-wrap: wrap;
     justify-content: center; /* Backwards compatible */
     justify-content: space-between;
     color: ${BLUE};
