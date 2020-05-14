@@ -108,6 +108,7 @@ const Form = ({
             onHandleErrorClick={(targetName) => {
               const $el =
                 ref.current.querySelector(`[name=${targetName}]`) ??
+                ref.current.querySelector(`#field-${targetName} input`) ??
                 ref.current.querySelector(`#field-${targetName}`)
               if ($el) {
                 $el.scrollIntoView()
