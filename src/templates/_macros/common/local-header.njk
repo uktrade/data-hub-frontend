@@ -29,6 +29,10 @@
           }) }}
         {% endif %}
 
+        <div id="flash-messages" class="react-slot">
+          <noscript>Please enable JavaScript in your browser to see the content.</noscript>
+        </div>
+
         {% if messages|length %}
           {{ MessageList({ items: messages }) }}
         {% endif %}

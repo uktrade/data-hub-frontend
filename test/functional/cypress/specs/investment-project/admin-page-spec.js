@@ -118,6 +118,11 @@ describe('Update the project stage', () => {
           'contain',
           urls.investments.projects.details(fixtures.investment.newHotelFdi.id)
         )
+        cy.contains('div', 'Project stage saved')
+      })
+      it('should no longer show the flash message when the page is refreshed', () => {
+        cy.reload()
+        cy.contains('div', 'Project stage saved').should('not.be.visible')
       })
     }
   )

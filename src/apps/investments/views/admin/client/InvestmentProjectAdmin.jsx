@@ -11,6 +11,7 @@ import Task from '../../../../../client/components/Task'
 import { ID as STATE_ID, TASK_UPDATE_STAGE, state2props } from './state'
 import { INVESTMENT_PROJECT_ADMIN__UPDATE_STAGE } from '../../../../../client/actions'
 import urls from '../../../../../lib/urls'
+import flashUtils from '../../../../../client/utils/flash-messages'
 
 const StyledP = styled('p')`
   margin-bottom: ${SPACING.SCALE_2};
@@ -24,8 +25,10 @@ const InvestmentProjectAdmin = ({
   stageUpdated,
 }) => {
   useEffect(() => {
-    stageUpdated &&
-      (window.location.href = urls.investments.projects.project(projectId))
+    if (stageUpdated) {
+      flashUtils.addSuccessMessage('Project stage saved')
+      window.location.href = urls.investments.projects.project(projectId)
+    }
   }, [stageUpdated])
   const newStageOptions = stages.filter(
     (stage) => stage.value != projectStage.id
