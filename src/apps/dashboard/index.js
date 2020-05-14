@@ -5,11 +5,13 @@ const spaBasePath = require('../../middleware/spa-base-path')
 
 module.exports = {
   router: router.get(
-    // These two paths are handled by react-router
+    // These paths are handled by react-router
     [
-      urls.dashboard.route,
+      urls.dashboard.mountPoint,
       urls.companies.referrals.list.mountPoint,
       urls.pipeline.index.mountPoint,
+      urls.pipeline.active.mountPoint,
+      urls.pipeline.won.mountPoint,
     ],
     spaBasePath(urls.dashboard.route),
     renderDashboard

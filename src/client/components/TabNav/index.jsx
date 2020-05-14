@@ -60,7 +60,19 @@ const StyledTabpanel = styled.div({
   marginTop: 30,
 })
 
-const createId = (id, index) => `${id}.tab-${index}`
+const createId = (id, key) => `${id}.tab.${key.replace('/', '_')}`
+
+function getContent(tabs, keys, selectedTab) {
+  if (keys.includes(selectedTab)) {
+    return tabs[selectedTab].content
+  }
+
+  for (let key of keys) {
+    if (key.length > 1 && selectedTab.startsWith(key)) {
+      return tabs[key].content
+    }
+  }
+}
 
 // Based on https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/Tab_Role
 const TabNav = ({
@@ -77,79 +89,86 @@ const TabNav = ({
   // eslint-disable-next-line no-unused-vars
   dispatch,
   ...props
-}) => (
-  <div {...props}>
-    <Route>
-      {({ location: { pathname }, history }) => {
-        selectedIndex = routed ? pathname.replace(/^\//, '') : selectedIndex
+}) => {
+  const tabKeys = Object.keys(tabs)
+  return (
+    <div {...props}>
+      <Route>
+        {({ location: { pathname }, history }) => {
+          selectedIndex = routed ? pathname : selectedIndex
+          const isSelectedValid = tabKeys.includes(selectedIndex)
 
-        return (
-          <>
-            <StyledTablist
-              tabindex={0}
-              role="tablist"
-              aria-label={label}
-              onKeyUp={({ keyCode }) => {
-                const totalTabs = Object.keys(tabs).length
-                const currentFocusIndex = focusIndex || 0
+          return (
+            <>
+              <StyledTablist
+                tabindex={0}
+                role="tablist"
+                aria-label={label}
+                onKeyUp={({ keyCode }) => {
+                  const totalTabs = tabKeys.length
+                  const currentFocusIndex = focusIndex || 0
 
-                if (keyCode === RIGHT_ARROW_KEY) {
-                  onFocusChange((currentFocusIndex + 1) % totalTabs)
-                }
+                  if (keyCode === RIGHT_ARROW_KEY) {
+                    onFocusChange((currentFocusIndex + 1) % totalTabs)
+                  }
 
-                if (keyCode === LEFT_ARROW_KEY) {
-                  onFocusChange(
-                    ((currentFocusIndex < 1 ? totalTabs : currentFocusIndex) -
-                      1) %
-                      totalTabs
+                  if (keyCode === LEFT_ARROW_KEY) {
+                    onFocusChange(
+                      ((currentFocusIndex < 1 ? totalTabs : currentFocusIndex) -
+                        1) %
+                        totalTabs
+                    )
+                  }
+                }}
+              >
+                {Object.entries(tabs).map(([key, { label }], index) => {
+                  const selected = isSelectedValid
+                    ? key === selectedIndex
+                    : key.length > 1 && selectedIndex.startsWith(key)
+                  const Button = selected ? StyledSelectedButton : StyledButton
+                  const tabId = createId(id, key)
+                  return (
+                    <Button
+                      key={tabId}
+                      role="tab"
+                      focused={index === focusIndex}
+                      aria-selected={selected}
+                      id={tabId}
+                      tabIndex={
+                        // If no tab is selected...
+                        selectedIndex === undefined && !index
+                          ? // ...only the first tab participates in the tabindex
+                            0
+                          : // Otherwise, only the selected tab participates in tabindex
+                          selected
+                          ? 0
+                          : -1
+                      }
+                      onClick={() =>
+                        selected || routed
+                          ? (history.push(key), onFocusChange(index))
+                          : onChange(key, index)
+                      }
+                    >
+                      {label}
+                    </Button>
                   )
-                }
-              }}
-            >
-              {Object.entries(tabs).map(([key, { label }], index) => {
-                const selected = key == selectedIndex
-                const Button = selected ? StyledSelectedButton : StyledButton
-                return (
-                  <Button
-                    key={key}
-                    role="tab"
-                    focused={index === focusIndex}
-                    aria-selected={selected}
-                    id={createId(id, key)}
-                    tabIndex={
-                      // If no tab is selected...
-                      selectedIndex === undefined && !index
-                        ? // ...only the first tab participates in the tabindex
-                          0
-                        : // Otherwise, only the selected tab participates in tabindex
-                        selected
-                        ? 0
-                        : -1
-                    }
-                    onClick={() =>
-                      selected || routed
-                        ? (history.push('/' + key), onFocusChange(index))
-                        : onChange(key, index)
-                    }
-                  >
-                    {label}
-                  </Button>
-                )
-              })}
-            </StyledTablist>
-            <StyledTabpanel
-              role="tabpanel"
-              tabIndex={0}
-              aria-labelledby={createId(id, selectedIndex)}
-            >
-              {tabs[selectedIndex]?.content}
-            </StyledTabpanel>
-          </>
-        )
-      }}
-    </Route>
-  </div>
-)
+                })}
+              </StyledTablist>
+              <StyledTabpanel
+                role="tabpanel"
+                tabIndex={0}
+                aria-labelledby={createId(id, selectedIndex)}
+              >
+                {getContent(tabs, tabKeys, selectedIndex)}
+              </StyledTabpanel>
+            </>
+          )
+        }}
+      </Route>
+    </div>
+  )
+}
 
 const tabPropType = PropTypes.shape({
   label: PropTypes.node.isRequired,
