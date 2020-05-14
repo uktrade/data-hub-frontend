@@ -1,6 +1,5 @@
-const urls = require('../../lib/urls')
-
 const router = require('express').Router()
+const urls = require('../../../../lib/urls')
 
 const {
   renderAddToPipeline,
@@ -8,7 +7,7 @@ const {
 } = require('./controllers/add')
 
 router
-  .get(urls.pipeline.index.route, renderAddToPipeline)
-  .post(urls.pipeline.index.route, addCompanyToPipeline)
+  .get(urls.companies.pipeline.route, renderAddToPipeline)
+  .post(urls.companies.pipeline.route, addCompanyToPipeline)
 
 module.exports = router

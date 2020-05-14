@@ -238,6 +238,6 @@ module.exports = {
   },
   support: url('/support'),
   pipeline: {
-    index: url('/pipeline'),
+    index: url('/my-pipeline'),
   },
 }

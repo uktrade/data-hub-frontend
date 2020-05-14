@@ -5,6 +5,7 @@ import { GREY_2 } from 'govuk-colours'
 
 import CompanyLists from './CompanyLists'
 import ReferralList from './ReferralList'
+import Pipeline from './Pipeline'
 import TabNav from './TabNav'
 
 const StyledDiv = styled('div')`
@@ -26,6 +27,10 @@ const Dashboard = ({ id }) => (
         'my-referrals': {
           label: 'My referrals',
           content: <ReferralList id={`${id}:ReferralList`} />,
+        },
+        'my-pipeline': {
+          label: 'My pipeline',
+          content: <Pipeline />,
         },
       }}
     />
