@@ -2,7 +2,12 @@ import React, { useEffect } from 'react'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import ErrorSummary from '@govuk-react/error-summary'
-import { FormStateful, FieldRadios, FormActions } from 'data-hub-components'
+import {
+  FormStateful,
+  FieldRadios,
+  FormActions,
+  FieldInput,
+} from 'data-hub-components'
 import { connect } from 'react-redux'
 import Task from '../../../client/components/Task'
 import LoadingBox from '@govuk-react/loading-box'
@@ -21,7 +26,7 @@ import urls from '../../../lib/urls'
 
 function isOnPipeline(pipelineStatus, companyId) {
   if (pipelineStatus?.companyId === companyId) {
-    return Boolean(pipelineStatus.count)
+    return !!pipelineStatus.count
   }
   return null
 }
@@ -43,13 +48,13 @@ function PipelineCheck({
   if (getPipelineByCompany.error) {
     return (
       <ErrorSummary
-        heading={`There was an error checking the status of ${companyName}`}
-        description={getPipelineByCompany.errorMessage}
-        errors={[]}
+        heading="There is a problem"
+        description={`There was an error checking the status of ${companyName}`}
+        errors={[getPipelineByCompany.errorMessage]}
       />
     )
   }
-  if (onPipeline == null) {
+  if (onPipeline === null) {
     return <ProgressIndicator message="checking pipeline..." />
   }
   return (
@@ -92,9 +97,9 @@ function AddToPipelineForm({
           <>
             {addCompanyToPipeline.error && (
               <ErrorSummary
-                heading={`There was an error adding ${companyName} to a pipeline`}
-                description={addCompanyToPipeline.errorMessage}
-                errors={[]}
+                heading="There is a problem"
+                description={`There was an error adding ${companyName} to a pipeline`}
+                errors={[addCompanyToPipeline.errorMessage]}
               />
             )}
             <PipelineCheck
@@ -113,6 +118,11 @@ function AddToPipelineForm({
                   }}
                   submissionError={addCompanyToPipeline.errorMessage}
                 >
+                  <FieldInput
+                    name="name"
+                    label="Project name (Optional)"
+                    type="text"
+                  />
                   <FieldRadios
                     name="category"
                     label="Choose a status"
