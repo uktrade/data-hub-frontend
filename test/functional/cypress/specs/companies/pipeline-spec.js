@@ -35,7 +35,7 @@ describe('Company add to pipeline form', () => {
       cy.get('#field-name').then((element) => {
         assertFieldInput({
           element,
-          label: 'Project name (Optional)',
+          label: 'Project name',
           optionsCount: 3,
         })
       })
@@ -82,14 +82,16 @@ describe('Company add to pipeline form', () => {
     })
 
     it('should render a message', () => {
-      cy.contains(`${lambdaPlc.name} is already in your pipeline`)
+      cy.contains(
+        'This company is already in your pipeline.You can add it again under another project name.'
+      )
     })
 
     it('should render the project name text input', () => {
       cy.get('#field-name').then((element) => {
         assertFieldInput({
           element,
-          label: 'Project name (Optional)',
+          label: 'Project name',
           optionsCount: 3,
         })
       })
@@ -124,13 +126,16 @@ describe('Company add to pipeline form', () => {
       cy.get('#field-name').then((element) => {
         assertFieldInput({
           element,
-          label: 'Project name (Optional)',
+          label: 'Project name',
           optionsCount: 3,
         })
       })
     })
 
     it('should redirect to dashboard with a flash message', () => {
+      cy.get('#field-name')
+        .find('input')
+        .type('Test Project')
       cy.get('input[value=win').click()
       cy.contains('button', 'Add').click()
       cy.url().should('include', urls.dashboard())
@@ -138,6 +143,18 @@ describe('Company add to pipeline form', () => {
         'contain',
         'Pipeline changes for this company have been saved'
       )
+    })
+  })
+
+  context('when form is submitted without any input', () => {
+    beforeEach(() => {
+      cy.visit(urls.companies.pipeline(minimallyMinimal.id))
+    })
+
+    it('should display error messages', () => {
+      cy.contains('button', 'Add').click()
+      cy.contains('Enter a Project name')
+      cy.contains('Choose a status')
     })
   })
 })
