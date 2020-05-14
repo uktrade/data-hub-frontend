@@ -38,7 +38,7 @@ describe('Contacts interactions middleware', () => {
 
     it('should set the return URL', () => {
       expect(res.locals.interactions.returnLink).to.equal(
-        '/contacts/1/interactions/'
+        '/contacts/1/interactions'
       )
     })
 

@@ -125,7 +125,7 @@ const StepInteractionDetails = ({
             options={serviceDeliveryStatuses}
           />
           <FieldInput
-            type="text"
+            type="number"
             label="Grant offered (optional)"
             name="grant_amount_offered"
           />
