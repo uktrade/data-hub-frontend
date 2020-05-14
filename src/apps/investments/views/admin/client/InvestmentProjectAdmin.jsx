@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 
@@ -21,7 +21,12 @@ const InvestmentProjectAdmin = ({
   projectName,
   projectStage,
   stages,
+  stageUpdated,
 }) => {
+  useEffect(() => {
+    stageUpdated &&
+      (window.location.href = urls.investments.projects.project(projectId))
+  })
   const newStageOptions = stages.filter(
     (stage) => stage.value != projectStage.id
   )
