@@ -40,6 +40,7 @@ import sendReferral from '../apps/companies/apps/referrals/send-referral/client/
 import InteractionReferralDetails from '../apps/companies/apps/referrals/details/client/InteractionReferralDetails.jsx'
 import AddToPipelineForm from '../apps/pipeline/client/AddToPipelineForm'
 import CompanyLocalHeader from '../apps/companies/client/CompanyLocalHeader.jsx'
+import InvestmentProjectAdmin from '../apps/investments/views/admin/client/InvestmentProjectAdmin.jsx'
 
 import tasksSaga from './components/Task/saga'
 import tasks from './components/Task/reducer'
@@ -304,6 +305,9 @@ function App() {
         </Mount>
         <Mount selector="#company-local-header">
           {(props) => <CompanyLocalHeader {...props} />}
+        </Mount>
+        <Mount selector="#investment-project-admin">
+          {(props) => <InvestmentProjectAdmin {...props} />}
         </Mount>
       </ConnectedRouter>
     </Provider>
