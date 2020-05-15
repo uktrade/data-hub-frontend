@@ -12,7 +12,7 @@ import Card from 'data-hub-components/dist/activity-feed/activities/card/Card'
 import CardHeader from 'data-hub-components/dist/activity-feed/activities/card/CardHeader'
 
 import urls from '../../../lib/urls'
-import { AdviserDetails } from '../../companies/apps/referrals/details/client/ReferralDetails.jsx'
+import { AdviserDetails } from '../../../apps/companies/apps/referrals/details/client/ReferralDetails.jsx'
 
 const StyledButtonWrapper = styled(GridCol)`
   align-items: flex-start;
@@ -64,9 +64,11 @@ const PipelineItem = ({
     />
     <StyledGridRow>
       <StyledBadgeWrapper>
-        <Badge
-          borderColour={likelihoodConstants[likelihood].colour}
-        >{`Likelihood to succeed - ${likelihoodConstants[likelihood].text}`}</Badge>
+        {likelihood && (
+          <Badge
+            borderColour={likelihoodConstants[likelihood].colour}
+          >{`Likelihood to succeed - ${likelihoodConstants[likelihood].text}`}</Badge>
+        )}
       </StyledBadgeWrapper>
       <StyledButtonWrapper>
         <Button as={Link} href={`/${id}`} buttonColour={BLUE}>
