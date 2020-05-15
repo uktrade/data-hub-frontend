@@ -4,6 +4,7 @@ import { BLUE, WHITE } from 'govuk-colours'
 import { FONT_SIZE } from '@govuk-react/constants'
 
 import TabNav from '../TabNav'
+import PipelineList from './PipelineList'
 
 const SubTabs = styled(TabNav)`
   margin-top: -15px; /* Because we are in a tabpanel of an existing TabNav, it has a 30px margin at the top but we don't want that much */
@@ -45,7 +46,7 @@ export default function Pipeline() {
       tabs={{
         '/my-pipeline': {
           label: 'Prospect',
-          content: <p>Prospect list here</p>,
+          content: <PipelineList status="leads" />,
         },
         '/my-pipeline/active': {
           label: 'Active',
