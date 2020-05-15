@@ -26,7 +26,7 @@ const InvestmentProjectAdmin = ({
   useEffect(() => {
     stageUpdated &&
       (window.location.href = urls.investments.projects.project(projectId))
-  })
+  }, [stageUpdated])
   const newStageOptions = stages.filter(
     (stage) => stage.value != projectStage.id
   )
