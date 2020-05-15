@@ -1,11 +1,11 @@
 import React from 'react'
 import HintText from '@govuk-react/hint-text'
 import { SelectInput } from '@govuk-react/select'
-import { SPACING } from '@govuk-react/constants'
 import pluralize from 'pluralize'
 import styled from 'styled-components'
 
 import ContentWithHeading from '../ContentWithHeading'
+import StyledOrderedList from '../StyledOrderedList'
 import Task from '../Task'
 import Referral from './Referral'
 import {
@@ -15,13 +15,6 @@ import {
 import multiInstance from '../../utils/multiinstance'
 import { SENT, RECEIVED } from './constants'
 import reducer from './reducer'
-
-const StyledOl = styled.ol({
-  listStyleType: 'none',
-  '& > *': {
-    marginTop: SPACING.SCALE_4,
-  },
-})
 
 const StyledLabel = styled.label({
   display: 'flex',
@@ -83,13 +76,13 @@ export default multiInstance({
               }
             >
               {referrals.length ? (
-                <StyledOl>
+                <StyledOrderedList>
                   {filteredReferrals.map(({ id, ...referral }) => (
                     <li key={id}>
                       <Referral id={id} {...referral} />
                     </li>
                   ))}
-                </StyledOl>
+                </StyledOrderedList>
               ) : (
                 <HintText>
                   You have not received or sent any referrals.

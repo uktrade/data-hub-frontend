@@ -1,6 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+import ListItem from '@govuk-react/list-item'
+
+import StyledOrderedList from '../StyledOrderedList'
 import Task from '../Task'
 import { state2props, ID as STATE_ID, TASK_GET_PIPELINE_LIST } from './state'
 import { PIPELINE__LIST_LOADED } from '../../actions'
@@ -17,17 +20,20 @@ const PipelineList = ({ status, items }) => {
         onSuccessDispatch: PIPELINE__LIST_LOADED,
       }}
     >
-      {() =>
-        items?.map((item) => (
-          <PipelineItem
-            key={item.id}
-            companyId={item.company.id}
-            companyName={item.company.name}
-            projectName={item.name}
-            date={item.created_on}
-          />
-        ))
-      }
+      {() => (
+        <StyledOrderedList>
+          {items?.map((item) => (
+            <ListItem key={item.id}>
+              <PipelineItem
+                companyId={item.company.id}
+                companyName={item.company.name}
+                projectName={item.name}
+                date={item.created_on}
+              />
+            </ListItem>
+          ))}
+        </StyledOrderedList>
+      )}
     </Task.Status>
   )
 }
