@@ -25,10 +25,12 @@ const PipelineList = ({ status, items }) => {
           {items?.map((item) => (
             <ListItem key={item.id}>
               <PipelineItem
+                id={item.id}
                 companyId={item.company.id}
                 companyName={item.company.name}
                 projectName={item.name}
                 date={item.created_on}
+                likelihood={item.likelihood}
               />
             </ListItem>
           ))}
