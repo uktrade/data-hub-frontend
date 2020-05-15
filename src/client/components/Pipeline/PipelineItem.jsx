@@ -12,7 +12,6 @@ import Card from 'data-hub-components/dist/activity-feed/activities/card/Card'
 import CardHeader from 'data-hub-components/dist/activity-feed/activities/card/CardHeader'
 
 import urls from '../../../lib/urls'
-import { AdviserDetails } from '../../../apps/companies/apps/referrals/details/client/ReferralDetails.jsx'
 
 const StyledButtonWrapper = styled(GridCol)`
   align-items: flex-start;
@@ -82,12 +81,14 @@ const PipelineItem = ({
 PipelineItem.propTypes = {
   id: PropTypes.string.isRequired,
   companyId: PropTypes.string.isRequired,
-  projectName: PropTypes.string.isRequired,
   companyName: PropTypes.string.isRequired,
+  projectName: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
-  sender: PropTypes.shape(AdviserDetails.propTypes).isRequired,
-  recipient: PropTypes.shape(AdviserDetails.propTypes).isRequired,
-  dateAccepted: PropTypes.string,
+  likelihood: PropTypes.string,
+}
+
+PipelineItem.defaultProps = {
+  likelihood: null,
 }
 
 export default PipelineItem
