@@ -90,6 +90,13 @@ import {
 import addToPipelineReducer from '../apps/companies/apps/pipeline/client/reducer'
 import * as pipelineTasks from '../apps/companies/apps/pipeline/client/tasks'
 
+import {
+  ID as PIPELINE_LIST_ID,
+  TASK_GET_PIPELINE_LIST,
+} from './components/Pipeline/state'
+import pipelineListReducer from './components/Pipeline/reducer'
+import * as pipelineListTasks from './components/Pipeline/tasks'
+
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
   // The baseURI is set to the <base/> tag by the spaFallbackSpread
@@ -116,6 +123,7 @@ const store = createStore(
     [addInteractionFormState.ID]: addInteractionFormReducer,
     [addCompanyState.ID]: addCompanyPostcodeToRegionReducer,
     [ADD_TO_PIPELINE_ID]: addToPipelineReducer,
+    [PIPELINE_LIST_ID]: pipelineListReducer,
     ...TabNav.reducerSpread,
     ...ReferralList.reducerSpread,
     ...Form.reducerSpread,
@@ -152,6 +160,7 @@ sagaMiddleware.run(
     [EXPORT_COUNTRIES_EDIT_NAME]: exportCountriesEditTasks.saveExportCountries,
     [TASK_GET_PIPELINE_BY_COMPANY]: pipelineTasks.getPipelineByCompany,
     [TASK_ADD_COMPANY_TO_PIPELINE]: pipelineTasks.addCompanyToPipeline,
+    [TASK_GET_PIPELINE_LIST]: pipelineListTasks.getPipelineList,
     [addCompanyState.TASK_POSTCODE_TO_REGION]: addCompanyPostcodeToRegionTask,
     [addInteractionFormState.TASK_SAVE_INTERACTION]:
       addInteractionFormTasks.saveInteraction,
