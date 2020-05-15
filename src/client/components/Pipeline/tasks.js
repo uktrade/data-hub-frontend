@@ -8,7 +8,9 @@ function handleError(e) {
 export function getPipelineList({ status }) {
   return axios
     .get('/api-proxy/v4/pipeline-item', {
-      status,
+      params: {
+        status,
+      },
     })
     .catch(handleError)
     .then(({ data }) => data.results)

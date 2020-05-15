@@ -50,11 +50,11 @@ export default function Pipeline() {
         },
         '/my-pipeline/active': {
           label: 'Active',
-          content: <p>Active list here</p>,
+          content: <PipelineList status="in_progress" />,
         },
         '/my-pipeline/won': {
           label: 'Won',
-          content: <p>Won list here</p>,
+          content: <PipelineList status="win" />,
         },
       }}
     />
