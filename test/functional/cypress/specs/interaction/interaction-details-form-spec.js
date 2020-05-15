@@ -188,7 +188,25 @@ function fillCommonFields({ service, contact = 'Johnny Cakeman' }) {
     .selectTypeaheadOption('State Aid')
 
   cy.contains(ELEMENT_POLICY_FEEDBACK_NOTES.label)
-    .parent()
+    .next()
+    .contains(
+      'These notes will be visible to other Data Hub users and may be shared within the department. Please:'
+    )
+    .next()
+    .find('li')
+    .contains('summarise relevant information - don’t copy and paste')
+    .next()
+    .contains('use relevant keywords and accurate tags')
+    .parent('ul')
+    .next()
+    .contains('Read more guidance here')
+    .and(
+      'have.attr',
+      'href',
+      'https://data-services-help.trade.gov.uk/data-hub/updates/announcements/what-makes-good-policy-feedback/'
+    )
+    .parent('span')
+    .next()
     .find('textarea')
     .type('Some policy feedback notes')
 }
