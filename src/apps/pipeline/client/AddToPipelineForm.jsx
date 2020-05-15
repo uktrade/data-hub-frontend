@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import ErrorSummary from '@govuk-react/error-summary'
+import { StatusMessage } from 'data-hub-components'
 import {
   FormStateful,
   FieldRadios,
@@ -59,7 +60,13 @@ function PipelineCheck({
   }
   return (
     <>
-      {onPipeline && <p>{companyName} is already in your pipeline</p>}
+      {onPipeline && (
+        <StatusMessage>
+          This company is already in your pipeline.
+          <br />
+          You can add it again under another project name.
+        </StatusMessage>
+      )}
       {children}
     </>
   )
@@ -120,8 +127,9 @@ function AddToPipelineForm({
                 >
                   <FieldInput
                     name="name"
-                    label="Project name (Optional)"
+                    label="Project name"
                     type="text"
+                    required="Enter a Project name"
                   />
                   <FieldRadios
                     name="category"
