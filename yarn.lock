@@ -3130,10 +3130,10 @@
     lodash "^4.17.15"
     pretty "^2.0.0"
 
-"@wdio/browserstack-service@^6.1.4":
-  version "6.1.4"
-  resolved "https://registry.yarnpkg.com/@wdio/browserstack-service/-/browserstack-service-6.1.4.tgz#9e87e1da7bde60b192a93614a079efab5b4b12ee"
-  integrity sha512-wkysd0lmrN7/tDth5U6wZ8iqRxvAEfHeqJwWeWsl+fyUZG7YYeVZoLA2tPIfJzRILqvv5IGwJrSbv63VXEr1Eg==
+"@wdio/browserstack-service@^6.1.10":
+  version "6.1.10"
+  resolved "https://registry.yarnpkg.com/@wdio/browserstack-service/-/browserstack-service-6.1.10.tgz#a59053b71dcefbae9a90b2bd13d3663221df32ab"
+  integrity sha512-RhPT4sSZIWv+xUMOxpq7HCBmdbDdXQJpo1vrqjDKmdjhyWnZDbhZfETaHL4cUepYudwV9B06pxYrF6cmL17rdg==
   dependencies:
     "@wdio/logger" "6.0.16"
     browserstack-local "^1.4.5"
