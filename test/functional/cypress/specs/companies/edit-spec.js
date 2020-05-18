@@ -319,18 +319,32 @@ describe('Company edit', () => {
     })
 
     it('should redirect to the business details page', () => {
+      cy.contains('Company name')
+        .next()
+        .find('input')
+        .clear()
+        .type('Test company name')
+
       cy.contains('Trading name')
         .next()
         .find('input')
         .clear()
         .type('Test company trading name')
 
+      cy.contains('Website (optional)')
+        .next()
+        .find('input')
+        .clear()
+        .type('example.com')
+
       cy.contains('Submit').click()
 
       cy.wait('@editCompanyResponse').then((xhr) => {
+        expect(xhr.request.body.name).to.equal('Test company name')
         expect(xhr.request.body.trading_names).to.equal(
           'Test company trading name'
         )
+        expect(xhr.request.body.website).to.equal('example.com')
       })
 
       cy.location('pathname').should(
