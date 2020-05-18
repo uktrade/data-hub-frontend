@@ -94,7 +94,8 @@ const ELEMENT_NOTES = {
   assert: assertFieldTextarea,
 }
 const ELEMENT_FEEDBACK_POLICY = {
-  label: 'Did the contact give any feedback on government policy?',
+  label:
+    'Did the contact provide feedback on government policy or business intelligence?',
   assert: assertFieldRadios,
   optionsCount: 2,
 }
