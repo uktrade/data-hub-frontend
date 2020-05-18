@@ -54,7 +54,8 @@ const CompanyMatched = ({
 
     <Paragraph>
       Changes will be reviewed by our third-party data supplier and updated.
-      Business description, region and sector are not updated by third parties.
+      Business description, website, region and sector are not updated by third
+      parties.
     </Paragraph>
   </>
 )

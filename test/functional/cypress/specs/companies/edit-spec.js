@@ -299,7 +299,7 @@ describe('Company edit', () => {
               .should(
                 'have.text',
                 'Changes will be reviewed by our third-party data' +
-                  ' supplier and updated. Business description, region and' +
+                  ' supplier and updated. Business description, website, region and' +
                   ' sector are not updated by third parties.'
               ),
         },
