@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { BLUE, WHITE } from 'govuk-colours'
 import { FONT_SIZE } from '@govuk-react/constants'
 
+import urls from '../../../lib/urls'
 import TabNav from '../TabNav'
 import PipelineList from './PipelineList'
 
@@ -44,15 +45,15 @@ export default function Pipeline() {
       label="Pipeline statuses"
       routed={true}
       tabs={{
-        '/my-pipeline': {
+        [urls.pipeline.index()]: {
           label: 'Prospect',
           content: <PipelineList status="leads" />,
         },
-        '/my-pipeline/active': {
+        [urls.pipeline.active()]: {
           label: 'Active',
           content: <PipelineList status="in_progress" />,
         },
-        '/my-pipeline/won': {
+        [urls.pipeline.won()]: {
           label: 'Won',
           content: <PipelineList status="win" />,
         },
