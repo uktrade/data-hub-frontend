@@ -17,17 +17,15 @@ export default () =>
   ])
     .catch(handleError)
     .then(([{ data: { results } }, { data: { id } }]) =>
-      results
-        .map((referral) => ({
-          companyId: referral.company.id,
-          id: referral.id,
-          subject: referral.subject,
-          companyName: referral.company.name,
-          date: referral.created_on,
-          dateAccepted: referral.completed_on,
-          sender: convertAdviser(referral.created_by),
-          recipient: convertAdviser(referral.recipient),
-          direction: referral.created_by.id === id ? SENT : RECEIVED,
-        }))
-        .sort((a, b) => new Date(a.date) - new Date(b.date))
+      results.map((referral) => ({
+        companyId: referral.company.id,
+        id: referral.id,
+        subject: referral.subject,
+        companyName: referral.company.name,
+        date: referral.created_on,
+        dateAccepted: referral.completed_on,
+        sender: convertAdviser(referral.created_by),
+        recipient: convertAdviser(referral.recipient),
+        direction: referral.created_by.id === id ? SENT : RECEIVED,
+      }))
     )
