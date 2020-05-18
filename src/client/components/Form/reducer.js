@@ -60,12 +60,6 @@ export default (
         fields: omit(state.fields, action.fieldName),
       }
     case FORM__FIELD_SET_VALUE:
-      if (action.fieldValue === '') {
-        return {
-          ...state,
-          values: omit(state.values, action.fieldName),
-        }
-      }
       return {
         ...state,
         values: {
