@@ -255,7 +255,7 @@ const StepInteractionDetails = ({
       <FieldRadios
         inline={true}
         name="was_policy_feedback_provided"
-        label="Did the contact give any feedback on government policy?"
+        label="Did the contact provide feedback on government policy or business intelligence?"
         options={OPTIONS_YES_NO}
         required="Answer if the contact gave any feedback on government policy"
       />
