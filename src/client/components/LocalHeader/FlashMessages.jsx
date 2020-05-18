@@ -7,6 +7,7 @@ import { FONT_WEIGHTS } from '@govuk-react/constants/lib/typography'
 import { FONT_SIZE } from '@govuk-react/constants'
 import UnorderedList from '@govuk-react/unordered-list'
 import { StatusMessage } from 'data-hub-components'
+import flashUtils from '../../utils/flash-messages'
 
 const StyledBody = styled('p')`
   margin-bottom: 0;
@@ -32,31 +33,43 @@ const messageColours = {
   muted: BLACK,
 }
 
-const FlashMessages = ({ flashMessages }) => (
-  <UnorderedList listStyleType="none" data-auto-id="flash">
-    {Object.entries(flashMessages).map(([type, message]) => {
-      const parts = String(type).split(':')
-      return parts.length > 1
-        ? message.map((message) => (
-            <li key={message.body}>
-              <StatusMessage colour={messageColours[parts[0]]}>
-                <StyledHeading>{message.heading}</StyledHeading>
-                <StyledBody
-                  dangerouslySetInnerHTML={{ __html: message.body }}
-                />
-              </StatusMessage>
-            </li>
-          ))
-        : message.map((message) => (
-            <li key={message}>
-              <StatusMessage colour={messageColours[type]}>
-                <StyledMessage dangerouslySetInnerHTML={{ __html: message }} />
-              </StatusMessage>
-            </li>
-          ))
-    })}
-  </UnorderedList>
-)
+const FlashMessages = ({ flashMessages }) => {
+  const flashMessagesFromStorage = flashUtils.getMessages()
+  flashUtils.clearMessages()
+
+  if (flashMessages || flashMessagesFromStorage) {
+    return (
+      <UnorderedList listStyleType="none" data-auto-id="flash">
+        {Object.entries(flashMessages || flashMessagesFromStorage).map(
+          ([type, message]) => {
+            const parts = String(type).split(':')
+            return parts.length > 1
+              ? message.map((message) => (
+                  <li key={message.body}>
+                    <StatusMessage colour={messageColours[parts[0]]}>
+                      <StyledHeading>{message.heading}</StyledHeading>
+                      <StyledBody
+                        dangerouslySetInnerHTML={{ __html: message.body }}
+                      />
+                    </StatusMessage>
+                  </li>
+                ))
+              : message.map((message) => (
+                  <li key={message}>
+                    <StatusMessage colour={messageColours[type]}>
+                      <StyledMessage
+                        dangerouslySetInnerHTML={{ __html: message }}
+                      />
+                    </StatusMessage>
+                  </li>
+                ))
+          }
+        )}
+      </UnorderedList>
+    )
+  }
+  return null
+}
 
 FlashMessages.propTypes = {
   flashMessages: PropTypes.shape({
@@ -70,7 +83,7 @@ FlashMessages.propTypes = {
       ),
       PropTypes.arrayOf(PropTypes.string).isRequired,
     ]),
-  }).isRequired,
+  }),
 }
 
 export default FlashMessages

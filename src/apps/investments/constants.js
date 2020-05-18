@@ -55,6 +55,11 @@ const LOCAL_NAV = [
     path: 'evidence',
     label: 'Evidence',
   },
+  {
+    path: 'admin',
+    label: 'Admin',
+    permissions: ['investment.change_to_any_stage_investmentproject'],
+  },
 ]
 
 const INVESTMENT_TAB_ITEMS = [
