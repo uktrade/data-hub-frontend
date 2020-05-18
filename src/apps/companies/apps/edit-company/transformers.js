@@ -80,7 +80,7 @@ const transformFormToApi = (company, formValues) => {
   )
 }
 
-const transformFormToZendesk = (company, formValues) => {
+const transformFormToChangeRequest = (company, formValues) => {
   const originalFormValues = transformCompanyToForm(company)
   return omitBy(
     formValues,
@@ -93,7 +93,7 @@ const transformFormToZendesk = (company, formValues) => {
 }
 
 const transformFormToDnbChangeRequest = (company, formValues) => {
-  const obj = transformFormToZendesk(company, formValues)
+  const obj = transformFormToChangeRequest(company, formValues)
   const address = omitBy(
     {
       line_1: obj.address1,
@@ -135,6 +135,5 @@ const transformFormToDnbChangeRequest = (company, formValues) => {
 module.exports = {
   transformCompanyToForm,
   transformFormToApi,
-  transformFormToZendesk,
   transformFormToDnbChangeRequest,
 }

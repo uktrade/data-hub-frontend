@@ -1,6 +1,3 @@
-const url = require('url')
-const { isEmpty } = require('lodash')
-
 const config = require('../../../../config')
 const { updateCompany, createDnbChangeRequest } = require('../../repos')
 const { getHeadquarterOptions } = require('./repos')
@@ -9,14 +6,9 @@ const urls = require('../../../../lib/urls')
 const {
   transformCompanyToForm,
   transformFormToApi,
-  transformFormToZendesk,
   transformFormToDnbChangeRequest,
 } = require('./transformers')
-const { postToZenDesk } = require('../../../support/services')
 const { isItaTierDAccount } = require('../../../../lib/is-tier-type-company')
-
-const ZENDESK_TICKET_TAG_CHANGE_REQUEST = 'company_details_change_request'
-const ZENDESK_TICKET_TYPE_TASK = 'task'
 
 async function renderEditCompanyForm(req, res, next) {
   try {
@@ -63,74 +55,21 @@ async function renderEditCompanyForm(req, res, next) {
   }
 }
 
-function createUpdateRequest(formValues, req, res) {
-  const { company } = res.locals
-  const transformedCompanyValues = transformCompanyToForm(company)
-
-  if (isEmpty(formValues)) {
-    return
-  }
-
-  return postToZenDesk(
-    createUpdateRequestMessage(formValues, transformedCompanyValues, req, res)
-  )
-}
-
-function createUpdateRequestMessage(
-  formValues,
-  transformedCompanyValues,
-  req,
-  res
-) {
-  const { company, user } = res.locals
-  const companyUrl = url.format({
-    protocol: req.protocol,
-    host: req.get('host'),
-    pathname: urls.companies.detail(company.id),
-  })
-
-  const changesMatrix = Object.keys(formValues).map(
-    (fieldName) =>
-      `Current ${fieldName}: ${transformedCompanyValues[fieldName] ||
-        'Not set'}\nRequested ${fieldName}: ${formValues[fieldName]}`
-  )
-
-  const messageBody =
-    `User ${user.name} requested company details change of ${company.name} (${companyUrl})\n\n` +
-    `Company DUNS number: ${company.duns_number}\n\n` +
-    changesMatrix.join('\n\n')
-
-  return {
-    type: ZENDESK_TICKET_TYPE_TASK,
-    requester: {
-      name: `Data Hub user - ${user.name}`,
-      email: user.email,
-    },
-    subject: `Business details change request for ${company.name}`,
-    comment: {
-      body: messageBody,
-    },
-    tags: [ZENDESK_TICKET_TAG_CHANGE_REQUEST],
-  }
-}
-
 async function postEditCompany(req, res, next) {
   try {
     const { company } = res.locals
     const { token } = req.session
 
     const apiRequestFields = transformFormToApi(company, req.body)
-    const zendeskRequestFields = transformFormToZendesk(company, req.body)
 
     const dnbChanges = company.duns_number
       ? transformFormToDnbChangeRequest(company, req.body)
       : null
 
-    if (company.duns_number && !isEmpty(zendeskRequestFields)) {
-      const [, , ...zendeskResponses] = await Promise.all([
+    if (company.duns_number) {
+      const [, changeRequests] = await Promise.all([
         updateCompany(token, company.id, apiRequestFields),
         createDnbChangeRequest(token, company.duns_number, dnbChanges),
-        createUpdateRequest(zendeskRequestFields, req, res),
       ])
 
       req.flashWithBody(
@@ -139,9 +78,7 @@ async function postEditCompany(req, res, next) {
         'Thanks for keeping Data Hub running smoothly.',
         'message-company-change-request'
       )
-      res.json({
-        changeRequests: zendeskResponses.map((r) => r.data.ticket.description),
-      })
+      res.json({ changeRequests })
     } else {
       const result = await updateCompany(
         req.session.token,

@@ -318,7 +318,7 @@ describe('Company edit', () => {
       cy.visit(urls.companies.edit(company.id))
     })
 
-    it('should create ZenDesk ticket and redirect to the business details', () => {
+    it('should redirect to the business details page', () => {
       cy.contains('Company name')
         .next()
         .find('input')
@@ -331,21 +331,20 @@ describe('Company edit', () => {
         .clear()
         .type('Test company trading name')
 
+      cy.contains('Website (optional)')
+        .next()
+        .find('input')
+        .clear()
+        .type('example.com')
+
       cy.contains('Submit').click()
 
       cy.wait('@editCompanyResponse').then((xhr) => {
-        expect(xhr.responseBody.changeRequests.length).to.equal(1)
-
-        const companyUrl =
-          Cypress.config().baseUrl + urls.companies.detail(company.id)
-        expect(xhr.responseBody.changeRequests[0]).to.equal(
-          `User DIT Staff requested company details change of ${company.name} (${companyUrl})\n\n` +
-            `Company DUNS number: ${company.duns_number}\n\n` +
-            'Current name: DnB Ltd\n' +
-            'Requested name: Test company name\n\n' +
-            'Current trading_names: DnB\n' +
-            'Requested trading_names: Test company trading name'
+        expect(xhr.request.body.name).to.equal('Test company name')
+        expect(xhr.request.body.trading_names).to.equal(
+          'Test company trading name'
         )
+        expect(xhr.request.body.website).to.equal('example.com')
       })
 
       cy.location('pathname').should(
