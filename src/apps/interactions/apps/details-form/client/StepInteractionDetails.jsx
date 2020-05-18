@@ -9,10 +9,6 @@ import axios from 'axios'
 import { GREY_1 } from 'govuk-colours'
 import styled from 'styled-components'
 
-import PropTypes from 'prop-types'
-import { throttle } from 'lodash'
-import axios from 'axios'
-
 import {
   FieldCheckboxes,
   FieldDate,
