@@ -308,9 +308,16 @@ describe('urls', () => {
   })
 
   describe('pipeline', () => {
+    const pipelineItemId = faker.random.uuid()
+
     it('should return the correct value', () => {
       expect(urls.pipeline.index()).to.equal('/my-pipeline')
       expect(urls.pipeline.index.route).to.equal('/')
+      expect(urls.pipeline.active()).to.equal('/my-pipeline/active')
+      expect(urls.pipeline.won()).to.equal('/my-pipeline/won')
+      expect(urls.pipeline.edit(pipelineItemId)).to.equal(
+        `/my-pipeline/${pipelineItemId}/edit`
+      )
     })
   })
 })
