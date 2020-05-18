@@ -58,9 +58,10 @@ export default multiInstance({
     >
       {() => {
         if (referrals) {
-          const filteredReferrals = referrals.filter(
-            ({ direction }) => direction === filter
-          )
+          const filteredReferrals = referrals
+            .filter(({ direction }) => direction === filter)
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+
           return (
             <ContentWithHeading
               heading={pluralize(
