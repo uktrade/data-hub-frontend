@@ -241,5 +241,6 @@ module.exports = {
     index: url('/my-pipeline'),
     active: url('/my-pipeline/active'),
     won: url('/my-pipeline/won'),
+    edit: url('/my-pipeline', '/:pipelineItemId/edit'),
   },
 }
