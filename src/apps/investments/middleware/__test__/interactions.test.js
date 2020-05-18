@@ -38,7 +38,7 @@ describe('Investment projects interactions middleware', () => {
 
     it('should set the return URL', () => {
       expect(this.res.locals.interactions.returnLink).to.equal(
-        '/investments/projects/1/interactions/'
+        '/investments/projects/1/interactions'
       )
     })
 

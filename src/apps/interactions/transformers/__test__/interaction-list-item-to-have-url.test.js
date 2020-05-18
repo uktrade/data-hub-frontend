@@ -7,7 +7,7 @@ describe('#transformInteractionListItemToHaveUrlPrefix', () => {
       const actualInteraction = transformInteractionListItemToHaveUrlPrefix(
         '/url'
       )(mockInteraction)
-      const expectedInteraction = { ...mockInteraction, urlPrefix: 'url' }
+      const expectedInteraction = { ...mockInteraction, urlPrefix: 'url/' }
 
       expect(actualInteraction).to.deep.equal(expectedInteraction)
     })
@@ -18,7 +18,7 @@ describe('#transformInteractionListItemToHaveUrlPrefix', () => {
       const actualInteraction = transformInteractionListItemToHaveUrlPrefix(
         'url'
       )(mockInteraction)
-      const expectedInteraction = { ...mockInteraction, urlPrefix: 'url' }
+      const expectedInteraction = { ...mockInteraction, urlPrefix: 'url/' }
 
       expect(actualInteraction).to.deep.equal(expectedInteraction)
     })
