@@ -1,9 +1,14 @@
 import React from 'react'
 import { H3 } from '@govuk-react/heading'
 import Link from '@govuk-react/link'
+import UnorderedList from '@govuk-react/unordered-list'
+import ListItem from '@govuk-react/list-item'
 import PropTypes from 'prop-types'
 import { throttle } from 'lodash'
 import axios from 'axios'
+import { GREY_1 } from 'govuk-colours'
+import styled from 'styled-components'
+
 import {
   FieldCheckboxes,
   FieldDate,
@@ -13,6 +18,7 @@ import {
   FieldTextarea,
   FieldTypeahead,
   useFormContext,
+  NewWindowLink,
 } from 'data-hub-components'
 
 import {
@@ -30,6 +36,10 @@ import {
 } from '../../../../constants'
 
 import urls from '../../../../../lib/urls'
+
+const StyledListItem = styled(ListItem)`
+  color: ${GREY_1};
+`
 
 const getServiceContext = (theme, kind, investmentProject) => {
   if (investmentProject) {
@@ -270,7 +280,25 @@ const StepInteractionDetails = ({
             name="policy_feedback_notes"
             label="Policy feedback notes"
             required="Enter policy feedback notes"
-            hint="These notes will be visible to other Data Hub users and may be shared within the department"
+            hint={
+              <>
+                <p>
+                  These notes will be visible to other Data Hub users and may be
+                  shared within the department. Please:
+                </p>
+                <UnorderedList listStyleType="bullet">
+                  <StyledListItem>
+                    summarise relevant information - don’t copy and paste
+                  </StyledListItem>
+                  <StyledListItem>
+                    use relevant keywords and accurate tags
+                  </StyledListItem>
+                </UnorderedList>
+                <NewWindowLink href="https://data-services-help.trade.gov.uk/data-hub/updates/announcements/what-makes-good-policy-feedback/">
+                  Read more guidance here
+                </NewWindowLink>
+              </>
+            }
           />
         </>
       )}
