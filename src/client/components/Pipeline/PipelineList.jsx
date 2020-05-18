@@ -21,7 +21,7 @@ const PipelineList = ({ status, items }) => {
       }}
     >
       {() => (
-        <StyledOrderedList>
+        <StyledOrderedList data-auto-id="pipelineList">
           {items?.map((item) => (
             <ListItem key={item.id}>
               <PipelineItem

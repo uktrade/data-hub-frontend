@@ -44,6 +44,7 @@ export default function Pipeline() {
       id="PipelineSubTabs"
       label="Pipeline statuses"
       routed={true}
+      data-auto-id="pipelineSubTabNav"
       tabs={{
         [urls.pipeline.index()]: {
           label: 'Prospect',

@@ -1,0 +1,19 @@
+{
+  "count": 1,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": "691b1331-ba5b-4261-9774-e6a5e39b5ca5",
+      "company": {
+        "name": "Venus Ltd",
+        "turnover": null,
+        "export_potential": null,
+        "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+      },
+      "name": "Socks to Korea",
+      "status": "win",
+      "created_on": "2020-05-10T14:09:07.705157Z"
+    }
+  ]
+}
