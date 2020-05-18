@@ -91,7 +91,7 @@ module.exports = {
       index: url('/companies', '/:companyId/lists'),
       addRemove: url('/companies', '/:companyId/lists/add-remove'),
     },
-    pipeline: url('/companies', '/:companyId/pipeline'),
+    pipeline: url('/companies', '/:companyId/my-pipeline'),
     orders: url('/companies', '/:companyId/orders'),
     details: url('/companies', '/:companyId/details'),
     archive: url('/companies', '/:companyId/archive'),
