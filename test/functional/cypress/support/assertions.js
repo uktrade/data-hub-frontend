@@ -90,23 +90,44 @@ const assertFieldUneditable = ({ element, label, value = null }) =>
     .parent()
     .then(($el) => value && cy.wrap($el).should('contain', value))
 
-const assertFieldSelect = ({ element, label, value, optionsCount = 0 }) =>
+const assertFieldSelect = ({
+  element,
+  label,
+  emptyOption,
+  value,
+  optionsCount = 0,
+}) =>
   cy
     .wrap(element)
     .as('fieldSelect')
-    .find('label')
-    .first()
-    .should('have.text', label)
+    .then(
+      () =>
+        label &&
+        cy
+          .get('@fieldSelect')
+          .find('label')
+          .first()
+          .should('have.text', label)
+    )
+    .then(
+      () =>
+        emptyOption &&
+        cy
+          .get('@fieldSelect')
+          .find('option')
+          .first()
+          .should('have.text', emptyOption)
+    )
     .next()
     .find('option')
     .should('have.length', optionsCount)
     .then(
       () =>
-        value ??
+        value &&
         cy
           .get('@fieldSelect')
           .find('option[selected]')
-          .should('have.text', value || '')
+          .should('have.text', value)
     )
 
 const assertFieldRadios = ({ element, label, value, optionsCount }) =>

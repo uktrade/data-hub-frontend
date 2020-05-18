@@ -10,7 +10,7 @@ module.exports = {
   dateOfInteractionDay: '#field-date_day',
   contact: '#field-contacts',
   add: '#interaction-details-form button[name=forward]',
-  service: '#field-service',
+  service: '#field-service select',
   serviceDeliveryStatus: '#field-service_delivery_status',
   subService: '.is-active > .c-form-group__inner > #field-subService',
   grantOffered: '#field-grant_amount_offered',

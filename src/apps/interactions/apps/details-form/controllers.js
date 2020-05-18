@@ -70,7 +70,7 @@ const transformServiceAnswers = (serviceAnswers) => {
   return Object.keys(serviceAnswers).reduce(
     (acc, questionId) => ({
       ...acc,
-      [`service_answers[${questionId}]`]: Object.keys(
+      [`service_answers.${questionId}`]: Object.keys(
         serviceAnswers[questionId]
       )[0],
     }),
@@ -83,8 +83,13 @@ const transformInteractionToValues = (interaction) => {
     return {}
   }
 
+  const service = interaction.service
+  const [parentServiceLabel, childServiceLabel] = service.name.split(' : ')
+
   return {
     theme: THEMES.OTHER,
+    service: childServiceLabel ? parentServiceLabel : service.id,
+    service_2nd_level: childServiceLabel ? service.id : undefined,
     ...pick(interaction, [
       'id',
       'kind',
@@ -105,7 +110,6 @@ const transformInteractionToValues = (interaction) => {
       'policy_issue_types',
     ]),
     ...transformValues(interaction, transformToTypeahead, [
-      'service',
       'contacts',
       'event',
       'communication_channel',

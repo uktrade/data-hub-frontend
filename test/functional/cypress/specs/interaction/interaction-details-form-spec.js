@@ -3,6 +3,7 @@ const { reduce, isEqual } = require('lodash')
 import {
   assertFieldInput,
   assertFieldRadios,
+  assertFieldSelect,
   testBreadcrumbs,
 } from '../../support/assertions'
 
@@ -46,8 +47,8 @@ const ELEMENT_SERVICE_NET_RECEIPT = {
   label: 'Net receipt (optional)',
 }
 const ELEMENT_SERVICE = {
-  placeholder: '-- Select service --',
-  assert: assertFieldTypeahead,
+  emptyOption: '-- Select service --',
+  assert: assertFieldSelect,
 }
 const ELEMENT_PARTICIPANTS_HEADER = {
   text: 'Participants',
@@ -127,11 +128,6 @@ const ELEMENT_IS_EVENT = {
   assert: assertFieldRadios,
   optionsCount: 2,
 }
-const ELEMENT_EVENT_SELECTION = {
-  label: 'Event',
-  placeholder: '-- Select event --',
-  assert: assertFieldTypeahead,
-}
 const ELEMENT_STEP2_BUTTONS = {
   buttons: ['Add interaction', 'Back'],
   assert: assertFormActions,
@@ -152,10 +148,23 @@ const COMMON_REQUEST_BODY = {
   status: 'complete',
 }
 
-function fillCommonFields({ service, contact = 'Johnny Cakeman' }) {
+function fillCommonFields({
+  service,
+  subservice = null,
+  contact = 'Johnny Cakeman',
+}) {
   cy.contains('Service')
     .next()
-    .selectTypeaheadOption(service)
+    .find('select')
+    .select(service)
+
+  if (subservice) {
+    cy.contains('Service')
+      .next()
+      .find('select')
+      .last()
+      .select(subservice)
+  }
 
   if (contact) {
     cy.contains(ELEMENT_CONTACT.label)
@@ -263,8 +272,9 @@ function submitForm(kind, theme, values) {
         .next()
         .find('input')
         .check('yes')
-
-      cy.contains(ELEMENT_EVENT_SELECTION.label)
+        .parent()
+        .parent()
+        .parent()
         .next()
         .selectTypeaheadOption('Sort event')
     }
@@ -365,8 +375,8 @@ describe('Interaction theme', () => {
 
     it('should save the interaction', () => {
       submitForm(KINDS.INTERACTION, THEMES.EXPORT, {
-        service:
-          'A Specific DIT Export Service or Funding : Tradeshow Access Programme (TAP)',
+        service: 'A Specific DIT Export Service or Funding',
+        subservice: 'Tradeshow Access Programme (TAP)',
       })
 
       assertRequestBody(
@@ -453,8 +463,8 @@ describe('Service delivery theme', () => {
 
     it('should save the service delivery', () => {
       submitForm(KINDS.SERVICE_DELIVERY, THEMES.EXPORT, {
-        service:
-          'A Specific DIT Export Service or Funding : Tradeshow Access Programme (TAP)',
+        service: 'A Specific DIT Export Service or Funding',
+        subservice: 'Tradeshow Access Programme (TAP)',
       })
 
       assertRequestBody(
@@ -542,7 +552,7 @@ describe('Investment theme', () => {
 
     it('should save the interaction', () => {
       submitForm(KINDS.INTERACTION, THEMES.INVESTMENT, {
-        service: 'Investment - Service',
+        service: 'Investment - Services',
       })
 
       assertRequestBody(
@@ -552,7 +562,6 @@ describe('Investment theme', () => {
           service: '0596b92b-3499-e211-a939-e4115bead28a',
           communication_channel: '72c226d7-5d95-e211-a939-e4115bead28a',
           kind: 'interaction',
-          service_answers: {},
           event: null,
           export_countries: [],
         },
@@ -642,7 +651,7 @@ describe('Contact loop', () => {
 describe('Adding an interaction from a referral', () => {
   const referral = fixtures.referrals.referalDetails
 
-  it('should be able to create interaction from referral', () => {
+  it('should be able to create an interaction from referral', () => {
     spyOnRequest(`/api-proxy/v4/company-referral/${referral.id}/complete`)
 
     cy.visit(urls.companies.referrals.details(referral.company.id, referral.id))
@@ -696,5 +705,65 @@ describe('Adding an interaction from a referral', () => {
         )
       }
     )
+  })
+})
+
+describe('Adding an interaction from a contact', () => {
+  const contact = fixtures.contact.deanCox
+
+  it('should be able to create an interaction from a contact', () => {
+    cy.visit(urls.contacts.interactions.index(contact.id))
+
+    cy.contains('Add interaction').click()
+    cy.contains('Export').click()
+    cy.contains('A standard interaction').click()
+    cy.contains('Continue').click()
+
+    cy.contains('h1', 'Add interaction for Zboncak Group')
+    cy.contains('button', 'Add interaction')
+  })
+})
+
+describe('Editing an interaction from a contact', () => {
+  it('should be able to edit an interaction from a contact', () => {
+    cy.visit(urls.contacts.interactions.index(fixtures.contact.deanCox.id))
+
+    cy.contains('a', 'totam|f19f5014-8bb1-4645-a224-27a4c8db5336').click()
+    cy.contains('a', 'Edit interaction').click()
+    cy.contains('h1', 'Edit interaction for Zboncak Group')
+    cy.contains('button', 'Save interaction')
+  })
+})
+
+describe('Adding an interaction from an investment project', () => {
+  const investmentProject = fixtures.investment.newHotelFdi
+
+  it('should be able to create an interaction from investment project', () => {
+    cy.visit(urls.investments.projects.interactions.index(investmentProject.id))
+
+    cy.contains('Add interaction').click()
+    cy.contains('h1', 'Add interaction for Venus Ltd')
+    cy.contains('button', 'Add interaction')
+  })
+})
+
+describe('Editing an interaction from an investment project', () => {
+  const investmentProject = fixtures.investment.newHotelFdi
+
+  it('should be able to edit an interaction from an investment project', () => {
+    cy.visit(urls.investments.projects.interactions.index(investmentProject.id))
+    cy.contains('a', 'totam|f19f5014-8bb1-4645-a224-27a4c8db5336').click()
+    cy.contains('a', 'Edit interaction').click()
+    cy.contains('h1', 'Edit interaction for Venus Ltd')
+    cy.contains('button', 'Save interaction')
+  })
+})
+
+describe('Editing an interaction from an interactions list', () => {
+  it('should be able to edit an interaction from an interactions list', () => {
+    cy.visit(urls.interactions.edit(fixtures.interaction.withLink))
+
+    cy.contains('h1', 'Edit interaction for Zboncak Group')
+    cy.contains('button', 'Save interaction')
   })
 })

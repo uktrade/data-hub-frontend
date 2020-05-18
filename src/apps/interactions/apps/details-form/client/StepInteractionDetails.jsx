@@ -9,6 +9,7 @@ import axios from 'axios'
 import { GREY_1 } from 'govuk-colours'
 import styled from 'styled-components'
 
+import { SPACING_POINTS } from '@govuk-react/constants'
 import {
   FieldCheckboxes,
   FieldDate,
@@ -37,6 +38,33 @@ import {
 
 import urls from '../../../../../lib/urls'
 
+const StyledSubservicePrefix = styled.div`
+  background: ${GREY_1};
+  height: ${SPACING_POINTS[4]}px;
+  position: relative;
+  width: 3px;
+  margin-right: ${SPACING_POINTS[8]}px;
+  &:after {
+    background: ${GREY_1};
+    content: '';
+    height: 3px;
+    left: 0;
+    position: absolute;
+    top: ${SPACING_POINTS[4]}px;
+    width: ${SPACING_POINTS[6]}px;
+  }
+`
+
+const StyledSubserviceWrapper = styled.div`
+  margin: ${SPACING_POINTS[3]}px 0 0 ${SPACING_POINTS[3]}px;
+  display: flex;
+  align-items: end;
+`
+
+const StyledSubserviceField = styled(FieldSelect)`
+  width: 100%;
+`
+
 const StyledListItem = styled(ListItem)`
   color: ${GREY_1};
 `
@@ -63,8 +91,45 @@ const getServiceContext = (theme, kind, investmentProject) => {
 
 const isTapService = (service) => service?.label?.includes('(TAP)')
 
-const filterServices = (services, serviceContext) =>
-  services.filter((s) => s.contexts.includes(serviceContext))
+const buildServicesHierarchy = (services) =>
+  Object.values(
+    services.reduce((acc, s) => {
+      const [parentLabel, childLabel] = s.label.split(' : ')
+      const parent =
+        parentLabel in acc
+          ? acc[parentLabel]
+          : {
+              label: parentLabel,
+              value: childLabel ? parentLabel : s.value,
+              children: [],
+            }
+
+      if (childLabel) {
+        parent.children.push({
+          label: childLabel,
+          value: s.value,
+        })
+      }
+
+      return {
+        ...acc,
+        [parentLabel]: parent,
+      }
+    }, {})
+  ).map((s) => ({
+    ...s,
+    children: s.children.length ? (
+      <StyledSubserviceWrapper>
+        <StyledSubservicePrefix />
+        <StyledSubserviceField
+          name="service_2nd_level"
+          emptyOption="-- Select service --"
+          options={s.children}
+          required="Select a service"
+        />
+      </StyledSubserviceWrapper>
+    ) : null,
+  }))
 
 const validateRequiredCountries = (countries, field, { values }) =>
   !EXPORT_INTEREST_STATUS_VALUES.some((status) => values[status])
@@ -94,29 +159,33 @@ const StepInteractionDetails = ({
   onOpenContactForm,
 }) => {
   const { values = {} } = useFormContext()
-  const filteredServices = filterServices(
-    services,
-    getServiceContext(values.theme, values.kind, values.investment_project)
+  const serviceContext = getServiceContext(
+    values.theme,
+    values.kind,
+    values.investment_project
   )
-  const selectedService = services.find(
-    (s) => s.value === values.service?.value
+  const servicesHierarchy = buildServicesHierarchy(
+    services.filter((s) => s.contexts.includes(serviceContext))
   )
+
+  const selectedServiceId = values.service_2nd_level || values.service
+  const selectedService = services.find((s) => s.value === selectedServiceId)
   const isServiceDelivery = values.kind === KINDS.SERVICE_DELIVERY
 
   return (
     <>
       <H3 as="h2">Service</H3>
 
-      <FieldTypeahead
+      <FieldSelect
         name="service"
-        placeholder="-- Select service --"
-        options={filteredServices}
+        emptyOption="-- Select service --"
+        options={servicesHierarchy}
         required="Select a service"
       />
 
       {selectedService?.interaction_questions?.map((question) => (
         <FieldRadios
-          name={`service_answers[${question.id}]`}
+          name={`service_answers.${question.id}`}
           label={question.name}
           required={`Give answer to "${question.name}"`}
           options={question.answer_options.map(({ id, name }) => ({
