@@ -227,7 +227,7 @@ describe('urls', () => {
       )
 
       expect(urls.companies.pipeline(companyId)).to.equal(
-        `/companies/${companyId}/pipeline`
+        `/companies/${companyId}/my-pipeline`
       )
     })
   })
