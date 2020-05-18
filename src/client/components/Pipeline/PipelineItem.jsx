@@ -70,7 +70,7 @@ const PipelineItem = ({
         )}
       </StyledBadgeWrapper>
       <StyledButtonWrapper>
-        <Button as={Link} href={`/${id}`} buttonColour={BLUE}>
+        <Button as={Link} href={urls.pipeline.edit(id)} buttonColour={BLUE}>
           Edit
         </Button>
       </StyledButtonWrapper>
