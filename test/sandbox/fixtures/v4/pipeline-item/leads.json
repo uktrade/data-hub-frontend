@@ -1,0 +1,43 @@
+{
+  "count": 3,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": "3e869547-694b-4192-acf6-77a177b43935",
+      "company": {
+        "name": "Venus Ltd",
+        "turnover": null,
+        "export_potential": null,
+        "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+      },
+      "name": "Socks to Norway",
+      "status": "leads",
+      "created_on": "2020-05-15T14:13:01.053350Z"
+    },
+    {
+      "id": "1211a313-1ab9-4330-9b9d-b971c434e9f0",
+      "company": {
+        "name": "Venus Ltd",
+        "turnover": null,
+        "export_potential": null,
+        "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+      },
+      "name": "Socks to Sweden",
+      "status": "leads",
+      "created_on": "2020-05-14T14:12:54.041906Z"
+    },
+    {
+      "id": "96631105-6b08-44b3-9ed1-93ccb1adcc3e",
+      "company": {
+        "name": "Venus Ltd",
+        "turnover": null,
+        "export_potential": null,
+        "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+      },
+      "name": "Socks to Japan",
+      "status": "leads",
+      "created_on": "2020-05-13T14:12:46.838377Z"
+    }
+  ]
+}
