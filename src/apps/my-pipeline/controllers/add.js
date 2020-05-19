@@ -1,13 +1,13 @@
-const urls = require('../../../../../lib/urls')
-const { authorisedRequest } = require('../../../../../lib/authorised-request')
-const config = require('../../../../../config')
+const urls = require('../../../lib/urls')
+const { authorisedRequest } = require('../../../lib/authorised-request')
+const config = require('../../../config')
 
 function renderAddToPipeline(req, res) {
   const { company } = res.locals
   res
     .breadcrumb(company.name, urls.companies.detail(company.id))
     .breadcrumb('Add to your pipeline')
-    .render('companies/apps/pipeline/views/add-to-pipeline', {
+    .render('my-pipeline/views/pipeline-form', {
       heading: `Add ${company.name} to your pipeline`,
       props: {
         companyId: company.id,
