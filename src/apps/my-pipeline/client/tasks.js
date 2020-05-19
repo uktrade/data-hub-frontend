@@ -1,5 +1,5 @@
 import axios from 'axios'
-import urls from '../../../../../lib/urls'
+import urls from '../../../lib/urls'
 
 export async function getPipelineByCompany({ companyId }) {
   const { data } = await axios.get(
@@ -14,7 +14,7 @@ export async function getPipelineByCompany({ companyId }) {
 
 export async function addCompanyToPipeline({ values, companyId, csrfToken }) {
   await axios.post(
-    `${urls.companies.pipeline(companyId, { _csrf: csrfToken })}`,
+    `${urls.companies.pipelineAdd(companyId, { _csrf: csrfToken })}`,
     {
       company: companyId,
       name: values.name,
@@ -22,4 +22,22 @@ export async function addCompanyToPipeline({ values, companyId, csrfToken }) {
     }
   )
   return companyId
+}
+
+export async function getPipelineItem({ pipelineItemId }) {
+  const { data } = await axios.get(
+    `/api-proxy/v4/pipeline-item/${pipelineItemId}`
+  )
+  return data
+}
+
+export async function editPipelineItem({ values, pipelineItemId, csrfToken }) {
+  await axios.post(
+    `${urls.pipeline.edit(pipelineItemId, { _csrf: csrfToken })}`,
+    {
+      name: values.name,
+      status: values.category,
+    }
+  )
+  return pipelineItemId
 }
