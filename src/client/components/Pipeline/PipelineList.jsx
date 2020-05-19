@@ -30,7 +30,6 @@ const PipelineList = ({ status, items }) => {
                 companyName={item.company.name}
                 projectName={item.name}
                 date={item.created_on}
-                likelihood={item.likelihood}
               />
             </ListItem>
           ))}
