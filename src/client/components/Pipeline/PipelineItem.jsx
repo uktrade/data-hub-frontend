@@ -6,8 +6,7 @@ import Link from '@govuk-react/link'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
-import { GREEN, YELLOW, RED, BLUE } from 'govuk-colours'
-import { Badge } from 'data-hub-components'
+import { BLUE } from 'govuk-colours'
 import Card from 'data-hub-components/dist/activity-feed/activities/card/Card'
 import CardHeader from 'data-hub-components/dist/activity-feed/activities/card/CardHeader'
 
@@ -17,9 +16,11 @@ const StyledButtonWrapper = styled(GridCol)`
   align-items: flex-start;
   display: flex;
   justify-content: flex-start;
+  min-width: 100%;
 
   ${MEDIA_QUERIES.TABLET} {
     justify-content: flex-end;
+    min-width: unset;
   }
 
   a {
@@ -27,32 +28,19 @@ const StyledButtonWrapper = styled(GridCol)`
   }
 `
 
-const StyledBadgeWrapper = styled(GridCol)`
-  margin: ${SPACING.SCALE_3} 0;
+const StyledGridRow = styled(GridRow)`
+  align-items: baseline;
 
-  ${MEDIA_QUERIES.TABLET} {
-    margin: 0;
+  div {
+    margin-top: ${SPACING.SCALE_3};
+
+    ${MEDIA_QUERIES.TABLET} {
+      margin-top: 0;
+    }
   }
 `
 
-const StyledGridRow = styled(GridRow)`
-  align-items: baseline;
-`
-
-const likelihoodConstants = {
-  HIGH: { text: 'high', colour: GREEN },
-  MEDIUM: { text: 'medium', colour: YELLOW },
-  LOW: { text: 'low', colour: RED },
-}
-
-const PipelineItem = ({
-  id,
-  companyId,
-  companyName,
-  projectName,
-  date,
-  likelihood,
-}) => (
+const PipelineItem = ({ id, companyId, companyName, projectName, date }) => (
   <Card>
     <CardHeader
       company={{ name: projectName }}
@@ -62,13 +50,6 @@ const PipelineItem = ({
       startTime={date}
     />
     <StyledGridRow>
-      <StyledBadgeWrapper>
-        {likelihood && (
-          <Badge
-            borderColour={likelihoodConstants[likelihood].colour}
-          >{`Likelihood to succeed - ${likelihoodConstants[likelihood].text}`}</Badge>
-        )}
-      </StyledBadgeWrapper>
       <StyledButtonWrapper>
         <Button as={Link} href={urls.pipeline.edit(id)} buttonColour={BLUE}>
           Edit
@@ -84,11 +65,6 @@ PipelineItem.propTypes = {
   companyName: PropTypes.string.isRequired,
   projectName: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
-  likelihood: PropTypes.string,
-}
-
-PipelineItem.defaultProps = {
-  likelihood: null,
 }
 
 export default PipelineItem
