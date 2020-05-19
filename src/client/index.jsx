@@ -38,7 +38,7 @@ import ReferralHelp from '../apps/companies/apps/referrals/help/client/ReferralH
 import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
 import sendReferral from '../apps/companies/apps/referrals/send-referral/client/reducer'
 import InteractionReferralDetails from '../apps/companies/apps/referrals/details/client/InteractionReferralDetails.jsx'
-import AddToPipelineForm from '../apps/companies/apps/pipeline/client/AddToPipelineForm'
+import PipelineForm from '../apps/my-pipeline/client'
 import CompanyLocalHeader from '../apps/companies/client/CompanyLocalHeader.jsx'
 import InvestmentProjectAdmin from '../apps/investments/views/admin/client/InvestmentProjectAdmin.jsx'
 import FlashMessages from './components/LocalHeader/FlashMessages.jsx'
@@ -88,9 +88,11 @@ import {
   ID as ADD_TO_PIPELINE_ID,
   TASK_GET_PIPELINE_BY_COMPANY,
   TASK_ADD_COMPANY_TO_PIPELINE,
-} from '../apps/companies/apps/pipeline/client/state'
-import addToPipelineReducer from '../apps/companies/apps/pipeline/client/reducer'
-import * as pipelineTasks from '../apps/companies/apps/pipeline/client/tasks'
+  TASK_GET_PIPELINE_ITEM,
+  TASK_EDIT_PIPELINE_ITEM,
+} from '../apps/my-pipeline/client/state'
+import addToPipelineReducer from '../apps/my-pipeline/client/reducer'
+import * as pipelineTasks from '../apps/my-pipeline/client/tasks'
 
 import {
   ID as PIPELINE_LIST_ID,
@@ -171,6 +173,8 @@ sagaMiddleware.run(
     [TASK_GET_PIPELINE_BY_COMPANY]: pipelineTasks.getPipelineByCompany,
     [TASK_ADD_COMPANY_TO_PIPELINE]: pipelineTasks.addCompanyToPipeline,
     [TASK_GET_PIPELINE_LIST]: pipelineListTasks.getPipelineList,
+    [TASK_GET_PIPELINE_ITEM]: pipelineTasks.getPipelineItem,
+    [TASK_EDIT_PIPELINE_ITEM]: pipelineTasks.editPipelineItem,
     [addCompanyState.TASK_POSTCODE_TO_REGION]: addCompanyPostcodeToRegionTask,
     [addInteractionFormState.TASK_SAVE_INTERACTION]:
       addInteractionFormTasks.saveInteraction,
@@ -317,9 +321,9 @@ function App() {
         <Mount selector="#company-export-countries-edit">
           {(props) => <ExportCountriesEdit {...props} />}
         </Mount>
-        <Mount selector="#add-to-pipeline-form">
+        <Mount selector="#pipeline-form">
           {(props) => (
-            <AddToPipelineForm {...props} csrfToken={globalProps.csrfToken} />
+            <PipelineForm {...props} csrfToken={globalProps.csrfToken} />
           )}
         </Mount>
         <Mount selector="#company-local-header">
