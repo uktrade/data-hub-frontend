@@ -33,7 +33,7 @@ function PipelineForm({
         initialValue={initialValue.category}
       />
       <FormActions>
-        <Button>Add</Button>
+        <Button>{Object.keys(initialValue).length ? 'Update' : 'Add'}</Button>
         <Link href={cancelLink}>Cancel</Link>
       </FormActions>
     </Form>
