@@ -41,6 +41,22 @@ describe('Send a referral form', () => {
         assertLocalHeader('Send a referral')
       })
 
+      it('should display guidance on sending a referral', () => {
+        cy.get('h2')
+          .contains('When to send a referral')
+          .next()
+          .should(
+            'have.text',
+            'Referrals are for when you want to ask another DIT advisor to help out an account you are working on.Read more guidance here (opens in a new window or tab)'
+          )
+          .find('a')
+          .should(
+            'have.attr',
+            'href',
+            'https://data-services-help.trade.gov.uk/data-hub/updates/announcements/improving-collaboration-internal-referrals/'
+          )
+      })
+
       it('should display the headings and four fields', () => {
         cy.contains('Who do you want to refer this company to?').should(
           'be.visible'

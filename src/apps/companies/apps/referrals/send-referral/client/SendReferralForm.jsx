@@ -19,6 +19,7 @@ import {
   InputField,
 } from 'govuk-react'
 import { MEDIA_QUERIES } from '@govuk-react/constants'
+import { WHITE, LIGHT_BLUE_50 } from 'govuk-colours'
 
 import {
   SEND_REFERRAL_FORM__CONTINUE,
@@ -31,6 +32,7 @@ import {
 } from '../../../../../../client/actions'
 import SendReferralConfirmation from './SendReferralConfirmation'
 import LocalHeader from '../../../../../../client/components/LocalHeader/LocalHeader'
+import { Panel } from '../../../../../../client/components/'
 import { companies, dashboard } from '../../../../../../lib/urls'
 
 const StyledTextArea = styled(TextArea)({
@@ -40,6 +42,16 @@ const StyledTextArea = styled(TextArea)({
     },
   },
 })
+
+const StyledPanel = styled(Panel)`
+  a:link,
+  a:visited {
+    color: ${WHITE};
+  }
+  a:hover {
+    color: ${LIGHT_BLUE_50};
+  }
+`
 
 const SendReferralForm = ({
   companyContacts,
@@ -74,6 +86,14 @@ const SendReferralForm = ({
       />
 
       <Main>
+        <StyledPanel title="When to send a referral">
+          Referrals are for when you want to ask another DIT advisor to help out
+          an account you are working on.
+          <br />
+          <NewWindowLink href="https://data-services-help.trade.gov.uk/data-hub/updates/announcements/improving-collaboration-internal-referrals/">
+            Read more guidance here
+          </NewWindowLink>
+        </StyledPanel>
         <form
           onSubmit={(event) => {
             event.preventDefault()
