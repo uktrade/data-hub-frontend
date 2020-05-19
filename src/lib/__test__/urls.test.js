@@ -226,7 +226,7 @@ describe('urls', () => {
         `/companies/${companyId}/lists/add-remove`
       )
 
-      expect(urls.companies.pipeline(companyId)).to.equal(
+      expect(urls.companies.pipelineAdd(companyId)).to.equal(
         `/companies/${companyId}/my-pipeline`
       )
     })

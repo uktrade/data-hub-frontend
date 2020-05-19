@@ -12,7 +12,7 @@ const selectors = require('../../../../selectors')
 describe('Company add to pipeline form', () => {
   context('When a company is not already on the pipeline', () => {
     before(() => {
-      cy.visit(urls.companies.pipeline(minimallyMinimal.id))
+      cy.visit(urls.companies.pipelineAdd(minimallyMinimal.id))
     })
 
     it('should render the breadcrumbs', () => {
@@ -62,7 +62,7 @@ describe('Company add to pipeline form', () => {
 
   context('When the company is already on the pipeline', () => {
     before(() => {
-      cy.visit(urls.companies.pipeline(lambdaPlc.id))
+      cy.visit(urls.companies.pipelineAdd(lambdaPlc.id))
     })
 
     it('should render the breadcrumbs', () => {
@@ -109,7 +109,7 @@ describe('Company add to pipeline form', () => {
   })
   context('when form is submitted to add a company to pipeline', () => {
     beforeEach(() => {
-      cy.visit(urls.companies.pipeline(minimallyMinimal.id))
+      cy.visit(urls.companies.pipelineAdd(minimallyMinimal.id))
     })
 
     it('should render the status radio buttons', () => {
@@ -148,7 +148,7 @@ describe('Company add to pipeline form', () => {
 
   context('when form is submitted without any input', () => {
     beforeEach(() => {
-      cy.visit(urls.companies.pipeline(minimallyMinimal.id))
+      cy.visit(urls.companies.pipelineAdd(minimallyMinimal.id))
     })
 
     it('should display error messages', () => {
