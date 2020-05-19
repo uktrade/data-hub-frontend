@@ -1,8 +1,9 @@
-const urls = require('../../../../lib/urls')
+const urls = require('../../lib/urls')
 
-const router = require('./router')
+const { myPipelineRouter } = require('./router')
 
 module.exports = {
-  mountpath: urls.companies.pipeline.mountPoint,
-  router,
+  displayName: 'My Pipeline',
+  mountpath: urls.pipeline.edit.mountPoint,
+  router: myPipelineRouter,
 }

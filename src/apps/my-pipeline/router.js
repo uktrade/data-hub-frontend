@@ -1,13 +1,28 @@
-const router = require('express').Router()
-const urls = require('../../../../lib/urls')
+const { Router } = require('express')
+const urls = require('../../lib/urls')
 
 const {
   renderAddToPipeline,
   addCompanyToPipeline,
 } = require('./controllers/add')
 
-router
-  .get(urls.companies.pipeline.route, renderAddToPipeline)
-  .post(urls.companies.pipeline.route, addCompanyToPipeline)
+const {
+  renderEditPipeline,
+  editCompanyOnPipeline,
+} = require('./controllers/edit')
 
-module.exports = router
+const companyPipelineRouter = Router()
+const myPipelineRouter = Router()
+
+companyPipelineRouter
+  .get(urls.companies.pipelineAdd.route, renderAddToPipeline)
+  .post(urls.companies.pipelineAdd.route, addCompanyToPipeline)
+
+myPipelineRouter
+  .get(urls.pipeline.edit.route, renderEditPipeline)
+  .post(urls.pipeline.edit.route, editCompanyOnPipeline)
+
+module.exports = {
+  companyPipelineRouter,
+  myPipelineRouter,
+}
