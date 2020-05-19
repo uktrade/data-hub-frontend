@@ -2,12 +2,19 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import ListItem from '@govuk-react/list-item'
+import InsetText from '@govuk-react/inset-text'
 
 import StyledOrderedList from '../StyledOrderedList'
 import Task from '../Task'
 import { state2props, ID as STATE_ID, TASK_GET_PIPELINE_LIST } from './state'
 import { PIPELINE__LIST_LOADED } from '../../actions'
 import PipelineItem from './PipelineItem'
+
+const statusConstants = {
+  leads: 'prospect',
+  in_progress: 'active',
+  win: 'won',
+}
 
 const PipelineList = ({ status, items }) => {
   return (
@@ -22,17 +29,25 @@ const PipelineList = ({ status, items }) => {
     >
       {() => (
         <StyledOrderedList data-auto-id="pipelineList">
-          {items?.map((item) => (
-            <ListItem key={item.id}>
-              <PipelineItem
-                id={item.id}
-                companyId={item.company.id}
-                companyName={item.company.name}
-                projectName={item.name}
-                date={item.created_on}
-              />
-            </ListItem>
-          ))}
+          {items && items.length ? (
+            items.map((item) => (
+              <ListItem key={item.id}>
+                <PipelineItem
+                  id={item.id}
+                  companyId={item.company.id}
+                  companyName={item.company.name}
+                  projectName={item.name}
+                  date={item.created_on}
+                />
+              </ListItem>
+            ))
+          ) : (
+            <InsetText>
+              There are no companies in the {statusConstants[status]} section of
+              your pipeline. You can add companies to your pipeline from the
+              company page.
+            </InsetText>
+          )}
         </StyledOrderedList>
       )}
     </Task.Status>
