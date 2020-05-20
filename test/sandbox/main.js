@@ -563,3 +563,13 @@ Sandbox.define('/zendesk/tickets', 'POST', zendesk.tickets)
 // Pipeline endpoint
 Sandbox.define('/v4/pipeline-item', 'GET', v4pipelineItem.getPipelineItems)
 Sandbox.define('/v4/pipeline-item', 'POST', v4pipelineItem.postPipelineItems)
+Sandbox.define(
+  '/v4/pipeline-item/{pipelineItemId}',
+  'PATCH',
+  v4pipelineItem.patchPipelineItem
+)
+Sandbox.define(
+  '/v4/pipeline-item/{pipelineItemId}',
+  'GET',
+  v4pipelineItem.getPipelineItem
+)
