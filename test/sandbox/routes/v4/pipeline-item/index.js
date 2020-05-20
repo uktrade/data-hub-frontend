@@ -33,7 +33,30 @@ exports.postPipelineItems = function(req, res) {
       id: lambdaPlc.id,
       name: lambdaPlc.name,
     },
-    pipelineCreate
+    pipelineCreate.company
   )
-  res.json(company)
+  pipelineCreate.company = company
+  res.json(pipelineCreate)
+}
+
+exports.patchPipelineItem = function(req, res) {
+  var company = _.assign(
+    {},
+    {
+      id: lambdaPlc.id,
+      name: lambdaPlc.name,
+    },
+    pipelineCreate.company
+  )
+  pipelineCreate.company = company
+  res.json(pipelineCreate)
+}
+
+exports.getPipelineItem = function(req, res) {
+  var pipelineItem = pipelineItemLambdaPlc.results[0]
+  if (req.params.pipelineItemId == pipelineItem.id) {
+    res.json(pipelineItem)
+    return
+  }
+  res.send(404)
 }
