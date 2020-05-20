@@ -62,7 +62,10 @@ RUN apt-get install -y xvfb xdg-utils libgtk-3-0 lsb-release libappindicator3-1 
 RUN apt-get install -y openjdk-8-jre
 
 # Install sandbox
-RUN wget -O /usr/local/sandbox.jar https://dl.bintray.com/getsandbox/public/com/sandbox/sandbox/1.0.235/sandbox-1.0.235-all.jar
+RUN wget https://github.com/getsandbox/sandbox/releases/download/1.1.0/sandbox-runtime.tar \
+  && tar -C /usr/local/bin -xvf sandbox-runtime.tar \
+  && mv /usr/local/bin/sandbox-runtime /usr/local/bin/sandbox \
+  && rm sandbox-runtime.tar
 
 # Versions of local tools
 RUN node -v

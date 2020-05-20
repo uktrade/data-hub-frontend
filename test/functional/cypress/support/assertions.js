@@ -177,7 +177,8 @@ const assertFieldInput = ({ element, label, hint, value }) =>
     )
     .find('input')
     .then(
-      ($el) => value ?? cy.wrap($el).should('have.attr', 'value', value || '')
+      ($el) =>
+        value && cy.wrap($el).should('have.attr', 'value', String(value) || '')
     )
 
 const assertFieldTextarea = ({ element, label, hint, value }) =>
