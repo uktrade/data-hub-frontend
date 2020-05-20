@@ -213,18 +213,18 @@ describe('Referall list on dashboard', () => {
       )
 
     assertResultList([
-      EXPECTED_REFERRALS.lou2andy,
-      EXPECTED_REFERRALS.andy2lou,
       EXPECTED_REFERRALS.yeahButNo,
+      EXPECTED_REFERRALS.andy2lou,
+      EXPECTED_REFERRALS.lou2andy,
     ])
   })
 
   it('Only sent referrals shold be visible when sent filter is set', () => {
     selectFilter('Sent referrals')
     assertResultList([
-      EXPECTED_REFERRALS.computerSaysNo,
-      EXPECTED_REFERRALS.zoo,
       EXPECTED_REFERRALS.yeahIKnow,
+      EXPECTED_REFERRALS.zoo,
+      EXPECTED_REFERRALS.computerSaysNo,
     ])
   })
 })
