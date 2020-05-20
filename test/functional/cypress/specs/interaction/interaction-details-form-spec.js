@@ -767,3 +767,116 @@ describe('Editing an interaction from an interactions list', () => {
     cy.contains('button', 'Save interaction')
   })
 })
+
+describe('Filtering services based on theme & kind', () => {
+  const openFormForNewInteraction = (theme, kind) =>
+    cy.visit(
+      urls.companies.interactions.createType(
+        fixtures.company.dnbCorp,
+        theme,
+        kind
+      )
+    )
+
+  it('should show filtered services for Export => Interaction', () => {
+    openFormForNewInteraction(THEMES.EXPORT, KINDS.INTERACTION)
+
+    cy.get('#field-service').should(
+      'have.text',
+      [
+        '-- Select service --',
+        'A Specific DIT Export Service or Funding',
+        'Enquiry or Referral Received',
+        'Export Relationship Management',
+        'Global Growth Service',
+        'Making Export Introductions',
+        'Providing Export Advice & Information',
+        'Referral to UKEFRelationship Management',
+        'Trade - EnquiryTrade - Services',
+      ].join('')
+    )
+  })
+
+  it('should show filtered services for Export => Service delivery', () => {
+    openFormForNewInteraction(THEMES.EXPORT, KINDS.SERVICE_DELIVERY)
+
+    cy.get('#field-service').should(
+      'have.text',
+      [
+        '-- Select service --',
+        'A Specific DIT Export Service or Funding',
+        'Enquiry or Referral Received',
+        'Events - Overseas',
+        'Events',
+        'Export Relationship Management',
+        'Global Growth Service',
+        'Relationship Management',
+      ].join('')
+    )
+  })
+
+  it('should show filtered services for Investment', () => {
+    openFormForNewInteraction(THEMES.INVESTMENT, KINDS.INTERACTION)
+
+    cy.get('#field-service').should(
+      'have.text',
+      [
+        '-- Select service --',
+        'Enquiry received',
+        'IST Specific Service',
+        'Investment - Aftercare Company Visit',
+        'Investment - Business Proposition',
+        'Investment - Company Visit',
+        'Investment - Services',
+        'Making Investment Introductions',
+        'Providing Investment Advice & Information',
+        'Relationship Management',
+      ].join('')
+    )
+  })
+
+  it('should show filtered services for Other => Interaction', () => {
+    openFormForNewInteraction(THEMES.OTHER, KINDS.INTERACTION)
+
+    cy.get('#field-service').should(
+      'have.text',
+      [
+        '-- Select service --',
+        'A Specific DIT Export Service or Funding',
+        'A Specific DIT Service',
+        'A Specific Service',
+        'Enquiry or Referral Received',
+        'Global Growth Pilot (2017)',
+        'Global Growth Pilot (2017) – Diagnostic Output Report completed',
+        'Global Growth Pilot (2017) – Diagnostic completed',
+        'Global Growth Pilot (2017) – Export Growth Plan agreed with customer',
+        'Global Growth Pilot (2017) – GGP process complete',
+        'Investment - Aftercare Company Visit',
+        'Investment - Business Proposition',
+        'Investment - Company Visit',
+        'Investment - Services',
+        'Onward Referral',
+        'Relationship Management',
+        'Trade - EnquiryTrade - Services',
+      ].join('')
+    )
+  })
+
+  it('should show filtered services for Other => Service delivery', () => {
+    openFormForNewInteraction(THEMES.OTHER, KINDS.SERVICE_DELIVERY)
+
+    cy.get('#field-service').should(
+      'have.text',
+      [
+        '-- Select service --',
+        'A Specific DIT Service',
+        'A Specific Service',
+        'Enquiry or Referral Received',
+        'Events - Overseas',
+        'Events',
+        'Global Growth Pilot (2017) – Eligible GGP customer',
+        'Relationship Management',
+      ].join('')
+    )
+  })
+})
