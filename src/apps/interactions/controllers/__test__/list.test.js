@@ -162,7 +162,7 @@ describe('interaction list', () => {
             locals: {
               interactions: {
                 view: 'entity/interactions',
-                returnLink: 'entity/interactions/',
+                returnLink: 'entity/interactions',
                 createKind: 'interaction',
                 theme: 'export',
                 canAdd: true,

@@ -53,7 +53,7 @@ describe('Interactions middleware', () => {
       it('should set the return link', () => {
         expect(
           this.middlewareParameters.resMock.locals.interactions.returnLink
-        ).to.equal(`/companies/${companyMock.id}/interactions/`)
+        ).to.equal(`/companies/${companyMock.id}/interactions`)
       })
 
       it('should set the entity name', () => {

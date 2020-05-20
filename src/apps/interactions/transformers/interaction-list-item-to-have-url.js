@@ -5,7 +5,8 @@ function transformInteractionListItemToHaveUrlPrefix(urlPrefix) {
     if (!urlPrefix) return item
     return assign({}, item, {
       urlPrefix:
-        urlPrefix.charAt(0) === '/' ? urlPrefix.substring(1) : urlPrefix,
+        (urlPrefix.charAt(0) === '/' ? urlPrefix.substring(1) : urlPrefix) +
+        '/',
     })
   }
 }

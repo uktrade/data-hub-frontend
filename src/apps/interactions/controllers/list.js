@@ -1,3 +1,4 @@
+const path = require('path')
 const qs = require('querystring')
 const { get, set } = require('lodash')
 const { collectionFilterFields } = require('../macros')
@@ -159,9 +160,11 @@ function renderInteractionsForEntity(req, res, next) {
       ? [
           {
             label: 'Add interaction',
-            url: `${returnLink}create${
+            url: path.join(
+              returnLink,
+              '/create',
               createKind ? `/${theme}/${createKind}` : ''
-            }`,
+            ),
           },
         ]
       : undefined

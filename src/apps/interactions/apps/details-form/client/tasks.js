@@ -9,6 +9,7 @@ const FIELDS_TO_OMIT = [
   'currently_exporting',
   'future_interest',
   'not_interested',
+  'service_2nd_level',
 ]
 
 function transformOption(option) {
@@ -44,15 +45,17 @@ function transformExportCountries(values) {
 }
 
 function transformServiceAnswers(values) {
-  return values.service?.interaction_questions?.reduce(
-    (acc, question) => ({
-      ...acc,
-      [question.id]: {
-        [values[`service_answers[${question.id}]`]]: {},
-      },
-    }),
-    {}
-  )
+  return Object.keys(values)
+    .filter((fieldName) => fieldName.startsWith('service_answers.'))
+    .reduce((acc, fieldName) => {
+      const [, questionId] = fieldName.split('.')
+      return {
+        ...acc,
+        [questionId]: {
+          [values[`service_answers.${questionId}`]]: {},
+        },
+      }
+    }, {})
 }
 
 export function openContactForm({ values, currentStep, url }) {
@@ -85,7 +88,7 @@ export function saveInteraction({ values, companyId, referralId }) {
     company: {
       id: companyId,
     },
-    service: transformOption(values.service),
+    service: values.service_2nd_level || values.service,
     service_answers: transformServiceAnswers(values),
     contacts: transformArrayOfOptions(values.contacts),
     dit_participants: values.dit_participants.map((a) => ({
@@ -95,10 +98,14 @@ export function saveInteraction({ values, companyId, referralId }) {
     policy_areas: transformArrayOfOptions(values.policy_areas),
     communication_channel: transformOption(values.communication_channel),
     event: transformOption(values.event),
+    // Cannot be empty string
+    grant_amount_offered:
+      'grant_amount_offered' in values
+        ? values.grant_amount_offered || null
+        : undefined,
     ...pick(values, [
       'notes',
       'subject',
-      'grant_amount_offered',
       'net_company_receipt',
       'policy_feedback_notes',
       'was_policy_feedback_provided',
