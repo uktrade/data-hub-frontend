@@ -59,7 +59,7 @@ describe('Company Export tab - Edit exports', () => {
           assertFieldSelect({
             element,
             label: 'Export win category (optional)',
-            value: '-- Select Category --',
+            value: '-- Select category --',
             optionsCount: 7,
           })
         })

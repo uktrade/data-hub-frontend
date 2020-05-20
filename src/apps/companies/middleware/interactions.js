@@ -1,3 +1,5 @@
+const urls = require('../../../lib/urls')
+
 function setInteractionsDetails(req, res, next) {
   const { company } = res.locals
 
@@ -7,7 +9,7 @@ function setInteractionsDetails(req, res, next) {
 
   res.locals.interactions = {
     view: 'companies/views/interactions',
-    returnLink: `/companies/${company.id}/interactions/`,
+    returnLink: urls.companies.interactions.index(company.id),
     entityName: company.name,
     query: { company_id: company.id },
     canAdd: !company.archived,
@@ -15,11 +17,11 @@ function setInteractionsDetails(req, res, next) {
     breadcrumbs: [
       {
         text: company.name,
-        href: `/companies/${company.id}`,
+        href: urls.companies.detail(company.id),
       },
       {
         text: 'Interactions',
-        href: `/companies/${company.id}/interactions`,
+        href: urls.companies.interactions.index(company.id),
       },
     ],
   }
