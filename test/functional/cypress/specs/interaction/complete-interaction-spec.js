@@ -380,6 +380,7 @@ describe('Complete interaction', () => {
       })
 
       it('should redirect to the interaction create form', () => {
+        cy.contains('h1', 'Edit interaction for Venus Ltd')
         cy.location('pathname').should(
           'eq',
           `/companies/${params.companyId}/interactions/${[

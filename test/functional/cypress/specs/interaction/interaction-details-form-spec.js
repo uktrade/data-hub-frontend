@@ -9,6 +9,7 @@ import {
 
 const urls = require('../../../../../src/lib/urls')
 const fixtures = require('../../fixtures')
+const interactionWithoutTheme = require('../../../../sandbox/fixtures/v3/interaction/interaction-without-theme')
 const {
   assertFieldTextarea,
   assertFieldDate,
@@ -878,5 +879,21 @@ describe('Filtering services based on theme & kind', () => {
         'Relationship Management',
       ].join('')
     )
+  })
+})
+
+describe('Editing an interaction without a theme', () => {
+  it('should set a default theme (Other)', () => {
+    cy.visit(urls.interactions.edit(interactionWithoutTheme.id))
+
+    cy.get('#field-subject').then((element) =>
+      assertFieldInput({
+        element,
+        label: 'Subject',
+        value: interactionWithoutTheme.subject,
+      })
+    )
+
+    cy.contains('button', 'Save interaction')
   })
 })

@@ -44,7 +44,7 @@ aliases:
   - &start_api_sandbox
     run:
       name: Start API sandbox
-      command: java -jar /usr/local/sandbox.jar --port=8001 --watch=false --base=./test/sandbox run
+      command: sandbox --port=8001 --watch=false --base=./test/sandbox run
       background: true
 
   - &wait_for_api_sandbox
@@ -105,7 +105,7 @@ aliases:
 
   # Data hub base docker container
   - &docker_data_hub_base
-    image: ukti/data-hub-frontend-test:3.4.0
+    image: ukti/data-hub-frontend-test:3.5.0
     environment: *data_hub_base_envs
 
   # Data hub redis container
