@@ -124,11 +124,16 @@ const getInitialFormValues = (req, res) => {
   const { company, investment, interaction, referral } = res.locals
   const { theme, kind } = req.params
   const date = interaction ? moment(interaction.date) : moment()
+  const investmentId = get(
+    investment,
+    'id',
+    get(interaction, 'investment_project')
+  )
   return {
     theme,
     kind,
     company: company.id,
-    investment_project: investment && investment.id,
+    investment_project: investmentId,
     date: {
       day: date.format('DD'),
       month: date.format('MM'),
