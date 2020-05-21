@@ -1,5 +1,11 @@
 import PropTypes from 'prop-types'
 
+export const URL_MAP = {
+  leads: 'index',
+  in_progress: 'active',
+  win: 'won',
+}
+
 export const PipelineItemPropType = PropTypes.exact({
   company: PropTypes.exact({
     export_potential: PropTypes.string,

@@ -62,8 +62,7 @@ describe('Pipeline edit form', () => {
         assertFieldInput({
           element,
           label: 'Project name',
-          optionsCount: 3,
-          value: 'In progress',
+          value: pipelineItem.name,
         })
       })
     })
@@ -79,41 +78,43 @@ describe('Pipeline edit form', () => {
       })
     })
   })
-  context('when form is submitted to add a company to pipeline', () => {
-    beforeEach(() => {
-      cy.visit(urls.pipeline.edit(pipelineItem.id))
-    })
 
-    it('should render the project name text input', () => {
-      cy.get('#field-name').then((element) => {
-        assertFieldInput({
-          element,
-          label: 'Project name',
-          optionsCount: 3,
-          value: 'In progress',
-        })
+  context(
+    'when form is submitted it redirects to the correct tab with a success message',
+    () => {
+      beforeEach(() => {
+        cy.visit(urls.pipeline.edit(pipelineItem.id))
       })
-    })
 
-    it('should render the status radio buttons', () => {
-      cy.get('#field-category').then((element) => {
-        assertFieldRadios({
-          element,
-          label: 'Choose a status',
-          optionsCount: 3,
-          value: 'In progress',
-        })
+      it('should redirect to the prospect tab in my pipeline', () => {
+        cy.get('input[value=leads').click()
+        cy.contains('button', 'Update').click()
+        cy.url().should('include', urls.pipeline.index())
+        cy.get(selectors.companyLocalHeader().flashMessageList).should(
+          'contain',
+          'Pipeline changes for this company have been saved'
+        )
       })
-    })
 
-    it('should redirect to dashboard with a flash message', () => {
-      cy.get('input[value=win').click()
-      cy.contains('button', 'Update').click()
-      cy.url().should('include', urls.pipeline.index())
-      cy.get(selectors.localHeader().flash).should(
-        'contain',
-        'Pipeline changes for this company have been saved'
-      )
-    })
-  })
+      it('should redirect to the active tab in my pipeline', () => {
+        cy.get('input[value=in_progress').click()
+        cy.contains('button', 'Update').click()
+        cy.url().should('include', urls.pipeline.active())
+        cy.get(selectors.companyLocalHeader().flashMessageList).should(
+          'contain',
+          'Pipeline changes for this company have been saved'
+        )
+      })
+
+      it('should redirect to the won tab in my pipeline', () => {
+        cy.get('input[value=win').click()
+        cy.contains('button', 'Update').click()
+        cy.url().should('include', urls.pipeline.won())
+        cy.get(selectors.companyLocalHeader().flashMessageList).should(
+          'contain',
+          'Pipeline changes for this company have been saved'
+        )
+      })
+    }
+  )
 })
