@@ -10,21 +10,19 @@ import { ISO_CODE, WEBSITE_REGEX } from './constants'
 import InformationList from './InformationList'
 
 // TODO: Move this validation to the component library
-const requiredWebsiteAndOrPhoneValidator = (
+const requiredWebsiteOrPhoneValidator = (
   value,
   name,
   { values: { website, telephone_number } }
 ) => {
-  if (!telephone_number && !website) {
-    return 'Enter a website or phone number'
-  }
-
-  if (telephone_number && !website) {
-    return null
-  }
-
-  return !WEBSITE_REGEX.test(website) ? 'Enter a valid website URL' : null
+  return !website && !telephone_number
+    ? 'Enter a website or phone number'
+    : null
 }
+
+// TODO: Move this validation to the component library
+const websiteValidator = (value) =>
+  !WEBSITE_REGEX.test(value) ? 'Enter a valid website URL' : null
 
 function CompanyNotFoundStep({ organisationTypes, regions, sectors, country }) {
   return (
@@ -54,14 +52,14 @@ function CompanyNotFoundStep({ organisationTypes, regions, sectors, country }) {
         label="Company's website"
         name="website"
         type="url"
-        validate={[requiredWebsiteAndOrPhoneValidator]}
+        validate={[requiredWebsiteOrPhoneValidator, websiteValidator]}
       />
 
       <FieldInput
         label="Company's telephone number"
         name="telephone_number"
         type="tel"
-        validate={requiredWebsiteAndOrPhoneValidator}
+        validate={requiredWebsiteOrPhoneValidator}
       />
 
       <FieldAddress
