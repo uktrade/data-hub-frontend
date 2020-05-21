@@ -17,6 +17,7 @@ import {
 import urls from '../../../lib/urls'
 import PipelineForm from './PipelineForm'
 import { PipelineItemPropType, PipelineItemsPropType } from './constants'
+import { getPipelineUrl } from './utils'
 
 function isOnPipeline(pipelineStatus, companyId) {
   if (pipelineStatus?.companyId === companyId) {
@@ -70,17 +71,17 @@ function AddToPipelineForm({
   companyId,
   companyName,
   pipelineStatus,
-  savedId,
+  savedPipelineItem,
 }) {
   useEffect(() => {
-    if (savedId) {
+    if (savedPipelineItem) {
       /**
        * TODO: Replace with react router navigation.
        * As we move to SPA clear the saveId from the state before navigation.
        */
-      window.location.href = urls.pipeline.index()
+      window.location.href = getPipelineUrl(savedPipelineItem)
     }
-  }, [savedId])
+  }, [savedPipelineItem])
 
   return (
     <Task>
@@ -101,7 +102,9 @@ function AddToPipelineForm({
               companyId={companyId}
               companyName={companyName}
             >
-              <LoadingBox loading={addCompanyToPipeline.progress || savedId}>
+              <LoadingBox
+                loading={addCompanyToPipeline.progress || savedPipelineItem}
+              >
                 <PipelineForm
                   cancelLink={urls.companies.detail(companyId)}
                   pipelineStatus={pipelineStatus}
