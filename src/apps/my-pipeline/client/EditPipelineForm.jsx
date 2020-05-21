@@ -16,8 +16,8 @@ import {
 } from './state'
 import ProgressIndicator from '../../../client/components/ProgressIndicator'
 import PipelineForm from './PipelineForm'
-import urls from '../../../lib/urls'
 import { PipelineItemPropType } from './constants'
+import { getPipelineUrl } from './utils'
 
 function formatInitialValues({ name, status }) {
   return {
@@ -57,17 +57,17 @@ function PipelineCheck({
 function EditPipelineForm({
   pipelineItemId,
   currentPipeline,
-  savedId,
+  savedPipelineItem,
 }) {
   useEffect(() => {
-    if (savedId) {
+    if (savedPipelineItem) {
       /**
        * TODO: Replace with react router navigation.
        * As we move to SPA clear the saveId from the state before navigation.
        */
-      window.location.href = urls.pipeline.index()
+      window.location.href = getPipelineUrl(savedPipelineItem)
     }
-  }, [savedId])
+  }, [savedPipelineItem])
 
   return (
     <Task>
@@ -90,7 +90,7 @@ function EditPipelineForm({
                       onSuccessDispatch: PIPELINE__EDIT_PIPELINE_SUCCESS,
                     })
                   }}
-                  cancelLink={urls.pipeline.index()}
+                  cancelLink={getPipelineUrl(currentPipeline)}
                   initialValue={
                     currentPipeline && formatInitialValues(currentPipeline)
                   }
