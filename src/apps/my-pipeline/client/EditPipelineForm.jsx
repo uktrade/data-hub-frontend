@@ -55,7 +55,6 @@ function PipelineCheck({
 
 function EditPipelineForm({
   pipelineItemId,
-  csrfToken,
   currentPipeline,
   savedId,
 }) {
@@ -86,7 +85,7 @@ function EditPipelineForm({
                   submissionError={editPipelineItem.errorMessage}
                   onSubmit={(values) => {
                     editPipelineItem.start({
-                      payload: { values, pipelineItemId, csrfToken },
+                      payload: { values, pipelineItemId },
                       onSuccessDispatch: PIPELINE__EDIT_PIPELINE_SUCCESS,
                     })
                   }}
