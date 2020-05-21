@@ -80,7 +80,7 @@ describe('Pipeline edit form', () => {
   })
 
   context(
-    'when form is submitted it redirects to the correct tab with a success message',
+    'When form is submitted it redirects to the correct tab with a success message',
     () => {
       beforeEach(() => {
         cy.visit(urls.pipeline.edit(pipelineItem.id))
@@ -114,6 +114,48 @@ describe('Pipeline edit form', () => {
           'contain',
           'Pipeline changes for this company have been saved'
         )
+      })
+    }
+  )
+
+  context(
+    'When cancelling an edit it should link to the pipeline category',
+    () => {
+      beforeEach(() => {
+        cy.visit(urls.pipeline.edit(pipelineItem.id))
+      })
+
+      it('should redirect to the prospect tab in my pipeline', () => {
+        cy.visit(urls.pipeline.edit('LEADS'))
+        cy.contains('a', 'Cancel').should(
+          'have.attr',
+          'href',
+          urls.pipeline.index()
+        )
+        cy.contains('a', 'Cancel').click()
+        cy.url().should('include', urls.pipeline.index())
+      })
+
+      it('should redirect to the active tab in my pipeline', () => {
+        cy.visit(urls.pipeline.edit('IN_PROGRESS'))
+        cy.contains('a', 'Cancel').should(
+          'have.attr',
+          'href',
+          urls.pipeline.active()
+        )
+        cy.contains('a', 'Cancel').click()
+        cy.url().should('include', urls.pipeline.active())
+      })
+
+      it('should redirect to the won tab in my pipeline', () => {
+        cy.visit(urls.pipeline.edit('WIN'))
+        cy.contains('a', 'Cancel').should(
+          'have.attr',
+          'href',
+          urls.pipeline.won()
+        )
+        cy.contains('a', 'Cancel').click()
+        cy.url().should('include', urls.pipeline.won())
       })
     }
   )

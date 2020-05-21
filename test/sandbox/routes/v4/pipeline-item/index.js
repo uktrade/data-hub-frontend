@@ -41,8 +41,32 @@ exports.createUpdatePipelineItem = function(req, res) {
 
 exports.getPipelineItem = function(req, res) {
   var pipelineItem = pipelineItemLambdaPlc.results[0]
-  if (req.params.pipelineItemId == pipelineItem.id) {
+  if (req.params.pipelineItemId === pipelineItem.id) {
     res.json(pipelineItem)
+    return
+  }
+  if (req.params.pipelineItemId === 'LEADS') {
+    res.json(
+      _.assign({}, pipelineCreate, {
+        status: 'leads',
+      })
+    )
+    return
+  }
+  if (req.params.pipelineItemId === 'IN_PROGRESS') {
+    res.json(
+      _.assign({}, pipelineCreate, {
+        status: 'in_progress',
+      })
+    )
+    return
+  }
+  if (req.params.pipelineItemId === 'WIN') {
+    res.json(
+      _.assign({}, pipelineCreate, {
+        status: 'win',
+      })
+    )
     return
   }
   res.send(404)
