@@ -16,6 +16,7 @@ import {
 } from './state'
 import urls from '../../../lib/urls'
 import PipelineForm from './PipelineForm'
+import { PipelineItemPropType, PipelineItemsPropType } from './constants'
 
 function isOnPipeline(pipelineStatus, companyId) {
   if (pipelineStatus?.companyId === companyId) {
@@ -124,9 +125,8 @@ function AddToPipelineForm({
 AddToPipelineForm.propTypes = {
   companyId: PropTypes.string,
   companyName: PropTypes.string,
-  csrfToken: PropTypes.string,
-  pipelineStatus: PropTypes.object,
-  savedId: PropTypes.string,
+  pipelineStatus: PipelineItemsPropType,
+  savedId: PipelineItemPropType,
 }
 
 export default AddToPipelineForm
