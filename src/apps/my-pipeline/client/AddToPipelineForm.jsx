@@ -69,7 +69,6 @@ function AddToPipelineForm({
   companyId,
   companyName,
   pipelineStatus,
-  csrfToken,
   savedId,
 }) {
   useEffect(() => {
@@ -107,7 +106,7 @@ function AddToPipelineForm({
                   pipelineStatus={pipelineStatus}
                   onSubmit={(values) => {
                     addCompanyToPipeline.start({
-                      payload: { values, companyId, csrfToken },
+                      payload: { values, companyId },
                       onSuccessDispatch: PIPELINE__ADD_COMPANY_SUCCESS,
                     })
                   }}
