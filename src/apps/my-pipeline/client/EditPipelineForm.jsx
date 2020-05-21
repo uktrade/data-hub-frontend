@@ -17,6 +17,7 @@ import {
 import ProgressIndicator from '../../../client/components/ProgressIndicator'
 import PipelineForm from './PipelineForm'
 import urls from '../../../lib/urls'
+import { PipelineItemPropType } from './constants'
 
 function formatInitialValues({ name, status }) {
   return {
@@ -105,9 +106,8 @@ function EditPipelineForm({
 
 EditPipelineForm.propTypes = {
   pipelineItemId: PropTypes.string,
-  csrfToken: PropTypes.string,
-  currentPipeline: PropTypes.object,
-  savedId: PropTypes.string,
+  currentPipeline: PipelineItemPropType,
+  savedPipelineItem: PipelineItemPropType,
 }
 
 export default EditPipelineForm
