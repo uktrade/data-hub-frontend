@@ -16,7 +16,7 @@ export default (state = {}, { type, result }) => {
     case PIPELINE__EDIT_PIPELINE_SUCCESS:
       return {
         ...state,
-        savedId: result,
+        savedPipelineItem: result,
       }
     case PIPELINE__GET_PIPELINE_SUCCESS:
       return {
