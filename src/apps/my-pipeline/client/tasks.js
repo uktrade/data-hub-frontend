@@ -1,10 +1,9 @@
-import axios from 'axios'
-import urls from '../../../lib/urls'
+import pipelineApi from './api'
+import { addSuccessMessage } from '../../../client/utils/flash-messages'
 
 export async function getPipelineByCompany({ companyId }) {
-  const { data } = await axios.get(
-    `/api-proxy/v4/pipeline-item?company_id=${companyId}`
-  )
+  const { data } = await pipelineApi.list({ company_id: companyId })
+
   return {
     companyId,
     count: data.count,
@@ -12,32 +11,26 @@ export async function getPipelineByCompany({ companyId }) {
   }
 }
 
-export async function addCompanyToPipeline({ values, companyId, csrfToken }) {
-  await axios.post(
-    `${urls.companies.pipelineAdd(companyId, { _csrf: csrfToken })}`,
-    {
-      company: companyId,
-      name: values.name,
-      status: values.category,
-    }
-  )
-  return companyId
-}
-
-export async function getPipelineItem({ pipelineItemId }) {
-  const { data } = await axios.get(
-    `/api-proxy/v4/pipeline-item/${pipelineItemId}`
-  )
+export async function addCompanyToPipeline({ values, companyId }) {
+  const { data } = await pipelineApi.create({
+    company: companyId,
+    name: values.name,
+    status: values.category,
+  })
+  addSuccessMessage('Pipeline changes for this company have been saved')
   return data
 }
 
-export async function editPipelineItem({ values, pipelineItemId, csrfToken }) {
-  await axios.post(
-    `${urls.pipeline.edit(pipelineItemId, { _csrf: csrfToken })}`,
-    {
-      name: values.name,
-      status: values.category,
-    }
-  )
-  return pipelineItemId
+export async function getPipelineItem({ pipelineItemId }) {
+  const { data } = await pipelineApi.get(pipelineItemId)
+  return data
+}
+
+export async function editPipelineItem({ values, pipelineItemId }) {
+  const { data } = await pipelineApi.update(pipelineItemId, {
+    name: values.name,
+    status: values.category,
+  })
+  addSuccessMessage('Pipeline changes for this company have been saved')
+  return data
 }
