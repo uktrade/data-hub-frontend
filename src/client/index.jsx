@@ -322,9 +322,7 @@ function App() {
           {(props) => <ExportCountriesEdit {...props} />}
         </Mount>
         <Mount selector="#pipeline-form">
-          {(props) => (
-            <PipelineForm {...props} csrfToken={globalProps.csrfToken} />
-          )}
+          {(props) => <PipelineForm {...props} />}
         </Mount>
         <Mount selector="#company-local-header">
           {(props) => <CompanyLocalHeader {...props} />}
