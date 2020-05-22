@@ -5,6 +5,7 @@ aliases:
   - &mi_postgres_version postgres:9.6
   - &elasticsearch_version docker.elastic.co/elasticsearch/elasticsearch:6.8.2
   - &api_image quay.io/uktrade/data-hub-api:master
+  - &sandbox_image getsandbox/worker-cli:2.0.14
   - &oauth2_dit_staff_token ditStaffToken
   - &oauth2_da_staff_token daStaffToken
   - &oauth2_lep_staff_token lepStaffToken
@@ -17,7 +18,7 @@ aliases:
   - &wait_for_backend
     run:
       name: Wait for backend
-      command: dockerize -wait ${API_ROOT}/admin/ -timeout 300s
+      command: dockerize -wait ${API_ROOT}/ping.xml -timeout 300s
 
   - &wait_for_mock_sso
     run:
@@ -40,17 +41,6 @@ aliases:
     run:
       name: Wait for data hub frontend
       command: dockerize -wait ${QA_HOST}/healthcheck -timeout 180s
-
-  - &start_api_sandbox
-    run:
-      name: Start API sandbox
-      command: sandbox --port=8001 --watch=false --base=./test/sandbox run
-      background: true
-
-  - &wait_for_api_sandbox
-    run:
-      name: Wait for api sandbox
-      command: dockerize -wait ${API_ROOT}/ping.xml -timeout 120s
 
   - &store_artifacts_cypress_video
     store_artifacts:
@@ -138,6 +128,13 @@ aliases:
     environment:
       - MOCK_SSO_SCOPE: 'data-hub:internal-front-end'
       - MOCK_SSO_TOKEN: 123
+
+  # Sandbox container used for API mocks
+  - &docker_sandbox
+    image: *sandbox_image
+    volumes:
+      - './test/sandbox:/base'
+    command: /sandbox-worker-cli --base=/base --port=8001 --watch=true run
 
   # Data hub backend
   - &docker_data_hub_backend_base
@@ -295,15 +292,15 @@ jobs:
         environment: *data_hub_functional_envs
       - *docker_redis
       - *docker_mock_sso
+      - *docker_sandbox
     parallelism: 9
     steps:
       - checkout
       - *restore_yarn_cache
-      - *start_api_sandbox
       - run: yarn install --pure-lockfile
       - run: yarn build
       - *wait_for_mock_sso
-      - *wait_for_api_sandbox
+      - *wait_for_backend
       - *start_frontend_coverage
       - *wait_for_frontend
       - run:
@@ -332,14 +329,14 @@ jobs:
         environment: *data_hub_functional_envs
       - *docker_redis
       - *docker_mock_sso
+      - *docker_sandbox
     steps:
       - checkout
       - *restore_yarn_cache
-      - *start_api_sandbox
       - run: yarn install --pure-lockfile
       - run: yarn build
       - *wait_for_mock_sso
-      - *wait_for_api_sandbox
+      - *wait_for_backend
       - *start_frontend
       - *wait_for_frontend
       - run:

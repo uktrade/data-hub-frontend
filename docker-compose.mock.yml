@@ -14,12 +14,10 @@ services:
     env_file: mock-stack.env
 
   mock-backend:
-    build:
-      context: ./test/sandbox
+    image: getsandbox/worker-cli:2.0.14
     volumes:
-      - './test/sandbox:/usr/src/app/test/sandbox'
-    ports:
-      - 8002:8001
+      - './test/sandbox:/base'
+    command: /sandbox-worker-cli --base=/base --port=8001 --watch=true run
 
   redis:
     image: redis:3.2
