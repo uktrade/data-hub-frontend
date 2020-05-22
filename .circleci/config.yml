@@ -72,7 +72,7 @@ aliases:
     DATA_HUB_BACKEND_SECRET_ACCESS_KEY: frontend-key
     DATA_STORE_SERVICE_ACCESS_KEY_ID: data-store-service-id
     DATA_STORE_SERVICE_SECRET_ACCESS_KEY: data-store-service-key
-    DATA_STORE_SERVICE_POSTCODE_TO_REGION_URL: http://localhost:8001/api/v1/get-postcode-data/
+    DATA_STORE_SERVICE_POSTCODE_TO_REGION_URL: http://localhost:8000/api/v1/get-postcode-data/
     ZEN_TICKETS_URL: http://zendesk.example.com
     ZEN_TOKEN: nobodyKnows
     ZEN_EMAIL: zendesk@example.com
@@ -86,12 +86,11 @@ aliases:
   - &data_hub_functional_envs
     <<: *data_hub_base_envs
     NODE_ENV: test
-    API_ROOT: http://localhost:8001
     OAUTH2_DEV_TOKEN: ditStaffToken
     OAUTH2_BYPASS_SSO: true
-    HELP_CENTRE_API_FEED: http://localhost:8001/help-centre/announcement
+    HELP_CENTRE_API_FEED: http://localhost:8000/help-centre/announcement
     HELP_CENTRE_FEED_API_TOKEN: apiToken
-    ZEN_TICKETS_URL: http://localhost:8001/zendesk/tickets
+    ZEN_TICKETS_URL: http://localhost:8000/zendesk/tickets
 
   # Data hub base docker container
   - &docker_data_hub_base
@@ -134,7 +133,9 @@ aliases:
     image: *sandbox_image
     volumes:
       - './test/sandbox:/base'
-    command: /sandbox-worker-cli --base=/base --port=8001 --watch=true run
+    ports:
+      - 8000:80
+    command: /sandbox-worker-cli --base=/base--watch=true run
 
   # Data hub backend
   - &docker_data_hub_backend_base
