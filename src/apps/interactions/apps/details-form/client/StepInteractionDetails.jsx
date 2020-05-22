@@ -4,8 +4,6 @@ import Link from '@govuk-react/link'
 import UnorderedList from '@govuk-react/unordered-list'
 import ListItem from '@govuk-react/list-item'
 import PropTypes from 'prop-types'
-import { throttle } from 'lodash'
-import axios from 'axios'
 import { GREY_1 } from 'govuk-colours'
 import styled from 'styled-components'
 
@@ -21,6 +19,8 @@ import {
   useFormContext,
   NewWindowLink,
 } from 'data-hub-components'
+
+import AdviserTypeAhead from '../../../../../client/components/AdviserTypeAhead'
 
 import {
   SERVICE_CONTEXTS,
@@ -244,30 +244,10 @@ const StepInteractionDetails = ({
         }
       />
 
-      <FieldTypeahead
+      <AdviserTypeAhead
         name="dit_participants"
         label="Adviser(s)"
-        placeholder="-- Select adviser --"
-        noOptionsMessage={() => 'Type to search for advisers'}
         required="Select at least one adviser"
-        loadOptions={throttle(
-          (searchString) =>
-            axios
-              .get('/api-proxy/adviser/', {
-                params: {
-                  autocomplete: searchString,
-                },
-              })
-              .then(({ data: { results } }) =>
-                results
-                  .filter((adviser) => adviser?.name.trim().length)
-                  .map(({ id, name, dit_team }) => ({
-                    label: `${name}${dit_team ? ', ' + dit_team.name : ''}`,
-                    value: id,
-                  }))
-              ),
-          500
-        )}
         isMulti={true}
       />
 
