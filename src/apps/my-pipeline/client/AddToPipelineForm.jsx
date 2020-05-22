@@ -28,7 +28,6 @@ function isOnPipeline(pipelineStatus, companyId) {
 
 function PipelineCheck({
   pipelineStatus,
-  companyName,
   companyId,
   getPipelineByCompany,
   children,
@@ -45,8 +44,8 @@ function PipelineCheck({
     return (
       <ErrorSummary
         heading="There is a problem"
-        description={`There was an error checking the status of ${companyName}`}
-        errors={[getPipelineByCompany.errorMessage]}
+        description={`Error: ${getPipelineByCompany.errorMessage}`}
+        errors={[]}
       />
     )
   }
@@ -67,12 +66,7 @@ function PipelineCheck({
   )
 }
 
-function AddToPipelineForm({
-  companyId,
-  companyName,
-  pipelineStatus,
-  savedPipelineItem,
-}) {
+function AddToPipelineForm({ companyId, pipelineStatus, savedPipelineItem }) {
   useEffect(() => {
     if (savedPipelineItem) {
       /**
@@ -100,7 +94,6 @@ function AddToPipelineForm({
               getPipelineByCompany={getPipelineByCompany}
               pipelineStatus={pipelineStatus}
               companyId={companyId}
-              companyName={companyName}
             >
               <LoadingBox
                 loading={addCompanyToPipeline.progress || savedPipelineItem}
@@ -127,7 +120,6 @@ function AddToPipelineForm({
 
 AddToPipelineForm.propTypes = {
   companyId: PropTypes.string,
-  companyName: PropTypes.string,
   pipelineStatus: PipelineItemsPropType,
   savedId: PipelineItemPropType,
 }
