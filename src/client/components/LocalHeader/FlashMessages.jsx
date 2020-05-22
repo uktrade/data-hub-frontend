@@ -30,6 +30,7 @@ const StyledHeading = styled('h2')`
 const StyledMessage = styled('p')`
   margin: 0;
   font-size: ${FONT_SIZE.SIZE_20};
+  font-weight: ${FONT_WEIGHTS.bold};
 `
 
 const StyledStatusMessage = styled(StatusMessage)`
