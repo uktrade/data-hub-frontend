@@ -20,8 +20,9 @@ const PipelineList = ({ status, items }) => {
   return (
     <Task.Status
       name={TASK_GET_PIPELINE_LIST}
-      id={STATE_ID}
+      id={`${STATE_ID}_${status}`}
       progressMessage="loading pipelines items"
+      noun="my pipelines"
       startOnRender={{
         payload: { status },
         onSuccessDispatch: PIPELINE__LIST_LOADED,

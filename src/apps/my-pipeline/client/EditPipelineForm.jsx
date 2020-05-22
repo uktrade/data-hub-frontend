@@ -43,7 +43,7 @@ function PipelineCheck({
     return (
       <ErrorSummary
         heading="There is a problem"
-        description={getCompanyByPipeline.errorMessage}
+        description={`Error: ${getCompanyByPipeline.errorMessage}`}
         errors={[]}
       />
     )
