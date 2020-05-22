@@ -2,9 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
-import { ERROR_COLOUR, BLUE, BUTTON_COLOUR, ORANGE, BLACK } from 'govuk-colours'
+import {
+  ERROR_COLOUR,
+  BLUE,
+  BUTTON_COLOUR,
+  ORANGE,
+  BLACK,
+  WHITE,
+} from 'govuk-colours'
 import { FONT_WEIGHTS } from '@govuk-react/constants/lib/typography'
-import { FONT_SIZE } from '@govuk-react/constants'
+import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 import UnorderedList from '@govuk-react/unordered-list'
 import { StatusMessage } from 'data-hub-components'
 import flashUtils from '../../utils/flash-messages'
@@ -23,6 +30,12 @@ const StyledHeading = styled('h2')`
 const StyledMessage = styled('p')`
   margin: 0;
   font-size: ${FONT_SIZE.SIZE_20};
+  font-weight: ${FONT_WEIGHTS.bold};
+`
+
+const StyledStatusMessage = styled(StatusMessage)`
+  margin-top: ${SPACING.SCALE_3};
+  background-color: ${WHITE};
 `
 
 const messageColours = {
@@ -46,21 +59,21 @@ const FlashMessages = ({ flashMessages }) => {
             return parts.length > 1
               ? message.map((message) => (
                   <li key={message.body}>
-                    <StatusMessage colour={messageColours[parts[0]]}>
+                    <StyledStatusMessage colour={messageColours[parts[0]]}>
                       <StyledHeading>{message.heading}</StyledHeading>
                       <StyledBody
                         dangerouslySetInnerHTML={{ __html: message.body }}
                       />
-                    </StatusMessage>
+                    </StyledStatusMessage>
                   </li>
                 ))
               : message.map((message) => (
                   <li key={message}>
-                    <StatusMessage colour={messageColours[type]}>
+                    <StyledStatusMessage colour={messageColours[type]}>
                       <StyledMessage
                         dangerouslySetInnerHTML={{ __html: message }}
                       />
-                    </StatusMessage>
+                    </StyledStatusMessage>
                   </li>
                 ))
           }
