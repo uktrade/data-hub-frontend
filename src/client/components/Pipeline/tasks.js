@@ -1,17 +1,5 @@
-import axios from 'axios'
-
-function handleError(e) {
-  const message = e?.response?.data?.detail || 'An unknown error occured'
-  return Promise.reject(new Error(message))
-}
+import pipelineApi from '../../../apps/my-pipeline/client/api'
 
 export function getPipelineList({ status }) {
-  return axios
-    .get('/api-proxy/v4/pipeline-item', {
-      params: {
-        status,
-      },
-    })
-    .catch(handleError)
-    .then(({ data }) => data.results)
+  return pipelineApi.list({ status }).then(({ data }) => data.results)
 }
