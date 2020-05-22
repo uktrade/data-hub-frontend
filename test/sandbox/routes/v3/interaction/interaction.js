@@ -11,6 +11,7 @@ var interactionDraftFutureMeeting = require('../../../fixtures/v3/interaction/in
 var interactionDraftPastMeeting = require('../../../fixtures/v3/interaction/interaction-draft-past-meeting.json')
 var interactionValidationError = require('../../../fixtures/v3/interaction/interaction-validation-error.json')
 var interactionWithReferral = require('../../../fixtures/v3/interaction/interaction-with-referral.json')
+var interactionWithoutTheme = require('../../../fixtures/v3/interaction/interaction-without-theme')
 
 var getInteractions = function(req, res) {
   if (req.query.contact_id) {
@@ -38,6 +39,7 @@ var getInteractionById = function(req, res) {
     '999c12ee-91db-4964-908e-0f18ce823096': interactionDraftFutureMeeting,
     '888c12ee-91db-4964-908e-0f18ce823096': interactionDraftPastMeeting,
     '65e984ad-1ad5-4d89-9b12-71cdff5f412d': interactionWithReferral,
+    '65e984ad-1ad5-4d89-9b12-71cdff5f412c': interactionWithoutTheme,
   }
 
   var interactionResponse =

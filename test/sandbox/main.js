@@ -1,3 +1,5 @@
+require('./polyfills')
+
 var adviser = require('./routes/adviser.js')
 var dashboard = require('./routes/dashboard.js')
 var healthcheck = require('./routes/ping.js')
