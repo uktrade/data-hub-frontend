@@ -83,17 +83,17 @@ const transformInteractionToValues = (interaction) => {
     return {}
   }
 
-  const service = interaction.service
-  const [parentServiceLabel, childServiceLabel] = service.name.split(' : ')
+  const serviceId = get(interaction, 'service.id')
+  const serviceName = get(interaction, 'service.name', '')
+  const [parentServiceLabel, childServiceLabel] = serviceName.split(' : ')
 
   return {
-    theme: THEMES.OTHER,
-    service: childServiceLabel ? parentServiceLabel : service.id,
-    service_2nd_level: childServiceLabel ? service.id : undefined,
+    theme: interaction.theme || THEMES.OTHER,
+    service: childServiceLabel ? parentServiceLabel : serviceId,
+    service_2nd_level: childServiceLabel ? serviceId : undefined,
     ...pick(interaction, [
       'id',
       'kind',
-      'theme',
       'subject',
       'notes',
       'grant_amount_offered',

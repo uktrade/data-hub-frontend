@@ -3,7 +3,7 @@
 ## Creating Docker container for CircleCI
 
 ```bash
-export VERSION=3.4.0 # Increment this version each time when you edit Dockerfile.
+export VERSION=3.5.0 # Increment this version each time when you edit Dockerfile.
 
 docker login # Ask webops for Docker Hub access to the ukti group.
 docker build -f test/Dockerfile -t data-hub-frontend-test .
@@ -60,9 +60,10 @@ Sandbox is as a light replacement for API backend and it's used only by function
 1. Install sandbox, for more info see [instructions](https://github.com/getsandbox/sandbox)
 
 ```bash
-wget https://s3.amazonaws.com/sandbox-binaries/runtime-binary.tar \
-  && tar -C /usr/local/bin -xzvf runtime-binary.tar \
-  && rm runtime-binary.tar
+wget https://github.com/getsandbox/sandbox/releases/download/1.1.0/sandbox-runtime.tar \
+  && tar -C /usr/local/bin -xzvf sandbox-runtime.tar \
+  && mv /usr/local/bin/sandbox-runtime /usr/local/bin/sandbox \
+  && rm sandbox-runtime.tar
 ```
 
 2. Start sandbox on port `8001`:
