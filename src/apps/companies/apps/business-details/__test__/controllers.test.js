@@ -39,6 +39,9 @@ describe('Company business details', () => {
             },
             dnbRelatedCompaniesCount: 111,
             ARCHIVED_DOCUMENT_BASE_URL: '/',
+            user: {
+              permissions: [],
+            },
           },
         })
 
@@ -71,6 +74,7 @@ describe('Company business details', () => {
               isGlobalUltimateFlagEnabled: false,
               dnbRelatedCompaniesCount: 111,
               subsidiariesCount: 999,
+              canEditOneList: false,
               urls: {
                 archivedDocument: '/some/path',
                 companiesHouse: urls.external.companiesHouse(
@@ -105,6 +109,7 @@ describe('Company business details', () => {
                   companyMock.global_headquarters.id
                 ),
                 dnbHierarchy: urls.companies.dnbHierarchy.index(companyMock.id),
+                editOneList: urls.companies.editOneList(companyMock.id),
               },
             },
           }

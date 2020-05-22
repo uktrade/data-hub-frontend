@@ -469,6 +469,21 @@ Sandbox.define(
   'GET',
   v4Company.getOneListGroupCoreTeam
 )
+Sandbox.define(
+  '/v4/company/{companyId}/assign-one-list-tier-and-global-account-manager',
+  'POST',
+  v4Company.postOneListTierAndGlobalAccountManager
+)
+Sandbox.define(
+  '/v4/company/{companyId}/remove-from-one-list',
+  'POST',
+  v4Company.postRemoveFromOneList
+)
+Sandbox.define(
+  '/v4/company/{companyId}/update-one-list-core-team',
+  'PATCH',
+  v4Company.patchOneListCoreTeam
+)
 
 // V4 DnB
 Sandbox.define('/v4/dnb/company-create', 'POST', v4Dnb.companyCreate)
