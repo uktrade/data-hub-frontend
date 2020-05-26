@@ -39,6 +39,7 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the correct buttons', () => {
+        cy.contains('View Options').click()
         cy.contains('Add to or remove from lists').should(
           'have.attr',
           'href',
@@ -108,6 +109,7 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the correct buttons', () => {
+        cy.contains('View Options').click()
         cy.contains('Add to or remove from lists').should(
           'have.attr',
           'href',
@@ -179,6 +181,7 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the correct buttons', () => {
+        cy.contains('View Options').click()
         cy.contains('Add to or remove from lists').should(
           'have.attr',
           'href',
@@ -250,6 +253,7 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the correct buttons', () => {
+        cy.contains('View Options').click()
         cy.contains('Add to or remove from lists').should(
           'have.attr',
           'href',
@@ -321,6 +325,7 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the correct buttons', () => {
+        cy.contains('View Options').click()
         cy.contains('Add to or remove from lists').should(
           'have.attr',
           'href',
@@ -388,6 +393,7 @@ describe('Local header for company under dnb investigation', () => {
     })
 
     it('should display the correct buttons', () => {
+      cy.contains('View Options').click()
       cy.contains('Add to or remove from lists').should(
         'have.attr',
         'href',
@@ -459,6 +465,7 @@ describe('Local header for company under dnb investigation', () => {
       })
 
       it('should display the correct buttons', () => {
+        cy.contains('View Options').click()
         cy.contains('Add to or remove from lists').should(
           'have.attr',
           'href',
@@ -524,6 +531,7 @@ describe('Local header for company under dnb investigation', () => {
     })
 
     it('should display the correct buttons', () => {
+      cy.contains('View Options').click()
       cy.contains('Add to or remove from lists').should(
         'have.attr',
         'href',
