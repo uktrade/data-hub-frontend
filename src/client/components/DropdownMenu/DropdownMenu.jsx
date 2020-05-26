@@ -68,6 +68,7 @@ const DropdownMenu = ({
   onUpdateIndex,
   closeMenu,
 }) => {
+  const buttonRef = React.useRef(null)
   const childrenGroupRef = React.useRef(null)
   const onKeyUp = ({ keyCode }) => {
     switch (keyCode) {
@@ -91,6 +92,8 @@ const DropdownMenu = ({
       case KEY_TAB:
       case KEY_ESC:
         closeMenu()
+      case KEY_ESC:
+        buttonRef.current && buttonRef.current.focus()
         break
       case KEY_HOME:
       case KEY_END:
@@ -113,6 +116,7 @@ const DropdownMenu = ({
   return (
     <DropdownMenuContainer onKeyUp={onKeyUp} onKeyDown={onKeyDown}>
       <DropdownToggleButton
+        ref={buttonRef}
         buttonShadowColour="transparent"
         onClick={() => onClick(!open)}
         icon={<Icon src={trianglePng} active={open} />}
