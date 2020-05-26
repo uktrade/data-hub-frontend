@@ -10,6 +10,7 @@ const testTab = (tabText) => {
     cy.get(tabbedLocalNav().tabs)
       .contains(tabText)
       .click()
+    cy.contains('View Options').click()
     cy.contains('Add to or remove from lists').click()
     cy.get(cancelLink).click()
     cy.get(tabbedLocalNav().tabs)
