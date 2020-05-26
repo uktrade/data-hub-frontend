@@ -12,7 +12,7 @@ Dropdown button is extending styles of Button for usage please visit the button 
 ### Usage
 
 ```jsx
-  <DropdownMenu label="View Options" closedLabel="Hide Options" {...props}>
+  <DropdownMenu label="View options" closedLabel="Hide options" {...props}>
     <DropdownButton buttonColour={GREY_3} buttonTextColour={BLACK}>
       Add to or remove from list
     </DropdownButton>

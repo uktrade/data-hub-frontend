@@ -1,1 +1,2 @@
-export { default as ButtonGroup, ButtonGroupItem } from './DropdownMenu'
+export { default, DropdownButton, DropdownLink } from './DropdownMenu'
+export { default as ConnectedDropdownMenu } from './ConnectedDropdownMenu'
