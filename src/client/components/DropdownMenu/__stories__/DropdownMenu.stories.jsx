@@ -19,9 +19,13 @@ export default {
 
 const withState = (Component) => () => {
   const [isOpen, setState] = React.useState(false)
+  const [activeIndex, onUpdateIndex] = React.useState(void 0)
   const clickAction = action('click')
   return (
     <Component
+      closeMenu={() => setState(false)}
+      activeIndex={activeIndex}
+      onUpdateIndex={onUpdateIndex}
       open={isOpen}
       onClick={(nextState) => {
         clickAction(nextState)
