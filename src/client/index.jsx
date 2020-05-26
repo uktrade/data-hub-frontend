@@ -42,7 +42,7 @@ import PipelineForm from '../apps/my-pipeline/client'
 import CompanyLocalHeader from '../apps/companies/client/CompanyLocalHeader.jsx'
 import InvestmentProjectAdmin from '../apps/investments/views/admin/client/InvestmentProjectAdmin.jsx'
 import FlashMessages from './components/LocalHeader/FlashMessages.jsx'
-
+import { ConnectedDropdownMenu } from './components/DropdownMenu'
 import tasksSaga from './components/Task/saga'
 import tasks from './components/Task/reducer'
 
@@ -138,6 +138,7 @@ const store = createStore(
     ...TabNav.reducerSpread,
     ...ReferralList.reducerSpread,
     ...Form.reducerSpread,
+    ...ConnectedDropdownMenu.reducerSpread,
     // A reducer is required to be able to set a preloadedState parameter
     referrerUrl: (state = {}) => state,
     [INVESTEMENT_PROJECT_ADMIN_ID]: investmentProjectAdminReducer,
