@@ -36,6 +36,7 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the correct buttons', () => {
+      cy.contains('View options').click()
       cy.contains('Add to or remove from lists').should(
         'have.attr',
         'href',
@@ -119,6 +120,7 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the correct buttons', () => {
+      cy.contains('View options').click()
       cy.contains('Add to or remove from lists').should(
         'have.attr',
         'href',
@@ -204,6 +206,7 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the correct buttons', () => {
+      cy.contains('View options').click()
       cy.contains('Add to or remove from lists').should(
         'have.attr',
         'href',
@@ -293,6 +296,7 @@ describe('Local header for global ultimate company', () => {
       })
 
       it('should display the correct buttons', () => {
+        cy.contains('View options').click()
         cy.contains('Add to or remove from lists').should(
           'have.attr',
           'href',
@@ -383,6 +387,7 @@ describe('Local header for global ultimate company', () => {
       })
 
       it('should display the correct buttons', () => {
+        cy.contains('View options').click()
         cy.contains('Add to or remove from lists').should(
           'have.attr',
           'href',
@@ -469,6 +474,7 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the correct buttons', () => {
+      cy.contains('View options').click()
       cy.contains('Add to or remove from lists').should(
         'have.attr',
         'href',
@@ -559,6 +565,7 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the correct buttons', () => {
+      cy.contains('View options').click()
       cy.contains('Add to or remove from lists').should(
         'have.attr',
         'href',
@@ -642,6 +649,7 @@ describe('Local header for global ultimate company', () => {
     })
 
     it('should display the correct buttons', () => {
+      cy.contains('View options').click()
       cy.contains('Add to or remove from lists').should(
         'have.attr',
         'href',

@@ -10,6 +10,7 @@ describe('Adding and removing a company to a list', () => {
       cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/activity`)
     })
     it('displays a button to add or remove from a list', () => {
+      cy.contains('View options').click()
       cy.contains('Add to or remove from lists')
     })
   })
