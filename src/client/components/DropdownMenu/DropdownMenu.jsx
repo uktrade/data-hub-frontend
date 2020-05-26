@@ -1,15 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Button from '@govuk-react/button'
-import { GREY_3, BLACK, GREY_2 } from 'govuk-colours'
+import { GREY_2 } from 'govuk-colours'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import { spacing } from '@govuk-react/lib'
 import styled from 'styled-components'
-
+import Link from '@govuk-react/link'
+import SecondaryButton from '../../components/SecondaryButton'
 import trianglePng from '../../../../assets/images/icon-triangle.svg'
 
 const DropdownMenuContainer = styled.div`
   position: relative;
+`
+
+const DropdownButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 `
 
 const DropdownMenuGroup = styled.div`
@@ -18,11 +24,18 @@ const DropdownMenuGroup = styled.div`
   padding: ${SPACING.SCALE_3};
   background-color: ${GREY_2};
   ${spacing.responsive({
+    size: 5,
+    property: 'margin-bottom',
+  })}
+  ${spacing.responsive({
     size: -5,
     property: 'margin-top',
   })}
   ${MEDIA_QUERIES.TABLET} {
     position: absolute;
+    right: 0;
+    z-index: 1;
+    margin-bottom: 0;
   }
 `
 
@@ -33,11 +46,15 @@ const Icon = styled.img`
   transform-origin: center;
 `
 
-const DropdownToggleButton = styled(Button)`
+const DropdownToggleButton = styled(SecondaryButton)`
   font-weight: Bold;
 `
 
-export const DropdownButton = styled(Button)`
+export const DropdownButton = styled(SecondaryButton).attrs(() => ({
+  tabIndex: '-1',
+  role: 'option',
+  forwardedAs: Link,
+}))`
   ${spacing.responsive({
     size: 3,
     property: 'margin-bottom',
@@ -46,27 +63,113 @@ export const DropdownButton = styled(Button)`
     margin-bottom: 0;
   }
 `
+const KEY_ARROW_UP = 38
+const KEY_ARROW_DOWN = 40
+const KEY_TAB = 9
+const KEY_ESC = 27
+const KEY_HOME = 36
+const KEY_END = 35
 
-const DropdownMenu = ({ label, children, closedLabel, onClick, open }) => {
+const DropdownMenu = ({
+  label,
+  children,
+  closedLabel,
+  onClick,
+  open,
+  activeIndex,
+  onUpdateIndex,
+  closeMenu,
+}) => {
+  const buttonRef = React.useRef(null)
+  const childrenGroupRef = React.useRef(null)
+  const containerRef = React.useRef(null)
+
+  const onKeyUp = ({ keyCode }) => {
+    switch (keyCode) {
+      case KEY_ARROW_UP:
+        onUpdateIndex(Math.max(0, (activeIndex ?? 0) - 1))
+        break
+      case KEY_ARROW_DOWN:
+        onUpdateIndex(Math.min((activeIndex ?? -1) + 1, children.length - 1))
+        break
+      case KEY_HOME:
+        onUpdateIndex(0)
+        break
+      case KEY_END:
+        onUpdateIndex(children.length - 1)
+        break
+    }
+  }
+
+  const onKeyDown = (event) => {
+    switch (event.keyCode) {
+      case KEY_TAB:
+        closeMenu()
+        break
+      case KEY_ESC:
+        closeMenu()
+        buttonRef.current && buttonRef.current.focus()
+        break
+      case KEY_HOME:
+      case KEY_END:
+      case KEY_ARROW_UP:
+      case KEY_ARROW_DOWN:
+        if (open) {
+          // Prevent page scrolling if open
+          event.preventDefault()
+        }
+        break
+    }
+  }
+
+  React.useEffect(() => {
+    if (!isNaN(activeIndex) && childrenGroupRef.current) {
+      childrenGroupRef.current.children[activeIndex].focus()
+    }
+  }, [activeIndex])
+
+  React.useEffect(() => {
+    const clickOutside = ({ target }) => {
+      if (!containerRef.current.contains(target)) {
+        closeMenu()
+      }
+    }
+    document.addEventListener('mousedown', clickOutside)
+    return () => document.removeEventListener('mousedown', clickOutside)
+  }, [])
+
   return (
-    <DropdownMenuContainer>
-      <DropdownToggleButton
-        buttonShadowColour="transparent"
-        buttonColour={GREY_3}
-        buttonTextColour={BLACK}
-        onClick={() => onClick(!open)}
-        icon={<Icon src={trianglePng} active={open} />}
-        aria-haspopup={true}
-        aria-expanded={open}
-      >
-        {(open ? closedLabel : label) || label}
-      </DropdownToggleButton>
-      {open && <DropdownMenuGroup>{children}</DropdownMenuGroup>}
+    <DropdownMenuContainer
+      ref={containerRef}
+      onKeyUp={onKeyUp}
+      onKeyDown={onKeyDown}
+    >
+      <DropdownButtonContainer>
+        <DropdownToggleButton
+          ref={buttonRef}
+          buttonShadowColour="transparent"
+          onClick={() => onClick(!open)}
+          icon={<Icon src={trianglePng} active={open} />}
+          aria-haspopup={true}
+          aria-expanded={open}
+          aria-controls="dropDownOptionsMenu"
+        >
+          {(open ? closedLabel : label) || label}
+        </DropdownToggleButton>
+      </DropdownButtonContainer>
+      {open && (
+        <DropdownMenuGroup id="dropDownOptionsMenu" ref={childrenGroupRef}>
+          {children}
+        </DropdownMenuGroup>
+      )}
     </DropdownMenuContainer>
   )
 }
 
 DropdownMenu.propTypes = {
+  onUpdateIndex: PropTypes.func.isRequired,
+  closeMenu: PropTypes.func.isRequired,
+  activeIndex: PropTypes.number,
   label: PropTypes.string.isRequired,
   closedLabel: PropTypes.string,
   children: PropTypes.node,
