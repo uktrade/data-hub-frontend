@@ -38,11 +38,11 @@ import ReferralHelp from '../apps/companies/apps/referrals/help/client/ReferralH
 import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
 import sendReferral from '../apps/companies/apps/referrals/send-referral/client/reducer'
 import InteractionReferralDetails from '../apps/companies/apps/referrals/details/client/InteractionReferralDetails.jsx'
-import AddToPipelineForm from '../apps/pipeline/client/AddToPipelineForm'
+import PipelineForm from '../apps/my-pipeline/client'
 import CompanyLocalHeader from '../apps/companies/client/CompanyLocalHeader.jsx'
 import InvestmentProjectAdmin from '../apps/investments/views/admin/client/InvestmentProjectAdmin.jsx'
 import FlashMessages from './components/LocalHeader/FlashMessages.jsx'
-
+import { ConnectedDropdownMenu } from './components/DropdownMenu'
 import tasksSaga from './components/Task/saga'
 import tasks from './components/Task/reducer'
 
@@ -88,9 +88,18 @@ import {
   ID as ADD_TO_PIPELINE_ID,
   TASK_GET_PIPELINE_BY_COMPANY,
   TASK_ADD_COMPANY_TO_PIPELINE,
-} from '../apps/pipeline/client/state'
-import addToPipelineReducer from '../apps/pipeline/client/reducer'
-import * as pipelineTasks from '../apps/pipeline/client/tasks'
+  TASK_GET_PIPELINE_ITEM,
+  TASK_EDIT_PIPELINE_ITEM,
+} from '../apps/my-pipeline/client/state'
+import addToPipelineReducer from '../apps/my-pipeline/client/reducer'
+import * as pipelineTasks from '../apps/my-pipeline/client/tasks'
+
+import {
+  ID as PIPELINE_LIST_ID,
+  TASK_GET_PIPELINE_LIST,
+} from './components/Pipeline/state'
+import pipelineListReducer from './components/Pipeline/reducer'
+import * as pipelineListTasks from './components/Pipeline/tasks'
 
 import {
   ID as INVESTEMENT_PROJECT_ADMIN_ID,
@@ -125,9 +134,11 @@ const store = createStore(
     [addInteractionFormState.ID]: addInteractionFormReducer,
     [addCompanyState.ID]: addCompanyPostcodeToRegionReducer,
     [ADD_TO_PIPELINE_ID]: addToPipelineReducer,
+    [PIPELINE_LIST_ID]: pipelineListReducer,
     ...TabNav.reducerSpread,
     ...ReferralList.reducerSpread,
     ...Form.reducerSpread,
+    ...ConnectedDropdownMenu.reducerSpread,
     // A reducer is required to be able to set a preloadedState parameter
     referrerUrl: (state = {}) => state,
     [INVESTEMENT_PROJECT_ADMIN_ID]: investmentProjectAdminReducer,
@@ -162,6 +173,9 @@ sagaMiddleware.run(
     [EXPORT_COUNTRIES_EDIT_NAME]: exportCountriesEditTasks.saveExportCountries,
     [TASK_GET_PIPELINE_BY_COMPANY]: pipelineTasks.getPipelineByCompany,
     [TASK_ADD_COMPANY_TO_PIPELINE]: pipelineTasks.addCompanyToPipeline,
+    [TASK_GET_PIPELINE_LIST]: pipelineListTasks.getPipelineList,
+    [TASK_GET_PIPELINE_ITEM]: pipelineTasks.getPipelineItem,
+    [TASK_EDIT_PIPELINE_ITEM]: pipelineTasks.editPipelineItem,
     [addCompanyState.TASK_POSTCODE_TO_REGION]: addCompanyPostcodeToRegionTask,
     [addInteractionFormState.TASK_SAVE_INTERACTION]:
       addInteractionFormTasks.saveInteraction,
@@ -308,10 +322,8 @@ function App() {
         <Mount selector="#company-export-countries-edit">
           {(props) => <ExportCountriesEdit {...props} />}
         </Mount>
-        <Mount selector="#add-to-pipeline-form">
-          {(props) => (
-            <AddToPipelineForm {...props} csrfToken={globalProps.csrfToken} />
-          )}
+        <Mount selector="#pipeline-form">
+          {(props) => <PipelineForm {...props} />}
         </Mount>
         <Mount selector="#company-local-header">
           {(props) => <CompanyLocalHeader {...props} />}

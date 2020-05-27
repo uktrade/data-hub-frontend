@@ -3,8 +3,13 @@ import Button from '@govuk-react/button'
 import React from 'react'
 
 // TODO: Move to data-hub-components
-const SecondaryButton = (props) => (
-  <Button buttonColour={GREY_3} buttonTextColour={TEXT_COLOUR} {...props} />
-)
+const SecondaryButton = React.forwardRef((props, ref) => (
+  <Button
+    ref={ref}
+    buttonColour={GREY_3}
+    buttonTextColour={TEXT_COLOUR}
+    {...props}
+  />
+))
 
 export default SecondaryButton

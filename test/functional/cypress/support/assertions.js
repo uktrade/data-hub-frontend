@@ -145,7 +145,7 @@ const assertFieldRadios = ({ element, label, value, optionsCount }) =>
         value &&
         cy
           .get('@fieldRadio')
-          .find('input[checked]')
+          .find('input:checked')
           .next()
           .should('have.text', value)
     )

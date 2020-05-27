@@ -154,7 +154,7 @@ export const connect = (componentState2props, dispatch2props, ...rest) =>
  * const store = createStore(combineReducers({
  *   // So we can use it like this and we can be sure that both the reducer
  *   // and the component are connected to the same part of the state
- *   ...Counter.redcerSpread,
+ *   ...Counter.reducerSpread,
  * }))
  *
  * const App = () =>

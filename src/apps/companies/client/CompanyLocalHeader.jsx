@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import pluralize from 'pluralize'
 import GridCol from '@govuk-react/grid-col'
 import GridRow from '@govuk-react/grid-row'
-import Link from '@govuk-react/link'
 import { SPACING, FONT_SIZE, BREAKPOINTS } from '@govuk-react/constants'
 import { GREY_3 } from 'govuk-colours'
 import Details from '@govuk-react/details'
@@ -13,9 +12,12 @@ import { Badge, StatusMessage, DateUtils } from 'data-hub-components'
 
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 import LocalHeaderHeading from '../../../client/components/LocalHeader/LocalHeaderHeading'
-import SecondaryButton from '../../../client/components/SecondaryButton.jsx'
 import formatAddress from '../../../client/utils/formatAddress'
-import { companies } from '../../../lib/urls'
+import urls from '../../../lib/urls'
+import {
+  ConnectedDropdownMenu,
+  DropdownButton,
+} from '../../../client/components/DropdownMenu'
 
 const StyledAddress = styled('p')`
   margin-top: ${SPACING.SCALE_2};
@@ -107,12 +109,20 @@ const CompanyLocalHeader = ({
             </StyledAddress>
           </GridCol>
           <GridCol setWith="one-third">
-            <SecondaryButton
-              as={Link}
-              href={`/companies/${company.id}/lists/add-remove?returnUrl=${queryString}`}
+            <ConnectedDropdownMenu
+              label="View options"
+              closedLabel="Hide options"
+              id="local_header"
             >
-              Add to or remove from lists
-            </SecondaryButton>
+              <DropdownButton
+                href={`/companies/${company.id}/lists/add-remove?returnUrl=${queryString}`}
+              >
+                Add to or remove from lists
+              </DropdownButton>
+              <DropdownButton href={urls.companies.pipelineAdd(company.id)}>
+                Add to pipeline
+              </DropdownButton>
+            </ConnectedDropdownMenu>
           </GridCol>
         </GridRow>
         {(company.isUltimate || company.isGlobalHQ) && (
@@ -140,7 +150,7 @@ const CompanyLocalHeader = ({
             {dnbRelatedCompaniesCount > 0 && (
               <p>
                 Data Hub contains{' '}
-                <a href={companies.dnbHierarchy.index(company.id)}>
+                <a href={urls.companies.dnbHierarchy.index(company.id)}>
                   {dnbRelatedCompaniesCount} other company{' '}
                   {pluralize('record', dnbRelatedCompaniesCount)}
                 </a>{' '}
@@ -158,7 +168,7 @@ const CompanyLocalHeader = ({
                     ? 'Lead ITA'
                     : 'Global Account Manager'}
                   : {company.one_list_group_global_account_manager.name}{' '}
-                  <a href={companies.advisers.index(company.id)}>
+                  <a href={urls.companies.advisers.index(company.id)}>
                     {company.isItaTierDAccount
                       ? 'View Lead adviser'
                       : 'View core team'}
@@ -169,7 +179,7 @@ const CompanyLocalHeader = ({
           </StyledDescription>
         )}
         <p>
-          <a href={companies.businessDetails(company.id)}>
+          <a href={urls.companies.businessDetails(company.id)}>
             View full business details
           </a>
         </p>
@@ -191,7 +201,7 @@ const CompanyLocalHeader = ({
             <strong>Reason:</strong> {company.archived_reason}
             <br />
             <br />
-            <a href={companies.unarchive(company.id)}>Unarchive</a>
+            <a href={urls.companies.unarchive(company.id)}>Unarchive</a>
           </StatusMessage>
         </StyledMain>
       )}

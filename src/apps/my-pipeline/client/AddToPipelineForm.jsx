@@ -1,15 +1,7 @@
 import React, { useEffect } from 'react'
-import Button from '@govuk-react/button'
-import Link from '@govuk-react/link'
+import PropTypes from 'prop-types'
 import ErrorSummary from '@govuk-react/error-summary'
 import { StatusMessage } from 'data-hub-components'
-import {
-  FormStateful,
-  FieldRadios,
-  FormActions,
-  FieldInput,
-} from 'data-hub-components'
-import { connect } from 'react-redux'
 import Task from '../../../client/components/Task'
 import LoadingBox from '@govuk-react/loading-box'
 import ProgressIndicator from '../../../client/components/ProgressIndicator'
@@ -18,12 +10,14 @@ import {
   PIPELINE__ADD_COMPANY_SUCCESS,
 } from '../../../client/actions'
 import {
-  state2props,
   ID as STATE_ID,
   TASK_GET_PIPELINE_BY_COMPANY,
   TASK_ADD_COMPANY_TO_PIPELINE,
 } from './state'
 import urls from '../../../lib/urls'
+import PipelineForm from './PipelineForm'
+import { PipelineItemPropType, PipelineItemsPropType } from './constants'
+import { getPipelineUrl } from './utils'
 
 function isOnPipeline(pipelineStatus, companyId) {
   if (pipelineStatus?.companyId === companyId) {
@@ -31,9 +25,9 @@ function isOnPipeline(pipelineStatus, companyId) {
   }
   return null
 }
+
 function PipelineCheck({
   pipelineStatus,
-  companyName,
   companyId,
   getPipelineByCompany,
   children,
@@ -50,8 +44,8 @@ function PipelineCheck({
     return (
       <ErrorSummary
         heading="There is a problem"
-        description={`There was an error checking the status of ${companyName}`}
-        errors={[getPipelineByCompany.errorMessage]}
+        description={`Error: ${getPipelineByCompany.errorMessage}`}
+        errors={[]}
       />
     )
   }
@@ -72,22 +66,16 @@ function PipelineCheck({
   )
 }
 
-function AddToPipelineForm({
-  companyId,
-  companyName,
-  pipelineStatus,
-  csrfToken,
-  savedId,
-}) {
+function AddToPipelineForm({ companyId, pipelineStatus, savedPipelineItem }) {
   useEffect(() => {
-    if (savedId) {
+    if (savedPipelineItem) {
       /**
        * TODO: Replace with react router navigation.
        * As we move to SPA clear the saveId from the state before navigation.
        */
-      window.location.href = urls.dashboard()
+      window.location.href = getPipelineUrl(savedPipelineItem)
     }
-  }, [savedId])
+  }, [savedPipelineItem])
 
   return (
     <Task>
@@ -102,50 +90,25 @@ function AddToPipelineForm({
         )
         return (
           <>
-            {addCompanyToPipeline.error && (
-              <ErrorSummary
-                heading="There is a problem"
-                description={`There was an error adding ${companyName} to a pipeline`}
-                errors={[addCompanyToPipeline.errorMessage]}
-              />
-            )}
             <PipelineCheck
               getPipelineByCompany={getPipelineByCompany}
               pipelineStatus={pipelineStatus}
               companyId={companyId}
-              companyName={companyName}
             >
-              <LoadingBox loading={addCompanyToPipeline.progress}>
-                <FormStateful
+              <LoadingBox
+                loading={addCompanyToPipeline.progress || savedPipelineItem}
+              >
+                <PipelineForm
+                  cancelLink={urls.companies.detail(companyId)}
+                  pipelineStatus={pipelineStatus}
                   onSubmit={(values) => {
                     addCompanyToPipeline.start({
-                      payload: { values, companyId, csrfToken },
+                      payload: { values, companyId },
                       onSuccessDispatch: PIPELINE__ADD_COMPANY_SUCCESS,
                     })
                   }}
                   submissionError={addCompanyToPipeline.errorMessage}
-                >
-                  <FieldInput
-                    name="name"
-                    label="Project name"
-                    type="text"
-                    required="Enter a Project name"
-                  />
-                  <FieldRadios
-                    name="category"
-                    label="Choose a status"
-                    required="Choose a status"
-                    options={[
-                      { value: 'leads', label: 'Lead' },
-                      { value: 'in_progress', label: 'In progress' },
-                      { value: 'win', label: 'Win' },
-                    ]}
-                  />
-                  <FormActions>
-                    <Button>Add</Button>
-                    <Link href={urls.companies.detail(companyId)}>Cancel</Link>
-                  </FormActions>
-                </FormStateful>
+                />
               </LoadingBox>
             </PipelineCheck>
           </>
@@ -155,4 +118,10 @@ function AddToPipelineForm({
   )
 }
 
-export default connect(state2props)(AddToPipelineForm)
+AddToPipelineForm.propTypes = {
+  companyId: PropTypes.string,
+  pipelineStatus: PipelineItemsPropType,
+  savedId: PipelineItemPropType,
+}
+
+export default AddToPipelineForm

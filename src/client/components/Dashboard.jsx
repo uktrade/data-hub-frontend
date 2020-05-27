@@ -3,8 +3,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { GREY_2 } from 'govuk-colours'
 
+import urls from '../../lib/urls'
 import CompanyLists from './CompanyLists'
 import ReferralList from './ReferralList'
+import Pipeline from './Pipeline'
 import TabNav from './TabNav'
 
 const StyledDiv = styled('div')`
@@ -19,13 +21,17 @@ const Dashboard = ({ id }) => (
       label="Dashboard"
       routed={true}
       tabs={{
-        '': {
+        [urls.dashboard.mountPoint]: {
           label: 'My companies lists',
           content: <CompanyLists />,
         },
-        'my-referrals': {
+        [urls.companies.referrals.list.mountPoint]: {
           label: 'My referrals',
           content: <ReferralList id={`${id}:ReferralList`} />,
+        },
+        [urls.pipeline.index.mountPoint]: {
+          label: 'My pipeline',
+          content: <Pipeline />,
         },
       }}
     />
