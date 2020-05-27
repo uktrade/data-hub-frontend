@@ -3,9 +3,9 @@ import styled from 'styled-components'
 import { BLUE, WHITE } from 'govuk-colours'
 import { FONT_SIZE } from '@govuk-react/constants'
 
-import urls from '../../../lib/urls'
 import TabNav from '../TabNav'
 import PipelineList from './PipelineList'
+import { STATUS_VALUES } from '../../../apps/my-pipeline/client/constants'
 
 const SubTabs = styled(TabNav)`
   margin-top: -15px; /* Because we are in a tabpanel of an existing TabNav, it has a 30px margin at the top but we don't want that much */
@@ -45,20 +45,18 @@ export default function Pipeline() {
       label="Pipeline statuses"
       routed={true}
       data-auto-id="pipelineSubTabNav"
-      tabs={{
-        [urls.pipeline.index()]: {
-          label: 'Prospect',
-          content: <PipelineList status="leads" />,
-        },
-        [urls.pipeline.active()]: {
-          label: 'Active',
-          content: <PipelineList status="in_progress" />,
-        },
-        [urls.pipeline.won()]: {
-          label: 'Won',
-          content: <PipelineList status="win" />,
-        },
-      }}
+      tabs={STATUS_VALUES.reduce((acc, status) => {
+        acc[status.url()] = {
+          label: status.label,
+          content: (
+            <PipelineList
+              status={status.value}
+              statusText={status.label.toLocaleLowerCase()}
+            />
+          ),
+        }
+        return acc
+      }, {})}
     />
   )
 }

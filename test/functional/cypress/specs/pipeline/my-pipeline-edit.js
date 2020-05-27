@@ -73,7 +73,7 @@ describe('Pipeline edit form', () => {
           element,
           label: 'Choose a status',
           optionsCount: 3,
-          value: 'In progress',
+          value: 'Active',
         })
       })
     })

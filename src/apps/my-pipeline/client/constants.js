@@ -1,10 +1,5 @@
 import PropTypes from 'prop-types'
-
-export const URL_MAP = {
-  leads: 'index',
-  in_progress: 'active',
-  win: 'won',
-}
+import urls from '../../../lib/urls'
 
 export const PipelineItemPropType = PropTypes.exact({
   company: PropTypes.exact({
@@ -24,3 +19,23 @@ export const PipelineItemsPropType = PropTypes.exact({
   count: PropTypes.number,
   results: PropTypes.arrayOf(PipelineItemPropType),
 })
+
+export const STATUSES = {
+  LEADS: {
+    value: 'leads',
+    label: 'Prospect',
+    url: urls.pipeline.index,
+  },
+  IN_PROGRESS: {
+    value: 'in_progress',
+    label: 'Active',
+    url: urls.pipeline.active,
+  },
+  WIN: {
+    value: 'win',
+    label: 'Won',
+    url: urls.pipeline.won,
+  },
+}
+
+export const STATUS_VALUES = Object.values(STATUSES)
