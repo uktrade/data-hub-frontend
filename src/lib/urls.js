@@ -91,7 +91,7 @@ module.exports = {
       index: url('/companies', '/:companyId/lists'),
       addRemove: url('/companies', '/:companyId/lists/add-remove'),
     },
-    pipeline: url('/companies', '/:companyId/pipeline'),
+    pipelineAdd: url('/companies', '/:companyId/my-pipeline'),
     orders: url('/companies', '/:companyId/orders'),
     details: url('/companies', '/:companyId/details'),
     archive: url('/companies', '/:companyId/archive'),
@@ -238,6 +238,9 @@ module.exports = {
   },
   support: url('/support'),
   pipeline: {
-    index: url('/pipeline'),
+    index: url('/my-pipeline'),
+    active: url('/my-pipeline/active'),
+    won: url('/my-pipeline/won'),
+    edit: url('/my-pipeline', '/:pipelineItemId/edit'),
   },
 }

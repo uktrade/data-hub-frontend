@@ -12,7 +12,7 @@ const selectors = require('../../../../selectors')
 describe('Company add to pipeline form', () => {
   context('When a company is not already on the pipeline', () => {
     before(() => {
-      cy.visit(urls.companies.pipeline(minimallyMinimal.id))
+      cy.visit(urls.companies.pipelineAdd(minimallyMinimal.id))
     })
 
     it('should render the breadcrumbs', () => {
@@ -36,7 +36,6 @@ describe('Company add to pipeline form', () => {
         assertFieldInput({
           element,
           label: 'Project name',
-          optionsCount: 3,
         })
       })
     })
@@ -62,7 +61,7 @@ describe('Company add to pipeline form', () => {
 
   context('When the company is already on the pipeline', () => {
     before(() => {
-      cy.visit(urls.companies.pipeline(lambdaPlc.id))
+      cy.visit(urls.companies.pipelineAdd(lambdaPlc.id))
     })
 
     it('should render the breadcrumbs', () => {
@@ -92,7 +91,6 @@ describe('Company add to pipeline form', () => {
         assertFieldInput({
           element,
           label: 'Project name',
-          optionsCount: 3,
         })
       })
     })
@@ -107,48 +105,58 @@ describe('Company add to pipeline form', () => {
       })
     })
   })
-  context('when form is submitted to add a company to pipeline', () => {
-    beforeEach(() => {
-      cy.visit(urls.companies.pipeline(minimallyMinimal.id))
-    })
 
-    it('should render the status radio buttons', () => {
-      cy.get('#field-category').then((element) => {
-        assertFieldRadios({
-          element,
-          label: 'Choose a status',
-          optionsCount: 3,
-        })
+  context(
+    'when form is submitted it redirects to the correct tab with a success message',
+    () => {
+      beforeEach(() => {
+        cy.visit(urls.companies.pipelineAdd(minimallyMinimal.id))
       })
-    })
 
-    it('should render the project name text input', () => {
-      cy.get('#field-name').then((element) => {
-        assertFieldInput({
-          element,
-          label: 'Project name',
-          optionsCount: 3,
-        })
+      it('should redirect to the prospect tab in my pipeline', () => {
+        cy.get('#field-name')
+          .find('input')
+          .type('Test Project')
+        cy.get('input[value=leads').click()
+        cy.contains('button', 'Add').click()
+        cy.url().should('include', urls.pipeline.index())
+        cy.get(selectors.companyLocalHeader().flashMessageList).should(
+          'contain',
+          'Pipeline changes for this company have been saved'
+        )
       })
-    })
 
-    it('should redirect to dashboard with a flash message', () => {
-      cy.get('#field-name')
-        .find('input')
-        .type('Test Project')
-      cy.get('input[value=win').click()
-      cy.contains('button', 'Add').click()
-      cy.url().should('include', urls.dashboard())
-      cy.get(selectors.localHeader().flash).should(
-        'contain',
-        'Pipeline changes for this company have been saved'
-      )
-    })
-  })
+      it('should redirect to the active tab in my pipeline', () => {
+        cy.get('#field-name')
+          .find('input')
+          .type('Test Project')
+        cy.get('input[value=in_progress').click()
+        cy.contains('button', 'Add').click()
+        cy.url().should('include', urls.pipeline.active())
+        cy.get(selectors.companyLocalHeader().flashMessageList).should(
+          'contain',
+          'Pipeline changes for this company have been saved'
+        )
+      })
+
+      it('should redirect to the won tab in my pipeline', () => {
+        cy.get('#field-name')
+          .find('input')
+          .type('Test Project')
+        cy.get('input[value=win').click()
+        cy.contains('button', 'Add').click()
+        cy.url().should('include', urls.pipeline.won())
+        cy.get(selectors.companyLocalHeader().flashMessageList).should(
+          'contain',
+          'Pipeline changes for this company have been saved'
+        )
+      })
+    }
+  )
 
   context('when form is submitted without any input', () => {
     beforeEach(() => {
-      cy.visit(urls.companies.pipeline(minimallyMinimal.id))
+      cy.visit(urls.companies.pipelineAdd(minimallyMinimal.id))
     })
 
     it('should display error messages', () => {

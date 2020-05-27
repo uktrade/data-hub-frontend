@@ -75,7 +75,7 @@ const interactionsRouter = require('../interactions/router.sub-app')
 const companyListsRouter = require('../company-lists/router')
 const advisersRouter = require('./apps/advisers/router')
 const referralsRouter = require('./apps/referrals/router')
-const pipelineRouter = require('../pipeline/router')
+const { companyPipelineRouter } = require('../my-pipeline/router')
 
 const {
   setCompanyHierarchyLocalNav,
@@ -110,7 +110,6 @@ router.use(urls.companies.create.route, addCompanyFormRouter)
 router.use(urls.companies.lists.index.route, companyListsRouter)
 router.use(urls.companies.edit.route, editCompanyFormRouter)
 router.use(urls.companies.editHistory.index.route, editHistoryRouter)
-router.use(urls.companies.pipeline.route, pipelineRouter)
 
 router.post(urls.companies.archive.route, archiveCompany)
 router.get(urls.companies.unarchive.route, unarchiveCompany)
@@ -170,15 +169,11 @@ router.get(urls.companies.subsidiaries.index.route, renderSubsidiaries)
 router.get(urls.companies.subsidiaries.link.route, renderLinkSubsidiary)
 
 router.use(activityFeedRouter)
-
 router.use(dnbHierarchyRouter)
-
 router.use(businessDetailsRouter)
-
 router.use(matchCompanyRouter)
-
 router.use(exportsRouter)
-
 router.use(referralsRouter)
+router.use(companyPipelineRouter)
 
 module.exports = router
