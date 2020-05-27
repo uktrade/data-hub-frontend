@@ -10,13 +10,7 @@ import { state2props, ID as STATE_ID, TASK_GET_PIPELINE_LIST } from './state'
 import { PIPELINE__LIST_LOADED } from '../../actions'
 import PipelineItem from './PipelineItem'
 
-const statusConstants = {
-  leads: 'prospect',
-  in_progress: 'active',
-  win: 'won',
-}
-
-const PipelineList = ({ status, items }) => {
+const PipelineList = ({ status, statusText, items }) => {
   return (
     <Task.Status
       name={TASK_GET_PIPELINE_LIST}
@@ -44,9 +38,9 @@ const PipelineList = ({ status, items }) => {
             ))
           ) : (
             <InsetText>
-              There are no companies in the {statusConstants[status]} section of
-              your pipeline. You can add companies to your pipeline from the
-              company page.
+              There are no companies in the {statusText} section of your
+              pipeline. You can add companies to your pipeline from the company
+              page.
             </InsetText>
           )}
         </StyledOrderedList>

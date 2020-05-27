@@ -1,6 +1,11 @@
 import urls from '../../../lib/urls'
-import { URL_MAP } from './constants'
+import { STATUS_VALUES } from './constants'
+
+const URL_MAP = STATUS_VALUES.reduce((acc, { value, url }) => {
+  acc[value] = url
+  return acc
+}, {})
 
 export function getPipelineUrl({ status } = {}) {
-  return urls.pipeline[URL_MAP[status] || 'index']()
+  return (URL_MAP[status] || urls.pipeline.index)()
 }

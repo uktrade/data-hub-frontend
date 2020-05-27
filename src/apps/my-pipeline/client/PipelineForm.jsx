@@ -5,6 +5,12 @@ import Link from '@govuk-react/link'
 import { FieldRadios, FormActions, FieldInput } from 'data-hub-components'
 import Form from '../../../client/components/Form'
 import { ID as STATE_ID } from './state'
+import { STATUS_VALUES } from './constants'
+
+const options = STATUS_VALUES.map(({ value, label }) => ({
+  value,
+  label,
+}))
 
 function PipelineForm({
   onSubmit,
@@ -25,11 +31,7 @@ function PipelineForm({
         name="category"
         label="Choose a status"
         required="Choose a status"
-        options={[
-          { value: 'leads', label: 'Lead' },
-          { value: 'in_progress', label: 'In progress' },
-          { value: 'win', label: 'Win' },
-        ]}
+        options={options}
         initialValue={initialValue.category}
       />
       <FormActions>
