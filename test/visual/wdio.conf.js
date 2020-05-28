@@ -34,15 +34,15 @@ exports.config = {
       'os': 'Windows',
       'os_version': '10',
       'browserName': 'Chrome',
-      'browser_version': '76.0 beta',
-      'resolution': '1920x1080'
+      'browser_version': '83.0 beta',
+      'resolution': '1280x1024'
     },
     {
       'os': 'Windows',
       'os_version': '10',
       'browserName': 'IE',
       'browser_version': '11.0',
-      'resolution': '1920x1080'
+      'resolution': '1280x1024'
     },
   ],
   featureFlags: {
