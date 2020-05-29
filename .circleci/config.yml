@@ -135,7 +135,7 @@ aliases:
       - './test/sandbox:/base'
     ports:
       - 8000:8080
-    command: /sandbox-worker-cli --base=/base--watch=true run
+    command: /sandbox-worker-cli --base=/base--watch=true --port=8000 run
 
   # Data hub backend
   - &docker_data_hub_backend_base
