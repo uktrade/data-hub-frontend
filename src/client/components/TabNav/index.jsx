@@ -2,7 +2,15 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Route } from 'react-router-dom'
 import styled from 'styled-components'
-import { GREY_4, TEXT_COLOUR, BORDER_COLOUR, FOCUS_COLOUR } from 'govuk-colours'
+import {
+  GREY_4,
+  WHITE,
+  LINK_COLOUR,
+  TEXT_COLOUR,
+  BORDER_COLOUR,
+  FOCUS_COLOUR,
+} from 'govuk-colours'
+import { MEDIA_QUERIES, SPACING_POINTS } from '@govuk-react/constants'
 
 import multiInstance from '../../utils/multiinstance'
 import focusable from '../../utils/focusable'
@@ -14,50 +22,89 @@ const RIGHT_ARROW_KEY = 39
 
 const FocusableButton = focusable('button')
 
-const buttonStyle = {
-  color: TEXT_COLOUR,
-  fontSize: 19,
-  fontFamily: 'Arial, sans-serif',
-}
-
 const focusStyle = {
   '&:focus': {
     outline: `3px solid ${FOCUS_COLOUR}`,
+    background: FOCUS_COLOUR,
+    [MEDIA_QUERIES.TABLET]: {
+      background: WHITE,
+    },
   },
+}
+
+const StyledSpan = styled('span')({
+  display: 'block',
+  '::before': {
+    color: '#0b0c0c',
+    content: '"\u2014 "',
+    paddingRight: `${SPACING_POINTS[1]}px`,
+  },
+  [MEDIA_QUERIES.TABLET]: {
+    display: `inline-block`,
+    '::before': {
+      display: 'none',
+    },
+  },
+})
+
+const buttonStyle = {
+  padding: 0,
+  margin: `0 0 ${SPACING_POINTS[2]}px 0`,
+  color: LINK_COLOUR,
+  fontSize: 16,
+  fontFamily: 'Arial, sans-serif',
+  textDecoration: 'underline',
+  border: 'none',
+  background: 'transparent',
 }
 
 const StyledButton = styled(FocusableButton)({
   ...buttonStyle,
-  padding: '10px 20px',
-  margin: '5px 0 5px',
-  background: GREY_4,
-  border: 'none',
-  cursor: 'pointer',
   ...focusStyle,
+  [MEDIA_QUERIES.TABLET]: {
+    color: TEXT_COLOUR,
+    fontSize: 19,
+    textDecoration: 'none',
+    padding: `${SPACING_POINTS[2]}px ${SPACING_POINTS[4]}px`,
+    margin: `${SPACING_POINTS[1]}px 0 ${SPACING_POINTS[1]}px`,
+    background: GREY_4,
+    border: 'none',
+    cursor: 'pointer',
+  },
 })
 
 const StyledSelectedButton = styled(FocusableButton)({
   ...buttonStyle,
-  border: `1px solid ${BORDER_COLOUR}`,
-  borderBottom: 'none',
-  // The negative margin is here so that it overcasts tabpane's top border
-  marginBottom: -1,
-  // The 19px include compensation for the 1px negative margin above
-  padding: '14px 19px 16px',
-  background: 'white',
   ...focusStyle,
+  [MEDIA_QUERIES.TABLET]: {
+    color: TEXT_COLOUR,
+    fontSize: 19,
+    textDecoration: 'none',
+    border: `1px solid ${BORDER_COLOUR}`,
+    borderBottom: 'none',
+    // The negative margin is here so that it overcasts tabpane's top border
+    marginBottom: -1,
+    // The 19px include compensation for the 1px negative margin above
+    padding: '14px 19px 16px',
+    background: WHITE,
+  },
 })
 
 const StyledTablist = styled.div({
-  borderBottom: `1px solid ${BORDER_COLOUR}`,
-  '& > *:not(:last-child)': {
-    marginRight: 5,
+  borderBottom: 'none',
+  [MEDIA_QUERIES.TABLET]: {
+    borderBottom: `1px solid ${BORDER_COLOUR}`,
+    '& > *:not(:last-child)': {
+      marginRight: 5,
+    },
   },
 })
 
 const StyledTabpanel = styled.div({
-  ...focusStyle,
-  marginTop: 30,
+  marginTop: 15,
+  [MEDIA_QUERIES.TABLET]: {
+    marginTop: 30,
+  },
 })
 
 const createId = (id, key) => `${id}.tab.${key.replace('/', '_')}`
@@ -128,30 +175,32 @@ const TabNav = ({
                   const Button = selected ? StyledSelectedButton : StyledButton
                   const tabId = createId(id, key)
                   return (
-                    <Button
-                      key={tabId}
-                      role="tab"
-                      focused={index === focusIndex}
-                      aria-selected={selected}
-                      id={tabId}
-                      tabIndex={
-                        // If no tab is selected...
-                        selectedIndex === undefined && !index
-                          ? // ...only the first tab participates in the tabindex
-                            0
-                          : // Otherwise, only the selected tab participates in tabindex
-                          selected
-                          ? 0
-                          : -1
-                      }
-                      onClick={() =>
-                        selected || routed
-                          ? (history.push(key), onFocusChange(index))
-                          : onChange(key, index)
-                      }
-                    >
-                      {label}
-                    </Button>
+                    <StyledSpan>
+                      <Button
+                        key={tabId}
+                        role="tab"
+                        focused={index === focusIndex}
+                        aria-selected={selected}
+                        id={tabId}
+                        tabIndex={
+                          // If no tab is selected...
+                          selectedIndex === undefined && !index
+                            ? // ...only the first tab participates in the tabindex
+                              0
+                            : // Otherwise, only the selected tab participates in tabindex
+                            selected
+                            ? 0
+                            : -1
+                        }
+                        onClick={() =>
+                          selected || routed
+                            ? (history.push(key), onFocusChange(index))
+                            : onChange(key, index)
+                        }
+                      >
+                        {label}
+                      </Button>
+                    </StyledSpan>
                   )
                 })}
               </StyledTablist>
