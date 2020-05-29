@@ -132,7 +132,7 @@ aliases:
   - &docker_sandbox
     image: *sandbox_image
     volumes:
-      - './test/sandbox:/base'
+      - '~/project/test/sandbox:/base'
     ports:
       - 8000:8080
     command: /sandbox-worker-cli --base=/base --watch=true --port=8000 run
