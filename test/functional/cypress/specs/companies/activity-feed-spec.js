@@ -39,12 +39,11 @@ describe('Company activity feed', () => {
       )
     })
 
-    // TODO: Uncomment once Sandbox supports body in GET request (https://github.com/getsandbox/sandbox/issues/44)
-    // it('should display the "There are no activities to show." message', () => {
-    //   cy.get(selectors.companyActivity.activityFeed.noActivites).should(
-    //     'be.visible'
-    //   )
-    // })
+    it('should display the "There are no activities to show." message', () => {
+      cy.get(selectors.companyActivity.activityFeed.noActivites).should(
+        'be.visible'
+      )
+    })
   })
 
   context('when viewing activity feed for an archived company', () => {

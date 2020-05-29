@@ -134,7 +134,7 @@ aliases:
     volumes:
       - './test/sandbox:/base'
     ports:
-      - 8000:80
+      - 8000:8080
     command: /sandbox-worker-cli --base=/base--watch=true run
 
   # Data hub backend
