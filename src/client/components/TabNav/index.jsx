@@ -94,6 +94,9 @@ const StyledTablist = styled.div({
   borderBottom: 'none',
   [MEDIA_QUERIES.TABLET]: {
     borderBottom: `1px solid ${BORDER_COLOUR}`,
+    '& > *:not(:last-child)': {
+      marginRight: 5,
+    },
   },
 })
 
