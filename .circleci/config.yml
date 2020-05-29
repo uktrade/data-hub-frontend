@@ -288,6 +288,7 @@ jobs:
 
   # Run functional tests
   functional_tests:
+    machine: true
     docker:
       - <<: *docker_data_hub_base
         environment: *data_hub_functional_envs
@@ -325,6 +326,7 @@ jobs:
 
   # Run visual tests
   visual_tests:
+    machine: true
     docker:
       - <<: *docker_data_hub_base
         environment: *data_hub_functional_envs
