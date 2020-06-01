@@ -220,5 +220,23 @@ exports.exportDetail = function(req, res) {
 }
 
 exports.getOneListGroupCoreTeam = function(req, res) {
-  res.json(oneListGroupCoreTeam)
+  var companyId = req.params.companyId
+
+  if (companyId === companyMinimallyMinimal.id) {
+    res.send('')
+  } else {
+    res.json(oneListGroupCoreTeam)
+  }
+}
+
+exports.postOneListTierAndGlobalAccountManager = function(req, res) {
+  res.send('')
+}
+
+exports.postRemoveFromOneList = function(req, res) {
+  res.send('')
+}
+
+exports.patchOneListCoreTeam = function(req, res) {
+  res.send('')
 }
