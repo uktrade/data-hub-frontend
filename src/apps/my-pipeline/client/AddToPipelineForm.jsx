@@ -66,7 +66,13 @@ function PipelineCheck({
   )
 }
 
-function AddToPipelineForm({ companyId, pipelineStatus, savedPipelineItem }) {
+function AddToPipelineForm({
+  companyId,
+  pipelineStatus,
+  savedPipelineItem,
+  sectors,
+  contacts,
+}) {
   useEffect(() => {
     if (savedPipelineItem) {
       /**
@@ -101,6 +107,8 @@ function AddToPipelineForm({ companyId, pipelineStatus, savedPipelineItem }) {
                 <PipelineForm
                   cancelLink={urls.companies.detail(companyId)}
                   pipelineStatus={pipelineStatus}
+                  sectors={sectors}
+                  contacts={contacts}
                   onSubmit={(values) => {
                     addCompanyToPipeline.start({
                       payload: { values, companyId },
