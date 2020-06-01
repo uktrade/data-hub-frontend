@@ -68,6 +68,7 @@
     "@govuk-react/constants": "^0.7.1",
     "@hapi/hawk": "^8.0.0",
     "@hapi/joi": "^17.1.1",
+    "@sentry/browser": "^5.15.5",
     "@storybook/addon-actions": "^5.3.18",
     "@storybook/addon-knobs": "^5.3.18",
     "@storybook/addons": "^5.3.18",
