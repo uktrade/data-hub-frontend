@@ -6,8 +6,11 @@ const {
   assertBreadcrumbs,
   assertFormButtons,
   assertFieldInput,
+  assertFieldTypeahead,
 } = require('../../support/assertions')
 const selectors = require('../../../../selectors')
+
+const formSelectors = selectors.pipelineForm
 
 describe('Company add to pipeline form', () => {
   context('When a company is not already on the pipeline', () => {
@@ -32,7 +35,7 @@ describe('Company add to pipeline form', () => {
     })
 
     it('should render the project name text input', () => {
-      cy.get('#field-name').then((element) => {
+      cy.get(formSelectors.fields.name).then((element) => {
         assertFieldInput({
           element,
           label: 'Project name',
@@ -41,11 +44,43 @@ describe('Company add to pipeline form', () => {
     })
 
     it('should render the status radio buttons', () => {
-      cy.get('#field-category').then((element) => {
+      cy.get(formSelectors.fields.status).then((element) => {
         assertFieldRadios({
           element,
           label: 'Choose a status',
           optionsCount: 3,
+        })
+      })
+    })
+
+    it('Should render the likelihood to export radio buttons', () => {
+      cy.get(formSelectors.fields.likelihood).then((element) => {
+        assertFieldRadios({
+          element,
+          label: 'Likelihood to export (optional)',
+          optionsCount: 3,
+        })
+      })
+    })
+
+    it('Should render the export sector typeahead', () => {
+      cy.get(formSelectors.fields.sector).then((element) => {
+        assertFieldTypeahead({ element, label: 'Export sector (optional)' })
+      })
+    })
+
+    it('Should render the company contact typeahead', () => {
+      cy.get(formSelectors.fields.contact).then((element) => {
+        assertFieldTypeahead({ element, label: 'Company contact (optional)' })
+      })
+    })
+
+    it('Should render the potential export value input', () => {
+      cy.get(formSelectors.fields.value).then((element) => {
+        assertFieldInput({
+          element,
+          label: 'Potential export value (optional)',
+          hint: 'Amount in GBP',
         })
       })
     })
@@ -87,7 +122,7 @@ describe('Company add to pipeline form', () => {
     })
 
     it('should render the project name text input', () => {
-      cy.get('#field-name').then((element) => {
+      cy.get(formSelectors.fields.name).then((element) => {
         assertFieldInput({
           element,
           label: 'Project name',
@@ -96,7 +131,7 @@ describe('Company add to pipeline form', () => {
     })
 
     it('should render the status radio buttons', () => {
-      cy.get('#field-category').then((element) => {
+      cy.get(formSelectors.fields.status).then((element) => {
         assertFieldRadios({
           element,
           label: 'Choose a status',
@@ -114,10 +149,8 @@ describe('Company add to pipeline form', () => {
       })
 
       it('should redirect to the prospect tab in my pipeline', () => {
-        cy.get('#field-name')
-          .find('input')
-          .type('Test Project')
-        cy.get('input[value=leads').click()
+        cy.get(formSelectors.name).type('Test Project')
+        cy.get(formSelectors.status.prospect).click()
         cy.contains('button', 'Add').click()
         cy.url().should('include', urls.pipeline.index())
         cy.get(selectors.companyLocalHeader().flashMessageList).should(
@@ -127,10 +160,8 @@ describe('Company add to pipeline form', () => {
       })
 
       it('should redirect to the active tab in my pipeline', () => {
-        cy.get('#field-name')
-          .find('input')
-          .type('Test Project')
-        cy.get('input[value=in_progress').click()
+        cy.get(formSelectors.name).type('Test Project')
+        cy.get(formSelectors.status.active).click()
         cy.contains('button', 'Add').click()
         cy.url().should('include', urls.pipeline.active())
         cy.get(selectors.companyLocalHeader().flashMessageList).should(
@@ -140,10 +171,8 @@ describe('Company add to pipeline form', () => {
       })
 
       it('should redirect to the won tab in my pipeline', () => {
-        cy.get('#field-name')
-          .find('input')
-          .type('Test Project')
-        cy.get('input[value=win').click()
+        cy.get(formSelectors.name).type('Test Project')
+        cy.get(formSelectors.status.won).click()
         cy.contains('button', 'Add').click()
         cy.url().should('include', urls.pipeline.won())
         cy.get(selectors.companyLocalHeader().flashMessageList).should(

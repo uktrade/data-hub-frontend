@@ -19,36 +19,41 @@ import PipelineForm from './PipelineForm'
 import { PipelineItemPropType } from './constants'
 import { getPipelineUrl } from './utils'
 
-function formatInitialValues({ name, status }) {
+function formatInitialValues(values) {
+  const { sector, contact } = values
   return {
-    name,
-    category: status,
+    name: values.name,
+    category: values.status,
+    likelihood: String(values.likelihood_to_win),
+    sector: sector ? { value: sector.id, label: sector.segment } : null,
+    contact: contact ? { value: contact.id, label: contact.name } : null,
+    export_value: values.potential_value,
   }
 }
 
 function PipelineCheck({
   pipelineItemId,
-  getCompanyByPipeline,
+  getPipelineData,
   children,
-  currentPipeline,
+  currentPipelineItem,
 }) {
   useEffect(() => {
-    getCompanyByPipeline.start({
+    getPipelineData.start({
       payload: { pipelineItemId },
       onSuccessDispatch: PIPELINE__GET_PIPELINE_SUCCESS,
     })
   }, [pipelineItemId])
 
-  if (getCompanyByPipeline.error) {
+  if (getPipelineData.error) {
     return (
       <ErrorSummary
         heading="There is a problem"
-        description={`Error: ${getCompanyByPipeline.errorMessage}`}
+        description={`Error: ${getPipelineData.errorMessage}`}
         errors={[]}
       />
     )
   }
-  if (!currentPipeline) {
+  if (!currentPipelineItem) {
     return <ProgressIndicator message="getting pipeline..." />
   }
   return <>{children}</>
@@ -56,7 +61,9 @@ function PipelineCheck({
 
 function EditPipelineForm({
   pipelineItemId,
-  currentPipeline,
+  contacts,
+  sectors,
+  currentPipelineItem,
   savedPipelineItem,
 }) {
   useEffect(() => {
@@ -72,28 +79,31 @@ function EditPipelineForm({
   return (
     <Task>
       {(getTask) => {
-        const getCompanyByPipeline = getTask(TASK_GET_PIPELINE_ITEM, STATE_ID)
+        const getPipelineData = getTask(TASK_GET_PIPELINE_ITEM, STATE_ID)
         const editPipelineItem = getTask(TASK_EDIT_PIPELINE_ITEM, STATE_ID)
         return (
           <>
             <LoadingBox>
               <PipelineCheck
-                currentPipeline={currentPipeline}
+                currentPipelineItem={currentPipelineItem}
                 pipelineItemId={pipelineItemId}
-                getCompanyByPipeline={getCompanyByPipeline}
+                getPipelineData={getPipelineData}
               >
                 <PipelineForm
                   submissionError={editPipelineItem.errorMessage}
                   onSubmit={(values) => {
                     editPipelineItem.start({
-                      payload: { values, pipelineItemId },
+                      payload: { values, pipelineItemId, currentPipelineItem },
                       onSuccessDispatch: PIPELINE__EDIT_PIPELINE_SUCCESS,
                     })
                   }}
-                  cancelLink={getPipelineUrl(currentPipeline)}
+                  cancelLink={getPipelineUrl(currentPipelineItem)}
                   initialValue={
-                    currentPipeline && formatInitialValues(currentPipeline)
+                    currentPipelineItem &&
+                    formatInitialValues(currentPipelineItem)
                   }
+                  sectors={sectors}
+                  contacts={contacts}
                 />
               </PipelineCheck>
             </LoadingBox>

@@ -21,7 +21,8 @@ export default (state = {}, { type, result }) => {
     case PIPELINE__GET_PIPELINE_SUCCESS:
       return {
         ...state,
-        currentPipeline: result,
+        currentPipelineItem: result.pipelineItem,
+        contacts: result.contacts,
       }
     default:
       return state
