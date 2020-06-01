@@ -21,8 +21,15 @@ describe('Lead advisers', () => {
         'Lead ITA for Mars Exports Ltd'
       )
     })
-    it('should display a button to add myself as lead adviser', () => {
-      cy.contains('Add myself as Lead ITA')
+    it('should display help text for adding a lead adviser', () => {
+      cy.contains('This company has no Lead ITA.')
+      cy.contains(
+        'An ITA (International Trade Adviser) can add themselves as the Lead ITA,' +
+          ' which will be visible to all Data Hub users on the company page and any of its subsidiaries.'
+      )
+    })
+    it('should display a button to add a lead adviser', () => {
+      cy.contains('Add a lead ITA')
         .invoke('attr', 'href')
         .should(
           'eq',
