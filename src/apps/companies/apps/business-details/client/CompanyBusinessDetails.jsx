@@ -4,6 +4,7 @@ import Details from '@govuk-react/details'
 import Link from '@govuk-react/link'
 import { get } from 'lodash'
 import styled from 'styled-components'
+import Button from '@govuk-react/button'
 import { SPACING_POINTS } from '@govuk-react/constants'
 import { StatusMessage, DateUtils } from 'data-hub-components'
 
@@ -38,6 +39,7 @@ const CompanyBusinessDetails = ({
   dnbRelatedCompaniesCount,
   globalUltimate,
   isGlobalUltimateFlagEnabled,
+  canEditOneList,
   urls,
 }) => {
   const isGlobalHQ = get(businessDetails, 'headquarter_type.name') === 'ghq'
@@ -147,6 +149,12 @@ const CompanyBusinessDetails = ({
         isDnbCompany={isDnbCompany}
         urls={urls}
       />
+
+      {canEditOneList && (
+        <Button as={Link} href={urls.editOneList}>
+          Edit One List Information
+        </Button>
+      )}
     </StyledRoot>
   )
 }
@@ -158,6 +166,7 @@ CompanyBusinessDetails.propTypes = {
   dnbRelatedCompaniesCount: PropTypes.number,
   globalUltimate: PropTypes.object.isRequired,
   isGlobalUltimateFlagEnabled: PropTypes.bool.isRequired,
+  canEditOneList: PropTypes.bool,
 }
 
 CompanyBusinessDetails.defaultProps = {

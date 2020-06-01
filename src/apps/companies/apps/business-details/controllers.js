@@ -6,6 +6,16 @@ const { transformCompanyToBusinessDetails } = require('./transformers')
 const { getCompanySubsidiaries } = require('../../repos')
 const urls = require('../../../../lib/urls')
 
+function canEditOneList(permissions) {
+  return (
+    permissions &&
+    permissions.includes('company.change_company') &&
+    permissions.includes(
+      'company.change_one_list_tier_and_global_account_manager'
+    )
+  )
+}
+
 async function renderBusinessDetails(req, res) {
   const { token } = req.session
   const {
@@ -16,6 +26,7 @@ async function renderBusinessDetails(req, res) {
     globalUltimate,
     dnbRelatedCompaniesCount,
   } = res.locals
+  const userPermissions = res.locals.user.permissions
   const subsidiaries = await getCompanySubsidiaries(token, company.id)
 
   res
@@ -55,7 +66,9 @@ async function renderBusinessDetails(req, res) {
           archivedDocument: company.archived_documents_url_path
             ? ARCHIVED_DOCUMENT_BASE_URL + company.archived_documents_url_path
             : undefined,
+          editOneList: urls.companies.editOneList(company.id),
         },
+        canEditOneList: canEditOneList(userPermissions),
       },
     })
 }

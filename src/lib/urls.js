@@ -99,6 +99,7 @@ module.exports = {
     unarchive: url('/companies', '/:companyId/unarchive'),
     documents: url('/companies', '/:companyId/documents'),
     businessDetails: url('/companies', '/:companyId/business-details'),
+    editOneList: url('/companies', '/:companyId/edit-one-list'),
     interactions: createInteractionsSubApp(
       '/companies',
       '/:companyId/interactions'

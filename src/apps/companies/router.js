@@ -68,6 +68,7 @@ const activityFeedRouter = require('./apps/activity-feed/router')
 const dnbHierarchyRouter = require('./apps/dnb-hierarchy/router')
 const businessDetailsRouter = require('./apps/business-details/router')
 const editHistoryRouter = require('./apps/edit-history/router')
+const editOneListRouter = require('./apps/edit-one-list/router')
 const matchCompanyRouter = require('./apps/match-company/router')
 const exportsRouter = require('./apps/exports/router')
 const investmentsRouter = require('./apps/investments/router')
@@ -123,6 +124,8 @@ router.get(urls.companies.detail.route, redirectToFirstNavItem)
 router.get(urls.companies.details.route, renderDetails)
 
 router.get(urls.companies.businessDetails.route, renderBusinessDetails)
+
+router.use(urls.companies.editOneList.route, editOneListRouter)
 
 router.get(
   urls.companies.hierarchies.ghq.link.route,
