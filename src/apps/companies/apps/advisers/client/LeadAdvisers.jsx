@@ -62,19 +62,35 @@ const RenderHasNoAccountManager = ({
   hasPermissionToAddIta,
   addUrl,
   companyName,
+  featureFlagOn,
 }) => (
   <div>
     <H2 size={LEVEL_SIZE[3]}>Lead ITA for {companyName}</H2>
-    <p>This company has no Lead ITA</p>
-    <p>
-      An ITA (International Trade Adviser) can add themselves as the Lead ITA,
-      which will be visible to all Data Hub users on the company page and any of
-      its subsidiaries.
-    </p>
-    {hasPermissionToAddIta && (
-      <Button as={Link} href={addUrl}>
-        Add myself as Lead ITA
-      </Button>
+    <p>This company has no Lead ITA.</p>
+    {featureFlagOn ? (
+      <>
+        <p>
+          An ITA (International Trade Adviser) can add themselves as the Lead
+          ITA, which will be visible to all Data Hub users on the company page
+          and any of its subsidiaries.
+        </p>
+        <Button as={Link} href={addUrl}>
+          Add a lead ITA
+        </Button>
+      </>
+    ) : (
+      <>
+        <p>
+          You can add an ITA (International Trade Adviser) as the Lead ITA,
+          which will be visible to all Data Hub users on the company page and
+          any of its subsidiaries.
+        </p>
+        {hasPermissionToAddIta && (
+          <Button as={Link} href={addUrl}>
+            Add myself as Lead ITA
+          </Button>
+        )}
+      </>
     )}
   </div>
 )
@@ -89,6 +105,7 @@ const LeadAdvisers = ({
   addUrl,
   removeUrl,
   hasPermissionToAddIta,
+  featureFlagOn,
 }) => {
   return hasAccountManager ? (
     <RenderHasAccountManager
@@ -107,14 +124,15 @@ const LeadAdvisers = ({
       hasPermissionToAddIta={hasPermissionToAddIta}
       addUrl={addUrl}
       removeUrl={removeUrl}
+      featureFlagOn={featureFlagOn}
     />
   )
 }
 
 LeadAdvisers.propTypes = {
   hasAccountManager: PropTypes.bool.isRequired,
-  name: PropTypes.string.isRequired,
-  team: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  team: PropTypes.string,
   email: PropTypes.string,
   companyName: PropTypes.string.isRequired,
   companyId: PropTypes.string.isRequired,

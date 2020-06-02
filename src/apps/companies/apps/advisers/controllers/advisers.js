@@ -20,6 +20,7 @@ function renderLeadAdvisers(req, res) {
     user: { permissions },
     returnUrl,
     dnbRelatedCompaniesCount,
+    features,
   } = res.locals
   const { name, team, email } = companyToLeadITA(company) || {}
 
@@ -46,6 +47,7 @@ function renderLeadAdvisers(req, res) {
       returnUrl,
       dnbRelatedCompaniesCount,
       flashMessages: res.locals.getMessages(),
+      featureFlagOn: features['manage-lead-adviser'],
     },
   })
 }
