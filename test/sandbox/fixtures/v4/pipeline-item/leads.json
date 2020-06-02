@@ -13,7 +13,11 @@
       },
       "name": "Socks to Norway",
       "status": "leads",
-      "created_on": "2020-05-15T14:13:01.053350Z"
+      "created_on": "2020-05-15T14:13:01.053350Z",
+      "contact": {
+        "id": "048f2edc-e7ed-4881-b1cc-29142a80238a",
+        "name": "John Smith"
+      }
     },
     {
       "id": "1211a313-1ab9-4330-9b9d-b971c434e9f0",
@@ -35,9 +39,60 @@
         "export_potential": null,
         "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
       },
-      "name": "Socks to Japan",
+      "name": "Socks to France",
       "status": "leads",
-      "created_on": "2020-05-13T14:12:46.838377Z"
+      "created_on": "2020-05-13T14:12:46.838377Z",
+      "contact": {
+        "id": "048f2edc-e7ed-4881-b1cc-29142a80238a",
+        "name": "John Smith"
+      },
+      "sector": {
+        "id": "9738cecc-5f95-e211-a939-e4115bead28a",
+        "segment": "Textiles"
+      },
+      "potential_value": 14453420,
+      "likelihood_to_win": 1,
+      "expected_win_date": "2021-05-01"
+    },
+    {
+      "id": "96631105-6b08-44b3-a939-93ccb1adcc3e",
+      "company": {
+        "name": "Venus Ltd",
+        "turnover": null,
+        "export_potential": null,
+        "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+      },
+      "name": "Socks to Germany",
+      "status": "leads",
+      "created_on": "2020-05-12T14:12:46.838377Z",
+      "contact": {
+        "id": "048f2edc-e7ed-4881-b1cc-29142a80238a",
+        "name": "John Smith"
+      },
+      "sector": {
+        "id": "9738cecc-5f95-e211-a939-e4115bead28a",
+        "segment": "Textiles"
+      },
+      "potential_value": 14453420,
+      "likelihood_to_win": 2,
+      "expected_win_date": "2021-05-01"
+    },
+    {
+      "id": "96631105-6b08-44b3-a939-93ccb1adcc3e",
+      "company": {
+        "name": "Venus Ltd",
+        "turnover": null,
+        "export_potential": null,
+        "id": "0f5216e0-849f-11e6-ae22-56b6b6499645"
+      },
+      "name": "Socks to Thailand",
+      "status": "leads",
+      "created_on": "2020-05-11T14:12:46.838377Z",
+      "contact": null,
+      "sector": null,
+      "potential_value": null,
+      "likelihood_to_win": 3,
+      "expected_win_date": null
     }
   ]
 }
