@@ -2,7 +2,72 @@ const urls = require('../../../../../src/lib/urls')
 const leads = require('../../../../sandbox/fixtures/v4/pipeline-item/leads.json')
 const inProgress = require('../../../../sandbox/fixtures/v4/pipeline-item/in-progress.json')
 const win = require('../../../../sandbox/fixtures/v4/pipeline-item/win.json')
+const { NumberUtils } = require('data-hub-components')
 
+function assertPipelineItem(
+  index,
+  { expectedDate, expectedWinDate },
+  givenData
+) {
+  const result = givenData.results[index]
+  if (!result) {
+    throw Error('Given data is out of range')
+  }
+  cy.get('[data-auto-id="pipelineSubTabNav"]')
+    .get(`ol > li:nth-child(${index + 1})`)
+    .within(() => {
+      cy.contains(result.name)
+      cy.contains(result.company.name).should(
+        'have.attr',
+        'href',
+        urls.companies.detail(result.company.id)
+      )
+      cy.contains(expectedDate)
+      cy.contains('Edit').should(
+        'have.attr',
+        'href',
+        urls.pipeline.edit(result.id)
+      )
+      if (result.likelihood_to_win) {
+        const likelihoodToWinText = {
+          1: 'Likelihood to succeed - Low',
+          2: 'Likelihood to succeed - Medium',
+          3: 'Likelihood to succeed - High',
+        }
+        cy.contains(likelihoodToWinText[result.likelihood_to_win])
+      } else {
+        cy.contains('Likelihood to succeed').should('not.exist')
+      }
+
+      if (result.expected_win_date) {
+        cy.contains('Expected date for win')
+        cy.contains(expectedWinDate)
+      } else {
+        cy.contains('Expected date for win').should('not.exist')
+      }
+
+      if (result.potential_value) {
+        cy.contains('Potential export value')
+        cy.contains(NumberUtils.currencyGBP(result.potential_value))
+      } else {
+        cy.contains('Potential export value').should('not.exist')
+      }
+
+      if (result.contact) {
+        cy.contains('Company contact')
+        cy.contains(result.contact.name)
+      } else {
+        cy.contains('Company contact').should('not.exist')
+      }
+
+      if (result.sector) {
+        cy.contains('Project sector')
+        cy.contains(result.sector.segment)
+      } else {
+        cy.contains('Project sector').should('not.exist')
+      }
+    })
+}
 describe('My pipeline app', () => {
   context('When viewing the propspect status', () => {
     before(() => {
@@ -18,62 +83,17 @@ describe('My pipeline app', () => {
     })
 
     context('should render the pipeline list', () => {
-      it('should render the first item', () => {
-        cy.get('[data-auto-id="pipelineSubTabNav"]')
-          .get('ol > li:first')
-          .within(() => {
-            cy.contains(leads.results[0].name)
-            cy.contains(leads.results[0].company.name).should(
-              'have.attr',
-              'href',
-              urls.companies.detail(leads.results[0].company.id)
-            )
-            cy.contains('15 May 2020')
-            cy.contains('Edit').should(
-              'have.attr',
-              'href',
-              urls.pipeline.edit(leads.results[0].id)
-            )
-          })
-      })
-
-      it('should render the second item', () => {
-        cy.get('[data-auto-id="pipelineSubTabNav"]')
-          .get('ol > li')
-          .eq(1)
-          .within(() => {
-            cy.contains(leads.results[1].name)
-            cy.contains(leads.results[1].company.name).should(
-              'have.attr',
-              'href',
-              urls.companies.detail(leads.results[1].company.id)
-            )
-            cy.contains('14 May 2020')
-            cy.contains('Edit').should(
-              'have.attr',
-              'href',
-              urls.pipeline.edit(leads.results[1].id)
-            )
-          })
-      })
-
-      it('should render the third item', () => {
-        cy.get('[data-auto-id="pipelineSubTabNav"]')
-          .get('ol > li:last')
-          .within(() => {
-            cy.contains(leads.results[2].name)
-            cy.contains(leads.results[2].company.name).should(
-              'have.attr',
-              'href',
-              urls.companies.detail(leads.results[2].company.id)
-            )
-            cy.contains('13 May 2020')
-            cy.contains('Edit').should(
-              'have.attr',
-              'href',
-              urls.pipeline.edit(leads.results[2].id)
-            )
-          })
+      const expectedOutcomeList = [
+        { expectedDate: '15 May 2020' },
+        { expectedDate: '14 May 2020' },
+        { expectedDate: '13 May 2020', expectedWinDate: 'May 2021' },
+        { expectedDate: '12 May 2020', expectedWinDate: 'May 2021' },
+        { expectedDate: '11 May 2020' },
+      ]
+      expectedOutcomeList.forEach((expectedData, index) => {
+        it(`should render the item at index ${index}`, () => {
+          assertPipelineItem(index, expectedData, leads)
+        })
       })
     })
   })
@@ -93,22 +113,7 @@ describe('My pipeline app', () => {
 
     context('should render the pipeline list', () => {
       it('should render the first item', () => {
-        cy.get('[data-auto-id="pipelineSubTabNav"]')
-          .get('ol > li:first')
-          .within(() => {
-            cy.contains(inProgress.results[0].name)
-            cy.contains(inProgress.results[0].company.name).should(
-              'have.attr',
-              'href',
-              urls.companies.detail(inProgress.results[0].company.id)
-            )
-            cy.contains('12 May 2020')
-            cy.contains('Edit').should(
-              'have.attr',
-              'href',
-              urls.pipeline.edit(inProgress.results[0].id)
-            )
-          })
+        assertPipelineItem(0, { expectedDate: '12 May 2020' }, inProgress)
       })
     })
   })
@@ -128,22 +133,7 @@ describe('My pipeline app', () => {
 
     context('should render the pipeline list', () => {
       it('should render the first item', () => {
-        cy.get('[data-auto-id="pipelineSubTabNav"]')
-          .get('ol > li:first')
-          .within(() => {
-            cy.contains(win.results[0].name)
-            cy.contains(win.results[0].company.name).should(
-              'have.attr',
-              'href',
-              urls.companies.detail(win.results[0].company.id)
-            )
-            cy.contains('10 May 2020')
-            cy.contains('Edit').should(
-              'have.attr',
-              'href',
-              urls.pipeline.edit(win.results[0].id)
-            )
-          })
+        assertPipelineItem(0, { expectedDate: '10 May 2020' }, win)
       })
     })
   })
