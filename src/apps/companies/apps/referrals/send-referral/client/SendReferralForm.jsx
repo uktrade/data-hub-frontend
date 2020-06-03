@@ -15,7 +15,6 @@ import {
   ErrorText,
   LabelText,
   TextArea,
-  Main,
   InputField,
 } from 'govuk-react'
 import { MEDIA_QUERIES } from '@govuk-react/constants'
@@ -32,7 +31,7 @@ import {
 } from '../../../../../../client/actions'
 import SendReferralConfirmation from './SendReferralConfirmation'
 import LocalHeader from '../../../../../../client/components/LocalHeader/LocalHeader'
-import { Panel } from '../../../../../../client/components/'
+import { Panel, Main } from '../../../../../../client/components/'
 import { companies, dashboard } from '../../../../../../lib/urls'
 
 const StyledTextArea = styled(TextArea)({
