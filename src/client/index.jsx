@@ -11,6 +11,8 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly'
 import createSagaMiddleware from 'redux-saga'
 
+import * as Sentry from '@sentry/browser'
+
 import AddCompanyForm from '../apps/companies/apps/add-company/client/AddCompanyForm'
 import InteractionDetailsForm from '../apps/interactions/apps/details-form/client/InteractionDetailsForm'
 import CompanyActivityFeed from '../apps/companies/apps/activity-feed/client/CompanyActivityFeed'
@@ -195,8 +197,6 @@ sagaMiddleware.run(
   })
 )
 
-const appWrapper = document.getElementById('react-app')
-
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
 }
@@ -211,8 +211,17 @@ function Mount({ selector, children }) {
   })
 }
 
+const appWrapper = document.getElementById('react-app')
+const globalProps = parseProps(appWrapper)
+
+if (globalProps.sentryDsn) {
+  Sentry.init({
+    dsn: globalProps.sentryDsn,
+    environment: globalProps.sentryEnvironment,
+  })
+}
+
 function App() {
-  const globalProps = parseProps(appWrapper)
   return (
     <Provider store={store}>
       <ConnectedRouter history={history}>
