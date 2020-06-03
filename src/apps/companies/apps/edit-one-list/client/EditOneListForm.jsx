@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { ERROR_COLOUR } from 'govuk-colours'
-import { Main } from 'govuk-react'
+import Main from '../../../../../client/components/Main'
 
 import {
   FieldRadios,
