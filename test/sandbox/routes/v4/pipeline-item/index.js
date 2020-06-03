@@ -40,12 +40,21 @@ exports.createUpdatePipelineItem = function(req, res) {
 }
 
 exports.getPipelineItem = function(req, res) {
-  var pipelineItem = pipelineItemLambdaPlc.results[0]
-  if (req.params.pipelineItemId === pipelineItem.id) {
-    res.json(pipelineItem)
+  var pipelineId = req.params.pipelineItemId
+  var lambdaItemOne = pipelineItemLambdaPlc.results[0]
+  var lambdaItemTwo = pipelineItemLambdaPlc.results[1]
+
+  if (pipelineId === lambdaItemOne.id) {
+    res.json(lambdaItemOne)
     return
   }
-  if (req.params.pipelineItemId === 'LEADS') {
+
+  if (pipelineId === lambdaItemTwo.id) {
+    res.json(lambdaItemTwo)
+    return
+  }
+
+  if (pipelineId === 'LEADS') {
     res.json(
       _.assign({}, pipelineCreate, {
         status: 'leads',
@@ -53,7 +62,8 @@ exports.getPipelineItem = function(req, res) {
     )
     return
   }
-  if (req.params.pipelineItemId === 'IN_PROGRESS') {
+
+  if (pipelineId === 'IN_PROGRESS') {
     res.json(
       _.assign({}, pipelineCreate, {
         status: 'in_progress',
@@ -61,7 +71,8 @@ exports.getPipelineItem = function(req, res) {
     )
     return
   }
-  if (req.params.pipelineItemId === 'WIN') {
+
+  if (pipelineId === 'WIN') {
     res.json(
       _.assign({}, pipelineCreate, {
         status: 'win',
@@ -69,5 +80,6 @@ exports.getPipelineItem = function(req, res) {
     )
     return
   }
+
   res.send(404)
 }

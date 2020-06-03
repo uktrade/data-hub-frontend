@@ -4,11 +4,13 @@ const {
   assertFieldRadios,
   assertBreadcrumbs,
   assertFieldInput,
+  assertFieldTypeahead,
 } = require('../../support/assertions')
 
 const selectors = require('../../../../selectors')
 
-const pipelineItem = pipelineItemLambdaPlc.results[0]
+const formSelectors = selectors.pipelineForm
+const [firstItem, secondItem] = pipelineItemLambdaPlc.results
 
 describe('Pipeline edit form', () => {
   context('When pipeline id is incorrect', () => {
@@ -38,42 +40,182 @@ describe('Pipeline edit form', () => {
   })
 
   context('When editing a pipeline item', () => {
-    before(() => {
-      cy.visit(urls.pipeline.edit(pipelineItem.id))
-    })
-
-    it('should render the breadcrumbs', () => {
-      assertBreadcrumbs({
-        Home: urls.dashboard(),
-        'My Pipeline': urls.pipeline.index(),
-        'Edit your pipeline': null,
+    context('With values for only the mandatory fields', () => {
+      before(() => {
+        cy.visit(urls.pipeline.edit(firstItem.id))
       })
-    })
 
-    it('should render the heading', () => {
-      cy.get(selectors.localHeader().heading).should(
-        'have.text',
-        `Edit your pipeline`
-      )
-    })
+      it('should render the breadcrumbs', () => {
+        assertBreadcrumbs({
+          Home: urls.dashboard(),
+          'My Pipeline': urls.pipeline.index(),
+          'Edit your pipeline': null,
+        })
+      })
 
-    it('should render the project name text input', () => {
-      cy.get('#field-name').then((element) => {
-        assertFieldInput({
-          element,
-          label: 'Project name',
-          value: pipelineItem.name,
+      it('should render the heading', () => {
+        cy.get(selectors.localHeader().heading).should(
+          'have.text',
+          `Edit your pipeline`
+        )
+      })
+
+      it('should render the project name text input', () => {
+        cy.get(formSelectors.fields.name).then((element) => {
+          assertFieldInput({
+            element,
+            label: 'Project name',
+            value: firstItem.name,
+          })
+        })
+      })
+
+      it('should render the status radio buttons', () => {
+        cy.get(formSelectors.fields.status).then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Choose a status',
+            optionsCount: 3,
+            value: 'Active',
+          })
+        })
+      })
+
+      it('Should render the likelihood to export radio buttons', () => {
+        cy.get(formSelectors.fields.likelihood).then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Likelihood to export (optional)',
+            optionsCount: 3,
+          })
+        })
+      })
+
+      it('Should render the export sector typeahead', () => {
+        cy.get(formSelectors.fields.sector).then((element) => {
+          assertFieldTypeahead({ element, label: 'Export sector (optional)' })
+        })
+      })
+
+      it('Should render the company contact typeahead', () => {
+        cy.get(formSelectors.fields.contact).then((element) => {
+          assertFieldTypeahead({ element, label: 'Company contact (optional)' })
+        })
+      })
+
+      it('Should render the potential export value input', () => {
+        cy.get(formSelectors.fields.value).then((element) => {
+          assertFieldInput({
+            element,
+            label: 'Potential export value (optional)',
+            hint: 'Amount in GBP',
+          })
         })
       })
     })
 
-    it('should render the status radio buttons', () => {
-      cy.get('#field-category').then((element) => {
-        assertFieldRadios({
-          element,
-          label: 'Choose a status',
-          optionsCount: 3,
-          value: 'Active',
+    context('With values for all fields', () => {
+      before(() => {
+        cy.visit(urls.pipeline.edit(secondItem.id))
+      })
+
+      it('should render the breadcrumbs', () => {
+        assertBreadcrumbs({
+          Home: urls.dashboard(),
+          'My Pipeline': urls.pipeline.index(),
+          'Edit your pipeline': null,
+        })
+      })
+
+      it('should render the heading', () => {
+        cy.get(selectors.localHeader().heading).should(
+          'have.text',
+          `Edit your pipeline`
+        )
+      })
+
+      it('should render the project name text input', () => {
+        cy.get(formSelectors.fields.name).then((element) => {
+          assertFieldInput({
+            element,
+            label: 'Project name',
+            value: secondItem.name,
+          })
+        })
+      })
+
+      it('should render the status radio buttons', () => {
+        cy.get(formSelectors.fields.status).then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Choose a status',
+            optionsCount: 3,
+            value: 'Prospect',
+          })
+        })
+      })
+
+      it('Should render the likelihood to export radio buttons', () => {
+        cy.get(formSelectors.fields.likelihood).then((element) => {
+          assertFieldRadios({
+            element,
+            label: 'Likelihood to export (optional)',
+            optionsCount: 3,
+            value: 'Medium',
+          })
+        })
+      })
+
+      it('Should render the export sector typeahead', () => {
+        cy.get(formSelectors.fields.sector).then((element) => {
+          assertFieldTypeahead({
+            element,
+            label: 'Export sector (optional)',
+            value: 'Advanced Engineering',
+          })
+        })
+      })
+
+      it('Should render the company contact typeahead', () => {
+        cy.get(formSelectors.fields.contact).then((element) => {
+          assertFieldTypeahead({
+            element,
+            label: 'Company contact (optional)',
+            value: 'Dean Cox',
+          })
+        })
+      })
+
+      it('Should render the potential export value input', () => {
+        cy.get(formSelectors.fields.value).then((element) => {
+          assertFieldInput({
+            element,
+            label: 'Potential export value (optional)',
+            hint: 'Amount in GBP',
+            value: 111,
+          })
+        })
+      })
+
+      context('When removing the values', () => {
+        before(() => {
+          cy.server()
+          cy.route('PATCH', '/api-proxy/v4/pipeline-item/*').as(
+            'updatePipelineItem'
+          )
+        })
+
+        it('should call the api with a null value for each field', () => {
+          cy.get(formSelectors.fields.sector).removeAllTypeaheadValues()
+          cy.get(formSelectors.fields.contact).removeAllTypeaheadValues()
+          cy.get(formSelectors.value).clear()
+          cy.contains('button', 'Update').click()
+
+          cy.wait('@updatePipelineItem').then((xhr) => {
+            expect(xhr.request.body.sector).to.equal(null)
+            expect(xhr.request.body.contact).to.equal(null)
+            expect(xhr.request.body.potential_value).to.equal(null)
+          })
         })
       })
     })
@@ -83,7 +225,7 @@ describe('Pipeline edit form', () => {
     'When form is submitted it redirects to the correct tab with a success message',
     () => {
       beforeEach(() => {
-        cy.visit(urls.pipeline.edit(pipelineItem.id))
+        cy.visit(urls.pipeline.edit(firstItem.id))
       })
 
       it('should redirect to the prospect tab in my pipeline', () => {
@@ -122,7 +264,7 @@ describe('Pipeline edit form', () => {
     'When cancelling an edit it should link to the pipeline category',
     () => {
       beforeEach(() => {
-        cy.visit(urls.pipeline.edit(pipelineItem.id))
+        cy.visit(urls.pipeline.edit(firstItem.id))
       })
 
       it('should redirect to the prospect tab in my pipeline', () => {

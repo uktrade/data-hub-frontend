@@ -1,22 +1,12 @@
 const urls = require('../../../../../src/lib/urls')
 const fixtures = require('../../fixtures/index')
+const formSelectors = require('../../../../selectors/pipeline-form')
 
 const { lambdaPlc } = fixtures.company
-
-const selectors = {
-  tabPanel: '[data-auto-id="pipelineSubTabNav"] [role="tabpanel"]',
-  form: {
-    name: 'input[name="name"]',
-    status: {
-      prospect: 'input[value=leads]',
-      active: 'input[value="in_progress"]',
-      won: 'input[value="win"]',
-    },
-  },
-}
+const tabPanelSelector = '[data-auto-id="pipelineSubTabNav"] [role="tabpanel"]'
 
 function assertTabListItem(projectName) {
-  cy.get(selectors.tabPanel)
+  cy.get(tabPanelSelector)
     .find('ol > li')
     .should('have.length', 1)
     .contains(projectName)
@@ -42,7 +32,7 @@ describe('My Pipeline tab on the dashboard', () => {
 
       tabs.forEach((tab) => {
         cy.visit(tab.url)
-        cy.get(selectors.tabPanel).contains(
+        cy.get(tabPanelSelector).contains(
           `There are no companies in the ${tab.status} section of your pipeline`
         )
       })
@@ -55,8 +45,8 @@ describe('My Pipeline tab on the dashboard', () => {
     it('Should add the company and return to the my pipeline tab', () => {
       cy.visit(urls.companies.pipelineAdd(lambdaPlc.id))
 
-      cy.get(selectors.form.name).type(projectName)
-      cy.get(selectors.form.status.prospect).click()
+      cy.get(formSelectors.name).type(projectName)
+      cy.get(formSelectors.status.prospect).click()
       cy.contains('button', 'Add').click()
 
       cy.url().should('include', urls.pipeline.index())
@@ -68,11 +58,11 @@ describe('My Pipeline tab on the dashboard', () => {
         it('Should change the status and go to the active tab', () => {
           cy.visit(urls.pipeline.index())
 
-          cy.get(selectors.tabPanel)
+          cy.get(tabPanelSelector)
             .contains('a', 'Edit')
             .click()
 
-          cy.get(selectors.form.status.active).click()
+          cy.get(formSelectors.status.active).click()
           cy.contains('button', 'Update').click()
 
           cy.url().should('include', urls.pipeline.active())
@@ -88,14 +78,14 @@ describe('My Pipeline tab on the dashboard', () => {
 
             cy.visit(urls.pipeline.active())
 
-            cy.get(selectors.tabPanel)
+            cy.get(tabPanelSelector)
               .contains('a', 'Edit')
               .click()
 
-            cy.get(selectors.form.name)
+            cy.get(formSelectors.name)
               .clear()
               .type(newProjectName)
-            cy.get(selectors.form.status.won).click()
+            cy.get(formSelectors.status.won).click()
             cy.contains('button', 'Update').click()
 
             cy.url().should('include', urls.pipeline.won())
