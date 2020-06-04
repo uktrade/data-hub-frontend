@@ -88,7 +88,7 @@ function PipelineForm({
       />
       <FieldDate
         format="short"
-        label="Expected date for win (Optional)"
+        label="Expected date for win (optional)"
         hint="For example 11 2020"
         name="expected_win_date"
         initialValue={initialValue.expected_win_date}

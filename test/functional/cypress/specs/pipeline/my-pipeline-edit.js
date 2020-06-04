@@ -5,6 +5,7 @@ const {
   assertBreadcrumbs,
   assertFieldInput,
   assertFieldTypeahead,
+  assertFieldDateShort,
 } = require('../../support/assertions')
 
 const selectors = require('../../../../selectors')
@@ -112,6 +113,16 @@ describe('Pipeline edit form', () => {
           })
         })
       })
+
+      it('Should render the expected date for win input', () => {
+        cy.get(formSelectors.fields.expectedWinDate).then((element) => {
+          assertFieldDateShort({
+            element,
+            label: 'Expected date for win (optional)',
+            hint: 'For example 11 2020',
+          })
+        })
+      })
     })
 
     context('With values for all fields', () => {
@@ -209,12 +220,16 @@ describe('Pipeline edit form', () => {
           cy.get(formSelectors.fields.sector).removeAllTypeaheadValues()
           cy.get(formSelectors.fields.contact).removeAllTypeaheadValues()
           cy.get(formSelectors.value).clear()
-          cy.contains('button', 'Update').click()
+          cy.get(formSelectors.fields.expectedWinDate)
+            .find('input')
+            .clear()
 
+          cy.contains('button', 'Update').click()
           cy.wait('@updatePipelineItem').then((xhr) => {
             expect(xhr.request.body.sector).to.equal(null)
             expect(xhr.request.body.contact).to.equal(null)
             expect(xhr.request.body.potential_value).to.equal(null)
+            expect(xhr.request.body.expected_win_date).to.equal(null)
           })
         })
       })
