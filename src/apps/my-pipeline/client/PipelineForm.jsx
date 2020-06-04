@@ -7,6 +7,7 @@ import {
   FormActions,
   FieldInput,
   FieldTypeahead,
+  FieldDate,
 } from 'data-hub-components'
 import Form from '../../../client/components/Form'
 import { ID as STATE_ID } from './state'
@@ -84,6 +85,13 @@ function PipelineForm({
         inputmode="numeric"
         spellcheck="false"
         className="govuk-input--width-10"
+      />
+      <FieldDate
+        format="short"
+        label="Expected date for win (Optional)"
+        hint="For example 11 2020"
+        name="expected_win_date"
+        initialValue={initialValue.expected_win_date}
       />
       <FormActions>
         <Button>{Object.keys(initialValue).length ? 'Update' : 'Add'}</Button>
