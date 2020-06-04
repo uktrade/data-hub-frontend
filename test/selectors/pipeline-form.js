@@ -5,6 +5,9 @@ module.exports = {
     active: 'input[value="in_progress"]',
     won: 'input[value="win"]',
   },
+  likelihood: {
+    low: 'input[value="1"]',
+  },
   value: 'input[name="export_value"]',
   fields: {
     name: '#field-name',

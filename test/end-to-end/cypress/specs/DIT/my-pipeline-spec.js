@@ -5,11 +5,26 @@ const formSelectors = require('../../../../selectors/pipeline-form')
 const { lambdaPlc } = fixtures.company
 const tabPanelSelector = '[data-auto-id="pipelineSubTabNav"] [role="tabpanel"]'
 
-function assertTabListItem(projectName) {
-  cy.get(tabPanelSelector)
-    .find('ol > li')
-    .should('have.length', 1)
-    .contains(projectName)
+function addAssertion(assertion) {
+  return (content) => ({
+    assertion,
+    content,
+  })
+}
+
+function assertTabListItem({ contain = [], notContain = [] }) {
+  const checks = [
+    ...contain.map(addAssertion('contain')),
+    ...notContain.map(addAssertion('not.contain')),
+  ]
+
+  checks.reduce(
+    ($tab, { assertion, content }) => $tab.should(assertion, content),
+    cy
+      .get(tabPanelSelector)
+      .find('ol > li')
+      .should('have.length', 1)
+  )
 }
 
 describe('My Pipeline tab on the dashboard', () => {
@@ -50,7 +65,7 @@ describe('My Pipeline tab on the dashboard', () => {
       cy.contains('button', 'Add').click()
 
       cy.url().should('include', urls.pipeline.index())
-      assertTabListItem(projectName)
+      assertTabListItem({ contain: [projectName] })
     })
 
     context('Edit a company on the pipeline', () => {
@@ -66,7 +81,7 @@ describe('My Pipeline tab on the dashboard', () => {
           cy.contains('button', 'Update').click()
 
           cy.url().should('include', urls.pipeline.active())
-          assertTabListItem(projectName)
+          assertTabListItem({ contain: [projectName] })
         })
       })
 
@@ -89,10 +104,63 @@ describe('My Pipeline tab on the dashboard', () => {
             cy.contains('button', 'Update').click()
 
             cy.url().should('include', urls.pipeline.won())
-            assertTabListItem(newProjectName)
+            assertTabListItem({ contain: [newProjectName] })
           })
         }
       )
+
+      context('Add the optional fields', () => {
+        it('should save the values and go to the won tab', () => {
+          cy.visit(urls.pipeline.won())
+
+          cy.get(tabPanelSelector)
+            .contains('a', 'Edit')
+            .click()
+
+          cy.get(formSelectors.likelihood.low).click()
+          cy.get(formSelectors.fields.sector).selectTypeaheadOption('Aero')
+          cy.get(formSelectors.fields.contact).selectTypeaheadOption('Dean')
+          cy.get(formSelectors.value).type('1000')
+
+          cy.contains('button', 'Update').click()
+
+          cy.url().should('include', urls.pipeline.won())
+          assertTabListItem({
+            contain: [
+              projectName + ' edited',
+              'Project sectorAerospace',
+              'Company contactDean Cox',
+              'Potential export value£1,000',
+            ],
+          })
+        })
+      })
+
+      context('Edit optional fields to remove the values', () => {
+        it('Should remove the values and go to the won tab', () => {
+          cy.visit(urls.pipeline.won())
+
+          cy.get(tabPanelSelector)
+            .contains('a', 'Edit')
+            .click()
+
+          cy.get(formSelectors.fields.sector).removeAllTypeaheadValues()
+          cy.get(formSelectors.fields.contact).removeAllTypeaheadValues()
+          cy.get(formSelectors.value).clear()
+
+          cy.contains('button', 'Update').click()
+
+          cy.url().should('include', urls.pipeline.won())
+          assertTabListItem({
+            contain: [projectName + ' edited', 'Likelihood to succeed - Low'],
+            notContain: [
+              'Project sector',
+              'Company contact',
+              'Potential export value',
+            ],
+          })
+        })
+      })
     })
   })
 })
