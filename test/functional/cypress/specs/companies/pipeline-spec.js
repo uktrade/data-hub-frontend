@@ -7,6 +7,7 @@ const {
   assertFormButtons,
   assertFieldInput,
   assertFieldTypeahead,
+  assertFieldDateShort,
 } = require('../../support/assertions')
 const selectors = require('../../../../selectors')
 
@@ -81,6 +82,16 @@ describe('Company add to pipeline form', () => {
           element,
           label: 'Potential export value (optional)',
           hint: 'Amount in GBP',
+        })
+      })
+    })
+
+    it('Should render the expected date for win input', () => {
+      cy.get(formSelectors.fields.expectedWinDate).then((element) => {
+        assertFieldDateShort({
+          element,
+          label: 'Expected date for win (optional)',
+          hint: 'For example 11 2020',
         })
       })
     })
