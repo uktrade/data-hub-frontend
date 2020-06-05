@@ -357,6 +357,15 @@ describe('Interaction theme', () => {
       ])
     })
 
+    it('should only show non-archived contacts in the contacts field', () => {
+      cy.contains(ELEMENT_CONTACT.label)
+        .next()
+        .next()
+        .click()
+        .find('> div > div > div')
+        .should('have.text', '-- Select contact --Johnny Cakeman')
+    })
+
     it('should validate the form', () => {
       cy.contains('button', 'Add interaction').click()
       cy.contains('h2', 'There is a problem')

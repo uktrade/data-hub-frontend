@@ -156,7 +156,7 @@ async function renderInteractionDetailsForm(req, res, next) {
   try {
     const { token } = req.session
     const { company, interaction, referral, investment, contact } = res.locals
-
+    const contacts = company.contacts.filter((contact) => !contact.archived)
     const [
       services,
       serviceDeliveryStatuses,
@@ -190,7 +190,7 @@ async function renderInteractionDetailsForm(req, res, next) {
           investmentId: get(investment, 'id'),
           referralId: get(referral, 'id'),
           contactId: get(contact, 'id'),
-          contacts: company.contacts.map(transformContactToOption),
+          contacts: contacts.map(transformContactToOption),
           activeEvents: activeEvents.map(transformObjectToOption),
           services,
           serviceDeliveryStatuses,

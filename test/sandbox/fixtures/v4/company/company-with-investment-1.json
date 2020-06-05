@@ -66,6 +66,44 @@
       "archived_by": null,
       "created_on": "2017-02-28T15:00:00Z",
       "modified_on": "2017-06-05T00:00:00Z"
+    },
+    {
+      "id": "8a1138ab-ec7b-497f-b8c3-27fed21694ef",
+      "title": null,
+      "first_name": "Archived",
+      "last_name": "Contact",
+      "name": "Archived Contact",
+      "job_title": null,
+      "company": {
+        "name": "Venus Ltd",
+        "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+      },
+      "adviser": null,
+      "primary": false,
+      "telephone_countrycode": "44",
+      "telephone_number": "67890123432",
+      "email": "archived@cakeman.com",
+      "address_same_as_company": false,
+      "address_1": "82 Ramsgate Rd",
+      "address_2": null,
+      "address_town": "Willington",
+      "address_county": null,
+      "address_country": {
+        "name": "United Kingdom",
+        "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+      },
+      "address_postcode": "NE28 5JB",
+      "telephone_alternative": null,
+      "email_alternative": null,
+      "notes": "This is a dummy contact for testing",
+      "accepts_dit_email_marketing": false,
+      "archived": true,
+      "archived_documents_url_path": "/documents/123",
+      "archived_on": "2018-02-28T15:00:00Z",
+      "archived_reason": null,
+      "archived_by": null,
+      "created_on": "2017-02-28T15:00:00Z",
+      "modified_on": "2017-06-05T00:00:00Z"
     }
   ],
   "employee_range": null,
