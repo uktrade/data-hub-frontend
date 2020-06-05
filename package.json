@@ -95,6 +95,7 @@
     "data-hub-components": "5.6.1",
     "date-fns": "^1.29.0",
     "del-cli": "^3.0.0",
+    "details-element-polyfill": "^2.4.0",
     "dotenv": "^8.2.0",
     "element-closest": "^2.0.2",
     "express": "^4.16.2",
