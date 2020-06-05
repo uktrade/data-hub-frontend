@@ -46,38 +46,30 @@ import CompanyLocalHeader from '../apps/companies/client/CompanyLocalHeader.jsx'
 import InvestmentProjectAdmin from '../apps/investments/views/admin/client/InvestmentProjectAdmin.jsx'
 import FlashMessages from './components/LocalHeader/FlashMessages.jsx'
 import { ConnectedDropdownMenu } from './components/DropdownMenu'
-import tasksSaga from './components/Task/saga'
 import tasks from './components/Task/reducer'
+import rootSaga from './root-saga'
 
 import { ID as COMPANY_LISTS_STATE_ID } from './components/CompanyLists/state'
 import companyListsReducer from './components/CompanyLists/reducer'
-import * as companyListsTasks from './components/CompanyLists/tasks'
 
 import { ID as REFERRALS_DETAILS_STATE_ID } from '../apps/companies/apps/referrals/details/client/state'
 import referralsReducer from '../apps/companies/apps/referrals/details/client/reducer'
-import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
 
 import { ID as EXPORTS_HISTORY_ID } from '../apps/companies/apps/exports/client/ExportsHistory/state'
 import exportsHistoryReducer from '../apps/companies/apps/exports/client/ExportsHistory/reducer'
-import * as exportsHistoryTasks from '../apps/companies/apps/exports/client/ExportsHistory/tasks'
 
 import TabNav from './components/TabNav'
-import referralListTask from './components/ReferralList/task'
+
 import ReferralList from './components/ReferralList'
 import Dashboard from './components/Dashboard'
 
 import { ID as EXPORTS_WINS_ID } from '../apps/companies/apps/exports/client/ExportWins/state'
 import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/reducer'
-import * as exportWinsTasks from '../apps/companies/apps/exports/client/ExportWins/tasks'
 
 import Form from './components/Form'
 
-import {
-  ID as EXPORT_COUNTRIES_EDIT_ID,
-  TASK_NAME as EXPORT_COUNTRIES_EDIT_NAME,
-} from '../apps/companies/apps/exports/client/ExportCountriesEdit/state'
+import { ID as EXPORT_COUNTRIES_EDIT_ID } from '../apps/companies/apps/exports/client/ExportCountriesEdit/state'
 import exportCountriesEditReducer from '../apps/companies/apps/exports/client/ExportCountriesEdit/reducer'
-import * as exportCountriesEditTasks from '../apps/companies/apps/exports/client/ExportCountriesEdit/tasks'
 
 import * as addInteractionFormState from '../apps/interactions/apps/details-form/client/state'
 import * as addInteractionFormTasks from '../apps/interactions/apps/details-form/client/tasks'
@@ -85,37 +77,18 @@ import addInteractionFormReducer from '../apps/interactions/apps/details-form/cl
 
 import * as addCompanyState from '../apps/companies/apps/add-company/client/state'
 import addCompanyPostcodeToRegionReducer from '../apps/companies/apps/add-company/client/reducer'
-import addCompanyPostcodeToRegionTask from '../apps/companies/apps/add-company/client/tasks'
 
-import {
-  ID as ONE_LIST_DETAILS_ID,
-  TASK_SAVE_ONE_LIST_DETAILS,
-} from '../apps/companies/apps/edit-one-list/client/state'
+import { ID as ONE_LIST_DETAILS_ID } from '../apps/companies/apps/edit-one-list/client/state'
 import editOneListReducer from '../apps/companies/apps/edit-one-list/client/reducer'
-import * as editOneListTasks from '../apps/companies/apps/edit-one-list/client/tasks'
 
-import {
-  ID as ADD_TO_PIPELINE_ID,
-  TASK_GET_PIPELINE_BY_COMPANY,
-  TASK_ADD_COMPANY_TO_PIPELINE,
-  TASK_GET_PIPELINE_ITEM,
-  TASK_EDIT_PIPELINE_ITEM,
-} from '../apps/my-pipeline/client/state'
+import { ID as ADD_TO_PIPELINE_ID } from '../apps/my-pipeline/client/state'
 import addToPipelineReducer from '../apps/my-pipeline/client/reducer'
-import * as pipelineTasks from '../apps/my-pipeline/client/tasks'
 
-import {
-  ID as PIPELINE_LIST_ID,
-  TASK_GET_PIPELINE_LIST,
-} from './components/Pipeline/state'
+import { ID as PIPELINE_LIST_ID } from './components/Pipeline/state'
 import pipelineListReducer from './components/Pipeline/reducer'
-import * as pipelineListTasks from './components/Pipeline/tasks'
 
-import {
-  ID as INVESTEMENT_PROJECT_ADMIN_ID,
-  TASK_UPDATE_STAGE,
-} from '../apps/investments/views/admin/client/state'
-import * as investmentAdminTasks from '../apps/investments/views/admin/client/tasks'
+import { ID as INVESTEMENT_PROJECT_ADMIN_ID } from '../apps/investments/views/admin/client/state'
+
 import investmentProjectAdminReducer from '../apps/investments/views/admin/client/reducer'
 
 const sagaMiddleware = createSagaMiddleware()
@@ -173,29 +146,7 @@ const store = createStore(
   )
 )
 
-sagaMiddleware.run(
-  tasksSaga({
-    'Company lists': companyListsTasks.fetchCompanyLists,
-    'Company list': companyListsTasks.fetchCompanyList,
-    'Exports history': exportsHistoryTasks.fetchExportsHistory,
-    'Referral details': referralTasks.fetchReferralDetails,
-    Referrals: referralListTask,
-    'Export wins': exportWinsTasks.fetchExportWins,
-    [TASK_SAVE_ONE_LIST_DETAILS]: editOneListTasks.saveOneListDetails,
-    [EXPORT_COUNTRIES_EDIT_NAME]: exportCountriesEditTasks.saveExportCountries,
-    [TASK_GET_PIPELINE_BY_COMPANY]: pipelineTasks.getPipelineByCompany,
-    [TASK_ADD_COMPANY_TO_PIPELINE]: pipelineTasks.addCompanyToPipeline,
-    [TASK_GET_PIPELINE_LIST]: pipelineListTasks.getPipelineList,
-    [TASK_GET_PIPELINE_ITEM]: pipelineTasks.getPipelineItem,
-    [TASK_EDIT_PIPELINE_ITEM]: pipelineTasks.editPipelineItem,
-    [addCompanyState.TASK_POSTCODE_TO_REGION]: addCompanyPostcodeToRegionTask,
-    [addInteractionFormState.TASK_SAVE_INTERACTION]:
-      addInteractionFormTasks.saveInteraction,
-    [addInteractionFormState.TASK_OPEN_CONTACT_FORM]:
-      addInteractionFormTasks.openContactForm,
-    [TASK_UPDATE_STAGE]: investmentAdminTasks.updateProjectStage,
-  })
-)
+sagaMiddleware.run(rootSaga)
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
