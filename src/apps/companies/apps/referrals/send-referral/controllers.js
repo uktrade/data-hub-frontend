@@ -20,6 +20,7 @@ function renderSendReferralForm(req, res) {
         companyName: name,
         companyId: id,
         cancelUrl: urls.companies.detail(id),
+        sendingAdviserTeamName: req.session.user.dit_team.name,
       },
     }
   )
