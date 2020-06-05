@@ -10,6 +10,7 @@ import SecondaryButton from '../../../../../../client/components/SecondaryButton
 import LocalHeader from '../../../../../../client/components/LocalHeader/LocalHeader'
 import { Main } from '../../../../../../client/components/'
 import { companies, dashboard } from '../../../../../../lib/urls'
+import Analytics from '../../../../../../client/components/Analytics/index.jsx'
 
 const SendReferralConfirmation = ({
   companyName,
@@ -21,7 +22,9 @@ const SendReferralConfirmation = ({
   cancelUrl,
   onBack,
   csrfToken,
+  sendingAdviserTeamName,
 }) => {
+  const recevingAdviserTeamName = adviser.name.split(', ')[1]
   return (
     <>
       <LocalHeader
@@ -59,18 +62,32 @@ const SendReferralConfirmation = ({
           </ListItem>
           <ListItem>The referral might take 24 hours to appear</ListItem>
         </UnorderedList>
-        <form method="post">
-          <input name="recipient" value={adviser.id} type="hidden"></input>
-          <input name="subject" value={subject} type="hidden"></input>
-          <input name="notes" value={notes} type="hidden"></input>
-          <input name="contact" value={contact?.id} type="hidden"></input>
-          <input name="company" value={companyId} type="hidden"></input>
-          <input name="_csrf" value={csrfToken} type="hidden"></input>
-          <FormActions>
-            <Button>Send referral</Button>
-            <Link href={cancelUrl}>Cancel</Link>
-          </FormActions>
-        </form>
+        <Analytics>
+          {(pushData) => (
+            <form
+              method="post"
+              onSubmit={() =>
+                pushData({
+                  event: 'send_referral',
+                  sendingAdviserTeam: sendingAdviserTeamName,
+                  receivingAdviserTeam: recevingAdviserTeamName,
+                  referralSubject: subject,
+                })
+              }
+            >
+              <input name="recipient" value={adviser.id} type="hidden"></input>
+              <input name="subject" value={subject} type="hidden"></input>
+              <input name="notes" value={notes} type="hidden"></input>
+              <input name="contact" value={contact?.id} type="hidden"></input>
+              <input name="company" value={companyId} type="hidden"></input>
+              <input name="_csrf" value={csrfToken} type="hidden"></input>
+              <FormActions>
+                <Button>Send referral</Button>
+                <Link href={cancelUrl}>Cancel</Link>
+              </FormActions>
+            </form>
+          )}
+        </Analytics>
       </Main>
     </>
   )
