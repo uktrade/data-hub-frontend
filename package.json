@@ -74,7 +74,7 @@
     "@storybook/addons": "^5.3.18",
     "@storybook/react": "^5.3.18",
     "@uktrade/datahub-header": "1.2.1",
-    "autoprefixer": "^9.7.4",
+    "autoprefixer": "^9.8.0",
     "axios": "^0.18.0",
     "babel-loader": "^8.1.0",
     "basic-auth": "^2.0.0",
