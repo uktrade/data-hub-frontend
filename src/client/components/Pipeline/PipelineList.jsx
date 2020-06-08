@@ -3,7 +3,9 @@ import { connect } from 'react-redux'
 
 import ListItem from '@govuk-react/list-item'
 import InsetText from '@govuk-react/inset-text'
+import Link from '@govuk-react/link'
 
+import urls from '../../../lib/urls'
 import StyledOrderedList from '../StyledOrderedList'
 import Task from '../Task'
 import { state2props, ID as STATE_ID, TASK_GET_PIPELINE_LIST } from './state'
@@ -34,7 +36,12 @@ const PipelineList = ({ status, statusText, items }) => {
             <InsetText>
               There are no companies in the {statusText} section of your
               pipeline. You can add companies to your pipeline from the company
-              page.
+              page. To find out more{' '}
+              <Link href={urls.external.helpCentre.pipeline()}>
+                {' '}
+                visit the help centre article on how to use My Pipeline
+              </Link>
+              .
             </InsetText>
           )}
         </StyledOrderedList>

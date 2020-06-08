@@ -68,6 +68,7 @@ function assertPipelineItem(
       }
     })
 }
+
 describe('My pipeline app', () => {
   context('When viewing the propspect status', () => {
     before(() => {
