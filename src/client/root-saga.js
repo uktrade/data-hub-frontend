@@ -26,6 +26,7 @@ import { TASK_UPDATE_STAGE } from '../apps/investments/views/admin/client/state'
 import * as investmentAdminTasks from '../apps/investments/views/admin/client/tasks'
 import { TASK_POSTCODE_TO_REGION } from '../apps/companies/apps/add-company/client/state'
 import {
+  TASK_ACTIVE_EVENTS,
   TASK_SAVE_INTERACTION,
   TASK_OPEN_CONTACT_FORM,
 } from '../apps/interactions/apps/details-form/client/state'
@@ -49,6 +50,7 @@ export default function* rootSaga() {
       [TASK_GET_PIPELINE_ITEM]: pipelineTasks.getPipelineItem,
       [TASK_EDIT_PIPELINE_ITEM]: pipelineTasks.editPipelineItem,
       [TASK_POSTCODE_TO_REGION]: addCompanyPostcodeToRegionTask,
+      [TASK_ACTIVE_EVENTS]: addInteractionFormTasks.fetchActiveEvents,
       [TASK_SAVE_INTERACTION]: addInteractionFormTasks.saveInteraction,
       [TASK_OPEN_CONTACT_FORM]: addInteractionFormTasks.openContactForm,
       [TASK_UPDATE_STAGE]: investmentAdminTasks.updateProjectStage,
