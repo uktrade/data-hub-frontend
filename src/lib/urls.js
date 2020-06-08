@@ -78,6 +78,10 @@ module.exports = {
       teams:
         'https://people.trade.gov.uk/teams/department-for-international-trade',
     },
+    helpCentre: {
+      pipeline: () =>
+        'https://data-services-help.trade.gov.uk/data-hub/how-articles/account-management/my-pipeline/',
+    },
   },
   dashboard: url('/'),
   companies: {

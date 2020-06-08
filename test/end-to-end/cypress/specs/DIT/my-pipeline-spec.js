@@ -47,9 +47,16 @@ describe('My Pipeline tab on the dashboard', () => {
 
       tabs.forEach((tab) => {
         cy.visit(tab.url)
-        cy.get(tabPanelSelector).contains(
-          `There are no companies in the ${tab.status} section of your pipeline`
-        )
+        cy.get(tabPanelSelector)
+          .should(
+            'contain',
+            `There are no companies in the ${tab.status} section of your pipeline`
+          )
+          .contains(
+            'a',
+            'visit the help centre article on how to use My Pipeline'
+          )
+          .should('have.attr', 'href', urls.external.helpCentre.pipeline())
       })
     })
   })
