@@ -162,6 +162,7 @@ const StepInteractionDetails = ({
   countries,
   onOpenContactForm,
   activeEvents,
+  activeEvent,
 }) => {
   const { values = {} } = useFormContext()
   const serviceContext = getServiceContext(
@@ -297,6 +298,7 @@ const StepInteractionDetails = ({
                   name="event"
                   placeholder="-- Select event --"
                   required="Select a specific event"
+                  initialValue={activeEvent}
                   options={activeEvents}
                 />
               )}
@@ -438,6 +440,7 @@ StepInteractionDetails.propTypes = {
   communicationChannels: typeaheadOptionsListProp.isRequired,
   countries: typeaheadOptionsListProp.isRequired,
   activeEvents: typeaheadOptionsListProp,
+  activeEvent: typeaheadOptionProp,
 }
 
 export default connect((state) => {
