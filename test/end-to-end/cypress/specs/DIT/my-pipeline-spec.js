@@ -128,6 +128,12 @@ describe('My Pipeline tab on the dashboard', () => {
           cy.get(formSelectors.fields.sector).selectTypeaheadOption('Aero')
           cy.get(formSelectors.fields.contact).selectTypeaheadOption('Dean')
           cy.get(formSelectors.value).type('1000')
+          cy.get(formSelectors.fields.expectedWinDate)
+            .find('input')
+            .then((element) => {
+              cy.wrap(element[0]).type('06')
+              cy.wrap(element[1]).type('2025')
+            })
 
           cy.contains('button', 'Update').click()
 
@@ -138,6 +144,7 @@ describe('My Pipeline tab on the dashboard', () => {
               'Project sectorAerospace',
               'Company contactDean Cox',
               'Potential export value£1,000',
+              'Expected date for winJun 2025',
             ],
           })
         })
@@ -154,6 +161,9 @@ describe('My Pipeline tab on the dashboard', () => {
           cy.get(formSelectors.fields.sector).removeAllTypeaheadValues()
           cy.get(formSelectors.fields.contact).removeAllTypeaheadValues()
           cy.get(formSelectors.value).clear()
+          cy.get(formSelectors.fields.expectedWinDate)
+            .find('input')
+            .clear()
 
           cy.contains('button', 'Update').click()
 
@@ -164,6 +174,7 @@ describe('My Pipeline tab on the dashboard', () => {
               'Project sector',
               'Company contact',
               'Potential export value',
+              'Expected date for win',
             ],
           })
         })
