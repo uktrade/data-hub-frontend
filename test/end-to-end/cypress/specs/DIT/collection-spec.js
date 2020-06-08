@@ -12,7 +12,7 @@ const checkCollection = () => {
   assertCollection(selectors.collection.headerCount, selectors.collection.items)
 }
 
-describe('Collection', () => {
+describe.skip('Collection', () => {
   describe('contact', () => {
     before(() => {
       cy.visit(companies.orders(fixtures.company.lambdaPlc.id))
