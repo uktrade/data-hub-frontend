@@ -1,6 +1,7 @@
 import {
-  ADD_INTERACTION_FORM__SUBMIT,
   TASK__ERROR,
+  ADD_INTERACTION_FORM__SUBMIT,
+  ADD_INTERACTION__ACTIVE_EVENTS,
 } from '../../../../../client/actions'
 
 export default (state = {}, { type, result }) => {
@@ -19,6 +20,12 @@ export default (state = {}, { type, result }) => {
           : undefined,
         // Keep showing the loader while we redirect user to a new page.
         progress: true,
+      }
+
+    case ADD_INTERACTION__ACTIVE_EVENTS:
+      return {
+        ...state,
+        activeEvents: result,
       }
 
     default:
