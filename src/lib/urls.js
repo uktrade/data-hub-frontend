@@ -210,6 +210,8 @@ module.exports = {
   },
   interactions: {
     ...createInteractionsSubApp('/interactions'),
+    activeEvents: url('/activeEvents'),
+    activeEventsData: url('/interactions', '/activeEvents'),
   },
   investments: {
     index: url('/investments'),

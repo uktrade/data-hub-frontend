@@ -1,7 +1,10 @@
 const router = require('express').Router()
 
 const urls = require('../../../../lib/urls')
-const { renderInteractionDetailsForm } = require('./controllers')
+const {
+  fetchActiveEvents,
+  renderInteractionDetailsForm,
+} = require('./controllers')
 const { getInteractionDetails } = require('../../middleware/details')
 
 router.param('interactionId', getInteractionDetails)
@@ -13,5 +16,7 @@ router
   .get(renderInteractionDetailsForm)
 
 router.route(urls.interactions.edit.route).get(renderInteractionDetailsForm)
+
+router.get(urls.interactions.activeEventsData.route, fetchActiveEvents)
 
 module.exports = router
