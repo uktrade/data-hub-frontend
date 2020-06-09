@@ -1,6 +1,8 @@
+const { keys, forEach } = require('lodash')
+
 const selectors = require('../../../selectors')
 
-const { keys, forEach } = require('lodash')
+const PAGE_SIZE = 10
 
 const assertError = (message) => {
   cy.get('body').should('contain', message)
@@ -10,9 +12,22 @@ const assertCollection = (headerCountSelector, collectionItemsSelector) => {
   cy.get(headerCountSelector)
     .invoke('text')
     .then((headerCount) => {
+      const hasMoreThanOnePage = headerCount > PAGE_SIZE
+
       cy.get(collectionItemsSelector).should((collectionItems) => {
-        expect(headerCount).to.eq(collectionItems.length.toString())
+        expect(collectionItems.length).to.eq(
+          hasMoreThanOnePage ? PAGE_SIZE : Number(headerCount)
+        )
       })
+
+      if (hasMoreThanOnePage) {
+        const totalPages = Math.ceil(headerCount / PAGE_SIZE)
+        cy.get('.c-collection__pagination-summary').contains(
+          `Page 1 of ${totalPages}`
+        )
+
+        cy.get('.c-pagination__label--next').should('be.visible')
+      }
     })
 }
 
