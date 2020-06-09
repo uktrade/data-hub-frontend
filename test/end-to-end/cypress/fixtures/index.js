@@ -5,6 +5,7 @@ module.exports = {
     oneListCorp: require('./company/one-list-corp'),
     archivedLtd: require('./company/archived-ltd'),
     teddyBearExpo: require('./company/teddy-bear-expo'),
+    emptyUkRegionLtd: require('./company/empty-uk-region-ltd.json'),
   },
   contact: {
     johnnyCakeman: require('./contact/johnny-cakeman'),
