@@ -2,6 +2,7 @@ import axios from 'axios'
 import { omit, pick } from 'lodash'
 
 import urls from '../../../../../lib/urls'
+import getContactFromQuery from '../../../../../client/utils/getContactFromQuery'
 import { INTERACTION_STATUS } from '../../../constants'
 import { EXPORT_INTEREST_STATUS_VALUES, OPTION_NO } from '../../../../constants'
 import { ID as STORE_ID } from './state'
@@ -72,7 +73,21 @@ export function openContactForm({ values, currentStep, url }) {
 
 export function restoreState() {
   const stateFromStorage = window.sessionStorage.getItem(STORE_ID)
-  return stateFromStorage ? JSON.parse(stateFromStorage) : {}
+
+  if (!stateFromStorage) {
+    return {}
+  }
+
+  if (getContactFromQuery.label && getContactFromQuery.value) {
+    const updatedState = JSON.parse(stateFromStorage)
+    updatedState.values.contact.push({
+      label: getContactFromQuery.label,
+      value: getContactFromQuery.value,
+    })
+    return updatedState
+  }
+
+  return JSON.parse(stateFromStorage)
 }
 
 export function saveInteraction({ values, companyId, referralId }) {

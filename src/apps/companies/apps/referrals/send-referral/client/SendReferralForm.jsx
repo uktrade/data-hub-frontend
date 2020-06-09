@@ -1,77 +1,49 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { throttle } from 'lodash'
-import axios from 'axios'
-import styled from 'styled-components'
+import { LoadingBox } from 'govuk-react'
 
-import { NewWindowLink, FormActions, Typeahead } from 'data-hub-components'
-import {
-  H4,
-  Label,
-  Button,
-  Link,
-  HintText,
-  ErrorText,
-  LabelText,
-  TextArea,
-  InputField,
-} from 'govuk-react'
-import { MEDIA_QUERIES } from '@govuk-react/constants'
-import { WHITE, LIGHT_BLUE_50 } from 'govuk-colours'
-
-import {
-  SEND_REFERRAL_FORM__CONTINUE,
-  SEND_REFERRAL_FORM__BACK,
-  SEND_REFERRAL_FORM__ERROR,
-  SEND_REFERRAL_FORM__SUBJECT_CHANGE,
-  SEND_REFERRAL_FORM__ADVISER_CHANGE,
-  SEND_REFERRAL_FORM__CONTACT_CHANGE,
-  SEND_REFERRAL_FORM__TEXTAREA_CHANGE,
-} from '../../../../../../client/actions'
-import SendReferralConfirmation from './SendReferralConfirmation'
+import { SEND_REFERRAL_FORM__SUBMIT } from '../../../../../../client/actions'
+import StepReferralDetails from './StepReferralDetails'
+import StepReferralConfirmation from './StepReferralConfirmation'
 import LocalHeader from '../../../../../../client/components/LocalHeader/LocalHeader'
-import { Panel, Main } from '../../../../../../client/components/'
+import { Main } from '../../../../../../client/components/'
 import { companies, dashboard } from '../../../../../../lib/urls'
+import Form from '../../../../../../client/components/Form'
+import Task from '../../../../../../client/components/Task'
+import Analytics from '../../../../../../client/components/Analytics/index.jsx'
+import { addMessageWithBody } from '../../../../../../client/utils/flash-messages'
 
-const StyledTextArea = styled(TextArea)({
-  textarea: {
-    [MEDIA_QUERIES.LARGESCREEN]: {
-      width: '100%',
-    },
-  },
-})
-
-const StyledPanel = styled(Panel)`
-  a:link,
-  a:visited {
-    color: ${WHITE};
-  }
-  a:hover {
-    color: ${LIGHT_BLUE_50};
-  }
-`
+import {
+  ID as STATE_ID,
+  TASK_OPEN_REFERRALS_CONTACT_FORM,
+  TASK_SAVE_REFERRAL,
+} from './state'
 
 const SendReferralForm = ({
+  cancelUrl,
   companyContacts,
   companyName,
   companyId,
-  cancelUrl,
-  onContinue,
-  onError,
   subject,
   notes,
   contact,
   adviser,
-  emptyFields = [],
-  onAdviserChange,
-  onContactChange,
+  sendingAdviserTeamName,
+  flashMessages,
+  progress = false,
+  formSubmitted = false,
 }) => {
-  const emptyAdviserError = emptyFields.includes('adviser')
-  const emptySubjectError = emptyFields.includes('subject')
-  const emptyNotesError = emptyFields.includes('notes')
-  const MAX_LENGTH = 255
-
+  useEffect(() => {
+    if (formSubmitted) {
+      addMessageWithBody(
+        'success',
+        'Referral sent.',
+        `You can <a href=${companies.referrals.list()}>see all of your referrals on your Homepage</a>.`
+      )
+      window.location.href = companies.detail(companyId)
+    }
+  }, [formSubmitted])
   return (
     <>
       <LocalHeader
@@ -82,148 +54,73 @@ const SendReferralForm = ({
           { link: companies.detail(companyId), text: companyName },
           { text: 'Send a referral' },
         ]}
+        flashMessages={flashMessages}
       />
 
       <Main>
-        <StyledPanel title="When to send a referral">
-          Referrals are for when you want to ask another DIT advisor to help out
-          an account you are working on.
-          <br />
-          <NewWindowLink href="https://data-services-help.trade.gov.uk/data-hub/updates/announcements/improving-collaboration-internal-referrals/">
-            Read more guidance here
-          </NewWindowLink>
-        </StyledPanel>
-        <form
-          onSubmit={(event) => {
-            event.preventDefault()
-            const emptyFields = [
-              (!event?.target?.subject?.value ||
-                event?.target?.subject?.value?.length >= MAX_LENGTH) &&
-                'subject',
-              !adviser && 'adviser',
-              !event.target.notes.value && 'notes',
-            ].filter(Boolean)
-            emptyFields.length
-              ? onError(emptyFields)
-              : onContinue({
-                  adviser,
-                  subject: event.target.subject.value,
-                  notes: event.target.notes.value,
-                  contact,
-                })
+        <Task>
+          {(getTask) => {
+            const saveTask = getTask(TASK_SAVE_REFERRAL, STATE_ID)
+            const openContactFormTask = getTask(
+              TASK_OPEN_REFERRALS_CONTACT_FORM,
+              STATE_ID
+            )
+
+            return (
+              <Analytics>
+                {(pushData) => (
+                  <Form
+                    id={STATE_ID}
+                    onSubmit={(values) => {
+                      const receivingAdviserTeamName = values.adviser.label?.split(
+                        ', '
+                      )[1]
+                      pushData({
+                        event: 'send_referral',
+                        sendingAdviserTeam: sendingAdviserTeamName,
+                        receivingAdviserTeam: receivingAdviserTeamName,
+                        referralSubject: values.subject,
+                      })
+                      saveTask.start({
+                        payload: {
+                          values,
+                          companyId,
+                        },
+                        onSuccessDispatch: SEND_REFERRAL_FORM__SUBMIT,
+                      })
+                    }}
+                    initialValues={{ adviser, subject, notes, contact }}
+                    submissionError={saveTask.errorMessage}
+                  >
+                    {() => (
+                      <LoadingBox loading={progress}>
+                        <Form.Step name="referral_details" forwardButton={null}>
+                          {() => (
+                            <StepReferralDetails
+                              cancelUrl={cancelUrl}
+                              companyContacts={companyContacts}
+                              companyId={companyId}
+                              openContactFormTask={openContactFormTask}
+                            />
+                          )}
+                        </Form.Step>
+                        <Form.Step
+                          name="referral_confirmation"
+                          forwardButton={null}
+                          backButton={null}
+                        >
+                          {() => (
+                            <StepReferralConfirmation cancelUrl={cancelUrl} />
+                          )}
+                        </Form.Step>
+                      </LoadingBox>
+                    )}
+                  </Form>
+                )}
+              </Analytics>
+            )
           }}
-        >
-          <H4>Who do you want to refer this company to?</H4>
-          <Label error={emptyAdviserError}>
-            <LabelText>Adviser</LabelText>
-            {emptyAdviserError && (
-              <ErrorText>Select an adviser for the referral</ErrorText>
-            )}
-            <HintText>
-              This can be an adviser at post, a sector specialist or an
-              international trade advisor. If you're not sure, you can{' '}
-              <NewWindowLink href="https://people.trade.gov.uk/teams/department-for-international-trade">
-                find the right team and person on Digital Workspace
-              </NewWindowLink>
-              .
-            </HintText>
-            <Typeahead
-              onChange={(event) =>
-                onAdviserChange({
-                  name: event.label,
-                  id: event.value,
-                })
-              }
-              error={emptyAdviserError}
-              defaultValue={adviser && { label: adviser.name }}
-              placeholder="Search for an adviser"
-              name="adviser"
-              loadOptions={throttle(
-                (searchString) =>
-                  axios
-                    .get('/api-proxy/adviser/', {
-                      params: {
-                        autocomplete: searchString,
-                        permission__has:
-                          'company_referral.change_companyreferral',
-                      },
-                    })
-                    .then(({ data: { results } }) =>
-                      results
-                        .filter((adviser) => adviser?.name.trim().length)
-                        .map(({ id, name, dit_team }) => ({
-                          label: `${name}${
-                            dit_team ? ', ' + dit_team.name : ''
-                          }`,
-                          value: id,
-                        }))
-                    ),
-                500
-              )}
-            />
-          </Label>
-          <br />
-          <H4>Referral notes</H4>
-          <InputField
-            meta={{
-              touched: true,
-              error:
-                emptySubjectError &&
-                `Enter a subject for the referral (Max ${MAX_LENGTH} characters)`,
-            }}
-            input={{ name: 'subject', defaultValue: subject }}
-          >
-            Subject
-          </InputField>
-          <br />
-          <StyledTextArea
-            hint="Include reasons you're referring this company and any specific opportunities."
-            meta={{
-              touched: true,
-              error: emptyNotesError && 'Enter notes for the referral',
-            }}
-            input={{ name: 'notes', defaultValue: notes }}
-          >
-            Notes
-          </StyledTextArea>
-          <br />
-          <Label>
-            <LabelText>Company contact (optional)</LabelText>
-            <HintText>
-              Who should the recipient of the referral talk to?
-            </HintText>
-            <Typeahead
-              isMulti={false}
-              isClearable={true}
-              name="contact"
-              options={companyContacts.map((contact) => ({
-                label: contact.name,
-                value: contact.id,
-              }))}
-              noOptionsMessage={() => 'This company has no contacts'}
-              onChange={(selectedOption) =>
-                onContactChange(
-                  selectedOption && {
-                    name: selectedOption.label,
-                    id: selectedOption.value,
-                  }
-                )
-              }
-              defaultValue={contact && { label: contact.name }}
-              placeholder="Select a contact"
-              /* When a contact is removed a warning may appear stating the component switches between controlled
-            and uncontrolled (despite the value being controlled by an onChange).
-            The react-select library, used for the typeahead component, doesn't provide a way of controlling
-            the input value under the hood and a fix for the warning couldn't be found.
-            */
-            />
-          </Label>
-          <br />
-          <FormActions>
-            <Button>Continue</Button>
-            <Link href={cancelUrl}>Cancel</Link>
-          </FormActions>
-        </form>
+        </Task>
       </Main>
     </>
   )
@@ -237,56 +134,10 @@ SendReferralForm.propTypes = {
     })
   ),
   cancelUrl: PropTypes.string.isRequired,
+  sendingAdviserTeamName: PropTypes.string,
 }
 
-export default connect(
-  (state) => ({
-    ...state.sendReferral,
-  }),
-  (dispatch) => ({
-    onError: (emptyFields) => {
-      dispatch({
-        type: SEND_REFERRAL_FORM__ERROR,
-        emptyFields,
-      })
-    },
-    onAdviserChange: (adviser) => {
-      dispatch({
-        type: SEND_REFERRAL_FORM__ADVISER_CHANGE,
-        adviser,
-      })
-    },
-    onSubjectChange: () => {
-      dispatch({
-        type: SEND_REFERRAL_FORM__SUBJECT_CHANGE,
-      })
-    },
-    onTextAreaChange: () => {
-      dispatch({
-        type: SEND_REFERRAL_FORM__TEXTAREA_CHANGE,
-      })
-    },
-    onContactChange: (contact) => {
-      dispatch({
-        type: SEND_REFERRAL_FORM__CONTACT_CHANGE,
-        contact,
-      })
-    },
-    onContinue: (formData) => {
-      dispatch({
-        type: SEND_REFERRAL_FORM__CONTINUE,
-        ...formData,
-      })
-    },
-    onBack: () =>
-      dispatch({
-        type: SEND_REFERRAL_FORM__BACK,
-      }),
-  })
-)(({ confirm, ...props }) =>
-  confirm ? (
-    <SendReferralConfirmation {...props} />
-  ) : (
-    <SendReferralForm {...props} />
-  )
-)
+export default connect(({ values, ...state }) => ({
+  ...state[STATE_ID],
+  values,
+}))(({ ...props }) => <SendReferralForm {...props} />)
