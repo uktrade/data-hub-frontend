@@ -67,10 +67,11 @@ var createInteraction = function(req, res) {
     }
   }
 
-  if (req.body.were_countries_discussed == 'true') {
-    var newInteraction = JSON.parse(JSON.stringify(interactionCreate))
-    newInteraction.were_countries_discussed = true
-    return res.json(newInteraction)
+  if (req.body.were_countries_discussed === 'true') {
+    return res.json(201, {
+      ...interactionCreate,
+      were_countries_discussed: true,
+    })
   }
 
   res.json(201, interactionCreate)

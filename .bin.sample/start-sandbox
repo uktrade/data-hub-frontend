@@ -1,3 +1,3 @@
 cd test/sandbox
 docker build -t data-hub-sandbox .
-docker run --rm --name data-hub-sandbox -it -p 8001:8001 data-hub-sandbox
+docker run --rm --name data-hub-sandbox -it -p 8001:8000 data-hub-sandbox

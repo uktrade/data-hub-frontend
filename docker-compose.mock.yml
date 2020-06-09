@@ -1,10 +1,10 @@
 version: '3'
 services:
-  dev-frontend:
+  frontend:
     build:
       context: .
     volumes:
-      - .:/usr/src/app
+      - ./src:/usr/src/app/src
     ports:
       - 3001:3000
       - 9230:9229
@@ -14,12 +14,9 @@ services:
     env_file: mock-stack.env
 
   mock-backend:
-    build:
-      context: ./test/sandbox
+    build: ./test/sandbox
     volumes:
-      - './test/sandbox:/usr/src/app/test/sandbox'
-    ports:
-      - 8002:8001
+      - './test/sandbox:/usr/src/app'
 
   redis:
     image: redis:3.2

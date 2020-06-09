@@ -80,7 +80,10 @@ exports.companies = function(req, res) {
     '079942718': companyDnBGlobalUltimateSubsidiaries,
   }
 
-  if (req.query.global_headquarters_id) {
+  if (
+    req.query.global_headquarters_id &&
+    req.query.global_headquarters_id in subsidiaries
+  ) {
     res.json(subsidiaries[req.query.global_headquarters_id])
   } else if (req.query.global_ultimate_duns_number) {
     res.json(subsidiaries[req.query.global_ultimate_duns_number])
