@@ -1,0 +1,5 @@
+export const ID = 'referralForm'
+
+export const TASK_SAVE_REFERRAL = 'TASK_SAVE_REFERRAL'
+export const TASK_OPEN_REFERRALS_CONTACT_FORM =
+  'TASK_OPEN_REFERRALS_CONTACT_FORM'

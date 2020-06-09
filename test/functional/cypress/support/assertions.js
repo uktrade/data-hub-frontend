@@ -150,7 +150,13 @@ const assertFieldRadios = ({ element, label, value, optionsCount }) =>
           .should('have.text', value)
     )
 
-const assertFieldTypeahead = ({ element, label, value, placeholder = '' }) =>
+const assertFieldTypeahead = ({
+  element,
+  label,
+  value,
+  placeholder = '',
+  hint = '',
+}) =>
   cy.wrap(element).should(($typeahead) => {
     placeholder && expect($typeahead).to.contain(placeholder)
 
@@ -159,6 +165,8 @@ const assertFieldTypeahead = ({ element, label, value, placeholder = '' }) =>
       : expect($typeahead.find('label')).to.not.exist
 
     value && expect($typeahead).to.contain(value)
+
+    hint && expect($typeahead).to.contain(hint)
   })
 
 const assertFieldInput = ({ element, label, hint, value }) =>

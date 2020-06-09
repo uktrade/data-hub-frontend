@@ -240,7 +240,8 @@ const StepInteractionDetails = ({
             <Link
               onClick={onOpenContactForm}
               href={urls.contacts.create(companyId, {
-                from_interaction: window.location.pathname,
+                origin_url: window.location.pathname,
+                origin_type: 'interaction',
               })}
             >
               add a new contact
