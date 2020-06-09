@@ -55,9 +55,11 @@ const FlashMessages = ({ flashMessages }) => {
       {Object.entries(
         !isEmpty(flashMessages) ? flashMessages : flashMessagesFromStorage
       ).map(([type, messages]) => {
-        // Example "success:with-body" -  If the string you pass in the first argument "type"
-        // has a colon then the message argument accepts two props in an object, one for the heading
-        // and one for the body. The first part of the string is used to indicate colour, success - green, info - blue
+        /*
+        Example "success:with-body" -  If the string you pass in the first argument "type"
+        has a colon then the message argument accepts two props in an object, one for the heading
+        and one for the body. The first part of the string is used to indicate colour, success - green, info - blue
+        */
         const parts = String(type).split(':')
         return parts.length > 1
           ? messages.map(({ body, heading }) => (
