@@ -6,7 +6,7 @@ const { companies, contacts } = require('../../../../../src/lib/urls')
 
 const { assertKeyValueTable } = require('../../support/assertions')
 
-const { oneListCorp, lambdaPlc } = fixtures.company
+const { oneListCorp, lambdaPlc, emptyUkRegionLtd } = fixtures.company
 
 describe('Advisors', () => {
   const globalManagerTable = 2
@@ -84,42 +84,56 @@ describe('Export', () => {
   }
 
   describe('Edit exports', () => {
-    context('Selecting a value', () => {
-      it('Should update the export win category', () => {
-        cy.visit(companies.exports.edit(lambdaPlc.id))
+    function runEditTests() {
+      context('Selecting a value', () => {
+        it('Should update the export win category', () => {
+          cy.get(selectors.companyExport.winCategory).select('Export growth')
+          cy.contains('Save and return').click()
 
-        cy.get(selectors.companyExport.winCategory).select('Export growth')
-        cy.contains('Save and return').click()
-
-        assertTable([
-          'Export growth',
-          'No profile',
-          'No score given',
-          'None',
-          'None',
-          'None',
-        ])
+          assertTable([
+            'Export growth',
+            'No profile',
+            'No score given',
+            'None',
+            'None',
+            'None',
+          ])
+        })
       })
+
+      context('Selecting no value', () => {
+        it('Should remove the export win category', () => {
+          cy.get(selectors.companyExport.winCategory).select(
+            '-- Select category --'
+          )
+          cy.contains('Save and return').click()
+
+          assertTable([
+            'None',
+            'No profile',
+            'No score given',
+            'None',
+            'None',
+            'None',
+          ])
+        })
+      })
+    }
+
+    context('With lambdaPlc (which has a UK Region set)', () => {
+      beforeEach(() => {
+        cy.visit(companies.exports.edit(lambdaPlc.id))
+      })
+
+      runEditTests()
     })
 
-    context('Selecting no value', () => {
-      it('Should remove the export win category', () => {
-        cy.visit(companies.exports.edit(lambdaPlc.id))
-
-        cy.get(selectors.companyExport.winCategory).select(
-          '-- Select category --'
-        )
-        cy.contains('Save and return').click()
-
-        assertTable([
-          'None',
-          'No profile',
-          'No score given',
-          'None',
-          'None',
-          'None',
-        ])
+    context('With emptyUkRegionLtd (which does not have UK Region set)', () => {
+      beforeEach(() => {
+        cy.visit(companies.exports.edit(emptyUkRegionLtd.id))
       })
+
+      runEditTests()
     })
   })
 
