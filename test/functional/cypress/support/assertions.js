@@ -272,6 +272,19 @@ const assertFieldDate = ({ element, label, value = {} }) => {
   value.year && expect(inputs[2]).to.have.value(value.year)
 }
 
+const assertFieldDateShort = ({ element, label, value = {} }) => {
+  const labels = element.find('label')
+  const inputs = element.find('input')
+
+  label && expect(labels[0]).to.have.text(label)
+
+  expect(labels[1]).to.have.text('Month')
+  expect(labels[2]).to.have.text('Year')
+
+  value.month && expect(inputs[0]).to.have.value(value.month)
+  value.year && expect(inputs[1]).to.have.value(value.year)
+}
+
 const assertFormActions = ({ element, buttons }) =>
   cy
     .wrap(element)
@@ -351,6 +364,7 @@ module.exports = {
   assertFieldUneditable,
   assertFormActions,
   assertFieldDate,
+  assertFieldDateShort,
   assertFormFields,
   assertDetails,
   assertLocalHeader,

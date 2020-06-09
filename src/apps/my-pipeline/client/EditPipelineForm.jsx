@@ -18,9 +18,11 @@ import ProgressIndicator from '../../../client/components/ProgressIndicator'
 import PipelineForm from './PipelineForm'
 import { PipelineItemPropType } from './constants'
 import { getPipelineUrl } from './utils'
+import moment from 'moment'
 
 function formatInitialValues(values) {
   const { sector, contact } = values
+  const expectedWinDate = moment(values.expected_win_date, 'YYYY-MM-DD', true)
   return {
     name: values.name,
     category: values.status,
@@ -28,6 +30,15 @@ function formatInitialValues(values) {
     sector: sector ? { value: sector.id, label: sector.segment } : null,
     contact: contact ? { value: contact.id, label: contact.name } : null,
     export_value: values.potential_value,
+    expected_win_date: expectedWinDate.isValid()
+      ? {
+          month: expectedWinDate.format('MM'),
+          year: expectedWinDate.format('YYYY'),
+        }
+      : {
+          month: '',
+          year: '',
+        },
   }
 }
 
