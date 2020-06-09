@@ -22,10 +22,11 @@ describe('Lead advisers', () => {
       )
     })
     it('should display help text for adding a lead adviser', () => {
-      cy.contains('This company has no Lead ITA.')
       cy.contains(
-        'An ITA (International Trade Adviser) can add themselves as the Lead ITA,' +
-          ' which will be visible to all Data Hub users on the company page and any of its subsidiaries.'
+        'This company record has no lead International Trade Adviser (ITA).'
+      )
+      cy.contains(
+        'You can add a lead ITA. This will be visible to all Data Hub users.'
       )
     })
     it('should display a button to add a lead adviser', () => {
