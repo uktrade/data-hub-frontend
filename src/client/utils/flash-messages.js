@@ -1,19 +1,19 @@
 const KEY = 'flash-messages'
 
-function getMessages() {
+const getMessages = () => {
   const items = window.sessionStorage.getItem(KEY)
   if (items) {
     try {
       return JSON.parse(items)
     } catch (e) {
       // eslint-disable-next-line no-console
-      console.log(e) // TODO: replace with more robust error logging when implemented
+      console.error('Cannot get messages from session storage', e)
     }
   }
   return {}
 }
 
-function addMessage(messageType, message) {
+const addMessage = (messageType, message) => {
   const messages = getMessages()
   messages[messageType] = messages[messageType] || []
   messages[messageType].push(message)
@@ -21,21 +21,14 @@ function addMessage(messageType, message) {
     window.sessionStorage.setItem(KEY, JSON.stringify(messages))
   } catch (e) {
     // eslint-disable-next-line no-console
-    console.log(e) // TODO: replace with more robust error logging when implemented
+    console.error('Cannot set messages to session storage', e)
   }
 }
 
-function addSuccessMessage(message) {
-  addMessage('success', message)
-}
-
-function clearMessages() {
-  window.sessionStorage.removeItem(KEY)
-}
+const clearMessages = () => window.sessionStorage.removeItem(KEY)
 
 module.exports = {
   getMessages,
   addMessage,
-  addSuccessMessage,
   clearMessages,
 }
