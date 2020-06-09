@@ -25,10 +25,15 @@ const addMessage = (messageType, message) => {
   }
 }
 
+const addMessageWithBody = (type, heading, body) => {
+  addMessage(`${type}:with-body`, { heading, body })
+}
+
 const clearMessages = () => window.sessionStorage.removeItem(KEY)
 
 module.exports = {
-  getMessages,
   addMessage,
+  getMessages,
+  addMessageWithBody,
   clearMessages,
 }
