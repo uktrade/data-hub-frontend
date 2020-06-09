@@ -1,8 +1,6 @@
 var investmentProjects = require('../../../fixtures/v3/search/investment-project.json')
 
 exports.investmentProjects = function(req, res) {
-  res.json(investmentProjects)
-
   if (req.body.uk_region_location) {
     var regionQuery = req.body.uk_region_location
     var regions = typeof regionQuery === 'string' ? [regionQuery] : regionQuery
@@ -20,5 +18,7 @@ exports.investmentProjects = function(req, res) {
       count: ukRegionFilteredResults.length,
       results: ukRegionFilteredResults,
     })
+  } else {
+    return res.json(investmentProjects)
   }
 }

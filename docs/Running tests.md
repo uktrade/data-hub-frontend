@@ -45,34 +45,23 @@ Sandbox is as a light replacement for API backend and it's used only by function
 
 ### Using sandbox within docker (preferred method)
 
-1. cd into `data-hub-frontend` and run `docker-compose up`. This will start up the sandbox api in conjunction with the frontend, mock-sso, webpack and redis. You don't need to rebuild the image when you make changes.
+1. cd into `data-hub-frontend` and run `docker-compose up -f docker-compose.mock.yml`. This will start up the sandbox api in conjunction with the frontend, mock-sso, webpack and redis. You don't need to rebuild the image when you make changes.
 
 ### Using sandbox within docker with local frontend
 
-1. cd into `test/sandbox` and run `docker run --rm --name data-hub-sandbox -it -p 8001:8001 data-hub-sandbox`.
+1. Build Sandbox image `docker build -t data-hub-sandbox ./test/sandbox`
 
-2. Change your `API_ROOT` in your env file to point to `http://mock-backend:8001` and then run the frontend locally with `yarn develop`.
+2. Start the container with `docker run -it -p 8000:8000 data-hub-sandbox`
 
-3. If you make changes to sandbox rebuild docker with `docker build -t data-hub-sandbox`.
+3. Change your `API_ROOT` in your env file to point to `http://localhost:8000` and then run the frontend locally with `yarn develop`.
 
-### Using sandbox on host machine
-
-1. Install sandbox, for more info see [instructions](https://github.com/getsandbox/sandbox)
+### Starting sandbox on host machine
 
 ```bash
-wget https://github.com/getsandbox/sandbox/releases/download/1.1.0/sandbox-runtime.tar \
-  && tar -C /usr/local/bin -xzvf sandbox-runtime.tar \
-  && mv /usr/local/bin/sandbox-runtime /usr/local/bin/sandbox \
-  && rm sandbox-runtime.tar
+cd test/sandbox
+yarn install 
+yarn exec nodemon .
 ```
-
-2. Start sandbox on port `8001`:
-
-   ```bash
-   sandbox run --port="8001" --watch=true
-   ```
-
-`$ yarn`
 
 ### Running the tests
 
@@ -188,23 +177,6 @@ Updating the baseline consists in 2 steps:
 - 1:. Run the visual tests on your machine, if the baseline is no longer the correct representation of the page in test then execute step #2:
 
 - 2:. Run `$ yarn test:visual:update` to update the failed tests with updated images of how the page in test should look like.
-
-### Creating Docker container for CircleCI
-
-Docker image will be automatically rebuilt on each push.
-
-However, you can still do this manually.
-
-```bash
-docker login # Ask webops for Docker Hub access to the ukti group.
-docker build -f Dockerfile -t data-hub-sandbox .
-
-docker tag data-hub-sandbox:latest ukti/data-hub-sandbox:latest
-
-docker push ukti/data-hub-sandbox:latest
-```
-
-You image should be now listed at [Docker Hub](https://cloud.docker.com/u/ukti/repository/docker/ukti/data-hub-sandbox/tags).
 
 ## Cypress code coverage
 

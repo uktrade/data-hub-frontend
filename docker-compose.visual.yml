@@ -14,17 +14,19 @@ services:
     command: yarn test:visual
     depends_on:
       - frontend
-  sandbox:
-    build:
-      context: ./test/sandbox
+
+  mock-backend:
+    build: ./test/sandbox
+    volumes:
+      - './test/sandbox:/usr/src/app'
+
   redis:
     image: redis:3.2
+
   frontend:
     build: .
     env_file: visual-stack.env
-    command: sh -c './wait-for-it.sh sandbox:8001 redis:6379 -t 240 -- yarn build'
-    command: yarn start
     depends_on:
       - redis
-      - sandbox
+      - mock-backend
 

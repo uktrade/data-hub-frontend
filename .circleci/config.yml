@@ -5,6 +5,7 @@ aliases:
   - &mi_postgres_version postgres:9.6
   - &elasticsearch_version docker.elastic.co/elasticsearch/elasticsearch:6.8.2
   - &api_image quay.io/uktrade/data-hub-api:master
+  - &frontend_testing_image ukti/data-hub-frontend-test:3.5.0
   - &oauth2_dit_staff_token ditStaffToken
   - &oauth2_da_staff_token daStaffToken
   - &oauth2_lep_staff_token lepStaffToken
@@ -17,12 +18,18 @@ aliases:
   - &wait_for_backend
     run:
       name: Wait for backend
-      command: dockerize -wait ${API_ROOT}/admin/ -timeout 300s
+      command: dockerize -wait ${API_ROOT}/ping.xml -timeout 300s
 
   - &wait_for_mock_sso
     run:
       name: Wait for mock sso
       command: dockerize -wait ${MOCK_SSO_ROOT}/healthcheck -timeout 60s
+
+  - &start_api_sandbox
+    run:
+      name: Start API sandbox
+      command: node ./test/sandbox/server.js
+      background: true
 
   - &start_frontend
     run:
@@ -40,17 +47,6 @@ aliases:
     run:
       name: Wait for data hub frontend
       command: dockerize -wait ${QA_HOST}/healthcheck -timeout 180s
-
-  - &start_api_sandbox
-    run:
-      name: Start API sandbox
-      command: sandbox --port=8001 --watch=false --base=./test/sandbox run
-      background: true
-
-  - &wait_for_api_sandbox
-    run:
-      name: Wait for api sandbox
-      command: dockerize -wait ${API_ROOT}/ping.xml -timeout 120s
 
   - &store_artifacts_cypress_video
     store_artifacts:
@@ -82,7 +78,7 @@ aliases:
     DATA_HUB_BACKEND_SECRET_ACCESS_KEY: frontend-key
     DATA_STORE_SERVICE_ACCESS_KEY_ID: data-store-service-id
     DATA_STORE_SERVICE_SECRET_ACCESS_KEY: data-store-service-key
-    DATA_STORE_SERVICE_POSTCODE_TO_REGION_URL: http://localhost:8001/api/v1/get-postcode-data/
+    DATA_STORE_SERVICE_POSTCODE_TO_REGION_URL: http://localhost:8000/api/v1/get-postcode-data/
     ZEN_TICKETS_URL: http://zendesk.example.com
     ZEN_TOKEN: nobodyKnows
     ZEN_EMAIL: zendesk@example.com
@@ -96,16 +92,15 @@ aliases:
   - &data_hub_functional_envs
     <<: *data_hub_base_envs
     NODE_ENV: test
-    API_ROOT: http://localhost:8001
     OAUTH2_DEV_TOKEN: ditStaffToken
     OAUTH2_BYPASS_SSO: true
-    HELP_CENTRE_API_FEED: http://localhost:8001/help-centre/announcement
+    HELP_CENTRE_API_FEED: http://localhost:8000/help-centre/announcement
     HELP_CENTRE_FEED_API_TOKEN: apiToken
-    ZEN_TICKETS_URL: http://localhost:8001/zendesk/tickets
+    ZEN_TICKETS_URL: http://localhost:8000/zendesk/tickets
 
   # Data hub base docker container
   - &docker_data_hub_base
-    image: ukti/data-hub-frontend-test:3.5.0
+    image: *frontend_testing_image
     environment: *data_hub_base_envs
 
   # Data hub redis container
@@ -299,11 +294,11 @@ jobs:
     steps:
       - checkout
       - *restore_yarn_cache
-      - *start_api_sandbox
       - run: yarn install --pure-lockfile
       - run: yarn build
+      - *start_api_sandbox
       - *wait_for_mock_sso
-      - *wait_for_api_sandbox
+      - *wait_for_backend
       - *start_frontend_coverage
       - *wait_for_frontend
       - run:
@@ -335,11 +330,11 @@ jobs:
     steps:
       - checkout
       - *restore_yarn_cache
-      - *start_api_sandbox
       - run: yarn install --pure-lockfile
       - run: yarn build
+      - *start_api_sandbox
       - *wait_for_mock_sso
-      - *wait_for_api_sandbox
+      - *wait_for_backend
       - *start_frontend
       - *wait_for_frontend
       - run:
