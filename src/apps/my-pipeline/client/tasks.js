@@ -1,5 +1,5 @@
 import pipelineApi from './api'
-import { addSuccessMessage } from '../../../client/utils/flash-messages'
+import { addMessage } from '../../../client/utils/flash-messages'
 import axios from 'axios'
 import moment from 'moment'
 
@@ -47,7 +47,7 @@ export async function addCompanyToPipeline({ values, companyId }) {
     company: companyId,
     ...transformValuesForApi(values),
   })
-  addSuccessMessage('Pipeline changes for this company have been saved')
+  addMessage('success', 'Pipeline changes for this company have been saved')
   return data
 }
 
@@ -69,6 +69,6 @@ export async function editPipelineItem({
     pipelineItemId,
     transformValuesForApi(values, currentPipelineItem)
   )
-  addSuccessMessage('Pipeline changes for this company have been saved')
+  addMessage('success', 'Pipeline changes for this company have been saved')
   return data
 }

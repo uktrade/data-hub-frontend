@@ -16,12 +16,14 @@ storiesOf('Flash Messages', module)
   .add('Default', () => (
     <FlashMessages
       flashMessages={{
+        success: ['Success message'],
         'success:with-body': [
           {
             heading: 'Success message heading',
             body: 'Success message body',
           },
         ],
+        info: ['Info message'],
         'info:with-body': [
           {
             heading: 'Info message heading',
