@@ -13,7 +13,8 @@
             },
             "name": "TEST",
             "status": "in_progress",
-            "created_on": "2020-05-05T18:30:07.869217Z"
+            "created_on": "2020-05-05T18:30:07.869217Z",
+            "expected_win_date": null
         },{
           "id": "0fb3379c-341c-4da4-b825-bf8d47b26bab",
           "company": {
@@ -34,7 +35,8 @@
             "id": "952232d2-1d25-4c3a-bcac-2f3a30a94da9",
             "name": "Dean Cox"
           },
-          "potential_value": 111
+          "potential_value": 111,
+          "expected_win_date": "2021-11-01"
       }
     ]
 }

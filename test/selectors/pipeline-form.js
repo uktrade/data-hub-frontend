@@ -16,5 +16,6 @@ module.exports = {
     sector: '#field-sector',
     contact: '#field-contact',
     value: '#field-export_value',
+    expectedWinDate: '#field-expected_win_date',
   },
 }
