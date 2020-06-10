@@ -9,6 +9,7 @@ aliases:
   - &oauth2_dit_staff_token ditStaffToken
   - &oauth2_da_staff_token daStaffToken
   - &oauth2_lep_staff_token lepStaffToken
+  - &es_apm docker.elastic.co/apm/apm-server:7.7.1
 
   - &restore_yarn_cache
     restore_cache:
@@ -58,7 +59,7 @@ aliases:
     WEBPACK_ENV: prod
     API_ROOT: http://localhost:8000
     QA_HOST: http://localhost:3000
-    REDIS_HOST: localhost
+    REDIS_HOST: redis
     LOG_LEVEL: debug
     MOCK_SSO_ROOT: http://localhost:8080
     QA_SELENIUM_HOST: 127.0.0.1
@@ -105,10 +106,12 @@ aliases:
 
   # Data hub redis container
   - &docker_redis
+    name: redis
     image: *redis_version
 
   # Data hub backend elasticsearch container
   - &docker_elasticsearch
+    name: es
     image: *elasticsearch_version
 
   # Data hub backend postgres container
@@ -134,6 +137,12 @@ aliases:
       - MOCK_SSO_SCOPE: 'data-hub:internal-front-end'
       - MOCK_SSO_TOKEN: 123
 
+  # Data hub backend Elasticsearch APM
+  - &docker_es_apm
+    image: *es_apm
+    name: es-apm
+    command: apm-server -e -E output.elasticsearch.hosts=["localhost:9200"]
+
   # Data hub backend
   - &docker_data_hub_backend_base
     image: *api_image
@@ -149,10 +158,10 @@ aliases:
       DJANGO_SETTINGS_MODULE: config.settings.local
       ENABLE_CELERY_ES_SYNC_OBJECT: 'True'
       ES_INDEX_PREFIX: test_index
-      ES5_URL: http://localhost:9200
+      ES5_URL: http://es:9200
       POSTGRES_URL: tcp://postgres:5432
       MI_POSTGRES_URL: tcp://mi-postgres:5432
-      REDIS_BASE_URL: redis://localhost:6379
+      REDIS_BASE_URL: redis://redis:6379
       REDIS_CACHE_DB: 5
       REDIS_CELERY_DB: 6
       SSO_ENABLED: 'True'
@@ -167,6 +176,7 @@ aliases:
       DATA_HUB_FRONTEND_ACCESS_KEY_ID: frontend-key-id
       DATA_HUB_FRONTEND_SECRET_ACCESS_KEY: frontend-key
       ADMIN_OAUTH2_ENABLED: 'False'
+      ES_APM_ENABLED: 'False'
       # Workaround for Docker/CircleCI compatibility problem with Python 3.8
       COLUMNS: 80
 
@@ -355,6 +365,7 @@ jobs:
           OAUTH2_DEV_TOKEN: *oauth2_dit_staff_token
       - *docker_redis
       - *docker_elasticsearch
+      - *docker_es_apm
       - *docker_postgres
       - *docker_mi_postgres
       - *docker_mock_sso
@@ -389,6 +400,7 @@ jobs:
           OAUTH2_DEV_TOKEN: *oauth2_lep_staff_token
       - *docker_redis
       - *docker_elasticsearch
+      - *docker_es_apm
       - *docker_postgres
       - *docker_mi_postgres
       - *docker_mock_sso
@@ -423,6 +435,7 @@ jobs:
           OAUTH2_DEV_TOKEN: *oauth2_da_staff_token
       - *docker_redis
       - *docker_elasticsearch
+      - *docker_es_apm
       - *docker_postgres
       - *docker_mi_postgres
       - *docker_mock_sso
