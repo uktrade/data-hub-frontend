@@ -167,6 +167,7 @@ aliases:
       DATA_HUB_FRONTEND_ACCESS_KEY_ID: frontend-key-id
       DATA_HUB_FRONTEND_SECRET_ACCESS_KEY: frontend-key
       ADMIN_OAUTH2_ENABLED: 'False'
+      ES_APM_ENABLED: 'False'
       # Workaround for Docker/CircleCI compatibility problem with Python 3.8
       COLUMNS: 80
 
