@@ -141,7 +141,7 @@ aliases:
   - &docker_es_apm
     image: *es_apm
     name: es-apm
-    command: apm-server -e -E output.elasticsearch.hosts=["localhost:9200"]
+    command: apm-server -e -E output.elasticsearch.hosts=["es:9200"]
 
   # Data hub backend
   - &docker_data_hub_backend_base
