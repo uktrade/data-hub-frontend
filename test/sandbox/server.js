@@ -9,6 +9,7 @@ const config = {
 const app = express()
 
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 // TODO: Remove these legacy Sandbox vars after all the mocks are refactored
 global.state = {}
