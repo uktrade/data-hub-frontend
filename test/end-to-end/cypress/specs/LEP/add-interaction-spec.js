@@ -7,10 +7,7 @@ describe('LEP add interaction', () => {
     cy.visit(
       investments.projects.interactions.index(
         fixtures.investmentProject.newZoo.id
-      ),
-      {
-        failOnStatusCode: false,
-      }
+      )
     )
       .get('[data-auto-id="Add interaction"]')
       .click()

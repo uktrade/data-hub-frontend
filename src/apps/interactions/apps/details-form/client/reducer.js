@@ -1,7 +1,7 @@
 import {
   TASK__ERROR,
   ADD_INTERACTION_FORM__SUBMIT,
-  ADD_INTERACTION__ACTIVE_EVENTS,
+  ADD_INTERACTION__GET_ACTIVE_EVENTS,
 } from '../../../../../client/actions'
 
 export default (state = {}, { type, result }) => {
@@ -22,7 +22,7 @@ export default (state = {}, { type, result }) => {
         progress: true,
       }
 
-    case ADD_INTERACTION__ACTIVE_EVENTS:
+    case ADD_INTERACTION__GET_ACTIVE_EVENTS:
       return {
         ...state,
         activeEvents: result,
