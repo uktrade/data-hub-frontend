@@ -37,8 +37,8 @@ import {
   OPTIONS_YES_NO,
 } from '../../../../constants'
 
-import { ADD_INTERACTION__ACTIVE_EVENTS } from '../../../../../client/actions'
-import { ID, TASK_ACTIVE_EVENTS } from './state'
+import { ADD_INTERACTION__GET_ACTIVE_EVENTS } from '../../../../../client/actions'
+import { ID, TASK_GET_ACTIVE_EVENTS } from './state'
 import Task from '../../../../../client/components/Task'
 
 import urls from '../../../../../lib/urls'
@@ -287,9 +287,9 @@ const StepInteractionDetails = ({
           {values.is_event === OPTION_YES && (
             <Task.Status
               id={ID}
-              name={TASK_ACTIVE_EVENTS}
+              name={TASK_GET_ACTIVE_EVENTS}
               startOnRender={{
-                onSuccessDispatch: ADD_INTERACTION__ACTIVE_EVENTS,
+                onSuccessDispatch: ADD_INTERACTION__GET_ACTIVE_EVENTS,
               }}
             >
               {() => (
