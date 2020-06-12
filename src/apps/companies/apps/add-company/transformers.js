@@ -28,7 +28,7 @@ const transformFormData = (
   }
 }
 
-const transformToSaveDnBCompanyInvestigation = (formData) => {
+const transformToDnbStubCompany = (formData) => {
   return {
     ...transformFormData(formData),
     business_type: formData.business_type,
@@ -45,6 +45,6 @@ const transformToCreateDnbCompanyInvestigation = (formData, companyId) => {
 }
 
 module.exports = {
-  transformToSaveDnBCompanyInvestigation,
+  transformToDnbStubCompany,
   transformToCreateDnbCompanyInvestigation,
 }

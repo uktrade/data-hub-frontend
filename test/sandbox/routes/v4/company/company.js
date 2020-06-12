@@ -25,6 +25,7 @@ var companyAudit = require('../../../fixtures/v4/company-audit/company-audit.jso
 var exportWins = require('../../../fixtures/v4/company-export-wins/export-wins.json')
 var exportWinsPage1 = require('../../../fixtures/v4/company-export-wins/export-wins-page-1.json')
 var exportWinsPage2 = require('../../../fixtures/v4/company-export-wins/export-wins-page-2.json')
+var companyCreateInvestigation = require('../../../fixtures/v4/dnb/company-create-investigation.json')
 
 var largeCapitalProfileEmpty = require('../../../fixtures/v4/company/large-capital-profile-empty.json')
 var largeCapitalProfileNew = require('../../../fixtures/v4/company/large-capital-profile-new.json')
@@ -134,6 +135,10 @@ exports.company = function(req, res) {
         name: 'Andy Pipkin',
       },
     }),
+  }
+
+  if (!req.params.companyId) {
+    return res.json(companyCreateInvestigation)
   }
 
   res.json(companies[req.params.companyId] || company)

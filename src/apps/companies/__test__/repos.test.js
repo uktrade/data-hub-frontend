@@ -12,7 +12,6 @@ const {
 const {
   getDitCompany,
   saveDnbCompany,
-  saveDnbCompanyInvestigation,
   saveCompanyExportDetails,
 } = require('../repos')
 
@@ -145,22 +144,6 @@ describe('Company repository', () => {
         })
 
       const actual = await saveDnbCompany('1234', '123')
-
-      expect(actual).to.deep.equal({ hello: true })
-    })
-  })
-
-  describe('#saveDnbCompanyInvestigation', () => {
-    it('should respond successfully', async () => {
-      nock(config.apiRoot)
-        .post('/v4/dnb/company-create-investigation', {
-          name: 'name',
-        })
-        .reply(200, {
-          hello: true,
-        })
-
-      const actual = await saveDnbCompanyInvestigation('1234', { name: 'name' })
 
       expect(actual).to.deep.equal({ hello: true })
     })
