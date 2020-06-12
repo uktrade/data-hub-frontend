@@ -26,7 +26,7 @@
     "test:unit-client": "NODE_ENV=test mocha-webpack --webpack-config webpack.config.js --opts ./test/unit-client/mocha.opts ./test/unit-client/assets/javascripts/**/*.test.js",
     "test:functional": "cypress run",
     "test:functional:watch": "cypress open",
-    "test:e2e:lep": "CYPRESS_integrationFolder=test/end-to-end/cypress/specs/LEP cypress run --config baseUrl=http://localhost:3000",
+    "test:e2e:lep": "CYPRESS_integrationFolder=test/end-to-end/cypress/specs/LEP cypress run --config baseUrl=http://localhost:3000 --spec test/end-to-end/cypress/specs/LEP/add-interaction-spec.js",
     "test:e2e:da": "CYPRESS_integrationFolder=test/end-to-end/cypress/specs/DA cypress run --config baseUrl=http://localhost:3000",
     "test:e2e:dit": "CYPRESS_integrationFolder=test/end-to-end/cypress/specs/DIT cypress run --config baseUrl=http://localhost:3000",
     "test:e2e:dit:watch": "CYPRESS_integrationFolder=test/end-to-end/cypress/specs/DIT cypress open --config baseUrl=http://localhost:3000",
