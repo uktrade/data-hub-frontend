@@ -5,7 +5,7 @@ aliases:
   - &mi_postgres_version postgres:9.6
   - &elasticsearch_version docker.elastic.co/elasticsearch/elasticsearch:6.8.2
   - &api_image quay.io/uktrade/data-hub-api:master
-  - &frontend_testing_image ukti/data-hub-frontend-test:3.5.0
+  - &frontend_testing_image ukti/data-hub-frontend-test:3.6.0
   - &oauth2_dit_staff_token ditStaffToken
   - &oauth2_da_staff_token daStaffToken
   - &oauth2_lep_staff_token lepStaffToken
@@ -141,7 +141,7 @@ aliases:
   - &docker_es_apm
     image: *es_apm
     name: es-apm
-    command: apm-server -e -E output.elasticsearch.hosts=["localhost:9200"]
+    command: apm-server -e -E output.elasticsearch.hosts=["es:9200"]
 
   # Data hub backend
   - &docker_data_hub_backend_base

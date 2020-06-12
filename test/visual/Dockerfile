@@ -1,7 +1,7 @@
 # E2E docker image used to run tests locally
-FROM node:12.16.1
+FROM node:12.17.0
 
-ENV YARN_VERSION 1.22.0
+ENV YARN_VERSION 1.22.4
 
 # Install visual test dependencies
 RUN apt-get update
