@@ -33,6 +33,10 @@ module.exports = (app) => {
         ['^' + API_PROXY_PATH]: '',
       },
       onProxyReq: (proxyReq, req) => {
+        console.log('-------- HEADERS ------------')
+        console.log(req.headers)
+        console.log('-------- URL ------------')
+        console.log(req.url)
         proxyReq.setHeader('authorization', `Bearer ${req.session.token}`)
         // this is required to be able to handle POST requests and avoid a conflict with bodyParser
         // issue here -> https://github.com/chimurai/http-proxy-middleware/issues/320
