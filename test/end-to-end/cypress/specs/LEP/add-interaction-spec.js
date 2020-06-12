@@ -2,21 +2,37 @@ const { investments } = require('../../../../../src/lib/urls')
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 
-describe('LEP add interaction', () => {
-  before(() => {
-    cy.visit(
-      investments.projects.interactions.index(
-        fixtures.investmentProject.newZoo.id
+describe('LEP add Investment Project interaction', () => {
+  context('The browser URL has updated', () => {
+    before(() => {
+      cy.visit(
+        investments.projects.interactions.index(
+          fixtures.investmentProject.newZoo.id
+        )
       )
-    )
-      .get('[data-auto-id="Add interaction"]')
-      .click()
+    })
+    it('should have the correct url', () => {
+      cy.get('[data-auto-id="Add interaction"]')
+        .click()
+        .location('pathname')
+        .should(
+          'eq',
+          investments.projects.interactions.createType(
+            fixtures.investmentProject.newZoo.id,
+            'investment',
+            'interaction'
+          )
+        )
+    })
   })
 
-  context('The browser URL has updated', () => {
-    it('should have the correct url', () => {
-      cy.location('pathname').should(
-        'eq',
+  context('LEP completes the form and clicks "Add interaction"', () => {
+    before(() => {
+      cy.server()
+        .route('POST', '/api-proxy/v3/interaction')
+        .as('post')
+
+      cy.visit(
         investments.projects.interactions.createType(
           fixtures.investmentProject.newZoo.id,
           'investment',
@@ -24,9 +40,7 @@ describe('LEP add interaction', () => {
         )
       )
     })
-  })
 
-  context('LEP completes the form and clicks "Add interaction"', () => {
     it('should add an interaction', () => {
       const subject = 'The best Investment Project interaction'
       const formSelectors = selectors.interactionForm
@@ -46,6 +60,10 @@ describe('LEP add interaction', () => {
         .click()
         .get(formSelectors.add)
         .click()
+        .wait('@post')
+        .should((xhr) => {
+          expect(xhr.status, 'successful POST').to.equal(201)
+        })
 
       cy.contains('h1', subject)
     })
