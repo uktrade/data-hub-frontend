@@ -1,10 +1,10 @@
 # This docker image is used ONLY with CircleCI to run tests.
 # For local development image see Dockerfile in the root directory of this project.
 
-FROM node:12.16.1
+FROM node:12.17.0
 
 ENV DOCKERIZE_VERSION      v0.3.0
-ENV YARN_VERSION           1.22.0
+ENV YARN_VERSION           1.22.4
 ENV NPM_CONFIG_LOGLEVEL    warn
 ENV NPM_CONFIG_UNSAFE_PERM true
 ENV TZ                     Europe/London
