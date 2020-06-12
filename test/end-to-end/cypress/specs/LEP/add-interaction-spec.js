@@ -28,7 +28,12 @@ describe('LEP add Investment Project interaction', () => {
 
   context('LEP completes the form and clicks "Add interaction"', () => {
     before(() => {
-      cy.server()
+      cy.server({
+        onAnyAbort: (route, proxy) => {
+          console.log(route)
+          console.log(proxy)
+        },
+      })
         .route('POST', '/api-proxy/v3/interaction')
         .as('post')
     })
