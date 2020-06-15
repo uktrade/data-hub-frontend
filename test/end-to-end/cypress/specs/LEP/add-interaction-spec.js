@@ -36,6 +36,14 @@ describe('LEP add Investment Project interaction', () => {
       })
         .route('POST', '/api-proxy/v3/interaction')
         .as('post')
+
+      cy.visit(
+        investments.projects.interactions.createType(
+          fixtures.investmentProject.newZoo.id,
+          'investment',
+          'interaction'
+        )
+      )
     })
 
     it('should add an interaction', () => {
