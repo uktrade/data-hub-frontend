@@ -30,8 +30,27 @@ function parseDateString(dateString) {
   return null
 }
 
+function padZero(value) {
+  const parsedValue = parseInt(value, 10)
+  if (Number.isNaN(parsedValue)) {
+    return value
+  }
+  return parsedValue < 10 ? `0${parsedValue}` : parsedValue.toString()
+}
+
+function transformValueForApi({ year, month, day = 1 }) {
+  if (year && month && day) {
+    const y = padZero(year)
+    const m = padZero(month)
+    const yearAndMonth = `${y}-${m}`
+    return day ? `${yearAndMonth}-${padZero(day)}` : yearAndMonth
+  }
+  return null
+}
+
 module.exports = {
   formatLongDate,
   formatMediumDate,
   parseDateString,
+  transformValueForApi,
 }
