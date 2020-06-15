@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { H3 } from '@govuk-react/heading'
 import Link from '@govuk-react/link'
 import UnorderedList from '@govuk-react/unordered-list'
@@ -35,6 +36,10 @@ import {
   OPTION_YES,
   OPTIONS_YES_NO,
 } from '../../../../constants'
+
+import { ADD_INTERACTION__GET_ACTIVE_EVENTS } from '../../../../../client/actions'
+import { ID, TASK_GET_ACTIVE_EVENTS } from './state'
+import Task from '../../../../../client/components/Task'
 
 import urls from '../../../../../lib/urls'
 
@@ -155,8 +160,9 @@ const StepInteractionDetails = ({
   policyIssueTypes,
   communicationChannels,
   countries,
-  activeEvents,
   onOpenContactForm,
+  activeEvents,
+  activeEvent,
 }) => {
   const { values = {} } = useFormContext()
   const serviceContext = getServiceContext(
@@ -279,13 +285,24 @@ const StepInteractionDetails = ({
             required="Answer if this was an event"
           />
           {values.is_event === OPTION_YES && (
-            <FieldTypeahead
-              label="Event"
-              name="event"
-              placeholder="-- Select event --"
-              required="Select a specific event"
-              options={activeEvents}
-            />
+            <Task.Status
+              id={ID}
+              name={TASK_GET_ACTIVE_EVENTS}
+              startOnRender={{
+                onSuccessDispatch: ADD_INTERACTION__GET_ACTIVE_EVENTS,
+              }}
+            >
+              {() => (
+                <FieldTypeahead
+                  label="Event"
+                  name="event"
+                  placeholder="-- Select event --"
+                  required="Select a specific event"
+                  initialValue={activeEvent}
+                  options={activeEvents}
+                />
+              )}
+            </Task.Status>
           )}
         </>
       )}
@@ -422,7 +439,13 @@ StepInteractionDetails.propTypes = {
   policyIssueTypes: typeaheadOptionsListProp.isRequired,
   communicationChannels: typeaheadOptionsListProp.isRequired,
   countries: typeaheadOptionsListProp.isRequired,
-  activeEvents: typeaheadOptionsListProp.isRequired,
+  activeEvents: typeaheadOptionsListProp,
+  activeEvent: typeaheadOptionProp,
 }
 
-export default StepInteractionDetails
+export default connect((state) => {
+  const { activeEvents } = state[ID]
+  return {
+    activeEvents,
+  }
+}, null)(StepInteractionDetails)

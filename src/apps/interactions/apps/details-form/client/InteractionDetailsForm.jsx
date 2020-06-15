@@ -104,6 +104,7 @@ const InteractionDetailsForm = ({
                   {() => (
                     <StepInteractionDetails
                       companyId={companyId}
+                      activeEvent={initialValues.event}
                       onOpenContactForm={(e) => {
                         e.preventDefault()
                         openContactFormTask.start({

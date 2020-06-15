@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { omit, pick } from 'lodash'
 
+import urls from '../../../../../lib/urls'
 import { INTERACTION_STATUS } from '../../../constants'
 import { EXPORT_INTEREST_STATUS_VALUES, OPTION_NO } from '../../../../constants'
 import { ID as STORE_ID } from './state'
@@ -130,3 +131,11 @@ export function saveInteraction({ values, companyId, referralId }) {
     omit(payload, FIELDS_TO_OMIT)
   )
 }
+
+const handleError = (e) => Promise.reject(Error(e.response.data.detail))
+
+export const fetchActiveEvents = () =>
+  axios
+    .get(urls.interactions.activeEventsData())
+    .catch(handleError)
+    .then(({ data }) => data)

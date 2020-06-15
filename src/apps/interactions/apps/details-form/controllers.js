@@ -10,6 +10,7 @@ const {
 const { getOptions } = require('../../../../lib/options')
 
 const { OPTION_YES, OPTION_NO } = require('../../../constants')
+const urls = require('../../../../lib/urls')
 
 const transformServiceToOption = (service) => ({
   value: service.id,
@@ -156,7 +157,7 @@ async function renderInteractionDetailsForm(req, res, next) {
   try {
     const { token } = req.session
     const { company, interaction, referral, investment, contact } = res.locals
-    const contacts = company.contacts.filter((contact) => !contact.archived)
+
     const [
       services,
       serviceDeliveryStatuses,
@@ -164,7 +165,6 @@ async function renderInteractionDetailsForm(req, res, next) {
       policyIssueTypes,
       communicationChannels,
       countries,
-      activeEvents,
     ] = await Promise.all([
       getOptions(token, 'service', {
         transformer: transformServiceToOption,
@@ -174,7 +174,6 @@ async function renderInteractionDetailsForm(req, res, next) {
       getOptions(token, 'policy-issue-type'),
       getOptions(token, 'communication-channel'),
       getOptions(token, 'country'),
-      getActiveEvents(token),
     ])
 
     res
@@ -190,8 +189,10 @@ async function renderInteractionDetailsForm(req, res, next) {
           investmentId: get(investment, 'id'),
           referralId: get(referral, 'id'),
           contactId: get(contact, 'id'),
-          contacts: contacts.map(transformContactToOption),
-          activeEvents: activeEvents.map(transformObjectToOption),
+          contacts: company.contacts
+            .filter((contact) => !contact.archived)
+            .map(transformContactToOption),
+          activeEventsEndpoint: urls.interactions.activeEvents.route,
           services,
           serviceDeliveryStatuses,
           policyAreas,
@@ -205,6 +206,17 @@ async function renderInteractionDetailsForm(req, res, next) {
   }
 }
 
+async function fetchActiveEvents(req, res, next) {
+  const { token } = req.session
+  try {
+    const activeEvents = await getActiveEvents(token)
+    res.json(activeEvents.map(transformObjectToOption))
+  } catch (error) {
+    next(error)
+  }
+}
+
 module.exports = {
+  fetchActiveEvents,
   renderInteractionDetailsForm,
 }
