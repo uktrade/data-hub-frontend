@@ -11,6 +11,7 @@
   "env": {
     "codeCoverage": {
       "url": "http://localhost:3000/__coverage__"
-    }
+    },
+    "sandbox_url": "http://localhost:8000"
   }
 }

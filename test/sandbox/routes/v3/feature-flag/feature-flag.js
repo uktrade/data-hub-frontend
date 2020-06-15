@@ -9,7 +9,7 @@ exports.featureFlag = function(req, res) {
   res.json(featureFlag)
 }
 
-exports.updateFeatureFlag = (req, res) => {
+exports.setSandboxFlag = (req, res) => {
   updatedFeatureFlag = featureFlag.map((flag) =>
     flag.code === req.body.code ? { ...req.body } : flag
   )
