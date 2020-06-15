@@ -1,7 +1,7 @@
 import pipelineApi from './api'
 import { addMessage } from '../../../client/utils/flash-messages'
 import axios from 'axios'
-import moment from 'moment'
+import { transformValueForApi } from '../../../common/date'
 
 function transformValuesForApi(values, oldValues = {}) {
   const data = {
@@ -21,14 +21,8 @@ function transformValuesForApi(values, oldValues = {}) {
   addValue('sector', values.sector?.value)
   addValue('contact', values.contact?.value)
   addValue('potential_value', values.export_value)
+  addValue('expected_win_date', transformValueForApi(values.expected_win_date))
 
-  const { month, year } = values.expected_win_date
-  const expectedWinDate = moment(`${year}-${month}`, 'YYYY-MM', true)
-  if (expectedWinDate.isValid()) {
-    addValue('expected_win_date', expectedWinDate.format('YYYY-MM-DD'))
-  } else {
-    addValue('expected_win_date')
-  }
   return data
 }
 
