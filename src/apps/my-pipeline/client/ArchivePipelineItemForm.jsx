@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { FieldInput, FormActions } from 'data-hub-components'
+import { FieldTextarea, FormActions } from 'data-hub-components'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import LoadingBox from '@govuk-react/loading-box'
@@ -109,7 +109,7 @@ function ArchivePipelineItemForm({
                   }}
                   submissionError={archivePipelineItem.errorMessage}
                 >
-                  <FieldInput
+                  <FieldTextarea
                     label="Reason for achiving this project"
                     name="reason"
                     type="text"
