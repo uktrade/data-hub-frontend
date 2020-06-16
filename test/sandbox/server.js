@@ -302,6 +302,7 @@ app.get('/v3/event/:eventId', v3Event.eventById)
 // V3 Feature Flag
 app.get('/v3/feature-flag', v3FeatureFlag.featureFlag)
 app.put('/sandbox/feature-flag', v3FeatureFlag.setSandboxFlag)
+app.post('/sandbox/reset-feature-flag', v3FeatureFlag.resetSandboxFlags)
 
 // V3 Interaction
 app.get('/v3/interaction', v3Interaction.getInteractions)

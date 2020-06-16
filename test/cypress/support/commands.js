@@ -171,3 +171,12 @@ Cypress.Commands.add(
     return cy.request('PUT', `${backend_url}${uri}`, body)
   }
 )
+
+Cypress.Commands.add(
+  'resetFeatureFlags',
+  () => {
+    backend_url = Cypress.env('sandbox_url')
+    uri = '/sandbox/reset-feature-flag'
+    return cy.request('POST', `${backend_url}${uri}`)
+  }
+)
