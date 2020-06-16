@@ -72,3 +72,11 @@ export async function editPipelineItem({
   addMessage('success', 'Pipeline changes for this company have been saved')
   return data
 }
+
+export async function archivePipelineItem({ values, pipelineItemId }) {
+  const { data } = await pipelineApi.archive(pipelineItemId, {
+    reason: values.reason,
+  })
+  addMessage('success', 'Pipeline changes for this company have been saved')
+  return data
+}
