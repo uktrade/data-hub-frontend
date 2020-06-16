@@ -1,6 +1,7 @@
 const { createProxyMiddleware } = require('http-proxy-middleware')
 
-const config = require('../config/')
+const config = require('../config')
+const getZipkinHeaders = require('../lib/get-zipkin-headers')
 
 const API_PROXY_PATH = '/api-proxy'
 const WHITELIST = [
@@ -33,6 +34,12 @@ module.exports = (app) => {
         ['^' + API_PROXY_PATH]: '',
       },
       onProxyReq: (proxyReq, req) => {
+        Object.entries(getZipkinHeaders(req)).forEach(
+          ([header, headerValue]) => {
+            proxyReq.setHeader(header, headerValue)
+          }
+        )
+
         proxyReq.setHeader('authorization', `Bearer ${req.session.token}`)
         // this is required to be able to handle POST requests and avoid a conflict with bodyParser
         // issue here -> https://github.com/chimurai/http-proxy-middleware/issues/320
