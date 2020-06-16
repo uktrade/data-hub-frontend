@@ -400,6 +400,40 @@ describe('Add company form', () => {
           })
         }
       )
+      context('when only the website is submitted', () => {
+        before(() => {
+          cy.get(selectors.companyAdd.newCompanyRecordForm.website).type(
+            'www.example.com'
+          )
+          cy.get(selectors.companyAdd.submitButton).click()
+        })
+        it('should not display "Enter a website or phone number"', () => {
+          cy.get(selectors.companyAdd.form).should(
+            'not.contain',
+            'Enter a website or phone number'
+          )
+        })
+        after(() => {
+          cy.get(selectors.companyAdd.newCompanyRecordForm.website).clear()
+        })
+      })
+      context('when only the phone number is submitted', () => {
+        before(() => {
+          cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).type(
+            '0123456789'
+          )
+          cy.get(selectors.companyAdd.submitButton).click()
+        })
+        it('should not display "Enter a website or phone number"', () => {
+          cy.get(selectors.companyAdd.form).should(
+            'not.contain',
+            'Enter a website or phone number'
+          )
+        })
+        after(() => {
+          cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).clear()
+        })
+      })
       context('when an invalid website URL is filled', () => {
         before(() => {
           cy.get(selectors.companyAdd.newCompanyRecordForm.website).type(
