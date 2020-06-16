@@ -92,6 +92,7 @@
     "company.change_regional_account_manager",
     "company.view_companyexportcountry",
     "company.change_companyexportcountry",
-    "company.change_one_list_tier_and_global_account_manager"
+    "company.change_one_list_tier_and_global_account_manager",
+    "company.change_one_list_core_team_member"
   ]
 }
