@@ -1,15 +1,15 @@
 const {
-  transformToSaveDnBCompanyInvestigation,
+  transformToDnbStubCompany,
   transformToCreateDnbCompanyInvestigation,
 } = require('../transformers')
 
 describe('Companies add company transformers', () => {
-  describe('#transformToSaveDnBCompanyInvestigation', () => {
+  describe('#transformToDnbStubCompany', () => {
     context('when all fields are populated', () => {
       let actual
 
       beforeEach(() => {
-        actual = transformToSaveDnBCompanyInvestigation({
+        actual = transformToDnbStubCompany({
           business_type: '1',
           name: 'name',
           website: 'website',
@@ -51,7 +51,7 @@ describe('Companies add company transformers', () => {
       let actual
 
       beforeEach(() => {
-        actual = transformToSaveDnBCompanyInvestigation({
+        actual = transformToDnbStubCompany({
           business_type: '1',
           name: 'name',
           website: 'website',

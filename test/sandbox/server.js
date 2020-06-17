@@ -340,6 +340,7 @@ app.get('/v4/ch-company/:companyId', v4ChCompany.company)
 // V4 Company
 app.get('/v4/company/:companyId', v4Company.company)
 app.patch('/v4/company/:companyId', v4Company.companyPatched)
+app.post('/v4/company', v4Company.company)
 app.get('/v4/company', v4Company.companies)
 app.post(
   '/v4/company/:companyId/:action-account-manager',
@@ -367,10 +368,6 @@ app.patch(
 
 // V4 DnB
 app.post('/v4/dnb/company-create', v4Dnb.companyCreate)
-app.post(
-  '/v4/dnb/company-create-investigation',
-  v4Dnb.companyCreateInvestigation
-)
 app.post('/v4/dnb/company-investigation', v4Dnb.companyInvestigation)
 app.post('/v4/dnb/company-search', v4Dnb.companySearch)
 app.post('/v4/dnb/company-link', v4Dnb.companyLink)

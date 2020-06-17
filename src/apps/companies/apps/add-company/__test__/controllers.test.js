@@ -325,7 +325,7 @@ describe('Add company form controllers', () => {
     context('when the company investigation is successfully created', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
-          .post('/v4/dnb/company-create-investigation', {
+          .post('/v4/company', {
             name: 'name',
             telephone_number: '123',
             website: 'website',
@@ -405,7 +405,7 @@ describe('Add company form controllers', () => {
     context('when there is an error', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
-          .post('/v4/dnb/company-create-investigation', {
+          .post('/v4/company', {
             address: {
               country: {
                 id: 'country',
