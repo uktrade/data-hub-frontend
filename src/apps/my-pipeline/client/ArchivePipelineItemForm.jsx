@@ -6,7 +6,9 @@ import styled from 'styled-components'
 import LoadingBox from '@govuk-react/loading-box'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
-import { SPACING } from '@govuk-react/constants'
+import { SPACING, FONT_SIZE, MEDIA_QUERIES } from '@govuk-react/constants'
+import ErrorSummary from '@govuk-react/error-summary'
+import { H2 } from '@govuk-react/heading'
 
 import Task from '../../../client/components/Task'
 import Form from '../../../client/components/Form'
@@ -25,6 +27,16 @@ import {
 import { PipelineItemPropType } from './constants'
 import PipelineDetails from './PipelineDetails'
 import { getPipelineUrl } from './utils'
+
+const StyledH2 = styled(H2)`
+  margin-top: ${SPACING.SCALE_6};
+  margin-bottom: ${SPACING.SCALE_3};
+  font-size: ${FONT_SIZE.SIZE_16};
+
+  ${MEDIA_QUERIES.DESKTOP} {
+    font-size: ${FONT_SIZE.SIZE_19};
+  }
+`
 
 function GetPipelineData({
   getPipelineData,
@@ -65,7 +77,9 @@ function ArchivePipelineItemForm({
   currentPipelineItem,
   savedPipelineItem,
 }) {
+  let loading = false
   useEffect(() => {
+    loading = false
     if (savedPipelineItem) {
       /**
        * TODO: Replace with react router navigation.
@@ -91,7 +105,7 @@ function ArchivePipelineItemForm({
             currentPipelineItem={currentPipelineItem}
           >
             {() => (
-              <LoadingBox>
+              <LoadingBox loading={loading}>
                 <StyledP>
                   Archive this project if it’s no longer required or active.
                   <br />
@@ -102,6 +116,7 @@ function ArchivePipelineItemForm({
                 <Form
                   id={STATE_ID}
                   onSubmit={(values) => {
+                    loading = true
                     archivePipelineItem.start({
                       payload: { values, pipelineItemId },
                       onSuccessDispatch: PIPELINE__ARCHIVE_PIPELINE_SUCCESS,
@@ -109,11 +124,12 @@ function ArchivePipelineItemForm({
                   }}
                   submissionError={archivePipelineItem.errorMessage}
                 >
+                  <StyledH2>Reason for archive</StyledH2>
                   <FieldTextarea
-                    label="Reason for achiving this project"
+                    label="Details on why the project is being archived"
                     name="reason"
                     type="text"
-                    required="Enter a reason for achiving"
+                    required="Enter why the project is being archived"
                     className="govuk-!-width-two-thirds"
                   />
                   <FormActions>

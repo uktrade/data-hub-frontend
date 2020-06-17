@@ -36,12 +36,12 @@ export default function PipelineDetails({ item }) {
   const rows = [
     ['Project name', item.name],
     ['Company', item.company.name, urls.companies.detail(item.company.id)],
-    ['Project status', STATUS_LABELS[item.status]],
+    ['Status', STATUS_LABELS[item.status]],
     item.likelihood_to_win && [
       'Export win potential',
       LIKELIHOOD_LABELS[item.likelihood_to_win],
     ],
-    item.sector && ['Project sector', item.sector.segment],
+    item.sector && ['Export sector', item.sector.segment],
     item.contact && [
       'Company contact',
       item.contact.name,
@@ -55,7 +55,7 @@ export default function PipelineDetails({ item }) {
       'Expected date for win',
       moment(item.expected_win_date).format('MMM Y'),
     ],
-    ['Created on', DateUtils.formatWithTime(item.created_on)],
+    ['Created on', DateUtils.format(item.created_on)],
   ]
 
   return (
