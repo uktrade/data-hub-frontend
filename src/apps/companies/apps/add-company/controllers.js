@@ -5,13 +5,13 @@ const { fetchOrganisationTypes } = require('./repos')
 const { searchDnbCompanies } = require('../../../../modules/search/services')
 const { getOptions } = require('../../../../lib/options')
 const {
-  transformToSaveDnBCompanyInvestigation,
+  transformToDnbStubCompany,
   transformToCreateDnbCompanyInvestigation,
 } = require('./transformers')
 const {
   saveDnbCompany,
   updateCompany,
-  saveDnbCompanyInvestigation,
+  saveCompany,
   createDnbCompanyInvestigation,
 } = require('../../repos')
 
@@ -80,8 +80,8 @@ async function postAddDnbCompanyInvestigation(req, res, next) {
   try {
     // 1. Saves a stubbed record in Data Hub.
     // 2. Sends a single notification to request an investigation.
-    const save = transformToSaveDnBCompanyInvestigation(body)
-    const company = await saveDnbCompanyInvestigation(token, save)
+    const stubCompany = transformToDnbStubCompany(body)
+    const company = await saveCompany(token, stubCompany)
 
     // 1. Creates a record which is proxied through to the DnB Service.
     // 2. Generates an excel spreadsheet for the support team to investigate.
