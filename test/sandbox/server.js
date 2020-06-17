@@ -425,6 +425,10 @@ app.patch(
   v4pipelineItem.createUpdatePipelineItem
 )
 app.get('/v4/pipeline-item/:pipelineItemId', v4pipelineItem.getPipelineItem)
+app.post(
+  '/v4/pipeline-item/:pipelineItemId/archive',
+  v4pipelineItem.archivePipelineItem
+)
 
 app.use((req, res) =>
   res.status(404).json({ message: 'Route' + req.url + ' Not found.' })

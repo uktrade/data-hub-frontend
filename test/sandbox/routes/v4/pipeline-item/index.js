@@ -6,6 +6,13 @@ var leads = require('../../../fixtures/v4/pipeline-item/leads.json')
 var inProgress = require('../../../fixtures/v4/pipeline-item/in-progress.json')
 var win = require('../../../fixtures/v4/pipeline-item/win.json')
 
+function createItem(status) {
+  return {
+    ...pipelineCreate,
+    status,
+  }
+}
+
 exports.getPipelineItems = function(req, res) {
   if (req.query.company_id === lambdaPlc.id) {
     res.json(pipelineItemLambdaPlc)
@@ -45,41 +52,42 @@ exports.getPipelineItem = function(req, res) {
   var lambdaItemTwo = pipelineItemLambdaPlc.results[1]
 
   if (pipelineId === lambdaItemOne.id) {
-    res.json(lambdaItemOne)
-    return
+    return res.json(lambdaItemOne)
   }
 
   if (pipelineId === lambdaItemTwo.id) {
-    res.json(lambdaItemTwo)
-    return
+    return res.json(lambdaItemTwo)
   }
 
   if (pipelineId === 'LEADS') {
-    res.json(
-      _.assign({}, pipelineCreate, {
-        status: 'leads',
-      })
-    )
-    return
+    return res.json(createItem('leads'))
   }
 
   if (pipelineId === 'IN_PROGRESS') {
-    res.json(
-      _.assign({}, pipelineCreate, {
-        status: 'in_progress',
-      })
-    )
-    return
+    return res.json(createItem('in_progress'))
   }
 
   if (pipelineId === 'WIN') {
-    res.json(
-      _.assign({}, pipelineCreate, {
-        status: 'win',
-      })
-    )
-    return
+    return res.json(createItem('win'))
   }
 
   res.send(404)
+}
+
+exports.archivePipelineItem = function(req, res) {
+  const { pipelineItemId } = req.params
+
+  if (pipelineItemId === 'LEADS') {
+    return res.json(createItem('leads'))
+  }
+
+  if (pipelineItemId === 'IN_PROGRESS') {
+    return res.json(createItem('in_progress'))
+  }
+
+  if (pipelineItemId === 'WIN') {
+    return res.json(createItem('win'))
+  }
+
+  res.send(200)
 }
