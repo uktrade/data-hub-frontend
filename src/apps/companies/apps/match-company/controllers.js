@@ -115,7 +115,7 @@ async function renderMatchConfirmation(req, res, next) {
   }
 }
 
-async function linkCompanies(req, res) {
+async function linkCompanies(req, res, next) {
   try {
     const { token } = req.session
     const { company } = res.locals
@@ -135,9 +135,7 @@ async function linkCompanies(req, res) {
     )
     res.json(result)
   } catch (error) {
-    const statusCode = get(error, 'response.status', 500)
-    const message = get(error, 'response.data.description')
-    res.status(statusCode).json({ message })
+    next(error)
   }
 }
 
