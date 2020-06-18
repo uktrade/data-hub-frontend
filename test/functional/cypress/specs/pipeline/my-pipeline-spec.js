@@ -92,7 +92,6 @@ describe('My pipeline app', () => {
         { expectedDate: '14 May 2020' },
         { expectedDate: '13 May 2020', expectedWinDate: 'May 2021' },
         { expectedDate: '12 May 2020', expectedWinDate: 'May 2021' },
-        { expectedDate: '11 May 2020' },
       ]
       expectedOutcomeList.forEach((expectedData, index) => {
         it(`should render the item at index ${index}`, () => {
@@ -139,6 +138,100 @@ describe('My pipeline app', () => {
       it('should render the first item', () => {
         assertPipelineItem(0, { expectedDate: '10 May 2020' }, win)
       })
+    })
+  })
+
+  context('When filtering pipeline by archived', () => {
+    beforeEach(() => {
+      cy.server()
+      cy.visit(urls.pipeline.index())
+      cy.route('GET', '/api-proxy/v4/pipeline-item*').as('pipelineGet')
+    })
+
+    const assertCheckedBoxAcrossTabs = (checkbox, test) => {
+      cy.contains('Prospect').click()
+      cy.contains('Prospect').should('have.attr', 'aria-selected', 'true')
+      cy.wrap(checkbox).should(test)
+
+      cy.contains('Active').click()
+      cy.contains('Active').should('have.attr', 'aria-selected', 'true')
+      cy.wrap(checkbox).should(test)
+
+      cy.contains('Won').click()
+      cy.contains('Won').should('have.attr', 'aria-selected', 'true')
+      cy.wrap(checkbox).should(test)
+    }
+
+    it('should be un-checked by default', () => {
+      cy.contains('Show archived projects')
+        .parent()
+        .find('input')
+        .then((element) => {
+          assertCheckedBoxAcrossTabs(element, 'not.be.checked')
+        })
+    })
+
+    it('should keep its checked state across tabs', () => {
+      cy.contains('Show archived projects')
+        .parent()
+        .find('input')
+        .then((element) => {
+          cy.wrap(element).check()
+          assertCheckedBoxAcrossTabs(element, 'be.checked')
+          cy.wrap(element).uncheck()
+          assertCheckedBoxAcrossTabs(element, 'not.be.checked')
+        })
+    })
+
+    it('should omit ?archive=false from the query string when archive is checked', () => {
+      cy.contains('Show archived projects')
+        .parent()
+        .find('input')
+        .then((element) => {
+          cy.wrap(element).check()
+          cy.wrap(element).should('be.checked')
+          cy.wrap(element).uncheck()
+          cy.wrap(element).should('not.be.checked')
+          cy.wait(['@pipelineGet', '@pipelineGet']).then((xhr) => {
+            expect(xhr[0].url).to.contain('archived')
+            expect(xhr[1].url).to.not.contain('archived')
+          })
+        })
+    })
+
+    it('should add ?archive=false from the query string when archive is unchecked', () => {
+      cy.contains('Show archived projects')
+        .parent()
+        .find('input')
+        .then((element) => {
+          cy.wrap(element).should('not.be.checked')
+          cy.wait('@pipelineGet').then((xhr) => {
+            expect(xhr.url).to.contain('archived')
+          })
+        })
+    })
+
+    it('should render archived items', () => {
+      const expectedOutcomeList = [
+        { expectedDate: '15 May 2020' },
+        { expectedDate: '14 May 2020' },
+        { expectedDate: '13 May 2020', expectedWinDate: 'May 2021' },
+        { expectedDate: '12 May 2020', expectedWinDate: 'May 2021' },
+        { expectedDate: '11 May 2020' },
+      ]
+      cy.contains('Show archived projects')
+        .parent()
+        .find('input')
+        .then((element) => {
+          cy.wrap(element).check()
+          cy.wrap(element).should('be.checked')
+          return cy.wait('@pipelineGet')
+        })
+        .then(() => {
+          expectedOutcomeList.forEach((expectedData, index) => {
+            assertPipelineItem(index, expectedData, leads)
+          })
+        })
     })
   })
 })
