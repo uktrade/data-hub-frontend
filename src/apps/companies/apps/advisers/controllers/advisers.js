@@ -109,25 +109,22 @@ async function renderAdvisers(req, res, next) {
 
 // istanbul ignore next: Covered by functional tests
 const form = (req, res) => {
-  const { name, id } = res.locals.company
+  const {
+    company: { name, id },
+    features,
+  } = res.locals
   const isRemove = req.url === '/remove'
   const currentLeadITA = companyToLeadITA(res.locals.company)
-  res
-    .breadcrumb(name, urls.companies.detail(id))
-    .breadcrumb(
-      isRemove
-        ? 'Remove the Lead ITA'
-        : currentLeadITA
-        ? 'Replace the Lead ITA'
-        : 'Confirm you are the Lead ITA'
-    )
-    .render('companies/apps/advisers/views/manage-adviser.njk', {
-      props: {
-        isRemove,
-        currentLeadITA,
-        cancelUrl: urls.companies.advisers.index(id),
-      },
-    })
+  res.render('companies/apps/advisers/views/manage-adviser.njk', {
+    props: {
+      companyName: name,
+      companyId: id,
+      isFeatureFlagged: features['manage-lead-adviser'],
+      isRemove,
+      currentLeadITA,
+      cancelUrl: urls.companies.advisers.index(id),
+    },
+  })
 }
 
 // istanbul ignore next: Covered by functional tests
