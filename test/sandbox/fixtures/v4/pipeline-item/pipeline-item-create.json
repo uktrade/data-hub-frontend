@@ -8,5 +8,8 @@
     },
     "name": "TEST",
     "status": "in_progress",
-    "created_on": "2020-05-06T14:14:38.079479Z"
+    "created_on": "2020-05-06T14:14:38.079479Z",
+    "archived": false,
+    "archived_on": null,
+    "archived_reason": null
 }

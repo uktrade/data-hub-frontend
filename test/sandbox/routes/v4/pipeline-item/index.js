@@ -5,6 +5,7 @@ var lambdaPlc = require('../../../fixtures/v4/company/company-lambda-plc.json')
 var leads = require('../../../fixtures/v4/pipeline-item/leads.json')
 var inProgress = require('../../../fixtures/v4/pipeline-item/in-progress.json')
 var win = require('../../../fixtures/v4/pipeline-item/win.json')
+const archived = require('../../../fixtures/v4/pipeline-item/archived.json')
 
 function createItem(status) {
   return {
@@ -71,7 +72,11 @@ exports.getPipelineItem = function(req, res) {
     return res.json(createItem('win'))
   }
 
-  res.send(404)
+  if (pipelineId === 'ARCHIVED') {
+    return res.json(archived)
+  }
+
+  res.sendStatus(404)
 }
 
 exports.archivePipelineItem = function(req, res) {
@@ -89,5 +94,23 @@ exports.archivePipelineItem = function(req, res) {
     return res.json(createItem('win'))
   }
 
-  res.send(200)
+  res.sendStatus(200)
+}
+
+exports.unarchivePipelineItem = function(req, res) {
+  const { pipelineItemId } = req.params
+
+  if (pipelineItemId === 'LEADS') {
+    return res.json(createItem('leads'))
+  }
+
+  if (pipelineItemId === 'IN_PROGRESS') {
+    return res.json(createItem('in_progress'))
+  }
+
+  if (pipelineItemId === 'WIN') {
+    return res.json(createItem('win'))
+  }
+
+  res.sendStatus(200)
 }

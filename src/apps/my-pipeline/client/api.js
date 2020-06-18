@@ -42,12 +42,19 @@ function archivePipelineItem(pipelineItemId, values) {
     .then(handleSuccess, handleError)
 }
 
+function unarchivePipelineItem(pipelineItemId) {
+  return axios
+    .post(`${endpoint}/${pipelineItemId}/unarchive`)
+    .then(handleSuccess, handleError)
+}
+
 const pipelineApi = {
   list: getPipelineItems,
   get: getPipelineItem,
   update: updatePipelineItem,
   create: createPipelineItem,
   archive: archivePipelineItem,
+  unarchive: unarchivePipelineItem,
 }
 
 export default pipelineApi
