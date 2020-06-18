@@ -56,6 +56,8 @@ export default function PipelineDetails({ item }) {
       moment(item.expected_win_date).format('MMM Y'),
     ],
     ['Created on', DateUtils.format(item.created_on)],
+    item.archived && ['Reason for archive', item.archived_reason],
+    item.archived && ['Archived on', DateUtils.format(item.archived_on)],
   ]
 
   return (

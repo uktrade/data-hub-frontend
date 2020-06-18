@@ -4,17 +4,20 @@
     "previous": null,
     "results": [
         {
-            "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
-            "company": {
-                "name": "Lambda plc",
-                "turnover": null,
-                "export_potential": null,
-                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa"
-            },
-            "name": "TEST",
-            "status": "in_progress",
-            "created_on": "2020-05-05T18:30:07.869217Z",
-            "expected_win_date": null
+          "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+          "company": {
+              "name": "Lambda plc",
+              "turnover": null,
+              "export_potential": null,
+              "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa"
+          },
+          "name": "TEST",
+          "status": "in_progress",
+          "created_on": "2020-05-05T18:30:07.869217Z",
+          "archived": false,
+          "archived_on": null,
+          "archived_reason": null,
+          "expected_win_date": null
         },{
           "id": "0fb3379c-341c-4da4-b825-bf8d47b26bab",
           "company": {
@@ -26,6 +29,9 @@
           "name": "TEST - all fields",
           "status": "leads",
           "created_on": "2020-05-05T18:30:07.869217Z",
+          "archived": false,
+          "archived_on": null,
+          "archived_reason": null,
           "likelihood_to_win": 2,
           "sector": {
             "id": "af959812-6095-e211-a939-e4115bead28a",
