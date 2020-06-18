@@ -1,5 +1,7 @@
 import pipelineApi from '../../../apps/my-pipeline/client/api'
 
-export function getPipelineList({ status }) {
-  return pipelineApi.list({ status }).then(({ data }) => data.results)
+export function getPipelineList(filters) {
+  return pipelineApi.list(filters).then(({ data }) => ({
+    [filters.status]: data.results,
+  }))
 }
