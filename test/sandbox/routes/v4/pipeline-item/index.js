@@ -15,23 +15,28 @@ function createItem(status) {
 }
 
 exports.getPipelineItems = function(req, res) {
+  let result = pipelineNoResult
   if (req.query.company_id === lambdaPlc.id) {
     res.json(pipelineItemLambdaPlc)
     return
   }
+
   if (req.query.status === 'leads') {
-    res.json(leads)
-    return
+    result = { ...leads }
   }
   if (req.query.status === 'in_progress') {
-    res.json(inProgress)
-    return
+    result = { ...inProgress }
   }
   if (req.query.status === 'win') {
-    res.json(win)
-    return
+    result = { ...win }
   }
-  res.json(pipelineNoResult)
+
+  if (req.query.archived === 'false') {
+    result.results = result.results.filter((item) => !item.archived)
+  }
+
+  res.json(result)
+  return
 }
 
 exports.createUpdatePipelineItem = function(req, res) {
