@@ -45,6 +45,8 @@ import PipelineForm from '../apps/my-pipeline/client'
 import CompanyLocalHeader from '../apps/companies/client/CompanyLocalHeader.jsx'
 import InvestmentProjectAdmin from '../apps/investments/views/admin/client/InvestmentProjectAdmin.jsx'
 import FlashMessages from './components/LocalHeader/FlashMessages.jsx'
+import ArchivePipelineItemForm from '../apps/my-pipeline/client/ArchivePipelineItemForm.jsx'
+
 import { ConnectedDropdownMenu } from './components/DropdownMenu'
 import tasks from './components/Task/reducer'
 import rootSaga from './root-saga'
@@ -308,6 +310,9 @@ function App() {
         </Mount>
         <Mount selector="#flash-messages">
           {(props) => <FlashMessages {...props} />}
+        </Mount>
+        <Mount selector="#archive-pipeline-item-form">
+          {(props) => <ArchivePipelineItemForm {...props} />}
         </Mount>
       </ConnectedRouter>
     </Provider>
