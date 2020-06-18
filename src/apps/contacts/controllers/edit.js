@@ -24,11 +24,16 @@ async function editDetails(req, res, next) {
     // This can either be data recently posted, to be re-rendered with errors
     // or a contact that the user wishes to edit
     // or a new contact for a company
-    let { from_interaction: fromInteraction, company: companyId } = req.query
+    let {
+      origin_type: originType,
+      origin_url: originUrl,
+      company: companyId,
+    } = req.query
 
     if (containsFormData(req)) {
       companyId = req.body.company
-      fromInteraction = req.body.from_interaction
+      originUrl = req.body.origin_url
+
       res.locals.formData = req.body
     } else if (res.locals.contact) {
       companyId = res.locals.contact.company.id
@@ -40,8 +45,11 @@ async function editDetails(req, res, next) {
       res.locals.formData = {
         company: companyId,
       }
-      if (fromInteraction) {
-        res.locals.formData.from_interaction = fromInteraction
+      if (originUrl) {
+        res.locals.formData.origin_url = originUrl
+      }
+      if (originType) {
+        res.locals.formData.origin_type = originType
       }
     } else {
       return next('Unable to edit contact')
@@ -57,8 +65,8 @@ async function editDetails(req, res, next) {
     if (contactId) {
       res.locals.returnLink = urls.contacts.details(contactId)
       res.breadcrumb('Edit')
-    } else if (fromInteraction && isUrlSafe(req, fromInteraction)) {
-      res.locals.returnLink = fromInteraction
+    } else if (originUrl && isUrlSafe(req, originUrl)) {
+      res.locals.returnLink = originUrl
       res.breadcrumb(`Add contact at ${res.locals.company.name}`)
     } else if (companyId) {
       res.locals.returnLink = urls.companies.contacts(companyId)
@@ -87,7 +95,7 @@ async function postDetails(req, res, next) {
   // Try and save the form data, if it fails
   // then attach the errors to the response and re-render edit
   try {
-    const { from_interaction: fromInteraction, ...body } = req.body
+    const { origin_type: originType, origin_url: originUrl, ...body } = req.body
 
     const newContact = await contactFormService.saveContactForm(
       req.session.token,
@@ -96,7 +104,13 @@ async function postDetails(req, res, next) {
 
     if (req.body.id) {
       req.flash('success', 'Contact record updated')
-    } else if (fromInteraction) {
+    } else if (originType === 'referral') {
+      req.flashWithBody(
+        'success',
+        `You added ${newContact.name}.`,
+        'You can now continue sending the referral.'
+      )
+    } else if (originType === 'interaction') {
       req.flash(
         'success',
         `You added ${newContact.name}.\nYou can now continue recording the interaction.`
@@ -106,8 +120,9 @@ async function postDetails(req, res, next) {
     }
 
     const redirectUrl =
-      fromInteraction && isUrlSafe(req, fromInteraction)
-        ? fromInteraction
+      originUrl && isUrlSafe(req, originUrl)
+        ? originUrl +
+          `?new-contact-name=${newContact.name}&new-contact-id=${newContact.id}`
         : urls.contacts.details(newContact.id)
     res.redirect(redirectUrl)
   } catch (errors) {

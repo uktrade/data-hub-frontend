@@ -11,6 +11,10 @@ function renderSendReferralForm(req, res) {
     name: `${first_name} ${last_name}`,
     id: id,
   }))
+  const sendingAdviserTeamName =
+    req.session.user && req.session.user.dit_team
+      ? req.session.user.dit_team.name
+      : ''
   res.locals.title = `Send a referral - ${name} - Companies`
   res.render(
     'companies/apps/referrals/send-referral/views/client-container.njk',
@@ -20,7 +24,8 @@ function renderSendReferralForm(req, res) {
         companyName: name,
         companyId: id,
         cancelUrl: urls.companies.detail(id),
-        sendingAdviserTeamName: req.session.user.dit_team.name,
+        sendingAdviserTeamName,
+        flashMessages: res.locals.getMessages(),
       },
     }
   )

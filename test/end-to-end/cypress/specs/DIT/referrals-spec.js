@@ -6,7 +6,7 @@ const formSelectors = selectors.interactionForm
 const companyLocalHeader = selectors.companyLocalHeader()
 
 const selectTypeahead = (fieldName, input) =>
-  cy.contains(fieldName).within(() => {
+  cy.get(fieldName).within(() => {
     cy.server()
     cy.route('/api-proxy/adviser/?*').as('adviserResults')
     cy.get('div')
@@ -22,13 +22,11 @@ describe('Referrals', () => {
   })
   context('when adding a referral', () => {
     it('should create a referral for a company', () => {
-      selectTypeahead('Adviser', 'dennis')
-      cy.contains('label', 'Subject')
-        .find('input')
+      selectTypeahead(selectors.sendReferral.adviserField, 'dennis')
+      cy.get(selectors.sendReferral.subjectField)
         .click()
         .type('Example subject')
-      cy.contains('label', 'Notes')
-        .find('textarea')
+      cy.get(selectors.sendReferral.notesField)
         .click()
         .type('Example notes')
       cy.contains('button', 'Continue').click()
