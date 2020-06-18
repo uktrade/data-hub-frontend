@@ -7,6 +7,11 @@ import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
 import * as exportsHistoryTasks from '../apps/companies/apps/exports/client/ExportsHistory/tasks'
 import referralListTask from './components/ReferralList/task'
+import {
+  TASK_OPEN_REFERRALS_CONTACT_FORM,
+  TASK_SAVE_REFERRAL,
+} from '../apps/companies/apps/referrals/send-referral/client/state'
+import * as referralsSendTasks from '../apps/companies/apps/referrals/send-referral/client/tasks'
 import * as exportWinsTasks from '../apps/companies/apps/exports/client/ExportWins/tasks'
 import { TASK_NAME as EXPORT_COUNTRIES_EDIT_NAME } from '../apps/companies/apps/exports/client/ExportCountriesEdit/state'
 import * as exportCountriesEditTasks from '../apps/companies/apps/exports/client/ExportCountriesEdit/tasks'
@@ -42,6 +47,8 @@ export default function* rootSaga() {
       'Referral details': referralTasks.fetchReferralDetails,
       Referrals: referralListTask,
       'Export wins': exportWinsTasks.fetchExportWins,
+      [TASK_OPEN_REFERRALS_CONTACT_FORM]: referralsSendTasks.openContactForm,
+      [TASK_SAVE_REFERRAL]: referralsSendTasks.saveReferral,
       [TASK_SAVE_ONE_LIST_DETAILS]: editOneListTasks.saveOneListDetails,
       [EXPORT_COUNTRIES_EDIT_NAME]:
         exportCountriesEditTasks.saveExportCountries,

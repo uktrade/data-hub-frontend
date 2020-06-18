@@ -39,7 +39,6 @@ import ExportCountriesEdit from '../apps/companies/apps/exports/client/ExportCou
 import ReferralDetails from '../apps/companies/apps/referrals/details/client/ReferralDetails'
 import ReferralHelp from '../apps/companies/apps/referrals/help/client/ReferralHelp'
 import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
-import sendReferral from '../apps/companies/apps/referrals/send-referral/client/reducer'
 import InteractionReferralDetails from '../apps/companies/apps/referrals/details/client/InteractionReferralDetails.jsx'
 import PipelineForm from '../apps/my-pipeline/client'
 import CompanyLocalHeader from '../apps/companies/client/CompanyLocalHeader.jsx'
@@ -56,6 +55,10 @@ import companyListsReducer from './components/CompanyLists/reducer'
 
 import { ID as REFERRALS_DETAILS_STATE_ID } from '../apps/companies/apps/referrals/details/client/state'
 import referralsReducer from '../apps/companies/apps/referrals/details/client/reducer'
+
+import { ID as REFERRALS_SEND_ID } from '../apps/companies/apps/referrals/send-referral/client/state'
+import referralsSendReducer from '../apps/companies/apps/referrals/send-referral/client/reducer'
+import * as referralsSendTasks from '../apps/companies/apps/referrals/send-referral/client/tasks'
 
 import { ID as EXPORTS_HISTORY_ID } from '../apps/companies/apps/exports/client/ExportsHistory/state'
 import exportsHistoryReducer from '../apps/companies/apps/exports/client/ExportsHistory/reducer'
@@ -110,10 +113,10 @@ const store = createStore(
   combineReducers({
     router: connectRouter(history),
     tasks,
-    sendReferral,
     [COMPANY_LISTS_STATE_ID]: companyListsReducer,
     [EXPORTS_HISTORY_ID]: exportsHistoryReducer,
     [REFERRALS_DETAILS_STATE_ID]: referralsReducer,
+    [REFERRALS_SEND_ID]: referralsSendReducer,
     [EXPORTS_WINS_ID]: exportWinsReducer,
     [EXPORT_COUNTRIES_EDIT_ID]: exportCountriesEditReducer,
     [addInteractionFormState.ID]: addInteractionFormReducer,
@@ -140,6 +143,15 @@ const store = createStore(
         steps: [],
         currentStep: 0,
         ...addInteractionFormTasks.restoreState(),
+      },
+      [REFERRALS_SEND_ID]: {
+        values: {},
+        touched: {},
+        errors: {},
+        fields: {},
+        steps: [],
+        currentStep: 0,
+        ...referralsSendTasks.restoreState(),
       },
     },
   },
