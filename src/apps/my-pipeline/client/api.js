@@ -48,6 +48,12 @@ function unarchivePipelineItem(pipelineItemId) {
     .then(handleSuccess, handleError)
 }
 
+function deletePipelineItem(pipelineItemId) {
+  return axios
+    .delete(`${endpoint}/${pipelineItemId}`)
+    .then(handleSuccess, handleError)
+}
+
 const pipelineApi = {
   list: getPipelineItems,
   get: getPipelineItem,
@@ -55,6 +61,7 @@ const pipelineApi = {
   create: createPipelineItem,
   archive: archivePipelineItem,
   unarchive: unarchivePipelineItem,
+  delete: deletePipelineItem,
 }
 
 export default pipelineApi

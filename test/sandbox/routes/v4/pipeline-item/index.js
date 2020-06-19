@@ -114,3 +114,7 @@ exports.unarchivePipelineItem = function(req, res) {
 
   res.sendStatus(200)
 }
+
+exports.deletePipelineItem = function(req, res) {
+  res.sendStatus(204)
+}
