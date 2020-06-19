@@ -32,9 +32,7 @@ function UnarchivePipelineItemForm({
   currentPipelineItem,
   savedPipelineItem,
 }) {
-  let loading = false
   useEffect(() => {
-    loading = false
     if (savedPipelineItem) {
       /**
        * TODO: Replace with react router navigation.
@@ -59,7 +57,7 @@ function UnarchivePipelineItemForm({
             currentPipelineItem={currentPipelineItem}
           >
             {() => (
-              <LoadingBox loading={loading}>
+              <LoadingBox loading={unarchivePipelineItem.progress}>
                 <StyledP>
                   Unarchiving this project will restore these project details in
                   your pipeline.
@@ -68,7 +66,6 @@ function UnarchivePipelineItemForm({
                 <Form
                   id={STATE_ID}
                   onSubmit={() => {
-                    loading = true
                     unarchivePipelineItem.start({
                       payload: {
                         pipelineName: currentPipelineItem.name,

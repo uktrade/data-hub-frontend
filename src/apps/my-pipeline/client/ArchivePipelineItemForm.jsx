@@ -44,9 +44,7 @@ function ArchivePipelineItemForm({
   currentPipelineItem,
   savedPipelineItem,
 }) {
-  let loading = false
   useEffect(() => {
-    loading = false
     if (savedPipelineItem) {
       /**
        * TODO: Replace with react router navigation.
@@ -71,7 +69,7 @@ function ArchivePipelineItemForm({
             currentPipelineItem={currentPipelineItem}
           >
             {() => (
-              <LoadingBox loading={loading}>
+              <LoadingBox loading={archivePipelineItem.progress}>
                 <StyledP>
                   Archive this project if it’s no longer required or active.
                   <br />
@@ -82,7 +80,6 @@ function ArchivePipelineItemForm({
                 <Form
                   id={STATE_ID}
                   onSubmit={(values) => {
-                    loading = true
                     archivePipelineItem.start({
                       payload: { values, pipelineItemId },
                       onSuccessDispatch: PIPELINE__ARCHIVE_PIPELINE_SUCCESS,
