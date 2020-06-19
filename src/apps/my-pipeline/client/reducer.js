@@ -4,6 +4,7 @@ import {
   PIPELINE__GET_PIPELINE_SUCCESS,
   PIPELINE__EDIT_PIPELINE_SUCCESS,
   PIPELINE__ARCHIVE_PIPELINE_SUCCESS,
+  PIPELINE__UNARCHIVE_PIPELINE_SUCCESS,
 } from '../../../client/actions'
 
 export default (state = {}, { type, result }) => {
@@ -16,6 +17,7 @@ export default (state = {}, { type, result }) => {
     case PIPELINE__ADD_COMPANY_SUCCESS:
     case PIPELINE__EDIT_PIPELINE_SUCCESS:
     case PIPELINE__ARCHIVE_PIPELINE_SUCCESS:
+    case PIPELINE__UNARCHIVE_PIPELINE_SUCCESS:
       return {
         ...state,
         savedPipelineItem: result,

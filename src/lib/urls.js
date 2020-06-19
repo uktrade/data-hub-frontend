@@ -250,5 +250,6 @@ module.exports = {
     won: url('/my-pipeline/won'),
     edit: url('/my-pipeline', '/:pipelineItemId/edit'),
     archive: url('/my-pipeline', '/:pipelineItemId/archive'),
+    unarchive: url('/my-pipeline', '/:pipelineItemId/unarchive'),
   },
 }

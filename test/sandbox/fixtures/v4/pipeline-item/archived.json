@@ -1,0 +1,26 @@
+{
+    "id": "0fb3379c-341c-4da4-b825-bf8d47b26bab",
+    "company": {
+        "name": "Lambda plc",
+        "turnover": null,
+        "export_potential": null,
+        "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa"
+    },
+    "name": "TEST - all fields",
+    "status": "leads",
+    "created_on": "2020-05-05T18:30:07.869217Z",
+    "archived": true,
+    "archived_on": "2020-06-05T18:30:07.869217Z",
+    "archived_reason": "My reason for archive here",
+    "likelihood_to_win": 2,
+    "sector": {
+        "id": "af959812-6095-e211-a939-e4115bead28a",
+        "segment": "Advanced Engineering"
+    },
+    "contact": {
+        "id": "952232d2-1d25-4c3a-bcac-2f3a30a94da9",
+        "name": "Dean Cox"
+    },
+    "potential_value": 111,
+    "expected_win_date": "2021-11-01"
+}
