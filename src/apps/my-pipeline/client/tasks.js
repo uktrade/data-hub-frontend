@@ -80,3 +80,9 @@ export async function archivePipelineItem({ values, pipelineItemId }) {
   addMessage('success', 'Pipeline changes for this company have been saved')
   return data
 }
+
+export async function unarchivePipelineItem({ pipelineName, pipelineItemId }) {
+  const { data } = await pipelineApi.unarchive(pipelineItemId)
+  addMessage('success', `You have unarchived ${pipelineName}`)
+  return data
+}

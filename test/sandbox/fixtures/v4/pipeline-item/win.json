@@ -13,7 +13,10 @@
       },
       "name": "Socks to Korea",
       "status": "win",
-      "created_on": "2020-05-10T14:09:07.705157Z"
+      "created_on": "2020-05-10T14:09:07.705157Z",
+      "archived": false,
+      "archived_on": null,
+      "archived_reason": null
     }
   ]
 }

@@ -14,6 +14,9 @@
       "name": "Socks to Norway",
       "status": "leads",
       "created_on": "2020-05-15T14:13:01.053350Z",
+      "archived": false,
+      "archived_on": null,
+      "archived_reason": null,
       "contact": {
         "id": "048f2edc-e7ed-4881-b1cc-29142a80238a",
         "name": "John Smith"
@@ -29,7 +32,10 @@
       },
       "name": "Socks to Sweden",
       "status": "leads",
-      "created_on": "2020-05-14T14:12:54.041906Z"
+      "created_on": "2020-05-14T14:12:54.041906Z",
+      "archived": false,
+      "archived_on": null,
+      "archived_reason": null
     },
     {
       "id": "96631105-6b08-44b3-9ed1-93ccb1adcc3e",
@@ -42,6 +48,9 @@
       "name": "Socks to France",
       "status": "leads",
       "created_on": "2020-05-13T14:12:46.838377Z",
+      "archived": false,
+      "archived_on": null,
+      "archived_reason": null,
       "contact": {
         "id": "048f2edc-e7ed-4881-b1cc-29142a80238a",
         "name": "John Smith"
@@ -65,6 +74,9 @@
       "name": "Socks to Germany",
       "status": "leads",
       "created_on": "2020-05-12T14:12:46.838377Z",
+      "archived": false,
+      "archived_on": null,
+      "archived_reason": null,
       "contact": {
         "id": "048f2edc-e7ed-4881-b1cc-29142a80238a",
         "name": "John Smith"
@@ -88,6 +100,9 @@
       "name": "Socks to Thailand",
       "status": "leads",
       "created_on": "2020-05-11T14:12:46.838377Z",
+      "archived": true,
+      "archived_on": "2020-06-11T15:10:46.838377Z",
+      "archived_reason": "A reason for archive here",
       "contact": null,
       "sector": null,
       "potential_value": null,
