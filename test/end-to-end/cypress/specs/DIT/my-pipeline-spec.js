@@ -169,7 +169,7 @@ describe('My Pipeline tab on the dashboard', () => {
 
           cy.url().should('include', urls.pipeline.won())
           assertTabListItem({
-            contain: [projectName + ' edited', 'Likelihood to succeed - Low'],
+            contain: [projectName + ' edited', 'LOW'],
             notContain: [
               'Project sector',
               'Company contact',
