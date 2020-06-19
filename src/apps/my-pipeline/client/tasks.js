@@ -80,3 +80,9 @@ export async function unarchivePipelineItem({ pipelineName, pipelineItemId }) {
   addMessage('success', `You have unarchived ${pipelineName}`)
   return data
 }
+
+export async function deletePipelineItem({ pipelineName, pipelineItemId }) {
+  const { status } = await pipelineApi.delete(pipelineItemId)
+  addMessage('success', `You have deleted ${pipelineName} from your pipeline`)
+  return status
+}

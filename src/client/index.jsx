@@ -46,6 +46,7 @@ import InvestmentProjectAdmin from '../apps/investments/views/admin/client/Inves
 import FlashMessages from './components/LocalHeader/FlashMessages.jsx'
 import ArchivePipelineItemForm from '../apps/my-pipeline/client/ArchivePipelineItemForm.jsx'
 import UnarchivePipelineItemForm from '../apps/my-pipeline/client/UnarchivePipelineItemForm.jsx'
+import DeletePipelineItemForm from '../apps/my-pipeline/client/DeletePipelineItemForm.jsx'
 
 import { ConnectedDropdownMenu } from './components/DropdownMenu'
 import tasks from './components/Task/reducer'
@@ -329,6 +330,9 @@ function App() {
         </Mount>
         <Mount selector="#unarchive-pipeline-item-form">
           {(props) => <UnarchivePipelineItemForm {...props} />}
+        </Mount>
+        <Mount selector="#delete-pipeline-item-form">
+          {(props) => <DeletePipelineItemForm {...props} />}
         </Mount>
       </ConnectedRouter>
     </Provider>
