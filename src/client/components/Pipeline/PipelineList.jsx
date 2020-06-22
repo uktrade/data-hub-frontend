@@ -13,7 +13,6 @@ import { state2props, dispatchToProps } from './state'
 
 import PipelineItem from './PipelineItem'
 import PipelineFilterSort from './PipelineFilterSort'
-import ProgressIndicator from '../ProgressIndicator'
 import GetPipeLineData from './GetPipelineData'
 
 const PipelineList = ({
@@ -39,7 +38,6 @@ const PipelineList = ({
                     <PipelineItem item={item} />
                   </ListItem>
                 ))}
-                {progress && <ProgressIndicator />}
               </>
             ) : (
               <LoadingBox loading={progress} timeIn={0} timeOut={400}>
