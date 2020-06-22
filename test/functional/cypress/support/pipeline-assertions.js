@@ -1,13 +1,13 @@
 const { DateUtils, NumberUtils } = require('data-hub-components')
 const moment = require('moment')
 
-const { assertKeyValueTable } = require('../../support/assertions')
+const { assertKeyValueTable } = require('./assertions')
 
-const urls = require('../../../../../src/lib/urls')
+const urls = require('../../../../src/lib/urls')
 const {
   STATUS_VALUES,
   LIKELIHOOD_VALUES,
-} = require('../../../../../src/apps/my-pipeline/client/constants')
+} = require('../../../../src/apps/my-pipeline/client/constants')
 
 function getItems(acc, item) {
   acc[item.value] = item
