@@ -58,7 +58,7 @@ const {
 } = require('./middleware/hierarchies')
 const setCompaniesLocalNav = require('./middleware/local-navigation')
 const lastInteractionDate = require('./middleware/last-interaction-date')
-const search = require('./middleware/search')
+const formatPostcodes = require('./middleware/format-postcodes')
 
 const { transformCompanyToListItem } = require('./transformers')
 
@@ -94,7 +94,7 @@ router.get(
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   getRequestBody(QUERY_FIELDS),
   lastInteractionDate,
-  search,
+  formatPostcodes,
   getCollection('company', ENTITIES, transformCompanyToListItem),
   renderCompanyList
 )
@@ -104,6 +104,7 @@ router.get(
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   getRequestBody(QUERY_FIELDS),
   lastInteractionDate,
+  formatPostcodes,
   exportCollection('company')
 )
 
