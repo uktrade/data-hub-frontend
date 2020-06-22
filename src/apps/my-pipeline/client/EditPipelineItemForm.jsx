@@ -1,21 +1,17 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import ErrorSummary from '@govuk-react/error-summary'
 
 import Task from '../../../client/components/Task'
 import LoadingBox from '@govuk-react/loading-box'
 
-import {
-  PIPELINE__EDIT_ITEM,
-  PIPELINE__GET_ITEM,
-} from '../../../client/actions'
+import { PIPELINE__EDIT_ITEM } from '../../../client/actions'
 import {
   ID as STATE_ID,
   TASK_GET_PIPELINE_ITEM,
   TASK_EDIT_PIPELINE_ITEM,
 } from './state'
-import ProgressIndicator from '../../../client/components/ProgressIndicator'
 import PipelineForm from './PipelineForm'
+import GetPipelineData from './GetPipelineData'
 import { PipelineItemPropType } from './constants'
 import { getPipelineUrl } from './utils'
 import moment from 'moment'
@@ -42,34 +38,6 @@ function formatInitialValues(values) {
   }
 }
 
-function PipelineCheck({
-  pipelineItemId,
-  getPipelineData,
-  children,
-  currentPipelineItem,
-}) {
-  useEffect(() => {
-    getPipelineData.start({
-      payload: { pipelineItemId },
-      onSuccessDispatch: PIPELINE__GET_ITEM,
-    })
-  }, [pipelineItemId])
-
-  if (getPipelineData.error) {
-    return (
-      <ErrorSummary
-        heading="There is a problem"
-        description={`Error: ${getPipelineData.errorMessage}`}
-        errors={[]}
-      />
-    )
-  }
-  if (!currentPipelineItem) {
-    return <ProgressIndicator message="getting pipeline..." />
-  }
-  return <>{children}</>
-}
-
 function EditPipelineItemForm({
   pipelineItemId,
   contacts,
@@ -90,34 +58,39 @@ function EditPipelineItemForm({
   return (
     <Task>
       {(getTask) => {
-        const getPipelineData = getTask(TASK_GET_PIPELINE_ITEM, STATE_ID)
         const editPipelineItem = getTask(TASK_EDIT_PIPELINE_ITEM, STATE_ID)
         return (
           <>
-            <LoadingBox>
-              <PipelineCheck
-                currentPipelineItem={currentPipelineItem}
-                pipelineItemId={pipelineItemId}
-                getPipelineData={getPipelineData}
-              >
-                <PipelineForm
-                  submissionError={editPipelineItem.errorMessage}
-                  onSubmit={(values) => {
-                    editPipelineItem.start({
-                      payload: { values, pipelineItemId, currentPipelineItem },
-                      onSuccessDispatch: PIPELINE__EDIT_ITEM,
-                    })
-                  }}
-                  cancelLink={getPipelineUrl(currentPipelineItem)}
-                  initialValue={
-                    currentPipelineItem &&
-                    formatInitialValues(currentPipelineItem)
-                  }
-                  sectors={sectors}
-                  contacts={contacts}
-                />
-              </PipelineCheck>
-            </LoadingBox>
+            <GetPipelineData
+              task={getTask(TASK_GET_PIPELINE_ITEM, STATE_ID)}
+              pipelineItemId={pipelineItemId}
+              currentPipelineItem={currentPipelineItem}
+            >
+              {() => (
+                <LoadingBox loading={editPipelineItem.progress}>
+                  <PipelineForm
+                    submissionError={editPipelineItem.errorMessage}
+                    onSubmit={(values) => {
+                      editPipelineItem.start({
+                        payload: {
+                          values,
+                          pipelineItemId,
+                          currentPipelineItem,
+                        },
+                        onSuccessDispatch: PIPELINE__EDIT_ITEM,
+                      })
+                    }}
+                    cancelLink={getPipelineUrl(currentPipelineItem)}
+                    initialValue={
+                      currentPipelineItem &&
+                      formatInitialValues(currentPipelineItem)
+                    }
+                    sectors={sectors}
+                    contacts={contacts}
+                  />
+                </LoadingBox>
+              )}
+            </GetPipelineData>
           </>
         )
       }}
