@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import axios from 'axios'
 import { throttle } from 'lodash'
 import styled from 'styled-components'
-import LoadingBox from '@govuk-react/loading-box'
+import { LoadingBox } from 'govuk-react'
 
 import {
   Button,
