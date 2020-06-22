@@ -251,5 +251,6 @@ module.exports = {
     edit: url('/my-pipeline', '/:pipelineItemId/edit'),
     archive: url('/my-pipeline', '/:pipelineItemId/archive'),
     unarchive: url('/my-pipeline', '/:pipelineItemId/unarchive'),
+    delete: url('/my-pipeline', '/:pipelineItemId/delete'),
   },
 }
