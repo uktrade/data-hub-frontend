@@ -8,10 +8,7 @@ import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import { SPACING, MEDIA_QUERIES, FONT_SIZE } from '@govuk-react/constants'
 import { BLUE, GREY_1 } from 'govuk-colours'
-import {
-  Card,
-  CardDetailsList,
-} from 'data-hub-components/dist/activity-feed/activities/card'
+import { Card } from 'data-hub-components/dist/activity-feed/activities/card'
 import { NumberUtils } from 'data-hub-components'
 
 import urls from '../../../lib/urls'
@@ -78,8 +75,10 @@ const StyledTagSpacing = styled.span`
   }
 `
 
-const StyledMetaItem = styled(GridRow)`
-  margin-bottom: ${SPACING.SCALE_2};
+const StyledUnorderedList = styled('ul')`
+  li:not(:last-child) {
+    margin-bottom: ${SPACING.SCALE_2};
+  }
 `
 
 function buildMetaList({
@@ -98,7 +97,12 @@ function buildMetaList({
       href: urls.companies.detail(company.id),
     },
     sector && { id: 1, label: 'Project sector', value: sector.segment },
-    contact && { id: 2, label: 'Company contact', value: contact.name },
+    contact && {
+      id: 2,
+      label: 'Company contact',
+      value: contact.name,
+      href: urls.contacts.contact(contact.id),
+    },
     potential_value && {
       id: 3,
       label: 'Potential export value',
@@ -120,43 +124,55 @@ function buildMetaList({
 }
 
 const PipelineItemMeta = ({ label, value, href }) => (
-  <StyledMetaItem>
-    <StyledGridLabel>{label}</StyledGridLabel>
-    {href ? (
-      <StyledGridValue>
-        <Link href={href}>{value}</Link>
-      </StyledGridValue>
-    ) : (
-      <StyledGridValue>{value}</StyledGridValue>
-    )}
-  </StyledMetaItem>
+  <li>
+    <GridRow>
+      <StyledGridLabel>{label}</StyledGridLabel>
+      {href ? (
+        <StyledGridValue>
+          <Link href={href}>{value}</Link>
+        </StyledGridValue>
+      ) : (
+        <StyledGridValue>{value}</StyledGridValue>
+      )}
+    </GridRow>
+  </li>
 )
 
-const PipelineItem = ({ item: { id, name, likelihood_to_win, ...meta } }) => (
-  <Card>
-    <StyledH3>{name}</StyledH3>
-    <StyledGridRow>
-      <GridCol>
-        <CardDetailsList
-          itemRenderer={(metaItem) => <PipelineItemMeta {...metaItem} />}
-          items={buildMetaList({ ...meta })}
-        />
-      </GridCol>
-      <StyledGridCol>
-        {LIKELIHOOD_TO_SUCCEED[likelihood_to_win] && (
-          <StyledTagSpacing aria-label="Likelihood to succeed">
-            <Tag
-              colour={LIKELIHOOD_TO_SUCCEED[likelihood_to_win].colour}
-            >{`${LIKELIHOOD_TO_SUCCEED[likelihood_to_win].text}`}</Tag>
-          </StyledTagSpacing>
-        )}
-        <Button as={Link} href={urls.pipeline.edit(id)} buttonColour={BLUE}>
-          Edit
-        </Button>
-      </StyledGridCol>
-    </StyledGridRow>
-  </Card>
-)
+const PipelineItem = ({ item: { id, name, likelihood_to_win, ...meta } }) => {
+  const metaListItems = buildMetaList({ ...meta })
+
+  return (
+    <Card>
+      <StyledH3>{name}</StyledH3>
+      <StyledGridRow>
+        <GridCol>
+          <StyledUnorderedList>
+            {metaListItems.map(({ label, value, href }) => (
+              <PipelineItemMeta
+                key={label}
+                label={label}
+                value={value}
+                href={href}
+              />
+            ))}
+          </StyledUnorderedList>
+        </GridCol>
+        <StyledGridCol>
+          {LIKELIHOOD_TO_SUCCEED[likelihood_to_win] && (
+            <StyledTagSpacing aria-label="Likelihood to succeed">
+              <Tag
+                colour={LIKELIHOOD_TO_SUCCEED[likelihood_to_win].colour}
+              >{`${LIKELIHOOD_TO_SUCCEED[likelihood_to_win].text}`}</Tag>
+            </StyledTagSpacing>
+          )}
+          <Button as={Link} href={urls.pipeline.edit(id)} buttonColour={BLUE}>
+            Edit
+          </Button>
+        </StyledGridCol>
+      </StyledGridRow>
+    </Card>
+  )
+}
 
 PipelineItem.propTypes = {
   item: PipeLineItemPropType,
