@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import ErrorSummary from '@govuk-react/error-summary'
 
 import ProgressIndicator from '../../../client/components/ProgressIndicator'
-import { PIPELINE__GET_PIPELINE_SUCCESS } from '../../../client/actions'
+import { PIPELINE__GET_ITEM } from '../../../client/actions'
 import { PipelineItemPropType } from './constants'
 
 export default function GetPipelineData({
@@ -15,7 +15,7 @@ export default function GetPipelineData({
   useEffect(() => {
     task.start({
       payload: { pipelineItemId },
-      onSuccessDispatch: PIPELINE__GET_PIPELINE_SUCCESS,
+      onSuccessDispatch: PIPELINE__GET_ITEM,
     })
   }, [pipelineItemId])
 

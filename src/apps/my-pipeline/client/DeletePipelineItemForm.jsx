@@ -12,7 +12,7 @@ import { SPACING } from '@govuk-react/constants'
 
 import Task from '../../../client/components/Task'
 import Form from '../../../client/components/Form'
-import { PIPELINE__DELETE_PIPELINE_SUCCESS } from '../../../client/actions'
+import { PIPELINE__DELETE_ITEM } from '../../../client/actions'
 
 import {
   ID as STATE_ID,
@@ -70,7 +70,7 @@ function DeletePipelineItemForm({
                         pipelineName: currentPipelineItem.name,
                         pipelineItemId,
                       },
-                      onSuccessDispatch: PIPELINE__DELETE_PIPELINE_SUCCESS,
+                      onSuccessDispatch: PIPELINE__DELETE_ITEM,
                     })
                   }}
                   submissionError={deletePipelineItem.errorMessage}

@@ -6,8 +6,8 @@ import Task from '../../../client/components/Task'
 import LoadingBox from '@govuk-react/loading-box'
 
 import {
-  PIPELINE__EDIT_PIPELINE_SUCCESS,
-  PIPELINE__GET_PIPELINE_SUCCESS,
+  PIPELINE__EDIT_ITEM,
+  PIPELINE__GET_ITEM,
 } from '../../../client/actions'
 import {
   ID as STATE_ID,
@@ -51,7 +51,7 @@ function PipelineCheck({
   useEffect(() => {
     getPipelineData.start({
       payload: { pipelineItemId },
-      onSuccessDispatch: PIPELINE__GET_PIPELINE_SUCCESS,
+      onSuccessDispatch: PIPELINE__GET_ITEM,
     })
   }, [pipelineItemId])
 
@@ -105,7 +105,7 @@ function EditPipelineItemForm({
                   onSubmit={(values) => {
                     editPipelineItem.start({
                       payload: { values, pipelineItemId, currentPipelineItem },
-                      onSuccessDispatch: PIPELINE__EDIT_PIPELINE_SUCCESS,
+                      onSuccessDispatch: PIPELINE__EDIT_ITEM,
                     })
                   }}
                   cancelLink={getPipelineUrl(currentPipelineItem)}
