@@ -1,8 +1,10 @@
+const { NumberUtils } = require('data-hub-components')
+
 const urls = require('../../../../../src/lib/urls')
 const leads = require('../../../../sandbox/fixtures/v4/pipeline-item/leads.json')
 const inProgress = require('../../../../sandbox/fixtures/v4/pipeline-item/in-progress.json')
 const win = require('../../../../sandbox/fixtures/v4/pipeline-item/win.json')
-const { NumberUtils } = require('data-hub-components')
+const LIKELIHOOD_TO_SUCCEED = require('../../../../../src/client/components/Pipeline/constants')
 
 function assertPipelineItem(
   index,
@@ -29,14 +31,15 @@ function assertPipelineItem(
         urls.pipeline.edit(result.id)
       )
       if (result.likelihood_to_win) {
-        const likelihoodToWinText = {
-          1: 'Likelihood to succeed - Low',
-          2: 'Likelihood to succeed - Medium',
-          3: 'Likelihood to succeed - High',
-        }
-        cy.contains(likelihoodToWinText[result.likelihood_to_win])
+        cy.get('span[aria-label="Likelihood to succeed"]').should('exist')
+        cy.contains(LIKELIHOOD_TO_SUCCEED[result.likelihood_to_win].text)
       } else {
-        cy.contains('Likelihood to succeed').should('not.exist')
+        const values = Object.values(LIKELIHOOD_TO_SUCCEED).map(
+          (item) => item.text
+        )
+        const regex = new RegExp(`${values.join('|')}`, 'g')
+        cy.get('span[aria-label="Likelihood to succeed"]').should('not.exist')
+        cy.contains(regex).should('not.exist')
       }
 
       if (result.expected_win_date) {

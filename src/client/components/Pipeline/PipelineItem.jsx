@@ -7,15 +7,17 @@ import Link from '@govuk-react/link'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
-import { BLUE, GREEN } from 'govuk-colours'
+import { BLUE } from 'govuk-colours'
 import {
   Card,
   CardDetailsList,
   CardHeader,
 } from 'data-hub-components/dist/activity-feed/activities/card'
-import { Badge, NumberUtils } from 'data-hub-components'
+import { NumberUtils } from 'data-hub-components'
 
 import urls from '../../../lib/urls'
+import Tag from '../Tag'
+import LIKELIHOOD_TO_SUCCEED from './constants'
 
 const StyledGridCol = styled(GridCol)`
   display: flex;
@@ -53,7 +55,7 @@ const StyledGridRow = styled(GridRow)`
   }
 `
 
-const StyledBadgeSpacing = styled.span`
+const StyledTagSpacing = styled.span`
   margin: ${SPACING.SCALE_3} 0 0 0;
   ${MEDIA_QUERIES.TABLET} {
     margin: 0;
@@ -64,12 +66,6 @@ const StyledBadgeSpacing = styled.span`
     box-sizing: border-box;
   }
 `
-
-const LIKELIHOOD_TO_WIN = {
-  1: 'Low',
-  2: 'Medium',
-  3: 'High',
-}
 
 function buildMetaList({
   potential_value,
@@ -120,14 +116,13 @@ const PipelineItem = ({
         />
       </GridCol>
       <StyledGridCol>
-        {LIKELIHOOD_TO_WIN[likelihood_to_win] && (
-          <StyledBadgeSpacing>
-            <Badge
-              borderColour={GREEN}
-            >{`Likelihood to succeed - ${LIKELIHOOD_TO_WIN[likelihood_to_win]}`}</Badge>
-          </StyledBadgeSpacing>
+        {LIKELIHOOD_TO_SUCCEED[likelihood_to_win] && (
+          <StyledTagSpacing aria-label="Likelihood to succeed">
+            <Tag
+              colour={LIKELIHOOD_TO_SUCCEED[likelihood_to_win].colour}
+            >{`${LIKELIHOOD_TO_SUCCEED[likelihood_to_win].text}`}</Tag>
+          </StyledTagSpacing>
         )}
-
         <Button as={Link} href={urls.pipeline.edit(id)} buttonColour={BLUE}>
           Edit
         </Button>
