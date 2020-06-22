@@ -23,10 +23,12 @@ function PipelineStates({ items, children, task, status, includeArchive }) {
   const { progress, error, errorMessage } = task
 
   React.useEffect(() => {
-    task.start({
-      payload: { status, ...(!includeArchive && { archived: false }) },
-      onSuccessDispatch: PIPELINE__LIST_LOADED,
-    })
+    if (!progress) {
+      task.start({
+        payload: { status, ...(!includeArchive && { archived: false }) },
+        onSuccessDispatch: PIPELINE__LIST_LOADED,
+      })
+    }
   }, [status, includeArchive])
 
   if (error) {
@@ -59,7 +61,10 @@ const GetPipeLineData = ({ status, lists, children, filter }) => {
               items={lists[status]}
               status={status}
               includeArchive={includeArchive}
-              task={getTask(TASK_GET_PIPELINE_LIST, `${STATE_ID}_${status}`)}
+              task={getTask(
+                TASK_GET_PIPELINE_LIST,
+                `${STATE_ID}_${status}_${includeArchive ? 'filter' : ''}`
+              )}
             >
               {children}
             </PipelineStates>
