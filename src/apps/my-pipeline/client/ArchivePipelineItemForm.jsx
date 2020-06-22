@@ -16,7 +16,6 @@ import { PIPELINE__ARCHIVE_ITEM } from '../../../client/actions'
 
 import {
   ID as STATE_ID,
-  TASK_GET_PIPELINE_ITEM,
   TASK_ARCHIVE_PIPELINE_ITEM,
   state2props,
 } from './state'
@@ -64,7 +63,7 @@ function ArchivePipelineItemForm({
 
         return (
           <GetPipelineData
-            task={getTask(TASK_GET_PIPELINE_ITEM, STATE_ID)}
+            getTask={getTask}
             pipelineItemId={pipelineItemId}
             currentPipelineItem={currentPipelineItem}
           >

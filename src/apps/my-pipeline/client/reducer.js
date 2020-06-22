@@ -6,6 +6,7 @@ import {
   PIPELINE__ARCHIVE_ITEM,
   PIPELINE__UNARCHIVE_ITEM,
   PIPELINE__DELETE_ITEM,
+  PIPELINE__GET_COMPANY_CONTACTS,
 } from '../../../client/actions'
 
 export default (state = {}, { type, result }) => {
@@ -26,8 +27,12 @@ export default (state = {}, { type, result }) => {
     case PIPELINE__GET_ITEM:
       return {
         ...state,
-        currentPipelineItem: result.pipelineItem,
-        contacts: result.contacts,
+        currentPipelineItem: result,
+      }
+    case PIPELINE__GET_COMPANY_CONTACTS:
+      return {
+        ...state,
+        contacts: result,
       }
     case PIPELINE__DELETE_ITEM:
       return {

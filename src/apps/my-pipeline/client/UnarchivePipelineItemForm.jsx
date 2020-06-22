@@ -14,7 +14,6 @@ import { PIPELINE__UNARCHIVE_ITEM } from '../../../client/actions'
 
 import {
   ID as STATE_ID,
-  TASK_GET_PIPELINE_ITEM,
   TASK_UNARCHIVE_PIPELINE_ITEM,
   state2props,
 } from './state'
@@ -52,7 +51,7 @@ function UnarchivePipelineItemForm({
 
         return (
           <GetPipelineData
-            task={getTask(TASK_GET_PIPELINE_ITEM, STATE_ID)}
+            getTask={getTask}
             pipelineItemId={pipelineItemId}
             currentPipelineItem={currentPipelineItem}
           >
