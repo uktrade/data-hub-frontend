@@ -41,9 +41,6 @@ const StyledGridValue = styled(GridCol)`
   ${MEDIA_QUERIES.TABLET} {
     margin-top: 0;
   }
-  a {
-    text-decoration-line: none;
-  }
 `
 
 const StyledGridLabel = styled(StyledGridValue)`
@@ -79,6 +76,14 @@ const StyledUnorderedList = styled('ul')`
   li:not(:last-child) {
     margin-bottom: ${SPACING.SCALE_2};
   }
+`
+
+const StyledLink = styled(Link)`
+  text-decoration-line: none;
+`
+
+const StyledUnderlinedLink = styled(Link)`
+  margin-left: ${SPACING.SCALE_2};
 `
 
 function buildMetaList({
@@ -123,16 +128,23 @@ function buildMetaList({
   return list.filter(Boolean)
 }
 
-const PipelineItemMeta = ({ label, value, href }) => (
+const PipelineItemMeta = ({ label, value, href, id }) => (
   <li>
     <GridRow>
       <StyledGridLabel>{label}</StyledGridLabel>
       {href ? (
         <StyledGridValue>
-          <Link href={href}>{value}</Link>
+          <StyledLink href={href}>{value}</StyledLink>
         </StyledGridValue>
       ) : (
-        <StyledGridValue>{value}</StyledGridValue>
+        <StyledGridValue>
+          {value}
+          {label === 'Created' && (
+            <StyledUnderlinedLink href={urls.pipeline.archive(id)}>
+              Archive this project
+            </StyledUnderlinedLink>
+          )}
+        </StyledGridValue>
       )}
     </GridRow>
   </li>
@@ -153,6 +165,7 @@ const PipelineItem = ({ item: { id, name, likelihood_to_win, ...meta } }) => {
                 label={label}
                 value={value}
                 href={href}
+                id={id}
               />
             ))}
           </StyledUnorderedList>
