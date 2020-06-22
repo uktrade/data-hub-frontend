@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { spacing } from '@govuk-react/lib'
 import Checkbox from '@govuk-react/checkbox'
 import { GREY_4, WHITE } from 'govuk-colours'
+import throttle from 'lodash/throttle'
 
 const StyledSortFilter = styled.div`
   ${spacing.responsive({
@@ -28,12 +29,13 @@ const StyledCheckbox = styled(Checkbox)`
 
 export default function PipeLineFilterSort({ updateArchiveFilter, filter }) {
   const { includeArchive } = filter
+  const onClick = React.useCallback(throttle(updateArchiveFilter, 500), [])
   return (
     <StyledSortFilter>
       <StyledCheckbox
         data-auto-id="pipeline-filter-archive"
         onChange={() => {
-          updateArchiveFilter(!includeArchive)
+          onClick(!includeArchive)
         }}
         checked={includeArchive}
       >
