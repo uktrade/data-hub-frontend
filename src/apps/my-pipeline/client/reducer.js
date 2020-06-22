@@ -5,6 +5,7 @@ import {
   PIPELINE__EDIT_PIPELINE_SUCCESS,
   PIPELINE__ARCHIVE_PIPELINE_SUCCESS,
   PIPELINE__UNARCHIVE_PIPELINE_SUCCESS,
+  PIPELINE__DELETE_PIPELINE_SUCCESS,
 } from '../../../client/actions'
 
 export default (state = {}, { type, result }) => {
@@ -27,6 +28,11 @@ export default (state = {}, { type, result }) => {
         ...state,
         currentPipelineItem: result.pipelineItem,
         contacts: result.contacts,
+      }
+    case PIPELINE__DELETE_PIPELINE_SUCCESS:
+      return {
+        ...state,
+        itemDeleted: result === 204,
       }
     default:
       return state
