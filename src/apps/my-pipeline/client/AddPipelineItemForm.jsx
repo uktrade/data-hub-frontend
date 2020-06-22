@@ -66,7 +66,7 @@ function PipelineCheck({
   )
 }
 
-function AddToPipelineForm({
+function AddPipelineItemForm({
   companyId,
   pipelineStatus,
   savedPipelineItem,
@@ -126,10 +126,10 @@ function AddToPipelineForm({
   )
 }
 
-AddToPipelineForm.propTypes = {
+AddPipelineItemForm.propTypes = {
   companyId: PropTypes.string,
   pipelineStatus: PipelineItemsPropType,
   savedId: PipelineItemPropType,
 }
 
-export default AddToPipelineForm
+export default AddPipelineItemForm
