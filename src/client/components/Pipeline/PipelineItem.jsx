@@ -7,7 +7,7 @@ import Link from '@govuk-react/link'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import { SPACING, MEDIA_QUERIES, FONT_SIZE } from '@govuk-react/constants'
-import { BLUE } from 'govuk-colours'
+import { BLUE, GREY_1 } from 'govuk-colours'
 import {
   Card,
   CardDetailsList,
@@ -38,6 +38,8 @@ const StyledGridCol = styled(GridCol)`
 `
 const StyledGridValue = styled(GridCol)`
   flex: 1;
+  min-width: 220px;
+  font-size: ${FONT_SIZE.SIZE_19};
   margin-top: ${SPACING.SCALE_1};
   ${MEDIA_QUERIES.TABLET} {
     margin-top: 0;
@@ -46,8 +48,9 @@ const StyledGridValue = styled(GridCol)`
     text-decoration-line: none;
   }
 `
+
 const StyledGridLabel = styled(StyledGridValue)`
-  font-weight: bold;
+  color: ${GREY_1};
   margin-top: ${SPACING.SCALE_2};
   ${MEDIA_QUERIES.TABLET} {
     flex: 0 0 200px;
@@ -73,6 +76,10 @@ const StyledTagSpacing = styled.span`
     width: 100%;
     box-sizing: border-box;
   }
+`
+
+const StyledMetaItem = styled(GridRow)`
+  margin-bottom: ${SPACING.SCALE_2};
 `
 
 function buildMetaList({
@@ -113,7 +120,7 @@ function buildMetaList({
 }
 
 const PipelineItemMeta = ({ label, value, href }) => (
-  <GridRow>
+  <StyledMetaItem>
     <StyledGridLabel>{label}</StyledGridLabel>
     {href ? (
       <StyledGridValue>
@@ -122,7 +129,7 @@ const PipelineItemMeta = ({ label, value, href }) => (
     ) : (
       <StyledGridValue>{value}</StyledGridValue>
     )}
-  </GridRow>
+  </StyledMetaItem>
 )
 
 const PipelineItem = ({ item: { id, name, likelihood_to_win, ...meta } }) => (
