@@ -46,12 +46,16 @@ export async function addCompanyToPipeline({ values, companyId }) {
 }
 
 export async function getPipelineItem({ pipelineItemId }) {
-  const { data: pipelineItem } = await pipelineApi.get(pipelineItemId)
-  const { data: contactData } = await axios.get('/api-proxy/v3/contact', {
-    params: { company_id: pipelineItem.company.id, limit: 500 },
+  const { data } = await pipelineApi.get(pipelineItemId)
+  return data
+}
+
+export async function getCompanyContacts({ companyId }) {
+  const { data } = await axios.get('/api-proxy/v3/contact', {
+    params: { company_id: companyId, limit: 500 },
   })
 
-  return { pipelineItem, contacts: contactData.results }
+  return data.results
 }
 
 export async function editPipelineItem({
