@@ -10,7 +10,7 @@ import { SPACING } from '@govuk-react/constants'
 
 import Task from '../../../client/components/Task'
 import Form from '../../../client/components/Form'
-import { PIPELINE__UNARCHIVE_PIPELINE_SUCCESS } from '../../../client/actions'
+import { PIPELINE__UNARCHIVE_ITEM } from '../../../client/actions'
 
 import {
   ID as STATE_ID,
@@ -71,7 +71,7 @@ function UnarchivePipelineItemForm({
                         pipelineName: currentPipelineItem.name,
                         pipelineItemId,
                       },
-                      onSuccessDispatch: PIPELINE__UNARCHIVE_PIPELINE_SUCCESS,
+                      onSuccessDispatch: PIPELINE__UNARCHIVE_ITEM,
                     })
                   }}
                   submissionError={unarchivePipelineItem.errorMessage}

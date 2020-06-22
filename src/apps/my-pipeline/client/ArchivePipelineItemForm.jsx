@@ -12,7 +12,7 @@ import { H2 } from '@govuk-react/heading'
 
 import Task from '../../../client/components/Task'
 import Form from '../../../client/components/Form'
-import { PIPELINE__ARCHIVE_PIPELINE_SUCCESS } from '../../../client/actions'
+import { PIPELINE__ARCHIVE_ITEM } from '../../../client/actions'
 
 import {
   ID as STATE_ID,
@@ -82,7 +82,7 @@ function ArchivePipelineItemForm({
                   onSubmit={(values) => {
                     archivePipelineItem.start({
                       payload: { values, pipelineItemId },
-                      onSuccessDispatch: PIPELINE__ARCHIVE_PIPELINE_SUCCESS,
+                      onSuccessDispatch: PIPELINE__ARCHIVE_ITEM,
                     })
                   }}
                   submissionError={archivePipelineItem.errorMessage}
