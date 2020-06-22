@@ -70,7 +70,7 @@ function PipelineCheck({
   return <>{children}</>
 }
 
-function EditPipelineForm({
+function EditPipelineItemForm({
   pipelineItemId,
   contacts,
   sectors,
@@ -125,10 +125,10 @@ function EditPipelineForm({
   )
 }
 
-EditPipelineForm.propTypes = {
+EditPipelineItemForm.propTypes = {
   pipelineItemId: PropTypes.string,
   currentPipeline: PipelineItemPropType,
   savedPipelineItem: PipelineItemPropType,
 }
 
-export default EditPipelineForm
+export default EditPipelineItemForm
