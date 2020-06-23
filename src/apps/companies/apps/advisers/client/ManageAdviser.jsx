@@ -8,7 +8,6 @@ import { LoadingBox } from 'govuk-react'
 
 import {
   Button,
-  Details,
   H3,
   InsetText,
   Link,
@@ -54,11 +53,9 @@ CurrentLeadIta.propTypes = {
 
 const Add = ({
   cancelUrl,
-  csrfToken,
   currentLeadITA,
   companyName,
   companyId,
-  isFeatureFlagged,
   isLeadITAUpdated,
   updatedLeadITA,
 }) => {
@@ -78,7 +75,7 @@ const Add = ({
       window.location.href = urls.companies.advisers.index(companyId)
     }
   }, [isLeadITAUpdated])
-  return isFeatureFlagged ? (
+  return (
     <>
       <LocalHeader
         heading={`${
@@ -131,6 +128,8 @@ const Add = ({
                             .get('/api-proxy/adviser/', {
                               params: {
                                 autocomplete: searchString,
+                                dit_team__role:
+                                  '5e329c18-6095-e211-a939-e4115bead28a',
                               },
                             })
                             .then(({ data: { results } }) =>
@@ -188,65 +187,6 @@ const Add = ({
             )
           }}
         </Task>
-      </Main>
-    </>
-  ) : (
-    <>
-      <LocalHeader
-        heading={
-          currentLeadITA
-            ? 'Replace the Lead ITA'
-            : 'Confirm you are the Lead ITA'
-        }
-        breadcrumbs={[
-          { link: urls.dashboard(), text: 'Home' },
-          { link: urls.companies.index(), text: 'Companies' },
-          { link: urls.companies.detail(companyId), text: companyName },
-          {
-            text: currentLeadITA
-              ? 'Replace the Lead ITA'
-              : 'Confirm you are the Lead ITA',
-          },
-        ]}
-      />
-      <Main>
-        <H3>Do you want to add yourself as the first point of contact?</H3>
-        {currentLeadITA && (
-          <>
-            <Paragraph>You would replace Lead ITA:</Paragraph>
-            <CurrentLeadIta {...currentLeadITA} />
-          </>
-        )}
-        <Details summary="How do I add someone else as the Lead ITA?">
-          You can only add yourself as the Lead ITA. If you think another
-          International Trade Adviser is the first point of contact for this
-          company, they will need to add themselves.
-        </Details>
-
-        <H3>What happens next?</H3>
-
-        <UnorderedList listStyleType="bullet">
-          <ListItem>
-            Your name and team will be displayed on top of the company page, as
-            well as in the Lead Adviser tab
-          </ListItem>
-          <ListItem>
-            This will also replace Lead ITAs set on any subsidiaries of this
-            company
-          </ListItem>
-          <ListItem>
-            Other ITAs will be able to replace you as the Lead ITA for the
-            company
-          </ListItem>
-        </UnorderedList>
-
-        <form method="POST">
-          <input type="hidden" name="_csrf" value={csrfToken} />
-          <FormActions>
-            <Button>Add myself as Lead ITA</Button>
-            <Link href={cancelUrl}>Cancel</Link>
-          </FormActions>
-        </form>
       </Main>
     </>
   )

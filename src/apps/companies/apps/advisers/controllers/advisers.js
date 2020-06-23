@@ -20,7 +20,6 @@ function renderLeadAdvisers(req, res) {
     user: { permissions },
     returnUrl,
     dnbRelatedCompaniesCount,
-    features,
   } = res.locals
   const { name, team, email } = companyToLeadITA(company) || {}
 
@@ -47,7 +46,6 @@ function renderLeadAdvisers(req, res) {
       returnUrl,
       dnbRelatedCompaniesCount,
       flashMessages: res.locals.getMessages(),
-      featureFlagOn: features['manage-lead-adviser'],
     },
   })
 }
@@ -111,7 +109,6 @@ async function renderAdvisers(req, res, next) {
 const form = (req, res) => {
   const {
     company: { name, id },
-    features,
   } = res.locals
   const isRemove = req.url === '/remove'
   const currentLeadITA = companyToLeadITA(res.locals.company)
@@ -119,7 +116,6 @@ const form = (req, res) => {
     props: {
       companyName: name,
       companyId: id,
-      isFeatureFlagged: features['manage-lead-adviser'],
       isRemove,
       currentLeadITA,
       cancelUrl: urls.companies.advisers.index(id),
