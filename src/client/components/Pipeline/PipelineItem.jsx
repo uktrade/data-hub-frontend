@@ -128,30 +128,25 @@ function buildMetaList({
 }) {
   const list = [
     {
-      id: 0,
       label: 'Company',
       value: company.name,
       href: urls.companies.detail(company.id),
     },
-    sector && { id: 1, label: 'Project sector', value: sector.segment },
+    sector && { label: 'Project sector', value: sector.segment },
     contact && {
-      id: 2,
       label: 'Company contact',
       value: contact.name,
       href: urls.contacts.contact(contact.id),
     },
     potential_value && {
-      id: 3,
       label: 'Potential export value',
       value: NumberUtils.currencyGBP(potential_value),
     },
     expected_win_date && {
-      id: 4,
       label: 'Expected date for win',
       value: moment(expected_win_date).format('MMM Y'),
     },
     {
-      id: 5,
       label: 'Created',
       value: moment(created_on).format('DD MMM Y'),
       linkText: 'Archive this project',
@@ -159,7 +154,6 @@ function buildMetaList({
     },
     archived &&
       archived_reason && {
-        id: 6,
         label: 'Archive reason',
         value: (
           <span
@@ -170,7 +164,6 @@ function buildMetaList({
         ),
       },
     archived && {
-      id: 7,
       label: 'Archived',
       value: moment(archived_on).format('DD MMM Y'),
       subtle: true,
