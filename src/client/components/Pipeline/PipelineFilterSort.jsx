@@ -2,7 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 
 import { spacing } from '@govuk-react/lib'
-import Checkbox from '@govuk-react/checkbox'
+import { default as Checkbox } from 'data-hub-components/dist/activity-feed/ActivityFeedCheckbox'
+
 import { GREY_4, WHITE } from 'govuk-colours'
 import throttle from 'lodash/throttle'
 
@@ -23,16 +24,13 @@ const StyledSortFilter = styled.div`
     background-color: ${WHITE};
   }
 `
-const StyledCheckbox = styled(Checkbox)`
-  margin: 0;
-`
 
 export default function PipeLineFilterSort({ updateArchiveFilter, filter }) {
   const { includeArchive } = filter
   const onClick = React.useCallback(throttle(updateArchiveFilter, 500), [])
   return (
     <StyledSortFilter>
-      <StyledCheckbox
+      <Checkbox
         data-auto-id="pipeline-filter-archive"
         onChange={() => {
           onClick(!includeArchive)
@@ -40,7 +38,7 @@ export default function PipeLineFilterSort({ updateArchiveFilter, filter }) {
         checked={includeArchive}
       >
         Show archived projects
-      </StyledCheckbox>
+      </Checkbox>
     </StyledSortFilter>
   )
 }
