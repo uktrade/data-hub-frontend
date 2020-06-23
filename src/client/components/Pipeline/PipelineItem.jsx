@@ -49,11 +49,14 @@ const StyledLabel = styled('span')`
   font-size: ${FONT_SIZE.SIZE_19};
 `
 
-const StyledValue = styled(StyledLabel)`
-  color: ${BLACK};
+const StyledValueSubtle = styled(StyledLabel)`
   ${MEDIA_QUERIES.TABLET} {
     margin-left: ${SPACING.SCALE_1};
   }
+`
+
+const StyledValue = styled(StyledValueSubtle)`
+  color: ${BLACK};
 `
 
 const StyledGridRow = styled(GridRow)`
@@ -149,8 +152,10 @@ function buildMetaList({
     },
     {
       id: 5,
-      label: 'Created on',
+      label: 'Created',
       value: moment(created_on).format('DD MMM Y'),
+      linkText: 'Archive this project',
+      subtle: true,
     },
     archived &&
       archived_reason && {
@@ -166,30 +171,41 @@ function buildMetaList({
       },
     archived && {
       id: 7,
-      label: 'Archived on',
+      label: 'Archived',
       value: moment(archived_on).format('DD MMM Y'),
+      subtle: true,
     },
   ]
   // remove falsy values
   return list.filter(Boolean)
 }
 
-const PipelineItemMeta = ({ label, value, href, id, archived }) => (
+const PipelineItemMeta = ({
+  label,
+  value,
+  href,
+  subtle,
+  linkText,
+  id,
+  archived,
+}) => (
   <StyledListItem>
     <StyledLabel>{label}</StyledLabel>
     {href ? (
       <StyledValue>
         <StyledLink href={href}>{value}</StyledLink>
       </StyledValue>
-    ) : (
-      <StyledValue>
+    ) : subtle ? (
+      <StyledValueSubtle>
         {value}
-        {label === 'Created on' && !archived && (
+        {linkText && !archived && (
           <StyledUnderlinedLink href={urls.pipeline.archive(id)}>
             Archive this project
           </StyledUnderlinedLink>
         )}
-      </StyledValue>
+      </StyledValueSubtle>
+    ) : (
+      <StyledValue>{value}</StyledValue>
     )}
   </StyledListItem>
 )
@@ -218,12 +234,14 @@ const PipelineItem = ({
       <StyledGridRow>
         <GridCol>
           <StyledUnorderedList>
-            {metaListItems.map(({ label, value, href }) => (
+            {metaListItems.map(({ label, value, href, subtle, linkText }) => (
               <PipelineItemMeta
                 key={label}
                 label={label}
                 value={value}
                 href={href}
+                subtle={subtle}
+                linkText={linkText}
                 id={id}
                 archived={archived}
               />
