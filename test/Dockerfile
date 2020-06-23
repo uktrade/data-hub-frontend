@@ -1,7 +1,7 @@
 # This docker image is used ONLY with CircleCI to run tests.
 # For local development image see Dockerfile in the root directory of this project.
 
-FROM node:12.17.0
+FROM node:12.18.0
 
 ENV DOCKERIZE_VERSION      v0.3.0
 ENV YARN_VERSION           1.22.4
@@ -62,7 +62,7 @@ RUN apt-get install -y xvfb xdg-utils libgtk-3-0 lsb-release libappindicator3-1 
 RUN apt-get install -y openjdk-8-jre
 
 # Install sandbox
-RUN wget https://github.com/getsandbox/sandbox/releases/download/1.1.0/sandbox-runtime.tar \
+RUN wget https://github.com/getsandbox/worker/releases/download/1.1.0/sandbox-runtime.tar \
   && tar -C /usr/local/bin -xvf sandbox-runtime.tar \
   && mv /usr/local/bin/sandbox-runtime /usr/local/bin/sandbox \
   && rm sandbox-runtime.tar

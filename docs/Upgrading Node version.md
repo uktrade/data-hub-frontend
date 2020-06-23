@@ -34,6 +34,7 @@ Once the "Image for tests" has been updated, you will need to [follow the instru
     - `Dockerfile`
     - `test/Dockerfile`
     - `test/visual/Dockerfile`
+    - `test/sandbox/Dockerfile`
 4. Delete the `node_modules` directory and do a yarn install `yarn install --pure-lockfile`
 5. Run the unit tests to check the app `yarn test:unit` and then start the app `yarn develop` and do some quick smoke tests to ensure the app works
 6. Update the image used by CircleCI as found here: `./Running tests.md` (I hold off publising the `:latest` tag until I am sure it has worked, so stop before this `docker push ukti/data-hub-frontend-test:latest`)
