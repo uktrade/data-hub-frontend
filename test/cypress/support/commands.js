@@ -158,3 +158,25 @@ Cypress.Commands.add(
     return cy.wrap(subject)
   }
 )
+
+Cypress.Commands.add(
+  'setFeatureFlag',
+  (name, isActive) => {
+    const body = {
+      code: name,
+      is_active: isActive,
+    }
+    backend_url = Cypress.env('sandbox_url')
+    uri = '/sandbox/feature-flag'
+    return cy.request('PUT', `${backend_url}${uri}`, body)
+  }
+)
+
+Cypress.Commands.add(
+  'resetFeatureFlags',
+  () => {
+    backend_url = Cypress.env('sandbox_url')
+    uri = '/sandbox/reset-feature-flag'
+    return cy.request('POST', `${backend_url}${uri}`)
+  }
+)
