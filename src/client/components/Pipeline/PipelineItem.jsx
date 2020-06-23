@@ -36,22 +36,23 @@ const StyledGridCol = styled(GridCol)`
     align-items: flex-end;
   }
 `
-const StyledGridValue = styled(GridCol)`
-  flex: 1;
-  min-width: 220px;
-  font-size: ${FONT_SIZE.SIZE_19};
-  margin-top: ${SPACING.SCALE_1};
+
+const StyledListItem = styled('li')`
+  display: grid;
   ${MEDIA_QUERIES.TABLET} {
-    margin-top: 0;
+    display: block;
   }
 `
 
-const StyledGridLabel = styled(StyledGridValue)`
+const StyledLabel = styled('span')`
   color: ${GREY_1};
-  margin-top: ${SPACING.SCALE_2};
+  font-size: ${FONT_SIZE.SIZE_19};
+`
+
+const StyledValue = styled(StyledLabel)`
+  color: ${BLACK};
   ${MEDIA_QUERIES.TABLET} {
-    flex: 0 0 200px;
-    margin-top: 0;
+    margin-left: ${SPACING.SCALE_1};
   }
 `
 
@@ -174,25 +175,23 @@ function buildMetaList({
 }
 
 const PipelineItemMeta = ({ label, value, href, id, archived }) => (
-  <li>
-    <GridRow>
-      <StyledGridLabel>{label}</StyledGridLabel>
-      {href ? (
-        <StyledGridValue>
-          <StyledLink href={href}>{value}</StyledLink>
-        </StyledGridValue>
-      ) : (
-        <StyledGridValue>
-          {value}
-          {label === 'Created on' && !archived && (
-            <StyledUnderlinedLink href={urls.pipeline.archive(id)}>
-              Archive this project
-            </StyledUnderlinedLink>
-          )}
-        </StyledGridValue>
-      )}
-    </GridRow>
-  </li>
+  <StyledListItem>
+    <StyledLabel>{label}</StyledLabel>
+    {href ? (
+      <StyledValue>
+        <StyledLink href={href}>{value}</StyledLink>
+      </StyledValue>
+    ) : (
+      <StyledValue>
+        {value}
+        {label === 'Created on' && !archived && (
+          <StyledUnderlinedLink href={urls.pipeline.archive(id)}>
+            Archive this project
+          </StyledUnderlinedLink>
+        )}
+      </StyledValue>
+    )}
+  </StyledListItem>
 )
 
 const PipelineItem = ({
