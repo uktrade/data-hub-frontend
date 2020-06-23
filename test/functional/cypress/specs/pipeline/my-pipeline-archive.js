@@ -5,7 +5,7 @@ const {
   assertFieldTextarea,
   assertBreadcrumbs,
 } = require('../../support/assertions')
-const { assertProjectDetails } = require('./assertions')
+const { assertProjectDetails } = require('../../support/pipeline-assertions')
 
 const [firstItem, secondItem] = pipelineItemLambdaPlc.results
 

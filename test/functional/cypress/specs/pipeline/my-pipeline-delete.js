@@ -2,7 +2,7 @@ const urls = require('../../../../../src/lib/urls')
 const selectors = require('../../../../selectors')
 const { assertBreadcrumbs } = require('../../support/assertions')
 const archived = require('../../../../sandbox/fixtures/v4/pipeline-item/archived.json')
-const { assertProjectDetails } = require('./assertions')
+const { assertProjectDetails } = require('../../support/pipeline-assertions')
 
 function assertHeader() {
   it('should render the breadcrumbs', () => {
