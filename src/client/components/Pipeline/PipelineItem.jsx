@@ -148,7 +148,7 @@ function buildMetaList({
     },
     {
       id: 5,
-      label: 'Created',
+      label: 'Created on',
       value: moment(created_on).format('DD MMM Y'),
     },
     archived &&
@@ -165,7 +165,7 @@ function buildMetaList({
       },
     archived && {
       id: 7,
-      label: 'Archived',
+      label: 'Archived on',
       value: moment(archived_on).format('DD MMM Y'),
     },
   ]
@@ -184,7 +184,7 @@ const PipelineItemMeta = ({ label, value, href, id, archived }) => (
       ) : (
         <StyledGridValue>
           {value}
-          {label === 'Created' && !archived && (
+          {label === 'Created on' && !archived && (
             <StyledUnderlinedLink href={urls.pipeline.archive(id)}>
               Archive this project
             </StyledUnderlinedLink>
