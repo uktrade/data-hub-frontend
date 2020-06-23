@@ -26,9 +26,14 @@ const StyledH3 = styled('h3')`
 
 const StyledGridCol = styled(GridCol)`
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   align-items: stretch;
-  justify-content: space-between;
+  &:first-child {
+    justify-content: flex-end;
+  }
+  &:last-child {
+    justify-content: space-between;
+  }
   a {
     margin: ${SPACING.SCALE_3} 0 0 0;
   }
@@ -242,14 +247,6 @@ const PipelineItem = ({
           </StyledUnorderedList>
         </GridCol>
         <StyledGridCol>
-          {LIKELIHOOD_TO_SUCCEED[likelihood_to_win] && (
-            <StyledTagSpacing aria-label="Likelihood to succeed">
-              <Tag
-                colour={LIKELIHOOD_TO_SUCCEED[likelihood_to_win].colour}
-              >{`${LIKELIHOOD_TO_SUCCEED[likelihood_to_win].text}`}</Tag>
-              {archived && <Tag colour="grey">Archived</Tag>}
-            </StyledTagSpacing>
-          )}
           {archived ? (
             <StyledLinkWrapper>
               <Link href={urls.pipeline.delete(id)}>Delete</Link>
@@ -259,6 +256,14 @@ const PipelineItem = ({
             <Button as={Link} href={urls.pipeline.edit(id)} buttonColour={BLUE}>
               Edit
             </Button>
+          )}
+          {LIKELIHOOD_TO_SUCCEED[likelihood_to_win] && (
+            <StyledTagSpacing aria-label="Likelihood to succeed">
+              <Tag
+                colour={LIKELIHOOD_TO_SUCCEED[likelihood_to_win].colour}
+              >{`${LIKELIHOOD_TO_SUCCEED[likelihood_to_win].text}`}</Tag>
+              {archived && <Tag colour="grey">Archived</Tag>}
+            </StyledTagSpacing>
           )}
         </StyledGridCol>
       </StyledGridRow>
