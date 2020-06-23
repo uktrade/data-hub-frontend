@@ -12,14 +12,9 @@ import { SPACING } from '@govuk-react/constants'
 
 import Task from '../../../client/components/Task'
 import Form from '../../../client/components/Form'
-import { PIPELINE__DELETE_PIPELINE_SUCCESS } from '../../../client/actions'
+import { PIPELINE__DELETE_ITEM } from '../../../client/actions'
 
-import {
-  ID as STATE_ID,
-  TASK_GET_PIPELINE_ITEM,
-  TASK_DELETE_PIPELINE_ITEM,
-  state2props,
-} from './state'
+import { ID as STATE_ID, TASK_DELETE_PIPELINE_ITEM, state2props } from './state'
 import { PipelineItemPropType } from './constants'
 import PipelineDetails from './PipelineDetails'
 import GetPipelineData from './GetPipelineData'
@@ -51,7 +46,7 @@ function DeletePipelineItemForm({
 
         return (
           <GetPipelineData
-            task={getTask(TASK_GET_PIPELINE_ITEM, STATE_ID)}
+            getTask={getTask}
             pipelineItemId={pipelineItemId}
             currentPipelineItem={currentPipelineItem}
           >
@@ -70,7 +65,7 @@ function DeletePipelineItemForm({
                         pipelineName: currentPipelineItem.name,
                         pipelineItemId,
                       },
-                      onSuccessDispatch: PIPELINE__DELETE_PIPELINE_SUCCESS,
+                      onSuccessDispatch: PIPELINE__DELETE_ITEM,
                     })
                   }}
                   submissionError={deletePipelineItem.errorMessage}

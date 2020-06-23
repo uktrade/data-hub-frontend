@@ -1,11 +1,12 @@
 import {
   PIPELINE__CHECKED_IF_ON_PIPELINE,
-  PIPELINE__ADD_COMPANY_SUCCESS,
-  PIPELINE__GET_PIPELINE_SUCCESS,
-  PIPELINE__EDIT_PIPELINE_SUCCESS,
-  PIPELINE__ARCHIVE_PIPELINE_SUCCESS,
-  PIPELINE__UNARCHIVE_PIPELINE_SUCCESS,
-  PIPELINE__DELETE_PIPELINE_SUCCESS,
+  PIPELINE__ADD_ITEM,
+  PIPELINE__GET_ITEM,
+  PIPELINE__EDIT_ITEM,
+  PIPELINE__ARCHIVE_ITEM,
+  PIPELINE__UNARCHIVE_ITEM,
+  PIPELINE__DELETE_ITEM,
+  PIPELINE__GET_COMPANY_CONTACTS,
 } from '../../../client/actions'
 
 export default (state = {}, { type, result }) => {
@@ -15,21 +16,25 @@ export default (state = {}, { type, result }) => {
         ...state,
         pipelineStatus: result,
       }
-    case PIPELINE__ADD_COMPANY_SUCCESS:
-    case PIPELINE__EDIT_PIPELINE_SUCCESS:
-    case PIPELINE__ARCHIVE_PIPELINE_SUCCESS:
-    case PIPELINE__UNARCHIVE_PIPELINE_SUCCESS:
+    case PIPELINE__ADD_ITEM:
+    case PIPELINE__EDIT_ITEM:
+    case PIPELINE__ARCHIVE_ITEM:
+    case PIPELINE__UNARCHIVE_ITEM:
       return {
         ...state,
         savedPipelineItem: result,
       }
-    case PIPELINE__GET_PIPELINE_SUCCESS:
+    case PIPELINE__GET_ITEM:
       return {
         ...state,
-        currentPipelineItem: result.pipelineItem,
-        contacts: result.contacts,
+        currentPipelineItem: result,
       }
-    case PIPELINE__DELETE_PIPELINE_SUCCESS:
+    case PIPELINE__GET_COMPANY_CONTACTS:
+      return {
+        ...state,
+        contacts: result,
+      }
+    case PIPELINE__DELETE_ITEM:
       return {
         ...state,
         itemDeleted: result === 204,

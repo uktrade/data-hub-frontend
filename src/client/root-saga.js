@@ -26,6 +26,7 @@ import {
   TASK_ARCHIVE_PIPELINE_ITEM,
   TASK_UNARCHIVE_PIPELINE_ITEM,
   TASK_DELETE_PIPELINE_ITEM,
+  TASK_GET_PIPELINE_COMPANY_CONTACTS,
 } from '../apps/my-pipeline/client/state'
 import * as pipelineTasks from '../apps/my-pipeline/client/tasks'
 import { TASK_GET_PIPELINE_LIST } from './components/Pipeline/state'
@@ -62,6 +63,7 @@ export default function* rootSaga() {
       [TASK_ARCHIVE_PIPELINE_ITEM]: pipelineTasks.archivePipelineItem,
       [TASK_UNARCHIVE_PIPELINE_ITEM]: pipelineTasks.unarchivePipelineItem,
       [TASK_DELETE_PIPELINE_ITEM]: pipelineTasks.deletePipelineItem,
+      [TASK_GET_PIPELINE_COMPANY_CONTACTS]: pipelineTasks.getCompanyContacts,
       [TASK_POSTCODE_TO_REGION]: addCompanyPostcodeToRegionTask,
       [TASK_GET_ACTIVE_EVENTS]: addInteractionFormTasks.fetchActiveEvents,
       [TASK_SAVE_INTERACTION]: addInteractionFormTasks.saveInteraction,

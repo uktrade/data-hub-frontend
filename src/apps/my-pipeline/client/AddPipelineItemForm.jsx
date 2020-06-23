@@ -7,7 +7,7 @@ import LoadingBox from '@govuk-react/loading-box'
 import ProgressIndicator from '../../../client/components/ProgressIndicator'
 import {
   PIPELINE__CHECKED_IF_ON_PIPELINE,
-  PIPELINE__ADD_COMPANY_SUCCESS,
+  PIPELINE__ADD_ITEM,
 } from '../../../client/actions'
 import {
   ID as STATE_ID,
@@ -66,7 +66,7 @@ function PipelineCheck({
   )
 }
 
-function AddToPipelineForm({
+function AddPipelineItemForm({
   companyId,
   pipelineStatus,
   savedPipelineItem,
@@ -112,7 +112,7 @@ function AddToPipelineForm({
                   onSubmit={(values) => {
                     addCompanyToPipeline.start({
                       payload: { values, companyId },
-                      onSuccessDispatch: PIPELINE__ADD_COMPANY_SUCCESS,
+                      onSuccessDispatch: PIPELINE__ADD_ITEM,
                     })
                   }}
                   submissionError={addCompanyToPipeline.errorMessage}
@@ -126,10 +126,10 @@ function AddToPipelineForm({
   )
 }
 
-AddToPipelineForm.propTypes = {
+AddPipelineItemForm.propTypes = {
   companyId: PropTypes.string,
   pipelineStatus: PipelineItemsPropType,
   savedId: PipelineItemPropType,
 }
 
-export default AddToPipelineForm
+export default AddPipelineItemForm

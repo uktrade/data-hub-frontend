@@ -1,15 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { state2props } from './state'
-import AddToPipelineForm from './AddToPipelineForm'
-import EditPipelineForm from './EditPipelineForm'
+import AddPipelineItemForm from './AddPipelineItemForm'
+import EditPipelineItemForm from './EditPipelineItemForm'
 
 function PipeLineFormView(props) {
   const { pipelineItemId } = props
   if (pipelineItemId) {
-    return <EditPipelineForm {...props} />
+    return <EditPipelineItemForm {...props} />
   } else {
-    return <AddToPipelineForm {...props} />
+    return <AddPipelineItemForm {...props} />
   }
 }
 

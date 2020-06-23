@@ -3,41 +3,43 @@ import PropTypes from 'prop-types'
 import ErrorSummary from '@govuk-react/error-summary'
 
 import ProgressIndicator from '../../../client/components/ProgressIndicator'
-import { PIPELINE__GET_PIPELINE_SUCCESS } from '../../../client/actions'
+import { PIPELINE__GET_ITEM } from '../../../client/actions'
 import { PipelineItemPropType } from './constants'
+import { ID as STATE_ID, TASK_GET_PIPELINE_ITEM } from './state'
 
 export default function GetPipelineData({
-  task,
+  getTask,
   pipelineItemId,
   currentPipelineItem,
   children,
 }) {
+  const getPipelineItem = getTask(TASK_GET_PIPELINE_ITEM, STATE_ID)
   useEffect(() => {
-    task.start({
+    getPipelineItem.start({
       payload: { pipelineItemId },
-      onSuccessDispatch: PIPELINE__GET_PIPELINE_SUCCESS,
+      onSuccessDispatch: PIPELINE__GET_ITEM,
     })
   }, [pipelineItemId])
 
-  if (task.error) {
+  if (getPipelineItem.error) {
     return (
       <ErrorSummary
         heading="There is a problem"
-        description={`Error: ${task.errorMessage}`}
+        description={`Error: ${getPipelineItem.errorMessage}`}
         errors={[]}
       />
     )
   }
 
   if (!currentPipelineItem) {
-    return <ProgressIndicator message="Getting pipeline project details..." />
+    return <ProgressIndicator message="Getting project details..." />
   }
 
   return children()
 }
 
 GetPipelineData.propTypes = {
-  task: PropTypes.object.isRequired,
+  getTask: PropTypes.func.isRequired,
   pipelineItemId: PropTypes.string.isRequired,
   currentPipeline: PipelineItemPropType,
 }
