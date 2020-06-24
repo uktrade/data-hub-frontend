@@ -5,7 +5,7 @@ import pluralize from 'pluralize'
 import GridCol from '@govuk-react/grid-col'
 import GridRow from '@govuk-react/grid-row'
 import { SPACING, FONT_SIZE, BREAKPOINTS } from '@govuk-react/constants'
-import { GREY_3 } from 'govuk-colours'
+import { GREY_3, PURPLE, BLACK } from 'govuk-colours'
 import Details from '@govuk-react/details'
 import Main from '@govuk-react/main'
 import { Badge, StatusMessage, DateUtils } from 'data-hub-components'
@@ -51,6 +51,14 @@ const StyledDetails = styled(Details)`
   }
 `
 
+const StyledDetailsMuted = styled(Details)`
+  margin: 0;
+  span,
+  div {
+    font-size: ${FONT_SIZE.SIZE_16};
+  }
+`
+
 const StyledDescription = styled('div')`
   padding: ${SPACING.SCALE_2};
   background-color: ${GREY_3};
@@ -77,6 +85,20 @@ const StyledMain = styled(Main)`
   padding-top: ${SPACING.SCALE_1};
   div {
     font-size: ${FONT_SIZE.SIZE_20};
+  }
+`
+
+const StyledMainMuted = styled(Main)`
+  padding-top: ${SPACING.SCALE_1};
+  div {
+    font-size: ${FONT_SIZE.SIZE_16};
+    font-weight: normal;
+    color: ${BLACK};
+  }
+  div > div {
+    border: 3px solid ${PURPLE};
+    margin: 0;
+    padding: ${SPACING.SCALE_3};
   }
 `
 
@@ -214,6 +236,48 @@ const CompanyLocalHeader = ({
             Hub support team.
           </StatusMessage>
         </StyledMain>
+      )}
+
+      {company.account_plan_url && (
+        <StyledMainMuted data-auto-id="accountPlanMessage">
+          <StatusMessage>
+            <a href={company.account_plan_url} target="_blank">
+              Go to Sharepoint to view the account plan
+            </a>{' '}
+            for {company.name} (opens in a new window or tab). You might have to
+            request access to this file.
+            {company.one_list_group_global_account_manager &&
+              company.one_list_group_global_account_manager.contact_email && (
+                <>
+                  &nbsp;To do so, contact the Global Account Manager at&nbsp;
+                  <a href="mailto:{company.one_list_group_global_account_manager.contact_email}">
+                    {
+                      company.one_list_group_global_account_manager
+                        .contact_email
+                    }
+                  </a>
+                  .
+                </>
+              )}
+            <StyledDetailsMuted
+              summary="What is an account plan?"
+              data-auto-id="metaList"
+            >
+              All businesses on the One List are expected to have an account
+              plan, to ensure that the wider virtual team understands the
+              company and its key priorities. The Global Account Manager is
+              responsible for adding and updating the account plan. For further
+              information{' '}
+              <a
+                href="https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/the-account-management-strategy-team"
+                target="_blank"
+              >
+                view the Account Management Framework
+              </a>{' '}
+              (opens in a new window or tab).
+            </StyledDetailsMuted>
+          </StatusMessage>
+        </StyledMainMuted>
       )}
     </>
   )

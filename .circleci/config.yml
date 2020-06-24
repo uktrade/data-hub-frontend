@@ -98,6 +98,7 @@ aliases:
     HELP_CENTRE_API_FEED: http://localhost:8000/help-centre/announcement
     HELP_CENTRE_FEED_API_TOKEN: apiToken
     ZEN_TICKETS_URL: http://localhost:8000/zendesk/tickets
+    ACCOUNT_PLAN_URLS: '{"000000001": "/some-test-account-plan-url", "123456789": "/some-other-test-account-plan-url"}'
 
   # Data hub base docker container
   - &docker_data_hub_base

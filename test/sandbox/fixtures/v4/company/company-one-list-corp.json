@@ -46,6 +46,7 @@
     "name": "Travis Greene",
     "first_name": "Travis",
     "last_name": "Greene",
+    "contact_email": "travis@example.net",
     "dit_team": {
       "name": "IST - Sector Advisory Services",
       "uk_region": {
