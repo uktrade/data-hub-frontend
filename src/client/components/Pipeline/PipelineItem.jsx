@@ -28,13 +28,11 @@ const StyledGridCol = styled(GridCol)`
   display: flex;
   flex-direction: column-reverse;
   align-items: stretch;
-  &:first-child {
-    justify-content: flex-end;
-  }
   &:last-child {
     justify-content: space-between;
   }
-  a {
+  a,
+  div {
     margin: ${SPACING.SCALE_3} 0 0 0;
   }
   ${MEDIA_QUERIES.TABLET} {
@@ -137,7 +135,7 @@ function buildMetaList({
       value: company.name,
       href: urls.companies.detail(company.id),
     },
-    sector && { label: 'Project sector', value: sector.segment },
+    sector && { label: 'Export sector', value: sector.segment },
     contact && {
       label: 'Company contact',
       value: contact.name,
