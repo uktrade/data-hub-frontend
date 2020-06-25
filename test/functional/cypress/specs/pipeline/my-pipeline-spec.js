@@ -8,6 +8,7 @@ const inProgress = require('../../../../sandbox/fixtures/v4/pipeline-item/in-pro
 const win = require('../../../../sandbox/fixtures/v4/pipeline-item/win.json')
 const LIKELIHOOD_TO_SUCCEED = require('../../../../../src/client/components/Pipeline/constants')
 const TAG_COLOURS = require('../../../../../src/client/components/Tag/colours')
+const { sortBy } = require('lodash')
 
 function assertPipelineItem(
   index,
@@ -136,6 +137,20 @@ function assertPipelineItem(
     })
 }
 
+function assertAcrossTabs(callback) {
+  cy.contains('Prospect').click()
+  cy.contains('Prospect').should('have.attr', 'aria-selected', 'true')
+  callback('Prospect')
+
+  cy.contains('Active').click()
+  cy.contains('Active').should('have.attr', 'aria-selected', 'true')
+  callback('Active')
+
+  cy.contains('Won').click()
+  cy.contains('Won').should('have.attr', 'aria-selected', 'true')
+  callback('Won')
+}
+
 describe('My pipeline app', () => {
   context('When viewing the propspect status', () => {
     before(() => {
@@ -224,26 +239,12 @@ describe('My pipeline app', () => {
       cy.route('GET', '/api-proxy/v4/pipeline-item*').as('pipelineGet')
     })
 
-    const assertCheckedBoxAcrossTabs = (checkbox, test) => {
-      cy.contains('Prospect').click()
-      cy.contains('Prospect').should('have.attr', 'aria-selected', 'true')
-      cy.wrap(checkbox).should(test)
-
-      cy.contains('Active').click()
-      cy.contains('Active').should('have.attr', 'aria-selected', 'true')
-      cy.wrap(checkbox).should(test)
-
-      cy.contains('Won').click()
-      cy.contains('Won').should('have.attr', 'aria-selected', 'true')
-      cy.wrap(checkbox).should(test)
-    }
-
     it('should be un-checked by default', () => {
       cy.contains('Show archived projects')
         .parent()
         .find('input')
         .then((element) => {
-          assertCheckedBoxAcrossTabs(element, 'not.be.checked')
+          assertAcrossTabs(() => cy.wrap(element).should('not.be.checked'))
         })
     })
 
@@ -253,9 +254,9 @@ describe('My pipeline app', () => {
         .find('input')
         .then((element) => {
           cy.wrap(element).check()
-          assertCheckedBoxAcrossTabs(element, 'be.checked')
+          assertAcrossTabs(() => cy.wrap(element).should('be.checked'))
           cy.wrap(element).uncheck()
-          assertCheckedBoxAcrossTabs(element, 'not.be.checked')
+          assertAcrossTabs(() => cy.wrap(element).should('not.be.checked'))
         })
     })
 
@@ -313,6 +314,178 @@ describe('My pipeline app', () => {
         .then(() => {
           expectedOutcomeList.forEach((expectedData, index) => {
             assertPipelineItem(index, expectedData, leads)
+          })
+        })
+    })
+  })
+
+  context('When sorting pipeline', () => {
+    beforeEach(() => {
+      cy.server()
+      cy.visit(urls.pipeline.index())
+      cy.route('GET', '/api-proxy/v4/pipeline-item*').as('pipelineGet')
+    })
+
+    it('should sort by most recently created by default', () => {
+      cy.contains('Sort by')
+        .parent()
+        .find('select')
+        .then((element) => {
+          assertAcrossTabs(() => {
+            cy.wrap(element).should('have.value', '-created_on')
+            cy.wrap(element)
+              .find('option:checked')
+              .should('have.text', 'Most recently created')
+          })
+        })
+    })
+
+    it('should keep its selected state across tabs', () => {
+      cy.contains('Sort by')
+        .parent()
+        .find('select')
+        .then((element) => {
+          assertAcrossTabs(() => {
+            cy.wrap(element).select('-modified_on')
+            cy.wrap(element).should('have.value', '-modified_on')
+            cy.wrap(element)
+              .find('option:checked')
+              .should('have.text', 'Most recently updated')
+          })
+        })
+    })
+
+    context('When sorting when archived is disabled', () => {
+      it('should add sortby=name query string', () => {
+        cy.contains('Sort by')
+          .parent()
+          .find('select')
+          .then((element) => {
+            cy.wait('@pipelineGet').then(() => {
+              cy.wrap(element).select('Project Name A-Z')
+              cy.wait('@pipelineGet').then((xhr) => {
+                expect(xhr.url).to.contain(`sortby=name`)
+                expect(xhr.url).to.contain('archived=false')
+              })
+            })
+          })
+      })
+
+      it('should add sortby=-modified_on query string', () => {
+        cy.contains('Sort by')
+          .parent()
+          .find('select')
+          .then((element) => {
+            cy.wait('@pipelineGet').then(() => {
+              cy.wrap(element).select('Most recently updated')
+              cy.wait('@pipelineGet').then((xhr) => {
+                expect(xhr.url).to.contain(`sortby=-modified_on`)
+                expect(xhr.url).to.contain('archived=false')
+              })
+            })
+          })
+      })
+
+      it('should add sortby=-created_on query string', () => {
+        cy.contains('Sort by')
+          .parent()
+          .find('select')
+          .then((element) => {
+            cy.wrap(element).select('Most recently updated')
+            cy.wait(['@pipelineGet', '@pipelineGet']).then(() => {
+              cy.wrap(element).select('Most recently created')
+              cy.wait('@pipelineGet').then((xhr) => {
+                expect(xhr.url).to.contain(`sortby=-created_on`)
+                expect(xhr.url).to.contain('archived=false')
+              })
+            })
+          })
+      })
+    })
+
+    context('When sorting when archived is enabled', () => {
+      beforeEach(() => {
+        cy.contains('Show archived projects')
+          .parent()
+          .find('input')
+          .then((element) => {
+            cy.wrap(element).check()
+            cy.wrap(element).should('be.checked')
+          })
+      })
+
+      it('should add sortby=name query string', () => {
+        cy.contains('Sort by')
+          .parent()
+          .find('select')
+          .then((element) => {
+            cy.wait(['@pipelineGet', '@pipelineGet']).then(() => {
+              cy.wrap(element).select('Project Name A-Z')
+              cy.wait('@pipelineGet').then((xhr) => {
+                expect(xhr.url).to.contain(`sortby=name`)
+                expect(xhr.url).to.not.contain('archived')
+              })
+            })
+          })
+      })
+
+      it('should add sortby=-modified_on query string', () => {
+        cy.contains('Sort by')
+          .parent()
+          .find('select')
+          .then((element) => {
+            cy.wait(['@pipelineGet', '@pipelineGet']).then(() => {
+              cy.wrap(element).select('Most recently updated')
+              cy.wait('@pipelineGet').then((xhr) => {
+                expect(xhr.url).to.contain(`sortby=-modified_on`)
+                expect(xhr.url).to.not.contain('archived')
+              })
+            })
+          })
+      })
+
+      it('should add sortby=-created_on query string', () => {
+        cy.contains('Sort by')
+          .parent()
+          .find('select')
+          .then((element) => {
+            cy.wrap(element).select('Most recently updated')
+            cy.wait(['@pipelineGet', '@pipelineGet', '@pipelineGet']).then(
+              () => {
+                cy.wrap(element).select('Most recently created')
+                cy.wait('@pipelineGet').then((xhr) => {
+                  expect(xhr.url).to.contain(`sortby=-created_on`)
+                  expect(xhr.url).to.not.contain('archived')
+                })
+              }
+            )
+          })
+      })
+    })
+
+    it('should updated the ui with the items sorted', () => {
+      const expectedOutcomeList = [
+        { expectedDate: '14 May 2020' },
+        { expectedDate: '15 May 2020' },
+        { expectedDate: '13 May 2020', expectedWinDate: 'May 2021' },
+        { expectedDate: '12 May 2020', expectedWinDate: 'May 2021' },
+      ]
+
+      cy.contains('Sort by')
+        .parent()
+        .find('select')
+        .then((element) => {
+          cy.wrap(element).select('Most recently updated')
+          cy.wait(['@pipelineGet', '@pipelineGet']).then(() => {
+            expectedOutcomeList.forEach((expectedData, index) => {
+              assertPipelineItem(index, expectedData, {
+                ...leads,
+                results: sortBy(
+                  leads.results.filter((r) => !r.archived),
+                  ['modified_on']
+                ).reverse(),
+              })
+            })
           })
         })
     })
