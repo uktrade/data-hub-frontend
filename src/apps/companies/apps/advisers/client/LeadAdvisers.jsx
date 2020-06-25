@@ -72,7 +72,7 @@ const RenderHasNoAccountManager = ({
           You can add a Lead ITA. This will be visible to all Data Hub users.
         </p>
         <Button as={Link} href={addUrl}>
-          Add a lead ITA
+          Add a Lead ITA
         </Button>
       </>
     )}
