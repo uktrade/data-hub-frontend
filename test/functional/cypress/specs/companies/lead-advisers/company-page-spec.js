@@ -23,7 +23,7 @@ describe('Lead advisers', () => {
     })
     it('should display help text for adding a lead adviser', () => {
       cy.contains(
-        'This company record has no lead International Trade Adviser (ITA).'
+        'This company record has no Lead International Trade Adviser (ITA).'
       )
       cy.contains(
         'You can add a Lead ITA. This will be visible to all Data Hub users.'
