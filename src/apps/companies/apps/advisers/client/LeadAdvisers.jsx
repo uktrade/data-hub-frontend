@@ -62,40 +62,18 @@ const RenderHasNoAccountManager = ({
   hasPermissionToAddIta,
   addUrl,
   companyName,
-  featureFlagOn,
 }) => (
   <div>
     <H2 size={LEVEL_SIZE[3]}>Lead ITA for {companyName}</H2>
-    {featureFlagOn ? (
+    <p>This company record has no Lead International Trade Adviser (ITA).</p>
+    {hasPermissionToAddIta && (
       <>
         <p>
-          This company record has no lead International Trade Adviser (ITA).
+          You can add a Lead ITA. This will be visible to all Data Hub users.
         </p>
-        {hasPermissionToAddIta && (
-          <>
-            <p>
-              You can add a lead ITA. This will be visible to all Data Hub
-              users.
-            </p>
-            <Button as={Link} href={addUrl}>
-              Add a lead ITA
-            </Button>
-          </>
-        )}
-      </>
-    ) : (
-      <>
-        <p>This company has no Lead ITA.</p>
-        <p>
-          An ITA (International Trade Adviser) can add themselves as the Lead
-          ITA, which will be visible to all Data Hub users on the company page
-          and any of its subsidiaries.
-        </p>
-        {hasPermissionToAddIta && (
-          <Button as={Link} href={addUrl}>
-            Add myself as Lead ITA
-          </Button>
-        )}
+        <Button as={Link} href={addUrl}>
+          Add a Lead ITA
+        </Button>
       </>
     )}
   </div>
@@ -111,7 +89,6 @@ const LeadAdvisers = ({
   addUrl,
   removeUrl,
   hasPermissionToAddIta,
-  featureFlagOn,
 }) => {
   return hasAccountManager ? (
     <RenderHasAccountManager
@@ -130,7 +107,6 @@ const LeadAdvisers = ({
       hasPermissionToAddIta={hasPermissionToAddIta}
       addUrl={addUrl}
       removeUrl={removeUrl}
-      featureFlagOn={featureFlagOn}
     />
   )
 }

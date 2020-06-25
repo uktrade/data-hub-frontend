@@ -1,6 +1,6 @@
-{% extends "_layouts/template.njk" %}
+{% extends "_layouts/template-no-local-header.njk" %}
 
-{% block content %}
+{% block body %}
     {% component 'react-slot', {
         id: 'manage-adviser',
         props: props
