@@ -3,7 +3,7 @@
 ## Creating Docker container for CircleCI
 
 ```bash
-export VERSION=3.5.0 # Increment this version each time when you edit Dockerfile.
+export VERSION=3.7.0 # Increment this version each time when you edit Dockerfile.
 
 docker login # Ask webops for Docker Hub access to the ukti group.
 docker build -f test/Dockerfile -t data-hub-frontend-test .
