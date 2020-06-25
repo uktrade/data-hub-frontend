@@ -1,3 +1,5 @@
+const { NumberUtils } = require('data-hub-components')
+
 import {
   testBreadcrumbs,
   assertFieldUneditable,
@@ -10,6 +12,7 @@ import {
 
 const fixtures = require('../../fixtures')
 const urls = require('../../../../../src/lib/urls')
+const { convertUsdToGbp } = require('../../../../../src/common/currency')
 
 const assertRegisteredAddress = ({ element, ukBased }) =>
   cy
@@ -271,7 +274,10 @@ describe('Company edit', () => {
         {
           label: 'Annual turnover (optional)',
           hint: 'Amount in GBP',
-          value: company.turnover,
+          value: NumberUtils.roundToSignificantDigits(
+            convertUsdToGbp(company.turnover),
+            2
+          ),
           assert: assertFieldInput,
         },
         {
