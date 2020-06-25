@@ -46,9 +46,5 @@
   {
     "code": "companies-matching",
     "is_active": true
-  },
-  {
-    "code": "manage-lead-adviser",
-    "is_active": true
   }
 ]

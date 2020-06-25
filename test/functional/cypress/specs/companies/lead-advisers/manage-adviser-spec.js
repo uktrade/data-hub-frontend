@@ -1,121 +1,96 @@
 const { assertBreadcrumbs } = require('../../../support/assertions')
 const urls = require('../../../../../../src/lib/urls')
-const selectors = require('../../../../../selectors/index')
 
 const EXPECTED_NAME = 'Andy Pipkin'
 const EXPECTED_TEAM = 'Andy & Lou'
-
-const companyLocalHeader = selectors.companyLocalHeader()
-
-const selectMainContent = () =>
-  cy
-    .get('main')
-    .children()
-    .first()
 
 const addOrReplaceTestCase = ({
   companyId,
   companyName,
   name,
   team,
-  replace,
+  replace = false,
 }) =>
-  it(`Should render the ${replace ? 'replace' : 'add'} page`, () => {
+  it(`Should render "${replace ? 'replace' : 'add'} a lead adviser" ${
+    !team && replace ? 'with no team' : ''
+  }`, () => {
     cy.visit(urls.companies.advisers.assign(companyId))
 
     const headline = replace
       ? 'Replace the Lead ITA'
-      : 'Confirm you are the Lead ITA'
+      : 'Add someone as the Lead ITA'
 
     assertBreadcrumbs({
       Home: urls.dashboard(),
       Companies: urls.companies.index(),
       [companyName]: urls.companies.detail(companyId),
-      [headline]: undefined,
+      [replace ? 'Replace the Lead ITA' : 'Add Lead ITA']: undefined,
     })
 
     cy.get('h1').contains(headline)
-
-    selectMainContent()
-      .children()
-      .first()
-      .get('h3')
-      .as('h3')
-      .eq(0)
-      .as('question')
-      .contains('Do you want to add yourself as the first point of contact?')
-      .then(
-        ($el) =>
-          replace &&
+    cy.get('main')
+      .should('have.attr', 'role', 'main')
+      .should('have.id', 'main-content')
+      .then(($el) => {
+        replace &&
           cy
-            .get($el)
-            .next()
+            .wrap($el)
+            .find('> div')
             .contains('You would replace Lead ITA:')
-            // We are using the govuk-react/Paragraph component,
-            // in which <p> is nested in a <div> so we need to step out of it.
             .parent()
             .next()
             .contains('Name: ' + name + 'Team: ' + team)
-      )
+            .parents('main')
+      })
+      .find('form > div')
+      .eq(0)
+      .find('label')
+      .contains('Select an ITA')
       .next()
-      .contains('How do I add someone else as the Lead ITA?')
-      .as('detail-summary')
-
-    cy.get('@h3')
-      .eq(1)
-      .contains('What happens next?')
+      .contains('Who should be the primary point of contact?')
+      .next()
+      .find('div')
+      .as('typeahead')
+      .contains('-- Select ITA --')
+      .parents('form')
+      .find('h2')
+      .contains('What happens next')
       .next()
       .as('list')
       .should('have.prop', 'tagName', 'UL')
       .find('li')
       .contains(
-        'Your name and team will be displayed on top of the company page, ' +
-          'as well as in the Lead Adviser tab'
+        'The Lead ITA’s name and team will be shown on the company record page and on the Lead ITA tab.'
       )
       .next()
       .contains(
-        'This will also replace Lead ITAs set on ' +
-          'any subsidiaries of this company'
+        'This will replace all Lead ITAs added on any subsidiaries of this company.'
       )
       .next()
+      .contains('Other ITAs can replace or remove this Lead ITA at any time.')
+      .parent()
+      .next()
       .contains(
-        'Other ITAs will be able to replace you as the Lead ITA for the company'
+        'When adding someone else as the Lead ITA, send the person an email to notify them. Data Hub does not send notications.'
       )
 
     cy.get('@list')
       .next()
-      .contains('Add myself as Lead ITA')
-      .as('submit')
       .next()
+      .next()
+      .find('button')
+      .as('submit')
+      .contains('Add Lead ITA')
+      .next()
+      .as('cancel')
       .contains('Cancel')
       .should('have.attr', 'href', urls.companies.advisers.index(companyId))
-
-    cy.contains(
-      'You can only add yourself as the Lead ITA. If you think another ' +
-        'International Trade Adviser is the first point of contact for this ' +
-        'company, they will need to add themselves.'
-    )
-      .as('detail-content')
-      .should('not.be.visible')
-
-    // Test interaction
-    cy.get('@detail-summary').click()
-
-    cy.get('@detail-content').should('be.visible')
-
-    cy.get('@submit').click()
-
-    cy.get(companyLocalHeader.flashMessageList).contains(
-      'Lead adviser information updated'
-    )
   })
 
 describe('Manage Lead ITA', () => {
   addOrReplaceTestCase({
     companyId: 'not-managed',
     companyName: 'Not Managed Company',
-    name: EXPECTED_NAME,
-    team: EXPECTED_TEAM,
   })
 
   addOrReplaceTestCase({
@@ -134,6 +109,15 @@ describe('Manage Lead ITA', () => {
     replace: true,
   })
 
+  context('When submitted with no adviser is selected', () => {
+    it('Should display errors', () => {
+      cy.visit(urls.companies.advisers.assign('managed'))
+      cy.get('form button').click()
+      cy.get('form div').contains('There is a problemSelect an ITA')
+      cy.get('#field-dit_participants').contains('Select an ITA')
+    })
+  })
+
   it(`Should render the remove page`, () => {
     const HEADLINE = 'Remove the Lead ITA'
     const COMPANY_NAME = 'Managed Company'
@@ -150,19 +134,17 @@ describe('Manage Lead ITA', () => {
 
     cy.get('h1').contains(HEADLINE)
 
-    selectMainContent()
-      .children()
-      .first()
-      .as('before-paragraph')
-      .get('p')
+    cy.get('main')
+      .should('have.attr', 'role', 'main')
+      .should('have.id', 'main-content')
+      .find('p')
       .contains('This will remove the current Lead ITA')
-
-    cy.get('@before-paragraph')
+      .parent()
       .next()
       .contains('Name: ' + EXPECTED_NAME + 'Team: ' + EXPECTED_TEAM)
       .next()
       .contains('What happens next?')
-      .should('have.prop', 'tagName', 'H3')
+      .should('have.prop', 'tagName', 'H2')
       .next()
       .should('have.prop', 'tagName', 'UL')
       .find('li')
@@ -186,11 +168,5 @@ describe('Manage Lead ITA', () => {
       .next()
       .contains('Cancel')
       .should('have.attr', 'href', urls.companies.advisers.index(COMPANY_ID))
-
-    cy.get('@submit').click()
-
-    cy.get(companyLocalHeader.flashMessageList).contains(
-      'Lead adviser information updated'
-    )
   })
 })
