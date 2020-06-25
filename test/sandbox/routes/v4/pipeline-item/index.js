@@ -6,6 +6,7 @@ var leads = require('../../../fixtures/v4/pipeline-item/leads.json')
 var inProgress = require('../../../fixtures/v4/pipeline-item/in-progress.json')
 var win = require('../../../fixtures/v4/pipeline-item/win.json')
 const archived = require('../../../fixtures/v4/pipeline-item/archived.json')
+const { sortBy } = require('lodash')
 
 function createItem(status) {
   return {
@@ -33,6 +34,16 @@ exports.getPipelineItems = function(req, res) {
 
   if (req.query.archived === 'false') {
     result.results = result.results.filter((item) => !item.archived)
+  }
+  if (req.query.sortby) {
+    let sortByQuery = req.query.sortby
+    let reverse = false
+    if (sortByQuery[0] === '-') {
+      reverse = true
+      sortByQuery = sortByQuery.substring(1)
+    }
+    const sortedResults = sortBy(result.results, [sortByQuery])
+    result.results = reverse ? sortedResults.reverse() : sortedResults
   }
 
   res.json(result)
