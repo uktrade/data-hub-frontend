@@ -66,7 +66,7 @@ const Add = ({
         'Lead adviser information updated.',
         `Send ${
           updatedLeadITA.name
-        } an email to let them know they've been made lead ITA${
+        } an email to let them know they've been made Lead ITA${
           updatedLeadITA.email
             ? `: <a href="mailto:${updatedLeadITA.email}">${updatedLeadITA.email}</a>`
             : '.'
@@ -150,15 +150,15 @@ const Add = ({
                     <H3 as="h2">What happens next</H3>
                     <UnorderedList listStyleType="bullet">
                       <ListItem>
-                        The lead ITA’s name and team will be shown on the
-                        company record page and on the lead ITA tab.
+                        The Lead ITA’s name and team will be shown on the
+                        company record page and on the Lead ITA tab.
                       </ListItem>
                       <ListItem>
-                        This will replace all lead ITAs added on any
+                        This will replace all Lead ITAs added on any
                         subsidiaries of this company.
                       </ListItem>
                       <ListItem>
-                        Other ITAs can replace or remove this lead ITA at any
+                        Other ITAs can replace or remove this Lead ITA at any
                         time.
                       </ListItem>
                     </UnorderedList>

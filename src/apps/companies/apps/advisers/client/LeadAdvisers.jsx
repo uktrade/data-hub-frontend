@@ -65,7 +65,7 @@ const RenderHasNoAccountManager = ({
 }) => (
   <div>
     <H2 size={LEVEL_SIZE[3]}>Lead ITA for {companyName}</H2>
-    <p>This company record has no lead International Trade Adviser (ITA).</p>
+    <p>This company record has no Lead International Trade Adviser (ITA).</p>
     {hasPermissionToAddIta && (
       <>
         <p>
