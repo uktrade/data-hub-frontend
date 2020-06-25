@@ -31,16 +31,16 @@ const addOrReplaceTestCase = ({
 describe('Manage Lead ITA', () => {
   addOrReplaceTestCase({
     headline: 'Add someone as the Lead ITA',
-    option: 'Barry',
+    option: 'Harold',
     successMessage:
-      "Lead adviser information updated.Send Barry Oling an email to let them know they've been made lead ITA.",
+      "Lead adviser information updated.Send Harold Jones an email to let them know they've been made lead ITA.",
     replace: false,
   })
   addOrReplaceTestCase({
     headline: 'Replace the Lead ITA',
-    option: 'Bernard',
+    option: 'Sarah',
     successMessage:
-      "Lead adviser information updated.Send Bernard Harris-Patel an email to let them know they've been made lead ITA.",
+      "Lead adviser information updated.Send Sarah Gates an email to let them know they've been made lead ITA.",
     replace: true,
   })
   it('should be able to remove an adviser', () => {
