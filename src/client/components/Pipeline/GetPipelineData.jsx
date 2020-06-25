@@ -19,17 +19,28 @@ const StyledError = styled.div`
   })}
 `
 
-function PipelineStates({ items, children, task, status, includeArchive }) {
+function PipelineStates({
+  items,
+  children,
+  task,
+  status,
+  includeArchive,
+  sortBy,
+}) {
   const { progress, error, errorMessage } = task
 
   React.useEffect(() => {
     if (!progress) {
       task.start({
-        payload: { status, ...(!includeArchive && { archived: false }) },
+        payload: {
+          status,
+          sortby: sortBy,
+          ...(!includeArchive && { archived: false }),
+        },
         onSuccessDispatch: PIPELINE__LIST_LOADED,
       })
     }
-  }, [status, includeArchive])
+  }, [status, includeArchive, sortBy])
 
   if (error) {
     return (
@@ -51,7 +62,7 @@ function PipelineStates({ items, children, task, status, includeArchive }) {
 }
 
 const GetPipeLineData = ({ status, lists, children, filter }) => {
-  const { includeArchive } = filter
+  const { includeArchive, sortBy } = filter
   return (
     <>
       <Task>
@@ -60,10 +71,13 @@ const GetPipeLineData = ({ status, lists, children, filter }) => {
             <PipelineStates
               items={lists[status]}
               status={status}
+              sortBy={sortBy}
               includeArchive={includeArchive}
               task={getTask(
                 TASK_GET_PIPELINE_LIST,
-                `${STATE_ID}_${status}_${includeArchive ? 'filter' : ''}`
+                `${STATE_ID}_${status}_${
+                  includeArchive ? 'filter' : ''
+                }_${sortBy}`
               )}
             >
               {children}
