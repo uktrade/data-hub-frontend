@@ -2,6 +2,7 @@ const proxyquire = require('proxyquire')
 
 const subscriberData = require('../../../../../../test/unit/data/omis/subscribers.json')
 const assigneeData = require('../../../../../../test/unit/data/omis/assignees.json')
+const paymentData = require('../../../../../../test/unit/data/omis/payments.json')
 const contactData = require('../../../../../../test/unit/data/contacts/contact.json')
 
 const orderMock = {
@@ -127,9 +128,9 @@ describe('OMIS View controllers', () => {
       })
     })
 
-    context('when an order is in paid state', () => {
+    context('when an order has been paid', () => {
       beforeEach(() => {
-        this.resMock.locals.order.status = 'paid'
+        this.resMock.locals.payments = paymentData
       })
 
       it('should set a breadcrumb option', () => {

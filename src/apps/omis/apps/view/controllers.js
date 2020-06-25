@@ -29,9 +29,10 @@ function renderQuote(req, res) {
 }
 
 function renderPaymentReceipt(req, res) {
-  const { id, status } = get(res.locals, 'order')
+  const { id } = get(res.locals, 'order')
+  const { payments } = res.locals
 
-  if (!['paid', 'complete'].includes(status)) {
+  if (!payments || payments.length === 0) {
     return res.redirect(`/omis/${id}`)
   }
 
