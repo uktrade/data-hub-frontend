@@ -242,6 +242,9 @@ module.exports = {
   omis: {
     index: url('/omis'),
     create: url('/omis/create?company=', ':companyId'),
+    order: url('/omis', '/:orderId'),
+    paymentReceipt: url('/omis', '/:orderId/payment-receipt'),
+    quote: url('/omis', '/:orderId/quote'),
   },
   support: url('/support'),
   pipeline: {
