@@ -60,14 +60,14 @@ const addOrReplaceTestCase = ({
       .should('have.prop', 'tagName', 'UL')
       .find('li')
       .contains(
-        'The lead ITA’s name and team will be shown on the company record page and on the lead ITA tab.'
+        'The Lead ITA’s name and team will be shown on the company record page and on the Lead ITA tab.'
       )
       .next()
       .contains(
-        'This will replace all lead ITAs added on any subsidiaries of this company.'
+        'This will replace all Lead ITAs added on any subsidiaries of this company.'
       )
       .next()
-      .contains('Other ITAs can replace or remove this lead ITA at any time.')
+      .contains('Other ITAs can replace or remove this Lead ITA at any time.')
       .parent()
       .next()
       .contains(
