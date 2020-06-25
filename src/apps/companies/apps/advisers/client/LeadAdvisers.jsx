@@ -69,7 +69,7 @@ const RenderHasNoAccountManager = ({
     {hasPermissionToAddIta && (
       <>
         <p>
-          You can add a lead ITA. This will be visible to all Data Hub users.
+          You can add a Lead ITA. This will be visible to all Data Hub users.
         </p>
         <Button as={Link} href={addUrl}>
           Add a lead ITA
@@ -89,7 +89,6 @@ const LeadAdvisers = ({
   addUrl,
   removeUrl,
   hasPermissionToAddIta,
-  featureFlagOn,
 }) => {
   return hasAccountManager ? (
     <RenderHasAccountManager
@@ -108,7 +107,6 @@ const LeadAdvisers = ({
       hasPermissionToAddIta={hasPermissionToAddIta}
       addUrl={addUrl}
       removeUrl={removeUrl}
-      featureFlagOn={featureFlagOn}
     />
   )
 }
