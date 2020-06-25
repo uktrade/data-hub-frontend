@@ -28,6 +28,7 @@ const PipelineList = ({
   statusText,
   lists,
   updateArchiveFilter,
+  updateSort,
   filter,
 }) => {
   return (
@@ -35,6 +36,7 @@ const PipelineList = ({
       <PipelineFilterSort
         filter={filter}
         updateArchiveFilter={updateArchiveFilter}
+        updateSort={updateSort}
       />
       <GetPipeLineData lists={lists} status={status} filter={filter}>
         {({ items, progress }) => (
