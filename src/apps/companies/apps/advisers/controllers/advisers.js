@@ -128,12 +128,11 @@ async function submit(req, res, next) {
   const {
     company: { id },
   } = res.locals
-  const action = req.url === '/remove' ? 'remove' : 'self-assign'
 
   try {
     await authorisedRequest(req.session.token, {
       method: 'POST',
-      url: `${config.apiRoot}/v4/company/${id}/${action}-account-manager`,
+      url: `${config.apiRoot}/v4/company/${id}/remove-account-manager`,
     })
 
     req.flash('success', 'Lead adviser information updated')
