@@ -1,0 +1,22 @@
+[
+  {
+    "adviser": {
+      "first_name": "Joe",
+      "last_name": "Doe",
+      "name": "Joe Doe",
+      "id": "33736be0-3e6b-4d4e-9fa8-32f23d0ba55e"
+    },
+    "estimated_time": 200,
+    "is_lead": true
+  },
+  {
+    "adviser": {
+      "first_name": "Rebecca",
+      "last_name": "Bah",
+      "name": "Rebecca Bah",
+      "id": "3cfad090-8f7e-4a8b-beb0-14c909d6f052"
+    },
+    "estimated_time": 250,
+    "is_lead": false
+  }
+]

@@ -40,6 +40,7 @@ router.get(
   setContact,
   setAssignees,
   setSubscribers,
+  setPayments,
   renderWorkOrder
 )
 router.get('/payment-receipt', setInvoice, setPayments, renderPaymentReceipt)

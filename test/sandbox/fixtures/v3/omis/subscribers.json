@@ -1,0 +1,19 @@
+[
+  {
+    "id": "e83a608e-84a4-11e6-ae22-56b6b6499611",
+    "first_name": "Puck",
+    "last_name": "Head",
+    "name": "Puck Head",
+    "dit_team": {
+      "name": "CBBC North EAST",
+      "id": "602b971d-5df6-e511-888e-e4115bead28a"
+    }
+  },
+  {
+    "id": "25628b23-c75b-4aef-b120-dac2d64c0696",
+    "first_name": "",
+    "last_name": "",
+    "name": "",
+    "dit_team": null
+  }
+]

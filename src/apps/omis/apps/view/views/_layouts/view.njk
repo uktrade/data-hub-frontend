@@ -7,7 +7,7 @@
     </p>
   {% endif %}
 
-  {% if order.status in ['paid', 'complete'] %}
+  {% if payments and payments.length %}
     <p class="c-local-header__action">
       <a href="payment-receipt">View payment receipt</a>
     </p>
@@ -23,7 +23,7 @@
     <p class="c-local-header__action">
       {% if order.status == 'draft' %}
         <a href="quote" class="govuk-button">Preview quote</a>
-      {% elif order.status not in ['cancelled']  %}
+      {% else %}
         <a href="quote">View quote</a>
       {% endif %}
     </p>
