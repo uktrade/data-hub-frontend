@@ -150,6 +150,10 @@ describe('My pipeline app', () => {
       })
     })
 
+    it('should render the item counter', () => {
+      cy.contains('4 items')
+    })
+
     context('should render the pipeline list', () => {
       const expectedOutcomeList = [
         { expectedDate: '15 May 2020' },
@@ -178,6 +182,10 @@ describe('My pipeline app', () => {
       })
     })
 
+    it('should render the item counter', () => {
+      cy.contains('1 item')
+    })
+
     context('should render the pipeline list', () => {
       it('should render the first item', () => {
         assertPipelineItem(0, { expectedDate: '12 May 2020' }, inProgress)
@@ -196,6 +204,10 @@ describe('My pipeline app', () => {
         cy.contains('Active')
         cy.contains('Won').should('have.attr', 'aria-selected', 'true')
       })
+    })
+
+    it('should render the item counter', () => {
+      cy.contains('1 item')
     })
 
     context('should render the pipeline list', () => {
@@ -275,6 +287,10 @@ describe('My pipeline app', () => {
         })
     })
 
+    it('should render the item counter with only non-archived items', () => {
+      cy.contains('4 items')
+    })
+
     it('should render archived items', () => {
       const expectedOutcomeList = [
         { expectedDate: '15 May 2020' },
@@ -290,6 +306,9 @@ describe('My pipeline app', () => {
           cy.wrap(element).check()
           cy.wrap(element).should('be.checked')
           return cy.wait('@pipelineGet')
+        })
+        .then(() => {
+          cy.contains('5 items')
         })
         .then(() => {
           expectedOutcomeList.forEach((expectedData, index) => {
