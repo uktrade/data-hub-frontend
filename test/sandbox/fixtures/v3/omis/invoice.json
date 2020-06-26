@@ -1,0 +1,26 @@
+{
+  "created_on": "2017-09-27T08:59:20.381047",
+  "invoice_number": "201709270001",
+  "invoice_company_name": "Department for International Trade",
+  "invoice_address_1": "3 Whitehall Place",
+  "invoice_address_2": "",
+  "invoice_address_town": "London",
+  "invoice_address_county": "",
+  "invoice_address_postcode": "SW1A 2AW",
+  "invoice_address_country": {
+    "name": "United Kingdom",
+    "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+  },
+  "invoice_vat_number": "888 850455",
+  "billing_contact_name": "Jeff Fisher",
+  "billing_address_1": "Apt 0.",
+  "billing_address_2": "0 Foo st.",
+  "billing_address_county": "Eos et quibusdam dignissimos molestias saepe sit exercitationem pariatur. Velit fugit delectus tempore cumque ipsa. Temporibus quaerat deserunt illo perferendis beatae incidunt.",
+  "billing_address_postcode": "SW1A1AA",
+  "billing_address_town": "London",
+  "billing_address_country": {
+    "name": "United Kingdom",
+    "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+  },
+  "po_number": "At ipsam dolorum inventore."
+}

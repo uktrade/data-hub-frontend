@@ -28,6 +28,7 @@ var postcodeToRegion = require('./routes/postcodeToRegion.js')
 // V3
 var v3Contact = require('./routes/v3/contact/contact.js')
 var v3Event = require('./routes/v3/event/event.js')
+var v3OMIS = require('./routes/v3/omis/omis.js')
 var v3FeatureFlag = require('./routes/v3/feature-flag/feature-flag.js')
 var v3Interaction = require('./routes/v3/interaction/interaction.js')
 var v3Investment = require('./routes/v3/investment/investment-projects.js')
@@ -322,6 +323,13 @@ app.get(
   v3Investment.investmentProjectAudit
 )
 app.post('/v3/investment/:id/update-stage', v3Investment.investmentProjectById)
+
+// V3 Omis
+app.get('/v3/omis/order/:id', v3OMIS.getOrderById)
+app.get('/v3/omis/order/:id/assignee', v3OMIS.assignees)
+app.get('/v3/omis/order/:id/invoice', v3OMIS.invoice)
+app.get('/v3/omis/order/:id/subscriber-list', v3OMIS.subscriberList)
+app.get('/v3/omis/order/:id/payment', v3OMIS.payments)
 
 // V3 Search
 app.post('/v3/search/company', v3SearchCompany.companies)
