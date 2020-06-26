@@ -175,9 +175,8 @@ const TabNav = ({
                   const Button = selected ? StyledSelectedButton : StyledButton
                   const tabId = createId(id, key)
                   return (
-                    <StyledSpan>
+                    <StyledSpan key={tabId}>
                       <Button
-                        key={tabId}
                         role="tab"
                         focused={index === focusIndex}
                         aria-selected={selected}
