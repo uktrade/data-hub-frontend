@@ -79,11 +79,12 @@ export function restoreState() {
     return {}
   }
 
-  if (getContactFromQuery.label && getContactFromQuery.value) {
+  const queryContact = getContactFromQuery()
+  if (queryContact.label && queryContact.value) {
     const updatedState = JSON.parse(stateFromStorage)
-    updatedState.values.contact.push({
-      label: getContactFromQuery.label,
-      value: getContactFromQuery.value,
+    updatedState.values.contacts.push({
+      label: queryContact.label,
+      value: queryContact.value,
     })
     return updatedState
   }
