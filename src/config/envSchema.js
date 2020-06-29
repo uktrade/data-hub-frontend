@@ -22,6 +22,9 @@ const OAUTH2_URI = Joi.string().uri()
   .when('OAUTH2_BYPASS_SSO', { is: false, then: Joi.required() })
 
 const envSchema = Joi.object({
+  // A mapping of { duns_number: url, .. } for the companies that have account plans
+  ACCOUNT_PLAN_URLS: ExtendedJoi.json().default({}),
+
   // The url for a back end server instance for the service
   API_ROOT: Joi.string().uri().required(),
 
