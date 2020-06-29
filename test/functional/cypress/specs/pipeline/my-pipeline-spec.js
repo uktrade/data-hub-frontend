@@ -121,7 +121,12 @@ function assertPipelineItem(
         cy.contains('Potential export value').should('not.exist')
       }
 
-      if (result.contact) {
+      if (result.contacts && result.contacts.length) {
+        cy.contains(
+          result.contacts.length > 1 ? 'Company contacts' : 'Company contact'
+        )
+        cy.contains(result.contacts.map(({ name }) => name).join(', '))
+      } else if (result.contact) {
         cy.contains('Company contact')
         cy.contains(result.contact.name)
       } else {
@@ -152,7 +157,7 @@ function assertAcrossTabs(callback) {
 }
 
 describe('My pipeline app', () => {
-  context('When viewing the propspect status', () => {
+  context('When viewing the prospect status', () => {
     before(() => {
       cy.visit(urls.pipeline.index())
     })
@@ -198,12 +203,20 @@ describe('My pipeline app', () => {
     })
 
     it('should render the item counter', () => {
-      cy.contains('1 item')
+      cy.contains('3 items')
     })
 
     context('should render the pipeline list', () => {
       it('should render the first item', () => {
         assertPipelineItem(0, { expectedDate: '12 May 2020' }, inProgress)
+      })
+
+      it('should render the second item with one contact', () => {
+        assertPipelineItem(1, { expectedDate: '12 May 2020' }, inProgress)
+      })
+
+      it('should render the thirs item with two contacts', () => {
+        assertPipelineItem(2, { expectedDate: '12 May 2020' }, inProgress)
       })
     })
   })

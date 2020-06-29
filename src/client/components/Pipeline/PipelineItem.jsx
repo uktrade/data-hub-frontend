@@ -121,6 +121,7 @@ function buildMetaList({
   potential_value,
   sector,
   contact,
+  contacts,
   expected_win_date,
   created_on,
   archived,
@@ -134,10 +135,20 @@ function buildMetaList({
       href: urls.companies.detail(company.id),
     },
     sector && { label: 'Export sector', value: sector.segment },
-    contact && {
-      label: 'Company contact',
-      value: contact.name,
-      href: urls.contacts.contact(contact.id),
+    !contacts?.length &&
+      contact && {
+        label: 'Company contact',
+        value: contact.name,
+        href: urls.contacts.contact(contact.id),
+      },
+    contacts?.length && {
+      label: 'Company contact' + (contacts.length > 1 ? 's' : ''),
+      value: contacts.map(({ id, name }, index) => (
+        <>
+          <StyledLink href={urls.contacts.details(id)}>{name}</StyledLink>
+          {index === contacts.length - 1 ? '' : ', '}
+        </>
+      )),
     },
     potential_value && {
       label: 'Potential export value',
