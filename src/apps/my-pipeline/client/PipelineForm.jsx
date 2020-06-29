@@ -65,7 +65,7 @@ function PipelineForm({
         className="govuk-!-width-two-thirds"
       />
       <FieldTypeahead
-        label="Company contact (optional)"
+        label="Company contacts (optional)"
         name="contacts"
         options={contacts.map(({ id, name, job_title }) => ({
           value: id,

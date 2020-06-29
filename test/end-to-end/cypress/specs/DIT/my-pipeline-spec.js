@@ -126,7 +126,7 @@ describe('My Pipeline tab on the dashboard', () => {
 
           cy.get(formSelectors.likelihood.low).click()
           cy.get(formSelectors.fields.sector).selectTypeaheadOption('Aero')
-          cy.get(formSelectors.fields.contact).selectTypeaheadOption('Dean')
+          cy.get(formSelectors.fields.contacts).selectTypeaheadOption('Dean')
           cy.get(formSelectors.value).type('1000')
           cy.get(formSelectors.fields.expectedWinDate)
             .find('input')
@@ -159,7 +159,7 @@ describe('My Pipeline tab on the dashboard', () => {
             .click()
 
           cy.get(formSelectors.fields.sector).removeAllTypeaheadValues()
-          cy.get(formSelectors.fields.contact).removeAllTypeaheadValues()
+          cy.get(formSelectors.fields.contacts).removeAllTypeaheadValues()
           cy.get(formSelectors.value).clear()
           cy.get(formSelectors.fields.expectedWinDate)
             .find('input')
