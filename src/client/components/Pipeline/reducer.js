@@ -1,11 +1,12 @@
 import {
   PIPELINE__LIST_LOADED,
-  PIPELINE__FILTER_ARCHIVE_CHANGED,
+  PIPELINE__LIST_FILTER_SORT_CHANGED,
 } from '../../actions'
 
 const initialState = {
   lists: {},
   filter: {
+    sortBy: '-created_on',
     includeArchive: false,
   },
 }
@@ -20,7 +21,7 @@ export default (state = initialState, { type, result }) => {
           ...result,
         },
       }
-    case PIPELINE__FILTER_ARCHIVE_CHANGED:
+    case PIPELINE__LIST_FILTER_SORT_CHANGED:
       return {
         ...state,
         filter: {
