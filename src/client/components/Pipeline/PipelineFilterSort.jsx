@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 import { spacing } from '@govuk-react/lib'
 import Select from '@govuk-react/select'
+import { MEDIA_QUERIES } from '@govuk-react/constants'
 import { default as Checkbox } from 'data-hub-components/dist/activity-feed/ActivityFeedCheckbox'
 
 import { GREY_4, WHITE } from 'govuk-colours'
@@ -10,9 +11,7 @@ import throttle from 'lodash/throttle'
 
 const StyledSortFilter = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
   ${spacing.responsive({
     size: 3,
     property: 'padding',
@@ -28,21 +27,45 @@ const StyledSortFilter = styled.div`
   span:before {
     background-color: ${WHITE};
   }
+
+}
+${MEDIA_QUERIES.TABLET} {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
 `
 
 const StyledSelect = styled(Select)`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  ${spacing.responsive({
+    size: 2,
+    property: 'margin',
+    direction: ['top'],
+  })}
+
   span {
     ${spacing.responsive({
       size: 1,
       property: 'margin',
-      direction: ['right'],
+      direction: ['left'],
     })}
   }
+
   select {
     flex: 1;
+  }
+
+  ${MEDIA_QUERIES.TABLET} {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    span {
+      ${spacing.responsive({
+        size: 1,
+        property: 'margin',
+        direction: ['right'],
+      })}
+    }
   }
 `
 
