@@ -250,7 +250,13 @@ const CompanyLocalHeader = ({
               company.one_list_group_global_account_manager.contact_email && (
                 <>
                   &nbsp;To do so, contact the Global Account Manager at&nbsp;
-                  <a href={"mailto:" + company.one_list_group_global_account_manager.contact_email}>
+                  <a
+                    href={
+                      'mailto:' +
+                      company.one_list_group_global_account_manager
+                        .contact_email
+                    }
+                  >
                     {
                       company.one_list_group_global_account_manager
                         .contact_email
