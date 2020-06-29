@@ -19,11 +19,12 @@ export function restoreState() {
     return {}
   }
 
-  if (getContactFromQuery.label && getContactFromQuery.value) {
+  const queryContact = getContactFromQuery()
+  if (queryContact.label && queryContact.value) {
     const updatedState = JSON.parse(stateFromStorage)
     updatedState.values.contact = {
-      label: getContactFromQuery.label,
-      value: getContactFromQuery.value,
+      label: queryContact.label,
+      value: queryContact.value,
     }
     return updatedState
   }
