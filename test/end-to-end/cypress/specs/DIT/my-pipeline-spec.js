@@ -141,7 +141,7 @@ describe('My Pipeline tab on the dashboard', () => {
           assertTabListItem({
             contain: [
               projectName + ' edited',
-              'Project sectorAerospace',
+              'Export sectorAerospace',
               'Company contactDean Cox',
               'Potential export value£1,000',
               'Expected date for winJun 2025',
@@ -171,7 +171,7 @@ describe('My Pipeline tab on the dashboard', () => {
           assertTabListItem({
             contain: [projectName + ' edited', 'LOW'],
             notContain: [
-              'Project sector',
+              'Export sector',
               'Company contact',
               'Potential export value',
               'Expected date for win',

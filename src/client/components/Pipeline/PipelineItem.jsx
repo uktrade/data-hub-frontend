@@ -1,50 +1,65 @@
 import React from 'react'
 import moment from 'moment'
 import styled from 'styled-components'
-import { PipeLineItemPropType } from './types'
+import { escape } from 'lodash'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
-import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
-import { BLUE } from 'govuk-colours'
-import {
-  Card,
-  CardDetailsList,
-  CardHeader,
-} from 'data-hub-components/dist/activity-feed/activities/card'
+import { SPACING, MEDIA_QUERIES, FONT_SIZE } from '@govuk-react/constants'
+import { BLUE, GREY_1, BLACK } from 'govuk-colours'
+import { Card } from 'data-hub-components/dist/activity-feed/activities/card'
 import { NumberUtils } from 'data-hub-components'
 
+import { newlineToBr } from '../../../lib/text-formatting'
+import { PipeLineItemPropType } from './types'
 import urls from '../../../lib/urls'
 import Tag from '../Tag'
 import LIKELIHOOD_TO_SUCCEED from './constants'
 
+const StyledH3 = styled('h3')`
+  font-size: ${FONT_SIZE.SIZE_27};
+  font-weight: bold;
+  margin-bottom: ${SPACING.SCALE_2};
+  color: ${(props) => (props.archived ? GREY_1 : BLACK)};
+`
+
 const StyledGridCol = styled(GridCol)`
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   align-items: stretch;
-  justify-content: space-between;
-  a {
+  &:last-child {
+    justify-content: space-between;
+  }
+  a,
+  div {
     margin: ${SPACING.SCALE_3} 0 0 0;
   }
   ${MEDIA_QUERIES.TABLET} {
     align-items: flex-end;
   }
 `
-const StyledGridValue = styled(GridCol)`
-  flex: 1;
-  margin-top: ${SPACING.SCALE_1};
+
+const StyledListItem = styled('li')`
+  display: grid;
   ${MEDIA_QUERIES.TABLET} {
-    margin-top: 0;
+    display: block;
   }
 `
-const StyledGridLabel = styled(StyledGridValue)`
-  font-weight: bold;
-  margin-top: ${SPACING.SCALE_2};
+
+const StyledLabel = styled('span')`
+  color: ${GREY_1};
+  font-size: ${FONT_SIZE.SIZE_19};
+`
+
+const StyledValueSubtle = styled(StyledLabel)`
   ${MEDIA_QUERIES.TABLET} {
-    flex: 0 0 200px;
-    margin-top: 0;
+    margin-left: ${SPACING.SCALE_1};
   }
+`
+
+const StyledValue = styled(StyledValueSubtle)`
+  color: ${BLACK};
 `
 
 const StyledGridRow = styled(GridRow)`
@@ -55,81 +70,190 @@ const StyledGridRow = styled(GridRow)`
   }
 `
 
-const StyledTagSpacing = styled.span`
+const StyledTagSpacing = styled('span')`
+  display: flex;
   margin: ${SPACING.SCALE_3} 0 0 0;
-  ${MEDIA_QUERIES.TABLET} {
-    margin: 0;
+  strong + strong {
+    margin-left: ${SPACING.SCALE_3};
   }
   & > span {
     display: block;
     width: 100%;
     box-sizing: border-box;
   }
+  ${MEDIA_QUERIES.TABLET} {
+    flex-direction: column;
+    margin: 0;
+    strong + strong {
+      margin-left: 0;
+      margin-top: ${SPACING.SCALE_3};
+    }
+  }
+  ${MEDIA_QUERIES.DESKTOP} {
+    flex-direction: row;
+    strong + strong {
+      margin-left: ${SPACING.SCALE_3};
+      margin-top: 0;
+    }
+  }
+`
+
+const StyledUnorderedList = styled('ul')`
+  li + li {
+    margin-bottom: ${SPACING.SCALE_2};
+  }
+`
+
+const StyledLink = styled(Link)`
+  text-decoration-line: none;
+`
+
+const StyledUnderlinedLink = styled(Link)`
+  margin-left: ${SPACING.SCALE_2};
+`
+
+const StyledLinkWrapper = styled('div')`
+  a + a {
+    margin-left: ${SPACING.SCALE_5};
+  }
 `
 
 function buildMetaList({
+  company,
   potential_value,
   sector,
   contact,
   expected_win_date,
+  created_on,
+  archived,
+  archived_on,
+  archived_reason,
 }) {
   const list = [
-    sector && { id: 0, label: 'Project sector', value: sector.segment },
-    contact && { id: 1, label: 'Company contact', value: contact.name },
+    {
+      label: 'Company',
+      value: company.name,
+      href: urls.companies.detail(company.id),
+    },
+    sector && { label: 'Export sector', value: sector.segment },
+    contact && {
+      label: 'Company contact',
+      value: contact.name,
+      href: urls.contacts.contact(contact.id),
+    },
     potential_value && {
-      id: 2,
       label: 'Potential export value',
       value: NumberUtils.currencyGBP(potential_value),
     },
     expected_win_date && {
-      id: 3,
       label: 'Expected date for win',
       value: moment(expected_win_date).format('MMM Y'),
+    },
+    {
+      label: 'Created',
+      value: moment(created_on).format('DD MMM Y'),
+      subtle: true,
+    },
+    archived &&
+      archived_reason && {
+        label: 'Archive reason',
+        value: (
+          <span
+            dangerouslySetInnerHTML={{
+              __html: newlineToBr(escape(archived_reason)),
+            }}
+          />
+        ),
+      },
+    archived && {
+      label: 'Archived',
+      value: moment(archived_on).format('DD MMM Y'),
+      subtle: true,
     },
   ]
   // remove falsy values
   return list.filter(Boolean)
 }
 
-const PipelineItemMeta = ({ label, value }) => (
-  <GridRow>
-    <StyledGridLabel>{label}</StyledGridLabel>
-    <StyledGridValue>{value}</StyledGridValue>
-  </GridRow>
-)
-const PipelineItem = ({
-  item: { id, name, company, created_on, likelihood_to_win, ...meta },
-}) => (
-  <Card>
-    <CardHeader
-      company={{ name }}
-      heading={
-        <Link href={urls.companies.detail(company.id)}>{company.name}</Link>
-      }
-      startTime={created_on}
-    />
-    <StyledGridRow>
-      <GridCol>
-        <CardDetailsList
-          itemRenderer={(metaItem) => <PipelineItemMeta {...metaItem} />}
-          items={buildMetaList(meta)}
-        />
-      </GridCol>
-      <StyledGridCol>
-        {LIKELIHOOD_TO_SUCCEED[likelihood_to_win] && (
-          <StyledTagSpacing aria-label="Likelihood to succeed">
-            <Tag
-              colour={LIKELIHOOD_TO_SUCCEED[likelihood_to_win].colour}
-            >{`${LIKELIHOOD_TO_SUCCEED[likelihood_to_win].text}`}</Tag>
-          </StyledTagSpacing>
+const PipelineItemMeta = ({ label, value, href, subtle, id, archived }) => {
+  const Wrapper = subtle ? StyledValueSubtle : StyledValue
+
+  return (
+    <StyledListItem>
+      <StyledLabel>{label}</StyledLabel>
+      <Wrapper>
+        {href ? <StyledLink href={href}>{value}</StyledLink> : value}
+        {!archived && (
+          <StyledUnderlinedLink href={urls.pipeline.archive(id)}>
+            Archive this project
+          </StyledUnderlinedLink>
         )}
-        <Button as={Link} href={urls.pipeline.edit(id)} buttonColour={BLUE}>
-          Edit
-        </Button>
-      </StyledGridCol>
-    </StyledGridRow>
-  </Card>
-)
+      </Wrapper>
+    </StyledListItem>
+  )
+}
+
+const PipelineItem = ({
+  item: {
+    id,
+    name,
+    likelihood_to_win,
+    archived,
+    archived_on,
+    archived_reason,
+    ...meta
+  },
+}) => {
+  const metaListItems = buildMetaList({
+    ...meta,
+    archived,
+    archived_on,
+    archived_reason,
+  })
+
+  return (
+    <Card>
+      <StyledH3 archived={archived}>{name}</StyledH3>
+      <StyledGridRow>
+        <GridCol>
+          <StyledUnorderedList>
+            {metaListItems.map(({ label, value, href, subtle }) => (
+              <PipelineItemMeta
+                key={label}
+                label={label}
+                value={value}
+                href={href}
+                subtle={subtle}
+                id={id}
+                archived={archived}
+              />
+            ))}
+          </StyledUnorderedList>
+        </GridCol>
+        <StyledGridCol>
+          {archived ? (
+            <StyledLinkWrapper>
+              <Link href={urls.pipeline.delete(id)}>Delete</Link>
+              <Link href={urls.pipeline.unarchive(id)}>Unarchive</Link>
+            </StyledLinkWrapper>
+          ) : (
+            <Button as={Link} href={urls.pipeline.edit(id)} buttonColour={BLUE}>
+              Edit
+            </Button>
+          )}
+          {LIKELIHOOD_TO_SUCCEED[likelihood_to_win] && (
+            <StyledTagSpacing aria-label="Likelihood to succeed">
+              <Tag
+                colour={LIKELIHOOD_TO_SUCCEED[likelihood_to_win].colour}
+              >{`${LIKELIHOOD_TO_SUCCEED[likelihood_to_win].text}`}</Tag>
+              {archived && <Tag colour="grey">Archived</Tag>}
+            </StyledTagSpacing>
+          )}
+        </StyledGridCol>
+      </StyledGridRow>
+    </Card>
+  )
+}
 
 PipelineItem.propTypes = {
   item: PipeLineItemPropType,

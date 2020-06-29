@@ -154,29 +154,53 @@ Cypress.Commands.add(
       .find('> div > div > div > div:nth-child(2) > div:nth-child(1)')
       .click()
 
-
     return cy.wrap(subject)
   }
 )
 
-Cypress.Commands.add(
-  'setFeatureFlag',
-  (name, isActive) => {
-    const body = {
-      code: name,
-      is_active: isActive,
-    }
-    backend_url = Cypress.env('sandbox_url')
-    uri = '/sandbox/feature-flag'
-    return cy.request('PUT', `${backend_url}${uri}`, body)
+Cypress.Commands.add('setFeatureFlag', (name, isActive) => {
+  const body = {
+    code: name,
+    is_active: isActive,
   }
-)
+  backend_url = Cypress.env('sandbox_url')
+  uri = '/sandbox/feature-flag'
+  return cy.request('PUT', `${backend_url}${uri}`, body)
+})
 
-Cypress.Commands.add(
-  'resetFeatureFlags',
-  () => {
-    backend_url = Cypress.env('sandbox_url')
-    uri = '/sandbox/reset-feature-flag'
-    return cy.request('POST', `${backend_url}${uri}`)
+Cypress.Commands.add('resetFeatureFlags', () => {
+  backend_url = Cypress.env('sandbox_url')
+  uri = '/sandbox/reset-feature-flag'
+  return cy.request('POST', `${backend_url}${uri}`)
+})
+
+// This command helps us to check colours in cypress as cypress always return rgb, and our govuk-colours library uses hexes.
+const compareColor = (color, property) => (targetElement) => {
+  const tempElement = document.createElement('div')
+  tempElement.style.color = color
+  tempElement.style.display = 'none' // make sure it doesn't actually render
+  document.body.appendChild(tempElement) // append so that `getComputedStyle` actually works
+
+  const tempColor = getComputedStyle(tempElement).color
+  const targetColor = getComputedStyle(targetElement[0])[property]
+
+  document.body.removeChild(tempElement) // remove it because we're done with it
+
+  expect(tempColor).to.equal(targetColor)
+}
+
+Cypress.Commands.overwrite(
+  'should',
+  (originalFn, subject, expectation, ...args) => {
+    const customMatchers = {
+      'have.backgroundColour': compareColor(args[0], 'backgroundColor'),
+      'have.colour': compareColor(args[0], 'color'),
+    }
+
+    // See if the expectation is a string and if it is a member of Jest's expect
+    if (typeof expectation === 'string' && customMatchers[expectation]) {
+      return originalFn(subject, customMatchers[expectation])
+    }
+    return originalFn(subject, expectation, ...args)
   }
 )
