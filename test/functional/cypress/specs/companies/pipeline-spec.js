@@ -213,9 +213,6 @@ describe('Company add to pipeline form', () => {
     })
 
     function checkError(value, assertion = 'contain') {
-      cy.window().then((win) => {
-        win.document.querySelector('#export_value').type = 'text'
-      })
       cy.get(formSelectors.value).type(value)
       cy.contains('button', 'Add').click()
       cy.get('#form-errors').should(

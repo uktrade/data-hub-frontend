@@ -81,7 +81,7 @@ function PipelineForm({
         label="Potential export value (optional)"
         hint="Amount in GBP"
         name="export_value"
-        type="number"
+        type="text"
         initialValue={initialValue.export_value}
         pattern="[0-9]*"
         inputmode="numeric"
