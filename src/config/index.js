@@ -51,6 +51,7 @@ const config = {
   version: envVars.GIT_BRANCH,
   noCache: envVars.CACHE_ASSETS ? false : isDev,
   port: envVars.PORT,
+  accountPlanUrls: envVars.ACCOUNT_PLAN_URLS,
   apiRoot: envVars.API_ROOT,
   api: {
     authUrl: '/token/',

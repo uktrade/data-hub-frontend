@@ -4,6 +4,7 @@ const {
   getDitCompanyFromList,
   removeDitCompanyFromList,
 } = require('../repos')
+const config = require('../../../config')
 
 const { isItaTierDAccount } = require('../../../lib/is-tier-type-company')
 
@@ -20,6 +21,10 @@ async function getCompany(req, res, next, id) {
       !!company.is_global_ultimate && features['companies-ultimate-hq']
     company.isGlobalHQ =
       company.headquarter_type && company.headquarter_type.name === 'ghq'
+
+    if (config.accountPlanUrls[company.duns_number]) {
+      company.account_plan_url = config.accountPlanUrls[company.duns_number]
+    }
 
     res.locals.company = company
     next()
