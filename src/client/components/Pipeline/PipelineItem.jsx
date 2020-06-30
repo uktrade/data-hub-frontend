@@ -45,6 +45,10 @@ const StyledListItem = styled('li')`
   ${MEDIA_QUERIES.TABLET} {
     display: block;
   }
+  margin-bottom: ${SPACING.SCALE_2};
+  &:last-child {
+    margin-bottom: 0;
+  }
 `
 
 const StyledLabel = styled('span')`
@@ -98,12 +102,6 @@ const StyledTagSpacing = styled('span')`
   }
 `
 
-const StyledUnorderedList = styled('ul')`
-  li + li {
-    margin-bottom: ${SPACING.SCALE_2};
-  }
-`
-
 const StyledLink = styled(Link)`
   text-decoration-line: none;
 `
@@ -153,6 +151,7 @@ function buildMetaList({
       label: 'Created',
       value: moment(created_on).format('DD MMM Y'),
       subtle: true,
+      showArchived: true,
     },
     archived &&
       archived_reason && {
@@ -175,7 +174,15 @@ function buildMetaList({
   return list.filter(Boolean)
 }
 
-const PipelineItemMeta = ({ label, value, href, subtle, id, archived }) => {
+const PipelineItemMeta = ({
+  label,
+  value,
+  href,
+  subtle,
+  id,
+  archived,
+  showArchived,
+}) => {
   const Wrapper = subtle ? StyledValueSubtle : StyledValue
 
   return (
@@ -183,7 +190,7 @@ const PipelineItemMeta = ({ label, value, href, subtle, id, archived }) => {
       <StyledLabel>{label}</StyledLabel>
       <Wrapper>
         {href ? <StyledLink href={href}>{value}</StyledLink> : value}
-        {!archived && (
+        {!archived && showArchived && (
           <StyledUnderlinedLink href={urls.pipeline.archive(id)}>
             Archive this project
           </StyledUnderlinedLink>
@@ -216,19 +223,22 @@ const PipelineItem = ({
       <StyledH3 archived={archived}>{name}</StyledH3>
       <StyledGridRow>
         <GridCol>
-          <StyledUnorderedList>
-            {metaListItems.map(({ label, value, href, subtle }) => (
-              <PipelineItemMeta
-                key={label}
-                label={label}
-                value={value}
-                href={href}
-                subtle={subtle}
-                id={id}
-                archived={archived}
-              />
-            ))}
-          </StyledUnorderedList>
+          <ul>
+            {metaListItems.map(
+              ({ label, value, href, subtle, showArchived }) => (
+                <PipelineItemMeta
+                  key={label}
+                  label={label}
+                  value={value}
+                  href={href}
+                  subtle={subtle}
+                  id={id}
+                  archived={archived}
+                  showArchived={showArchived}
+                />
+              )
+            )}
+          </ul>
         </GridCol>
         <StyledGridCol>
           {archived ? (
