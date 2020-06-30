@@ -23,6 +23,7 @@ const WHITELIST = [
   '/v4/company/:id/update-one-list-core-team',
   '/v3/contact',
   '/v4/company/:id/assign-regional-account-manager',
+  '/v4/dnb/company-change-request',
 ]
 
 module.exports = (app) => {

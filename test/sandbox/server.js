@@ -387,6 +387,7 @@ app.post('/v4/dnb/company-investigation', v4Dnb.companyInvestigation)
 app.post('/v4/dnb/company-search', v4Dnb.companySearch)
 app.post('/v4/dnb/company-link', v4Dnb.companyLink)
 app.post('/v4/dnb/company-change-request', v4Dnb.companyChangeRequest)
+app.get('/v4/dnb/company-change-request', v4Dnb.companyChangeRequest)
 
 // V4 legacy company list
 app.get('/v4/user/company-list/:companyId', v4Company.getCompanyList)
