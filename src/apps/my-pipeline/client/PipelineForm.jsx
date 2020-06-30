@@ -19,6 +19,8 @@ const statusOptions = STATUS_VALUES.map(({ value, label }) => ({
 }))
 
 const likelihoodOptions = Object.values(LIKELIHOOD_VALUES)
+
+const IS_NUMBER = /^[0-9]*$/
 function PipelineForm({
   onSubmit,
   submissionError,
@@ -79,12 +81,17 @@ function PipelineForm({
         label="Potential export value (optional)"
         hint="Amount in GBP"
         name="export_value"
-        type="number"
+        type="text"
         initialValue={initialValue.export_value}
         pattern="[0-9]*"
         inputmode="numeric"
         spellcheck="false"
         className="govuk-input--width-10"
+        validate={(value) =>
+          !value || IS_NUMBER.test(value)
+            ? null
+            : 'Potential export value must be a number'
+        }
       />
       <FieldDate
         format="short"

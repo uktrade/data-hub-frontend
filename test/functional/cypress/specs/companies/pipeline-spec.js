@@ -205,4 +205,40 @@ describe('Company add to pipeline form', () => {
       cy.contains('Choose a status')
     })
   })
+
+  context('Potential export value validation', () => {
+    beforeEach(() => {
+      cy.visit(urls.companies.pipelineAdd(minimallyMinimal.id))
+      cy.contains('Potential export value')
+    })
+
+    function checkError(value, assertion = 'contain') {
+      cy.get(formSelectors.value).type(value)
+      cy.contains('button', 'Add').click()
+      cy.get('#form-errors').should(
+        assertion,
+        'Potential export value must be a number'
+      )
+    }
+
+    context('With only numbers', () => {
+      it('Should not show an error', () => {
+        checkError('123456', 'not.contain')
+      })
+    })
+
+    context('When the form is submitted with a non numeric value', () => {
+      context('With characters', () => {
+        it('Should show an error', () => {
+          checkError('ABC')
+        })
+      })
+
+      context('With a £ sign and commas in the number', () => {
+        it('Should show an error', () => {
+          checkError('£1,000')
+        })
+      })
+    })
+  })
 })

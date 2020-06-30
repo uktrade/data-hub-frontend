@@ -65,10 +65,9 @@ describe('Edit One List', () => {
     })
 
     it('should submit updated data', () => {
-      cy.get(selectors.companyEditOneList.globalAccountManagerField)
-        .click()
-        .type('shawn{enter}')
-        .contains('Shawn Cohen')
+      cy.get(
+        selectors.companyEditOneList.globalAccountManagerField
+      ).selectTypeaheadOption('shawn')
 
       cy.contains('Holly Collins')
         .next()
@@ -79,11 +78,9 @@ describe('Edit One List', () => {
         'Holly Collins'
       )
 
-      cy.get(selectors.companyEditOneList.coreTeamField)
-        .click()
-        .type('leroy{enter}')
-        .contains('Leroy Powers')
-        .click({ force: true })
+      cy.get(selectors.companyEditOneList.coreTeamField).selectTypeaheadOption(
+        'leroy'
+      )
 
       cy.contains('Submit').click()
 
@@ -124,8 +121,7 @@ describe('Edit One List', () => {
 
       it('should submit updated data', () => {
         cy.get(selectors.companyEditOneList.globalAccountManagerField)
-          .click()
-          .type('shawn{enter}')
+          .selectTypeaheadOption('shawn')
           .contains('Shawn Cohen')
 
         cy.contains('Submit').click()
