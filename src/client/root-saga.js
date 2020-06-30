@@ -44,6 +44,9 @@ import * as addInteractionFormTasks from '../apps/interactions/apps/details-form
 import { TASK_UPDATE_ADVISER } from '../apps/companies/apps/advisers/client/state'
 import * as manageAdviser from '../apps/companies/apps/advisers/client/tasks'
 
+import { DNB__CHECK_PENDING_REQUEST } from '../apps/companies/apps/business-details/client/state'
+import * as dnbCheck from '../apps/companies/apps/business-details/client/tasks'
+
 export default function* rootSaga() {
   yield fork(
     tasksSaga({
@@ -73,6 +76,7 @@ export default function* rootSaga() {
       [TASK_OPEN_CONTACT_FORM]: addInteractionFormTasks.openContactForm,
       [TASK_UPDATE_STAGE]: investmentAdminTasks.updateProjectStage,
       [TASK_UPDATE_ADVISER]: manageAdviser.updateAdviser,
+      [DNB__CHECK_PENDING_REQUEST]: dnbCheck.checkIfPendingRequest,
     })
   )
   yield fork(analyticsSaga)

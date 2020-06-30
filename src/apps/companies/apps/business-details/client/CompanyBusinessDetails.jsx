@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import Details from '@govuk-react/details'
 import Link from '@govuk-react/link'
@@ -16,6 +17,10 @@ import SectionOneList from './SectionOneList'
 import SectionDocuments from './SectionDocuments'
 import SectionArchive from './SectionArchive'
 import { StatusMessage, DateUtils } from '../../../../../client/components/'
+
+import { ID as CHECK_PENDING_REQUEST_ID, state2props } from './state'
+import { DNB__CHECK_PENDING_REQUEST } from '../../../../../client/actions'
+import Task from '../../../../../client/components/Task'
 
 const StyledRoot = styled('div')`
   & > table {
@@ -41,6 +46,7 @@ const CompanyBusinessDetails = ({
   isGlobalUltimateFlagEnabled,
   canEditOneList,
   urls,
+  isDnbPending,
 }) => {
   const isGlobalHQ = get(businessDetails, 'headquarter_type.name') === 'ghq'
   const isGlobalUltimate = !!businessDetails.is_global_ultimate
@@ -65,7 +71,6 @@ const CompanyBusinessDetails = ({
       {lastUpdated && (
         <div>Last updated on: {DateUtils.format(lastUpdated)}</div>
       )}
-
       {isArchived && (
         <StatusMessage>
           <p>{getArchivedBy(businessDetails)}</p>
@@ -77,7 +82,26 @@ const CompanyBusinessDetails = ({
           </p>
         </StatusMessage>
       )}
-
+      <Task.Status
+        name={DNB__CHECK_PENDING_REQUEST}
+        id={CHECK_PENDING_REQUEST_ID}
+        progressMessage="Checking for pending change requests"
+        startOnRender={{
+          payload: businessDetails.duns_number,
+          onSuccessDispatch: DNB__CHECK_PENDING_REQUEST,
+        }}
+      >
+        {() =>
+          isDnbPending && (
+            <>
+              <br />
+              <StatusMessage>
+                Changes to these business details are currently being reviewed.
+              </StatusMessage>
+            </>
+          )
+        }
+      </Task.Status>
       {isDnbCompany && (
         <Details
           summary="Are these business details right?"
@@ -94,41 +118,35 @@ const CompanyBusinessDetails = ({
           </p>
         </Details>
       )}
-
       <SectionAbout
         businessDetails={businessDetails}
         isArchived={isArchived}
         isDnbCompany={isDnbCompany}
         urls={urls}
       />
-
       <SectionAddresses
         businessDetails={businessDetails}
         isArchived={isArchived}
         isDnbCompany={isDnbCompany}
         urls={urls}
       />
-
       <SectionRegion
         businessDetails={businessDetails}
         isArchived={isArchived}
         isBasedInUK={isBasedInUK}
         urls={urls}
       />
-
       <SectionSector
         businessDetails={businessDetails}
         isArchived={isArchived}
         urls={urls}
       />
-
       <SectionOneList
         businessDetails={businessDetails}
         isArchived={isArchived}
         isDnbCompany={isDnbCompany}
         urls={urls}
       />
-
       <SectionHierarchy
         businessDetails={businessDetails}
         subsidiariesCount={subsidiariesCount}
@@ -141,15 +159,12 @@ const CompanyBusinessDetails = ({
         globalUltimate={globalUltimate}
         urls={urls}
       />
-
       <SectionDocuments urls={urls} />
-
       <SectionArchive
         isArchived={isArchived}
         isDnbCompany={isDnbCompany}
         urls={urls}
       />
-
       {canEditOneList && (
         <Button as={Link} href={urls.editOneList}>
           Edit One List Information
@@ -174,4 +189,4 @@ CompanyBusinessDetails.defaultProps = {
   dnbRelatedCompaniesCount: 0,
 }
 
-export default CompanyBusinessDetails
+export default connect(state2props)(CompanyBusinessDetails)
