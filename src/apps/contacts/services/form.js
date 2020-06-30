@@ -73,8 +73,7 @@ function saveContactForm(token, contactForm) {
         ['title', 'company', 'address_country']
       )
       const contactFormForApiRequest = merge({}, transformedContactForm, {
-        // database is positive on accepts, negative on rejects; UI is reverse, so flip that here
-        accepts_dit_email_marketing: !contactForm.rejects_dit_email_marketing,
+        accepts_dit_email_marketing: !!contactForm.accepts_dit_email_marketing,
       })
       const savedContact = await contactsRepository.saveContact(
         token,
