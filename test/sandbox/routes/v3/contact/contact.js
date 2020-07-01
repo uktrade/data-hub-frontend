@@ -21,7 +21,7 @@ exports.contact = function(req, res) {
 
 exports.contactCreate = function(req, res) {
   if (req.body.company.id === 'validationCompany') {
-    return res.json(400, contactCreateValidation)
+    return res.status(400).json(contactCreateValidation)
   }
   res.json(contactCreate)
 }

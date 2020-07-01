@@ -153,11 +153,11 @@ exports.companyPatched = function(req, res) {
 
 exports.getCompanyList = function(req, res) {
   if (req.params.companyId === '0fb3379c-341c-4da4-b825-bf8d47b26baa') {
-    return res.json(204, {})
+    return res.status(204).json({})
   } else if (req.params.companyId === 'b2c34b41-1d5a-4b4b-9249-7c53ff2868dd') {
-    return res.json(404, {})
+    return res.status(404).json({})
   }
-  res.json(200, companyList)
+  res.status(200).json(companyList)
 }
 
 exports.manageAdviser = function(req, res) {
