@@ -14,7 +14,7 @@ aliases:
   - &restore_cache
     restore_cache:
       name: Restore dependencies cache
-      key: dependency-cache-{{ checksum "package.json" }}
+      key: dependency-cache-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
 
   - &wait_for_backend
     run:
@@ -211,7 +211,7 @@ jobs:
       - run: npm ci
       - save_cache:
           name: Save dependencies cache
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
           paths:
             - ~/data-hub-frontend/node_modules
             - /root/.cache/Cypress
@@ -314,7 +314,7 @@ jobs:
       - *wait_for_frontend
       - run:
           name: Run functional tests
-          command: npm run test:functional -- --config baseUrl=http://localhost:3000 --parallel --record --key $CYPRESS_DASHBOARD_KEY
+          command: npm run test:functional -- --browser chrome --config baseUrl=http://localhost:3000 --parallel --record --key $CYPRESS_DASHBOARD_KEY
           when: always
       - store_artifacts:
           path: cypress/screenshots
