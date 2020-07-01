@@ -31,7 +31,7 @@ circleci local execute --job unit_client_tests
 
 Prettier and Sass linter will run as part of the build, assure you run the command below before committing:
 
-`$ yarn test:lint`
+`$ npm run test:lint`
 
 ## Functional Tests
 
@@ -53,14 +53,14 @@ Sandbox is as a light replacement for API backend and it's used only by function
 
 2. Start the container with `docker run -it -p 8000:8000 data-hub-sandbox`
 
-3. Change your `API_ROOT` in your env file to point to `http://localhost:8000` and then run the frontend locally with `yarn develop`.
+3. Change your `API_ROOT` in your env file to point to `http://localhost:8000` and then run the frontend locally with `npm run develop`.
 
 ### Starting sandbox on host machine
 
 ```bash
 cd test/sandbox
-yarn install 
-yarn exec nodemon .
+npm install
+npx nodemon .
 ```
 
 ### Running the tests
@@ -75,15 +75,15 @@ If you are not running the sandbox through docker using the preferred method and
 
 Execute all the tests on `specs` in chrome browser:
 
-`$ yarn test:functional -- --browser chrome`
+`$ npm run test:functional -- --browser chrome`
 
 ### Running the tests manually in cypress interface
 
-`$ yarn test:functional:watch`
+`$ npm run test:functional:watch`
 
 ### Running a specific spec
 
-`$ yarn test:functional -- --spec test/functional/cypress/specs/nav-spec.js`
+`$ npm run test:functional -- --spec test/functional/cypress/specs/nav-spec.js`
 
 ## E2E Tests
 
@@ -95,7 +95,7 @@ Pre-requisites:
 
 Ensure you have [node](https://nodejs.org/en/download/) v10 installed then install dependencies:
 
-`$ yarn`
+`$ npm install`
 
 ### Running the tests
 
@@ -106,7 +106,7 @@ by running `start-uat.sh` located on the root of the api repository.
 
 The main e2e test suite is triggered by running the following command:
 
-`$ yarn test:e2e:dit -- --browser chrome`
+`$ npm run test:e2e:dit -- --browser chrome`
 
 ### Setting up users with different permissions
 
@@ -116,30 +116,30 @@ So for setting up a test for a user of type `LEP` you need to:
 
 - add a token to the backend with a token associated to the permissions type. e.g `lepStaffToken`
 - add this token to the environment variable `OAUTH2_DEV_TOKEN` in the circleCi job
-- specify which suite to use when running `cypress`. e.g `npm run yarn test:e2e:lep -- --browser chrome`
+- specify which suite to use when running `cypress`. e.g `npm run test:e2e:lep -- --browser chrome`
 
 ### Permission tags
 
 There are also 3 other test suites, which run permission specs against users that have particular
 permissions for their roles, you can trigger these tests by running either of the commands below:
 
-`$ yarn test:e2e:lep -- --browser chrome`
+`$ npm run test:e2e:lep -- --browser chrome`
 
 or
 
-`$ yarn test:e2e:da -- --browser chrome`
+`$ npm run test:e2e:da -- --browser chrome`
 
 or
 
-`$ yarn test:e2e:dit -- --browser chrome`
+`$ npm run test:e2e:dit -- --browser chrome`
 
 ### Running the tests manually in cypress interface
 
-`$ yarn test:e2e:watch`
+`$ npm run test:e2e:watch`
 
 ### Running a specific spec
 
-`$ yarn test:e2e:dit -- --spec test/end-to-end/cypress/specs/DIT/local-nav-spec.js`
+`$ npm run test:e2e:dit -- --spec test/end-to-end/cypress/specs/DIT/local-nav-spec.js`
 
 ## Visual Tests
 
@@ -176,7 +176,7 @@ Updating the baseline consists in 2 steps:
 
 - 1:. Run the visual tests on your machine, if the baseline is no longer the correct representation of the page in test then execute step #2:
 
-- 2:. Run `$ yarn test:visual:update` to update the failed tests with updated images of how the page in test should look like.
+- 2:. Run `$ npm run test:visual:update` to update the failed tests with updated images of how the page in test should look like.
 
 ## Cypress code coverage
 
@@ -185,8 +185,9 @@ As part of cypress test suites (functional and e2e), code coverage reports can b
 ### Code coverage locally
 
 Steps:
+
 - Ensure you NODE_ENV is either `test` or `development` in order for client side code to be instrumented.
-- Start the application by running `$ yarn start:coverage`, this will ensure server side code is instrumented.
+- Start the application by running `$ npm run start:coverage`, this will ensure server side code is instrumented.
 - Execute a spec or suite and look for `cypress-coverage` folder output in the root of the folder.
 
 ### Code coverage in CI
