@@ -14,7 +14,7 @@ aliases:
   - &restore_cache
     restore_cache:
       name: Restore dependencies cache
-      key: npm-dependency-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
+      key: dependency-cache-{{ checksum "package.json" }}
 
   - &wait_for_backend
     run:
@@ -208,10 +208,10 @@ jobs:
     steps:
       - checkout
       - *restore_cache
-      - run: npm run install --no-save
+      - run: npm install --no-save
       - save_cache:
           name: Save dependencies cache
-          key: npm-dependency-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
+          key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ~/data-hub-frontend/node_modules
             - /root/.cache/Cypress
@@ -223,7 +223,7 @@ jobs:
     steps:
       - checkout
       - *restore_cache
-      - run: npm run install --no-save
+      - run: npm install --no-save
       - run:
           name: Lint code
           command: |
@@ -243,7 +243,7 @@ jobs:
     steps:
       - checkout
       - *restore_cache
-      - run: npm run install --no-save
+      - run: npm install --no-save
       - run:
           name: Run unit tests
           command: |
@@ -274,7 +274,7 @@ jobs:
     steps:
       - checkout
       - *restore_cache
-      - run: npm run install --no-save
+      - run: npm install --no-save
       - run: npm run build
       - run:
           name: Run client-side unit tests
@@ -305,7 +305,7 @@ jobs:
     steps:
       - checkout
       - *restore_cache
-      - run: npm run install --no-save
+      - run: npm install --no-save
       - run: npm run build
       - *start_api_sandbox
       - *wait_for_mock_sso
@@ -314,7 +314,7 @@ jobs:
       - *wait_for_frontend
       - run:
           name: Run functional tests
-          command: npm run test:functional --browser chrome --config baseUrl=http://localhost:3000 --parallel --record --key $CYPRESS_DASHBOARD_KEY
+          command: npm run test:functional -- --config baseUrl=http://localhost:3000 --parallel --record --key $CYPRESS_DASHBOARD_KEY
           when: always
       - store_artifacts:
           path: cypress/screenshots
@@ -341,7 +341,7 @@ jobs:
     steps:
       - checkout
       - *restore_cache
-      - run: npm run install --no-save
+      - run: npm install --no-save
       - run: npm run build
       - *start_api_sandbox
       - *wait_for_mock_sso
@@ -375,7 +375,7 @@ jobs:
     steps:
       - checkout
       - *restore_cache
-      - run: npm run install --no-save
+      - run: npm install --no-save
       - run: npm run build
       - *wait_for_backend
       - *wait_for_mock_sso
@@ -383,7 +383,7 @@ jobs:
       - *wait_for_frontend
       - run:
           name: Run DIT staff e2e tests
-          command: npm run test:e2e:dit --browser chrome
+          command: npm run test:e2e:dit
       - store_test_results:
           path: cypress-coverage
       - store_artifacts:
@@ -410,7 +410,7 @@ jobs:
     steps:
       - checkout
       - *restore_cache
-      - run: npm run install --no-save
+      - run: npm install --no-save
       - run: npm run build
       - *wait_for_backend
       - *wait_for_mock_sso
@@ -418,7 +418,7 @@ jobs:
       - *wait_for_frontend
       - run:
           name: Run LEP staff e2e tests
-          command: npm run test:e2e:lep --browser chrome
+          command: npm run test:e2e:lep
       - store_test_results:
           path: cypress-coverage
       - store_artifacts:
@@ -445,7 +445,7 @@ jobs:
     steps:
       - checkout
       - *restore_cache
-      - run: npm run install --no-save
+      - run: npm install --no-save
       - run: npm run build
       - *wait_for_backend
       - *wait_for_mock_sso
@@ -453,7 +453,7 @@ jobs:
       - *wait_for_frontend
       - run:
           name: Run DA staff e2e tests
-          command: npm run test:e2e:da --browser chrome
+          command: npm run test:e2e:da
       - store_test_results:
           path: cypress-coverage
       - store_artifacts:
