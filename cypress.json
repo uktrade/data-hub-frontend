@@ -12,5 +12,6 @@
     "codeCoverage": {
       "url": "http://localhost:3000/__coverage__"
     }
-  }
+  },
+  "browser": "chrome"
 }
