@@ -35,7 +35,7 @@ Once the "Image for tests" has been updated, you will need to [follow the instru
    - `test/Dockerfile`
    - `test/visual/Dockerfile`
    - `test/sandbox/Dockerfile`
-4. Delete the `node_modules` directory and do an npm install `npm install --no-save`
+4. Delete the `node_modules` directory and do an npm install `npm ci`
 5. Run the unit tests to check the app `npm run test:unit` and then start the app `npm run develop` and do some quick smoke tests to ensure the app works
 6. Update the image used by CircleCI as found here: `./Running tests.md` (I hold off publising the `:latest` tag until I am sure it has worked, so stop before this `docker push ukti/data-hub-frontend-test:latest`)
 7. Update the `&docker_data_hub_base` alias in the CircleCI config file (`.circleci/config.yml`) to match the version created in the previos step.
