@@ -11,4 +11,4 @@ if [ $# -gt 0 ]; then
 fi
 
 echo "Starting $envName server with $API_ROOT"
-yarn run develop
+npm run develop

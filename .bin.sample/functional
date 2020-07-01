@@ -2,7 +2,7 @@
 # If a single spec is passed run just that, otherwise run the watch task
 if [ $# -eq 0 ]
   then
-    yarn test:functional:watch
+    npm run test:functional:watch
   else
-    yarn test:functional --spec $1
+    npm run test:functional --spec $1
 fi
