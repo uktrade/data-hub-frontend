@@ -6,6 +6,7 @@ var leads = require('../../../fixtures/v4/pipeline-item/leads.json')
 var inProgress = require('../../../fixtures/v4/pipeline-item/in-progress.json')
 var win = require('../../../fixtures/v4/pipeline-item/win.json')
 const archived = require('../../../fixtures/v4/pipeline-item/archived.json')
+const { sortBy } = require('lodash')
 
 function createItem(status) {
   return {
@@ -15,23 +16,38 @@ function createItem(status) {
 }
 
 exports.getPipelineItems = function(req, res) {
+  let result = pipelineNoResult
   if (req.query.company_id === lambdaPlc.id) {
     res.json(pipelineItemLambdaPlc)
     return
   }
+
   if (req.query.status === 'leads') {
-    res.json(leads)
-    return
+    result = { ...leads }
   }
   if (req.query.status === 'in_progress') {
-    res.json(inProgress)
-    return
+    result = { ...inProgress }
   }
   if (req.query.status === 'win') {
-    res.json(win)
-    return
+    result = { ...win }
   }
-  res.json(pipelineNoResult)
+
+  if (req.query.archived === 'false') {
+    result.results = result.results.filter((item) => !item.archived)
+  }
+  if (req.query.sortby) {
+    let sortByQuery = req.query.sortby
+    let reverse = false
+    if (sortByQuery[0] === '-') {
+      reverse = true
+      sortByQuery = sortByQuery.substring(1)
+    }
+    const sortedResults = sortBy(result.results, [sortByQuery])
+    result.results = reverse ? sortedResults.reverse() : sortedResults
+  }
+
+  res.json(result)
+  return
 }
 
 exports.createUpdatePipelineItem = function(req, res) {
