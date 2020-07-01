@@ -11,7 +11,7 @@ services:
     volumes:
       - ./:/project
     entrypoint: dockerize -wait tcp://frontend:3050 -timeout 120s
-    command: yarn test:visual
+    command: npm run test:visual
     depends_on:
       - frontend
 
@@ -29,4 +29,3 @@ services:
     depends_on:
       - redis
       - mock-backend
-

@@ -15,7 +15,7 @@ services:
     depends_on:
       - api
     env_file: dev-stack.env
-    command: sh -c './wait-for-it.sh api:8000 -t 240 -- yarn develop'
+    command: sh -c './wait-for-it.sh api:8000 -t 240 -- npm run develop'
 
   api:
     build: ../data-hub-api
