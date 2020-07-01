@@ -208,7 +208,7 @@ jobs:
     steps:
       - checkout
       - *restore_cache
-      - run: npm install --no-save
+      - run: npm ci
       - save_cache:
           name: Save dependencies cache
           key: dependency-cache-{{ checksum "package.json" }}
@@ -223,7 +223,7 @@ jobs:
     steps:
       - checkout
       - *restore_cache
-      - run: npm install --no-save
+      - run: npm ci
       - run:
           name: Lint code
           command: |
@@ -243,7 +243,7 @@ jobs:
     steps:
       - checkout
       - *restore_cache
-      - run: npm install --no-save
+      - run: npm ci
       - run:
           name: Run unit tests
           command: |
@@ -274,7 +274,7 @@ jobs:
     steps:
       - checkout
       - *restore_cache
-      - run: npm install --no-save
+      - run: npm ci
       - run: npm run build
       - run:
           name: Run client-side unit tests
@@ -305,7 +305,7 @@ jobs:
     steps:
       - checkout
       - *restore_cache
-      - run: npm install --no-save
+      - run: npm ci
       - run: npm run build
       - *start_api_sandbox
       - *wait_for_mock_sso
@@ -341,7 +341,7 @@ jobs:
     steps:
       - checkout
       - *restore_cache
-      - run: npm install --no-save
+      - run: npm ci
       - run: npm run build
       - *start_api_sandbox
       - *wait_for_mock_sso
@@ -375,7 +375,7 @@ jobs:
     steps:
       - checkout
       - *restore_cache
-      - run: npm install --no-save
+      - run: npm ci
       - run: npm run build
       - *wait_for_backend
       - *wait_for_mock_sso
@@ -410,7 +410,7 @@ jobs:
     steps:
       - checkout
       - *restore_cache
-      - run: npm install --no-save
+      - run: npm ci
       - run: npm run build
       - *wait_for_backend
       - *wait_for_mock_sso
@@ -445,7 +445,7 @@ jobs:
     steps:
       - checkout
       - *restore_cache
-      - run: npm install --no-save
+      - run: npm ci
       - run: npm run build
       - *wait_for_backend
       - *wait_for_mock_sso
