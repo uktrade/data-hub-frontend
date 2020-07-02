@@ -56,6 +56,7 @@ var v4pipelineItem = require('./routes/v4/pipeline-item/index.js')
 
 // Data store service (github.com/uktrade/data-store-service)
 app.get('/api/v1/get-postcode-data/', postcodeToRegion.lookup)
+app.get('/api/v1/get-postcode-data/:postCode', postcodeToRegion.lookup)
 
 // Referral details
 app.get('/v4/company-referral/:id', v4Company.referralDetails)
