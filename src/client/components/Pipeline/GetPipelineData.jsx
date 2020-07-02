@@ -26,6 +26,7 @@ function PipelineStates({
   status,
   includeArchive,
   sortBy,
+  showLoader,
 }) {
   const { progress, error, errorMessage } = task
 
@@ -54,14 +55,20 @@ function PipelineStates({
     )
   }
 
-  if (progress && !items) {
+  if (progress && !items && showLoader) {
     return <ProgressIndicator message="Loading projects..." />
   }
 
   return !!items && children({ items, progress })
 }
 
-const GetPipeLineData = ({ status, lists, children, filter }) => {
+const GetPipeLineData = ({
+  status,
+  lists,
+  children,
+  filter,
+  showLoader = true,
+}) => {
   const { includeArchive, sortBy } = filter
   return (
     <>
@@ -69,6 +76,7 @@ const GetPipeLineData = ({ status, lists, children, filter }) => {
         {(getTask) => {
           return (
             <PipelineStates
+              showLoader={showLoader}
               items={lists[status]}
               status={status}
               sortBy={sortBy}

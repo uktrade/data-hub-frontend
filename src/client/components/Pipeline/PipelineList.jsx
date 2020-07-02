@@ -33,11 +33,22 @@ const PipelineList = ({
 }) => {
   return (
     <>
-      <PipelineFilterSort
-        filter={filter}
-        updateArchiveFilter={updateArchiveFilter}
-        updateSort={updateSort}
-      />
+      <GetPipeLineData
+        lists={lists}
+        status={status}
+        filter={{ includeArchive: true }}
+        showLoader={false}
+      >
+        {({ items }) =>
+          items.length && (
+            <PipelineFilterSort
+              filter={filter}
+              updateArchiveFilter={updateArchiveFilter}
+              updateSort={updateSort}
+            />
+          )
+        }
+      </GetPipeLineData>
       <GetPipeLineData lists={lists} status={status} filter={filter}>
         {({ items, progress }) => (
           <>
