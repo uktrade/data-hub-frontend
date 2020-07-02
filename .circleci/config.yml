@@ -11,11 +11,6 @@ aliases:
   - &oauth2_lep_staff_token lepStaffToken
   - &es_apm docker.elastic.co/apm/apm-server:7.7.1
 
-  - &restore_cache
-    restore_cache:
-      name: Restore dependencies cache
-      key: dependency-cache-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
-
   - &wait_for_backend
     run:
       name: Wait for backend
@@ -193,36 +188,18 @@ aliases:
 
   # Non master branch Common workflow config
   - &common_workflow_config
-    requires:
-      - dependencies
     filters:
       branches:
         ignore:
           - master
 
 jobs:
-  # Save dependencies to cache
-  dependencies:
-    docker:
-      - <<: *docker_data_hub_base
-    steps:
-      - checkout
-      - *restore_cache
-      - run: npm ci
-      - save_cache:
-          name: Save dependencies cache
-          key: dependency-cache-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
-          paths:
-            - ~/data-hub-frontend/node_modules
-            - /root/.cache/Cypress
-
   # Run linting jobs
   lint_code:
     docker:
       - <<: *docker_data_hub_base
     steps:
       - checkout
-      - *restore_cache
       - run: npm ci
       - run:
           name: Lint code
@@ -242,7 +219,6 @@ jobs:
       - *docker_data_hub_base
     steps:
       - checkout
-      - *restore_cache
       - run: npm ci
       - run:
           name: Run unit tests
@@ -273,7 +249,6 @@ jobs:
       - <<: *docker_data_hub_base
     steps:
       - checkout
-      - *restore_cache
       - run: npm ci
       - run: npm run build
       - run:
@@ -304,7 +279,6 @@ jobs:
     parallelism: 9
     steps:
       - checkout
-      - *restore_cache
       - run: npm ci
       - run: npm run build
       - *start_api_sandbox
@@ -340,7 +314,6 @@ jobs:
       - *docker_mock_sso
     steps:
       - checkout
-      - *restore_cache
       - run: npm ci
       - run: npm run build
       - *start_api_sandbox
@@ -374,7 +347,6 @@ jobs:
       - *docker_data_hub_backend_celery
     steps:
       - checkout
-      - *restore_cache
       - run: npm ci
       - run: npm run build
       - *wait_for_backend
@@ -409,7 +381,6 @@ jobs:
       - *docker_data_hub_backend_celery
     steps:
       - checkout
-      - *restore_cache
       - run: npm ci
       - run: npm run build
       - *wait_for_backend
@@ -444,7 +415,6 @@ jobs:
       - *docker_data_hub_backend_celery
     steps:
       - checkout
-      - *restore_cache
       - run: npm ci
       - run: npm run build
       - *wait_for_backend
@@ -490,7 +460,6 @@ workflows:
   version: 2
   datahub:
     jobs:
-      - dependencies
       - lint_code: *common_workflow_config
       - unit_tests: *common_workflow_config
       - unit_client_tests: *common_workflow_config
