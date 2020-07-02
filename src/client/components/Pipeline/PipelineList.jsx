@@ -40,7 +40,7 @@ const PipelineList = ({
         showLoader={false}
       >
         {({ items }) =>
-          items.length && (
+          items.length > 0 && (
             <PipelineFilterSort
               filter={filter}
               updateArchiveFilter={updateArchiveFilter}
