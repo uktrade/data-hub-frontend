@@ -37,13 +37,6 @@ exports.config = {
       'browser_version': '83.0 beta',
       'resolution': '1280x1024'
     },
-    {
-      'os': 'Windows',
-      'os_version': '10',
-      'browserName': 'IE',
-      'browser_version': '11.0',
-      'resolution': '1280x1024'
-    },
   ],
   featureFlags: {
     specFiltering: true
