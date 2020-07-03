@@ -1,5 +1,5 @@
 import { get, pick } from 'lodash'
-import { apiProxyAxios } from '../Task/utils'
+import { apiProxyAxios } from '../../Task/utils'
 
 export const fetchCompanyLists = () =>
   apiProxyAxios.get('v4/company-list').then((res) =>
