@@ -1,9 +1,18 @@
 const assert = require('assert')
 
+const hideScrollBarIE = () => {
+  if (browser.capabilities.browserName == 'internet explorer') {
+    return browser.execute(function() {
+      document.body.style.msOverflowStyle = 'none'
+    })
+  }
+}
+
 describe('Data Hub', () => {
   describe('home page', () => {
     before(async () => {
       await browser.url('')
+      await hideScrollBarIE()
     })
 
     it('content', async () => {
@@ -30,6 +39,7 @@ describe('Data Hub', () => {
 
   it('contacts page', async () => {
     await browser.url('/contacts')
+    await hideScrollBarIE()
     await browser.imageDiff.take()
     const result = await browser.imageDiff.validate()
     assert.equal(result, 0)
@@ -37,6 +47,7 @@ describe('Data Hub', () => {
 
   it('companies page', async () => {
     await browser.url('/companies')
+    await hideScrollBarIE()
     await browser.imageDiff.take()
     const result = await browser.imageDiff.validate()
     assert.equal(result, 0)
@@ -44,6 +55,7 @@ describe('Data Hub', () => {
 
   it('interactions page', async () => {
     await browser.url('/interactions')
+    await hideScrollBarIE()
     await browser.imageDiff.take()
     const result = await browser.imageDiff.validate()
     assert.equal(result, 0)
@@ -51,6 +63,7 @@ describe('Data Hub', () => {
 
   it('investments page', async () => {
     await browser.url('/investments/projects')
+    await hideScrollBarIE()
     await browser.imageDiff.take()
     const result = await browser.imageDiff.validate()
     assert.equal(result, 0)
@@ -58,6 +71,7 @@ describe('Data Hub', () => {
 
   it('omis page', async () => {
     await browser.url('/omis')
+    await hideScrollBarIE()
     await browser.imageDiff.take()
     const result = await browser.imageDiff.validate()
     assert.equal(result, 0)
@@ -65,6 +79,7 @@ describe('Data Hub', () => {
 
   it('events page', async () => {
     await browser.url('/events')
+    await hideScrollBarIE()
     await browser.imageDiff.take()
     const result = await browser.imageDiff.validate()
     assert.equal(result, 0)
