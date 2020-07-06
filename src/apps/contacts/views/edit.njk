@@ -85,7 +85,7 @@
       error: errors.messages.email
     }) }}
 
-    <fieldset id="group-field-accepts_dit_email_marketing" class="c-form-group">
+    <fieldset id="group-field-rejects_dit_email_marketing" class="c-form-group">
         <legend class="c-form-group__label u-visually-hidden">
             <span class="c-form-group__label-text">
                 Marketing preferences
@@ -93,17 +93,11 @@
         </legend>
         <div class="c-form-group__inner">
             <div class="c-multiple-choice">
-                <input class="c-multiple-choice__input" type="checkbox" name="accepts_dit_email_marketing" value="true" id="field-accepts_dit_email_marketing-1" {% if formData.accepts_dit_email_marketing %} checked {% endif %}>
-                      <label class="c-multiple-choice__label" for="field-accepts_dit_email_marketing-1">
+                <input class="c-multiple-choice__input" type="checkbox" name="rejects_dit_email_marketing" value="rejects_dit_email_marketing" id="field-rejects_dit_email_marketing-1" {% if formData.rejects_dit_email_marketing %} checked {% endif %}>
+                      <label class="c-multiple-choice__label" for="field-rejects_dit_email_marketing-1">
                           <span class="c-multiple-choice__label-text">
-                              The company contact does accept email marketing
+                              Does not accept email marketing
                           </span>
-
-                          {# TODO when form rewritten in React: conditionally render on checked #}
-                          <span class="c-form-group__hint" id="hint-group-field-accepts_dit_email_marketing">
-                            By checking this box, you confirm that the contact has opted in to email marketing.
-                          </span>
-
                       </label>
             </div>
         </div>

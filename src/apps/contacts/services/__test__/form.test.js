@@ -203,7 +203,7 @@ describe('contact form service', () => {
         telephone_number: '652423467167',
         telephone_countrycode: '+1',
         email: 'zboasdaan@opasdasdov.com',
-        accepts_dit_email_marketing: false,
+        accepts_dit_email_marketing: true,
         address_same_as_company: false,
         address_1: '99 N Shore Road',
         address_2: 'Suite 20',
@@ -246,7 +246,7 @@ describe('contact form service', () => {
     context('when the contact accepts DIT email marketing', () => {
       it('it should send accepts DIT email marketing as true', async () => {
         this.formData = assign({}, formData, {
-          accepts_dit_email_marketing: true,
+          rejects_dit_email_marketing: false,
         })
 
         await contactFormService.saveContactForm('1234', this.formData)
