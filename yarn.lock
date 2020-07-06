@@ -3219,16 +3219,6 @@
     async-exit-hook "^2.0.1"
     stream-buffers "^3.0.2"
 
-"@wdio/logger@5.16.10":
-  version "5.16.10"
-  resolved "https://registry.yarnpkg.com/@wdio/logger/-/logger-5.16.10.tgz#45d0ea485d52c8a7c526954ccc980d54c3e29e56"
-  integrity sha512-hRKhxgd9uB48Dtj2xe2ckxU4KwI/RO8IwguySuaI2SLFj6EDbdonwzpVkq111/fjBuq7R1NauAaNcm3AMEbIFA==
-  dependencies:
-    chalk "^3.0.0"
-    loglevel "^1.6.0"
-    loglevel-plugin-prefix "^0.8.4"
-    strip-ansi "^6.0.0"
-
 "@wdio/logger@6.0.16":
   version "6.0.16"
   resolved "https://registry.yarnpkg.com/@wdio/logger/-/logger-6.0.16.tgz#eef00e8369d8a5c86080a27d8bab41ad7dcdd2b2"
@@ -3288,14 +3278,14 @@
     webdriver "6.1.17"
     webdriverio "6.1.20"
 
-"@wdio/selenium-standalone-service@^5.16.10":
-  version "5.16.10"
-  resolved "https://registry.yarnpkg.com/@wdio/selenium-standalone-service/-/selenium-standalone-service-5.16.10.tgz#1d76a9e2334a54abaae32ed5b414624a56112e9d"
-  integrity sha512-IudfrPgFoejkM+UT4sPv9g5pAGax7+CyHDZkbPDl2XXsct3gdAXDVe57KWuNYX+s0jFu8MSR/4nLnvJjdydNjw==
+"@wdio/selenium-standalone-service@^6.1.14":
+  version "6.1.14"
+  resolved "https://registry.yarnpkg.com/@wdio/selenium-standalone-service/-/selenium-standalone-service-6.1.14.tgz#6f33dcbc4b93167f90182aaa50d8eecf72e01b1d"
+  integrity sha512-gZZS+UU9FaiqEqldnptCwaJ6IBVS8JtNZf5UHig/1vAniCL0P0PTtSeaIBw5oFBxB2cwec9BQIYK2PBuujE5hA==
   dependencies:
     "@types/selenium-standalone" "^6.15.0"
-    "@wdio/logger" "5.16.10"
-    fs-extra "^8.0.1"
+    "@wdio/logger" "6.0.16"
+    fs-extra "^9.0.0"
     selenium-standalone "^6.15.1"
 
 "@wdio/spec-reporter@^6.1.5":
