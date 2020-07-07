@@ -32,8 +32,8 @@ reports
 !*.sample.env
 npm*.log
 yarn-error.log
+yarn.lock
 stats.json
-package-lock.json
 .vscode/launch.json
 .vscode/settings.json
 .envrc

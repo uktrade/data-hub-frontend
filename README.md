@@ -56,7 +56,7 @@ and be provided with a back end server to provide the API, data storage and sear
 
 3. Install docker if you don't have it already - https://docs.docker.com/get-docker/
 
-4. Run `docker-compose build --parallel && docker-compose -p dev up --abort-on-container-exit`. This is provided for you in the `dev-stack` file in the `.bin/sample` folder. Feel free to move it to your own `.bin` file. Alternatively, if you already have yarn installed globally on your machine, you can run `yarn dev-stack`.
+4. Run `docker-compose build --parallel && docker-compose -p dev up --abort-on-container-exit`. This is provided for you in the `dev-stack` file in the `.bin/sample` folder. Feel free to move it to your own `.bin` file. Alternatively, if you already have npm installed globally on your machine, you can run `npm run dev-stack`.
 
 5. Once the process has completed you can access the frontend at `http://localhost:3000` and the api at `http://localhost:8000`.
 
@@ -75,13 +75,13 @@ and be provided with a back end server to provide the API, data storage and sear
 
 3. Install docker if you don't have it already - https://docs.docker.com/get-docker/
 
-4. Run `docker-compose -p mock -f docker-compose.mock.yml up --build --abort-on-container-exit`. This is provided for you in the `mock-stack` file in the `.bin/sample` folder. Feel free to move it to your own `.bin` file. Alternatively, if you already have yarn installed globally on your machine, you can run `yarn mock-stack`.
+4. Run `docker-compose -p mock -f docker-compose.mock.yml up --build --abort-on-container-exit`. This is provided for you in the `mock-stack` file in the `.bin/sample` folder. Feel free to move it to your own `.bin` file. Alternatively, if you already have npm installed globally on your machine, you can run `npm run mock-stack`.
 
 5. You can now access the frontend at `http://localhost:3001` and the mock api at `http://localhost:8001`.
 
 ### Running the project natively
 
-**Note for all users** If you wish to run the functional tests against your native frontend, you will need to pass a config flag to point cypress to run against port 3000 - `yarn test:functional:watch --config baseUrl=http://localhost:3000`.
+**Note for all users** If you wish to run the functional tests against your native frontend, you will need to pass a config flag to point cypress to run against port 3000 - `npm run test:functional:watch --config baseUrl=http://localhost:3000`.
 
 1.  Navigate to the project root.
 
@@ -92,19 +92,13 @@ and be provided with a back end server to provide the API, data storage and sear
     nvm use 10.16.0
     ```
 
-3.  Ensure correct version of yarn is used:
+3.  Install node packages:
 
     ```bash
-    yarn policies set-version 1.16.0
+    npm install
     ```
 
-4.  Install node packages:
-
-    ```bash
-    yarn
-    ```
-
-5.  Create a copy of a sample `.env` file which points to a mocked API:
+4.  Create a copy of a sample `.env` file which points to a mocked API:
 
     ```bash
     cp sample.env .env
@@ -112,31 +106,31 @@ and be provided with a back end server to provide the API, data storage and sear
 
     See [supported environment variables](./docs/Environment%20variables.md).
 
-6.  Start redis server:
+5.  Start redis server:
 
     ```bash
     docker run -it -p 6379:6379 redis:3.2
     ```
 
-7.  Start the mocked SSO:
+6.  Start the mocked SSO:
 
     ```bash
     docker run -it -p 8080:8080 quay.io/uktrade/mock-sso:latest
     ```
 
-8.  Start the mocked backend:
+7.  Start the mocked backend:
 
     ```bash
     docker run -it -p 8001:8001 ukti/data-hub-sandbox:1.0.0
     ```
 
-9.  Start the node server
+8.  Start the node server
 
     **In production mode:**
 
     ```bash
     export NODE_ENV=production
-    yarn run build && yarn start
+    npm run build && npm start
     ```
 
     This will build static assets beforehand and then run the app.
@@ -144,7 +138,7 @@ and be provided with a back end server to provide the API, data storage and sear
     **In development mode:**
 
     ```bash
-    yarn run develop
+    npm run develop
     ```
 
     Server will watch for changes and rebuild sass or compile js using webpack as
