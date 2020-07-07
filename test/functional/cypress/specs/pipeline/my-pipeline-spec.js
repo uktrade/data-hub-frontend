@@ -208,15 +208,15 @@ describe('My pipeline app', () => {
 
     context('should render the pipeline list', () => {
       it('should render the first item', () => {
-        assertPipelineItem(0, { expectedDate: '12 May 2020' }, inProgress)
+        assertPipelineItem(0, { expectedDate: '13 May 2020' }, inProgress)
       })
 
       it('should render the second item with one contact', () => {
         assertPipelineItem(1, { expectedDate: '12 May 2020' }, inProgress)
       })
 
-      it('should render the thirs item with two contacts', () => {
-        assertPipelineItem(2, { expectedDate: '12 May 2020' }, inProgress)
+      it('should render the third item with two contacts', () => {
+        assertPipelineItem(2, { expectedDate: '11 May 2020' }, inProgress)
       })
     })
   })
