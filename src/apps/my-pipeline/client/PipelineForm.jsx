@@ -65,17 +65,18 @@ function PipelineForm({
         className="govuk-!-width-two-thirds"
       />
       <FieldTypeahead
-        label="Company contact (optional)"
-        name="contact"
-        options={contacts.map(({ id, name }) => ({
+        label="Company contacts (optional)"
+        name="contacts"
+        options={contacts.map(({ id, name, job_title }) => ({
           value: id,
-          label: name,
+          label: name + (job_title ? ', ' + job_title : ''),
         }))}
-        initialValue={initialValue.contact}
+        initialValue={initialValue.contacts}
         noOptionsMessage={() => 'This company has no contacts'}
         placeholder="Select a contact..."
         isClearable={true}
         className="govuk-!-width-two-thirds"
+        isMulti="true"
       />
       <FieldInput
         label="Potential export value (optional)"

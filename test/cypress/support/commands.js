@@ -158,6 +158,10 @@ Cypress.Commands.add(
   }
 )
 
+Cypress.Commands.add('getTypeaheadValues', { prevSubject: 'element'}, ( subject) => {
+  return cy.wrap(subject).find('div > div > div > div[class*="-multiValue"]')
+})
+
 Cypress.Commands.add('setFeatureFlag', (name, isActive) => {
   const body = {
     code: name,

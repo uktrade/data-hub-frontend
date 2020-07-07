@@ -37,10 +37,10 @@
             "id": "af959812-6095-e211-a939-e4115bead28a",
             "segment": "Advanced Engineering"
           },
-          "contact": {
+          "contacts": [{
             "id": "952232d2-1d25-4c3a-bcac-2f3a30a94da9",
             "name": "Dean Cox"
-          },
+          }],
           "potential_value": 111,
           "expected_win_date": "2021-11-01"
       }

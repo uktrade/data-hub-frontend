@@ -1,6 +1,6 @@
+import axios from 'axios'
 import pipelineApi from './api'
 import { addMessage } from '../../../client/utils/flash-messages'
-import axios from 'axios'
 import { transformValueForApi } from '../../../common/date'
 
 function transformValuesForApi(values, oldValues = {}) {
@@ -10,16 +10,22 @@ function transformValuesForApi(values, oldValues = {}) {
   }
 
   function addValue(key, value) {
-    const hasExistingValue = !!oldValues[key]
+    const existingValue = oldValues[key]
+    const hasExistingValue = Array.isArray(existingValue)
+      ? !!existingValue.length
+      : !!existingValue
 
-    if (hasExistingValue || value) {
+    if (hasExistingValue || (Array.isArray(value) ? value.length : value)) {
       data[key] = value || null
     }
   }
 
   addValue('likelihood_to_win', parseInt(values.likelihood, 10))
   addValue('sector', values.sector?.value)
-  addValue('contact', values.contact?.value)
+  addValue(
+    'contacts',
+    values.contacts ? values.contacts.map(({ value }) => value) : []
+  )
   addValue('potential_value', values.export_value)
   addValue('expected_win_date', transformValueForApi(values.expected_win_date))
 

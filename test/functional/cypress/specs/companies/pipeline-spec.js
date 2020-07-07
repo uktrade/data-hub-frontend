@@ -1,5 +1,5 @@
 const minimallyMinimal = require('../../../../sandbox/fixtures/v4/company/company-minimally-minimal.json')
-const lambdaPlc = require('../../../../sandbox/fixtures/v4/company/company-lambda-plc')
+const lambdaPlc = require('../../../../sandbox/fixtures/v4/company/company-lambda-plc.json')
 const urls = require('../../../../../src/lib/urls')
 const {
   assertFieldRadios,
@@ -70,9 +70,9 @@ describe('Company add to pipeline form', () => {
       })
     })
 
-    it('Should render the company contact typeahead', () => {
-      cy.get(formSelectors.fields.contact).then((element) => {
-        assertFieldTypeahead({ element, label: 'Company contact (optional)' })
+    it('Should render the company contacts typeahead', () => {
+      cy.get(formSelectors.fields.contacts).then((element) => {
+        assertFieldTypeahead({ element, label: 'Company contacts (optional)' })
       })
     })
 
@@ -239,6 +239,21 @@ describe('Company add to pipeline form', () => {
           checkError('£1,000')
         })
       })
+    })
+  })
+
+  context('Company contacts', () => {
+    before(() => {
+      cy.visit(urls.companies.pipelineAdd(lambdaPlc.id))
+    })
+
+    it('Should allow more than one contact to be selected', () => {
+      cy.get(formSelectors.fields.contacts)
+        .selectTypeaheadOption('Dean')
+        .selectTypeaheadOption('Georg')
+        .getTypeaheadValues()
+        .should('contain', 'Georgina Clark')
+        .should('contain', 'Dean Cox')
     })
   })
 })
