@@ -11,11 +11,6 @@ aliases:
   - &oauth2_lep_staff_token lepStaffToken
   - &es_apm docker.elastic.co/apm/apm-server:7.7.1
 
-  - &restore_yarn_cache
-    restore_cache:
-      name: Restore yarn dependencies cache
-      key: yarn-dependency-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
-
   - &wait_for_backend
     run:
       name: Wait for backend
@@ -35,13 +30,13 @@ aliases:
   - &start_frontend
     run:
       name: Start data hub frontend
-      command: yarn start
+      command: npm run start
       background: true
 
   - &start_frontend_coverage
     run:
       name: Start data hub frontend instrumenting the code
-      command: yarn start:coverage
+      command: npm run start:coverage
       background: true
 
   - &wait_for_frontend
@@ -193,43 +188,25 @@ aliases:
 
   # Non master branch Common workflow config
   - &common_workflow_config
-    requires:
-      - dependencies
     filters:
       branches:
         ignore:
           - master
 
 jobs:
-  # Save yarn dependencies to cache
-  dependencies:
-    docker:
-      - <<: *docker_data_hub_base
-    steps:
-      - checkout
-      - *restore_yarn_cache
-      - run: yarn install --pure-lockfile
-      - save_cache:
-          name: Save yarn dependencies cache
-          key: yarn-dependency-{{ checksum "package.json" }}-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/data-hub-frontend/node_modules
-            - /root/.cache/Cypress
-
   # Run linting jobs
   lint_code:
     docker:
       - <<: *docker_data_hub_base
     steps:
       - checkout
-      - *restore_yarn_cache
-      - run: yarn install --pure-lockfile
+      - run: npm ci
       - run:
           name: Lint code
           command: |
             mkdir -p reports
-            yarn lint:js -- --format junit --output-file reports/eslint.xml
-            yarn lint:sass
+            npm run lint:js -- --format junit --output-file reports/eslint.xml
+            npm run lint:sass
           when: always
       - store_test_results:
           path: reports
@@ -242,13 +219,12 @@ jobs:
       - *docker_data_hub_base
     steps:
       - checkout
-      - *restore_yarn_cache
-      - run: yarn install --pure-lockfile
+      - run: npm ci
       - run:
           name: Run unit tests
           command: |
             mkdir junit
-            yarn circle:unit
+            npm run circle:unit
           environment:
             MOCHA_FILE: junit/test-results.xml
           when: always
@@ -273,14 +249,13 @@ jobs:
       - <<: *docker_data_hub_base
     steps:
       - checkout
-      - *restore_yarn_cache
-      - run: yarn install --pure-lockfile
-      - run: yarn build
+      - run: npm ci
+      - run: npm run build
       - run:
           name: Run client-side unit tests
           command: |
             mkdir junit
-            yarn circle:unit-client
+            npm run circle:unit-client
           environment:
             WEBPACK_ENV: develop
             MOCHA_FILE: junit/test-results.xml
@@ -304,9 +279,8 @@ jobs:
     parallelism: 9
     steps:
       - checkout
-      - *restore_yarn_cache
-      - run: yarn install --pure-lockfile
-      - run: yarn build
+      - run: npm ci
+      - run: npm run build
       - *start_api_sandbox
       - *wait_for_mock_sso
       - *wait_for_backend
@@ -314,7 +288,7 @@ jobs:
       - *wait_for_frontend
       - run:
           name: Run functional tests
-          command: yarn test:functional --browser chrome --config baseUrl=http://localhost:3000 --parallel --record --key $CYPRESS_DASHBOARD_KEY
+          command: npm run test:functional -- --browser chrome --config baseUrl=http://localhost:3000 --parallel --record --key $CYPRESS_DASHBOARD_KEY
           when: always
       - store_artifacts:
           path: cypress/screenshots
@@ -340,9 +314,8 @@ jobs:
       - *docker_mock_sso
     steps:
       - checkout
-      - *restore_yarn_cache
-      - run: yarn install --pure-lockfile
-      - run: yarn build
+      - run: npm ci
+      - run: npm run build
       - *start_api_sandbox
       - *wait_for_mock_sso
       - *wait_for_backend
@@ -350,7 +323,7 @@ jobs:
       - *wait_for_frontend
       - run:
           name: Run visual tests
-          command: yarn test:visual
+          command: npm run test:visual
           when: always
       - store_artifacts:
           path: visual-screenshots
@@ -374,16 +347,15 @@ jobs:
       - *docker_data_hub_backend_celery
     steps:
       - checkout
-      - *restore_yarn_cache
-      - run: yarn install --pure-lockfile
-      - run: yarn build
+      - run: npm ci
+      - run: npm run build
       - *wait_for_backend
       - *wait_for_mock_sso
       - *start_frontend
       - *wait_for_frontend
       - run:
           name: Run DIT staff e2e tests
-          command: yarn test:e2e:dit --browser chrome
+          command: npm run test:e2e:dit
       - store_test_results:
           path: cypress-coverage
       - store_artifacts:
@@ -409,16 +381,15 @@ jobs:
       - *docker_data_hub_backend_celery
     steps:
       - checkout
-      - *restore_yarn_cache
-      - run: yarn install --pure-lockfile
-      - run: yarn build
+      - run: npm ci
+      - run: npm run build
       - *wait_for_backend
       - *wait_for_mock_sso
       - *start_frontend
       - *wait_for_frontend
       - run:
           name: Run LEP staff e2e tests
-          command: yarn test:e2e:lep --browser chrome
+          command: npm run test:e2e:lep
       - store_test_results:
           path: cypress-coverage
       - store_artifacts:
@@ -444,16 +415,15 @@ jobs:
       - *docker_data_hub_backend_celery
     steps:
       - checkout
-      - *restore_yarn_cache
-      - run: yarn install --pure-lockfile
-      - run: yarn build
+      - run: npm ci
+      - run: npm run build
       - *wait_for_backend
       - *wait_for_mock_sso
       - *start_frontend
       - *wait_for_frontend
       - run:
           name: Run DA staff e2e tests
-          command: yarn test:e2e:da --browser chrome
+          command: npm run test:e2e:da
       - store_test_results:
           path: cypress-coverage
       - store_artifacts:
@@ -469,7 +439,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/
-      - run: yarn global add nyc
+      - run: npm install nyc --global
       - run: cp unit-coverage/unit-coverage.json partial-coverage
       - run: nyc merge partial-coverage
       - run: mkdir .nyc_output || true
@@ -490,7 +460,6 @@ workflows:
   version: 2
   datahub:
     jobs:
-      - dependencies
       - lint_code: *common_workflow_config
       - unit_tests: *common_workflow_config
       - unit_client_tests: *common_workflow_config

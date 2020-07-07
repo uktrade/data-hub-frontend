@@ -4,7 +4,6 @@
 FROM node:12.18.0
 
 ENV DOCKERIZE_VERSION      v0.3.0
-ENV YARN_VERSION           1.22.4
 ENV NPM_CONFIG_LOGLEVEL    warn
 ENV NPM_CONFIG_UNSAFE_PERM true
 ENV TZ                     Europe/London
@@ -26,9 +25,6 @@ RUN apt-get install -y \
 RUN wget -q -O /tmp/libpng12.deb http://mirrors.kernel.org/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1_amd64.deb \
   && dpkg -i /tmp/libpng12.deb \
   && rm /tmp/libpng12.deb
-
-# Use specific yarn version
-RUN npm install -g --force yarn@$YARN_VERSION
 
 # Set timezone
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
@@ -70,7 +66,6 @@ RUN wget https://github.com/getsandbox/worker/releases/download/1.1.0/sandbox-ru
 # Versions of local tools
 RUN node -v
 RUN npm -v
-RUN yarn -v
 RUN google-chrome --version
 RUN git --version
 RUN java -version
