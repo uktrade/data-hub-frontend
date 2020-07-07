@@ -143,30 +143,30 @@ function assertPipelineItem(
 }
 
 function assertAcrossTabs(callback) {
-  cy.contains('Prospect').click()
-  cy.contains('Prospect').should('have.attr', 'aria-selected', 'true')
-  callback('Prospect')
+  cy.contains('To do').click()
+  cy.contains('To do').should('have.attr', 'aria-selected', 'true')
+  callback('To do')
 
-  cy.contains('Active').click()
-  cy.contains('Active').should('have.attr', 'aria-selected', 'true')
-  callback('Active')
+  cy.contains('In progress').click()
+  cy.contains('In progress').should('have.attr', 'aria-selected', 'true')
+  callback('In progress')
 
-  cy.contains('Won').click()
-  cy.contains('Won').should('have.attr', 'aria-selected', 'true')
-  callback('Won')
+  cy.contains('Done').click()
+  cy.contains('Done').should('have.attr', 'aria-selected', 'true')
+  callback('Done')
 }
 
 describe('My pipeline app', () => {
-  context('When viewing the prospect status', () => {
+  context('When viewing the to do status', () => {
     before(() => {
       cy.visit(urls.pipeline.index())
     })
 
     it('should render the sub tab nav', () => {
       cy.get('[data-auto-id="pipelineSubTabNav"]').within(() => {
-        cy.contains('Prospect').should('have.attr', 'aria-selected', 'true')
-        cy.contains('Active')
-        cy.contains('Won')
+        cy.contains('To do').should('have.attr', 'aria-selected', 'true')
+        cy.contains('In progress')
+        cy.contains('Done')
       })
     })
 
@@ -189,16 +189,16 @@ describe('My pipeline app', () => {
     })
   })
 
-  context('When viewing the active status', () => {
+  context('When viewing the in progress status', () => {
     before(() => {
       cy.visit(urls.pipeline.active())
     })
 
     it('should render the sub tab nav', () => {
       cy.get('[data-auto-id="pipelineSubTabNav"]').within(() => {
-        cy.contains('Prospect')
-        cy.contains('Active').should('have.attr', 'aria-selected', 'true')
-        cy.contains('Won')
+        cy.contains('To do')
+        cy.contains('In progress').should('have.attr', 'aria-selected', 'true')
+        cy.contains('Done')
       })
     })
 
@@ -221,16 +221,16 @@ describe('My pipeline app', () => {
     })
   })
 
-  context('When viewing the won status', () => {
+  context('When viewing the done status', () => {
     before(() => {
       cy.visit(urls.pipeline.won())
     })
 
     it('should render the sub tab nav', () => {
       cy.get('[data-auto-id="pipelineSubTabNav"]').within(() => {
-        cy.contains('Prospect')
-        cy.contains('Active')
-        cy.contains('Won').should('have.attr', 'aria-selected', 'true')
+        cy.contains('To do')
+        cy.contains('In progress')
+        cy.contains('Done').should('have.attr', 'aria-selected', 'true')
       })
     })
 
