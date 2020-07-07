@@ -96,7 +96,7 @@ describe('Delete pipeline item form', () => {
   )
 
   context('When cancelling it should link to the pipeline category', () => {
-    it('should redirect to the prospect tab in my pipeline', () => {
+    it('should redirect to the to do tab in my pipeline', () => {
       cy.visit(urls.pipeline.delete('LEADS'))
       cy.contains('a', 'Cancel').should(
         'have.attr',
@@ -107,7 +107,7 @@ describe('Delete pipeline item form', () => {
       cy.url().should('include', urls.pipeline.index())
     })
 
-    it('should redirect to the active tab in my pipeline', () => {
+    it('should redirect to the in progress tab in my pipeline', () => {
       cy.visit(urls.pipeline.delete('IN_PROGRESS'))
       cy.contains('a', 'Cancel').should(
         'have.attr',
@@ -118,7 +118,7 @@ describe('Delete pipeline item form', () => {
       cy.url().should('include', urls.pipeline.active())
     })
 
-    it('should redirect to the won tab in my pipeline', () => {
+    it('should redirect to the done tab in my pipeline', () => {
       cy.visit(urls.pipeline.delete('WIN'))
       cy.contains('a', 'Cancel').should(
         'have.attr',

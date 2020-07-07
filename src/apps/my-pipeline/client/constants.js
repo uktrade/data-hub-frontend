@@ -34,17 +34,17 @@ export const PipelineItemsPropType = PropTypes.exact({
 export const STATUSES = {
   LEADS: {
     value: 'leads',
-    label: 'Prospect',
+    label: 'To do',
     url: urls.pipeline.index,
   },
   IN_PROGRESS: {
     value: 'in_progress',
-    label: 'Active',
+    label: 'In progress',
     url: urls.pipeline.active,
   },
   WIN: {
     value: 'win',
-    label: 'Won',
+    label: 'Done',
     url: urls.pipeline.won,
   },
 }
