@@ -98,9 +98,12 @@ describe('Pipeline edit form', () => {
         })
       })
 
-      it('Should render the company contact typeahead', () => {
-        cy.get(formSelectors.fields.contact).then((element) => {
-          assertFieldTypeahead({ element, label: 'Company contact (optional)' })
+      it('Should render the company contacts typeahead', () => {
+        cy.get(formSelectors.fields.contacts).then((element) => {
+          assertFieldTypeahead({
+            element,
+            label: 'Company contacts (optional)',
+          })
         })
       })
 
@@ -187,11 +190,11 @@ describe('Pipeline edit form', () => {
         })
       })
 
-      it('Should render the company contact typeahead', () => {
-        cy.get(formSelectors.fields.contact).then((element) => {
+      it('Should render the company contacts typeahead', () => {
+        cy.get(formSelectors.fields.contacts).then((element) => {
           assertFieldTypeahead({
             element,
-            label: 'Company contact (optional)',
+            label: 'Company contacts (optional)',
             value: 'Dean Cox',
           })
         })
@@ -218,7 +221,7 @@ describe('Pipeline edit form', () => {
 
         it('should call the api with a null value for each field', () => {
           cy.get(formSelectors.fields.sector).removeAllTypeaheadValues()
-          cy.get(formSelectors.fields.contact).removeAllTypeaheadValues()
+          cy.get(formSelectors.fields.contacts).removeAllTypeaheadValues()
           cy.get(formSelectors.value).clear()
           cy.get(formSelectors.fields.expectedWinDate)
             .find('input')
@@ -227,7 +230,7 @@ describe('Pipeline edit form', () => {
           cy.contains('button', 'Update').click()
           cy.wait('@updatePipelineItem').then((xhr) => {
             expect(xhr.request.body.sector).to.equal(null)
-            expect(xhr.request.body.contact).to.equal(null)
+            expect(xhr.request.body.contacts).to.deep.equal([])
             expect(xhr.request.body.potential_value).to.equal(null)
             expect(xhr.request.body.expected_win_date).to.equal(null)
           })

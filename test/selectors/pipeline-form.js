@@ -14,7 +14,7 @@ module.exports = {
     status: '#field-category',
     likelihood: '#field-likelihood',
     sector: '#field-sector',
-    contact: '#field-contact',
+    contacts: '#field-contacts',
     value: '#field-export_value',
     expectedWinDate: '#field-expected_win_date',
   },

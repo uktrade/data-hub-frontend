@@ -20,14 +20,14 @@ import { getPipelineUrl } from './utils'
 import moment from 'moment'
 
 function formatInitialValues(values) {
-  const { sector, contact } = values
+  const { sector, contacts } = values
   const expectedWinDate = moment(values.expected_win_date, 'YYYY-MM-DD', true)
   return {
     name: values.name,
     category: values.status,
     likelihood: String(values.likelihood_to_win),
     sector: sector ? { value: sector.id, label: sector.segment } : null,
-    contact: contact ? { value: contact.id, label: contact.name } : null,
+    contacts: contacts?.map(({ id, name }) => ({ value: id, label: name })),
     export_value: values.potential_value,
     expected_win_date: expectedWinDate.isValid()
       ? {
