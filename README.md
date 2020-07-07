@@ -130,7 +130,7 @@ and be provided with a back end server to provide the API, data storage and sear
 
     ```bash
     export NODE_ENV=production
-    npm run build && npm run start
+    npm run build && npm start
     ```
 
     This will build static assets beforehand and then run the app.
