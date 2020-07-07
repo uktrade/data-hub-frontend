@@ -53,7 +53,6 @@
   },
   "license": "MIT",
   "engines": {
-    "yarn": "YARN NO LONGER USED - use npm instead.",
     "node": "12.18.0"
   },
   "dependencies": {
