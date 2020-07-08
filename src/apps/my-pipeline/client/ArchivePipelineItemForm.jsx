@@ -77,7 +77,7 @@ function ArchivePipelineItemForm({
                   <br />
                   <FieldTextarea
                     label="Reason for archive"
-                    hint="Details on why the project is being archived"
+                    hint="Details on why you are archiving this project"
                     name="reason"
                     type="text"
                     required="Enter the reason why you are archiving this project"
