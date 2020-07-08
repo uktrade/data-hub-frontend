@@ -31,14 +31,12 @@ function assertHeader() {
 }
 
 function assertForm() {
-  it('Should have a heading', () => {
-    cy.contains('h2', 'Reason for archive')
-  })
   it('Should render the reason for achive textarea', () => {
     cy.get(formSelectors.reason).then((element) => {
       assertFieldTextarea({
         element,
-        label: 'Details on why the project is being archived',
+        label: 'Reason for archive',
+        hint: 'Details on why you are archiving this project',
       })
     })
   })
@@ -73,7 +71,7 @@ describe('Archive pipeline item form', () => {
 
     it('Should show a validation error', () => {
       cy.contains('button', 'Archive project').click()
-      cy.contains('There is a problemEnter why the project is being archived')
+      cy.contains('Enter the reason why you are archiving this project')
     })
   })
 
