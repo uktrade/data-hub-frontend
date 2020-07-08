@@ -52,6 +52,7 @@ const Form = ({
   values = {},
   touched = {},
   steps = [],
+  showErrorSummary = true,
   ...props
 }) => {
   useEffect(() => {
@@ -101,7 +102,7 @@ const Form = ({
           }
         }}
       >
-        {(!isEmpty(errors) || submissionError) && (
+        {(!isEmpty(errors) || submissionError) && showErrorSummary && (
           <ErrorSummary
             id="form-errors"
             heading="There is a problem"
