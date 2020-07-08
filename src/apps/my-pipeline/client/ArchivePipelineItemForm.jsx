@@ -6,9 +6,7 @@ import styled from 'styled-components'
 import LoadingBox from '@govuk-react/loading-box'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
-import { SPACING, FONT_SIZE, MEDIA_QUERIES } from '@govuk-react/constants'
-
-import { H2 } from '@govuk-react/heading'
+import { SPACING } from '@govuk-react/constants'
 
 import Task from '../../../client/components/Task'
 import Form from '../../../client/components/Form'
@@ -23,16 +21,6 @@ import { PipelineItemPropType } from './constants'
 import PipelineDetails from './PipelineDetails'
 import GetPipelineData from './GetPipelineData'
 import { getPipelineUrl } from './utils'
-
-const StyledH2 = styled(H2)`
-  margin-top: ${SPACING.SCALE_6};
-  margin-bottom: ${SPACING.SCALE_3};
-  font-size: ${FONT_SIZE.SIZE_16};
-
-  ${MEDIA_QUERIES.DESKTOP} {
-    font-size: ${FONT_SIZE.SIZE_19};
-  }
-`
 
 const StyledP = styled.p`
   margin: ${SPACING.SCALE_2} 0 ${SPACING.SCALE_5} 0;
@@ -86,9 +74,10 @@ function ArchivePipelineItemForm({
                   }}
                   submissionError={archivePipelineItem.errorMessage}
                 >
-                  <StyledH2>Reason for archive</StyledH2>
+                  <br />
                   <FieldTextarea
-                    label="Details on why the project is being archived"
+                    label="Reason for archive"
+                    hint="Details on why the project is being archived"
                     name="reason"
                     type="text"
                     required="Enter why the project is being archived"
