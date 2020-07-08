@@ -65,7 +65,7 @@ module.exports = {
         ).format('MMM Y')
       }
 
-      content['Created on'] = DateUtils.format(item.created_on)
+      content.Created = DateUtils.format(item.created_on)
 
       if (item.archived) {
         content['Reason for archive'] = item.archived_reason
