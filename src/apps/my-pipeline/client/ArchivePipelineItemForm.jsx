@@ -72,7 +72,7 @@ function ArchivePipelineItemForm({
                       onSuccessDispatch: PIPELINE__ARCHIVE_ITEM,
                     })
                   }}
-                  submissionError={archivePipelineItem.errorMessage}
+                  showErrorSummary={false}
                 >
                   <br />
                   <FieldTextarea
