@@ -33,15 +33,15 @@ describe('My Pipeline tab on the dashboard', () => {
       const tabs = [
         {
           url: urls.pipeline.index(),
-          status: 'prospect',
+          status: 'to do',
         },
         {
           url: urls.pipeline.active(),
-          status: 'active',
+          status: 'in progress',
         },
         {
           url: urls.pipeline.won(),
-          status: 'won',
+          status: 'done',
         },
       ]
 

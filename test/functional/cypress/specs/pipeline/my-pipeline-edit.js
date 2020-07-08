@@ -77,7 +77,7 @@ describe('Pipeline edit form', () => {
             element,
             label: 'Choose a status',
             optionsCount: 3,
-            value: 'Active',
+            value: 'In progress',
           })
         })
       })
@@ -164,7 +164,7 @@ describe('Pipeline edit form', () => {
             element,
             label: 'Choose a status',
             optionsCount: 3,
-            value: 'Prospect',
+            value: 'To do',
           })
         })
       })
