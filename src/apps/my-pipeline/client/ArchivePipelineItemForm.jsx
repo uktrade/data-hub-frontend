@@ -80,7 +80,7 @@ function ArchivePipelineItemForm({
                     hint="Details on why the project is being archived"
                     name="reason"
                     type="text"
-                    required="Enter why the project is being archived"
+                    required="Enter the reason why you are archiving this project"
                     className="govuk-!-width-two-thirds"
                   />
                   <FormActions>
