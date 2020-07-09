@@ -102,7 +102,9 @@ function PipelineForm({
         initialValue={initialValue.expected_win_date}
       />
       <FormActions>
-        <Button>{Object.keys(initialValue).length ? 'Update' : 'Add'}</Button>
+        <Button>
+          {Object.keys(initialValue).length ? 'Save' : 'Create project'}
+        </Button>
         <Link href={cancelLink}>Cancel</Link>
       </FormActions>
     </Form>
