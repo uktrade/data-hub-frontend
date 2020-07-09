@@ -69,7 +69,7 @@ describe('My Pipeline tab on the dashboard', () => {
 
       cy.get(formSelectors.name).type(projectName)
       cy.get(formSelectors.status.prospect).click()
-      cy.contains('button', 'Add').click()
+      cy.contains('button', 'Create project').click()
 
       cy.url().should('include', urls.pipeline.index())
       assertTabListItem({ contain: [projectName] })
@@ -85,7 +85,7 @@ describe('My Pipeline tab on the dashboard', () => {
             .click()
 
           cy.get(formSelectors.status.active).click()
-          cy.contains('button', 'Update').click()
+          cy.contains('button', 'Save').click()
 
           cy.url().should('include', urls.pipeline.active())
           assertTabListItem({ contain: [projectName] })
@@ -108,7 +108,7 @@ describe('My Pipeline tab on the dashboard', () => {
               .clear()
               .type(newProjectName)
             cy.get(formSelectors.status.won).click()
-            cy.contains('button', 'Update').click()
+            cy.contains('button', 'Save').click()
 
             cy.url().should('include', urls.pipeline.won())
             assertTabListItem({ contain: [newProjectName] })
@@ -135,7 +135,7 @@ describe('My Pipeline tab on the dashboard', () => {
               cy.wrap(element[1]).type('2025')
             })
 
-          cy.contains('button', 'Update').click()
+          cy.contains('button', 'Save').click()
 
           cy.url().should('include', urls.pipeline.won())
           assertTabListItem({
@@ -165,7 +165,7 @@ describe('My Pipeline tab on the dashboard', () => {
             .find('input')
             .clear()
 
-          cy.contains('button', 'Update').click()
+          cy.contains('button', 'Save').click()
 
           cy.url().should('include', urls.pipeline.won())
           assertTabListItem({

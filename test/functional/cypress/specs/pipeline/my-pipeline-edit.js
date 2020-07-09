@@ -227,7 +227,7 @@ describe('Pipeline edit form', () => {
             .find('input')
             .clear()
 
-          cy.contains('button', 'Update').click()
+          cy.contains('button', 'Save').click()
           cy.wait('@updatePipelineItem').then((xhr) => {
             expect(xhr.request.body.sector).to.equal(null)
             expect(xhr.request.body.contacts).to.deep.equal([])
@@ -248,7 +248,7 @@ describe('Pipeline edit form', () => {
 
       it('should redirect to the prospect tab in my pipeline', () => {
         cy.get('input[value=leads').click()
-        cy.contains('button', 'Update').click()
+        cy.contains('button', 'Save').click()
         cy.url().should('include', urls.pipeline.index())
         cy.get(selectors.companyLocalHeader().flashMessageList).should(
           'contain',
@@ -258,7 +258,7 @@ describe('Pipeline edit form', () => {
 
       it('should redirect to the active tab in my pipeline', () => {
         cy.get('input[value=in_progress').click()
-        cy.contains('button', 'Update').click()
+        cy.contains('button', 'Save').click()
         cy.url().should('include', urls.pipeline.active())
         cy.get(selectors.companyLocalHeader().flashMessageList).should(
           'contain',
@@ -268,7 +268,7 @@ describe('Pipeline edit form', () => {
 
       it('should redirect to the won tab in my pipeline', () => {
         cy.get('input[value=win').click()
-        cy.contains('button', 'Update').click()
+        cy.contains('button', 'Save').click()
         cy.url().should('include', urls.pipeline.won())
         cy.get(selectors.companyLocalHeader().flashMessageList).should(
           'contain',

@@ -98,7 +98,7 @@ describe('Company add to pipeline form', () => {
 
     it('should render the form buttons', () => {
       assertFormButtons({
-        submitText: 'Add',
+        submitText: 'Create project',
         cancelText: 'Cancel',
         cancelLink: urls.companies.detail(minimallyMinimal.id),
       })
@@ -162,7 +162,7 @@ describe('Company add to pipeline form', () => {
       it('should redirect to the prospect tab in my pipeline', () => {
         cy.get(formSelectors.name).type('Test Project')
         cy.get(formSelectors.status.prospect).click()
-        cy.contains('button', 'Add').click()
+        cy.contains('button', 'Create project').click()
         cy.url().should('include', urls.pipeline.index())
         cy.get(selectors.companyLocalHeader().flashMessageList).should(
           'contain',
@@ -173,7 +173,7 @@ describe('Company add to pipeline form', () => {
       it('should redirect to the active tab in my pipeline', () => {
         cy.get(formSelectors.name).type('Test Project')
         cy.get(formSelectors.status.active).click()
-        cy.contains('button', 'Add').click()
+        cy.contains('button', 'Create project').click()
         cy.url().should('include', urls.pipeline.active())
         cy.get(selectors.companyLocalHeader().flashMessageList).should(
           'contain',
@@ -184,7 +184,7 @@ describe('Company add to pipeline form', () => {
       it('should redirect to the won tab in my pipeline', () => {
         cy.get(formSelectors.name).type('Test Project')
         cy.get(formSelectors.status.won).click()
-        cy.contains('button', 'Add').click()
+        cy.contains('button', 'Create project').click()
         cy.url().should('include', urls.pipeline.won())
         cy.get(selectors.companyLocalHeader().flashMessageList).should(
           'contain',
@@ -200,7 +200,7 @@ describe('Company add to pipeline form', () => {
     })
 
     it('should display error messages', () => {
-      cy.contains('button', 'Add').click()
+      cy.contains('button', 'Create project').click()
       cy.contains('Enter a Project name')
       cy.contains('Choose a status')
     })
@@ -214,7 +214,7 @@ describe('Company add to pipeline form', () => {
 
     function checkError(value, assertion = 'contain') {
       cy.get(formSelectors.value).type(value)
-      cy.contains('button', 'Add').click()
+      cy.contains('button', 'Create project').click()
       cy.get('#form-errors').should(
         assertion,
         'Potential export value must be a number'
