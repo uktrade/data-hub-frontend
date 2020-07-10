@@ -47,7 +47,8 @@ export async function addCompanyToPipeline({ values, companyId }) {
     company: companyId,
     ...transformValuesForApi(values),
   })
-  addMessage('success', 'Pipeline changes for this company have been saved')
+
+  addMessage('success', `You added ${values.name} to your pipeline`)
   return data
 }
 
@@ -73,26 +74,30 @@ export async function editPipelineItem({
     pipelineItemId,
     transformValuesForApi(values, currentPipelineItem)
   )
-  addMessage('success', 'Pipeline changes for this company have been saved')
+  addMessage('success', `You saved changes to ${values.name}`)
   return data
 }
 
-export async function archivePipelineItem({ values, pipelineItemId }) {
+export async function archivePipelineItem({
+  values,
+  pipelineItemId,
+  projectName,
+}) {
   const { data } = await pipelineApi.archive(pipelineItemId, {
     reason: values.reason,
   })
-  addMessage('success', 'Pipeline changes for this company have been saved')
+  addMessage('success', `You archived ${projectName}`)
   return data
 }
 
-export async function unarchivePipelineItem({ pipelineName, pipelineItemId }) {
+export async function unarchivePipelineItem({ projectName, pipelineItemId }) {
   const { data } = await pipelineApi.unarchive(pipelineItemId)
-  addMessage('success', `You have unarchived ${pipelineName}`)
+  addMessage('success', `You unarchived ${projectName}`)
   return data
 }
 
-export async function deletePipelineItem({ pipelineName, pipelineItemId }) {
+export async function deletePipelineItem({ projectName, pipelineItemId }) {
   const { status } = await pipelineApi.delete(pipelineItemId)
-  addMessage('success', `You have deleted ${pipelineName} from your pipeline`)
+  addMessage('success', `You deleted ${projectName} from your pipeline`)
   return status
 }
