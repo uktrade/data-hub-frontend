@@ -69,7 +69,7 @@ module.exports = {
 
       if (item.archived) {
         content['Reason for archive'] = item.archived_reason
-        content['Archived on'] = DateUtils.format(item.archived_on)
+        content.Archived = DateUtils.format(item.archived_on)
       }
 
       assertSummaryTable({
