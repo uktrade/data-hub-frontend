@@ -166,7 +166,7 @@ describe('Company add to pipeline form', () => {
         cy.url().should('include', urls.pipeline.index())
         cy.get(selectors.companyLocalHeader().flashMessageList).should(
           'contain',
-          'Pipeline changes for this company have been saved'
+          'You added Test Project to your pipeline'
         )
       })
 
@@ -177,7 +177,7 @@ describe('Company add to pipeline form', () => {
         cy.url().should('include', urls.pipeline.active())
         cy.get(selectors.companyLocalHeader().flashMessageList).should(
           'contain',
-          'Pipeline changes for this company have been saved'
+          'You added Test Project to your pipeline'
         )
       })
 
@@ -188,7 +188,7 @@ describe('Company add to pipeline form', () => {
         cy.url().should('include', urls.pipeline.won())
         cy.get(selectors.companyLocalHeader().flashMessageList).should(
           'contain',
-          'Pipeline changes for this company have been saved'
+          'You added Test Project to your pipeline'
         )
       })
     }
