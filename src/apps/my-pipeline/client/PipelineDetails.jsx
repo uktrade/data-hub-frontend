@@ -57,7 +57,7 @@ export default function PipelineDetails({ item }) {
     ],
     ['Created', DateUtils.format(item.created_on)],
     item.archived && ['Reason for archive', item.archived_reason],
-    item.archived && ['Archived on', DateUtils.format(item.archived_on)],
+    item.archived && ['Archived', DateUtils.format(item.archived_on)],
   ]
 
   return (
