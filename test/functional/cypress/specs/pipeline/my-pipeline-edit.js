@@ -252,7 +252,7 @@ describe('Pipeline edit form', () => {
         cy.url().should('include', urls.pipeline.index())
         cy.get(selectors.companyLocalHeader().flashMessageList).should(
           'contain',
-          'Pipeline changes for this company have been saved'
+          'You saved changes to TEST'
         )
       })
 
@@ -262,7 +262,7 @@ describe('Pipeline edit form', () => {
         cy.url().should('include', urls.pipeline.active())
         cy.get(selectors.companyLocalHeader().flashMessageList).should(
           'contain',
-          'Pipeline changes for this company have been saved'
+          'You saved changes to TEST'
         )
       })
 
@@ -272,7 +272,7 @@ describe('Pipeline edit form', () => {
         cy.url().should('include', urls.pipeline.won())
         cy.get(selectors.companyLocalHeader().flashMessageList).should(
           'contain',
-          'Pipeline changes for this company have been saved'
+          'You saved changes to TEST'
         )
       })
     }

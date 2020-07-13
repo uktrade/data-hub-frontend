@@ -71,7 +71,7 @@ describe('Unarchive pipeline item form', () => {
         cy.url().should('include', urls.pipeline.index())
         cy.get(selectors.companyLocalHeader().flashMessageList).should(
           'contain',
-          'You have unarchived TEST'
+          'You unarchived TEST'
         )
       })
 
@@ -80,7 +80,7 @@ describe('Unarchive pipeline item form', () => {
         cy.url().should('include', urls.pipeline.active())
         cy.get(selectors.companyLocalHeader().flashMessageList).should(
           'contain',
-          'You have unarchived TEST'
+          'You unarchived TEST'
         )
       })
 
@@ -89,7 +89,7 @@ describe('Unarchive pipeline item form', () => {
         cy.url().should('include', urls.pipeline.won())
         cy.get(selectors.companyLocalHeader().flashMessageList).should(
           'contain',
-          'You have unarchived TEST'
+          'You unarchived TEST'
         )
       })
     }
