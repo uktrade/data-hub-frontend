@@ -128,7 +128,7 @@ describe('Company add to pipeline form', () => {
 
     it('should render a message', () => {
       cy.contains(
-        'This company is already in your pipeline.You can add it again under another project name.'
+        "You've already added this company to the following 1 project:TEST - In progressTEST - all fields - To do"
       )
     })
 
