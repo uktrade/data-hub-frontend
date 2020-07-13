@@ -100,7 +100,7 @@
     "express-minify-html": "^0.12.0",
     "express-session": "^1.17.1",
     "express-sslify": "^1.2.0",
-    "express-useragent": "^1.0.12",
+    "express-useragent": "^1.0.15",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^2.0.0",
     "formidable": "^1.2.2",
