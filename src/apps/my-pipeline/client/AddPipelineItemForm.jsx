@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
+import pluralize from 'pluralize'
+
 import ErrorSummary from '@govuk-react/error-summary'
 import { StatusMessage } from 'data-hub-components'
 import Task from '../../../client/components/Task'
@@ -16,7 +18,11 @@ import {
 } from './state'
 import urls from '../../../lib/urls'
 import PipelineForm from './PipelineForm'
-import { PipelineItemPropType, PipelineItemsPropType } from './constants'
+import {
+  PipelineItemPropType,
+  PipelineItemsPropType,
+  STATUS_VALUES,
+} from './constants'
 import { getPipelineUrl } from './utils'
 
 function isOnPipeline(pipelineStatus, companyId) {
@@ -56,9 +62,20 @@ function PipelineCheck({
     <>
       {onPipeline && (
         <StatusMessage>
-          This company is already in your pipeline.
+          You've already added this company to the following{' '}
+          {pluralize('projects', pipelineStatus.count, true)}:
           <br />
-          You can add it again under another project name.
+          <br />
+          <ul>
+            {pipelineStatus.results.map((project) => (
+              <li key={project.id}>
+                {project.name} -{' '}
+                {STATUS_VALUES.filter(
+                  (status) => status.value === project.status
+                ).map((status) => status.label)}
+              </li>
+            ))}
+          </ul>
         </StatusMessage>
       )}
       {children}
