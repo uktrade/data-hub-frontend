@@ -113,7 +113,7 @@ describe('Archive pipeline item form', () => {
         cy.url().should('include', urls.pipeline.index())
         cy.get(selectors.companyLocalHeader().flashMessageList).should(
           'contain',
-          'Pipeline changes for this company have been saved'
+          'You archived TEST'
         )
       })
 
@@ -122,7 +122,7 @@ describe('Archive pipeline item form', () => {
         cy.url().should('include', urls.pipeline.active())
         cy.get(selectors.companyLocalHeader().flashMessageList).should(
           'contain',
-          'Pipeline changes for this company have been saved'
+          'You archived TEST'
         )
       })
 
@@ -131,7 +131,7 @@ describe('Archive pipeline item form', () => {
         cy.url().should('include', urls.pipeline.won())
         cy.get(selectors.companyLocalHeader().flashMessageList).should(
           'contain',
-          'Pipeline changes for this company have been saved'
+          'You archived TEST'
         )
       })
     }
