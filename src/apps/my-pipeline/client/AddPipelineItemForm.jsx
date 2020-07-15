@@ -112,7 +112,7 @@ function AddPipelineItemForm({
           { link: urls.dashboard(), text: 'Home' },
           { link: urls.companies.index(), text: 'Companies' },
           { link: urls.companies.detail(companyId), text: companyName },
-          { link: urls.pipeline.index(), text: 'Add to your pipeline' },
+          { link: null, text: 'Add to your pipeline' },
         ]}
       />
       <Main>
