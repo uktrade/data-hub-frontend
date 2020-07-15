@@ -81,7 +81,7 @@ function DeletePipelineItemForm({
                       onSubmit={() => {
                         deletePipelineItem.start({
                           payload: {
-                            pipelineName: currentPipelineItem.name,
+                            projectName: currentPipelineItem.name,
                             pipelineItemId,
                           },
                           onSuccessDispatch: PIPELINE__DELETE_ITEM,
