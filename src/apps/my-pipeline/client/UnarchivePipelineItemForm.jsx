@@ -83,7 +83,7 @@ function UnarchivePipelineItemForm({
                       onSubmit={() => {
                         unarchivePipelineItem.start({
                           payload: {
-                            pipelineName: currentPipelineItem.name,
+                            projectName: currentPipelineItem.name,
                             pipelineItemId,
                           },
                           onSuccessDispatch: PIPELINE__UNARCHIVE_ITEM,

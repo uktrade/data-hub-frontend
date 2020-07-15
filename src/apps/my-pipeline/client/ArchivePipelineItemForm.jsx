@@ -84,7 +84,11 @@ function ArchivePipelineItemForm({
                       id={STATE_ID}
                       onSubmit={(values) => {
                         archivePipelineItem.start({
-                          payload: { values, pipelineItemId },
+                          payload: {
+                            values,
+                            pipelineItemId,
+                            projectName: currentPipelineItem.name,
+                          },
                           onSuccessDispatch: PIPELINE__ARCHIVE_ITEM,
                         })
                       }}
