@@ -62,7 +62,7 @@ This set up will give you both your front end and api running locally. This is t
 5. Once the process has completed you can access the frontend at `http://localhost:3000` and the api at `http://localhost:8000`.
 
 #### The Test Stack (the mock stack - using the sandbox api for running functional tests)
-When testing your code, you'll need to have a database set up with specific data which is all fabricated, for the tests to use. In order to ensure this, we use Sandbox to make this 'fake' , pre-populated API. You should use this set up when testing your code. 
+When testing your code you'll need to have a database set up with specific data, which is all fabricated, for the tests to use. In order to ensure this, we use Sandbox to make this 'fake', pre-populated API. You should use this set up when testing your code. 
 
 1. If you haven't already done so in the steps above for the Dev stack, clone this repo and go to the project root.
 
