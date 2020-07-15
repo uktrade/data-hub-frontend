@@ -1,8 +1,7 @@
 async function renderDeletePipelineItem(req, res) {
   const { pipelineItemId } = req.params
 
-  res.breadcrumb('Delete project').render('my-pipeline/views/delete', {
-    heading: `Delete project`,
+  res.render('my-pipeline/views/delete', {
     props: {
       pipelineItemId,
     },

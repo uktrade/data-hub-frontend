@@ -10,9 +10,13 @@ import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import { SPACING } from '@govuk-react/constants'
 
+import urls from '../../../lib/urls'
 import Task from '../../../client/components/Task'
 import Form from '../../../client/components/Form'
 import { PIPELINE__DELETE_ITEM } from '../../../client/actions'
+
+import { Main } from '../../../client/components/'
+import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 
 import { ID as STATE_ID, TASK_DELETE_PIPELINE_ITEM, state2props } from './state'
 import { PipelineItemPropType } from './constants'
@@ -40,49 +44,66 @@ function DeletePipelineItemForm({
   }, [itemDeleted])
 
   return (
-    <Task>
-      {(getTask) => {
-        const deletePipelineItem = getTask(TASK_DELETE_PIPELINE_ITEM, STATE_ID)
+    <>
+      <LocalHeader
+        heading="Delete project"
+        breadcrumbs={[
+          { link: urls.dashboard(), text: 'Home' },
+          { link: urls.pipeline.index(), text: 'My Pipeline' },
+          { link: null, text: 'Delete project' },
+        ]}
+      />
+      <Main>
+        <Task>
+          {(getTask) => {
+            const deletePipelineItem = getTask(
+              TASK_DELETE_PIPELINE_ITEM,
+              STATE_ID
+            )
 
-        return (
-          <GetPipelineData
-            getTask={getTask}
-            pipelineItemId={pipelineItemId}
-            currentPipelineItem={currentPipelineItem}
-          >
-            {() => (
-              <LoadingBox loading={deletePipelineItem.progress}>
-                <StyledWarningText>
-                  Deleting this project will remove all project details from
-                  your pipeline.
-                </StyledWarningText>
-                <PipelineDetails item={currentPipelineItem}></PipelineDetails>
-                <Form
-                  id={STATE_ID}
-                  onSubmit={() => {
-                    deletePipelineItem.start({
-                      payload: {
-                        projectName: currentPipelineItem.name,
-                        pipelineItemId,
-                      },
-                      onSuccessDispatch: PIPELINE__DELETE_ITEM,
-                    })
-                  }}
-                  submissionError={deletePipelineItem.errorMessage}
-                >
-                  <FormActions>
-                    <Button buttonColour={RED}>Delete project</Button>
-                    <Link href={getPipelineUrl(currentPipelineItem)}>
-                      Cancel
-                    </Link>
-                  </FormActions>
-                </Form>
-              </LoadingBox>
-            )}
-          </GetPipelineData>
-        )
-      }}
-    </Task>
+            return (
+              <GetPipelineData
+                getTask={getTask}
+                pipelineItemId={pipelineItemId}
+                currentPipelineItem={currentPipelineItem}
+              >
+                {() => (
+                  <LoadingBox loading={deletePipelineItem.progress}>
+                    <StyledWarningText>
+                      Deleting this project will remove all project details from
+                      your pipeline.
+                    </StyledWarningText>
+                    <PipelineDetails
+                      item={currentPipelineItem}
+                    ></PipelineDetails>
+                    <Form
+                      id={STATE_ID}
+                      onSubmit={() => {
+                        deletePipelineItem.start({
+                          payload: {
+                            pipelineName: currentPipelineItem.name,
+                            pipelineItemId,
+                          },
+                          onSuccessDispatch: PIPELINE__DELETE_ITEM,
+                        })
+                      }}
+                      submissionError={deletePipelineItem.errorMessage}
+                    >
+                      <FormActions>
+                        <Button buttonColour={RED}>Delete project</Button>
+                        <Link href={getPipelineUrl(currentPipelineItem)}>
+                          Cancel
+                        </Link>
+                      </FormActions>
+                    </Form>
+                  </LoadingBox>
+                )}
+              </GetPipelineData>
+            )
+          }}
+        </Task>
+      </Main>
+    </>
   )
 }
 
