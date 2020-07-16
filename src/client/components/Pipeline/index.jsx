@@ -64,12 +64,7 @@ export default function Pipeline() {
       tabs={STATUS_VALUES.reduce((acc, status) => {
         acc[status.url()] = {
           label: status.label,
-          content: (
-            <PipelineList
-              status={status.value}
-              statusText={status.label.toLocaleLowerCase()}
-            />
-          ),
+          content: <PipelineList status={status.value} />,
         }
         return acc
       }, {})}
