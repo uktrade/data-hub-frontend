@@ -1,5 +1,5 @@
 const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   devtool: false,
@@ -12,6 +12,6 @@ module.exports = {
         NODE_ENV: JSON.stringify('production'),
       },
     }),
-    new ExtractTextPlugin('css/[name].[contenthash:8].css'),
+    new MiniCssExtractPlugin('css/[name].[contenthash:8].css'),
   ],
 }

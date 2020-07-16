@@ -1,6 +1,6 @@
 const merge = require('webpack-merge')
 const path = require('path')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
 
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
@@ -59,39 +59,37 @@ const common = {
       },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                sourceMap: !config.isProd,
-                minimize: config.isProd,
-              },
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: !config.isProd,
+              minimize: config.isProd,
             },
-            {
-              loader: 'postcss-loader',
-              options: {
-                plugins: () => [require('autoprefixer')()],
-                sourceMap: !config.isProd,
-              },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: () => [require('autoprefixer')()],
+              sourceMap: !config.isProd,
             },
-            'resolve-url-loader',
-            {
-              loader: 'sass-loader',
-              options: {
-                sourceMap: true, // required for resolve-url-loader
-                includePaths: [
-                  path.resolve(
-                    __dirname,
-                    'node_modules/govuk_frontend_toolkit/stylesheets'
-                  ),
-                  path.resolve(__dirname, 'node_modules/vue-multiselect/dist'),
-                ],
-              },
+          },
+          'resolve-url-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true, // required for resolve-url-loader
+              includePaths: [
+                path.resolve(
+                  __dirname,
+                  'node_modules/govuk_frontend_toolkit/stylesheets'
+                ),
+                path.resolve(__dirname, 'node_modules/vue-multiselect/dist'),
+              ],
             },
-          ],
-        }),
+          },
+        ],
       },
     ],
   },
@@ -106,7 +104,11 @@ const common = {
     },
     extensions: ['*', '.js', '.jsx', '.vue', '.json'],
   },
-  plugins: [new WebpackAssetsManifest(), new VueLoaderPlugin()],
+  plugins: [
+    new WebpackAssetsManifest(),
+    new VueLoaderPlugin(),
+    new MiniCssExtractPlugin(),
+  ],
   node: {
     fs: 'empty',
     child_process: 'empty',
