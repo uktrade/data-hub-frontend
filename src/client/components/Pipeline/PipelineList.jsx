@@ -25,7 +25,6 @@ const StyledItemsCounter = styled('p')`
 
 const PipelineList = ({
   status,
-  statusText,
   lists,
   updateArchiveFilter,
   updateSort,
@@ -42,7 +41,7 @@ const PipelineList = ({
         {({ items, progress }) => (
           <>
             <StyledItemsCounter>
-              {pluralize('item', items.length, true)}
+              {pluralize('project', items.length, true)}
             </StyledItemsCounter>
             <StyledOrderedList data-auto-id="pipelineList">
               {items.length ? (
@@ -54,14 +53,16 @@ const PipelineList = ({
               ) : (
                 <LoadingBox loading={progress} timeIn={0} timeOut={400}>
                   <InsetText>
-                    There are no companies in the {statusText} section of your
-                    pipeline. You can add companies to your pipeline from the
-                    company page. To find out more{' '}
+                    My pipeline allows you to track the progress of your
+                    projects.
+                    <br />
+                    <br />
+                    For more information please see the{' '}
                     <Link href={urls.external.helpCentre.pipeline()}>
                       {' '}
-                      visit the help centre article on how to use My Pipeline
-                    </Link>
-                    .
+                      help centre article
+                    </Link>{' '}
+                    on how to use this feature.
                   </InsetText>
                 </LoadingBox>
               )}
