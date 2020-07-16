@@ -23,7 +23,7 @@ var metadata = require('./routes/metadata.js')
 var user = require('./routes/whoami.js')
 var helpCentre = require('./routes/helpCentre.js')
 var zendesk = require('./routes/zendesk.js')
-var postcodeToRegion = require('./routes/postcodeToRegion.js')
+var postcode = require('./routes/postcode.js')
 
 // V3
 var v3Contact = require('./routes/v3/contact/contact.js')
@@ -55,8 +55,11 @@ var v4referralList = require('./routes/v4/referrals/list.js')
 var v4pipelineItem = require('./routes/v4/pipeline-item/index.js')
 
 // Data store service (github.com/uktrade/data-store-service)
-app.get('/api/v1/get-postcode-data/', postcodeToRegion.lookup)
-app.get('/api/v1/get-postcode-data/:postCode', postcodeToRegion.lookup)
+app.get('/api/v1/get-postcode-data/', postcode.toRegion)
+app.get('/api/v1/get-postcode-data/:postCode', postcode.toRegion)
+
+// getaddress.io mock
+app.get('/sandbox/postcodelookup/', postcode.lookup)
 
 // Referral details
 app.get('/v4/company-referral/:id', v4Company.referralDetails)
