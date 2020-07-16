@@ -58,7 +58,7 @@ const config = {
   },
   postcodeLookup: {
     apiKey: envVars.POSTCODE_KEY,
-    baseUrl: 'https://api.getAddress.io/v2/uk/{postcode}?api-key={api-key}',
+    baseUrl: envVars.DATA_STORE_SERVICE_POSTCODE,
   },
   regionLookupUrl: envVars.DATA_STORE_SERVICE_POSTCODE_TO_REGION_URL,
   redis: buildRedisConfig(),

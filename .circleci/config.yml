@@ -75,6 +75,7 @@ aliases:
     DATA_STORE_SERVICE_ACCESS_KEY_ID: data-store-service-id
     DATA_STORE_SERVICE_SECRET_ACCESS_KEY: data-store-service-key
     DATA_STORE_SERVICE_POSTCODE_TO_REGION_URL: http://localhost:8000/api/v1/get-postcode-data/
+    DATA_STORE_SERVICE_POSTCODE: http://localhost:8000/sandbox/postcodelookup/
     ZEN_TICKETS_URL: http://zendesk.example.com
     ZEN_TOKEN: nobodyKnows
     ZEN_EMAIL: zendesk@example.com
