@@ -9,7 +9,6 @@ aliases:
   - &oauth2_dit_staff_token ditStaffToken
   - &oauth2_da_staff_token daStaffToken
   - &oauth2_lep_staff_token lepStaffToken
-  - &es_apm docker.elastic.co/apm/apm-server:7.7.1
 
   - &wait_for_backend
     run:
@@ -134,11 +133,6 @@ aliases:
       - MOCK_SSO_SCOPE: 'data-hub:internal-front-end'
       - MOCK_SSO_TOKEN: 123
 
-  # Data hub backend Elasticsearch APM
-  - &docker_es_apm
-    image: *es_apm
-    name: es-apm
-    command: apm-server -e -E output.elasticsearch.hosts=["es:9200"]
 
   # Data hub backend
   - &docker_data_hub_backend_base
@@ -340,7 +334,6 @@ jobs:
           OAUTH2_DEV_TOKEN: *oauth2_dit_staff_token
       - *docker_redis
       - *docker_elasticsearch
-      - *docker_es_apm
       - *docker_postgres
       - *docker_mi_postgres
       - *docker_mock_sso
@@ -374,7 +367,6 @@ jobs:
           OAUTH2_DEV_TOKEN: *oauth2_lep_staff_token
       - *docker_redis
       - *docker_elasticsearch
-      - *docker_es_apm
       - *docker_postgres
       - *docker_mi_postgres
       - *docker_mock_sso
@@ -408,7 +400,6 @@ jobs:
           OAUTH2_DEV_TOKEN: *oauth2_da_staff_token
       - *docker_redis
       - *docker_elasticsearch
-      - *docker_es_apm
       - *docker_postgres
       - *docker_mi_postgres
       - *docker_mock_sso
