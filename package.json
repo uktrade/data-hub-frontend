@@ -115,7 +115,7 @@
     "html5shiv": "^3.7.3",
     "http-proxy-middleware": "^1.0.3",
     "image-webpack-loader": "^4.0.0",
-    "lodash": "^4.17.13",
+    "lodash": "^4.17.19",
     "markdown-it": "^11.0.0",
     "moment": "^2.22.1",
     "moment-duration-format": "^2.1.0",
