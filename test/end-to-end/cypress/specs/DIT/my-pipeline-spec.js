@@ -33,29 +33,21 @@ describe('My Pipeline tab on the dashboard', () => {
       const tabs = [
         {
           url: urls.pipeline.index(),
-          status: 'to do',
         },
         {
           url: urls.pipeline.active(),
-          status: 'in progress',
         },
         {
           url: urls.pipeline.won(),
-          status: 'done',
         },
       ]
 
       tabs.forEach((tab) => {
         cy.visit(tab.url)
-        cy.get(tabPanelSelector)
-          .should(
-            'contain',
-            `There are no companies in the ${tab.status} section of your pipeline`
-          )
-          .contains(
-            'a',
-            'visit the help centre article on how to use My Pipeline'
-          )
+        cy.contains(
+          'My pipeline allows you to track the progress of your projects.'
+        )
+          .contains('a', 'help centre article')
           .should('have.attr', 'href', urls.external.helpCentre.pipeline())
       })
     })

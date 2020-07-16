@@ -171,7 +171,7 @@ describe('My pipeline app', () => {
     })
 
     it('should render the item counter', () => {
-      cy.contains('4 items')
+      cy.contains('4 projects')
     })
 
     context('should render the pipeline list', () => {
@@ -203,7 +203,7 @@ describe('My pipeline app', () => {
     })
 
     it('should render the item counter', () => {
-      cy.contains('3 items')
+      cy.contains('3 projects')
     })
 
     context('should render the pipeline list', () => {
@@ -235,7 +235,7 @@ describe('My pipeline app', () => {
     })
 
     it('should render the item counter', () => {
-      cy.contains('1 item')
+      cy.contains('1 project')
     })
 
     context('should render the pipeline list', () => {
@@ -302,7 +302,7 @@ describe('My pipeline app', () => {
     })
 
     it('should render the item counter with only non-archived items', () => {
-      cy.contains('4 items')
+      cy.contains('4 projects')
     })
 
     it('should render archived items', () => {
@@ -322,7 +322,7 @@ describe('My pipeline app', () => {
           return cy.wait('@pipelineGet')
         })
         .then(() => {
-          cy.contains('5 items')
+          cy.contains('5 projects')
         })
         .then(() => {
           expectedOutcomeList.forEach((expectedData, index) => {
