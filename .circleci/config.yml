@@ -4,7 +4,7 @@ aliases:
   - &postgres_version postgres:10
   - &mi_postgres_version postgres:9.6
   - &elasticsearch_version docker.elastic.co/elasticsearch/elasticsearch:6.8.2
-  - &api_image quay.io/uktrade/data-hub-api:feature_no-es-apm-uat
+  - &api_image quay.io/uktrade/data-hub-api:master
   - &frontend_testing_image ukti/data-hub-frontend-test:3.7.0
   - &oauth2_dit_staff_token ditStaffToken
   - &oauth2_da_staff_token daStaffToken
