@@ -1,4 +1,4 @@
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
@@ -122,6 +122,6 @@ const webpackEnv =
   process.env.WEBPACK_ENV || (config.isProd ? 'prod' : 'develop')
 
 const envConfig = require(`./webpack.config.${webpackEnv}`)
-const webpackConfig = merge.smart(common, envConfig)
+const webpackConfig = merge(common, envConfig)
 
 module.exports = webpackConfig
