@@ -1,4 +1,4 @@
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   output: {
@@ -6,7 +6,5 @@ module.exports = {
     devtoolModuleFilenameTemplate: '[absolute-resource-path]',
     devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]',
   },
-  plugins: [
-    new ExtractTextPlugin('css/[name].css'),
-  ],
+  plugins: [new MiniCssExtractPlugin('css/[name].css')],
 }
