@@ -30,10 +30,12 @@ module.exports = {
     devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]',
   },
   plugins: [
-    new MiniCssExtractPlugin(
-      //   config.isProd ? 'css/[name].[contenthash:8].css' : 'css/[name].css'
-      { filename: './[name].css', chunkFilename: './[name].[id].css' }
-    ),
+    new MiniCssExtractPlugin({
+      filename: config.isProd
+        ? 'css/[name].[contenthash:8].css'
+        : 'css/[name].css',
+      chunkFilename: 'css/[name].[id].css',
+    }),
     new VueLoaderPlugin(),
     new WebpackAssetsManifest(),
   ],
