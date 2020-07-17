@@ -108,4 +108,11 @@ module.exports = {
       },
     ],
   },
+  node: {
+    fs: 'empty',
+    child_process: 'empty',
+    module: 'empty',
+    net: 'empty',
+    tls: 'empty',
+  },
 }
