@@ -8,16 +8,22 @@ import {
   PIPELINE__EDIT_ITEM,
   PIPELINE__GET_COMPANY_CONTACTS,
 } from '../../../client/actions'
+
 import {
   ID as STATE_ID,
   TASK_GET_PIPELINE_COMPANY_CONTACTS,
   TASK_EDIT_PIPELINE_ITEM,
 } from './state'
+
+import urls from '../../../lib/urls'
 import PipelineForm from './PipelineForm'
 import GetPipelineData from './GetPipelineData'
 import { PipelineItemPropType } from './constants'
 import { getPipelineUrl } from './utils'
 import moment from 'moment'
+
+import { Main } from '../../../client/components/'
+import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 
 function formatInitialValues(values) {
   const { sector, contacts } = values
@@ -70,59 +76,74 @@ function EditPipelineItemForm({
   }, [savedPipelineItem])
 
   return (
-    <Task>
-      {(getTask) => {
-        const editPipelineItem = getTask(TASK_EDIT_PIPELINE_ITEM, STATE_ID)
+    <>
+      <LocalHeader
+        heading="Edit project"
+        breadcrumbs={[
+          { link: urls.dashboard(), text: 'Home' },
+          { link: urls.pipeline.index(), text: 'My Pipeline' },
+          {
+            text: 'Edit project',
+          },
+        ]}
+      />
+      <Main>
+        <Task>
+          {(getTask) => {
+            const editPipelineItem = getTask(TASK_EDIT_PIPELINE_ITEM, STATE_ID)
 
-        const getCompanyContacts = getTask(
-          TASK_GET_PIPELINE_COMPANY_CONTACTS,
-          STATE_ID
-        )
-        return (
-          <>
-            <GetPipelineData
-              getTask={getTask}
-              pipelineItemId={pipelineItemId}
-              currentPipelineItem={currentPipelineItem}
-            >
-              {() => (
-                <GetCompanyContacts
-                  task={getCompanyContacts}
-                  companyId={currentPipelineItem.company.id}
+            const getCompanyContacts = getTask(
+              TASK_GET_PIPELINE_COMPANY_CONTACTS,
+              STATE_ID
+            )
+            return (
+              <>
+                <GetPipelineData
+                  getTask={getTask}
+                  pipelineItemId={pipelineItemId}
+                  currentPipelineItem={currentPipelineItem}
                 >
-                  <LoadingBox
-                    loading={
-                      getCompanyContacts.progress || editPipelineItem.progress
-                    }
-                  >
-                    <PipelineForm
-                      submissionError={editPipelineItem.errorMessage}
-                      onSubmit={(values) => {
-                        editPipelineItem.start({
-                          payload: {
-                            values,
-                            pipelineItemId,
-                            currentPipelineItem,
-                          },
-                          onSuccessDispatch: PIPELINE__EDIT_ITEM,
-                        })
-                      }}
-                      cancelLink={getPipelineUrl(currentPipelineItem)}
-                      initialValue={
-                        currentPipelineItem &&
-                        formatInitialValues(currentPipelineItem)
-                      }
-                      sectors={sectors}
-                      contacts={contacts}
-                    />
-                  </LoadingBox>
-                </GetCompanyContacts>
-              )}
-            </GetPipelineData>
-          </>
-        )
-      }}
-    </Task>
+                  {() => (
+                    <GetCompanyContacts
+                      task={getCompanyContacts}
+                      companyId={currentPipelineItem.company.id}
+                    >
+                      <LoadingBox
+                        loading={
+                          getCompanyContacts.progress ||
+                          editPipelineItem.progress
+                        }
+                      >
+                        <PipelineForm
+                          submissionError={editPipelineItem.errorMessage}
+                          onSubmit={(values) => {
+                            editPipelineItem.start({
+                              payload: {
+                                values,
+                                pipelineItemId,
+                                currentPipelineItem,
+                              },
+                              onSuccessDispatch: PIPELINE__EDIT_ITEM,
+                            })
+                          }}
+                          cancelLink={getPipelineUrl(currentPipelineItem)}
+                          initialValue={
+                            currentPipelineItem &&
+                            formatInitialValues(currentPipelineItem)
+                          }
+                          sectors={sectors}
+                          contacts={contacts}
+                        />
+                      </LoadingBox>
+                    </GetCompanyContacts>
+                  )}
+                </GetPipelineData>
+              </>
+            )
+          }}
+        </Task>
+      </Main>
+    </>
   )
 }
 

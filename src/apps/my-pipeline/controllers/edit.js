@@ -5,15 +5,12 @@ async function renderEditPipeline(req, res, next) {
     const { pipelineItemId } = req.params
     const { token } = req.session
 
-    res
-      .breadcrumb('Edit your pipeline')
-      .render('my-pipeline/views/pipeline-form', {
-        heading: `Edit your pipeline`,
-        props: {
-          pipelineItemId,
-          sectors: await getOptions(token, 'sector'),
-        },
-      })
+    res.render('my-pipeline/views/pipeline-form', {
+      props: {
+        pipelineItemId,
+        sectors: await getOptions(token, 'sector'),
+      },
+    })
   } catch (e) {
     next(e)
   }

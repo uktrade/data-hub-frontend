@@ -25,6 +25,9 @@ import {
 } from './constants'
 import { getPipelineUrl } from './utils'
 
+import { Main } from '../../../client/components/'
+import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
+
 function isOnPipeline(pipelineStatus, companyId) {
   if (pipelineStatus?.companyId === companyId) {
     return !!pipelineStatus.count
@@ -84,6 +87,7 @@ function PipelineCheck({
 }
 
 function AddPipelineItemForm({
+  companyName,
   companyId,
   pipelineStatus,
   savedPipelineItem,
@@ -101,49 +105,64 @@ function AddPipelineItemForm({
   }, [savedPipelineItem])
 
   return (
-    <Task>
-      {(getTask) => {
-        const getPipelineByCompany = getTask(
-          TASK_GET_PIPELINE_BY_COMPANY,
-          STATE_ID
-        )
-        const addCompanyToPipeline = getTask(
-          TASK_ADD_COMPANY_TO_PIPELINE,
-          STATE_ID
-        )
-        return (
-          <>
-            <PipelineCheck
-              getPipelineByCompany={getPipelineByCompany}
-              pipelineStatus={pipelineStatus}
-              companyId={companyId}
-            >
-              <LoadingBox
-                loading={addCompanyToPipeline.progress || savedPipelineItem}
-              >
-                <PipelineForm
-                  cancelLink={urls.companies.detail(companyId)}
+    <>
+      <LocalHeader
+        heading={`Add ${companyName} to your pipeline`}
+        breadcrumbs={[
+          { link: urls.dashboard(), text: 'Home' },
+          { link: urls.companies.index(), text: 'Companies' },
+          { link: urls.companies.detail(companyId), text: companyName },
+          { link: null, text: 'Add to your pipeline' },
+        ]}
+      />
+      <Main>
+        <Task>
+          {(getTask) => {
+            const getPipelineByCompany = getTask(
+              TASK_GET_PIPELINE_BY_COMPANY,
+              STATE_ID
+            )
+            const addCompanyToPipeline = getTask(
+              TASK_ADD_COMPANY_TO_PIPELINE,
+              STATE_ID
+            )
+            return (
+              <>
+                <PipelineCheck
+                  getPipelineByCompany={getPipelineByCompany}
                   pipelineStatus={pipelineStatus}
-                  sectors={sectors}
-                  contacts={contacts}
-                  onSubmit={(values) => {
-                    addCompanyToPipeline.start({
-                      payload: { values, companyId },
-                      onSuccessDispatch: PIPELINE__ADD_ITEM,
-                    })
-                  }}
-                  submissionError={addCompanyToPipeline.errorMessage}
-                />
-              </LoadingBox>
-            </PipelineCheck>
-          </>
-        )
-      }}
-    </Task>
+                  companyId={companyId}
+                >
+                  <LoadingBox
+                    loading={addCompanyToPipeline.progress || savedPipelineItem}
+                  >
+                    <PipelineForm
+                      companyName={companyName}
+                      cancelLink={urls.companies.detail(companyId)}
+                      pipelineStatus={pipelineStatus}
+                      sectors={sectors}
+                      contacts={contacts}
+                      onSubmit={(values) => {
+                        addCompanyToPipeline.start({
+                          payload: { values, companyId },
+                          onSuccessDispatch: PIPELINE__ADD_ITEM,
+                        })
+                      }}
+                      submissionError={addCompanyToPipeline.errorMessage}
+                    />
+                  </LoadingBox>
+                </PipelineCheck>
+              </>
+            )
+          }}
+        </Task>
+      </Main>
+    </>
   )
 }
 
 AddPipelineItemForm.propTypes = {
+  companyName: PropTypes.string,
   companyId: PropTypes.string,
   pipelineStatus: PipelineItemsPropType,
   savedId: PipelineItemPropType,

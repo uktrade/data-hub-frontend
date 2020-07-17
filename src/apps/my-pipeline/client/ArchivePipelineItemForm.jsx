@@ -8,9 +8,13 @@ import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import { SPACING } from '@govuk-react/constants'
 
+import urls from '../../../lib/urls'
 import Task from '../../../client/components/Task'
 import Form from '../../../client/components/Form'
 import { PIPELINE__ARCHIVE_ITEM } from '../../../client/actions'
+
+import { Main } from '../../../client/components/'
+import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 
 import {
   ID as STATE_ID,
@@ -42,64 +46,78 @@ function ArchivePipelineItemForm({
   }, [savedPipelineItem])
 
   return (
-    <Task>
-      {(getTask) => {
-        const archivePipelineItem = getTask(
-          TASK_ARCHIVE_PIPELINE_ITEM,
-          STATE_ID
-        )
+    <>
+      <LocalHeader
+        heading="Archive project"
+        breadcrumbs={[
+          { link: urls.dashboard(), text: 'Home' },
+          { link: urls.pipeline.index(), text: 'My Pipeline' },
+          { link: null, text: 'Archive project' },
+        ]}
+      />
+      <Main>
+        <Task>
+          {(getTask) => {
+            const archivePipelineItem = getTask(
+              TASK_ARCHIVE_PIPELINE_ITEM,
+              STATE_ID
+            )
 
-        return (
-          <GetPipelineData
-            getTask={getTask}
-            pipelineItemId={pipelineItemId}
-            currentPipelineItem={currentPipelineItem}
-          >
-            {() => (
-              <LoadingBox loading={archivePipelineItem.progress}>
-                <StyledP>
-                  Archive this project if it’s no longer required or active.
-                  <br />
-                  You can unarchive or delete an archived project from your
-                  pipeline dashboard.
-                </StyledP>
-                <PipelineDetails item={currentPipelineItem}></PipelineDetails>
-                <Form
-                  id={STATE_ID}
-                  onSubmit={(values) => {
-                    archivePipelineItem.start({
-                      payload: {
-                        values,
-                        pipelineItemId,
-                        projectName: currentPipelineItem.name,
-                      },
-                      onSuccessDispatch: PIPELINE__ARCHIVE_ITEM,
-                    })
-                  }}
-                  showErrorSummary={false}
-                >
-                  <br />
-                  <FieldTextarea
-                    label="Reason for archive"
-                    hint="Details on why you are archiving this project"
-                    name="reason"
-                    type="text"
-                    required="Enter the reason why you are archiving this project"
-                    className="govuk-!-width-two-thirds"
-                  />
-                  <FormActions>
-                    <Button>Archive project</Button>
-                    <Link href={getPipelineUrl(currentPipelineItem)}>
-                      Cancel
-                    </Link>
-                  </FormActions>
-                </Form>
-              </LoadingBox>
-            )}
-          </GetPipelineData>
-        )
-      }}
-    </Task>
+            return (
+              <GetPipelineData
+                getTask={getTask}
+                pipelineItemId={pipelineItemId}
+                currentPipelineItem={currentPipelineItem}
+              >
+                {() => (
+                  <LoadingBox loading={archivePipelineItem.progress}>
+                    <StyledP>
+                      Archive this project if it’s no longer required or active.
+                      <br />
+                      You can unarchive or delete an archived project from your
+                      pipeline dashboard.
+                    </StyledP>
+                    <PipelineDetails
+                      item={currentPipelineItem}
+                    ></PipelineDetails>
+                    <Form
+                      id={STATE_ID}
+                      onSubmit={(values) => {
+                        archivePipelineItem.start({
+                          payload: {
+                            values,
+                            pipelineItemId,
+                            projectName: currentPipelineItem.name,
+                          },
+                          onSuccessDispatch: PIPELINE__ARCHIVE_ITEM,
+                        })
+                      }}
+                      showErrorSummary={false}
+                    >
+                      <br />
+                      <FieldTextarea
+                        label="Reason for archive"
+                        hint="Details on why you are archiving this project"
+                        name="reason"
+                        type="text"
+                        required="Enter the reason why you are archiving this project"
+                        className="govuk-!-width-two-thirds"
+                      />
+                      <FormActions>
+                        <Button>Archive project</Button>
+                        <Link href={getPipelineUrl(currentPipelineItem)}>
+                          Cancel
+                        </Link>
+                      </FormActions>
+                    </Form>
+                  </LoadingBox>
+                )}
+              </GetPipelineData>
+            )
+          }}
+        </Task>
+      </Main>
+    </>
   )
 }
 

@@ -29,7 +29,7 @@ describe('Company add to pipeline form', () => {
     })
 
     it('should render the heading', () => {
-      cy.get(selectors.localHeader().heading).should(
+      cy.get('[data-auto-id="localHeader"] h1').should(
         'have.text',
         `Add ${minimallyMinimal.name} to your pipeline`
       )
@@ -120,7 +120,7 @@ describe('Company add to pipeline form', () => {
     })
 
     it('should render the heading', () => {
-      cy.get(selectors.localHeader().heading).should(
+      cy.get('[data-auto-id="localHeader"] h1').should(
         'have.text',
         `Add ${lambdaPlc.name} to your pipeline`
       )
