@@ -2,8 +2,7 @@ async function renderArchivePipelineItem(req, res, next) {
   try {
     const { pipelineItemId } = req.params
 
-    res.breadcrumb('Archive project').render('my-pipeline/views/archive', {
-      heading: `Archive project`,
+    res.render('my-pipeline/views/archive', {
       props: {
         pipelineItemId,
       },

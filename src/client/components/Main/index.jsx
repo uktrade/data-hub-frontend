@@ -24,7 +24,12 @@ const InnerContainer = styled('div')({
 })
 
 const Main = ({ children, ...props }) => (
-  <OuterContainer {...props} role="main" id="main-content">
+  <OuterContainer
+    {...props}
+    role="main"
+    id="main-content"
+    data-auto-id="bodyMainContent"
+  >
     <InnerContainer>{children}</InnerContainer>
   </OuterContainer>
 )

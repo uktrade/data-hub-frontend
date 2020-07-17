@@ -23,14 +23,14 @@ describe('Pipeline edit form', () => {
       assertBreadcrumbs({
         Home: urls.dashboard(),
         'My Pipeline': urls.pipeline.index(),
-        'Edit your pipeline': null,
+        'Edit project': null,
       })
     })
 
     it('should render the heading', () => {
-      cy.get(selectors.localHeader().heading).should(
+      cy.get('[data-auto-id="localHeader"] h1').should(
         'have.text',
-        `Edit your pipeline`
+        'Edit project'
       )
     })
 
@@ -50,14 +50,14 @@ describe('Pipeline edit form', () => {
         assertBreadcrumbs({
           Home: urls.dashboard(),
           'My Pipeline': urls.pipeline.index(),
-          'Edit your pipeline': null,
+          'Edit project': null,
         })
       })
 
       it('should render the heading', () => {
-        cy.get(selectors.localHeader().heading).should(
+        cy.get('[data-auto-id="localHeader"] h1').should(
           'have.text',
-          `Edit your pipeline`
+          `Edit project`
         )
       })
 
@@ -137,14 +137,14 @@ describe('Pipeline edit form', () => {
         assertBreadcrumbs({
           Home: urls.dashboard(),
           'My Pipeline': urls.pipeline.index(),
-          'Edit your pipeline': null,
+          'Edit project': null,
         })
       })
 
       it('should render the heading', () => {
-        cy.get(selectors.localHeader().heading).should(
+        cy.get('[data-auto-id="localHeader"] h1').should(
           'have.text',
-          `Edit your pipeline`
+          'Edit project'
         )
       })
 

@@ -8,9 +8,13 @@ import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import { SPACING } from '@govuk-react/constants'
 
+import urls from '../../../lib/urls'
 import Task from '../../../client/components/Task'
 import Form from '../../../client/components/Form'
 import { PIPELINE__UNARCHIVE_ITEM } from '../../../client/actions'
+
+import { Main } from '../../../client/components/'
+import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 
 import {
   ID as STATE_ID,
@@ -42,52 +46,66 @@ function UnarchivePipelineItemForm({
   }, [savedPipelineItem])
 
   return (
-    <Task>
-      {(getTask) => {
-        const unarchivePipelineItem = getTask(
-          TASK_UNARCHIVE_PIPELINE_ITEM,
-          STATE_ID
-        )
+    <>
+      <LocalHeader
+        heading="Unarchive project"
+        breadcrumbs={[
+          { link: urls.dashboard(), text: 'Home' },
+          { link: urls.pipeline.index(), text: 'My Pipeline' },
+          { link: null, text: 'Unarchive project' },
+        ]}
+      />
+      <Main>
+        <Task>
+          {(getTask) => {
+            const unarchivePipelineItem = getTask(
+              TASK_UNARCHIVE_PIPELINE_ITEM,
+              STATE_ID
+            )
 
-        return (
-          <GetPipelineData
-            getTask={getTask}
-            pipelineItemId={pipelineItemId}
-            currentPipelineItem={currentPipelineItem}
-          >
-            {() => (
-              <LoadingBox loading={unarchivePipelineItem.progress}>
-                <StyledP>
-                  Unarchiving this project will restore these project details in
-                  your pipeline.
-                </StyledP>
-                <PipelineDetails item={currentPipelineItem}></PipelineDetails>
-                <Form
-                  id={STATE_ID}
-                  onSubmit={() => {
-                    unarchivePipelineItem.start({
-                      payload: {
-                        projectName: currentPipelineItem.name,
-                        pipelineItemId,
-                      },
-                      onSuccessDispatch: PIPELINE__UNARCHIVE_ITEM,
-                    })
-                  }}
-                  submissionError={unarchivePipelineItem.errorMessage}
-                >
-                  <FormActions>
-                    <Button>Unarchive project</Button>
-                    <Link href={getPipelineUrl(currentPipelineItem)}>
-                      Cancel
-                    </Link>
-                  </FormActions>
-                </Form>
-              </LoadingBox>
-            )}
-          </GetPipelineData>
-        )
-      }}
-    </Task>
+            return (
+              <GetPipelineData
+                getTask={getTask}
+                pipelineItemId={pipelineItemId}
+                currentPipelineItem={currentPipelineItem}
+              >
+                {() => (
+                  <LoadingBox loading={unarchivePipelineItem.progress}>
+                    <StyledP>
+                      Unarchiving this project will restore these project
+                      details in your pipeline.
+                    </StyledP>
+                    <PipelineDetails
+                      item={currentPipelineItem}
+                    ></PipelineDetails>
+                    <Form
+                      id={STATE_ID}
+                      onSubmit={() => {
+                        unarchivePipelineItem.start({
+                          payload: {
+                            projectName: currentPipelineItem.name,
+                            pipelineItemId,
+                          },
+                          onSuccessDispatch: PIPELINE__UNARCHIVE_ITEM,
+                        })
+                      }}
+                      submissionError={unarchivePipelineItem.errorMessage}
+                    >
+                      <FormActions>
+                        <Button>Unarchive project</Button>
+                        <Link href={getPipelineUrl(currentPipelineItem)}>
+                          Cancel
+                        </Link>
+                      </FormActions>
+                    </Form>
+                  </LoadingBox>
+                )}
+              </GetPipelineData>
+            )
+          }}
+        </Task>
+      </Main>
+    </>
   )
 }
 
