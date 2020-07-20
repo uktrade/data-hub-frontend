@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
 
-const config = require('./src/config/index')
+const config = require('./src/config')
 
 module.exports = {
   devtool: config.isProd ? 'false' : 'source-map',
