@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { useSearchParam } from 'react-use'
-import { CollectionList } from 'data-hub-components'
+import { CollectionList } from '../../../../../client/components/'
 import axios from 'axios'
 import { Details, LoadingBox } from 'govuk-react'
 
