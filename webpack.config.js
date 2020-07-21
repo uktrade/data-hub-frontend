@@ -1,14 +1,13 @@
-const merge = require('webpack-merge')
 const path = require('path')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const WebpackAssetsManifest = require('webpack-assets-manifest')
-
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const WebpackAssetsManifest = require('webpack-assets-manifest')
 
 const config = require('./src/config')
 
-const common = {
-  devtool: 'source-map',
+module.exports = {
+  devtool: config.isProd ? 'false' : 'source-map',
+  mode: config.isProd ? 'production' : 'development',
   entry: {
     styles: './assets/stylesheets/application.scss',
     app: [
@@ -26,17 +25,38 @@ const common = {
   output: {
     path: config.buildDir,
     publicPath: '/',
+    filename: config.isProd ? 'js/[name].[chunkhash:8].js' : 'js/[name].js',
+    devtoolModuleFilenameTemplate: '[absolute-resource-path]',
+    devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]',
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: config.isProd
+        ? 'css/[name].[contenthash:8].css'
+        : 'css/[name].css',
+      chunkFilename: 'css/[name].[id].css',
+    }),
+    new VueLoaderPlugin(),
+    new WebpackAssetsManifest(),
+  ],
+  resolve: {
+    modules: [
+      'node_modules',
+      path.resolve(__dirname, 'src'),
+      path.resolve(__dirname, 'src', 'client', 'components'),
+    ],
+    alias: {
+      vue$: 'vue/dist/vue.common.js',
+    },
+    extensions: ['*', '.js', '.jsx', '.vue', '.json'],
   },
   module: {
-    exprContextCritical: false,
     rules: [
       {
         test: /\.(js|jsx)$/,
-
         // Packages "hex-rgb" and "set-harmonic-interval" are not transpiled to ES5 by default so we need to transpile them again.
         // See: https://stackoverflow.com/questions/51289261/babel-does-not-transpile-imported-modules-from-node-modules
         exclude: /node_modules\/(?!(.*(hex-rgb|set-harmonic-interval))\/).*/,
-
         loader: 'babel-loader',
         options: {
           cacheDirectory: './babel_cache',
@@ -59,54 +79,35 @@ const common = {
       },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                sourceMap: !config.isProd,
-                minimize: config.isProd,
-              },
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: { hmr: !config.isProd },
+          },
+          // the below loaders load in reverse order
+          // 3. turns css into commonjs
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: !config.isProd,
+              importLoaders: 3,
             },
-            {
-              loader: 'postcss-loader',
-              options: {
-                plugins: () => [require('autoprefixer')()],
-                sourceMap: !config.isProd,
-              },
-            },
-            'resolve-url-loader',
-            {
-              loader: 'sass-loader',
-              options: {
-                sourceMap: true, // required for resolve-url-loader
-                includePaths: [
-                  path.resolve(
-                    __dirname,
-                    'node_modules/govuk_frontend_toolkit/stylesheets'
-                  ),
-                  path.resolve(__dirname, 'node_modules/vue-multiselect/dist'),
-                ],
-              },
-            },
-          ],
-        }),
+          },
+          {
+            loader: 'postcss-loader',
+            options: { plugins: [require('autoprefixer')] },
+          },
+          // 2. rewrites relative paths in url() statements based on the original source file
+          'resolve-url-loader',
+          // 1. turns sass into css
+          {
+            loader: 'sass-loader',
+            options: { sourceMap: true }, // needed for resolve-url-loader
+          },
+        ],
       },
     ],
   },
-  resolve: {
-    modules: [
-      'node_modules',
-      path.resolve(__dirname, 'src'),
-      path.resolve(__dirname, 'src', 'client', 'components'),
-    ],
-    alias: {
-      vue$: 'vue/dist/vue.common.js',
-    },
-    extensions: ['*', '.js', '.jsx', '.vue', '.json'],
-  },
-  plugins: [new WebpackAssetsManifest(), new VueLoaderPlugin()],
   node: {
     fs: 'empty',
     child_process: 'empty',
@@ -115,11 +116,3 @@ const common = {
     tls: 'empty',
   },
 }
-
-const webpackEnv =
-  process.env.WEBPACK_ENV || (config.isProd ? 'prod' : 'develop')
-
-const envConfig = require(`./webpack.config.${webpackEnv}`)
-const webpackConfig = merge.smart(common, envConfig)
-
-module.exports = webpackConfig
