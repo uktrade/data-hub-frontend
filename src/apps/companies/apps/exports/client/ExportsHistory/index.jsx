@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { H2 } from '@govuk-react/heading'
 import { SPACING, LEVEL_SIZE } from '@govuk-react/constants'
 import InsetText from '@govuk-react/inset-text'
-import { CollectionList } from 'data-hub-components'
+import { CollectionList } from '../../../../../../client/components/'
 import { connect } from 'react-redux'
 
 import Task from '../../../../../../client/components/Task/index.jsx'
