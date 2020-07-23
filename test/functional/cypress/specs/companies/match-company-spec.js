@@ -239,7 +239,7 @@ describe('Match a company', () => {
     () => {
       before(() => {
         cy.visit(urls.companies.match.cannotFind(fixtures.company.venusLtd.id))
-        cy.contains('button', 'Send').click()
+        cy.get('main button').click()
       })
 
       it('should display two error message', () => {
