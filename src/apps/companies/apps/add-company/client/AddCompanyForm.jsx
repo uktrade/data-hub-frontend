@@ -83,6 +83,7 @@ function AddCompanyForm({
         const countryName = get(country, 'label')
         const countryIsoCode = get(country, 'value')
         const postcode = get(values.dnbCompany, 'address_postcode')
+        const manualPostcode = values.postcode
 
         // eslint-disable-next-line react-hooks/rules-of-hooks
         useEffect(() => {
@@ -126,6 +127,7 @@ function AddCompanyForm({
                 regions={regions}
                 sectors={sectors}
                 country={country}
+                postcode={manualPostcode}
               />
             )}
           </>
