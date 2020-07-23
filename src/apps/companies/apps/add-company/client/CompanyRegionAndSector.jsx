@@ -23,6 +23,7 @@ function CompanyRegionAndSector({ regions, region, sectors, isUK, postcode }) {
         >
           {() => (
             <FieldSelect
+              key={region?.value}
               name="uk_region"
               label="DIT region"
               initialValue={region?.value}
