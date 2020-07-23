@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import { Button, Details, Paragraph, WarningText } from 'govuk-react'
 import { BLACK } from 'govuk-colours'
 import styled from 'styled-components'
-import { ActivityFeedAction, StatusMessage } from 'data-hub-components'
+import { StatusMessage } from 'data-hub-components'
 
-import ActivityFeedApp from './ActivityFeedApp'
+import ActivityFeedApp from '../../../../../client/components/ActivityFeed/ActivityFeedApp.jsx'
+import ActivityFeedAction from '../../../../../client/components/ActivityFeed/ActivityFeedAction.jsx'
 import { companies } from '../../../../../lib/urls'
 
 const StyledLink = styled('a')`
