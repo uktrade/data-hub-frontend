@@ -1,5 +1,4 @@
-import { get } from 'lodash'
-import { take, put, spawn, call, select } from 'redux-saga/effects'
+import { take, put, spawn, call } from 'redux-saga/effects'
 
 import {
   TASK__START,
@@ -44,18 +43,10 @@ export default (registry) =>
   function* tasksSaga() {
     while (true) {
       const action = yield take(TASK__START)
-      const { name, id } = action
+      const { name } = action
       const task = registry[action.name]
       if (!task) {
         throw Error(`Task "${name}" is not registered!`)
-      }
-      const status = yield select((state) =>
-        get(state, ['tasks', name, id, 'status'])
-      )
-      if (status === 'progress') {
-        throw Error(
-          `Cannot start task "${name}.${id}" because it is already in progress!`
-        )
       }
       yield spawn(taskSaga, task, action)
     }
