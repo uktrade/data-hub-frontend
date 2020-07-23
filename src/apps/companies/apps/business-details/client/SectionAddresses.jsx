@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Link from '@govuk-react/link'
 import Table from '@govuk-react/table'
+import { Badge } from '../../../../../client/components/'
 import { SPACING_POINTS } from '@govuk-react/constants'
 
-import { Badge, SummaryTable } from 'data-hub-components'
+import { SummaryTable } from 'data-hub-components'
 
 const StyledAddressList = styled('ul')`
   ${({ isRegistered }) => isRegistered && `margin-top: ${SPACING_POINTS[2]}px;`}
