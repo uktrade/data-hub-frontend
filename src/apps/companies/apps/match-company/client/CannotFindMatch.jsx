@@ -15,9 +15,11 @@ import { WEBSITE_REGEX } from '../../add-company/client/constants'
 
 import { FormStateful, FormActions, FieldInput } from 'data-hub-components'
 
-const requiredWebsiteOrPhoneValidator = ({
-  values: { website, telephoneNumber },
-}) => {
+const requiredWebsiteOrPhoneValidator = (
+  value,
+  name,
+  { values: { website, telephoneNumber } }
+) => {
   return !website && !telephoneNumber ? 'Enter a website or phone number' : null
 }
 
