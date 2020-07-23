@@ -473,7 +473,8 @@ describe('Add company form', () => {
             cy.get(
               selectors.companyAdd.newCompanyRecordForm.address.options
             ).select('Ministry of Justice')
-            cy.get(selectors.companyAdd.newCompanyRecordForm.region).select(
+            cy.get(selectors.companyAdd.newCompanyRecordForm.region).should(
+              'contain',
               'London'
             )
             cy.get(selectors.companyAdd.newCompanyRecordForm.sector).select(
