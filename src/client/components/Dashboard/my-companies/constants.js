@@ -1,0 +1,3 @@
+export const LIST_CHANGE = 'LIST_CHANGE'
+export const FILTER_CHANGE = 'FILTER_CHANGE'
+export const ORDER_CHANGE = 'ORDER_CHANGE'
