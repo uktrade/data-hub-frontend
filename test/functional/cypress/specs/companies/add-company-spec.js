@@ -365,24 +365,17 @@ describe('Add company form', () => {
         cy.get(
           selectors.companyAdd.newCompanyRecordForm.address.postcode
         ).should('be.visible')
-        cy.get(selectors.companyAdd.form).contains('United Kingdom')
-        cy.get(selectors.companyAdd.newCompanyRecordForm.sector).should(
-          'be.visible'
-        )
-      })
-      it('should display the UK-related fields', () => {
         cy.get(
           selectors.companyAdd.newCompanyRecordForm.address.findUkAddress
         ).should('be.visible')
-        cy.get(selectors.companyAdd.newCompanyRecordForm.region).should(
-          'be.visible'
-        )
+        cy.get(selectors.companyAdd.form).contains('United Kingdom')
       })
+
       context(
         'when the form is submitted without filling the required fields',
         () => {
           before(() => {
-            cy.get(selectors.companyAdd.submitButton).click()
+            cy.get(selectors.companyAdd.continueButton).click()
           })
           it('should display errors', () => {
             cy.get(selectors.companyAdd.form).contains(
@@ -395,8 +388,6 @@ describe('Add company form', () => {
             )
             cy.get(selectors.companyAdd.form).contains('Enter address line 1')
             cy.get(selectors.companyAdd.form).contains('Enter town or city')
-            cy.get(selectors.companyAdd.form).contains('Select DIT region')
-            cy.get(selectors.companyAdd.form).contains('Select DIT sector')
           })
         }
       )
@@ -405,7 +396,7 @@ describe('Add company form', () => {
           cy.get(selectors.companyAdd.newCompanyRecordForm.website).type(
             'www.example.com'
           )
-          cy.get(selectors.companyAdd.submitButton).click()
+          cy.get(selectors.companyAdd.continueButton).click()
         })
         it('should not display "Enter a website or phone number"', () => {
           cy.get(selectors.companyAdd.form).should(
@@ -422,7 +413,7 @@ describe('Add company form', () => {
           cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).type(
             '0123456789'
           )
-          cy.get(selectors.companyAdd.submitButton).click()
+          cy.get(selectors.companyAdd.continueButton).click()
         })
         it('should not display "Enter a website or phone number"', () => {
           cy.get(selectors.companyAdd.form).should(
@@ -439,7 +430,7 @@ describe('Add company form', () => {
           cy.get(selectors.companyAdd.newCompanyRecordForm.website).type(
             'hello'
           )
-          cy.get(selectors.companyAdd.submitButton).click()
+          cy.get(selectors.companyAdd.continueButton).click()
         })
         it('should display invalid website URL error', () => {
           cy.get(selectors.companyAdd.form).contains(
@@ -448,7 +439,7 @@ describe('Add company form', () => {
         })
       })
       context(
-        'when the form is submitted after filling the required fields',
+        'when the form is submitted after filling the required fields, but the region and sector fields are not filled in',
         () => {
           before(() => {
             cy.get(
@@ -473,6 +464,29 @@ describe('Add company form', () => {
             cy.get(
               selectors.companyAdd.newCompanyRecordForm.address.options
             ).select('Ministry of Justice')
+            cy.get(selectors.companyAdd.continueButton).click()
+          })
+          it('should render the region and sector fields', () => {
+            cy.get(selectors.companyAdd.form).contains('London')
+            cy.get(selectors.companyAdd.form).contains('Select DIT sector')
+          })
+          it('should shown errors if neither field are selected', () => {
+            cy.get(selectors.companyAdd.newCompanyRecordForm.region).select(
+              '-- Select DIT region --'
+            )
+            cy.get(selectors.companyAdd.submitButton)
+              .click()
+              .get(selectors.companyAdd.form)
+              .contains('Select DIT region')
+              .get(selectors.companyAdd.form)
+              .contains('Select DIT sector')
+          })
+        }
+      )
+      context(
+        'when the form and section region section is submitted after filling the required fields',
+        () => {
+          before(() => {
             cy.get(selectors.companyAdd.newCompanyRecordForm.region).select(
               'London'
             )
@@ -559,9 +573,6 @@ describe('Add company form', () => {
         cy.get(
           selectors.companyAdd.newCompanyRecordForm.address.postcode
         ).should('be.visible')
-        cy.get(selectors.companyAdd.newCompanyRecordForm.sector).should(
-          'be.visible'
-        )
         cy.get(selectors.companyAdd.form).contains('India')
       })
 
@@ -569,9 +580,6 @@ describe('Add company form', () => {
         cy.get(
           selectors.companyAdd.newCompanyRecordForm.address.findUkAddress
         ).should('not.be.visible')
-        cy.get(selectors.companyAdd.newCompanyRecordForm.region).should(
-          'not.be.visible'
-        )
       })
     }
   )
