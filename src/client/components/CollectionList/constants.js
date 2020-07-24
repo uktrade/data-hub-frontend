@@ -1,0 +1,3 @@
+const MAX_ITEMS_TO_DOWNLOAD = 5000
+
+export default MAX_ITEMS_TO_DOWNLOAD

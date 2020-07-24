@@ -1,0 +1,248 @@
+[
+  {
+    "headingText": "Mars Exports Ltd",
+    "headingUrl": "https://example.com/item/1",
+    "subheading": "Updated on 5 September 2019",
+    "metadata": [
+      {
+        "label": "Sector",
+        "value": "Environment"
+      },
+      {
+        "label": "Address",
+        "value": "20 New Fake Road, Bristol, B11 9QC"
+      }
+    ],
+    "badges": [
+      {
+        "text": "United Kingdom"
+      },
+      {
+        "text": "Global HQ"
+      }
+    ]
+  },
+  {
+    "headingText": "Stage One Boutique",
+    "headingUrl": "https://example.com/item/2",
+    "subheading": "Updated on 5 September 2019",
+    "metadata": [
+      {
+        "label": "Sector",
+        "value": "Environment"
+      },
+      {
+        "label": "Address",
+        "value": "999 Old Fake Road, New York, NY 123"
+      }
+    ],
+    "badges": [
+      {
+        "text": "United States"
+      }
+    ]
+  },
+  {
+    "headingText": "Onet Technologies",
+    "headingUrl": "https://example.com/item/3",
+    "subheading": "Updated on 5 September 2019",
+    "metadata": [
+      {
+        "label": "Sector",
+        "value": "Environment"
+      },
+      {
+        "label": "Address",
+        "value": "13 Unlucky Street, Miami, MI 9QC"
+      }
+    ],
+    "badges": [
+      {
+        "text": "United States"
+      }
+    ]
+  },
+  {
+    "headingText": "Lambda plc",
+    "headingUrl": "https://example.com/item/4",
+    "subheading": "Updated on 5 September 2019",
+    "metadata": [
+      {
+        "label": "Sector",
+        "value": "Environment"
+      },
+      {
+        "label": "Address",
+        "value": "20 New Fake Road, Bristol, B11 9QC"
+      }
+    ],
+    "badges": [
+      {
+        "text": "United Kingdom"
+      }
+    ]
+  },
+  {
+    "headingText": "One List Corp",
+    "headingUrl": "https://example.com/item/5",
+    "subheading": "Updated on 5 September 2019",
+    "metadata": [
+      {
+        "label": "Sector",
+        "value": "Environment"
+      },
+      {
+        "label": "Address",
+        "value": "20 New Fake Road, Bristol, B11 9QC"
+      }
+    ],
+    "badges": [
+      {
+        "text": "United Kingdom"
+      },
+      {
+        "text": "Global HQ"
+      }
+    ]
+  },
+  {
+    "headingText": "Angel syndicate",
+    "headingUrl": "https://example.com/item/6",
+    "subheading": "Updated on 5 September 2019",
+    "metadata": [
+      {
+        "label": "Sector",
+        "value": "Environment"
+      },
+      {
+        "label": "Address",
+        "value": "20 New Fake Road, Bristol, B11 9QC"
+      }
+    ],
+    "badges": [
+      {
+        "text": "United Kingdom"
+      }
+    ]
+  },
+  {
+    "headingText": "Venus Ltd",
+    "headingUrl": "https://example.com/item/7",
+    "subheading": "Updated on 5 September 2019",
+    "metadata": [
+      {
+        "label": "Sector",
+        "value": "Environment"
+      },
+      {
+        "label": "Address",
+        "value": "20 New Fake Road, Bristol, B11 9QC"
+      }
+    ],
+    "badges": [
+      {
+        "text": "United Kingdom"
+      }
+    ]
+  },
+  {
+    "headingText": "A1 BMW LTD",
+    "headingUrl": "https://example.com/item/8",
+    "subheading": "Updated on 5 September 2019",
+    "metadata": [
+      {
+        "label": "Sector",
+        "value": "Environment"
+      },
+      {
+        "label": "Address",
+        "value": "20 New Fake Road, Bristol, B11 9QC"
+      }
+    ],
+    "badges": [
+      {
+        "text": "United Kingdom"
+      }
+    ]
+  },
+  {
+    "headingText": "Bargainworld",
+    "headingUrl": "https://example.com/item/9",
+    "subheading": "Updated on 5 September 2019",
+    "metadata": [
+      {
+        "label": "Sector",
+        "value": "Environment"
+      },
+      {
+        "label": "Address",
+        "value": "20 New Fake Road, Bristol, B11 9QC"
+      }
+    ],
+    "badges": [
+      {
+        "text": "United Kingdom"
+      }
+    ]
+  },
+  {
+    "headingText": "JOHN LEWIS PLC",
+    "headingUrl": "https://example.com/item/10",
+    "subheading": "Updated on 5 September 2019",
+    "metadata": [
+      {
+        "label": "Sector",
+        "value": "Environment"
+      },
+      {
+        "label": "Address",
+        "value": "20 New Fake Road, Bristol, B11 9QC"
+      }
+    ],
+    "badges": [
+      {
+        "text": "United Kingdom"
+      }
+    ]
+  },
+  {
+    "headingText": "JOHN LEWIS LTD",
+    "headingUrl": "https://example.com/item/10",
+    "subheading": "Updated on 5 September 2019",
+    "metadata": [
+      {
+        "label": "Sector",
+        "value": "Environment"
+      },
+      {
+        "label": "Address",
+        "value": "20 New Fake Road, Bristol, B11 9QC"
+      }
+    ],
+    "badges": [
+      {
+        "text": "United Kingdom"
+      }
+    ]
+  },
+  {
+    "headingText": "M&S",
+    "headingUrl": "https://example.com/item/10",
+    "subheading": "Updated on 5 September 2019",
+    "metadata": [
+      {
+        "label": "Sector",
+        "value": "Environment"
+      },
+      {
+        "label": "Address",
+        "value": "20 New Fake Road, Bristol, B11 9QC"
+      }
+    ],
+    "badges": [
+      {
+        "text": "United Kingdom"
+      }
+    ]
+  }
+]
