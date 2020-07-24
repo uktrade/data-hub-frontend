@@ -3,11 +3,10 @@
 import React from 'react'
 import { Details } from 'govuk-react'
 import PropTypes from 'prop-types'
-import { FieldInput, FieldRadios, FieldSelect, Step } from 'data-hub-components'
+import { FieldInput, FieldRadios, Step } from 'data-hub-components'
 import FieldAddress from 'data-hub-components/dist/forms/elements/FieldAddress'
 
-import { ISO_CODE, WEBSITE_REGEX } from './constants'
-import InformationList from './InformationList'
+import { WEBSITE_REGEX } from './constants'
 
 const requiredWebsiteAndOrPhoneValidator = (
   value,
@@ -26,9 +25,9 @@ const requiredWebsiteAndOrPhoneValidator = (
   return !WEBSITE_REGEX.test(website) ? 'Enter a valid website URL' : null
 }
 
-function CompanyNotFoundStep({ organisationTypes, regions, sectors, country }) {
+function CompanyNotFoundStep({ organisationTypes, country }) {
   return (
-    <Step name="unhappy" forwardButton="Add company">
+    <Step name="unhappy">
       <Details summary="Why am I seeing this?">
         The company you want to add to Data Hub cannot be found in the external
         databases Data Hub checks. You will need to provide information about
@@ -71,41 +70,6 @@ function CompanyNotFoundStep({ organisationTypes, regions, sectors, country }) {
         }}
         apiEndpoint="/api/postcodelookup"
       />
-
-      {country.value === ISO_CODE.UK && (
-        <FieldSelect
-          name="uk_region"
-          label="DIT region"
-          emptyOption="-- Select DIT region --"
-          options={regions}
-          required="Select DIT region"
-        />
-      )}
-
-      <FieldSelect
-        name="sector"
-        label="DIT sector"
-        emptyOption="-- Select DIT sector --"
-        options={sectors}
-        required="Select DIT sector"
-      />
-
-      <InformationList
-        heading="What happens next"
-        description="You are requesting that a new company be added to Data Hub. Once you select the ‘Add company’ button below:"
-      >
-        <InformationList.Item>
-          you can continue to record interactions with the company
-        </InformationList.Item>
-        <InformationList.Item>
-          Data Hub’s external data provider will confirm with the company that
-          the information on this page is correct
-        </InformationList.Item>
-        <InformationList.Item>
-          within 3 weeks the Data Hub support team will send you an email to
-          tell you whether the information on this page has been confirmed
-        </InformationList.Item>
-      </InformationList>
     </Step>
   )
 }

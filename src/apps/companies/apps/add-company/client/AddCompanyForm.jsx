@@ -19,6 +19,7 @@ import CompanyFoundStep from './CompanyFoundStep'
 import CompanyNotFoundStep from './CompanyNotFoundStep'
 import CompanySearchStep from './CompanySearchStep'
 import CompanyRegionAndSector from './CompanyRegionAndSector'
+import InformationList from './InformationList'
 import { ISO_CODE } from './constants'
 
 function AddCompanyForm({
@@ -83,6 +84,7 @@ function AddCompanyForm({
         const countryName = get(country, 'label')
         const countryIsoCode = get(country, 'value')
         const postcode = get(values.dnbCompany, 'address_postcode')
+        const manualPostcode = values.postcode
 
         // eslint-disable-next-line react-hooks/rules-of-hooks
         useEffect(() => {
@@ -123,10 +125,34 @@ function AddCompanyForm({
             {values.cannotFind && (
               <CompanyNotFoundStep
                 organisationTypes={organisationTypes}
-                regions={regions}
-                sectors={sectors}
                 country={country}
               />
+            )}
+            {values.cannotFind && (
+              <CompanyRegionAndSector
+                regions={regions}
+                sectors={sectors}
+                isUK={country.value === ISO_CODE.UK}
+                postcode={manualPostcode}
+              >
+                <InformationList
+                  heading="What happens next"
+                  description="You are requesting that a new company be added to Data Hub. Once you select the ‘Add company’ button below:"
+                >
+                  <InformationList.Item>
+                    you can continue to record interactions with the company
+                  </InformationList.Item>
+                  <InformationList.Item>
+                    Data Hub’s external data provider will confirm with the
+                    company that the information on this page is correct
+                  </InformationList.Item>
+                  <InformationList.Item>
+                    within 3 weeks the Data Hub support team will send you an
+                    email to tell you whether the information on this page has
+                    been confirmed
+                  </InformationList.Item>
+                </InformationList>
+              </CompanyRegionAndSector>
             )}
           </>
         )
