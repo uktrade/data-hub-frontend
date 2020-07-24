@@ -148,8 +148,9 @@ describe('Match a company', () => {
     })
 
     it('should render the header', () => {
-      assertLocalHeader(
-        'Send these business details to our third party data supplier for verification'
+      assertLocalHeader('I still can’t find what I’m looking for')
+      cy.get(selectors.localHeader().headingAfter).contains(
+        'Add the company contact details below. It will be sent to our third party data supplier for verification.'
       )
     })
 
@@ -178,13 +179,13 @@ describe('Match a company', () => {
     })
 
     it('should render the rest of the page', () => {
-      cy.contains('Contact details of the business for verification')
+      cy.contains('Company contact information')
         .and('match', 'h2')
         .next()
         .children()
         .should('have.length', 2)
         .first()
-        .should('have.text', "Company's website")
+        .should('have.text', 'Website address')
         .next()
         .find('input')
         .should('have.attr', 'type', 'url')
@@ -194,14 +195,11 @@ describe('Match a company', () => {
         .children()
         .should('have.length', 3)
         .first()
-        .should('have.text', "Company's telephone number")
+        .should('have.text', 'Phone number')
         .next()
         .should(
           'have.text',
-          'If the website of the business does not show the name and address of' +
-            ' the business as you want it to appear in Data Hub, it is important' +
-            ' to provide a valid phone number, so the company can be contacted' +
-            ' when verifying the business details.'
+          'If the name or address on the company website is different to what there is in Data Hub, please provide the phone number, so the company can be contacted.'
         )
         .next()
         .find('input')
@@ -212,24 +210,16 @@ describe('Match a company', () => {
         .should('have.text', 'What happens next')
         .and('match', 'h2')
         .next()
+        .should('have.text', 'You don’t need to do anything else.')
+        .next()
         .should(
           'have.text',
-          'These business details will be sent to our third party data' +
-            ' suppliers, so it is important you have consent from the' +
-            ' business to share these details.'
+          'Our third-party supplier will verify the company’s business details directly, so make sure the details are correct and you have consent to share them.'
         )
         .next()
         .should(
           'have.text',
-          'Our data suppliers might need to contact the company to verify the' +
-            ' details, so it is important that the website and phone number' +
-            ' are valid.'
-        )
-        .next()
-        .should(
-          'have.text',
-          'It will NOT change any recorded activity (interactions, OMIS orders' +
-            ' or Investment projects).'
+          'It will NOT change any recorded activity (interactions, OMIS orders or Investment projects).'
         )
         .next()
         .contains('Send')
@@ -249,17 +239,17 @@ describe('Match a company', () => {
     () => {
       before(() => {
         cy.visit(urls.companies.match.cannotFind(fixtures.company.venusLtd.id))
-        cy.contains('button', 'Send').click()
+        cy.get('main button').click()
       })
 
       it('should display two error message', () => {
-        cy.contains("Company's website")
+        cy.contains('Website address')
           .next()
           .children()
           .first()
           .should('have.text', 'Enter a website or phone number')
 
-        cy.contains("Company's telephone number")
+        cy.contains('Phone number')
           .next()
           .next()
           .children()
@@ -282,12 +272,12 @@ describe('Match a company', () => {
       })
 
       it('should submit both fields', () => {
-        cy.contains("Company's website")
+        cy.contains('Website address')
           .next()
           .find('input')
           .type('01185673456')
 
-        cy.contains("Company's telephone number")
+        cy.contains('Phone number')
           .next()
           .next()
           .find('input')

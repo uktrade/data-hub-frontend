@@ -182,17 +182,15 @@ async function renderCannotFindMatch(req, res, next) {
     const { token } = req.session
     const countries = await getCountries(token)
 
-    res
-      .breadcrumb(company.name, urls.companies.detail(company.id))
-      .breadcrumb('Send business details')
-      .render('companies/apps/match-company/views/cannot-find-match', {
-        props: {
-          company: {
-            ...pick(company, ['id', 'name']),
-            address: parseAddress(company.address, countries),
-          },
+    res.locals.title = `Send business details - ${company.name}`
+    res.render('companies/apps/match-company/views/cannot-find-match', {
+      props: {
+        company: {
+          ...pick(company, ['id', 'name']),
+          address: parseAddress(company.address, countries),
         },
-      })
+      },
+    })
   } catch (error) {
     next(error)
   }
