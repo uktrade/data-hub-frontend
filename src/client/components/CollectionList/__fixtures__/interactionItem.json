@@ -1,0 +1,32 @@
+{
+  "headingText": "Leadership Academy",
+  "headingUrl": "https://example.com/interaction/1",
+  "metadata": [
+    {
+      "label": "Date",
+      "value": "1 February 2022"
+    },
+    {
+      "label": "Contact(s)",
+      "value": "Ned Neddington"
+    },
+    {
+      "label": "Company",
+      "value": "Ministry of Funny Walks"
+    },
+    {
+      "label": "Adviser(s)",
+      "value": "Bob Bobbington, British Embassy Cairo Egypt"
+    },
+    {
+      "label": "Service",
+      "value": "Making Export Introductions : Business Partners (e.g. distributors or manufacturers"
+    }
+  ],
+  "badges": [
+    {
+      "text": "Interaction",
+      "borderColour": "rgb(0, 100, 53)"
+    }
+  ]
+}

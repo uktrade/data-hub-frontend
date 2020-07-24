@@ -1,0 +1,18 @@
+{
+  "headingText": "Mars Exports Ltd",
+  "headingUrl": "https://example.com/profile/1",
+  "subheading": "Updated on 1 Nov 2019",
+  "metadata": [
+    {
+      "label": "Sector",
+      "value": "Finance"
+    },
+    {
+      "label": "Address",
+      "value": "123 Random Street, Lucky City"
+    }
+  ],
+  "badges": [
+    {"text": "United States"}
+  ]
+}

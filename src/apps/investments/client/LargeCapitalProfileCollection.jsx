@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useSearchParam } from 'react-use'
-import { CollectionList } from 'data-hub-components'
+import { CollectionList } from '../../../client/components/'
 import LoadingBox from '@govuk-react/loading-box'
 import ErrorSummary from '@govuk-react/error-summary'
 import { investments } from '../../../lib/urls'

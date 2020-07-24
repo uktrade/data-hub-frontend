@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { SPACING } from '@govuk-react/constants'
-import { CollectionList } from 'data-hub-components'
+import { CollectionList } from '../../../../../../client/components/'
 
 import { connect } from 'react-redux'
 import Task from '../../../../../../client/components/Task/index.jsx'
