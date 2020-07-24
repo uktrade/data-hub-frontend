@@ -1,15 +1,6 @@
-{% extends "_layouts/template.njk" %}
+{% extends "_layouts/template-no-local-header.njk" %}
 
-{% block local_header %}
-  {{
-    LocalHeader({
-      heading: "Send these business details to our third party data supplier for verification",
-      modifier: 'light-banner'
-    })
-  }}
-{% endblock %}
-
-{% block body_main_content %}
+{% block body %}
   {% component 'react-slot', {
     id: 'cannot-find-match',
     props: props
