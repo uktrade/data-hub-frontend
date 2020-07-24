@@ -2,7 +2,7 @@
 
 import React from 'react'
 import axios from 'axios'
-import { CreateListForm } from 'data-hub-components'
+import { CreateListForm } from '../../../client/components/'
 
 const CreateListFormSection = (
   {
