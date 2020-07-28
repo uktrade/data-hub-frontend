@@ -7,8 +7,7 @@ import Link from '@govuk-react/link'
 import { HEADING_SIZES, SPACING } from '@govuk-react/constants'
 import { GREY_2 } from 'govuk-colours'
 import Details from '@govuk-react/details'
-
-const { Badge, Metadata } = require('data-hub-components')
+import { Badge, Metadata } from '../../components/'
 
 const ItemWrapper = styled('div')`
   border-bottom: 1px solid ${GREY_2};
