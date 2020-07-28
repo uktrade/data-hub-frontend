@@ -26,11 +26,11 @@ if (config.isProd) {
   )
 }
 
-const logger = new winston.Logger({
+const logger = winston.createLogger({
+  format: winston.format.combine(winston.format.cli()),
   transports: loggingTransports,
   exceptionHandlers: exceptionTransports,
   exitOnError: true,
 })
-logger.cli()
 
 module.exports = logger
