@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Link from '@govuk-react/link'
 import { H2 } from '@govuk-react/heading'
 import { LEVEL_SIZE } from '@govuk-react/constants'
-import { NewWindowLink } from 'data-hub-components'
+import { NewWindowLink } from '../../../../../../client/components/'
 import urls from '../../../../../../lib/urls'
 
 import Task from '../../../../../../client/components/Task'
