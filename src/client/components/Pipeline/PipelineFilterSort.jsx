@@ -1,13 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-
 import { spacing } from '@govuk-react/lib'
-import Select from '@govuk-react/select'
 import { MEDIA_QUERIES } from '@govuk-react/constants'
 import { default as Checkbox } from 'data-hub-components/dist/activity-feed/ActivityFeedCheckbox'
-
 import { GREY_4, WHITE } from 'govuk-colours'
 import throttle from 'lodash/throttle'
+
+import Sort from '../Sort'
 
 const StyledSortFilter = styled.div`
   display: flex;
@@ -23,7 +22,7 @@ const StyledSortFilter = styled.div`
     direction: ['top', 'bottom'],
   })}
   background-color: ${GREY_4};
-  
+
   span:before {
     background-color: ${WHITE};
   }
@@ -36,38 +35,38 @@ ${MEDIA_QUERIES.TABLET} {
 }
 `
 
-const StyledSelect = styled(Select)`
-  ${spacing.responsive({
-    size: 2,
-    property: 'margin',
-    direction: ['top'],
-  })}
+// const StyledSelect = styled(Select)`
+//   ${spacing.responsive({
+//     size: 2,
+//     property: 'margin',
+//     direction: ['top'],
+//   })}
 
-  span {
-    ${spacing.responsive({
-      size: 1,
-      property: 'margin',
-      direction: ['left'],
-    })}
-  }
+//   span {
+//     ${spacing.responsive({
+//       size: 1,
+//       property: 'margin',
+//       direction: ['left'],
+//     })}
+//   }
 
-  select {
-    flex: 1;
-  }
+//   select {
+//     flex: 1;
+//   }
 
-  ${MEDIA_QUERIES.TABLET} {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    span {
-      ${spacing.responsive({
-        size: 1,
-        property: 'margin',
-        direction: ['right'],
-      })}
-    }
-  }
-`
+//   ${MEDIA_QUERIES.TABLET} {
+//     display: flex;
+//     align-items: center;
+//     flex-direction: row;
+//     span {
+//       ${spacing.responsive({
+//         size: 1,
+//         property: 'margin',
+//         direction: ['right'],
+//       })}
+//     }
+//   }
+// `
 
 export default function PipeLineFilterSort({
   updateArchiveFilter,
@@ -88,7 +87,7 @@ export default function PipeLineFilterSort({
       >
         Show archived projects
       </Checkbox>
-      <StyledSelect
+      <Sort
         name="sortBy"
         label="Sort by"
         input={{ value: sortBy }}
@@ -99,7 +98,7 @@ export default function PipeLineFilterSort({
         <option value="-created_on">Most recently created</option>
         <option value="-modified_on">Most recently updated</option>
         <option value="name">Project Name A-Z</option>
-      </StyledSelect>
+      </Sort>
     </StyledSortFilter>
   )
 }
