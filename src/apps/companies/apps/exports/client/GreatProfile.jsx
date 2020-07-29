@@ -1,6 +1,6 @@
 import React from 'react'
 import urls from '../../../../../lib/urls'
-import { NewWindowLink } from 'data-hub-components'
+import { NewWindowLink } from '../../../../../client/components/'
 
 export default ({ profile, companyNumber }) =>
   profile.value === 'published' ? (
