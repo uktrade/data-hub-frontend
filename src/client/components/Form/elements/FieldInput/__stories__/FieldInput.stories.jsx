@@ -63,7 +63,6 @@ storiesOf('Forms/Input', module)
             hint="Some hint"
             name="testField"
             required="Enter text"
-            legend={() => <>mooo</>}
             type="text"
             reduced={true}
           />
