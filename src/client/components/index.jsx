@@ -14,3 +14,5 @@ export { default as MyCompaniesFilters } from './Dashboard/my-companies/MyCompan
 export { default as MyCompaniesTable } from './Dashboard/my-companies/MyCompaniesTable'
 export { default as MyCompaniesTile } from './Dashboard/my-companies/MyCompaniesTile'
 export { default as useMyCompaniesContext } from './Dashboard/my-companies/useMyCompaniesContext'
+export { default as EntityList } from './EntityList'
+export { default as EntityListItem } from './EntityList/EntityListItem'
