@@ -21,6 +21,8 @@ const Sort = styled(Select)`
 
   select {
     flex: 1;
+    width: 'initial';
+    min-width: 200px;
   }
 
   ${MEDIA_QUERIES.TABLET} {
