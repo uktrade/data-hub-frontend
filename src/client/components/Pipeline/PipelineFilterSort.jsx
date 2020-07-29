@@ -35,39 +35,6 @@ ${MEDIA_QUERIES.TABLET} {
 }
 `
 
-// const StyledSelect = styled(Select)`
-//   ${spacing.responsive({
-//     size: 2,
-//     property: 'margin',
-//     direction: ['top'],
-//   })}
-
-//   span {
-//     ${spacing.responsive({
-//       size: 1,
-//       property: 'margin',
-//       direction: ['left'],
-//     })}
-//   }
-
-//   select {
-//     flex: 1;
-//   }
-
-//   ${MEDIA_QUERIES.TABLET} {
-//     display: flex;
-//     align-items: center;
-//     flex-direction: row;
-//     span {
-//       ${spacing.responsive({
-//         size: 1,
-//         property: 'margin',
-//         direction: ['right'],
-//       })}
-//     }
-//   }
-// `
-
 export default function PipeLineFilterSort({
   updateArchiveFilter,
   updateSort,
