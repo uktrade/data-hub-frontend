@@ -16,3 +16,5 @@ export { default as MyCompaniesTile } from './Dashboard/my-companies/MyCompanies
 export { default as useMyCompaniesContext } from './Dashboard/my-companies/useMyCompaniesContext'
 export { default as EntityList } from './EntityList'
 export { default as EntityListItem } from './EntityList/EntityListItem'
+export { default as Metadata } from './Metadata'
+export { default as MetadataItem } from './Metadata/MetadataItem'
