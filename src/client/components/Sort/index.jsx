@@ -27,6 +27,11 @@ const Sort = styled(Select)`
     display: flex;
     align-items: center;
     flex-direction: row;
+    ${spacing.responsive({
+      size: 0,
+      property: 'margin',
+      direction: ['top'],
+    })}
     span {
       ${spacing.responsive({
         size: 1,
