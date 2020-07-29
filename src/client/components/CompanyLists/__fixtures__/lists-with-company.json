@@ -1,0 +1,25 @@
+{
+  "companyId": "0fb3379c-341c-4da4-b825-bf8d47b26baa",
+  "companyName": "Lambda plc",
+  "companyLists": [
+    {
+      "listName": "List A",
+      "listId": "63a93bbf-6d1b-4a41-b3f8-975bde0ecacc",
+      "isAdded": "yes",
+      "companyId": "0fb3379c-341c-4da4-b825-bf8d47b26baa"
+    },
+    {
+      "listName": "List B",
+      "listId": "feb862ed-561c-4adb-9d40-dac6d085ff54",
+      "isAdded": "no",
+      "companyId": "0fb3379c-341c-4da4-b825-bf8d47b26baa"
+    },
+    {
+      "listName": "List C",
+      "listId": "45e3883b-f350-4ab6-8695-3c7d037fb14c",
+      "isAdded": "yes",
+      "companyId": "0fb3379c-341c-4da4-b825-bf8d47b26baa"
+    }
+  ]
+}
+

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { get } from 'lodash'
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { DeleteCompanyListSection } from 'data-hub-components'
+import { DeleteCompanyListSection } from '../../../client/components/'
 
 const notFoundMessage =
   'The list was not found. It may have already been deleted.'
