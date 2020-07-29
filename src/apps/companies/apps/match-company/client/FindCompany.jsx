@@ -4,12 +4,8 @@ import { H4 } from '@govuk-react/heading'
 import InsetText from '@govuk-react/inset-text'
 
 import urls from '../../../../../lib/urls'
-import {
-  EntityListItem,
-  FieldDnbCompany,
-  FormStateful,
-  SummaryList,
-} from 'data-hub-components'
+import { EntityListItem } from '../../../../../client/components/'
+import { FieldDnbCompany, FormStateful, SummaryList } from 'data-hub-components'
 
 function FindCompany({ company, csrfToken }) {
   return (
