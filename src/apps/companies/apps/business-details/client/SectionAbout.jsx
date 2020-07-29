@@ -5,8 +5,9 @@ import Details from '@govuk-react/details'
 import Link from '@govuk-react/link'
 import { get, isEmpty } from 'lodash'
 import { SPACING_POINTS, LINE_HEIGHT } from '@govuk-react/constants'
+import { NewWindowLink } from '../../../../../client/components/'
 
-import { NewWindowLink, SummaryTable, NumberUtils } from 'data-hub-components'
+import { SummaryTable, NumberUtils } from 'data-hub-components'
 
 const TableDetails = styled('div')`
   display: flex;
