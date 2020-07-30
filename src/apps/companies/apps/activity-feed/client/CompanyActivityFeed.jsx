@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 import { Button, Details, Paragraph, WarningText } from 'govuk-react'
 import { BLACK } from 'govuk-colours'
 import styled from 'styled-components'
-import { ActivityFeedAction, StatusMessage } from 'data-hub-components'
+import { ActivityFeedAction } from 'data-hub-components'
 
 import ActivityFeedApp from './ActivityFeedApp'
 import { companies } from '../../../../../lib/urls'
+import { StatusMessage } from '../../../../../client/components/'
 
 const StyledLink = styled('a')`
   margin-bottom: 0;

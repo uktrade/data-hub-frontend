@@ -6,7 +6,7 @@ import { get } from 'lodash'
 import styled from 'styled-components'
 import Button from '@govuk-react/button'
 import { SPACING_POINTS } from '@govuk-react/constants'
-import { StatusMessage, DateUtils } from 'data-hub-components'
+import { DateUtils } from 'data-hub-components'
 
 import SectionAbout from './SectionAbout'
 import SectionAddresses from './SectionAddresses'
@@ -16,6 +16,7 @@ import SectionSector from './SectionSector'
 import SectionOneList from './SectionOneList'
 import SectionDocuments from './SectionDocuments'
 import SectionArchive from './SectionArchive'
+import { StatusMessage } from '../../../../../client/components/'
 
 const StyledRoot = styled('div')`
   & > table {
