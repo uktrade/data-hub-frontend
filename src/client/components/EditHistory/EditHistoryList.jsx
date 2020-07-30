@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Pagination } from 'data-hub-components'
 import { FONT_SIZE } from '@govuk-react/constants'
 import styled from 'styled-components'
 import { GREY_1, GREY_2 } from 'govuk-colours'
 
 import EditHistoryChangeList from './EditHistoryChangeList'
+import { Pagination } from '../../components/'
 
 const StyledListContainer = styled('div')`
   border-top: 2px solid ${GREY_2};
