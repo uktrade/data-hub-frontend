@@ -4,11 +4,11 @@ import { action } from '@storybook/addon-actions/dist'
 import { withKnobs } from '@storybook/addon-knobs'
 import Button from '@govuk-react/button'
 
-import FieldInput from '../../FieldInput'
-import FormStateful from '../../FormStateful'
+import FieldInput from '../FieldInput'
+import FormStateful from '../FormStateful'
 
-import exampleReadme from '../example.md'
-import usageReadme from '../usage.md'
+import exampleReadme from '../FieldInput/example.md'
+import usageReadme from '../FieldInput/usage.md'
 
 addDecorator(withKnobs)
 
@@ -20,7 +20,7 @@ storiesOf('Forms/Input', module)
       sidebar: usageReadme,
     },
   })
-  .add('FieldInput - Text', () => (
+  .add('Text', () => (
     <FormStateful onSubmit={action('onSubmit')}>
       {(state) => (
         <>
@@ -37,7 +37,7 @@ storiesOf('Forms/Input', module)
       )}
     </FormStateful>
   ))
-  .add('FieldInput - Number', () => (
+  .add('Number', () => (
     <FormStateful onSubmit={action('onSubmit')}>
       {(state) => (
         <>
@@ -54,9 +54,9 @@ storiesOf('Forms/Input', module)
       )}
     </FormStateful>
   ))
-  .add('FieldInput (reduced)', () => (
+  .add('Text (reduced)', () => (
     <FormStateful onSubmit={action('onSubmit')}>
-      {() => (
+      {(state) => (
         <>
           <FieldInput
             label="Text"
@@ -66,6 +66,8 @@ storiesOf('Forms/Input', module)
             type="text"
             reduced={true}
           />
+          <Button>Submit</Button>
+          <pre>{JSON.stringify(state, null, 2)}</pre>
         </>
       )}
     </FormStateful>
