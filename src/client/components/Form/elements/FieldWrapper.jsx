@@ -16,27 +16,26 @@ import Paragraph from '@govuk-react/paragraph'
 const StyledFormGroup = styled(FormGroup)`
   ${(props) => {
     const isReduced = props.reduced
+    const hasReducedPadding = props.reducedPadding
     const hasHint = !!props.hint
-    return (
-      isReduced &&
+
+    return `
+    ${isReduced &&
       `
     background-color: ${GREY_3};
-    padding: 8px;
     label {
-      ${
-        hasHint
-          ? `padding-bottom: ${SPACING.SCALE_1}`
-          : `padding-bottom: ${SPACING.SCALE_2}`
-      };
-    }
-    label, span {
       font-size: ${BODY_SIZES.S}px;
-    }
-    input {
-      border-width: 1px;
-    }
-  `
-    )
+        + span {
+          font-size: ${BODY_SIZES.S}px;
+          + div span {
+            font-size: ${BODY_SIZES.S}px;
+          }
+        }
+      }
+    `}
+    ${hasReducedPadding ? `padding: 8px 8px 3px !important; ` : `padding: 8px`};
+    ${hasHint ? `padding-bottom: ${SPACING.SCALE_1};` : `padding-bottom: 8px;`};
+    `
   }}
 `
 
@@ -68,13 +67,13 @@ const StyledLegend = styled('legend')`
     `
     border-left: ${BORDER_WIDTH_FORM_ELEMENT_ERROR} solid ${ERROR_COLOUR};
     margin-right: ${SPACING.SCALE_3};
-    padding-left: ${SPACING.SCALE_2};
+    padding-left: 8px;
   `}
   ${(props) =>
     props.showBorder &&
     `
-    padding: ${SPACING.SCALE_2};
-    margin-left: -${SPACING.SCALE_2};
+    padding: 8px;
+    margin-left: -8px;
   `}
 `
 
@@ -118,8 +117,14 @@ const FieldWrapper = ({
   showBorder,
   children,
   reduced,
+  reducedPadding,
 }) => (
-  <StyledFormGroup id={`field-${name}`} reduced={reduced} hint={hint}>
+  <StyledFormGroup
+    id={`field-${name}`}
+    reduced={reduced}
+    hint={hint}
+    reducedPadding={reducedPadding}
+  >
     <FieldInner legend={legend} error={error} showBorder={showBorder}>
       {label && (
         <StyledLabel error={error} htmlFor={name}>
