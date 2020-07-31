@@ -130,6 +130,12 @@ const getInitialFormValues = (req, res) => {
     'id',
     get(interaction, 'investment_project')
   )
+  const advisers =
+    interaction &&
+    interaction.dit_participants &&
+    interaction.dit_participants
+      .filter((participant) => participant.adviser.name)
+      .map((participant) => participant.adviser)
   return {
     theme,
     kind,
@@ -145,9 +151,9 @@ const getInitialFormValues = (req, res) => {
         ? [transformObjectToOption(referral.contact)]
         : [],
     dit_participants: [
-      transformObjectToOption(
-        get(interaction, 'dit_participants[0].adviser') || user
-      ),
+      (advisers &&
+        advisers.map((adviser) => transformObjectToOption(adviser))) ||
+        transformObjectToOption(user),
     ],
     ...transformInteractionToValues(interaction),
   }
