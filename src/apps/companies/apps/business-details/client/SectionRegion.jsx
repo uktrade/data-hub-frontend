@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Link from '@govuk-react/link'
 
-import { SummaryTable } from 'data-hub-components'
+import { SummaryTable } from '../../../../../client/components/'
 
 const SectionRegion = ({ businessDetails, isArchived, isBasedInUK, urls }) =>
   isBasedInUK ? (
