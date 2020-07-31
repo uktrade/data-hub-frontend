@@ -133,6 +133,7 @@ FieldCheckboxes.propTypes = {
   hint: PropTypes.node,
   initialValue: PropTypes.arrayOf(PropTypes.string),
   reduced: PropTypes.bool,
+  reducedPadding: PropTypes.bool,
   options: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string.isRequired,
@@ -151,6 +152,7 @@ FieldCheckboxes.defaultProps = {
   initialValue: [],
   options: [],
   reduced: false,
+  reducedPadding: false,
 }
 
 export default FieldCheckboxes

@@ -45,3 +45,4 @@ Checkboxes for use in forms and filters.
 | `initialValue` | false    | `` | Text | Sets initial value of the input                             |
 | `options` | true | empty array | array | Defines the checkbox labels and values
 | `reduced`      | false    | false                                                                   | Boolean                        | Toggles wether the element is a filter or not |
+| `reducedPadding`      | false    | false                                                                   | Boolean                        | Toggles wether the surrounding padding is reduced for the likes of checkboxes |
