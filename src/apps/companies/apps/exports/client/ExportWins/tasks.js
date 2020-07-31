@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { DateUtils, NumberUtils } from 'data-hub-components'
+import { DateUtils, NumberUtils } from '../../../../../../client/components/'
 import { GREEN, BLUE } from 'govuk-colours'
 
 import { NOT_IMPLEMENTED } from './state'
