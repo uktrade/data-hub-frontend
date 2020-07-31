@@ -1,12 +1,15 @@
 import React from 'react'
-import { NumberUtils, DateUtils } from 'data-hub-components'
 import Link from '@govuk-react/link'
 import moment from 'moment'
 import styled from 'styled-components'
 
 import { STATUS_VALUES, LIKELIHOOD_VALUES } from './constants'
 import urls from '../../../lib/urls'
-import { SummaryTable } from '../../../client/components/'
+import {
+  DateUtils,
+  NumberUtils,
+  SummaryTable,
+} from '../../../client/components/'
 import { WIDTHS } from '@govuk-react/constants/lib/spacing'
 
 function getLabels(acc, { value, label }) {
