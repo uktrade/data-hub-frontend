@@ -5,7 +5,9 @@ import { compact, get } from 'lodash'
 import PropTypes from 'prop-types'
 import { H3 } from '@govuk-react/heading'
 import InsetText from '@govuk-react/inset-text'
-import { Step, SummaryList, useFormContext } from 'data-hub-components'
+import { Step, useFormContext } from 'data-hub-components'
+
+import { SummaryList } from '../../../../../client/components/'
 
 function getCompanyAddress(dnbCompany) {
   if (dnbCompany) {
