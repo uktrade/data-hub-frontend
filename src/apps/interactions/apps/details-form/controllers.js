@@ -150,10 +150,9 @@ const getInitialFormValues = (req, res) => {
       referral && referral.contact
         ? [transformObjectToOption(referral.contact)]
         : [],
-    dit_participants: [
-      (advisers &&
-        advisers.map((adviser) => transformObjectToOption(adviser))) ||
-        transformObjectToOption(user),
+    dit_participants: (advisers &&
+      advisers.map((adviser) => transformObjectToOption(adviser))) || [
+      transformObjectToOption(user),
     ],
     ...transformInteractionToValues(interaction),
   }
