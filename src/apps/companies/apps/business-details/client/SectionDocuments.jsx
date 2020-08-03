@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { SummaryTable } from 'data-hub-components'
-import { NewWindowLink } from '../../../../../client/components/'
+import { NewWindowLink, SummaryTable } from '../../../../../client/components/'
 
 const SectionDocuments = ({ urls }) =>
   urls.archivedDocument ? (

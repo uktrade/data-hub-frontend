@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Details from '@govuk-react/details'
 import Link from '@govuk-react/link'
 import { H3 } from '@govuk-react/heading'
-import { SummaryTable } from 'data-hub-components'
+import { SummaryTable } from '../../../../../client/components/'
 import { SPACING } from '@govuk-react/constants'
 
 import urls from '../../../../../lib/urls'
