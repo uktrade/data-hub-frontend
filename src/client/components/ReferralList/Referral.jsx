@@ -3,12 +3,13 @@ import { Link } from 'govuk-react'
 import { SPACING, FONT_SIZE } from '@govuk-react/constants'
 import { BLUE, GREEN } from 'govuk-colours'
 import PropTypes from 'prop-types'
-import { SummaryList, DateUtils } from 'data-hub-components'
+import { DateUtils } from 'data-hub-components'
 import styled from 'styled-components'
 import Card from 'data-hub-components/dist/activity-feed/activities/card/Card'
 import CardHeader from 'data-hub-components/dist/activity-feed/activities/card/CardHeader'
 
 import urls from '../../../lib/urls'
+import { SummaryList } from '../../components/'
 import { AdviserDetails } from '../../../apps/companies/apps/referrals/details/client/ReferralDetails'
 
 const StyledSummaryListWrapper = styled.div({
