@@ -1,10 +1,8 @@
 import React from 'react'
-import { DateUtils } from 'data-hub-components'
 import { SPACING_POINTS } from '@govuk-react/constants'
 import { Link } from 'govuk-react'
 import styled from 'styled-components'
-import { SummaryTable } from '../../../../../../client/components/'
-
+import { DateUtils, SummaryTable } from '../../../../../../client/components/'
 import urls from '../../../../../../lib/urls'
 
 const StyledSummaryTable = styled(SummaryTable)({

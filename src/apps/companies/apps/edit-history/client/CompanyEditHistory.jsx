@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { isBoolean, isNumber } from 'lodash'
-import { DateUtils, NumberUtils } from 'data-hub-components'
+import { DateUtils, NumberUtils } from '../../../../../client/components/'
 import { convertUsdToGbp } from '../../../../../common/currency'
 
 import EditHistory from '../../../../../client/components/EditHistory/EditHistory'
