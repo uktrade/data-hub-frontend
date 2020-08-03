@@ -7,8 +7,7 @@ import PropTypes from 'prop-types'
 import CollectionHeader from './CollectionHeader'
 import CollectionDownload from './CollectionDownload'
 import CollectionItem from './CollectionItem'
-
-const { Pagination } = require('data-hub-components')
+import { Pagination } from '../../components/'
 
 function CollectionList({
   totalItems,
