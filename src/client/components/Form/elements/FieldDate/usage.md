@@ -2,7 +2,7 @@
 
 ### Description
 
-Date field for use in forms and filters, as the native input **`type="date"`** field does not work in IE 11 so you need to toggle the **`isIE`** flag on (see props below). The fallback for IE11 is the three input fields pattern rather than the native date picker which gets interpreted by the browser.
+Date field for use in forms and filters. When using this component as a filter (reduced version) the native input **`type="date"`** will not work in IE 11 so you need to toggle the **`isIE`** flag on (see props below). The fallback for IE11 is the three input fields pattern.
 
 **Note: The `<FieldDate>` has to be wrapped with `<FormStateful>`.** 
 
