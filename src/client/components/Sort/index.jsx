@@ -11,14 +11,6 @@ const Sort = styled(Select)`
     direction: ['top'],
   })}
 
-  span {
-    ${spacing.responsive({
-      size: 1,
-      property: 'margin',
-      direction: ['left'],
-    })}
-  }
-
   select {
     flex: 1;
     width: 'initial';
