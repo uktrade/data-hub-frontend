@@ -9,7 +9,7 @@ import GridCol from '@govuk-react/grid-col'
 import { SPACING, MEDIA_QUERIES, FONT_SIZE } from '@govuk-react/constants'
 import { BLUE, GREY_1, BLACK } from 'govuk-colours'
 import { Card } from 'data-hub-components/dist/activity-feed/activities/card'
-import { NumberUtils } from 'data-hub-components'
+import { NumberUtils } from '../../components'
 
 import { newlineToBr } from '../../../lib/text-formatting'
 import { PipeLineItemPropType } from './types'
