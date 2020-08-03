@@ -16,12 +16,7 @@ import {
   UnorderedList,
 } from 'govuk-react'
 
-import {
-  FormActions,
-  FieldInput,
-  StatusMessage,
-  FieldTypeahead,
-} from 'data-hub-components'
+import { FormActions, FieldInput, FieldTypeahead } from 'data-hub-components'
 
 import { ID as STATE_ID, TASK_UPDATE_ADVISER, state2props } from './state'
 import { MANAGE_ADVISER__UPDATE } from '../../../../../client/actions'
@@ -31,6 +26,7 @@ import Task from '../../../../../client/components/Task'
 import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeader.jsx'
 import { Main } from '../../../../../client/components/'
 import { addMessageWithBody } from '../../../../../client/utils/flash-messages'
+import { StatusMessage } from '../../../../../client/components/'
 
 const StyledStatusMessage = styled(StatusMessage)`
   p {

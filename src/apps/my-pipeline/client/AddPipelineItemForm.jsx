@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import pluralize from 'pluralize'
 
 import ErrorSummary from '@govuk-react/error-summary'
-import { StatusMessage } from 'data-hub-components'
 import Task from '../../../client/components/Task'
 import LoadingBox from '@govuk-react/loading-box'
 import ProgressIndicator from '../../../client/components/ProgressIndicator'
@@ -25,7 +24,7 @@ import {
 } from './constants'
 import { getPipelineUrl } from './utils'
 
-import { Main } from '../../../client/components/'
+import { Main, StatusMessage } from '../../../client/components/'
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 
 function isOnPipeline(pipelineStatus, companyId) {

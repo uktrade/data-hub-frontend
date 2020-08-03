@@ -3,12 +3,7 @@ import { connect } from 'react-redux'
 import { Button, Link } from 'govuk-react'
 import { ERROR_COLOUR } from 'govuk-colours'
 import styled from 'styled-components'
-import {
-  FormActions,
-  FieldTypeahead,
-  FormStateful,
-  StatusMessage,
-} from 'data-hub-components'
+import { FormActions, FieldTypeahead, FormStateful } from 'data-hub-components'
 
 import Task from '../../../../../../client/components/Task/index.jsx'
 import { EXPORT_COUNTRIES_EDIT__SAVE } from '../../../../../../client/actions'
@@ -21,6 +16,7 @@ import {
   SAVED,
 } from './state'
 import urls from '../../../../../../lib/urls'
+import { StatusMessage } from '../../../../../../client/components/'
 
 const StyledH2 = styled.h2`
   font-weight: bold;
