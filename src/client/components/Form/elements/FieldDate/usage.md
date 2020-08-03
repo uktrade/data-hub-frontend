@@ -1,10 +1,10 @@
-# FieldCheckboxes
+# FieldDate
 
 ### Description
 
-Checkboxes for use in forms and filters.
+Date field for use in forms and filters, as the native input **`type="date"`** field does not work in IE 11 so you need to toggle the **`isIE`** flag on (see props below). The fallback for IE11 is the three input fields pattern rather than the native date picker which gets interpreted by the browser.
 
-**Note: The `<FieldCheckboxes>` has to be wrapped with `<FormStateful>`.** 
+**Note: The `<FieldDate>` has to be wrapped with `<FormStateful>`.** 
 
 ### Usage
 
@@ -12,20 +12,11 @@ Checkboxes for use in forms and filters.
 <FormStateful onSubmit={action('onSubmit')}>
   {(state) => (
     <>
-      <FieldCheckboxes
-        name="countries"
-        label="What are your favourite countries?"
-        required="Select at least one country"
-        options={[
-          {
-            label: 'Italy',
-            value: 'it',
-          },
-          {
-            label: 'Poland',
-            value: 'pl',
-          },
-        ]}
+      <FieldDate
+        name="date"
+        label="What is your date of birth?"
+        hint="For example, 01 09 2019"
+        required="Enter a valid date of birth"
       />
     </>
   )}
@@ -45,4 +36,4 @@ Checkboxes for use in forms and filters.
 | `initialValue` | false    | `` | Text | Sets initial value of the input                             |
 | `options` | true | empty array | array | Defines the checkbox labels and values
 | `reduced`      | false    | false                                                                   | Boolean                        | Toggles wether the element is a filter or not |
-| `reducedPadding`      | false    | false                                                                   | Boolean                        | Toggles wether the surrounding padding is reduced for the likes of checkboxes |
+| `isIE`      | false    | false                                                                   | Boolean                        | Toggles wether the native input type="date" is used or not |
