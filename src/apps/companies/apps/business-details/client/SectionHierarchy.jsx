@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 import { SPACING_POINTS } from '@govuk-react/constants'
 
-import { SummaryTable } from 'data-hub-components'
+import { SummaryTable } from '../../../../../client/components/'
 import WideSummaryTableRow from './WideSummaryTableRow'
 
 const StyledRowActionLink = styled(Link)`
