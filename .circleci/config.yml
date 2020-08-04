@@ -4,8 +4,8 @@ aliases:
   - &postgres_version postgres:10
   - &mi_postgres_version postgres:9.6
   - &elasticsearch_version docker.elastic.co/elasticsearch/elasticsearch:6.8.2
-  - &api_image quay.io/uktrade/data-hub-api:master
-  - &frontend_testing_image ukti/data-hub-frontend-test:3.7.0
+  - &api_image gcr.io/sre-docker-registry/github.com/uktrade/data-hub-api:master
+  - &frontend_testing_image gcr.io/sre-docker-registry/data-hub-frontend-test:3.7.0
   - &oauth2_dit_staff_token ditStaffToken
   - &oauth2_da_staff_token daStaffToken
   - &oauth2_lep_staff_token lepStaffToken
@@ -128,11 +128,10 @@ aliases:
 
   # Mock SSO container used by Data hub frontend
   - &docker_mock_sso
-    image: quay.io/uktrade/mock-sso:latest
+    image: gcr.io/sre-docker-registry/github.com/uktrade/mock-sso:latest
     environment:
       - MOCK_SSO_SCOPE: 'data-hub:internal-front-end'
       - MOCK_SSO_TOKEN: 123
-
 
   # Data hub backend
   - &docker_data_hub_backend_base

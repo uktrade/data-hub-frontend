@@ -115,7 +115,7 @@ and be provided with a back end server to provide the API, data storage and sear
 6.  Start the mocked SSO:
 
     ```bash
-    docker run -it -p 8080:8080 quay.io/uktrade/mock-sso:latest
+    docker run -it -p 8080:8080 gcr.io/sre-docker-registry/github.com/uktrade/mock-sso:latest
     ```
 
 7.  Start the mocked backend:
