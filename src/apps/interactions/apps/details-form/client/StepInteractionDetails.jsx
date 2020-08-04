@@ -20,8 +20,10 @@ import {
   useFormContext,
 } from 'data-hub-components'
 
-import AdviserTypeAhead from '../../../../../client/components/AdviserTypeAhead'
-import { NewWindowLink } from '../../../../../client/components/'
+import {
+  NewWindowLink,
+  AdviserTypeAhead,
+} from '../../../../../client/components/'
 
 import {
   SERVICE_CONTEXTS,
