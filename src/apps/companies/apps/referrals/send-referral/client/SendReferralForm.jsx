@@ -7,11 +7,10 @@ import { SEND_REFERRAL_FORM__SUBMIT } from '../../../../../../client/actions'
 import StepReferralDetails from './StepReferralDetails'
 import StepReferralConfirmation from './StepReferralConfirmation'
 import LocalHeader from '../../../../../../client/components/LocalHeader/LocalHeader'
-import { Main } from '../../../../../../client/components/'
+import { Main, Analytics } from '../../../../../../client/components/'
 import { companies, dashboard } from '../../../../../../lib/urls'
 import Form from '../../../../../../client/components/Form'
 import Task from '../../../../../../client/components/Task'
-import Analytics from '../../../../../../client/components/Analytics/index.jsx'
 import { addMessageWithBody } from '../../../../../../client/utils/flash-messages'
 
 import {
