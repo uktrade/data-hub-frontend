@@ -1,11 +1,11 @@
-import { LEVEL_SIZE, SPACING } from '@govuk-react/constants'
+import { LEVEL_SIZE } from '@govuk-react/constants'
 import { H2 } from '@govuk-react/heading'
-import Select from '@govuk-react/select'
 import React from 'react'
 import pluralize from 'pluralize'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
+import Sort from '../Sort'
 import { COMPANY_LISTS__SELECT } from '../../actions'
 import { state2props } from './state'
 
@@ -16,21 +16,6 @@ const StyledRoot = styled.div({
 
 const StyledHeading = styled(H2)({
   flexGrow: 1,
-})
-
-const StyledSelect = styled(Select)({
-  display: 'flex',
-  flexDirection: 'row',
-  alignItems: 'baseline',
-  marginRight: 0,
-  span: {
-    marginRight: SPACING.SCALE_2,
-  },
-  // We need to override the select style because it has a hardcoded 50% width.
-  select: {
-    width: 'initial',
-    minWidth: 200,
-  },
 })
 
 export const Header = connect(state2props, (dispatch) => ({
@@ -47,7 +32,7 @@ export const Header = connect(state2props, (dispatch) => ({
         {pluralize('My companies list', listLength, true)}
       </StyledHeading>
       {listLength > 1 && (
-        <StyledSelect
+        <Sort
           label="View list"
           input={{
             onChange: (e) => onChange(e.target.value),
@@ -59,7 +44,7 @@ export const Header = connect(state2props, (dispatch) => ({
               {name}
             </option>
           ))}
-        </StyledSelect>
+        </Sort>
       )}
     </StyledRoot>
   )

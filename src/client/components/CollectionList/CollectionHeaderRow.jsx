@@ -7,6 +7,7 @@ import { FONT_SIZE, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 const StyledRowWrapper = styled('div')`
   display: flex;
   flex-flow: row wrap;
+  align-items: center;
   font-size: ${FONT_SIZE.SIZE_16};
   padding: ${SPACING.SCALE_2} 0;
   border-bottom: ${({ primary }) =>
@@ -14,10 +15,11 @@ const StyledRowWrapper = styled('div')`
 `
 
 const StyledActions = styled('div')`
-  text-align: right;
   width: 100%;
   ${MEDIA_QUERIES.TABLET} {
     width: 0;
+    display: flex;
+    justify-content: flex-end;
     flex-grow: 1;
   }
 `
