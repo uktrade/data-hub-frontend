@@ -48,7 +48,7 @@ import ArchivePipelineItemForm from '../apps/my-pipeline/client/ArchivePipelineI
 import UnarchivePipelineItemForm from '../apps/my-pipeline/client/UnarchivePipelineItemForm.jsx'
 import DeletePipelineItemForm from '../apps/my-pipeline/client/DeletePipelineItemForm.jsx'
 
-import { ConnectedDropdownMenu } from './components/DropdownMenu'
+import { ConnectedDropdownMenu } from './components/'
 import tasks from './components/Task/reducer'
 import rootSaga from './root-saga'
 

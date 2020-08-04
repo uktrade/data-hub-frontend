@@ -7,7 +7,7 @@ import { storiesOf } from '@storybook/react'
 import dnBGlobalUltimate from '../../../../../test/sandbox/fixtures/v4/company/company-dnb-global-ultimate.json'
 import { companies, dashboard } from '../../../../lib/urls'
 import CompanyLocalHeader from '../CompanyLocalHeader'
-import ConnectedDropdownMenu from '../../../../client/components/DropdownMenu/ConnectedDropdownMenu'
+import { ConnectedDropdownMenu } from '../../../../client/components/'
 import exampleReadme from './example.md'
 import usageReadme from './usage.md'
 
