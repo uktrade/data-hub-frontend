@@ -27,6 +27,13 @@ const CollectionWithState = () => {
       itemName="profile"
       addItemUrl="http://example.com"
       downloadUrl="http://example.com"
+      sortOptions={
+        <>
+          <option value="-created_on">Most recently created</option>
+          <option value="-modified_on">Most recently updated</option>
+          <option value="name">Project Name A-Z</option>
+        </>
+      }
     />
   )
 }
