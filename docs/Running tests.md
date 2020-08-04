@@ -5,17 +5,21 @@
 ```bash
 export VERSION=3.7.0 # Increment this version each time when you edit Dockerfile.
 
-docker login # Ask webops for Docker Hub access to the ukti group.
+Ensure you have gcloud sdk and you are logged in following their instructions:
+
+https://cloud.google.com/sdk/docs
+
 docker build -f test/Dockerfile -t data-hub-frontend-test .
 
-docker tag data-hub-frontend-test:latest ukti/data-hub-frontend-test:${VERSION}
-docker tag data-hub-frontend-test:latest ukti/data-hub-frontend-test:latest
+docker tag data-hub-frontend-test:latest gcr.io/sre-docker-registry/data-hub-frontend-test:${VERSION}
 
-docker push ukti/data-hub-frontend-test:${VERSION}
-docker push ukti/data-hub-frontend-test:latest
+docker tag data-hub-frontend-test:latest gcr.io/sre-docker-registry/data-hub-frontend-test:latest
+
+docker push gcr.io/sre-docker-registry/data-hub-frontend-test:${VERSION}
+docker push gcr.io/sre-docker-registry/data-hub-frontend-test:latest
 ```
 
-You image should be now listed at [Docker Hub](https://cloud.docker.com/u/ukti/repository/docker/ukti/data-hub-frontend-test/tags).
+You image should be now listed at [Google Container Registry](http://gcr.io/sre-docker-registry/github.com/uktrade).
 
 ## Executing CircleCI jobs locally
 
