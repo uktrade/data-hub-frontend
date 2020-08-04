@@ -5,7 +5,7 @@ FieldInput
 
 A basic input field for numbers and text. 
 
-**Note: The `<FieldInput>` has to be wrapped with either the `<Form>` or `<FormStateful>`.**
+**Note: The `<FieldDate>` has to be wrapped with `<FormStateful>`.** 
 
 ### Usage
 
