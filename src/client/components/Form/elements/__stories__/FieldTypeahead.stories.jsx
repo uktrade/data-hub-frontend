@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions'
 import { withKnobs } from '@storybook/addon-knobs'
 import Button from '@govuk-react/button'
 
-import FormStateful from '../FormStateful'
+import { FormStateful } from 'data-hub-components'
 import FieldTypeahead from '../FieldTypeahead'
 
 import exampleReadme from '../FieldTypeahead/example.md'
@@ -76,7 +76,7 @@ storiesOf('Forms/Typeahead', module)
             label="Typeahead - async multi value"
             hint="Some hint"
             name="async_multi"
-            required="Chose value"
+            required="Choose value"
             loadOptions={getOptions}
             isMulti={true}
           />
