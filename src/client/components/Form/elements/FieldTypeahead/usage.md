@@ -17,7 +17,7 @@ A Typeahead for use in forms. This is a wrapper around the `react-select` by Jed
         label="Typeahead - sync single value"
         hint="Some hint"
         name="sync_single"
-        required="Chose value"
+        required="Choose value"
         options={options}
       />
     </>
