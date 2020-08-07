@@ -1,8 +1,8 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
-import CreateListForm from '../CreateListForm.jsx'
-import AddRemoveFromListForm from '../AddRemoveFromListForm.jsx'
+import CreateListForm from '../CreateListForm'
+import AddRemoveFromListForm from '../../../components/CompanyLists/AddRemoveFromListForm'
 import listsWithCompany from '../__fixtures__/lists-with-company.json'
 
 storiesOf('Company lists', module)

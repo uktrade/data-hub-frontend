@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { GREY_1, GREY_2 } from 'govuk-colours'
 
 import EditHistoryChangeList from './EditHistoryChangeList'
-import { Pagination } from '../../components/'
+import Pagination from '../../components/Pagination'
 
 const StyledListContainer = styled('div')`
   border-top: 2px solid ${GREY_2};

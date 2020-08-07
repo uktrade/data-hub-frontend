@@ -9,12 +9,12 @@ import GridCol from '@govuk-react/grid-col'
 import { SPACING, MEDIA_QUERIES, FONT_SIZE } from '@govuk-react/constants'
 import { BLUE, GREY_1, BLACK } from 'govuk-colours'
 import { Card } from 'data-hub-components/dist/activity-feed/activities/card'
-import { NumberUtils } from '../../components'
+import NumberUtils from '../../components/Utils/NumberUtils'
+import Tag from '../../components/Tag'
 
 import { newlineToBr } from '../../../lib/text-formatting'
 import { PipeLineItemPropType } from './types'
 import urls from '../../../lib/urls'
-import Tag from '../Tag'
 import LIKELIHOOD_TO_SUCCEED from './constants'
 
 const StyledH3 = styled('h3')`

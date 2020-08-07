@@ -4,10 +4,10 @@ import styled from 'styled-components'
 import { GREY_2 } from 'govuk-colours'
 
 import urls from '../../../lib/urls'
-import CompanyLists from '../CompanyLists'
-import ReferralList from '../ReferralList'
-import Pipeline from '../Pipeline'
-import TabNav from '../TabNav'
+import CompanyLists from '../../components/CompanyLists'
+import ReferralList from '../../components/ReferralList'
+import Pipeline from '../../components/Pipeline'
+import TabNav from '../../components/TabNav'
 
 const StyledDiv = styled('div')`
   border-top: 4px solid ${GREY_2};

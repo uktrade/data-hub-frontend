@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { isBoolean, isNumber } from 'lodash'
-import { DateUtils } from '../../../client/components/'
+import DateUtils from '../../../client/components/Utils/DateUtils'
 
 import { CHANGE_TYPE_TEXT, TRUE, FALSE, NOT_SET } from '../constants'
 

@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { DateUtils, NumberUtils } from '../../../../../../client/components/'
+import DateUtils from '../../../../../../client/components/Utils/DateUtils'
+import NumberUtils from '../../../../../../client/components/Utils/NumberUtils'
 import { GREEN, BLUE } from 'govuk-colours'
 
 import { NOT_IMPLEMENTED } from './state'

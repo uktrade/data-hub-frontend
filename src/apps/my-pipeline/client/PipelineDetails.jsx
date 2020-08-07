@@ -5,12 +5,10 @@ import styled from 'styled-components'
 
 import { STATUS_VALUES, LIKELIHOOD_VALUES } from './constants'
 import urls from '../../../lib/urls'
-import {
-  DateUtils,
-  NumberUtils,
-  SummaryTable,
-} from '../../../client/components/'
+import { SummaryTable } from '../../../client/components/'
 import { WIDTHS } from '@govuk-react/constants/lib/spacing'
+import DateUtils from '../../../client/components/Utils/DateUtils'
+import NumberUtils from '../../../client/components/Utils/NumberUtils'
 
 function getLabels(acc, { value, label }) {
   acc[value] = label

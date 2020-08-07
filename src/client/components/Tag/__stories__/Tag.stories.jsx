@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { storiesOf } from '@storybook/react'
 import { SPACING } from '@govuk-react/constants'
 
-import Tag from '../index'
+import Tag from 'Tag'
 import defaultReadme from './default.md'
 import usageReadme from './usage.md'
 

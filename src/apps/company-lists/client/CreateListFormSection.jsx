@@ -2,7 +2,7 @@
 
 import React from 'react'
 import axios from 'axios'
-import { CreateListForm } from '../../../client/components/'
+import CreateListForm from '../../../client/components/CompanyLists/CreateListForm'
 
 const CreateListFormSection = (
   {
