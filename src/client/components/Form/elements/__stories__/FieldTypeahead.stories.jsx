@@ -46,14 +46,14 @@ storiesOf('Forms/Typeahead', module)
             label="Typeahead - sync single value"
             hint="Some hint"
             name="sync_single"
-            required="Chose value"
+            required="Choose value"
             options={options}
           />
           <FieldTypeahead
             label="Typeahead - sync multi value"
             hint="Some hint"
             name="sync_multi"
-            required="Chose value"
+            required="Choose value"
             options={options}
             isMulti={true}
           />
@@ -61,7 +61,7 @@ storiesOf('Forms/Typeahead', module)
             label="Typeahead - initial value"
             hint="Some hint"
             name="sync_single"
-            required="Chose value"
+            required="Choose value"
             initialValue={options[1]}
             options={options}
           />
@@ -69,7 +69,7 @@ storiesOf('Forms/Typeahead', module)
             label="Typeahead - async single value"
             hint="Some hint"
             name="async_single"
-            required="Chose value"
+            required="Choose value"
             loadOptions={getOptions}
           />
           <FieldTypeahead
