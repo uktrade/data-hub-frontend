@@ -73,6 +73,9 @@ describe('Companies business details', () => {
         cy.visit(
           urls.companies.businessDetails(fixtures.company.oneListCorp.id)
         )
+        it('should display the "Pending Change Request" text', () => {
+          cy.contains('Checking for pending change requests')
+        })
       })
 
       it('should render breadcrumbs', () => {
@@ -95,6 +98,12 @@ describe('Companies business details', () => {
 
       it('should display the "Last updated" paragraph', () => {
         cy.contains('Last updated on: 26 Nov 2017').should('be.visible')
+      })
+
+      it('should not display the "Pending Change Request" box', () => {
+        cy.contains(
+          'Changes to these business details are currently being reviewed.'
+        ).should('not.be.visible')
       })
 
       it('should display the "Are these business details right?" details summary', () => {
@@ -207,6 +216,12 @@ describe('Companies business details', () => {
     () => {
       before(() => {
         cy.visit(urls.companies.businessDetails(fixtures.company.venusLtd.id))
+      })
+
+      it('should not display the "Pending Change Request" text', () => {
+        cy.contains('Checking for pending change requests').should(
+          'not.be.visible'
+        )
       })
 
       it('should render breadcrumbs', () => {
@@ -349,6 +364,9 @@ describe('Companies business details', () => {
     () => {
       before(() => {
         cy.visit(urls.companies.businessDetails(fixtures.company.dnbCorp.id))
+        it('should display the "Pending Change Request" text', () => {
+          cy.contains('Checking for pending change requests')
+        })
       })
 
       it('should render breadcrumbs', () => {
