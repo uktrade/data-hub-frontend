@@ -8,7 +8,7 @@ import CollectionHeader from './CollectionHeader'
 import CollectionDownload from './CollectionDownload'
 import CollectionItem from './CollectionItem'
 import CollectionSort from './CollectionSort'
-import { Pagination } from '../../components/'
+import Pagination from '../../components/Pagination'
 
 function CollectionList({
   totalItems,

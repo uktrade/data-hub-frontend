@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { get } from 'lodash'
-import { AddRemoveFromListForm } from '../../../client/components/'
+import AddRemoveFromListForm from '../../../client/components/CompanyLists/AddRemoveFromListForm'
 import ErrorSummary from '@govuk-react/error-summary'
 import PropTypes from 'prop-types'
 

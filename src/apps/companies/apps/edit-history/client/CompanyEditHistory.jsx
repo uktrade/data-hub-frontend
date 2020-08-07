@@ -2,10 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { isBoolean, isNumber } from 'lodash'
-import { DateUtils, NumberUtils } from '../../../../../client/components/'
 import { convertUsdToGbp } from '../../../../../common/currency'
 
 import EditHistory from '../../../../../client/components/EditHistory/EditHistory'
+import DateUtils from '../../../../../client/components/Utils/DateUtils'
+import NumberUtils from '../../../../../client/components/Utils/NumberUtils'
 
 import {
   ARCHIVED,

@@ -2,8 +2,9 @@ import React from 'react'
 import { SPACING_POINTS } from '@govuk-react/constants'
 import { Link } from 'govuk-react'
 import styled from 'styled-components'
-import { DateUtils, SummaryTable } from '../../../../../../client/components/'
+import { SummaryTable } from '../../../../../../client/components/'
 import urls from '../../../../../../lib/urls'
+import DateUtils from '../../../../../../client/components/Utils/DateUtils'
 
 const StyledSummaryTable = styled(SummaryTable)({
   'margin-top': SPACING_POINTS[8],

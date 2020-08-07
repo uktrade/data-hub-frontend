@@ -16,11 +16,12 @@ import SectionSector from './SectionSector'
 import SectionOneList from './SectionOneList'
 import SectionDocuments from './SectionDocuments'
 import SectionArchive from './SectionArchive'
-import { StatusMessage, DateUtils } from '../../../../../client/components/'
+import { StatusMessage } from '../../../../../client/components/'
 
 import { ID as CHECK_PENDING_REQUEST_ID, state2props } from './state'
 import { DNB__CHECK_PENDING_REQUEST } from '../../../../../client/actions'
 import Task from '../../../../../client/components/Task'
+import DateUtils from '../../../../../client/components/Utils/DateUtils'
 
 const StyledRoot = styled('div')`
   & > table {

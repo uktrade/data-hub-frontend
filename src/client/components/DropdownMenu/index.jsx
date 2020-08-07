@@ -5,7 +5,7 @@ import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import { spacing } from '@govuk-react/lib'
 import styled from 'styled-components'
 import Link from '@govuk-react/link'
-import SecondaryButton from '../../components/SecondaryButton'
+import SecondaryButton from '../SecondaryButton'
 import trianglePng from '../../../../assets/images/icon-triangle.svg'
 
 const DropdownMenuContainer = styled.div`

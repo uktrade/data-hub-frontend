@@ -8,16 +8,16 @@ import { SPACING, FONT_SIZE, BREAKPOINTS } from '@govuk-react/constants'
 import { GREY_3, PURPLE, BLACK } from 'govuk-colours'
 import Details from '@govuk-react/details'
 import Main from '@govuk-react/main'
-import { Badge, StatusMessage, DateUtils } from '../../../client/components/'
 
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 import LocalHeaderHeading from '../../../client/components/LocalHeader/LocalHeaderHeading'
+import Badge from '../../../client/components/Badge'
+import StatusMessage from '../../../client/components/StatusMessage'
+import DateUtils from '../../../client/components/Utils/DateUtils'
 import formatAddress from '../../../client/utils/formatAddress'
 import urls from '../../../lib/urls'
-import {
-  ConnectedDropdownMenu,
-  DropdownButton,
-} from '../../../client/components/DropdownMenu'
+import ConnectedDropdownMenu from '../DropdownMenu/ConnectedDropdownMenu'
+import { DropdownButton } from '../DropdownMenu'
 
 const StyledAddress = styled('p')`
   margin-top: ${SPACING.SCALE_2};

@@ -6,6 +6,7 @@ import Button from '@govuk-react/button'
 
 import FieldSelect from '../FieldSelect'
 import FormStateful from '../FormStateful'
+import FieldInput from '../FieldInput'
 
 addDecorator(withKnobs)
 
