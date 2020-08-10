@@ -178,7 +178,7 @@ const envSchema = Joi.object({
   // Elastic APM secret token used to authenticate the service
   ELASTIC_APM_SECRET_TOKEN: Joi.string(),
   // Elastic APM server timeout used to timeout if no response is found after 20 secs
-  ELASTIC_APM_SERVER_TIMEOUT: Joi.integer().default(20)
+  ELASTIC_APM_SERVER_TIMEOUT: Joi.number().integer().default(20)
 })
 /* eslint-enable prettier/prettier */
 
