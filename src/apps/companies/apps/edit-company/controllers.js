@@ -74,7 +74,7 @@ async function postEditCompany(req, res, next) {
 
       req.flashWithBody(
         'success',
-        'Update sent for third party review.',
+        'Change requested.',
         'Thanks for keeping Data Hub running smoothly.',
         'message-company-change-request'
       )

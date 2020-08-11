@@ -359,9 +359,9 @@ describe('Company edit', () => {
       )
     })
 
-    it('displays the "Update sent for third party review" flash message and the ID used in GA', () => {
+    it('displays the "Change requested. Thanks for keeping Data Hub running smoothly" flash message and the ID used in GA', () => {
       cy.contains(
-        'Update sent for third party review.Thanks for keeping Data Hub running smoothly.'
+        'Change requested.Thanks for keeping Data Hub running smoothly.'
       ).should('have.attr', 'id', 'message-company-change-request')
     })
   })
