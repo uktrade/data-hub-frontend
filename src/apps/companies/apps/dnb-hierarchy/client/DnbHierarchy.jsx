@@ -15,10 +15,8 @@ const DnbHierarchy = ({ dataEndpoint, isGlobalHQ }) => {
   const setActivePage = (page) =>
     window.history.pushState({}, '', getPageUrl(page))
 
-  const onPageClick = (page, event) => {
+  const onPageClick = (page) => {
     setActivePage(page)
-    event.target.blur()
-    event.preventDefault()
   }
 
   useEffect(() => {

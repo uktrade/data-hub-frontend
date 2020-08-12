@@ -47,6 +47,9 @@ import * as manageAdviser from '../apps/companies/apps/advisers/client/tasks'
 import { DNB__CHECK_PENDING_REQUEST } from '../apps/companies/apps/business-details/client/state'
 import * as dnbCheck from '../apps/companies/apps/business-details/client/tasks'
 
+import { TASK_GET_PROFILES_LIST } from '../apps/investments/client/state'
+import * as investmentProfilesTasks from '../apps/investments/client/tasks'
+
 export default function* rootSaga() {
   yield fork(
     tasksSaga({
@@ -77,6 +80,7 @@ export default function* rootSaga() {
       [TASK_UPDATE_STAGE]: investmentAdminTasks.updateProjectStage,
       [TASK_UPDATE_ADVISER]: manageAdviser.updateAdviser,
       [DNB__CHECK_PENDING_REQUEST]: dnbCheck.checkIfPendingRequest,
+      [TASK_GET_PROFILES_LIST]: investmentProfilesTasks.getLargeCapitalProfiles,
     })
   )
   yield fork(analyticsSaga)
