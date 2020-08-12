@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react'
 import { isEmpty } from 'lodash'
 import { ErrorSummary } from 'govuk-react'
-import { useFormContext, Step } from 'data-hub-components'
+import useFormContext from './hooks/useFormContext'
+import Step from './elements/Step'
 
 import {
   FORM__LOADED,
