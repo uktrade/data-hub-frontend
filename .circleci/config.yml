@@ -26,6 +26,16 @@ aliases:
       command: node ./test/sandbox/server.js
       background: true
 
+  - &start_api_sandbox_e2e
+    run:
+      name: Start API sandbox
+      command: | 
+        echo 'export SANDBOX_PORT=8888' >> $BASH_ENV
+        source $BASH_ENV
+        node ./test/sandbox/server.js
+      background: true
+
+
   - &start_frontend
     run:
       name: Start data hub frontend
@@ -165,14 +175,14 @@ aliases:
     ADMIN_OAUTH2_ENABLED: 'False'
     ES_APM_ENABLED: 'False'
     COLUMNS: 80 # Workaround for Docker/CircleCI compatibility problem with Python 3.8
-    CONSENT_SERVICE_BASE_URL: $DH_CONSENT_SERVICE_BASE_URL
-    CONSENT_SERVICE_HAWK_ID: $DH_CONSENT_SERVICE_HAWK_ID
-    CONSENT_SERVICE_HAWK_KEY: $DH_CONSENT_SERVICE_HAWK_KEY
-    DNB_SERVICE_BASE_URL: $DH_DNB_SERVICE_BASE_URL
-    DNB_SERVICE_TOKEN: $DH_DNB_SERVICE_TOKEN
-    COMPANY_MATCHING_SERVICE_BASE_URL: $DH_COMPANY_MATCHING_SERVICE_BASE_URL
-    COMPANY_MATCHING_HAWK_ID: $DH_COMPANY_MATCHING_HAWK_ID
-    COMPANY_MATCHING_HAWK_KEY: $DH_COMPANY_MATCHING_HAWK_KEY
+    CONSENT_SERVICE_BASE_URL: http://localhost:8888
+    CONSENT_SERVICE_HAWK_ID: dummyId
+    CONSENT_SERVICE_HAWK_KEY: dummyKey
+    DNB_SERVICE_BASE_URL: http://localhost:8888
+    DNB_SERVICE_TOKEN: dummyToken
+    COMPANY_MATCHING_SERVICE_BASE_URL: http://localhost:8888
+    COMPANY_MATCHING_HAWK_ID: dummyId
+    COMPANY_MATCHING_HAWK_KEY: dummyKey
 
   # Data hub backend
   - &docker_data_hub_backend_base
@@ -352,6 +362,7 @@ jobs:
       - checkout
       - run: npm ci
       - run: npm run build
+      - *start_api_sandbox_e2e
       - *wait_for_backend
       - *wait_for_mock_sso
       - *start_frontend
@@ -385,6 +396,7 @@ jobs:
       - checkout
       - run: npm ci
       - run: npm run build
+      - *start_api_sandbox_e2e
       - *wait_for_backend
       - *wait_for_mock_sso
       - *start_frontend
@@ -418,6 +430,7 @@ jobs:
       - checkout
       - run: npm ci
       - run: npm run build
+      - *start_api_sandbox_e2e
       - *wait_for_backend
       - *wait_for_mock_sso
       - *start_frontend
