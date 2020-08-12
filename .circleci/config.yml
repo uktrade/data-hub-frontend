@@ -94,6 +94,10 @@ aliases:
     ARCHIVED_DOCUMENTS_BASE_URL: http://documents.example.com
     POSTCODE_KEY: fakeKey
     CACHE_ASSETS: 'true'
+    ELASTIC_APM_SERVICE_NAME: 'some-service'
+    ELASTIC_APM_SERVER_URL: https://some-service.com
+    ELASTIC_APM_SECRET_TOKEN: 12345
+    ELASTIC_APM_SERVER_TIMEOUT: 1
 
   - &data_hub_functional_envs
     <<: *data_hub_base_envs
