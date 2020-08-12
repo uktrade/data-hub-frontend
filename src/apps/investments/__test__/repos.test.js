@@ -7,7 +7,6 @@ const {
   createInvestmentProject,
   archiveInvestmentProject,
   unarchiveInvestmentProject,
-  fetchLargeCapitalProfiles,
 } = require('../../../apps/investments/repos')
 
 const companyData = require('../../../../test/unit/data/company.json')
@@ -115,13 +114,5 @@ describe('Investment repository', () => {
         investmentProjectAuditData
       )
     })
-  })
-
-  it('#fetchLargeCapitalProfiles', async () => {
-    nock(config.apiRoot)
-      .get(`/v4/large-investor-profile?limit=10&offset=0&sortby=modified_on`)
-      .reply(200, 'data')
-
-    expect(await fetchLargeCapitalProfiles('token', 10)).to.equal('data')
   })
 })
