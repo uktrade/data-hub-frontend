@@ -174,9 +174,9 @@ const envSchema = Joi.object({
   // Elastic APM service name used to label the service you want to monitor
   ELASTIC_APM_SERVICE_NAME: Joi.string().default('datahub-fe'),
   // Elastic APM server url is where you host the monitoring of transactions
-  ELASTIC_APM_SERVER_URL: Joi.string().uri(),
+  ELASTIC_APM_SERVER_URL: Joi.string().uri().required(),
   // Elastic APM secret token used to authenticate the service
-  ELASTIC_APM_SECRET_TOKEN: Joi.string(),
+  ELASTIC_APM_SECRET_TOKEN: Joi.string().required(),
   // Elastic APM server timeout used to timeout if no response is found after 20 secs
   ELASTIC_APM_SERVER_TIMEOUT: Joi.number().integer().default(20)
 })
