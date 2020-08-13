@@ -14,7 +14,7 @@ import {
 
 import FieldWrapper from '../FieldWrapper'
 import useField from '../../hooks/useField'
-import useFormContext from '../../hooks/useFormContext'
+import { useFormContext } from 'data-hub-components'
 import DateUtils from '../../../../utils/DateUtils'
 
 const DAY = 'day'
