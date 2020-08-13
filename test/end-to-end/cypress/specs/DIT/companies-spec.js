@@ -56,7 +56,7 @@ describe('Contacts', () => {
       'Phone number': '(44) 0778877778800',
       Address: "12 St George's Road, Paris, 75001, France",
       Email: 'company.contact@dit.com',
-      'Email marketing': 'Can be marketed to',
+      'Email marketing': 'Cannot be marketed to',
     })
   })
 
