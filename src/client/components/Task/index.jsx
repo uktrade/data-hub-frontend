@@ -220,7 +220,7 @@ Task.Status = ({
               errorMessage,
               retry: () => start({ payload, onSuccessDispatch }),
             })}
-          {!status && children()}
+          {status === 'finished' && children()}
         </>
       )
     }}
