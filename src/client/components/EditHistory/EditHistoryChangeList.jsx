@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { FONT_SIZE } from '@govuk-react/constants'
 import styled from 'styled-components'
-import { SummaryTable } from '../../components/'
+import SummaryTable from '../../components/SummaryTable'
 
 const StyledSummaryTable = styled(SummaryTable)`
   caption {

@@ -7,7 +7,8 @@ import Link from '@govuk-react/link'
 import { HEADING_SIZES, SPACING } from '@govuk-react/constants'
 import { GREY_2 } from 'govuk-colours'
 import Details from '@govuk-react/details'
-import { Badge, Metadata } from '../../components/'
+import Badge from '../Badge/'
+import Metadata from '../../components/Metadata/'
 
 const ItemWrapper = styled('div')`
   border-bottom: 1px solid ${GREY_2};

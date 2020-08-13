@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { ERROR_COLOUR } from 'govuk-colours'
-import Main from '../../../../../client/components/Main'
 
 import { FieldRadios, FormStateful, Step } from 'data-hub-components'
 
@@ -12,7 +11,7 @@ import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeade
 import Task from '../../../../../client/components/Task'
 import { companies, dashboard } from '../../../../../lib/urls'
 import { EDIT_ONE_LIST_DETAILS__SUBMIT } from '../../../../../client/actions'
-import { StatusMessage } from '../../../../../client/components/'
+import { StatusMessage, Main } from '../../../../../client/components/'
 
 import {
   state2props,

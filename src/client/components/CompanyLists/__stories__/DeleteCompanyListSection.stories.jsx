@@ -2,7 +2,7 @@ import React from 'react'
 import { action } from '@storybook/addon-actions'
 import { storiesOf } from '@storybook/react'
 
-import DeleteCompanyListSection from '../DeleteCompanyListSection.jsx'
+import DeleteCompanyListSection from '../DeleteCompanyListSection'
 import listWithMultipleItems from '../__fixtures__/list-with-multiple-items.json'
 import listWithSingleItem from '../__fixtures__/list-with-single-item.json'
 import listWithoutItems from '../__fixtures__/list-without-items.json'

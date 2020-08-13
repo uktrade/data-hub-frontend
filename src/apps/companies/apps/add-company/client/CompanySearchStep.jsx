@@ -5,7 +5,7 @@ import { Link } from 'govuk-react'
 import PropTypes from 'prop-types'
 import { get } from 'lodash'
 import { H3 } from '@govuk-react/heading'
-import { EntityListItem } from '../../../../../client/components/'
+import EntityListItem from '../../../../../client/components/EntityList/EntityListItem'
 import { FieldDnbCompany, Step, useFormContext } from 'data-hub-components'
 
 function DnbCompanyRenderer(props) {

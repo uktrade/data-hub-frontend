@@ -7,7 +7,7 @@ import VisuallyHidden from '@govuk-react/visually-hidden'
 import React from 'react'
 import LinesEllipsis from 'react-lines-ellipsis'
 import styled from 'styled-components'
-import { DateUtils } from '../../components'
+import DateUtils from '../../components/Utils/DateUtils'
 
 import urls from '../../../lib/urls'
 import SecondaryButton from '../SecondaryButton'

@@ -23,10 +23,9 @@ import { MANAGE_ADVISER__UPDATE } from '../../../../../client/actions'
 import urls from '../../../../../lib/urls'
 import Form from '../../../../../client/components/Form'
 import Task from '../../../../../client/components/Task'
-import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeader.jsx'
-import { Main } from '../../../../../client/components/'
+import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeader'
 import { addMessageWithBody } from '../../../../../client/utils/flash-messages'
-import { StatusMessage } from '../../../../../client/components/'
+import { StatusMessage, Main } from '../../../../../client/components/'
 
 const StyledStatusMessage = styled(StatusMessage)`
   p {

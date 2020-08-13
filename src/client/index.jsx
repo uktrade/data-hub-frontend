@@ -41,14 +41,13 @@ import ReferralHelp from '../apps/companies/apps/referrals/help/client/ReferralH
 import SendReferralForm from '../apps/companies/apps/referrals/send-referral/client/SendReferralForm'
 import InteractionReferralDetails from '../apps/companies/apps/referrals/details/client/InteractionReferralDetails.jsx'
 import PipelineForm from '../apps/my-pipeline/client'
-import CompanyLocalHeader from '../apps/companies/client/CompanyLocalHeader.jsx'
 import InvestmentProjectAdmin from '../apps/investments/views/admin/client/InvestmentProjectAdmin.jsx'
 import FlashMessages from './components/LocalHeader/FlashMessages.jsx'
 import ArchivePipelineItemForm from '../apps/my-pipeline/client/ArchivePipelineItemForm.jsx'
 import UnarchivePipelineItemForm from '../apps/my-pipeline/client/UnarchivePipelineItemForm.jsx'
 import DeletePipelineItemForm from '../apps/my-pipeline/client/DeletePipelineItemForm.jsx'
 
-import { ConnectedDropdownMenu } from './components/DropdownMenu'
+import ConnectedDropdownMenu from './components/DropdownMenu/ConnectedDropdownMenu'
 import tasks from './components/Task/reducer'
 import rootSaga from './root-saga'
 
@@ -69,6 +68,7 @@ import TabNav from './components/TabNav'
 
 import ReferralList from './components/ReferralList'
 import Dashboard from './components/Dashboard'
+import CompanyLocalHeader from './components/CompanyLocalHeader'
 
 import { ID as EXPORTS_WINS_ID } from '../apps/companies/apps/exports/client/ExportWins/state'
 import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/reducer'

@@ -12,7 +12,7 @@ import { GREY_2, GREY_4, LINK_COLOUR, LINK_HOVER_COLOUR } from 'govuk-colours'
 import { H3 } from '@govuk-react/heading'
 import InsetText from '@govuk-react/inset-text'
 
-import { Metadata } from 'data-hub-components'
+import Metadata from '../../components/Metadata/'
 
 const KEY_ENTER = 13
 
