@@ -5,6 +5,7 @@ import { object, text, withKnobs } from '@storybook/addon-knobs'
 import Button from '@govuk-react/button'
 
 import FieldSelect from '../FieldSelect'
+import FieldInput from '../FieldInput'
 import FormStateful from '../FormStateful'
 import FieldInput from '../FieldInput'
 
