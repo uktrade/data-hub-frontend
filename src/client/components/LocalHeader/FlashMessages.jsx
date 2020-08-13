@@ -14,7 +14,7 @@ import {
 import { FONT_WEIGHTS } from '@govuk-react/constants/lib/typography'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 import UnorderedList from '@govuk-react/unordered-list'
-import { StatusMessage } from '../../components/'
+import StatusMessage from '../../components/StatusMessage'
 import { getMessages, clearMessages } from '../../utils/flash-messages'
 
 const StyledBody = styled('p')`

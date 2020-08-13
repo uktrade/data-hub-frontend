@@ -1,6 +1,6 @@
 import React from 'react'
 import multiInstance from '../../../client/utils/multiinstance'
-import DropdownMenu from './DropdownMenu'
+import DropdownMenu from '../../components/DropdownMenu'
 import {
   DROP_DOWN_MENU_TOGGLE,
   DROP_DOWN_MENU_OPEN,

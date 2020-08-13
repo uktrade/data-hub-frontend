@@ -10,8 +10,9 @@ import url from 'url'
 import { ID as STATE_ID } from './state'
 
 import SecondaryButton from '../../../../../../client/components/SecondaryButton'
-import { SummaryTable, DateUtils } from '../../../../../../client/components/'
+import { SummaryTable } from '../../../../../../client/components/'
 import Task from '../../../../../../client/components/Task'
+import DateUtils from '../../../../../../client/components/Utils/DateUtils'
 
 import { REFERRAL_DETAILS } from '../../../../../../client/actions'
 
