@@ -26,6 +26,16 @@ aliases:
       command: node ./test/sandbox/server.js
       background: true
 
+  - &start_api_sandbox_e2e
+    run:
+      name: Start API sandbox
+      command: | 
+        echo 'export SANDBOX_PORT=8888' >> $BASH_ENV
+        source $BASH_ENV
+        node ./test/sandbox/server.js
+      background: true
+
+
   - &start_frontend
     run:
       name: Start data hub frontend
@@ -133,42 +143,52 @@ aliases:
       - MOCK_SSO_SCOPE: 'data-hub:internal-front-end'
       - MOCK_SSO_TOKEN: 123
 
+  - &docker_data_hub_backend_env
+    AWS_DEFAULT_REGION: eu-west-2
+    AWS_ACCESS_KEY_ID: foo
+    AWS_SECRET_ACCESS_KEY: bar
+    DATABASE_URL: postgresql://postgres:datahub@postgres/datahub
+    MI_DATABASE_URL: postgresql://postgres:datahub@mi-postgres/mi
+    DEBUG: 'False'
+    DEFAULT_BUCKET: baz
+    DJANGO_SECRET_KEY: topSecret
+    DJANGO_SETTINGS_MODULE: config.settings.local
+    ENABLE_CELERY_ES_SYNC_OBJECT: 'True'
+    ES_INDEX_PREFIX: test_index
+    ES5_URL: http://es:9200
+    POSTGRES_URL: tcp://postgres:5432
+    MI_POSTGRES_URL: tcp://mi-postgres:5432
+    REDIS_BASE_URL: redis://redis:6379
+    REDIS_CACHE_DB: 5
+    REDIS_CELERY_DB: 6
+    SSO_ENABLED: 'True'
+    RESOURCE_SERVER_INTROSPECTION_URL: http://localhost:8080/o/introspect # required but not used as user with token has been created in backend setup script
+    RESOURCE_SERVER_AUTH_TOKEN: sso-token
+    STAFF_SSO_BASE_URL: http://localhost:8080/
+    STAFF_SSO_AUTH_TOKEN: sso-token
+    WEB_CONCURRENCY: 2
+    ACTIVITY_STREAM_ACCESS_KEY_ID: some-id
+    ACTIVITY_STREAM_SECRET_ACCESS_KEY: some-secret
+    DISABLE_PAAS_IP_CHECK: 'True'
+    DATA_HUB_FRONTEND_ACCESS_KEY_ID: frontend-key-id
+    DATA_HUB_FRONTEND_SECRET_ACCESS_KEY: frontend-key
+    ADMIN_OAUTH2_ENABLED: 'False'
+    ES_APM_ENABLED: 'False'
+    COLUMNS: 80 # Workaround for Docker/CircleCI compatibility problem with Python 3.8
+    CONSENT_SERVICE_BASE_URL: http://localhost:8888
+    CONSENT_SERVICE_HAWK_ID: dummyId
+    CONSENT_SERVICE_HAWK_KEY: dummyKey
+    DNB_SERVICE_BASE_URL: http://localhost:8888
+    DNB_SERVICE_TOKEN: dummyToken
+    COMPANY_MATCHING_SERVICE_BASE_URL: http://localhost:8888
+    COMPANY_MATCHING_HAWK_ID: dummyId
+    COMPANY_MATCHING_HAWK_KEY: dummyKey
+
   # Data hub backend
   - &docker_data_hub_backend_base
     image: *api_image
-    environment:
-      AWS_DEFAULT_REGION: eu-west-2
-      AWS_ACCESS_KEY_ID: foo
-      AWS_SECRET_ACCESS_KEY: bar
-      DATABASE_URL: postgresql://postgres:datahub@postgres/datahub
-      MI_DATABASE_URL: postgresql://postgres:datahub@mi-postgres/mi
-      DEBUG: 'False'
-      DEFAULT_BUCKET: baz
-      DJANGO_SECRET_KEY: topSecret
-      DJANGO_SETTINGS_MODULE: config.settings.local
-      ENABLE_CELERY_ES_SYNC_OBJECT: 'True'
-      ES_INDEX_PREFIX: test_index
-      ES5_URL: http://es:9200
-      POSTGRES_URL: tcp://postgres:5432
-      MI_POSTGRES_URL: tcp://mi-postgres:5432
-      REDIS_BASE_URL: redis://redis:6379
-      REDIS_CACHE_DB: 5
-      REDIS_CELERY_DB: 6
-      SSO_ENABLED: 'True'
-      RESOURCE_SERVER_INTROSPECTION_URL: http://localhost:8080/o/introspect # required but not used as user with token has been created in backend setup script
-      RESOURCE_SERVER_AUTH_TOKEN: sso-token
-      STAFF_SSO_BASE_URL: http://localhost:8080/
-      STAFF_SSO_AUTH_TOKEN: sso-token
-      WEB_CONCURRENCY: 2
-      ACTIVITY_STREAM_ACCESS_KEY_ID: some-id
-      ACTIVITY_STREAM_SECRET_ACCESS_KEY: some-secret
-      DISABLE_PAAS_IP_CHECK: 'True'
-      DATA_HUB_FRONTEND_ACCESS_KEY_ID: frontend-key-id
-      DATA_HUB_FRONTEND_SECRET_ACCESS_KEY: frontend-key
-      ADMIN_OAUTH2_ENABLED: 'False'
-      ES_APM_ENABLED: 'False'
-      # Workaround for Docker/CircleCI compatibility problem with Python 3.8
-      COLUMNS: 80
+    environment: *docker_data_hub_backend_env
+      
 
   - &docker_data_hub_backend_api
     <<: *docker_data_hub_backend_base
@@ -342,6 +362,7 @@ jobs:
       - checkout
       - run: npm ci
       - run: npm run build
+      - *start_api_sandbox_e2e
       - *wait_for_backend
       - *wait_for_mock_sso
       - *start_frontend
@@ -375,6 +396,7 @@ jobs:
       - checkout
       - run: npm ci
       - run: npm run build
+      - *start_api_sandbox_e2e
       - *wait_for_backend
       - *wait_for_mock_sso
       - *start_frontend
@@ -408,6 +430,7 @@ jobs:
       - checkout
       - run: npm ci
       - run: npm run build
+      - *start_api_sandbox_e2e
       - *wait_for_backend
       - *wait_for_mock_sso
       - *start_frontend

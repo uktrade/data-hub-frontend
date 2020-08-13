@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const _ = require('lodash')
 
 const config = {
-  PORT: process.env.PORT || 8000,
+  PORT: process.env.SANDBOX_PORT || 8000,
 }
 
 const app = express()
@@ -53,6 +53,9 @@ var v4SearchLargeInvestorProfiles = require('./routes/v4/search/large-investor-p
 var v4SearchExports = require('./routes/v4/search/export')
 var v4referralList = require('./routes/v4/referrals/list.js')
 var v4pipelineItem = require('./routes/v4/pipeline-item/index.js')
+
+// Datahub API 3rd party dependencies
+var consentService = require('./routes/api/consentService.js')
 
 // Data store service (github.com/uktrade/data-store-service)
 app.get('/api/v1/get-postcode-data/', postcode.toRegion)
@@ -453,6 +456,10 @@ app.delete(
   '/v4/pipeline-item/:pipelineItemId',
   v4pipelineItem.deletePipelineItem
 )
+
+app.post('/api/v1/person', consentService.person)
+app.get('/api/v1/person/bulk_lookup', consentService.bulkPerson)
+
 app.use((req, res) =>
   res.status(404).json({ message: 'Route' + req.url + ' Not found.' })
 )
