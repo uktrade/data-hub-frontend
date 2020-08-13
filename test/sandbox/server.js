@@ -459,7 +459,6 @@ app.delete(
 
 app.post('/api/v1/person', consentService.person)
 app.get('/api/v1/person/bulk_lookup', consentService.bulkPerson)
-app.post('/api/v1/person/bulk_lookup', consentService.bulkPerson)
 
 app.use((req, res) =>
   res.status(404).json({ message: 'Route' + req.url + ' Not found.' })
