@@ -47,7 +47,7 @@ describe('Investor profiles', () => {
 
   context('When there are 12 profiles and viewing the second page', () => {
     before(() => {
-      cy.visit(`${investments.profiles.index()}?page=2`)
+      cy.visit(investments.profiles.index())
     })
 
     it('should render the header', () => {
@@ -65,6 +65,12 @@ describe('Investor profiles', () => {
     it('should render the local navigation', () => {
       assertTabbedLocalNav('Projects')
       assertTabbedLocalNav('Investor profiles')
+    })
+
+    it('should be able to navigate to the second page', () => {
+      cy.get('ul:last li a')
+        .contains('2')
+        .click()
     })
 
     it('should display 2 profiles', () => {

@@ -1,6 +1,3 @@
-const { fetchLargeCapitalProfiles } = require('../repos')
-const { transformLargeCapitalProfiles } = require('../transformers/profiles')
-
 const renderProfilesView = async (req, res, next) => {
   try {
     res
@@ -11,24 +8,4 @@ const renderProfilesView = async (req, res, next) => {
   }
 }
 
-const fetchLargeCapitalProfilesHandler = async (req, res, next) => {
-  try {
-    const { token } = req.session
-    const { page } = req.query
-
-    const { count, results } = await fetchLargeCapitalProfiles(
-      token,
-      10,
-      parseInt(page, 10)
-    )
-
-    res.json({
-      count: count || 0,
-      results: results ? results.map(transformLargeCapitalProfiles) : [],
-    })
-  } catch (error) {
-    next(error)
-  }
-}
-
-module.exports = { renderProfilesView, fetchLargeCapitalProfilesHandler }
+module.exports = { renderProfilesView }

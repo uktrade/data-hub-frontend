@@ -55,9 +55,7 @@ function ExportWins(state) {
 }
 
 export default connect(state2props, (dispatch) => ({
-  onPageClick: (page, event) => {
-    event.target.blur()
-    event.preventDefault()
+  onPageClick: (page) => {
     dispatch({
       type: EXPORT_WINS__SELECT_PAGE,
       page,

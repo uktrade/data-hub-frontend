@@ -104,6 +104,9 @@ import manageAdviserReducer from '../apps/companies/apps/advisers/client/reducer
 import { ID as DNB_CHECK_ID } from '../apps/companies/apps/business-details/client/state'
 import dnbCheckReducer from '../apps/companies/apps/business-details/client/reducer'
 
+import { ID as INVESTMENT_PROFILES_ID } from '../apps/investments/client/state'
+import investmentProfileReducer from '../apps/investments/client/reducer'
+
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
   // The baseURI is set to the <base/> tag by the spaFallbackSpread
@@ -142,6 +145,7 @@ const store = createStore(
     [INVESTEMENT_PROJECT_ADMIN_ID]: investmentProjectAdminReducer,
     [MANAGE_ADVISER_ID]: manageAdviserReducer,
     [DNB_CHECK_ID]: dnbCheckReducer,
+    [INVESTMENT_PROFILES_ID]: investmentProfileReducer,
   }),
   {
     referrerUrl: window.document.referrer,

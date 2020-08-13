@@ -88,18 +88,6 @@ async function updateInvestmentTeamMembers(
   })
 }
 
-async function fetchLargeCapitalProfiles(token, limit, page = 1) {
-  const offset = limit * (page - 1)
-  return authorisedRequest(token, {
-    url: `${config.apiRoot}/v4/large-investor-profile`,
-    qs: {
-      limit,
-      offset,
-      sortby: 'modified_on',
-    },
-  })
-}
-
 module.exports = {
   getCompanyInvestmentProjects,
   getInvestment,
@@ -110,5 +98,4 @@ module.exports = {
   archiveInvestmentProject,
   unarchiveInvestmentProject,
   updateInvestmentTeamMembers,
-  fetchLargeCapitalProfiles,
 }

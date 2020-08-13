@@ -17,54 +17,52 @@ const Wrapper = styled('div')`
   margin-top: ${SPACING.SCALE_3};
 `
 
+function ExportsHistory({
+  count,
+  results,
+  onPageClick,
+  activePage,
+  companyId,
+  countryId,
+  pageTitle,
+}) {
+  return (
+    <Wrapper>
+      <Task.Status
+        name="Exports history"
+        id="exportsHistory"
+        progressMessage="loading Exports History"
+        startOnRender={{
+          payload: { companyId, countryId, activePage },
+          onSuccessDispatch: EXPORTS_HISTORY__LOADED,
+        }}
+      >
+        {() => (
+          <>
+            <InsetText>
+              You can only see the history of countries that were added or
+              edited after 6th February 2020
+            </InsetText>
+            <H2 size={LEVEL_SIZE[3]}>{pageTitle}</H2>
+            <CollectionList
+              itemName="result"
+              items={results}
+              totalItems={count}
+              onPageClick={onPageClick}
+              activePage={activePage}
+            />
+          </>
+        )}
+      </Task.Status>
+    </Wrapper>
+  )
+}
+
 export default connect(state2props, (dispatch) => ({
-  onPageClick: (page, event) => {
-    event.target.blur()
-    event.preventDefault()
+  onPageClick: (page) => {
     dispatch({
       type: EXPORTS_HISTORY__SELECT_PAGE,
       page,
     })
   },
-}))(
-  ({
-    count,
-    results,
-    onPageClick,
-    activePage,
-    companyId,
-    countryId,
-    pageTitle,
-  }) => {
-    return (
-      <Wrapper>
-        <Task.Status
-          name="Exports history"
-          id="exportsHistory"
-          progressMessage="loading Exports History"
-          startOnRender={{
-            payload: { companyId, countryId, activePage },
-            onSuccessDispatch: EXPORTS_HISTORY__LOADED,
-          }}
-        >
-          {() => (
-            <>
-              <InsetText>
-                You can only see the history of countries that were added or
-                edited after 6th February 2020
-              </InsetText>
-              <H2 size={LEVEL_SIZE[3]}>{pageTitle}</H2>
-              <CollectionList
-                itemName="result"
-                items={results}
-                totalItems={count}
-                onPageClick={onPageClick}
-                activePage={activePage}
-              />
-            </>
-          )}
-        </Task.Status>
-      </Wrapper>
-    )
-  }
-)
+}))(ExportsHistory)

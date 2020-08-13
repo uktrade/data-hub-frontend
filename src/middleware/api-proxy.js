@@ -24,6 +24,7 @@ const WHITELIST = [
   '/v3/contact',
   '/v4/company/:id/assign-regional-account-manager',
   '/v4/dnb/company-change-request',
+  '/v4/large-investor-profile',
 ]
 
 module.exports = (app) => {

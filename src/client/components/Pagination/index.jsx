@@ -84,8 +84,11 @@ function Pagination({ totalPages, activePage, onPageClick, getPageUrl }) {
         {visiblePieces.map(
           ({ type, pageNumber, isActive, isDisabled }, index) => {
             const key = `${type}-${index}`
-            const onClick = (event) => onPageClick(pageNumber, event)
-
+            const onClick = (event) => {
+              event.target.blur()
+              event.preventDefault()
+              onPageClick(pageNumber)
+            }
             const PageNumberLink = isActive
               ? StyledActivePaginationLink
               : StyledPaginationLink
