@@ -9,7 +9,7 @@ import { MEDIA_QUERIES } from '@govuk-react/constants'
 import FormGroup from '@govuk-react/form-group'
 import styled from 'styled-components'
 
-import useFormContext from '../../hooks/useFormContext'
+import { useFormContext } from 'data-hub-components'
 import useAddressSearch from '../../../AddressSearch/useAddressSearch'
 import usePostcodeLookup from '../../../AddressSearch/usePostcodeLookup'
 import FieldInput from '../FieldInput'
