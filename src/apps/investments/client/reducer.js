@@ -1,6 +1,6 @@
 import {
   INVESTMENTS__PROFILES_LOADED,
-  INVESTMENTS__PROFILE_SELECT_PAGE,
+  INVESTMENTS__PROFILES_SELECT_PAGE,
 } from '../../../client/actions'
 import { transformLargeCapitalProfiles } from '../transformers/profiles'
 
@@ -20,7 +20,7 @@ export default (state = initialState, { type, result, page }) => {
         results: result?.results?.map(transformLargeCapitalProfiles),
         isComplete: true,
       }
-    case INVESTMENTS__PROFILE_SELECT_PAGE:
+    case INVESTMENTS__PROFILES_SELECT_PAGE:
       return {
         ...state,
         page,
