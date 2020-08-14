@@ -362,8 +362,8 @@ jobs:
       - *docker_mock_sso
       - *docker_data_hub_backend_api
       - *docker_data_hub_backend_celery
-      parallelism: 3
-      steps:
+    parallelism: 3
+    steps:
       - checkout
       - run: npm ci
       - run: npm run build
@@ -374,7 +374,7 @@ jobs:
       - *wait_for_frontend
       - run:
           name: Run DIT staff e2e tests
-          command: npm run test:e2e:dit -- --parallel --record --key $CYPRESS_DASHBOARD_KEY --ci-build-id $CIRCLE_BUILD_NUMBER
+          command: npm run test:e2e:dit -- --browser chrome --parallel --record --key $CYPRESS_DASHBOARD_KEY --ci-build-id $CIRCLE_BUILD_NUM
       - store_test_results:
           path: cypress-coverage
       - store_artifacts:
