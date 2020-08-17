@@ -7,8 +7,7 @@ import { H2 } from '@govuk-react/heading'
 import { BLACK, GREY_3 } from 'govuk-colours'
 import { HEADING_SIZES } from '@govuk-react/constants'
 import CollectionHeaderRow from './CollectionHeaderRow'
-
-const { NumberUtils } = require('data-hub-components')
+import { NumberUtils } from '../../../client/components'
 
 const StyledHeaderText = styled(H2)`
   margin-top: 0;
