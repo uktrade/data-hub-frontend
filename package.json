@@ -157,7 +157,7 @@
     "vue-multiselect": "^2.1.0",
     "vue-template-compiler": "^2.5.13",
     "wdio-chromedriver-service": "^6.0.3",
-    "webpack": "^4.43.0",
+    "webpack": "^4.44.1",
     "webpack-assets-manifest": "^3.1.1",
     "webpack-cli": "^3.3.12",
     "winston": "^2.4.2"
