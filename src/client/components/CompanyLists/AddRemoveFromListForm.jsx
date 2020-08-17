@@ -9,7 +9,7 @@ import {
   FieldRadios,
   FieldInput,
   FormActions,
-} from 'data-hub-components'
+} from '../../../client/components'
 
 const AddRemoveFromListForm = ({
   list,

@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions'
 import { withKnobs } from '@storybook/addon-knobs'
 import Button from '@govuk-react/button'
 
-import { FormStateful } from 'data-hub-components'
+import { FormStateful } from '../../../'
 import FieldTypeahead from '../FieldTypeahead'
 
 import exampleReadme from '../FieldTypeahead/example.md'

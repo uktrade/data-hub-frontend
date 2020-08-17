@@ -73,7 +73,7 @@ import CompanyLocalHeader from './components/CompanyLocalHeader'
 import { ID as EXPORTS_WINS_ID } from '../apps/companies/apps/exports/client/ExportWins/state'
 import exportWinsReducer from '../apps/companies/apps/exports/client/ExportWins/reducer'
 
-import Form from './components/Form'
+import { MultiInstanceForm } from './components'
 
 import { ID as EXPORT_COUNTRIES_EDIT_ID } from '../apps/companies/apps/exports/client/ExportCountriesEdit/state'
 import exportCountriesEditReducer from '../apps/companies/apps/exports/client/ExportCountriesEdit/reducer'
@@ -137,7 +137,7 @@ const store = createStore(
     [PIPELINE_LIST_ID]: pipelineListReducer,
     ...TabNav.reducerSpread,
     ...ReferralList.reducerSpread,
-    ...Form.reducerSpread,
+    ...MultiInstanceForm.reducerSpread,
     ...ConnectedDropdownMenu.reducerSpread,
 
     // A reducer is required to be able to set a preloadedState parameter

@@ -9,9 +9,9 @@ import {
   FieldInput,
   FieldTypeahead,
   FieldDate,
-} from 'data-hub-components'
+  MultiInstanceForm,
+} from '../../../client/components'
 
-import Form from '../../../client/components/Form'
 import { ID as STATE_ID } from './state'
 import { STATUS_VALUES, LIKELIHOOD_VALUES } from './constants'
 
@@ -32,7 +32,11 @@ function PipelineForm({
   contacts = [],
 }) {
   return (
-    <Form id={STATE_ID} onSubmit={onSubmit} submissionError={submissionError}>
+    <MultiInstanceForm
+      id={STATE_ID}
+      onSubmit={onSubmit}
+      submissionError={submissionError}
+    >
       <FieldInput
         label="Project name"
         name="name"
@@ -109,7 +113,7 @@ function PipelineForm({
         </Button>
         <Link href={cancelLink}>Cancel</Link>
       </FormActions>
-    </Form>
+    </MultiInstanceForm>
   )
 }
 

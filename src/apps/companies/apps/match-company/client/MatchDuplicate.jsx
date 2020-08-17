@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import Button from '@govuk-react/button'
 import { ErrorSummary, UnorderedList } from 'govuk-react'
 import { SPACING } from '@govuk-react/constants'
-import { FormStateful, FormActions } from 'data-hub-components'
+import { FormStateful, FormActions } from '../../../../../client/components'
 
 import urls from '../../../../../lib/urls'
 

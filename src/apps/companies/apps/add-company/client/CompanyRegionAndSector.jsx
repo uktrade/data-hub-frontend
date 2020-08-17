@@ -3,8 +3,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Step, FieldSelect } from 'data-hub-components'
 
+import { Step, FieldSelect } from '../../../../../client/components'
 import Task from '../../../../../client/components/Task'
 import { ADD_COMPANY__REGION_LOADED } from '../../../../../client/actions'
 import { ID, TASK_POSTCODE_TO_REGION } from './state'

@@ -1,8 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Paragraph from '@govuk-react/paragraph'
-import FieldWrapper from 'data-hub-components/dist/forms/elements/FieldWrapper'
-import { FieldAddress, FieldInput, FieldSelect } from 'data-hub-components'
+
+import {
+  FieldAddress,
+  FieldInput,
+  FieldSelect,
+  FieldWrapper,
+} from '../../../../../client/components'
 import { WEBSITE_REGEX } from '../../add-company/client/constants'
 
 const websiteValidator = (value) =>

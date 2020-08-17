@@ -8,7 +8,7 @@ import {
 } from '@govuk-react/constants'
 import { ERROR_COLOUR } from 'govuk-colours'
 
-import { useField, useFormContext } from 'data-hub-components'
+import { useField, useFormContext } from '../../hooks'
 import FieldWrapper from '../FieldWrapper'
 import Typeahead from '../../../Typeahead/Typeahead'
 

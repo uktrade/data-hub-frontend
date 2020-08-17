@@ -13,7 +13,7 @@ import {
   FieldSelect,
   FormStateful,
   Step,
-} from 'data-hub-components'
+} from '../../../../../client/components'
 
 import CompanyFoundStep from './CompanyFoundStep'
 import CompanyNotFoundStep from './CompanyNotFoundStep'

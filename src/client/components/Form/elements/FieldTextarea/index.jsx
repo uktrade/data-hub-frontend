@@ -10,7 +10,7 @@ import {
 } from '@govuk-react/constants'
 import { ERROR_COLOUR } from 'govuk-colours'
 
-import useField from '../../hooks/useField'
+import { useField } from '../../hooks'
 import FieldWrapper from '../FieldWrapper'
 
 const StyledTextareaWrapper = styled('div')`

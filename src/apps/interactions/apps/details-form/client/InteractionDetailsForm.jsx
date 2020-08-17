@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { LoadingBox } from 'govuk-react'
 import { connect } from 'react-redux'
 
-import Form from '../../../../../client/components/Form'
+import { MultiInstanceForm } from '../../../../../client/components'
 import StepInteractionType from './StepInteractionType'
 import StepInteractionDetails from './StepInteractionDetails'
 import Task from '../../../../../client/components/Task'
@@ -72,7 +72,7 @@ const InteractionDetailsForm = ({
         const openContactFormTask = getTask(TASK_OPEN_CONTACT_FORM, STATE_ID)
 
         return (
-          <Form
+          <MultiInstanceForm
             id={STATE_ID}
             initialValues={initialValues}
             onSubmit={(values) => {
@@ -90,12 +90,12 @@ const InteractionDetailsForm = ({
             {({ values, currentStep }) => (
               <LoadingBox loading={progress}>
                 {(!initialValues.theme || !initialValues.kind) && (
-                  <Form.Step name="interaction_type">
+                  <MultiInstanceForm.Step name="interaction_type">
                     {() => <StepInteractionType />}
-                  </Form.Step>
+                  </MultiInstanceForm.Step>
                 )}
 
-                <Form.Step
+                <MultiInstanceForm.Step
                   name="interaction_details"
                   forwardButton={
                     initialValues.id ? 'Save interaction' : 'Add interaction'
@@ -120,10 +120,10 @@ const InteractionDetailsForm = ({
                       {...props}
                     />
                   )}
-                </Form.Step>
+                </MultiInstanceForm.Step>
               </LoadingBox>
             )}
-          </Form>
+          </MultiInstanceForm>
         )
       }}
     </Task>

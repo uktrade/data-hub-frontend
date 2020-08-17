@@ -16,16 +16,20 @@ import {
   UnorderedList,
 } from 'govuk-react'
 
-import { FormActions, FieldInput, FieldTypeahead } from 'data-hub-components'
-
 import { ID as STATE_ID, TASK_UPDATE_ADVISER, state2props } from './state'
 import { MANAGE_ADVISER__UPDATE } from '../../../../../client/actions'
 import urls from '../../../../../lib/urls'
-import Form from '../../../../../client/components/Form'
 import Task from '../../../../../client/components/Task'
 import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeader'
+import {
+  FormActions,
+  FieldInput,
+  FieldTypeahead,
+  StatusMessage,
+  Main,
+  MultiInstanceForm,
+} from '../../../../../client/components'
 import { addMessageWithBody } from '../../../../../client/utils/flash-messages'
-import { StatusMessage, Main } from '../../../../../client/components/'
 
 const StyledStatusMessage = styled(StatusMessage)`
   p {
@@ -100,7 +104,7 @@ const Add = ({
                   </>
                 )}
                 <LoadingBox loading={isLeadITAUpdated}>
-                  <Form
+                  <MultiInstanceForm
                     id={STATE_ID}
                     onSubmit={(values) => {
                       updateStageTask.start({
@@ -176,7 +180,7 @@ const Add = ({
                       <Button>Add Lead ITA</Button>
                       <Link href={cancelUrl}>Cancel</Link>
                     </FormActions>
-                  </Form>
+                  </MultiInstanceForm>
                 </LoadingBox>
               </>
             )
