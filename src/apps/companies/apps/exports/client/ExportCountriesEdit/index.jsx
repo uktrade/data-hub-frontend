@@ -3,9 +3,8 @@ import { connect } from 'react-redux'
 import { Button, Link } from 'govuk-react'
 import { ERROR_COLOUR } from 'govuk-colours'
 import styled from 'styled-components'
-import { FormActions, FieldTypeahead, FormStateful } from 'data-hub-components'
 
-import Task from '../../../../../../client/components/Task/index.jsx'
+import Task from '../../../../../../client/components/Task'
 import { EXPORT_COUNTRIES_EDIT__SAVE } from '../../../../../../client/actions'
 import {
   state2props,
@@ -16,7 +15,12 @@ import {
   SAVED,
 } from './state'
 import urls from '../../../../../../lib/urls'
-import { StatusMessage } from '../../../../../../client/components/'
+import {
+  StatusMessage,
+  FormActions,
+  FieldTypeahead,
+  FormStateful,
+} from '../../../../../../client/components/'
 
 const StyledH2 = styled.h2`
   font-weight: bold;

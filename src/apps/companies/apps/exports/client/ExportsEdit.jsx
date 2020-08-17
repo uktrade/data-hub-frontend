@@ -1,9 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Button, Link } from 'govuk-react'
-import { SPACING_POINTS } from '@govuk-react/constants'
-import { FormActions, FieldSelect, FormStateful } from 'data-hub-components'
 import axios from 'axios'
+import { SPACING_POINTS } from '@govuk-react/constants'
+import {
+  FormActions,
+  FieldSelect,
+  FormStateful,
+} from '../../../../../client/components'
 
 import GreatProfile from './GreatProfile'
 import urls from '../../../../../lib/urls'

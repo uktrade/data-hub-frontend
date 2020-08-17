@@ -3,8 +3,13 @@
 import React from 'react'
 import { Details } from 'govuk-react'
 import PropTypes from 'prop-types'
-import { FieldInput, FieldRadios, Step } from 'data-hub-components'
-import FieldAddress from 'data-hub-components/dist/forms/elements/FieldAddress'
+
+import {
+  Step,
+  FieldInput,
+  FieldRadios,
+  FieldAddress,
+} from '../../../../../client/components'
 
 import { WEBSITE_REGEX } from './constants'
 

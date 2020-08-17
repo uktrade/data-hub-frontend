@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { FormActions } from 'data-hub-components'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import LoadingBox from '@govuk-react/loading-box'
@@ -10,10 +9,13 @@ import { SPACING } from '@govuk-react/constants'
 
 import urls from '../../../lib/urls'
 import Task from '../../../client/components/Task'
-import Form from '../../../client/components/Form'
 import { PIPELINE__UNARCHIVE_ITEM } from '../../../client/actions'
 
-import { Main } from '../../../client/components/'
+import {
+  Main,
+  MultiInstanceForm,
+  FormActions,
+} from '../../../client/components'
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 
 import {
@@ -78,7 +80,7 @@ function UnarchivePipelineItemForm({
                     <PipelineDetails
                       item={currentPipelineItem}
                     ></PipelineDetails>
-                    <Form
+                    <MultiInstanceForm
                       id={STATE_ID}
                       onSubmit={() => {
                         unarchivePipelineItem.start({
@@ -97,7 +99,7 @@ function UnarchivePipelineItemForm({
                           Cancel
                         </Link>
                       </FormActions>
-                    </Form>
+                    </MultiInstanceForm>
                   </LoadingBox>
                 )}
               </GetPipelineData>
