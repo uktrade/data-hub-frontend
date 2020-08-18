@@ -4,11 +4,14 @@ import { connect } from 'react-redux'
 
 import { InsetText, H4, Button, Link } from 'govuk-react'
 import { SPACING } from '@govuk-react/constants'
-import { FieldRadios, FormActions } from 'data-hub-components'
 import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeader.jsx'
-import Form from '../../../../../client/components/Form'
 import Task from '../../../../../client/components/Task'
-import { Main } from '../../../../../client/components/'
+import {
+  Main,
+  MultiInstanceForm,
+  FieldRadios,
+  FormActions,
+} from '../../../../../client/components'
 import { ID as STATE_ID, TASK_UPDATE_STAGE, state2props } from './state'
 import { INVESTMENT_PROJECT_ADMIN__UPDATE_STAGE } from '../../../../../client/actions'
 import urls from '../../../../../lib/urls'
@@ -60,7 +63,7 @@ const InvestmentProjectAdmin = ({
                 <p>Project name: {projectName}</p>
                 <StyledP>Current stage: {projectStage.name}</StyledP>
               </InsetText>
-              <Form
+              <MultiInstanceForm
                 id={STATE_ID}
                 onSubmit={(values) => {
                   updateStageTask.start({
@@ -82,7 +85,7 @@ const InvestmentProjectAdmin = ({
                     Cancel
                   </Link>
                 </FormActions>
-              </Form>
+              </MultiInstanceForm>
             </Main>
           </>
         )

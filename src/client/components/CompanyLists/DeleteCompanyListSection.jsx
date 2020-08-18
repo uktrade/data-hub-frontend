@@ -10,7 +10,7 @@ import Paragraph from '@govuk-react/paragraph'
 import UnorderedList from '@govuk-react/unordered-list'
 import pluralize from 'pluralize'
 
-import { FormActions } from 'data-hub-components'
+import { FormActions } from '../../../client/components'
 
 const DeleteCompanyListSection = ({
   companyList,

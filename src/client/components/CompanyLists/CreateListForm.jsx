@@ -2,7 +2,11 @@ import React from 'react'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import PropTypes from 'prop-types'
-import { FormStateful, FieldInput, FormActions } from 'data-hub-components'
+import {
+  FormStateful,
+  FieldInput,
+  FormActions,
+} from '../../../client/components'
 
 const CreateListForm = ({
   name,

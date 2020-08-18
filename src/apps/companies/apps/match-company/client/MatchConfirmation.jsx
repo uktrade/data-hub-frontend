@@ -12,8 +12,11 @@ import { SPACING } from '@govuk-react/constants'
 import ErrorSummary from '@govuk-react/error-summary'
 import Details from '@govuk-react/details'
 
-import { FormStateful, FormActions } from 'data-hub-components'
-import { SummaryList } from '../../../../../client/components/'
+import {
+  SummaryList,
+  FormStateful,
+  FormActions,
+} from '../../../../../client/components'
 import urls from '../../../../../lib/urls'
 import MatchDuplicate from './MatchDuplicate'
 

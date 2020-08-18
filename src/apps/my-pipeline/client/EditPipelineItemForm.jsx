@@ -22,7 +22,7 @@ import { PipelineItemPropType } from './constants'
 import { getPipelineUrl } from './utils'
 import moment from 'moment'
 
-import { Main } from '../../../client/components/'
+import { Main } from '../../../client/components'
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 
 function formatInitialValues(values) {

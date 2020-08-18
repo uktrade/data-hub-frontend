@@ -7,9 +7,8 @@ import { SEND_REFERRAL_FORM__SUBMIT } from '../../../../../../client/actions'
 import StepReferralDetails from './StepReferralDetails'
 import StepReferralConfirmation from './StepReferralConfirmation'
 import LocalHeader from '../../../../../../client/components/LocalHeader/LocalHeader'
-import { Main } from '../../../../../../client/components/'
+import { Main, MultiInstanceForm } from '../../../../../../client/components/'
 import { companies, dashboard } from '../../../../../../lib/urls'
-import Form from '../../../../../../client/components/Form'
 import Task from '../../../../../../client/components/Task'
 import Analytics from '../../../../../../client/components/Analytics/index.jsx'
 import { addMessageWithBody } from '../../../../../../client/utils/flash-messages'
@@ -69,7 +68,7 @@ const SendReferralForm = ({
             return (
               <Analytics>
                 {(pushData) => (
-                  <Form
+                  <MultiInstanceForm
                     id={STATE_ID}
                     onSubmit={(values) => {
                       const receivingAdviserTeamName = values.adviser.label?.split(
@@ -94,7 +93,10 @@ const SendReferralForm = ({
                   >
                     {() => (
                       <LoadingBox loading={progress}>
-                        <Form.Step name="referral_details" forwardButton={null}>
+                        <MultiInstanceForm.Step
+                          name="referral_details"
+                          forwardButton={null}
+                        >
                           {() => (
                             <StepReferralDetails
                               cancelUrl={cancelUrl}
@@ -103,8 +105,8 @@ const SendReferralForm = ({
                               openContactFormTask={openContactFormTask}
                             />
                           )}
-                        </Form.Step>
-                        <Form.Step
+                        </MultiInstanceForm.Step>
+                        <MultiInstanceForm.Step
                           name="referral_confirmation"
                           forwardButton={null}
                           backButton={null}
@@ -112,10 +114,10 @@ const SendReferralForm = ({
                           {() => (
                             <StepReferralConfirmation cancelUrl={cancelUrl} />
                           )}
-                        </Form.Step>
+                        </MultiInstanceForm.Step>
                       </LoadingBox>
                     )}
-                  </Form>
+                  </MultiInstanceForm>
                 )}
               </Analytics>
             )
