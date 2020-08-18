@@ -4,8 +4,7 @@ import Link from '@govuk-react/link'
 import React from 'react'
 import styled from 'styled-components'
 
-import { FormActions } from 'data-hub-components'
-
+import { FormActions } from '../../../client/components'
 import urls from '../../../lib/urls'
 import SecondaryButton from '../SecondaryButton'
 

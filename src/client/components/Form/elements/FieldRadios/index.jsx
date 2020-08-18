@@ -4,7 +4,7 @@ import Radio from '@govuk-react/radio'
 import MultiChoice from '@govuk-react/multi-choice'
 import styled from 'styled-components'
 
-import useField from '../../hooks/useField'
+import { useField } from '../../hooks'
 import FieldWrapper from '../FieldWrapper'
 
 const StyledChildField = styled('div')`

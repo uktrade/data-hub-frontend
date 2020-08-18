@@ -4,9 +4,12 @@ import { H4 } from '@govuk-react/heading'
 import InsetText from '@govuk-react/inset-text'
 
 import urls from '../../../../../lib/urls'
-import { SummaryList } from '../../../../../client/components/'
+import {
+  SummaryList,
+  FieldDnbCompany,
+  FormStateful,
+} from '../../../../../client/components'
 import EntityListItem from '../../../../../client/components/EntityList/EntityListItem'
-import { FieldDnbCompany, FormStateful } from 'data-hub-components'
 
 function FindCompany({ company, csrfToken }) {
   return (

@@ -4,14 +4,18 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { ERROR_COLOUR } from 'govuk-colours'
 
-import { FieldRadios, FormStateful, Step } from 'data-hub-components'
-
-import AdviserTypeAhead from '../../../../../client/components/AdviserTypeAhead'
 import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeader'
 import Task from '../../../../../client/components/Task'
 import { companies, dashboard } from '../../../../../lib/urls'
 import { EDIT_ONE_LIST_DETAILS__SUBMIT } from '../../../../../client/actions'
-import { StatusMessage, Main } from '../../../../../client/components/'
+import {
+  StatusMessage,
+  Main,
+  FieldRadios,
+  FormStateful,
+  Step,
+  AdviserTypeAhead,
+} from '../../../../../client/components'
 
 import {
   state2props,

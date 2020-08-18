@@ -315,6 +315,9 @@ describe('Add company form', () => {
     () => {
       before(() => {
         cy.visit(urls.companies.create())
+      })
+
+      it('should display the form', () => {
         cy.get(selectors.companyAdd.form)
           .find('[type="radio"]')
           .check('GB')
@@ -326,9 +329,10 @@ describe('Add company form', () => {
         cy.get(selectors.companyAdd.entitySearch.cannotFind.summary).click()
         cy.get(
           selectors.companyAdd.entitySearch.cannotFind.stillCannotFind
+        ).should('be.visible')
+        cy.get(
+          selectors.companyAdd.entitySearch.cannotFind.stillCannotFind
         ).click()
-      })
-      it('should display the form', () => {
         cy.get(
           selectors.companyAdd.newCompanyRecordForm.organisationType.charity
         ).should('be.visible')

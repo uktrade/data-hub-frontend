@@ -4,8 +4,8 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { FieldRadios, FieldSelect } from 'data-hub-components'
 
+import { FieldRadios, FieldSelect } from '../../../../../client/components'
 import OneListFields from './OneListFields'
 import CommonFields from './CommonFields'
 

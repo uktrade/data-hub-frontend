@@ -1,15 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
-
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
-import { FormStateful, FormActions } from 'data-hub-components'
 
 import urls from '../../../../../lib/urls'
 import CompanyMatched from './CompanyMatched'
 import CompanyUnmatched from './CompanyUnmatched'
-import { StatusMessage } from '../../../../../client/components/'
+import {
+  StatusMessage,
+  FormStateful,
+  FormActions,
+} from '../../../../../client/components'
 
 function EditCompanyForm({
   csrfToken,

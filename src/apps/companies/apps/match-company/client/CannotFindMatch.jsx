@@ -9,11 +9,15 @@ import ErrorSummary from '@govuk-react/error-summary'
 import Paragraph from '@govuk-react/paragraph'
 
 import LocalHeader from '../../../../../client/components/LocalHeader/LocalHeader.jsx'
-import { Main, SummaryList } from '../../../../../client/components/'
+import {
+  Main,
+  SummaryList,
+  FormStateful,
+  FormActions,
+  FieldInput,
+} from '../../../../../client/components'
 import urls from '../../../../../lib/urls'
 import { WEBSITE_REGEX } from '../../add-company/client/constants'
-
-import { FormStateful, FormActions, FieldInput } from 'data-hub-components'
 
 const requiredWebsiteOrPhoneValidator = (
   value,

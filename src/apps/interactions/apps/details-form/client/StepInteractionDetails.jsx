@@ -9,7 +9,10 @@ import { GREY_1 } from 'govuk-colours'
 import styled from 'styled-components'
 
 import { SPACING_POINTS } from '@govuk-react/constants'
+
 import {
+  AdviserTypeAhead,
+  NewWindowLink,
   FieldCheckboxes,
   FieldDate,
   FieldInput,
@@ -17,11 +20,9 @@ import {
   FieldSelect,
   FieldTextarea,
   FieldTypeahead,
-  useFormContext,
-} from 'data-hub-components'
+} from '../../../../../client/components'
 
-import AdviserTypeAhead from '../../../../../client/components/AdviserTypeAhead'
-import { NewWindowLink } from '../../../../../client/components/'
+import { useFormContext } from '../../../../../client/components/Form/hooks'
 
 import {
   SERVICE_CONTEXTS,

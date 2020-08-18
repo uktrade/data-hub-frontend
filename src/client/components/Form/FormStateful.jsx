@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import LoadingBox from '@govuk-react/loading-box'
 
-import { useForm } from 'data-hub-components'
-import Form from '../../Form'
+import { useForm } from './hooks'
+import Form from './Form'
 
 const FormStateful = ({ children, formAttributes, ...contextProps }) => {
   const state = useForm(contextProps)

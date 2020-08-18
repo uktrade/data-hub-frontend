@@ -2,7 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Details from '@govuk-react/details'
 import Link from '@govuk-react/link'
-import { FieldUneditable } from 'data-hub-components'
+
+import { FieldUneditable } from '../../../../../client/components'
 
 function OneListFields({ company, sectors, headquarterTypes, oneListEmail }) {
   const sectorName = sectors.find(

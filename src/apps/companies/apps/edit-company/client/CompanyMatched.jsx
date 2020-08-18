@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Paragraph from '@govuk-react/paragraph'
 import { H4 } from '@govuk-react/heading'
-import { FieldInput, FieldSelect } from 'data-hub-components'
 
+import { FieldInput, FieldSelect } from '../../../../../client/components'
 import OneListFields from './OneListFields'
 import CommonFields from './CommonFields'
 

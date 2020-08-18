@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import { throttle } from 'lodash'
-import { FieldTypeahead } from 'data-hub-components'
+import { FieldTypeahead } from '../../../client/components'
 
 import { parseAdviserData } from '../../utils/formatAdviser'
 

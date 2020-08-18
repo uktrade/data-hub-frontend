@@ -2,10 +2,15 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { get } from 'lodash'
 import PropTypes from 'prop-types'
-import { FormStateful, FieldInput, FormActions } from 'data-hub-components'
 import Button from '@govuk-react/button'
 import Link from '@govuk-react/link'
 import ErrorSummary from '@govuk-react/error-summary'
+
+import {
+  FormStateful,
+  FieldInput,
+  FormActions,
+} from '../../../client/components'
 
 const NOT_FOUND_MESSAGE =
   'The list you are trying to edit was not found. It may have already been deleted.'

@@ -13,7 +13,7 @@ import {
   FormActions,
   FieldRadios,
   FieldInput,
-} from 'data-hub-components'
+} from '../../../../../client/components'
 
 const StyledSectionHeader = styled('div')`
   ${typography.font({ size: 24, weight: 'bold' })};

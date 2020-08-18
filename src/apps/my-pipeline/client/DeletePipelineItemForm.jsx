@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { FormActions } from 'data-hub-components'
 import { connect } from 'react-redux'
 import { RED } from 'govuk-colours'
 import WarningText from '@govuk-react/warning-text'
@@ -12,10 +11,13 @@ import { SPACING } from '@govuk-react/constants'
 
 import urls from '../../../lib/urls'
 import Task from '../../../client/components/Task'
-import Form from '../../../client/components/Form'
 import { PIPELINE__DELETE_ITEM } from '../../../client/actions'
 
-import { Main } from '../../../client/components/'
+import {
+  Main,
+  FormActions,
+  MultiInstanceForm,
+} from '../../../client/components'
 import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 
 import { ID as STATE_ID, TASK_DELETE_PIPELINE_ITEM, state2props } from './state'
@@ -76,7 +78,7 @@ function DeletePipelineItemForm({
                     <PipelineDetails
                       item={currentPipelineItem}
                     ></PipelineDetails>
-                    <Form
+                    <MultiInstanceForm
                       id={STATE_ID}
                       onSubmit={() => {
                         deletePipelineItem.start({
@@ -95,7 +97,7 @@ function DeletePipelineItemForm({
                           Cancel
                         </Link>
                       </FormActions>
-                    </Form>
+                    </MultiInstanceForm>
                   </LoadingBox>
                 )}
               </GetPipelineData>
