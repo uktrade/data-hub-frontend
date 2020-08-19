@@ -1,0 +1,92 @@
+version: '3'
+services:
+  frontend:
+    depends_on:
+      - api
+      - mock-sso
+    entrypoint: dockerize -wait tcp://api:8000 -timeout 3m -wait-retry-interval 5s
+    environment:
+      DATA_STORE_SERVICE_POSTCODE_TO_REGION_URL: http://api:8000/api/v1/get-postcode-data/
+      POSTCODE_KEY: ${POSTCODE_KEY}
+      OAUTH2_TOKEN_FETCH_URL: http://mock-sso:8080/o/token
+      OAUTH2_USER_PROFILE_URL: http://mock-sso:8080/api/v1/user/me
+      OAUTH2_AUTH_URL: http://mock-sso:8080/o/authorize
+      OAUTH2_REDIRECT_URL: http://localhost:3000/oauth/callback
+      OAUTH2_LOGOUT_URL: http://mock-sso:8080/o/logout
+      OAUTH2_BYPASS_SSO: 'False'
+      OAUTH2_CLIENT_SECRET: youAintSeenMyRight
+      OAUTH2_CLIENT_ID: randomClientId
+      ELASTIC_APM_SERVER_URL: http://es-apm:8200
+
+  mock-sso:
+    image: quay.io/uktrade/mock-sso:latest
+    ports:
+      - 8080:8080
+    environment:
+      MOCK_SSO_SCOPE: data-hub:internal-front-end
+      MOCK_SSO_TOKEN: 123
+      MOCK_SSO_EMAIL_USER_ID: test@gov.uk
+
+  api:
+    image: quay.io/uktrade/data-hub-api:master
+    env_file: .env
+    environment:
+      DEBUG: 'False'
+      RESOURCE_SERVER_AUTH_TOKEN: sso-token
+      STAFF_SSO_BASE_URL: http://mock-sso:8080/
+      STAFF_SSO_AUTH_TOKEN: sso-token
+      ES_APM_ENABLED: 'False'
+      COLUMNS: 80
+      DJANGO_SUPERUSER_SSO_EMAIL_USER_ID: test@gov.uk
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
+      - mi-postgres
+      - es
+      - redis
+      - celery
+      - mock-sso
+    entrypoint: dockerize -wait tcp://postgres:5432 -wait tcp://mi-postgres:5432 -wait tcp://es:9200 -wait tcp://redis:6379 -timeout 5m
+    command: /app/setup-uat.sh || echo "all ood"
+
+  celery:
+    image: quay.io/uktrade/data-hub-api:master
+    env_file: .env
+    depends_on:
+      - postgres
+      - mi-postgres
+      - es
+      - redis
+    entrypoint: dockerize -wait tcp://postgres:5432 -wait tcp://mi-postgres:5432 -wait tcp://es:9200 -wait tcp://redis:6379 -timeout 5m
+    command: celery worker -A config -l info -Q celery -B
+
+  postgres:
+    image: postgres:10
+    environment:
+      POSTGRES_DB: datahub
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+
+  mi-postgres:
+    image: postgres:9.6
+    environment:
+      POSTGRES_DB: datahub
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+
+  es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.3
+    environment:
+      discovery.type: single-node
+      cluster.routing.allocation.disk.threshold_enabled: 'false'
+
+  es-apm:
+    image: docker.elastic.co/apm/apm-server:7.7.1
+    ports:
+      - 8200:8200
+    command: >
+      apm-server -e
+        -E output.elasticsearch.hosts=["es:9200"]
+    depends_on:
+      - es

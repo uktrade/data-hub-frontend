@@ -56,6 +56,8 @@ const envSchema = Joi.object({
   DATA_STORE_SERVICE_ACCESS_KEY_ID: Joi.string().required(),
   // Data store service API Hawk Auth key
   DATA_STORE_SERVICE_SECRET_ACCESS_KEY: Joi.string().required(),
+  // Data store service for postcode lookup
+  DATA_STORE_SERVICE_POSTCODE: Joi.string().required(),
   // Data store service API endpoint
   DATA_STORE_SERVICE_POSTCODE_TO_REGION_URL: Joi.string().required(),
 

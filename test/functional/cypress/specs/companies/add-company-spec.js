@@ -315,9 +315,6 @@ describe('Add company form', () => {
     () => {
       before(() => {
         cy.visit(urls.companies.create())
-      })
-
-      it('should display the form', () => {
         cy.get(selectors.companyAdd.form)
           .find('[type="radio"]')
           .check('GB')
@@ -329,10 +326,9 @@ describe('Add company form', () => {
         cy.get(selectors.companyAdd.entitySearch.cannotFind.summary).click()
         cy.get(
           selectors.companyAdd.entitySearch.cannotFind.stillCannotFind
-        ).should('be.visible')
-        cy.get(
-          selectors.companyAdd.entitySearch.cannotFind.stillCannotFind
         ).click()
+      })
+      it('should display the form', () => {
         cy.get(
           selectors.companyAdd.newCompanyRecordForm.organisationType.charity
         ).should('be.visible')
@@ -595,7 +591,7 @@ describe('Add company form', () => {
     })
 
     it('should render an "Add a company" H1 element', () => {
-      cy.get(selectors.companyAdd.title).should('have.prop', 'tagName', 'H1')
+      cy.get(selectors.companyAdd.title).should('have.text', 'Add company')
     })
 
     it('should render a form with both "Region" and "Sector" selects', () => {
