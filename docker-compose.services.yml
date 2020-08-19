@@ -1,0 +1,10 @@
+version: '3'
+services:
+  mock-third-party-services:
+    build: ./test/sandbox
+    environment:
+      SANDBOX_PORT: 8888
+    volumes:
+      - ./test/sandbox:/usr/src/app
+      # Ensures that the local node_modules dir is not used in the container
+      - /usr/src/app/node_modules
