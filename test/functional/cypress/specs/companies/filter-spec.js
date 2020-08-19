@@ -173,7 +173,7 @@ describe('Company Collections Filter', () => {
         cy.contains('Search multiple postcodes separated by a comma')
         cy.get('input')
           .type(POSTCODE)
-          .blur()
+          .type('{enter}')
       })
 
     cy.wait('@filterResults').then((xhr) => {
