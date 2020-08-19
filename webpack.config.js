@@ -1,11 +1,28 @@
 const path = require('path')
+const { spawn } = require('child_process')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const WebpackAssetsManifest = require('webpack-assets-manifest')
 
 const config = require('./src/config')
 
-module.exports = {
+/**
+ * A webpack plugin that starts a node.js server after the assets are compiled.
+ * This is a required step, because the node server is parsing manifest.json
+ * when booting up.
+ */
+const StartServerAfterBuild = () => ({
+  apply: (compiler) => {
+    compiler.plugin('done', () => {
+      spawn('npm run watch:js:server', {
+        stdio: 'inherit',
+        shell: true,
+      })
+    })
+  },
+})
+
+module.exports = (env) => ({
   devtool: config.isProd ? 'false' : 'source-map',
   mode: config.isProd ? 'production' : 'development',
   entry: {
@@ -38,7 +55,8 @@ module.exports = {
     }),
     new VueLoaderPlugin(),
     new WebpackAssetsManifest(),
-  ],
+    env && env.backend ? StartServerAfterBuild() : undefined,
+  ].filter(Boolean),
   resolve: {
     modules: [
       'node_modules',
@@ -115,4 +133,4 @@ module.exports = {
     net: 'empty',
     tls: 'empty',
   },
-}
+})
