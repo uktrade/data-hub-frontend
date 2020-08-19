@@ -16,7 +16,7 @@ async function postcodeLookupHandler(req, res) {
 
     res.json(augmentedAddresses)
   } catch (error) {
-    res.status(error.statusCode).json({ message: error.message })
+    res.status(error.statusCode || 500).json({ message: error.message })
   }
 }
 
