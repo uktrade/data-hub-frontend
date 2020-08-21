@@ -207,7 +207,7 @@ describe('Contact transformers', () => {
         beforeEach(() => {
           this.view = transformContactToView(
             assign({}, contact, {
-              rejects_dit_email_marketing: true,
+              accepts_dit_email_marketing: true,
             }),
             company
           )
@@ -228,7 +228,7 @@ describe('Contact transformers', () => {
         beforeEach(() => {
           this.view = transformContactToView(
             assign({}, contact, {
-              rejects_dit_email_marketing: false,
+              accepts_dit_email_marketing: false,
             }),
             company
           )

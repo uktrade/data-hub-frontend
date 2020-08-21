@@ -38,9 +38,6 @@ async function getCommon(req, res, next) {
 
 function getDetails(req, res, next) {
   try {
-    // database is positive on accepts, negative on rejects; UI is reverse, so flip that here
-    res.locals.contact.rejects_dit_email_marketing = !res.locals.contact
-      .accepts_dit_email_marketing
     res.render('contacts/views/details', {
       contactDetails: transformContactToView(
         res.locals.contact,
