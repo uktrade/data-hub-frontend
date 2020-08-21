@@ -87,7 +87,6 @@ describe('contact form service', () => {
         telephone_number: '652423467167',
         telephone_countrycode: '+1',
         email: 'zboasdaan@opasdasdov.com',
-        accepts_dit_email_marketing: false,
         accepts_dit_email_marketing: true,
         address_same_as_company: 'no',
         address_1: '99 N Shore Road',
@@ -141,7 +140,6 @@ describe('contact form service', () => {
         email_alternative: 'fred@me.com',
         notes: 'Some notes',
         accepts_dit_email_marketing: true,
-        accepts_dit_email_marketing: false,
       }
 
       const actual = contactFormService.getContactAsFormData(contact)
@@ -156,7 +154,7 @@ describe('contact form service', () => {
     context('when the contact accepts DIT email marketing', () => {
       it('should set the marketing preferences to accepts_dit_email_marketing', () => {
         const contact = assign({}, contactData, {
-          accepts_dit_email_marketing: false,
+          accepts_dit_email_marketing: true,
         })
         const actual = contactFormService.getContactAsFormData(contact)
         expect(actual.accepts_dit_email_marketing).to.be.true
@@ -203,7 +201,7 @@ describe('contact form service', () => {
         telephone_number: '652423467167',
         telephone_countrycode: '+1',
         email: 'zboasdaan@opasdasdov.com',
-        accepts_dit_email_marketing: true,
+        accepts_dit_email_marketing: false,
         address_same_as_company: false,
         address_1: '99 N Shore Road',
         address_2: 'Suite 20',
@@ -246,7 +244,7 @@ describe('contact form service', () => {
     context('when the contact accepts DIT email marketing', () => {
       it('it should send accepts DIT email marketing as true', async () => {
         this.formData = assign({}, formData, {
-          accepts_dit_email_marketing: false,
+          accepts_dit_email_marketing: true,
         })
 
         await contactFormService.saveContactForm('1234', this.formData)
