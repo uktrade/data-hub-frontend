@@ -77,7 +77,7 @@
     "body-parser": "^1.18.3",
     "bodybuilder": "^2.2.21",
     "case": "^1.5.5",
-    "chrono-node": "^1.4.4",
+    "chrono-node": "^2.1.7",
     "churchill": "^1.2.0",
     "classlist.js": "^1.1.20150312",
     "compression": "^1.7.1",
