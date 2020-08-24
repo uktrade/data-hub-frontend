@@ -74,6 +74,8 @@ const transformFormToApi = (company, formValues) => {
     ? MATCHED_COMPANY_EDITABLE_FIELDS
     : UNMATCHED_COMPANY_EDITABLE_FIELDS
 
+  const originalFormValues = transformCompanyToForm(company)
+
   return omitBy(
     {
       ...formValues,
@@ -90,7 +92,9 @@ const transformFormToApi = (company, formValues) => {
       },
     },
     (fieldValue, fieldName) =>
-      isUndefined(fieldValue) || !whitelistedFields.includes(fieldName)
+      isUndefined(fieldValue) ||
+      !whitelistedFields.includes(fieldName) ||
+      originalFormValues[fieldName] === formValues[fieldName]
   )
 }
 

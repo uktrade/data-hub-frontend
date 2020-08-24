@@ -25,7 +25,12 @@ function EditCompanyForm({
   oneListEmail,
   isOnOneList,
 }) {
-  async function onSubmit(values) {
+  async function onSubmit(values, isPrestine) {
+    if (isPrestine) {
+      return
+    }
+
+    // There are changes so make an API call
     await axios.post(urls.companies.edit(company.id), values, {
       params: { _csrf: csrfToken },
     })
