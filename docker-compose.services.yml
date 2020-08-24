@@ -8,3 +8,32 @@ services:
       - ./test/sandbox:/usr/src/app
       # Ensures that the local node_modules dir is not used in the container
       - /usr/src/app/node_modules
+
+  lb_web:
+    image: gcr.io/sre-docker-registry/github.com/uktrade/legal-basis-api
+    environment:
+      DJANGO_DATABASE_HOST: db
+      DJANGO_ENV: test
+      DJANGO_SECRET_KEY: 4c1nzrs&8^g+t$tt**wl7u8)0p8ql3vr28rjn1mdcnr*crjz*#
+      DATABASE_URL: postgres://postgres@127.0.0.1:5432/legal-basis
+      AUTHBROKER_URL: https://sso.trade.gov.uk/
+      AUTHBROKER_CLIENT_ID: client_id
+      AUTHBROKER_CLIENT_SECRET: client_secret
+      DOMAIN_NAME: trade.gov.uk
+      TLS_EMAIL: webmaster@trade.gov.uk
+      ACTIVITY_STREAM_URL: https://localhost/v3/
+      ACTIVITY_STREAM_ID: fake_id
+      ACTIVITY_STREAM_KEY: fake_key
+      REDIS_URL: redis://redis/
+      ELASTIC_APM_DISABLE_SEND: 1
+    depends_on:
+      - lb_db
+    ports:
+      - "8555:8000"
+    command: ./start.sh
+
+  lb_db:
+    image: postgres:9.6.9-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: legal-basis
