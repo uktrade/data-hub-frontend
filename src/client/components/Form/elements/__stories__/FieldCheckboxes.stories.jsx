@@ -5,7 +5,7 @@ import Button from '@govuk-react/button'
 import { H1 } from '@govuk-react/heading'
 
 import FieldCheckboxes from '../FieldCheckboxes'
-import FormStateful from '../FormStateful'
+import FormStateful from '../../FormStateful'
 
 import exampleReadme from '../FieldCheckboxes/example.md'
 import usageReadme from '../FieldCheckboxes/usage.md'
