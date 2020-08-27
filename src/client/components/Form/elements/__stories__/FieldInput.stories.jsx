@@ -5,7 +5,7 @@ import { withKnobs } from '@storybook/addon-knobs'
 import Button from '@govuk-react/button'
 
 import FieldInput from '../FieldInput'
-import FormStateful from '../FormStateful'
+import FormStateful from '../../FormStateful'
 
 import exampleReadme from '../FieldInput/example.md'
 import usageReadme from '../FieldInput/usage.md'
