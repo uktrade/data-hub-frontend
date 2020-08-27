@@ -29,4 +29,10 @@ describe('Layout', () => {
         .should('have.css', 'outline-color', 'rgb(255, 191, 71)')
     })
   })
+
+  describe('Footer', () => {
+    it('should display footer', () => {
+      cy.get('footer a').should('have.length', 4)
+    })
+  })
 })
