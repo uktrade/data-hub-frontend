@@ -6,7 +6,13 @@ import { FieldTypeahead } from '../../../client/components'
 
 import { parseAdviserData } from '../../utils/formatAdviser'
 
-const AdviserTypeAhead = ({ name, label, required, isMulti }) => {
+const AdviserTypeAhead = ({
+  name,
+  label,
+  required,
+  isMulti,
+  onlyShowActiveAdvisers = true,
+}) => {
   return (
     <FieldTypeahead
       name={name}
@@ -20,6 +26,7 @@ const AdviserTypeAhead = ({ name, label, required, isMulti }) => {
             .get('/api-proxy/adviser/', {
               params: {
                 autocomplete: searchString,
+                is_active: onlyShowActiveAdvisers,
               },
             })
             .then(({ data: { results } }) => parseAdviserData(results)),
