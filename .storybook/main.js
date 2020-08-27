@@ -1,4 +1,4 @@
-const webpackConfig = require('../webpack.config').resolve
+const { resolve } = require('../webpack.config')()
 
 module.exports = {
   stories: ['../src/**/*.stories.(js|jsx)$/'],
@@ -6,7 +6,7 @@ module.exports = {
     return {
       ...config,
       resolve: {
-        ...webpackConfig,
+        ...resolve,
       },
     }
   },
