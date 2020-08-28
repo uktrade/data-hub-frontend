@@ -18,7 +18,8 @@
   {% set modifier = props.modifier | concat('') | reverse | join(' c-local-header--') if props.modifier %}
 
   {% if props %}
-    <header class="c-local-header {{ modifier }}{{ ' c-local-header--relative' if props.fullWidthContent }}" aria-label="local header" data-auto-id="localHeader">
+  {# Using <div> as there is already a <header> on the page - role="region" gives the element significance as a landmark #}
+    <div class="c-local-header {{ modifier }}{{ ' c-local-header--relative' if props.fullWidthContent }}" aria-label="local header" data-auto-id="localHeader" role="region">
       <div class="govuk-width-container c-local-header__container">
         {% if breadcrumbs|length > 1 %}
           {{ govukBreadcrumbs({
@@ -60,6 +61,6 @@
         </div>
 
       </div>
-    </header>
+    </div>
   {% endif %}
 {% endmacro %}
