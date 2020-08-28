@@ -407,9 +407,12 @@ describe('Company edit', () => {
       cy.visit(urls.companies.edit(company.id))
     })
 
-    it('should not redirect', () => {
+    it('should redirect back to the Business Details page', () => {
       cy.contains('Submit').click()
-      cy.location('pathname').should('eq', urls.companies.edit(company.id))
+      cy.location('pathname').should(
+        'eq',
+        urls.companies.businessDetails(company.id)
+      )
     })
   })
 })
