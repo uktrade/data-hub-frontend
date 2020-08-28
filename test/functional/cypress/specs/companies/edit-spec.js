@@ -1,4 +1,7 @@
-const { NumberUtils } = require('data-hub-components')
+const { convertUsdToGbp } = require('../../../../../src/common/currency')
+const { roundToSignificantDigits } = require('../../../../../src/common/number')
+const urls = require('../../../../../src/lib/urls')
+const fixtures = require('../../fixtures')
 
 import {
   testBreadcrumbs,
@@ -9,10 +12,6 @@ import {
   assertFieldRadios,
   assertDetails,
 } from '../../support/assertions'
-
-const fixtures = require('../../fixtures')
-const urls = require('../../../../../src/lib/urls')
-const { convertUsdToGbp } = require('../../../../../src/common/currency')
 
 const assertRegisteredAddress = ({ element, ukBased }) =>
   cy
@@ -274,10 +273,7 @@ describe('Company edit', () => {
         {
           label: 'Annual turnover (optional)',
           hint: 'Amount in GBP',
-          value: NumberUtils.roundToSignificantDigits(
-            convertUsdToGbp(company.turnover),
-            2
-          ),
+          value: roundToSignificantDigits(convertUsdToGbp(company.turnover), 2),
           assert: assertFieldInput,
         },
         {

@@ -7,7 +7,7 @@ import { H2 } from '@govuk-react/heading'
 import { BLACK, GREY_3 } from 'govuk-colours'
 import { HEADING_SIZES } from '@govuk-react/constants'
 import CollectionHeaderRow from './CollectionHeaderRow'
-import { NumberUtils } from '../../../client/components'
+import { decimal } from '../../utils/number-utils'
 
 const StyledHeaderText = styled(H2)`
   margin-top: 0;
@@ -27,7 +27,7 @@ const StyledResultCount = styled('span')`
 `
 
 function CollectionHeader({ totalItems, itemName, addItemUrl }) {
-  const formattedTotal = NumberUtils.decimal(totalItems)
+  const formattedTotal = decimal(totalItems)
   const counterSuffix = pluralize(itemName, totalItems)
 
   const actions = addItemUrl && (

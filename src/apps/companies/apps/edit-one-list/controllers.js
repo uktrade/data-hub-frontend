@@ -1,5 +1,5 @@
 const { getOptions } = require('../../../../lib/options')
-const { parseAdviserData } = require('../../../../client/utils/formatAdviser')
+const { parseAdviserData } = require('../../../../common/formatAdviser')
 const { getOneListGroupCoreTeam } = require('../../repos')
 const { filterOneListTiers, getTeamMembers } = require('./transformers')
 const {

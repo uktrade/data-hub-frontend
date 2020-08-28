@@ -1,6 +1,6 @@
 const KEY = 'flash-messages'
 
-const getMessages = () => {
+export const getMessages = () => {
   const items = window.sessionStorage.getItem(KEY)
   if (items) {
     try {
@@ -13,7 +13,7 @@ const getMessages = () => {
   return {}
 }
 
-const addMessage = (messageType, message) => {
+export const addMessage = (messageType, message) => {
   const messages = getMessages()
   messages[messageType] = messages[messageType] || []
   messages[messageType].push(message)
@@ -25,15 +25,8 @@ const addMessage = (messageType, message) => {
   }
 }
 
-const addMessageWithBody = (type, heading, body) => {
+export const addMessageWithBody = (type, heading, body) => {
   addMessage(`${type}:with-body`, { heading, body })
 }
 
-const clearMessages = () => window.sessionStorage.removeItem(KEY)
-
-module.exports = {
-  addMessage,
-  getMessages,
-  addMessageWithBody,
-  clearMessages,
-}
+export const clearMessages = () => window.sessionStorage.removeItem(KEY)
