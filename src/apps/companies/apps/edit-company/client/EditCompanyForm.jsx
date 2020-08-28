@@ -27,10 +27,12 @@ function EditCompanyForm({
 }) {
   async function onSubmit(values, isPristine) {
     if (isPristine) {
-      return
+      // The user has not made any changes so redirect
+      // back to the Business Details page.
+      return urls.companies.businessDetails(company.id)
     }
 
-    // There are changes so make an API call
+    // The user has made some changes so make an API call
     await axios.post(urls.companies.edit(company.id), values, {
       params: { _csrf: csrfToken },
     })
