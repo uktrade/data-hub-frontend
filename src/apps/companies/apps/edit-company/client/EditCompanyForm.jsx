@@ -25,8 +25,8 @@ function EditCompanyForm({
   oneListEmail,
   isOnOneList,
 }) {
-  async function onSubmit(values, isPrestine) {
-    if (isPrestine) {
+  async function onSubmit(values, isPristine) {
+    if (isPristine) {
       return
     }
 
