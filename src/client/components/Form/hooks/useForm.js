@@ -42,9 +42,9 @@ function useForm({
   const [submissionError, setSubmissionError] = useState(null)
   const isDirty =
     !isEmpty(touched) || (!isEmpty(values) && !isEqual(values, initialValues))
+  const isPristine = isEqual(values, initialValues)
 
   const [redirectUrl, setRedirectUrl] = useState(null)
-
   const formState = {
     values,
     touched,
@@ -55,6 +55,7 @@ function useForm({
     isLoading,
     isSubmitted,
     isDirty,
+    isPristine,
     submissionError,
   }
 
@@ -197,7 +198,7 @@ function useForm({
       setIsLoading(true)
 
       if (typeof onSubmit === 'function') {
-        newRedirectUrl = await onSubmit(values)
+        newRedirectUrl = await onSubmit(values, isPristine)
       }
 
       if (newRedirectUrl) {

@@ -1,3 +1,5 @@
+const { isEmpty } = require('lodash')
+
 const config = require('../../../../config')
 const { updateCompany, createDnbChangeRequest } = require('../../repos')
 const { getHeadquarterOptions } = require('./repos')
@@ -60,17 +62,24 @@ async function postEditCompany(req, res, next) {
     const { company } = res.locals
     const { token } = req.session
 
-    const apiRequestFields = transformFormToApi(company, req.body)
+    const dataHubChanges = transformFormToApi(company, req.body)
 
     const dnbChanges = company.duns_number
       ? transformFormToDnbChangeRequest(company, req.body)
-      : null
+      : {}
 
-    if (company.duns_number) {
-      const [, changeRequests] = await Promise.all([
-        updateCompany(token, company.id, apiRequestFields),
-        createDnbChangeRequest(token, company.duns_number, dnbChanges),
-      ])
+    // No changes
+    if (isEmpty(dataHubChanges) && isEmpty(dnbChanges)) {
+      return res.json({})
+    }
+
+    // Only D&B changes
+    if (isEmpty(dataHubChanges) && !isEmpty(dnbChanges)) {
+      const dnbChangeRequest = await createDnbChangeRequest(
+        token,
+        company.duns_number,
+        dnbChanges
+      )
 
       req.flashWithBody(
         'success',
@@ -78,15 +87,48 @@ async function postEditCompany(req, res, next) {
         'Thanks for keeping Data Hub running smoothly.',
         'message-company-change-request'
       )
-      res.json({ changeRequests })
-    } else {
-      const result = await updateCompany(
-        req.session.token,
+
+      return res.json({ dnbChangeRequest })
+    }
+
+    // Only Data Hub changes
+    if (!isEmpty(dataHubChanges) && isEmpty(dnbChanges)) {
+      const updatedCompany = await updateCompany(
+        token,
         company.id,
-        apiRequestFields
+        dataHubChanges
       )
+
       req.flash('success', 'Company record updated')
-      res.json(result)
+
+      return res.json({ company: updatedCompany })
+    }
+
+    // Both D&B and Data Hub changes
+    if (!isEmpty(dataHubChanges) && !isEmpty(dnbChanges)) {
+      const updatedCompany = await updateCompany(
+        token,
+        company.id,
+        dataHubChanges
+      )
+
+      const dnbChangeRequest = await createDnbChangeRequest(
+        token,
+        company.duns_number,
+        dnbChanges
+      )
+
+      req.flashWithBody(
+        'success',
+        'Change requested.',
+        'Thanks for keeping Data Hub running smoothly.',
+        'message-company-change-request'
+      )
+
+      res.json({
+        company: updatedCompany,
+        dnbChangeRequest,
+      })
     }
   } catch (error) {
     next(error)
