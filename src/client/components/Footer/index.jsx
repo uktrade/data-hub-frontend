@@ -82,20 +82,38 @@ export default function Footer() {
       <Container>
         <StyleList>
           <li>
-            <FooterLink href={urls.support()}>Request Support</FooterLink>
+            <FooterLink
+              href={urls.support()}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Request Support
+            </FooterLink>
           </li>
           <li>
-            <FooterLink href="https://data-services-help.trade.gov.uk/data-hub/">
+            <FooterLink
+              href="https://data-services-help.trade.gov.uk/data-hub/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Help Centre
             </FooterLink>
           </li>
           <li>
-            <FooterLink href=" https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/data-hub-privacy-policy/">
+            <FooterLink
+              href=" https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/data-hub-privacy-policy/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Privacy Policy
             </FooterLink>
           </li>
         </StyleList>
-        <CopyrightLink href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">
+        <CopyrightLink
+          href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           &#169; Crown copyright
         </CopyrightLink>
       </Container>
