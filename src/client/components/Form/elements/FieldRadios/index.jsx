@@ -27,6 +27,7 @@ const FieldRadios = ({
   required,
   label,
   legend,
+  bigLegend,
   hint,
   inline,
   initialValue,
@@ -40,7 +41,7 @@ const FieldRadios = ({
   })
 
   return (
-    <FieldWrapper {...{ name, label, legend, hint, error }}>
+    <FieldWrapper {...{ name, label, legend, hint, error, bigLegend }}>
       <MultiChoice meta={{ error, touched }}>
         {options.map(
           ({
@@ -57,6 +58,7 @@ const FieldRadios = ({
                 onChange={onChange}
                 onBlur={onBlur}
                 name={name}
+                aria-label={optionLabel}
                 {...optionProps}
               >
                 {optionLabel}

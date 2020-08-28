@@ -2,7 +2,7 @@ const { reduce, isEqual } = require('lodash')
 
 import {
   assertFieldInput,
-  assertFieldRadios,
+  assertFieldRadiosWithLegend,
   assertFieldSelect,
   testBreadcrumbs,
 } from '../../support/assertions'
@@ -92,10 +92,11 @@ const ELEMENT_NOTES = {
   label: 'Notes (optional)',
   assert: assertFieldTextarea,
 }
+// The radios on this page have been refactored to use legends instead of labels, as part of the Accessibility work.
 const ELEMENT_FEEDBACK_POLICY = {
-  label:
+  legend:
     'Did the contact provide feedback on government policy or business intelligence?',
-  assert: assertFieldRadios,
+  assert: assertFieldRadiosWithLegend,
   optionsCount: 2,
 }
 const ELEMENT_POLICY_ISSUE_TYPES = {
@@ -108,8 +109,8 @@ const ELEMENT_POLICY_FEEDBACK_NOTES = {
   label: 'Policy feedback notes',
 }
 const ELEMENT_COUNTRIES = {
-  label: 'Were any countries discussed?',
-  assert: assertFieldRadios,
+  legend: 'Were any countries discussed?',
+  assert: assertFieldRadiosWithLegend,
   optionsCount: 2,
 }
 const ELEMENT_COUNTRIES_CURRENTLY_EXPORTING = {
@@ -122,8 +123,8 @@ const ELEMENT_COUNTRIES_NOT_INTERESTED = {
   label: 'Countries not interested in',
 }
 const ELEMENT_IS_EVENT = {
-  label: 'Is this an event?',
-  assert: assertFieldRadios,
+  legend: 'Is this an event?',
+  assert: assertFieldRadiosWithLegend,
   optionsCount: 2,
 }
 const ELEMENT_STEP2_BUTTONS = {
@@ -168,7 +169,7 @@ function fillCommonFields({
 
   cy.contains(ELEMENT_NOTES.label).next().find('textarea').type('Some notes')
 
-  cy.contains(ELEMENT_FEEDBACK_POLICY.label).next().find('input').check('yes')
+  cy.contains(ELEMENT_FEEDBACK_POLICY.legend).next().find('input').check('yes')
 
   cy.contains(ELEMENT_POLICY_ISSUE_TYPES.label)
     .next()
@@ -204,7 +205,7 @@ function fillCommonFields({
 }
 
 function fillExportCountriesFields() {
-  cy.contains(ELEMENT_COUNTRIES.label).next().find('input').check('yes')
+  cy.contains(ELEMENT_COUNTRIES.legend).next().find('input').check('yes')
 
   cy.contains(ELEMENT_COUNTRIES_CURRENTLY_EXPORTING.label)
     .parent()
@@ -247,15 +248,10 @@ function submitForm(kind, theme, values) {
         .find('input')
         .type('456')
 
-      cy.contains(ELEMENT_IS_EVENT.label)
-        .next()
-        .find('input')
-        .check('yes')
-        .parent()
-        .parent()
-        .parent()
-        .next()
-        .selectTypeaheadOption('Sort event')
+      cy.contains(ELEMENT_IS_EVENT.legend).next().find('input').check('yes')
+
+      cy.get('#event').parent().selectTypeaheadOption('Sort event')
+      // Searching directly for 'event' string causes a false positive as it matches other elements.
     }
 
     cy.contains('Add interaction').click()

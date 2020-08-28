@@ -63,14 +63,19 @@ export default multiInstance({
                 true
               )}
               headingActions={
-                <StyledLabel>
+                <StyledLabel htmlFor="view-referrals">
                   View
                   <StyledSelectInput
                     value={filter}
+                    id="view-referrals"
                     onChange={(e) => onFilterChange(e.target.value)}
                   >
-                    <option value={RECEIVED}>Received referrals</option>
-                    <option value={SENT}>Sent referrals</option>
+                    <option value={RECEIVED} aria-label="received-referrals">
+                      Received referrals
+                    </option>
+                    <option value={SENT} aria-label="sent-referrals">
+                      Sent referrals
+                    </option>
                   </StyledSelectInput>
                 </StyledLabel>
               }

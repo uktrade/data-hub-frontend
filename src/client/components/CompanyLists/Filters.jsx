@@ -43,28 +43,43 @@ const StyledSelect = styled(SelectInput)({
   [MEDIA_QUERIES.LARGESCREEN]: { width: 'auto' },
 })
 
-const Filters = ({ query, orderBy, onSearch, onOrderChange }) => (
+const Filters = ({
+  query,
+  orderBy,
+  onSearch,
+  onOrderChange,
+  companyNameId = 'company-name',
+  sortById = 'sort-by',
+}) => (
   <StyledRoot>
     <StyledCol>
-      <InlineLabel text="Search this list">
+      <InlineLabel text="Search this list" name={companyNameId}>
         <StyledInput
           // We need to default to empty string here,
           // only to prevent React's uncontrolled input warning.
           value={query || ''}
           placeholder="Company name"
+          id={companyNameId}
           onChange={(e) => onSearch(e.target.value)}
         />
       </InlineLabel>
     </StyledCol>
     <StyledCol>
-      <InlineLabel text="Sort by" justifyRight={true}>
+      <InlineLabel text="Sort by" justifyRight={true} name={sortById}>
         <StyledSelect
           value={orderBy}
+          id={sortById}
           onChange={(e) => onOrderChange(e.target.value)}
         >
-          <option value={RECENT}>Recent interaction</option>
-          <option value={LEAST_RECENT}>Least recent interaction</option>
-          <option value={ALPHABETICAL}>Company name A-Z</option>
+          <option value={RECENT} aria-label="recent interaction">
+            Recent interaction
+          </option>
+          <option value={LEAST_RECENT} aria-label="least recent interaction">
+            Least recent interaction
+          </option>
+          <option value={ALPHABETICAL} aria-label="company name a to z">
+            Company name A-Z
+          </option>
         </StyledSelect>
       </InlineLabel>
     </StyledCol>

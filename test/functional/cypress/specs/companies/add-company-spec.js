@@ -43,8 +43,7 @@ describe('Add company form', () => {
     })
 
     it('should display "Where is this company located?" heading', () => {
-      cy.get(selectors.companyAdd.stepHeader).should(
-        'have.text',
+      cy.get(selectors.companyAdd.form).contains(
         'Where is this company located?'
       )
     })
