@@ -146,6 +146,33 @@ const assertFieldRadios = ({ element, label, value, optionsCount }) =>
           .should('have.text', value)
     )
 
+// As part of the accessibility work, a sample of pages have been refactored to use legends instead of labels.
+//  Use this assertion for radios which have legends applied.
+const assertFieldRadiosWithLegend = ({
+  element,
+  legend,
+  value,
+  optionsCount,
+}) =>
+  cy
+    .wrap(element)
+    .as('fieldRadio')
+    .find('legend')
+    .first()
+    .should('have.text', legend)
+    .parent()
+    .find('input')
+    .should('have.length', optionsCount)
+    .then(
+      () =>
+        value &&
+        cy
+          .get('@fieldRadio')
+          .find('input:checked')
+          .next()
+          .should('have.text', value)
+    )
+
 const assertFieldTypeahead = ({
   element,
   label,
@@ -358,6 +385,7 @@ module.exports = {
   assertFieldTextarea,
   assertFieldSelect,
   assertFieldRadios,
+  assertFieldRadiosWithLegend,
   assertFieldAddress,
   assertFieldUneditable,
   assertFormActions,

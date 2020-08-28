@@ -62,6 +62,7 @@ const StyledLegend = styled('legend')`
   box-sizing: border-box;
   display: table;
   white-space: normal;
+  font-size: 19px;
   padding: 0;
   margin: 0;
   padding-bottom: ${SPACING.SCALE_1};
@@ -80,6 +81,14 @@ const StyledLegend = styled('legend')`
     `
     padding: 8px;
     margin-left: -8px;
+  `}
+
+  ${(props) =>
+    props.bigLegend &&
+    `
+    margin-bottom: 20px;
+    padding-bottom: 0px;
+    font-size: 24px;
   `}
 `
 
@@ -102,10 +111,15 @@ const StyledHint = styled(HintText)`
   `}
 `
 
-const FieldInner = ({ legend, error, showBorder, children }) =>
+const FieldInner = ({ legend, error, showBorder, children, bigLegend }) =>
   legend ? (
     <StyledFieldset showBorder={showBorder}>
-      <StyledLegend error={error} showBorder={showBorder}>
+      <StyledLegend
+        className="govuk-heading-m"
+        error={error}
+        showBorder={showBorder}
+        bigLegend={bigLegend}
+      >
         {legend}
       </StyledLegend>
       {children}
@@ -118,6 +132,7 @@ const FieldWrapper = ({
   name,
   label,
   legend,
+  bigLegend,
   hint,
   error,
   showBorder,
@@ -133,7 +148,12 @@ const FieldWrapper = ({
     reducedPadding={reducedPadding}
     isIE={isIE}
   >
-    <FieldInner legend={legend} error={error} showBorder={showBorder}>
+    <FieldInner
+      legend={legend}
+      error={error}
+      showBorder={showBorder}
+      bigLegend={bigLegend}
+    >
       {label && (
         <StyledLabel error={error} htmlFor={name}>
           {label}
@@ -155,6 +175,7 @@ FieldInner.propTypes = {
   error: PropTypes.string,
   showBorder: PropTypes.bool,
   children: PropTypes.node,
+  bigLegend: PropTypes.bool,
 }
 
 FieldInner.defaultProps = {
@@ -162,6 +183,7 @@ FieldInner.defaultProps = {
   error: null,
   showBorder: false,
   children: null,
+  bigLegend: false,
 }
 
 FieldWrapper.propTypes = {

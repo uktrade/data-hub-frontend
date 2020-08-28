@@ -52,6 +52,7 @@ export default () => {
             <>
               <StyledSelect
                 label="View list"
+                id="view-list"
                 input={{
                   onChange: (e) =>
                     dispatch({

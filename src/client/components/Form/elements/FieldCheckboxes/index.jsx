@@ -60,6 +60,7 @@ const FieldCheckboxes = ({
   required,
   label,
   legend,
+  bigLegend,
   hint,
   options,
   initialValue,
@@ -89,7 +90,16 @@ const FieldCheckboxes = ({
 
   return (
     <FieldWrapper
-      {...{ name, label, legend, hint, error, reduced, reducedPadding }}
+      {...{
+        name,
+        label,
+        legend,
+        bigLegend,
+        hint,
+        error,
+        reduced,
+        reducedPadding,
+      }}
     >
       <MultiChoice meta={{ error, touched }} reduced={reduced}>
         {options.map(
@@ -107,6 +117,7 @@ const FieldCheckboxes = ({
                 onChange={onChange}
                 onBlur={onBlur}
                 reduced={reduced}
+                aria-label={optionLabel}
                 {...optionProps}
               >
                 {optionLabel}

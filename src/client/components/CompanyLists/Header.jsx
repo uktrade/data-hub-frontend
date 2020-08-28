@@ -34,13 +34,15 @@ export const Header = connect(state2props, (dispatch) => ({
       {listLength > 1 && (
         <Sort
           label="View list"
+          htmlFor="view-list"
           input={{
             onChange: (e) => onChange(e.target.value),
             value: selectedId,
+            id: 'view-list,',
           }}
         >
           {Object.entries(lists).map(([id, { name }]) => (
-            <option key={id} value={id}>
+            <option key={id} value={id} aria-label={name}>
               {name}
             </option>
           ))}
