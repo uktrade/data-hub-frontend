@@ -1,14 +1,14 @@
-const { NumberUtils } = require('data-hub-components')
-const moment = require('moment')
 const { BLACK, GREY_1 } = require('govuk-colours')
-
-const urls = require('../../../../../src/lib/urls')
-const leads = require('../../../../sandbox/fixtures/v4/pipeline-item/leads.json')
-const inProgress = require('../../../../sandbox/fixtures/v4/pipeline-item/in-progress.json')
-const win = require('../../../../sandbox/fixtures/v4/pipeline-item/win.json')
-const LIKELIHOOD_TO_SUCCEED = require('../../../../../src/client/components/Pipeline/constants')
-const TAG_COLOURS = require('../../../../../src/client/components/Tag/colours')
 const { sortBy } = require('lodash')
+const moment = require('moment')
+
+const LIKELIHOOD_TO_SUCCEED = require('../../../../../src/client/components/Pipeline/constants')
+const inProgress = require('../../../../sandbox/fixtures/v4/pipeline-item/in-progress.json')
+const { currencyGBP } = require('../../../../../src/client/utils/number-utils')
+const leads = require('../../../../sandbox/fixtures/v4/pipeline-item/leads.json')
+const TAG_COLOURS = require('../../../../../src/client/components/Tag/colours')
+const win = require('../../../../sandbox/fixtures/v4/pipeline-item/win.json')
+const urls = require('../../../../../src/lib/urls')
 
 function assertPipelineItem(
   index,
@@ -116,7 +116,7 @@ function assertPipelineItem(
 
       if (result.potential_value) {
         cy.contains('Potential export value')
-        cy.contains(NumberUtils.currencyGBP(result.potential_value))
+        cy.contains(currencyGBP(result.potential_value))
       } else {
         cy.contains('Potential export value').should('not.exist')
       }

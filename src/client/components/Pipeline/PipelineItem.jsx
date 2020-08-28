@@ -9,7 +9,7 @@ import GridCol from '@govuk-react/grid-col'
 import { SPACING, MEDIA_QUERIES, FONT_SIZE } from '@govuk-react/constants'
 import { BLUE, GREY_1, BLACK } from 'govuk-colours'
 import { Card } from 'data-hub-components/dist/activity-feed/activities/card'
-import NumberUtils from '../../components/Utils/NumberUtils'
+import { currencyGBP } from '../../utils/number-utils'
 import Tag from '../../components/Tag'
 
 import { newlineToBr } from '../../../lib/text-formatting'
@@ -152,7 +152,7 @@ function buildMetaList({
     },
     potential_value && {
       label: 'Potential export value',
-      value: NumberUtils.currencyGBP(potential_value),
+      value: currencyGBP(potential_value),
     },
     expected_win_date && {
       label: 'Expected date for win',

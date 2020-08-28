@@ -4,7 +4,7 @@ import { SPACING, FONT_SIZE } from '@govuk-react/constants'
 import { BLUE, GREEN } from 'govuk-colours'
 import PropTypes from 'prop-types'
 import SummaryList from '../../components/SummaryList'
-import DateUtils from '../../components/Utils/DateUtils'
+import { format } from '../../utils/date-utils'
 import styled from 'styled-components'
 import Card from 'data-hub-components/dist/activity-feed/activities/card/Card'
 import CardHeader from 'data-hub-components/dist/activity-feed/activities/card/CardHeader'
@@ -75,7 +75,7 @@ const Referral = ({
             ? [
                 {
                   label: 'Accepted on',
-                  value: DateUtils.format(dateAccepted),
+                  value: format(dateAccepted),
                 },
               ]
             : []),

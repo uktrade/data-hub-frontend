@@ -5,8 +5,8 @@ import { isBoolean, isNumber } from 'lodash'
 import { convertUsdToGbp } from '../../../../../common/currency'
 
 import EditHistory from '../../../../../client/components/EditHistory/EditHistory'
-import DateUtils from '../../../../../client/components/Utils/DateUtils'
-import NumberUtils from '../../../../../client/components/Utils/NumberUtils'
+import { formatWithTime } from '../../../../../client/utils/date-utils'
+import { currencyGBP } from '../../../../../client/utils/number-utils'
 
 import {
   ARCHIVED,
@@ -44,21 +44,21 @@ function getValue(value, field) {
 
   if (isNumber(value)) {
     return CURRENCY_FIELDS.includes(field)
-      ? NumberUtils.currencyGBP(convertUsdToGbp(value), {
+      ? currencyGBP(convertUsdToGbp(value), {
           maximumSignificantDigits: 2,
         })
       : value.toString()
   }
 
   if (isDate(value)) {
-    return DateUtils.formatWithTime(value)
+    return formatWithTime(value)
   }
 
   return value || NOT_SET
 }
 
 function getUpdatedBy(timestamp, changedBy) {
-  const formattedTime = DateUtils.formatWithTime(timestamp)
+  const formattedTime = formatWithTime(timestamp)
   return changedBy === AUTOMATIC_UPDATE
     ? `Automatically updated on ${formattedTime}`
     : `Updated on ${formattedTime} by ${changedBy}`
