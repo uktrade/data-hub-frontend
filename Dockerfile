@@ -7,6 +7,7 @@ ENV TZ                     Europe/London
 ENV TERM                   xterm
 ENV LANG                   C.UTF-8
 ENV NODE_ENV               development
+ENV CHROME_VERSION         85.0.4183.83-1
 
 RUN apt-get update
 
@@ -46,11 +47,12 @@ RUN apt-get install -y \
 # Install visual test dependencies
 RUN apt-get install -y imagemagick
 
-# Install Chrome (Latest)
+# Install Chrome (Version 85)
+# See all available versions for download on: https://www.ubuntuupdates.org/package_logs?type=ppas&vals=8
 RUN apt-get install -y xvfb xdg-utils libgtk-3-0 lsb-release libappindicator3-1 fonts-liberation libasound2 libnspr4 libnss3 \
-  && curl https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O \
-  && dpkg -i google-chrome-stable_current_amd64.deb \
-  && rm google-chrome-stable_current_amd64.deb \
+  && curl https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb -O \
+  && dpkg -i google-chrome-stable_${CHROME_VERSION}_amd64.deb \
+  && rm google-chrome-stable_${CHROME_VERSION}_amd64.deb \
   && google-chrome --version
 
 WORKDIR /usr/src/app

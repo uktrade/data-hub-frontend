@@ -64,9 +64,6 @@ jobs:
     steps:
       - checkout
       - run_make:
-          label: Clean base compose
-          target: clean-base
-      - run_make:
           label: Run functional tests
           target: start-mock functional-tests
       - store_cypress_artifacts
@@ -103,9 +100,6 @@ jobs:
         type: string
     steps:
       - checkout
-      - run_make:
-          label: Clean base compose
-          target: clean-base
       - run_make:
           label: Run e2e tests
           target: start-e2e-<< parameters.staff >> e2e-tests-<< parameters.staff >>
