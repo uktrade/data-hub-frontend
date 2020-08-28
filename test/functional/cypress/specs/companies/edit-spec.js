@@ -398,4 +398,21 @@ describe('Company edit', () => {
       cy.contains('Company record updated')
     })
   })
+
+  context('when the form is submitted and there are no changes', () => {
+    const company = fixtures.company.dnbLtd
+
+    before(() => {
+      cy.server()
+      cy.visit(urls.companies.edit(company.id))
+    })
+
+    it('should redirect back to the Business Details page', () => {
+      cy.contains('Submit').click()
+      cy.location('pathname').should(
+        'eq',
+        urls.companies.businessDetails(company.id)
+      )
+    })
+  })
 })

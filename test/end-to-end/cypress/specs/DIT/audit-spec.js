@@ -10,6 +10,10 @@ describe('Company', () => {
   })
 
   it('should display name of the person who made company record changes', () => {
+    cy.get(selectors.companyEdit.website)
+      .clear()
+      .type('www.example.com')
+
     cy.get(selectors.companyEdit.saveButton).click()
     cy.get(selectors.message.successful).should('be.visible')
 
@@ -18,11 +22,6 @@ describe('Company', () => {
     cy.get(selectors.editHistory.change(1).updated)
       .should('contain', todaysDate)
       .and('contain', 'DIT Staff')
-
-    cy.get(selectors.editHistory.change(1).noChanges).should(
-      'have.text',
-      'No changes were made to business details in this update'
-    )
   })
 })
 
