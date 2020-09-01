@@ -2,7 +2,14 @@ import Link from '@govuk-react/link'
 import Table from '@govuk-react/table'
 import { FONT_WEIGHTS, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import { spacing } from '@govuk-react/lib'
-import { BORDER_COLOUR } from 'govuk-colours'
+import {
+  BORDER_COLOUR,
+  LINK_ACTIVE_COLOUR,
+  LINK_COLOUR,
+  LINK_HOVER_COLOUR,
+  LINK_VISITED_COLOUR,
+  PAGE_COLOUR,
+} from 'govuk-colours'
 import VisuallyHidden from '@govuk-react/visually-hidden'
 import React from 'react'
 import LinesEllipsis from 'react-lines-ellipsis'
@@ -12,7 +19,7 @@ import DateUtils from '../../components/Utils/DateUtils'
 import urls from '../../../lib/urls'
 import SecondaryButton from '../SecondaryButton'
 
-const StyledCellLink = styled.a({
+const StyledButtonLink = styled.a({
   whiteSpace: 'nowrap',
   marginBottom: 0,
 })
@@ -76,6 +83,27 @@ const ColumnLabelCell = styled(StyledTableCell)({
   },
 })
 
+const StyledLink = styled(Link)({
+  ':focus': {
+    color: LINK_COLOUR,
+    ':active': {
+      color: LINK_ACTIVE_COLOUR,
+    },
+    ':hover': {
+      color: LINK_HOVER_COLOUR,
+    },
+    ':visited': {
+      color: LINK_VISITED_COLOUR,
+    },
+  },
+})
+
+const StyledLinesEllipsis = styled(LinesEllipsis)({
+  display: 'inline-block',
+  background: PAGE_COLOUR,
+  textDecoration: 'underline',
+})
+
 const ActionCell = styled(StyledTableCell)({
   paddingTop: SPACING.SCALE_2,
   paddingBottom: SPACING.SCALE_4,
@@ -116,30 +144,30 @@ const CompaniesTable = ({ companies }) => (
       ({ id, name, date, subject, interactionId, ditParticipants }) => (
         <StyledTableRow key={id}>
           <TitleCell setWidth="20%">
-            <Link href={urls.companies.detail(id)}>
-              <LinesEllipsis
+            <StyledLink href={urls.companies.detail(id)}>
+              <StyledLinesEllipsis
                 text={name}
                 maxLine="2"
                 ellipsis="..."
                 trimRight={true}
                 basedOn="words"
               />
-            </Link>
+            </StyledLink>
           </TitleCell>
           <ColumnLabelCell setWidth="15%">
             {date ? DateUtils.format(date) : '-'}
           </ColumnLabelCell>
           <StyledTableCell setWidth="30%">
             {interactionId ? (
-              <Link href={urls.interactions.detail(interactionId)}>
-                <LinesEllipsis
+              <StyledLink href={urls.interactions.detail(interactionId)}>
+                <StyledLinesEllipsis
                   text={subject}
                   maxLine="2"
                   ellipsis="..."
                   trimRight={true}
                   basedOn="words"
                 />
-              </Link>
+              </StyledLink>
             ) : (
               'No interactions have been recorded'
             )}
@@ -149,7 +177,7 @@ const CompaniesTable = ({ companies }) => (
           </StyledTableCell>
           <ActionCell>
             <SecondaryButton
-              as={StyledCellLink}
+              as={StyledButtonLink}
               href={urls.companies.interactions.create(id)}
             >
               Add interaction
