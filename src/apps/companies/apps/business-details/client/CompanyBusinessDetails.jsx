@@ -21,7 +21,7 @@ import { StatusMessage } from '../../../../../client/components/'
 import { ID as CHECK_PENDING_REQUEST_ID, state2props } from './state'
 import { DNB__CHECK_PENDING_REQUEST } from '../../../../../client/actions'
 import Task from '../../../../../client/components/Task'
-import DateUtils from '../../../../../client/components/Utils/DateUtils'
+import { format } from '../../../../../client/utils/date-utils'
 
 const StyledRoot = styled('div')`
   & > table {
@@ -31,7 +31,7 @@ const StyledRoot = styled('div')`
 `
 
 const getArchivedBy = ({ archived_by, archived_on }) => {
-  const dateStr = DateUtils.format(archived_on)
+  const dateStr = format(archived_on)
   if (archived_by) {
     const { first_name, last_name } = archived_by
     return `This company was archived on ${dateStr} by ${first_name} ${last_name}`
@@ -69,9 +69,7 @@ const CompanyBusinessDetails = ({
         Changes made to this information can be found on the{' '}
         <Link href={urls.companyEditHistory}>Edit history page</Link>.
       </div>
-      {lastUpdated && (
-        <div>Last updated on: {DateUtils.format(lastUpdated)}</div>
-      )}
+      {lastUpdated && <div>Last updated on: {format(lastUpdated)}</div>}
       {isArchived && (
         <StatusMessage>
           <p>{getArchivedBy(businessDetails)}</p>

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { isBoolean, isNumber } from 'lodash'
-import DateUtils from '../../../client/components/Utils/DateUtils'
+import { formatWithTime } from '../../../client/utils/date-utils'
 
 import { CHANGE_TYPE_TEXT, TRUE, FALSE, NOT_SET } from '../constants'
 
@@ -23,14 +23,14 @@ function getValue(value) {
   }
 
   if (isDate(value)) {
-    return DateUtils.formatWithTime(value)
+    return formatWithTime(value)
   }
 
   return value || NOT_SET
 }
 
 function getUpdatedBy(timestamp, changedBy) {
-  const formattedTime = DateUtils.formatWithTime(timestamp)
+  const formattedTime = formatWithTime(timestamp)
   return `Updated on ${formattedTime} by ${changedBy}`
 }
 

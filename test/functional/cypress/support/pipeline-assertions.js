@@ -1,8 +1,8 @@
-const { DateUtils, NumberUtils } = require('data-hub-components')
 const moment = require('moment')
 
+const { currencyGBP } = require('../../../../src/client/utils/number-utils')
+const { format } = require('../../../../src/client/utils/date-utils')
 const { assertKeyValueTable } = require('./assertions')
-
 const urls = require('../../../../src/lib/urls')
 const {
   STATUS_VALUES,
@@ -54,9 +54,7 @@ module.exports = {
       }
 
       if (item.potential_value) {
-        content['Potential export value'] = NumberUtils.currencyGBP(
-          item.potential_value
-        )
+        content['Potential export value'] = currencyGBP(item.potential_value)
       }
 
       if (item.expected_win_date) {
@@ -65,11 +63,11 @@ module.exports = {
         ).format('MMM Y')
       }
 
-      content.Created = DateUtils.format(item.created_on)
+      content.Created = format(item.created_on)
 
       if (item.archived) {
         content['Reason for archive'] = item.archived_reason
-        content.Archived = DateUtils.format(item.archived_on)
+        content.Archived = format(item.archived_on)
       }
 
       assertSummaryTable({

@@ -5,7 +5,7 @@ import Details from '@govuk-react/details'
 import Link from '@govuk-react/link'
 import { get, isEmpty } from 'lodash'
 import { SPACING_POINTS, LINE_HEIGHT } from '@govuk-react/constants'
-import NumberUtils from '../../../../../client/components/Utils/NumberUtils'
+import { currencyGBP } from '../../../../../client/utils/number-utils'
 import { NewWindowLink, SummaryTable } from '../../../../../client/components/'
 
 const TableDetails = styled('div')`
@@ -67,7 +67,7 @@ const SectionAbout = ({ businessDetails, isDnbCompany, isArchived, urls }) => (
     <SummaryTable.Row heading="Annual turnover">
       {businessDetails.turnover && (
         <>
-          {NumberUtils.currencyGBP(businessDetails.turnover, {
+          {currencyGBP(businessDetails.turnover, {
             maximumSignificantDigits: 2,
           })}
 

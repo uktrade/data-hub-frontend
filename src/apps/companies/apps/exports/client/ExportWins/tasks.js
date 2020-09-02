@@ -1,6 +1,6 @@
 import axios from 'axios'
-import DateUtils from '../../../../../../client/components/Utils/DateUtils'
-import NumberUtils from '../../../../../../client/components/Utils/NumberUtils'
+import { format } from '../../../../../../client/utils/date-utils'
+import { currencyGBP } from '../../../../../../client/utils/number-utils'
 import { GREEN, BLUE } from 'govuk-colours'
 
 import { NOT_IMPLEMENTED } from './state'
@@ -40,7 +40,7 @@ function getMetadata(win) {
     ['Type of export', win.business_type],
     [
       'Total export value',
-      NumberUtils.currencyGBP(win.value.export.total, {
+      currencyGBP(win.value.export.total, {
         maximumSignificantDigits: 3,
       }),
     ],
@@ -54,7 +54,7 @@ function getMetadata(win) {
   }
 
   if (win.response?.confirmed) {
-    metadata.push(['Date confirmed', DateUtils.format(win.response.date)])
+    metadata.push(['Date confirmed', format(win.response.date)])
   }
 
   if (win.hvc) {
@@ -96,7 +96,7 @@ export function fetchExportWins({ companyId, companyName, activePage }) {
         results: data.results.map((win) => ({
           badges: getBadges(win),
           headingText: win.title,
-          subheading: `Won on ${DateUtils.format(win.date)}`,
+          subheading: `Won on ${format(win.date)}`,
           metadata: getMetadata(win),
         })),
       }

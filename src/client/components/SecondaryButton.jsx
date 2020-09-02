@@ -2,7 +2,6 @@ import { TEXT_COLOUR, GREY_3 } from 'govuk-colours'
 import Button from '@govuk-react/button'
 import React from 'react'
 
-// TODO: Move to data-hub-components
 const SecondaryButton = React.forwardRef((props, ref) => (
   <Button
     ref={ref}

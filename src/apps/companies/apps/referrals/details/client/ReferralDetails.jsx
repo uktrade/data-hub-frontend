@@ -11,7 +11,7 @@ import { ID as STATE_ID } from './state'
 import SecondaryButton from '../../../../../../client/components/SecondaryButton'
 import { SummaryTable, FormActions } from '../../../../../../client/components/'
 import Task from '../../../../../../client/components/Task'
-import DateUtils from '../../../../../../client/components/Utils/DateUtils'
+import { format } from '../../../../../../client/utils/date-utils'
 
 import { REFERRAL_DETAILS } from '../../../../../../client/actions'
 
@@ -86,14 +86,14 @@ export default connect(({ referrerUrl, ...state }) => ({
                   {receivingAdviser && <AdviserDetails {...receivingAdviser} />}
                 </SummaryTable.Row>
                 <SummaryTable.Row heading="Date of referral">
-                  {DateUtils.format(date)}
+                  {format(date)}
                 </SummaryTable.Row>
                 <SummaryTable.Row heading="Notes">{notes}</SummaryTable.Row>
               </SummaryTable>
               {completed ? (
                 <SummaryTable caption="Referral accepted">
                   <SummaryTable.Row heading="Date">
-                    {DateUtils.format(completed.on)}
+                    {format(completed.on)}
                   </SummaryTable.Row>
                   <SummaryTable.Row heading="By">
                     <AdviserDetails {...completed.by} />

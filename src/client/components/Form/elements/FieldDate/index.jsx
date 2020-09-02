@@ -15,7 +15,7 @@ import {
 import FieldWrapper from '../FieldWrapper'
 import useField from '../../hooks/useField'
 import useFormContext from '../../hooks/useFormContext'
-import DateUtils from '../../../../utils/DateUtils'
+import { isDateValid, isShortDateValid } from '../../../../utils/date-utils'
 
 const DAY = 'day'
 const MONTH = 'month'
@@ -48,13 +48,13 @@ const StyledList = styled('div')({
 
 const getValidator = (required, format) => ({ day, month, year }) => {
   const isLong = format === FORMAT_LONG
-  const isDateValid = isLong
-    ? DateUtils.isDateValid(year, month, day)
-    : DateUtils.isShortDateValid(year, month)
+  const isValid = isLong
+    ? isDateValid(year, month, day)
+    : isShortDateValid(year, month)
 
   const isDateEmpty = isLong ? !day && !month && !year : !month && !year
 
-  return !isDateValid && (!isDateEmpty || required)
+  return !isValid && (!isDateEmpty || required)
     ? required || 'Enter a valid date'
     : null
 }
