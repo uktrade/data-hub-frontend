@@ -35,7 +35,7 @@ describe('Contact controller, archive', () => {
       locals: {},
       redirect: () => {
         expect(contactRepositoryArchiveContactStub).to.be.calledWith(
-          token,
+          req,
           id,
           req.body.archived_reason
         )
@@ -56,7 +56,7 @@ describe('Contact controller, archive', () => {
       locals: {},
       redirect: () => {
         expect(contactRepositoryArchiveContactStub).to.be.calledWith(
-          token,
+          req,
           id,
           req.body.archived_reason_other
         )
@@ -113,10 +113,7 @@ describe('Contact controller, archive', () => {
     const res = {
       locals: {},
       redirect: () => {
-        expect(contactRepositoryUnArchiveContactStub).to.be.calledWith(
-          token,
-          id
-        )
+        expect(contactRepositoryUnArchiveContactStub).to.be.calledWith(req, id)
         done()
       },
     }

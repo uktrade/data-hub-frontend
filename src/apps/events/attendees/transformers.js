@@ -50,9 +50,9 @@ function transformServiceDeliveryToAttendeeListItem({
   return listItem
 }
 
-async function createContactItemToAttendeeSearchResult(token, event) {
+async function createContactItemToAttendeeSearchResult(req, event) {
   const attendees = await fetchEventAttendees({
-    token,
+    req,
     eventId: event.id,
     limit: 9999,
   })

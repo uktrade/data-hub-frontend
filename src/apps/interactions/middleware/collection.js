@@ -34,7 +34,7 @@ async function getInteractionCollectionForEntity(req, res, next) {
     const { query: entityQuery, showCompany } = res.locals.interactions
     const params = {
       entityQuery,
-      token: req.session.token,
+      req,
       page: req.query.page,
       sortby: req.query.sortby || getDefaultInteractionSort(showCompany),
     }

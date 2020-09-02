@@ -50,7 +50,7 @@ describe('Contact audit controller', () => {
           breadcrumb: this.breadcrumbStub,
           render: () => {
             expect(this.getContactAuditLogStub).to.be.calledWith(
-              this.req.session.token,
+              this.req,
               this.req.params.contactId,
               1
             )
@@ -74,7 +74,7 @@ describe('Contact audit controller', () => {
           breadcrumb: this.breadcrumbStub,
           render: () => {
             expect(this.getContactAuditLogStub).to.be.calledWith(
-              this.req.session.token,
+              this.req,
               this.req.params.contactId,
               '3'
             )

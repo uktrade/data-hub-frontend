@@ -6,7 +6,7 @@ const { abandonProposition, fetchProposition } = require('../repos')
 async function postAbandon(req, res, next) {
   try {
     res.locals.requestBody = transformPropositionFormBodyToApiRequest(req.body)
-    await abandonProposition(req.session.token, res.locals.requestBody)
+    await abandonProposition(req, res.locals.requestBody)
 
     req.flash('success', 'Proposition abandoned')
 
@@ -31,10 +31,9 @@ async function postAbandon(req, res, next) {
 
 async function getPropositionDetails(req, res, next, propositionId) {
   try {
-    const token = req.session.token
     const { investment } = res.locals
     res.locals.proposition = await fetchProposition(
-      token,
+      req,
       propositionId,
       investment.id
     )

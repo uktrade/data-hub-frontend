@@ -2,7 +2,7 @@ const config = require('../../../../../config')
 const { fetchOrganisationTypes } = require('../repos')
 const businessTypeFixture = require('../../../../../../test/unit/data/metadata/business-type')
 
-const token = 'abcd'
+const stubRequest = { session: { token: 'abcd' } }
 
 describe('Add company form repos', () => {
   describe('#fetchOrganisationTypes', () => {
@@ -13,7 +13,7 @@ describe('Add company form repos', () => {
         .get('/v4/metadata/business-type')
         .reply(200, businessTypeFixture)
 
-      actual = await fetchOrganisationTypes(token)
+      actual = await fetchOrganisationTypes(stubRequest)
     })
 
     it('should return the organisation types', () => {

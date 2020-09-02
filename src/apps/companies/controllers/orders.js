@@ -6,7 +6,6 @@ const { transformOrderToListItem } = require('../../omis/transformers')
 const urls = require('../../../lib/urls')
 
 async function renderOrders(req, res, next) {
-  const token = req.session.token
   const page = req.query.page || 1
   const { company, returnUrl, dnbRelatedCompaniesCount } = res.locals
   const actionButtons = company.archived
@@ -20,7 +19,7 @@ async function renderOrders(req, res, next) {
 
   try {
     const results = await search({
-      token,
+      req,
       page,
       searchEntity: 'order',
       requestBody: {

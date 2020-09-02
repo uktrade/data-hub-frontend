@@ -27,23 +27,24 @@ describe('Investment archive controller', () => {
   describe('archive', () => {
     it('should call the archive investment project repo method for the id and reason', (done) => {
       const archived_reason = 'test'
+      const stubRequest = {
+        session: this.session,
+        body: {
+          archived_reason,
+        },
+        params: {
+          investmentId: investmentData.id,
+        },
+      }
 
       this.controller.archiveInvestmentProjectHandler(
-        {
-          session: this.session,
-          body: {
-            archived_reason,
-          },
-          params: {
-            investmentId: investmentData.id,
-          },
-        },
+        stubRequest,
         {
           locals: {},
         },
         () => {
           expect(this.archiveInvestmentProject).to.be.calledWith(
-            this.token,
+            stubRequest,
             investmentData.id,
             archived_reason
           )
@@ -54,24 +55,25 @@ describe('Investment archive controller', () => {
     it('should use the other reason in the call to the repo if it is provided', (done) => {
       const archived_reason = 'Other'
       const archived_reason_other = 'Some other reason'
+      const stubRequest = {
+        session: this.session,
+        body: {
+          archived_reason,
+          archived_reason_other,
+        },
+        params: {
+          investmentId: investmentData.id,
+        },
+      }
 
       this.controller.archiveInvestmentProjectHandler(
-        {
-          session: this.session,
-          body: {
-            archived_reason,
-            archived_reason_other,
-          },
-          params: {
-            investmentId: investmentData.id,
-          },
-        },
+        stubRequest,
         {
           locals: {},
         },
         () => {
           expect(this.archiveInvestmentProject).to.be.calledWith(
-            this.token,
+            stubRequest,
             investmentData.id,
             archived_reason_other
           )
@@ -211,20 +213,21 @@ describe('Investment archive controller', () => {
 
   describe('unarchive', () => {
     it('should call unarchive on repository', (done) => {
-      this.controller.unarchiveInvestmentProjectHandler(
-        {
-          session: {
-            token: this.token,
-          },
-          params: {
-            investmentId: investmentData.id,
-          },
-          flash: this.flashStub,
+      const stubRequest = {
+        session: {
+          token: this.token,
         },
+        params: {
+          investmentId: investmentData.id,
+        },
+        flash: this.flashStub,
+      }
+      this.controller.unarchiveInvestmentProjectHandler(
+        stubRequest,
         {
           redirect: () => {
             expect(this.unarchiveInvestmentProject).to.be.calledWith(
-              this.token,
+              stubRequest,
               investmentData.id
             )
             done()

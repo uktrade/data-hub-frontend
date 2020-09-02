@@ -30,27 +30,27 @@ const filterServiceNames = (services) => {
   return filteredServiceNames
 }
 
-async function getEditOptions(token, createdOn, currentAdviser) {
-  const advisers = await getAdvisers(token)
+async function getEditOptions(req, createdOn, currentAdviser) {
+  const advisers = await getAdvisers(req)
   const activeAdvisers = filterActiveAdvisers({
     advisers: advisers.results,
     includeAdviser: currentAdviser,
   })
 
-  const unfilteredServiceOptions = await getOptions(token, 'service', {
+  const unfilteredServiceOptions = await getOptions(req, 'service', {
     createdOn,
     context: 'event',
   })
 
   return {
     advisers: activeAdvisers.map(transformObjectToOption),
-    eventTypes: await getOptions(token, 'event-type', { createdOn }),
-    locationTypes: await getOptions(token, 'location-type', { createdOn }),
-    countries: await getOptions(token, 'country', { createdOn }),
-    teams: await getOptions(token, 'team', { createdOn }),
+    eventTypes: await getOptions(req, 'event-type', { createdOn }),
+    locationTypes: await getOptions(req, 'location-type', { createdOn }),
+    countries: await getOptions(req, 'country', { createdOn }),
+    teams: await getOptions(req, 'team', { createdOn }),
     services: filterServiceNames(unfilteredServiceOptions),
-    programmes: await getOptions(token, 'programme', { createdOn }),
-    ukRegions: await getOptions(token, 'uk-region', { createdOn }),
+    programmes: await getOptions(req, 'programme', { createdOn }),
+    ukRegions: await getOptions(req, 'uk-region', { createdOn }),
   }
 }
 
@@ -67,7 +67,7 @@ async function renderEditPage(req, res, next) {
     )
     const currentAdviser = get(eventData, 'organiser')
     const options = await getEditOptions(
-      req.session.token,
+      req,
       mergedData.created_on,
       currentAdviser
     )

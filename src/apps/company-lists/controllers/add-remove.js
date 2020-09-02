@@ -15,7 +15,7 @@ async function handleAddRemoveCompanyToList(req, res, next) {
     for (const [listId, value] of Object.entries(list)) {
       const addOrRemoveCompany =
         value === 'yes' ? addCompanyToList : removeCompanyFromList
-      listsToUpdate.push(addOrRemoveCompany(req.session.token, listId, id))
+      listsToUpdate.push(addOrRemoveCompany(req, listId, id))
     }
     await Promise.all(listsToUpdate)
     req.flash('success', 'Lists changes for this company have been saved.')
@@ -29,8 +29,8 @@ async function handleAddRemoveCompanyToList(req, res, next) {
 async function fetchListsCompanyIsOn(req, res, next) {
   try {
     const [allLists, allListsCompaniesIn] = await Promise.all([
-      getAllCompanyLists(req.session.token),
-      getListsCompanyIsIn(req.session.token, res.locals.company.id),
+      getAllCompanyLists(req),
+      getListsCompanyIsIn(req, res.locals.company.id),
     ])
     res.locals.listsCompanyIsIn = await transformCompaniesInLists(
       allLists,

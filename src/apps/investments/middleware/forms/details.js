@@ -32,22 +32,21 @@ async function populateForm(req, res, next) {
   try {
     const investment = transformFromApi(res.locals.investment)
     const createdOn = get(investment, 'created_on')
-    const token = req.session.token
 
     const {
       equityCompany,
       equityCompanyInvestment,
-    } = await getEquityCompanyDetails(token, equityCompanyId)
+    } = await getEquityCompanyDetails(req, equityCompanyId)
 
     const contacts = get(equityCompany, 'contacts', []).map(
       transformContactToOption
     )
 
-    const investmentTypes = await getOptions(token, 'investment-type', {
+    const investmentTypes = await getOptions(req, 'investment-type', {
       createdOn,
     })
     const referralSourceActivities = await getOptions(
-      token,
+      req,
       'referral-source-activity',
       { createdOn }
     )
@@ -61,7 +60,7 @@ async function populateForm(req, res, next) {
       investment
     )
 
-    const advisersResponse = await getAdvisers(token)
+    const advisersResponse = await getAdvisers(req)
 
     const clientRelationshipManagers = filterActiveAdvisers({
       advisers: advisersResponse.results,
@@ -86,39 +85,37 @@ async function populateForm(req, res, next) {
         investmentTypes,
         referralSourceActivities,
         investmentTypesObj: buildMetaDataObj(investmentTypes),
-        fdi: await getOptions(token, 'fdi-type', { createdOn }),
+        fdi: await getOptions(req, 'fdi-type', { createdOn }),
         referralSourceActivitiesObj: buildMetaDataObj(referralSourceActivities),
         referralSourceMarketing: await getOptions(
-          token,
+          req,
           'referral-source-marketing',
           { createdOn }
         ),
         referralSourceWebsite: await getOptions(
-          token,
+          req,
           'referral-source-website',
           { createdOn }
         ),
-        primarySectors: await getOptions(token, 'sector', { createdOn }),
+        primarySectors: await getOptions(req, 'sector', { createdOn }),
         businessActivities: await getOptions(
-          token,
+          req,
           'investment-business-activity',
           { createdOn }
         ),
         investmentSpecificProgramme: await getOptions(
-          token,
+          req,
           'investment-specific-programme',
           { createdOn }
         ),
         investmentInvestorType: await getOptions(
-          token,
+          req,
           'investment-investor-type',
           { createdOn }
         ),
-        investmentInvolvement: await getOptions(
-          token,
-          'investment-involvement',
-          { createdOn }
-        ),
+        investmentInvolvement: await getOptions(req, 'investment-involvement', {
+          createdOn,
+        }),
       },
     })
 
@@ -167,9 +164,9 @@ function handleFormPost(req, res, next) {
   }
 
   if (projectId) {
-    saveMethod = updateInvestment(req.session.token, projectId, formattedBody)
+    saveMethod = updateInvestment(req, projectId, formattedBody)
   } else {
-    saveMethod = createInvestmentProject(req.session.token, formattedBody)
+    saveMethod = createInvestmentProject(req, formattedBody)
   }
 
   saveMethod

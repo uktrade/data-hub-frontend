@@ -13,8 +13,8 @@ const BUSINESS_TYPE_WHITELIST = {
   soleTrader: '99d14e94-5d95-e211-a939-e4115bead28a',
 }
 
-async function fetchOrganisationTypes(token) {
-  const businessTypeOptions = await getOptions(token, 'business-type')
+async function fetchOrganisationTypes(req) {
+  const businessTypeOptions = await getOptions(req, 'business-type')
   const filteredBusinessTypeOptions = filter(
     businessTypeOptions,
     ({ value }) => {

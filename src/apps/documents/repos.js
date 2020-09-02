@@ -5,11 +5,11 @@ const fs = require('fs')
 
 const { authorisedRequest } = require('../../lib/authorised-request')
 
-async function chainUploadSequence(token, data) {
-  const documentUploadData = await getDocumentUploadS3Url(token, data)
+async function chainUploadSequence(req, data) {
+  const documentUploadData = await getDocumentUploadS3Url(req, data)
   const s3Url = documentUploadData.signed_upload_url
 
-  uploadDocumentToS3(token, data, s3Url, documentUploadData.id)
+  uploadDocumentToS3(req, data, s3Url, documentUploadData.id)
 }
 
 function buildApiUrl(url, fields) {
@@ -20,7 +20,7 @@ function buildApiUrl(url, fields) {
   return `${config.apiRoot}/v3${app}${subApp}${document}`
 }
 
-function createRequest(token, urls, file) {
+function createRequest(req, urls, file) {
   request(
     {
       url: urls.s3Url,
@@ -29,7 +29,7 @@ function createRequest(token, urls, file) {
     },
     (error, response) => {
       if (!error && response.statusCode === 200) {
-        authorisedRequest(token, {
+        authorisedRequest(req, {
           url: urls.api,
           method: 'POST',
         })
@@ -38,7 +38,7 @@ function createRequest(token, urls, file) {
   )
 }
 
-function getDocumentUploadS3Url(token, { file, url, fields, textFields = {} }) {
+function getDocumentUploadS3Url(req, { file, url, fields, textFields = {} }) {
   const body = {
     ...textFields,
     original_filename: file.name,
@@ -50,14 +50,14 @@ function getDocumentUploadS3Url(token, { file, url, fields, textFields = {} }) {
     method: 'POST',
   }
 
-  return authorisedRequest(token, options)
+  return authorisedRequest(req, options)
 }
 
-function uploadDocumentToS3(token, { url, fields, file }, s3Url, documentId) {
+function uploadDocumentToS3(req, { url, fields, file }, s3Url, documentId) {
   const api = `${buildApiUrl(url, fields)}/${documentId}/upload-callback`
   const urls = { s3Url, api }
 
-  createRequest(token, urls, file)
+  createRequest(req, urls, file)
 }
 
 module.exports = {

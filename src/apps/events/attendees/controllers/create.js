@@ -6,7 +6,7 @@ const { fetchEventAttendees } = require('../repos')
 
 async function createAttendee(req, res, next) {
   try {
-    const { user: adviser, token } = req.session
+    const { user: adviser } = req.session
     const contactId = req.params.contactId
     const { event } = res.locals
 
@@ -15,7 +15,7 @@ async function createAttendee(req, res, next) {
     }
 
     const attendees = await fetchEventAttendees({
-      token,
+      req,
       contactId,
       eventId: event.id,
     })
@@ -28,7 +28,7 @@ async function createAttendee(req, res, next) {
       return res.redirect(`/events/${event.id}/attendees`)
     }
 
-    const contact = await getContact(token, contactId)
+    const contact = await getContact(req, contactId)
 
     const serviceDelivery = {
       contacts: [contact.id],
@@ -49,7 +49,7 @@ async function createAttendee(req, res, next) {
       were_countries_discussed: false,
     }
 
-    await saveInteraction(token, serviceDelivery)
+    await saveInteraction(req, serviceDelivery)
 
     req.flash(
       'success',

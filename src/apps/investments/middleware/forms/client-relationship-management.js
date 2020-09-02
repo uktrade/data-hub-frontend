@@ -24,7 +24,7 @@ async function populateForm(req, res, next) {
       investment,
       'investor_company.one_list_group_global_account_manager.last_name'
     )
-    const advisersResponse = await getAdvisers(req.session.token)
+    const advisersResponse = await getAdvisers(req)
     const clientRelationshipManagerOptions = filterActiveAdvisers({
       advisers: advisersResponse.results,
       includeAdviser: clientRelationshipManager,
@@ -58,7 +58,7 @@ async function populateForm(req, res, next) {
 async function handleFormPost(req, res, next) {
   try {
     res.locals.projectId = req.params.investmentId
-    await updateInvestment(req.session.token, res.locals.projectId, {
+    await updateInvestment(req, res.locals.projectId, {
       client_relationship_manager: req.body.client_relationship_manager,
     })
     next()

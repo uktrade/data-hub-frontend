@@ -42,13 +42,13 @@ describe('Company orders controller', () => {
 
       it('should call search with correct arguments', () => {
         expect(this.searchStub).to.have.been.calledWith({
+          req: this.middlewareParameters.reqMock,
           isAggregation: false,
           page: 1,
           requestBody: {
             company: companyMock.id,
           },
           searchEntity: 'order',
-          token: '1234',
         })
       })
 

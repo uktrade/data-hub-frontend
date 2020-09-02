@@ -36,12 +36,11 @@ class CancelOrderController extends EditController {
   }
 
   async saveValues(req, res, next) {
-    const token = req.session.token
     const orderId = get(res.locals, 'order.id')
     const data = req.form.values
 
     try {
-      await Order.cancel(token, orderId, data)
+      await Order.cancel(req, orderId, data)
       next()
     } catch (error) {
       next(error)

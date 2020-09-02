@@ -61,7 +61,7 @@ describe('OMIS middleware', () => {
         )
 
         expect(this.getDitCompanyStub).to.have.been.calledWith(
-          this.reqMock.session.token,
+          this.reqMock,
           this.companyId
         )
       })
@@ -141,7 +141,7 @@ describe('OMIS middleware', () => {
         )
 
         expect(this.getByIdStub).to.have.been.calledWith(
-          this.reqMock.session.token,
+          this.reqMock,
           this.orderId
         )
       })

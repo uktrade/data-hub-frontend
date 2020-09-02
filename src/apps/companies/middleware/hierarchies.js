@@ -7,14 +7,13 @@ function transformErrorMessage(error) {
 }
 
 async function setGlobalHQ(req, res, next) {
-  const token = req.session.token
   const companyId = req.params.companyId
   const globalHqId = req.params.globalHqId
   const body = { global_headquarters: globalHqId }
   const detailsUrl = `/companies/${companyId}/business-details`
 
   try {
-    await updateCompany(token, companyId, body)
+    await updateCompany(req, companyId, body)
 
     req.flash('success', 'You’ve linked the Global Headquarters')
     return res.redirect(detailsUrl)
@@ -28,13 +27,12 @@ async function setGlobalHQ(req, res, next) {
 }
 
 async function removeGlobalHQ(req, res, next) {
-  const token = req.session.token
   const companyId = req.params.companyId
   const body = { global_headquarters: null }
   const detailsUrl = `/companies/${companyId}/business-details`
 
   try {
-    await updateCompany(token, companyId, body)
+    await updateCompany(req, companyId, body)
 
     req.flash('success', 'You’ve removed the link to Global Headquarters')
     return res.redirect(detailsUrl)
@@ -48,12 +46,11 @@ async function removeGlobalHQ(req, res, next) {
 }
 
 async function addSubsidiary(req, res, next) {
-  const token = req.session.token
   const { companyId, subsidiaryCompanyId } = req.params
   const body = { global_headquarters: companyId }
 
   try {
-    await updateCompany(token, subsidiaryCompanyId, body)
+    await updateCompany(req, subsidiaryCompanyId, body)
     req.flash('success', 'You’ve linked the subsidiary')
   } catch (error) {
     if (error.statusCode !== 400) {

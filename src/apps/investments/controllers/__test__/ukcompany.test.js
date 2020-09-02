@@ -55,7 +55,7 @@ describe('investment uk company', () => {
         })
 
         it('should save the change to the investment project', () => {
-          expect(this.updateInvestmentStub).to.be.calledWith('abcd', '1', {
+          expect(this.updateInvestmentStub).to.be.calledWith(this.req, '1', {
             uk_company: '1234',
           })
         })
@@ -208,7 +208,7 @@ describe('investment uk company', () => {
       })
 
       it('should update the investment record', () => {
-        expect(this.updateInvestmentStub).to.be.calledWith('abcd', '1', {
+        expect(this.updateInvestmentStub).to.be.calledWith(this.req, '1', {
           uk_company: null,
         })
       })

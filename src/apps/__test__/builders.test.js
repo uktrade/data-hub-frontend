@@ -4,6 +4,8 @@ const builders = require('../builders')
 const config = require('../../config')
 
 describe('Global builders', () => {
+  const stubRequest = { session: { token: '1234' } }
+
   describe('#getDeepObjectValuesForKey', () => {
     it('should return an empty array when no valid args are given', () => {
       expect(builders.getDeepObjectValuesForKey({}))
@@ -501,7 +503,7 @@ describe('Global builders', () => {
         }
 
         this.result = await builders.buildFieldsWithSelectedEntities(
-          '1234',
+          stubRequest,
           this.fields,
           query
         )
@@ -532,7 +534,7 @@ describe('Global builders', () => {
         }
 
         this.result = await builders.buildFieldsWithSelectedEntities(
-          '1234',
+          stubRequest,
           this.fields,
           query
         )
@@ -557,7 +559,7 @@ describe('Global builders', () => {
         const query = {}
 
         this.result = await builders.buildFieldsWithSelectedEntities(
-          '1234',
+          stubRequest,
           this.fields,
           query
         )

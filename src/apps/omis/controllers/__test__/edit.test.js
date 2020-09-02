@@ -55,7 +55,7 @@ describe('OMIS EditController', () => {
 
       it('should call save method on order model', () => {
         expect(this.orderUpdateStub).to.have.been.calledWith(
-          'sessionToken',
+          this.reqMock,
           updateMockData.id,
           {
             foo: 'bar',

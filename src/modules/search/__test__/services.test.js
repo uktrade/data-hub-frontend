@@ -10,6 +10,8 @@ const {
 } = require('../services')
 const buildMiddlewareParameters = require('../../../../test/unit/helpers/middleware-parameters-builder')
 
+const stubRequest = { session: { token: '1234' } }
+
 describe('Search service', () => {
   describe('#search', () => {
     context('when minimal parameters are populated', () => {
@@ -23,7 +25,7 @@ describe('Search service', () => {
           })
 
         this.actual = await search({
-          token: '1234',
+          req: stubRequest,
           searchTerm: 'search',
         })
       })
@@ -51,7 +53,7 @@ describe('Search service', () => {
           })
 
         this.actual = await search({
-          token: '1234',
+          req: stubRequest,
           searchTerm: 'search',
           searchEntity: 'company',
           requestBody: {
@@ -86,7 +88,7 @@ describe('Search service', () => {
           })
 
         this.actual = await search({
-          token: '1234',
+          req: stubRequest,
           searchTerm: 'search',
           searchEntity: 'company',
           requestBody: {
@@ -125,7 +127,7 @@ describe('Search service', () => {
         })
 
       this.actual = await searchCompanies({
-        token: '1234',
+        req: stubRequest,
         searchTerm: 'search',
         isUkBased: true,
         requestBody: {
@@ -159,7 +161,7 @@ describe('Search service', () => {
         })
 
       this.actual = await searchInvestments({
-        token: '1234',
+        req: stubRequest,
         searchTerm: 'search',
         filters: {
           field: true,
@@ -192,7 +194,7 @@ describe('Search service', () => {
         })
 
       this.actual = await searchForeignCompanies({
-        token: '1234',
+        req: stubRequest,
         searchTerm: 'search',
       })
     })
@@ -231,7 +233,7 @@ describe('Search service', () => {
         })
 
         await exportSearch({
-          token: '1234',
+          req: stubRequest,
           searchTerm: 'search',
           searchEntity: 'company',
           requestBody: {
@@ -270,7 +272,7 @@ describe('Search service', () => {
         })
 
         await exportSearch({
-          token: '1234',
+          req: stubRequest,
           searchTerm: 'search',
           searchEntity: 'entity',
           requestBody: {
@@ -297,7 +299,7 @@ describe('Search service', () => {
         })
 
       this.actual = await searchAutocomplete({
-        token: '1234',
+        req: stubRequest,
         searchEntity: 'company',
         searchTerm: 'search',
       })
@@ -325,7 +327,7 @@ describe('Search service', () => {
         })
 
       this.actual = await searchDnbCompanies({
-        token: '1234',
+        req: stubRequest,
         requestBody: {
           search_term: 'company',
           address_country: 'GB',

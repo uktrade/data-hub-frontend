@@ -1,10 +1,10 @@
 const { authorisedRequest } = require('../../../../lib/authorised-request')
 const config = require('../../../../config')
 
-function getDnbHierarchy(token, globalUltimateDunsNumber, limit, page = 1) {
+function getDnbHierarchy(req, globalUltimateDunsNumber, limit, page = 1) {
   const offset = limit * (page - 1)
 
-  return authorisedRequest(token, {
+  return authorisedRequest(req, {
     url: `${config.apiRoot}/v4/company`,
     qs: {
       limit,

@@ -22,10 +22,10 @@ const exportOptions = {
  * including a flat version of the sector list
  *
  */
-async function getFormOptions(token, res) {
-  const omisMarketOptions = await getOptions(token, 'omis-market')
-  const regionOptions = await getOptions(token, 'uk-region')
-  const sectorOptions = await getOptions(token, 'sector', {
+async function getFormOptions(req, res) {
+  const omisMarketOptions = await getOptions(req, 'omis-market')
+  const regionOptions = await getOptions(req, 'uk-region')
+  const sectorOptions = await getOptions(req, 'sector', {
     queryString: '?level__lte=0',
   })
   return {
@@ -43,15 +43,9 @@ async function getFormOptions(token, res) {
  * request query
  *
  */
-async function getFiltersFields(token, query, res) {
-  const filtersFields = omisFiltersFields(await getFormOptions(token, res))
-  const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(
-    token,
-    filtersFields,
-    query
-  )
-
-  return filtersFieldsWithSelectedOptions
+async function getFiltersFields(req, query, res) {
+  const filtersFields = omisFiltersFields(await getFormOptions(req, res))
+  return await buildFieldsWithSelectedEntities(req, filtersFields, query)
 }
 
 /**
@@ -71,11 +65,11 @@ function getSortForm(query) {
  */
 async function renderList(req, res, next) {
   try {
-    const { token, user } = req.session
+    const { user } = req.session
     const query = req.query
 
     const sortForm = getSortForm(query)
-    const filtersFields = await getFiltersFields(token, query, res)
+    const filtersFields = await getFiltersFields(req, query, res)
     const selectedFilters = buildSelectedFiltersSummary(filtersFields, query)
     const exportAction = await buildExportAction(
       qs.stringify(req.query),

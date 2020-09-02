@@ -17,7 +17,6 @@ const urls = require('../../../lib/urls')
 // Todo - rewrite to use form generator
 async function editDetails(req, res, next) {
   try {
-    const { token } = req.session
     const { contactId } = req.params
 
     // Work out what to use for the form data
@@ -56,10 +55,7 @@ async function editDetails(req, res, next) {
     }
 
     if (!res.locals.company) {
-      res.locals.company = await companyRepository.getDitCompany(
-        token,
-        companyId
-      )
+      res.locals.company = await companyRepository.getDitCompany(req, companyId)
     }
 
     if (contactId) {
@@ -74,7 +70,7 @@ async function editDetails(req, res, next) {
     }
 
     res.locals.contactLabels = contactLabels
-    res.locals.countryOptions = await getOptions(token, 'country', {
+    res.locals.countryOptions = await getOptions(req, 'country', {
       createdOn: get(res.locals, 'contact.created_on'),
     })
 
@@ -97,10 +93,7 @@ async function postDetails(req, res, next) {
   try {
     const { origin_type: originType, origin_url: originUrl, ...body } = req.body
 
-    const newContact = await contactFormService.saveContactForm(
-      req.session.token,
-      body
-    )
+    const newContact = await contactFormService.saveContactForm(req, body)
 
     if (req.body.id) {
       req.flash('success', 'Contact record updated')

@@ -7,7 +7,7 @@ const labels = require('./locales/en/default')
 
 async function setCompany(req, res, next, companyId) {
   try {
-    res.locals.company = await getDitCompany(req.session.token, companyId)
+    res.locals.company = await getDitCompany(req, companyId)
     next()
   } catch (error) {
     next(error)
@@ -16,7 +16,7 @@ async function setCompany(req, res, next, companyId) {
 
 async function setOrder(req, res, next, orderId) {
   try {
-    const order = await Order.getById(req.session.token, orderId)
+    const order = await Order.getById(req, orderId)
     const activeOrder = !['cancelled', 'complete'].includes(order.status)
 
     res.locals.order = assign({}, order, {

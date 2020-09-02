@@ -11,7 +11,7 @@ async function editLeadAssignee(req, res, next) {
   }
 
   try {
-    const allAssignees = await Order.getAssignees(req.session.token, orderId)
+    const allAssignees = await Order.getAssignees(req, orderId)
     const assignees = allAssignees.map((assignee) => {
       return Object.assign(assignee, {
         is_lead: assignee.adviser.id === adviserId,
@@ -19,7 +19,7 @@ async function editLeadAssignee(req, res, next) {
     })
     const leadAdviser = find(assignees, { adviser: { id: adviserId } })
 
-    await Order.saveAssignees(req.session.token, orderId, assignees)
+    await Order.saveAssignees(req, orderId, assignees)
 
     req.flash(
       'success',

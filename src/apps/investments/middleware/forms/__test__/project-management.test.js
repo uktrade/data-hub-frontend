@@ -7,6 +7,12 @@ const investmentData = require('../../../../../../test/unit/data/investment/inve
 const advisorData = require('../../../../../../test/unit/data/investment/interaction/advisers.json')
 const { projectManagementLabels } = require('../../../labels')
 
+const stubRequest = {
+  session: {
+    token: 'mock-token',
+  },
+}
+
 describe('Investment form middleware - project magement', () => {
   describe('#populateForm', () => {
     beforeEach(() => {
@@ -42,49 +48,25 @@ describe('Investment form middleware - project magement', () => {
         project_assurance_adviser: investmentData.project_assurance_adviser.id,
       }
 
-      this.controller.populateForm(
-        {
-          session: {
-            token: 'mock-token',
-          },
-        },
-        this.resMock,
-        () => {
-          expect(this.resMock.locals.form.state).to.deep.equal(
-            expectedFormState
-          )
-          done()
-        }
-      )
+      this.controller.populateForm(stubRequest, this.resMock, () => {
+        expect(this.resMock.locals.form.state).to.deep.equal(expectedFormState)
+        done()
+      })
     })
 
     it('should include labels for the form', (done) => {
-      this.controller.populateForm(
-        {
-          session: {
-            token: 'mock-token',
-          },
-        },
-        this.resMock,
-        () => {
-          expect(this.resMock.locals.form.labels).to.deep.equal(
-            projectManagementLabels.edit
-          )
-          done()
-        }
-      )
+      this.controller.populateForm(stubRequest, this.resMock, () => {
+        expect(this.resMock.locals.form.labels).to.deep.equal(
+          projectManagementLabels.edit
+        )
+        done()
+      })
     })
 
     context(
       'when the investment data contains project management information',
       () => {
         beforeEach(async () => {
-          this.reqMock = {
-            session: {
-              token: 'mock-token',
-            },
-          }
-
           this.resMock = {
             locals: {
               paths,
@@ -97,7 +79,7 @@ describe('Investment form middleware - project magement', () => {
           }
 
           await this.controller.populateForm(
-            this.reqMock,
+            stubRequest,
             this.resMock,
             this.nextSpy
           )
@@ -156,26 +138,21 @@ describe('Investment form middleware - project magement', () => {
       })
 
       it('updates the investment data', (done) => {
-        this.controller.handleFormPost(
-          {
-            session: {
-              token: 'mock-token',
-            },
-            params: {
-              investmentId: investmentData.id,
-            },
-            body: this.body,
+        const req = {
+          ...stubRequest,
+          params: {
+            investmentId: investmentData.id,
           },
-          this.resMock,
-          () => {
-            expect(this.updateInvestmentStub).to.be.calledWith(
-              'mock-token',
-              investmentData.id,
-              this.body
-            )
-            done()
-          }
-        )
+          body: this.body,
+        }
+        this.controller.handleFormPost(req, this.resMock, () => {
+          expect(this.updateInvestmentStub).to.be.calledWith(
+            req,
+            investmentData.id,
+            this.body
+          )
+          done()
+        })
       })
 
       it('continues onto the next middleware with no errors', (done) => {

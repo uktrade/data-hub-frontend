@@ -65,7 +65,7 @@ async function renderSearchResults(req, res) {
     searchTerm,
     searchEntity,
     requestBody: req.body,
-    token: req.session.token,
+    req,
     page: req.query.page,
   }).then(
     transformApiResponseToSearchCollection(

@@ -4,6 +4,7 @@ const requestPromise = require('request-promise')
 
 const config = require('../config')
 const logger = require('../config/logger')
+const getZipkinHeaders = require('./get-zipkin-headers')
 
 function hasValue(value) {
   return !isNil(value)
@@ -25,10 +26,12 @@ function stripScripts(key, value) {
   return value
 }
 
-function parseOptions(opts, token) {
+function parseOptions(req, opts) {
+  const { token } = req.session
   const defaults = {
     headers: {
       ...opts.headers,
+      ...getZipkinHeaders(req),
       ...(token ? { Authorization: `Bearer ${token}` } : null),
     },
     json: true,
@@ -73,8 +76,8 @@ function logRequest(opts) {
 // Accepts options as keys on an object or encoded as a url
 // Responses are parsed to remove any embedded XSS attempts with
 // script tags
-function authorisedRequest(token, opts) {
-  const requestOptions = parseOptions(opts, token)
+function authorisedRequest(req, opts) {
+  const requestOptions = parseOptions(req, opts)
 
   logRequest(requestOptions)
   requestOptions.jsonReviver = stripScripts
@@ -92,8 +95,8 @@ function authorisedRequest(token, opts) {
 // Responses are not parsed for XSS attacks
 // See request-promise #90 does not work with streams
 // https://github.com/request/request-promise/issues/90
-function authorisedRawRequest(token, opts) {
-  const requestOptions = parseOptions(opts, token)
+function authorisedRawRequest(req, opts) {
+  const requestOptions = parseOptions(req, opts)
 
   logRequest(requestOptions)
 

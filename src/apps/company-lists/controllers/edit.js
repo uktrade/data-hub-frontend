@@ -2,10 +2,9 @@ const { renameCompanyList, getCompanyList } = require('../repos')
 const urls = require('../../../lib/urls')
 // istanbul ignore next: Covered by functional tests
 async function handleEditCompanyList(req, res, next) {
-  const { token } = req.session
   const { name, id } = req.body
   try {
-    await renameCompanyList(token, name, id)
+    await renameCompanyList(req, name, id)
     req.flash('success', 'List updated')
     res.send()
   } catch (error) {
@@ -14,10 +13,9 @@ async function handleEditCompanyList(req, res, next) {
 }
 // istanbul ignore next: Covered by functional tests
 async function renderEditCompanyListPage(req, res, next) {
-  const { token } = req.session
   const { listId } = req.params
   try {
-    res.locals.companyList = await getCompanyList(token, listId)
+    res.locals.companyList = await getCompanyList(req, listId)
     const {
       companyList: { id, name },
     } = res.locals

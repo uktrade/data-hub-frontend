@@ -18,16 +18,15 @@ function parseFeatureData(featureData = []) {
 
 module.exports = async function features(req, res, next) {
   try {
-    const token = req.session.token
     const passThrough =
-      !token || /^\/(support|healthcheck|oauth)\b/.test(req.url)
+      !req.session.token || /^\/(support|healthcheck|oauth)\b/.test(req.url)
 
     if (passThrough) {
       res.locals.features = {}
       return next()
     }
 
-    const featureData = await authorisedRequest(token, flagUrl)
+    const featureData = await authorisedRequest(req, flagUrl)
     res.locals.features = parseFeatureData(featureData)
   } catch (error) {
     logger.error(`Unable to fetch feature flags: ${error}`)

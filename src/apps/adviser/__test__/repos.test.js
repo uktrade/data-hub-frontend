@@ -10,7 +10,7 @@ describe('Adviser repository', () => {
         nock(config.apiRoot)
           .get(`/adviser/?limit=100000&offset=0`)
           .reply(200, badAdviserData)
-        this.advisers = await repos.getAdvisers(123)
+        this.advisers = await repos.getAdvisers({ session: { token: 123 } })
       })
 
       it('will be filtered out', async () => {
@@ -33,7 +33,7 @@ describe('Adviser repository', () => {
         nock(config.apiRoot)
           .get(`/adviser/?limit=100000&offset=0`)
           .reply(200, adviserData)
-        this.advisers = await repos.getAdvisers(123)
+        this.advisers = await repos.getAdvisers({ session: { token: 123 } })
       })
 
       it('will not filter out any advisers', () => {
@@ -58,10 +58,13 @@ describe('Adviser repository', () => {
             results: [this.bertSmith],
           })
 
-        this.advisers = await repos.fetchAdviserSearchResults('1234', {
-          term: 'be',
-          is_active: true,
-        })
+        this.advisers = await repos.fetchAdviserSearchResults(
+          { session: { token: '1234' } },
+          {
+            term: 'be',
+            is_active: true,
+          }
+        )
       })
 
       it('should return the results', () => {

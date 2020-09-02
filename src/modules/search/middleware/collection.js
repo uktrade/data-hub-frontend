@@ -7,7 +7,7 @@ function getCollection(searchEntity, entityDetails, ...itemTransformers) {
       res.locals.results = await search({
         searchEntity,
         requestBody: req.body,
-        token: req.session.token,
+        req,
         page: req.query.page,
         isAggregation: false,
       }).then(
@@ -30,7 +30,7 @@ function exportCollection(searchEntity) {
     return exportSearch({
       searchEntity,
       requestBody: req.body,
-      token: req.session.token,
+      req,
     })
       .then((apiReq) => {
         return apiReq.pipe(res)
