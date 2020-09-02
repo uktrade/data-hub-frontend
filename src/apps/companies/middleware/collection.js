@@ -6,8 +6,8 @@ const {
 const { transformCompanyToListItem } = require('../transformers')
 const { ENTITIES } = require('../../search/constants')
 
-async function getNonGlobalHQs(token) {
-  const headerquarterTypes = await getOptions(token, 'headquarter-type')
+async function getNonGlobalHQs(req) {
+  const headerquarterTypes = await getOptions(req, 'headquarter-type')
   const filtered = headerquarterTypes.filter(
     (hqType) => !hqType.disabled && hqType.label !== 'ghq'
   )
@@ -20,25 +20,24 @@ async function getNonGlobalHQs(token) {
   ]
 }
 
-async function getGlobalHQ(token) {
-  const headerquarterTypes = await getOptions(token, 'headquarter-type')
+async function getGlobalHQ(req) {
+  const headerquarterTypes = await getOptions(req, 'headquarter-type')
   return headerquarterTypes.find((hqType) => hqType.label === 'ghq')
 }
 
 async function getGlobalHQCompaniesCollection(req, res, next) {
   const searchTerm = (res.locals.searchTerm = req.query.term)
   const { id: companyId } = res.locals.company
-  const { token } = req.session
 
   if (!searchTerm) {
     return next()
   }
 
   try {
-    const globalHQ = await getGlobalHQ(token)
+    const globalHQ = await getGlobalHQ(req)
 
     res.locals.results = await searchCompanies({
-      token: req.session.token,
+      req,
       searchTerm,
       page: req.query.page,
       requestBody: {
@@ -68,17 +67,16 @@ async function getGlobalHQCompaniesCollection(req, res, next) {
 async function getSubsidiaryCompaniesCollection(req, res, next) {
   const searchTerm = (res.locals.searchTerm = req.query.term)
   const { id: companyId } = res.locals.company
-  const { token } = req.session
 
   if (!searchTerm) {
     return next()
   }
 
   try {
-    const nonGlobalHQs = await getNonGlobalHQs(token)
+    const nonGlobalHQs = await getNonGlobalHQs(req)
 
     res.locals.results = await searchCompanies({
-      token: req.session.token,
+      req,
       searchTerm,
       page: req.query.page,
       requestBody: {

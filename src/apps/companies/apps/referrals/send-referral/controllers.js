@@ -33,7 +33,7 @@ function renderSendReferralForm(req, res) {
 
 async function submitSendReferralForm(req, res, next) {
   try {
-    await authorisedRequest(req.session.token, {
+    await authorisedRequest(req, {
       method: 'POST',
       url: `${config.apiRoot}/v4/company-referral`,
       body: omit(req.body, '_csrf'),

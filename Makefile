@@ -54,7 +54,7 @@ stop-dev:
 
 lint:
 	$(docker-base) build frontend
-	$(docker-base) run --no-deps --rm frontend bash -c 'mkdir -p reports && npm run lint'
+	$(docker-base) run --no-deps --rm frontend bash -c 'mkdir -p reports && npm run lint:sass && npm run lint:js -- --format junit --output-file reports/eslint.xml'
 
 unit-tests:
 	$(docker-base) build frontend

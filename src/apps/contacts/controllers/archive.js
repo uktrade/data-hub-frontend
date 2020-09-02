@@ -8,11 +8,7 @@ async function archiveContact(req, res, next) {
         : req.body.archived_reason_other
 
     if (reason.length > 0) {
-      await contactsRepository.archiveContact(
-        req.session.token,
-        req.params.id,
-        reason
-      )
+      await contactsRepository.archiveContact(req, req.params.id, reason)
       req.flash('success', 'Contact record updated')
     } else {
       req.flash('error', 'Unable to archive contact, no reason given')
@@ -26,7 +22,7 @@ async function archiveContact(req, res, next) {
 
 async function unarchiveContact(req, res, next) {
   try {
-    await contactsRepository.unarchiveContact(req.session.token, req.params.id)
+    await contactsRepository.unarchiveContact(req, req.params.id)
     req.flash('success', 'Contact record updated')
     res.redirect(`/contacts/${req.params.id}`)
   } catch (error) {

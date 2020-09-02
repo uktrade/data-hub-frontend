@@ -4,7 +4,7 @@ const config = require('../../../config')
 const { authorisedRequest } = require('../../../lib/authorised-request')
 
 async function fetchEventAttendees({
-  token,
+  req,
   eventId,
   page = 1,
   sortby,
@@ -17,7 +17,7 @@ async function fetchEventAttendees({
 
   const offset = limit * (page - 1)
 
-  const eventAttendees = await authorisedRequest(token, {
+  const eventAttendees = await authorisedRequest(req, {
     url: `${config.apiRoot}/v3/interaction`,
     qs: pickBy(
       {

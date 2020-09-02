@@ -20,11 +20,7 @@ const { Order } = require('../models')
 class EditController extends FormController {
   async saveValues(req, res, next) {
     try {
-      await Order.update(
-        req.session.token,
-        res.locals.order.id,
-        req.form.values
-      )
+      await Order.update(req, res.locals.order.id, req.form.values)
 
       next()
     } catch (error) {

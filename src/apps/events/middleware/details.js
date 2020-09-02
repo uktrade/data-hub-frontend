@@ -13,7 +13,7 @@ async function postDetails(req, res, next) {
   }
 
   try {
-    const result = await saveEvent(req.session.token, res.locals.requestBody)
+    const result = await saveEvent(req, res.locals.requestBody)
 
     if (!res.locals.event) {
       req.flash('success', 'Event created')
@@ -35,7 +35,7 @@ async function postDetails(req, res, next) {
 
 async function getEventDetails(req, res, next, eventId) {
   try {
-    res.locals.event = await fetchEvent(req.session.token, eventId)
+    res.locals.event = await fetchEvent(req, eventId)
     res.locals.eventViewRecord = transformEventResponseToViewRecord(
       res.locals.event
     )

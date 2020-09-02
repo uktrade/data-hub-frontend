@@ -5,7 +5,7 @@ const { EditController } = require('../../../controllers')
 
 class EditBillingAddressController extends EditController {
   async configure(req, res, next) {
-    const countries = await getOptions(req.session.token, 'country')
+    const countries = await getOptions(req, 'country')
     req.form.options.fields.billing_address_country.options = countries
 
     if (req.form.options.disableFormAction) {

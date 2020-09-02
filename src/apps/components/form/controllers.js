@@ -6,14 +6,14 @@ const {
   buildSearchEntityResultsData,
 } = require('../../../modules/search/services')
 
-async function getAggregationData(token, searchTerm) {
+async function getAggregationData(req, searchTerm) {
   if (!searchTerm) {
     return null
   }
 
   const results = await search({
     searchTerm,
-    token,
+    req,
     searchEntity: 'company',
   })
 
@@ -43,7 +43,7 @@ async function renderFormElements(req, res) {
     buildFormWithStateAndErrors(entitySearchConfig),
     {
       modifier: 'global',
-      aggregations: await getAggregationData(req.session.token, req.query.term),
+      aggregations: await getAggregationData(req, req.query.term),
     }
   )
 

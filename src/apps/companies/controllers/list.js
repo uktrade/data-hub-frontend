@@ -22,21 +22,21 @@ const exportOptions = {
 
 async function renderCompanyList(req, res, next) {
   try {
-    const { token, user } = req.session
+    const { user } = req.session
     const queryString = QUERY_STRING
     const sortForm = merge({}, companySortForm, {
       hiddenFields: { ...omit(req.query, 'sortby') },
       children: [{ value: req.query.sortby }],
     })
 
-    const sectorOptions = await getOptions(token, SECTOR, { queryString })
+    const sectorOptions = await getOptions(req, SECTOR, { queryString })
 
     const filtersFields = companyFiltersFields({
       sectorOptions,
     })
 
     const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(
-      token,
+      req,
       filtersFields,
       req.query
     )

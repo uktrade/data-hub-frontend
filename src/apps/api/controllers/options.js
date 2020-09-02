@@ -3,7 +3,6 @@ const { searchAutocomplete } = require('./../../../modules/search/services')
 const { transformObjectToOption } = require('../../../apps/transformers')
 
 async function getOptionsHandler(req, res, next) {
-  const token = req.session.token
   const key = req.params.entity
 
   if (key === 'adviser') {
@@ -20,14 +19,14 @@ async function getOptionsHandler(req, res, next) {
       }
 
       const options = await searchAutocomplete({
-        token: token,
+        req,
         searchEntity: key,
         searchTerm: searchTerm,
       })
 
       res.json(options.results.map(transformObjectToOption))
     } else {
-      const options = await getOptions(token, key, {
+      const options = await getOptions(req, key, {
         includeDisabled: true,
         term: req.query.autocomplete,
         is_active: req.query.is_active,

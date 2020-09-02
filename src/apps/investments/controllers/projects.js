@@ -20,7 +20,7 @@ const SECTOR = FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.NAME
 
 const renderProjectsView = async (req, res, next) => {
   try {
-    const { token, user } = req.session
+    const { user } = req.session
     const currentAdviserId = user.id
     const queryString = QUERY_STRING
     const sortForm = merge({}, investmentSortForm, {
@@ -28,8 +28,8 @@ const renderProjectsView = async (req, res, next) => {
       children: [{ value: req.query.sortby }],
     })
 
-    const sectorOptions = await getOptions(token, SECTOR, { queryString })
-    const advisers = await getAdvisers(token)
+    const sectorOptions = await getOptions(req, SECTOR, { queryString })
+    const advisers = await getAdvisers(req)
     const currentAdvisers =
       get(res.locals, 'interaction.dit_participants') &&
       res.locals.interaction.dit_participants.map(
@@ -49,7 +49,7 @@ const renderProjectsView = async (req, res, next) => {
     })
 
     const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(
-      token,
+      req,
       filtersFields,
       req.query
     )

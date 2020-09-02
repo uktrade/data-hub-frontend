@@ -99,21 +99,21 @@ describe('options API controller', () => {
   })
 
   context('given that defined target is search_autocomplete', () => {
-    beforeEach(async () => {
-      const reqMock = {
-        query: {
-          target: 'search_autocomplete',
-          is_active: true,
-          autocomplete: 'France',
-        },
-        session: {
-          token: '1234',
-        },
-        params: {
-          entity: 'company',
-        },
-      }
+    const reqMock = {
+      query: {
+        target: 'search_autocomplete',
+        is_active: true,
+        autocomplete: 'France',
+      },
+      session: {
+        token: '1234',
+      },
+      params: {
+        entity: 'company',
+      },
+    }
 
+    beforeEach(async () => {
       this.searchAutocomplete = sinon.stub().resolves({})
 
       const controller = proxyquire('../options', {
@@ -129,7 +129,7 @@ describe('options API controller', () => {
       expect(this.searchAutocomplete).to.be.calledWith({
         searchEntity: 'company',
         searchTerm: 'France',
-        token: '1234',
+        req: reqMock,
       })
     })
   })
@@ -137,23 +137,23 @@ describe('options API controller', () => {
   context(
     'given target is search_autocomplete and list of options depends on another selection',
     () => {
-      beforeEach(async () => {
-        const reqMock = {
-          query: {
-            chained_param: 'chainedParam',
-            chained_value: 'chainedValue',
-            target: 'search_autocomplete',
-            is_active: true,
-            autocomplete: 'France',
-          },
-          session: {
-            token: '1234',
-          },
-          params: {
-            entity: 'company',
-          },
-        }
+      const reqMock = {
+        query: {
+          chained_param: 'chainedParam',
+          chained_value: 'chainedValue',
+          target: 'search_autocomplete',
+          is_active: true,
+          autocomplete: 'France',
+        },
+        session: {
+          token: '1234',
+        },
+        params: {
+          entity: 'company',
+        },
+      }
 
+      beforeEach(async () => {
         this.searchAutocomplete = sinon.stub().resolves({})
 
         const controller = proxyquire('../options', {
@@ -169,7 +169,7 @@ describe('options API controller', () => {
         expect(this.searchAutocomplete).to.be.calledWith({
           searchEntity: 'company',
           searchTerm: 'France&chainedParam=chainedValue',
-          token: '1234',
+          req: reqMock,
         })
       })
     }

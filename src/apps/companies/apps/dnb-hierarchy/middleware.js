@@ -30,9 +30,9 @@ function setCompanyHierarchyLocalNav(req, res, next) {
   }
 }
 
-async function getDnbHierarchyDetails(token, dunsNumber) {
+async function getDnbHierarchyDetails(req, dunsNumber) {
   if (dunsNumber) {
-    const dnbHierarchy = await getDnbHierarchy(token, dunsNumber, 1)
+    const dnbHierarchy = await getDnbHierarchy(req, dunsNumber, 1)
     const dnbHierarchyCount = dnbHierarchy.count
     const globalUltimate = dnbHierarchy.results.find(
       (c) => c.is_global_ultimate
@@ -54,11 +54,10 @@ async function getDnbHierarchyDetails(token, dunsNumber) {
 
 async function setDnbHierarchyDetails(req, res, next) {
   const { company, features } = res.locals
-  const { token } = req.session
 
   if (features['companies-ultimate-hq']) {
     const { globalUltimate, dnbHierarchyCount } = await getDnbHierarchyDetails(
-      token,
+      req,
       company.global_ultimate_duns_number
     )
 

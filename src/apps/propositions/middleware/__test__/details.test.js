@@ -77,9 +77,7 @@ describe('Proposition details middleware', () => {
       })
 
       it('should post to the API', () => {
-        expect(this.savePropositionStub).to.have.been.calledWith(
-          this.req.session.token
-        )
+        expect(this.savePropositionStub).to.have.been.calledWith(this.req)
         expect(this.savePropositionStub).to.have.been.calledOnce
         expect(this.savePropositionStub.firstCall.args[1]).to.deep.equal(
           transformed

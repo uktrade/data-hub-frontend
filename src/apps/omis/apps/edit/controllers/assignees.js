@@ -11,9 +11,8 @@ class EditAssigneesController extends EditController {
       const orderId = get(res.locals, 'order.id')
       const canEditOrder = get(res.locals, 'order.canEditOrder')
       const canEditAdvisers = get(res.locals, 'order.canEditAdvisers')
-      const token = get(req.session, 'token')
-      const advisers = await getAdvisers(token)
-      const assignees = await Order.getAssignees(token, orderId)
+      const advisers = await getAdvisers(req)
+      const assignees = await Order.getAssignees(req, orderId)
       const options = advisers.results.map(transformObjectToOption)
 
       req.form.options.fields.assignees.options = sortBy(options, 'label')
@@ -46,12 +45,11 @@ class EditAssigneesController extends EditController {
     try {
       const orderId = get(res.locals, 'order.id')
       const canEditOrder = get(res.locals, 'order.canEditOrder')
-      const token = get(req.session, 'token')
 
       if (canEditOrder) {
-        await Order.forceSaveAssignees(token, orderId, assignees)
+        await Order.forceSaveAssignees(req, orderId, assignees)
       } else {
-        await Order.saveAssignees(token, orderId, assignees)
+        await Order.saveAssignees(req, orderId, assignees)
       }
 
       next()

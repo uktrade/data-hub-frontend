@@ -7,7 +7,7 @@ const { evidenceForm } = require('../macros/index')
 
 async function renderAddEvidence(req, res) {
   const investment = get(res.locals, 'investment.id')
-  const tags = await getOptions(req.session.token, 'evidence-tag')
+  const tags = await getOptions(req, 'evidence-tag')
 
   const addEvidenceForm = buildFormWithStateAndErrors(
     evidenceForm(

@@ -172,7 +172,7 @@ function getFieldWithSelectedOptions(field) {
   }
 }
 
-async function buildFieldsWithSelectedEntities(token, fields = [], query = {}) {
+async function buildFieldsWithSelectedEntities(req, fields = [], query = {}) {
   const fieldsArray = castArray(fields)
   const processedFields = []
 
@@ -182,7 +182,7 @@ async function buildFieldsWithSelectedEntities(token, fields = [], query = {}) {
 
     if (child.entity && has(query, child.name)) {
       const id = castArray(get(query, child.name))
-      newChild.selectedOptions = await getOptions(token, child.entity, { id })
+      newChild.selectedOptions = await getOptions(req, child.entity, { id })
     }
 
     processedFields.push(newChild)

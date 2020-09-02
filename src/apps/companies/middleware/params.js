@@ -11,7 +11,7 @@ const { isItaTierDAccount } = require('../../../lib/is-tier-type-company')
 async function getCompany(req, res, next, id) {
   try {
     const { features } = res.locals
-    const company = await getDitCompany(req.session.token, id)
+    const company = await getDitCompany(req, id)
     company.isItaTierDAccount = isItaTierDAccount(company)
     company.hasAllocatedLeadIta =
       company.one_list_group_global_account_manager != null
@@ -36,7 +36,7 @@ async function getCompany(req, res, next, id) {
 async function setIsCompanyAlreadyAdded(req, res, next, id) {
   let isCompanyAlreadyAdded = false
   try {
-    await getDitCompanyFromList(req.session.token, id)
+    await getDitCompanyFromList(req, id)
     isCompanyAlreadyAdded = true
   } catch (error) {
     //  Do nothing
@@ -47,14 +47,14 @@ async function setIsCompanyAlreadyAdded(req, res, next, id) {
 
 const companyListActions = {
   add: async (req, res, next, companyId) => {
-    await addDitCompanyToList(req.session.token, companyId)
+    await addDitCompanyToList(req, companyId)
     req.flash(
       'success',
       'This company has been added to your list of companies. You can find this list on your Data Hub Home page. Only you can see this list.'
     )
   },
   remove: async (req, res, next, companyId) => {
-    await removeDitCompanyFromList(req.session.token, companyId)
+    await removeDitCompanyFromList(req, companyId)
     req.flash('success', 'This company has been removed from your list.')
   },
 }

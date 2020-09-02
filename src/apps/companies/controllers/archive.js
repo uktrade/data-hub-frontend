@@ -17,7 +17,7 @@ async function archiveCompany(req, res) {
   }
 
   try {
-    await archive(req.session.token, company.id, reason)
+    await archive(req, company.id, reason)
 
     req.flash('success', 'Company archived')
     res.redirect(detailsUrl)
@@ -34,7 +34,7 @@ async function unarchiveCompany(req, res) {
   const detailsUrl = `/companies/${company.id}/business-details`
 
   try {
-    await unarchive(req.session.token, company.id)
+    await unarchive(req, company.id)
 
     req.flash('success', 'Company unarchived')
     res.redirect(detailsUrl)

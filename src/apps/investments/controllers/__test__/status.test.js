@@ -141,7 +141,7 @@ describe('investment status controller', () => {
 
       it('should save the data to the API', () => {
         expect(this.updateInvestmentStub).to.be.calledWith(
-          this.req.session.token,
+          this.req,
           this.req.params.investmentId,
           { status: 'test' }
         )

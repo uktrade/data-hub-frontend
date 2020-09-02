@@ -6,7 +6,7 @@ const dnbHierarchyFixture = {
   count: 2,
   results: [{ id: '1' }, { id: '2' }],
 }
-const TOKEN = 'abcd'
+const stubRequest = { session: { token: 'abcd' } }
 const DUNS_NUMBER = 999999
 
 describe('D&B Subsidiaries repos', () => {
@@ -18,7 +18,7 @@ describe('D&B Subsidiaries repos', () => {
       })
 
       const actual = await getDnbHierarchy(
-        TOKEN,
+        stubRequest,
         DUNS_NUMBER,
         config.paginationDefaultSize,
         1

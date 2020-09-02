@@ -2,11 +2,11 @@ const { sortBy } = require('lodash')
 const { authorisedRequest } = require('../../lib/authorised-request')
 const config = require('../../config')
 
-function getContact(token, contactId) {
-  return authorisedRequest(token, `${config.apiRoot}/v3/contact/${contactId}`)
+function getContact(req, contactId) {
+  return authorisedRequest(req, `${config.apiRoot}/v3/contact/${contactId}`)
 }
 
-function saveContact(token, contact) {
+function saveContact(req, contact) {
   const options = {
     body: contact,
   }
@@ -20,27 +20,27 @@ function saveContact(token, contact) {
     options.method = 'POST'
   }
 
-  return authorisedRequest(token, options)
+  return authorisedRequest(req, options)
 }
 
-function archiveContact(token, contactId, reason) {
+function archiveContact(req, contactId, reason) {
   const options = {
     body: { reason },
     url: `${config.apiRoot}/v3/contact/${contactId}/archive`,
     method: 'POST',
   }
-  return authorisedRequest(token, options)
+  return authorisedRequest(req, options)
 }
 
-function unarchiveContact(token, contactId) {
-  return authorisedRequest(token, {
+function unarchiveContact(req, contactId) {
+  return authorisedRequest(req, {
     method: 'POST',
     url: `${config.apiRoot}/v3/contact/${contactId}/unarchive`,
   })
 }
 
-async function getContactsForCompany(token, companyId) {
-  const response = await authorisedRequest(token, {
+async function getContactsForCompany(req, companyId) {
+  const response = await authorisedRequest(req, {
     url: `${config.apiRoot}/v3/contact`,
     qs: {
       company_id: companyId,
@@ -50,11 +50,11 @@ async function getContactsForCompany(token, companyId) {
   return sortBy(response.results, [(name) => name.first_name])
 }
 
-function getContactAuditLog(token, contactId, page = 1) {
+function getContactAuditLog(req, contactId, page = 1) {
   const limit = 10
   const offset = limit * (page - 1)
   return authorisedRequest(
-    token,
+    req,
     `${config.apiRoot}/v3/contact/${contactId}/audit?limit=${limit}&offset=${offset}`
   )
 }

@@ -38,10 +38,9 @@ async function postComplete(req, res, next) {
 
 async function getPropositionDetails(req, res, next, propositionId) {
   try {
-    const token = req.session.token
     const { investment } = res.locals
     res.locals.proposition = await fetchProposition(
-      token,
+      req,
       propositionId,
       investment.id
     )
@@ -54,8 +53,7 @@ async function getPropositionDetails(req, res, next, propositionId) {
 
 async function getPropositionOptions(req, res, next) {
   try {
-    const token = req.session.token
-    const advisers = await getAdvisers(token)
+    const advisers = await getAdvisers(req)
     const currentAdviser = get(res.locals, 'proposition.adviser.id')
     const activeAdvisers = filterActiveAdvisers({
       advisers: advisers.results,

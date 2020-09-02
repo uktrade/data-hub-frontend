@@ -8,14 +8,13 @@ const { getAdvisers } = require('../../adviser/repos')
 
 async function renderEventList(req, res, next) {
   try {
-    const token = req.session.token
-    const advisers = await getAdvisers(req.session.token)
+    const advisers = await getAdvisers(req)
     const filtersFields = eventFiltersFields({
       advisers: advisers.results,
       userAgent: res.locals.userAgent,
     })
     const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(
-      token,
+      req,
       filtersFields,
       req.query
     )

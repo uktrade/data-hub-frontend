@@ -19,10 +19,9 @@ function renderEditHistory(req, res) {
 async function fetchCompanyAuditLog(req, res, next) {
   try {
     const { company } = res.locals
-    const { token } = req.session
     const { page } = req.query
 
-    const { results, count } = await getCompanyAuditLog(token, company.id, page)
+    const { results, count } = await getCompanyAuditLog(req, company.id, page)
 
     res.json({
       results: transformCompanyAuditLog(results),

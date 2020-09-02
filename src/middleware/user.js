@@ -16,7 +16,7 @@ async function userMiddleware(req, res, next) {
 
   try {
     const userResponse = await authorisedRequest(
-      token,
+      req,
       `${config.apiRoot}/whoami/`
     )
 

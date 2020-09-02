@@ -58,7 +58,6 @@ async function renderActivityFeed(req, res, next) {
 
 async function fetchActivityFeedHandler(req, res, next) {
   try {
-    const { token } = req.session
     const { company, user } = res.locals
     const {
       from = 0,
@@ -70,7 +69,7 @@ async function fetchActivityFeedHandler(req, res, next) {
     let dnbHierarchyIds = []
     if (company.is_global_ultimate && showDnbHierarchy) {
       const { results } = await getGlobalUltimateHierarchy(
-        token,
+        req,
         company.global_ultimate_duns_number
       )
       dnbHierarchyIds = results
@@ -78,17 +77,17 @@ async function fetchActivityFeedHandler(req, res, next) {
         .map((company) => company.id)
     }
 
-    const results = await fetchActivityFeed({
-      token: req.session.token,
-      body: createESFilters(
+    const results = await fetchActivityFeed(
+      req,
+      createESFilters(
         activityTypeFilter,
         dnbHierarchyIds,
         company,
         user,
         from,
         size
-      ),
-    })
+      )
+    )
 
     res.json(results)
   } catch (error) {

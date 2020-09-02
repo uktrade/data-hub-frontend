@@ -135,7 +135,7 @@ describe('Contact controller, edit', () => {
       it('should include an expanded company', function (done) {
         res.render = () => {
           expect(getDitCompanyStub).to.have.been.calledWith(
-            req.session.token,
+            req,
             contact.company.id
           )
           expect(res.locals.company).to.deep.equal(company)
@@ -186,10 +186,7 @@ describe('Contact controller, edit', () => {
       })
       it('should include an expanded company', function (done) {
         res.render = () => {
-          expect(getDitCompanyStub).to.have.been.calledWith(
-            req.session.token,
-            company.id
-          )
+          expect(getDitCompanyStub).to.have.been.calledWith(req, company.id)
           expect(res.locals.company).to.deep.equal(company)
           done()
         }
@@ -242,10 +239,7 @@ describe('Contact controller, edit', () => {
       })
       it('should include an expanded company', function (done) {
         res.render = () => {
-          expect(getDitCompanyStub).to.have.been.calledWith(
-            req.session.token,
-            company.id
-          )
+          expect(getDitCompanyStub).to.have.been.calledWith(req, company.id)
           expect(res.locals.company).to.deep.equal(company)
           done()
         }
@@ -458,7 +452,7 @@ describe('Contact controller, edit', () => {
     })
     it('should save the form data to the back end', function (done) {
       res.redirect = () => {
-        expect(saveContactFormStub).to.be.calledWith(req.session.token, body)
+        expect(saveContactFormStub).to.be.calledWith(req, body)
         done()
       }
 

@@ -20,10 +20,7 @@ async function expandTeamMembers(req, res, next) {
     const teamMembers = []
 
     for (const teamMember of res.locals.investment.team_members) {
-      const teamMemberAdvisor = await getAdviser(
-        req.session.token,
-        teamMember.adviser.id
-      )
+      const teamMemberAdvisor = await getAdviser(req, teamMember.adviser.id)
       teamMembers.push({
         adviser: teamMemberAdvisor,
         role: teamMember.role,

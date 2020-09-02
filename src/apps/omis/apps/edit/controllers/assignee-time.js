@@ -6,8 +6,7 @@ const { Order } = require('../../../models')
 class EditAssigneeTimeController extends EditController {
   async configure(req, res, next) {
     const orderId = get(res.locals, 'order.id')
-    const token = get(req.session, 'token')
-    const assignees = await Order.getAssignees(token, orderId)
+    const assignees = await Order.getAssignees(req, orderId)
 
     if (!assignees.length) {
       req.form.options.hidePrimaryFormAction = true
@@ -36,11 +35,7 @@ class EditAssigneeTimeController extends EditController {
     })
 
     try {
-      await Order.saveAssignees(
-        req.session.token,
-        res.locals.order.id,
-        filter(assignees)
-      )
+      await Order.saveAssignees(req, res.locals.order.id, filter(assignees))
       next()
     } catch (error) {
       next(error)

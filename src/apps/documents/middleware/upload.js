@@ -15,9 +15,9 @@ function parseForm(req, res) {
       return res.status(500).json({ error: err })
     }
 
-    Object.keys(files).forEach(async (key, index, collection) => {
+    Object.keys(files).map(async (key, index, collection) => {
       try {
-        await chainUploadSequence(req.session.token, {
+        await chainUploadSequence(req, {
           fields,
           file: files[key],
           url: res.locals.documents.url,

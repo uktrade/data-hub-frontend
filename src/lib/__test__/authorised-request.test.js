@@ -38,3 +38,33 @@ describe('In dev', () => {
     })
   })
 })
+
+describe('With Zipkin headers', () => {
+  it('Should forward Zipkin headers', () => {
+    const options = {
+      url: 'http://example.com',
+    }
+    const request = {
+      session: {
+        token: 'fake-token',
+      },
+      headers: {
+        'x-b3-traceid': 'fake-trace-id',
+        'x-b3-spanid': 'fake-span-id',
+      },
+    }
+
+    const requestPromiseStub = sinon.stub().resolves({})
+    const { authorisedRequest } = proxyquire('../authorised-request', {
+      'request-promise': requestPromiseStub,
+    })
+
+    authorisedRequest(request, options)
+
+    expect(requestPromiseStub.firstCall.lastArg.headers).deep.equals({
+      Authorization: 'Bearer fake-token',
+      'x-b3-spanid': 'fake-span-id',
+      'x-b3-traceid': 'fake-trace-id',
+    })
+  })
+})

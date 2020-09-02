@@ -9,12 +9,11 @@ const {
 
 async function renderPropositionList(req, res, next) {
   try {
-    const token = req.session.token
     const page = req.query.page || '1'
     const investmentId = req.params.investmentId
 
     const propositions = await getPropositionsForInvestment(
-      token,
+      req,
       investmentId,
       page
     ).then(
