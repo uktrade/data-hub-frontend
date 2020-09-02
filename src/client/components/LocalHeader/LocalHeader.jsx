@@ -9,7 +9,9 @@ import Breadcrumbs from '@govuk-react/breadcrumbs'
 import LocalHeaderHeading from './LocalHeaderHeading'
 import FlashMessages from './FlashMessages'
 
-const StyledHeader = styled('header')`
+// Using <div> as there is already a <header> on the page
+// role="region" gives the element significance as a landmark
+const StyledHeader = styled('div')`
   padding-bottom: ${SPACING.SCALE_5};
   background-color: ${GREY_4};
   padding-top: ${SPACING.SCALE_3};
@@ -24,7 +26,11 @@ const BreadcrumbsWrapper = styled(Breadcrumbs)`
   margin-top: 0;
 `
 const LocalHeader = ({ breadcrumbs, flashMessages, heading, children }) => (
-  <StyledHeader aria-label="local header" data-auto-id="localHeader">
+  <StyledHeader
+    aria-label="local header"
+    data-auto-id="localHeader"
+    role="region"
+  >
     <StyledMain>
       <BreadcrumbsWrapper>
         {breadcrumbs?.map((breadcrumb) =>
