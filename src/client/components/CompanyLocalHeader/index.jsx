@@ -13,7 +13,7 @@ import LocalHeader from '../../../client/components/LocalHeader/LocalHeader'
 import LocalHeaderHeading from '../../../client/components/LocalHeader/LocalHeaderHeading'
 import Badge from '../../../client/components/Badge'
 import StatusMessage from '../../../client/components/StatusMessage'
-import DateUtils from '../../../client/components/Utils/DateUtils'
+import { format } from '../../utils/date-utils'
 import formatAddress from '../../../client/utils/formatAddress'
 import urls from '../../../lib/urls'
 import ConnectedDropdownMenu from '../DropdownMenu/ConnectedDropdownMenu'
@@ -211,12 +211,12 @@ const CompanyLocalHeader = ({
         <StyledMain>
           <StatusMessage data-auto-id="archivedMessage">
             {company.archived_by
-              ? `This company was archived on ${DateUtils.format(
+              ? `This company was archived on ${format(
                   company.archived_on
                 )} by ${company.archived_by.first_name} ${
                   company.archived_by.last_name
                 }.`
-              : `This company was automatically archived on ${DateUtils.format(
+              : `This company was automatically archived on ${format(
                   company.archived_on
                 )}.`}
             <br />

@@ -14,7 +14,7 @@ import VisuallyHidden from '@govuk-react/visually-hidden'
 import React from 'react'
 import LinesEllipsis from 'react-lines-ellipsis'
 import styled from 'styled-components'
-import DateUtils from '../../components/Utils/DateUtils'
+import { format } from '../../utils/date-utils'
 
 import urls from '../../../lib/urls'
 import SecondaryButton from '../SecondaryButton'
@@ -155,7 +155,7 @@ const CompaniesTable = ({ companies }) => (
             </StyledLink>
           </TitleCell>
           <ColumnLabelCell setWidth="15%">
-            {date ? DateUtils.format(date) : '-'}
+            {date ? format(date) : '-'}
           </ColumnLabelCell>
           <StyledTableCell setWidth="30%">
             {interactionId ? (

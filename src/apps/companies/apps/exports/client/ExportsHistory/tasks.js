@@ -1,5 +1,5 @@
 import axios from 'axios'
-import DateUtils from '../../../../../../client/components/Utils/DateUtils'
+import { formatWithTime } from '../../../../../../client/utils/date-utils'
 import { GREEN } from 'govuk-colours'
 
 import urls from '../../../../../../lib/urls'
@@ -49,7 +49,7 @@ function createHistory(item) {
         label: 'By',
         value: item.history_user?.name ?? 'unknown',
       },
-      { label: 'Date', value: DateUtils.formatWithTime(item.date) },
+      { label: 'Date', value: formatWithTime(item.date) },
     ],
   }
 }
@@ -92,7 +92,7 @@ function createInteraction(item) {
   return {
     headingText: item.subject,
     headingUrl: urls.interactions.detail(item.id),
-    subheading: `Created ${DateUtils.formatWithTime(item.date)}`,
+    subheading: `Created ${formatWithTime(item.date)}`,
     badges: [
       {
         text: 'Interaction',

@@ -2,9 +2,10 @@ import React from 'react'
 import { SPACING_POINTS } from '@govuk-react/constants'
 import { Link } from 'govuk-react'
 import styled from 'styled-components'
+
 import { SummaryTable } from '../../../../../../client/components/'
+import { format } from '../../../../../../client/utils/date-utils'
 import urls from '../../../../../../lib/urls'
-import DateUtils from '../../../../../../client/components/Utils/DateUtils'
 
 const StyledSummaryTable = styled(SummaryTable)({
   'margin-top': SPACING_POINTS[8],
@@ -29,7 +30,7 @@ const InteractionReferralDetails = ({
         </Link>
       </SummaryTable.Row>
       <SummaryTable.Row heading="Sent on">
-        {DateUtils.format(created_on)}
+        {format(created_on)}
       </SummaryTable.Row>
       <SummaryTable.Row heading="By">{created_by.name}</SummaryTable.Row>
       <SummaryTable.Row heading="To">{recipient.name}</SummaryTable.Row>
