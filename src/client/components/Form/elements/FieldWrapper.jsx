@@ -21,7 +21,8 @@ const StyledFormGroup = styled(FormGroup)`
     const hasHint = !!props.hint
 
     return `
-    ${(isReduced || isIE) &&
+    ${
+      (isReduced || isIE) &&
       `
     background-color: ${GREY_3};
     label {
@@ -36,7 +37,8 @@ const StyledFormGroup = styled(FormGroup)`
       input {
         border-width: 1px;
       }
-    `}
+    `
+    }
     ${hasReducedPadding ? `padding: 8px 8px 3px !important; ` : `padding: 8px`};
     ${hasHint ? `padding-bottom: ${SPACING.SCALE_1};` : `padding-bottom: 8px;`};
     `

@@ -9,7 +9,7 @@ describe('Omis Create Required Fields', () => {
     )
   })
 
-  beforeEach(function() {
+  beforeEach(function () {
     Cypress.Cookies.preserveOnce('datahub.sid')
   })
 

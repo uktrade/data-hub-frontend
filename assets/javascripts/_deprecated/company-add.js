@@ -37,7 +37,7 @@ const CompanyAdd = {
       }
     }
 
-    this.form.addEventListener('change', function(event) {
+    this.form.addEventListener('change', function (event) {
       if (event.target.name && event.target.name === 'business_type') {
         updateVisibility()
       }

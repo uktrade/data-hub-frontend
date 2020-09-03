@@ -40,9 +40,7 @@ describe('feature flag middleware', () => {
     beforeEach(async () => {
       delete this.reqMock.session.token
 
-      nock(config.apiRoot)
-        .get('/v3/feature-flag')
-        .reply(200, this.featuresData)
+      nock(config.apiRoot).get('/v3/feature-flag').reply(200, this.featuresData)
 
       await this.features(this.reqMock, this.resMock, this.nextSpy)
     })
@@ -60,9 +58,7 @@ describe('feature flag middleware', () => {
     beforeEach(async () => {
       this.reqMock.url = '/support'
 
-      nock(config.apiRoot)
-        .get('/v3/feature-flag')
-        .reply(200, this.featuresData)
+      nock(config.apiRoot).get('/v3/feature-flag').reply(200, this.featuresData)
 
       await this.features(this.reqMock, this.resMock, this.nextSpy)
     })
@@ -80,9 +76,7 @@ describe('feature flag middleware', () => {
     beforeEach(async () => {
       this.reqMock.url = '/healthcheck'
 
-      nock(config.apiRoot)
-        .get('/v3/feature-flag')
-        .reply(200, this.featuresData)
+      nock(config.apiRoot).get('/v3/feature-flag').reply(200, this.featuresData)
 
       await this.features(this.reqMock, this.resMock, this.nextSpy)
     })
@@ -100,9 +94,7 @@ describe('feature flag middleware', () => {
     beforeEach(async () => {
       this.reqMock.url = '/oauth'
 
-      nock(config.apiRoot)
-        .get('/v3/feature-flag')
-        .reply(200, this.featuresData)
+      nock(config.apiRoot).get('/v3/feature-flag').reply(200, this.featuresData)
 
       await this.features(this.reqMock, this.resMock, this.nextSpy)
     })
@@ -118,9 +110,7 @@ describe('feature flag middleware', () => {
 
   context('when there are feature flags', () => {
     beforeEach(async () => {
-      nock(config.apiRoot)
-        .get('/v3/feature-flag')
-        .reply(200, this.featuresData)
+      nock(config.apiRoot).get('/v3/feature-flag').reply(200, this.featuresData)
 
       await this.features(this.reqMock, this.resMock, this.nextSpy)
     })
@@ -138,9 +128,7 @@ describe('feature flag middleware', () => {
 
   context('when there are no feature flags', () => {
     beforeEach(async () => {
-      nock(config.apiRoot)
-        .get('/v3/feature-flag')
-        .reply(200, [])
+      nock(config.apiRoot).get('/v3/feature-flag').reply(200, [])
 
       await this.features(this.reqMock, this.resMock, this.nextSpy)
     })
@@ -156,9 +144,7 @@ describe('feature flag middleware', () => {
 
   context('when the call to get features fails', () => {
     beforeEach(async () => {
-      nock(config.apiRoot)
-        .get('/v3/feature-flag')
-        .reply(500, 'Error message')
+      nock(config.apiRoot).get('/v3/feature-flag').reply(500, 'Error message')
 
       await this.features(this.reqMock, this.resMock, this.nextSpy)
     })

@@ -19,9 +19,7 @@ describe('Contacts Collections Filter', () => {
   })
 
   it('should filter by contact name', () => {
-    cy.get(selectors.filter.name)
-      .type('FilterByContacts')
-      .type('{enter}')
+    cy.get(selectors.filter.name).type('FilterByContacts').type('{enter}')
 
     cy.get(selectors.entityCollection.entities)
       .children()

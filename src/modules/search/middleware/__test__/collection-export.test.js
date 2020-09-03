@@ -25,9 +25,7 @@ describe('Collection middleware', () => {
 
     describe('#exportCollection', () => {
       beforeEach(async () => {
-        nock(config.apiRoot)
-          .post(`/v3/search/entity/export`)
-          .reply(200)
+        nock(config.apiRoot).post(`/v3/search/entity/export`).reply(200)
 
         this.reqMock.query = {
           sortby: 'name:asc',

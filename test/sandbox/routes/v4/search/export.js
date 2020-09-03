@@ -14,7 +14,7 @@ var investigationLtd = require('../../../fixtures/v4/company/company-investigati
 var globalUltimate = require('../../../fixtures/v4/company/company-dnb-global-ultimate.json')
 var minimallyMinimal = require('../../../fixtures/v4/company/company-minimally-minimal.json')
 
-exports.fetchExportHistory = function(req, res) {
+exports.fetchExportHistory = function (req, res) {
   var companyId = req.body.company
 
   if (req.body.country === '975f66a0-5d95-e211-a939-e4115bead28a') {

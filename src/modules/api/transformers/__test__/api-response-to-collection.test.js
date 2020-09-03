@@ -99,9 +99,7 @@ describe('#transformApiResponseToCollection', () => {
     })
 
     it('should pass all the items through', () => {
-      expect(this.result)
-        .to.have.property('items')
-        .to.have.length(2)
+      expect(this.result).to.have.property('items').to.have.length(2)
     })
   })
 

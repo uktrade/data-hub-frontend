@@ -12,9 +12,7 @@ const selectTypeahead = (field, input) =>
   cy.get(field).within(() => {
     cy.server()
     cy.route('/api-proxy/adviser/?*').as('adviserResults')
-    cy.get('div')
-      .eq(0)
-      .type(input)
+    cy.get('div').eq(0).type(input)
     cy.wait('@adviserResults')
     cy.get('[class*="menu"] > div').click()
   })
@@ -23,16 +21,10 @@ const enterAdviserDefault = () =>
   selectTypeahead(selectors.sendReferral.adviserField, 'shawn')
 
 const enterSubjectDefault = () =>
-  cy
-    .get(selectors.sendReferral.subjectField)
-    .click()
-    .type('Example subject')
+  cy.get(selectors.sendReferral.subjectField).click().type('Example subject')
 
 const enterNotesDefault = () =>
-  cy
-    .get(selectors.sendReferral.notesField)
-    .click()
-    .type('Example notes')
+  cy.get(selectors.sendReferral.notesField).click().type('Example notes')
 
 const enterContactDefault = () =>
   selectTypeahead(selectors.sendReferral.contactField, 'johnny')
@@ -373,27 +365,15 @@ describe('Contact loop', () => {
         urls.companies.referrals.send(fixtures.company.withContacts.id)
       )
 
-      cy.contains('div', 'First name')
-        .find('input')
-        .type('John')
-      cy.contains('div', 'Last name')
-        .find('input')
-        .type('Doe')
-      cy.contains('div', 'Job title')
-        .find('input')
-        .type('Full-stack dev')
+      cy.contains('div', 'First name').find('input').type('John')
+      cy.contains('div', 'Last name').find('input').type('Doe')
+      cy.contains('div', 'Job title').find('input').type('Full-stack dev')
       cy.contains('fieldset', 'Is this person a primary contact?')
         .contains('label', 'Yes')
         .click()
-      cy.contains('div', 'Telephone country code')
-        .find('input')
-        .type('+44')
-      cy.contains('div', 'Telephone number')
-        .find('input')
-        .type('123 567 789')
-      cy.contains('div', 'Email')
-        .find('input')
-        .type('john@example.com')
+      cy.contains('div', 'Telephone country code').find('input').type('+44')
+      cy.contains('div', 'Telephone number').find('input').type('123 567 789')
+      cy.contains('div', 'Email').find('input').type('john@example.com')
       cy.contains(
         'fieldset',
         'Is the contact’s address the same as the company address?'

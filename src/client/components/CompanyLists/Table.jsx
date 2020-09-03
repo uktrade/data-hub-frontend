@@ -121,8 +121,9 @@ const Advisers = ({ ditParticipants }) =>
     ? 'Multiple advisers'
     : ditParticipants.map((adviser, index) => (
         <div key={index}>
-          {`${adviser.name || 'Unknown adviser'} - ${adviser.team ||
-            'Unknown team'}`}
+          {`${adviser.name || 'Unknown adviser'} - ${
+            adviser.team || 'Unknown team'
+          }`}
         </div>
       ))
 

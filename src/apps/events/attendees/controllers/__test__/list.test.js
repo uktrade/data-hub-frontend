@@ -62,9 +62,7 @@ describe('event attendees', () => {
 
     it('should transform the results to a collection', () => {
       expect(this.properties).to.have.property('attendees')
-      expect(this.properties.attendees)
-        .to.have.property('items')
-        .an('array')
+      expect(this.properties.attendees).to.have.property('items').an('array')
       expect(this.properties.attendees).to.have.property('count', 0)
       expect(this.properties.attendees).to.have.property('pagination', null)
       expect(this.properties.attendees).to.have.property(
@@ -109,9 +107,7 @@ describe('event attendees', () => {
 
     it('should transform the results to a collection', () => {
       expect(this.properties).to.have.property('attendees')
-      expect(this.properties.attendees)
-        .to.have.property('items')
-        .an('array')
+      expect(this.properties.attendees).to.have.property('items').an('array')
       expect(this.properties.attendees).to.have.property('count', 1)
       expect(this.properties.attendees).to.have.property('pagination', null)
       expect(this.properties.attendees).to.have.property(

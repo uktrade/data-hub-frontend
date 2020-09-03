@@ -8,10 +8,7 @@ const countrySelectors = exportSelectors.countries
 describe('Company Export tab - Export countries history', () => {
   function checkListItems(items) {
     items.forEach(([text, by, date]) => {
-      cy.contains(text)
-        .siblings()
-        .should('contain', by)
-        .should('contain', date)
+      cy.contains(text).siblings().should('contain', by).should('contain', date)
     })
   }
 
@@ -138,9 +135,7 @@ describe('Company Export tab - Export countries history', () => {
       })
 
       it('the second page renders the collection list with 2 of the 12 results', () => {
-        cy.get('a')
-          .contains('2')
-          .click()
+        cy.get('a').contains('2').click()
         cy.get(countrySelectors.listItemHeadings).should('have.length', 2)
 
         checkListItems([

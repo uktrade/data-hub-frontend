@@ -7,9 +7,7 @@ const config = require('../../../../../config')
 const paths = require('../../../paths')
 const companyData = require('../../../../../../test/unit/data/companies/company-v4.json')
 
-const yesterday = moment()
-  .subtract(1, 'days')
-  .toISOString()
+const yesterday = moment().subtract(1, 'days').toISOString()
 
 const metadataMock = {
   investmentTypeOptions: [

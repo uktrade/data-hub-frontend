@@ -38,16 +38,12 @@ describe('Event transformers', () => {
       })
 
       it('should return expected id property', () => {
-        expect(event)
-          .to.have.property('id')
-          .a('string')
+        expect(event).to.have.property('id').a('string')
         expect(event.id).to.equal(mockEvent.id)
       })
 
       it('should return expected name property', () => {
-        expect(event)
-          .to.have.property('name')
-          .a('string')
+        expect(event).to.have.property('name').a('string')
         expect(event.name).to.equal(mockEvent.name)
       })
 
@@ -60,9 +56,7 @@ describe('Event transformers', () => {
       })
 
       it('should return expected type property', () => {
-        expect(event)
-          .to.have.property('type')
-          .a('string')
+        expect(event).to.have.property('type').a('string')
         expect(event.type).to.equal('event')
       })
 

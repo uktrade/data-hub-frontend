@@ -5,7 +5,7 @@ import { ANALYTICS__PUSH } from '../../actions'
 action from within the Analytics component, to the Google Tag Manager
 data layer. */
 
-export default function*() {
+export default function* () {
   while (true) {
     const { data } = yield take(ANALYTICS__PUSH)
     window.dataLayer = window.dataLayer || []

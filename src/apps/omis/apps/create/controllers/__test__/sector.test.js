@@ -18,9 +18,7 @@ describe('OMIS create sector controller', () => {
   describe('configure()', () => {
     context('when getOptions returns 200', () => {
       beforeEach(async () => {
-        nock(apiRoot)
-          .get('/v4/metadata/sector')
-          .reply(200, sectorOptionsMock)
+        nock(apiRoot).get('/v4/metadata/sector').reply(200, sectorOptionsMock)
 
         this.reqMock = assign({}, globalReq, {
           form: {

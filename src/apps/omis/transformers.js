@@ -125,7 +125,7 @@ function transformPaymentToView({
 }
 
 function transformSubscriberToView(currentUserId) {
-  return function({ name, id, dit_team } = {}) {
+  return function ({ name, id, dit_team } = {}) {
     if (!id) {
       return
     }

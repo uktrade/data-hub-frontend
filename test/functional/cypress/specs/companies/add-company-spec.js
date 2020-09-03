@@ -25,7 +25,7 @@ const selectUKCompanyAndSelectListItem = (listItem) => {
 }
 
 describe('Add company form', () => {
-  beforeEach(function() {
+  beforeEach(function () {
     Cypress.Cookies.preserveOnce('datahub.sid')
   })
 
@@ -77,9 +77,7 @@ describe('Add company form', () => {
 
       it('should display "Country" selection', () => {
         cy.get(selectors.companyAdd.form).contains('Country')
-        cy.get(selectors.companyAdd.form)
-          .find('select')
-          .should('be.visible')
+        cy.get(selectors.companyAdd.form).find('select').should('be.visible')
       })
     })
 
@@ -102,9 +100,7 @@ describe('Add company form', () => {
       'when I click the "Continue" button after filling the required fields',
       () => {
         before(() => {
-          cy.get(selectors.companyAdd.form)
-            .find('select')
-            .select('Poland')
+          cy.get(selectors.companyAdd.form).find('select').select('Poland')
           cy.get(selectors.companyAdd.continueButton).click()
         })
 
@@ -315,9 +311,7 @@ describe('Add company form', () => {
     () => {
       before(() => {
         cy.visit(urls.companies.create())
-        cy.get(selectors.companyAdd.form)
-          .find('[type="radio"]')
-          .check('GB')
+        cy.get(selectors.companyAdd.form).find('[type="radio"]').check('GB')
         cy.get(selectors.companyAdd.continueButton).click()
         cy.get(selectors.companyAdd.entitySearch.companyNameField).type(
           'some company'
@@ -523,9 +517,7 @@ describe('Add company form', () => {
         cy.get(selectors.companyAdd.form)
           .find('[type="radio"]')
           .check('overseas')
-        cy.get(selectors.companyAdd.form)
-          .find('select')
-          .select('India')
+        cy.get(selectors.companyAdd.form).find('select').select('India')
         cy.get(selectors.companyAdd.continueButton).click()
 
         cy.get(selectors.companyAdd.entitySearch.companyNameField).type(

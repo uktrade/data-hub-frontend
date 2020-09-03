@@ -45,7 +45,7 @@ const filterServiceNames = (services) => {
           : service.label
       return { ...service, label: name }
     })
-    .sort(function(a, b) {
+    .sort(function (a, b) {
       const textA = a.label
       const textB = b.label
 
