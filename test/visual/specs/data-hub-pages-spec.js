@@ -2,7 +2,7 @@ const assert = require('assert')
 
 const hideScrollBarIE = () => {
   if (browser.capabilities.browserName == 'internet explorer') {
-    return browser.execute(function() {
+    return browser.execute(function () {
       document.body.style.msOverflowStyle = 'none'
     })
   }

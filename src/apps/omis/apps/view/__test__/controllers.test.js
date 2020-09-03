@@ -74,9 +74,7 @@ describe('OMIS View controllers', () => {
     it('should set the correct time sum', () => {
       const values = this.renderSpy.firstCall.args[1].values
 
-      expect(values.estimatedTimeSum)
-        .to.be.a('number')
-        .to.equal(450)
+      expect(values.estimatedTimeSum).to.be.a('number').to.equal(450)
     })
   })
 

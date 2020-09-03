@@ -9,9 +9,7 @@ const selectTypeahead = (fieldName, input) =>
   cy.get(fieldName).within(() => {
     cy.server()
     cy.route('/api-proxy/adviser/?*').as('adviserResults')
-    cy.get('div')
-      .eq(0)
-      .type(input)
+    cy.get('div').eq(0).type(input)
     cy.wait('@adviserResults')
     cy.get('[class*="menu"] > div').click()
   })
@@ -26,9 +24,7 @@ describe('Referrals', () => {
       cy.get(selectors.sendReferral.subjectField)
         .click()
         .type('Example subject')
-      cy.get(selectors.sendReferral.notesField)
-        .click()
-        .type('Example notes')
+      cy.get(selectors.sendReferral.notesField).click().type('Example notes')
       cy.contains('button', 'Continue').click()
       cy.contains('Check referral details')
         .should('be.visible')
@@ -46,10 +42,7 @@ describe('Referrals', () => {
     })
 
     it('should display the new referral on the homepage', () => {
-      cy.get(companyLocalHeader.flashMessageList)
-        .find('a')
-        .eq(0)
-        .click()
+      cy.get(companyLocalHeader.flashMessageList).find('a').eq(0).click()
       cy.get(selectors.tabbedNav().item(2)).click()
       cy.selectDhTablistTab('Dashboard', 'My referrals').within(() => {
         cy.get('select').select('Sent referrals')
@@ -68,10 +61,7 @@ describe('Referrals', () => {
 
   context('when accepting a referral', () => {
     it('should create an interaction successfully', () => {
-      cy.get('details')
-        .next()
-        .find('a:first-child')
-        .click()
+      cy.get('details').next().find('a:first-child').click()
       cy.get(selectors.createInteractionContext.export.theme).click()
       cy.get(selectors.createInteractionContext.export.interaction).click()
       cy.get(selectors.createInteractionContext.button).click()

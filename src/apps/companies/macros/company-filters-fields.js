@@ -7,7 +7,7 @@ const { QUERY_FIELDS_MAP } = require('../constants')
 
 const PRIMARY_SECTOR_NAME = FILTER_CONSTANTS.COMPANIES.SECTOR.PRIMARY.NAME
 
-const companyFiltersFields = function({ sectorOptions }) {
+const companyFiltersFields = function ({ sectorOptions }) {
   const countryOptions = globalFields.countries.options()
   const ukRegionOptions = globalFields.ukRegions.options()
   return [

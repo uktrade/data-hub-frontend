@@ -26,7 +26,7 @@ const STATUS_ITEMS = STATUS_VALUES.reduce(getItems, {})
 const LIKELIHOOD_ITEMS = Object.values(LIKELIHOOD_VALUES).reduce(getItems, {})
 
 module.exports = {
-  assertProjectDetails: function(item) {
+  assertProjectDetails: function (item) {
     it('Should render project details', () => {
       const content = {
         'Project name': item.name,

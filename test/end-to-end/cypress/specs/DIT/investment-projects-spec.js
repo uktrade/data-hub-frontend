@@ -200,12 +200,8 @@ describe('Investment project', () => {
       cy.get(selectors.companyInvestmentProjects.sourceOfEquityNo).click()
       cy.get(selectors.companyInvestmentProjects.continue).click()
 
-      cy.get(selectors.nav.searchTerm)
-        .type('Mars Exports Ltd')
-        .type('{enter}')
-      cy.get('a')
-        .contains('Mars Exports Ltd')
-        .click()
+      cy.get(selectors.nav.searchTerm).type('Mars Exports Ltd').type('{enter}')
+      cy.get('a').contains('Mars Exports Ltd').click()
 
       populateForm({ ...data, contact: 'Fred Peterson' })
       cy.get(selectors.message.successful).should(

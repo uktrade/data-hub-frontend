@@ -7,9 +7,7 @@ const {
 
 const testTab = (tabText) => {
   it(`should return to the tab ${tabText}`, () => {
-    cy.get(tabbedLocalNav().tabs)
-      .contains(tabText)
-      .click()
+    cy.get(tabbedLocalNav().tabs).contains(tabText).click()
     cy.contains('View options').click()
     cy.contains('Add to or remove from lists').click()
     cy.get(cancelLink).click()

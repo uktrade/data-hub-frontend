@@ -10,7 +10,7 @@ function userHasPermission(routePermissions, userPermissions) {
 }
 
 function setHomeBreadcrumb(text) {
-  return function(req, res, next) {
+  return function (req, res, next) {
     if (text) {
       res.breadcrumb({
         text,

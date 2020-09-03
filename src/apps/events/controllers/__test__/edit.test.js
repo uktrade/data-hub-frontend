@@ -10,12 +10,8 @@ const {
   filterServiceNames,
 } = require('../../../../../src/apps/events/controllers/edit')
 
-const yesterday = moment()
-  .subtract(1, 'days')
-  .toISOString()
-const lastMonth = moment()
-  .subtract(1, 'months')
-  .toISOString()
+const yesterday = moment().subtract(1, 'days').toISOString()
+const lastMonth = moment().subtract(1, 'months').toISOString()
 
 const metadataMock = {
   teamOptions: [

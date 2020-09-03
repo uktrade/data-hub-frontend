@@ -20,10 +20,7 @@ function assertTabListItem({ contain = [], notContain = [] }) {
 
   checks.reduce(
     ($tab, { assertion, content }) => $tab.should(assertion, content),
-    cy
-      .get(tabPanelSelector)
-      .find('ol > li')
-      .should('have.length', 1)
+    cy.get(tabPanelSelector).find('ol > li').should('have.length', 1)
   )
 }
 
@@ -72,9 +69,7 @@ describe('My Pipeline tab on the dashboard', () => {
         it('Should change the status and go to the active tab', () => {
           cy.visit(urls.pipeline.index())
 
-          cy.get(tabPanelSelector)
-            .contains('a', 'Edit')
-            .click()
+          cy.get(tabPanelSelector).contains('a', 'Edit').click()
 
           cy.get(formSelectors.status.active).click()
           cy.contains('button', 'Save').click()
@@ -92,13 +87,9 @@ describe('My Pipeline tab on the dashboard', () => {
 
             cy.visit(urls.pipeline.active())
 
-            cy.get(tabPanelSelector)
-              .contains('a', 'Edit')
-              .click()
+            cy.get(tabPanelSelector).contains('a', 'Edit').click()
 
-            cy.get(formSelectors.name)
-              .clear()
-              .type(newProjectName)
+            cy.get(formSelectors.name).clear().type(newProjectName)
             cy.get(formSelectors.status.won).click()
             cy.contains('button', 'Save').click()
 
@@ -112,9 +103,7 @@ describe('My Pipeline tab on the dashboard', () => {
         it('should save the values and go to the won tab', () => {
           cy.visit(urls.pipeline.won())
 
-          cy.get(tabPanelSelector)
-            .contains('a', 'Edit')
-            .click()
+          cy.get(tabPanelSelector).contains('a', 'Edit').click()
 
           cy.get(formSelectors.likelihood.low).click()
           cy.get(formSelectors.fields.sector).selectTypeaheadOption('Aero')
@@ -146,16 +135,12 @@ describe('My Pipeline tab on the dashboard', () => {
         it('Should remove the values and go to the won tab', () => {
           cy.visit(urls.pipeline.won())
 
-          cy.get(tabPanelSelector)
-            .contains('a', 'Edit')
-            .click()
+          cy.get(tabPanelSelector).contains('a', 'Edit').click()
 
           cy.get(formSelectors.fields.sector).removeAllTypeaheadValues()
           cy.get(formSelectors.fields.contacts).removeAllTypeaheadValues()
           cy.get(formSelectors.value).clear()
-          cy.get(formSelectors.fields.expectedWinDate)
-            .find('input')
-            .clear()
+          cy.get(formSelectors.fields.expectedWinDate).find('input').clear()
 
           cy.contains('button', 'Save').click()
 

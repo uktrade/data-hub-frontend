@@ -47,9 +47,7 @@ describe('Investment repository', () => {
 
   describe('#createInvestmentProject', () => {
     beforeEach(async () => {
-      nock(config.apiRoot)
-        .post(`/v3/investment`)
-        .reply(200, { id: '12345' })
+      nock(config.apiRoot).post(`/v3/investment`).reply(200, { id: '12345' })
       this.investmentProject = await createInvestmentProject('token', {
         foo: 'bar',
       })

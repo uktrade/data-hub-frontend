@@ -223,9 +223,7 @@ describe('Pipeline edit form', () => {
           cy.get(formSelectors.fields.sector).removeAllTypeaheadValues()
           cy.get(formSelectors.fields.contacts).removeAllTypeaheadValues()
           cy.get(formSelectors.value).clear()
-          cy.get(formSelectors.fields.expectedWinDate)
-            .find('input')
-            .clear()
+          cy.get(formSelectors.fields.expectedWinDate).find('input').clear()
 
           cy.contains('button', 'Save').click()
           cy.wait('@updatePipelineItem').then((xhr) => {

@@ -18,9 +18,7 @@ describe('Company Collections Filter', () => {
   })
 
   it('should filter by name', () => {
-    cy.get(selectors.filter.name)
-      .type('FilterByCompany')
-      .type('{enter}')
+    cy.get(selectors.filter.name).type('FilterByCompany').type('{enter}')
 
     cy.get(selectors.entityCollection.entities)
       .children()
@@ -171,9 +169,7 @@ describe('Company Collections Filter', () => {
       .closest('.c-form-group')
       .within(() => {
         cy.contains('Search multiple postcodes separated by a comma')
-        cy.get('input')
-          .type(POSTCODE)
-          .type('{enter}')
+        cy.get('input').type(POSTCODE).type('{enter}')
       })
 
     cy.wait('@filterResults').then((xhr) => {
@@ -195,9 +191,7 @@ describe('Company Collections Filter', () => {
       .get(typeahead(leadIta).options)
       .should('have.length', 63)
 
-    cy.get(typeahead(leadIta).selectedOption)
-      .type('{enter}')
-      .type('{esc}')
+    cy.get(typeahead(leadIta).selectedOption).type('{enter}').type('{esc}')
 
     cy.wait('@filterResults').then((xhr) => {
       expect(xhr.url).to.contain(

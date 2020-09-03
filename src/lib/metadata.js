@@ -44,7 +44,7 @@ function getMetadata(path, key) {
     })
 }
 
-module.exports.getMetadataItem = function(table, id) {
+module.exports.getMetadataItem = function (table, id) {
   const url = `${config.apiRoot}/v4/metadata/${table}`
 
   return new Promise((resolve, reject) => {
@@ -171,11 +171,11 @@ module.exports.investmentStatusOptions = [
   { label: 'Dormant', value: 'dormant' },
 ]
 
-module.exports.getServices = function() {
+module.exports.getServices = function () {
   return hawkRequest(`${config.apiRoot}/v4/metadata/service`)
 }
 
-module.exports.initialiseRestrictedServiceOptions = function() {
+module.exports.initialiseRestrictedServiceOptions = function () {
   hawkRequest(`${config.apiRoot}/v4/metadata/service`).then((data) => {
     module.exports.serviceDeliveryServiceOptions = data.filter((service) =>
       restrictedServiceKeys.includes(service.name)
@@ -183,7 +183,7 @@ module.exports.initialiseRestrictedServiceOptions = function() {
   })
 }
 
-module.exports.getIdForName = function(options, name) {
+module.exports.getIdForName = function (options, name) {
   if (!name) return null
   const _name = name.toLowerCase()
   for (const option of options) {

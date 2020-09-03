@@ -68,9 +68,7 @@ describe('Investor profiles', () => {
     })
 
     it('should be able to navigate to the second page', () => {
-      cy.get('ul:last li a')
-        .contains('2')
-        .click()
+      cy.get('ul:last li a').contains('2').click()
     })
 
     it('should display 2 profiles', () => {

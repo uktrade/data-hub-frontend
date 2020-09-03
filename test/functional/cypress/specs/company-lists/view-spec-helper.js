@@ -115,9 +115,7 @@ const describeTableCell = ({ row, col, text, linksTo, shouldHaveEllipsis }) =>
         return
       }
 
-      cy.get('@cell')
-        .find('a')
-        .should('have.attr', 'href', linksTo)
+      cy.get('@cell').find('a').should('have.attr', 'href', linksTo)
     })
   })
 
@@ -143,16 +141,11 @@ const describeTable = (rows) => {
 const describeSortListBy = ({ option, rows }) =>
   describe(`Sort list by "${option}"`, () => {
     before(() => {
-      cy.contains('Sort by')
-        .children('select')
-        .select(option)
+      cy.contains('Sort by').children('select').select(option)
     })
 
     it(`The option "${option}" should be selected`, () =>
-      cy
-        .contains('Sort by')
-        .find(':selected')
-        .should('have.text', option))
+      cy.contains('Sort by').find(':selected').should('have.text', option))
     describeTable(rows)
   })
 
@@ -222,10 +215,7 @@ exports.describeSelectedList = ({
   describe('Selected list', () => {
     describe('List selector', () =>
       it(`The "${name}" should be selected`, () =>
-        cy
-          .contains('View list')
-          .find(':selected')
-          .should('have.text', name)))
+        cy.contains('View list').find(':selected').should('have.text', name)))
 
     describe('Delete list link', () =>
       it('The link should go to the correct url', () =>

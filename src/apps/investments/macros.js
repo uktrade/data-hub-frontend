@@ -9,7 +9,7 @@ const FILTER_CONSTANTS = require('../../lib/filter-constants')
 const PRIMARY_SECTOR_NAME =
   FILTER_CONSTANTS.INVESTMENT_PROJECTS.SECTOR.PRIMARY.NAME
 
-const investmentFiltersFields = function({
+const investmentFiltersFields = function ({
   currentAdviserId,
   sectorOptions,
   adviserOptions,
@@ -346,7 +346,7 @@ const statusFormConfig = {
   ],
 }
 
-const investmentProfilesFiltersFields = function() {
+const investmentProfilesFiltersFields = function () {
   return [
     {
       macroName: 'MultipleChoiceField',

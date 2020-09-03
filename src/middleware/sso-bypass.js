@@ -8,7 +8,7 @@ const config = require('../config')
  */
 
 const ssoBypass = () => {
-  return function(req, res, next) {
+  return function (req, res, next) {
     const bypassSSO = get(config, 'oauth.bypassSSO')
     const oAuthDevToken = get(config, 'oauth.devToken')
 

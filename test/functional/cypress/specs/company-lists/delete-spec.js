@@ -2,7 +2,7 @@ const selectors = require('../../../../selectors')
 const { testBreadcrumbs } = require('../../support/assertions')
 
 describe('Delete company list page', () => {
-  beforeEach(function() {
+  beforeEach(function () {
     Cypress.Cookies.preserveOnce('datahub.sid')
   })
 

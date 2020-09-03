@@ -34,7 +34,7 @@ const contactSortOptions = [
   { value: 'company.name:asc', label: 'Company: A-Z' },
 ]
 
-const contactFiltersFields = function({ sectorOptions }) {
+const contactFiltersFields = function ({ sectorOptions }) {
   return [
     {
       macroName: 'TextField',

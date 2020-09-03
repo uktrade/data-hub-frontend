@@ -5,7 +5,7 @@ var companySortByMostRecent = require('../../../fixtures/v3/search/sort/company-
 var companySortByLeastRecent = require('../../../fixtures/v3/search/sort/company-sort-by-least-recent.json')
 var companySortByAZ = require('../../../fixtures/v3/search/sort/company-sort-by-a-z.json')
 
-exports.companies = function(req, res) {
+exports.companies = function (req, res) {
   var companiesList = {
     collectionTest: companyWithAttributes,
     'modified_on:desc': companySortByMostRecent,

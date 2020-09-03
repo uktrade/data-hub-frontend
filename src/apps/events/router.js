@@ -29,10 +29,7 @@ const { transformEventToListItem } = require('./transformers')
 
 router.use(handleRoutePermissions(APP_PERMISSIONS))
 
-router
-  .route('/create')
-  .post(postDetails, renderEditPage)
-  .get(renderEditPage)
+router.route('/create').post(postDetails, renderEditPage).get(renderEditPage)
 
 router.param('eventId', getEventDetails)
 

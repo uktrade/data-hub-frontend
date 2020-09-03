@@ -51,9 +51,7 @@ describe('Company list repository', () => {
 
     context('when there is an error retrieving the list', () => {
       beforeEach(async () => {
-        nock(config.apiRoot)
-          .get(`/v4/company-list/${listId}`)
-          .reply(404)
+        nock(config.apiRoot).get(`/v4/company-list/${listId}`).reply(404)
 
         await fetchCompanyList(
           middlewareParameters.reqMock,
@@ -137,9 +135,7 @@ describe('Company list repository', () => {
 
   describe('#deleteCompanyList', () => {
     beforeEach(() => {
-      nock(config.apiRoot)
-        .delete(`/v4/company-list/${listId}`)
-        .reply(204)
+      nock(config.apiRoot).delete(`/v4/company-list/${listId}`).reply(204)
     })
 
     it('deletes a company list', () => {
@@ -149,9 +145,7 @@ describe('Company list repository', () => {
 
   describe('#addCompanyToList', () => {
     beforeEach(() => {
-      nock(config.apiRoot)
-        .put('/v4/company-list/1/item/2')
-        .reply(204)
+      nock(config.apiRoot).put('/v4/company-list/1/item/2').reply(204)
     })
 
     it('should add a company to a list', () => {
@@ -161,9 +155,7 @@ describe('Company list repository', () => {
 
   describe('#removeCompanyFromList', () => {
     beforeEach(() => {
-      nock(config.apiRoot)
-        .delete('/v4/company-list/1/item/2')
-        .reply(204)
+      nock(config.apiRoot).delete('/v4/company-list/1/item/2').reply(204)
     })
 
     it('should delete a company from a list', () => {

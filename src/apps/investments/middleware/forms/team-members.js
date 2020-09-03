@@ -64,7 +64,7 @@ function transformErrorResponseToFormErrors(error) {
   const messages = {}
 
   castArray(error).forEach((errorItem, index) => {
-    forOwn(errorItem, function(value, key) {
+    forOwn(errorItem, function (value, key) {
       messages[`${key}-${index}`] = value[0]
     })
   })
