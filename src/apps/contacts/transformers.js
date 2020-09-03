@@ -107,7 +107,7 @@ function transformContactToView(
     telephone_number,
     job_title,
     email,
-    rejects_dit_email_marketing,
+    accepts_dit_email_marketing,
     address_1,
     address_2,
     address_town,
@@ -131,9 +131,9 @@ function transformContactToView(
       telephone_countrycode,
       telephone_number
     ),
-    email_marketing: rejects_dit_email_marketing
-      ? 'Cannot be marketed to'
-      : 'Can be marketed to',
+    email_marketing: accepts_dit_email_marketing
+      ? 'Can be marketed to'
+      : 'Cannot be marketed to',
     address: {
       type: 'address',
       address: getContactAddress(

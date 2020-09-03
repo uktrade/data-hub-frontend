@@ -36,7 +36,6 @@ function getContactAsFormData(contact) {
     telephone_countrycode: contact.telephone_countrycode,
     email: contact.email,
     accepts_dit_email_marketing: contact.accepts_dit_email_marketing,
-    rejects_dit_email_marketing: !contact.accepts_dit_email_marketing,
     address_same_as_company: contact.address_same_as_company ? 'yes' : 'no',
     address_1: contact.address_1,
     address_2: contact.address_2,
@@ -72,9 +71,9 @@ function saveContactForm(token, contactForm) {
         contactFormWithEmptyAsNull,
         ['title', 'company', 'address_country']
       )
+
       const contactFormForApiRequest = merge({}, transformedContactForm, {
-        // database is positive on accepts, negative on rejects; UI is reverse, so flip that here
-        accepts_dit_email_marketing: !contactForm.rejects_dit_email_marketing,
+        accepts_dit_email_marketing: !!contactForm.accepts_dit_email_marketing,
       })
       const savedContact = await contactsRepository.saveContact(
         token,

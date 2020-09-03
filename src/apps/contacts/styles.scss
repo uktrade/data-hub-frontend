@@ -1,0 +1,9 @@
+#hint-group-field-accepts_dit_email_marketing {
+    display: none;
+}
+input:checked[name="accepts_dit_email_marketing"] {
+    + label #hint-group-field-accepts_dit_email_marketing {
+        display: block;
+        margin-top: 4px;
+    }
+}
