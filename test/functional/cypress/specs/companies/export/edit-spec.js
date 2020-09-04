@@ -7,12 +7,7 @@ describe('Company Export tab - Edit exports', () => {
   function assertReadOnlyItems(rows) {
     const DT_ALIAS = 'dt-items'
     const DD_ALIAS = 'dd-items'
-    cy.get('dl')
-      .find('dt')
-      .as(DT_ALIAS)
-      .parent()
-      .find('dd')
-      .as(DD_ALIAS)
+    cy.get('dl').find('dt').as(DT_ALIAS).parent().find('dd').as(DD_ALIAS)
     rows.forEach((row, index) => {
       cy.get('@' + DT_ALIAS)
         .eq(index)

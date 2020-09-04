@@ -44,7 +44,7 @@ var ReferralIds = require('../../../constants/referrals')
 
 state.investor_description = state.investor_description || ''
 
-exports.largeInvestorProfile = function(req, res) {
+exports.largeInvestorProfile = function (req, res) {
   if (req.query.investor_company_id === companyOneListCorp.id) {
     return res.json(largeCapitalProfile)
   }
@@ -63,11 +63,11 @@ exports.largeInvestorProfile = function(req, res) {
   res.json(largeCapitalProfileEmpty)
 }
 
-exports.largeInvestorProfilePatched = function(req, res) {
+exports.largeInvestorProfilePatched = function (req, res) {
   res.json(largeCapitalProfile)
 }
 
-exports.largeInvestorProfilePostCreate = function(req, res) {
+exports.largeInvestorProfilePostCreate = function (req, res) {
   if (req.body.investor_company === '400094ac-f79a-43e5-9c88-059a7baa17f3') {
     return res.json(400, largeCapitalProfileCreateError)
   }
@@ -75,7 +75,7 @@ exports.largeInvestorProfilePostCreate = function(req, res) {
   res.json(largeCapitalProfileCreateSuccess)
 }
 
-exports.companies = function(req, res) {
+exports.companies = function (req, res) {
   var subsidiaries = {
     '346f78a5-1d23-4213-b4c2-bf48246a13c3': companyArchivedSubsidiaries,
     '079942718': companyDnBGlobalUltimateSubsidiaries,
@@ -93,7 +93,7 @@ exports.companies = function(req, res) {
   }
 }
 
-exports.company = function(req, res) {
+exports.company = function (req, res) {
   var companies = {
     '4cd4128b-1bad-4f1e-9146-5d4678c6a018': company,
     '346f78a5-1d23-4213-b4c2-bf48246a13c3': companyArchived,
@@ -144,14 +144,14 @@ exports.company = function(req, res) {
   res.json(companies[req.params.companyId] || company)
 }
 
-exports.companyPatched = function(req, res) {
+exports.companyPatched = function (req, res) {
   if (req.body.sector === '9738cecc-5f95-e211-a939-e4115bead28a') {
     return res.json(companySomeOtherCompany)
   }
   res.json(company)
 }
 
-exports.getCompanyList = function(req, res) {
+exports.getCompanyList = function (req, res) {
   if (req.params.companyId === '0fb3379c-341c-4da4-b825-bf8d47b26baa') {
     return res.status(204).json({})
   } else if (req.params.companyId === 'b2c34b41-1d5a-4b4b-9249-7c53ff2868dd') {
@@ -160,15 +160,15 @@ exports.getCompanyList = function(req, res) {
   res.status(200).json(companyList)
 }
 
-exports.manageAdviser = function(req, res) {
+exports.manageAdviser = function (req, res) {
   return res.json(204, {})
 }
 
-exports.companyAudit = function(req, res) {
+exports.companyAudit = function (req, res) {
   res.json(companyAudit)
 }
 
-exports.exportWins = function(req, res) {
+exports.exportWins = function (req, res) {
   var companyId = req.params.companyId
 
   if (companyId === companyLambdaPlc.id) {
@@ -189,7 +189,7 @@ exports.exportWins = function(req, res) {
   }
 }
 
-exports.referralDetails = function(req, res) {
+exports.referralDetails = function (req, res) {
   if (req.params.id === ReferralIds.REFERRAL_ID_NO_CONTACT) {
     return res.json(referralDetailsNoContact)
   }
@@ -215,7 +215,7 @@ exports.referralDetails = function(req, res) {
   return res.json(referralDetails)
 }
 
-exports.exportDetail = function(req, res) {
+exports.exportDetail = function (req, res) {
   var companyId = req.params.companyId
 
   if (companyId === companyLambdaPlc.id) {
@@ -227,7 +227,7 @@ exports.exportDetail = function(req, res) {
   }
 }
 
-exports.getOneListGroupCoreTeam = function(req, res) {
+exports.getOneListGroupCoreTeam = function (req, res) {
   var companyId = req.params.companyId
 
   if (companyId === companyMinimallyMinimal.id) {
@@ -237,14 +237,14 @@ exports.getOneListGroupCoreTeam = function(req, res) {
   }
 }
 
-exports.postOneListTierAndGlobalAccountManager = function(req, res) {
+exports.postOneListTierAndGlobalAccountManager = function (req, res) {
   res.send('')
 }
 
-exports.postRemoveFromOneList = function(req, res) {
+exports.postRemoveFromOneList = function (req, res) {
   res.send('')
 }
 
-exports.patchOneListCoreTeam = function(req, res) {
+exports.patchOneListCoreTeam = function (req, res) {
   res.send('')
 }

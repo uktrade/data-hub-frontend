@@ -1,6 +1,6 @@
 var zendeskTickets = require('../fixtures/zendesk/tickets.json')
 
-exports.tickets = function(req, res) {
+exports.tickets = function (req, res) {
   var response = _.set(
     zendeskTickets,
     'ticket.description',

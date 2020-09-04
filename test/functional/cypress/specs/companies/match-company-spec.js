@@ -13,9 +13,7 @@ const DUNS_NUMBER_MATCHED = '222222222'
 const companyLocalHeader = selectors.companyLocalHeader()
 
 const performSearch = (companyName = 'some company') => {
-  cy.get(selectors.companyMatch.find.companyNameInput)
-    .clear()
-    .type(companyName)
+  cy.get(selectors.companyMatch.find.companyNameInput).clear().type(companyName)
   cy.get(selectors.companyMatch.find.button).click()
 }
 
@@ -272,10 +270,7 @@ describe('Match a company', () => {
       })
 
       it('should submit both fields', () => {
-        cy.contains('Website address')
-          .next()
-          .find('input')
-          .type('01185673456')
+        cy.contains('Website address').next().find('input').type('01185673456')
 
         cy.contains('Phone number')
           .next()

@@ -15,7 +15,7 @@ function createItem(status) {
   }
 }
 
-exports.getPipelineItems = function(req, res) {
+exports.getPipelineItems = function (req, res) {
   let result = pipelineNoResult
   if (req.query.company_id === lambdaPlc.id) {
     res.json(pipelineItemLambdaPlc)
@@ -50,7 +50,7 @@ exports.getPipelineItems = function(req, res) {
   return
 }
 
-exports.createUpdatePipelineItem = function(req, res) {
+exports.createUpdatePipelineItem = function (req, res) {
   var company = _.assign({}, pipelineCreate.company, {
     id: lambdaPlc.id,
     name: lambdaPlc.name,
@@ -63,7 +63,7 @@ exports.createUpdatePipelineItem = function(req, res) {
   res.json(json)
 }
 
-exports.getPipelineItem = function(req, res) {
+exports.getPipelineItem = function (req, res) {
   var pipelineId = req.params.pipelineItemId
   var lambdaItemOne = pipelineItemLambdaPlc.results[0]
   var lambdaItemTwo = pipelineItemLambdaPlc.results[1]
@@ -95,7 +95,7 @@ exports.getPipelineItem = function(req, res) {
   res.sendStatus(404)
 }
 
-exports.archivePipelineItem = function(req, res) {
+exports.archivePipelineItem = function (req, res) {
   const { pipelineItemId } = req.params
 
   if (pipelineItemId === 'LEADS') {
@@ -113,7 +113,7 @@ exports.archivePipelineItem = function(req, res) {
   res.sendStatus(200)
 }
 
-exports.unarchivePipelineItem = function(req, res) {
+exports.unarchivePipelineItem = function (req, res) {
   const { pipelineItemId } = req.params
 
   if (pipelineItemId === 'LEADS') {
@@ -131,6 +131,6 @@ exports.unarchivePipelineItem = function(req, res) {
   res.sendStatus(200)
 }
 
-exports.deletePipelineItem = function(req, res) {
+exports.deletePipelineItem = function (req, res) {
   res.sendStatus(204)
 }

@@ -15,7 +15,7 @@ describe('Adding and removing a company to a list', () => {
   describe('#handleAddRemoveCompanyToList', () => {
     context('when adding a company to a list', () => {
       beforeEach(async () => {
-        middlewareParameters.reqMock.body = { list: { '1': 'yes' } }
+        middlewareParameters.reqMock.body = { list: { 1: 'yes' } }
         middlewareParameters.resMock.locals = {
           csrfToken: 'token',
           company: {
@@ -25,9 +25,7 @@ describe('Adding and removing a company to a list', () => {
         }
         middlewareParameters.resMock.send = sinon.stub()
 
-        nock(config.apiRoot)
-          .put('/v4/company-list/1/item/1')
-          .reply(204)
+        nock(config.apiRoot).put('/v4/company-list/1/item/1').reply(204)
 
         await handleAddRemoveCompanyToList(
           middlewareParameters.reqMock,
@@ -48,7 +46,7 @@ describe('Adding and removing a company to a list', () => {
     })
     context('when removing a company from a list', () => {
       beforeEach(async () => {
-        middlewareParameters.reqMock.body = { list: { '1': 'no' } }
+        middlewareParameters.reqMock.body = { list: { 1: 'no' } }
         middlewareParameters.resMock.locals = {
           csrfToken: 'token',
           company: {
@@ -58,9 +56,7 @@ describe('Adding and removing a company to a list', () => {
         }
         middlewareParameters.resMock.send = sinon.stub()
 
-        nock(config.apiRoot)
-          .delete('/v4/company-list/1/item/1')
-          .reply(204)
+        nock(config.apiRoot).delete('/v4/company-list/1/item/1').reply(204)
 
         await handleAddRemoveCompanyToList(
           middlewareParameters.reqMock,
@@ -83,7 +79,7 @@ describe('Adding and removing a company to a list', () => {
       'when there is an error adding or removing a company from a list',
       () => {
         beforeEach(async () => {
-          middlewareParameters.reqMock.body = { list: { '1': 'no' } }
+          middlewareParameters.reqMock.body = { list: { 1: 'no' } }
           middlewareParameters.resMock.locals = {
             csrfToken: 'token',
             company: {
@@ -93,9 +89,7 @@ describe('Adding and removing a company to a list', () => {
           }
           middlewareParameters.resMock.send = sinon.stub()
 
-          nock(config.apiRoot)
-            .delete('/v4/company-list/1/item/1')
-            .reply(404)
+          nock(config.apiRoot).delete('/v4/company-list/1/item/1').reply(404)
 
           await handleAddRemoveCompanyToList(
             middlewareParameters.reqMock,
@@ -223,9 +217,7 @@ describe('Adding and removing a company to a list', () => {
         },
       }
 
-      nock(config.apiRoot)
-        .put('/v4/company-list/1/item/1')
-        .reply(204)
+      nock(config.apiRoot).put('/v4/company-list/1/item/1').reply(204)
 
       await renderAddRemoveForm(
         middlewareParameters.reqMock,

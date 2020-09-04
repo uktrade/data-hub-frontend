@@ -2,7 +2,7 @@ const { search, exportSearch } = require('../services')
 const { transformApiResponseToSearchCollection } = require('../transformers')
 
 function getCollection(searchEntity, entityDetails, ...itemTransformers) {
-  return async function(req, res, next) {
+  return async function (req, res, next) {
     try {
       res.locals.results = await search({
         searchEntity,
@@ -26,7 +26,7 @@ function getCollection(searchEntity, entityDetails, ...itemTransformers) {
 }
 
 function exportCollection(searchEntity) {
-  return async function(req, res, next) {
+  return async function (req, res, next) {
     return exportSearch({
       searchEntity,
       requestBody: req.body,

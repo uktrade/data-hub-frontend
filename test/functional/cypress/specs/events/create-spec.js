@@ -23,31 +23,19 @@ describe('Event create', () => {
 
   it('should allow user to add multiple shared teams', () => {
     cy.get(selectors.eventCreate.sharedYes).click()
-    cy.get(selectors.eventCreate.teams)
-      .eq(0)
-      .select('BPI')
+    cy.get(selectors.eventCreate.teams).eq(0).select('BPI')
     cy.get(selectors.eventCreate.addAnotherSharedTeam).click()
-    cy.get(selectors.eventCreate.teams)
-      .eq(1)
-      .select('BN Americas')
+    cy.get(selectors.eventCreate.teams).eq(1).select('BN Americas')
 
-    cy.get(selectors.eventCreate.teams)
-      .eq(0)
-      .should('contain', 'BPI')
-    cy.get(selectors.eventCreate.teams)
-      .eq(1)
-      .should('contain', 'BN Americas')
+    cy.get(selectors.eventCreate.teams).eq(0).should('contain', 'BPI')
+    cy.get(selectors.eventCreate.teams).eq(1).should('contain', 'BN Americas')
   })
 
   it('should allow user to add multiple programmes', () => {
     cy.get(selectors.eventCreate.sharedYes).click()
-    cy.get(selectors.eventCreate.relatedProgrammes)
-      .eq(0)
-      .select('CEN Energy')
+    cy.get(selectors.eventCreate.relatedProgrammes).eq(0).select('CEN Energy')
     cy.get(selectors.eventCreate.addAnotherProgramme).click()
-    cy.get(selectors.eventCreate.relatedProgrammes)
-      .eq(1)
-      .select('CEN Services')
+    cy.get(selectors.eventCreate.relatedProgrammes).eq(1).select('CEN Services')
 
     cy.get(selectors.eventCreate.relatedProgrammes)
       .eq(0)

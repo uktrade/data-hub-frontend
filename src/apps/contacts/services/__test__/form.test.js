@@ -13,7 +13,7 @@ describe('contact form service', () => {
     contactFormService = proxyquire('../form', {
       '../repos': {
         savedContactForm: null,
-        saveContact: function(token, contactForm) {
+        saveContact: function (token, contactForm) {
           return new Promise((resolve, reject) => {
             postedData = contactForm
 

@@ -48,10 +48,7 @@ router.get(
   exportCollection('contact')
 )
 
-router
-  .route('/create')
-  .get(editDetails)
-  .post(postDetails, editDetails)
+router.route('/create').get(editDetails).post(postDetails, editDetails)
 
 router.use(
   '/:contactId',
@@ -63,10 +60,7 @@ router.use(
 router.get('/:contactId', redirectToFirstNavItem)
 router.get('/:contactId/details', getDetails)
 
-router
-  .route('/:contactId/edit')
-  .get(editDetails)
-  .post(postDetails, editDetails)
+router.route('/:contactId/edit').get(editDetails).post(postDetails, editDetails)
 
 router.post('/:id/archive', archiveContact)
 router.get('/:id/unarchive', unarchiveContact)

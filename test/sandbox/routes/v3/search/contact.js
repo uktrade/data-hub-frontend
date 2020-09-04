@@ -3,7 +3,7 @@ var contactFilter = require('../../../fixtures/v3/search/filter/contact-filter.j
 var contactWithAttributes = require('../../../fixtures/v3/search/contact-with-attributes.json')
 var contactSortBy = require('../../../fixtures/v3/search/sort/contact-sort-by.json')
 
-exports.contacts = function(req, res) {
+exports.contacts = function (req, res) {
   var contactsList = {
     collectionTest: contactWithAttributes,
     'created_on:desc': contactSortBy,
@@ -17,10 +17,11 @@ exports.contacts = function(req, res) {
   if (req.body.company_uk_region) {
     var regionQuery = req.body.company_uk_region
     var regions = typeof regionQuery === 'string' ? [regionQuery] : regionQuery
-    var ukRegionFilteredResults = _.filter(contacts.results, function(contact) {
-      return _.intersection(regions, [
-        _.get(contact, 'company_uk_region.id'),
-      ]).length
+    var ukRegionFilteredResults = _.filter(contacts.results, function (
+      contact
+    ) {
+      return _.intersection(regions, [_.get(contact, 'company_uk_region.id')])
+        .length
     })
     return res.json({
       count: ukRegionFilteredResults.length,

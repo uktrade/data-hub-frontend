@@ -5,7 +5,7 @@ var companySortByMostRecent = require('../../../fixtures/v4/search/sort/company-
 var companySortByLeastRecent = require('../../../fixtures/v4/search/sort/company-sort-by-least-recent.json')
 var companySortByAZ = require('../../../fixtures/v4/search/sort/company-sort-by-a-z.json')
 
-exports.companies = function(req, res) {
+exports.companies = function (req, res) {
   var companiesList = {
     collectionTest: companyWithAttributes,
     'modified_on:desc': companySortByMostRecent,
@@ -14,7 +14,7 @@ exports.companies = function(req, res) {
   }
 
   if (req.body.uk_postcode) {
-    var postcodeFilteredResults = _.filter(companies.results, function(
+    var postcodeFilteredResults = _.filter(companies.results, function (
       company
     ) {
       return _.startsWith(

@@ -2,7 +2,7 @@ const { flatten } = require('lodash')
 
 const { ORDER_STATES } = require('../../constants')
 
-const omisFiltersFields = function({
+const omisFiltersFields = function ({
   omisMarketOptions,
   regionOptions,
   sectorOptions,

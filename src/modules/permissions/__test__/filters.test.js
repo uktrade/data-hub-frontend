@@ -2,12 +2,8 @@ const moment = require('moment')
 
 const { filterDisabledOption, filterNonPermittedItem } = require('../filters')
 
-const lastMonth = moment()
-  .subtract(1, 'months')
-  .toISOString()
-const nextMonth = moment()
-  .add(1, 'months')
-  .toISOString()
+const lastMonth = moment().subtract(1, 'months').toISOString()
+const nextMonth = moment().add(1, 'months').toISOString()
 
 describe('filters', () => {
   describe('#filterDisabledOption', () => {

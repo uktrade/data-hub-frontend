@@ -6,9 +6,7 @@ const apiProxy = require('../../middleware/api-proxy')
 
 describe('API proxy middleware', () => {
   it('should forward requests to the backend', async () => {
-    const scope = nock(config.apiRoot)
-      .get('/whoami')
-      .reply(200, {})
+    const scope = nock(config.apiRoot).get('/whoami').reply(200, {})
 
     const app = express()
     app.use((req, res, next) => {

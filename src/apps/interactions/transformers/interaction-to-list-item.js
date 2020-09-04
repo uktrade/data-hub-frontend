@@ -5,7 +5,7 @@ const { INTERACTION_NAMES } = require('../constants')
 const labels = require('../labels')
 
 function transformInteractionToListItem(showCompany = true) {
-  return function({
+  return function ({
     id,
     subject,
     kind,

@@ -4,15 +4,15 @@ var companyListsDB = require('../../../fixtures/v4/company-list/company-lists-db
 var multipleItemCompanyList = require('../../../fixtures/v4/company-list/single-list-with-multiple-items.json')
 var errorOnDeleteCompanyList = require('../../../fixtures/v4/company-list/single-list-with-error-on-delete.json')
 
-exports.companyList = function(req, res) {
+exports.companyList = function (req, res) {
   res.json(companyList)
 }
 
-exports.getCompanyLists = function(req, res) {
+exports.getCompanyLists = function (req, res) {
   res.json(companyLists)
 }
 
-exports.getCompanyList = function(req, res) {
+exports.getCompanyList = function (req, res) {
   if (req.params.listId === multipleItemCompanyList.id) {
     res.json(multipleItemCompanyList)
     return
@@ -26,7 +26,7 @@ exports.getCompanyList = function(req, res) {
   res.send(404)
 }
 
-exports.getCompanyListItems = function(req, res) {
+exports.getCompanyListItems = function (req, res) {
   return res.json(
     companyListsDB[req.params.listId] || {
       count: 0,
@@ -37,11 +37,11 @@ exports.getCompanyListItems = function(req, res) {
   )
 }
 
-exports.createCompanyList = function(req, res) {
+exports.createCompanyList = function (req, res) {
   res.send(201)
 }
 
-exports.deleteCompanyList = function(req, res) {
+exports.deleteCompanyList = function (req, res) {
   if (req.params.listId === multipleItemCompanyList.id) {
     res.send(204)
     return
@@ -50,7 +50,7 @@ exports.deleteCompanyList = function(req, res) {
   res.send(404)
 }
 
-exports.editCompanyList = function(req, res) {
+exports.editCompanyList = function (req, res) {
   if (req.params.listId === multipleItemCompanyList.id) {
     res.send(204)
     return

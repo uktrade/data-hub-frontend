@@ -2,12 +2,8 @@ const moment = require('moment')
 
 const config = require('../../config')
 
-const yesterday = moment()
-  .subtract(1, 'days')
-  .toISOString()
-const lastWeek = moment()
-  .subtract(1, 'weeks')
-  .toISOString()
+const yesterday = moment().subtract(1, 'days').toISOString()
+const lastWeek = moment().subtract(1, 'weeks').toISOString()
 const today = moment().toISOString()
 
 const { getOptions, fetchOptions } = require('../options')
@@ -23,9 +19,7 @@ const serviceOptions = serviceOptionData
 
 describe('#options', () => {
   beforeEach(() => {
-    nock(config.apiRoot)
-      .get('/v4/metadata/uk-region')
-      .reply(200, regionOptions)
+    nock(config.apiRoot).get('/v4/metadata/uk-region').reply(200, regionOptions)
 
     nock(config.apiRoot)
       .get('/v4/metadata/123&contexts__has_any=')

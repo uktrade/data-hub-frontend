@@ -27,19 +27,19 @@ module.exports = {
     fatal: 'fatal',
   },
 
-  setup: function(app) {
+  setup: function (app) {
     if (useSentry) {
       app.use(raven.requestHandler())
     }
   },
 
-  handleErrors: function(app) {
+  handleErrors: function (app) {
     if (useSentry) {
       app.use(raven.errorHandler())
     }
   },
 
-  message: function(level, msg, extra) {
+  message: function (level, msg, extra) {
     if (useSentry) {
       raven.captureMessage(msg, {
         level,
@@ -53,7 +53,7 @@ module.exports = {
     }
   },
 
-  captureException: function(err, extra) {
+  captureException: function (err, extra) {
     if (useSentry) {
       raven.captureException(err, { extra })
     } else {

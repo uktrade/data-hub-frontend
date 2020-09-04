@@ -11,9 +11,7 @@ const {
 } = require('../../../../../test/unit/form-helpers')
 const contactLabels = require('../../labels')
 
-const yesterday = moment()
-  .subtract(1, 'days')
-  .toISOString()
+const yesterday = moment().subtract(1, 'days').toISOString()
 
 describe('Contact controller, edit', () => {
   let contactEditController
@@ -21,7 +19,7 @@ describe('Contact controller, edit', () => {
   let saveContactFormStub
   let getContactAsFormDataStub
   let company
-  const next = function(error) {
+  const next = function (error) {
     throw error
   }
 
@@ -72,7 +70,7 @@ describe('Contact controller, edit', () => {
       let res
       let contact
 
-      const next = function(error) {
+      const next = function (error) {
         throw error
       }
 
@@ -126,7 +124,7 @@ describe('Contact controller, edit', () => {
         }
       })
 
-      it('should create a form based on the existing contact', function(done) {
+      it('should create a form based on the existing contact', function (done) {
         res.render = () => {
           expect(getContactAsFormDataStub).to.have.been.calledWith(contact)
           expect(res.locals).to.have.property('formData')
@@ -134,7 +132,7 @@ describe('Contact controller, edit', () => {
         }
         contactEditController.editDetails(req, res, next)
       })
-      it('should include an expanded company', function(done) {
+      it('should include an expanded company', function (done) {
         res.render = () => {
           expect(getDitCompanyStub).to.have.been.calledWith(
             req.session.token,
@@ -145,7 +143,7 @@ describe('Contact controller, edit', () => {
         }
         contactEditController.editDetails(req, res, next)
       })
-      it('should provide a back link to the contact', function(done) {
+      it('should provide a back link to the contact', function (done) {
         res.render = () => {
           expect(res.locals.returnLink).to.equal(
             '/contacts/12651151-2149-465e-871b-ac45bc568a62/details'
@@ -159,7 +157,7 @@ describe('Contact controller, edit', () => {
       let req
       let res
 
-      const next = function(error) {
+      const next = function (error) {
         throw error
       }
 
@@ -179,14 +177,14 @@ describe('Contact controller, edit', () => {
         }
       })
 
-      it('should return a form pre-populated with just the company id', function(done) {
+      it('should return a form pre-populated with just the company id', function (done) {
         res.render = () => {
           expect(res.locals.formData).to.deep.equal({ company: company.id })
           done()
         }
         contactEditController.editDetails(req, res, next)
       })
-      it('should include an expanded company', function(done) {
+      it('should include an expanded company', function (done) {
         res.render = () => {
           expect(getDitCompanyStub).to.have.been.calledWith(
             req.session.token,
@@ -197,7 +195,7 @@ describe('Contact controller, edit', () => {
         }
         contactEditController.editDetails(req, res, next)
       })
-      it('should provide a back link to the company', function(done) {
+      it('should provide a back link to the company', function (done) {
         res.render = () => {
           expect(res.locals.returnLink).to.equal('/companies/1234/contacts')
           done()
@@ -209,7 +207,7 @@ describe('Contact controller, edit', () => {
       let req
       let body
       let res
-      const next = function(error) {
+      const next = function (error) {
         throw error
       }
 
@@ -235,14 +233,14 @@ describe('Contact controller, edit', () => {
           breadcrumb: this.breadcrumbStub,
         }
       })
-      it('should use the pre posted form for edit', function(done) {
+      it('should use the pre posted form for edit', function (done) {
         res.render = () => {
           expect(res.locals.formData).to.deep.equal(body)
           done()
         }
         contactEditController.editDetails(req, res, next)
       })
-      it('should include an expanded company', function(done) {
+      it('should include an expanded company', function (done) {
         res.render = () => {
           expect(getDitCompanyStub).to.have.been.calledWith(
             req.session.token,
@@ -253,7 +251,7 @@ describe('Contact controller, edit', () => {
         }
         contactEditController.editDetails(req, res, next)
       })
-      it('should provide a back link to the company', function(done) {
+      it('should provide a back link to the company', function (done) {
         res.render = () => {
           expect(res.locals.returnLink).to.equal('/companies/1234/contacts')
           done()
@@ -458,7 +456,7 @@ describe('Contact controller, edit', () => {
           { id: '8888', name: 'Test', disabled_on: yesterday },
         ])
     })
-    it('should save the form data to the back end', function(done) {
+    it('should save the form data to the back end', function (done) {
       res.redirect = () => {
         expect(saveContactFormStub).to.be.calledWith(req.session.token, body)
         done()
@@ -466,22 +464,22 @@ describe('Contact controller, edit', () => {
 
       contactEditController.postDetails(req, res, next)
     })
-    it('should redirect the user to the contact details', function(done) {
+    it('should redirect the user to the contact details', function (done) {
       delete body.id
-      res.redirect = function(url) {
+      res.redirect = function (url) {
         expect(url).to.equal(`/contacts/${company.id}/details`)
         done()
       }
       contactEditController.postDetails(req, res, next)
     })
-    it('should redirect the user to the contact detail screen if editing an existing contact', function(done) {
-      res.redirect = function(url) {
+    it('should redirect the user to the contact detail screen if editing an existing contact', function (done) {
+      res.redirect = function (url) {
         expect(url).to.equal('/contacts/1234/details')
         done()
       }
       contactEditController.postDetails(req, res, next)
     })
-    it('should re-render the edit page with the original form data on validation errors', async function() {
+    it('should re-render the edit page with the original form data on validation errors', async function () {
       const next = sinon.stub()
 
       saveContactFormStub = sinon.stub().rejects({
@@ -511,7 +509,7 @@ describe('Contact controller, edit', () => {
       expect(res.locals).to.have.property('errors')
       expect(next).to.be.called
     })
-    it('should show errors when the save fails for a non-validation related reason', function(done) {
+    it('should show errors when the save fails for a non-validation related reason', function (done) {
       saveContactFormStub = sinon.stub().rejects(Error('some error'))
 
       contactEditController = proxyquire('../edit', {
@@ -532,20 +530,20 @@ describe('Contact controller, edit', () => {
         },
       })
 
-      contactEditController.postDetails(req, res, function() {
+      contactEditController.postDetails(req, res, function () {
         done()
       })
     })
-    it('should send a flash message to let the user know they just updated a contact', function(done) {
-      res.redirect = function() {
+    it('should send a flash message to let the user know they just updated a contact', function (done) {
+      res.redirect = function () {
         expect(flashStub).to.be.calledWith('success', 'Contact record updated')
         done()
       }
       contactEditController.postDetails(req, res, next)
     })
-    it('should send a flash message to let the user know they just added a contact', function(done) {
+    it('should send a flash message to let the user know they just added a contact', function (done) {
       delete body.id
-      res.redirect = function() {
+      res.redirect = function () {
         expect(flashStub).to.be.calledWith('success', 'Added new contact')
         done()
       }

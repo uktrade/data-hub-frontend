@@ -13,9 +13,7 @@ const selectors = {
 
 function assertTypeaheadValues(selector, ...values) {
   const VALUES_ALIAS = 'typeahead-values'
-  cy.get(selector)
-    .find('[class*=multiValue]')
-    .as(VALUES_ALIAS)
+  cy.get(selector).find('[class*=multiValue]').as(VALUES_ALIAS)
 
   values.forEach((value) => {
     cy.get('@' + VALUES_ALIAS).contains(value)

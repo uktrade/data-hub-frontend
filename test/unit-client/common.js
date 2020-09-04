@@ -31,7 +31,7 @@ process.setMaxListeners(0)
 process.stdout.setMaxListeners(0)
 
 // Patch lack of support for closest in jsdom
-window.Element.prototype.closest = function(selector) {
+window.Element.prototype.closest = function (selector) {
   let el = this
   while (el) {
     if (el.matches(selector)) {

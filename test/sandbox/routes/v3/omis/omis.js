@@ -6,15 +6,15 @@ var invoice = require('../../../fixtures/v3/omis/invoice.json')
 var payments = require('../../../fixtures/v3/omis/payments.json')
 var subscribers = require('../../../fixtures/v3/omis/subscribers.json')
 
-exports.assignees = function(req, res) {
+exports.assignees = function (req, res) {
   res.json(assignees)
 }
 
-exports.invoice = function(req, res) {
+exports.invoice = function (req, res) {
   res.json(invoice)
 }
 
-exports.getOrderById = function(req, res) {
+exports.getOrderById = function (req, res) {
   var orders = {
     [cancelledOrder.id]: cancelledOrder,
     [paidOrder.id]: paidOrder,
@@ -24,10 +24,10 @@ exports.getOrderById = function(req, res) {
   res.json(orders[req.params.id] || paidOrder)
 }
 
-exports.payments = function(req, res) {
+exports.payments = function (req, res) {
   res.json(req.params.id === draftOrder.id ? [] : payments)
 }
 
-exports.subscriberList = function(req, res) {
+exports.subscriberList = function (req, res) {
   res.json(subscribers)
 }

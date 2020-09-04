@@ -27,13 +27,9 @@ const createEvent = () => {
   cy.get(selectors.eventCreate.organiserOption).should('be.visible')
   cy.get(selectors.eventCreate.organiserInput).type('{enter}')
   cy.get(selectors.eventCreate.sharedYes).click()
-  cy.get(selectors.eventCreate.relatedProgrammes)
-    .eq(0)
-    .select('CEN Energy')
+  cy.get(selectors.eventCreate.relatedProgrammes).eq(0).select('CEN Energy')
   cy.get(selectors.eventCreate.addAnotherProgramme).click()
-  cy.get(selectors.eventCreate.relatedProgrammes)
-    .eq(1)
-    .select('CEN Services')
+  cy.get(selectors.eventCreate.relatedProgrammes).eq(1).select('CEN Services')
 
   cy.get(selectors.eventCreate.saveEvent).click()
 
@@ -99,9 +95,7 @@ describe('Event', () => {
       cy.contains('Attendees').click()
       cy.get(selectors.entityCollection.addAttendee).click()
 
-      cy.get(selectors.nav.searchTerm)
-        .type('dean cox')
-        .type('{enter}')
+      cy.get(selectors.nav.searchTerm).type('dean cox').type('{enter}')
       cy.get(selectors.collection.items).click()
 
       cy.get(selectors.message.successful)
@@ -149,9 +143,7 @@ describe('Event', () => {
       cy.get('input').type('John')
       cy.contains('button', 'Search').click()
 
-      cy.get('main li > a')
-        .should('contain', 'Johnny Cakeman')
-        .click()
+      cy.get('main li > a').should('contain', 'Johnny Cakeman').click()
 
       cy.contains('Event attendee added')
     })

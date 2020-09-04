@@ -14,7 +14,7 @@ const { isArray, isObject, each, extend, find, includes } = require('lodash')
  * @return {Function}
  */
 function init() {
-  return function(req, res, next) {
+  return function (req, res, next) {
     let breadcrumbs = []
 
     function addBreadcrumb(item) {
@@ -80,7 +80,7 @@ function setHome(options = {}) {
   const homeText = options.text || 'Home'
   const homeHref = options.href || '/'
 
-  return function(req, res, next) {
+  return function (req, res, next) {
     const homeBreadcrumb = find(res.breadcrumb(), (breadcrumb) => {
       return breadcrumb._home
     })

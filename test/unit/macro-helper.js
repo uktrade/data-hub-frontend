@@ -68,7 +68,7 @@ function getMacros(fileName, context = {}) {
     },
 
     renderWithCallerToDom(macroName, ...params) {
-      return function(...caller) {
+      return function (...caller) {
         if (!caller.length) {
           return null
         }

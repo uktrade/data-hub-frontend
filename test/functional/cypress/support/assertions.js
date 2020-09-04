@@ -103,11 +103,7 @@ const assertFieldSelect = ({
     .then(
       () =>
         label &&
-        cy
-          .get('@fieldSelect')
-          .find('label')
-          .first()
-          .should('have.text', label)
+        cy.get('@fieldSelect').find('label').first().should('have.text', label)
     )
     .then(
       () =>
@@ -298,9 +294,7 @@ const assertFormActions = ({ element, buttons }) =>
     .wrap(element)
     .children()
     .each((element, i) => {
-      cy.wrap(element)
-        .should('have.text', buttons[i])
-        .should('match', 'button')
+      cy.wrap(element).should('have.text', buttons[i]).should('match', 'button')
     })
 
 const assertFormFields = (formElement, specs) =>
@@ -339,12 +333,8 @@ const assertSummaryList = (listElement, specs) => {
     .should('have.length', entries.length)
     .each((x, i) => {
       const [expectedLabel, expectedValue] = entries[i]
-      cy.get(x)
-        .find('dt')
-        .should('have.text', expectedLabel)
-      cy.get(x)
-        .find('dd')
-        .should('have.text', expectedValue)
+      cy.get(x).find('dt').should('have.text', expectedLabel)
+      cy.get(x).find('dd').should('have.text', expectedValue)
     })
 }
 

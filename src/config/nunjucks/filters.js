@@ -102,10 +102,7 @@ const filters = {
     if (isNil(dateString)) {
       return
     }
-    return dateString
-      .split('/')
-      .reverse()
-      .join('/')
+    return dateString.split('/').reverse().join('/')
   },
 
   encodeQueryString(value) {

@@ -6,9 +6,7 @@ describe('Search', () => {
   before(() => {
     cy.visit(dashboard())
 
-    cy.get(selectors.nav.searchTerm)
-      .type('fred')
-      .type('{enter}')
+    cy.get(selectors.nav.searchTerm).type('fred').type('{enter}')
   })
 
   it('should display search navs', () => {
@@ -27,9 +25,7 @@ describe('Search', () => {
       '0 results matching fred'
     )
 
-    cy.get(selectors.collection.nav)
-      .contains('Contacts')
-      .click()
+    cy.get(selectors.collection.nav).contains('Contacts').click()
 
     cy.get(selectors.collection.header).should(
       'contain',

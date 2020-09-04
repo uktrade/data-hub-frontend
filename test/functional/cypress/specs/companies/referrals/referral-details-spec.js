@@ -74,9 +74,7 @@ describe('Referral details', () => {
         .find('a')
         .should('have.attr', 'href', 'mailto:barry@barry.com')
 
-      cy.get('@row')
-        .eq(4)
-        .should('have.text', 'Date of referral14 Feb 2020')
+      cy.get('@row').eq(4).should('have.text', 'Date of referral14 Feb 2020')
 
       cy.get('@row')
         .eq(5)
@@ -157,9 +155,7 @@ describe('Referral details', () => {
         .find('a')
         .should('have.attr', 'href', 'mailto:barry@barry.com')
 
-      cy.get('@row')
-        .eq(3)
-        .should('have.text', 'Date of referral14 Feb 2020')
+      cy.get('@row').eq(3).should('have.text', 'Date of referral14 Feb 2020')
 
       cy.get('@row')
         .eq(4)

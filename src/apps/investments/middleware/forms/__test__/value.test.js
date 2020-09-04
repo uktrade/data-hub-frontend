@@ -7,12 +7,8 @@ const config = require('../../../../../config')
 const moment = require('moment')
 
 const gvaMessage = gvaMessages.capitalExpenditureAndPrimarySectorRequired
-const yesterday = moment()
-  .subtract(1, 'days')
-  .toISOString()
-const lastMonth = moment()
-  .subtract(1, 'months')
-  .toISOString()
+const yesterday = moment().subtract(1, 'days').toISOString()
+const lastMonth = moment().subtract(1, 'months').toISOString()
 
 const metadataMock = {
   salaryRangeOptions: [

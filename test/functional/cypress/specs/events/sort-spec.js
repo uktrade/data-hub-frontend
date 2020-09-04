@@ -64,9 +64,7 @@ describe('Event Collections Sort', () => {
   })
 
   it('should only show sort option if there is more than 1 result', () => {
-    cy.get(selectors.filter.name)
-      .type('FilterByEvent')
-      .type('{enter}')
+    cy.get(selectors.filter.name).type('FilterByEvent').type('{enter}')
     cy.get(selectors.entityCollection.sort).should('not.be.visible')
   })
 })
