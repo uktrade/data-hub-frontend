@@ -13,5 +13,6 @@
     "codeCoverage": {
       "url": "http://localhost:3000/__coverage__"
     }
-  }
+  },
+  "retries": 3
 }
