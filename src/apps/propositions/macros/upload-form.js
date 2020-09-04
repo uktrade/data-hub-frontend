@@ -3,7 +3,7 @@ const { assign } = require('lodash')
 const labels = require('../labels')
 const { multipleDocumentUpload } = require('./fields')
 
-module.exports = function({ returnLink = '', hiddenFields }) {
+module.exports = function ({ returnLink = '', hiddenFields }) {
   return {
     enctype: 'multipart/form-data',
     returnLink,

@@ -1,7 +1,7 @@
 const { assign } = require('lodash')
 
 function transformInteractionListItemToHaveUrlPrefix(urlPrefix) {
-  return function(item) {
+  return function (item) {
     if (!urlPrefix) return item
     return assign({}, item, {
       urlPrefix:

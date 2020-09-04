@@ -36,9 +36,7 @@ describe('Events Collections Filter', () => {
   })
 
   it('should filter by name', () => {
-    cy.get(selectors.filter.name)
-      .type('FilterByEvent')
-      .type('{enter}')
+    cy.get(selectors.filter.name).type('FilterByEvent').type('{enter}')
 
     cy.get(selectors.entityCollection.entities)
       .children()

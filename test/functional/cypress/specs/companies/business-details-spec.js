@@ -18,9 +18,7 @@ const HIERARCHY_STRINGS = {
 const assertSummaryTable = ({ dataAutoId, heading, showEditLink, content }) => {
   const summaryTableSelector = `[data-auto-id="${dataAutoId}"]`
 
-  cy.get(summaryTableSelector)
-    .find('caption')
-    .should('contain', heading)
+  cy.get(summaryTableSelector).find('caption').should('contain', heading)
   cy.get(summaryTableSelector)
     .contains('Edit')
     .should(showEditLink ? 'be.visible' : 'not.be.visible')
@@ -39,9 +37,7 @@ const assertAddress = ({ address, registeredAddress }) => {
     '[data-auto-id="addressesDetailsContainer"] td:nth-child(2)'
 
   if (address) {
-    cy.get(addressSelector1)
-      .contains('Registered')
-      .should('not.exist')
+    cy.get(addressSelector1).contains('Registered').should('not.exist')
     address.map((line, index) => {
       cy.get(addressSelector1)
         .find(`li:nth-child(${index + 1})`)
@@ -52,9 +48,7 @@ const assertAddress = ({ address, registeredAddress }) => {
   }
 
   if (registeredAddress) {
-    cy.get(addressSelector2)
-      .contains('Registered')
-      .should('exist')
+    cy.get(addressSelector2).contains('Registered').should('exist')
     registeredAddress.map((line, index) => {
       cy.get(addressSelector2)
         .find(`li:nth-child(${index + 1})`)

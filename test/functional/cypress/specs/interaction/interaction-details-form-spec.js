@@ -24,10 +24,7 @@ const {
 } = require('../../../../../src/apps/interactions/constants')
 
 const assertHeader = ({ element, text }) =>
-  cy
-    .wrap(element)
-    .should('have.text', text)
-    .and('match', 'h2')
+  cy.wrap(element).should('have.text', text).and('match', 'h2')
 
 const [TODAY_YEAR, TODAY_MONTH, TODAY_DAY] = new Date()
   .toISOString()
@@ -154,17 +151,10 @@ function fillCommonFields({
   subservice = null,
   contact = 'Johnny Cakeman',
 }) {
-  cy.contains('Service')
-    .next()
-    .find('select')
-    .select(service)
+  cy.contains('Service').next().find('select').select(service)
 
   if (subservice) {
-    cy.contains('Service')
-      .next()
-      .find('select')
-      .last()
-      .select(subservice)
+    cy.contains('Service').next().find('select').last().select(subservice)
   }
 
   if (contact) {
@@ -174,20 +164,11 @@ function fillCommonFields({
       .selectTypeaheadOption(contact)
   }
 
-  cy.contains(ELEMENT_SUBJECT.label)
-    .next()
-    .find('input')
-    .type('Some subject')
+  cy.contains(ELEMENT_SUBJECT.label).next().find('input').type('Some subject')
 
-  cy.contains(ELEMENT_NOTES.label)
-    .next()
-    .find('textarea')
-    .type('Some notes')
+  cy.contains(ELEMENT_NOTES.label).next().find('textarea').type('Some notes')
 
-  cy.contains(ELEMENT_FEEDBACK_POLICY.label)
-    .next()
-    .find('input')
-    .check('yes')
+  cy.contains(ELEMENT_FEEDBACK_POLICY.label).next().find('input').check('yes')
 
   cy.contains(ELEMENT_POLICY_ISSUE_TYPES.label)
     .next()
@@ -223,10 +204,7 @@ function fillCommonFields({
 }
 
 function fillExportCountriesFields() {
-  cy.contains(ELEMENT_COUNTRIES.label)
-    .next()
-    .find('input')
-    .check('yes')
+  cy.contains(ELEMENT_COUNTRIES.label).next().find('input').check('yes')
 
   cy.contains(ELEMENT_COUNTRIES_CURRENTLY_EXPORTING.label)
     .parent()
@@ -614,27 +592,15 @@ describe('Contact loop', () => {
         urls.companies.interactions.create(company.id)
       )
 
-      cy.contains('div', 'First name')
-        .find('input')
-        .type('John')
-      cy.contains('div', 'Last name')
-        .find('input')
-        .type('Doe')
-      cy.contains('div', 'Job title')
-        .find('input')
-        .type('Full-stack dev')
+      cy.contains('div', 'First name').find('input').type('John')
+      cy.contains('div', 'Last name').find('input').type('Doe')
+      cy.contains('div', 'Job title').find('input').type('Full-stack dev')
       cy.contains('fieldset', 'Is this person a primary contact?')
         .contains('label', 'Yes')
         .click()
-      cy.contains('div', 'Telephone country code')
-        .find('input')
-        .type('+44')
-      cy.contains('div', 'Telephone number')
-        .find('input')
-        .type('123 567 789')
-      cy.contains('div', 'Email')
-        .find('input')
-        .type('john@example.com')
+      cy.contains('div', 'Telephone country code').find('input').type('+44')
+      cy.contains('div', 'Telephone number').find('input').type('123 567 789')
+      cy.contains('div', 'Email').find('input').type('john@example.com')
       cy.contains(
         'fieldset',
         'Is the contact’s address the same as the company address?'

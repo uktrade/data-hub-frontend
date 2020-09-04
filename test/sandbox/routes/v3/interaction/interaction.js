@@ -13,7 +13,7 @@ var interactionValidationError = require('../../../fixtures/v3/interaction/inter
 var interactionWithReferral = require('../../../fixtures/v3/interaction/interaction-with-referral.json')
 var interactionWithoutTheme = require('../../../fixtures/v3/interaction/interaction-without-theme')
 
-var getInteractions = function(req, res) {
+var getInteractions = function (req, res) {
   if (req.query.contact_id) {
     return res.json(interactionByContactId)
   }
@@ -31,7 +31,7 @@ var getInteractions = function(req, res) {
   res.json(interactions)
 }
 
-var getInteractionById = function(req, res) {
+var getInteractionById = function (req, res) {
   var interactions = {
     'ec4a46ef-6e50-4a5c-bba0-e311f0471312': interactionWithDocumentLink,
     '0dcb3748-c097-4f20-b84f-0114bbb1a8e0': interactionWithoutDocumentLink,
@@ -56,7 +56,7 @@ var getInteractionById = function(req, res) {
   return res.json(interactionResponse)
 }
 
-var createInteraction = function(req, res) {
+var createInteraction = function (req, res) {
   if (req.body.company === '4e6a4edb-55e3-4461-a88d-84d329ee7eb8') {
     return res.json(400, interactionValidationError)
   }
@@ -77,11 +77,11 @@ var createInteraction = function(req, res) {
   res.json(201, interactionCreate)
 }
 
-var archiveInteraction = function(req, res) {
+var archiveInteraction = function (req, res) {
   return getInteractionById(req, res)
 }
 
-var patchInteraction = function(req, res) {
+var patchInteraction = function (req, res) {
   return getInteractionById(req, res)
 }
 

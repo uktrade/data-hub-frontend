@@ -69,9 +69,7 @@ describe('Edit One List', () => {
         selectors.companyEditOneList.globalAccountManagerField
       ).selectTypeaheadOption('shawn')
 
-      cy.contains('Holly Collins')
-        .next()
-        .click({ force: true })
+      cy.contains('Holly Collins').next().click({ force: true })
 
       cy.get(selectors.companyEditOneList.coreTeamFieldText).should(
         'not.contain',

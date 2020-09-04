@@ -40,9 +40,7 @@ describe('options API controller', () => {
       },
     ]
 
-    nock(config.apiRoot)
-      .get('/v4/metadata/uk-region')
-      .reply(200, regions)
+    nock(config.apiRoot).get('/v4/metadata/uk-region').reply(200, regions)
   })
 
   context('given the user asks for a list of options', () => {

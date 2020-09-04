@@ -51,18 +51,10 @@ describe('Update the project stage', () => {
     })
     it('should display heading and radio buttons for the remaining four stages', () => {
       cy.contains('h2', 'Change the stage to')
-      cy.get('label')
-        .eq(0)
-        .should('contain', 'Prospect')
-      cy.get('label')
-        .eq(1)
-        .should('contain', 'Active')
-      cy.get('label')
-        .eq(2)
-        .should('contain', 'Verify win')
-      cy.get('label')
-        .eq(3)
-        .should('contain', 'Won')
+      cy.get('label').eq(0).should('contain', 'Prospect')
+      cy.get('label').eq(1).should('contain', 'Active')
+      cy.get('label').eq(2).should('contain', 'Verify win')
+      cy.get('label').eq(3).should('contain', 'Won')
     })
     it('should display the "Save" button', () => {
       cy.contains('button', 'Save')
@@ -111,9 +103,7 @@ describe('Update the project stage', () => {
         )
       })
       it('should take you to project details page and display a flash message', () => {
-        cy.get('label')
-          .eq(0)
-          .click()
+        cy.get('label').eq(0).click()
         cy.contains('button', 'Save').click()
         cy.url().should(
           'contain',

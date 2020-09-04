@@ -37,7 +37,7 @@ filter.toCamelCase = function toCamelCase(s) {
   return s
     .trim()
     .split(/-| /)
-    .reduce(function(pw, cw, i) {
+    .reduce(function (pw, cw, i) {
       pw += (i === 0 ? cw[0].toLowerCase() : cw[0].toUpperCase()) + cw.slice(1)
       return pw
     }, '')
@@ -50,10 +50,7 @@ filter.toCamelCase = function toCamelCase(s) {
  * @example {{ "Hello there" | toHyphenated }} // hello-there
  */
 filter.toHyphenated = function toHyphenated(string) {
-  return string
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, '-')
+  return string.trim().toLowerCase().replace(/\s+/g, '-')
 }
 
 filter.attributeArray = function attributeArray(list) {
@@ -72,7 +69,7 @@ filter.attributeArray = function attributeArray(list) {
   return result
 }
 
-filter.versionAssetUrl = function(asset) {
+filter.versionAssetUrl = function (asset) {
   const env = process.env.NODE_ENV || 'develop'
   if (env === 'production') {
     const pos = asset.lastIndexOf('.')
@@ -84,7 +81,7 @@ filter.versionAssetUrl = function(asset) {
   return asset
 }
 
-filter.splitPart = function(value, seperator, part) {
+filter.splitPart = function (value, seperator, part) {
   if (!value || value.length === 0) {
     return ''
   }
@@ -121,7 +118,7 @@ function getDateParts(value) {
   return [parts[2], parts[1], parts[0]]
 }
 
-filter.dateParseDay = function(value) {
+filter.dateParseDay = function (value) {
   if (!value || value.length === 0) return
   const parts = getDateParts(value)
   if (!parts) return
@@ -130,7 +127,7 @@ filter.dateParseDay = function(value) {
   return day
 }
 
-filter.dateParseMonth = function(value) {
+filter.dateParseMonth = function (value) {
   if (!value || value.length === 0) return
   const parts = getDateParts(value)
   if (!parts) return
@@ -139,14 +136,14 @@ filter.dateParseMonth = function(value) {
   return month
 }
 
-filter.dateParseYear = function(value) {
+filter.dateParseYear = function (value) {
   if (!value || value.length === 0) return
   const parts = getDateParts(value)
   if (!parts) return
   return parts[2]
 }
 
-filter.attributeObject = function(myObject) {
+filter.attributeObject = function (myObject) {
   let result = '{'
 
   for (const key in myObject) {
@@ -157,7 +154,7 @@ filter.attributeObject = function(myObject) {
   return result
 }
 
-filter.humanFieldName = function(fieldName) {
+filter.humanFieldName = function (fieldName) {
   fieldName = fieldName.toLocaleLowerCase()
   fieldName = capitalizeFirstLetter(fieldName)
   fieldName = replaceAll(fieldName, '_', ' ')
@@ -187,7 +184,7 @@ filter.highlightTerm = function highlightTerm(phrase, term = '') {
  * @param  {String} d   A date string (must be) formatted yyyy-mm-dd
  * @return {String}     a javascript date string
  */
-filter.newDate = function(d) {
+filter.newDate = function (d) {
   const dateArr = d.split('-')
   return dateArr.length === 3
     ? new Date(dateArr[0], parseInt(dateArr[1]) - 1, dateArr[2])
@@ -202,7 +199,7 @@ filter.newDate = function(d) {
  * @param  {string} format moment.js format string (to override the default if needed)
  * @return {string} date string as per the current gov.uk standard 09/12/1981 -> 09 December 1981
  */
-filter.date = function(date, format) {
+filter.date = function (date, format) {
   format = format || 'DD MMMM YYYY, h:mm:ss a'
 
   const formatted = moment(date).format(format)
@@ -214,7 +211,7 @@ filter.date = function(date, format) {
   return formatted
 }
 
-filter.pluralise = function(number, string) {
+filter.pluralise = function (number, string) {
   if (number !== 1) {
     string += 's'
   }
@@ -222,15 +219,15 @@ filter.pluralise = function(number, string) {
   return number + ' ' + string
 }
 
-filter.isArray = function(value) {
+filter.isArray = function (value) {
   return Array.isArray(value)
 }
 
-filter.keys = function(value) {
+filter.keys = function (value) {
   return Object.keys(value)
 }
 
-filter.cellValue = function(value) {
+filter.cellValue = function (value) {
   if (Array.isArray(value)) {
     let list = '<ul>'
     for (const item of value) {
@@ -243,11 +240,11 @@ filter.cellValue = function(value) {
   return value
 }
 
-filter.hasValue = function(value) {
+filter.hasValue = function (value) {
   return value !== null
 }
 
-filter.hasKey = function(value, key) {
+filter.hasKey = function (value, key) {
   return value.hasOwnProperty(key) && value[key] !== null
 }
 

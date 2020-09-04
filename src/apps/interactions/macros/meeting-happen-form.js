@@ -1,4 +1,4 @@
-module.exports = function({ returnLink, userAgent }) {
+module.exports = function ({ returnLink, userAgent }) {
   return {
     returnLink,
     buttonText: 'Continue',

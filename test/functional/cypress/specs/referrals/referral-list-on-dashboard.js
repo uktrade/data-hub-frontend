@@ -102,10 +102,7 @@ const EXPECTED_REFERRALS = {
 }
 
 const selectFilter = (option) =>
-  cy
-    .contains('label', 'View')
-    .find('select')
-    .select(option)
+  cy.contains('label', 'View').find('select').select(option)
 
 const assertDescription = ({ term, name, email, team }) =>
   cy
@@ -133,11 +130,7 @@ const assertReferralCard = ({
   sender,
   recipient,
 }) => {
-  cy.get('div')
-    .eq(0)
-    .children()
-    .eq(0)
-    .should('have.text', company)
+  cy.get('div').eq(0).children().eq(0).should('have.text', company)
 
   cy.get('h3')
     .should('have.text', subject)
@@ -174,10 +167,7 @@ const assertReferralCard = ({
 }
 
 const assertResultList = (expectedItems) => {
-  cy.getDhTabNavPanel('Dashboard')
-    .find('ol')
-    .children()
-    .as('items')
+  cy.getDhTabNavPanel('Dashboard').find('ol').children().as('items')
 
   expectedItems.forEach((expected, i) =>
     cy

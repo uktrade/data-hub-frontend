@@ -77,9 +77,7 @@ describe('Export', () => {
     cy.get('td').as('exportTds')
 
     values.forEach((value, index) => {
-      cy.get('@exportTds')
-        .eq(index)
-        .should('have.text', value)
+      cy.get('@exportTds').eq(index).should('have.text', value)
     })
   }
 

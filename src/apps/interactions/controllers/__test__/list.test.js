@@ -51,9 +51,7 @@ describe('interaction list', () => {
 
     next = sinon.stub()
 
-    const yesterday = moment()
-      .subtract(1, 'days')
-      .toISOString()
+    const yesterday = moment().subtract(1, 'days').toISOString()
 
     metadataMock = {
       teamOptions: [

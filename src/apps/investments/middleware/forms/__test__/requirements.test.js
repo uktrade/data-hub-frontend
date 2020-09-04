@@ -7,9 +7,7 @@ const paths = require('../../../paths')
 const investmentData = require('../../../../../../test/unit/data/investment/investment-data.json')
 const { handleFormPost, populateForm } = require('../requirements')
 
-const yesterday = moment()
-  .subtract(1, 'days')
-  .toISOString()
+const yesterday = moment().subtract(1, 'days').toISOString()
 
 const metadataMock = {
   strategicDriversOptions: [

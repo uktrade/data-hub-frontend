@@ -5,7 +5,7 @@ const FILTER_CONSTANTS = require('../../../lib/filter-constants')
 
 const PRIMARY_SECTOR_NAME = FILTER_CONSTANTS.INTERACTIONS.SECTOR.PRIMARY.NAME
 
-module.exports = function({
+module.exports = function ({
   currentAdviserId,
   sectorOptions,
   serviceOptions,

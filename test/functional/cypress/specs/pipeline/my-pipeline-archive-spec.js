@@ -102,9 +102,7 @@ describe('Archive pipeline item form', () => {
     () => {
       function archiveItem(itemId) {
         cy.visit(urls.pipeline.archive(itemId))
-        cy.get(formSelectors.reason)
-          .find('textarea')
-          .type('My reason')
+        cy.get(formSelectors.reason).find('textarea').type('My reason')
         cy.contains('button', 'Archive project').click()
       }
 

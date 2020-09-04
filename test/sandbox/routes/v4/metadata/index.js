@@ -47,193 +47,193 @@ var capitalInvestmentDesiredDealRoles = require('../../../fixtures/v4/metadata/c
 var capitalInvestmentAssetClassInterest = require('../../../fixtures/v4/metadata/capital-investment-asset-class-interest.json')
 var oneListTier = require('../../../fixtures/v4/metadata/one-list-tier.json')
 
-exports.likelihoodToLand = function(req, res) {
+exports.likelihoodToLand = function (req, res) {
   res.json(likelihoodToLand)
 }
 
-exports.investmentInvestorType = function(req, res) {
+exports.investmentInvestorType = function (req, res) {
   res.json(investmentInvestorType)
 }
 
-exports.investmentSpecificProgramme = function(req, res) {
+exports.investmentSpecificProgramme = function (req, res) {
   res.json(investmentSpecificProgramme)
 }
 
-exports.investmentInvolvement = function(req, res) {
+exports.investmentInvolvement = function (req, res) {
   res.json(investmentInvolvement)
 }
 
-exports.investmentProjectStage = function(req, res) {
+exports.investmentProjectStage = function (req, res) {
   res.json(investmentProjectStage)
 }
 
-exports.investmentBusinessActivity = function(req, res) {
+exports.investmentBusinessActivity = function (req, res) {
   res.json(investmentBusinessActivity)
 }
 
-exports.investmentType = function(req, res) {
+exports.investmentType = function (req, res) {
   res.json(investmentType)
 }
 
-exports.investmentStrategicDriver = function(req, res) {
+exports.investmentStrategicDriver = function (req, res) {
   res.json(investmentStrategicDriver)
 }
 
-exports.exportExperienceCategory = function(req, res) {
+exports.exportExperienceCategory = function (req, res) {
   res.json(exportExperienceCategory)
 }
 
-exports.orderServiceType = function(req, res) {
+exports.orderServiceType = function (req, res) {
   res.json(orderServiceType)
 }
 
-exports.orderCancellationReason = function(req, res) {
+exports.orderCancellationReason = function (req, res) {
   res.json(orderCancellationReason)
 }
 
-exports.omisMarket = function(req, res) {
+exports.omisMarket = function (req, res) {
   res.json(omisMarket)
 }
 
-exports.fdiValue = function(req, res) {
+exports.fdiValue = function (req, res) {
   res.json(fdiValue)
 }
 
-exports.fdiType = function(req, res) {
+exports.fdiType = function (req, res) {
   res.json(fdiType)
 }
 
-exports.salaryRange = function(req, res) {
+exports.salaryRange = function (req, res) {
   res.json(salaryRange)
 }
 
-exports.turnover = function(req, res) {
+exports.turnover = function (req, res) {
   res.json(turnover)
 }
 
-exports.sector = function(req, res) {
+exports.sector = function (req, res) {
   if (req.query.level__lte === '0') {
     return res.json(sectorLte0)
   }
   res.json(sector)
 }
 
-exports.locationType = function(req, res) {
+exports.locationType = function (req, res) {
   res.json(locationType)
 }
 
-exports.eventType = function(req, res) {
+exports.eventType = function (req, res) {
   res.json(eventType)
 }
 
-exports.programme = function(req, res) {
+exports.programme = function (req, res) {
   res.json(programme)
 }
 
-exports.businessType = function(req, res) {
+exports.businessType = function (req, res) {
   res.json(businessType)
 }
 
-exports.evidenceTag = function(req, res) {
+exports.evidenceTag = function (req, res) {
   res.json(evidenceTag)
 }
 
-exports.employeeRange = function(req, res) {
+exports.employeeRange = function (req, res) {
   res.json(employeeRange)
 }
 
-exports.country = function(req, res) {
+exports.country = function (req, res) {
   res.json(country)
 }
 
-exports.ukRegion = function(req, res) {
+exports.ukRegion = function (req, res) {
   res.json(ukRegion)
 }
 
-exports.referralSourceWebsite = function(req, res) {
+exports.referralSourceWebsite = function (req, res) {
   res.json(referralSourceWebsite)
 }
 
-exports.referralSourceMarketing = function(req, res) {
+exports.referralSourceMarketing = function (req, res) {
   res.json(referralSourceMarketing)
 }
 
-exports.referralSourceActivity = function(req, res) {
+exports.referralSourceActivity = function (req, res) {
   res.json(referralSourceActivity)
 }
 
-exports.headquarterType = function(req, res) {
+exports.headquarterType = function (req, res) {
   res.json(headquarterType)
 }
 
-exports.service = function(req, res) {
+exports.service = function (req, res) {
   res.json(service)
 }
 
-exports.communicationChannel = function(req, res) {
+exports.communicationChannel = function (req, res) {
   res.json(communicationChannel)
 }
 
-exports.team = function(req, res) {
+exports.team = function (req, res) {
   res.json(team)
 }
 
-exports.policyArea = function(req, res) {
+exports.policyArea = function (req, res) {
   res.json(policyArea)
 }
 
-exports.policyIssueType = function(req, res) {
+exports.policyIssueType = function (req, res) {
   res.json(policyIssueType)
 }
 
-exports.serviceDeliveryStatus = function(req, res) {
+exports.serviceDeliveryStatus = function (req, res) {
   res.json(serviceDeliveryStatus)
 }
 
-exports.capitalInvestmentInvestorType = function(req, res) {
+exports.capitalInvestmentInvestorType = function (req, res) {
   res.json(capitalInvestmentInvestorType)
 }
 
-exports.capitalInvestmentRequiredChecks = function(req, res) {
+exports.capitalInvestmentRequiredChecks = function (req, res) {
   res.json(capitalInvestmentRequiredChecks)
 }
 
-exports.capitalInvestmentDealTicketSize = function(req, res) {
+exports.capitalInvestmentDealTicketSize = function (req, res) {
   res.json(capitalInvestmentDealTicketSize)
 }
 
-exports.capitalInvestmentInvestmentTypes = function(req, res) {
+exports.capitalInvestmentInvestmentTypes = function (req, res) {
   res.json(capitalInvestmentInvestmentTypes)
 }
 
-exports.capitalInvestmentMinimumReturnRate = function(req, res) {
+exports.capitalInvestmentMinimumReturnRate = function (req, res) {
   res.json(capitalInvestmentMinimumReturnRate)
 }
 
-exports.capitalInvestmentTimeHorizons = function(req, res) {
+exports.capitalInvestmentTimeHorizons = function (req, res) {
   res.json(capitalInvestmentTimeHorizons)
 }
 
-exports.capitalInvestmentRestrictions = function(req, res) {
+exports.capitalInvestmentRestrictions = function (req, res) {
   res.json(capitalInvestmentRestrictions)
 }
 
-exports.capitalInvestmentConstructionRisks = function(req, res) {
+exports.capitalInvestmentConstructionRisks = function (req, res) {
   res.json(capitalInvestmentConstructionRisks)
 }
 
-exports.capitalInvestmentEquityPercentage = function(req, res) {
+exports.capitalInvestmentEquityPercentage = function (req, res) {
   res.json(capitalInvestmentEquityPercentage)
 }
 
-exports.capitalInvestmentDesiredDealRoles = function(req, res) {
+exports.capitalInvestmentDesiredDealRoles = function (req, res) {
   res.json(capitalInvestmentDesiredDealRoles)
 }
 
-exports.capitalInvestmentAssetClassInterest = function(req, res) {
+exports.capitalInvestmentAssetClassInterest = function (req, res) {
   res.json(capitalInvestmentAssetClassInterest)
 }
 
-exports.oneListTier = function(req, res) {
+exports.oneListTier = function (req, res) {
   res.json(oneListTier)
 }

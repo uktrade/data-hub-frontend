@@ -108,9 +108,7 @@ describe('Company Export tab', () => {
       })
 
       it('should render the "Export wins" header', () => {
-        cy.get('h3')
-          .eq(0)
-          .should('have.text', 'Export wins')
+        cy.get('h3').eq(0).should('have.text', 'Export wins')
       })
 
       it('should render the "Record your win on our Exports Wins site" paragraph', () => {
@@ -141,10 +139,7 @@ describe('Company Export tab', () => {
       it('should render the list of Export Wins without pagination', () => {
         const LIST_ALIAS = 'export-wins-collection-list'
 
-        cy.contains('8 results')
-          .parent()
-          .parent()
-          .as(LIST_ALIAS)
+        cy.contains('8 results').parent().parent().as(LIST_ALIAS)
 
         cy.get('@' + LIST_ALIAS)
           .find('ul:last li a:last')
@@ -399,9 +394,7 @@ describe('Company Export tab', () => {
       })
 
       it('the second page renders the collection list with 6 of the 15 results', () => {
-        cy.get('a')
-          .contains('2')
-          .click()
+        cy.get('a').contains('2').click()
 
         cy.get(exportSelectors.exportWins.listItemHeadings).should(
           'have.length',

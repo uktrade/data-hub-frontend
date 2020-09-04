@@ -55,7 +55,7 @@ function ComponentExtension(env) {
 function SafeSpacelessExtension() {
   this.tags = ['safespaceless']
 
-  this.parse = function(parser, nodes) {
+  this.parse = function (parser, nodes) {
     const token = parser.nextToken()
     const args = parser.parseSignature(null, true)
     parser.advanceAfterBlockEnd(token.value)
@@ -64,7 +64,7 @@ function SafeSpacelessExtension() {
     return new nodes.CallExtension(this, 'run', args, [body])
   }
 
-  this.run = function(context, body) {
+  this.run = function (context, body) {
     const result = body()
       .replace(WHITESPACE_AT_START, '')
       .replace(WHITESPACE_BETWEEN_TAGS, '><')

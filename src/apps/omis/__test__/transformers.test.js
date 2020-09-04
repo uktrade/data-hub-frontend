@@ -37,21 +37,15 @@ describe('OMIS list transformers', () => {
         it('should return a transformed object', () => {
           const actual = this.transformers.transformOrderToListItem(simpleOrder)
 
-          expect(actual)
-            .to.have.property('id')
-            .a('string')
-          expect(actual)
-            .to.have.property('name')
-            .a('string')
+          expect(actual).to.have.property('id').a('string')
+          expect(actual).to.have.property('name').a('string')
           expect(actual).to.have.property('type', 'order')
           expect(actual).to.have.property('urlPrefix', 'omis/')
-          expect(actual)
-            .to.have.property('subTitle')
-            .to.deep.equal({
-              type: 'datetime',
-              value: '2017-08-16T14:18:28.328729',
-              label: 'Updated on',
-            })
+          expect(actual).to.have.property('subTitle').to.deep.equal({
+            type: 'datetime',
+            value: '2017-08-16T14:18:28.328729',
+            label: 'Updated on',
+          })
           expect(actual)
             .to.have.property('meta')
             .an('array')
@@ -116,21 +110,15 @@ describe('OMIS list transformers', () => {
           })
           const actual = this.transformers.transformOrderToListItem(order)
 
-          expect(actual)
-            .to.have.property('id')
-            .a('string')
-          expect(actual)
-            .to.have.property('name')
-            .a('string')
+          expect(actual).to.have.property('id').a('string')
+          expect(actual).to.have.property('name').a('string')
           expect(actual).to.have.property('type', 'order')
           expect(actual).to.have.property('urlPrefix', 'omis/')
-          expect(actual)
-            .to.have.property('subTitle')
-            .to.deep.equal({
-              type: 'datetime',
-              value: '2017-08-16T14:18:28.328729',
-              label: 'Updated on',
-            })
+          expect(actual).to.have.property('subTitle').to.deep.equal({
+            type: 'datetime',
+            value: '2017-08-16T14:18:28.328729',
+            label: 'Updated on',
+          })
           expect(actual)
             .to.have.property('meta')
             .an('array')
@@ -183,21 +171,11 @@ describe('OMIS list transformers', () => {
       it('should return a transformed object', () => {
         const actual = this.transformers.transformOrderToTableItem(simpleOrder)
 
-        expect(actual)
-          .to.have.property('id')
-          .a('string')
-        expect(actual)
-          .to.have.property('reference')
-          .a('string')
-        expect(actual)
-          .to.have.property('subtotal_cost')
-          .a('number')
-        expect(actual)
-          .to.have.property('total_cost')
-          .a('number')
-        expect(actual)
-          .to.have.property('company')
-          .a('string')
+        expect(actual).to.have.property('id').a('string')
+        expect(actual).to.have.property('reference').a('string')
+        expect(actual).to.have.property('subtotal_cost').a('number')
+        expect(actual).to.have.property('total_cost').a('number')
+        expect(actual).to.have.property('company').a('string')
       })
     })
   })
@@ -219,27 +197,13 @@ describe('OMIS list transformers', () => {
       it('should return the correct properties', () => {
         const actual = this.transformers.transformPaymentToView(payment)
 
-        expect(actual)
-          .to.have.property('reference')
-          .a('string')
-        expect(actual)
-          .to.have.property('transaction_reference')
-          .a('string')
-        expect(actual)
-          .to.have.property('additional_reference')
-          .a('string')
-        expect(actual)
-          .to.have.property('method')
-          .a('string')
-        expect(actual)
-          .to.have.property('received_on')
-          .a('string')
-        expect(actual)
-          .to.have.property('created_on')
-          .a('string')
-        expect(actual)
-          .to.have.property('amount')
-          .a('number')
+        expect(actual).to.have.property('reference').a('string')
+        expect(actual).to.have.property('transaction_reference').a('string')
+        expect(actual).to.have.property('additional_reference').a('string')
+        expect(actual).to.have.property('method').a('string')
+        expect(actual).to.have.property('received_on').a('string')
+        expect(actual).to.have.property('created_on').a('string')
+        expect(actual).to.have.property('amount').a('number')
       })
 
       it('should convert amount to pounds', () => {

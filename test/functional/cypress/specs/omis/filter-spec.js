@@ -19,9 +19,7 @@ describe('OMIS Collections Filter', () => {
       .type('North West')
       .get(typeahead(ukRegion).options)
 
-    cy.get(typeahead(ukRegion).selectedOption)
-      .type('{enter}')
-      .type('{esc}')
+    cy.get(typeahead(ukRegion).selectedOption).type('{enter}').type('{esc}')
 
     cy.wait('@filterResults').then(() => {
       cy.get('article header').within(() => {

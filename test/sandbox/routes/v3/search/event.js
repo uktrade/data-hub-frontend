@@ -2,7 +2,7 @@ var events = require('../../../fixtures/v3/search/event.json')
 var eventFilter = require('../../../fixtures/v3/search/filter/event-filter.json')
 var eventSort = require('../../../fixtures/v3/search/sort/event-sort-by.json')
 
-exports.events = function(req, res) {
+exports.events = function (req, res) {
   var eventList = {
     'modified_on:asc': eventSort,
     'start_date:asc': eventSort,
@@ -13,7 +13,7 @@ exports.events = function(req, res) {
   if (req.body.uk_region) {
     var regionQuery = req.body.uk_region
     var regions = typeof regionQuery === 'string' ? [regionQuery] : regionQuery
-    var ukRegionFilteredResults = _.filter(events.results, function(contact) {
+    var ukRegionFilteredResults = _.filter(events.results, function (contact) {
       return _.intersection(regions, [_.get(contact, 'uk_region.id')]).length
     })
     return res.json({
