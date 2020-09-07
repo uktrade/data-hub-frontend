@@ -115,7 +115,7 @@ export default class ActivityFeedApp extends React.Component {
     const { total, hits } = data.hits
 
     return {
-      total,
+      total: total.value,
       activities: hits.map((hit) => hit._source),
     }
   }
