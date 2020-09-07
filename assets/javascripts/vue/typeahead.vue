@@ -81,7 +81,7 @@
   const getFormData = require('get-form-data').default
   const debounce = require('lodash/debounce')
   const pickBy = require('lodash/pickBy')
-  const uuid = require('uuid')
+  const { v4: uuid } = require('uuid')
   const XHR = require('../lib/xhr')
   const { matchWords } = require('../lib/helpers')
 
