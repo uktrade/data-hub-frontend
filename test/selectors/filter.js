@@ -3,6 +3,7 @@ module.exports = {
   statusActive: '[for="field-archived-1"]',
   statusInactive: '[for="field-archived-2"]',
   ukRegion: '#group-field-uk_region',
+  ukPostcode: '#field-uk_postcode',
   country: '#group-field-country',
   sector: '#group-field-sector_descends',
   exportingTo: '#group-field-export_to_countries',
