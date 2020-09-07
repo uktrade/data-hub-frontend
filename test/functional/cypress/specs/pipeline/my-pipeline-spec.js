@@ -278,13 +278,16 @@ describe('My pipeline app', () => {
         .parent()
         .find('input')
         .then((element) => {
+          cy.get(element).should('be.visible')
           cy.wrap(element).check()
           cy.wrap(element).should('be.checked')
+          cy.wait('@pipelineGet').then((xhr) => {
+            expect(xhr.url).to.contain('archived')
+          })
           cy.wrap(element).uncheck()
           cy.wrap(element).should('not.be.checked')
-          cy.wait(['@pipelineGet', '@pipelineGet']).then((xhr) => {
-            expect(xhr[0].url).to.contain('archived')
-            expect(xhr[1].url).to.not.contain('archived')
+          cy.wait('@pipelineGet').then((xhr) => {
+            expect(xhr.url).to.not.contain('archived')
           })
         })
     })
@@ -337,6 +340,7 @@ describe('My pipeline app', () => {
       cy.server()
       cy.visit(urls.pipeline.index())
       cy.route('GET', '/api-proxy/v4/pipeline-item*').as('pipelineGet')
+      cy.wait('@pipelineGet')
     })
 
     it('should sort by most recently created by default', () => {
@@ -374,12 +378,11 @@ describe('My pipeline app', () => {
           .parent()
           .find('select')
           .then((element) => {
-            cy.wait('@pipelineGet').then(() => {
-              cy.wrap(element).select('Project Name A-Z')
-              cy.wait('@pipelineGet').then((xhr) => {
-                expect(xhr.url).to.contain(`sortby=name`)
-                expect(xhr.url).to.contain('archived=false')
-              })
+            cy.wrap(element).select('Project Name A-Z')
+            cy.get(element).should('contain', 'Project Name A-Z')
+            cy.wait('@pipelineGet').then((xhr) => {
+              expect(xhr.url).to.contain(`sortby=name`)
+              expect(xhr.url).to.contain('archived=false')
             })
           })
       })
@@ -389,12 +392,11 @@ describe('My pipeline app', () => {
           .parent()
           .find('select')
           .then((element) => {
-            cy.wait('@pipelineGet').then(() => {
-              cy.wrap(element).select('Most recently updated')
-              cy.wait('@pipelineGet').then((xhr) => {
-                expect(xhr.url).to.contain(`sortby=-modified_on`)
-                expect(xhr.url).to.contain('archived=false')
-              })
+            cy.wrap(element).select('Most recently updated')
+            cy.wrap(element).should('contain', 'Most recently updated')
+            cy.wait('@pipelineGet').then((xhr) => {
+              expect(xhr.url).to.contain(`sortby=-modified_on`)
+              expect(xhr.url).to.contain('archived=false')
             })
           })
       })
@@ -405,12 +407,11 @@ describe('My pipeline app', () => {
           .find('select')
           .then((element) => {
             cy.wrap(element).select('Most recently updated')
-            cy.wait(['@pipelineGet', '@pipelineGet']).then(() => {
-              cy.wrap(element).select('Most recently created')
-              cy.wait('@pipelineGet').then((xhr) => {
-                expect(xhr.url).to.contain(`sortby=-created_on`)
-                expect(xhr.url).to.contain('archived=false')
-              })
+            cy.wait('@pipelineGet')
+            cy.wrap(element).select('Most recently created')
+            cy.wait('@pipelineGet').then((xhr) => {
+              expect(xhr.url).to.contain(`sortby=-created_on`)
+              expect(xhr.url).to.contain('archived=false')
             })
           })
       })
@@ -425,6 +426,7 @@ describe('My pipeline app', () => {
             cy.wrap(element).check()
             cy.wrap(element).should('be.checked')
           })
+        cy.wait('@pipelineGet')
       })
 
       it('should add sortby=name query string', () => {
@@ -432,12 +434,10 @@ describe('My pipeline app', () => {
           .parent()
           .find('select')
           .then((element) => {
-            cy.wait(['@pipelineGet', '@pipelineGet']).then(() => {
-              cy.wrap(element).select('Project Name A-Z')
-              cy.wait('@pipelineGet').then((xhr) => {
-                expect(xhr.url).to.contain(`sortby=name`)
-                expect(xhr.url).to.not.contain('archived')
-              })
+            cy.wrap(element).select('Project Name A-Z')
+            cy.wait('@pipelineGet').then((xhr) => {
+              expect(xhr.url).to.contain(`sortby=name`)
+              expect(xhr.url).to.not.contain('archived')
             })
           })
       })
@@ -447,12 +447,10 @@ describe('My pipeline app', () => {
           .parent()
           .find('select')
           .then((element) => {
-            cy.wait(['@pipelineGet', '@pipelineGet']).then(() => {
-              cy.wrap(element).select('Most recently updated')
-              cy.wait('@pipelineGet').then((xhr) => {
-                expect(xhr.url).to.contain(`sortby=-modified_on`)
-                expect(xhr.url).to.not.contain('archived')
-              })
+            cy.wrap(element).select('Most recently updated')
+            cy.wait('@pipelineGet').then((xhr) => {
+              expect(xhr.url).to.contain(`sortby=-modified_on`)
+              expect(xhr.url).to.not.contain('archived')
             })
           })
       })
@@ -463,15 +461,12 @@ describe('My pipeline app', () => {
           .find('select')
           .then((element) => {
             cy.wrap(element).select('Most recently updated')
-            cy.wait(['@pipelineGet', '@pipelineGet', '@pipelineGet']).then(
-              () => {
-                cy.wrap(element).select('Most recently created')
-                cy.wait('@pipelineGet').then((xhr) => {
-                  expect(xhr.url).to.contain(`sortby=-created_on`)
-                  expect(xhr.url).to.not.contain('archived')
-                })
-              }
-            )
+            cy.wait('@pipelineGet')
+            cy.wrap(element).select('Most recently created')
+            cy.wait('@pipelineGet').then((xhr) => {
+              expect(xhr.url).to.contain(`sortby=-created_on`)
+              expect(xhr.url).to.not.contain('archived')
+            })
           })
       })
     })
@@ -488,8 +483,9 @@ describe('My pipeline app', () => {
         .parent()
         .find('select')
         .then((element) => {
+          cy.wrap(element).should('be.visible')
           cy.wrap(element).select('Most recently updated')
-          cy.wait(['@pipelineGet', '@pipelineGet']).then(() => {
+          cy.wait('@pipelineGet').then(() => {
             expectedOutcomeList.forEach((expectedData, index) => {
               assertPipelineItem(index, expectedData, {
                 ...leads,

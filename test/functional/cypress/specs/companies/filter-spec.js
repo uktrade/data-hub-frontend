@@ -165,12 +165,8 @@ describe('Company Collections Filter', () => {
 
   it('should filter by UK postcode', () => {
     const POSTCODE = 'GL11'
-    cy.contains('UK postcode')
-      .closest('.c-form-group')
-      .within(() => {
-        cy.contains('Search multiple postcodes separated by a comma')
-        cy.get('input').type(POSTCODE).type('{enter}')
-      })
+    cy.get(selectors.filter.ukPostcode).should('be.visible')
+    cy.get(selectors.filter.ukPostcode).clear().type(POSTCODE).type('{enter}')
 
     cy.wait('@filterResults').then((xhr) => {
       expect(xhr.url).to.contain(`uk_postcode=${POSTCODE}`)
