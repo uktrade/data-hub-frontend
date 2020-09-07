@@ -20,7 +20,7 @@ const checkIfRequestIsValid = ({ count, results }) => {
         result.status === 'pending' &&
         moment(result.created_on).isAfter(timeInterval)
     )
-    return validRequests.length
+    return validRequests.length > 0
   }
   return false
 }
