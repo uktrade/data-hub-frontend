@@ -165,6 +165,8 @@ describe('Company Collections Filter', () => {
 
   it('should filter by UK postcode', () => {
     const POSTCODE = 'GL11'
+
+    cy.reload(true)
     cy.get(selectors.filter.ukPostcode).should('be.visible')
     cy.get(selectors.filter.ukPostcode).clear().type(POSTCODE).type('{enter}')
 
