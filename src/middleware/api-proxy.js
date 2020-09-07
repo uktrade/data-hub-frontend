@@ -4,7 +4,7 @@ const config = require('../config')
 const getZipkinHeaders = require('../lib/get-zipkin-headers')
 
 const API_PROXY_PATH = '/api-proxy'
-const WHITELIST = [
+const ALLOWLIST = [
   '/v3/interaction',
   '/v3/investment/:id/update-stage',
   '/whoami/',
@@ -29,7 +29,7 @@ const WHITELIST = [
 
 module.exports = (app) => {
   app.use(
-    WHITELIST.map((apiPath) => API_PROXY_PATH + apiPath),
+    ALLOWLIST.map((apiPath) => API_PROXY_PATH + apiPath),
     createProxyMiddleware('/', {
       changeOrigin: true,
       target: config.apiRoot,

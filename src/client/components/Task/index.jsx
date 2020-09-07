@@ -1,3 +1,8 @@
+/**
+ * If any changes are done to this file which changes the way we use it then
+ * PLEASE update the docs - https://github.com/uktrade/data-hub-frontend/tree/master/docs/Redux%20and%20Saga.md
+ **/
+
 import { get } from 'lodash'
 import PropTypes from 'prop-types'
 import React, { useEffect } from 'react'
