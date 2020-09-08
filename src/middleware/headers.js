@@ -8,7 +8,7 @@ module.exports = function headers(req, res, next) {
     req.url.indexOf('/javascripts') === -1 &&
     req.url.indexOf('/images') === -1
   ) {
-    logger.debug('Headers middleware -> Adding response headers')
+    logger.http('Headers middleware -> Adding response headers')
 
     res.set('Cache-Control', 'no-cache, no-store, must-revalidate, private')
     res.set('Pragma', 'no-cache')

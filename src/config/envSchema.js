@@ -89,10 +89,8 @@ const envSchema = Joi.object({
 
   // How much logging to output
   LOG_LEVEL: Joi.string()
-    .valid('emerg', 'alert', 'crit', 'error', 'warning', 'notice', 'info', 'debug')
+    .valid('error', 'warn', 'info', 'http', 'verbose', 'debug', 'silly')
     .default('error'),
-  LOG_REQUESTS: Joi.bool(),
-  LOG_RESPONSES: Joi.bool(),
 
   // How long to store dropdown data etc for, in seconds. Defaults to 15 minutes
   METADATA_TTL: Joi.number().integer().default(15 * 60),
