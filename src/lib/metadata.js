@@ -137,7 +137,7 @@ module.exports.fetchAll = (cb) => {
   function checkResults() {
     completeRequests += 1
     if (completeRequests === totalRequests) {
-      logger.debug('All metadataRepository requests complete')
+      logger.info('All metadataRepository requests complete')
       cb(caughtErrors)
     }
   }

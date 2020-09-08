@@ -5,16 +5,6 @@ const requestPromise = require('request-promise')
 const config = require('../config')
 const logger = require('../config/logger')
 
-const { logResponses: LOG_RESPONSE, logRequests: LOG_REQUEST } = config
-
-if (LOG_RESPONSE) {
-  logger.info('Logging responses from requests')
-}
-
-if (LOG_REQUEST) {
-  logger.info('Logging request options')
-}
-
 function hasValue(value) {
   return !isNil(value)
 }
@@ -66,32 +56,18 @@ function createResponseLogger(requestOpts) {
   return (data) => {
     const statusCode = (data && data.statusCode) || ''
     const responseInfo = `Response ${statusCode} for ${requestOpts.method} to ${requestOpts.url}:`
-    try {
-      logger.debug(responseInfo, JSON.stringify(data, null, 2))
-    } catch (e) {
-      logger.debug(responseInfo, data)
-    }
+    logger.debug(responseInfo, data)
     return data
   }
 }
 
 function logRequest(opts) {
   logger.debug(`Sending ${opts.method} to ${opts.url}`)
-
-  if (LOG_REQUEST) {
-    logger.debug(
-      'with request data:',
-      JSON.stringify(
-        {
-          headers: opts.headers,
-          body: opts.body,
-          qs: opts.qs,
-        },
-        null,
-        2
-      )
-    )
-  }
+  logger.debug('with request data:', {
+    headers: opts.headers,
+    body: opts.body,
+    qs: opts.qs,
+  })
 }
 
 // Accepts options as keys on an object or encoded as a url
@@ -105,15 +81,11 @@ function authorisedRequest(token, opts) {
 
   const r = requestPromise(requestOptions)
 
-  if (LOG_RESPONSE) {
-    const logResponse = createResponseLogger(requestOptions)
-    return r.then(logResponse, (err) => {
-      logResponse(err)
-      throw err
-    })
-  }
-
-  return r
+  const logResponse = createResponseLogger(requestOptions)
+  return r.then(logResponse, (err) => {
+    logResponse(err)
+    throw err
+  })
 }
 
 // Accepts options as keys on an object or encoded as a url
