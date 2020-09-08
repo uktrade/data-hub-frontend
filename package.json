@@ -65,7 +65,7 @@
     "@hapi/joi": "^17.1.1",
     "constate": "^2.0.0",
     "@sentry/browser": "^5.15.5",
-    "@storybook/addon-actions": "^5.3.18",
+    "@storybook/addon-actions": "^6.0.21",
     "@storybook/addon-knobs": "^5.3.18",
     "@storybook/addons": "^5.3.18",
     "@storybook/react": "^5.3.18",
