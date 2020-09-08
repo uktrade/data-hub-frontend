@@ -109,6 +109,7 @@ module.exports = (env) => ({
             options: {
               sourceMap: !config.isProd,
               importLoaders: 3,
+              url: false,
             },
           },
           {
