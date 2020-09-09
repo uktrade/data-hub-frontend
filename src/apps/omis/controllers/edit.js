@@ -77,7 +77,7 @@ class EditController extends FormController {
           return flatten([newValue])
         }
 
-        const parsedDate = dateFns.parse(newValue)
+        const parsedDate = dateFns.parseISO(newValue)
         if (
           dateFields.includes(key) &&
           newValue &&

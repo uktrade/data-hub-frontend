@@ -73,7 +73,9 @@ function transformCompanyToDnbHierarchyList({
   return {
     headingText: name,
     headingUrl: urls.companies.detail(id),
-    subheading: `Updated on ${formatDateTime(modified_on)}`,
+    subheading: `Updated on ${formatDateTime(modified_on)}`
+      .replace('AM', 'am')
+      .replace('PM', 'pm'),
     metadata,
     badges,
   }

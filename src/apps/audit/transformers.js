@@ -25,10 +25,12 @@ function transformAuditLogToListItem(labels = {}) {
   return function transformAuditLogItem(logEntry) {
     const changeCount =
       (logEntry.changes && Object.keys(logEntry.changes).length) || 0
-
     return {
       type: 'audit',
-      name: dateFns.format(logEntry.timestamp, DATE_TIME_MEDIUM_FORMAT),
+      name: dateFns
+        .format(dateFns.parseISO(logEntry.timestamp), DATE_TIME_MEDIUM_FORMAT)
+        .replace('AM', 'am')
+        .replace('PM', 'pm'),
       contentMetaModifier: 'stacked',
       meta: [
         {

@@ -1,5 +1,5 @@
 const { get, upperFirst, camelCase } = require('lodash')
-const format = require('date-fns/format')
+const { format, parseISO } = require('date-fns')
 
 const metadata = require('../../../lib/metadata')
 const {
@@ -119,7 +119,12 @@ async function getInvestmentDetails(req, res, next) {
         },
         {
           label: 'Created on',
-          value: format(investment.created_on, DATE_TIME_MEDIUM_FORMAT),
+          value: format(
+            parseISO(investment.created_on),
+            DATE_TIME_MEDIUM_FORMAT
+          )
+            .replace('AM', 'am')
+            .replace('PM', 'pm'),
         },
       ],
       company: {

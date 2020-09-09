@@ -193,7 +193,10 @@ const filters = {
     if (!value) {
       return value
     }
-    const parsedDate = dateFns.parse(value)
+
+    const parsedDate = value.includes('-')
+      ? dateFns.parse(value, 'yyyy-MM-dd', new Date())
+      : dateFns.parse(value, 'MM/dd/yyyy', new Date())
 
     if (!dateFns.isValid(parsedDate)) {
       return value
@@ -206,13 +209,16 @@ const filters = {
       return value
     }
 
-    const parsedDate = dateFns.parse(value)
+    const parsedDate = dateFns.toDate(dateFns.parseISO(value))
 
     if (!dateFns.isValid(parsedDate)) {
       return value
     }
 
-    return dateFns.format(parsedDate, format)
+    return dateFns
+      .format(parsedDate, format)
+      .replace('AM', 'am')
+      .replace('PM', 'pm')
   },
 
   formatAddress: (address, join = ', ') => {
