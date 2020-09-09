@@ -109,6 +109,20 @@ module.exports = (env) => ({
             options: {
               sourceMap: !config.isProd,
               importLoaders: 3,
+              url: (url) => {
+                const files = [
+                  '/assets/images/icon-pointer.png',
+                  '/assets/images/icon-pointer-2x.png',
+                  '/assets/images/govuk-crest.png',
+                  '/assets/images/govuk-crest-2x.png',
+                  '/images/open-government-licence.png',
+                  '/images/open-government-licence_2x.png',
+                  '/images/govuk-crest.png',
+                  '/images/govuk-crest-2x.png',
+                ]
+
+                return !files.some((file) => url.includes(file))
+              },
             },
           },
           {
