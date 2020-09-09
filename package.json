@@ -86,7 +86,7 @@
     "connected-react-router": "^6.8.0",
     "cookie-parser": "^1.4.5",
     "core-js": "^2.5.7",
-    "css-loader": "^4.2.2",
+    "css-loader": "^4.3.0",
     "csurf": "^1.9.0",
     "data-hub-components": "5.10.2",
     "date-fns": "^1.29.0",
