@@ -44,11 +44,16 @@ describe('XHR', () => {
     })
     it('should perform page load if unable to pushState', () => {
       sinon.stub(history, 'replace').throws('error')
-      sinon.stub(window.location, 'assign')
+      // can't simply reassign the assign function so need to delete window.location first
+      // https://github.com/jsdom/jsdom/issues/2674
+      delete window.location
+      window.location = { assign: sinon.spy() }
       const res = { data: {} }
       const params = { a: 1, b: 2 }
       XHR.updateOutlet(res, params)
       expect(window.location.assign).to.be.calledWith('?a=1&b=2')
+      // clean up and put window.location back
+      window.location = location
     })
   })
 
