@@ -15,6 +15,7 @@ nav.sub-navigation {
         color: $govuk-blue;
         text-decoration: none;
       }
+
       &.active {
         padding-bottom: 7px;
         border-bottom: 7px solid $govuk-blue;
@@ -29,7 +30,7 @@ nav.govuk-tabs {
 
 .large-capital-profile {
   details:last-child {
-    border-bottom: 2px solid lightgray;
+    border-bottom: 2px solid #d3d3d3;
   }
 }
 
@@ -38,12 +39,14 @@ form {
     label {
       font-weight: bold;
     }
+
     .investor-description {
       span {
         display: block;
       }
     }
   }
+
   &.investor-requirements-edit {
     .asset-classes-of-interest {
       border: 1px solid $govuk-border-colour;
@@ -58,6 +61,7 @@ form {
         padding-left: 10px;
         padding-right: 10px;
       }
+
       .notice {
         margin-top: 10px;
         span {
@@ -65,9 +69,11 @@ form {
           color: $govuk-blue;
         }
       }
+
       .govuk-form-group {
         margin-bottom: 10px;
       }
+
       .real-estate,
       .energy-and-infrastructure {
         border-left: 7px solid $govuk-border-colour;
@@ -75,13 +81,16 @@ form {
       }
     }
   }
+
   &.location-edit {
     label {
       font-weight: bold;
     }
+
     .c-form-fieldset__add-another {
       margin-top: $default-spacing-unit;
     }
+
     .govuk-form-group {
       margin-top: $default-spacing-unit;
     }
@@ -93,12 +102,14 @@ form {
     &.investor-details-edit {
       width: 75%;
     }
+
     &.investor-requirements-edit  {
       .deal-ticket-sizes {
         @include flexWrap;
         width: 34.7em;
         height: 8em;
       }
+
       .asset-classes-of-interest {
         .real-estate,
         .energy-and-infrastructure {
@@ -111,9 +122,11 @@ form {
             top: -14px;
           }
         }
+
         .real-estate {
           height: 24.5em;
         }
+
         .govuk-form-group {
           margin-bottom: 0;
         }

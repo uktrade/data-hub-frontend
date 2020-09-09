@@ -25,7 +25,7 @@
 
   &[type="file"] {
     $button-width: 128px;
-    border: none;
+    border: 0;
     margin-left: $button-width;
     padding-top: 10px;
     line-height: 1ex;
@@ -81,7 +81,7 @@ select.c-form-control {
   }
 
   // IE9
-  @media all and (min-width:0\0) and (min-resolution:.001dpcm) {
+  @media all and (min-width: 0\0) and (min-resolution: .001dpcm) {
     & {
       background-image: none;
       padding: 0 !important;

@@ -12,9 +12,10 @@
   }
 
   h1,h2{
-    margin-bottom : $default-spacing-unit * 0.3;
+    margin-bottom: $default-spacing-unit * 0.3;
     flex-grow: 1;      
   }
+
   h1{
     @include bold-font(24);
   }

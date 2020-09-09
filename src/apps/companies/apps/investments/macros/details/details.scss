@@ -1,7 +1,7 @@
 .govuk-details--dit {
   margin: 0;
   padding-top: 8px;
-  border-top: 2px solid lightgray;
+  border-top: 2px solid #d3d3d3;
 
   .govuk-details__summary:focus {
     outline: none;
@@ -31,7 +31,7 @@
   .govuk-details__text {
     margin-top: 20px;
     padding: 0;
-    border-left: none;
+    border-left: 0;
 
     select {
       width: 100%;

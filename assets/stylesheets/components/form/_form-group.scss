@@ -110,7 +110,7 @@ fieldset.c-form-group.c-form-fieldset--subfield {
 
 
 fieldset.c-form-group.c-form-fieldset--subfield {
-  border: none;
+  border: 0;
 
   .c-form-fieldset__legend {
     @include bold-19();

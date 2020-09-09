@@ -27,10 +27,12 @@
     background: $highlight-colour;
   }
 }
+
 .data-table--slim {
   thead{
     @include visually-hidden
   }
+
   tr:first-of-type {
     border-top: 1px solid $grey-2;
   }
@@ -50,13 +52,14 @@
   tr{
     border-bottom: 1px solid $grey-2;
   }
+
   td{
     border: 0;
     color: $grey-5;
     font-size: inherit;
     padding: $default-spacing-unit/4 0;
     @include media (mobile) {
-      display:block;
+      display: block;
     }
   }
 }
