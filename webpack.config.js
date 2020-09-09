@@ -120,10 +120,8 @@ module.exports = (env) => ({
                   '/images/govuk-crest.png',
                   '/images/govuk-crest-2x.png',
                 ]
-                if (files.some((file) => url.includes(file))) {
-                  return false
-                }
-                return true
+
+                return !files.some((file) => url.includes(file))
               },
             },
           },
