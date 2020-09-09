@@ -29,7 +29,7 @@
 }
 
 .data-table--slim {
-  thead{
+  thead {
     @include visually-hidden
   }
 
@@ -37,27 +37,25 @@
     border-top: 1px solid $grey-2;
   }
 
-  tr td:first-child
-  {
+  tr td:first-child {
     color: inherit;
   }
 
-  tr td:not(:first-child)
-  {
+  tr td:not(:first-child) {
     @include media(desktop) {
       padding-left: $default-spacing-unit * 2;
     }
   }
 
-  tr{
+  tr {
     border-bottom: 1px solid $grey-2;
   }
 
-  td{
+  td {
     border: 0;
     color: $grey-5;
     font-size: inherit;
-    padding: $default-spacing-unit/4 0;
+    padding: $default-spacing-unit / 4 0;
     @include media (mobile) {
       display: block;
     }
@@ -66,6 +64,6 @@
 
 .data-table--equal-columns {
   thead tr th {
-    width: 33%
+    width: 33%;
   }
 }

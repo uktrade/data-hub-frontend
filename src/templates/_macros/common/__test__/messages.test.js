@@ -123,7 +123,7 @@ describe('MessageList macro', () => {
 
       it('should be dismissable', () => {
         expect(this.component.className.trim()).to.equal(
-          'c-message-list js-Messages'
+          'c-message-list js-messages'
         )
       })
     })

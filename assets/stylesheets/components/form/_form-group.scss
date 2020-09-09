@@ -55,7 +55,8 @@
   padding-left: $default-spacing-unit;
 }
 
-fieldset.c-form-group.has-error {
+fieldset
+.c-form-group.has-error {
   border-left: 0;
   padding-left: $default-spacing-unit + 5;
   position: relative;
@@ -87,8 +88,10 @@ fieldset.c-form-group.has-error {
   }
 }
 
-fieldset.c-form-group.c-form-group--subfield,
-fieldset.c-form-group.c-form-fieldset--subfield {
+fieldset
+.c-form-group.c-form-group--subfield,
+fieldset
+.c-form-group.c-form-fieldset--subfield {
   border-left: 0;
   padding-left: $default-spacing-unit * 2;
   position: relative;
@@ -109,7 +112,8 @@ fieldset.c-form-group.c-form-fieldset--subfield {
 }
 
 
-fieldset.c-form-group.c-form-fieldset--subfield {
+fieldset
+.c-form-group.c-form-fieldset--subfield {
   border: 0;
 
   .c-form-fieldset__legend {
@@ -192,7 +196,8 @@ fieldset.c-form-group.c-form-fieldset--subfield {
 }
 
 .c-form-group--option-select {
-  legend.c-form-group__label {
+  legend
+  .c-form-group__label {
     float: left;
   }
 

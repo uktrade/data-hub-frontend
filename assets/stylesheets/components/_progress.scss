@@ -63,6 +63,7 @@ $_section-width: 25%;
 
   &.is-complete {
     border-color: $govuk-blue;
+
     &::before {
       @include progress-bar-node;
     }

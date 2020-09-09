@@ -19,7 +19,7 @@
   &[type="text"],
   &[type="search"],
   &[type="password"],
-  &[type="date"]{
+  &[type="date"] {
     width: 100%;
   }
 
@@ -38,7 +38,7 @@
     &::before {
       @include button ($grey-3);
       padding-bottom: .526315em;
-      content: 'Choose a file';
+      content: "Choose a file";
       display: inline-block;
       position: absolute;
       left: 0;

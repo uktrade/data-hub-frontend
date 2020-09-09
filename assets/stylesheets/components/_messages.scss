@@ -14,7 +14,7 @@
   background-color: $white;
 
   @include media(tablet) {
-    .js-Messages & {
+    .js-messages & {
       padding-right: 90px;
     }
   }

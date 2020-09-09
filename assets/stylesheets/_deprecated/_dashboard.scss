@@ -20,7 +20,7 @@
     }
   }
 
-  a:visited{
+  a:visited {
     color: $link-colour;
   }
 
@@ -32,7 +32,7 @@
 
   &__top-link {
     position: absolute;
-    right: 0
+    right: 0;
   }
 
   &__subheading {
@@ -42,7 +42,7 @@
     margin-bottom: $default-spacing-unit;
   }
 
-  &__info-feed-link{
+  &__info-feed-link {
     text-decoration: none;
   }
 

@@ -28,3 +28,7 @@ rules:
   quotes:
     - 1
     - style: double
+  no-color-literals: 0
+  no-important: 0
+  empty-args: 0
+  space-around-operator: 0

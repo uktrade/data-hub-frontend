@@ -3,7 +3,8 @@
 @import "../tools/mixins/conditionals";
 
 // TODO: remove qualifier
-span.phase-badge {
+span
+.phase-badge {
   @include bold-font(14);
   background-color: $govuk-blue;
   color: $white;

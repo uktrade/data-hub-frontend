@@ -45,7 +45,7 @@ const Messages = {
 
 module.exports = {
   init() {
-    const elements = document.querySelectorAll('.js-Messages')
+    const elements = document.querySelectorAll('.js-messages')
     Array.from(elements).forEach((element) => Messages.init(element))
   },
 }

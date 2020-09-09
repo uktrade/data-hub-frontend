@@ -1,3 +1,5 @@
+// sass-lint:disable allow-rgba
+
 @import "../settings";
 
 @mixin _style-badge($colour: $text-colour, $hover: $colour) {
