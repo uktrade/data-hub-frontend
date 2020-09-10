@@ -31,3 +31,7 @@ exports.payments = function (req, res) {
 exports.subscriberList = function (req, res) {
   res.json(subscribers)
 }
+
+exports.editQuoteDetail = function (req, res) {
+  res.json({})
+}

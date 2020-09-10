@@ -245,6 +245,9 @@ module.exports = {
     order: url('/omis', '/:orderId'),
     paymentReceipt: url('/omis', '/:orderId/payment-receipt'),
     quote: url('/omis', '/:orderId/quote'),
+    edit: {
+      quote: url('/omis', '/:orderId/edit/quote-details'),
+    },
   },
   support: url('/support'),
   pipeline: {
