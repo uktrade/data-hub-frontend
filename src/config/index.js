@@ -71,8 +71,6 @@ const config = {
     ttl: envVars.SESSION_TTL,
   },
   logLevel: envVars.LOG_LEVEL,
-  logResponses: envVars.LOG_RESPONSES,
-  logRequests: envVars.LOG_REQUESTS,
   zen: {
     ticketsURL: envVars.ZEN_TICKETS_URL,
     token: envVars.ZEN_TOKEN,

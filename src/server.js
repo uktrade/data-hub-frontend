@@ -9,7 +9,7 @@ const express = require('express')
 const flash = require('connect-flash')
 const csrf = require('csurf')
 const slashify = require('slashify')
-const churchill = require('churchill')
+
 const enforce = require('express-sslify')
 const favicon = require('serve-favicon')
 const cookieParser = require('cookie-parser')
@@ -34,6 +34,7 @@ const errors = require('./middleware/errors')
 const sessionStore = require('./middleware/session-store')
 const ssoBypass = require('./middleware/sso-bypass')
 const logger = require('./config/logger')
+const httpLogger = require('./config/httpLogger')
 const basicAuth = require('./middleware/basic-auth')
 const features = require('./middleware/features')
 const redisCheck = require('./middleware/redis-check')
@@ -62,9 +63,7 @@ app.disable('x-powered-by')
 // Raven request handler must be the first middleware
 reporter.setup(app)
 
-if (!config.ci) {
-  app.use(churchill(logger))
-}
+app.use(httpLogger)
 
 if (config.forceHttps) {
   app.enable('trust proxy')
@@ -150,17 +149,14 @@ app.use(errors.catchAll)
 
 metadata.fetchAll((errors) => {
   if (errors) {
-    logger.log(
-      'error',
-      'Unable to load all metadataRepository, cannot start app'
-    )
+    logger.error('Unable to load all metadataRepository, cannot start app')
 
     for (const err of errors) {
       throw err
     }
   } else {
     app.listen(config.port, () => {
-      logger.log('info', 'app listening on port %s', config.port)
+      logger.info(`app listening on port ${config.port}`)
     })
   }
 })
