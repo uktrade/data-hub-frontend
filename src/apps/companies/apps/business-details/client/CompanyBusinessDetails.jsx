@@ -54,10 +54,14 @@ const CompanyBusinessDetails = ({
   const isDnbCompany = !!businessDetails.duns_number
   const isArchived = !!businessDetails.archived
   const isBasedInUK = !!businessDetails.uk_based
-  const lastUpdated =
-    businessDetails.dnb_modified_on ||
-    businessDetails.modified_on ||
-    businessDetails.created_on
+  const lastUpdated = [
+    businessDetails.dnb_modified_on,
+    businessDetails.modified_on,
+    businessDetails.created_on,
+  ]
+    .filter(Boolean)
+    .sort()
+    .reverse()[0]
 
   return (
     <StyledRoot>

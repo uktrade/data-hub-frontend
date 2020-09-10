@@ -9,6 +9,7 @@
   "duns_number": "123456789",
   "created_on": "2015-10-26T11:00:00Z",
   "modified_on": "2017-11-26T11:00:00Z",
+  "dnb_modified_on": "2017-11-25T11:00:00Z",
   "archived": false,
   "archived_documents_url_path": "",
   "archived_on": null,
