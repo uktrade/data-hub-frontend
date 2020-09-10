@@ -2,34 +2,34 @@ const config = require('../../config')
 const { authorisedRequest } = require('../../lib/authorised-request')
 const { getDitCompany } = require('../companies/repos')
 
-function getCompanyInvestmentProjects(token, companyId, page = 1) {
+function getCompanyInvestmentProjects(req, companyId, page = 1) {
   const limit = 10
   const offset = limit * (page - 1)
   return authorisedRequest(
-    token,
+    req,
     `${config.apiRoot}/v3/investment?investor_company_id=${companyId}&limit=${limit}&offset=${offset}`
   )
 }
 
-function getInvestment(token, investmentId) {
+function getInvestment(req, investmentId) {
   return authorisedRequest(
-    token,
+    req,
     `${config.apiRoot}/v3/investment/${investmentId}`
   )
 }
 
-function updateInvestment(token, investmentId, body) {
-  return authorisedRequest(token, {
+function updateInvestment(req, investmentId, body) {
+  return authorisedRequest(req, {
     url: `${config.apiRoot}/v3/investment/${investmentId}`,
     method: 'PATCH',
     body,
   })
 }
 
-function getEquityCompanyDetails(token, equityCompanyId) {
+function getEquityCompanyDetails(req, equityCompanyId) {
   const promises = [
-    getDitCompany(token, equityCompanyId),
-    getCompanyInvestmentProjects(token, equityCompanyId),
+    getDitCompany(req, equityCompanyId),
+    getCompanyInvestmentProjects(req, equityCompanyId),
   ]
 
   return Promise.all(promises).then(
@@ -42,25 +42,25 @@ function getEquityCompanyDetails(token, equityCompanyId) {
   )
 }
 
-function createInvestmentProject(token, body) {
-  return authorisedRequest(token, {
+function createInvestmentProject(req, body) {
+  return authorisedRequest(req, {
     url: `${config.apiRoot}/v3/investment`,
     method: 'POST',
     body,
   })
 }
 
-function getInvestmentProjectAuditLog(token, investmentId, page = 1) {
+function getInvestmentProjectAuditLog(req, investmentId, page = 1) {
   const limit = 10
   const offset = limit * (page - 1)
-  return authorisedRequest(token, {
+  return authorisedRequest(req, {
     url: `${config.apiRoot}/v3/investment/${investmentId}/audit`,
     qs: { limit, offset },
   })
 }
 
-function archiveInvestmentProject(token, investmentId, reason) {
-  return authorisedRequest(token, {
+function archiveInvestmentProject(req, investmentId, reason) {
+  return authorisedRequest(req, {
     url: `${config.apiRoot}/v3/investment/${investmentId}/archive`,
     method: 'POST',
     body: {
@@ -69,19 +69,19 @@ function archiveInvestmentProject(token, investmentId, reason) {
   })
 }
 
-function unarchiveInvestmentProject(token, investmentId) {
-  return authorisedRequest(token, {
+function unarchiveInvestmentProject(req, investmentId) {
+  return authorisedRequest(req, {
     url: `${config.apiRoot}/v3/investment/${investmentId}/unarchive`,
     method: 'POST',
   })
 }
 
 async function updateInvestmentTeamMembers(
-  token,
+  req,
   investmentId,
   investmentTeamMembers
 ) {
-  return authorisedRequest(token, {
+  return authorisedRequest(req, {
     url: `${config.apiRoot}/v3/investment/${investmentId}/team-member`,
     method: 'PUT',
     body: investmentTeamMembers,

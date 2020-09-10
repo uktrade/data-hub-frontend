@@ -20,12 +20,11 @@ async function renderAttendees(req, res, next) {
     const name = event.name
     const query = req.query
     const page = query.page || 1
-    const token = req.session.token
     const sortby = req.query.sortby || defaultAttendeeSort
     const incompleteEvent = !event.service || !event.lead_team
 
     const attendeesResponse = await fetchEventAttendees({
-      token,
+      req,
       eventId: event.id,
       page,
       sortby,

@@ -59,7 +59,7 @@ class EditPaymentReconciliationController extends EditController {
     let invoice
 
     try {
-      invoice = await Order.getInvoice(req.session.token, res.locals.order.id)
+      invoice = await Order.getInvoice(req, res.locals.order.id)
     } catch (error) {
       logger.error(error)
     }
@@ -84,7 +84,7 @@ class EditPaymentReconciliationController extends EditController {
       // TODO: Support adding of multiple payments
       // API accepts an array of payment objects
       // This solution sends the only payment captured in an array to solve this
-      await Order.savePayments(req.session.token, res.locals.order.id, [data])
+      await Order.savePayments(req, res.locals.order.id, [data])
       next()
     } catch (err) {
       if (err.statusCode === 409) {

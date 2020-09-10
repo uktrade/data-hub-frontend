@@ -1,14 +1,14 @@
 const config = require('../../config')
 const { authorisedRequest } = require('../../lib/authorised-request')
 
-function fetchInteraction(token, interactionId) {
+function fetchInteraction(req, interactionId) {
   return authorisedRequest(
-    token,
+    req,
     `${config.apiRoot}/v3/interaction/${interactionId}`
   )
 }
 
-function saveInteraction(token, interaction, referralId) {
+function saveInteraction(req, interaction, referralId) {
   const options = {
     url:
       referralId && !interaction.id
@@ -23,13 +23,13 @@ function saveInteraction(token, interaction, referralId) {
     options.method = 'PATCH'
   }
 
-  return authorisedRequest(token, options)
+  return authorisedRequest(req, options)
 }
 
-function getInteractionsForEntity({ token, entityQuery, page = 1, sortby }) {
+function getInteractionsForEntity({ req, entityQuery, page = 1, sortby }) {
   const limit = 10
   const offset = limit * (page - 1)
-  return authorisedRequest(token, {
+  return authorisedRequest(req, {
     url: `${config.apiRoot}/v3/interaction`,
     qs: {
       ...entityQuery,
@@ -40,13 +40,13 @@ function getInteractionsForEntity({ token, entityQuery, page = 1, sortby }) {
   })
 }
 
-function archiveInteraction(token, interactionId, reason) {
+function archiveInteraction(req, interactionId, reason) {
   const options = {
     body: { reason },
     url: `${config.apiRoot}/v3/interaction/${interactionId}/archive`,
     method: 'POST',
   }
-  return authorisedRequest(token, options)
+  return authorisedRequest(req, options)
 }
 
 module.exports = {

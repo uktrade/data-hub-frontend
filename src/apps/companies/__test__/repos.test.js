@@ -24,6 +24,8 @@ function makeRepositoryWithAuthRequest(authorisedRequestStub) {
 }
 
 describe('Company repository', () => {
+  const stubRequest = { session: { token: 'TEST_TOKEN' } }
+
   describe('Save company', () => {
     describe('Make correct call to API', () => {
       let authorisedRequestStub
@@ -38,11 +40,11 @@ describe('Company repository', () => {
       })
 
       it('should call the API with a PATCH if an ID is provided.', async () => {
-        await repo.saveCompany('TEST_TOKEN', {
+        await repo.saveCompany(stubRequest, {
           id: 'TEST_TOKEN',
           name: 'fred',
         })
-        expect(authorisedRequestStub).calledOnceWithExactly('TEST_TOKEN', {
+        expect(authorisedRequestStub).calledOnceWithExactly(stubRequest, {
           body: { id: 'TEST_TOKEN', name: 'fred' },
           method: 'PATCH',
           url: `${config.apiRoot}/v4/company/TEST_TOKEN`,
@@ -50,8 +52,8 @@ describe('Company repository', () => {
       })
 
       it('should call the API with a POST if no ID is provided.', async () => {
-        await repo.saveCompany('TEST_TOKEN', { name: 'fred' })
-        expect(authorisedRequestStub).calledOnceWithExactly('TEST_TOKEN', {
+        await repo.saveCompany(stubRequest, { name: 'fred' })
+        expect(authorisedRequestStub).calledOnceWithExactly(stubRequest, {
           body: { name: 'fred' },
           method: 'POST',
           url: `${config.apiRoot}/v4/company`,
@@ -65,11 +67,11 @@ describe('Company repository', () => {
       const authorisedRequestStub = sinon.stub().resolves(companyData)
       const repo = makeRepositoryWithAuthRequest(authorisedRequestStub)
 
-      await repo.updateCompany('TEST_TOKEN', '999', {
+      await repo.updateCompany(stubRequest, '999', {
         global_headquarters: '1',
       })
 
-      expect(authorisedRequestStub).to.be.calledOnceWithExactly('TEST_TOKEN', {
+      expect(authorisedRequestStub).to.be.calledOnceWithExactly(stubRequest, {
         url: `${config.apiRoot}/v4/company/999`,
         method: 'PATCH',
         body: {
@@ -85,7 +87,7 @@ describe('Company repository', () => {
         .get(`/v4/company/${companyV4Data.id}`)
         .reply(200, companyV4Data)
 
-      const company = await getDitCompany('TEST_TOKEN', companyV4Data.id)
+      const company = await getDitCompany(stubRequest, companyV4Data.id)
 
       expect(company).to.deep.equal(companyV4Data)
     })
@@ -96,9 +98,9 @@ describe('Company repository', () => {
       const authorisedRequestStub = sinon.stub()
       const repo = makeRepositoryWithAuthRequest(authorisedRequestStub)
 
-      await repo.getDitCompanyFromList('TEST_TOKEN', myCompanyListData.id)
+      await repo.getDitCompanyFromList(stubRequest, myCompanyListData.id)
 
-      expect(authorisedRequestStub).calledOnceWithExactly('TEST_TOKEN', {
+      expect(authorisedRequestStub).calledOnceWithExactly(stubRequest, {
         method: 'GET',
         url: `${config.apiRoot}/v4/user/company-list/${myCompanyListData.id}`,
       })
@@ -110,9 +112,9 @@ describe('Company repository', () => {
       const authorisedRequestStub = sinon.stub()
       const repo = makeRepositoryWithAuthRequest(authorisedRequestStub)
 
-      await repo.addDitCompanyToList('TEST_TOKEN', myCompanyListData.id)
+      await repo.addDitCompanyToList(stubRequest, myCompanyListData.id)
 
-      expect(authorisedRequestStub).calledOnceWithExactly('TEST_TOKEN', {
+      expect(authorisedRequestStub).calledOnceWithExactly(stubRequest, {
         method: 'PUT',
         url: `${config.apiRoot}/v4/user/company-list/${myCompanyListData.id}`,
       })
@@ -124,9 +126,9 @@ describe('Company repository', () => {
       const authorisedRequestStub = sinon.stub()
       const repo = makeRepositoryWithAuthRequest(authorisedRequestStub)
 
-      await repo.removeDitCompanyFromList('TEST_TOKEN', myCompanyListData.id)
+      await repo.removeDitCompanyFromList(stubRequest, myCompanyListData.id)
 
-      expect(authorisedRequestStub).calledOnceWithExactly('TEST_TOKEN', {
+      expect(authorisedRequestStub).calledOnceWithExactly(stubRequest, {
         method: 'DELETE',
         url: `${config.apiRoot}/v4/user/company-list/${myCompanyListData.id}`,
       })
@@ -143,7 +145,7 @@ describe('Company repository', () => {
           hello: true,
         })
 
-      const actual = await saveDnbCompany('1234', '123')
+      const actual = await saveDnbCompany(stubRequest, '123')
 
       expect(actual).to.deep.equal({ hello: true })
     })
@@ -163,7 +165,11 @@ describe('Company repository', () => {
           countries: true,
         })
 
-      const actual = await saveCompanyExportDetails('1234', companyId, details)
+      const actual = await saveCompanyExportDetails(
+        stubRequest,
+        companyId,
+        details
+      )
 
       expect(actual).to.deep.equal({ countries: true })
     })

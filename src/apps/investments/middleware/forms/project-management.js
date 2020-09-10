@@ -15,7 +15,7 @@ async function populateForm(req, res, next) {
       'project_assurance_adviser.id'
     )
 
-    const advisersResponse = await getAdvisers(req.session.token)
+    const advisersResponse = await getAdvisers(req)
 
     const projectManagers = filterActiveAdvisers({
       advisers: advisersResponse.results,
@@ -52,7 +52,7 @@ async function populateForm(req, res, next) {
 
 function handleFormPost(req, res, next) {
   res.locals.projectId = req.params.investmentId
-  updateInvestment(req.session.token, res.locals.projectId, req.body)
+  updateInvestment(req, res.locals.projectId, req.body)
     .then(() => next())
     .catch((err) => {
       if (err.statusCode === 400) {

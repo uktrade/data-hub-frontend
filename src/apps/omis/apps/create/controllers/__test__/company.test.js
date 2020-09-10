@@ -271,7 +271,7 @@ describe('OMIS create company controller', () => {
 
         it('should call search', () => {
           expect(this.searchCompaniesStub).to.have.been.calledWith({
-            token: '12345',
+            req: this.reqMock,
             page: undefined,
             searchTerm: 'search term',
           })

@@ -163,7 +163,7 @@ describe('OMIS View middleware', () => {
       it('should call getContact with correct arguments', () => {
         expect(this.getContactStub).to.have.been.calledOnce
         expect(this.getContactStub).to.have.been.calledWith(
-          '12345',
+          this.reqMock,
           'contact-id'
         )
       })
@@ -238,7 +238,7 @@ describe('OMIS View middleware', () => {
       it('should call getAssigneesStub with correct arguments', () => {
         expect(this.getAssigneesStub).to.have.been.calledOnce
         expect(this.getAssigneesStub).to.have.been.calledWith(
-          '12345',
+          this.reqMock,
           '123456789'
         )
       })
@@ -314,7 +314,7 @@ describe('OMIS View middleware', () => {
       it('should call getAssigneesStub with correct arguments', () => {
         expect(this.getSubscribersStub).to.have.been.calledOnce
         expect(this.getSubscribersStub).to.have.been.calledWith(
-          '12345',
+          this.reqMock,
           '123456789'
         )
       })
@@ -389,7 +389,7 @@ describe('OMIS View middleware', () => {
 
           it('should make quote request', () => {
             expect(this.getQuoteStub).to.have.been.calledWith(
-              this.reqMock.session.token,
+              this.reqMock,
               this.resMock.locals.order.id
             )
           })
@@ -450,7 +450,7 @@ describe('OMIS View middleware', () => {
 
         it('should make quote request', () => {
           expect(this.getQuoteStub).to.have.been.calledWith(
-            this.reqMock.session.token,
+            this.reqMock,
             this.resMock.locals.order.id
           )
         })

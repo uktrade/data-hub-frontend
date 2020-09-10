@@ -29,7 +29,7 @@ class ConfirmController extends CreateController {
     unset(data, 'errors')
 
     try {
-      const order = await Order.save(req.session.token, data)
+      const order = await Order.save(req, data)
       req.sessionModel.set('order-id', order.id)
 
       next()

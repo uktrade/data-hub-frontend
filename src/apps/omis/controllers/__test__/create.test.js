@@ -273,7 +273,7 @@ describe('OMIS CreateController', () => {
         it('should call get company method', () => {
           expect(this.getDitCompanyStub).to.be.calledOnce
           expect(this.getDitCompanyStub).to.be.calledWith(
-            '12345',
+            this.reqMock,
             companyMock.id
           )
         })
@@ -308,7 +308,7 @@ describe('OMIS CreateController', () => {
         it('should call get company method', () => {
           expect(this.getDitCompanyStub).to.be.calledOnce
           expect(this.getDitCompanyStub).to.be.calledWith(
-            '12345',
+            this.reqMock,
             companyMock.id
           )
         })

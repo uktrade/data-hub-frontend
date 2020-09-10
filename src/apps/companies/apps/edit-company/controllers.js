@@ -15,7 +15,6 @@ const { isItaTierDAccount } = require('../../../../lib/is-tier-type-company')
 async function renderEditCompanyForm(req, res, next) {
   try {
     const { company } = res.locals
-    const { token } = req.session
 
     const [
       turnoverRanges,
@@ -24,11 +23,11 @@ async function renderEditCompanyForm(req, res, next) {
       sectors,
       headquarterTypes,
     ] = await Promise.all([
-      getOptions(token, 'turnover', { sorted: false }),
-      getOptions(token, 'employee-range', { sorted: false }),
-      getOptions(token, 'uk-region', { sorted: false }),
-      getOptions(token, 'sector', { sorted: false }),
-      getHeadquarterOptions(token),
+      getOptions(req, 'turnover', { sorted: false }),
+      getOptions(req, 'employee-range', { sorted: false }),
+      getOptions(req, 'uk-region', { sorted: false }),
+      getOptions(req, 'sector', { sorted: false }),
+      getHeadquarterOptions(req),
     ])
 
     res
@@ -60,7 +59,6 @@ async function renderEditCompanyForm(req, res, next) {
 async function postEditCompany(req, res, next) {
   try {
     const { company } = res.locals
-    const { token } = req.session
 
     const dataHubChanges = transformFormToApi(company, req.body)
 
@@ -76,7 +74,7 @@ async function postEditCompany(req, res, next) {
     // Only D&B changes
     if (isEmpty(dataHubChanges) && !isEmpty(dnbChanges)) {
       const dnbChangeRequest = await createDnbChangeRequest(
-        token,
+        req,
         company.duns_number,
         dnbChanges
       )
@@ -94,7 +92,7 @@ async function postEditCompany(req, res, next) {
     // Only Data Hub changes
     if (!isEmpty(dataHubChanges) && isEmpty(dnbChanges)) {
       const updatedCompany = await updateCompany(
-        token,
+        req,
         company.id,
         dataHubChanges
       )
@@ -107,13 +105,13 @@ async function postEditCompany(req, res, next) {
     // Both D&B and Data Hub changes
     if (!isEmpty(dataHubChanges) && !isEmpty(dnbChanges)) {
       const updatedCompany = await updateCompany(
-        token,
+        req,
         company.id,
         dataHubChanges
       )
 
       const dnbChangeRequest = await createDnbChangeRequest(
-        token,
+        req,
         company.duns_number,
         dnbChanges
       )

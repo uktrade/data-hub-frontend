@@ -10,7 +10,6 @@ const {
 const urls = require('../../../../../../lib/urls')
 
 async function renderProjects(req, res, next) {
-  const { token } = req.session
   const { company, returnUrl, dnbRelatedCompaniesCount } = res.locals
   const actionButtons = company.archived
     ? undefined
@@ -23,7 +22,7 @@ async function renderProjects(req, res, next) {
 
   try {
     const results = await getCompanyInvestmentProjects(
-      token,
+      req,
       company.id,
       req.query.page
     ).then(

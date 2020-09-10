@@ -2,7 +2,7 @@ const logger = require('../../../../config/logger')
 const { updateInvestment } = require('../../repos')
 
 function handleFormPost(req, res, next, projectId = req.params.investmentId) {
-  updateInvestment(req.session.token, projectId, {
+  updateInvestment(req, projectId, {
     stage: {
       id: req.body.next_project_stage,
     },

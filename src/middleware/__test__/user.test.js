@@ -83,7 +83,7 @@ describe('user middleware', () => {
 
       it('should call authorised request', () => {
         expect(this.authorisedRequestStub).to.be.calledWith(
-          token,
+          this.reqMock,
           `${apiRoot}/whoami/`
         )
       })

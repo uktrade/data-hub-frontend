@@ -3,13 +3,12 @@ const { getOptions } = require('../../../lib/options')
 async function renderAddToPipeline(req, res, next) {
   try {
     const { company } = res.locals
-    const { token } = req.session
 
     res.render('my-pipeline/views/pipeline-form', {
       props: {
         companyId: company.id,
         companyName: company.name,
-        sectors: await getOptions(token, 'sector'),
+        sectors: await getOptions(req, 'sector'),
         contacts: company.contacts,
       },
     })

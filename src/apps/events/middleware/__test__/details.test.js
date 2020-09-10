@@ -83,9 +83,7 @@ describe('Event details middleware', () => {
     context('when all fields are valid', () => {
       it('should post to the API', async () => {
         await this.middleware.postDetails(this.req, this.res, this.nextSpy)
-        expect(this.saveEventStub).to.have.been.calledWith(
-          this.req.session.token
-        )
+        expect(this.saveEventStub).to.have.been.calledWith(this.req)
         expect(this.saveEventStub).to.have.been.calledOnce
         expect(this.saveEventStub.firstCall.args[1]).to.deep.equal(expectedBody)
       })
@@ -112,10 +110,7 @@ describe('Event details middleware', () => {
           teams: ['team 1', 'lead_team'],
         })
 
-        expect(this.saveEventStub).to.have.been.calledWith(
-          this.req.session.token,
-          expected
-        )
+        expect(this.saveEventStub).to.have.been.calledWith(req, expected)
         expect(this.saveEventStub).to.have.been.calledOnce
       })
 
@@ -132,10 +127,7 @@ describe('Event details middleware', () => {
           teams: ['team 1', 'lead_team'],
         })
 
-        expect(this.saveEventStub).to.have.been.calledWith(
-          this.req.session.token,
-          expected
-        )
+        expect(this.saveEventStub).to.have.been.calledWith(req, expected)
         expect(this.saveEventStub).to.have.been.calledOnce
       })
     })
@@ -180,10 +172,7 @@ describe('Event details middleware', () => {
           related_programmes: ['programme 1'],
         })
 
-        expect(this.saveEventStub).to.have.been.calledWith(
-          this.req.session.token,
-          expected
-        )
+        expect(this.saveEventStub).to.have.been.calledWith(req, expected)
         expect(this.saveEventStub).to.have.been.calledOnce
       })
 
@@ -200,10 +189,7 @@ describe('Event details middleware', () => {
           related_programmes: ['programme 1'],
         })
 
-        expect(this.saveEventStub).to.have.been.calledWith(
-          this.req.session.token,
-          expected
-        )
+        expect(this.saveEventStub).to.have.been.calledWith(req, expected)
         expect(this.saveEventStub).to.have.been.calledOnce
       })
     })

@@ -10,7 +10,7 @@ async function archiveInvestmentProjectHandler(req, res, next) {
         ? req.body.archived_reason_other
         : req.body.archived_reason
     await investmentRepository.archiveInvestmentProject(
-      req.session.token,
+      req,
       req.params.investmentId,
       reason
     )
@@ -37,7 +37,7 @@ async function archiveInvestmentProjectHandler(req, res, next) {
 async function unarchiveInvestmentProjectHandler(req, res, next) {
   try {
     await investmentRepository.unarchiveInvestmentProject(
-      req.session.token,
+      req,
       req.params.investmentId
     )
     req.flash('success', 'Investment project updated')

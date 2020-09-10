@@ -13,6 +13,11 @@ describe('Investment form middleware - client relationship management', () => {
     beforeEach(() => {
       this.updateCompanyStub = sinon.stub().resolves(companyData)
       this.nextSpy = sinon.spy()
+      this.reqMock = {
+        session: {
+          token: 'mock-token',
+        },
+      }
       this.resMock = {
         locals: {
           paths,
@@ -51,19 +56,11 @@ describe('Investment form middleware - client relationship management', () => {
           global_account_manager: `${globalAccountManager.first_name} ${globalAccountManager.last_name}`,
         }
 
-        await this.controller.populateForm(
-          {
-            session: {
-              token: 'mock-token',
-            },
-          },
-          this.resMock,
-          () => {
-            expect(this.resMock.locals.form.state).to.deep.equal(
-              expectedFormState
-            )
-          }
-        )
+        await this.controller.populateForm(this.reqMock, this.resMock, () => {
+          expect(this.resMock.locals.form.state).to.deep.equal(
+            expectedFormState
+          )
+        })
       })
     })
 
@@ -77,37 +74,21 @@ describe('Investment form middleware - client relationship management', () => {
           global_account_manager: 'Not set',
         }
 
-        await this.controller.populateForm(
-          {
-            session: {
-              token: 'mock-token',
-            },
-          },
-          this.resMock,
-          () => {
-            expect(this.resMock.locals.form.state).to.deep.equal(
-              expectedFormState
-            )
-          }
-        )
+        await this.controller.populateForm(this.reqMock, this.resMock, () => {
+          expect(this.resMock.locals.form.state).to.deep.equal(
+            expectedFormState
+          )
+        })
       })
     })
 
     it('should include the investor company as a hidden field', (done) => {
-      this.controller.populateForm(
-        {
-          session: {
-            token: 'mock-token',
-          },
-        },
-        this.resMock,
-        () => {
-          expect(this.resMock.locals.form.hiddenFields).to.deep.equal({
-            investor_company: investmentData.investor_company.id,
-          })
-          done()
-        }
-      )
+      this.controller.populateForm(this.reqMock, this.resMock, () => {
+        expect(this.resMock.locals.form.hiddenFields).to.deep.equal({
+          investor_company: investmentData.investor_company.id,
+        })
+        done()
+      })
     })
 
     it('should include labels for the form', (done) => {
@@ -128,23 +109,15 @@ describe('Investment form middleware - client relationship management', () => {
     })
 
     it('should include button text, return link and One List email', async () => {
-      await this.controller.populateForm(
-        {
-          session: {
-            token: 'mock-token',
-          },
-        },
-        this.resMock,
-        () => {
-          expect(this.resMock.locals.form.buttonText).to.equal('Save')
-          expect(this.resMock.locals.form.returnLink).to.equal(
-            `/investments/projects/${investmentData.id}/team`
-          )
-          expect(this.resMock.locals.form.oneListEmail).to.equal(
-            config.oneList.email
-          )
-        }
-      )
+      await this.controller.populateForm(this.reqMock, this.resMock, () => {
+        expect(this.resMock.locals.form.buttonText).to.equal('Save')
+        expect(this.resMock.locals.form.returnLink).to.equal(
+          `/investments/projects/${investmentData.id}/team`
+        )
+        expect(this.resMock.locals.form.oneListEmail).to.equal(
+          config.oneList.email
+        )
+      })
     })
 
     context(
@@ -219,48 +192,38 @@ describe('Investment form middleware - client relationship management', () => {
       })
 
       it('updates the investment data', (done) => {
-        this.controller.handleFormPost(
-          {
-            session: {
-              token: 'mock-token',
-            },
-            params: {
-              investmentId: investmentData.id,
-            },
-            body: this.body,
+        const stubRequest = {
+          ...this.reqMock,
+          params: {
+            investmentId: investmentData.id,
           },
-          this.resMock,
-          () => {
-            expect(this.updateInvestmentStub).to.be.calledWith(
-              'mock-token',
-              investmentData.id,
-              {
-                client_relationship_manager: this.body
-                  .client_relationship_manager,
-              }
-            )
-            done()
-          }
-        )
+          body: this.body,
+        }
+        this.controller.handleFormPost(stubRequest, this.resMock, () => {
+          expect(this.updateInvestmentStub).to.be.calledWith(
+            stubRequest,
+            investmentData.id,
+            {
+              client_relationship_manager: this.body
+                .client_relationship_manager,
+            }
+          )
+          done()
+        })
       })
 
       it('continues onto the next middleware with no errors', (done) => {
-        this.controller.handleFormPost(
-          {
-            session: {
-              token: 'mock-token',
-            },
-            params: {
-              investmentId: investmentData.id,
-            },
-            body: this.body,
+        const stubRequest = {
+          ...this.reqMock,
+          params: {
+            investmentId: investmentData.id,
           },
-          this.resMock,
-          (error) => {
-            expect(error).to.equal(undefined)
-            done()
-          }
-        )
+          body: this.body,
+        }
+        this.controller.handleFormPost(stubRequest, this.resMock, (error) => {
+          expect(error).to.equal(undefined)
+          done()
+        })
       })
     })
 
@@ -296,26 +259,22 @@ describe('Investment form middleware - client relationship management', () => {
 
         this.updateInvestmentStub.rejects(this.error)
 
-        this.controller.handleFormPost(
-          {
-            session: {
-              token: 'mock-token',
-            },
-            params: {
-              investmentId: investmentData.id,
-            },
-            body: this.body,
+        const stubRequest = {
+          ...this.reqMock,
+          params: {
+            investmentId: investmentData.id,
           },
-          this.resMock,
-          (error) => {
-            expect(error).to.equal(undefined)
-            expect(this.resMock.locals.form.state).to.deep.equal(this.body)
-            expect(this.resMock.locals.form.errors).to.deep.equal(
-              this.error.error
-            )
-            done()
-          }
-        )
+          body: this.body,
+        }
+
+        this.controller.handleFormPost(stubRequest, this.resMock, (error) => {
+          expect(error).to.equal(undefined)
+          expect(this.resMock.locals.form.state).to.deep.equal(this.body)
+          expect(this.resMock.locals.form.errors).to.deep.equal(
+            this.error.error
+          )
+          done()
+        })
       })
 
       it('should pass a none form error to next middleware', (done) => {
@@ -325,22 +284,18 @@ describe('Investment form middleware - client relationship management', () => {
 
         this.updateInvestmentStub.rejects(this.error)
 
-        this.controller.handleFormPost(
-          {
-            session: {
-              token: 'mock-token',
-            },
-            params: {
-              investmentId: investmentData.id,
-            },
-            body: this.body,
+        const stubRequest = {
+          ...this.reqMock,
+          params: {
+            investmentId: investmentData.id,
           },
-          this.resMock,
-          (error) => {
-            expect(error).to.deep.equal(this.error)
-            done()
-          }
-        )
+          body: this.body,
+        }
+
+        this.controller.handleFormPost(stubRequest, this.resMock, (error) => {
+          expect(error).to.deep.equal(this.error)
+          done()
+        })
       })
     })
   })

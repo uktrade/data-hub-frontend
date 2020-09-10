@@ -12,7 +12,7 @@ async function selectUKCompany(req, res, next) {
   }
 
   try {
-    await updateInvestment(req.session.token, req.params.investmentId, {
+    await updateInvestment(req, req.params.investmentId, {
       uk_company: req.query.company,
     })
 
@@ -28,7 +28,6 @@ async function selectUKCompany(req, res, next) {
 
 async function searchForUKCompany(req, res, next) {
   const searchTerm = req.query.term
-  const token = req.session.token
 
   if (!searchTerm) {
     return next()
@@ -38,7 +37,7 @@ async function searchForUKCompany(req, res, next) {
     res.locals.searchTerm = searchTerm
 
     res.locals.results = await searchCompanies({
-      token,
+      req,
       searchTerm,
       page: req.query.page,
       isUkBased: true,
@@ -66,7 +65,7 @@ function renderCompanyResults(req, res) {
 
 async function removeUKCompany(req, res, next) {
   try {
-    await updateInvestment(req.session.token, req.params.investmentId, {
+    await updateInvestment(req, req.params.investmentId, {
       uk_company: null,
     })
 

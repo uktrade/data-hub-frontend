@@ -6,7 +6,7 @@ const { CreateController } = require('../../../controllers')
 class SectorController extends CreateController {
   async configure(req, res, next) {
     try {
-      const sectors = await getOptions(req.session.token, 'sector')
+      const sectors = await getOptions(req, 'sector')
 
       req.form.options.fields.sector.options = sectors
       super.configure(req, res, next)

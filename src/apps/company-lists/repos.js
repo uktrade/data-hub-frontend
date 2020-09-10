@@ -2,18 +2,17 @@ const config = require('../../config')
 const { authorisedRequest } = require('../../lib/authorised-request')
 
 async function fetchCompanyList(req, res, next) {
-  const { token } = req.session
   const { listId } = req.params
   try {
-    res.locals.companyList = await getCompanyList(token, listId)
+    res.locals.companyList = await getCompanyList(req, listId)
     next()
   } catch (error) {
     next(error)
   }
 }
 
-function renameCompanyList(token, name, id) {
-  return authorisedRequest(token, {
+function renameCompanyList(req, name, id) {
+  return authorisedRequest(req, {
     url: `${config.apiRoot}/v4/company-list/${id}`,
     method: 'PATCH',
     body: {
@@ -23,8 +22,8 @@ function renameCompanyList(token, name, id) {
   })
 }
 
-function createUserCompanyList(token, id, name) {
-  return authorisedRequest(token, {
+function createUserCompanyList(req, id, name) {
+  return authorisedRequest(req, {
     method: 'POST',
     url: `${config.apiRoot}/v4/company-list`,
     body: {
@@ -34,37 +33,37 @@ function createUserCompanyList(token, id, name) {
   })
 }
 
-function getListsCompanyIsIn(token, id) {
-  return authorisedRequest(token, {
+function getListsCompanyIsIn(req, id) {
+  return authorisedRequest(req, {
     method: 'GET',
     url: `${config.apiRoot}/v4/company-list?items__company_id=${id}`,
   })
 }
 
-function getAllCompanyLists(token) {
-  return authorisedRequest(token, `${config.apiRoot}/v4/company-list`)
+function getAllCompanyLists(req) {
+  return authorisedRequest(req, `${config.apiRoot}/v4/company-list`)
 }
 
-function getCompanyList(token, id) {
-  return authorisedRequest(token, `${config.apiRoot}/v4/company-list/${id}`)
+function getCompanyList(req, id) {
+  return authorisedRequest(req, `${config.apiRoot}/v4/company-list/${id}`)
 }
 
-function deleteCompanyList(token, id) {
-  return authorisedRequest(token, {
+function deleteCompanyList(req, id) {
+  return authorisedRequest(req, {
     url: `${config.apiRoot}/v4/company-list/${id}`,
     method: 'DELETE',
   })
 }
 
-function addCompanyToList(token, listId, companyId) {
-  return authorisedRequest(token, {
+function addCompanyToList(req, listId, companyId) {
+  return authorisedRequest(req, {
     url: `${config.apiRoot}/v4/company-list/${listId}/item/${companyId}`,
     method: 'PUT',
   })
 }
 
-function removeCompanyFromList(token, listId, companyId) {
-  return authorisedRequest(token, {
+function removeCompanyFromList(req, listId, companyId) {
+  return authorisedRequest(req, {
     url: `${config.apiRoot}/v4/company-list/${listId}/item/${companyId}`,
     method: 'DELETE',
   })

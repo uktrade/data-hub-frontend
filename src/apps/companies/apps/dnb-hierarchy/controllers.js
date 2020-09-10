@@ -50,13 +50,12 @@ function removeCurrentCompany(dunsNumber, { count, results }) {
 async function fetchDnbHierarchyHandler(req, res, next) {
   try {
     const { company } = res.locals
-    const { token } = req.session
     const { page } = req.query
 
     const { count, results } = removeCurrentCompany(
       company.duns_number,
       await getDnbHierarchy(
-        token,
+        req,
         company.global_ultimate_duns_number,
         config.paginationDefaultSize,
         page

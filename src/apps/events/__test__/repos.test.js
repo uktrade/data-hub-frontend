@@ -3,7 +3,7 @@ const proxyquire = require('proxyquire')
 const config = require('../../../config')
 const { search } = require('../../../modules/search/services')
 
-const token = 'abcd'
+const stubRequest = { session: { token: 'abcd' } }
 
 describe('Event repos', () => {
   beforeEach(() => {
@@ -24,19 +24,19 @@ describe('Event repos', () => {
       const eventMock = { name: 'Convention' }
 
       it('should call with POST method', () => {
-        this.repos.saveEvent(token, eventMock)
+        this.repos.saveEvent(stubRequest, eventMock)
 
         expect(this.authorisedRequestStub).to.be.calledWith(
-          token,
+          stubRequest,
           sinon.match({ method: 'POST' })
         )
       })
 
       it('should contain event form body', () => {
-        this.repos.saveEvent(token, eventMock)
+        this.repos.saveEvent(stubRequest, eventMock)
 
         expect(this.authorisedRequestStub).to.be.calledWith(
-          token,
+          stubRequest,
           sinon.match({ body: eventMock })
         )
       })
@@ -46,29 +46,29 @@ describe('Event repos', () => {
       const eventMock = { id: '123', name: 'Convention' }
 
       it('should call with POST method', () => {
-        this.repos.saveEvent(token, eventMock)
+        this.repos.saveEvent(stubRequest, eventMock)
 
         expect(this.authorisedRequestStub).to.be.calledWith(
-          token,
+          stubRequest,
           sinon.match({ method: 'PATCH' })
         )
       })
 
       it('should set request URL to event URL', () => {
-        this.repos.saveEvent(token, eventMock)
+        this.repos.saveEvent(stubRequest, eventMock)
 
         expect(this.authorisedRequestStub).to.be.calledWith(
-          token,
+          stubRequest,
           sinon.match({ url: `${config.apiRoot}/v3/event/${eventMock.id}` })
         )
       })
 
       it('should contain event form body', () => {
         const event = { name: 'Convention' }
-        this.repos.saveEvent(token, eventMock)
+        this.repos.saveEvent(stubRequest, eventMock)
 
         expect(this.authorisedRequestStub).to.be.calledWith(
-          token,
+          stubRequest,
           sinon.match({ body: event })
         )
       })
@@ -77,9 +77,9 @@ describe('Event repos', () => {
 
   describe('#fetchEvent', () => {
     it('should call with event URL', () => {
-      this.repos.fetchEvent(token, '123')
+      this.repos.fetchEvent(stubRequest, '123')
       expect(this.authorisedRequestStub).to.be.calledWith(
-        token,
+        stubRequest,
         `${config.apiRoot}/v3/event/123`
       )
     })
@@ -113,7 +113,7 @@ describe('Event repos', () => {
 
             this.currentFormattedTime = now.toISOString()
 
-            this.events = await this.repos.getActiveEvents(token)
+            this.events = await this.repos.getActiveEvents(stubRequest)
           })
 
           afterEach(() => {
@@ -122,6 +122,7 @@ describe('Event repos', () => {
 
           it('should call search to get all active events today', () => {
             expect(this.searchSpy).to.be.calledWith({
+              req: stubRequest,
               searchEntity: 'event',
               requestBody: {
                 sortby: 'name:asc',
@@ -130,7 +131,6 @@ describe('Event repos', () => {
                   after: this.currentFormattedTime,
                 },
               },
-              token,
               limit: 100000,
               isAggregation: false,
             })
@@ -144,13 +144,14 @@ describe('Event repos', () => {
               const now = new Date()
               this.createdOn = now.toISOString()
               this.events = await this.repos.getActiveEvents(
-                token,
+                stubRequest,
                 this.createdOn
               )
             })
 
             it('should call search to get all active events on the specified date', () => {
               expect(this.searchSpy).to.be.calledWith({
+                req: stubRequest,
                 searchEntity: 'event',
                 requestBody: {
                   sortby: 'name:asc',
@@ -159,7 +160,6 @@ describe('Event repos', () => {
                     after: this.createdOn,
                   },
                 },
-                token,
                 limit: 100000,
                 isAggregation: false,
               })

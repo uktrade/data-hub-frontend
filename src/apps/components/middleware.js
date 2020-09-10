@@ -4,7 +4,6 @@ const { getAdviser } = require('../adviser/repos')
 
 async function adviserLookup(req, res, next) {
   try {
-    const token = req.session.token
     const adviserParam = req.query.adviser
     res.locals.advisers = []
 
@@ -12,7 +11,7 @@ async function adviserLookup(req, res, next) {
       const adviserIds = castArray(adviserParam)
 
       for (let index = 0; index < adviserIds.length; index += 1) {
-        const adviser = await getAdviser(token, adviserIds[index])
+        const adviser = await getAdviser(req, adviserIds[index])
         res.locals.advisers.push({
           value: adviser.id,
           label: adviser.name,

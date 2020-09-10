@@ -10,9 +10,9 @@ const removeArray = require('../../../lib/remove-array')
 async function getCompanyContactCollection(req, res, next) {
   try {
     res.locals.contactResults = await search({
+      req,
       searchEntity: 'contact',
       requestBody: req.body,
-      token: req.session.token,
       page: req.query.page,
       isAggregation: false,
     }).then(

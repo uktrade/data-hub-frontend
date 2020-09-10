@@ -22,23 +22,22 @@ const { getCompanyProfiles } = require('../repos')
 const { get } = require('lodash')
 const urls = require('../../../../../../lib/urls')
 
-const getCompanyProfile = async (token, company, editing) => {
-  const profiles = await getCompanyProfiles(token, company.id)
+const getCompanyProfile = async (req, company, editing) => {
+  const profiles = await getCompanyProfiles(req, company.id)
   const profile = profiles.results && profiles.results[0]
   return profile ? transformProfile(Object.freeze(profile), editing) : profile
 }
 
 const renderProfile = async (req, res, next) => {
-  const { token } = req.session
   const { company, returnUrl, dnbRelatedCompaniesCount } = res.locals
   const { editing } = req.query
 
   try {
-    const profile = await getCompanyProfile(token, company, editing)
+    const profile = await getCompanyProfile(req, company, editing)
     const editType = get(profile, 'editing')
 
     if (editType === INVESTOR_DETAILS) {
-      await Promise.all(getInvestorDetailsOptions(token)).then(
+      await Promise.all(getInvestorDetailsOptions(req)).then(
         ([investorTypeMD, requiredCheckMD, adviserMD]) => {
           profile.investorDetails.investorType.items = transformInvestorTypes(
             investorTypeMD,
@@ -57,7 +56,7 @@ const renderProfile = async (req, res, next) => {
         }
       )
     } else if (editType === INVESTOR_REQUIREMENTS) {
-      await Promise.all(getInvestorRequirementsOptions(token)).then(
+      await Promise.all(getInvestorRequirementsOptions(req)).then(
         ([
           dealTicketSizeMD,
           assetClassesMD,
@@ -135,7 +134,7 @@ const renderProfile = async (req, res, next) => {
         }
       )
     } else if (editType === LOCATION) {
-      await Promise.all(getLocationOptions(token)).then(
+      await Promise.all(getLocationOptions(req)).then(
         ([regions, countries]) => {
           profile.location.uk_region_locations.items = regions
           profile.location.other_countries_being_considered.items = countries

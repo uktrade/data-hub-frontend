@@ -7,8 +7,8 @@ const hqLabels = {
   trading_names: 'Trading names',
 }
 
-async function getHeadquarterOptions(token) {
-  const options = await getOptions(token, 'headquarter-type', { sorted: false })
+async function getHeadquarterOptions(req) {
+  const options = await getOptions(req, 'headquarter-type', { sorted: false })
   const headquarterOptions = options.map((option) => ({
     value: option.value,
     label: hqLabels[option.label],

@@ -1,7 +1,6 @@
 const { getOptions } = require('../../../lib/options')
 
 async function renderAdminView(req, res) {
-  const { token } = req.session
   const { id, name, stage } = res.locals.investment
   // orderStages puts the stages array in chronological order, rather than alphabetical
   const orderStages = (stages) => {
@@ -10,9 +9,7 @@ async function renderAdminView(req, res) {
     stages[2] = activeStage
     return stages
   }
-  const stages = orderStages(
-    await getOptions(token, 'investment-project-stage')
-  )
+  const stages = orderStages(await getOptions(req, 'investment-project-stage'))
 
   res.locals.title = `Admin - ${name} - Projects - Investments - DIT Data Hub`
   res.render('investments/views/admin/client-container.njk', {

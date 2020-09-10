@@ -6,14 +6,14 @@ const { requirementsFormConfig } = require('../../macros')
 const { getOptions } = require('../../../../lib/options')
 const { buildFormWithStateAndErrors } = require('../../../builders')
 
-async function getFormOptions(token, createdOn) {
+async function getFormOptions(req, createdOn) {
   return {
-    strategicDrivers: await getOptions(token, 'investment-strategic-driver', {
+    strategicDrivers: await getOptions(req, 'investment-strategic-driver', {
       createdOn,
     }),
-    countries: await getOptions(token, 'country', { createdOn }),
-    ukRegions: await getOptions(token, 'uk-region', { createdOn }),
-    partners: await getOptions(token, 'investment-delivery-partner', {
+    countries: await getOptions(req, 'country', { createdOn }),
+    ukRegions: await getOptions(req, 'uk-region', { createdOn }),
+    partners: await getOptions(req, 'investment-delivery-partner', {
       createdOn,
     }),
   }
@@ -39,10 +39,7 @@ async function populateForm(req, res, next) {
   try {
     const { investment } = res.locals
     const { projects } = res.locals.paths
-    const options = await getFormOptions(
-      req.session.token,
-      investment.created_on
-    )
+    const options = await getFormOptions(req, investment.created_on)
     const body = res.locals.formattedBody || investment
 
     res.locals.requirementsForm = assign(
@@ -72,11 +69,7 @@ async function handleFormPost(req, res, next) {
       return next()
     }
 
-    await updateInvestment(
-      req.session.token,
-      investmentId,
-      res.locals.formattedBody
-    )
+    await updateInvestment(req, investmentId, res.locals.formattedBody)
     req.flash('success', 'Investment requirements updated')
     res.redirect(`${projects}/${investmentId}/details`)
   } catch (err) {

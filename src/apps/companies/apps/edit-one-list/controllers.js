@@ -9,12 +9,11 @@ const {
 } = require('./constants')
 
 async function renderEditOneList(req, res) {
-  const { token } = req.session
   const { company } = res.locals
 
   const [oneListTiers, oneListTeam] = await Promise.all([
-    getOptions(token, 'one-list-tier', { sorted: false }),
-    getOneListGroupCoreTeam(token, company.id),
+    getOptions(req, 'one-list-tier', { sorted: false }),
+    getOneListGroupCoreTeam(req, company.id),
   ])
 
   const oneListGroupTier = company.one_list_group_tier

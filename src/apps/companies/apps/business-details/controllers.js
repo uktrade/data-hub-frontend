@@ -18,7 +18,6 @@ function canEditOneList(permissions) {
 }
 
 async function renderBusinessDetails(req, res) {
-  const { token } = req.session
   const {
     company,
     ARCHIVED_DOCUMENT_BASE_URL,
@@ -28,7 +27,7 @@ async function renderBusinessDetails(req, res) {
     dnbRelatedCompaniesCount,
   } = res.locals
   const userPermissions = res.locals.user.permissions
-  const subsidiaries = await getCompanySubsidiaries(token, company.id)
+  const subsidiaries = await getCompanySubsidiaries(req, company.id)
 
   res
     .breadcrumb(company.name, urls.companies.detail(company.id))

@@ -15,11 +15,10 @@ const renderProjectsView = (req, res) => {
 
 const fetchProjectsHistoryHandler = async (req, res, next) => {
   try {
-    const { token } = req.session
     const { page } = req.query
 
     const { results, count } = await getInvestmentProjectAuditLog(
-      token,
+      req,
       req.params.investmentId,
       page
     )

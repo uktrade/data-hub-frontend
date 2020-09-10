@@ -12,7 +12,7 @@ describe('HTTP PATCH - Large capital profile', () => {
     const commonTests = () => {
       it('should call updateCompanyProfile with the correct arguments', () => {
         expect(this.updateCompanyProfileStub).to.have.been.calledWith(
-          '1234',
+          this.middlewareParameters.reqMock,
           {},
           '123'
         )

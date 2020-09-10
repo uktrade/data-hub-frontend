@@ -8,7 +8,6 @@ const { ENTITIES } = require('../../search/constants')
 
 async function renderSubsidiaries(req, res, next) {
   try {
-    const token = req.session.token
     const { company } = res.locals
     const actionButtons = company.archived
       ? undefined
@@ -20,7 +19,7 @@ async function renderSubsidiaries(req, res, next) {
         ]
 
     const subsidiaryCollection = await getCompanySubsidiaries(
-      token,
+      req,
       company.id,
       req.query.page
     ).then(

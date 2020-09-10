@@ -74,12 +74,11 @@ function transformErrorResponseToFormErrors(error) {
 
 async function populateTeamEditForm(req, res, next) {
   try {
-    const { token } = req.session
     const { investmentId } = req.params
     const { projects } = res.locals.paths
     const path = `${projects}/${investmentId}`
 
-    const { results: advisers } = await getAdvisers(token)
+    const { results: advisers } = await getAdvisers(req)
 
     const teamMembers = transformInvestmentTeamMemberstoTeamMemberArray(
       res.locals.investment
@@ -97,7 +96,6 @@ async function populateTeamEditForm(req, res, next) {
 }
 
 async function postTeamEdit(req, res, next) {
-  const { token } = req.session
   const { investmentId } = req.params
   const { projects } = res.locals.paths
   const path = `${projects}/${investmentId}`
@@ -105,7 +103,7 @@ async function postTeamEdit(req, res, next) {
   const teamMembersArray = transformFormToTeamMemberArray(req.body)
 
   try {
-    await updateInvestmentTeamMembers(token, investmentId, teamMembersArray)
+    await updateInvestmentTeamMembers(req, investmentId, teamMembersArray)
     req.flash('success', 'Investment details updated')
     return res.redirect(`${path}/team`)
   } catch (exception) {
@@ -120,7 +118,7 @@ async function postTeamEdit(req, res, next) {
     }
   }
 
-  const { results: advisers } = await getAdvisers(token)
+  const { results: advisers } = await getAdvisers(req)
   const fields = transformTeamMemberArrayToFields(teamMembersArray, advisers)
   res.locals.form = assign({}, res.locals.form, makeForm(path, fields))
 

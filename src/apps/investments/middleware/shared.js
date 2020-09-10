@@ -21,7 +21,7 @@ function getNextStage(currentStage, projectStages) {
 }
 
 function getCompanyDetails(req, res, next) {
-  getDitCompany(req.session.token, req.params.companyId)
+  getDitCompany(req, req.params.companyId)
     .then((company) => {
       res.locals.company = company
       return next()
@@ -45,9 +45,9 @@ async function getInvestmentDetails(req, res, next) {
     return next()
   }
   try {
-    const investment = await getInvestment(req.session.token, investmentId)
+    const investment = await getInvestment(req, investmentId)
     const investorCompany = await getDitCompany(
-      req.session.token,
+      req,
       get(investment, 'investor_company.id')
     )
     const ukCompanyId = get(investment, 'uk_company.id')
@@ -67,7 +67,7 @@ async function getInvestmentDetails(req, res, next) {
     )
 
     if (ukCompanyId) {
-      const companyDetails = await getDitCompany(req.session.token, ukCompanyId)
+      const companyDetails = await getDitCompany(req, ukCompanyId)
       investment.uk_company = Object.assign(
         {},
         investment.uk_company,
@@ -77,7 +77,7 @@ async function getInvestmentDetails(req, res, next) {
 
     if (clientRelationshipManagerId) {
       const clientRelationshipManager = await getAdviser(
-        req.session.token,
+        req,
         clientRelationshipManagerId
       )
       investment.client_relationship_manager = clientRelationshipManager

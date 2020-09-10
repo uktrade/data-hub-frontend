@@ -46,7 +46,7 @@ describe('Company investments project controlle', () => {
 
       it('should call audit log with correct arguments', () => {
         expect(this.getCompanyInvestmentProjectsStub).to.have.been.calledWith(
-          '1234',
+          this.middlewareParameters.reqMock,
           companyMock.id,
           1
         )

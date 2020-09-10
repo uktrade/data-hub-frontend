@@ -41,13 +41,13 @@ async function getHandler(req, res, next) {
 
   try {
     const companyInvestments = await getCompanyInvestmentProjects(
-      req.session.token,
+      req,
       companyId
     )
 
     if (searchTerm) {
       searchResult = await searchForeignCompanies({
-        token: req.session.token,
+        req,
         page: req.query.page,
         searchTerm,
       }).then(

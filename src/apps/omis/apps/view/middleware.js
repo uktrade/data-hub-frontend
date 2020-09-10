@@ -25,7 +25,7 @@ async function setContact(req, res, next) {
   }
 
   try {
-    res.locals.order.contact = await getContact(req.session.token, contactId)
+    res.locals.order.contact = await getContact(req, contactId)
     next()
   } catch (error) {
     next(error)
@@ -37,10 +37,7 @@ async function setAssignees(req, res, next) {
 
   if (orderId) {
     try {
-      res.locals.assignees = await Order.getAssignees(
-        req.session.token,
-        orderId
-      )
+      res.locals.assignees = await Order.getAssignees(req, orderId)
     } catch (error) {
       return next(error)
     }
@@ -53,10 +50,7 @@ async function setSubscribers(req, res, next) {
 
   if (orderId) {
     try {
-      res.locals.subscribers = await Order.getSubscribers(
-        req.session.token,
-        orderId
-      )
+      res.locals.subscribers = await Order.getSubscribers(req, orderId)
     } catch (error) {
       return next(error)
     }
@@ -70,7 +64,7 @@ async function setQuoteSummary(req, res, next) {
 
   if (orderStatus === 'quote_awaiting_acceptance') {
     try {
-      const quote = await Order.getQuote(req.session.token, orderId)
+      const quote = await Order.getQuote(req, orderId)
       quote.expires_on = new Date(quote.expires_on + 'T23:59:59')
 
       res.locals.quote = assign({}, quote, {
@@ -96,7 +90,7 @@ async function setQuotePreview(req, res, next) {
   }
 
   try {
-    const quote = await Order.previewQuote(req.session.token, id)
+    const quote = await Order.previewQuote(req, id)
     quote.expires_on = new Date(quote.expires_on + 'T23:59:59')
 
     res.locals.quote = quote
@@ -140,7 +134,7 @@ async function setQuote(req, res, next) {
   }
 
   try {
-    const quote = await Order.getQuote(req.session.token, res.locals.order.id)
+    const quote = await Order.getQuote(req, res.locals.order.id)
     quote.expires_on = new Date(quote.expires_on + 'T23:59:59')
 
     res.locals.quote = assign({}, quote, {
@@ -157,10 +151,7 @@ async function setQuote(req, res, next) {
 
 async function setInvoice(req, res, next) {
   try {
-    res.locals.invoice = await Order.getInvoice(
-      req.session.token,
-      res.locals.order.id
-    )
+    res.locals.invoice = await Order.getInvoice(req, res.locals.order.id)
   } catch (error) {
     logger.error(error)
   }
@@ -170,10 +161,7 @@ async function setInvoice(req, res, next) {
 
 async function setPayments(req, res, next) {
   try {
-    const payments = await Order.getPayments(
-      req.session.token,
-      res.locals.order.id
-    )
+    const payments = await Order.getPayments(req, res.locals.order.id)
 
     res.locals.payments = payments.map(transformPaymentToView)
   } catch (error) {
@@ -188,7 +176,7 @@ async function generateQuote(req, res, next) {
   const clientEmail = get(res.locals, 'order.contact.email') || 'client'
 
   try {
-    await Order.createQuote(req.session.token, orderId)
+    await Order.createQuote(req, orderId)
 
     req.flash('success', `Quote sent ${clientEmail}`)
     res.redirect(`/omis/${orderId}`)
@@ -219,7 +207,7 @@ async function cancelQuote(req, res, next) {
   const orderId = get(res.locals, 'order.id')
 
   try {
-    await Order.cancelQuote(req.session.token, orderId)
+    await Order.cancelQuote(req, orderId)
 
     req.flash('success', 'Quote successfully cancelled.')
     res.redirect(`/omis/${orderId}`)

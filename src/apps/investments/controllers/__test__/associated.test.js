@@ -88,7 +88,7 @@ describe('investment associated controller', () => {
         })
 
         it('should save the change to the investment project', () => {
-          expect(this.updateInvestmentStub).to.be.calledWith('abcd', '1', {
+          expect(this.updateInvestmentStub).to.be.calledWith(this.req, '1', {
             associated_non_fdi_r_and_d_project: '1234',
           })
         })
@@ -266,7 +266,7 @@ describe('investment associated controller', () => {
       })
 
       it('should update the investment record', () => {
-        expect(this.updateInvestmentStub).to.be.calledWith('abcd', '1', {
+        expect(this.updateInvestmentStub).to.be.calledWith(this.req, '1', {
           associated_non_fdi_r_and_d_project: null,
         })
       })
