@@ -9,7 +9,7 @@ describe('OAuth controller', () => {
     this.saveSessionStub = sinon.stub()
     this.controller = proxyquire.noCallThru().load('../controllers', {
       './../../config': this.mockConfig,
-      uuid: this.mockUuid,
+      uuid: { v4: this.mockUuid },
       './../../lib/session-helper': {
         saveSession: this.saveSessionStub,
       },
