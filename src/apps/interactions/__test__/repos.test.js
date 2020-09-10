@@ -1,7 +1,8 @@
 const config = require('../../../config')
 const draftPastMeeting = require('../../../../test/unit/data/interactions/draft-past-meeting.json')
-
 const { archiveInteraction } = require('../repos')
+
+const stubRequest = { session: { token: 'abcd' } }
 
 describe('Interaction repository', () => {
   describe('#archiveInteraction', () => {
@@ -13,7 +14,7 @@ describe('Interaction repository', () => {
         .reply(200, { id: draftPastMeeting.id })
 
       const interaction = await archiveInteraction(
-        'token',
+        stubRequest,
         draftPastMeeting.id,
         'reason'
       )

@@ -14,15 +14,14 @@ const SECTOR = FILTER_CONSTANTS.PROPOSITIONS.SECTOR.NAME
 
 async function renderPropositionList(req, res, next) {
   try {
-    const token = req.session.token
     const queryString = QUERY_STRING
     const currentAdviserId = get(req.session, 'user.id')
-    const channels = await getOptions(token, 'communication-channel', {
+    const channels = await getOptions(req, 'communication-channel', {
       includeDisabled: true,
     })
-    const teams = await getOptions(token, 'team', { includeDisabled: true })
+    const teams = await getOptions(req, 'team', { includeDisabled: true })
 
-    const sectorOptions = await getOptions(token, SECTOR, { queryString })
+    const sectorOptions = await getOptions(req, SECTOR, { queryString })
 
     const filtersFields = collectionFilterFields({
       teams,
@@ -32,7 +31,7 @@ async function renderPropositionList(req, res, next) {
     })
 
     const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(
-      token,
+      req,
       filtersFields,
       req.query
     )

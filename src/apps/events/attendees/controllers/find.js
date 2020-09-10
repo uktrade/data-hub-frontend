@@ -29,7 +29,6 @@ async function renderFindAttendee(req, res, next) {
 async function findAttendee(req, res, next) {
   try {
     const event = res.locals.event
-    const token = req.session.token
 
     if (!event) {
       throw new Error('No event supplied')
@@ -43,12 +42,12 @@ async function findAttendee(req, res, next) {
     }
 
     const transformListItemToAttendeeSearchResult = await createContactItemToAttendeeSearchResult(
-      token,
+      req,
       event
     )
 
     const contactsResponse = await search({
-      token,
+      req,
       searchEntity: 'contact',
       page: query.page,
       requestBody: {

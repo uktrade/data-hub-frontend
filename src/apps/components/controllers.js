@@ -32,7 +32,7 @@ function renderCollection(req, res) {
 
 async function renderEntityList(req, res) {
   const investmentProjects = await authorisedRequest(
-    req.session.token,
+    req,
     `${config.apiRoot}/v3/investment?limit=10`
   ).then((result) => {
     return Object.assign(result, {
@@ -73,11 +73,11 @@ async function renderEntityList(req, res) {
     investmentProjects,
     auditLog,
     companiesSearch: await authorisedRequest(
-      req.session.token,
+      req,
       `${config.apiRoot}/v3/search?term=samsung&entity=company&limit=10`
     ),
     contactsSearch: await authorisedRequest(
-      req.session.token,
+      req,
       `${config.apiRoot}/v3/search?term=samsung&entity=contact&limit=10`
     ),
   })

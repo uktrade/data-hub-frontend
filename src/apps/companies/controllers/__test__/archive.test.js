@@ -26,17 +26,15 @@ describe('Company controller, archive', () => {
   const commonTests = ({ stubName, expectedReason, expectedFlash }) => {
     if (stubName) {
       it('should call archive company with correct args', () => {
-        const expectedToken = this.middlewareParameters.reqMock.session.token
-
         if (expectedReason) {
           expect(this.stub[stubName]).to.have.been.calledWith(
-            expectedToken,
+            this.middlewareParameters.reqMock,
             companyMock.id,
             expectedReason
           )
         } else {
           expect(this.stub[stubName]).to.have.been.calledWith(
-            expectedToken,
+            this.middlewareParameters.reqMock,
             companyMock.id
           )
         }

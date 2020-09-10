@@ -10,35 +10,35 @@ const OPTIONS = {
   transformer: transformObjectToGovUKOption,
 }
 
-const getInvestorDetailsOptions = (token) => {
+const getInvestorDetailsOptions = (req) => {
   return [
-    getOptions(token, 'capital-investment/investor-type', OPTIONS),
-    getOptions(token, 'capital-investment/required-checks-conducted', OPTIONS),
-    getAdvisers(token),
+    getOptions(req, 'capital-investment/investor-type', OPTIONS),
+    getOptions(req, 'capital-investment/required-checks-conducted', OPTIONS),
+    getAdvisers(req),
   ]
 }
 
-const getInvestorRequirementsOptions = (token) => {
+const getInvestorRequirementsOptions = (req) => {
   return [
-    getOptions(token, 'capital-investment/deal-ticket-size', OPTIONS),
-    getOptions(token, 'capital-investment/asset-class-interest', {
+    getOptions(req, 'capital-investment/deal-ticket-size', OPTIONS),
+    getOptions(req, 'capital-investment/asset-class-interest', {
       transformer: transformAssetClasses,
     }),
-    getOptions(token, 'capital-investment/large-capital-investment-type', {
+    getOptions(req, 'capital-investment/large-capital-investment-type', {
       sortPropertyName: 'text',
       transformer: transformObjectToGovUKOption,
     }),
-    getOptions(token, 'capital-investment/return-rate', OPTIONS),
-    getOptions(token, 'capital-investment/time-horizon', OPTIONS),
-    getOptions(token, 'capital-investment/restriction', OPTIONS),
-    getOptions(token, 'capital-investment/construction-risk', OPTIONS),
-    getOptions(token, 'capital-investment/equity-percentage', OPTIONS),
-    getOptions(token, 'capital-investment/desired-deal-role', OPTIONS),
+    getOptions(req, 'capital-investment/return-rate', OPTIONS),
+    getOptions(req, 'capital-investment/time-horizon', OPTIONS),
+    getOptions(req, 'capital-investment/restriction', OPTIONS),
+    getOptions(req, 'capital-investment/construction-risk', OPTIONS),
+    getOptions(req, 'capital-investment/equity-percentage', OPTIONS),
+    getOptions(req, 'capital-investment/desired-deal-role', OPTIONS),
   ]
 }
 
-const getLocationOptions = (token) => {
-  return [getOptions(token, 'uk-region'), getOptions(token, 'country')]
+const getLocationOptions = (req) => {
+  return [getOptions(req, 'uk-region'), getOptions(req, 'country')]
 }
 
 module.exports = {

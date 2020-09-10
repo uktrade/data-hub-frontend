@@ -11,14 +11,13 @@ const reasonForArchiveOptionsPrefix = 'This contact has:'
 
 async function getCommon(req, res, next) {
   try {
-    const token = req.session.token
     const contact = (res.locals.contact = await contactsRepository.getContact(
-      token,
+      req,
       req.params.contactId
     ))
 
     res.locals.company = await companyRepository.getDitCompany(
-      token,
+      req,
       contact.company.id
     )
     res.locals.id = req.params.contactId

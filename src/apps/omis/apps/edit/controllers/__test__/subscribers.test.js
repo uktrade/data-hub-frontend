@@ -215,7 +215,7 @@ describe('OMIS edit subscribers controller', () => {
       it('should force save assignees', () => {
         expect(this.saveSubscribersStub).to.have.been.calledOnce
         expect(this.saveSubscribersStub).to.have.been.calledWith(
-          tokenMock,
+          this.reqMock,
           orderMock.id,
           [
             {

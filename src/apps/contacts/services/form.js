@@ -55,12 +55,12 @@ function getContactAsFormData(contact) {
 /**
  * Accepts a contact posted from a form and converts it into the API format before saving it.
  *
- * @param {string} token Session token to use for network calls
+ * @param {string} req Originating request
  * @param {Object} contactForm A flat form format contact
  * @returns {Promise} Returns a promise that resolves to a copy of the saved contact in API
  * format after the server has saved it
  */
-function saveContactForm(token, contactForm) {
+function saveContactForm(req, contactForm) {
   return new Promise(async (resolve, reject) => {
     try {
       const contactFormWithYesNoAsBool = convertYesNoToBoolean(contactForm)
@@ -76,7 +76,7 @@ function saveContactForm(token, contactForm) {
         accepts_dit_email_marketing: !!contactForm.accepts_dit_email_marketing,
       })
       const savedContact = await contactsRepository.saveContact(
-        token,
+        req,
         contactFormForApiRequest
       )
       resolve(savedContact)

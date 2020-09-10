@@ -17,14 +17,13 @@ const {
 
 async function renderAddCompanyForm(req, res, next) {
   try {
-    const { token } = req.session
     const [countries, organisationTypes, regions, sectors] = await Promise.all([
-      getOptions(token, 'country', {
+      getOptions(req, 'country', {
         transformer: transformCountryToOptionWithIsoCode,
       }),
-      fetchOrganisationTypes(token),
-      getOptions(token, 'uk-region'),
-      getOptions(token, 'sector'),
+      fetchOrganisationTypes(req),
+      getOptions(req, 'uk-region'),
+      getOptions(req, 'sector'),
     ])
 
     res
@@ -45,7 +44,7 @@ async function renderAddCompanyForm(req, res, next) {
 async function postSearchDnbCompanies(req, res, next) {
   try {
     const results = await searchDnbCompanies({
-      token: req.session.token,
+      req,
       requestBody: req.body,
     })
 
@@ -56,12 +55,11 @@ async function postSearchDnbCompanies(req, res, next) {
 }
 
 async function postAddDnbCompany(req, res, next) {
-  const { token } = req.session
   const { uk_region, sector, dnbCompany } = req.body
 
   try {
-    const company = await saveDnbCompany(token, dnbCompany.duns_number)
-    const result = await updateCompany(token, company.id, {
+    const company = await saveDnbCompany(req, dnbCompany.duns_number)
+    const result = await updateCompany(req, company.id, {
       uk_region,
       sector,
     })
@@ -74,19 +72,18 @@ async function postAddDnbCompany(req, res, next) {
 }
 
 async function postAddDnbCompanyInvestigation(req, res, next) {
-  const { token } = req.session
   const { body } = req
 
   try {
     // 1. Saves a stubbed record in Data Hub.
     // 2. Sends a single notification to request an investigation.
     const stubCompany = transformToDnbStubCompany(body)
-    const company = await saveCompany(token, stubCompany)
+    const company = await saveCompany(req, stubCompany)
 
     // 1. Creates a record which is proxied through to the DnB Service.
     // 2. Generates an excel spreadsheet for the support team to investigate.
     const create = transformToCreateDnbCompanyInvestigation(body, company.id)
-    await createDnbCompanyInvestigation(token, create)
+    await createDnbCompanyInvestigation(req, create)
 
     req.flash('success', 'Company added to Data Hub')
     res.json(company)

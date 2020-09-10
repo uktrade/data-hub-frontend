@@ -2,7 +2,7 @@ const config = require('../../config')
 const { authorisedRequest } = require('../../lib/authorised-request')
 const { search } = require('../../modules/search/services')
 
-function saveEvent(token, event) {
+function saveEvent(req, event) {
   const options = {
     url: `${config.apiRoot}/v3/event`,
     method: 'POST',
@@ -14,26 +14,27 @@ function saveEvent(token, event) {
     options.method = 'PATCH'
   }
 
-  return authorisedRequest(token, options)
+  return authorisedRequest(req, options)
 }
 
-function fetchEvent(token, id) {
-  return authorisedRequest(token, `${config.apiRoot}/v3/event/${id}`)
+function fetchEvent(req, id) {
+  return authorisedRequest(req, `${config.apiRoot}/v3/event/${id}`)
 }
 
-function getEvents(token) {
-  return authorisedRequest(token, `${config.apiRoot}/v3/event`)
+function getEvents(req) {
+  return authorisedRequest(req, `${config.apiRoot}/v3/event`)
 }
 
-function getAllEvents(token) {
+function getAllEvents(req) {
   return authorisedRequest(
-    token,
+    req,
     `${config.apiRoot}/v3/event?limit=100000&offset=0`
   )
 }
 
-async function getActiveEvents(token, createdOn) {
+async function getActiveEvents(req, createdOn) {
   const eventsResponse = await search({
+    req,
     searchEntity: 'event',
     requestBody: {
       sortby: 'name:asc',
@@ -42,7 +43,6 @@ async function getActiveEvents(token, createdOn) {
         exists: false,
       },
     },
-    token: token,
     limit: 100000,
     isAggregation: false,
   })

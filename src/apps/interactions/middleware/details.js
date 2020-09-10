@@ -3,13 +3,11 @@ const { getDitCompany } = require('../../companies/repos')
 
 async function getInteractionDetails(req, res, next, interactionId) {
   try {
-    const { token } = req.session
-
-    const interaction = await fetchInteraction(token, interactionId)
+    const interaction = await fetchInteraction(req, interactionId)
     res.locals.interaction = interaction
 
     if (!res.locals.company) {
-      res.locals.company = await getDitCompany(token, interaction.company.id)
+      res.locals.company = await getDitCompany(req, interaction.company.id)
     }
 
     next()

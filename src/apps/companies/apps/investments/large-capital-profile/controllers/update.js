@@ -19,11 +19,10 @@ const transformer = {
 const updateProfile = async (req, res, next) => {
   const { profileId, editing } = req.body
   const { company } = res.locals
-  const { token } = req.session
 
   try {
     const body = transformer[editing](req.body)
-    await updateCompanyProfile(token, body, profileId)
+    await updateCompanyProfile(req, body, profileId)
     res.redirect(`/companies/${company.id}/investments/large-capital-profile`)
   } catch (error) {
     next(error)

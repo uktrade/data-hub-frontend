@@ -55,25 +55,25 @@ const filterServiceNames = (services) => {
   return filteredServiceNames
 }
 
-async function getInteractionOptions(token, req, res) {
+async function getInteractionOptions(req, res) {
   if (req.xhr && get(req.session, 'interactions.options')) {
     return req.session.interactions.options
   }
-  const sectorOptions = await getOptions(token, SECTOR, {
+  const sectorOptions = await getOptions(req, SECTOR, {
     queryString: QUERY_STRING,
   })
 
-  const unfilteredServiceOptions = await getOptions(token, 'service', {
+  const unfilteredServiceOptions = await getOptions(req, 'service', {
     includeDisabled: true,
   })
 
   const serviceOptions = filterServiceNames(unfilteredServiceOptions)
 
-  const teamOptions = await getOptions(token, 'team', { includeDisabled: true })
-  const types = await getOptions(token, 'policy-issue-type')
+  const teamOptions = await getOptions(req, 'team', { includeDisabled: true })
+  const types = await getOptions(req, 'policy-issue-type')
 
-  const areas = await getOptions(token, 'policy-area')
-  const oneListTierOptions = await getOptions(token, 'one-list-tier')
+  const areas = await getOptions(req, 'policy-area')
+  const oneListTierOptions = await getOptions(req, 'one-list-tier')
 
   const currentAdvisers =
     get(res.locals, 'interaction.dit_participants') &&
@@ -81,7 +81,7 @@ async function getInteractionOptions(token, req, res) {
       (participant) => participant.adviser && participant.adviser.id
     )
 
-  const advisers = await getAdvisers(token)
+  const advisers = await getAdvisers(req)
 
   const activeAdvisers = filterActiveAdvisers({
     advisers: advisers.results,
@@ -108,10 +108,10 @@ async function getInteractionOptions(token, req, res) {
 
 async function renderInteractionList(req, res, next) {
   try {
-    const { token, user } = req.session
+    const { user } = req.session
     const { id: currentAdviserId, permissions } = user
     const { query } = req
-    const options = await getInteractionOptions(token, req, res)
+    const options = await getInteractionOptions(req, res)
 
     const filtersFields = collectionFilterFields({
       currentAdviserId,
@@ -121,7 +121,7 @@ async function renderInteractionList(req, res, next) {
     })
 
     const filtersFieldsWithSelectedOptions = await buildFieldsWithSelectedEntities(
-      token,
+      req,
       filtersFields,
       query
     )

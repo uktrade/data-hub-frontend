@@ -22,8 +22,8 @@ function getCompanyAbsoluteUrl(req, companyId) {
   })
 }
 
-function getCountries(token) {
-  return getOptions(token, 'country', {
+function getCountries(req) {
+  return getOptions(req, 'country', {
     transformer: ({ id, name, iso_alpha2_code }) => ({
       id,
       name,
@@ -73,12 +73,11 @@ function parseAddress(dnbCompany, countries, prefix = '') {
 async function renderMatchConfirmation(req, res, next) {
   try {
     const { company } = res.locals
-    const { token } = req.session
     const { dunsNumber } = req.params
-    const countries = await getCountries(token)
+    const countries = await getCountries(req)
 
     const results = await searchDnbCompanies({
-      token,
+      req,
       requestBody: {
         duns_number: dunsNumber,
       },
@@ -117,12 +116,11 @@ async function renderMatchConfirmation(req, res, next) {
 
 async function linkCompanies(req, res, next) {
   try {
-    const { token } = req.session
     const { company } = res.locals
     const { dnbCompany } = req.body
 
     const result = await linkDataHubCompanyToDnBCompany(
-      token,
+      req,
       company.id,
       dnbCompany.duns_number
     )
@@ -142,8 +140,7 @@ async function linkCompanies(req, res, next) {
 async function renderFindCompanyForm(req, res, next) {
   try {
     const { company } = res.locals
-    const { token } = req.session
-    const countries = await getCountries(token)
+    const countries = await getCountries(req)
 
     res
       .breadcrumb(company.name, urls.companies.detail(company.id))
@@ -166,7 +163,7 @@ async function renderFindCompanyForm(req, res, next) {
 async function findDnbCompany(req, res, next) {
   try {
     const results = await searchDnbCompanies({
-      token: req.session.token,
+      req,
       requestBody: req.body,
     })
 
@@ -179,8 +176,7 @@ async function findDnbCompany(req, res, next) {
 async function renderCannotFindMatch(req, res, next) {
   try {
     const { company } = res.locals
-    const { token } = req.session
-    const countries = await getCountries(token)
+    const countries = await getCountries(req)
 
     res.locals.title = `Send business details - ${company.name}`
     res.render('companies/apps/match-company/views/cannot-find-match', {
@@ -200,7 +196,6 @@ async function submitNewDnbRecordRequest(req, res, next) {
   try {
     const { company } = res.locals
     const { website, telephone_number } = req.body
-    const { token } = req.session
 
     const transformed = transformToDnbInvestigation(
       company,
@@ -208,7 +203,7 @@ async function submitNewDnbRecordRequest(req, res, next) {
       telephone_number
     )
 
-    const dnbResponse = await createDnbCompanyInvestigation(token, transformed)
+    const dnbResponse = await createDnbCompanyInvestigation(req, transformed)
 
     req.flash('success', 'Verification request sent for third party review')
     res.json(dnbResponse)

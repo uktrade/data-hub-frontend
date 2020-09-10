@@ -26,7 +26,7 @@ const buildOptions = (isAggregation, searchUrl, body, entity) => {
 }
 
 function search({
-  token,
+  req,
   searchTerm: term = '',
   searchEntity,
   requestBody,
@@ -46,14 +46,14 @@ function search({
 
   const options = buildOptions(isAggregation, searchUrl, body, searchEntity)
 
-  return authorisedRequest(token, options).then((result) => {
+  return authorisedRequest(req, options).then((result) => {
     result.page = page
     return result
   })
 }
 
 function searchEntity(
-  token,
+  req,
   body,
   route,
   { apiVersion = 'v3', page = 1, limit = 10 }
@@ -71,14 +71,14 @@ function searchEntity(
     method: 'POST',
   }
 
-  return authorisedRequest(token, options).then((result) => {
+  return authorisedRequest(req, options).then((result) => {
     result.page = page
     return result
   })
 }
 
 function searchCompanies({
-  token,
+  req,
   searchTerm,
   isUkBased,
   page = 1,
@@ -86,7 +86,7 @@ function searchCompanies({
   requestBody = {},
 }) {
   return searchEntity(
-    token,
+    req,
     {
       ...requestBody,
       original_query: searchTerm,
@@ -99,14 +99,14 @@ function searchCompanies({
 }
 
 function searchInvestments({
-  token,
+  req,
   searchTerm,
   page = 1,
   limit = 10,
   filters = {},
 }) {
   return searchEntity(
-    token,
+    req,
     {
       ...filters,
       original_query: searchTerm,
@@ -117,9 +117,9 @@ function searchInvestments({
   )
 }
 
-function searchForeignCompanies({ token, searchTerm, page = 1, limit = 10 }) {
+function searchForeignCompanies({ req, searchTerm, page = 1, limit = 10 }) {
   return searchCompanies({
-    token,
+    req,
     searchTerm,
     page,
     limit,
@@ -127,7 +127,7 @@ function searchForeignCompanies({ token, searchTerm, page = 1, limit = 10 }) {
   })
 }
 
-function exportSearch({ token, searchTerm = '', searchEntity, requestBody }) {
+function exportSearch({ req, searchTerm = '', searchEntity, requestBody }) {
   const apiVersion = searchEntity === 'company' ? 'v4' : 'v3'
   const searchUrl = `${config.apiRoot}/${apiVersion}/search`
   const options = {
@@ -139,11 +139,11 @@ function exportSearch({ token, searchTerm = '', searchEntity, requestBody }) {
     },
   }
 
-  return authorisedRawRequest(token, options)
+  return authorisedRawRequest(req, options)
 }
 
 function searchAutocomplete({
-  token,
+  req,
   searchEntity,
   searchTerm = '',
   requestBody = {},
@@ -155,19 +155,19 @@ function searchAutocomplete({
 
   const options = buildOptions(true, searchUrl, body)
 
-  return authorisedRequest(token, options).then((result) => {
+  return authorisedRequest(req, options).then((result) => {
     return result
   })
 }
 
-function searchDnbCompanies({ token, requestBody = {} }) {
+function searchDnbCompanies({ req, requestBody = {} }) {
   const url = `${config.apiRoot}/v4/dnb/company-search`
   const options = buildOptions(false, url, {
     ...requestBody,
     page_size: 100,
   })
 
-  return authorisedRequest(token, options)
+  return authorisedRequest(req, options)
 }
 
 module.exports = {

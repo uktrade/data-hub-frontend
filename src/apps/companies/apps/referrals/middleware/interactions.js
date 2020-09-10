@@ -3,10 +3,7 @@ const urls = require('../../../../../lib/urls')
 
 async function setReferralDetails(req, res, next) {
   try {
-    res.locals.referral = await getReferral(
-      req.session.token,
-      req.params.referralId
-    )
+    res.locals.referral = await getReferral(req, req.params.referralId)
     next()
   } catch (error) {
     next(error)

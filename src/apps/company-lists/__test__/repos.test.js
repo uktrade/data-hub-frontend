@@ -17,6 +17,7 @@ const companyList = require('../../../../test/unit/data/company-lists/list-with-
 const companyListFixture = require('../../../../test/unit/data/company-lists/list-with-multiple-items.json')
 
 const listId = companyListFixture.id
+const stubRequest = { session: { token: 'abcd' } }
 
 describe('Company list repository', () => {
   describe('#fetchCompanyList', () => {
@@ -82,7 +83,7 @@ describe('Company list repository', () => {
 
     it('should return company', async () => {
       const companyList = await createUserCompanyList(
-        'TEST_TOKEN',
+        stubRequest,
         '1',
         'listName'
       )
@@ -102,7 +103,7 @@ describe('Company list repository', () => {
     })
 
     it('should return all lists a company is in', async () => {
-      const companyList = await getListsCompanyIsIn('TEST_TOKEN', '1')
+      const companyList = await getListsCompanyIsIn(stubRequest, '1')
       expect(companyList).to.deep.equal(companyListFixture)
     })
   })
@@ -115,7 +116,7 @@ describe('Company list repository', () => {
     })
 
     it('should return all company lists', async () => {
-      const companyList = await getAllCompanyLists('TEST_TOKEN')
+      const companyList = await getAllCompanyLists(stubRequest)
       expect(companyList).to.deep.equal(companyListFixture)
     })
   })
@@ -128,7 +129,7 @@ describe('Company list repository', () => {
     })
 
     it('returns a company list', async () => {
-      const companyList = await getCompanyList('token', listId)
+      const companyList = await getCompanyList(stubRequest, listId)
       expect(companyList).to.deep.equal(companyListFixture)
     })
   })
@@ -139,7 +140,7 @@ describe('Company list repository', () => {
     })
 
     it('deletes a company list', () => {
-      expect(() => deleteCompanyList('token', listId)).to.not.throw()
+      expect(() => deleteCompanyList(stubRequest, listId)).to.not.throw()
     })
   })
 
@@ -149,7 +150,7 @@ describe('Company list repository', () => {
     })
 
     it('should add a company to a list', () => {
-      expect(() => addCompanyToList('TEST_TOKEN', '1', '2')).to.not.throw()
+      expect(() => addCompanyToList(stubRequest, '1', '2')).to.not.throw()
     })
   })
 
@@ -159,7 +160,7 @@ describe('Company list repository', () => {
     })
 
     it('should delete a company from a list', () => {
-      expect(() => removeCompanyFromList('TEST_TOKEN', '1', '2')).to.not.throw()
+      expect(() => removeCompanyFromList(stubRequest, '1', '2')).to.not.throw()
     })
   })
 })

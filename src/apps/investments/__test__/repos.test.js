@@ -13,6 +13,8 @@ const companyData = require('../../../../test/unit/data/company.json')
 const investmentData = require('../../../../test/unit/data/investment/investment-data.json')
 const investmentProjectAuditData = require('../../../../test/unit/data/investment/audit-log.json')
 
+const stubRequest = { session: { token: 'token' } }
+
 describe('Investment repository', () => {
   describe('#getCompanyInvestmentProjects', () => {
     beforeEach(async () => {
@@ -22,7 +24,7 @@ describe('Investment repository', () => {
         )
         .reply(200, companyData)
       this.investmentProjects = await getCompanyInvestmentProjects(
-        'token',
+        stubRequest,
         companyData.id
       )
     })
@@ -37,7 +39,10 @@ describe('Investment repository', () => {
       nock(config.apiRoot)
         .get(`/v3/investment/${investmentData.id}`)
         .reply(200, investmentData)
-      this.investmentProject = await getInvestment('token', investmentData.id)
+      this.investmentProject = await getInvestment(
+        stubRequest,
+        investmentData.id
+      )
     })
 
     it('should return an investment object', () => {
@@ -48,7 +53,7 @@ describe('Investment repository', () => {
   describe('#createInvestmentProject', () => {
     beforeEach(async () => {
       nock(config.apiRoot).post(`/v3/investment`).reply(200, { id: '12345' })
-      this.investmentProject = await createInvestmentProject('token', {
+      this.investmentProject = await createInvestmentProject(stubRequest, {
         foo: 'bar',
       })
     })
@@ -66,7 +71,7 @@ describe('Investment repository', () => {
         .patch(`/v3/investment/${investmentData.id}`)
         .reply(200, investmentData)
       this.investmentProject = await updateInvestment(
-        'token',
+        stubRequest,
         investmentData.id,
         appendedData
       )
@@ -83,7 +88,7 @@ describe('Investment repository', () => {
         .post(`/v3/investment/${investmentData.id}/archive`, { reason: 'test' })
         .reply(200, investmentProjectAuditData)
       this.investmentProjectAuditData = await archiveInvestmentProject(
-        'token',
+        stubRequest,
         investmentData.id,
         'test'
       )
@@ -102,7 +107,7 @@ describe('Investment repository', () => {
         .post(`/v3/investment/${investmentData.id}/unarchive`)
         .reply(200, investmentProjectAuditData)
       this.investmentProjectAuditData = await unarchiveInvestmentProject(
-        'token',
+        stubRequest,
         investmentData.id
       )
     })

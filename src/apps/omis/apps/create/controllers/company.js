@@ -61,7 +61,7 @@ class CompanyController extends CreateController {
     if (searchTerm) {
       try {
         res.locals.searchResult = await searchCompanies({
-          token: req.session.token,
+          req,
           page: req.query.page,
           searchTerm,
         }).then(

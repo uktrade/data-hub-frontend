@@ -2,7 +2,7 @@ const proxyquire = require('proxyquire')
 
 const paths = require('../../../paths')
 
-const token = 'abcd'
+const stubRequest = { session: { token: 'abcd' }, query: {} }
 const ukCompany = {
   id: '12345',
   name: 'Test company',
@@ -55,21 +55,12 @@ describe('Investment start controller', () => {
           breadcrumb: this.breadcrumbStub,
         }
 
-        this.controller.getHandler(
-          {
-            session: {
-              token,
-            },
-            query: {},
-          },
-          this.resMock,
-          () => {
-            expect(this.resMock.locals.company).to.be.undefined
-            expect(this.resMock.locals.company).to.be.undefined
-            expect(this.resMock.locals.showSearch).to.equal(false)
-            done()
-          }
-        )
+        this.controller.getHandler(stubRequest, this.resMock, () => {
+          expect(this.resMock.locals.company).to.be.undefined
+          expect(this.resMock.locals.company).to.be.undefined
+          expect(this.resMock.locals.showSearch).to.equal(false)
+          done()
+        })
       })
     })
 
@@ -83,27 +74,18 @@ describe('Investment start controller', () => {
           breadcrumb: this.breadcrumbStub,
         }
 
-        this.controller.getHandler(
-          {
-            session: {
-              token,
-            },
-            query: {},
-          },
-          this.resMock,
-          () => {
-            expect(this.getCompanyInvestmentProjects).to.be.calledWith(
-              token,
-              '12345'
-            )
-            expect(this.resMock.locals.company).to.deep.equal(ukCompany)
-            expect(this.resMock.locals.companyInvestments).to.deep.equal(
-              investmentProjects
-            )
-            expect(this.resMock.locals.showSearch).to.equal(true)
-            done()
-          }
-        )
+        this.controller.getHandler(stubRequest, this.resMock, () => {
+          expect(this.getCompanyInvestmentProjects).to.be.calledWith(
+            stubRequest,
+            '12345'
+          )
+          expect(this.resMock.locals.company).to.deep.equal(ukCompany)
+          expect(this.resMock.locals.companyInvestments).to.deep.equal(
+            investmentProjects
+          )
+          expect(this.resMock.locals.showSearch).to.equal(true)
+          done()
+        })
       })
     })
 
@@ -117,27 +99,18 @@ describe('Investment start controller', () => {
           breadcrumb: this.breadcrumbStub,
         }
 
-        this.controller.getHandler(
-          {
-            session: {
-              token,
-            },
-            query: {},
-          },
-          this.resMock,
-          () => {
-            expect(this.getCompanyInvestmentProjects).to.be.calledWith(
-              token,
-              '12345'
-            )
-            expect(this.resMock.locals.company).to.deep.equal(foreignCompany)
-            expect(this.resMock.locals.companyInvestments).to.deep.equal(
-              investmentProjects
-            )
-            expect(this.resMock.locals.showSearch).to.equal(false)
-            done()
-          }
-        )
+        this.controller.getHandler(stubRequest, this.resMock, () => {
+          expect(this.getCompanyInvestmentProjects).to.be.calledWith(
+            stubRequest,
+            '12345'
+          )
+          expect(this.resMock.locals.company).to.deep.equal(foreignCompany)
+          expect(this.resMock.locals.companyInvestments).to.deep.equal(
+            investmentProjects
+          )
+          expect(this.resMock.locals.showSearch).to.equal(false)
+          done()
+        })
       })
 
       it('should render search', (done) => {
@@ -151,9 +124,7 @@ describe('Investment start controller', () => {
 
         this.controller.getHandler(
           {
-            session: {
-              token,
-            },
+            ...stubRequest,
             query: {
               search: true,
             },
@@ -170,9 +141,7 @@ describe('Investment start controller', () => {
     describe('when query contains a search term', () => {
       it('should render results', async () => {
         this.reqMock = {
-          session: {
-            token,
-          },
+          ...stubRequest,
           query: {
             term: 'samsung',
           },
@@ -265,9 +234,7 @@ describe('Investment start controller', () => {
 
         this.controller.postHandler(
           {
-            session: {
-              token,
-            },
+            ...stubRequest,
             body: {
               company_id: '12345',
             },

@@ -3,6 +3,8 @@ const activityFeedRawFixture = require('../../../../../../test/unit/data/activit
 const { ES_KEYS_GROUPED } = require('../constants')
 
 describe('Activity feed repos', () => {
+  const stubRequest = { session: { token: 'abcd' } }
+
   describe('#fetchActivityFeed', () => {
     const authorisedRequestStub = sinon.stub().resolves(activityFeedRawFixture)
     const repos = proxyquire(
@@ -17,7 +19,6 @@ describe('Activity feed repos', () => {
     context('when called with filters', () => {
       const { dataHubActivity } = ES_KEYS_GROUPED
       let body, results
-      const token = 'abcd'
 
       before(async () => {
         body = {
@@ -52,14 +53,11 @@ describe('Activity feed repos', () => {
           },
         }
 
-        results = await repos.fetchActivityFeed({
-          token,
-          body,
-        })
+        results = await repos.fetchActivityFeed(stubRequest, body)
       })
 
       it('should make a request including the filters', () => {
-        expect(authorisedRequestStub).to.be.calledOnceWith(token, {
+        expect(authorisedRequestStub).to.be.calledOnceWith(stubRequest, {
           body,
           url: `${config.apiRoot}/v4/activity-feed`,
         })

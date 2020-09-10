@@ -15,7 +15,7 @@ if (!config.isTest) {
   redisAsyncGet = redisClient.asyncGet()
 }
 
-async function fetchOptions(token, url) {
+async function fetchOptions(req, url) {
   let metaData = config.isTest ? null : await redisAsyncGet(url)
 
   if (metaData) {
@@ -30,7 +30,7 @@ async function fetchOptions(token, url) {
 }
 
 async function getOptions(
-  token,
+  req,
   key,
   {
     createdOn,
@@ -47,7 +47,7 @@ async function getOptions(
   } = {}
 ) {
   if (id) {
-    return getOptionsForId(token, key, id)
+    return getOptionsForId(req, key, id)
   }
 
   if (context) {
@@ -59,7 +59,7 @@ async function getOptions(
   }
 
   const url = `${config.apiRoot}/v4/metadata/${key}${queryString}`
-  let options = await fetchOptions(token, url)
+  let options = await fetchOptions(req, url)
 
   if (!includeDisabled) {
     options = options.filter(filterDisabledOption({ currentValue, createdOn }))
@@ -87,7 +87,7 @@ async function getOptions(
   return sorted ? sortBy(mappedOptions, sortPropertyName) : mappedOptions
 }
 
-async function getOptionsForId(token, key, id) {
+async function getOptionsForId(req, key, id) {
   const ids = castArray(id)
   const options = []
 
@@ -96,7 +96,7 @@ async function getOptionsForId(token, key, id) {
       key === 'adviser'
         ? `${config.apiRoot}/adviser/${ids[index]}/`
         : `${config.apiRoot}/v3/${key}/${ids[index]}`
-    const data = await authorisedRequest(token, url)
+    const data = await authorisedRequest(req, url)
     options.push({
       value: data.id,
       label: data.name,

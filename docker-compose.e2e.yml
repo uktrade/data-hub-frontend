@@ -28,7 +28,7 @@ services:
       MOCK_SSO_EMAIL_USER_ID: test@gov.uk
 
   api:
-    image: quay.io/uktrade/data-hub-api:master
+    image: quay.io/uktrade/data-hub-api:develop
     env_file: .env
     environment:
       DEBUG: 'False'
@@ -51,7 +51,7 @@ services:
     command: /app/setup-uat.sh || echo "all ood"
 
   celery:
-    image: quay.io/uktrade/data-hub-api:master
+    image: quay.io/uktrade/data-hub-api:develop
     env_file: .env
     depends_on:
       - postgres

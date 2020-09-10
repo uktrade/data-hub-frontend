@@ -2,7 +2,7 @@ const { createCompanyProfile } = require('../repos')
 
 const createProfile = async (req, res, next) => {
   try {
-    const profile = await createCompanyProfile(req.session.token, {
+    const profile = await createCompanyProfile(req, {
       investor_company: req.body.id,
     })
     res.redirect(

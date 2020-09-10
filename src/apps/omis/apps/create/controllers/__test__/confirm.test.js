@@ -140,7 +140,7 @@ describe('OMIS create confirm controller', () => {
       })
 
       it('should call save method on order model', () => {
-        expect(this.orderSaveStub).to.have.been.calledWith('token-12345', {
+        expect(this.orderSaveStub).to.have.been.calledWith(this.reqMock, {
           foo: 'bar',
           fizz: 'buzz',
         })

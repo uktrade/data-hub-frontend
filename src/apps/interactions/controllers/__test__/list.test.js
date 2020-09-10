@@ -20,6 +20,7 @@ describe('interaction list', () => {
     token = ''
     req = {
       session: {
+        token,
         save: (cb) => cb(null),
         user: {
           id: '1234',
@@ -274,9 +275,7 @@ describe('interaction list', () => {
 
     context('when the request is not XHR', () => {
       it(`should return all interaction options`, async () => {
-        expect(await getInteractionOptions(token, req, res)).to.deep.equal(
-          expected
-        )
+        expect(await getInteractionOptions(req, res)).to.deep.equal(expected)
       })
     })
 
@@ -286,9 +285,7 @@ describe('interaction list', () => {
       })
 
       it(`should return all interaction options`, async () => {
-        expect(await getInteractionOptions(token, req, res)).to.deep.equal(
-          expected
-        )
+        expect(await getInteractionOptions(req, res)).to.deep.equal(expected)
       })
     })
 
@@ -303,7 +300,7 @@ describe('interaction list', () => {
         })
 
         it(`should return interaction options from session key`, async () => {
-          expect(await getInteractionOptions(token, req, res)).to.equal(
+          expect(await getInteractionOptions(req, res)).to.equal(
             req.session.interactions.options
           )
         })

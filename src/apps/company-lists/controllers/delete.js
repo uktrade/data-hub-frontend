@@ -17,7 +17,7 @@ async function renderDeleteCompanyListPage(req, res, next) {
 
 async function handleDeleteCompanyList(req, res, next) {
   try {
-    await deleteCompanyList(req.session.token, req.params.listId)
+    await deleteCompanyList(req, req.params.listId)
     req.flash('success', 'List deleted')
     res.send()
   } catch (error) {

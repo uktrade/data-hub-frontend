@@ -15,10 +15,7 @@ function setPropositionsEntityName(req, res, next) {
 
 async function setCompanyDetailsWithPropositions(req, res, next) {
   try {
-    const investment = await getInvestment(
-      req.session.token,
-      req.params.investmentId
-    )
+    const investment = await getInvestment(req, req.params.investmentId)
     res.locals.company = investment.investor_company
     next()
   } catch (error) {

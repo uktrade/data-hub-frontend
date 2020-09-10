@@ -49,22 +49,17 @@ async function postComplete(req, res, next) {
     return next()
   }
 
-  const { token } = req.session
   const { interaction } = res.locals
 
   if (req.body.meeting_happen === 'false') {
     try {
       if (req.body.archived_reason === ARCHIVED_REASON.RESCHEDULED) {
-        await saveInteraction(token, {
+        await saveInteraction(req, {
           id: interaction.id,
           date: req.body.date,
         })
       } else {
-        await archiveInteraction(
-          token,
-          interaction.id,
-          req.body.archived_reason
-        )
+        await archiveInteraction(req, interaction.id, req.body.archived_reason)
       }
 
       req.flash('success', 'The interaction has been updated')

@@ -160,7 +160,6 @@ const getInitialFormValues = (req, res) => {
 
 async function renderInteractionDetailsForm(req, res, next) {
   try {
-    const { token } = req.session
     const { company, interaction, referral, investment, contact } = res.locals
 
     const [
@@ -171,14 +170,14 @@ async function renderInteractionDetailsForm(req, res, next) {
       communicationChannels,
       countries,
     ] = await Promise.all([
-      getOptions(token, 'service', {
+      getOptions(req, 'service', {
         transformer: transformServiceToOption,
       }),
-      getOptions(token, 'service-delivery-status', { sorted: false }),
-      getOptions(token, 'policy-area'),
-      getOptions(token, 'policy-issue-type'),
-      getOptions(token, 'communication-channel'),
-      getOptions(token, 'country'),
+      getOptions(req, 'service-delivery-status', { sorted: false }),
+      getOptions(req, 'policy-area'),
+      getOptions(req, 'policy-issue-type'),
+      getOptions(req, 'communication-channel'),
+      getOptions(req, 'country'),
     ])
 
     res
@@ -212,9 +211,8 @@ async function renderInteractionDetailsForm(req, res, next) {
 }
 
 async function fetchActiveEvents(req, res, next) {
-  const { token } = req.session
   try {
-    const activeEvents = await getActiveEvents(token)
+    const activeEvents = await getActiveEvents(req)
     res.json(activeEvents.map(transformObjectToOption))
   } catch (error) {
     next(error)

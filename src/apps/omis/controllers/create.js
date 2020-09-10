@@ -53,7 +53,7 @@ class CreateController extends FormController {
 
     if (companyId) {
       try {
-        res.locals.company = await getDitCompany(req.session.token, companyId)
+        res.locals.company = await getDitCompany(req, companyId)
       } catch (error) {
         logger.error(error)
       }

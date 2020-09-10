@@ -3,7 +3,7 @@ const { createUserCompanyList } = require('../repos')
 async function createCompanyList(req, res, next) {
   const { id, name } = req.body
   try {
-    await createUserCompanyList(req.session.token, id, name)
+    await createUserCompanyList(req, id, name)
     req.flash('success', 'Company list created')
     res.send()
   } catch (error) {

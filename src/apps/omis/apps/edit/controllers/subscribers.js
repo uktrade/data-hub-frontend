@@ -13,9 +13,8 @@ class EditSubscribersController extends EditController {
     try {
       const orderId = get(res.locals, 'order.id')
       const canEditAdvisers = get(res.locals, 'order.canEditAdvisers')
-      const token = get(req.session, 'token')
-      const advisers = await getAdvisers(token)
-      const subscribers = await Order.getSubscribers(token, orderId)
+      const advisers = await getAdvisers(req)
+      const subscribers = await Order.getSubscribers(req, orderId)
       const options = advisers.results.map(transformObjectToOption)
 
       req.form.options.disableFormAction = !canEditAdvisers
@@ -41,11 +40,7 @@ class EditSubscribersController extends EditController {
     const subscribers = subscribersTransform.map(transformIdToObject)
 
     try {
-      await Order.saveSubscribers(
-        req.session.token,
-        res.locals.order.id,
-        subscribers
-      )
+      await Order.saveSubscribers(req, res.locals.order.id, subscribers)
       next()
     } catch (error) {
       next(error)

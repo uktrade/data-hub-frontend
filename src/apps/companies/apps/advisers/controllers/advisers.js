@@ -53,7 +53,6 @@ function renderLeadAdvisers(req, res) {
 async function renderCoreTeamAdvisers(req, res, next) {
   try {
     const { company, returnUrl, dnbRelatedCompaniesCount } = res.locals
-    const token = req.session.token
     const {
       global_account_manager: globalAccountManager,
       adviser_on_core_team: adviserOnCoreTeam,
@@ -72,7 +71,7 @@ async function renderCoreTeamAdvisers(req, res, next) {
         name: adviserOnCoreTeam,
       },
     }
-    const coreTeam = await getOneListGroupCoreTeam(token, company.id).then(
+    const coreTeam = await getOneListGroupCoreTeam(req, company.id).then(
       transformCoreTeamToCollection
     )
     res.render('companies/views/advisers', {
@@ -130,7 +129,7 @@ async function submit(req, res, next) {
   } = res.locals
 
   try {
-    await authorisedRequest(req.session.token, {
+    await authorisedRequest(req, {
       method: 'POST',
       url: `${config.apiRoot}/v4/company/${id}/remove-account-manager`,
     })

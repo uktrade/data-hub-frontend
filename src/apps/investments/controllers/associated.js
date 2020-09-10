@@ -21,7 +21,7 @@ async function selectAssociatedInvestmentProject(req, res, next) {
     const { projects } = res.locals.paths
     const investmentId = req.params.investmentId
 
-    await updateInvestment(req.session.token, investmentId, {
+    await updateInvestment(req, investmentId, {
       associated_non_fdi_r_and_d_project: req.query.project,
     })
 
@@ -35,7 +35,6 @@ async function selectAssociatedInvestmentProject(req, res, next) {
 async function searchForAssociatedInvestmentProject(req, res, next) {
   const searchTerm = req.query.term
   const page = req.query.page || '1'
-  const token = req.session.token
 
   if (!searchTerm) {
     return next()
@@ -51,7 +50,7 @@ async function searchForAssociatedInvestmentProject(req, res, next) {
     res.locals.searchTerm = searchTerm
 
     res.locals.results = await searchInvestments({
-      token,
+      req,
       searchTerm,
       page,
       filters: {
@@ -81,7 +80,7 @@ function renderAssociatedInvestmentProjectResults(req, res) {
 
 async function removeAssociatedInvestmentProject(req, res, next) {
   try {
-    await updateInvestment(req.session.token, req.params.investmentId, {
+    await updateInvestment(req, req.params.investmentId, {
       associated_non_fdi_r_and_d_project: null,
     })
 

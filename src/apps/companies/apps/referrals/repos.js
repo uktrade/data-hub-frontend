@@ -1,9 +1,9 @@
 const { authorisedRequest } = require('../../../../lib/authorised-request')
 const config = require('../../../../config/index')
 
-function getReferral(token, referralId) {
+function getReferral(req, referralId) {
   return authorisedRequest(
-    token,
+    req,
     `${config.apiRoot}/v4/company-referral/${referralId}`
   )
 }

@@ -8,7 +8,6 @@ const { assign, get, merge } = require('lodash')
 const { valueLabels } = require('../../labels')
 
 async function populateForm(req, res, next) {
-  const token = req.session.token
   const investment = get(res, 'locals.investment', {})
   const createdOn = investment.created_on
 
@@ -20,14 +19,14 @@ async function populateForm(req, res, next) {
       gross_value_added_message: grossValueAddedMessage(investment),
     }),
     options: {
-      averageSalaryRange: await getOptions(token, 'salary-range', {
+      averageSalaryRange: await getOptions(req, 'salary-range', {
         createdOn,
       }),
-      fdiValue: await getOptions(token, 'fdi-value', {
+      fdiValue: await getOptions(req, 'fdi-value', {
         createdOn,
         sorted: false,
       }),
-      likelihoodToLand: await getOptions(token, 'likelihood-to-land', {
+      likelihoodToLand: await getOptions(req, 'likelihood-to-land', {
         createdOn,
         sorted: false,
       }),
@@ -46,7 +45,7 @@ async function handleFormPost(req, res, next) {
   const formattedBody = transformInvestmentValueFormBodyToApiRequest(req.body)
 
   try {
-    await updateInvestment(req.session.token, investmentId, formattedBody)
+    await updateInvestment(req, investmentId, formattedBody)
     req.flash('success', 'Investment value updated')
     res.redirect(`${projects}/${investmentId}/details`)
   } catch (err) {

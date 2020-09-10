@@ -26,7 +26,7 @@ function renderStatusPage(req, res) {
 
 async function postStatus(req, res, next) {
   try {
-    await updateInvestment(req.session.token, req.params.investmentId, {
+    await updateInvestment(req, req.params.investmentId, {
       status: req.body.status,
     })
 

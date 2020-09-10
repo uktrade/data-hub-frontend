@@ -148,7 +148,7 @@ describe('Interaction details controller', () => {
 
       it('should archive the interaction', () => {
         expect(archiveInteractionStub).calledOnceWithExactly(
-          '1234',
+          middlewareParameters.reqMock,
           draftPastMeeting.id,
           'reason'
         )
@@ -320,10 +320,13 @@ describe('Interaction details controller', () => {
         })
 
         it('should save the interaction', () => {
-          expect(saveInteractionStub).calledOnceWithExactly('1234', {
-            date: 'date',
-            id: '888c12ee-91db-4964-908e-0f18ce823096',
-          })
+          expect(saveInteractionStub).calledOnceWithExactly(
+            middlewareParameters.reqMock,
+            {
+              date: 'date',
+              id: '888c12ee-91db-4964-908e-0f18ce823096',
+            }
+          )
         })
 
         it('should not archive the interaction', () => {

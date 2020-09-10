@@ -202,11 +202,10 @@ function renderExportEditCountries(req, res) {
 }
 
 async function handleEditFormPost(req, res, next) {
-  const { token } = req.session
   const companyId = res.locals.company.id
 
   try {
-    await saveCompanyExportDetails(token, companyId, {
+    await saveCompanyExportDetails(req, companyId, {
       export_countries: getExportCountries(req.body) || [],
     })
 

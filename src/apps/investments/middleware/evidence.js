@@ -15,10 +15,9 @@ function setEvidenceReturnUrl(req, res, next) {
 
 async function getDownloadLink(req, res, next) {
   try {
-    const token = req.session.token
     const evidenceId = req.params.evidenceId
     const investmentId = req.params.investmentId
-    const s3 = await fetchDownloadLink(token, investmentId, evidenceId)
+    const s3 = await fetchDownloadLink(req, investmentId, evidenceId)
 
     return res.redirect(s3.document_url)
   } catch (error) {
@@ -28,11 +27,10 @@ async function getDownloadLink(req, res, next) {
 
 async function deleteEvidence(req, res, next) {
   try {
-    const token = req.session.token
     const evidenceId = req.params.evidenceId
     const investmentId = req.params.investmentId
 
-    await requestDeleteEvidence(token, investmentId, evidenceId).then(() => {
+    await requestDeleteEvidence(req, investmentId, evidenceId).then(() => {
       req.flash('success', 'Evidence item deleted')
       res.redirect(res.locals.returnLink)
     })
