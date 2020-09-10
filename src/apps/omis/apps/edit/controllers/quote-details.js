@@ -6,7 +6,7 @@ const { EditController } = require('../../../controllers')
 class EditQuoteDetailsController extends EditController {
   process(req, res, next) {
     const deliveryDateStr = req.body.delivery_date
-    const parsedDeliveryDate = chrono.en_GB.parseDate(deliveryDateStr)
+    const parsedDeliveryDate = chrono.en.GB.parseDate(deliveryDateStr)
 
     if (parsedDeliveryDate) {
       req.form.values.delivery_date = dateFns.format(

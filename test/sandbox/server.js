@@ -333,6 +333,7 @@ app.post('/v3/investment/:id/update-stage', v3Investment.investmentProjectById)
 
 // V3 Omis
 app.get('/v3/omis/order/:id', v3OMIS.getOrderById)
+app.patch('/v3/omis/order/:id', v3OMIS.getOrderById)
 app.get('/v3/omis/order/:id/assignee', v3OMIS.assignees)
 app.get('/v3/omis/order/:id/invoice', v3OMIS.invoice)
 app.get('/v3/omis/order/:id/subscriber-list', v3OMIS.subscriberList)
