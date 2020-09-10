@@ -81,7 +81,7 @@
   const getFormData = require('get-form-data').default
   const debounce = require('lodash/debounce')
   const pickBy = require('lodash/pickBy')
-  const uuid = require('uuid')
+  const UUID = require("pure-uuid")
   const XHR = require('../lib/xhr')
   const { matchWords } = require('../lib/helpers')
 
@@ -203,7 +203,7 @@
         options:  !this.isAsync ? JSON.parse(this.model) : [],
         optionsData: this.model && JSON.parse(this.model),
         isLoading: false,
-        id: uuid(),
+        id: new UUID(4),
         multiSelectModel: this.model,
         useMultipleSelect: this.multipleSelect,
         hiddenFormValue: this.selectedValue,
