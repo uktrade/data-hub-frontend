@@ -10,7 +10,7 @@ describe('Order', () => {
     cy.visit(omis.create(fixtures.company.venusLtd.id))
   })
 
-  it('should create an order', () => {
+  it('should create an order and view collection page', () => {
     cy.contains('Continue').click()
     cy.get(selectors.omisCreate.contact).select('Johnny Cakeman')
     cy.get(selectors.omisCreate.continue).click()
@@ -30,5 +30,17 @@ describe('Order', () => {
       .should('contain', 'Venus Ltd')
       .and('contain', 'Brazil')
       .and('contain', today)
+
+    cy.contains('Orders (OMIS)').click()
+
+    cy.get(selectors.entityCollection.entityBadge(1)).should(
+      'contain',
+      'Brazil'
+    )
+    cy.get(selectors.collection.items)
+      .should('contain', 'Venus Ltd')
+      .and('contain', 'Johnny Cakeman')
+      .and('contain', 'North West')
+      .and('contain', 'Aerospace')
   })
 })
