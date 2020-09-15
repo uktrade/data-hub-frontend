@@ -51,18 +51,21 @@
 }
 
 .c-collection__filter-tag {
-  color: $text-colour;
   display: inline-block;
   position: relative;
+  border-style: solid;
+  border-color: $grey-6;
+  background-color: #F3F2F1;
+  border-width: 1px;
+  border-radius: 5px;
   margin-right: $default-spacing-unit / 2;
   margin-top: $default-spacing-unit / 2;
   padding: 0 ($default-spacing-unit / 2);
-  background: $grey-4;
   cursor: default;
 }
 
 .c-collection__filter-label {
-  color: $grey-1;
+  color: $grey-6;
 
   &::after {
     content: ":";
