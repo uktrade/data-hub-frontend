@@ -5,7 +5,7 @@ export function checkIfPendingRequest(duns_number) {
   if (duns_number) {
     return axios
       .get(
-        `/api-proxy/v4/dnb/company-change-request?duns_number=${duns_number}&status=pending`
+        `/api-proxy/v4/dnb/company-change-request?duns_number=${duns_number}`
       )
       .then(({ data }) => checkIfRequestIsValid(data))
   }
@@ -17,7 +17,7 @@ const checkIfRequestIsValid = ({ count, results }) => {
     const timeInterval = moment().subtract(20, 'days')
     const validRequests = results.filter(
       (result) =>
-        result.status === 'pending' &&
+        ['pending', 'submitted'].includes(result.status) &&
         moment(result.created_on).isAfter(timeInterval)
     )
     return validRequests.length > 0
