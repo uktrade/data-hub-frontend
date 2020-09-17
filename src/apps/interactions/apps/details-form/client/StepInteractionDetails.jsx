@@ -132,6 +132,7 @@ const buildServicesHierarchy = (services) =>
           emptyOption="-- Select service --"
           options={s.children}
           required="Select a service"
+          aria-label="service second level"
         />
       </StyledSubserviceWrapper>
     ) : null,
@@ -188,12 +189,13 @@ const StepInteractionDetails = ({
         emptyOption="-- Select service --"
         options={servicesHierarchy}
         required="Select a service"
+        aria-label="service"
       />
 
       {selectedService?.interaction_questions?.map((question) => (
         <FieldRadios
           name={`service_answers.${question.id}`}
-          label={question.name}
+          legend={question.name}
           required={`Give answer to "${question.name}"`}
           options={question.answer_options.map(({ id, name }) => ({
             label: name,
@@ -282,7 +284,7 @@ const StepInteractionDetails = ({
           <FieldRadios
             inline={true}
             name="is_event"
-            label="Is this an event?"
+            legend="Is this an event?"
             options={OPTIONS_YES_NO}
             required="Answer if this was an event"
           />
@@ -323,7 +325,7 @@ const StepInteractionDetails = ({
       <FieldRadios
         inline={true}
         name="was_policy_feedback_provided"
-        label="Did the contact provide feedback on government policy or business intelligence?"
+        legend="Did the contact provide feedback on government policy or business intelligence?"
         options={OPTIONS_YES_NO}
         required="Answer if the contact gave any feedback on government policy"
       />
@@ -332,7 +334,7 @@ const StepInteractionDetails = ({
         <>
           <FieldCheckboxes
             name="policy_issue_types"
-            label="Policy issue types"
+            legend="Policy issue types"
             options={policyIssueTypes}
             required="Select at least one policy issue type"
           />
@@ -376,7 +378,7 @@ const StepInteractionDetails = ({
           <FieldRadios
             inline={true}
             name="were_countries_discussed"
-            label="Were any countries discussed?"
+            legend="Were any countries discussed?"
             required="Answer if any of the countries were discussed"
             options={OPTIONS_YES_NO}
           />

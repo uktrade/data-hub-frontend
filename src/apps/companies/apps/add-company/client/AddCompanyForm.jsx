@@ -6,7 +6,6 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 import { get } from 'lodash'
-import { H3 } from '@govuk-react/heading'
 
 import {
   FieldRadios,
@@ -94,12 +93,12 @@ function AddCompanyForm({
         return (
           <>
             <Step name="companyLocation">
-              <H3>Where is this company located?</H3>
-
               <FieldRadios
                 name="companyLocation"
+                legend="Where is this company located?"
                 required="Specify location of the company"
                 options={Object.values(COMPANY_LOCATION_OPTIONS)}
+                bigLegend={true}
               />
             </Step>
 

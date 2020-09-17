@@ -47,6 +47,7 @@ export default function PipeLineFilterSort({
     <StyledSortFilter>
       <Checkbox
         data-auto-id="pipeline-filter-archive"
+        aria-label="show archived projects"
         onChange={() => {
           onClick(!includeArchive)
         }}
@@ -57,14 +58,21 @@ export default function PipeLineFilterSort({
       <Sort
         name="sortBy"
         label="Sort by"
-        input={{ value: sortBy }}
+        htmlFor="sort-by"
+        input={{ value: sortBy, id: 'sort-by' }}
         onChange={(event) => {
           updateSort(event.target.value)
         }}
       >
-        <option value="-created_on">Most recently created</option>
-        <option value="-modified_on">Most recently updated</option>
-        <option value="name">Project Name A-Z</option>
+        <option value="-created_on" aria-label="most recently created">
+          Most recently created
+        </option>
+        <option value="-modified_on" aria-label="most recently updated">
+          Most recently updated
+        </option>
+        <option value="name" aria-label="project name a to z">
+          Project Name A-Z
+        </option>
       </Sort>
     </StyledSortFilter>
   )
