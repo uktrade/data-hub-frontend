@@ -24,8 +24,8 @@ const StyledLabelText = styled(LabelText)({
   },
 })
 
-const InlineLabel = ({ text, children, justifyRight }) => (
-  <StyledLabel justifyRight={justifyRight}>
+const InlineLabel = ({ text, children, justifyRight, name }) => (
+  <StyledLabel justifyRight={justifyRight} htmlFor={name}>
     <StyledLabelText>{text}</StyledLabelText>
     {children}
   </StyledLabel>
