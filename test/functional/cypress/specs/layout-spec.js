@@ -26,13 +26,13 @@ describe('Layout', () => {
     it('should use the same colour palette as the rest of the site', () => {
       cy.contains('Edit list name')
         .focus()
-        .should('have.css', 'outline-color', 'rgb(255, 191, 71)')
+        .should('have.css', 'outline-color', 'rgb(255, 221, 0)')
     })
   })
 
   describe('Footer', () => {
     it('should display footer', () => {
-      cy.get('footer a').should('have.length', 4)
+      cy.get('footer a').should('have.length', 5)
     })
   })
 })
