@@ -101,11 +101,20 @@ export default function Footer() {
           </li>
           <li>
             <FooterLink
-              href=" https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/data-hub-privacy-policy/"
+              href="https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/data-hub-privacy-policy/"
               target="_blank"
               rel="noopener noreferrer"
             >
               Privacy Policy
+            </FooterLink>
+          </li>
+          <li>
+            <FooterLink
+              href="https://data-services-help.trade.gov.uk/data-hub/how-articles/accessibility-statement/data-hub-accessibility-statement/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Accessibility Statement
             </FooterLink>
           </li>
         </StyleList>
