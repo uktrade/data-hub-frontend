@@ -8,11 +8,34 @@ Prerequisite:
 
 # Table of Contents
 
+- [Creating Docker container for CircleCI](#dependency-image)
 - [Start Dev](#start-dev)
 - [Start the Functional tests](#start-the-functional-tests)
 - [Start the E2E tests (DIT/LEP/DA)](#start-the-e2e-tests-ditlepda)
 - [Start the Visual tests](#start-the-visual-tests)
 - [Start the Unit tests](#start-the-unit-tests)
+
+## Creating Docker container for CircleCI
+
+```bash
+export VERSION=1.0.0 # Increment this version each time when you edit Dockerfile.
+
+Ensure you have gcloud sdk and you are logged in following their instructions:
+
+https://cloud.google.com/sdk/docs
+
+docker build -f Dockerfile.dependencies -t data-hub-frontend-dependencies .
+
+docker tag data-hub-frontend-dependencies:latest gcr.io/sre-docker-registry/data-hub-frontend-dependencies:${VERSION}
+
+docker tag data-hub-frontend-dependencies:latest gcr.io/sre-docker-registry/data-hub-frontend-dependencies:latest
+
+docker push gcr.io/sre-docker-registry/data-hub-frontend-dependencies:${VERSION}
+
+docker push gcr.io/sre-docker-registry/data-hub-frontend-dependencies:latest
+```
+
+You image should be now listed at [Google Container Registry](http://gcr.io/sre-docker-registry/github.com/uktrade).
 
 ## Start Dev
 
