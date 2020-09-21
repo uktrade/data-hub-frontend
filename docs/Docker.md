@@ -8,7 +8,7 @@ Prerequisite:
 
 # Table of Contents
 
-- [Creating Docker container for CircleCI](#dependency-image)
+- [Creating Docker container for CircleCI](#creating-docker-container-for-circleci)
 - [Start Dev](#start-dev)
 - [Start the Functional tests](#start-the-functional-tests)
 - [Start the E2E tests (DIT/LEP/DA)](#start-the-e2e-tests-ditlepda)
@@ -18,7 +18,7 @@ Prerequisite:
 ## Creating Docker container for CircleCI
 
 ```bash
-export VERSION=1.0.0 # Increment this version each time when you edit Dockerfile.
+export VERSION=1.0.2 # Increment this version each time when you edit Dockerfile.
 
 Ensure you have gcloud sdk and you are logged in following their instructions:
 
@@ -35,7 +35,7 @@ docker push gcr.io/sre-docker-registry/data-hub-frontend-dependencies:${VERSION}
 docker push gcr.io/sre-docker-registry/data-hub-frontend-dependencies:latest
 ```
 
-You image should be now listed at [Google Container Registry](http://gcr.io/sre-docker-registry/github.com/uktrade).
+Your image should be now listed at [Google Container Registry](http://gcr.io/sre-docker-registry/github.com/uktrade).
 
 ## Start Dev
 
