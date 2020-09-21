@@ -1,4 +1,4 @@
-FROM gcr.io/sre-docker-registry/data-hub-frontend-dependencies:1.0.0
+FROM gcr.io/sre-docker-registry/data-hub-frontend-dependencies:1.0.2
 
 ENV NPM_CONFIG_LOGLEVEL    warn
 ENV NPM_CONFIG_UNSAFE_PERM true
