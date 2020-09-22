@@ -1,5 +1,11 @@
 version: 2.1
 
+ignore_ghpages: &ignore_ghpages
+  filters:
+    branches:
+      ignore:
+        - gh-pages
+
 jobs:
   lint:
     machine:
@@ -105,6 +111,16 @@ jobs:
           target: start-e2e-<< parameters.staff >> e2e-tests-<< parameters.staff >>
       - store_cypress_artifacts
 
+  release-storybook:
+    docker:
+      - image: node
+    steps:
+      - checkout
+      - run: npm ci
+      - run:
+          name: Release storybook
+          command: npm run storybook:release
+
   merge-and-publish-coverage:
     docker:
       - image: node
@@ -160,17 +176,26 @@ workflows:
   version: 2
   datahub:
     jobs:
-      - lint
-      - unit_tests
-      - unit_client_tests
-      - functional_tests
-      - visual_tests
+      - lint: *ignore_ghpages
+      - unit_tests: *ignore_ghpages
+      - unit_client_tests: *ignore_ghpages
+      - functional_tests: *ignore_ghpages
+      - visual_tests: *ignore_ghpages
       - e2e_tests:
           name: e2e_tests_<< matrix.staff >>
           matrix:
             parameters:
               staff: [dit, da, lep]
+          filters:
+            branches:
+              ignore:
+                - gh-pages
+      - release-storybook: *ignore_ghpages
       - merge-and-publish-coverage:
           requires:
             - functional_tests
             - unit_tests
+          filters:
+            branches:
+              ignore:
+                - gh-pages

@@ -8,6 +8,8 @@
   },
   "scripts": {
     "storybook": "start-storybook",
+    "storybook:build": "rimraf storybook-static && build-storybook --quiet",
+    "storybook:release": "npm run storybook:build && cp -R ./.circleci ./storybook-static/.circleci && git-directory-deploy --directory storybook-static --branch gh-pages",
     "clean": "del .build cypress-coverage",
     "start": "node --use-strict src/server.js",
     "start:coverage": "nyc --silent npm run start",
@@ -196,6 +198,7 @@
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.8",
     "faker": "^4.1.0",
+    "git-directory-deploy": "^1.5.1",
     "html": "^1.0.0",
     "istanbul": "^0.4.5",
     "istanbul-lib-coverage": "^3.0.0",

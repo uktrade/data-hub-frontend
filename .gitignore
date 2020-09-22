@@ -82,3 +82,5 @@ yalc.lock
 # Ignore bin scripts
 .bin
 
+# Ignore gh pages for Storybook
+storybook-static/
