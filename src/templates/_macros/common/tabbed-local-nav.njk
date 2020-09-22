@@ -11,7 +11,9 @@
         {% for item in props.items %}
           <li class="govuk-tabs__list-item govuk-tabs__list-item--full">
             <a class="govuk-tabs__tab {{ 'govuk-tabs__tab--selected' if item.isActive }}"
-               href="{{ item.url }}">
+              href="{{ item.url }}"
+              {% if item.ariaDescription %} aria-label="{{ item.ariaDescription }}" {% endif %}
+            >
               {{ item.label }}
             </a>
           </li>
