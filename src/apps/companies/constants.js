@@ -49,6 +49,7 @@ const LOCAL_NAV = [
       'investment.view_all_investmentproject',
       'investment.view_associated_investmentproject',
     ],
+    ariaDescription: 'Company investments',
   },
   {
     path: 'exports',
@@ -59,6 +60,7 @@ const LOCAL_NAV = [
     path: 'orders',
     label: 'Orders',
     permissions: ['order.view_order'],
+    ariaDescription: 'Company orders',
   },
 ]
 
