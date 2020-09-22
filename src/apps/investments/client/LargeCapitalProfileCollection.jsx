@@ -6,7 +6,7 @@ import Task from '../../../client/components/Task/index.jsx'
 import { TASK_GET_PROFILES_LIST, ID, state2props } from './state'
 import {
   INVESTMENTS__PROFILES_LOADED,
-  INVESTMENTS__PROFILE_SELECT_PAGE,
+  INVESTMENTS__PROFILES_SELECT_PAGE,
 } from '../../../client/actions'
 
 const LargeCapitalProfileCollection = ({
@@ -44,7 +44,7 @@ const LargeCapitalProfileCollection = ({
 export default connect(state2props, (dispatch) => ({
   onPageClick: (page) => {
     dispatch({
-      type: INVESTMENTS__PROFILE_SELECT_PAGE,
+      type: INVESTMENTS__PROFILES_SELECT_PAGE,
       page,
     })
   },
