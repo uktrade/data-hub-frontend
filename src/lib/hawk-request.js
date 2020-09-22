@@ -1,6 +1,7 @@
 const request = require('request')
 const hawk = require('@hapi/hawk')
 const config = require('../config')
+const logger = require('../config/logger')
 
 function getHawkHeader(credentials, requestOptions) {
   if (config.isTest) {
@@ -18,6 +19,9 @@ function getHawkHeader(credentials, requestOptions) {
   })
 }
 
+let successCount = 0
+let failureCount = 0
+
 function createPromiseRequest(
   requestOptions,
   credentials,
@@ -25,7 +29,11 @@ function createPromiseRequest(
 ) {
   return new Promise((resolve, reject) => {
     request(requestOptions, (err, response, responseBody) => {
+      const uri = requestOptions.uri
+      const endpoint = uri.substring(uri.indexOf('/v4'))
+
       if (err) {
+        logger.error(`ERROR ${++failureCount} : ${endpoint} ${err}`)
         return reject(new Error(err))
       }
       if (!config.isTest) {
@@ -52,6 +60,7 @@ function createPromiseRequest(
 
       const statusCode = response.statusCode
       if (statusCode >= 200 && statusCode < 300) {
+        logger.debug(`SUCCESS ${++successCount} : ${endpoint}`)
         return resolve(body)
       }
       const error = new Error(

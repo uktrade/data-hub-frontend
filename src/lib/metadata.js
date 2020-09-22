@@ -39,7 +39,7 @@ function getMetadata(path, key) {
       return responseData
     })
     .catch((err) => {
-      logger.error('Error fetching metadataRepository for url: %s', url)
+      // logger.error('Error fetching metadataRepository for url: %s', url)
       throw err
     })
 }
