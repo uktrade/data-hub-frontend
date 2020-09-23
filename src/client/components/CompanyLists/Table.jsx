@@ -180,6 +180,7 @@ const CompaniesTable = ({ companies }) => (
             <SecondaryButton
               as={StyledButtonLink}
               href={urls.companies.interactions.create(id)}
+              aria-label={`Add interaction with ${name}`}
             >
               Add interaction
             </SecondaryButton>

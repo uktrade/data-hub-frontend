@@ -28,6 +28,7 @@ const LOCAL_NAV = [
       'interaction.view_associated_investmentproject_interaction',
       'interaction.view_all_interaction',
     ],
+    ariaDescription: 'Investment interactions',
   },
   {
     path: 'propositions',

@@ -56,9 +56,9 @@
             {% set isCurrentPage = item.entity === props.entityType %}
             <li class="c-entity-search__aggregations-item {{ 'is-active' if isCurrentPage }}">
               {% if isCurrentPage %}
-                {{ item.text }}
+                <span aria-label="{{item.text}} search results">{{ item.text }}</span>
               {% else %}
-                <a class="c-entity-search__aggregations-link" href="{{ urls.search.type(item.path) }}?term={{ props.searchTerm }}">{{ item.text }}</a>
+                <a class="c-entity-search__aggregations-link" href="{{ urls.search.type(item.path) }}?term={{ props.searchTerm }}"  aria-label="{{item.text}} search results">{{ item.text }}</a>
               {% endif %}
               <span class="c-entity-search__aggregations-count">({{ item.count | formatNumber }})</span>
             </li>
