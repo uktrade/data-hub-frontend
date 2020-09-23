@@ -15,11 +15,7 @@ describe('Layout', () => {
   describe('Search', () => {
     it('should display search form', () => {
       cy.get('input[type="search"]')
-        .should(
-          'have.attr',
-          'placeholder',
-          'Search for company, contact, event, investment project or OMIS order'
-        )
+        .should('have.attr', 'placeholder', 'Enter your search term(s)')
         .next()
         .should('match', 'button')
         .and('have.text', 'Search')
