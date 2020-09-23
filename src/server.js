@@ -63,7 +63,9 @@ app.disable('x-powered-by')
 // Raven request handler must be the first middleware
 reporter.setup(app)
 
-app.use(httpLogger)
+if (!config.ci) {
+  app.use(httpLogger)
+}
 
 if (config.forceHttps) {
   app.enable('trust proxy')
