@@ -142,21 +142,27 @@ module.exports.fetchAll = (cb) => {
     }
   }
 
+  function delay(item, totalRequests) {
+    setTimeout(() => {
+      getMetadata(item[0], item[1])
+        .then((data) => {
+          if (item[2]) {
+            item[2](data)
+          }
+
+          checkResults()
+        })
+        .catch((err) => {
+          caughtErrors = caughtErrors || []
+          caughtErrors.push(err)
+          checkResults()
+        })
+    }, totalRequests * 50)
+  }
+
   for (const item of metadataItems) {
     totalRequests += 1
-    getMetadata(item[0], item[1])
-      .then((data) => {
-        if (item[2]) {
-          item[2](data)
-        }
-
-        checkResults()
-      })
-      .catch((err) => {
-        caughtErrors = caughtErrors || []
-        caughtErrors.push(err)
-        checkResults()
-      })
+    delay(item, totalRequests)
   }
 }
 
