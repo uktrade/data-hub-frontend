@@ -1,5 +1,4 @@
-import axios from 'axios'
-
+import { apiProxyAxios } from '../../../../../client/components/Task/utils'
 import { SAVED, API_ERROR } from './state'
 import {
   NONE,
@@ -10,8 +9,8 @@ import {
 
 export function saveOneListDetails({ values, companyId }) {
   function assignOneListTierandGlobalManagerRequest() {
-    return axios.post(
-      `/api-proxy/v4/company/${companyId}/assign-one-list-tier-and-global-account-manager`,
+    return apiProxyAxios.post(
+      `v4/company/${companyId}/assign-one-list-tier-and-global-account-manager`,
       {
         [ACCOUNT_MANAGER_FIELD_NAME]: values[ACCOUNT_MANAGER_FIELD_NAME].value,
         [TIER_FIELD_NAME]: values[TIER_FIELD_NAME],
@@ -20,7 +19,7 @@ export function saveOneListDetails({ values, companyId }) {
   }
 
   function removeFromOneList() {
-    return axios.post(`/api-proxy/v4/company/${companyId}/remove-from-one-list`)
+    return apiProxyAxios.post(`v4/company/${companyId}/remove-from-one-list`)
   }
 
   function assignCoreTeamRequest() {
@@ -28,8 +27,8 @@ export function saveOneListDetails({ values, companyId }) {
       adviser: member.value,
     }))
 
-    return axios.patch(
-      `/api-proxy/v4/company/${companyId}/update-one-list-core-team`,
+    return apiProxyAxios.patch(
+      `v4/company/${companyId}/update-one-list-core-team`,
       {
         [ONE_LIST_TEAM_FIELD_NAME]: one_list_team,
       }
@@ -37,8 +36,8 @@ export function saveOneListDetails({ values, companyId }) {
   }
 
   function removeCoreTeamRequest() {
-    return axios.patch(
-      `/api-proxy/v4/company/${companyId}/update-one-list-core-team`,
+    return apiProxyAxios.patch(
+      `v4/company/${companyId}/update-one-list-core-team`,
       {
         [ONE_LIST_TEAM_FIELD_NAME]: [],
       }

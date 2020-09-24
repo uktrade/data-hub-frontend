@@ -21,11 +21,9 @@ export function saveExportCountries({ values, companyId }) {
       const is400 = e?.response?.status === 400
       const nonFieldMessages = is400 && e.response.data?.non_field_errors
       if (nonFieldMessages?.length) {
-        return Promise.reject({
-          message: { [API_ERROR]: nonFieldMessages.join(', ') },
-        })
+        return Promise.reject({ [API_ERROR]: nonFieldMessages.join(', ') })
       } else {
-        return Promise.reject({ message: { [API_WARN]: e.message } })
+        return Promise.reject({ [API_WARN]: e.message })
       }
     })
     .then(() => ({ [SAVED]: urls.companies.exports.index(companyId) }))

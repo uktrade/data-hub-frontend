@@ -1,9 +1,12 @@
-const axios = require('axios')
+import { apiProxyAxios } from '../../../../../client/components/Task/utils'
 
 export function updateProjectStage({ values, projectId }) {
-  return axios.post(`/api-proxy/v3/investment/${projectId}/update-stage`, {
-    stage: {
-      id: values.projectStageId,
-    },
-  })
+  return apiProxyAxios.post(
+    `/api-proxy/v3/investment/${projectId}/update-stage`,
+    {
+      stage: {
+        id: values.projectStageId,
+      },
+    }
+  )
 }
