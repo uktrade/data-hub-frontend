@@ -2,6 +2,7 @@ import axios from 'axios'
 import { omit, pick } from 'lodash'
 
 import urls from '../../../../../lib/urls'
+import { catchApiError } from '../../../../../client/components/Task/utils'
 import getContactFromQuery from '../../../../../client/utils/getContactFromQuery'
 import { INTERACTION_STATUS } from '../../../constants'
 import { EXPORT_INTEREST_STATUS_VALUES, OPTION_NO } from '../../../../constants'
@@ -146,13 +147,11 @@ export function saveInteraction({ values, companyId, referralId }) {
   return request(
     values.id ? `${endpoint}/${values.id}` : endpoint,
     omit(payload, FIELDS_TO_OMIT)
-  )
+  ).catch(catchApiError)
 }
-
-const handleError = (e) => Promise.reject(Error(e.response.data.detail))
 
 export const fetchActiveEvents = () =>
   axios
     .get(urls.interactions.activeEventsData())
-    .catch(handleError)
+    .catch(catchApiError)
     .then(({ data }) => data)

@@ -24,13 +24,17 @@ function* taskSaga(task, action) {
     }
     yield put({ type: TASK__CLEAR, id, name })
   } catch (error) {
-    const { id, name } = action
-    yield put({
-      type: TASK__ERROR,
-      id,
-      name,
-      errorMessage: error.message,
-    })
+    if (error instanceof Error) {
+      throw error
+    } else {
+      const { id, name } = action
+      yield put({
+        type: TASK__ERROR,
+        id,
+        name,
+        errorMessage: error,
+      })
+    }
   }
 }
 

@@ -1,9 +1,8 @@
 import axios from 'axios'
-
-const handleError = (e) => Promise.reject(Error(e.response.data.detail))
+import { catchApiError } from '../../../../../client/components/Task/utils'
 
 export default (postcode) =>
   axios
     .get(`/api/postcode-to-region-lookup/${postcode}`)
-    .catch(handleError)
+    .catch(catchApiError)
     .then(({ data }) => data)
