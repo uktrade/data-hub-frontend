@@ -1,5 +1,5 @@
-import { apiProxyAxios } from '../../components/Task/utils'
-import { SENT, RECEIVED } from './constants'
+import { apiProxyAxios } from '../../Task/utils'
+import { SENT, RECEIVED } from '../constants'
 
 const convertAdviser = ({ name, contact_email, dit_team }) => ({
   name,

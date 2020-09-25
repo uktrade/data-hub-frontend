@@ -6,6 +6,10 @@ import { createGlobalStyle } from 'styled-components'
 
 const req = require.context('../src', true, /.*\.stories\.(js|jsx)$/)
 
+import DataHubProvider from '../src/client/provider'
+import referralsTask from '../src/client/components/ReferralList/tasks/dummy/spread'
+import companyListsTasks from '../src/client/components/CompanyLists/tasks/dummy/spread'
+
 const GlobalStyle = createGlobalStyle`
   body {
     font: ${FONT_SIZE.SIZE_16} ${FONT_STACK};
@@ -23,6 +27,16 @@ addParameters({
 })
 
 addDecorator(addReadme)
-addDecorator(s => <><GlobalStyle />{s()}</>)
+addDecorator(s =>
+  <>
+    <GlobalStyle />
+    <DataHubProvider tasks={{
+      ...referralsTask(),
+      ...companyListsTasks(),
+    }}>
+      {s()}
+    </DataHubProvider>
+  </>
+)
 
 configure(req, module);
