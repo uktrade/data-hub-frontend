@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-require('elastic-apm-node').start()
+// require('elastic-apm-node').start()
 
 const path = require('path')
 const bodyParser = require('body-parser')
