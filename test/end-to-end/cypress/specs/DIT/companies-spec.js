@@ -36,6 +36,38 @@ describe('Advisors', () => {
 })
 
 describe('Contacts', () => {
+  const company = {
+    pk: '1233379c-341c-4da4-b825-bf8d47b26baa',
+    model: 'company.company',
+    fields: {
+      name: '1 2 3 testing',
+      business_type: '98d14e94-5d95-e211-a939-e4115bead28a',
+      employee_range: '41afd8d0-5d95-e211-a939-e4115bead28a',
+      turnover_range: '7a4cd12a-6095-e211-a939-e4115bead28a',
+      export_to_countries: [
+        '82756b9a-5d95-e211-a939-e4115bead28a',
+        '83756b9a-5d95-e211-a939-e4115bead28a',
+      ],
+      future_interest_countries: ['37afd8d0-5d95-e211-a939-e4115bead28a'],
+      sector: '355f977b-8ac3-e211-a646-e4115bead28a',
+      address_1: '100 Path',
+      address_town: 'A town',
+      address_postcode: '12345',
+      address_country: '81756b9a-5d95-e211-a939-e4115bead28a',
+      registered_address_1: '100 Path',
+      registered_address_town: 'A town',
+      registered_address_postcode: '12345',
+      registered_address_country: '81756b9a-5d95-e211-a939-e4115bead28a',
+      description: 'This is a dummy company for testing',
+      created_on: '2017-10-16T11:00:00Z',
+      modified_on: '2017-11-16T11:00:00Z',
+    },
+  }
+
+  before(() => {
+    cy.loadFixture([company])
+  })
+
   const data = {
     name: 'Company',
     lastName: 'Contact',
@@ -46,7 +78,7 @@ describe('Contacts', () => {
   }
 
   it('should create a contact for a given company', () => {
-    cy.visit(contacts.create(lambdaPlc.id))
+    cy.visit(contacts.create(company.pk))
     userActions.contacts.create(data)
 
     cy.get(selectors.message.successful).should('contain', 'Added new contact')
@@ -54,14 +86,14 @@ describe('Contacts', () => {
     assertKeyValueTable('bodyMainContent', {
       'Job title': 'Coffee machine operator',
       'Phone number': '(44) 0778877778800',
-      Address: "12 St George's Road, Paris, 75001, France",
+      Address: '100 Path, A town, 12345, United States',
       Email: 'company.contact@dit.com',
       'Email marketing': 'Cannot be marketed to',
     })
   })
 
   it('should display the newly created contact in company contact collection page', () => {
-    cy.visit(companies.activity.index(lambdaPlc.id))
+    cy.visit(companies.activity.index(company.pk))
 
     cy.contains('Company contacts').click()
     cy.get(selectors.collection.items)
