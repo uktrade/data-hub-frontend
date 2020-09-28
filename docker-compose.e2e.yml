@@ -38,6 +38,7 @@ services:
       ES_APM_ENABLED: 'False'
       COLUMNS: 80
       DJANGO_SUPERUSER_SSO_EMAIL_USER_ID: test@gov.uk
+      ALLOW_TEST_FIXTURE_SETUP: 'True'
     ports:
       - 8000:8000
     depends_on:
