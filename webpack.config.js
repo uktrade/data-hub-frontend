@@ -123,7 +123,6 @@ module.exports = (env) => ({
           },
           {
             loader: 'postcss-loader',
-            options: { plugins: [require('autoprefixer')] },
           },
           // 2. rewrites relative paths in url() statements based on the original source file
           'resolve-url-loader',
