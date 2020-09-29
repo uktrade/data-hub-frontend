@@ -33,15 +33,21 @@ describe('Investor profiles', () => {
     })
 
     it('should display 3 pagination links', () => {
-      cy.get('ul:last li a').should('have.length', 3)
+      cy.get('#large-capital-profile-collection').within(() => {
+        cy.get('ul:last li a').should('have.length', 3)
+      })
     })
 
     it('should display the next button', () => {
-      cy.get('ul:last li a:last').should('have.text', 'Next')
+      cy.get('#large-capital-profile-collection').within(() => {
+        cy.get('ul:last li a:last').should('have.text', 'Next')
+      })
     })
 
     it('should not display the previous button', () => {
-      cy.get('ul:last li a:first').should('not.have.text', 'Previous')
+      cy.get('#large-capital-profile-collection').within(() => {
+        cy.get('ul:last li a:first').should('not.have.text', 'Previous')
+      })
     })
   })
 
@@ -68,7 +74,9 @@ describe('Investor profiles', () => {
     })
 
     it('should be able to navigate to the second page', () => {
-      cy.get('ul:last li a').contains('2').click()
+      cy.get('#large-capital-profile-collection').within(() => {
+        cy.get('ul:last li a').contains('2').click()
+      })
     })
 
     it('should display 2 profiles', () => {
@@ -76,15 +84,21 @@ describe('Investor profiles', () => {
     })
 
     it('should display 3 pagination links', () => {
-      cy.get('ul:last li a').should('have.length', 3)
+      cy.get('#large-capital-profile-collection').within(() => {
+        cy.get('ul:last li a').should('have.length', 3)
+      })
     })
 
     it('should not display the next button', () => {
-      cy.get('ul:last li a:last').should('not.have.text', 'Next')
+      cy.get('#large-capital-profile-collection').within(() => {
+        cy.get('ul:last li a:last').should('not.have.text', 'Next')
+      })
     })
 
     it('should display the previous button', () => {
-      cy.get('ul:last li a:first').should('have.text', 'Previous')
+      cy.get('#large-capital-profile-collection').within(() => {
+        cy.get('ul:last li a:first').should('have.text', 'Previous')
+      })
     })
   })
 })
