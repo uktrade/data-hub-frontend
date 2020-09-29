@@ -127,11 +127,15 @@ describe('Company Export tab - Export countries history', () => {
       })
 
       it('should display the next button', () => {
-        cy.get('ul:last li a:last').should('have.text', 'Next')
+        cy.get('#company-export-full-history').within(() => {
+          cy.get('ul:last li a:last').should('have.text', 'Next')
+        })
       })
 
       it('should not display the previous button', () => {
-        cy.get('ul:last li a:first').should('not.have.text', 'Previous')
+        cy.get('#company-export-full-history').within(() => {
+          cy.get('ul:last li a:first').should('not.have.text', 'Previous')
+        })
       })
 
       it('the second page renders the collection list with 2 of the 12 results', () => {
@@ -153,11 +157,15 @@ describe('Company Export tab - Export countries history', () => {
       })
 
       it('should not display the next button', () => {
-        cy.get('ul:last li a:last').should('not.have.text', 'Next')
+        cy.get('#company-export-full-history').within(() => {
+          cy.get('ul:last li a:last').should('not.have.text', 'Next')
+        })
       })
 
       it('should display the previous button', () => {
-        cy.get('ul:last li a:first').should('have.text', 'Previous')
+        cy.get('#company-export-full-history').within(() => {
+          cy.get('ul:last li a:first').should('have.text', 'Previous')
+        })
       })
     })
 

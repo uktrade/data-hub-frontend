@@ -85,6 +85,7 @@ import * as dnbCheck from '../apps/companies/apps/business-details/client/tasks'
 
 import { TASK_GET_PROFILES_LIST } from '../apps/investments/client/state'
 import * as investmentProfilesTasks from '../apps/investments/client/tasks'
+import Footer from '../client/components/Footer'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -281,6 +282,7 @@ function App() {
       <Mount selector="#delete-pipeline-item-form">
         {(props) => <DeletePipelineItemForm {...props} />}
       </Mount>
+      <Mount selector="#footer">{() => <Footer />}</Mount>
     </Provider>
   )
 }

@@ -8,7 +8,7 @@ const OuterContainer = styled('main')({
   textAlign: 'center',
 })
 
-const InnerContainer = styled('div')({
+export const InnerContainer = styled('div')({
   maxWidth: SITE_WIDTH,
   marginLeft: SPACING.SCALE_3,
   marginRight: SPACING.SCALE_3,
