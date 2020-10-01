@@ -126,7 +126,7 @@ const CompanyLocalHeader = ({
                 company.address.town,
                 company.address.county,
                 company.address.postcode,
-                company.address.country.name,
+                company.address.country?.name,
               ])}
             </StyledAddress>
           </GridCol>
