@@ -69,7 +69,7 @@
     "@storybook/addon-actions": "^6.0.21",
     "@storybook/addon-knobs": "^5.3.18",
     "@storybook/addons": "^5.3.18",
-    "@storybook/react": "^5.3.18",
+    "@storybook/react": "^6.0.25",
     "@uktrade/datahub-header": "1.2.5",
     "autoprefixer": "^9.8.6",
     "axios": "^0.19.2",
