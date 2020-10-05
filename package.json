@@ -68,7 +68,7 @@
     "@storybook/addon-actions": "^6.0.25",
     "@sentry/browser": "^5.24.2",
     "@storybook/addon-knobs": "^5.3.18",
-    "@storybook/addons": "^5.3.18",
+    "@storybook/addons": "^6.0.25",
     "@storybook/react": "^5.3.18",
     "@uktrade/datahub-header": "1.2.5",
     "autoprefixer": "^9.8.6",
