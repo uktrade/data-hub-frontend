@@ -8,6 +8,11 @@ describe('Company activity feed', () => {
   context('when viewing Venus Ltd which has no activities', () => {
     before(() => {
       cy.visit(urls.companies.activity.index(fixtures.company.venusLtd.id))
+      cy.initA11y()
+    })
+
+    it('should not have any a11y violations', () => {
+      cy.runA11y()
     })
 
     it('should display the activity header', () => {

@@ -198,6 +198,29 @@ Cypress.Commands.add('loadFixture', (fixture) => {
   })
 })
 
+Cypress.Commands.add('initA11y', (options = {}) => {
+  cy.injectAxe();
+  cy.configureAxe(options)
+})
+
+Cypress.Commands.add('runA11y', (context = null, options = null) => {
+  cy.checkA11y(context, options, (violations) => {
+    const hasOneError = violations.length === 1
+    cy.task("log", `${violations.length} a11y violation${hasOneError ? "" : "s"}
+    ${hasOneError ? "was" : "were"} detected`)
+    cy.task("log",   violations.map(
+      ({ id, impact, description, help, helpUrl, nodes }) => ({
+        id,
+        impact,
+        description,
+        help,
+        helpUrl,
+        nodes: nodes.length,
+      })
+    ))
+  })
+})
+
 // This command helps us to check colours in cypress as cypress always return rgb, and our govuk-colours library uses hexes.
 const compareColor = (color, property) => (targetElement) => {
   const tempElement = document.createElement('div')

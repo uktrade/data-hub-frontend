@@ -187,6 +187,7 @@
     "cucumber": "^4.2.1",
     "cucumber-html-reporter": "^5.2.0",
     "cypress": "^5.0.0",
+    "cypress-axe": "^0.8.1",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-import": "^2.12.0",
