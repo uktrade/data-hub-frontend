@@ -205,10 +205,12 @@ Cypress.Commands.add('initA11y', (options = {}) => {
 
 Cypress.Commands.add('runA11y', (context = null, options = null) => {
   cy.checkA11y(context, options, (violations) => {
-    const hasOneError = violations.length === 1
-    cy.task("log", `${violations.length} a11y violation${hasOneError ? "" : "s"}
-    ${hasOneError ? "was" : "were"} detected`)
-    cy.task("log",   violations.map(
+    const hasOneErr = violations.length === 1
+    const msg = `${violations.length} a11y violation${hasOneErr ? '' : 's'}` +
+      `${hasOneErr ? 'was' : 'were'} detected`
+
+    cy.task('log', msg)
+    cy.task('log',   violations.map(
       ({ id, impact, description, help, helpUrl, nodes }) => ({
         id,
         impact,
