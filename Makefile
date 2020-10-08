@@ -76,6 +76,10 @@ visual-tests:
 	@echo "*** Requires the mock stack, it can be started with 'make start-mock' ***"
 	$(docker-mock) exec frontend bash -c '$(wait-for-frontend) && npm run test:visual'
 
+a11y-tests:
+	@echo "*** Requires the mock stack, it can be started with 'make start-mock' ***"
+	$(docker-mock) exec frontend bash -c '$(wait-for-frontend) && npm run test:a11y'
+
 e2e-tests-lep:
 	@echo "*** Requires the e2e stack with the LEP role, it can be started with 'make start-e2e-lep' ***"
 	$(docker-e2e) exec frontend bash -c '$(wait-for-frontend) && npm run test:e2e:lep $(cypress-args)'

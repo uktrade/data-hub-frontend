@@ -26,6 +26,7 @@
     "test:unit-client": "NODE_ENV=test WEBPACK_ENV=develop MOCHA_FILE=junit/test-results.xml npx mocha-webpack --webpack-config webpack.config.js --opts ./test/unit-client/mocha.opts ./test/unit-client/assets/javascripts/**/*.test.js",
     "test:functional": "cypress run --browser chrome",
     "test:functional:watch": "cypress open",
+    "test:a11y": "CYPRESS_coverage=false CYPRESS_integrationFolder=test/a11y/cypress/specs cypress run --browser chrome",
     "test:e2e:lep": "CYPRESS_coverage=false CYPRESS_integrationFolder=test/end-to-end/cypress/specs/LEP cypress run --browser chrome",
     "test:e2e:da": "CYPRESS_coverage=false CYPRESS_integrationFolder=test/end-to-end/cypress/specs/DA cypress run --browser chrome",
     "test:e2e:dit": "CYPRESS_coverage=false CYPRESS_integrationFolder=test/end-to-end/cypress/specs/DIT cypress run --browser chrome",
