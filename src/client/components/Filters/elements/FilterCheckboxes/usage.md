@@ -15,15 +15,18 @@ These are checkboxes to be used as filters on the collection list pages, this co
               label: 'Italy',
               value: 'it',
               }]}
+      taskProps={...taskProps} // task to be forwarded on
+      onChange={()=> // function from dispatch}
     />
 ```
 
 ### Properties
 Prop | Required | Default | Type | Description
 :--- | :------- | :------ | :--- | :----------
- `taskProps` | true | `````` | object | contains props for the task component
- `taskProps - name` | true | `````` | string | name for task
- `taskProps - id` | true | `````` | string | id for task
- `onChange` | true | `````` | function | function to fire when you select an option
+`name` | true | ````` | string | name of filter
+`onChange` | true | `````` | function | function to fire from dispatch
+`taskProps` | true | `````` | object | contains props for the task component
+`taskProps - name` | true | `````` | string | name for task
+`taskProps - id` | true | `````` | string | id for task
 
 

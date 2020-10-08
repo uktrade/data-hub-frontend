@@ -48,7 +48,7 @@ storiesOf('Filters/Checkboxes', module)
     <FilterCheckboxes
       name="countries"
       label="What are your favourite countries?"
-      hint="some hint"
+      hint="Some hint"
       options={options}
       taskProps={{
         name: 'task name 1',
