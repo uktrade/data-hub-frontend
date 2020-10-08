@@ -85,8 +85,8 @@ const defaultStyles = {
     padding: 0,
     svg: {
       color: BLACK,
-      width: '25px',
-      height: '25px',
+      width: '17px',
+      height: '17px',
     },
   }),
   indicatorSeparator: (styles) => ({
