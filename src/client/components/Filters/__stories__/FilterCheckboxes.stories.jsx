@@ -44,3 +44,15 @@ storiesOf('Filters/Checkboxes', module)
       }}
     />
   ))
+  .add('With hint', () => (
+    <FilterCheckboxes
+      name="countries"
+      label="What are your favourite countries?"
+      hint="some hint"
+      options={options}
+      taskProps={{
+        name: 'task name 1',
+        id: 'id1',
+      }}
+    />
+  ))
