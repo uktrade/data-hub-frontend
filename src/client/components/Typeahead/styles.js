@@ -4,6 +4,7 @@ import {
   YELLOW,
   BLACK,
   WHITE,
+  GREY_1,
   GREY_2,
   GREY_3,
   GREY_4,
@@ -40,6 +41,7 @@ const defaultStyles = {
   noOptionsMessage: (styles) => ({
     ...styles,
     fontSize: FONT_SIZE.SIZE_19,
+    color: GREY_1,
   }),
   control: (styles, { isFocused }) => ({
     ...styles,
@@ -58,10 +60,10 @@ const defaultStyles = {
     border: `1px solid ${BLACK}`,
     borderTop: 0,
   }),
-  placeholder: (styles, { isFocused = false }) => ({
+  placeholder: (styles) => ({
     ...styles,
     fontSize: FONT_SIZE.SIZE_16,
-    color: isFocused ? GREY_2 : BLACK,
+    color: GREY_1,
     [MEDIA_QUERIES.TABLET]: {
       fontSize: FONT_SIZE.SIZE_19,
     },
@@ -77,6 +79,19 @@ const defaultStyles = {
       backgroundColor: GREY_2,
       cursor: 'pointer',
     },
+  }),
+  dropdownIndicator: (styles) => ({
+    ...styles,
+    padding: 0,
+    svg: {
+      color: BLACK,
+      width: '25px',
+      height: '25px',
+    },
+  }),
+  indicatorSeparator: (styles) => ({
+    ...styles,
+    backgroundColor: WHITE,
   }),
 }
 
