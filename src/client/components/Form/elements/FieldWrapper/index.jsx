@@ -140,6 +140,7 @@ const FieldWrapper = ({
   reduced,
   reducedPadding,
   isIE,
+  ...rest
 }) => (
   <StyledFormGroup
     id={`field-${name}`}
@@ -147,6 +148,7 @@ const FieldWrapper = ({
     hint={hint}
     reducedPadding={reducedPadding}
     isIE={isIE}
+    {...rest}
   >
     <FieldInner
       legend={legend}
