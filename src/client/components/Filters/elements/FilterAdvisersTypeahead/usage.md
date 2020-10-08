@@ -16,15 +16,18 @@ This is a typeahead is to be used in the collection list pages, this component d
     loadOptions={loadOptions}
     placeholder="Search advisers..."
     noOptionsMessage={() => <span>No advisers found</span>}
+    taskProps={...taskProps} // task to be forwarded on
+    onChange={()=> // function from dispatch}
   />
 ```
 
 ### Properties
 Prop | Required | Default | Type | Description
 :--- | :------- | :------ | :--- | :----------
+`name` | true | ````` | string | name of filter
+ `onChange` | true | `````` | function | function to fire from dispatch
  `taskProps` | true | `````` | object | contains props for the task component
  `taskProps - name` | true | `````` | string | name for task
  `taskProps - id` | true | `````` | string | id for task
- `onChange` | true | `````` | function | function to fire when you select an option
 
 
