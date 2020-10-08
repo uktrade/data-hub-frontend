@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Checkbox from '@govuk-react/checkbox'
 import MultiChoice from '@govuk-react/multi-choice'
 import { BODY_SIZES } from '@govuk-react/constants'
-import { GREY_2 } from 'govuk-colours'
+import { GREY_2, YELLOW } from 'govuk-colours'
 import styled from 'styled-components'
 
 import { FieldWrapper } from '../../../../components'
@@ -38,6 +38,13 @@ const StyledFieldWrapper = styled(FieldWrapper)`
       + span {
         &::before {
           outline: 10px solid ${GREY_2};
+        }
+      }
+    }
+    &:focus {
+      + span {
+        &::before {
+          box-shadow: 0 0 0 4px ${YELLOW};
         }
       }
     }
