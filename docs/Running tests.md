@@ -153,6 +153,29 @@ Updating the baseline consists in 2 steps:
 
 - 2:. Run `$ npm run test:visual:update` to update the failed tests with updated images of how the page in test should look like.
 
+## Visual Component Tests
+
+The aim of this suite is taking screenshots from storybook and comparing to baselines
+to ensure consistency between builds.
+
+### Folder structure
+
+```
+- cypress-visual-screenshots
+  - baseline
+  - comparison
+  - diff
+```
+
+### Running the tests
+
+Execute the command below:
+
+```bash
+npm run storybook
+npm run test:visual-component
+```
+
 ## Cypress code coverage
 
 As part of cypress test suites (functional and e2e), code coverage reports can be generated.
