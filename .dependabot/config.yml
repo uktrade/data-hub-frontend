@@ -10,3 +10,5 @@ update_configs:
           dependency_name: 'govuk-frontend'
       - match:
           dependency_name: 'govuk-colours'
+      - match:
+          dependency_name: 'image-webpack-loader'
