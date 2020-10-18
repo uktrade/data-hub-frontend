@@ -145,7 +145,7 @@
     "request-promise": "^4.2.6",
     "resolve-url-loader": "^3.1.1",
     "sass": "^1.26.10",
-    "sass-loader": "^10.0.2",
+    "sass-loader": "^10.0.3",
     "serve-favicon": "^2.5.0",
     "slashify": "^1.0.0",
     "sniffr": "^1.1.4",
