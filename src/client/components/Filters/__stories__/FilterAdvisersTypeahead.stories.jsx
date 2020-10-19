@@ -24,10 +24,10 @@ const asyncOptions = [
 const SearchMesssage = () => <p>Try searching for Bernard, Holly or Dennis</p>
 
 const FilterAdvisersTypeaheadWithState = (props) => {
-  const [advisers, setAdvisers] = useState([])
+  const [advisers, setAdvisers] = useState(props.value || [])
 
   const onChange = (adviser) => {
-    setAdvisers(adviser)
+    adviser ? setAdvisers(adviser) : setAdvisers([])
   }
 
   return (
@@ -97,7 +97,7 @@ storiesOf('Filters/Adviser typeahead', module)
         loadOptions={loadOptions}
         placeholder="Search advisers..."
         noOptionsMessage={() => <span>No advisers found</span>}
-        selectedAdvisers={asyncOptions[2]}
+        value={asyncOptions[2]}
         taskProps={{
           name: 'task name 3',
           id: 'id3',
