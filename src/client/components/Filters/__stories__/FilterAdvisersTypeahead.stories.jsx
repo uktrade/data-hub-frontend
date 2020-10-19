@@ -5,7 +5,6 @@ import { storiesOf } from '@storybook/react'
 
 import FilterAdvisersTypeahead from '../elements/FilterAdvisersTypeahead'
 import exampleReadme from '../elements/FilterAdvisersTypeahead/example.md'
-import usageReadme from '../elements/FilterAdvisersTypeahead/usage.md'
 
 const asyncOptions = [
   {
@@ -48,7 +47,6 @@ storiesOf('Filters/Adviser typeahead', module)
     options: { theme: undefined },
     readme: {
       content: exampleReadme,
-      sidebar: usageReadme,
     },
   })
   .add('Default', () => (
