@@ -51,6 +51,7 @@ const FilterAdvisersTypeAhead = ({
         {() => (
           <Typeahead
             name={name}
+            aria-label={name}
             placeholder={placeholder}
             noOptionsMessage={noOptionsMessage}
             closeMenuOnSelect={closeMenuOnSelect}
