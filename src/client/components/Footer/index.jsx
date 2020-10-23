@@ -16,6 +16,7 @@ import { InnerContainer } from '../Main'
 
 const StyledFooter = styled('footer')(
   {
+    clear: 'both',
     borderTop: `1px solid ${FOOTER_BORDER_TOP}`,
     background: `${FOOTER_BACKGROUND}`,
     color: `${FOOTER_TEXT}`,

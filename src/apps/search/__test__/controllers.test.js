@@ -70,7 +70,7 @@ describe('Search Controller #renderSearchResults', () => {
     it('should transform investment projects data', () => {
       expect(
         this.renderFunction.getCall(0).args[1].results.items[0].type
-      ).to.equal('investments/project')
+      ).to.equal('project')
     })
   })
 
