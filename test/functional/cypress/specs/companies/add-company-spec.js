@@ -404,7 +404,7 @@ describe('Add company form', () => {
       context('when only the phone number is submitted', () => {
         before(() => {
           cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).type(
-            '0123456789'
+            '+01 (23) 456789'
           )
           cy.get(selectors.companyAdd.continueButton).click()
         })
@@ -426,9 +426,28 @@ describe('Add company form', () => {
           cy.get(selectors.companyAdd.continueButton).click()
         })
         it('should display invalid website URL error', () => {
-          cy.get(selectors.companyAdd.form).contains(
-            'Enter a valid website URL'
+          cy.get(
+            selectors.companyAdd.newCompanyRecordForm.websiteContainer
+          ).contains('Enter a valid website URL')
+          cy.get(
+            selectors.companyAdd.newCompanyRecordForm.telephoneContainer
+          ).should('not.contain', 'Enter a valid website URL')
+        })
+      })
+      context('when an invalid telephone number is filled', () => {
+        before(() => {
+          cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).type(
+            '©123123123'
           )
+          cy.get(selectors.companyAdd.continueButton).click()
+        })
+        it('should display invalid telephone number error', () => {
+          cy.get(
+            selectors.companyAdd.newCompanyRecordForm.telephoneContainer
+          ).contains('Enter a valid telephone number')
+          cy.get(
+            selectors.companyAdd.newCompanyRecordForm.websiteContainer
+          ).should('not.contain', 'Enter a valid telephone number')
         })
       })
       context(
