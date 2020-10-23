@@ -39,7 +39,9 @@ module.exports = {
     },
     companyName: 'input[name="name"]',
     website: 'input[name="website"]',
+    websiteContainer: '#field-website',
     telephone: 'input[name="telephone_number"]',
+    telephoneContainer: '#field-telephone_number',
     address: {
       postcode: 'input[name="postcode"]',
       findUkAddress: 'form button:contains("Find UK address")',

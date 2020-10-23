@@ -11,4 +11,4 @@ export const WEBSITE_REGEX = /^(?:(?:(?:https?):)?\/\/)?(?:\S+(?::\S*)?@)?(?:(?!
 export const GENERIC_PHONE_NUMBER_REGEX = /^$|([0-9]|#|\+|\s|\(|\))+$/
 
 // Non ASCII
-export const NON_ASCII_REGEX = /[^\x00-\x7F]/g
+export const NON_ASCII_REGEX = /[^$|\x00-\x7F]/
