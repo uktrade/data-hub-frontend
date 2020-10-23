@@ -71,9 +71,8 @@ const StyledPagesTruncation = styled('span')`
   color: ${GREY_1};
 `
 
-function Pagination({ totalPages, activePage, onPageClick, getPageUrl }) {
+function Pagination({ totalPages, activePage, getPageUrl, onClick }) {
   const visiblePieces = computeVisiblePieces(totalPages, activePage)
-
   if (totalPages < 2) {
     return null
   }
@@ -84,11 +83,6 @@ function Pagination({ totalPages, activePage, onPageClick, getPageUrl }) {
         {visiblePieces.map(
           ({ type, pageNumber, isActive, isDisabled }, index) => {
             const key = `${type}-${index}`
-            const onClick = (event) => {
-              event.target.blur()
-              event.preventDefault()
-              onPageClick(pageNumber)
-            }
             const PageNumberLink = isActive
               ? StyledActivePaginationLink
               : StyledPaginationLink
@@ -118,6 +112,7 @@ function Pagination({ totalPages, activePage, onPageClick, getPageUrl }) {
                 {type === PAGINATION_PIECE_PAGE_NUMBER && (
                   <PageNumberLink
                     data-test={isActive ? 'page-number-active' : 'page-number'}
+                    data-page-number={pageNumber}
                     onClick={onClick}
                     href={getPageUrl(pageNumber)}
                   >
