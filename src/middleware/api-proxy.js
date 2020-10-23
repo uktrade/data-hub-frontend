@@ -15,6 +15,7 @@ const ALLOWLIST = [
   '/v4/company-referral/:id',
   '/v4/company-referral/:id/complete',
   '/adviser/',
+  '/adviser/:id/',
   '/v4/company/:id/export-win',
   '/v4/company/:id',
   '/v4/pipeline-item',
@@ -25,6 +26,7 @@ const ALLOWLIST = [
   '/v4/company/:id/assign-regional-account-manager',
   '/v4/dnb/company-change-request',
   '/v4/large-investor-profile',
+  '/v3/search/investment_project',
 ]
 
 module.exports = (app) => {
