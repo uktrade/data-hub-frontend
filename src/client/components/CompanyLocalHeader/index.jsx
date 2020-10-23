@@ -108,9 +108,9 @@ const CompanyLocalHeader = ({
   company,
   dnbRelatedCompaniesCount,
   returnUrl,
+  hasActivityFeedWarning,
 }) => {
   const queryString = returnUrl ? `${returnUrl}` : `/companies/${company.id}`
-
   return (
     <>
       <LocalHeader breadcrumbs={breadcrumbs} flashMessages={flashMessages}>
@@ -205,6 +205,17 @@ const CompanyLocalHeader = ({
             View full business details
           </a>
         </p>
+        {hasActivityFeedWarning && (
+          <StatusMessage>
+            Data Hub note: 09:30 Tuesday 20 October 2020. We are investigating
+            an error with displaying activities on Company records. When you add
+            an interaction, it will be saved. You can see it on Contact records
+            or the Interaction view. For any further questions, email&nbsp;
+            <a href="datahubsupport@uktrade.zendesk.com">
+              datahubsupport@uktrade.zendesk.com
+            </a>
+          </StatusMessage>
+        )}
       </LocalHeader>
 
       {company.archived && (
