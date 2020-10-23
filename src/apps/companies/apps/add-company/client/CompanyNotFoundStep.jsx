@@ -11,23 +11,40 @@ import {
   FieldAddress,
 } from '../../../../../client/components'
 
-import { WEBSITE_REGEX } from './constants'
+import {
+  WEBSITE_REGEX,
+  GENERIC_PHONE_NUMBER_REGEX,
+  NON_ASCII_REGEX,
+} from './constants'
 
-const requiredWebsiteAndOrPhoneValidator = (
+const websiteValidator = (
   value,
   name,
   { values: { website, telephone_number } }
 ) => {
-  if (!telephone_number && !website) {
+  if (!website && !telephone_number) {
     return 'Enter a website or phone number'
+  } else if (website && !WEBSITE_REGEX.test(website)) {
+    return 'Enter a valid website URL'
   }
+  return null
+}
 
-  if (telephone_number && !website) {
-    return null
+const telephoneValidator = (
+  value,
+  name,
+  { values: { website, telephone_number } }
+) => {
+  if (!website && !telephone_number) {
+    return 'Enter a website or phone number'
+  } else if (
+    telephone_number &&
+    (!GENERIC_PHONE_NUMBER_REGEX.test(telephone_number) ||
+      NON_ASCII_REGEX.test(telephone_number))
+  ) {
+    return 'Enter a valid telephone number'
   }
-
-  // TODO: Move this validation to the component library
-  return !WEBSITE_REGEX.test(website) ? 'Enter a valid website URL' : null
+  return null
 }
 
 function CompanyNotFoundStep({ organisationTypes, country }) {
@@ -58,14 +75,14 @@ function CompanyNotFoundStep({ organisationTypes, country }) {
         label="Company's website"
         name="website"
         type="url"
-        validate={requiredWebsiteAndOrPhoneValidator}
+        validate={websiteValidator}
       />
 
       <FieldInput
         label="Company's telephone number"
         name="telephone_number"
         type="tel"
-        validate={requiredWebsiteAndOrPhoneValidator}
+        validate={telephoneValidator}
       />
 
       <FieldAddress
