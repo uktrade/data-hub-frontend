@@ -106,7 +106,6 @@ router.param('companyId', shared.getCompanyDetails)
 router.get(
   '/',
   detectUserAgent,
-  setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   getRequestBody(QUERY_FIELDS, QUERY_DATE_FIELDS),
   getCollection(
     'investment_project',

@@ -50,14 +50,14 @@ const StyledDetails = styled(Details)`
   margin: ${SPACING.SCALE_3} 0 0 0;
 `
 
-function CollectionItem({
+const CollectionItem = ({
+  name,
+  projectCode,
   headingUrl,
-  headingText,
-  subheading,
   badges,
   metadata,
   type,
-}) {
+}) => {
   const summaryMessage = type ? `View ${type} details` : 'View details'
 
   return (
@@ -74,13 +74,13 @@ function CollectionItem({
 
       {headingUrl ? (
         <StyledLinkHeader>
-          <Link href={headingUrl}>{headingText}</Link>
+          <Link href={headingUrl}>{name}</Link>
         </StyledLinkHeader>
       ) : (
-        <StyledHeader>{headingText}</StyledHeader>
+        <StyledHeader>{name}</StyledHeader>
       )}
 
-      <StyledSubheading>{subheading}</StyledSubheading>
+      <StyledSubheading>{`Project code ${projectCode}`}</StyledSubheading>
 
       {metadata && metadata.length > 4 ? (
         <>
@@ -97,7 +97,7 @@ function CollectionItem({
 
 CollectionItem.propTypes = {
   headingUrl: PropTypes.string,
-  headingText: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   subheading: PropTypes.string,
   badges: PropTypes.arrayOf(
     PropTypes.shape({
