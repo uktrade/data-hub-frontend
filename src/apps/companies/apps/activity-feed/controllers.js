@@ -30,6 +30,9 @@ async function renderActivityFeed(req, res, next) {
       : {
           company,
           breadcrumbs,
+          hasActivityFeedWarning: !!res.locals.features[
+            'activity-feed-display-incomplete-message'
+          ],
           flashMessages: res.locals.getMessages(),
           activityTypeFilter: FILTER_KEYS.dataHubActivity,
           activityTypeFilters: FILTER_ITEMS,
