@@ -12,7 +12,7 @@ function handleError(error) {
   })
 }
 
-export async function getLargeCapitalProfiles({ limit = 10, page = 1 }) {
+export function getLargeCapitalProfiles({ limit = 10, page = 1 }) {
   const offset = limit * (page - 1)
   return axios
     .get('/api-proxy/v4/large-investor-profile', {
