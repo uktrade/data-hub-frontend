@@ -20,7 +20,6 @@ const StyledNav = styled('nav')`
   display: flex;
   justify-content: space-around;
   padding: ${SPACING.SCALE_3};
-
   ${MEDIA_QUERIES.TABLET} {
     display: block;
   }
@@ -33,7 +32,6 @@ const StyledPaginationList = styled('ul')`
 
 const StyledPaginationPiece = styled('li')`
   display: inline-block;
-
   & + & {
     margin-left: ${SPACING.SCALE_1};
   }
@@ -48,7 +46,6 @@ const StyledPaginationLink = styled(Link)`
   line-height: 1.9em;
   color: ${LINK_COLOUR};
   text-decoration: none;
-
   :hover {
     background-color: ${GREY_3};
   }
