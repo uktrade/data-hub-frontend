@@ -6,34 +6,15 @@
       <div class="govuk-grid-column-full">
         {{ TabbedLocalNav({ items: investmentTabItems }) }}
       </div>
-  </div>
-
-  <div class="grid-row">
-    <div class="column-one-third">
-      {{
-        CollectionFilters({
-          query: QUERY,
-          filtersFields: filtersFields,
-          action: CURRENT_PATH
-        })
-      }}
     </div>
 
-    {% block xhr_content %}
-      <article class="column-two-thirds" data-xhr="c781e8b1-9747-4b2e-8655-68b14ea49126">
-        {{
-          CollectionContent(results | assign({
-            countLabel: countLabel,
-            sortForm: assign({}, sortForm, { action: CURRENT_PATH }),
-            selectedFilters: selectedFilters,
-            highlightTerm: highlightTerm,
-            actionButtons: actionButtons,
-            exportAction: exportAction,
-            query: QUERY
-          }))
-        }}
-      </article>
-    {% endblock %}
+    <div class="govuk-grid-column-full">
+        {% component 'react-slot', {
+          id: 'investment-projects-collection',
+          props: props
+        }
+        %}
+    </div>
 
   </div>
 {% endblock %}
