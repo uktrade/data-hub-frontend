@@ -97,7 +97,7 @@ const CollectionItem = ({
 
 CollectionItem.propTypes = {
   headingUrl: PropTypes.string,
-  headingText: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   subheading: PropTypes.string,
   badges: PropTypes.arrayOf(
     PropTypes.shape({

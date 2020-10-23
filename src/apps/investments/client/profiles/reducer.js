@@ -20,11 +20,6 @@ export default (state = initialState, { type, page, result }) => {
         results: result?.results?.map(transformLargeCapitalProfiles),
         isComplete: true,
       }
-    case INVESTMENTS__PROFILES_SELECT_PAGE:
-      return {
-        ...state,
-        page,
-      }
     default:
       return state
   }
