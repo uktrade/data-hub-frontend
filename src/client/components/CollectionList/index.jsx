@@ -24,6 +24,8 @@ const CollectionList = ({
   isComplete,
   children,
   collectionName,
+  items,
+  activePage = 1,
 }) => {
   const totalPages = Math.ceil(count / itemsPerPage)
   return (
@@ -40,6 +42,24 @@ const CollectionList = ({
           {sortOptions && (
             <CollectionSort sortOptions={sortOptions} totalPages={count} />
           )}
+
+          {items &&
+            items.map(
+              (
+                { headingText, headingUrl, subheading, badges, metadata, type },
+                index
+              ) => (
+                <CollectionItem
+                  key={[count, activePage, index].join('-')}
+                  headingUrl={headingUrl}
+                  name={headingText}
+                  subheading={subheading}
+                  badges={badges}
+                  metadata={metadata}
+                  type={type}
+                />
+              )
+            )}
 
           <Task.Status {...taskProps}>
             {() =>
@@ -76,7 +96,7 @@ CollectionList.propTypes = {
       }).isRequired,
       onSuccessDispatch: PropTypes.string,
     }).isRequired,
-  }).isRequired,
+  }),
   isComplete: PropTypes.bool,
   children: PropTypes.node,
   collectionName: PropTypes.string,
