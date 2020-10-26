@@ -464,9 +464,9 @@ describe('Add company form', () => {
             cy.get(selectors.companyAdd.newCompanyRecordForm.website).type(
               'www.investigationlimited.com'
             )
-            cy.get(selectors.companyAdd.newCompanyRecordForm.telephone).type(
-              '0123456789'
-            )
+            cy.get(selectors.companyAdd.newCompanyRecordForm.telephone)
+              .clear()
+              .type('0123456789')
             cy.get(
               selectors.companyAdd.newCompanyRecordForm.address.postcode
             ).type('SW1H 9AJ')
