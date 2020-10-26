@@ -33,19 +33,19 @@ describe('Collection', () => {
     })
   })
 
-  describe('investment interaction', () => {
-    before(() => {
-      cy.visit(
-        investments.projects.interactions.index(
-          fixtures.investmentProject.newHotelFdi.id
-        )
-      )
-    })
+  // describe('investment interaction', () => {
+  //   before(() => {
+  //     cy.visit(
+  //       investments.projects.interactions.index(
+  //         fixtures.investmentProject.newHotelFdi.id
+  //       )
+  //     )
+  //   })
 
-    it('should return the results summary for investment interaction collection', () => {
-      checkCollection()
-    })
-  })
+  //   it('should return the results summary for investment interaction collection', () => {
+  //     checkCollection()
+  //   })
+  // })
 
   describe('investment proposition', () => {
     before(() => {
