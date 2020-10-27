@@ -60,7 +60,7 @@ const ProjectsCollection = ({ payload, ...props }) => {
             label="Advisers"
             name="advisers"
             placeholder="Search advisers..."
-            noOptionsMessage={() => <span>No advisers found</span>}
+            noOptionsMessage={() => <>No advisers found</>}
           />
         </ToggleSection>
       </CollectionFilters>
