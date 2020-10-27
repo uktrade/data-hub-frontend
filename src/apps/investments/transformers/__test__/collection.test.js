@@ -16,7 +16,7 @@ describe('Investment project transformers', () => {
       })
 
       it('should provide the name', () => {
-        expect(this.transformedItem.name).to.equal(this.rawItem.name)
+        expect(this.transformedItem.headingText).to.equal(this.rawItem.name)
       })
 
       it('should provide the type', () => {
@@ -30,7 +30,9 @@ describe('Investment project transformers', () => {
         })
       })
       it('should list the project code', () => {
-        expect(this.transformedItem.projectCode).to.equal('DHP-00000110')
+        expect(this.transformedItem.subheading).to.equal(
+          'Project code DHP-00000110'
+        )
       })
     })
   })
