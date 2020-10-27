@@ -68,4 +68,4 @@ const ProjectsCollection = ({ payload, ...props }) => {
   )
 }
 
-export default connect(state2props, null)(ProjectsCollection)
+export default connect(state2props)(ProjectsCollection)
