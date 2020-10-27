@@ -23,10 +23,7 @@ export default (state = initialState, { type, result }) => {
     case INVESTMENTS__PROJECTS_SELECTED_ADVISERS:
       return {
         ...state,
-        selectedAdvisers: result.map(({ advisers }) => ({
-          label: advisers.name,
-          value: advisers.id,
-        })),
+        selectedAdvisers: result,
       }
     default:
       return state
