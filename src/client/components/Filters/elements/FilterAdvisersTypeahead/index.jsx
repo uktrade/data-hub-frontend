@@ -49,42 +49,46 @@ const FilterAdvisersTypeAhead = ({
   closeMenuOnSelect = false,
   selectedAdvisers = null,
   loadOptions = fetchAdvisers(onlyShowActiveAdvisers),
-}) => {
-  return (
-    <StyledFieldWrapper label={label} name={name} hint={hint}>
-      <Task.Status {...taskProps}>
-        {() => (
-          <Route>
-            {({ history }) => {
-              const qsParams = qs.parse(location.search.slice(1))
-              return (
-                <Typeahead
-                  name={name}
-                  aria-label={name}
-                  placeholder={placeholder}
-                  noOptionsMessage={noOptionsMessage}
-                  closeMenuOnSelect={closeMenuOnSelect}
-                  loadOptions={loadOptions}
-                  isMulti={isMulti}
-                  value={selectedAdvisers}
-                  onChange={(adviser) => {
-                    history.push({
-                      search: qs.stringify({
-                        ...qsParams,
-                        ...getAdviserIds(adviser),
-                        page: 1,
-                      }),
-                    })
-                  }}
-                />
-              )
-            }}
-          </Route>
-        )}
-      </Task.Status>
-    </StyledFieldWrapper>
-  )
-}
+}) => (
+  <StyledFieldWrapper label={label} name={name} hint={hint}>
+    <Task.Status {...taskProps}>
+      {() => (
+        <Route>
+          {({ history }) => {
+            const qsParams = qs.parse(location.search.slice(1))
+            return (
+              <Typeahead
+                name={name}
+                aria-label={name}
+                placeholder={placeholder}
+                noOptionsMessage={noOptionsMessage}
+                closeMenuOnSelect={closeMenuOnSelect}
+                loadOptions={loadOptions}
+                isMulti={isMulti}
+                value={
+                  selectedAdvisers &&
+                  selectedAdvisers.map(({ advisers }) => ({
+                    label: advisers.name,
+                    value: advisers.id,
+                  }))
+                }
+                onChange={(adviser) => {
+                  history.push({
+                    search: qs.stringify({
+                      ...qsParams,
+                      ...getAdviserIds(adviser),
+                      page: 1,
+                    }),
+                  })
+                }}
+              />
+            )
+          }}
+        </Route>
+      )}
+    </Task.Status>
+  </StyledFieldWrapper>
+)
 
 FilterAdvisersTypeAhead.propTypes = {
   name: PropTypes.string.isRequired,
