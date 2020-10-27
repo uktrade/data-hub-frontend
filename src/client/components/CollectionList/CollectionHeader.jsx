@@ -26,7 +26,11 @@ const StyledResultCount = styled('span')`
   line-height: 1;
 `
 
-function CollectionHeader({ totalItems, collectionName, addItemUrl }) {
+function CollectionHeader({
+  totalItems,
+  collectionName = 'result',
+  addItemUrl,
+}) {
   const formattedTotal = decimal(totalItems)
   const counterSuffix = pluralize(collectionName, totalItems)
 
