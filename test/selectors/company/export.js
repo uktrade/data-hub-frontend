@@ -9,6 +9,6 @@ module.exports = {
     noInterest: '#field-' + EXPORT_INTEREST_STATUS.NOT_INTERESTED,
   },
   exportWins: {
-    listItemHeadings: '#company-export-index-page > div > div > h3',
+    listItemHeadings: '#company-export-index-page > div > div h3',
   },
 }
