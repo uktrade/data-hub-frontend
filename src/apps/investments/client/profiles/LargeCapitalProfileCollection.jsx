@@ -1,5 +1,4 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { CollectionList } from '../../../../client/components/'
@@ -9,32 +8,23 @@ import {
   INVESTMENTS__PROFILE_SELECT_PAGE,
 } from '../../../../client/actions'
 
-const LargeCapitalProfileCollection = (props) => {
-  const { page } = props
-
+const LargeCapitalProfileCollection = ({ payload, ...props }) => {
   const collectionListTask = {
     name: TASK_GET_PROFILES_LIST,
     id: ID,
     progressMessage: 'loading profiles...',
     startOnRender: {
-      payload: { page },
+      payload,
       onSuccessDispatch: INVESTMENTS__PROFILES_LOADED,
     },
   }
 
   return (
-    <Route>
-      {(routerProps) => {
-        return (
-          <CollectionList
-            {...props}
-            {...routerProps}
-            collectionName="Profile"
-            taskProps={collectionListTask}
-          />
-        )
-      }}
-    </Route>
+    <CollectionList
+      {...props}
+      collectionName="Profile"
+      taskProps={collectionListTask}
+    />
   )
 }
 
