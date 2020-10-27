@@ -51,8 +51,8 @@ const StyledDetails = styled(Details)`
 `
 
 const CollectionItem = ({
-  name,
-  projectCode,
+  headingText,
+  subheading,
   headingUrl,
   badges,
   metadata,
@@ -74,13 +74,13 @@ const CollectionItem = ({
 
       {headingUrl ? (
         <StyledLinkHeader>
-          <Link href={headingUrl}>{name}</Link>
+          <Link href={headingUrl}>{headingText}</Link>
         </StyledLinkHeader>
       ) : (
-        <StyledHeader>{name}</StyledHeader>
+        <StyledHeader>{headingText}</StyledHeader>
       )}
 
-      <StyledSubheading>{`Project code ${projectCode}`}</StyledSubheading>
+      {subheading && <StyledSubheading>{subheading}</StyledSubheading>}
 
       {metadata && metadata.length > 4 ? (
         <>
@@ -97,7 +97,7 @@ const CollectionItem = ({
 
 CollectionItem.propTypes = {
   headingUrl: PropTypes.string,
-  name: PropTypes.string.isRequired,
+  headingText: PropTypes.string.isRequired,
   subheading: PropTypes.string,
   badges: PropTypes.arrayOf(
     PropTypes.shape({

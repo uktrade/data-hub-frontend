@@ -32,9 +32,9 @@ function transformInvestmentProjectToListItem({
 
   return {
     headingUrl: urls.investments.projects.details(id),
-    name,
+    headingText: name,
+    subheading: `Project code ${project_code}`,
     type: 'project',
-    projectCode: project_code,
     badges,
     metadata,
   }

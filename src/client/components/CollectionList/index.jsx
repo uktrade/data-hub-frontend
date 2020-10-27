@@ -11,6 +11,7 @@ import {
   CollectionHeader,
   CollectionSort,
   CollectionItem,
+  Pagination,
 } from '../../components'
 
 import RoutedPagination from '../RoutedPagination'
@@ -26,6 +27,8 @@ const CollectionList = ({
   collectionName,
   items,
   activePage = 1,
+  routedPagination = true,
+  onPageClick,
 }) => {
   const totalPages = Math.ceil(count / itemsPerPage)
   return (
@@ -33,12 +36,13 @@ const CollectionList = ({
       {children}
       <GridCol setWidth={children ? `two-thirds` : `full`}>
         <article>
-          {collectionName && (
+          {isComplete && (
             <CollectionHeader
               totalItems={count}
               collectionName={collectionName}
             />
           )}
+
           {sortOptions && (
             <CollectionSort sortOptions={sortOptions} totalPages={count} />
           )}
@@ -52,7 +56,7 @@ const CollectionList = ({
                 <CollectionItem
                   key={[count, activePage, index].join('-')}
                   headingUrl={headingUrl}
-                  name={headingText}
+                  headingText={headingText}
                   subheading={subheading}
                   badges={badges}
                   metadata={metadata}
@@ -68,11 +72,19 @@ const CollectionList = ({
                   {results.map((item, i) => (
                     <CollectionItem {...item} key={i} />
                   ))}
-
-                  <RoutedPagination
-                    qsParamName="page"
-                    totalPages={totalPages}
-                  />
+                  {routedPagination ? (
+                    <RoutedPagination
+                      qsParamName="page"
+                      totalPages={totalPages}
+                      activePage={activePage}
+                    />
+                  ) : (
+                    <Pagination
+                      totalPages={totalPages}
+                      onPageClick={onPageClick}
+                      activePage={activePage}
+                    />
+                  )}
                 </>
               )
             }
