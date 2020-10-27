@@ -17,6 +17,7 @@ export default (state = initialState, { type, result, page }) => {
         ...state,
         count,
         results,
+        isComplete: true,
       }
     case EXPORTS_HISTORY__SELECT_PAGE:
       return {
