@@ -4,7 +4,6 @@ import { transformLargeCapitalProfiles } from '../../transformers/profiles'
 
 const initialState = {
   page: 1,
-  count: undefined,
   results: [],
   isComplete: false,
 }
