@@ -6,8 +6,11 @@ export const TASK_GET_ADVISER_NAME = 'TASK_GET_ADVISER_NAME'
 
 export const ID = 'projectsList'
 
-const collectionListPayload = (searchParams) => {
-  const { adviser = false, sortby = 'created_on:desc', page = 1 } = searchParams
+const collectionListPayload = ({
+  adviser = false,
+  sortby = 'created_on:desc',
+  page = 1,
+}) => {
   const searchParamProps = {
     adviser: adviser ? (Array.isArray(adviser) ? adviser : [adviser]) : adviser,
     sortby,
