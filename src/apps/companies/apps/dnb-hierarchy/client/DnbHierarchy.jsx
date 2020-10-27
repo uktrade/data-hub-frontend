@@ -57,8 +57,8 @@ const DnbHierarchy = ({ dataEndpoint, isGlobalHQ }) => {
           items={companies}
           count={totalItems}
           isComplete={true}
-          // onPageClick={onPageClick}
-          // getPageUrl={getPageUrl}
+          onPageClick={onPageClick}
+          getPageUrl={getPageUrl}
           activePage={activePage}
         />
       </LoadingBox>
