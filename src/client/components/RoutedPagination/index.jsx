@@ -11,16 +11,11 @@ const RoutedPagination = ({ qsParamName, ...props }) => (
       return (
         <Pagination
           {...props}
-          onClick={(e) => {
-            const targetValue = e.target.attributes.getNamedItem(
-              'data-page-number'
-            ).value
-            e.target.blur()
-            e.preventDefault()
+          onPageClick={(page) => {
             history.push({
               search: qs.stringify({
                 ...qsParams,
-                [qsParamName]: targetValue,
+                [qsParamName]: page,
               }),
             })
           }}
