@@ -27,6 +27,7 @@ export default (state = initialState, { type, result, page }) => {
         ...state,
         count,
         results,
+        isComplete: true,
       }
     case EXPORT_WINS__SELECT_PAGE:
       return {
