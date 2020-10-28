@@ -1,14 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import axios from 'axios'
+import qs from 'qs'
 import { throttle } from 'lodash'
+import { Route } from 'react-router-dom'
 import styled from 'styled-components'
 import { FONT_WEIGHTS } from '@govuk-react/constants'
 
 import { Typeahead, FieldWrapper } from '../../../../components'
+
 import Task from '../../../../components/Task'
 
 import { parseAdviserData } from '../../../../../common/formatAdviser'
+
+const getAdviserIds = (advisers) => ({
+  adviser: advisers ? advisers.map(({ value }) => value) : [],
+})
 
 const fetchAdvisers = (onlyShowActiveAdvisers) =>
   throttle(
@@ -32,44 +39,59 @@ const StyledFieldWrapper = styled(FieldWrapper)`
 
 const FilterAdvisersTypeAhead = ({
   name,
-  label = '',
   taskProps,
+  label = '',
   hint = '',
-  required = false,
   isMulti = false,
   placeholder = '',
   onlyShowActiveAdvisers = true,
   noOptionsMessage = () => null,
   closeMenuOnSelect = false,
-  onChange,
   selectedAdvisers = null,
   loadOptions = fetchAdvisers(onlyShowActiveAdvisers),
-}) => {
-  return (
-    <StyledFieldWrapper label={label} name={name} hint={hint}>
-      <Task.Status {...taskProps}>
-        {() => (
-          <Typeahead
-            name={name}
-            aria-label={name}
-            placeholder={placeholder}
-            noOptionsMessage={noOptionsMessage}
-            closeMenuOnSelect={closeMenuOnSelect}
-            required={required}
-            loadOptions={loadOptions}
-            isMulti={isMulti}
-            onChange={onChange}
-            value={selectedAdvisers}
-          />
-        )}
-      </Task.Status>
-    </StyledFieldWrapper>
-  )
-}
+}) => (
+  <StyledFieldWrapper label={label} name={name} hint={hint}>
+    <Task.Status {...taskProps}>
+      {() => (
+        <Route>
+          {({ history }) => {
+            const qsParams = qs.parse(location.search.slice(1))
+            return (
+              <Typeahead
+                name={name}
+                aria-label={name}
+                placeholder={placeholder}
+                noOptionsMessage={noOptionsMessage}
+                closeMenuOnSelect={closeMenuOnSelect}
+                loadOptions={loadOptions}
+                isMulti={isMulti}
+                value={
+                  selectedAdvisers &&
+                  selectedAdvisers.map(({ advisers }) => ({
+                    label: advisers.name,
+                    value: advisers.id,
+                  }))
+                }
+                onChange={(adviser) => {
+                  history.push({
+                    search: qs.stringify({
+                      ...qsParams,
+                      ...getAdviserIds(adviser),
+                      page: 1,
+                    }),
+                  })
+                }}
+              />
+            )
+          }}
+        </Route>
+      )}
+    </Task.Status>
+  </StyledFieldWrapper>
+)
 
 FilterAdvisersTypeAhead.propTypes = {
   name: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
   taskProps: PropTypes.shape({
     name: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,

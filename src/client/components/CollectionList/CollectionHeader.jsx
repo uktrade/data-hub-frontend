@@ -26,9 +26,13 @@ const StyledResultCount = styled('span')`
   line-height: 1;
 `
 
-function CollectionHeader({ totalItems, itemName, addItemUrl }) {
+function CollectionHeader({
+  totalItems,
+  collectionName = 'result',
+  addItemUrl,
+}) {
   const formattedTotal = decimal(totalItems)
-  const counterSuffix = pluralize(itemName, totalItems)
+  const counterSuffix = pluralize(collectionName, totalItems)
 
   const actions = addItemUrl && (
     <Button
@@ -37,7 +41,7 @@ function CollectionHeader({ totalItems, itemName, addItemUrl }) {
       buttonColour={GREY_3}
       buttonTextColour={BLACK}
     >
-      Add {itemName}
+      Add {collectionName}
     </Button>
   )
 
@@ -53,7 +57,7 @@ function CollectionHeader({ totalItems, itemName, addItemUrl }) {
 
 CollectionHeader.propTypes = {
   totalItems: PropTypes.number.isRequired,
-  itemName: PropTypes.string.isRequired,
+  collectionName: PropTypes.string.isRequired,
   addItemUrl: PropTypes.string,
 }
 

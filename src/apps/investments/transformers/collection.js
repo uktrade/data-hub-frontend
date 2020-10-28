@@ -1,7 +1,8 @@
 /* eslint camelcase: 0 */
-const { isArray, assign, compact, pickBy } = require('lodash')
+const { isArray, assign } = require('lodash')
+const { format } = require('date-fns')
 
-const labels = require('../labels')
+const urls = require('../../../lib/urls')
 
 function transformInvestmentProjectToListItem({
   id,
@@ -14,39 +15,28 @@ function transformInvestmentProjectToListItem({
   estimated_land_date,
   sector,
 }) {
-  const metaItems = [
-    { key: 'stage', value: stage, type: 'badge' },
+  const badges = [
+    { text: stage.name },
+    { text: investment_type.name },
+    { text: status },
+  ]
+
+  const metadata = [
+    { label: 'Investor', value: investor_company.name },
+    { label: 'Sector', value: sector.name },
     {
-      key: 'investment_type',
-      value: investment_type,
-      type: 'badge',
-      badgeModifier: 'secondary',
+      label: 'Estimated land date',
+      value: estimated_land_date && format(estimated_land_date, 'MMMM YYYY'),
     },
-    { key: 'status', value: status, type: 'badge', badgeModifier: 'secondary' },
-    { key: 'investor_company', value: investor_company },
-    { key: 'sector', value: sector },
-    {
-      key: 'estimated_land_date',
-      value: estimated_land_date,
-      type: 'dateMonthYear',
-      isInert: true,
-    },
-  ].map(({ key, value, type, badgeModifier, isInert }) => {
-    if (!value) return
-    return assign({}, pickBy({ value, type, badgeModifier, isInert }), {
-      label: labels.investmentProjectMetaItemLabels[key],
-    })
-  })
+  ].filter((metadata) => metadata.value)
 
   return {
-    id,
-    name,
-    type: 'investments/project',
-    subTitle: {
-      label: 'Project code',
-      value: project_code,
-    },
-    meta: compact(metaItems),
+    headingUrl: urls.investments.projects.details(id),
+    headingText: name,
+    subheading: `Project code ${project_code}`,
+    type: 'project',
+    badges,
+    metadata,
   }
 }
 

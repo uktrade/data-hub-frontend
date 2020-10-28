@@ -50,14 +50,14 @@ const StyledDetails = styled(Details)`
   margin: ${SPACING.SCALE_3} 0 0 0;
 `
 
-function CollectionItem({
-  headingUrl,
+const CollectionItem = ({
   headingText,
   subheading,
+  headingUrl,
   badges,
   metadata,
   type,
-}) {
+}) => {
   const summaryMessage = type ? `View ${type} details` : 'View details'
 
   return (
@@ -80,7 +80,7 @@ function CollectionItem({
         <StyledHeader>{headingText}</StyledHeader>
       )}
 
-      <StyledSubheading>{subheading}</StyledSubheading>
+      {subheading && <StyledSubheading>{subheading}</StyledSubheading>}
 
       {metadata && metadata.length > 4 ? (
         <>

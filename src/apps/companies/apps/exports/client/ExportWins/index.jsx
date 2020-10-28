@@ -4,7 +4,6 @@ import { SPACING } from '@govuk-react/constants'
 import { CollectionList } from '../../../../../../client/components/'
 
 import { connect } from 'react-redux'
-import Task from '../../../../../../client/components/Task/index.jsx'
 import { state2props, NOT_IMPLEMENTED } from './state'
 import {
   EXPORT_WINS__LOADED,
@@ -27,29 +26,30 @@ function ExportWins(state) {
     activePage,
     companyId,
     companyName,
+    isComplete,
   } = state
+
+  const collectionListTask = {
+    name: 'Export wins',
+    id: 'exportWins',
+    progressMessage: 'Loading Exports Wins...',
+    startOnRender: {
+      payload: { companyId, companyName, activePage },
+      onSuccessDispatch: EXPORT_WINS__LOADED,
+    },
+  }
 
   return (
     <Wrapper>
-      <Task.Status
-        name="Export wins"
-        id="exportWins"
-        progressMessage="Loading Exports Wins..."
-        startOnRender={{
-          payload: { companyId, companyName, activePage },
-          onSuccessDispatch: EXPORT_WINS__LOADED,
-        }}
-      >
-        {() => (
-          <CollectionList
-            itemName="result"
-            items={results}
-            totalItems={count}
-            onPageClick={onPageClick}
-            activePage={activePage}
-          />
-        )}
-      </Task.Status>
+      <CollectionList
+        taskProps={collectionListTask}
+        items={results}
+        count={count}
+        onPageClick={onPageClick}
+        activePage={activePage}
+        routedPagination={false}
+        isComplete={isComplete}
+      />
     </Wrapper>
   )
 }

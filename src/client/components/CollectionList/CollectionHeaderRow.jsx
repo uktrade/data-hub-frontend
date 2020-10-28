@@ -24,7 +24,7 @@ const StyledActions = styled('div')`
   }
 `
 
-function CollectionHeaderRow({ primary, actions, children }) {
+const CollectionHeaderRow = ({ primary, actions, children }) => {
   return (
     <StyledRowWrapper primary={primary}>
       {children}
