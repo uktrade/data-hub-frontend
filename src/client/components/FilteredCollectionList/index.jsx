@@ -11,25 +11,25 @@ import {
   CollectionHeader,
   CollectionSort,
   CollectionItem,
-  Pagination,
+  RoutedPagination,
 } from '../../components'
 
-const CollectionList = ({
+const FilteredCollectionList = ({
   results = [],
   itemsPerPage = 10,
   sortOptions = null,
   taskProps,
   count = 0,
   isComplete,
-  collectionName = 'result',
-  items,
+  children,
+  collectionName,
   activePage = 1,
-  onPageClick,
 }) => {
   const totalPages = Math.ceil(count / itemsPerPage)
   return (
     <GridRow>
-      <GridCol setWidth="full">
+      {children}
+      <GridCol setWidth="two-thirds">
         <article>
           {isComplete && (
             <CollectionHeader
@@ -37,28 +37,9 @@ const CollectionList = ({
               collectionName={collectionName}
             />
           )}
-
           {sortOptions && (
             <CollectionSort sortOptions={sortOptions} totalPages={count} />
           )}
-
-          {items.map(
-            (
-              { headingText, headingUrl, subheading, badges, metadata, type },
-              index
-            ) => (
-              <CollectionItem
-                key={[count, activePage, index].join('-')}
-                headingUrl={headingUrl}
-                headingText={headingText}
-                subheading={subheading}
-                badges={badges}
-                metadata={metadata}
-                type={type}
-              />
-            )
-          )}
-
           <Task.Status {...taskProps}>
             {() =>
               isComplete && (
@@ -66,9 +47,9 @@ const CollectionList = ({
                   {results.map((item, i) => (
                     <CollectionItem {...item} key={i} />
                   ))}
-                  <Pagination
+                  <RoutedPagination
+                    qsParamName="page"
                     totalPages={totalPages}
-                    onPageClick={onPageClick}
                     activePage={activePage}
                   />
                 </>
@@ -81,14 +62,14 @@ const CollectionList = ({
   )
 }
 
-CollectionList.propTypes = {
+FilteredCollectionList.propTypes = {
   taskProps: PropTypes.shape({
     name: PropTypes.string,
     id: PropTypes.string,
     progressMessage: PropTypes.string,
     startOnRender: PropTypes.shape({
       payload: PropTypes.shape({
-        page: PropTypes.number,
+        page: PropTypes.string,
         filters: PropTypes.object,
         search: PropTypes.string,
       }).isRequired,
@@ -104,7 +85,7 @@ CollectionList.propTypes = {
       query: PropTypes.object.isRequired,
     }),
   }),
-  onPageClick: PropTypes.func.isRequired,
+  maxItemsToDownload: PropTypes.number,
 }
 
-export default CollectionList
+export default FilteredCollectionList
