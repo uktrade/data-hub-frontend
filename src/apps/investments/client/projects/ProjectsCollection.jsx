@@ -5,7 +5,7 @@ import {
   FilterAdvisersTypeAhead,
   CollectionFilters,
   ToggleSection,
-  CollectionList,
+  FilteredCollectionList,
 } from '../../../../client/components'
 
 import {
@@ -42,7 +42,7 @@ const ProjectsCollection = ({ payload, ...props }) => {
     },
   }
   return (
-    <CollectionList
+    <FilteredCollectionList
       {...props}
       collectionName="Project"
       sortOptions={sortOptions}
@@ -64,7 +64,7 @@ const ProjectsCollection = ({ payload, ...props }) => {
           />
         </ToggleSection>
       </CollectionFilters>
-    </CollectionList>
+    </FilteredCollectionList>
   )
 }
 
