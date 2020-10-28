@@ -1,4 +1,7 @@
-import { INVESTMENTS__PROFILES_LOADED } from '../../../../client/actions'
+import {
+  INVESTMENTS__PROFILES_LOADED,
+  INVESTMENTS__PROFILES_SELECT_PAGE,
+} from '../../../../client/actions'
 
 import { transformLargeCapitalProfiles } from '../../transformers/profiles'
 
@@ -8,7 +11,7 @@ const initialState = {
   isComplete: false,
 }
 
-export default (state = initialState, { type, result }) => {
+export default (state = initialState, { type, page, result }) => {
   switch (type) {
     case INVESTMENTS__PROFILES_LOADED:
       return {
@@ -16,6 +19,11 @@ export default (state = initialState, { type, result }) => {
         count: result.count,
         results: result?.results?.map(transformLargeCapitalProfiles),
         isComplete: true,
+      }
+    case INVESTMENTS__PROFILES_SELECT_PAGE:
+      return {
+        ...state,
+        page,
       }
     default:
       return state
