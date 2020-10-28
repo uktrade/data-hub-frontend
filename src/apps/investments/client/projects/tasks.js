@@ -1,9 +1,5 @@
 import axios from 'axios'
 
-function handleSuccess({ data }) {
-  return data
-}
-
 function handleError(error) {
   const message = error.response.data.detail
   return Promise.reject({
@@ -21,7 +17,7 @@ function getProjects({ limit = 10, page, ...rest }) {
       offset,
       ...rest,
     })
-    .then(handleSuccess, handleError)
+    .then(({ data }) => data, handleError)
 }
 
 function getAdviserNames(adviser) {
