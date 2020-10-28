@@ -26,7 +26,7 @@ function ExportsHistory({
   pageTitle,
   isComplete,
 }) {
-  const exportHistoryTask = {
+  const collectionListTask = {
     name: 'Exports history',
     id: 'exportsHistory',
     progressMessage: 'loading Exports History',
@@ -43,14 +43,12 @@ function ExportsHistory({
       </InsetText>
       <H2 size={LEVEL_SIZE[3]}>{pageTitle}</H2>
       <CollectionList
-        itemName="result"
-        taskProps={exportHistoryTask}
+        taskProps={collectionListTask}
         items={results}
         count={count}
         onPageClick={onPageClick}
         activePage={activePage}
         isComplete={isComplete}
-        routedPagination={false}
       />
     </Wrapper>
   )

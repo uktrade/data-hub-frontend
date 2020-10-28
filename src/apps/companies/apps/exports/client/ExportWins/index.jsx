@@ -29,7 +29,7 @@ function ExportWins(state) {
     isComplete,
   } = state
 
-  const exportWinsTask = {
+  const collectionListTask = {
     name: 'Export wins',
     id: 'exportWins',
     progressMessage: 'Loading Exports Wins...',
@@ -42,8 +42,7 @@ function ExportWins(state) {
   return (
     <Wrapper>
       <CollectionList
-        taskProps={exportWinsTask}
-        itemName="result"
+        taskProps={collectionListTask}
         items={results}
         count={count}
         onPageClick={onPageClick}
