@@ -17,7 +17,7 @@ import {
 const CollectionList = ({
   results = [],
   itemsPerPage = 10,
-  sortOptions = null,
+  sortOptions,
   taskProps,
   count = 0,
   isComplete,
@@ -25,61 +25,58 @@ const CollectionList = ({
   items,
   activePage = 1,
   onPageClick,
-}) => {
-  const totalPages = Math.ceil(count / itemsPerPage)
-  return (
-    <GridRow>
-      <GridCol setWidth="full">
-        <article>
-          {isComplete && (
-            <CollectionHeader
-              totalItems={count}
-              collectionName={collectionName}
+}) => (
+  <GridRow>
+    <GridCol setWidth="full">
+      <article>
+        {isComplete && (
+          <CollectionHeader
+            totalItems={count}
+            collectionName={collectionName}
+          />
+        )}
+
+        {sortOptions && (
+          <CollectionSort sortOptions={sortOptions} totalPages={count} />
+        )}
+
+        {items.map(
+          (
+            { headingText, headingUrl, subheading, badges, metadata, type },
+            index
+          ) => (
+            <CollectionItem
+              key={[count, activePage, index].join('-')}
+              headingUrl={headingUrl}
+              headingText={headingText}
+              subheading={subheading}
+              badges={badges}
+              metadata={metadata}
+              type={type}
             />
-          )}
+          )
+        )}
 
-          {sortOptions && (
-            <CollectionSort sortOptions={sortOptions} totalPages={count} />
-          )}
-
-          {items.map(
-            (
-              { headingText, headingUrl, subheading, badges, metadata, type },
-              index
-            ) => (
-              <CollectionItem
-                key={[count, activePage, index].join('-')}
-                headingUrl={headingUrl}
-                headingText={headingText}
-                subheading={subheading}
-                badges={badges}
-                metadata={metadata}
-                type={type}
-              />
+        <Task.Status {...taskProps}>
+          {() =>
+            isComplete && (
+              <>
+                {results.map((item, i) => (
+                  <CollectionItem {...item} key={i} />
+                ))}
+                <Pagination
+                  totalPages={Math.ceil(count / itemsPerPage)}
+                  onPageClick={onPageClick}
+                  activePage={activePage}
+                />
+              </>
             )
-          )}
-
-          <Task.Status {...taskProps}>
-            {() =>
-              isComplete && (
-                <>
-                  {results.map((item, i) => (
-                    <CollectionItem {...item} key={i} />
-                  ))}
-                  <Pagination
-                    totalPages={totalPages}
-                    onPageClick={onPageClick}
-                    activePage={activePage}
-                  />
-                </>
-              )
-            }
-          </Task.Status>
-        </article>
-      </GridCol>
-    </GridRow>
-  )
-}
+          }
+        </Task.Status>
+      </article>
+    </GridCol>
+  </GridRow>
+)
 
 CollectionList.propTypes = {
   taskProps: PropTypes.shape({
