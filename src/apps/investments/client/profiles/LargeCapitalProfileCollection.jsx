@@ -5,25 +5,35 @@ import { CollectionList } from '../../../../client/components/'
 import { TASK_GET_PROFILES_LIST, ID, state2props } from './state'
 import {
   INVESTMENTS__PROFILES_LOADED,
-  INVESTMENTS__PROFILE_SELECT_PAGE,
+  INVESTMENTS__PROFILES_SELECT_PAGE,
 } from '../../../../client/actions'
 
-const LargeCapitalProfileCollection = ({ payload, ...props }) => {
+const LargeCapitalProfileCollection = ({
+  page,
+  count,
+  results,
+  onPageClick,
+  isComplete,
+}) => {
   const collectionListTask = {
     name: TASK_GET_PROFILES_LIST,
     id: ID,
     progressMessage: 'loading profiles...',
     startOnRender: {
-      payload,
+      payload: { page },
       onSuccessDispatch: INVESTMENTS__PROFILES_LOADED,
     },
   }
 
   return (
     <CollectionList
-      {...props}
-      collectionName="Profile"
       taskProps={collectionListTask}
+      collectionName="profile"
+      items={results}
+      count={count}
+      onPageClick={onPageClick}
+      activePage={page}
+      isComplete={isComplete}
     />
   )
 }
@@ -31,7 +41,7 @@ const LargeCapitalProfileCollection = ({ payload, ...props }) => {
 export default connect(state2props, (dispatch) => ({
   onPageClick: (page) => {
     dispatch({
-      type: INVESTMENTS__PROFILE_SELECT_PAGE,
+      type: INVESTMENTS__PROFILES_SELECT_PAGE,
       page,
     })
   },
