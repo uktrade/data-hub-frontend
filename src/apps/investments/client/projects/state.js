@@ -1,5 +1,4 @@
 import qs from 'qs'
-import { omit } from 'lodash'
 
 export const TASK_GET_PROJECTS_LIST = 'TASK_GET_PROJECTS_LIST'
 export const TASK_GET_ADVISER_NAME = 'TASK_GET_ADVISER_NAME'
@@ -17,12 +16,9 @@ const collectionListPayload = ({
     page,
   }
 
-  let keysToDelete = []
-
-  Object.keys(searchParamProps).forEach((key) => {
-    searchParamProps[key] === false && keysToDelete.push(key)
-  })
-  return omit(searchParamProps, keysToDelete)
+  return Object.fromEntries(
+    Object.entries(searchParamProps).filter((v) => v[1])
+  )
 }
 
 export const state2props = ({ router, ...state }) => ({
