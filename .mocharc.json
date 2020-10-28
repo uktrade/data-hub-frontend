@@ -1,0 +1,9 @@
+{
+  "require" : [
+      "test/unit/common.js"
+  ],
+  "ui": "bdd",
+  "recursive": true,
+  "reporter": "dot",
+  "file": "test/unit/global-helpers.js"
+}
