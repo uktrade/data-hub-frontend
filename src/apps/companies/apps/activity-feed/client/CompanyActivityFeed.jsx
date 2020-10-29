@@ -4,10 +4,12 @@ import { Button, Details, Paragraph, WarningText } from 'govuk-react'
 import { BLACK } from 'govuk-colours'
 import styled from 'styled-components'
 
-import { ActivityFeedAction } from '../../../../../client/components'
-import { StatusMessage } from '../../../../../client/components/'
+import {
+  ActivityFeedApp,
+  ActivityFeedAction,
+  StatusMessage,
+} from '../../../../../client/components'
 import { companies } from '../../../../../lib/urls'
-import ActivityFeedApp from './ActivityFeedApp'
 
 const StyledLink = styled('a')`
   margin-bottom: 0;
