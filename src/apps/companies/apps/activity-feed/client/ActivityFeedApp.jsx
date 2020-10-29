@@ -1,5 +1,5 @@
 import React from 'react'
-import { ActivityFeed } from 'data-hub-components'
+import { ActivityFeed } from '../../../../../client/components/'
 import PropTypes from 'prop-types'
 import axios from 'axios'
 

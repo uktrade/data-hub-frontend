@@ -3,14 +3,14 @@ import { Link } from 'govuk-react'
 import { SPACING, FONT_SIZE } from '@govuk-react/constants'
 import { BLUE, GREEN } from 'govuk-colours'
 import PropTypes from 'prop-types'
+
+import { AdviserDetails } from '../../../apps/companies/apps/referrals/details/client/ReferralDetails'
+import { CardHeader } from '../ActivityFeed/activities/card'
+import { Card } from '../ActivityFeed/activities/card'
 import SummaryList from '../../components/SummaryList'
 import { format } from '../../utils/date-utils'
 import styled from 'styled-components'
-import Card from 'data-hub-components/dist/activity-feed/activities/card/Card'
-import CardHeader from 'data-hub-components/dist/activity-feed/activities/card/CardHeader'
-
 import urls from '../../../lib/urls'
-import { AdviserDetails } from '../../../apps/companies/apps/referrals/details/client/ReferralDetails'
 
 const StyledSummaryListWrapper = styled.div({
   flexGrow: 1,
