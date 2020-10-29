@@ -52,6 +52,7 @@ const ProjectsCollection = ({ payload, ...props }) => {
         <ToggleSection
           label="Company information"
           id="projects.filters.company.information"
+          isOpen={true}
         >
           <FilterAdvisersTypeAhead
             {...props}
