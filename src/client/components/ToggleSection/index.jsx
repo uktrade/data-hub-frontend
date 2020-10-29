@@ -41,7 +41,7 @@ const StyledButton = styled('button')`
   }
 `
 
-const ToggleSection = ({ label, open, isOpen = true, children }) => {
+const ToggleSection = ({ label, open, isOpen = false, children }) => {
   return (
     <ToggleContainer>
       <StyledButton onClick={() => open(!isOpen)} isOpen={isOpen}>
