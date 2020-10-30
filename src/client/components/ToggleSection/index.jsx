@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { YELLOW, BLACK } from 'govuk-colours'
 
 import multiInstance from '../../utils/multiinstance'
 import { TOGGLE_SECTION__TOGGLE } from '../../actions'
@@ -26,6 +27,12 @@ const StyledButton = styled('button')`
   }
   &:focus {
     outline: none;
+    text-decoration: none;
+    span {
+      color: ${BLACK};
+      background-color: ${YELLOW};
+      box-shadow: 0 -2px ${YELLOW}, 0 4px ${BLACK};
+    }
   }
   &::before {
     display: table-cell;
@@ -41,7 +48,7 @@ const StyledButton = styled('button')`
   }
 `
 
-const ToggleSection = ({ label, open, isOpen = true, children }) => {
+const ToggleSection = ({ label, open, isOpen = false, children }) => {
   return (
     <ToggleContainer>
       <StyledButton onClick={() => open(!isOpen)} isOpen={isOpen}>
