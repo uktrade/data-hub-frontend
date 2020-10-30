@@ -5,6 +5,12 @@ import {
   actualLandDateBeforeLabel,
   actualLandDateAfterLabel,
   countryOptions,
+<<<<<<< HEAD
+=======
+  sortOptions,
+  sectorOptions,
+  projectStageOptions,
+>>>>>>> c5551a5f3... Add chip component for checkboxes
   estimatedLandDateBeforeLabel,
   estimatedLandDateAfterLabel,
   sectorOptions,
@@ -26,7 +32,11 @@ const searchParamProps = ({
   adviser = false,
   sector_descends = false,
   country = false,
+<<<<<<< HEAD
   uk_region = false,
+=======
+  stage = false,
+>>>>>>> c5551a5f3... Add chip component for checkboxes
   estimated_land_date_before = null,
   estimated_land_date_after = null,
   actual_land_date_before = null,
@@ -35,7 +45,11 @@ const searchParamProps = ({
   adviser: parseVariablePropType(adviser),
   sector_descends: parseVariablePropType(sector_descends),
   country: parseVariablePropType(country),
+<<<<<<< HEAD
   uk_region: parseVariablePropType(uk_region),
+=======
+  stage: parseVariablePropType(stage),
+>>>>>>> c5551a5f3... Add chip component for checkboxes
   estimated_land_date_before,
   estimated_land_date_after,
   actual_land_date_before,
@@ -72,7 +86,11 @@ export const state2props = ({ router, ...state }) => {
   const {
     sector_descends = [],
     country = [],
+<<<<<<< HEAD
     uk_region = [],
+=======
+    stage = [],
+>>>>>>> c5551a5f3... Add chip component for checkboxes
     estimated_land_date_before,
     estimated_land_date_after,
     actual_land_date_before,
@@ -85,8 +103,12 @@ export const state2props = ({ router, ...state }) => {
       value: advisers.id,
     })),
     selectedSectors: listSelectedFilters(sectorOptions, sector_descends),
+<<<<<<< HEAD
     selectedCountries: listSelectedFilters(countryOptions, country),
     selectedUkRegions: listSelectedFilters(ukRegionOptions, uk_region),
+=======
+    selectedStage: listSelectedFilters(projectStageOptions, stage),
+>>>>>>> c5551a5f3... Add chip component for checkboxes
     selectedEstimatedLandDatesBefore: buildDatesFilter(
       estimatedLandDateBeforeLabel,
       estimated_land_date_before
@@ -112,7 +134,11 @@ export const state2props = ({ router, ...state }) => {
       countryOptions,
       sortOptions,
       sectorOptions,
+<<<<<<< HEAD
       ukRegionOptions,
+=======
+      projectStageOptions,
+>>>>>>> c5551a5f3... Add chip component for checkboxes
     },
     selectedFilters,
   }
