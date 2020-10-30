@@ -8,6 +8,7 @@ import {
   ToggleSection,
   FilteredCollectionList,
   RoutedDateField,
+  RoutedFilterCheckbox,
 } from '../../../../client/components'
 
 import {
@@ -60,6 +61,12 @@ const ProjectsCollection = ({
           id="company-information-filters"
           isOpen={true}
         >
+          <RoutedFilterCheckbox
+            {...props}
+            label="Stage"
+            name="stage"
+            options={optionMetadata.projectStageOptions}
+          />
           <FilterAdvisersTypeahead
             {...props}
             taskProps={adviserListTask}
@@ -124,5 +131,4 @@ const ProjectsCollection = ({
     </FilteredCollectionList>
   )
 }
-
 export default connect(state2props)(ProjectsCollection)
