@@ -119,14 +119,14 @@ async function postDetails(req, res, next) {
         : urls.contacts.details(newContact.id)
     res.redirect(redirectUrl)
   } catch (errors) {
-    if (errors.error) {
-      if (errors.error.errors) {
+    if (errors.response) {
+      if (errors.response.data) {
         res.locals.errors = {
-          messages: errors.error.errors,
+          messages: errors.response.data,
         }
       } else {
         res.locals.errors = {
-          messages: errors.error,
+          messages: errors.response,
         }
       }
 

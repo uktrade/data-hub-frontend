@@ -20,10 +20,10 @@ async function postDetails(req, res, next) {
     }
     return res.redirect(`/events/${result.id}`)
   } catch (err) {
-    if (err.statusCode === 400) {
+    if (err.response.status === 400) {
       res.locals.form = assign({}, res.locals.form, {
         errors: {
-          messages: err.error,
+          messages: err.response.data,
         },
       })
       next()

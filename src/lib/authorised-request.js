@@ -1,6 +1,5 @@
 const { isNil, isString, pickBy } = require('lodash')
-const request = require('request')
-const requestPromise = require('request-promise')
+const axios = require('axios')
 
 const config = require('../config')
 const logger = require('../config/logger')
@@ -26,7 +25,7 @@ function stripScripts(key, value) {
   return value
 }
 
-function parseOptions(req, opts) {
+function parseConfig(req, opts) {
   const { token } = req.session
   const defaults = {
     headers: {
@@ -34,7 +33,6 @@ function parseOptions(req, opts) {
       ...getZipkinHeaders(req),
       ...(token ? { Authorization: `Bearer ${token}` } : null),
     },
-    json: true,
     method: 'GET',
     proxy: config.proxy,
   }
@@ -48,19 +46,19 @@ function parseOptions(req, opts) {
 
   return {
     ...defaults,
-    body: opts.body,
+    data: opts.body,
     method: opts.method || 'GET',
-    qs: pickBy(opts.qs, hasValue),
+    params: pickBy(opts.qs, hasValue),
     url: opts.url,
   }
 }
 
 function createResponseLogger(requestOpts) {
-  return (data) => {
-    const statusCode = (data && data.statusCode) || ''
+  return (res) => {
+    const statusCode = (res && res.data && res.data.statusCode) || ''
     const responseInfo = `Response ${statusCode} for ${requestOpts.method} to ${requestOpts.url}:`
-    logger.debug(responseInfo, data)
-    return data
+    logger.debug(responseInfo, res.data)
+    return res.data
   }
 }
 
@@ -69,7 +67,8 @@ function logRequest(opts) {
   logger.debug('with request data:', {
     headers: opts.headers,
     body: opts.body,
-    qs: opts.qs,
+    // TO DO - DECIDE: should this be params: opts.params, or will this make a mess of log history?
+    qs: opts.params,
   })
 }
 
@@ -77,14 +76,14 @@ function logRequest(opts) {
 // Responses are parsed to remove any embedded XSS attempts with
 // script tags
 function authorisedRequest(req, opts) {
-  const requestOptions = parseOptions(req, opts)
+  const requestConfig = parseConfig(req, opts)
 
-  logRequest(requestOptions)
-  requestOptions.jsonReviver = stripScripts
+  logRequest(requestConfig)
+  requestConfig.jsonReviver = stripScripts
 
-  const r = requestPromise(requestOptions)
+  const r = axios(requestConfig)
 
-  const logResponse = createResponseLogger(requestOptions)
+  const logResponse = createResponseLogger(requestConfig)
   return r.then(logResponse, (err) => {
     logResponse(err)
     throw err
@@ -96,11 +95,11 @@ function authorisedRequest(req, opts) {
 // See request-promise #90 does not work with streams
 // https://github.com/request/request-promise/issues/90
 function authorisedRawRequest(req, opts) {
-  const requestOptions = parseOptions(req, opts)
+  const requestConfig = parseConfig(req, opts)
+  logRequest(requestConfig)
 
-  logRequest(requestOptions)
-
-  return Promise.resolve(request(requestOptions))
+  // return Promise.resolve(request(requestConfig))
+  return axios(requestConfig)
 }
 
 // accept untrusted certificates for dev environments

@@ -91,7 +91,7 @@ describe('Delete company list page', () => {
       })
     })
 
-    it('displays the "List deleted" flash message', () => {
+    it('displays the 404 error page', () => {
       cy.get(selectors.localHeader().heading).should(
         'contain.text',
         'Page not found'
