@@ -1,6 +1,10 @@
 export { countryOptions } from './countries'
 export { sectorOptions } from './sectors'
+<<<<<<< HEAD
 export { ukRegionOptions } from './uk-regions'
+=======
+export { projectStageOptions } from './checkboxes'
+>>>>>>> c5551a5f3... Add chip component for checkboxes
 
 export const estimatedLandDateBeforeLabel = 'Estimated land date before'
 export const estimatedLandDateAfterLabel = 'Estimated land date after'
