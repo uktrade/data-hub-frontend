@@ -89,6 +89,10 @@ function FilteredCollectionHeader({
 
       <CollectionHeaderRow id="filter-chips">
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedStage}
+          qsParamName="stage"
+        />
+        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedAdvisers}
           qsParamName="adviser"
         />
