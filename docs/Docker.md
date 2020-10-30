@@ -18,7 +18,7 @@ Prerequisite:
 ## Creating Docker container for CircleCI
 
 ```bash
-export VERSION=1.0.2 # Increment this version each time when you edit Dockerfile.
+export VERSION=1.0.3 # Increment this version each time when you edit Dockerfile.
 
 Ensure you have gcloud sdk and you are logged in following their instructions:
 
