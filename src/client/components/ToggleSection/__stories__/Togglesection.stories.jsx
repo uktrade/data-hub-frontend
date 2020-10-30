@@ -1,6 +1,9 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
+import usageReadme from '../usage.md'
+import exampleReadme from '../example.md'
+
 import FieldInput from '../../Form/elements/FieldInput'
 import FormStateful from '../../Form/FormStateful'
 
@@ -9,6 +12,10 @@ import ToggleSection from 'ToggleSection'
 storiesOf('ToggleSection', module)
   .addParameters({
     options: { theme: undefined },
+    readme: {
+      content: exampleReadme,
+      sidebar: usageReadme,
+    },
   })
   .add('Single', () => (
     <ToggleSection label="Toggle me" id="toggle.one" isOpen={true}>
