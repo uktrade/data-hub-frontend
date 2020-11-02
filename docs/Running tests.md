@@ -172,8 +172,8 @@ to ensure consistency between builds.
 Execute the command below:
 
 ```bash
-npm run storybook
-npm run test:visual-component
+make start-storybook
+make visual-component-tests
 ```
 
 ## Cypress code coverage
