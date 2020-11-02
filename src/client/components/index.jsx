@@ -43,3 +43,6 @@ export { default as FilterAdvisersTypeAhead } from './Filters/elements/FilterAdv
 export { default as ToggleSection } from './ToggleSection'
 export { default as RoutedPagination } from './RoutedPagination'
 export { default as FilteredCollectionList } from './FilteredCollectionList'
+export { default as FilteredCollectionHeader } from './FilteredCollectionList/FilteredCollectionHeader'
+export { default as AdviserFilterChips } from './AdviserFilterChips'
+export { default as Chip } from './Chip'
