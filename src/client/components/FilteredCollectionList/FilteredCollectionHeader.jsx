@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import pluralize from 'pluralize'
 import { H2 } from '@govuk-react/heading'
 import { BLACK, GREY_3 } from 'govuk-colours'
-import { HEADING_SIZES } from '@govuk-react/constants'
+import { HEADING_SIZES, SPACING } from '@govuk-react/constants'
 import CollectionHeaderRow from '../CollectionList/CollectionHeaderRow'
 import { AdviserFilterChips } from '../../components'
 import { decimal } from '../../utils/number-utils'
@@ -31,7 +31,7 @@ const CollectionHeaderRowContainer = styled('div')`
   > div {
     border: none;
   }
-  border-bottom: 5px solid ${BLACK} !important;
+  border-bottom: ${SPACING.SCALE_1} solid ${BLACK};
 `
 
 function FilteredCollectionHeader({
