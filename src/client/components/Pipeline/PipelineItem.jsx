@@ -8,10 +8,10 @@ import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import { SPACING, MEDIA_QUERIES, FONT_SIZE } from '@govuk-react/constants'
 import { BLUE, GREY_1, BLACK } from 'govuk-colours'
-import { Card } from 'data-hub-components/dist/activity-feed/activities/card'
+
+import { Card } from '../ActivityFeed/activities/card'
 import { currencyGBP } from '../../utils/number-utils'
 import Tag from '../../components/Tag'
-
 import { newlineToBr } from '../../../lib/text-formatting'
 import { PipeLineItemPropType } from './types'
 import urls from '../../../lib/urls'
