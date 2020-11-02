@@ -8,10 +8,10 @@ import { GridRow, GridCol } from 'govuk-react'
 import Task from '../../../client/components/Task'
 
 import {
-  CollectionHeader,
   CollectionSort,
   CollectionItem,
   RoutedPagination,
+  FilteredCollectionHeader,
 } from '../../components'
 
 const FilteredCollectionList = ({
@@ -24,6 +24,7 @@ const FilteredCollectionList = ({
   children,
   collectionName,
   activePage = 1,
+  selectedAdvisers,
 }) => {
   const totalPages = Math.ceil(count / itemsPerPage)
   return (
@@ -32,9 +33,10 @@ const FilteredCollectionList = ({
       <GridCol setWidth="two-thirds">
         <article>
           {isComplete && (
-            <CollectionHeader
+            <FilteredCollectionHeader
               totalItems={count}
               collectionName={collectionName}
+              selectedAdvisers={selectedAdvisers}
             />
           )}
           {sortOptions && (
