@@ -59,8 +59,8 @@ function FilteredCollectionHeader({
     <CollectionHeaderRowContainer>
       <CollectionHeaderRow actions={actions}>
         <StyledHeaderText>
-          <StyledResultCount>{formattedTotal}</StyledResultCount>
-          {` ${counterSuffix}`}
+          <StyledResultCount>{formattedTotal}</StyledResultCount>{' '}
+          {counterSuffix}
         </StyledHeaderText>
       </CollectionHeaderRow>
       {hasFilters && (
