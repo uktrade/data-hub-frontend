@@ -16,17 +16,17 @@ storiesOf('Chips', module)
   .add('Single', () => {
     return (
       <div>
-        <Chip label="Apple" />
+        <Chip>Apple</Chip>
       </div>
     )
   })
   .add('Multiple', () => {
     return (
       <div>
-        <Chip label="Apple" />
-        <Chip label="Pear" />
-        <Chip label="Orange" />
-        <Chip label="Bananna" />
+        <Chip>Apple</Chip>
+        <Chip>Pear</Chip>
+        <Chip>Orange</Chip>
+        <Chip>Banana</Chip>
       </div>
     )
   })
