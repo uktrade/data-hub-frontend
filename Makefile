@@ -84,7 +84,7 @@ visual-tests:
 	$(docker-mock) exec frontend bash -c '$(wait-for-frontend) && npm run test:visual'
 
 visual-component-tests:
-	@echo "*** Requires the mock stack, it can be started with 'make start-mock' ***"
+	@echo "*** Requires the storybook stack, it can be started with 'make start-storybook' ***"
 	$(docker-storybook) exec storybook bash -c '$(wait-for-storybook) && CYPRESS_baseUrl=http://localhost:65200 npm run test:visual-component'
 
 e2e-tests-lep:
