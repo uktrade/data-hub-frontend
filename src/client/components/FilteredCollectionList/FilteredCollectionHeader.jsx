@@ -37,7 +37,7 @@ const CollectionHeaderRowContainer = styled('div')`
 function FilteredCollectionHeader({
   totalItems,
   collectionName = 'result',
-  addItemUrl,
+  addItemUrl = null,
   selectedAdvisers,
 }) {
   const formattedTotal = decimal(totalItems)
@@ -76,10 +76,6 @@ FilteredCollectionHeader.propTypes = {
   totalItems: PropTypes.number.isRequired,
   collectionName: PropTypes.string.isRequired,
   addItemUrl: PropTypes.string,
-}
-
-FilteredCollectionHeader.defaultProps = {
-  addItemUrl: null,
 }
 
 export default FilteredCollectionHeader
