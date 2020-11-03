@@ -14,6 +14,10 @@
  * the log message.
  * @returns undefined
  */
+
+const compareSnapshotCommand = require('cypress-image-diff-js/dist/command')
+compareSnapshotCommand()
+
 const addLoggedCommand = ({
   name,
   logName,
@@ -105,10 +109,8 @@ addLoggedCommand({
  * with a dash e.g. `'-GET'` if in a nested context like `.witin()`
  */
 Cypress.Commands.add('getDhTablistTab', (tablistLabel, tabLabel, options) => {
-  cy.getDhTablist(tablistLabel, options).within(
-    { log: !!options?.verbose },
-    () => cy.getDhTab(tabLabel, { ...options, nestedLog: true })
-  )
+  cy.getDhTablist(tablistLabel, options)
+    .getDhTab(tabLabel, { ...options, nestedLog: true })
 })
 
 Cypress.Commands.add(
