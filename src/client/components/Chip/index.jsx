@@ -12,10 +12,10 @@ const StyledSpan = styled('span')`
   border-radius: ${SPACING.SCALE_2};
 `
 
-const Chip = ({ label }) => <StyledSpan>{label}</StyledSpan>
+const Chip = ({ children }) => <StyledSpan>{children}</StyledSpan>
 
 Chip.propTypes = {
-  label: PropTypes.string.isRequired,
+  children: PropTypes.string.isRequired,
 }
 
 export default Chip
