@@ -9,8 +9,6 @@ ENV LANG                   C.UTF-8
 ENV NODE_ENV               development
 ENV CHROME_VERSION         85.0.4183.83-1
 
-RUN apt-get update
-
 # Install common dependencies
 RUN apt-get install -y \
   tzdata \
@@ -31,6 +29,7 @@ RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSI
     && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 # Install Cypress dependencies
+RUN apt-get update
 RUN apt-get install -y \
   libgtk2.0-0 \
   libnotify-dev \
