@@ -2,8 +2,10 @@ docker-base = docker-compose -p dh -f docker-compose.base.yml
 docker-mock = docker-compose -p dh -f docker-compose.base.yml -f docker-compose.mock.yml
 docker-e2e = docker-compose -p dh -f docker-compose.base.yml -f docker-compose.e2e.yml -f docker-compose.services.yml
 docker-dev = docker-compose -p dh -f docker-compose.base.yml -f docker-compose.e2e.yml -f docker-compose.dev.yml
+docker-storybook = docker-compose -p dh -f docker-compose.storybook.yml
 
 wait-for-frontend = dockerize -wait tcp://localhost:3000/healthcheck -timeout 5m -wait-retry-interval 5s
+wait-for-storybook = dockerize -wait tcp://localhost:65200 -timeout 5m -wait-retry-interval 5s
 
 ifdef CI
 	start-command = up --build --force-recreate -d
@@ -42,6 +44,9 @@ start-e2e-dit:
 start-dev:
 	@echo "*** To stop this stack run 'make stop-dev' ***"
 	$(docker-dev) $(start-command)
+start-storybook:
+	@echo "*** To stop this stack run 'make stop-storybook' ***"
+	$(docker-storybook) $(start-command)
 
 stop-base:
 	$(docker-base) down -v --remove-orphans
@@ -51,6 +56,8 @@ stop-e2e:
 	$(docker-e2e) down -v --remove-orphans
 stop-dev:
 	$(docker-dev) down -v --remove-orphans
+stop-storybook:
+	$(docker-storybook) down -v --remove-orphans
 
 lint:
 	$(docker-base) build frontend
@@ -75,6 +82,10 @@ functional-tests:
 visual-tests:
 	@echo "*** Requires the mock stack, it can be started with 'make start-mock' ***"
 	$(docker-mock) exec frontend bash -c '$(wait-for-frontend) && npm run test:visual'
+
+visual-component-tests:
+	@echo "*** Requires the storybook stack, it can be started with 'make start-storybook' ***"
+	$(docker-storybook) exec storybook bash -c '$(wait-for-storybook) && CYPRESS_baseUrl=http://localhost:65200 npm run test:visual-component'
 
 e2e-tests-lep:
 	@echo "*** Requires the e2e stack with the LEP role, it can be started with 'make start-e2e-lep' ***"
