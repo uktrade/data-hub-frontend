@@ -1,5 +1,5 @@
 const { get } = require('lodash')
-const rp = require('request-promise')
+const axios = require('axios')
 
 const GLOBAL_NAV_ITEMS = require('../global-nav-items')
 
@@ -15,15 +15,13 @@ async function renderDashboard(req, res, next) {
     let articleFeed
 
     try {
-      const helpCentreArticleFeed = await rp({
-        uri: config.helpCentre.apiFeed,
-        auth: {
-          bearer: config.helpCentre.token,
-        },
-        json: true,
+      const helpCentreArticleFeed = await axios({
+        url: config.helpCentre.apiFeed,
+        headers: { Authorization: `Bearer ${config.helpCentre.token}` },
         timeout: 1000,
       })
-      articleFeed = formatHelpCentreAnnouncements(helpCentreArticleFeed) || []
+      articleFeed =
+        formatHelpCentreAnnouncements(helpCentreArticleFeed.data) || []
     } catch (e) {
       // If we encounter an error when fetching the latest help centre articles,
       // just show an empty feed

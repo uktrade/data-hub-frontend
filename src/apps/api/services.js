@@ -1,4 +1,4 @@
-const rp = require('request-promise')
+const axios = require('axios')
 const { trim } = require('lodash')
 
 const hawkRequest = require('../../lib/hawk-request')
@@ -14,9 +14,12 @@ function lookupAddress(postcode) {
       .replace('{postcode}', formattedPostcode)
       .replace('{api-key}', postcodeKey)
 
-    rp({ url, json: true })
-      .then((data) => {
-        const parsed = parsePostcodeResult(data, postcode.toLocaleUpperCase())
+    axios(url)
+      .then((res) => {
+        const parsed = parsePostcodeResult(
+          res.data,
+          postcode.toLocaleUpperCase()
+        )
         resolve(parsed)
       })
       .catch((error) => {

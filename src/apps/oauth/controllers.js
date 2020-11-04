@@ -1,4 +1,4 @@
-const request = require('request-promise')
+const axios = require('axios')
 const queryString = require('qs')
 const { v4: uuid } = require('uuid')
 
@@ -11,17 +11,16 @@ function getAccessToken(code) {
   const options = {
     method: 'POST',
     url: config.oauth.tokenFetchUrl,
-    formData: {
+    data: {
       code,
       grant_type: 'authorization_code',
       client_id: config.oauth.clientId,
       client_secret: config.oauth.clientSecret,
       redirect_uri: config.oauth.redirectUri,
     },
-    json: true,
   }
 
-  return request(options)
+  return axios(options)
 }
 
 function handleMissingState(req, res, next) {
@@ -38,11 +37,10 @@ async function getSSOUserProfile(token) {
   const options = {
     url: config.oauth.userProfileUrl,
     headers: { Authorization: 'Bearer ' + token },
-    json: true,
   }
 
   try {
-    const response = await request(options)
+    const response = await axios(options)
     return response
   } catch (error) {
     return error
@@ -77,11 +75,11 @@ async function callbackOAuth(req, res, next) {
   }
 
   try {
-    const data = await getAccessToken(req.query.code)
-    const userProfile = await getSSOUserProfile(data.access_token)
+    const responseData = await getAccessToken(req.query.code)
+    const userProfile = await getSSOUserProfile(responseData.access_token)
 
-    set(req, 'session.token', data.access_token)
-    set(req, 'session.userProfile', userProfile)
+    set(req, 'session.token', responseData.data.access_token)
+    set(req, 'session.userProfile', userProfile.data)
     return res.redirect(req.session.returnTo || '/')
   } catch (error) {
     return next(error)
