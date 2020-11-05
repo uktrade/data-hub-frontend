@@ -1,3 +1,4 @@
+const axios = require('axios')
 const chai = require('chai')
 const sinon = require('sinon')
 const proxyquire = require('proxyquire')
@@ -17,6 +18,9 @@ global.rootPath = `${process.cwd()}`
 global.rootPath = `${process.cwd()}`
 global.globalReq = reqres.req()
 global.globalRes = reqres.res()
+
+// Gets axios to work with nock: https://www.npmjs.com/package/nock#axios
+axios.defaults.adapter = require('axios/lib/adapters/http')
 
 process.env.TZ = 'Europe/London'
 
