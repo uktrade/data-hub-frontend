@@ -157,6 +157,27 @@ function assertAcrossTabs(callback) {
 }
 
 describe('My pipeline app', () => {
+  context('when query string is used by analytic team', () => {
+    before(() => {
+      cy.visit(
+        `${urls.pipeline.index()}?
+        some_source=averylongquery&othersource=anotherlongquery`
+      )
+    })
+
+    it('should render the sub tab nav', () => {
+      cy.get('[data-auto-id="pipelineSubTabNav"]').within(() => {
+        cy.contains('To do').should('have.attr', 'aria-selected', 'true')
+        cy.contains('In progress')
+        cy.contains('Done')
+      })
+    })
+
+    it('should render the item counter', () => {
+      cy.contains('4 projects')
+    })
+  })
+
   context('When viewing the to do status', () => {
     before(() => {
       cy.visit(urls.pipeline.index())
