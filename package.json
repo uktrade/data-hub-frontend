@@ -89,7 +89,7 @@
     "connected-react-router": "^6.8.0",
     "constate": "^2.0.0",
     "cookie-parser": "^1.4.5",
-    "core-js": "^3.6.5",
+    "core-js": "^3.7.0",
     "css-loader": "^4.3.0",
     "csurf": "^1.9.0",
     "date-fns": "^1.29.0",
