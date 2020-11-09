@@ -63,7 +63,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
     "@babel/plugin-proposal-optional-chaining": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
-    "@babel/preset-react": "^7.12.1",
+    "@babel/preset-react": "^7.12.5",
     "@govuk-react/constants": "^0.7.1",
     "@hapi/hawk": "^8.0.0",
     "@hapi/joi": "^17.1.1",
