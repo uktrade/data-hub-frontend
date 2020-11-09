@@ -168,7 +168,7 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.8.1",
+    "@cypress/code-coverage": "^3.8.3",
     "@uktrade/client-matrix-js": "^1.0.88",
     "@uktrade/wdio-image-diff-js": "1.7.0",
     "@vue/test-utils": "^1.0.3",
