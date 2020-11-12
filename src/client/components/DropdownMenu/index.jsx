@@ -149,7 +149,7 @@ const DropdownMenu = ({
           ref={buttonRef}
           buttonShadowColour="transparent"
           onClick={() => onClick(!open)}
-          icon={<Icon src={trianglePng} active={open} />}
+          icon={<Icon src={trianglePng} active={open} alt="" />}
           aria-haspopup={true}
           aria-expanded={open}
           aria-controls="dropDownOptionsMenu"
