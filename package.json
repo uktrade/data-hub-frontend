@@ -90,7 +90,7 @@
     "constate": "^2.0.0",
     "cookie-parser": "^1.4.5",
     "core-js": "^3.7.0",
-    "css-loader": "^4.3.0",
+    "css-loader": "^5.0.1",
     "csurf": "^1.9.0",
     "date-fns": "^1.29.0",
     "del-cli": "^3.0.0",
