@@ -7,6 +7,7 @@ import {
   CollectionFilters,
   ToggleSection,
   FilteredCollectionList,
+  RoutedDateField,
 } from '../../../../client/components'
 
 import {
@@ -73,6 +74,16 @@ const ProjectsCollection = ({ payload, optionMetadata, ...props }) => {
             placeholder="Search sectors..."
             selectedSectors={optionMetadata.sectors}
             options={sectorOptions}
+          />
+          <RoutedDateField
+            label="Estimated land date before"
+            name="estimated_land_date_before"
+            qsParamName="estimated_land_date_before"
+          />
+          <RoutedDateField
+            label="Estimated land date after"
+            name="estimated_land_date_after"
+            qsParamName="estimated_land_date_after"
           />
         </ToggleSection>
       </CollectionFilters>
