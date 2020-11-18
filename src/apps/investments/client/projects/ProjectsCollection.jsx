@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import {
   FilterAdvisersTypeAhead,
+  FilterSectorTypeahead,
   CollectionFilters,
   ToggleSection,
   FilteredCollectionList,
@@ -20,9 +21,9 @@ import {
   INVESTMENTS__PROJECTS_SELECTED_ADVISERS,
 } from '../../../../client/actions'
 
-import { sortOptions } from './labels'
+import { sortOptions, sectorOptions } from './labels'
 
-const ProjectsCollection = ({ payload, ...props }) => {
+const ProjectsCollection = ({ payload, optionMetadata, ...props }) => {
   const collectionListTask = {
     name: TASK_GET_PROJECTS_LIST,
     id: ID,
@@ -47,6 +48,7 @@ const ProjectsCollection = ({ payload, ...props }) => {
       collectionName="Project"
       sortOptions={sortOptions}
       taskProps={collectionListTask}
+      selectedSectors={optionMetadata.sectors}
     >
       <CollectionFilters>
         <ToggleSection
@@ -62,6 +64,15 @@ const ProjectsCollection = ({ payload, ...props }) => {
             name="advisers"
             placeholder="Search advisers..."
             noOptionsMessage={() => <>No advisers found</>}
+          />
+          <FilterSectorTypeahead
+            {...props}
+            isMulti={true}
+            label="Sector"
+            name="sector"
+            placeholder="Search sectors..."
+            selectedSectors={optionMetadata.sectors}
+            options={sectorOptions}
           />
         </ToggleSection>
       </CollectionFilters>

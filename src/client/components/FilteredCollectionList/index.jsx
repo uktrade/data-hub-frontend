@@ -25,6 +25,7 @@ const FilteredCollectionList = ({
   collectionName,
   activePage = 1,
   selectedAdvisers,
+  selectedSectors,
 }) => {
   const totalPages = Math.ceil(count / itemsPerPage)
   return (
@@ -37,6 +38,7 @@ const FilteredCollectionList = ({
               totalItems={count}
               collectionName={collectionName}
               selectedAdvisers={selectedAdvisers}
+              selectedSectors={selectedSectors}
             />
           )}
           {sortOptions && (

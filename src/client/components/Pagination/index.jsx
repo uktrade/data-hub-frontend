@@ -83,6 +83,11 @@ function Pagination({ totalPages, activePage, getPageUrl, onPageClick }) {
         {visiblePieces.map(
           ({ type, pageNumber, isActive, isDisabled }, index) => {
             const key = `${type}-${index}`
+            const onClick = (event) => {
+              event.target.blur()
+              event.preventDefault()
+              onPageClick(pageNumber)
+            }
             const PageNumberLink = isActive
               ? StyledActivePaginationLink
               : StyledPaginationLink
@@ -96,7 +101,7 @@ function Pagination({ totalPages, activePage, getPageUrl, onPageClick }) {
                 {type === PAGINATION_PIECE_PREVIOUS && (
                   <StyledPaginationLink
                     data-test="prev"
-                    onClick={onPageClick}
+                    onClick={onClick}
                     href={getPageUrl(pageNumber)}
                   >
                     Previous
@@ -113,7 +118,7 @@ function Pagination({ totalPages, activePage, getPageUrl, onPageClick }) {
                   <PageNumberLink
                     data-test={isActive ? 'page-number-active' : 'page-number'}
                     data-page-number={pageNumber}
-                    onClick={onPageClick}
+                    onClick={onClick}
                     href={getPageUrl(pageNumber)}
                   >
                     {pageNumber}
@@ -123,7 +128,7 @@ function Pagination({ totalPages, activePage, getPageUrl, onPageClick }) {
                 {type === PAGINATION_PIECE_NEXT && (
                   <StyledPaginationLink
                     data-test="next"
-                    onClick={onPageClick}
+                    onClick={onClick}
                     href={getPageUrl(pageNumber)}
                   >
                     Next
