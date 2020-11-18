@@ -17,6 +17,7 @@ const RoutedDateField = ({ qsParamName, ...props }) => (
               search: qs.stringify({
                 ...qsParams,
                 [qsParamName]: e.target.value,
+                page: 1,
               }),
             })
           }}
