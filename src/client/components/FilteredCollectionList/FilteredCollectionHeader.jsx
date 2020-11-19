@@ -6,7 +6,7 @@ import pluralize from 'pluralize'
 import { H2 } from '@govuk-react/heading'
 import { BLACK, GREY_3 } from 'govuk-colours'
 import { HEADING_SIZES, SPACING } from '@govuk-react/constants'
-import CollectionHeaderRow from '../CollectionList/CollectionHeaderRow'
+import { CollectionHeaderRow, FilterReset } from '../../components'
 import { AdviserFilterChips } from '../../components'
 import { decimal } from '../../utils/number-utils'
 
@@ -34,6 +34,23 @@ const CollectionHeaderRowContainer = styled('div')`
   border-bottom: ${SPACING.SCALE_1} solid ${BLACK};
 `
 
+const StyledDiv = styled('div')`
+  display: flex;
+  flex: 50%;
+  align-items: center;
+  flex-flow: nowrap;
+
+  h2 {
+    flex-grow: 2;
+  }
+
+  button {
+    text-align: right;
+    width: auto;
+    margin: 0;
+  }
+`
+
 function FilteredCollectionHeader({
   totalItems,
   collectionName = 'result',
@@ -58,10 +75,13 @@ function FilteredCollectionHeader({
   return (
     <CollectionHeaderRowContainer>
       <CollectionHeaderRow actions={actions}>
-        <StyledHeaderText>
-          <StyledResultCount>{formattedTotal}</StyledResultCount>{' '}
-          {counterSuffix}
-        </StyledHeaderText>
+        <StyledDiv>
+          <StyledHeaderText>
+            <StyledResultCount>{formattedTotal}</StyledResultCount>{' '}
+            {counterSuffix}
+          </StyledHeaderText>
+          <FilterReset>Remove all filters</FilterReset>
+        </StyledDiv>
       </CollectionHeaderRow>
       {hasFilters && (
         <CollectionHeaderRow>
