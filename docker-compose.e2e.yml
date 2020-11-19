@@ -19,7 +19,7 @@ services:
       ELASTIC_APM_SERVER_URL: http://es-apm:8200
 
   mock-sso:
-    image: quay.io/uktrade/mock-sso:latest
+    image: gcr.io/sre-docker-registry/github.com/uktrade/mock-sso:latest
     ports:
       - 8080:8080
     environment:
@@ -28,7 +28,7 @@ services:
       MOCK_SSO_EMAIL_USER_ID: test@gov.uk
 
   api:
-    image: quay.io/uktrade/data-hub-api:develop
+    image: gcr.io/sre-docker-registry/github.com/uktrade/data-hub-api:develop
     env_file: .env
     environment:
       DEBUG: 'False'
@@ -52,7 +52,7 @@ services:
     command: /app/setup-uat.sh || echo "all ood"
 
   celery:
-    image: quay.io/uktrade/data-hub-api:develop
+    image: gcr.io/sre-docker-registry/github.com/uktrade/data-hub-api:develop
     env_file: .env
     depends_on:
       - postgres
@@ -77,7 +77,7 @@ services:
       POSTGRES_PASSWORD: password
 
   es:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.3
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
     environment:
       discovery.type: single-node
       cluster.routing.allocation.disk.threshold_enabled: 'false'
