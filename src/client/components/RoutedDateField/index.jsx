@@ -9,6 +9,7 @@ const RoutedDateField = ({ qsParamName, ...props }) => (
   <Route>
     {({ location, history }) => {
       const qsParams = qs.parse(location.search.slice(1))
+
       return (
         <DateField
           {...props}
