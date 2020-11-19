@@ -50,6 +50,8 @@ const ProjectsCollection = ({ payload, optionMetadata, ...props }) => {
       sortOptions={sortOptions}
       taskProps={collectionListTask}
       selectedSectors={optionMetadata.sectors}
+      estimatedLandDateBefore={optionMetadata.estimated_land_date_before}
+      estimatedLandDateAfter={optionMetadata.estimated_land_date_after}
     >
       <CollectionFilters>
         <ToggleSection
