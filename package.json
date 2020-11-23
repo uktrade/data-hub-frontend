@@ -119,7 +119,7 @@
     "lodash": "^4.17.20",
     "markdown-it": "^11.0.0",
     "mini-css-extract-plugin": "^1.2.1",
-    "moment": "^2.22.1",
+    "moment": "^2.29.1",
     "moment-duration-format": "^2.1.0",
     "morgan": "^1.10.0",
     "numeral": "^2.0.6",
