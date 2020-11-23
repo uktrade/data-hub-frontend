@@ -66,7 +66,6 @@ const FilterAdvisersTypeAhead = ({
                     display: 'none',
                   }),
                 }}
-                ClearIndicator={() => null}
                 name={name}
                 aria-label={name}
                 placeholder={placeholder}
