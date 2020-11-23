@@ -70,7 +70,7 @@
     "@sentry/browser": "^5.24.2",
     "@storybook/addon-a11y": "^6.1.2",
     "@storybook/addon-actions": "^6.0.28",
-    "@storybook/addon-knobs": "^5.3.18",
+    "@storybook/addon-knobs": "^6.1.2",
     "@storybook/addons": "^6.0.27",
     "@storybook/react": "^6.0.26",
     "@uktrade/datahub-header": "1.2.5",
