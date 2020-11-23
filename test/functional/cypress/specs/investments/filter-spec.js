@@ -11,7 +11,10 @@ const filterIndicatior = () => cy.get('main article div + div button')
 
 describe('Investments Collections Filter', () => {
   beforeEach(() => {
-    cy.get('aside button').next().as('adviserTypeaheadFilter')
+    cy.get('aside button')
+      .next()
+      .find('#field-advisers')
+      .as('adviserTypeaheadFilter')
   })
   context('when the url contains no state', () => {
     before(() => {
