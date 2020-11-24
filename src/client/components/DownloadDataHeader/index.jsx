@@ -13,14 +13,14 @@ const StyledLink = styled('a')`
   margin-left: 10px;
 `
 
-function DownloadDataHeader({ count = 0, maxItems = 5000 }) {
+function DownloadDataHeader({ id = null, count = 0, maxItems = 5000 }) {
   if (!count) {
     return null
   }
 
   if (count >= maxItems) {
     return (
-      <CollectionHeaderRow>
+      <CollectionHeaderRow id={id}>
         Filter to fewer than {maxItems} projects to download
       </CollectionHeaderRow>
     )
@@ -44,11 +44,9 @@ function DownloadDataHeader({ count = 0, maxItems = 5000 }) {
           </Button>
         )
         return (
-          <CollectionHeaderRow actions={[downloadAction]}>
-            <span>
-              You can now download{' '}
-              {count === 1 ? 'this project' : `these ${count} projects`}
-            </span>
+          <CollectionHeaderRow id={id} actions={[downloadAction]}>
+            You can now download{' '}
+            {count === 1 ? 'this project' : `these ${count} projects`}
           </CollectionHeaderRow>
         )
       }}
@@ -57,6 +55,7 @@ function DownloadDataHeader({ count = 0, maxItems = 5000 }) {
 }
 
 DownloadDataHeader.propTypes = {
+  id: PropTypes.string,
   count: PropTypes.number,
   maxItems: PropTypes.number,
 }

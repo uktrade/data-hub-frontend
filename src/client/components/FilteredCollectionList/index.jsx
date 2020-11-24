@@ -49,7 +49,7 @@ const FilteredCollectionList = ({
           {sortOptions && (
             <CollectionSort sortOptions={sortOptions} totalPages={count} />
           )}
-          <DownloadDataHeader count={count} />
+          <DownloadDataHeader id="download-data-header" count={count} />
           <Task.Status {...taskProps}>
             {() =>
               isComplete && (
