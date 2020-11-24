@@ -10,6 +10,7 @@ import Task from '../../../client/components/Task'
 import {
   CollectionSort,
   CollectionItem,
+  DownloadDataHeader,
   RoutedPagination,
   FilteredCollectionHeader,
 } from '../../components'
@@ -48,6 +49,7 @@ const FilteredCollectionList = ({
           {sortOptions && (
             <CollectionSort sortOptions={sortOptions} totalPages={count} />
           )}
+          <DownloadDataHeader count={count} />
           <Task.Status {...taskProps}>
             {() =>
               isComplete && (
