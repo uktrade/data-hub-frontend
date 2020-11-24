@@ -52,20 +52,26 @@ const XHR = {
     return res
   },
 
-  request(url, params = {}) {
+  request(url, params = {}, cancelToken = null) {
     if (params) {
       const url = `?${queryString.stringify(params)}`
       history.push(url)
     }
-
+    const options = {
+      ...{ headers: { 'X-Requested-With': 'XMLHttpRequest' } },
+      ...(cancelToken && { cancelToken: cancelToken }),
+    }
     return axios
       .get(
         `${url}?${queryString.stringify(params, { arrayFormat: 'repeat' })}`,
-        {
-          headers: { 'X-Requested-With': 'XMLHttpRequest' },
-        }
+        options
       )
       .then((res) => this.updateOutlet(res, params))
+      .catch((thrown) => {
+        if (!axios.isCancel(thrown)) {
+          throw thrown
+        }
+      })
   },
 }
 
