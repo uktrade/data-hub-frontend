@@ -348,6 +348,10 @@ app.post(
   '/v3/search/investment_project',
   v3SearchInvestmentProject.investmentProjects
 )
+app.post(
+  '/v3/search/investment_project/export',
+  v3SearchInvestmentProject.export
+)
 app.post('/v3/search/interaction', v3SearchInteraction.interaction)
 
 // V4 activity feed
