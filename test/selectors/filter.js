@@ -4,6 +4,7 @@ module.exports = {
   statusInactive: '[for="field-archived-2"]',
   ukRegion: '#group-field-uk_region',
   ukPostcode: '#field-uk_postcode',
+  completedOnAfterTextInput: '#field-completed_on_after',
   country: '#group-field-country',
   sector: '#group-field-sector_descends',
   exportingTo: '#group-field-export_to_countries',

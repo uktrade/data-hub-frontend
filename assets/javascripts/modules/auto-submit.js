@@ -1,3 +1,4 @@
+const axios = require('axios')
 const getFormData = require('get-form-data').default
 const pickBy = require('lodash/pickBy')
 const XHR = require('../lib/xhr')
@@ -5,27 +6,13 @@ const { checkDateFormat } = require('../lib/helpers')
 
 const AutoSubmit = {
   selector: '.js-AutoSubmit',
-  isSubmitting: false,
+  sources: [],
 
   init() {
     this.bindEvents()
   },
 
-  isCheckboxSynced(evt) {
-    // This is needed because checkboxes can go out of sync with posted values. We prevent
-    // this by reverting the checkbox to it's previous state if there is already a submit in progress.
-    // This intentionally affects all checkboxes that trigger form submits site-wide.
-
-    if (this.isSubmitting && evt.target.type === 'checkbox') {
-      evt.target.checked = !evt.target.checked
-      return
-    }
-    return true
-  },
-
   handleFormSubmit(evt) {
-    if (!this.isCheckboxSynced(evt)) return
-
     if (evt.target.classList.contains('ie-date-field')) {
       if (!checkDateFormat(evt.target.value)) {
         return
@@ -53,20 +40,18 @@ const AutoSubmit = {
   },
 
   submitForm(form) {
-    if (this.isSubmitting) {
-      return
+    while (this.sources.length) {
+      const source = this.sources.pop()
+      source.cancel()
     }
-    this.isSubmitting = true
+
+    const CancelToken = axios.CancelToken
+    const source = CancelToken.source()
+    this.sources.push(source)
 
     const query = pickBy(getFormData(form))
 
-    XHR.request(form.action, query)
-      .then(() => {
-        this.isSubmitting = false
-      })
-      .catch(() => {
-        this.isSubmitting = false
-      })
+    XHR.request(form.action, query, source.token)
   },
 }
 

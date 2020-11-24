@@ -30,6 +30,21 @@ describe('OMIS Collections Filter', () => {
     })
   })
 
+  it('should filter by completed on after', () => {
+    // This test checks that the form is submitted on change and that event
+    // is not being guarded by a mutex
+    const completedOnAfter = selectors.filter.completedOnAfterTextInput
+    cy.get(completedOnAfter)
+      .type('1008-01-01')
+      .trigger('change')
+      .type('2008-12-12')
+      .trigger('change')
+    cy.wait('@filterResults')
+    cy.wait('@filterResults').then((xhr) => {
+      expect(xhr.url).to.contain('completed_on_after=2008-12-12')
+    })
+  })
+
   it('should filter by country', () => {
     const country = selectors.filter.omis.country
     const { typeahead } = selectors.filter
