@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react'
 
 import DateField from 'DateField'
 
-const collectionStories = storiesOf('DateField', module)
+const dateFieldStories = storiesOf('DateField', module)
 
 const BasicDateField = () => {
   return (
@@ -27,6 +27,6 @@ const AlertChangeDateField = () => {
   )
 }
 
-collectionStories
+dateFieldStories
   .add('Basic', () => <BasicDateField />)
   .add('Callback on Change', () => <AlertChangeDateField />)

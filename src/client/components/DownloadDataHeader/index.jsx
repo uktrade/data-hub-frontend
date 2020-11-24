@@ -57,7 +57,6 @@ function DownloadDataHeader({ count = 0, maxItems = 5000 }) {
 }
 
 DownloadDataHeader.propTypes = {
-  filters: PropTypes.arrayOf(PropTypes.object),
   count: PropTypes.number,
   maxItems: PropTypes.number,
 }
