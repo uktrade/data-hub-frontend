@@ -23,3 +23,9 @@ exports.investmentProjects = function (req, res) {
     return res.json(investmentProjects)
   }
 }
+
+exports.export = function (req, res) {
+  res.header('Content-Type', 'text/csv')
+  res.attachment('export.csv')
+  res.send('a,b,c\n1,2,3')
+}
