@@ -52,6 +52,7 @@ exports.interaction = {
 }
 exports.investment = {
   proposition: require('./investment/proposition'),
+  header: require('./investment/header'),
   form: require('./investment/form'),
   value: require('./investment/value'),
   team: require('./investment/team'),
