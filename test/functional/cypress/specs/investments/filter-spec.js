@@ -1,3 +1,5 @@
+import urls from '../../../../../src/lib/urls'
+
 const selectAdvisersTypeahead = (fieldName, input) =>
   cy.get(fieldName).within(() => {
     cy.server()
@@ -48,7 +50,7 @@ describe('Investments Collections Filter', () => {
   })
   context('when the url contains no state', () => {
     before(() => {
-      cy.visit('/investments')
+      cy.visit(urls.investments.projects.index())
     })
 
     it('should filter by advisers', () => {
@@ -110,7 +112,7 @@ describe('Investments Collections Filter', () => {
 
   context('when the url contains state', () => {
     before(() => {
-      cy.visit('/investments/projects', {
+      cy.visit(urls.investments.projects.index(), {
         qs: {
           adviser: 'e83a608e-84a4-11e6-ae22-56b6b6499611',
           sector_descends: 'af959812-6095-e211-a939-e4115bead28a',
