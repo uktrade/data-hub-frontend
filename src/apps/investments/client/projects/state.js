@@ -76,7 +76,7 @@ export const state2props = ({ router, ...state }) => {
   return {
     ...state[ID],
     payload: filteredQueryProps,
-    optionMetadata: { sortOptions, sectorOptions, estimatedLandDateBefore },
+    optionMetadata: { sortOptions, sectorOptions },
     selectedFilters,
   }
 }
