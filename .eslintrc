@@ -28,7 +28,12 @@
     "no-async-promise-executor": "off",
     "no-case-declarations": "off",
     "no-prototype-builtins": "off",
-    "no-unused-vars": "error",
+    "no-unused-vars": [
+      "error",
+      {
+        "ignoreRestSiblings": true
+      }
+    ],
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "node/no-deprecated-api": "off",
