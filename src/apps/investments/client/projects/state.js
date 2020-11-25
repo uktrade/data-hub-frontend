@@ -38,8 +38,8 @@ const collectionListPayload = (paramProps) => {
     Object.entries(searchParamProps(paramProps)).filter((v) => v[1])
   )
 }
-// Gets the label or name of the selected filter
-const getFilterLabel = (metadataOptions, filterProp) =>
+// Gets an array of selected filters
+const listSelectedFilters = (metadataOptions, filterProp) =>
   metadataOptions.filter((option) => filterProp.includes(option.value))
 
 export const state2props = ({ router, ...state }) => {
@@ -58,7 +58,7 @@ export const state2props = ({ router, ...state }) => {
 
   // Set the selected filters
   const selectedFilters = {
-    selectedSectors: getFilterLabel(sectorOptions, sector_descends),
+    selectedSectors: listSelectedFilters(sectorOptions, sector_descends),
     selectedEstimatedLandDatesBefore: [
       {
         label: estimatedLandDateBefore,
