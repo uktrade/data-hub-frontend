@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 import qs from 'qs'
 import { Route } from 'react-router-dom'
 import { omit } from 'lodash'
+import dateFns from 'date-fns'
 
 import { Chip } from '..'
 
-const RoutedAdviserFilterChips = ({
+const RoutedOptionFilterChips = ({
   qsParamName,
   selectedOptions,
   ...props
@@ -29,10 +30,10 @@ const RoutedAdviserFilterChips = ({
     <Route>
       {({ location, history }) => {
         const qsParams = qs.parse(location.search.slice(1))
-        return selectedOptions.map(({ advisers: { name, id } }) => (
+        return selectedOptions.map(({ value, label }) => (
           <Chip
-            key={id}
-            value={id}
+            key={value}
+            value={value}
             onClick={(e) => {
               history.push({
                 search: qs.stringify(
@@ -46,7 +47,7 @@ const RoutedAdviserFilterChips = ({
             }}
             {...props}
           >
-            {name}
+            {`${label} : ${dateFns.format(value, 'D MMMM YYYY')}`}
           </Chip>
         ))
       }}
@@ -54,9 +55,9 @@ const RoutedAdviserFilterChips = ({
   )
 }
 
-RoutedAdviserFilterChips.propTypes = {
+RoutedOptionFilterChips.propTypes = {
   qsParamName: PropTypes.string.isRequired,
   selectedOptions: PropTypes.array.isRequired,
 }
 
-export default RoutedAdviserFilterChips
+export default RoutedOptionFilterChips
