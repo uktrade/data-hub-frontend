@@ -1,6 +1,13 @@
 var investmentProjects = require('../../../fixtures/v3/search/investment-project.json')
 
 exports.investmentProjects = function (req, res) {
+  const hasFilters = !!(
+    req.body.estimated_land_date_before ||
+    req.body.estimated_land_date_after ||
+    req.body.sector_descends ||
+    req.body.adviser
+  )
+
   if (req.body.uk_region_location) {
     var regionQuery = req.body.uk_region_location
     var regions = typeof regionQuery === 'string' ? [regionQuery] : regionQuery
@@ -18,6 +25,11 @@ exports.investmentProjects = function (req, res) {
     return res.json({
       count: ukRegionFilteredResults.length,
       results: ukRegionFilteredResults,
+    })
+  } else if (hasFilters) {
+    return res.json({
+      count: 12,
+      results: investmentProjects.results,
     })
   } else {
     return res.json(investmentProjects)

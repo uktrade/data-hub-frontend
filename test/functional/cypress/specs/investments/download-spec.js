@@ -23,4 +23,14 @@ describe('Investment Project Collections', () => {
         '/investments/projects/export?estimated_land_date_before=2020-11-19'
       )
   })
+
+  it('should show "filter to fewer than 5000" when too many projects', () => {
+    cy.visit(investments.projects.index())
+
+    cy.get(selectors.investment.header.downloadData)
+      .should('have.length', 1)
+      .should('contain', 'Filter to fewer than 5000 projects to download')
+
+    cy.get(selectors.investment.header.downloadDataButton).should('not.exist')
+  })
 })
