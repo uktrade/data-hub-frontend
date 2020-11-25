@@ -3,17 +3,23 @@ import { Route } from 'react-router-dom'
 import qs from 'qs'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { isEmpty } from 'lodash'
 
 import { Button } from 'govuk-react'
+import { SPACING_POINTS } from '@govuk-react/constants'
 
 import { CollectionHeaderRow } from '../../components'
 
 const StyledLink = styled('a')`
   margin-bottom: 0;
-  margin-left: 10px;
+  margin-left: ${SPACING_POINTS[2]}px;
 `
 
-function DownloadDataHeader({ id = null, count = 0, maxItems = 5000 }) {
+const RoutedDownloadDataHeader = ({
+  id = null,
+  count = 0,
+  maxItems = 5000,
+}) => {
   if (!count) {
     return null
   }
@@ -29,15 +35,16 @@ function DownloadDataHeader({ id = null, count = 0, maxItems = 5000 }) {
   return (
     <Route>
       {({ location }) => {
-        const qsParams = qs.parse(location.search.slice(1))
-        delete qsParams.page
-        const query = qs.stringify({ ...qsParams })
-        const searchString = query ? `?${query}` : ''
+        const { page, ...qsParams } = qs.parse(location.search.slice(1))
+        const query = isEmpty(qsParams)
+          ? ''
+          : `?${qs.stringify({ ...qsParams })}`
+
         const downloadAction = (
           <Button
             key="download"
             as={StyledLink}
-            href={`/investments/projects/export${searchString}`}
+            href={`/investments/projects/export${query}`}
             download={true}
           >
             Download
@@ -54,10 +61,10 @@ function DownloadDataHeader({ id = null, count = 0, maxItems = 5000 }) {
   )
 }
 
-DownloadDataHeader.propTypes = {
+RoutedDownloadDataHeader.propTypes = {
   id: PropTypes.string,
   count: PropTypes.number,
   maxItems: PropTypes.number,
 }
 
-export default DownloadDataHeader
+export default RoutedDownloadDataHeader
