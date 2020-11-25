@@ -26,10 +26,8 @@ const FilteredCollectionList = ({
   collectionName,
   activePage = 1,
   selectedAdvisers,
-  selectedSectors,
-  estimatedLandDateBefore,
-  estimatedLandDateAfter,
   maxItemsToDownload,
+  selectedFilters,
 }) => {
   const totalPages = Math.ceil(count / itemsPerPage)
   return (
@@ -41,10 +39,8 @@ const FilteredCollectionList = ({
             <FilteredCollectionHeader
               totalItems={count}
               collectionName={collectionName}
+              selectedFilters={selectedFilters}
               selectedAdvisers={selectedAdvisers}
-              selectedSectors={selectedSectors}
-              estimatedLandDateBefore={estimatedLandDateBefore}
-              estimatedLandDateAfter={estimatedLandDateAfter}
             />
           )}
           {sortOptions && (
