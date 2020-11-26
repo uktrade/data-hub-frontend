@@ -36,15 +36,16 @@ const RoutedDownloadDataHeader = ({
     <Route>
       {({ location }) => {
         const { page, ...qsParams } = qs.parse(location.search.slice(1))
-        const query = isEmpty(qsParams)
-          ? ''
-          : `?${qs.stringify({ ...qsParams })}`
+        let downloadLink = 'investments/projects/export'
+        if (!isEmpty(qsParams)) {
+          downloadLink += `?${qs.stringify({ ...qsParams })}`
+        }
 
         const downloadAction = (
           <Button
             key="download"
             as={StyledLink}
-            href={`/investments/projects/export${query}`}
+            href={downloadLink}
             download={true}
           >
             Download
