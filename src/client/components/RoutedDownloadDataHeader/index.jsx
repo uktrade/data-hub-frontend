@@ -36,7 +36,7 @@ const RoutedDownloadDataHeader = ({
     <Route>
       {({ location }) => {
         const { page, ...qsParams } = qs.parse(location.search.slice(1))
-        let downloadLink = 'investments/projects/export'
+        let downloadLink = '/investments/projects/export'
         if (!isEmpty(qsParams)) {
           downloadLink += `?${qs.stringify({ ...qsParams })}`
         }
