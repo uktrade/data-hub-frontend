@@ -238,6 +238,7 @@
   "sasslintConfig": ".sass-lint.yml",
   "resolutions": {
     "tar": "^4.4.8",
-    "http-proxy-agent": "^2.1.0"
+    "http-proxy-agent": "^2.1.0",
+    "is-plain-obj": "1.1.0"
   }
 }
