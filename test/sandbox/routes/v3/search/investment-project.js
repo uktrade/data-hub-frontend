@@ -37,6 +37,9 @@ exports.investmentProjects = function (req, res) {
 }
 
 exports.export = function (req, res) {
+  /*
+   * Mock a simple csv file for export
+   */
   res.header('Content-Type', 'text/csv')
   res.attachment('export.csv')
   res.send('a,b,c\n1,2,3')
