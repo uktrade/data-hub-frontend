@@ -8,6 +8,7 @@ import { isEmpty } from 'lodash'
 import { Button } from 'govuk-react'
 import { SPACING_POINTS } from '@govuk-react/constants'
 
+import { decimal } from '../../utils/number-utils'
 import { CollectionHeaderRow } from '../../components'
 
 const StyledLink = styled('a')`
@@ -27,7 +28,7 @@ const RoutedDownloadDataHeader = ({
   if (count >= maxItems) {
     return (
       <CollectionHeaderRow id={id}>
-        Filter to fewer than {maxItems} projects to download
+        Filter to fewer than {decimal(maxItems)} projects to download
       </CollectionHeaderRow>
     )
   }
