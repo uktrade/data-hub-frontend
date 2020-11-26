@@ -19,7 +19,6 @@ const searchParamProps = ({
   sortby = 'created_on:desc',
   page = 1,
   adviser = false,
-  // snake-case as comes from the query
   sector_descends = false,
   estimated_land_date_before = null,
   estimated_land_date_after = null,
@@ -32,31 +31,25 @@ const searchParamProps = ({
   page,
 })
 
-// Filters out falsey values
 const collectionListPayload = (paramProps) => {
   return Object.fromEntries(
     Object.entries(searchParamProps(paramProps)).filter((v) => v[1])
   )
 }
-// Gets an array of selected filters
+
 const listSelectedFilters = (metadataOptions, filterProp) =>
   metadataOptions.filter((option) => filterProp.includes(option.value))
 
 export const state2props = ({ router, ...state }) => {
-  // Get the query props if they exist
   const queryProps = qs.parse(router.location.search.slice(1))
-
-  // Get the filtered props
   const filteredQueryProps = collectionListPayload(queryProps)
 
-  // If they exist we deconstruct them, if no prop then set a default
   const {
     sector_descends = [],
     estimated_land_date_before,
     estimated_land_date_after,
   } = queryProps
 
-  // Set the selected filters
   const selectedFilters = {
     selectedSectors: listSelectedFilters(sectorOptions, sector_descends),
     selectedEstimatedLandDatesBefore: [
