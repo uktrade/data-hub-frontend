@@ -53,10 +53,7 @@ export { default as FilteredCollectionList } from './FilteredCollectionList'
 export { default as FilteredCollectionHeader } from './FilteredCollectionList/FilteredCollectionHeader'
 export { default as RoutedOptionFilterChips } from './RoutedOptionFilterChips'
 export { default as RoutedAdviserFilterChips } from './RoutedAdviserFilterChips'
-<<<<<<< HEAD
 export { default as RoutedDownloadDataHeader } from './RoutedDownloadDataHeader'
-=======
 export { default as RoutedDateFilterChips } from './RoutedDateFilterChips'
->>>>>>> Add call to action to the remaining filters chips
 export { default as Chip } from './Chip'
 export { default as FilterReset } from './FilterReset'
