@@ -15,9 +15,9 @@ WORKDIR /usr/src/app
 # Install dev packages
 COPY package.json .
 COPY package-lock.json .
+RUN npx npm-force-resolutions
 RUN npm install
 
 COPY . .
 
 CMD npm run develop
-
