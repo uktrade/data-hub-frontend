@@ -1,5 +1,8 @@
 import urls from '../../../../../src/lib/urls'
 
+const ADVISER_ID = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
+const SECTOR_ID = 'af959812-6095-e211-a939-e4115bead28a'
+
 const selectAdvisersTypeahead = (fieldName, input) =>
   cy.get(fieldName).within(() => {
     cy.server()
@@ -114,8 +117,8 @@ describe('Investments Collections Filter', () => {
     before(() => {
       cy.visit(urls.investments.projects.index(), {
         qs: {
-          adviser: 'e83a608e-84a4-11e6-ae22-56b6b6499611',
-          sector_descends: 'af959812-6095-e211-a939-e4115bead28a',
+          adviser: ADVISER_ID,
+          sector_descends: SECTOR_ID,
           estimated_land_date_before: '2020-01-01',
           estimated_land_date_after: '2020-01-01',
         },
