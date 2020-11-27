@@ -80,7 +80,7 @@ FilteredCollectionList.propTypes = {
     progressMessage: PropTypes.string,
     startOnRender: PropTypes.shape({
       payload: PropTypes.shape({
-        page: PropTypes.string,
+        page: PropTypes.number,
         filters: PropTypes.object,
         search: PropTypes.string,
       }).isRequired,
