@@ -5,7 +5,7 @@ import pluralize from 'pluralize'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-import Sort from '../Sort'
+import { Select } from '..'
 import { COMPANY_LISTS__SELECT } from '../../actions'
 import { state2props } from './state'
 
@@ -32,12 +32,12 @@ export const Header = connect(state2props, (dispatch) => ({
         {pluralize('My companies list', listLength, true)}
       </StyledHeading>
       {listLength > 1 && (
-        <Sort
+        <Select
           label="View list"
           htmlFor="view-list"
           input={{
             onChange: (e) => onChange(e.target.value),
-            value: selectedId,
+            initialValue: selectedId,
             id: 'view-list,',
           }}
         >
@@ -46,7 +46,7 @@ export const Header = connect(state2props, (dispatch) => ({
               {name}
             </option>
           ))}
-        </Sort>
+        </Select>
       )}
     </StyledRoot>
   )
