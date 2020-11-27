@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
@@ -20,17 +20,32 @@ const DateField = ({
   legend,
   hint,
   initialValue,
-}) => (
-  <StyledFieldWrapper {...{ name, label, legend, hint }}>
-    <Input
-      id={name}
-      name={name}
-      defaultValue={initialValue}
-      type="date"
-      onChange={onChange}
-    />
-  </StyledFieldWrapper>
-)
+}) => {
+  /*
+   * A Date Input Field
+   *
+   * Changing the initialValue prop overrides the user's input value - this
+   * means that the input value will stay synchronised when changing the route.
+   */
+  const [value, setValue] = useState(initialValue)
+  useEffect(() => setValue(initialValue), [initialValue])
+
+  return (
+    <StyledFieldWrapper {...{ name, label, legend, hint }}>
+      <Input
+        id={name}
+        key={name}
+        name={name}
+        value={value}
+        type="date"
+        onChange={(e) => {
+          setValue(e.target.value)
+          onChange(e)
+        }}
+      />
+    </StyledFieldWrapper>
+  )
+}
 
 DateField.propTypes = {
   onChange: PropTypes.func,
