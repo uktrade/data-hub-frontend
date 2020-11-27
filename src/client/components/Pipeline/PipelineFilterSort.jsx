@@ -6,7 +6,7 @@ import { default as Checkbox } from '../ActivityFeed/ActivityFeedCheckbox'
 import { GREY_4, WHITE } from 'govuk-colours'
 import throttle from 'lodash/throttle'
 
-import Sort from '../Sort'
+import { Select } from '..'
 
 const StyledSortFilter = styled.div`
   display: flex;
@@ -55,13 +55,14 @@ export default function PipeLineFilterSort({
       >
         Show archived projects
       </Checkbox>
-      <Sort
+      <Select
         name="sortBy"
         label="Sort by"
         htmlFor="sort-by"
-        input={{ value: sortBy, id: 'sort-by' }}
-        onChange={(event) => {
-          updateSort(event.target.value)
+        input={{
+          id: 'sort-by',
+          initialValue: sortBy,
+          onChange: (event) => updateSort(event.target.value),
         }}
       >
         <option value="-created_on" aria-label="most recently created">
@@ -73,7 +74,7 @@ export default function PipeLineFilterSort({
         <option value="name" aria-label="project name a to z">
           Project Name A-Z
         </option>
-      </Sort>
+      </Select>
     </StyledSortFilter>
   )
 }
