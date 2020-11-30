@@ -1,6 +1,11 @@
 import qs from 'qs'
 
-import { sectorOptions } from './labels'
+import {
+  sortOptions,
+  sectorOptions,
+  estimatedLandDateBefore,
+  estimatedLandDateAfter,
+} from './metadata'
 
 export const TASK_GET_PROJECTS_LIST = 'TASK_GET_PROJECTS_LIST'
 export const TASK_GET_ADVISER_NAME = 'TASK_GET_ADVISER_NAME'
@@ -11,13 +16,12 @@ const parseVariablePropType = (prop) =>
   prop ? (Array.isArray(prop) ? prop : [prop]) : prop
 
 const searchParamProps = ({
-  adviser = false,
-  // snake-case as comes from the query
-  sector_descends = false,
   sortby = 'created_on:desc',
+  page = 1,
+  adviser = false,
+  sector_descends = false,
   estimated_land_date_before = null,
   estimated_land_date_after = null,
-  page = 1,
 }) => ({
   adviser: parseVariablePropType(adviser),
   sector_descends: parseVariablePropType(sector_descends),
@@ -33,23 +37,39 @@ const collectionListPayload = (paramProps) => {
   )
 }
 
-const getOptionMetadata = ({
-  sector_descends,
-  estimated_land_date_before,
-  estimated_land_date_after,
-}) => ({
-  sectors: sector_descends
-    ? sectorOptions.filter((option) => sector_descends.includes(option.value))
-    : [],
-  estimated_land_date_before,
-  estimated_land_date_after,
-})
+const listSelectedFilters = (metadataOptions, filterProp) =>
+  metadataOptions.filter((option) => filterProp.includes(option.value))
 
 export const state2props = ({ router, ...state }) => {
   const queryProps = qs.parse(router.location.search.slice(1))
+  const filteredQueryProps = collectionListPayload(queryProps)
+
+  const {
+    sector_descends = [],
+    estimated_land_date_before,
+    estimated_land_date_after,
+  } = queryProps
+
+  const selectedFilters = {
+    selectedSectors: listSelectedFilters(sectorOptions, sector_descends),
+    selectedEstimatedLandDatesBefore: [
+      {
+        label: estimatedLandDateBefore,
+        value: estimated_land_date_before,
+      },
+    ],
+    selectedEstimatedLandDatesAfter: [
+      {
+        label: estimatedLandDateAfter,
+        value: estimated_land_date_after,
+      },
+    ],
+  }
+
   return {
     ...state[ID],
-    payload: collectionListPayload(queryProps),
-    optionMetadata: getOptionMetadata(queryProps),
+    payload: filteredQueryProps,
+    optionMetadata: { sortOptions, sectorOptions },
+    selectedFilters,
   }
 }

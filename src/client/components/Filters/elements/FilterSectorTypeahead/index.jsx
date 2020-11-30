@@ -35,6 +35,14 @@ const FilterSectorTypeahead = ({
         const qsParams = qs.parse(location.search.slice(1))
         return (
           <Typeahead
+            styles={{
+              multiValueRemove: () => ({
+                display: 'none',
+              }),
+              clearIndicator: () => ({
+                display: 'none',
+              }),
+            }}
             name={name}
             aria-label={name}
             placeholder={placeholder}
