@@ -132,7 +132,7 @@ const assertReferralCard = ({
 }) => {
   cy.get('div').eq(0).children().eq(0).should('have.text', company)
 
-  cy.get('h3')
+  cy.get('h2')
     .should('have.text', subject)
     .find('a')
     .should('have.attr', 'href', `/companies/${companyId}/referrals/${id}`)
@@ -196,7 +196,7 @@ describe('Referall list on dashboard', () => {
       .eq(0)
       .within(() =>
         cy
-          .contains('h3', '3 received referrals')
+          .contains('h1', '3 received referrals')
           .next()
           .contains('View')
           .contains('select', 'Received referrals')

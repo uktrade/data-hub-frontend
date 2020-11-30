@@ -1,5 +1,4 @@
-import { LEVEL_SIZE } from '@govuk-react/constants'
-import { H2 } from '@govuk-react/heading'
+import { H3 } from '@govuk-react/heading'
 import React from 'react'
 import pluralize from 'pluralize'
 import { connect } from 'react-redux'
@@ -14,7 +13,7 @@ const StyledRoot = styled.div({
   alignItems: 'baseline',
 })
 
-const StyledHeading = styled(H2)({
+const StyledHeading = styled(H3)({
   flexGrow: 1,
 })
 
@@ -28,7 +27,7 @@ export const Header = connect(state2props, (dispatch) => ({
   const listLength = Object.keys(lists).length
   return (
     <StyledRoot>
-      <StyledHeading size={LEVEL_SIZE[3]}>
+      <StyledHeading level={1}>
         {pluralize('My companies list', listLength, true)}
       </StyledHeading>
       {listLength > 1 && (
