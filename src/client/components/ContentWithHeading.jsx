@@ -5,7 +5,7 @@ import styled from 'styled-components'
 
 import SpacedSectionBreak from './SpacedSectionBreak'
 
-const StyledH3 = styled(H3)({
+const StyledHeading = styled(H3)({
   flexGrow: 1,
 })
 
@@ -15,14 +15,14 @@ const StyledHeader = styled.div({
 })
 
 const ContentWithHeading = ({ heading, children, headingActions }) => (
-  <>
+  <section>
     <StyledHeader>
-      <StyledH3>{heading}</StyledH3>
+      <StyledHeading level={1}>{heading}</StyledHeading>
       {headingActions}
     </StyledHeader>
     <SpacedSectionBreak />
     {children}
-  </>
+  </section>
 )
 
 ContentWithHeading.propTypes = {

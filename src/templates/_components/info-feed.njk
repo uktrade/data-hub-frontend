@@ -26,7 +26,7 @@
 {% set feedLimit =  feedLimit | default(5) %}
 <div class="dashboard-section">
 {% if outboundLinkText %} <a href="{{ outboundLinkURL }}" class="dashboard-section__top-link" target="_blank">{{ outboundLinkText }}</a> {% endif %}
-{% if heading %} <h2 class="govuk-heading-m">{{heading}}</h2> {% endif %}
+{% if heading %} <h1 class="govuk-heading-m">{{heading}}</h1> {% endif %}
 {% if subHeading %} <p class="dashboard-section__subheading">{{subHeading}}</p> {% endif %}
 {% if dataFeed.length %}
   {% for item in dataFeed.slice(0, feedLimit) %}

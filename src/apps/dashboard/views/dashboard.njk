@@ -18,7 +18,7 @@ As nunjucks is on it's way out, a label of an empty space has been used as a wor
 
 {% block body_main_content %}
 <div class="grid-row dashboard">
-    <div class="govuk-grid-column-full">
+    <section class="govuk-grid-column-full">
       {% component 'info-feed', {
         heading: 'Data Hub updates',
         feedLimit: 1,
@@ -26,7 +26,7 @@ As nunjucks is on it's way out, a label of an empty space has been used as a wor
         outboundLinkURL: helpCentre.announcementsURL,
         outboundLinkText: 'View all updates'
       } %}
-    </div>
+    </section>
 {% if user.hasPermission('company_list.view_companylist') %}
   <div class="govuk-grid-column-full">
       {% component 'react-slot', {

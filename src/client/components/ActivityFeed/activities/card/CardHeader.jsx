@@ -110,7 +110,7 @@ const CardHeader = ({
 
         {subHeading && <StyledSubHeading>{subHeading}</StyledSubHeading>}
 
-        {heading && <StyledHeading>{heading}</StyledHeading>}
+        {heading && <StyledHeading level={2}>{heading}</StyledHeading>}
       </StyledHeadingWrapper>
 
       <StyledMetaItems>
