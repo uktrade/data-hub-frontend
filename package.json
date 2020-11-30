@@ -232,7 +232,7 @@
     "selenium-server": "^3.12.0",
     "sinon": "^8.1.1",
     "sinon-chai": "^3.1.0",
-    "storybook-readme": "^5.0.8",
+    "storybook-readme": "^5.0.9",
     "supertest": "^6.0.1"
   },
   "sasslintConfig": ".sass-lint.yml",
