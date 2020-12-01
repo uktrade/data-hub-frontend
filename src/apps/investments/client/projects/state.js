@@ -41,13 +41,8 @@ const collectionListPayload = (paramProps) => {
 const listSelectedFilters = (metadataOptions, filterProp) =>
   metadataOptions.filter((option) => filterProp.includes(option.value))
 
-const getDateLabel = (paramLabel, value) => {
-  if (value) {
-    return `${paramLabel} : ${dateFns.format(value, 'D MMMM YYYY')}`
-  } else {
-    return paramLabel
-  }
-}
+const getDateLabel = (paramLabel, value) =>
+  value ? `${paramLabel} : ${dateFns.format(value, 'D MMMM YYYY')}` : paramLabel
 
 export const state2props = ({ router, ...state }) => {
   /*
