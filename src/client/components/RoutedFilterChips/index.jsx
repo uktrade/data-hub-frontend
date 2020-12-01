@@ -7,22 +7,22 @@ import dateFns from 'date-fns'
 
 import { Chip } from '..'
 
-const removeParamFromQs = (qsParams, queryParam, targetValue = null) => {
+const removeParamFromQs = (qsParams, targetParam, targetValue = null) => {
   /*
-   * Removes the queryParam with targetValue from qsParams
+   * Removes the targetParam with targetValue from qsParams
    *
-   * When the query param contains an array of values it removes the item with
-   * the given target value, otherwise it removes that param entirely.
+   * When the targetParam corresponds to an array of values it removes the item
+   * with targetValue, otherwise it removes that param entirely.
    */
   return Object.entries(qsParams)
     .map(([key]) => {
-      if (key === queryParam) {
+      if (key === targetParam) {
         return Array.isArray(qsParams[key])
           ? {
               ...qsParams,
               [key]: qsParams[key].filter((x) => x !== targetValue),
             }
-          : omit(qsParams, queryParam)
+          : omit(qsParams, targetParam)
       }
     })
     .filter(Boolean)[0]
@@ -42,15 +42,15 @@ const RoutedFilterChips = ({
           search: qs.stringify(removeParamFromQs(qsParams, qsParamName, value)),
         })
       }
-      const chips = selectedOptions.filter(({ value }) => value)
-      return chips.map(({ value, label }) => (
+      const filteredOptions = selectedOptions.filter(({ value }) => value)
+      return filteredOptions.map(({ value, label }) => (
         <Chip
-          key={`filter-chip-${value}`}
+          key={value}
           value={value}
           onClick={() => clearFilter(value)}
           {...props}
         >
-          {asDate ? `${label}: ${dateFns.format(value, 'D MMMM YYYY')}` : label}
+          {label} {asDate && `: ${dateFns.format(value, 'D MMMM YYYY')}`}
         </Chip>
       ))
     }}
