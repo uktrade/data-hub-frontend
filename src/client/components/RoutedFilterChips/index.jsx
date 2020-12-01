@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import qs from 'qs'
 import { Route } from 'react-router-dom'
 import { omit } from 'lodash'
-import dateFns from 'date-fns'
 
 import { Chip } from '..'
 
@@ -28,12 +27,7 @@ const removeParamFromQs = (qsParams, targetParam, targetValue = null) => {
     .filter(Boolean)[0]
 }
 
-const RoutedFilterChips = ({
-  qsParamName,
-  selectedOptions,
-  asDate = false,
-  ...props
-}) => (
+const RoutedFilterChips = ({ qsParamName, selectedOptions, ...props }) => (
   <Route>
     {({ location, history }) => {
       const clearFilter = (value) => {
@@ -50,7 +44,7 @@ const RoutedFilterChips = ({
           onClick={() => clearFilter(value)}
           {...props}
         >
-          {label} {asDate && `: ${dateFns.format(value, 'D MMMM YYYY')}`}
+          {label}
         </Chip>
       ))
     }}
@@ -60,7 +54,6 @@ const RoutedFilterChips = ({
 RoutedFilterChips.propTypes = {
   qsParamName: PropTypes.string.isRequired,
   selectedOptions: PropTypes.array.isRequired,
-  asDate: PropTypes.bool,
 }
 
 export default RoutedFilterChips

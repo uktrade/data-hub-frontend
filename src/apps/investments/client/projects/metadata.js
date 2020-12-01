@@ -1,5 +1,5 @@
-export const estimatedLandDateBefore = 'Estimated land date before'
-export const estimatedLandDateAfter = 'Estimated land date after'
+export const estimatedLandDateBeforeLabel = 'Estimated land date before'
+export const estimatedLandDateAfterLabel = 'Estimated land date after'
 
 export const sortOptions = [
   {
