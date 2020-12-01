@@ -1,7 +1,11 @@
 const activityFeedEsFixtures = require('../../../../../../test/unit/data/activity-feed/activity-feed-from-es.json')
 const buildMiddlewareParameters = require('../../../../../../test/unit/helpers/middleware-parameters-builder')
 const companyMock = require('../../../../../../test/unit/data/company.json')
-const { ES_KEYS_GROUPED } = require('../constants')
+const {
+  DATA_HUB_ACTIVITY,
+  EXTERNAL_ACTIVITY,
+  DATA_HUB_AND_EXTERNAL_ACTIVITY,
+} = require('../constants')
 
 describe('Activity feed controllers', () => {
   let fetchActivityFeedStub,
@@ -28,95 +32,113 @@ describe('Activity feed controllers', () => {
       )
     })
 
-    const commonTests = (types, attributedTo) => {
-      const expectedEsQuery = {
-        from: 0,
-        size: 20,
-        sort: [
-          {
-            'object.startTime': {
-              order: 'desc',
+    context(
+      'when filtering on "Data Hub & External activity" for a company',
+      () => {
+        before(async () => {
+          middlewareParameters = buildMiddlewareParameters({
+            company: companyMock,
+            requestQuery: {
+              activityTypeFilter: 'dataHubAndExternalActivity',
+              showDnbHierarchy: false,
             },
-          },
-        ],
-        query: {
-          bool: {
-            filter: {
+            user: {
+              id: 123,
+            },
+          })
+
+          await controllers.fetchActivityFeedHandler(
+            middlewareParameters.reqMock,
+            middlewareParameters.resMock,
+            middlewareParameters.nextSpy
+          )
+        })
+
+        it('should call fetchActivityFeed with the right params', async () => {
+          const expectedEsQuery = {
+            from: 0,
+            size: 20,
+            sort: [
+              {
+                'object.startTime': {
+                  order: 'desc',
+                },
+              },
+            ],
+            query: {
               bool: {
-                must: [
-                  {
-                    terms: {
-                      'object.type': types,
-                    },
+                filter: {
+                  bool: {
+                    should: [
+                      {
+                        bool: {
+                          must: [
+                            {
+                              terms: {
+                                'object.type': DATA_HUB_AND_EXTERNAL_ACTIVITY,
+                              },
+                            },
+                            {
+                              terms: {
+                                'object.attributedTo.id': [
+                                  'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        bool: {
+                          must: [
+                            {
+                              term: {
+                                'object.type':
+                                  'dit:directoryFormsApi:Submission',
+                              },
+                            },
+                            {
+                              term: {
+                                'object.attributedTo.type':
+                                  'dit:directoryFormsApi:SubmissionAction:gov-notify-email',
+                              },
+                            },
+                            {
+                              term: {
+                                'object.url': '/contact/export-advice/comment/',
+                              },
+                            },
+                            {
+                              terms: {
+                                'actor.dit:emailAddress': [
+                                  'fred@acme.org',
+                                  'fred@acme.org',
+                                  'fred@acme.org',
+                                  'byvanuwenu@yahoo.com',
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
                   },
-                  {
-                    term: {
-                      'object.attributedTo.id': attributedTo,
-                    },
-                  },
-                ],
+                },
               },
             },
-          },
-        },
+          }
+
+          expect(fetchActivityFeedStub).to.be.calledWith(
+            middlewareParameters.reqMock,
+            expectedEsQuery
+          )
+
+          expect(middlewareParameters.resMock.json).to.be.calledOnceWithExactly(
+            activityFeedEsFixtures
+          )
+        })
       }
-      expect(fetchActivityFeedStub).to.be.calledWith(
-        middlewareParameters.reqMock,
-        expectedEsQuery
-      )
-
-      expect(middlewareParameters.resMock.json).to.be.calledOnceWithExactly(
-        activityFeedEsFixtures
-      )
-    }
-
-    context('when fetching activity (no filter) for a company', () => {
-      before(async () => {
-        middlewareParameters = buildMiddlewareParameters({
-          company: companyMock,
-        })
-
-        await controllers.fetchActivityFeedHandler(
-          middlewareParameters.reqMock,
-          middlewareParameters.resMock,
-          middlewareParameters.nextSpy
-        )
-      })
-
-      it('should call fetchActivityFeed with default params', async () => {
-        const { dataHubActivity } = ES_KEYS_GROUPED
-        commonTests(
-          dataHubActivity,
-          'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a'
-        )
-      })
-    })
-
-    context('when filtering on "All activity" for a company', () => {
-      before(async () => {
-        middlewareParameters = buildMiddlewareParameters({
-          company: companyMock,
-          requestQuery: {
-            activityTypeFilter: 'allActivity',
-            showDnbHierarchy: false,
-          },
-        })
-
-        await controllers.fetchActivityFeedHandler(
-          middlewareParameters.reqMock,
-          middlewareParameters.resMock,
-          middlewareParameters.nextSpy
-        )
-      })
-
-      it('should call fetchActivityFeed with the right params', async () => {
-        const { allActivity } = ES_KEYS_GROUPED
-        commonTests(
-          allActivity,
-          'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a'
-        )
-      })
-    })
+    )
 
     context('when filtering on "My activity" for a company', () => {
       before(async () => {
@@ -139,7 +161,6 @@ describe('Activity feed controllers', () => {
       })
 
       it('should call fetchActivityFeed with a user id', async () => {
-        const { dataHubActivity } = ES_KEYS_GROUPED
         const expectedEsQuery = {
           from: 0,
           size: 20,
@@ -152,31 +173,29 @@ describe('Activity feed controllers', () => {
           ],
           query: {
             bool: {
-              filter: {
-                bool: {
-                  must: [
-                    {
-                      terms: {
-                        'object.type': dataHubActivity,
-                      },
-                    },
-                    {
-                      term: {
-                        'object.attributedTo.id': 'dit:DataHubAdviser:123',
-                      },
-                    },
-                    {
-                      term: {
-                        'object.attributedTo.id':
-                          'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
-                      },
-                    },
-                  ],
+              must: [
+                {
+                  terms: {
+                    'object.type': DATA_HUB_ACTIVITY,
+                  },
                 },
-              },
+                {
+                  term: {
+                    'object.attributedTo.id': 'dit:DataHubAdviser:123',
+                  },
+                },
+                {
+                  terms: {
+                    'object.attributedTo.id': [
+                      'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                    ],
+                  },
+                },
+              ],
             },
           },
         }
+
         expect(fetchActivityFeedStub).to.be.calledWith(
           middlewareParameters.reqMock,
           expectedEsQuery
@@ -192,6 +211,9 @@ describe('Activity feed controllers', () => {
             activityTypeFilter: 'dataHubActivity',
             showDnbHierarchy: false,
           },
+          user: {
+            id: 123,
+          },
         })
 
         await controllers.fetchActivityFeedHandler(
@@ -202,10 +224,39 @@ describe('Activity feed controllers', () => {
       })
 
       it('should call fetchActivityFeed with the right params', async () => {
-        const { dataHubActivity } = ES_KEYS_GROUPED
-        commonTests(
-          dataHubActivity,
-          'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a'
+        const expectedEsQuery = {
+          from: 0,
+          size: 20,
+          sort: [
+            {
+              'object.startTime': {
+                order: 'desc',
+              },
+            },
+          ],
+          query: {
+            bool: {
+              must: [
+                {
+                  terms: {
+                    'object.type': DATA_HUB_ACTIVITY,
+                  },
+                },
+                {
+                  terms: {
+                    'object.attributedTo.id': [
+                      'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        }
+
+        expect(fetchActivityFeedStub).to.be.calledWith(
+          middlewareParameters.reqMock,
+          expectedEsQuery
         )
       })
     })
@@ -218,6 +269,9 @@ describe('Activity feed controllers', () => {
             activityTypeFilter: 'externalActivity',
             showDnbHierarchy: false,
           },
+          user: {
+            id: 123,
+          },
         })
 
         await controllers.fetchActivityFeedHandler(
@@ -228,10 +282,85 @@ describe('Activity feed controllers', () => {
       })
 
       it('should call fetchActivityFeed with the right params', async () => {
-        const { externalActivity } = ES_KEYS_GROUPED
-        commonTests(
-          externalActivity,
-          'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a'
+        const expectedEsQuery = {
+          from: 0,
+          size: 20,
+          sort: [
+            {
+              'object.startTime': {
+                order: 'desc',
+              },
+            },
+          ],
+          query: {
+            bool: {
+              filter: {
+                bool: {
+                  should: [
+                    {
+                      bool: {
+                        must: [
+                          {
+                            terms: {
+                              'object.type': EXTERNAL_ACTIVITY,
+                            },
+                          },
+                          {
+                            terms: {
+                              'object.attributedTo.id': [
+                                'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      bool: {
+                        must: [
+                          {
+                            term: {
+                              'object.type': 'dit:directoryFormsApi:Submission',
+                            },
+                          },
+                          {
+                            term: {
+                              'object.attributedTo.type':
+                                'dit:directoryFormsApi:SubmissionAction:gov-notify-email',
+                            },
+                          },
+                          {
+                            term: {
+                              'object.url': '/contact/export-advice/comment/',
+                            },
+                          },
+                          {
+                            terms: {
+                              'actor.dit:emailAddress': [
+                                'fred@acme.org',
+                                'fred@acme.org',
+                                'fred@acme.org',
+                                'byvanuwenu@yahoo.com',
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        }
+
+        expect(fetchActivityFeedStub).to.be.calledWith(
+          middlewareParameters.reqMock,
+          expectedEsQuery
+        )
+
+        expect(middlewareParameters.resMock.json).to.be.calledOnceWithExactly(
+          activityFeedEsFixtures
         )
       })
     })
@@ -262,7 +391,6 @@ describe('Activity feed controllers', () => {
         })
 
         it('should call fetchActivityFeed with the right params', async () => {
-          const { dataHubActivity } = ES_KEYS_GROUPED
           const expectedEsQuery = {
             from: 0,
             size: 20,
@@ -275,29 +403,26 @@ describe('Activity feed controllers', () => {
             ],
             query: {
               bool: {
-                filter: {
-                  bool: {
-                    must: [
-                      {
-                        terms: {
-                          'object.type': dataHubActivity,
-                        },
-                      },
-                      {
-                        terms: {
-                          'object.attributedTo.id': [
-                            'dit:DataHubCompany:123',
-                            'dit:DataHubCompany:456',
-                            'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
-                          ],
-                        },
-                      },
-                    ],
+                must: [
+                  {
+                    terms: {
+                      'object.type': DATA_HUB_ACTIVITY,
+                    },
                   },
-                },
+                  {
+                    terms: {
+                      'object.attributedTo.id': [
+                        'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                        'dit:DataHubCompany:123',
+                        'dit:DataHubCompany:456',
+                      ],
+                    },
+                  },
+                ],
               },
             },
           }
+
           expect(fetchActivityFeedStub).to.be.calledWith(
             middlewareParameters.reqMock,
             expectedEsQuery
@@ -314,6 +439,9 @@ describe('Activity feed controllers', () => {
             activityTypeFilter: 'foobar',
             showDnbHierarchy: false,
           },
+          user: {
+            id: 123,
+          },
         })
 
         await controllers.fetchActivityFeedHandler(
@@ -323,11 +451,40 @@ describe('Activity feed controllers', () => {
         )
       })
 
-      it('should call fetchActivityFeed with the right params', async () => {
-        const { dataHubActivity } = ES_KEYS_GROUPED
-        commonTests(
-          dataHubActivity,
-          'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a'
+      it('should default to dataHubActivity', async () => {
+        const expectedEsQuery = {
+          from: 0,
+          size: 20,
+          sort: [
+            {
+              'object.startTime': {
+                order: 'desc',
+              },
+            },
+          ],
+          query: {
+            bool: {
+              must: [
+                {
+                  terms: {
+                    'object.type': DATA_HUB_ACTIVITY,
+                  },
+                },
+                {
+                  terms: {
+                    'object.attributedTo.id': [
+                      'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        }
+
+        expect(fetchActivityFeedStub).to.be.calledWith(
+          middlewareParameters.reqMock,
+          expectedEsQuery
         )
       })
     })
@@ -341,6 +498,9 @@ describe('Activity feed controllers', () => {
         fetchActivityFeedStub.rejects(error)
         middlewareParameters = buildMiddlewareParameters({
           company: companyMock,
+          user: {
+            id: 123,
+          },
         })
 
         await controllers.fetchActivityFeedHandler(
@@ -351,44 +511,6 @@ describe('Activity feed controllers', () => {
       })
 
       it('should call next with an error', async () => {
-        const { dataHubActivity } = ES_KEYS_GROUPED
-        const expectedEsQuery = {
-          from: 0,
-          size: 20,
-          sort: [
-            {
-              'object.startTime': {
-                order: 'desc',
-              },
-            },
-          ],
-          query: {
-            bool: {
-              filter: {
-                bool: {
-                  must: [
-                    {
-                      terms: {
-                        'object.type': dataHubActivity,
-                      },
-                    },
-                    {
-                      term: {
-                        'object.attributedTo.id':
-                          'dit:DataHubCompany:dcdabbc9-1781-e411-8955-e4115bead28a',
-                      },
-                    },
-                  ],
-                },
-              },
-            },
-          },
-        }
-
-        expect(fetchActivityFeedStub).to.be.calledWith(
-          middlewareParameters.reqMock,
-          expectedEsQuery
-        )
         expect(middlewareParameters.resMock.json).to.not.have.been.called
         expect(middlewareParameters.nextSpy).to.have.been.calledWith(error)
       })
