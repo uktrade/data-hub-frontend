@@ -9,12 +9,12 @@ exports.advisers = function (req, res) {
   res.json(advisers)
 }
 
+/**
+ * Return a single adviser
+ *
+ * Use the adviser id provided to find the adviser from the autocomplete list
+ */
 exports.singleAdviser = function (req, res) {
-  /*
-   * Return a single adviser
-   *
-   * Use the adviser id provided to find the adviser from the autocomplete list
-   */
   const pathComponents = req.path.split('/')
   const adviserId = pathComponents[pathComponents.length - 2]
   let adviser = autoCompleteAdvisers.results.find(({ id }) => id === adviserId)

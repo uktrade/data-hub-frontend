@@ -6,13 +6,13 @@ import { omit } from 'lodash'
 
 import { Chip } from '..'
 
+/**
+ * Removes the targetParam with targetValue from qsParams
+ *
+ * When the targetParam corresponds to an array of values it removes the item
+ * with targetValue, otherwise it removes that param entirely.
+ */
 const removeParamFromQs = (qsParams, targetParam, targetValue = null) => {
-  /*
-   * Removes the targetParam with targetValue from qsParams
-   *
-   * When the targetParam corresponds to an array of values it removes the item
-   * with targetValue, otherwise it removes that param entirely.
-   */
   return Object.entries(qsParams)
     .map(([key]) => {
       if (key === targetParam) {
@@ -32,9 +32,8 @@ const RoutedFilterChips = ({ qsParamName, selectedOptions, ...props }) => (
     {({ location, history }) => {
       const clearFilter = (value) => {
         const qsParams = qs.parse(location.search.slice(1))
-        history.push({
-          search: qs.stringify(removeParamFromQs(qsParams, qsParamName, value)),
-        })
+        const newQsParams = removeParamFromQs(qsParams, qsParamName, value)
+        history.push({ search: qs.stringify(newQsParams) })
       }
       return selectedOptions.map(({ value, label }) => (
         <Chip
