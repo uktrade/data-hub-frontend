@@ -47,13 +47,13 @@ const getDateLabel = (paramLabel, value) =>
 const buildDatesFilter = (paramLabel, value) =>
   value ? [{ label: getDateLabel(paramLabel, value), value }] : []
 
+/**
+ * Convert both location and redux state to investment projects props
+ *
+ * Selected filters are built from the page's query props as well as the
+ * selected advisers in state.
+ */
 export const state2props = ({ router, ...state }) => {
-  /*
-   * Convert both location and redux state to investment projects props
-   *
-   * Selected filters are built from the page's query props as well as the
-   * selected advisers in state.
-   */
   const queryProps = qs.parse(router.location.search.slice(1))
   const filteredQueryProps = collectionListPayload(queryProps)
   const { selectedAdvisers } = state.projectsList
