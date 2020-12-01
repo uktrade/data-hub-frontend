@@ -1,5 +1,5 @@
 {
-    "count": 9,
+    "count": 11,
     "next": null,
     "previous": null,
     "results": [
@@ -212,6 +212,66 @@
           "archived_by": [
               null,
               "Paul Gain"
+          ]
+      }
+    },
+    {
+      "id": 10,
+      "user": {
+        "id": "13d19d55-68b2-4bb9-9c7c-eedbb1548b94",
+        "first_name": "Pippo",
+        "last_name": "Raimondi",
+        "name": "Pippo Raimondi",
+        "email": "Pippo.Raimondi@digital.trade.gov.uk"
+      },
+      "timestamp": "2020-11-06T14:16:42.923800Z",
+      "comment": "",
+      "changes": {
+          "archived": [
+              false,
+              true
+          ],
+          "archived_on": [
+              null,
+              "2020-11-06T14:16:42.982000Z"
+          ],
+          "archived_reason": [
+              null,
+              "Company is dissolved"
+          ],
+          "archived_by": [
+              null,
+              "Pippo Raimondi"
+          ]
+      }
+    },
+    {
+      "id": 11,
+      "user": {
+        "id": "13d19d55-68b2-4bb9-9c7c-eedbb1548194",
+        "first_name": "Pippo",
+        "last_name": "Raimondi",
+        "name": "Pippo Raimondi",
+        "email": "Pippo.Raimondi@digital.trade.gov.uk"
+      },
+      "timestamp": "2020-11-07T14:16:42.923800Z",
+      "comment": "",
+      "changes": {
+          "archived": [
+              false,
+              true
+          ],
+          "archived_on": [
+              null,
+              "2020-11-07T14:16:42.982000Z"
+          ],
+          "archived_reason": [
+              null,
+              "Company is dissolved"
+          ],
+          "archived_by": [
+              null,
+              "Pippo Raimondi"
           ]
       }
     }
