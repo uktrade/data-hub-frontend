@@ -25,7 +25,6 @@ const FilteredCollectionList = ({
   children,
   collectionName,
   activePage = 1,
-  selectedAdvisers,
   maxItemsToDownload,
   selectedFilters,
 }) => {
@@ -40,7 +39,6 @@ const FilteredCollectionList = ({
               totalItems={count}
               collectionName={collectionName}
               selectedFilters={selectedFilters}
-              selectedAdvisers={selectedAdvisers}
             />
           )}
           {sortOptions && (
@@ -97,6 +95,10 @@ FilteredCollectionList.propTypes = {
     }),
   }),
   maxItemsToDownload: PropTypes.number,
+  selectedFilters: PropTypes.shape({
+    label: PropTypes.string,
+    value: PropTypes.string,
+  }),
 }
 
 export default FilteredCollectionList
