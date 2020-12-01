@@ -1,10 +1,11 @@
 import qs from 'qs'
+import dateFns from 'date-fns'
 
 import {
   sortOptions,
   sectorOptions,
-  estimatedLandDateBefore,
-  estimatedLandDateAfter,
+  estimatedLandDateBeforeLabel,
+  estimatedLandDateAfterLabel,
 } from './metadata'
 
 export const TASK_GET_PROJECTS_LIST = 'TASK_GET_PROJECTS_LIST'
@@ -40,6 +41,14 @@ const collectionListPayload = (paramProps) => {
 const listSelectedFilters = (metadataOptions, filterProp) =>
   metadataOptions.filter((option) => filterProp.includes(option.value))
 
+const getDateLabel = (paramLabel, value) => {
+  if (value) {
+    return `${paramLabel} : ${dateFns.format(value, 'D MMMM YYYY')}`
+  } else {
+    return paramLabel
+  }
+}
+
 export const state2props = ({ router, ...state }) => {
   /*
    * Convert both location and redux state to investment projects props
@@ -64,13 +73,19 @@ export const state2props = ({ router, ...state }) => {
     selectedSectors: listSelectedFilters(sectorOptions, sector_descends),
     selectedEstimatedLandDatesBefore: [
       {
-        label: estimatedLandDateBefore,
+        label: getDateLabel(
+          estimatedLandDateBeforeLabel,
+          estimated_land_date_before
+        ),
         value: estimated_land_date_before,
       },
     ],
     selectedEstimatedLandDatesAfter: [
       {
-        label: estimatedLandDateAfter,
+        label: getDateLabel(
+          estimatedLandDateAfterLabel,
+          estimated_land_date_after
+        ),
         value: estimated_land_date_after,
       },
     ],
