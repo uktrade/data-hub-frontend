@@ -36,8 +36,7 @@ const RoutedFilterChips = ({ qsParamName, selectedOptions, ...props }) => (
           search: qs.stringify(removeParamFromQs(qsParams, qsParamName, value)),
         })
       }
-      const filteredOptions = selectedOptions.filter(({ value }) => value)
-      return filteredOptions.map(({ value, label }) => (
+      return selectedOptions.map(({ value, label }) => (
         <Chip
           key={value}
           value={value}
