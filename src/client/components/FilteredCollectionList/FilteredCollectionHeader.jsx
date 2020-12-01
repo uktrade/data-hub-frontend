@@ -99,12 +99,10 @@ function FilteredCollectionHeader({
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedEstimatedLandDatesBefore}
           qsParamName="estimated_land_date_before"
-          asDate={true}
         />
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedEstimatedLandDatesAfter}
           qsParamName="estimated_land_date_after"
-          asDate={true}
         />
       </CollectionHeaderRow>
     </CollectionHeaderRowContainer>
