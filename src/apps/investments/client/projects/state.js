@@ -41,9 +41,15 @@ const listSelectedFilters = (metadataOptions, filterProp) =>
   metadataOptions.filter((option) => filterProp.includes(option.value))
 
 export const state2props = ({ router, ...state }) => {
+  /*
+   * Convert both location and redux state to investment projects props
+   *
+   * Selected filters are built from the page's query props as well as the
+   * selected advisers in state.
+   */
   const queryProps = qs.parse(router.location.search.slice(1))
   const filteredQueryProps = collectionListPayload(queryProps)
-
+  const { selectedAdvisers } = state.projectsList
   const {
     sector_descends = [],
     estimated_land_date_before,
@@ -51,6 +57,10 @@ export const state2props = ({ router, ...state }) => {
   } = queryProps
 
   const selectedFilters = {
+    selectedAdvisers: selectedAdvisers.map(({ advisers }) => ({
+      label: advisers.name,
+      value: advisers.id,
+    })),
     selectedSectors: listSelectedFilters(sectorOptions, sector_descends),
     selectedEstimatedLandDatesBefore: [
       {

@@ -91,7 +91,7 @@ describe('Investments Collections Filter', () => {
         .next()
         .click()
         .type('2020-01-01')
-      assertFilterIndicator(1, 'Estimated land date before : 1 January 2020')
+      assertFilterIndicator(1, 'Estimated land date before: 1 January 2020')
     })
 
     it('should remove the estimated land date before filter', () => {
@@ -105,7 +105,7 @@ describe('Investments Collections Filter', () => {
         .next()
         .click()
         .type('2020-01-01')
-      assertFilterIndicator(1, 'Estimated land date after : 1 January 2020')
+      assertFilterIndicator(1, 'Estimated land date after: 1 January 2020')
     })
 
     it('should remove the estimated land date before filter', () => {
@@ -129,11 +129,11 @@ describe('Investments Collections Filter', () => {
       cy.get('@adviserTypeaheadFilter').should('contain', 'Puck Head')
       assertFilterIndicator(2, 'Advanced Engineering')
       cy.get('@sectorFilter').should('contain', 'Advanced Engineering')
-      assertFilterIndicator(3, 'Estimated land date before : 1 January 2020')
+      assertFilterIndicator(3, 'Estimated land date before: 1 January 2020')
       cy.get('@estimatedDateBefore')
         .find('input')
         .should('have.attr', 'value', '2020-01-01')
-      assertFilterIndicator(4, 'Estimated land date after : 1 January 2020')
+      assertFilterIndicator(4, 'Estimated land date after: 1 January 2020')
       cy.get('@estimatedDateAfter')
         .find('input')
         .should('have.attr', 'value', '2020-01-01')
