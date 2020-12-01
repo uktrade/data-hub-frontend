@@ -13,6 +13,12 @@ const StyledFieldWrapper = styled(FieldWrapper)`
   }
 `
 
+/**
+ * A Date Input Field
+ *
+ * Changing the initialValue prop overrides the user's input value - this
+ * means that the input value will stay synchronised when changing the route.
+ */
 const DateField = ({
   onChange = () => {},
   name,
@@ -21,12 +27,6 @@ const DateField = ({
   hint,
   initialValue,
 }) => {
-  /*
-   * A Date Input Field
-   *
-   * Changing the initialValue prop overrides the user's input value - this
-   * means that the input value will stay synchronised when changing the route.
-   */
   const [value, setValue] = useState(initialValue)
   useEffect(() => setValue(initialValue), [initialValue])
 
