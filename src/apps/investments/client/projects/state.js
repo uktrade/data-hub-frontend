@@ -44,6 +44,9 @@ const listSelectedFilters = (metadataOptions, filterProp) =>
 const getDateLabel = (paramLabel, value) =>
   value ? `${paramLabel} : ${dateFns.format(value, 'D MMMM YYYY')}` : paramLabel
 
+const buildDatesFilter = (paramLabel, value) =>
+  value ? [{ label: getDateLabel(paramLabel, value), value }] : []
+
 export const state2props = ({ router, ...state }) => {
   /*
    * Convert both location and redux state to investment projects props
@@ -66,24 +69,14 @@ export const state2props = ({ router, ...state }) => {
       value: advisers.id,
     })),
     selectedSectors: listSelectedFilters(sectorOptions, sector_descends),
-    selectedEstimatedLandDatesBefore: [
-      {
-        label: getDateLabel(
-          estimatedLandDateBeforeLabel,
-          estimated_land_date_before
-        ),
-        value: estimated_land_date_before,
-      },
-    ],
-    selectedEstimatedLandDatesAfter: [
-      {
-        label: getDateLabel(
-          estimatedLandDateAfterLabel,
-          estimated_land_date_after
-        ),
-        value: estimated_land_date_after,
-      },
-    ],
+    selectedEstimatedLandDatesBefore: buildDatesFilter(
+      estimatedLandDateBeforeLabel,
+      estimated_land_date_before
+    ),
+    selectedEstimatedLandDatesAfter: buildDatesFilter(
+      estimatedLandDateAfterLabel,
+      estimated_land_date_after
+    ),
   }
 
   return {
