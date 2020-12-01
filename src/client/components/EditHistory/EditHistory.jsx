@@ -25,15 +25,13 @@ function EditHistory({
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
 
-  const totalPages = Math.floor(totalItems / itemsPerPage) + 1
+  const totalPages = Math.ceil(totalItems / itemsPerPage)
   const activePage = parseInt(useSearchParam('page'), 10) || 1
   const setActivePage = (page) =>
     window.history.pushState({}, '', `${window.location.pathname}?page=${page}`)
 
-  const onPageClick = (page, event) => {
+  const onPageClick = (page) => {
     setActivePage(page)
-    event.target.blur()
-    event.preventDefault()
   }
 
   useEffect(() => {
