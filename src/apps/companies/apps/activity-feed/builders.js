@@ -1,60 +1,28 @@
-const bodybuilder = require('bodybuilder')
+const {
+  FILTER_KEYS,
+  DATA_HUB_ACTIVITY,
+  EXTERNAL_ACTIVITY,
+  DATA_HUB_AND_EXTERNAL_ACTIVITY,
+} = require('./constants')
 
-const { FILTER_KEYS, ES_KEYS_GROUPED } = require('./constants')
+const {
+  myActivity,
+  dataHubActivity,
+  externalActivity,
+} = require('./es-queries')
 
-const { allActivity, externalActivity, dataHubActivity } = ES_KEYS_GROUPED
-
-const FILTER_KEY_MAP = {
-  [FILTER_KEYS.allActivity]: allActivity,
-  [FILTER_KEYS.externalActivity]: externalActivity,
-  [FILTER_KEYS.dataHubActivity]: dataHubActivity,
-}
-
-function createESFilters(
-  activityTypeFilter,
-  dnbHierarchyIds = [],
-  company,
-  user,
-  from,
-  size
-) {
-  const types =
-    FILTER_KEY_MAP[activityTypeFilter] ||
-    FILTER_KEY_MAP[FILTER_KEYS.dataHubActivity]
-
-  const body = bodybuilder()
-    .from(from)
-    .size(size)
-    .sort('object.startTime', 'desc')
-
-  // Add the types
-  body.filter('terms', 'object.type', types)
-
-  // My activity
-  if (activityTypeFilter === FILTER_KEYS.myActivity) {
-    body.filter(
-      'term',
-      'object.attributedTo.id',
-      `dit:DataHubAdviser:${user.id}`
-    )
+const createESFilter = (activityTypeFilter, opts) => {
+  const filters = {
+    [FILTER_KEYS.myActivity]: myActivity(opts, DATA_HUB_ACTIVITY),
+    [FILTER_KEYS.dataHubActivity]: dataHubActivity(opts, DATA_HUB_ACTIVITY),
+    [FILTER_KEYS.externalActivity]: externalActivity(opts, EXTERNAL_ACTIVITY),
+    [FILTER_KEYS.dataHubAndExternalActivity]: externalActivity(
+      opts,
+      DATA_HUB_AND_EXTERNAL_ACTIVITY
+    ),
   }
 
-  // DnB Hierarchy IDs and Data Hub Company ID
-  if (dnbHierarchyIds.length) {
-    const ids = dnbHierarchyIds.map((id) => `dit:DataHubCompany:${id}`)
-    ids.push(`dit:DataHubCompany:${company.id}`)
-    body.filter('terms', 'object.attributedTo.id', ids)
-  } else {
-    body.filter(
-      'term',
-      'object.attributedTo.id',
-      `dit:DataHubCompany:${company.id}`
-    )
-  }
-
-  return body.build()
+  return filters[activityTypeFilter] || filters[FILTER_KEYS.dataHubActivity]
 }
 
-module.exports = {
-  createESFilters,
-}
+module.exports = createESFilter
