@@ -23,6 +23,7 @@ function EditHistoryList({
   totalPages,
   activePage,
   onPageClick,
+  getPageUrl,
   changeType,
   getUpdatedBy,
   getValue,
@@ -47,6 +48,7 @@ function EditHistoryList({
         totalPages={totalPages}
         activePage={activePage}
         onPageClick={onPageClick}
+        getPageUrl={getPageUrl}
       />
     </div>
   )
