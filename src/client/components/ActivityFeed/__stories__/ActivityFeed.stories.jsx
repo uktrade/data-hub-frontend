@@ -23,7 +23,7 @@ import projectAddedCtiFixture from '../__fixtures__/investment_projects/project_
 import orderAddedFixture from '../__fixtures__/omis/order_added.json'
 import completeReferralFixture from '../__fixtures__/referrals/completeReferral.json'
 import outstandingReferralFixture from '../__fixtures__/referrals/outstandingReferral.json'
-import exportAdviceFixture from '../__fixtures__/great_gov_uk_forms/export-enquiry.json'
+import exportEnquiryFixture from '../__fixtures__/great_gov_uk_forms/export-enquiry.json'
 
 addDecorator(withKnobs)
 class ActivityFeedDemoApp extends React.Component {
@@ -71,7 +71,7 @@ class ActivityFeedDemoApp extends React.Component {
         accountsAreDueFixture,
         incorporatedFixture,
         exportOfGoodsFixture,
-        exportAdviceFixture,
+        exportEnquiryFixture,
       ],
       [dataHubActivity.value]: [
         completeReferralFixture,
