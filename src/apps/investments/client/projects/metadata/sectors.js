@@ -1,29 +1,3 @@
-export const estimatedLandDateBeforeLabel = 'Estimated land date before'
-export const estimatedLandDateAfterLabel = 'Estimated land date after'
-
-export const sortOptions = [
-  {
-    name: 'Most recently created',
-    value: 'created_on:desc',
-  },
-  {
-    name: 'Earliest land date',
-    value: 'estimated_land_date:asc',
-  },
-  {
-    name: 'Latest land date',
-    value: 'estimated_land_date:desc',
-  },
-  {
-    name: 'Project name',
-    value: 'name:asc',
-  },
-  {
-    name: 'Stage',
-    value: 'stage.name',
-  },
-]
-
 export const sectorOptions = [
   {
     value: 'af959812-6095-e211-a939-e4115bead28a',
@@ -163,3 +137,5 @@ export const sectorOptions = [
   },
   { value: 'ae22c9d2-5f95-e211-a939-e4115bead28a', label: 'Water' },
 ]
+
+export default sectorOptions
