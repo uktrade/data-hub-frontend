@@ -27,8 +27,9 @@ function EditHistory({
 
   const totalPages = Math.ceil(totalItems / itemsPerPage)
   const activePage = parseInt(useSearchParam('page'), 10) || 1
+  const getPageUrl = (page) => `${window.location.pathname}?page=${page}`
   const setActivePage = (page) =>
-    window.history.pushState({}, '', `${window.location.pathname}?page=${page}`)
+    window.history.pushState({}, '', getPageUrl(page))
 
   const onPageClick = (page) => {
     setActivePage(page)
@@ -68,6 +69,7 @@ function EditHistory({
         totalPages={totalPages}
         activePage={activePage}
         onPageClick={onPageClick}
+        getPageUrl={getPageUrl}
         changeType={changeType}
         getUpdatedBy={getUpdatedBy}
         getValue={getValue}
