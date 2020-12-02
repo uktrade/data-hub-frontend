@@ -22,11 +22,13 @@ const searchParamProps = ({
   page = 1,
   adviser = false,
   sector_descends = false,
+  country = false,
   estimated_land_date_before = null,
   estimated_land_date_after = null,
 }) => ({
   adviser: parseVariablePropType(adviser),
   sector_descends: parseVariablePropType(sector_descends),
+  country: parseVariablePropType(country),
   estimated_land_date_before,
   estimated_land_date_after,
   sortby,
