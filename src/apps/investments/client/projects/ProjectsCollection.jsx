@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import {
   FilterAdvisersTypeAhead,
+  FilterCountryTypeahead,
   FilterSectorTypeahead,
   CollectionFilters,
   ToggleSection,
@@ -77,6 +78,15 @@ const ProjectsCollection = ({
             placeholder="Search sectors..."
             selectedSectors={selectedFilters.selectedSectors}
             options={optionMetadata.sectorOptions}
+          />
+          <FilterCountryTypeahead
+            {...props}
+            isMulti={true}
+            label="Country of origin"
+            name="country"
+            placeholder="Search countries..."
+            selectedCountries={selectedFilters.selectedCountries}
+            options={optionMetadata.countryOptions}
           />
           <RoutedDateField
             label="Estimated land date before"
