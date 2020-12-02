@@ -9,9 +9,7 @@ import { HEADING_SIZES, SPACING } from '@govuk-react/constants'
 
 import {
   CollectionHeaderRow,
-  RoutedAdviserFilterChips,
-  RoutedOptionFilterChips,
-  RoutedDateFilterChips,
+  RoutedFilterChips,
   FilterReset,
 } from '../../components'
 
@@ -62,7 +60,6 @@ function FilteredCollectionHeader({
   totalItems,
   collectionName = 'result',
   addItemUrl = null,
-  selectedAdvisers,
   selectedFilters,
 }) {
   const formattedTotal = decimal(totalItems)
@@ -91,26 +88,22 @@ function FilteredCollectionHeader({
       </CollectionHeaderRow>
 
       <CollectionHeaderRow>
-        <RoutedAdviserFilterChips
-          selectedOptions={selectedAdvisers}
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedAdvisers}
           qsParamName="adviser"
         />
-        <RoutedOptionFilterChips
+        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedSectors}
           qsParamName="sector_descends"
         />
-        {selectedFilters.selectedEstimatedLandDatesBefore[0].value && (
-          <RoutedDateFilterChips
-            selectedOptions={selectedFilters.selectedEstimatedLandDatesBefore}
-            qsParamName="estimated_land_date_before"
-          />
-        )}
-        {selectedFilters.selectedEstimatedLandDatesAfter[0].value && (
-          <RoutedDateFilterChips
-            selectedOptions={selectedFilters.selectedEstimatedLandDatesAfter}
-            qsParamName="estimated_land_date_after"
-          />
-        )}
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedEstimatedLandDatesBefore}
+          qsParamName="estimated_land_date_before"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedEstimatedLandDatesAfter}
+          qsParamName="estimated_land_date_after"
+        />
       </CollectionHeaderRow>
     </CollectionHeaderRowContainer>
   )
@@ -120,6 +113,10 @@ FilteredCollectionHeader.propTypes = {
   totalItems: PropTypes.number.isRequired,
   collectionName: PropTypes.string.isRequired,
   addItemUrl: PropTypes.string,
+  selectedFilters: PropTypes.shape({
+    label: PropTypes.string,
+    value: PropTypes.string,
+  }),
 }
 
 export default FilteredCollectionHeader

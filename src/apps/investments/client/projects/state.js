@@ -1,10 +1,11 @@
 import qs from 'qs'
+import dateFns from 'date-fns'
 
 import {
   sortOptions,
   sectorOptions,
-  estimatedLandDateBefore,
-  estimatedLandDateAfter,
+  estimatedLandDateBeforeLabel,
+  estimatedLandDateAfterLabel,
 } from './metadata'
 
 export const TASK_GET_PROJECTS_LIST = 'TASK_GET_PROJECTS_LIST'
@@ -40,10 +41,22 @@ const collectionListPayload = (paramProps) => {
 const listSelectedFilters = (metadataOptions, filterProp) =>
   metadataOptions.filter((option) => filterProp.includes(option.value))
 
+const getDateLabel = (paramLabel, value) =>
+  value ? `${paramLabel} : ${dateFns.format(value, 'D MMMM YYYY')}` : paramLabel
+
+const buildDatesFilter = (paramLabel, value) =>
+  value ? [{ label: getDateLabel(paramLabel, value), value }] : []
+
+/**
+ * Convert both location and redux state to investment projects props
+ *
+ * Selected filters are built from the page's query props as well as the
+ * selected advisers in state.
+ */
 export const state2props = ({ router, ...state }) => {
   const queryProps = qs.parse(router.location.search.slice(1))
   const filteredQueryProps = collectionListPayload(queryProps)
-
+  const { selectedAdvisers } = state.projectsList
   const {
     sector_descends = [],
     estimated_land_date_before,
@@ -51,19 +64,19 @@ export const state2props = ({ router, ...state }) => {
   } = queryProps
 
   const selectedFilters = {
+    selectedAdvisers: selectedAdvisers.map(({ advisers }) => ({
+      label: advisers.name,
+      value: advisers.id,
+    })),
     selectedSectors: listSelectedFilters(sectorOptions, sector_descends),
-    selectedEstimatedLandDatesBefore: [
-      {
-        label: estimatedLandDateBefore,
-        value: estimated_land_date_before,
-      },
-    ],
-    selectedEstimatedLandDatesAfter: [
-      {
-        label: estimatedLandDateAfter,
-        value: estimated_land_date_after,
-      },
-    ],
+    selectedEstimatedLandDatesBefore: buildDatesFilter(
+      estimatedLandDateBeforeLabel,
+      estimated_land_date_before
+    ),
+    selectedEstimatedLandDatesAfter: buildDatesFilter(
+      estimatedLandDateAfterLabel,
+      estimated_land_date_after
+    ),
   }
 
   return {
