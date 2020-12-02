@@ -31,7 +31,7 @@ const RoutedTypeahead = ({
 }) => (
   <StyledFieldWrapper label={label} name={name} hint={hint}>
     <Route>
-      {({ history }) => {
+      {({ history, location }) => {
         const qsParams = qs.parse(location.search.slice(1))
         return (
           <Typeahead
