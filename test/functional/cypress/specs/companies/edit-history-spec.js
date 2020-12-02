@@ -249,4 +249,15 @@ describe('Edit History', () => {
       )
     })
   })
+
+  context('when there are more than 10 entries', () => {
+    it('should display the pagination', () => {
+      cy.get('[data-test="page-number"]').should('be.visible', true)
+    })
+
+    it('should display the pagination', () => {
+      cy.get('[data-test="page-number"]').click()
+      cy.url().should('include', '?page=2')
+    })
+  })
 })
