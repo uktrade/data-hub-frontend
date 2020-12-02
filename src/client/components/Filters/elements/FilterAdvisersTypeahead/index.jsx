@@ -37,7 +37,7 @@ const StyledFieldWrapper = styled(FieldWrapper)`
   }
 `
 
-const FilterAdvisersTypeAhead = ({
+const FilterAdvisersTypeahead = ({
   name,
   taskProps,
   label = '',
@@ -98,7 +98,7 @@ const FilterAdvisersTypeAhead = ({
   </StyledFieldWrapper>
 )
 
-FilterAdvisersTypeAhead.propTypes = {
+FilterAdvisersTypeahead.propTypes = {
   name: PropTypes.string.isRequired,
   taskProps: PropTypes.shape({
     name: PropTypes.string.isRequired,
@@ -106,4 +106,4 @@ FilterAdvisersTypeAhead.propTypes = {
   }).isRequired,
 }
 
-export default FilterAdvisersTypeAhead
+export default FilterAdvisersTypeahead
