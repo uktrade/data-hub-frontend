@@ -14,24 +14,23 @@ const StyledFieldWrapper = styled(FieldWrapper)`
   }
 `
 
-const getSectorIds = (sectors) => ({
-  // snake-case as used directly in the query
-  sector_descends: sectors ? sectors.map(({ value }) => value) : [],
+const getCountryIds = (countries) => ({
+  country: countries ? countries.map(({ value }) => value) : [],
 })
 
-const FilterSectorTypeahead = ({
+const FilterCountryTypeahead = ({
   name,
   label = '',
   hint = '',
   isMulti = false,
   placeholder = '',
   closeMenuOnSelect = false,
-  selectedSectors = null,
+  selectedCountries = null,
   options = [],
 }) => (
   <StyledFieldWrapper label={label} name={name} hint={hint}>
     <Route>
-      {({ history }) => {
+      {({ location, history }) => {
         const qsParams = qs.parse(location.search.slice(1))
         return (
           <Typeahead
@@ -49,12 +48,12 @@ const FilterSectorTypeahead = ({
             options={options}
             closeMenuOnSelect={closeMenuOnSelect}
             isMulti={isMulti}
-            value={selectedSectors}
-            onChange={(sectors) => {
+            value={selectedCountries}
+            onChange={(countries) => {
               history.push({
                 search: qs.stringify({
                   ...qsParams,
-                  ...getSectorIds(sectors),
+                  ...getCountryIds(countries),
                   page: 1,
                 }),
               })
@@ -66,8 +65,8 @@ const FilterSectorTypeahead = ({
   </StyledFieldWrapper>
 )
 
-FilterSectorTypeahead.propTypes = {
+FilterCountryTypeahead.propTypes = {
   name: PropTypes.string.isRequired,
 }
 
-export default FilterSectorTypeahead
+export default FilterCountryTypeahead
