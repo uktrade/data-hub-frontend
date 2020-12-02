@@ -97,6 +97,10 @@ function FilteredCollectionHeader({
           qsParamName="sector_descends"
         />
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedCountries}
+          qsParamName="country"
+        />
+        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedEstimatedLandDatesBefore}
           qsParamName="estimated_land_date_before"
         />
