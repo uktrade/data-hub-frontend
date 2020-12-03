@@ -3,10 +3,11 @@ import dateFns from 'date-fns'
 
 import {
   countryOptions,
-  sortOptions,
-  sectorOptions,
   estimatedLandDateBeforeLabel,
   estimatedLandDateAfterLabel,
+  sortOptions,
+  sectorOptions,
+  ukRegionOptions,
 } from './metadata'
 
 export const TASK_GET_PROJECTS_LIST = 'TASK_GET_PROJECTS_LIST'
@@ -23,12 +24,14 @@ const searchParamProps = ({
   adviser = false,
   sector_descends = false,
   country = false,
+  uk_region = false,
   estimated_land_date_before = null,
   estimated_land_date_after = null,
 }) => ({
   adviser: parseVariablePropType(adviser),
   sector_descends: parseVariablePropType(sector_descends),
   country: parseVariablePropType(country),
+  uk_region: parseVariablePropType(uk_region),
   estimated_land_date_before,
   estimated_land_date_after,
   sortby,
@@ -63,6 +66,7 @@ export const state2props = ({ router, ...state }) => {
   const {
     sector_descends = [],
     country = [],
+    uk_region = [],
     estimated_land_date_before,
     estimated_land_date_after,
   } = queryProps
@@ -72,8 +76,9 @@ export const state2props = ({ router, ...state }) => {
       label: advisers.name,
       value: advisers.id,
     })),
-    selectedCountries: listSelectedFilters(countryOptions, country),
     selectedSectors: listSelectedFilters(sectorOptions, sector_descends),
+    selectedCountries: listSelectedFilters(countryOptions, country),
+    selectedUkRegions: listSelectedFilters(ukRegionOptions, uk_region),
     selectedEstimatedLandDatesBefore: buildDatesFilter(
       estimatedLandDateBeforeLabel,
       estimated_land_date_before
@@ -87,7 +92,12 @@ export const state2props = ({ router, ...state }) => {
   return {
     ...state[ID],
     payload: filteredQueryProps,
-    optionMetadata: { countryOptions, sortOptions, sectorOptions },
+    optionMetadata: {
+      countryOptions,
+      sortOptions,
+      sectorOptions,
+      ukRegionOptions,
+    },
     selectedFilters,
   }
 }
