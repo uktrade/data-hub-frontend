@@ -45,6 +45,9 @@ describe('Activity feed controllers', () => {
             user: {
               id: 123,
             },
+            features: {
+              'activity-feed-export-enquiry': true,
+            },
           })
 
           await controllers.fetchActivityFeedHandler(
@@ -271,6 +274,9 @@ describe('Activity feed controllers', () => {
           },
           user: {
             id: 123,
+          },
+          features: {
+            'activity-feed-export-enquiry': true,
           },
         })
 
