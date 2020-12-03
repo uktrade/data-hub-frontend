@@ -1,0 +1,63 @@
+{
+  "id" : "dit:directoryFormsApi:Submission:63208:Create",
+  "published" : "2020-11-10T11:31:18.256239+00:00",
+  "type" : "Create",
+
+  "actor" : {
+    "dit:blackListedReason" : null,
+    "dit:emailAddress" : "gary.james@fish.com",
+    "dit:isBlacklisted" : false,
+    "dit:isWhitelisted" : false,
+    "id" : "dit:directoryFormsApi:Sender:26731",
+    "type" : "dit:directoryFormsApi:Submission:Sender"
+  },
+
+  "object" : {
+    "id" : "dit:directoryFormsApi:Submission:63208",
+    "type" : "dit:directoryFormsApi:Submission",
+    "url" : "/contact/export-advice/comment/",
+    "published" : "2020-11-10T11:31:18.256239+00:00",
+
+    "attributedTo" : {
+      "id" : "dit:directoryFormsApi:SubmissionType:Domestic",
+      "type" : "dit:directoryFormsApi:SubmissionAction:gov-notify-email"
+    },
+
+    "dit:directoryFormsApi:Submission:Data" : {
+      "comment" : "We export fish products to South Korea. In 2011 we were issued an approved exporter authorisation number by HMRC to be able to export to South Korea.  Does this number still stand for exporting to South Korea in 2021 or do we need a new number?",
+      "companies_house_number" : "12345678",
+      "company_type" : "LIMITED",
+      "company_type_other" : "",
+      "contact_consent" : [
+        "consents_to_email_contact",
+        "consents_to_phone_contact"
+      ],
+      "email" : "gary.james@fish.com",
+      "employees" : "51-200",
+      "first_name" : "Gary",
+      "industry" : "Agriculture, horticulture, fisheries and pets",
+      "industry_label" : "Agriculture, horticulture, fisheries and pets",
+      "industry_other" : "",
+      "last_name" : "James",
+      "organisation_name" : "SUPREME FISH LIMITED",
+      "phone" : "02074567655",
+      "position" : "Director",
+      "postcode" : "SW15 4LS",
+      "region_office_email" : "info@tradesoutheast.com",
+      "turnover" : "25m-50m"
+    },
+
+    "dit:directoryFormsApi:Submission:Meta" : {
+      "action_name" : "gov-notify-email",
+      "email_address" : "gary.james@fish.com",
+      "email_reply_to_id" : "ad1b973d-5c49-4d1d-a197-863fd25b4a97",
+      "funnel_steps" : [
+        "domestic"
+      ],
+      "ingress_url" : "https://www.gov.uk/",
+      "sender" : { },
+      "spam_control" : { },
+      "template_id" : "5abd7372-a92d-4351-bccb-b9a38d353e75"
+    }
+  }
+}

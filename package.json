@@ -79,7 +79,6 @@
     "babel-loader": "^8.1.0",
     "basic-auth": "^2.0.0",
     "body-parser": "^1.18.3",
-    "bodybuilder": "^2.2.21",
     "case": "^1.5.5",
     "chrono-node": "^2.1.9",
     "classlist.js": "^1.1.20150312",

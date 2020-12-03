@@ -55,12 +55,13 @@ export const ACTIVITY_TYPE = {
   InvestmentProject: ['dit:InvestmentProject'],
   Omis: ['dit:OMISOrder'],
   Referral: ['dit:CompanyReferral'],
+  DirectoryFormsApi: ['dit:directoryFormsApi:Submission'],
 }
 
 export const ACTIVITY_TYPE_FILTERS = {
-  allActivity: {
+  dataHubAndExternalActivity: {
     label: 'All Data Hub & external activity',
-    value: 'allActivity',
+    value: 'dataHubAndExternalActivity',
   },
   myActivity: {
     label: 'My activity',

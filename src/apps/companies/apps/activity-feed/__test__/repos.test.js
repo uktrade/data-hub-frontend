@@ -1,6 +1,6 @@
 const config = require('../../../../../config')
 const activityFeedRawFixture = require('../../../../../../test/unit/data/activity-feed/activity-feed-from-es.json')
-const { ES_KEYS_GROUPED } = require('../constants')
+const { DATA_HUB_ACTIVITY } = require('../constants')
 
 describe('Activity feed repos', () => {
   const stubRequest = { session: { token: 'abcd' } }
@@ -17,7 +17,6 @@ describe('Activity feed repos', () => {
     )
 
     context('when called with filters', () => {
-      const { dataHubActivity } = ES_KEYS_GROUPED
       let body, results
 
       before(async () => {
@@ -33,22 +32,18 @@ describe('Activity feed repos', () => {
           ],
           query: {
             bool: {
-              filter: {
-                bool: {
-                  must: [
-                    {
-                      terms: {
-                        'object.type': dataHubActivity,
-                      },
-                    },
-                    {
-                      term: {
-                        'object.attributedTo.id': 'dit:DataHubCompany:123',
-                      },
-                    },
-                  ],
+              must: [
+                {
+                  terms: {
+                    'object.type': DATA_HUB_ACTIVITY,
+                  },
                 },
-              },
+                {
+                  term: {
+                    'object.attributedTo.id': 'dit:DataHubCompany:123',
+                  },
+                },
+              ],
             },
           },
         }
