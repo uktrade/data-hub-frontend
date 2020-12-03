@@ -2,8 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import {
-  FilterAdvisersTypeAhead,
-  FilterSectorTypeahead,
+  FilterAdvisersTypeahead,
+  RoutedTypeahead,
   CollectionFilters,
   ToggleSection,
   FilteredCollectionList,
@@ -60,7 +60,7 @@ const ProjectsCollection = ({
           id="projects.filters.company.information"
           isOpen={true}
         >
-          <FilterAdvisersTypeAhead
+          <FilterAdvisersTypeahead
             {...props}
             taskProps={adviserListTask}
             isMulti={true}
@@ -69,14 +69,25 @@ const ProjectsCollection = ({
             placeholder="Search advisers..."
             noOptionsMessage={() => <>No advisers found</>}
           />
-          <FilterSectorTypeahead
+          <RoutedTypeahead
             {...props}
             isMulti={true}
             label="Sector"
             name="sector"
+            qsParam="sector_descends"
             placeholder="Search sectors..."
-            selectedSectors={selectedFilters.selectedSectors}
+            selectedOptions={selectedFilters.selectedSectors}
             options={optionMetadata.sectorOptions}
+          />
+          <RoutedTypeahead
+            {...props}
+            isMulti={true}
+            label="Country of origin"
+            name="country"
+            qsParam="country"
+            placeholder="Search countries..."
+            selectedOptions={selectedFilters.selectedCountries}
+            options={optionMetadata.countryOptions}
           />
           <RoutedDateField
             label="Estimated land date before"

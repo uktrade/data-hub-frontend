@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 import { FONT_WEIGHTS } from '@govuk-react/constants'
 
-import { FieldWrapper, Typeahead } from '../../..'
+import { FieldWrapper, Typeahead } from '..'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
   label {
@@ -14,24 +14,24 @@ const StyledFieldWrapper = styled(FieldWrapper)`
   }
 `
 
-const getSectorIds = (sectors) => ({
-  // snake-case as used directly in the query
-  sector_descends: sectors ? sectors.map(({ value }) => value) : [],
+const getParamIds = (qsParam, pickedOptions) => ({
+  [qsParam]: pickedOptions ? pickedOptions.map(({ value }) => value) : [],
 })
 
-const FilterSectorTypeahead = ({
+const RoutedTypeahead = ({
   name,
+  qsParam,
   label = '',
   hint = '',
   isMulti = false,
   placeholder = '',
   closeMenuOnSelect = false,
-  selectedSectors = null,
-  options = {},
+  selectedOptions = null,
+  options = [],
 }) => (
   <StyledFieldWrapper label={label} name={name} hint={hint}>
     <Route>
-      {({ history }) => {
+      {({ history, location }) => {
         const qsParams = qs.parse(location.search.slice(1))
         return (
           <Typeahead
@@ -49,12 +49,12 @@ const FilterSectorTypeahead = ({
             options={options}
             closeMenuOnSelect={closeMenuOnSelect}
             isMulti={isMulti}
-            value={selectedSectors}
-            onChange={(sectors) => {
+            value={selectedOptions}
+            onChange={(pickedOptions) => {
               history.push({
                 search: qs.stringify({
                   ...qsParams,
-                  ...getSectorIds(sectors),
+                  ...getParamIds(qsParam, pickedOptions),
                   page: 1,
                 }),
               })
@@ -66,8 +66,9 @@ const FilterSectorTypeahead = ({
   </StyledFieldWrapper>
 )
 
-FilterSectorTypeahead.propTypes = {
+RoutedTypeahead.propTypes = {
   name: PropTypes.string.isRequired,
+  qsParam: PropTypes.string.isRequired,
 }
 
-export default FilterSectorTypeahead
+export default RoutedTypeahead

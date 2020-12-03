@@ -1,7 +1,8 @@
 import urls from '../../../../../src/lib/urls'
 
-const ADVISER_ID = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
-const SECTOR_ID = 'af959812-6095-e211-a939-e4115bead28a'
+const PUCK_ADVISER_ID = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
+const ADVANCED_ENGINEERING_SECTOR_ID = 'af959812-6095-e211-a939-e4115bead28a'
+const UK_COUNTRY_ID = '80756b9a-5d95-e211-a939-e4115bead28a'
 
 const selectAdvisersTypeahead = (fieldName, input) =>
   cy.get(fieldName).within(() => {
@@ -43,9 +44,11 @@ describe('Investments Collections Filter', () => {
     cy.get('aside button')
       .next()
       .find('#field-advisers')
-      .as('adviserTypeaheadFilter')
+      .as('adviserFilter')
       .next()
       .as('sectorFilter')
+      .next()
+      .as('countryFilter')
       .next()
       .as('estimatedDateBefore')
       .next()
@@ -57,18 +60,18 @@ describe('Investments Collections Filter', () => {
     })
 
     it('should filter by advisers', () => {
-      cy.get('@adviserTypeaheadFilter')
+      cy.get('@adviserFilter')
         .should('contain', 'Search advisers')
         .find('label')
         .should('have.text', 'Advisers')
 
-      selectAdvisersTypeahead('@adviserTypeaheadFilter', 'puc')
-      cy.get('@adviserTypeaheadFilter').should('contain', 'Puck Head')
+      selectAdvisersTypeahead('@adviserFilter', 'puc')
+      cy.get('@adviserFilter').should('contain', 'Puck Head')
       assertFilterIndicator(1, 'Puck Head')
     })
 
     it('should remove the advisers filter', () => {
-      assertRemovedFilterIndicator('@adviserTypeaheadFilter', 'Search advisers')
+      assertRemovedFilterIndicator('@adviserFilter', 'Search advisers')
     })
 
     it('should filter by sector', () => {
@@ -82,6 +85,19 @@ describe('Investments Collections Filter', () => {
     })
     it('should remove the sector filter', () => {
       assertRemovedFilterIndicator('@sectorFilter', 'Search sectors')
+    })
+
+    it('should filter by country', () => {
+      assertTypehead(
+        '@countryFilter',
+        'Country of origin',
+        'Search countries',
+        'sin',
+        'Singapore'
+      )
+    })
+    it('should remove the country filter', () => {
+      assertRemovedFilterIndicator('@countryFilter', 'Search countries')
     })
 
     it('should filter the estimated land date before', () => {
@@ -117,8 +133,9 @@ describe('Investments Collections Filter', () => {
     before(() => {
       cy.visit(urls.investments.projects.index(), {
         qs: {
-          adviser: ADVISER_ID,
-          sector_descends: SECTOR_ID,
+          adviser: PUCK_ADVISER_ID,
+          sector_descends: ADVANCED_ENGINEERING_SECTOR_ID,
+          country: UK_COUNTRY_ID,
           estimated_land_date_before: '2020-01-01',
           estimated_land_date_after: '2020-01-01',
         },
@@ -126,14 +143,16 @@ describe('Investments Collections Filter', () => {
     })
     it('should set the selected filter values and filter indicators', () => {
       assertFilterIndicator(1, 'Puck Head')
-      cy.get('@adviserTypeaheadFilter').should('contain', 'Puck Head')
+      cy.get('@adviserFilter').should('contain', 'Puck Head')
       assertFilterIndicator(2, 'Advanced Engineering')
       cy.get('@sectorFilter').should('contain', 'Advanced Engineering')
-      assertFilterIndicator(3, 'Estimated land date before : 1 January 2020')
+      assertFilterIndicator(3, 'United Kingdom')
+      cy.get('@countryFilter').should('contain', 'United Kingdom')
+      assertFilterIndicator(4, 'Estimated land date before : 1 January 2020')
       cy.get('@estimatedDateBefore')
         .find('input')
         .should('have.attr', 'value', '2020-01-01')
-      assertFilterIndicator(4, 'Estimated land date after : 1 January 2020')
+      assertFilterIndicator(5, 'Estimated land date after : 1 January 2020')
       cy.get('@estimatedDateAfter')
         .find('input')
         .should('have.attr', 'value', '2020-01-01')
@@ -141,7 +160,7 @@ describe('Investments Collections Filter', () => {
 
     it('should clear all filters', () => {
       cy.get('main article div + div button').as('filterIndicators')
-      cy.get('@filterIndicators').should('have.length', 4)
+      cy.get('@filterIndicators').should('have.length', 5)
       cy.get('main article div:first-child > button').click()
       cy.get('@filterIndicators').should('have.length', 0)
       cy.get('@estimatedDateBefore')
@@ -150,29 +169,12 @@ describe('Investments Collections Filter', () => {
       cy.get('@estimatedDateAfter')
         .find('input')
         .should('have.attr', 'value', '')
+      cy.get('@adviserFilter').should('contain', 'Search advisers...')
       cy.get('@sectorFilter').should('contain', 'Search sectors...')
+      cy.get('@countryFilter').should('contain', 'Search countries...')
     })
   })
 })
-
-//   it('should filter by country', () => {
-//     const country = selectors.filter.investments.country
-//     const { typeahead } = selectors.filter
-
-//     cy.get(typeahead(country).selectedOption)
-//       .click()
-//       .get(typeahead(country).textInput)
-//       .type('United Kingdom')
-//       .get(typeahead(country).options)
-//       .should('have.length', 1)
-//       .get(typeahead(country).textInput)
-//       .type('{enter}')
-//       .type('{esc}')
-
-//     cy.wait('@filterResults').then((xhr) => {
-//       expect(xhr.url).to.contain('country=80756b9a-5d95-e211-a939-e4115bead28a')
-//     })
-//   })
 
 //   it('should filter by uk region', () => {
 //     const { typeahead } = selectors.filter

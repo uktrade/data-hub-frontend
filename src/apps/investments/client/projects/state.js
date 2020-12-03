@@ -2,6 +2,7 @@ import qs from 'qs'
 import dateFns from 'date-fns'
 
 import {
+  countryOptions,
   sortOptions,
   sectorOptions,
   estimatedLandDateBeforeLabel,
@@ -21,11 +22,13 @@ const searchParamProps = ({
   page = 1,
   adviser = false,
   sector_descends = false,
+  country = false,
   estimated_land_date_before = null,
   estimated_land_date_after = null,
 }) => ({
   adviser: parseVariablePropType(adviser),
   sector_descends: parseVariablePropType(sector_descends),
+  country: parseVariablePropType(country),
   estimated_land_date_before,
   estimated_land_date_after,
   sortby,
@@ -59,6 +62,7 @@ export const state2props = ({ router, ...state }) => {
   const { selectedAdvisers } = state.projectsList
   const {
     sector_descends = [],
+    country = [],
     estimated_land_date_before,
     estimated_land_date_after,
   } = queryProps
@@ -68,6 +72,7 @@ export const state2props = ({ router, ...state }) => {
       label: advisers.name,
       value: advisers.id,
     })),
+    selectedCountries: listSelectedFilters(countryOptions, country),
     selectedSectors: listSelectedFilters(sectorOptions, sector_descends),
     selectedEstimatedLandDatesBefore: buildDatesFilter(
       estimatedLandDateBeforeLabel,
@@ -82,7 +87,7 @@ export const state2props = ({ router, ...state }) => {
   return {
     ...state[ID],
     payload: filteredQueryProps,
-    optionMetadata: { sortOptions, sectorOptions },
+    optionMetadata: { countryOptions, sortOptions, sectorOptions },
     selectedFilters,
   }
 }
