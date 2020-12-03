@@ -3,6 +3,7 @@ import urls from '../../../../../src/lib/urls'
 const PUCK_ADVISER_ID = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
 const ADVANCED_ENGINEERING_SECTOR_ID = 'af959812-6095-e211-a939-e4115bead28a'
 const UK_COUNTRY_ID = '80756b9a-5d95-e211-a939-e4115bead28a'
+const SOUTH_EAST_UK_REGION_ID = '884cd12a-6095-e211-a939-e4115bead28a'
 
 const selectAdvisersTypeahead = (fieldName, input) =>
   cy.get(fieldName).within(() => {
@@ -49,6 +50,8 @@ describe('Investments Collections Filter', () => {
       .as('sectorFilter')
       .next()
       .as('countryFilter')
+      .next()
+      .as('ukRegionFilter')
       .next()
       .as('estimatedDateBefore')
       .next()
@@ -100,6 +103,19 @@ describe('Investments Collections Filter', () => {
       assertRemovedFilterIndicator('@countryFilter', 'Search countries')
     })
 
+    it('should filter by uk region', () => {
+      assertTypehead(
+        '@ukRegionFilter',
+        'UK Region',
+        'Search UK regions',
+        'sou',
+        'South East'
+      )
+    })
+    it('should remove the country filter', () => {
+      assertRemovedFilterIndicator('@countryFilter', 'Search countries')
+    })
+
     it('should filter the estimated land date before', () => {
       cy.get('@estimatedDateBefore')
         .find('label')
@@ -136,6 +152,7 @@ describe('Investments Collections Filter', () => {
           adviser: PUCK_ADVISER_ID,
           sector_descends: ADVANCED_ENGINEERING_SECTOR_ID,
           country: UK_COUNTRY_ID,
+          uk_region: SOUTH_EAST_UK_REGION_ID,
           estimated_land_date_before: '2020-01-01',
           estimated_land_date_after: '2020-01-01',
         },
@@ -148,11 +165,13 @@ describe('Investments Collections Filter', () => {
       cy.get('@sectorFilter').should('contain', 'Advanced Engineering')
       assertFilterIndicator(3, 'United Kingdom')
       cy.get('@countryFilter').should('contain', 'United Kingdom')
-      assertFilterIndicator(4, 'Estimated land date before : 1 January 2020')
+      assertFilterIndicator(4, 'South East')
+      cy.get('@ukRegionFilter').should('contain', 'South East')
+      assertFilterIndicator(5, 'Estimated land date before : 1 January 2020')
       cy.get('@estimatedDateBefore')
         .find('input')
         .should('have.attr', 'value', '2020-01-01')
-      assertFilterIndicator(5, 'Estimated land date after : 1 January 2020')
+      assertFilterIndicator(6, 'Estimated land date after : 1 January 2020')
       cy.get('@estimatedDateAfter')
         .find('input')
         .should('have.attr', 'value', '2020-01-01')
@@ -160,7 +179,7 @@ describe('Investments Collections Filter', () => {
 
     it('should clear all filters', () => {
       cy.get('main article div + div button').as('filterIndicators')
-      cy.get('@filterIndicators').should('have.length', 5)
+      cy.get('@filterIndicators').should('have.length', 6)
       cy.get('main article div:first-child > button').click()
       cy.get('@filterIndicators').should('have.length', 0)
       cy.get('@estimatedDateBefore')
@@ -172,31 +191,7 @@ describe('Investments Collections Filter', () => {
       cy.get('@adviserFilter').should('contain', 'Search advisers...')
       cy.get('@sectorFilter').should('contain', 'Search sectors...')
       cy.get('@countryFilter').should('contain', 'Search countries...')
+      cy.get('@ukRegionFilter').should('contain', 'Search UK regions...')
     })
   })
 })
-
-//   it('should filter by uk region', () => {
-//     const { typeahead } = selectors.filter
-//     const { ukRegion } = selectors.filter.investments
-//     cy.get(typeahead(ukRegion).selectedOption)
-//       .click()
-//       .get(typeahead(ukRegion).textInput)
-//       .type('North East')
-//       .get(typeahead(ukRegion).options)
-//       .should('have.length', 1)
-//       .get(typeahead(ukRegion).textInput)
-//       .type('{enter}')
-//       .type('{esc}')
-
-//     cy.wait('@filterResults').then((xhr) => {
-//       expect(xhr.url).to.contain(
-//         'uk_region_location=814cd12a-6095-e211-a939-e4115bead28a'
-//       )
-//     })
-
-//     cy.get(selectors.entityCollection.entities)
-//       .children()
-//       .should('have.length', 2)
-//   })
-// })

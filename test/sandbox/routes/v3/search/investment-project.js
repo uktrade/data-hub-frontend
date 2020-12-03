@@ -6,6 +6,7 @@ exports.investmentProjects = function (req, res) {
     req.body.estimated_land_date_after ||
     req.body.sector_descends ||
     req.body.country ||
+    req.body.uk_region ||
     req.body.adviser
   )
 
