@@ -12,7 +12,6 @@ export default class ActivityFeedApp extends React.Component {
     isGlobalUltimate: PropTypes.bool,
     dnbHierarchyCount: PropTypes.number,
     isTypeFilterFlagEnabled: PropTypes.bool,
-    isExportEnquiriesEnabled: PropTypes.bool,
     isGlobalUltimateFlagEnabled: PropTypes.bool,
   }
 
@@ -23,7 +22,6 @@ export default class ActivityFeedApp extends React.Component {
     isGlobalUltimate: false,
     dnbHierarchyCount: null,
     isTypeFilterFlagEnabled: false,
-    isExportEnquiriesEnabled: false,
     isGlobalUltimateFlagEnabled: false,
   }
 
@@ -130,7 +128,6 @@ export default class ActivityFeedApp extends React.Component {
       isGlobalUltimate,
       dnbHierarchyCount,
       isTypeFilterFlagEnabled,
-      isExportEnquiriesEnabled,
       isGlobalUltimateFlagEnabled,
     } = this.props
 
@@ -149,7 +146,6 @@ export default class ActivityFeedApp extends React.Component {
         isGlobalUltimate={isGlobalUltimate}
         dnbHierarchyCount={dnbHierarchyCount}
         isTypeFilterFlagEnabled={isTypeFilterFlagEnabled}
-        isExportEnquiriesEnabled={isExportEnquiriesEnabled}
         isGlobalUltimateFlagEnabled={isGlobalUltimateFlagEnabled}
       >
         {isEmptyFeed && !error && <div>There are no activities to show.</div>}

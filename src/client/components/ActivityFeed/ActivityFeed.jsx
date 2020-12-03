@@ -37,7 +37,6 @@ export default class ActivityFeed extends React.Component {
     isGlobalUltimate: PropTypes.bool,
     dnbHierarchyCount: PropTypes.number,
     isTypeFilterFlagEnabled: PropTypes.bool,
-    isExportEnquiriesEnabled: PropTypes.bool,
     isGlobalUltimateFlagEnabled: PropTypes.bool,
   }
 
@@ -54,7 +53,6 @@ export default class ActivityFeed extends React.Component {
     isGlobalUltimate: false,
     dnbHierarchyCount: null,
     isTypeFilterFlagEnabled: false,
-    isExportEnquiriesEnabled: false,
     isGlobalUltimateFlagEnabled: false,
   }
 
@@ -135,7 +133,6 @@ export default class ActivityFeed extends React.Component {
       isGlobalUltimate,
       dnbHierarchyCount,
       isTypeFilterFlagEnabled,
-      isExportEnquiriesEnabled,
       isGlobalUltimateFlagEnabled,
     } = this.props
 
@@ -184,7 +181,6 @@ export default class ActivityFeed extends React.Component {
                 activity={activity}
                 showDetails={showDetails}
                 showDnbHierarchy={showDnbHierarchy}
-                isExportEnquiriesEnabled={isExportEnquiriesEnabled}
               />
             </li>
           ))}
