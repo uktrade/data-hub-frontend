@@ -1,5 +1,6 @@
 export { countryOptions } from './countries'
 export { sectorOptions } from './sectors'
+export { ukRegionOptions } from './uk-regions'
 
 export const estimatedLandDateBeforeLabel = 'Estimated land date before'
 export const estimatedLandDateAfterLabel = 'Estimated land date after'
