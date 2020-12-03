@@ -10,9 +10,6 @@ const FORM_URL_TO_NAME_MAP = {
   '/contact/export-advice/comment/': 'Export enquiry',
 }
 
-const YES = 'Yes'
-const NO = 'No'
-
 export default class DirectoryFormsApi extends React.PureComponent {
   static propTypes = {
     activity: PropTypes.object.isRequired,
@@ -51,63 +48,12 @@ export default class DirectoryFormsApi extends React.PureComponent {
           <CardTable
             rows={[
               { header: 'Comment', content: formData.comment },
-              { header: 'First name', content: formData.first_name },
-              { header: 'Last name', content: formData.last_name },
+              {
+                header: 'Name',
+                content: `${formData.first_name} ${formData.last_name}`,
+              },
               { header: 'Position', content: formData.position },
               { header: 'Email', content: formData.email },
-              { header: 'Phone', content: formData.phone },
-
-              // UK Ltd or UK PLC
-              { header: 'Company type', content: formData.company_type },
-
-              // User does not complete this field
-              {
-                header: 'Companies House number',
-                content: formData.companies_house_number,
-              },
-
-              // Sole trader, Charity, ..., Other
-              {
-                header: 'Company type other',
-                content: formData.company_type_other,
-              },
-
-              {
-                header: 'Organisation name',
-                content: formData.organisation_name,
-              },
-              { header: 'Postcode', content: formData.postcode },
-              { header: 'Industry', content: formData.industry },
-
-              // If defined the user has manually typed the industry
-              { header: 'Industry other', content: formData.industry_other },
-
-              { header: 'Turnover', content: formData.turnover },
-              { header: 'Employees', content: formData.employees },
-
-              // User does not complete this field
-              {
-                header: 'Region office email',
-                content: formData.region_office_email,
-              },
-
-              {
-                header:
-                  'I would like to receive additional information by email',
-                content:
-                  formData.contact_consent && formData.contact_consent[0]
-                    ? YES
-                    : NO,
-              },
-
-              {
-                header:
-                  'I would like to receive additional information by telephone',
-                content:
-                  formData.contact_consent && formData.contact_consent[1]
-                    ? YES
-                    : NO,
-              },
             ]}
           />
         </CardDetails>
