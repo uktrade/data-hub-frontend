@@ -89,6 +89,16 @@ const ProjectsCollection = ({
             selectedOptions={selectedFilters.selectedCountries}
             options={optionMetadata.countryOptions}
           />
+          <RoutedTypeahead
+            {...props}
+            isMulti={true}
+            label="UK Region"
+            name="uk_region"
+            qsParam="uk_region"
+            placeholder="Search UK regions..."
+            selectedOptions={selectedFilters.selectedUkRegions}
+            options={optionMetadata.ukRegionOptions}
+          />
           <RoutedDateField
             label="Estimated land date before"
             name="estimated_land_date_before"
