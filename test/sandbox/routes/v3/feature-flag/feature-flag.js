@@ -1,17 +1,18 @@
+const { isEmpty } = require('lodash')
 var defaultFeatureFlags = require('../../../fixtures/v3/feature-flag/feature-flag.json')
 
-let featureFlags = { ...defaultFeatureFlags }
+let featureFlags = [...defaultFeatureFlags]
 
 exports.featureFlag = function (req, res) {
-  return res.json(defaultFeatureFlags)
+  res.json(featureFlags.filter((x) => !isEmpty(x)))
 }
 
 exports.setSandboxFlag = function (req, res) {
-  featureFlags[req.body.code] = req.body
+  featureFlags['123'] = req.body
   res.json(featureFlags)
 }
 
 exports.resetSandboxFlags = function (req, res) {
-  featureFlags = { ...defaultFeatureFlags }
+  featureFlags = [...defaultFeatureFlags]
   res.json(featureFlags)
 }
