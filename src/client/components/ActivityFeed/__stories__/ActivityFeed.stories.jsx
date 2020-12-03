@@ -23,6 +23,7 @@ import projectAddedCtiFixture from '../__fixtures__/investment_projects/project_
 import orderAddedFixture from '../__fixtures__/omis/order_added.json'
 import completeReferralFixture from '../__fixtures__/referrals/completeReferral.json'
 import outstandingReferralFixture from '../__fixtures__/referrals/outstandingReferral.json'
+import exportEnquiryFixture from '../__fixtures__/great_gov_uk_forms/export-enquiry.json'
 
 addDecorator(withKnobs)
 class ActivityFeedDemoApp extends React.Component {
@@ -51,7 +52,7 @@ class ActivityFeedDemoApp extends React.Component {
 
   fetchActivities = (offset = 0, limit = 20, queryParams) => {
     const {
-      allActivity,
+      dataHubAndExternalActivity,
       myActivity,
       externalActivity,
       dataHubActivity,
@@ -60,7 +61,7 @@ class ActivityFeedDemoApp extends React.Component {
     const { activityTypeFilter } = queryParams
 
     const items = {
-      [allActivity.value]: activityFeedFixtures,
+      [dataHubAndExternalActivity.value]: activityFeedFixtures,
       [myActivity.value]: [
         interactionFixture,
         completeReferralFixture,
@@ -70,6 +71,7 @@ class ActivityFeedDemoApp extends React.Component {
         accountsAreDueFixture,
         incorporatedFixture,
         exportOfGoodsFixture,
+        exportEnquiryFixture,
       ],
       [dataHubActivity.value]: [
         completeReferralFixture,
@@ -175,6 +177,7 @@ class ActivityFeedDemoApp extends React.Component {
           dnbHierarchyCount={8}
           isGlobalUltimate={true}
           isTypeFilterFlagEnabled={true}
+          isExportEnquiriesEnabled={true}
           isGlobalUltimateFlagEnabled={true}
         >
           {isEmptyFeed && !error && <div>There are no activities to show.</div>}

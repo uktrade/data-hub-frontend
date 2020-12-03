@@ -1,6 +1,7 @@
 import accountsAreDueFixture from './companies_house/accounts_are_due.json'
 import incorporatedFixture from './companies_house/incorporated.json'
 import exportOfGoodsFixture from './hmrc/export_of_goods.json'
+import exportEnquiryFixture from './great_gov_uk_forms/export-enquiry.json'
 import interactionFixture from './interactions/interaction.json'
 import investmentProjectFixture from './interactions/investment_project.json'
 import serviceDeliveryFixture from './interactions/service_delivery.json'
@@ -15,6 +16,7 @@ export default [
   accountsAreDueFixture,
   incorporatedFixture,
   exportOfGoodsFixture,
+  exportEnquiryFixture,
   interactionFixture,
   investmentProjectFixture,
   serviceDeliveryFixture,

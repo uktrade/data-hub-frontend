@@ -1,7 +1,7 @@
 const { FILTER_ITEMS, FILTER_KEYS } = require('./constants')
 const { getGlobalUltimateHierarchy } = require('../../repos')
 const urls = require('../../../../lib/urls')
-const { createESFilters } = require('./builders')
+const createESFilter = require('./builders')
 const { fetchActivityFeed } = require('./repos')
 const config = require('../../../../config')
 
@@ -46,6 +46,7 @@ async function renderActivityFeed(req, res, next) {
             features['companies-matching'] &&
             !company.duns_number &&
             !company.pending_dnb_investigation,
+          isExportEnquiriesEnabled: features['activity-feed-export-enquiry'],
         }
 
     const props = {
@@ -80,16 +81,17 @@ async function fetchActivityFeedHandler(req, res, next) {
         .map((company) => company.id)
     }
 
+    const options = {
+      from,
+      size,
+      companyIds: [company.id, ...dnbHierarchyIds],
+      contacts: company.contacts,
+      user,
+    }
+
     const results = await fetchActivityFeed(
       req,
-      createESFilters(
-        activityTypeFilter,
-        dnbHierarchyIds,
-        company,
-        user,
-        from,
-        size
-      )
+      createESFilter(activityTypeFilter, options)
     )
 
     res.json(results)
