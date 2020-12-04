@@ -1,9 +1,21 @@
-const { FILTER_ITEMS, FILTER_KEYS } = require('./constants')
+const {
+  FILTER_ITEMS,
+  FILTER_KEYS,
+  DATA_HUB_ACTIVITY,
+  EXTERNAL_ACTIVITY,
+  DATA_HUB_AND_EXTERNAL_ACTIVITY,
+} = require('./constants')
+
 const { getGlobalUltimateHierarchy } = require('../../repos')
 const urls = require('../../../../lib/urls')
-const createESFilter = require('./builders')
 const { fetchActivityFeed } = require('./repos')
 const config = require('../../../../config')
+
+const {
+  myActivity,
+  dataHubActivity,
+  externalActivity,
+} = require('./es-queries')
 
 async function renderActivityFeed(req, res, next) {
   const {
@@ -46,7 +58,6 @@ async function renderActivityFeed(req, res, next) {
             features['companies-matching'] &&
             !company.duns_number &&
             !company.pending_dnb_investigation,
-          isExportEnquiriesEnabled: features['activity-feed-export-enquiry'],
         }
 
     const props = {
@@ -60,9 +71,36 @@ async function renderActivityFeed(req, res, next) {
   }
 }
 
+function getQueries(options, isExportEnquiriesEnabled) {
+  return {
+    [FILTER_KEYS.myActivity]: myActivity({
+      ...options,
+      types: DATA_HUB_ACTIVITY,
+    }),
+    [FILTER_KEYS.dataHubActivity]: dataHubActivity({
+      ...options,
+      types: DATA_HUB_ACTIVITY,
+    }),
+    [FILTER_KEYS.externalActivity]: externalActivity(
+      {
+        ...options,
+        types: EXTERNAL_ACTIVITY,
+      },
+      isExportEnquiriesEnabled
+    ),
+    [FILTER_KEYS.dataHubAndExternalActivity]: externalActivity(
+      {
+        ...options,
+        types: DATA_HUB_AND_EXTERNAL_ACTIVITY,
+      },
+      isExportEnquiriesEnabled
+    ),
+  }
+}
+
 async function fetchActivityFeedHandler(req, res, next) {
   try {
-    const { company, user } = res.locals
+    const { company, user, features } = res.locals
     const {
       from = 0,
       size = config.activityFeed.paginationSize,
@@ -81,17 +119,20 @@ async function fetchActivityFeedHandler(req, res, next) {
         .map((company) => company.id)
     }
 
-    const options = {
-      from,
-      size,
-      companyIds: [company.id, ...dnbHierarchyIds],
-      contacts: company.contacts,
-      user,
-    }
+    const queries = getQueries(
+      {
+        from,
+        size,
+        companyIds: [company.id, ...dnbHierarchyIds],
+        contacts: company.contacts,
+        user,
+      },
+      features['activity-feed-export-enquiry']
+    )
 
     const results = await fetchActivityFeed(
       req,
-      createESFilter(activityTypeFilter, options)
+      queries[activityTypeFilter] || queries[FILTER_KEYS.dataHubActivity]
     )
 
     res.json(results)

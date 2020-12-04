@@ -1,5 +1,8 @@
-const externalActivity = ({ from, size, companyIds, contacts }, types) => {
-  return {
+const externalActivity = (
+  { from, size, types, companyIds, contacts },
+  isExportEnquiriesEnabled
+) => {
+  const dsl = {
     from,
     size,
     sort: [
@@ -71,6 +74,12 @@ const externalActivity = ({ from, size, companyIds, contacts }, types) => {
       },
     },
   }
+
+  if (!isExportEnquiriesEnabled) {
+    dsl.query.bool.filter.bool.should.pop()
+  }
+
+  return dsl
 }
 
 module.exports = externalActivity

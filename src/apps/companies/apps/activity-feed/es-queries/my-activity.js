@@ -1,4 +1,4 @@
-const myActivity = ({ from, size, companyIds, user }, types) => {
+const myActivity = ({ from, size, types, user, companyIds }) => {
   return {
     from,
     size,

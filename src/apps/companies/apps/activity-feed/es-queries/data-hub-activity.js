@@ -1,4 +1,4 @@
-const dataHubActivity = ({ from, size, companyIds }, types) => {
+const dataHubActivity = ({ from, size, types, companyIds }) => {
   return {
     from,
     size,
