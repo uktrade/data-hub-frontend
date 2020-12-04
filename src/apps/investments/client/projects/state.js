@@ -2,11 +2,13 @@ import qs from 'qs'
 import dateFns from 'date-fns'
 
 import {
+  actualLandDateBeforeLabel,
+  actualLandDateAfterLabel,
   countryOptions,
   estimatedLandDateBeforeLabel,
   estimatedLandDateAfterLabel,
-  sortOptions,
   sectorOptions,
+  sortOptions,
   ukRegionOptions,
 } from './metadata'
 
@@ -27,6 +29,8 @@ const searchParamProps = ({
   uk_region = false,
   estimated_land_date_before = null,
   estimated_land_date_after = null,
+  actual_land_date_before = null,
+  actual_land_date_after = null,
 }) => ({
   adviser: parseVariablePropType(adviser),
   sector_descends: parseVariablePropType(sector_descends),
@@ -34,6 +38,8 @@ const searchParamProps = ({
   uk_region: parseVariablePropType(uk_region),
   estimated_land_date_before,
   estimated_land_date_after,
+  actual_land_date_before,
+  actual_land_date_after,
   sortby,
   page,
 })
@@ -69,6 +75,8 @@ export const state2props = ({ router, ...state }) => {
     uk_region = [],
     estimated_land_date_before,
     estimated_land_date_after,
+    actual_land_date_before,
+    actual_land_date_after,
   } = queryProps
 
   const selectedFilters = {
@@ -86,6 +94,14 @@ export const state2props = ({ router, ...state }) => {
     selectedEstimatedLandDatesAfter: buildDatesFilter(
       estimatedLandDateAfterLabel,
       estimated_land_date_after
+    ),
+    selectedActualLandDatesBefore: buildDatesFilter(
+      actualLandDateBeforeLabel,
+      actual_land_date_before
+    ),
+    selectedActualLandDatesAfter: buildDatesFilter(
+      actualLandDateAfterLabel,
+      actual_land_date_after
     ),
   }
 
