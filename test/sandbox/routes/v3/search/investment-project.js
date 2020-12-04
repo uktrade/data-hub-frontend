@@ -2,6 +2,8 @@ var investmentProjects = require('../../../fixtures/v3/search/investment-project
 
 exports.investmentProjects = function (req, res) {
   const hasFilters = !!(
+    req.body.actual_land_date_before ||
+    req.body.actual_land_date_after ||
     req.body.estimated_land_date_before ||
     req.body.estimated_land_date_after ||
     req.body.sector_descends ||
@@ -38,10 +40,10 @@ exports.investmentProjects = function (req, res) {
   }
 }
 
+/**
+ * Mock a simple csv file for export
+ */
 exports.export = function (req, res) {
-  /*
-   * Mock a simple csv file for export
-   */
   res.header('Content-Type', 'text/csv')
   res.attachment('export.csv')
   res.send('a,b,c\n1,2,3')
