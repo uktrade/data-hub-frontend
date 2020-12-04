@@ -8,7 +8,7 @@ exports.featureFlag = function (req, res) {
 }
 
 exports.setSandboxFlag = function (req, res) {
-  featureFlags['123'] = req.body
+  featureFlags.push(req.body)
   res.json(featureFlags)
 }
 
