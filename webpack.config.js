@@ -46,6 +46,7 @@ module.exports = (env) => ({
     devtoolModuleFilenameTemplate: '[absolute-resource-path]',
     devtoolFallbackModuleFilenameTemplate: '[absolute-resource-path]?[hash]',
   },
+  optimization: { sideEffects: false },
   plugins: [
     new MiniCssExtractPlugin({
       filename: config.isProd
