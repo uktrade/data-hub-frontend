@@ -15,11 +15,8 @@ export default class DirectoryFormsApi extends React.PureComponent {
     activity: PropTypes.object.isRequired,
   }
 
-  static canRender(activity, filter, isExportEnquiriesEnabled) {
-    return (
-      CardUtils.canRenderByTypes(activity, ACTIVITY_TYPE.DirectoryFormsApi) &&
-      isExportEnquiriesEnabled
-    )
+  static canRender(activity) {
+    return CardUtils.canRenderByTypes(activity, ACTIVITY_TYPE.DirectoryFormsApi)
   }
 
   render() {
