@@ -101,6 +101,10 @@ function FilteredCollectionHeader({
           qsParamName="country"
         />
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedUkRegions}
+          qsParamName="uk_region"
+        />
+        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedEstimatedLandDatesBefore}
           qsParamName="estimated_land_date_before"
         />
