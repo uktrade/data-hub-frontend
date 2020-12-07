@@ -24,5 +24,7 @@ module.exports = (queryParam) => (req, res, next) => {
       return res.redirect(`${req.originalUrl}?layoutTesting=${queryParam}`)
     }
     next()
+  } else {
+    next()
   }
 }
