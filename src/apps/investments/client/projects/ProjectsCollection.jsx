@@ -65,7 +65,9 @@ const ProjectsCollection = ({
             {...props}
             label="Stage"
             name="stage"
+            qsParam="stage"
             options={optionMetadata.projectStageOptions}
+            selectedOptions={selectedFilters.selectedStage}
           />
           <FilterAdvisersTypeahead
             {...props}
