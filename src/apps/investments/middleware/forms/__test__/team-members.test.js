@@ -7,6 +7,7 @@ const investmentData = require('../../../../../../test/unit/data/investment/inve
 const { teamMembersLabels } = require('../../../labels')
 const teamMembersController = require('../team-members')
 
+// TODO: add more depth to the test/end-to-end/cypress/specs/DIT/investment-team-spec.js e2e test (or add a functional test for different aspects of editing the investment team)
 describe('Investment form middleware - team members', () => {
   beforeEach(() => {
     this.nextStub = sinon.stub()

@@ -52,8 +52,7 @@ describe('Contact controller, edit', () => {
     })
   })
 
-  // TODO - re-write to use newer test styles, contexts and
-  // forms generator.
+  // TODO - write a functional test for editing contacts
 
   describe('get', () => {
     beforeEach(() => {

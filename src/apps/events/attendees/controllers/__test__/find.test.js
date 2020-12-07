@@ -36,7 +36,7 @@ describe('Find new event attendees controller', () => {
         this.res.locals.event = event
         await renderFindAttendee(this.req, this.res, this.nextSpy)
       })
-
+      // TODO: add breadcrumb tests to: test/functional/cypress/specs/events/attendees-spec.js
       it('should set the first part of the breadcrumb to a link back to attendee list', () => {
         expect(this.res.breadcrumb.firstCall.args).to.deep.equal([
           'A United Kingdom Get together',
@@ -44,6 +44,7 @@ describe('Find new event attendees controller', () => {
         ])
       })
 
+      // TODO: add breadcrumb tests to: test/functional/cypress/specs/events/attendees-spec.js
       it('should set the last part of the breadcrumb to incidate the user is adding an attendee', () => {
         expect(this.res.breadcrumb.callCount).to.eq(2)
         expect(this.res.breadcrumb.secondCall.args).to.deep.equal([
@@ -51,20 +52,24 @@ describe('Find new event attendees controller', () => {
         ])
       })
 
+      // TODO: add title check to: test/functional/cypress/specs/events/attendees-spec.js
       it('should set the page title to the title of the event', () => {
         expect(this.res.title).to.be.calledOnce
         expect(this.res.title).to.be.calledWith('A United Kingdom Get together')
       })
 
+      // NOTE: covered by test/functional/cypress/specs/events/attendees-spec.js
       it('should render the correct template', () => {
         expect(this.res.render).to.be.calledWith('events/attendees/views/find')
       })
 
+      // Not sure this is a necessary test if we're checking what is rendered in the functional test
       it('should not call next', () => {
         expect(this.nextSpy).to.not.be.called
       })
     })
 
+    // NOTE: not sure this is a meaningful test of functionality
     context('when called without an event', () => {
       beforeEach(async () => {
         await renderFindAttendee(this.req, this.res, this.nextSpy)
@@ -81,6 +86,7 @@ describe('Find new event attendees controller', () => {
     })
   })
 
+  // NOTE: some of this is exercised by the event-spec.js DIT e2e test, line 135 onwards - except where noted. Given that there are a few different scenarios, it may be worth rolling the missing scenarios into an updated and more thorough attendees-spec functional test
   describe('#findAttendee', () => {
     context('when called with an event', () => {
       beforeEach(() => {
@@ -194,12 +200,12 @@ describe('Find new event attendees controller', () => {
               'block-links'
             )
           })
-
+          // TODO: add checks to test/functional/cypress/specs/events/attendees-spec.js that check search term displayed to user
           it('should include the search term in the locals', () => {
             expect(this.res.locals.searchTerm).to.equal('Fred')
           })
         })
-
+        // TODO: add check to test/functional/cypress/specs/events/attendees-spec.js for paginated results
         context('with lots of results and asking for page 2', () => {
           beforeEach(async () => {
             this.req.query.page = '2'
@@ -252,7 +258,7 @@ describe('Find new event attendees controller', () => {
             expect(pagination.pages).to.have.length(5)
           })
         })
-
+        // TODO: add a duplicate attendee fixture to the attendees-spec test
         context('when one of the results is an existing attendee', () => {
           beforeEach(async () => {
             this.req.query.page = '1'
@@ -299,7 +305,7 @@ describe('Find new event attendees controller', () => {
             })
           })
         })
-
+        // TODO: add a search failure context test case to the attendees-spec functional test
         context('when there is an error searching for contacts', () => {
           beforeEach(async () => {
             this.req.query.page = '1'
@@ -333,7 +339,7 @@ describe('Find new event attendees controller', () => {
         })
       })
     })
-
+    // NOTE: as above, I'm not sure this is a helpful test
     context('when no event is supplied', () => {
       beforeEach(async () => {
         await findAttendee(this.req, this.res, this.nextSpy)

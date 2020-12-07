@@ -78,16 +78,16 @@ describe('Event details middleware', () => {
     }
     this.nextSpy = sinon.spy()
   })
-
   describe('#postDetails', () => {
     context('when all fields are valid', () => {
+      // possible TODO: add api received data structure check to test/end-to-end/cypress/specs/DIT/event-spec.js
       it('should post to the API', async () => {
         await this.middleware.postDetails(this.req, this.res, this.nextSpy)
         expect(this.saveEventStub).to.have.been.calledWith(this.req)
         expect(this.saveEventStub).to.have.been.calledOnce
         expect(this.saveEventStub.firstCall.args[1]).to.deep.equal(expectedBody)
       })
-
+      // NOTE: covered in test/end-to-end/cypress/specs/DIT/event-spec.js:36
       it('should redirect on success', async () => {
         await this.middleware.postDetails(this.req, this.res, this.nextSpy)
 
@@ -95,7 +95,7 @@ describe('Event details middleware', () => {
         expect(this.res.redirect).to.be.calledWith('/events/1')
       })
     })
-
+    // TODO: add a context case for this to a new api received data structure check
     context('when selecting one event shared team', () => {
       it('should set teams as an array', async () => {
         const req = merge({}, this.req, {
@@ -114,6 +114,7 @@ describe('Event details middleware', () => {
         expect(this.saveEventStub).to.have.been.calledOnce
       })
 
+      // TODO: add a context case for this to a new api received data structure check
       it('should not add empty values to the event shared teams', async () => {
         const req = merge({}, this.req, {
           body: {
@@ -131,7 +132,7 @@ describe('Event details middleware', () => {
         expect(this.saveEventStub).to.have.been.calledOnce
       })
     })
-
+    // TODO: add a context case for this to the e2e test, checking the API not called
     context('when adding another event shared team', () => {
       it('should not POST to the API', async () => {
         const req = merge({}, this.req, {
@@ -157,7 +158,7 @@ describe('Event details middleware', () => {
         expect(this.nextSpy).to.have.been.calledOnce
       })
     })
-
+    // TODO: add a context case for this to a new api received data structure check
     context('when selecting one related programme', () => {
       it('should set related programmes as an array', async () => {
         const req = merge({}, this.req, {
@@ -175,7 +176,7 @@ describe('Event details middleware', () => {
         expect(this.saveEventStub).to.have.been.calledWith(req, expected)
         expect(this.saveEventStub).to.have.been.calledOnce
       })
-
+      // TODO: add a context case for this to a new api received data structure check
       it('should not add empty values to the event shared teams', async () => {
         const req = merge({}, this.req, {
           body: {
@@ -193,7 +194,7 @@ describe('Event details middleware', () => {
         expect(this.saveEventStub).to.have.been.calledOnce
       })
     })
-
+    // TODO: add a context case for this to the e2e test, checking the API not called
     context('when adding another related programme', () => {
       it('should not POST to the API', async () => {
         const req = merge({}, this.req, {
@@ -219,7 +220,7 @@ describe('Event details middleware', () => {
         expect(this.nextSpy).to.have.been.calledOnce
       })
     })
-
+    // TODO: add a error context case to the e2e test
     context('when there is a 400', () => {
       beforeEach(() => {
         this.saveEventStub.rejects({ statusCode: 400, error: 'error' })
@@ -238,7 +239,7 @@ describe('Event details middleware', () => {
         expect(this.nextSpy).have.been.calledOnce
       })
     })
-
+    // TODO: add a error context case to the e2e test
     context('when there is an error other than 400', () => {
       beforeEach(() => {
         this.saveEventStub.rejects({ statusCode: 500, error: 'error' })
@@ -261,7 +262,7 @@ describe('Event details middleware', () => {
       })
     })
   })
-
+  // NOTE: covered here: test/end-to-end/cypress/specs/DIT/event-spec.js
   describe('#getEventDetails', () => {
     context('when success', () => {
       it('should set event data on locals', async () => {

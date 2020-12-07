@@ -30,6 +30,7 @@ describe('Company list repository', () => {
         },
       })
     })
+    // NOTE: this context is covered by the view-1 and view-2 company-list functional test specs
     context('when the list is successfully retrieved', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
@@ -49,7 +50,7 @@ describe('Company list repository', () => {
         ).to.be.deep.equal(companyList)
       })
     })
-
+    // TODO: add fetching error context to the company-list view functional tests
     context('when there is an error retrieving the list', () => {
       beforeEach(async () => {
         nock(config.apiRoot).get(`/v4/company-list/${listId}`).reply(404)
@@ -70,7 +71,7 @@ describe('Company list repository', () => {
       })
     })
   })
-
+  // NOTE: covered in test/functional/cypress/specs/company-lists/create-spec.js
   describe('#createUserCompanyList', () => {
     beforeEach(() => {
       nock(config.apiRoot)
@@ -94,7 +95,7 @@ describe('Company list repository', () => {
       })
     })
   })
-
+  // TODO: add a functional test for this case - see line 111
   describe('#getListsCompanyIsIn', () => {
     beforeEach(() => {
       nock(config.apiRoot)
@@ -107,7 +108,7 @@ describe('Company list repository', () => {
       expect(companyList).to.deep.equal(companyListFixture)
     })
   })
-
+  // TODO: While this (and #getCompanyList) is exercised in test/functional/cypress/specs/company-lists/add-remove.spec.js, it might be worth updating that test to make the distinction clearer between the lists the company is already on for the user, and the lists it isn't
   describe('#getAllCompanyLists', () => {
     beforeEach(() => {
       nock(config.apiRoot)
@@ -120,7 +121,7 @@ describe('Company list repository', () => {
       expect(companyList).to.deep.equal(companyListFixture)
     })
   })
-
+  // TODO: as comment in line 111
   describe('#getCompanyList', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
@@ -133,7 +134,7 @@ describe('Company list repository', () => {
       expect(companyList).to.deep.equal(companyListFixture)
     })
   })
-
+  // NOTE: covered in test/functional/cypress/specs/company-lists/delete-spec.js
   describe('#deleteCompanyList', () => {
     beforeEach(() => {
       nock(config.apiRoot).delete(`/v4/company-list/${listId}`).reply(204)
@@ -143,7 +144,7 @@ describe('Company list repository', () => {
       expect(() => deleteCompanyList(stubRequest, listId)).to.not.throw()
     })
   })
-
+  // TODO: add test for this to test/functional/cypress/specs/company-lists/add-remove.spec.js or to a new e2e test
   describe('#addCompanyToList', () => {
     beforeEach(() => {
       nock(config.apiRoot).put('/v4/company-list/1/item/2').reply(204)
@@ -153,7 +154,7 @@ describe('Company list repository', () => {
       expect(() => addCompanyToList(stubRequest, '1', '2')).to.not.throw()
     })
   })
-
+  // TODO: add test for this to test/functional/cypress/specs/company-lists/add-remove.spec.js, or to a new e2e test
   describe('#removeCompanyFromList', () => {
     beforeEach(() => {
       nock(config.apiRoot).delete('/v4/company-list/1/item/2').reply(204)

@@ -1,5 +1,6 @@
 const config = require('../../../../config')
 
+// TODO: add an export collection data test (if possible) to test/end-to-end/cypress/specs/DIT/collection-spec.js
 describe('Collection middleware', () => {
   context('#collectionExport', () => {
     beforeEach(() => {

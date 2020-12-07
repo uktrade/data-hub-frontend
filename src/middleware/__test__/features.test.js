@@ -2,6 +2,7 @@ const proxyquire = require('proxyquire')
 
 const config = require('../../config')
 
+// TODO: check with team whether we are keeping this functionality; write functional test for feature flag
 describe('feature flag middleware', () => {
   beforeEach(() => {
     this.reqMock = {

@@ -54,7 +54,7 @@ function getFieldError(form, name) {
 
   return null
 }
-
+// TODO: add functional tests for editing investment requirements (or at least add an e2e test like: test/end-to-end/cypress/specs/DIT/investment-team-spec.js)
 describe('Investment requirements form middleware', () => {
   beforeEach(() => {
     this.reqMock = {

@@ -1,4 +1,5 @@
 const proxyquire = require('proxyquire').noPreserveCache()
+// TODO: Rewrite when update the request package
 
 let NODE_TLS_REJECT_UNAUTHORIZED
 

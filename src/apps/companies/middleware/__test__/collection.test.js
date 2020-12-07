@@ -28,7 +28,7 @@ const headquarterTypes = [
     disabled_on: null,
   },
 ]
-
+// TODO: add new functional test to companies testing the views for HQ companies and subsidiaries (using the contexts outlined below). This could be in addition to: test/functional/cypress/specs/companies/dnb-hierarchy-spec.js (ensuring non D&B companies are covered if there is a business need)
 describe('Company collection middleware', () => {
   beforeEach(() => {
     this.nextSpy = sinon.spy()

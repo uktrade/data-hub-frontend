@@ -2,6 +2,7 @@ const queryString = require('qs')
 const { assign, set } = require('lodash')
 const proxyquire = require('proxyquire')
 
+// TODO: update permission-specs in e2e tests (add one for the DIT case) to fully cover authentication
 describe('OAuth controller', () => {
   beforeEach(() => {
     this.mockUuid = sinon.stub().returns(this.mockUUIDvalue)

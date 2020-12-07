@@ -12,6 +12,7 @@ const buildMiddlewareParameters = require('../../../../test/unit/helpers/middlew
 
 const stubRequest = { session: { token: '1234' } }
 
+// TODO: add functional tests using Cypress for our search functions and views
 describe('Search service', () => {
   describe('#search', () => {
     context('when minimal parameters are populated', () => {

@@ -32,11 +32,11 @@ describe('D&B Company hierarchy', () => {
           middlewareParams.nextSpy
         )
       })
-
+      // NOTE: covered in test/functional/cypress/specs/companies/dnb-hierarchy-spec.js:29
       it('should render', () => {
         expect(middlewareParams.resMock.render).to.be.calledOnce
       })
-
+      // TODO: mostly covered in test/functional/cypress/specs/companies/dnb-hierarchy-spec.js, but could add a check for isGlobal HQ
       it('should render the activity feed template', () => {
         expect(middlewareParams.resMock.render).to.be.calledOnceWithExactly(
           'companies/apps/dnb-hierarchy/views/client-container',
@@ -49,23 +49,23 @@ describe('D&B Company hierarchy', () => {
           }
         )
       })
-
+      // NOTE: covered in test/functional/cypress/specs/companies/dnb-hierarchy-spec.js:39
       it('should add a breadcrumb', () => {
         expect(middlewareParams.resMock.breadcrumb).to.have.been.calledWith(
           'Test company',
           urls.companies.detail('1')
         )
-
+        // NOTE: as line 52
         expect(middlewareParams.resMock.breadcrumb).to.have.been.calledWith(
           'Business details',
           urls.companies.businessDetails('1')
         )
-
+        // NOTE: as line 52
         expect(middlewareParams.resMock.breadcrumb).to.have.been.calledWith(
           'Related companies'
         )
       })
-
+      // TODO: add something about not displaying an error
       it('should not call "next" with an error', async () => {
         expect(middlewareParams.nextSpy).to.not.have.been.called
       })
@@ -93,7 +93,7 @@ describe('D&B Company hierarchy', () => {
           middlewareParams.nextSpy
         )
       })
-
+      // TODO: add test to dnb-hierachy-spec.js about errors
       it('should call next with an error', async () => {
         expect(middlewareParams.nextSpy).to.have.been.calledWith(error)
       })
@@ -115,7 +115,7 @@ describe('D&B Company hierarchy', () => {
           middlewareParams.nextSpy
         )
       })
-
+      // TODO: add a test case for this case to dnb-hierachy-spec.js
       it('should call next() with an error', async () => {
         expect(middlewareParams.nextSpy).to.have.been.calledOnceWithExactly(
           sinon.match({
@@ -151,7 +151,7 @@ describe('D&B Company hierarchy', () => {
           middlewareParams.nextSpy
         )
       })
-
+      // NOTE: covered in: test/functional/cypress/specs/companies/dnb-hierarchy-spec.js:49
       it('should respond with a list of D&B hierarchy', () => {
         expect(middlewareParams.resMock.json).to.be.calledOnceWithExactly({
           count: 1,
@@ -172,7 +172,7 @@ describe('D&B Company hierarchy', () => {
           ],
         })
       })
-
+      // TODO: add check to dnb-hierachy-spec.js about not erroring
       it('should not call next() with an error', async () => {
         expect(middlewareParams.nextSpy).to.not.have.been.called
       })
@@ -199,7 +199,7 @@ describe('D&B Company hierarchy', () => {
           middlewareParams.nextSpy
         )
       })
-
+      // TODO: add 500 mock error case to functional test
       it('should not respond', () => {
         expect(middlewareParams.resMock.json).to.not.have.been.called
       })

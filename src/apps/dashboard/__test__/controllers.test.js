@@ -1,7 +1,7 @@
 const proxyquire = require('proxyquire')
 
 var rpErrors = require('request-promise/errors')
-
+// TODO: write a functional test for the dashboard
 describe('dashboard controller', () => {
   beforeEach(() => {
     global.reqMock = Object.assign({}, globalReq, {

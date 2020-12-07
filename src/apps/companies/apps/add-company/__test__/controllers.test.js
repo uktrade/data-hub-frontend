@@ -83,6 +83,7 @@ describe('Add company form controllers', () => {
         )
       })
 
+      // TODO: Mostly covered by: test/functional/cypress/specs/companies/add-company-spec.js - is it worth adding a test checking the expected countries etc. appear or in the right format?
       it('should render the add company form template with fields', () => {
         const expectedTemplate =
           'companies/apps/add-company/views/client-container'
@@ -112,12 +113,14 @@ describe('Add company form controllers', () => {
         )
       })
 
+      // DONE: covered by test/functional/cypress/specs/companies/add-company-spec.js:37
       it('should add a breadcrumb', () => {
         expect(
           middlewareParameters.resMock.breadcrumb.firstCall
         ).to.be.calledWith('Add company')
       })
 
+      // TODO: find way to show errors not flagged (perhaps check for absence of error message for user?)
       it('should not call next() with an error', () => {
         expect(middlewareParameters.nextSpy).to.not.have.been.called
       })
@@ -143,6 +146,7 @@ describe('Add company form controllers', () => {
         )
       })
 
+      // TODO: mock error in form rendering in test/functional/cypress/specs/companies/add-company-spec.js - check for presence of error message
       it('should call next() with an error', () => {
         expect(middlewareParameters.nextSpy).to.have.been.calledOnceWithExactly(
           error
@@ -179,14 +183,14 @@ describe('Add company form controllers', () => {
           middlewareParameters.nextSpy
         )
       })
-
+      // NOTE: covered in tests here test/functional/cypress/specs/companies/add-company-spec.js:168
       it('should respond with JSON', () => {
         expect(middlewareParameters.resMock.json).to.be.calledOnceWithExactly({
           count: 0,
           results: [],
         })
       })
-
+      // TODO: as above, check for lack of error message
       it('should not call next() with an error', () => {
         expect(middlewareParameters.nextSpy).to.not.have.been.called
       })
@@ -216,11 +220,11 @@ describe('Add company form controllers', () => {
           middlewareParameters.nextSpy
         )
       })
-
+      // TODO: add a test case to test/functional/cypress/specs/companies/add-company-spec.js for when the search fails
       it('should not respond with JSON', () => {
         expect(middlewareParameters.resMock.json).to.not.have.been.called
       })
-
+      // TODO: as immediately above - is there an error message?
       it('should call next() with an error', () => {
         expect(middlewareParameters.nextSpy).to.have.been.calledOnceWithExactly(
           sinon.match({
@@ -261,20 +265,20 @@ describe('Add company form controllers', () => {
           middlewareParameters.nextSpy
         )
       })
-
+      // NOTE: covered in: test/functional/cypress/specs/companies/add-company-spec.js:297
       it('should flash a created message', () => {
         expect(middlewareParameters.reqMock.flash).to.be.calledOnceWithExactly(
           'success',
           'Company added to Data Hub'
         )
       })
-
+      // NOTE: covered in: test/functional/cypress/specs/companies/add-company-spec.js:282
       it('should respond with the created company', () => {
         expect(middlewareParameters.resMock.json).to.be.calledOnceWithExactly(
           companyCreateResponse
         )
       })
-
+      // TODO: add check there is no error to add-company-spec.js
       it('should not call next() with an error', async () => {
         expect(middlewareParameters.nextSpy).to.not.have.been.called
       })
@@ -302,15 +306,15 @@ describe('Add company form controllers', () => {
           middlewareParameters.nextSpy
         )
       })
-
+      // TODO: add test for 500 failure in adding a new DnB company in add-company.js
       it('should not flash a created message', () => {
         expect(middlewareParameters.reqMock.flash).to.not.have.been.called
       })
-
+      // TODO: as immediately above
       it('should not respond', () => {
         expect(middlewareParameters.resMock.json).to.not.have.been.called
       })
-
+      // TODO: as immediately above
       it('should call next() with an error', async () => {
         expect(middlewareParameters.nextSpy).to.have.been.calledOnceWithExactly(
           sinon.match({
@@ -383,20 +387,20 @@ describe('Add company form controllers', () => {
           middlewareParameters.nextSpy
         )
       })
-
+      // NOTE: covered in add-company-spec.js:516
       it('should flash a created message', () => {
         expect(middlewareParameters.reqMock.flash).to.be.calledOnceWithExactly(
           'success',
           'Company added to Data Hub'
         )
       })
-
+      // NOTE: covered in add-company-spec.js:510
       it('should respond with the created company', () => {
         expect(middlewareParameters.resMock.json).to.be.calledOnceWithExactly(
           companyCreateInvestigationResponse
         )
       })
-
+      // TODO: check absence of error
       it('should not call next() with an error', async () => {
         expect(middlewareParameters.nextSpy).to.not.have.been.called
       })
@@ -448,15 +452,15 @@ describe('Add company form controllers', () => {
           middlewareParameters.nextSpy
         )
       })
-
+      // TODO: add a test with a mocked 500 response to add-company-spec.js
       it('should not flash a created message', () => {
         expect(middlewareParameters.reqMock.flash).to.not.have.been.called
       })
-
+      // as above
       it('should not respond', () => {
         expect(middlewareParameters.resMock.json).to.not.have.been.called
       })
-
+      // as above
       it('should call next() with an error', async () => {
         expect(middlewareParameters.nextSpy).to.have.been.calledOnceWithExactly(
           sinon.match({

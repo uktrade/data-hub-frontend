@@ -35,14 +35,14 @@ describe('Delete company list controller', () => {
           middlewareParameters.nextSpy
         )
       })
-
+      // NOTE: covered in: test/functional/cypress/specs/company-lists/delete-spec.js
       it('renders the delete list page', () => {
         expect(middlewareParameters.resMock.render).to.be.calledWith(
           'company-lists/views/delete-list'
         )
         expect(middlewareParameters.resMock.render).to.have.been.calledOnce
       })
-
+      // NOTE: covered in: test/functional/cypress/specs/company-lists/delete-spec.js by displaying the content of the props
       it('passes props to react-slot', () => {
         const actualProps = middlewareParameters.resMock.render.getCall(0)
           .args[1].props
@@ -51,7 +51,7 @@ describe('Delete company list controller', () => {
           returnUrl: '/',
         })
       })
-
+      // NOTE: covered in test/functional/cypress/specs/company-lists/delete-spec.js:14
       it('adds a breadcrumb', () => {
         expect(
           middlewareParameters.resMock.breadcrumb.firstCall
@@ -69,7 +69,7 @@ describe('Delete company list controller', () => {
           middlewareParameters.nextSpy
         )
       })
-
+      // TODO: write a render error case in delete company list functional test
       it('forwards the error to the next middleware', () => {
         expect(middlewareParameters.nextSpy).to.be.called
         expect(middlewareParameters.nextSpy.firstCall.args[0]).to.be.instanceof(
@@ -92,14 +92,14 @@ describe('Delete company list controller', () => {
           middlewareParameters.nextSpy
         )
       })
-
+      // NOTE: covered by delete-spec.js:68
       it('sets a flash message', () => {
         expect(middlewareParameters.reqMock.flash).to.be.calledWith(
           'success',
           'List deleted'
         )
       })
-
+      // NOTE: covered by delete-spec.js as showing consequences of this reponse
       it('sends a response', () => {
         expect(middlewareParameters.resMock.send).to.be.calledWith()
       })
@@ -117,7 +117,7 @@ describe('Delete company list controller', () => {
           middlewareParameters.nextSpy
         )
       })
-
+      // NOTE: covered by delete-spec.js:73 onwards
       it('forwards the error to the next middleware', () => {
         expect(middlewareParameters.resMock.send).to.not.be.called
         expect(middlewareParameters.nextSpy).to.be.called

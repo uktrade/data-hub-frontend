@@ -5,7 +5,7 @@ const { setGlobalHQ, removeGlobalHQ, addSubsidiary } = require('../hierarchies')
 
 const globalHeadquartersId = '1'
 const subsidiaryCompanyId = '2'
-
+// TODO: add new functional/e2e test to companies updating the Global HQ of  companies and subsidiaries (using the contexts outlined below). This could be in addition to: test/functional/cypress/specs/companies/dnb-hierarchy-spec.js (ensuring non D&B companies are covered if there is a business need)
 describe('Company hierarchies middleware', () => {
   describe('#setGlobalHQ', () => {
     context('when company update is successful', () => {

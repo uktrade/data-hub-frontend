@@ -35,7 +35,7 @@ describe('event attendees', () => {
 
     this.nextSpy = sinon.spy()
   })
-
+  // TODO: add test cases for no attendees to: test/functional/cypress/specs/events/attendees-spec.js
   context('when there are no attendees', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
@@ -151,7 +151,7 @@ describe('event attendees', () => {
       await renderAttendees(this.req, this.res, this.nextSpy)
       this.properties = this.res.render.firstCall.args[1]
     })
-
+    // TODO: add pagination information (and >10 attendees case) to: test/functional/cypress/specs/events/attendees-spec.js
     it('should include pagination information', () => {
       expect(this.properties.attendees.pagination).to.not.be.null
     })
@@ -186,7 +186,7 @@ describe('event attendees', () => {
       expect(this.properties.attendees).to.have.property('actionButtons')
     })
   })
-
+  // TODO: add search error cases to: test/functional/cypress/specs/events/attendees-spec.js
   context('when there is an error fetching attendees', () => {
     beforeEach(async () => {
       nock(config.apiRoot)
@@ -211,7 +211,7 @@ describe('event attendees', () => {
       )
     })
   })
-
+  // TODO: add both incomplete and complete event checks to the attendees-spec.js
   context('when the event is incomplete', () => {
     context('when there is no service', () => {
       beforeEach(async () => {
@@ -235,7 +235,7 @@ describe('event attendees', () => {
         expect(this.properties.attendees).to.not.have.property('actionButtons')
       })
     })
-
+    // TODO: add this context to: test/functional/cypress/specs/events/attendees-spec.js
     context('when there is no lead team', () => {
       beforeEach(async () => {
         this.res.locals.event.lead_team = null
@@ -259,7 +259,7 @@ describe('event attendees', () => {
       })
     })
   })
-
+  // TODO: add this context to: test/functional/cypress/specs/events/attendees-spec.js
   context('when the event is disabled', () => {
     beforeEach(async () => {
       this.res.locals.event.disabled_on = '2018-07-16T11:22:43Z'
