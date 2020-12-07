@@ -1,14 +1,12 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-console */
 import React from 'react'
 import PropTypes from 'prop-types'
-import Checkbox from '@govuk-react/checkbox'
+import Checkbox from '../Checkbox'
 import MultiChoice from '@govuk-react/multi-choice'
-import { BODY_SIZES } from '@govuk-react/constants'
 import { GREY_2, YELLOW } from 'govuk-colours'
 import styled from 'styled-components'
 import { Route } from 'react-router-dom'
 import qs from 'qs'
+import { get } from 'lodash'
 
 import { FieldWrapper } from '../../components'
 
@@ -53,40 +51,6 @@ const StyledFieldWrapper = styled(FieldWrapper)`
     }
   }
 `
-
-const StyledCheckbox = styled(Checkbox)`
-  ${(props) =>
-    props.reduced &&
-    `
-      padding: 8px 0 8px 33px !important;
-      min-height: auto;
-      margin-bottom: 1px;
-
-      input {
-        width: 18px;
-        height: 18px;
-      }
-      input + span {
-        padding: 0;
-        &:before {
-          margin: 8px 0 0 8px;
-          height: 18px;
-          width: 18px;
-          border-width: 1px;
-        }
-        &:after{
-          border-width: 0 0 2px 2px;
-          width: 10px;
-          height: 5px;
-          left: 11px;
-        }
-      }
-      input + span + span {
-        padding-left: 0;
-        font-size: ${BODY_SIZES.S}px;
-      }
-    `}
-`
 const RoutedFilterCheckboxes = ({
   name,
   label = '',
@@ -101,13 +65,15 @@ const RoutedFilterCheckboxes = ({
             <Route key={optionValue}>
               {({ history, location }) => {
                 const qsParams = qs.parse(location.search.slice(1))
-                console.log(qsParams[name])
                 const currentState = Array.isArray(qsParams[name])
                   ? qsParams[name]
                   : [qsParams[name]]
+                const initialOptions = get(qsParams, 'stage', '')
                 return (
-                  <StyledCheckbox
+                  <Checkbox
                     name={name}
+                    qsParams={qsParams}
+                    initialOptions={initialOptions}
                     value={optionValue}
                     onChange={(event) => {
                       const isChecked = event.target.checked
@@ -132,14 +98,10 @@ const RoutedFilterCheckboxes = ({
                       })
                     }}
                     aria-label={optionLabel}
-                    defaultChecked={
-                      (qsParams[name] && optionValue === qsParams[name]) ||
-                      (qsParams[name] && qsParams[name].includes(optionValue))
-                    }
                     {...optionProps}
                   >
                     {optionLabel}
-                  </StyledCheckbox>
+                  </Checkbox>
                 )
               }}
             </Route>
