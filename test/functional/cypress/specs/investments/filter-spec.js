@@ -86,6 +86,7 @@ const testRemoveChip = ({ element, placeholder = null }) => {
 
 describe('Investments Collections Filter', () => {
   beforeEach(() => {
+    cy.get('#field-stage').as('stageFilter')
     cy.get('#field-advisers').as('adviserFilter')
     cy.get('#field-sector').as('sectorFilter')
     cy.get('#field-country').as('countryFilter')
@@ -109,6 +110,8 @@ describe('Investments Collections Filter', () => {
         .next()
         .should('exist')
         .find('*')
+        .should('have.id', 'field-stage')
+        .next()
         .should('have.id', 'field-advisers')
         .next()
         .should('have.id', 'field-sector')
