@@ -440,9 +440,6 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           id: '70c226d7-5d95-e211-a939-e4115bead28a',
           name: 'Email/Website',
         },
-        Documents: {
-          name: 'There are no files or documents',
-        },
         'Adviser(s)': ['Bob Lawson, The test team'],
       })
     })
@@ -482,9 +479,6 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           'Policy feedback notes':
             'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
           'Policy issue types': 'EU exit',
-          Documents: {
-            name: 'There are no files or documents',
-          },
           'Date of interaction': {
             type: 'date',
             name: '2058-11-25',
@@ -619,9 +613,6 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           },
           'Adviser(s)': ['Bob Lawson, The test team'],
           Event: 'No',
-          Documents: {
-            name: 'There are no files or documents',
-          },
         })
       })
     }
@@ -659,9 +650,6 @@ describe('#transformInteractionResponsetoViewRecord', () => {
         'Policy feedback notes':
           'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy issue types': 'EU exit',
-        Documents: {
-          name: 'There are no files or documents',
-        },
         'Date of interaction': {
           type: 'date',
           name: '2058-11-25',
@@ -709,9 +697,6 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           'Communication channel': {
             id: '70c226d7-5d95-e211-a939-e4115bead28a',
             name: 'Email/Website',
-          },
-          Documents: {
-            name: 'There are no files or documents',
           },
           'Policy issue types': 'Domestic',
           'Policy feedback notes':

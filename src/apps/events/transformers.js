@@ -156,10 +156,6 @@ function transformEventResponseToViewRecord({
     Service: service,
   })
 
-  viewRecord.Documents = {
-    name: 'There are no files or documents',
-  }
-
   if (archived_documents_url_path) {
     viewRecord.Documents = {
       url: config.archivedDocumentsBaseUrl + archived_documents_url_path,

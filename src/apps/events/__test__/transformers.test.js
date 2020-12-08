@@ -188,9 +188,6 @@ describe('Event transformers', () => {
             },
             type: 'address',
           },
-          Documents: {
-            name: 'There are no files or documents',
-          },
           'Type of event': {
             id: '6031f993-a689-49af-9a11-942a8413a779',
             name: 'Outward mission',
@@ -232,9 +229,6 @@ describe('Event transformers', () => {
               town: 'Plymouth',
             },
             type: 'address',
-          },
-          Documents: {
-            name: 'There are no files or documents',
           },
           'Event end date': {
             type: 'date',
