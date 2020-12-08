@@ -45,7 +45,6 @@ describe('Event Details', () => {
         'Other teams': 'CBBC North West',
         'Related programmes': 'Grown in Britain',
         Service: 'Events : UK Based',
-        Documents: 'There are no files or documents',
       })
     })
 
