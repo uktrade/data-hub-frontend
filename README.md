@@ -36,61 +36,13 @@ and be provided with a back end server to provide the API, data storage and sear
 
 ### Running the project within Docker (recommended method)
 
-**Note for Mac Users:** By default, docker on Mac will restrict itself to using just 2GB of memory. This [should be increased](https://docs.docker.com/docker-for-mac/#resources) to at least 6GB for options 1 and 4GB for option 2 to avoid running in to unexpected problems.
-
-**Note for all users:** The docker volumes for the frontend, api and sandbox api are all mounted. This means that you should not need to rebuild the containers when you make changes and you should see your changes reflected immediately. However, there are certain changes that will require you to rebuild. In that case, bring down the containers and run the script again. The scripts will always rebuild you containers if it detects code changes, otherwise they will be quick to come up and will just use the images it has in the docker cache.
-
-#### Option 1 (the full development stack - recommended for development)
-
-1. Clone this repo and the `data-hub-api` repo into the same parent folder. Go to the front-end project root.
-
-2. Create a copy of a sample `.env` file which points to a mocked API:
-
-    ```bash
-    cp sample.env .env
-    ```
-    
-    Real values are available in vault. To log into vault you'll need to be on the VPN and create a personal access token from the developer settings in your GitHub account.
-
-3. Install docker if you don't have it already - https://docs.docker.com/get-docker/
-
-4. Run `make start-dev`.
-
-5. Once the process has completed you can access the frontend at `http://localhost:3000` and the api at `http://localhost:8000`.
-
-6. You can check Docker logs by running:
-
-    ```bash
-    `make dev` logs -f
-    ```
-
-#### Option 2 (the mock stack - using the sandbox api for running functional tests)
-
-1. Clone this repo and go to the project root
-
-2. Create a copy of a sample `.env` file which points to a mocked API:
-
-    ```bash
-    cp sample.env .env
-    ```
-    
-    Real values are available in vault. To log into vault you'll need to be on the VPN and create a personal access token from the developer settings in your GitHub account.
-
-3. Install docker if you don't have it already - https://docs.docker.com/get-docker/
-
-4. Run `make start-mock`.
-
-5. You can now access the frontend at `http://localhost:3000`.
-
-6. You can check Docker logs by running:
-
-    ```bash
-    `make mock` logs -f
-    ```
+Please view the dedicated [Docker readme](./docs/Docker.md).
 
 ### Running the project natively
 
 **Note for all users** If you wish to run the functional tests against your native frontend, you will need to pass a config flag to point cypress to run against port 3000 - `npm run test:functional:watch --config baseUrl=http://localhost:3000`.
+
+**Note for Civil Servant developers** When running the project natively for the first time on your DIT-issued device you will need to setup ZSH. Instructions for this are available [here](./docs/ZSH%20setup.md)
 
 1.  Navigate to the project root.
 
@@ -98,7 +50,7 @@ and be provided with a back end server to provide the API, data storage and sear
 
     ```bash
     brew install nvm
-    nvm use 10.16.0
+    nvm use 12.15.0
     ```
 
 3.  Install node packages:
@@ -107,13 +59,13 @@ and be provided with a back end server to provide the API, data storage and sear
     npm install
     ```
 
-4.  Create a copy of a sample `.env` file which points to a mocked API:
+4.  Create a copy of the sample `.env` file which points to a mocked API:
 
     ```bash
     cp sample.env .env
     ```
 
-6.  Start redis server:
+6.  Start the redis server:
 
     ```bash
     docker run -it -p 6379:6379 redis:3.2
@@ -125,10 +77,12 @@ and be provided with a back end server to provide the API, data storage and sear
     docker run -it -p 8080:8080 gcr.io/sre-docker-registry/github.com/uktrade/mock-sso:latest
     ```
 
-7.  Start the mocked backend:
+7.  Start the mocked backend (this command is included in `.bin.sample` as `start-sandbox`):
 
     ```bash
-    docker run -it -p 8001:8001 ukti/data-hub-sandbox:1.0.0
+    cd test/sandbox
+    docker build -t data-hub-sandbox .
+    docker run --rm --name data-hub-sandbox -it -p 8001:8000 data-hub-sandbox
     ```
 
 8.  Start the node server
@@ -148,7 +102,7 @@ and be provided with a back end server to provide the API, data storage and sear
     npm run develop
     ```
 
-    Server will watch for changes and rebuild sass or compile js using webpack as
+    The server will watch for changes and rebuild sass or compile js using webpack as
     needed. Changes to server side code will result in the server autorestarting.
     The server will run with the node debug flag so you can debug with Webstorm
     or Visual Studio Code.
