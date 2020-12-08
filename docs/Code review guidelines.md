@@ -112,7 +112,7 @@ So for these reasons you ought to observe the following rules when reviewing a P
 
 - A Pull Request is not the forum for architectural review. Once work is at such a level of maturity that it
   exists in a PR, all the architectural considerations should have been handled already. If work contains
-  anything particularly unusual in terms of its approach, that should have been discussed at one of the weekly
+  anything particularly unusual in terms of its approach, that should have been discussed at one of the fortnightly
   Developer Huddles, well in advance of starting work on the actual code.
 
 #### Language

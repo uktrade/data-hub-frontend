@@ -16,8 +16,7 @@
   updates from the master branch. We prefer a rebase here to a merge commit
   as we prefer a clean and straight history on master with discrete merge
   commits for features
-- Features are merged onto the `develop` branch
-- Releases are created from `develop` and are merged into `master`
+- Features are merged onto the `master` branch
 
 ## Code
 
