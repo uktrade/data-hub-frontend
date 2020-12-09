@@ -49,13 +49,6 @@ describe('Interaction details controller', () => {
         ).to.exist
       })
 
-      it('should render the template with Document details', () => {
-        expect(
-          middlewareParameters.resMock.render.firstCall.args[1]
-            .interactionViewRecord.Documents
-        ).to.exist
-      })
-
       it('should render the template with canComplete as false', () => {
         expect(
           middlewareParameters.resMock.render.firstCall.args[1].canComplete
@@ -107,13 +100,6 @@ describe('Interaction details controller', () => {
         expect(
           middlewareParameters.resMock.render.firstCall.args[1]
             .interactionViewRecord
-        ).to.exist
-      })
-
-      it('should render the template with Document details', () => {
-        expect(
-          middlewareParameters.resMock.render.firstCall.args[1]
-            .interactionViewRecord.Documents
         ).to.exist
       })
 

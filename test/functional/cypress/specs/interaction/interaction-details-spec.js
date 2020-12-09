@@ -328,7 +328,6 @@ describe('Interaction details', () => {
           name: fixtures.investment.newHotelFdi.name,
         },
         'Communication channel': 'Email/Website',
-        Documents: 'There are no files or documents',
       })
     })
 
