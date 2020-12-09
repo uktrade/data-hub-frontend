@@ -48,16 +48,20 @@ const StyledButton = styled('button')`
   }
 `
 
-const ToggleSection = ({ label, open, isOpen = false, children }) => {
-  return (
-    <ToggleContainer>
-      <StyledButton onClick={() => open(!isOpen)} isOpen={isOpen}>
-        <span>{label}</span>
-      </StyledButton>
-      <StyledDiv isOpen={isOpen}>{children}</StyledDiv>
-    </ToggleContainer>
-  )
-}
+const ToggleSection = ({
+  label,
+  open,
+  isOpen = false,
+  children,
+  id = null,
+}) => (
+  <ToggleContainer id={id}>
+    <StyledButton onClick={() => open(!isOpen)} isOpen={isOpen}>
+      <span>{label}</span>
+    </StyledButton>
+    <StyledDiv isOpen={isOpen}>{children}</StyledDiv>
+  </ToggleContainer>
+)
 
 export default multiInstance({
   name: 'ToggleSection',

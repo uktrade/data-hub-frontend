@@ -57,7 +57,7 @@ const ProjectsCollection = ({
       <CollectionFilters>
         <ToggleSection
           label="Company information"
-          id="projects.filters.company.information"
+          id="company-information-filters"
           isOpen={true}
         >
           <FilterAdvisersTypeahead
@@ -108,6 +108,16 @@ const ProjectsCollection = ({
             label="Estimated land date after"
             name="estimated_land_date_after"
             qsParamName="estimated_land_date_after"
+          />
+          <RoutedDateField
+            label="Actual land date before"
+            name="actual_land_date_before"
+            qsParamName="actual_land_date_before"
+          />
+          <RoutedDateField
+            label="Actual land date after"
+            name="actual_land_date_after"
+            qsParamName="actual_land_date_after"
           />
         </ToggleSection>
       </CollectionFilters>

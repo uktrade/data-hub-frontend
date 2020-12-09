@@ -83,11 +83,11 @@ function FilteredCollectionHeader({
             <StyledResultCount>{formattedTotal}</StyledResultCount>{' '}
             {counterSuffix}
           </StyledHeaderText>
-          <FilterReset>Remove all filters</FilterReset>
+          <FilterReset id="clear-filters">Remove all filters</FilterReset>
         </StyledDiv>
       </CollectionHeaderRow>
 
-      <CollectionHeaderRow>
+      <CollectionHeaderRow id="filter-chips">
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedAdvisers}
           qsParamName="adviser"
@@ -111,6 +111,14 @@ function FilteredCollectionHeader({
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedEstimatedLandDatesAfter}
           qsParamName="estimated_land_date_after"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedActualLandDatesBefore}
+          qsParamName="actual_land_date_before"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedActualLandDatesAfter}
+          qsParamName="actual_land_date_after"
         />
       </CollectionHeaderRow>
     </CollectionHeaderRowContainer>
