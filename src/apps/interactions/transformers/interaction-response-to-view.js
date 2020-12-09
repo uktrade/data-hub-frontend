@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const { camelCase, pickBy, get } = require('lodash')
 
 const config = require('../../../config')
@@ -13,19 +12,6 @@ function transformEntityLink(entity, entityPath, noLinkText = null) {
         name: entity.name,
       }
     : noLinkText
-}
-
-function transformDocumentsLink(archivedDocumentsUrlPath) {
-  if (archivedDocumentsUrlPath) {
-    return {
-      url: config.archivedDocumentsBaseUrl + archivedDocumentsUrlPath,
-      name: 'View files and documents',
-      hint: '(will open another website)',
-      hintId: 'external-link-label',
-    }
-  }
-
-  return { name: 'There are no files or documents' }
 }
 
 function formatParticipantName(participant) {
@@ -133,13 +119,19 @@ function transformInteractionResponseToViewRecord(
     ),
     event: transformEntityLink(event, 'events', defaultEventText),
     communication_channel: communication_channel,
-    documents: canShowDocuments
-      ? transformDocumentsLink(archived_documents_url_path)
-      : null,
     policy_issue_types: getNames(policy_issue_types),
     policy_areas: getNames(policy_areas),
     policy_feedback_notes: policy_feedback_notes,
     ...getExportCountries(export_countries),
+  }
+
+  if (canShowDocuments && archived_documents_url_path) {
+    viewRecord.documents = {
+      url: config.archivedDocumentsBaseUrl + archived_documents_url_path,
+      name: 'View files and documents',
+      hint: '(will open another website)',
+      hintId: 'external-link-label',
+    }
   }
 
   return pickBy(getDataLabels(viewRecord, kindLabels))
