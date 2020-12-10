@@ -5,9 +5,10 @@ import {
   actualLandDateBeforeLabel,
   actualLandDateAfterLabel,
   countryOptions,
-  projectStageOptions,
   estimatedLandDateBeforeLabel,
   estimatedLandDateAfterLabel,
+  investmentTypeOptions,
+  projectStageOptions,
   sectorOptions,
   sortOptions,
   ukRegionOptions,
@@ -29,6 +30,7 @@ const searchParamProps = ({
   country = false,
   uk_region = false,
   stage = false,
+  investment_type = false,
   estimated_land_date_before = null,
   estimated_land_date_after = null,
   actual_land_date_before = null,
@@ -39,6 +41,7 @@ const searchParamProps = ({
   country: parseVariablePropType(country),
   uk_region: parseVariablePropType(uk_region),
   stage: parseVariablePropType(stage),
+  investment_type: parseVariablePropType(investment_type),
   estimated_land_date_before,
   estimated_land_date_after,
   actual_land_date_before,
@@ -77,6 +80,7 @@ export const state2props = ({ router, ...state }) => {
     country = [],
     uk_region = [],
     stage = [],
+    investment_type = [],
     estimated_land_date_before,
     estimated_land_date_after,
     actual_land_date_before,
@@ -91,7 +95,11 @@ export const state2props = ({ router, ...state }) => {
     selectedSectors: listSelectedFilters(sectorOptions, sector_descends),
     selectedCountries: listSelectedFilters(countryOptions, country),
     selectedUkRegions: listSelectedFilters(ukRegionOptions, uk_region),
-    selectedStage: listSelectedFilters(projectStageOptions, stage),
+    selectedStages: listSelectedFilters(projectStageOptions, stage),
+    selectedInvestmentTypes: listSelectedFilters(
+      investmentTypeOptions,
+      investment_type
+    ),
     selectedEstimatedLandDatesBefore: buildDatesFilter(
       estimatedLandDateBeforeLabel,
       estimated_land_date_before
@@ -119,6 +127,7 @@ export const state2props = ({ router, ...state }) => {
       sectorOptions,
       ukRegionOptions,
       projectStageOptions,
+      investmentTypeOptions,
     },
     selectedFilters,
   }

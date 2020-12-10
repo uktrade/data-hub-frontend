@@ -1,9 +1,9 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import RoutedFilterCheckbox from '../../RoutedFilterCheckbox'
+import CheckboxGroupField from '..'
 
-import exampleReadme from '../../RoutedFilterCheckbox/example.md'
-import usageReadme from '../../RoutedFilterCheckbox/usage.md'
+import exampleReadme from '../example.md'
+import usageReadme from '../usage.md'
 
 const options = [
   {
@@ -34,14 +34,14 @@ storiesOf('Filters/Checkbox', module)
     },
   })
   .add('Default', () => (
-    <RoutedFilterCheckbox
+    <CheckboxGroupField
       name="countries"
       label="What are your favourite countries?"
       options={options}
     />
   ))
   .add('With hint', () => (
-    <RoutedFilterCheckbox
+    <CheckboxGroupField
       name="countries"
       label="What are your favourite countries?"
       hint="Some hint"
