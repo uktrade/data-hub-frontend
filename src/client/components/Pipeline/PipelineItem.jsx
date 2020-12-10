@@ -8,6 +8,7 @@ import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import { SPACING, MEDIA_QUERIES, FONT_SIZE } from '@govuk-react/constants'
 import { BLUE, GREY_1, BLACK } from 'govuk-colours'
+import { H3 } from 'govuk-react'
 
 import { Card } from '../ActivityFeed/activities/card'
 import { currencyGBP } from '../../utils/number-utils'
@@ -17,7 +18,7 @@ import { PipeLineItemPropType } from './types'
 import urls from '../../../lib/urls'
 import LIKELIHOOD_TO_SUCCEED from './constants'
 
-const StyledH3 = styled('h3')`
+const StyledH3 = styled(H3)`
   font-size: ${FONT_SIZE.SIZE_27};
   font-weight: bold;
   margin-bottom: ${SPACING.SCALE_2};
@@ -231,7 +232,9 @@ const PipelineItem = ({
 
   return (
     <Card>
-      <StyledH3 archived={archived}>{name}</StyledH3>
+      <StyledH3 level={2} archived={archived}>
+        {name}
+      </StyledH3>
       <StyledGridRow>
         <GridCol>
           <ul>

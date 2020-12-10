@@ -35,7 +35,7 @@ const CompanyList = connect((state) => {
     query,
   }
 })(({ id, name, companies, query, orderBy }) => (
-  <div>
+  <section>
     <Header />
     <SpacedSectionBreak />
     <ListHeader id={id} name={name} />
@@ -64,7 +64,7 @@ const CompanyList = connect((state) => {
         )
       }
     </Task.Status>
-  </div>
+  </section>
 ))
 
 const EmptyState = () => (

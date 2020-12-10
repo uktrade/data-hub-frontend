@@ -1,5 +1,4 @@
 import { H3 } from '@govuk-react/heading'
-import { LEVEL_SIZE } from '@govuk-react/constants'
 import Link from '@govuk-react/link'
 import React from 'react'
 import styled from 'styled-components'
@@ -21,7 +20,7 @@ const StyledHeading = styled(H3)({
 
 const ListHeader = ({ id, name }) => (
   <StyledRoot>
-    <StyledHeading size={LEVEL_SIZE[4]}>{name}</StyledHeading>
+    <StyledHeading level={2}>{name}</StyledHeading>
     <FormActions>
       <SecondaryButton as={Link} href={urls.companyLists.rename(id)}>
         Edit list name
