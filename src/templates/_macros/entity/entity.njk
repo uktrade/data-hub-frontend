@@ -47,13 +47,13 @@
           </div>
         {% endif %}
 
-        <h3 class="c-entity__title">
+        <h2 class="c-entity__title">
           {% if props.id and not props.isBlockLink %}
             <a href="{{ url }}" class="c-entity__link">{{ highlightedName }}</a>
           {% else %}
             {{ highlightedName }}
           {% endif %}
-        </h3>
+        </h2>
 
         {% if props.subTitle %}
           {{ SubTitle(props.subTitle) }}
