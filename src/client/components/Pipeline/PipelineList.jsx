@@ -18,7 +18,7 @@ import PipelineItem from './PipelineItem'
 import PipelineFilterSort from './PipelineFilterSort'
 import GetPipeLineData from './GetPipelineData'
 
-const StyledItemsCounter = styled('p')`
+const StyledItemsCounter = styled('h1')`
   font-weight: ${FONT_WEIGHTS.bold};
   margin: ${SPACING.SCALE_4} 0 -${SPACING.SCALE_2} 0;
 `
