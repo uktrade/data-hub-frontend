@@ -66,6 +66,7 @@ const ProjectsCollection = ({
             label="Stage"
             name="stage"
             qsParam="stage"
+            data-cy="stage-filter"
             options={optionMetadata.projectStageOptions}
             selectedOptions={selectedFilters.selectedStages}
           />
