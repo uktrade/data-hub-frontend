@@ -39,13 +39,11 @@ const StyledGovCheckbox = styled(GovCheckbox)`
 
 const Checkbox = ({
   onChange,
-  qsParams,
   name,
-  initialOptions = '',
+  initialChecked = false,
   value,
   ...props
 }) => {
-  const initialChecked = initialOptions.includes(value)
   const [checked, setChecked] = useState(initialChecked)
   useEffect(() => setChecked(initialChecked), [initialChecked])
   return (

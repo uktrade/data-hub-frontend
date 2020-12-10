@@ -8,7 +8,7 @@ import {
   ToggleSection,
   FilteredCollectionList,
   RoutedDateField,
-  RoutedFilterCheckbox,
+  RoutedCheckboxGroupField,
 } from '../../../../client/components'
 
 import {
@@ -61,13 +61,13 @@ const ProjectsCollection = ({
           id="company-information-filters"
           isOpen={true}
         >
-          <RoutedFilterCheckbox
+          <RoutedCheckboxGroupField
             {...props}
             label="Stage"
             name="stage"
             qsParam="stage"
             options={optionMetadata.projectStageOptions}
-            selectedOptions={selectedFilters.selectedStage}
+            selectedOptions={selectedFilters.selectedStages}
           />
           <FilterAdvisersTypeahead
             {...props}
@@ -85,8 +85,8 @@ const ProjectsCollection = ({
             name="sector"
             qsParam="sector_descends"
             placeholder="Search sectors..."
-            selectedOptions={selectedFilters.selectedSectors}
             options={optionMetadata.sectorOptions}
+            selectedOptions={selectedFilters.selectedSectors}
           />
           <RoutedTypeahead
             {...props}
@@ -95,8 +95,8 @@ const ProjectsCollection = ({
             name="country"
             qsParam="country"
             placeholder="Search countries..."
-            selectedOptions={selectedFilters.selectedCountries}
             options={optionMetadata.countryOptions}
+            selectedOptions={selectedFilters.selectedCountries}
           />
           <RoutedTypeahead
             {...props}
@@ -105,8 +105,16 @@ const ProjectsCollection = ({
             name="uk_region"
             qsParam="uk_region"
             placeholder="Search UK regions..."
-            selectedOptions={selectedFilters.selectedUkRegions}
             options={optionMetadata.ukRegionOptions}
+            selectedOptions={selectedFilters.selectedUkRegions}
+          />
+          <RoutedCheckboxGroupField
+            {...props}
+            label="Type of investment"
+            name="investment_type"
+            qsParam="investment_type"
+            options={optionMetadata.investmentTypeOptions}
+            selectedOptions={selectedFilters.selectedInvestmentTypes}
           />
           <RoutedDateField
             label="Estimated land date before"

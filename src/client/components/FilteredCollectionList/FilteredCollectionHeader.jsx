@@ -89,7 +89,7 @@ function FilteredCollectionHeader({
 
       <CollectionHeaderRow id="filter-chips">
         <RoutedFilterChips
-          selectedOptions={selectedFilters.selectedStage}
+          selectedOptions={selectedFilters.selectedStages}
           qsParamName="stage"
         />
         <RoutedFilterChips
@@ -107,6 +107,10 @@ function FilteredCollectionHeader({
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedUkRegions}
           qsParamName="uk_region"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedInvestmentTypes}
+          qsParamName="investment_type"
         />
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedEstimatedLandDatesBefore}
