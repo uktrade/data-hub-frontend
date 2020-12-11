@@ -41,6 +41,7 @@ AdviserTypeAhead.propTypes = {
   label: PropTypes.string.isRequired,
   required: PropTypes.string,
   isMulti: PropTypes.bool,
+  placeholder: PropTypes.string,
 }
 
 export default AdviserTypeAhead

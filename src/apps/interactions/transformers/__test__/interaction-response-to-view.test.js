@@ -37,8 +37,8 @@ describe('#transformInteractionResponsetoViewRecord', () => {
         name: 'Account Management',
       },
       Notes: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-      'Policy area': 'Access to Public Funding (inc. EU funding)',
-      'Policy feedback notes':
+      'Policy area(s)': 'Access to Public Funding (inc. EU funding)',
+      'Business intelligence':
         'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
       'Policy issue types': 'EU exit',
       'Date of interaction': {
@@ -185,8 +185,8 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           name: 'Account Management',
         },
         Notes: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-        'Policy area': 'Access to Public Funding (inc. EU funding)',
-        'Policy feedback notes':
+        'Policy area(s)': 'Access to Public Funding (inc. EU funding)',
+        'Business intelligence':
           'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy issue types': 'EU exit',
         'Date of interaction': {
@@ -250,8 +250,8 @@ describe('#transformInteractionResponsetoViewRecord', () => {
             name: 'Specific type of management',
           },
           Notes: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-          'Policy area': 'Access to Public Funding (inc. EU funding)',
-          'Policy feedback notes':
+          'Policy area(s)': 'Access to Public Funding (inc. EU funding)',
+          'Business intelligence':
             'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
           'Policy issue types': 'EU exit',
           'Date of interaction': {
@@ -316,8 +316,8 @@ describe('#transformInteractionResponsetoViewRecord', () => {
             name: 'A Specific DIT : Specific type of service',
           },
           Notes: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-          'Policy area': 'Access to Public Funding (inc. EU funding)',
-          'Policy feedback notes':
+          'Policy area(s)': 'Access to Public Funding (inc. EU funding)',
+          'Business intelligence':
             'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
           'Policy issue types': 'EU exit',
           'Date of interaction': {
@@ -377,8 +377,8 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           name: 'Account Management',
         },
         Notes: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-        'Policy area': 'Access to Public Funding (inc. EU funding)',
-        'Policy feedback notes':
+        'Policy area(s)': 'Access to Public Funding (inc. EU funding)',
+        'Business intelligence':
           'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy issue types': 'EU exit',
         Documents: {
@@ -428,8 +428,8 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           name: 'Account Management',
         },
         Notes: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-        'Policy area': 'Access to Public Funding (inc. EU funding)',
-        'Policy feedback notes':
+        'Policy area(s)': 'Access to Public Funding (inc. EU funding)',
+        'Business intelligence':
           'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy issue types': 'EU exit',
         'Date of interaction': {
@@ -475,8 +475,8 @@ describe('#transformInteractionResponsetoViewRecord', () => {
             name: 'Account Management',
           },
           Notes: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-          'Policy area': 'Access to Public Funding (inc. EU funding)',
-          'Policy feedback notes':
+          'Policy area(s)': 'Access to Public Funding (inc. EU funding)',
+          'Business intelligence':
             'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
           'Policy issue types': 'EU exit',
           'Date of interaction': {
@@ -545,8 +545,8 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           type: 'currency',
         },
         Notes: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-        'Policy area': 'Access to Public Funding (inc. EU funding)',
-        'Policy feedback notes':
+        'Policy area(s)': 'Access to Public Funding (inc. EU funding)',
+        'Business intelligence':
           'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy issue types': 'EU exit',
         'Date of service delivery': {
@@ -603,8 +603,8 @@ describe('#transformInteractionResponsetoViewRecord', () => {
             name: 'Account Management',
           },
           Notes: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-          'Policy area': 'Access to Public Funding (inc. EU funding)',
-          'Policy feedback notes':
+          'Policy area(s)': 'Access to Public Funding (inc. EU funding)',
+          'Business intelligence':
             'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
           'Policy issue types': 'EU exit',
           'Date of service delivery': {
@@ -646,8 +646,8 @@ describe('#transformInteractionResponsetoViewRecord', () => {
           name: 'Account Management',
         },
         Notes: 'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
-        'Policy area': 'Access to Public Funding (inc. EU funding)',
-        'Policy feedback notes':
+        'Policy area(s)': 'Access to Public Funding (inc. EU funding)',
+        'Business intelligence':
           'Labore\nculpa\nquas\ncupiditate\nvoluptatibus\nmagni.',
         'Policy issue types': 'EU exit',
         'Date of interaction': {
@@ -699,7 +699,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
             name: 'Email/Website',
           },
           'Policy issue types': 'Domestic',
-          'Policy feedback notes':
+          'Business intelligence':
             'Labore culpa quas cupiditate voluptatibus magni.',
         })
       })
@@ -723,7 +723,7 @@ describe('#transformInteractionResponsetoViewRecord', () => {
       })
 
       it('should transform to display format', () => {
-        expect(this.transformed['Policy area']).to.equal('p a 1, p a 2')
+        expect(this.transformed['Policy area(s)']).to.equal('p a 1, p a 2')
       })
     })
   })

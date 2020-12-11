@@ -17,6 +17,10 @@ import {
   TASK_OPEN_CONTACT_FORM,
 } from './state'
 import urls from '../../../../../lib/urls'
+import {
+  addMessage,
+  addMessageWithBody,
+} from '../../../../../client/utils/flash-messages'
 
 const getReturnLink = (
   companyId,
@@ -50,12 +54,25 @@ const InteractionDetailsForm = ({
   contactId,
   returnLink,
   updatedInteractionId,
+  wasPolicyFeedbackProvided,
   initialValues,
   progress = false,
   ...props
 }) => {
   useEffect(() => {
     if (updatedInteractionId) {
+      if (!initialValues.id) {
+        if (wasPolicyFeedbackProvided) {
+          const body = [
+            'Thanks for submitting business intelligence (BI), which feeds into the Business Intelligence Unit’s reports. If they need more information, they will contact you.',
+            '',
+            'For more on the value of BI, <a href="https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/business-intelligence-reports/" target="_blank">See the Digital Workspace article</a> (opens in new tab)',
+          ].join('<br />')
+          addMessageWithBody('success', 'Interaction created', body)
+        } else {
+          addMessage('success', 'Interaction created')
+        }
+      }
       window.location.href = getReturnLink(
         companyId,
         referralId,
@@ -132,6 +149,7 @@ const InteractionDetailsForm = ({
 
 InteractionDetailsForm.propTypes = {
   updatedInteractionId: PropTypes.string,
+  wasPolicyFeedbackProvided: PropTypes.bool,
   companyId: PropTypes.string,
   referralId: PropTypes.string,
   investmentId: PropTypes.string,
