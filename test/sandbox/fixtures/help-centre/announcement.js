@@ -1,6 +1,9 @@
 var now = new Date()
 now.setHours(now.getHours() - 1.1)
 
+var yesterday = new Date()
+yesterday.setHours(yesterday.getHours() - 24)
+
 exports.announcement = {
   count: 3,
   next_page: null,
@@ -23,7 +26,7 @@ exports.announcement = {
       vote_sum: 1,
       vote_count: 1,
       section_id: 360000018069,
-      created_at: now,
+      created_at: yesterday,
       updated_at: '2019-06-25T13:54:08.540Z',
       name: 'Using Sectors in the Find Exporters Tool',
       title: 'Using Sectors in the Find Exporters Tool',

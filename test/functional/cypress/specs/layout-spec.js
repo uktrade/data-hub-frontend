@@ -12,6 +12,23 @@ describe('Layout', () => {
     })
   })
 
+  describe('Tabs', () => {
+    it('should display tabs in the right order', () => {
+      cy.get('[data-cy="dashboard-tabs"]')
+        .should('exist')
+        .find('[data-cy="tablist"]')
+        .should('exist')
+        .children()
+        .should('have.length', 3)
+        .first()
+        .should('have.text', 'My companies lists')
+        .next()
+        .should('have.text', 'My referrals')
+        .next()
+        .should('have.text', 'My pipeline')
+    })
+  })
+
   describe('Search', () => {
     it('should display search form', () => {
       cy.get('input[type="search"]')
