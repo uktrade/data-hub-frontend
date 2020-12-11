@@ -1,9 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { H3 } from '@govuk-react/heading'
+import InsetText from '@govuk-react/inset-text'
 import Link from '@govuk-react/link'
-import UnorderedList from '@govuk-react/unordered-list'
-import ListItem from '@govuk-react/list-item'
 import PropTypes from 'prop-types'
 import { GREY_1 } from 'govuk-colours'
 import styled from 'styled-components'
@@ -15,6 +14,7 @@ import {
   NewWindowLink,
   FieldCheckboxes,
   FieldDate,
+  FieldHelp,
   FieldInput,
   FieldRadios,
   FieldSelect,
@@ -69,10 +69,6 @@ const StyledSubserviceWrapper = styled.div`
 
 const StyledSubserviceField = styled(FieldSelect)`
   width: 100%;
-`
-
-const StyledListItem = styled(ListItem)`
-  color: ${GREY_1};
 `
 
 const getServiceContext = (theme, kind, investmentProject) => {
@@ -183,6 +179,17 @@ const StepInteractionDetails = ({
   return (
     <>
       <H3 as="h2">Service</H3>
+
+      <InsetText>
+        If your contact provided business intelligence (eg issues impacting the
+        company or feedback on government policy), complete the business
+        intelligence section.
+        <br />
+        <br />
+        <NewWindowLink href="https://data-services-help.trade.gov.uk/data-hub/updates/announcements/what-makes-good-policy-feedback/">
+          See more guidance
+        </NewWindowLink>
+      </InsetText>
 
       <FieldSelect
         name="service"
@@ -320,14 +327,19 @@ const StepInteractionDetails = ({
         required="Enter a subject"
       />
 
-      <FieldTextarea type="text" name="notes" label="Notes (optional)" />
+      <FieldTextarea
+        type="text"
+        name="notes"
+        label="Notes (optional)"
+        hint="Use this text box to record any details of the logistics of the interaction eg how meeting(s) came about and where or when they happened. These are for your records. Do not include comments about issues impacting the company or feedback on government policy. Include that information in the business intelligence section."
+      />
 
       <FieldRadios
         inline={true}
         name="was_policy_feedback_provided"
-        legend="Did the contact provide feedback on government policy or business intelligence?"
+        legend="Did the contact provide business intelligence?"
         options={OPTIONS_YES_NO}
-        required="Answer if the contact gave any feedback on government policy"
+        required="Answer if the contact provided business intelligence"
       />
 
       {values.was_policy_feedback_provided === OPTION_YES && (
@@ -338,6 +350,14 @@ const StepInteractionDetails = ({
             options={policyIssueTypes}
             required="Select at least one policy issue type"
           />
+
+          <FieldHelp
+            helpSummary="Help with policy issue types"
+            helpText="A policy type is the broad category/categories that the information fits into."
+            footerUrl={urls.external.policyFeedbackHelp}
+            footerUrlDescription="See more guidance"
+          />
+
           <FieldTypeahead
             isMulti={true}
             name="policy_areas"
@@ -346,29 +366,42 @@ const StepInteractionDetails = ({
             options={policyAreas}
             required="Select at least one policy area"
           />
+
+          <FieldHelp
+            helpSummary="Help with policy area(s)"
+            helpText="A policy area is the specific area that the information fits into. Completing this enables the correct team(s) to find the information and input into their reports to support businesses and ministers effectively."
+            footerUrl={urls.external.policyFeedbackHelp}
+            footerUrlDescription="See more guidance"
+          />
+
           <FieldTextarea
             name="policy_feedback_notes"
-            label="Policy feedback notes"
-            required="Enter policy feedback notes"
-            hint={
+            label="Business intelligence"
+            required="Enter business intelligence"
+            hint="Enter any comments the company made to you on areas such as issues impacting them or feedback on government policy. This information will be visible to other Data Hub users, the Business Intelligence Unit and may also be shared within DIT."
+          />
+
+          <FieldHelp
+            helpSummary="Help with business intelligence"
+            helpText={
               <>
+                Consider these questions when filling out this text box:
+                <p>What business intelligence did the company provide?</p>
                 <p>
-                  These notes will be visible to other Data Hub users and may be
-                  shared within the department. Please:
+                  Why has the company raised this/these issue(s) and what are
+                  the impacts on the company, sector and wider economy?
                 </p>
-                <UnorderedList listStyleType="bullet">
-                  <StyledListItem>
-                    summarise relevant information - don’t copy and paste
-                  </StyledListItem>
-                  <StyledListItem>
-                    use relevant keywords and accurate tags
-                  </StyledListItem>
-                </UnorderedList>
-                <NewWindowLink href="https://data-services-help.trade.gov.uk/data-hub/updates/announcements/what-makes-good-policy-feedback/">
-                  Read more guidance here
-                </NewWindowLink>
+                <p>
+                  Did the company make any wider requests of DIT/HMG, including
+                  ministerial engagement or policy changes? If so, provide
+                  details.
+                </p>
+                Will the company be taking any further actions (eg investment
+                decisions or job creation/losses)? If so, provide details.
               </>
             }
+            footerUrl={urls.external.policyFeedbackHelp}
+            footerUrlDescription="See more guidance"
           />
         </>
       )}
@@ -379,7 +412,7 @@ const StepInteractionDetails = ({
             inline={true}
             name="were_countries_discussed"
             legend="Were any countries discussed?"
-            required="Answer if any of the countries were discussed"
+            required="Answer if any countries were discussed"
             options={OPTIONS_YES_NO}
           />
           {values.were_countries_discussed === OPTION_YES && (

@@ -35,6 +35,16 @@ const ELEMENT_SERVICE_HEADER = {
   text: 'Service',
   assert: assertHeader,
 }
+
+const ELEMENT_BUSINESS_INTELLIGENCE_INFO = {
+  assert: ({ element }) =>
+    cy
+      .wrap(element)
+      .contains(
+        'If your contact provided business intelligence (eg issues impacting the company or feedback on government policy), complete the business intelligence section.'
+      ),
+}
+
 const ELEMENT_SERVICE_STATUS = {
   label: 'Service status (optional)',
 }
@@ -90,12 +100,13 @@ const ELEMENT_SUBJECT = {
 }
 const ELEMENT_NOTES = {
   label: 'Notes (optional)',
+  hint:
+    'Use this text box to record any details of the logistics of the interaction eg how meeting(s) came about and where or when they happened. These are for your records. Do not include comments about issues impacting the company or feedback on government policy. Include that information in the business intelligence section.',
   assert: assertFieldTextarea,
 }
 // The radios on this page have been refactored to use legends instead of labels, as part of the Accessibility work.
 const ELEMENT_FEEDBACK_POLICY = {
-  legend:
-    'Did the contact provide feedback on government policy or business intelligence?',
+  legend: 'Did the contact provide business intelligence?',
   assert: assertFieldRadiosWithLegend,
   optionsCount: 2,
 }
@@ -106,7 +117,7 @@ const ELEMENT_POLICY_AREAS = {
   label: 'Policy area(s)',
 }
 const ELEMENT_POLICY_FEEDBACK_NOTES = {
-  label: 'Policy feedback notes',
+  label: 'Business intelligence',
 }
 const ELEMENT_COUNTRIES = {
   legend: 'Were any countries discussed?',
@@ -152,10 +163,15 @@ function fillCommonFields({
   subservice = null,
   contact = 'Johnny Cakeman',
 }) {
-  cy.contains('Service').next().find('select').select(service)
+  cy.contains('Service').next().next().find('select').select(service)
 
   if (subservice) {
-    cy.contains('Service').next().find('select').last().select(subservice)
+    cy.contains('Service')
+      .next()
+      .next()
+      .find('select')
+      .last()
+      .select(subservice)
   }
 
   if (contact) {
@@ -167,7 +183,11 @@ function fillCommonFields({
 
   cy.contains(ELEMENT_SUBJECT.label).next().find('input').type('Some subject')
 
-  cy.contains(ELEMENT_NOTES.label).next().find('textarea').type('Some notes')
+  cy.contains(ELEMENT_NOTES.label)
+    .next()
+    .next()
+    .find('textarea')
+    .type('Some notes')
 
   cy.contains(ELEMENT_FEEDBACK_POLICY.legend).next().find('input').check('yes')
 
@@ -182,23 +202,6 @@ function fillCommonFields({
 
   cy.contains(ELEMENT_POLICY_FEEDBACK_NOTES.label)
     .next()
-    .contains(
-      'These notes will be visible to other Data Hub users and may be shared within the department. Please:'
-    )
-    .next()
-    .find('li')
-    .contains('summarise relevant information - don’t copy and paste')
-    .next()
-    .contains('use relevant keywords and accurate tags')
-    .parent('ul')
-    .next()
-    .contains('Read more guidance here')
-    .and(
-      'have.attr',
-      'href',
-      'https://data-services-help.trade.gov.uk/data-hub/updates/announcements/what-makes-good-policy-feedback/'
-    )
-    .parent('span')
     .next()
     .find('textarea')
     .type('Some policy feedback notes')
@@ -315,6 +318,7 @@ describe('Interaction theme', () => {
     it('should render all form fields', () => {
       assertFormFields(cy.get('#interaction-details-form form div'), [
         ELEMENT_SERVICE_HEADER,
+        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
@@ -351,8 +355,8 @@ describe('Interaction theme', () => {
             'Select at least one contact',
             'Select a communication channel',
             'Enter a subject',
-            'Answer if the contact gave any feedback on government policy',
-            'Answer if any of the countries were discussed',
+            'Answer if the contact provided business intelligence',
+            'Answer if any countries were discussed',
           ].join('')
         )
     })
@@ -412,6 +416,7 @@ describe('Service delivery theme', () => {
     it('should render all form fields', () => {
       assertFormFields(cy.get('#interaction-details-form form div'), [
         ELEMENT_SERVICE_HEADER,
+        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
@@ -439,8 +444,8 @@ describe('Service delivery theme', () => {
             'Select at least one contact',
             'Answer if this was an event',
             'Enter a subject',
-            'Answer if the contact gave any feedback on government policy',
-            'Answer if any of the countries were discussed',
+            'Answer if the contact provided business intelligence',
+            'Answer if any countries were discussed',
           ].join('')
         )
     })
@@ -503,6 +508,7 @@ describe('Investment theme', () => {
     it('should render all form fields', () => {
       assertFormFields(cy.get('#interaction-details-form form div'), [
         ELEMENT_SERVICE_HEADER,
+        ELEMENT_BUSINESS_INTELLIGENCE_INFO,
         ELEMENT_SERVICE,
         ELEMENT_PARTICIPANTS_HEADER,
         ELEMENT_CONTACT,
@@ -529,7 +535,7 @@ describe('Investment theme', () => {
             'Select at least one contact',
             'Select a communication channel',
             'Enter a subject',
-            'Answer if the contact gave any feedback on government policy',
+            'Answer if the contact provided business intelligence',
           ].join('')
         )
     })
