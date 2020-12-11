@@ -101,7 +101,6 @@ module.exports = (env) => ({
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
-            options: { hmr: !config.isProd },
           },
           // the below loaders load in reverse order
           // 3. turns css into commonjs
