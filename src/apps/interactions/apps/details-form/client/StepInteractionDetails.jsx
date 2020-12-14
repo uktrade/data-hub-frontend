@@ -186,7 +186,7 @@ const StepInteractionDetails = ({
         intelligence section.
         <br />
         <br />
-        <NewWindowLink href="https://data-services-help.trade.gov.uk/data-hub/updates/announcements/what-makes-good-policy-feedback/">
+        <NewWindowLink href={urls.external.policyFeedbackHelp}>
           See more guidance
         </NewWindowLink>
       </InsetText>
