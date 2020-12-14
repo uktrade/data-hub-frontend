@@ -3,8 +3,8 @@
 import React, { useState } from 'react'
 import { storiesOf } from '@storybook/react'
 
-import FilterAdvisersTypeahead from '../elements/FilterAdvisersTypeahead'
-// import exampleReadme from '../elements/FilterAdvisersTypeahead/example.md'
+import RoutedAdvisersTypeahead from '..'
+// import exampleReadme from './example.md'
 
 const asyncOptions = [
   {
@@ -23,7 +23,7 @@ const asyncOptions = [
 
 const SearchMesssage = () => <p>Try searching for Bernard, Holly or Dennis</p>
 
-const FilterAdvisersTypeaheadWithState = (props) => {
+const RoutedAdvisersTypeaheadWithState = (props) => {
   const [advisers, setAdvisers] = useState(props.value || [])
 
   const onChange = (adviser) => {
@@ -31,9 +31,9 @@ const FilterAdvisersTypeaheadWithState = (props) => {
   }
 
   return (
-    <FilterAdvisersTypeahead
+    <RoutedAdvisersTypeahead
       onChange={onChange}
-      selectedAdvisers={advisers}
+      selectedOptions={advisers}
       {...props}
     />
   )
@@ -49,7 +49,7 @@ storiesOf('Filters/Adviser typeahead', module)
   .add('Default', () => (
     <div style={{ width: '600px' }}>
       <SearchMesssage />
-      <FilterAdvisersTypeaheadWithState
+      <RoutedAdvisersTypeaheadWithState
         label="Advisers"
         isMulti={true}
         closeMenuOnSelect={false}
@@ -67,7 +67,7 @@ storiesOf('Filters/Adviser typeahead', module)
   .add('With hint', () => (
     <div style={{ width: '600px' }}>
       <SearchMesssage />
-      <FilterAdvisersTypeaheadWithState
+      <RoutedAdvisersTypeaheadWithState
         label="Advisers"
         hint="Some hint"
         isMulti={true}
@@ -86,7 +86,7 @@ storiesOf('Filters/Adviser typeahead', module)
   .add('Pre-selected option', () => (
     <div style={{ width: '600px' }}>
       <SearchMesssage />
-      <FilterAdvisersTypeaheadWithState
+      <RoutedAdvisersTypeaheadWithState
         label="Advisers"
         isMulti={true}
         closeMenuOnSelect={false}
