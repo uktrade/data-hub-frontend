@@ -6,7 +6,7 @@ describe('Interactions Collections Filter', () => {
   })
 
   beforeEach(() => {
-    cy.intercept('/interactions?*').as('filterResults')
+    cy.intercept('/interactions').as('filterResults')
   })
 
   it('should filter by sector', () => {

@@ -45,7 +45,7 @@ describe('Company Export tab - Edit exports', () => {
       })
 
       beforeEach(() => {
-        cy.intercept('PATCH', '*/v4/company/*').as(XHR_ALIAS)
+        cy.intercept('PATCH', '*/v4/company').as(XHR_ALIAS)
       })
 
       it('Should render a list without a selected item', () => {

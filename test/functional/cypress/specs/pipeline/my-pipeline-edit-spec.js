@@ -213,7 +213,7 @@ describe('Pipeline edit form', () => {
 
       context('When removing the values', () => {
         before(() => {
-          cy.intercept('PATCH', '/api-proxy/v4/pipeline-item/*').as(
+          cy.intercept('PATCH', '/api-proxy/v4/pipeline-item').as(
             'updatePipelineItem'
           )
         })
