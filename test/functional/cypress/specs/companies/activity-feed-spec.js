@@ -4,6 +4,15 @@ const urls = require('../../../../../src/lib/urls')
 
 const companyLocalHeader = selectors.companyLocalHeader()
 
+const assertTable = (selector, tableContents) => {
+  tableContents.forEach((row, index) => {
+    cy.get(`${selector} table tr:nth-child(${index + 1}) th`).should(
+      'have.text',
+      row.th
+    )
+  })
+}
+
 describe('Company activity feed', () => {
   context('when viewing Venus Ltd which has no activities', () => {
     before(() => {
@@ -163,6 +172,54 @@ describe('Company activity feed', () => {
       cy.get(selectors.companyActivity.pendingDnbInvestigationMessage).should(
         'be.visible'
       )
+    })
+  })
+
+  context('when viewing an export enquiry in the activity feed', () => {
+    before(() => {
+      cy.visit(urls.companies.activity.index(fixtures.company.venusLtd.id))
+      cy.get('[data-cy="activity-feed"] select').select('externalActivity')
+      cy.get(selectors.companyActivity.activityFeed.item(1)).as('exportEnquiry')
+    })
+    it('should display an export enquiry with truncated comment', () => {
+      const exportEnquiry = [
+        {
+          th: 'Comment',
+          td:
+            'We export fish products to South Korea. In 2011 we were issued an approved exporter authorisation number by HMRC to be able to export to South Korea. Does this number still stand for exporting to South Korea in 2021 or do we need a new number? Lorem... Read More',
+        },
+        {
+          th: 'Name',
+          td: 'Gary James',
+        },
+        {
+          th: 'Position',
+          td: 'Director',
+        },
+        {
+          th: 'Email',
+          td: 'gary.james@fish.com',
+        },
+      ]
+      cy.get('@exportEnquiry').find('h3').should('have.text', 'Great.gov.uk')
+      cy.get('@exportEnquiry')
+        .find('ul')
+        .should('have.text', '10 Nov 2020GREAT.GOV.UK')
+      cy.get('@exportEnquiry')
+        .find('details summary')
+        .should('have.text', 'View key details for this enquiry')
+        .click()
+      assertTable(selectors.companyActivity.activityFeed.item(1), exportEnquiry)
+    })
+    it('should be able to read the full comment', () => {
+      cy.get(selectors.companyActivity.activityFeed.item(1)).as('exportEnquiry')
+      cy.get('@exportEnquiry').find('table tr:nth-child(1) td button').click()
+      cy.get('@exportEnquiry')
+        .find('table tr:nth-child(1) td')
+        .should(
+          'have.text',
+          'We export fish products to South Korea. In 2011 we were issued an approved exporter authorisation number by HMRC to be able to export to South Korea. Does this number still stand for exporting to South Korea in 2021 or do we need a new number? Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Show Less'
+        )
     })
   })
 })
