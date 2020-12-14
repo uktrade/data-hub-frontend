@@ -18,7 +18,7 @@ storiesOf('Readmore', module)
   .add('Default', () => <ReadMore text={content} />)
   .add('Custom', () => (
     <>
-      <p>Charcter limit set to 10</p>
+      <p>Character limit set to 10</p>
       <ReadMore text={content} count={20} />
     </>
   ))
