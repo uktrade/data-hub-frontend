@@ -27,13 +27,16 @@ const RoutedTypeahead = ({
   placeholder = '',
   closeMenuOnSelect = false,
   selectedOptions = null,
-  options = [],
+  loadOptions = null,
+  noOptionsMessage = () => null,
+  options = null,
+  ...props
 }) => (
-  <StyledFieldWrapper label={label} name={name} hint={hint}>
-    <Route>
-      {({ history, location }) => {
-        const qsParams = qs.parse(location.search.slice(1))
-        return (
+  <Route>
+    {({ history, location }) => {
+      const qsParams = qs.parse(location.search.slice(1))
+      return (
+        <StyledFieldWrapper label={label} name={name} hint={hint} {...props}>
           <Typeahead
             styles={{
               multiValueRemove: () => ({
@@ -50,6 +53,8 @@ const RoutedTypeahead = ({
             closeMenuOnSelect={closeMenuOnSelect}
             isMulti={isMulti}
             value={selectedOptions}
+            loadOptions={loadOptions}
+            noOptionsMessage={noOptionsMessage}
             onChange={(pickedOptions) => {
               history.push({
                 search: qs.stringify({
@@ -60,10 +65,10 @@ const RoutedTypeahead = ({
               })
             }}
           />
-        )
-      }}
-    </Route>
-  </StyledFieldWrapper>
+        </StyledFieldWrapper>
+      )
+    }}
+  </Route>
 )
 
 RoutedTypeahead.propTypes = {

@@ -47,16 +47,20 @@ const testRemoveChip = ({ element, placeholder = null }) => {
 
 describe('Investments Collections Filter', () => {
   beforeEach(() => {
-    cy.get('#field-stage').as('stageFilter')
-    cy.get('#field-advisers').as('adviserFilter')
-    cy.get('#field-sector').as('sectorFilter')
-    cy.get('#field-country').as('countryFilter')
-    cy.get('#field-uk_region').as('ukRegionFilter')
-    cy.get('#field-investment_type').as('investmentTypeFilter')
-    cy.get('#field-estimated_land_date_before').as('estimatedDateBefore')
-    cy.get('#field-estimated_land_date_after').as('estimatedDateAfter')
-    cy.get('#field-actual_land_date_before').as('actualDateBefore')
-    cy.get('#field-actual_land_date_after').as('actualDateAfter')
+    cy.get('[data-cy="stage-filter"]').as('stageFilter')
+    cy.get('[data-cy="adviser-filter"]').as('adviserFilter')
+    cy.get('[data-cy="sector-filter"]').as('sectorFilter')
+    cy.get('[data-cy="country-filter"]').as('countryFilter')
+    cy.get('[data-cy="uk-region-filter"]').as('ukRegionFilter')
+    cy.get('[data-cy="investment-type-filter"]').as('investmentTypeFilter')
+    cy.get('[data-cy="estimated-land-date-before-filter"]').as(
+      'estimatedDateBefore'
+    )
+    cy.get('[data-cy="estimated-land-date-after-filter"]').as(
+      'estimatedDateAfter'
+    )
+    cy.get('[data-cy="actual-land-date-before-filter"]').as('actualDateBefore')
+    cy.get('[data-cy="actual-land-date-after-filter"]').as('actualDateAfter')
   })
 
   context('when the url contains no state', () => {
@@ -66,16 +70,16 @@ describe('Investments Collections Filter', () => {
 
     it('should contain filter fields in the right order', () => {
       const expectedIdentifiers = [
-        'field-stage',
-        'field-advisers',
-        'field-sector',
-        'field-country',
-        'field-uk_region',
-        'field-investment_type',
-        'field-estimated_land_date_before',
-        'field-estimated_land_date_after',
-        'field-actual_land_date_before',
-        'field-actual_land_date_after',
+        'stage-filter',
+        'adviser-filter',
+        'sector-filter',
+        'country-filter',
+        'uk-region-filter',
+        'investment-type-filter',
+        'estimated-land-date-before-filter',
+        'estimated-land-date-after-filter',
+        'actual-land-date-before-filter',
+        'actual-land-date-after-filter',
       ]
       cy.get('#company-information-filters')
         .should('exist')
