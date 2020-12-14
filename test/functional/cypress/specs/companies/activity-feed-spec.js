@@ -43,9 +43,7 @@ describe('Company activity feed', () => {
     })
 
     it('should not display the activity feed', () => {
-      cy.get(selectors.companyActivity.activityFeed.item(1)).should(
-        'not.be.visible'
-      )
+      cy.get(selectors.companyActivity.activityFeed.item(1)).should('not.exist')
     })
 
     it('should display the "There are no activities to show." message', () => {
@@ -97,7 +95,7 @@ describe('Company activity feed', () => {
 
     it('should not display the "There are no activities to show." message', () => {
       cy.get(selectors.companyActivity.activityFeed.noActivites).should(
-        'not.be.visible'
+        'not.exist'
       )
     })
   })
@@ -149,7 +147,7 @@ describe('Company activity feed', () => {
 
     it('should not display the pending D&B investigation message', () => {
       cy.get(selectors.companyActivity.pendingDnbInvestigationMessage).should(
-        'not.be.visible'
+        'not.exist'
       )
     })
   })
