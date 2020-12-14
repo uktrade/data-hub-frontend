@@ -79,7 +79,7 @@ module.exports = {
         'https://people.trade.gov.uk/teams/department-for-international-trade',
     },
     policyFeedbackHelp:
-      'https://data-services-help.trade.gov.uk/data-hub/updates/announcements/what-makes-good-policy-feedback/',
+      'https://data-services-help.trade.gov.uk/data-hub/how-articles/interactions-and-service-delivery/record-business-intelligence-interaction/',
     helpCentre: {
       pipeline: () =>
         'https://data-services-help.trade.gov.uk/data-hub/how-articles/account-management/my-pipeline/',
