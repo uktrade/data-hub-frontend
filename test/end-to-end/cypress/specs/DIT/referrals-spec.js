@@ -7,9 +7,9 @@ const companyLocalHeader = selectors.companyLocalHeader()
 
 const selectTypeahead = (fieldName, input) =>
   cy.get(fieldName).within(() => {
-    cy.intercept('/api-proxy/adviser/*').as('adviserResults')
+    cy.intercept('/api-proxy/adviser').as('adviserResults')
     cy.get('div').eq(0).type(input)
-    cy.request('@adviserResults')
+    cy.wait('@adviserResults')
     cy.get('[class*="menu"] > div').click()
   })
 
