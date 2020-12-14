@@ -39,7 +39,7 @@ const StyledSecondaryButton = styled(SecondaryButton)({
 
 const Err = ({ errorMessage, retry, noun }) => (
   <StyledRoot>
-    <H2 size="MEDIUM">Could not load {noun}</H2>
+    <H2 as="div">Could not load {noun}</H2>
     <p>Error: {errorMessage}</p>
     <StyledSecondaryButton onClick={retry}>Retry</StyledSecondaryButton>
   </StyledRoot>
