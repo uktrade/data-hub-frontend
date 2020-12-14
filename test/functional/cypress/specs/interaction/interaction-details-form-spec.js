@@ -262,8 +262,7 @@ function submitForm(kind, theme, values) {
 }
 
 function spyOnRequest(url = '/api-proxy/v3/interaction') {
-  cy.server()
-  cy.route('POST', url).as('interactionHttpRequest')
+  cy.intercept('POST', url).as('interactionHttpRequest')
 }
 
 function objectDiff(a, b) {

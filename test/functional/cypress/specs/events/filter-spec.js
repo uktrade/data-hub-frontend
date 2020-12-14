@@ -10,8 +10,7 @@ describe('Events Collections Filter', () => {
   })
 
   beforeEach(() => {
-    cy.server()
-    cy.route('/events?*').as('filterResults')
+    cy.intercept('/events?*').as('filterResults')
   })
 
   it('should filter by country', () => {

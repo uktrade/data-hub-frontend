@@ -313,8 +313,7 @@ describe('Company edit', () => {
     const company = fixtures.company.dnbLtd
 
     before(() => {
-      cy.server()
-      cy.route('POST', urls.companies.edit(company.id) + '*').as(
+      cy.intercept('POST', urls.companies.edit(company.id) + '*').as(
         'editCompanyResponse'
       )
       cy.visit(urls.companies.edit(company.id))
@@ -366,8 +365,7 @@ describe('Company edit', () => {
     const company = fixtures.company.marsExportsLtd
 
     before(() => {
-      cy.server()
-      cy.route('POST', urls.companies.edit(company.id) + '*').as(
+      cy.intercept('POST', urls.companies.edit(company.id) + '*').as(
         'editCompanyResponse'
       )
       cy.visit(urls.companies.edit(company.id))

@@ -10,8 +10,7 @@ describe('Contacts Collections Filter', () => {
   })
 
   beforeEach(() => {
-    cy.server()
-    cy.route('/contacts?*').as('filterResults')
+    cy.intercept('/contacts?*').as('filterResults')
   })
 
   it('should default active contacts filter', () => {

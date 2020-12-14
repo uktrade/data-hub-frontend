@@ -53,8 +53,7 @@ describe('Company Export tab - Edit export countries', () => {
     })
 
     beforeEach(() => {
-      cy.server()
-      cy.route('PATCH', '*/v4/company/*/export-detail').as(XHR_ALIAS)
+      cy.intercept('PATCH', '*/v4/company/*/export-detail').as(XHR_ALIAS)
     })
 
     it('Should enter values for currently exporting', () => {
@@ -117,8 +116,7 @@ describe('Company Export tab - Edit export countries', () => {
     })
 
     beforeEach(() => {
-      cy.server()
-      cy.route('PATCH', '*/v4/company/*/export-detail').as(XHR_ALIAS)
+      cy.intercept('PATCH', '*/v4/company/*/export-detail').as(XHR_ALIAS)
     })
 
     it('Should enter values for currently exporting', () => {
@@ -165,8 +163,7 @@ describe('Company Export tab - Edit export countries', () => {
     })
 
     beforeEach(() => {
-      cy.server()
-      cy.route('PATCH', '*/v4/company/*/export-detail').as(XHR_ALIAS)
+      cy.intercept('PATCH', '*/v4/company/*/export-detail').as(XHR_ALIAS)
     })
 
     it('Should save and return back to the exports index', () => {
