@@ -1,91 +1,25 @@
 import urls from '../../../../../src/lib/urls'
 
+import {
+  assertCheckboxGroupOption,
+  assertCheckboxGroupNoneSelected,
+  assertChipExists,
+  assertElementsInOrder,
+  assertTypeaheadHasLabelAndPlaceholder,
+  assertTypeaheadOptionSelected,
+} from '../../support/assertions'
+import {
+  selectFirstAdvisersTypeaheadOption,
+  clickCheckboxGroupOption,
+  selectFirstTypeaheadOption,
+} from '../../support/actions'
+
 const PROSPECT_STAGE_ID = '8a320cc9-ae2e-443e-9d26-2f36452c2ced'
 const PUCK_ADVISER_ID = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
 const ADVANCED_ENGINEERING_SECTOR_ID = 'af959812-6095-e211-a939-e4115bead28a'
 const UK_COUNTRY_ID = '80756b9a-5d95-e211-a939-e4115bead28a'
 const SOUTH_EAST_UK_REGION_ID = '884cd12a-6095-e211-a939-e4115bead28a'
 const FDI_INVESTMENT_TYPE_ID = '3e143372-496c-4d1e-8278-6fdd3da9b48b'
-
-/**
- * Enter `input` into an advisers typeahead `element` and select the first result
- *
- * This waits for the adviser api request to complete before selecting the
- * first option.
- */
-const selectFirstAdvisersTypeaheadOption = ({ element, input }) =>
-  cy.get(element).within(() => {
-    cy.server()
-    cy.route('/api-proxy/adviser/?*').as('adviserResults')
-    cy.get('div').eq(0).type(input)
-    cy.wait('@adviserResults')
-    cy.get('[class*="menu"] > div').click()
-  })
-
-const clickCheckboxGroupOption = ({ element, value }) => {
-  cy.get(element).find(`input[value="${value}"]`).click()
-}
-
-/**
- * Enter `input` into a typeahead `element` and select the first result
- */
-const selectFirstTypeaheadOption = ({ element, input }) => {
-  cy.get(element).type(input)
-  cy.get(element).find('[class*="menu"] > div').click()
-  cy.get(element).click()
-}
-
-/**
- * Assert that a checkbox is checked or unchecked
- */
-const assertCheckboxGroupOption = ({ element, value, checked = true }) => {
-  const checkbox = cy.get(element).find(`input[value="${value}"]`)
-  if (checked) {
-    checkbox.should('be.checked')
-  } else {
-    checkbox.should('not.be.checked')
-  }
-}
-
-/**
- * Assert that none of the options in a checkbox group are selected
- */
-const assertCheckboxGroupNoneSelected = (element) => {
-  cy.get(element)
-    .find('input')
-    .each((child) => cy.wrap(child).should('not.be.checked'))
-}
-
-/**
- * Asserts that a typeahead `element` has the given `label` and `placeholder`
- */
-const assertTypeaheadHasLabelAndPlaceholder = ({
-  element,
-  label,
-  placeholder,
-}) => {
-  cy.get(element)
-    .find('label')
-    .should('have.text', label)
-    .next()
-    .should('contain', placeholder)
-}
-
-/**
- * Asserts that the typeahead `element` has the `expectedOption` selected
- */
-const assertTypeaheadOptionSelected = ({ element, expectedOption }) => {
-  cy.get(element).should('contain', expectedOption)
-}
-
-/**
- * Asserts that a chip indicator exists in the specified position
- */
-const assertChipExists = ({ label, position }) => {
-  cy.get(`#filter-chips button:nth-child(${position})`).should((el) => {
-    expect(el.text()).to.contain(label)
-  })
-}
 
 /**
  * Tests that a typeahead functions correctly by inputing a value and selecting
@@ -131,32 +65,31 @@ describe('Investments Collections Filter', () => {
     })
 
     it('should contain filter fields in the right order', () => {
+      const expectedIdentifiers = [
+        'field-stage',
+        'field-advisers',
+        'field-sector',
+        'field-country',
+        'field-uk_region',
+        'field-investment_type',
+        'field-estimated_land_date_before',
+        'field-estimated_land_date_after',
+        'field-actual_land_date_before',
+        'field-actual_land_date_after',
+      ]
       cy.get('#company-information-filters')
         .should('exist')
         .find('button')
         .should('exist')
         .next()
         .should('exist')
-        .find('*')
-        .should('have.id', 'field-stage')
-        .next()
-        .should('have.id', 'field-advisers')
-        .next()
-        .should('have.id', 'field-sector')
-        .next()
-        .should('have.id', 'field-country')
-        .next()
-        .should('have.id', 'field-uk_region')
-        .next()
-        .should('have.id', 'field-investment_type')
-        .next()
-        .should('have.id', 'field-estimated_land_date_before')
-        .next()
-        .should('have.id', 'field-estimated_land_date_after')
-        .next()
-        .should('have.id', 'field-actual_land_date_before')
-        .next()
-        .should('have.id', 'field-actual_land_date_after')
+        .children()
+        .as('filterFields')
+
+      assertElementsInOrder({
+        parentElement: '@filterFields',
+        expectedIdentifiers,
+      })
     })
 
     it('should filter by stage', () => {
