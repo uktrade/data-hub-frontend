@@ -113,7 +113,7 @@ describe('Update the project stage', () => {
       })
       it('should no longer show the flash message when the page is refreshed', () => {
         cy.reload()
-        cy.contains('div', 'Project stage saved').should('not.be.visible')
+        cy.contains('div', 'Project stage saved').should('not.exist')
       })
     }
   )

@@ -11,7 +11,7 @@ describe('Event Attendees', () => {
       'contain',
       'This event was disabled on 5 September 2017 and can no longer be edited.'
     )
-    cy.get(selectors.entityCollection.addAttendee).should('not.be.visible')
+    cy.get(selectors.entityCollection.addAttendee).should('not.exist')
   })
 
   it('should display attendee collection', () => {

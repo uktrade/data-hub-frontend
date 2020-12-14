@@ -61,7 +61,7 @@ describe('Edit the value details of a project', () => {
       cy.contains('Edit value').click()
     })
     it('should not display the Project Value field on the edit value page', () => {
-      cy.contains('label', 'Project value').should('not.be.visible')
+      cy.contains('label', 'Project value').should('not.exist')
     })
   })
   context('When both dates are after 01/04/2020', () => {
@@ -70,7 +70,7 @@ describe('Edit the value details of a project', () => {
       cy.contains('Edit value').click()
     })
     it('should not display the Project Value field on the edit value page', () => {
-      cy.contains('label', 'Project value').should('not.be.visible')
+      cy.contains('label', 'Project value').should('not.exist')
     })
   })
   context('When both land date fields are empty', () => {
@@ -79,7 +79,7 @@ describe('Edit the value details of a project', () => {
       cy.contains('Edit value').click()
     })
     it('should not display the Project Value field on the edit value page', () => {
-      cy.contains('label', 'Project value').should('not.be.visible')
+      cy.contains('label', 'Project value').should('not.exist')
     })
   })
 })

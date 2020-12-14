@@ -97,7 +97,7 @@ describe('Companies business details', () => {
       it('should not display the "Pending Change Request" box', () => {
         cy.contains(
           'Changes to these business details are currently being reviewed.'
-        ).should('not.be.visible')
+        ).should('not.exist')
       })
 
       it('should display the "Are these business details right?" details summary', () => {

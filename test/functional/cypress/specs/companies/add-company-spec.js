@@ -123,11 +123,11 @@ describe('Add company form', () => {
         })
 
         it('should not display the"Back" button', () => {
-          cy.get(selectors.companyAdd.backButton).should('not.be.visible')
+          cy.get(selectors.companyAdd.backButton).should('not.exist')
         })
 
         it('should not display the "Continue" button', () => {
-          cy.get(selectors.companyAdd.continueButton).should('not.be.visible')
+          cy.get(selectors.companyAdd.continueButton).should('not.exist')
         })
 
         context(
@@ -147,10 +147,10 @@ describe('Add company form', () => {
             it('should not display the entity search results', () => {
               cy.get(
                 selectors.companyAdd.entitySearch.results.someCompanyName
-              ).should('not.be.visible')
+              ).should('not.exist')
               cy.get(
                 selectors.companyAdd.entitySearch.results.someOtherCompany
-              ).should('not.be.visible')
+              ).should('not.exist')
             })
           }
         )
@@ -589,7 +589,7 @@ describe('Add company form', () => {
       it('should hide the UK-related fields', () => {
         cy.get(
           selectors.companyAdd.newCompanyRecordForm.address.findUkAddress
-        ).should('not.be.visible')
+        ).should('not.exist')
       })
     }
   )
