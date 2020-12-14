@@ -65,12 +65,14 @@ const CheckboxGroupField = ({
   options,
   selectedOptions = [],
   onChange = () => null,
+  ...props
 }) => (
   <StyledFieldWrapper
     label={label}
     name={name}
     hint={hint}
     data-cy={`checkbox-group-field-${name}`}
+    {...props}
   >
     <MultiChoice>
       {options.map((option) => {
