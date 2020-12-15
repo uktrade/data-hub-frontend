@@ -52,6 +52,12 @@ describe('Add company form', () => {
       cy.get(selectors.companyAdd.continueButton).should('be.visible')
     })
 
+    it('should not display an error message', () => {
+      cy.get(selectors.companyAdd.form)
+        .contains('Specify location of the company')
+        .should('not.be.visible')
+    })
+
     context(
       'when "Continue" button is pressed without specifying the company location',
       () => {
