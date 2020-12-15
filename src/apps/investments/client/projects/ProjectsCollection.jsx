@@ -54,6 +54,7 @@ const ProjectsCollection = ({
       sortOptions={optionMetadata.sortOptions}
       taskProps={collectionListTask}
       selectedFilters={selectedFilters}
+      baseDownloadLink="/investments/projects/export"
     >
       <CollectionFilters>
         <ToggleSection
