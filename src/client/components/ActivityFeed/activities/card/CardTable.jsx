@@ -5,6 +5,8 @@ import Table from '@govuk-react/table'
 import styled from 'styled-components'
 import { SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
 
+import { ReadMore } from '../../../../components'
+
 const GovUkTable = styled(Table)`
   ${MEDIA_QUERIES.TABLET} {
     margin-bottom: ${({ isNotWrappedInDetails }) =>
@@ -73,9 +75,9 @@ export default class CardTable extends React.Component {
     const { rows, isNotWrappedInDetails } = this.props
     return (
       <GovUkTable isNotWrappedInDetails={isNotWrappedInDetails}>
-        {rows.map(({ header, content }) => (
+        {rows.map(({ header, content, hasReadmore }) => (
           <DetailsRow header={header} key={header}>
-            {content}
+            {hasReadmore ? <ReadMore text={content} /> : content}
           </DetailsRow>
         ))}
       </GovUkTable>
