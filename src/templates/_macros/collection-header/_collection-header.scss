@@ -19,6 +19,7 @@
 .c-collection__header-intro {
   @include core-font(24);
   display: inline-block;
+  margin: 0;
 }
 
 .c-collection__header-actions {

@@ -8,7 +8,7 @@
 
 <header class="c-collection__header">
   <div class="c-collection__header-row">
-    <div class="c-collection__header-intro">
+    <h2 class="c-collection__header-intro">
       <span class="c-collection__result-count">{{ count | formatNumber }}</span>
       {{ countLabel | pluralise(count) }}
       {% if props.highlightTerm or selectedFilters | length %}
@@ -17,7 +17,7 @@
           <span class="u-highlight">{{ props.highlightTerm }}</span>
         {% endif %}
       {% endif %}
-    </div>
+    </h2>
 
     {% if props.selectedFilters | length or actionButtons.length %}
       <div class="c-collection__header-actions">
