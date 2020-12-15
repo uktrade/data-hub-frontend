@@ -15,6 +15,6 @@ For truncating content with a link to read more.
 Prop | Required | Default | Type | Description
 :--- | :------- | :------ | :--- | :----------
  `text` | true | `````` | string | The content to truncate
- `count` | false | 255 | number | Specifies a cusom character count to truncate content
+ `count` | false | 255 | number | Specifies a custom character count to truncate content
 
 
