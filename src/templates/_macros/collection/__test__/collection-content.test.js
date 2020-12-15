@@ -13,7 +13,7 @@ describe('Collection macro', () => {
       component
         .querySelector('.c-collection__result-count')
         .parentNode.textContent.trim()
-    ).to.match(/0[\n ]results/)
+    ).to.match(/0\s+results/)
   })
 
   it('should render results summary component with correct count', () => {
@@ -26,7 +26,7 @@ describe('Collection macro', () => {
       component
         .querySelector('.c-collection__result-count')
         .parentNode.textContent.trim()
-    ).to.match(/10[\n ]cats/)
+    ).to.match(/10\s+cats/)
   })
 
   context('when filters are selected', () => {
