@@ -27,6 +27,7 @@ const FilteredCollectionList = ({
   activePage = 1,
   maxItemsToDownload,
   selectedFilters,
+  baseDownloadLink,
 }) => {
   const totalPages = Math.ceil(count / itemsPerPage)
   return (
@@ -45,9 +46,10 @@ const FilteredCollectionList = ({
             <CollectionSort sortOptions={sortOptions} totalPages={count} />
           )}
           <RoutedDownloadDataHeader
-            id="download-data-header"
             count={count}
             maxItems={maxItemsToDownload}
+            data-cy="download-data-header"
+            baseDownloadLink={baseDownloadLink}
           />
           <Task.Status {...taskProps}>
             {() =>

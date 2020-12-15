@@ -26,12 +26,13 @@ const DateField = ({
   legend,
   hint,
   initialValue,
+  ...props
 }) => {
   const [value, setValue] = useState(initialValue)
   useEffect(() => setValue(initialValue), [initialValue])
 
   return (
-    <StyledFieldWrapper {...{ name, label, legend, hint }}>
+    <StyledFieldWrapper {...{ name, label, legend, hint }} {...props}>
       <Input
         id={name}
         key={name}

@@ -2,13 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import {
-  FilterAdvisersTypeahead,
+  RoutedAdvisersTypeahead,
   RoutedTypeahead,
   CollectionFilters,
   ToggleSection,
   FilteredCollectionList,
   RoutedDateField,
-  RoutedFilterCheckbox,
+  RoutedCheckboxGroupField,
 } from '../../../../client/components'
 
 import {
@@ -54,6 +54,7 @@ const ProjectsCollection = ({
       sortOptions={optionMetadata.sortOptions}
       taskProps={collectionListTask}
       selectedFilters={selectedFilters}
+      baseDownloadLink="/investments/projects/export"
     >
       <CollectionFilters>
         <ToggleSection
@@ -61,72 +62,86 @@ const ProjectsCollection = ({
           id="company-information-filters"
           isOpen={true}
         >
-          <RoutedFilterCheckbox
-            {...props}
+          <RoutedCheckboxGroupField
             label="Stage"
             name="stage"
             qsParam="stage"
             options={optionMetadata.projectStageOptions}
-            selectedOptions={selectedFilters.selectedStage}
+            selectedOptions={selectedFilters.selectedStages}
+            data-cy="stage-filter"
           />
-          <FilterAdvisersTypeahead
-            {...props}
+          <RoutedAdvisersTypeahead
             taskProps={adviserListTask}
             isMulti={true}
             label="Advisers"
-            name="advisers"
+            name="adviser"
+            qsParam="adviser"
             placeholder="Search advisers..."
             noOptionsMessage={() => <>No advisers found</>}
+            selectedOptions={selectedFilters.selectedAdvisers}
+            data-cy="adviser-filter"
           />
           <RoutedTypeahead
-            {...props}
             isMulti={true}
             label="Sector"
             name="sector"
             qsParam="sector_descends"
             placeholder="Search sectors..."
-            selectedOptions={selectedFilters.selectedSectors}
             options={optionMetadata.sectorOptions}
+            selectedOptions={selectedFilters.selectedSectors}
+            data-cy="sector-filter"
           />
           <RoutedTypeahead
-            {...props}
             isMulti={true}
             label="Country of origin"
             name="country"
             qsParam="country"
             placeholder="Search countries..."
-            selectedOptions={selectedFilters.selectedCountries}
             options={optionMetadata.countryOptions}
+            selectedOptions={selectedFilters.selectedCountries}
+            data-cy="country-filter"
           />
           <RoutedTypeahead
-            {...props}
             isMulti={true}
             label="UK Region"
             name="uk_region"
             qsParam="uk_region"
             placeholder="Search UK regions..."
-            selectedOptions={selectedFilters.selectedUkRegions}
             options={optionMetadata.ukRegionOptions}
+            selectedOptions={selectedFilters.selectedUkRegions}
+            data-cy="uk-region-filter"
+          />
+          <RoutedCheckboxGroupField
+            label="Type of investment"
+            name="investment_type"
+            qsParam="investment_type"
+            options={optionMetadata.investmentTypeOptions}
+            selectedOptions={selectedFilters.selectedInvestmentTypes}
+            data-cy="investment-type-filter"
           />
           <RoutedDateField
             label="Estimated land date before"
             name="estimated_land_date_before"
             qsParamName="estimated_land_date_before"
+            data-cy="estimated-land-date-before-filter"
           />
           <RoutedDateField
             label="Estimated land date after"
             name="estimated_land_date_after"
             qsParamName="estimated_land_date_after"
+            data-cy="estimated-land-date-after-filter"
           />
           <RoutedDateField
             label="Actual land date before"
             name="actual_land_date_before"
             qsParamName="actual_land_date_before"
+            data-cy="actual-land-date-before-filter"
           />
           <RoutedDateField
             label="Actual land date after"
             name="actual_land_date_after"
             qsParamName="actual_land_date_after"
+            data-cy="actual-land-date-after-filter"
           />
         </ToggleSection>
       </CollectionFilters>
