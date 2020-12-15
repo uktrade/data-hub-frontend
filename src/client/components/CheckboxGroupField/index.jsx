@@ -1,9 +1,9 @@
 import React from 'react'
-import { Checkbox } from '..'
 import MultiChoice from '@govuk-react/multi-choice'
 import { GREY_2, YELLOW } from 'govuk-colours'
 import styled from 'styled-components'
 
+import Checkbox from '../Checkbox'
 import FieldWrapper from '../Form/elements/FieldWrapper'
 
 const StyledFieldWrapper = styled(FieldWrapper)`
@@ -56,7 +56,7 @@ const StyledFieldWrapper = styled(FieldWrapper)`
  * @param {string} hint - hint to display
  * @param {Array} options - the available options as objects with label and value
  * @param {Array} selectedOptions - the options that have been selected
- * @param {Func} onChange - callback function that includes the selected options
+ * @param {Func} onChange - callback function that passes on the selected options
  */
 const CheckboxGroupField = ({
   label,
