@@ -37,14 +37,17 @@ export default class DirectoryFormsApi extends React.PureComponent {
           sourceType={SOURCE_TYPES.external}
           badge={{ text: 'GREAT.GOV.UK', borderColour: '#006435' }}
         />
-
         <CardDetails
           summary="View key details for this enquiry"
           showDetails={showDetails}
         >
           <CardTable
             rows={[
-              { header: 'Comment', content: formData.comment },
+              {
+                header: 'Comment',
+                content: formData.comment,
+                hasReadmore: true,
+              },
               {
                 header: 'Name',
                 content: `${formData.first_name} ${formData.last_name}`,
