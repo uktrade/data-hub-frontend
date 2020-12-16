@@ -11,6 +11,8 @@ import {
   estimatedLandDateAfterLabel,
   investmentTypeLabel,
   investmentTypeOptions,
+  involvementLevelLabel,
+  involvementLevelOptions,
   likelihoodToLandLabel,
   likelihoodToLandOptions,
   projectStageOptions,
@@ -44,6 +46,7 @@ const searchParamProps = ({
   estimated_land_date_after = null,
   actual_land_date_before = null,
   actual_land_date_after = null,
+  level_of_involvement_simplified = false,
 }) => ({
   adviser: parseVariablePropType(adviser),
   sector_descends: parseVariablePropType(sector_descends),
@@ -56,6 +59,7 @@ const searchParamProps = ({
   estimated_land_date_after,
   actual_land_date_before,
   actual_land_date_after,
+  level_of_involvement_simplified,
   sortby,
   page,
 })
@@ -109,6 +113,7 @@ export const state2props = ({ router, ...state }) => {
     estimated_land_date_after,
     actual_land_date_before,
     actual_land_date_after,
+    level_of_involvement_simplified = [],
   } = queryProps
 
   const selectedFilters = {
@@ -163,6 +168,11 @@ export const state2props = ({ router, ...state }) => {
       value: actual_land_date_after,
       categoryLabel: actualLandDateAfterLabel,
     }),
+    selectedInvolvementLevels: buildOptionsFilter({
+      options: involvementLevelOptions,
+      value: level_of_involvement_simplified,
+      categoryLabel: involvementLevelLabel,
+    }),
   }
 
   return {
@@ -176,6 +186,7 @@ export const state2props = ({ router, ...state }) => {
       projectStageOptions,
       investmentTypeOptions,
       likelihoodToLandOptions,
+      involvementLevelOptions,
     },
     selectedFilters,
   }
