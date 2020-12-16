@@ -27,7 +27,12 @@ const removeParamFromQs = (qsParams, targetParam, targetValue = null) => {
     .filter(Boolean)[0]
 }
 
-const RoutedFilterChips = ({ qsParamName, selectedOptions, ...props }) => (
+const RoutedFilterChips = ({
+  qsParamName,
+  selectedOptions,
+  showCategoryLabels = false,
+  ...props
+}) => (
   <Route>
     {({ location, history }) => {
       const clearFilter = (value) => {
@@ -35,14 +40,14 @@ const RoutedFilterChips = ({ qsParamName, selectedOptions, ...props }) => (
         const newQsParams = removeParamFromQs(qsParams, qsParamName, value)
         history.push({ search: qs.stringify(newQsParams) })
       }
-      return selectedOptions.map(({ value, label }) => (
+      return selectedOptions.map(({ value, label, categoryLabel }) => (
         <Chip
           key={value}
           value={value}
           onClick={() => clearFilter(value)}
           {...props}
         >
-          {label}
+          {showCategoryLabels ? `${categoryLabel}: ${label}` : label}
         </Chip>
       ))
     }}
