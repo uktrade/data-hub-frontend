@@ -1,5 +1,6 @@
 import React from 'react'
-import { H4, Button, Link } from 'govuk-react'
+import { H2, Button, Link } from 'govuk-react'
+import { LEVEL_SIZE } from '@govuk-react/constants'
 import UnorderedList from '@govuk-react/unordered-list'
 import ListItem from '@govuk-react/list-item'
 
@@ -19,7 +20,8 @@ const StepReferralConfirmation = ({ cancelUrl }) => {
     <>
       {/* TODO: remove when bug with Steps not pulling data from form context is fixed */}
       <FieldInput name="confirmed" type="hidden" />
-      <SummaryTable caption="Check referral details">
+      <H2 size={LEVEL_SIZE[3]}>Check referral details</H2>
+      <SummaryTable>
         <SummaryTable.Row heading="Refer this company to">
           {values.adviser.label}
         </SummaryTable.Row>
@@ -34,7 +36,7 @@ const StepReferralConfirmation = ({ cancelUrl }) => {
       <SecondaryButton name="back" onClick={goBack}>
         Edit Referral
       </SecondaryButton>
-      <H4>What happens next</H4>
+      <H2 size={LEVEL_SIZE[3]}>What happens next</H2>
       <UnorderedList listStyleType="bullet">
         <ListItem>
           You won't be able to edit the referral after this point
