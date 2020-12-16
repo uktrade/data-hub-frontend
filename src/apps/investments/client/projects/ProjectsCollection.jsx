@@ -59,7 +59,7 @@ const ProjectsCollection = ({
       <CollectionFilters>
         <ToggleSection
           label="Company information"
-          id="company-information-filters"
+          data-cy="company-information-filters"
           isOpen={true}
         >
           <RoutedCheckboxGroupField
@@ -150,6 +150,14 @@ const ProjectsCollection = ({
             name="actual_land_date_after"
             qsParamName="actual_land_date_after"
             data-cy="actual-land-date-after-filter"
+          />
+          <RoutedCheckboxGroupField
+            label="Level of involvement specified"
+            name="involvement_level"
+            qsParam="level_of_involvement_simplified"
+            options={optionMetadata.involvementLevelOptions}
+            selectedOptions={selectedFilters.selectedInvolvementLevels}
+            data-cy="involvement-level-filter"
           />
         </ToggleSection>
       </CollectionFilters>

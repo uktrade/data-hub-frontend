@@ -137,6 +137,11 @@ function FilteredCollectionHeader({
           qsParamName="actual_land_date_after"
           showCategoryLabels={true}
         />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedInvolvementLevels}
+          qsParamName="level_of_involvement_simplified"
+          showCategoryLabels={true}
+        />
       </CollectionHeaderRow>
     </CollectionHeaderRowContainer>
   )
