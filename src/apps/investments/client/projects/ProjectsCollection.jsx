@@ -112,6 +112,14 @@ const ProjectsCollection = ({
             data-cy="uk-region-filter"
           />
           <RoutedCheckboxGroupField
+            label="Status"
+            name="project_status"
+            qsParam="status"
+            options={optionMetadata.projectStatusOptions}
+            selectedOptions={selectedFilters.selectedProjectStatuses}
+            data-cy="project-status-filter"
+          />
+          <RoutedCheckboxGroupField
             label="Type of investment"
             name="investment_type"
             qsParam="investment_type"
