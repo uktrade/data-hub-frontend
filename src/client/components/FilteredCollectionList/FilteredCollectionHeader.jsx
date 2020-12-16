@@ -115,22 +115,27 @@ function FilteredCollectionHeader({
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedLikelihoodToLands}
           qsParamName="likelihood_to_land"
+          showCategoryLabels={true}
         />
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedEstimatedLandDatesBefore}
           qsParamName="estimated_land_date_before"
+          showCategoryLabels={true}
         />
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedEstimatedLandDatesAfter}
           qsParamName="estimated_land_date_after"
+          showCategoryLabels={true}
         />
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedActualLandDatesBefore}
           qsParamName="actual_land_date_before"
+          showCategoryLabels={true}
         />
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedActualLandDatesAfter}
           qsParamName="actual_land_date_after"
+          showCategoryLabels={true}
         />
       </CollectionHeaderRow>
     </CollectionHeaderRowContainer>

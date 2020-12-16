@@ -3,11 +3,17 @@ export { sectorOptions } from './sectors'
 export { ukRegionOptions } from './uk-regions'
 export { projectStageOptions } from './project-stages'
 
+export const adviserLabel = 'Adviser'
+export const countryLabel = 'Country'
 export const estimatedLandDateBeforeLabel = 'Estimated land date before'
 export const estimatedLandDateAfterLabel = 'Estimated land date after'
 export const actualLandDateBeforeLabel = 'Actual land date before'
 export const actualLandDateAfterLabel = 'Actual land date after'
 export const likelihoodToLandLabel = 'Likelihood to land'
+export const investmentTypeLabel = 'Investment type'
+export const sectorLabel = 'Sector'
+export const ukRegionLabel = 'UK region'
+export const stageLabel = 'Stage'
 
 export const sortOptions = [
   {
