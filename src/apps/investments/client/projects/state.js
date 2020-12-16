@@ -75,7 +75,7 @@ const collectionListPayload = (paramProps) => {
 }
 
 /**
- * Build the options filter - if specified, prefix label with the category label
+ * Build the options filter to include value, label and category label
  */
 const buildOptionsFilter = ({ options, value, categoryLabel = '' }) => {
   const optionsFilter = options.filter((option) => value.includes(option.value))
