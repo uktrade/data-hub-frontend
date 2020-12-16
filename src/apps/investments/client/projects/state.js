@@ -4,16 +4,22 @@ import dateFns from 'date-fns'
 import {
   actualLandDateBeforeLabel,
   actualLandDateAfterLabel,
+  adviserLabel,
+  countryLabel,
   countryOptions,
   estimatedLandDateBeforeLabel,
   estimatedLandDateAfterLabel,
+  investmentTypeLabel,
   investmentTypeOptions,
   likelihoodToLandLabel,
   likelihoodToLandOptions,
   projectStageOptions,
+  sectorLabel,
   sectorOptions,
   sortOptions,
+  ukRegionLabel,
   ukRegionOptions,
+  stageLabel,
 } from './metadata'
 
 export const TASK_GET_PROJECTS_LIST = 'TASK_GET_PROJECTS_LIST'
@@ -61,27 +67,26 @@ const collectionListPayload = (paramProps) => {
 }
 
 /**
- * Build the options filter - if specified, prfix label with the group name
+ * Build the options filter - if specified, prefix label with the category label
  */
-const buildOptionsFilter = (metadataOptions, filterProp, groupName = false) => {
-  const optionsFilter = metadataOptions.filter((option) =>
-    filterProp.includes(option.value)
-  )
-  if (groupName) {
+const buildOptionsFilter = ({ options, value, categoryLabel = '' }) => {
+  const optionsFilter = options.filter((option) => value.includes(option.value))
+  if (categoryLabel) {
     return optionsFilter.map(({ value, label }) => ({
       value,
-      label: `${groupName}: ${label}`,
+      label,
+      categoryLabel,
     }))
   } else {
     return optionsFilter
   }
 }
 
-const getDateLabel = (paramLabel, value) =>
-  value ? `${paramLabel}: ${dateFns.format(value, 'D MMMM YYYY')}` : paramLabel
+const getDateLabel = (value) =>
+  value ? `${dateFns.format(value, 'D MMMM YYYY')}` : ''
 
-const buildDatesFilter = (paramLabel, value) =>
-  value ? [{ label: getDateLabel(paramLabel, value), value }] : []
+const buildDatesFilter = ({ value, categoryLabel = '' }) =>
+  value ? [{ label: getDateLabel(value), value, categoryLabel }] : []
 
 /**
  * Convert both location and redux state to investment projects props
@@ -110,36 +115,54 @@ export const state2props = ({ router, ...state }) => {
     selectedAdvisers: selectedAdvisers.map(({ advisers }) => ({
       label: advisers.name,
       value: advisers.id,
+      categoryLabel: adviserLabel,
     })),
-    selectedSectors: buildOptionsFilter(sectorOptions, sector_descends),
-    selectedCountries: buildOptionsFilter(countryOptions, country),
-    selectedUkRegions: buildOptionsFilter(ukRegionOptions, uk_region),
-    selectedStages: buildOptionsFilter(projectStageOptions, stage),
-    selectedInvestmentTypes: buildOptionsFilter(
-      investmentTypeOptions,
-      investment_type
-    ),
-    selectedLikelihoodToLands: buildOptionsFilter(
-      likelihoodToLandOptions,
-      likelihood_to_land,
-      likelihoodToLandLabel
-    ),
-    selectedEstimatedLandDatesBefore: buildDatesFilter(
-      estimatedLandDateBeforeLabel,
-      estimated_land_date_before
-    ),
-    selectedEstimatedLandDatesAfter: buildDatesFilter(
-      estimatedLandDateAfterLabel,
-      estimated_land_date_after
-    ),
-    selectedActualLandDatesBefore: buildDatesFilter(
-      actualLandDateBeforeLabel,
-      actual_land_date_before
-    ),
-    selectedActualLandDatesAfter: buildDatesFilter(
-      actualLandDateAfterLabel,
-      actual_land_date_after
-    ),
+    selectedSectors: buildOptionsFilter({
+      options: sectorOptions,
+      value: sector_descends,
+      categoryLabel: sectorLabel,
+    }),
+    selectedCountries: buildOptionsFilter({
+      options: countryOptions,
+      value: country,
+      categoryLabel: countryLabel,
+    }),
+    selectedUkRegions: buildOptionsFilter({
+      options: ukRegionOptions,
+      value: uk_region,
+      categoryLabel: ukRegionLabel,
+    }),
+    selectedStages: buildOptionsFilter({
+      options: projectStageOptions,
+      value: stage,
+      categoryLabel: stageLabel,
+    }),
+    selectedInvestmentTypes: buildOptionsFilter({
+      options: investmentTypeOptions,
+      value: investment_type,
+      categoryLabel: investmentTypeLabel,
+    }),
+    selectedLikelihoodToLands: buildOptionsFilter({
+      options: likelihoodToLandOptions,
+      value: likelihood_to_land,
+      categoryLabel: likelihoodToLandLabel,
+    }),
+    selectedEstimatedLandDatesBefore: buildDatesFilter({
+      value: estimated_land_date_before,
+      categoryLabel: estimatedLandDateBeforeLabel,
+    }),
+    selectedEstimatedLandDatesAfter: buildDatesFilter({
+      value: estimated_land_date_after,
+      categoryLabel: estimatedLandDateAfterLabel,
+    }),
+    selectedActualLandDatesBefore: buildDatesFilter({
+      value: actual_land_date_before,
+      categoryLabel: actualLandDateBeforeLabel,
+    }),
+    selectedActualLandDatesAfter: buildDatesFilter({
+      value: actual_land_date_after,
+      categoryLabel: actualLandDateAfterLabel,
+    }),
   }
 
   return {
