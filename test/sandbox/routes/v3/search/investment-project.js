@@ -9,6 +9,7 @@ exports.investmentProjects = function (req, res) {
     req.body.sector_descends ||
     req.body.country ||
     req.body.uk_region ||
+    req.body.status ||
     req.body.adviser ||
     req.body.stage ||
     req.body.investment_type ||

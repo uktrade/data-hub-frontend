@@ -15,6 +15,7 @@ export const involvementLevelLabel = 'Level of involvement specified'
 export const sectorLabel = 'Sector'
 export const ukRegionLabel = 'UK region'
 export const stageLabel = 'Stage'
+export const projectStatusLabel = 'Status'
 
 export const sortOptions = [
   {
