@@ -7,6 +7,7 @@ export const estimatedLandDateBeforeLabel = 'Estimated land date before'
 export const estimatedLandDateAfterLabel = 'Estimated land date after'
 export const actualLandDateBeforeLabel = 'Actual land date before'
 export const actualLandDateAfterLabel = 'Actual land date after'
+export const likelihoodToLandLabel = 'Likelihood to land'
 
 export const sortOptions = [
   {
