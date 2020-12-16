@@ -11,7 +11,8 @@ exports.investmentProjects = function (req, res) {
     req.body.uk_region ||
     req.body.adviser ||
     req.body.stage ||
-    req.body.investment_type
+    req.body.investment_type ||
+    req.body.likelihood_to_land
   )
 
   if (req.body.uk_region_location) {

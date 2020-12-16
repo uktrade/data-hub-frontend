@@ -119,6 +119,14 @@ const ProjectsCollection = ({
             selectedOptions={selectedFilters.selectedInvestmentTypes}
             data-cy="investment-type-filter"
           />
+          <RoutedCheckboxGroupField
+            label="Likelihood to land"
+            name="likelihood_to_land"
+            qsParam="likelihood_to_land"
+            options={optionMetadata.likelihoodToLandOptions}
+            selectedOptions={selectedFilters.selectedLikelihoodToLands}
+            data-cy="likelihood-to-land-filter"
+          />
           <RoutedDateField
             label="Estimated land date before"
             name="estimated_land_date_before"

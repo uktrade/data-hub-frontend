@@ -113,6 +113,10 @@ function FilteredCollectionHeader({
           qsParamName="investment_type"
         />
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedLikelihoodToLands}
+          qsParamName="likelihood_to_land"
+        />
+        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedEstimatedLandDatesBefore}
           qsParamName="estimated_land_date_before"
         />
