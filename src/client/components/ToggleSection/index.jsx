@@ -48,14 +48,8 @@ const StyledButton = styled('button')`
   }
 `
 
-const ToggleSection = ({
-  label,
-  open,
-  isOpen = false,
-  children,
-  id = null,
-}) => (
-  <ToggleContainer id={id}>
+const ToggleSection = ({ label, open, isOpen = false, children, ...props }) => (
+  <ToggleContainer {...props}>
     <StyledButton onClick={() => open(!isOpen)} isOpen={isOpen}>
       <span>{label}</span>
     </StyledButton>
