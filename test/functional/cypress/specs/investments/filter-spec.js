@@ -21,6 +21,7 @@ const UK_COUNTRY_ID = '80756b9a-5d95-e211-a939-e4115bead28a'
 const SOUTH_EAST_UK_REGION_ID = '884cd12a-6095-e211-a939-e4115bead28a'
 const FDI_INVESTMENT_TYPE_ID = '3e143372-496c-4d1e-8278-6fdd3da9b48b'
 const MEDIUM_LIKELIHOOD_TO_LAND_ID = '683ca57b-bd69-462c-852f-d2177e35b2eb'
+const INVOLVEMENT_LEVEL_UNSPECIFIED = 'unspecified'
 
 /**
  * Tests that a typeahead functions correctly by inputing a value and selecting
@@ -56,13 +57,18 @@ describe('Investments Collections Filter', () => {
     cy.get('[data-cy="investment-type-filter"]').as('investmentTypeFilter')
     cy.get('[data-cy="likelihood-to-land-filter"]').as('likelihoodToLandFilter')
     cy.get('[data-cy="estimated-land-date-before-filter"]').as(
-      'estimatedDateBefore'
+      'estimatedDateBeforeFilter'
     )
     cy.get('[data-cy="estimated-land-date-after-filter"]').as(
-      'estimatedDateAfter'
+      'estimatedDateAfterFilter'
     )
-    cy.get('[data-cy="actual-land-date-before-filter"]').as('actualDateBefore')
-    cy.get('[data-cy="actual-land-date-after-filter"]').as('actualDateAfter')
+    cy.get('[data-cy="actual-land-date-before-filter"]').as(
+      'actualDateBeforeFilter'
+    )
+    cy.get('[data-cy="actual-land-date-after-filter"]').as(
+      'actualDateAfterFilter'
+    )
+    cy.get('[data-cy="involvement-level-filter"]').as('involvementLevelFilter')
   })
 
   context('when the url contains no state', () => {
@@ -83,8 +89,9 @@ describe('Investments Collections Filter', () => {
         'estimated-land-date-after-filter',
         'actual-land-date-before-filter',
         'actual-land-date-after-filter',
+        'involvement-level-filter',
       ]
-      cy.get('#company-information-filters')
+      cy.get('[data-cy="company-information-filters"]')
         .should('exist')
         .find('button')
         .should('exist')
@@ -209,7 +216,7 @@ describe('Investments Collections Filter', () => {
     })
 
     it('should filter the estimated land date before', () => {
-      cy.get('@estimatedDateBefore')
+      cy.get('@estimatedDateBeforeFilter')
         .find('label')
         .should('have.text', 'Estimated land date before')
         .next()
@@ -220,11 +227,11 @@ describe('Investments Collections Filter', () => {
         position: 1,
       })
 
-      testRemoveChip({ element: '@estimatedDateBefore' })
+      testRemoveChip({ element: '@estimatedDateBeforeFilter' })
     })
 
     it('should filter the estimated land date after', () => {
-      cy.get('@estimatedDateAfter')
+      cy.get('@estimatedDateAfterFilter')
         .find('label')
         .should('have.text', 'Estimated land date after')
         .next()
@@ -235,11 +242,11 @@ describe('Investments Collections Filter', () => {
         position: 1,
       })
 
-      testRemoveChip({ element: '@estimatedDateBefore' })
+      testRemoveChip({ element: '@estimatedDateAfterFilter' })
     })
 
     it('should filter the actual land date before', () => {
-      cy.get('@actualDateBefore')
+      cy.get('@actualDateBeforeFilter')
         .find('label')
         .should('have.text', 'Actual land date before')
         .next()
@@ -250,11 +257,11 @@ describe('Investments Collections Filter', () => {
         position: 1,
       })
 
-      testRemoveChip({ element: '@actualDateBefore' })
+      testRemoveChip({ element: '@actualDateBeforeFilter' })
     })
 
     it('should filter the actual land date after', () => {
-      cy.get('@actualDateAfter')
+      cy.get('@actualDateAfterFilter')
         .find('label')
         .should('have.text', 'Actual land date after')
         .next()
@@ -265,7 +272,25 @@ describe('Investments Collections Filter', () => {
         position: 1,
       })
 
-      testRemoveChip({ element: '@actualDateBefore' })
+      testRemoveChip({ element: '@actualDateAfterFilter' })
+    })
+
+    it('should filter by involvement level', () => {
+      clickCheckboxGroupOption({
+        element: '@involvementLevelFilter',
+        value: INVOLVEMENT_LEVEL_UNSPECIFIED,
+      })
+      assertCheckboxGroupOption({
+        element: '@involvementLevelFilter',
+        value: INVOLVEMENT_LEVEL_UNSPECIFIED,
+        checked: true,
+      })
+      assertChipExists({
+        label: 'Level of involvement specified: Unspecified',
+        position: 1,
+      })
+
+      testRemoveChip({ element: '@involvementLevelFilter' })
     })
   })
 
@@ -284,6 +309,7 @@ describe('Investments Collections Filter', () => {
           estimated_land_date_after: '2020-01-02',
           actual_land_date_before: '2020-02-01',
           actual_land_date_after: '2020-02-02',
+          level_of_involvement_simplified: INVOLVEMENT_LEVEL_UNSPECIFIED,
         },
       })
     })
@@ -318,42 +344,51 @@ describe('Investments Collections Filter', () => {
         label: 'Estimated land date before: 1 January 2020',
         position: 8,
       })
-      cy.get('@estimatedDateBefore')
+      cy.get('@estimatedDateBeforeFilter')
         .find('input')
         .should('have.attr', 'value', '2020-01-01')
       assertChipExists({
         label: 'Estimated land date after: 2 January 2020',
         position: 9,
       })
-      cy.get('@estimatedDateAfter')
+      cy.get('@estimatedDateAfterFilter')
         .find('input')
         .should('have.attr', 'value', '2020-01-02')
       assertChipExists({
         label: 'Actual land date before: 1 February 2020',
         position: 10,
       })
-      cy.get('@actualDateBefore')
+      cy.get('@actualDateBeforeFilter')
         .find('input')
         .should('have.attr', 'value', '2020-02-01')
       assertChipExists({
         label: 'Actual land date after: 2 February 2020',
         position: 11,
       })
-      cy.get('@actualDateAfter')
+      cy.get('@actualDateAfterFilter')
         .find('input')
         .should('have.attr', 'value', '2020-02-02')
+      assertChipExists({
+        position: 12,
+        label: 'Level of involvement specified: Unspecified',
+      })
+      assertCheckboxGroupOption({
+        element: '@involvementLevelFilter',
+        value: INVOLVEMENT_LEVEL_UNSPECIFIED,
+        checked: true,
+      })
     })
 
     it('should clear all filters', () => {
       cy.get('#filter-chips').find('button').as('chips')
       cy.get('#clear-filters').as('clearFilters')
-      cy.get('@chips').should('have.length', 11)
+      cy.get('@chips').should('have.length', 12)
       cy.get('@clearFilters').click()
       cy.get('@chips').should('have.length', 0)
-      cy.get('@estimatedDateBefore')
+      cy.get('@estimatedDateBeforeFilter')
         .find('input')
         .should('have.attr', 'value', '')
-      cy.get('@estimatedDateAfter')
+      cy.get('@estimatedDateBeforeFilter')
         .find('input')
         .should('have.attr', 'value', '')
       cy.get('@adviserFilter').should('contain', 'Search advisers...')
@@ -363,6 +398,7 @@ describe('Investments Collections Filter', () => {
       assertCheckboxGroupNoneSelected('@stageFilter')
       assertCheckboxGroupNoneSelected('@investmentTypeFilter')
       assertCheckboxGroupNoneSelected('@likelihoodToLandFilter')
+      assertCheckboxGroupNoneSelected('@involvementLevelFilter')
     })
   })
 })
