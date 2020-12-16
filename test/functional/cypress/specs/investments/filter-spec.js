@@ -19,6 +19,7 @@ const PUCK_ADVISER_ID = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
 const ADVANCED_ENGINEERING_SECTOR_ID = 'af959812-6095-e211-a939-e4115bead28a'
 const UK_COUNTRY_ID = '80756b9a-5d95-e211-a939-e4115bead28a'
 const SOUTH_EAST_UK_REGION_ID = '884cd12a-6095-e211-a939-e4115bead28a'
+const PROJECT_STATUS_ABANDONED = 'abandoned'
 const FDI_INVESTMENT_TYPE_ID = '3e143372-496c-4d1e-8278-6fdd3da9b48b'
 const MEDIUM_LIKELIHOOD_TO_LAND_ID = '683ca57b-bd69-462c-852f-d2177e35b2eb'
 const INVOLVEMENT_LEVEL_UNSPECIFIED = 'unspecified'
@@ -54,6 +55,7 @@ describe('Investments Collections Filter', () => {
     cy.get('[data-cy="sector-filter"]').as('sectorFilter')
     cy.get('[data-cy="country-filter"]').as('countryFilter')
     cy.get('[data-cy="uk-region-filter"]').as('ukRegionFilter')
+    cy.get('[data-cy="project-status-filter"]').as('projectStatusFilter')
     cy.get('[data-cy="investment-type-filter"]').as('investmentTypeFilter')
     cy.get('[data-cy="likelihood-to-land-filter"]').as('likelihoodToLandFilter')
     cy.get('[data-cy="estimated-land-date-before-filter"]').as(
@@ -83,6 +85,7 @@ describe('Investments Collections Filter', () => {
         'sector-filter',
         'country-filter',
         'uk-region-filter',
+        'project-status-filter',
         'investment-type-filter',
         'likelihood-to-land-filter',
         'estimated-land-date-before-filter',
@@ -183,6 +186,21 @@ describe('Investments Collections Filter', () => {
         element: '@ukRegionFilter',
         placeholder: 'Search UK regions',
       })
+    })
+
+    it('should filter by project status', () => {
+      clickCheckboxGroupOption({
+        element: '@projectStatusFilter',
+        value: PROJECT_STATUS_ABANDONED,
+      })
+      assertCheckboxGroupOption({
+        element: '@projectStatusFilter',
+        value: PROJECT_STATUS_ABANDONED,
+        checked: true,
+      })
+      assertChipExists({ label: 'Abandoned', position: 1 })
+
+      testRemoveChip({ element: '@projectStatusFilter' })
     })
 
     it('should filter by investment type', () => {
@@ -303,6 +321,7 @@ describe('Investments Collections Filter', () => {
           sector_descends: ADVANCED_ENGINEERING_SECTOR_ID,
           country: UK_COUNTRY_ID,
           uk_region: SOUTH_EAST_UK_REGION_ID,
+          status: PROJECT_STATUS_ABANDONED,
           investment_type: FDI_INVESTMENT_TYPE_ID,
           likelihood_to_land: MEDIUM_LIKELIHOOD_TO_LAND_ID,
           estimated_land_date_before: '2020-01-01',
@@ -328,13 +347,19 @@ describe('Investments Collections Filter', () => {
       cy.get('@countryFilter').should('contain', 'United Kingdom')
       assertChipExists({ position: 5, label: 'South East' })
       cy.get('@ukRegionFilter').should('contain', 'South East')
-      assertChipExists({ position: 6, label: 'FDI' })
+      assertChipExists({ position: 6, label: 'Abandoned' })
+      assertCheckboxGroupOption({
+        element: '@projectStatusFilter',
+        value: PROJECT_STATUS_ABANDONED,
+        checked: true,
+      })
+      assertChipExists({ position: 7, label: 'FDI' })
       assertCheckboxGroupOption({
         element: '@investmentTypeFilter',
         value: FDI_INVESTMENT_TYPE_ID,
         checked: true,
       })
-      assertChipExists({ position: 7, label: 'Likelihood to land: Medium' })
+      assertChipExists({ position: 8, label: 'Likelihood to land: Medium' })
       assertCheckboxGroupOption({
         element: '@likelihoodToLandFilter',
         value: MEDIUM_LIKELIHOOD_TO_LAND_ID,
@@ -342,34 +367,34 @@ describe('Investments Collections Filter', () => {
       })
       assertChipExists({
         label: 'Estimated land date before: 1 January 2020',
-        position: 8,
+        position: 9,
       })
       cy.get('@estimatedDateBeforeFilter')
         .find('input')
         .should('have.attr', 'value', '2020-01-01')
       assertChipExists({
         label: 'Estimated land date after: 2 January 2020',
-        position: 9,
+        position: 10,
       })
       cy.get('@estimatedDateAfterFilter')
         .find('input')
         .should('have.attr', 'value', '2020-01-02')
       assertChipExists({
         label: 'Actual land date before: 1 February 2020',
-        position: 10,
+        position: 11,
       })
       cy.get('@actualDateBeforeFilter')
         .find('input')
         .should('have.attr', 'value', '2020-02-01')
       assertChipExists({
         label: 'Actual land date after: 2 February 2020',
-        position: 11,
+        position: 12,
       })
       cy.get('@actualDateAfterFilter')
         .find('input')
         .should('have.attr', 'value', '2020-02-02')
       assertChipExists({
-        position: 12,
+        position: 13,
         label: 'Level of involvement specified: Unspecified',
       })
       assertCheckboxGroupOption({
@@ -382,7 +407,7 @@ describe('Investments Collections Filter', () => {
     it('should clear all filters', () => {
       cy.get('#filter-chips').find('button').as('chips')
       cy.get('#clear-filters').as('clearFilters')
-      cy.get('@chips').should('have.length', 12)
+      cy.get('@chips').should('have.length', 13)
       cy.get('@clearFilters').click()
       cy.get('@chips').should('have.length', 0)
       cy.get('@estimatedDateBeforeFilter')
@@ -396,6 +421,7 @@ describe('Investments Collections Filter', () => {
       cy.get('@countryFilter').should('contain', 'Search countries...')
       cy.get('@ukRegionFilter').should('contain', 'Search UK regions...')
       assertCheckboxGroupNoneSelected('@stageFilter')
+      assertCheckboxGroupNoneSelected('@projectStatusFilter')
       assertCheckboxGroupNoneSelected('@investmentTypeFilter')
       assertCheckboxGroupNoneSelected('@likelihoodToLandFilter')
       assertCheckboxGroupNoneSelected('@involvementLevelFilter')
