@@ -109,6 +109,10 @@ function FilteredCollectionHeader({
           qsParamName="uk_region"
         />
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedProjectStatuses}
+          qsParamName="status"
+        />
+        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedInvestmentTypes}
           qsParamName="investment_type"
         />
