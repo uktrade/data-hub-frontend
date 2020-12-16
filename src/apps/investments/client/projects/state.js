@@ -8,6 +8,8 @@ import {
   estimatedLandDateBeforeLabel,
   estimatedLandDateAfterLabel,
   investmentTypeOptions,
+  likelihoodToLandLabel,
+  likelihoodToLandOptions,
   projectStageOptions,
   sectorOptions,
   sortOptions,
@@ -31,6 +33,7 @@ const searchParamProps = ({
   uk_region = false,
   stage = false,
   investment_type = false,
+  likelihood_to_land = false,
   estimated_land_date_before = null,
   estimated_land_date_after = null,
   actual_land_date_before = null,
@@ -42,6 +45,7 @@ const searchParamProps = ({
   uk_region: parseVariablePropType(uk_region),
   stage: parseVariablePropType(stage),
   investment_type: parseVariablePropType(investment_type),
+  likelihood_to_land: parseVariablePropType(likelihood_to_land),
   estimated_land_date_before,
   estimated_land_date_after,
   actual_land_date_before,
@@ -56,11 +60,25 @@ const collectionListPayload = (paramProps) => {
   )
 }
 
-const listSelectedFilters = (metadataOptions, filterProp) =>
-  metadataOptions.filter((option) => filterProp.includes(option.value))
+/**
+ * Build the options filter - if specified, prfix label with the group name
+ */
+const buildOptionsFilter = (metadataOptions, filterProp, groupName = false) => {
+  const optionsFilter = metadataOptions.filter((option) =>
+    filterProp.includes(option.value)
+  )
+  if (groupName) {
+    return optionsFilter.map(({ value, label }) => ({
+      value,
+      label: `${groupName}: ${label}`,
+    }))
+  } else {
+    return optionsFilter
+  }
+}
 
 const getDateLabel = (paramLabel, value) =>
-  value ? `${paramLabel} : ${dateFns.format(value, 'D MMMM YYYY')}` : paramLabel
+  value ? `${paramLabel}: ${dateFns.format(value, 'D MMMM YYYY')}` : paramLabel
 
 const buildDatesFilter = (paramLabel, value) =>
   value ? [{ label: getDateLabel(paramLabel, value), value }] : []
@@ -81,6 +99,7 @@ export const state2props = ({ router, ...state }) => {
     uk_region = [],
     stage = [],
     investment_type = [],
+    likelihood_to_land = [],
     estimated_land_date_before,
     estimated_land_date_after,
     actual_land_date_before,
@@ -92,13 +111,18 @@ export const state2props = ({ router, ...state }) => {
       label: advisers.name,
       value: advisers.id,
     })),
-    selectedSectors: listSelectedFilters(sectorOptions, sector_descends),
-    selectedCountries: listSelectedFilters(countryOptions, country),
-    selectedUkRegions: listSelectedFilters(ukRegionOptions, uk_region),
-    selectedStages: listSelectedFilters(projectStageOptions, stage),
-    selectedInvestmentTypes: listSelectedFilters(
+    selectedSectors: buildOptionsFilter(sectorOptions, sector_descends),
+    selectedCountries: buildOptionsFilter(countryOptions, country),
+    selectedUkRegions: buildOptionsFilter(ukRegionOptions, uk_region),
+    selectedStages: buildOptionsFilter(projectStageOptions, stage),
+    selectedInvestmentTypes: buildOptionsFilter(
       investmentTypeOptions,
       investment_type
+    ),
+    selectedLikelihoodToLands: buildOptionsFilter(
+      likelihoodToLandOptions,
+      likelihood_to_land,
+      likelihoodToLandLabel
     ),
     selectedEstimatedLandDatesBefore: buildDatesFilter(
       estimatedLandDateBeforeLabel,
@@ -128,6 +152,7 @@ export const state2props = ({ router, ...state }) => {
       ukRegionOptions,
       projectStageOptions,
       investmentTypeOptions,
+      likelihoodToLandOptions,
     },
     selectedFilters,
   }
