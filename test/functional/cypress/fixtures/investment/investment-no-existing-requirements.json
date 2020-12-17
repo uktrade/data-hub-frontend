@@ -1,0 +1,153 @@
+{
+  "id": "fb5b5006-56af-40e0-8615-7aba53e0e4bf",
+  "incomplete_fields": [
+    "client_cannot_provide_total_investment",
+    "number_new_jobs",
+    "strategic_drivers",
+    "client_requirements",
+    "client_considering_other_countries",
+    "total_investment",
+    "uk_region_locations"
+  ],
+  "name": "New hotel (commitment to invest)",
+  "project_code": "DHP-00000003",
+  "description": "This is a dummy investment project for testing",
+  "anonymous_description": "",
+  "allow_blank_estimated_land_date": false,
+  "estimated_land_date": "2020-01-01",
+  "actual_land_date": null,
+  "quotable_as_public_case_study": null,
+  "likelihood_to_land": null,
+  "priority": null,
+  "approved_commitment_to_invest": null,
+  "approved_fdi": null,
+  "approved_good_value": null,
+  "approved_high_value": null,
+  "approved_landed": null,
+  "approved_non_fdi": null,
+  "investment_type": {
+    "name": "Commitment to invest",
+    "id": "031269ab-b7ec-40e9-8a4e-7371404f0622"
+  },
+  "stage": {
+    "name": "Prospect",
+    "id": "8a320cc9-ae2e-443e-9d26-2f36452c2ced"
+  },
+  "status": "ongoing",
+  "reason_delayed": null,
+  "reason_abandoned": null,
+  "date_abandoned": null,
+  "reason_lost": null,
+  "date_lost": null,
+  "country_lost_to": null,
+  "investor_company": {
+    "name": "Venus Ltd",
+    "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+  },
+  "investor_type": null,
+  "investor_company_country": {
+    "name": "United Kingdom",
+    "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+  },
+  "intermediate_company": null,
+  "level_of_involvement": null,
+  "specific_programme": null,
+  "client_contacts": [
+    {
+      "name": "Dean Cox",
+      "id": "952232d2-1d25-4c3a-bcac-2f3a30a94da9"
+    }
+  ],
+  "client_relationship_manager": {
+    "name": "Puck Head",
+    "first_name": "Puck",
+    "last_name": "Head",
+    "id": "e83a608e-84a4-11e6-ae22-56b6b6499611"
+  },
+  "client_relationship_manager_team": {
+    "name": "CBBC North EAST",
+    "id": "602b971d-5df6-e511-888e-e4115bead28a"
+  },
+  "referral_source_adviser": {
+    "name": "Puck Head",
+    "first_name": "Puck",
+    "last_name": "Head",
+    "id": "e83a608e-84a4-11e6-ae22-56b6b6499611"
+  },
+  "referral_source_activity": {
+    "name": "None",
+    "id": "aba8f653-264f-48d8-950e-07f9c418c7b0"
+  },
+  "referral_source_activity_website": null,
+  "referral_source_activity_marketing": null,
+  "referral_source_activity_event": null,
+  "fdi_type": {
+    "name": "Creation of new site or activity",
+    "id": "f8447013-cfdc-4f35-a146-6619665388b3"
+  },
+  "sector": {
+    "name": "Renewable Energy : Wind : Onshore",
+    "id": "034be3be-5329-e511-b6bc-e4115bead28a"
+  },
+  "business_activities": [
+    {
+      "name": "Retail",
+      "id": "a2dbd807-ae52-421c-8d1d-88adfc7a506b"
+    }
+  ],
+  "other_business_activity": null,
+  "archived": false,
+  "archived_documents_url_path": "/documents/123",
+  "archived_on": null,
+  "archived_reason": null,
+  "archived_by": null,
+  "created_on": "2017-06-07T10:00:00Z",
+  "modified_on": "2017-06-07T10:00:00Z",
+  "comments": "",
+  "country_investment_originates_from": null,
+  "level_of_involvement_simplified": "unspecified",
+  "fdi_value": null,
+  "total_investment": null,
+  "foreign_equity_investment": null,
+  "government_assistance": null,
+  "some_new_jobs": null,
+  "number_new_jobs": null,
+  "will_new_jobs_last_two_years": null,
+  "average_salary": null,
+  "number_safeguarded_jobs": null,
+  "r_and_d_budget": null,
+  "non_fdi_r_and_d_budget": null,
+  "associated_non_fdi_r_and_d_project": null,
+  "new_tech_to_uk": null,
+  "export_revenue": null,
+  "value_complete": false,
+  "client_cannot_provide_total_investment": null,
+  "client_cannot_provide_foreign_investment": null,
+  "client_requirements": null,
+  "site_decided": null,
+  "address_1": null,
+  "address_2": null,
+  "address_town": null,
+  "address_postcode": null,
+  "competitor_countries": [],
+  "allow_blank_possible_uk_regions": false,
+  "uk_region_locations": [],
+  "actual_uk_regions": [],
+  "delivery_partners": [],
+  "strategic_drivers": [],
+  "client_considering_other_countries": null,
+  "uk_company_decided": null,
+  "uk_company": null,
+  "requirements_complete": false,
+  "project_manager_requested_on": null,
+  "project_manager_request_status": null,
+  "project_manager": null,
+  "project_assurance_adviser": null,
+  "project_manager_team": null,
+  "project_assurance_team": null,
+  "team_complete": true,
+  "team_members": [],
+  "project_arrived_in_triage_on": null,
+  "proposal_deadline": null,
+  "stage_log": []
+}

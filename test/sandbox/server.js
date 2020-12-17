@@ -209,6 +209,10 @@ app.get(
   '/v4/metadata/investment-strategic-driver',
   v4Metadata.investmentStrategicDriver
 )
+app.get(
+  '/v4/metadata/investment-delivery-partner',
+  v4Metadata.investmentDeliveryPartner
+)
 app.get('/v4/metadata/order-service-type', v4Metadata.orderServiceType)
 app.get(
   '/v4/metadata/order-cancellation-reason',
@@ -325,6 +329,7 @@ app.patch('/v3/interaction/:interactionId', v3Interaction.archiveInteraction)
 // V3 Investment
 app.get('/v3/investment', v3Investment.investmentProjects)
 app.get('/v3/investment/:id', v3Investment.investmentProjectById)
+app.patch('/v3/investment/:id', v3Investment.patchInvestmentProject)
 app.get(
   '/v3/investment/:investmentId/audit',
   v3Investment.investmentProjectAudit

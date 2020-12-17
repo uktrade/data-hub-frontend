@@ -95,36 +95,64 @@ const assertFieldSelect = ({
   label,
   emptyOption,
   value,
-  optionsCount = 0,
+  optionsCount,
 }) =>
   cy
     .wrap(element)
     .as('fieldSelect')
-    .then(
-      () =>
-        label &&
+    .then(() => {
+      label &&
         cy.get('@fieldSelect').find('label').first().should('have.text', label)
-    )
-    .then(
-      () =>
-        emptyOption &&
+
+      emptyOption &&
         cy
           .get('@fieldSelect')
           .find('option')
           .first()
           .should('have.text', emptyOption)
-    )
-    .next()
-    .find('option')
-    .should('have.length', optionsCount)
-    .then(
-      () =>
-        value &&
+
+      optionsCount &&
+        cy
+          .get('@fieldSelect')
+          .find('option')
+          .should('have.length', optionsCount)
+
+      value &&
         cy
           .get('@fieldSelect')
           .find('option[selected]')
           .should('have.text', value)
+    })
+
+const assertFieldAddAnother = ({
+  element,
+  label,
+  values,
+  emptyOption,
+  optionsCount = 0,
+}) =>
+  cy
+    .wrap(element)
+    .as('fieldAddAnother')
+    .then(
+      () =>
+        label &&
+        cy
+          .get('@fieldAddAnother')
+          .find('label')
+          .first()
+          .should('have.text', label)
     )
+    .parent()
+    .children('div')
+    .each((item, i) => {
+      assertFieldSelect({
+        element: item,
+        emptyOption,
+        optionsCount,
+        value: values[i] && values[i].name,
+      })
+    })
 
 const assertFieldRadios = ({ element, label, value, optionsCount }) =>
   cy
@@ -196,7 +224,7 @@ const assertFieldInput = ({ element, label, hint, value }) =>
   cy
     .wrap(element)
     .find('label')
-    .contains(label)
+    .should('have.text', label)
     .next()
     .then(
       ($el) =>
@@ -216,7 +244,7 @@ const assertFieldTextarea = ({ element, label, hint, value }) =>
   cy
     .wrap(element)
     .find('label')
-    .contains(label)
+    .should('contain', label)
     .next()
     .then(
       ($el) =>
@@ -384,6 +412,7 @@ module.exports = {
   assertFieldInput,
   assertFieldTextarea,
   assertFieldSelect,
+  assertFieldAddAnother,
   assertFieldRadios,
   assertFieldRadiosWithLegend,
   assertFieldAddress,
