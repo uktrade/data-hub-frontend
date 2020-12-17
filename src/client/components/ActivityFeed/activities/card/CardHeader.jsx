@@ -97,6 +97,7 @@ const CardHeader = ({
   heading,
   startTime,
   badge,
+  headingLevel = 3,
 }) => (
   <>
     {company && company.name && (
@@ -109,8 +110,9 @@ const CardHeader = ({
         )}
 
         {subHeading && <StyledSubHeading>{subHeading}</StyledSubHeading>}
-
-        {heading && <StyledHeading level={2}>{heading}</StyledHeading>}
+        {heading && (
+          <StyledHeading level={headingLevel}>{heading}</StyledHeading>
+        )}
       </StyledHeadingWrapper>
 
       <StyledMetaItems>
@@ -139,16 +141,6 @@ CardHeader.propTypes = {
     text: PropTypes.string,
     borderColour: PropTypes.string,
   }),
-}
-
-CardHeader.defaultProps = {
-  startTime: null,
-  heading: null,
-  blockText: null,
-  subHeading: null,
-  company: null,
-  badge: null,
-  sourceType: null,
 }
 
 export default CardHeader
