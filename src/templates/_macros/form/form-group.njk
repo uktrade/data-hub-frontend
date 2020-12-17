@@ -40,6 +40,7 @@
         {{ 'js-ConditionalSubfield' if isConditional }}
         {{ props.class if props.class }}
       "
+      data-cy="group-{{ props.fieldId }}"
       {% if isConditional %}
         data-controlled-by="{{ props.condition.name }}"
         data-control-value="{{ props.condition.value }}"

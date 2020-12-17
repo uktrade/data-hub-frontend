@@ -8,28 +8,30 @@
  # @param {object} props - An object containing field properties
  # @param {array} [props.value] - Input values
  # @param {array} [props.element=fieldset]
+ # @param {object} [props.inputData] - Data attributes to add to input control
  #}
 {% macro AddAnother(props) %}
   {% set fieldId = 'field-' + props.name + ('-' + props.idSuffix if props.idSuffix) if props.name %}
   {% set element = props.element | default('fieldset') %}
   {% set typeaheadClassModifier = '--typeahead' if props.children[0].macroName === 'Typeahead' %}
+  {% set data = props.inputData if props.inputData %}
 
   {% call FormGroup(props | assign({ fieldId: fieldId, element: element, groupClassName: 'c-form-group c-form-fieldset' })) %}
     <div class="js-AddItems" data-item-selector=".c-form-group--AddItems">
 
       {% if props.value %}
         {% if props.value.length <= 0 %}
-          {{ renderAsMacro(props.children, { modifier: 'AddItems' } ) }}
+          {{ renderAsMacro(props.children, { modifier: 'AddItems', inputData: data } ) }}
         {% else %}
           {% for individualValue in props.value %}
               {{ renderAsMacro(
                 props.children,
-                { value: individualValue, modifier: 'AddItems' }
+                { value: individualValue, modifier: 'AddItems', inputData: data }
             ) }}
           {% endfor %}
         {% endif %}
       {% else %}
-        {{ renderAsMacro(props.children, { modifier: 'AddItems' } ) }}
+        {{ renderAsMacro(props.children, { modifier: 'AddItems', inputData: props.inputData } ) }}
       {% endif %}
 
       <p class="c-form-fieldset__add-another">
@@ -38,7 +40,8 @@
           type="submit"
           name="{{ props.buttonName }}"
           value="Add another"
-          data-persist-values="true"/>
+          data-persist-values="true"
+          data-cy="{{ props.fieldId }}-add_button"/>
       </p>
     </div>
   {% endcall %}

@@ -159,6 +159,18 @@ function resetFieldValues(element) {
   return element
 }
 
+function updateCypressDataAttribute(element, length) {
+  Array.from(element.querySelectorAll('select')).forEach((selectedElement) => {
+    const dataAttr = selectedElement.getAttribute('data-cy')
+
+    if (dataAttr) {
+      selectedElement.setAttribute('data-cy', `${dataAttr}-${length}`)
+    }
+  })
+
+  return element
+}
+
 /**
  * regenIds
  * *
@@ -274,4 +286,5 @@ module.exports = {
   closest,
   matchWords,
   checkDateFormat,
+  updateCypressDataAttribute,
 }
