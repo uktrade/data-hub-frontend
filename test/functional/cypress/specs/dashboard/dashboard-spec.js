@@ -2,7 +2,7 @@ const EXPORTERS_TOOL_LINK =
   'https://uktrade.zendesk.com/hc/en-gb/articles/360001844497-Using-Sectors-in-the-Find-Exporters-Tool'
 
 describe('Dashboard', () => {
-  context('When viewing the info feed', () => {
+  context('When the help centre API is available', () => {
     beforeEach(() => {
       cy.visit('/')
       cy.get('[data-cy="info-feed"]')
@@ -43,6 +43,34 @@ describe('Dashboard', () => {
             .should('have.text', '(Link opens in a new window)')
           cy.get('time').should('exist').should('have.text', 'a day ago')
         })
+    })
+  })
+
+  context('When the help centre API is unavailable', () => {
+    beforeEach(() => {
+      cy.visit('/', { qs: { test: 'help-centre-unavailable' } })
+      cy.get('[data-cy="info-feed"]').as('infoFeed')
+    })
+
+    it('should return an empty info feed', () => {
+      cy.get('[data-cy="info-feed-list"]').should('not.exist')
+      cy.get('[data-cy="info-feed-no-results"]')
+        .should('exist')
+        .should('have.text', 'No updates available')
+    })
+  })
+
+  context('When the help centre API returns no results', () => {
+    beforeEach(() => {
+      cy.visit('/', { qs: { test: 'help-centre-empty' } })
+      cy.get('[data-cy="info-feed"]').as('infoFeed')
+    })
+
+    it('should return an empty info feed', () => {
+      cy.get('[data-cy="info-feed-list"]').should('not.exist')
+      cy.get('[data-cy="info-feed-no-results"]')
+        .should('exist')
+        .should('have.text', 'No updates available')
     })
   })
 })

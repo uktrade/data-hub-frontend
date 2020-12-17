@@ -103,3 +103,15 @@ exports.announcement = {
   sort_by: 'position',
   sort_order: 'asc',
 }
+
+exports.emptyAnnouncement = {
+  count: 0,
+  next_page: null,
+  page: 1,
+  page_count: 1,
+  per_page: 30,
+  previous_page: null,
+  articles: [],
+  sort_by: 'position',
+  sort_order: 'asc',
+}
