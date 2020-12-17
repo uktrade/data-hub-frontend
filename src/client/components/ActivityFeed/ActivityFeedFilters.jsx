@@ -28,7 +28,7 @@ const StyledCheckboxContainer = styled('div')`
   }
 `
 
-const StyledTitle = styled('h4')`
+const StyledTitle = styled('div')`
   margin-right: ${SPACING.SCALE_4};
   white-space: nowrap;
 `
