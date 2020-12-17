@@ -1,0 +1,199 @@
+{
+  "id": "ea3a03ba-b239-4956-b2fb-f35c91109674",
+  "incomplete_fields": [
+    "actual_land_date",
+    "associated_non_fdi_r_and_d_project"
+  ],
+  "name": "New fruit machine",
+  "project_code": "DHP-00000009",
+  "description": "This is a dummy investment project for testing",
+  "anonymous_description": "",
+  "allow_blank_estimated_land_date": false,
+  "estimated_land_date": "2020-01-01",
+  "actual_land_date": null,
+  "quotable_as_public_case_study": null,
+  "likelihood_to_land": null,
+  "priority": null,
+  "approved_commitment_to_invest": null,
+  "approved_fdi": null,
+  "approved_good_value": null,
+  "approved_high_value": null,
+  "approved_landed": null,
+  "approved_non_fdi": null,
+  "investment_type": {
+    "name": "FDI",
+    "id": "3e143372-496c-4d1e-8278-6fdd3da9b48b"
+  },
+  "stage": {
+    "name": "Verify win",
+    "id": "49b8f6f3-0c50-4150-a965-2c974f3149e3"
+  },
+  "status": "ongoing",
+  "reason_delayed": null,
+  "reason_abandoned": null,
+  "date_abandoned": null,
+  "reason_lost": null,
+  "date_lost": null,
+  "country_lost_to": null,
+  "investor_company": {
+    "name": "Venus Ltd",
+    "id": "0f5216e0-849f-11e6-ae22-56b6b6499611"
+  },
+  "investor_type": null,
+  "investor_company_country": {
+    "name": "United Kingdom",
+    "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+  },
+  "intermediate_company": null,
+  "level_of_involvement": null,
+  "specific_programme": null,
+  "client_contacts": [
+    {
+      "name": "Dean Cox",
+      "id": "952232d2-1d25-4c3a-bcac-2f3a30a94da9"
+    }
+  ],
+  "client_relationship_manager": {
+    "name": "Puck Head",
+    "first_name": "Puck",
+    "last_name": "Head",
+    "id": "e83a608e-84a4-11e6-ae22-56b6b6499611"
+  },
+  "client_relationship_manager_team": {
+    "name": "CBBC North EAST",
+    "id": "602b971d-5df6-e511-888e-e4115bead28a"
+  },
+  "referral_source_adviser": {
+    "name": "Puck Head",
+    "first_name": "Puck",
+    "last_name": "Head",
+    "id": "e83a608e-84a4-11e6-ae22-56b6b6499611"
+  },
+  "referral_source_activity": {
+    "name": "None",
+    "id": "aba8f653-264f-48d8-950e-07f9c418c7b0"
+  },
+  "referral_source_activity_website": null,
+  "referral_source_activity_marketing": null,
+  "referral_source_activity_event": null,
+  "fdi_type": {
+    "name": "Creation of new site or activity",
+    "id": "f8447013-cfdc-4f35-a146-6619665388b3"
+  },
+  "sector": {
+    "name": "Renewable Energy : Wind : Onshore",
+    "id": "034be3be-5329-e511-b6bc-e4115bead28a"
+  },
+  "business_activities": [
+    {
+      "name": "Retail",
+      "id": "a2dbd807-ae52-421c-8d1d-88adfc7a506b"
+    }
+  ],
+  "other_business_activity": null,
+  "archived": false,
+  "archived_documents_url_path": "",
+  "archived_on": null,
+  "archived_reason": null,
+  "archived_by": null,
+  "created_on": "2017-03-05T12:00:00Z",
+  "modified_on": "2017-03-05T15:00:00Z",
+  "comments": "",
+  "country_investment_originates_from": null,
+  "level_of_involvement_simplified": "unspecified",
+  "fdi_value": null,
+  "total_investment": "1000000",
+  "foreign_equity_investment": "200000",
+  "government_assistance": true,
+  "some_new_jobs": null,
+  "number_new_jobs": 20,
+  "will_new_jobs_last_two_years": null,
+  "average_salary": {
+    "name": "Below £25,000",
+    "id": "2943bf3d-32dd-43be-8ad4-969b006dee7b"
+  },
+  "number_safeguarded_jobs": 1,
+  "r_and_d_budget": false,
+  "non_fdi_r_and_d_budget": true,
+  "associated_non_fdi_r_and_d_project": null,
+  "new_tech_to_uk": true,
+  "export_revenue": true,
+  "value_complete": false,
+  "client_cannot_provide_total_investment": false,
+  "client_cannot_provide_foreign_investment": false,
+  "client_requirements": "Anywhere",
+  "site_decided": true,
+  "address_1": "10 Eastings Road",
+  "address_2": null,
+  "address_town": "London",
+  "address_postcode": "W1 2AA",
+  "competitor_countries": [
+    {
+      "name": "Netherlands",
+      "id": "1950bdb8-5d95-e211-a939-e4115bead28a"
+    }
+  ],
+  "allow_blank_possible_uk_regions": false,
+  "uk_region_locations": [
+    {
+      "name": "North East",
+      "id": "814cd12a-6095-e211-a939-e4115bead28a"
+    }
+  ],
+  "actual_uk_regions": [
+    {
+      "name": "North East",
+      "id": "814cd12a-6095-e211-a939-e4115bead28a"
+    }
+  ],
+  "delivery_partners": [
+    {
+      "name": "New Anglia LEP",
+      "id": "cdcc392e-0bf1-e511-8ffa-e4115bead28a"
+    },
+    {
+      "name": "North Eastern LEP",
+      "id": "6e85b4e3-0df1-e511-8ffa-e4115bead28a"
+    }
+  ],
+  "strategic_drivers": [
+    {
+      "name": "Access to market",
+      "id": "382aa6d1-a362-4166-a09d-f579d9f3be75"
+    }
+  ],
+  "client_considering_other_countries": true,
+  "uk_company_decided": null,
+  "uk_company": {
+    "name": "Mercury Ltd",
+    "id": "a73efeba-8499-11e6-ae22-56b6b6499611"
+  },
+  "requirements_complete": true,
+  "project_manager_requested_on": null,
+  "project_manager_request_status": null,
+  "project_manager": {
+    "name": "Michael Wining",
+    "first_name": "Michael",
+    "last_name": "Wining",
+    "id": "d7493b4e-5d7b-4834-98d9-28b78a74052a"
+  },
+  "project_assurance_adviser": {
+    "name": "Paula Churing",
+    "first_name": "Paula",
+    "last_name": "Churing",
+    "id": "5a644146-5298-4741-91f3-d5d7558adf47"
+  },
+  "project_manager_team": {
+    "name": "Marketing - Marketing Team",
+    "id": "8248318c-9698-e211-a939-e4115bead28a"
+  },
+  "project_assurance_team": {
+    "name": "Marketing - Marketing Team",
+    "id": "8248318c-9698-e211-a939-e4115bead28a"
+  },
+  "team_complete": true,
+  "team_members": [],
+  "project_arrived_in_triage_on": null,
+  "proposal_deadline": null,
+  "stage_log": []
+}
