@@ -18,3 +18,19 @@ exports.investmentProjects = function (req, res) {
 exports.investmentProjectAudit = function (req, res) {
   res.json(projectAudit)
 }
+
+exports.patchInvestmentProject = function (req, res) {
+  if (
+    !(
+      req.body &&
+      req.body.client_requirements &&
+      req.body.client_requirements.length
+    )
+  ) {
+    return res.json(400, {
+      client_requirements: ['required'],
+    })
+  }
+
+  return res.sendStatus(200)
+}

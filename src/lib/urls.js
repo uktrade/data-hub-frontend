@@ -227,6 +227,10 @@ module.exports = {
       index: url('/investments', '/projects'),
       details: url('/investments', '/projects/:investmentId/details'),
       editDetails: url('/investments', '/projects/:investmentId/edit-details'),
+      editRequirements: url(
+        '/investments',
+        '/projects/:investmentId/edit-requirements'
+      ),
       documents: url('/investments', '/projects/:investmentId/documents'),
       propositions: url('/investments', '/projects/:investmentId/propositions'),
       team: url('/investments', '/projects/:investmentId/team'),

@@ -6,6 +6,7 @@ var investmentProjectStage = require('../../../fixtures/v4/metadata/investment-p
 var investmentBusinessActivity = require('../../../fixtures/v4/metadata/investment-business-activity.json')
 var investmentType = require('../../../fixtures/v4/metadata/investment-type.json')
 var investmentStrategicDriver = require('../../../fixtures/v4/metadata/investment-strategic-driver.json')
+var investmentDeliveryPartner = require('../../../fixtures/v4/metadata/investment-delivery-partner.json')
 var exportExperienceCategory = require('../../../fixtures/v4/metadata/export-experience-category.json')
 var orderServiceType = require('../../../fixtures/v4/metadata/order-service-type.json')
 var orderCancellationReason = require('../../../fixtures/v4/metadata/order-cancellation-reason.json')
@@ -77,6 +78,10 @@ exports.investmentType = function (req, res) {
 
 exports.investmentStrategicDriver = function (req, res) {
   res.json(investmentStrategicDriver)
+}
+
+exports.investmentDeliveryPartner = function (req, res) {
+  res.json(investmentDeliveryPartner)
 }
 
 exports.exportExperienceCategory = function (req, res) {
