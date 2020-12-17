@@ -66,8 +66,13 @@
           id="{{ props.fieldId }}-0"
           value=""
           {% if not props.value %}checked{% endif %}
+<<<<<<< HEAD
           {% if props.inputData.test %}
             data-test="{{ props.inputData.test | escape }}-0"
+=======
+          {% if props.inputData.cy %}
+            data-cy="{{ props.inputData.cy | escape }}-0"
+>>>>>>> Add data-cy attributes to nunjucks form components
           {% endif %}
         >
         <label class="c-multiple-choice__label" for="{{ props.fieldId }}-0">
