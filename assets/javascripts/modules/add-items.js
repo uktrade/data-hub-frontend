@@ -9,6 +9,7 @@ const {
   regenIds,
   closest,
   removeElement,
+  updateCypressDataAttribute,
 } = require('../lib/helpers')
 
 const Typeahead = require('../vue/typeahead.vue').default
@@ -237,11 +238,18 @@ const AddItems = {
     )
     const attr = this.getItemAttribute()
     const newItem = regenIds(this.template.cloneNode(true), attr)
+    const itemsLength = this.wrapper.querySelectorAll(
+      `${this.settings.itemSelector}`
+    ).length
 
     resetFieldValues(newItem)
 
     if (!lastItem) {
       return this.itemContainer.appendChild(newItem)
+    }
+
+    if (itemsLength > 0) {
+      updateCypressDataAttribute(newItem, itemsLength)
     }
 
     insertAfter(newItem, lastItem)
