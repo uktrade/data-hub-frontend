@@ -7,7 +7,7 @@
  #}
 {% macro ErrorSummary(errors) %}
   {% if errors.messages | length or errors.summary or errors.nonField %}
-    <div class="c-error-summary js-ErrorSummary" role="alert">
+    <div class="c-error-summary js-ErrorSummary" role="alert" data-test="form-alert">
       <h1 class="c-error-summary__heading heading-medium">There was a problem submitting this form</h1>
       {% if errors.nonField %}
         <ul class="c-error-summary__non-field">
