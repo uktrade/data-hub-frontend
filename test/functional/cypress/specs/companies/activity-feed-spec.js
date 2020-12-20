@@ -177,7 +177,9 @@ describe('Company activity feed', () => {
 
   context('when viewing an export enquiry in the activity feed', () => {
     before(() => {
-      cy.visit(urls.companies.activity.index(fixtures.company.venusLtd.id))
+      cy.visit(
+        urls.companies.activity.index(fixtures.company.externalActivitiesLtd.id)
+      )
       cy.get('[data-cy="activity-feed"] select').select('externalActivity')
       cy.get(selectors.companyActivity.activityFeed.item(1)).as('exportEnquiry')
     })
