@@ -11,6 +11,7 @@ import projectAddedCtiFixture from './investment_projects/project_added_cti.json
 import orderAddedFixture from './omis/order_added.json'
 import completeReferralFixture from './referrals/completeReferral.json'
 import outstandingReferralFixture from './referrals/outstandingReferral.json'
+import maxemailCampaignFixture from './maxemail/maxemail-campaign.json'
 
 export default [
   accountsAreDueFixture,
@@ -26,4 +27,5 @@ export default [
   orderAddedFixture,
   completeReferralFixture,
   outstandingReferralFixture,
+  maxemailCampaignFixture,
 ]
