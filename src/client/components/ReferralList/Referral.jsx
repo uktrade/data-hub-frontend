@@ -46,6 +46,7 @@ const Referral = ({
           {subject}
         </Link>
       }
+      headingLevel={2}
       startTime={date}
       badge={
         dateAccepted
