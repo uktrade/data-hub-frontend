@@ -135,10 +135,6 @@ describe('Activity feed controllers', () => {
             middlewareParameters.reqMock,
             expectedEsQuery
           )
-
-          expect(middlewareParameters.resMock.json).to.be.calledOnceWithExactly(
-            activityFeedEsFixtures
-          )
         })
       }
     )
@@ -363,10 +359,6 @@ describe('Activity feed controllers', () => {
         expect(fetchActivityFeedStub).to.be.calledWith(
           middlewareParameters.reqMock,
           expectedEsQuery
-        )
-
-        expect(middlewareParameters.resMock.json).to.be.calledOnceWithExactly(
-          activityFeedEsFixtures
         )
       })
     })
