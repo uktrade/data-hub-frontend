@@ -5,18 +5,20 @@ import {
   assertFieldTextarea,
 } from '../../support/assertions'
 
-const JOSEPH_WOOF_CONTACT_ID = '00131246-fb98-e211-a939-e4115bead28a'
+const WOOF_CONTACT_ID = '00131246-fb98-e211-a939-e4115bead28a'
 const ZBONCAK_COMPANY_ID = '4cd4128b-1bad-4f1e-9146-5d4678c6a018'
 const ZBONCAK_COMPANY_NAME =
   'Zboncak Group|271eb29e-425b-4cd8-b386-3208c3a5f978'
 
 describe('Contact Edit Form Validation', () => {
   before(() => {
-    cy.visit(`/contacts/${JOSEPH_WOOF_CONTACT_ID}/edit`)
-      .get('[data-test="contact-company-link"]')
-      .as('companyLink')
+    cy.visit(`/contacts/${WOOF_CONTACT_ID}/edit`)
       .get('form')
       .as('contactEditForm')
+      .get('[data-test="contact-company-link"]')
+      .as('companyLink')
+      .get('[data-test="return-link"]')
+      .as('returnLink')
   })
 
   it('should render a form with existing contact details', () => {
@@ -107,5 +109,11 @@ describe('Contact Edit Form Validation', () => {
     expectedFields.map(({ identifier, assert, ...rest }) => {
       cy.get(identifier).then((element) => assert({ element, ...rest }))
     })
+  })
+
+  it('should provide a backlink to the contact', () => {
+    cy.get('@returnLink')
+      .should('have.attr', 'href', `/contacts/${WOOF_CONTACT_ID}/details`)
+      .should('have.text', 'Return without saving')
   })
 })
