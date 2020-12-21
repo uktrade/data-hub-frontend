@@ -252,6 +252,9 @@ const assertFieldInput = ({ element, label, hint, value }) =>
         value && cy.wrap($el).should('have.attr', 'value', String(value) || '')
     )
 
+const assertFieldHidden = ({ element, name, value }) =>
+  cy.wrap(element).should('have.attr', 'name', name).should('have.value', value)
+
 const assertFieldTextarea = ({ element, label, hint, value }) =>
   cy
     .wrap(element)
@@ -494,6 +497,7 @@ module.exports = {
   assertFormActions,
   assertFieldDate,
   assertFieldDateShort,
+  assertFieldHidden,
   assertFormFields,
   assertDetails,
   assertLocalHeader,
