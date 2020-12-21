@@ -51,10 +51,10 @@
       {% for fieldName, fieldValue in hiddenFields | removeNilAndEmpty %}
         {% if fieldValue | isArray %}
           {% for value in fieldValue %}
-            <input type="hidden" name="{{ fieldName }}" value="{{ value }}">
+            <input type="hidden" name="{{ fieldName }}" value="{{ value }}" data-test="field-{{ fieldName }}">
           {% endfor %}
         {% else %}
-          <input type="hidden" name="{{ fieldName }}" value="{{ fieldValue }}">
+          <input type="hidden" name="{{ fieldName }}" value="{{ fieldValue }}" data-test="field-{{ fieldName }}">
         {% endif %}
       {% endfor %}
     {% endif %}
@@ -65,6 +65,7 @@
       <div class="c-form-actions {{ props.actionsClass }}">
         {% if not props.hidePrimaryFormAction %}
           <button
+            data-test="submit"
             class="govuk-button js-prevent-multiple-submits {{ buttonModifiers }}"
             {{ 'disabled="disabled"' if props.disableFormAction }}
             {% if buttonDataAttr %}data-auto-id="{{ buttonDataAttr }}"{% endif %}
