@@ -34,7 +34,6 @@ exports.config = {
       'os': 'Windows',
       'os_version': '10',
       'browserName': 'Chrome',
-      'browser_version': '83.0 beta',
       'resolution': '1280x1024'
     },
     {
@@ -70,16 +69,16 @@ exports.config = {
   mochaOpts: {
     timeout: 60000,
   },
-  before: () => {
+  before: function (capabilities, specs, browser) {
     browser.setTimeout({ 'implicit': IMPLICIT_TIMEOUT })
     const wdioImageDiff = new WdioImage(browser, { threshold: 0.2, width: 1792, height: 1008 })
     browser.imageDiff = wdioImageDiff
   },
-  beforeTest: (test) => {
+  beforeTest: function (test) {
     testName = `${test.parent} ${test.title} - ${browser.capabilities.browserName}`
     browser.imageDiff.testName = testName
   },
-  after: () => {
+  after: function () {
     browser.imageDiff.generateReport()
   }
 }
