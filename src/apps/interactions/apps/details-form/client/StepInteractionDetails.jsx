@@ -1,3 +1,5 @@
+import _ from 'lodash'
+import qs from 'qs'
 import React from 'react'
 import { connect } from 'react-redux'
 import { H3 } from '@govuk-react/heading'
@@ -176,6 +178,14 @@ const StepInteractionDetails = ({
   const selectedService = services.find((s) => s.value === selectedServiceId)
   const isServiceDelivery = values.kind === KINDS.SERVICE_DELIVERY
 
+  const helpUrl = (position) =>
+    urls.external.policyFeedbackHelp +
+    '?' +
+    qs.stringify({
+      ..._.pick(values, ['theme', 'kind']),
+      'link-pos': 'box-' + position,
+    })
+
   return (
     <>
       <H3 as="h2">Service</H3>
@@ -186,9 +196,7 @@ const StepInteractionDetails = ({
         intelligence section.
         <br />
         <br />
-        <NewWindowLink href={urls.external.policyFeedbackHelp}>
-          See more guidance
-        </NewWindowLink>
+        <NewWindowLink href={helpUrl(1)}>See more guidance</NewWindowLink>
       </InsetText>
 
       <FieldSelect
@@ -354,7 +362,7 @@ const StepInteractionDetails = ({
           <FieldHelp
             helpSummary="Help with policy issue types"
             helpText="A policy type is the broad category/categories that the information fits into."
-            footerUrl={urls.external.policyFeedbackHelp}
+            footerUrl={helpUrl(2)}
             footerUrlDescription="See more guidance"
           />
 
@@ -370,7 +378,7 @@ const StepInteractionDetails = ({
           <FieldHelp
             helpSummary="Help with policy area(s)"
             helpText="A policy area is the specific area that the information fits into. Completing this enables the correct team(s) to find the information and input into their reports to support businesses and ministers effectively."
-            footerUrl={urls.external.policyFeedbackHelp}
+            footerUrl={helpUrl(3)}
             footerUrlDescription="See more guidance"
           />
 
@@ -400,7 +408,7 @@ const StepInteractionDetails = ({
                 decisions or job creation/losses)? If so, provide details.
               </>
             }
-            footerUrl={urls.external.policyFeedbackHelp}
+            footerUrl={helpUrl(4)}
             footerUrlDescription="See more guidance"
           />
         </>
