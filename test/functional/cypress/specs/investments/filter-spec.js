@@ -95,11 +95,6 @@ describe('Investments Collections Filter', () => {
         'involvement-level-filter',
       ]
       cy.get('[data-cy="company-information-filters"]')
-        .should('exist')
-        .find('button')
-        .should('exist')
-        .next()
-        .should('exist')
         .children()
         .as('filterFields')
 
