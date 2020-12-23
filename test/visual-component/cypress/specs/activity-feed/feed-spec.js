@@ -15,7 +15,7 @@ describe('Empty feed', () => {
 describe('Company feed', () => {
   it('should render the company feed component correctly', () => {
     cy.visit('/iframe.html?id=activityfeed--data-hub-company-page')
-    cy.get('[data-cy="activity-feed"]').should('be.visible')
+    cy.get('[data-test="activity-feed"]').should('be.visible')
     cy.get('#root').should('be.visible').compareSnapshot('company-feed')
   })
 })
