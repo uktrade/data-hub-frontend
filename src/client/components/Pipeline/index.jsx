@@ -56,18 +56,19 @@ const SubTabs = styled(TabNav)`
 
 export default function Pipeline() {
   return (
-    <SubTabs
-      id="PipelineSubTabs"
-      label="Pipeline statuses"
-      routed={true}
-      data-auto-id="pipelineSubTabNav"
-      tabs={STATUS_VALUES.reduce((acc, status) => {
-        acc[status.url()] = {
-          label: status.label,
-          content: <PipelineList status={status.value} />,
-        }
-        return acc
-      }, {})}
-    />
+    <div data-auto-id="pipelineSubTabNav">
+      <SubTabs
+        id="PipelineSubTabs"
+        label="Pipeline statuses"
+        routed={true}
+        tabs={STATUS_VALUES.reduce((acc, status) => {
+          acc[status.url()] = {
+            label: status.label,
+            content: <PipelineList status={status.value} />,
+          }
+          return acc
+        }, {})}
+      />
+    </div>
   )
 }
