@@ -1,6 +1,9 @@
 var now = new Date()
 now.setHours(now.getHours() - 1.1)
 
+var yesterday = new Date()
+yesterday.setHours(yesterday.getHours() - 24)
+
 exports.announcement = {
   count: 3,
   next_page: null,
@@ -23,7 +26,7 @@ exports.announcement = {
       vote_sum: 1,
       vote_count: 1,
       section_id: 360000018069,
-      created_at: now,
+      created_at: yesterday,
       updated_at: '2019-06-25T13:54:08.540Z',
       name: 'Using Sectors in the Find Exporters Tool',
       title: 'Using Sectors in the Find Exporters Tool',
@@ -97,6 +100,18 @@ exports.announcement = {
         '\u003cp\u003eDear Data Hub User,\u003c/p\u003e\n\u003cp\u003eWe would like you to share your experience of using Data Hub. We are continuously working to improve the service and we would like your feedback.\u003cbr\u003ePlease take the time to complete a two minute survey. Your response will be anonymous.\u003c/p\u003e\n\u003cp\u003eThe survey will close on 21 June 2019. Please click on the link below.\u003c/p\u003e\n\u003cp\u003e\u003ca href="https://eur02.safelinks.protection.outlook.com/?url=https%3A%2F%2Fditresearch.eu.qualtrics.com%2Fjfe%2Fform%2FSV_5ub2ocWjlpCosS1\u0026amp;data=02%7C01%7Cjonathan.lilley%40trade.gov.uk%7C6253d94c38144a7529a908d6ea832b22%7C8fa217ec33aa46fbad96dfe68006bb86%7C0%7C0%7C636954246422415815\u0026amp;sdata=r6yQGktmyINrDqO3h%2B%2FP1N5VlNUXv%2B9pYYkztneA%2BJI%3D\u0026amp;reserved=0" target="_self"\u003eDatahub Experience Survey\u003c/a\u003e\u003c/p\u003e\n\u003cp\u003e \u003c/p\u003e\n\u003cp\u003e \u003c/p\u003e\n\u003cp\u003e \u003c/p\u003e',
     },
   ],
+  sort_by: 'position',
+  sort_order: 'asc',
+}
+
+exports.emptyAnnouncement = {
+  count: 0,
+  next_page: null,
+  page: 1,
+  page_count: 1,
+  per_page: 30,
+  previous_page: null,
+  articles: [],
   sort_by: 'position',
   sort_order: 'asc',
 }

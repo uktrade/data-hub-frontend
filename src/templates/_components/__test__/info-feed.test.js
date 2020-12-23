@@ -72,7 +72,7 @@ describe('Info feed component', () => {
 
   describe('Render correct outbound link', () => {
     it('should render outbound link', () => {
-      expect(outboundLink.textContent).to.equal(data.outboundLinkText)
+      expect(outboundLink.textContent.trim()).to.equal(data.outboundLinkText)
       expect(outboundLink.href).to.equal(data.outboundLinkURL)
     })
   })

@@ -20,6 +20,7 @@ async function renderDashboard(req, res, next) {
         auth: {
           bearer: config.helpCentre.token,
         },
+        qs: { test: req.query.test },
         json: true,
         timeout: 1000,
       })
