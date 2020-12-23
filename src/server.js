@@ -43,6 +43,7 @@ const permissions = require('./middleware/permissions')
 const envSchema = require('./config/envSchema')
 const flashWithBody = require('./middleware/flash-with-body')
 const apiProxy = require('./middleware/api-proxy')
+const metadataApiProxy = require('./middleware/metadata-api-proxy')
 
 const routers = require('./apps/routers')
 
@@ -135,6 +136,7 @@ app.use(userLocals)
 app.use(headers)
 app.use(store())
 apiProxy(app)
+metadataApiProxy(app)
 // csrf middleware needs to come after the proxy path as it is not needed for the proxy and would block requests
 app.use(csrf())
 app.use(csrfToken())
