@@ -60,7 +60,7 @@ const startOnRenderPropTypes = {
  * To register a task that always succeeds with the value `123` under the name
  * `'foo'` you can do:
  * `sagaMiddleware.run(taskSagaFactory({foo: payload => Promise.resolve(123)}))`.
- * The acction names are used in the default error view so it's best to keep
+ * The action names are used in the default error view so it's best to keep
  * them human readable.
  * A task can be in three possible states:
  * - Idle: it hasn't started yet, or it has succeeded
