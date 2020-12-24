@@ -1,5 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import axios from 'axios'
+import { throttle } from 'lodash'
 
 import {
   RoutedAdvisersTypeahead,
@@ -47,6 +49,17 @@ const ProjectsCollection = ({
       onSuccessDispatch: INVESTMENTS__PROJECTS_SELECTED_ADVISERS,
     },
   }
+  const fetchProjectStages = () => {
+    return throttle(
+      () =>
+        axios
+          .get('/api-proxy/v4/metadata/investment-project-stage')
+          .then(({ data }) =>
+            data.map(({ id, name }) => ({ value: id, label: name }))
+          ),
+      500
+    )
+  }
   return (
     <FilteredCollectionList
       {...props}
@@ -66,7 +79,7 @@ const ProjectsCollection = ({
             label="Stage"
             name="stage"
             qsParam="stage"
-            options={optionMetadata.projectStageOptions}
+            loadOptions={fetchProjectStages()}
             selectedOptions={selectedFilters.selectedStages}
             data-cy="stage-filter"
           />

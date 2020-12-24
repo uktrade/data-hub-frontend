@@ -90,6 +90,7 @@ import * as investmentProfilesTasks from '../apps/investments/client/profiles/ta
 import {
   TASK_GET_PROJECTS_LIST,
   TASK_GET_ADVISER_NAME,
+  TASK_GET_PROJECT_STAGES,
 } from '../apps/investments/client/projects/state'
 import * as getInvestmentProjects from '../apps/investments/client/projects/tasks'
 
@@ -154,6 +155,7 @@ function App() {
           investmentProfilesTasks.getLargeCapitalProfiles,
         [TASK_GET_PROJECTS_LIST]: getInvestmentProjects.getProjects,
         [TASK_GET_ADVISER_NAME]: getInvestmentProjects.getAdviserNames,
+        [TASK_GET_PROJECT_STAGES]: getInvestmentProjects.getProjectStages,
       }}
     >
       <Mount selector="#add-company-form">
