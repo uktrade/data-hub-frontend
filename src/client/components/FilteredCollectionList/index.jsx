@@ -5,7 +5,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { GridRow, GridCol } from 'govuk-react'
-import Task from '../../../client/components/Task'
+
+import Task from '../Task'
 
 import {
   CollectionSort,
