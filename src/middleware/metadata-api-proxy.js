@@ -59,6 +59,7 @@ module.exports = (app) => {
       try {
         const metadataUrl = req.originalUrl.replace(API_PROXY_PATH, '')
         const responseData = await hawkRequest(config.apiRoot + metadataUrl)
+        res.setHeader('Content-Type', 'application/json')
         res.write(JSON.stringify(responseData))
         res.send()
       } catch (error) {
