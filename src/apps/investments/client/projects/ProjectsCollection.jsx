@@ -49,13 +49,28 @@ const ProjectsCollection = ({
       onSuccessDispatch: INVESTMENTS__PROJECTS_SELECTED_ADVISERS,
     },
   }
-  const fetchProjectStages = () => {
+  const fetchMetadataOptions = (endpoint) => {
     return throttle(
       () =>
         axios
-          .get('/api-proxy/v4/metadata/investment-project-stage')
+          .get(`/api-proxy/v4/metadata/${endpoint}`)
           .then(({ data }) =>
             data.map(({ id, name }) => ({ value: id, label: name }))
+          ),
+      500
+    )
+  }
+  const fetchSectorOptions = () => {
+    return throttle(
+      (searchString) =>
+        axios
+          .get('/api-proxy/v4/metadata/sector', {
+            params: searchString ? { autocomplete: searchString } : {},
+          })
+          .then(({ data }) =>
+            data
+              .filter(({ level }) => level === 0)
+              .map(({ id, name }) => ({ value: id, label: name }))
           ),
       500
     )
@@ -79,7 +94,7 @@ const ProjectsCollection = ({
             label="Stage"
             name="stage"
             qsParam="stage"
-            loadOptions={fetchProjectStages()}
+            loadOptions={fetchMetadataOptions('investment-project-stage')}
             selectedOptions={selectedFilters.selectedStages}
             data-cy="stage-filter"
           />
@@ -100,7 +115,7 @@ const ProjectsCollection = ({
             name="sector"
             qsParam="sector_descends"
             placeholder="Search sectors..."
-            options={optionMetadata.sectorOptions}
+            loadOptions={fetchSectorOptions()}
             selectedOptions={selectedFilters.selectedSectors}
             data-cy="sector-filter"
           />
@@ -110,7 +125,7 @@ const ProjectsCollection = ({
             name="country"
             qsParam="country"
             placeholder="Search countries..."
-            options={optionMetadata.countryOptions}
+            loadOptions={fetchMetadataOptions('country')}
             selectedOptions={selectedFilters.selectedCountries}
             data-cy="country-filter"
           />
@@ -120,7 +135,7 @@ const ProjectsCollection = ({
             name="uk_region"
             qsParam="uk_region"
             placeholder="Search UK regions..."
-            options={optionMetadata.ukRegionOptions}
+            loadOptions={fetchMetadataOptions('uk-region')}
             selectedOptions={selectedFilters.selectedUkRegions}
             data-cy="uk-region-filter"
           />
@@ -136,7 +151,7 @@ const ProjectsCollection = ({
             label="Type of investment"
             name="investment_type"
             qsParam="investment_type"
-            options={optionMetadata.investmentTypeOptions}
+            loadOptions={fetchMetadataOptions('investment-type')}
             selectedOptions={selectedFilters.selectedInvestmentTypes}
             data-cy="investment-type-filter"
           />
@@ -144,7 +159,7 @@ const ProjectsCollection = ({
             label="Likelihood to land"
             name="likelihood_to_land"
             qsParam="likelihood_to_land"
-            options={optionMetadata.likelihoodToLandOptions}
+            loadOptions={fetchMetadataOptions('likelihood-to-land')}
             selectedOptions={selectedFilters.selectedLikelihoodToLands}
             data-cy="likelihood-to-land-filter"
           />
