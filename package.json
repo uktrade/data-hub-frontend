@@ -191,7 +191,7 @@
     "chromedriver": "^85.0.1",
     "codeclimate-test-reporter": "^0.5.0",
     "cucumber": "^4.2.1",
-    "cucumber-html-reporter": "^5.2.0",
+    "cucumber-html-reporter": "^5.3.0",
     "cypress": "^5.5.0",
     "cypress-image-diff-js": "1.7.2",
     "eslint": "^7.17.0",
