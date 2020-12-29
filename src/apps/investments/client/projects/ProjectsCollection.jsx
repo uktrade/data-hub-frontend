@@ -1,8 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
-import { throttle } from 'lodash'
 
+import urls from '../../../../lib/urls'
 import {
   RoutedAdvisersTypeahead,
   RoutedTypeahead,
@@ -16,6 +15,7 @@ import {
 import {
   TASK_GET_PROJECTS_LIST,
   TASK_GET_ADVISER_NAME,
+  TASK_GET_INVESTMENTS_PROJECTS_METADATA,
   ID,
   state2props,
 } from './state'
@@ -23,6 +23,7 @@ import {
 import {
   INVESTMENTS__PROJECTS_LOADED,
   INVESTMENTS__PROJECTS_SELECTED_ADVISERS,
+  INVESTMENTS__SET_PROJECTS_METADATA,
 } from '../../../../client/actions'
 
 const ProjectsCollection = ({
@@ -49,31 +50,21 @@ const ProjectsCollection = ({
       onSuccessDispatch: INVESTMENTS__PROJECTS_SELECTED_ADVISERS,
     },
   }
-  const fetchMetadataOptions = (endpoint) => {
-    return throttle(
-      () =>
-        axios
-          .get(`/api-proxy/v4/metadata/${endpoint}`)
-          .then(({ data }) =>
-            data.map(({ id, name }) => ({ value: id, label: name }))
-          ),
-      500
-    )
-  }
-  const fetchSectorOptions = () => {
-    return throttle(
-      (searchString) =>
-        axios
-          .get('/api-proxy/v4/metadata/sector', {
-            params: searchString ? { autocomplete: searchString } : {},
-          })
-          .then(({ data }) =>
-            data
-              .filter(({ level }) => level === 0)
-              .map(({ id, name }) => ({ value: id, label: name }))
-          ),
-      500
-    )
+  const collectionListMetadataTask = {
+    name: TASK_GET_INVESTMENTS_PROJECTS_METADATA,
+    id: ID,
+    progressMessage: 'loading metadata...',
+    startOnRender: {
+      payload: {
+        projectStageOptions: urls.metadata.investmentProjectStage(),
+        sectorOptions: urls.metadata.sector(),
+        countryOptions: urls.metadata.country(),
+        ukRegionOptions: urls.metadata.ukRegion(),
+        investmentTypeOptions: urls.metadata.investmentType(),
+        likelihoodToLandOptions: urls.metadata.likelihoodToLand(),
+      },
+      onSuccessDispatch: INVESTMENTS__SET_PROJECTS_METADATA,
+    },
   }
   return (
     <FilteredCollectionList
@@ -84,7 +75,7 @@ const ProjectsCollection = ({
       selectedFilters={selectedFilters}
       baseDownloadLink="/investments/projects/export"
     >
-      <CollectionFilters>
+      <CollectionFilters taskProps={collectionListMetadataTask}>
         <ToggleSection
           label="Company information"
           data-cy="company-information-filters"
@@ -94,7 +85,7 @@ const ProjectsCollection = ({
             label="Stage"
             name="stage"
             qsParam="stage"
-            loadOptions={fetchMetadataOptions('investment-project-stage')}
+            options={optionMetadata.projectStageOptions}
             selectedOptions={selectedFilters.selectedStages}
             data-cy="stage-filter"
           />
@@ -115,7 +106,7 @@ const ProjectsCollection = ({
             name="sector"
             qsParam="sector_descends"
             placeholder="Search sectors..."
-            loadOptions={fetchSectorOptions()}
+            options={optionMetadata.sectorOptions}
             selectedOptions={selectedFilters.selectedSectors}
             data-cy="sector-filter"
           />
@@ -125,7 +116,7 @@ const ProjectsCollection = ({
             name="country"
             qsParam="country"
             placeholder="Search countries..."
-            loadOptions={fetchMetadataOptions('country')}
+            options={optionMetadata.countryOptions}
             selectedOptions={selectedFilters.selectedCountries}
             data-cy="country-filter"
           />
@@ -135,7 +126,7 @@ const ProjectsCollection = ({
             name="uk_region"
             qsParam="uk_region"
             placeholder="Search UK regions..."
-            loadOptions={fetchMetadataOptions('uk-region')}
+            options={optionMetadata.ukRegionOptions}
             selectedOptions={selectedFilters.selectedUkRegions}
             data-cy="uk-region-filter"
           />
@@ -151,7 +142,7 @@ const ProjectsCollection = ({
             label="Type of investment"
             name="investment_type"
             qsParam="investment_type"
-            loadOptions={fetchMetadataOptions('investment-type')}
+            options={optionMetadata.investmentTypeOptions}
             selectedOptions={selectedFilters.selectedInvestmentTypes}
             data-cy="investment-type-filter"
           />
@@ -159,7 +150,7 @@ const ProjectsCollection = ({
             label="Likelihood to land"
             name="likelihood_to_land"
             qsParam="likelihood_to_land"
-            loadOptions={fetchMetadataOptions('likelihood-to-land')}
+            options={optionMetadata.likelihoodToLandOptions}
             selectedOptions={selectedFilters.selectedLikelihoodToLands}
             data-cy="likelihood-to-land-filter"
           />
