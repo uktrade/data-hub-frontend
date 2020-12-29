@@ -6,7 +6,7 @@ import {
   actualLandDateAfterLabel,
   adviserLabel,
   countryLabel,
-  countryOptions,
+  // countryOptions,
   estimatedLandDateBeforeLabel,
   estimatedLandDateAfterLabel,
   investmentTypeLabel,
@@ -105,7 +105,7 @@ const buildDatesFilter = ({ value, categoryLabel = '' }) =>
 export const state2props = ({ router, ...state }) => {
   const queryProps = qs.parse(router.location.search.slice(1))
   const filteredQueryProps = collectionListPayload(queryProps)
-  const { selectedAdvisers } = state.projectsList
+  const { selectedAdvisers, countryOptions } = state.projectsList
   const {
     sector_descends = [],
     country = [],
