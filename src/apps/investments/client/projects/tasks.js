@@ -20,6 +20,9 @@ function getProjects({ limit = 10, page, ...rest }) {
     .then(({ data }) => data, handleError)
 }
 
+/**
+ * Get metadata options as a list of values and labels
+ */
 function getMetadataOptions(url) {
   return axios
     .get(url)
@@ -28,6 +31,12 @@ function getMetadataOptions(url) {
     )
 }
 
+/**
+ * Get the top-level sector options as a list of values and labels
+ *
+ * Specifying a searchString uses the autocomplete feature to only show
+ * matching results.
+ */
 function getSectorOptions(url, searchString) {
   return axios
     .get(url, {
@@ -58,13 +67,22 @@ function getAdviserNames(adviser) {
     )
 }
 
-function getMetadata(metadataOptions) {
-  const optionCategories = Object.keys(metadataOptions)
+/**
+ * Get the options for each of the given metadata urls.
+ *
+ * Waits until all urls have been fetched before generating a result.
+ *
+ * @param {object} metadataUrls - a lookup of category names to the api url
+ *
+ * @returns {promise} - the promise containing a list of options for each category
+ */
+function getMetadata(metadataUrls) {
+  const optionCategories = Object.keys(metadataUrls)
   return Promise.all(
     optionCategories.map((name) =>
       name == 'sectorOptions'
-        ? getSectorOptions(metadataOptions[name])
-        : getMetadataOptions(metadataOptions[name])
+        ? getSectorOptions(metadataUrls[name])
+        : getMetadataOptions(metadataUrls[name])
     ),
     handleError
   ).then((results) =>
