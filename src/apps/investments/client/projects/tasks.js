@@ -20,6 +20,26 @@ function getProjects({ limit = 10, page, ...rest }) {
     .then(({ data }) => data, handleError)
 }
 
+function getMetadataOptions(url) {
+  return axios
+    .get(url)
+    .then(({ data }) =>
+      data.map(({ id, name }) => ({ value: id, label: name }))
+    )
+}
+
+function getSectorOptions(url, searchString) {
+  return axios
+    .get(url, {
+      params: searchString ? { autocomplete: searchString } : {},
+    })
+    .then(({ data }) =>
+      data
+        .filter(({ level }) => level === 0)
+        .map(({ id, name }) => ({ value: id, label: name }))
+    )
+}
+
 function getAdviserNames(adviser) {
   if (!adviser) {
     return []
@@ -38,4 +58,20 @@ function getAdviserNames(adviser) {
     )
 }
 
-export { getProjects, getAdviserNames }
+function getMetadata(metadataOptions) {
+  const optionCategories = Object.keys(metadataOptions)
+  return Promise.all(
+    optionCategories.map((name) =>
+      name == 'sectorOptions'
+        ? getSectorOptions(metadataOptions[name])
+        : getMetadataOptions(metadataOptions[name])
+    ),
+    handleError
+  ).then((results) =>
+    Object.fromEntries(
+      results.map((options, index) => [optionCategories[index], options])
+    )
+  )
+}
+
+export { getProjects, getAdviserNames, getMetadata }
