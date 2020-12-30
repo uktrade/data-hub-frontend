@@ -1941,12 +1941,17 @@
       "client_cannot_provide_total_investment": false,
       "client_cannot_provide_foreign_investment": false,
       "client_requirements": "Anywhere",
-      "site_decided": false,
+      "site_decided": true,
       "address_1": "10 Eastings Road",
       "address_2": null,
       "address_town": "London",
       "address_postcode": "W1 2AA",
-      "competitor_countries": [],
+      "competitor_countries": [
+        {
+          "name": "Netherlands",
+          "id": "1950bdb8-5d95-e211-a939-e4115bead28a"
+        }
+      ],
       "allow_blank_possible_uk_regions": false,
       "uk_region_locations": [
         {
@@ -1976,7 +1981,7 @@
           "id": "382aa6d1-a362-4166-a09d-f579d9f3be75"
         }
       ],
-      "client_considering_other_countries": false,
+      "client_considering_other_countries": true,
       "uk_company_decided": null,
       "uk_company": {
         "name": "Mercury Ltd",
