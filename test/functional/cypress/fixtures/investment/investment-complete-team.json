@@ -1,0 +1,54 @@
+{
+  "id": "ba1f0b14-5fe4-4c36-bf6a-ddf115272977",
+  "name": "New zoo (LEP)",
+  "client_relationship_manager": {
+    "name": "Paula Churing",
+    "first_name": "Paula",
+    "last_name": "Churing",
+    "id": "5a644146-5298-4741-91f3-d5d7558adf47"
+  },
+  "client_relationship_manager_team": {
+    "name": "Marketing - Marketing Team",
+    "id": "8248318c-9698-e211-a939-e4115bead28a"
+  },
+  "project_manager": {
+    "name": "Michael Wining",
+    "first_name": "Michael",
+    "last_name": "Wining",
+    "id": "d7493b4e-5d7b-4834-98d9-28b78a74052a"
+  },
+  "project_assurance_adviser": {
+    "name": "John Rogers",
+    "first_name": "John",
+    "last_name": "Rogers",
+    "id": "7bad8082-4978-4fe8-a018-740257f01637"
+  },
+  "project_manager_team": {
+    "name": "Marketing - Marketing Team",
+    "id": "8248318c-9698-e211-a939-e4115bead28a"
+  },
+  "project_assurance_team": {
+    "name": "Marketing - Marketing Team",
+    "id": "8248318c-9698-e211-a939-e4115bead28a"
+  },
+  "team_members": [
+    {
+      "adviser": {
+        "name": "Jenny Carey",
+        "first_name": "Jenny",
+        "last_name": "Carey",
+        "id": "f1eb4363-0a37-4344-bd96-e90abeaf483e"
+      },
+      "role": "Sector adviser"
+    },
+    {
+      "adviser": {
+        "name": "Dennis Kennedy",
+        "first_name": "Dennis",
+        "last_name": "Kennedy",
+        "id": "a6f39399-5bf4-46cb-a686-826f73e9f0ca"
+      },
+      "role": "Region adviser"
+    }
+  ]
+}

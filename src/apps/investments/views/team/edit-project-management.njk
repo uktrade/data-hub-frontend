@@ -5,8 +5,11 @@
 {% set rsa = investment.referral_source_adviser %}
 
 {% block main_grid_right_column %}
-  {% call DetailsContainer({ heading: 'Assign project management' }) %}
-    {% component 'key-value-table', items=briefInvestmentSummary, variant='striped' %}
+  {% call DetailsContainer({ 
+    heading: 'Assign project management', 
+    dataAutoId: 'assign-project-management' 
+  }) %}
+    {% component 'key-value-table', items=briefInvestmentSummary, variant='striped', dataAutoId="project-management-table"%}
   {% endcall %}
 
   {% call Form(form) %}
