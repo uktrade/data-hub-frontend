@@ -45,6 +45,7 @@ async function populateForm(req, res, next) {
         investor_company: get(investment, 'investor_company.id'),
       },
       buttonText: 'Save',
+      buttonDataAttr: 'client-relationship-management-save',
       returnLink: `${projects}/${investment.id}/team`,
       oneListEmail: config.oneList.email,
     })
