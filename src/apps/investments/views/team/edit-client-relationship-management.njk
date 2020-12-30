@@ -1,7 +1,9 @@
 {% extends "../template.njk" %}
 
 {% block main_grid_right_column %}
-  <h2 class="govuk-heading-m">Edit client relationship management</h2>
+  <h2 class="govuk-heading-m" data-test="client-relationship-header">
+    Edit client relationship management
+  </h2>
 
   {% call Form(form) %}
     {{ Typeahead({
@@ -22,7 +24,7 @@
       innerHTML: form.state.global_account_manager
     })) }}
 
-    {% call HiddenContent({ summary: 'Need to edit the Global Account Manager information?' }) %}
+    {% call HiddenContent({ summary: 'Need to edit the Global Account Manager information?', dataTest: 'global-account-manager' }) %}
       {% call Message({ type: 'muted' }) %}
         If you need to change the Global Account Manager for this company,
         go to the <a href="https://workspace.trade.gov.uk/working-at-dit/policies-and-guidance/strategic-relationship-account-management/">Digital Workspace</a>

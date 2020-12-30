@@ -1,0 +1,19 @@
+{
+  "id": "721e2a04-21c3-4172-a321-4368463a4b2d",
+  "name": "New hotel (FDI)",
+  "client_relationship_manager": {
+    "name": "Puck Head",
+    "first_name": "Puck",
+    "last_name": "Head",
+    "id": "e83a608e-84a4-11e6-ae22-56b6b6499611"
+  },
+  "client_relationship_manager_team": {
+    "name": "CBBC North EAST",
+    "id": "602b971d-5df6-e511-888e-e4115bead28a"
+  },
+  "project_manager": null,
+  "project_assurance_adviser": null,
+  "project_manager_team": null,
+  "project_assurance_team": null,
+  "team_members": []
+}

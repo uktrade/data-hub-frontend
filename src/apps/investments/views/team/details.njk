@@ -2,15 +2,21 @@
 
 {% block main_grid_right_column %}
 
-  {% call DetailsContainer({ heading: 'Client relationship management' }) %}
+  {% call DetailsContainer({ 
+    heading: 'Client relationship management',
+    dataAutoId: 'client-relationship-management'
+  }) %}
     {% component 'data-table', {
       columns: clientRelationshipManagementLabels.view,
       data: clientRelationshipManagementData
     } %}
-    <a href="edit-client-relationship-management" class="govuk-button govuk-button--secondary">Change</a>
+    <a href="edit-client-relationship-management" class="govuk-button govuk-button--secondary" data-test="client-relationship-management-button">Change</a>
   {% endcall %}
 
-  {% call DetailsContainer({ heading: 'Project management' }) %}
+  {% call DetailsContainer({ 
+    heading: 'Project management',
+    dataAutoId: 'project-management'
+  }) %}
     {% if stage == 'Prospect' %}
       {{ Message({
         type: 'muted',
@@ -21,26 +27,34 @@
         columns: projectManagementLabels.view,
         data: projectManagementData
       } %}
-      <p><a href="edit-project-management" class="govuk-button govuk-button--secondary">Change</a></p>
+      <p>
+        <a
+          href="edit-project-management"
+          class="govuk-button govuk-button--secondary"
+          data-test="project-management-button"
+        >
+          Change
+        </a>
+      </p>
     {% else %}
       {{ Message({
         type: 'muted',
         text: 'Once both a Project Manager and a Project Assurance have been assigned, the project will move to "Active" stage.'
       }) }}
-      <p><a href="edit-project-management" class="govuk-button">Assign</a></p>
+      <p><a href="edit-project-management" class="govuk-button" data-test="project-management-button">Assign</a></p>
     {% endif %}
   {% endcall %}
 
-  {% call DetailsContainer({ heading: 'Project specialist and team members' }) %}
+  {% call DetailsContainer({ heading: 'Project specialist and team members', dataAutoId: 'project-specialist-team-members' }) %}
     {% component 'data-table', {
       columns: teamMembersLabels.view,
       data: teamMembersData
     } %}
 
-    <a href="edit-team-members" class="govuk-button govuk-button--secondary">Change</a>
+    <a href="edit-team-members" class="govuk-button govuk-button--secondary" data-test="project-specialist-team-members-button">Change</a>
   {% endcall %}
 
-  {% call DetailsContainer({ heading: 'Success verifier' }) %}
+  {% call DetailsContainer({ heading: 'Success verifier', dataAutoId: 'success-verifier' }) %}
     {{ Message({
       type: 'muted',
       text: 'Will be assigned during "Verify win" stage.'
