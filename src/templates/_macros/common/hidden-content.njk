@@ -5,16 +5,25 @@
  # @param {string} props.summary - Summary text to always be visible
  # @param {string} [props.text] - A string to render as the contents
  # @param {function} [props.caller] - Optional inner contents
- #
+ # @param {string} props.dataTest - Optional text for data-test attribute
+ #  
  #}
 {% macro HiddenContent(props) %}
   {%- if props.summary -%}
     <details>
-      <summary>
+      <summary
+        {% if props.dataTest %}
+        data-test="{{ props.dataTest }}-summary"
+        {% endif %}
+      >
         <span class="details__summary">{{ props.summary }}</span>
       </summary>
 
-      <div class="details__content">
+      <div class="details__content"
+        {% if props.dataTest %}
+          data-test="{{ props.dataTest }}-content"
+        {% endif %}
+      >
         {% if caller %}
           {{ caller() }}
         {% else %}

@@ -14,7 +14,11 @@
         {% call MultipleChoiceField(props) %}{% endcall %}
       </noscript>
     </div>
-    <div class="js-vue-wrapper" data-typeahead-type="{{ props.name }}">
+    <div 
+      class="js-vue-wrapper" 
+      data-typeahead-type="{{ props.name }}" 
+      data-test="{{ props.name }}-typeahead"
+    >
       <typeahead
         entity="{{ props.entity }}"
         selected-value="{{ props.value }}"

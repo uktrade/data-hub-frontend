@@ -20,6 +20,9 @@ const LOCAL_NAV = [
   {
     path: 'team',
     label: 'Project team',
+    data: {
+      test: 'project-team',
+    },
   },
   {
     path: 'interactions',
