@@ -1,5 +1,6 @@
 module.exports = () => {
   return {
+    hierarchy: '[data-auto-id="businessHierarchyDetailsContainer"]',
     unarchiveLink: '[data-auto-id="bodyMainContent"] .c-message a',
     whereDoesInformation:
       '[data-auto-id="businessDetailsWhereDoesInformation"]',
