@@ -19,7 +19,10 @@ exports.singleAdviser = function (req, res) {
   const adviserId = pathComponents[pathComponents.length - 2]
   let adviser = autoCompleteAdvisers.results.find(({ id }) => id === adviserId)
   if (!adviser) {
-    adviser = { ...singleAdviser, id: adviserId }
+    adviser = advisers.results.find(({ id }) => id === adviserId)
+    if (!adviser) {
+      adviser = { ...singleAdviser, id: adviserId }
+    }
   }
   res.json(adviser)
 }
