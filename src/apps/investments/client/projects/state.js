@@ -6,28 +6,24 @@ import {
   actualLandDateAfterLabel,
   adviserLabel,
   countryLabel,
-  countryOptions,
   estimatedLandDateBeforeLabel,
   estimatedLandDateAfterLabel,
   investmentTypeLabel,
-  investmentTypeOptions,
   involvementLevelLabel,
   involvementLevelOptions,
   likelihoodToLandLabel,
-  likelihoodToLandOptions,
-  projectStageOptions,
   projectStatusLabel,
   projectStatusOptions,
   sectorLabel,
-  sectorOptions,
   sortOptions,
   ukRegionLabel,
-  ukRegionOptions,
   stageLabel,
 } from './metadata'
 
 export const TASK_GET_PROJECTS_LIST = 'TASK_GET_PROJECTS_LIST'
 export const TASK_GET_ADVISER_NAME = 'TASK_GET_ADVISER_NAME'
+export const TASK_GET_INVESTMENTS_PROJECTS_METADATA =
+  'TASK_GET_INVESTMENTS_PROJECTS_METADATA'
 
 export const ID = 'projectsList'
 
@@ -77,7 +73,7 @@ const collectionListPayload = (paramProps) => {
 /**
  * Build the options filter to include value, label and category label
  */
-const buildOptionsFilter = ({ options, value, categoryLabel = '' }) => {
+const buildOptionsFilter = ({ options = [], value, categoryLabel = '' }) => {
   const optionsFilter = options.filter((option) => value.includes(option.value))
   if (categoryLabel) {
     return optionsFilter.map(({ value, label }) => ({
@@ -105,7 +101,7 @@ const buildDatesFilter = ({ value, categoryLabel = '' }) =>
 export const state2props = ({ router, ...state }) => {
   const queryProps = qs.parse(router.location.search.slice(1))
   const filteredQueryProps = collectionListPayload(queryProps)
-  const { selectedAdvisers } = state.projectsList
+  const { selectedAdvisers, metadata } = state.projectsList
   const {
     sector_descends = [],
     country = [],
@@ -128,22 +124,22 @@ export const state2props = ({ router, ...state }) => {
       categoryLabel: adviserLabel,
     })),
     selectedSectors: buildOptionsFilter({
-      options: sectorOptions,
+      options: metadata.sectorOptions,
       value: sector_descends,
       categoryLabel: sectorLabel,
     }),
     selectedCountries: buildOptionsFilter({
-      options: countryOptions,
+      options: metadata.countryOptions,
       value: country,
       categoryLabel: countryLabel,
     }),
     selectedUkRegions: buildOptionsFilter({
-      options: ukRegionOptions,
+      options: metadata.ukRegionOptions,
       value: uk_region,
       categoryLabel: ukRegionLabel,
     }),
     selectedStages: buildOptionsFilter({
-      options: projectStageOptions,
+      options: metadata.projectStageOptions,
       value: stage,
       categoryLabel: stageLabel,
     }),
@@ -153,12 +149,12 @@ export const state2props = ({ router, ...state }) => {
       categoryLabel: projectStatusLabel,
     }),
     selectedInvestmentTypes: buildOptionsFilter({
-      options: investmentTypeOptions,
+      options: metadata.investmentTypeOptions,
       value: investment_type,
       categoryLabel: investmentTypeLabel,
     }),
     selectedLikelihoodToLands: buildOptionsFilter({
-      options: likelihoodToLandOptions,
+      options: metadata.likelihoodToLandOptions,
       value: likelihood_to_land,
       categoryLabel: likelihoodToLandLabel,
     }),
@@ -189,15 +185,10 @@ export const state2props = ({ router, ...state }) => {
     ...state[ID],
     payload: filteredQueryProps,
     optionMetadata: {
-      countryOptions,
       sortOptions,
-      sectorOptions,
-      ukRegionOptions,
-      projectStageOptions,
       projectStatusOptions,
-      investmentTypeOptions,
-      likelihoodToLandOptions,
       involvementLevelOptions,
+      ...metadata,
     },
     selectedFilters,
   }

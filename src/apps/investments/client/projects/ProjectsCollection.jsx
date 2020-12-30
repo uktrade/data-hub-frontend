@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+import urls from '../../../../lib/urls'
 import {
   RoutedAdvisersTypeahead,
   RoutedTypeahead,
@@ -14,6 +15,7 @@ import {
 import {
   TASK_GET_PROJECTS_LIST,
   TASK_GET_ADVISER_NAME,
+  TASK_GET_INVESTMENTS_PROJECTS_METADATA,
   ID,
   state2props,
 } from './state'
@@ -21,6 +23,7 @@ import {
 import {
   INVESTMENTS__PROJECTS_LOADED,
   INVESTMENTS__PROJECTS_SELECTED_ADVISERS,
+  INVESTMENTS__SET_PROJECTS_METADATA,
 } from '../../../../client/actions'
 
 const ProjectsCollection = ({
@@ -47,6 +50,22 @@ const ProjectsCollection = ({
       onSuccessDispatch: INVESTMENTS__PROJECTS_SELECTED_ADVISERS,
     },
   }
+  const collectionListMetadataTask = {
+    name: TASK_GET_INVESTMENTS_PROJECTS_METADATA,
+    id: ID,
+    progressMessage: 'loading metadata...',
+    startOnRender: {
+      payload: {
+        projectStageOptions: urls.metadata.investmentProjectStage(),
+        sectorOptions: urls.metadata.sector(),
+        countryOptions: urls.metadata.country(),
+        ukRegionOptions: urls.metadata.ukRegion(),
+        investmentTypeOptions: urls.metadata.investmentType(),
+        likelihoodToLandOptions: urls.metadata.likelihoodToLand(),
+      },
+      onSuccessDispatch: INVESTMENTS__SET_PROJECTS_METADATA,
+    },
+  }
   return (
     <FilteredCollectionList
       {...props}
@@ -56,7 +75,7 @@ const ProjectsCollection = ({
       selectedFilters={selectedFilters}
       baseDownloadLink="/investments/projects/export"
     >
-      <CollectionFilters>
+      <CollectionFilters taskProps={collectionListMetadataTask}>
         <ToggleSection
           label="Company information"
           data-cy="company-information-filters"

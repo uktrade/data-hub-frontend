@@ -6,7 +6,7 @@ describe('Metadata', () => {
     cy.request(metadata.headquarterType()).as('headquarterType')
     cy.get('@headquarterType').then((response) => {
       expect(response.status).to.equal(200)
-      expect(response.body).to.equal(
+      expect(JSON.stringify(response.body)).to.equal(
         JSON.stringify([
           {
             id: '3e6debb4-1596-40c5-aa25-f00da0e05af9',
