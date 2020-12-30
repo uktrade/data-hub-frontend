@@ -15,7 +15,7 @@ import {
 } from '../../support/actions'
 
 const PROSPECT_STAGE_ID = '8a320cc9-ae2e-443e-9d26-2f36452c2ced'
-const PUCK_ADVISER_ID = 'e83a608e-84a4-11e6-ae22-56b6b6499611'
+const MY_ADVISER_ID = '7d19d407-9aec-4d06-b190-d3f404627f21'
 const ADVANCED_ENGINEERING_SECTOR_ID = 'af959812-6095-e211-a939-e4115bead28a'
 const UK_COUNTRY_ID = '80756b9a-5d95-e211-a939-e4115bead28a'
 const SOUTH_EAST_UK_REGION_ID = '884cd12a-6095-e211-a939-e4115bead28a'
@@ -51,6 +51,7 @@ const testRemoveChip = ({ element, placeholder = null }) => {
 describe('Investments Collections Filter', () => {
   beforeEach(() => {
     cy.get('[data-cy="stage-filter"]').as('stageFilter')
+    cy.get('[data-cy="my-projects-filter"]').as('myProjectsFilter')
     cy.get('[data-cy="adviser-filter"]').as('adviserFilter')
     cy.get('[data-cy="sector-filter"]').as('sectorFilter')
     cy.get('[data-cy="country-filter"]').as('countryFilter')
@@ -81,6 +82,7 @@ describe('Investments Collections Filter', () => {
     it('should contain filter fields in the right order', () => {
       const expectedIdentifiers = [
         'stage-filter',
+        'my-projects-filter',
         'adviser-filter',
         'sector-filter',
         'country-filter',
@@ -117,6 +119,22 @@ describe('Investments Collections Filter', () => {
       assertChipExists({ label: 'Prospect', position: 1 })
 
       testRemoveChip({ element: '@stageFilter' })
+    })
+
+    it('should filter by my projects', () => {
+      clickCheckboxGroupOption({
+        element: '@myProjectsFilter',
+        value: MY_ADVISER_ID,
+      })
+      assertCheckboxGroupOption({
+        element: '@myProjectsFilter',
+        value: MY_ADVISER_ID,
+        checked: true,
+      })
+      cy.get('@adviserFilter').should('contain', 'Jimmy West')
+      assertChipExists({ label: 'Jimmy West', position: 1 })
+
+      testRemoveChip({ element: '@adviserFilter' })
     })
 
     it('should filter by advisers', () => {
@@ -312,7 +330,7 @@ describe('Investments Collections Filter', () => {
       cy.visit(urls.investments.projects.index(), {
         qs: {
           stage: PROSPECT_STAGE_ID,
-          adviser: PUCK_ADVISER_ID,
+          adviser: MY_ADVISER_ID,
           sector_descends: ADVANCED_ENGINEERING_SECTOR_ID,
           country: UK_COUNTRY_ID,
           uk_region: SOUTH_EAST_UK_REGION_ID,
@@ -334,8 +352,13 @@ describe('Investments Collections Filter', () => {
         value: PROSPECT_STAGE_ID,
         checked: true,
       })
-      assertChipExists({ position: 2, label: 'Puck Head' })
-      cy.get('@adviserFilter').should('contain', 'Puck Head')
+      assertChipExists({ position: 2, label: 'Jimmy West' })
+      assertCheckboxGroupOption({
+        element: '@myProjectsFilter',
+        value: MY_ADVISER_ID,
+        checked: true,
+      })
+      cy.get('@adviserFilter').should('contain', 'Jimmy West')
       assertChipExists({ position: 3, label: 'Advanced Engineering' })
       cy.get('@sectorFilter').should('contain', 'Advanced Engineering')
       assertChipExists({ position: 4, label: 'United Kingdom' })
@@ -416,6 +439,7 @@ describe('Investments Collections Filter', () => {
       cy.get('@countryFilter').should('contain', 'Search countries...')
       cy.get('@ukRegionFilter').should('contain', 'Search UK regions...')
       assertCheckboxGroupNoneSelected('@stageFilter')
+      assertCheckboxGroupNoneSelected('@myProjectsFilter')
       assertCheckboxGroupNoneSelected('@projectStatusFilter')
       assertCheckboxGroupNoneSelected('@investmentTypeFilter')
       assertCheckboxGroupNoneSelected('@likelihoodToLandFilter')
