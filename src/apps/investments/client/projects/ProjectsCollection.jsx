@@ -27,6 +27,7 @@ import {
 
 const ProjectsCollection = ({
   payload,
+  currentAdviserId,
   optionMetadata,
   selectedFilters,
   ...props
@@ -65,6 +66,11 @@ const ProjectsCollection = ({
       onSuccessDispatch: INVESTMENTS__SET_PROJECTS_METADATA,
     },
   }
+  const myProjectsSelected = selectedFilters.selectedAdvisers
+    .map(({ value }) => value)
+    .includes(currentAdviserId)
+  const myProjectsOption = { label: 'My Projects', value: currentAdviserId }
+
   return (
     <FilteredCollectionList
       {...props}
@@ -82,6 +88,14 @@ const ProjectsCollection = ({
           options={optionMetadata.projectStageOptions}
           selectedOptions={selectedFilters.selectedStages}
           data-cy="stage-filter"
+        />
+        <RoutedCheckboxGroupField
+          label="My Projects"
+          name="my_projects"
+          qsParam="adviser"
+          options={[myProjectsOption]}
+          selectedOptions={myProjectsSelected ? [myProjectsOption] : []}
+          data-cy="my-projects-filter"
         />
         <RoutedAdvisersTypeahead
           taskProps={adviserListTask}
