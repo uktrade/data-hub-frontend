@@ -1,3 +1,31 @@
 module.exports = {
-  body: '[data-auto-id="bodyMainContent"]',
+  flash: '[data-test="flash"]',
+  removeMethod: '[data-method="remove"]',
+  addTypeahead: '[data-method="add-typeahead"]',
+  clientRelationship: {
+    button: '[data-test="client-relationship-management-button"]',
+    header: '[data-test="client-relationship-header"]',
+    typeahead: '[data-typeahead-type="client_relationship_manager"]',
+    globalSummary: '[data-test="global-account-manager-summary"]',
+    globalContents: '[data-test="global-account-manager-contents"]',
+    save: '[data-auto-id="client-relationship-management-save"]',
+    table: '[data-auto-id="client-relationship-management-content"]',
+  },
+  projectManagement: {
+    button: '[data-test="project-management-button"]',
+    header: '[data-auto-id="assign-project-management-heading"]',
+    projectInfo: '[data-auto-id="project-management-table"]',
+    assuranceTypeahead: '[data-typeahead-type="project_assurance_adviser"]',
+    pmTypeahead: '[data-typeahead-type="project_manager"]',
+    save: '[data-auto-id="project-management-save"]',
+    table: '[data-auto-id="project-management-content"]',
+  },
+  teamMembers: {
+    button: '[data-test="project-specialist-team-members-button"]',
+    header: '[data-test="assign-team-members-header"]',
+    typeahead: '[data-typeahead-type="adviser"]',
+    teamRole: '[data-test="team-role"]',
+    save: '[data-auto-id="team-members-save"]',
+    table: '[data-auto-id="project-specialist-team-members-content"]',
+  },
 }

@@ -10,5 +10,12 @@ exports.advisers = function (req, res) {
 }
 
 exports.singleAdviser = function (req, res) {
-  res.json(singleAdviser)
+  const pathComponents = req.path.split('/')
+  const adviserId = pathComponents[pathComponents.length - 2]
+
+  let adviser = autoCompleteAdvisor.results.find(({ id }) => id === adviserId)
+  if (!adviser) {
+    adviser = { ...singleAdviser, id: adviserId }
+  }
+  res.json(adviser)
 }

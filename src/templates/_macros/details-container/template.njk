@@ -4,7 +4,11 @@
   {% endif %}
 >
   {% if props.heading %}
-    <h2 class="govuk-heading-m" style="margin-bottom: 0">{{ props.heading }}</h2>
+    <h2 class="govuk-heading-m" style="margin-bottom: 0"
+    {% if props.dataAutoId %}
+      data-auto-id="{{ props.dataAutoId }}-heading"
+    {% endif %}
+    >{{ props.heading }}</h2>
   {% endif %}
 
   {% if props.editUrl %}
@@ -12,7 +16,11 @@
   {% endif %}
 
   {% if caller %}
-    <div class="c-details-container__content">
+    <div class="c-details-container__content"
+    {% if props.dataAutoId %}
+      data-auto-id="{{ props.dataAutoId }}-content"
+    {% endif %}
+    >
       {{ caller() }}
     </div>
   {% endif %}
