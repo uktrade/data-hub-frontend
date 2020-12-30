@@ -2,7 +2,9 @@
 
 {% block local_header %}
   {% set headingBefore %}
-    <a href="/companies/{{ contact.company.id }}">{{contact.company.name}}</a>
+    <a href="/companies/{{ contact.company.id }}" data-test="contact-company-link">
+      {{contact.company.name}}
+    </a>
   {% endset %}
 
   {{
@@ -85,7 +87,11 @@
       error: errors.messages.email
     }) }}
 
-    <fieldset id="group-field-accepts_dit_email_marketing" class="c-form-group">
+    <fieldset
+      id="group-field-accepts_dit_email_marketing"
+      data-test="group-field-accepts_dit_email_marketing"
+      class="c-form-group"
+    >
         <legend class="c-form-group__label u-visually-hidden">
             <span class="c-form-group__label-text">
                 Marketing preferences
@@ -103,7 +109,7 @@
                         <span class="c-form-group__hint" id="hint-group-field-accepts_dit_email_marketing">
                           By checking this box, you confirm that the contact has opted in to email marketing.
                         </span>
-                  </label> 
+                  </label>
             </div>
         </div>
     </fieldset>
