@@ -94,7 +94,7 @@ describe('Investments Collections Filter', () => {
         'actual-land-date-after-filter',
         'involvement-level-filter',
       ]
-      cy.get('[data-cy="company-information-filters"]')
+      cy.get('[data-test="company-information-filters"]')
         .children()
         .as('filterFields')
 
