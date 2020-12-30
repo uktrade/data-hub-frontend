@@ -6,7 +6,9 @@ const CollectionFilters = ({ children, taskProps }) => {
   return (
     <GridCol setWidth="one-third">
       <Task.Status {...taskProps}>
-        {() => <aside>{children}</aside>}
+        {() => (
+          <aside data-test="company-information-filters">{children}</aside>
+        )}
       </Task.Status>
     </GridCol>
   )
