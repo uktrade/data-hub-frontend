@@ -7,7 +7,7 @@ describe('Testing layout feature flag', () => {
           'layoutTesting:9010dd28-9798-e211-a939-e4115bead28a',
           true
         )
-        cy.visit('/layout-testing')
+        cy.visit('/testing/layout')
       })
       it('should display a test layout', () => {
         cy.get('body').should('have.text', 'Testing layout is true')
@@ -25,13 +25,13 @@ describe('Testing layout feature flag', () => {
     () => {
       beforeEach(() => {
         cy.setFeatureFlag('layoutTesting:123456', true)
-        cy.visit('/layout-testing')
+        cy.visit('/testing/layout')
       })
       it('should display a normal layout', () => {
         cy.get('body').should('have.text', 'Testing layout is false')
       })
       it('should not contain any query params in the url', () => {
-        cy.url().should('eq', `${Cypress.config().baseUrl}/layout-testing`)
+        cy.url().should('eq', `${Cypress.config().baseUrl}/testing/layout`)
       })
       after(() => {
         cy.resetFeatureFlags()
@@ -41,13 +41,13 @@ describe('Testing layout feature flag', () => {
 
   context('when "testingLayout" feature flag is turned off', () => {
     beforeEach(() => {
-      cy.visit('/layout-testing')
+      cy.visit('/testing/layout')
     })
     it('should display a normal layout', () => {
       cy.get('body').should('have.text', 'Testing layout is false')
     })
     it('should not contain any query params in the url', () => {
-      cy.url().should('eq', `${Cypress.config().baseUrl}/layout-testing`)
+      cy.url().should('eq', `${Cypress.config().baseUrl}/testing/layout`)
     })
   })
 })
