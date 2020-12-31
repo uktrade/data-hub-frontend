@@ -37,6 +37,7 @@ module.exports = {
     investmentWithNoLink: require('./investment/investment-with-no-link.json'),
     investmentWithLink: require('./investment/investment-with-link.json'),
     newHotelFdi: require('./investment/new-hotel-fdi'),
+    stageWon: require('./investment/investment-stage-won.json'),
   },
   event: {
     oneDayExhibition: require('./event/one-day-exhibition'),
