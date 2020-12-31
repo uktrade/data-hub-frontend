@@ -22,6 +22,13 @@
     currentStageName: investmentStatus.currentStage.name
   }) }}
 
+  {% if investmentStatus.currentStage.name === 'Won' and not investment.archived %}
+      {% call Message({ type: 'info' }) %}
+        This project has been verified as won. You should not make any changes to this project.<br>
+        If you would like to make changes, please contact the Investment Promotion Performance team.
+      {% endcall %}
+  {% endif %}
+
   {% if investment.archived %}
       {% call Message({ type: 'info' }) %}
         This investment project was archived on {{ investment.archived_on | formatDate }} by {{ investment.archived_by.first_name }} {{ investment.archived_by.last_name }}. <br>
