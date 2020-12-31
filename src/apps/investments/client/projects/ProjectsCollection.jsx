@@ -32,6 +32,8 @@ const ProjectsCollection = ({
   selectedFilters,
   ...props
 }) => {
+  payload.page = parseInt(payload.page) || 1
+
   const collectionListTask = {
     name: TASK_GET_PROJECTS_LIST,
     id: ID,
