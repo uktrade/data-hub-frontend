@@ -192,6 +192,7 @@ module.exports = {
   },
   contacts: {
     index: url('/contacts'),
+    export: url('/contacts', '/export'),
     audit: url('/contacts', '/:contactId/audit'),
     contact: url('/contacts', '/:contactId'),
     create: url('/contacts/create?company=', ':companyId'),
@@ -217,11 +218,13 @@ module.exports = {
     ...createInteractionsSubApp('/interactions'),
     activeEvents: url('/activeEvents'),
     activeEventsData: url('/interactions', '/activeEvents'),
+    export: url('/interactions', '/export'),
   },
   investments: {
     index: url('/investments'),
     projects: {
       index: url('/investments', '/projects'),
+      export: url('/investments', '/projects', '/export'),
       details: url('/investments', '/projects/:investmentId/details'),
       editDetails: url('/investments', '/projects/:investmentId/edit-details'),
       editRequirements: url(
@@ -367,6 +370,7 @@ module.exports = {
   },
   omis: {
     index: url('/omis'),
+    export: url('/omis', '/export'),
     create: url('/omis/create?company=', ':companyId'),
     order: url('/omis', '/:orderId'),
     paymentReceipt: url('/omis', '/:orderId/payment-receipt'),
