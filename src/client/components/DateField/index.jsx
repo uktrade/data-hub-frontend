@@ -38,6 +38,7 @@ const DateField = ({
         key={name}
         name={name}
         value={value}
+        aria-label={label}
         type="date"
         onChange={(e) => {
           setValue(e.target.value)
