@@ -58,7 +58,7 @@ storiesOf('Typeahead/Single select', module)
       name="test_2"
       options={options}
       placeholder="Search..."
-      value={options[2]}
+      defaultValue={options[2]}
     />
   ))
   .add('Small', () => (
