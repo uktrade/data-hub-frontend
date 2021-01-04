@@ -111,9 +111,16 @@ const StyledHint = styled(HintText)`
   `}
 `
 
-const FieldInner = ({ legend, error, showBorder, children, bigLegend }) =>
-  legend ? (
-    <StyledFieldset showBorder={showBorder}>
+const FieldInner = ({
+  legend,
+  error,
+  showBorder,
+  children,
+  asFieldset,
+  bigLegend,
+}) => {
+  const content = legend ? (
+    <>
       <StyledLegend
         className="govuk-heading-m"
         error={error}
@@ -123,10 +130,16 @@ const FieldInner = ({ legend, error, showBorder, children, bigLegend }) =>
         {legend}
       </StyledLegend>
       {children}
-    </StyledFieldset>
+    </>
   ) : (
     children
   )
+  if (legend || asFieldset) {
+    return <StyledFieldset showBorder={showBorder}>{content}</StyledFieldset>
+  } else {
+    return content
+  }
+}
 
 const FieldWrapper = ({
   name,
@@ -140,6 +153,7 @@ const FieldWrapper = ({
   reduced,
   reducedPadding,
   isIE,
+  asFieldset,
   ...rest
 }) => (
   <StyledFormGroup
@@ -155,6 +169,7 @@ const FieldWrapper = ({
       error={error}
       showBorder={showBorder}
       bigLegend={bigLegend}
+      asFieldset={asFieldset}
     >
       {label && (
         <StyledLabel error={error} htmlFor={name}>
@@ -176,16 +191,18 @@ FieldInner.propTypes = {
   legend: PropTypes.node,
   error: PropTypes.string,
   showBorder: PropTypes.bool,
-  children: PropTypes.node,
   bigLegend: PropTypes.bool,
+  asFieldset: PropTypes.bool,
+  children: PropTypes.node,
 }
 
 FieldInner.defaultProps = {
   legend: null,
   error: null,
   showBorder: false,
-  children: null,
   bigLegend: false,
+  asFieldset: null,
+  children: null,
 }
 
 FieldWrapper.propTypes = {
@@ -195,6 +212,7 @@ FieldWrapper.propTypes = {
   hint: PropTypes.node,
   error: PropTypes.string,
   showBorder: PropTypes.bool,
+  asFieldset: PropTypes.bool,
   children: PropTypes.node,
 }
 
@@ -205,6 +223,7 @@ FieldWrapper.defaultProps = {
   error: null,
   showBorder: false,
   children: null,
+  asFieldset: null,
 }
 
 export default FieldWrapper
