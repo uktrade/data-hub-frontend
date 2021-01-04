@@ -1,0 +1,96 @@
+{
+  "took": 45,
+  "timed_out": false,
+  "_shards": {
+    "total": 45,
+    "successful": 45,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": {
+      "value": 1,
+      "relation": "eq"
+    },
+    "max_score": null,
+    "hits": [
+      {
+        "_index": "activities__feed_id_datahub-interactions__date_2020-12-20__timestamp_1608457808__batch_id_4xvly80n__",
+        "_type": "_doc",
+        "_id": "dit:DataHubInteraction:a0d16f51-a2af-42e9-9363-84528120379b:Announce",
+        "_score": null,
+        "_source": {
+          "generator": {
+            "name": "dit:dataHub",
+            "type": "Application"
+          },
+          "id": "dit:DataHubInteraction:a0d16f51-a2af-42e9-9363-84528120379b:Announce",
+          "object": {
+            "attributedTo": [
+              {
+                "dit:companiesHouseNumber": null,
+                "dit:dunsNumber": "622604416",
+                "id": "dit:DataHubCompany:6bc15745-2b2a-4e96-8993-60f8eeb32af0",
+                "name": "Google International LLC",
+                "type": [
+                  "Organization",
+                  "dit:Company"
+                ]
+              },
+              {
+                "dit:emailAddress": "paul.gain@digital.trade.gov.uk",
+                "dit:team": {
+                  "id": "dit:DataHubTeam:76a9ed9f-c9ff-4569-8a9a-8f20b63c97ef",
+                  "name": "Digital Data Hub - Live Service",
+                  "type": [
+                    "Group",
+                    "dit:Team"
+                  ]
+                },
+                "id": "dit:DataHubAdviser:73d89d55-68b2-4bb9-9c7c-eedbb1548b94",
+                "name": "Paul Gain",
+                "type": [
+                  "Person",
+                  "dit:Adviser"
+                ]
+              },
+              {
+                "dit:emailAddress": "jack.daniels@jd.com",
+                "dit:jobTitle": "Senior Consultant",
+                "id": "dit:DataHubContact:db7d3035-4ff6-424e-ac66-cdb2a9363808",
+                "name": "Jack Daniels",
+                "type": [
+                  "Person",
+                  "dit:Contact"
+                ],
+                "url": "https://www.datahub.dev.uktrade.io/contacts/db7d3035-4ff6-424e-ac66-cdb2a9363808"
+              }
+            ],
+            "dit:archived": false,
+            "dit:communicationChannel": {
+              "name": "Email/Website"
+            },
+            "dit:service": {
+              "name": "A Specific DIT Export Service or Funding : Export Academy"
+            },
+            "dit:status": "complete",
+            "dit:subject": "Webinar",
+            "id": "dit:DataHubInteraction:a0d16f51-a2af-42e9-9363-84528120379b",
+            "startTime": "2020-12-20T00:00:00Z",
+            "type": [
+              "dit:Event",
+              "dit:Interaction"
+            ],
+            "url": "https://www.datahub.dev.uktrade.io/interactions/a0d16f51-a2af-42e9-9363-84528120379b"
+          },
+          "published": "2020-12-20T09:13:29.813473Z",
+          "type": "Announce"
+        },
+        "sort": [
+          1608422400000
+        ]
+      }
+    ]
+  }
+}
+

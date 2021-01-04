@@ -24,6 +24,7 @@ import orderAddedFixture from '../__fixtures__/omis/order_added.json'
 import completeReferralFixture from '../__fixtures__/referrals/completeReferral.json'
 import outstandingReferralFixture from '../__fixtures__/referrals/outstandingReferral.json'
 import exportEnquiryFixture from '../__fixtures__/great_gov_uk_forms/export-enquiry.json'
+import maxemailCampaignFixture from '../__fixtures__/maxemail/maxemail-campaign.json'
 
 addDecorator(withKnobs)
 class ActivityFeedDemoApp extends React.Component {
@@ -72,6 +73,7 @@ class ActivityFeedDemoApp extends React.Component {
         incorporatedFixture,
         exportOfGoodsFixture,
         exportEnquiryFixture,
+        maxemailCampaignFixture,
       ],
       [dataHubActivity.value]: [
         completeReferralFixture,

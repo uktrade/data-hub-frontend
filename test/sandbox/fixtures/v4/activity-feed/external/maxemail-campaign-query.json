@@ -1,0 +1,15 @@
+{
+  "size": 20,
+  "sort": [
+    {
+      "published": {
+        "order": "desc"
+      }
+    }
+  ],
+  "query": {
+    "term": {
+      "object.type": "dit:maxemail:Campaign"
+    }
+  }
+}

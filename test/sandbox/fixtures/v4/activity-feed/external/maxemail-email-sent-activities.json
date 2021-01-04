@@ -1,0 +1,179 @@
+{
+  "took" : 26,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 54,
+    "successful" : 54,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 26,
+      "relation" : "eq"
+    },
+    "max_score" : null,
+    "hits" : [
+      {
+        "_index" : "activities__feed_id_maxemail__date_2020-12-15__timestamp_1607994790__batch_id_gzq0krjv__",
+        "_type" : "_doc",
+        "_id" : "dit:maxemail:Email:Sent:1:2020-12-15T00:15:04:max.speed@example.com:Create",
+        "_score" : null,
+        "_source" : {
+          "dit:application" : "maxemail",
+          "id" : "dit:maxemail:Email:Sent:1:2020-12-15T00:15:04:max.speed@example.com:Create",
+          "object" : {
+            "attributedTo" : {
+              "content" : "All the latest updates from around the BBN",
+              "dit:emailSubject" : "British Business Network Update - December 2020",
+              "dit:maxemail:Campaign:id" : 1,
+              "id" : "dit:maxemail:Campaign:1",
+              "name" : "AU_SH_BBN_Newsletter_Dec2020",
+              "published" : "2020-12-15T00:15:03",
+              "type" : "dit:maxemail:Campaign"
+            },
+            "dit:emailAddress" : "max.speed@example.com",
+            "id" : "dit:maxemail:Email:Sent:1:2020-12-15T00:15:04:max.speed@example.com",
+            "type" : [
+              "dit:maxemail:Email",
+              "dit:maxemail:Email:Sent"
+            ]
+          },
+          "published" : "2020-12-15T00:15:04",
+          "type" : "Create"
+        },
+        "sort" : [
+          1607991304000
+        ]
+      },
+      {
+        "_index" : "activities__feed_id_maxemail__date_2020-12-15__timestamp_1607994790__batch_id_gzq0krjv__",
+        "_type" : "_doc",
+        "_id" : "dit:maxemail:Email:Sent:1:2020-12-15T00:15:04:max.weight@example.com:Create",
+        "_score" : null,
+        "_source" : {
+          "dit:application" : "maxemail",
+          "id" : "dit:maxemail:Email:Sent:1:2020-12-15T00:15:04:max.weight@example.com:Create",
+          "object" : {
+            "attributedTo" : {
+              "content" : "All the latest updates from around the BBN",
+              "dit:emailSubject" : "British Business Network Update - December 2020",
+              "dit:maxemail:Campaign:id" : 1,
+              "id" : "dit:maxemail:Campaign:1",
+              "name" : "AU_SH_BBN_Newsletter_Dec2020",
+              "published" : "2020-12-15T00:15:03",
+              "type" : "dit:maxemail:Campaign"
+            },
+            "dit:emailAddress" : "max.weight@example.com",
+            "id" : "dit:maxemail:Email:Sent:1:2020-12-15T00:15:04:max.weight@example.com",
+            "type" : [
+              "dit:maxemail:Email",
+              "dit:maxemail:Email:Sent"
+            ]
+          },
+          "published" : "2020-12-15T00:15:04",
+          "type" : "Create"
+        },
+        "sort" : [
+          1607991304000
+        ]
+      },
+      {
+        "_index" : "activities__feed_id_maxemail__date_2020-12-15__timestamp_1607994790__batch_id_gzq0krjv__",
+        "_type" : "_doc",
+        "_id" : "dit:maxemail:Email:Sent:1:2020-12-15T00:15:03:max.height@example.com:Create",
+        "_score" : null,
+        "_source" : {
+          "dit:application" : "maxemail",
+          "id" : "dit:maxemail:Email:Sent:1:2020-12-15T00:15:03:max.height@example.com:Create",
+          "object" : {
+            "attributedTo" : {
+              "content" : "All the latest updates from around the BBN",
+              "dit:emailSubject" : "British Business Network Update - December 2020",
+              "dit:maxemail:Campaign:id" : 1,
+              "id" : "dit:maxemail:Campaign:1",
+              "name" : "AU_SH_BBN_Newsletter_Dec2020",
+              "published" : "2020-12-15T00:15:03",
+              "type" : "dit:maxemail:Campaign"
+            },
+            "dit:emailAddress" : "max.height@example.com",
+            "id" : "dit:maxemail:Email:Sent:1:2020-12-15T00:15:03:max.height@example.com",
+            "type" : [
+              "dit:maxemail:Email",
+              "dit:maxemail:Email:Sent"
+            ]
+          },
+          "published" : "2020-12-15T00:15:03",
+          "type" : "Create"
+        },
+        "sort" : [
+          1607991303000
+        ]
+      },
+      {
+        "_index" : "activities__feed_id_maxemail__date_2020-12-15__timestamp_1607994790__batch_id_gzq0krjv__",
+        "_type" : "_doc",
+        "_id" : "dit:maxemail:Email:Sent:3:2020-12-04T03:13:15:max.weight@example.com:Create",
+        "_score" : null,
+        "_source" : {
+          "dit:application" : "maxemail",
+          "id" : "dit:maxemail:Email:Sent:3:2020-12-04T03:13:15:max.weight@example.com:Create",
+          "object" : {
+            "attributedTo" : {
+              "content" : "[recipient:Recipient.First Name;Hi there] join us for a discussion with Vivien Life and Elisabeth Bowes",
+              "dit:emailSubject" : "Invitation: Round 3 of UK-AUS Free Trade Agreement Negotiations: Discussion with Chief Negotiators",
+              "dit:maxemail:Campaign:id" : 3,
+              "id" : "dit:maxemail:Campaign:3",
+              "name" : "AU_LP_FTA_R3_Webinar_Dec20",
+              "published" : "2020-12-04T03:13:03",
+              "type" : "dit:maxemail:Campaign"
+            },
+            "dit:emailAddress" : "max.weight@example.com",
+            "id" : "dit:maxemail:Email:Sent:3:2020-12-04T03:13:15:max.weight@example.com",
+            "type" : [
+              "dit:maxemail:Email",
+              "dit:maxemail:Email:Sent"
+            ]
+          },
+          "published" : "2020-12-04T03:13:15",
+          "type" : "Create"
+        },
+        "sort" : [
+          1607051595000
+        ]
+      },
+      {
+        "_index" : "activities__feed_id_maxemail__date_2020-12-15__timestamp_1607994790__batch_id_gzq0krjv__",
+        "_type" : "_doc",
+        "_id" : "dit:maxemail:Email:Sent:4:2020-12-02T03:27:15:max.height@example.com:Create",
+        "_score" : null,
+        "_source" : {
+          "dit:application" : "maxemail",
+          "id" : "dit:maxemail:Email:Sent:4:2020-12-02T03:27:15:max.height@example.com:Create",
+          "object" : {
+            "attributedTo" : {
+              "content" : "Catch up on the latest",
+              "dit:emailSubject" : "News and updates from the UK's Department for International Trade",
+              "dit:maxemail:Campaign:id" : 4,
+              "id" : "dit:maxemail:Campaign:4",
+              "name" : "AU_LP_Newsletter_Dec_Short",
+              "published" : "2020-12-02T03:26:02",
+              "type" : "dit:maxemail:Campaign"
+            },
+            "dit:emailAddress" : "max.height@example.com",
+            "id" : "dit:maxemail:Email:Sent:4:2020-12-02T03:27:15:max.height@example.com",
+            "type" : [
+              "dit:maxemail:Email",
+              "dit:maxemail:Email:Sent"
+            ]
+          },
+          "published" : "2020-12-02T03:27:15",
+          "type" : "Create"
+        },
+        "sort" : [
+          1606879635000
+        ]
+      }
+    ]
+  }
+}

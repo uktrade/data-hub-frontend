@@ -1,9 +1,13 @@
-const externalActivity = require('./external-activity')
-const dataHubActivity = require('./data-hub-activity')
-const myActivity = require('./my-activity')
+const maxemailEmailSentQuery = require('./maxemail-email-sent-query')
+const maxemailCampaignQuery = require('./maxemail-campaign-query')
+const externalActivityQuery = require('./external-activity-query')
+const dataHubActivityQuery = require('./data-hub-activity-query')
+const myActivityQuery = require('./my-activity-query')
 
 module.exports = {
-  myActivity,
-  dataHubActivity,
-  externalActivity,
+  myActivityQuery,
+  dataHubActivityQuery,
+  externalActivityQuery,
+  maxemailCampaignQuery,
+  maxemailEmailSentQuery,
 }

@@ -1,0 +1,146 @@
+{
+  "actor": {
+    "dit:emailAddress": "gde.news@example.gov.uk",
+    "id": "dit:maxemail:Sender:gde.news@example.gov.uk",
+    "name": "Sarah Bow",
+    "type": [
+      "Organization",
+      "dit:maxemail:Sender"
+    ]
+  },
+  "dit:application": "maxemail",
+  "id": "dit:maxemail:Campaign:1:Create",
+  "object": {
+    "content": "All the latest updates from around the BBN",
+    "dit:emailSubject": "British Business Network Update - December 2020",
+    "dit:maxemail:Campaign:id": 1,
+    "id": "dit:maxemail:Campaign:1",
+    "name": "Newsletter_Dec2020",
+    "published": "2020-09-28T17:12:16",
+    "type": "dit:maxemail:Campaign",
+    "contacts": [
+      {
+        "id": "9136dd49-df67-4b2b-b241-6b64a662f1af",
+        "title": null,
+        "first_name": "Max",
+        "last_name": "Speed",
+        "name": "Max Speed",
+        "job_title": "Manager",
+        "company": {
+          "name": "Bollo Bridge Road Post Office",
+          "id": "6df487c5-7c75-4672-8907-f74b49e6c635"
+        },
+        "adviser": {
+          "name": "Paul Gain",
+          "first_name": "Paul",
+          "last_name": "Gain",
+          "id": "73d89d55-68b2-4bb9-9c7c-eedbb1548b94"
+        },
+        "primary": true,
+        "telephone_countrycode": "0044",
+        "telephone_number": "7455678334",
+        "email": "max.speed@example.com",
+        "address_same_as_company": true,
+        "address_1": null,
+        "address_2": null,
+        "address_town": null,
+        "address_county": null,
+        "address_country": null,
+        "address_postcode": null,
+        "telephone_alternative": null,
+        "email_alternative": null,
+        "notes": null,
+        "archived": false,
+        "archived_documents_url_path": "",
+        "archived_on": null,
+        "archived_reason": null,
+        "archived_by": null,
+        "created_on": "2020-12-15T11:06:40.094944Z",
+        "modified_on": "2020-12-15T11:09:42.233040Z",
+        "url": "/contacts/9136dd49-df67-4b2b-b241-6b64a662f1af/details"
+      },
+      {
+        "id": "236f8b6c-afac-4fba-a8eb-5739aa14823a",
+        "title": null,
+        "first_name": "Max",
+        "last_name": "Weight",
+        "name": "Max Weight",
+        "job_title": "Associate",
+        "company": {
+          "name": "Bollo Bridge Road Post Office",
+          "id": "6df487c5-7c75-4672-8907-f74b49e6c635"
+        },
+        "adviser": {
+          "name": "Paul Gain",
+          "first_name": "Paul",
+          "last_name": "Gain",
+          "id": "73d89d55-68b2-4bb9-9c7c-eedbb1548b94"
+        },
+        "primary": false,
+        "telephone_countrycode": "0044",
+        "telephone_number": "7455678334",
+        "email": "max.weight@example.com",
+        "address_same_as_company": true,
+        "address_1": null,
+        "address_2": null,
+        "address_town": null,
+        "address_county": null,
+        "address_country": null,
+        "address_postcode": null,
+        "telephone_alternative": null,
+        "email_alternative": null,
+        "notes": null,
+        "archived": false,
+        "archived_documents_url_path": "",
+        "archived_on": null,
+        "archived_reason": null,
+        "archived_by": null,
+        "created_on": "2020-12-15T11:09:01.944896Z",
+        "modified_on": "2020-12-15T11:09:01.944918Z",
+        "url": "/contacts/236f8b6c-afac-4fba-a8eb-5739aa14823a/details"
+      },
+      {
+        "id": "335369fc-b010-4730-97aa-10e66315b821",
+        "title": null,
+        "first_name": "Max",
+        "last_name": "Height",
+        "name": "Max Height",
+        "job_title": "Senior Dude",
+        "company": {
+          "name": "Bollo Bridge Road Post Office",
+          "id": "6df487c5-7c75-4672-8907-f74b49e6c635"
+        },
+        "adviser": {
+          "name": "Paul Gain",
+          "first_name": "Paul",
+          "last_name": "Gain",
+          "id": "73d89d55-68b2-4bb9-9c7c-eedbb1548b94"
+        },
+        "primary": true,
+        "telephone_countrycode": "0044",
+        "telephone_number": "7455678334",
+        "email": "max.height@example.com",
+        "address_same_as_company": true,
+        "address_1": null,
+        "address_2": null,
+        "address_town": null,
+        "address_county": null,
+        "address_country": null,
+        "address_postcode": null,
+        "telephone_alternative": null,
+        "email_alternative": null,
+        "notes": null,
+        "archived": false,
+        "archived_documents_url_path": "",
+        "archived_on": null,
+        "archived_reason": null,
+        "archived_by": null,
+        "created_on": "2020-12-15T11:07:40.257005Z",
+        "modified_on": "2020-12-15T11:07:40.257031Z",
+        "url": "/contacts/335369fc-b010-4730-97aa-10e66315b821/details"
+      }
+    ]
+  },
+  "published": "2020-09-28T17:12:16",
+  "type": "Create"
+}

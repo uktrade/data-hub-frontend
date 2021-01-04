@@ -46,5 +46,13 @@
   {
     "code": "companies-matching",
     "is_active": true
+  },
+  {
+    "code": "activity-feed-export-enquiry",
+    "is_active": true
+  },
+  {
+    "code": "activity-feed-maxemail-campaign",
+    "is_active": true
   }
 ]

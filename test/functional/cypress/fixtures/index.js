@@ -17,6 +17,7 @@ module.exports = {
     oneListCorp: require('../../../../test/sandbox/fixtures/v4/company/company-one-list-corp.json'),
     someOtherCompany: require('../../../../test/sandbox/fixtures/v4/company/company-some-other-company.json'),
     venusLtd: require('../../../../test/sandbox/fixtures/v4/company/company-with-investment-1'),
+    externalActivitiesLtd: require('../../../../test/sandbox/fixtures/v4/company/company-with-external-activities.json'),
     withContacts: require('../../../../test/sandbox/fixtures/v4/company/company-with-contacts.json'),
     oneListTierDita: require('../../../../test/sandbox/fixtures/v4/company/company-one-list-tier-d-ita.json'),
     addInteractionError: require('../../../../test/sandbox/fixtures/v4/company/company-validation-error.json'),

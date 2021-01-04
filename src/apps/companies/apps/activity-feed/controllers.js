@@ -12,9 +12,11 @@ const { fetchActivityFeed } = require('./repos')
 const config = require('../../../../config')
 
 const {
-  myActivity,
-  dataHubActivity,
-  externalActivity,
+  myActivityQuery,
+  dataHubActivityQuery,
+  externalActivityQuery,
+  maxemailCampaignQuery,
+  maxemailEmailSentQuery,
 } = require('./es-queries')
 
 async function renderActivityFeed(req, res, next) {
@@ -73,28 +75,87 @@ async function renderActivityFeed(req, res, next) {
 
 function getQueries(options, isExportEnquiriesEnabled) {
   return {
-    [FILTER_KEYS.myActivity]: myActivity({
+    [FILTER_KEYS.myActivity]: myActivityQuery({
       ...options,
       types: DATA_HUB_ACTIVITY,
     }),
-    [FILTER_KEYS.dataHubActivity]: dataHubActivity({
+    [FILTER_KEYS.dataHubActivity]: dataHubActivityQuery({
       ...options,
       types: DATA_HUB_ACTIVITY,
     }),
-    [FILTER_KEYS.externalActivity]: externalActivity(
+    [FILTER_KEYS.externalActivity]: externalActivityQuery(
       {
         ...options,
         types: EXTERNAL_ACTIVITY,
       },
       isExportEnquiriesEnabled
     ),
-    [FILTER_KEYS.dataHubAndExternalActivity]: externalActivity(
+    [FILTER_KEYS.dataHubAndExternalActivity]: externalActivityQuery(
       {
         ...options,
         types: DATA_HUB_AND_EXTERNAL_ACTIVITY,
       },
       isExportEnquiriesEnabled
     ),
+  }
+}
+
+function isExternalFilter(activityTypeFilter) {
+  return (
+    activityTypeFilter === FILTER_KEYS.externalActivity ||
+    activityTypeFilter === FILTER_KEYS.dataHubAndExternalActivity
+  )
+}
+
+function getContactFromEmailAddress(emailAddress, contacts) {
+  const contact = contacts.find((contact) => contact.email === emailAddress)
+  return contact
+    ? {
+        ...contact,
+        url: urls.contacts.details(contact.id),
+      }
+    : null
+}
+
+async function getMaxemailCampaigns(req, next, contacts) {
+  try {
+    // Fetch Maxemail campaigns
+    const campaignQuery = maxemailCampaignQuery()
+    const campaignsResults = await fetchActivityFeed(req, campaignQuery)
+    const campaignActivities = campaignsResults.hits.hits.map(
+      (hit) => hit._source
+    )
+
+    // Fetch all Maxemail emails sent to Data Hub company contacts as part of a campaign
+    const emailSentQuery = maxemailEmailSentQuery(contacts)
+    const emailSentResults = await fetchActivityFeed(req, emailSentQuery)
+    const emailSentActivities = emailSentResults.hits.hits.map(
+      (hit) => hit._source
+    )
+
+    // Group Data Hub company contacts to a campaign
+    campaignActivities.forEach((campaign) => {
+      campaign.object.contacts = []
+      const campaignId = campaign.object['dit:maxemail:Campaign:id']
+      emailSentActivities.forEach((emailSent) => {
+        const sentEmailCampaignId =
+          emailSent.object.attributedTo['dit:maxemail:Campaign:id']
+        if (campaignId === sentEmailCampaignId) {
+          const emailAddress = emailSent.object['dit:emailAddress']
+          const contact = getContactFromEmailAddress(emailAddress, contacts)
+          if (contact) {
+            campaign.object.contacts.push(contact)
+          }
+        }
+      })
+    })
+
+    // We only want campaigns that have at least one contact
+    return campaignActivities.filter(
+      (campaign) => campaign.object.contacts.length
+    )
+  } catch (error) {
+    next(error)
   }
 }
 
@@ -135,7 +196,20 @@ async function fetchActivityFeedHandler(req, res, next) {
       queries[activityTypeFilter] || queries[FILTER_KEYS.dataHubActivity]
     )
 
-    res.json(results)
+    let activities = results.hits.hits.map((hit) => hit._source)
+    let total = results.hits.total.value
+
+    const isMaxemailEnabled = features['activity-feed-maxemail-campaign']
+    if (isExternalFilter(activityTypeFilter) && isMaxemailEnabled) {
+      const campaigns = await getMaxemailCampaigns(req, next, company.contacts)
+      activities = [...activities, ...campaigns]
+      total += campaigns.length
+    }
+
+    res.json({
+      total,
+      activities,
+    })
   } catch (error) {
     next(error)
   }
