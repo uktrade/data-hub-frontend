@@ -20,17 +20,18 @@ exports.investmentProjectAudit = function (req, res) {
 }
 
 exports.patchInvestmentProject = function (req, res) {
-  if (
-    !(
-      req.body &&
+  if (req.body) {
+    if (req.body.associated_non_fdi_r_and_d_project) {
+      res.sendStatus(200)
+    } else if (
       req.body.client_requirements &&
       req.body.client_requirements.length
-    )
-  ) {
-    return res.json(400, {
-      client_requirements: ['required'],
-    })
+    ) {
+      res.sendStatus(200)
+    }
   }
 
-  return res.sendStatus(200)
+  return res.json(400, {
+    client_requirements: ['required'],
+  })
 }

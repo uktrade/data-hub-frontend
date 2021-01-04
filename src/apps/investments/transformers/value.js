@@ -142,10 +142,12 @@ function transformAssociatedProject({
         {
           label: 'Edit project',
           url: `${projects}/${id}/edit-associated?term=${project_code}`,
+          test: 'edit-associated-link',
         },
         {
           label: 'Remove association',
           url: `${projects}/${id}/remove-associated`,
+          test: 'remove-associated-link',
         },
       ],
     }
@@ -154,6 +156,7 @@ function transformAssociatedProject({
   return {
     name: 'Find project',
     url: `${projects}/${id}/edit-associated`,
+    test: 'edit-associated-link',
   }
 }
 
