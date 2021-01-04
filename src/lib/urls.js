@@ -67,6 +67,9 @@ function createInteractionsSubApp(mountPoint, pathPrefix = '') {
 }
 
 module.exports = {
+  testing: {
+    index: url('/testing'),
+  },
   external: {
     greatProfile: (id) =>
       `https://www.great.gov.uk/international/trade/suppliers/${id}`,
