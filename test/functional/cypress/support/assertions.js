@@ -397,16 +397,12 @@ const assertCheckboxGroupNoneSelected = (element) => {
 }
 
 /**
- * Asserts that a typeahead `element` has the given `label` and `placeholder`
+ * Asserts that a typeahead `element` has the given `legend` and `placeholder`
  */
-const assertTypeaheadHasLabelAndPlaceholder = ({
-  element,
-  label,
-  placeholder,
-}) => {
+const assertTypeaheadHints = ({ element, legend, placeholder }) => {
   cy.get(element)
-    .find('label')
-    .should('have.text', label)
+    .find('legend')
+    .should('have.text', legend)
     .next()
     .should('contain', placeholder)
 }
@@ -465,7 +461,7 @@ module.exports = {
   assertFormButtons,
   assertCheckboxGroupOption,
   assertCheckboxGroupNoneSelected,
-  assertTypeaheadHasLabelAndPlaceholder,
+  assertTypeaheadHints,
   assertTypeaheadOptionSelected,
   assertChipExists,
   assertElementsInOrder,

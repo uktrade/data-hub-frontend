@@ -5,7 +5,7 @@ import {
   assertCheckboxGroupNoneSelected,
   assertChipExists,
   assertElementsInOrder,
-  assertTypeaheadHasLabelAndPlaceholder,
+  assertTypeaheadHints,
   assertTypeaheadOptionSelected,
 } from '../../support/assertions'
 import {
@@ -29,12 +29,12 @@ const INVOLVEMENT_LEVEL_UNSPECIFIED = 'unspecified'
  */
 const testTypeahead = ({
   element,
-  label,
+  legend,
   placeholder,
   input,
   expectedOption,
 }) => {
-  assertTypeaheadHasLabelAndPlaceholder({ element, label, placeholder })
+  assertTypeaheadHints({ element, legend, placeholder })
   selectFirstTypeaheadOption({ element, input })
   assertTypeaheadOptionSelected({ element, expectedOption })
 }
@@ -140,7 +140,7 @@ describe('Investments Collections Filter', () => {
     it('should filter by advisers', () => {
       cy.get('@adviserFilter')
         .should('contain', 'Search advisers')
-        .find('label')
+        .find('legend')
         .should('have.text', 'Advisers')
 
       selectFirstAdvisersTypeaheadOption({
@@ -159,7 +159,7 @@ describe('Investments Collections Filter', () => {
     it('should filter by sector', () => {
       testTypeahead({
         element: '@sectorFilter',
-        label: 'Sector',
+        legend: 'Sector',
         placeholder: 'Search sectors',
         input: 'adv',
         expectedOption: 'Advanced Engineering',
@@ -174,7 +174,7 @@ describe('Investments Collections Filter', () => {
     it('should filter by country', () => {
       testTypeahead({
         element: '@countryFilter',
-        label: 'Country of origin',
+        legend: 'Country of origin',
         placeholder: 'Search countries',
         input: 'sin',
         expectedOption: 'Singapore',
@@ -189,7 +189,7 @@ describe('Investments Collections Filter', () => {
     it('should filter by uk region', () => {
       testTypeahead({
         element: '@ukRegionFilter',
-        label: 'UK Region',
+        legend: 'UK Region',
         placeholder: 'Search UK region',
         input: 'sou',
         expectedOption: 'South East',
