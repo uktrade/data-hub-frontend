@@ -1,4 +1,4 @@
-const myActivity = ({ from, size, types, user, companyIds }) => {
+const myActivityQuery = ({ from, size, types, user, companyIds }) => {
   return {
     from,
     size,
@@ -35,4 +35,4 @@ const myActivity = ({ from, size, types, user, companyIds }) => {
   }
 }
 
-module.exports = myActivity
+module.exports = myActivityQuery

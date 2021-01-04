@@ -1,4 +1,4 @@
-const dataHubActivity = ({ from, size, types, companyIds }) => {
+const dataHubActivityQuery = ({ from, size, types, companyIds }) => {
   return {
     from,
     size,
@@ -30,4 +30,4 @@ const dataHubActivity = ({ from, size, types, companyIds }) => {
   }
 }
 
-module.exports = dataHubActivity
+module.exports = dataHubActivityQuery

@@ -1,0 +1,28 @@
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "term": {
+            "object.type": "dit:maxemail:Email:Sent"
+          }
+        },
+        {
+          "bool": {
+            "should": [
+              {
+                "terms": {
+                  "object.dit:emailAddress": [
+                    "max.speed@example.com",
+                    "max.weight@example.com",
+                    "max.height@example.com"
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

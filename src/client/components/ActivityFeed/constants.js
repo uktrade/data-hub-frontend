@@ -56,6 +56,7 @@ export const ACTIVITY_TYPE = {
   Omis: ['dit:OMISOrder'],
   Referral: ['dit:CompanyReferral'],
   DirectoryFormsApi: ['dit:directoryFormsApi:Submission'],
+  MaxemailCampaign: ['dit:maxemail:Campaign'],
 }
 
 export const ACTIVITY_TYPE_FILTERS = {

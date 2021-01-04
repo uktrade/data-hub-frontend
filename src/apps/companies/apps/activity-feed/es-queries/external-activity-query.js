@@ -1,4 +1,4 @@
-const externalActivity = (
+const externalActivityQuery = (
   { from, size, types, companyIds, contacts },
   isExportEnquiriesEnabled
 ) => {
@@ -82,4 +82,4 @@ const externalActivity = (
   return dsl
 }
 
-module.exports = externalActivity
+module.exports = externalActivityQuery

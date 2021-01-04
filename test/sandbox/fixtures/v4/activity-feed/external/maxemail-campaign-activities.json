@@ -1,0 +1,184 @@
+{
+  "took" : 24,
+  "timed_out" : false,
+  "_shards" : {
+    "total" : 54,
+    "successful" : 54,
+    "skipped" : 0,
+    "failed" : 0
+  },
+  "hits" : {
+    "total" : {
+      "value" : 578,
+      "relation" : "eq"
+    },
+    "max_score" : null,
+    "hits" : [
+      {
+        "_index" : "activities__feed_id_maxemail__date_2020-12-15__timestamp_1607994790__batch_id_gzq0krjv__",
+        "_type" : "_doc",
+        "_id" : "dit:maxemail:Campaign:1:Create",
+        "_score" : null,
+        "_source" : {
+          "actor" : {
+            "dit:emailAddress" : "anz.newsletter@email.trade.gov.uk",
+            "id" : "dit:maxemail:Sender:anz.newsletter@email.trade.gov.uk",
+            "name" : "Susannah Howen",
+            "type" : [
+              "Organization",
+              "dit:maxemail:Sender"
+            ]
+          },
+          "dit:application" : "maxemail",
+          "id" : "dit:maxemail:Campaign:1:Create",
+          "object" : {
+            "content" : "All the latest updates from around the BBN",
+            "dit:emailSubject" : "British Business Network Update - December 2020",
+            "dit:maxemail:Campaign:id" : 1,
+            "id" : "dit:maxemail:Campaign:1",
+            "name" : "AU_SH_BBN_Newsletter_Dec2020",
+            "published" : "2020-12-15T00:15:03",
+            "type" : "dit:maxemail:Campaign"
+          },
+          "published" : "2020-12-15T00:15:03",
+          "type" : "Create"
+        },
+        "sort" : [
+          1607991303000
+        ]
+      },
+      {
+        "_index" : "activities__feed_id_maxemail__date_2020-12-15__timestamp_1607994790__batch_id_gzq0krjv__",
+        "_type" : "_doc",
+        "_id" : "dit:maxemail:Campaign:2:Create",
+        "_score" : null,
+        "_source" : {
+          "actor" : {
+            "dit:emailAddress" : "ddat-comms-engagement@email.trade.gov.uk",
+            "id" : "dit:maxemail:Sender:ddat-comms-engagement@email.trade.gov.uk",
+            "name" : "DIT Data Team",
+            "type" : [
+              "Organization",
+              "dit:maxemail:Sender"
+            ]
+          },
+          "dit:application" : "maxemail",
+          "id" : "dit:maxemail:Campaign:2:Create",
+          "object" : {
+            "content" : "View the recording and slides ",
+            "dit:emailSubject" : "[recipient:Recipient.First Name;Hello], thanks for joining the Data Hub webinar",
+            "dit:maxemail:Campaign:id" : 2,
+            "id" : "dit:maxemail:Campaign:2",
+            "name" : "01_03_2020_02_DataHubAutumn2020_Webinar Thanks Dec 2020",
+            "published" : "2020-12-14T16:40:02",
+            "type" : "dit:maxemail:Campaign"
+          },
+          "published" : "2020-12-14T16:40:02",
+          "type" : "Create"
+        },
+        "sort" : [
+          1607964002000
+        ]
+      },
+      {
+        "_index" : "activities__feed_id_maxemail__date_2020-12-15__timestamp_1607994790__batch_id_gzq0krjv__",
+        "_type" : "_doc",
+        "_id" : "dit:maxemail:Campaign:3:Create",
+        "_score" : null,
+        "_source" : {
+          "actor" : {
+            "dit:emailAddress" : "northwest@email.trade.gov.uk",
+            "id" : "dit:maxemail:Sender:northwest@email.trade.gov.uk",
+            "name" : "Department for International Trade North West",
+            "type" : [
+              "Organization",
+              "dit:maxemail:Sender"
+            ]
+          },
+          "dit:application" : "maxemail",
+          "id" : "dit:maxemail:Campaign:3:Create",
+          "object" : {
+            "content" : "Deadline 18:00, Tuesday 15 December, 2020 to submit your details for the UK Tech Company Directory at CES 2021",
+            "dit:emailSubject" : "Submit your details now for DIT's UK Tech Company Directory at CES 2021",
+            "dit:maxemail:Campaign:id" : 3,
+            "id" : "dit:maxemail:Campaign:3",
+            "name" : "NPH CES 21 Brochure",
+            "published" : "2020-12-14T16:30:04",
+            "type" : "dit:maxemail:Campaign"
+          },
+          "published" : "2020-12-14T16:30:04",
+          "type" : "Create"
+        },
+        "sort" : [
+          1607963404000
+        ]
+      },
+      {
+        "_index" : "activities__feed_id_maxemail__date_2020-12-15__timestamp_1607994790__batch_id_gzq0krjv__",
+        "_type" : "_doc",
+        "_id" : "dit:maxemail:Campaign:4:Create",
+        "_score" : null,
+        "_source" : {
+          "actor" : {
+            "dit:emailAddress" : "yorkshire@email.trade.gov.uk",
+            "id" : "dit:maxemail:Sender:yorkshire@email.trade.gov.uk",
+            "name" : "Department for International Trade Yorkshire and the Humber",
+            "type" : [
+              "Organization",
+              "dit:maxemail:Sender"
+            ]
+          },
+          "dit:application" : "maxemail",
+          "id" : "dit:maxemail:Campaign:4:Create",
+          "object" : {
+            "content" : "News, virtual events & trade missions with DIT Yorkshire & Humber",
+            "dit:emailSubject" : "Your monthly round up: news, virtual events & trade missions with DIT Yorkshire & Humber",
+            "dit:maxemail:Campaign:id" : 4,
+            "id" : "dit:maxemail:Campaign:4",
+            "name" : "External Newsletter December 2020",
+            "published" : "2020-12-14T15:56:03",
+            "type" : "dit:maxemail:Campaign"
+          },
+          "published" : "2020-12-14T15:56:03",
+          "type" : "Create"
+        },
+        "sort" : [
+          1607961363000
+        ]
+      },
+      {
+        "_index" : "activities__feed_id_maxemail__date_2020-12-15__timestamp_1607994790__batch_id_gzq0krjv__",
+        "_type" : "_doc",
+        "_id" : "dit:maxemail:Campaign:5:Create",
+        "_score" : null,
+        "_source" : {
+          "actor" : {
+            "dit:emailAddress" : "DITMarine@email.trade.gov.uk",
+            "id" : "dit:maxemail:Sender:DITMarine@email.trade.gov.uk",
+            "name" : "DITMarine@email.trade.gov.uk",
+            "type" : [
+              "Organization",
+              "dit:maxemail:Sender"
+            ]
+          },
+          "dit:application" : "maxemail",
+          "id" : "dit:maxemail:Campaign:5:Create",
+          "object" : {
+            "content" : "",
+            "dit:emailSubject" : "Submission deadline extended for Commercial Marine Digital Campaign",
+            "dit:maxemail:Campaign:id" : 5,
+            "id" : "dit:maxemail:Campaign:5",
+            "name" : "Submission deadline extended for Commercial Marine Digital Campaign",
+            "published" : "2020-12-14T15:30:04",
+            "type" : "dit:maxemail:Campaign"
+          },
+          "published" : "2020-12-14T15:30:04",
+          "type" : "Create"
+        },
+        "sort" : [
+          1607959804000
+        ]
+      }
+    ]
+  }
+}

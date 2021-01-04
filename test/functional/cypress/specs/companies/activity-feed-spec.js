@@ -177,8 +177,10 @@ describe('Company activity feed', () => {
 
   context('when viewing an export enquiry in the activity feed', () => {
     before(() => {
-      cy.visit(urls.companies.activity.index(fixtures.company.venusLtd.id))
-      cy.get('[data-cy="activity-feed"] select').select('externalActivity')
+      cy.visit(
+        urls.companies.activity.index(fixtures.company.externalActivitiesLtd.id)
+      )
+      cy.get('[data-test="activity-feed"] select').select('externalActivity')
       cy.get(selectors.companyActivity.activityFeed.item(1)).as('exportEnquiry')
     })
     it('should display an export enquiry with truncated comment', () => {
@@ -220,6 +222,99 @@ describe('Company activity feed', () => {
           'have.text',
           'We export fish products to South Korea. In 2011 we were issued an approved exporter authorisation number by HMRC to be able to export to South Korea. Does this number still stand for exporting to South Korea in 2021 or do we need a new number? Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Show Less'
         )
+    })
+  })
+
+  context('when viewing a Maxemail campaign in the Activity Feed', () => {
+    before(() => {
+      const companyId = fixtures.company.externalActivitiesLtd.id
+      const url = urls.companies.activity.index(companyId)
+
+      cy.visit(url)
+        .get('[data-test="activity-feed"] select')
+        .select('externalActivity')
+    })
+
+    it('should show campaign heading, email subject and date', () => {
+      cy.get(selectors.companyActivity.activityFeed.item(2)).as(
+        'maxemailCampaign'
+      )
+
+      cy.get('@maxemailCampaign')
+        .find('h3')
+        .eq(0)
+        .should('have.text', 'Email Campaign')
+
+      cy.get('@maxemailCampaign')
+        .find('h3')
+        .eq(1)
+        .should('have.text', 'British Business Network Update - December 2020')
+
+      cy.get('@maxemailCampaign')
+        .find('ul')
+        .first()
+        .should('have.text', '15 Dec 2020')
+    })
+
+    it('should summarize the details of the campaign', () => {
+      cy.get(selectors.companyActivity.activityFeed.item(2)).as(
+        'maxemailCampaign'
+      )
+
+      cy.get('@maxemailCampaign')
+        .find('details summary')
+        .should('have.text', 'View details of this campaign')
+        .click()
+
+      assertTable(selectors.companyActivity.activityFeed.item(2), [
+        {
+          th: 'Senders name',
+          td: 'Susannah Howen',
+        },
+        {
+          th: 'Senders email',
+          td: 'anz.newsletter@email.trade.gov.uk',
+        },
+        {
+          th: 'Content',
+          td: 'All the latest updates from around the BBN',
+        },
+      ])
+    })
+
+    it('should show a list of campaign email recipients', () => {
+      cy.get(selectors.companyActivity.activityFeed.item(2)).as(
+        'maxemailCampaign'
+      )
+
+      cy.get('@maxemailCampaign')
+        .find('table tbody tr')
+        .last()
+        .find('th')
+        .should('have.text', 'Recipients')
+
+      const recipients = [
+        {
+          text: 'Max Speed',
+          href: '/contacts/9136dd49-df67-4b2b-b241-6b64a662f1af/details',
+        },
+        {
+          text: 'Max Weight',
+          href: '/contacts/236f8b6c-afac-4fba-a8eb-5739aa14823a/details',
+        },
+        {
+          text: 'Max Height',
+          href: '/contacts/335369fc-b010-4730-97aa-10e66315b821/details',
+        },
+      ]
+
+      recipients.forEach((recipient, index) => {
+        cy.get('@maxemailCampaign')
+          .find('a')
+          .eq(index)
+          .should('have.text', recipient.text)
+          .and('have.attr', 'href', recipient.href)
+      })
     })
   })
 })

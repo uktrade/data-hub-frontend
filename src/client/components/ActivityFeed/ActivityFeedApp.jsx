@@ -112,11 +112,11 @@ export default class ActivityFeedApp extends React.Component {
 
     const { data } = await axios.get(apiEndpoint, { params })
 
-    const { total, hits } = data.hits
+    const { total, activities } = data
 
     return {
-      total: total.value,
-      activities: hits.map((hit) => hit._source),
+      total,
+      activities,
     }
   }
 
