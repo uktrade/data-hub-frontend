@@ -165,24 +165,28 @@ const ProjectsCollection = ({
           data-cy="likelihood-to-land-filter"
         />
         <RoutedDateField
+          asFieldset={true}
           label="Estimated land date before"
           name="estimated_land_date_before"
           qsParamName="estimated_land_date_before"
           data-cy="estimated-land-date-before-filter"
         />
         <RoutedDateField
+          asFieldset={true}
           label="Estimated land date after"
           name="estimated_land_date_after"
           qsParamName="estimated_land_date_after"
           data-cy="estimated-land-date-after-filter"
         />
         <RoutedDateField
+          asFieldset={true}
           label="Actual land date before"
           name="actual_land_date_before"
           qsParamName="actual_land_date_before"
           data-cy="actual-land-date-before-filter"
         />
         <RoutedDateField
+          asFieldset={true}
           label="Actual land date after"
           name="actual_land_date_after"
           qsParamName="actual_land_date_after"
