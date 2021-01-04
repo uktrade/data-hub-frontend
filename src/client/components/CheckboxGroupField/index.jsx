@@ -51,7 +51,7 @@ const StyledFieldWrapper = styled(FieldWrapper)`
 /**
  * Check box group field - shows a number of options as checkboxes
  *
- * @param {string} label - label to display
+ * @param {string} legend - legend label to display
  * @param {string} name - field name for the group
  * @param {string} hint - hint to display
  * @param {Array} options - the available options as objects with label and value
@@ -60,7 +60,7 @@ const StyledFieldWrapper = styled(FieldWrapper)`
  * @param {Func} onChange - callback function that passes on the selected options
  */
 const CheckboxGroupField = ({
-  label,
+  legend,
   name,
   hint,
   options: initialOptions = [],
@@ -83,7 +83,7 @@ const CheckboxGroupField = ({
 
   return (
     <StyledFieldWrapper
-      label={label}
+      legend={legend}
       name={name}
       hint={hint}
       data-cy={`checkbox-group-field-${name}`}
@@ -122,7 +122,7 @@ const CheckboxGroupField = ({
                 initialChecked={checked}
                 value={optionValue}
                 onChange={handleChange}
-                aria-label={label}
+                aria-label={optionLabel}
                 {...optionProps}
               >
                 {optionLabel}

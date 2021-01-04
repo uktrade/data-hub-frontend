@@ -84,7 +84,7 @@ const ProjectsCollection = ({
     >
       <CollectionFilters taskProps={collectionListMetadataTask}>
         <RoutedCheckboxGroupField
-          label="Stage"
+          legend="Stage"
           name="stage"
           qsParam="stage"
           options={optionMetadata.projectStageOptions}
@@ -92,7 +92,7 @@ const ProjectsCollection = ({
           data-cy="stage-filter"
         />
         <RoutedCheckboxGroupField
-          label="My Projects"
+          legend="My Projects"
           name="my_projects"
           qsParam="adviser"
           options={[myProjectsOption]}
@@ -102,7 +102,7 @@ const ProjectsCollection = ({
         <RoutedAdvisersTypeahead
           taskProps={adviserListTask}
           isMulti={true}
-          label="Advisers"
+          legend="Advisers"
           name="adviser"
           qsParam="adviser"
           placeholder="Search advisers..."
@@ -112,7 +112,7 @@ const ProjectsCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          label="Sector"
+          legend="Sector"
           name="sector"
           qsParam="sector_descends"
           placeholder="Search sectors..."
@@ -122,7 +122,7 @@ const ProjectsCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          label="Country of origin"
+          legend="Country of origin"
           name="country"
           qsParam="country"
           placeholder="Search countries..."
@@ -132,7 +132,7 @@ const ProjectsCollection = ({
         />
         <RoutedTypeahead
           isMulti={true}
-          label="UK Region"
+          legend="UK Region"
           name="uk_region"
           qsParam="uk_region"
           placeholder="Search UK regions..."
@@ -141,7 +141,7 @@ const ProjectsCollection = ({
           data-cy="uk-region-filter"
         />
         <RoutedCheckboxGroupField
-          label="Status"
+          legend="Status"
           name="project_status"
           qsParam="status"
           options={optionMetadata.projectStatusOptions}
@@ -149,7 +149,7 @@ const ProjectsCollection = ({
           data-cy="project-status-filter"
         />
         <RoutedCheckboxGroupField
-          label="Type of investment"
+          legend="Type of investment"
           name="investment_type"
           qsParam="investment_type"
           options={optionMetadata.investmentTypeOptions}
@@ -157,7 +157,7 @@ const ProjectsCollection = ({
           data-cy="investment-type-filter"
         />
         <RoutedCheckboxGroupField
-          label="Likelihood to land"
+          legend="Likelihood to land"
           name="likelihood_to_land"
           qsParam="likelihood_to_land"
           options={optionMetadata.likelihoodToLandOptions}
@@ -189,7 +189,7 @@ const ProjectsCollection = ({
           data-cy="actual-land-date-after-filter"
         />
         <RoutedCheckboxGroupField
-          label="Level of involvement specified"
+          legend="Level of involvement specified"
           name="involvement_level"
           qsParam="level_of_involvement_simplified"
           options={optionMetadata.involvementLevelOptions}
