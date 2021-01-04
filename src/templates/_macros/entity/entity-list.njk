@@ -6,7 +6,11 @@
 
   <ol class="c-entity-list {{ listModifier }}">
     {% for item in props.items %}
-      <li class="c-entity-list__item">
+      <li class="c-entity-list__item"
+      {% if item.type %} 
+        data-test="item-{{item.type}}-{{loop.index0}}"
+      {% endif %}
+      >
         {{ Entity(item | assign({
           highlightTerm: props.highlightTerm,
           isBlockLink: hasBlockLinks,
