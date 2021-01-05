@@ -32,65 +32,89 @@ const getOptions = () =>
 
 storiesOf('Typeahead/Single select', module)
   .add('Standard options', () => (
-    <Typeahead
-      isMulti={false}
-      closeMenuOnSelect={false}
-      name="test_1"
-      options={options}
-      placeholder="Search..."
-    />
+    <>
+      <label htmlFor="test_1">Search</label>
+      <Typeahead
+        isMulti={false}
+        closeMenuOnSelect={false}
+        name="test_1"
+        options={options}
+        placeholder="Search..."
+        aria-label="search"
+      />
+    </>
   ))
   .add('Error', () => (
-    <Typeahead
-      error={true}
-      isMulti={false}
-      closeMenuOnSelect={false}
-      name="test_1"
-      options={options}
-      placeholder="Search..."
-    />
+    <>
+      <label htmlFor="test_2">Search</label>
+      <Typeahead
+        error={true}
+        isMulti={false}
+        closeMenuOnSelect={false}
+        name="test_2"
+        options={options}
+        placeholder="Search..."
+        aria-label="search"
+      />
+    </>
   ))
   .add('Options - pre-selected option', () => (
-    <Typeahead
-      isMulti={false}
-      closeMenuOnSelect={false}
-      label="Options - pre-selected option"
-      name="test_2"
-      options={options}
-      placeholder="Search..."
-      defaultValue={options[2]}
-    />
+    <>
+      <label htmlFor="test_3">Search</label>
+      <Typeahead
+        isMulti={false}
+        closeMenuOnSelect={false}
+        label="Options - pre-selected option"
+        name="test_3"
+        options={options}
+        placeholder="Search..."
+        defaultValue={options[2]}
+        aria-label="search"
+      />
+    </>
   ))
   .add('Small', () => (
-    <SmallTypeahead
-      isMulti={false}
-      closeMenuOnSelect={false}
-      name="test_2"
-      options={options}
-      placeholder="Search..."
-    />
+    <>
+      <label htmlFor="test_4">Search</label>
+      <SmallTypeahead
+        isMulti={false}
+        closeMenuOnSelect={false}
+        name="test_4"
+        options={options}
+        placeholder="Search..."
+        aria-label="search"
+      />
+    </>
   ))
 
 storiesOf('Typeahead/Multiple select', module)
   .add('Standard options', () => (
-    <Typeahead
-      isMulti={true}
-      closeMenuOnSelect={false}
-      label="Standard options"
-      name="test_1"
-      options={options}
-      placeholder="Search..."
-    />
+    <>
+      <label htmlFor="test_5">Search</label>
+      <Typeahead
+        isMulti={true}
+        closeMenuOnSelect={false}
+        label="Standard options"
+        name="test_5"
+        options={options}
+        placeholder="Search..."
+        aria-label="search"
+      />
+    </>
   ))
   .add('Options - pre-selected option', () => (
-    <Typeahead
-      isMulti={true}
-      closeMenuOnSelect={false}
-      name="test_1"
-      options={options}
-      placeholder="Search..."
-      value={options[2]}
-    />
+    <>
+      <label htmlFor="test_6">Search</label>
+      <Typeahead
+        isMulti={true}
+        closeMenuOnSelect={false}
+        name="test_6"
+        options={options}
+        placeholder="Search..."
+        value={options[2]}
+        aria-label="search"
+      />
+    </>
   ))
   .add('Async options', () => (
     <div style={{ width: '600px' }}>
@@ -100,13 +124,15 @@ storiesOf('Typeahead/Multiple select', module)
         <li>Holly</li>
         <li>Dennis</li>
       </ul>
+      <label htmlFor="test_7">Search</label>
       <Typeahead
         isMulti={true}
         closeMenuOnSelect={false}
-        name="test_4"
+        name="test_7"
         loadOptions={getOptions}
         placeholder="Search advisers..."
         noOptionsMessage={() => <span>No advisers found</span>}
+        aria-label="search"
       />
     </div>
   ))
@@ -118,14 +144,16 @@ storiesOf('Typeahead/Multiple select', module)
         <li>Holly</li>
         <li>Dennis</li>
       </ul>
+      <label htmlFor="test_8">Search</label>
       <Typeahead
         isMulti={true}
         closeMenuOnSelect={false}
-        name="test_4"
+        name="test_8"
         loadOptions={getOptions}
         placeholder="Search advisers..."
         noOptionsMessage={() => <span>No advisers found</span>}
         value={asyncOptions[2]}
+        aria-label="search"
       />
     </div>
   ))
