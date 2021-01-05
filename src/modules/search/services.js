@@ -130,8 +130,16 @@ function searchForeignCompanies({ req, searchTerm, page = 1, limit = 10 }) {
 function exportSearch({ req, searchTerm = '', searchEntity, requestBody }) {
   const apiVersion = searchEntity === 'company' ? 'v4' : 'v3'
   const searchUrl = `${config.apiRoot}/${apiVersion}/search`
+  // If the requested CSV export should contain policy feedback, we need to call
+  // different export endpoint that will provide extra columns to match
+  // Data Workspace export.
+  const exportApp =
+    requestBody && requestBody.was_policy_feedback_provided
+      ? 'policy-feedback'
+      : 'export'
+  const url = `${searchUrl}/${searchEntity}/${exportApp}`
   const options = {
-    url: `${searchUrl}/${searchEntity}/export`,
+    url: url,
     method: 'POST',
     body: {
       ...requestBody,
