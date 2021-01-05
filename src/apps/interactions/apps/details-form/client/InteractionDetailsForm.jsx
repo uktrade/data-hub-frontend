@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { LoadingBox } from 'govuk-react'
@@ -6,6 +7,7 @@ import { connect } from 'react-redux'
 import { MultiInstanceForm } from '../../../../../client/components'
 import StepInteractionType from './StepInteractionType'
 import StepInteractionDetails from './StepInteractionDetails'
+import Analytics from '../../../../../client/components/Analytics'
 import Task from '../../../../../client/components/Task'
 import {
   ADD_INTERACTION_FORM__CONTACT_FORM_OPENED,
@@ -89,58 +91,72 @@ const InteractionDetailsForm = ({
         const openContactFormTask = getTask(TASK_OPEN_CONTACT_FORM, STATE_ID)
 
         return (
-          <MultiInstanceForm
-            id={STATE_ID}
-            initialValues={initialValues}
-            onSubmit={(values) => {
-              saveInteractionTask.start({
-                payload: {
-                  values,
-                  companyId,
-                  referralId,
-                },
-                onSuccessDispatch: ADD_INTERACTION_FORM__SUBMIT,
-              })
-            }}
-            submissionError={saveInteractionTask.errorMessage}
-          >
-            {({ values, currentStep }) => (
-              <LoadingBox loading={progress}>
-                {(!initialValues.theme || !initialValues.kind) && (
-                  <MultiInstanceForm.Step name="interaction_type">
-                    {() => <StepInteractionType />}
-                  </MultiInstanceForm.Step>
-                )}
+          <Analytics>
+            {(pushAnalytics) => (
+              <MultiInstanceForm
+                id={STATE_ID}
+                initialValues={initialValues}
+                submissionError={saveInteractionTask.errorMessage}
+                onSubmit={(values) => {
+                  saveInteractionTask.start({
+                    payload: {
+                      values,
+                      companyId,
+                      referralId,
+                    },
+                    onSuccessDispatch: ADD_INTERACTION_FORM__SUBMIT,
+                  })
+                  pushAnalytics({
+                    event: 'create_interaction',
+                    ..._.pick(
+                      values,
+                      'was_policy_feedback_provided',
+                      'were_countries_discussed'
+                    ),
+                  })
+                }}
+              >
+                {({ values, currentStep }) => (
+                  <LoadingBox loading={progress}>
+                    {(!initialValues.theme || !initialValues.kind) && (
+                      <MultiInstanceForm.Step name="interaction_type">
+                        {() => <StepInteractionType />}
+                      </MultiInstanceForm.Step>
+                    )}
 
-                <MultiInstanceForm.Step
-                  name="interaction_details"
-                  forwardButton={
-                    initialValues.id ? 'Save interaction' : 'Add interaction'
-                  }
-                >
-                  {() => (
-                    <StepInteractionDetails
-                      companyId={companyId}
-                      activeEvent={initialValues.event}
-                      onOpenContactForm={(e) => {
-                        e.preventDefault()
-                        openContactFormTask.start({
-                          payload: {
-                            values,
-                            currentStep,
-                            companyId,
-                            url: e.target.href,
-                          },
-                          onSuccessDispatch: ADD_INTERACTION_FORM__CONTACT_FORM_OPENED,
-                        })
-                      }}
-                      {...props}
-                    />
-                  )}
-                </MultiInstanceForm.Step>
-              </LoadingBox>
+                    <MultiInstanceForm.Step
+                      name="interaction_details"
+                      forwardButton={
+                        initialValues.id
+                          ? 'Save interaction'
+                          : 'Add interaction'
+                      }
+                    >
+                      {() => (
+                        <StepInteractionDetails
+                          companyId={companyId}
+                          activeEvent={initialValues.event}
+                          onOpenContactForm={(e) => {
+                            e.preventDefault()
+                            openContactFormTask.start({
+                              payload: {
+                                values,
+                                currentStep,
+                                companyId,
+                                url: e.target.href,
+                              },
+                              onSuccessDispatch: ADD_INTERACTION_FORM__CONTACT_FORM_OPENED,
+                            })
+                          }}
+                          {...props}
+                        />
+                      )}
+                    </MultiInstanceForm.Step>
+                  </LoadingBox>
+                )}
+              </MultiInstanceForm>
             )}
-          </MultiInstanceForm>
+          </Analytics>
         )
       }}
     </Task>
