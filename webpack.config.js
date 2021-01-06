@@ -11,16 +11,23 @@ const config = require('./src/config')
  * This is a required step, because the node server is parsing manifest.json
  * when booting up.
  */
-const StartServerAfterBuild = () => ({
-  apply: (compiler) => {
-    compiler.plugin('done', () => {
-      spawn('npm run watch:js:server', {
-        stdio: 'inherit',
-        shell: true,
+const StartServerAfterBuild = () => {
+  let server = false
+  return {
+    apply: (compiler) => {
+      compiler.plugin('done', () => {
+        if (server) {
+          server.stdin.write('rs\n')
+        } else {
+          server = spawn(
+            "npx nodemon --inspect --ignore 'src/**/__test__/**/*'",
+            { stdio: 'pipe', shell: true }
+          )
+        }
       })
-    })
-  },
-})
+    },
+  }
+}
 
 module.exports = (env) => ({
   devtool: config.isProd ? 'false' : 'source-map',
@@ -56,7 +63,7 @@ module.exports = (env) => ({
     }),
     new VueLoaderPlugin(),
     new WebpackAssetsManifest(),
-    env && env.backend ? StartServerAfterBuild() : undefined,
+    env && env.development ? StartServerAfterBuild() : null,
   ].filter(Boolean),
   resolve: {
     modules: [
