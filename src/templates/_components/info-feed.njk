@@ -24,18 +24,18 @@
  #}
 
 {% set feedLimit =  feedLimit | default(5) %}
-<div class="dashboard-section" data-cy="info-feed">
+<div class="dashboard-section" data-test="info-feed">
 {% if outboundLinkText %}
-  <a href="{{ outboundLinkURL }}" class="dashboard-section__top-link" target="_blank" data-cy="info-feed-top-link">
+  <a href="{{ outboundLinkURL }}" class="dashboard-section__top-link" target="_blank" data-test="info-feed-top-link">
     {{ outboundLinkText }}
   </a>
 {% endif %}
-{% if heading %} <h1 class="govuk-heading-m" data-cy="info-feed-heading">{{heading}}</h1> {% endif %}
+{% if heading %} <h1 class="govuk-heading-m" data-test="info-feed-heading">{{heading}}</h1> {% endif %}
 {% if subHeading %} <p class="dashboard-section__subheading">{{subHeading}}</p> {% endif %}
 {% if dataFeed.length %}
-  <ul data-cy="info-feed-list">
+  <ul data-test="info-feed-list">
     {% for item in dataFeed.slice(0, feedLimit) %}
-      <li data-cy="info-feed-list-item">
+      <li data-test="info-feed-list-item">
         <a href="{{ item.link }}" class="dashboard-section__info-feed-link" target="_blank">{{ item.heading }}</a>
         <span class="dashboard-section__info-feed-link-note">(Link opens in a new window)</span>
         <time class="dashboard-section__info-feed-date">{{ item.date }}</time>
@@ -43,6 +43,6 @@
     {% endfor %}
   </ul>
 {% else %}
-  <p class="dashboard-section__fallback-text" data-cy="info-feed-no-results">No updates available</p>
+  <p class="dashboard-section__fallback-text" data-test="info-feed-no-results">No updates available</p>
 {% endif %}
 </div>

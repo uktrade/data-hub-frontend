@@ -49,7 +49,7 @@ const FilteredCollectionList = ({
           <RoutedDownloadDataHeader
             count={count}
             maxItems={maxItemsToDownload}
-            data-cy="download-data-header"
+            data-test="download-data-header"
             baseDownloadLink={baseDownloadLink}
           />
           <Task.Status {...taskProps}>

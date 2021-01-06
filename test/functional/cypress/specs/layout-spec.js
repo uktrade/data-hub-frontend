@@ -14,9 +14,9 @@ describe('Layout', () => {
 
   describe('Tabs', () => {
     it('should display tabs in the right order', () => {
-      cy.get('[data-cy="dashboard-tabs"]')
+      cy.get('[data-test="dashboard-tabs"]')
         .should('exist')
-        .find('[data-cy="tablist"]')
+        .find('[data-test="tablist"]')
         .should('exist')
         .children()
         .should('have.length', 3)
