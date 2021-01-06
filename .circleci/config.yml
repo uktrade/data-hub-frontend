@@ -144,10 +144,10 @@ jobs:
 
   release-storybook:
     docker:
-      - image: node
+      - image: node:12.18.0
     steps:
       - checkout
-      - run: npm install
+      - run: npm install storybook
       - run:
           name: Release storybook
           command: npm run storybook:release
