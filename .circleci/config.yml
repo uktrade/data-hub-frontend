@@ -147,7 +147,7 @@ jobs:
       - image: node
     steps:
       - checkout
-      - run: npm ci
+      - run: npm install
       - run:
           name: Release storybook
           command: npm run storybook:release
