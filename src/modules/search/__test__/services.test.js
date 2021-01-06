@@ -249,6 +249,47 @@ describe('Search service', () => {
       })
     })
 
+    context('when exporting policy feedback', () => {
+      beforeEach(async () => {
+        nock(config.apiRoot)
+          .post(`/v3/search/entity/policy-feedback`, {
+            field: true,
+            term: 'search',
+            was_policy_feedback_provided: true,
+          })
+          .reply(200, {
+            count: 0,
+            results: [],
+            aggregations: [],
+          })
+
+        this.middlewareParameters = buildMiddlewareParameters({
+          resMock: {
+            on: sinon.spy(),
+            emit: sinon.spy(),
+            end: sinon.spy(),
+            removeListener: sinon.spy(),
+          },
+        })
+
+        await exportSearch({
+          req: stubRequest,
+          searchTerm: 'search',
+          searchEntity: 'entity',
+          requestBody: {
+            was_policy_feedback_provided: true,
+            field: true,
+          },
+        }).then((response) => {
+          response.pipe(this.middlewareParameters.resMock)
+        })
+      })
+
+      it('should return the response', () => {
+        expect(this.middlewareParameters.resMock.on).to.be.called
+      })
+    })
+
     context('when exporting records that are not company', () => {
       beforeEach(async () => {
         nock(config.apiRoot)
