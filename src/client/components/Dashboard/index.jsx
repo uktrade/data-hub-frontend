@@ -15,7 +15,7 @@ const StyledDiv = styled('div')`
 `
 
 const Dashboard = ({ id }) => (
-  <StyledDiv data-cy="dashboard-tabs">
+  <StyledDiv data-test="dashboard-tabs">
     <TabNav
       id={`${id}.TabNav`}
       label="Dashboard"

@@ -86,7 +86,7 @@ const CheckboxGroupField = ({
       legend={legend}
       name={name}
       hint={hint}
-      data-cy={`checkbox-group-field-${name}`}
+      data-test={`checkbox-group-field-${name}`}
       {...props}
     >
       {loading ? (

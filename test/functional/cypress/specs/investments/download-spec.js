@@ -6,7 +6,7 @@ describe('Investment Project Collections', () => {
       cy.visit(investments.projects.index(), {
         qs: { page: 2, estimated_land_date_before: '2020-11-19' },
       })
-      cy.get('[data-cy="download-data-header"]')
+      cy.get('[data-test="download-data-header"]')
         .as('downloadDataHeader')
         .find('a')
         .as('downloadDataButton')
@@ -31,7 +31,7 @@ describe('Investment Project Collections', () => {
   context('when over 5,000 projects are returned', () => {
     before(() => {
       cy.visit(investments.projects.index())
-      cy.get('[data-cy="download-data-header"]').as('downloadDataHeader')
+      cy.get('[data-test="download-data-header"]').as('downloadDataHeader')
     })
 
     it('should show "filter to fewer than 5,000"', () => {
