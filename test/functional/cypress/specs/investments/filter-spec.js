@@ -50,28 +50,32 @@ const testRemoveChip = ({ element, placeholder = null }) => {
 
 describe('Investments Collections Filter', () => {
   beforeEach(() => {
-    cy.get('[data-cy="stage-filter"]').as('stageFilter')
-    cy.get('[data-cy="my-projects-filter"]').as('myProjectsFilter')
-    cy.get('[data-cy="adviser-filter"]').as('adviserFilter')
-    cy.get('[data-cy="sector-filter"]').as('sectorFilter')
-    cy.get('[data-cy="country-filter"]').as('countryFilter')
-    cy.get('[data-cy="uk-region-filter"]').as('ukRegionFilter')
-    cy.get('[data-cy="project-status-filter"]').as('projectStatusFilter')
-    cy.get('[data-cy="investment-type-filter"]').as('investmentTypeFilter')
-    cy.get('[data-cy="likelihood-to-land-filter"]').as('likelihoodToLandFilter')
-    cy.get('[data-cy="estimated-land-date-before-filter"]').as(
+    cy.get('[data-test="stage-filter"]').as('stageFilter')
+    cy.get('[data-test="my-projects-filter"]').as('myProjectsFilter')
+    cy.get('[data-test="adviser-filter"]').as('adviserFilter')
+    cy.get('[data-test="sector-filter"]').as('sectorFilter')
+    cy.get('[data-test="country-filter"]').as('countryFilter')
+    cy.get('[data-test="uk-region-filter"]').as('ukRegionFilter')
+    cy.get('[data-test="project-status-filter"]').as('projectStatusFilter')
+    cy.get('[data-test="investment-type-filter"]').as('investmentTypeFilter')
+    cy.get('[data-test="likelihood-to-land-filter"]').as(
+      'likelihoodToLandFilter'
+    )
+    cy.get('[data-test="estimated-land-date-before-filter"]').as(
       'estimatedDateBeforeFilter'
     )
-    cy.get('[data-cy="estimated-land-date-after-filter"]').as(
+    cy.get('[data-test="estimated-land-date-after-filter"]').as(
       'estimatedDateAfterFilter'
     )
-    cy.get('[data-cy="actual-land-date-before-filter"]').as(
+    cy.get('[data-test="actual-land-date-before-filter"]').as(
       'actualDateBeforeFilter'
     )
-    cy.get('[data-cy="actual-land-date-after-filter"]').as(
+    cy.get('[data-test="actual-land-date-after-filter"]').as(
       'actualDateAfterFilter'
     )
-    cy.get('[data-cy="involvement-level-filter"]').as('involvementLevelFilter')
+    cy.get('[data-test="involvement-level-filter"]').as(
+      'involvementLevelFilter'
+    )
   })
 
   context('when the url contains no state', () => {
