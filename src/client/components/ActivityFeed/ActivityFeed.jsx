@@ -146,7 +146,7 @@ export default class ActivityFeed extends React.Component {
     const hasFilters = isTypeFilterFlagEnabled || isGlobalUltimateFlagEnabled
 
     return (
-      <ActivityFeedContainer data-cy="activity-feed">
+      <ActivityFeedContainer data-test="activity-feed">
         <ActivityFeedHeader
           totalActivities={totalActivities}
           actions={actions}

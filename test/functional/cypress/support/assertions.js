@@ -429,7 +429,7 @@ const assertChipExists = ({ label, position }) => {
 const assertElementsInOrder = ({ parentElement, expectedIdentifiers }) => {
   let filterElement = cy.get(parentElement).first()
   for (const [index, identifier] of expectedIdentifiers.entries()) {
-    filterElement.should('have.attr', 'data-cy', identifier)
+    filterElement.should('have.attr', 'data-test', identifier)
     if (index !== expectedIdentifiers.length - 1) {
       filterElement.next()
     }

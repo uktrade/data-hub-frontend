@@ -5,12 +5,12 @@ describe('Dashboard', () => {
   context('When the help centre API is available', () => {
     beforeEach(() => {
       cy.visit('/')
-      cy.get('[data-cy="info-feed"]')
+      cy.get('[data-test="info-feed"]')
         .as('infoFeed')
         .within(() => {
-          cy.get('[data-cy="info-feed-top-link"]').as('infoFeedTopLink')
-          cy.get('[data-cy="info-feed-heading"]').as('infoFeedHeading')
-          cy.get('[data-cy="info-feed-list"]').as('infoFeedList')
+          cy.get('[data-test="info-feed-top-link"]').as('infoFeedTopLink')
+          cy.get('[data-test="info-feed-heading"]').as('infoFeedHeading')
+          cy.get('[data-test="info-feed-list"]').as('infoFeedList')
         })
     })
 
@@ -30,7 +30,7 @@ describe('Dashboard', () => {
     it('should display the info feed list', () => {
       cy.get('@infoFeedList')
         .should('exist')
-        .find('[data-cy="info-feed-list-item"]')
+        .find('[data-test="info-feed-list-item"]')
         .should('have.length', 1)
         .first()
         .within(() => {
@@ -49,12 +49,12 @@ describe('Dashboard', () => {
   context('When the help centre API is unavailable', () => {
     beforeEach(() => {
       cy.visit('/', { qs: { test: 'help-centre-unavailable' } })
-      cy.get('[data-cy="info-feed"]').as('infoFeed')
+      cy.get('[data-test="info-feed"]').as('infoFeed')
     })
 
     it('should return an empty info feed', () => {
-      cy.get('[data-cy="info-feed-list"]').should('not.exist')
-      cy.get('[data-cy="info-feed-no-results"]')
+      cy.get('[data-test="info-feed-list"]').should('not.exist')
+      cy.get('[data-test="info-feed-no-results"]')
         .should('exist')
         .should('have.text', 'No updates available')
     })
@@ -63,12 +63,12 @@ describe('Dashboard', () => {
   context('When the help centre API returns no results', () => {
     beforeEach(() => {
       cy.visit('/', { qs: { test: 'help-centre-empty' } })
-      cy.get('[data-cy="info-feed"]').as('infoFeed')
+      cy.get('[data-test="info-feed"]').as('infoFeed')
     })
 
     it('should return an empty info feed', () => {
-      cy.get('[data-cy="info-feed-list"]').should('not.exist')
-      cy.get('[data-cy="info-feed-no-results"]')
+      cy.get('[data-test="info-feed-list"]').should('not.exist')
+      cy.get('[data-test="info-feed-no-results"]')
         .should('exist')
         .should('have.text', 'No updates available')
     })
