@@ -110,7 +110,7 @@ export default function Footer() {
           </li>
           <li>
             <FooterLink
-              href="https://data-services-help.trade.gov.uk/data-hub/how-articles/accessibility-statement/data-hub-accessibility-statement/"
+              href="https://data-services-help.trade.gov.uk/accessibility-statement/"
               target="_blank"
               rel="noopener noreferrer"
             >
