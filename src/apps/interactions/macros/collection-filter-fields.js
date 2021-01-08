@@ -92,7 +92,7 @@ module.exports = function ({
       name: 'was_policy_feedback_provided',
       type: 'checkbox',
       modifier: 'option-select',
-      options: [{ value: 'true', label: 'Includes policy feedback' }],
+      options: [{ value: 'true', label: 'Includes business intelligence' }],
     },
     {
       macroName: 'MultipleChoiceField',

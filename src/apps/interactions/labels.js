@@ -64,7 +64,7 @@ const filters = {
   dit_participants__team: 'Teams',
   sector_descends: 'Sector',
   service: 'Service',
-  was_policy_feedback_provided: 'Policy feedback',
+  was_policy_feedback_provided: 'Business intelligence',
   policy_areas: 'Policy area(s)',
   policy_issue_types: 'Policy issue type',
   company_one_list_group_tier: 'Company One List Group Tier',
