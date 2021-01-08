@@ -275,7 +275,7 @@ describe('#transformInteractionToListItem', () => {
           {
             label: 'Type',
             type: 'badge',
-            value: 'Policy feedback',
+            value: 'Business intelligence',
           },
           {
             label: 'Date',
@@ -331,7 +331,7 @@ describe('#transformInteractionToListItem', () => {
           {
             label: 'Type',
             type: 'badge',
-            value: 'Policy feedback',
+            value: 'Business intelligence',
           },
           {
             label: 'Date',
@@ -385,7 +385,7 @@ describe('#transformInteractionToListItem', () => {
             label: 'Type',
           },
           {
-            value: 'Policy feedback',
+            value: 'Business intelligence',
             type: 'badge',
             label: 'Type',
           },

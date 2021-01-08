@@ -31,7 +31,7 @@ const APP_PERMISSIONS = [GLOBAL_NAV_ITEM]
 const INTERACTION_NAMES = {
   interaction: 'Interaction',
   service_delivery: 'Service delivery',
-  policy_feedback: 'Policy feedback',
+  policy_feedback: 'Business intelligence',
 }
 
 const SERVICE_DELIVERY_STATUS_COMPLETED = '47329c18-6095-e211-a939-e4115bead28a'
