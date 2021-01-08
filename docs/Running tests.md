@@ -176,6 +176,16 @@ make start-storybook
 make visual-component-tests
 ```
 
+### Updating the baseline image
+
+Updating the baseline consists in 2 steps: 
+
+- 1:. Running the visual component tests locally and verifying the failures are valid
+
+- 2:. Running `$ npm run test:visual-component:update` which will copy all comparison images that have a failure associated to them into the baseline folder, replacing the old baseline images.
+
+There is work to be done to allow update of a given baseline image rather than only have the option to update all of them at once.
+
 ## Cypress code coverage
 
 As part of cypress test suites (functional and e2e), code coverage reports can be generated.
