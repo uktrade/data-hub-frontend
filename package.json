@@ -130,7 +130,7 @@
     "postcss-cli": "^7.1.2",
     "postcss-loader": "^4.1.0",
     "prop-types": "^15.6.2",
-    "pure-uuid": "^1.6.1",
+    "pure-uuid": "^1.6.2",
     "qs": "^6.9.4",
     "raven": "^2.6.2",
     "react": "^17.0.1",
