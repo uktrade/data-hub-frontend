@@ -14,7 +14,7 @@ import {
 
 import FieldWrapper from '../FieldWrapper'
 import useField from '../../hooks/useField'
-import useFormContext from '../../hooks/useFormContext'
+import { useFormContext } from '../../hooks'
 import { isDateValid, isShortDateValid } from '../../../../utils/date-utils'
 
 const DAY = 'day'
