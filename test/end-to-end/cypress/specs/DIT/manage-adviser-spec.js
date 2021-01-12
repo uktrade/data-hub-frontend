@@ -43,6 +43,16 @@ describe('Manage Lead ITA', () => {
       "Lead adviser information updated.Send Sarah Gates an email to let them know they've been made Lead ITA.",
     replace: true,
   })
+  it('should not be able to add an advisor who is no longer active', () => {
+    cy.visit(urls.companies.detail(fixtures.company.lambdaPlc.id))
+    cy.get(selectors.tabbedLocalNav().item(3)).click()
+    cy.get('#lead-advisers a').contains('Replace Lead ITA').click()
+    cy.get('form label').next().next().selectTypeaheadOption('Ava')
+    cy.get('#form-errors').should(
+      'have.text',
+      'There is a problemSelect an ITA'
+    )
+  })
   it('should be able to remove an adviser', () => {
     cy.visit(urls.companies.detail(fixtures.company.lambdaPlc.id))
     cy.get(selectors.tabbedLocalNav().item(3)).click()
