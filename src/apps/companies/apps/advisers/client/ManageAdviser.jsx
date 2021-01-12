@@ -129,6 +129,7 @@ const Add = ({
                                 autocomplete: searchString,
                                 dit_team__role:
                                   '5e329c18-6095-e211-a939-e4115bead28a',
+                                is_active: 'true',
                               },
                             })
                             .then(({ data: { results } }) =>
