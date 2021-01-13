@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { isEmpty, castArray } from 'lodash'
 
-import useFormContext from './useFormContext'
+import { useFormContext } from './useFormContext'
 
 function useField({
   name,

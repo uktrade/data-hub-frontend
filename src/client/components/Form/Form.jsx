@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { useFormContext } from './hooks'
+import { FormContextProvider } from './hooks'
 
 function Form({ formAttributes, children, ...contextProps }) {
   return (
-    <useFormContext.Provider {...contextProps}>
+    <FormContextProvider {...contextProps}>
       <form
         {...formAttributes}
         noValidate={true}
@@ -16,7 +16,7 @@ function Form({ formAttributes, children, ...contextProps }) {
       >
         {children}
       </form>
-    </useFormContext.Provider>
+    </FormContextProvider>
   )
 }
 

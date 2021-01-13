@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { isEmpty } from 'lodash'
 import { ErrorSummary } from 'govuk-react'
-import { useFormContext } from './hooks'
+import { FormContextProvider } from './hooks'
 import Step from './elements/Step'
 
 import {
@@ -82,7 +82,7 @@ const Form = ({
   const ref = useRef()
 
   return (
-    <useFormContext.Provider {...contextProps}>
+    <FormContextProvider {...contextProps}>
       <form
         ref={ref}
         noValidate={true}
@@ -126,7 +126,7 @@ const Form = ({
         )}
         {typeof children === 'function' ? children(contextProps) : children}
       </form>
-    </useFormContext.Provider>
+    </FormContextProvider>
   )
 }
 

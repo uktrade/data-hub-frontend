@@ -1,5 +1,5 @@
-import createUseContext from 'constate'
+import constate from 'constate'
 
-const useFormContext = createUseContext((state) => state)
+const [FormContextProvider, useFormContext] = constate((state) => state)
 
-export default useFormContext
+export { FormContextProvider, useFormContext }
