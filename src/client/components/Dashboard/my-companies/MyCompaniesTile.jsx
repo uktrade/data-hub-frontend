@@ -4,7 +4,7 @@ import { SPACING, BORDER_WIDTH_MOBILE } from '@govuk-react/constants'
 import { GREY_2 } from 'govuk-colours'
 import styled from 'styled-components'
 
-import useMyCompaniesContext from './useMyCompaniesContext'
+import { useMyCompaniesContext } from './useMyCompaniesContext'
 import MyCompaniesTable from './MyCompaniesTable'
 import ListSelector from './ListSelector'
 

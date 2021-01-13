@@ -9,7 +9,7 @@ import Link from '@govuk-react/link'
 import { GREY_1, GREY_3, TEXT_COLOUR } from 'govuk-colours'
 import { MEDIA_QUERIES } from '@govuk-react/constants'
 import Button from '@govuk-react/button'
-import useMyCompaniesContext from './useMyCompaniesContext'
+import { useMyCompaniesContext } from './useMyCompaniesContext'
 import Filters from './MyCompaniesFilters'
 import urls from '../../../../lib/urls'
 

@@ -9,7 +9,7 @@ import { BODY_SIZES } from '@govuk-react/constants'
 
 import useField from '../../hooks/useField'
 import FieldWrapper from '../FieldWrapper'
-import useFormContext from '../../hooks/useFormContext'
+import { useFormContext } from '../../hooks'
 
 const StyledDiv = styled('div')`
   ${(props) =>

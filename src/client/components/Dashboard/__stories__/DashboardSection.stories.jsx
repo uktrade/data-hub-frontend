@@ -1,13 +1,13 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import useMyCompaniesContext from '../my-companies/useMyCompaniesContext'
+import { MyCompaniesContextProvider } from '../my-companies/useMyCompaniesContext'
 import MyCompaniesTile from '../my-companies/MyCompaniesTile'
 import allCompanies from '../__fixtures__/companies.json'
 
 const WithData = (props) => (
-  <useMyCompaniesContext.Provider {...props}>
+  <MyCompaniesContextProvider {...props}>
     <MyCompaniesTile />
-  </useMyCompaniesContext.Provider>
+  </MyCompaniesContextProvider>
 )
 
 storiesOf('Dashboard')
