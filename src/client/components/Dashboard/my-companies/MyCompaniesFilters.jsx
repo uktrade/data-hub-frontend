@@ -6,7 +6,7 @@ import Input from '@govuk-react/input'
 import LabelText from '@govuk-react/label-text'
 import Label from '@govuk-react/label'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
-import useMyCompaniesContext from './useMyCompaniesContext'
+import { useMyCompaniesContext } from './useMyCompaniesContext'
 import { FILTER_CHANGE, ORDER_CHANGE } from './constants'
 
 const StyledSelectInput = styled(SelectInput)({
