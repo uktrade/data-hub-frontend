@@ -11,11 +11,6 @@ const { ENTITIES } = require('../../../search/constants')
 async function renderFindAttendee(req, res, next) {
   try {
     const event = res.locals.event
-
-    if (!event) {
-      throw new Error('Missing event')
-    }
-
     res
       .breadcrumb(event.name, `/events/${event.id}/attendees`)
       .breadcrumb('Add attendee')
@@ -29,10 +24,6 @@ async function renderFindAttendee(req, res, next) {
 async function findAttendee(req, res, next) {
   try {
     const event = res.locals.event
-
-    if (!event) {
-      throw new Error('No event supplied')
-    }
 
     const query = req.query
     const searchTerm = (res.locals.searchTerm = (query.term || '').trim())
