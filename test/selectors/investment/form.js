@@ -25,4 +25,5 @@ module.exports = {
   specificInvestmentProgramme: '#field-specific_programme',
   clientContact: '#field-client_contacts',
   saveButton: 'button:contains("Save")',
+  history: '#investment-edit-history',
 }
