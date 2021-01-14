@@ -25,6 +25,7 @@ describe('Company', () => {
     cy.get(selectors.editHistory.change(1).updated)
       .should('contain', todaysDate)
       .and('contain', 'DIT Staff')
+    cy.get(selectors.companyEdit.history).should('contain', '1 change')
   })
 })
 
@@ -47,6 +48,7 @@ describe('Contact', () => {
       .should('contain', 'DIT Staff')
       .and('contain', 'No changes saved')
       .and('contain', todaysDate)
+    cy.get(selectors.collection.header).should('contain', '1 result')
   })
 })
 
@@ -71,5 +73,6 @@ describe('Investment Project', () => {
       'have.text',
       'No changes were made to the project in this update'
     )
+    cy.get(selectors.investment.form.history).should('contain', '1 change')
   })
 })
