@@ -1,6 +1,6 @@
 const selectors = require('../../../../selectors')
 
-const { events } = require('../../../../../src/lib/urls')
+const urls = require('../../../../../src/lib/urls')
 
 const { assertKeyValueTable } = require('../../support/assertions')
 
@@ -133,22 +133,25 @@ describe('Event', () => {
   })
 
   describe('Add attendee', () => {
-    it('Should add an interaction with the attendee', () => {
-      cy.visit(events.index())
-
+    before(() => {
+      cy.visit(urls.events.index())
       cy.contains('One-day exhibition').click()
+    })
+    it('Should add an interaction with the attendee', () => {
       cy.contains('a', 'Attendees').click()
       cy.contains('Add attendee').click()
-
       cy.get('input').type('John')
       cy.contains('button', 'Search').click()
-
-      cy.get(selectors.collection.items)
-        .first()
-        .should('contain', 'Johnny Cakeman')
-        .click()
-
+      cy.get('main li > a').should('contain', 'Johnny Cakeman').click()
       cy.contains('Event attendee added')
+    })
+    it('Should not be able to add a duplicate attendee', () => {
+      cy.contains('a', 'Attendees').click()
+      cy.contains('Add attendee').click()
+      cy.get('input').type('John')
+      cy.contains('button', 'Search').click()
+      cy.get('main li a').should('not.exist')
+      cy.get('main li').should('contain', 'Existing attendee')
     })
   })
 })

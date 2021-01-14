@@ -216,6 +216,8 @@ module.exports = {
     index: url('/events'),
     create: url('/events/create'),
     details: url('/events', '/:eventId/details'),
+    attendees: url('/events', '/:eventId/attendees'),
+    find: url('/events', '/:eventId/attendees/find-new'),
   },
   search: {
     index: url('/search'),

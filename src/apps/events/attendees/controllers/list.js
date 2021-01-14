@@ -13,10 +13,6 @@ async function renderAttendees(req, res, next) {
   try {
     const event = res.locals.event
 
-    if (!event) {
-      throw new Error('Missing event')
-    }
-
     const name = event.name
     const query = req.query
     const page = query.page || 1
