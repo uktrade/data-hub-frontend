@@ -23,4 +23,5 @@ module.exports = {
   needToEditTheHeadquarterType: 'details[data-test="headquarter_type-details"]',
   saveButton: 'button:contains("Submit")',
   backLink: 'a:contains("Return without saving")',
+  history: '#company-edit-history',
 }
