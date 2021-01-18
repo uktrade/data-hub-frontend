@@ -21,10 +21,4 @@ module.exports = {
     newZoo: require('./investment-project/new-zoo'),
     create: require('./investment-project/create-investment').create,
   },
-  adviser: {
-    create: require('./create-adviser').create,
-  },
-  team: {
-    create: require('./create-team').create,
-  },
 }
