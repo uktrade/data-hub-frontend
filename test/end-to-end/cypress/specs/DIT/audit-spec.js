@@ -9,7 +9,7 @@ let investmentProjectObj
 
 describe('Company', () => {
   before(() => {
-    companyObj = company.create()
+    companyObj = company.create.defaultCompany()
     cy.loadFixture([companyObj])
     cy.visit(urls.companies.edit(companyObj.pk))
   })
@@ -31,7 +31,7 @@ describe('Company', () => {
 
 describe('Contact', () => {
   before(() => {
-    companyObj = company.create()
+    companyObj = company.create.defaultCompany()
     contactObj = contact.create(companyObj.pk)
     cy.loadFixture([companyObj])
     cy.loadFixture([contactObj])
