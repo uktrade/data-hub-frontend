@@ -43,7 +43,7 @@ const FilteredCollectionList = ({
             />
           )}
           {sortOptions && (
-            <CollectionSort sortOptions={sortOptions} totalPages={count} />
+            <CollectionSort sortOptions={sortOptions} totalPages={totalPages} />
           )}
           <RoutedDownloadDataHeader
             count={count}
