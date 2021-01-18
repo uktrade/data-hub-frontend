@@ -6,7 +6,7 @@ module.exports = {
     archivedLtd: require('./company/archived-ltd'),
     teddyBearExpo: require('./company/teddy-bear-expo'),
     emptyUkRegionLtd: require('./company/empty-uk-region-ltd.json'),
-    create: require('./company/create-company').create,
+    create: require('./company/create-company'),
   },
   contact: {
     johnnyCakeman: require('./contact/johnny-cakeman'),
@@ -20,5 +20,11 @@ module.exports = {
     newGolfCourse: require('./investment-project/new-golf-course'),
     newZoo: require('./investment-project/new-zoo'),
     create: require('./investment-project/create-investment').create,
+  },
+  adviser: {
+    create: require('./create-adviser').create,
+  },
+  team: {
+    create: require('./create-team').create,
   },
 }
