@@ -68,12 +68,7 @@ They resemble macros but do not have to be imported where they are needed.
 
 ## Test
 
-Unit and acceptance test files.
-
-### Acceptance
-
-Acceptance tests written using the [Nightwatch](http://nightwatchjs.org/)
-framework to drive the browser through each scenario.
+Test specs and other related files.
 
 ### Unit
 
