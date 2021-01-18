@@ -21,5 +21,5 @@ _Add a screenshot_
 https://github.com/uktrade/data-hub-frontend/blob/master/docs/Code%20review%20guidelines.md"
 
 - [ ] Has the branch been rebased to master?
-- [ ] Automated tests (Any of the following when applicable: Unit, Functional or Acceptance)
+- [ ] Automated tests (Any of the following when applicable: Unit, Functional or End-to-End)
 - [ ] Manual compatibility testing (Browsers: Chrome, Firefox, IE11, Safari)
