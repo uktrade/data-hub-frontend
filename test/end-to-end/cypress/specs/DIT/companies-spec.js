@@ -6,14 +6,16 @@ const { companies, contacts } = require('../../../../../src/lib/urls')
 
 const { assertKeyValueTable } = require('../../support/assertions')
 
-const { oneListCorp, lambdaPlc, emptyUkRegionLtd } = fixtures.company
-
 describe('Advisors', () => {
   const globalManagerTable = 2
-  const adviserTable = 3
+  const company = fixtures.company.create.corp('company adviser testing')
+
+  before(() => {
+    cy.loadFixture([company])
+  })
 
   it('should display advisers for a GHQ for a given company', () => {
-    cy.visit(companies.advisers.index(oneListCorp.id))
+    cy.visit(companies.advisers.index(company.pk))
 
     cy.get(selectors.collection.contentHeader).should(
       'contain',
@@ -24,45 +26,11 @@ describe('Advisors', () => {
       .should('contain', 'IST - Sector Advisory Services')
       .and('contain', 'London')
       .and('contain', 'Travis Greene')
-
-    cy.get(selectors.collection.contentTable(adviserTable))
-      .should('contain', 'Heart of the South West LEP')
-      .and('contain', 'South West')
-      .and('contain', 'Holly Collins')
-      .and('contain', 'IG - Specialists - Knowledge Intensive Industry')
-      .and('contain', 'London')
-      .and('contain', 'Jenny Carey')
   })
 })
 
 describe('Contacts', () => {
-  const company = {
-    pk: '1233379c-341c-4da4-b825-bf8d47b26baa',
-    model: 'company.company',
-    fields: {
-      name: '1 2 3 testing',
-      business_type: '98d14e94-5d95-e211-a939-e4115bead28a',
-      employee_range: '41afd8d0-5d95-e211-a939-e4115bead28a',
-      turnover_range: '7a4cd12a-6095-e211-a939-e4115bead28a',
-      export_to_countries: [
-        '82756b9a-5d95-e211-a939-e4115bead28a',
-        '83756b9a-5d95-e211-a939-e4115bead28a',
-      ],
-      future_interest_countries: ['37afd8d0-5d95-e211-a939-e4115bead28a'],
-      sector: '355f977b-8ac3-e211-a646-e4115bead28a',
-      address_1: '100 Path',
-      address_town: 'A town',
-      address_postcode: '12345',
-      address_country: '81756b9a-5d95-e211-a939-e4115bead28a',
-      registered_address_1: '100 Path',
-      registered_address_town: 'A town',
-      registered_address_postcode: '12345',
-      registered_address_country: '81756b9a-5d95-e211-a939-e4115bead28a',
-      description: 'This is a dummy company for testing',
-      created_on: '2017-10-16T11:00:00Z',
-      modified_on: '2017-11-16T11:00:00Z',
-    },
-  }
+  const company = fixtures.company.create.defaultCompany('company testing')
 
   before(() => {
     cy.loadFixture([company])
@@ -105,6 +73,11 @@ describe('Contacts', () => {
 })
 
 describe('Export', () => {
+  const company = fixtures.company.create.defaultCompany('company testing')
+  before(() => {
+    cy.loadFixture([company])
+  })
+
   function assertTable(values) {
     cy.get('td').as('exportTds')
 
@@ -152,7 +125,7 @@ describe('Export', () => {
 
     context('With lambdaPlc (which has a UK Region set)', () => {
       beforeEach(() => {
-        cy.visit(companies.exports.edit(lambdaPlc.id))
+        cy.visit(companies.exports.edit(company.pk))
       })
 
       runEditTests()
@@ -160,7 +133,11 @@ describe('Export', () => {
 
     context('With emptyUkRegionLtd (which does not have UK Region set)', () => {
       beforeEach(() => {
-        cy.visit(companies.exports.edit(emptyUkRegionLtd.id))
+        const emptyUkRegion = fixtures.company.create.emptyUkRegion(
+          'empty uk region'
+        )
+        cy.loadFixture([emptyUkRegion])
+        cy.visit(companies.exports.edit(emptyUkRegion.pk))
       })
 
       runEditTests()
@@ -172,7 +149,7 @@ describe('Export', () => {
       'With no existing values and without changing the export countries',
       () => {
         it('Should return back to the export tab with no changes', () => {
-          cy.visit(companies.exports.editCountries(lambdaPlc.id))
+          cy.visit(companies.exports.editCountries(company.pk))
           cy.contains('button', 'Save and return').click()
 
           assertTable([
@@ -190,7 +167,7 @@ describe('Export', () => {
     context('Adding export countries', () => {
       context('Adding two countries to currently exporting', () => {
         it('Should add the countries and display them in alphabetical order', () => {
-          cy.visit(companies.exports.editCountries(lambdaPlc.id))
+          cy.visit(companies.exports.editCountries(company.pk))
 
           cy.get(selectors.companyExport.countries.export)
             .selectTypeaheadOption('Germ')
@@ -211,7 +188,7 @@ describe('Export', () => {
 
       context('Without changing the export countries again', () => {
         it('Should return back to the export tab with no changes', () => {
-          cy.visit(companies.exports.editCountries(lambdaPlc.id))
+          cy.visit(companies.exports.editCountries(company.pk))
           cy.contains('button', 'Save and return').click()
 
           assertTable([
@@ -227,7 +204,7 @@ describe('Export', () => {
 
       context('Adding the same country to more than one field', () => {
         it('Should show an error', () => {
-          cy.visit(companies.exports.editCountries(lambdaPlc.id))
+          cy.visit(companies.exports.editCountries(company.pk))
           cy.get(
             selectors.companyExport.countries.future
           ).selectTypeaheadOption('Germ')
@@ -238,7 +215,7 @@ describe('Export', () => {
 
       context('Editing all countries', () => {
         it('should update the countries', () => {
-          cy.visit(companies.exports.editCountries(lambdaPlc.id))
+          cy.visit(companies.exports.editCountries(company.pk))
 
           cy.get(
             selectors.companyExport.countries.export
@@ -265,7 +242,7 @@ describe('Export', () => {
 
       context('Removing all countries', () => {
         it('Should save the export countries as empty', () => {
-          cy.visit(companies.exports.editCountries(lambdaPlc.id))
+          cy.visit(companies.exports.editCountries(company.pk))
 
           cy.get(
             selectors.companyExport.countries.export

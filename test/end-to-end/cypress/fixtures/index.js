@@ -6,7 +6,7 @@ module.exports = {
     archivedLtd: require('./company/archived-ltd'),
     teddyBearExpo: require('./company/teddy-bear-expo'),
     emptyUkRegionLtd: require('./company/empty-uk-region-ltd.json'),
-    create: require('./company/create-company').create,
+    create: require('./company/create-company'),
   },
   contact: {
     johnnyCakeman: require('./contact/johnny-cakeman'),
