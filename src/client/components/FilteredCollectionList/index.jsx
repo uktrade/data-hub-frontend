@@ -25,7 +25,6 @@ const FilteredCollectionList = ({
   isComplete,
   children,
   collectionName,
-  activePage = 1,
   maxItemsToDownload,
   selectedFilters,
   baseDownloadLink,
@@ -44,7 +43,7 @@ const FilteredCollectionList = ({
             />
           )}
           {sortOptions && (
-            <CollectionSort sortOptions={sortOptions} totalPages={count} />
+            <CollectionSort sortOptions={sortOptions} totalPages={totalPages} />
           )}
           <RoutedDownloadDataHeader
             count={count}
@@ -62,7 +61,6 @@ const FilteredCollectionList = ({
                   <RoutedPagination
                     qsParamName="page"
                     totalPages={totalPages}
-                    activePage={activePage}
                   />
                 </>
               )

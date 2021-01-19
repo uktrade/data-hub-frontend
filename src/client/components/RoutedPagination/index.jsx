@@ -7,10 +7,13 @@ import Pagination from '../Pagination'
 const RoutedPagination = ({ qsParamName, ...props }) => (
   <Route>
     {({ location, history }) => {
-      const qsParams = qs.parse(location.search.slice(1))
+      const { page: activePage = '1', ...qsParams } = qs.parse(
+        location.search.slice(1)
+      )
       return (
         <Pagination
           {...props}
+          activePage={parseInt(activePage, 10)}
           onPageClick={(page) => {
             history.push({
               search: qs.stringify({
