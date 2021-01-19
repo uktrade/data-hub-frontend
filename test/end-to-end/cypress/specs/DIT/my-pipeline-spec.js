@@ -1,8 +1,7 @@
 const urls = require('../../../../../src/lib/urls')
-const fixtures = require('../../fixtures/index')
+const fixtures = require('../../fixtures')
 const formSelectors = require('../../../../selectors/pipeline-form')
 
-const { lambdaPlc } = fixtures.company
 const tabPanelSelector = '[data-auto-id="pipelineSubTabNav"] [role="tabpanel"]'
 
 function addAssertion(assertion) {
@@ -52,9 +51,14 @@ describe('My Pipeline tab on the dashboard', () => {
 
   context('Adding a company as a lead', () => {
     const projectName = 'Test add project'
+    const company = fixtures.company.create.lambda('pipeline testing')
+
+    before(() => {
+      cy.loadFixture([company])
+    })
 
     it('Should add the company and return to the my pipeline tab', () => {
-      cy.visit(urls.companies.pipelineAdd(lambdaPlc.id))
+      cy.visit(urls.companies.pipelineAdd(company.pk))
 
       cy.get(formSelectors.name).type(projectName)
       cy.get(formSelectors.status.prospect).click()
