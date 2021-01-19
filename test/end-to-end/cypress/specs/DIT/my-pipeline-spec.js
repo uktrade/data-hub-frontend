@@ -52,9 +52,11 @@ describe('My Pipeline tab on the dashboard', () => {
   context('Adding a company as a lead', () => {
     const projectName = 'Test add project'
     const company = fixtures.company.create.lambda('pipeline testing')
+    const contact = fixtures.contact.create(company.pk)
 
     before(() => {
       cy.loadFixture([company])
+      cy.loadFixture([contact])
     })
 
     it('Should add the company and return to the my pipeline tab', () => {
@@ -111,7 +113,7 @@ describe('My Pipeline tab on the dashboard', () => {
 
           cy.get(formSelectors.likelihood.low).click()
           cy.get(formSelectors.fields.sector).selectTypeaheadOption('Aero')
-          cy.get(formSelectors.fields.contacts).selectTypeaheadOption('Dean')
+          cy.get(formSelectors.fields.contacts).selectTypeaheadOption('Johnny')
           cy.get(formSelectors.value).type('1000')
           cy.get(formSelectors.fields.expectedWinDate)
             .find('input')
