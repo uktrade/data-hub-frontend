@@ -109,18 +109,17 @@ addLoggedCommand({
  * with a dash e.g. `'-GET'` if in a nested context like `.witin()`
  */
 Cypress.Commands.add('getDhTablistTab', (tablistLabel, tabLabel, options) => {
-  cy.getDhTablist(tablistLabel, options)
-    .getDhTab(tabLabel, { ...options, nestedLog: true })
+  cy.getDhTablist(tablistLabel, options).getDhTab(tabLabel, {
+    ...options,
+    nestedLog: true,
+  })
 })
 
 Cypress.Commands.add(
   'selectTypeaheadOption',
   { prevSubject: 'element' },
   (subject, text) => {
-    cy.wrap(subject)
-      .find('input')
-      .type(text, { force: true })
-      .type('{enter}')
+    cy.wrap(subject).find('input').type(text, { force: true }).type('{enter}')
 
     return cy.wrap(subject)
   }
@@ -160,9 +159,13 @@ Cypress.Commands.add(
   }
 )
 
-Cypress.Commands.add('getTypeaheadValues', { prevSubject: 'element'}, ( subject) => {
-  return cy.wrap(subject).find('div > div > div > div[class*="-multiValue"]')
-})
+Cypress.Commands.add(
+  'getTypeaheadValues',
+  { prevSubject: 'element' },
+  (subject) => {
+    return cy.wrap(subject).find('div > div > div > div[class*="-multiValue"]')
+  }
+)
 
 Cypress.Commands.add('setFeatureFlag', (name, isActive) => {
   const body = {
@@ -230,3 +233,11 @@ Cypress.Commands.overwrite(
     return originalFn(subject, expectation, ...args)
   }
 )
+
+Cypress.Commands.add('setUserDitTeam', (id) => {
+  return cy.request('PUT', `${Cypress.env('sandbox_url')}/whoami`, { id })
+})
+
+Cypress.Commands.add('resetUserDitTeam', () => {
+  return cy.request('POST', `${Cypress.env('sandbox_url')}/whoami`)
+})
