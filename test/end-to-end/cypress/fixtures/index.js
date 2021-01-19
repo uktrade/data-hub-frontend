@@ -21,4 +21,7 @@ module.exports = {
     newZoo: require('./investment-project/new-zoo'),
     create: require('./investment-project/create-investment').create,
   },
+  event: {
+    create: require('./create-event'),
+  },
 }
