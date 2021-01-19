@@ -15,8 +15,13 @@ const selectTypeahead = (fieldName, input) =>
   })
 
 describe('Referrals', () => {
+  const company = fixtures.company.create.lambda('company referral testing')
+  const contact = fixtures.contact.create(company.pk)
+
   before(() => {
-    cy.visit(urls.companies.referrals.send(fixtures.company.lambdaPlc.id))
+    cy.loadFixture([company])
+    cy.loadFixture([contact])
+    cy.visit(urls.companies.referrals.send(company.pk))
   })
   context('when adding a referral', () => {
     it('should create a referral for a company', () => {
@@ -67,7 +72,7 @@ describe('Referrals', () => {
       cy.get(selectors.createInteractionContext.button).click()
 
       cy.get(formSelectors.service).select('Export Win')
-      cy.get(formSelectors.contact).selectTypeaheadOption('Dean Cox')
+      cy.get(formSelectors.contact).selectTypeaheadOption('Johnny Cakeman')
       cy.get(formSelectors.communicationChannel).selectTypeaheadOption(
         'Email/Website'
       )
