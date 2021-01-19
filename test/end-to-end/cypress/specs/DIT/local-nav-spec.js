@@ -31,8 +31,11 @@ describe('DIT Permission', () => {
   })
 
   describe('activity', () => {
+    const company = fixtures.company.create.corp('local nav testing')
+
     before(() => {
-      cy.visit(companies.detail(fixtures.company.oneListCorp.id))
+      cy.loadFixture([company])
+      cy.visit(companies.detail(company.pk))
     })
 
     it('should display DIT only tabs', () => {
@@ -48,8 +51,13 @@ describe('DIT Permission', () => {
   })
 
   describe('contact', () => {
+    const company = fixtures.company.create.defaultCompany('local nav testing')
+    const contact = fixtures.contact.create(company.pk)
+
     before(() => {
-      cy.visit(contacts.contact(fixtures.contact.johnnyCakeman.id))
+      cy.loadFixture([company])
+      cy.loadFixture([contact])
+      cy.visit(contacts.contact(contact.pk))
     })
 
     it('should display DIT only side navs', () => {
@@ -64,11 +72,9 @@ describe('DIT Permission', () => {
 
   describe('investment', () => {
     before(() => {
-      cy.visit(
-        investments.projects.project(
-          fixtures.investmentProject.newHotelCommitmentToInvest.id
-        )
-      )
+      const investmentProject = fixtures.investmentProject.create()
+      cy.loadFixture([investmentProject])
+      cy.visit(investments.projects.project(investmentProject.pk))
     })
 
     it('should display DIT only side navs', () => {
@@ -86,7 +92,9 @@ describe('DIT Permission', () => {
 
   describe('event', () => {
     before(() => {
-      cy.visit(events.details(fixtures.company.teddyBearExpo.id))
+      const event = fixtures.event.create.defaultEvent()
+      cy.loadFixture([event])
+      cy.visit(events.details(event.pk))
     })
 
     it('should display DIT only side navs', () => {
