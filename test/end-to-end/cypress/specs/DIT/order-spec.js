@@ -45,7 +45,6 @@ describe('Order', () => {
     cy.get(selectors.collection.items)
       .should('contain', 'order testing')
       .and('contain', 'Johnny Cakeman')
-      .and('contain', 'North West')
       .and('contain', 'Aerospace')
   })
 })
