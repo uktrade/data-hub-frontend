@@ -1,8 +1,7 @@
 const urls = require('../../../../../src/lib/urls')
-const fixtures = require('../../fixtures/index')
+const fixtures = require('../../fixtures')
 const formSelectors = require('../../../../selectors/pipeline-form')
 
-const { lambdaPlc } = fixtures.company
 const tabPanelSelector = '[data-auto-id="pipelineSubTabNav"] [role="tabpanel"]'
 
 function addAssertion(assertion) {
@@ -52,9 +51,16 @@ describe('My Pipeline tab on the dashboard', () => {
 
   context('Adding a company as a lead', () => {
     const projectName = 'Test add project'
+    const company = fixtures.company.create.lambda('pipeline testing')
+    const contact = fixtures.contact.create(company.pk)
+
+    before(() => {
+      cy.loadFixture([company])
+      cy.loadFixture([contact])
+    })
 
     it('Should add the company and return to the my pipeline tab', () => {
-      cy.visit(urls.companies.pipelineAdd(lambdaPlc.id))
+      cy.visit(urls.companies.pipelineAdd(company.pk))
 
       cy.get(formSelectors.name).type(projectName)
       cy.get(formSelectors.status.prospect).click()
@@ -107,7 +113,7 @@ describe('My Pipeline tab on the dashboard', () => {
 
           cy.get(formSelectors.likelihood.low).click()
           cy.get(formSelectors.fields.sector).selectTypeaheadOption('Aero')
-          cy.get(formSelectors.fields.contacts).selectTypeaheadOption('Dean')
+          cy.get(formSelectors.fields.contacts).selectTypeaheadOption('Johnny')
           cy.get(formSelectors.value).type('1000')
           cy.get(formSelectors.fields.expectedWinDate)
             .find('input')
@@ -123,7 +129,7 @@ describe('My Pipeline tab on the dashboard', () => {
             contain: [
               projectName + ' edited',
               'Export sectorAerospace',
-              'Company contactDean Cox',
+              'Company contactJohnny Cakeman',
               'Potential export value£1,000',
               'Expected date for winJun 2025',
             ],
