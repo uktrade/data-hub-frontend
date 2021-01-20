@@ -1,0 +1,39 @@
+{% extends "_layouts/template.njk" %}
+{# For the accessibility work, the search bar has been amended to have hint text and placeholder text.
+It seems to be that the label and hint are coupled up somewhere, so a label is required to show a hint.
+As nunjucks is on it's way out, a label of an empty space has been used as a work around for this issue. #}
+{% block local_header %}
+  {% call LocalHeader({ modifier: 'dark-banner' }) %}
+    {{ EntitySearchForm({
+      inputName: 'term',
+      inputHint: 'Search for company, contact, event, investment project or OMIS order',
+      inputPlaceholder: 'Enter your search term(s)',
+      inputLabel: ' ',
+      isLabelHidden: false,
+      modifier: 'global',
+      action: urls.search.type('companies')
+    }) }}
+  {% endcall %}
+{% endblock %}
+
+{% block body_main_content %}
+<div class="grid-row dashboard">
+    <section class="govuk-grid-column-full">
+      {% component 'info-feed', {
+        heading: 'Data Hub updates',
+        feedLimit: 1,
+        dataFeed: articleFeed,
+        outboundLinkURL: helpCentre.announcementsURL,
+        outboundLinkText: 'View all updates'
+      } %}
+    </section>
+{% if user.hasPermission('company_list.view_companylist') %}
+  <div class="govuk-grid-column-full">
+      {% component 'react-slot', {
+        id: 'company-lists'
+      } %}
+  </div>
+{% endif %}
+</div>
+
+{% endblock %}
