@@ -2,6 +2,7 @@ const router = require('express').Router()
 const urls = require('../../lib/urls')
 const { renderDashboard } = require('./controllers')
 const spaBasePath = require('../../middleware/spa-base-path')
+const layoutTesting = require('../../middleware/layout-testing')
 
 module.exports = {
   router: router.get(
@@ -14,6 +15,7 @@ module.exports = {
       urls.pipeline.won.mountPoint,
     ],
     spaBasePath(urls.dashboard.route),
+    layoutTesting('dashboard'),
     renderDashboard
   ),
 }
