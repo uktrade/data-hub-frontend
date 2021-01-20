@@ -6,8 +6,13 @@ const { omis } = require('../../../../../src/lib/urls')
 const today = Cypress.moment().format('D MMM YYYY')
 
 describe('Order', () => {
-  beforeEach(() => {
-    cy.visit(omis.create(fixtures.company.venusLtd.id))
+  const company = fixtures.company.create.defaultCompany('order testing')
+  const contact = fixtures.contact.create(company.pk)
+
+  before(() => {
+    cy.loadFixture([company])
+    cy.loadFixture([contact])
+    cy.visit(omis.create(company.pk))
   })
 
   it('should create an order and view collection page', () => {
@@ -27,7 +32,7 @@ describe('Order', () => {
       .should('contain', 'Johnny Cakeman')
       .and('contain', 'johnny@cakeman.com')
     cy.get(selectors.omisSummary.header)
-      .should('contain', 'Venus Ltd')
+      .should('contain', 'order testing')
       .and('contain', 'Brazil')
       .and('contain', today)
 
@@ -38,9 +43,8 @@ describe('Order', () => {
       'Brazil'
     )
     cy.get(selectors.collection.items)
-      .should('contain', 'Venus Ltd')
+      .should('contain', 'order testing')
       .and('contain', 'Johnny Cakeman')
-      .and('contain', 'North West')
       .and('contain', 'Aerospace')
   })
 })
