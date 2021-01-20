@@ -2,6 +2,8 @@ const urls = require('../../../../../src/lib/urls')
 const fixtures = require('../../fixtures')
 const selectors = require('../../../../selectors')
 
+let company
+
 const addOrReplaceTestCase = ({
   headline,
   option,
@@ -9,7 +11,7 @@ const addOrReplaceTestCase = ({
   replace,
 }) => {
   it(`should be able to ${replace ? 'replace' : 'add'} an adviser`, () => {
-    cy.visit(urls.companies.detail(fixtures.company.lambdaPlc.id))
+    cy.visit(urls.companies.detail(company.pk))
     cy.get(selectors.tabbedLocalNav().item(3)).click()
     cy.get('#lead-advisers a')
       .contains(`${replace ? 'Replace Lead ITA' : 'Add a Lead ITA'}`)
@@ -29,6 +31,11 @@ const addOrReplaceTestCase = ({
 }
 
 describe('Manage Lead ITA', () => {
+  company = fixtures.company.create.lambda('manage adviser testing')
+  before(() => {
+    cy.loadFixture([company])
+  })
+
   addOrReplaceTestCase({
     headline: 'Add someone as the Lead ITA',
     option: 'Harold',
@@ -44,7 +51,7 @@ describe('Manage Lead ITA', () => {
     replace: true,
   })
   it('should not be able to add an advisor who is no longer active', () => {
-    cy.visit(urls.companies.detail(fixtures.company.lambdaPlc.id))
+    cy.visit(urls.companies.detail(company.pk))
     cy.get(selectors.tabbedLocalNav().item(3)).click()
     cy.get('#lead-advisers a').contains('Replace Lead ITA').click()
     cy.get('form label').next().next().selectTypeaheadOption('Ava')
@@ -54,7 +61,7 @@ describe('Manage Lead ITA', () => {
     )
   })
   it('should be able to remove an adviser', () => {
-    cy.visit(urls.companies.detail(fixtures.company.lambdaPlc.id))
+    cy.visit(urls.companies.detail(company.pk))
     cy.get(selectors.tabbedLocalNav().item(3)).click()
     cy.get('#lead-advisers a + a').click()
     cy.get('form button').click()
