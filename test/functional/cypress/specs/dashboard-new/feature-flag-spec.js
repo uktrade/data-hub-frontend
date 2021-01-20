@@ -5,6 +5,9 @@ describe('Dashboard - feature flag', () => {
       cy.setFeatureFlag('layoutTesting:1234', true)
       cy.visit('/')
     })
+    afterEach(() => {
+      cy.resetUserDitTeam()
+    })
     it('should show an alternative layout', () => {
       cy.get('[data-test="dashboard"]').should('be.visible')
     })
@@ -20,7 +23,6 @@ describe('Dashboard - feature flag', () => {
     'when a feature flag is set and your are NOT in the testing team',
     () => {
       beforeEach(() => {
-        cy.resetUserDitTeam()
         cy.setFeatureFlag('layoutTesting:1234', true)
         cy.visit('/')
       })
