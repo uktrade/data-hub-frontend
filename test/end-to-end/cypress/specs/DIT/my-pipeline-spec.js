@@ -129,7 +129,7 @@ describe('My Pipeline tab on the dashboard', () => {
             contain: [
               projectName + ' edited',
               'Export sectorAerospace',
-              'Company contactDean Cox',
+              'Company contactJohnny Cakeman',
               'Potential export value£1,000',
               'Expected date for winJun 2025',
             ],
