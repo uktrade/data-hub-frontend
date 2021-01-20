@@ -143,7 +143,10 @@ describe('Event', () => {
       cy.get('input').type('John')
       cy.contains('button', 'Search').click()
 
-      cy.get('main li > a').should('contain', 'Johnny Cakeman').click()
+      cy.get(selectors.collection.items)
+        .first()
+        .should('contain', 'Johnny Cakeman')
+        .click()
 
       cy.contains('Event attendee added')
     })
