@@ -17,7 +17,7 @@ import CreateListFormSection from '../apps/company-lists/client/CreateListFormSe
 import AddRemoveFromListSection from '../apps/company-lists/client/AddRemoveFromListSection'
 import DnbHierarchy from '../apps/companies/apps/dnb-hierarchy/client/DnbHierarchy'
 import LeadAdvisers from '../apps/companies/apps/advisers/client/LeadAdvisers'
-import LargeCapitalProfileCollection from '../apps/investments/client/LargeCapitalProfileCollection'
+import LargeCapitalProfileCollection from '../apps/investments/client/profiles/LargeCapitalProfileCollection'
 import InvestmentEditHistory from '../apps/investments/client/InvestmentEditHistory'
 import ManageAdviser from '../apps/companies/apps/advisers/client/ManageAdviser'
 import CompanyBusinessDetails from '../apps/companies/apps/business-details/client/CompanyBusinessDetails'
@@ -38,6 +38,7 @@ import UnarchivePipelineItemForm from '../apps/my-pipeline/client/UnarchivePipel
 import DeletePipelineItemForm from '../apps/my-pipeline/client/DeletePipelineItemForm.jsx'
 import Dashboard from './components/Dashboard'
 import CompanyLocalHeader from './components/CompanyLocalHeader'
+import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -83,8 +84,16 @@ import * as manageAdviser from '../apps/companies/apps/advisers/client/tasks'
 import { DNB__CHECK_PENDING_REQUEST } from '../apps/companies/apps/business-details/client/state'
 import * as dnbCheck from '../apps/companies/apps/business-details/client/tasks'
 
-import { TASK_GET_PROFILES_LIST } from '../apps/investments/client/state'
-import * as investmentProfilesTasks from '../apps/investments/client/tasks'
+import { TASK_GET_PROFILES_LIST } from '../apps/investments/client/profiles/state'
+import * as investmentProfilesTasks from '../apps/investments/client/profiles/tasks'
+
+import {
+  TASK_GET_PROJECTS_LIST,
+  TASK_GET_ADVISER_NAME,
+  TASK_GET_INVESTMENTS_PROJECTS_METADATA,
+} from '../apps/investments/client/projects/state'
+import * as getInvestmentProjects from '../apps/investments/client/projects/tasks'
+
 import Footer from '../client/components/Footer'
 
 function parseProps(domNode) {
@@ -144,6 +153,10 @@ function App() {
         [DNB__CHECK_PENDING_REQUEST]: dnbCheck.checkIfPendingRequest,
         [TASK_GET_PROFILES_LIST]:
           investmentProfilesTasks.getLargeCapitalProfiles,
+        [TASK_GET_PROJECTS_LIST]: getInvestmentProjects.getProjects,
+        [TASK_GET_ADVISER_NAME]: getInvestmentProjects.getAdviserNames,
+        [TASK_GET_INVESTMENTS_PROJECTS_METADATA]:
+          getInvestmentProjects.getMetadata,
       }}
     >
       <Mount selector="#add-company-form">
@@ -283,6 +296,9 @@ function App() {
         {(props) => <DeletePipelineItemForm {...props} />}
       </Mount>
       <Mount selector="#footer">{() => <Footer />}</Mount>
+      <Mount selector="#investment-projects-collection">
+        {(props) => <InvestmentProjectsCollection {...props} />}
+      </Mount>
     </Provider>
   )
 }

@@ -144,7 +144,7 @@ const TabNav = ({
             <StyledTablist
               tabindex={0}
               role="tablist"
-              data-cy="tablist"
+              data-test="tablist"
               aria-label={label}
               onKeyUp={({ keyCode }) => {
                 const totalTabs = tabKeys.length
@@ -202,7 +202,7 @@ const TabNav = ({
               role="tabpanel"
               tabIndex={0}
               aria-labelledby={createId(id, selectedIndex)}
-              data-cy="tabpanel"
+              data-test="tabpanel"
             >
               {getContent(tabs, tabKeys, selectedIndex)}
             </StyledTabpanel>

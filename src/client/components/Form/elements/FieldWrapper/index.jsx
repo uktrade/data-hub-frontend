@@ -176,16 +176,16 @@ FieldInner.propTypes = {
   legend: PropTypes.node,
   error: PropTypes.string,
   showBorder: PropTypes.bool,
-  children: PropTypes.node,
   bigLegend: PropTypes.bool,
+  children: PropTypes.node,
 }
 
 FieldInner.defaultProps = {
   legend: null,
   error: null,
   showBorder: false,
-  children: null,
   bigLegend: false,
+  children: null,
 }
 
 FieldWrapper.propTypes = {
