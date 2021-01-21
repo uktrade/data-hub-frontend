@@ -375,6 +375,67 @@ const assertFormButtons = ({ submitText, cancelText, cancelLink }) => {
   cy.contains('a', cancelText).should('have.attr', 'href', cancelLink)
 }
 
+/**
+ * Assert that a checkbox is checked or unchecked
+ */
+const assertCheckboxGroupOption = ({ element, value, checked = true }) => {
+  const checkbox = cy.get(element).find(`input[value="${value}"]`)
+  if (checked) {
+    checkbox.should('be.checked')
+  } else {
+    checkbox.should('not.be.checked')
+  }
+}
+
+/**
+ * Assert that none of the options in a checkbox group are selected
+ */
+const assertCheckboxGroupNoneSelected = (element) => {
+  cy.get(element)
+    .find('input')
+    .each((child) => cy.wrap(child).should('not.be.checked'))
+}
+
+/**
+ * Asserts that a typeahead `element` has the given `legend` and `placeholder`
+ */
+const assertTypeaheadHints = ({ element, legend, placeholder }) => {
+  cy.get(element)
+    .find('legend')
+    .should('have.text', legend)
+    .next()
+    .should('contain', placeholder)
+}
+
+/**
+ * Asserts that the typeahead `element` has the `expectedOption` selected
+ */
+const assertTypeaheadOptionSelected = ({ element, expectedOption }) => {
+  cy.get(element).should('contain', expectedOption)
+}
+
+/**
+ * Asserts that a chip indicator exists in the specified position
+ */
+const assertChipExists = ({ label, position }) => {
+  cy.get(`#filter-chips button:nth-child(${position})`).should((el) => {
+    expect(el.text()).to.contain(label)
+  })
+}
+
+/**
+ * Assert that child elements exist in the expected order
+ */
+const assertElementsInOrder = ({ parentElement, expectedIdentifiers }) => {
+  let filterElement = cy.get(parentElement).first()
+  for (const [index, identifier] of expectedIdentifiers.entries()) {
+    filterElement.should('have.attr', 'data-test', identifier)
+    if (index !== expectedIdentifiers.length - 1) {
+      filterElement.next()
+    }
+  }
+}
+
 module.exports = {
   assertKeyValueTable,
   assertValueTable,
@@ -398,4 +459,10 @@ module.exports = {
   assertSummaryList,
   assertAriaTablistTabSelected,
   assertFormButtons,
+  assertCheckboxGroupOption,
+  assertCheckboxGroupNoneSelected,
+  assertTypeaheadHints,
+  assertTypeaheadOptionSelected,
+  assertChipExists,
+  assertElementsInOrder,
 }

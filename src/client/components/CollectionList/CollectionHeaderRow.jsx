@@ -24,9 +24,9 @@ const StyledActions = styled('div')`
   }
 `
 
-function CollectionHeaderRow({ primary, actions, children }) {
+const CollectionHeaderRow = ({ primary, actions, children, ...rest }) => {
   return (
-    <StyledRowWrapper primary={primary}>
+    <StyledRowWrapper primary={primary} {...rest}>
       {children}
 
       {actions && <StyledActions>{actions}</StyledActions>}

@@ -53,9 +53,10 @@ const DnbHierarchy = ({ dataEndpoint, isGlobalHQ }) => {
 
       <LoadingBox loading={isLoading}>
         <CollectionList
-          itemName="related company record"
+          collectionName="related company record"
           items={companies}
-          totalItems={totalItems}
+          count={totalItems}
+          isComplete={true}
           onPageClick={onPageClick}
           getPageUrl={getPageUrl}
           activePage={activePage}

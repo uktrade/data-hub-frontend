@@ -6,7 +6,6 @@ import InsetText from '@govuk-react/inset-text'
 import { CollectionList } from '../../../../../../client/components/'
 import { connect } from 'react-redux'
 
-import Task from '../../../../../../client/components/Task/index.jsx'
 import { state2props } from './state'
 import {
   EXPORTS_HISTORY__LOADED,
@@ -25,35 +24,32 @@ function ExportsHistory({
   companyId,
   countryId,
   pageTitle,
+  isComplete,
 }) {
+  const collectionListTask = {
+    name: 'Exports history',
+    id: 'exportsHistory',
+    progressMessage: 'loading Exports History',
+    startOnRender: {
+      payload: { companyId, countryId, activePage },
+      onSuccessDispatch: EXPORTS_HISTORY__LOADED,
+    },
+  }
   return (
     <Wrapper>
-      <Task.Status
-        name="Exports history"
-        id="exportsHistory"
-        progressMessage="loading Exports History"
-        startOnRender={{
-          payload: { companyId, countryId, activePage },
-          onSuccessDispatch: EXPORTS_HISTORY__LOADED,
-        }}
-      >
-        {() => (
-          <>
-            <InsetText>
-              You can only see the history of countries that were added or
-              edited after 6th February 2020
-            </InsetText>
-            <H2 size={LEVEL_SIZE[3]}>{pageTitle}</H2>
-            <CollectionList
-              itemName="result"
-              items={results}
-              totalItems={count}
-              onPageClick={onPageClick}
-              activePage={activePage}
-            />
-          </>
-        )}
-      </Task.Status>
+      <InsetText>
+        You can only see the history of countries that were added or edited
+        after 6th February 2020
+      </InsetText>
+      <H2 size={LEVEL_SIZE[3]}>{pageTitle}</H2>
+      <CollectionList
+        taskProps={collectionListTask}
+        items={results}
+        count={count}
+        onPageClick={onPageClick}
+        activePage={activePage}
+        isComplete={isComplete}
+      />
     </Wrapper>
   )
 }

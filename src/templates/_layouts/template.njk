@@ -13,8 +13,12 @@
 {% if IS_XHR %}
   {% extends "./xhr.njk" %}
 {% else %}
+  {# This one: https://github.com/alphagov/govuk-frontend/blob/master/src/govuk/template.njk #}
   {% extends "template.njk" %}
 {% endif %}
+
+{# Remove the skipLink from the base template #}
+{% block skipLink %}{% endblock %}
 
 {% set pageTitle = [getPageTitle() if getPageTitle, 'DIT Data Hub'] | removeNilAndEmpty | flatten | join(' - ') %}
 {%- set titleDefault = 'Department for International Trade' -%}
@@ -97,7 +101,7 @@
       <a href="https://www.gov.uk/help/cookies">Find out more about cookies</a>
     </p>
   </div>
-  <nav role="navigation"> 
+  <nav role="navigation">
     <a href="#main-content" class="govuk-skip-link">Skip to main content</a>
   </nav>
 {% endblock %}
