@@ -6,13 +6,17 @@ const { companies, interactions } = require('../../../../../src/lib/urls')
 const today = Cypress.moment().format('D MMMM YYYY')
 
 describe('Interaction', () => {
+  const company = fixtures.company.create.defaultCompany('interaction testing')
+  const contact = fixtures.contact.create(company.pk)
+
+  before(() => {
+    cy.loadFixture([company])
+    cy.loadFixture([contact])
+  })
+
   beforeEach(() => {
     cy.visit(
-      companies.interactions.createType(
-        fixtures.company.venusLtd.id,
-        'export',
-        'interaction'
-      )
+      companies.interactions.createType(company.pk, 'export', 'interaction')
     )
   })
 
@@ -78,7 +82,7 @@ describe('Interaction', () => {
           .and('contain', 'Future countries of interestGermany')
           .and('contain', 'Countries not interested inSpain')
 
-        cy.visit(companies.exports.index(fixtures.company.venusLtd.id))
+        cy.visit(companies.exports.index(company.pk))
 
         cy.contains('Export countries information')
           .parent()
@@ -139,10 +143,18 @@ describe('Interaction', () => {
 })
 
 describe('Service delivery', () => {
+  const company = fixtures.company.create.defaultCompany('interaction testing')
+  const contact = fixtures.contact.create(company.pk)
+
+  before(() => {
+    cy.loadFixture([company])
+    cy.loadFixture([contact])
+  })
+
   beforeEach(() => {
     cy.visit(
       companies.interactions.createType(
-        fixtures.company.venusLtd.id,
+        company.pk,
         'export',
         'service_delivery'
       )
