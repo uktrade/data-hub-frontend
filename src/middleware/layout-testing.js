@@ -1,4 +1,4 @@
-const { isEmpty } = require('lodash')
+const { isEmpty, get } = require('lodash')
 const logger = require('../config/logger')
 
 /**
@@ -23,12 +23,10 @@ module.exports = (queryParam) => (req, res, next) => {
     )
 
   if (!isEmpty(layoutTestingFeature)) {
-    const {
-      dit_team: { id },
-    } = res.locals.user
+    const userTeamId = get(res.locals.user.dit_team, 'id')
     const [featureFlag] = layoutTestingFeature
-    const [, teamId] = featureFlag.split(':')
-    res.locals.isLayoutTesting = teamId === id
+    const [, featureTeamId] = featureFlag.split(':')
+    res.locals.isLayoutTesting = featureTeamId === userTeamId
     if (res.locals.isLayoutTesting && isEmpty(req.query)) {
       return res.redirect(`${req.originalUrl}?layoutTesting=${queryParam}`)
     }
