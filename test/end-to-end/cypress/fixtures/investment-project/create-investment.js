@@ -39,7 +39,7 @@ function newHotelFdi() {
 function fancyDressManufacturing() {
   return {
     model: 'investment.investmentproject',
-    pk: 'b30dee70-b2d6-48cf-9ce4-b9264854470c',
+    pk: uuidv4(),
     fields: {
       name: 'Fancy dress manufacturing',
       description: 'This is a dummy investment project for testing',
@@ -74,7 +74,7 @@ function fancyDressManufacturing() {
 function newHotelCommitmentToInvest() {
   return {
     model: 'investment.investmentproject',
-    pk: 'fb5b5006-56af-40e0-8615-7aba53e0e4bf',
+    pk: uuidv4(),
     fields: {
       name: 'New hotel (commitment to invest)',
       description: 'This is a dummy investment project for testing',

@@ -55,7 +55,7 @@ describe('Investment project', () => {
   }
 
   describe('FDI investment', () => {
-    const company = fixtures.company.create.lambda('investment project testing')
+    const company = fixtures.company.create.lambda()
     const contact = fixtures.contact.create(company.pk)
 
     before(() => {
@@ -125,7 +125,7 @@ describe('Investment project', () => {
   })
 
   describe('non FDI investment', () => {
-    const company = fixtures.company.create.lambda('investment project testing')
+    const company = fixtures.company.create.lambda()
     const contact = fixtures.contact.create(company.pk)
 
     before(() => {
@@ -191,7 +191,7 @@ describe('Investment project', () => {
   })
 
   describe('FDI investment with different company source', () => {
-    const company = fixtures.company.create.lambda('investment project testing')
+    const company = fixtures.company.create.lambda()
     const contact = fixtures.contact.create(company.pk)
 
     before(() => {
@@ -235,7 +235,7 @@ describe('Investment project', () => {
   })
 
   describe('Commitment investment project', () => {
-    const company = fixtures.company.create.lambda('investment project testing')
+    const company = fixtures.company.create.lambda()
     const contact = fixtures.contact.create(company.pk)
 
     before(() => {

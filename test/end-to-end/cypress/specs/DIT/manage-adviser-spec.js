@@ -31,7 +31,7 @@ const addOrReplaceTestCase = ({
 }
 
 describe('Manage Lead ITA', () => {
-  company = fixtures.company.create.lambda('manage adviser testing')
+  company = fixtures.company.create.lambda()
   before(() => {
     cy.loadFixture([company])
   })

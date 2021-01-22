@@ -31,7 +31,7 @@ describe('DIT Permission', () => {
   })
 
   describe('activity', () => {
-    const company = fixtures.company.create.corp('local nav testing')
+    const company = fixtures.company.create.corp()
 
     before(() => {
       cy.loadFixture([company])
