@@ -14,8 +14,11 @@ const checkCollection = () => {
 
 describe('Collection', () => {
   describe('contact', () => {
+    const company = fixtures.company.create.lambda()
+
     before(() => {
-      cy.visit(companies.orders(fixtures.company.lambdaPlc.id))
+      cy.loadFixture([company])
+      cy.visit(companies.orders(company.pk))
     })
 
     it('should return the results summary for orders collection', () => {
@@ -24,8 +27,13 @@ describe('Collection', () => {
   })
 
   describe('contact interaction', () => {
+    const company = fixtures.company.create.lambda()
+    const contact = fixtures.contact.create(company.pk)
+
     before(() => {
-      cy.visit(contacts.contactInteractions(fixtures.contact.deanCox.id))
+      cy.loadFixture([company])
+      cy.loadFixture([contact])
+      cy.visit(contacts.contactInteractions(contact.pk))
     })
 
     it('should return the results summary for contact interaction collection', () => {
@@ -33,27 +41,25 @@ describe('Collection', () => {
     })
   })
 
-  // describe('investment interaction', () => {
-  //   before(() => {
-  //     cy.visit(
-  //       investments.projects.interactions.index(
-  //         fixtures.investmentProject.newHotelFdi.id
-  //       )
-  //     )
-  //   })
+  describe('investment interaction', () => {
+    const investmentProject = fixtures.investmentProject.create.newHotelFdi()
 
-  //   it('should return the results summary for investment interaction collection', () => {
-  //     checkCollection()
-  //   })
-  // })
+    before(() => {
+      cy.loadFixture([investmentProject])
+      cy.visit(investments.projects.interactions.index(investmentProject.pk))
+    })
+
+    it('should return the results summary for investment interaction collection', () => {
+      checkCollection()
+    })
+  })
 
   describe('investment proposition', () => {
+    const investmentProject = fixtures.investmentProject.create.newHotelFdi()
+
     before(() => {
-      cy.visit(
-        investments.projects.propositions(
-          fixtures.investmentProject.newHotelFdi.id
-        )
-      )
+      cy.loadFixture([investmentProject])
+      cy.visit(investments.projects.propositions(investmentProject.pk))
     })
 
     it('should return the results summary for investment proposition collection', () => {
