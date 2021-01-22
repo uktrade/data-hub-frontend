@@ -42,7 +42,7 @@ describe('Investment project', () => {
     description: 'FDI Auto Description',
     sector: 'Aerospace',
     businessActivity: 'Assembly',
-    contact: 'Dean Cox',
+    contact: 'Johnny Cakeman',
     referralSource: 'Bank',
     estimateMonth: '10',
     estimateYear: '2030',
@@ -55,10 +55,13 @@ describe('Investment project', () => {
   }
 
   describe('FDI investment', () => {
+    const company = fixtures.company.create.lambda('investment project testing')
+    const contact = fixtures.contact.create(company.pk)
+
     before(() => {
-      cy.visit(
-        companies.investments.companyInvestment(fixtures.company.lambdaPlc.id)
-      )
+      cy.loadFixture([company])
+      cy.loadFixture([contact])
+      cy.visit(companies.investments.companyInvestment(company.pk))
     })
 
     it('should create a FDI investment project', () => {
@@ -122,10 +125,13 @@ describe('Investment project', () => {
   })
 
   describe('non FDI investment', () => {
+    const company = fixtures.company.create.lambda('investment project testing')
+    const contact = fixtures.contact.create(company.pk)
+
     before(() => {
-      cy.visit(
-        companies.investments.companyInvestment(fixtures.company.lambdaPlc.id)
-      )
+      cy.loadFixture([company])
+      cy.loadFixture([contact])
+      cy.visit(companies.investments.companyInvestment(company.pk))
     })
 
     it('should create a non FDI investment project', () => {
@@ -185,10 +191,13 @@ describe('Investment project', () => {
   })
 
   describe('FDI investment with different company source', () => {
+    const company = fixtures.company.create.lambda('investment project testing')
+    const contact = fixtures.contact.create(company.pk)
+
     before(() => {
-      cy.visit(
-        companies.investments.companyInvestment(fixtures.company.lambdaPlc.id)
-      )
+      cy.loadFixture([company])
+      cy.loadFixture([contact])
+      cy.visit(companies.investments.companyInvestment(company.pk))
     })
 
     it('should create a FDI investment project with a different source of equity company', () => {
@@ -226,10 +235,13 @@ describe('Investment project', () => {
   })
 
   describe('Commitment investment project', () => {
+    const company = fixtures.company.create.lambda('investment project testing')
+    const contact = fixtures.contact.create(company.pk)
+
     before(() => {
-      cy.visit(
-        companies.investments.companyInvestment(fixtures.company.lambdaPlc.id)
-      )
+      cy.loadFixture([company])
+      cy.loadFixture([contact])
+      cy.visit(companies.investments.companyInvestment(company.pk))
     })
 
     it('should create a commitment to investment project', () => {
