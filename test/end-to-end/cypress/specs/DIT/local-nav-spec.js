@@ -72,7 +72,7 @@ describe('DIT Permission', () => {
 
   describe('investment', () => {
     before(() => {
-      const investmentProject = fixtures.investmentProject.create()
+      const investmentProject = fixtures.investmentProject.create.newHotelFdi()
       cy.loadFixture([investmentProject])
       cy.visit(investments.projects.project(investmentProject.pk))
     })
