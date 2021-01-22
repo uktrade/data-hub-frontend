@@ -51,7 +51,7 @@ describe('My Pipeline tab on the dashboard', () => {
 
   context('Adding a company as a lead', () => {
     const projectName = 'Test add project'
-    const company = fixtures.company.create.lambda('pipeline testing')
+    const company = fixtures.company.create.lambda()
     const contact = fixtures.contact.create(company.pk)
 
     before(() => {

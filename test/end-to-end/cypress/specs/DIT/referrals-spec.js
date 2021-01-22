@@ -15,7 +15,7 @@ const selectTypeahead = (fieldName, input) =>
   })
 
 describe('Referrals', () => {
-  const company = fixtures.company.create.lambda('company referral testing')
+  const company = fixtures.company.create.lambda()
   const contact = fixtures.contact.create(company.pk)
 
   before(() => {
