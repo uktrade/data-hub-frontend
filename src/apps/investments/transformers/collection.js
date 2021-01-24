@@ -72,12 +72,11 @@ function transformInvestmentProjectToListItem({
       value: project_code,
       metadata,
     },
-    // end
     meta: compact(metaItems),
+    // end
     headingUrl: urls.investments.projects.details(id),
     headingText: name,
     subheading: `Project code ${project_code}`,
-    type: 'project',
     badges,
     metadata,
   }
