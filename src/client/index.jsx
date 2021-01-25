@@ -37,6 +37,7 @@ import ArchivePipelineItemForm from '../apps/my-pipeline/client/ArchivePipelineI
 import UnarchivePipelineItemForm from '../apps/my-pipeline/client/UnarchivePipelineItemForm.jsx'
 import DeletePipelineItemForm from '../apps/my-pipeline/client/DeletePipelineItemForm.jsx'
 import Dashboard from './components/Dashboard'
+import PersonalisedDashboard from './components/PersonalisedDashboard'
 import CompanyLocalHeader from './components/CompanyLocalHeader'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
 
@@ -207,6 +208,9 @@ function App() {
       </Mount>
       <Mount selector="#company-lists">
         <Dashboard id="homepage" />
+      </Mount>
+      <Mount selector="#dashboard">
+        <PersonalisedDashboard id="dashboard" />
       </Mount>
       <Mount selector="#delete-company-list">
         {(props) => (

@@ -89,6 +89,9 @@ module.exports = {
     },
   },
   dashboard: url('/'),
+  personalisedDashboard: {
+    myInvestmentProjects: url('/myinvestmentprojects'),
+  },
   companies: {
     index: url('/companies'),
     create: url('/companies', '/create'),

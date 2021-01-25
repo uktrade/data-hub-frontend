@@ -8,11 +8,12 @@ module.exports = {
   router: router.get(
     // These paths are handled by react-router
     [
-      urls.dashboard.mountPoint,
-      urls.companies.referrals.list.mountPoint,
-      urls.pipeline.index.mountPoint,
-      urls.pipeline.active.mountPoint,
-      urls.pipeline.won.mountPoint,
+      urls.personalisedDashboard.myInvestmentProjects(),
+      urls.dashboard(),
+      urls.companies.referrals.list(),
+      urls.pipeline.index(),
+      urls.pipeline.active(),
+      urls.pipeline.won(),
     ],
     spaBasePath(urls.dashboard.route),
     layoutTesting('dashboard'),
