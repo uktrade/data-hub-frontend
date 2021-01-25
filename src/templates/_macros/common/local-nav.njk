@@ -3,6 +3,7 @@
  # @param {object} props
  # @param {string} [props.modifier] - nav modifier
  # @param {string} [props.items] - nav items
+ # @param {object} [props.data] - data attributes to add to control
  #
  #}
 {% macro LocalNav(props) %}
@@ -11,6 +12,9 @@
       {% for item in props.items %}
         <a class="{{ 'c-local-nav__link' | applyClassModifiers(props.modifier) }} {{ 'is-active' if item.isActive }}" href="{{item.url}}" 
           {% if item.ariaDescription %} aria-label="{{ item.ariaDescription }}" {% endif %}
+          {% for key, value in item.data %}
+            data-{{ key }}="{{ value | escape }}-link"
+          {% endfor %}
         >{{ item.label }}</a>
       {% endfor %}
     </nav>

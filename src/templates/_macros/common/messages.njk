@@ -33,7 +33,7 @@
   {% if props.items|length %}
     {% set isDismissable = props.isDismissable | default(true) %}
 
-    <ul class="c-message-list {{ 'js-Messages' if isDismissable }}" tabindex="-1" role="alert">
+    <ul class="c-message-list {{ 'js-Messages' if isDismissable }}" data-test="flash" tabindex="-1" role="alert">
       {% for type, messages in props.items -%}
 
         {% set parts = type | split(':') %}

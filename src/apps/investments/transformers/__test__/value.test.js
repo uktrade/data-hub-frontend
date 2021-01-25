@@ -137,10 +137,12 @@ describe('Investment project transformers', () => {
                 label: 'Edit project',
                 url:
                   '/investments/projects/1/edit-associated?term=DHP-00000460',
+                test: 'edit-associated-link',
               },
               {
                 label: 'Remove association',
                 url: '/investments/projects/1/remove-associated',
+                test: 'remove-associated-link',
               },
             ],
           },
@@ -225,10 +227,12 @@ describe('Investment project transformers', () => {
                   label: 'Edit project',
                   url:
                     '/investments/projects/1/edit-associated?term=DHP-00000460',
+                  test: 'edit-associated-link',
                 },
                 {
                   label: 'Remove association',
                   url: '/investments/projects/1/remove-associated',
+                  test: 'remove-associated-link',
                 },
               ],
             },
@@ -288,6 +292,7 @@ describe('Investment project transformers', () => {
             ).to.deep.equal({
               name: 'Find project',
               url: `/investments/projects/1/edit-associated`,
+              test: 'edit-associated-link',
             })
           })
         })

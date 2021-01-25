@@ -209,6 +209,10 @@ app.get(
   '/v4/metadata/investment-strategic-driver',
   v4Metadata.investmentStrategicDriver
 )
+app.get(
+  '/v4/metadata/investment-delivery-partner',
+  v4Metadata.investmentDeliveryPartner
+)
 app.get('/v4/metadata/order-service-type', v4Metadata.orderServiceType)
 app.get(
   '/v4/metadata/order-cancellation-reason',
@@ -303,6 +307,7 @@ app.get('/ping.xml', healthcheck.ping)
 app.get('/v3/contact', v3Contact.contact)
 app.post('/v3/contact', v3Contact.contactCreate)
 app.get('/v3/contact/:contactId', v3Contact.contactById)
+app.patch('/v3/contact/:contactId', v3Contact.updateContactById)
 
 // V3 Event
 app.get('/v3/event/:eventId', v3Event.eventById)
@@ -325,6 +330,7 @@ app.patch('/v3/interaction/:interactionId', v3Interaction.archiveInteraction)
 // V3 Investment
 app.get('/v3/investment', v3Investment.investmentProjects)
 app.get('/v3/investment/:id', v3Investment.investmentProjectById)
+app.patch('/v3/investment/:id', v3Investment.patchInvestmentProject)
 app.get(
   '/v3/investment/:investmentId/audit',
   v3Investment.investmentProjectAudit

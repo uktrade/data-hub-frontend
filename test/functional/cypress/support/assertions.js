@@ -95,36 +95,64 @@ const assertFieldSelect = ({
   label,
   emptyOption,
   value,
-  optionsCount = 0,
+  optionsCount,
 }) =>
   cy
     .wrap(element)
     .as('fieldSelect')
-    .then(
-      () =>
-        label &&
+    .then(() => {
+      label &&
         cy.get('@fieldSelect').find('label').first().should('have.text', label)
-    )
-    .then(
-      () =>
-        emptyOption &&
+
+      emptyOption &&
         cy
           .get('@fieldSelect')
           .find('option')
           .first()
           .should('have.text', emptyOption)
-    )
-    .next()
-    .find('option')
-    .should('have.length', optionsCount)
-    .then(
-      () =>
-        value &&
+
+      optionsCount &&
+        cy
+          .get('@fieldSelect')
+          .find('option')
+          .should('have.length', optionsCount)
+
+      value &&
         cy
           .get('@fieldSelect')
           .find('option[selected]')
           .should('have.text', value)
+    })
+
+const assertFieldAddAnother = ({
+  element,
+  label,
+  values,
+  emptyOption,
+  optionsCount = 0,
+}) =>
+  cy
+    .wrap(element)
+    .as('fieldAddAnother')
+    .then(
+      () =>
+        label &&
+        cy
+          .get('@fieldAddAnother')
+          .find('label')
+          .first()
+          .should('have.text', label)
     )
+    .parent()
+    .children('div')
+    .each((item, i) => {
+      assertFieldSelect({
+        element: item,
+        emptyOption,
+        optionsCount,
+        value: values[i] && values[i].name,
+      })
+    })
 
 const assertFieldRadios = ({ element, label, value, optionsCount }) =>
   cy
@@ -173,6 +201,18 @@ const assertFieldRadiosWithLegend = ({
           .should('have.text', value)
     )
 
+const assertFieldCheckbox = ({ element, label, value, checked }) => {
+  cy.wrap(element)
+    .as('fieldCheckbox')
+    .find('label')
+    .should('contain.text', label)
+
+  cy.get('@fieldCheckbox')
+    .find('input')
+    .should('have.attr', 'value', value)
+    .should(checked ? 'be.checked' : 'not.be.checked')
+}
+
 const assertFieldTypeahead = ({
   element,
   label,
@@ -196,7 +236,7 @@ const assertFieldInput = ({ element, label, hint, value }) =>
   cy
     .wrap(element)
     .find('label')
-    .contains(label)
+    .should('have.text', label)
     .next()
     .then(
       ($el) =>
@@ -212,11 +252,14 @@ const assertFieldInput = ({ element, label, hint, value }) =>
         value && cy.wrap($el).should('have.attr', 'value', String(value) || '')
     )
 
+const assertFieldHidden = ({ element, name, value }) =>
+  cy.wrap(element).should('have.attr', 'name', name).should('have.value', value)
+
 const assertFieldTextarea = ({ element, label, hint, value }) =>
   cy
     .wrap(element)
     .find('label')
-    .contains(label)
+    .should('contain', label)
     .next()
     .then(
       ($el) =>
@@ -445,13 +488,16 @@ module.exports = {
   assertFieldInput,
   assertFieldTextarea,
   assertFieldSelect,
+  assertFieldAddAnother,
   assertFieldRadios,
   assertFieldRadiosWithLegend,
+  assertFieldCheckbox,
   assertFieldAddress,
   assertFieldUneditable,
   assertFormActions,
   assertFieldDate,
   assertFieldDateShort,
+  assertFieldHidden,
   assertFormFields,
   assertDetails,
   assertLocalHeader,

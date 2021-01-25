@@ -56,7 +56,11 @@ function makeForm(path, teamMembers) {
     fields: { teamMembers },
     labels: teamMembersLabels.edit,
     buttonText: 'Save',
+    buttonDataAttr: 'team-members-save',
     returnLink: `${path}/team`,
+    inputData: {
+      test: 'team-role',
+    },
   }
 }
 
