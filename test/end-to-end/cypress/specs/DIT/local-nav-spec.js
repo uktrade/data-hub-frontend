@@ -31,7 +31,7 @@ describe('DIT Permission', () => {
   })
 
   describe('activity', () => {
-    const company = fixtures.company.create.corp('local nav testing')
+    const company = fixtures.company.create.corp()
 
     before(() => {
       cy.loadFixture([company])
@@ -72,7 +72,7 @@ describe('DIT Permission', () => {
 
   describe('investment', () => {
     before(() => {
-      const investmentProject = fixtures.investmentProject.create()
+      const investmentProject = fixtures.investmentProject.create.newHotelFdi()
       cy.loadFixture([investmentProject])
       cy.visit(investments.projects.project(investmentProject.pk))
     })

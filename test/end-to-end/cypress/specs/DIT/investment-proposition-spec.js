@@ -16,12 +16,10 @@ const createProposition = (data) => {
 }
 
 describe('Proposition', () => {
+  const investmentProject = fixtures.investmentProject.create.newHotelCommitmentToInvest()
   beforeEach(() => {
-    cy.visit(
-      investments.projects.propositions(
-        fixtures.investmentProject.newHotelCommitmentToInvest.id
-      )
-    )
+    cy.loadFixture([investmentProject])
+    cy.visit(investments.projects.propositions(investmentProject.pk))
   })
 
   it('should create a proposition', () => {

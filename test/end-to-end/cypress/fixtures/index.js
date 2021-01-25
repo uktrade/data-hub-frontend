@@ -19,7 +19,7 @@ module.exports = {
     fancyDressManufacturing: require('./investment-project/fancy-dress-manufacturing'),
     newGolfCourse: require('./investment-project/new-golf-course'),
     newZoo: require('./investment-project/new-zoo'),
-    create: require('./investment-project/create-investment').create,
+    create: require('./investment-project/create-investment'),
   },
   event: {
     create: require('./create-event'),

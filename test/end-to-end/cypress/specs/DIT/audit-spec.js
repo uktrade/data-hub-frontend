@@ -54,7 +54,7 @@ describe('Contact', () => {
 
 describe('Investment Project', () => {
   before(() => {
-    investmentProjectObj = investmentProject.create()
+    investmentProjectObj = investmentProject.create.newHotelFdi()
     cy.loadFixture([investmentProjectObj])
     cy.visit(urls.investments.projects.editDetails(investmentProjectObj.pk))
   })

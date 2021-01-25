@@ -8,7 +8,7 @@ const { assertKeyValueTable } = require('../../support/assertions')
 
 describe('Advisors', () => {
   const globalManagerTable = 2
-  const company = fixtures.company.create.corp('company adviser testing')
+  const company = fixtures.company.create.corp()
 
   before(() => {
     cy.loadFixture([company])

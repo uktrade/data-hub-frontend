@@ -19,7 +19,10 @@ describe('Contacts', () => {
   }
 
   it('should create a primary contact with a different address to the companies address', () => {
-    cy.visit(contacts.create(fixtures.company.lambdaPlc.id))
+    const company = fixtures.company.create.defaultCompany('contact testing')
+    cy.loadFixture([company])
+
+    cy.visit(contacts.create(company.pk))
     userActions.contacts.createWithNewAddress(data)
 
     cy.get(selectors.contactCreate.details)

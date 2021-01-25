@@ -5,8 +5,11 @@ const { companies } = require('../../../../../src/lib/urls')
 
 describe('Business hierarchy', () => {
   context('Global HQ', () => {
+    const company = fixtures.company.create.lambda()
+
     before(() => {
-      cy.visit(companies.businessDetails(fixtures.company.lambdaPlc.id))
+      cy.loadFixture([company])
+      cy.visit(companies.businessDetails(company.pk))
     })
     context('when the company has no link to a global hq', () => {
       it('should not contain a link', () => {
@@ -23,7 +26,7 @@ describe('Business hierarchy', () => {
           .type(fixtures.company.oneListCorp.name)
           .next()
           .click()
-        cy.get('.c-entity-list li a').click()
+        cy.get('.c-entity-list li a').first().click()
         cy.get('.c-message--success').should(
           'contain',
           'You’ve linked the Global Headquarters'
@@ -51,8 +54,14 @@ describe('Business hierarchy', () => {
     })
   })
   context('Company Subsidiary', () => {
+    const company = fixtures.company.create.lambda()
+
+    before(() => {
+      cy.loadFixture([company])
+    })
+
     beforeEach(() => {
-      cy.visit(companies.businessDetails(fixtures.company.lambdaPlc.id))
+      cy.visit(companies.businessDetails(company.pk))
     })
 
     it('should update business hierarchy type to Global HQ', () => {
@@ -104,8 +113,16 @@ describe('Business hierarchy', () => {
   })
 
   describe('Archived Company Subsidiary', () => {
+    const company = fixtures.company.create.archivedLtd()
+    const subsidiaryCompany = fixtures.company.create.subsidiaryCorp(company.pk)
+
+    before(() => {
+      cy.loadFixture([company])
+      cy.loadFixture([subsidiaryCompany])
+    })
+
     beforeEach(() => {
-      cy.visit(companies.businessDetails(fixtures.company.archivedLtd.id))
+      cy.visit(companies.businessDetails(company.pk))
     })
 
     it('should hide subsidiaries links for archived companies', () => {
@@ -122,8 +139,16 @@ describe('Business hierarchy', () => {
   })
 
   describe('DnB Company Subsidiary', () => {
+    const company = fixtures.company.create.corp()
+    const subsidiaryCompany = fixtures.company.create.subsidiaryCorp(company.pk)
+
+    before(() => {
+      cy.loadFixture([company])
+      cy.loadFixture([subsidiaryCompany])
+    })
+
     beforeEach(() => {
-      cy.visit(companies.businessDetails(fixtures.company.oneListCorp.id))
+      cy.visit(companies.businessDetails(company.pk))
     })
 
     it('should display subsidiaries links for dnb companies', () => {
