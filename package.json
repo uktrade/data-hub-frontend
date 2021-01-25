@@ -165,8 +165,8 @@
     "vue-template-compiler": "^2.6.12",
     "wdio-chromedriver-service": "^6.0.4",
     "webpack": "^4.45.0",
-    "webpack-assets-manifest": "^3.1.1",
     "webpack-cli": "^4.4.0",
+    "webpack-assets-manifest": "^4.0.1",
     "winston": "^3.3.3"
   },
   "devDependencies": {
