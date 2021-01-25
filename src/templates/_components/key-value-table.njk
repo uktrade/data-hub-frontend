@@ -18,6 +18,7 @@
   <a href="{{ data.url }}"
     {% if data.hintId %} aria-labelledby="{{ data.hintId }}"{% endif %}
     {% if data.newWindow %} target="_blank"{% endif %}
+    {% if data.test %} data-test="{{ data.test }}"{% endif %}
     >
     {{- data.name -}}
   </a>

@@ -66,6 +66,9 @@
           id="{{ props.fieldId }}-0"
           value=""
           {% if not props.value %}checked{% endif %}
+          {% if props.inputData.test %}
+            data-test="{{ props.inputData.test | escape }}-0"
+          {% endif %}
         >
         <label class="c-multiple-choice__label" for="{{ props.fieldId }}-0">
           <span class="c-multiple-choice__label-text">{{ props.initialOption }}</span>
@@ -93,6 +96,9 @@
           id="{{ props.fieldId }}-{{ loop.index }}"
           {% if isSelected %}checked="checked"{% endif %}
           {% if props.hint %}aria-describedby="hint-{{ props.fieldId }}"{% endif %}
+          {% if props.inputData.test %}
+            data-test="{{ props.inputData.test | escape }}-{{ loop.index }}"
+          {% endif %}
         >
         <label class="c-multiple-choice__label" for="{{ props.fieldId }}-{{ loop.index }}">
           <span class="c-multiple-choice__label-text">{{ option.label }}</span>

@@ -188,6 +188,9 @@ const requirementsFormConfig = ({
         buttonName: 'add_item',
         name: 'strategic_drivers',
         label: requirementsLabels.edit.strategic_drivers,
+        inputData: {
+          test: 'field-strategic_drivers',
+        },
         children: [
           assign({}, globalFields.strategicDrivers, {
             label: labels.strategic_drivers,
@@ -201,6 +204,9 @@ const requirementsFormConfig = ({
         type: 'textarea',
         name: 'client_requirements',
         label: labels.client_requirements,
+        inputData: {
+          test: 'field-client_requirements',
+        },
       },
       {
         macroName: 'MultipleChoiceField',
@@ -208,6 +214,9 @@ const requirementsFormConfig = ({
         modifier: 'inline',
         name: 'client_considering_other_countries',
         label: labels.client_considering_other_countries,
+        inputData: {
+          test: 'field-client_considering_other_countries',
+        },
         options: [
           { label: 'Yes', value: 'true' },
           { label: 'No', value: 'false' },
@@ -223,6 +232,9 @@ const requirementsFormConfig = ({
           name: 'client_considering_other_countries',
           value: 'true',
         },
+        inputData: {
+          test: 'field-competitor_countries',
+        },
         children: [
           assign({}, globalFields.countries, {
             name: 'competitor_countries',
@@ -237,6 +249,9 @@ const requirementsFormConfig = ({
         buttonName: 'add_item',
         name: 'uk_region_locations',
         label: requirementsLabels.edit.uk_region_locations,
+        inputData: {
+          test: 'field-uk_region_locations',
+        },
         children: [
           assign({}, globalFields.ukRegions, {
             label: labels.uk_region_locations,
@@ -252,6 +267,9 @@ const requirementsFormConfig = ({
         modifier: 'inline',
         name: 'site_decided',
         label: labels.site_decided,
+        inputData: {
+          test: 'field-site_decided',
+        },
         options: [
           { label: 'Yes', value: 'true' },
           { label: 'No', value: 'false' },
@@ -270,6 +288,9 @@ const requirementsFormConfig = ({
             name: 'address_1',
             label: requirementsLabels.edit.address_1,
             modifier: 'compact',
+            inputData: {
+              test: 'field-address_1',
+            },
           },
           {
             macroName: 'TextField',
@@ -277,17 +298,26 @@ const requirementsFormConfig = ({
             label: requirementsLabels.edit.address_2,
             isLabelHidden: true,
             modifier: 'compact',
+            inputData: {
+              test: 'field-address_2',
+            },
           },
           {
             macroName: 'TextField',
             name: 'address_town',
             label: requirementsLabels.edit.address_town,
+            inputData: {
+              test: 'field-address_town',
+            },
           },
           {
             macroName: 'TextField',
             name: 'address_postcode',
             label: requirementsLabels.edit.address_postcode,
             modifier: 'short',
+            inputData: {
+              test: 'field-address_postcode',
+            },
           },
         ],
       },
@@ -299,6 +329,9 @@ const requirementsFormConfig = ({
         condition: {
           name: 'site_decided',
           value: 'true',
+        },
+        inputData: {
+          test: 'field-actual_uk_regions',
         },
         children: [
           assign({}, globalFields.ukRegions, {
@@ -313,6 +346,9 @@ const requirementsFormConfig = ({
         macroName: 'AddAnother',
         buttonName: 'add_item',
         name: 'delivery_partners',
+        inputData: {
+          test: 'field-delivery_partners',
+        },
         children: [
           {
             macroName: 'MultipleChoiceField',

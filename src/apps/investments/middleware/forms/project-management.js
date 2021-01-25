@@ -38,6 +38,7 @@ async function populateForm(req, res, next) {
         projectAssuranceAdvisers,
       },
       buttonText: 'Save',
+      buttonDataAttr: 'project-management-save',
       returnLink: `${projects}/${investment.id}/team`,
       hiddenFields: {
         returnUrl: get(req.query, 'returnUrl'),

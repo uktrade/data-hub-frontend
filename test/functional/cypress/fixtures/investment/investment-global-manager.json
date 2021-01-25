@@ -1,0 +1,18 @@
+{
+  "name": "Travis Greene",
+  "first_name": "Travis",
+  "last_name": "Greene",
+  "dit_team": {
+    "name": "IST - Sector Advisory Services",
+    "uk_region": {
+      "name": "London",
+      "id": "874cd12a-6095-e211-a939-e4115bead28a"
+    },
+    "country": {
+      "name": "United Kingdom",
+      "id": "80756b9a-5d95-e211-a939-e4115bead28a"
+    },
+    "id": "fc3a6667-cfe9-e511-8ffa-e4115bead28a"
+  },
+  "id": "8eefe6b4-2816-4e47-94b5-a13409dcef70"
+}
