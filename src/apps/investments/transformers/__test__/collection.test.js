@@ -19,10 +19,6 @@ describe('Investment project transformers', () => {
         expect(this.transformedItem.headingText).to.equal(this.rawItem.name)
       })
 
-      it('should provide the type', () => {
-        expect(this.transformedItem.type).to.equal('project')
-      })
-
       it('should list the esimated land date as date', () => {
         expect(this.transformedItem.metadata[2]).to.deep.equal({
           label: 'Estimated land date',
