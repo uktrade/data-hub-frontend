@@ -1,8 +1,5 @@
 const qs = require('querystring')
-const url = require('fast-url-parser')
-const join = require('path').join
-const fileExists = require('file-exists')
-const { trimEnd } = require('lodash')
+const { trimEnd, endsWith } = require('lodash')
 
 /**
  * Removes trailing slashes.
@@ -13,29 +10,15 @@ const { trimEnd } = require('lodash')
  * https://www.npmjs.com/package/express-slash to validate that the resulting
  * url exists in the app router.
  */
-function fixSlashes(options) {
-  options = options || {}
-
-  const root = options.root || './'
-  const indexFile = options.index || 'index.html'
-  const leaveOnDirectory = options.directory === false ? false : true
-
-  if (options.exists) fileExists = options.exists
-
+function fixSlashes() {
   return function (req, res, next) {
-    const pathname = url.parse(req.url).pathname
-    let redirectPathname = false
+    const pathname = req.path
 
     const method = req.method.toLowerCase()
 
-    // Don't remove trailing slash on directory index file
-    if (leaveOnDirectory && isDirectoryIndex() && !hasTrailingSlash()) {
-      redirectPathname = join(pathname, '/')
-    } else if (leaveOnDirectory && isDirectoryIndex()) {
-      redirectPathname = false
-    } else if (pathname !== '/' && hasTrailingSlash()) {
-      redirectPathname = trimEnd(pathname, '/')
-    }
+    const redirectPathname = endsWith(pathname, '/')
+      ? trimEnd(pathname, '/')
+      : false
 
     const match =
       redirectPathname &&
@@ -53,14 +36,6 @@ function fixSlashes(options) {
       redirectUrl += query ? '?' + query : ''
       res.writeHead(301, { Location: redirectUrl })
       res.end()
-    }
-
-    function isDirectoryIndex() {
-      return fileExists(join(root, req.url.split('?')[0], indexFile))
-    }
-
-    function hasTrailingSlash() {
-      return pathname.substr(-1) === '/'
     }
   }
 }
