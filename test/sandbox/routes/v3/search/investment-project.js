@@ -7,8 +7,8 @@ exports.investmentProjects = function (req, res) {
     req.body.estimated_land_date_before ||
     req.body.estimated_land_date_after ||
     req.body.sector_descends ||
-    req.body.country ||
-    req.body.uk_region ||
+    req.body.country_investment_originates_from ||
+    req.body.uk_region_location ||
     req.body.status ||
     req.body.adviser ||
     req.body.stage ||
