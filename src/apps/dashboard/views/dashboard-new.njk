@@ -3,9 +3,13 @@
 {% block local_header %}
 {% endblock %}
 
-{% block body_main_content %}
-  {% component 'react-slot', {
-    id: 'dashboard',
-    props: props
-  } %}
+{% block main %}
+<div class="govuk-width-container">
+  <div class="govuk-main-wrapper">
+    {% component 'react-slot', {
+      id: 'dashboard',
+      props: props
+    } %}
+  </div>
+</div>
 {% endblock %}
