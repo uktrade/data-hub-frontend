@@ -1,5 +1,6 @@
 const request = require('supertest')
 const express = require('express')
+const router = require('express').Router()
 
 const fixSlashes = require('../fix-slashes')
 
@@ -14,6 +15,12 @@ describe('remove trailing slash middleware', () => {
     app.use(fixSlashes())
     app.get('/', respond)
     app.get('/about', respond)
+    router.get('/page', respond)
+    app.use('/directory', router)
+  })
+
+  it('leaves unslashed urls alone', (done) => {
+    request(app).get('/about').expect(200).end(done)
   })
 
   it('removes the trailing slash for a given url', (done) => {
@@ -26,6 +33,18 @@ describe('remove trailing slash middleware', () => {
 
   it('does not redirect the root url because of the trailing slash', (done) => {
     request(app).get('/').expect(200).end(done)
+  })
+
+  it('removes the trailing slash for a sub url', (done) => {
+    request(app)
+      .get('/directory/page/')
+      .expect(301)
+      .expect('Location', '/directory/page')
+      .end(done)
+  })
+
+  it('leaves unslashed sub urls alone', (done) => {
+    request(app).get('/directory/page').expect(200).end(done)
   })
 
   it('preserves the query parameters on redirect', (done) => {
