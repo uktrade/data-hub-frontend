@@ -35,8 +35,8 @@ const searchParamProps = ({
   page = 1,
   adviser = false,
   sector_descends = false,
-  country = false,
-  uk_region = false,
+  country_investment_originates_from = false,
+  uk_region_location = false,
   stage = false,
   status = false,
   investment_type = false,
@@ -49,8 +49,10 @@ const searchParamProps = ({
 }) => ({
   adviser: parseVariablePropType(adviser),
   sector_descends: parseVariablePropType(sector_descends),
-  country: parseVariablePropType(country),
-  uk_region: parseVariablePropType(uk_region),
+  country_investment_originates_from: parseVariablePropType(
+    country_investment_originates_from
+  ),
+  uk_region_location: parseVariablePropType(uk_region_location),
   stage: parseVariablePropType(stage),
   status: parseVariablePropType(status),
   investment_type: parseVariablePropType(investment_type),
@@ -104,8 +106,8 @@ export const state2props = ({ router, ...state }) => {
   const { selectedAdvisers, metadata } = state.projectsList
   const {
     sector_descends = [],
-    country = [],
-    uk_region = [],
+    country_investment_originates_from = [],
+    uk_region_location = [],
     stage = [],
     status = [],
     investment_type = [],
@@ -130,12 +132,12 @@ export const state2props = ({ router, ...state }) => {
     }),
     selectedCountries: buildOptionsFilter({
       options: metadata.countryOptions,
-      value: country,
+      value: country_investment_originates_from,
       categoryLabel: countryLabel,
     }),
     selectedUkRegions: buildOptionsFilter({
       options: metadata.ukRegionOptions,
-      value: uk_region,
+      value: uk_region_location,
       categoryLabel: ukRegionLabel,
     }),
     selectedStages: buildOptionsFilter({
