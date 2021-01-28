@@ -12,8 +12,6 @@ function fixSlashes() {
   return function (req, res, next) {
     const pathname = req.path
 
-    // const method = req.method.toLowerCase()
-
     const redirectPathname = endsWith(pathname, '/')
       ? trimEnd(pathname, '/')
       : false
