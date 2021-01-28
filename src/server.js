@@ -8,7 +8,6 @@ const compression = require('compression')
 const express = require('express')
 const flash = require('connect-flash')
 const csrf = require('csurf')
-const slashify = require('slashify')
 
 const enforce = require('express-sslify')
 const favicon = require('serve-favicon')
@@ -44,6 +43,7 @@ const envSchema = require('./config/envSchema')
 const flashWithBody = require('./middleware/flash-with-body')
 const apiProxy = require('./middleware/api-proxy')
 const metadataApiProxy = require('./middleware/metadata-api-proxy')
+const fixSlashes = require('./middleware/fix-slashes')
 
 const routers = require('./apps/routers')
 
@@ -142,7 +142,7 @@ app.use(csrf())
 app.use(csrfToken())
 app.use(reactGlobalProps())
 // routing
-app.use(slashify())
+app.use(fixSlashes())
 app.use(routers)
 
 // Raven error handler must come before other error middleware
