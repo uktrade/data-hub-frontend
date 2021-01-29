@@ -1,4 +1,4 @@
-const { get } = require('lodash')
+const { get, pick } = require('lodash')
 const rp = require('request-promise')
 
 const GLOBAL_NAV_ITEMS = require('../global-nav-items')
@@ -9,6 +9,7 @@ const { formatHelpCentreAnnouncements } = require('./transformers')
 
 async function renderDashboard(req, res, next) {
   try {
+    const user = res.locals.user
     const userPermissions = get(res, 'locals.user.permissions')
 
     const helpCentre = config.helpCentre
@@ -39,6 +40,11 @@ async function renderDashboard(req, res, next) {
         userPermissions
       ),
       helpCentre,
+      props: {
+        adviser: {
+          ...pick(user, ['id', 'name', 'last_login', 'dit_team']),
+        },
+      },
     })
   } catch (error) {
     next(error)
