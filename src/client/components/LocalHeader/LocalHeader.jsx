@@ -19,6 +19,9 @@ const StyledHeader = styled('div')`
 
 const StyledMain = styled(Main)`
   padding-top: 0;
+  > div {
+    max-width: 1200px;
+  }
 `
 
 const BreadcrumbsWrapper = styled(Breadcrumbs)`

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { MEDIA_QUERIES, SPACING, SITE_WIDTH } from '@govuk-react/constants'
+import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
 const OuterContainer = styled('main')({
   paddingTop: SPACING.SCALE_5,
@@ -9,7 +9,7 @@ const OuterContainer = styled('main')({
 })
 
 export const InnerContainer = styled('div')({
-  maxWidth: SITE_WIDTH,
+  maxWidth: '1200px',
   marginLeft: SPACING.SCALE_3,
   marginRight: SPACING.SCALE_3,
   textAlign: 'left',

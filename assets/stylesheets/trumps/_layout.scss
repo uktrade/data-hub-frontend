@@ -65,3 +65,9 @@
     }
   }
 }
+
+.govuk-width-container,
+.datahub-header--max-width .datahub-header__logo-container,
+.datahub-header--max-width .datahub-header__navigation {
+  @include site-width-container;
+}
