@@ -172,6 +172,10 @@ module.exports = {
     },
     investments: {
       companyInvestment: url('/companies', '/:companyId/investments'),
+      companyInvestmentProjects: url(
+        '/companies',
+        '/:companyId/investments/projects'
+      ),
       largeCapitalProfile: url(
         '/companies',
         '/:companyId/investments/large-capital-profile'

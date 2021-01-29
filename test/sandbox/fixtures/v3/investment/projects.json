@@ -93,10 +93,6 @@
         "name": "Creation of new site or activity",
         "id": "f8447013-cfdc-4f35-a146-6619665388b3"
       },
-      "sector": {
-        "name": "Renewable Energy : Wind : Onshore",
-        "id": "034be3be-5329-e511-b6bc-e4115bead28a"
-      },
       "business_activities": [
         {
           "name": "Retail",
