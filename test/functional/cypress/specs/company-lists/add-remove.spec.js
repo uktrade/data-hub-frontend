@@ -22,7 +22,7 @@ describe('Adding and removing a company to a list', () => {
     testBreadcrumbs({
       Home: '/',
       Companies: '/companies',
-      'Lambda plc': '/companies/0fb3379c-341c-4da4-b825-bf8d47b26baa',
+      'Lambda plc': `/companies/${fixtures.company.lambdaPlc.id}`,
       'Add and remove from lists': undefined,
     })
 
@@ -34,6 +34,9 @@ describe('Adding and removing a company to a list', () => {
       cy.get(listSelectors.listA.radios).should('have.length', 2)
       cy.get(listSelectors.listA.labelYes).should('have.text', 'Yes')
       cy.get(listSelectors.listA.labelNo).should('have.text', 'No')
+
+      cy.get(listSelectors.listA.radioYes).should('not.be.checked')
+      cy.get(listSelectors.listA.radioNo).should('be.checked')
     })
     it('should render options for list B', () => {
       cy.get(listSelectors.listB.legend).should(
@@ -43,6 +46,9 @@ describe('Adding and removing a company to a list', () => {
       cy.get(listSelectors.listB.radios).should('have.length', 2)
       cy.get(listSelectors.listB.labelYes).should('have.text', 'Yes')
       cy.get(listSelectors.listB.labelNo).should('have.text', 'No')
+
+      cy.get(listSelectors.listB.radioYes).should('be.checked')
+      cy.get(listSelectors.listB.radioNo).should('not.be.checked')
     })
     it('should render options for list B', () => {
       cy.get(listSelectors.listC.legend).should(
@@ -52,6 +58,9 @@ describe('Adding and removing a company to a list', () => {
       cy.get(listSelectors.listC.radios).should('have.length', 2)
       cy.get(listSelectors.listC.labelYes).should('have.text', 'Yes')
       cy.get(listSelectors.listC.labelNo).should('have.text', 'No')
+
+      cy.get(listSelectors.listC.radioYes).should('not.be.checked')
+      cy.get(listSelectors.listC.radioNo).should('be.checked')
     })
     it('should render a "Create list" button', () => {
       cy.get(listSelectors.createButton).should(
