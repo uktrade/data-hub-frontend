@@ -95,6 +95,9 @@ import {
 } from '../apps/investments/client/projects/state'
 import * as getInvestmentProjects from '../apps/investments/client/projects/tasks'
 
+import * as myInvestmentProjects from './components/MyInvestmentProjects/tasks'
+import { TASK_GET_MY_INVESTMENTS_LIST } from './components/MyInvestmentProjects/state'
+
 import Footer from '../client/components/Footer'
 
 function parseProps(domNode) {
@@ -158,6 +161,8 @@ function App() {
         [TASK_GET_ADVISER_NAME]: getInvestmentProjects.getAdviserNames,
         [TASK_GET_INVESTMENTS_PROJECTS_METADATA]:
           getInvestmentProjects.getMetadata,
+        [TASK_GET_MY_INVESTMENTS_LIST]:
+          myInvestmentProjects.fetchMyInvestmentsList,
       }}
     >
       <Mount selector="#add-company-form">
@@ -210,7 +215,7 @@ function App() {
         <Dashboard id="homepage" />
       </Mount>
       <Mount selector="#dashboard">
-        <PersonalisedDashboard id="dashboard" />
+        {(props) => <PersonalisedDashboard id="dashboard" {...props} />}
       </Mount>
       <Mount selector="#delete-company-list">
         {(props) => (

@@ -15,27 +15,30 @@ import {
   DashboardTabs,
 } from '../../components'
 
-const PersonalisedDashboard = ({ id }) => (
-  <GridRow data-test="dashboard">
-    <GridCol setWidth="one-third">
-      <Aside>
-        <UserDetails />
-        <InvestmentReminders />
-        <InvestmentProjectSummary />
-      </Aside>
-    </GridCol>
-    <GridCol setWidth="two-thirds">
-      <Main>
-        <Search />
-        <InvestmentUpcomingDates />
-        <DashboardTabs id={id} />
-      </Main>
-    </GridCol>
-  </GridRow>
-)
+const PersonalisedDashboard = ({ id, adviser }) => {
+  return (
+    <GridRow data-test="dashboard">
+      <GridCol setWidth="one-third">
+        <Aside>
+          <UserDetails {...adviser} />
+          <InvestmentReminders />
+          <InvestmentProjectSummary />
+        </Aside>
+      </GridCol>
+      <GridCol setWidth="two-thirds">
+        <Main>
+          <Search />
+          <InvestmentUpcomingDates />
+          <DashboardTabs id={id} adviser={adviser} />
+        </Main>
+      </GridCol>
+    </GridRow>
+  )
+}
 
 PersonalisedDashboard.propTypes = {
   id: PropTypes.string.isRequired,
+  adviser: PropTypes.object.isRequired,
 }
 
 export default PersonalisedDashboard

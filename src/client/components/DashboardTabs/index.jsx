@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import urls from '../../../lib/urls'
@@ -13,7 +13,7 @@ const StyledDiv = styled('div')`
   padding-top: 16px;
 `
 
-const DashboardTabs = ({ id }) => (
+const DashboardTabs = ({ id, adviser }) => (
   <StyledDiv data-cy="dashboard-tabs">
     <TabNav
       id={`${id}.TabNav`}
@@ -22,7 +22,7 @@ const DashboardTabs = ({ id }) => (
       tabs={{
         [urls.personalisedDashboard.myInvestmentProjects()]: {
           label: 'My projects',
-          content: <MyInvestmentProjects />,
+          content: <MyInvestmentProjects adviser={adviser} />,
         },
         [urls.dashboard()]: {
           label: 'My companies lists',
@@ -43,6 +43,7 @@ const DashboardTabs = ({ id }) => (
 
 DashboardTabs.propTypes = {
   id: PropTypes.string.isRequired,
+  adviser: PropTypes.object.isRequired,
 }
 
 export default DashboardTabs
