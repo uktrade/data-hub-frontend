@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
-import InvestmentEstimatedLandDate from 'InvestmentEstimatedLandDate'
+import InvestmentEstimatedLandDate from '../InvestmentEstimatedLandDate'
 import exampleReadme from './example.md'
 import usageReadme from './usage.md'
 import { addDays, subDays, endOfToday } from 'date-fns'
