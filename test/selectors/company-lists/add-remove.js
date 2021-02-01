@@ -3,6 +3,10 @@ module.exports = {
     legend: `#add-remove-list-form > form > div > div:nth-child(2) > div > fieldset > legend`,
     radios:
       '#add-remove-list-form > form > div > div:nth-child(2) > div > fieldset > div input',
+    radioYes:
+      '#add-remove-list-form > form > div > div:nth-child(2) > div > fieldset > div input[value="yes"]',
+    radioNo:
+      '#add-remove-list-form > form > div > div:nth-child(2) > div > fieldset > div input[value="no"]',
     labelYes:
       '#add-remove-list-form > form > div > div:nth-child(2) > div > fieldset > div > label:nth-child(2)',
     labelNo:
@@ -12,6 +16,10 @@ module.exports = {
     legend: `#add-remove-list-form > form > div > div:nth-child(3) > div > fieldset > legend`,
     radios:
       '#add-remove-list-form > form > div > div:nth-child(3) > div > fieldset > div input',
+    radioYes:
+      '#add-remove-list-form > form > div > div:nth-child(3) > div > fieldset > div input[value="yes"]',
+    radioNo:
+      '#add-remove-list-form > form > div > div:nth-child(3) > div > fieldset > div input[value="no"]',
     labelYes:
       '#add-remove-list-form > form > div > div:nth-child(3) > div > fieldset > div > label:nth-child(2)',
     labelNo:
@@ -21,6 +29,10 @@ module.exports = {
     legend: `#add-remove-list-form > form > div > div:nth-child(4) > div > fieldset > legend`,
     radios:
       '#add-remove-list-form > form > div > div:nth-child(4) > div > fieldset > div input',
+    radioYes:
+      '#add-remove-list-form > form > div > div:nth-child(4) > div > fieldset > div input[value="yes"]',
+    radioNo:
+      '#add-remove-list-form > form > div > div:nth-child(4) > div > fieldset > div input[value="no"]',
     labelYes:
       '#add-remove-list-form > form > div > div:nth-child(4) > div > fieldset > div > label:nth-child(2)',
     labelNo:

@@ -14,4 +14,12 @@ describe('My companies lists', () => {
     name: 'List A',
     ...helper.expectedLists['List A'],
   })
+
+  Object.entries(helper.expectedLists).forEach(([name, expectedValues]) => {
+    describe(`After selecting list "${name}"`, () => {
+      before(() => cy.contains('View list').find('select').select(name))
+
+      helper.describeSelectedList({ name, ...expectedValues })
+    })
+  })
 })
