@@ -60,55 +60,68 @@ const Chart = ({
   sortLabel,
   sortOptions,
   headers,
-  data,
+  data = [],
   name,
   url,
 }) => {
   const [isAccessible, setAccessible] = useState(accessible)
-  const total = data.reduce((prev, curr) => {
-    return prev + curr.value
-  }, 0)
+  const hasNoData = Boolean(data.length === 0)
+
+  const total = hasNoData
+    ? 0
+    : data.results.reduce((prev, curr) => {
+        return prev + curr.value
+      }, 0)
+
   return (
     <>
       <StyledHeader>{title}</StyledHeader>
-      <StyledSelect
-        name={sortName}
-        label={sortLabel}
-        input={{
-          onChange,
-        }}
-      >
-        {sortOptions &&
-          sortOptions.map(({ label, value }, i) => (
-            <option value={value} key={i}>
-              {label}
-            </option>
-          ))}
-      </StyledSelect>
-      <TotalHeader>
-        <span>{total}</span> <span>{subject}</span>
-      </TotalHeader>
-      {total > 0 && (
-        <StyledButton onClick={() => setAccessible(!isAccessible)}>
-          {isAccessible ? 'Change to chart view' : 'Change to accessible view'}
-        </StyledButton>
-      )}
-      {isAccessible || total === 0 ? (
-        <Table
-          data={data}
-          headers={headers}
-          total={total}
-          url={url}
-          name={name}
-        />
+      {hasNoData ? (
+        <>Data currently unavailable</>
       ) : (
-        <Bar
-          data={data}
-          name={name}
-          total={total}
-          description={description}
-          url={url}
-        />
+        <>
+          <StyledSelect
+            name={sortName}
+            label={sortLabel}
+            input={{
+              onChange,
+            }}
+          >
+            {sortOptions &&
+              sortOptions.map(({ label, value }, i) => (
+                <option value={value} key={i}>
+                  {label}
+                </option>
+              ))}
+          </StyledSelect>
+          <TotalHeader>
+            <span>{total}</span> <span>{subject}</span>
+          </TotalHeader>
+          {total > 0 && (
+            <StyledButton onClick={() => setAccessible(!isAccessible)}>
+              {isAccessible
+                ? 'Change to chart view'
+                : 'Change to accessible view'}
+            </StyledButton>
+          )}
+          {isAccessible || total === 0 ? (
+            <Table
+              data={data.results}
+              headers={headers}
+              total={total}
+              url={url}
+              name={name}
+            />
+          ) : (
+            <Bar
+              data={data.results}
+              name={name}
+              total={total}
+              description={description}
+              url={url}
+            />
+          )}
+        </>
       )}
     </>
   )
@@ -127,13 +140,16 @@ Chart.propTypes = {
       value: PropTypes.string.isRequired,
     })
   ),
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      param: PropTypes.number.isRequired,
-      value: PropTypes.number.isRequired,
-      key: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+  data: PropTypes.shape({
+    date: PropTypes.string.isRequired,
+    results: PropTypes.arrayOf(
+      PropTypes.shape({
+        param: PropTypes.number.isRequired,
+        value: PropTypes.number.isRequired,
+        key: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+  }),
   url: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
 }
