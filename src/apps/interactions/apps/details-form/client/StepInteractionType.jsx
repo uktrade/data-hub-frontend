@@ -41,7 +41,7 @@ const StepInteractionType = () => {
                 },
                 {
                   label: 'A service that you have provided',
-                  hint: 'For example a significant assist or an event',
+                  hint: 'For example, a significant assist or an event',
                   value: KINDS.SERVICE_DELIVERY,
                   onChange: getOnChangeHandler('kind', setFieldValue),
                 },
@@ -73,7 +73,7 @@ const StepInteractionType = () => {
                 },
                 {
                   label: 'A service that you have provided',
-                  hint: 'For example a significant assist or an event',
+                  hint: 'For example, a significant assist or an event',
                   value: KINDS.SERVICE_DELIVERY,
                   onChange: getOnChangeHandler('kind', setFieldValue),
                 },
