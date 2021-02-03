@@ -35,6 +35,7 @@ describe('LEP Permission', () => {
         'Companies',
         'Contacts',
         'Investments',
+        'Support',
       ])
     })
   })
