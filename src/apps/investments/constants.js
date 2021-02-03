@@ -97,6 +97,7 @@ const QUERY_FIELDS = [
   'client_relationship_manager',
   'likelihood_to_land',
   'level_of_involvement_simplified',
+  'country_investment_originates_from',
 ]
 
 const QUERY_DATE_FIELDS = [
