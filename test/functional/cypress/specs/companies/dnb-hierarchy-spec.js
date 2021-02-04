@@ -151,4 +151,15 @@ describe('D&B Company hierarchy', () => {
       })
     }
   )
+
+  context('when attempting to view the hierarchy without a D&B id', () => {
+    it('should have a 403 error', () => {
+      cy.request({
+        url: urls.companies.dnbHierarchy.index(1234),
+        failOnStatusCode: false,
+      }).then((response) => {
+        expect(response.status).to.eq(403)
+      })
+    })
+  })
 })
