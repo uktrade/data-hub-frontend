@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { typography } from '@govuk-react/lib'
 import { SPACING } from '@govuk-react/constants'
 import { YELLOW, BLACK } from 'govuk-colours'
-import { format, endOfToday, differenceInDays } from 'date-fns'
+import { format, endOfToday, differenceInCalendarDays } from 'date-fns'
 
 const StyledPanel = styled('div')`
   padding: ${SPACING.SCALE_4};
@@ -24,7 +24,7 @@ const StyledBody = styled('div')`
 
 const getDifferenceInDays = (estimatedLandDate) => {
   const today = endOfToday()
-  const difference = differenceInDays(estimatedLandDate, today)
+  const difference = differenceInCalendarDays(estimatedLandDate, today)
   return difference === 1
     ? difference + ' day'
     : difference === 0
