@@ -34,7 +34,7 @@ const DateField = ({
   return (
     <StyledFieldWrapper {...{ name, label, legend, hint }} {...props}>
       <Input
-        id={name}
+        id={`field-${name}-1`}
         key={name}
         name={name}
         value={value}
