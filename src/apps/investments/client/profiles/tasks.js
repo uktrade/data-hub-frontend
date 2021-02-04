@@ -1,14 +1,12 @@
 import { apiProxyAxios } from '../../../../client/components/Task/utils'
 
-export function getLargeCapitalProfiles({ limit = 10, page, countries }) {
+export function getLargeCapitalProfiles({ limit = 10, page, countryOfOrigin }) {
   let offset = limit * (parseInt(page, 10) - 1) || 0
   return apiProxyAxios
     .post('/v4/search/large-investor-profile', {
-      params: {
-        limit,
-        offset,
-        country_of_origin: countries,
-      },
+      limit,
+      offset,
+      country_of_origin: countryOfOrigin,
     })
     .then(({ data }) => {
       return data

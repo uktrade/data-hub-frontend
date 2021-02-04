@@ -14,6 +14,10 @@ import {
   INVESTMENTS__PROFILES_SELECT_PAGE,
 } from '../../../../client/actions'
 
+const QS_PARAMS = {
+  countryOfOrigin: 'country_of_origin',
+}
+
 const LargeCapitalProfileCollection = ({
   count,
   results,
@@ -23,9 +27,7 @@ const LargeCapitalProfileCollection = ({
   <Route>
     {({ location }) => {
       const qsParams = qs.parse(location.search.slice(1))
-      const selectedCountries = (
-        qsParams.country_investment_originates_from || []
-      )
+      const selectedCountries = (qsParams[QS_PARAMS.countryOfOrigin] || [])
         .map(
           (id) => filterOptions.countries.filter(({ value }) => value === id)[0]
         )
@@ -44,12 +46,12 @@ const LargeCapitalProfileCollection = ({
             startOnRender: {
               payload: {
                 page: parseInt(qsParams.page, 10),
-                countries: qsParams.country_investment_originates_from,
+                countryOfOrigin: qsParams.country_of_origin,
               },
               onSuccessDispatch: INVESTMENTS__PROFILES_LOADED,
             },
           }}
-          selectedFilters={{ selectedCountries }}
+          selectedFilters={{ selectedCountryOfOrigin: selectedCountries }}
         >
           <CollectionFilters
             taskProps={{
@@ -65,7 +67,7 @@ const LargeCapitalProfileCollection = ({
               isMulti={true}
               legend="Country of origin"
               name="country"
-              qsParam="country_investment_originates_from"
+              qsParam={QS_PARAMS.countryOfOrigin}
               placeholder="Search countries"
               options={filterOptions.countries}
               selectedOptions={selectedCountries}
