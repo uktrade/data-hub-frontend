@@ -15,7 +15,7 @@ Option.propTypes = comps.Option.propTypes
 export const filterOption = ({ label = '' }, query) =>
   label.toLowerCase().includes(query.toLowerCase())
 
-const Typeahead = ({ options, styles, error, ...props }) => {
+const Typeahead = ({ options, styles, error, name, ...props }) => {
   const customisedProps = {
     styles: {
       ...(error ? errorStyles : defaultStyles),
@@ -30,9 +30,13 @@ const Typeahead = ({ options, styles, error, ...props }) => {
   return (
     <>
       {options ? (
-        <Select {...customisedProps} options={options} />
+        <Select
+          {...customisedProps}
+          options={options}
+          inputId={`field-${name}-1`}
+        />
       ) : (
-        <AsyncSelect {...customisedProps} />
+        <AsyncSelect {...customisedProps} inputId={`field-${name}-1`} />
       )}
     </>
   )

@@ -66,6 +66,7 @@ const CheckboxGroupField = ({
   loadOptions = null,
   selectedOptions = [],
   onChange = () => null,
+  id,
   ...props
 }) => {
   const [options, setOptions] = useState(initialOptions)
@@ -92,7 +93,7 @@ const CheckboxGroupField = ({
         'Loading...'
       ) : (
         <MultiChoice>
-          {options.map((option) => {
+          {options.map((option, i) => {
             const {
               value: optionValue,
               label: optionLabel,
@@ -116,6 +117,7 @@ const CheckboxGroupField = ({
             }
             return (
               <Checkbox
+                id={`field-${name}-${i + 1}`}
                 key={optionValue}
                 name={name}
                 initialChecked={checked}

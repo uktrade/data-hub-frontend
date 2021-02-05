@@ -253,7 +253,7 @@ function submitForm(kind, theme, values) {
 
       cy.contains(ELEMENT_IS_EVENT.legend).next().find('input').check('yes')
 
-      cy.get('#event').parent().selectTypeaheadOption('Sort event')
+      cy.get('#field-event-1').parent().selectTypeaheadOption('Sort event')
       // Searching directly for 'event' string causes a false positive as it matches other elements.
     }
 
