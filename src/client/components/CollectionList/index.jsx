@@ -12,6 +12,7 @@ import {
   CollectionSort,
   CollectionItem,
   Pagination,
+  RoutedDownloadDataHeader,
 } from '../../components'
 
 const CollectionList = ({
@@ -25,6 +26,8 @@ const CollectionList = ({
   items,
   activePage = 1,
   onPageClick,
+  maxItemsToDownload,
+  baseDownloadLink,
 }) => (
   <GridRow>
     <GridCol setWidth="full">
@@ -39,7 +42,12 @@ const CollectionList = ({
         {sortOptions && (
           <CollectionSort sortOptions={sortOptions} totalPages={count} />
         )}
-
+        <RoutedDownloadDataHeader
+          count={count}
+          maxItems={maxItemsToDownload}
+          data-test="download-data-header"
+          baseDownloadLink={baseDownloadLink}
+        />
         {items.map(
           (
             { headingText, headingUrl, subheading, badges, metadata, type },
@@ -101,6 +109,7 @@ CollectionList.propTypes = {
       query: PropTypes.object.isRequired,
     }),
   }),
+  maxItemsToDownload: PropTypes.number,
   onPageClick: PropTypes.func.isRequired,
 }
 

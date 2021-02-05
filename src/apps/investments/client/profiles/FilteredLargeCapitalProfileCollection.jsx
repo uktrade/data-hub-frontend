@@ -52,6 +52,7 @@ const LargeCapitalProfileCollection = ({
             },
           }}
           selectedFilters={{ selectedCountryOfOrigin: selectedCountries }}
+          baseDownloadLink="/investments/profiles/export"
         >
           <CollectionFilters
             taskProps={{
