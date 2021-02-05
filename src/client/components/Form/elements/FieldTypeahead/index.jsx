@@ -49,6 +49,7 @@ const FieldTypeahead = ({
       <StyledWrapper error={error}>
         {touched && error && <ErrorText>{error}</ErrorText>}
         <Typeahead
+          name={name}
           inputId={name}
           aria-label={label || legend}
           onBlur={onBlur}
