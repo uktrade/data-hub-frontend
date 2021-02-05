@@ -40,5 +40,12 @@ exports.contacts = function (req, res) {
     return res.json(contactFilter)
   }
 
+  if (req.body.original_query === 'no results') {
+    return res.json({
+      count: 0,
+      results: [],
+    })
+  }
+
   res.json(contactsList[req.body.sortby] || contacts)
 }

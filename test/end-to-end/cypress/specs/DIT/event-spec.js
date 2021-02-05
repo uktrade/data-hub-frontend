@@ -1,6 +1,6 @@
 const selectors = require('../../../../selectors')
 
-const { events } = require('../../../../../src/lib/urls')
+const urls = require('../../../../../src/lib/urls')
 
 const { assertKeyValueTable } = require('../../support/assertions')
 
@@ -39,7 +39,7 @@ const createEvent = () => {
 describe('Event', () => {
   describe('create', () => {
     beforeEach(() => {
-      cy.visit(events.create())
+      cy.visit(urls.events.create())
     })
 
     it('should throw validation messages for required fields', () => {
@@ -90,7 +90,7 @@ describe('Event', () => {
     it('should create an attendee on a event', () => {
       createEvent()
 
-      cy.visit(events.index())
+      cy.visit(urls.events.index())
       cy.contains('Eventful event').click()
       cy.contains('Attendees').click()
       cy.get(selectors.entityCollection.addAttendee).click()
@@ -112,7 +112,7 @@ describe('Event', () => {
 
   describe('edit', () => {
     before(() => {
-      cy.visit(events.index())
+      cy.visit(urls.events.index())
     })
 
     it('should display newly created event in collection page', () => {
@@ -133,22 +133,25 @@ describe('Event', () => {
   })
 
   describe('Add attendee', () => {
-    it('Should add an interaction with the attendee', () => {
-      cy.visit(events.index())
-
+    before(() => {
+      cy.visit(urls.events.index())
       cy.contains('One-day exhibition').click()
+    })
+    it('Should add an interaction with the attendee', () => {
       cy.contains('a', 'Attendees').click()
       cy.contains('Add attendee').click()
-
       cy.get('input').type('John')
       cy.contains('button', 'Search').click()
-
-      cy.get(selectors.collection.items)
-        .first()
-        .should('contain', 'Johnny Cakeman')
-        .click()
-
+      cy.get('main li > a').should('contain', 'Johnny Cakeman').click()
       cy.contains('Event attendee added')
+    })
+    it('Should not be able to add a duplicate attendee', () => {
+      cy.contains('a', 'Attendees').click()
+      cy.contains('Add attendee').click()
+      cy.get('input').type('John')
+      cy.contains('button', 'Search').click()
+      cy.get('main li a').should('not.exist')
+      cy.get('main li').should('contain', 'Existing attendee')
     })
   })
 })
