@@ -4,12 +4,10 @@
 {% endblock %}
 
 {% block main %}
-<div class="govuk-width-container">
-  <div class="govuk-main-wrapper">
-    {% component 'react-slot', {
-      id: 'dashboard',
-      props: props
-    } %}
-  </div>
-</div>
+
+  {% component 'react-slot', {
+    id: 'dashboard',
+    props: props
+  } %}
+
 {% endblock %}
