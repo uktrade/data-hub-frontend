@@ -24,7 +24,7 @@ const PersonalisedDashboard = ({ id, adviser }) => {
           <Aside>
             <UserDetails {...adviser} />
             <InvestmentReminders />
-            <InvestmentProjectSummary />
+            <InvestmentProjectSummary adviser={adviser} />
           </Aside>
         </GridCol>
         <GridCol setWidth="two-thirds">
