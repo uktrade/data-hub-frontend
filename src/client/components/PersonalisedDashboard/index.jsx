@@ -13,26 +13,29 @@ import {
   Search,
   InvestmentUpcomingDates,
   DashboardTabs,
+  Container,
 } from '../../components'
 
 const PersonalisedDashboard = ({ id, adviser }) => {
   return (
-    <GridRow data-test="dashboard">
-      <GridCol setWidth="one-third">
-        <Aside>
-          <UserDetails {...adviser} />
-          <InvestmentReminders />
-          <InvestmentProjectSummary />
-        </Aside>
-      </GridCol>
-      <GridCol setWidth="two-thirds">
-        <Main>
-          <Search />
-          <InvestmentUpcomingDates />
-          <DashboardTabs id={id} adviser={adviser} />
-        </Main>
-      </GridCol>
-    </GridRow>
+    <Container>
+      <GridRow data-test="dashboard">
+        <GridCol setWidth="one-third">
+          <Aside>
+            <UserDetails {...adviser} />
+            <InvestmentReminders />
+            <InvestmentProjectSummary />
+          </Aside>
+        </GridCol>
+        <GridCol setWidth="two-thirds">
+          <Main>
+            <Search />
+            <InvestmentUpcomingDates />
+            <DashboardTabs id={id} adviser={adviser} />
+          </Main>
+        </GridCol>
+      </GridRow>
+    </Container>
   )
 }
 
