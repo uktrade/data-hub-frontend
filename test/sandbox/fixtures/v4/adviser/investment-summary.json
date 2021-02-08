@@ -1,0 +1,33 @@
+{
+    "annual_summaries": [
+        {
+            "financial_year": {
+                "label": "2019-20",
+                "start": "2019-04-01",
+                "end": "2020-03-31"
+            },
+            "totals": {
+                "prospect": 3,
+                "assign_pm": 1,
+                "active": 5,
+                "verify_win": 1,
+                "won": 0
+            }
+        },
+        {
+            "financial_year": {
+                "label": "2020-21",
+                "start": "2020-04-01",
+                "end": "2021-03-31"
+            },
+            "totals": {
+                "prospect": 3,
+                "assign_pm": 0,
+                "active": 0,
+                "verify_win": 1,
+                "won": 3
+            }
+        }
+    ],
+    "adviser_id": "e83a608e-84a4-11e6-ae22-56b6b6499622"
+}
