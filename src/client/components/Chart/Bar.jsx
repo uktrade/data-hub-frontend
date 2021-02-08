@@ -52,24 +52,24 @@ const MakeBar = styled('a')`
   text-align: center;
 `
 
-const Bar = ({ data, total, name, url, description }) => (
+const Bar = ({ data, total, queryParam, url, description }) => (
   <>
     <Key>
-      {data.map(({ key }, i) => (
+      {data.map(({ label }, i) => (
         <ListItem color={COLOURS[i]} key={i}>
-          {key}
+          {label}
         </ListItem>
       ))}
     </Key>
     <p>{description}</p>
     <BarContainer>
-      {data.map(({ key, value, param }, i) => (
+      {data.map(({ id, label, value }, i) => (
         <MakeBar
           key={i}
           percent={(value / total) * 100}
           color={COLOURS[i]}
-          href={`${url}?${name}=${param}`}
-          title={`View ${key}`}
+          href={`${url}?${queryParam}=${id}`}
+          title={`View ${label}`}
         >
           {value}
         </MakeBar>
@@ -81,14 +81,14 @@ const Bar = ({ data, total, name, url, description }) => (
 Bar.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      param: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
       value: PropTypes.number.isRequired,
-      key: PropTypes.string.isRequired,
     })
   ).isRequired,
   total: PropTypes.number.isRequired,
   url: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  queryParam: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
 }
 
