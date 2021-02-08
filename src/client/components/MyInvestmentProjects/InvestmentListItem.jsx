@@ -16,11 +16,11 @@ const InvestmentListItem = ({ name, stage, estimated_land_date }) => {
 }
 
 InvestmentListItem.propTypes = {
-  name: PropTypes.string,
+  name: PropTypes.string.isRequired,
   stage: PropTypes.shape({
     name: PropTypes.string,
-  }),
-  estimated_land_date: PropTypes.string,
+  }).isRequired,
+  estimated_land_date: PropTypes.string.isRequired,
 }
 
 export default InvestmentListItem

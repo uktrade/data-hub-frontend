@@ -105,7 +105,7 @@ import { PIPELINE__LIST_LOADED } from '../../../../../../client/actions'
 
 ### 6. reducer.js
 
-The reducer module is where we update our state based on what action was dispatched. Remember, all Redux functions must be pure, so we're making a copy of the exisitng state and updating that - not updating the state directly.
+The reducer module is where we update our state based on what action was dispatched. Remember, all Redux functions must be pure, so we're making a copy of the existing state and updating that - not updating the state directly.
 
 ```
 // put your initial state here if needed
