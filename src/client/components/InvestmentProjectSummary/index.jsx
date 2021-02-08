@@ -1,98 +1,66 @@
-import React, { useState } from 'react'
-import Chart from '../Chart'
+import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { get } from 'lodash'
 
-const InvestmentProjectSummary = () => {
-  // Todo: remove after task component is set up
-  const data = [
-    {
-      date: '2021',
-      results: [
-        {
-          key: 'Prospect',
-          param: 1,
-          value: 7,
-        },
-        {
-          key: 'Assigned',
-          param: 2,
-          value: 20,
-        },
-        {
-          key: 'Active',
-          param: 3,
-          value: 5,
-        },
-        {
-          key: 'Verfiy win',
-          param: 4,
-          value: 2,
-        },
-        {
-          key: 'Won',
-          param: 5,
-          value: 15,
-        },
-      ],
-    },
-    {
-      date: '2020',
-      results: [
-        {
-          key: 'Prospect',
-          param: 1,
-          value: 14,
-        },
-        {
-          key: 'Assigned',
-          param: 2,
-          value: 3,
-        },
-        {
-          key: 'Active',
-          param: 3,
-          value: 19,
-        },
-        {
-          key: 'Verfiy win',
-          param: 4,
-          value: 2,
-        },
-        {
-          key: 'Won',
-          param: 5,
-          value: 0,
-        },
-      ],
-    },
-  ]
+import { INVESTMENT_SUMMARY__LOADED } from '../../actions'
+import Task from '../Task/index.jsx'
+import { MultiRangeChart } from '../Chart'
+import { ID, TASK_GET_INVESTMENT_SUMMARY, state2props } from './state'
+import { annualSummariesAsDataRanges } from './utils'
 
-  const [projectsData, setProjectsData] = useState(data[0])
-
-  const onChange = (e) => {
-    const [selectedProjects] = data.filter(
-      ({ date }) => date === e.target.value
-    )
-    setProjectsData(selectedProjects)
-  }
+const InvestmentProjectSummary = ({ adviser, investmentSummary = {} }) => {
+  const annualSummaries = get(investmentSummary, 'annual_summaries', [])
+  const dataRanges = annualSummariesAsDataRanges(annualSummaries)
 
   return (
-    <Chart
-      title="My project summary"
-      sortName="sortBy"
-      sortLabel="Date range"
-      sortOptions={[
-        { label: 'Current financial year', value: '2021' },
-        { label: '2019-2020', value: '2020' },
-      ]}
-      subject="Projects"
-      description="Projects in the current financial year"
-      headers={['Stage', 'Amount']}
-      name="stage"
-      url="/investments/projects"
-      onChange={onChange}
-      data={projectsData}
-    />
+    <Task.Status
+      name={TASK_GET_INVESTMENT_SUMMARY}
+      id={ID}
+      progressMessage="Loading your investment projects"
+      startOnRender={{
+        payload: { adviser },
+        onSuccessDispatch: INVESTMENT_SUMMARY__LOADED,
+      }}
+    >
+      {() => (
+        <MultiRangeChart
+          title="My project summary"
+          subject="Project"
+          description="Projects in the current financial year"
+          headers={['Stage', 'Amount']}
+          queryParam="stage"
+          url="/investments/projects"
+          dataRanges={dataRanges}
+        />
+      )}
+    </Task.Status>
   )
 }
 
-export default InvestmentProjectSummary
+InvestmentProjectSummary.propTypes = {
+  adviser: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }).isRequired,
+  investmentSummary: PropTypes.shape({
+    adviser_id: PropTypes.string,
+    annual_summaries: PropTypes.arrayOf(
+      PropTypes.shape({
+        financial_year: PropTypes.shape({
+          label: PropTypes.string.isRequired,
+          start: PropTypes.string.isRequired,
+          end: PropTypes.string.isRequired,
+        }).isRequired,
+        totals: PropTypes.arrayOf(
+          PropTypes.shape({
+            label: PropTypes.string,
+            id: PropTypes.string,
+            value: PropTypes.number,
+          })
+        ),
+      })
+    ),
+  }),
+}
+
+export default connect(state2props)(InvestmentProjectSummary)
