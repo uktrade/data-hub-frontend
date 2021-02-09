@@ -27,6 +27,7 @@ const ALLOWLIST = [
   '/v4/dnb/company-change-request',
   '/v4/large-investor-profile',
   '/v3/search/investment_project',
+  '/v4/search/large-investor-profile',
 ]
 
 module.exports = (app) => {

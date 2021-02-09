@@ -54,5 +54,9 @@
   {
     "code": "activity-feed-maxemail-campaign",
     "is_active": true
+  },
+  {
+    "code": "capital-investments-filters",
+    "is_active": true
   }
 ]
