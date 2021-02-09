@@ -6,6 +6,10 @@ import GridCol from '@govuk-react/grid-col'
 import Aside from './Aside.jsx'
 import Main from './Main.jsx'
 
+import { ID, TASK_GET_USER_DETAILS } from './state'
+import { USER_DETAILS_LOADED } from '../../actions'
+import Task from '../Task'
+
 import {
   UserDetails,
   InvestmentReminders,
@@ -22,7 +26,23 @@ const PersonalisedDashboard = ({ id, adviser }) => {
       <GridRow data-test="dashboard">
         <GridCol setWidth="one-third">
           <Aside>
-            <UserDetails {...adviser} />
+            <Task.Status
+              name={TASK_GET_USER_DETAILS}
+              id={ID}
+              progressMessage="Loading user details"
+              startOnRender={{
+                payload: adviser,
+                onSuccessDispatch: USER_DETAILS_LOADED,
+              }}
+            >
+              {() => (
+                <UserDetails
+                  name={adviser.name}
+                  last_login={adviser.last_login}
+                  dit_team={adviser.dit_team}
+                />
+              )}
+            </Task.Status>
             <InvestmentReminders />
             <InvestmentProjectSummary />
           </Aside>
