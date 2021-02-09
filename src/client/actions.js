@@ -6,7 +6,7 @@
  *
  * The name and value of the constants must be the same.
  * The name should be the name of the component the action relates to and a verb
- * describing what it does, concattenated by double underscore.
+ * describing what it does, concatenated by double underscore.
  */
 export const COMPANY_LISTS__LISTS_LOADED = 'COMPANY_LISTS__LISTS_LOADED'
 export const COMPANY_LISTS__SELECT = 'COMPANY_LISTS__SELECT'
@@ -106,4 +106,7 @@ export const INVESTMENTS_PROFILES__FILTER_OPTIONS_LOADED =
   'INVESTMENTS_PROFILES__FILTER_OPTIONS_LOADED'
 
 export const MY_INVESTMENTS__LIST_LOADED = 'MY_INVESTMENTS__LIST_LOADED'
-export const MY_INVESTMENTS__PAGE_SELECTED = 'MY_INVESTMENTS__PAGE_SELECTED'
+export const MY_INVESTMENTS__PAGINATION_CLICK =
+  'MY_INVESTMENTS__PAGINATION_CLICK'
+export const MY_INVESTMENTS__FILTER_CHANGE = 'MY_INVESTMENTS__FILTER_CHANGE'
+export const MY_INVESTMENTS__SORT_CHANGE = 'MY_INVESTMENTS__SORT_CHANGE'
