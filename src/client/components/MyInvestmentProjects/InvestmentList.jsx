@@ -9,10 +9,10 @@ const StyledOrderedList = styled('ol')`
   margin-top: ${SPACING.SCALE_3};
 `
 
-const InvestmentList = ({ items }) => (
+const InvestmentList = ({ items, showDetails }) => (
   <StyledOrderedList>
     {items.map((item) => (
-      <InvestmentListItem key={item.id} {...item} />
+      <InvestmentListItem key={item.id} showDetails={showDetails} {...item} />
     ))}
   </StyledOrderedList>
 )
