@@ -7,11 +7,13 @@ import InvestmentTimeline from './InvestmentTimeline'
 
 const InvestmentListItem = ({ name, stage, estimated_land_date }) => {
   return (
-    <Details summary={name}>
-      <div>+ Add Interaction...</div>
-      <InvestmentTimeline stage={stage} />
-      <InvestmentEstimatedLandDate estimatedLandDate={estimated_land_date} />
-    </Details>
+    <li>
+      <Details summary={name}>
+        <div>+ Add Interaction...</div>
+        <InvestmentTimeline stage={stage} />
+        <InvestmentEstimatedLandDate estimatedLandDate={estimated_land_date} />
+      </Details>
+    </li>
   )
 }
 
