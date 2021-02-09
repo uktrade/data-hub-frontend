@@ -7,7 +7,6 @@ import {
 import { transformInvestmentProjectToListItem } from '../../transformers'
 
 const initialState = {
-  page: 1,
   results: [],
   selectedAdvisers: [],
   metadata: {},

@@ -1,26 +1,19 @@
-import axios from 'axios'
+import { apiProxyAxios } from '../../../../client/components/Task/utils'
 
-function handleSuccess({ data }) {
-  return data
-}
-
-function handleError(error) {
-  const message = error?.response?.data?.detail || error.message
-  return Promise.reject({
-    message,
-    ...error,
-  })
-}
-
-export function getLargeCapitalProfiles({ limit = 10, page, ...rest }) {
+export function getLargeCapitalProfiles({ limit = 10, page, countryOfOrigin }) {
   let offset = limit * (parseInt(page, 10) - 1) || 0
-  return axios
-    .get('/api-proxy/v4/large-investor-profile', {
-      params: {
-        limit,
-        offset,
-        ...rest,
-      },
+  return apiProxyAxios
+    .post('/v4/search/large-investor-profile', {
+      limit,
+      offset,
+      country_of_origin: countryOfOrigin,
     })
-    .then(handleSuccess, handleError)
+    .then(({ data }) => {
+      return data
+    })
 }
+
+export const loadFilterOptions = () =>
+  apiProxyAxios.get('/v4/metadata/country').then(({ data }) => ({
+    countries: data.map(({ id, name }) => ({ value: id, label: name })),
+  }))

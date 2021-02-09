@@ -88,6 +88,10 @@ function FilteredCollectionHeader({
       </CollectionHeaderRow>
 
       <CollectionHeaderRow id="filter-chips">
+        {/*
+        FIXME: This is supposed to be a generic component,
+        thus the chips should not be hardcoded here
+        */}
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedStages}
           qsParamName="stage"
@@ -102,7 +106,11 @@ function FilteredCollectionHeader({
         />
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedCountries}
-          qsParamName="country"
+          qsParamName="country_investment_originates_from"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedCountryOfOrigin}
+          qsParamName="country_of_origin"
         />
         <RoutedFilterChips
           selectedOptions={selectedFilters.selectedUkRegions}

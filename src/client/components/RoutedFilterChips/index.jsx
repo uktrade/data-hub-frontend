@@ -13,6 +13,8 @@ import { Chip } from '..'
  * with targetValue, otherwise it removes that param entirely.
  */
 const removeParamFromQs = (qsParams, targetParam, targetValue = null) => {
+  // FIXME: If the targetParam is not a key in qsParams the function returns
+  //        undefined, which based on how it is used resets all filters
   return Object.entries(qsParams)
     .map(([key]) => {
       if (key === targetParam) {
@@ -29,7 +31,7 @@ const removeParamFromQs = (qsParams, targetParam, targetValue = null) => {
 
 const RoutedFilterChips = ({
   qsParamName,
-  selectedOptions,
+  selectedOptions = [],
   showCategoryLabels = false,
   ...props
 }) => (
@@ -56,7 +58,13 @@ const RoutedFilterChips = ({
 
 RoutedFilterChips.propTypes = {
   qsParamName: PropTypes.string.isRequired,
-  selectedOptions: PropTypes.array.isRequired,
+  selectedOptions: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      categoryLabel: PropTypes.string,
+    })
+  ),
 }
 
 export default RoutedFilterChips
