@@ -5,10 +5,15 @@ import { Details } from 'govuk-react'
 import InvestmentEstimatedLandDate from './InvestmentEstimatedLandDate'
 import InvestmentTimeline from './InvestmentTimeline'
 
-const InvestmentListItem = ({ name, stage, estimated_land_date }) => {
+const InvestmentListItem = ({
+  name,
+  stage,
+  estimated_land_date,
+  showDetails,
+}) => {
   return (
     <li>
-      <Details summary={name}>
+      <Details summary={name} open={showDetails}>
         <div>+ Add Interaction...</div>
         <InvestmentTimeline stage={stage} />
         <InvestmentEstimatedLandDate estimatedLandDate={estimated_land_date} />
