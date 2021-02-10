@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+/* eslint-disable no-unused-vars */
 import PropTypes from 'prop-types'
 import React from 'react'
 import GridRow from '@govuk-react/grid-row'
@@ -6,7 +8,10 @@ import GridCol from '@govuk-react/grid-col'
 import Aside from './Aside.jsx'
 import Main from './Main.jsx'
 
-import { ID, TASK_GET_USER_DETAILS } from './state'
+import {
+  ID,
+  TASK_USER_DETAILS,
+} from '../../../apps/dashboard/client/UserDetails/state'
 import { USER_DETAILS_LOADED } from '../../actions'
 import Task from '../Task'
 
@@ -20,14 +25,23 @@ import {
   Container,
 } from '../../components'
 
-const PersonalisedDashboard = ({ id, adviser }) => {
+const PersonalisedDashboard = ({ payload, currentAdviserId }) => {
+  const userDetailsTask = {
+    name: TASK_USER_DETAILS,
+    id: ID,
+    progressMessage: 'loading projects',
+    startOnRender: {
+      payload,
+      onSuccessDispatch: USER_DETAILS_LOADED,
+    },
+  }
   return (
     <Container>
       <GridRow data-test="dashboard">
         <GridCol setWidth="one-third">
           <Aside>
             <Task.Status
-              name={TASK_GET_USER_DETAILS}
+              name={TASK_USER_DETAILS}
               id={ID}
               progressMessage="Loading user details"
               startOnRender={{
@@ -61,7 +75,6 @@ const PersonalisedDashboard = ({ id, adviser }) => {
 
 PersonalisedDashboard.propTypes = {
   id: PropTypes.string.isRequired,
-  adviser: PropTypes.object.isRequired,
 }
 
 export default PersonalisedDashboard

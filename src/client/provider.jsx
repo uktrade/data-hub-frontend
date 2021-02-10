@@ -78,6 +78,8 @@ import { ID as MY_INVESTMENT_PROJECTS_ID } from './components/MyInvestmentProjec
 import myInvestmentProjectsReducer from './components/MyInvestmentProjects/reducer'
 
 import RoutedInputField from './components/RoutedInputField'
+import { ID as USER_DETAILS_ID } from '../apps/dashboard/client/UserDetails/state'
+import userDetailsReducer from '../apps/dashboard/client/UserDetails/reducer'
 
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
@@ -123,6 +125,7 @@ const store = createStore(
     [INVESTMENT_PROFILES_ID]: investmentProfileReducer,
     [INVESTMENT_PROJECTS_ID]: investmentProjectsReducer,
     [MY_INVESTMENT_PROJECTS_ID]: myInvestmentProjectsReducer,
+    [USER_DETAILS_ID]: userDetailsReducer,
   }),
   {
     referrerUrl: window.document.referrer,

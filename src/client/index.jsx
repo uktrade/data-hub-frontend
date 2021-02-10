@@ -101,8 +101,8 @@ import { TASK_GET_MY_INVESTMENTS_LIST } from './components/MyInvestmentProjects/
 
 import Footer from '../client/components/Footer'
 
-import { TASK_GET_USER_DETAILS } from './components/PersonalisedDashboard/state'
-import * as userDetails from './components/PersonalisedDashboard/tasks'
+import { TASK_USER_DETAILS } from '../apps/dashboard/client/UserDetails/state'
+import * as userDetails from '../apps/dashboard/client/UserDetails/tasks'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}
@@ -167,11 +167,8 @@ function App() {
           getInvestmentProjects.getMetadata,
         [TASK_GET_MY_INVESTMENTS_LIST]:
           myInvestmentProjects.fetchMyInvestmentsList,
-<<<<<<< HEAD
         'Large investment profiles': investmentProfilesTasks.loadFilterOptions,
-=======
-        [TASK_GET_USER_DETAILS]: userDetails.getUserDetails,
->>>>>>> Add Task for UserDetails component
+        [TASK_USER_DETAILS]: userDetails.getUserDetails,
       }}
     >
       <Mount selector="#add-company-form">
@@ -224,7 +221,7 @@ function App() {
         <Dashboard id="homepage" />
       </Mount>
       <Mount selector="#dashboard">
-        {(props) => <PersonalisedDashboard id="dashboard" {...props} />}
+        {<PersonalisedDashboard id="dashboard" />}
       </Mount>
       <Mount selector="#delete-company-list">
         {(props) => (
