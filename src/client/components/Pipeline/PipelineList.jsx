@@ -20,7 +20,7 @@ import GetPipeLineData from './GetPipelineData'
 
 const StyledItemsCounter = styled('h1')`
   font-weight: ${FONT_WEIGHTS.bold};
-  margin: ${SPACING.SCALE_4} 0 -${SPACING.SCALE_2} 0;
+  margin: ${SPACING.SCALE_4} 0;
 `
 
 const PipelineList = ({
@@ -43,30 +43,29 @@ const PipelineList = ({
             <StyledItemsCounter>
               {pluralize('project', items.length, true)}
             </StyledItemsCounter>
-            <StyledOrderedList data-auto-id="pipelineList">
-              {items.length ? (
-                items.map((item) => (
+            {items.length ? (
+              <StyledOrderedList data-auto-id="pipelineList">
+                {items.map((item) => (
                   <ListItem key={item.id}>
                     <PipelineItem item={item} />
                   </ListItem>
-                ))
-              ) : (
-                <LoadingBox loading={progress} timeIn={0} timeOut={400}>
-                  <InsetText>
-                    My pipeline allows you to track the progress of your
-                    projects.
-                    <br />
-                    <br />
-                    For more information please see the{' '}
-                    <Link href={urls.external.helpCentre.pipeline()}>
-                      {' '}
-                      help centre article
-                    </Link>{' '}
-                    on how to use this feature.
-                  </InsetText>
-                </LoadingBox>
-              )}
-            </StyledOrderedList>
+                ))}
+              </StyledOrderedList>
+            ) : (
+              <LoadingBox loading={progress} timeIn={0} timeOut={400}>
+                <InsetText>
+                  My pipeline allows you to track the progress of your projects.
+                  <br />
+                  <br />
+                  For more information please see the{' '}
+                  <Link href={urls.external.helpCentre.pipeline()}>
+                    {' '}
+                    help centre article
+                  </Link>{' '}
+                  on how to use this feature.
+                </InsetText>
+              </LoadingBox>
+            )}
           </>
         )}
       </GetPipeLineData>
