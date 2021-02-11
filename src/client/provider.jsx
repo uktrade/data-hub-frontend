@@ -77,6 +77,8 @@ import investmentProjectsReducer from '../apps/investments/client/projects/reduc
 import { ID as MY_INVESTMENT_PROJECTS_ID } from './components/MyInvestmentProjects/state'
 import myInvestmentProjectsReducer from './components/MyInvestmentProjects/reducer'
 
+import RoutedInputField from './components/RoutedInputField'
+
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
   // The baseURI is set to the <base/> tag by the spaFallbackSpread
@@ -112,6 +114,7 @@ const store = createStore(
     ...MultiInstanceForm.reducerSpread,
     ...DropdownMenu.reducerSpread,
     ...ToggleSection.reducerSpread,
+    ...RoutedInputField.reducerSpread,
     // A reducer is required to be able to set a preloadedState parameter
     referrerUrl: (state = {}) => state,
     [INVESTEMENT_PROJECT_ADMIN_ID]: investmentProjectAdminReducer,

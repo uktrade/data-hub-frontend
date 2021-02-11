@@ -12,6 +12,7 @@ const initialState = {
   isComplete: false,
   filterOptions: {
     countries: [],
+    assetClassesOfInterest: [],
   },
 }
 
@@ -25,6 +26,8 @@ export default (state = initialState, { type, page, result }) => {
         results: result?.results?.map(transformLargeCapitalProfiles),
         isComplete: true,
       }
+    // TODO: Remove this after the feature flag capital-investments-filters
+    // is removed
     case INVESTMENTS__PROFILES_SELECT_PAGE:
       return {
         ...state,
