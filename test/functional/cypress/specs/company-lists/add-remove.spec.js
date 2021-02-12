@@ -75,4 +75,42 @@ describe('Adding and removing a company to a list', () => {
       cy.get(listSelectors.cancelLink).should('have.text', 'Cancel')
     })
   })
+
+  context('when adding the company to a list', () => {
+    before(() => {
+      cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/lists/add-remove`)
+      cy.get(listSelectors.listA.radioYes).check()
+      cy.get(listSelectors.saveButton).click()
+    })
+
+    it('should redirect to the homepage', () => {
+      cy.location('pathname').should('eq', `/`)
+    })
+
+    it('should show a flash message to say the lists have been updated', () => {
+      cy.get('[data-test="flash"]').should(
+        'contain.text',
+        'Lists changes for this company have been saved.'
+      )
+    })
+  })
+
+  context('when removing the company from a list', () => {
+    before(() => {
+      cy.visit(`/companies/${fixtures.company.lambdaPlc.id}/lists/add-remove`)
+      cy.get(listSelectors.listB.radioNo).check()
+      cy.get(listSelectors.saveButton).click()
+    })
+
+    it('should redirect to the homepage', () => {
+      cy.location('pathname').should('eq', `/`)
+    })
+
+    it('should show a flash message to say the lists have been updated', () => {
+      cy.get('[data-test="flash"]').should(
+        'contain.text',
+        'Lists changes for this company have been saved.'
+      )
+    })
+  })
 })
