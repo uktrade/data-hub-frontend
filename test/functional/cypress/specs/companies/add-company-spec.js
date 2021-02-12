@@ -84,6 +84,14 @@ describe('Add company form', () => {
         cy.get(selectors.companyAdd.form).contains('Country')
         cy.get(selectors.companyAdd.form).find('select').should('be.visible')
       })
+
+      it('should include Hong Kong in the "Country" selection', () => {
+        cy.get(selectors.companyAdd.form).contains('Country')
+        cy.get(selectors.companyAdd.form)
+          .find('select option[value="HK"]')
+          .should('have.length', 1)
+          .should('have.text', 'Hong Kong (SAR)')
+      })
     })
 
     context(
