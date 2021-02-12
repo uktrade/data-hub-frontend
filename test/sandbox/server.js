@@ -418,6 +418,14 @@ app.get('/v4/company-list/:listId/item', v4CompanyList.getCompanyListItems)
 app.post('/v4/company-list', v4CompanyList.createCompanyList)
 app.delete('/v4/company-list/:listId', v4CompanyList.deleteCompanyList)
 app.patch('/v4/company-list/:listId', v4CompanyList.editCompanyList)
+app.put(
+  '/v4/company-list/:listId/item/:companyId',
+  v4CompanyList.addCompanyToList
+)
+app.delete(
+  '/v4/company-list/:listId/item/:companyId',
+  v4CompanyList.removeCompanyFromList
+)
 
 // V4 Investment
 app.get('/v4/large-investor-profile', v4Company.largeInvestorProfile)

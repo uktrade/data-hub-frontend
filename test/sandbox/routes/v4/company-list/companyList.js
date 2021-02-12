@@ -64,3 +64,11 @@ exports.editCompanyList = function (req, res) {
 
   res.send(404)
 }
+
+exports.addCompanyToList = function (req, res) {
+  res.send(204)
+}
+
+exports.removeCompanyFromList = function (req, res) {
+  res.send(204)
+}
