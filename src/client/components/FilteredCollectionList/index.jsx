@@ -28,7 +28,7 @@ const FilteredCollectionList = ({
   maxItemsToDownload,
   selectedFilters,
   baseDownloadLink = null,
-  entityName = null,
+  entityName,
 }) => {
   const totalPages = Math.ceil(count / itemsPerPage)
   return (
