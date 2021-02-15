@@ -83,6 +83,36 @@ const DEFAULT_COLLECTION_QUERY = {
 
 const APP_PERMISSIONS = concat(LOCAL_NAV, GLOBAL_NAV_ITEM)
 
+const LARGE_INVESTMENT_PROFILE_QUERY = {
+  sortby: 'created_on:asc',
+}
+
+const LARGE_INVESTMENT_PROFILE_QUERY_FIELDS = [
+  'link',
+  'investor_company__name',
+  'investor_type__name',
+  'investable_capital',
+  'global_assets_under_management',
+  'investor_description',
+  'required_checks_conducted__name',
+  'required_checks_conducted_by_name',
+  'required_checks_conducted_on',
+  'deal_ticket_sizes_names',
+  'asset_classes_of_interest_names',
+  'investment_types_names',
+  'minimum_return_rate__name',
+  'time_horizons_names',
+  'restrictions_names',
+  'construction_risks_names',
+  'minimum_equity_percentage__name',
+  'desired_deal_roles_names',
+  'uk_region_locations_names',
+  'other_countries_being_considered_names',
+  'notes_on_locations',
+]
+
+const LARGE_INVESTMENT_PROFILE_QUERY_DATE = ['modified_on', 'created_on']
+
 const QUERY_FIELDS = [
   'status',
   'adviser',
@@ -129,4 +159,7 @@ module.exports = {
   TRUE,
   FALSE,
   NOT_SET,
+  LARGE_INVESTMENT_PROFILE_QUERY,
+  LARGE_INVESTMENT_PROFILE_QUERY_FIELDS,
+  LARGE_INVESTMENT_PROFILE_QUERY_DATE,
 }

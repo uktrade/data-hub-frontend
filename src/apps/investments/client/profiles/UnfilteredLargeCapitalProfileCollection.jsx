@@ -34,6 +34,8 @@ const LargeCapitalProfileCollection = ({
       onPageClick={onPageClick}
       activePage={page}
       isComplete={isComplete}
+      baseDownloadLink="/investments/profiles/export"
+      entityName="profile"
     />
   )
 }
