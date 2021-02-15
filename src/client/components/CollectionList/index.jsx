@@ -28,6 +28,7 @@ const CollectionList = ({
   onPageClick,
   maxItemsToDownload,
   baseDownloadLink,
+  entityName,
 }) => (
   <GridRow>
     <GridCol setWidth="full">
@@ -47,6 +48,7 @@ const CollectionList = ({
           maxItems={maxItemsToDownload}
           data-test="download-data-header"
           baseDownloadLink={baseDownloadLink}
+          entityName={entityName}
         />
         {items.map(
           (

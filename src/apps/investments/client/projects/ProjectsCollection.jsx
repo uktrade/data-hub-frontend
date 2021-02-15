@@ -81,6 +81,7 @@ const ProjectsCollection = ({
       taskProps={collectionListTask}
       selectedFilters={selectedFilters}
       baseDownloadLink="/investments/projects/export"
+      entityName="project"
     >
       <CollectionFilters taskProps={collectionListMetadataTask}>
         <RoutedCheckboxGroupField
