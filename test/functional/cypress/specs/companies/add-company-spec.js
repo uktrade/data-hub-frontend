@@ -450,6 +450,22 @@ describe('Add company form', () => {
           ).should('not.contain', 'Enter a valid telephone number')
         })
       })
+      context('when an invalid organisation name is filled', () => {
+        before(() => {
+          cy.get(selectors.companyAdd.newCompanyRecordForm.companyName).type(
+            '=INVESTIGATION LIMITED'
+          )
+          cy.get(selectors.companyAdd.continueButton).click()
+        })
+        it('should display invalid name error', () => {
+          cy.get(
+            selectors.companyAdd.newCompanyRecordForm.companyNameContainer
+          ).contains('Enter a valid name')
+        })
+        after(() => {
+          cy.get(selectors.companyAdd.newCompanyRecordForm.companyName).clear()
+        })
+      })
       context(
         'when the form is submitted after filling the required fields, but the region and sector fields are not filled in',
         () => {

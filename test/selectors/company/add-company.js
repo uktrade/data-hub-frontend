@@ -38,6 +38,7 @@ module.exports = {
       soleTrader: 'label:contains("Sole Trader") input[type="radio"]',
     },
     companyName: 'input[name="name"]',
+    companyNameContainer: '#field-name',
     website: 'input[name="website"]',
     websiteContainer: '#field-website',
     telephone: 'input[name="telephone_number"]',
