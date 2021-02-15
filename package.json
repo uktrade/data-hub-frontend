@@ -177,7 +177,7 @@
     "@wdio/cli": "^6.12.1",
     "@wdio/local-runner": "^6.12.1",
     "@wdio/mocha-framework": "^6.11.0",
-    "@wdio/reporter": "^6.11.0",
+    "@wdio/reporter": "^7.0.3",
     "@wdio/selenium-standalone-service": "^6.12.1",
     "@wdio/spec-reporter": "^6.11.0",
     "@wdio/sync": "^6.10.11",
