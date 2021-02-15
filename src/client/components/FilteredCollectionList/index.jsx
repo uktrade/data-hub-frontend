@@ -28,6 +28,7 @@ const FilteredCollectionList = ({
   maxItemsToDownload,
   selectedFilters,
   baseDownloadLink = null,
+  entityName = null,
 }) => {
   const totalPages = Math.ceil(count / itemsPerPage)
   return (
@@ -51,6 +52,7 @@ const FilteredCollectionList = ({
               maxItems={maxItemsToDownload}
               data-test="download-data-header"
               baseDownloadLink={baseDownloadLink}
+              entityName={entityName}
             />
           )}
           <Task.Status {...taskProps}>
