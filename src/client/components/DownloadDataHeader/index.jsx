@@ -27,7 +27,7 @@ const DownloadDataHeader = ({
   if (count >= maxItems) {
     return (
       <CollectionHeaderRow {...props}>
-        Filter to fewer than {decimal(maxItems)} {entityName} to download
+        Filter to fewer than {decimal(maxItems)} {entityName}s to download
       </CollectionHeaderRow>
     )
   }

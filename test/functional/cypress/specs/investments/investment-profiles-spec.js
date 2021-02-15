@@ -6,7 +6,7 @@ const {
 const { investments } = require('../../../../../src/lib/urls')
 
 describe('Investor profiles', () => {
-  context('When there is 1 profile and viewing the first page', () => {
+  context('When there is 10 profiles and viewing the first page', () => {
     before(() => {
       cy.visit(investments.profiles.index())
     })
@@ -31,7 +31,7 @@ describe('Investor profiles', () => {
     it('should display download profile text', () => {
       cy.get('[data-test="download-data-header"]').should(
         'contain',
-        'You can now download this profile'
+        'You can now download these 10 profiles'
       )
     })
 
@@ -41,8 +41,8 @@ describe('Investor profiles', () => {
         .should('have.attr', 'href', '/investments/profiles/export')
     })
 
-    it('should display 1 profile', () => {
-      cy.get('h3').should('have.length', 1)
+    it('should display 10 profiles', () => {
+      cy.get('h3').should('have.length', 10)
     })
   })
 })
