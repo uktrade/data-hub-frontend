@@ -97,7 +97,7 @@
     "del-cli": "^3.0.0",
     "details-element-polyfill": "^2.4.0",
     "dotenv": "^8.2.0",
-    "elastic-apm-node": "^3.9.0",
+    "elastic-apm-node": "^3.11.0",
     "element-closest": "^3.0.2",
     "express": "^4.16.2",
     "express-minify-html": "^0.12.0",
