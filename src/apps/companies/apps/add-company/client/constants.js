@@ -12,3 +12,7 @@ export const GENERIC_PHONE_NUMBER_REGEX = /^$|([0-9]|#|\+|\s|\(|\))+$/
 
 // Non ASCII
 export const NON_ASCII_REGEX = /[^$|\x00-\x7F]/
+
+// Prevents CSV formula injection attacks
+// https://owasp.org/www-community/attacks/CSV_Injection
+export const CSV_FORMULA_INJECTION_REGEX = /^[=+-@]/
