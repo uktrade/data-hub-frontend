@@ -17,7 +17,6 @@ const DownloadDataHeader = ({
   downloadLink,
   count = 0,
   maxItems = 5000,
-  entityName = '',
   ...props
 }) => {
   if (!count) {
@@ -41,7 +40,7 @@ const DownloadDataHeader = ({
   return (
     <CollectionHeaderRow actions={[downloadAction]} {...props}>
       You can now download{' '}
-      {count === 1 ? `this ${entityName}` : `these ${count} ${entityName}s`}
+      {count === 1 ? `this project` : `these ${count} projects`}
     </CollectionHeaderRow>
   )
 }
