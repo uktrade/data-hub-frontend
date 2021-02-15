@@ -70,7 +70,7 @@
     "@hapi/hawk": "^8.0.0",
     "@hapi/joi": "^17.1.1",
     "@sentry/browser": "^5.29.2",
-    "@storybook/addon-actions": "^6.1.17",
+    "@storybook/addon-actions": "^6.1.18",
     "@storybook/addon-a11y": "^6.1.17",
     "@storybook/addon-knobs": "^6.1.17",
     "@storybook/addons": "^6.1.17",
