@@ -1,15 +1,21 @@
 var companyList = require('../../../fixtures/v4/company-list/company-list.json')
+var filteredCompanyLists = require('../../../fixtures/v4/company-list/filtered-company-lists.json')
 var companyLists = require('../../../fixtures/v4/company-list/company-lists.json')
 var companyListsDB = require('../../../fixtures/v4/company-list/company-lists-db.json')
 var multipleItemCompanyList = require('../../../fixtures/v4/company-list/single-list-with-multiple-items.json')
 var errorOnDeleteCompanyList = require('../../../fixtures/v4/company-list/single-list-with-error-on-delete.json')
+
+const LAMBDA_COMPANY_ID = '0fb3379c-341c-4da4-b825-bf8d47b26baa'
 
 exports.companyList = function (req, res) {
   res.json(companyList)
 }
 
 exports.getCompanyLists = function (req, res) {
-  res.json(companyLists)
+  if (req.query.items__company_id == LAMBDA_COMPANY_ID) {
+    return res.json(filteredCompanyLists)
+  }
+  return res.json(companyLists)
 }
 
 exports.getCompanyList = function (req, res) {
@@ -57,4 +63,12 @@ exports.editCompanyList = function (req, res) {
   }
 
   res.send(404)
+}
+
+exports.addCompanyToList = function (req, res) {
+  res.send(204)
+}
+
+exports.removeCompanyFromList = function (req, res) {
+  res.send(204)
 }
