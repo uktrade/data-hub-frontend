@@ -7,7 +7,7 @@
             "modified_on": "2019-05-13T14:01:11.187885Z",
             "country_of_origin": "87756b9a-5d95-e211-a939-e4115bead28a",
             "investor_company": {
-                "name": "Lambda plc",
+                "name": "Foo Bar Baz",
                 "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa"
             },
             "incomplete_details_fields": [
@@ -111,7 +111,7 @@
             "modified_on": "2019-05-13T14:01:11.187885Z",
             "country_of_origin": "87756b9a-5d95-e211-a939-e4115bead28a",
             "investor_company": {
-                "name": "Lambda plc",
+                "name": "Food import & export",
                 "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa"
             },
             "incomplete_details_fields": [
@@ -233,6 +233,65 @@
                 "construction_risks",
                 "minimum_equity_percentage",
                 "desired_deal_roles",
+                "restrictions"
+            ],
+            "incomplete_location_fields": [
+                "uk_region_locations",
+                "notes_on_locations",
+                "other_countries_being_considered"
+            ],
+            "investor_type": null,
+            "investable_capital": null,
+            "global_assets_under_management": null,
+            "investor_description": "",
+            "required_checks_conducted": null,
+            "required_checks_conducted_on": null,
+            "required_checks_conducted_by": null,
+            "deal_ticket_sizes": [],
+            "investment_types": [],
+            "minimum_return_rate": null,
+            "time_horizons": [],
+            "construction_risks": [],
+            "minimum_equity_percentage": null,
+            "desired_deal_roles": [],
+            "restrictions": [],
+            "asset_classes_of_interest": [
+                {
+                    "name": "Biofuel",
+                    "id": "66507830-595d-432e-8521-9daf11785265"
+                },
+                {
+                    "name": "Nuclear",
+                    "id": "9e619e8d-af51-4abf-a83a-5c139851de82"
+                }
+            ],
+            "uk_region_locations": [],
+            "notes_on_locations": "",
+            "other_countries_being_considered": []
+        },
+        {
+            "id": "a84f8405-c419-40a6-84c8-642b7c3209b2",
+            "created_on": "2019-05-13T14:01:11.187838Z",
+            "modified_on": "2019-05-13T14:01:11.187885Z",
+            "investor_company": {
+                "name": "Lambda plc (NO COUNTRY)",
+                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa"
+            },
+            "incomplete_details_fields": [
+                "investor_type",
+                "investable_capital",
+                "global_assets_under_management",
+                "investor_description",
+                "required_checks_conducted"
+            ],
+            "incomplete_requirements_fields": [
+                "deal_ticket_sizes",
+                "investment_types",
+                "minimum_return_rate",
+                "time_horizons",
+                "construction_risks",
+                "minimum_equity_percentage",
+                "desired_deal_roles",
                 "restrictions",
                 "asset_classes_of_interest"
             ],
@@ -256,7 +315,12 @@
             "minimum_equity_percentage": null,
             "desired_deal_roles": [],
             "restrictions": [],
-            "asset_classes_of_interest": [],
+            "asset_classes_of_interest": [
+                {
+                    "name": "Biofuel",
+                    "id": "66507830-595d-432e-8521-9daf11785265"
+                }
+            ],
             "uk_region_locations": [],
             "notes_on_locations": "",
             "other_countries_being_considered": []
@@ -358,7 +422,12 @@
             "minimum_equity_percentage": null,
             "desired_deal_roles": [],
             "restrictions": [],
-            "asset_classes_of_interest": [],
+            "asset_classes_of_interest": [
+                {
+                    "name": "Nuclear",
+                    "id": "9e619e8d-af51-4abf-a83a-5c139851de82"
+                }
+            ],
             "uk_region_locations": [],
             "notes_on_locations": "",
             "other_countries_being_considered": []
@@ -409,58 +478,12 @@
             "minimum_equity_percentage": null,
             "desired_deal_roles": [],
             "restrictions": [],
-            "asset_classes_of_interest": [],
-            "uk_region_locations": [],
-            "notes_on_locations": "",
-            "other_countries_being_considered": []
-        },
-        {
-            "id": "a84f8405-c419-40a6-84c8-642b7c3209b2",
-            "created_on": "2019-05-13T14:01:11.187838Z",
-            "modified_on": "2019-05-13T14:01:11.187885Z",
-            "investor_company": {
-                "name": "Lambda plc",
-                "id": "0fb3379c-341c-4da4-b825-bf8d47b26baa"
-            },
-            "incomplete_details_fields": [
-                "investor_type",
-                "investable_capital",
-                "global_assets_under_management",
-                "investor_description",
-                "required_checks_conducted"
+            "asset_classes_of_interest": [
+                {
+                    "name": "Nuclear",
+                    "id": "9e619e8d-af51-4abf-a83a-5c139851de82"
+                }
             ],
-            "incomplete_requirements_fields": [
-                "deal_ticket_sizes",
-                "investment_types",
-                "minimum_return_rate",
-                "time_horizons",
-                "construction_risks",
-                "minimum_equity_percentage",
-                "desired_deal_roles",
-                "restrictions",
-                "asset_classes_of_interest"
-            ],
-            "incomplete_location_fields": [
-                "uk_region_locations",
-                "notes_on_locations",
-                "other_countries_being_considered"
-            ],
-            "investor_type": null,
-            "investable_capital": null,
-            "global_assets_under_management": null,
-            "investor_description": "",
-            "required_checks_conducted": null,
-            "required_checks_conducted_on": null,
-            "required_checks_conducted_by": null,
-            "deal_ticket_sizes": [],
-            "investment_types": [],
-            "minimum_return_rate": null,
-            "time_horizons": [],
-            "construction_risks": [],
-            "minimum_equity_percentage": null,
-            "desired_deal_roles": [],
-            "restrictions": [],
-            "asset_classes_of_interest": [],
             "uk_region_locations": [],
             "notes_on_locations": "",
             "other_countries_being_considered": []
