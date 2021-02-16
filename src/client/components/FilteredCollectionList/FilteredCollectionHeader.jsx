@@ -113,6 +113,14 @@ function FilteredCollectionHeader({
           qsParamName="country_of_origin"
         />
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedAssetClassesOfInterest}
+          qsParamName="asset_classes_of_interest"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedInvestorCompanyName}
+          qsParamName="investor_company_name"
+        />
+        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedUkRegions}
           qsParamName="uk_region"
         />

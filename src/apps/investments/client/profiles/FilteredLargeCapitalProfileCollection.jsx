@@ -8,15 +8,20 @@ import {
   CollectionFilters,
   RoutedTypeahead,
 } from '../../../../client/components/'
-import { TASK_GET_PROFILES_LIST, ID, state2props } from './state'
-import {
-  INVESTMENTS__PROFILES_LOADED,
-  INVESTMENTS__PROFILES_SELECT_PAGE,
-} from '../../../../client/actions'
+import RoutedInputField from '../../../../client/components/RoutedInputField'
+import { TASK_GET_PROFILES_LIST, ID } from './state'
+import { INVESTMENTS__PROFILES_LOADED } from '../../../../client/actions'
 
 const QS_PARAMS = {
   countryOfOrigin: 'country_of_origin',
+  assetClassesOfInterest: 'asset_classes_of_interest',
+  investorCompanyName: 'investor_company_name',
 }
+
+const resolveSelectedOptions = (values = [], options = []) =>
+  values
+    .map((id) => options.filter(({ value }) => value === id)[0])
+    .filter(Boolean)
 
 const LargeCapitalProfileCollection = ({
   count,
@@ -27,11 +32,19 @@ const LargeCapitalProfileCollection = ({
   <Route>
     {({ location }) => {
       const qsParams = qs.parse(location.search.slice(1))
-      const selectedCountries = (qsParams[QS_PARAMS.countryOfOrigin] || [])
-        .map(
-          (id) => filterOptions.countries.filter(({ value }) => value === id)[0]
-        )
-        .filter(Boolean)
+      const selectedCountries = resolveSelectedOptions(
+        qsParams[QS_PARAMS.countryOfOrigin],
+        filterOptions.countries
+      )
+      const selectedAssetClassesOfInterest = resolveSelectedOptions(
+        qsParams[QS_PARAMS.assetClassesOfInterest],
+        filterOptions.assetClassesOfInterest
+      )
+
+      const resolveSelectedInvestorCompanyName = () => {
+        const companyName = qsParams[QS_PARAMS.investorCompanyName]
+        return companyName ? [{ label: companyName, value: companyName }] : []
+      }
 
       return (
         <FilteredCollectionList
@@ -46,14 +59,21 @@ const LargeCapitalProfileCollection = ({
             startOnRender: {
               payload: {
                 page: parseInt(qsParams.page, 10),
-                countryOfOrigin: qsParams.country_of_origin,
+                countryOfOrigin: qsParams[QS_PARAMS.countryOfOrigin],
+                assetClassesOfInterest:
+                  qsParams[QS_PARAMS.assetClassesOfInterest],
+                investorCompanyName: qsParams[QS_PARAMS.investorCompanyName],
               },
               onSuccessDispatch: INVESTMENTS__PROFILES_LOADED,
             },
           }}
-          selectedFilters={{ selectedCountryOfOrigin: selectedCountries }}
           baseDownloadLink="/investments/profiles/export"
           entityName="profile"
+          selectedFilters={{
+            selectedCountryOfOrigin: selectedCountries,
+            selectedAssetClassesOfInterest,
+            selectedInvestorCompanyName: resolveSelectedInvestorCompanyName(),
+          }}
         >
           <CollectionFilters
             taskProps={{
@@ -75,6 +95,23 @@ const LargeCapitalProfileCollection = ({
               selectedOptions={selectedCountries}
               data-test="country-filter"
             />
+            <RoutedTypeahead
+              isMulti={true}
+              legend="Asset class of interest"
+              name="asset-class-of-interest"
+              qsParam={QS_PARAMS.assetClassesOfInterest}
+              placeholder="Search countries"
+              options={filterOptions.assetClassesOfInterest}
+              selectedOptions={selectedAssetClassesOfInterest}
+              data-test="asset-class-of-interest-filter"
+            />
+            <RoutedInputField
+              id="LargeCapitalProfileCollection.investor-company-name"
+              qsParam="investor_company_name"
+              name="investor-company-name"
+              label="Company name"
+              placeholder="Search company name"
+            />
           </CollectionFilters>
         </FilteredCollectionList>
       )
@@ -82,11 +119,4 @@ const LargeCapitalProfileCollection = ({
   </Route>
 )
 
-export default connect(state2props, (dispatch) => ({
-  onPageClick: (page) => {
-    dispatch({
-      type: INVESTMENTS__PROFILES_SELECT_PAGE,
-      page,
-    })
-  },
-}))(LargeCapitalProfileCollection)
+export default connect((state) => state[ID])(LargeCapitalProfileCollection)
