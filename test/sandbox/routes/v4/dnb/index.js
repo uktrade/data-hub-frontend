@@ -13,6 +13,9 @@ exports.companyCreate = function (req, res) {
 }
 
 exports.companySearch = function (req, res) {
+  if (req.body.search_term === 'Simulate 500 Error') {
+    return res.json(500)
+  }
   if (req.body.duns_number === '111111111') {
     return res.json(companySearchNotMatched)
   } else if (req.body.duns_number === '222222222') {
