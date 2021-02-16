@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { isEmpty } from 'lodash'
-import { ErrorSummary } from 'govuk-react'
+import { ErrorSummary } from '../../../client/components'
 import { FormContextProvider } from './hooks'
 import Step from './elements/Step'
 
@@ -106,22 +106,10 @@ const Form = ({
         {(!isEmpty(errors) || submissionError) && showErrorSummary && (
           <ErrorSummary
             id="form-errors"
-            heading="There is a problem"
-            onHandleErrorClick={(targetName) => {
-              const $el =
-                ref.current.querySelector(`[name=${targetName}]`) ??
-                ref.current.querySelector(`#field-${targetName} input`) ??
-                ref.current.querySelector(`#field-${targetName}`)
-              if ($el) {
-                $el.scrollIntoView()
-                $el.focus()
-              }
-            }}
             errors={Object.entries(errors).map(([name, error]) => ({
               targetName: name,
               text: error,
             }))}
-            description={isEmpty(errors) && submissionError}
           />
         )}
         {typeof children === 'function' ? children(contextProps) : children}
