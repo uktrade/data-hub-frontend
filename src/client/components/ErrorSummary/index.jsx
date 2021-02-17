@@ -67,55 +67,10 @@ const StyledErrorSummary = styled('div')(
   spacing.withWhiteSpace({ marginBottom: 6 })
 )
 
-/**
- *
- * ### Usage
- *
- * Simple
- * ```jsx
- * const heading = 'Message to alert the user to a problem goes here';
- * const description = 'Optional description of the errors and how to correct them';
- * const errors = [
- *   {
- *     targetName: 'national-insurance-number',
- *     text: 'National Insurance number error',
- *   },
- *   {
- *     targetName: 'description',
- *     text: 'Description of what you saw error',
- *   },
- * ];
- *
- *
- * <div>
- *   <ErrorSummary
- *     heading={heading}
- *     description={description}
- *     onHandleErrorClick={onHandleErrorClick}
- *     errors={errors}
- *   />
- *   <InputField
- *     name="national-insurance-number"
- *     hint="It’s on your National Insurance card, benefit letter, payslip or P60."
- *   >
- *     National Insurance number
- *   </InputField>
- *   <br />
- *   <TextArea name="description">Description of what you saw</TextArea>
- * </div>
- * ```
- *
- * ### References:
- * - https://govuk-elements.herokuapp.com/errors/#summarise-errors
- * - https://github.com/alphagov/govuk-frontend/tree/master/src/components/error-summary
- *
- * ### TODO:
- * - Swap out browser dependancy for context API to help with React Native support
- */
 const ErrorSummary = ({
   heading = 'There is a problem',
   description = null,
-  errors = [],
+  errors,
   ...props
 }) => (
   <StyledErrorSummary tabIndex={-1} {...props}>
@@ -136,16 +91,13 @@ const ErrorSummary = ({
 )
 
 ErrorSummary.propTypes = {
-  /** Heading text */
   heading: PropTypes.string,
-  /** Optional description of the errors */
   description: PropTypes.string,
-  /** Array of errors with text and target element name to scroll into view when clicked */
   errors: PropTypes.arrayOf(
     PropTypes.shape({
-      targetName: PropTypes.string,
-      text: PropTypes.string,
-    })
+      targetName: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
+    }).isRequired
   ),
 }
 
