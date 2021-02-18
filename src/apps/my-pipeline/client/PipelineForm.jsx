@@ -46,14 +46,14 @@ function PipelineForm({
         className="govuk-!-width-two-thirds"
       />
       <FieldRadios
-        label="Choose a status"
+        legend="Choose a status"
         name="category"
         required="Choose a status"
         options={statusOptions}
         initialValue={initialValue.category}
       />
       <FieldRadios
-        label="Likelihood to export (optional)"
+        legend="Likelihood to export (optional)"
         name="likelihood"
         options={likelihoodOptions.map(({ value, label }) => ({
           label,
