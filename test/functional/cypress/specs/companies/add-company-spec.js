@@ -288,6 +288,7 @@ describe('Add company form', () => {
     })
 
     it('should not continue when DnB company creation fails', () => {
+      // Choosing the water sector simulates a server error
       cy.get(selectors.companyAdd.sectorSelect).select('Water')
       cy.get(selectors.companyAdd.submitButton).click()
       cy.location('pathname').should('eq', urls.companies.create())
@@ -415,7 +416,7 @@ describe('Add company form', () => {
   })
 
   context('when valid details are submitted for a new UK company', () => {
-    before(() => {
+    beforeEach(() => {
       gotoUKCompanySectorAndRegionPage()
     })
 
@@ -434,6 +435,15 @@ describe('Add company form', () => {
         .contains('Select DIT region')
         .get(selectors.companyAdd.form)
         .contains('Select DIT sector')
+    })
+
+    it('should not continue when the DnB investigation api call fails', () => {
+      cy.get(selectors.companyAdd.newCompanyRecordForm.region).select('London')
+      // Water sector simulates a server error from dnb investigation post
+      cy.get(selectors.companyAdd.newCompanyRecordForm.sector).select('Water')
+      cy.get(selectors.companyAdd.submitButton).click()
+
+      cy.location('pathname').should('eq', urls.companies.create())
     })
   })
 
