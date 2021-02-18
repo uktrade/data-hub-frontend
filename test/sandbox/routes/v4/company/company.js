@@ -44,6 +44,8 @@ var ReferralIds = require('../../../constants/referrals')
 
 var companyWithExternalActivities = require('../../../fixtures/v4/company/company-with-external-activities.json')
 
+const waterSector = 'ae22c9d2-5f95-e211-a939-e4115bead28a'
+
 state.investor_description = state.investor_description || ''
 
 exports.largeInvestorProfile = function (req, res) {
@@ -140,6 +142,11 @@ exports.company = function (req, res) {
     }),
   }
 
+  if (req.body.sector == waterSector) {
+    // Simulate a 504 error
+    return res.sendStatus(504)
+  }
+
   if (!req.params.companyId) {
     return res.json(companyCreateInvestigation)
   }
@@ -151,6 +158,12 @@ exports.companyPatched = function (req, res) {
   if (req.body.sector === '9738cecc-5f95-e211-a939-e4115bead28a') {
     return res.json(companySomeOtherCompany)
   }
+
+  if (req.body.sector == waterSector) {
+    // Simulate a 504 error
+    return res.sendStatus(504)
+  }
+
   res.json(company)
 }
 

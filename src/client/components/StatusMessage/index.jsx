@@ -21,6 +21,7 @@ StatusMessage.propTypes = {
 
 StatusMessage.defaultProps = {
   colour: BLUE,
+  'data-test': 'status-message',
 }
 
 export default StatusMessage
