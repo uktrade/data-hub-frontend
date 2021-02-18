@@ -148,9 +148,16 @@ exports.company = function (req, res) {
 }
 
 exports.companyPatched = function (req, res) {
+  const waterSector = 'ae22c9d2-5f95-e211-a939-e4115bead28a'
   if (req.body.sector === '9738cecc-5f95-e211-a939-e4115bead28a') {
     return res.json(companySomeOtherCompany)
   }
+
+  if (req.body.sector == waterSector) {
+    // Simulate a 504 error
+    return res.sendStatus(504)
+  }
+
   res.json(company)
 }
 

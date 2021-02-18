@@ -179,7 +179,7 @@ describe('Add company form', () => {
       )
     })
 
-    it('should display an error message when a network error occurs', () => {
+    it('should display an error message when DnB search fails', () => {
       cy.get(selectors.companyAdd.entitySearch.companyNameField).type(
         'Simulate 500 Error'
       )
@@ -285,6 +285,12 @@ describe('Add company form', () => {
           urls.companies.activity.index(fixtures.company.someOtherCompany.id)
         )
       cy.contains('Company added to Data Hub')
+    })
+
+    it('should not continue when DnB company creation fails', () => {
+      cy.get(selectors.companyAdd.sectorSelect).select('Water')
+      cy.get(selectors.companyAdd.submitButton).click()
+      cy.location('pathname').should('eq', urls.companies.create())
     })
   })
 
