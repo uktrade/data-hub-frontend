@@ -71,13 +71,13 @@ describe('Interaction details', () => {
         selectors.interaction.details.interaction.actions.editInteraction(
           params
         )
-      ).should('not.be.visible')
+      ).should('not.exist')
     })
 
     it('should not render the "Why can I not complete this interaction?" details summary', () => {
       cy.get(
         selectors.interaction.details.interaction.whyCanINotComplete
-      ).should('not.be.visible')
+      ).should('not.exist')
     })
   })
 
@@ -128,7 +128,7 @@ describe('Interaction details', () => {
         selectors.interaction.details.interaction.actions.completeInteraction(
           params
         )
-      ).should('not.be.visible')
+      ).should('not.exist')
     })
 
     it('should not render the "Edit interaction" button', () => {
@@ -136,7 +136,7 @@ describe('Interaction details', () => {
         selectors.interaction.details.interaction.actions.editInteraction(
           params
         )
-      ).should('not.be.visible')
+      ).should('not.exist')
     })
 
     it('should render the "Why can I not complete this interaction?" details summary', () => {
@@ -193,7 +193,7 @@ describe('Interaction details', () => {
         selectors.interaction.details.interaction.actions.completeInteraction(
           params
         )
-      ).should('not.be.visible')
+      ).should('not.exist')
     })
 
     it('should not render the "Edit interaction" button', () => {
@@ -201,13 +201,13 @@ describe('Interaction details', () => {
         selectors.interaction.details.interaction.actions.editInteraction(
           params
         )
-      ).should('not.be.visible')
+      ).should('not.exist')
     })
 
     it('should not render the "Why can I not complete this interaction?" details summary', () => {
       cy.get(
         selectors.interaction.details.interaction.whyCanINotComplete
-      ).should('not.be.visible')
+      ).should('not.exist')
     })
   })
 
@@ -264,7 +264,7 @@ describe('Interaction details', () => {
       const completeInteraction = selectors.interaction.details.interaction.actions.completeInteraction(
         params
       )
-      cy.get(completeInteraction).should('not.be.visible')
+      cy.get(completeInteraction).should('not.exist')
     })
 
     it('should render the "Edit interaction" button', () => {
@@ -278,7 +278,7 @@ describe('Interaction details', () => {
     it('should not render the "Why can I not complete this interaction?" details summary', () => {
       cy.get(
         selectors.interaction.details.interaction.whyCanINotComplete
-      ).should('not.be.visible')
+      ).should('not.exist')
     })
   })
 
@@ -335,7 +335,7 @@ describe('Interaction details', () => {
       const completeInteraction = selectors.interaction.details.interaction.actions.completeInteraction(
         params
       )
-      cy.get(completeInteraction).should('not.be.visible')
+      cy.get(completeInteraction).should('not.exist')
     })
 
     it('should render the "Edit interaction" button', () => {
@@ -349,7 +349,7 @@ describe('Interaction details', () => {
     it('should not render the "Why can I not complete this interaction?" details summary', () => {
       cy.get(
         selectors.interaction.details.interaction.whyCanINotComplete
-      ).should('not.be.visible')
+      ).should('not.exist')
     })
   })
 
