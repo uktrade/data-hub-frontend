@@ -10,7 +10,7 @@ describe('Event create', () => {
     cy.get(selectors.eventCreate.ukRegion).should('be.visible')
 
     cy.get(selectors.eventCreate.addressCountry).select('Uganda')
-    cy.get(selectors.eventCreate.ukRegion).should('not.be.visible')
+    cy.get(selectors.eventCreate.ukRegion).should('not.exist')
   })
 
   it('should toggle teams section when interacting with shared options', () => {
@@ -18,7 +18,7 @@ describe('Event create', () => {
     cy.get(selectors.eventCreate.teams).should('be.visible')
 
     cy.get(selectors.eventCreate.sharedNo).click()
-    cy.get(selectors.eventCreate.teams).should('not.be.visible')
+    cy.get(selectors.eventCreate.teams).should('not.exist')
   })
 
   it('should allow user to add multiple shared teams', () => {

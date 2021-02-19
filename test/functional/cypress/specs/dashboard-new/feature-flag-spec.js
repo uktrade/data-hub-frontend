@@ -27,7 +27,7 @@ describe('Dashboard - feature flag', () => {
         cy.visit('/')
       })
       it('should show the default dashboard layout', () => {
-        cy.get('[data-test="dashboard"]').should('not.be.visible')
+        cy.get('[data-test="dashboard"]').should('not.exist')
       })
       it('should NOT append a query param for GA tracking', () => {
         cy.url('[data-test="dashboard"]').should(
@@ -45,7 +45,7 @@ describe('Dashboard - feature flag', () => {
       cy.visit('/')
     })
     it('should show the default dashboard layout', () => {
-      cy.get('[data-test="dashboard"]').should('not.be.visible')
+      cy.get('[data-test="dashboard"]').should('not.exist')
     })
     it('should NOT append a query param for GA tracking', () => {
       cy.url('[data-test="dashboard"]').should(
@@ -62,7 +62,7 @@ describe('Dashboard - feature flag', () => {
       cy.visit('/')
     })
     it('should show the default dashboard layout', () => {
-      cy.get('[data-test="dashboard"]').should('not.be.visible')
+      cy.get('[data-test="dashboard"]').should('not.exist')
     })
     it('should NOT append a query param for GA tracking', () => {
       cy.url('[data-test="dashboard"]').should(

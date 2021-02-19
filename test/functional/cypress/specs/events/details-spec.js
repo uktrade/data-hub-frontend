@@ -49,7 +49,7 @@ describe('Event Details', () => {
     })
 
     it('should hide edit event button for disabled events', () => {
-      cy.get(selectors.entityCollection.editEvent).should('not.be.visible')
+      cy.get(selectors.entityCollection.editEvent).should('not.exist')
     })
   })
 })
