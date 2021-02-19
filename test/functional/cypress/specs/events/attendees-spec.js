@@ -85,7 +85,7 @@ describe('Event Attendees', () => {
     })
 
     it('should not display add attendees button for disabled events', () => {
-      cy.get(selectors.entityCollection.addAttendee).should('not.be.visible')
+      cy.get(selectors.entityCollection.addAttendee).should('not.exist')
     })
 
     it('should display a message indicating that you cannot add an event attendee', () => {
