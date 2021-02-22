@@ -1,15 +1,14 @@
 const router = require('express').Router()
 const fs = require('fs')
 const detectUserAgent = require('../middleware/detect-useragent')
+// Check useragent on all routes
+router.use(detectUserAgent)
 
 const { setHomeBreadcrumb } = require('./middleware')
 
 const subApps = fs.readdirSync(__dirname, { withFileTypes: true })
 
 const appsRouters = []
-
-// Check useragent on all routes
-router.get('/*', detectUserAgent)
 
 subApps.forEach((subAppDir) => {
   if (subAppDir.isDirectory() && !subAppDir.name.startsWith('__')) {
