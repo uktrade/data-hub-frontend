@@ -50,15 +50,15 @@ describe('Complete interaction', () => {
       )
       cy.get(
         selectors.interaction.complete.archivedReason.clientCancelled
-      ).should('not.exist')
+      ).should('not.be.visible')
       cy.get(selectors.interaction.complete.archivedReason.ditCancelled).should(
-        'not.exist'
+        'not.be.visible'
       )
       cy.get(selectors.interaction.complete.archivedReason.rescheduled).should(
-        'not.exist'
+        'not.be.visible'
       )
       cy.get(selectors.interaction.complete.rescheduledDate.field).should(
-        'not.exist'
+        'not.be.visible'
       )
       cy.get(selectors.interaction.complete.actions.continue).should(
         'be.visible'
@@ -80,7 +80,7 @@ describe('Complete interaction', () => {
         'be.visible'
       )
       cy.get(selectors.interaction.complete.rescheduledDate.field).should(
-        'not.exist'
+        'not.be.visible'
       )
 
       cy.get(selectors.interaction.complete.archivedReason.rescheduled).click()
@@ -92,21 +92,21 @@ describe('Complete interaction', () => {
         selectors.interaction.complete.archivedReason.clientCancelled
       ).click()
       cy.get(selectors.interaction.complete.rescheduledDate.field).should(
-        'not.exist'
+        'not.be.visible'
       )
 
       cy.get(selectors.interaction.complete.meetingHappen.yes).click()
       cy.get(
         selectors.interaction.complete.archivedReason.clientCancelled
-      ).should('not.exist')
+      ).should('not.be.visible')
       cy.get(selectors.interaction.complete.archivedReason.ditCancelled).should(
-        'not.exist'
+        'not.be.visible'
       )
       cy.get(selectors.interaction.complete.archivedReason.rescheduled).should(
-        'not.exist'
+        'not.be.visible'
       )
       cy.get(selectors.interaction.complete.rescheduledDate.field).should(
-        'not.exist'
+        'not.be.visible'
       )
     })
   })

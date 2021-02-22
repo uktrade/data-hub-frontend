@@ -141,13 +141,8 @@ describe('Company Export tab', () => {
 
         cy.contains('8 results').parent().parent().as(LIST_ALIAS)
 
-        cy.get('@' + LIST_ALIAS)
-          .find('ul:last li a:last')
-          .should('not.have.text', 'Next')
-
-        cy.get('@' + LIST_ALIAS)
-          .find('ul:last li a:first')
-          .should('not.have.text', 'Previous')
+        cy.get('@' + LIST_ALIAS).should('not.contain', 'Next')
+        cy.get('@' + LIST_ALIAS).should('not.contain', 'Previous')
 
         cy.contains(
           'Ut eius quisquam qui quaerat adipisci dolorum sit similique.'
