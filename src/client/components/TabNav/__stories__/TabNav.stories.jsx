@@ -58,15 +58,15 @@ storiesOf('TabNav', module)
       selectedIndex="bar"
       routed={true}
       tabs={{
-        foo: {
+        '/foo': {
           label: 'Foo',
           content: <h1>Foo</h1>,
         },
-        bar: {
+        '/bar': {
           label: 'Bar',
           content: <h2>Bar</h2>,
         },
-        baz: {
+        '/baz': {
           label: 'Baz',
           content: <h3>Baz</h3>,
         },
