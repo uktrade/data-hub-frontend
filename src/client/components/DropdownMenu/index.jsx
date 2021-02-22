@@ -51,7 +51,7 @@ const DropdownToggleButton = styled(SecondaryButton)`
 `
 
 export const DropdownButton = styled(SecondaryButton).attrs(() => ({
-  tabIndex: '-1',
+  tabIndex: 0,
   role: 'option',
   forwardedAs: Link,
 }))`
@@ -65,7 +65,6 @@ export const DropdownButton = styled(SecondaryButton).attrs(() => ({
 `
 const KEY_ARROW_UP = 38
 const KEY_ARROW_DOWN = 40
-const KEY_TAB = 9
 const KEY_ESC = 27
 const KEY_HOME = 36
 const KEY_END = 35
@@ -103,9 +102,6 @@ const DropdownMenu = ({
 
   const onKeyDown = (event) => {
     switch (event.keyCode) {
-      case KEY_TAB:
-        closeMenu()
-        break
       case KEY_ESC:
         closeMenu()
         buttonRef.current && buttonRef.current.focus()
@@ -135,7 +131,7 @@ const DropdownMenu = ({
       }
     }
     document.addEventListener('mousedown', clickOutside)
-    return () => document.removeEventListener('mousedown', clickOutside)
+    document.addEventListener('keyup', clickOutside)
   }, [])
 
   return (
