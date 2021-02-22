@@ -10,7 +10,6 @@ const {
 } = require('../../../../modules/search/middleware/collection')
 const { setDefaultQuery } = require('../../../middleware')
 const { getRequestBody } = require('../../../../middleware/collection')
-const { detectUserAgent } = require('../../../../middleware/detect-useragent')
 
 const { renderList } = require('./controllers')
 const { setRequestBody } = require('./middleware')
@@ -22,7 +21,6 @@ const DEFAULT_QUERY = {
 
 router.get(
   '/',
-  detectUserAgent,
   setDefaultQuery(DEFAULT_QUERY),
   setRequestBody,
   getCollection('order', ENTITIES, transformOrderToListItem),

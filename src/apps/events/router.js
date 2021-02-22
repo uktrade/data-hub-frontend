@@ -10,7 +10,6 @@ const {
 } = require('./constants')
 
 const { getRequestBody } = require('../../middleware/collection')
-const { detectUserAgent } = require('../../middleware/detect-useragent')
 const { getCollection } = require('../../modules/search/middleware/collection')
 
 const {
@@ -41,7 +40,6 @@ router.use(
 
 router.get(
   '/',
-  detectUserAgent,
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   getRequestBody(QUERY_FIELDS, QUERY_DATE_FIELDS),
   getCollection('event', ENTITIES, transformEventToListItem),
