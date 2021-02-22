@@ -41,9 +41,13 @@ describe('Interaction', () => {
       cy.visit(interactions.index())
       cy.get(selectors.filter.interaction.myInteractions).click()
 
-      cy.get(selectors.collection.items)
+      cy.get(selectors.collection.itemsHeader).should(
+        'contain',
+        'Some interesting interaction'
+      )
+
+      cy.get(selectors.collection.itemsList)
         .should('contain', 'Johnny Cakeman')
-        .and('contain', 'Some interesting interaction')
         .and('contain', 'Venus Ltd')
         .and(
           'contain',
@@ -182,9 +186,13 @@ describe('Service delivery', () => {
     cy.visit(interactions.index())
     cy.get(selectors.filter.interaction.myInteractions).click()
 
-    cy.get(selectors.collection.items)
+    cy.get(selectors.collection.itemsHeader).should(
+      'contain',
+      'Some interesting service delivery'
+    )
+
+    cy.get(selectors.collection.itemsList)
       .should('contain', 'Johnny Cakeman')
-      .and('contain', 'Some interesting service delivery')
       .and('contain', 'Venus Ltd')
       .and(
         'contain',
