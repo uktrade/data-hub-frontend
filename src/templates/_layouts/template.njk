@@ -107,6 +107,13 @@
 {% endblock %}
 
 {% block header %}
+{% if userAgent.isIE %}
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full" id="ie-banner"></div>
+    </div>
+  </div>
+  {% endif %}
   {{ datahubHeader( PERMITTED_APPLICATIONS, {
       crmApps: ALLOWED_APPS,
       active: ACTIVE_KEY,
