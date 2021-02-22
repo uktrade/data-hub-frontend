@@ -89,6 +89,11 @@ module.exports = {
     },
   },
   dashboard: url('/'),
+  oauth: {
+    redirect: url('/oauth'),
+    callback: url('/oauth/callback'),
+    signout: url('/oauth/sign-out'),
+  },
   personalisedDashboard: {
     myInvestmentProjects: url('/myinvestmentprojects'),
   },
