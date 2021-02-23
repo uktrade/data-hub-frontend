@@ -11,7 +11,6 @@ const {
   exportCollection,
 } = require('../../modules/search/middleware/collection')
 const { getRequestBody } = require('../../middleware/collection')
-const { detectUserAgent } = require('../../middleware/detect-useragent')
 
 const { setDefaultQuery, handleRoutePermissions } = require('../middleware')
 const {
@@ -26,7 +25,6 @@ router.use(handleRoutePermissions(APP_PERMISSIONS))
 
 router.get(
   '/',
-  detectUserAgent,
   setDefaultQuery(DEFAULT_COLLECTION_QUERY),
   getInteractionsRequestBody,
   getInteractionCollection,
