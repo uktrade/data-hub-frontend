@@ -299,7 +299,7 @@ describe('My pipeline app', () => {
         .parent()
         .find('input')
         .then((element) => {
-          cy.get(element).should('be.visible')
+          cy.get(element).should('exist')
           cy.wrap(element).check()
           cy.wrap(element).should('be.checked')
           cy.wait('@pipelineGet').then((xhr) => {

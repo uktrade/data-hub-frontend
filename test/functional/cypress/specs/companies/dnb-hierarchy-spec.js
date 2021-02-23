@@ -111,7 +111,7 @@ describe('D&B Company hierarchy', () => {
     it('should now show explanation why the D&B hierarchy might have fewer records than manual one', () => {
       cy.contains(
         "Why aren't all manually linked subsidiaries listed here?"
-      ).should('not.be.visible')
+      ).should('not.exist')
     })
   })
 

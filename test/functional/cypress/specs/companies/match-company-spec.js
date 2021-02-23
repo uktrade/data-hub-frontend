@@ -102,10 +102,10 @@ describe('Match a company', () => {
 
       it('should not display the search results', () => {
         cy.get(selectors.companyMatch.find.results.someCompany).should(
-          'not.be.visible'
+          'not.exist'
         )
         cy.get(selectors.companyMatch.find.results.someOtherCompany).should(
-          'not.be.visible'
+          'not.exist'
         )
       })
     }

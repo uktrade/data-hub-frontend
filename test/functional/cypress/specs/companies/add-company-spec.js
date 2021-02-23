@@ -97,7 +97,7 @@ describe('Add company form', () => {
     it('should not display an error message', () => {
       cy.get(selectors.companyAdd.form)
         .contains('Specify location of the company')
-        .should('not.be.visible')
+        .should('not.exist')
     })
 
     it('should display an error message when no location is selected', () => {
@@ -161,21 +161,21 @@ describe('Add company form', () => {
     })
 
     it('should not display the"Back" button', () => {
-      cy.get(selectors.companyAdd.backButton).should('not.be.visible')
+      cy.get(selectors.companyAdd.backButton).should('not.exist')
     })
 
     it('should not display the "Continue" button', () => {
-      cy.get(selectors.companyAdd.continueButton).should('not.be.visible')
+      cy.get(selectors.companyAdd.continueButton).should('not.exist')
     })
 
     it('should display an error message when the "Company name" field is not filled in', () => {
       cy.get(selectors.companyAdd.entitySearch.searchButton).click()
       cy.get(selectors.companyAdd.form).should('contain', 'Enter company name')
       cy.get(selectors.companyAdd.entitySearch.results.someCompanyName).should(
-        'not.be.visible'
+        'not.exist'
       )
       cy.get(selectors.companyAdd.entitySearch.results.someOtherCompany).should(
-        'not.be.visible'
+        'not.exist'
       )
     })
 
@@ -301,27 +301,37 @@ describe('Add company form', () => {
     })
 
     it('should display the manual entry form', () => {
-      cy.get(
-        selectors.companyAdd.newCompanyRecordForm.organisationType.charity
-      ).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.charity)
+        .parent()
+        .should('be.visible')
       cy.get(
         selectors.companyAdd.newCompanyRecordForm.organisationType
           .governmentDepartmentOrOtherPublicBody
-      ).should('be.visible')
+      )
+        .parent()
+        .should('be.visible')
       cy.get(
         selectors.companyAdd.newCompanyRecordForm.organisationType
           .limitedCompany
-      ).should('be.visible')
+      )
+        .parent()
+        .should('be.visible')
       cy.get(
         selectors.companyAdd.newCompanyRecordForm.organisationType
           .limitedPartnership
-      ).should('be.visible')
+      )
+        .parent()
+        .should('be.visible')
       cy.get(
         selectors.companyAdd.newCompanyRecordForm.organisationType.partnership
-      ).should('be.visible')
+      )
+        .parent()
+        .should('be.visible')
       cy.get(
         selectors.companyAdd.newCompanyRecordForm.organisationType.soleTrader
-      ).should('be.visible')
+      )
+        .parent()
+        .should('be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.companyName).should(
         'be.visible'
       )
@@ -483,27 +493,37 @@ describe('Add company form', () => {
     })
 
     it('should display the manual entry form', () => {
-      cy.get(
-        selectors.companyAdd.newCompanyRecordForm.organisationType.charity
-      ).should('be.visible')
+      cy.get(selectors.companyAdd.newCompanyRecordForm.organisationType.charity)
+        .parent()
+        .should('be.visible')
       cy.get(
         selectors.companyAdd.newCompanyRecordForm.organisationType
           .governmentDepartmentOrOtherPublicBody
-      ).should('be.visible')
+      )
+        .parent()
+        .should('be.visible')
       cy.get(
         selectors.companyAdd.newCompanyRecordForm.organisationType
           .limitedCompany
-      ).should('be.visible')
+      )
+        .parent()
+        .should('be.visible')
       cy.get(
         selectors.companyAdd.newCompanyRecordForm.organisationType
           .limitedPartnership
-      ).should('be.visible')
+      )
+        .parent()
+        .should('be.visible')
       cy.get(
         selectors.companyAdd.newCompanyRecordForm.organisationType.partnership
-      ).should('be.visible')
+      )
+        .parent()
+        .should('be.visible')
       cy.get(
         selectors.companyAdd.newCompanyRecordForm.organisationType.soleTrader
-      ).should('be.visible')
+      )
+        .parent()
+        .should('be.visible')
       cy.get(selectors.companyAdd.newCompanyRecordForm.companyName).should(
         'be.visible'
       )
@@ -522,7 +542,7 @@ describe('Add company form', () => {
     it('should hide the UK-related fields', () => {
       cy.get(
         selectors.companyAdd.newCompanyRecordForm.address.findUkAddress
-      ).should('not.be.visible')
+      ).should('not.exist')
     })
   })
 

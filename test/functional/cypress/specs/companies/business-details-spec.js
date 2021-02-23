@@ -21,7 +21,7 @@ const assertSummaryTable = ({ dataAutoId, heading, showEditLink, content }) => {
   cy.get(summaryTableSelector).find('caption').should('contain', heading)
   cy.get(summaryTableSelector)
     .contains('Edit')
-    .should(showEditLink ? 'be.visible' : 'not.be.visible')
+    .should(showEditLink ? 'be.visible' : 'not.exist')
 
   if (typeof content !== 'undefined') {
     Array.isArray(content)
@@ -97,7 +97,7 @@ describe('Companies business details', () => {
       it('should not display the "Pending Change Request" box', () => {
         cy.contains(
           'Changes to these business details are currently being reviewed.'
-        ).should('not.be.visible')
+        ).should('not.exist')
       })
 
       it('should display the "Are these business details right?" details summary', () => {
@@ -213,9 +213,7 @@ describe('Companies business details', () => {
       })
 
       it('should not display the "Pending Change Request" text', () => {
-        cy.contains('Checking for pending change requests').should(
-          'not.be.visible'
-        )
+        cy.contains('Checking for pending change requests').should('not.exist')
       })
 
       it('should render breadcrumbs', () => {
