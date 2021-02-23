@@ -8,9 +8,6 @@ const { fetchEvent, saveEvent } = require('../repos')
 
 async function postDetails(req, res, next) {
   res.locals.requestBody = transformEventFormBodyToApiRequest(req.body)
-  if (req.body.add_team || req.body.add_related_programme) {
-    return next()
-  }
 
   try {
     const result = await saveEvent(req, res.locals.requestBody)
