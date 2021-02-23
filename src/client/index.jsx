@@ -40,6 +40,7 @@ import Dashboard from './components/Dashboard'
 import PersonalisedDashboard from './components/PersonalisedDashboard'
 import CompanyLocalHeader from './components/CompanyLocalHeader'
 import InvestmentProjectsCollection from '../apps/investments/client/projects/ProjectsCollection.jsx'
+import IEBanner from '../apps/dashboard/client/IEBanner'
 
 import * as companyListsTasks from './components/CompanyLists/tasks'
 import * as referralTasks from '../apps/companies/apps/referrals/details/client/tasks'
@@ -309,6 +310,7 @@ function App() {
       <Mount selector="#investment-projects-collection">
         {(props) => <InvestmentProjectsCollection {...props} />}
       </Mount>
+      <Mount selector="#ie-banner">{() => <IEBanner />}</Mount>
     </Provider>
   )
 }

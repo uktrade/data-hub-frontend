@@ -6,6 +6,4 @@ function detectUserAgent(req, res, next) {
   next()
 }
 
-module.exports = {
-  detectUserAgent,
-}
+module.exports = detectUserAgent

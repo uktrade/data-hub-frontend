@@ -10,7 +10,6 @@ const {
   getInteractionCollectionForEntity,
   getInteractionSortForm,
 } = require('./middleware/collection')
-const { detectUserAgent } = require('../../middleware/detect-useragent')
 
 const detailsFormRouter = require('./apps/details-form/router')
 
@@ -30,7 +29,7 @@ router.get(urls.interactions.detail.route, renderDetailsPage)
 
 router
   .route(urls.interactions.complete.route)
-  .post(detectUserAgent, postComplete, renderCompletePage)
-  .get(detectUserAgent, renderCompletePage)
+  .post(postComplete, renderCompletePage)
+  .get(renderCompletePage)
 
 module.exports = router
