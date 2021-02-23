@@ -127,12 +127,12 @@ describe('Business hierarchy', () => {
 
     it('should hide subsidiaries links for archived companies', () => {
       cy.get(selectors.companySubsidiaries().linkASubsidiaryToHierarchy).should(
-        'not.be.visible'
+        'not.exist'
       )
 
       cy.get(selectors.companySubsidiaries().oneLinkedSubsidiary).click()
       cy.get(selectors.companySubsidiariesLink().removeSubsidiary).should(
-        'not.be.visible'
+        'not.exist'
       )
       cy.get(selectors.companySubsidiaries().whyNoSubLink).should('be.visible')
     })
