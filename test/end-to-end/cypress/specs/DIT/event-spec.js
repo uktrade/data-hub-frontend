@@ -27,6 +27,9 @@ const createEvent = () => {
   cy.get(selectors.eventCreate.organiserOption).should('be.visible')
   cy.get(selectors.eventCreate.organiserInput).type('{enter}')
   cy.get(selectors.eventCreate.sharedYes).click()
+  cy.get(selectors.eventCreate.teams).eq(0).select('Automotive Sector')
+  cy.get(selectors.eventCreate.addAnotherSharedTeam).click()
+  cy.get(selectors.eventCreate.teams).eq(1).select('Biopartner')
   cy.get(selectors.eventCreate.relatedProgrammes).eq(0).select('CEN Energy')
   cy.get(selectors.eventCreate.addAnotherProgramme).click()
   cy.get(selectors.eventCreate.relatedProgrammes).eq(1).select('CEN Services')
@@ -119,7 +122,7 @@ describe('Event', () => {
       cy.get(selectors.collection.items).should('contain', 'Eventful event')
     })
 
-    it('should edit event type', () => {
+    it('should edit event details', () => {
       cy.get(selectors.collection.items).should('contain', 'Account management')
       cy.contains('Eventful event').click()
       cy.get(selectors.entityCollection.editEvent).click()
@@ -152,6 +155,17 @@ describe('Event', () => {
       cy.contains('button', 'Search').click()
       cy.get('main li a').should('not.exist')
       cy.get('main li').should('contain', 'Existing attendee')
+    })
+  })
+
+  describe('Attempting to view non-existent event', () => {
+    it('should have a 404 error', () => {
+      cy.request({
+        url: urls.events.details(1234),
+        failOnStatusCode: false,
+      }).then((response) => {
+        expect(response.status).to.eq(404)
+      })
     })
   })
 })
