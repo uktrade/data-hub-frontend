@@ -52,7 +52,7 @@ const MakeBar = styled('a')`
   text-align: center;
 `
 
-const Bar = ({ data, total, queryParam, url, description }) => (
+const Bar = ({ data, total, description }) => (
   <>
     <Key>
       {data.map(({ label }, i) => (
@@ -63,12 +63,12 @@ const Bar = ({ data, total, queryParam, url, description }) => (
     </Key>
     <p>{description}</p>
     <BarContainer>
-      {data.map(({ id, label, value }, i) => (
+      {data.map(({ label, value, link }, i) => (
         <MakeBar
           key={i}
           percent={(value / total) * 100}
           color={COLOURS[i]}
-          href={`${url}?${queryParam}=${id}`}
+          href={link}
           title={`View ${label}`}
         >
           {value}
@@ -84,11 +84,10 @@ Bar.propTypes = {
       id: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
       value: PropTypes.number.isRequired,
+      link: PropTypes.string,
     })
   ).isRequired,
   total: PropTypes.number.isRequired,
-  url: PropTypes.string.isRequired,
-  queryParam: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
 }
 
