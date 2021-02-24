@@ -10,8 +10,8 @@ import {
   FONT_WEIGHTS,
 } from '@govuk-react/constants'
 
-import Bar from './Bar'
-import Table from './Table'
+import { BarChart } from '../../../client/components/Chart'
+import DataTable from '../../../client/components/DataTable'
 
 const StyledHeader = styled('h3')`
   font-weight: ${FONT_WEIGHTS.bold};
@@ -39,7 +39,7 @@ const StyledButton = styled(Button)`
   margin-bottom: ${SPACING.SCALE_3};
 `
 
-const Chart = ({
+const DataSummary = ({
   title,
   description,
   subject,
@@ -65,15 +65,15 @@ const Chart = ({
         </StyledButton>
       )}
       {isAccessible || total === 0 ? (
-        <Table data={data} headers={headers} total={total} />
+        <DataTable data={data} headers={headers} total={total} />
       ) : (
-        <Bar data={data} total={total} description={description} />
+        <BarChart data={data} total={total} description={description} />
       )}
     </>
   )
 }
 
-Chart.propTypes = {
+DataSummary.propTypes = {
   title: PropTypes.string.isRequired,
   subject: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
@@ -89,4 +89,4 @@ Chart.propTypes = {
   children: PropTypes.node,
 }
 
-export default Chart
+export default DataSummary

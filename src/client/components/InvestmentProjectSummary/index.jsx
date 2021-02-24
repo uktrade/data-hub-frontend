@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import { INVESTMENT_SUMMARY__LOADED } from '../../actions'
 import Task from '../Task/index.jsx'
-import { MultiRangeChart } from '../Chart'
+import DataSummaryPicker from '../DataSummaryPicker'
 import { ID, TASK_GET_INVESTMENT_SUMMARY, state2props } from './state'
 import { investmentSummaryAsDataRanges } from './utils'
 
@@ -22,7 +22,7 @@ const InvestmentProjectSummary = ({ adviser, investmentSummary = {} }) => {
       }}
     >
       {() => (
-        <MultiRangeChart
+        <DataSummaryPicker
           title="My project summary"
           subject="Project"
           description="Projects in the current financial year"

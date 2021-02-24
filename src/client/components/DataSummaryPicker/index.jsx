@@ -5,7 +5,7 @@ import { get } from 'lodash'
 import { BODY_SIZES, SPACING } from '@govuk-react/constants'
 
 import Select from '../../../client/components/Select'
-import Chart from './Chart'
+import DataSummary from './DataSummary'
 
 const StyledSelect = styled(Select)`
   font-size: ${BODY_SIZES.XSMALL}px;
@@ -18,7 +18,7 @@ const StyledSelect = styled(Select)`
   }
 `
 
-const MultiRangeChart = ({ dataRanges, ...props }) => {
+const DataSummaryPicker = ({ dataRanges, ...props }) => {
   let defaultRangeName = null
   if (dataRanges.length) {
     defaultRangeName = dataRanges[0].name
@@ -30,7 +30,7 @@ const MultiRangeChart = ({ dataRanges, ...props }) => {
   props.data = get(selectedDataRange, 'range', [])
 
   return (
-    <Chart {...props}>
+    <DataSummary {...props}>
       <StyledSelect
         name="sortBy"
         label="Date range"
@@ -42,11 +42,11 @@ const MultiRangeChart = ({ dataRanges, ...props }) => {
           </option>
         ))}
       </StyledSelect>
-    </Chart>
+    </DataSummary>
   )
 }
 
-MultiRangeChart.propTypes = {
+DataSummaryPicker.propTypes = {
   title: PropTypes.string.isRequired,
   subject: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
@@ -67,4 +67,4 @@ MultiRangeChart.propTypes = {
   ),
 }
 
-export default MultiRangeChart
+export default DataSummaryPicker

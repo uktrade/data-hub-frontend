@@ -52,7 +52,7 @@ const MakeBar = styled('a')`
   text-align: center;
 `
 
-const Bar = ({ data, total, description }) => (
+const BarChart = ({ data, total, description }) => (
   <>
     <Key>
       {data.map(({ label }, i) => (
@@ -78,7 +78,7 @@ const Bar = ({ data, total, description }) => (
   </>
 )
 
-Bar.propTypes = {
+BarChart.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -91,4 +91,4 @@ Bar.propTypes = {
   description: PropTypes.string.isRequired,
 }
 
-export default Bar
+export default BarChart

@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
-import { MultiRangeChart } from '..'
+import DataSummaryPicker from '..'
 
 const dataRanges = [
   {
@@ -151,12 +151,12 @@ const dataRangesWithNoLinks = [
   },
 ]
 
-storiesOf('Chart', module)
+storiesOf('DataSummaryPicker', module)
   .addParameters({
     options: { theme: undefined },
   })
-  .add('Bar', () => (
-    <MultiRangeChart
+  .add('Data Summary Picker', () => (
+    <DataSummaryPicker
       title="My project summary"
       subject="Project"
       description="Projects in the current financial year"
@@ -164,8 +164,8 @@ storiesOf('Chart', module)
       dataRanges={dataRanges}
     />
   ))
-  .add('Bar - no results', () => (
-    <MultiRangeChart
+  .add('Data Summary Picker - no results', () => (
+    <DataSummaryPicker
       title="My project summary"
       subject="Project"
       description="Projects in the current financial year"
@@ -173,8 +173,8 @@ storiesOf('Chart', module)
       dataRanges={dataRangesWithZeroValues}
     />
   ))
-  .add('Bar - no links', () => (
-    <MultiRangeChart
+  .add('Data Summary Picker - no links', () => (
+    <DataSummaryPicker
       title="My project summary"
       subject="Project"
       description="Projects in the current financial year"
