@@ -46,8 +46,6 @@ const Chart = ({
   accessible = false,
   headers,
   data = [],
-  queryParam,
-  url,
   children,
 }) => {
   const [isAccessible, setAccessible] = useState(accessible)
@@ -67,21 +65,9 @@ const Chart = ({
         </StyledButton>
       )}
       {isAccessible || total === 0 ? (
-        <Table
-          data={data}
-          headers={headers}
-          total={total}
-          url={url}
-          queryParam={queryParam}
-        />
+        <Table data={data} headers={headers} total={total} />
       ) : (
-        <Bar
-          data={data}
-          total={total}
-          description={description}
-          url={url}
-          queryParam={queryParam}
-        />
+        <Bar data={data} total={total} description={description} />
       )}
     </>
   )
@@ -97,10 +83,9 @@ Chart.propTypes = {
       id: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
       value: PropTypes.number.isRequired,
+      link: PropTypes.string,
     })
   ).isRequired,
-  url: PropTypes.string.isRequired,
-  queryParam: PropTypes.string.isRequired,
   children: PropTypes.node,
 }
 

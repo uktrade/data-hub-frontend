@@ -1,17 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { get } from 'lodash'
 
 import { INVESTMENT_SUMMARY__LOADED } from '../../actions'
 import Task from '../Task/index.jsx'
 import { MultiRangeChart } from '../Chart'
 import { ID, TASK_GET_INVESTMENT_SUMMARY, state2props } from './state'
-import { annualSummariesAsDataRanges } from './utils'
+import { investmentSummaryAsDataRanges } from './utils'
 
 const InvestmentProjectSummary = ({ adviser, investmentSummary = {} }) => {
-  const annualSummaries = get(investmentSummary, 'annual_summaries', [])
-  const dataRanges = annualSummariesAsDataRanges(annualSummaries)
+  const dataRanges = investmentSummaryAsDataRanges(investmentSummary)
 
   return (
     <Task.Status
@@ -29,8 +27,6 @@ const InvestmentProjectSummary = ({ adviser, investmentSummary = {} }) => {
           subject="Project"
           description="Projects in the current financial year"
           headers={['Stage', 'Amount']}
-          queryParam="stage"
-          url="/investments/projects"
           dataRanges={dataRanges}
         />
       )}

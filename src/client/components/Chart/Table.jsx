@@ -2,20 +2,24 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { default as GovTable } from '@govuk-react/table'
 
-const Table = ({ data, headers, total, url, queryParam }) => (
+const Table = ({ data, headers, total }) => (
   <GovTable>
     <GovTable.Row>
       {headers.map((header, i) => (
         <GovTable.CellHeader key={i}>{header}</GovTable.CellHeader>
       ))}
     </GovTable.Row>
-    {data.map(({ id, label, value }, i) => (
+    {data.map(({ label, value, link }, i) => (
       <GovTable.Row key={i}>
         <GovTable.Cell>{label}</GovTable.Cell>
         <GovTable.Cell>
-          <a href={`${url}?${queryParam}=${id}`} title={`View ${label}`}>
-            {value}
-          </a>
+          {link ? (
+            <a href={link} title={`View ${label}`}>
+              {value}
+            </a>
+          ) : (
+            value
+          )}
         </GovTable.Cell>
       </GovTable.Row>
     ))}
@@ -34,12 +38,11 @@ Table.propTypes = {
       id: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
       value: PropTypes.number.isRequired,
+      link: PropTypes.string,
     })
   ).isRequired,
   headers: PropTypes.array.isRequired,
   total: PropTypes.number.isRequired,
-  url: PropTypes.string.isRequired,
-  queryParam: PropTypes.string.isRequired,
 }
 
 export default Table

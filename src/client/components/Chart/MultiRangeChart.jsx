@@ -60,12 +60,11 @@ MultiRangeChart.propTypes = {
           id: PropTypes.string.isRequired,
           label: PropTypes.string.isRequired,
           value: PropTypes.number.isRequired,
+          link: PropTypes.string,
         })
       ).isRequired,
     })
   ),
-  url: PropTypes.string.isRequired,
-  queryParam: PropTypes.string.isRequired,
 }
 
 export default MultiRangeChart
