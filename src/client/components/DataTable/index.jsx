@@ -2,15 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { default as GovTable } from '@govuk-react/table'
 
-const Table = ({ data, headers, total }) => (
+const DataTable = ({ data, headers, total }) => (
   <GovTable>
     <GovTable.Row>
       {headers.map((header, i) => (
         <GovTable.CellHeader key={i}>{header}</GovTable.CellHeader>
       ))}
     </GovTable.Row>
-    {data.map(({ label, value, link }, i) => (
-      <GovTable.Row key={i}>
+    {data.map(({ id, label, value, link }) => (
+      <GovTable.Row key={id}>
         <GovTable.Cell>{label}</GovTable.Cell>
         <GovTable.Cell>
           {link ? (
@@ -32,7 +32,7 @@ const Table = ({ data, headers, total }) => (
   </GovTable>
 )
 
-Table.propTypes = {
+DataTable.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -45,4 +45,4 @@ Table.propTypes = {
   total: PropTypes.number.isRequired,
 }
 
-export default Table
+export default DataTable
