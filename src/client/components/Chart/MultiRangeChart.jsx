@@ -30,21 +30,19 @@ const MultiRangeChart = ({ dataRanges, ...props }) => {
   props.data = get(selectedDataRange, 'range', [])
 
   return (
-    <>
-      <Chart {...props}>
-        <StyledSelect
-          name="sortBy"
-          label="Date range"
-          input={{ onChange: (e) => setSelectedRangeName(e.target.value) }}
-        >
-          {dataRanges.map(({ label, name }, i) => (
-            <option value={name} key={i}>
-              {label}
-            </option>
-          ))}
-        </StyledSelect>
-      </Chart>
-    </>
+    <Chart {...props}>
+      <StyledSelect
+        name="sortBy"
+        label="Date range"
+        input={{ onChange: (e) => setSelectedRangeName(e.target.value) }}
+      >
+        {dataRanges.map(({ label, name }, i) => (
+          <option value={name} key={i}>
+            {label}
+          </option>
+        ))}
+      </StyledSelect>
+    </Chart>
   )
 }
 
