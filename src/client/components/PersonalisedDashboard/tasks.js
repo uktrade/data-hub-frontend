@@ -1,4 +1,4 @@
-import { apiProxyAxios } from '../../../../client/components/Task/utils'
+import { apiProxyAxios } from '../Task/utils'
 
 export const getUserDetails = ({ adviser }) => {
   return apiProxyAxios

@@ -78,8 +78,8 @@ import { ID as MY_INVESTMENT_PROJECTS_ID } from './components/MyInvestmentProjec
 import myInvestmentProjectsReducer from './components/MyInvestmentProjects/reducer'
 
 import RoutedInputField from './components/RoutedInputField'
-import { ID as USER_DETAILS_ID } from '../apps/dashboard/client/UserDetails/state'
-import userDetailsReducer from '../apps/dashboard/client/UserDetails/reducer'
+import { ID as USER_DETAILS_ID } from './components/PersonalisedDashboard/state'
+import userDetailsReducer from '../client/components/PersonalisedDashboard/reducer'
 
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({

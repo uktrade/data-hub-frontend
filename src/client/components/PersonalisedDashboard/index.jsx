@@ -8,10 +8,7 @@ import GridCol from '@govuk-react/grid-col'
 import Aside from './Aside.jsx'
 import Main from './Main.jsx'
 
-import {
-  ID,
-  TASK_USER_DETAILS,
-} from '../../../apps/dashboard/client/UserDetails/state'
+import { ID, TASK_USER_DETAILS } from '../PersonalisedDashboard/state'
 import { USER_DETAILS_LOADED } from '../../actions'
 import Task from '../Task'
 
@@ -25,8 +22,8 @@ import {
   Container,
 } from '../../components'
 
-const PersonalisedDashboard = ({ payload, currentAdviserId }) => {
-  const userDetailsTask = {
+const PersonalisedDashboard = ({ id, adviser }) => {
+  /*const userDetailsTask = {
     name: TASK_USER_DETAILS,
     id: ID,
     progressMessage: 'loading projects',
@@ -34,29 +31,17 @@ const PersonalisedDashboard = ({ payload, currentAdviserId }) => {
       payload,
       onSuccessDispatch: USER_DETAILS_LOADED,
     },
-  }
+  }*/
   return (
     <Container>
       <GridRow data-test="dashboard">
         <GridCol setWidth="one-third">
           <Aside>
-            <Task.Status
-              name={TASK_USER_DETAILS}
-              id={ID}
-              progressMessage="Loading user details"
-              startOnRender={{
-                payload: adviser,
-                onSuccessDispatch: USER_DETAILS_LOADED,
-              }}
-            >
-              {() => (
-                <UserDetails
-                  name={adviser.name}
-                  last_login={adviser.last_login}
-                  dit_team={adviser.dit_team}
-                />
-              )}
-            </Task.Status>
+            <UserDetails
+              name={adviser.name}
+              last_login={adviser.last_login}
+              dit_team={adviser.dit_team}
+            />
             <InvestmentReminders />
             <InvestmentProjectSummary />
           </Aside>

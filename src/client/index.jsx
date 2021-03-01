@@ -101,8 +101,8 @@ import { TASK_GET_MY_INVESTMENTS_LIST } from './components/MyInvestmentProjects/
 
 import Footer from '../client/components/Footer'
 
-import { TASK_USER_DETAILS } from '../apps/dashboard/client/UserDetails/state'
-import * as userDetails from '../apps/dashboard/client/UserDetails/tasks'
+import { TASK_USER_DETAILS } from './components/PersonalisedDashboard/state'
+import * as userDetails from '../client/components/PersonalisedDashboard/tasks'
 
 function parseProps(domNode) {
   return 'props' in domNode.dataset ? JSON.parse(domNode.dataset.props) : {}

@@ -1,4 +1,4 @@
-import { USER_DETAILS_LOADED } from '../../../../client/actions'
+import { USER_DETAILS_LOADED } from '../../actions'
 
 const initialState = {}
 
