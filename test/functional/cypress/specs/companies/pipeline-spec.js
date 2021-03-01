@@ -2,7 +2,7 @@ const minimallyMinimal = require('../../../../sandbox/fixtures/v4/company/compan
 const lambdaPlc = require('../../../../sandbox/fixtures/v4/company/company-lambda-plc.json')
 const urls = require('../../../../../src/lib/urls')
 const {
-  assertFieldRadios,
+  assertFieldRadiosWithLegend,
   assertBreadcrumbs,
   assertFormButtons,
   assertFieldInput,
@@ -46,9 +46,9 @@ describe('Company add to pipeline form', () => {
 
     it('should render the status radio buttons', () => {
       cy.get(formSelectors.fields.status).then((element) => {
-        assertFieldRadios({
+        assertFieldRadiosWithLegend({
           element,
-          label: 'Choose a status',
+          legend: 'Choose a status',
           optionsCount: 3,
         })
       })
@@ -56,9 +56,9 @@ describe('Company add to pipeline form', () => {
 
     it('Should render the likelihood to export radio buttons', () => {
       cy.get(formSelectors.fields.likelihood).then((element) => {
-        assertFieldRadios({
+        assertFieldRadiosWithLegend({
           element,
-          label: 'Likelihood to export (optional)',
+          legend: 'Likelihood to export (optional)',
           optionsCount: 3,
         })
       })
@@ -143,9 +143,9 @@ describe('Company add to pipeline form', () => {
 
     it('should render the status radio buttons', () => {
       cy.get(formSelectors.fields.status).then((element) => {
-        assertFieldRadios({
+        assertFieldRadiosWithLegend({
           element,
-          label: 'Choose a status',
+          legend: 'Choose a status',
           optionsCount: 3,
         })
       })
