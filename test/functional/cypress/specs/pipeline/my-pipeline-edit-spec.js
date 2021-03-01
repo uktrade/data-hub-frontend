@@ -1,7 +1,7 @@
 const pipelineItemLambdaPlc = require('../../../../sandbox/fixtures/v4/pipeline-item/pipeline-item-lambda-plc.json')
 const urls = require('../../../../../src/lib/urls')
 const {
-  assertFieldRadios,
+  assertFieldRadiosWithLegend,
   assertBreadcrumbs,
   assertFieldInput,
   assertFieldTypeahead,
@@ -73,9 +73,9 @@ describe('Pipeline edit form', () => {
 
       it('should render the status radio buttons', () => {
         cy.get(formSelectors.fields.status).then((element) => {
-          assertFieldRadios({
+          assertFieldRadiosWithLegend({
             element,
-            label: 'Choose a status',
+            legend: 'Choose a status',
             optionsCount: 3,
             value: 'In progress',
           })
@@ -84,9 +84,9 @@ describe('Pipeline edit form', () => {
 
       it('Should render the likelihood to export radio buttons', () => {
         cy.get(formSelectors.fields.likelihood).then((element) => {
-          assertFieldRadios({
+          assertFieldRadiosWithLegend({
             element,
-            label: 'Likelihood to export (optional)',
+            legend: 'Likelihood to export (optional)',
             optionsCount: 3,
           })
         })
@@ -160,9 +160,9 @@ describe('Pipeline edit form', () => {
 
       it('should render the status radio buttons', () => {
         cy.get(formSelectors.fields.status).then((element) => {
-          assertFieldRadios({
+          assertFieldRadiosWithLegend({
             element,
-            label: 'Choose a status',
+            legend: 'Choose a status',
             optionsCount: 3,
             value: 'To do',
           })
@@ -171,9 +171,9 @@ describe('Pipeline edit form', () => {
 
       it('Should render the likelihood to export radio buttons', () => {
         cy.get(formSelectors.fields.likelihood).then((element) => {
-          assertFieldRadios({
+          assertFieldRadiosWithLegend({
             element,
-            label: 'Likelihood to export (optional)',
+            legend: 'Likelihood to export (optional)',
             optionsCount: 3,
             value: 'Medium',
           })
