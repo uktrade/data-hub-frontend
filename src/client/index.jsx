@@ -167,8 +167,9 @@ function App() {
           getInvestmentProjects.getMetadata,
         [TASK_GET_MY_INVESTMENTS_LIST]:
           myInvestmentProjects.fetchMyInvestmentsList,
-        'Large investment profiles': investmentProfilesTasks.loadFilterOptions,
         [TASK_GET_INVESTMENT_SUMMARY_DATA_RANGES]: fetchInvestmentSummaryDataRanges,
+        'Large investment profiles filters':
+          investmentProfilesTasks.loadFilterOptions,
       }}
     >
       <Mount selector="#add-company-form">
