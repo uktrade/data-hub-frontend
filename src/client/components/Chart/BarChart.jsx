@@ -55,17 +55,17 @@ const MakeBar = styled('a')`
 const BarChart = ({ data, total, description }) => (
   <>
     <Key>
-      {data.map(({ label }, i) => (
-        <ListItem color={COLOURS[i]} key={i}>
+      {data.map(({ id, label }, i) => (
+        <ListItem color={COLOURS[i]} key={id}>
           {label}
         </ListItem>
       ))}
     </Key>
     <p>{description}</p>
     <BarContainer>
-      {data.map(({ label, value, link }, i) => (
+      {data.map(({ id, label, value, link }, i) => (
         <MakeBar
-          key={i}
+          key={id}
           percent={(value / total) * 100}
           color={COLOURS[i]}
           href={link}

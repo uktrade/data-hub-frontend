@@ -1,7 +1,7 @@
 import { apiProxyAxios } from '../Task/utils'
+import { investmentSummaryAsDataRanges } from './utils'
 
-export const fetchInvestmentSummary = ({ adviser }) => {
-  return apiProxyAxios
+export const fetchInvestmentSummaryDataRanges = ({ adviser }) =>
+  apiProxyAxios
     .get(`/v4/adviser/${adviser.id}/investment-summary`)
-    .then(({ data }) => data)
-}
+    .then(({ data }) => investmentSummaryAsDataRanges(data))

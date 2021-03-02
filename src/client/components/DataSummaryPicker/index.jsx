@@ -19,25 +19,22 @@ const StyledSelect = styled(Select)`
 `
 
 const DataSummaryPicker = ({ dataRanges, ...props }) => {
-  let defaultRangeName = null
-  if (dataRanges.length) {
-    defaultRangeName = dataRanges[0].name
-  }
+  const defaultRangeName = dataRanges[0]?.name
   const [selectedRangeName, setSelectedRangeName] = useState(defaultRangeName)
   const [selectedDataRange] = dataRanges.filter(
     ({ name }) => name === selectedRangeName
   )
-  props.data = get(selectedDataRange, 'range', [])
+  const data = get(selectedDataRange, 'range', [])
 
   return (
-    <DataSummary {...props}>
+    <DataSummary data={data} {...props}>
       <StyledSelect
         name="sortBy"
         label="Date range"
         input={{ onChange: (e) => setSelectedRangeName(e.target.value) }}
       >
-        {dataRanges.map(({ label, name }, i) => (
-          <option value={name} key={i}>
+        {dataRanges.map(({ label, name }) => (
+          <option value={name} key={name}>
             {label}
           </option>
         ))}
