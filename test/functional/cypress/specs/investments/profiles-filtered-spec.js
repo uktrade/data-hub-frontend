@@ -139,6 +139,28 @@ describe('Investor profiles filters', () => {
     ],
   })
 
+  typeaheadFilterTestCases({
+    filterName: 'Check clearance',
+    selector: 'required-checks-conducted-filter',
+    cases: [
+      {
+        expectedNumberOfResults: 10,
+      },
+      {
+        options: ['Cleared'],
+        expectedNumberOfResults: 1,
+      },
+      {
+        options: ['Issues identified'],
+        expectedNumberOfResults: 2,
+      },
+      {
+        options: ['Cleared', 'Issues identified'],
+        expectedNumberOfResults: 3,
+      },
+    ],
+  })
+
   inputFilterTestCases({
     filterName: 'Company name',
     placeholder: 'Search company name',

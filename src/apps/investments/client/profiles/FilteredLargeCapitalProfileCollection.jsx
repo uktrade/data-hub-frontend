@@ -17,6 +17,7 @@ const QS_PARAMS = {
   assetClassesOfInterest: 'asset_classes_of_interest',
   investorCompanyName: 'investor_company_name',
   investorTypes: 'investor_type',
+  requiredChecksConducted: 'required_checks_conducted',
 }
 
 const resolveSelectedOptions = (values = [], options = []) =>
@@ -45,6 +46,10 @@ const LargeCapitalProfileCollection = ({
         qsParams[QS_PARAMS.investorTypes],
         filterOptions.investorTypes
       )
+      const selectedRequiredChecksConducted = resolveSelectedOptions(
+        qsParams[QS_PARAMS.requiredChecksConducted],
+        filterOptions.requiredChecksConducted
+      )
 
       const resolveSelectedInvestorCompanyName = () => {
         const companyName = qsParams[QS_PARAMS.investorCompanyName]
@@ -69,6 +74,8 @@ const LargeCapitalProfileCollection = ({
                 assetClassesOfInterest:
                   qsParams[QS_PARAMS.assetClassesOfInterest],
                 investorCompanyName: qsParams[QS_PARAMS.investorCompanyName],
+                requiredChecksConducted:
+                  qsParams[QS_PARAMS.requiredChecksConducted],
               },
               onSuccessDispatch: INVESTMENTS__PROFILES_LOADED,
             },
@@ -80,6 +87,7 @@ const LargeCapitalProfileCollection = ({
             selectedAssetClassesOfInterest,
             selectedInvestorCompanyName: resolveSelectedInvestorCompanyName(),
             selectedInvestorTypes,
+            selectedRequiredChecksConducted,
           }}
         >
           <CollectionFilters
@@ -128,6 +136,16 @@ const LargeCapitalProfileCollection = ({
               options={filterOptions.investorTypes}
               selectedOptions={selectedInvestorTypes}
               data-test="investor-type-filter"
+            />
+            <RoutedTypeahead
+              isMulti={true}
+              legend="Check clearance"
+              name="required-checks-conducted"
+              qsParam={QS_PARAMS.requiredChecksConducted}
+              placeholder="Check clearance"
+              options={filterOptions.requiredChecksConducted}
+              selectedOptions={selectedRequiredChecksConducted}
+              data-test="required-checks-conducted-filter"
             />
           </CollectionFilters>
         </FilteredCollectionList>
