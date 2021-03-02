@@ -1,11 +1,10 @@
-import { INVESTMENT_SUMMARY__LOADED } from '../../actions'
+import { INVESTMENT_SUMMARY_DATA_RANGES__LOADED } from '../../actions'
 
 export default (state = {}, { type, result }) => {
   switch (type) {
-    case INVESTMENT_SUMMARY__LOADED:
+    case INVESTMENT_SUMMARY_DATA_RANGES__LOADED:
       return {
-        ...state,
-        investmentSummary: { ...result },
+        investmentSummaryDataRanges: result,
       }
     default:
       return state

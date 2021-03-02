@@ -10,12 +10,13 @@ export const investmentSummaryAsDataRanges = (investmentSummary) => {
 
   return annualSummaries.map(({ financial_year, totals }) => {
     const now = new Date()
-    let { label, start, end } = financial_year
-    if (new Date(start) <= now && new Date(end) >= now) {
-      label = 'Current financial year'
-    }
+    const { start, end } = financial_year
+    const label =
+      new Date(start) <= now && new Date(end) >= now
+        ? 'Current financial year'
+        : financial_year.label
     return {
-      label: label,
+      label,
       name: financial_year.start,
       range: Object.entries(totals).map(([, props]) => ({
         ...props,

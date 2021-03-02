@@ -22,17 +22,17 @@ const TotalHeader = styled('h3')`
   display: table;
   line-height: 40px;
   margin-bottom: ${SPACING.SCALE_5};
-  span {
-    font-size: ${HEADING_SIZES.XLARGE}px;
-    display: table-cell;
-    padding: 0 ${SPACING.SCALE_1} 0 0;
+`
 
-    + span {
-      vertical-align: top;
-      font-size: ${BODY_SIZES.SMALL}px;
-      line-height: 16px;
-    }
-  }
+const StyledTotal = styled('span')`
+  font-size: ${HEADING_SIZES.XLARGE}px;
+  display: table-cell;
+  padding: 0 ${SPACING.SCALE_1} 0 0;
+`
+const StyledTotalSubject = styled('span')`
+  vertical-align: top;
+  font-size: ${BODY_SIZES.SMALL}px;
+  line-height: 16px;
 `
 
 const StyledButton = styled(Button)`
@@ -43,7 +43,7 @@ const DataSummary = ({
   title,
   description,
   subject,
-  accessible = false,
+  accessible,
   headers,
   data = [],
   children,
@@ -57,7 +57,8 @@ const DataSummary = ({
       <StyledHeader>{title}</StyledHeader>
       {children}
       <TotalHeader>
-        <span>{total}</span> <span>{pluralize(subject, total)}</span>
+        <StyledTotal>{total}</StyledTotal>
+        <StyledTotalSubject> {pluralize(subject, total)}</StyledTotalSubject>
       </TotalHeader>
       {total > 0 && (
         <StyledButton onClick={() => setAccessible(!isAccessible)}>
