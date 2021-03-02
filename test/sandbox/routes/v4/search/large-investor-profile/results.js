@@ -5,6 +5,7 @@ exports.largeInvestorProfile = function (req, res) {
   const assetClassesOfInterestFilter = req.body.asset_classes_of_interest || []
   const investorCompanyNameFilter = req.body.investor_company_name
   const investorTypesFilter = req.body.investor_type || []
+  const requiredChecksConductedFilter = req.body.required_checks_conducted || []
 
   const filtered = largeCapitalProfile.results
     .filter(({ country_of_origin }) =>
@@ -30,6 +31,12 @@ exports.largeInvestorProfile = function (req, res) {
     .filter(({ investor_type }) =>
       investorTypesFilter.length
         ? investor_type && investorTypesFilter.includes(investor_type.id)
+        : true
+    )
+    .filter(({ required_checks_conducted }) =>
+      requiredChecksConductedFilter.length
+        ? required_checks_conducted &&
+          requiredChecksConductedFilter.includes(required_checks_conducted.id)
         : true
     )
 

@@ -166,6 +166,10 @@ function FilteredCollectionHeader({
           selectedOptions={selectedFilters.selectedInvestorTypes}
           qsParamName="investor_type"
         />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedRequiredChecksConducted}
+          qsParamName="required_checks_conducted"
+        />
       </CollectionHeaderRow>
     </CollectionHeaderRowContainer>
   )
