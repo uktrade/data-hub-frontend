@@ -8,6 +8,7 @@ const ALLOWLIST = [
   '/v3/interaction',
   '/v3/investment/:id/update-stage',
   '/whoami/',
+  '/v4/adviser/:id/investment-summary',
   '/v4/company-list',
   '/v4/company-list/:id/item',
   '/v4/search/export-country-history',

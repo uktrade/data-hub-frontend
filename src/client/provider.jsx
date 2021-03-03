@@ -77,6 +77,12 @@ import investmentProjectsReducer from '../apps/investments/client/projects/reduc
 import { ID as MY_INVESTMENT_PROJECTS_ID } from './components/MyInvestmentProjects/state'
 import myInvestmentProjectsReducer from './components/MyInvestmentProjects/reducer'
 
+import { ID as INVESTMENT_SUMMARY_ID } from './components/InvestmentProjectSummary/state'
+import investmentSummaryReducer from './components/InvestmentProjectSummary/reducer'
+
+import { ID as DATA_SUMMARY_PICKER_ID } from './components/DataSummaryPicker/state'
+import dataSummaryPickerReducer from './components/DataSummaryPicker/reducer'
+
 import RoutedInputField from './components/RoutedInputField'
 
 const sagaMiddleware = createSagaMiddleware()
@@ -123,6 +129,8 @@ const store = createStore(
     [INVESTMENT_PROFILES_ID]: investmentProfileReducer,
     [INVESTMENT_PROJECTS_ID]: investmentProjectsReducer,
     [MY_INVESTMENT_PROJECTS_ID]: myInvestmentProjectsReducer,
+    [INVESTMENT_SUMMARY_ID]: investmentSummaryReducer,
+    [DATA_SUMMARY_PICKER_ID]: dataSummaryPickerReducer,
   }),
   {
     referrerUrl: window.document.referrer,
