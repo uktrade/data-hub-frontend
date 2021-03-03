@@ -40,9 +40,9 @@ const StyledLi = styled('li')`
     border-radius: 50%;
     border: 2px solid ${BLUE};
     background-color: ${({ isStageComplete }) =>
-      isStageComplete() ? WHITE : BLUE};
+      isStageComplete ? BLUE : WHITE};
     position: absolute;
-    left: -12px;
+    left: -13px;
   }
   span {
     display: block;
@@ -52,7 +52,7 @@ const StyledLi = styled('li')`
     padding: ${SPACING.SCALE_4} 0 0 0;
     display: table-cell;
     width: 25%;
-    border-top: 2px solid ${BLUE};
+    border-top: 3px solid ${BLUE};
     border-left: none;
     &:last-child {
       padding: ${SPACING.SCALE_4} 0 0 0;
@@ -71,22 +71,24 @@ const StyledLi = styled('li')`
   }
 `
 
-const Timeline = ({ stages, currentStage = '' }) => {
+const Timeline = ({ stages, currentStage = '', ...props }) => {
   const lowerCaseStageNames = stages.map((name) => name.toLowerCase())
   const stageIndex = lowerCaseStageNames.indexOf(currentStage.toLowerCase())
   return (
-    <TimelineContainer>
+    <TimelineContainer data-test="timeline" {...props}>
       <StyledOl>
-        {stages.map((stage, i) => (
-          <StyledLi
-            key={i}
-            isStageComplete={() =>
-              stageIndex === stages.length ? true : Boolean(stageIndex < i)
-            }
-          >
-            <span>{stage}</span>
-          </StyledLi>
-        ))}
+        {stages.map((stage, i) => {
+          const isComplete = i <= stageIndex
+          return (
+            <StyledLi
+              key={i}
+              isStageComplete={isComplete}
+              aria-label={isComplete ? 'stage complete' : 'stage incomplete'}
+            >
+              <span>{stage}</span>
+            </StyledLi>
+          )
+        })}
       </StyledOl>
     </TimelineContainer>
   )
