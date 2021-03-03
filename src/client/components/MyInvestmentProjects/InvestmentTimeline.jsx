@@ -1,7 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const InvestmentTimeline = ({ stage }) => <div>Stage: {stage.name}</div>
+import { Timeline } from '../../components'
+
+const InvestmentTimeline = ({ stage, ...props }) => (
+  <Timeline
+    stages={['Prospect', 'Assign PM', 'Active', 'Verify win', 'Won']}
+    currentStage={stage.name}
+    {...props}
+  />
+)
 
 InvestmentTimeline.propTypes = {
   stage: PropTypes.shape({
