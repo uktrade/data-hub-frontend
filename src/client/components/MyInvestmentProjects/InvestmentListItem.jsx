@@ -4,6 +4,7 @@ import { Details } from 'govuk-react'
 import styled from 'styled-components'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
+import { Tag } from '../../components'
 import InvestmentEstimatedLandDate from './InvestmentEstimatedLandDate'
 import InvestmentTimeline from './InvestmentTimeline'
 
@@ -40,8 +41,15 @@ const InvestmentListItem = ({
 }) => {
   return (
     <li>
+      <Tag
+        colour="grey"
+        data-test="project-status-tag"
+        aria-label="project status"
+      >
+        {stage.name}
+      </Tag>
+      <div>+ Add Interaction...</div>
       <StyledDetails summary={name} open={showDetails}>
-        <div>+ Add Interaction...</div>
         <TimelineRow>
           <StyledInvestmentTimeline stage={stage} />
           <StyledInvestmentEstimatedLandDate
