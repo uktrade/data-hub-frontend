@@ -1,5 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+
+import { state2props } from './state'
+import {
+  DATA_SUMMARY_PICKER__RANGE_SELECTED,
+  DATA_SUMMARY_PICKER__ACCESSIBLE_TOGGLE,
+} from '../../actions'
+
 import styled from 'styled-components'
 import { get } from 'lodash'
 import { BODY_SIZES, SPACING } from '@govuk-react/constants'
@@ -18,11 +26,14 @@ const StyledSelect = styled(Select)`
   }
 `
 
-const DataSummaryPicker = ({ dataRanges, ...props }) => {
-  const defaultRangeName = dataRanges[0]?.name
-  const [selectedRangeName, setSelectedRangeName] = useState(defaultRangeName)
+const DataSummaryPicker = ({
+  dataRanges,
+  selectedRangeName,
+  onSelectDataRange = () => {},
+  ...props
+}) => {
   const [selectedDataRange] = dataRanges.filter(
-    ({ name }) => name === selectedRangeName
+    ({ name }) => name === (selectedRangeName || dataRanges[0]?.name)
   )
   const data = get(selectedDataRange, 'range', [])
 
@@ -31,7 +42,11 @@ const DataSummaryPicker = ({ dataRanges, ...props }) => {
       <StyledSelect
         name="sortBy"
         label="Date range"
-        input={{ onChange: (e) => setSelectedRangeName(e.target.value) }}
+        input={{
+          onChange: (e) => {
+            onSelectDataRange(e.target.value)
+          },
+        }}
       >
         {dataRanges.map(({ label, name }) => (
           <option value={name} key={name}>
@@ -62,6 +77,22 @@ DataSummaryPicker.propTypes = {
       ).isRequired,
     })
   ),
+  selectedRangeName: PropTypes.string,
+  accessible: PropTypes.bool,
+  onToggleAccessible: PropTypes.func,
+  onSelectDataRange: PropTypes.func,
 }
 
-export default DataSummaryPicker
+export default connect(state2props, (dispatch) => ({
+  onSelectDataRange: (dataRangeName) => {
+    dispatch({
+      type: DATA_SUMMARY_PICKER__RANGE_SELECTED,
+      result: dataRangeName,
+    })
+  },
+  onToggleAccessible: () => {
+    dispatch({
+      type: DATA_SUMMARY_PICKER__ACCESSIBLE_TOGGLE,
+    })
+  },
+}))(DataSummaryPicker)
