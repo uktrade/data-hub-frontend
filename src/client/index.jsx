@@ -99,6 +99,9 @@ import * as getInvestmentProjects from '../apps/investments/client/projects/task
 import * as myInvestmentProjects from './components/MyInvestmentProjects/tasks'
 import { TASK_GET_MY_INVESTMENTS_LIST } from './components/MyInvestmentProjects/state'
 
+import { fetchInvestmentSummaryDataRanges } from './components/InvestmentProjectSummary/tasks'
+import { TASK_GET_INVESTMENT_SUMMARY_DATA_RANGES } from './components/InvestmentProjectSummary/state'
+
 import Footer from '../client/components/Footer'
 
 function parseProps(domNode) {
@@ -165,6 +168,7 @@ function App() {
         [TASK_GET_MY_INVESTMENTS_LIST]:
           myInvestmentProjects.fetchMyInvestmentsList,
         'Large investment profiles': investmentProfilesTasks.loadFilterOptions,
+        [TASK_GET_INVESTMENT_SUMMARY_DATA_RANGES]: fetchInvestmentSummaryDataRanges,
       }}
     >
       <Mount selector="#add-company-form">

@@ -1,98 +1,59 @@
-import React, { useState } from 'react'
-import Chart from '../Chart'
+import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-const InvestmentProjectSummary = () => {
-  // Todo: remove after task component is set up
-  const data = [
-    {
-      date: '2021',
-      results: [
-        {
-          key: 'Prospect',
-          param: 1,
-          value: 7,
-        },
-        {
-          key: 'Assigned',
-          param: 2,
-          value: 20,
-        },
-        {
-          key: 'Active',
-          param: 3,
-          value: 5,
-        },
-        {
-          key: 'Verfiy win',
-          param: 4,
-          value: 2,
-        },
-        {
-          key: 'Won',
-          param: 5,
-          value: 15,
-        },
-      ],
-    },
-    {
-      date: '2020',
-      results: [
-        {
-          key: 'Prospect',
-          param: 1,
-          value: 14,
-        },
-        {
-          key: 'Assigned',
-          param: 2,
-          value: 3,
-        },
-        {
-          key: 'Active',
-          param: 3,
-          value: 19,
-        },
-        {
-          key: 'Verfiy win',
-          param: 4,
-          value: 2,
-        },
-        {
-          key: 'Won',
-          param: 5,
-          value: 0,
-        },
-      ],
-    },
-  ]
+import { INVESTMENT_SUMMARY_DATA_RANGES__LOADED } from '../../actions'
+import Task from '../Task/index.jsx'
+import DataSummaryPicker from '../DataSummaryPicker'
+import {
+  ID,
+  TASK_GET_INVESTMENT_SUMMARY_DATA_RANGES,
+  state2props,
+} from './state'
 
-  const [projectsData, setProjectsData] = useState(data[0])
+const InvestmentProjectSummary = ({
+  adviser,
+  investmentSummaryDataRanges = [],
+}) => (
+  <Task.Status
+    name={TASK_GET_INVESTMENT_SUMMARY_DATA_RANGES}
+    id={ID}
+    progressMessage="Loading your investment projects"
+    startOnRender={{
+      payload: { adviser },
+      onSuccessDispatch: INVESTMENT_SUMMARY_DATA_RANGES__LOADED,
+    }}
+  >
+    {() => (
+      <DataSummaryPicker
+        title="My project summary"
+        subject="Project"
+        description="Projects in the current financial year"
+        headers={['Stage', 'Amount']}
+        dataRanges={investmentSummaryDataRanges}
+      />
+    )}
+  </Task.Status>
+)
 
-  const onChange = (e) => {
-    const [selectedProjects] = data.filter(
-      ({ date }) => date === e.target.value
-    )
-    setProjectsData(selectedProjects)
-  }
-
-  return (
-    <Chart
-      title="My project summary"
-      sortName="sortBy"
-      sortLabel="Date range"
-      sortOptions={[
-        { label: 'Current financial year', value: '2021' },
-        { label: '2019-2020', value: '2020' },
-      ]}
-      subject="Projects"
-      description="Projects in the current financial year"
-      headers={['Stage', 'Amount']}
-      name="stage"
-      url="/investments/projects"
-      onChange={onChange}
-      data={projectsData}
-    />
-  )
+InvestmentProjectSummary.propTypes = {
+  adviser: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }).isRequired,
+  investmentSummaryDataRanges: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      range: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.string.isRequired,
+          label: PropTypes.string.isRequired,
+          value: PropTypes.number.isRequired,
+          link: PropTypes.string,
+        })
+      ).isRequired,
+    })
+  ),
 }
 
-export default InvestmentProjectSummary
+export default connect(state2props)(InvestmentProjectSummary)

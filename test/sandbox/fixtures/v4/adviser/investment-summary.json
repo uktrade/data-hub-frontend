@@ -1,0 +1,73 @@
+{
+    "annual_summaries": [
+        {
+            "financial_year": {
+                "label": "2020-21",
+                "start": "2020-04-01",
+                "end": "2021-03-31"
+            },
+            "totals": {
+                "prospect": {
+                  "label": "Prospect",
+                  "id": "8a320cc9-ae2e-443e-9d26-2f36452c2ced",
+                  "value": 3
+                },
+                "assign_pm": {
+                  "label": "Assigned",
+                  "id": "c9864359-fb1a-4646-a4c1-97d10189fc03",
+                  "value": 0
+                },
+                "active": {
+                  "label": "Active",
+                  "id": "7606cc19-20da-4b74-aba1-2cec0d753ad8",
+                  "value": 0
+                },
+                "verify_win": {
+                  "label": "Verify Win",
+                  "id": "49b8f6f3-0c50-4150-a965-2c974f3149e3",
+                  "value": 1
+                },
+                "won": {
+                  "label": "Won",
+                  "id": "945ea6d1-eee3-4f5b-9144-84a75b71b8e6",
+                  "value": 3
+                }
+            }
+        },
+        {
+            "financial_year": {
+                "label": "2019-20",
+                "start": "2019-04-01",
+                "end": "2020-03-31"
+            },
+            "totals": {
+                "prospect": {
+                  "label": "Prospect",
+                  "id": "8a320cc9-ae2e-443e-9d26-2f36452c2ced",
+                  "value": 3
+                },
+                "assigned": {
+                  "label": "Assigned",
+                  "id": "c9864359-fb1a-4646-a4c1-97d10189fc03",
+                  "value": 3
+                },
+                "active": {
+                  "label": "Active",
+                  "id": "7606cc19-20da-4b74-aba1-2cec0d753ad8",
+                  "value": 5
+                },
+                "verify_win": {
+                  "label": "Verify Win",
+                  "id": "49b8f6f3-0c50-4150-a965-2c974f3149e3",
+                  "value": 1
+                },
+                "won": {
+                  "label": "Won",
+                  "id": "945ea6d1-eee3-4f5b-9144-84a75b71b8e6",
+                  "value": 0
+                }
+            }
+        }
+    ],
+    "adviser_id": "e83a608e-84a4-11e6-ae22-56b6b6499622"
+}

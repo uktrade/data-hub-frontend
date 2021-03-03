@@ -2,20 +2,24 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { default as GovTable } from '@govuk-react/table'
 
-const Table = ({ data, headers, total, url, name }) => (
+const DataTable = ({ data, headers, total }) => (
   <GovTable>
     <GovTable.Row>
       {headers.map((header, i) => (
         <GovTable.CellHeader key={i}>{header}</GovTable.CellHeader>
       ))}
     </GovTable.Row>
-    {data.map(({ param, key, value }, i) => (
-      <GovTable.Row key={i}>
-        <GovTable.Cell>{key}</GovTable.Cell>
+    {data.map(({ id, label, value, link }) => (
+      <GovTable.Row key={id}>
+        <GovTable.Cell>{label}</GovTable.Cell>
         <GovTable.Cell>
-          <a href={`${url}?${name}=${param}`} title={`View ${key}`}>
-            {value}
-          </a>
+          {link ? (
+            <a href={link} title={`View ${label}`}>
+              {value}
+            </a>
+          ) : (
+            value
+          )}
         </GovTable.Cell>
       </GovTable.Row>
     ))}
@@ -28,18 +32,17 @@ const Table = ({ data, headers, total, url, name }) => (
   </GovTable>
 )
 
-Table.propTypes = {
+DataTable.propTypes = {
   data: PropTypes.arrayOf(
     PropTypes.shape({
-      param: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
       value: PropTypes.number.isRequired,
-      key: PropTypes.string.isRequired,
+      link: PropTypes.string,
     })
   ).isRequired,
   headers: PropTypes.array.isRequired,
   total: PropTypes.number.isRequired,
-  url: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
 }
 
-export default Table
+export default DataTable
