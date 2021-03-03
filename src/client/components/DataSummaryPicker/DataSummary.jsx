@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import pluralize from 'pluralize'
@@ -44,12 +44,11 @@ const DataSummary = ({
   description,
   subject,
   accessible,
+  onToggleAccessible = () => {},
   headers,
   data = [],
   children,
 }) => {
-  const [isAccessible, setAccessible] = useState(accessible)
-
   const total = data.reduce((prev, curr) => prev + curr.value, 0)
 
   return (
@@ -61,11 +60,11 @@ const DataSummary = ({
         <StyledTotalSubject> {pluralize(subject, total)}</StyledTotalSubject>
       </TotalHeader>
       {total > 0 && (
-        <StyledButton onClick={() => setAccessible(!isAccessible)}>
-          {isAccessible ? 'Change to chart view' : 'Change to accessible view'}
+        <StyledButton onClick={onToggleAccessible}>
+          {accessible ? 'Change to chart view' : 'Change to accessible view'}
         </StyledButton>
       )}
-      {isAccessible || total === 0 ? (
+      {accessible || total === 0 ? (
         <DataTable data={data} headers={headers} total={total} />
       ) : (
         <BarChart data={data} total={total} description={description} />
@@ -76,6 +75,8 @@ const DataSummary = ({
 
 DataSummary.propTypes = {
   title: PropTypes.string.isRequired,
+  accessible: PropTypes.bool,
+  onToggleAccessible: PropTypes.func,
   subject: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   headers: PropTypes.array.isRequired,
