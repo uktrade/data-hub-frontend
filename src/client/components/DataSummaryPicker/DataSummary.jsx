@@ -10,7 +10,7 @@ import {
   FONT_WEIGHTS,
 } from '@govuk-react/constants'
 
-import { BarChart } from '../../../client/components/Chart'
+import PieChart from 'PieChart'
 import DataTable from '../../../client/components/DataTable'
 
 const StyledHeader = styled('h3')`
@@ -41,7 +41,6 @@ const StyledButton = styled(Button)`
 
 const DataSummary = ({
   title,
-  description,
   subject,
   accessible,
   onToggleAccessible = () => {},
@@ -67,7 +66,7 @@ const DataSummary = ({
       {accessible || total === 0 ? (
         <DataTable data={data} headers={headers} total={total} />
       ) : (
-        <BarChart data={data} total={total} description={description} />
+        <PieChart data={data} />
       )}
     </>
   )
