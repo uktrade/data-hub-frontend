@@ -40,8 +40,7 @@ const StyledCheckbox = styled(Checkbox)`
   }
 `
 
-const ActivityFeedCheckbox = (props) => {
-  const { children, ...rest } = props
+const ActivityFeedCheckbox = ({ children, ...rest }) => {
   return <StyledCheckbox {...rest}>{children}</StyledCheckbox>
 }
 
@@ -49,12 +48,8 @@ ActivityFeedCheckbox.propTypes = {
   children: PropTypes.node.isRequired,
   onChange: PropTypes.func.isRequired,
   checked: PropTypes.bool,
+  disabled: PropTypes.bool,
   name: PropTypes.string,
-}
-
-ActivityFeedCheckbox.defaultProps = {
-  checked: null,
-  name: null,
 }
 
 export default ActivityFeedCheckbox

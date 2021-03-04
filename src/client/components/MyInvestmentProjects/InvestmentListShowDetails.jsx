@@ -9,14 +9,10 @@ const CheckboxContainer = styled('div')`
   padding: ${SPACING.SCALE_2};
 `
 
-const InvestmentListShowDetails = ({ onChange, checked, children }) => {
+const InvestmentListShowDetails = ({ children, ...rest }) => {
   return (
     <CheckboxContainer>
-      <Checkbox
-        name="investmentListShowDetails"
-        onChange={onChange}
-        checked={checked}
-      >
+      <Checkbox name="investmentListShowDetails" {...rest}>
         {children}
       </Checkbox>
     </CheckboxContainer>
@@ -24,9 +20,10 @@ const InvestmentListShowDetails = ({ onChange, checked, children }) => {
 }
 
 InvestmentListShowDetails.propTypes = {
+  children: PropTypes.node.isRequired,
   onChange: PropTypes.func.isRequired,
   checked: PropTypes.bool.isRequired,
-  children: PropTypes.node.isRequired,
+  disabled: PropTypes.bool.isRequired,
 }
 
 export default InvestmentListShowDetails
