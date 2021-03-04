@@ -9,8 +9,10 @@ const StyledTag = styled(GovUkTag)`
   color: ${(props) => TAG_COLOURS[props.colour].colour};
 `
 
-const Tag = ({ colour, children }) => (
-  <StyledTag colour={colour}>{children}</StyledTag>
+const Tag = ({ colour, children, ...props }) => (
+  <StyledTag colour={colour} {...props}>
+    {children}
+  </StyledTag>
 )
 
 Tag.propTypes = {
