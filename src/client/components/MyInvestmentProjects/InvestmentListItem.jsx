@@ -1,10 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Details } from 'govuk-react'
+import Button from '@govuk-react/button'
+import { BLUE } from 'govuk-colours'
 import styled from 'styled-components'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
 import { Tag } from '../../components'
+import { companies } from '../../../lib/urls'
 import InvestmentEstimatedLandDate from './InvestmentEstimatedLandDate'
 import InvestmentTimeline from './InvestmentTimeline'
 
@@ -38,9 +41,10 @@ const InvestmentListItem = ({
   stage,
   estimated_land_date,
   showDetails,
+  investor_company,
 }) => {
   return (
-    <li>
+    <li data-test="my-projects-list-item">
       <Tag
         colour="grey"
         data-test="project-status-tag"
@@ -48,7 +52,14 @@ const InvestmentListItem = ({
       >
         {stage.name}
       </Tag>
-      <div>+ Add Interaction...</div>
+
+      <Button
+        as="a"
+        buttonColour={BLUE}
+        href={companies.interactions.create(investor_company.id)}
+      >
+        Add interaction
+      </Button>
       <StyledDetails summary={name} open={showDetails}>
         <TimelineRow>
           <StyledInvestmentTimeline stage={stage} />
