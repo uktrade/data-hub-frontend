@@ -21,7 +21,10 @@ const RoutedInput = ({
   // being unrecognized input atributes
   dispatch,
   staticContext,
+<<<<<<< HEAD
   id,
+=======
+>>>>>>> Refactor RoutedInputField in terms of the new RoutedInput
   ...props
 }) => {
   // This is the only way we can reset the value when the query string param is
