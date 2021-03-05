@@ -86,7 +86,7 @@ import dataSummaryPickerReducer from './components/DataSummaryPicker/reducer'
 import { ID as PERSONALISED_DASHBOARD_ID } from './components/PersonalisedDashboard/state'
 import personalisedDashboardReducer from './components/PersonalisedDashboard/reducer'
 
-import RoutedInputField from './components/RoutedInputField'
+import RoutedInput from './components/RoutedInput'
 
 const sagaMiddleware = createSagaMiddleware()
 const history = createBrowserHistory({
@@ -123,7 +123,7 @@ const store = createStore(
     ...MultiInstanceForm.reducerSpread,
     ...DropdownMenu.reducerSpread,
     ...ToggleSection.reducerSpread,
-    ...RoutedInputField.reducerSpread,
+    ...RoutedInput.reducerSpread,
     // A reducer is required to be able to set a preloadedState parameter
     referrerUrl: (state = {}) => state,
     [INVESTEMENT_PROJECT_ADMIN_ID]: investmentProjectAdminReducer,
