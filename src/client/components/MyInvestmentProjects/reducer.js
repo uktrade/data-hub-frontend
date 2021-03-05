@@ -13,7 +13,7 @@ const initialState = {
   page: 1,
   sort: 'created_on:desc',
   filter: 'all-stages',
-  showDetails: true,
+  showDetails: false,
 }
 
 export default (
