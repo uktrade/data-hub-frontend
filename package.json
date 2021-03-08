@@ -226,7 +226,7 @@
     "rewire": "^5.0.0",
     "sass-lint": "^1.12.1",
     "selenium-server": "^3.12.0",
-    "sinon": "^9.2.3",
+    "sinon": "^9.2.4",
     "sinon-chai": "^3.1.0",
     "storybook-readme": "^5.0.9",
     "supertest": "^6.1.3"
