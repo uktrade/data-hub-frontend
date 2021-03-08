@@ -37,6 +37,16 @@ const globalFields = {
     },
   },
 
+  usStates: {
+    macroName: 'MultipleChoiceField',
+    name: 'us_state',
+    label: 'US State',
+    initialOption: '-- Select US state --',
+    options() {
+      return metadata.administrativeAreaOptions.map(transformObjectToOption)
+    },
+  },
+
   headquarter_type: {
     macroName: 'MultipleChoiceField',
     name: 'headquarter_type',

@@ -10,6 +10,7 @@ const PRIMARY_SECTOR_NAME = FILTER_CONSTANTS.COMPANIES.SECTOR.PRIMARY.NAME
 const companyFiltersFields = function ({ sectorOptions }) {
   const countryOptions = globalFields.countries.options()
   const ukRegionOptions = globalFields.ukRegions.options()
+  const usStateOptions = globalFields.usStates.options()
   return [
     Object.assign({}, globalFields.headquarter_type, {
       name: QUERY_FIELDS_MAP.headquarterType,
@@ -59,6 +60,17 @@ const companyFiltersFields = function ({ sectorOptions }) {
       hideInactive: false,
       target: 'metadata',
       label: 'UK region',
+    },
+    {
+      macroName: 'Typeahead',
+      name: QUERY_FIELDS_MAP.ukRegion,
+      isAsync: false,
+      placeholder: 'Search US state',
+      useSubLabel: false,
+      options: usStateOptions,
+      hideInactive: false,
+      target: 'metadata',
+      label: 'US state',
     },
     {
       macroName: 'MultipleChoiceField',
