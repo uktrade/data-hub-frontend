@@ -121,6 +121,36 @@ function FilteredCollectionHeader({
           qsParamName="investor_company_name"
         />
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedDealTicketSize}
+          qsParamName="deal_ticket_size"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedMinimumReturnRate}
+          qsParamName="minimum_return_rate"
+          showCategoryLabels={true}
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedTimeHorizon}
+          qsParamName="time_horizon"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedRestrictions}
+          qsParamName="restriction"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedConstructionRisk}
+          qsParamName="construction_risk"
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedMinimumEquityPercentage}
+          qsParamName="minimum_equity_percentage"
+          showCategoryLabels={true}
+        />
+        <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedDesiredDealRole}
+          qsParamName="desired_deal_role"
+        />
+        <RoutedFilterChips
           selectedOptions={selectedFilters.selectedUkRegions}
           qsParamName="uk_region"
         />

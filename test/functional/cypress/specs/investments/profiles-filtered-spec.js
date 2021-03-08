@@ -179,4 +179,186 @@ describe('Investor profiles filters', () => {
       },
     ],
   })
+
+  typeaheadFilterTestCases({
+    filterName: 'Deal ticket size',
+    selector: 'deal-ticket-size-filter',
+    cases: [
+      {
+        expectedNumberOfResults: 10,
+      },
+      {
+        options: ['Up to £49 million'],
+        expectedNumberOfResults: 2,
+      },
+      {
+        options: ['£50-99 million'],
+        expectedNumberOfResults: 4,
+      },
+      {
+        options: ['Up to £49 million', '£50-99 million'],
+        expectedNumberOfResults: 5,
+      },
+    ],
+  })
+
+  typeaheadFilterTestCases({
+    filterName: 'Investment type',
+    selector: 'types-of-investment-filter',
+    cases: [
+      {
+        expectedNumberOfResults: 10,
+      },
+      {
+        options: ['Direct Investment in Project Equity'],
+        expectedNumberOfResults: 2,
+      },
+      {
+        options: ['Venture capital funds'],
+        expectedNumberOfResults: 2,
+      },
+      {
+        options: [
+          'Direct Investment in Project Equity',
+          'Venture capital funds',
+        ],
+        expectedNumberOfResults: 3,
+      },
+    ],
+  })
+
+  typeaheadFilterTestCases({
+    filterName: 'Minimum return rate',
+    selector: 'minimum-return-rate-filter',
+    cases: [
+      {
+        expectedNumberOfResults: 10,
+      },
+      {
+        options: ['5-10%'],
+        expectedNumberOfResults: 2,
+      },
+      {
+        options: ['10-15%'],
+        expectedNumberOfResults: 2,
+      },
+      {
+        options: ['5-10%', '10-15%'],
+        expectedNumberOfResults: 4,
+      },
+    ],
+  })
+
+  typeaheadFilterTestCases({
+    filterName: 'Time horizon tenor',
+    selector: 'time-horizon-tenor-filter',
+    cases: [
+      {
+        expectedNumberOfResults: 10,
+      },
+      {
+        options: ['Up to 5 years'],
+        expectedNumberOfResults: 2,
+      },
+      {
+        options: ['15 years +'],
+        expectedNumberOfResults: 2,
+      },
+      {
+        options: ['Up to 5 years', '15 years +'],
+        expectedNumberOfResults: 3,
+      },
+    ],
+  })
+
+  typeaheadFilterTestCases({
+    filterName: 'Restrictions and Conditions',
+    selector: 'restrictions-conditions-filter',
+    cases: [
+      {
+        expectedNumberOfResults: 10,
+      },
+      {
+        options: ['Require board seat'],
+        expectedNumberOfResults: 2,
+      },
+      {
+        options: ['Inflation adjustment'],
+        expectedNumberOfResults: 2,
+      },
+      {
+        options: ['Require board seat', 'Inflation adjustment'],
+        expectedNumberOfResults: 3,
+      },
+    ],
+  })
+
+  typeaheadFilterTestCases({
+    filterName: 'Construction risk',
+    selector: 'construction-risk-filter',
+    cases: [
+      {
+        expectedNumberOfResults: 10,
+      },
+      {
+        options: ['Greenfield (construction risk)'],
+        expectedNumberOfResults: 2,
+      },
+      {
+        options: ['Brownfield (some construction risk)'],
+        expectedNumberOfResults: 2,
+      },
+      {
+        options: [
+          'Greenfield (construction risk)',
+          'Brownfield (some construction risk)',
+        ],
+        expectedNumberOfResults: 3,
+      },
+    ],
+  })
+
+  typeaheadFilterTestCases({
+    filterName: 'Minimum equity percentage',
+    selector: 'minimum-equity-percentage-filter',
+    cases: [
+      {
+        expectedNumberOfResults: 10,
+      },
+      {
+        options: ['1-19%'],
+        expectedNumberOfResults: 2,
+      },
+      {
+        options: ['50% +'],
+        expectedNumberOfResults: 2,
+      },
+      {
+        options: ['1-19%', '50% +'],
+        expectedNumberOfResults: 4,
+      },
+    ],
+  })
+
+  typeaheadFilterTestCases({
+    filterName: 'Desired deal role',
+    selector: 'desired-deal-role-filter',
+    cases: [
+      {
+        expectedNumberOfResults: 10,
+      },
+      {
+        options: ['Lead manager / deal structure'],
+        expectedNumberOfResults: 2,
+      },
+      {
+        options: ['Co-lead manager'],
+        expectedNumberOfResults: 2,
+      },
+      {
+        options: ['Lead manager / deal structure', 'Co-lead manager'],
+        expectedNumberOfResults: 3,
+      },
+    ],
+  })
 })

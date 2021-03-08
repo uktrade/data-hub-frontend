@@ -18,6 +18,14 @@ const QS_PARAMS = {
   investorCompanyName: 'investor_company_name',
   investorTypes: 'investor_type',
   requiredChecksConducted: 'required_checks_conducted',
+  dealTicketSize: 'deal_ticket_size',
+  investmentTypes: 'investment_type',
+  minimumReturnRate: 'minimum_return_rate',
+  timeHorizon: 'time_horizon',
+  restrictions: 'restriction',
+  constructionRisk: 'construction_risk',
+  minimumEquityPercentage: 'minimum_equity_percentage',
+  desiredDealRole: 'desired_deal_role',
 }
 
 const resolveSelectedOptions = (values = [], options = []) =>
@@ -50,6 +58,38 @@ const LargeCapitalProfileCollection = ({
         qsParams[QS_PARAMS.requiredChecksConducted],
         filterOptions.requiredChecksConducted
       )
+      const selectedDealTicketSize = resolveSelectedOptions(
+        qsParams[QS_PARAMS.dealTicketSize],
+        filterOptions.dealTicketSize
+      )
+      const selectedInvestmentTypes = resolveSelectedOptions(
+        qsParams[QS_PARAMS.investmentTypes],
+        filterOptions.investmentTypes
+      )
+      const selectedMinimumReturnRate = resolveSelectedOptions(
+        qsParams[QS_PARAMS.minimumReturnRate],
+        filterOptions.minimumReturnRate
+      )
+      const selectedTimeHorizon = resolveSelectedOptions(
+        qsParams[QS_PARAMS.timeHorizon],
+        filterOptions.timeHorizon
+      )
+      const selectedRestrictions = resolveSelectedOptions(
+        qsParams[QS_PARAMS.restrictions],
+        filterOptions.restrictions
+      )
+      const selectedConstructionRisk = resolveSelectedOptions(
+        qsParams[QS_PARAMS.constructionRisk],
+        filterOptions.constructionRisk
+      )
+      const selectedMinimumEquityPercentage = resolveSelectedOptions(
+        qsParams[QS_PARAMS.minimumEquityPercentage],
+        filterOptions.minimumEquityPercentage
+      )
+      const selectedDesiredDealRole = resolveSelectedOptions(
+        qsParams[QS_PARAMS.desiredDealRole],
+        filterOptions.desiredDealRole
+      )
 
       const resolveSelectedInvestorCompanyName = () => {
         const companyName = qsParams[QS_PARAMS.investorCompanyName]
@@ -76,6 +116,15 @@ const LargeCapitalProfileCollection = ({
                 investorCompanyName: qsParams[QS_PARAMS.investorCompanyName],
                 requiredChecksConducted:
                   qsParams[QS_PARAMS.requiredChecksConducted],
+                dealTicketSize: qsParams[QS_PARAMS.dealTicketSize],
+                investmentTypes: qsParams[QS_PARAMS.investmentTypes],
+                minimumReturnRate: qsParams[QS_PARAMS.minimumReturnRate],
+                timeHorizon: qsParams[QS_PARAMS.timeHorizon],
+                restrictions: qsParams[QS_PARAMS.restrictions],
+                constructionRisk: qsParams[QS_PARAMS.constructionRisk],
+                minimumEquityPercentage:
+                  qsParams[QS_PARAMS.minimumEquityPercentage],
+                desiredDealRole: qsParams[QS_PARAMS.desiredDealRole],
               },
               onSuccessDispatch: INVESTMENTS__PROFILES_LOADED,
             },
@@ -88,6 +137,14 @@ const LargeCapitalProfileCollection = ({
             selectedInvestorCompanyName: resolveSelectedInvestorCompanyName(),
             selectedInvestorTypes,
             selectedRequiredChecksConducted,
+            selectedDealTicketSize,
+            selectedInvestmentTypes,
+            selectedMinimumReturnRate,
+            selectedTimeHorizon,
+            selectedRestrictions,
+            selectedConstructionRisk,
+            selectedMinimumEquityPercentage,
+            selectedDesiredDealRole,
           }}
         >
           <CollectionFilters
@@ -115,7 +172,7 @@ const LargeCapitalProfileCollection = ({
               legend="Asset class of interest"
               name="asset-class-of-interest"
               qsParam={QS_PARAMS.assetClassesOfInterest}
-              placeholder="Search countries"
+              placeholder="Search asset classes"
               options={filterOptions.assetClassesOfInterest}
               selectedOptions={selectedAssetClassesOfInterest}
               data-test="asset-class-of-interest-filter"
@@ -146,6 +203,86 @@ const LargeCapitalProfileCollection = ({
               options={filterOptions.requiredChecksConducted}
               selectedOptions={selectedRequiredChecksConducted}
               data-test="required-checks-conducted-filter"
+            />
+            <RoutedTypeahead
+              isMulti={true}
+              legend="Deal ticket size"
+              name="deal-ticket-size"
+              qsParam={QS_PARAMS.dealTicketSize}
+              placeholder="Search ticket sizes"
+              options={filterOptions.dealTicketSize}
+              selectedOptions={selectedDealTicketSize}
+              data-test="deal-ticket-size-filter"
+            />
+            <RoutedTypeahead
+              isMulti={true}
+              legend="Types of investment"
+              name="types-of-investment"
+              qsParam={QS_PARAMS.investmentTypes}
+              placeholder="Search types"
+              options={filterOptions.investmentTypes}
+              selectedOptions={selectedInvestmentTypes}
+              data-test="types-of-investment-filter"
+            />
+            <RoutedTypeahead
+              isMulti={true}
+              legend="Minimum Return Rate"
+              name="minimum-return-rate"
+              qsParam={QS_PARAMS.minimumReturnRate}
+              placeholder="Search return rates"
+              options={filterOptions.minimumReturnRate}
+              selectedOptions={selectedMinimumReturnRate}
+              data-test="minimum-return-rate-filter"
+            />
+            <RoutedTypeahead
+              isMulti={true}
+              legend="Time horizon tenor"
+              name="time-horizon-tenor"
+              qsParam={QS_PARAMS.timeHorizon}
+              placeholder="Search time horizons"
+              options={filterOptions.timeHorizon}
+              selectedOptions={selectedTimeHorizon}
+              data-test="time-horizon-tenor-filter"
+            />
+            <RoutedTypeahead
+              isMulti={true}
+              legend="Restrictions and Conditions"
+              name="restrictions-conditions"
+              qsParam={QS_PARAMS.restrictions}
+              placeholder="Search restrictions"
+              options={filterOptions.restrictions}
+              selectedOptions={selectedRestrictions}
+              data-test="restrictions-conditions-filter"
+            />
+            <RoutedTypeahead
+              isMulti={true}
+              legend="Construction risk"
+              name="construction-risk"
+              qsParam={QS_PARAMS.constructionRisk}
+              placeholder="Search risks"
+              options={filterOptions.constructionRisk}
+              selectedOptions={selectedConstructionRisk}
+              data-test="construction-risk-filter"
+            />
+            <RoutedTypeahead
+              isMulti={true}
+              legend="Minimum equity percentage"
+              name="minimum-equity-percentage"
+              qsParam={QS_PARAMS.minimumEquityPercentage}
+              placeholder="Search percentages"
+              options={filterOptions.minimumEquityPercentage}
+              selectedOptions={selectedMinimumEquityPercentage}
+              data-test="minimum-equity-percentage-filter"
+            />
+            <RoutedTypeahead
+              isMulti={true}
+              legend="Desired deal role"
+              name="desired-deal-role"
+              qsParam={QS_PARAMS.desiredDealRole}
+              placeholder="Search deal roles"
+              options={filterOptions.desiredDealRole}
+              selectedOptions={selectedDesiredDealRole}
+              data-test="desired-deal-role-filter"
             />
           </CollectionFilters>
         </FilteredCollectionList>

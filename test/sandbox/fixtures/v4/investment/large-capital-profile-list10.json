@@ -18,11 +18,8 @@
                 "required_checks_conducted"
             ],
             "incomplete_requirements_fields": [
-                "deal_ticket_sizes",
                 "investment_types",
-                "minimum_return_rate",
                 "time_horizons",
-                "construction_risks",
                 "minimum_equity_percentage",
                 "desired_deal_roles",
                 "restrictions",
@@ -40,11 +37,31 @@
             "required_checks_conducted": null,
             "required_checks_conducted_on": null,
             "required_checks_conducted_by": null,
-            "deal_ticket_sizes": [],
+            "deal_ticket_sizes": [
+                {
+                    "id": "56492c50-aa12-404d-a14e-1eaae24ac6ee",
+                    "name": "Up to £49 million",
+                    "disabled_on": null
+                },
+                {
+                    "id": "54df4ffb-5787-49b8-a7d2-ba33040fa32f",
+                    "name": "£50-99 million",
+                    "disabled_on": null
+                }
+            ],
             "investment_types": [],
-            "minimum_return_rate": null,
+            "minimum_return_rate": {
+                "id": "6ecbd7d2-e16a-4bfd-a4b9-8c9bca947302",
+                "name": "10-15%",
+                "disabled_on": null
+            },
             "time_horizons": [],
-            "construction_risks": [],
+            "construction_risks": [
+                {
+                    "id": "79cc3963-9376-4771-9cba-c1b3cc0ade33",
+                    "name": "Greenfield (construction risk)"
+                }
+            ],
             "minimum_equity_percentage": null,
             "desired_deal_roles": [],
             "restrictions": [],
@@ -70,14 +87,10 @@
                 "required_checks_conducted"
             ],
             "incomplete_requirements_fields": [
-                "deal_ticket_sizes",
                 "investment_types",
                 "minimum_return_rate",
-                "time_horizons",
-                "construction_risks",
                 "minimum_equity_percentage",
                 "desired_deal_roles",
-                "restrictions",
                 "asset_classes_of_interest"
             ],
             "incomplete_location_fields": [
@@ -92,14 +105,39 @@
             "required_checks_conducted": null,
             "required_checks_conducted_on": null,
             "required_checks_conducted_by": null,
-            "deal_ticket_sizes": [],
+            "deal_ticket_sizes": [
+                {
+                    "id": "56492c50-aa12-404d-a14e-1eaae24ac6ee",
+                    "name": "Up to £49 million",
+                    "disabled_on": null
+                }
+            ],
             "investment_types": [],
             "minimum_return_rate": null,
-            "time_horizons": [],
-            "construction_risks": [],
+            "time_horizons": [
+                {
+                    "id": "c4579a5e-4588-4952-a974-e03475a3f559",
+                    "name": "15 years +"
+                }
+            ],
+            "construction_risks": [
+                {
+                    "id": "79cc3963-9376-4771-9cba-c1b3cc0ade33",
+                    "name": "Greenfield (construction risk)"
+                },
+                {
+                    "id": "884deaf6-cb0c-4036-b78c-efd92cb10098",
+                    "name": "Brownfield (some construction risk)"
+                }
+            ],
             "minimum_equity_percentage": null,
             "desired_deal_roles": [],
-            "restrictions": [],
+            "restrictions": [
+                {
+                    "id": "daa293d4-e18e-44af-b139-bd1b4c4a9067",
+                    "name": "Inflation adjustment"
+                }
+            ],
             "asset_classes_of_interest": [],
             "uk_region_locations": [],
             "notes_on_locations": "",
@@ -124,10 +162,7 @@
             "incomplete_requirements_fields": [
                 "deal_ticket_sizes",
                 "investment_types",
-                "minimum_return_rate",
                 "time_horizons",
-                "construction_risks",
-                "minimum_equity_percentage",
                 "desired_deal_roles",
                 "restrictions",
                 "asset_classes_of_interest"
@@ -146,10 +181,23 @@
             "required_checks_conducted_by": null,
             "deal_ticket_sizes": [],
             "investment_types": [],
-            "minimum_return_rate": null,
+            "minimum_return_rate": {
+                "id": "6ecbd7d2-e16a-4bfd-a4b9-8c9bca947302",
+                "name": "10-15%",
+                "disabled_on": null
+            },
             "time_horizons": [],
-            "construction_risks": [],
-            "minimum_equity_percentage": null,
+            "construction_risks": [
+                {
+                    "id": "884deaf6-cb0c-4036-b78c-efd92cb10098",
+                    "name": "Brownfield (some construction risk)"
+                }
+            ],
+            "minimum_equity_percentage": {
+                "id": "488bf5ad-4c8e-4e6b-b339-182f291dcd76",
+                "name": "50% +",
+                "disabled_on": null
+            },
             "desired_deal_roles": [],
             "restrictions": [],
             "asset_classes_of_interest": [],
@@ -174,14 +222,10 @@
                 "required_checks_conducted"
             ],
             "incomplete_requirements_fields": [
-                "deal_ticket_sizes",
                 "investment_types",
                 "minimum_return_rate",
                 "time_horizons",
                 "construction_risks",
-                "minimum_equity_percentage",
-                "desired_deal_roles",
-                "restrictions",
                 "asset_classes_of_interest"
             ],
             "incomplete_location_fields": [
@@ -196,14 +240,39 @@
             "required_checks_conducted": null,
             "required_checks_conducted_on": null,
             "required_checks_conducted_by": null,
-            "deal_ticket_sizes": [],
+            "deal_ticket_sizes": [
+                {
+                    "id": "54df4ffb-5787-49b8-a7d2-ba33040fa32f",
+                    "name": "£50-99 million",
+                    "disabled_on": null
+                }
+            ],
             "investment_types": [],
             "minimum_return_rate": null,
             "time_horizons": [],
             "construction_risks": [],
-            "minimum_equity_percentage": null,
-            "desired_deal_roles": [],
-            "restrictions": [],
+            "minimum_equity_percentage": {
+                "id": "488bf5ad-4c8e-4e6b-b339-182f291dcd76",
+                "name": "50% +",
+                "disabled_on": null
+            },
+            "desired_deal_roles": [
+                {
+                    "id": "29d930e6-de2f-403d-87dc-764bc418d33a",
+                    "name": "Co-lead manager",
+                    "disabled_on": null
+                }
+            ],
+            "restrictions": [
+                {
+                    "id": "daa293d4-e18e-44af-b139-bd1b4c4a9067",
+                    "name": "Inflation adjustment"
+                },
+                {
+                    "id": "7dad0891-9174-437d-bb30-b610ac1ecd0a",
+                    "name": "Require board seat"
+                }
+            ],
             "asset_classes_of_interest": [],
             "uk_region_locations": [],
             "notes_on_locations": "",
@@ -229,10 +298,7 @@
                 "investment_types",
                 "minimum_return_rate",
                 "time_horizons",
-                "construction_risks",
-                "minimum_equity_percentage",
-                "desired_deal_roles",
-                "restrictions"
+                "construction_risks"
             ],
             "incomplete_location_fields": [
                 "uk_region_locations",
@@ -254,9 +320,29 @@
             "minimum_return_rate": null,
             "time_horizons": [],
             "construction_risks": [],
-            "minimum_equity_percentage": null,
-            "desired_deal_roles": [],
-            "restrictions": [],
+            "minimum_equity_percentage": {
+                "id": "f7b72f8b-399e-43b2-b7ef-f42a154ef916",
+                "name": "1-19%",
+                "disabled_on": null
+            },
+            "desired_deal_roles": [
+                {
+                    "id": "29d930e6-de2f-403d-87dc-764bc418d33a",
+                    "name": "Co-lead manager",
+                    "disabled_on": null
+                },
+                {
+                    "id": "efadc6bb-2a73-4627-8ce3-9dc2c34c3f31",
+                    "name": "Lead manager / deal structure",
+                    "disabled_on": null
+                }
+            ],
+            "restrictions": [
+                {
+                    "id": "7dad0891-9174-437d-bb30-b610ac1ecd0a",
+                    "name": "Require board seat"
+                }
+            ],
             "asset_classes_of_interest": [
                 {
                     "name": "Biofuel",
@@ -287,13 +373,9 @@
                 "required_checks_conducted"
             ],
             "incomplete_requirements_fields": [
-                "deal_ticket_sizes",
-                "investment_types",
                 "minimum_return_rate",
                 "time_horizons",
                 "construction_risks",
-                "minimum_equity_percentage",
-                "desired_deal_roles",
                 "restrictions",
                 "asset_classes_of_interest"
             ],
@@ -312,13 +394,34 @@
             "required_checks_conducted": null,
             "required_checks_conducted_on": null,
             "required_checks_conducted_by": null,
-            "deal_ticket_sizes": [],
-            "investment_types": [],
+            "deal_ticket_sizes": [
+                {
+                    "id": "54df4ffb-5787-49b8-a7d2-ba33040fa32f",
+                    "name": "£50-99 million",
+                    "disabled_on": null
+                }
+            ],
+            "investment_types": [
+                {
+                    "id": "4170d99a-02fc-46ee-8fd4-3fe786717708",
+                    "name": "Direct Investment in Project Equity"
+                }
+            ],
             "minimum_return_rate": null,
             "time_horizons": [],
             "construction_risks": [],
-            "minimum_equity_percentage": null,
-            "desired_deal_roles": [],
+            "minimum_equity_percentage": {
+                "id": "f7b72f8b-399e-43b2-b7ef-f42a154ef916",
+                "name": "1-19%",
+                "disabled_on": null
+            },
+            "desired_deal_roles": [
+                {
+                    "id": "efadc6bb-2a73-4627-8ce3-9dc2c34c3f31",
+                    "name": "Lead manager / deal structure",
+                    "disabled_on": null
+                }
+            ],
             "restrictions": [],
             "asset_classes_of_interest": [
                 {
@@ -345,10 +448,7 @@
                 "investor_description"
             ],
             "incomplete_requirements_fields": [
-                "deal_ticket_sizes",
-                "investment_types",
                 "minimum_return_rate",
-                "time_horizons",
                 "construction_risks",
                 "minimum_equity_percentage",
                 "desired_deal_roles",
@@ -370,10 +470,35 @@
             },
             "required_checks_conducted_on": null,
             "required_checks_conducted_by": null,
-            "deal_ticket_sizes": [],
-            "investment_types": [],
+            "deal_ticket_sizes": [
+                {
+                    "id": "54df4ffb-5787-49b8-a7d2-ba33040fa32f",
+                    "name": "£50-99 million",
+                    "disabled_on": null
+                }
+            ],
+            "investment_types": [
+                {
+                    "id": "4170d99a-02fc-46ee-8fd4-3fe786717708",
+                    "name": "Direct Investment in Project Equity"
+                },
+                {
+                    "id": "8feb6087-d61c-43bd-9bf1-3d9e1129432b",
+                    "name": "Venture capital funds",
+                    "disabled_on": null
+                }
+            ],
             "minimum_return_rate": null,
-            "time_horizons": [],
+            "time_horizons": [
+                {
+                    "id": "d2d1bdbb-c42a-459c-adaa-fce45ce08cc9",
+                    "name": "Up to 5 years"
+                },
+                {
+                    "id": "c4579a5e-4588-4952-a974-e03475a3f559",
+                    "name": "15 years +"
+                }
+            ],
             "construction_risks": [],
             "minimum_equity_percentage": null,
             "desired_deal_roles": [],
@@ -458,8 +583,6 @@
             ],
             "incomplete_requirements_fields": [
                 "deal_ticket_sizes",
-                "investment_types",
-                "minimum_return_rate",
                 "time_horizons",
                 "construction_risks",
                 "minimum_equity_percentage",
@@ -483,8 +606,18 @@
             "required_checks_conducted_on": null,
             "required_checks_conducted_by": null,
             "deal_ticket_sizes": [],
-            "investment_types": [],
-            "minimum_return_rate": null,
+            "investment_types": [
+                {
+                    "id": "8feb6087-d61c-43bd-9bf1-3d9e1129432b",
+                    "name": "Venture capital funds",
+                    "disabled_on": null
+                }
+            ],
+            "minimum_return_rate": {
+                "id": "65c9bc7a-af68-4549-a9c9-70cd73109617",
+                "name": "5-10%",
+                "disabled_on": null
+            },
             "time_horizons": [],
             "construction_risks": [],
             "minimum_equity_percentage": null,
@@ -518,8 +651,6 @@
             "incomplete_requirements_fields": [
                 "deal_ticket_sizes",
                 "investment_types",
-                "minimum_return_rate",
-                "time_horizons",
                 "construction_risks",
                 "minimum_equity_percentage",
                 "desired_deal_roles",
@@ -540,8 +671,17 @@
             "required_checks_conducted_by": null,
             "deal_ticket_sizes": [],
             "investment_types": [],
-            "minimum_return_rate": null,
-            "time_horizons": [],
+            "minimum_return_rate": {
+                "id": "65c9bc7a-af68-4549-a9c9-70cd73109617",
+                "name": "5-10%",
+                "disabled_on": null
+            },
+            "time_horizons": [
+                {
+                    "id": "d2d1bdbb-c42a-459c-adaa-fce45ce08cc9",
+                    "name": "Up to 5 years"
+                }
+            ],
             "construction_risks": [],
             "minimum_equity_percentage": null,
             "desired_deal_roles": [],

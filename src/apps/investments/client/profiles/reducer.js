@@ -13,6 +13,14 @@ const initialState = {
   filterOptions: {
     countries: [],
     assetClassesOfInterest: [],
+    dealTicketSize: [],
+    investmentTypes: [],
+    minimumReturnRate: [],
+    timeHorizon: [],
+    restrictions: [],
+    constructionRisk: [],
+    minimumEquityPercentage: [],
+    desiredDealRole: [],
   },
 }
 
