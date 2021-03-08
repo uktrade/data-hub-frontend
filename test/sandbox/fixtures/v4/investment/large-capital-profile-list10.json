@@ -222,8 +222,7 @@
                 "investor_type",
                 "investable_capital",
                 "global_assets_under_management",
-                "investor_description",
-                "required_checks_conducted"
+                "investor_description"
             ],
             "incomplete_requirements_fields": [
                 "deal_ticket_sizes",
@@ -244,7 +243,10 @@
             "investable_capital": null,
             "global_assets_under_management": null,
             "investor_description": "",
-            "required_checks_conducted": null,
+            "required_checks_conducted": {
+                "id": "02d6fc9b-fbb9-4621-b247-d86f2487898e",
+                "name": "Cleared"
+            },
             "required_checks_conducted_on": null,
             "required_checks_conducted_by": null,
             "deal_ticket_sizes": [],
@@ -340,8 +342,7 @@
                 "investor_type",
                 "investable_capital",
                 "global_assets_under_management",
-                "investor_description",
-                "required_checks_conducted"
+                "investor_description"
             ],
             "incomplete_requirements_fields": [
                 "deal_ticket_sizes",
@@ -363,7 +364,10 @@
             "investable_capital": null,
             "global_assets_under_management": null,
             "investor_description": "",
-            "required_checks_conducted": null,
+            "required_checks_conducted": {
+                "id": "9beab8fc-1094-49b4-97d0-37bc7a9de631",
+                "name": "Issues identified"
+            },
             "required_checks_conducted_on": null,
             "required_checks_conducted_by": null,
             "deal_ticket_sizes": [],
@@ -391,8 +395,7 @@
                 "investor_type",
                 "investable_capital",
                 "global_assets_under_management",
-                "investor_description",
-                "required_checks_conducted"
+                "investor_description"
             ],
             "incomplete_requirements_fields": [
                 "deal_ticket_sizes",
@@ -414,7 +417,10 @@
             "investable_capital": null,
             "global_assets_under_management": null,
             "investor_description": "",
-            "required_checks_conducted": null,
+            "required_checks_conducted": {
+                "id": "9beab8fc-1094-49b4-97d0-37bc7a9de631",
+                "name": "Issues identified"
+            },
             "required_checks_conducted_on": null,
             "required_checks_conducted_by": null,
             "deal_ticket_sizes": [],
