@@ -2,20 +2,72 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Details } from 'govuk-react'
 import Button from '@govuk-react/button'
-import { BLUE } from 'govuk-colours'
+import { BLUE, GREY_1 } from 'govuk-colours'
 import styled from 'styled-components'
-import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
+import { MEDIA_QUERIES, SPACING, FONT_SIZE } from '@govuk-react/constants'
 
+import icon from './assets/search-gov.uk.svg'
 import { Tag } from '../../components'
-import { companies } from '../../../lib/urls'
+import { companies, investments } from '../../../lib/urls'
 import InvestmentEstimatedLandDate from './InvestmentEstimatedLandDate'
 import InvestmentTimeline from './InvestmentTimeline'
 
+const ListItem = styled('li')`
+  padding: ${SPACING.SCALE_3} 0;
+  border-bottom: 2px solid ${GREY_1};
+`
+
+const ListItemHeaderContainer = styled('div')`
+  display: flex;
+  align-items: top;
+  align-content: stretch;
+`
+
+const ListItemHeader = styled('h2')`
+  flex-grow: 1;
+  font-size: ${FONT_SIZE.SIZE_19};
+  margin: 0;
+`
+
+const ListItemHeaderTagContainer = styled('div')`
+  padding: 0 ${SPACING.SCALE_4};
+`
+
+const ListItemHeaderActionContainer = styled('div')`
+  a {
+    margin-bottom: 0;
+  }
+`
+
 const StyledDetails = styled(Details)`
+  padding: 0;
+  margin: 0;
   > div {
     border: none;
     padding: 0;
     margin-bottom: ${SPACING.SCALE_2};
+  }
+  summary {
+    padding-left: ${SPACING.SCALE_5};
+    &::before {
+      clip-path: none;
+      background: url(${icon}) 0 0 no-repeat;
+      width: 30px;
+      height: 30px;
+      border: none;
+      transform: rotate(180deg);
+    }
+    span {
+      display: inline-block;
+    }
+  }
+  &[open] summary::before {
+    border: none;
+    width: 30px;
+    height: 30px;
+    clip-path: none;
+    background: url(${icon}) 0 0 no-repeat;
+    transform: rotate(0);
   }
 `
 
@@ -37,30 +89,45 @@ const StyledInvestmentEstimatedLandDate = styled(InvestmentEstimatedLandDate)`
 `
 
 const InvestmentListItem = ({
+  id,
   name,
   stage,
   estimated_land_date,
   showDetails,
   investor_company,
+  project_code,
 }) => {
   return (
-    <li data-test="my-projects-list-item">
-      <Tag
-        colour="grey"
-        data-test="project-status-tag"
-        aria-label="project status"
+    <ListItem data-test="projects-list-item">
+      <ListItemHeaderContainer>
+        <ListItemHeader data-test="project-header">
+          <a href={`${investments.projects.details(id)}`}>{name}</a>
+        </ListItemHeader>
+        <ListItemHeaderTagContainer>
+          <Tag
+            colour="grey"
+            data-test="project-status-tag"
+            aria-label="project status"
+          >
+            {stage.name}
+          </Tag>
+        </ListItemHeaderTagContainer>
+        <ListItemHeaderActionContainer>
+          <Button
+            buttonColour={BLUE}
+            href={companies.interactions.create(investor_company.id)}
+            as="a"
+            data-test="add-interaction"
+          >
+            Add interaction
+          </Button>
+        </ListItemHeaderActionContainer>
+      </ListItemHeaderContainer>
+      <StyledDetails
+        summary={project_code}
+        open={showDetails}
+        data-test="project-details"
       >
-        {stage.name}
-      </Tag>
-
-      <Button
-        as="a"
-        buttonColour={BLUE}
-        href={companies.interactions.create(investor_company.id)}
-      >
-        Add interaction
-      </Button>
-      <StyledDetails summary={name} open={showDetails}>
         <TimelineRow>
           <StyledInvestmentTimeline stage={stage} />
           <StyledInvestmentEstimatedLandDate
@@ -68,16 +135,21 @@ const InvestmentListItem = ({
           />
         </TimelineRow>
       </StyledDetails>
-    </li>
+    </ListItem>
   )
 }
 
 InvestmentListItem.propTypes = {
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  project_code: PropTypes.string.isRequired,
   stage: PropTypes.shape({
     name: PropTypes.string,
   }).isRequired,
   estimated_land_date: PropTypes.string.isRequired,
+  investor_company: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+  }).isRequired,
 }
 
 export default InvestmentListItem
