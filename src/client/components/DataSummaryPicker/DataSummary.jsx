@@ -49,6 +49,11 @@ const DataSummary = ({
   children,
 }) => {
   const total = data.reduce((prev, curr) => prev + curr.value, 0)
+  const chartData = data.map(({ label, value }) => ({
+    id: label,
+    label,
+    value,
+  }))
 
   return (
     <>
@@ -66,7 +71,7 @@ const DataSummary = ({
       {accessible || total === 0 ? (
         <DataTable data={data} headers={headers} total={total} />
       ) : (
-        <PieChart data={data} />
+        <PieChart data={chartData} height={450} />
       )}
     </>
   )

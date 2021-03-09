@@ -1,14 +1,15 @@
-# UserDetails
+# PieChart
 
 ### Description
+A visual representaion of data in the form of a pie chart. This component is built using the [nivo.js](https://nivo.rocks/) library which is a wrapper around d3.
 
-Shows some details about the user when they go to the dashboard.
 
 ### Usage
 
 ```jsx
 <PieChart
   data={data}
+  height={450}
 />
 ```
 
@@ -16,7 +17,9 @@ Shows some details about the user when they go to the dashboard.
 
 | Prop         | Required | Default | Type   | Description                                                                     |
 | :----------- | :------- | :------ | :----- | :------------------------------------------------------------------------------ |
-| `data`       | true     | ``````  | string | The data for the pie chart. Some transformation takes place in order to convert the data to the format required by Nivo.
+| `data`       | true     | ``````  | string | The data for the pie chart.
+| `height`       | true     | ``````  | number | A height value is need to render the chart
+
 
 ### Data format
 ```jsx
@@ -26,4 +29,25 @@ const exampleData = [
     label: 'Prospect',
     value: 7,
   },
+  {
+    id: 'Assign PM',
+    label: 'Assign PM',
+    value: 2,
+  },
+  {
+    id: 'Active',
+    label: 'Active',
+    value: 5,
+  },
+  {
+    id: 'Verify win',
+    label: 'Verify win',
+    value: 2,
+  },
+  {
+    id: 'Won',
+    label: 'Won',
+    value: 2,
+  },
+]
 ```
