@@ -44,7 +44,7 @@ const PersonalisedDashboard = ({ id, adviser, csrfToken }) => (
       <GridRow data-test="dashboard">
         <GridCol setWidth="one-third">
           <Aside>
-            <InvestmentReminders />
+            <InvestmentReminders adviser={adviser} />
             <InvestmentProjectSummary adviser={adviser} />
           </Aside>
         </GridCol>

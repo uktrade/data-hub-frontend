@@ -23,6 +23,7 @@ const ALLOWLIST = [
   '/v4/company/:id/assign-one-list-tier-and-global-account-manager',
   '/v4/company/:id/remove-from-one-list',
   '/v4/company/:id/update-one-list-core-team',
+  '/v4/proposition',
   '/v3/contact',
   '/v4/company/:id/assign-regional-account-manager',
   '/v4/dnb/company-change-request',
