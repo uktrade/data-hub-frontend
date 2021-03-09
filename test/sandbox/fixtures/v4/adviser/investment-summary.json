@@ -13,7 +13,7 @@
                   "value": 3
                 },
                 "assign_pm": {
-                  "label": "Assigned",
+                  "label": "Assign PM",
                   "id": "c9864359-fb1a-4646-a4c1-97d10189fc03",
                   "value": 0
                 },
@@ -47,7 +47,7 @@
                   "value": 3
                 },
                 "assigned": {
-                  "label": "Assigned",
+                  "label": "Assign PM",
                   "id": "c9864359-fb1a-4646-a4c1-97d10189fc03",
                   "value": 3
                 },
