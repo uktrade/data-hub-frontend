@@ -43,7 +43,12 @@ const globalFields = {
     label: 'US State',
     initialOption: '-- Select US state --',
     options() {
-      return metadata.administrativeAreaOptions.map(transformObjectToOption)
+      return metadata.administrativeAreaOptions
+        .filter(
+          (states) =>
+            states.country.id == '81756b9a-5d95-e211-a939-e4115bead28a'
+        )
+        .map(transformObjectToOption)
     },
   },
 
