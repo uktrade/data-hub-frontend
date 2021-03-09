@@ -16,6 +16,8 @@ export function getLargeCapitalProfiles({
   constructionRisk,
   minimumEquityPercentage,
   desiredDealRole,
+  investableCapital,
+  globalAssetsUnderManagement,
 }) {
   let offset = limit * (parseInt(page, 10) - 1) || 0
   return apiProxyAxios
@@ -36,6 +38,23 @@ export function getLargeCapitalProfiles({
       desired_deal_role: desiredDealRole,
       ...(investorCompanyName
         ? { investor_company_name: investorCompanyName }
+        : {}),
+      ...(globalAssetsUnderManagement.min
+        ? {
+            global_assets_under_management_start:
+              globalAssetsUnderManagement.min,
+          }
+        : {}),
+      ...(globalAssetsUnderManagement.max
+        ? {
+            global_assets_under_management_end: globalAssetsUnderManagement.max,
+          }
+        : {}),
+      ...(investableCapital.min
+        ? { investable_capital_start: investableCapital.min }
+        : {}),
+      ...(investableCapital.max
+        ? { investable_capital_end: investableCapital.max }
         : {}),
     })
     .then(({ data }) => {
