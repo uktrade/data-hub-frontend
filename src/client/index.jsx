@@ -222,7 +222,13 @@ function App() {
         <Dashboard id="homepage" />
       </Mount>
       <Mount selector="#dashboard">
-        {(props) => <PersonalisedDashboard id="dashboard" {...props} />}
+        {(props) => (
+          <PersonalisedDashboard
+            csrfToken={globalProps.csrfToken}
+            id="dashboard"
+            {...props}
+          />
+        )}
       </Mount>
       <Mount selector="#delete-company-list">
         {(props) => (
