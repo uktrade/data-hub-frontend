@@ -4,7 +4,9 @@ import styled from 'styled-components'
 import { typography } from '@govuk-react/lib'
 import { SPACING } from '@govuk-react/constants'
 import { YELLOW, BLACK } from 'govuk-colours'
-import { format, endOfToday, differenceInCalendarDays } from 'date-fns'
+import { format } from 'date-fns'
+
+import { getDifferenceInDays } from '../../utils/date-utils'
 
 const StyledPanel = styled('div')`
   padding: ${SPACING.SCALE_4};
@@ -21,18 +23,6 @@ const StyledBody = styled('div')`
   text-align: center;
   font-size: ${typography.font({ size: 16 })};
 `
-
-const getDifferenceInDays = (estimatedLandDate) => {
-  const today = endOfToday()
-  const difference = differenceInCalendarDays(estimatedLandDate, today)
-  return difference === 1
-    ? difference + ' day'
-    : difference === 0
-    ? 'Today'
-    : difference < 0
-    ? difference * -1 + ' days ago'
-    : difference + ' days'
-}
 
 const InvestmentEstimatedLandDate = ({ estimatedLandDate }) => (
   <StyledPanel>

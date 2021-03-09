@@ -10,4 +10,4 @@ export const fetchOutstandingPropositions = ({ adviser }) =>
         limit: 5,
       },
     })
-    .then(({ data }) => data.results)
+    .then(({ data }) => data)
