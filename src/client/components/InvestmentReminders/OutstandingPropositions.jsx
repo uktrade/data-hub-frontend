@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { format } from 'date-fns'
 
 import { H3 } from '@govuk-react/heading'
-import { RED, TEXT } from 'govuk-colours'
+import { LINK_COLOUR, RED, TEXT } from 'govuk-colours'
 import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
 import urls from '../../../lib/urls'
@@ -21,6 +21,7 @@ const StyledSubHeading = styled(H3)`
 const StyledProjectLink = styled('a')`
   display: block;
   font-size: ${FONT_SIZE.SIZE_19};
+  color: ${LINK_COLOUR};
 `
 
 const StyledDueDate = styled('span')`
@@ -36,7 +37,11 @@ const StyledDueCountdown = styled('span')`
   color: ${TEXT};
 `
 
-const StyledList = styled('ul')``
+const StyledList = styled('ul')`
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+`
 
 const StyledListItem = styled('li')`
   margin-bottom: ${SPACING.SCALE_3};
