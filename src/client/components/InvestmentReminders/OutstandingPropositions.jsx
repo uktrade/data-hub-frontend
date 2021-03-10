@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 import { H3 } from '@govuk-react/heading'
-import { RED } from 'govuk-colours'
+import { RED, TEXT } from 'govuk-colours'
 import { FONT_SIZE, SPACING } from '@govuk-react/constants'
 
 import { format } from 'date-fns'
@@ -11,25 +11,29 @@ import { format } from 'date-fns'
 import urls from '../../../lib/urls'
 import { getDifferenceInDays } from '../../utils/date-utils'
 
-const RemindersHeading = styled(H3)`
+const StyledSubHeading = styled(H3)`
   color: ${RED};
   font-size: ${FONT_SIZE.SIZE_19};
   font-weight: normal;
-  padding-top: ${SPACING.SCALE_2};
+  margin-bottom: ${SPACING.SCALE_4};
 `
 
 const StyledProjectLink = styled('a')`
   display: block;
-  flex: 1 0 100%;
+  font-size: ${FONT_SIZE.SIZE_19};
 `
 
 const StyledDueDate = styled('span')`
   margin-top: ${SPACING.SCALE_1};
+  font-size: ${FONT_SIZE.SIZE_16};
+  color: ${TEXT};
 `
 
 const StyledDueCountdown = styled('span')`
   margin-top: ${SPACING.SCALE_1};
   text-align: right;
+  font-size: ${FONT_SIZE.SIZE_16};
+  color: ${TEXT};
 `
 
 const StyledList = styled('ul')``
@@ -47,7 +51,7 @@ const OutstandingPropositions = ({ outstandingPropositions = {} }) => {
   const { results = [], count = 0 } = outstandingPropositions
   return (
     <>
-      <RemindersHeading>Outstanding propositions ({count})</RemindersHeading>
+      <StyledSubHeading>Outstanding propositions ({count})</StyledSubHeading>
       <StyledList>
         {results.map(({ id, investment_project, deadline }) => (
           <StyledListItem key={id}>
