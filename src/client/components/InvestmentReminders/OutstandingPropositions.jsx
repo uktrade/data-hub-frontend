@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { format } from 'date-fns'
 
 import { H3 } from '@govuk-react/heading'
 import { RED, TEXT } from 'govuk-colours'
-import { FONT_SIZE, SPACING } from '@govuk-react/constants'
-
-import { format } from 'date-fns'
+import { FONT_SIZE, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 
 import urls from '../../../lib/urls'
 import { getDifferenceInDays } from '../../utils/date-utils'
@@ -14,8 +13,9 @@ import { getDifferenceInDays } from '../../utils/date-utils'
 const StyledSubHeading = styled(H3)`
   color: ${RED};
   font-size: ${FONT_SIZE.SIZE_19};
-  font-weight: normal;
-  margin-bottom: ${SPACING.SCALE_4};
+  font-weight: ${FONT_WEIGHTS.regular};
+  margin-top: ${SPACING.SCALE_2};
+  margin-bottom: ${SPACING.SCALE_2};
 `
 
 const StyledProjectLink = styled('a')`
