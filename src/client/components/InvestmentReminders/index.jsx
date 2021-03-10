@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import { OUTSTANDING_PROPOSITIONS__LOADED } from '../../actions'
 import Task from '../Task/index.jsx'
+import ToggleSection from '../ToggleSection'
 
 import OutstandingPropositions from './OutstandingPropositions'
 import { ID, TASK_GET_OUTSTANDING_PROPOSITIONS, state2props } from './state'
@@ -19,9 +20,20 @@ const InvestmentReminders = ({ adviser, outstandingPropositions }) => (
     }}
   >
     {() => (
-      <OutstandingPropositions
-        outstandingPropositions={outstandingPropositions}
-      />
+      <ToggleSection
+        id="investment-reminders-toggle"
+        label={
+          <>
+            Reminders (
+            {outstandingPropositions && outstandingPropositions.count})
+          </>
+        }
+        isOpen={true}
+      >
+        <OutstandingPropositions
+          outstandingPropositions={outstandingPropositions}
+        />
+      </ToggleSection>
     )}
   </Task.Status>
 )
