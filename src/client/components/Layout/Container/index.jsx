@@ -9,9 +9,9 @@ const Container = styled('div')`
     margin: 0 ${SPACING.SCALE_5};
   }
 
-  @media only screen and (min-width: 1200px) {
+  @media only screen and (min-width: ${({ width }) => `${width}px`}) {
     margin: 0 auto;
-    max-width: 1200px;
+    max-width: ${({ width }) => `${width}px`};
   }
 `
 
