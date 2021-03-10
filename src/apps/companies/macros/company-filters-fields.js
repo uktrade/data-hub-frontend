@@ -63,7 +63,7 @@ const companyFiltersFields = function ({ sectorOptions }) {
     },
     {
       macroName: 'Typeahead',
-      name: QUERY_FIELDS_MAP.ukRegion,
+      name: QUERY_FIELDS_MAP.usStates,
       isAsync: false,
       placeholder: 'Search US state',
       useSubLabel: false,
