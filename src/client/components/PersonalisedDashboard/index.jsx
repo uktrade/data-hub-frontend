@@ -27,6 +27,15 @@ const SearchContainer = styled(Container)`
   ${MEDIA_QUERIES.TABLET} {
     padding: ${SPACING.SCALE_3} 0;
   }
+
+  ${MEDIA_QUERIES.DESKTOP} {
+    padding: ${SPACING.SCALE_4} 0;
+  }
+
+  @media only screen and (min-width: 960px) {
+    margin: 0 auto;
+    max-width: 960px;
+  }
 `
 
 const PersonalisedDashboard = ({ id, adviser, csrfToken }) => (
