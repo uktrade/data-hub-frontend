@@ -31,21 +31,16 @@ const SearchContainer = styled(Container)`
   ${MEDIA_QUERIES.DESKTOP} {
     padding: ${SPACING.SCALE_4} 0;
   }
-
-  @media only screen and (min-width: 960px) {
-    margin: 0 auto;
-    max-width: 960px;
-  }
 `
 
 const PersonalisedDashboard = ({ id, adviser, csrfToken }) => (
   <>
     <SearchBackground data-test="search-data-hub">
-      <SearchContainer>
+      <SearchContainer width="960">
         <Search csrfToken={csrfToken} />
       </SearchContainer>
     </SearchBackground>
-    <Container>
+    <Container width="1200">
       <GridRow data-test="dashboard">
         <GridCol setWidth="one-third">
           <Aside>
