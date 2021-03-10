@@ -6,14 +6,14 @@ import VisuallyHidden from '@govuk-react/visually-hidden'
 
 const StyledButton = styled('button')`
   position: absolute;
-  top: 1px;
-  right: 1px;
-  border: 0px;
-  margin: 0px;
+  top: 0;
+  right: 0;
+  border: 0;
+  margin: 0;
+  border-radius: 0;
   cursor: pointer;
   padding: 10px;
   overflow: hidden;
-  border-radius: 0;
   box-sizing: border-box;
   width: ${({ size }) => `${size}px`};
   height: ${({ size }) => `${size}px`};
@@ -21,7 +21,7 @@ const StyledButton = styled('button')`
 `
 
 const SearchButton = ({
-  size = 38,
+  size = 40,
   colour = WHITE,
   backgroundColour = BLACK,
 }) => (
