@@ -10,11 +10,11 @@ import SearchButton from '../SearchButton'
 const StyledSearchContainer = styled('div')`
   position: relative;
   width: 100%;
-  max-width: 900px;
 `
 
 const StyledSearchInput = styled(Input)`
   width: 100%;
+  border: 0;
 `
 
 const Search = ({ csrfToken }) => (
