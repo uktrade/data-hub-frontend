@@ -20,7 +20,7 @@ const DownloadDataHeader = ({
   entityName = '',
   ...props
 }) => {
-  if (!count) {
+  if (!count || !downloadLink) {
     return null
   }
 
