@@ -14,11 +14,12 @@ import { ResponsivePie } from '@nivo/pie'
 const segmentColours = [BLUE, TURQUOISE, GREEN, YELLOW, GRASS_GREEN]
 
 const CentredMetric = ({ dataWithArc, centerX, centerY }) => {
-  let total = 0
-  dataWithArc.forEach((datum) => {
-    total += datum.value
-  })
-  const customY1 = centerY - 30
+  const total = dataWithArc.reduce(
+    (accumulator, datum) => accumulator + datum.value,
+    0
+  )
+
+  const customY1 = centerY - 20
   const customY2 = centerY + 20
   return (
     <>
@@ -44,7 +45,7 @@ const CentredMetric = ({ dataWithArc, centerX, centerY }) => {
           fontWeight: FONT_WEIGHTS.bold,
         }}
       >
-        {'Projects'}
+        Projects
       </text>
     </>
   )
@@ -58,7 +59,7 @@ const PieChart = ({ data, height }) => (
       }}
       data={data}
       colors={segmentColours}
-      margin={{ top: 30, right: 70, bottom: 150, left: 0 }}
+      margin={{ top: 30, right: 0, bottom: 150, left: 0 }}
       startAngle={-90}
       innerRadius={0.75}
       borderWidth={1}
