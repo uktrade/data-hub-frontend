@@ -48,7 +48,7 @@ describe('Dashboard search', () => {
     it('should contain an SVG icon', () => {
       cy.get('@form')
         .find('svg')
-        .should('have.attr', 'viewBox', '0 0 512 512')
+        .should('have.attr', 'viewBox', '0 0 18 18')
         .should('have.attr', 'focusable', 'false')
         .should('have.attr', 'aria-hidden', 'true')
     })
