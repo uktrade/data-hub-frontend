@@ -202,7 +202,7 @@ function FilteredCollectionHeader({
         />
         <RoutedFilterChips
           selectedOptions={
-            selectedFilters.selectedInvestableCapital.min
+            selectedFilters.selectedInvestableCapital?.min
               ? [
                   {
                     categoryLabel: 'Investable capital min',
@@ -216,7 +216,7 @@ function FilteredCollectionHeader({
         />
         <RoutedFilterChips
           selectedOptions={
-            selectedFilters.selectedInvestableCapital.max
+            selectedFilters.selectedInvestableCapital?.max
               ? [
                   {
                     categoryLabel: 'Investable capital max',
@@ -230,7 +230,7 @@ function FilteredCollectionHeader({
         />
         <RoutedFilterChips
           selectedOptions={
-            selectedFilters.selectedGlobalAssetsUnderManagement.min
+            selectedFilters.selectedGlobalAssetsUnderManagement?.min
               ? [
                   {
                     categoryLabel: 'Global assets under management min',
@@ -245,7 +245,7 @@ function FilteredCollectionHeader({
         />
         <RoutedFilterChips
           selectedOptions={
-            selectedFilters.selectedGlobalAssetsUnderManagement.max
+            selectedFilters.selectedGlobalAssetsUnderManagement?.max
               ? [
                   {
                     categoryLabel: 'Global assets under management max',

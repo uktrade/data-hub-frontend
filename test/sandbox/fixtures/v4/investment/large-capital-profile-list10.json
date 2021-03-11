@@ -368,7 +368,6 @@
             "incomplete_details_fields": [
                 "investor_type",
                 "investable_capital",
-                "global_assets_under_management",
                 "investor_description",
                 "required_checks_conducted"
             ],
@@ -388,8 +387,8 @@
                 "name": "Fund of funds",
                 "id": "ab084390-36bd-460d-ae7e-f33f173f5356"
             },
-            "investable_capital": null,
-            "global_assets_under_management": null,
+            "investable_capital": 1000,
+            "global_assets_under_management": 1000,
             "investor_description": "",
             "required_checks_conducted": null,
             "required_checks_conducted_on": null,
@@ -443,8 +442,6 @@
             },
             "incomplete_details_fields": [
                 "investor_type",
-                "investable_capital",
-                "global_assets_under_management",
                 "investor_description"
             ],
             "incomplete_requirements_fields": [
@@ -461,8 +458,8 @@
                 "other_countries_being_considered"
             ],
             "investor_type": null,
-            "investable_capital": null,
-            "global_assets_under_management": null,
+            "investable_capital": 2000,
+            "global_assets_under_management": 2000,
             "investor_description": "",
             "required_checks_conducted": {
                 "id": "9beab8fc-1094-49b4-97d0-37bc7a9de631",
@@ -518,8 +515,6 @@
             },
             "incomplete_details_fields": [
                 "investor_type",
-                "investable_capital",
-                "global_assets_under_management",
                 "investor_description"
             ],
             "incomplete_requirements_fields": [
@@ -539,8 +534,8 @@
                 "other_countries_being_considered"
             ],
             "investor_type": null,
-            "investable_capital": null,
-            "global_assets_under_management": null,
+            "investable_capital": 3000,
+            "global_assets_under_management": 3000,
             "investor_description": "",
             "required_checks_conducted": {
                 "id": "9beab8fc-1094-49b4-97d0-37bc7a9de631",
