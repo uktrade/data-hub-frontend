@@ -372,6 +372,10 @@ describe('Company Export tab', () => {
         visitExports(fixtures.company.marsExportsLtd.id)
       })
 
+      it('should not display a download data header', () => {
+        cy.get('[data-test="download-data-header"]').should('not.exist')
+      })
+
       it('should have the correct count and number of visible results', () => {
         cy.contains('15 results')
         cy.get(exportSelectors.exportWins.listItemHeadings).should(
