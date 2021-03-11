@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Input from '@govuk-react/input'
 import VisuallyHidden from '@govuk-react/visually-hidden'
+import { SPACING } from '@govuk-react/constants'
+import Input from '@govuk-react/input'
 import styled from 'styled-components'
 
 import urls from '../../../lib/urls'
@@ -13,8 +14,9 @@ const StyledSearchContainer = styled('div')`
 `
 
 const StyledSearchInput = styled(Input)`
-  width: 100%;
   border: 0;
+  width: 100%;
+  padding-left: ${SPACING.SCALE_3};
 `
 
 const Search = ({ csrfToken }) => (

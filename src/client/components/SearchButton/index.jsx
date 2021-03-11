@@ -12,7 +12,7 @@ const StyledButton = styled('button')`
   margin: 0;
   border-radius: 0;
   cursor: pointer;
-  padding: 10px;
+  padding: 12px;
   overflow: hidden;
   box-sizing: border-box;
   width: ${({ size }) => `${size}px`};
@@ -27,9 +27,9 @@ const SearchButton = ({
 }) => (
   <StyledButton type="submit" size={size} backgroundColour={backgroundColour}>
     <>
-      <svg viewBox="0 0 512 512" focusable="false" aria-hidden="true">
+      <svg viewBox="0 0 18 18" focusable="false" aria-hidden="true">
         <g fill={colour}>
-          <path d="M364,322.6h-23.3l-8.4-7.4c27.9-33.5,45.6-76.3,45.6-124.7C377.9,85.2,293.2,0.5,188,0.5   C84.7,0.5,0,85.2,0,190.4s84.7,189.9,189.9,189.9c46.5,0,90.3-17.7,123.8-45.6l8.4,7.4v23.3l146.2,146.2l43.8-43.8L364,322.6z    M189,322.6c-72.6,0-131.3-58.6-131.3-131.3C57.7,117.8,116.4,60,189,60s131.3,58.6,131.3,131.3S261.6,322.6,189,322.6z" />
+          <path d="M18,16.56l-4.32-4.32a7.65,7.65,0,1,0-1.44,1.44L16.56,18ZM2,7.62a5.6,5.6,0,1,1,5.59,5.59A5.6,5.6,0,0,1,2,7.62Z" />
         </g>
       </svg>
       <VisuallyHidden>Submit Search</VisuallyHidden>
