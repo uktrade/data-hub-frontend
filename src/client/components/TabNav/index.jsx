@@ -107,7 +107,8 @@ const StyledTabpanel = styled.div({
   },
 })
 
-const createId = (id, key) => `${id}.tab.${key.replace('/', '_')}`
+const createId = (id, key, routed) =>
+  routed ? `${id}.tab.${key.replace('/', '_')}` : `tab.${key}`
 
 function getContent(tabs, keys, selectedTab) {
   if (keys.includes(selectedTab)) {
@@ -168,7 +169,7 @@ const TabNav = ({
                   ? key === selectedIndex
                   : key.length > 1 && selectedIndex.startsWith(key)
                 const Button = selected ? StyledSelectedButton : StyledButton
-                const tabId = createId(id, key)
+                const tabId = createId(id, key, routed)
                 return (
                   <StyledSpan key={tabId}>
                     <Button
@@ -201,7 +202,7 @@ const TabNav = ({
             <StyledTabpanel
               role="tabpanel"
               tabIndex={0}
-              aria-labelledby={createId(id, selectedIndex)}
+              aria-labelledby={createId(id, selectedIndex, routed)}
               data-test="tabpanel"
             >
               {getContent(tabs, tabKeys, selectedIndex)}
