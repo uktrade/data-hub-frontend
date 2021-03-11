@@ -55,26 +55,28 @@ const StyledDeadline = styled('div')`
 const OutstandingPropositions = ({ outstandingPropositions = {} }) => {
   const { results = [], count = 0 } = outstandingPropositions
   return (
-    <>
+    <div data-test="outstanding-propositions">
       <StyledSubHeading>Outstanding propositions ({count})</StyledSubHeading>
-      <StyledList>
+      <StyledList data-test="outstanding-propositions-list">
         {results.map(({ id, investment_project, deadline }) => (
           <StyledListItem key={id}>
-            <StyledProjectLink href={urls.investments.projects.details(id)}>
+            <StyledProjectLink
+              href={urls.investments.projects.propositions(id)}
+            >
               {investment_project.project_code}
             </StyledProjectLink>
             <StyledDeadline>
-              <StyledDueDate>
+              <StyledDueDate data-test="outstanding-proposition-deadline">
                 Due {format(deadline, 'ddd, DD MMM YYYY')}
               </StyledDueDate>
-              <StyledDueCountdown>
+              <StyledDueCountdown data-test="outstanding-proposition-countdown">
                 {getDifferenceInDays(deadline)}
               </StyledDueCountdown>
             </StyledDeadline>
           </StyledListItem>
         ))}
       </StyledList>
-    </>
+    </div>
   )
 }
 

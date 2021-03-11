@@ -52,8 +52,6 @@ export const getDifferenceInDays = (dateIn) => {
   const difference = differenceInCalendarDays(dateIn, today)
   return difference === 1
     ? difference + ' day'
-    : difference === 0
-    ? 'Today'
     : difference < 0
     ? difference * -1 + ' days ago'
     : difference + ' days'

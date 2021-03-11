@@ -29,8 +29,8 @@ const InvestmentReminders = ({ adviser, outstandingPropositions }) => (
     }}
   >
     {() => (
-      <>
-        <StyledHeading>
+      <div data-test="investment-reminders">
+        <StyledHeading data-test="investment-reminders-heading">
           Reminders{' '}
           <NotificationBadge
             label={outstandingPropositions && outstandingPropositions.count}
@@ -39,7 +39,7 @@ const InvestmentReminders = ({ adviser, outstandingPropositions }) => (
         <OutstandingPropositions
           outstandingPropositions={outstandingPropositions}
         />
-      </>
+      </div>
     )}
   </Task.Status>
 )

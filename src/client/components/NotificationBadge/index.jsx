@@ -19,7 +19,9 @@ const StyledNotificationSpan = styled('span')`
 `
 
 const NotificationBadge = ({ label = '' }) => (
-  <StyledNotificationSpan aria-label={label}>{label}</StyledNotificationSpan>
+  <StyledNotificationSpan aria-label={label} data-test="notification-badge">
+    {label}
+  </StyledNotificationSpan>
 )
 
 NotificationBadge.propTypes = {
