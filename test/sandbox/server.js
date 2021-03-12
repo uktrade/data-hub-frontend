@@ -54,6 +54,7 @@ var v4SearchLargeInvestorProfiles = require('./routes/v4/search/large-investor-p
 var v4SearchExports = require('./routes/v4/search/export')
 var v4referralList = require('./routes/v4/referrals/list.js')
 var v4pipelineItem = require('./routes/v4/pipeline-item/index.js')
+var v4Proposition = require('./routes/v4/proposition/proposition.js')
 
 // Datahub API 3rd party dependencies
 var consentService = require('./routes/api/consentService.js')
@@ -442,6 +443,9 @@ app.patch(
   v4Company.largeInvestorProfilePatched
 )
 app.post('/v4/large-investor-profile', v4Company.largeInvestorProfilePostCreate)
+
+// V4 Proposition
+app.get('/v4/proposition', v4Proposition.propositions)
 
 // V4 Search
 app.post('/v4/search/company', v4SearchCompany.companies)

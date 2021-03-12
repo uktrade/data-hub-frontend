@@ -247,6 +247,10 @@ module.exports = {
       ),
       documents: url('/investments', '/projects/:investmentId/documents'),
       propositions: url('/investments', '/projects/:investmentId/propositions'),
+      proposition: url(
+        '/investments',
+        '/projects/:investmentId/propositions/:propositionId'
+      ),
       team: url('/investments', '/projects/:investmentId/team'),
       interactions: createInteractionsSubApp(
         '/investments/projects',
