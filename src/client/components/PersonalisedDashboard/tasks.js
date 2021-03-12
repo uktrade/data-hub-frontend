@@ -6,7 +6,7 @@ export const fetchOutstandingPropositions = ({ adviser }) =>
       params: {
         adviser_id: adviser.id,
         status: 'ongoing',
-        sortBy: 'deadline',
+        sortby: 'deadline',
         limit: 5,
       },
     })
