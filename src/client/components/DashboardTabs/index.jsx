@@ -4,8 +4,6 @@ import styled from 'styled-components'
 
 import urls from '../../../lib/urls'
 import CompanyLists from '../CompanyLists'
-import ReferralList from '../ReferralList'
-import Pipeline from '../Pipeline'
 import MyInvestmentProjects from '../MyInvestmentProjects'
 import TabNav from '../TabNav'
 
@@ -27,14 +25,6 @@ const DashboardTabs = ({ id, adviser }) => (
         [urls.dashboard()]: {
           label: 'My companies lists',
           content: <CompanyLists />,
-        },
-        [urls.companies.referrals.list()]: {
-          label: 'My referrals',
-          content: <ReferralList id={`${id}:ReferralList`} />,
-        },
-        [urls.pipeline.index()]: {
-          label: 'My pipeline',
-          content: <Pipeline />,
         },
       }}
     />
