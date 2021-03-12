@@ -201,6 +201,10 @@ function FilteredCollectionHeader({
           qsParamName="required_checks_conducted"
         />
         <RoutedFilterChips
+          selectedOptions={selectedFilters.selectedUkRegionsOfInterest}
+          qsParamName="uk_regions_of_interest"
+        />
+        <RoutedFilterChips
           selectedOptions={
             selectedFilters.selectedInvestableCapital?.min
               ? [

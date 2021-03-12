@@ -452,4 +452,26 @@ describe('Investor profiles filters', () => {
       },
     ],
   })
+
+  typeaheadFilterTestCases({
+    filterName: 'UK regions of interest',
+    selector: 'uk-regions-of-interest',
+    cases: [
+      {
+        expectedNumberOfResults: 10,
+      },
+      {
+        options: ['Benzonia'],
+        expectedNumberOfResults: 2,
+      },
+      {
+        options: ['Benzonia', 'Jersey'],
+        expectedNumberOfResults: 3,
+      },
+      {
+        options: ['Jersey'],
+        expectedNumberOfResults: 2,
+      },
+    ],
+  })
 })
