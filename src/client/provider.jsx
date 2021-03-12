@@ -62,6 +62,9 @@ import { ID as INVESTEMENT_PROJECT_ADMIN_ID } from '../apps/investments/views/ad
 
 import investmentProjectAdminReducer from '../apps/investments/views/admin/client/reducer'
 
+import { ID as INVESTMENT_OPPORTUNITIES_ID } from '../apps/investments/client/opportunities/state'
+import investmentOpportunitiesReducer from '../apps/investments/client/opportunities/reducer'
+
 import { ID as MANAGE_ADVISER_ID } from '../apps/companies/apps/advisers/client/state'
 import manageAdviserReducer from '../apps/companies/apps/advisers/client/reducer'
 
@@ -128,6 +131,7 @@ const store = createStore(
     [DNB_CHECK_ID]: dnbCheckReducer,
     [INVESTMENT_PROFILES_ID]: investmentProfileReducer,
     [INVESTMENT_PROJECTS_ID]: investmentProjectsReducer,
+    [INVESTMENT_OPPORTUNITIES_ID]: investmentOpportunitiesReducer,
     [MY_INVESTMENT_PROJECTS_ID]: myInvestmentProjectsReducer,
     [INVESTMENT_SUMMARY_ID]: investmentSummaryReducer,
     [DATA_SUMMARY_PICKER_ID]: dataSummaryPickerReducer,
