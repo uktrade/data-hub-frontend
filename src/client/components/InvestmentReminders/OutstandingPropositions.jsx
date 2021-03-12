@@ -52,8 +52,7 @@ const StyledDeadline = styled('div')`
   justify-content: space-between;
 `
 
-const OutstandingPropositions = ({ outstandingPropositions = {} }) => {
-  const { results = [], count = 0 } = outstandingPropositions
+const OutstandingPropositions = ({ results, count }) => {
   return (
     <div data-test="outstanding-propositions">
       <StyledSubHeading>Outstanding propositions ({count})</StyledSubHeading>
@@ -84,27 +83,25 @@ const OutstandingPropositions = ({ outstandingPropositions = {} }) => {
 }
 
 OutstandingPropositions.propTypes = {
-  outstandingPropositions: PropTypes.shape({
-    count: PropTypes.number.isRequired,
-    results: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        investment_project: PropTypes.shape({
-          id: PropTypes.string.is_required,
-          name: PropTypes.string.isRequired,
-          project_code: PropTypes.string.isRequired,
-        }),
-        deadline: PropTypes.string.isRequired,
+  count: PropTypes.number.isRequired,
+  results: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      investment_project: PropTypes.shape({
+        id: PropTypes.string.is_required,
         name: PropTypes.string.isRequired,
-        adviser: PropTypes.shape({
-          id: PropTypes.string.isRequired,
-          name: PropTypes.string.isRequired,
-          first_name: PropTypes.string.isRequired,
-          last_name: PropTypes.string.isRequired,
-        }),
-      })
-    ),
-  }),
+        project_code: PropTypes.string.isRequired,
+      }),
+      deadline: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      adviser: PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        first_name: PropTypes.string.isRequired,
+        last_name: PropTypes.string.isRequired,
+      }),
+    })
+  ).isRequired,
 }
 
 export default OutstandingPropositions

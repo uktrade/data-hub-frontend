@@ -105,7 +105,7 @@ PersonalisedDashboard.propTypes = {
           last_name: PropTypes.string.isRequired,
         }),
       })
-    ),
+    ).isRequired,
   }),
 }
 
