@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { RED, WHITE } from 'govuk-colours'
-import { FONT_SIZE } from '@govuk-react/constants'
+import { FONT_SIZE, FONT_WEIGHTS } from '@govuk-react/constants'
 
 const StyledNotificationSpan = styled('span')`
   font-size: ${FONT_SIZE.SIZE_16};
-  font-weight: 600;
+  font-weight: ${FONT_WEIGHTS.bold};
   color: ${WHITE};
   display: inline-block;
   min-width: 15px;
