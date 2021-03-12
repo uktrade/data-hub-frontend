@@ -61,7 +61,10 @@ const OutstandingPropositions = ({ outstandingPropositions = {} }) => {
         {results.map(({ id, investment_project, deadline }) => (
           <StyledListItem key={id}>
             <StyledProjectLink
-              href={urls.investments.projects.propositions(id)}
+              href={urls.investments.projects.proposition(
+                investment_project.id,
+                id
+              )}
             >
               {investment_project.project_code}
             </StyledProjectLink>

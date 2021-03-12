@@ -1,8 +1,9 @@
 const { format } = require('date-fns')
 const urls = require('../../../../../src/lib/urls')
 
-const NEW_HOTEL_PROJECT_CODE = 'DHP-00000004'
-const NEW_HOTEL_PROJECT_ID = '3322750d-a645-4460-b584-8f9254459246'
+const NEW_RESTAURANT_PROJECT_CODE = 'DHP-00000004'
+const NEW_RESTAURANT_PROJECT_ID = '18750b26-a8c3-41b2-8d3a-fb0b930c2270'
+const LIST_OF_CITIES_PROPOSITON_ID = '3322750d-a645-4460-b584-8f9254459246'
 
 describe('Dashboard reminders', () => {
   beforeEach(() => {
@@ -51,11 +52,14 @@ describe('Dashboard reminders', () => {
 
       cy.get('@outstandingProposition')
         .find('a')
-        .should('have.text', NEW_HOTEL_PROJECT_CODE)
+        .should('have.text', NEW_RESTAURANT_PROJECT_CODE)
         .should(
           'have.attr',
           'href',
-          urls.investments.projects.propositions(NEW_HOTEL_PROJECT_ID)
+          urls.investments.projects.proposition(
+            NEW_RESTAURANT_PROJECT_ID,
+            LIST_OF_CITIES_PROPOSITON_ID
+          )
         )
 
       cy.get('@outstandingProposition')
