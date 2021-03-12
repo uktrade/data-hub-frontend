@@ -29,6 +29,7 @@ const QS_PARAMS = {
   desiredDealRole: 'desired_deal_role',
   investableCapital: 'investable_capital',
   globalAssetsUnderManagement: 'global_assets_under_management',
+  ukRegionsOfInterest: 'uk_regions_of_interest',
 }
 
 const resolveSelectedOptions = (values = [], options = []) =>
@@ -93,6 +94,10 @@ const LargeCapitalProfileCollection = ({
         qsParams[QS_PARAMS.desiredDealRole],
         filterOptions.desiredDealRole
       )
+      const selectedUkRegionsOfInterest = resolveSelectedOptions(
+        qsParams[QS_PARAMS.ukRegionsOfInterest],
+        filterOptions.ukRegionsOfInterest
+      )
 
       const resolveSelectedInvestorCompanyName = () => {
         const companyName = qsParams[QS_PARAMS.investorCompanyName]
@@ -144,6 +149,7 @@ const LargeCapitalProfileCollection = ({
                 desiredDealRole: qsParams[QS_PARAMS.desiredDealRole],
                 investableCapital,
                 globalAssetsUnderManagement,
+                ukRegionsOfInterest: qsParams[QS_PARAMS.ukRegionsOfInterest],
               },
               onSuccessDispatch: INVESTMENTS__PROFILES_LOADED,
             },
@@ -166,6 +172,7 @@ const LargeCapitalProfileCollection = ({
             selectedDesiredDealRole,
             selectedInvestableCapital: investableCapital,
             selectedGlobalAssetsUnderManagement: globalAssetsUnderManagement,
+            selectedUkRegionsOfInterest,
           }}
         >
           <CollectionFilters
@@ -314,6 +321,16 @@ const LargeCapitalProfileCollection = ({
               options={filterOptions.desiredDealRole}
               selectedOptions={selectedDesiredDealRole}
               data-test="desired-deal-role-filter"
+            />
+            <RoutedTypeahead
+              isMulti={true}
+              legend="UK regions of interest"
+              name="uk-regions-of-interest"
+              qsParam={QS_PARAMS.ukRegionsOfInterest}
+              placeholder="Search UK regions of interest"
+              options={filterOptions.ukRegionsOfInterest}
+              selectedOptions={selectedUkRegionsOfInterest}
+              data-test="uk-regions-of-interest"
             />
           </CollectionFilters>
         </FilteredCollectionList>
