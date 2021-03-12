@@ -3,8 +3,12 @@ import React from 'react'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
 import { BLUE } from 'govuk-colours'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
+
+import { OUTSTANDING_PROPOSITIONS__LOADED } from '../../actions'
+import Task from '../Task/index.jsx'
 
 import Aside from './Aside.jsx'
 import Main from './Main.jsx'
@@ -16,6 +20,8 @@ import {
   DashboardTabs,
   Container,
 } from '../../components'
+
+import { ID, TASK_GET_OUTSTANDING_PROPOSITIONS, state2props } from './state'
 
 const SearchBackground = styled('div')`
   background-color: ${BLUE};
@@ -33,18 +39,37 @@ const SearchContainer = styled(Container)`
   }
 `
 
-const PersonalisedDashboard = ({ id, adviser, csrfToken }) => (
+const PersonalisedDashboard = ({
+  id,
+  adviser,
+  outstandingPropositions,
+  csrfToken,
+}) => (
   <>
     <SearchBackground data-test="search-data-hub">
       <SearchContainer width="960">
         <Search csrfToken={csrfToken} />
       </SearchContainer>
     </SearchBackground>
-    <Container width="1200">
+    <Container width="1180">
       <GridRow data-test="dashboard">
         <GridCol setWidth="one-third">
           <Aside>
-            <InvestmentReminders />
+            <Task.Status
+              name={TASK_GET_OUTSTANDING_PROPOSITIONS}
+              id={ID}
+              progressMessage="Loading your reminders"
+              startOnRender={{
+                payload: { adviser },
+                onSuccessDispatch: OUTSTANDING_PROPOSITIONS__LOADED,
+              }}
+            >
+              {() => (
+                <InvestmentReminders
+                  outstandingPropositions={outstandingPropositions}
+                />
+              )}
+            </Task.Status>
             <InvestmentProjectSummary adviser={adviser} />
           </Aside>
         </GridCol>
@@ -61,6 +86,27 @@ const PersonalisedDashboard = ({ id, adviser, csrfToken }) => (
 PersonalisedDashboard.propTypes = {
   id: PropTypes.string.isRequired,
   adviser: PropTypes.object.isRequired,
+  outstandingPropositions: PropTypes.shape({
+    count: PropTypes.number.isRequired,
+    results: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        investment_project: PropTypes.shape({
+          id: PropTypes.string.is_required,
+          name: PropTypes.string.isRequired,
+          project_code: PropTypes.string.isRequired,
+        }),
+        deadline: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        adviser: PropTypes.shape({
+          id: PropTypes.string.isRequired,
+          name: PropTypes.string.isRequired,
+          first_name: PropTypes.string.isRequired,
+          last_name: PropTypes.string.isRequired,
+        }),
+      })
+    ).isRequired,
+  }),
 }
 
-export default PersonalisedDashboard
+export default connect(state2props)(PersonalisedDashboard)

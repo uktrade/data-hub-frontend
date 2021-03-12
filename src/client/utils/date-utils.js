@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { endOfToday, differenceInCalendarDays } from 'date-fns'
 
 const DATE_FORMAT_LONG = 'YYYY-MM-DD'
 const DATE_FORMAT_SHORT = 'YYYY-MM'
@@ -41,4 +42,17 @@ export const transformValueForAPI = ({ year, month, day = 1 }) => {
   }
 
   return null
+}
+
+/**
+ * Get the number of days left or days ago that an input date is as a string.
+ */
+export const getDifferenceInDays = (dateIn) => {
+  const today = endOfToday()
+  const difference = differenceInCalendarDays(dateIn, today)
+  return difference === 1
+    ? difference + ' day'
+    : difference < 0
+    ? difference * -1 + ' days ago'
+    : difference + ' days'
 }
