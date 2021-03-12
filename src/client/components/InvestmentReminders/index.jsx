@@ -17,14 +17,9 @@ const StyledHeading = styled(H2)`
 const InvestmentReminders = ({ outstandingPropositions }) => (
   <div data-test="investment-reminders">
     <StyledHeading data-test="investment-reminders-heading">
-      Reminders{' '}
-      <NotificationBadge
-        label={outstandingPropositions && outstandingPropositions.count}
-      />
+      Reminders <NotificationBadge label={outstandingPropositions.count} />
     </StyledHeading>
-    <OutstandingPropositions
-      outstandingPropositions={outstandingPropositions}
-    />
+    <OutstandingPropositions {...outstandingPropositions} />
   </div>
 )
 
@@ -48,7 +43,7 @@ InvestmentReminders.propTypes = {
           last_name: PropTypes.string.isRequired,
         }),
       })
-    ),
+    ).isRequired,
   }),
 }
 
