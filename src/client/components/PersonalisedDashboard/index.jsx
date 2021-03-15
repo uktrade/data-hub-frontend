@@ -12,7 +12,7 @@ import Task from '../Task/index.jsx'
 
 import Aside from './Aside.jsx'
 import Main from './Main.jsx'
-import { DASHBOARD_THEME } from './theme'
+import blueTheme from './blue-theme'
 
 import {
   InvestmentReminders,
@@ -46,7 +46,7 @@ const PersonalisedDashboard = ({
   outstandingPropositions,
   csrfToken,
 }) => (
-  <ThemeProvider theme={DASHBOARD_THEME}>
+  <ThemeProvider theme={blueTheme}>
     <SearchBackground data-test="search-data-hub">
       <SearchContainer width="960">
         <Search csrfToken={csrfToken} />

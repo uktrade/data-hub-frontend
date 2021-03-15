@@ -83,25 +83,21 @@ const StyledSelectedButton = styled(FocusableButton)({
   [MEDIA_QUERIES.TABLET]: {
     fontSize: 19,
     textDecoration: 'none',
+    color: ({ theme }) =>
+      get(theme, 'tabNav.selectedButton.color', TEXT_COLOUR),
+    border: ({ theme }) =>
+      get(theme, 'tabNav.selectedButton.border', `1px solid ${BORDER_COLOUR}`),
     borderBottom: 'none',
+    background: ({ theme }) =>
+      get(theme, 'tabNav.selectedButton.background', WHITE),
+    '&:focus': {
+      background: ({ theme }) =>
+        get(theme, 'tabNav.selectedButton.background', WHITE),
+    },
     // The negative margin is here so that it overcasts tabpane's top border
     marginBottom: -1,
     // The 19px include compensation for the 1px negative margin above
     padding: '14px 19px 16px',
-    color: ({ theme }) =>
-      get(theme, 'dashboard.tabNav.selectedButton.color', TEXT_COLOUR),
-    border: ({ theme }) =>
-      get(
-        theme,
-        'dashboard.tabNav.selectedButton.border',
-        `1px solid ${BORDER_COLOUR}`
-      ),
-    background: ({ theme }) =>
-      get(theme, 'dashboard.tabNav.selectedButton.background', WHITE),
-    '&:focus': {
-      background: ({ theme }) =>
-        get(theme, 'dashboard.tabNav.selectedButton.background', WHITE),
-    },
   },
 })
 
@@ -117,11 +113,11 @@ const StyledTablist = styled.div({
 
 const StyledTabpanel = styled('div')`
   ${({ theme }) =>
-    theme.dashboard
+    theme.tabNav
       ? `
-        border: ${get(theme.dashboard, 'tabNav.tabPanel.border')};
-        padding: ${get(theme.dashboard, 'tabNav.tabPanel.padding')};
-        margin-bottom: ${get(theme.dashboard, 'tabNav.tabPanel.marginBottom')};
+        border: ${get(theme, 'tabNav.tabPanel.border')};
+        padding: ${get(theme, 'tabNav.tabPanel.padding')};
+        margin-bottom: ${get(theme, 'tabNav.tabPanel.marginBottom')};
       `
       : `
         margin-top: 15px;
