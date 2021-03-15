@@ -37,13 +37,15 @@ const MyInvestmentProjects = ({
 }) => (
   <article>
     <InvestmentListHeader>
-      <InvestmentListShowDetails
-        onChange={(event) => onShowDetailsChange(event.target.checked)}
-        checked={showDetails}
-        disabled={!results.length}
-      >
-        Show details
-      </InvestmentListShowDetails>
+      {false && (
+        <InvestmentListShowDetails
+          onChange={(event) => onShowDetailsChange(event.target.checked)}
+          checked={showDetails}
+          disabled={!results.length}
+        >
+          Show details
+        </InvestmentListShowDetails>
+      )}
       <InvestmentListFilter
         options={STAGE_OPTIONS}
         onChange={(event) => onFilterChange(event.target.value)}
