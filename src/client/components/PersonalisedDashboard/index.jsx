@@ -8,10 +8,12 @@ import { BLUE } from 'govuk-colours'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
 import { OUTSTANDING_PROPOSITIONS__LOADED } from '../../actions'
-import Task from '../Task/index.jsx'
+import NotificationBadge from '../NotificationBadge'
+import Task from '../Task'
+import ToggleSection from '../ToggleSection'
 
-import Aside from './Aside.jsx'
-import Main from './Main.jsx'
+import Aside from './Aside'
+import Main from './Main'
 import blueTheme from './blue-theme'
 
 import {
@@ -66,12 +68,30 @@ const PersonalisedDashboard = ({
               }}
             >
               {() => (
-                <InvestmentReminders
-                  outstandingPropositions={outstandingPropositions}
-                />
+                <ToggleSection
+                  label="Reminders"
+                  id="reminders-section"
+                  badge={
+                    <NotificationBadge
+                      label={`${outstandingPropositions.count}`}
+                    />
+                  }
+                  isOpen={true}
+                >
+                  <InvestmentReminders
+                    outstandingPropositions={outstandingPropositions}
+                  />
+                </ToggleSection>
               )}
             </Task.Status>
-            <InvestmentProjectSummary adviser={adviser} />
+
+            <ToggleSection
+              label="Investment project summary"
+              id="investment-project-summary-section"
+              isOpen={true}
+            >
+              <InvestmentProjectSummary adviser={adviser} />
+            </ToggleSection>
           </Aside>
         </GridCol>
         <GridCol setWidth="two-thirds">
