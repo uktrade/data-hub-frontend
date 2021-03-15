@@ -126,6 +126,7 @@ app.get('/metadata/evidence-tag/', metadata.evidenceTag)
 app.get('/metadata/employee-range/', metadata.employeeRange)
 app.get('/metadata/country/', metadata.country)
 app.get('/metadata/uk-region/', metadata.ukRegion)
+app.get('/metadata/administrative-area/', metadata.administrativeArea)
 app.get('/metadata/referral-source-website/', metadata.referralSourceWebsite)
 app.get(
   '/metadata/referral-source-marketing/',
@@ -236,6 +237,7 @@ app.get('/v4/metadata/evidence-tag', v4Metadata.evidenceTag)
 app.get('/v4/metadata/employee-range', v4Metadata.employeeRange)
 app.get('/v4/metadata/country', v4Metadata.country)
 app.get('/v4/metadata/uk-region', v4Metadata.ukRegion)
+app.get('/v4/metadata/administrative-area', v4Metadata.administrativeArea)
 app.get(
   '/v4/metadata/referral-source-website',
   v4Metadata.referralSourceWebsite
