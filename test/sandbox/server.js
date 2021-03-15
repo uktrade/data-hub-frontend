@@ -126,7 +126,6 @@ app.get('/metadata/evidence-tag/', metadata.evidenceTag)
 app.get('/metadata/employee-range/', metadata.employeeRange)
 app.get('/metadata/country/', metadata.country)
 app.get('/metadata/uk-region/', metadata.ukRegion)
-app.get('/metadata/administrative-area/', metadata.administrativeArea)
 app.get('/metadata/referral-source-website/', metadata.referralSourceWebsite)
 app.get(
   '/metadata/referral-source-marketing/',
