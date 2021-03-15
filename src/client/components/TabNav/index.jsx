@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Route } from 'react-router-dom'
 import styled from 'styled-components'
+import { get } from 'lodash'
 import {
   GREY_4,
   WHITE,
@@ -75,18 +76,32 @@ const StyledButton = styled(FocusableButton)({
 
 const StyledSelectedButton = styled(FocusableButton)({
   ...buttonStyle,
-  ...focusStyle,
+  '&:focus': {
+    outline: `3px solid ${FOCUS_COLOUR}`,
+    background: FOCUS_COLOUR,
+  },
   [MEDIA_QUERIES.TABLET]: {
-    color: TEXT_COLOUR,
     fontSize: 19,
     textDecoration: 'none',
-    border: `1px solid ${BORDER_COLOUR}`,
     borderBottom: 'none',
     // The negative margin is here so that it overcasts tabpane's top border
     marginBottom: -1,
     // The 19px include compensation for the 1px negative margin above
     padding: '14px 19px 16px',
-    background: WHITE,
+    color: ({ theme }) =>
+      get(theme, 'dashboard.tabNav.selectedButton.color', TEXT_COLOUR),
+    border: ({ theme }) =>
+      get(
+        theme,
+        'dashboard.tabNav.selectedButton.border',
+        `1px solid ${BORDER_COLOUR}`
+      ),
+    background: ({ theme }) =>
+      get(theme, 'dashboard.tabNav.selectedButton.background', WHITE),
+    '&:focus': {
+      background: ({ theme }) =>
+        get(theme, 'dashboard.tabNav.selectedButton.background', WHITE),
+    },
   },
 })
 
@@ -100,12 +115,21 @@ const StyledTablist = styled.div({
   },
 })
 
-const StyledTabpanel = styled.div({
-  marginTop: 15,
-  [MEDIA_QUERIES.TABLET]: {
-    marginTop: 30,
-  },
-})
+const StyledTabpanel = styled('div')`
+  ${({ theme }) =>
+    theme.dashboard
+      ? `
+        border: ${get(theme.dashboard, 'tabNav.tabPanel.border')};
+        padding: ${get(theme.dashboard, 'tabNav.tabPanel.padding')};
+        margin-bottom: ${get(theme.dashboard, 'tabNav.tabPanel.marginBottom')};
+      `
+      : `
+        margin-top: 15px;
+        ${MEDIA_QUERIES.TABLET} {
+          margin-top: 30px;
+        }
+      `}
+`
 
 const createId = (id, key) => `${id}.tab.${key.replace('/', '_')}`
 
