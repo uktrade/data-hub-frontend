@@ -80,9 +80,8 @@ module.exports = (env) => ({
     rules: [
       {
         test: /\.(js|jsx)$/,
-        // Packages "hex-rgb" and "set-harmonic-interval" are not transpiled to ES5 by default so we need to transpile them again.
-        // See: https://stackoverflow.com/questions/51289261/babel-does-not-transpile-imported-modules-from-node-modules
-        exclude: /node_modules\/(?!(.*(hex-rgb|set-harmonic-interval))\/).*/,
+        // Some packages need transpiling to es6 so below we exclude all node_modules but include specific modules.
+        exclude: /node_modules\/(?!(.*(hex-rgb|set-harmonic-interval|react-spring|internmap|unified|is-plain-obj|d3-.*))\/).*/,
         loader: 'babel-loader',
         options: {
           cacheDirectory: './babel_cache',
