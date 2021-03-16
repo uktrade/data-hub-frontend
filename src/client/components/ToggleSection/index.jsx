@@ -35,8 +35,16 @@ const StyledHeader = styled('div')`
 const StyledContent = styled('div')`
   ${({ isOpen, theme }) => `
     display: ${isOpen ? 'block' : 'none'};
-    margin-bottom: 10px;
-    padding: ${get(theme, 'toggleSection.asBox', false) ? '0 15px' : '0'};
+    ${
+      get(theme, 'toggleSection.asBox', false)
+        ? `
+          padding: 0 15px;
+          margin: 15px 0;
+        `
+        : `
+          padding: 0;
+        `
+    }
   `}
 `
 
@@ -47,15 +55,19 @@ const StyledButton = styled('button')`
     background: transparent;
     border: none;
     font-size: 19px;
-    ${
-      get(theme, 'toggleSection.asBox', false) &&
-      `font-weight: ${FONT_WEIGHTS.regular};`
-    }
     color: #005ea5;
-    padding: ${
-      get(theme, 'toggleSection.asBox', false) ? '13px 0' : '0 0 15px 0'
-    };
     cursor: pointer;
+
+    ${
+      get(theme, 'toggleSection.asBox', false)
+        ? `
+          font-weight: ${FONT_WEIGHTS.regular};
+          padding: 13px 0;
+        `
+        : `
+          padding: 0 0 15px 0;
+        `
+    }
 
     &::before {
       content: '';
@@ -79,20 +91,28 @@ const StyledButton = styled('button')`
     &:focus {
       outline: none;
       text-decoration: none;
-      span {
-        color: ${BLACK};
-        background-color: ${YELLOW};
-        box-shadow: 0 -2px ${YELLOW}, 0 4px ${BLACK};
-      }
     }
   `}
 `
 
 const ButtonContent = styled('span')`
   ${({ theme }) => `
-    ${get(theme, 'toggleSection.asBox', false) && `text-decoration: 'none'`};
+    ${
+      get(theme, 'toggleSection.asBox', false)
+        ? `
+          text-decoration: underline;
+        `
+        : `
+          ${StyledButton}:focus & {
+            color: ${BLACK};
+            background-color: ${YELLOW};
+            box-shadow: 0 -2px ${YELLOW}, 0 4px ${BLACK};
+          }
+        `
+    };
   `}
 `
+
 const BadgeContainer = styled('span')`
   margin-left: 5px;
 `
