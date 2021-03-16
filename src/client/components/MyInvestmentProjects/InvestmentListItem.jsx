@@ -15,6 +15,9 @@ import InvestmentTimeline from './InvestmentTimeline'
 const ListItem = styled('li')`
   padding: ${SPACING.SCALE_3} 0;
   border-bottom: 2px solid ${GREY_1};
+  &:last-child {
+    border-bottom: none;
+  }
 `
 
 const ListItemHeaderContainer = styled('div')`

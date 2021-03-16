@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import GridRow from '@govuk-react/grid-row'
 import GridCol from '@govuk-react/grid-col'
-import styled from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 import { connect } from 'react-redux'
 import { BLUE } from 'govuk-colours'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
@@ -12,6 +12,7 @@ import Task from '../Task/index.jsx'
 
 import Aside from './Aside.jsx'
 import Main from './Main.jsx'
+import blueTheme from './blue-theme'
 
 import {
   InvestmentReminders,
@@ -45,7 +46,7 @@ const PersonalisedDashboard = ({
   outstandingPropositions,
   csrfToken,
 }) => (
-  <>
+  <ThemeProvider theme={blueTheme}>
     <SearchBackground data-test="search-data-hub">
       <SearchContainer width="960">
         <Search csrfToken={csrfToken} />
@@ -80,7 +81,7 @@ const PersonalisedDashboard = ({
         </GridCol>
       </GridRow>
     </Container>
-  </>
+  </ThemeProvider>
 )
 
 PersonalisedDashboard.propTypes = {

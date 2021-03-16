@@ -37,13 +37,15 @@ const MyInvestmentProjects = ({
 }) => (
   <article>
     <InvestmentListHeader>
-      <InvestmentListShowDetails
-        onChange={(event) => onShowDetailsChange(event.target.checked)}
-        checked={showDetails}
-        disabled={!results.length}
-      >
-        Show details
-      </InvestmentListShowDetails>
+      {false && (
+        <InvestmentListShowDetails
+          onChange={(event) => onShowDetailsChange(event.target.checked)}
+          checked={showDetails}
+          disabled={!results.length}
+        >
+          Show details
+        </InvestmentListShowDetails>
+      )}
       <InvestmentListFilter
         options={STAGE_OPTIONS}
         onChange={(event) => onFilterChange(event.target.value)}
@@ -67,16 +69,23 @@ const MyInvestmentProjects = ({
         onSuccessDispatch: MY_INVESTMENTS__LIST_LOADED,
       }}
     >
-      {() => (
-        <>
-          <InvestmentList items={results} showDetails={showDetails} />
-          <Pagination
-            totalPages={Math.ceil(count / itemsPerPage)}
-            activePage={page}
-            onPageClick={onPaginationClick}
-          />
-        </>
-      )}
+      {() => {
+        const totalPages = Math.ceil(count / itemsPerPage)
+        return (
+          <>
+            <InvestmentList
+              items={results}
+              isPaginated={totalPages > 1}
+              showDetails={showDetails}
+            />
+            <Pagination
+              totalPages={totalPages}
+              activePage={page}
+              onPageClick={onPaginationClick}
+            />
+          </>
+        )
+      }}
     </Task.Status>
   </article>
 )
