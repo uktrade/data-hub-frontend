@@ -76,6 +76,7 @@ const PersonalisedDashboard = ({
                       label={`${outstandingPropositions.count}`}
                     />
                   }
+                  major={true}
                   isOpen={true}
                 >
                   <InvestmentReminders
