@@ -78,6 +78,7 @@ const PersonalisedDashboard = ({
                   }
                   major={true}
                   isOpen={true}
+                  appearance="primary"
                 >
                   <InvestmentReminders
                     outstandingPropositions={outstandingPropositions}
@@ -90,6 +91,7 @@ const PersonalisedDashboard = ({
               label="Investment project summary"
               id="investment-project-summary-section"
               isOpen={true}
+              appearance="primary"
             >
               <InvestmentProjectSummary adviser={adviser} />
             </ToggleSection>

@@ -1,14 +1,11 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
-import { ThemeProvider } from 'styled-components'
 
 import usageReadme from '../usage.md'
 import exampleReadme from '../example.md'
 
 import FieldInput from '../../Form/elements/FieldInput'
 import FormStateful from '../../Form/FormStateful'
-
-import blueTheme from '../../PersonalisedDashboard/blue-theme'
 
 import NotificationBadge from 'NotificationBadge'
 import ToggleSection from 'ToggleSection'
@@ -21,8 +18,14 @@ storiesOf('ToggleSection', module)
       sidebar: usageReadme,
     },
   })
-  .add('Single', () => (
-    <ToggleSection label="Toggle me" id="toggle.one" isOpen={true}>
+  .add('Primary - Single (with badge)', () => (
+    <ToggleSection
+      label="Toggle me"
+      id="toggle.one"
+      isOpen={true}
+      appearance="primary"
+      badge={<NotificationBadge label="15" />}
+    >
       <FormStateful>
         {() => (
           <FieldInput
@@ -36,9 +39,14 @@ storiesOf('ToggleSection', module)
       </FormStateful>
     </ToggleSection>
   ))
-  .add('Multiple', () => (
+  .add('Primary - Multiple', () => (
     <>
-      <ToggleSection label="Toggle me" id="toggle.two" isOpen={true}>
+      <ToggleSection
+        label="Toggle me"
+        id="toggle.two"
+        isOpen={true}
+        appearance="primary"
+      >
         <FormStateful>
           {() => (
             <FieldInput
@@ -51,7 +59,7 @@ storiesOf('ToggleSection', module)
           )}
         </FormStateful>
       </ToggleSection>
-      <ToggleSection label="Toggle me" id="toggle.three">
+      <ToggleSection label="Toggle me" id="toggle.three" appearance="primary">
         <FormStateful>
           {() => (
             <FieldInput
@@ -66,13 +74,33 @@ storiesOf('ToggleSection', module)
       </ToggleSection>
     </>
   ))
-  .add('As Box - Single (with badge)', () => (
-    <ThemeProvider theme={blueTheme}>
+  .add('Secondary - Single', () => (
+    <ToggleSection
+      label="Toggle me"
+      id="toggle.four"
+      isOpen={true}
+      appearance="secondary"
+    >
+      <FormStateful>
+        {() => (
+          <FieldInput
+            label="Text"
+            hint="Some hint"
+            name="testField"
+            required="Enter text"
+            type="text"
+          />
+        )}
+      </FormStateful>
+    </ToggleSection>
+  ))
+  .add('Secondary - Multiple', () => (
+    <>
       <ToggleSection
         label="Toggle me"
-        id="toggle.four"
+        id="toggle.five"
         isOpen={true}
-        badge={<NotificationBadge label="15" />}
+        appearance="secondary"
       >
         <FormStateful>
           {() => (
@@ -86,11 +114,7 @@ storiesOf('ToggleSection', module)
           )}
         </FormStateful>
       </ToggleSection>
-    </ThemeProvider>
-  ))
-  .add('As Box - Multiple', () => (
-    <ThemeProvider theme={blueTheme}>
-      <ToggleSection label="Toggle me" id="toggle.five" isOpen={true}>
+      <ToggleSection label="Toggle me" id="toggle.six" appearance="secondary">
         <FormStateful>
           {() => (
             <FieldInput
@@ -103,18 +127,5 @@ storiesOf('ToggleSection', module)
           )}
         </FormStateful>
       </ToggleSection>
-      <ToggleSection label="Toggle me" id="toggle.six">
-        <FormStateful>
-          {() => (
-            <FieldInput
-              label="Text"
-              hint="Some hint"
-              name="testField"
-              required="Enter text"
-              type="text"
-            />
-          )}
-        </FormStateful>
-      </ToggleSection>
-    </ThemeProvider>
+    </>
   ))

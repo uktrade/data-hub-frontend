@@ -17,7 +17,4 @@ export default {
       marginBottom: '30px',
     },
   },
-  toggleSection: {
-    asBox: true,
-  },
 }
