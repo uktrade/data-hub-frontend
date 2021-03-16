@@ -104,7 +104,8 @@ const StyledSelectedButton = styled(FocusableButton)({
 const StyledTablist = styled.div({
   borderBottom: 'none',
   [MEDIA_QUERIES.TABLET]: {
-    borderBottom: `1px solid ${BORDER_COLOUR}`,
+    borderBottom: ({ theme }) =>
+      get(theme, 'tabNav.tabList.borderBottom', `1px solid ${BORDER_COLOUR}`),
     '& > *:not(:last-child)': {
       marginRight: 5,
     },
