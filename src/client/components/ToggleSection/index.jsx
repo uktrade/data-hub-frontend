@@ -1,140 +1,29 @@
 import React from 'react'
-import styled from 'styled-components'
-import { get } from 'lodash'
-
-import { BLACK, BLUE, GREY_3, RED, YELLOW } from 'govuk-colours'
-import { FONT_WEIGHTS } from '@govuk-react/constants'
+import PropTypes from 'prop-types'
 
 import multiInstance from '../../utils/multiinstance'
 import { TOGGLE_SECTION__TOGGLE } from '../../actions'
-import icon from './assets/search-gov.uk.svg'
 
-const ToggleContainer = styled('div')`
-  ${({ major, theme }) => `
-    margin-bottom: 10px;
-    ${
-      get(theme, 'toggleSection.asBox', false) &&
-      `
-        border: solid 2px ${GREY_3};
-        border-top-color: ${major ? RED : BLUE};
-      `
-    }
-  `}
-`
+import PrimaryToggleSection from './PrimaryToggleSection'
+import SecondaryToggleSection from './SecondaryToggleSection'
 
-const StyledHeader = styled('div')`
-  ${({ theme }) => `
-    display: flex;
-    align-items: center;
-    ${
-      get(theme, 'toggleSection.asBox', false) && `background-color: ${GREY_3};`
-    }
-  `}
-`
+const ToggleSection = ({ appearance = 'primary', ...props }) =>
+  appearance === 'primary' ? (
+    <PrimaryToggleSection {...props} />
+  ) : (
+    <SecondaryToggleSection {...props} />
+  )
 
-const StyledContent = styled('div')`
-  ${({ isOpen, theme }) => `
-    display: ${isOpen ? 'block' : 'none'};
-    ${
-      get(theme, 'toggleSection.asBox', false)
-        ? `
-          padding: 0 15px;
-          margin: 15px 0;
-        `
-        : `
-          padding: 0;
-        `
-    }
-  `}
-`
-
-const StyledButton = styled('button')`
-  ${({ isOpen, theme }) => `
-    display: flex;
-    align-items: center;
-    background: transparent;
-    border: none;
-    font-size: 19px;
-    color: #005ea5;
-    cursor: pointer;
-
-    ${
-      get(theme, 'toggleSection.asBox', false)
-        ? `
-          font-weight: ${FONT_WEIGHTS.regular};
-          padding: 13px 0;
-        `
-        : `
-          padding: 0 0 15px 0;
-        `
-    }
-
-    &::before {
-      content: '';
-      ${
-        get(theme, 'toggleSection.asBox', false)
-          ? `
-            background: url(${icon}) 7px 0 no-repeat;
-            width: 44px;
-          `
-          : `
-            background: url(${icon}) 0 0 no-repeat;
-            width: 30px;
-          `
-      };
-      height: 30px;
-      transform: ${isOpen ? `rotate(0deg)` : `rotate(180deg)`};
-    }
-    &:hover {
-      text-decoration: underline;
-    }
-    &:focus {
-      outline: none;
-      text-decoration: none;
-    }
-  `}
-`
-
-const ButtonContent = styled('span')`
-  ${({ theme }) => `
-    ${
-      get(theme, 'toggleSection.asBox', false)
-        ? `
-          text-decoration: underline;
-        `
-        : `
-          ${StyledButton}:focus & {
-            color: ${BLACK};
-            background-color: ${YELLOW};
-            box-shadow: 0 -2px ${YELLOW}, 0 4px ${BLACK};
-          }
-        `
-    };
-  `}
-`
-
-const BadgeContainer = styled('span')`
-  margin-left: 5px;
-`
-
-const ToggleSection = ({
-  label,
-  badge = null,
-  open,
-  isOpen = false,
-  children,
-  ...props
-}) => (
-  <ToggleContainer {...props}>
-    <StyledHeader>
-      <StyledButton onClick={() => open(!isOpen)} isOpen={isOpen}>
-        <ButtonContent>{label}</ButtonContent>
-      </StyledButton>
-      {badge && <BadgeContainer>{badge}</BadgeContainer>}
-    </StyledHeader>
-    <StyledContent isOpen={isOpen}>{children}</StyledContent>
-  </ToggleContainer>
-)
+ToggleSection.propTypes = {
+  id: PropTypes.string,
+  appearance: PropTypes.string,
+  label: PropTypes.string,
+  badge: PropTypes.node,
+  open: PropTypes.func,
+  isOpen: PropTypes.bool,
+  children: PropTypes.node,
+  major: PropTypes.bool,
+}
 
 export default multiInstance({
   name: 'ToggleSection',
