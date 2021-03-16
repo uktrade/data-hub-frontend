@@ -70,7 +70,7 @@ const PersonalisedDashboard = ({
               {() => (
                 <ToggleSection
                   label="Reminders"
-                  id="reminders-section"
+                  id="investment-reminders-section"
                   badge={
                     <NotificationBadge
                       label={`${outstandingPropositions.count}`}
@@ -79,6 +79,7 @@ const PersonalisedDashboard = ({
                   major={true}
                   isOpen={true}
                   appearance="primary"
+                  data-test="investment-reminders-section"
                 >
                   <InvestmentReminders
                     outstandingPropositions={outstandingPropositions}

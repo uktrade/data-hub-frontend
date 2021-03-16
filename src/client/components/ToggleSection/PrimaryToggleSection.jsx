@@ -76,8 +76,14 @@ const PrimaryToggleSection = ({
 }) => (
   <ToggleContainer {...props}>
     <StyledHeader>
-      <StyledButton onClick={() => open(!isOpen)} isOpen={isOpen}>
-        <ButtonContent>{label}</ButtonContent>
+      <StyledButton
+        data-test="toggle-section-button"
+        onClick={() => open(!isOpen)}
+        isOpen={isOpen}
+      >
+        <ButtonContent data-test="toggle-section-button-content">
+          {label}
+        </ButtonContent>
       </StyledButton>
       {badge && <BadgeContainer>{badge}</BadgeContainer>}
     </StyledHeader>
