@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import { BLACK, YELLOW } from 'govuk-colours'
-import { FONT_WEIGHTS } from '@govuk-react/constants'
 import { get } from 'lodash'
+
+import { BLACK, BLUE, GREY_3, RED, YELLOW } from 'govuk-colours'
+import { FONT_WEIGHTS } from '@govuk-react/constants'
 
 import multiInstance from '../../utils/multiinstance'
 import { TOGGLE_SECTION__TOGGLE } from '../../actions'
@@ -10,22 +11,24 @@ import icon from './assets/search-gov.uk.svg'
 
 const ToggleContainer = styled('div')`
   ${({ major, theme }) => `
-      margin-bottom: 10px;
-      border: ${get(theme, 'toggleSection.border', '0')};
-      border-color: ${get(theme, 'toggleSection.borderColor', 'inherit')};
-      border-top-color: ${
-        major
-          ? get(theme, 'toggleSection.majorHighlight', 'transparent')
-          : get(theme, 'toggleSection.highlight', 'transparent')
-      };
-    `}
+    margin-bottom: 10px;
+    ${
+      get(theme, 'toggleSection.asBox', false) &&
+      `
+        border: solid 2px ${GREY_3};
+        border-top-color: ${major ? RED : BLUE};
+      `
+    }
+  `}
 `
 
 const StyledHeader = styled('div')`
   ${({ theme }) => `
     display: flex;
     align-items: center;
-    background-color: ${get(theme, 'toggleSection.headerColour', 'unset')};
+    ${
+      get(theme, 'toggleSection.asBox', false) && `background-color: ${GREY_3};`
+    }
   `}
 `
 
@@ -33,7 +36,7 @@ const StyledContent = styled('div')`
   ${({ isOpen, theme }) => `
     display: ${isOpen ? 'block' : 'none'};
     margin-bottom: 10px;
-    padding: ${get(theme, 'toggleSection.contentPadding', '0')};
+    padding: ${get(theme, 'toggleSection.asBox', false) ? '0 15px' : '0'};
   `}
 `
 
@@ -44,19 +47,20 @@ const StyledButton = styled('button')`
     background: transparent;
     border: none;
     font-size: 19px;
-    font-weight: ${get(
-      theme,
-      'toggleSection.buttonFontWeight',
-      FONT_WEIGHTS.BOLD
-    )};
+    ${
+      get(theme, 'toggleSection.asBox', false) &&
+      `font-weight: ${FONT_WEIGHTS.regular};`
+    }
     color: #005ea5;
-    padding: ${get(theme, 'toggleSection.buttonPadding', '0 0 15px 0')};
+    padding: ${
+      get(theme, 'toggleSection.asBox', false) ? '13px 0' : '0 0 15px 0'
+    };
     cursor: pointer;
 
     &::before {
       content: '';
       ${
-        get(theme, 'toggleSection.wideToggleIcon')
+        get(theme, 'toggleSection.asBox', false)
           ? `
             background: url(${icon}) 7px 0 no-repeat;
             width: 44px;
@@ -86,7 +90,7 @@ const StyledButton = styled('button')`
 
 const ButtonContent = styled('span')`
   ${({ theme }) => `
-    text-decoration: ${get(theme, 'toggleSection.buttonDecoration', 'none')};
+    ${get(theme, 'toggleSection.asBox', false) && `text-decoration: 'none'`};
   `}
 `
 const BadgeContainer = styled('span')`
