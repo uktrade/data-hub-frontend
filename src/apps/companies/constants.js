@@ -12,7 +12,7 @@ const QUERY_FIELDS_MAP = {
   interestedIn: 'future_interest_countries',
   lastInteractionDate: 'interaction_between',
   ukPostcode: 'uk_postcode',
-  administrativeArea: 'administrative_area',
+  area: 'area',
 }
 
 const DEFAULT_COLLECTION_QUERY = {
