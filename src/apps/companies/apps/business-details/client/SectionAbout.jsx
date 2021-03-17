@@ -121,6 +121,14 @@ const SectionAbout = ({ businessDetails, isDnbCompany, isArchived, urls }) => (
     <SummaryTable.Row heading="Business description">
       {businessDetails.description || 'No description has been added'}
     </SummaryTable.Row>
+
+    <SummaryTable.Row heading="Segment">
+      {businessDetails.segment || 'No segment has been added'}
+    </SummaryTable.Row>
+
+    <SummaryTable.Row heading="Sub-segment">
+      {businessDetails.sub_segment || 'No sub-segment has been added'}
+    </SummaryTable.Row>
   </SummaryTable>
 )
 
