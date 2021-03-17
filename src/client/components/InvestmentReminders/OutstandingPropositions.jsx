@@ -84,7 +84,6 @@ const OutstandingPropositions = ({ results, count }) => {
 
 OutstandingPropositions.propTypes = {
   count: PropTypes.number.isRequired,
-  loaded: PropTypes.bool.isRequired,
   results: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
