@@ -64,7 +64,7 @@ const PersonalisedDashboard = ({
               label="Reminders"
               id="investment-reminders-section"
               badge={
-                outstandingPropositions.loaded && (
+                !!outstandingPropositions.count && (
                   <NotificationBadge
                     label={`${outstandingPropositions.count}`}
                   />
@@ -117,7 +117,6 @@ PersonalisedDashboard.propTypes = {
   adviser: PropTypes.object.isRequired,
   outstandingPropositions: PropTypes.shape({
     count: PropTypes.number.isRequired,
-    loaded: PropTypes.bool.isRequired,
     results: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.string.isRequired,
