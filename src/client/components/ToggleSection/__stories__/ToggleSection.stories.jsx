@@ -1,7 +1,7 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react'
 
-import { APPEARANCES } from '../../../common/constants'
+import { APPEARANCES } from '../../../../common/constants'
 
 import usageReadme from '../usage.md'
 import exampleReadme from '../example.md'
