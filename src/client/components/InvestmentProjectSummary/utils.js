@@ -1,14 +1,13 @@
-import { get } from 'lodash'
 import { addYears, subYears } from 'date-fns'
 
 /**
  * Converts investment summary received by the API into data ranges
  * that the chart component can work with
  */
-export const investmentSummaryAsDataRanges = (investmentSummary) => {
-  const annualSummaries = get(investmentSummary, 'annual_summaries', [])
-  const adviserId = get(investmentSummary, 'adviser_id')
-
+export const investmentSummaryAsDataRanges = ({
+  annual_summaries: annualSummaries,
+  adviser_id: adviserId,
+}) => {
   const labelledSummaries = annualSummaries.map(
     ({ financial_year, totals }) => {
       const { start, end } = financial_year
@@ -52,7 +51,6 @@ export const investmentSummaryAsDataRanges = (investmentSummary) => {
     }
   )
 
-  return labelledSummaries
-    .sort((a, b) => a.order > b.order)
-    .map(({ order, ...rest }) => ({ ...rest }))
+  labelledSummaries.sort((a, b) => a.order - b.order)
+  return labelledSummaries.map(({ order, ...rest }) => ({ ...rest }))
 }

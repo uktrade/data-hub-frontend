@@ -56,3 +56,9 @@ export const getDifferenceInDays = (dateIn) => {
     ? difference * -1 + ' days ago'
     : difference + ' days'
 }
+
+export const getFinancialYearStart = (date) =>
+  date.getMonth() < 4 ? date.getFullYear() - 1 : date.getFullYear()
+
+export const generateFinancialYearLabel = (yearStart) =>
+  `${yearStart}-${(yearStart + 1).toString().slice(-2)}`
