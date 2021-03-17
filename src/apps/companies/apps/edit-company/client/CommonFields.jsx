@@ -10,6 +10,26 @@ import {
 } from '../../../../../client/components'
 import { WEBSITE_REGEX } from '../../add-company/client/constants'
 
+const segments = [
+  {value: 'hep', label: 'HEP'},
+  {value: 'non_hep', label: 'Non-HEP'}
+];
+const sub_segments = [
+  {value: null, label: 'No Sub-Segment or not known'},
+  {value: 'sustain_nurture_and_grow', label: 'Sustain: Nurture & Grow'},
+  {value: 'sustain_develop_export_capability', label: 'Sustain: Develop Export Capability'},
+  {value: 'sustain_communicate_benefits', label: 'Sustain: Communicate Benefits'},
+  {value: 'sustain_increase_competitiveness', label: 'Sustain: Increase Competitiveness'},
+  {value: 'reassure_nurture_and_grow', label: 'Reassure: Nurture & Grow'},
+  {value: 'reassure_develop_export_capability', label: 'Reassure: Develop Export Capability'},
+  {value: 'reassure_leave_be', label: 'Reassure: Leave Be'},
+  {value: 'reassure_change_the_game', label: 'Reassure: Change the Game'},
+  {value: 'promote_develop_export_capability', label: 'Promote: Develop Export Capability'},
+  {value: 'promote_communicate_benefits', label: 'Promote: Communicate Benefits'},
+  {value: 'promote_change_the_game', label: 'Promote: Change the Game'},
+  {value: 'challenge', label: 'Challenge'}
+];
+
 const websiteValidator = (value) =>
   value && !WEBSITE_REGEX.test(value) ? 'Enter a valid website URL' : null
 
@@ -36,6 +56,20 @@ const CommonFields = ({ company, regions }) => (
       label="Business description (optional)"
       name="description"
       type="text"
+    />
+
+    <FieldSelect
+      name="segment"
+      label="Segment (optional)"
+      emptyOption="-- Select segment --"
+      options={segments}
+    />
+
+    <FieldSelect
+      name="sub_segment"
+      label="Sub-segment (optional)"
+      emptyOption="-- Select Sub-segment --"
+      options={sub_segments}
     />
 
     <FieldAddress
