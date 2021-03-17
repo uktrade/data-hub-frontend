@@ -97,6 +97,7 @@ const PersonalisedDashboard = ({
               id="investment-project-summary-section"
               isOpen={true}
               variant={VARIANTS.PRIMARY}
+              data-test="investment-project-summary-section"
             >
               <InvestmentProjectSummary adviser={adviser} />
             </ToggleSection>
