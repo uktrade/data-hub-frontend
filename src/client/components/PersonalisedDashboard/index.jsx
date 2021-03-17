@@ -7,11 +7,15 @@ import { connect } from 'react-redux'
 import { BLUE } from 'govuk-colours'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 
-import { OUTSTANDING_PROPOSITIONS__LOADED } from '../../actions'
-import Task from '../Task/index.jsx'
+import { VARIANTS } from '../../../common/constants'
 
-import Aside from './Aside.jsx'
-import Main from './Main.jsx'
+import { OUTSTANDING_PROPOSITIONS__LOADED } from '../../actions'
+import NotificationBadge from '../NotificationBadge'
+import Task from '../Task'
+import ToggleSection from '../ToggleSection'
+
+import Aside from './Aside'
+import Main from './Main'
 import blueTheme from './blue-theme'
 
 import {
@@ -56,22 +60,46 @@ const PersonalisedDashboard = ({
       <GridRow data-test="dashboard">
         <GridCol setWidth="one-third">
           <Aside>
-            <Task.Status
-              name={TASK_GET_OUTSTANDING_PROPOSITIONS}
-              id={ID}
-              progressMessage="Loading your reminders"
-              startOnRender={{
-                payload: { adviser },
-                onSuccessDispatch: OUTSTANDING_PROPOSITIONS__LOADED,
-              }}
+            <ToggleSection
+              label="Reminders"
+              id="investment-reminders-section"
+              badge={
+                !!outstandingPropositions.count && (
+                  <NotificationBadge
+                    label={`${outstandingPropositions.count}`}
+                  />
+                )
+              }
+              major={true}
+              isOpen={true}
+              variant={VARIANTS.PRIMARY}
+              data-test="investment-reminders-section"
             >
-              {() => (
-                <InvestmentReminders
-                  outstandingPropositions={outstandingPropositions}
-                />
-              )}
-            </Task.Status>
-            <InvestmentProjectSummary adviser={adviser} />
+              <Task.Status
+                name={TASK_GET_OUTSTANDING_PROPOSITIONS}
+                id={ID}
+                progressMessage="Loading your reminders"
+                startOnRender={{
+                  payload: { adviser },
+                  onSuccessDispatch: OUTSTANDING_PROPOSITIONS__LOADED,
+                }}
+              >
+                {() => (
+                  <InvestmentReminders
+                    outstandingPropositions={outstandingPropositions}
+                  />
+                )}
+              </Task.Status>
+            </ToggleSection>
+
+            <ToggleSection
+              label="Investment project summary"
+              id="investment-project-summary-section"
+              isOpen={true}
+              variant={VARIANTS.PRIMARY}
+            >
+              <InvestmentProjectSummary adviser={adviser} />
+            </ToggleSection>
           </Aside>
         </GridCol>
         <GridCol setWidth="two-thirds">
