@@ -8,7 +8,7 @@ const DATE_LONG_FORMAT = 'D MMMM YYYY'
 const DATE_MEDIUM_FORMAT = 'D MMM YYYY'
 const DATE_TIME_MEDIUM_FORMAT = 'D MMM YYYY, h:mma'
 
-const APPEARANCES = {
+const VARIANTS = {
   PRIMARY: 'primary',
   SECONDARY: 'secondary,',
 }
@@ -19,5 +19,5 @@ module.exports = {
   DATE_LONG_FORMAT,
   DATE_MEDIUM_FORMAT,
   DATE_TIME_MEDIUM_FORMAT,
-  APPEARANCES,
+  VARIANTS,
 }
