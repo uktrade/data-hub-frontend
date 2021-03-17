@@ -3,6 +3,7 @@ var largeCapitalProfile = require('./../../../../fixtures/v4/investment/large-ca
 exports.largeInvestorProfile = function (req, res) {
   const countryOfOriginFilter = req.body.country_of_origin || []
   const assetClassesOfInterestFilter = req.body.asset_classes_of_interest || []
+  const ukRegionLocationsFilter = req.body.uk_region_location || []
   const investorCompanyNameFilter = req.body.investor_company_name
   const investorTypesFilter = req.body.investor_type || []
   const requiredChecksConductedFilter = req.body.required_checks_conducted || []
@@ -36,6 +37,14 @@ exports.largeInvestorProfile = function (req, res) {
         ? _.intersection(
             assetClassesOfInterestFilter,
             asset_classes_of_interest.map((x) => x.id)
+          ).length
+        : true
+    )
+    .filter(({ uk_region_locations = [] }) =>
+      ukRegionLocationsFilter.length
+        ? _.intersection(
+            ukRegionLocationsFilter,
+            uk_region_locations.map((x) => x.id)
           ).length
         : true
     )
