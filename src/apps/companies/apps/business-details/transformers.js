@@ -42,6 +42,8 @@ const transformCompanyToBusinessDetails = (company) => {
         'uk_based',
         'headquarter_type',
         'is_global_ultimate',
+        'segment',
+        'sub_segment',
       ]),
       turnover: convertUsdToGbp(company.turnover),
       business_type: get(company.business_type, 'name'),
