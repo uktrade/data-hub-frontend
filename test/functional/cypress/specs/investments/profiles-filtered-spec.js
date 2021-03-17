@@ -32,13 +32,12 @@ const testTypeaheadFilter = ({
   })
 }
 
-const testInputFilter = ({ placeholder, text, expectedNumberOfResults }) => {
+const testInputFilter = ({ selector, text, expectedNumberOfResults }) => {
   context(`When inputting text "${text}"`, () => {
     it(`There should be ${expectedNumberOfResults} items found`, () => {
       cy.visit(urls.investments.profiles.index())
-      cy.get(`[placeholder="${placeholder}"]`).within((e) =>
-        cy.wrap(e).type(text).blur()
-      )
+      // cy.get(`[placeholder="${placeholder}"]`).within((e) =>
+      cy.get(selector).within((e) => cy.wrap(e).type(text).blur())
       cy.contains(
         `${expectedNumberOfResults} Profile${
           expectedNumberOfResults > 1 ? 's' : ''
@@ -62,11 +61,11 @@ const typeaheadFilterTestCases = ({ filterName, selector, cases }) =>
     )
   )
 
-const inputFilterTestCases = ({ filterName, placeholder, cases }) =>
+const inputFilterTestCases = ({ filterName, selector, cases }) =>
   context(filterName, () =>
     cases.forEach((options) =>
       testInputFilter({
-        placeholder,
+        selector,
         ...options,
       })
     )
@@ -163,7 +162,7 @@ describe('Investor profiles filters', () => {
 
   inputFilterTestCases({
     filterName: 'Company name',
-    placeholder: 'Search company name',
+    selector: '[placeholder="Search company name"]',
     cases: [
       {
         text: 'foo',
@@ -176,6 +175,98 @@ describe('Investor profiles filters', () => {
       {
         text: 'bing',
         expectedNumberOfResults: 0,
+      },
+    ],
+  })
+
+  inputFilterTestCases({
+    filterName: 'Investable capital min',
+    selector: '[aria-label="Investable capital min"]',
+    cases: [
+      {
+        text: '1000',
+        expectedNumberOfResults: 3,
+      },
+      {
+        text: '1001',
+        expectedNumberOfResults: 2,
+      },
+      {
+        text: '2001',
+        expectedNumberOfResults: 1,
+      },
+      {
+        text: '3001',
+        expectedNumberOfResults: 0,
+      },
+    ],
+  })
+
+  inputFilterTestCases({
+    filterName: 'Investable capital max',
+    selector: '[aria-label="Investable capital max"]',
+    cases: [
+      {
+        text: '999',
+        expectedNumberOfResults: 0,
+      },
+      {
+        text: '1000',
+        expectedNumberOfResults: 1,
+      },
+      {
+        text: '2000',
+        expectedNumberOfResults: 2,
+      },
+      {
+        text: '3000',
+        expectedNumberOfResults: 3,
+      },
+    ],
+  })
+
+  inputFilterTestCases({
+    filterName: 'Global assets under management min',
+    selector: '[aria-label="Global assets under management min"]',
+    cases: [
+      {
+        text: '1000',
+        expectedNumberOfResults: 3,
+      },
+      {
+        text: '1001',
+        expectedNumberOfResults: 2,
+      },
+      {
+        text: '2001',
+        expectedNumberOfResults: 1,
+      },
+      {
+        text: '3001',
+        expectedNumberOfResults: 0,
+      },
+    ],
+  })
+
+  inputFilterTestCases({
+    filterName: 'Global assets under management max',
+    selector: '[aria-label="Global assets under management max"]',
+    cases: [
+      {
+        text: '999',
+        expectedNumberOfResults: 0,
+      },
+      {
+        text: '1000',
+        expectedNumberOfResults: 1,
+      },
+      {
+        text: '2000',
+        expectedNumberOfResults: 2,
+      },
+      {
+        text: '3000',
+        expectedNumberOfResults: 3,
       },
     ],
   })

@@ -200,6 +200,64 @@ function FilteredCollectionHeader({
           selectedOptions={selectedFilters.selectedRequiredChecksConducted}
           qsParamName="required_checks_conducted"
         />
+        <RoutedFilterChips
+          selectedOptions={
+            selectedFilters.selectedInvestableCapital?.min
+              ? [
+                  {
+                    categoryLabel: 'Investable capital min',
+                    label: selectedFilters.selectedInvestableCapital.min,
+                  },
+                ]
+              : []
+          }
+          qsParamName="investable_capital_min"
+          showCategoryLabels={true}
+        />
+        <RoutedFilterChips
+          selectedOptions={
+            selectedFilters.selectedInvestableCapital?.max
+              ? [
+                  {
+                    categoryLabel: 'Investable capital max',
+                    label: selectedFilters.selectedInvestableCapital.max,
+                  },
+                ]
+              : []
+          }
+          qsParamName="investable_capital_max"
+          showCategoryLabels={true}
+        />
+        <RoutedFilterChips
+          selectedOptions={
+            selectedFilters.selectedGlobalAssetsUnderManagement?.min
+              ? [
+                  {
+                    categoryLabel: 'Global assets under management min',
+                    label:
+                      selectedFilters.selectedGlobalAssetsUnderManagement.min,
+                  },
+                ]
+              : []
+          }
+          qsParamName="global_assets_under_management_min"
+          showCategoryLabels={true}
+        />
+        <RoutedFilterChips
+          selectedOptions={
+            selectedFilters.selectedGlobalAssetsUnderManagement?.max
+              ? [
+                  {
+                    categoryLabel: 'Global assets under management max',
+                    label:
+                      selectedFilters.selectedGlobalAssetsUnderManagement.max,
+                  },
+                ]
+              : []
+          }
+          qsParamName="global_assets_under_management_max"
+          showCategoryLabels={true}
+        />
       </CollectionHeaderRow>
     </CollectionHeaderRowContainer>
   )
@@ -209,6 +267,7 @@ FilteredCollectionHeader.propTypes = {
   totalItems: PropTypes.number.isRequired,
   collectionName: PropTypes.string.isRequired,
   addItemUrl: PropTypes.string,
+  // FIXME: This doesn't reflect the reality
   selectedFilters: PropTypes.shape({
     label: PropTypes.string,
     value: PropTypes.string,
